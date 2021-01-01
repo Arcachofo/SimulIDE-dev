@@ -1,0 +1,147 @@
+<!DOCTYPE SimulIDE>
+
+<!-- *************************************************************************** -->
+<!-- *   Copyright (C) 2020 by santiago González                               * -->
+<!-- *   santigoro@gmail.com                                                   * -->
+<!-- *                                                                         * -->
+<!-- *   This program is free software; you can redistribute it and/or modify  * -->
+<!-- *   it under the terms of the GNU General Public License as published by  * -->
+<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
+<!-- *   (at your option) any later version.                                   * -->
+<!-- *                                                                         * -->
+<!-- *   This program is distributed in the hope that it will be useful,       * -->
+<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
+<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
+<!-- *   GNU General Public License for more details.                          * -->
+<!-- *                                                                         * -->
+<!-- *   You should have received a copy of the GNU General Public License     * -->
+<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
+<!-- *                                                                         * -->
+<!-- *************************************************************************** -->
+
+<mcu name="atmega328" core="AVR" data="2304" prog="16384" progword="2" eeprom="1024"
+            inst_cycle="1">
+
+    <stack sp="SPL,SPH" increment="postdec" />
+    
+    <registers start="32" end="255" status="SREG" >
+        <register name="PINB"   addr="3"   bits="0-7"/>
+        <register name="DDRB"   addr="4"   bits="0-7"/>
+        <register name="PORTB"  addr="5"   bits="0-7"/>
+        <register name="PINC"   addr="6"   bits="0-6"/>
+        <register name="DDRC"   addr="7"   bits="0-6"/>
+        <register name="PORTC"  addr="8"   bits="0-6"/>
+        <register name="PIND"   addr="9"   bits="0-7"/>
+        <register name="DDRD"   addr="10"  bits="0-7"/>
+        <register name="PORTD"  addr="11"  bits="0-7"/>
+        <register name="TIFR0"  addr="21"  bits="TOV0,OCF0A,OCF0B"/>
+        <register name="TIFR1"  addr="22"  bits="TOV1,OCF1A,OCF1B,0,0,ICIE1"/>
+        <register name="TIFR2"  addr="23"  bits="TOV2,OCF2A,OCF2B"/>
+        <register name="PCIFR"  addr="27"  bits="PCIF0,PCIF1,PCIF2"/>
+        <register name="EIFR"   addr="28"  bits="INTF0,INTF1"/>
+        <register name="EIMSK"  addr="29"  bits="INT0,INT1"/>
+        <register name="GPIOR0" addr="30"  bits=""/>
+        <register name="EECR"   addr="31"  bits="EERE,EEPE,EEMPE,EERIE,EEPM0,EEPM1"/>
+        <register name="EEDR"   addr="32"  bits=""/>
+        <register name="EEARL"  addr="33"  bits=""/>
+        <register name="EEARH"  addr="34"  bits=""/>
+        <register name="GTCCR"  addr="35"  bits=""/>
+        <register name="TCCR0A" addr="36"  bits=""/>
+        <register name="TCCR0B" addr="37"  bits=""/>
+        <register name="TCNT0"  addr="38"  bits=""/>
+        <register name="OCR0A"  addr="39"  bits=""/>
+        <register name="OCR0B"  addr="40"  bits=""/>
+        <register name="GPIOR1" addr="42"  bits=""/>
+        <register name="GPIOR2" addr="43"  bits=""/>
+        <register name="SPCR"   addr="44"  bits=""/>
+        <register name="SPSR"   addr="45"  bits=""/>
+        <register name="SPDR"   addr="46"  bits=""/>
+        <register name="ACSR"   addr="48"  bits=""/>
+        <register name="SMCR"   addr="51"  bits=""/>
+        <register name="MCUSR"  addr="52"  bits=""/>
+        <register name="MCUCR"  addr="53"  bits=""/>
+        <register name="SPMCSR" addr="55"  bits=""/>
+        <register name="SPL"    addr="61"  bits=""/>
+        <register name="SPH"    addr="62"  bits=""/>
+        <register name="SREG"   addr="63"  bits=""/>
+        <register name="WDTCSR" addr="96"  bits=""/>
+        <register name="CLKPR"  addr="97"  bits=""/>
+        <register name="PRR"    addr="100" bits=""/>
+        <register name="OSCCAL" addr="102" bits=""/>
+        <register name="PCICR"  addr="104" bits="PCIE0,PCIE1,PCIE2"/>
+        <register name="EICRA"  addr="105" bits=""/>
+        <register name="PCMSK0" addr="107" bits=""/>
+        <register name="PCMSK1" addr="108" bits=""/>
+        <register name="PCMSK2" addr="109" bits=""/>
+        <register name="TIMSK0" addr="110" bits=""/>
+        <register name="TIMSK1" addr="111" bits=""/>
+        <register name="TIMSK2" addr="112" bits=""/>
+        <register name="ADCL"   addr="120" bits=""/>
+        <register name="ADCH"   addr="121" bits=""/>
+        <register name="ADCSRA" addr="122" bits=""/>
+        <register name="ADCSRB" addr="123" bits=""/>
+        <register name="ADMUX"  addr="124" bits=""/>
+        <register name="DIDR0"  addr="126" bits=""/>
+        <register name="DIDR1"  addr="127" bits=""/>
+        <register name="TCCR1A" addr="128" bits=""/>
+        <register name="TCCR1B" addr="129" bits=""/>
+        <register name="TCCR1C" addr="130" bits=""/>
+        <register name="TCNT1L" addr="132" bits=""/>
+        <register name="TCNT1H" addr="133" bits=""/>
+        <register name="ICR1L"  addr="134" bits=""/>
+        <register name="ICR1H"  addr="135" bits=""/>
+        <register name="OCR1AL" addr="136" bits=""/>
+        <register name="OCR1AH" addr="137" bits=""/>
+        <register name="OCR1BL" addr="138" bits=""/>
+        <register name="OCR1BH" addr="139" bits=""/>
+        <register name="TCCR2A" addr="176" bits=""/>
+        <register name="TCCR2B" addr="177" bits=""/>
+        <register name="TCNT2"  addr="178" bits=""/>
+        <register name="OCR2A"  addr="179" bits=""/>
+        <register name="OCR2B"  addr="180" bits=""/>
+        <register name="ASSR"   addr="182" bits=""/>
+        <register name="TWBR"   addr="184" bits=""/>
+        <register name="TWSR"   addr="185" bits=""/>
+        <register name="TWAR"   addr="186" bits=""/>
+        <register name="TWDR"   addr="187" bits=""/>
+        <register name="TWCR"   addr="188" bits=""/>
+        <register name="TWAMR"  addr="189" bits=""/>
+        <register name="UCSR0A" addr="192" bits=""/>
+        <register name="UCSR0B" addr="193" bits=""/>
+        <register name="UCSR0C" addr="194" bits=""/>
+        <register name="UBRR0L" addr="196" bits=""/>
+        <register name="UBRR0H" addr="197" bits=""/>
+        <register name="UDR0"   addr="198" bits=""/>
+    </registers>
+    
+    <interrupts enable="I">
+        <interrupt name="RESET"                              priority="26" vector="0x000"/>
+        <interrupt name="INT0"   enable="INT0"  flag="INTF0" priority="25" vector="0x002"/>
+        <interrupt name="INT1"   enable="INT1"  flag="INTF1" priority="24" vector="0x004"/>
+        <interrupt name="PCINT0" enable="PCIE0" flag="PCIF0" priority="23" vector="0x006"/>
+        <interrupt name="PCINT1" enable="PCIE1" flag="PCIF1" priority="22" vector="0x008"/>
+        <interrupt name="PCINT2" enable="PCIE2" flag="PCIF2" priority="21" vector="0x00A"/>
+        
+        <interrupt name="TIMER0_OVF" enable="TOIE0" flag="TOV0" priority="10" vector="0x020"/>
+        
+    </interrupts>
+    
+    <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
+        <raiseint intname="PCINT0" source="PINB" mask="PCMSK0"/>
+    </port>
+    
+    <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
+        <raiseint intname="PCINT1" source="PINC" mask="PCMSK1"/>
+    </port>
+    
+    <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
+        <raiseint intname="PCINT2" source="PIND" mask="PCMSK2"/>
+    </port>
+    
+    <timer name="TIMER0" counter="TCNT0" disable="PRTIM0">
+        <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+        <extclock type="PIN" source="PORTD4"/>
+        <raiseint intname="TIMER0_OVF" source="OVERFLOW" />
+    </timer>
+    
+</mcu>

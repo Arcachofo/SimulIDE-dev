@@ -1,0 +1,1405 @@
+/***************************************************************************
+ *   Copyright (C) 2012 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         *
+ ***************************************************************************/
+
+
+#include "circuit.h"
+#include "simulator.h"
+#include "itemlibrary.h"
+#include "mainwindow.h"
+#include "circuitwidget.h"
+#include "connectorline.h"
+#include "simuapi_apppath.h"
+#include "node.h"
+#include "utils.h"
+#include "subcircuit.h"
+#include "mcucomponent.h"
+#include "simulator.h"
+
+static const char* Circuit_properties[] = {
+    QT_TRANSLATE_NOOP("App::Property","Speed"),
+    QT_TRANSLATE_NOOP("App::Property","ReactStep"),
+    QT_TRANSLATE_NOOP("App::Property","NoLinAcc"),
+    QT_TRANSLATE_NOOP("App::Property","Draw Grid"),
+    QT_TRANSLATE_NOOP("App::Property","Show ScrollBars"),
+    QT_TRANSLATE_NOOP("App::Property","Animate"),
+    QT_TRANSLATE_NOOP("App::Property","Font Scale"),
+    QT_TRANSLATE_NOOP("App::Property","Auto Backup Secs")
+    QT_TRANSLATE_NOOP("App::Property","Language")
+};
+
+Circuit*  Circuit::m_pSelf = 0l;
+
+Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView*  parent )
+       : QGraphicsScene( x, y, width, height, parent )
+{
+    Q_UNUSED( Circuit_properties );
+
+    m_simulator = new Simulator();
+    
+    setObjectName( "Circuit" );
+    setParent( parent );
+    m_graphicView = parent;
+    m_scenerect.setRect( x, y, width, height );
+    setSceneRect( QRectF(x, y, width, height) );
+
+    m_pSelf = this;
+    m_circType = "simulide_0.5";
+
+    m_busy       = false;
+    m_changed    = false;
+    m_animate    = false;
+    m_pasting    = false;
+    m_deleting   = false;
+    m_conStarted = false;
+
+    new_connector = 0l;
+    m_seqNumber   = 0;
+    
+    m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
+    m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
+    m_filePath   = qApp->applicationDirPath()+"/new.simu";
+
+    connect( &m_bckpTimer, SIGNAL(timeout() ),
+                     this, SLOT( saveChanges()), Qt::UniqueConnection );
+}
+
+Circuit::~Circuit()
+{
+    delete m_simulator;
+
+    m_bckpTimer.stop();
+
+    // Clear Undo/Redo stacks
+    for( QDomDocument* doc : m_redoStack ) delete doc;
+    for( QDomDocument* doc : m_undoStack ) delete doc;
+    m_undoStack.clear();
+    m_redoStack.clear();
+
+    if( !m_backupPath.isEmpty() )
+    {
+        QFile file( m_backupPath );
+        if( !file.exists() ) return;
+        QFile::remove( m_backupPath ); // Remove backup file
+    }
+}
+
+void Circuit::setLang( Langs lang )
+{
+    m_lang = lang;
+    MainWindow::self()->settings()->setValue( "language", loc() );
+}
+
+QString Circuit::loc()
+{
+    QString locale = "en";
+    if     ( m_lang == French )    locale = "fr";
+    else if( m_lang == German )    locale = "de";
+    else if( m_lang == Italian )   locale = "it";
+    else if( m_lang == Russian )   locale = "ru";
+    else if( m_lang == Spanish )   locale = "es";
+    else if( m_lang == Pt_Brasil ) locale = "pt_BR";
+
+    return locale;
+}
+
+void Circuit::setLoc( QString loc )
+{
+    Langs lang = English;
+    if     ( loc == "fr" )    lang = French;
+    else if( loc == "de" )    lang = German;
+    else if( loc == "it" )    lang = Italian;
+    else if( loc == "ru" )    lang = Russian;
+    else if( loc == "es" )    lang = Spanish;
+    else if( loc == "pt_BR" ) lang = Pt_Brasil;
+
+    m_lang = lang;
+}
+
+Component* Circuit::getComponent( QString name )
+{
+    for( Component* comp : m_compList ) if( comp->idLabel() == name ) return comp;
+    return 0l;
+}
+
+Component* Circuit::getCompById( QString id )
+{
+    for( Component* comp : m_compList ) if( comp->objectName() == id ) return comp;
+    return 0l;
+}
+
+QString Circuit::getCompId( QString name )
+{
+    QStringList nameSplit = name.split("-");
+    if( nameSplit.isEmpty() ) return "";
+
+    QString compId  = nameSplit.takeFirst();
+    if( nameSplit.isEmpty() ) return "";
+
+    QString compNum = nameSplit.takeFirst();
+
+    return compId+"-"+compNum;
+}
+
+Pin* Circuit::findPin( int x, int y, QString id )
+{
+    qDebug() << "Circuit::findPin" << id;
+    QRectF itemRect = QRectF ( x-4, y-4, 8, 8 );
+
+    QList<QGraphicsItem*> list = items( itemRect ); // List of items in (x, y)
+    for( QGraphicsItem* it : list )
+    {
+        Pin* pin =  qgraphicsitem_cast<Pin*>( it );
+
+        if( pin && (pin->pinId().left(1) == id.left(1))) return pin; // Check if names start by same letter
+    }
+    for( QGraphicsItem* it : list ) // Not found by first letter, take first Pin
+    {
+        Pin* pin =  qgraphicsitem_cast<Pin*>( it );
+        if( pin ) return pin;
+    }
+    return 0l;
+}
+
+Pin* Circuit::getConPin( QString pinId )
+{
+    Pin* pin = 0l;
+    QString compName = Circuit::self()->getCompId( pinId );
+    QString newName  = m_idMap.value( compName );
+
+    pinId.replace( compName, newName );
+    pin = m_pinMap[pinId];
+    if( pin && pin->isConnected() ) pin = 0l;
+
+    return pin;
+}
+
+void Circuit::loadCircuit( QString fileName )
+{
+    if( m_conStarted ) return;
+    saveState();
+
+    m_filePath = fileName;
+    QDomDocument domDoc = fileToDomDoc( fileName, "Circuit::loadCircuit");
+    if( domDoc.isNull() ) return;
+
+    m_error = 0;
+    loadDomDoc( &domDoc );
+    
+    if( m_error != 0 ) 
+    {
+        remove();
+        for( Component* comp : m_compList ) removeComp( comp ); // Clean Nodes
+    }
+    else m_graphicView->centerOn( QPointF(
+            width()/2  + itemsBoundingRect().center().x() - m_graphicView->width()/2,
+            height()/2 + itemsBoundingRect().center().y() - m_graphicView->height()/2 ) );
+}
+
+void Circuit::loadDomDoc( QDomDocument* doc )
+{
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    QList<Component*> compList;   // Component List
+    QList<Component*> conList;    // Connector List
+    QList<Node*>      jointList;  // Joint List
+
+    QHash<QString, eNode*> nodMap;
+
+    m_busy    = true;
+    m_animate = false;
+
+    QDomElement circuit = doc->documentElement();
+    m_circType = circuit.attribute("type");
+
+    if( circuit.hasAttribute( "speed" ))
+    {
+        double sps = circuit.attribute("speed").toDouble();
+        setCircSpeed( sps );
+    }
+    if( circuit.hasAttribute( "Speed_sps" ))    setCircSpeed( circuit.attribute("Speed_sps").toInt() );
+    if( circuit.hasAttribute( "Speed_per" ))    setCircSpeedP( circuit.attribute("Speed_per").toDouble() );
+    if( circuit.hasAttribute( "reactStep" ))    setReactStep( circuit.attribute("reactStep").toInt() );
+    if( circuit.hasAttribute( "noLinAcc" ))     setNoLinAcc( circuit.attribute("noLinAcc").toInt() );
+    if( circuit.hasAttribute( "animate" ))      setAnimate( circuit.attribute("animate").toInt() );
+
+    QDomNode node = circuit.firstChild();
+
+    while( !node.isNull() )
+    {
+        QDomElement   element = node.toElement();
+        const QString tagName = element.tagName();
+
+        if( tagName == "item" )
+        {
+            QString objNam = element.attribute( "objectName"  ); // Data in simu file
+            QString type   = element.attribute( "itemtype"  );
+            QString id     = element.attribute( "id"  );//objNam.split("-").first()+"-"+newSceneId(); // Create new id
+
+
+            /*if( (type == "Probe") || (type == "Fixed Voltage") )
+            {
+                type = "Tunnel";
+                id.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );
+                objNam.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );
+                id.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );
+                //if( element.attribute( "Name" ) == "" )
+                element.setAttribute( "itemtype", "Tunnel" );
+                element.setAttribute( "Name", element.attribute( "id" ));
+                element.setAttribute( "rotation", "0");
+                element.setAttribute( "labelrot", "0");
+            }*/
+
+
+            if( type == "Connector" )
+            {
+                Pin* startpin  = 0l;
+                Pin* endpin    = 0l;
+                QString startpinid    = element.attribute( "startpinid" );
+                QString endpinid      = element.attribute( "endpinid" );
+
+
+
+                /*if( startpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") )
+                    startpinid.replace( "outnod", "pin").replace( "inpin", "pin" )
+                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );
+                if( endpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") )
+                    endpinid.replace( "outnod", "pin").replace( "inpin", "pin" )
+                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );*/
+
+
+                startpin = m_pinMap[startpinid];
+                endpin   = m_pinMap[endpinid];
+
+                if( !startpin ) // Pin not found by name... find it by pos
+                {
+                    QStringList pointList   = element.attribute( "pointList" ).split(",");
+                    int itemX = pointList.first().toInt();
+                    int itemY = pointList.at(1).toInt();
+
+                    startpin = findPin( itemX, itemY, startpinid );
+                }
+                if( !endpin ) // Pin not found by name... find it by pos
+                {
+                    QStringList pointList   = element.attribute( "pointList" ).split(",");
+                    int itemX = pointList.at(pointList.size()-2).toInt();
+                    int itemY = pointList.last().toInt();
+
+                    endpin = findPin( itemX, itemY, endpinid );
+                }
+
+                if( startpin && startpin->isConnected() ) startpin = 0l;
+                if( endpin   && endpin->isConnected() )   endpin   = 0l;
+
+                if( startpin && endpin )    // Create Connector
+                {
+                    Connector* con  = new Connector( this, type, id, startpin, endpin );
+
+                    element.setAttribute( "startpinid", startpin->objectName() );
+                    element.setAttribute(   "endpinid", endpin->objectName() );
+
+                    loadProperties( element, con );
+
+                    QString enodeId = element.attribute( "enodeid" );
+                    eNode*  enode   = nodMap[enodeId];
+                    if( !enode )                    // Create eNode and add to enodList
+                    {
+                        enode = new eNode( "Circ_eNode-"+newSceneId() );
+                        nodMap[enodeId] = enode;
+                    }
+                    con->setEnode( enode );
+
+                    QStringList plist = con->pointList();   // add lines to connector
+                    int p1x = plist.first().toInt();
+                    int p1y = plist.at(1).toInt();
+                    int p2x = plist.at(plist.size()-2).toInt();
+                    int p2y = plist.last().toInt();
+
+                    con->addConLine( con->x(),con->y(), p1x, p1y, 0 );
+
+                    int count = plist.size();
+                    for (int i=2; i<count; i+=2)
+                    {
+                        p2x = plist.at(i).toInt();
+                        p2y = plist.at(i+1).toInt();
+                        con->addConLine( p1x, p1y, p2x, p2y, i/2 );
+                        p1x = p2x;
+                        p1y = p2y;
+                    }
+                    con->updateConRoute( startpin, startpin->scenePos() );
+                    con->updateConRoute( endpin, endpin->scenePos() );
+                    con->remNullLines();
+                    conList.append( con );
+                }
+                else // Start or End pin not found
+                {
+                    if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null startpin in " << objNam << startpinid;
+                    if( !endpin )   qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null endpin in "   << objNam << endpinid;
+                }
+            }
+            else if( type == "Node")
+            {
+                Node* joint = new Node( this, type, objNam );
+                loadProperties( element, joint );
+                compList.append( joint );
+                jointList.append( joint );
+            }
+            else if( (type == "Plotter") && id.contains("Widget") ) ;// Old Plotter widget;
+            else if(( type == "SerialPort")
+                 && ( element.hasAttribute( "visible" ) )
+                 && ( element.attribute( "visible" ) == "false" ) ) ;// Old Serial Port Widget
+            else
+            {
+                /*bool oldArduino = false;
+                if( type == "Arduino" )
+                {
+                    oldArduino = true;
+                    type = "Subcircuit";
+                    id = id.remove( "Arduino " );
+                    objNam = objNam.remove( "Arduino " );
+                }*/
+                Component* item = createItem( type, objNam, objNam );
+
+                if( item )
+                {
+                    loadProperties( element, item );
+
+                    /*if( oldArduino ) // Load mcu properties & change subcircuit names
+                    {
+                        SubCircuit* subci = static_cast<SubCircuit*>(item);
+                        McuComponent* mcu = static_cast<McuComponent*>( subci->getMainComp() );
+                        //loadObjectProperties( element, mcu );
+                        mcu->setSubcDir("");
+                        mcu->setProgram( element.attribute("Program") );
+                        mcu->setFreq( element.attribute("Mhz").toDouble() );
+                        mcu->setAutoLoad( element.attribute("Auto_Load").toInt() );
+
+                        subci->setObjectName( subci->objectName().remove( "Arduino " ) );
+                        subci->setId( subci->itemID().remove( "Arduino " ) );
+                    }*/
+                    compList.append( item );
+                }
+                else qDebug() << " ERROR Creating Component: "<< type << objNam;
+            }
+        }
+        node = node.nextSibling();
+    }
+    // Take care about unconnected Joints
+    for( Node* joint : jointList ) joint->remove(); // Only removed if some missing connector
+
+    m_busy = false;
+    QApplication::restoreOverrideCursor();
+}
+
+void Circuit::pasteDomDoc( QDomDocument* doc )
+{
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    QList<Component*> compList;   // Component List
+    QList<Component*> conList;    // Connector List
+    QList<Node*>      jointList;  // Joint List
+
+    QHash<QString, eNode*> nodMap;
+
+    m_busy    = true;
+
+    QDomElement circuit = doc->documentElement();
+    QDomNode node = circuit.firstChild();
+
+    while( !node.isNull() )
+    {
+        QDomElement   element = node.toElement();
+        const QString tagName = element.tagName();
+
+        if( tagName == "item" )
+        {
+            QString objNam = element.attribute( "objectName"  ); // Data in simu file
+            QString type   = element.attribute( "itemtype"  );
+            QString id     = objNam.split("-").first()+"-"+newSceneId(); // Create new id
+
+            element.setAttribute( "objectName", id  );
+
+            if( type == "Connector" )
+            {
+                Pin* startpin  = 0l;
+                Pin* endpin    = 0l;
+                QString startpinid    = element.attribute( "startpinid" );
+                QString endpinid      = element.attribute( "endpinid" );
+
+                QString startCompName = getCompId( startpinid );
+                QString endCompName   = getCompId( endpinid );
+
+                startpinid.replace( startCompName, m_idMap[startCompName] );
+                endpinid.replace( endCompName, m_idMap[endCompName] );
+
+                startpin = m_pinMap[startpinid];
+                endpin   = m_pinMap[endpinid];
+                
+                if( !startpin ) // Pin not found by name... find it by pos
+                {
+                    QStringList pointList   = element.attribute( "pointList" ).split(",");
+                    int itemX = pointList.first().toInt();
+                    int itemY = pointList.at(1).toInt();
+
+                    startpin = findPin( itemX, itemY, startpinid );
+                }
+                if( !endpin ) // Pin not found by name... find it by pos
+                {
+                    QStringList pointList   = element.attribute( "pointList" ).split(",");
+                    int itemX = pointList.at(pointList.size()-2).toInt();
+                    int itemY = pointList.last().toInt();
+
+                    endpin = findPin( itemX, itemY, endpinid );
+                }
+
+                if( m_pasting )
+                {
+                    if( startpin && !startpin->component()->isSelected() ) startpin = 0l;
+                    if( endpin   && !endpin->component()->isSelected() )   endpin = 0l;
+                }
+                if( startpin && startpin->isConnected() ) startpin = 0l;
+                if( endpin   && endpin->isConnected() )   endpin   = 0l;
+
+                if( startpin && endpin )    // Create Connector
+                {
+                    Connector* con  = new Connector( this, type, id, startpin, endpin );
+
+                    element.setAttribute( "startpinid", startpin->objectName() );
+                    element.setAttribute(   "endpinid", endpin->objectName() );
+
+                    loadProperties( element, con );
+
+                    QString enodeId = element.attribute( "enodeid" );
+                    eNode*  enode   = nodMap[enodeId];
+                    if( !enode )                    // Create eNode and add to enodList
+                    {
+                        enode = new eNode( "Circ_eNode-"+newSceneId() );
+                        nodMap[enodeId] = enode;
+                    }
+                    con->setEnode( enode );
+
+                    QStringList plist = con->pointList();   // add lines to connector
+                    int p1x = plist.first().toInt();
+                    int p1y = plist.at(1).toInt();
+                    int p2x = plist.at(plist.size()-2).toInt();
+                    int p2y = plist.last().toInt();
+
+                    con->addConLine( con->x(),con->y(), p1x, p1y, 0 );
+
+                    int count = plist.size();
+                    for (int i=2; i<count; i+=2)
+                    {
+                        p2x = plist.at(i).toInt();
+                        p2y = plist.at(i+1).toInt();
+                        con->addConLine( p1x, p1y, p2x, p2y, i/2 );
+                        p1x = p2x;
+                        p1y = p2y;
+                    }
+                    con->updateConRoute( startpin, startpin->scenePos() );
+                    con->updateConRoute( endpin, endpin->scenePos() );
+                    con->remNullLines();
+                    conList.append( con );
+                }
+                else // Start or End pin not found
+                {
+                    if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null startpin in " << objNam << startpinid;
+                    if( !endpin )   qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null endpin in "   << objNam << endpinid;
+                }
+            }
+            else if( type == "Node")
+            {
+                m_idMap[objNam] = id;                              // Map simu id to new id
+                
+                Node* joint = new Node( this, type, id );
+                loadProperties( element, joint );
+                compList.append( joint );
+                jointList.append( joint );
+
+                if( m_pasting ) joint->setSelected( true );
+            }
+            else
+            {
+                if( objNam == "" ) objNam = id;
+                m_idMap[objNam] = id;              // Map simu id to new id
+                Component* item = createItem( type, id, objNam );
+                
+                if( item )
+                {
+                    loadProperties( element, item );
+                    compList.append( item );
+                    if( m_pasting ) item->setSelected( true );
+                }
+                else qDebug() << " ERROR Creating Component: "<< type << id;
+            }
+        }
+        node = node.nextSibling();
+    }
+    if( m_pasting )
+    {
+        for( Component* item : compList )
+        {
+            item->move( m_deltaMove );
+        }
+        for( Component* item : conList )
+        {
+            Connector* con = static_cast<Connector*>( item );
+            con->setSelected( true );
+            con->move( m_deltaMove );
+        }
+    }
+    // Take care about unconnected Joints
+    for( Node* joint : jointList ) joint->remove(); // Only removed if some missing connector
+    
+    m_busy = false;
+    QApplication::restoreOverrideCursor();
+}
+
+void Circuit::circuitToDom()
+{
+    m_domDoc.clear();
+    QDomElement circuit = m_domDoc.createElement("circuit");
+
+    circuit.setAttribute( "type",      "simulide_0.5" );
+    circuit.setAttribute( "Speed_sps", QString::number( circSpeed() ) );
+    circuit.setAttribute( "Speed_per", QString::number( circSpeedP() ) );
+    circuit.setAttribute( "reactStep", QString::number( reactStep() ) );
+    circuit.setAttribute( "noLinAcc",  QString::number( noLinAcc() ) );
+    circuit.setAttribute( "animate",   QString::number( animate() ) );
+    //circuit.setAttribute( "drawGrid",    QString( drawGrid()?"true":"false"));
+    //circuit.setAttribute( "showScroll",  QString( showScroll()?"true":"false"));
+
+    m_domDoc.appendChild(circuit);
+
+    listToDom( &m_domDoc, &m_compList );
+
+    for( Component* comp : m_conList )
+    {
+        Connector* con = static_cast<Connector*>( comp );
+        con->remNullLines();
+    }
+    listToDom( &m_domDoc, &m_conList );
+
+    circuit.appendChild( m_domDoc.createTextNode( "\n \n" ) );
+}
+
+void Circuit::listToDom( QDomDocument* doc, QList<Component*>* complist )
+{
+    for( Component* item : *complist )
+    {
+        if( item->isHidden() ) continue;
+
+        bool isNumber = false;  // Don't save internal items
+        item->objectName().split("-").last().toInt( &isNumber );
+
+        if( isNumber ) objectToDom( doc, item );
+    }
+}
+
+void Circuit::objectToDom( QDomDocument* doc, Component* object )
+{
+    QDomElement root = doc->firstChild().toElement();
+    QDomElement elm = m_domDoc.createElement("item");
+    const QMetaObject* metaobject = object->metaObject();
+
+    int count = metaobject->propertyCount();
+    for( int i=0; i<count; i++ )
+    {
+        QMetaProperty metaproperty = metaobject->property(i);
+        const char* name = metaproperty.name();
+
+        QVariant value = object->property( name );
+        if( metaproperty.type() == QVariant::StringList )
+        {
+            QStringList list= value.toStringList();
+            elm.setAttribute( name, list.join(",") );
+        }
+        else if( metaproperty.type() == QVariant::PointF )
+        {
+            QPointF point = value.toPointF();
+            elm.setAttribute( name, QString::number(point.x())+","+QString::number(point.y())  );
+        }
+        else if( (QString(name)=="Mem") || (QString(name)=="eeprom") )
+        {
+            QVector<int> vmem = value.value<QVector<int>>();
+
+            QStringList list;
+            for( int val : vmem ) list << QString::number( val );
+
+            elm.setAttribute( name, list.join(",") );
+        }
+        else elm.setAttribute( name, value.toString() );
+
+    }
+    QDomText objId = m_domDoc.createTextNode(  "\n\nUnique  Id: "+object->objectName()
+                                              +": \nCircuit Id: "+object->idLabel()+"\n" );
+    root.appendChild( objId );
+    root.appendChild( elm );
+}
+
+bool Circuit::saveDom( QString &fileName, QDomDocument* doc )
+{
+    QFile file( fileName );
+
+    if( !file.open( QFile::WriteOnly | QFile::Text ))
+    {
+        QApplication::restoreOverrideCursor();
+        QMessageBox::warning(0l, "Circuit::saveCircuit",
+        tr("Cannot write file %1:\n%2.").arg(fileName).arg(file.errorString()));
+        return false;
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << doc->toString();
+    file.close();
+
+    return true;
+}
+
+bool Circuit::saveCircuit( QString fileName )
+{
+    if( m_conStarted ) return false;
+
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    if( !fileName.endsWith(".simu") ) fileName.append(".simu");
+
+    QString oldFilePath = m_filePath;
+    m_filePath = fileName;
+
+    circuitToDom();
+    bool saved = saveDom( fileName, &m_domDoc );
+
+    if( saved )
+    {
+        if( !m_backupPath.isEmpty() )
+        {
+            QFile::remove( m_backupPath ); // remove backup file
+            m_backupPath = "";
+        }
+    }
+    else m_filePath = oldFilePath;
+
+    QApplication::restoreOverrideCursor();
+    return saved;
+}
+
+void Circuit::importCirc(  QPointF eventpoint  )
+{
+    if( m_conStarted ) return;
+    m_pasting = true;
+
+    m_deltaMove = QPointF( 160, 160 );//togrid(eventpoint);
+
+    const QString dir = m_filePath;
+    QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Circuit"), dir,
+                                          tr("Circuits (*.simu);;All files (*.*)"));
+
+    if( !fileName.isEmpty() && fileName.endsWith(".simu") )
+        loadCircuit( fileName );
+
+    m_pasting = false;
+}
+
+Component* Circuit::createItem( QString type, QString id, QString objNam )
+{
+    //qDebug() << "Circuit::createItem" << type << id;
+    for( LibraryItem* libItem : ItemLibrary::self()->items() )
+    {
+        if( libItem->type()==type )
+        {
+            Component* comp = libItem->createItemFnPtr()( this, type, id );
+            
+            if( comp )
+            {
+                QString category = libItem->category();
+                if( ( category != "Meters" )
+                &&  ( category != "Sources" )
+                &&  ( category != "Other" ) )
+                    comp->setPrintable( true );
+            }
+            return comp;
+        }
+    }
+    return 0l;
+}
+
+void Circuit::loadProperties( QDomElement element, Component* Item )
+{
+    loadObjectProperties( element, Item );
+    
+    Item->setLabelPos();
+    Item->setValLabelPos();
+    addItem( Item );
+
+    int number = Item->objectName().split("-").last().toInt();
+    if ( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
+}
+
+void Circuit::loadObjectProperties( QDomElement element, QObject* Item )
+{
+    QHash<QString, QString> atrMap;          // Make properties case insentive
+    QDomNamedNodeMap atrs = element.attributes();
+
+    for( int i=0; i<atrs.length(); i++ )   // Get List of property names in Circuit file
+    {
+        QString attrib = atrs.item( i ).nodeName();
+        atrMap[attrib.toLower()] = attrib;
+        //qDebug() << "Circuit::loadObjectProperties" << attrib;
+    }
+
+    const QMetaObject* metaobject = Item->metaObject();
+    int count = metaobject->propertyCount();
+    
+    for( int i=0; i<count; ++i )
+    {
+        QMetaProperty metaproperty = metaobject->property(i);
+        const char* chName = metaproperty.name();
+        QString n = chName;
+        QString lowN = n.toLower();
+        //qDebug() << "Circuit::loadObjectProperties.....";
+        //qDebug() << "Circuit::loadObjectProperties" << n << chName;
+
+        if( !atrMap.contains( lowN )) continue;
+
+        n = atrMap.value( lowN );                 // Take actual property name in Circuit file
+        //qDebug() << "Circuit::loadObjectProperties" << n;
+        QVariant value( element.attribute( n ) );
+        
+        if     ( metaproperty.type() == QVariant::Int    ) Item->setProperty( chName, value.toInt() );
+        else if( metaproperty.type() == QVariant::Double ) Item->setProperty( chName, value.toDouble() );
+        else if( metaproperty.type() == QVariant::PointF )
+        {
+            QStringList coord = element.attribute( n ).split(",");
+            qreal x = coord.takeFirst().toDouble();
+            qreal y = coord.takeFirst().toDouble();
+            //qDebug() << "Circuit::loadObjectProperties" <<element.attribute( n )<< n << QPointF( x, y )<<coord;
+            Item->setProperty( chName, QPointF( x, y ) );
+        }
+        else if( metaproperty.type() == QVariant::Bool   ) Item->setProperty( chName, value.toBool() );
+        else if( metaproperty.type() == QVariant::StringList )
+        {
+            QStringList list= value.toString().split(",");
+            Item->setProperty( chName, list );
+        }
+        else if( (lowN=="mem") || (lowN=="eeprom") )
+        {
+            QString data = value.toString();
+            if( data.isEmpty() ) continue;
+            QStringList list = data.split(",");
+            
+            QVector<int> vmem;
+            int lsize = list.size();
+            vmem.resize( lsize );
+            
+            for( int x=0; x<lsize; x++ ) vmem[x] = list.at(x).toInt();
+
+            QVariant value = QVariant::fromValue( vmem );
+            Item->setProperty( chName, value );
+        }
+        else Item->setProperty( chName, value );
+        //else qDebug() << "    ERROR!!! Circuit::loadObjectProperties\n  unknown type:  "<<"name "<<name<<"   value "<<value ;
+    }
+}
+
+void Circuit::removeItems()                     // Remove Selected items
+{
+    if( m_conStarted ) return;
+
+    if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    saveState();
+    m_busy = true;
+
+    foreach( Component* comp, m_compList )
+    {
+        if( comp->isSelected() && !(comp->itemType()=="Node") ) removeComp( comp ); // Don't remove Graphical Nodes
+    }
+    QList<Connector*> connectors;
+
+    for( QGraphicsItem* item : selectedItems() )
+    {
+        ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine* >( item );
+        if( line->objectName() == "" )
+        {
+            Connector* con = line->connector();
+            if( !connectors.contains( con ) ) connectors.append( con );
+        }
+    }
+    for( Connector* con : connectors ) con->remove();
+    for( QGraphicsItem* item : selectedItems() ) item->setSelected( false );
+    m_busy = false;
+}
+
+void Circuit::removeComp( Component* comp )
+{
+    m_compRemoved = false;
+    comp->remove();
+    if( !m_compRemoved ) return;
+
+    compList()->removeOne( comp );
+    if( items().contains( comp ) ) removeItem( comp );
+
+    delete comp;
+}
+
+void Circuit::compRemoved( bool removed )
+{
+    m_compRemoved = removed;
+}
+
+void Circuit::remove() // Remove everything ( Clear Circuit )
+{
+    if( m_conStarted ) return;
+    m_busy = true;
+
+    while( !m_compList.isEmpty() )
+    {
+        Component* comp = m_compList.takeFirst();
+        //qDebug() << "Circuit::remove" << comp->itemID()<<comp->objectName();
+
+        bool isNumber = false;               // Don't remove internal items
+
+        comp->objectName().split("-").last().toInt( &isNumber ); // TODO: Find a proper way !!!!!!!!!!!
+
+        if( isNumber && !(comp->itemType()=="Node") ) removeComp( comp );
+    }
+    m_busy = false;
+}
+
+void Circuit::deselectAll()
+{
+    for( QGraphicsItem* item : selectedItems() ) item->setSelected( false );
+}
+
+void Circuit::saveState()
+{
+    if( m_conStarted ) return;
+
+    m_changed = true;
+
+    if( m_busy || m_deleting ) return;
+    m_deleting = true;
+
+    for( QDomDocument* doc : m_redoStack ) delete doc;
+
+    m_redoStack.clear();
+    circuitToDom();
+    m_undoStack.append( new QDomDocument() );
+    m_undoStack.last()->setContent( m_domDoc.toString() );
+
+    QString title = MainWindow::self()->windowTitle();
+    if( !title.endsWith('*') ) MainWindow::self()->setWindowTitle(title+'*');
+
+    m_deleting = false;
+}
+
+void Circuit::unSaveState()
+{
+    m_undoStack.takeLast();
+}
+
+void Circuit::saveChanges()
+{
+    //qDebug() << "Circuit::saveChanges";
+    if( m_simulator->isRunning() ) return;
+    if( !m_changed || m_conStarted || m_busy ) return;
+    m_changed = false;
+
+    circuitToDom();
+    m_backupPath = m_filePath;
+
+    QFileInfo bckDir( m_backupPath );
+
+    if( !bckDir.isWritable() )
+        m_backupPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/_backup.simu";
+
+    if( !m_backupPath.endsWith( "_backup.simu" ))
+        m_backupPath.replace( ".simu", "_backup.simu" );
+
+    //qDebug() << "saving Backup"<<m_backupPath;
+    if( saveDom( m_backupPath, &m_domDoc ) )
+        MainWindow::self()->settings()->setValue( "backupPath", m_backupPath );
+}
+
+void Circuit::setChanged() { m_changed = true; }
+
+void Circuit::undo()
+{
+    if( m_conStarted || m_undoStack.isEmpty() ) return;
+
+    if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    circuitToDom();
+    m_redoStack.prepend( new QDomDocument() );
+    m_redoStack.first()->setContent( m_domDoc.toString() );
+
+    remove();
+    QDomDocument* doc = m_undoStack.takeLast();
+    m_domDoc.setContent( doc->toString());
+
+    m_seqNumber = 0;
+    loadDomDoc( &m_domDoc );
+}
+
+void Circuit::redo()
+{
+    if( m_conStarted || m_redoStack.isEmpty()) return;
+
+    if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    circuitToDom();
+    m_undoStack.append( new QDomDocument() );
+    m_undoStack.last()->setContent( m_domDoc.toString() );
+
+    remove();
+    QDomDocument* doc = m_redoStack.takeFirst();
+    m_domDoc.setContent( doc->toString());
+
+    m_seqNumber = 0;
+    loadDomDoc( &m_domDoc );
+}
+
+void Circuit::copy( QPointF eventpoint )
+{
+    if( m_conStarted ) return;
+
+    m_eventpoint = togrid(eventpoint);
+
+    QList<Component*> complist;
+    QList<QGraphicsItem*> itemlist = selectedItems();
+
+    for( QGraphicsItem* item : itemlist )
+    {
+        Component* comp =  qgraphicsitem_cast<Component*>( item );
+        if( comp )
+        {
+            if( comp->itemType() == "Connector" )
+            {
+                Connector* con = static_cast<Connector*>( comp );
+                con->remNullLines();
+
+                complist.append( con );
+            }
+            else complist.prepend( comp );
+        }
+    }
+    m_copyDoc.clear();
+    QDomElement root = m_copyDoc.createElement("circuit");
+    root.setAttribute( "type", "simulide_0.4" );
+    m_copyDoc.appendChild(root);
+
+    listToDom( &m_copyDoc, &complist );
+
+    QString px = QString::number( m_eventpoint.x() );
+    QString py = QString::number( m_eventpoint.y() );
+    QString clipTextText = px+","+py+"eventpoint"+m_copyDoc.toString();
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText( clipTextText );
+}
+
+void Circuit::paste( QPointF eventpoint )
+{
+    if( m_conStarted ) return;
+
+    QClipboard *clipboard = QApplication::clipboard();
+    QString clipText = clipboard->text();
+    if( !clipText.contains( "eventpoint") ) return;
+
+    if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
+    
+    bool animate = m_animate;
+    saveState();
+    m_pasting = true;
+    for( QGraphicsItem*item : selectedItems() ) item->setSelected( false );
+
+    QStringList clipData = clipText.split( "eventpoint" );
+    clipText = clipData.last();
+    m_copyDoc.setContent( clipText );
+
+    clipData = clipData.first().split(",");
+    int px = clipData.first().toInt();
+    int py = clipData.last().toInt();
+    m_eventpoint = QPointF( px, py );
+
+    m_deltaMove = togrid(eventpoint) - m_eventpoint;
+
+    pasteDomDoc( &m_copyDoc );
+
+    m_pasting = false;
+    setAnimate( animate );
+}
+
+bool  Circuit::pasting() { return m_pasting; }
+QPointF Circuit::deltaMove(){ return m_deltaMove; }
+
+void Circuit::newconnector( Pin*  startpin )
+{
+    saveState();
+    m_conStarted = true;
+
+    QString type = QString("Connector");
+    QString id = type;
+    id.append( "-" );
+    id.append( newSceneId() );
+
+    new_connector = new Connector( this, type, id, startpin );
+
+    QPoint p1 = startpin->scenePos().toPoint();
+    QPoint p2 = startpin->scenePos().toPoint();
+
+    new_connector->addConLine( p1.x(), p1.y(), p2.x(), p2.y(), 0 );
+
+    addItem(new_connector);
+}
+
+void Circuit::closeconnector( Pin* endpin )
+{
+    m_conStarted = false;
+    new_connector->closeCon( endpin, /*connect=*/true );
+}
+
+void Circuit::deleteNewConnector()
+{
+    if( !m_conStarted ) return;
+    new_connector->remove();
+    m_conStarted = false;
+}
+
+void Circuit::updateConnectors()
+{
+    for( Component* comp : m_conList )
+    {
+        Connector* con = static_cast<Connector*>( comp );
+        con->updateLines();
+    }
+}
+
+void Circuit::bom()
+{
+    if( m_conStarted ) return;
+
+    QString fileName = m_filePath;
+    fileName.replace( fileName.lastIndexOf( ".simu" ), 5, "-bom.txt" );
+
+    fileName = QFileDialog::getSaveFileName( MainWindow::self()
+                            , tr( "Bill Of Materials" )
+                            , fileName
+                            , "(*.*)"  );
+
+    if( fileName.isEmpty() ) return;
+
+    QStringList bom;
+
+    for( Component* comp : m_compList )
+    {
+        bool isNumber = false;
+        comp->objectName().split("-").last().toInt( &isNumber );
+
+        if( isNumber ) bom.append( comp->print() );
+    }
+    QFile file( fileName );
+    if( !file.open(QFile::WriteOnly | QFile::Text) )
+    {
+          QMessageBox::warning(0l, "Circuit::bom",
+          tr("Cannot write file %1:\n%2.").arg(fileName).arg(file.errorString()));
+    }
+    bom.sort();
+
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out <<  "\nCircuit: ";
+    out <<  QFileInfo( m_filePath ).fileName();
+    out <<  "\n\n";
+    out <<  "Bill of Materials:\n\n";
+    for( QString line : bom ) out << line;
+
+    file.close();
+}
+
+void Circuit::mousePressEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( event->button() == Qt::LeftButton )
+    {
+        if( m_conStarted )  event->accept();
+        QGraphicsScene::mousePressEvent( event );
+    }
+    else if( event->button() == Qt::RightButton )
+    {
+        if( m_conStarted ) event->accept();
+        else                QGraphicsScene::mousePressEvent( event );
+    }
+    else if( event->button() == Qt::MidButton )
+    {
+        QGraphicsScene::mousePressEvent( event );
+    }
+}
+
+void Circuit::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( event->button() == Qt::LeftButton )
+    {
+        if( m_conStarted )  new_connector->incActLine() ;
+        QGraphicsScene::mouseReleaseEvent( event );
+    }
+    else if( event->button() == Qt::RightButton )
+    {
+        if( !m_conStarted ) QGraphicsScene::mouseReleaseEvent( event );
+    }
+}
+
+void Circuit::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( m_conStarted )
+    {
+        event->accept();
+        
+        if(event->modifiers() & Qt::ShiftModifier) new_connector->m_freeLine = true;
+        new_connector->updateConRoute( 0l, event->scenePos() );
+    }
+    QGraphicsScene::mouseMoveEvent( event );
+}
+
+void Circuit::keyPressEvent( QKeyEvent* event )
+{
+    int key = event->key();
+
+    if( m_conStarted )
+    {
+        if( key == Qt::Key_Escape ) deleteNewConnector();
+        else QGraphicsScene::keyPressEvent( event );
+        return;
+    }
+    if( event->modifiers() & Qt::ControlModifier )
+    {
+        if( key == Qt::Key_C )
+        {
+            QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
+            copy( m_graphicView->mapToScene( p ) );
+            clearSelection();
+        }
+        else if( key == Qt::Key_V )
+        {
+            QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
+            paste( m_graphicView->mapToScene( p ) );
+        }
+        else if( key == Qt::Key_Z ) undo();
+        else if( key == Qt::Key_Y ) redo();
+        else if( key == Qt::Key_N ) CircuitWidget::self()->newCircuit();
+        else if( key == Qt::Key_S )
+        {
+            if( event->modifiers() & Qt::ShiftModifier)
+                CircuitWidget::self()->saveCircAs();
+            else
+                CircuitWidget::self()->saveCirc();
+        }
+        else if( key == Qt::Key_O ) CircuitWidget::self()->openCirc();
+        else QGraphicsScene::keyPressEvent( event );
+    }
+    else if( key == Qt::Key_Delete || key == Qt::Key_Backspace )
+    {
+        removeItems();
+        QGraphicsScene::keyPressEvent( event );
+    }
+    else
+    {
+        if( !event->isAutoRepeat() ) // Deliver Key events ( switches )
+        {
+            QString keys = event->text();
+            //qDebug() << "Circuit::keyPressEven" << keys;
+            while( keys.size() > 0 )
+            {
+                QString key = keys.left( 1 );
+                keys.remove( 0, 1 );
+                emit keyEvent( key, true );
+            }
+        }
+        QGraphicsScene::keyPressEvent( event );
+    }
+}
+
+void Circuit::keyReleaseEvent( QKeyEvent* event )
+{
+    if( !event->isAutoRepeat()
+     && !( event->modifiers() & Qt::ControlModifier ) )  // Deliver Key events ( switches )
+    {
+        QString keys = event->text();
+        //qDebug() << "Circuit::keyReleaseEvent" << keys;
+        while( keys.size() > 0 )
+        {
+            QString key = keys.left( 1 );
+            keys.remove( 0, 1 );
+            emit keyEvent( key, false );
+        }
+    }
+    QGraphicsScene::keyReleaseEvent( event );
+}
+
+void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
+{
+    QString type = event->mimeData()->html();
+    QString id   = event->mimeData()->text();
+
+    QString file = "file://";
+    if( id.startsWith( file ) )
+    {
+        id.replace( file, "" ).replace("\r\n", "" );
+#ifdef _WIN32
+        if( id.startsWith( "/" )) id.remove( 0, 1 );
+#endif
+        QString loId = id.toLower();
+
+        if( loId.endsWith( ".jpg")
+         || loId.endsWith( ".png")
+         || loId.endsWith( ".gif"))
+        {
+            file = id;
+            type = "Image";
+            id   = "Image";
+            Component* enterItem = createItem( type, id+"-"+newSceneId() );
+            if( enterItem )
+            {
+                saveState();
+                QPoint cPos = QCursor::pos()-CircuitView::self()->mapToGlobal( QPoint(0,0));
+                enterItem->setPos( CircuitView::self()->mapToScene( cPos ) );
+                enterItem->setBackground( file );
+                addItem( enterItem );
+            }
+        }
+        else CircuitWidget::self()->loadCirc( id );
+    }
+}
+
+void Circuit::drawBackground ( QPainter*  painter, const QRectF & rect )
+{
+    Q_UNUSED( rect );
+    /*painter->setBrush(QColor( 255, 255, 255 ) );
+    painter->drawRect( m_scenerect );
+    return;*/
+
+    painter->setBrush( QColor( 240, 240, 210 ) );
+    painter->drawRect( m_scenerect );
+    painter->setPen( QColor( 210, 210, 210 ) );
+
+    if( m_hideGrid ) return;
+
+    int startx = int(m_scenerect.x());///2;
+    int endx   = int(m_scenerect.width())/2;
+    int starty = int(m_scenerect.y());///2;
+    int endy   = int(m_scenerect.height())/2;
+
+    for( int i = 4; i<endx; i+=8 )
+    {
+        painter->drawLine( i, starty, i, endy );
+        painter->drawLine(-i, starty,-i, endy );
+    }
+    for( int i = 4; i<endy; i+=8 )
+    {
+        painter->drawLine( startx, i, endx, i);
+        painter->drawLine( startx,-i, endx,-i);
+    }
+}
+
+void Circuit::updatePin( ePin* epin, QString newId )
+{
+    QString pinId = newId;
+    Pin* pin = static_cast<Pin*>( epin );
+    addPin( pin, pinId );
+}
+
+void Circuit::addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; }
+void Circuit::removePin( QString pinId ) { m_pinMap.remove( pinId ); }
+
+bool Circuit::drawGrid() { return !m_hideGrid; }
+void Circuit::setDrawGrid( bool draw )
+{
+    m_hideGrid = !draw;
+    if( m_hideGrid ) MainWindow::self()->settings()->setValue( "Circuit/hideGrid", "true" );
+    else             MainWindow::self()->settings()->setValue( "Circuit/hideGrid", "false" );
+    update();
+}
+
+bool Circuit::showScroll() { return m_showScroll; }
+void Circuit::setShowScroll( bool show )
+{
+    m_showScroll = show;
+    if( show )
+    {
+        m_graphicView->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+        m_graphicView->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
+        MainWindow::self()->settings()->setValue( "Circuit/showScroll", "true" );
+    }
+    else
+    {
+        m_graphicView->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+        m_graphicView->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+        MainWindow::self()->settings()->setValue( "Circuit/showScroll", "false" );
+    }
+}
+
+bool Circuit::animate() { return m_animate; }
+void Circuit::setAnimate( bool an ) { m_animate = an; update(); }
+
+double Circuit::fontScale() { return MainWindow::self()->fontScale(); }
+void Circuit::setFontScale( double scale ) { MainWindow::self()->setFontScale( scale ); }
+
+int Circuit::autoBck() { return MainWindow::self()->autoBck(); }
+void Circuit::setAutoBck( int secs )
+{
+    m_bckpTimer.stop();
+    if( secs < 1 ) secs = 0;
+    else           m_bckpTimer.start( secs*1000 );
+
+    MainWindow::self()->setAutoBck( secs );
+}
+
+int Circuit::noLinAcc() { return m_simulator->noLinAcc(); }
+void Circuit::setNoLinAcc( int ac ) { m_simulator->setNoLinAcc( ac ); }
+
+int Circuit::reactStep() { return m_simulator->reaClock(); }
+void Circuit::setReactStep( int steps ) { m_simulator->setReaClock( steps ); }
+
+uint64_t Circuit::circSpeed() { return m_simulator->simuRate(); }
+void Circuit::setCircSpeed( int rate )
+{
+    m_simulator->simuRateChanged( rate );
+}
+
+double Circuit::circSpeedP()
+{
+    double spsReal = m_simulator->simuRate();
+    double sps100  = 1e6;
+    sps100 = 100*spsReal/sps100;
+
+    return sps100;
+}
+
+void Circuit::setCircSpeedP( double speedP )
+{
+    if( speedP > 100 ) speedP = 100;
+    double rate = 1e6*speedP/100;
+
+    setCircSpeed( rate );
+}
+
+QList<Component*>* Circuit::compList() { return &m_compList; }
+QList<Component*>* Circuit::conList()  { return &m_conList; }
+
+QString Circuit::newSceneId() { return QString("%1").arg(++m_seqNumber) ; }
+
+#include "moc_circuit.cpp"
+

@@ -1,0 +1,93 @@
+<!DOCTYPE SimulIDE>
+
+<!-- *************************************************************************** -->
+<!-- *   Copyright (C) 2020 by santiago González                               * -->
+<!-- *   santigoro@gmail.com                                                   * -->
+<!-- *                                                                         * -->
+<!-- *   This program is free software; you can redistribute it and/or modify  * -->
+<!-- *   it under the terms of the GNU General Public License as published by  * -->
+<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
+<!-- *   (at your option) any later version.                                   * -->
+<!-- *                                                                         * -->
+<!-- *   This program is distributed in the hope that it will be useful,       * -->
+<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
+<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
+<!-- *   GNU General Public License for more details.                          * -->
+<!-- *                                                                         * -->
+<!-- *   You should have received a copy of the GNU General Public License     * -->
+<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
+<!-- *                                                                         * -->
+<!-- *************************************************************************** -->
+
+<mcu name="MCS51" core="8051" data="256" prog="4096" progword="1" eeprom="0" 
+            inst_cycle="12">
+            
+    <stack sp="SP" increment="preinc" />
+    
+    <registers start="0x0080" end="0x00FF" status="PSW" >
+        <register name="P0"     addr="0"   bits="0-7"/>
+        <register name="SP"     addr="1"   bits="" reset="7"/>
+        <register name="DPL"    addr="2"   bits=""/>
+        <register name="DPH"    addr="3"   bits=""/>
+        <register name="PCON"   addr="7"   bits="IDL,PD,GF0,GF1,0,0,0,SMOD"/>
+        <register name="TCON"   addr="8"   bits="IT0,IE0,IT1,IE1,TR0,TF0,TR1,TF1"/>
+        <register name="TMOD"   addr="9"   bits="T0M0,T0M1,C/T0,GATE0,T1M0,T1M0,C/T1,GATE1"/>
+        <register name="TL0"    addr="10"  bits=""/>
+        <register name="TL1"    addr="11"  bits=""/>
+        <register name="TH0"    addr="12"  bits=""/>
+        <register name="TH1"    addr="13"  bits=""/>
+        <register name="P1"     addr="16"  bits="0-7"/>
+        
+        <register name="PIN0"   addr="17"  bits="0-7"/><!-- Fake Input Register -->
+        <register name="PIN1"   addr="18"  bits="0-7"/><!-- Fake Input Register -->
+        <register name="PIN2"   addr="19"  bits="0-7"/><!-- Fake Input Register -->
+        <register name="PIN3"   addr="20"  bits="0-7"/><!-- Fake Input Register -->
+        
+        <register name="SCON"   addr="24"  bits="RI,TI,RB8,TB8,REN,SM2,SM1,SM0"/>
+        <register name="SBUF"   addr="25"  bits=""/>
+        <register name="P2"     addr="32"  bits="0-7"/>
+        <register name="IE"     addr="40"  bits="EX0,ET0,EX1,ET1,ES,ET2,0,EA"/>
+        <register name="P3"     addr="48"  bits="0-7"/>
+        <register name="IP"     addr="56"  bits="PX0,PT0,PX1,PT1,PS"/>
+        <register name="T2CON"  addr="72"  bits=""/>
+        <register name="RCAP2L" addr="74"  bits=""/>
+        <register name="RCAP2H" addr="75"  bits=""/>
+        <register name="TL2"    addr="76"  bits=""/>
+        <register name="TH2"    addr="77"  bits=""/>
+        <register name="PSW"    addr="80"  bits="P,0,OV,RS0,RS1,F0,AC,CY"/>
+        <register name="ACC"    addr="96"  bits=""/>
+        <register name="B"      addr="112" bits=""/>
+    </registers>
+    
+    <interrupts enable="EA">
+        <interrupt name="RESET"                                         vector="0x0000" />
+        <interrupt name="EXT_0"  enable="EX0" flag="IE0" priority="PX0" vector="0x0003" mode="IT0"/>
+        <interrupt name="T0_OVF" enable="ET0" flag="ET0" priority="PT0" vector="0x000B" />
+        <interrupt name="EXT_1"  enable="EX1" flag="IE1" priority="PX1" vector="0x0013" mode="IT1"/>
+        <interrupt name="T1_OVF" enable="ET1" flag="ET1" priority="PT1" vector="0x001B" />
+        <interrupt name="UART"   enable="ES"  flag="IE0" priority="PS"  vector="0x0023" />
+    </interrupts>
+    
+    <port name="PORT0" pins="8" outreg="P0" inreg="PIN0" dirreg="" reset="11111111"
+                       dirmask="11111111" opencol="11111111">
+    </port>
+    
+    <port name="PORT1" pins="8" outreg="P1" inreg="PIN1" dirreg="" reset="11111111"
+                       dirmask="11111111" pullups="11111111" opencol="11111111">
+    </port>
+    
+    <port name="PORT2" pins="8" outreg="P2" inreg="PIN2" dirreg="" reset="11111111"
+                       dirmask="11111111" pullups="11111111" opencol="11111111">
+    </port>
+    
+    <port name="PORT3" pins="8" outreg="P3" inreg="PIN3" dirreg="" reset="11111111"
+                       dirmask="11111111" pullups="11111111" opencol="11111111">
+        <raiseint intname="EXT_0" source="PIN32"/>
+        <raiseint intname="EXT_1" source="PIN33"/>
+    </port>
+    
+    <timer name="TIMER0" counter="TL0,TH0" enable="TR0" disable="" mode="T0M0,T0M1,C/T0,GATE0">
+        <raiseint intname="T0_OVF" source="OVERFLOW" />
+        <extclock type="PIN" source="PIN34"/>
+    </timer>
+</mcu>

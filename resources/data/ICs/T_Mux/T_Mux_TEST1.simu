@@ -1,0 +1,108 @@
+<circuit reactStep="50" animate="0" type="simulide_0.1" speed="1000000" noLinAcc="5">
+ 
+Rail-69: 
+<item id="Rail-14" valLabelx="-24" valLabRot="0" rotation="0" itemtype="Rail" labelx="-16" vflip="1" valLabely="-5" Unit=" V" Voltage="5" labely="-24" objectName="Rail-69" y="-356" hflip="1" Show_Volt="true" x="80" labelrot="0" Show_id="false"/>
+ 
+T_Mux-68: 
+<item valLabelx="0" labely="-20" id="T_Mux-1" labelrot="0" y="-340" valLabRot="0" vflip="1" itemtype="Subcircuit" labelx="0" hflip="1" Logic_Symbol="true" rotation="0" objectName="T_Mux-68" Show_id="true" x="104" valLabely="0"/>
+ 
+Probe-67: 
+<item valLabelx="16" labely="-16" id="Probe-2" labelrot="45" y="-348" valLabRot="45" vflip="1" itemtype="Probe" labelx="16" hflip="1" PlotterCh="0" Show_volt="true" rotation="-45" objectName="Probe-67" Show_id="false" x="168" valLabely="0"/>
+ 
+Rail-66: 
+<item id="Rail-18" valLabelx="-29" valLabRot="0" rotation="0" itemtype="Rail" labelx="-16" vflip="1" valLabely="-2" Unit=" V" Voltage="-5" labely="-24" objectName="Rail-66" y="-280" hflip="1" Show_Volt="true" x="72" labelrot="0" Show_id="false"/>
+ 
+Ground-61: 
+<item valLabelx="0" labely="8" id="Ground-16" labelrot="0" y="-320" valLabRot="0" vflip="1" itemtype="Ground" labelx="-16" hflip="1" rotation="0" objectName="Ground-61" Show_id="false" x="56" valLabely="0"/>
+ 
+Rail-59: 
+<item id="Rail-18" valLabelx="-29" valLabRot="0" rotation="0" itemtype="Rail" labelx="-16" vflip="1" valLabely="-2" Unit=" V" Voltage="-5" labely="-24" objectName="Rail-59" y="-316" hflip="1" Show_Volt="true" x="80" labelrot="0" Show_id="false"/>
+ 
+Rail-36: 
+<item id="Rail-14" valLabelx="-24" valLabRot="0" rotation="0" itemtype="Rail" labelx="-16" vflip="1" valLabely="-5" Unit=" V" Voltage="5" labely="-24" objectName="Rail-36" y="-356" hflip="1" Show_Volt="true" x="-64" labelrot="0" Show_id="false"/>
+ 
+T_Mux-35: 
+<item valLabelx="0" labely="-20" id="T_Mux-1" labelrot="0" y="-340" valLabRot="0" vflip="1" itemtype="Subcircuit" labelx="0" hflip="1" Logic_Symbol="true" rotation="0" objectName="T_Mux-35" Show_id="true" x="-36" valLabely="0"/>
+ 
+Probe-34: 
+<item valLabelx="16" labely="-16" id="Probe-2" labelrot="45" y="-348" valLabRot="45" vflip="1" itemtype="Probe" labelx="16" hflip="1" PlotterCh="0" Show_volt="true" rotation="-45" objectName="Probe-34" Show_id="false" x="24" valLabely="0"/>
+ 
+Ground-30: 
+<item valLabelx="0" labely="8" id="Ground-16" labelrot="0" y="-272" valLabRot="0" vflip="1" itemtype="Ground" labelx="-16" hflip="1" rotation="0" objectName="Ground-30" Show_id="false" x="-52" valLabely="0"/>
+ 
+Ground-28: 
+<item valLabelx="0" labely="8" id="Ground-16" labelrot="0" y="-320" valLabRot="0" vflip="1" itemtype="Ground" labelx="-16" hflip="1" rotation="0" objectName="Ground-28" Show_id="false" x="-88" valLabely="0"/>
+ 
+Rail-26: 
+<item id="Rail-18" valLabelx="-29" valLabRot="0" rotation="0" itemtype="Rail" labelx="-16" vflip="1" valLabely="-2" Unit=" V" Voltage="-5" labely="-24" objectName="Rail-26" y="-316" hflip="1" Show_Volt="true" x="-64" labelrot="0" Show_id="false"/>
+ 
+Rail-24: 
+<item id="Rail-18" valLabelx="-29" valLabRot="0" rotation="0" itemtype="Rail" labelx="-16" vflip="1" valLabely="-2" Unit=" V" Voltage="-5" labely="-24" objectName="Rail-24" y="-316" hflip="1" Show_Volt="true" x="-200" labelrot="0" Show_id="false"/>
+ 
+Ground-22: 
+<item valLabelx="0" labely="8" id="Ground-16" labelrot="0" y="-320" valLabRot="0" vflip="1" itemtype="Ground" labelx="-16" hflip="1" rotation="0" objectName="Ground-22" Show_id="false" x="-232" valLabely="0"/>
+ 
+Rail-20: 
+<item id="Rail-14" valLabelx="-24" valLabRot="0" rotation="0" itemtype="Rail" labelx="-16" vflip="1" valLabely="-5" Unit=" V" Voltage="5" labely="-24" objectName="Rail-20" y="-356" hflip="1" Show_Volt="true" x="-200" labelrot="0" Show_id="false"/>
+ 
+Rail-14: 
+<item id="Rail-14" valLabelx="-24" valLabRot="0" rotation="0" itemtype="Rail" labelx="-16" vflip="1" valLabely="-5" Unit=" V" Voltage="5" labely="-24" objectName="Rail-14" y="-276" hflip="1" Show_Volt="true" x="-200" labelrot="0" Show_id="false"/>
+ 
+Probe-2: 
+<item valLabelx="16" labely="-16" id="Probe-2" labelrot="45" y="-348" valLabRot="45" vflip="1" itemtype="Probe" labelx="16" hflip="1" PlotterCh="0" Show_volt="true" rotation="-45" objectName="Probe-2" Show_id="false" x="-116" valLabely="0"/>
+ 
+T_Mux-1: 
+<item valLabelx="0" labely="-20" id="T_Mux-1" labelrot="0" y="-340" valLabRot="0" vflip="1" itemtype="Subcircuit" labelx="0" hflip="1" Logic_Symbol="true" rotation="0" objectName="T_Mux-1" Show_id="true" x="-172" valLabely="0"/>
+ 
+Connector-3: 
+<item endpinid="T_Mux-1-Q" id="Connector-3" valLabelx="0" pointList="-132,-332,-132,-332" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-3" startpinid="Probe-2-inpin" y="-332" hflip="1" x="-132" enodeid="enode-3" labelrot="0" Show_id="false"/>
+ 
+Connector-21: 
+<item endpinid="T_Mux-1-P" id="Connector-21" valLabelx="0" pointList="-184,-356,-180,-356,-180,-332" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-21" startpinid="Rail-20-outnod" y="-356" hflip="1" x="-184" enodeid="enode-21" labelrot="0" Show_id="false"/>
+ 
+Connector-23: 
+<item endpinid="T_Mux-1-0" id="Connector-23" valLabelx="0" pointList="-232,-336,-188,-336,-188,-324,-180,-324" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-23" startpinid="Ground-22-Gnd" y="-336" hflip="1" x="-232" enodeid="enode-23" labelrot="0" Show_id="false"/>
+ 
+Connector-25: 
+<item endpinid="T_Mux-1-N" id="Connector-25" valLabelx="0" pointList="-184,-316,-180,-316" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-25" startpinid="Rail-24-outnod" y="-316" hflip="1" x="-184" enodeid="enode-25" labelrot="0" Show_id="false"/>
+ 
+Connector-39: 
+<item endpinid="T_Mux-35-0" id="Connector-23" valLabelx="0" pointList="-88,-336,-52,-336,-52,-324,-44,-324" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-39" startpinid="Ground-28-Gnd" y="-336" hflip="1" x="-88" enodeid="Circ_eNode-40" labelrot="0" Show_id="false"/>
+ 
+Connector-45: 
+<item endpinid="T_Mux-35-N" id="Connector-25" valLabelx="0" pointList="-48,-316,-44,-316" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-45" startpinid="Rail-26-outnod" y="-316" hflip="1" x="-48" enodeid="Circ_eNode-46" labelrot="0" Show_id="false"/>
+ 
+Connector-49: 
+<item endpinid="T_Mux-35-Q" id="Connector-3" valLabelx="0" pointList="8,-332,4,-332" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-49" startpinid="Probe-34-inpin" y="-332" hflip="1" x="8" enodeid="Circ_eNode-50" labelrot="0" Show_id="false"/>
+ 
+Connector-57: 
+<item endpinid="T_Mux-35-P" id="Connector-21" valLabelx="0" pointList="-48,-356,-44,-356,-44,-332" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-57" startpinid="Rail-36-outnod" y="-356" hflip="1" x="-48" enodeid="Circ_eNode-58" labelrot="0" Show_id="false"/>
+ 
+Connector-72: 
+<item endpinid="T_Mux-68-0" id="Connector-23" valLabelx="0" pointList="56,-336,92,-336,92,-324,96,-324" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-72" startpinid="Ground-61-Gnd" y="-336" hflip="1" x="56" enodeid="Circ_eNode-73" labelrot="0" Show_id="false"/>
+ 
+Connector-78: 
+<item endpinid="T_Mux-68-N" id="Connector-25" valLabelx="0" pointList="96,-316,96,-316" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-78" startpinid="Rail-59-outnod" y="-316" hflip="1" x="96" enodeid="Circ_eNode-79" labelrot="0" Show_id="false"/>
+ 
+Connector-82: 
+<item endpinid="T_Mux-68-Q" id="Connector-3" valLabelx="0" pointList="152,-332,144,-332" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-82" startpinid="Probe-67-inpin" y="-332" hflip="1" x="152" enodeid="Circ_eNode-83" labelrot="0" Show_id="false"/>
+ 
+Connector-90: 
+<item endpinid="T_Mux-68-P" id="Connector-21" valLabelx="0" pointList="96,-356,96,-332" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-90" startpinid="Rail-69-outnod" y="-356" hflip="1" x="96" enodeid="Circ_eNode-91" labelrot="0" Show_id="false"/>
+ 
+Connector-92: 
+<item endpinid="T_Mux-1-S" id="Connector-92" valLabelx="0" pointList="-184,-276,-184,-300,-180,-300" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-92" startpinid="Rail-14-outnod" y="-276" hflip="1" x="-184" enodeid="enode-92" labelrot="0" Show_id="false"/>
+ 
+Connector-93: 
+<item endpinid="T_Mux-35-S" id="Connector-93" valLabelx="0" pointList="-52,-288,-52,-300,-44,-300" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-93" startpinid="Ground-30-Gnd" y="-288" hflip="1" x="-52" enodeid="enode-93" labelrot="0" Show_id="false"/>
+ 
+Connector-94: 
+<item endpinid="T_Mux-68-S" id="Connector-94" valLabelx="0" pointList="88,-280,88,-300,96,-300" valLabRot="0" rotation="0" itemtype="Connector" labelx="-16" vflip="1" valLabely="0" labely="-24" objectName="Connector-94" startpinid="Rail-66-outnod" y="-280" hflip="1" x="88" enodeid="enode-94" labelrot="0" Show_id="false"/>
+ 
+PlotterWidget: 
+<item childrenRect="" visible="false" baseSize="" minimized="false" minimumWidth="200" acceptDrops="false" styleSheet="" inputMethodHints="0" minimumHeight="200" accessibleName="" contextMenuPolicy="1" windowModified="false" frameSize="" minimumSize="" toolTip="" itemtype="Plotter" MaxVolt="500" Tracks="1" minimumSizeHint="" pos="" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" maximumSize="" frameGeometry="" locale="" Scale="1" objectName="PlotterWidget" toolTipDuration="-1" cursor="" windowFilePath="" MinVolt="-500" y="0" sizePolicy="" size="" fullScreen="false" focus="false" focusPolicy="0" sizeHint="" windowTitle="" statusTip="" height="200" rect="" palette="" mouseTracking="false" autoFillBackground="false" windowIcon="" normalGeometry="" modal="false" maximumWidth="1000" accessibleDescription="" width="200" childrenRegion="" maximized="false" updatesEnabled="true" windowIconText="" geometry="" maximumHeight="200" whatsThis="" x="0" isActiveWindow="true" windowModality="0" enabled="true" layoutDirection="0" windowOpacity="1" sizeIncrement=""/>
+ 
+SerialPortWidget: 
+<item childrenRect="" visible="false" baseSize="" minimized="false" minimumWidth="0" acceptDrops="false" styleSheet="" inputMethodHints="0" minimumHeight="0" accessibleName="" contextMenuPolicy="1" windowModified="false" frameSize="" minimumSize="" toolTip="" itemtype="SerialPort" minimumSizeHint="" pos="" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" maximumSize="" frameGeometry="" locale="" objectName="SerialPortWidget" toolTipDuration="-1" cursor="" windowFilePath="" y="0" sizePolicy="" size="" fullScreen="false" focus="false" focusPolicy="0" sizeHint="" windowTitle="Настройки" statusTip="" height="141" rect="" palette="" mouseTracking="false" autoFillBackground="false" windowIcon="" normalGeometry="" modal="false" maximumWidth="450" accessibleDescription="" width="313" childrenRegion="" maximized="false" updatesEnabled="true" windowIconText="" SettingsProp="COM1,0,3,0,0,0" geometry="" maximumHeight="170" whatsThis="" x="0" isActiveWindow="true" windowModality="0" enabled="true" layoutDirection="0" windowOpacity="1" sizeIncrement=""/>
+ 
+</circuit>

@@ -1,0 +1,11 @@
+<circuit type="simulide_0.4" Speed_sps="1000000" Speed_per="100" Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0">
+
+Unique  Id: pic16f886-1: 
+Circuit Id: pic16f886-1
+<item boardRot="-1000000" id="pic16f886-1" Mhz="16" labely="-20" hflip="1" rotation="0" circRot="2.5345567631655948e-321" valLabely="0" vflip="1" labelrot="0" itemtype="PIC" Auto_Load="false" boardPos="-1e+06,-1e+06" Show_id="true" y="-380" varList=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," circPos="0,0" x="-684" mainComp="false" Program="serial_echo-16F886.hex" objectName="pic16f886-1" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" labelx="0" valLabRot="0" valLabelx="0" Logic_Symbol="false"/>
+
+Unique  Id: SerialTerm-2: 
+Circuit Id: SerialTerm-5
+<item boardRot="-1000000" id="SerialTerm-5" Mcu_Uart="1" labely="-24" hflip="1" posx="2551" rotation="0" circRot="6.0134700169990685e-154" valLabely="0" vflip="1" labelrot="0" itemtype="SerialTerm" Mcu_Id="pic16f886-1" boardPos="-1e+06,-1e+06" Show_id="false" y="-380" sizey="200" sizex="469" circPos="0,0" x="-684" mainComp="false" objectName="SerialTerm-2" posy="254" labelx="-16" valLabRot="0" valLabelx="0"/>
+ 
+</circuit>

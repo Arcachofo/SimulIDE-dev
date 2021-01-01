@@ -1,0 +1,71 @@
+<circuit type="simulide_0.4" Speed_sps="1000000" Speed_per="100" Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0">
+
+Unique  Id: Sonda Voltaje.-9: 
+Circuit Id: Sonda Voltaje.-1
+<item boardRot="-1000000" id="Sonda Voltaje.-1" labely="-16" hflip="1" Threshold="2.5" rotation="-45" circRot="0" valLabely="0" vflip="1" labelrot="45" itemtype="Probe" boardPos="-1e+06,-1e+06" Show_id="false" y="-340" circPos="0,0" x="-500" mainComp="false" objectName="Sonda Voltaje.-9" labelx="16" Show_volt="true" valLabRot="45" valLabelx="16"/>
+
+Unique  Id: Node-8: 
+Circuit Id: Node-2
+<item boardRot="-1000000" id="Node-2" labely="-24" hflip="1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Node" boardPos="-1e+06,-1e+06" Show_id="false" y="-292" circPos="0,0" x="-516" mainComp="false" objectName="Node-8" labelx="-16" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Reistencia-7: 
+Circuit Id: Reistencia-3
+<item boardRot="-1000000" id="Reistencia-3" labely="-24" hflip="1" rotation="90" Resistance="10" circRot="0" valLabely="-18" vflip="1" labelrot="0" itemtype="Resistor" boardPos="-1e+06,-1e+06" Show_id="false" y="-372" circPos="0,0" x="-516" mainComp="false" objectName="Reistencia-7" labelx="-12" Unit=" kΩ" valLabRot="0" valLabelx="-12" Show_res="true"/>
+
+Unique  Id: Node-6: 
+Circuit Id: Node-4
+<item boardRot="-1000000" id="Node-4" labely="-24" hflip="1" rotation="0" circRot="8.6153029123219589e-312" valLabely="0" vflip="1" labelrot="0" itemtype="Node" boardPos="-1e+06,-1e+06" Show_id="false" y="-212" circPos="0,0" x="-620" mainComp="false" objectName="Node-6" labelx="-16" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Pulsador-5: 
+Circuit Id: Play Song
+<item boardRot="-1000000" id="Play Song" labely="24" hflip="-1" Norm_Close="false" rotation="90" circRot="0" valLabely="0" vflip="1" labelrot="90" Poles="1" itemtype="Push" boardPos="-1e+06,-1e+06" Show_id="true" y="-260" Key="" circPos="0,0" x="-516" mainComp="false" objectName="Pulsador-5" labelx="-4" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Rail.-4: 
+Circuit Id: Rail.-6
+<item boardRot="-1000000" id="Rail.-6" labely="-24" hflip="1" Voltage="5" rotation="0" circRot="0" valLabely="8" vflip="1" labelrot="0" itemtype="Rail" boardPos="-1e+06,-1e+06" Show_id="false" y="-420" circPos="0,0" x="-620" mainComp="false" Show_Volt="true" objectName="Rail.-4" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-16"/>
+
+Unique  Id: Tierra-3: 
+Circuit Id: Tierra-7
+<item boardRot="-1000000" id="Tierra-7" labely="-24" hflip="1" rotation="0" circRot="9.7139550962152504e-317" valLabely="0" vflip="1" labelrot="0" itemtype="Ground" boardPos="-1e+06,-1e+06" Show_id="false" y="-180" circPos="0,0" x="-620" mainComp="false" objectName="Tierra-3" labelx="-16" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Salida Audio-2: 
+Circuit Id: Salida Audio-8
+<item boardRot="-1000000" id="Salida Audio-8" labely="-24" hflip="-1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="AudioOut" Buzzer="false" boardPos="-1e+06,-1e+06" Show_id="false" y="-244" Impedance="8" circPos="0,0" x="-644" mainComp="false" objectName="Salida Audio-2" labelx="-12" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: pic16f886-1: 
+Circuit Id: pic16f886-9
+<item boardRot="-1000000" id="pic16f886-9" Mhz="20" labely="-18" hflip="1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="PIC" Auto_Load="false" boardPos="-1e+06,-1e+06" Show_id="true" y="-356" varList=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," circPos="0,0" x="-588" mainComp="false" Program="song_16F886.hex" objectName="pic16f886-1" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" labelx="-11" valLabRot="0" valLabelx="0" Logic_Symbol="false"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-10
+<item boardRot="-1000000" enodeid="Circ_eNode-11" id="Connector-10" labely="-24" hflip="1" endpinid="Salida Audio-2-lPin" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-252" startpinid="pic16f886-1-RC2" circPos="0,0" x="-596" mainComp="false" objectName="Connector-10" labelx="-16" pointList="-596,-252,-628,-252" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item boardRot="-1000000" enodeid="Circ_eNode-13" id="Connector-12" labely="-24" hflip="1" endpinid="Node-6-0" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-196" startpinid="Tierra-3-Gnd" circPos="0,0" x="-620" mainComp="false" objectName="Connector-12" labelx="-16" pointList="-620,-196,-620,-212" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-14
+<item boardRot="-1000000" enodeid="Circ_eNode-15" id="Connector-14" labely="-24" hflip="1" endpinid="Node-8-0" rotation="0" circRot="4.2341346798091494e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-292" startpinid="pic16f886-1-RB0" circPos="0,0" x="-548" mainComp="false" objectName="Connector-14" labelx="-16" pointList="-548,-292,-516,-292" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-16: 
+Circuit Id: Connector-16
+<item boardRot="-1000000" enodeid="Circ_eNode-13" id="Connector-16" labely="-24" hflip="1" endpinid="Node-6-1" rotation="0" circRot="1.4045448375931292e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-244" startpinid="Pulsador-5-switch0pinN" circPos="0,0" x="-516" mainComp="false" objectName="Connector-16" labelx="-16" pointList="-516,-244,-516,-212,-620,-212" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-17: 
+Circuit Id: Connector-17
+<item boardRot="-1000000" enodeid="Circ_eNode-13" id="Connector-17" labely="-24" hflip="1" endpinid="Salida Audio-2-rPin" rotation="0" circRot="6.9533474039882476e-310" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-212" startpinid="Node-6-2" circPos="0,0" x="-620" mainComp="false" objectName="Connector-17" labelx="-16" pointList="-620,-212,-620,-244,-628,-244" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-18: 
+Circuit Id: Connector-18
+<item boardRot="-1000000" enodeid="Circ_eNode-19" id="Connector-18" labely="-24" hflip="1" endpinid="Reistencia-7-lPin" rotation="0" circRot="40" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-420" startpinid="Rail.-4-outnod" circPos="0,0" x="-604" mainComp="false" objectName="Connector-18" labelx="-16" pointList="-604,-420,-516,-420,-516,-388" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-20: 
+Circuit Id: Connector-20
+<item boardRot="-1000000" enodeid="Circ_eNode-15" id="Connector-20" labely="-24" hflip="1" endpinid="Node-8-1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-356" startpinid="Reistencia-7-rPin" circPos="0,0" x="-516" mainComp="false" objectName="Connector-20" labelx="-16" pointList="-516,-356,-516,-292" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-21: 
+Circuit Id: Connector-21
+<item boardRot="-1000000" enodeid="Circ_eNode-15" id="Connector-21" labely="-24" hflip="1" endpinid="Pulsador-5-pinP0" rotation="0" circRot="4.2048290772129467e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-292" startpinid="Node-8-2" circPos="0,0" x="-516" mainComp="false" objectName="Connector-21" labelx="-16" pointList="-516,-292,-516,-276" valLabRot="0" valLabelx="0"/>
+ 
+</circuit>

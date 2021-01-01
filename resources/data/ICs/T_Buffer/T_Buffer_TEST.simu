@@ -1,0 +1,54 @@
+<circuit noLinAcc="5" speed="1000000" reactStep="50" animate="0" type="simulide_0.1">
+ 
+Rail-14: 
+<item labelx="-16" hflip="1" labelrot="0" id="Rail-14" labely="-24" valLabelx="-26" Unit=" V" rotation="0" y="-128" Show_id="false" vflip="1" valLabRot="0" valLabely="-3" x="-304" Voltage="-5" itemtype="Rail" objectName="Rail-14" Show_Volt="true"/>
+ 
+Rail-12: 
+<item labelx="-16" hflip="1" labelrot="0" id="Rail-12" labely="-24" valLabelx="-27" Unit=" V" rotation="0" y="-176" Show_id="false" vflip="1" valLabRot="0" valLabely="-2" x="-304" Voltage="5" itemtype="Rail" objectName="Rail-12" Show_Volt="true"/>
+ 
+Ground-10: 
+<item vflip="1" itemtype="Ground" Show_id="false" rotation="0" hflip="1" objectName="Ground-10" labely="8" valLabelx="0" valLabely="0" valLabRot="0" labelx="-16" id="Ground-10" labelrot="0" x="-280" y="-200"/>
+ 
+Probe-8: 
+<item vflip="1" PlotterCh="0" itemtype="Probe" Show_id="false" rotation="-45" hflip="1" Show_volt="true" objectName="Probe-8" labely="-16" valLabelx="16" valLabely="0" valLabRot="45" labelx="16" id="Probe-8" labelrot="45" x="-172" y="-144"/>
+ 
+Probe-6: 
+<item vflip="1" PlotterCh="0" itemtype="Probe" Show_id="false" rotation="-45" hflip="1" Show_volt="true" objectName="Probe-6" labely="-16" valLabelx="16" valLabely="0" valLabRot="45" labelx="16" id="Probe-6" labelrot="45" x="-176" y="-192"/>
+ 
+Probe-4: 
+<item vflip="1" PlotterCh="0" itemtype="Probe" Show_id="false" rotation="-45" hflip="1" Show_volt="true" objectName="Probe-4" labely="-16" valLabelx="16" valLabely="0" valLabRot="45" labelx="16" id="Probe-4" labelrot="45" x="-180" y="-240"/>
+ 
+T_buff-3: 
+<item vflip="1" itemtype="Subcircuit" Show_id="true" rotation="0" Logic_Symbol="true" hflip="1" objectName="T_buff-3" labely="-20" valLabelx="0" valLabely="0" valLabRot="0" labelx="0" id="T_buff-3" labelrot="0" x="-264" y="-136"/>
+ 
+T_buff-2: 
+<item vflip="1" itemtype="Subcircuit" Show_id="true" rotation="0" Logic_Symbol="true" hflip="1" objectName="T_buff-2" labely="-20" valLabelx="0" valLabely="0" valLabRot="0" labelx="0" id="T_buff-2" labelrot="0" x="-264" y="-184"/>
+ 
+T_buff-1: 
+<item vflip="1" itemtype="Subcircuit" Show_id="true" rotation="0" Logic_Symbol="true" hflip="1" objectName="T_buff-1" labely="-20" valLabelx="0" valLabely="0" valLabRot="0" labelx="0" id="T_buff-1" labelrot="0" x="-264" y="-232"/>
+ 
+Connector-5: 
+<item labelx="-16" hflip="1" labelrot="0" id="Connector-5" labely="-24" endpinid="T_buff-1-TY" valLabelx="0" rotation="0" y="-224" pointList="-196,-224,-224,-224" Show_id="false" vflip="1" valLabRot="0" startpinid="Probe-4-inpin" valLabely="0" x="-196" itemtype="Connector" enodeid="enode-5" objectName="Connector-5"/>
+ 
+Connector-7: 
+<item labelx="-16" hflip="1" labelrot="0" id="Connector-7" labely="-24" endpinid="T_buff-2-TY" valLabelx="0" rotation="0" y="-176" pointList="-192,-176,-224,-176" Show_id="false" vflip="1" valLabRot="0" startpinid="Probe-6-inpin" valLabely="0" x="-192" itemtype="Connector" enodeid="enode-7" objectName="Connector-7"/>
+ 
+Connector-9: 
+<item labelx="-16" hflip="1" labelrot="0" id="Connector-9" labely="-24" endpinid="T_buff-3-TY" valLabelx="0" rotation="0" y="-128" pointList="-188,-128,-224,-128" Show_id="false" vflip="1" valLabRot="0" startpinid="Probe-8-inpin" valLabely="0" x="-188" itemtype="Connector" enodeid="enode-9" objectName="Connector-9"/>
+ 
+Connector-11: 
+<item labelx="-16" hflip="1" labelrot="0" id="Connector-11" labely="-24" endpinid="T_buff-1-TX" valLabelx="0" rotation="0" y="-216" pointList="-280,-216,-280,-224,-272,-224" Show_id="false" vflip="1" valLabRot="0" startpinid="Ground-10-Gnd" valLabely="0" x="-280" itemtype="Connector" enodeid="enode-11" objectName="Connector-11"/>
+ 
+Connector-13: 
+<item labelx="-16" hflip="1" labelrot="0" id="Connector-13" labely="-24" endpinid="T_buff-2-TX" valLabelx="0" rotation="0" y="-176" pointList="-288,-176,-272,-176" Show_id="false" vflip="1" valLabRot="0" startpinid="Rail-12-outnod" valLabely="0" x="-288" itemtype="Connector" enodeid="enode-13" objectName="Connector-13"/>
+ 
+Connector-15: 
+<item labelx="-16" hflip="1" labelrot="0" id="Connector-15" labely="-24" endpinid="T_buff-3-TX" valLabelx="0" rotation="0" y="-128" pointList="-288,-128,-272,-128" Show_id="false" vflip="1" valLabRot="0" startpinid="Rail-14-outnod" valLabely="0" x="-288" itemtype="Connector" enodeid="enode-15" objectName="Connector-15"/>
+ 
+PlotterWidget: 
+<item updatesEnabled="true" styleSheet="" childrenRect="" layoutDirection="0" toolTip="" visible="false" palette="" statusTip="" minimumSizeHint="" maximumHeight="200" contextMenuPolicy="1" sizeHint="" height="200" focusPolicy="0" windowIconText="" windowModality="0" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" cursor="" Tracks="1" acceptDrops="false" minimumHeight="200" toolTipDuration="-1" size="" whatsThis="" MinVolt="-500" rect="" itemtype="Plotter" sizePolicy="" windowTitle="" accessibleDescription="" pos="" windowIcon="" width="200" minimized="false" minimumSize="" maximized="false" maximumSize="" y="0" accessibleName="" childrenRegion="" x="0" MaxVolt="500" inputMethodHints="0" focus="false" objectName="PlotterWidget" windowOpacity="1" windowModified="false" minimumWidth="200" mouseTracking="false" frameGeometry="" locale="" enabled="true" autoFillBackground="false" baseSize="" normalGeometry="" fullScreen="false" geometry="" sizeIncrement="" isActiveWindow="true" windowFilePath="" Scale="1" maximumWidth="1000" modal="false" frameSize=""/>
+ 
+SerialPortWidget: 
+<item updatesEnabled="true" styleSheet="" childrenRect="" layoutDirection="0" toolTip="" visible="false" palette="" statusTip="" minimumSizeHint="" SettingsProp="COM1,0,3,0,0,0" maximumHeight="170" contextMenuPolicy="1" sizeHint="" height="141" focusPolicy="0" windowIconText="" windowModality="0" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" cursor="" acceptDrops="false" minimumHeight="0" toolTipDuration="-1" size="" whatsThis="" rect="" itemtype="SerialPort" sizePolicy="" windowTitle="Настройки" accessibleDescription="" pos="" windowIcon="" width="313" minimized="false" minimumSize="" maximized="false" maximumSize="" y="0" accessibleName="" childrenRegion="" x="0" inputMethodHints="0" focus="false" objectName="SerialPortWidget" windowOpacity="1" windowModified="false" minimumWidth="0" mouseTracking="false" frameGeometry="" locale="" enabled="true" autoFillBackground="false" baseSize="" normalGeometry="" fullScreen="false" geometry="" sizeIncrement="" isActiveWindow="true" windowFilePath="" maximumWidth="450" modal="false" frameSize=""/>
+ 
+</circuit>

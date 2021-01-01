@@ -1,0 +1,35 @@
+<circuit type="simulide_0.4" Speed_sps="1000000" Speed_per="100" Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0">
+
+Unique  Id: Led-5: 
+Circuit Id: Led-1
+<item boardRot="-1000000" id="Led-1" labely="-24" hflip="1" Threshold="2.3999999999999999" rotation="0" Resistance="0.59999999999999998" circRot="nan" valLabely="0" vflip="1" labelrot="0" itemtype="Led" MaxCurrent="0.02" boardPos="-1e+06,-1e+06" Show_id="false" y="-180" Color="0" circPos="0,0" x="-228" mainComp="false" Grounded="false" objectName="Led-5" labelx="0" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: pic16f628a-4: 
+Circuit Id: PIC16F628A
+<item boardRot="-1000000" id="PIC16F628A" Mhz="16" labely="84" hflip="1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="PIC" Auto_Load="false" boardPos="-1e+06,-1e+06" Show_id="true" y="-196" varList=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," circPos="0,0" x="-308" mainComp="false" Program="T0_IRQ_Pic16F628A.hex" objectName="pic16f628a-4" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" labelx="-12" valLabRot="0" valLabelx="0" Logic_Symbol="false"/>
+
+Unique  Id: Resistor-3: 
+Circuit Id: Resistor-3
+<item boardRot="-1000000" id="Resistor-3" labely="-24" hflip="1" rotation="0" Resistance="100" circRot="7.1639518646980749e-322" valLabely="-21" vflip="1" labelrot="0" itemtype="Resistor" boardPos="-1e+06,-1e+06" Show_id="false" y="-180" circPos="0,0" x="-172" mainComp="false" objectName="Resistor-3" labelx="0" Unit=" Ω" valLabRot="0" valLabelx="-16" Show_res="true"/>
+
+Unique  Id: Ground (0 V)-2: 
+Circuit Id: Ground (0 V)-4
+<item boardRot="-1000000" id="Ground (0 V)-4" labely="-24" hflip="1" rotation="0" circRot="0" valLabely="-10" vflip="1" labelrot="0" itemtype="Ground" boardPos="-1e+06,-1e+06" Show_id="false" y="-124" circPos="0,0" x="-116" mainComp="false" objectName="Ground (0 V)-2" labelx="0" valLabRot="0" valLabelx="14"/>
+
+Unique  Id: Text-1: 
+Circuit Id: Text-5
+<item boardRot="-1000000" id="Text-5" labely="-24" hflip="1" Border="1" Font="Helvetica [Cronyx]" rotation="0" Opacity="1" circRot="nan" valLabely="0" vflip="1" Text="This example Demonstrates how to &#xa;use interrupts with TMR0.&#xa;&#xa;State of LED on Ra0 is inverted &#xa;by toggle every 61 interrupts.&#xa;&#xa;PIC16F628A and 16 mHz crystal" labelrot="0" Margin="5" itemtype="TextComponent" boardPos="-1e+06,-1e+06" Show_id="false" y="-324" Font_Size="10" circPos="0,0" x="-340" mainComp="false" objectName="Text-1" Fixed_Width="true" labelx="-16" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-6: 
+Circuit Id: Connector-6
+<item boardRot="-1000000" enodeid="Circ_eNode-7" id="Connector-6" labely="-24" hflip="1" endpinid="Ground (0 V)-2-Gnd" rotation="0" circRot="0" valLabely="2" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-180" startpinid="Resistor-3-rPin" circPos="0,0" x="-156" mainComp="false" objectName="Connector-6" labelx="0" pointList="-156,-180,-116,-180,-116,-140" valLabRot="0" valLabelx="-14"/>
+
+Unique  Id: Connector-8: 
+Circuit Id: Connector-8
+<item boardRot="-1000000" enodeid="Circ_eNode-9" id="Connector-8" labely="-24" hflip="1" endpinid="pic16f628a-4-RA0" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-180" startpinid="Led-5-lPin" circPos="0,0" x="-244" mainComp="false" objectName="Connector-8" labelx="0" pointList="-244,-180,-268,-180" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-10
+<item boardRot="-1000000" enodeid="Circ_eNode-11" id="Connector-10" labely="-24" hflip="1" endpinid="Resistor-3-lPin" rotation="0" circRot="3.2439314744342565e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-180" startpinid="Led-5-rPin" circPos="0,0" x="-212" mainComp="false" objectName="Connector-10" labelx="0" pointList="-212,-180,-188,-180" valLabRot="0" valLabelx="0"/>
+ 
+</circuit>

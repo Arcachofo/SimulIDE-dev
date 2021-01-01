@@ -1,0 +1,36 @@
+<circuit type="simulide_0.1" reactStep="50" animate="0" speed="1000000" noLinAcc="5" noLinStep="10">
+ 
+Probe-8: 
+<item Show_id="true" valLabely="0" vflip="1" objectName="Probe-8" labely="-21" valLabelx="16" labelrot="45" valLabRot="45" y="-244" itemtype="Probe" hflip="1" Show_volt="true" labelx="14" id="Q0" x="-276" rotation="-45" PlotterCh="0"/>
+ 
+Fixed Voltage-6: 
+<item y="-244" labely="-5" x="-452" valLabRot="0" valLabelx="-16" Voltage="5" labelx="-52" Unit=" V" Show_Volt="true" itemtype="Fixed Voltage" id="D0" vflip="1" labelrot="0" rotation="0" objectName="Fixed Voltage-6" valLabely="8" Show_id="true" hflip="1"/>
+ 
+Fixed Voltage-4: 
+<item y="-124" labely="-3" x="-356" valLabRot="0" valLabelx="-16" Voltage="5" labelx="-77" Unit=" V" Show_Volt="true" itemtype="Fixed Voltage" id="CLOCK" vflip="1" labelrot="0" rotation="0" objectName="Fixed Voltage-4" valLabely="8" Show_id="true" hflip="1"/>
+ 
+Fixed Voltage-2: 
+<item y="-316" labely="-5" x="-452" valLabRot="0" valLabelx="-16" Voltage="5" labelx="-69" Unit=" V" Show_Volt="true" itemtype="Fixed Voltage" id="!RESET" vflip="1" labelrot="0" rotation="0" objectName="Fixed Voltage-2" valLabely="8" Show_id="true" hflip="1"/>
+ 
+74HC174-1: 
+<item Show_id="true" valLabely="0" vflip="1" objectName="74HC174-1" labely="-20" valLabelx="0" labelrot="0" valLabRot="0" y="-260" itemtype="Subcircuit" hflip="1" labelx="0" id="74HC174-1" x="-388" rotation="0"/>
+ 
+Connector-3: 
+<item y="-316" labely="-24" x="-436" valLabRot="0" valLabelx="0" startpinid="Fixed Voltage-2-outnod" labelx="-16" itemtype="Connector" id="Connector-3" vflip="1" labelrot="0" rotation="0" enodeid="enode-3" endpinid="74HC174-1-!MR" pointList="-436,-316,-396,-316,-396,-252" objectName="Connector-3" valLabely="0" Show_id="false" hflip="1"/>
+ 
+Connector-5: 
+<item y="-124" labely="-24" x="-340" valLabRot="0" valLabelx="0" startpinid="Fixed Voltage-4-outnod" labelx="-16" itemtype="Connector" id="Connector-5" vflip="1" labelrot="0" rotation="0" enodeid="enode-5" endpinid="74HC174-1-CP" pointList="-340,-124,-340,-196,-348,-196" objectName="Connector-5" valLabely="0" Show_id="false" hflip="1"/>
+ 
+Connector-9: 
+<item y="-228" labely="-24" x="-292" valLabRot="0" valLabelx="0" startpinid="Probe-8-inpin" labelx="-16" itemtype="Connector" id="Connector-9" vflip="1" labelrot="0" rotation="0" enodeid="enode-9" endpinid="74HC174-1-Q0" pointList="-292,-228,-292,-292,-404,-292,-404,-244,-396,-244" objectName="Connector-9" valLabely="0" Show_id="false" hflip="1"/>
+ 
+Connector-12: 
+<item y="-244" labely="-24" x="-436" valLabRot="0" valLabelx="0" startpinid="Fixed Voltage-6-outnod" labelx="-16" itemtype="Connector" id="Connector-12" vflip="1" labelrot="0" rotation="0" enodeid="enode-12" endpinid="74HC174-1-D0" pointList="-436,-244,-436,-236,-396,-236" objectName="Connector-12" valLabely="0" Show_id="false" hflip="1"/>
+ 
+PlotterWidget: 
+<item minimumWidth="200" enabled="true" mouseTracking="false" maximumWidth="1000" objectName="PlotterWidget" MinVolt="-500" palette="" childrenRegion="" windowIcon="" MaxVolt="500" rect="" accessibleName="" windowModality="0" sizeIncrement="" cursor="" sizeHint="" pos="" focusPolicy="0" normalGeometry="" inputMethodHints="0" focus="false" visible="false" locale="" minimumHeight="200" windowOpacity="1" whatsThis="" layoutDirection="0" geometry="" frameGeometry="" maximized="false" minimumSizeHint="" windowIconText="" baseSize="" styleSheet="" modal="false" childrenRect="" minimumSize="" x="0" autoFillBackground="false" frameSize="" maximumHeight="200" toolTip="" accessibleDescription="" height="200" acceptDrops="false" fullScreen="false" sizePolicy="" y="0" contextMenuPolicy="1" isActiveWindow="true" toolTipDuration="-1" windowFilePath="" width="200" statusTip="" size="" updatesEnabled="true" maximumSize="" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" windowTitle="" minimized="false" itemtype="Plotter" windowModified="false"/>
+ 
+SerialPortWidget: 
+<item minimumWidth="0" enabled="true" mouseTracking="false" maximumWidth="450" objectName="SerialPortWidget" palette="" childrenRegion="" windowIcon="" rect="" accessibleName="" windowModality="0" sizeIncrement="" cursor="" sizeHint="" pos="" focusPolicy="0" normalGeometry="" inputMethodHints="0" focus="false" visible="false" locale="" minimumHeight="0" windowOpacity="1" whatsThis="" layoutDirection="0" geometry="" frameGeometry="" maximized="false" minimumSizeHint="" windowIconText="" baseSize="" styleSheet="" modal="false" childrenRect="" minimumSize="" x="0" autoFillBackground="false" frameSize="" maximumHeight="170" toolTip="" accessibleDescription="" height="141" acceptDrops="false" fullScreen="false" sizePolicy="" y="0" contextMenuPolicy="1" isActiveWindow="true" toolTipDuration="-1" windowFilePath="" width="313" statusTip="" size="" updatesEnabled="true" maximumSize="" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" windowTitle="Настройки" minimized="false" itemtype="SerialPort" windowModified="false" SettingsProp="COM1,0,3,0,0,0"/>
+ 
+</circuit>

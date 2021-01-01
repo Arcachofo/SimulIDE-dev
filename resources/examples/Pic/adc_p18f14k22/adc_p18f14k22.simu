@@ -1,0 +1,43 @@
+<circuit type="simulide_0.4" Speed_sps="1000000" Speed_per="100" Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0">
+
+Unique  Id: pic18f14k22-3: 
+Circuit Id: pic18f14k22-1
+<item boardRot="-1000000" id="pic18f14k22-1" Mhz="4" labely="-16" hflip="1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="PIC" Auto_Load="false" boardPos="-1e+06,-1e+06" Show_id="true" y="-252" varList=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," circPos="0,0" x="-420" mainComp="false" Program="adc_p18f14k22.hex" objectName="pic18f14k22-3" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" labelx="-17" valLabRot="0" valLabelx="0" Logic_Symbol="false"/>
+
+Unique  Id: Hd44780-2: 
+Circuit Id: Hd44780-2
+<item boardRot="-1000000" id="Hd44780-2" labely="-82" hflip="1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Hd44780" Cols="16" boardPos="-1e+06,-1e+06" Show_id="true" y="-348" Rows="2" circPos="0,0" x="-548" mainComp="false" objectName="Hd44780-2" labelx="70" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Fuente Voltaje-1: 
+Circuit Id: Fuente Voltaje-3
+<item boardRot="-1000000" id="Fuente Voltaje-3" labely="-24" hflip="1" Voltage="5" rotation="0" circRot="3.1620201333839779e-322" valLabely="10" vflip="1" labelrot="0" itemtype="Voltage Source" boardPos="-1e+06,-1e+06" Show_id="false" y="-348" circPos="0,0" x="-268" mainComp="false" Show_Volt="true" objectName="Fuente Voltaje-1" labelx="-16" Unit=" V" valLabRot="0" valLabelx="-26"/>
+
+Unique  Id: Connector-4: 
+Circuit Id: Connector-8
+<item boardRot="-1000000" enodeid="Circ_eNode-5" id="Connector-8" labely="-24" hflip="1" endpinid="pic18f14k22-3-RA0" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-348" startpinid="Fuente Voltaje-1-outPin" circPos="0,0" x="-252" mainComp="false" objectName="Connector-4" labelx="-16" pointList="-252,-348,-244,-348,-244,-236,-380,-236" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-6: 
+Circuit Id: Connector-10
+<item boardRot="-1000000" enodeid="Circ_eNode-7" id="Connector-10" labely="-24" hflip="1" endpinid="pic18f14k22-3-RB7" rotation="0" circRot="1.08971039796242e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-340" startpinid="Hd44780-2-dataPin7" circPos="0,0" x="-452" mainComp="false" objectName="Connector-6" labelx="-16" pointList="-452,-340,-452,-172,-428,-172" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-8: 
+Circuit Id: Connector-12
+<item boardRot="-1000000" enodeid="Circ_eNode-9" id="Connector-12" labely="-24" hflip="1" endpinid="pic18f14k22-3-RB6" rotation="0" circRot="8.9080826450210098e-317" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-340" startpinid="Hd44780-2-dataPin6" circPos="0,0" x="-460" mainComp="false" objectName="Connector-8" labelx="-16" pointList="-460,-340,-460,-156,-364,-156,-364,-172,-380,-172" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-14
+<item boardRot="-1000000" enodeid="Circ_eNode-11" id="Connector-14" labely="-24" hflip="1" endpinid="Hd44780-2-dataPin5" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-180" startpinid="pic18f14k22-3-RB5" circPos="0,0" x="-380" mainComp="false" objectName="Connector-10" labelx="-16" pointList="-380,-180,-356,-180,-356,-148,-468,-148,-468,-340" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-16
+<item boardRot="-1000000" enodeid="Circ_eNode-13" id="Connector-16" labely="-24" hflip="1" endpinid="Hd44780-2-dataPin4" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-188" startpinid="pic18f14k22-3-RB4" circPos="0,0" x="-380" mainComp="false" objectName="Connector-12" labelx="-16" pointList="-380,-188,-348,-188,-348,-140,-476,-140,-476,-340" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-4
+<item boardRot="-1000000" enodeid="Circ_eNode-15" id="Connector-4" labely="-24" hflip="1" endpinid="Hd44780-2-PinRS" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-212" startpinid="pic18f14k22-3-RC0" circPos="0,0" x="-380" mainComp="false" objectName="Connector-14" labelx="-16" pointList="-380,-212,-324,-212,-324,-124,-532,-124,-532,-340" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-16: 
+Circuit Id: Connector-28
+<item boardRot="-1000000" enodeid="Circ_eNode-17" id="Connector-28" labely="-24" hflip="1" endpinid="Hd44780-2-PinEn" rotation="0" circRot="6.9531436082559078e-310" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-204" startpinid="pic18f14k22-3-RC1" circPos="0,0" x="-380" mainComp="false" objectName="Connector-16" labelx="-16" pointList="-380,-204,-332,-204,-332,-132,-516,-132,-516,-340" valLabRot="0" valLabelx="0"/>
+ 
+</circuit>

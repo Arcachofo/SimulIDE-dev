@@ -1,0 +1,23 @@
+<circuit type="simulide_0.4" Speed_sps="1000000" Speed_per="100" Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0">
+
+Unique  Id: Sonda Voltaje.-3: 
+Circuit Id: Sonda Voltaje.-1
+<item boardRot="-1000000" id="Sonda Voltaje.-1" labely="-16" hflip="1" Threshold="2.5" rotation="-45" circRot="6.9533474039882476e-310" valLabely="0" vflip="1" labelrot="45" itemtype="Probe" boardPos="-1e+06,-1e+06" Show_id="false" y="-292" circPos="0,0" x="-444" mainComp="false" objectName="Sonda Voltaje.-3" labelx="16" Show_volt="true" valLabRot="45" valLabelx="16"/>
+
+Unique  Id: Fuente Voltaje-2: 
+Circuit Id: Fuente Voltaje-2
+<item boardRot="-1000000" id="Fuente Voltaje-2" labely="-24" hflip="1" Voltage="5" rotation="0" circRot="6.9531436082568959e-310" valLabely="10" vflip="1" labelrot="0" itemtype="Voltage Source" boardPos="-1e+06,-1e+06" Show_id="false" y="-364" circPos="0,0" x="-484" mainComp="false" Show_Volt="true" objectName="Fuente Voltaje-2" labelx="-16" Unit=" V" valLabRot="0" valLabelx="-26"/>
+
+Unique  Id: pic12f683-1: 
+Circuit Id: pic12f683-3
+<item boardRot="-1000000" id="pic12f683-3" Mhz="4" labely="-15" hflip="1" rotation="0" circRot="8.6225813636817352e-308" valLabely="0" vflip="1" labelrot="0" itemtype="PIC" Auto_Load="false" boardPos="-1e+06,-1e+06" Show_id="true" y="-308" varList=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," circPos="0,0" x="-540" mainComp="false" Program="pic-comp.hex" objectName="pic12f683-1" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" labelx="-9" valLabRot="0" valLabelx="0" Logic_Symbol="false"/>
+
+Unique  Id: Connector-4: 
+Circuit Id: Connector-4
+<item boardRot="-1000000" enodeid="Circ_eNode-5" id="Connector-4" labely="-24" hflip="1" endpinid="Sonda Voltaje.-3-inpin" rotation="0" circRot="1.3107964741735277e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-276" startpinid="pic12f683-1-GP2" circPos="0,0" x="-500" mainComp="false" objectName="Connector-4" labelx="-16" pointList="-500,-276,-460,-276" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-6: 
+Circuit Id: Connector-6
+<item boardRot="-1000000" enodeid="Circ_eNode-7" id="Connector-6" labely="-24" hflip="1" endpinid="Fuente Voltaje-2-outPin" rotation="0" circRot="3.9525251667299724e-322" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-284" startpinid="pic12f683-1-GP1" circPos="0,0" x="-500" mainComp="false" objectName="Connector-6" labelx="-16" pointList="-500,-284,-468,-284,-468,-364" valLabRot="0" valLabelx="0"/>
+ 
+</circuit>

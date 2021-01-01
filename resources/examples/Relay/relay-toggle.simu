@@ -1,0 +1,191 @@
+<circuit type="simulide_0.5" animate="0" Speed_per="100" noLinAcc="5" reactStep="50" Speed_sps="1000000">
+
+Unique  Id: Led-20: 
+Circuit Id: Led-1
+<item labely="-24" labelx="-16" hflip="1" MaxCurrent="0.029999999999999999" boardPos="-1e+06,-1e+06" objectName="Led-20" boardRot="-1000000" Show_id="false" vflip="1" Threshold="2.3999999999999999" itemtype="Led" Resistance="0.59999999999999998" circPos="0,0" valLabely="0" Grounded="false" Color="0" circRot="9.6689990749688637e-317" mainComp="false" rotation="0" x="-140" id="Led-1" valLabRot="0" y="-220" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Ground (0 V)-19: 
+Circuit Id: Ground (0 V)-2
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Ground (0 V)-19" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Ground" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-108" id="Ground (0 V)-2" valLabRot="0" y="-92" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Resistor-18: 
+Circuit Id: Resistor-3
+<item labely="-24" labelx="-12" hflip="1" boardPos="-1e+06,-1e+06" objectName="Resistor-18" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Resistor" Resistance="100" circPos="0,0" Show_res="true" valLabely="6" Unit=" Ω" circRot="4.2439915878593324e-314" mainComp="false" rotation="-90" x="-108" id="Resistor-3" valLabRot="0" y="-148" labelrot="0" valLabelx="-16"/>
+
+Unique  Id: Node-17: 
+Circuit Id: Node-4
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-17" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-220" id="Node-4" valLabRot="0" y="-180" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-16: 
+Circuit Id: Node-6
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-16" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-244" id="Node-6" valLabRot="0" y="-196" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-15: 
+Circuit Id: Node-8
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-15" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-236" id="Node-8" valLabRot="0" y="-252" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-14: 
+Circuit Id: Node-9
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-14" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-276" id="Node-9" valLabRot="0" y="-300" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Push-13: 
+Circuit Id: Toggle
+<item labely="37" labelx="-18" hflip="1" boardPos="-1e+06,-1e+06" Norm_Close="false" Key="" objectName="Push-13" boardRot="-1000000" Show_id="true" vflip="-1" itemtype="Push" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-252" id="Toggle" valLabRot="0" y="-300" Poles="1" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-12: 
+Circuit Id: Node-11
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-12" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="6.9533474039882476e-310" mainComp="false" rotation="0" x="-276" id="Node-11" valLabRot="0" y="-244" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Resistor-11: 
+Circuit Id: Resistor-12
+<item labely="-24" labelx="-12" hflip="1" boardPos="-1e+06,-1e+06" objectName="Resistor-11" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Resistor" Resistance="250" circPos="0,0" Show_res="true" valLabely="-18" Unit=" Ω" circRot="0" mainComp="false" rotation="-90" x="-276" id="Resistor-12" valLabRot="0" y="-268" labelrot="0" valLabelx="-16"/>
+
+Unique  Id: Relay SPST-10: 
+Circuit Id: Relay SPST-13
+<item labely="-24" labelx="-16" hflip="-1" IOn="0.02" boardPos="-1e+06,-1e+06" Norm_Close="false" Rcoil="50" objectName="Relay SPST-10" boardRot="-1000000" Show_id="false" vflip="-1" itemtype="RelaySPST" circPos="0,0" Inductance="0.10000000000000001" valLabely="6" DT="false" circRot="0" mainComp="false" IOff="0.01" rotation="-270" x="-236" id="Relay SPST-13" valLabRot="0" y="-220" Poles="1" labelrot="0" valLabelx="-16"/>
+
+Unique  Id: Rail.-9: 
+Circuit Id: Rail.-15
+<item labely="-24" labelx="-64" hflip="1" boardPos="-1e+06,-1e+06" objectName="Rail.-9" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Rail" Show_Volt="true" circPos="0,0" valLabely="8" Unit=" V" Voltage="5" circRot="0" mainComp="false" rotation="0" x="-340" id="Rail.-15" valLabRot="0" y="-300" labelrot="0" valLabelx="-16"/>
+
+Unique  Id: Relay SPST-8: 
+Circuit Id: Relay SPST-16
+<item labely="-24" labelx="-16" hflip="1" IOn="0.02" boardPos="-1e+06,-1e+06" Norm_Close="false" Rcoil="50" objectName="Relay SPST-8" boardRot="-1000000" Show_id="false" vflip="-1" itemtype="RelaySPST" circPos="0,0" Inductance="0.10000000000000001" valLabely="6" DT="false" circRot="0" mainComp="false" IOff="0.01" rotation="0" x="-196" id="Relay SPST-16" valLabRot="0" y="-236" Poles="1" labelrot="0" valLabelx="-16"/>
+
+Unique  Id: Relay SPST-7: 
+Circuit Id: Relay SPST-17
+<item labely="-24" labelx="-16" hflip="1" IOn="0.02" boardPos="-1e+06,-1e+06" Norm_Close="false" Rcoil="50" objectName="Relay SPST-7" boardRot="-1000000" Show_id="false" vflip="1" itemtype="RelaySPST" circPos="0,0" Inductance="0.10000000000000001" valLabely="6" DT="false" circRot="0" mainComp="false" IOff="0.01" rotation="0" x="-196" id="Relay SPST-17" valLabRot="0" y="-156" Poles="1" labelrot="0" valLabelx="-16"/>
+
+Unique  Id: Led-6: 
+Circuit Id: Led-18
+<item labely="-24" labelx="-16" hflip="1" MaxCurrent="0.029999999999999999" boardPos="-1e+06,-1e+06" objectName="Led-6" boardRot="-1000000" Show_id="false" vflip="1" Threshold="2.3999999999999999" itemtype="Led" Resistance="0.59999999999999998" circPos="0,0" valLabely="0" Grounded="false" Color="0" circRot="0" mainComp="false" rotation="0" x="-140" id="Led-18" valLabRot="0" y="-172" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-5: 
+Circuit Id: Node-19
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-5" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-108" id="Node-19" valLabRot="0" y="-172" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-4: 
+Circuit Id: Node-20
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-4" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="5.9287877500949585e-322" mainComp="false" rotation="0" x="-300" id="Node-20" valLabRot="0" y="-300" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-3: 
+Circuit Id: Node-56
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-3" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-108" id="Node-56" valLabRot="0" y="-124" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-2: 
+Circuit Id: Node-61
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-2" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-172" id="Node-61" valLabRot="0" y="-124" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Node-1: 
+Circuit Id: Node-64
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Node-1" boardRot="-1000000" Show_id="false" vflip="1" itemtype="Node" circPos="0,0" valLabely="0" circRot="0" mainComp="false" rotation="0" x="-172" id="Node-64" valLabRot="0" y="-156" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-21: 
+Circuit Id: Connector-21
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-21" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-22" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Relay SPST-8-pinP2" pointList="-212,-220,-220,-220,-220,-180" endpinid="Node-17-0" circRot="0" mainComp="false" rotation="0" x="-212" id="Connector-21" valLabRot="0" y="-220" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-23: 
+Circuit Id: Connector-23
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-23" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-24" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-12-2" pointList="-276,-244,-276,-156,-212,-156" endpinid="Relay SPST-7-lPin" circRot="0" mainComp="false" rotation="0" x="-276" id="Connector-23" valLabRot="0" y="-244" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-25: 
+Circuit Id: Connector-25
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-25" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-24" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-12-1" pointList="-276,-244,-252,-244,-252,-236" endpinid="Relay SPST-10-switch0pinN" circRot="nan" mainComp="false" rotation="0" x="-276" id="Connector-25" valLabRot="0" y="-244" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-26: 
+Circuit Id: Connector-26
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-26" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-22" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-14-2" pointList="-276,-300,-276,-284" endpinid="Resistor-11-rPin" circRot="2.4555062598309953e-321" mainComp="false" rotation="0" x="-276" id="Connector-26" valLabRot="0" y="-300" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-27: 
+Circuit Id: Connector-27
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-27" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-22" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-14-1" pointList="-276,-300,-268,-300" endpinid="Push-13-pinP0" circRot="1.2475347278699478e-316" mainComp="false" rotation="0" x="-276" id="Connector-27" valLabRot="0" y="-300" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-28: 
+Circuit Id: Connector-28
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-28" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-29" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Push-13-switch0pinN" pointList="-236,-300,-236,-252" endpinid="Node-15-0" circRot="1.2475347278699478e-316" mainComp="false" rotation="0" x="-236" id="Connector-28" valLabRot="0" y="-300" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-30: 
+Circuit Id: Connector-30
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-30" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-29" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Relay SPST-10-rPin" pointList="-236,-236,-236,-252" endpinid="Node-15-1" circRot="2.7717082731693931e-321" mainComp="false" rotation="0" x="-236" id="Connector-30" valLabRot="0" y="-236" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-31: 
+Circuit Id: Connector-31
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-31" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-29" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-15-2" pointList="-236,-252,-220,-252,-220,-236,-212,-236" endpinid="Relay SPST-8-lPin" circRot="1.1125751266543463e-307" mainComp="false" rotation="0" x="-236" id="Connector-31" valLabRot="0" y="-252" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-32: 
+Circuit Id: Connector-32
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-32" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Relay SPST-10-pinP2" pointList="-252,-204,-252,-196,-244,-196" endpinid="Node-16-0" circRot="3.2379604934780067e-317" mainComp="false" rotation="0" x="-252" id="Connector-32" valLabRot="0" y="-204" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-34: 
+Circuit Id: Connector-35
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-34" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-16-2" pointList="-244,-196,-236,-196,-236,-204" endpinid="Relay SPST-10-lPin" circRot="6.9533474039977337e-310" mainComp="false" rotation="0" x="-244" id="Connector-35" valLabRot="0" y="-196" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-35: 
+Circuit Id: Connector-40
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-35" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-24" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Resistor-11-lPin" pointList="-276,-252,-276,-244" endpinid="Node-12-0" circRot="6.9531436082559078e-310" mainComp="false" rotation="0" x="-276" id="Connector-40" valLabRot="0" y="-252" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-36: 
+Circuit Id: Connector-41
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-36" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-22" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-17-2" pointList="-220,-180,-220,-172,-212,-172" endpinid="Relay SPST-7-pinP2" circRot="1.1805070155875076e-316" mainComp="false" rotation="0" x="-220" id="Connector-41" valLabRot="0" y="-180" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-37: 
+Circuit Id: Connector-42
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-37" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Ground (0 V)-19-Gnd" pointList="-108,-108,-108,-124" endpinid="Node-3-0" circRot="3.8439421858545999e-316" mainComp="false" rotation="0" x="-108" id="Connector-42" valLabRot="0" y="-108" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-38: 
+Circuit Id: Connector-44
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-38" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-39" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Led-20-rPin" pointList="-124,-220,-108,-220,-108,-172" endpinid="Node-5-0" circRot="1.0609978955814493e-313" mainComp="false" rotation="0" x="-124" id="Connector-44" valLabRot="0" y="-220" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-40: 
+Circuit Id: Connector-46
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-40" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-39" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Led-6-rPin" pointList="-124,-172,-108,-172" endpinid="Node-5-1" circRot="1.4377144287923272e-316" mainComp="false" rotation="0" x="-124" id="Connector-46" valLabRot="0" y="-172" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-41: 
+Circuit Id: Connector-47
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-41" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-39" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-5-2" pointList="-108,-172,-108,-164" endpinid="Resistor-18-rPin" circRot="1.3666590933649891e-316" mainComp="false" rotation="0" x="-108" id="Connector-47" valLabRot="0" y="-172" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-42: 
+Circuit Id: Connector-48
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-42" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-43" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Relay SPST-8-switch0pinN" pointList="-180,-220,-156,-220" endpinid="Led-20-lPin" circRot="0" mainComp="false" rotation="0" x="-180" id="Connector-48" valLabRot="0" y="-220" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-44: 
+Circuit Id: Connector-50
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-44" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-45" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Relay SPST-7-switch0pinN" pointList="-180,-172,-156,-172" endpinid="Led-6-lPin" circRot="1.0596324719486383e-316" mainComp="false" rotation="0" x="-180" id="Connector-50" valLabRot="0" y="-172" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-46: 
+Circuit Id: Connector-52
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-46" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-22" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-17-1" pointList="-220,-180,-300,-180,-300,-300" endpinid="Node-4-0" circRot="3.9525251667299724e-322" mainComp="false" rotation="0" x="-220" id="Connector-52" valLabRot="0" y="-180" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-47: 
+Circuit Id: Connector-53
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-47" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-22" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Rail.-9-outnod" pointList="-324,-300,-300,-300" endpinid="Node-4-1" circRot="1.0589557996400941e-316" mainComp="false" rotation="0" x="-324" id="Connector-53" valLabRot="0" y="-300" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-48: 
+Circuit Id: Connector-54
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-48" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-22" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-4-2" pointList="-300,-300,-276,-300" endpinid="Node-14-0" circRot="0" mainComp="false" rotation="0" x="-300" id="Connector-54" valLabRot="0" y="-300" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-49: 
+Circuit Id: Connector-55
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-49" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Relay SPST-7-rPin" pointList="-180,-156,-172,-156" endpinid="Node-1-0" circRot="3.894208819915005e-316" mainComp="false" rotation="0" x="-180" id="Connector-55" valLabRot="0" y="-156" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-50: 
+Circuit Id: Connector-57
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-50" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-3-2" pointList="-108,-124,-108,-132" endpinid="Resistor-18-lPin" circRot="8.9002954444938985e-307" mainComp="false" rotation="0" x="-108" id="Connector-57" valLabRot="0" y="-124" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-51: 
+Circuit Id: Connector-62
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-51" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-2-2" pointList="-172,-124,-108,-124" endpinid="Node-3-1" circRot="nan" mainComp="false" rotation="0" x="-172" id="Connector-62" valLabRot="0" y="-124" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-52: 
+Circuit Id: Connector-60
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-52" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-2-1" pointList="-172,-124,-244,-124,-244,-196" endpinid="Node-16-1" circRot="5.5335352334219613e-322" mainComp="false" rotation="0" x="-172" id="Connector-60" valLabRot="0" y="-124" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-53: 
+Circuit Id: Connector-63
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-53" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Relay SPST-8-rPin" pointList="-180,-236,-172,-236,-172,-156" endpinid="Node-1-1" circRot="2.1219957909652723e-314" mainComp="false" rotation="0" x="-180" id="Connector-63" valLabRot="0" y="-236" labelrot="0" valLabelx="0"/>
+
+Unique  Id: Connector-54: 
+Circuit Id: Connector-65
+<item labely="-24" labelx="-16" hflip="1" boardPos="-1e+06,-1e+06" objectName="Connector-54" boardRot="-1000000" Show_id="false" enodeid="Circ_eNode-33" vflip="1" itemtype="Connector" circPos="0,0" valLabely="0" startpinid="Node-1-2" pointList="-172,-156,-172,-124" endpinid="Node-2-0" circRot="3.9722514293320883e-316" mainComp="false" rotation="0" x="-172" id="Connector-65" valLabRot="0" y="-156" labelrot="0" valLabelx="0"/>
+ 
+</circuit>

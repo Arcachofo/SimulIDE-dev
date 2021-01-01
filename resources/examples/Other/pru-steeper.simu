@@ -1,0 +1,47 @@
+<circuit type="simulide_0.4" Speed_sps="1000000" Speed_per="100" Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0">
+
+Unique  Id: Fixed Volt.-6: 
+Circuit Id: Fixed Volt.-6
+<item boardRot="-1000000" id="Fixed Volt.-6" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="nan" valLabely="-9" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-60" circPos="0,0" x="-260" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-6" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-57"/>
+
+Unique  Id: Fixed Volt.-5: 
+Circuit Id: Fixed Volt.-5
+<item boardRot="-1000000" id="Fixed Volt.-5" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="6.7903865310888714e-313" valLabely="-10" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-76" circPos="0,0" x="-260" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-5" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-57"/>
+
+Unique  Id: Fixed Volt.-4: 
+Circuit Id: Fixed Volt.-4
+<item boardRot="-1000000" id="Fixed Volt.-4" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="0" valLabely="-10" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-108" circPos="0,0" x="-260" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-4" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-58"/>
+
+Unique  Id: Fixed Volt.-3: 
+Circuit Id: Fixed Volt.-3
+<item boardRot="-1000000" id="Fixed Volt.-3" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="0" valLabely="-9" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-124" circPos="0,0" x="-260" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-3" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-57"/>
+
+Unique  Id: Stepper-2: 
+Circuit Id: Stepper-2
+<item boardRot="-1000000" id="Stepper-2" labely="-24" hflip="1" rotation="0" Resistance="100" circRot="6.9533474039882476e-310" valLabely="0" vflip="1" labelrot="0" itemtype="Stepper" boardPos="-1e+06,-1e+06" Show_id="false" y="-92" circPos="0,0" x="-148" mainComp="false" objectName="Stepper-2" labelx="-16" Unit=" kΩ" valLabRot="0" Bipolar="false" valLabelx="0" Steps="32"/>
+
+Unique  Id: Ground (0 V)-1: 
+Circuit Id: Ground (0 V)-1
+<item boardRot="-1000000" id="Ground (0 V)-1" labely="-24" hflip="1" rotation="0" circRot="3.1620201333839779e-322" valLabely="0" vflip="1" labelrot="0" itemtype="Ground" boardPos="-1e+06,-1e+06" Show_id="false" y="-12" circPos="0,0" x="-228" mainComp="false" objectName="Ground (0 V)-1" labelx="-16" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-7: 
+Circuit Id: Connector-7
+<item boardRot="-1000000" enodeid="Circ_eNode-8" id="Connector-7" labely="-24" hflip="1" endpinid="Stepper-2-PinA1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-124" startpinid="Fixed Volt.-3-outnod" circPos="0,0" x="-244" mainComp="false" objectName="Connector-7" labelx="-16" pointList="-244,-124,-220,-124" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-9: 
+Circuit Id: Connector-9
+<item boardRot="-1000000" enodeid="Circ_eNode-10" id="Connector-9" labely="-24" hflip="1" endpinid="Stepper-2-PinB1" rotation="0" circRot="4.4809394420276524e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-108" startpinid="Fixed Volt.-4-outnod" circPos="0,0" x="-244" mainComp="false" objectName="Connector-9" labelx="-16" pointList="-244,-108,-220,-108" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-11: 
+Circuit Id: Connector-11
+<item boardRot="-1000000" enodeid="Circ_eNode-12" id="Connector-11" labely="-24" hflip="1" endpinid="Stepper-2-PinA2" rotation="0" circRot="8.9006010014227061e-307" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-76" startpinid="Fixed Volt.-5-outnod" circPos="0,0" x="-244" mainComp="false" objectName="Connector-11" labelx="-16" pointList="-244,-76,-220,-76" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-13: 
+Circuit Id: Connector-13
+<item boardRot="-1000000" enodeid="Circ_eNode-14" id="Connector-13" labely="-24" hflip="1" endpinid="Stepper-2-PinB2" rotation="0" circRot="3.9525251667299724e-322" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-60" startpinid="Fixed Volt.-6-outnod" circPos="0,0" x="-244" mainComp="false" objectName="Connector-13" labelx="-16" pointList="-244,-60,-220,-60" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-15: 
+Circuit Id: Connector-15
+<item boardRot="-1000000" enodeid="Circ_eNode-16" id="Connector-15" labely="-24" hflip="1" endpinid="Stepper-2-PinCo" rotation="0" circRot="6.9533481350382117e-310" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-28" startpinid="Ground (0 V)-1-Gnd" circPos="0,0" x="-228" mainComp="false" objectName="Connector-15" labelx="-16" pointList="-228,-28,-228,-92,-220,-92" valLabRot="0" valLabelx="0"/>
+ 
+</circuit>

@@ -1,0 +1,55 @@
+<circuit type="simulide_0.4" Speed_sps="1000000" Speed_per="100" Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0">
+
+Unique  Id: Fixed Volt.-7: 
+Circuit Id: Fixed Volt.-7
+<item boardRot="-1000000" id="Fixed Volt.-7" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="0" valLabely="-12" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-124" circPos="0,0" x="-460" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-7" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-60"/>
+
+Unique  Id: Fixed Volt.-6: 
+Circuit Id: Fixed Volt.-6
+<item boardRot="-1000000" id="Fixed Volt.-6" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="0" valLabely="-9" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-188" circPos="0,0" x="-460" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-6" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-58"/>
+
+Unique  Id: Fixed Volt.-5: 
+Circuit Id: Fixed Volt.-5
+<item boardRot="-1000000" id="Fixed Volt.-5" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="0" valLabely="-9" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-204" circPos="0,0" x="-460" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-5" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-59"/>
+
+Unique  Id: Hd44780-4: 
+Circuit Id: Hd44780-4
+<item boardRot="-1000000" id="Hd44780-4" labely="-24" hflip="1" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Hd44780" Cols="16" boardPos="-1e+06,-1e+06" Show_id="false" y="-228" Rows="2" circPos="0,0" x="-428" mainComp="false" objectName="Hd44780-4" labelx="-16" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Fixed Volt.-3: 
+Circuit Id: Fixed Volt.-3
+<item boardRot="-1000000" id="Fixed Volt.-3" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="2.1362080723786757e-306" valLabely="-8" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-76" circPos="0,0" x="-460" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-3" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-61"/>
+
+Unique  Id: Fixed Volt.-2: 
+Circuit Id: Fixed Volt.-2
+<item boardRot="-1000000" id="Fixed Volt.-2" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="1.1126150197866642e-306" valLabely="-11" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-100" circPos="0,0" x="-460" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-2" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-59"/>
+
+Unique  Id: Fixed Volt.-1: 
+Circuit Id: Fixed Volt.-1
+<item boardRot="-1000000" id="Fixed Volt.-1" labely="-24" hflip="1" Voltage="5" Out="false" rotation="0" circRot="0" valLabely="-11" vflip="1" labelrot="0" itemtype="Fixed Voltage" boardPos="-1e+06,-1e+06" Show_id="false" y="-148" circPos="0,0" x="-460" mainComp="false" Show_Volt="true" objectName="Fixed Volt.-1" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-60"/>
+
+Unique  Id: Connector-8: 
+Circuit Id: Connector-8
+<item boardRot="-1000000" enodeid="Circ_eNode-9" id="Connector-8" labely="-24" hflip="1" endpinid="Hd44780-4-PinEn" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-188" startpinid="Fixed Volt.-6-outnod" circPos="0,0" x="-444" mainComp="false" objectName="Connector-8" labelx="-16" pointList="-444,-188,-396,-188,-396,-220" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-10
+<item boardRot="-1000000" enodeid="Circ_eNode-11" id="Connector-10" labely="-24" hflip="1" endpinid="Hd44780-4-dataPin7" rotation="0" circRot="5.5829417980060859e-322" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-76" startpinid="Fixed Volt.-3-outnod" circPos="0,0" x="-444" mainComp="false" objectName="Connector-10" labelx="-16" pointList="-444,-76,-332,-76,-332,-220" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item boardRot="-1000000" enodeid="Circ_eNode-13" id="Connector-12" labely="-24" hflip="1" endpinid="Hd44780-4-dataPin6" rotation="0" circRot="8.4564829295711101e-317" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-100" startpinid="Fixed Volt.-2-outnod" circPos="0,0" x="-444" mainComp="false" objectName="Connector-12" labelx="-16" pointList="-444,-100,-340,-100,-340,-220" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-14
+<item boardRot="-1000000" enodeid="Circ_eNode-15" id="Connector-14" labely="-24" hflip="1" endpinid="Hd44780-4-dataPin5" rotation="0" circRot="1.6912028068246705e-306" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-124" startpinid="Fixed Volt.-7-outnod" circPos="0,0" x="-444" mainComp="false" objectName="Connector-14" labelx="-16" pointList="-444,-124,-348,-124,-348,-220" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-16: 
+Circuit Id: Connector-16
+<item boardRot="-1000000" enodeid="Circ_eNode-17" id="Connector-16" labely="-24" hflip="1" endpinid="Hd44780-4-dataPin4" rotation="0" circRot="1.3107624824570938e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-148" startpinid="Fixed Volt.-1-outnod" circPos="0,0" x="-444" mainComp="false" objectName="Connector-16" labelx="-16" pointList="-444,-148,-356,-148,-356,-220" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-18: 
+Circuit Id: Connector-18
+<item boardRot="-1000000" enodeid="Circ_eNode-19" id="Connector-18" labely="-24" hflip="1" endpinid="Hd44780-4-PinRS" rotation="0" circRot="4.5866358937737619e-316" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-204" startpinid="Fixed Volt.-5-outnod" circPos="0,0" x="-444" mainComp="false" objectName="Connector-18" labelx="-16" pointList="-444,-204,-412,-204,-412,-220" valLabRot="0" valLabelx="0"/>
+ 
+</circuit>

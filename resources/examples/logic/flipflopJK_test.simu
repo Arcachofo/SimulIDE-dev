@@ -1,0 +1,63 @@
+<circuit Speed_per="100" Speed_sps="1000000" noLinAcc="5" reactStep="50" animate="0" type="simulide_0.5">
+
+Unique  Id: FlipFlop JK-1: 
+Circuit Id: FlipFlop JK-1
+<item hflip="1" circRot="3.9027758481617129e+233" Input_Low_V="2.5" Clock_Inverted="true" valLabRot="0" y="-52" Show_id="false" x="-260" Input_Imped="100000000000000" Out_High_V="5" valLabely="0" Input_High_V="2.5" S_R_Inverted="false" rotation="0" Propagation_Delay_ns="10" labely="-24" vflip="1" Out_Low_V="0" Out_Imped="40" mainComp="false" Trigger="1" objectName="FlipFlop JK-1" valLabelx="0" labelx="-16" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="FlipFlopJK" id="FlipFlop JK-1" boardRot="-1000000"/>
+
+Unique  Id: Fixed Volt.-2: 
+Circuit Id: J
+<item hflip="1" circRot="0" valLabRot="0" y="-68" Show_id="true" x="-308" valLabely="8" Voltage="5" Unit=" V" rotation="0" labely="-6" vflip="1" mainComp="false" Out="false" objectName="Fixed Volt.-2" valLabelx="-16" labelx="-38" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Fixed Voltage" id="J" boardRot="-1000000" Show_Volt="false"/>
+
+Unique  Id: Fixed Volt.-3: 
+Circuit Id: K
+<item hflip="1" circRot="0" valLabRot="0" y="-36" Show_id="true" x="-308" valLabely="8" Voltage="5" Unit=" V" rotation="0" labely="-5" vflip="1" mainComp="false" Out="false" objectName="Fixed Volt.-3" valLabelx="-16" labelx="-40" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Fixed Voltage" id="K" boardRot="-1000000" Show_Volt="false"/>
+
+Unique  Id: Fixed Volt.-4: 
+Circuit Id: Clock
+<item hflip="1" circRot="0" valLabRot="0" y="-52" Show_id="true" x="-308" valLabely="8" Voltage="5" Unit=" V" rotation="0" labely="-6" vflip="1" mainComp="false" Out="false" objectName="Fixed Volt.-4" valLabelx="-16" labelx="-60" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Fixed Voltage" id="Clock" boardRot="-1000000" Show_Volt="false"/>
+
+Unique  Id: Fixed Volt.-5: 
+Circuit Id: MS
+<item hflip="1" circRot="1.4278497164812025e-321" valLabRot="0" y="-84" Show_id="true" x="-308" valLabely="8" Voltage="5" Unit=" V" rotation="0" labely="-6" vflip="1" mainComp="false" Out="false" objectName="Fixed Volt.-5" valLabelx="-16" labelx="-48" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Fixed Voltage" id="MS" boardRot="-1000000" Show_Volt="false"/>
+
+Unique  Id: Fixed Volt.-6: 
+Circuit Id: MR
+<item hflip="1" circRot="0" valLabRot="0" y="-20" Show_id="true" x="-308" valLabely="8" Voltage="5" Unit=" V" rotation="0" labely="-6" vflip="1" mainComp="false" Out="false" objectName="Fixed Volt.-6" valLabelx="-16" labelx="-49" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Fixed Voltage" id="MR" boardRot="-1000000" Show_Volt="false"/>
+
+Unique  Id: Probe-7: 
+Circuit Id: Q
+<item hflip="1" circRot="0" valLabRot="45" y="-76" Show_id="true" x="-204" Show_volt="false" Threshold="2.5" valLabely="0" rotation="-45" labely="0" vflip="1" mainComp="false" objectName="Probe-7" valLabelx="16" labelx="12" circPos="0,0" labelrot="45" boardPos="-1e+06,-1e+06" itemtype="Probe" id="Q" boardRot="-1000000"/>
+
+Unique  Id: Probe-8: 
+Circuit Id: Q'
+<item hflip="1" circRot="0" valLabRot="45" y="-60" Show_id="true" x="-204" Show_volt="false" Threshold="2.5" valLabely="0" rotation="-45" labely="1" vflip="1" mainComp="false" objectName="Probe-8" valLabelx="16" labelx="11" circPos="0,0" labelrot="45" boardPos="-1e+06,-1e+06" itemtype="Probe" id="Q'" boardRot="-1000000"/>
+
+Unique  Id: Connector-9: 
+Circuit Id: Connector-9
+<item hflip="1" circRot="0" valLabRot="0" y="-84" Show_id="false" x="-292" valLabely="0" enodeid="Circ_eNode-10" rotation="0" labely="-24" vflip="1" startpinid="Fixed Volt.-5-outnod" endpinid="FlipFlop JK-1-in2" mainComp="false" objectName="Connector-9" valLabelx="0" labelx="-16" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Connector" id="Connector-9" boardRot="-1000000" pointList="-292,-84,-260,-84,-260,-76"/>
+
+Unique  Id: Connector-11: 
+Circuit Id: Connector-11
+<item hflip="1" circRot="0" valLabRot="0" y="-68" Show_id="false" x="-292" valLabely="0" enodeid="Circ_eNode-12" rotation="0" labely="-24" vflip="1" startpinid="Fixed Volt.-2-outnod" endpinid="FlipFlop JK-1-in0" mainComp="false" objectName="Connector-11" valLabelx="0" labelx="-16" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Connector" id="Connector-11" boardRot="-1000000" pointList="-292,-68,-284,-68,-284,-60,-276,-60"/>
+
+Unique  Id: Connector-13: 
+Circuit Id: Connector-13
+<item hflip="1" circRot="7.1639518646980749e-322" valLabRot="0" y="-52" Show_id="false" x="-292" valLabely="0" enodeid="Circ_eNode-14" rotation="0" labely="-24" vflip="1" startpinid="Fixed Volt.-4-outnod" endpinid="FlipFlop JK-1-in4" mainComp="false" objectName="Connector-13" valLabelx="0" labelx="-16" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Connector" id="Connector-13" boardRot="-1000000" pointList="-292,-52,-276,-52"/>
+
+Unique  Id: Connector-15: 
+Circuit Id: Connector-15
+<item hflip="1" circRot="0" valLabRot="0" y="-36" Show_id="false" x="-292" valLabely="0" enodeid="Circ_eNode-16" rotation="0" labely="-24" vflip="1" startpinid="Fixed Volt.-3-outnod" endpinid="FlipFlop JK-1-in1" mainComp="false" objectName="Connector-15" valLabelx="0" labelx="-16" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Connector" id="Connector-15" boardRot="-1000000" pointList="-292,-36,-284,-36,-284,-44,-276,-44"/>
+
+Unique  Id: Connector-17: 
+Circuit Id: Connector-17
+<item hflip="1" circRot="1.0260616994450173e-316" valLabRot="0" y="-20" Show_id="false" x="-292" valLabely="0" enodeid="Circ_eNode-18" rotation="0" labely="-24" vflip="1" startpinid="Fixed Volt.-6-outnod" endpinid="FlipFlop JK-1-in3" mainComp="false" objectName="Connector-17" valLabelx="0" labelx="-16" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Connector" id="Connector-17" boardRot="-1000000" pointList="-292,-20,-252,-20,-252,-28"/>
+
+Unique  Id: Connector-19: 
+Circuit Id: Connector-19
+<item hflip="1" circRot="1.0325971998082053e-321" valLabRot="0" y="-60" Show_id="false" x="-236" valLabely="0" enodeid="Circ_eNode-20" rotation="0" labely="-24" vflip="1" startpinid="FlipFlop JK-1-out0" endpinid="Probe-7-inpin" mainComp="false" objectName="Connector-19" valLabelx="0" labelx="-16" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Connector" id="Connector-19" boardRot="-1000000" pointList="-236,-60,-220,-60"/>
+
+Unique  Id: Connector-21: 
+Circuit Id: Connector-21
+<item hflip="1" circRot="1e-14" valLabRot="0" y="-44" Show_id="false" x="-236" valLabely="0" enodeid="Circ_eNode-22" rotation="0" labely="-24" vflip="1" startpinid="FlipFlop JK-1-out1" endpinid="Probe-8-inpin" mainComp="false" objectName="Connector-21" valLabelx="0" labelx="-16" circPos="0,0" labelrot="0" boardPos="-1e+06,-1e+06" itemtype="Connector" id="Connector-21" boardRot="-1000000" pointList="-236,-44,-220,-44"/>
+ 
+</circuit>

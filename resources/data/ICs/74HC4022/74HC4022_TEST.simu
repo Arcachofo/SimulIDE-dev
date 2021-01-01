@@ -1,0 +1,75 @@
+<circuit Speed_per="100" type="simulide_0.5" reactStep="50" Speed_sps="1000000" animate="0" noLinAcc="5">
+
+Unique  Id: Probe-1: 
+Circuit Id: Probe-1
+<item vflip="1" circPos="0,0" Show_volt="true" y="-164" valLabRot="45" rotation="-45" circRot="0" Threshold="2.5" labelrot="45" Show_id="false" boardRot="-1000000" labelx="16" id="Probe-1" x="-228" objectName="Probe-1" labely="-16" mainComp="false" boardPos="-1e+06,-1e+06" valLabely="0" itemtype="Probe" hflip="1" valLabelx="16"/>
+
+Unique  Id: Clock-2: 
+Circuit Id: Clock-2
+<item vflip="1" Freq="2" circPos="0,0" y="-76" valLabRot="0" rotation="0" Show_Volt="true" circRot="0" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-64" id="Clock-2" x="-428" objectName="Clock-2" Voltage="5" labely="-24" mainComp="false" boardPos="-1e+06,-1e+06" valLabely="8" Out="false" itemtype="Clock" Unit=" V" hflip="1" Always_On="false" Running="true" valLabelx="-16"/>
+
+Unique  Id: Ground (0 V)-3: 
+Circuit Id: Ground (0 V)-3
+<item vflip="1" circPos="0,0" y="-60" valLabRot="0" rotation="0" circRot="0" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Ground (0 V)-3" x="-364" objectName="Ground (0 V)-3" labely="-24" mainComp="false" boardPos="-1e+06,-1e+06" valLabely="0" itemtype="Ground" hflip="1" valLabelx="0"/>
+
+Unique  Id: 74HC4022-5: 
+Circuit Id: 74HC4022-5
+<item vflip="1" Logic_Symbol="false" circPos="0,0" y="-188" valLabRot="0" rotation="0" circRot="8.112502569360934e-317" labelrot="0" Show_id="true" boardRot="-1000000" labelx="0" id="74HC4022-5" x="-412" objectName="74HC4022-5" labely="-20" mainComp="false" boardPos="-1e+06,-1e+06" valLabely="0" itemtype="Subcircuit" hflip="1" valLabelx="0"/>
+
+Unique  Id: LedBar-6: 
+Circuit Id: LedBar-6
+<item vflip="1" Size="8" Resistance="40" circPos="0,0" y="-196" valLabRot="0" rotation="0" circRot="0" Threshold="2.3999999999999999" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="LedBar-6" x="-260" objectName="LedBar-6" MaxCurrent="0.029999999999999999" Grounded="true" labely="-24" mainComp="false" boardPos="-1e+06,-1e+06" valLabely="0" itemtype="LedBar" hflip="1" valLabelx="0" Color="1"/>
+
+Unique  Id: Fixed Volt.-33: 
+Circuit Id: Fixed Volt.-33
+<item vflip="1" circPos="0,0" y="-260" valLabRot="0" rotation="0" Show_Volt="true" circRot="0" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-64" id="Fixed Volt.-33" x="-412" objectName="Fixed Volt.-33" Voltage="5" labely="-24" mainComp="false" boardPos="-1e+06,-1e+06" valLabely="8" Out="false" itemtype="Fixed Voltage" Unit=" V" hflip="1" valLabelx="-16"/>
+
+Unique  Id: Connector-7: 
+Circuit Id: Connector-7
+<item vflip="1" endpinid="LedBar-6-led0-pinP" circPos="0,0" startpinid="74HC4022-5-Q0" y="-172" valLabRot="0" rotation="0" circRot="0" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-7" x="-420" objectName="Connector-7" labely="-24" mainComp="false" pointList="-420,-172,-460,-172,-460,-220,-276,-220" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Q0-74HC4022-5-Q0-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-9: 
+Circuit Id: Connector-9
+<item vflip="1" endpinid="LedBar-6-led1-pinP" circPos="0,0" startpinid="74HC4022-5-Q1" y="-180" valLabRot="0" rotation="0" circRot="8.7515231231668356e-317" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-9" x="-420" objectName="Connector-9" labely="-24" mainComp="false" pointList="-420,-180,-444,-180,-444,-212,-276,-212" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Q1-74HC4022-5-Q1-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-11: 
+Circuit Id: Connector-11
+<item vflip="1" endpinid="LedBar-6-led3-pinP" circPos="0,0" startpinid="74HC4022-5-Q3" y="-132" valLabRot="0" rotation="0" circRot="8.5264821502738979e-317" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-11" x="-420" objectName="Connector-11" labely="-24" mainComp="false" pointList="-420,-132,-476,-132,-476,-236,-300,-236,-300,-196,-276,-196" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Q3-74HC4022-5-Q3-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-13: 
+Circuit Id: Connector-13
+<item vflip="1" endpinid="LedBar-6-led2-pinP" circPos="0,0" startpinid="74HC4022-5-Q2" y="-164" valLabRot="0" rotation="0" circRot="0" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-13" x="-420" objectName="Connector-13" labely="-24" mainComp="false" pointList="-420,-164,-468,-164,-468,-228,-284,-228,-284,-204,-276,-204" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Q2-74HC4022-5-Q2-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-15: 
+Circuit Id: Connector-15
+<item vflip="1" endpinid="LedBar-6-led4-pinP" circPos="0,0" startpinid="74HC4022-5-Q4" y="-140" valLabRot="0" rotation="0" circRot="6.9533481350382117e-310" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-15" x="-372" objectName="Connector-15" labely="-24" mainComp="false" pointList="-372,-140,-308,-140,-308,-188,-276,-188" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Q4-74HC4022-5-Q4-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-17: 
+Circuit Id: Connector-17
+<item vflip="1" endpinid="LedBar-6-led5-pinP" circPos="0,0" startpinid="74HC4022-5-Q5" y="-156" valLabRot="0" rotation="0" circRot="0" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-17" x="-420" objectName="Connector-17" labely="-24" mainComp="false" pointList="-420,-156,-436,-156,-436,-108,-300,-108,-300,-180,-276,-180" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Q5-74HC4022-5-Q5-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-19: 
+Circuit Id: Connector-19
+<item vflip="1" endpinid="LedBar-6-led6-pinP" circPos="0,0" startpinid="74HC4022-5-Q6" y="-148" valLabRot="0" rotation="0" circRot="8.8962566897221537e-317" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-19" x="-420" objectName="Connector-19" labely="-24" mainComp="false" pointList="-420,-148,-444,-148,-444,-100,-292,-100,-292,-172,-276,-172" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Q6-74HC4022-5-Q6-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-21: 
+Circuit Id: Connector-21
+<item vflip="1" endpinid="LedBar-6-led7-pinP" circPos="0,0" startpinid="74HC4022-5-Q7" y="-132" valLabRot="0" rotation="0" circRot="1.9097962119181516e-313" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-21" x="-372" objectName="Connector-21" labely="-24" mainComp="false" pointList="-372,-132,-276,-132,-276,-164" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Q7-74HC4022-5-Q7-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-25: 
+Circuit Id: Connector-25
+<item vflip="1" endpinid="74HC4022-5-!CE" circPos="0,0" startpinid="Ground (0 V)-3-Gnd" y="-76" valLabRot="0" rotation="0" circRot="8.5445689054368542e-317" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-25" x="-364" objectName="Connector-25" labely="-24" mainComp="false" pointList="-364,-76,-364,-156,-372,-156" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-!CE-74HC4022-5-!CE-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-27: 
+Circuit Id: Connector-27
+<item vflip="1" endpinid="74HC4022-5-CLK" circPos="0,0" startpinid="Clock-2-outnod" y="-76" valLabRot="0" rotation="0" circRot="8.4884825733209559e-317" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-27" x="-412" objectName="Connector-27" labely="-24" mainComp="false" pointList="-412,-76,-348,-76,-348,-164,-372,-164" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="Circ_eNode-197" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-29: 
+Circuit Id: Connector-29
+<item vflip="1" endpinid="74HC4022-5-Cout" circPos="0,0" startpinid="Probe-1-inpin" y="-148" valLabRot="0" rotation="0" circRot="5.7311614917584599e-322" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-29" x="-244" objectName="Connector-29" labely="-24" mainComp="false" pointList="-244,-148,-372,-148" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-Cout-74HC4022-5-Cout-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+
+Unique  Id: Connector-34: 
+Circuit Id: Connector-34
+<item vflip="1" endpinid="74HC4022-5-MR" circPos="0,0" startpinid="Fixed Volt.-33-outnod" y="-260" valLabRot="0" rotation="0" circRot="8.6993576960163334e-317" labelrot="0" Show_id="false" boardRot="-1000000" labelx="-16" id="Connector-34" x="-396" objectName="Connector-34" labely="-24" mainComp="false" pointList="-396,-260,-332,-260,-332,-172,-372,-172" boardPos="-1e+06,-1e+06" valLabely="0" enodeid="74HC4022-5-MR-74HC4022-5-MR-eNode" itemtype="Connector" hflip="1" valLabelx="0"/>
+ 
+</circuit>

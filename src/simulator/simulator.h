@@ -1,0 +1,185 @@
+/***************************************************************************
+ *   Copyright (C) 2012 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef SIMULATOR_H
+#define SIMULATOR_H
+
+#include <qtconcurrentrun.h>
+#include <QElapsedTimer>
+
+#include "circmatrix.h"
+#include "component.h"
+
+#define LAST_SIM_EVENT 999
+
+class BaseProcessor;
+class eElement;
+class eNode;
+
+class MAINMODULE_EXPORT Simulator : public QObject
+{
+    struct simEvent_t{
+        simEvent_t* next;
+        uint64_t    time;
+        eElement*   comp;
+    };
+    struct simEventList_t {
+        simEvent_t  events[LAST_SIM_EVENT+1];
+        simEvent_t* free;
+        simEvent_t* first;
+    };
+    enum simState_t{
+        SIM_STOPPED=0,
+        SIM_PAUSED,
+        SIM_ERROR,
+        SIM_STARTING,
+        SIM_WAITING,
+        SIM_RUNNING,
+        SIM_DEBUGG,
+    };
+
+    Q_OBJECT
+    public:
+        Simulator( QObject* parent=0 );
+        ~Simulator();
+
+ static Simulator* self() { return m_pSelf; }
+
+         void addEvent( uint64_t time, eElement* comp );
+         void cancelEvents( eElement* comp );
+
+ inline void freeEvent( simEvent_t* event );
+        void clearEventList();
+        void clearNodeList();
+
+        void resetSim();
+        void startSim();
+        void debug( bool run );
+        void resumeSim();
+
+        void stopTimer();
+        void resumeTimer();
+
+        void pauseSim();
+        void stopSim();
+        void stopDebug();
+
+        void runGraphicStep();
+        void runGraphicStep1();
+        void runGraphicStep2();
+
+        void runCircuit();
+        
+        uint64_t circuitRate() { return m_stepsPF; }
+        uint64_t simuRate() { return m_stepsPS; }
+        void simuRateChanged( uint64_t rate );
+
+        int  reaClock() { return m_stepsReac; }
+        void setReaClock( int value );
+
+        int    noLinAcc() { return m_noLinAcc; }
+        void   setNoLinAcc( int ac );
+        double NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
+        
+        bool isRunning() { return (m_state >= SIM_STARTING); }
+        bool isPaused()  { return (m_state == SIM_PAUSED); }
+
+        uint64_t circTime() { return m_circTime; }
+        void setCircTime( uint64_t time );
+
+        QList<eNode*> geteNodes() { return m_eNodeList; }
+
+        void timerEvent( QTimerEvent* e );
+
+        uint64_t mS(){ return m_RefTimer.elapsed(); }
+
+        simState_t simState() { return m_state; }
+
+        void addToEnodeBusList( eNode* nod );
+        void remFromEnodeBusList( eNode* nod, bool del );
+
+        void addToEnodeList( eNode* nod );
+        void remFromEnodeList( eNode* nod, bool del );
+
+        void addToChangedNodes( eNode* nod );
+        
+        void addToElementList( eElement* el );
+        void remFromElementList( eElement* el );
+        
+        void addToUpdateList( eElement* el );
+        void remFromUpdateList( eElement* el );
+
+        void addToChangedFast( eElement* el );
+
+        void addToNoLinList( eElement* el );
+
+    signals:
+        void pauseDebug();
+        void resumeDebug();
+        void rateChanged();
+        
+    private:
+ static Simulator* m_pSelf;
+
+        inline void solveMatrix();
+
+        simEventList_t   m_eventList;
+
+        QFuture<void> m_CircuitFuture;
+
+        CircMatrix m_matrix;
+
+        QHash<int, QString> m_errors;
+
+        QList<eNode*> m_eNodeList;
+        QList<eNode*> m_eNodeBusList;
+
+        eNode*    m_changedNode;
+        eElement* m_voltChanged;
+        eElement* m_nonLin;
+
+        QList<eElement*> m_changedFast;
+        QList<eElement*> m_nonLinear;
+        QList<eElement*> m_elementList;
+        QList<eElement*> m_updateList;
+
+        simState_t m_state;
+
+        int  m_error;
+        int m_timerId;
+        int m_timerTick;
+        int m_noLinAcc;
+        int m_stepsReac;
+
+        uint64_t m_stepsPS;
+        uint64_t m_stepsPF;
+
+        uint64_t m_circTime;
+        uint64_t m_tStep;
+        uint64_t m_lastStep;
+        uint64_t m_refTime;
+        uint64_t m_lastRefT;
+        uint64_t m_loopTime;
+        double   m_load;
+
+        QElapsedTimer m_RefTimer;
+};
+ #endif
+
+

@@ -1,0 +1,67 @@
+<circuit type="simulide_0.4" Speed_sps="1000000" Speed_per="100" Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0">
+
+Unique  Id: Amperimeter-9: 
+Circuit Id: Amperimeter-24
+<item boardRot="-1000000" id="Amperimeter-24" labely="-24" hflip="1" rotation="0" circRot="0" valLabely="-22" vflip="1" labelrot="0" itemtype="Amperimeter" boardPos="-1e+06,-1e+06" Show_id="false" y="-220" circPos="0,0" x="-340" mainComp="false" objectName="Amperimeter-9" labelx="-12" valLabRot="0" valLabelx="-20"/>
+
+Unique  Id: Ground (0 V)-8: 
+Circuit Id: Ground (0 V)-22
+<item boardRot="-1000000" id="Ground (0 V)-22" labely="-24" hflip="1" rotation="0" circRot="8.6425203841187564e-317" valLabely="0" vflip="1" labelrot="0" itemtype="Ground" boardPos="-1e+06,-1e+06" Show_id="false" y="-44" circPos="0,0" x="-172" mainComp="false" objectName="Ground (0 V)-8" labelx="-16" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Resistor-7: 
+Circuit Id: Resistor-20
+<item boardRot="-1000000" id="Resistor-20" labely="-24" hflip="1" rotation="90" Resistance="100" circRot="9.4853211866374831e-312" valLabely="6" vflip="1" labelrot="0" itemtype="Resistor" boardPos="-1e+06,-1e+06" Show_id="false" y="-116" circPos="0,0" x="-172" mainComp="false" objectName="Resistor-7" labelx="-12" Unit=" Ω" valLabRot="0" valLabelx="-16" Show_res="true"/>
+
+Unique  Id: Rail.-6: 
+Circuit Id: Rail.-18
+<item boardRot="-1000000" id="Rail.-18" labely="-24" hflip="1" Voltage="5" rotation="0" circRot="9.4853211866374831e-312" valLabely="8" vflip="1" labelrot="0" itemtype="Rail" boardPos="-1e+06,-1e+06" Show_id="false" y="-332" circPos="0,0" x="-332" mainComp="false" Show_Volt="true" objectName="Rail.-6" labelx="-64" Unit=" V" valLabRot="0" valLabelx="-16"/>
+
+Unique  Id: BJT-5: 
+Circuit Id: BJT-6
+<item boardRot="-1000000" id="BJT-6" labely="-24" hflip="1" Threshold="0.69999999999999996" rotation="0" circRot="2.1362080723786757e-306" valLabely="0" vflip="-1" labelrot="0" itemtype="BJT" boardPos="-1e+06,-1e+06" Show_id="false" y="-196" circPos="0,0" x="-244" mainComp="false" objectName="BJT-5" BC_diode="false" labelx="-16" Gain="100" valLabRot="0" PNP="true" valLabelx="0"/>
+
+Unique  Id: Amperimeter-4: 
+Circuit Id: Amperimeter-4
+<item boardRot="-1000000" id="Amperimeter-4" labely="-24" hflip="1" rotation="0" circRot="0" valLabely="-22" vflip="1" labelrot="0" itemtype="Amperimeter" boardPos="-1e+06,-1e+06" Show_id="false" y="-188" circPos="0,0" x="-180" mainComp="false" objectName="Amperimeter-4" labelx="-12" valLabRot="0" valLabelx="-20"/>
+
+Unique  Id: Volt. Source-3: 
+Circuit Id: Volt. Source-3
+<item boardRot="-1000000" id="Volt. Source-3" labely="-24" hflip="1" Voltage="5" rotation="0" circRot="0" valLabely="10" vflip="1" labelrot="0" itemtype="Voltage Source" boardPos="-1e+06,-1e+06" Show_id="false" y="-196" circPos="0,0" x="-420" mainComp="false" Show_Volt="true" objectName="Volt. Source-3" labelx="-16" Unit=" V" valLabRot="0" valLabelx="-26"/>
+
+Unique  Id: Resistor-2: 
+Circuit Id: Resistor-2
+<item boardRot="-1000000" id="Resistor-2" labely="-24" hflip="1" rotation="0" Resistance="1" circRot="6.9533474039882476e-310" valLabely="10" vflip="1" labelrot="0" itemtype="Resistor" boardPos="-1e+06,-1e+06" Show_id="false" y="-196" circPos="0,0" x="-380" mainComp="false" objectName="Resistor-2" labelx="-12" Unit=" kΩ" valLabRot="0" valLabelx="-11" Show_res="true"/>
+
+Unique  Id: Probe-1: 
+Circuit Id: Probe-1
+<item boardRot="-1000000" id="Probe-1" labely="-16" hflip="1" Threshold="2.5" rotation="-45" circRot="2.1362080723786757e-306" valLabely="0" vflip="1" labelrot="45" itemtype="Probe" boardPos="-1e+06,-1e+06" Show_id="false" y="-212" circPos="0,0" x="-292" mainComp="false" objectName="Probe-1" labelx="16" Show_volt="true" valLabRot="45" valLabelx="16"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-10
+<item boardRot="-1000000" enodeid="Circ_eNode-11" id="Connector-10" labely="-24" hflip="1" endpinid="Amperimeter-4-lPin" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-180" startpinid="BJT-5-collector" circPos="0,0" x="-236" mainComp="false" objectName="Connector-10" labelx="-16" pointList="-236,-180,-236,-156,-188,-156,-188,-172" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item boardRot="-1000000" enodeid="Circ_eNode-13" id="Connector-12" labely="-24" hflip="1" endpinid="Resistor-2-lPin" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-196" startpinid="Volt. Source-3-outPin" circPos="0,0" x="-404" mainComp="false" objectName="Connector-12" labelx="-16" pointList="-404,-196,-396,-196" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-19
+<item boardRot="-1000000" enodeid="Circ_eNode-15" id="Connector-19" labely="-24" hflip="1" endpinid="BJT-5-emiter" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-332" startpinid="Rail.-6-outnod" circPos="0,0" x="-316" mainComp="false" objectName="Connector-14" labelx="-16" pointList="-316,-332,-236,-332,-236,-212" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-16: 
+Circuit Id: Connector-21
+<item boardRot="-1000000" enodeid="Circ_eNode-17" id="Connector-21" labely="-24" hflip="1" endpinid="Resistor-7-lPin" rotation="0" circRot="0" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-172" startpinid="Amperimeter-4-rPin" circPos="0,0" x="-172" mainComp="false" objectName="Connector-16" labelx="-16" pointList="-172,-172,-172,-132" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-18: 
+Circuit Id: Connector-23
+<item boardRot="-1000000" enodeid="Circ_eNode-19" id="Connector-23" labely="-24" hflip="1" endpinid="Resistor-7-rPin" rotation="0" circRot="2.1362080723786757e-306" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-60" startpinid="Ground (0 V)-8-Gnd" circPos="0,0" x="-172" mainComp="false" objectName="Connector-18" labelx="-16" pointList="-172,-60,-172,-100" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-20: 
+Circuit Id: Connector-25
+<item boardRot="-1000000" enodeid="Circ_eNode-21" id="Connector-25" labely="-24" hflip="1" endpinid="Amperimeter-9-lPin" rotation="0" circRot="3.9525251667299724e-322" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-196" startpinid="Resistor-2-rPin" circPos="0,0" x="-364" mainComp="false" objectName="Connector-20" labelx="-16" pointList="-364,-196,-348,-196,-348,-204" valLabRot="0" valLabelx="0"/>
+
+Unique  Id: Connector-22: 
+Circuit Id: Connector-26
+<item boardRot="-1000000" enodeid="Circ_eNode-23" id="Connector-26" labely="-24" hflip="1" endpinid="BJT-5-base" rotation="0" circRot="nan" valLabely="0" vflip="1" labelrot="0" itemtype="Connector" boardPos="-1e+06,-1e+06" Show_id="false" y="-204" startpinid="Amperimeter-9-rPin" circPos="0,0" x="-332" mainComp="false" objectName="Connector-22" labelx="-16" pointList="-332,-204,-332,-196,-260,-196" valLabRot="0" valLabelx="0"/>
+ 
+</circuit>

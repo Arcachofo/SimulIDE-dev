@@ -1,0 +1,126 @@
+<circuit noLinAcc="5" animate="0" type="simulide_0.4" speed="1000000" reactStep="50">
+ 
+Node-65: 
+<item id="Node-65" labelrot="0" rotation="0" vflip="1" objectName="Node-65" labelx="-16" valLabRot="0" valLabelx="0" x="-8" Show_id="false" y="-308" labely="-24" hflip="1" valLabely="0" itemtype="Node"/>
+ 
+Node-58: 
+<item id="Node-58" labelrot="0" rotation="0" vflip="1" objectName="Node-58" labelx="-16" valLabRot="0" valLabelx="0" x="68" Show_id="false" y="-196" labely="-24" hflip="1" valLabely="0" itemtype="Node"/>
+ 
+Node-55: 
+<item id="Node-55" labelrot="0" rotation="0" vflip="1" objectName="Node-55" labelx="-16" valLabRot="0" valLabelx="0" x="60" Show_id="false" y="-196" labely="-24" hflip="1" valLabely="0" itemtype="Node"/>
+ 
+Ground-52: 
+<item id="Ground-28" labelrot="0" rotation="0" vflip="1" objectName="Ground-52" labelx="-16" valLabRot="0" valLabelx="0" x="60" Show_id="false" y="-120" labely="8" hflip="1" valLabely="0" itemtype="Ground"/>
+ 
+7-51: 
+<item id="7-Seg BCD-21" labelrot="0" rotation="0" vflip="1" objectName="7-51" labelx="-16" valLabRot="0" valLabelx="0" x="112" Show_id="false" y="-232" labely="-24" hflip="1" valLabely="0" itemtype="7-Seg BCD"/>
+ 
+Node-48: 
+<item id="Node-48" labelrot="0" rotation="0" vflip="1" objectName="Node-48" labelx="-16" valLabRot="0" valLabelx="0" x="20" Show_id="false" y="-268" labely="-24" hflip="1" valLabely="0" itemtype="Node"/>
+ 
+MM74C923-46: 
+<item id="MM74C923-46" labelrot="0" rotation="0" vflip="1" objectName="MM74C923-46" labelx="0" valLabRot="0" valLabelx="0" x="-72" Logic_Symbol="true" Show_id="true" y="-300" labely="-20" hflip="1" valLabely="0" itemtype="Subcircuit"/>
+ 
+KeyPad-9: 
+<item Cols="4" vflip="1" rotation="0" hflip="1" valLabelx="0" objectName="KeyPad-9" y="-260" Show_id="false" valLabely="0" itemtype="KeyPad" labelx="-8" x="-252" id="KeyPad-2" labely="-16" valLabRot="0" Key_Labels="0123456789ABCDEFGHIJ" Rows="5" labelrot="0"/>
+ 
+Buffer-8: 
+<item vflip="1" rotation="0" hflip="1" valLabelx="0" Input_Low_V="2.5" Out_Low_V="0" Input_Imped="100000000000000" Tristate="false" objectName="Buffer-8" y="-268" Show_id="false" Input_High_V="2.5" valLabely="0" Out_High_V="5" itemtype="Buffer" labelx="-16" x="0" Out_Imped="40" id="Buffer-14" labely="-24" valLabRot="0" Open_Collector="false" Inverted="true" labelrot="0"/>
+ 
+Probe-7: 
+<item vflip="1" rotation="-45" hflip="1" valLabelx="16" Threshold="2.5" objectName="Probe-7" y="-284" Show_id="false" valLabely="0" itemtype="Probe" labelx="16" x="76" id="Probe-17" labely="-16" Show_volt="true" valLabRot="45" PlotterCh="0" labelrot="45"/>
+ 
+7-5: 
+<item id="7-Seg BCD-21" labelrot="0" rotation="0" vflip="1" objectName="7-5" labelx="-16" valLabRot="0" valLabelx="0" x="68" Show_id="false" y="-232" labely="-24" hflip="1" valLabely="0" itemtype="7-Seg BCD"/>
+ 
+Capacitor-4: 
+<item vflip="1" rotation="0" hflip="1" valLabelx="-16" Unit=" nF" objectName="Capacitor-4" Capacitance="99.999999999999986" y="-308" Show_Cap="true" Show_id="false" valLabely="8" itemtype="Capacitor" labelx="-16" x="28" id="Capacitor-26" labely="-24" valLabRot="0" labelrot="0"/>
+ 
+Ground-3: 
+<item id="Ground-28" labelrot="0" rotation="0" vflip="1" objectName="Ground-3" labelx="-16" valLabRot="0" valLabelx="0" x="44" Show_id="false" y="-280" labely="8" hflip="1" valLabely="0" itemtype="Ground"/>
+ 
+Clock-2: 
+<item vflip="1" rotation="0" hflip="1" valLabelx="-16" Unit=" V" objectName="Clock-2" y="-356" Show_id="false" valLabely="8" itemtype="Clock" labelx="-64" Show_Volt="true" x="-40" id="Clock-51" labely="-24" valLabRot="0" Freq="200" Running="true" Voltage="5" labelrot="0"/>
+ 
+Connector-41: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Node-65-0" valLabelx="0" startpinid="Clock-2-outnod" pointList="-24,-356,-8,-356,-8,-308" objectName="Connector-41" y="-356" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-24" id="Connector-41" labely="-24" valLabRot="0" enodeid="enode-67" labelrot="0"/>
+ 
+Connector-13: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Node-48-0" valLabelx="0" startpinid="Buffer-8-out" pointList="16,-268,20,-268" objectName="Connector-13" y="-268" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="16" id="Connector-13" labely="-24" valLabRot="0" enodeid="enode-50" labelrot="0"/>
+ 
+Connector-47: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Buffer-8-in0" valLabelx="0" startpinid="MM74C923-46-DA" pointList="-32,-268,-16,-268" objectName="Connector-47" y="-268" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-32" id="Connector-47" labely="-24" valLabRot="0" enodeid="enode-47" labelrot="0"/>
+ 
+Connector-49: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Probe-7-inpin" valLabelx="0" startpinid="Node-48-2" pointList="20,-268,60,-268" objectName="Connector-49" y="-268" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="20" id="Connector-49" labely="-24" valLabRot="0" enodeid="enode-50" labelrot="0"/>
+ 
+Connector-50: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-!OE" valLabelx="0" startpinid="Node-48-1" pointList="20,-268,20,-260,-32,-260" objectName="Connector-50" y="-268" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="20" id="Connector-50" labely="-24" valLabRot="0" enodeid="enode-50" labelrot="0"/>
+ 
+Connector-53: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Node-55-0" valLabelx="0" startpinid="Ground-52-Gnd" pointList="60,-136,60,-196" objectName="Connector-53" y="-136" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="60" id="Connector-53" labely="-24" valLabRot="0" enodeid="enode-57" labelrot="0"/>
+ 
+Connector-54: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Node-58-0" valLabelx="0" startpinid="7-5-in2" pointList="68,-200,68,-196" objectName="Connector-54" y="-200" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="68" id="Connector-54" labely="-24" valLabRot="0" enodeid="enode-57" labelrot="0"/>
+ 
+Connector-56: 
+<item vflip="1" rotation="0" hflip="1" endpinid="7-5-in3" valLabelx="0" startpinid="Node-55-2" pointList="60,-196,60,-200" objectName="Connector-56" y="-196" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="60" id="Connector-56" labely="-24" valLabRot="0" enodeid="enode-57" labelrot="0"/>
+ 
+Connector-57: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Node-58-1" valLabelx="0" startpinid="7-5-in1" pointList="76,-200,76,-196,68,-196" objectName="Connector-57" y="-200" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="76" id="Connector-57" labely="-24" valLabRot="0" enodeid="enode-57" labelrot="0"/>
+ 
+Connector-59: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Node-55-1" valLabelx="0" startpinid="Node-58-2" pointList="68,-196,60,-196" objectName="Connector-59" y="-196" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="68" id="Connector-59" labely="-24" valLabRot="0" enodeid="enode-57" labelrot="0"/>
+ 
+Connector-60: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-E" valLabelx="0" startpinid="7-5-in0" pointList="84,-200,84,-184,-24,-184,-24,-212,-32,-212" objectName="Connector-60" y="-200" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="84" id="Connector-60" labely="-24" valLabRot="0" enodeid="enode-60" labelrot="0"/>
+ 
+Connector-61: 
+<item vflip="1" rotation="0" hflip="1" endpinid="7-51-in3" valLabelx="0" startpinid="MM74C923-46-D" pointList="-32,-220,-12,-220,-12,-180,104,-180,104,-200" objectName="Connector-61" y="-220" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-32" id="Connector-61" labely="-24" valLabRot="0" enodeid="enode-61" labelrot="0"/>
+ 
+Connector-62: 
+<item vflip="1" rotation="0" hflip="1" endpinid="7-51-in2" valLabelx="0" startpinid="MM74C923-46-C" pointList="-32,-228,-4,-228,-4,-172,112,-172,112,-200" objectName="Connector-62" y="-228" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-32" id="Connector-62" labely="-24" valLabRot="0" enodeid="enode-62" labelrot="0"/>
+ 
+Connector-63: 
+<item vflip="1" rotation="0" hflip="1" endpinid="7-51-in1" valLabelx="0" startpinid="MM74C923-46-B" pointList="-32,-236,4,-236,4,-168,120,-168,120,-200" objectName="Connector-63" y="-236" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-32" id="Connector-63" labely="-24" valLabRot="0" enodeid="enode-63" labelrot="0"/>
+ 
+Connector-64: 
+<item vflip="1" rotation="0" hflip="1" endpinid="7-51-in0" valLabelx="0" startpinid="MM74C923-46-A" pointList="-32,-244,12,-244,12,-164,128,-164,128,-200" objectName="Connector-64" y="-244" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-32" id="Connector-64" labely="-24" valLabRot="0" enodeid="enode-64" labelrot="0"/>
+ 
+Connector-66: 
+<item vflip="1" rotation="0" hflip="1" endpinid="Capacitor-4-lPin" valLabelx="0" startpinid="Node-65-2" pointList="-8,-308,12,-308" objectName="Connector-66" y="-308" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-8" id="Connector-66" labely="-24" valLabRot="0" enodeid="enode-67" labelrot="0"/>
+ 
+Connector-67: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-OSC" valLabelx="0" startpinid="Node-65-1" pointList="-8,-308,-8,-284,-32,-284" objectName="Connector-67" y="-308" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-8" id="Connector-67" labely="-24" valLabRot="0" enodeid="enode-67" labelrot="0"/>
+ 
+Connector-68: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-Y1" valLabelx="0" startpinid="KeyPad-9-Pin0" pointList="-188,-252,-80,-252,-80,-244" objectName="Connector-68" y="-252" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-188" id="Connector-68" labely="-24" valLabRot="0" enodeid="enode-68" labelrot="0"/>
+ 
+Connector-69: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-Y2" valLabelx="0" startpinid="KeyPad-9-Pin1" pointList="-188,-236,-80,-236" objectName="Connector-69" y="-236" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-188" id="Connector-69" labely="-24" valLabRot="0" enodeid="enode-69" labelrot="0"/>
+ 
+Connector-70: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-Y3" valLabelx="0" startpinid="KeyPad-9-Pin2" pointList="-188,-220,-176,-220,-176,-228,-80,-228" objectName="Connector-70" y="-220" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-188" id="Connector-70" labely="-24" valLabRot="0" enodeid="enode-70" labelrot="0"/>
+ 
+Connector-71: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-Y4" valLabelx="0" startpinid="KeyPad-9-Pin3" pointList="-188,-204,-168,-204,-168,-220,-80,-220" objectName="Connector-71" y="-204" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-188" id="Connector-71" labely="-24" valLabRot="0" enodeid="enode-71" labelrot="0"/>
+ 
+Connector-72: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-Y5" valLabelx="0" startpinid="KeyPad-9-Pin4" pointList="-188,-188,-156,-188,-156,-212,-80,-212" objectName="Connector-72" y="-188" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-188" id="Connector-72" labely="-24" valLabRot="0" enodeid="enode-72" labelrot="0"/>
+ 
+Connector-73: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-X1" valLabelx="0" startpinid="KeyPad-9-Pin5" pointList="-252,-172,-252,-164,-140,-164,-140,-292,-80,-292" objectName="Connector-73" y="-172" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-252" id="Connector-73" labely="-24" valLabRot="0" enodeid="enode-73" labelrot="0"/>
+ 
+Connector-74: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-X2" valLabelx="0" startpinid="KeyPad-9-Pin6" pointList="-236,-172,-236,-156,-132,-156,-132,-284,-80,-284" objectName="Connector-74" y="-172" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-236" id="Connector-74" labely="-24" valLabRot="0" enodeid="enode-74" labelrot="0"/>
+ 
+Connector-75: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-X3" valLabelx="0" startpinid="KeyPad-9-Pin7" pointList="-220,-172,-220,-148,-124,-148,-124,-276,-80,-276" objectName="Connector-75" y="-172" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-220" id="Connector-75" labely="-24" valLabRot="0" enodeid="enode-75" labelrot="0"/>
+ 
+Connector-76: 
+<item vflip="1" rotation="0" hflip="1" endpinid="MM74C923-46-X4" valLabelx="0" startpinid="KeyPad-9-Pin8" pointList="-204,-172,-204,-140,-116,-140,-116,-268,-80,-268" objectName="Connector-76" y="-172" Show_id="false" valLabely="0" itemtype="Connector" labelx="-16" x="-204" id="Connector-76" labely="-24" valLabRot="0" enodeid="enode-76" labelrot="0"/>
+ 
+PlotterWidget-45: 
+<item toolTip="" childrenRegion="" normalGeometry="" objectName="PlotterWidget-45" maximumHeight="200" pos="" visible="false" windowIconText="" baseSize="" minimumSizeHint="" frameGeometry="" sizeHint="" enabled="true" accessibleDescription="" MaxVolt="500" updatesEnabled="true" minimumHeight="200" maximized="false" y="0" windowModality="0" focusPolicy="0" contextMenuPolicy="1" maximumSize="" windowOpacity="1" locale="" sizePolicy="" layoutDirection="0" cursor="" accessibleName="" modal="false" frameSize="" inputMethodHints="0" width="200" geometry="" autoFillBackground="false" isActiveWindow="true" Tracks="1" maximumWidth="1000" childrenRect="" size="" sizeIncrement="" statusTip="" rect="" whatsThis="" palette="" minimized="false" itemtype="Plotter" windowFilePath="" Scale="1" x="0" styleSheet="" minimumSize="" windowModified="false" windowIcon="" height="200" acceptDrops="false" toolTipDuration="-1" minimumWidth="200" mouseTracking="false" windowTitle="" MinVolt="-500" focus="false" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" fullScreen="false"/>
+ 
+</circuit>

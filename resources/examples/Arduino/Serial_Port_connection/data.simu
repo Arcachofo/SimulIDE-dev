@@ -1,0 +1,55 @@
+<circuit Speed_per="100" Simu_Step_nS="1000" reactStep="50" type="simulide_0.4" Speed_sps="1000000" animate="0" noLinAcc="5">
+
+Unique  Id: Arduino Uno-7: 
+Circuit Id: Arduino Uno-7
+<item circPos="0,0" x="-324" eeprom="0" Show_id="true" valLabely="0" objectName="Arduino Uno-7" valLabRot="0" hflip="1" Init_gdb="false" boardRot="-1000000" boardPos="-1e+06,-1e+06" labely="-20" varList="" Mhz="16" y="-284" vflip="1" labelx="0" id="Arduino Uno-7" mainComp="false" circRot="0" Program="/home/user/Escritorio/kk/simulide_0.1.4/release/SimulIDE_0.1.4-Lin64-NO_PIC/examples/StandardFirmata.ino.hex" valLabelx="0" labelrot="0" Logic_Symbol="false" rotation="0" itemtype="Arduino" Auto_Load="false"/>
+
+Unique  Id: Fixed Volt.-6: 
+Circuit Id: Fixed Volt.-6
+<item circPos="0,0" x="-396" Out="false" Show_id="false" valLabely="8" objectName="Fixed Volt.-6" valLabRot="0" hflip="1" boardRot="-1000000" boardPos="-1e+06,-1e+06" Voltage="5" labely="-24" Unit=" V" y="-268" vflip="1" labelx="-64" id="Fixed Volt.-6" mainComp="false" circRot="1.8675681412799119e-321" valLabelx="-16" labelrot="0" rotation="0" itemtype="Fixed Voltage" Show_Volt="true"/>
+
+Unique  Id: Fixed Volt.-5: 
+Circuit Id: Fixed Volt.-5
+<item circPos="0,0" x="-396" Out="false" Show_id="false" valLabely="8" objectName="Fixed Volt.-5" valLabRot="0" hflip="1" boardRot="-1000000" boardPos="-1e+06,-1e+06" Voltage="5" labely="-24" Unit=" V" y="-244" vflip="1" labelx="-64" id="Fixed Volt.-5" mainComp="false" circRot="0" valLabelx="-16" labelrot="0" rotation="0" itemtype="Fixed Voltage" Show_Volt="true"/>
+
+Unique  Id: Fixed Volt.-4: 
+Circuit Id: Fixed Volt.-4
+<item circPos="0,0" x="-396" Out="false" Show_id="false" valLabely="8" objectName="Fixed Volt.-4" valLabRot="0" hflip="1" boardRot="-1000000" boardPos="-1e+06,-1e+06" Voltage="5" labely="-24" Unit=" V" y="-220" vflip="1" labelx="-64" id="Fixed Volt.-4" mainComp="false" circRot="0" valLabelx="-16" labelrot="0" rotation="0" itemtype="Fixed Voltage" Show_Volt="true"/>
+
+Unique  Id: Volt. Source-3: 
+Circuit Id: Volt. Source-3
+<item circPos="0,0" x="-156" Show_id="false" valLabely="10" objectName="Volt. Source-3" valLabRot="0" hflip="1" boardRot="-1000000" boardPos="-1e+06,-1e+06" Voltage="5" labely="-24" Unit=" V" y="-324" vflip="1" labelx="-16" id="Volt. Source-3" mainComp="false" circRot="0" valLabelx="-26" labelrot="0" rotation="0" itemtype="Voltage Source" Show_Volt="true"/>
+
+Unique  Id: Volt. Source-2: 
+Circuit Id: Volt. Source-2
+<item circPos="0,0" x="-68" Show_id="false" valLabely="10" objectName="Volt. Source-2" valLabRot="0" hflip="1" boardRot="-1000000" boardPos="-1e+06,-1e+06" Voltage="5" labely="-24" Unit=" V" y="-324" vflip="1" labelx="-16" id="Volt. Source-2" mainComp="false" circRot="0" valLabelx="-26" labelrot="0" rotation="0" itemtype="Voltage Source" Show_Volt="true"/>
+
+Unique  Id: Volt. Source-1: 
+Circuit Id: Volt. Source-1
+<item circPos="0,0" x="44" Show_id="false" valLabely="10" objectName="Volt. Source-1" valLabRot="0" hflip="1" boardRot="-1000000" boardPos="-1e+06,-1e+06" Voltage="5" labely="-24" Unit=" V" y="-324" vflip="1" labelx="-16" id="Volt. Source-1" mainComp="false" circRot="8.4377874855324773e-317" valLabelx="-26" labelrot="0" rotation="0" itemtype="Voltage Source" Show_Volt="true"/>
+
+Unique  Id: Connector-8: 
+Circuit Id: Connector-8
+<item circPos="0,0" x="-380" Show_id="false" valLabely="0" objectName="Connector-8" valLabRot="0" hflip="1" boardRot="-1000000" startpinid="Fixed Volt.-6-outnod" boardPos="-1e+06,-1e+06" enodeid="Circ_eNode-9" labely="-24" y="-268" vflip="1" labelx="-16" id="Connector-8" endpinid="Arduino Uno-7-PD0" mainComp="false" circRot="8.7449619313900638e-322" valLabelx="0" pointList="-380,-268,-316,-268" labelrot="0" rotation="0" itemtype="Connector"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-10
+<item circPos="0,0" x="-380" Show_id="false" valLabely="0" objectName="Connector-10" valLabRot="0" hflip="1" boardRot="-1000000" startpinid="Fixed Volt.-5-outnod" boardPos="-1e+06,-1e+06" enodeid="Circ_eNode-11" labely="-24" y="-244" vflip="1" labelx="-16" id="Connector-10" endpinid="Arduino Uno-7-PD3" mainComp="false" circRot="6.9531436082559078e-310" valLabelx="0" pointList="-380,-244,-316,-244" labelrot="0" rotation="0" itemtype="Connector"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item circPos="0,0" x="-380" Show_id="false" valLabely="0" objectName="Connector-12" valLabRot="0" hflip="1" boardRot="-1000000" startpinid="Fixed Volt.-4-outnod" boardPos="-1e+06,-1e+06" enodeid="Circ_eNode-13" labely="-24" y="-220" vflip="1" labelx="-16" id="Connector-12" endpinid="Arduino Uno-7-PD6" mainComp="false" circRot="0" valLabelx="0" pointList="-380,-220,-316,-220" labelrot="0" rotation="0" itemtype="Connector"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-14
+<item circPos="0,0" x="-140" Show_id="false" valLabely="0" objectName="Connector-14" valLabRot="0" hflip="1" boardRot="-1000000" startpinid="Volt. Source-3-outPin" boardPos="-1e+06,-1e+06" enodeid="Circ_eNode-15" labely="-24" y="-324" vflip="1" labelx="-16" id="Connector-14" endpinid="Arduino Uno-7-PC3" mainComp="false" circRot="2.1362080723786757e-306" valLabelx="0" pointList="-140,-324,-132,-324,-132,-252,-172,-252" labelrot="0" rotation="0" itemtype="Connector"/>
+
+Unique  Id: Connector-16: 
+Circuit Id: Connector-16
+<item circPos="0,0" x="-52" Show_id="false" valLabely="0" objectName="Connector-16" valLabRot="0" hflip="1" boardRot="-1000000" startpinid="Volt. Source-2-outPin" boardPos="-1e+06,-1e+06" enodeid="Circ_eNode-17" labely="-24" y="-324" vflip="1" labelx="-16" id="Connector-16" endpinid="Arduino Uno-7-PC2" mainComp="false" circRot="8.5521538012318091e-317" valLabelx="0" pointList="-52,-324,-28,-324,-28,-244,-172,-244" labelrot="0" rotation="0" itemtype="Connector"/>
+
+Unique  Id: Connector-18: 
+Circuit Id: Connector-18
+<item circPos="0,0" x="60" Show_id="false" valLabely="0" objectName="Connector-18" valLabRot="0" hflip="1" boardRot="-1000000" startpinid="Volt. Source-1-outPin" boardPos="-1e+06,-1e+06" enodeid="Circ_eNode-19" labely="-24" y="-324" vflip="1" labelx="-16" id="Connector-18" endpinid="Arduino Uno-7-PC0" mainComp="false" circRot="7.9508601001423451e-317" valLabelx="0" pointList="60,-324,60,-228,-172,-228" labelrot="0" rotation="0" itemtype="Connector"/>
+ 
+</circuit>

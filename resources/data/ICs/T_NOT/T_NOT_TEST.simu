@@ -1,0 +1,54 @@
+<circuit type="simulide_0.1" speed="1000000" noLinAcc="5" animate="0" reactStep="50">
+ 
+Fixed Voltage-9: 
+<item id="Fixed Voltage-28" hflip="1" x="-440" labelx="-64" vflip="1" labely="-24" valLabelx="-51" labelrot="0" itemtype="Fixed Voltage" valLabRot="0" Show_id="false" Show_Volt="true" rotation="0" Unit=" V" valLabely="-6" y="-96" objectName="Fixed Voltage-9" Voltage="-5"/>
+ 
+Fixed Voltage-8: 
+<item id="Fixed Voltage-26" hflip="1" x="-444" labelx="-64" vflip="1" labely="-24" valLabelx="-47" labelrot="0" itemtype="Fixed Voltage" valLabRot="0" Show_id="false" Show_Volt="true" rotation="0" Unit=" V" valLabely="-5" y="-160" objectName="Fixed Voltage-8" Voltage="5"/>
+ 
+Probe-7: 
+<item hflip="1" valLabely="0" x="-300" labely="-16" labelx="16" valLabelx="16" vflip="1" valLabRot="45" Show_volt="true" y="-112" rotation="-45" Show_id="false" itemtype="Probe" PlotterCh="0" objectName="Probe-7" labelrot="45" id="Probe-2"/>
+ 
+T_not-6: 
+<item hflip="1" valLabely="0" x="-388" labely="-20" labelx="0" valLabelx="0" vflip="1" valLabRot="0" y="-104" rotation="0" Logic_Symbol="true" Show_id="true" itemtype="Subcircuit" objectName="T_not-6" labelrot="0" id="T_not-1"/>
+ 
+Probe-5: 
+<item hflip="1" valLabely="0" x="-300" labely="-16" labelx="16" valLabelx="16" vflip="1" valLabRot="45" Show_volt="true" y="-176" rotation="-45" Show_id="false" itemtype="Probe" PlotterCh="0" objectName="Probe-5" labelrot="45" id="Probe-2"/>
+ 
+T_not-4: 
+<item hflip="1" valLabely="0" x="-388" labely="-20" labelx="0" valLabelx="0" vflip="1" valLabRot="0" y="-168" rotation="0" Logic_Symbol="true" Show_id="true" itemtype="Subcircuit" objectName="T_not-4" labelrot="0" id="T_not-1"/>
+ 
+Ground-3: 
+<item hflip="1" valLabely="0" x="-428" labely="8" labelx="-16" valLabelx="0" vflip="1" valLabRot="0" y="-204" rotation="0" Show_id="false" itemtype="Ground" objectName="Ground-3" labelrot="0" id="Ground-6"/>
+ 
+Probe-2: 
+<item hflip="1" valLabely="0" x="-300" labely="-16" labelx="16" valLabelx="16" vflip="1" valLabRot="45" Show_volt="true" y="-240" rotation="-45" Show_id="false" itemtype="Probe" PlotterCh="0" objectName="Probe-2" labelrot="45" id="Probe-2"/>
+ 
+T_not-1: 
+<item hflip="1" valLabely="0" x="-388" labely="-20" labelx="0" valLabelx="0" vflip="1" valLabRot="0" y="-232" rotation="0" Logic_Symbol="true" Show_id="true" itemtype="Subcircuit" objectName="T_not-1" labelrot="0" id="T_not-1"/>
+ 
+Connector-10: 
+<item id="Connector-3" hflip="1" x="-316" labelx="-16" vflip="1" endpinid="T_not-1-!TX" labely="-24" valLabelx="0" labelrot="0" itemtype="Connector" startpinid="Probe-2-inpin" valLabRot="0" Show_id="false" rotation="0" enodeid="Circ_eNode-11" pointList="-316,-224,-348,-224" valLabely="0" y="-224" objectName="Connector-10"/>
+ 
+Connector-12: 
+<item id="Connector-7" hflip="1" x="-428" labelx="-16" vflip="1" endpinid="T_not-1-TX" labely="-24" valLabelx="0" labelrot="0" itemtype="Connector" startpinid="Ground-3-Gnd" valLabRot="0" Show_id="false" rotation="0" enodeid="Circ_eNode-13" pointList="-428,-220,-428,-224,-396,-224" valLabely="0" y="-220" objectName="Connector-12"/>
+ 
+Connector-14: 
+<item id="Connector-3" hflip="1" x="-316" labelx="-16" vflip="1" endpinid="T_not-4-!TX" labely="-24" valLabelx="0" labelrot="0" itemtype="Connector" startpinid="Probe-5-inpin" valLabRot="0" Show_id="false" rotation="0" enodeid="Circ_eNode-15" pointList="-316,-160,-348,-160" valLabely="0" y="-160" objectName="Connector-14"/>
+ 
+Connector-16: 
+<item id="Connector-3" hflip="1" x="-316" labelx="-16" vflip="1" endpinid="T_not-6-!TX" labely="-24" valLabelx="0" labelrot="0" itemtype="Connector" startpinid="Probe-7-inpin" valLabRot="0" Show_id="false" rotation="0" enodeid="Circ_eNode-17" pointList="-316,-96,-348,-96" valLabely="0" y="-96" objectName="Connector-16"/>
+ 
+Connector-18: 
+<item id="Connector-27" hflip="1" x="-428" labelx="-16" vflip="1" endpinid="T_not-4-TX" labely="-24" valLabelx="0" labelrot="0" itemtype="Connector" startpinid="Fixed Voltage-8-outnod" valLabRot="0" Show_id="false" rotation="0" enodeid="Circ_eNode-19" pointList="-428,-160,-396,-160" valLabely="0" y="-160" objectName="Connector-18"/>
+ 
+Connector-20: 
+<item id="Connector-29" hflip="1" x="-424" labelx="-16" vflip="1" endpinid="T_not-6-TX" labely="-24" valLabelx="0" labelrot="0" itemtype="Connector" startpinid="Fixed Voltage-9-outnod" valLabRot="0" Show_id="false" rotation="0" enodeid="Circ_eNode-21" pointList="-424,-96,-396,-96" valLabely="0" y="-96" objectName="Connector-20"/>
+ 
+PlotterWidget-22: 
+<item childrenRegion="" minimized="false" baseSize="" MinVolt="-500" maximumWidth="1000" updatesEnabled="true" toolTipDuration="-1" y="0" modal="false" objectName="PlotterWidget-22" maximized="false" maximumSize="" windowTitle="" toolTip="" MaxVolt="500" mouseTracking="false" focusPolicy="0" sizeIncrement="" childrenRect="" normalGeometry="" width="200" accessibleDescription="" frameSize="" windowModality="0" windowModified="false" focus="false" sizeHint="" cursor="" styleSheet="" itemtype="Plotter" minimumHeight="200" enabled="true" statusTip="" layoutDirection="0" fullScreen="false" accessibleName="" rect="" size="" minimumSizeHint="" Tracks="1" windowFilePath="" isActiveWindow="true" visible="false" x="0" palette="" windowIcon="" minimumSize="" windowIconText="" locale="" geometry="" contextMenuPolicy="1" sizePolicy="" minimumWidth="200" maximumHeight="200" height="200" pos="" acceptDrops="false" whatsThis="" frameGeometry="" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" autoFillBackground="false" inputMethodHints="0" Scale="1" windowOpacity="1"/>
+ 
+SerialPortWidget-23: 
+<item childrenRegion="" minimized="false" baseSize="" maximumWidth="450" updatesEnabled="true" toolTipDuration="-1" y="0" modal="false" objectName="SerialPortWidget-23" maximized="false" maximumSize="" windowTitle="?????????" toolTip="" mouseTracking="false" focusPolicy="0" sizeIncrement="" childrenRect="" normalGeometry="" width="313" accessibleDescription="" frameSize="" windowModality="0" windowModified="false" focus="false" sizeHint="" cursor="" styleSheet="" itemtype="SerialPort" minimumHeight="0" enabled="true" statusTip="" layoutDirection="0" fullScreen="false" accessibleName="" rect="" size="" minimumSizeHint="" windowFilePath="" isActiveWindow="true" visible="false" x="0" palette="" SettingsProp="COM1,0,3,0,0,0" windowIcon="" minimumSize="" windowIconText="" locale="" geometry="" contextMenuPolicy="1" sizePolicy="" minimumWidth="0" maximumHeight="170" height="141" pos="" acceptDrops="false" whatsThis="" frameGeometry="" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" autoFillBackground="false" inputMethodHints="0" windowOpacity="1"/>
+ 
+</circuit>
