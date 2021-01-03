@@ -126,12 +126,34 @@ void MainWindow::setFontScale(float scale )
 
 QString MainWindow::loc()
 {
-    return Circuit::self()->loc();
+    QString locale = "en";
+    if     ( m_lang == French )    locale = "fr";
+    else if( m_lang == German )    locale = "de";
+    else if( m_lang == Italian )   locale = "it";
+    else if( m_lang == Russian )   locale = "ru";
+    else if( m_lang == Spanish )   locale = "es";
+    else if( m_lang == Pt_Brasil ) locale = "pt_BR";
+
+    return locale;
 }
 
 void MainWindow::setLoc(QString loc )
 {
-    Circuit::self()->setLoc( loc );
+    Langs lang = English;
+    if     ( loc == "fr" )    lang = French;
+    else if( loc == "de" )    lang = German;
+    else if( loc == "it" )    lang = Italian;
+    else if( loc == "ru" )    lang = Russian;
+    else if( loc == "es" )    lang = Spanish;
+    else if( loc == "pt_BR" ) lang = Pt_Brasil;
+
+    m_lang = lang;
+}
+
+void MainWindow::setLang( Langs lang )
+{
+    m_lang = lang;
+    settings()->setValue( "language", loc() );
 }
 
 int MainWindow::autoBck()
@@ -146,7 +168,7 @@ void MainWindow::setAutoBck( int secs )
 
 void MainWindow::setTitle( QString title )
 {
-    setWindowTitle(m_version+"  -  "+title);
+    setWindowTitle( m_version+"  -  "+title );
 }
 
 void MainWindow::about()
@@ -231,7 +253,7 @@ QString MainWindow::getHelpFile( QString name )
     if( m_help.contains( name )) return m_help.value( name );
 
     //QString locale   = "_"+QLocale::system().name().split("_").first();
-    QString locale = "_"+Circuit::self()->loc();
+    QString locale = "_"+loc();
 
     name= name.toLower().replace( " ", "" );
     QString dfPath = SIMUAPI_AppPath::self()->availableDataFilePath( "help/"+locale+"/"+name+locale+".txt" );

@@ -176,7 +176,7 @@ void eLogicDevice::createInput( ePin* epin )
 
     epin->setId( m_elmId+"-ePin-input"+m_numInputs );
 
-    m_input[m_numInputs] = new eSource( m_elmId+"-eSource-input"+m_numInputs, epin );
+    m_input[m_numInputs] = new eSource( m_elmId+"-eSource-input"+QString::number(m_numInputs), epin );
     m_input[m_numInputs]->setImp( m_inputImp );
 
     m_inputState.resize( totalInps );

@@ -61,6 +61,7 @@ class MAINMODULE_EXPORT eElement
         QString getId(){ return m_elmId; }
 
         bool converged() { return m_converged; }
+        bool m_converged;
 
         static constexpr double cero_doub = 1e-14;
         static constexpr double high_imp  = 1e14;
@@ -80,7 +81,7 @@ class MAINMODULE_EXPORT eElement
         QString m_elmId;
 
         bool m_changed;
-        bool m_converged;
+        //bool m_converged;
 
         uint64_t m_propDelay; // Propagation delay
 };

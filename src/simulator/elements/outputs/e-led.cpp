@@ -50,7 +50,7 @@ void eLed::updateVI()
 {
     eDiode::updateVI();
     
-    const uint64_t step = Simulator::self()->circTime()/1e6;
+    const uint64_t step = Simulator::self()->circTime();
     uint64_t period = (step-m_prevStep);
 
     m_prevStep = step;
@@ -59,9 +59,6 @@ void eLed::updateVI()
     if( m_lastCurrent > 0) m_avg_brightness += m_lastCurrent*period/m_maxCurrent;
     
     m_lastCurrent = m_current;
-
-    //qDebug()<<"current"<< m_current<<m_lastCurrent<<period<< m_lastUpdatePeriod <<m_avg_brightness;
-    //label->setText( QString("%1 A"). arg(double(int(m_current*1000))/1000) );
 }
 
 void eLed::updateBright()
@@ -75,7 +72,10 @@ void eLed::updateBright()
     }
     updateVI();
 
-    if( m_lastUpdatePeriod > Simulator::self()->circuitRate() )
+    uint64_t sPF = Simulator::self()->stepsPerFrame();
+    uint64_t sPS = Simulator::self()->stepSize();
+
+    if( m_lastUpdatePeriod > sPF*sPS )
     {
         m_disp_brightness = m_avg_brightness/m_lastUpdatePeriod;
         
@@ -83,8 +83,6 @@ void eLed::updateBright()
 
         m_avg_brightness   = 0;
         m_lastUpdatePeriod = 0;
-        m_bright = uint(m_disp_brightness*255)+25;
+        m_bright = uint32_t(m_disp_brightness*255)+25;
     }
-    //qDebug()<<"current"<< m_current<<m_lastCurrent<<m_lastUpdatePeriod;
-    //qDebug() << m_bright;
 }

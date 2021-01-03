@@ -59,7 +59,7 @@ void LedBase::initialize()
 
 void LedBase::updateStep()
 {
-    uint bright = m_bright;
+    uint32_t bright = m_bright;
     eLed::updateBright();
     
     if( m_bright > 255+75 )

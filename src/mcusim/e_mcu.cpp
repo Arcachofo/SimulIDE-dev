@@ -17,30 +17,32 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QDomElement>
-
 #include "e_mcu.h"
 #include "mcucore.h"
-#include "mcuport.h"
 #include "mcupin.h"
-#include "mcutimer.h"
-#include "mcuinterrupts.h"
 
 #include "simulator.h"
 
 eMcu::eMcu( QString id )
     : eElement( id )
+    , m_interrupts( this )
+    , m_ports( this )
+    , m_timers( this )
 {
-    m_freq = 16.0;
+    m_regStart = 0xFFFF;
+    m_regEnd   = 0;
+
+    m_cPerInst = 1;
+    setFreq( 16.0 );
 }
 
 eMcu::~eMcu()
 {
     delete cpu;
 
-    Interrupt::remove();
-    McuTimer::remove();
-    McuPort::remove();
+    m_interrupts.remove();
+    m_timers.remove();
+    m_ports.remove();
 
     for( uint16_t addr : m_regSignals.keys() )
         delete m_regSignals.value( addr );
@@ -61,9 +63,9 @@ void eMcu::initialize()
     for( QString regName : m_regInfo.keys() )  // Set Registers Reset Values
     {
         regInfo_t regInfo = m_regInfo[regName];
-        m_dataMem[regInfo.address] = regInfo.resetVal;
+        writeReg( regInfo.address, regInfo.resetVal );
     }
-    Interrupt::resetInts();
+    m_interrupts.resetInts();
 
     Simulator::self()->addEvent( 1, this );
 }
@@ -76,18 +78,17 @@ void eMcu::runEvent()
 
         else if( cpu->PC < m_progMemSize )
         {
-            Interrupt::runInterrupts();     // Run Interrupts
+            m_interrupts.runInterrupts();     // Run Interrupts
 
             cpu->runDecoder();              // Run Decoder
         }
-        /// TODO precalculate period
-        Simulator::self()->addEvent( (uint64_t)(1e6*m_instCycle/m_freq), this );
+        Simulator::self()->addEvent( m_simCycPI, this );
     }
 }
 
 void eMcu::enableInterrupts( uint8_t en )
 {
-    Interrupt::enableGlobal( en );
+    m_interrupts.enableGlobal( en );
 }
 
 uint8_t eMcu::readReg( uint16_t addr )
@@ -116,4 +117,13 @@ void eMcu::readStatus( uint8_t v ) // Read SREG values and write to RAM
 void eMcu::writeStatus( uint8_t v ) // Write SREG values from RAM
 {
     for( int i=0; i<8; i++ ) m_sreg[i] = v & (1<<i);
+}
+
+void eMcu::setFreq( double freq )
+{
+    if     ( freq < 0  )  freq = 0;
+    else if( freq > 100 ) freq = 100;
+
+    m_freq = freq;
+    m_simCycPI = 1e6*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }

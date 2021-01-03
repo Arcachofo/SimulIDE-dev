@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT McuCore
         virtual void runDecoder()=0;
 
         virtual void CALL_ADDR( uint32_t addr )=0;
-        virtual void RETI()=0;
+        virtual void RETI() { m_mcu->m_interrupts.retI(); }
         
         uint32_t PC;
 
@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT McuCore
         uint16_t  m_lowDataMemEnd;
         uint16_t  m_regEnd;
 
-        uint8_t* sreg;    // Mirror of the STATUS register
+        uint8_t* m_sreg;  // Mirror of the STATUS register
         uint8_t* m_spl;   // STACK POINTER low byte
         uint8_t* m_sph;   // STACK POINTER high byte
         bool     m_spPre; // STACK pre-increment?

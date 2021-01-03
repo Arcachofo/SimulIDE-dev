@@ -24,6 +24,7 @@
 
 
 class LibraryItem;
+class OscopeChannel;
 
 class MAINMODULE_EXPORT Oscope : public PlotBase
 {
@@ -41,11 +42,15 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         double filter() { return m_filter; }
         void setFilter( double filter );
 
+        virtual void updateStep() override;
+
         //virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
 
         double m_filter;
+
+        OscopeChannel* m_oscCh[2];
 };
 
 #endif

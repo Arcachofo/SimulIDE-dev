@@ -25,11 +25,13 @@
 #include "e-element.h"
 #include "itemlibrary.h"
 #include "regsignal.h"
+#include "mcutypes.h"
+#include "mcuport.h"
+#include "mcutimer.h"
+#include "mcuinterrupts.h"
 
 class McuCore;
-class McuPort;
 class McuTimer;
-class Interrupt;
 
 enum{
     R_READ = 0,
@@ -40,6 +42,7 @@ class MAINMODULE_EXPORT eMcu : public eElement
 {
         friend class McuCreator;
         friend class McuCore;
+        friend class Mcu;
 
     public:
         eMcu( QString id );
@@ -58,6 +61,21 @@ class MAINMODULE_EXPORT eMcu : public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
+        void setFreq( double freq );
+        uint64_t simCycPI() { return m_simCycPI; }
+        //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle
+
+        void readStatus( uint8_t v );                // Update STATUS Reg when is readen
+        void writeStatus( uint8_t v );               // Update STATUS Reg when is written
+
+        uint32_t ramSize()   { return m_dataMem.size(); }
+        uint32_t flashSize() { return m_progMem.size(); }
+
+        QHash<QString, McuPort*> getPorts() { return m_ports.getPorts(); }
+        McuTimer* getTimer( QString name ) { return m_timers.getTimer( name ); }
+
+        void enableInterrupts( uint8_t en );
+
         uint8_t* getRam() { return m_dataMem.data(); }    // Get pointer to Ram data
 
         uint8_t  readReg( uint16_t addr );            // Read Register (call watchers)
@@ -66,34 +84,24 @@ class MAINMODULE_EXPORT eMcu : public eElement
         uint8_t* getReg( QString reg )                // Get pointer to Reg data by name
         { return &m_dataMem[m_regInfo.value( reg ).address]; }
 
-        int getRegAddress( QString reg )             // Get Reg address by name
+        uint16_t getRegAddress( QString reg )             // Get Reg address by name
         { return m_regInfo.value( reg ).address; }
 
-        void readStatus( uint8_t v );                // Update STATUS Reg when is readen
-        void writeStatus( uint8_t v );               // Update STATUS Reg when is written
-
-        uint32_t ramSize() { return m_dataMem.size(); }
-        uint32_t flashSize() { return m_progMem.size(); }
-
-        void enableInterrupts( uint8_t en );
+        uint16_t getMapperAddr( uint16_t addr ) { return m_addrMap[addr]; }
 
         template <typename T>                      // Add callback for Register changes by names
-        void watchRegsName( QString regNames, int write
+        void watchRegNames( QString regNames, int write
                       , T* inst, void (T::*func)(uint8_t) )
         {
             if( regNames.isEmpty() ) return;
-            if( regNames.contains(","))
-            {
-                QStringList regs = regNames.split(",");
-                for( QString reg : regs )
-                {
-                    uint16_t addr = m_regInfo.value( reg ).address;
-                    watchRegister( addr, write, inst, func, 0xFF );
-                }
-            }
-            else watchRegister( m_regInfo.value( regNames ).address, write, inst, func, 0xFF );
-        }
 
+            QStringList regs = regNames.split(",");
+            for( QString reg : regs )
+            {
+                uint16_t addr = m_regInfo.value( reg ).address;
+                watchRegister( addr, write, inst, func, 0xFF );
+            }
+        }
         template <typename T>                       // Add callback for Register changes by address
         void watchRegister( uint16_t addr, int write
                           , T* inst, void (T::*func)(uint8_t), uint8_t mask=0xFF )
@@ -109,46 +117,71 @@ class MAINMODULE_EXPORT eMcu : public eElement
         }
 
         template <typename T>                      // Add callback for Register bit changes by names
-        void watchBits( QString bitNames, int write
+        void watchBitNames( QString bitNames, int write
                       , T* inst, void (T::*func)(uint8_t) )
         {
             if( bitNames.isEmpty() ) return;
 
-            uint8_t  bitMask = 0;
-            if( bitNames.contains(","))
-            {
-                QStringList bits = bitNames.split(",");
-                for( QString bit : bits ) bitMask |= m_bitMasks.value( bit );
-            }
-            else bitMask = m_bitMasks.value( bitNames );
+            uint16_t regAddr = 0;
+            QStringList bitList = bitNames.split(",");
+            uint8_t     bitMask = getBitMask( bitList );
 
-            uint16_t regAddr = m_bitRegs.value( bitNames );
-            watchRegister( regAddr, write, inst, func, bitMask );
+            regAddr = m_bitRegs.value( bitList.first() );
+
+            if( regAddr )
+                watchRegister( regAddr, write, inst, func, bitMask );
+        }
+        uint8_t getBitMask( QStringList bitList ) // Get mask for a group of bits in a register
+        {
+            uint8_t bitMask;
+            for( QString bitName : bitList ) bitMask |= m_bitMasks.value( bitName );
+            return bitMask;
+        }
+        regBits_t getRegBits( QString bitNames )
+        {
+            regBits_t regBits;
+            QStringList bitList = bitNames.split(",");
+
+            uint8_t mask = getBitMask( bitList );
+            regBits.mask = mask;
+
+            for( regBits.bit0=0; regBits.bit0<8; ++regBits.bit0 ) // Rotate mask to get initial bit
+            {
+                if( mask & 1 ) break;
+                mask >>= 1;
+            }
+            return regBits;
         }
 
         McuCore* cpu;
         int cyclesDone;
 
     protected:
-        std::vector<uint16_t> m_progMem;             // Program memory
+        std::vector<uint16_t> m_progMem;           // Program memory
         uint32_t m_progMemSize;
-        uint8_t  m_wordSize;                       // Size of flash word in bytes
+        uint8_t  m_wordSize;                       // Size of Program memory word in bytes
 
-        std::vector<uint8_t> m_dataMem;                // Whole Ram space including Registers
+        std::vector<uint16_t> m_addrMap;           // Maps addresses in Data space
+        std::vector<uint8_t>  m_dataMem;           // Whole Ram space including Registers
         uint32_t m_dataMemSize;
 
         QHash<QString, regInfo_t>     m_regInfo;   // Access Reg Info by  Reg name
         QHash<uint16_t, regSignal_t*> m_regSignals;// Access Reg Signals by Reg address
-        uint16_t m_regStart;                       // Start address of SFR section
-        uint16_t m_regEnd;                         // Last address of SFR Section
-        QHash<QString, uint8_t>  m_bitMasks;       // Register bits Register Mask
-        QHash<QString, uint16_t> m_bitRegs;        // Register bits Register address
+        QHash<QString, uint8_t>       m_bitMasks;  // Access Bit mask by bit name
+        QHash<QString, uint16_t>      m_bitRegs;   // Access Reg. address by bit name
+        uint16_t m_regStart;                       // First address of SFR section
+        uint16_t m_regEnd;                         // Last  address of SFR Section
 
         std::vector<uint8_t> m_sreg;               // STATUS Reg splitted in bits
         uint16_t m_sregAddr;                       // STATUS Reg Address
+
+        Interrupts m_interrupts;
+        McuPorts   m_ports;
+        McuTimers  m_timers;
         
         double m_freq;                             // Clock Frequency in MegaHerzs
-        double m_instCycle;                        // Clock ticks per Instruction Cycle
+        double m_cPerInst;                         // Clock ticks per Instruction Cycle
+        uint64_t m_simCycPI;                       // Simulation cycles per Instruction Cycle
 };
 
 

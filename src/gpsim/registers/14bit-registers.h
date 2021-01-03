@@ -168,10 +168,10 @@ class StatusReg : public  SfrReg
 
       inline void put_Z_C_DC(uint new_value, uint src1, uint src2) // Special member function to set Z, C, and DC
       {
-        value.put((value.get() & ~ (STATUS_Z | STATUS_C | STATUS_DC)) |
-                  ((new_value & 0xff)   ? 0 : STATUS_Z)   |
-                  ((new_value & 0x100)  ? STATUS_C : 0)   |
-                  (((new_value ^ src1 ^ src2)&0x10) ? STATUS_DC : 0));
+        value.put( (value.get() & ~ (STATUS_Z | STATUS_C | STATUS_DC))
+                 | ((new_value & 0xff)           ? 0         : STATUS_Z)
+                 | ((new_value & 0x100)          ? STATUS_C  : 0)
+                 | (((new_value^src1^src2)&0x10) ? STATUS_DC : 0));
 
       }
 

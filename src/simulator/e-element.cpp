@@ -57,7 +57,7 @@ void eElement::setNumEpins( int n )
         if( m_ePin[i] == 0 )
         {
             //qDebug() << "eElement::setNumEpins Creating:"<<i;
-            m_ePin[i] = new ePin( m_elmId+"-ePin"+i, i );
+            m_ePin[i] = new ePin( m_elmId+"-ePin"+QString::number(i), i );
         }
     }
 }

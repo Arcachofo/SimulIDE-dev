@@ -99,13 +99,6 @@ void BJT::setPnp( bool pnp )
     update();
 }
 
-void BJT::setBCd( bool bcd ) 
-{
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-    
-    eBJT::setBCd( bcd );
-}
-
 void BJT::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );

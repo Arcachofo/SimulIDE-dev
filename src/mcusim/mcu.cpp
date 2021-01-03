@@ -48,12 +48,12 @@ LibraryItem* Mcu::libraryItem()
 Component* Mcu::construct( QObject* parent, QString type, QString id )
 {
     Mcu* mcu = new Mcu( parent, type,  id );
-    m_error = McuCreator::createMcu( mcu );
-    mcu->setLogicSymbol( false );
+    if( !m_error) m_error = McuCreator::createMcu( mcu, id );
+    if( !m_error) mcu->setLogicSymbol( false );
 
     if( m_error > 0 )
     {
-        Circuit::self()->removeComp( mcu );
+        //Circuit::self()->removeComp( mcu );
         mcu = 0l;
         m_error = 0;
         //m_pSelf = 0l;
@@ -63,12 +63,23 @@ Component* Mcu::construct( QObject* parent, QString type, QString id )
 
 Mcu::Mcu( QObject* parent, QString type, QString id )
    : Chip( parent, type, id )
-   , eMcu( id )
+   , m_eMcu( id )
 {
     QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
 
-    QString xmlFile = ComponentSelector::self()->getXmlFile( compName );
+    m_icColor = QColor( 20, 30, 60 );
 
+    QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
+    f.setFamily("Monospace");
+    f.setPixelSize(5);
+    f.setLetterSpacing( QFont::PercentageSpacing, 120 );
+    m_valLabel->setFont( f );
+    m_valLabel->setPlainText( compName );
+    m_valLabel->setDefaultTextColor( QColor( 110, 110, 110 ) );
+    m_valLabel->setAcceptedMouseButtons( 0 );
+    setShowVal( true );
+
+    QString xmlFile = ComponentSelector::self()->getXmlFile( compName );
     QFile file( xmlFile );
 
     if(( xmlFile == "" ) || ( !file.exists() ))
@@ -76,26 +87,11 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
         m_error = 1;
         return;
     }
-    if( !file.open(QFile::ReadOnly | QFile::Text) )
-    {
-        MessageBoxNB( "Error", tr("Cannot read file %1:\n%2.").arg(xmlFile).arg(file.errorString()) );
-        m_error = 1;
-        return;
-    }
-    QDomDocument domDoc;
-
-    if( !domDoc.setContent(&file) )
-    {
-        MessageBoxNB( "Error", tr("Cannot set file %1\nto DomDocument").arg(xmlFile) );
-        file.close();
-        m_error = 1;
-        return;
-    }
-    file.close();
+    QDomDocument domDoc = fileToDomDoc( xmlFile, "Mcu::Mcu" );
+    if( domDoc.isNull() ) { m_error = 1; return; }
 
     QDomElement root  = domDoc.documentElement();
     QDomNode    rNode = root.firstChild();
-    QString package;
 
     while( !rNode.isNull() )
     {
@@ -112,10 +108,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
                 dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
                 m_pkgeFile = dataDir.filePath( element.attribute( "package" ) )+".package";
 
-                // Get device
-                m_device = element.attribute( "device" );
-                ///m_processor->setDevice( m_device );
-
                 // Get data file
                 m_dataFile = dataDir.filePath( element.attribute( "data" ) )+".mcu";
                 //create( dataFile );
@@ -126,12 +118,12 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
         }
         rNode = rNode.nextSibling();
     }
-    if( m_device != "" ) return;//Chip::initChip();
-    else
+    /*if( m_device == "" ) //return;//Chip::initChip();
     {
         m_error = 1;
-        qDebug() << compName << "ERROR!! McuComponent::initChip Chip not Found: " << package;
-    }
+        qDebug() << compName << "ERROR!! Mcu::Mcu Chip not Found: " << compName;
+        return;
+    }*/
 
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();
@@ -139,18 +131,22 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     if( m_lastFirmDir.isEmpty() )
         m_lastFirmDir = QCoreApplication::applicationDirPath();
 
-    m_subcDir    = "";
+    m_subcDir = "";
+
 }
+Mcu::~Mcu(){}
 
-Mcu::~Mcu()
-{}
-
-void Mcu::setFreq( double freq )
+void Mcu::setLogicSymbol( bool ls )
 {
-    if     ( freq < 0  )  freq = 0;
-    else if( freq > 100 ) freq = 100;
+    Chip::setLogicSymbol( ls );
 
-    m_freq = freq;
+    //QFontMetrics fm( m_valLabel->font() );
+    //fm.width( m_valLabel->text() );
+
+    setValLabelX( m_area.width()/2-3 );
+    setValLabelY( m_area.height()/2+m_valLabel->textWidth()/2 );
+    setValLabRot(-90 );
+    setValLabelPos();
 }
 
 void Mcu::setProgram( QString pro )
@@ -172,7 +168,6 @@ void Mcu::setProgram( QString pro )
 
 void Mcu::initialize()
 {
-    eMcu::initialize();
 }
 
 void Mcu::remove()
@@ -211,7 +206,7 @@ void Mcu::load( QString fileName )
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    QString msg = loadHex( cleanPathAbs, m_wordSize );
+    QString msg = loadHex( cleanPathAbs, m_eMcu.m_wordSize );
     if( msg.isEmpty() )
     {
         msg ="hex file succesfully loaded";
@@ -281,14 +276,14 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 void Mcu::addPin( QString id, QString type, QString label,
                      int pos, int xpos, int ypos, int angle, int length )
 {
-    bool portPin = false; /// TODO: use type
-    if( id.startsWith("P") )
+    bool portPin = false;
+    if( type == "IO" )
     {
-        int pinNum = id.mid(2,1).toInt( &portPin );
+        int pinNum = id.right(1).toInt( &portPin );
         if( portPin )
         {
             QString portName = "PORT"+id.mid(1,1);
-            McuPort* port = McuPort::getPort( portName );
+            McuPort* port = m_eMcu.m_ports.getPort( portName );
             Pin* pin = port->getPin( pinNum )->pin();
 
             pin->setPos( QPoint( xpos, ypos ) );
@@ -353,7 +348,7 @@ QString Mcu::loadHex( QString file, int WordSize )
                 data += (hiByte<<8);
                 checksum += hiByte;
             }
-            m_progMem[addr] = data;
+            m_eMcu.m_progMem[addr] = data;
             addr++;
         }
         checksum += line.mid( i, 2 ).toInt( &ok, 16 );

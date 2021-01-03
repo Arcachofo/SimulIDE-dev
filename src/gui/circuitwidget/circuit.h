@@ -33,50 +33,12 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
     friend class SubCircuit;
 
     Q_OBJECT
-    
-    Q_PROPERTY( double  Speed_per    READ circSpeedP WRITE setCircSpeedP DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Speed_sps    READ circSpeed  WRITE setCircSpeed  DESIGNABLE true USER true )
-    Q_PROPERTY( int     ReactStep    READ reactStep  WRITE setReactStep  DESIGNABLE true USER true )
-    Q_PROPERTY( int     NoLinAcc     READ noLinAcc   WRITE setNoLinAcc   DESIGNABLE true USER true )
-    
-    Q_PROPERTY( bool Draw_Grid        READ drawGrid   WRITE setDrawGrid   DESIGNABLE true USER true )
-    Q_PROPERTY( bool Show_ScrollBars  READ showScroll WRITE setShowScroll DESIGNABLE true USER true )
-    Q_PROPERTY( bool Animate          READ animate    WRITE setAnimate    DESIGNABLE true USER true )
-    Q_PROPERTY( double Font_Scale     READ fontScale  WRITE setFontScale  DESIGNABLE true USER true )
-    Q_PROPERTY( int  Auto_Backup_Secs READ autoBck    WRITE setAutoBck    DESIGNABLE true USER true )
-    Q_PROPERTY( Langs Language        READ lang       WRITE setLang       DESIGNABLE true USER true )
-    Q_ENUMS( Langs )
 
     public:
         Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView* parent );
         ~Circuit();
 
-        enum Langs {
-            English = 0,
-            French,
-            German,
-            Italian,
-            Russian,
-            Spanish,
-            Pt_Brasil,
-        };
-
  static Circuit* self() { return m_pSelf; }
-        
-        uint64_t circSpeed();
-        void setCircSpeed( int rate );
-
-        double circSpeedP();
-        void   setCircSpeedP( double speedP );
-
-        double stepNs();
-        void setStepNs( double ns );
-
-        int  reactStep();
-        void setReactStep( int steps );
-
-        int  noLinAcc();
-        void setNoLinAcc( int ac );
         
         bool drawGrid();
         void setDrawGrid( bool draw );
@@ -86,18 +48,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         
         bool animate();
         void setAnimate( bool an );
-        
-        double fontScale();
-        void   setFontScale( double scale );
 
         int autoBck();
         void setAutoBck( int secs );
-
-        Langs lang() { return m_lang; }
-        void setLang( Langs lang );
-
-        QString loc();
-        void setLoc( QString loc );
         
         void removeItems();
         void removeComp( Component* comp );
@@ -183,8 +136,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
  static Circuit*  m_pSelf;
 
-        Langs m_lang;
- 
         QDomDocument m_domDoc;
         QDomDocument m_copyDoc;
 

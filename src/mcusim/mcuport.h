@@ -29,22 +29,17 @@ class Component;
 class MAINMODULE_EXPORT McuPort : public eElement
 {
         friend class McuCreator;
+        friend class McuPorts;
 
     public:
         McuPort( eMcu* mcu );
         ~McuPort();
 
- static void remove();
- static McuPort* getPort( QString name ) { return m_ports.value( name ); }
- static QHash<QString, McuPort*> getPorts() {return m_ports; }
-
         virtual void initialize() override;
 
         void pinChanged( uint8_t pinMask, uint8_t val );
         void readInReg( uint8_t );
-        //void inChanged( uint8_t val );
 
-        void controlPin( uint8_t pin, bool ctrl ); // used by perifericals to override Port control
         void setPullups( uint8_t puMask );
 
         McuPin* getPin( uint8_t i ) { return m_pins[i]; }
@@ -56,7 +51,6 @@ class MAINMODULE_EXPORT McuPort : public eElement
 
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }
-        //uint16_t getDirAddr() { return m_dirAddr; }
 
     protected:
 
@@ -66,10 +60,9 @@ class MAINMODULE_EXPORT McuPort : public eElement
 
         std::vector<McuPin*> m_pins;
         uint8_t m_numPins;
-
         uint8_t m_pinState;
 
-        //bool m_dirInv;
+        bool m_dirInv;
 
         uint8_t* m_outReg; // Pointer to m_ram[m_outAddr]
         uint8_t* m_inReg;  // Pointer to m_ram[m_inAddr]
@@ -78,8 +71,25 @@ class MAINMODULE_EXPORT McuPort : public eElement
         uint16_t m_outAddr;
         uint16_t m_inAddr;
         uint16_t m_dirAddr;
+};
 
- static QHash<QString, McuPort*>  m_ports; // Access PORTS by name
+class MAINMODULE_EXPORT McuPorts
+{
+        friend class McuCreator;
+
+    public:
+        McuPorts( eMcu* mcu );
+        ~McuPorts();
+
+       void remove();
+       McuPort* getPort( QString name ) { return m_portList.value( name ); }
+       McuPin*  getPin( QString name );
+       QHash<QString, McuPort*> getPorts() { return m_portList; }
+
+    protected:
+       eMcu* m_mcu;
+
+       QHash<QString, McuPort*>  m_portList; // Access PORTS by name
 };
 
 #endif

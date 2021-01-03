@@ -129,7 +129,7 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         void pauseOnCond();
 
         virtual void initialize() override;
-        virtual void updateStep() override;
+        //virtual void updateStep() override;
         //virtual void runEvent() override;
         virtual void remove() override;
 
@@ -137,7 +137,7 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         void connectProbe( int ch, bool con ) { m_probeConnected[ch] = con; }
 
-        void fetchData( int ch, uint64_t edge );
+        void fetchData( uint64_t orig, uint64_t origAbs, uint64_t offset );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -146,6 +146,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
     protected:
         int m_bufferSize;
+
+        int m_trigger;
 
         bool m_pinConnected[2];
         bool m_probeConnected[2];

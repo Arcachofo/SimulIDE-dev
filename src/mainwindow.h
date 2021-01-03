@@ -28,9 +28,20 @@ class CircuitWidget;
 class EditorWindow;
 class FileWidget;
 
+enum Langs {
+    English = 0,
+    French,
+    German,
+    Italian,
+    Russian,
+    Spanish,
+    Pt_Brasil,
+};
+
 class MAINMODULE_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
+    //Q_ENUMS( Langs )
 
     public:
         MainWindow();
@@ -46,15 +57,18 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         void readSettings();
         
         void setTitle( QString title );
+
+        QString loc();
+        void setLoc( QString loc );
+
+        Langs lang() { return m_lang; }
+        void setLang( Langs lang );
         
         float fontScale() { return m_fontScale; }
         void setFontScale( float scale );
 
         int autoBck();
         void setAutoBck( int secs );
-
-        QString loc();
-        void setLoc( QString loc );
 
         QString getHelpFile( QString name );
 
@@ -63,7 +77,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         QTabWidget*  m_sidepanel;
 
     protected:
-        void closeEvent(QCloseEvent* event);
+        void closeEvent( QCloseEvent* event );
 
     private slots:
         void about();
@@ -74,6 +88,8 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
  static MainWindow* m_pSelf;
  
         void loadPluginsAt( QDir pluginsDir );
+
+        Langs m_lang;
 
         bool m_blocked;
 
@@ -92,16 +108,14 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         QString m_styleSheet;
 
         QHash<QString, QPluginLoader*>  m_plugins;
-
         QHash<QString, QString>  m_help;
         
-        CircuitWidget*      m_circuit;
+        CircuitWidget* m_circuit;
         ComponentSelector*  m_components;
-        QWidget*  m_componentWidget;
-        QVBoxLayout* m_componentWidgetLayout;
-        QLineEdit*   m_searchComponent;
-        //PropertiesWidget*   m_itemprop;
-        EditorWindow*       m_editor;
+        QWidget*      m_componentWidget;
+        QVBoxLayout*  m_componentWidgetLayout;
+        QLineEdit*    m_searchComponent;
+        EditorWindow* m_editor;
         
         QSplitter*  m_Centralsplitter;
         FileWidget* m_fileSystemTree;

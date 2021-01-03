@@ -39,39 +39,29 @@ class MAINMODULE_EXPORT CoreCpu : public McuCore
         {
             PUSH_STACK( PC );// Push current PC to stack
             PC = addr;
-            m_mcu->cyclesDone = 2;
+            m_mcu->cyclesDone = m_retCycles;
         }
         void RETI() override
         {
-            Interrupt::retI();
-            PC = POP_STACK();
+            McuCore::RETI();
+            RET();
         }
-        /*void McuCore::RET()
+        void RET()
         {
             PC = POP_STACK();
-            //m_mcu->cyclesDone = 2;
-        }*/
+            m_mcu->cyclesDone = m_retCycles;
+        }
 
     protected:
+        uint8_t m_retCycles;
 
-        // Data Memory access
-        /*uint8_t getDataMem( uint16_t addr ) // Whole data Mem space including Registers
+        void incDefault()
         {
-            if( addr > m_lowDataMemEnd && addr < m_regEnd ) // Read Register
-                return m_mcu->readReg( addr );              // and call Watchers
-
-            else if( addr <= m_dataMemEnd ) return m_dataMem[addr]; // Read Ram
-            return 0;
+            PC++;
+            m_mcu->cyclesDone = 1;
         }
-        void setDataMem( uint16_t addr, uint8_t v ) // Whole data Mem space including Registers
-        {
-            if( (addr > m_lowDataMemEnd) && (addr < m_regEnd) ) // Write Register
-                m_mcu->writeReg( addr, v );                     // and call Watchers
 
-            else if( addr <= m_dataMemEnd) m_dataMem[addr] = v;     // Write Ram
-        }*/
-
-        uint8_t GET_RAM( uint16_t addr ) // Ram space excluding Registers
+        virtual uint8_t GET_RAM( uint16_t addr ) //
         {
             if( addr > m_lowDataMemEnd && addr < m_regEnd ) // Read Register
                 return m_mcu->readReg( addr );              // and call Watchers
@@ -79,7 +69,7 @@ class MAINMODULE_EXPORT CoreCpu : public McuCore
             else if( addr <= m_dataMemEnd) return m_dataMem[addr]; // Read Ram
             return 0;
         }
-        void SET_RAM( uint16_t addr, uint8_t v )  // Ram space excluding Registers
+        virtual void SET_RAM( uint16_t addr, uint8_t v )  //
         {
             if( (addr > m_lowDataMemEnd) && (addr < m_regEnd) ) // Write Register
                 m_mcu->writeReg( addr, v );                     // and call Watchers
@@ -113,7 +103,7 @@ class MAINMODULE_EXPORT CoreCpu : public McuCore
             if( m_sph ) REG_SPH = (sp>>8) & 0xFF;
         }
 
-        void PUSH_STACK( uint32_t addr )
+        virtual void PUSH_STACK( uint32_t addr )
         {
             uint16_t sp = GET_SP();
 
@@ -127,7 +117,7 @@ class MAINMODULE_EXPORT CoreCpu : public McuCore
             SET_SP( sp );
         }
 
-        uint32_t POP_STACK()
+        virtual uint32_t POP_STACK()
         {
             uint16_t sp = GET_SP();
             uint32_t res = 0;

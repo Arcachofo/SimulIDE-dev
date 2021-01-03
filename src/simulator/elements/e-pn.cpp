@@ -17,13 +17,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QDebug>
-#include <math.h>   // fabs(x,y)
+//#include <QDebug>
+//#include <math.h>   // fabs(x,y)
 
 #include "e-pn.h"
 #include "simulator.h"
 
-ePN::ePN( QString id ) 
+ePN::ePN( QString id )
    : eResistor(id )
 {
     m_threshold = 0.7;
@@ -32,18 +32,19 @@ ePN::~ePN(){}
 
 void ePN::stamp()
 {
-    if( m_ePin[0]->isConnected() )
+    /*if( m_ePin[0]->isConnected() )
     {
         eNode* node = m_ePin[0]->getEnode();
-        node->addToNoLinList(this);
+        //node->addToNoLinList(this);
         node->setSwitched( true );
     }
     if( m_ePin[1]->isConnected() )
     {
         eNode* node = m_ePin[1]->getEnode();
-        node->addToNoLinList(this);
+        //node->addToNoLinList(this);
         node->setSwitched( true );
-    }
+    }*/
+    eResistor::setAdmit( cero_doub );
     eResistor::stamp();
 }
 
@@ -56,37 +57,41 @@ void ePN::initialize()
     m_current = 0;
 }
 
-void ePN::voltChanged()
+double ePN::step( double volt )
 {
-    m_converged = false;
+    //m_converged = false;
 
-    m_voltPN = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
+    m_voltPN = volt;
 
     double deltaV = m_threshold;
 
-    if( (m_threshold-m_voltPN) > 1e-6 )
+    if( m_voltPN < m_threshold )
     {
-        eResistor::setAdmit( 0 );
+        eResistor::setAdmit( cero_doub );
         m_ePin[0]->stampCurrent( 0 );
         m_ePin[1]->stampCurrent( 0 );
         m_deltaV = m_voltPN;
-        return;
+        m_current = 0;
+        return 0;
     }
     if( m_admit != 1/m_resist ) eResistor::setAdmit( 1/m_resist );
 
     //qDebug() <<"ePN::setVChanged,  deltaR: "<< deltaR << "  deltaV" << deltaV << "m_voltPN" << m_voltPN ;
+    m_current = (m_voltPN-m_threshold)/m_resist;
 
-    if( fabs(deltaV-m_deltaV) < m_accuracy/10 )
+    /*if( fabs(deltaV-m_deltaV) < m_accuracy/10 )
     {
         m_converged = true;
         return;
-    }
+    }*/
 
     m_deltaV = deltaV;
 
     double current = deltaV/m_resist;
 
     eResistor::stampCurrent( current );
+
+    return m_current;
 }
 
 void ePN::setThreshold( double threshold )
@@ -94,7 +99,11 @@ void ePN::setThreshold( double threshold )
     m_threshold = threshold;
 }
 
-void ePN::updateVI()
+double ePN::current()
+{
+    return m_current;
+}
+/*void ePN::updateVI()
 {
     m_current = 0;
 
@@ -107,4 +116,4 @@ void ePN::updateVI()
             //qDebug() << " current " <<m_current<<volt<<m_deltaV;
         }
     }
-}
+}*/

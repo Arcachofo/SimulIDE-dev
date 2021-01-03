@@ -24,6 +24,7 @@
 #include "mainwindow.h"
 #include "circuit.h"
 #include "simulator.h"
+#include "utils.h"
 
 DataPlotWidget::DataPlotWidget(  QWidget* parent, PlotBase* plotB  )
               : QWidget( parent )
@@ -81,15 +82,10 @@ void DataPlotWidget::hTickBoxChanged() // User entered value
     if( m_auto < 2 ) return;
 
     double  val  = m_hTickBox->value();
-    QString unit = m_hTickBox->suffix();
-
-    if     ( unit == " ns" ) val *= 1e3;
-    else if( unit == " us")  val *= 1e6;
-    else if( unit == " ms" ) val *= 1e9;
-    else if( unit == " s")   val *= 1e12;
+    QString unit = m_hTickBox->suffix().remove("s");
+    unitToVal( val, unit );
 
     if( val < 1 ) val = 1;
-
     if( (uint64_t)val == m_hTick ) return;
 
     m_hTick = (uint64_t)val;
@@ -107,29 +103,19 @@ void DataPlotWidget::updateHTickBox()
 {
     double val  = (double)m_hTick;
 
-    QString unit = " ps";
-    if( val > 999 )
-    {
-        val /= 1e3; unit = " ns";
-        if( val > 999 )
-        {
-            val /= 1e3; unit = " us";
-            if( val > 999 )
-            {
-                val /= 1e3; unit = " ms";
-                if( val > 999 ) { val /= 1e3; unit = " s"; }
-            }
-        }
-    }
+    QString unit = " p";
     int Vdecimals = 0;
-    if     ( val < 10)   Vdecimals = 3;
-    else if( val < 100)  Vdecimals = 2;
-    else if( val < 1000) Vdecimals = 1;
+    valToUnit( val, unit, Vdecimals );
+
+    /*if( (unit == " ") && (val > 1) )
+    {
+        val = 1;
+        m_hTick = 1e12;
+    }*/
 
     m_hTickBox->setDecimals( Vdecimals );
     m_hTickBox->setValue( val );
-    m_hTickBox->setSuffix( unit );
-    m_display->setXFrame( m_hTick*10 );
+    m_hTickBox->setSuffix( unit+"s" );
 }
 
 void DataPlotWidget::vTickDialChanged( int ch, int Vscale ) // Changed by Dial
@@ -138,34 +124,50 @@ void DataPlotWidget::vTickDialChanged( int ch, int Vscale ) // Changed by Dial
     if( m_auto == ch ) return;
     
     double vscale = (double)Vscale;
-    if( vscale < m_prevVscale ) m_vTick[ch] *= 1.01;
-    else                        m_vTick[ch] /= 1.01;
+    double delta = m_vTick[ch]/10;
+    if( vscale < m_prevVscale ) m_vTick[ch] += delta;
+    else                        m_vTick[ch] -= delta;
 
-    if( m_vTick[ch] < 0.001 ) m_vTick[ch] = 0.001;
     m_prevVscale = vscale;
-    m_display->setVTick( ch, m_vTick[ch] );
-
-    int activeChan = m_buttonGroup->checkedId();
-    if(( activeChan == 2 )
-    || ( activeChan == ch ))m_vTickBox->setValue( m_vTick[ch] );
+    updateVTickBox( ch );
 }
 
 void DataPlotWidget::vTickBoxChanged( int ch )
 {
     if( (ch>2) || (ch<0) ) ch = 2;
     if( m_auto == ch ) return;
-    m_vTick[ch] = m_vTickBox->value();
-    m_display->setVTick( ch, m_vTick[ch] );
+
+    double  val  = m_vTickBox->value();
+    QString unit = m_vTickBox->suffix().remove("V");
+    unitToVal( val, unit );
+
+    m_vTick[ch] = val/1e12;
+
+    updateVTickBox( ch );
 }
 
 void DataPlotWidget::setVTick( int ch, double vTick )
 {
     m_vTick[ch] = vTick;
-    m_display->setVTick( ch, vTick );
+    updateVTickBox( ch );
+}
+
+void DataPlotWidget::updateVTickBox( int ch )
+{
+    m_display->setVTick( ch, m_vTick[ch] );
 
     int activeChan = m_buttonGroup->checkedId();
-    if(( activeChan == 2 )
-    || ( activeChan == ch ))m_vTickBox->setValue( vTick );
+    if(( activeChan == 2 ) || ( activeChan == ch ))
+    {
+        double val  = (double)m_vTick[ch]*1e12;
+        QString unit = " p";
+        int Vdecimals = 0;
+        valToUnit( val, unit, Vdecimals );
+
+        m_vTickBox->setDecimals( Vdecimals );
+        m_vTickBox->setValue( val );
+        m_vTickBox->setSuffix( unit+"V" );
+    }
 }
 
 void DataPlotWidget::hPosDialChanged( int ch, int ihPos ) // Changed by Dial
@@ -175,7 +177,7 @@ void DataPlotWidget::hPosDialChanged( int ch, int ihPos ) // Changed by Dial
 
     double hPos = (double)ihPos;
 
-    int delta = m_hTick/10;
+    uint64_t delta = m_hTick/50;
     if( delta < 1 ) delta = 1;
 
     if( hPos < m_prevHPos ) m_hPos[ch] += delta;
@@ -191,12 +193,8 @@ void DataPlotWidget::hPosBoxChanged( int ch )
     if( m_auto == ch ) return;
 
     double  val  = m_hPosBox->value();
-    QString unit = m_hPosBox->suffix();
-
-    if     ( unit == " ns" ) val *= 1e3;
-    else if( unit == " us")  val *= 1e6;
-    else if( unit == " ms")  val *= 1e9;
-    else if( unit == " s")   val *= 1e12;
+    QString unit = m_hPosBox->suffix().remove("s");
+    unitToVal( val, unit );
 
     m_hPos[ch] = val;
     updateHPosBox( ch );
@@ -213,39 +211,16 @@ void DataPlotWidget::updateHPosBox( int ch )
 {
     if( (ch>2) || (ch<0) ) ch = 2;
     int activeChan = m_buttonGroup->checkedId();
-    if(( activeChan == 2 )
-    || ( activeChan == ch ))
+    if(( activeChan == 2 ) || ( activeChan == ch ))
     {
-        double val  = m_hPos[ch];
-        /*double halfScreen = (double)m_hTick*5;
-        if     ( val > halfScreen ) val = halfScreen;
-        else if( val <-halfScreen ) val =-halfScreen;*/
-        m_hPos[ch] = val;
-
-        QString unit = " ps";
-        if( fabs( val ) > 999 )
-        {
-            val /= 1e3; unit = " ns";
-            if( fabs( val ) > 999 )
-            {
-                val /= 1e3; unit = " us";
-                if( fabs( val ) > 999 )
-                {
-                    val /= 1e3; unit = " ms";
-                    if( fabs( val ) > 999 ) { val /= 1e3; unit = " s"; }
-                }
-            }
-        }
-
+        double  val  = m_hPos[ch];
+        QString unit = " p";
         int Vdecimals = 0;
-        double fval = fabs( val );
-        if     ( fval < 10)   Vdecimals = 3;
-        else if( fval < 100)  Vdecimals = 2;
-        else if( fval < 1000) Vdecimals = 1;
+        valToUnit( val, unit, Vdecimals )
 
         m_hPosBox->setDecimals( Vdecimals );
         m_hPosBox->setValue( val );
-        m_hPosBox->setSuffix( unit );
+        m_hPosBox->setSuffix( unit+"s" );
         m_display->setHPos( ch, m_hPos[ch] );
     }
 }
@@ -256,35 +231,51 @@ void DataPlotWidget::vPosDialChanged( int ch, int ivPos ) // Changed by Dial
     if( m_auto == ch ) return;
     
     double vPos = (double)ivPos;
+    double delta = m_vTick[ch]/10;
     
-    if( vPos < m_prevVPos ) m_vPos[ch] -= 0.05*m_vTick[ch];
-    else                    m_vPos[ch] += 0.05*m_vTick[ch];
+    if( vPos < m_prevVPos ) m_vPos[ch] -= delta;
+    else                    m_vPos[ch] += delta;
 
     m_prevVPos = vPos;
-    m_display->setVPos( ch, m_vPos[ch] );
-
-    int activeChan = m_buttonGroup->checkedId();
-    if(( activeChan == 2 )
-    || ( activeChan == ch )) m_vPosBox->setValue( m_vPos[ch] );
+    updateVPosBox( ch );
 }
 
 void DataPlotWidget::vPosBoxChanged( int ch )
 {
     if( (ch>2) || (ch<0) ) ch = 2;
     if( m_auto == ch ) return;
-    m_vPos[ch] = m_vPosBox->value();
-    m_display->setVPos( ch, m_vPos[ch] );
+
+    double  val  = m_vPosBox->value();
+    QString unit = m_vPosBox->suffix().remove("V");
+    unitToVal( val, unit );
+
+    m_vPos[ch] = val/1e12;
+    updateVPosBox( ch );
 }
 
 void DataPlotWidget::setVPos( int ch, double vPos )
 {
     if( (ch>2) || (ch<0) ) ch = 2;
     m_vPos[ch] = vPos;
-    m_display->setVPos( ch, vPos );
+    updateVPosBox( ch );
+}
 
+void DataPlotWidget::updateVPosBox( int ch )
+{
+    if( (ch>2) || (ch<0) ) ch = 2;
     int activeChan = m_buttonGroup->checkedId();
-    if(( activeChan == 2 )
-    || ( activeChan == ch )) m_vPosBox->setValue( vPos );
+    if(( activeChan == 2 ) || ( activeChan == ch ))
+    {
+        double  val  = m_vPos[ch]*1e12;
+        QString unit = " p";
+        int Vdecimals = 0;
+        valToUnit( val, unit, Vdecimals )
+
+        m_vPosBox->setDecimals( Vdecimals );
+        m_vPosBox->setValue( val );
+        m_vPosBox->setSuffix( unit+"V" );
+        m_display->setVPos( ch, m_vPos[ch] );
+    }
 }
 
 void DataPlotWidget::setAuto( int ch )
@@ -339,8 +330,9 @@ void DataPlotWidget::buttonChanged( int ch )
 
     if( ch < 2 )
     {
-        m_vTickBox->setValue( m_vTick[ch] );
-        m_vPosBox->setValue( m_vPos[ch] );
+        updateVTickBox( ch );//m_vTickBox->setValue( m_vTick[ch]*1e12 );
+        updateVPosBox( ch );//m_vPosBox->setValue( m_vPos[ch]*1e12 );
+        updateHPosBox( ch );//m_hPosBox->setValue( m_hPos[ch] );
     }
 }
 
@@ -389,7 +381,7 @@ void DataPlotWidget::updateWidgets()
     int ds = sc*27;
 
     QFont font = this->font();
-    font.setPixelSize( int(9*fs*sc) );
+    font.setPixelSize( int(8*fs*sc) );
     font.setBold( true );
 
     m_advaCheck->setFixedSize( sc*65, sc*14 );
@@ -528,7 +520,7 @@ void DataPlotWidget::setupWidget()
 
     QHBoxLayout* hTickLayout = createQHBoxLayout();
     m_hTickDial  = createDial();
-    m_hTickBox   = createSpinBox( " S" );
+    m_hTickBox   = createSpinBox( "TDiv" );
     m_hTickBox->installEventFilter( this );
     m_hTickLabel = new QLabel( " Div", this );
     hTickLayout->addWidget(m_hTickDial );
@@ -536,7 +528,7 @@ void DataPlotWidget::setupWidget()
     hTickLayout->addWidget( m_hTickLabel );
     QHBoxLayout* hPosLayout = createQHBoxLayout();
     m_hPosDial  = createDial();
-    m_hPosBox   = createSpinBox( " S" );
+    m_hPosBox   = createSpinBox( "TPos" );
     m_hPosBox->installEventFilter( this );
     m_hPosBox->setMinimum( -1000000 );
     m_hPosBox->setValue( 0 );
@@ -547,7 +539,7 @@ void DataPlotWidget::setupWidget()
     m_line[1]->setLineWidth( 1 );
     QHBoxLayout* vTickLayout = createQHBoxLayout();
     m_vTickDial  = createDial();
-    m_vTickBox   = createSpinBox( " V" );
+    m_vTickBox   = createSpinBox( "VDiv" );
     m_vTickBox->installEventFilter( this );
     m_vTickLabel = new QLabel( " Div", this );
     vTickLayout->addWidget( m_vTickDial );
@@ -555,7 +547,7 @@ void DataPlotWidget::setupWidget()
     vTickLayout->addWidget( m_vTickLabel );
     QHBoxLayout* vPosLayout = createQHBoxLayout();
     m_vPosDial  = createDial();
-    m_vPosBox   = createSpinBox( " V" );
+    m_vPosBox   = createSpinBox( "VPos" );
     m_vPosBox->installEventFilter( this );
     m_vPosBox->setMinimum( -1000000 );
     m_vPosLabel = new QLabel( " Pos", this );
@@ -657,8 +649,8 @@ void DataPlotWidget::setupWidget()
     connect( m_trigGroup, SIGNAL( buttonClicked(int)),
              this,        SLOT  ( setTrigger(int)), Qt::UniqueConnection );
 
-    setTrigger( 0 );
-    setAuto( 0 );
+    setTrigger( 2 );
+    setAuto( 2 );
     setHTick( 1e9);
 }
 

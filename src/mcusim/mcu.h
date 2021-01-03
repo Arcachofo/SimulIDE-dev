@@ -27,7 +27,7 @@
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Mcu : public Chip, public eMcu
+class MAINMODULE_EXPORT Mcu : public Chip
 {
         Q_OBJECT
         Q_PROPERTY( double   Mhz         READ freq     WRITE setFreq     DESIGNABLE true  USER true )
@@ -45,11 +45,12 @@ class MAINMODULE_EXPORT Mcu : public Chip, public eMcu
         QString program()   const { return m_firmware; }
         void setProgram( QString pro );
 
-        double freq(){ return m_freq; }
-        virtual void setFreq( double freq );
+        double freq(){ return m_eMcu.m_freq; }
+        virtual void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
 
         virtual void initialize() override;
         virtual void remove() override;
+        virtual void setLogicSymbol( bool ls ) override;
 
         void load( QString fileName );
 
@@ -70,6 +71,7 @@ class MAINMODULE_EXPORT Mcu : public Chip, public eMcu
         QString m_dataFile;
         QString m_device;       // Name of device
 
+        eMcu m_eMcu;
 
         QList<Pin*> m_pinList;
 };

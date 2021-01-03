@@ -27,7 +27,7 @@ LibraryItem* Thermistor::libraryItem()
 {
     return new LibraryItem(
             tr( "Thermistor" ),
-            tr( "Passive" ),
+            tr( "Resistive Sensors" ),
             "thermistor.png",
             "Thermistor",
             Thermistor::construct);

@@ -27,6 +27,7 @@ class PlotDisplay : public QWidget
 {
     friend class DataPlotWidget;
     friend class PlotBase;
+
     Q_OBJECT
 
     public:
@@ -41,11 +42,8 @@ class PlotDisplay : public QWidget
         void setVTick( int ch, double tick );
         void setVPos( int ch, double vPos );
         void setHPos( int ch, int64_t hPos );
-        void setMaxMin( int ch, double max, double min );
+        void setLimits( int ch, double max, double min );
         void setFilter( double f ) {  m_filter = f; }
-
-        //void printData( int ch, QList<QPointF>* points, double filter );
-        //void clear( int ch );
 
     protected:
         virtual void paintEvent( QPaintEvent *event );
@@ -70,7 +68,9 @@ class PlotDisplay : public QWidget
         double m_scaleY[2];
         double m_scaleX;
 
-        double m_vMax[2];
+        double m_volt[2];
+        double m_vMaxVal[2];
+        double m_vMinVal[2];
         double m_vMin[2];
         double m_ampli[2];
         double m_vTick[2];
@@ -84,8 +84,6 @@ class PlotDisplay : public QWidget
         double m_lineX;
         double m_linWi;
 
-        double m_endY[2];
-        double m_midV[2];
         double m_sclY[2];
         double m_posY[2];
         double m_vMaxPos[2];
@@ -93,11 +91,8 @@ class PlotDisplay : public QWidget
 
         QFont m_fontB;
         QFont m_fontS;
-        QPixmap m_foregroundA[2];
-        QPixmap m_foregroundB[2];
-        QPixmap* m_foreground[2];
-        QPixmap m_background;
         QColor m_color[3];
+        QColor m_dark[2];
         QColor m_scaleColor[3];
 };
 

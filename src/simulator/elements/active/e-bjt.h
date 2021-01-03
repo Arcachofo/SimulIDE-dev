@@ -20,10 +20,9 @@
 #ifndef EBJT_H
 #define EBJT_H
 
-#include "e-pn.h"
-#include "e-diode.h"
+#include "e-element.h"
 
-class MAINMODULE_EXPORT eBJT : public eResistor
+class MAINMODULE_EXPORT eBJT : public eElement
 {
     public:
 
@@ -33,34 +32,49 @@ class MAINMODULE_EXPORT eBJT : public eResistor
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
-        
+
         virtual double gain()              { return m_gain; }
         virtual void setGain( double gain ){ m_gain = gain; }
-        
-        virtual double BEthr();
-        virtual void setBEthr( double thr );
-        
+
         virtual double pnp()              { return m_PNP; }
         virtual void setPnp( double pnp ) { m_PNP = pnp; }
-        
-        virtual bool BCd()              { return m_BCdiodeOn; }
-        virtual void setBCd( bool bcd );
-        
+
     protected:
+        double limitStep( double vnew, double vold );
+
         double m_accuracy;
-        double m_lastOut;
         double m_baseCurr;
         double m_voltE;
-        double m_BEthr;
-        
-        int m_gain;
-        bool m_Efollow;
-        
+        double m_voltBE;
+        double m_voltBC;
+        double m_gain;
+        double m_vt;
+        double m_rsCurr;
+        double m_thr;
+        double m_rgain;
+        double m_fgain;
         bool m_PNP;
-        bool m_BCdiodeOn;
-        
-        ePN* m_BEdiode;
-        eDiode* m_BCdiode;
+        uint32_t m_steps;
+
+        eElement* m_BEjunction;
+        eElement* m_BCjunction;
+
+        ePin* m_BC;
+        ePin* m_CB;
+        ePin* m_BE;
+        ePin* m_EB;
+        ePin* m_CE;
+        ePin* m_EC;
+
+
+        double gBC;
+        double gCB;
+        double gBE;
+        double gEB;
+
+        double curB;
+        double curC;
+        double curE;
 };
 
 #endif

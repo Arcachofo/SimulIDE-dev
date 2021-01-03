@@ -17,7 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #include "circuit.h"
 #include "simulator.h"
 #include "itemlibrary.h"
@@ -99,38 +98,6 @@ Circuit::~Circuit()
     }
 }
 
-void Circuit::setLang( Langs lang )
-{
-    m_lang = lang;
-    MainWindow::self()->settings()->setValue( "language", loc() );
-}
-
-QString Circuit::loc()
-{
-    QString locale = "en";
-    if     ( m_lang == French )    locale = "fr";
-    else if( m_lang == German )    locale = "de";
-    else if( m_lang == Italian )   locale = "it";
-    else if( m_lang == Russian )   locale = "ru";
-    else if( m_lang == Spanish )   locale = "es";
-    else if( m_lang == Pt_Brasil ) locale = "pt_BR";
-
-    return locale;
-}
-
-void Circuit::setLoc( QString loc )
-{
-    Langs lang = English;
-    if     ( loc == "fr" )    lang = French;
-    else if( loc == "de" )    lang = German;
-    else if( loc == "it" )    lang = Italian;
-    else if( loc == "ru" )    lang = Russian;
-    else if( loc == "es" )    lang = Spanish;
-    else if( loc == "pt_BR" ) lang = Pt_Brasil;
-
-    m_lang = lang;
-}
-
 Component* Circuit::getComponent( QString name )
 {
     for( Component* comp : m_compList ) if( comp->idLabel() == name ) return comp;
@@ -152,7 +119,6 @@ QString Circuit::getCompId( QString name )
     if( nameSplit.isEmpty() ) return "";
 
     QString compNum = nameSplit.takeFirst();
-
     return compId+"-"+compNum;
 }
 
@@ -227,16 +193,10 @@ void Circuit::loadDomDoc( QDomDocument* doc )
     QDomElement circuit = doc->documentElement();
     m_circType = circuit.attribute("type");
 
-    if( circuit.hasAttribute( "speed" ))
-    {
-        double sps = circuit.attribute("speed").toDouble();
-        setCircSpeed( sps );
-    }
-    if( circuit.hasAttribute( "Speed_sps" ))    setCircSpeed( circuit.attribute("Speed_sps").toInt() );
-    if( circuit.hasAttribute( "Speed_per" ))    setCircSpeedP( circuit.attribute("Speed_per").toDouble() );
-    if( circuit.hasAttribute( "reactStep" ))    setReactStep( circuit.attribute("reactStep").toInt() );
-    if( circuit.hasAttribute( "noLinAcc" ))     setNoLinAcc( circuit.attribute("noLinAcc").toInt() );
-    if( circuit.hasAttribute( "animate" ))      setAnimate( circuit.attribute("animate").toInt() );
+    if( circuit.hasAttribute( "stepsPS" )) m_simulator->setStepsPerSec( circuit.attribute("stepsPS").toDouble() );
+    if( circuit.hasAttribute( "NLsteps" )) m_simulator->setMaxNlSteps( circuit.attribute("NLsteps").toUInt() );
+    if( circuit.hasAttribute( "stepSize" )) m_simulator->setStepSize( circuit.attribute("stepSize").toULongLong() );
+    if( circuit.hasAttribute( "animate" )) setAnimate( circuit.attribute("animate").toInt() );
 
     QDomNode node = circuit.firstChild();
 
@@ -466,7 +426,6 @@ void Circuit::pasteDomDoc( QDomDocument* doc )
 
                     endpin = findPin( itemX, itemY, endpinid );
                 }
-
                 if( m_pasting )
                 {
                     if( startpin && !startpin->component()->isSelected() ) startpin = 0l;
@@ -520,8 +479,7 @@ void Circuit::pasteDomDoc( QDomDocument* doc )
                     if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null startpin in " << objNam << startpinid;
                     if( !endpin )   qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null endpin in "   << objNam << endpinid;
                 }
-            }
-            else if( type == "Node")
+            }else if( type == "Node")
             {
                 m_idMap[objNam] = id;                              // Map simu id to new id
                 
@@ -551,10 +509,7 @@ void Circuit::pasteDomDoc( QDomDocument* doc )
     }
     if( m_pasting )
     {
-        for( Component* item : compList )
-        {
-            item->move( m_deltaMove );
-        }
+        for( Component* item : compList ) item->move( m_deltaMove );
         for( Component* item : conList )
         {
             Connector* con = static_cast<Connector*>( item );
@@ -574,12 +529,11 @@ void Circuit::circuitToDom()
     m_domDoc.clear();
     QDomElement circuit = m_domDoc.createElement("circuit");
 
-    circuit.setAttribute( "type",      "simulide_0.5" );
-    circuit.setAttribute( "Speed_sps", QString::number( circSpeed() ) );
-    circuit.setAttribute( "Speed_per", QString::number( circSpeedP() ) );
-    circuit.setAttribute( "reactStep", QString::number( reactStep() ) );
-    circuit.setAttribute( "noLinAcc",  QString::number( noLinAcc() ) );
-    circuit.setAttribute( "animate",   QString::number( animate() ) );
+    circuit.setAttribute( "type",   "simulide_0.5" );
+    circuit.setAttribute( "stepSize", QString::number( m_simulator->stepSize() ) );
+    circuit.setAttribute( "stepsPS", QString::number( m_simulator->stepsPerSec() ) );
+    circuit.setAttribute( "NLsteps", QString::number( m_simulator->maxNlSteps() ) );
+    circuit.setAttribute( "animate", QString::number( animate() ) );
     //circuit.setAttribute( "drawGrid",    QString( drawGrid()?"true":"false"));
     //circuit.setAttribute( "showScroll",  QString( showScroll()?"true":"false"));
 
@@ -720,20 +674,19 @@ Component* Circuit::createItem( QString type, QString id, QString objNam )
     //qDebug() << "Circuit::createItem" << type << id;
     for( LibraryItem* libItem : ItemLibrary::self()->items() )
     {
-        if( libItem->type()==type )
+        if( !(libItem->type()==type) ) continue;
+
+        Component* comp = libItem->createItemFnPtr()( this, type, id );
+
+        if( comp )
         {
-            Component* comp = libItem->createItemFnPtr()( this, type, id );
-            
-            if( comp )
-            {
-                QString category = libItem->category();
-                if( ( category != "Meters" )
-                &&  ( category != "Sources" )
-                &&  ( category != "Other" ) )
-                    comp->setPrintable( true );
-            }
-            return comp;
+            QString category = libItem->category();
+            if( ( category != "Meters" )
+            &&  ( category != "Sources" )
+            &&  ( category != "Other" ) )
+                comp->setPrintable( true );
         }
+        return comp;
     }
     return 0l;
 }
@@ -820,15 +773,14 @@ void Circuit::removeItems()                     // Remove Selected items
 {
     if( m_conStarted ) return;
 
-    if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
+
 
     saveState();
     m_busy = true;
 
     foreach( Component* comp, m_compList )
-    {
         if( comp->isSelected() && !(comp->itemType()=="Node") ) removeComp( comp ); // Don't remove Graphical Nodes
-    }
+
     QList<Connector*> connectors;
 
     for( QGraphicsItem* item : selectedItems() )
@@ -840,6 +792,9 @@ void Circuit::removeItems()                     // Remove Selected items
             if( !connectors.contains( con ) ) connectors.append( con );
         }
     }
+    if( !connectors.isEmpty() ) if( m_simulator->isRunning() )
+        if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
+
     for( Connector* con : connectors ) con->remove();
     for( QGraphicsItem* item : selectedItems() ) item->setSelected( false );
     m_busy = false;
@@ -847,6 +802,7 @@ void Circuit::removeItems()                     // Remove Selected items
 
 void Circuit::removeComp( Component* comp )
 {
+    if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
     m_compRemoved = false;
     comp->remove();
     if( !m_compRemoved ) return;
@@ -858,9 +814,7 @@ void Circuit::removeComp( Component* comp )
 }
 
 void Circuit::compRemoved( bool removed )
-{
-    m_compRemoved = removed;
-}
+{ m_compRemoved = removed; }
 
 void Circuit::remove() // Remove everything ( Clear Circuit )
 {
@@ -1203,9 +1157,8 @@ void Circuit::keyPressEvent( QKeyEvent* event )
         else if( key == Qt::Key_S )
         {
             if( event->modifiers() & Qt::ShiftModifier)
-                CircuitWidget::self()->saveCircAs();
-            else
-                CircuitWidget::self()->saveCirc();
+                 CircuitWidget::self()->saveCircAs();
+            else CircuitWidget::self()->saveCirc();
         }
         else if( key == Qt::Key_O ) CircuitWidget::self()->openCirc();
         else QGraphicsScene::keyPressEvent( event );
@@ -1214,9 +1167,7 @@ void Circuit::keyPressEvent( QKeyEvent* event )
     {
         removeItems();
         QGraphicsScene::keyPressEvent( event );
-    }
-    else
-    {
+    } else {
         if( !event->isAutoRepeat() ) // Deliver Key events ( switches )
         {
             QString keys = event->text();
@@ -1238,7 +1189,6 @@ void Circuit::keyReleaseEvent( QKeyEvent* event )
      && !( event->modifiers() & Qt::ControlModifier ) )  // Deliver Key events ( switches )
     {
         QString keys = event->text();
-        //qDebug() << "Circuit::keyReleaseEvent" << keys;
         while( keys.size() > 0 )
         {
             QString key = keys.left( 1 );
@@ -1354,9 +1304,6 @@ void Circuit::setShowScroll( bool show )
 bool Circuit::animate() { return m_animate; }
 void Circuit::setAnimate( bool an ) { m_animate = an; update(); }
 
-double Circuit::fontScale() { return MainWindow::self()->fontScale(); }
-void Circuit::setFontScale( double scale ) { MainWindow::self()->setFontScale( scale ); }
-
 int Circuit::autoBck() { return MainWindow::self()->autoBck(); }
 void Circuit::setAutoBck( int secs )
 {
@@ -1365,35 +1312,6 @@ void Circuit::setAutoBck( int secs )
     else           m_bckpTimer.start( secs*1000 );
 
     MainWindow::self()->setAutoBck( secs );
-}
-
-int Circuit::noLinAcc() { return m_simulator->noLinAcc(); }
-void Circuit::setNoLinAcc( int ac ) { m_simulator->setNoLinAcc( ac ); }
-
-int Circuit::reactStep() { return m_simulator->reaClock(); }
-void Circuit::setReactStep( int steps ) { m_simulator->setReaClock( steps ); }
-
-uint64_t Circuit::circSpeed() { return m_simulator->simuRate(); }
-void Circuit::setCircSpeed( int rate )
-{
-    m_simulator->simuRateChanged( rate );
-}
-
-double Circuit::circSpeedP()
-{
-    double spsReal = m_simulator->simuRate();
-    double sps100  = 1e6;
-    sps100 = 100*spsReal/sps100;
-
-    return sps100;
-}
-
-void Circuit::setCircSpeedP( double speedP )
-{
-    if( speedP > 100 ) speedP = 100;
-    double rate = 1e6*speedP/100;
-
-    setCircSpeed( rate );
 }
 
 QList<Component*>* Circuit::compList() { return &m_compList; }

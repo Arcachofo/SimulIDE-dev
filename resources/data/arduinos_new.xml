@@ -21,7 +21,7 @@
 
 <itemlib>
     
-    <itemset category="New Subcircuits" type="Subcircuit" folder="arduino">
+    <itemset category="New Subcircuits" type="Subcircuit" folder="arduino_new">
 
     <item name="Uno"         icon="uno_icon.png" /> 
     <item name="Mega"        icon="mega_icon.png" /> 

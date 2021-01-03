@@ -63,7 +63,7 @@ PlotBase::~PlotBase()
 
 void PlotBase::initialize()
 {
-    for( int i=0; i<2; i++ )
+    /*for( int i=0; i<2; i++ )
     {
         if( m_pin[i]->isConnected() ) m_pinConnected[i] = true;
         else                          m_pinConnected[i] = false;
@@ -71,67 +71,24 @@ void PlotBase::initialize()
         if(( !m_pinConnected[i] && !m_probeConnected[i])
           || !Simulator::self()->isRunning() )
         {
-            m_display->setData( i, 0l );
+            m_display->setData( i, NULL );
 
             if( m_dataPlotW->m_data1Label[i] ) m_dataPlotW->m_data1Label[i]->setText( "---" );
             m_dataPlotW->m_data2Label[i]->setText( "---" );
             m_channel[i]->m_connected = false;
-            //Simulator::self()->addEvent( 1, m_channel[i] );
         }
-        else
-        {
-            m_channel[i]->m_connected = true;
-        }
+        else m_channel[i]->m_connected = true;
+
         m_channel[i]->m_connected = m_pinConnected[i];
-    }
+    }*/
     m_dataPlotW->m_refCondFlag = false;
 
     /*for(int ch=0; ch<2; ch++ )
     {
-        m_channel[ch]->initialize() override;
+        m_channel[ch]->initialize();
         m_dataPlotW->setProbe( ch );
     }*/
 }
-
-void PlotBase::updateStep()
-{
-    for( int i=0; i<2; i++ )
-    {
-        if( m_pin[i]->isConnected() ) m_pinConnected[i] = true;
-        else                          m_pinConnected[i] = false;
-
-        if(( !m_pinConnected[i] && !m_probeConnected[i])
-          || !Simulator::self()->isRunning() )
-        {
-            m_display->setData( i, 0l );
-
-            if( m_dataPlotW->m_data1Label[i] ) m_dataPlotW->m_data1Label[i]->setText( "---" );
-            m_dataPlotW->m_data2Label[i]->setText( "---" );
-            m_channel[i]->m_connected = false;
-        }
-        else
-        {
-            m_channel[i]->m_connected = true;
-            m_channel[i]->updateStep();
-        }
-    }
-
-    m_dataPlotW->m_display->update();
-}
-
-/*void PlotBase::runEvent()
-{
-    for( int ch=0; ch<2; ch++ )
-    {
-        double data =  0;
-        if     ( m_pinConnected[ch] )   data = m_pin[ch]->getVolt();
-        else if( m_probeConnected[ch] ) data = m_dataPlotW->m_probe[ch]->getVolt();
-        else continue;
-
-        data = data - m_pin[2]->getVolt();
-        m_channel[ch]->step( data );
-    }
-}*/
 
 void PlotBase::pauseOnCond()
 {
@@ -150,25 +107,25 @@ void PlotBase::pauseOnCond()
         uint64_t simTime = Simulator::self()->circTime();
         CircuitWidget::self()->pauseSim();
 
-        m_channel[0]->fetchData( 0, simTime );
+        /*m_channel[0]->fetchData( 0, simTime );
         m_dataPlotW->m_display->setData( 0, m_channel[0]->m_points );
-        m_dataPlotW->m_display->setMaxMin( 0, m_channel[0]->m_dispMax, m_channel[0]->m_dispMin );
+        m_dataPlotW->m_display->setLimits( 0, m_channel[0]->m_dispMax, m_channel[0]->m_dispMin );
 
         m_channel[1]->fetchData( 1, simTime );
         m_dataPlotW->m_display->setData( 1, m_channel[1]->m_points );
-        m_dataPlotW->m_display->setMaxMin( 1, m_channel[1]->m_dispMax, m_channel[1]->m_dispMin );
+        m_dataPlotW->m_display->setLimits( 1, m_channel[1]->m_dispMax, m_channel[1]->m_dispMin );
 
         m_dataPlotW->m_display->setXFrame( m_dataPlotW->m_hTick*10 );
 
         m_channel[0]->m_chCondFlag = false;
         m_channel[1]->m_chCondFlag = false;
-        m_dataPlotW->m_refCondFlag = false;
+        m_dataPlotW->m_refCondFlag = false;*/
     }
 }
 
-void PlotBase::fetchData( int ch, uint64_t edge )
+void PlotBase::fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset )
 {
-    for( int i=0; i<2; i++ ) m_channel[i]->fetchData( ch, edge );
+    for( int i=0; i<2; ++i ) m_channel[i]->fetchData( orig, origAbs, offset );
 }
 
 void PlotBase::setAdvanc( bool advanc )
@@ -237,7 +194,9 @@ void PlotBase::setAdvanc( bool advanc )
         }
         m_dataPlotW->setVTick( i, m_dataPlotW->m_vTick[i] );
         m_dataPlotW->setVPos( i, m_dataPlotW->m_vPos[i] );
+        m_dataPlotW->updateHPosBox( i );
     }
+    m_dataPlotW->updateHTickBox();
     m_proxy->setPos( QPoint( -80, -centerY) );
 
     Circuit::self()->update();
@@ -255,7 +214,8 @@ void PlotBase::remove()
 
 void PlotBase::updateTrig( int ch )
 {
-    for( int i=0; i<2; i++ ) m_channel[i]->m_trigger = ch;
+    m_trigger = ch;
+    //for( int i=0; i<2; i++ ) m_channel[i]->m_trigger = ch;
 }
 
 void PlotBase::setProbe1( QString p )

@@ -58,7 +58,11 @@ void ClockBase::updateStep()
 {
     if( m_changed )
     {
-        if( m_isRunning ) Simulator::self()->addEvent( 1, this );
+        if( m_isRunning )
+        {
+            Simulator::self()->cancelEvents( this );
+            Simulator::self()->addEvent( 1, this );
+        }
         else
         {
             m_out->setOut( false );

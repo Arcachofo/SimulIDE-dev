@@ -31,7 +31,7 @@ LibraryItem* SR04::libraryItem()
     return new LibraryItem(
             tr( "HC-SR04" ),
             tr( "Sensors" ),
-            "sr04_ico.png",
+            "sr04.png",
             "SR04",
             SR04::construct);
 }

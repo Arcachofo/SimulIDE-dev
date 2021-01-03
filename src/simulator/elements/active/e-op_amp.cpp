@@ -54,7 +54,7 @@ void eOpAmp::stamp()
     if( m_ePin[2]->isConnected() ) m_ePin[2]->getEnode()->addToNoLinList(this);
 }
 
-void eOpAmp::voltChanged() // Called when input pins nodes change volt
+void eOpAmp::voltChanged() // Called when any pin node change volt
 {
     if( m_powerPins )
     {
@@ -67,20 +67,24 @@ void eOpAmp::voltChanged() // Called when input pins nodes change volt
         m_voltNeg = m_voltNegDef;
     }
     double vd = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
-
-    //qDebug() << "lastIn " << m_lastIn << "vd " << vd ;
+    if( m_firstStep && fabs(m_lastIn-vd) < m_accuracy )
+    {
+        m_converged = true;
+        m_firstStep = true;
+        return;
+    }
     
     double out = vd * m_gain;
     if     ( out > m_voltPos ) out = m_voltPos;
     else if( out < m_voltNeg ) out = m_voltNeg;
-    
-    //qDebug() << "lastOut " << m_lastOut << "out " << out << abs(out-m_lastOut)<< "<1e-5 ??";
 
     if( fabs(out-m_lastOut) < m_accuracy )
     {
+        m_converged = true;
         m_firstStep = true;
         return;
     }
+    m_converged = false;
 
     if( m_firstStep )                  // First step after a convergence
     {
@@ -90,21 +94,17 @@ void eOpAmp::voltChanged() // Called when input pins nodes change volt
         out = m_lastOut + dOut;
         m_firstStep = false;
     }
-    else
-    {
+    else {
         if( m_lastIn != vd ) // We problably are in a close loop configuration
         {
             double dIn  = fabs(m_lastIn-vd); // Input diff with last step
-            
-            // Guess next converging output:
-            out = (m_lastOut*dIn + vd*1e-6)/(dIn + m_k);
+            out = (m_lastOut*dIn + vd*1e-6)/(dIn + m_k); // Guess next converging output:
         }
         m_firstStep = true;
     }
     if     ( out >= m_voltPos ) out = m_voltPos;
     else if( out <= m_voltNeg ) out = m_voltNeg;
     
-    //qDebug()<< "lastOut " << m_lastOut << "out " << out << "dOut" << dOut  << "converged" << m_firstStep;
     m_lastIn  = vd;
     m_lastOut = out;
     

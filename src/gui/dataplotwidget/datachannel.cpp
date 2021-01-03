@@ -23,10 +23,10 @@
 double DataChannel::m_dataSize = 0;
 
 DataChannel::DataChannel( QString id )
-           : eElement( id+"-eElement" )
+           : eElement( id )
 {
     m_ePin.resize( 2 );
-    m_connected = false;
+    //m_connected = false;
     m_chCond = None;
 }
 
@@ -43,21 +43,70 @@ void DataChannel::stamp()                     // Called at Simulation Start
     if( enode ) enode->voltChangedCallback( this );
 }
 
-void DataChannel::updateStep()
+void DataChannel::fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset )
 {
-    if( m_dataPlotW->m_auto == m_channel )
+    voltChanged();
+
+    /*if( m_dataPlotW->m_paOnCond ) // Pause on Condition
     {
-        m_dataPlotW->setHTick( m_hTick );
-        m_dataPlotW->setVTick( m_channel, (m_dispMax-m_dispMin)/10 );
-        m_dataPlotW->setVPos( m_channel, 0 );
-        m_dataPlotW->setHPos( m_channel, 0 );
-    }
-    else
+        uint64_t size = edge-origAbs;
+        if( size < m_dataSize )
+        {
+            if( edge < m_dataSize) origAbs = 0;
+            else                   origAbs = edge - m_dataSize;
+        }
+    }*/
+
+    int pos = m_bufferCounter;
+    uint64_t time;
+    double val;
+
+    uint64_t timeStep = m_dataPlotW->m_hTick/50;
+    uint64_t lastTime = m_time.at(pos)+timeStep;
+    uint64_t maxTime = 0;
+    uint64_t minTime = 0;
+    double   maxVal  = -1e12;
+    double   minVal  = 1e12;
+    bool subSample = false;
+
+    m_points->clear();
+
+    for( int i=0; i<m_buffer.size(); ++i ) // Read Backwards
     {
-        m_hTick = m_dataPlotW->m_hTick;
-        //m_dataPlotW->setVPos( m_channel, m_dataPlotW->m_vPos[m_channel] );
-        //m_vTick = m_dataPlotW->m_vTick[m_channel];
-        //m_Vpos  = m_dataPlotW->m_Vpos[m_channel];
+        time = m_time.at(pos);
+        val  = m_buffer[pos];
+
+        if( lastTime-time < timeStep ) // SubSample
+        {
+            subSample = true;
+            if     ( val > maxVal ) { maxVal = val; maxTime = time; }
+            else if( val < minVal ) { minVal = val; minTime = time; }
+        }
+        else {
+            if( subSample )
+            {
+                if( maxTime > minTime )
+                {
+                    m_points->prepend( QPointF( (int64_t)(maxTime-orig+offset), maxVal ));
+                    if( minTime > 0 ) m_points->prepend( QPointF( (int64_t)(minTime-orig+offset), minVal ));
+                }
+                else if ( minTime > maxTime )
+                {
+                    m_points->prepend( QPointF( (int64_t)(minTime-orig+offset), minVal ));
+                    if( maxTime > 0 ) m_points->prepend( QPointF( (int64_t)(maxTime-orig+offset), maxVal ));
+                }
+                subSample = false;
+                maxVal = -1e12;
+                minVal = 1e12;
+                maxTime = 0;
+                minTime = 0;
+            }
+            lastTime = time;
+            m_points->prepend( QPointF( (int64_t)(time-orig+offset), val ));
+        }
+        if( time < origAbs ) break; // End of data
+        if( --pos < 0 ) pos += m_buffer.size();
     }
+    m_dataPlotW->m_display->setData( m_channel, m_points );
 }
 

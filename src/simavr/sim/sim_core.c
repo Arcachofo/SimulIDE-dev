@@ -999,7 +999,7 @@ avr_flashaddr_t avr_run_one( avr_t * avr )
                         case 0x9005:
                         case 0x9004: {    // LPM -- Load Program Memory -- 1001 000d dddd 01oo
                             get_d5(opcode);
-                            uint16_t z = avr->data[R_ZL] |( avr->data[R_ZH] << 8);
+                            uint16_t z = avr->data[R_ZL] | (avr->data[R_ZH] << 8);
                             int op = opcode & 1;
                             STATE("lpm %s,( Z[%04x]%s)\n", avr_regname(d), z, op ? "+" : "");
                             _avr_set_r(avr, d, avr->flash[z]);

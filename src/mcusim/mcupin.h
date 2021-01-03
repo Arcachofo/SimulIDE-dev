@@ -39,10 +39,14 @@ class MAINMODULE_EXPORT McuPin : public eSource
         virtual void stamp() override;
         virtual void voltChanged() override;
 
+        void controlPin( bool ctrl );
         void setState( bool state );
+        void setPortState( bool state );
         void setDirection( bool out );
         void setPullup( bool up );
         void setPullupMask( bool up ) { m_puMask = up;}
+
+        bool getState() { return m_state; }
 
         Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
 

@@ -127,6 +127,34 @@ inline QByteArray fileToByteArray( const QString &fileName, const QString &calle
     return ba;
 }
 
+#define unitToVal( val, unit ) \
+    if     ( unit == " n" ) val *= 1e3; \
+    else if( unit == " u")  val *= 1e6; \
+    else if( unit == " m" ) val *= 1e9; \
+    else if( unit == " ")   val *= 1e12;
+
+#define valToUnit( val, unit, Vdecimals ) \
+    unit = " p";\
+    if( fabs( val ) > 999 ) { \
+        val /= 1e3; unit = " n"; \
+        if( fabs( val ) > 999 ) { \
+            val /= 1e3; unit = " u"; \
+            if( fabs( val ) > 999 ) { \
+                val /= 1e3; unit = " m"; \
+                if( fabs( val ) > 999 ) { \
+                    val /= 1e3; unit = " "; \
+                    if( fabs( val ) > 999 ) { \
+                        val /= 1e3; unit = " k"; \
+                        if( fabs( val ) > 999 ) { \
+                            val /= 1e3; unit = " M"; \
+                            if( fabs( val ) > 999 ) { \
+                                val /= 1e3; unit = " G"; \
+    }}}}}}} \
+    if     ( fabs( val ) < 10)   Vdecimals = 3; \
+    else if( fabs( val ) < 100)  Vdecimals = 2; \
+    else if( fabs( val ) < 1000) Vdecimals = 1;
+
+
 inline QString val2hex( int d )
 {
     QString Hex="0123456789ABCDEF";

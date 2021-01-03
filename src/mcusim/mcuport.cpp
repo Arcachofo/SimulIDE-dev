@@ -21,13 +21,11 @@
 #include "mcupin.h"
 #include "e_mcu.h"
 
-QHash<QString, McuPort*> McuPort::m_ports;
 
 McuPort::McuPort( eMcu* mcu )
        : eElement( "McuPort" )
 {
     m_mcu = mcu;
-    //m_dirInv = false;
 
     m_outReg = NULL;
     m_inReg  = NULL;
@@ -36,18 +34,13 @@ McuPort::McuPort( eMcu* mcu )
     m_outAddr = 0;
     m_inAddr  = 0;
     m_dirAddr = 0;
+    m_dirInv  = false;
 }
 
 McuPort::~McuPort()
 {
     for( int i=0; i<m_numPins; ++i ) delete m_pins[i];
     m_pins.clear();
-}
-
-void McuPort::remove() // Static
-{
-    for( McuPort* port : m_ports ) delete port;
-    m_ports.clear();
 }
 
 void McuPort::initialize()
@@ -88,20 +81,6 @@ void McuPort::readInReg( uint8_t )
     *m_inReg = m_pinState;
 }
 
-/*void McuPort::inChanged( uint8_t val ) // Pin State is masked in val
-{
-    uint8_t in = *m_inReg;
-    uint8_t changed = in ^ val;
-
-    if( changed )
-    {
-        if( val ) in |= val;
-        else      in &= ~val;
-
-        m_mcu->writeReg( m_inAddr, in );
-    }
-}*/
-
 void McuPort::outChanged( uint8_t val )
 {
     uint8_t changed = *m_outReg ^ val;
@@ -112,9 +91,7 @@ void McuPort::outChanged( uint8_t val )
         {
             if( ( changed & (1<<i) )      // Pin changed
              && (!m_pins[i]->m_extCtrl )) // Port is controlling Pin
-            {
-                m_pins[i]->setState( val & (1<<i) );
-            }
+                m_pins[i]->setPortState( val & (1<<i) );
         }
     }
 }
@@ -122,7 +99,7 @@ void McuPort::outChanged( uint8_t val )
 void McuPort::dirChanged( uint8_t val )
 {
     uint8_t changed = *m_dirReg ^ val;
-    //if( m_dirInv ) val = ~val & 0xFF;
+    if( m_dirInv ) val = ~val & 0xFF;
 
     if( changed )
     {
@@ -132,14 +109,6 @@ void McuPort::dirChanged( uint8_t val )
                 m_pins[i]->setDirection( val & (1<<i));
         }
     }
-}
-
-void McuPort::controlPin( uint8_t pin, bool ctrl )
-{
-    //if( ctrl ) m_pinCtrlMask &= ~(1<<pin); // Perif. Controls Pin
-    //else       m_pinCtrlMask |= 1<<pin;    // Perif. Releases Pin
-
-    m_pins[pin]->m_extCtrl = ctrl;
 }
 
 void McuPort::setPullups(uint8_t puMask )
@@ -153,3 +122,24 @@ void McuPort::setPullups(uint8_t puMask )
     }
 }
 
+//  ------------------------------------------
+McuPorts::McuPorts( eMcu* mcu )
+{
+    m_mcu = mcu;
+}
+McuPorts::~McuPorts()
+{
+}
+
+void McuPorts::remove()
+{
+    for( McuPort* port : m_portList ) delete port;
+    m_portList.clear();
+}
+
+McuPin* McuPorts::getPin( QString name )
+{
+    int pinNumber = name.right(1).toInt();
+    QString portName = name.remove( name.size()-1, 1 );
+    return getPort( portName )->m_pins[pinNumber];
+}

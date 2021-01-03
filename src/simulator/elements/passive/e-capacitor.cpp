@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-// Capacitor model using backward euler  approximation
+// Capacitor model using backward euler approximation
 // consists of a current source in parallel with a resistor.
 
 #include <math.h>
@@ -37,9 +37,8 @@ eCapacitor::~eCapacitor()
 
 void eCapacitor::initialize()
 {
-    //uint64_t spus = Simulator::self()->stepsPerus();
-    m_nextStep = Simulator::self()->reaClock()*1e6;//*spus;
-    m_tStep = (double)Simulator::self()->reaClock()/1e6;
+    m_nextStep = Simulator::self()->stepSize();
+    m_tStep = (double)m_nextStep/1e12;
     m_curSource = 0;
     m_volt = 0;
     
@@ -77,7 +76,7 @@ double eCapacitor::cap()
 void  eCapacitor::setCap( double c ) 
 { 
     m_cap = c; 
-    eResistor::setResSafe( m_tStep/m_cap ); 
+    eResistor::setResSafe( m_tStep/m_cap );
     
     //qDebug() << "eCapacitor::setCap  m_tStep" << m_tStep << c <<" m_cap "<<m_cap<<" m_resist "<<m_resist;
 }

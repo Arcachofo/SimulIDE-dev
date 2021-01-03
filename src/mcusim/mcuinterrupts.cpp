@@ -21,12 +21,6 @@
 #include "mcucore.h"
 #include "e_mcu.h"
 
-uint8_t Interrupt::m_enGlobal = 0;
-Interrupt* Interrupt::m_active = 0l;
-std::multimap<uint8_t, Interrupt*> Interrupt::m_running;
-std::multimap<uint8_t, Interrupt*> Interrupt::m_pending;
-QHash<QString, Interrupt*> Interrupt::m_interrupts;
-
 Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
 {
     m_mcu = mcu;
@@ -63,23 +57,40 @@ void Interrupt::setPriority( uint8_t p )
 
 void Interrupt::raise( uint8_t v )
 {
-    if( !m_enable ) return;
     m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
+
+    if( !m_enable ) return;
     m_raised = true;
 
     // Interrupt are stored in static std::multimap
     // by priority order, highest at end
-    m_pending.emplace( m_priority, this ); // Add to pending interrupts
+    m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
 }
 
 void Interrupt::execute()
 {
     m_mcu->cpu->CALL_ADDR( m_vector );
-    m_active = this;
 }
 
 void Interrupt::exitInt() // Exit from this interrupt
 {
+}
+
+//------------------------               ------------------------
+//---------------------------------------------------------------
+
+Interrupts::Interrupts( eMcu* mcu )
+{
+    m_mcu = mcu;
+    m_enGlobal = 0;
+    m_active = 0l;
+}
+Interrupts::~Interrupts(){}
+
+void Interrupts::retI()
+{
+    m_active->exitInt();
+
     if( m_running.size() ) // There are interrupts interrupted
     {
         auto it = prev( m_running.end() );
@@ -89,20 +100,12 @@ void Interrupt::exitInt() // Exit from this interrupt
     else m_active = NULL;
 }
 
-//------------------------STATIC MEMBERS ------------------------
-//---------------------------------------------------------------
-
-void Interrupt::retI() // Static
-{
-    m_active->exitInt();
-}
-
-void Interrupt::enableGlobal( uint8_t en ) // Static
+void Interrupts::enableGlobal( uint8_t en )
 {
     m_enGlobal = en;
 }
 
-void Interrupt::runInterrupts() // Static
+void Interrupts::runInterrupts()
 {
     if( !m_enGlobal ) return;       // Global Interrupts disabled
     if( m_pending.empty() ) return; // No Interrupts to run
@@ -120,24 +123,30 @@ void Interrupt::runInterrupts() // Static
     }
     m_pending.erase( it ); // Remove Interrupt from pending list
     interrupt->execute();
+    m_active = interrupt;
 }
 
-void Interrupt::resetInts() // Static
+void Interrupts::resetInts()
 {
     m_active = NULL;
     m_pending.clear();
     m_running.clear();
 
-    for( QString  inte : m_interrupts.keys() )
-        m_interrupts.value( inte )->reset();
+    for( QString  inte : m_intList.keys() )
+        m_intList.value( inte )->reset();
 }
 
-void Interrupt::remove() // Static
+void Interrupts::remove()
 {
-    for( QString  inte : m_interrupts.keys() )
-        delete m_interrupts.value( inte );
+    for( QString  inte : m_intList.keys() )
+        delete m_intList.value( inte );
 
-    m_interrupts.clear();
+    m_intList.clear();
+}
+
+void Interrupts::addToPending( uint8_t pri, Interrupt* i )
+{
+    m_pending.emplace( pri, i );
 }
 
 

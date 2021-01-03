@@ -22,6 +22,7 @@
 CoreCpu::CoreCpu( eMcu* mcu )
        : McuCore( mcu )
 {
+    m_retCycles = 2;
 }
 CoreCpu::~CoreCpu() {}
 

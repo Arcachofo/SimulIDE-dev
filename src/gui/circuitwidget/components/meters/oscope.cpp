@@ -20,9 +20,9 @@
 #include "oscope.h"
 #include "connector.h"
 #include "circuit.h"
+#include "simulator.h"
 #include "itemlibrary.h"
 #include "oscopechannel.h"
-//#include "pin.h"
 
 static const char* Oscope_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Filter")
@@ -57,12 +57,12 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     m_adSizeX = 240;
     m_adSizeY = 200;
 
-    //m_dataSize = 200;
     m_bufferSize = 600000;
 
     for(int i=0; i<2; i++ )
     {
-        m_channel[i] = new OscopeChannel( (id+"Chan"+QString::number(i)));
+        m_oscCh[i] = new OscopeChannel( (id+"Chan"+QString::number(i)));
+        m_channel[i] = m_oscCh[i];
         m_channel[i]->m_channel = i;
         m_channel[i]->m_ePin[0] = m_pin[i];
         m_channel[i]->m_ePin[1] = m_pin[2]; // Ref Pin
@@ -72,6 +72,54 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     m_filter = 0.0;
 }
 Oscope::~Oscope() {}
+
+void Oscope::updateStep()
+{
+    uint64_t period = 0;
+    uint64_t hTick  = m_dataPlotW->m_hTick;
+    uint64_t timeFrame = hTick*10;
+    uint64_t offset = 0;
+    uint64_t orig;
+    uint64_t origAbs;
+    uint64_t simTime;
+
+    if( m_trigger < 2  ) period = m_oscCh[m_trigger]->m_period; // We want a trigger
+
+    if( period > 10 ) // We have a Trigger
+    {
+        uint64_t risEdge = m_oscCh[m_trigger]->m_risEdge;
+
+        uint64_t nCycles = timeFrame*2/period;
+        if( timeFrame%period ) nCycles++;
+        if( nCycles%2 )        nCycles++;
+
+        uint64_t delta = nCycles*period/2-timeFrame/2;
+        if( delta > risEdge ) delta = risEdge;
+        simTime = risEdge-delta;
+    }
+    else simTime = Simulator::self()->circTime(); // free running
+
+    m_dataPlotW->m_display->setXFrame( timeFrame );
+
+    if( simTime>timeFrame ) orig = simTime-timeFrame;
+    else
+    {
+        orig = 1;
+        offset = timeFrame-simTime;
+    }
+    if( simTime>timeFrame*2 ) origAbs = simTime-timeFrame*2;
+    else                      origAbs = 1;
+
+    for( int i=0; i<2; i++ )
+    {
+        if( m_pin[i]->isConnected() )
+        {
+            m_channel[i]->fetchData( orig, origAbs, offset );
+            m_channel[i]->updateStep();
+        }
+    }
+    m_dataPlotW->m_display->update();
+}
 
 void Oscope::setFilter( double filter )
 {

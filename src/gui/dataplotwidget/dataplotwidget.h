@@ -41,6 +41,7 @@ class MAINMODULE_EXPORT DataPlotWidget : public QWidget
     friend class DataChannel;
     friend class OscopeChannel;
     friend class PlotBase;
+    friend class Oscope;
 
     Q_OBJECT
 
@@ -70,14 +71,19 @@ class MAINMODULE_EXPORT DataPlotWidget : public QWidget
 
         void updateHTickBox();
         void updateHPosBox( int ch );
+        void updateVTickBox( int ch );
+        void updateVPosBox( int ch );
+
 
         void hTickDialChanged( int Hscale );
         void vTickDial1Changed( int Vscale );
+
         void hPosDial1Changed( int hPos );
         void vPosDial1Changed( int vPos );
 
         void hTickBoxChanged();
         void vTickBox1Changed();
+
         void hPosBox1Changed();
         void vPosBox1Changed();
 

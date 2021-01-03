@@ -44,7 +44,7 @@ LibraryItem* KY040::libraryItem()
     return new LibraryItem(
             tr( "KY-040" ),
             tr( "Perifericals" ),
-            "rotencod.png",
+            "ky-040.png",
             "KY040",
             KY040::construct);
 }

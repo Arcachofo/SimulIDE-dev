@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-// Inductor model using backward euler  approximation
+// Inductor model using backward euler approximation
 // consists of a current source in parallel with a resistor.
 
 #include <math.h>
@@ -37,9 +37,8 @@ eInductor::~eInductor()
 
 void eInductor::initialize()
 {
-    //uint64_t spus = Simulator::self()->stepsPerus();
-    m_nextStep = Simulator::self()->reaClock()*1e6;//*spus;
-    m_tStep = (double)Simulator::self()->reaClock()/1e6;
+    m_nextStep = Simulator::self()->stepSize();
+    m_tStep = (double)m_nextStep/1e12;
     m_curSource = 0;
     m_volt = 0;
     
@@ -82,6 +81,6 @@ double eInductor::ind()
 void  eInductor::setInd( double h ) 
 { 
     m_ind = h; 
-    eResistor::setResSafe( m_ind/m_tStep ); 
+    eResistor::setResSafe( m_ind/m_tStep );
 }
 

@@ -99,6 +99,7 @@ RelayBase::~RelayBase(){}
 
 void RelayBase::stamp()
 {
+    m_relayOn = false;
     if( m_ePin[0]->isConnected() ) m_ePin[0]->getEnode()->voltChangedCallback( this );
     if( m_ePin[1]->isConnected() ) m_ePin[1]->getEnode()->voltChangedCallback( this );
     MechContact::stamp();
@@ -107,13 +108,14 @@ void RelayBase::stamp()
 void RelayBase::voltChanged()
 {
     double indCurr = fabs( m_inductor->indCurrent() );
-    bool closed;
+    bool relayOn;
 
-    if( m_closed ) closed = ( indCurr > m_relCurrent );
-    else           closed = ( indCurr > m_trigCurrent );
+    if( m_relayOn ) relayOn = ( indCurr > m_relCurrent );
+    else            relayOn = ( indCurr > m_trigCurrent );
+    m_relayOn = relayOn;
 
-    if( m_nClose ) closed = !closed;
-    if( closed != m_closed ) setSwitch( closed );
+    if( m_nClose ) relayOn = !relayOn;
+    if( relayOn != m_closed ) setSwitch( relayOn );
 }
 
 void RelayBase::remove()

@@ -53,7 +53,7 @@ class MAINMODULE_EXPORT CircMatrix
     private:
  static CircMatrix* m_pSelf;
         
-        void factorMatrix( int n, int group );
+        bool factorMatrix( int n, int group );
         bool luSolve( int n, int group );
         void addConnections( int enodNum, QList<int>* nodeGroup, QList<int>* allNodes );
         

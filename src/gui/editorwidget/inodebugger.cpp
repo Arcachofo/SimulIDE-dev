@@ -125,7 +125,7 @@ int InoDebugger::compile()
         line = line.replace( "\t", " " ).remove(";");
         QStringList wordList= line.split( " " );
         wordList.removeAll( "" );        
-        if( !wordList.isEmpty())      // Fix crash on empty list.first()
+        if( !wordList.isEmpty())
         {
             QString type = wordList.takeFirst();
             if( type == "unsigned" ) type = "u"+wordList.takeFirst();
@@ -242,8 +242,8 @@ void InoDebugger::getVariables()
         
         QStringList words = line.split(" ");
         if( words.size() < 4 ) continue;
-        QString addr      = words.takeFirst();
-        QString symbol    = words.takeLast();
+        QString addr   = words.takeFirst();
+        QString symbol = words.takeLast();
         
         QHashIterator<QString, QString> i( m_varList );
         while( i.hasNext() )                        // Find Variable 

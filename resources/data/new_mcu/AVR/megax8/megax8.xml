@@ -19,12 +19,9 @@
 <!-- *                                                                         * -->
 <!-- *************************************************************************** -->
 
-<mcu name="atmega328" core="AVR" data="2304" prog="16384" progword="2" eeprom="1024"
-            inst_cycle="1">
-
-    <stack sp="SPL,SPH" increment="postdec" />
-    
-    <registers start="32" end="255" status="SREG" >
+<parts>
+    <datablock name="GPR" start="0x0000" end="0x001F"/>
+    <regblock  name="SFR" start="0x0020" end="0x00FF">
         <register name="PINB"   addr="3"   bits="0-7"/>
         <register name="DDRB"   addr="4"   bits="0-7"/>
         <register name="PORTB"  addr="5"   bits="0-7"/>
@@ -46,8 +43,8 @@
         <register name="EEARL"  addr="33"  bits=""/>
         <register name="EEARH"  addr="34"  bits=""/>
         <register name="GTCCR"  addr="35"  bits=""/>
-        <register name="TCCR0A" addr="36"  bits=""/>
-        <register name="TCCR0B" addr="37"  bits=""/>
+        <register name="TCCR0A" addr="36"  bits="WGM00,WGM01,0,0,COM0B0,COM0B1,COM0A0,COM0A1"/>
+        <register name="TCCR0B" addr="37"  bits="CS00,CS01,CS02,WGM02,0,0,FOC0B,FOC0A"/>
         <register name="TCNT0"  addr="38"  bits=""/>
         <register name="OCR0A"  addr="39"  bits=""/>
         <register name="OCR0B"  addr="40"  bits=""/>
@@ -106,42 +103,54 @@
         <register name="TWDR"   addr="187" bits=""/>
         <register name="TWCR"   addr="188" bits=""/>
         <register name="TWAMR"  addr="189" bits=""/>
-        <register name="UCSR0A" addr="192" bits=""/>
-        <register name="UCSR0B" addr="193" bits=""/>
-        <register name="UCSR0C" addr="194" bits=""/>
+        <register name="UCSR0A" addr="192" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0"/>
+        <register name="UCSR0B" addr="193" bits="TXB80,RXB80,UCSZ02,TXEN0,RXEN0,UDRIE0,TXCIE0,RXCIE0"/>
+        <register name="UCSR0C" addr="194" bits="UCPOL0,UCSZ00,UCSZ01,USBS0,UPM00,UPM01UMSEL00,UMSEL01"/>
         <register name="UBRR0L" addr="196" bits=""/>
         <register name="UBRR0H" addr="197" bits=""/>
         <register name="UDR0"   addr="198" bits=""/>
-    </registers>
+        <register name="UDR0RX" addr="199" bits=""/><!-- Fake Uart Input Register -->
+    </regblock>
+    <datablock name="RAM" start="0x0100" end="0x08FF"/>
+    <stack  spreg="SPL,SPH" increment="postdec" />
+    <status streg="SREG" />
     
     <interrupts enable="I">
-        <interrupt name="RESET"                              priority="26" vector="0x000"/>
-        <interrupt name="INT0"   enable="INT0"  flag="INTF0" priority="25" vector="0x002"/>
-        <interrupt name="INT1"   enable="INT1"  flag="INTF1" priority="24" vector="0x004"/>
-        <interrupt name="PCINT0" enable="PCIE0" flag="PCIF0" priority="23" vector="0x006"/>
-        <interrupt name="PCINT1" enable="PCIE1" flag="PCIF1" priority="22" vector="0x008"/>
-        <interrupt name="PCINT2" enable="PCIE2" flag="PCIF2" priority="21" vector="0x00A"/>
+        <interrupt name="RESET"                                priority="26" vector="0x000"/>
+        <interrupt name="INT0"    enable="INT0"   flag="INTF0" priority="25" vector="0x002"/>
+        <interrupt name="INT1"    enable="INT1"   flag="INTF1" priority="24" vector="0x004"/>
+        <interrupt name="PCINT0"  enable="PCIE0"  flag="PCIF0" priority="23" vector="0x006"/>
+        <interrupt name="PCINT1"  enable="PCIE1"  flag="PCIF1" priority="22" vector="0x008"/>
+        <interrupt name="PCINT2"  enable="PCIE2"  flag="PCIF2" priority="21" vector="0x00A"/>
         
-        <interrupt name="TIMER0_OVF" enable="TOIE0" flag="TOV0" priority="10" vector="0x020"/>
+        <interrupt name="T0_OVF"  enable="TOIE0"  flag="TOV0"  priority="10" vector="0x020"/>
         
+        <interrupt name="USART_R" enable="RXCIE0" flag="RXC0"  priority="4"  vector="0x0012" />
+        <interrupt name="USART_T" enable="TXCIE0" flag="TXC0"  priority="2"  vector="0x0014" />
     </interrupts>
     
     <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
         <raiseint intname="PCINT0" source="PINB" mask="PCMSK0"/>
     </port>
-    
     <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
         <raiseint intname="PCINT1" source="PINC" mask="PCMSK1"/>
     </port>
-    
     <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
         <raiseint intname="PCINT2" source="PIND" mask="PCMSK2"/>
     </port>
     
-    <timer name="TIMER0" counter="TCNT0" disable="PRTIM0">
+    <timer name="TIMER0" enable="PRTIM0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
         <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTD4"/>
-        <raiseint intname="TIMER0_OVF" source="OVERFLOW" />
+        
+        <ocunit   name="OC0A" pin="PORTD6" ocreg="OCR0A" configbits="COM0A0,COM0A1"/>
+        <ocunit   name="OC0B" pin="PORTD5" ocreg="OCR0B" configbits="COM0B0,COM0B1"/>
+        
+        <raiseint intname="T0_OVF" source="OVERFLOW" />
     </timer>
     
-</mcu>
+    <usart name="USART0" configregs="UCSR0C" >
+        <trunit type="tx" pin="PORTD1" register="UDR0"   raiseint="USART_T" enable="TXEN0"/>
+        <trunit type="rx" pin="PORTD0" register="UDR0RX" raiseint="USART_R" enable="RXEN0"/>
+    </usart>
+</parts>

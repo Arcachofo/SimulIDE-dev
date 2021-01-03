@@ -36,13 +36,10 @@ class MAINMODULE_EXPORT DataChannel : public eElement
 
         virtual void initialize(){;}
         virtual void stamp() override;
-        virtual void updateStep() override;
         virtual void voltChanged(){;}
 
-        void setFilter( double f )
-        { m_filter = f; m_dataPlotW->m_display->setFilter(f); }
-
-        virtual void fetchData( int ch, uint64_t edge ) {;}
+        virtual void setFilter( double f ){;}
+        virtual void fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset );
 
     protected:
         QList<QPointF> m_pointsA;
@@ -52,13 +49,12 @@ class MAINMODULE_EXPORT DataChannel : public eElement
         QVector<double> m_buffer;
         QVector<uint64_t> m_time;
 
-        bool m_connected;
+        //bool m_connected;
 
-        int m_trigger;
         int m_channel;
         int m_bufferCounter;
 
-        uint64_t m_hTick;
+        //uint64_t m_hTick;
 
         double m_maxVal;
         double m_minVal;

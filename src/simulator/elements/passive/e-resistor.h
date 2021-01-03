@@ -37,11 +37,9 @@ class MAINMODULE_EXPORT eResistor : public eElement
         void stampAdmit();
         void stampCurrent( double current );
 
-        double current();
+        virtual double current();
 
         virtual void stamp() override;
-
-        //virtual void initEpins();
 
     protected:
         virtual void updateVI();

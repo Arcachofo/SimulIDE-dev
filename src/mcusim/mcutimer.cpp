@@ -21,63 +21,57 @@
 
 #include "mcutimer.h"
 #include "e_mcu.h"
+#include "mcuocunit.h"
 #include "simulator.h"
 
-QHash<QString, McuTimer*> McuTimer::m_timers;
 
-McuTimer::McuTimer( eMcu* mcu )
-        : eElement( "McuTimer" )
+McuTimer::McuTimer( eMcu* mcu, QString name )
+        : eElement( "McuTimer"+name )
 {
     m_mcu = mcu;
+    m_name = name;
+    m_number = name.right(1).toInt();
 
-    m_countL = 0l;
-    m_countH = 0l;
+    m_countL = NULL;
+    m_countH = NULL;
+    initialize();
 }
 
-McuTimer::~McuTimer(){}
-
-void McuTimer::remove() // Static
+McuTimer::~McuTimer()
 {
-    for( McuTimer* timer : m_timers ) delete timer;
-    m_timers.clear();
+    for( McuOcUnit* ocUnit : m_ocUnit ) delete ocUnit;
 }
 
 void McuTimer::initialize()
 {
     m_running = false;
-    m_compare = false;
     m_bidirec = false;
     m_reverse = false;
 
-    m_countVal  = 0;
-    m_ovfMatch  = 0;
-    m_ovfPeriod = 0;
-    m_ovfCycle  = 0;
+    m_countVal   = 0;
+    m_countStart = 0;
+    m_ovfMatch   = 0;
+    m_ovfPeriod  = 0;
+    m_ovfCycle   = 0;
 
-    m_comMatch  = 0;
-    m_comPeriod = 0;
-    m_comCycle  = 0;
+    m_prescaler = 1;
+
+    m_clkSrc  = clkMCU;
+    m_clkEdge = Clock_Rising;
 }
 
-void McuTimer::runEvent()            // Overflow or Compare match
+void McuTimer::runEvent()            // Overflow
 {
     if( !m_running ) return;
 
-    uint64_t circTime = Simulator::self()->circTime();
+    for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->tov();
 
-    if( circTime == m_ovfCycle )                     // Overflow
-    {
-        on_tov.emitValue( 1 );
+    m_countVal = m_countStart;                // Reset count value
+    if( m_bidirec ) m_reverse = !m_reverse;
 
-        m_countVal = 0;
-        if( m_bidirec ) m_reverse = !m_reverse;
+    if( !m_reverse ) on_tov.emitValue( 1 );
 
-        sheduleEvents();
-    }
-    if( m_compare && (circTime == m_comCycle) )  // Compare match
-    {
-        on_comp.emitValue( 1 );
-    }
+    sheduleEvents();
 }
 
 void McuTimer::sheduleEvents()
@@ -85,32 +79,24 @@ void McuTimer::sheduleEvents()
     if( m_running )
     {
         uint64_t circTime = Simulator::self()->circTime();
+        m_scale = m_prescaler*m_mcu->simCycPI();
 
-        m_ovfCycle = circTime + m_ovfPeriod - m_countVal;
+        uint64_t cycles = (m_ovfPeriod-m_countVal)*m_scale; // cycles in ps
+        m_ovfCycle = circTime + cycles;// In simulation time (ps)
 
-        Simulator::self()->addEvent( m_ovfPeriod, this );
-
-        if( m_compare )
-        {
-            if( m_reverse )
-                 m_comMatch = m_ovfPeriod - m_comPeriod;
-            else m_comMatch = m_comPeriod;
-
-            if( m_comMatch > m_countVal ) // be sure next comp match is still ahead
-            {
-                m_comCycle = circTime + m_comMatch - m_countVal;
-                Simulator::self()->addEvent( m_comMatch- m_countVal, this );
-            }
-        }
+        Simulator::self()->addEvent( cycles, this );
+        for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfPeriod, m_countVal );
     }
-    else Simulator::self()->cancelEvents( this );
+    else
+    {
+        Simulator::self()->cancelEvents( this );
+        for( McuOcUnit* ocUnit : m_ocUnit ) Simulator::self()->cancelEvents( ocUnit );
+    }
 }
 
 void McuTimer::enable( uint8_t en )
 {
     updtCount();    // If disabling, write counter values to Ram
-    m_countValL = TIM_COUNT_L;
-    m_countValH = TIM_COUNT_H;
 
     m_running = en;
     updtCycles();  // This will shedule or cancel events
@@ -119,9 +105,7 @@ void McuTimer::enable( uint8_t en )
 void McuTimer::countWriteL( uint8_t val ) // Someone wrote to counter low byte
 {
     updtCount();
-    m_countValL = val;
-    m_countValH = TIM_COUNT_H;
-
+    m_countL[0] = val;
     Simulator::self()->cancelEvents( this );
     updtCycles();                             // update & Reshedule
 }
@@ -129,39 +113,43 @@ void McuTimer::countWriteL( uint8_t val ) // Someone wrote to counter low byte
 void McuTimer::countWriteH( uint8_t val ) // Someone wrote to counter high byte
 {
     updtCount();
-    m_countValL = TIM_COUNT_L;
-    m_countValH = val;
-
+    m_countH[0] = val;
     Simulator::self()->cancelEvents( this );
     updtCycles();                             // update & Reshedule
 }
 
-void McuTimer::updtCount() // Write counter values to Ram
+void McuTimer::updtCount( uint8_t )          // Write counter values to Ram
 {
-    if( m_running )
+    if( m_running ) // If no running, values were already written at timer stop.
     {
         uint64_t timTime = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
-        uint16_t countVal = timTime/m_prescaler;
+        uint16_t countVal = timTime/m_mcu->simCycPI()/m_prescaler;
 
         if( m_countL ) m_countL[0] = countVal & 0xFF;
         if( m_countH ) m_countH[0] = (countVal>>8) & 0xFF;
     }
 }
 
-void McuTimer::countReadL( uint8_t val ) // Someone is reading counter low byte
+void McuTimer::updtCycles() // Recalculate ovf, comps, etc
 {
-    updtCount(); // Write counter values to Ram
+    if( m_countH ) m_countVal  = m_countH[0] << 8;
+    m_countVal |= m_countL[0];
+    m_countStart = 0;
+
+    sheduleEvents();
 }
 
-void McuTimer::countReadH( uint8_t val ) // Someone is reading counter high byte
+// ----------------------------------------
+
+McuTimers::McuTimers( eMcu* mcu  )
 {
-    updtCount(); // Write counter values to Ram
+    m_mcu = mcu;
 }
 
+McuTimers::~McuTimers(){}
 
-/*void McuTimer::configure( uint16_t p, uint16_t cm, bool bd )
+void McuTimers::remove()
 {
-    m_period = p;
-    m_comMatch = cm;
-    m_bidir = bd;
-}*/
+    for( McuTimer* timer : m_timerList ) delete timer;
+    m_timerList.clear();
+}

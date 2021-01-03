@@ -27,8 +27,8 @@
 class MAINMODULE_EXPORT VarResistor : public VarResBase
 {
     Q_OBJECT
-    Q_PROPERTY( double Max_Resistance READ maxRes WRITE setMaxRes DESIGNABLE true USER true )
-    Q_PROPERTY( double Min_Resistance READ minRes WRITE setMinRes DESIGNABLE true USER true )
+    Q_PROPERTY( double Max_Resistance READ maxRes WRITE setMax DESIGNABLE true USER true )
+    Q_PROPERTY( double Min_Resistance READ minRes WRITE setMin DESIGNABLE true USER true )
 
     public:
         VarResistor( QObject* parent, QString type, QString id );
@@ -36,6 +36,9 @@ class MAINMODULE_EXPORT VarResistor : public VarResBase
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
+
+        void setMax( double r );
+        void setMin( double r );
 
         virtual void updateStep() override;
 

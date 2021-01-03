@@ -27,7 +27,7 @@ LibraryItem* VarResistor::libraryItem()
 {
     return new LibraryItem(
             tr( "Variable Resistor" ),
-            tr( "Passive" ),
+            tr( "Resistors" ),
             "varresistor.png",
             "VarResistor",
             VarResistor::construct);
@@ -49,14 +49,22 @@ void VarResistor::updateStep()
 {
     if( m_changed )
     {
-        double res = double( m_minRes+(m_maxRes-m_minRes)*m_dial->value()/1000 );
-        eResistor::setResSafe( res );
-        m_value = res;
-
+        eResistor::setResSafe( m_value );
         m_changed = false;
         Simulator::self()->addEvent( 1, this );
-        //qDebug()<<"VarResBase::updateStep"<<m_resist;
     }
+}
+
+void VarResistor::setMax( double r )
+{
+    setMaxRes( r );
+    setMaxVal( m_maxRes );
+}
+
+void VarResistor::setMin( double r )
+{
+    setMinRes( r );
+    setMinVal( m_minRes );
 }
 
 void VarResistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

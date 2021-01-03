@@ -3,12 +3,12 @@ enum {
     S_C = 0,S_Z,S_N,S_V,S_S,S_H,S_T,S_I,  // SREG bit indexes
     R_XL = 0x1a, R_XH,R_YL,R_YH,R_ZL,R_ZH,// 16 bits register pairs
 //    R_SPL = 32+0x3d, R_SPH,               // stack pointer
-    R_SREG = 32+0x3f,                     // real SREG
-    MAX_IOs    = 280,                     // maximum number of IO registers, on normal AVRs. Bigger AVRs need more than 256-32 (mega1280)
+//    R_SREG = 32+0x3f,                     // real SREG
+//    MAX_IOs    = 280,                     // maximum number of IO registers, on normal AVRs. Bigger AVRs need more than 256-32 (mega1280)
 };
 
 //Core states.
-enum {
+/*enum {
     cpu_Limbo = 0,  // before initialization is finished
     cpu_Stopped,    // all is stopped, timers included
     cpu_Running,    // we're free running
@@ -17,7 +17,7 @@ enum {
     cpu_StepDone,   // tell gdb it's all OK, and give it registers
     cpu_Done,       // avr software stopped gracefully
     cpu_Crashed,    // avr software crashed (watchdog fired)
-};
+};*/
 
 #define get_d5(o) \
         const uint8_t d = (o >> 4) & 0x1f;
@@ -79,12 +79,9 @@ enum {
         const uint8_t k = ((o & 0x00c0) >> 2) | (o & 0xf); \
         const uint16_t vp = m_dataMem[p] | (m_dataMem[p + 1] << 8);
 
-#define get_sreg_bit(o) \
-        const uint8_t b = (o >> 4) & 7;
-
 //#define AVR_DATA_TO_IO(v) ((v) - 32)
 //#define AVR_IO_TO_DATA(v) ((v) + 32)
 
-#define AVR_FUSE_LOW  0
-#define AVR_FUSE_HIGH 1
-#define AVR_FUSE_EXT  2
+//#define AVR_FUSE_LOW  0
+//#define AVR_FUSE_HIGH 1
+//#define AVR_FUSE_EXT  2

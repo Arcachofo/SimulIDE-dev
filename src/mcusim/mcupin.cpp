@@ -34,9 +34,10 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_puMask   = false;
     m_dirMask  = false;
 
-    Pin* pin = new Pin( 0, QPoint( 0, 0 ), id, i, (Component*)mcu );
+    Pin* pin = new Pin( 0, QPoint( 0, 0 ), mcu->objectName()+id, i, mcu );
     m_ePin[0] = pin;
 
+    initialize();
 }
 McuPin::~McuPin() {}
 
@@ -52,7 +53,7 @@ void McuPin::initialize()
     m_volt = 0;
 
     setDirection( m_dirMask );
-    setState( false );
+    //setState( false );
     setPullup( m_puMask );
 
     eSource::setVoltHigh( 5 );
@@ -77,11 +78,22 @@ void McuPin::voltChanged()
 
     if( fabs( volt-m_volt ) < 1e-5 ) return; // Avoid triggering because small volt changes
 
-    uint8_t state = 0;
-    if( volt > digital_thre ) state = 1;
+    if( volt > digital_thre ) m_state = 1;
+    else                      m_state = 0;
 
-    m_port->pinChanged( m_pinMask, state );
+    m_port->pinChanged( m_pinMask, m_state );
     m_volt = volt;
+}
+
+void McuPin::controlPin( bool ctrl )
+{
+    m_extCtrl = ctrl;
+}
+
+void McuPin::setPortState( bool state )
+{
+    if( m_extCtrl ) return;
+    setState( state );
 }
 
 void McuPin::setState( bool state )

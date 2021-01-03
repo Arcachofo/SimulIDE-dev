@@ -154,14 +154,17 @@ void ItemLibrary::loadItems()
     addItem( RelaySPST::libraryItem() );
     addItem( KeyPad::libraryItem() );
     // Passive
+    addItem( new LibraryItem( tr("Resistors"),tr("Passive"), "resistors.png","", 0l ) );
     addItem( Resistor::libraryItem() );
     addItem( ResistorDip::libraryItem() );
     addItem( Potentiometer::libraryItem() );
     addItem( VarResistor::libraryItem() );
+    addItem( new LibraryItem( tr("Resistive Sensors"),tr("Passive"), "resistorsensors.png","", 0l ) );
     addItem( Ldr::libraryItem() );
     addItem( Thermistor::libraryItem() );
     addItem( RTD::libraryItem() );
     addItem( Strain::libraryItem() );
+
     addItem( Capacitor::libraryItem() );
     addItem( elCapacitor::libraryItem() );
     addItem( Inductor::libraryItem() );
@@ -245,6 +248,9 @@ void ItemLibrary::loadItems()
     addItem( Tunnel::libraryItem() );
 
     addItem( SubPackage::libraryItem() );
+    addItem( new LibraryItem( tr("AVRs"),tr("NEW_MCU"), "ic2.png","", 0l ) );
+    addItem( new LibraryItem( tr("PICs"),tr("NEW_MCU"), "ic2.png","", 0l ) );
+    addItem( new LibraryItem( tr("I51"),tr("NEW_MCU"), "ic2.png","", 0l ) );
     addItem( Mcu::libraryItem() );
 }
 

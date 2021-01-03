@@ -87,7 +87,8 @@ void eNode::stampCurrent( ePin* epin, double data )
 
 void eNode::stampAdmitance( ePin* epin, double data )
 {
-    if( m_nodeList[epin] == m_nodeNum  ) return; // Be sure msg doesn't come from this node
+    if( m_nodeList[epin] == m_nodeNum  )
+        return; // Be sure msg doesn't come from this node
 
     m_admitList[epin] = data;
 

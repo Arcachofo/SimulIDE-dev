@@ -22,77 +22,94 @@
 
 #include "e-element.h"
 #include "regsignal.h"
-
-#define TIM_COUNT_L m_countL ? m_countL[0] : 0
-#define TIM_COUNT_H m_countH ? m_countH[0] : 0
+#include "mcutypes.h"
 
 class eMcu;
-class McuPin;
+class McuOcUnit;
 
 class MAINMODULE_EXPORT McuTimer : public eElement
 {
         friend class McuCreator;
+        friend class McuOcUnit;
 
     public:
-        McuTimer( eMcu* mcu );
+        McuTimer( eMcu* mcu, QString name );
         ~McuTimer();
 
- static void remove();
- static McuTimer* getTimer( QString name ) { return m_timers.value( name ); }
+        enum clkSource_t{
+            clkMCU=0,
+            clkEXT
+        };
 
         virtual void initialize() override;
         virtual void runEvent() override;
 
         virtual void sheduleEvents();
         virtual void enable( uint8_t en );
-        virtual void configure( uint8_t val ){;}
+        virtual void configureA( uint8_t val ){;}
+        virtual void configureB( uint8_t val ){;}
         virtual void countWriteL( uint8_t val );
         virtual void countWriteH( uint8_t val );
-        virtual void countReadL( uint8_t val );
-        virtual void countReadH( uint8_t val );
-        virtual void updtCycles(){;}
-        virtual void updtCount();
+        virtual void updtCycles();
+        virtual void updtCount( uint8_t val=0 );
+
+        virtual void addocUnit( McuOcUnit* ocUnit ) { m_ocUnit.emplace_back( ocUnit ); }
 
         QString name() { return m_name; }
 
         //Signals:
         RegSignal<uint8_t> on_tov;
-        RegSignal<uint8_t> on_comp;
 
     protected:
-
         QString m_name;
+        int     m_number;
 
         eMcu*   m_mcu;
-        std::vector<McuPin*> m_ocPin; // Output Compare Pins
 
         int      m_nBits;
         uint16_t m_prescaler;
+        uint64_t m_scale;
 
         bool m_running;  // is Timer running?
-        bool m_compare;  // are we comparing?
         bool m_bidirec;  // is Timer bidirectional?
         bool m_reverse;  // is Timer counting backwards?
 
-        uint8_t m_clkSrc;  // Source of Timer clock
+        clkSource_t m_clkSrc;  // Source of Timer clock
+        uint8_t     m_clkEdge; // Clock edge in ext pin clock
 
         uint8_t* m_countL; // Actual ram for counter low byte
         uint8_t* m_countH; // Actual ram for counter high byte
 
         uint32_t m_countVal;  // Value of counter
-        uint16_t m_countValL; // Value of counter low byte
-        uint16_t m_countValH; // Value of counter high byte
+        uint32_t m_countStart; // Value of counter after ovf
 
         uint16_t m_ovfMatch;  // counter vale to match an overflow
         uint32_t m_ovfPeriod; // overflow period
         uint64_t m_ovfCycle;  // absolute cycle of next overflow
 
-        uint16_t m_comMatch;  // counter vale to match a comparator
-        uint32_t m_comPeriod; // comparator period
-        uint64_t m_comCycle;  // absolute cycle of next compartion
+        regBits_t m_configBitsA;
+        regBits_t m_configBitsB;
 
+        uint8_t m_mode;
 
- static QHash<QString, McuTimer*> m_timers;// Access TIMERS by name
+        std::vector<McuOcUnit*> m_ocUnit; // Output Compare Units
+};
+
+class MAINMODULE_EXPORT McuTimers
+{
+        friend class McuCreator;
+
+    public:
+        McuTimers( eMcu* mcu );
+        ~McuTimers();
+
+       void remove();
+       McuTimer* getTimer( QString name ) { return m_timerList.value( name ); }
+
+    protected:
+       eMcu* m_mcu;
+
+       QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
 };
 
 

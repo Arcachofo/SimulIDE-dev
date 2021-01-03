@@ -25,111 +25,13 @@
 // SFR register locations
 enum SFR_REGS
 {
-    REG_ACC  = 0xE0,
+    REG_SBUF = 0x99,
     REG_B    = 0xF0,
-    REG_PSW  = 0xD0,
-    _SP   = 0x81,
     REG_DPL  = 0x82,
     REG_DPH  = 0x83,
-    REG_P0   = 0x80,
-    REG_P1   = 0x90,
-    REG_P2   = 0xA0,
-    REG_P3   = 0xB0,
-    REG_IP   = 0xB8,
-    REG_IE   = 0xA8,
-    REG_TMOD = 0x89,
-    REG_TCON = 0x88,
-    REG_TH0  = 0x8C,
-    REG_TL0  = 0x8A,
-    REG_TH1  = 0x8D,
-    REG_TL1  = 0x8B,
-    REG_SCON = 0x98,
-    REG_PCON = 0x87
 };
 
-enum PSW_BITS
-{
-    PSW_P = 0,
-    PSW_UNUSED = 1,
-    PSW_OV = 2,
-    PSW_RS0 = 3,
-    PSW_RS1 = 4,
-    PSW_F0 = 5,
-    PSW_AC = 6,
-    PSW_C = 7
-};
-
-enum PSW_MASKS
-{
-    PSWMASK_P = 0x01,
-    PSWMASK_UNUSED = 0x02,
-    PSWMASK_OV = 0x04,
-    PSWMASK_RS0 = 0x08,
-    PSWMASK_RS1 = 0x10,
-    PSWMASK_F0 = 0x20,
-    PSWMASK_AC = 0x40,
-    PSWMASK_C = 0x80
-};
-
-enum IE_MASKS
-{
-    IEMASK_EX0 = 0x01,
-    IEMASK_ET0 = 0x02,
-    IEMASK_EX1 = 0x04,
-    IEMASK_ET1 = 0x08,
-    IEMASK_ES  = 0x10,
-    IEMASK_ET2 = 0x20,
-    IEMASK_UNUSED = 0x40,
-    IEMASK_EA  = 0x80
-};
-
-enum PT_MASKS
-{
-    PTMASK_PX0 = 0x01,
-    PTMASK_PT0 = 0x02,
-    PTMASK_PX1 = 0x04,
-    PTMASK_PT1 = 0x08,
-    PTMASK_PS  = 0x10,
-    PTMASK_PT2 = 0x20,
-    PTMASK_UNUSED1 = 0x40,
-    PTMASK_UNUSED2 = 0x80
-};
-
-enum TCON_MASKS
-{
-    TCONMASK_IT0 = 0x01,
-    TCONMASK_IE0 = 0x02,
-    TCONMASK_IT1 = 0x04,
-    TCONMASK_IE1 = 0x08,
-    TCONMASK_TR0 = 0x10,
-    TCONMASK_TF0 = 0x20,
-    TCONMASK_TR1 = 0x40,
-    TCONMASK_TF1 = 0x80
-};
-
-enum TMOD_MASKS
-{
-    TMODMASK_M0_0 = 0x01,
-    TMODMASK_M1_0 = 0x02,
-    TMODMASK_CT_0 = 0x04,
-    TMODMASK_GATE_0 = 0x08,
-    TMODMASK_M0_1 = 0x10,
-    TMODMASK_M1_1 = 0x20,
-    TMODMASK_CT_1 = 0x40,
-    TMODMASK_GATE_1 = 0x80
-};
-
-enum IP_MASKS
-{
-    IPMASK_PX0 = 0x01,
-    IPMASK_PT0 = 0x02,
-    IPMASK_PX1 = 0x04,
-    IPMASK_PT1 = 0x08,
-    IPMASK_PS  = 0x10,
-    IPMASK_PT2 = 0x20
-};
-
-enum EM8051_EXCEPTION
+/*enum EM8051_EXCEPTION
 {
     EXCEPTION_STACK,  // stack address > 127 with no upper memory, or roll over
     EXCEPTION_ACC_TO_A, // acc-to-a move operation; illegal (acc-to-acc is ok, a-to-acc is ok..)
@@ -137,20 +39,9 @@ enum EM8051_EXCEPTION
     EXCEPTION_IRET_SP_MISMATCH,  // sp not preserved over interrupt call
     EXCEPTION_IRET_ACC_MISMATCH, // acc not preserved over interrupt call
     EXCEPTION_ILLEGAL_OPCODE     // for the single 'reserved' opcode in the architecture
-};
+};*/
 
-#define BAD_VALUE 0x77
-#define PSW       m_psw[0]
-#define ACC       m_acc[0]
 
-#define OPERAND1  m_progMem[PC+1]
-#define OPERAND2  m_progMem[PC+2]
-
-#define BANK_SELECT ( (PSW & (PSWMASK_RS0|PSWMASK_RS1))>>PSW_RS0 )
-#define INDIR_RX_ADDRESS ( m_dataMem[(m_opcode & 1) + 8*BANK_SELECT] )
-#define RX_ADDRESS ( (m_opcode & 7) + 8*BANK_SELECT )
-
-#define CARRY ((PSW & PSWMASK_C) >> PSW_C)
 
 class MAINMODULE_EXPORT I51Core : public CoreCpu
 {
@@ -163,18 +54,25 @@ class MAINMODULE_EXPORT I51Core : public CoreCpu
 
     protected:
         uint16_t m_opcode;
-        uint8_t* m_psw;
         uint8_t* m_acc;
+
+        uint8_t m_P;
+        uint8_t m_OV;
+        uint8_t m_RS0;
+        uint8_t m_RS1;
+        uint8_t m_F0;
+        uint8_t m_AC;
+        uint8_t m_CY;
+
+        bool m_upperData;
 
         std::vector<uint16_t> m_outPortAddr;
         std::vector<uint16_t> m_inPortAddr;
 
-        bool m_upperData;
-
-        typedef void (I51Core::*funcPtr)();
+        /*typedef void (I51Core::*funcPtr)();
         std::vector<funcPtr> m_instructions;
 
-        /*template <typename T>
+        template <typename T>
         void insertIntr( uint16_t opcode, T* core, funcPtr func)
         {
             m_instructions.at( opcode ) = func;
@@ -182,34 +80,38 @@ class MAINMODULE_EXPORT I51Core : public CoreCpu
 
         void createInstructions();*/
 
-        inline uint8_t getValue( uint16_t addr ) // Read Port Input instead Latch
+        inline uint8_t getValue( uint16_t addr ) // Read Fake Input instead
         {
-            for( uint i=0; i<m_outPortAddr.size(); ++i )
+            if( addr == REG_SBUF ) addr++;     // Fake Uart Input Register
+            else
             {
-                if( addr == m_outPortAddr[i] )
+                for( uint i=0; i<m_outPortAddr.size(); ++i )
                 {
-                    addr = m_inPortAddr[i];
-                    break;
+                    if( addr == m_outPortAddr[i] )
+                    {
+                        addr = m_inPortAddr[i]; // Fake Port Input Register
+                        break;
+                    }
                 }
-            }
-            return getRam( addr );
-        }
-
-        inline uint8_t getRam( uint16_t addr )
-        {
-            if( addr > m_lowDataMemEnd )
-            {
-                if( m_upperData ) addr += m_regEnd;
             }
             return GET_RAM( addr );
         }
-        inline void setRam( uint16_t addr , uint8_t val )
+
+        inline uint8_t GET_RAM( uint16_t addr ) override
         {
-            if( addr > m_lowDataMemEnd )
+            if( m_upperData )
             {
-                if( m_upperData ) addr += m_regEnd;
+                if( addr > m_lowDataMemEnd ) addr += m_regEnd;
             }
-            SET_RAM( addr, val );
+            return CoreCpu::GET_RAM( addr );
+        }
+        inline void SET_RAM( uint16_t addr , uint8_t val )
+        {
+            if( m_upperData )
+            {
+                if( addr > m_lowDataMemEnd ) addr += m_regEnd;
+            }
+            CoreCpu::SET_RAM( addr, val );
         }
 
         //void push_to_stack( int aValue );
@@ -217,8 +119,8 @@ class MAINMODULE_EXPORT I51Core : public CoreCpu
         inline void    pushStack8( uint8_t v );
         inline uint8_t popStack8();
 
-        inline void add_solve_flags(int value1, int value2, int acc );
-        inline void sub_solve_flags( int value1, int value2 );
+        inline void add_solve_flags( uint8_t value1, uint8_t value2, uint8_t acc );
+        inline void sub_solve_flags( uint8_t value1, uint8_t value2 );
 
         inline void ajmp_offset();
         inline void ljmp_address();

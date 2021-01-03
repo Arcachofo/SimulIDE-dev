@@ -33,14 +33,16 @@ class MAINMODULE_EXPORT ePN : public eResistor
 
         virtual void stamp() override;
         virtual void initialize() override;
+        double step( double volt );
 
-        virtual void voltChanged() override;
+        virtual double current() override;
 
     protected:
-        virtual void updateVI();
+        //virtual void updateVI();
 
         double m_voltPN;
         double m_deltaV;
+        double m_lastCurr;
         double m_threshold;
         double m_accuracy;
 };

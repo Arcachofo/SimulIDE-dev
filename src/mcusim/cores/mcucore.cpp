@@ -23,17 +23,22 @@ McuCore::McuCore( eMcu* mcu )
 {
     m_mcu = mcu;
 
-    m_dataMem       = mcu->m_dataMem.data();
-    m_dataMemEnd    = mcu->ramSize()-1;
+    m_spl = NULL;
+    m_sph = NULL;
+
+    m_dataMem    = mcu->m_dataMem.data();
+    m_dataMemEnd = mcu->ramSize()-1;
     m_progMem   = mcu->m_progMem.data();
     m_progSize  = mcu->flashSize();
 
-    m_lowDataMemEnd = mcu->m_regStart-1;
-    m_regEnd    = mcu->m_regEnd;
-    sreg        = mcu->m_sreg.data();
+    if( mcu->m_regStart > 0 ) m_lowDataMemEnd = mcu->m_regStart-1;
+    else                      m_lowDataMemEnd = 0;
+    m_regEnd = mcu->m_regEnd;
 
-    if     ( m_progSize <= 0xFF ) m_progAddrSize = 1;
-    else if( m_progSize <= 0xFFFF ) m_progAddrSize = 2;
+    m_sreg = mcu->m_sreg.data();
+
+    if     ( m_progSize <= 0xFF )     m_progAddrSize = 1;
+    else if( m_progSize <= 0xFFFF )   m_progAddrSize = 2;
     else if( m_progSize <= 0xFFFFFF ) m_progAddrSize = 3;
 }
 McuCore::~McuCore() {}

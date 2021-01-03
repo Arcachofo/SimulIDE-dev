@@ -63,6 +63,8 @@ class MAINMODULE_EXPORT RelayBase : public MechContact
         eNode* m_internalEnode;
         double m_trigCurrent;
         double m_relCurrent;
+
+        bool m_relayOn;
 };
 
 #endif

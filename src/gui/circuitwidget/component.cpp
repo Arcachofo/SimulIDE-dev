@@ -441,20 +441,17 @@ void Component::setValue( double val)
         m_unitMult = 1;
         while( fabs(val) >= 1000 )
         {
-            index--;
+            if( --index < 0 ) { index = 0; break; }
+
             m_unitMult = m_unitMult*1000;
             val = val/1000;
         }
         while( fabs(val) < 1 )
         {
-            index++;
+            if( ++index > 8 ) { index = 8; break; }
+
             m_unitMult = m_unitMult/1000;
             val = val*1000;
-        }
-        if( index > 8 )
-        {
-            index = 8;
-            val = val/1000;
         }
         m_mult = multUnits.at( index );
         if( m_mult != " " ) m_mult.prepend( " " );

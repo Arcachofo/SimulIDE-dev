@@ -29,22 +29,19 @@ class MAINMODULE_EXPORT BJT : public Component, public eBJT
 {
     Q_OBJECT
     Q_PROPERTY( double Gain      READ gain  WRITE setGain  DESIGNABLE true USER true )
-    Q_PROPERTY( double Threshold READ BEthr WRITE setBEthr DESIGNABLE true USER true )
     Q_PROPERTY( bool   PNP       READ pnp   WRITE setPnp   DESIGNABLE true USER true )
-    Q_PROPERTY( bool   BC_diode  READ BCd   WRITE setBCd   DESIGNABLE true USER true )
-    
+
     public:
 
         BJT( QObject* parent, QString type, QString id );
         ~BJT();
         
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem *libraryItem();
         
         virtual void updateStep() override;
         
         void setPnp( bool pnp );
-        void setBCd( bool bcd );
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 };

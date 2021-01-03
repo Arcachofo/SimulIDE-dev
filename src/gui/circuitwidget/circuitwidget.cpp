@@ -18,9 +18,13 @@
  ***************************************************************************/
  
 #include "circuitwidget.h"
+#include "propertieswidget.h"
 #include "mainwindow.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "appprop.h"
+#include "circprop.h"
+#include "simuprop.h"
 #include "filebrowser.h"
 #include "utils.h"
 
@@ -33,10 +37,15 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
              , m_circView( this )
              , m_circToolBar( this )
              , m_fileMenu( this )
+             , m_settingsMenu( this )
              , m_infoMenu( this )
 {
     setObjectName( "CircuitWidget" );
     m_pSelf = this;
+
+    m_cirPropW = NULL;
+    m_simPropW = NULL;
+    m_appPropW = NULL;
 
     m_verticalLayout.setObjectName( "verticalLayout" );
     m_verticalLayout.setContentsMargins(0, 0, 0, 0);
@@ -53,9 +62,9 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     font.setPixelSize( int(10*fontScale) );
     m_rateLabel->setFont( font );
 
-    m_errorLabel  = new QLabel( this );
-    m_errorLabel->setFont( font );
-    m_errorLabel->setMaximumSize( 200, 15 );
+    m_msgLabel  = new QLabel( this );
+    m_msgLabel->setFont( font );
+    m_msgLabel->setMaximumSize( 200, 15 );
     //m_errorLabel->setStyleSheet("QLabel { background-color: lightgreen; color: blue; }");
 
     createActions();
@@ -74,6 +83,20 @@ CircuitWidget::~CircuitWidget() { }
 
 void CircuitWidget::clear()
 {
+    if( m_cirPropW )
+    {
+        m_cirPropW->setParent( NULL );
+        m_cirPropW->close();
+        m_cirPropW->deleteLater();
+        m_cirPropW = NULL;
+    }
+    if( m_simPropW )
+    {
+        m_simPropW->setParent( NULL );
+        m_simPropW->close();
+        m_simPropW->deleteLater();
+        m_simPropW = NULL;
+    }
     m_circView.clear();
     m_circView.setCircTime( 0 );
 }
@@ -118,6 +141,23 @@ void CircuitWidget::createActions()
     pauseSimAct->setStatusTip(tr("Pause Simulation"));
     connect( pauseSimAct, SIGNAL( triggered()),
              this, SLOT(pauseSim()), Qt::UniqueConnection );
+
+    settAppAct = new QAction( QIcon(""),tr("App Settings"), this);
+    settAppAct->setStatusTip(tr("App Settings"));
+    connect( settAppAct, SIGNAL( triggered()),
+                   this, SLOT(settApp()), Qt::UniqueConnection );
+
+    settCirAct = new QAction( QIcon(""),tr("Circuit Settings"), this);
+    settCirAct->setStatusTip(tr("Circuit Settings"));
+    connect( settCirAct, SIGNAL( triggered()),
+                   this, SLOT(settCir()), Qt::UniqueConnection );
+
+    settSimAct = new QAction( QIcon(""),tr("Simulation Settings"), this);
+    settSimAct->setStatusTip(tr("Simulation Settings"));
+    connect( settSimAct, SIGNAL(triggered()),
+                   this, SLOT(settSim()), Qt::UniqueConnection );
+
+
     
     infoAct = new QAction( QIcon(":/help.png"),tr("Online Help"), this);
     infoAct->setStatusTip(tr("Online Help"));
@@ -157,23 +197,34 @@ void CircuitWidget::createToolBars()
     m_circToolBar.addSeparator();//..........................
     m_circToolBar.addWidget( m_rateLabel );
     //m_circToolBar.addSeparator();
-    m_circToolBar.addWidget( m_errorLabel );
+    m_circToolBar.addWidget( m_msgLabel );
 
     QWidget *spacerWidget = new QWidget( this );
     spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     spacerWidget->setVisible( true );
     m_circToolBar.addWidget( spacerWidget );
 
+    m_settingsMenu.addAction( settAppAct );
+    m_settingsMenu.addAction( settCirAct );
+    m_settingsMenu.addAction( settSimAct );
+
     m_infoMenu.addAction( infoAct );
     m_infoMenu.addAction( aboutAct );
     m_infoMenu.addAction( aboutQtAct );
 
-    QToolButton* toolButton = new QToolButton( this );
-    toolButton->setStatusTip( tr("Info") );
-    toolButton->setMenu( &m_infoMenu );
-    toolButton->setIcon( QIcon(":/help.png") );
-    toolButton->setPopupMode( QToolButton::InstantPopup );
-    m_circToolBar.addWidget( toolButton );
+    QToolButton* settingsButton = new QToolButton( this );
+    settingsButton->setToolTip( tr("Settings") );
+    settingsButton->setMenu( &m_settingsMenu );
+    settingsButton->setIcon( QIcon(":/config.png") );
+    settingsButton->setPopupMode( QToolButton::InstantPopup );
+    m_circToolBar.addWidget( settingsButton );
+
+    QToolButton* infoButton = new QToolButton( this );
+    infoButton->setToolTip( tr("Info") );
+    infoButton->setMenu( &m_infoMenu );
+    infoButton->setIcon( QIcon(":/help.png") );
+    infoButton->setPopupMode( QToolButton::InstantPopup );
+    m_circToolBar.addWidget( infoButton );
     
     m_circToolBar.addSeparator();//..........................
 }
@@ -330,6 +381,39 @@ void CircuitWidget::pauseSim()
     }
 }
 
+void CircuitWidget::settApp()
+{
+    if( !m_appPropW )
+    {
+        m_appPropW = new AppProp( this );
+        QPoint p = mapToGlobal( QPoint(50, 50) );
+        m_appPropW->move( p.x(), p.y() );
+    }
+    m_appPropW->show();
+}
+
+void CircuitWidget::settCir()
+{
+    if( !m_cirPropW )
+    {
+        m_cirPropW = new CircProp( this );
+        QPoint p = mapToGlobal( QPoint(50, 50) );
+        m_cirPropW->move( p.x(), p.y() );
+    }
+    m_cirPropW->show();
+}
+
+void CircuitWidget::settSim()
+{
+    if( !m_simPropW )
+    {
+        m_simPropW = new SimuProp( this );
+        QPoint p = mapToGlobal( QPoint(50, 50) );
+        m_simPropW->move( p.x(), p.y() );
+    }
+    m_simPropW->show();
+}
+
 void CircuitWidget::openInfo()
 {
     QDesktopServices::openUrl(QUrl("http://simulide.blogspot.com"));
@@ -392,16 +476,21 @@ void CircuitWidget::setRate( int rate, int load )
 
         m_rateLabel->setText( tr("    Real Speed: ")+Srate+" %"
                             + tr("    Load: "      )+Sload+" %    ");
-        m_errorLabel->setStyleSheet("QLabel { background-color: lightgreen; color: green; }");
-        m_errorLabel->setText( "   Ok   ");
     }
 }
 
 void CircuitWidget::setError( QString error )
 {
-    m_errorLabel->setStyleSheet("QLabel { background-color: yellow; color: red; }");
-    m_errorLabel->setText( "   "+error );
+    setMsg( error, 2 );
     setRate( -1, 0 );
+}
+
+void CircuitWidget::setMsg( QString msg, int type )
+{
+    if     ( type == 0 ) m_msgLabel->setStyleSheet("QLabel { background-color: lightgreen; color: green; }");
+    else if( type == 1 ) m_msgLabel->setStyleSheet("QLabel { background-color: yellow; color: red; font-weight: bold;}");
+    else if( type == 2 ) m_msgLabel->setStyleSheet("QLabel { background-color: orange; color: black; font-weight: bold;}");
+    m_msgLabel->setText( "   "+msg+"   " );
 }
 
 void CircuitWidget::updateRecentFileActions()

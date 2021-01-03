@@ -23,7 +23,10 @@
 #include <QtWidgets>
 
 #include "circuitview.h"
-#include "terminalwidget.h"
+
+class AppProp;
+class CircProp;
+class SimuProp;
 
 class MAINMODULE_EXPORT CircuitWidget : public QWidget
 {
@@ -42,6 +45,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         
         void setRate( int rate , int load );
         void setError( QString error );
+        void setMsg(QString msg , int type);
         void powerCircOn();
         void powerCircOff();
         void powerCircDebug( bool run );
@@ -55,6 +59,9 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         bool saveCircAs();
         void powerCirc();
         void pauseSim();
+        void settApp();
+        void settCir();
+        void settSim();
         void openInfo();
         void about();
 
@@ -75,7 +82,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         
         QToolBar m_circToolBar;
         QLabel*  m_rateLabel;
-        QLabel*  m_errorLabel;
+        QLabel*  m_msgLabel;
 
         QAction* recentFileActs[MaxRecentFiles];
         QAction* newCircAct;
@@ -84,15 +91,23 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         QAction* saveCircAsAct;
         QAction* powerCircAct;
         QAction* pauseSimAct;
+        QAction* settAppAct;
+        QAction* settCirAct;
+        QAction* settSimAct;
         QAction* infoAct;
         QAction* aboutAct;
         QAction* aboutQtAct;
         
         QMenu m_fileMenu;
+        QMenu m_settingsMenu;
         QMenu m_infoMenu;
         
         QString m_curCirc;
         QString m_lastCircDir;
+
+        AppProp*  m_appPropW;
+        CircProp* m_cirPropW;
+        SimuProp* m_simPropW;
 };
 
 #endif

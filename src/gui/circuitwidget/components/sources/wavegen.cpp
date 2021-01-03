@@ -116,10 +116,16 @@ void WaveGen::genTriangle()
 
 void WaveGen::genSquare()
 {
-    if( m_vOut == 1 ) m_vOut = 0;
-    else              m_vOut = 1;
-
-    m_nextStep = m_halfW;
+    if( m_vOut == 1 )
+    {
+        m_vOut = 0;
+        m_nextStep = m_fstepsPC-m_halfW;
+    }
+    else
+    {
+        m_vOut = 1;
+        m_nextStep = m_halfW;
+    }
 }
 
 void WaveGen::genRandom()

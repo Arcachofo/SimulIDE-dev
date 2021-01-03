@@ -132,7 +132,7 @@ bool CircMatrix::solveMatrix()
                 {
                     if( !nodeGroup.contains( y+1 ) ) continue;
                     int nx=0;
-                    for( int x=0; x<m_numEnodes; x++ )      
+                    for( int x=0; x<m_numEnodes; x++ )
                     {
                         if( !nodeGroup.contains( x+1 ) ) continue;
                         a[nx][ny] = &(m_circMatrix[x][y]);
@@ -152,7 +152,7 @@ bool CircMatrix::solveMatrix()
                 m_eNodeActList.append( eNodeActive );
                 m_eNodeActive = &eNodeActive;
                 
-                factorMatrix( ny, group );
+                isOk &= factorMatrix( ny, group );
                 isOk &= luSolve( ny, group );
 
                 group++;
@@ -178,7 +178,7 @@ bool CircMatrix::solveMatrix()
     return isOk;
 }
 
-void CircMatrix::factorMatrix( int n, int group  )
+bool CircMatrix::factorMatrix( int n, int group  )
 {
     // factors a matrix into upper and lower triangular matrices by
     // gaussian elimination.  On entry, a[0..n-1][0..n-1] is the
@@ -189,9 +189,9 @@ void CircMatrix::factorMatrix( int n, int group  )
     i_vector_t&  ipvt = m_ipvtList[group];
     
     d_matrix_t& a = m_aFaList[group];
-    for( int i=0; i<n; i++ )
+    for( int i=0; i<n; ++i )
     {
-        for( int j=0; j<n; j++ )
+        for( int j=0; j<n; ++j )
         {
              a[i][j] = *(ap[i][j]);             
              //qDebug() << m_circMatrix[i][j];
@@ -241,7 +241,7 @@ void CircMatrix::factorMatrix( int n, int group  )
             }
             //qDebug() <<"LTE"<<i<<j<<x<<q<<largest<<largestRow<<( !(x < largest) );
         }
-
+        if( largestRow == -1 ) return false;
         if( j != largestRow ) // pivoting
         {
             double x;
@@ -277,6 +277,7 @@ void CircMatrix::factorMatrix( int n, int group  )
         std::cout << ipvt[i] << std::endl;
         //std::cout << std::endl;
     }*/
+    return true;
 }
 
 bool CircMatrix::luSolve( int n, int group )

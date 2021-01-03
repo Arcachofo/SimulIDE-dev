@@ -27,13 +27,14 @@ OutPanelText::OutPanelText( QWidget* parent )
             : QPlainTextEdit( parent )
 {
     m_text = "";
+    this->setObjectName( "outPanel");
     
     //setStyleSheet("background-color: #150925");
     m_highlighter = new OutHighlighter( document() );
 
     QPalette p;// = palette();
-    p.setColor(QPalette::Base, QColor( 35, 30, 60) );
-    p.setColor(QPalette::Text, QColor( 190, 190, 150));
+    p.setColor( QPalette::Base, QColor( 35, 30, 60 ) );
+    p.setColor( QPalette::Text, QColor( 190, 190, 150) );
     setPalette(p);
     
     QFont font;

@@ -19,7 +19,7 @@
 
 
 VERSION = "0.5.15"
-RELEASE = "-RC3"
+RELEASE = "-RC4"
 
 TEMPLATE = app
 
@@ -54,6 +54,7 @@ SOURCES += ../src/*.cpp \
     ../src/gui/filebrowser/*.cpp \
     ../src/gui/editorwidget/*.cpp \
     ../src/gui/editorwidget/findreplacedialog/*.cpp \
+    ../src/gui/dialogs/*.cpp \
     ../src/simulator/*.cpp \
     ../src/simulator/elements/*.cpp \
     ../src/simulator/elements/active/*.cpp \
@@ -71,7 +72,8 @@ SOURCES += ../src/*.cpp \
     ../src/mcusim/cores/*.cpp \
     ../src/mcusim/cores/avr/*.cpp \
     ../src/mcusim/cores/i51/*.cpp \
-    ../src/mcusim/cores/pic/*.cpp
+    ../src/mcusim/cores/pic/*.cpp \
+    ../src/mcusim/modules/*.cpp
 
 HEADERS += ../src/*.h \
     ../src/gui/*.h \
@@ -94,6 +96,7 @@ HEADERS += ../src/*.h \
     ../src/gui/filebrowser/*.h \
     ../src/gui/editorwidget/*.h \
     ../src/gui/editorwidget/findreplacedialog/*.h \
+    ../src/gui/dialogs/*.h \
     ../src/simulator/*.h \
     ../src/simulator/elements/*.h \
     ../src/simulator/elements/active/*.h \
@@ -113,7 +116,8 @@ HEADERS += ../src/*.h \
     ../src/mcusim/cores/*.h \
     ../src/mcusim/cores/avr/*.h \
     ../src/mcusim/cores/i51/*.h \
-    ../src/mcusim/cores/pic/*.h
+    ../src/mcusim/cores/pic/*.h \
+    ../src/mcusim/modules/*.h
 
 INCLUDEPATH += ../src \
     ../src/gui \
@@ -136,6 +140,7 @@ INCLUDEPATH += ../src \
     ../src/gui/filebrowser \
     ../src/gui/editorwidget \
     ../src/gui/editorwidget/findreplacedialog \
+    ../src/gui/dialogs \
     ../src/simulator \
     ../src/simulator/elements \
     ../src/simulator/elements/active \
@@ -155,7 +160,8 @@ INCLUDEPATH += ../src \
     ../src/mcusim/cores \
     ../src/mcusim/cores/avr \
     ../src/mcusim/cores/i51 \
-    ../src/mcusim/cores/pic
+    ../src/mcusim/cores/pic \
+    ../src/mcusim/modules
 
 TRANSLATIONS +=  \
     ../resources/translations/simulide.ts \
@@ -166,6 +172,9 @@ TRANSLATIONS +=  \
     ../resources/translations/simulide_pt_BR.ts \
     ../resources/translations/simulide_ru.ts \
     ../resources/translations/simulide_it.ts
+
+FORMS +=   \
+    ../src/gui/dialogs/*.ui
 
 RESOURCES = ../src/application.qrc
 

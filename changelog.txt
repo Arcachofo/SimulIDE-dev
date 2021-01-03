@@ -19,6 +19,10 @@ Changes:
     - Convert Logic Devices to new simulation core.
     - Split loadDomDoc and pasteDomDoc (Solves some issues with old simu files).
     
+  RC4:
+    - Group Resitors and Resistive Sensors.
+    - Circuit->Properties moved to new Settings Menu.
+    
 New Features:
   RC1:
     - Some new Russian help files (Sergey Roenko).
@@ -40,6 +44,19 @@ New Features:
     - Tunnel: color inicator of connection.
     - Oscope: Take snapshot on condition.
     - Logic devices: "Propagation delay" property.
+    
+  RC4:
+    - New Subcircuits and MCUs show device name.
+    - Uart Module (basic implementation).
+    - New MCUs: 8051 Timers mostly working.
+    - New MCUs: 8051 Uart basic implementation.
+    - New MCUs: PIC14 core added.
+    - New MCUs: AVR Timer0 mostly working (including PWM).
+    - Simulation Time indicator shows units (upto ps).
+    - App, Circuit and Simulation Settings Dialogs.
+    - Oscope: Cursor time with unit multiplier.
+    - Oscope: Cursor shows voltages.
+    - Circuit: Refresh speed editable (fps).
     
 Bug Fixes:
   RC1:
@@ -100,6 +117,27 @@ Bug Fixes:
     - Mosfet error, happens whith switches in the circuit.
     - Current Source not working (0.5.15-RC2).
     - I2C not working (0.5.15-RC2).
+    
+  RC4:
+    - Oscope: Wrong Trigger & Auto at circuit load (0.5.15-RC3).
+    - Oscope: wrong readings after change expand mode (0.5.15-RC2).
+    - Oscope: Time step goes crazy if "auto" with no wave (0.5.15-RC2).
+    - Oscope: Max & Min values wrong update in non-auto (0.5.15-RC2).
+    - Oscope: Cursor randomly wrong scale.
+    - Oscope: Slow down simulation on long time steps.
+    - Oscope: Not showing wave at start for time steps.
+    - Oscope: Time Position Box value not update after change channel.
+    - Oscope: Circuit powers off when deletimg value.
+    - Crash: Simulator::calcelEvents error (0.5.15-RC3).
+    - Events with same timeStamp should be done at once (0.5.15-RC3).
+    - Relay Normally Closed not behaving correctly.
+    - WaveGen: square wave wrong duty (0.5.15-RC2).
+    - Bjt: fails to converge in some cases.
+    - Variable Resistor: wrong value label if defaults changed (0.5.15-RC2).
+    - Crash setting very large Component values.
+    - Clock: Wrong wave shape after changing frequency (0.5.15-RC2).
+    - Led: Wrong time values while updating bright (0.5.15-RC2).
+    
     
 New Components:
   RC2:

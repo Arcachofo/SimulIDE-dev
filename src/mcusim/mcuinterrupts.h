@@ -24,14 +24,8 @@
 #include <QHash>
 #include <map>
 
-/*enum {
-    AVR_INT_IRQ_PENDING = 0,
-    AVR_INT_IRQ_RUNNING,
-    AVR_INT_IRQ_COUNT,
-    AVR_INT_ANY        = 0xff,    // for avr_get_interrupt_irq()
-};*/
-
 class eMcu;
+class Interrupts;
 
 class MAINMODULE_EXPORT Interrupt
 {
@@ -40,12 +34,6 @@ class MAINMODULE_EXPORT Interrupt
     public:
         Interrupt( QString name, uint16_t vector, eMcu* mcu );
         virtual ~Interrupt();
-
- static void enableGlobal( uint8_t en );
- static void runInterrupts();
- static void retI();
- static void remove();
- static void resetInts();
 
         virtual void reset();
         virtual void raise( uint8_t v );
@@ -65,6 +53,8 @@ class MAINMODULE_EXPORT Interrupt
         eMcu* m_mcu;
         uint8_t* m_ram;
 
+        Interrupts* m_interrupts;
+
         QString  m_name;
         uint8_t  m_number;
         uint16_t m_vector;
@@ -77,13 +67,34 @@ class MAINMODULE_EXPORT Interrupt
 
         uint8_t m_priority;
         uint8_t m_raised;
+};
 
- static uint8_t    m_enGlobal;   // Global Interrupt Flag
- static Interrupt* m_active;     // Active interrupt
+//------------------------               ------------------------
+//---------------------------------------------------------------
+class MAINMODULE_EXPORT Interrupts
+{
+        friend class McuCreator;
 
- static std::multimap<uint8_t, Interrupt*> m_running; // Interrups thay were interrupted
- static std::multimap<uint8_t, Interrupt*> m_pending; // Interrupts pending to service
- static QHash<QString, Interrupt*> m_interrupts;      // Access Interrupts by name
+    public:
+        Interrupts( eMcu* mcu );
+        virtual ~Interrupts();
+
+       void enableGlobal( uint8_t en );
+       void runInterrupts();
+       void retI();
+       void remove();
+       void resetInts();
+       void addToPending( uint8_t pri, Interrupt* i );
+
+    protected:
+        eMcu* m_mcu;
+
+        uint8_t    m_enGlobal;   // Global Interrupt Flag
+        Interrupt* m_active;     // Active interrupt
+
+        std::multimap<uint8_t, Interrupt*> m_running; // Interrups that were interrupted
+        std::multimap<uint8_t, Interrupt*> m_pending; // Interrupts pending to service
+        QHash<QString, Interrupt*> m_intList;      // Access Interrupts by name
 };
 
 #endif

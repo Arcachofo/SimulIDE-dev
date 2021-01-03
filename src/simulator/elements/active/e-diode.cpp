@@ -99,14 +99,14 @@ void eDiode::voltChanged()
         if( deltaR == high_imp ) current = 0;
         if( current == m_lastC )
         {
-            m_converged = true;
+            //m_converged = true;
             return;
         }
         m_lastC = current;
 
         m_ePin[0]->stampCurrent( current );
         m_ePin[1]->stampCurrent(-current );
-        Simulator::self()->addEvent( 0, 0l );
+        //Simulator::self()->addEvent( 0, 0l );
     }
 }
 

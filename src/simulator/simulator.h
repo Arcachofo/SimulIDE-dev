@@ -85,17 +85,23 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void runGraphicStep2();
 
         void runCircuit();
-        
-        uint64_t circuitRate() { return m_stepsPF; }
-        uint64_t simuRate() { return m_stepsPS; }
-        void simuRateChanged( uint64_t rate );
 
-        int  reaClock() { return m_stepsReac; }
-        void setReaClock( int value );
+        uint64_t stepSize() { return m_stepSize; }
+        void setStepSize( uint64_t stepSize ) { m_stepSize = stepSize; }
+        
+        uint64_t fps() { return m_fps; }
+        void setFps( uint64_t fps );
+        uint64_t stepsPerFrame() { return m_stepsPF; }
+
+        uint64_t stepsPerSec() { return m_stepsPS; }
+        void setStepsPerSec( uint64_t sps );
 
         int    noLinAcc() { return m_noLinAcc; }
         void   setNoLinAcc( int ac );
         double NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
+
+        void  setMaxNlSteps( uint32_t steps ) { m_maxNlstp = steps; }
+        uint32_t maxNlSteps( ) { return m_maxNlstp; }
         
         bool isRunning() { return (m_state >= SIM_STARTING); }
         bool isPaused()  { return (m_state == SIM_PAUSED); }
@@ -103,10 +109,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t circTime() { return m_circTime; }
         void setCircTime( uint64_t time );
 
-        QList<eNode*> geteNodes() { return m_eNodeList; }
-
         void timerEvent( QTimerEvent* e );
-
         uint64_t mS(){ return m_RefTimer.elapsed(); }
 
         simState_t simState() { return m_state; }
@@ -146,6 +149,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         CircMatrix m_matrix;
 
         QHash<int, QString> m_errors;
+        QHash<int, QString> m_warnings;
 
         QList<eNode*> m_eNodeList;
         QList<eNode*> m_eNodeBusList;
@@ -154,19 +158,22 @@ class MAINMODULE_EXPORT Simulator : public QObject
         eElement* m_voltChanged;
         eElement* m_nonLin;
 
-        QList<eElement*> m_changedFast;
-        QList<eElement*> m_nonLinear;
         QList<eElement*> m_elementList;
         QList<eElement*> m_updateList;
 
         simState_t m_state;
 
-        int  m_error;
+        int m_error;
+        int m_warning;
         int m_timerId;
         int m_timerTick;
         int m_noLinAcc;
-        int m_stepsReac;
 
+        uint64_t m_fps;
+        uint32_t m_NLstep;
+        uint32_t m_maxNlstp;
+
+        uint64_t m_stepSize;
         uint64_t m_stepsPS;
         uint64_t m_stepsPF;
 

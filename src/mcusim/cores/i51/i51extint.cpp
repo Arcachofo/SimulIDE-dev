@@ -37,7 +37,7 @@ void I51ExtInt::raise( uint8_t v )
 
     if( m_mode == 0 )
     {
-        if( v == 0 ) Interrupt::raise( v ); // Low state: raise
+        if( v == 0 ) Interrupt::raise( v ); // Low  state: raise
         else         m_raised = false;      // High state: stop triggering
     }
     else if( m_mode == 1 )
@@ -52,7 +52,7 @@ void I51ExtInt::exitInt() // Exit from this interrupt
     Interrupt::exitInt();
 
     if( (m_mode == 0) && m_raised ) //In mode 0 keep triggering until pin change state
-        m_pending.emplace( m_priority, this ); // Add to pending interrupts
+        m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
 
     else if( m_mode == 1 ) Interrupt::clearFlag();
 }

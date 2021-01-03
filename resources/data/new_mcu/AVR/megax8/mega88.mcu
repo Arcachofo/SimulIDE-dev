@@ -19,13 +19,9 @@
 <!-- *                                                                         * -->
 <!-- *************************************************************************** -->
 
-<itemlib>
+<mcu name="mega88" core="AVR" data="1280" prog="4096" progword="2" eeprom="512"
+            inst_cycle="1">
+
+    <include file="megax8.xml" />
     
-    <itemset category="NEW_MCU" type="MCU">
-        
-    <item name="atmega328N" package="new_mcu/mega328/mega328" data="new_mcu/mega328/mega328" device="atmega328" icon="ic2.png"></item>
-    <item name="MCS51" package="new_mcu/MCS51/MCS51" data="new_mcu/MCS51/MCS51"  device="MCS51" icon="ic2.png"></item>
-    
-    </itemset>
-    
-</itemlib>
+</mcu>

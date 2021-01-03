@@ -10,6 +10,7 @@
         <file alias="savecircas.png">../src/icons/mainwindow/saveas.png</file>
         <file alias="help.png">../src/icons/mainwindow/help.png</file>
         <file alias="about.png">../src/icons/mainwindow/about.png</file>
+        <file alias="config.png">../src/icons/mainwindow/config.png</file>
         
         <file alias="new.png">../src/icons/mainwindow/new.png</file>
         <file alias="open.png">../src/icons/mainwindow/open.png</file>
@@ -150,12 +151,16 @@
         <file alias="leds.png">../src/icons/components/leds.png</file>
         <file alias="displays.png">../src/icons/components/displays.png</file>
         <file alias="motors.png">../src/icons/components/motors.png</file>
+        <file alias="resistors.png">../src/icons/components/resistors.png</file>
+        <file alias="resistorsensors.png">../src/icons/components/resistorsensors.png</file>
         
         <file alias="switchbut.png">../src/icons/mainwindow/switchbut.png</file>
         
         <file alias="arduino.png">../src/icons/components/arduino.png</file>
         <file alias="sr04.png">../src/icons/components/sr04.png</file>
         <file alias="sr04_ico.png">../src/icons/components/sr04_ico.png</file>
+        <file alias="ky-023.png">../src/icons/components/ky-023.png</file>
+        <file alias="ky-040.png">../src/icons/components/ky-040.png</file>
         
         <file alias="blanc.png">../src/icons/components/blanc.png</file>
         <file alias="font2.png">../src/icons/font/font2.png</file>

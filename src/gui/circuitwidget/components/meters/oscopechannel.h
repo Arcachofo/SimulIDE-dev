@@ -25,6 +25,8 @@
 
 class MAINMODULE_EXPORT OscopeChannel : public DataChannel
 {
+        friend class Oscope;
+
     public:
 
         OscopeChannel( QString id );
@@ -32,30 +34,27 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
 
         virtual void initialize() override;
         virtual void updateStep() override;
-        virtual void runEvent() override;
         virtual void voltChanged() override;
 
-        virtual void fetchData(int ch , uint64_t edge );
+        virtual void setFilter( double f ) override;
 
     private:
+        void updateValues();
+
         uint64_t m_totalP;
         uint64_t m_lastMax;
         uint64_t m_numMax;       // Number of Maximum found
         uint64_t m_nCycles;
         uint64_t m_period;
         uint64_t m_risEdge;
-        uint64_t m_stepsPerS;
 
-        double m_Vpos;
         double m_vTick;
         double m_lastValue;
         double m_freq;
+        double m_mid;
 
         bool m_rising;
         bool m_falling;
-        bool m_reading;
-        //bool m_gotWave;
-        bool m_runEvent;
 };
 
 #endif

@@ -51,6 +51,7 @@ void eMosfet::initialize()
     m_Vs = 0;
     m_Sfollow = false;
     m_converged = true;
+    m_firtStage = true;
     
     m_kRDSon = m_RDSon*(10-m_threshold);
     m_Gth    = m_threshold-m_threshold/4;
@@ -72,55 +73,58 @@ void eMosfet::stamp()
 
 void eMosfet::voltChanged()
 {
-    double Vgs;
-    double Vds;
     double Vd = m_ePin[0]->getVolt();
     double Vs = m_ePin[1]->getVolt();
     double Vg = m_ePin[2]->getVolt();
+    double Vgs = Vg-Vs;
+    double Vds = Vd-Vs;
     
     if(( m_Sfollow == false)&( fabs(Vs) > 1e-3 ))
     {
         if(( fabs(m_Vs) > 1e-3 )&( m_Vs != Vs )) m_Sfollow = true;
         m_Vs = Vs;
     }
-
     if( m_Pchannel )
     {
-        Vgs = Vs-Vg;
-        Vds = Vs-Vd;
-    }
-    else
-    {
-        Vgs = Vg-Vs;
-        Vds = Vd-Vs;
+        Vgs = -Vgs;
+        Vds = -Vds;
     }
     if( m_depletion ) Vgs = -Vgs;
     
-    m_gateV = Vgs - m_Gth;
-    //qDebug()<< "eMosfet::setVChanged"<<Vd<<Vs<<Vg<<m_Pchannel<<m_depletion;
+    double gateV = Vgs - m_Gth;
     
-    if( m_gateV < 0 ) m_gateV = 0;
-    
+    if( gateV < 0 ) gateV = 0;
+    //if( m_Sfollow ) gateV = (m_gateV*4 + gateV)/5;
+
     double admit = cero_doub;
     double current = 0;
+    double maxCurrDS = Vds/m_resist;
+    double DScurrent = m_accuracy*2;
     
-    if( m_gateV > 0 ) 
+    if( gateV > 0 )
     {
         admit = 1/m_RDSon;
         
-        double satK = 1+Vds/100;
-        double maxCurrDS = Vds/m_resist;
-        
-        if( Vds > m_gateV ) Vds = m_gateV;
-        
-        double DScurrent = 0;
-        
-        DScurrent = (m_gateV*Vds-pow(Vds,2)/2)*satK/m_kRDSon;
-        
-        //if( m_Sfollow ) DScurrent /= 2;
-        if( DScurrent > maxCurrDS ) DScurrent = maxCurrDS;
-        
-        current = maxCurrDS-DScurrent;
+        /*if( m_firtStage )
+        {
+            m_firtStage = false;
+
+            if( (gateV-m_gateV) < 0 ) DScurrent = -DScurrent;
+            current = m_lastCurrent+DScurrent;
+        }
+        else*/
+        {
+            double satK = 1+Vds/100;
+            //double maxCurrDS = Vds/m_resist;
+
+            if( Vds > gateV ) Vds =gateV;
+
+            DScurrent = (gateV*Vds-pow(Vds,2)/2)*satK/m_kRDSon;
+
+            //if( m_Sfollow ) DScurrent /= 2;
+            if( DScurrent > maxCurrDS ) DScurrent = maxCurrDS;
+            current = maxCurrDS-DScurrent;
+        }
     }
     if( m_Pchannel ) current = -current;
     
@@ -128,15 +132,13 @@ void eMosfet::voltChanged()
     {
         eResistor::setAdmit( admit );
         eResistor::stamp();
-        //qDebug()<< "eMosfet::setVChanged admit = "<<admit<<m_resist;
     }
-
-//qDebug()<< "eMosfet::setVChanged Current = "<<current<<m_gateV;
+    m_gateV = gateV;
 
     if( fabs(current-m_lastCurrent)<m_accuracy )            // Converged
     {
-        //qDebug()<< "eMosfet::setVChanged    CONVERGED";
-        m_converged = true;
+        //m_converged = true;
+        m_firtStage = true;
         return;
     }
     m_lastCurrent = current;

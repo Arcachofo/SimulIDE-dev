@@ -36,16 +36,20 @@ Simulator::Simulator( QObject* parent )
 {
     m_pSelf = this;
 
+    m_fps = 20;
     m_timerId   = 0;
     m_timerTick = 50;
-    m_stepsReac = 10;
     m_stepsPS   = 1e6;
+    m_stepSize  = 1e6;
     m_noLinAcc  = 5; // Non-Linear accuracy
+    m_maxNlstp  = 100000;
 
-    m_errors[0] = " ";
-    m_errors[1] = " Could not solve Matrix";
-    m_errors[2] = " Add Event: NULL free event";
-    m_errors[3] = " Add Event: LAST_SIM_EVENT reached";
+    m_errors[0] = "";
+    m_errors[1] = "Could not solve Matrix";
+    m_errors[2] = "Add Event: NULL free event";
+    m_errors[3] = "Add Event: LAST_SIM_EVENT reached";
+
+    m_warnings[1] = "NonLinear Not Converging";
 
     resetSim();
 
@@ -81,7 +85,16 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_state = SIM_ERROR;
         return;
     }
-    if( m_state < SIM_RUNNING ) return;
+    if( m_warning > 0 )
+    {
+        CircuitWidget::self()->setMsg( m_warnings.value( m_warning), 1 );
+        m_warning = -10;
+    }
+    else if( m_warning < 0 )
+    {
+        if( ++m_warning == 0 )CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
+    }
+    //if( m_state < SIM_RUNNING ) return;
 
     if( !m_CircuitFuture.isFinished() ) // Stop remaining parallel thread
     {
@@ -99,7 +112,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 
     runGraphicStep1();
     // Run Circuit in parallel thread
-    m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit ); // Run Circuit in a parallel thread
+    if( m_state == SIM_RUNNING ) m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit ); // Run Circuit in a parallel thread
 
     runGraphicStep2();
 }
@@ -133,27 +146,36 @@ void Simulator::runGraphicStep2()
         m_lastStep = m_tStep;
         m_lastRefT = m_refTime;
     }
-    CircuitView::self()->setCircTime( m_tStep/1e6 );
+    CircuitView::self()->setCircTime( m_tStep );
 }
 
 void Simulator::runCircuit()
 {
     simEvent_t* event = m_eventList.first;
-    uint64_t   endRun = m_circTime + m_stepsPF*1e6; // Run upto next Timer event
-    eElement*   comp;
+    uint64_t   endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
+    uint64_t nextTime;
+    //m_maxNlSteps = pow(m_noLinAcc,4);
 
     while( event )                         // Simulator event loop
     {
         if( event->time > endRun ) break;  // All events for this Timer Tick are done
-        m_circTime = event->time;
-        freeEvent( event );
 
-        comp = event->comp;
-        if( comp ) comp->runEvent();       // Run event callback
+        nextTime = m_circTime;
+        while( m_circTime == nextTime )    // Run all event with same timeStamp
+        {
+            m_circTime = event->time;
+            freeEvent( event );
 
-        if( m_changedNode ) solveMatrix();
+            if( event->comp ) event->comp->runEvent(); // Run event callback
 
-        while( m_nonLin )      // Non Linear Components
+            event = m_eventList.first;
+            if( event ) nextTime = event->time;
+            else break;
+        }
+        if( m_changedNode )
+            solveMatrix();
+
+        while( m_nonLin )                  // Non Linear Components
         {
             while( m_nonLin )
             {
@@ -161,22 +183,33 @@ void Simulator::runCircuit()
                 m_nonLin->voltChanged();
                 m_nonLin = m_nonLin->nextNonLin;
             }
-            if( m_changedNode ) solveMatrix();
-
-            if( m_state < SIM_RUNNING ) { addEvent( 0, 0l ); break; } // Add event so non linear keep running at next timer tick
+            if( m_changedNode )
+            {
+                solveMatrix();
+                m_NLstep++;
+            }
+            if( m_state < SIM_RUNNING ) {
+                addEvent( 0, NULL ); break; } // Add event so non linear keep running at next timer tick
+            if( m_maxNlstp )
+                if( m_NLstep >= m_maxNlstp )
+                {
+                    m_warning = 1;
+                    break;
+                }
         }
         if( m_state < SIM_RUNNING ) break; // ???? Keep this at the end for debugger to run 1 step
+//        if( (m_maxNlSteps == 0) && (m_noLinSteps>1) )qDebug() << "Simulator::runCircuit m_noLinSteps" << m_noLinSteps;
+        m_NLstep = 0;
 
-        while( m_voltChanged )  // Linear Components
+        while( m_voltChanged )           // Other Components
         {
             m_voltChanged->added = false;
             m_voltChanged->voltChanged();
             m_voltChanged = m_voltChanged->nextChanged;
         }
-
         event = m_eventList.first;
     }
-    if( m_state > SIM_STARTING ) m_circTime = endRun;
+    if( m_state > SIM_WAITING ) m_circTime = endRun;
     m_loopTime = m_RefTimer.nsecsElapsed();
 }
 
@@ -185,17 +218,19 @@ void Simulator::resetSim()
     m_state    = SIM_STOPPED;
     m_load     = 0;
     m_error    = 0;
+    m_warning  = 0;
     m_lastStep = 0;
     m_lastRefT = 0;
     m_circTime = 0;
+    m_NLstep   = 0;
 
     CircuitView::self()->setCircTime( 0 );
     clearEventList();
-    m_changedFast.clear();
-    m_nonLinear.clear();
     m_changedNode = NULL;
     m_voltChanged = NULL;
     m_nonLin = NULL;
+
+    CircuitWidget::self()->setMsg( " Simulation Stopped ", 1 );
 }
 
 void Simulator::startSim()
@@ -207,7 +242,7 @@ void Simulator::startSim()
         return;
     }*/
     resetSim();
-    simuRateChanged( m_stepsPS );
+    setStepsPerSec( m_stepsPS );
     m_state = SIM_STARTING;
     addEvent( 0, NULL );
 
@@ -251,10 +286,24 @@ void Simulator::startSim()
     }
     std::cout << "\nCircuit Matrix looks good" <<  std::endl;
 
-    m_state = SIM_RUNNING;
+    double sps100 = 100*(double)m_stepsPS*m_stepSize/1e12; // Speed %
+    double fps = m_stepsPS/m_stepsPF;
+
+    std::cout << "\nFPS:   " << fps        << "\t Frames Per Sec"
+              << "\nSpeed: " << sps100     << "%"
+              << "\nSpeed: " << m_stepsPS  << "\t Steps Per Sec"
+              << "\nStp/F: " << m_stepsPF  << "\t Steps per Frame"
+              << "\nNonLi: " << m_maxNlstp << "\t Max Iterations"
+              << "\nStep : " << m_stepSize << "\t picoseconds"
+              << std::endl
+              << std::endl;
 
     std::cout << "\n    Simulation Running... \n"<<std::endl;
+
+    CircuitWidget::self()->setMsg( " Simulation Running ", 0  );
     m_timerId = this->startTimer( m_timerTick, Qt::PreciseTimer );
+
+    m_state = SIM_RUNNING;
 }
 
 void Simulator::stopSim()
@@ -272,28 +321,31 @@ void Simulator::stopSim()
 
     CircuitWidget::self()->setRate( 0, 0 );
     Circuit::self()->update();
-
-    std::cout << "\n    Simulation Stopped \n" << std::endl;
+    CircuitWidget::self()->setMsg( " Simulation Stopped ", 1 );
+    std::cout << "\n    Simulation Stopped " << std::endl;
 }
 
 void Simulator::pauseSim()
 {
     //emit pauseDebug();
-    stopTimer();
+    //stopTimer();
     m_state = SIM_PAUSED;
     //m_CircuitFuture.waitForFinished();
-    std::cout << "\n    Simulation Paused \n" << std::endl;
+
+    CircuitWidget::self()->setMsg( " Simulation Paused ", 1 );
+    std::cout << "\n    Simulation Paused " << std::endl;
 }
 
 void Simulator::resumeSim()
 {
     m_state = SIM_RUNNING;
-    resumeTimer();
+    //resumeTimer();
 
     //emit resumeDebug();
     //if( m_debugging ) return;
 
-    std::cout << "\n    Resuming Simulation\n" << std::endl;
+    CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
+    std::cout << "\n    Resuming Simulation" << std::endl;
 }
 
 void Simulator::stopTimer()
@@ -309,22 +361,26 @@ void Simulator::resumeTimer() // Used by code editor
     m_timerId = this->startTimer( m_timerTick, Qt::PreciseTimer );
 }
 
-void Simulator::simuRateChanged( uint64_t rate )
+void Simulator::setFps( uint64_t fps )
 {
-    if( rate < 1 ) rate = 1;
+    m_fps = fps;
+    setStepsPerSec( m_stepsPS );
+}
 
-    m_timerTick  = 50;
-    uint64_t fps = 1000/m_timerTick;
+void Simulator::setStepsPerSec( uint64_t sps )
+{
+    if( sps < 1 ) sps = 1;
 
-    m_stepsPF = rate/fps;
+    m_timerTick  = 1000/m_fps; // 50 ms default
 
-    if( rate < fps )
+    m_stepsPS = sps;           // Steps per second
+    m_stepsPF = sps/m_fps;     // Steps per frame
+
+    if( sps < m_fps )
     {
-        fps = rate;
         m_stepsPF = 1;
-        m_timerTick = 1000/rate;
+        m_timerTick = 1000/sps; // ms
     }
-    m_stepsPS = m_stepsPF*fps;
 
     if( this->isRunning() )
     {
@@ -332,17 +388,6 @@ void Simulator::simuRateChanged( uint64_t rate )
         emit rateChanged();
         resumeSim();
     }
-
-    double sps100 = 100*(double)m_stepsPS/1e6;
-
-    std::cout << "\nFPS:   " << fps
-              << "\nus/F:  " << m_stepsPF   << "\t Simul. us"
-              << std::endl
-              << "\nSpeed: " << sps100      << "%"
-              << "\nSpeed: " << m_stepsPS   << "\t us Per Sec"
-              << "\nReact: " << m_stepsReac << "\t Simul. Steps"
-              << std::endl
-              << std::endl;
 }
 
 void Simulator::debug( bool run )
@@ -367,25 +412,12 @@ void Simulator::stopDebug()
     //stopSim();
 }
 
-void Simulator::setReaClock( int value )
-{
-    bool running = isRunning();
-    if( running ) pauseSim();
-
-    if     ( value < 1  )  value = 1;
-    else if( value > 100 ) value = 100;
-
-    m_stepsReac = value;
-
-    if( running ) resumeSim();
-}
-
 void  Simulator::setNoLinAcc( int ac )
 {
     bool running = isRunning();
     if( running ) pauseSim();
 
-    if     ( ac < 3 )  ac = 3;
+    if     ( ac < 1 )  ac = 1;
     else if( ac > 14 ) ac = 14;
     m_noLinAcc = ac;
 
@@ -442,18 +474,23 @@ void Simulator::cancelEvents( eElement* comp )
 {
     simEvent_t* event = m_eventList.first;
     simEvent_t* last  = 0l;
+    simEvent_t* next  = 0l;
 
     int i = 0;
     while( event )
     {
+        next = event->next;
         if( comp == event->comp )
         {
-            if( last ) last->next  = event->next;
+            if( last ) last->next  = next;
+            else       m_eventList.first = next;
+
             event->next = m_eventList.free;
             m_eventList.free = event;
         }
-        last  = event;
-        event = event->next;
+        else last = event;
+        event = next;
+
         if( ++i > LAST_SIM_EVENT ) { m_error = 3; return; }
     }
 }

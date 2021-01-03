@@ -56,6 +56,24 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
           : Chip( parent, type, id )
 {
     QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
+
+    m_icColor = QColor( 20, 30, 60 );
+
+    QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
+    f.setFamily("Monospace");
+    f.setPixelSize(5);
+    f.setLetterSpacing( QFont::PercentageSpacing, 120 );
+    m_valLabel->setFont( f );
+    m_valLabel->setPlainText( compName );
+    m_valLabel->setDefaultTextColor( QColor( 110, 110, 110 ) );
+    m_valLabel->setAcceptedMouseButtons( 0 );
+    setValLabelX( m_area.width()/2-3 );
+    setValLabelY( m_area.height()/2+m_valLabel->textWidth()/2 );
+    setValLabRot(-90 );
+    setValLabelPos();
+    setShowVal( true );
+
+
     QString dataFile = ComponentSelector::self()->getXmlFile( compName );
 
     m_mainComponent = 0l;
@@ -141,6 +159,8 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
         }
     }
     else    initChip();
+
+
 }
 SubCircuit::~SubCircuit(){}
 
@@ -401,6 +421,10 @@ void SubCircuit::setLogicSymbol( bool ls )
             }
         }
     }
+    setValLabelX( m_area.width()/2-3 );
+    setValLabelY( m_area.height()/2+m_valLabel->textWidth()/2 );
+    setValLabRot(-90 );
+    setValLabelPos();
 }
 
 void SubCircuit::remove()

@@ -25,18 +25,17 @@
 class MAINMODULE_EXPORT I51Timer : public McuTimer
 {
     public:
-        I51Timer( eMcu* mcu );
+        I51Timer( eMcu* mcu, QString name );
         ~I51Timer();
 
         virtual void initialize() override;
-        virtual void configure( uint8_t val ) override;
+        virtual void configureA( uint8_t val ) override;
+        virtual void configureB( uint8_t val ) override;
         virtual void updtCycles() override;
+        virtual void updtCount( uint8_t val=0 ) override;
 
     protected:
-        uint8_t m_mode;
-
         bool m_gate;
-
 };
 
 #endif
