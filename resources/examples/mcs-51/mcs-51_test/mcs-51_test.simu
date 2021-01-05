@@ -20,9 +20,9 @@ Unique  Id: Buffer-6:
 Circuit Id: Buffer-6
 <item valLabely="0" boardRot="-1000000" valLabelx="0" boardPos="-1e+06,-1e+06" Tristate="false" circPos="0,0" y="-124" labelrot="0" labely="-24" Out_High_V="5" id="Buffer-6" Inverted="false" Show_id="false" circRot="2.781396647055195e-307" Propagation_Delay_ns="10" hflip="1" Out_Low_V="0" rotation="-180" valLabRot="0" Input_Low_V="2.5" vflip="1" Input_Imped="100000000000000" itemtype="Buffer" labelx="-16" Open_Collector="false" mainComp="false" Out_Imped="40" x="-572" objectName="Buffer-6" Input_High_V="2.5"/>
 
-Unique  Id: MCS51-1: 
-Circuit Id: MCS51-1
-<item valLabely="0" boardRot="-1000000" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" y="-132" labelrot="0" labely="-20" Logic_Symbol="false" Program="ext_int.hex" id="MCS51-1" Show_id="true" circRot="4.541070993721501e-311" hflip="1" rotation="0" valLabRot="0" vflip="1" itemtype="MCU" labelx="0" Mhz="12" mainComp="false" x="-532" objectName="MCS51-1"/>
+Unique  Id: 8051-1: 
+Circuit Id: 8051-1
+<item valLabely="0" boardRot="-1000000" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" y="-132" labelrot="0" labely="-20" Logic_Symbol="false" Program="ext_int.hex" id="8051-1" Show_id="true" circRot="4.541070993721501e-311" hflip="1" rotation="0" valLabRot="0" vflip="1" itemtype="MCU" labelx="0" Mhz="12" mainComp="false" x="-532" objectName="8051-1"/>
 
 Unique  Id: Fixed Voltage-17: 
 Circuit Id: Fixed Voltage-17
