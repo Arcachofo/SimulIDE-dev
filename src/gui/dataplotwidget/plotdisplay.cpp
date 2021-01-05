@@ -251,6 +251,9 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     }
     for( int i=0; i<2; ++i ) // SCALES, MAX-MIN
     {
+        // Draw Rects to crop data plots
+        p.fillRect( i*(m_sizeX+m_margin*3), 0, m_margin*3, m_height, QColor( 10, 15, 50 ) );
+        
         if( !m_data[i] ) continue;
 
         QPen pen1( m_color[i], 0.5*m_linWi, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
@@ -259,9 +262,6 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
         m_vMinPos[i] = m_vCenter-(m_vMinVal[i]-m_posY[i])*m_sclY[i];
         p.drawLine( m_ceroX, m_vMaxPos[i], m_endX, m_vMaxPos[i] );   //Horizontal Max V line
         p.drawLine( m_ceroX, m_vMinPos[i], m_endX, m_vMinPos[i] );   //Horizontal Min V line
-
-        // Draw Rects to crop data plots
-        p.fillRect( i*(m_sizeX+m_margin*3), 0, m_margin*3, m_height, QColor( 10, 15, 50 ) );
 
         int xPos = 2+i*(m_sizeX+3*m_margin);
 
