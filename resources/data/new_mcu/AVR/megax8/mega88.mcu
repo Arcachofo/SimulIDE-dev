@@ -24,4 +24,6 @@
 
     <include file="megax8.xml" />
     
+    <datablock name="RAM" start="0x0100" end="0x04FF"/>
+    
 </mcu>

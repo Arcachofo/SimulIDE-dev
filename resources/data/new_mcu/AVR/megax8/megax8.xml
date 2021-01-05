@@ -111,7 +111,6 @@
         <register name="UDR0"   addr="198" bits=""/>
         <register name="UDR0RX" addr="199" bits=""/><!-- Fake Uart Input Register -->
     </regblock>
-    <datablock name="RAM" start="0x0100" end="0x08FF"/>
     <stack  spreg="SPL,SPH" increment="postdec" />
     <status streg="SREG" />
     

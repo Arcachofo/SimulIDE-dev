@@ -125,6 +125,14 @@ void McuCreator::createDataBlock( QDomElement* d, eMcu* mcu )
     uint16_t datEnd   = d->attribute("end").toUInt(0,0);
     uint16_t mapTo    = datStart;
 
+    if( datEnd >= mcu->m_dataMemSize )
+    {
+        qDebug() << "McuCreator::createDataBlock  ERROR creating DataBlock";
+        qDebug() << "dataMemSize  = " << mcu->m_dataMemSize;
+        qDebug() << "dataBlockEnd = " << datEnd;
+        return;
+    }
+
     if( d->hasAttribute("mapto") ) mapTo = d->attribute("mapto").toUInt(0,0);
 
     for( int i=datStart; i<=datEnd; ++i )
@@ -138,6 +146,15 @@ void McuCreator::createRegisters( QDomElement* e, eMcu* mcu )
 {
     uint16_t regStart = e->attribute("start").toUInt(0,0);
     uint16_t regEnd   = e->attribute("end").toUInt(0,0);
+
+    if( regEnd >= mcu->m_dataMemSize )
+    {
+        qDebug() << "McuCreator::createRegisters  ERROR creating Registers";
+        qDebug() << "dataMemSize  = " << mcu->m_dataMemSize;
+        qDebug() << "RegistersEnd = " << regEnd;
+        return;
+    }
+
     if( regStart < mcu->m_regStart ) mcu->m_regStart = regStart;
     if( regEnd   > mcu->m_regEnd )   mcu->m_regEnd   = regEnd;
 
