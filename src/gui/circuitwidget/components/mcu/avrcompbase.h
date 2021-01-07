@@ -35,6 +35,8 @@ class AvrCompBase : public McuComponent
         AvrCompBase( QObject* parent, QString type, QString id );
         ~AvrCompBase();
 
+        virtual void reset() override;
+
         bool initGdb();
         void setInitGdb( bool init );
         
@@ -88,6 +90,7 @@ class AvrCompBase : public McuComponent
         uint8_t m_slvAddr;
 
         avr_irq_t* m_i2cInIrq;
+        avr_irq_t* m_twenIrq;
 };
 
 #endif

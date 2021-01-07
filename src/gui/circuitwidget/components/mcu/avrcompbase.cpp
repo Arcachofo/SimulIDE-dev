@@ -68,8 +68,8 @@ void AvrCompBase::attachPins()
             m_avrI2C.setInput( 0, m_sda );         // Input SDA
             m_avrI2C.setClockPin( m_scl );         // Input SCL
 
-            avr_irq_t* twenIrq = avr_iomem_getirq( cpu, twcrAddr, 0l, 2 );
-            avr_irq_register_notify( twenIrq, twen_hook, this );
+            m_twenIrq = avr_iomem_getirq( cpu, twcrAddr, 0l, 2 );
+            avr_irq_register_notify( m_twenIrq, twen_hook, this );
 
             m_i2cInIrq = avr_io_getirq( cpu, AVR_IOCTL_TWI_GETIRQ(0), TWI_IRQ_INPUT);
         }
@@ -99,6 +99,12 @@ void AvrCompBase::addPin( QString id, QString type, QString label,
         ty = getType( type, "scl" );
         if( !ty.isEmpty() ) m_scl = newPin;
     }
+}
+
+void AvrCompBase::reset()
+{
+    McuComponent::reset();
+    m_twenIrq->flags |= IRQ_FLAG_INIT;
 }
 
 QString AvrCompBase::getType( QString type, QString t )
