@@ -104,7 +104,11 @@ void AvrCompBase::addPin( QString id, QString type, QString label,
 void AvrCompBase::reset()
 {
     McuComponent::reset();
-    m_twenIrq->flags |= IRQ_FLAG_INIT;
+    if( m_twenIrq )
+    {
+        m_twenIrq->flags  |= IRQ_FLAG_INIT;
+        m_i2cInIrq->flags |= IRQ_FLAG_INIT;
+    }
 }
 
 QString AvrCompBase::getType( QString type, QString t )

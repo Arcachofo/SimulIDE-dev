@@ -91,7 +91,7 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
             if( ty.startsWith("adc") )
             {
                 m_channelAdc = ty.remove( "adc" ).toInt();
-                m_Write_adc_irq = avr_io_getirq( m_avrProcessor, AVR_IOCTL_ADC_GETIRQ, m_channelAdc );
+                m_Write_adc_irq   = avr_io_getirq( m_avrProcessor, AVR_IOCTL_ADC_GETIRQ, m_channelAdc );
                 m_Write_acomp_irq = avr_io_getirq( m_avrProcessor, AVR_IOCTL_ACOMP_GETIRQ, ACOMP_IRQ_ADC0+m_channelAdc );
             }
             else if( ty.startsWith("ain") )
@@ -149,6 +149,28 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
     initialize();
 }
 
+void AVRComponentPin::initialize()
+{
+    if( m_pinType == 1 )                         // Initialize irq flags
+    {
+        if( m_Write_stat_irq )  m_Write_stat_irq->flags  |= IRQ_FLAG_INIT;
+        if( m_Write_adc_irq )   m_Write_adc_irq->flags   |= IRQ_FLAG_INIT;
+        if( m_Write_acomp_irq ) m_Write_acomp_irq->flags |= IRQ_FLAG_INIT;
+        if( m_PortRegChangeIrq && m_DdrRegChangeIrq )
+        {
+            m_PortChangeIrq->flags    |= IRQ_FLAG_INIT;
+            m_PortRegChangeIrq->flags |= IRQ_FLAG_INIT;
+            m_DdrRegChangeIrq->flags  |= IRQ_FLAG_INIT;
+        }
+        else
+        {
+            qDebug()<< "Pin not properly initialized:" << m_port << m_pinN;
+        }
+        m_enableIO = true;
+        McuComponentPin::initialize();
+    }
+}
+
 void AVRComponentPin::voltChanged()
 {
     double volt = m_ePin[0]->getVolt();
@@ -170,25 +192,6 @@ void AVRComponentPin::voltChanged()
     else if( m_pinType == 22 ) { m_avrProcessor->vcc  = volt*1000;}
     else if( m_pinType == 23 ) { m_avrProcessor->avcc = volt*1000;}
     else if( m_pinType == 24 ) { m_avrProcessor->aref = volt*1000;}
-}
-
-void AVRComponentPin::initialize()
-{
-    if( m_pinType == 1 )                         // Initialize irq flags
-    {
-        if( m_PortRegChangeIrq && m_DdrRegChangeIrq )
-        {
-            m_PortChangeIrq->flags    |= IRQ_FLAG_INIT;
-            m_PortRegChangeIrq->flags |= IRQ_FLAG_INIT;
-            m_DdrRegChangeIrq->flags  |= IRQ_FLAG_INIT;
-        }
-        else
-        {
-            qDebug()<< "Pin not properly initialized:" << m_port << m_pinN;
-        }
-        m_enableIO = true;
-        McuComponentPin::initialize();
-    }
 }
 
 void AVRComponentPin::setState( bool state )
