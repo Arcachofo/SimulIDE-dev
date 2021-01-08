@@ -42,13 +42,13 @@ class MAINMODULE_EXPORT eSource : public eElement
         void  setVoltLow( double v );
         
         bool  out();
-        void  setOut( bool hight );
+        void  setOut( bool out );
 
         bool  isInverted();
         void  setInverted( bool inverted );
 
         double imp();
-        void  setImp( double imp );
+        virtual void  setImp( double imp );
 
         double getVolt();
 

@@ -44,9 +44,10 @@ class AVRComponentPin : public McuComponentPin
         virtual void attachPin( avr_t* AvrProcessor );
         virtual void voltChanged() override;
         virtual void initialize() override;
-        virtual void setState( bool state );
+        virtual void setState( bool state ) override;
 
-        virtual void pullupNotConnected( bool up );
+        virtual void pullupNotConnected( bool up ) override;
+        virtual void setImp( double imp ) override;
         //virtual void resetOutput();
 
         void adcread();
@@ -101,8 +102,6 @@ class AVRComponentPin : public McuComponentPin
         bool m_enableIO;
 
     protected:
-        //void setPullup( uint32_t value );
-
         int  m_channelAdc;
         int  m_channelAin;
 
