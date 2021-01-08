@@ -157,6 +157,9 @@ void KY023::updateStep()
         m_vry->setVoltHigh( m_vOutY );
         m_vry->setOut( true );
         m_vry->stampOutput();
+
+        m_sw->setOut( !m_closed );
+        m_sw->stampOutput();
         
         m_changed = false;
         Simulator::self()->addEvent( 0, 0l );
@@ -167,6 +170,7 @@ void KY023::remove()
 {
     delete m_vrx;
     delete m_vry;
+    delete m_sw;
     Component::remove();
 }
 
