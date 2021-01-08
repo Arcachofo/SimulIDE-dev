@@ -117,6 +117,7 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
 
 AudioOut::~AudioOut()
 {
+    if( m_deviceinfo.isNull() ) return;
     delete m_dataBuffer;
     //qDebug() << "AudioOut::~AudioOut deleting" << QString::fromStdString( m_elmId );
 }
