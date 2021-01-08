@@ -109,6 +109,7 @@ void AvrCompBase::reset()
         m_twenIrq->flags  |= IRQ_FLAG_INIT;
         m_i2cInIrq->flags |= IRQ_FLAG_INIT;
     }
+    m_avrI2C.setEnabled( false );
 }
 
 QString AvrCompBase::getType( QString type, QString t )
@@ -220,7 +221,7 @@ void AvrCompBase::twenChanged( uint32_t value )
 
         qDebug() << "AvrCompBase::twenChanged i2cFreq:" << i2cFreq;
     }
-    else
+    else // Disable I2C
     {
         m_avrI2C.setEnabled( false );
         m_avrI2C.setMaster( false );

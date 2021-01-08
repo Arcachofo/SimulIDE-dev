@@ -74,6 +74,8 @@ class MAINMODULE_EXPORT eI2C : public eLogicDevice
         void writeBit();
         void ACK();
         void waitACK();
+
+        void updatePins();
         
         int m_address;           // Device Address
         int m_txReg;             // Byte to Send

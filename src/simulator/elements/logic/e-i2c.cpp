@@ -41,20 +41,27 @@ void eI2C::initialize()
     m_stepsPe = stepsPerS/m_freq/2;
     m_propDelay = m_stepsPe/3;
     
-    m_txReg = 0;
-    m_rxReg = 0;
+    m_txReg  = 0;
+    m_rxReg  = 0;
     m_bitPtr = 0;
-    m_lastSDA = false;
-    m_toggleScl = false;
-    m_lowerSda = false;
+
+    m_lastSDA    = false;
+    m_toggleScl  = false;
+    m_lowerSda   = false;
     m_releaseSda = false;
+
     m_state = I2C_IDLE;
     m_addressBits = 7;
 }
 
 void eI2C::stamp()                    // Called at Simulation Start
 {
-    //if( !m_enabled ) return;
+    SDA_PIN->setOut( false );
+    SDA_PIN->setImp( high_imp );
+    SCL_PIN->setOut( false );
+    SCL_PIN->setImp( high_imp );
+
+    if( !m_enabled ) return;
     if( m_input.size() == 0 ) return;
 
     eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
@@ -264,7 +271,7 @@ void eI2C::masterStart( uint8_t addr )
     SDA_PIN->setImp( high_imp );
     SCL_PIN->setOut( false );
     SCL_PIN->setImp( high_imp );
-    Simulator::self()->addEvent( 0, NULL );
+    ///Simulator::self()->addEvent( 0, NULL );
 
     m_state = I2C_STARTED;
 }
@@ -283,7 +290,7 @@ void eI2C::masterRead()
 
     SDA_PIN->setOut( false );
     SDA_PIN->setImp( high_imp );
-    Simulator::self()->addEvent( 0, NULL );
+    ///Simulator::self()->addEvent( 0, NULL );
 
     m_bitPtr = 0;
     m_state = I2C_READING;
@@ -310,19 +317,15 @@ void eI2C::readBit()
 
 void eI2C::writeBit()
 {
-    if( m_bitPtr < 0 ) 
-    {
-        waitACK();
-        return;
-    }
+    if( m_bitPtr < 0 ) { waitACK(); return; }
+
     bool bit = m_txReg>>m_bitPtr & 1;
 
-    double imp = m_outImp;
-    if( bit ) imp = high_imp;
+    if( bit ) SDA_PIN->setImp( high_imp );
+    else      SDA_PIN->setImp( m_outImp );
 
-    SDA_PIN->setImp( imp );
-    Simulator::self()->addEvent( 0, NULL );
-    //qDebug() << "eI2C::writeBit()"<<m_bitPtr<<bit;
+    ///Simulator::self()->addEvent( 0, NULL );
+
     m_bitPtr--;
 }
 
@@ -355,35 +358,42 @@ void eI2C::waitACK()
 
 void eI2C::setEnabled( bool en )
 {
+    if( m_enabled == en ) return;
     m_enabled = en;
+    updatePins();
+}
 
-    if( en )
+void eI2C::setMaster( bool m )
+{
+    if( m_master == m ) return;
+    m_master = m;
+    Simulator::self()->cancelEvents( this );
+    updatePins();
+}
+
+void eI2C::updatePins()
+{
+    if( m_enabled )
     {
         SDA_PIN->setOut( false );
         SDA_PIN->setImp( high_imp );
         SCL_PIN->setOut( false );
         SCL_PIN->setImp( high_imp );
-        Simulator::self()->addEvent( 0, NULL );
-        Simulator::self()->addEvent( m_stepsPe, this );
+
+        if( m_master )
+        {
+            eNode* enode = SCL_PIN->getEpin()->getEnode();
+            if( enode ) enode->remFromChangedCallback(this);
+
+            Simulator::self()->addEvent( m_stepsPe, this );
+        }
+        else
+        {
+            eNode* enode = SCL_PIN->getEpin()->getEnode();
+            if( enode ) enode->voltChangedCallback( this );
+        }
     }
     else m_state = I2C_IDLE;
-    //qDebug() << "eI2C::setEnabled"<<m_enabled<<m_master;
-}
-
-void eI2C::setMaster( bool m )
-{
-    m_master = m;
-    //qDebug() << "eI2C::setMaster"<<m_enabled<<m_master;
-    if( m_master )
-    {
-        eNode* enode = SCL_PIN->getEpin()->getEnode();
-        if( enode ) enode->remFromChangedCallback(this);
-    }
-    else
-    {
-        eNode* enode = SCL_PIN->getEpin()->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
 }
 
 void eI2C::setAddress( int address )
