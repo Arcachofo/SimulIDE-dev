@@ -113,14 +113,11 @@ void McuComponentPin::setDirection( bool out )
         m_vddAdmit = 0;
         m_gndAdmit = cero_doub;
         update();
-        //m_processor->setExtraStep();// Run Extra Simulation Step
     }
 }
 
 void McuComponentPin::setState( bool state )
 {
-    //qDebug() << "McuComponentPin::setState "<< m_id << state << m_openColl;
-
     if( state == m_state ) return;
     m_state = state;
 
@@ -132,20 +129,15 @@ void McuComponentPin::setState( bool state )
         {
             m_vddAdmit = 0;
             m_gndAdmit = cero_doub;
-        }
-        else
-        {
+        }else{
             m_vddAdmit = 0;
             m_gndAdmit = 1./40.;
         }
         update();
-    }
-    else
-    {
+    }else{
         eSource::setOut( state );
         eSource::stampOutput();
     }
-    //m_processor->setExtraStep(); // Run Extra Simulation Step
 }
 
 void McuComponentPin::update()
@@ -163,8 +155,6 @@ void McuComponentPin::setPullup( bool up )
 {
     if( !m_isInput ) return;
 
-    //qDebug() << "McuComponentPin::setPullup "<< m_id << pullup;
-
     if( up ) m_pupAdmit = 1/1e5; // Activate pullup
     else     m_pupAdmit = 0;     // Deactivate pullup
 
@@ -174,8 +164,6 @@ void McuComponentPin::setPullup( bool up )
         return;
     }
     update();
-
-    //m_processor->setExtraStep();  // Run Extra Simulation Step
 }
 
 void McuComponentPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example

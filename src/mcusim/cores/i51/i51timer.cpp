@@ -40,7 +40,7 @@ void I51Timer::initialize()
     m_mode = 0;
 }
 
-void I51Timer::configureA( uint8_t val ) // T0M0,T0M1
+void I51Timer::configureA( uint8_t val ) // TxM0,TxM1
 {
     uint8_t mode = getRegBitsVal( val, m_configBitsA );//val & 0b00000011;
 
@@ -62,6 +62,8 @@ void I51Timer::configureA( uint8_t val ) // T0M0,T0M1
         }
         else                 // 8+8 bits
         {
+            m_ovfMatch = 0x00FF;
+
             if( m_number == 0 )
             {
             }
@@ -73,7 +75,7 @@ void I51Timer::configureA( uint8_t val ) // T0M0,T0M1
     }
 }
 
-void I51Timer::configureB( uint8_t val ) // C/T0,GATE0
+void I51Timer::configureB( uint8_t val ) // C/Tx,GATEx
 {
     val = getRegBitsVal( val, m_configBitsB );
     bool  clkSrc = val & 1;
@@ -110,7 +112,7 @@ void I51Timer::updtCycles() // Recalculate ovf, comps, etc
         m_countVal   = COUNT_H;
         m_countStart = COUNT_H;
     }
-    else                 // 8+8 bits
+    else if( m_mode == 3 ) // 8+8 bits
     {
         if( m_number == 0 )
         {

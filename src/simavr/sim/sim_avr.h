@@ -59,14 +59,14 @@ enum {
     S_C = 0,S_Z,S_N,S_V,S_S,S_H,S_T,S_I,
 
     // 16 bits register pairs
-    R_XL	= 0x1a, R_XH,R_YL,R_YH,R_ZL,R_ZH,
+    R_XL    = 0x1a, R_XH,R_YL,R_YH,R_ZL,R_ZH,
     // stack pointer
-    R_SPL	= 32+0x3d, R_SPH,
+    R_SPL    = 32+0x3d, R_SPH,
     // real SREG
-    R_SREG	= 32+0x3f,
+    R_SREG    = 32+0x3f,
 
     // maximum number of IO registers, on normal AVRs
-    MAX_IOs	= 280,	// Bigger AVRs need more than 256-32 (mega1280)
+    MAX_IOs    = 280,    // Bigger AVRs need more than 256-32 (mega1280)
 };
 
 #define AVR_DATA_TO_IO(v) ((v) - 32)
@@ -99,15 +99,15 @@ enum {
  * Core states.
  */
 enum {
-    cpu_Limbo = 0,	// before initialization is finished
-    cpu_Stopped,	// all is stopped, timers included
+    cpu_Limbo = 0,    // before initialization is finished
+    cpu_Stopped,    // all is stopped, timers included
 
-    cpu_Running,	// we're free running
+    cpu_Running,    // we're free running
 
-    cpu_Sleeping,	// we're now sleeping until an interrupt
+    cpu_Sleeping,    // we're now sleeping until an interrupt
 
-    cpu_Step,		// run ONE instruction, then...
-    cpu_StepDone,	// tell gdb it's all OK, and give it registers
+    cpu_Step,        // run ONE instruction, then...
+    cpu_StepDone,    // tell gdb it's all OK, and give it registers
     cpu_Done,       // avr software stopped gracefully
     cpu_Crashed,    // avr software crashed (watchdog fired)
 };
@@ -121,54 +121,55 @@ struct avr_trace_data_t {
      * allows dumping of a meaningful data even if the stack is
      * munched and so on
      */
-#define OLD_PC_SIZE	32
+#define OLD_PC_SIZE    32
     struct {
         uint32_t pc;
         uint16_t sp;
     } old[OLD_PC_SIZE]; // catches reset..
-    int			old_pci;
+    int            old_pci;
 
 #if AVR_STACK_WATCH
-#define STACK_FRAME_SIZE	32
+#define STACK_FRAME_SIZE    32
     // this records the call/ret pairs, to try to catch
     // code that munches the stack -under- their own frame
     struct {
-        uint32_t	pc;
-        uint16_t 	sp;
+        uint32_t    pc;
+        uint16_t     sp;
     } stack_frame[STACK_FRAME_SIZE];
-    int			stack_frame_index;
+    int            stack_frame_index;
 #endif
 
     // DEBUG ONLY
     // keeps track of which registers gets touched by instructions
     // reset before each new instructions. Allows meaningful traces
-    uint32_t	touched[256 / 32];	// debug
+    uint32_t    touched[256 / 32];    // debug
 };
 
 typedef void (*avr_run_t)( struct avr_t* avr );
 
-#define AVR_FUSE_LOW	0
-#define AVR_FUSE_HIGH	1
-#define AVR_FUSE_EXT	2
+#define AVR_FUSE_LOW    0
+#define AVR_FUSE_HIGH    1
+#define AVR_FUSE_EXT    2
 
 /*
  * Main AVR instance. Some of these fields are set by the AVR "Core" definition files
  * the rest is runtime data (as little as possible)
  */
-typedef struct avr_t {
-    const char* mmcu;	// name of the AVR
+typedef struct avr_t
+{
+    const char* mmcu;    // name of the AVR
     // these are filled by sim_core_declare from constants in /usr/lib/avr/include/avr/io*.h
-    uint16_t	  ioend;
-    uint16_t 	  ramend;
-    uint32_t	  flashend;
-    uint32_t	  e2end;
-    uint8_t		  vector_size;
-    uint8_t		  signature[3];
-    uint8_t		  fuse[6];
-    uint8_t		  lockbits;
-    avr_io_addr_t rampz;	// optional, only for ELPM/SPM on >64Kb cores
-    avr_io_addr_t eind;	// optional, only for EIJMP/EICALL on >64Kb cores
-    uint8_t		  address_size;	// 2, or 3 for cores >128KB in flash
+    uint16_t      ioend;
+    uint16_t       ramend;
+    uint32_t      flashend;
+    uint32_t      e2end;
+    uint8_t          vector_size;
+    uint8_t          signature[3];
+    uint8_t          fuse[6];
+    uint8_t          lockbits;
+    avr_io_addr_t rampz;    // optional, only for ELPM/SPM on >64Kb cores
+    avr_io_addr_t eind;    // optional, only for EIJMP/EICALL on >64Kb cores
+    uint8_t          address_size;    // 2, or 3 for cores >128KB in flash
 
     struct {
         avr_regbit_t porf;
@@ -179,20 +180,20 @@ typedef struct avr_t {
 
     uint32_t codeend; // filled by the ELF data, this allow tracking of invalid jumps
 
-    int		 state;		// stopped, running, sleeping
-    uint32_t frequency;	// frequency we are running at
+    int         state;        // stopped, running, sleeping
+    uint32_t frequency;    // frequency we are running at
 
     uint32_t vcc,avcc,aref; // (optional) voltages in millivolts mostly used by the ADC for now
 
     // cycles gets incremented when sleeping and when running; it corresponds
     // not only to "cycles that runs" but also "cycles that might have run" like, sleeping.
-    avr_cycle_count_t cycle;		// current cycle
+    avr_cycle_count_t cycle;        // current cycle
     uint64_t cyclesDone;
 
     // these next two allow the core to freely run between cycle timers and also allows
     // for a maximum run cycle limit... run_cycle_count is set during cycle timer processing.
-    ////avr_cycle_count_t run_cycle_count;	// cycles to run before next timer
-    ////avr_cycle_count_t run_cycle_limit;	// maximum run cycle interval limit
+    ////avr_cycle_count_t run_cycle_count;    // cycles to run before next timer
+    ////avr_cycle_count_t run_cycle_limit;    // maximum run cycle interval limit
 
     /**
      * Sleep requests are accumulated in sleep_usec until the minimum sleep value
@@ -217,7 +218,7 @@ typedef struct avr_t {
      * it can, and a "gdb" mode that also watchouts for gdb events
      * and is a little bit slower.
      */
-    avr_run_t	run;
+    avr_run_t    run;
 
     /*!
      * Sleep default behaviour.
@@ -230,18 +231,18 @@ typedef struct avr_t {
      * Every IRQs will be stored in this pool. It is not
      * mandatory (yet) but will allow listing IRQs and their connections
      */
-    avr_irq_pool_t	irq_pool;
+    avr_irq_pool_t    irq_pool;
 
     // Mirror of the SREG register, to facilitate the access to bits
     // in the opcode decoder.
     // This array is re-synthesized back/forth when SREG changes
-    uint8_t	sreg[8];
+    uint8_t    sreg[8];
 
     /* Interrupt state:
         00: idle (no wait, no pending interrupts) or disabled
         <0: wait till zero
         >0: interrupt pending */
-    int8_t interrupt_state;	// interrupt state
+    int8_t interrupt_state;    // interrupt state
 
     /*
      * ** current PC **
@@ -250,12 +251,12 @@ typedef struct avr_t {
      * this is why you will see >>1 and <<1 in the decoder to handle jumps.
      * It CAN be a little confusing, so concentrate, young grasshopper.
      */
-    avr_flashaddr_t	pc;
+    avr_flashaddr_t    pc;
     /*
      * Reset PC, this is the value used to jump to at reset time, this
      * allow support for bootloaders
      */
-    avr_flashaddr_t	reset_pc;
+    avr_flashaddr_t    reset_pc;
 
     /*
      * callback when specific IO registers are read/written.
@@ -267,7 +268,7 @@ typedef struct avr_t {
      * work.
      */
     struct {
-        struct avr_irq_t * irq;	// optional, used only if asked for with avr_iomem_getirq()
+        struct avr_irq_t * irq;    // optional, used only if asked for with avr_iomem_getirq()
         struct {
             void * param;
             avr_io_read_t c;
@@ -303,12 +304,12 @@ typedef struct avr_t {
 
     avr_cmd_table_t commands;// Builtin and user-defined commands
 
-    avr_cycle_timer_pool_t	cycle_timers;// cycle timers tracking & delivery
+    avr_cycle_timer_pool_t    cycle_timers;// cycle timers tracking & delivery
 
-    avr_int_table_t	interrupts; // interrupt vectors and delivery fifo
+    avr_int_table_t    interrupts; // interrupt vectors and delivery fifo
 
     // DEBUG ONLY -- value ignored if CONFIG_SIMAVR_TRACE = 0
-    uint8_t	trace : 1, log : 4; // log level, default to 1
+    uint8_t    trace : 1, log : 4; // log level, default to 1
 
     // Only used if CONFIG_SIMAVR_TRACE is defined
     struct avr_trace_data_t *trace_data;
@@ -330,7 +331,7 @@ typedef struct avr_t {
 
     // buffer for console debugging output from register
     struct {
-        char *	 buf;
+        char*     buf;
         uint32_t size;
         uint32_t len;
     } io_console_buffer;
@@ -339,40 +340,38 @@ typedef struct avr_t {
 
 // this is a static constructor for each of the AVR devices
 typedef struct avr_kind_t {
-    const char * names[4];	// name aliases
-    avr_t * (*make)(void);
+    const char* names[4];    // name aliases
+    avr_t* (*make)(void);
 } avr_kind_t;
 
 // a symbol loaded from the .elf file
 typedef struct avr_symbol_t {
-    uint32_t	addr;
+    uint32_t    addr;
     const char  symbol[0];
 } avr_symbol_t;
 
 
-avr_t* avr_make_mcu_by_name( const char *name );// locate the maker for mcu "name" and allocates a new avr instance
+avr_t* avr_make_mcu_by_name( const char* name );// locate the maker for mcu "name" and allocates a new avr instance
 
 int avr_init( avr_t* avr );// initializes a new AVR instance. Will call the IO registers init(), and then reset()
 
-avr_t* avr_core_allocate( const avr_t* core, uint32_t coreLen);// Used by the cores, allocated a mutable avr_t from the const global
+avr_t* avr_core_allocate( const avr_t* core, uint32_t coreLen );// Used by the cores, allocated a mutable avr_t from the const global
 
-void avr_reset( avr_t* avr);// resets the AVR, and the IO modules
-
-int avr_run( avr_t* avr);// run one cycle of the AVR, sleep if necessary
-
-void avr_terminate( avr_t* avr);
+void avr_reset( avr_t* avr );// resets the AVR, and the IO modules
+int  avr_run( avr_t* avr );// run one cycle of the AVR, sleep if necessary
+void avr_terminate( avr_t* avr );
 // finish any pending operations
 
 // set an IO register to receive commands from the AVR firmware
 // it's optional, and uses the ELF tags
-void avr_set_command_register( avr_t * avr, avr_io_addr_t addr);
+void avr_set_command_register( avr_t* avr, avr_io_addr_t addr );
 
 // specify the "console register" -- output sent to this register
 // is printed on the simulator console, without using a UART
-void avr_set_console_register( avr_t* avr, avr_io_addr_t addr);
+void avr_set_console_register( avr_t* avr, avr_io_addr_t addr );
 
 // load code in the "flash"
-int avr_loadcode( avr_t* avr, uint8_t* code, uint32_t size, avr_flashaddr_t address);
+int avr_loadcode( avr_t* avr, uint8_t* code, uint32_t size, avr_flashaddr_t address );
 
 /*
  * These are accessors for avr->data but allows watchpoints to be set for gdb
@@ -395,21 +394,21 @@ void avr_global_logger( struct avr_t* avr, const int level, const char * format,
 /*
  * Type for custom logging functions
  */
-typedef void (*avr_logger_p)(struct avr_t* avr, const int level, const char * format, va_list ap);
+typedef void (*avr_logger_p)(struct avr_t* avr, const int level, const char* format, va_list ap );
 
 /* Sets a global logging function in place of the default */
-void avr_global_logger_set( avr_logger_p logger);
+void avr_global_logger_set( avr_logger_p logger );
 /* Gets the current global logger function */
-avr_logger_p avr_global_logger_get(void);
+avr_logger_p avr_global_logger_get( void );
 #endif
 
 /*
  * These are callbacks for the two 'main' behaviour in simavr
  */
-void avr_callback_sleep_gdb(avr_t * avr, avr_cycle_count_t howLong);
-void avr_callback_run_gdb(avr_t * avr);
-void avr_callback_sleep_raw(avr_t * avr, avr_cycle_count_t howLong);
-void avr_callback_run_raw(avr_t * avr);
+void avr_callback_sleep_gdb( avr_t* avr, avr_cycle_count_t howLong );
+void avr_callback_run_gdb( avr_t* avr );
+void avr_callback_sleep_raw( avr_t* avr, avr_cycle_count_t howLong );
+void avr_callback_run_raw( avr_t* avr );
 
 /**
  * Accumulates sleep requests (and returns a sleep time of 0) until
@@ -417,7 +416,7 @@ void avr_callback_run_raw(avr_t * avr);
  * (low amounts cannot be handled accurately).
  * This function is an utility function for the sleep callbacks
  */
-uint32_t avr_pending_sleep_usec( avr_t * avr, avr_cycle_count_t howLong);
+uint32_t avr_pending_sleep_usec( avr_t* avr, avr_cycle_count_t howLong );
 
 #ifdef __cplusplus
 };

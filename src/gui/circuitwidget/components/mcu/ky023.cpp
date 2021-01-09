@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2020 by Jan K. S.                                       *
- *                                                      *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -47,8 +47,8 @@ LibraryItem* KY023::libraryItem()
 }
 
 KY023::KY023( QObject* parent, QString type, QString id )
-    : Component( parent, type, id )
-    , eElement( id )
+     : Component( parent, type, id )
+     , eElement( id )
 {
     m_joystickW.setupWidget();
     m_joystickW.setFixedSize( JOYSTICK_SIZE, JOYSTICK_SIZE );
@@ -170,7 +170,6 @@ void KY023::remove()
 {
     delete m_vrx;
     delete m_vry;
-    delete m_sw;
     Component::remove();
 }
 

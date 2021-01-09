@@ -26,7 +26,7 @@ DataChannel::DataChannel( QString id )
            : eElement( id )
 {
     m_ePin.resize( 2 );
-    //m_connected = false;
+
     m_chCond = None;
 }
 

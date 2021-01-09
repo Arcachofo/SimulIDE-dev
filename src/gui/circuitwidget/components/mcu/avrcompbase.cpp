@@ -32,8 +32,10 @@ AvrCompBase::AvrCompBase( QObject* parent, QString type, QString id )
 
     m_avrI2C.setEnabled( false );
     m_avrI2C.setComponent( this );
-    m_sda = 0l;
-    m_scl = 0l;
+    m_i2cInIrq = NULL;
+    m_twenIrq = NULL;
+    m_sda = NULL;
+    m_scl = NULL;
 }
 AvrCompBase::~AvrCompBase() { }
 

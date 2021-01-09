@@ -154,11 +154,10 @@ void avr_core_watch_write(avr_t *avr, uint16_t addr, uint8_t v)
     if( avr->gdb) {
         avr_gdb_handle_watchpoints(avr, addr, AVR_GDB_WATCH_WRITE);
     }
-
     avr->data[addr] = v;
 }
 
-uint8_t avr_core_watch_read(avr_t *avr, uint16_t addr)
+uint8_t avr_core_watch_read( avr_t *avr, uint16_t addr )
 {
     if( addr > avr->ramend) {
         AVR_LOG(avr, LOG_ERROR, FONT_RED
@@ -172,7 +171,6 @@ uint8_t avr_core_watch_read(avr_t *avr, uint16_t addr)
     if( avr->gdb) {
         avr_gdb_handle_watchpoints(avr, addr, AVR_GDB_WATCH_READ);
     }
-
     return avr->data[addr];
 }
 
@@ -181,29 +179,30 @@ uint8_t avr_core_watch_read(avr_t *avr, uint16_t addr)
  * if it's an IO register( > 31) also( try to) call any callback that was
  * registered to track changes to that register.
  */
-static inline void _avr_set_r(avr_t * avr, uint16_t r, uint8_t v)
+static inline void _avr_set_r( avr_t* avr, uint16_t r, uint8_t v )
 {
-    REG_TOUCH(avr, r);
+    REG_TOUCH( avr, r );
 
-    if( r == R_SREG) {
+    if( r == R_SREG)
+    {
         avr->data[R_SREG] = v;
-        // unsplit the SREG
-        SET_SREG_FROM(avr, v);
+        SET_SREG_FROM(avr, v); // unsplit the SREG
         SREG();
     }
-    if( r > 31) {
+    if( r > 31 )
+    {
         avr_io_addr_t io = AVR_DATA_TO_IO(r);
-        if( avr->io[io].w.c)
-            avr->io[io].w.c(avr, r, v, avr->io[io].w.param);
-        else
-            avr->data[r] = v;
-        if( avr->io[io].irq) {
-            avr_raise_irq(avr->io[io].irq + AVR_IOMEM_IRQ_ALL, v);
-            for( int i = 0; i < 8; i++)
-                avr_raise_irq(avr->io[io].irq + i,( v >> i) & 1);
+
+        if( avr->io[io].w.c ) avr->io[io].w.c( avr, r, v, avr->io[io].w.param );
+        else                  avr->data[r] = v;
+
+        if( avr->io[io].irq)
+        {
+            avr_raise_irq( avr->io[io].irq + AVR_IOMEM_IRQ_ALL, v );
+            for( int i=0; i<8; i++ )
+                avr_raise_irq( avr->io[io].irq + i,( v >> i) & 1 );
         }
-    } else
-        avr->data[r] = v;
+    } else avr->data[r] = v;
 }
 
 static inline void

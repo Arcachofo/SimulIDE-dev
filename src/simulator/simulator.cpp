@@ -98,9 +98,10 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 
     if( !m_CircuitFuture.isFinished() ) // Stop remaining parallel thread
     {
+        simState_t state = m_state;
         m_state = SIM_WAITING;
         m_CircuitFuture.waitForFinished();
-        m_state = SIM_RUNNING;
+        m_state = state;
     }
     // Calculate Load
     uint64_t loop = m_loopTime-m_refTime;
@@ -112,7 +113,8 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 
     runGraphicStep1();
     // Run Circuit in parallel thread
-    if( m_state == SIM_RUNNING ) m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit ); // Run Circuit in a parallel thread
+    if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
+        m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
 
     runGraphicStep2();
 }
@@ -172,8 +174,7 @@ void Simulator::runCircuit()
             if( event ) nextTime = event->time;
             else break;
         }
-        if( m_changedNode )
-            solveMatrix();
+        if( m_changedNode ) solveMatrix();
 
         while( m_nonLin )                  // Non Linear Components
         {
@@ -317,7 +318,7 @@ void Simulator::stopSim()
     for( eElement* el : m_updateList )  el->updateStep();
 
     clearEventList();
-    clearNodeList();
+    m_changedNode = NULL;
 
     CircuitWidget::self()->setRate( 0, 0 );
     Circuit::self()->update();
@@ -422,11 +423,6 @@ void  Simulator::setNoLinAcc( int ac )
     m_noLinAcc = ac;
 
     if( running ) resumeSim();
-}
-
-void Simulator::clearNodeList()
-{
-    m_changedNode = NULL;
 }
 
 void Simulator::clearEventList()

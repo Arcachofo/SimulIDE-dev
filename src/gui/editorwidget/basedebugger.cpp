@@ -153,7 +153,7 @@ void BaseDebugger::ProcRead()
     while( m_compProcess.canReadLine() ) 
     {
         m_outPane->appendText( QString::fromLocal8Bit( m_compProcess.readLine()) );
-        m_outPane->writeText( "\n" );
+        //m_outPane->writeText( "\n" );
     }
 }
 

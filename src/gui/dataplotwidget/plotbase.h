@@ -31,7 +31,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     friend class DataPlotWidget;
 
     Q_OBJECT
-    //Q_PROPERTY( bool    Fast_Mode READ fastMode WRITE setFastMode DESIGNABLE true USER true )
     Q_PROPERTY( int Basic_X   READ baSizeX  WRITE setBaSizeX  DESIGNABLE true USER true )
     Q_PROPERTY( int Basic_Y   READ baSizeY  WRITE setBaSizeY  DESIGNABLE true USER true )
     Q_PROPERTY( int Expand_X  READ adSizeX  WRITE setAdSizeX  DESIGNABLE true USER true )
@@ -126,18 +125,13 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         double vPos2() { return m_dataPlotW->m_vPos[1]; }
         void setVPos2( double vPos ){ m_dataPlotW->setVPos( 1, vPos );}
 
-        void pauseOnCond();
-
         virtual void initialize() override;
-        //virtual void updateStep() override;
-        //virtual void runEvent() override;
         virtual void remove() override;
 
+        void pauseOnCond();
         void updateTrig( int ch );
 
         void connectProbe( int ch, bool con ) { m_probeConnected[ch] = con; }
-
-        void fetchData( uint64_t orig, uint64_t origAbs, uint64_t offset );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

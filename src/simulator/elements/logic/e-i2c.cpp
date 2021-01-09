@@ -56,13 +56,14 @@ void eI2C::initialize()
 
 void eI2C::stamp()                    // Called at Simulation Start
 {
+    if( m_input.size() == 0 ) return;
+
     SDA_PIN->setOut( false );
     SDA_PIN->setImp( high_imp );
     SCL_PIN->setOut( false );
     SCL_PIN->setImp( high_imp );
 
     if( !m_enabled ) return;
-    if( m_input.size() == 0 ) return;
 
     eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
 

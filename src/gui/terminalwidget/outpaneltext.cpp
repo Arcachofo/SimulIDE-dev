@@ -17,8 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QtGui>
-
 #include "outpaneltext.h"
 #include "mainwindow.h"
 
@@ -28,8 +26,7 @@ OutPanelText::OutPanelText( QWidget* parent )
 {
     m_text = "";
     this->setObjectName( "outPanel");
-    
-    //setStyleSheet("background-color: #150925");
+
     m_highlighter = new OutHighlighter( document() );
 
     QPalette p;// = palette();
@@ -43,22 +40,18 @@ OutPanelText::OutPanelText( QWidget* parent )
     font.setPixelSize( 12*MainWindow::self()->fontScale() );
     setFont(font);
 
-    setMaximumBlockCount( 100 );
+    setMaximumBlockCount( 1000 );
 }
 OutPanelText::~OutPanelText(){}
 
 
 void OutPanelText::appendText( const QString text )
 {
-    //qDebug() << "OutPanelText::appendText" << text;
     m_text.append( text);
-    //QPlainTextEdit::insertPlainText( text );
 }
 
 void OutPanelText::writeText( const QString text )
 {
-    //qDebug()<< "OutPanelText::writeText" << text;
-    //QPlainTextEdit::insertPlainText( text );
     m_text.append( text );
     step();
 }
@@ -69,9 +62,9 @@ void OutPanelText::step()
 
     QString text = this->toPlainText();
 
-    if( text.length() > 5000 )
+    if( text.length() > 50000 )
     {
-        text = text.right( 5000 );
+        text = text.right( 50000 );
         text.append( m_text );
         setPlainText( text );
 
@@ -84,28 +77,15 @@ void OutPanelText::step()
         insertPlainText( m_text );
         ensureCursorVisible();
     }
-    //repaint();
     m_text = "";
 }
 
 // CLASS OutHighlighter ***********************************************
 
-OutHighlighter::OutHighlighter( QTextDocument *parent )
+OutHighlighter::OutHighlighter( QTextDocument* parent )
               : QSyntaxHighlighter( parent )
 {
     HighlightingRule rule;
-
-    /*errorFormat.setForeground( QColor(100, 50, 0) );
-    errorFormat.setBackground( QColor(255, 255, 100) );
-    errorFormat.setFontWeight( QFont::Bold );
-    QStringList patterns;
-    patterns<< "ERROR";
-    for( const QString &pattern : patterns )
-    {
-        rule.pattern = QRegExp( pattern );
-        rule.format = errorFormat;
-        highlightingRules.append( rule );
-    }*/
 
     fileFormat.setForeground( QColor(110, 180, 100) );
     rule.pattern = QRegExp( "/[^\n]*" );

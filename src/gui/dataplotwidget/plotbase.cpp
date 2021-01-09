@@ -63,31 +63,7 @@ PlotBase::~PlotBase()
 
 void PlotBase::initialize()
 {
-    /*for( int i=0; i<2; i++ )
-    {
-        if( m_pin[i]->isConnected() ) m_pinConnected[i] = true;
-        else                          m_pinConnected[i] = false;
-
-        if(( !m_pinConnected[i] && !m_probeConnected[i])
-          || !Simulator::self()->isRunning() )
-        {
-            m_display->setData( i, NULL );
-
-            if( m_dataPlotW->m_data1Label[i] ) m_dataPlotW->m_data1Label[i]->setText( "---" );
-            m_dataPlotW->m_data2Label[i]->setText( "---" );
-            m_channel[i]->m_connected = false;
-        }
-        else m_channel[i]->m_connected = true;
-
-        m_channel[i]->m_connected = m_pinConnected[i];
-    }*/
     m_dataPlotW->m_refCondFlag = false;
-
-    /*for(int ch=0; ch<2; ch++ )
-    {
-        m_channel[ch]->initialize();
-        m_dataPlotW->setProbe( ch );
-    }*/
 }
 
 void PlotBase::pauseOnCond()
@@ -105,13 +81,14 @@ void PlotBase::pauseOnCond()
     if( pause )
     {
         uint64_t simTime = Simulator::self()->circTime();
+        uint64_t orig = simTime - DataChannel::m_dataSize;
         CircuitWidget::self()->pauseSim();
 
-        /*m_channel[0]->fetchData( 0, simTime );
+        m_channel[0]->fetchData( orig, orig, 0 );
         m_dataPlotW->m_display->setData( 0, m_channel[0]->m_points );
         m_dataPlotW->m_display->setLimits( 0, m_channel[0]->m_dispMax, m_channel[0]->m_dispMin );
 
-        m_channel[1]->fetchData( 1, simTime );
+        m_channel[1]->fetchData( orig, orig, 0  );
         m_dataPlotW->m_display->setData( 1, m_channel[1]->m_points );
         m_dataPlotW->m_display->setLimits( 1, m_channel[1]->m_dispMax, m_channel[1]->m_dispMin );
 
@@ -119,13 +96,8 @@ void PlotBase::pauseOnCond()
 
         m_channel[0]->m_chCondFlag = false;
         m_channel[1]->m_chCondFlag = false;
-        m_dataPlotW->m_refCondFlag = false;*/
+        m_dataPlotW->m_refCondFlag = false;
     }
-}
-
-void PlotBase::fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset )
-{
-    for( int i=0; i<2; ++i ) m_channel[i]->fetchData( orig, origAbs, offset );
 }
 
 void PlotBase::setAdvanc( bool advanc )

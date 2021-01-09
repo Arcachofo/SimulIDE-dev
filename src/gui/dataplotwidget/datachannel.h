@@ -49,12 +49,8 @@ class MAINMODULE_EXPORT DataChannel : public eElement
         QVector<double> m_buffer;
         QVector<uint64_t> m_time;
 
-        //bool m_connected;
-
         int m_channel;
         int m_bufferCounter;
-
-        //uint64_t m_hTick;
 
         double m_maxVal;
         double m_minVal;

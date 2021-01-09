@@ -369,7 +369,7 @@ void CircuitWidget::powerCircDebug( bool run )
 
 void CircuitWidget::pauseSim()
 {
-    if( Simulator::self()->isRunning() )
+    if( Simulator::self()->simState() > SIM_PAUSED )
     {
         Simulator::self()->pauseSim();
         powerCircAct->setEnabled( false );

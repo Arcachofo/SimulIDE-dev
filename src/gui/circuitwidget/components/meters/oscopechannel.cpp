@@ -163,10 +163,7 @@ void OscopeChannel::voltChanged()
         {
             if( m_falling && !m_rising )     // Min To Rising
             {
-                if( m_numMax > 0 )
-                {
-                    m_totalP += simTime-m_lastMax;
-                }
+                if( m_numMax > 0 ) m_totalP += simTime-m_lastMax;
                 m_lastMax = simTime;
 
                 m_numMax++;
@@ -236,7 +233,6 @@ void OscopeChannel::voltChanged()
         m_falling = true;
         m_lastValue = data;
     }
-    if( m_dataPlotW->m_paOnCond ) return;
 }
 
 void OscopeChannel::setFilter( double f )

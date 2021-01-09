@@ -25,8 +25,9 @@
 //BEGIN Item includes
 #include "amperimeter.h"
 #include "adc.h"
-#include "audio_out.h"
+#include "aip31068_i2c.h"
 #include "arduino.h"
+#include "audio_out.h"
 #include "avrcomponent.h"
 #include "battery.h"
 #include "bcdto7s.h"
@@ -184,6 +185,7 @@ void ItemLibrary::loadItems()
     addItem( SevenSegment::libraryItem() );
     addItem( new LibraryItem( tr("Displays"),tr("Outputs"), "displays.png","", 0l ) );
     addItem( Hd44780::libraryItem() );
+    addItem( Aip31068_i2c::libraryItem() );
     addItem( Pcd8544::libraryItem() );
     addItem( Ks0108::libraryItem() );
     addItem( Ssd1306::libraryItem() );
@@ -194,7 +196,6 @@ void ItemLibrary::loadItems()
     addItem( Servo::libraryItem() );
     addItem( AudioOut::libraryItem() );
     // Micro
-
     addItem( PICComponent::libraryItem() );
     addItem( AVRComponent::libraryItem() );
     addItem( Arduino::libraryItem() );

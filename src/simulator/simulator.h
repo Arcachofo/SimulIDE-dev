@@ -28,6 +28,16 @@
 
 #define LAST_SIM_EVENT 999
 
+enum simState_t{
+    SIM_STOPPED=0,
+    SIM_ERROR,
+    SIM_STARTING,
+    SIM_PAUSED,
+    SIM_WAITING,
+    SIM_RUNNING,
+    SIM_DEBUGG,
+};
+
 class BaseProcessor;
 class eElement;
 class eNode;
@@ -44,15 +54,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         simEvent_t* free;
         simEvent_t* first;
     };
-    enum simState_t{
-        SIM_STOPPED=0,
-        SIM_PAUSED,
-        SIM_ERROR,
-        SIM_STARTING,
-        SIM_WAITING,
-        SIM_RUNNING,
-        SIM_DEBUGG,
-    };
 
     Q_OBJECT
     public:
@@ -66,7 +67,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
  inline void freeEvent( simEvent_t* event );
         void clearEventList();
-        void clearNodeList();
 
         void resetSim();
         void startSim();
