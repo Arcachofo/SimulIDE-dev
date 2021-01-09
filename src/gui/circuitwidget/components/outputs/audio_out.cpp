@@ -68,7 +68,6 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
     m_ePin[1] = m_pin[1];
 
-    //m_idLabel->setText( QString("") );
     m_idLabel->setPos(-12,-24);
     setLabelPos(-20,-36, 0);
     
@@ -100,26 +99,14 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     }  
     m_audioOutput = new QAudioOutput( m_deviceinfo, m_format );   
     
-    m_dataSize = 2*refreshPeriod*sampleRate/1000;
-    
-    m_dataBuffer = new char[ m_dataSize ];
-    //m_audioOutput->setBufferSize( 2*m_dataSize );
-
-    //qDebug() << "AudioOut::AudioOut" << m_audioOutput->notifyInterval();
-    
-    //m_audioOutput->setNotifyInterval( refreshPeriod );
-    
-    //connect( m_audioOutput, SIGNAL( notify() ),
-    //         this,          SLOT(   OnAudioNotify() ));
+    m_dataSize = refreshPeriod*sampleRate/1000;
+    m_dataBuffer.resize( m_dataSize );
 
     initialize();
 }
 
 AudioOut::~AudioOut()
 {
-    if( m_deviceinfo.isNull() ) return;
-    delete m_dataBuffer;
-    //qDebug() << "AudioOut::~AudioOut deleting" << QString::fromStdString( m_elmId );
 }
 
 void AudioOut::stamp()
@@ -143,41 +130,35 @@ void AudioOut::initialize()
 void AudioOut::runEvent()
 {
     double voltPN = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
-    if( voltPN > 5 ) voltPN = 5;
 
-    char outVal = 0;
+    int outVal = 128;
 
     if( m_buzzer)
     {
-        if( voltPN> 2.5 )
+        if( voltPN > 2.5 )
         {
-            double stepsPC = 1e12/600;
+            double stepsPC = 1e12/1000;
             double time = Simulator::self()->circTime();
             time = remainder( time, stepsPC );
             time = qDegreesToRadians( time*360/stepsPC );
 
-            outVal = sin( time )*51/2;
+            outVal += sin( time )*128;
         }
     }
-    else outVal = voltPN*51;
+    else outVal += voltPN*51;
 
-    m_dataBuffer[ m_dataCount ] = outVal;
+    if     ( outVal > 255 ) outVal = 255;
+    else if( outVal < 0 )   outVal = 0;
+
+    m_dataBuffer[ m_dataCount ] = (char)outVal;
     m_dataCount++;
 
     if( m_dataCount == m_dataSize )
     {
-        //qDebug() << m_dataCount;
         m_dataCount = 0;
-        m_auIObuffer->write( (const char*)m_dataBuffer, m_dataSize );
+        m_auIObuffer->write( m_dataBuffer.data(), m_dataSize );
     }
     Simulator::self()->addEvent( 25*1e6, this ); // 25 us
-}
-
-void AudioOut::OnAudioNotify()
-{
-    //qDebug() << "AudioOut::OnAudioNotify()"<<m_dataCount;
-    m_auIObuffer->write( (const char*)m_dataBuffer, m_dataCount );
-    m_dataCount = 0;
 }
 
 QPainterPath AudioOut::shape() const
