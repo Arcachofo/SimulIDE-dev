@@ -79,21 +79,21 @@ void InoDebugger::upload()
 int InoDebugger::compile()
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    
-    QDir arduinoDir( m_compilerPath );
-    if( !arduinoDir.exists() )
+
+    if( !QFile::exists( m_compilerPath+"/arduino-builder") )
     {
         m_outPane->appendText( "\nArduino" );
         toolChainNotFound();
         return -1;
     }
     QString filePath = m_fileDir+m_fileName+m_fileExt;
-    // Doing build in the user directory
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
     
     QDir dir(buildPath);
-    dir.removeRecursively();                         // Remove old files
-    dir.mkpath(buildPath+"/"+m_fileName);        // Create sketch folder
+    dir.removeRecursively();               // Remove old files
+    dir.mkpath(buildPath+"/"+m_fileName);  // Create sketch folder
+    dir.mkpath(buildPath+"/build");        // Create build folder
+    dir.mkpath(buildPath+"/cache");        // Create cache folder
     
     QDir directory( m_fileDir );          
     QStringList fileList = directory.entryList(QDir::Files);
@@ -135,7 +135,6 @@ int InoDebugger::compile()
                 QString varName = wordList.at(0);
                 if( !m_varList.contains( varName ) )
                     m_varList[ varName ] = m_typesList[ type ];
-
                 //qDebug() << "InoDebugger::compile  variable "<<type<<varName<<m_typesList[ type ];
             }
         }
@@ -146,28 +145,28 @@ int InoDebugger::compile()
     }
     file.close();
 
-    ///TODO: verify arduino version, older versions can compile, but no sorce code emited into .lst file
-    /// , then debugger will hang!
     QString cBuildPath = buildPath;
-    QString preferencesPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/preferences.txt");
-    QString command  = m_compilerPath +"arduino";
+    QString boardName;
+
+    if( m_board < Custom ) boardName = boardList.at(m_board);
+    else                   boardName = m_customBoard;
+
+    QString command  = m_compilerPath +"arduino-builder -compile";
     
     #ifndef Q_OS_UNIX
-    command    += "_debug";
     command     = addQuotes( command );
     cBuildPath  = addQuotes( cBuildPath );
     ProcInoFile = addQuotes( ProcInoFile );
     #endif
-    
-    QString boardName;
-    
-    if( m_board < Custom ) boardName = boardList.at(m_board);
-    else                   boardName = m_customBoard;
-                
-    command += " -v --board arduino:avr:"+boardName+" --pref build.path=" + cBuildPath;
-    if( !preferencesPath.isEmpty() )
-        command += " --preferences-file " + preferencesPath;
-    command += " --preserve-temp-files --verify " + ProcInoFile;
+
+    command += " -hardware "+m_compilerPath+"/hardware";
+    command += " -tools "+m_compilerPath+"/tools-builder";
+    command += " -tools "+m_compilerPath+"/hardware/tools/avr ";
+    command += " -built-in-libraries "+m_compilerPath+"/libraries ";
+    command += " -fqbn=arduino:avr:"+boardName;
+    command += " -build-path "+cBuildPath+"/build";
+    command += " -build-cache "+cBuildPath+"/cache";
+    command += " "+ProcInoFile;
     m_firmware = "";
     
     m_outPane->appendText( command );
@@ -177,17 +176,9 @@ int InoDebugger::compile()
     m_compProcess.waitForFinished(-1);
     
     QString p_stderr = m_compProcess.readAllStandardError();
-    //m_outPane->appendText( p_stderr );
-    //m_outPane->writeText( "\n\n" );
 
     int error = -1;
-    if( p_stderr=="" )
-    {
-        m_outPane->appendText( "\nArduino" );
-        toolChainNotFound();
-        error = -1;
-    }
-    else if( p_stderr.toUpper().contains("ERROR:") )
+    if( p_stderr.toUpper().contains("ERROR:") )
     {
         QStringList lines = p_stderr.split("\n");
         for( QString line : lines )
@@ -200,10 +191,8 @@ int InoDebugger::compile()
             error = words.at(1).toInt()-1;
             break;
         }
-    }
-    else
-    {
-        m_firmware = buildPath + "/"+ m_fileName + ".ino.hex";
+    }else{
+        m_firmware = buildPath+"/build/"+ m_fileName + ".ino.hex";
         error = 0;
     }
     QApplication::restoreOverrideCursor();
