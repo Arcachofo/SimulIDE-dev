@@ -17,38 +17,46 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef HD44780_H
-#define HD44780_H
+#ifndef AIP31068_I2C_H
+#define AIP31068_I2C_H
 
 #include "itemlibrary.h"
 #include "hd44780_base.h"
-#include "e-element.h"
+#include "e-i2c.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
+class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public eI2C
 {
     Q_OBJECT
+    Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode  DESIGNABLE true USER true )
 
     public:
-        Hd44780( QObject* parent, QString type, QString id );
-        ~Hd44780();
+        Aip31068_i2c( QObject* parent, QString type, QString id );
+        ~Aip31068_i2c();
         
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
         
+        int cCode();
+        void setCcode( int code );
+
         virtual void initialize() override;
-        virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
         virtual void remove() override;
+        virtual void startWrite() override;
+        virtual void readByte() override;
 
         void showPins( bool show );
 
     private:
-        Pin* m_pinRS;
-        Pin* m_pinRW;
-        Pin* m_pinEn;
-        std::vector<Pin*> m_dataPin;
+        int m_cCode;
+        int m_controlByte;
+        int m_phase;
+
+        //Inputs
+        Pin* m_pinSDA;
+        Pin* m_pinSCL;
 };
 
 #endif
