@@ -112,6 +112,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void timerEvent( QTimerEvent* e );
         uint64_t mS(){ return m_RefTimer.elapsed(); }
 
+        double realSpeed() { return m_realSpeed; } // 0 to 10000 => 0 to 100%
+
         simState_t simState() { return m_state; }
 
         void addToEnodeBusList( eNode* nod );
@@ -176,6 +178,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t m_stepSize;
         uint64_t m_stepsPS;
         uint64_t m_stepsPF;
+        double   m_realSpeed;
 
         uint64_t m_circTime;
         uint64_t m_tStep;

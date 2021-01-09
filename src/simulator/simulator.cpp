@@ -143,8 +143,8 @@ void Simulator::runGraphicStep2()
     uint64_t deltaRefTime = m_refTime-m_lastRefT;
     if( deltaRefTime >= 1e9 )               // We want steps per 1 Sec = 1e9 ns
     {
-        uint64_t stepsPerSec = (m_tStep-m_lastStep)*10/deltaRefTime;
-        CircuitWidget::self()->setRate( stepsPerSec, m_load );
+        m_realSpeed = (m_tStep-m_lastStep)*10.0/deltaRefTime;
+        CircuitWidget::self()->setRate( m_realSpeed, m_load );
         m_lastStep = m_tStep;
         m_lastRefT = m_refTime;
     }

@@ -158,7 +158,15 @@ void AudioOut::runEvent()
         m_dataCount = 0;
         m_auIObuffer->write( m_dataBuffer.data(), m_dataSize );
     }
-    Simulator::self()->addEvent( 25*1e6, this ); // 25 us
+    double realSpeed = Simulator::self()->realSpeed();
+    if( realSpeed < 1e-6 )
+    {
+        realSpeed = Simulator::self()->stepsPerSec();
+        realSpeed *= Simulator::self()->stepSize();
+        realSpeed /= 1e8; // 1e12/10000
+    }
+    double nextEvent = realSpeed*25*1e2;//(realSpeed/10000)*25*1e6
+    Simulator::self()->addEvent( nextEvent, this ); // 25 us
 }
 
 QPainterPath AudioOut::shape() const
