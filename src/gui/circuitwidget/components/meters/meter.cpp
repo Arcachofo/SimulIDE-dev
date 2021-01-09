@@ -23,9 +23,6 @@
 #include "pin.h"
 #include "utils.h"
 
-
-#include <math.h>   // fabs(x,y)
-
 Meter::Meter( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
      , eResistor( id )
@@ -41,7 +38,6 @@ Meter::Meter( QObject* parent, QString type, QString id )
     pinId.append(QString("-lPin"));
     QPoint pinPos = QPoint(-8, 16);
     m_pin[0] = new Pin( 270, pinPos, pinId, 0, this);
-    //m_pin[0]->setLabelText( "+" );
     m_pin[0]->setColor( Qt::red );
     m_ePin[0] = m_pin[0];
 
@@ -49,7 +45,6 @@ Meter::Meter( QObject* parent, QString type, QString id )
     pinId.append(QString("-rPin"));
     pinPos = QPoint(8, 16);
     m_pin[1] = new Pin( 270, pinPos, pinId, 1, this);
-    //m_pin[1]->setLabelText( "|" );
     m_ePin[1] = m_pin[1];
 
     pinId = id;
@@ -82,29 +77,19 @@ Meter::~Meter(){}
 
 void Meter::updateStep()
 {
-    int dispVal = 0;
-
     QString sign = " ";
+    QString mult = " ";
+    int decimals = 3;
+    double value = fabs(m_dispValue);
 
-    double dispValue = fabs(m_dispValue);
-
-    if( dispValue > 1e-6 )
+    if( value < 1e-12 ) value = 0;
+    else
     {
+        value *= 1e12;
         if( m_dispValue < 0 ) sign = "-";
-
-        setValue( dispValue );
-        dispVal = int( m_value*10+0.5 );
-
-        if( dispVal > 999 )
-        {
-            setValue( dispVal/10 );
-            dispVal = int( m_value*10 );
-        }
-        //qDebug() <<"Meter::updateStep"<<m_dispValue<< m_value<<dispVal<<m_unitMult;
+        valToUnit( value, mult, decimals )
     }
-    m_display.setText( sign+decToBase( dispVal/10, 10, 3 )
-                       +"."+decToBase( dispVal%10, 10, 1 )
-                       +"\n"+m_mult+m_unit );
+    m_display.setText( sign+QString::number( value,'f', decimals )+"\n"+mult+m_unit );
 
     m_out->setVoltHigh( m_dispValue );
     m_out->stampOutput();
