@@ -30,8 +30,8 @@ static const char* Hd44780_Base_properties[] = {
 
 
 Hd44780_Base::Hd44780_Base( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
-       , m_fontImg( ":font2.png" )
+            : Component( parent, type, id )
+            , m_fontImg( ":font2.png" )
 {
     Q_UNUSED( Hd44780_Base_properties );
 
@@ -39,30 +39,6 @@ Hd44780_Base::Hd44780_Base( QObject* parent, QString type, QString id )
     
     m_rows = 2;
     m_cols = 16;
-
-    m_pin.resize( 11 );
-    
-    int pinY = 8;//8*((33+m_imgHeight)/8);
-
-    m_pinRS = new Pin( 270, QPoint(16, pinY), id+"-PinRS", 0, this );
-    m_pinRW = new Pin( 270, QPoint(24, pinY), id+"-PinRW", 0, this );
-    m_pinEn = new Pin( 270, QPoint(32, pinY), id+"-PinEn", 0, this );
-    m_pinRS->setLabelText( " RS" );
-    m_pinRW->setLabelText( " RW" );
-    m_pinEn->setLabelText( " En" );
-
-    m_pin[0] = m_pinRS;
-    m_pin[1] = m_pinRW;
-    m_pin[2] = m_pinEn;
-    
-    m_dataPin.resize( 8 );
-    
-    for( int i=0; i<8; i++ )
-    {
-        m_dataPin[i] = new Pin( 270, QPoint( 40+i*8, pinY), id+"-dataPin"+QString::number(i) , 0, this );
-        m_dataPin[i]->setLabelText( " D"+QString::number(i) );
-        m_pin[i+3] = m_dataPin[i];
-    }
 
     setLabelPos( 70,-82, 0);
     setShowId( true );

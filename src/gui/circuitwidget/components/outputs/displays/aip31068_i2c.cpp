@@ -42,13 +42,12 @@ LibraryItem* Aip31068_i2c::libraryItem()
 }
 
 Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
-       : Hd44780_Base( parent, type, id )
-       , eI2C( id )
+            : Hd44780_Base( parent, type, id )
+            , eI2C( id )
 {
     Q_UNUSED( Aip31068_i2c_properties );
 
-    m_cCode = (0x3E >> 1);
-
+    m_cCode = 0x3E;
 
     m_pin.resize( 2 );
 
