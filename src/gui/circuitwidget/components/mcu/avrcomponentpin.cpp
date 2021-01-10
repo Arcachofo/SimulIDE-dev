@@ -226,9 +226,13 @@ void AVRComponentPin::enableIO( bool en )
 
 void AVRComponentPin::setImp( double imp ) // Used by I2C
 {
-    if( imp == high_imp ) m_gndAdmEx = 0;
-    else                  m_gndAdmEx = 1/imp;
-    update();
+    if( m_pinType == 1 )                                 // Is an IO Pin
+    {
+        if( imp == high_imp ) m_gndAdmEx = 0;
+        else                  m_gndAdmEx = 1/imp;
+        update();
+    }
+    else eSource::setImp( imp );
 }
 
 #include "moc_avrcomponentpin.cpp"
