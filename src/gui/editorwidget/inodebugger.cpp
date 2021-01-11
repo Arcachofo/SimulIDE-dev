@@ -116,6 +116,13 @@ int InoDebugger::compile()
             }
         }
     }
+    QProcess getSkBook( this );  // Get sketchBook Path
+    QString command0  = m_compilerPath+"arduino --get-pref sketchbook.path";
+    getSkBook.start( command0 );
+    getSkBook.waitForFinished( 1000 );
+    QString sketchBook = getSkBook.readAllStandardOutput();
+    sketchBook = sketchBook.remove("\r").remove("\n");
+    getSkBook.close();
 
     QString cBuildPath = buildPath;
     QString boardName;
@@ -135,6 +142,7 @@ int InoDebugger::compile()
     command += " -tools "+m_compilerPath+"tools-builder";
     command += " -tools "+m_compilerPath+"hardware/tools/avr";
     command += " -built-in-libraries "+m_compilerPath+"libraries";
+    command += " -libraries "+sketchBook+"/libraries";
     command += " -fqbn=arduino:avr:"+boardName;
     command += " -build-path "+cBuildPath+"/build";
     command += " -build-cache "+cBuildPath+"/cache";
