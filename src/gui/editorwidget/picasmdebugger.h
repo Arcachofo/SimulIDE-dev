@@ -29,7 +29,7 @@ class PicAsmDebugger : public BaseDebugger
 {
     Q_OBJECT
     public:
-        PicAsmDebugger( QObject* parent, OutPanelText* outPane, QString filePath  );
+        PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~PicAsmDebugger();
 
         int  compile();

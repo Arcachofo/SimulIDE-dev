@@ -111,28 +111,10 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
     m_refTime = m_RefTimer.nsecsElapsed();
     m_tStep   = m_circTime;
 
-    runGraphicStep1();
-    // Run Circuit in parallel thread
+    for( eElement* el : m_updateList ) el->updateStep();
+
     if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
         m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
-
-    runGraphicStep2();
-}
-
-void Simulator::runGraphicStep()
-{
-    runGraphicStep1();
-    runGraphicStep2();
-}
-
-void Simulator::runGraphicStep1()
-{
-    for( eElement* el : m_updateList ) el->updateStep();
-}
-
-void Simulator::runGraphicStep2()
-{
-    if( m_state == SIM_DEBUGG ) m_tStep = m_circTime;        // Debugger driving, not timer
 
     if( Circuit::self()->animate() )
     {
@@ -234,14 +216,8 @@ void Simulator::resetSim()
     CircuitWidget::self()->setMsg( " Simulation Stopped ", 1 );
 }
 
-void Simulator::startSim()
+void Simulator::startSim( bool paused )
 {
-    /*if( m_state == SIM_DEBUGG ) // Debugger Controllig Simulation
-    {
-        debug( false );
-        emit resumeDebug();
-        return;
-    }*/
     resetSim();
     setStepsPerSec( m_stepsPS );
     m_state = SIM_STARTING;
@@ -301,16 +277,13 @@ void Simulator::startSim()
 
     std::cout << "\n    Simulation Running... \n"<<std::endl;
 
-    CircuitWidget::self()->setMsg( " Simulation Running ", 0  );
-    m_timerId = this->startTimer( m_timerTick, Qt::PreciseTimer );
-
-    m_state = SIM_RUNNING;
+    initTimer();
+    if( paused ) pauseSim();
 }
 
 void Simulator::stopSim()
 {
     stopTimer();
-    m_state = SIM_STOPPED;
     m_CircuitFuture.waitForFinished();
 
     for( eNode* node  : m_eNodeList  )  node->setVolt( 0 );
@@ -319,19 +292,11 @@ void Simulator::stopSim()
 
     clearEventList();
     m_changedNode = NULL;
-
-    CircuitWidget::self()->setRate( 0, 0 );
-    Circuit::self()->update();
-    CircuitWidget::self()->setMsg( " Simulation Stopped ", 1 );
-    std::cout << "\n    Simulation Stopped " << std::endl;
 }
 
 void Simulator::pauseSim()
 {
-    //emit pauseDebug();
-    //stopTimer();
     m_state = SIM_PAUSED;
-    //m_CircuitFuture.waitForFinished();
 
     CircuitWidget::self()->setMsg( " Simulation Paused ", 1 );
     std::cout << "\n    Simulation Paused " << std::endl;
@@ -340,10 +305,6 @@ void Simulator::pauseSim()
 void Simulator::resumeSim()
 {
     m_state = SIM_RUNNING;
-    //resumeTimer();
-
-    //emit resumeDebug();
-    //if( m_debugging ) return;
 
     CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
     std::cout << "\n    Resuming Simulation" << std::endl;
@@ -354,12 +315,20 @@ void Simulator::stopTimer()
     if( m_timerId == 0 ) return;
     this->killTimer( m_timerId );
     m_timerId = 0;
+
+    CircuitWidget::self()->setRate( 0, 0 );
+    CircuitWidget::self()->setMsg( " Simulation Stopped ", 1 );
+    Circuit::self()->update();
+    std::cout << "\n    Simulation Stopped " << std::endl;
+    m_state = SIM_STOPPED;
 }
 
-void Simulator::resumeTimer() // Used by code editor
+void Simulator::initTimer()
 {
     if( m_timerId != 0 ) return;
+    CircuitWidget::self()->setMsg( " Simulation Running ", 0  );
     m_timerId = this->startTimer( m_timerTick, Qt::PreciseTimer );
+    m_state = SIM_RUNNING;
 }
 
 void Simulator::setFps( uint64_t fps )
@@ -389,28 +358,6 @@ void Simulator::setStepsPerSec( uint64_t sps )
         emit rateChanged();
         resumeSim();
     }
-}
-
-void Simulator::debug( bool run )
-{
-    /*if( run )
-    {
-        //m_debugging = false;
-        runContinuous();
-    }
-    else
-    {
-        startSim();
-        //m_isrunning = false;
-        //m_debugging = true;
-        std::cout << "\n    Debugger Controllig Simulation... \n"<<std::endl;
-    }*/
-}
-
-void Simulator::stopDebug()
-{
-    //m_debugging = false;
-    //stopSim();
 }
 
 void  Simulator::setNoLinAcc( int ac )
@@ -472,7 +419,7 @@ void Simulator::cancelEvents( eElement* comp )
     simEvent_t* last  = 0l;
     simEvent_t* next  = 0l;
 
-    int i = 0;
+    //int i = 0;
     while( event )
     {
         next = event->next;
@@ -487,7 +434,7 @@ void Simulator::cancelEvents( eElement* comp )
         else last = event;
         event = next;
 
-        if( ++i > LAST_SIM_EVENT ) { m_error = 3; return; }
+        //if( ++i > LAST_SIM_EVENT ) { m_error = 3; return; }
     }
 }
 

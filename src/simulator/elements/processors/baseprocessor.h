@@ -26,10 +26,12 @@
 #include "ramtablewidget.h"
 #include "terminalwidget.h"
 
-class RamTable;
+class BaseDebugger;
 
 class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
 {
+        friend class BaseDebugger;
+
     Q_OBJECT
     public:
         BaseProcessor( QObject* parent=0 );
@@ -52,14 +54,14 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         virtual void terminate();
 
         virtual void setFreq( double freq );
-        virtual void stepOne();
         virtual void stepCpu()=0;
         virtual void reset()=0;
 
         virtual int  pc()=0;
+        virtual uint64_t cycle()=0;
         virtual int  status();
 
-        virtual uint64_t cycle()=0;
+        void stepOne( int line );
         
         virtual void hardReset( bool reset );
         virtual int  getRamValue( QString name );
@@ -74,7 +76,7 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         virtual void initialized();
         virtual QStringList getRegList() { return m_regList; }
         
-        virtual RamTable* getRamTable() { return m_ramTable; }
+        virtual RamTable* getRamTable() { return &m_ramTable; }
 
         virtual QVector<int> eeprom()=0;
         virtual void setEeprom( QVector<int> eep )=0;
@@ -92,9 +94,7 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
     protected:
  static BaseProcessor* m_pSelf;
         
-        virtual int  validate( int address )=0;
-        
-        void runSimuStep();
+        virtual int validate( int address )=0;
 
         QString m_symbolFile;
         QString m_dataFile;
@@ -102,9 +102,8 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         QString m_statusReg;
 
         double m_stepPS;
-        int    m_msimStep;
 
-        RamTable* m_ramTable;
+        RamTable m_ramTable;
 
         QStringList m_regList;
 
@@ -115,7 +114,11 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
 
         bool m_resetStatus;
         bool m_loadStatus;
+
+        BaseDebugger* m_debugger;
         bool m_debugging;
+        bool m_debugStep;
+        int  m_prevLine;
 };
 
 

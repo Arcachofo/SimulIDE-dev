@@ -73,6 +73,7 @@
 #include "line.h"
 #include "lm555.h"
 #include "logicinput.h"
+#include "max72xx_matrix.h"
 #include "mcu.h"
 #include "memory.h"
 #include "mosfet.h"
@@ -190,6 +191,7 @@ void ItemLibrary::loadItems()
     addItem( Ks0108::libraryItem() );
     addItem( Ssd1306::libraryItem() );
     addItem( Ili9341::libraryItem() );
+    addItem( Max72xx_matrix::libraryItem() );
     addItem( new LibraryItem( tr("Motors"),tr("Outputs"), "motors.png","", 0l ) );
     addItem( DcMotor::libraryItem() );
     addItem( Stepper::libraryItem() );

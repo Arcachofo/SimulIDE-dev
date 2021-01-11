@@ -22,7 +22,7 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
-GcbDebugger::GcbDebugger( QObject* parent, OutPanelText* outPane, QString filePath ) 
+GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
            : BaseDebugger( parent,outPane, filePath )
 {
     setObjectName( "GcBasic Compiler/Debugger" );

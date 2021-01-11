@@ -32,7 +32,7 @@ class InoDebugger : public BaseDebugger
     Q_ENUMS( board_t )
     
     public:
-        InoDebugger( QObject* parent, OutPanelText* outPane, QString filePath  );
+        InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~InoDebugger();
         
         enum board_t {
@@ -63,7 +63,9 @@ class InoDebugger : public BaseDebugger
         int m_loopInoLine;
         int m_processorType;
         
-        QStringList boardList;
+        QStringList m_boardList;
+
+        QStringList m_fileList;
         
         QString m_customBoard;
         board_t m_board;

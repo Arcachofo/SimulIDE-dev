@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include "baseprocessor.h"
+#include "basedebugger.h"
+#include "codeeditor.h"
 #include "mcucomponent.h"
 #include "circuitwidget.h"
 #include "mainwindow.h"
@@ -30,8 +32,11 @@ BaseProcessor* BaseProcessor::m_pSelf = 0l;
 BaseProcessor::BaseProcessor( QObject* parent )
              : QObject( parent )
              , eElement( "baseprocessor" )
+             , m_ramTable( this )
 {
     m_pSelf = this;
+
+    m_debugger = NULL;
 
     m_loadStatus  = false;
     m_resetStatus = false;
@@ -39,47 +44,51 @@ BaseProcessor::BaseProcessor( QObject* parent )
     m_symbolFile = "";
     m_device     = "";
 
-    m_ramTable = new RamTable( this );
-    m_ramTable->hide();
+    m_ramTable.hide();
 }
 BaseProcessor::~BaseProcessor() 
 {
-    delete m_ramTable;
 }
 
 void BaseProcessor::stamp()
 {
     //if( m_loadStatus ) Simulator::self()->addEvent( 1, this );
+
+    m_debugStep = false;
+    //m_lastPC = 0;
 }
 
 void BaseProcessor::runEvent()
 {
-    //while( m_nextCycle >= 1 )
+    if( m_debugging )
     {
-        stepCpu();
-        //m_nextCycle -= 1;
-
-        /*if( m_extraCycle )
+        if( m_debugStep )
         {
-            //qDebug() << "-" << m_extraCycle;qDebug() << " ";
-            Simulator::self()->runElements();
-            m_extraCycle = 0;
-        }*/
+            int lastPC = pc();
+            stepCpu();
+            int PC = pc();
+
+            if( ( lastPC != PC )
+            && ( m_debugger->m_flashToSource.contains( PC ) ) )
+            {
+                int line = m_debugger->m_flashToSource[ PC ];
+                if( line != m_prevLine )
+                {
+                    m_debugStep = false;
+                    m_debugger->m_editor->lineReached( line );
+                }
+            }
+        }
     }
-    //m_nextCycle += m_mcuStepsPT;
+    else stepCpu();
 
     Simulator::self()->addEvent( m_stepPS, this );
 }
 
-void BaseProcessor::stepOne()
+void BaseProcessor::stepOne( int line )
 {
-    stepCpu();
-
-    //while( cycle() >= m_nextCycle )
-    {
-        //m_nextCycle += m_mcuStepsPT;
-        runSimuStep();
-    }
+    m_prevLine = line;
+    m_debugStep = true;
 }
 
 void BaseProcessor::initialized()
@@ -88,8 +97,6 @@ void BaseProcessor::initialized()
     //qDebug() << "\nBaseProcessor::initialized Data File: " << m_dataFile;
 
     m_loadStatus = true;
-    m_msimStep = 0;
-    //Simulator::self()->addToSimuClockList( this );
 }
 
 void BaseProcessor::terminate()
@@ -99,18 +106,6 @@ void BaseProcessor::terminate()
     m_pSelf = 0l;
     m_loadStatus = false;
     m_symbolFile = "";
-}
-
-void BaseProcessor::runSimuStep()
-{
-    Simulator::self()->runCircuit();
-    
-    //m_msimStep++;
-    //if( m_msimStep >= 50000*Simulator::self()->stepsPerus() ) // 20 fps
-    {
-        //m_msimStep = 0;
-        Simulator::self()->runGraphicStep2();
-    }
 }
 
 void BaseProcessor::setFreq( double freq ) // Instruction exec. freq
@@ -139,7 +134,6 @@ int BaseProcessor::status()
 void BaseProcessor::hardReset( bool rst )
 {
     m_resetStatus = rst;
-    
     if( rst ) McuComponent::self()->reset();
 }
 
@@ -193,7 +187,7 @@ void BaseProcessor::updateRamValue( QString name )
     {
         float value = 0;
         memcpy(&value, ba, 4);
-        m_ramTable->setItemValue( 1, value  );
+        m_ramTable.setItemValue( 1, value  );
     }
     else                                              // char, int, long
     {
@@ -211,27 +205,24 @@ void BaseProcessor::updateRamValue( QString name )
             {
                 int32_t val = 0;
                 memcpy(&val, ba, 4);
-                
                 value = val;
             }
             else if( bits == 16 )
             {
                 int16_t val = 0;
                 memcpy(&val, ba, 2);
-                
                 value = val;
             }
             else
             {
                 int8_t val = 0;
                 memcpy(&val, ba, 1);
-                
                 value = val;
             }
         }
-        m_ramTable->setItemValue( 2, value  );
+        m_ramTable.setItemValue( 2, value  );
         
-        if     ( type.contains( "8" ) ) m_ramTable->setItemValue( 3, decToBase(value, 2, 8)  );
+        if     ( type.contains( "8" ) ) m_ramTable.setItemValue( 3, decToBase(value, 2, 8)  );
         else if( type.contains( "string" ) ) 
         {
             QString strVal = "";
@@ -244,13 +235,12 @@ void BaseProcessor::updateRamValue( QString name )
                 strVal += str; //QByteArray::fromHex( getRamValue( i ) );
             }
             //qDebug() << "string" << name << value << strVal;
-            m_ramTable->setItemValue( 3, strVal  );
+            m_ramTable.setItemValue( 3, strVal  );
         }
-        
     }
     //qDebug()<<name<<type <<address<<value;
     //if( !type.contains( "8" ) ) 
-    m_ramTable->setItemValue( 1, type  );
+    m_ramTable.setItemValue( 1, type  );
 }
 
 
@@ -261,10 +251,7 @@ int BaseProcessor::getRamValue( QString name )
     bool isNumber = false;
     int address = name.toInt( &isNumber );      // Try to convert to integer
 
-    if( !isNumber ) 
-    { 
-        address = m_regsTable[name.toUpper()];  // Is a register name
-    }
+    if( !isNumber ) address = m_regsTable[name.toUpper()];  // Is a register name
 
     return getRamValue( address );
 }

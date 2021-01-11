@@ -28,10 +28,10 @@
 class AvrAsmDebugger : public BaseDebugger
 {
     Q_OBJECT
-    Q_PROPERTY( QString  Avra_Inc_Path   READ avraIncPath    WRITE setAvraIncPath   DESIGNABLE true USER true )
+    Q_PROPERTY( QString Avra_Inc_Path   READ avraIncPath    WRITE setAvraIncPath   DESIGNABLE true USER true )
     
     public:
-        AvrAsmDebugger( QObject* parent, OutPanelText* outPane, QString filePath  );
+        AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~AvrAsmDebugger();
         
         QString avraIncPath();

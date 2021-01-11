@@ -35,7 +35,7 @@ enum simState_t{
     SIM_PAUSED,
     SIM_WAITING,
     SIM_RUNNING,
-    SIM_DEBUGG,
+    SIM_DEBUG,
 };
 
 class BaseProcessor;
@@ -69,20 +69,14 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void clearEventList();
 
         void resetSim();
-        void startSim();
-        void debug( bool run );
+        void startSim( bool paused=false );
         void resumeSim();
 
         void stopTimer();
-        void resumeTimer();
+        void initTimer();
 
         void pauseSim();
         void stopSim();
-        void stopDebug();
-
-        void runGraphicStep();
-        void runGraphicStep1();
-        void runGraphicStep2();
 
         void runCircuit();
 
@@ -135,8 +129,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void addToNoLinList( eElement* el );
 
     signals:
-        void pauseDebug();
-        void resumeDebug();
         void rateChanged();
         
     private:

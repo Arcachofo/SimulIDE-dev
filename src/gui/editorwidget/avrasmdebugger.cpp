@@ -27,8 +27,8 @@ static const char* AvrAsmDebugger_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Avra Inc Path")
 };
 
-AvrAsmDebugger::AvrAsmDebugger( QObject* parent, OutPanelText* outPane, QString filePath )
-              : BaseDebugger( parent,outPane, filePath )
+AvrAsmDebugger::AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
+              : BaseDebugger( parent, outPane, filePath )
 {
     Q_UNUSED( AvrAsmDebugger_properties );
     

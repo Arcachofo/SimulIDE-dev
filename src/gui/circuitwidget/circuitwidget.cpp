@@ -357,14 +357,14 @@ void CircuitWidget::powerCircOff()
     pauseSimAct->setEnabled( false );
 }
 
-void CircuitWidget::powerCircDebug( bool run )
+void CircuitWidget::powerCircDebug( bool paused )
 {
     powerCircAct->setIcon(QIcon(":/powerdeb.png"));
     powerCircAct->setIconText("Debug");
     powerCircAct->setEnabled( true );
 
-    Simulator::self()->debug( run );
-    m_rateLabel->setText( tr("    Real Speed: Debugger") );
+    Simulator::self()->startSim( paused );
+    if( paused ) m_rateLabel->setText( tr("    Real Speed: Debugger") );
 }
 
 void CircuitWidget::pauseSim()
@@ -460,7 +460,7 @@ void CircuitWidget::about()
                );
 }
 
-void CircuitWidget::setRate( int rate, int load )
+void CircuitWidget::setRate( double rate, int load )
 {
     if( rate < 0 ) m_rateLabel->setText( tr("Circuit ERROR!!!") );
     else
@@ -487,9 +487,9 @@ void CircuitWidget::setError( QString error )
 
 void CircuitWidget::setMsg( QString msg, int type )
 {
-    if     ( type == 0 ) m_msgLabel->setStyleSheet("QLabel { background-color: lightgreen; color: green; }");
-    else if( type == 1 ) m_msgLabel->setStyleSheet("QLabel { background-color: yellow; color: red; font-weight: bold;}");
-    else if( type == 2 ) m_msgLabel->setStyleSheet("QLabel { background-color: orange; color: black; font-weight: bold;}");
+    if     ( type == 0 ) m_msgLabel->setStyleSheet("QLabel { background-color: lightgreen; color: black;  font-weight: bold;}");
+    else if( type == 1 ) m_msgLabel->setStyleSheet("QLabel { background-color: orange;     color: white;  font-weight: bold;}");
+    else if( type == 2 ) m_msgLabel->setStyleSheet("QLabel { background-color: red;        color: yellow; font-weight: bold;}");
     m_msgLabel->setText( "   "+msg+"   " );
 }
 

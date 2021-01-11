@@ -32,7 +32,7 @@ EditorWindow::EditorWindow( QWidget* parent )
 {
     m_pSelf = this;
 
-    setAcceptDrops(true);
+    setAcceptDrops( true );
     
     createWidgets();
     createActions();
@@ -157,7 +157,7 @@ bool EditorWindow::save()
 {
     QString file = getCodeEditor()->getFilePath();
     if( file.isEmpty() ) return saveAs();
-    else                 return saveFile(file);
+    else                 return saveFile( file );
 }
 
 bool EditorWindow::saveAs()
@@ -201,7 +201,7 @@ bool EditorWindow::saveFile(const QString &fileName)
     ce->setFile( fileName );
     QApplication::restoreOverrideCursor();
     
-    ce->document()->setModified(false);
+    ce->document()->setModified( false );
     documentWasModified();
 
     m_docWidget->setTabText( m_docWidget->currentIndex(), strippedName(fileName) );
@@ -510,21 +510,19 @@ void EditorWindow::debug()
 void EditorWindow::run()
 { 
     setStepActs();
-    QTimer::singleShot( 10, getCodeEditor(), SLOT( run()) );
+    QTimer::singleShot( 10, getCodeEditor(), SLOT( runToBreak() ) );
 }
 
 void EditorWindow::step()    
 { 
     setStepActs();
     QTimer::singleShot( 10, getCodeEditor(), SLOT( step()) );
-    //getCodeEditor()->step( false ); 
 }
 
 void EditorWindow::stepOver()
 {
     setStepActs();
     QTimer::singleShot( 10, getCodeEditor(), SLOT( stepOver()) );
-    //getCodeEditor()->step( true ); 
 }
 
 void EditorWindow::setStepActs()

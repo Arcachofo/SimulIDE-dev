@@ -30,20 +30,21 @@ static const char* BaseDebugger_properties[] = {
 
 bool BaseDebugger::m_loadStatus = false;
 
-BaseDebugger::BaseDebugger( QObject* parent, OutPanelText* outPane, QString filePath ) 
+BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
             : QObject( parent )
             , m_compProcess( 0l )
 {
     Q_UNUSED( BaseDebugger_properties );
-    
+
+    m_editor  = parent;
     m_outPane = outPane;
-    m_appPath   = QCoreApplication::applicationDirPath();
+    m_appPath = QCoreApplication::applicationDirPath();
     
-    m_fileDir  = filePath;
-    m_fileName = filePath.split("/").last();
-    m_fileDir.remove( m_fileDir.lastIndexOf( m_fileName ), m_fileName.size() );
-    m_fileExt  = "."+m_fileName.split(".").last();
-    m_fileName = m_fileName.remove( m_fileName.lastIndexOf( m_fileExt ), m_fileExt.size() );
+    QFileInfo fi = QFileInfo( filePath );
+    m_file     = filePath;
+    m_fileDir  = fi.absolutePath();
+    m_fileExt  = "."+fi.suffix();
+    m_fileName = fi.completeBaseName();
 
     m_processorType = 0;
     type = 0;
@@ -61,9 +62,7 @@ bool BaseDebugger::loadFirmware()
     
     upload();
     if( m_loadStatus ) return false;
-    
     m_loadStatus = true;
-
     return true;
 }
 
@@ -88,6 +87,7 @@ void BaseDebugger::upload()
 
         BaseProcessor::self()->getRamTable()->setDebugger( this );
         mapFlashToSource();
+        BaseProcessor::self()->m_debugger = this;
     }
     else m_outPane->writeText( "\n"+tr("Error: No Mcu in Simulator... ")+"\n" );
 }
@@ -96,37 +96,6 @@ void BaseDebugger::stop()
 {
     m_loadStatus = false;
 }
-
-void BaseDebugger::getProcName()
-{
-}
-
-int BaseDebugger::step()
-{
-    int pc = BaseProcessor::self()->pc();
-    
-    int i = 0;
-    for( i=0; i<10; i++ ) // If runs 10 times and get to same PC return 0
-    {
-        BaseProcessor::self()->stepOne();
-
-        int pc2 = BaseProcessor::self()->pc();
-        //qDebug() <<"BaseDebugger::step "<<pc<<pc2;
-        if( pc != pc2 ) 
-        {
-            pc = pc2;
-            break;
-        }
-    }
-    //qDebug() <<"BaseDebugger::step PC"<<pc<<i;
-    int line = -1;
-    if( i == 10 ) line = 0;        // It ran 10 times and get to same PC 
-    else if( m_flashToSource.contains( pc )) line = m_flashToSource[ pc ];
-
-    return line ;
-}
-
-int BaseDebugger::stepOver(){return 0;}
 
 int BaseDebugger::getValidLine( int line )
 {

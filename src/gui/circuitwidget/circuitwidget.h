@@ -43,12 +43,12 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void createActions();
         void createToolBars();
         
-        void setRate( int rate , int load );
+        void setRate( double rate , int load );
         void setError( QString error );
         void setMsg(QString msg , int type);
         void powerCircOn();
         void powerCircOff();
-        void powerCircDebug( bool run );
+        void powerCircDebug( bool paused );
         
     public slots:
         bool newCircuit();

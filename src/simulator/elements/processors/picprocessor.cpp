@@ -151,7 +151,7 @@ void PicProcessor::reset()
     if( m_pPicProcessor->is_sleeping() ) m_pPicProcessor->exit_sleep();
     m_pPicProcessor->reset( POR_RESET ); // POR_RESET MCLR_RESET EXIT_RESET IO_RESET
 
-    if( m_resetStatus || m_debugging ) return;
+    if( m_resetStatus /*|| m_debugging*/ ) return;
     Simulator::self()->addEvent( 1, this );
 }
 
@@ -223,7 +223,7 @@ void PicProcessor::setDevice( QString device )
             statusBits <<" X "<<" X "<<" X "<<" N "<<"OV "<<" Z "<<"DC "<<" C ";
     else    statusBits <<"IRP"<<"RP1"<<"RP0"<<"TO "<<"PD "<<" Z "<<"DC "<<" C ";
 
-    m_ramTable->setStatusBits( statusBits );
+    m_ramTable.setStatusBits( statusBits );
 }
 
 #include "moc_picprocessor.cpp"

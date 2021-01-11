@@ -24,8 +24,8 @@
 //#include "simuapi_apppath.h"
 
 
-B16AsmDebugger::B16AsmDebugger( QObject* parent, OutPanelText* outPane, QString filePath )
-              : BaseDebugger( parent,outPane, filePath )
+B16AsmDebugger::B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
+              : BaseDebugger( parent, outPane, filePath )
 {
     setObjectName( "B16 asm Compiler" );
 

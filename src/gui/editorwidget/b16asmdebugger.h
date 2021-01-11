@@ -30,7 +30,7 @@ class B16AsmDebugger : public BaseDebugger
     Q_OBJECT
     
     public:
-        B16AsmDebugger( QObject* parent, OutPanelText* outPane, QString filePath  );
+        B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~B16AsmDebugger();
         
         int  compile();

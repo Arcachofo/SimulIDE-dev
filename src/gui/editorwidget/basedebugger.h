@@ -24,44 +24,39 @@
 #include "outpaneltext.h"
 #include "mcucomponent.h"
 
+class CodeEditor;
+
 class BaseDebugger : public QObject    // Base Class for all debuggers
 {
+        friend class BaseProcessor;
+
     Q_OBJECT
     Q_PROPERTY( bool    Drive_Circuit READ driveCirc    WRITE setDriveCirc    DESIGNABLE true USER true )
     Q_PROPERTY( QString Compiler_Path READ compilerPath WRITE setCompilerPath DESIGNABLE true USER true )
     
     public:
-        BaseDebugger( QObject* parent=0, OutPanelText* outPane=0, QString filePath=0 );
+        BaseDebugger( CodeEditor* parent=0, OutPanelText* outPane=0, QString filePath=0 );
         ~BaseDebugger();
         
         bool driveCirc();
         void setDriveCirc( bool drive );
 
         QString compilerPath();
+        virtual void getCompilerPath();
         virtual void setCompilerPath( QString path );
-        
+
         virtual bool loadFirmware();
         virtual void upload();
-        virtual int  step();        // Run 1 step,returns current source line number
-        virtual int  stepOver();    // Run until next source file
         virtual void stop();
 
-        virtual void getProcName();
-        virtual void setProcType( int type ){ m_processorType = type; }
-        
-        virtual int compile()=0;
+        virtual int  compile()=0;
         virtual void mapFlashToSource()=0;
-        
-        virtual int getValidLine( int line );   
 
-        virtual void getCompilerPath();
-        
+        virtual int getValidLine( int pc );
+
         virtual void readSettings();
-        
         virtual QString getVarType( QString var );
-        
         virtual QStringList getVarList();
-        
         virtual QList<int> getSubLines() { return m_subLines; }
         
         int type;
@@ -75,15 +70,17 @@ class BaseDebugger : public QObject    // Base Class for all debuggers
     
         OutPanelText*  m_outPane;
 
+        CodeEditor* m_editor;
+
  static bool m_loadStatus;                          // Is symbol file loaded?
-        bool m_running;                             // Is processor running?
 
         int m_processorType;
         int m_lastLine;
         
-        QString m_device;
+        //QString m_device;
         QString m_appPath;
         QString m_firmware;
+        QString m_file;
         QString m_fileDir;
         QString m_fileName;
         QString m_fileExt;

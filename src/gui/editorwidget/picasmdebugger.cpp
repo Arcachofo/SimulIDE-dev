@@ -22,7 +22,7 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
-PicAsmDebugger::PicAsmDebugger( QObject* parent, OutPanelText* outPane, QString filePath )
+PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
               : BaseDebugger( parent,outPane, filePath )
 {
     setObjectName( "PIC asm Compiler/Debugger" );

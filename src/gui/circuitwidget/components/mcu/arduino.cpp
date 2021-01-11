@@ -159,7 +159,7 @@ void Arduino::initBoard()
         QString type  = mcuPin->ptype();
         if     ( pinId.contains( "GND" ) )                   // Gnd Pins
         {    
-            mcuPin->setImp( 0.01 ); 
+            mcuPin->setImp( 0.01 );
         }
         else if( pinId.contains( "V3V" ) )                  // 3.3V Pins
         {

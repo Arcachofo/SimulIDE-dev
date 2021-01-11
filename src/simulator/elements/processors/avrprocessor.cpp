@@ -43,7 +43,7 @@ AvrProcessor::AvrProcessor( QObject* parent )
     m_statusReg = "SREG";
     QStringList statusBits;
     statusBits <<" I "<<" T "<<" H "<<" S "<<" V "<<" N "<<" Z "<<" C ";
-    m_ramTable->setStatusBits( statusBits );
+    m_ramTable.setStatusBits( statusBits );
 }
 AvrProcessor::~AvrProcessor() {}
 
@@ -216,7 +216,6 @@ bool AvrProcessor::loadFirmware( QString fileN )
 void AvrProcessor::reset()
 {
     if( !m_loadStatus ) return;
-    //qDebug() << "AvrProcessor::reset("<< eeprom();
     
     for( int i=0; i<m_avrProcessor->ramend; i++ ) m_avrProcessor->data[i] = 0;
 
@@ -224,7 +223,7 @@ void AvrProcessor::reset()
     m_avrProcessor->pc = 0;
     m_avrProcessor->cycle = 0;
 
-    if( m_resetStatus || m_debugging ) return;
+    if( m_resetStatus /*|| m_debugging*/ ) return;
     Simulator::self()->addEvent( 1, this );
 }
 
