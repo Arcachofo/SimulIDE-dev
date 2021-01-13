@@ -111,16 +111,16 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
     m_refTime = m_RefTimer.nsecsElapsed();
     m_tStep   = m_circTime;
 
-    for( eElement* el : m_updateList ) el->updateStep();
-
-    if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
-        m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
-
     if( Circuit::self()->animate() )
     {
         Circuit::self()->updateConnectors();
         for( eNode* enode : m_eNodeList ) enode->setVoltChanged( false );
     }
+
+    for( eElement* el : m_updateList ) el->updateStep();
+
+    if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
+        m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
 
     uint64_t deltaRefTime = m_refTime-m_lastRefT;
     if( deltaRefTime >= 1e9 )               // We want steps per 1 Sec = 1e9 ns
