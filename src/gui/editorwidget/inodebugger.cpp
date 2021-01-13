@@ -119,7 +119,7 @@ int InoDebugger::compile()
     QProcess getSkBook( this );  // Get sketchBook Path
     QString command0  = m_compilerPath+"arduino --get-pref sketchbook.path";
     getSkBook.start( command0 );
-    getSkBook.waitForFinished( 1000 );
+    getSkBook.waitForFinished( 3000 );
     QString sketchBook = getSkBook.readAllStandardOutput();
     sketchBook = sketchBook.remove("\r").remove("\n");
     getSkBook.close();
