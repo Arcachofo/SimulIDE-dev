@@ -64,7 +64,7 @@ Tunnel::~Tunnel() { }
 
 void Tunnel::setEnode( eNode* node )
 {
-    if( !m_tunnels.contains( m_name )  /// thi is only called by another tunnel
+    if( !m_tunnels.contains( m_name )
      || !m_pin[0]->isConnected() ) return;
 
     if( m_blocked ) return;
