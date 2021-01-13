@@ -172,13 +172,13 @@ Unique  Id: Tunnel-5:
 Circuit Id: PackagePin12
 <item valLabely="0" hflip="1" Uid="" id="PackagePin12" valLabelx="16" Name="Q0" objectName="Tunnel-5" vflip="1" labelx="-69" boardRot="-1000000" circRot="0" valLabRot="45" rotation="0" labelrot="0" mainComp="false" Show_id="true" x="-1052" labely="8" y="-316" boardPos="-1e+06,-1e+06" Rotated="false" circPos="0,0" itemtype="Tunnel"/>
 
-Unique  Id: Fixed Volt.-4: 
+Unique  Id: Tunnel-4: 
 Circuit Id: PackagePin1
-<item valLabely="8" hflip="1" Uid="" id="PackagePin1" valLabelx="-16" Name="!CP" objectName="Fixed Volt.-4" vflip="1" labelx="-84" boardRot="-1000000" circRot="4.8805903202230796e-312" valLabRot="0" rotation="0" labelrot="0" mainComp="false" Show_id="true" x="-1164" labely="-5" y="-244" boardPos="-1e+06,-1e+06" Rotated="false" circPos="0,0" itemtype="Tunnel"/>
+<item valLabely="8" hflip="1" Uid="" id="PackagePin1" valLabelx="-16" Name="!CP" objectName="Tunnel-4" vflip="1" labelx="-84" boardRot="-1000000" circRot="4.8805903202230796e-312" valLabRot="0" rotation="0" labelrot="0" mainComp="false" Show_id="true" x="-1164" labely="-5" y="-244" boardPos="-1e+06,-1e+06" Rotated="false" circPos="0,0" itemtype="Tunnel"/>
 
-Unique  Id: Fixed Volt.-3: 
+Unique  Id: Tunnel-3: 
 Circuit Id: PackagePin2
-<item valLabely="8" hflip="1" Uid="" id="PackagePin2" valLabelx="-16" Name="MR" objectName="Fixed Volt.-3" vflip="1" labelx="-86" boardRot="-1000000" circRot="0" valLabRot="0" rotation="0" labelrot="0" mainComp="false" Show_id="true" x="-1164" labely="-7" y="-212" boardPos="-1e+06,-1e+06" Rotated="false" circPos="0,0" itemtype="Tunnel"/>
+<item valLabely="8" hflip="1" Uid="" id="PackagePin2" valLabelx="-16" Name="MR" objectName="Tunnel-3" vflip="1" labelx="-86" boardRot="-1000000" circRot="0" valLabRot="0" rotation="0" labelrot="0" mainComp="false" Show_id="true" x="-1164" labely="-7" y="-212" boardPos="-1e+06,-1e+06" Rotated="false" circPos="0,0" itemtype="Tunnel"/>
 
 Unique  Id: Tunnel-2: 
 Circuit Id: PackagePin11
@@ -366,11 +366,11 @@ Circuit Id: Connector-259
 
 Unique  Id: Connector-132: 
 Circuit Id: Connector-132
-<item enodeid="enode-132" valLabely="0" endpinid="Buffer-12-in0" hflip="1" id="Connector-132" valLabelx="0" startpinid="Fixed Volt.-4-pin" objectName="Connector-132" vflip="1" labelx="-16" boardRot="-1000000" circRot="0" valLabRot="0" rotation="0" labelrot="0" mainComp="false" Show_id="false" x="-1164" pointList="-1164,-244,-1148,-244" labely="-24" y="-244" boardPos="-1e+06,-1e+06" circPos="0,0" itemtype="Connector"/>
+<item enodeid="enode-132" valLabely="0" endpinid="Buffer-12-in0" hflip="1" id="Connector-132" valLabelx="0" startpinid="Tunnel-4-pin" objectName="Connector-132" vflip="1" labelx="-16" boardRot="-1000000" circRot="0" valLabRot="0" rotation="0" labelrot="0" mainComp="false" Show_id="false" x="-1164" pointList="-1164,-244,-1148,-244" labely="-24" y="-244" boardPos="-1e+06,-1e+06" circPos="0,0" itemtype="Connector"/>
 
 Unique  Id: Connector-133: 
 Circuit Id: Connector-133
-<item enodeid="enode-133" valLabely="0" endpinid="Buffer-11-in0" hflip="1" id="Connector-133" valLabelx="0" startpinid="Fixed Volt.-3-pin" objectName="Connector-133" vflip="1" labelx="-16" boardRot="-1000000" circRot="6.9531436082568959e-310" valLabRot="0" rotation="0" labelrot="0" mainComp="false" Show_id="false" x="-1164" pointList="-1164,-212,-1148,-212" labely="-24" y="-212" boardPos="-1e+06,-1e+06" circPos="0,0" itemtype="Connector"/>
+<item enodeid="enode-133" valLabely="0" endpinid="Buffer-11-in0" hflip="1" id="Connector-133" valLabelx="0" startpinid="Tunnel-3-pin" objectName="Connector-133" vflip="1" labelx="-16" boardRot="-1000000" circRot="6.9531436082568959e-310" valLabRot="0" rotation="0" labelrot="0" mainComp="false" Show_id="false" x="-1164" pointList="-1164,-212,-1148,-212" labely="-24" y="-212" boardPos="-1e+06,-1e+06" circPos="0,0" itemtype="Connector"/>
 
 Unique  Id: Connector-104: 
 Circuit Id: Connector-104

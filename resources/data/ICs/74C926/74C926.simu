@@ -4,9 +4,9 @@ Unique  Id: Clock-265:
 Circuit Id: Clock-824
 <item circPos="0,0" mainComp="false" circRot="0" Unit=" V" vflip="1" Show_Volt="true" rotation="0" Freq="1000" valLabely="8" Out="false" labelx="-64" Show_id="false" x="-184" itemtype="Clock" Running="true" objectName="Clock-265" hflip="1" valLabelx="-16" Always_On="true" labely="-24" valLabRot="0" id="Clock-824" boardRot="-1000000" labelrot="0" Voltage="5" y="384" boardPos="-1e+06,-1e+06"/>
 
-Unique  Id: Fixed Volt.-264: 
+Unique  Id: Tunnel-264: 
 Circuit Id: Dsel
-<item circPos="0,0" mainComp="false" Rotated="false" circRot="5.2596639741142082e-316" vflip="1" rotation="0" valLabely="8" Name="Dsel" labelx="-56" Show_id="true" x="-528" itemtype="Tunnel" objectName="Fixed Volt.-264" hflip="1" valLabelx="-16" Uid="" labely="-5" valLabRot="0" id="Dsel" boardRot="-1000000" labelrot="0" y="-316" boardPos="-1e+06,-1e+06"/>
+<item circPos="0,0" mainComp="false" Rotated="false" circRot="5.2596639741142082e-316" vflip="1" rotation="0" valLabely="8" Name="Dsel" labelx="-56" Show_id="true" x="-528" itemtype="Tunnel" objectName="Tunnel-264" hflip="1" valLabelx="-16" Uid="" labely="-5" valLabRot="0" id="Dsel" boardRot="-1000000" labelrot="0" y="-316" boardPos="-1e+06,-1e+06"/>
 
 Unique  Id: Node-263: 
 Circuit Id: Node-818
@@ -376,13 +376,13 @@ Unique  Id: Node-172:
 Circuit Id: Node-256
 <item circPos="0,0" mainComp="false" circRot="8.6365228703650093e-312" vflip="1" rotation="0" valLabely="0" labelx="-16" Show_id="false" x="-400" itemtype="Node" objectName="Node-172" hflip="1" valLabelx="0" labely="-24" valLabRot="0" id="Node-256" boardRot="-1000000" labelrot="0" y="-260" boardPos="-1e+06,-1e+06"/>
 
-Unique  Id: Fixed Volt.-171: 
+Unique  Id: Tunnel-171: 
 Circuit Id: RES
-<item circPos="0,0" mainComp="false" Rotated="false" circRot="0" vflip="1" rotation="0" valLabely="8" Name="RES" labelx="-55" Show_id="true" x="-524" itemtype="Tunnel" objectName="Fixed Volt.-171" hflip="1" valLabelx="-16" Uid="" labely="-7" valLabRot="0" id="RES" boardRot="-1000000" labelrot="0" y="-180" boardPos="-1e+06,-1e+06"/>
+<item circPos="0,0" mainComp="false" Rotated="false" circRot="0" vflip="1" rotation="0" valLabely="8" Name="RES" labelx="-55" Show_id="true" x="-524" itemtype="Tunnel" objectName="Tunnel-171" hflip="1" valLabelx="-16" Uid="" labely="-7" valLabRot="0" id="RES" boardRot="-1000000" labelrot="0" y="-180" boardPos="-1e+06,-1e+06"/>
 
-Unique  Id: Fixed Volt.-170: 
+Unique  Id: Tunnel-170: 
 Circuit Id: CLK
-<item circPos="0,0" mainComp="false" Rotated="false" circRot="0" vflip="1" rotation="0" valLabely="8" Name="CLK" labelx="-56" Show_id="true" x="-516" itemtype="Tunnel" objectName="Fixed Volt.-170" hflip="1" valLabelx="-16" Uid="" labely="-5" valLabRot="0" id="CLK" boardRot="-1000000" labelrot="0" y="-228" boardPos="-1e+06,-1e+06"/>
+<item circPos="0,0" mainComp="false" Rotated="false" circRot="0" vflip="1" rotation="0" valLabely="8" Name="CLK" labelx="-56" Show_id="true" x="-516" itemtype="Tunnel" objectName="Tunnel-170" hflip="1" valLabelx="-16" Uid="" labely="-5" valLabRot="0" id="CLK" boardRot="-1000000" labelrot="0" y="-228" boardPos="-1e+06,-1e+06"/>
 
 Unique  Id: Node-169: 
 Circuit Id: Node-47
@@ -824,9 +824,9 @@ Unique  Id: Node-60:
 Circuit Id: Node-489
 <item circPos="0,0" mainComp="false" circRot="8.6365228703650093e-312" vflip="1" rotation="0" valLabely="0" labelx="-16" Show_id="false" x="-20" itemtype="Node" objectName="Node-60" hflip="1" valLabelx="0" labely="-24" valLabRot="0" id="Node-489" boardRot="-1000000" labelrot="0" y="-104" boardPos="-1e+06,-1e+06"/>
 
-Unique  Id: Fixed Volt.-59: 
+Unique  Id: Tunnel-59: 
 Circuit Id: LE
-<item circPos="0,0" mainComp="false" Rotated="false" circRot="0" vflip="1" rotation="0" valLabely="8" Name="LE" labelx="-47" Show_id="true" x="-532" itemtype="Tunnel" objectName="Fixed Volt.-59" hflip="1" valLabelx="-16" Uid="" labely="-7" valLabRot="0" id="LE" boardRot="-1000000" labelrot="0" y="312" boardPos="-1e+06,-1e+06"/>
+<item circPos="0,0" mainComp="false" Rotated="false" circRot="0" vflip="1" rotation="0" valLabely="8" Name="LE" labelx="-47" Show_id="true" x="-532" itemtype="Tunnel" objectName="Tunnel-59" hflip="1" valLabelx="-16" Uid="" labely="-7" valLabRot="0" id="LE" boardRot="-1000000" labelrot="0" y="312" boardPos="-1e+06,-1e+06"/>
 
 Unique  Id: Node-58: 
 Circuit Id: Node-493
@@ -2842,11 +2842,11 @@ Circuit Id: Connector-787
 
 Unique  Id: Connector-814: 
 Circuit Id: Connector-821
-<item circPos="0,0" mainComp="false" circRot="0" vflip="1" endpinid="Buffer-214-in0" rotation="0" valLabely="0" pointList="-516,-228,-488,-228" labelx="-16" Show_id="false" x="-516" itemtype="Connector" objectName="Connector-814" hflip="1" valLabelx="0" startpinid="Fixed Volt.-170-pin" labely="-24" valLabRot="0" id="Connector-821" boardRot="-1000000" enodeid="Circ_eNode-815" labelrot="0" y="-228" boardPos="-1e+06,-1e+06"/>
+<item circPos="0,0" mainComp="false" circRot="0" vflip="1" endpinid="Buffer-214-in0" rotation="0" valLabely="0" pointList="-516,-228,-488,-228" labelx="-16" Show_id="false" x="-516" itemtype="Connector" objectName="Connector-814" hflip="1" valLabelx="0" startpinid="Tunnel-170-pin" labely="-24" valLabRot="0" id="Connector-821" boardRot="-1000000" enodeid="Circ_eNode-815" labelrot="0" y="-228" boardPos="-1e+06,-1e+06"/>
 
 Unique  Id: Connector-816: 
 Circuit Id: Connector-822
-<item circPos="0,0" mainComp="false" circRot="6.9533558071796756e-310" vflip="1" endpinid="Buffer-147-in0" rotation="0" valLabely="0" pointList="-524,-180,-488,-180" labelx="-16" Show_id="false" x="-524" itemtype="Connector" objectName="Connector-816" hflip="1" valLabelx="0" startpinid="Fixed Volt.-171-pin" labely="-24" valLabRot="0" id="Connector-822" boardRot="-1000000" enodeid="Circ_eNode-817" labelrot="0" y="-180" boardPos="-1e+06,-1e+06"/>
+<item circPos="0,0" mainComp="false" circRot="6.9533558071796756e-310" vflip="1" endpinid="Buffer-147-in0" rotation="0" valLabely="0" pointList="-524,-180,-488,-180" labelx="-16" Show_id="false" x="-524" itemtype="Connector" objectName="Connector-816" hflip="1" valLabelx="0" startpinid="Tunnel-171-pin" labely="-24" valLabRot="0" id="Connector-822" boardRot="-1000000" enodeid="Circ_eNode-817" labelrot="0" y="-180" boardPos="-1e+06,-1e+06"/>
 
 Unique  Id: Connector-818: 
 Circuit Id: Connector-824
@@ -2854,11 +2854,11 @@ Circuit Id: Connector-824
 
 Unique  Id: Connector-819: 
 Circuit Id: Connector-825
-<item circPos="0,0" mainComp="false" circRot="6.9533558071701896e-310" vflip="1" endpinid="Fixed Volt.-264-pin" rotation="0" valLabely="0" pointList="12,-400,-528,-400,-528,-316" labelx="-16" Show_id="false" x="12" itemtype="Connector" objectName="Connector-819" hflip="1" valLabelx="0" startpinid="Node-1-1" labely="-24" valLabRot="0" id="Connector-825" boardRot="-1000000" enodeid="Circ_eNode-784" labelrot="0" y="-400" boardPos="-1e+06,-1e+06"/>
+<item circPos="0,0" mainComp="false" circRot="6.9533558071701896e-310" vflip="1" endpinid="Tunnel-264-pin" rotation="0" valLabely="0" pointList="12,-400,-528,-400,-528,-316" labelx="-16" Show_id="false" x="12" itemtype="Connector" objectName="Connector-819" hflip="1" valLabelx="0" startpinid="Node-1-1" labely="-24" valLabRot="0" id="Connector-825" boardRot="-1000000" enodeid="Circ_eNode-784" labelrot="0" y="-400" boardPos="-1e+06,-1e+06"/>
 
 Unique  Id: Connector-820: 
 Circuit Id: Connector-826
-<item circPos="0,0" mainComp="false" circRot="6.9533558071796756e-310" vflip="1" endpinid="Buffer-196-in0" rotation="0" valLabely="0" pointList="-532,312,-500,312" labelx="-16" Show_id="false" x="-532" itemtype="Connector" objectName="Connector-820" hflip="1" valLabelx="0" startpinid="Fixed Volt.-59-pin" labely="-24" valLabRot="0" id="Connector-826" boardRot="-1000000" enodeid="Circ_eNode-821" labelrot="0" y="312" boardPos="-1e+06,-1e+06"/>
+<item circPos="0,0" mainComp="false" circRot="6.9533558071796756e-310" vflip="1" endpinid="Buffer-196-in0" rotation="0" valLabely="0" pointList="-532,312,-500,312" labelx="-16" Show_id="false" x="-532" itemtype="Connector" objectName="Connector-820" hflip="1" valLabelx="0" startpinid="Tunnel-59-pin" labely="-24" valLabRot="0" id="Connector-826" boardRot="-1000000" enodeid="Circ_eNode-821" labelrot="0" y="312" boardPos="-1e+06,-1e+06"/>
 
 Unique  Id: Connector-822: 
 Circuit Id: Connector-825

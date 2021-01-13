@@ -32,9 +32,9 @@ Unique  Id: Node-109:
 Circuit Id: Node-493
 <item Show_id="false" valLabelx="0" valLabRot="0" labely="-24" circPos="0,0" circRot="0" itemtype="Node" vflip="1" objectName="Node-109" valLabely="0" labelx="-16" rotation="0" boardPos="-1e+06,-1e+06" mainComp="false" labelrot="0" x="-196" id="Node-493" boardRot="-1000000" hflip="1" y="-28"/>
 
-Unique  Id: Fixed Volt.-108: 
+Unique  Id: Tunnel-108: 
 Circuit Id: LE
-<item Show_id="true" valLabelx="-16" valLabRot="0" labely="-7" circPos="0,0" circRot="1.9908754641589036e-316" Name="LE" itemtype="Tunnel" vflip="1" objectName="Fixed Volt.-108" valLabely="8" labelx="-47" rotation="0" Rotated="false" boardPos="-1e+06,-1e+06" mainComp="false" labelrot="0" x="-560" Uid="" id="LE" boardRot="-1000000" hflip="1" y="-276"/>
+<item Show_id="true" valLabelx="-16" valLabRot="0" labely="-7" circPos="0,0" circRot="1.9908754641589036e-316" Name="LE" itemtype="Tunnel" vflip="1" objectName="Tunnel-108" valLabely="8" labelx="-47" rotation="0" Rotated="false" boardPos="-1e+06,-1e+06" mainComp="false" labelrot="0" x="-560" Uid="" id="LE" boardRot="-1000000" hflip="1" y="-276"/>
 
 Unique  Id: Node-107: 
 Circuit Id: Node-489
@@ -56,13 +56,13 @@ Unique  Id: Buffer-103:
 Circuit Id: Buffer-81
 <item Show_id="false" valLabelx="0" valLabRot="0" labely="-24" circPos="0,0" Out_Low_V="0" circRot="0" itemtype="Buffer" vflip="1" Input_High_V="2.5" Out_High_V="5" Input_Low_V="2.5" objectName="Buffer-103" valLabely="0" labelx="-16" rotation="0" boardPos="-1e+06,-1e+06" Inverted="true" Open_Collector="false" Out_Imped="40" mainComp="false" labelrot="0" x="-520" Input_Imped="100000000000000" id="Buffer-81" boardRot="-1000000" hflip="1" y="-212" Tristate="false"/>
 
-Unique  Id: Fixed Volt.-102: 
+Unique  Id: Tunnel-102: 
 Circuit Id: CLK
-<item Show_id="true" valLabelx="-16" valLabRot="0" labely="-5" circPos="0,0" circRot="5.5808489321803442e-312" Name="CLK" itemtype="Tunnel" vflip="1" objectName="Fixed Volt.-102" valLabely="8" labelx="-56" rotation="0" Rotated="false" boardPos="-1e+06,-1e+06" mainComp="false" labelrot="0" x="-560" Uid="" id="CLK" boardRot="-1000000" hflip="1" y="-236"/>
+<item Show_id="true" valLabelx="-16" valLabRot="0" labely="-5" circPos="0,0" circRot="5.5808489321803442e-312" Name="CLK" itemtype="Tunnel" vflip="1" objectName="Tunnel-102" valLabely="8" labelx="-56" rotation="0" Rotated="false" boardPos="-1e+06,-1e+06" mainComp="false" labelrot="0" x="-560" Uid="" id="CLK" boardRot="-1000000" hflip="1" y="-236"/>
 
-Unique  Id: Fixed Volt.-101: 
+Unique  Id: Tunnel-101: 
 Circuit Id: RES
-<item Show_id="true" valLabelx="-16" valLabRot="0" labely="-7" circPos="0,0" circRot="0" Name="RES" itemtype="Tunnel" vflip="1" objectName="Fixed Volt.-101" valLabely="8" labelx="-55" rotation="0" Rotated="false" boardPos="-1e+06,-1e+06" mainComp="false" labelrot="0" x="-560" Uid="" id="RES" boardRot="-1000000" hflip="1" y="-212"/>
+<item Show_id="true" valLabelx="-16" valLabRot="0" labely="-7" circPos="0,0" circRot="0" Name="RES" itemtype="Tunnel" vflip="1" objectName="Tunnel-101" valLabely="8" labelx="-55" rotation="0" Rotated="false" boardPos="-1e+06,-1e+06" mainComp="false" labelrot="0" x="-560" Uid="" id="RES" boardRot="-1000000" hflip="1" y="-212"/>
 
 Unique  Id: Mux-100: 
 Circuit Id: Mux-496
@@ -1174,14 +1174,14 @@ Circuit Id: Connector-367
 
 Unique  Id: Connector-359: 
 Circuit Id: Connector-363
-<item Show_id="false" valLabelx="0" valLabRot="0" labely="-24" circPos="0,0" circRot="6.9533558071796756e-310" itemtype="Connector" vflip="1" startpinid="Fixed Volt.-108-pin" objectName="Connector-359" valLabely="0" labelx="-16" rotation="0" boardPos="-1e+06,-1e+06" endpinid="Buffer-93-in0" mainComp="false" pointList="-560,-276,-536,-276" labelrot="0" x="-560" enodeid="Circ_eNode-360" id="Connector-363" boardRot="-1000000" hflip="1" y="-276"/>
+<item Show_id="false" valLabelx="0" valLabRot="0" labely="-24" circPos="0,0" circRot="6.9533558071796756e-310" itemtype="Connector" vflip="1" startpinid="Tunnel-108-pin" objectName="Connector-359" valLabely="0" labelx="-16" rotation="0" boardPos="-1e+06,-1e+06" endpinid="Buffer-93-in0" mainComp="false" pointList="-560,-276,-536,-276" labelrot="0" x="-560" enodeid="Circ_eNode-360" id="Connector-363" boardRot="-1000000" hflip="1" y="-276"/>
 
 Unique  Id: Connector-361: 
 Circuit Id: Connector-364
-<item Show_id="false" valLabelx="0" valLabRot="0" labely="-24" circPos="0,0" circRot="6.9533558071796756e-310" itemtype="Connector" vflip="1" startpinid="Fixed Volt.-102-pin" objectName="Connector-361" valLabely="0" labelx="-16" rotation="0" boardPos="-1e+06,-1e+06" endpinid="Buffer-89-in0" mainComp="false" pointList="-560,-236,-536,-236" labelrot="0" x="-560" enodeid="Circ_eNode-362" id="Connector-364" boardRot="-1000000" hflip="1" y="-236"/>
+<item Show_id="false" valLabelx="0" valLabRot="0" labely="-24" circPos="0,0" circRot="6.9533558071796756e-310" itemtype="Connector" vflip="1" startpinid="Tunnel-102-pin" objectName="Connector-361" valLabely="0" labelx="-16" rotation="0" boardPos="-1e+06,-1e+06" endpinid="Buffer-89-in0" mainComp="false" pointList="-560,-236,-536,-236" labelrot="0" x="-560" enodeid="Circ_eNode-362" id="Connector-364" boardRot="-1000000" hflip="1" y="-236"/>
 
 Unique  Id: Connector-363: 
 Circuit Id: Connector-365
-<item Show_id="false" valLabelx="0" valLabRot="0" labely="-24" circPos="0,0" circRot="6.9533481350382117e-310" itemtype="Connector" vflip="1" startpinid="Fixed Volt.-101-pin" objectName="Connector-363" valLabely="0" labelx="-16" rotation="0" boardPos="-1e+06,-1e+06" endpinid="Buffer-103-in0" mainComp="false" pointList="-560,-212,-536,-212" labelrot="0" x="-560" enodeid="Circ_eNode-364" id="Connector-365" boardRot="-1000000" hflip="1" y="-212"/>
+<item Show_id="false" valLabelx="0" valLabRot="0" labely="-24" circPos="0,0" circRot="6.9533481350382117e-310" itemtype="Connector" vflip="1" startpinid="Tunnel-101-pin" objectName="Connector-363" valLabely="0" labelx="-16" rotation="0" boardPos="-1e+06,-1e+06" endpinid="Buffer-103-in0" mainComp="false" pointList="-560,-212,-536,-212" labelrot="0" x="-560" enodeid="Circ_eNode-364" id="Connector-365" boardRot="-1000000" hflip="1" y="-212"/>
  
 </circuit>

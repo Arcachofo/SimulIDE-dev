@@ -67,7 +67,7 @@ class MAINMODULE_EXPORT eNode
         bool isSwitched();
 
         void setIsBus( bool bus );
-        bool isBus();
+        bool isBus() { return m_isBus; }
         void createBus();
         void addBusPinList( QList<ePin*> list, int line );
 

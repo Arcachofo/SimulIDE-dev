@@ -223,14 +223,10 @@ double eNode::getVolt() { return m_volt; }
 void eNode::setIsBus( bool bus )
 {
     m_isBus = bus;
+    if( !bus ) return;
 
     Simulator::self()->remFromEnodeList( this, /*delete=*/ false );
     Simulator::self()->addToEnodeBusList( this );
-}
-
-bool eNode::isBus()
-{
-    return m_isBus;
 }
 
 void eNode::createBus()

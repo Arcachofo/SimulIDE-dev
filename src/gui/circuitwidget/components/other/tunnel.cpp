@@ -24,8 +24,6 @@
 #include "pin.h"
 
 QHash<QString, QList<Tunnel*>*> Tunnel::m_tunnels;
-QHash<QString, eNode*> Tunnel::m_nodes;
-QHash<QString, int>    Tunnel::m_count;
 
 Component* Tunnel::construct( QObject* parent, QString type, QString id )
 { return new Tunnel( parent, type, id ); }
@@ -50,6 +48,8 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
     m_blocked = false;
     m_packed  = false;
 
+    m_name = "";
+
     m_size = 20;
     m_area = QRect( -m_size-8-4, -4, m_size+4, 8 );
 
@@ -62,73 +62,48 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
 }
 Tunnel::~Tunnel() { }
 
-void Tunnel::attach()
+void Tunnel::setEnode( eNode* node )
 {
+    if( !m_tunnels.contains( m_name )  /// thi is only called by another tunnel
+     || !m_pin[0]->isConnected() ) return;
+
     if( m_blocked ) return;
     m_blocked = true;
 
-    if( !m_nodes.contains( m_name )
-     || !m_pin[0]->isConnected() ) return;
-
-    eNode* node = m_nodes.value( m_name );
-    if( node )
-    {
-        m_pin[0]->registerPinsW( node );
-
-        //QList<ePin*> epins = m_pin[0]->getEnode()->getEpins();
-        //foreach( ePin* epin, epins ) epin->setEnode( node );
-    }
+    if( node ) m_pin[0]->registerPinsW( node );
     m_blocked = false;
-}
-
-void Tunnel::setEnode( eNode* node )
-{
-    QList<ePin*> epins = m_pin[0]->getEnode()->getEpins();
-    foreach( ePin* epin, epins ) epin->setEnode( node );
 }
 
 void Tunnel::registerPins( eNode* enode ) // called by m_pin[0]
 {
-    if( !m_nodes.contains( m_name ) ) return;
-
     if( m_blocked ) return;
-    m_blocked = true;
-
-    m_nodes.insert( m_name, enode );
 
     QList<Tunnel*>* list = m_tunnels.value( m_name );
-    if( list )
-    {
-        for( Tunnel* tunnel: *list )
-            if( tunnel != this ) tunnel->attach();
-    }
+    if( !list ) return;
+
+    m_blocked = true;
+
+    for( Tunnel* tunnel: *list )
+        if( tunnel != this ) tunnel->setEnode( enode );
+
     m_blocked = false;
 }
 
 void Tunnel::setName( QString name )
 {
+    if( name == m_name ) return;
+
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
     removeTunnel(); // Remove old name
 
-    if( m_count.contains( name ) ) // There is already tunnel with this name
+    if( m_tunnels.contains( name ) ) // There is already tunnel with this name
     {
         QList<Tunnel*>* list = m_tunnels.value( name );
         if( list ) list->append( this );
-
-        int count = m_count.value( name ) + 1;
-        m_count[ name ] = count;
-
-        if( !m_nodes.contains( name ))  // Seccond tunnel with this name
-        {
-            eNode* node = new eNode( m_id+"-"+name+"-eNode" ); // Create eNode when at least 2 tunnels.
-            m_nodes.insert( name, node );
-        }
-        //m_node = m_nodes.value( name );
     }
     else if( name != "" )
     {
-        m_count.insert( name, 1 ); // First tunnel with this name
         QList<Tunnel*>* list = new QList<Tunnel*>();
         list->append( this );
         m_tunnels.insert( name, list );
@@ -152,8 +127,7 @@ void Tunnel::setRotated( bool rot )
         m_pin[0]->setPinAngle( 180 );
         m_pin[0]->setLabelPos();
     }
-    else
-    {
+    else {
         m_area = QRect( -m_size-8, -4, m_size+4, 8 );
         m_pin[0]->setPinAngle( 0 );
         m_pin[0]->setLabelPos();
@@ -175,19 +149,6 @@ void Tunnel::removeTunnel()
             delete list;
         }
     }
-    if( m_count.contains( m_name ) ) // Remove old name from lists
-    {
-        int count = m_count.value( m_name )-1;
-
-        if( count > 0 )
-        {
-            m_count[ m_name ] = count;
-
-            if( (count < 2) && m_nodes.contains( m_name ) ) // Delete eNode
-                m_nodes.remove( m_name );
-        }
-        else m_count.remove( m_name );
-    }
 }
 
 void Tunnel::remove()
@@ -207,8 +168,8 @@ void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
 {
     if( m_hidden || m_packed ) return;
 
-    if( m_nodes.contains( m_name ) ) m_color = QColor( 255, 255, 250 );
-    else                             m_color = QColor( 210, 210, 230 );
+    if( m_tunnels.contains( m_name ) ) m_color = QColor( 255, 255, 250 );
+    else                               m_color = QColor( 210, 210, 230 );
 
     Component::paint( p, option, widget );
 

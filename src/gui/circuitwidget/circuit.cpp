@@ -212,12 +212,11 @@ void Circuit::loadDomDoc( QDomDocument* doc )
             QString id     = element.attribute( "id"  );//objNam.split("-").first()+"-"+newSceneId(); // Create new id
 
 
-            /*if( (type == "Probe") || (type == "Fixed Voltage") )
+            /*if( (type == "Probe") || (type == "Fixed Voltage") || (type == "Fixed Volt."))
             {
                 type = "Tunnel";
-                id.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );
-                objNam.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );
-                id.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );
+                objNam.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
+                id.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
                 //if( element.attribute( "Name" ) == "" )
                 element.setAttribute( "itemtype", "Tunnel" );
                 element.setAttribute( "Name", element.attribute( "id" ));
@@ -235,12 +234,12 @@ void Circuit::loadDomDoc( QDomDocument* doc )
 
 
 
-                /*if( startpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") )
+                /*if( startpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") || startpinid.contains( "Fixed Volt."))
                     startpinid.replace( "outnod", "pin").replace( "inpin", "pin" )
-                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );
-                if( endpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") )
+                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
+                if( endpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") || startpinid.contains( "Fixed Volt.") )
                     endpinid.replace( "outnod", "pin").replace( "inpin", "pin" )
-                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" );*/
+                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );*/
 
 
                 startpin = m_pinMap[startpinid];

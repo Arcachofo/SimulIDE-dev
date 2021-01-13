@@ -48,7 +48,6 @@ class MAINMODULE_EXPORT Tunnel : public Component, public eElement
         bool rotated() { return m_rotated; }
         void setRotated( bool rot );
 
-        virtual void attach() override;
         virtual void remove() override;
 
         QString uid() { return m_uid; }
@@ -57,10 +56,9 @@ class MAINMODULE_EXPORT Tunnel : public Component, public eElement
         void setEnode( eNode* node );
         void setPacked( bool p ){ m_packed = p; }
         void registerPins( eNode* enode );
+        void removeTunnel();
 
         Pin* getPin() { return m_pin[0]; }
-
-        void removeTunnel();
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
@@ -74,8 +72,6 @@ class MAINMODULE_EXPORT Tunnel : public Component, public eElement
         bool m_packed;
 
  static QHash<QString, QList<Tunnel*>*> m_tunnels;
- static QHash<QString, eNode*> m_nodes;
- static QHash<QString, int> m_count;
 };
 
 
