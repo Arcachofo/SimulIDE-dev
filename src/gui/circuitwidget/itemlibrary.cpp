@@ -181,9 +181,10 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( tr("Leds"),tr("Outputs"), "leds.png","", 0l ) );
     addItem( Led::libraryItem() );
     addItem( LedBar::libraryItem() );
-    addItem( LedMatrix::libraryItem() );
-    addItem( WS2812::libraryItem() );
     addItem( SevenSegment::libraryItem() );
+    addItem( LedMatrix::libraryItem() );
+    addItem( Max72xx_matrix::libraryItem() );
+    addItem( WS2812::libraryItem() );
     addItem( new LibraryItem( tr("Displays"),tr("Outputs"), "displays.png","", 0l ) );
     addItem( Hd44780::libraryItem() );
     addItem( Aip31068_i2c::libraryItem() );
@@ -191,7 +192,6 @@ void ItemLibrary::loadItems()
     addItem( Ks0108::libraryItem() );
     addItem( Ssd1306::libraryItem() );
     addItem( Ili9341::libraryItem() );
-    addItem( Max72xx_matrix::libraryItem() );
     addItem( new LibraryItem( tr("Motors"),tr("Outputs"), "motors.png","", 0l ) );
     addItem( DcMotor::libraryItem() );
     addItem( Stepper::libraryItem() );

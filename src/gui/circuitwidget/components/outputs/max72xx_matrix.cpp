@@ -35,8 +35,8 @@ LibraryItem* Max72xx_matrix::libraryItem()
 {
     return new LibraryItem(
             tr( "Max72xx_matrix" ),
-            tr( "Displays" ),
-            "ledmatrix.png",
+            tr( "Leds" ),
+            "max72xx.png",
             "Max72xx_matrix",
             Max72xx_matrix::construct);
 }

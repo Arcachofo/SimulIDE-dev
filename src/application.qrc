@@ -100,6 +100,7 @@
         <file alias="pcd8544.png">../src/icons/components/pcd8544.png</file>
         <file alias="ks0108.png">../src/icons/components/ks0108.png</file>
         <file alias="hd44780.png">../src/icons/components/hd44780.png</file>
+        <file alias="aip31068.png">../src/icons/components/aip31068.png</file>
         <file alias="ssd1306.png">../src/icons/components/ssd1306.png</file>
         <file alias="ili9341.png">../src/icons/components/ili9341.png</file>
         <file alias="mosfet.png">../src/icons/components/mosfet.png</file>
@@ -107,6 +108,7 @@
         <file alias="resistordip.png">../src/icons/components/resistordip.png</file>
         <file alias="ledbar.png">../src/icons/components/ledbar.png</file>
         <file alias="ledmatrix.png">../src/icons/components/ledmatrix.png</file>
+        <file alias="max72xx.png">../src/icons/components/max72xx.png</file>
         <file alias="text.png">../src/icons/components/text.png</file>
         <file alias="voltimeter.png">../src/icons/components/voltimeter.png</file>
         <file alias="amperimeter.png">../src/icons/components/amperimeter.png</file>

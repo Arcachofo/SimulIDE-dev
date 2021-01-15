@@ -36,7 +36,7 @@ LibraryItem* Aip31068_i2c::libraryItem()
     return new LibraryItem(
         tr( "Aip31068_i2c" ),
         tr( "Displays" ),
-        "hd44780.png",
+        "aip31068.png",
         "Aip31068_i2c",
         Aip31068_i2c::construct );
 }
