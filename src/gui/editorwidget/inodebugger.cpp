@@ -75,7 +75,12 @@ int InoDebugger::compile()
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    if( !QFile::exists( m_compilerPath+"/arduino-builder") )
+    QString builder = "arduino-builder";
+    #ifndef Q_OS_UNIX
+    builder += ".exe";
+    #endif
+
+    if( !QFile::exists( m_compilerPath+builder) )
     {
         m_outPane->appendText( "\nArduino" );
         toolChainNotFound();
@@ -116,13 +121,24 @@ int InoDebugger::compile()
             }
         }
     }
+    QString command  = m_compilerPath+"arduino";
+
+    #ifndef Q_OS_UNIX
+    command += "_debug";
+    command = addQuotes( command );
+    #endif
+    command += " --get-pref sketchbook.path";
+
     QProcess getSkBook( this );  // Get sketchBook Path
-    QString command0  = m_compilerPath+"arduino --get-pref sketchbook.path";
-    getSkBook.start( command0 );
-    getSkBook.waitForFinished( 3000 );
+    getSkBook.start( command );
+    getSkBook.waitForFinished( 4000 );
     QString sketchBook = getSkBook.readAllStandardOutput();
     sketchBook = sketchBook.remove("\r").remove("\n");
     getSkBook.close();
+    if( sketchBook.isEmpty() )
+        m_outPane->writeText( "\nNo User sketchBook Found\n\n" );
+    else
+        m_outPane->writeText( "\nFound User sketchBook at:\n"+sketchBook+"\n\n" );
 
     QString cBuildPath = buildPath;
     QString boardName;
@@ -130,7 +146,7 @@ int InoDebugger::compile()
     if( m_board < Custom ) boardName = m_boardList.at( m_board );
     else                   boardName = m_customBoard;
 
-    QString command  = m_compilerPath+"arduino-builder -compile";
+    command  = m_compilerPath+"arduino-builder";
     
     #ifndef Q_OS_UNIX
     command    = addQuotes( command );
@@ -138,6 +154,7 @@ int InoDebugger::compile()
     filePath   = addQuotes( filePath );
     #endif
 
+    command += " -compile";
     command += " -hardware "+m_compilerPath+"hardware";
     command += " -tools "+m_compilerPath+"tools-builder";
     command += " -tools "+m_compilerPath+"hardware/tools/avr";
