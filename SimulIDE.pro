@@ -171,6 +171,7 @@ TRANSLATIONS +=  \
     ../resources/translations/simulide_fr.ts \
     ../resources/translations/simulide_pt_BR.ts \
     ../resources/translations/simulide_ru.ts \
+    ../resources/translations/simulide_nl.ts \
     ../resources/translations/simulide_it.ts
 
 FORMS +=   \

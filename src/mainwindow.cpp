@@ -133,11 +133,12 @@ QString MainWindow::loc()
     else if( m_lang == Russian )   locale = "ru";
     else if( m_lang == Spanish )   locale = "es";
     else if( m_lang == Pt_Brasil ) locale = "pt_BR";
+    else if( m_lang == Dutch )     locale = "nl";
 
     return locale;
 }
 
-void MainWindow::setLoc(QString loc )
+void MainWindow::setLoc( QString loc )
 {
     Langs lang = English;
     if     ( loc == "fr" )    lang = French;
@@ -146,6 +147,7 @@ void MainWindow::setLoc(QString loc )
     else if( loc == "ru" )    lang = Russian;
     else if( loc == "es" )    lang = Spanish;
     else if( loc == "pt_BR" ) lang = Pt_Brasil;
+    else if( loc == "nl" )    lang = Dutch;
 
     m_lang = lang;
 }
