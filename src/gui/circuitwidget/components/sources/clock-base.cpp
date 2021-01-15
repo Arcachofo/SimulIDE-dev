@@ -81,8 +81,6 @@ void ClockBase::setAlwaysOn( bool on )
     m_button->setVisible( !on );
 }
 
-double ClockBase::freq() { return m_freq; }
-
 void ClockBase::setFreq( double freq )
 {
     //double stepsPerS = Simulator::self()->stepsPerus()*1e6*1e6;
@@ -121,6 +119,25 @@ void ClockBase::onbuttonclicked()
     setRunning( !m_isRunning );
 }
 
+uint64_t ClockBase::riseTime()
+{
+    return m_out->riseTime();
+}
+
+void ClockBase::setRiseTime( uint64_t time )
+{
+    m_out->setRiseTime( time );
+}
+
+uint64_t ClockBase::fallTime()
+{
+    return m_out->fallTime();
+}
+
+void ClockBase::setFallTime( uint64_t time )
+{
+    m_out->setFallTime( time );
+}
 
 #include "moc_clock-base.cpp"
 

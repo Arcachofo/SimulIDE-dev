@@ -34,17 +34,15 @@ eSource::eSource( QString id, ePin* epin )
     m_imp      = cero_doub;
     m_admit    = 1/m_imp;
 
+    m_timeLH = 3000;
+    m_timeHL = 4000;
+
     m_scrEnode = new eNode( id+"scr" );
     m_scrEnode->setNodeNumber(0);
 
     Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
 }
 eSource::~eSource(){ delete m_scrEnode; }
-
-void eSource::createPin()
-{
-    m_ePin[0] = new ePin( m_elmId+"-ePin0", 0 );
-}
 
 void eSource::initialize()
 {
@@ -53,16 +51,13 @@ void eSource::initialize()
 
 void eSource::stamp()
 {
-    //qDebug() <<"eSource::stamp"<<QString::fromStdString(m_elmId)<< m_out;
     m_ePin[0]->stampAdmitance( m_admit );
     stampOutput();
 }
 
-void eSource::stampOutput()                               // Stamp Output
+void eSource::stampOutput()
 {
-    //qDebug() <<"eSource::stampOutput"<<QString::fromStdString(m_elmId)<< m_out<<m_voltOut<<m_imp ;
     m_scrEnode->setVolt( m_voltOut );
-
     m_ePin[0]->stampCurrent( m_voltOut/m_imp );
 }
 
@@ -71,26 +66,46 @@ void eSource::setVoltHigh( double v )
     m_voltHigh = v;
     if( m_out ) m_voltOut = v;
 }
-double eSource::voltHight() { return m_voltHigh; }
 
 void eSource::setVoltLow( double v )
 {
     m_voltLow = v;
     if( !m_out ) m_voltOut = v;
 }
-double eSource::voltLow() { return m_voltLow; }
 
-void eSource::setOut( bool out )           // Set Output to Hight or Low
+void eSource::setOut( bool out ) // Set Output to Hight or Low
 {
     if( m_inverted ) m_out = !out;
     else             m_out =  out;
 
     if( m_out ) m_voltOut = m_voltHigh;
     else        m_voltOut = m_voltLow;
-    
-    //qDebug() << "eSource::setOut"<<QString::fromStdString(m_elmId)<<m_voltOut;
 }
-bool  eSource::out() { return m_out; }
+
+void eSource::setTimedOut( bool out )
+{
+    if( m_inverted ) out = !out;
+    if( out == m_out ) return;
+
+    if( out )
+    {
+        m_voltOut = m_voltLow + 1e-6;
+        Simulator::self()->addEvent( m_timeLH, this );
+    }
+    else
+    {
+        m_voltOut = m_voltHigh - 1e-6;
+        Simulator::self()->addEvent( m_timeHL, this );
+    }
+    stampOutput();
+    m_nextOut = out;
+}
+
+void eSource::runEvent()
+{
+    setOut( m_nextOut );
+    stampOutput();
+}
 
 void eSource::setInverted( bool inverted )
 {
@@ -105,7 +120,6 @@ void eSource::setInverted( bool inverted )
     
     stampOutput();
 }
-bool eSource::isInverted() { return m_inverted; }
 
 void eSource::setImp( double imp )
 {
@@ -114,23 +128,18 @@ void eSource::setImp( double imp )
     eSource::stamp();
 }
 
-double eSource::imp() { return m_imp; }
-
-ePin* eSource::getEpin()
+void eSource::setRiseTime( uint64_t time )
 {
-    return m_ePin[0];
+    m_timeLH = time;
 }
 
-ePin* eSource::getEpin( QString pinName )
+void eSource::setFallTime( uint64_t time )
 {
-    pinName ="";
-    return m_ePin[0];
+    m_timeHL = time;
 }
 
 double eSource::getVolt()
 {
-    //qDebug() << "eSource::getVolt()"<<QString::fromStdString(m_elmId)<< m_ePin[0]->isConnected() <<m_voltOut;
-    
     if( m_ePin[0]->isConnected() ) return m_ePin[0]->getVolt();
     else                           return m_voltOut;
 }

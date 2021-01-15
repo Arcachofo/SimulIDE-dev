@@ -44,8 +44,7 @@ Clock::~Clock(){}
 
 void Clock::runEvent()
 {
-    m_out->setOut( !m_out->out() );
-    m_out->stampOutput();
+    m_out->setTimedOut( !m_out->out() );
 
     m_remainder += m_fstepsPC-(double)m_stepsPC;
     uint64_t remainerInt = m_remainder;

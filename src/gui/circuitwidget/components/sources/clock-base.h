@@ -21,13 +21,14 @@
 #define CLOCKBASE_H
 
 #include "logicinput.h"
-#include <QObject>
 
 class MAINMODULE_EXPORT ClockBase : public LogicInput
 {
     Q_OBJECT
     Q_PROPERTY( bool Always_On READ alwaysOn WRITE setAlwaysOn DESIGNABLE true USER true )
-    Q_PROPERTY( double Freq    READ freq     WRITE setFreq     DESIGNABLE true USER true )
+    Q_PROPERTY( double    Freq READ freq     WRITE setFreq     DESIGNABLE true USER true )
+    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
+    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
     Q_PROPERTY( bool   Running READ running  WRITE setRunning )
 
     public:
@@ -37,8 +38,14 @@ class MAINMODULE_EXPORT ClockBase : public LogicInput
         bool alwaysOn() { return m_alwaysOn; }
         void setAlwaysOn( bool on );
 
-        double freq();
+        double freq() { return m_freq; }
         virtual void setFreq( double freq );
+
+        uint64_t riseTime();
+        void setRiseTime( uint64_t time );
+
+        uint64_t fallTime();
+        void setFallTime( uint64_t time );
         
         bool running();
         virtual void setRunning( bool running );

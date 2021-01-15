@@ -76,8 +76,12 @@ void WaveGen::runEvent()
     {
         m_lastVout = m_vOut;
 
-        m_out->setVoltHigh( m_voltHight*m_vOut+m_voltBase );
-        m_out->stampOutput();
+        if( m_type == Square ) m_out->setTimedOut( m_vOut );
+        else
+        {
+            m_out->setVoltHigh( m_voltHight*m_vOut+m_voltBase );
+            m_out->stampOutput();
+        }
     }
 
     m_remainder += m_fstepsPC-(double)m_stepsPC;
