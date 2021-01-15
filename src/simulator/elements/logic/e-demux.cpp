@@ -60,8 +60,8 @@ void eDemux::voltChanged()
 
 void eDemux::runEvent()
 {
-    if( m_oldAddr >= 0 ) setOut( m_oldAddr, false );
-    if( m_address >= 0 ) setOut( m_address, true );
+    if( m_oldAddr >= 0 ) m_output[m_oldAddr]->setTimedOut( false );
+    if( m_address >= 0 ) m_output[m_address]->setTimedOut( true );
 
     m_oldAddr = m_address;
 }

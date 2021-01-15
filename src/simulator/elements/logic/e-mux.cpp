@@ -52,6 +52,6 @@ void eMux::voltChanged()
 
 void eMux::runEvent()
 {
-    eLogicDevice::setOut( 0, m_out );
-    eLogicDevice::setOut( 1,!m_out );
+    m_output[0]->setTimedOut( m_out );
+    m_output[1]->setTimedOut(!m_out );
 }

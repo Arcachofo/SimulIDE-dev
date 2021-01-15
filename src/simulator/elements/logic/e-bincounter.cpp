@@ -72,7 +72,7 @@ void eBinCounter::voltChanged()
 
 void eBinCounter::runEvent()
 {
-    eLogicDevice::setOut( 0, m_runOut );
+    m_output[0]->setTimedOut( m_runOut );
 }
 
 int eBinCounter::TopValue() const

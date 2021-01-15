@@ -27,7 +27,7 @@ static const char* ADC_properties[] = {
 
 Component* ADC::construct( QObject* parent, QString type, QString id )
 {
-        return new ADC( parent, type, id );
+    return new ADC( parent, type, id );
 }
 
 LibraryItem* ADC::libraryItem()

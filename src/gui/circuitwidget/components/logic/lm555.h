@@ -34,6 +34,7 @@ class MAINMODULE_EXPORT Lm555 : public Component, public eLm555
     Q_OBJECT
     Q_PROPERTY( quint64 Propagation_Delay_ns  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
 
+
     public:
 
         Lm555( QObject* parent, QString type, QString id );

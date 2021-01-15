@@ -67,7 +67,6 @@ void eGate::runEvent()
 
         m_output[0]->setImp( imp );
     }
-    //eLogicDevice::setOut( 0, m_out );
     m_output[0]->setTimedOut( m_out );
 }
 

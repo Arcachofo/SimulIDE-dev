@@ -28,6 +28,8 @@ class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2C
 {
     Q_OBJECT
     Q_PROPERTY( quint64 Propagation_Delay_ns  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
+    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
+    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
     Q_PROPERTY( int Control_Code READ cCode WRITE setCcode DESIGNABLE true USER true )
 
     public:

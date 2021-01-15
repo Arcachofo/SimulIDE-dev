@@ -73,15 +73,14 @@ void eFunction::runEvent()
         {
             float out = m_engine.evaluate( text ).toNumber();
             m_output[i]->setVoltHigh( out );
-            eLogicDevice::setOut( i, true );
+            m_output[i]->setTimedOut( true );
             
         }
         else
         {
             bool out = m_engine.evaluate( text ).toBool();
-            eLogicDevice::setOut( i, out );
+            m_output[i]->setTimedOut( out );
         }
-
         //qDebug()<<"Func:"<< i << text; //textLabel->setText(text);
         //qDebug() << ":" << out;
         //qDebug() << m_engine.globalObject().property("i0").toVariant() << m_engine.globalObject().property("i1").toVariant();

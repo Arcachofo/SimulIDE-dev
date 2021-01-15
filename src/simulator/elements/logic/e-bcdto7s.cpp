@@ -79,5 +79,5 @@ void eBcdTo7S::voltChanged()
 void eBcdTo7S::runEvent()
 {
     uint8_t value = m_values[m_digit];
-    for( int i=0; i<m_numOutputs; ++i ) setOut( i, value & (1<<i) );
+    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setTimedOut( value & (1<<i) );
 }

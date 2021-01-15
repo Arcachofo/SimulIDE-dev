@@ -49,7 +49,7 @@ void eADC::runEvent()
     for( int i=0; i<m_numOutputs; ++i )
     {
         //qDebug() << "eADC::setVChanged" << i << (address & 1);
-        setOut( m_numOutputs-1-i, m_value & 1 );
+        m_output[m_numOutputs-1-i]->setTimedOut( m_value & 1 );
         m_value >>= 1;
     }
 }

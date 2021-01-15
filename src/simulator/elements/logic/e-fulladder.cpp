@@ -50,7 +50,7 @@ void eFullAdder::voltChanged()
 
 void eFullAdder::runEvent()
 {
-    eLogicDevice::setOut( 0, m_Sum );
-    eLogicDevice::setOut( 1, m_Co );
+    m_output[0]->setTimedOut( m_Sum );
+    m_output[1]->setTimedOut( m_Co );
 }
 

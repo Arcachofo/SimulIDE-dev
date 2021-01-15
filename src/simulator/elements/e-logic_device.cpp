@@ -75,7 +75,7 @@ void eLogicDevice::initialize()
 {
     if( m_clockSource ) m_clock = false;
     
-    for( int i=0; i<m_numOutputs; i++ )
+    for( int i=0; i<m_numOutputs; ++i )
         eLogicDevice::setOut( i, false );
 }
 
@@ -108,7 +108,7 @@ void eLogicDevice::setOutputEnabled( bool enabled )
     double imp = 1e28;
     if( enabled ) imp = m_outImp;
 
-    for( int i=0; i<m_numOutputs; i++ ) m_output[i]->setImp( imp );
+    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setImp( imp );
     Simulator::self()->addEvent( 1, NULL );
 }
 
@@ -190,7 +190,7 @@ void eLogicDevice::createInputs( int inputs )
     int totalInps  = m_numInputs + inputs;
     m_input.resize( totalInps );
 
-    for( int i=m_numInputs; i<totalInps; i++ )
+    for( int i=m_numInputs; i<totalInps; ++i )
     {
         ePin* epin = new ePin( m_elmId+"-ePin-input"+i, i );
 
@@ -219,7 +219,7 @@ void eLogicDevice::createOutputs( int outputs )
     int totalOuts = m_numOutputs + outputs;
     m_output.resize( totalOuts );
 
-    for( int i=m_numOutputs; i<totalOuts; i++ )
+    for( int i=m_numOutputs; i<totalOuts; ++i )
     {
         ePin* epin = new ePin( m_elmId+"-ePin-output"+i, i );
 
@@ -281,7 +281,7 @@ void eLogicDevice::setOutHighV( double volt )
 
     m_outHighV = volt;
 
-    for( int i=0; i<m_numOutputs; i++ )
+    for( int i=0; i<m_numOutputs; ++i )
         m_output[i]->setVoltHigh( volt );
 
     if( pauseSim ) Simulator::self()->resumeSim();
@@ -294,7 +294,7 @@ void eLogicDevice::setOutLowV( double volt )
 
     m_outLowV = volt;
 
-    for( int i=0; i<m_numOutputs; i++ )
+    for( int i=0; i<m_numOutputs; ++i )
         m_output[i]->setVoltLow( volt );
 
     if( pauseSim ) Simulator::self()->resumeSim();
@@ -307,7 +307,7 @@ void eLogicDevice::setInputImp( double imp )
 
     m_inputImp = imp;
 
-    for( int i=0; i<m_numInputs; i++ )
+    for( int i=0; i<m_numInputs; ++i )
     {
         m_input[i]->setImp( imp );
     }
@@ -323,7 +323,7 @@ void eLogicDevice::setOutImp( double imp )
 
     m_outImp = imp;
 
-    for( int i=0; i<m_numOutputs; i++ )
+    for( int i=0; i<m_numOutputs; ++i )
     {
         m_output[i]->setImp( imp );
     }
@@ -337,7 +337,7 @@ void eLogicDevice::setInverted( bool inverted )
 
     m_inverted = inverted;
     
-    for( int i=0; i<m_numOutputs; i++ )
+    for( int i=0; i<m_numOutputs; ++i )
     {
         m_output[i]->setInverted( inverted );
     }
@@ -352,7 +352,7 @@ void eLogicDevice::setInvertInps( bool invert )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_invInputs = invert;
-    for( int i=0; i<m_numInputs; i++ )
+    for( int i=0; i<m_numInputs; ++i )
     {
         m_input[i]->setInverted( invert );
     }
@@ -429,6 +429,18 @@ bool eLogicDevice::getInputState( int input )
 bool eLogicDevice::getOutputState( int output )
 {
     return m_output[output]->out();
+}
+
+void eLogicDevice::setRiseTime( uint64_t time )
+{
+    m_timeLH = time;
+    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setRiseTime( time );
+}
+
+void eLogicDevice::setFallTime( uint64_t time )
+{
+    m_timeHL = time;
+    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setFallTime( time );
 }
 
 ePin* eLogicDevice::getEpin( QString pinName )

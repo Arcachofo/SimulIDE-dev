@@ -59,8 +59,8 @@ void eBcdToDec::voltChanged()
 
 void eBcdToDec::runEvent()
 {
-    if( m_old >= 0 ) setOut( m_old, false );
-    if( m_dec >= 0 ) setOut( m_dec, true );
+    if( m_old >= 0 ) m_output[m_old]->setTimedOut( false );
+    if( m_dec >= 0 ) m_output[m_dec]->setTimedOut( true );
 
     m_old = m_dec;
 }

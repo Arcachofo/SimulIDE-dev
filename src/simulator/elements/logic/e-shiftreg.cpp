@@ -142,20 +142,18 @@ void eShiftReg::runEvent()
     if( ! m_changed )
     {
         if( m_latchClockPin )
-            for( int i=0; i<8; ++i )  setOut( i, m_latch[i] );
+            for( int i=0; i<8; ++i )  m_output[i]->setTimedOut( m_latch[i] );
         else
-            for( int i=0; i<8; ++i )  setOut( i, m_shiftReg[i] );
+            for( int i=0; i<8; ++i )  m_output[i]->setTimedOut( m_shiftReg[i] );
     }
     if( m_resSerOut )
     {
-        m_serOutPin->setOut( false );
-        m_serOutPin->stampOutput();
+        m_serOutPin->setTimedOut( false );
         m_resSerOut = false;
     }
     if( m_setSerOut )
     {
-        m_serOutPin->setOut( m_shiftReg[7] );
-        m_serOutPin->stampOutput();
+        m_serOutPin->setTimedOut( m_shiftReg[7] );
         m_setSerOut = false;
     }
 }

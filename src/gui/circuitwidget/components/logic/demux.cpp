@@ -36,7 +36,8 @@ LibraryItem* Demux::libraryItem()
 }
 
 Demux::Demux( QObject* parent, QString type, QString id )
-        : LogicComponent( parent, type, id ), eDemux( id )
+     : LogicComponent( parent, type, id )
+     , eDemux( id )
 {
     m_width  = 4;
     m_height = 10;

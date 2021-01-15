@@ -33,7 +33,6 @@ void eLatchD::stamp()
 {
     if( m_etrigger != Trig_Clk )
     {
-        //qDebug() << "eLatchD::initialize !m_clockPin";
         for( uint i=0; i<m_input.size(); ++i )
         {
             eNode* enode = m_input[i]->getEpin(0)->getEnode();
@@ -63,7 +62,7 @@ void eLatchD::runEvent()
         bool state = m_state & (1<<i);
         bool oldst = m_oldst & (1<<i);
 
-        if( state != oldst ) setOut( i, state );
+        if( state != oldst )  m_output[i]->setTimedOut( state );
     }
     m_oldst = m_state;
 }

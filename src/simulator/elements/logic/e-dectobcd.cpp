@@ -55,7 +55,7 @@ void eDecToBcd::voltChanged()
 
 void eDecToBcd::runEvent()
 {
-    for( int i=0; i<4; ++i ) setOut( i, m_bcd & (1<<i) );
+    for( int i=0; i<4; ++i ) m_output[i]->setTimedOut( m_bcd & (1<<i) );
 }
 
 void eDecToBcd::set_16bits( bool set )

@@ -23,7 +23,7 @@
 
 Component* ShiftReg::construct( QObject* parent, QString type, QString id )
 {
-        return new ShiftReg( parent, type, id );
+    return new ShiftReg( parent, type, id );
 }
 
 LibraryItem* ShiftReg::libraryItem()

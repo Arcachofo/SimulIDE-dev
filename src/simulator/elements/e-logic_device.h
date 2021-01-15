@@ -69,6 +69,12 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         void setOutputEnabled( bool enabled );
         void updateOutEnabled();
 
+        uint64_t riseTime() { return m_timeLH; }
+        void setRiseTime( uint64_t time );
+
+        uint64_t fallTime() { return m_timeHL; }
+        void setFallTime( uint64_t time );
+
         virtual ePin* getEpin( QString pinName );
 
         int getClockState();
@@ -104,6 +110,9 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         double m_inputLowV;
         double m_outHighV;
         double m_outLowV;
+
+        uint64_t m_timeLH;
+        uint64_t m_timeHL;
 
         double m_inputImp;
         double m_outImp;

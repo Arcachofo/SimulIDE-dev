@@ -30,6 +30,8 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public eMemory, public M
 {
     Q_OBJECT
     Q_PROPERTY( quint64 Propagation_Delay_ns  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
+    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
+    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
     Q_PROPERTY( QVector<int> Mem  READ mem        WRITE setMem )
     Q_PROPERTY( int  Address_Bits READ addrBits   WRITE setAddrBits   DESIGNABLE true USER true )
     Q_PROPERTY( int  Data_Bits    READ dataBits   WRITE setDataBits   DESIGNABLE true USER true )

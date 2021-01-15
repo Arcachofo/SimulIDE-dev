@@ -45,28 +45,22 @@ void eFlipFlopJK::stamp()
             if( enode ) enode->voltChangedCallback( this );
         }
     }
-    
     eLogicDevice::stamp();
 }
 
 void eFlipFlopJK::voltChanged()
 {
-    // Get Clk to don't miss any clock changes
-    bool clkAllow = (eLogicDevice::getClockState() == Clock_Allow);
+    bool clkAllow = (eLogicDevice::getClockState() == Clock_Allow); // Get Clk to don't miss any clock changes
 
-    //qDebug() << "eFlipFlopJK::voltChanged()"<<clkRising;
-
-    if( eLogicDevice::getInputState( 2 )==true )          // Master Set
+    if( eLogicDevice::getInputState( 2 )==true )     // Master Set
     {
         m_Q0 = true;         // Q
         m_Q1 = false;        // Q'
-        //qDebug() << "eFlipFlopJK::voltChanged() set";
     }
-    else if( eLogicDevice::getInputState( 3 )==true )   // Master Reset
+    else if( eLogicDevice::getInputState( 3 )==true ) // Master Reset
     {
         m_Q0 = false;         // Q
         m_Q1 = true;          // Q'
-        //qDebug() << "eFlipFlopJK::voltChanged() Reset";
     }
     else if( clkAllow )                              // Allow operation
     {
@@ -75,7 +69,6 @@ void eFlipFlopJK::voltChanged()
         bool Q = m_output[0]->out();
         
         bool state = (J && !Q) || (!K && Q) ;
-        //qDebug() << "eFlipFlopJK::voltChanged() clk"<<J<<K<<state;
 
         m_Q0 = state ;       // Q
         m_Q1 = !state;       // Q'
@@ -85,15 +78,15 @@ void eFlipFlopJK::voltChanged()
 
 void eFlipFlopJK::runEvent()
 {
-    setOut( 0, m_Q0 );      // Q
-    setOut( 1, m_Q1 );      // Q'
+    m_output[0]->setTimedOut( m_Q0 );      // Q
+    m_output[1]->setTimedOut( m_Q1 );      // Q'
 }
 
 void eFlipFlopJK::setSrInv( bool inv )
 {
     m_srInv = inv;
-    m_input[2]->setInverted( inv );                           // Set
-    m_input[3]->setInverted( inv );                           // Reset
+    m_input[2]->setInverted( inv );                   // Set
+    m_input[3]->setInverted( inv );                   // Reset
     
     Circuit::self()->update();
 }

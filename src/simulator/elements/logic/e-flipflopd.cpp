@@ -70,8 +70,8 @@ void eFlipFlopD::voltChanged()
 
 void eFlipFlopD::runEvent()
 {
-    setOut( 0, m_Q0 );      // Q
-    setOut( 1, m_Q1 );      // Q'
+    m_output[0]->setTimedOut( m_Q0 );      // Q
+    m_output[1]->setTimedOut( m_Q1 );      // Q'
 }
 
 void eFlipFlopD::setSrInv( bool inv )
