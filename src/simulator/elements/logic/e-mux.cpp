@@ -30,7 +30,7 @@ void eMux::stamp()
 {
     for( int i=0; i<11; ++i )
     {
-        eNode* enode = m_input[i]->getEpin()->getEnode();
+        eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
     eLogicDevice::stamp();

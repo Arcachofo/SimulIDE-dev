@@ -23,7 +23,6 @@
 eLatchD::eLatchD( QString id, int channels )
        : eLogicDevice( id )
 {
-    //setNumChannels( channels );
     m_oldst = 0;
 }
 eLatchD::~eLatchD()
@@ -37,7 +36,7 @@ void eLatchD::stamp()
         //qDebug() << "eLatchD::initialize !m_clockPin";
         for( uint i=0; i<m_input.size(); ++i )
         {
-            eNode* enode = m_input[i]->getEpin()->getEnode();
+            eNode* enode = m_input[i]->getEpin(0)->getEnode();
             if( enode ) enode->voltChangedCallback( this );
         }
     }
@@ -68,7 +67,4 @@ void eLatchD::runEvent()
     }
     m_oldst = m_state;
 }
-
-void eLatchD::setNumChannels( int channels )
-{ createPins( channels, channels); }
 

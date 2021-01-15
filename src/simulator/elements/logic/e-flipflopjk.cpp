@@ -31,17 +31,17 @@ eFlipFlopJK::~eFlipFlopJK() {}
 
 void eFlipFlopJK::stamp()
 {
-    eNode* enode = m_input[2]->getEpin()->getEnode();         // Set pin
+    eNode* enode = m_input[2]->getEpin(0)->getEnode();         // Set pin
     if( enode ) enode->voltChangedCallback( this );
     
-    enode = m_input[3]->getEpin()->getEnode();              // Reset pin
+    enode = m_input[3]->getEpin(0)->getEnode();              // Reset pin
     if( enode ) enode->voltChangedCallback( this );
 
     if( m_etrigger != Trig_Clk )
     {
         for( uint i=0; i<2; i++ )
         {
-            eNode* enode = m_input[i]->getEpin()->getEnode();
+            eNode* enode = m_input[i]->getEpin(0)->getEnode();
             if( enode ) enode->voltChangedCallback( this );
         }
     }

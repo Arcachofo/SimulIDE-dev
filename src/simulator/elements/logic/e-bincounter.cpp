@@ -30,7 +30,7 @@ eBinCounter::~eBinCounter() {}
 
 void eBinCounter::stamp()
 {
-    eNode* enode = m_input[0]->getEpin()->getEnode();              // Reset pin
+    eNode* enode = m_input[0]->getEpin(0)->getEnode();              // Reset pin
     if( enode ) enode->voltChangedCallback( this );
     
     eLogicDevice::stamp();

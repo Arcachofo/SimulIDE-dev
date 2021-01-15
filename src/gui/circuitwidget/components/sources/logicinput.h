@@ -39,7 +39,7 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eElement
         ~LogicInput();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         bool out() { return m_out->out(); }
         void setOut( bool out );
@@ -62,8 +62,8 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eElement
     protected:
         double m_voltHight;
 
-        Pin     *m_outpin;
-        eSource *m_out;
+        Pin*     m_outpin;
+        eSource* m_out;
 
         QToolButton* m_button;
         QGraphicsProxyWidget* m_proxy;

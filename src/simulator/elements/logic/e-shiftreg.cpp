@@ -64,12 +64,12 @@ void eShiftReg::initialize()
 
 void eShiftReg::stamp()
 {
-    eNode* enode = m_input[1]->getEpin()->getEnode(); // m_input[1] = Reset pin
+    eNode* enode = m_input[1]->getEpin(0)->getEnode(); // m_input[1] = Reset pin
     if( enode ) enode->voltChangedCallback( this );
 
     if( m_latchClockPin )
     {
-        enode = m_latchClockPin->getEpin()->getEnode();
+        enode = m_latchClockPin->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
     eLogicDevice::stamp();
@@ -80,7 +80,7 @@ void eShiftReg::voltChanged()
     eLogicDevice::updateOutEnabled();
 
     bool clkRising = (eLogicDevice::getClockState() == Clock_Rising);// Get Clk to don't miss any clock changes
-    double    volt = m_input[1]->getEpin()->getVolt();// Reset pin volt.
+    double    volt = m_input[1]->getEpin(0)->getVolt();// Reset pin volt.
     bool     reset = eLogicDevice::getInputState( 1 );// m_input[1] = Reset
     bool  addEvent = false;
 
@@ -103,7 +103,7 @@ void eShiftReg::voltChanged()
         if( m_serOutPin )  m_setSerOut = true;     // Set Serial Out Pin
 
         // Read data input pin & put in reg bit0
-        volt = m_input[0]->getEpin()->getVolt();      // Reset pin volt.
+        volt = m_input[0]->getVolt();      // Reset pin volt.
         m_shiftReg[0] = (volt > m_inputHighV);     // input0: data input
 
         m_changed = true;                      // Shift Register changed

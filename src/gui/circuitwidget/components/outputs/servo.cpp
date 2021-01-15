@@ -85,10 +85,10 @@ void Servo::stamp()
       & m_inPin[1]->isConnected()
       & m_inPin[2]->isConnected() )
     {
-        eNode* enode = m_input[0]->getEpin()->getEnode();  // Gnd pin
+        eNode* enode = m_input[0]->getEpin(0)->getEnode();  // Gnd pin
         if( enode ) enode->voltChangedCallback( this );
 
-        enode = m_input[1]->getEpin()->getEnode();         // V+ pin
+        enode = m_input[1]->getEpin(0)->getEnode();         // V+ pin
         if( enode ) enode->voltChangedCallback( this );
 
         eLogicDevice::stamp();

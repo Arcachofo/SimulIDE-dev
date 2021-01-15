@@ -36,7 +36,7 @@ void eFunction::stamp()
     
     for( int i=0; i<m_numInputs; ++i )
     {
-        eNode* enode = m_input[i]->getEpin()->getEnode();
+        eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
 }
@@ -52,10 +52,10 @@ void eFunction::voltChanged()
         m_engine.globalObject().setProperty( "o"+QString::number(i), QScriptValue( eLogicDevice::getOutputState( i )) );
         
     for( int i=0; i<m_numInputs; ++i )
-        m_engine.globalObject().setProperty( "vi"+QString::number(i), QScriptValue( m_input[i]->getEpin()->getVolt()) );
+        m_engine.globalObject().setProperty( "vi"+QString::number(i), QScriptValue( m_input[i]->getVolt()) );
 
     for( int i=0; i<m_numOutputs; ++i )
-        m_engine.globalObject().setProperty( "vo"+QString::number(i), QScriptValue( m_output[i]->getEpin()->getVolt()) );
+        m_engine.globalObject().setProperty( "vo"+QString::number(i), QScriptValue( m_output[i]->getVolt()) );
         
     Simulator::self()->addEvent( m_propDelay, this );
 }

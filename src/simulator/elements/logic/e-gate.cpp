@@ -34,7 +34,7 @@ void eGate::stamp()
     
     for( int i=0; i<m_numInputs; ++i )
     {
-        eNode* enode = m_input[i]->getEpin()->getEnode();
+        eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
 }
@@ -48,8 +48,6 @@ void eGate::voltChanged()
         bool state = eLogicDevice::getInputState( i );
         if( state ) inputs++;
     }
-    //qDebug() << "eGate::setVChanged" << inputs <<m_output[0]->imp()<<m_outImp; 
-
     m_out = calcOutput( inputs ); // In each gate type
     
     // Add random 1-10 ps to avoid oscillations
@@ -63,14 +61,14 @@ void eGate::runEvent()
     if( m_openCol )
     {
         double imp = m_outImp;
-        bool oOut = m_out;
+        bool  oOut = m_out;
         if( m_output[0]->isInverted() ) oOut = !m_out;
         if( oOut || !eLogicDevice::outputEnabled() ) imp = high_imp;
 
         m_output[0]->setImp( imp );
     }
-
-    eLogicDevice::setOut( 0, m_out );
+    //eLogicDevice::setOut( 0, m_out );
+    m_output[0]->setTimedOut( m_out );
 }
 
 bool eGate::calcOutput( int inputs ) 

@@ -29,15 +29,15 @@ eFlipFlopD::~eFlipFlopD() {}
 
 void eFlipFlopD::stamp()
 {
-    eNode* enode = m_input[1]->getEpin()->getEnode();         // Set pin
+    eNode* enode = m_input[1]->getEpin(0)->getEnode();         // Set pin
     if( enode ) enode->voltChangedCallback( this );
     
-    enode = m_input[2]->getEpin()->getEnode();              // Reset pin
+    enode = m_input[2]->getEpin(0)->getEnode();              // Reset pin
     if( enode ) enode->voltChangedCallback( this );
 
     if( m_etrigger != Trig_Clk )
     {
-        eNode* enode = m_input[0]->getEpin()->getEnode();
+        eNode* enode = m_input[0]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
     eLogicDevice::stamp();

@@ -774,8 +774,6 @@ void Circuit::removeItems()                     // Remove Selected items
 {
     if( m_conStarted ) return;
 
-
-
     saveState();
     m_busy = true;
 

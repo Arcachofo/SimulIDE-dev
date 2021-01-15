@@ -53,8 +53,8 @@ class MAINMODULE_EXPORT Servo : public LogicComponent, public eLogicDevice
         int m_pos;                      // Actual Angular position 0-180
         int m_targetPos;                // Target Angular position 0-180
 
-        double m_speed;                         // Angular speed sec/60ª
-        int    m_minAngle;                 // Angle to move evry repaint
+        double m_speed;                         // Angular speed sec/60º
+        int    m_minAngle;                // Angle to move evrey repaint
 
         uint64_t m_pulseStart;              // Simulation step
         uint64_t m_lastUpdate;              // Simulation step

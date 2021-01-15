@@ -67,7 +67,7 @@ void eI2C::stamp()                    // Called at Simulation Start
 
     eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
 
-    eNode* enode = SDA_PIN->getEpin()->getEnode(); // Register for SDA voltage changes
+    eNode* enode = SDA_PIN->getEpin(0)->getEnode(); // Register for SDA voltage changes
     if( enode ) enode->voltChangedCallback( this );
 }
 
@@ -383,14 +383,14 @@ void eI2C::updatePins()
 
         if( m_master )
         {
-            eNode* enode = SCL_PIN->getEpin()->getEnode();
+            eNode* enode = SCL_PIN->getEpin(0)->getEnode();
             if( enode ) enode->remFromChangedCallback(this);
 
             Simulator::self()->addEvent( m_stepsPe, this );
         }
         else
         {
-            eNode* enode = SCL_PIN->getEpin()->getEnode();
+            eNode* enode = SCL_PIN->getEpin(0)->getEnode();
             if( enode ) enode->voltChangedCallback( this );
         }
     }

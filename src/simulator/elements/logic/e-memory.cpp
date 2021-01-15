@@ -39,7 +39,7 @@ void eMemory::stamp()                 // Called at Simulation Start
 {
     for( int i=0; i<2+m_addrBits; ++i )                 // Initialize control pins
     {
-        eNode* enode =  m_input[i]->getEpin()->getEnode();
+        eNode* enode =  m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
     eLogicDevice::stamp();
@@ -109,7 +109,7 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
             int value = 0;
             for( int i=0; i<m_numOutputs; ++i )
             {
-                int  volt  = m_output[i]->getEpin()->getVolt();
+                int  volt  = m_output[i]->getEpin(0)->getVolt();
                 bool state = m_dataPinState[i];
 
                 if     ( volt > m_inputHighV ) state = true;

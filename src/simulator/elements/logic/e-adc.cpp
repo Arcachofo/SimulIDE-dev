@@ -30,7 +30,7 @@ eADC::~eADC()
 
 void eADC::stamp()
 {
-    eNode* enode = m_input[0]->getEpin()->getEnode();
+    eNode* enode = m_input[0]->getEpin(0)->getEnode();
     if( enode ) enode->voltChangedCallback( this );
 
     eLogicDevice::stamp();

@@ -33,8 +33,6 @@ class MAINMODULE_EXPORT eLatchD : public eLogicDevice
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        void setNumChannels( int channels );
-
     protected:
         uint32_t m_state;
         uint32_t m_oldst;

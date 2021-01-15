@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QDebug>
+//#include <QDebug>
 
 #include "e-logic_device.h"
 #include "simulator.h"
@@ -61,12 +61,12 @@ void eLogicDevice::stamp()
     // Register for callBack when eNode volt change on clock or OE pins
     if( m_clockSource )
     {
-        eNode* enode = m_clockSource->getEpin()->getEnode();
+        eNode* enode = m_clockSource->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
     if( m_outEnSource )
     {
-        eNode* enode = m_outEnSource->getEpin()->getEnode();
+        eNode* enode = m_outEnSource->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
 }
@@ -437,22 +437,22 @@ ePin* eLogicDevice::getEpin( QString pinName )
     {
         int pin = pinName.remove("input").toInt();
 
-        return m_input[pin]->getEpin();
+        return m_input[pin]->getEpin(0);
     }
     else if( pinName.contains("output") )
     {
         int pin = pinName.remove("output").toInt();
 
-        return m_output[pin]->getEpin();
+        return m_output[pin]->getEpin(0);
     }
     else if( pinName.contains("clock")
           || pinName.contains("inputEnable"))
     {
-        return m_clockSource->getEpin();
+        return m_clockSource->getEpin(0);
     }
     else if( pinName.contains("outEnable") )
     {
-        return m_outEnSource->getEpin();
+        return m_outEnSource->getEpin(0);
     }
     
     return 0l;

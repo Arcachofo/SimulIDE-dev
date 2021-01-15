@@ -229,12 +229,12 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
             {
                 P1 = P2; continue;
             }
-            if( fabs( y2-y1 ) <= filter )    // Filter
+            //if( fabs( y2-y1 ) <= filter )    // Filter
             {
                 p.drawLine( P1, P2 );
                 if( drawCursor && cursorX>x1 && cursorX<x2)
                     m_volt[i] = (p1Volt + p2Volt)/2 ;// Cursor Voltage
-            }else
+            }/*else
             {
                 QPointF PM = QPointF( x2, y1 );
                 p.drawLine( P1, PM );
@@ -242,7 +242,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
                 if( drawCursor && cursorX>x1 && cursorX<x2)
                     m_volt[i] = p1Volt ;// Cursor Voltage
-            }
+            }*/
             if( p2Volt > m_vMaxVal[i] ) m_vMaxVal[i] = p2Volt;
             if( p2Volt < m_vMinVal[i] ) m_vMinVal[i] = p2Volt;
             p1Volt = p2Volt;

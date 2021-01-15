@@ -159,26 +159,8 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
         }
     }
     else    initChip();
-
-
 }
 SubCircuit::~SubCircuit(){}
-
-/*void SubCircuit::attach()
-{
-    for ( Pin* pin : m_pin )
-    {
-        eNode* node = pin->getEnode();
-        if( !node ) continue;
-
-        QString pinId = pin->getId();
-        if( m_tunnelList.contains( pinId ) )
-        {
-            Tunnel* tunnel = m_tunnelList.value( pinId );
-            tunnel->setEnode( node );
-        }
-    }
-}*/
 
 void SubCircuit::loadSubCircuit( QString fileName )
 {

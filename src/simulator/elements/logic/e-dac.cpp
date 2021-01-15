@@ -32,7 +32,7 @@ void eDAC::stamp()
 {
     for( int i=0; i<m_numInputs; ++i )
     {
-        eNode* enode = m_input[i]->getEpin()->getEnode();
+        eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
     m_output[0]->setOut( true );

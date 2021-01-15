@@ -20,8 +20,6 @@
 #ifndef ELOGICDEVICE_H
 #define ELOGICDEVICE_H
 
-#include <math.h>
-
 #include "e-source.h"
 #include "e-pin.h"
 
