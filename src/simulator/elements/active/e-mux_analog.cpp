@@ -23,7 +23,7 @@
 #include "e-node.h"
 
 eMuxAnalog::eMuxAnalog( QString id )
-          : eElement( id )
+          : eLogicDevice( id )
 {
     m_channels = 0;
     m_addrBits = 0;

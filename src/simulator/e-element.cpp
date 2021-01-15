@@ -32,7 +32,6 @@ eElement::eElement( QString id )
     digital_high = 5.0;
     digital_low  = 0.0;
     digital_thre = 2.5;
-    m_propDelay  = 10*1000; // 10 ns
 
     Simulator::self()->addToElementList( this );
     //qDebug() << "eElement::eElement" << QString::fromStdString( m_elmId );

@@ -20,11 +20,11 @@
 #ifndef ELM555_H
 #define ELM555_H
 
-#include "e-element.h"
+#include "e-logic_device.h"
 
 class eSource;
 
-class MAINMODULE_EXPORT eLm555 : public eElement
+class MAINMODULE_EXPORT eLm555 : public eLogicDevice
 {
     public:
 

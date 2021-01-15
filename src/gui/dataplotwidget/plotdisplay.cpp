@@ -45,8 +45,8 @@ PlotDisplay::PlotDisplay( QWidget* parent )
     m_fontB.setBold(true);
     m_fontS.setPixelSize(7);
 
-    m_scaleColor[0] = QColor( 90, 90, 90 );
-    m_scaleColor[1] = QColor( 130, 130, 130 );
+    m_scaleColor[0] = QColor( 70, 70, 70 );
+    m_scaleColor[1] = QColor( 100, 100, 100 );
     m_scaleColor[2] = QColor( 200, 200, 200 );
     m_color[0] = QColor( 240, 240, 100 ); //QColor( 190, 190, 0 );
     m_color[1] = QColor( 220, 220, 255 ); //QColor( 255, 110, 50 );
@@ -202,7 +202,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
         p.setPen( pen2 );
 
         int k = 0;
-        double filter = m_filter*m_sclY[i];//m_ampli[i]*m_sclY[i]/4; //
+        //double filter = m_filter*m_sclY[i];//m_ampli[i]*m_sclY[i]/4; //
 
         m_vMaxVal[i] = -1e12;
         m_vMinVal[i] =  1e12;
@@ -232,8 +232,15 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
             //if( fabs( y2-y1 ) <= filter )    // Filter
             {
                 p.drawLine( P1, P2 );
-                if( drawCursor && cursorX>x1 && cursorX<x2)
-                    m_volt[i] = (p1Volt + p2Volt)/2 ;// Cursor Voltage
+                if( drawCursor && cursorX>x1 && cursorX<x2 ) // Cursor Voltage
+                {
+                    double cVolt= p1Volt;
+                    if( x2 != x1 && p2Volt!=p1Volt)
+                        cVolt = p1Volt+(cursorX-x1)*(p2Volt-p1Volt)/(x2-x1);
+                    if( cVolt < 0 )
+                        cVolt += 0;
+                    m_volt[i] = cVolt;
+                }
             }/*else
             {
                 QPointF PM = QPointF( x2, y1 );

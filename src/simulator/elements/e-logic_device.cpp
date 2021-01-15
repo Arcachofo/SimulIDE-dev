@@ -17,8 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-//#include <QDebug>
-
 #include "e-logic_device.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -44,6 +42,10 @@ eLogicDevice::eLogicDevice( QString id )
 
     m_clockSource = 0l;
     m_outEnSource = 0l;
+
+    m_propDelay = 10*1000; // 10 ns
+    m_timeLH = 3000;
+    m_timeHL = 4000;
 
     m_etrigger = Trig_Clk;
 }

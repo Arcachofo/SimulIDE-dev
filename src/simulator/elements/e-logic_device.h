@@ -69,6 +69,9 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         void setOutputEnabled( bool enabled );
         void updateOutEnabled();
 
+        virtual uint64_t propDelay() { return m_propDelay; }
+        virtual void     setPropDelay( uint64_t pd ) { m_propDelay = pd; }
+
         uint64_t riseTime() { return m_timeLH; }
         void setRiseTime( uint64_t time );
 
@@ -111,8 +114,9 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         double m_outHighV;
         double m_outLowV;
 
-        uint64_t m_timeLH;
-        uint64_t m_timeHL;
+        uint64_t m_propDelay; // Propagation delay
+        uint64_t m_timeLH; // Time for Output voltage to switch from 10% to 90%
+        uint64_t m_timeHL; // Time for Output voltage to switch from 90% to 10%
 
         double m_inputImp;
         double m_outImp;

@@ -20,12 +20,12 @@
 #ifndef EMUXANALOG_H
 #define EMUXANALOG_H
 
-#include "e-element.h"
+#include "e-logic_device.h"
 
 class ePin;
 class eResistor;
 
-class MAINMODULE_EXPORT eMuxAnalog : public eElement
+class MAINMODULE_EXPORT eMuxAnalog : public eLogicDevice
 {
     public:
 

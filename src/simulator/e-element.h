@@ -50,9 +50,6 @@ class MAINMODULE_EXPORT eElement
         virtual void updateStep(){;}
         virtual void voltChanged(){;}
 
-        virtual uint64_t propDelay() { return m_propDelay/1000; }
-        virtual void     setPropDelay( uint64_t pd ) { m_propDelay = pd*1000; }
-
         virtual void setNumEpins( int n );
 
         virtual ePin* getEpin( int pin );
@@ -81,9 +78,6 @@ class MAINMODULE_EXPORT eElement
         QString m_elmId;
 
         bool m_changed;
-        //bool m_converged;
-
-        uint64_t m_propDelay; // Propagation delay
 };
 
 #endif

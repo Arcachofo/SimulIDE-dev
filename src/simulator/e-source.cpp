@@ -90,12 +90,12 @@ void eSource::setTimedOut( bool out )
     if( out )
     {
         m_voltOut = m_voltLow + 1e-6;
-        Simulator::self()->addEvent( m_timeLH, this );
+        Simulator::self()->addEvent( m_timeLH*1.25, this );
     }
     else
     {
         m_voltOut = m_voltHigh - 1e-6;
-        Simulator::self()->addEvent( m_timeHL, this );
+        Simulator::self()->addEvent( m_timeHL*1.25, this );
     }
     stampOutput();
     m_nextOut = out;
@@ -130,11 +130,13 @@ void eSource::setImp( double imp )
 
 void eSource::setRiseTime( uint64_t time )
 {
+    if( time < 1 ) time = 1;
     m_timeLH = time;
 }
 
 void eSource::setFallTime( uint64_t time )
 {
+    if( time < 1 ) time = 1;
     m_timeHL = time;
 }
 

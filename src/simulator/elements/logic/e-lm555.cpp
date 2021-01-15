@@ -22,7 +22,7 @@
 #include "simulator.h"
 
 eLm555::eLm555( QString id )
-      : eElement( id )
+      : eLogicDevice( id )
 {
     setNumEpins(8);
     initialize();

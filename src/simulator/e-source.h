@@ -71,8 +71,8 @@ class MAINMODULE_EXPORT eSource : public eElement
         bool m_nextOut;
         bool m_inverted;
 
-        uint64_t m_timeLH;
-        uint64_t m_timeHL;
+        double m_timeLH;
+        double m_timeHL;
 
         eNode* m_scrEnode;
 };
