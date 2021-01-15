@@ -213,7 +213,6 @@ win32 {
                    deps
     QMAKE_LIBS += -lwsock32
     LIBS +=  deps/libelf.a
-    LIBS +=  deps/libglibc_win.a
     RC_ICONS += ../src/icons/simulide.ico
 }
 linux {
