@@ -276,10 +276,12 @@ void InoDebugger::mapFlashToSource()
     {
         QString addr = val2hex( flashAddr )+"\n";
         flashToLine.write( addr.toUtf8() );
+    }
+    flashToLine.closeWriteChannel();
+    flashToLine.waitForFinished();
 
-        bool ready = flashToLine.waitForReadyRead( 500 );
-        if( !ready ) break;
-
+    for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
+    {
         QString p_stdout = flashToLine.readLine();
         int idx = p_stdout.lastIndexOf( ":" );
         if( idx == -1 ) continue;
@@ -295,7 +297,6 @@ void InoDebugger::mapFlashToSource()
         }
     }
     flashToLine.close();
-    flashToLine.waitForFinished();
 }
 
 #include "moc_inodebugger.cpp"

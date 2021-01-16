@@ -41,6 +41,8 @@ OutPanelText::OutPanelText( QWidget* parent )
     setFont(font);
 
     setMaximumBlockCount( 1000 );
+
+    setReadOnly(true);
 }
 OutPanelText::~OutPanelText(){}
 
@@ -67,16 +69,13 @@ void OutPanelText::step()
         text = text.right( 50000 );
         text.append( m_text );
         setPlainText( text );
-
-        QTextCursor* newCursor = new QTextCursor( document() );
-        newCursor->movePosition( QTextCursor::End );
-        this->setTextCursor( *newCursor );
     }
     else
     {
+        moveCursor( QTextCursor::End );
         insertPlainText( m_text );
-        ensureCursorVisible();
     }
+    moveCursor( QTextCursor::End );
     m_text = "";
 }
 
