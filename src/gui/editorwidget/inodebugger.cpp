@@ -131,7 +131,7 @@ int InoDebugger::compile()
 
     QProcess getSkBook( this );  // Get sketchBook Path
     getSkBook.start( command );
-    getSkBook.waitForFinished( 4000 );
+    getSkBook.waitForFinished();
     QString sketchBook = getSkBook.readAllStandardOutput();
     sketchBook = sketchBook.remove("\r").remove("\n");
     getSkBook.close();
@@ -244,8 +244,8 @@ void InoDebugger::mapFlashToSource()
     
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
     QString elfPath = buildPath+"/build/"+m_fileName+".ino.elf";
-    QString avrSize = m_compilerPath+"hardware/tools/avr/bin/avr-size ";
-    QString addr2li = m_compilerPath+"hardware/tools/avr/bin/avr-addr2line -e ";
+    QString avrSize = m_compilerPath+"hardware/tools/avr/bin/avr-size";
+    QString addr2li = m_compilerPath+"hardware/tools/avr/bin/avr-addr2line";
 
     #ifndef Q_OS_UNIX
     avrSize = addQuotes( avrSize );
@@ -254,17 +254,21 @@ void InoDebugger::mapFlashToSource()
     #endif
 
     QProcess getSize( this );  // Get Firmware size
-    getSize.start( avrSize + elfPath );
-    getSize.waitForFinished( 1000 );
+    getSize.start( avrSize + " " + elfPath );
+    getSize.waitForFinished();
     QString lines = getSize.readAllStandardOutput();
     getSize.close();
-    QString size = lines.split("\n").at(1).split("\t").takeFirst().remove(" ");
     bool ok = false;
-    int flashSize = size.toInt( &ok );
+    int flashSize;
+    if( !lines.isEmpty() )
+    {
+        QString size = lines.split("\n").at(1).split("\t").takeFirst().remove(" ");
+        flashSize = size.toInt( &ok );
+    }
     if( !ok ) flashSize = 35000;
 
     QProcess flashToLine( this );
-    flashToLine.start( addr2li + elfPath );
+    flashToLine.start( addr2li + " -e " + elfPath );
     bool started = flashToLine.waitForStarted( 1000 );
     if( !started ) return;
 
@@ -277,20 +281,21 @@ void InoDebugger::mapFlashToSource()
         if( !ready ) break;
 
         QString p_stdout = flashToLine.readLine();
-        QStringList data = p_stdout.split(":");
-        QString fileName = QFileInfo( data.takeFirst() ).fileName();
+        int idx = p_stdout.lastIndexOf( ":" );
+        if( idx == -1 ) continue;
 
+        QString fileName = QFileInfo( p_stdout.left( idx ) ).fileName();
         if( m_fileList.contains( fileName ) )
         {
             bool ok = false;
-            int inoLineNum = data.takeFirst().toInt( &ok );
+            int inoLineNum = p_stdout.mid( idx+1 ).toInt( &ok );
             if( !ok ) continue;
             m_flashToSource[ flashAddr ]  = inoLineNum;
             m_sourceToFlash[ inoLineNum ] = flashAddr;
         }
     }
     flashToLine.close();
-    flashToLine.waitForFinished( 1000 );
+    flashToLine.waitForFinished();
 }
 
 #include "moc_inodebugger.cpp"
