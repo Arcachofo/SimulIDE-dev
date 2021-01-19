@@ -28,6 +28,8 @@ class MAINMODULE_EXPORT TextComponent : public Component
 
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem *libraryItem();
+
+        virtual QList<propGroup_t> propGroups() override;
  
         int  margin();
         void setMargin( int margin );

@@ -42,6 +42,8 @@ class MAINMODULE_EXPORT Tunnel : public Component, public eElement
 
         QRectF boundingRect() const;
 
+        virtual QList<propGroup_t> propGroups() override;
+
         QString name() { return m_name; }
         void setName( QString name );
 

@@ -31,7 +31,6 @@ class MAINMODULE_EXPORT Stepper : public Component, public eElement
     Q_OBJECT
     Q_PROPERTY( int     Steps      READ steps WRITE setSteps DESIGNABLE true USER true )
     Q_PROPERTY( double  Resistance READ res   WRITE setRes   DESIGNABLE true USER true )
-    Q_PROPERTY( QString Unit       READ unit  WRITE setUnit  DESIGNABLE true USER true )
     Q_PROPERTY( bool    Bipolar    READ bipolar  WRITE setBipolar  DESIGNABLE true USER true )
     
     public:
@@ -41,6 +40,8 @@ class MAINMODULE_EXPORT Stepper : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         int steps();
         void setSteps( int steps ); //" 4, 8,16,32"
         

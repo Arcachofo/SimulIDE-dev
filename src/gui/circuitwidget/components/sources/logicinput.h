@@ -30,8 +30,6 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( double   Voltage   READ volt    WRITE setVolt    DESIGNABLE true USER true )
-    Q_PROPERTY( QString  Unit      READ unit    WRITE setUnit    DESIGNABLE true USER true )
-    Q_PROPERTY( bool     Show_Volt READ showVal WRITE setShowVal DESIGNABLE true USER true )
     Q_PROPERTY( bool     Out       READ out     WRITE setOut     DESIGNABLE true)
 
     public:
@@ -41,13 +39,15 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         bool out() { return m_out->out(); }
         void setOut( bool out );
 
         double volt();
         void setVolt( double v );
         
-        void setUnit( QString un );
+        virtual void setUnit( QString un ) override;
 
         virtual void stamp() override;
         virtual void updateStep() override;
@@ -60,6 +60,8 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eElement
         virtual void onbuttonclicked();
 
     protected:
+        void updateOutput();
+
         double m_voltHight;
 
         Pin*     m_outpin;

@@ -30,7 +30,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT AndGate : public Gate
 {
     Q_OBJECT
-    Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
+    Q_PROPERTY( int Num_Inputs READ numInps WRITE setNumInps DESIGNABLE true USER true )
 
     public:
 
@@ -40,6 +40,8 @@ class MAINMODULE_EXPORT AndGate : public Gate
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 };

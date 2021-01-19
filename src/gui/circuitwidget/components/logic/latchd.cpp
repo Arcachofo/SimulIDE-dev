@@ -65,6 +65,20 @@ LatchD::LatchD( QObject* parent, QString type, QString id )
 }
 LatchD::~LatchD(){}
 
+QList<propGroup_t> LatchD::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+
+    mainGroup.propList.append( {"Tristate", tr("Tristate"),""} );
+    mainGroup.propList.append( {"Inverted", tr("Invert Outputs"),""} );
+    mainGroup.propList.append( {"Channels", tr("Size"),"Channels"} );
+    mainGroup.propList.append( {"Trigger", tr("Trigger Type"),"enum"} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
 void LatchD::createLatches( int n )
 {
     int chans = m_channels + n;

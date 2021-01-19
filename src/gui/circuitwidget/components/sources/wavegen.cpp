@@ -60,6 +60,25 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
 }
 WaveGen::~WaveGen(){}
 
+QList<propGroup_t> WaveGen::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Wave_Type", tr("Wave Type"),"enum"} );
+    mainGroup.propList.append( {"Freq", tr("Frequency"),"Hz"} );
+    mainGroup.propList.append( {"Duty", tr("Duty"),"\%"} );
+    mainGroup.propList.append( {"Always_On", tr("Always On"),""} );
+
+    propGroup_t elecGroup { tr("Electric") };
+    elecGroup.propList.append( {"Voltage", tr("Amplitude"),"main"} );
+    elecGroup.propList.append( {"Volt_Base", tr("Base Voltage"),"V"} );
+
+    propGroup_t timeGroup { tr("Edges") };
+    timeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
+    timeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
+
+    return {mainGroup, elecGroup, timeGroup};
+}
+
 void WaveGen::runEvent()
 {
     m_time = fmod( Simulator::self()->circTime(), m_fstepsPC );

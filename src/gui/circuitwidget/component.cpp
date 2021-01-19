@@ -28,6 +28,8 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
+#include "propdialog.h"
+
 #include <math.h>
 
 int Component::m_error = 0;
@@ -43,7 +45,7 @@ static const char* Component_properties[] = {
 Component::Component( QObject* parent, QString type, QString id )
          : QObject( parent )
          , QGraphicsItem()
-         , multUnits( "TGMk munp" )
+         , multUnits( "TGMk mµnp" )
 {
     Q_UNUSED( Component_properties );
     //setCacheMode(QGraphicsItem::DeviceCoordinateCache);
@@ -66,6 +68,8 @@ Component::Component( QObject* parent, QString type, QString id )
     m_graphical  = false;
     m_mainComp   = false;
     m_BackGround = "";
+
+    m_propDialog = NULL;
 
     m_boardPos = QPointF( -1e6, -1e6 );
     m_boardRot = -1e6;
@@ -296,6 +300,12 @@ void Component::slotRemove()
 
 void Component::remove()
 {
+    if( m_propDialog )
+    {
+        m_propDialog->setParent( NULL );
+        m_propDialog->close();
+        m_propDialog->deleteLater();
+    }
     if( m_properties )
     {
         m_propertiesW->properties()->removeObject( this );
@@ -319,7 +329,14 @@ void Component::remove()
 
 void Component::slotProperties()
 {
-    if( m_properties ) m_propertiesW->show();
+    if( !m_propDialog )
+    {
+        m_propDialog = new PropDialog( CircuitWidget::self() );
+        m_propDialog->setComponent( this );
+    }
+    m_propDialog->show();
+
+    /*if( m_properties ) m_propertiesW->show();
     else
     {
         if(( m_help == "" )&&( m_type != "Connector" )&&( m_type != "Node" ))
@@ -342,7 +359,7 @@ void Component::slotProperties()
         m_propertiesW->move( p.x()+p2.x(), p.y()+p2.y());
 
         m_properties = true;
-    }
+    }*/
 }
 
 void Component::H_flip()

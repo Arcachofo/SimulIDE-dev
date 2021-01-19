@@ -40,6 +40,8 @@ class MAINMODULE_EXPORT SubPackage : public Chip
     static Component* construct( QObject* parent, QString type, QString id );
     static LibraryItem *libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         int width();
         void setWidth( int width );
         

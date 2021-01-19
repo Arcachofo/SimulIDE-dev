@@ -34,6 +34,8 @@ class MAINMODULE_EXPORT Led : public LedBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
     protected:
         void drawBackground( QPainter *p );
         void drawForeground( QPainter *p );

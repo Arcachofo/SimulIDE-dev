@@ -32,7 +32,7 @@ eLogicDevice::eLogicDevice( QString id )
     m_outHighV   = 5;
     m_outLowV    = 0;
 
-    m_inputImp = high_imp;
+    m_inputImp = 1e9;
     m_outImp   = 40;
 
     m_invInputs = false;
@@ -308,11 +308,9 @@ void eLogicDevice::setInputImp( double imp )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_inputImp = imp;
-
     for( int i=0; i<m_numInputs; ++i )
-    {
         m_input[i]->setImp( imp );
-    }
+
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 

@@ -76,6 +76,14 @@ WS2812::~WS2812()
     Simulator::self()->remFromUpdateList( this );
 }
 
+QList<propGroup_t> WS2812::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Rows", tr("Rows"),""} );
+    mainGroup.propList.append( {"Cols", tr("Columns"),""} );
+    return {mainGroup};
+}
+
 void WS2812::updateStep()
 {
     update();

@@ -19,6 +19,7 @@
 
 #include "connector.h"
 #include "battery.h"
+#include "simulator.h"
 #include "itemlibrary.h"
 #include "pin.h"
 
@@ -41,6 +42,8 @@ Battery::Battery( QObject* parent, QString type, QString id )
 {
     m_area = QRect( -10, -10, 20, 20 );
 
+    m_unit = "V";
+
     m_pin.resize( 2 );
 
     m_pin[0] = new Pin( 180, QPoint(-16, 0 ), id+"-Pin0", 0, this);
@@ -55,11 +58,38 @@ Battery::Battery( QObject* parent, QString type, QString id )
 }
 Battery::~Battery() {}
 
+QList<propGroup_t> Battery::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Voltage", tr("Voltage"),"main"} );
+    return {mainGroup};
+}
+
+double Battery::volt()
+{
+    return m_value;
+}
+
 void Battery::setVolt( double volt )
 {
-    m_valLabel->setPlainText( QString::number(volt)+" V" );
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim )  Simulator::self()->pauseSim();
 
-    eBattery::setVolt( volt );
+    Component::setValue( volt );       // Takes care about units multiplier
+    eBattery::setVolt(  m_value*m_unitMult  );
+
+    if( pauseSim ) Simulator::self()->resumeSim();
+}
+
+void Battery::setUnit( QString un )
+{
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim )  Simulator::self()->pauseSim();
+
+    Component::setUnit( un );
+    eBattery::setVolt( m_value*m_unitMult );
+
+    if( pauseSim ) Simulator::self()->resumeSim();
 }
 
 void Battery::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

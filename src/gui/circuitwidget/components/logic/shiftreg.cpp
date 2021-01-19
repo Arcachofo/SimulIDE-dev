@@ -76,4 +76,15 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
 }
 ShiftReg::~ShiftReg(){}
 
+QList<propGroup_t> ShiftReg::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
+    mainGroup.propList.append( {"Reset_Inverted", tr("Reset Inverted"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
 #include "moc_shiftreg.cpp"

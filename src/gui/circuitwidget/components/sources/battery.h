@@ -28,8 +28,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT Battery : public Component, public eBattery
 {
     Q_OBJECT
-    Q_PROPERTY( double Volts     READ volt    WRITE setVolt DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Show_Volt READ showVal WRITE setShowVal DESIGNABLE true USER true )
+    Q_PROPERTY( double Voltage READ volt WRITE setVolt DESIGNABLE true USER true )
 
     public:
         Battery( QObject* parent, QString type, QString id );
@@ -38,7 +37,11 @@ class MAINMODULE_EXPORT Battery : public Component, public eBattery
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        virtual void setVolt( double volt );
+        virtual QList<propGroup_t> propGroups() override;
+
+        virtual double volt() override;
+        virtual void setVolt( double volt ) override;
+        virtual void setUnit( QString un ) override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 

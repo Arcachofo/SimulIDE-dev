@@ -75,6 +75,18 @@ FlipFlopD::FlipFlopD( QObject* parent, QString type, QString id )
 }
 FlipFlopD::~FlipFlopD(){}
 
+QList<propGroup_t> FlipFlopD::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
+    mainGroup.propList.append( {"S_R_Inverted", tr("Set / Reset Inverted"),""} );
+    mainGroup.propList.append( {"Trigger", tr("Trigger Type"),"enum"} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
 void FlipFlopD::setTrigger( Trigger trigger )
 {
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();

@@ -84,8 +84,14 @@ LogicInput::LogicInput( QObject* parent, QString type, QString id )
     connect( m_button, SIGNAL( clicked() ),
              this,     SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
 }
-
 LogicInput::~LogicInput()  {}
+
+QList<propGroup_t> LogicInput::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Voltage", tr("Voltage"),"main"} );
+    return {mainGroup};
+}
 
 void LogicInput::stamp()
 {
@@ -111,7 +117,6 @@ void LogicInput::onbuttonclicked()
 {
     m_out->setOut( m_button->isChecked() );
     m_changed = true;
-    //qDebug() << "LogicInput::onbuttonclicked" ;
     update();
 }
 
@@ -122,19 +127,32 @@ double LogicInput::volt()
 
 void LogicInput::setVolt( double v )
 {
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim )  Simulator::self()->pauseSim();
+
     Component::setValue( v );       // Takes care about units multiplier
-    m_voltHight = m_value*m_unitMult;
-    m_out->setVoltHigh( m_voltHight );
-    m_changed = true;
-    //update();
+    updateOutput();
+
+    if( pauseSim ) Simulator::self()->resumeSim();
 }
 
 void LogicInput::setUnit( QString un ) 
 {
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim )  Simulator::self()->pauseSim();
+
     Component::setUnit( un );
+    updateOutput();
+
+    if( pauseSim ) Simulator::self()->resumeSim();
+}
+
+void LogicInput::updateOutput()
+{
     m_voltHight = m_value*m_unitMult;
     m_out->setVoltHigh( m_voltHight );
     m_changed = true;
+    Simulator::self()->addEvent( 1, NULL );
 }
 
 void LogicInput::setOut( bool out )

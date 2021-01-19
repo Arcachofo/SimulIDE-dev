@@ -73,6 +73,30 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
 }
 Oscope::~Oscope() {}
 
+QList<propGroup_t> Oscope::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Filter", tr("Filter"),"V"} );
+
+    propGroup_t sizeGroup { tr("Screen") };
+    sizeGroup.propList.append( {"", tr("Baisc Mode:"),""} );
+    sizeGroup.propList.append( {"Basic_X", tr("Size X"),"Pixels"} );
+    sizeGroup.propList.append( {"Basic_Y", tr("Size Y"),"Pixels"} );
+    sizeGroup.propList.append( {"", tr("Expanded Mode:"),""} );
+    sizeGroup.propList.append( {"Expand_X", tr("Size X"),"Pixels"} );
+    sizeGroup.propList.append( {"Expand_Y", tr("Size Y"),"Pixels"} );
+
+    propGroup_t logGroup { tr("One Shot") };
+    logGroup.propList.append( {"Data_Log", tr("Active (pauses simulation at trigger)"),""} );
+    logGroup.propList.append( {"Log_us", tr("Log Size"),"µs"} );
+    logGroup.propList.append( {"", tr("Conditions:"),""} );
+    logGroup.propList.append( {"CH1_Cond", tr("Channel 1"),"enum"} );
+    logGroup.propList.append( {"CH2_Cond", tr("Channel 2"),"enum"} );
+    logGroup.propList.append( {"REF_Cond", tr("Ref. Pin"),"enum"} );
+
+    return {mainGroup, sizeGroup, logGroup};
+}
+
 void Oscope::updateStep()
 {
     uint64_t period = 0;

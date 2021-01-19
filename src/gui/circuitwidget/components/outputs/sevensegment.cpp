@@ -92,6 +92,22 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
 }
 SevenSegment::~SevenSegment() { }
 
+QList<propGroup_t> SevenSegment::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Vertical_Pins", tr("Vertical Pins"),""} );
+    mainGroup.propList.append( {"NumDisplays", tr("Size"),"Displays"} );
+    mainGroup.propList.append( {"Color", tr("Color"),"enum"} );
+
+    propGroup_t elecGroup { tr("Electric") };
+    elecGroup.propList.append( {"CommonCathode", tr("Common Cathode"),""} );
+    elecGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
+    elecGroup.propList.append( {"MaxCurrent", tr("Max Current"),"A"} );
+    elecGroup.propList.append( {"Resistance", tr("Resistance"),"Ω"} );
+
+    return {mainGroup, elecGroup};
+}
+
 int SevenSegment::numDisplays()
 {
     return m_numDisplays;

@@ -24,12 +24,11 @@
 #include "component.h"
 #include "dialwidget.h"
 
-
 class MAINMODULE_EXPORT VarResBase : public Component, public eResistor
 {
     Q_OBJECT
-    Q_PROPERTY( double Value_Ohm READ ValRes WRITE setValRes DESIGNABLE true USER true )
-    Q_PROPERTY( double Dial_Step READ getStep  WRITE setStep DESIGNABLE true USER true )
+    Q_PROPERTY( double Value_Ohm READ ValRes   WRITE setValRes DESIGNABLE true USER true )
+    Q_PROPERTY( double Dial_Step READ getStep  WRITE setStep   DESIGNABLE true USER true )
 
     public:
         VarResBase( QObject* parent, QString type, QString id );

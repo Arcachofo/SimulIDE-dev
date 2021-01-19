@@ -77,6 +77,16 @@ Demux::Demux( QObject* parent, QString type, QString id )
 }
 Demux::~Demux(){}
 
+QList<propGroup_t> Demux::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Inverted", tr("Invert Outputs"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
 QPainterPath Demux::shape() const
 {
     QPainterPath path;

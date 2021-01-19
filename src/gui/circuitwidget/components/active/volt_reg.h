@@ -29,7 +29,7 @@
 class MAINMODULE_EXPORT VoltReg : public Component, public eVoltReg
 {
     Q_OBJECT
-    Q_PROPERTY( double Volts READ vRef  WRITE setVRef DESIGNABLE true USER true )
+    Q_PROPERTY( double Voltage READ vRef WRITE setVRef DESIGNABLE true USER true )
     
     public:
 
@@ -38,8 +38,12 @@ class MAINMODULE_EXPORT VoltReg : public Component, public eVoltReg
         
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem *libraryItem();
-        
-        virtual void setVRef( double vref );
+
+        virtual QList<propGroup_t> propGroups() override;
+
+        virtual double vRef() override;
+        virtual void setVRef( double vref ) override;
+        virtual void setUnit( QString un ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 };

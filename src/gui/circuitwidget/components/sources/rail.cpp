@@ -62,29 +62,48 @@ Rail::Rail( QObject* parent, QString type, QString id )
     
     setLabelPos(-16,-24, 0);
 }
+Rail::~Rail() {}
 
-Rail::~Rail() 
+QList<propGroup_t> Rail::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Voltage", tr("Voltage"),"main"} );
+    return {mainGroup};
 }
 
-void Rail::runEvent()
+double Rail::volt()
 {
-    m_out->stampOutput();
+    return m_value;
 }
 
 void Rail::setVolt( double v )
 {
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim )  Simulator::self()->pauseSim();
+
     Component::setValue( v );       // Takes care about units multiplier
-    m_voltHight = m_value*m_unitMult;
-    m_out->setVoltHigh( m_voltHight );
-    Simulator::self()->addEvent( 1, this );
-    //update();
+    updateOutput();
+
+    if( pauseSim ) Simulator::self()->resumeSim();
 }
 
 void Rail::setUnit( QString un ) 
 {
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim )  Simulator::self()->pauseSim();
+
     Component::setUnit( un );
-    setVolt( m_value*m_unitMult );
+    updateOutput();
+
+    if( pauseSim ) Simulator::self()->resumeSim();
+}
+
+void Rail::updateOutput()
+{
+    m_voltHight = m_value*m_unitMult;
+    m_out->setVoltHigh( m_voltHight );
+    m_out->stampOutput();
+    Simulator::self()->addEvent( 1, NULL );
 }
 
 void Rail::remove()

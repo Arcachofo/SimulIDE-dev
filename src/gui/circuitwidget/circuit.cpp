@@ -692,63 +692,59 @@ Component* Circuit::createItem( QString type, QString id, QString objNam )
     return 0l;
 }
 
-void Circuit::loadProperties( QDomElement element, Component* Item )
+void Circuit::loadProperties( QDomElement element, Component* comp )
 {
-    loadObjectProperties( element, Item );
+    loadObjectProperties( element, comp );
     
-    Item->setLabelPos();
-    Item->setValLabelPos();
-    addItem( Item );
+    comp->setLabelPos();
+    comp->setValLabelPos();
+    addItem( comp );
 
-    int number = Item->objectName().split("-").last().toInt();
+    int number = comp->objectName().split("-").last().toInt();
     if ( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
 }
 
-void Circuit::loadObjectProperties( QDomElement element, QObject* Item )
+void Circuit::loadObjectProperties( QDomElement element, Component* comp )
 {
-    QHash<QString, QString> atrMap;          // Make properties case insentive
     QDomNamedNodeMap atrs = element.attributes();
 
-    for( int i=0; i<atrs.length(); i++ )   // Get List of property names in Circuit file
+    for( int i=0; i<atrs.length(); ++i )   // Get List of property names in Circuit file
     {
-        QString attrib = atrs.item( i ).nodeName();
-        atrMap[attrib.toLower()] = attrib;
-        //qDebug() << "Circuit::loadObjectProperties" << attrib;
-    }
+        QString propName = atrs.item( i ).nodeName();
+        QVariant value( element.attribute( propName ) );
 
-    const QMetaObject* metaobject = Item->metaObject();
-    int count = metaobject->propertyCount();
-    
-    for( int i=0; i<count; ++i )
-    {
-        QMetaProperty metaproperty = metaobject->property(i);
-        const char* chName = metaproperty.name();
-        QString n = chName;
-        QString lowN = n.toLower();
-        //qDebug() << "Circuit::loadObjectProperties.....";
-        //qDebug() << "Circuit::loadObjectProperties" << n << chName;
+        // SUBSTITUTIONS -------------------------------------------------------
 
-        if( !atrMap.contains( lowN )) continue;
+        if( propName == "Volts") propName = "Voltage";
 
-        n = atrMap.value( lowN );                 // Take actual property name in Circuit file
-        //qDebug() << "Circuit::loadObjectProperties" << n;
-        QVariant value( element.attribute( n ) );
-        
-        if     ( metaproperty.type() == QVariant::Int    ) Item->setProperty( chName, value.toInt() );
-        else if( metaproperty.type() == QVariant::Double ) Item->setProperty( chName, value.toDouble() );
-        else if( metaproperty.type() == QVariant::PointF )
+
+        const char* chName = propName.toStdString().c_str();
+        QString lowN = propName.toLower();
+
+        QVariant comProp = comp->property( chName );
+        if( !value.isValid()
+         || !comProp.isValid() )
         {
-            QStringList coord = element.attribute( n ).split(",");
+            //qDebug() << "loadObjectProperties Wrong Property: " << propName<<chName;
+            continue;
+        }
+        QVariant::Type type = comProp.type();
+        
+        if     ( type == QVariant::Int    ) comp->setProperty( chName, value.toInt() );
+        else if( type == QVariant::Double ) comp->setProperty( chName, value.toDouble() );
+        else if( type == QVariant::Bool   ) comp->setProperty( chName, value.toBool() );
+        else if( type == QVariant::PointF )
+        {
+            QStringList coord = value.toString().split(",");
             qreal x = coord.takeFirst().toDouble();
             qreal y = coord.takeFirst().toDouble();
             //qDebug() << "Circuit::loadObjectProperties" <<element.attribute( n )<< n << QPointF( x, y )<<coord;
-            Item->setProperty( chName, QPointF( x, y ) );
+            comp->setProperty( chName, QPointF( x, y ) );
         }
-        else if( metaproperty.type() == QVariant::Bool   ) Item->setProperty( chName, value.toBool() );
-        else if( metaproperty.type() == QVariant::StringList )
+        else if( type == QVariant::StringList )
         {
             QStringList list= value.toString().split(",");
-            Item->setProperty( chName, list );
+            comp->setProperty( chName, list );
         }
         else if( (lowN=="mem") || (lowN=="eeprom") )
         {
@@ -763,9 +759,9 @@ void Circuit::loadObjectProperties( QDomElement element, QObject* Item )
             for( int x=0; x<lsize; x++ ) vmem[x] = list.at(x).toInt();
 
             QVariant value = QVariant::fromValue( vmem );
-            Item->setProperty( chName, value );
+            comp->setProperty( chName, value );
         }
-        else Item->setProperty( chName, value );
+        else comp->setProperty( chName, value );
         //else qDebug() << "    ERROR!!! Circuit::loadObjectProperties\n  unknown type:  "<<"name "<<name<<"   value "<<value ;
     }
 }
@@ -806,9 +802,11 @@ void Circuit::removeComp( Component* comp )
     comp->remove();
     if( !m_compRemoved ) return;
 
-    compList()->removeOne( comp );
-    if( items().contains( comp ) ) removeItem( comp );
-
+    if( m_compList.contains( comp ) )
+    {
+        removeItem( comp );
+        m_compList.removeOne( comp );
+    }
     delete comp;
 }
 

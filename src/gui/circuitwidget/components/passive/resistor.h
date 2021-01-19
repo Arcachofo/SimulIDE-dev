@@ -29,8 +29,6 @@ class MAINMODULE_EXPORT Resistor : public Component, public eResistor
 {
     Q_OBJECT
     Q_PROPERTY( double Resistance READ resist   WRITE setResist  DESIGNABLE true USER true )
-    Q_PROPERTY( QString  Unit     READ unit     WRITE setUnit    DESIGNABLE true USER true )
-    Q_PROPERTY( bool     Show_res READ showVal  WRITE setShowVal DESIGNABLE true USER true )
 
     public:
         Resistor( QObject* parent, QString type, QString id );
@@ -38,6 +36,8 @@ class MAINMODULE_EXPORT Resistor : public Component, public eResistor
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
+
+        virtual QList<propGroup_t> propGroups() override;
 
         double resist();
         void setResist( double r );

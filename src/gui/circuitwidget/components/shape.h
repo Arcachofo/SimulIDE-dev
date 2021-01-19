@@ -42,6 +42,8 @@ class MAINMODULE_EXPORT Shape : public Component
             return QRectF( m_area.x()-m_border/2-1, m_area.y()-m_border/2-1, 
                            m_area.width()+m_border+2, m_area.height()+m_border+2 ); 
         }
+
+        virtual QList<propGroup_t> propGroups() override;
         
         int hSize();
         void setHSize( int size );

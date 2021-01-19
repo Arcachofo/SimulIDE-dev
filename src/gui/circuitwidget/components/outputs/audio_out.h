@@ -39,6 +39,8 @@ class AudioOut : public Component, public eResistor
     static Component* construct( QObject* parent, QString type, QString id );
     static LibraryItem *libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         bool buzzer() { return m_buzzer; }
         void setBuzzer( bool buz ) { m_buzzer = buz; }
 

@@ -58,7 +58,6 @@ FullAdder::FullAdder(QObject *parent, QString type, QString id)
     for( int i=0; i<m_numInPins; ++i )  eLogicDevice::createInput( m_inPin[i] );
     for( int i=0; i<m_numOutPins; ++i ) eLogicDevice::createOutput( m_outPin[i] );
 }
-
 FullAdder::~FullAdder(){}
 
 #include "moc_fulladder.cpp"

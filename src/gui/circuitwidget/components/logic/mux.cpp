@@ -79,6 +79,16 @@ Mux::Mux( QObject* parent, QString type, QString id )
 }
 Mux::~Mux(){}
 
+QList<propGroup_t> Mux::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Invert_Inputs", tr("Invert Inputs"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
 void Mux::setInvertInps( bool invert )
 {
     m_invInputs = invert;

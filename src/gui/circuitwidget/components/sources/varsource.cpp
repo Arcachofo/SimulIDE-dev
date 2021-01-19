@@ -60,7 +60,7 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
     m_out = 0l;
 
     setValLabelPos( -8, 30 , 0 ); // x, y, rot
-    setLabelPos(-40,-80, 0);
+    setLabelPos(-32,-48, 0);
     setShowVal( true );
 
     Simulator::self()->addToUpdateList( this );

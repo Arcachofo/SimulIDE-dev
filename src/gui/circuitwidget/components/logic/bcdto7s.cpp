@@ -77,6 +77,16 @@ BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
 }
 BcdTo7S::~BcdTo7S(){}
 
+QList<propGroup_t> BcdTo7S::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Inverted", tr("Invert Outputs"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
 void BcdTo7S::stamp()
 {
     eBcdTo7S::stamp();

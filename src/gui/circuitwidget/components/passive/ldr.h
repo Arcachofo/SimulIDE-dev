@@ -40,6 +40,8 @@ class MAINMODULE_EXPORT Ldr : public VarResBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         int r1() { return m_r1; }
         void setR1( int r1 );
 

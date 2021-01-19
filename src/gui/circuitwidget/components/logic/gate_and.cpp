@@ -41,6 +41,13 @@ AndGate::AndGate( QObject* parent, QString type, QString id )
 }
 AndGate::~AndGate(){}
 
+QList<propGroup_t> AndGate::propGroups()
+{
+    QList<propGroup_t> pg = Gate::propGroups();
+    pg.first().propList.append( {"Num_Inputs", tr("Input Size"),"Inputs"} );
+    return pg;
+}
+
 QPainterPath AndGate::shape() const
 {
     QPainterPath path;

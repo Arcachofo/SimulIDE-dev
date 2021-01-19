@@ -86,7 +86,7 @@ void VarResBase::initialize()
     m_changed = true;
 }
 
-void VarResBase::dialChanged(int val ) // Called when dial is rotated
+void VarResBase::dialChanged( int val ) // Called when dial is rotated
 {
     //qDebug() <<"VarResBase::dialChanged"<< res << m_resist;
     setVal( val );
@@ -116,9 +116,9 @@ void VarResBase::setVal( int val )
     else if( val < min ) val = min;
     else val = round(val/(double)m_step)*(double)m_step;
 
-    m_value = val;
+    Component::setValue( val );       // Takes care about units multiplier
     m_dial->setValue( val );
-    m_valLabel->setPlainText( QString::number(m_value)+" "+m_unit );
+    //m_valLabel->setPlainText( QString::number(m_value)+" "+m_unit );
     m_changed = true;
 }
 

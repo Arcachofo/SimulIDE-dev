@@ -78,6 +78,16 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
 }
 I2CToParallel::~I2CToParallel(){}
 
+QList<propGroup_t> I2CToParallel::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Control_Code", tr("Control_Code"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
 void I2CToParallel::stamp()                     // Called at Simulation Start
 {
     eI2C::stamp();

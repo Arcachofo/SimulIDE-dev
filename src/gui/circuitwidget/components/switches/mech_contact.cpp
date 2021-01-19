@@ -231,6 +231,7 @@ void MechContact::setNClose( bool nc )
 {
     m_nClose = nc;
     setSwitch( m_nClose );
+    update();
 }
 
 

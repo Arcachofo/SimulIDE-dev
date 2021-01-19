@@ -34,17 +34,20 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public eI2C
     Q_OBJECT
     //Q_PROPERTY( bool CS_Active_Low   READ csActLow    WRITE setCsActLow   DESIGNABLE true USER true )
     Q_PROPERTY( dispColor Color READ color WRITE setColor DESIGNABLE true USER true )
-    Q_ENUMS( dispColor )
+
     
     public:
         Ssd1306( QObject* parent, QString type, QString id );
         ~Ssd1306();
+
+        virtual QList<propGroup_t> propGroups() override;
 
         enum dispColor {
             White = 0,
             Blue,
             Yellow
         };
+        Q_ENUM( dispColor )
 
         void setColor( dispColor color );
         dispColor color() { return m_dColor; }

@@ -95,8 +95,18 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     
     setPowerPins( false );
 }
-OpAmp::~OpAmp()
+OpAmp::~OpAmp(){}
+
+QList<propGroup_t> OpAmp::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Gain", tr("Gain"),""} );
+
+    propGroup_t supGroup { tr("Supply") };
+    supGroup.propList.append( {"Volt_Pos", tr("V+"),"V"} );
+    supGroup.propList.append( {"Volt_Neg", tr("V-"),"V"} );
+    supGroup.propList.append( {"Power_Pins", tr("Supply Pins"),""} );
+    return {mainGroup, supGroup};
 }
 
 void OpAmp::setPowerPins( bool set )

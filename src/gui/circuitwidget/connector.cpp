@@ -342,54 +342,37 @@ void Connector::remLines()
 
 void Connector::move( QPointF delta )
 {
-    //qDebug() << "Connector::move ..........................";
     if( Circuit::self()->pasting() )
     {
         for( ConnectorLine* line : m_conLineList )
             line->move( delta );
-
-        //return;
     }
-    //else
-    //remNullLines();
-    //Component::move( delta );
 }
 
 void Connector::setSelected(  bool selected )
 {
-    //qDebug() <<"\nConnector::setSelected"<<selected;
-    for( ConnectorLine* line : m_conLineList )
-    {
-        line->setSelected( selected );
-        //qDebug() << line->isSelected();
-    }
-
+    for( ConnectorLine* line : m_conLineList ) line->setSelected( selected );
     Component::setSelected( selected );
 }
 
 void Connector::setVisib(  bool vis )
 {
-    //qDebug() <<"\nConnector::setSelected"<<selected;
-    for( ConnectorLine* line : m_conLineList )
-    {
-        line->setVisible( vis );
-        //qDebug() << line->isSelected();
-    }
-
+    for( ConnectorLine* line : m_conLineList ) line->setVisible( vis );
     this->setVisible( vis );
 }
 
 void Connector::remove()
 {
-    //qDebug() << "Connector::remove simulator running: " << Simulator::self()->isRunning();
-    //qDebug()<<"Connector::remove" << this->objectName();
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
     if( m_startPin ) m_startPin->reset();
     if( m_endPin )   m_endPin->reset();
 
-    Circuit::self()->conList()->removeOne( this );
-    Circuit::self()->removeItem( this );
+    if( Circuit::self()->conList()->contains( this ))
+    {
+        Circuit::self()->conList()->removeOne( this );
+        Circuit::self()->removeItem( this );
+    }
     remLines();
 }
 
@@ -512,16 +495,13 @@ void   Connector::setEnode( eNode* enode )
 
 double Connector::getVolt()
 {
-    //if( !m_eNode ) return 0;
     return m_startPin->getVolt();
 }
 
 QList<ConnectorLine*>* Connector::lineList() { return &m_conLineList; }
 
 void Connector::incActLine() 
-{ 
-    //qDebug() << "Connector::incActLine"<<  m_actLine << m_conLineList.size()-1;
-
+{
     if( m_actLine < m_conLineList.size()-1 ) m_actLine += 1;
 }
 

@@ -44,8 +44,15 @@ Push::Push( QObject* parent, QString type, QString id )
 
     SetupSwitches( 1, 1 );
 }
-Push::~Push()
+Push::~Push(){}
+
+QList<propGroup_t> Push::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Norm_Close", tr("Normally Closed"),""} );
+    mainGroup.propList.append( {"Poles", tr("Poles"),""} );
+    mainGroup.propList.append( {"Key", tr("Key"),""} );
+    return {mainGroup};
 }
 
 void Push::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

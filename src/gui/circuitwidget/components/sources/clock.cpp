@@ -42,6 +42,20 @@ Clock::Clock( QObject* parent, QString type, QString id )
 }
 Clock::~Clock(){}
 
+QList<propGroup_t> Clock::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Voltage",   tr("Voltage"),  "main"} );
+    mainGroup.propList.append( {"Freq",      tr("Frequency"),"Hz"} );
+    mainGroup.propList.append( {"Always_On", tr("Always On"),""} );
+
+    propGroup_t timeGroup { tr("Edges") };
+    timeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
+    timeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
+
+    return {mainGroup, timeGroup};
+}
+
 void Clock::runEvent()
 {
     m_out->setTimedOut( !m_out->out() );

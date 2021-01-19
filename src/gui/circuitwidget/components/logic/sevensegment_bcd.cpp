@@ -71,6 +71,8 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
 }
 SevenSegmentBCD::~SevenSegmentBCD(){}
 
+QList<propGroup_t> SevenSegmentBCD::propGroups(){ QList<propGroup_t> pg; return pg;}
+
 void SevenSegmentBCD::initialize()
 {
     m_digit = 16;

@@ -54,12 +54,9 @@ QVariant EnumProperty::value(int role /* = Qt::UserRole */) const {
             const QMetaObject* meta = m_propertyObject->metaObject();
             QMetaProperty prop = meta->property(meta->indexOfProperty(qPrintable(objectName())));
             return QVariant(prop.enumerator().valueToKey(index));
-        } else{
-            return QVariant();
         }
-    } else {
-        return Property::value(role);
-    }
+        else return QVariant();
+    } else  return Property::value(role);
 }
 
 QWidget* EnumProperty::createEditor(QWidget* parent, const QStyleOptionViewItem& option){
@@ -82,13 +79,11 @@ bool EnumProperty::setEditorData(QWidget *editor, const QVariant &data)
         QMetaProperty prop = meta->property(meta->indexOfProperty(qPrintable(objectName())));
         
         int index = combo->findText(prop.enumerator().valueToKey(value));
-        if(index == -1)
-            return false;
+        if(index == -1) return false;
 
         combo->setCurrentIndex(index);
-    } else {
-        return false;
     }
+    else return false;
 
     return true;
 }

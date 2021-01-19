@@ -39,6 +39,13 @@ AvrCompBase::AvrCompBase( QObject* parent, QString type, QString id )
 }
 AvrCompBase::~AvrCompBase() { }
 
+QList<propGroup_t> AvrCompBase::propGroups()
+{
+    QList<propGroup_t> pg = McuComponent::propGroups();
+    pg.first().propList.append( {"Init_gdb", tr("Init gdb server at restart"),""} );
+    return pg;
+}
+
 void AvrCompBase::attachPins()
 {;
     avr_t* cpu = m_avr.getCpu();

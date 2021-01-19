@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         virtual void remove() override;
 
         virtual void setLogicSymbol( bool ls );

@@ -103,8 +103,14 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     
     initialize();
 }
-
 Ks0108::~Ks0108(){}
+
+QList<propGroup_t> Ks0108::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"CS_Active_Low", tr("CS Active Low"),""} );
+    return {mainGroup};
+}
 
 void Ks0108::stamp()
 {

@@ -59,8 +59,25 @@ ADC::ADC( QObject* parent, QString type, QString id )
     m_inPin[0]->setLabelColor( QColor( 0, 0, 0 ) );
                           
     eLogicDevice::createInput( m_inPin[0] );
+
+    setLabelPos(-16,-80, 0);
+
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( property_t {"Vref", tr("Reference Voltage"),"V"} );
+    m_propGroups.append( mainGroup );
 }
-ADC::~ADC(){
+ADC::~ADC(){}
+
+QList<propGroup_t> ADC::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Num_Bits", tr("Size"),"Bits"} );
+    mainGroup.propList.append( {"Vref", tr("Reference Voltage"),"V"} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    for( int i=0;i<4; ++i ) pg.first().propList.removeFirst(); //remove Inputs.
+    pg.prepend( mainGroup );
+    return pg;
 }
 
 void ADC::setNumOuts( int outs )

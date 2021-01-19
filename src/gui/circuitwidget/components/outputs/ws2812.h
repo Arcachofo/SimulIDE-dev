@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT WS2812 : public Component, public eLogicDevice
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         int  rows();
         void setRows( int rows );
 

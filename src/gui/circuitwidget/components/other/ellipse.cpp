@@ -36,7 +36,6 @@ LibraryItem* Ellipse::libraryItem()
 Ellipse::Ellipse( QObject* parent, QString type, QString id )
        : Shape( parent, type, id )
 {
-
 }
 Ellipse::~Ellipse(){}
 

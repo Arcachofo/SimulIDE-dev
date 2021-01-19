@@ -51,8 +51,14 @@ CurrSource::CurrSource( QObject* parent, QString type, QString id )
     setValue( 1 );
     valueChanged( 0 );
 }
+CurrSource::~CurrSource(){}
 
-CurrSource::~CurrSource()  {}
+QList<propGroup_t> CurrSource::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Current", tr("Max. Current"),"main"} );
+    return {mainGroup};
+}
 
 void CurrSource::updateStep()
 {

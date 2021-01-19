@@ -43,10 +43,7 @@ Hd44780_Base::Hd44780_Base( QObject* parent, QString type, QString id )
     setLabelPos( 70,-82, 0);
     setShowId( true );
 }
-
-Hd44780_Base::~Hd44780_Base()
-{
-}
+Hd44780_Base::~Hd44780_Base(){}
 
 void Hd44780_Base::init()
 {

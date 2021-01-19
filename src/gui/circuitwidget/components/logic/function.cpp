@@ -51,10 +51,19 @@ Function::Function( QObject* parent, QString type, QString id )
     setNumOuts( 1 );
     
     setFunctions( "i0 | i1" );
-    
-    //Simulator::self()->addToUpdateList( this );
 }
-Function::~Function(){
+Function::~Function(){}
+
+QList<propGroup_t> Function::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Num_Inputs", tr("Input Size"),"Inputs"} );
+    mainGroup.propList.append( {"Num_Outputs", tr("Output Size"),"Outputs"} );
+    mainGroup.propList.append( {"Functions", tr("Functions"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
 }
 
 void Function::remove()

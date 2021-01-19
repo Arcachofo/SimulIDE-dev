@@ -62,6 +62,14 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
 }
 Tunnel::~Tunnel() { }
 
+QList<propGroup_t> Tunnel::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Name", tr("Name"),""} );
+    mainGroup.propList.append( {"Rotated", tr("Rotated"),""} );
+    return {mainGroup};
+}
+
 void Tunnel::setEnode( eNode* node )
 {
     if( !m_tunnels.contains( m_name )

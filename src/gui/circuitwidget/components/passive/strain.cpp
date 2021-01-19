@@ -21,7 +21,6 @@
  *   santigoro@gmail.com                                                   *
  *                                                                         */
 
-
 #include <iostream>
 
 #include "strain.h"
@@ -49,10 +48,9 @@ LibraryItem* Strain::libraryItem()
         Strain::construct );
 }
 
-Strain::Strain (QObject* parent, QString type, QString id)
+Strain::Strain( QObject* parent, QString type, QString id )
       : VarResBase( parent, type, id )
-
-  {
+{
     Q_UNUSED( Strain_properties );
     m_area = QRectF( -12,-20, 24, 24 );
 
@@ -61,9 +59,21 @@ Strain::Strain (QObject* parent, QString type, QString id)
     m_dial->setMinimum(0);
     m_dial->setMaximum(250);
     setVal( 0 );  // start at 0 °C
-  }
-
+}
 Strain::~Strain() { }
+
+QList<propGroup_t> Strain::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    //mainGroup.propList.append( {"Value_Ohm", tr("Current Value"),"main"} );
+    mainGroup.propList.append( {"Force_N", tr("Current Value"),"N"} );
+    mainGroup.propList.append( {"Min_Force_N", tr("Minimum Value"),"N"} );
+    mainGroup.propList.append( {"Max_Force_N", tr("Maximum Value"),"N"} );
+    mainGroup.propList.append( {"Dial_Step", tr("Dial Step"),"N"} );
+    mainGroup.propList.append( {"Ref_Temp", tr("Ref. Temperature"),"ºC"} );
+    mainGroup.propList.append( {"Temp", tr("Temperature"),"ºC"} );
+    return {mainGroup};
+}
 
 void Strain::initialize()
 {

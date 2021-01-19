@@ -54,8 +54,26 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
 
     m_trigPin = 0l;
 }
-LogicComponent::~LogicComponent()
+LogicComponent::~LogicComponent(){}
+
+QList<propGroup_t> LogicComponent::propGroups()
 {
+    propGroup_t elecGroup { tr("Electric") };
+    elecGroup.propList.append( {"", tr("Inputs:"),""} );
+    elecGroup.propList.append( {"Input_High_V", tr("Low to High Threshold"),"V"} );
+    elecGroup.propList.append( {"Input_Low_V", tr("High to Low Threshold"),"V"} );
+    elecGroup.propList.append( {"Input_Imped", tr("Input Impedance"),"Ω"} );
+    elecGroup.propList.append( {"", tr("Outputs:"),""} );
+    elecGroup.propList.append( {"Out_High_V", tr("Output High Voltage"),"V"} );
+    elecGroup.propList.append( {"Out_Low_V", tr("Output Low Voltage"),"V"} );
+    elecGroup.propList.append( {"Out_Imped", tr("Output Impedance"),"Ω"} );
+
+    propGroup_t edgeGroup { tr("Edges") };
+    edgeGroup.propList.append( {"Tpd_ps", tr("Propagation Delay"),"ps"} );
+    edgeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
+    edgeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
+
+    return {elecGroup, edgeGroup};
 }
 
 void LogicComponent::init( QStringList pins )
@@ -189,6 +207,7 @@ void LogicComponent::setNumOuts( int outPins )
     m_outPin.resize( outPins );
     
     m_numOutPins = outPins;
+    Circuit::self()->update();
 }
 
 void LogicComponent::deleteInputs( int inputs )

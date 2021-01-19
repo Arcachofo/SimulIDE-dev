@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT Thermistor : public ThermistorBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         int bVal() { return m_bVal; }
         void setBval( int bval );
 

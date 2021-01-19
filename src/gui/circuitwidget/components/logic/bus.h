@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT Bus : public Component, public eBus
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         void setNumLines( int lines );
 
         void setStartBit( int bit );

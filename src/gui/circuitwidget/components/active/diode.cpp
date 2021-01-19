@@ -62,6 +62,14 @@ Diode::Diode( QObject* parent, QString type, QString id )
 }
 Diode::~Diode(){}
 
+QList<propGroup_t> Diode::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
+    mainGroup.propList.append( {"Zener_Volt", tr("Zener Voltage"),"V"} );
+    return {mainGroup};
+}
+
 void Diode::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );

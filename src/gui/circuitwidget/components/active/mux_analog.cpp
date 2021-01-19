@@ -67,6 +67,14 @@ MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
 }
 MuxAnalog::~MuxAnalog(){}
 
+QList<propGroup_t> MuxAnalog::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Address_Bits", tr("Address Size"),"Bits"} );
+    mainGroup.propList.append( {"Impedance", tr("Impedance"),"Ω"} );
+    return {mainGroup};
+}
+
 void MuxAnalog::setAddrBits( int bits )
 {
     if( bits == m_addrBits ) return;

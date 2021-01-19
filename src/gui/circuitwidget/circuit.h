@@ -125,8 +125,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
     private:
         void loadDomDoc( QDomDocument* doc );
         void pasteDomDoc( QDomDocument* doc );
-        void loadProperties( QDomElement element, Component* Item );
-        void loadObjectProperties( QDomElement element, QObject* Item );
+        void loadProperties( QDomElement element, Component* comp );
+        void loadObjectProperties(QDomElement element, Component* comp );
         void circuitToDom();
         void listToDom( QDomDocument* doc, QList<Component*>* complist );
         void objectToDom( QDomDocument* doc, Component* object );

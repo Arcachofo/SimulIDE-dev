@@ -39,6 +39,8 @@ class MAINMODULE_EXPORT KeyPad : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         double rows();
         void setRows( double rows );
         

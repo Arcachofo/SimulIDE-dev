@@ -40,4 +40,21 @@ RelaySPST::RelaySPST( QObject* parent, QString type, QString id )
 }
 RelaySPST::~RelaySPST(){}
 
+QList<propGroup_t> RelaySPST::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Norm_Close", tr("Normally Closed"),""} );
+    mainGroup.propList.append( {"DT", tr("Double Throw"),""} );
+    mainGroup.propList.append( {"Poles", tr("Poles"),""} );
+    mainGroup.propList.append( {"Key", tr("Key"),""} );
+
+    propGroup_t elecGroup { tr("Electric") };
+    elecGroup.propList.append( {"Rcoil", tr("Resistance"),"Ω"} );
+    elecGroup.propList.append( {"Inductance", tr("Inductance"),"H"} );
+    elecGroup.propList.append( {"IOn", tr("IOn"),"A"} );
+    elecGroup.propList.append( {"IOff", tr("IOff"),"A"} );
+
+    return {mainGroup, elecGroup};
+}
+
 #include "moc_relay-spst.cpp"

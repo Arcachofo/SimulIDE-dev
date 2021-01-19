@@ -33,7 +33,28 @@ Gate::Gate( QObject* parent, QString type, QString id, int inputs )
                           
     eLogicDevice::createOutput( m_outputPin );
 }
-Gate::~Gate(){
+Gate::~Gate(){}
+
+QList<propGroup_t> Gate::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Inverted", tr("Inverted"),""} );
+    mainGroup.propList.append( {"Open_Collector", tr("Open Drain"),""} );
+
+    propGroup_t elecGroup { tr("Electric") };
+    elecGroup.propList.append( {"Input_High_V", tr("Low to High Threshold"),"V"} );
+    elecGroup.propList.append( {"Input_Low_V", tr("High to Low Threshold"),"V"} );
+    elecGroup.propList.append( {"Input_Imped", tr("Input Impedance"),"Ω"} );
+    elecGroup.propList.append( {"Out_High_V", tr("Output High Voltage"),"V"} );
+    elecGroup.propList.append( {"Out_Low_V", tr("Output Low Voltage"),"V"} );
+    elecGroup.propList.append( {"Out_Imped", tr("Output Impedance"),"Ω"} );
+
+    propGroup_t edgeGroup { tr("Edges") };
+    edgeGroup.propList.append( {"Tpd_ps", tr("Propagation Delay"),"ps"} );
+    edgeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
+    edgeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
+
+    return {mainGroup, elecGroup, edgeGroup};
 }
 
 void Gate::remove()

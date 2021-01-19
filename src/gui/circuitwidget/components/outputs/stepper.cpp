@@ -97,9 +97,15 @@ Stepper::Stepper( QObject* parent, QString type, QString id )
     setLabelPos(-32,-62, 0);
     setShowId( true );
 }
+Stepper::~Stepper(){}
 
-Stepper::~Stepper()
+QList<propGroup_t> Stepper::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Bipolar", tr("Bipolar"),""} );
+    mainGroup.propList.append( {"Steps", tr("Steps per Rotation"),tr("teeth")} );
+    mainGroup.propList.append( {"Resistance", tr("Resistance"),"Ω"} );
+    return {mainGroup};
 }
 
 void Stepper::voltChanged()

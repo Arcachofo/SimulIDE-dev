@@ -50,6 +50,16 @@ Switch::Switch( QObject* parent, QString type, QString id )
 }
 Switch::~Switch(){}
 
+QList<propGroup_t> Switch::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Norm_Close", tr("Normally Closed"),""} );
+    mainGroup.propList.append( {"DT", tr("Double Throw"),""} );
+    mainGroup.propList.append( {"Poles", tr("Poles"),""} );
+    mainGroup.propList.append( {"Key", tr("Key"),""} );
+    return {mainGroup};
+}
+
 void Switch::stamp()
 {
     MechContact::stamp();

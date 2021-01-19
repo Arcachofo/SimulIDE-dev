@@ -84,6 +84,16 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
 }
 SubPackage::~SubPackage(){}
 
+QList<propGroup_t> SubPackage::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Width", tr("Width"),"Grid Cells"} );
+    mainGroup.propList.append( {"Height", tr("Height"),"Grid Cells"} );
+    mainGroup.propList.append( {"Package_File", tr("Package File"),""} );
+    mainGroup.propList.append( {"Background", tr("Background"),""} );
+    return {mainGroup};
+}
+
 void SubPackage::hoverMoveEvent( QGraphicsSceneHoverEvent* event ) 
 {
     if( event->modifiers() & Qt::ShiftModifier) 

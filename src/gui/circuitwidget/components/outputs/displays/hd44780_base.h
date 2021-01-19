@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT Hd44780_Base : public Component
     public:
         Hd44780_Base( QObject* parent, QString type, QString id );
         ~Hd44780_Base();
-        
+
         int cols();
         void setCols( int cols );
         

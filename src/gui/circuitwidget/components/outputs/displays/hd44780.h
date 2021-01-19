@@ -35,7 +35,9 @@ class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
         
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-        
+
+        virtual QList<propGroup_t> propGroups() override;
+
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;

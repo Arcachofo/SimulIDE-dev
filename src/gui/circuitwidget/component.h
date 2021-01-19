@@ -26,11 +26,23 @@
 
 #include "QPropertyEditorWidget.h"
 
+struct property_t{
+        QString name;
+        QString caption;
+        QString unit;
+};
+
+struct propGroup_t{
+        QString name;
+        QList<property_t> propList;
+};
+
 Q_DECLARE_METATYPE( QList<int> )
 
 class Pin;
 class Label;
 class PropertiesWidget;
+class PropDialog;
 
 class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
 {
@@ -40,6 +52,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
     Q_PROPERTY( QString  itemtype  READ itemType  USER  true )
     Q_PROPERTY( QString  id        READ idLabel   WRITE setIdLabel DESIGNABLE true USER true )
     Q_PROPERTY( bool     Show_id   READ showId    WRITE setShowId  DESIGNABLE true USER true )
+    Q_PROPERTY( bool     Show_Val  READ showVal   WRITE setShowVal )
+    Q_PROPERTY( QString  Unit      READ unit      WRITE setUnit )
     Q_PROPERTY( qreal    rotation  READ rotation  WRITE setRotation )
     Q_PROPERTY( int      x         READ x         WRITE setX )
     Q_PROPERTY( int      y         READ y         WRITE setY )
@@ -63,6 +77,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
         Component( QObject* parent, QString type, QString id );
         ~Component();
 
+        virtual QList<propGroup_t> propGroups(){ QList<propGroup_t> pg; return pg;}
+
         enum { Type = UserType + 1 };
         int type() const { return Type; }
 
@@ -79,7 +95,7 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
         void setShowVal( bool show );
         
         QString unit();
-        void setUnit( QString un );
+        virtual void setUnit( QString un );
 
         QPointF boardPos() { return m_boardPos; }
         void setBoardPos( QPointF p ) { m_boardPos = p; }
@@ -217,6 +233,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
         bool m_mainComp;
 
         PropertiesWidget* m_propertiesW;
+        PropDialog*        m_propDialog;
+        QList<propGroup_t> m_propGroups;
         
         std::vector<Pin*> m_pin;
 };

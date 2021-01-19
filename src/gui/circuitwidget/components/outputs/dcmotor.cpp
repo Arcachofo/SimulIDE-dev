@@ -56,6 +56,7 @@ DcMotor::DcMotor( QObject* parent, QString type, QString id )
 
     m_ang  = 0;
     m_voltNom = 5;
+    m_speed = 0;
 
     setRpm( 60 );
 
@@ -87,6 +88,15 @@ DcMotor::DcMotor( QObject* parent, QString type, QString id )
 DcMotor::~DcMotor()
 {
     Simulator::self()->remFromUpdateList( this );
+}
+
+QList<propGroup_t> DcMotor::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"RPM_Nominal", tr("Nominal Speed"),"RPM"} );
+    mainGroup.propList.append( {"Volt_Nominal", tr("Nominal Voltage"),"V"} );
+    mainGroup.propList.append( {"Resistance", tr("Resistance"),"Ω"} );
+    return {mainGroup};
 }
 
 void DcMotor::initialize()
@@ -206,24 +216,27 @@ void DcMotor::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
     p->drawEllipse(-20,-20, 40, 40 );
 
     // Speed and Direction Indicator
-    double speed = m_speed;
-    double exedd = 0;
-    if( m_speed > 1 )
+    if( m_speed != 0 )
     {
-        exedd = m_speed -1;
-        speed = 1;
-    }
-    else if( m_speed < -1 )
-    {
-        exedd = m_speed +1;
-        speed = -1;
-    }
-    p->setPen ( QColor(50, 70, 100) );
-    p->setBrush( QColor(100, 200, 70) );
-    p->drawPie(-20,-20, 40, 40, 16*90, speed*16*180 );
+        double speed = m_speed;
+        double exedd = 0;
+        if( m_speed > 1 )
+        {
+            exedd = m_speed -1;
+            speed = 1;
+        }
+        else if( m_speed < -1 )
+        {
+            exedd = m_speed +1;
+            speed = -1;
+        }
+        p->setPen ( QColor(50, 70, 100) );
+        p->setBrush( QColor(100, 200, 70) );
+        p->drawPie(-20,-20, 40, 40, 16*90, speed*16*180 );
 
-    p->setBrush( QColor(200, 100, 70) );
-    p->drawPie(-20,-20, 40, 40, -16*90, exedd*16*180 );
-    //qDebug() << "DcMotor::paint"<< m_speed << speed << exedd;
+        p->setBrush( QColor(200, 100, 70) );
+        p->drawPie(-20,-20, 40, 40, -16*90, exedd*16*180 );
+        //qDebug() << "DcMotor::paint"<< m_speed << speed << exedd;
+    }
 }
 #include "moc_dcmotor.cpp"

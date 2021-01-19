@@ -88,6 +88,14 @@ BJT::~BJT()
     Simulator::self()->remFromUpdateList( this );
 }
 
+QList<propGroup_t> BJT::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"PNP", tr("PNP"),""} );
+    mainGroup.propList.append( {"Gain", tr("Gain"),""} );
+    return {mainGroup};
+}
+
 void BJT::updateStep()
 {
     update();

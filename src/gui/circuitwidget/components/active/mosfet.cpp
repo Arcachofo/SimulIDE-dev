@@ -79,6 +79,16 @@ Mosfet::Mosfet( QObject* parent, QString type, QString id )
 }
 Mosfet::~Mosfet(){}
 
+QList<propGroup_t> Mosfet::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"P_Channel", tr("P Channel"),""} );
+    mainGroup.propList.append( {"Depletion", tr("Depletion"),""} );
+    mainGroup.propList.append( {"RDSon", tr("RDSon"),"Ω"} );
+    mainGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
+    return {mainGroup};
+}
+
 void Mosfet::updateStep()
 {
     update();

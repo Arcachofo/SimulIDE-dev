@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;

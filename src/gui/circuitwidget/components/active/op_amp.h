@@ -45,6 +45,8 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eOpAmp
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         void setPowerPins( bool set );
 
         virtual QPainterPath shape() const;

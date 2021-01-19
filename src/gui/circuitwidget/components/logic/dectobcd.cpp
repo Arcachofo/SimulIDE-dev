@@ -79,6 +79,18 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
 }
 DecToBcd::~DecToBcd(){}
 
+QList<propGroup_t> DecToBcd::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Invert_Inputs", tr("Invert Inputs"),""} );
+    mainGroup.propList.append( {"_16_Bits", tr("16 Bits"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
+
 bool DecToBcd::_16bits()
 {
     return m_16Bits;

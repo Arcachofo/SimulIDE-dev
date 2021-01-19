@@ -38,16 +38,28 @@ Ldr::Ldr( QObject* parent, QString type, QString id )
 {
     m_unit = "Lux";
 
-    m_r1 = 127410;
+    m_r1    = 127410;
     m_gamma = 0.8582;
 
     m_dial->setMinimum(1);
-    m_dial->setMaximum(1000);
 
     Component::setValue( 1 );
     eResistor::setResSafe( m_r1 );
 }
 Ldr::~Ldr(){}
+
+QList<propGroup_t> Ldr::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    //mainGroup.propList.append( {"Value_Ohm", tr("Current Value"),"main"} );
+    mainGroup.propList.append( {"Lux", tr("Current Value"),"main"} );
+    mainGroup.propList.append( {"Min_Lux", tr("Minimum Value"),"Lux"} );
+    mainGroup.propList.append( {"Max_Lux", tr("Maximum Value"),"Lux"} );
+    mainGroup.propList.append( {"Dial_Step", tr("Dial Step"),"Lux"} );
+    mainGroup.propList.append( {"Gamma", tr("Gamma"),""} );
+    mainGroup.propList.append( {"R1", tr("R1"),"Ω"} );
+    return {mainGroup};
+}
 
 void Ldr::updateStep()
 {
@@ -91,4 +103,4 @@ void Ldr::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
     p->drawLine( 5, -7, 3,-7 );
 }
 
-//#include "moc_ldr.cpp"
+#include "moc_ldr.cpp"

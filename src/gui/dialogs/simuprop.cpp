@@ -63,7 +63,6 @@ void SimuProp::on_simSpeedPerSlider_valueChanged( int speed )
     m_speedP = speed;
     m_sps    = m_speedP*1e12/(m_stepSize*100);
     updateSpeed();
-    //qDebug() << "SimuProp::on_simSpeed" << ispeed << speed;
 }
 
 void SimuProp::on_simSpeedPerBox_editingFinished()

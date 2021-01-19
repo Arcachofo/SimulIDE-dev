@@ -42,6 +42,8 @@ class MAINMODULE_EXPORT RTD : public ThermistorBase
     static Component* construct( QObject* parent, QString type, QString id );
     static LibraryItem* libraryItem();
 
+    virtual QList<propGroup_t> propGroups() override;
+
     double getR0() { return m_r0; }
     void setR0( double r0 ) { m_r0 = r0; }
 

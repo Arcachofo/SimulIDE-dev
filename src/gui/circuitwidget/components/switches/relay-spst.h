@@ -33,6 +33,8 @@ class MAINMODULE_EXPORT RelaySPST : public RelayBase
         RelaySPST( QObject* parent, QString type, QString id );
         ~RelaySPST();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 

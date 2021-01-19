@@ -39,6 +39,8 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         double filter() { return m_filter; }
         void setFilter( double filter );
 

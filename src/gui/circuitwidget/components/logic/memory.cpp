@@ -79,6 +79,18 @@ Memory::Memory( QObject* parent, QString type, QString id )
 }
 Memory::~Memory(){}
 
+QList<propGroup_t> Memory::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Address_Bits", tr("Address Size"),"Bits"} );
+    mainGroup.propList.append( {"Data_Bits", tr("Data Size"),"Bits"} );
+    mainGroup.propList.append( {"Persistent", tr("Persistent"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
+
 void Memory::updatePins()
 {
     int h = m_addrBits+1;

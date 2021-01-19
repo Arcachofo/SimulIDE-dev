@@ -27,13 +27,15 @@ class LibraryItem;
 class MAINMODULE_EXPORT CurrSource : public VarSource
 {
     Q_OBJECT
-
+    Q_PROPERTY( double Current READ value WRITE setValue DESIGNABLE true USER true )
     public:
         CurrSource( QObject* parent, QString type, QString id );
         ~CurrSource();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
+
+        virtual QList<propGroup_t> propGroups() override;
 
         virtual void updateStep() override;
 };

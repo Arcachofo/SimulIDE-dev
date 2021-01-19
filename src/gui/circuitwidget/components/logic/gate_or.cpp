@@ -41,6 +41,13 @@ OrGate::OrGate( QObject* parent, QString type, QString id )
 }
 OrGate::~OrGate(){}
 
+QList<propGroup_t> OrGate::propGroups()
+{
+    QList<propGroup_t> pg = Gate::propGroups();
+    pg.first().propList.append( {"Num_Inputs", tr("Input Size"),"Inputs"} );
+    return pg;
+}
+
 bool OrGate::calcOutput( int inputs )
 {
     if( inputs > 0 )  return true;

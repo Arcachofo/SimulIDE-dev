@@ -162,6 +162,13 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 }
 SubCircuit::~SubCircuit(){}
 
+QList<propGroup_t> SubCircuit::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Logic_Symbol", tr("Logic Symbol"),""} );
+    return {mainGroup};
+}
+
 void SubCircuit::loadSubCircuit( QString fileName )
 {
     QFile file( fileName );

@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT VarResistor : public VarResBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         void setMax( double r );
         void setMin( double r );
 

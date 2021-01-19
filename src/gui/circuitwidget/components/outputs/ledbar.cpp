@@ -55,6 +55,21 @@ LedBar::LedBar( QObject* parent, QString type, QString id )
 }
 LedBar::~LedBar(){}
 
+QList<propGroup_t> LedBar::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Size", tr("Size"),"Leds"} );
+    mainGroup.propList.append( {"Color", tr("Color"),"enum"} );
+    mainGroup.propList.append( {"Grounded", tr("Grounded"),""} );
+
+    propGroup_t elecGroup { tr("Electric") };
+    elecGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
+    elecGroup.propList.append( {"MaxCurrent", tr("Max Current"),"A"} );
+    elecGroup.propList.append( {"Resistance", tr("Resistance"),"Ω"} );
+
+    return {mainGroup, elecGroup};
+}
+
 void LedBar::createLeds( int c )
 {
     bool initialized = m_size > 0;

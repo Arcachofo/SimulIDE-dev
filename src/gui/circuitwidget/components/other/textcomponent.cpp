@@ -88,6 +88,21 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
 }
 TextComponent::~TextComponent(){}
 
+QList<propGroup_t> TextComponent::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Margin", tr("Margin"),"Pixels"} );
+    mainGroup.propList.append( {"Border", tr("Border"),"Pixels"} );
+    mainGroup.propList.append( {"Opacity", tr("Opacity"),""} );
+
+    propGroup_t fontGroup { tr("Font") };
+    fontGroup.propList.append( {"Font", tr("Font"),""} );
+    fontGroup.propList.append( {"Font_Size", tr("Font Size"),"Pixels"} );
+    fontGroup.propList.append( {"Fixed_Width", tr("Fixed_Width"),""} );
+
+    return {mainGroup, fontGroup};
+}
+
 void TextComponent::updateGeometry(int, int, int)
 {
     m_text->document()->setTextWidth(-1);

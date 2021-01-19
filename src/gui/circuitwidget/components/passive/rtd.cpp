@@ -47,6 +47,19 @@ RTD::RTD (QObject* parent, QString type, QString id)
 
 RTD::~RTD() {}
 
+QList<propGroup_t> RTD::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    //mainGroup.propList.append( {"Value_Ohm", tr("Current Value"),"main"} );
+    mainGroup.propList.append( {"Temp", tr("Current Value"),"ºC"} );
+    mainGroup.propList.append( {"Min_Temp", tr("Minimum Value"),"ºC"} );
+    mainGroup.propList.append( {"Max_Temp", tr("Maximum Value"),"ºC"} );
+    mainGroup.propList.append( {"Dial_Step", tr("Dial Step"),"ºC"} );
+    mainGroup.propList.append( {"B", tr("B"),""} );
+    mainGroup.propList.append( {"R0", tr("R0"),"Ω"} );
+    return {mainGroup};
+}
+
 void RTD::initialize()
 {
   m_lastTime =  Simulator::self()->circTime();

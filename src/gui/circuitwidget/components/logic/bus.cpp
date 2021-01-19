@@ -65,6 +65,14 @@ Bus::Bus( QObject* parent, QString type, QString id )
 }
 Bus::~Bus(){}
 
+QList<propGroup_t> Bus::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Num_Bits", tr("Size"),"Bits"} );
+    mainGroup.propList.append( {"Start_Bit", tr("Start Bit"),""} );
+    return {mainGroup};
+}
+
 void Bus::initialize()
 {
     if( !m_busPin0->isConnected() && !m_busPin1->isConnected() ) return;

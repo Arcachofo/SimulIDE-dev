@@ -84,8 +84,14 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     
     initialize();
 }
-
 Ssd1306::~Ssd1306(){}
+
+QList<propGroup_t> Ssd1306::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Color", tr("Color"),"enum"} );
+    return {mainGroup};
+}
 
 /*void Ssd1306::stamp()
 {

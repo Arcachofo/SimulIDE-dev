@@ -54,8 +54,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( QString Probe1 READ probe1 WRITE setProbe1 )
     Q_PROPERTY( QString Probe2 READ probe2 WRITE setProbe2 )
 
-    Q_ENUMS( paCond )
-
     public:
 
         PlotBase( QObject* parent, QString type, QString id );
@@ -68,6 +66,7 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
             High,
             Low
         };
+        Q_ENUM( paCond )
 
         int baSizeX() { return m_baSizeX; }
         void setBaSizeX( int size ) { m_baSizeX = (size/10)*10; setAdvanc( m_advanc ); }

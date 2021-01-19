@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public eI2C
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         int cCode();
         void setCcode( int code );
 

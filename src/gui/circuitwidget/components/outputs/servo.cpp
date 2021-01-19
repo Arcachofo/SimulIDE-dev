@@ -79,6 +79,13 @@ Servo::Servo( QObject* parent, QString type, QString id )
 }
 Servo::~Servo(){}
 
+QList<propGroup_t> Servo::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Speed", tr("Speed "),"sec/60º"} );
+    return {mainGroup};
+}
+
 void Servo::stamp()
 {
     if( m_inPin[0]->isConnected()

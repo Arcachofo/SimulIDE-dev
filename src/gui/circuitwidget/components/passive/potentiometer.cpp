@@ -99,8 +99,15 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
     connect( m_dial, SIGNAL(valueChanged(int)),
              this,   SLOT  (resChanged(int)), Qt::UniqueConnection );
 }
-
 Potentiometer::~Potentiometer() {}
+
+QList<propGroup_t> Potentiometer::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Resistance", tr("Resistance"),"main"} );
+    mainGroup.propList.append( {"Value_Ohm", tr("Current Value"),"Ω"} );
+    return {mainGroup};
+}
 
 void Potentiometer::stamp()
 {
@@ -170,13 +177,13 @@ void Potentiometer::setUnit( QString un )
     m_changed = true;
 }
 
-void Potentiometer::setVal( int val )
+void Potentiometer::setVal( double val )
 {
     m_dial->setValue( val*1000/m_resist );
     //resChanged( val );
 }
 
-int Potentiometer::val()
+double Potentiometer::val()
 {
     return m_resist*m_dial->value()/1000;
 }

@@ -77,9 +77,13 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
 
     initialize();
 }
+Max72xx_matrix::~Max72xx_matrix(){}
 
-Max72xx_matrix::~Max72xx_matrix()
+QList<propGroup_t> Max72xx_matrix::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"NumDisplays", tr("Size"),"Displays(8x8)"} );
+    return {mainGroup};
 }
 
 void Max72xx_matrix::stamp()

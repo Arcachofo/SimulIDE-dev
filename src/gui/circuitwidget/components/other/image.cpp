@@ -52,6 +52,13 @@ Image::Image( QObject* parent, QString type, QString id )
 }
 Image::~Image(){}
 
+QList<propGroup_t> Image::propGroups()
+{
+    QList<propGroup_t> pg = Shape::propGroups();
+    pg.first().propList.prepend( {"Image_File", tr("Image File"),""} );
+    return pg;
+}
+
 void Image::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();

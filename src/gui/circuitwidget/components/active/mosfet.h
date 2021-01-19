@@ -42,6 +42,8 @@ class MAINMODULE_EXPORT Mosfet : public Component, public eMosfet
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         virtual void updateStep() override;
         virtual void remove() override;
         

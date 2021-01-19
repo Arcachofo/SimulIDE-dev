@@ -62,7 +62,18 @@ BinCounter::BinCounter(QObject *parent, QString type, QString id)
 
     setResetInv( true );                             // Invert Reset Pin
 }
-
 BinCounter::~BinCounter(){}
+
+QList<propGroup_t> BinCounter::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
+    mainGroup.propList.append( {"Reset_Inverted", tr("Reset Inverted"),""} );
+    mainGroup.propList.append( {"Max_Value", tr("Count to"),""} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    pg.prepend( mainGroup );
+    return pg;
+}
 
 #include "moc_bincounter.cpp"

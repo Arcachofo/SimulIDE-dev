@@ -57,6 +57,22 @@ LedMatrix::LedMatrix( QObject* parent, QString type, QString id )
 }
 LedMatrix::~LedMatrix(){}
 
+QList<propGroup_t> LedMatrix::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Vertical_Pins", tr("Vertical Pins"),""} );
+    mainGroup.propList.append( {"Rows", tr("Rows"),""} );
+    mainGroup.propList.append( {"Cols", tr("Columns"),""} );
+    mainGroup.propList.append( {"Color", tr("Color"),"enum"} );
+
+    propGroup_t elecGroup { tr("Electric") };
+    elecGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
+    elecGroup.propList.append( {"MaxCurrent", tr("Max Current"),"A"} );
+    elecGroup.propList.append( {"Resistance", tr("Resistance"),"Ω"} );
+
+    return {mainGroup, elecGroup};
+}
+
 void LedMatrix::stamp()
 {
     for( int row=0; row<m_rows; ++row )

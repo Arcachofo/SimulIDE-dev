@@ -26,7 +26,6 @@
 class MAINMODULE_EXPORT LogicComponent : public Component
 {
     Q_OBJECT
-    Q_ENUMS( Trigger )
 
     public:
 
@@ -38,6 +37,9 @@ class MAINMODULE_EXPORT LogicComponent : public Component
             Clock,
             InEnable
         };
+        Q_ENUM( Trigger )
+
+        virtual QList<propGroup_t> propGroups() override;
 
         Trigger trigger() { return m_trigger; }
         virtual void setTrigger( Trigger trigger );
@@ -47,15 +49,14 @@ class MAINMODULE_EXPORT LogicComponent : public Component
         virtual void setNumInps( int inPins );
         virtual void setNumOuts(int outPins );
 
+        virtual void remove() override;
+
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
-        virtual void remove() override;
-        
     protected:
         Pin* createPin( QString data , QString pinId );
 
-        Pin* m_trigPin;
-
+        Pin*    m_trigPin;
         Trigger m_trigger;
         
         void deleteInputs( int inputs );

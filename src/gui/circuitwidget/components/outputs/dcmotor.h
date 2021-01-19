@@ -31,8 +31,7 @@ class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
     Q_PROPERTY( int     RPM_Nominal  READ rpm    WRITE setRpm    DESIGNABLE true USER true )
     Q_PROPERTY( double  Volt_Nominal READ volt   WRITE setVolt   DESIGNABLE true USER true )
     Q_PROPERTY( double  Resistance   READ resist WRITE setResist DESIGNABLE true USER true )
-    Q_PROPERTY( QString Unit         READ unit   WRITE setUnit   DESIGNABLE true USER true )
-    
+
     public:
         DcMotor( QObject* parent, QString type, QString id );
         ~DcMotor();
@@ -40,6 +39,8 @@ class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         int rpm();
         void setRpm(int rpm );
 

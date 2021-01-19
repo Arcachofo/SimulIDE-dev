@@ -48,49 +48,67 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
     Q_UNUSED( VoltReg_properties );
     
     m_area = QRect( -11, -8, 22, 19 );
+
+    m_unit = "V";
+    setValLabelPos( 15, 12, 0 );
     
     setVRef( 1.2 );
     m_voltPos = 0;
     m_voltNeg = 0;
     
     m_pin.resize( 3 );
-    
-    QString newId = id;
-    
-    newId.append(QString("-input"));
-    m_pin[0] = new Pin( 180, QPoint( -16, 0 ), newId, 0, this );
+
+    m_pin[0] = new Pin( 180, QPoint( -16, 0 ), id+"-input", 0, this );
     m_pin[0]->setLength(6);
     m_pin[0]->setLabelText( "I" );
     m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
     m_ePin[0] = m_pin[0];
-    
-    newId = id;
-    newId.append(QString("-output"));
-    m_pin[1] = new Pin( 0, QPoint( 16, 0 ), newId, 1, this );
+
+    m_pin[1] = new Pin( 0, QPoint( 16, 0 ), id+"-output", 1, this );
     m_pin[1]->setLength(6);
     m_pin[1]->setLabelText( "O" );
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
     m_ePin[1] = m_pin[1];
-    
-    newId = id;
-    newId.append(QString("-ref"));
-    m_pin[2] = new Pin( 270, QPoint( 0, 16 ), newId, 2, this );
+
+    m_pin[2] = new Pin( 270, QPoint( 0, 16 ), id+"-ref", 2, this );
     m_pin[2]->setLength(6);
     m_pin[2]->setLabelText( "R" );
     m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
     m_ePin[2] = m_pin[2];
 }
-VoltReg::~VoltReg()
+VoltReg::~VoltReg(){}
+
+QList<propGroup_t> VoltReg::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Voltage", tr("Output Voltage"),"main"} );
+    return {mainGroup};
+}
+
+double VoltReg::vRef()
+{
+    return m_value;
 }
 
 void VoltReg::setVRef( double vref )
 {
     bool pauseSim = Simulator::self()->isRunning();
     if( pauseSim )  Simulator::self()->pauseSim();
+
+    Component::setValue( vref );       // Takes care about units multiplier
+    eVoltReg::setVRef( m_value*m_unitMult );
     
-    eVoltReg::setVRef( vref );
-    
+    if( pauseSim ) Simulator::self()->resumeSim();
+}
+
+void VoltReg::setUnit( QString un )
+{
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim )  Simulator::self()->pauseSim();
+
+    Component::setUnit( un );
+    eVoltReg::setVRef( m_value*m_unitMult );
+
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 

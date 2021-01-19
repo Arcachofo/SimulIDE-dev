@@ -54,6 +54,13 @@ VoltSource::VoltSource( QObject* parent, QString type, QString id )
 }
 VoltSource::~VoltSource() {}
 
+QList<propGroup_t> VoltSource::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Voltage", tr("Voltage"),"main"} );
+    return {mainGroup};
+}
+
 void VoltSource::updateStep()
 {
     if( m_changed ) 

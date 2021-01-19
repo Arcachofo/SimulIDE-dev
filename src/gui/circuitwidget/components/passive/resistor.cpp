@@ -61,6 +61,13 @@ Resistor::Resistor( QObject* parent, QString type, QString id )
 }
 Resistor::~Resistor(){}
 
+QList<propGroup_t> Resistor::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Resistance", tr("Resistance"),"main"} );
+    return {mainGroup};
+}
+
 double Resistor::resist() { return m_value; }
 
 void Resistor::setResist( double r )

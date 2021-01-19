@@ -104,9 +104,14 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
 
     initialize();
 }
+AudioOut::~AudioOut(){}
 
-AudioOut::~AudioOut()
+QList<propGroup_t> AudioOut::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Buzzer", tr("Buzzer"),""} );
+    mainGroup.propList.append( {"Impedance", tr("Impedance"),"Ω"} );
+    return {mainGroup};
 }
 
 void AudioOut::stamp()

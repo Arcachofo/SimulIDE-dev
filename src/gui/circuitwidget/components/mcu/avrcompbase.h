@@ -35,6 +35,8 @@ class AvrCompBase : public McuComponent
         AvrCompBase( QObject* parent, QString type, QString id );
         ~AvrCompBase();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         virtual void reset() override;
 
         bool initGdb();

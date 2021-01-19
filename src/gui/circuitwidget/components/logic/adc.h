@@ -28,7 +28,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT ADC : public LogicComponent, public eADC
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Propagation_Delay_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
+    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
     Q_PROPERTY( quint64 Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
     Q_PROPERTY( quint64 Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
     Q_PROPERTY( double Out_High_V  READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
@@ -43,6 +43,8 @@ class MAINMODULE_EXPORT ADC : public LogicComponent, public eADC
 
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem *libraryItem();
+
+        virtual QList<propGroup_t> propGroups() override;
 
         virtual void setNumOuts( int outs );
         

@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT Frequencimeter : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         double filter() { return m_filter; }
         void setFilter( double filter ){ m_filter = filter; }
 

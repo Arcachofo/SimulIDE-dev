@@ -43,6 +43,8 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         void setColor( LedBase::LedColor color );
         LedBase::LedColor color();
         

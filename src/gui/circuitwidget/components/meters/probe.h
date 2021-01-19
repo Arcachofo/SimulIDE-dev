@@ -41,6 +41,8 @@ class MAINMODULE_EXPORT Probe : public Component, public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         double trigVolt() { return m_voltTrig; }
         void setTrigVolt( double volt ) { m_voltTrig = volt; update();}
         

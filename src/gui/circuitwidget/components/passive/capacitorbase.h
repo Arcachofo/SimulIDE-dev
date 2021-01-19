@@ -28,14 +28,14 @@ class MAINMODULE_EXPORT CapacitorBase : public Component, public eCapacitor
 {
     Q_OBJECT
     Q_PROPERTY( double Capacitance   READ capac    WRITE setCapac   DESIGNABLE true USER true )
-    Q_PROPERTY( QString  Unit        READ unit     WRITE setUnit    DESIGNABLE true USER true )
-    Q_PROPERTY( bool     Show_Cap    READ showVal  WRITE setShowVal DESIGNABLE true USER true )
-    
+
     public:
 
         CapacitorBase( QObject* parent, QString type, QString id );
         ~CapacitorBase();
         
+        virtual QList<propGroup_t> propGroups() override;
+
         double capac();
         void  setCapac( double c );
         

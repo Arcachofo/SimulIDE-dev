@@ -60,6 +60,14 @@ ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
 }
 ResistorDip::~ResistorDip(){}
 
+QList<propGroup_t> ResistorDip::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Resistance", tr("Resistance"),"main"} );
+    mainGroup.propList.append( {"Size", tr("Size"),"Resistors"} );
+    return {mainGroup};
+}
+
 void ResistorDip::createResistors( int c )
 {
     int start = m_size;

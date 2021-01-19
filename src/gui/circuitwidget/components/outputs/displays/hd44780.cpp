@@ -69,9 +69,14 @@ Hd44780::Hd44780( QObject* parent, QString type, QString id )
     
     initialize();
 }
+Hd44780::~Hd44780(){}
 
-Hd44780::~Hd44780()
+QList<propGroup_t> Hd44780::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Rows", tr("Rows"),""} );
+    mainGroup.propList.append( {"Cols", tr("Columns"),""} );
+    return {mainGroup};
 }
 
 void Hd44780::updateStep() { update(); }

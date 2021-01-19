@@ -40,10 +40,19 @@ VarResistor::VarResistor( QObject* parent, QString type, QString id )
 
     setMinRes( 0 );
     setMaxRes( 1000 );
-
-    Component::setValue( 0 );
+    setVal( 0 );
 }
 VarResistor::~VarResistor(){}
+
+QList<propGroup_t> VarResistor::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Value_Ohm", tr("Current Value"),"main"} );
+    mainGroup.propList.append( {"Min_Resistance", tr("Minimum Resistance"),"Ω"} );
+    mainGroup.propList.append( {"Max_Resistance", tr("Maximum Resistance"),"Ω"} );
+    mainGroup.propList.append( {"Dial_Step", tr("Dial Step"),"Ω"} );
+    return {mainGroup};
+}
 
 void VarResistor::updateStep()
 {
@@ -51,7 +60,7 @@ void VarResistor::updateStep()
     {
         eResistor::setResSafe( m_value );
         m_changed = false;
-        Simulator::self()->addEvent( 1, this );
+        Simulator::self()->addEvent( 1, NULL );
     }
 }
 
@@ -80,4 +89,4 @@ void VarResistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
     p->drawLine( 8,-8, 6,-8 );
 }
 
-//#include "moc_varresistor.cpp"
+#include "moc_varresistor.cpp"

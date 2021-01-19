@@ -63,6 +63,13 @@ SwitchDip::SwitchDip( QObject* parent, QString type, QString id )
 }
 SwitchDip::~SwitchDip(){}
 
+QList<propGroup_t> SwitchDip::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Size", tr("Size"),"Switches"} );
+    return {mainGroup};
+}
+
 void SwitchDip::stamp()
 {
     for( int i=0; i<m_size; i++ )

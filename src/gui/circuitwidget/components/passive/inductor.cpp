@@ -77,6 +77,13 @@ Inductor::Inductor( QObject* parent, QString type, QString id )
 }
 Inductor::~Inductor(){}
 
+QList<propGroup_t> Inductor::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Inductance", tr("Inductance"),"main"} );
+    return {mainGroup};
+}
+
 double Inductor::induc() { return m_value; }
 
 void Inductor::setInduc( double i ) 

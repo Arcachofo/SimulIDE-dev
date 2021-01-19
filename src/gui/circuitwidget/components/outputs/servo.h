@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT Servo : public LogicComponent, public eLogicDevice
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         double speed() { return m_speed; }
         void setSpeed( double speed ) { m_speed = speed; }
 

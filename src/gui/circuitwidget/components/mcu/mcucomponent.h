@@ -45,6 +45,8 @@ class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
         
  static McuComponent* self() { return m_pSelf; }
 
+        virtual QList<propGroup_t> propGroups() override;
+
         virtual void initialize() override;
         virtual void updateStep() override;
         virtual void attach() override;

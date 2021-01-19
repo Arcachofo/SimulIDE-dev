@@ -29,7 +29,6 @@
 class MAINMODULE_EXPORT VarSource : public Component, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( double  Value     READ value   WRITE setValue   DESIGNABLE true USER true )
     Q_PROPERTY( QString Unit      READ unit    WRITE setUnit    DESIGNABLE true USER true )
     Q_PROPERTY( bool    Show_Volt READ showVal WRITE setShowVal DESIGNABLE true USER true )
 

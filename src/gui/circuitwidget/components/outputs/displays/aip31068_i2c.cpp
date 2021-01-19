@@ -66,9 +66,15 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
     
     initialize();
 }
+Aip31068_i2c::~Aip31068_i2c(){}
 
-Aip31068_i2c::~Aip31068_i2c()
+QList<propGroup_t> Aip31068_i2c::propGroups()
 {
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Rows", tr("Rows"),""} );
+    mainGroup.propList.append( {"Cols", tr("Columns"),""} );
+    mainGroup.propList.append( {"Control_Code", tr("Control Code"),""} );
+    return {mainGroup};
 }
 
 void Aip31068_i2c::updateStep() { update(); }

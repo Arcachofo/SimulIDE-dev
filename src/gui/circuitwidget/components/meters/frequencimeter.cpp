@@ -63,12 +63,19 @@ Frequencimeter::Frequencimeter( QObject* parent, QString type, QString id )
     m_filter   = 0.1;
 
     Simulator::self()->addToUpdateList( this );
-    
+
     initialize();
 }
 Frequencimeter::~Frequencimeter()
 {
     Simulator::self()->remFromUpdateList( this );
+}
+
+QList<propGroup_t> Frequencimeter::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Filter", tr("Filter"),"V"} );
+    return {mainGroup};
 }
 
 void Frequencimeter::initialize()

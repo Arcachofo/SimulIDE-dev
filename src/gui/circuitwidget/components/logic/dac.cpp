@@ -52,7 +52,18 @@ DAC::DAC( QObject* parent, QString type, QString id )
                           
     eLogicDevice::createOutput( m_outPin[0] );
 }
-DAC::~DAC(){
+DAC::~DAC(){}
+
+QList<propGroup_t> DAC::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Num_Bits", tr("Size"),"Bits"} );
+    mainGroup.propList.append( {"Vref", tr("Reference Voltage"),"V"} );
+
+    QList<propGroup_t> pg = LogicComponent::propGroups();
+    for( int i=0;i<4; ++i ) pg.first().propList.removeLast(); //remove Outputs.
+    pg.prepend( mainGroup );
+    return pg;
 }
 
 void DAC::setNumInps( int inputs )
