@@ -19,7 +19,7 @@
 
 
 VERSION = "0.5.15"
-RELEASE = "-RC4"
+RELEASE = "-RC5"
 
 TEMPLATE = app
 
@@ -55,6 +55,7 @@ SOURCES += ../src/*.cpp \
     ../src/gui/editorwidget/*.cpp \
     ../src/gui/editorwidget/findreplacedialog/*.cpp \
     ../src/gui/dialogs/*.cpp \
+    ../src/gui/dialogs/components/*.cpp \
     ../src/simulator/*.cpp \
     ../src/simulator/elements/*.cpp \
     ../src/simulator/elements/active/*.cpp \
@@ -97,6 +98,7 @@ HEADERS += ../src/*.h \
     ../src/gui/editorwidget/*.h \
     ../src/gui/editorwidget/findreplacedialog/*.h \
     ../src/gui/dialogs/*.h \
+    ../src/gui/dialogs/components/*.h \
     ../src/simulator/*.h \
     ../src/simulator/elements/*.h \
     ../src/simulator/elements/active/*.h \
@@ -141,6 +143,7 @@ INCLUDEPATH += ../src \
     ../src/gui/editorwidget \
     ../src/gui/editorwidget/findreplacedialog \
     ../src/gui/dialogs \
+    ../src/gui/dialogs/components \
     ../src/simulator \
     ../src/simulator/elements \
     ../src/simulator/elements/active \
@@ -175,7 +178,9 @@ TRANSLATIONS +=  \
     ../resources/translations/simulide_it.ts
 
 FORMS +=   \
-    ../src/gui/dialogs/*.ui
+    ../src/gui/dialogs/*.ui \
+    ../src/gui/dialogs/components/*.ui
+#    ../src/gui/dataplotwidget/*.ui
 
 RESOURCES = ../src/application.qrc
 
