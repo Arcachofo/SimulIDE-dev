@@ -59,6 +59,7 @@ QFont CodeEditor::m_font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           : QPlainTextEdit( parent )
+          , eElement( "CodeEditor" )
 {
     Q_UNUSED( CodeEditor_properties );
     
@@ -119,9 +120,13 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     setLineWrapMode( QPlainTextEdit::NoWrap );
     updateLineNumberAreaWidth( 0 );
     highlightCurrentLine();
+
+    Simulator::self()->addToUpdateList( this );
 }
 CodeEditor::~CodeEditor()
 {
+    Simulator::self()->remFromUpdateList( this );
+
     if( !m_propDialog ) return;
 
     m_propDialog->setParent( NULL );
@@ -481,7 +486,7 @@ void CodeEditor::pause()
 
     m_resume = m_state;
     m_state  = DBG_PAUSED;
-    updateScreen();
+    //updateScreen();
 }
 
 void CodeEditor::reset()
@@ -504,6 +509,11 @@ void CodeEditor::setDriveCirc( bool drive )
     {
         if( drive ) Simulator::self()->pauseSim();
     }
+}
+
+void CodeEditor::updateStep()
+{
+    if( m_state == DBG_PAUSED ) updateScreen();
 }
 
 void CodeEditor::updateScreen()

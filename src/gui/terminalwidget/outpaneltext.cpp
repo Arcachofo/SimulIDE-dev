@@ -19,13 +19,14 @@
 
 #include "outpaneltext.h"
 #include "mainwindow.h"
-
+#include "simulator.h"
 
 OutPanelText::OutPanelText( QWidget* parent )
             : QPlainTextEdit( parent )
+            , eElement( "outPanel" )
 {
-    m_text = "";
-    this->setObjectName( "outPanel");
+    m_textBuffer = "";
+    this->setObjectName( "outPanel" );
 
     m_highlighter = new OutHighlighter( document() );
 
@@ -43,31 +44,34 @@ OutPanelText::OutPanelText( QWidget* parent )
     setMaximumBlockCount( 1000 );
 
     setReadOnly(true);
-}
-OutPanelText::~OutPanelText(){}
 
+    Simulator::self()->addToUpdateList( this );
+}
+OutPanelText::~OutPanelText()
+{
+    Simulator::self()->remFromUpdateList( this );
+}
 
 void OutPanelText::appendText( const QString text )
 {
-    m_text.append( text);
+    m_textBuffer.append( text);
 }
 
 void OutPanelText::writeText( const QString text )
 {
-    m_text.append( text );
-    step();
+    m_textBuffer.append( text );
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
-void OutPanelText::step()
+void OutPanelText::updateStep()
 {
-    if( m_text.isEmpty() ) return;
+    if( m_textBuffer.isEmpty() ) return;
 
     if( this->document()->characterCount() > 50000 )
         setPlainText( this->toPlainText().right( 50000 ) );
 
-    appendPlainText( m_text );
-    moveCursor( QTextCursor::End );
-    m_text.clear();
+    appendPlainText( m_textBuffer );
+    m_textBuffer.clear();
 }
 
 // CLASS OutHighlighter ***********************************************

@@ -276,12 +276,6 @@ void TerminalWidget::uartChanged( int uart )
     if( m_uartBox.value() != uart ) m_uartBox.setValue( uart );
 }
 
-void TerminalWidget::step()
-{
-    m_uartInPanel.step();
-    m_uartOutPanel.step();
-}
-
 void TerminalWidget::uartIn( int uart, int value ) // Receive one byte on Uart
 {
     //qDebug() << "TerminalWidget::uartIn" << m_uart << uart << value;

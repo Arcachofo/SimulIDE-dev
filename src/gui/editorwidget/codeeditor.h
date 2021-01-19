@@ -26,6 +26,7 @@
 #include "highlighter.h"
 #include "outpaneltext.h"
 #include "ramtablewidget.h"
+#include "e-element.h"
 
 enum bebugState_t{
     DBG_STOPPED = 0,
@@ -43,7 +44,7 @@ class EditorProp;
 class BaseDebugger;
 class LineNumberArea;
 
-class CodeEditor : public QPlainTextEdit
+class CodeEditor : public QPlainTextEdit, public eElement
 {
     Q_OBJECT
     //Q_PROPERTY( bool   centerOnScroll   READ centerOnScroll    WRITE setCenterOnScroll  DESIGNABLE true USER true )
@@ -56,6 +57,8 @@ class CodeEditor : public QPlainTextEdit
         CodeEditor( QWidget* parent, OutPanelText* outPane );
         ~CodeEditor();
         
+        virtual void updateStep() override;
+
         int fontSize() { return m_fontSize; }
         void setFontSize( int size );
         

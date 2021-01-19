@@ -66,7 +66,6 @@ SerialTerm::~SerialTerm()
 
 void SerialTerm::updateStep()
 {
-    m_serialWidget->step();
     m_serialWidget->update();
 }
 

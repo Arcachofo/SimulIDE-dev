@@ -24,9 +24,11 @@
 #include <QSyntaxHighlighter>
 #include <QObject>
 
+#include "e-element.h"
+
 class OutHighlighter;
 
-class MAINMODULE_EXPORT OutPanelText : public QPlainTextEdit
+class MAINMODULE_EXPORT OutPanelText : public QPlainTextEdit, public eElement
 {
     Q_OBJECT
     public:
@@ -36,10 +38,10 @@ class MAINMODULE_EXPORT OutPanelText : public QPlainTextEdit
         void appendText( const QString text );
         void writeText( const QString text );
         
-        void step();
+        virtual void updateStep() override;
 
     private:
-        QString m_text;
+        QString m_textBuffer;
  
         OutHighlighter* m_highlighter;
 };

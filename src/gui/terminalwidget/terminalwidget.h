@@ -41,8 +41,6 @@ class MAINMODULE_EXPORT TerminalWidget : public QWidget
         QString mcuId() { return m_mcuId; }
         void setMcuId( QString mcu );
 
-        void step();
-
         int uart() { return m_uart+1; }
         void setUart( int uart );
 

@@ -94,8 +94,10 @@ int InoDebugger::compile()
     dir.mkpath(buildPath+"/build");        // Create build folder
     dir.mkpath(buildPath+"/cache");        // Create cache folder
     
-    QDir directory( m_fileDir );
-    m_fileList = directory.entryList( QDir::Files );
+    //QDir directory( m_fileDir );
+    //m_fileList = directory.entryList( QDir::Files );
+    m_fileList.clear();
+    m_fileList.append( m_fileName+m_fileExt );
     
     QStringList inoLines = fileToStringList( filePath, "InoDebugger::compile" );
     QString line;
@@ -282,6 +284,8 @@ void InoDebugger::mapFlashToSource()
     for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
     {
         QString p_stdout = flashToLine.readLine();
+        if( p_stdout.startsWith("?") ) continue;
+
         int idx = p_stdout.lastIndexOf( ":" );
         if( idx == -1 ) continue;
 
@@ -291,6 +295,7 @@ void InoDebugger::mapFlashToSource()
             bool ok = false;
             int inoLineNum = p_stdout.mid( idx+1 ).toInt( &ok );
             if( !ok ) continue;
+
             m_flashToSource[ flashAddr ]  = inoLineNum;
             m_sourceToFlash[ inoLineNum ] = flashAddr;
         }
