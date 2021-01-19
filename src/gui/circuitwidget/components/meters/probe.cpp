@@ -88,10 +88,6 @@ Probe::Probe( QObject* parent, QString type, QString id )
     setLabelPos( 16, -16 , 45 );
 
     Simulator::self()->addToUpdateList( this );
-
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
-    m_propGroups.append( mainGroup );
 }
 Probe::~Probe()
 {

@@ -24,8 +24,6 @@
 #include <QtWidgets>
 #include <QPointer>
 
-#include "QPropertyEditorWidget.h"
-
 struct property_t{
         QString name;
         QString caption;
@@ -41,7 +39,6 @@ Q_DECLARE_METATYPE( QList<int> )
 
 class Pin;
 class Label;
-class PropertiesWidget;
 class PropDialog;
 
 class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
@@ -232,9 +229,7 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
         bool m_graphical;
         bool m_mainComp;
 
-        PropertiesWidget* m_propertiesW;
-        PropDialog*        m_propDialog;
-        QList<propGroup_t> m_propGroups;
+        PropDialog* m_propDialog;
         
         std::vector<Pin*> m_pin;
 };

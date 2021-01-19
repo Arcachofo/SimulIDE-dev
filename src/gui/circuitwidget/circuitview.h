@@ -26,7 +26,6 @@
 class Component;
 class Circuit;
 class SimuProp;
-class PropertiesWidget;
 
 class CircuitView : public QGraphicsView
 {

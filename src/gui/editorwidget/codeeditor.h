@@ -39,9 +39,9 @@ class QResizeEvent;
 class QSize;
 class QWidget;
 
+class EditorProp;
 class BaseDebugger;
 class LineNumberArea;
-class PropertiesWidget;
 
 class CodeEditor : public QPlainTextEdit
 {
@@ -144,8 +144,7 @@ class CodeEditor : public QPlainTextEdit
 
         bool m_isCompiled;
 
-        bool m_properties;
-        PropertiesWidget* m_propertiesW;
+        EditorProp* m_propDialog;
         
  static bool  m_showSpaces;
  static bool  m_spaceTabs;

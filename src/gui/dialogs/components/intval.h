@@ -38,7 +38,7 @@ class IntVal : public QWidget, private Ui::IntVal
 
     public slots:
         void on_value_valueChanged( int val );
-        void on_unitBox_currentTextChanged( QString unit );
+        //void on_unitBox_currentTextChanged( QString unit );
 
     private:
         void updateValues();

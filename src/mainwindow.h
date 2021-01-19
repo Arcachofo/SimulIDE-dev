@@ -22,7 +22,6 @@
 
 #include <QtWidgets>
 
-class PropertiesWidget;
 class ComponentSelector;
 class CircuitWidget;
 class EditorWindow;
@@ -73,7 +72,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
 
         QString getHelpFile( QString name );
 
-        PropertiesWidget* createPropWidget( QObject* obj, QString* help );
+        //PropertiesWidget* createPropWidget( QObject* obj, QString* help );
         
         QTabWidget*  m_sidepanel;
 

@@ -63,9 +63,7 @@ int GcbDebugger::compile()
     #endif
 
     command.append( args + file );
-    
-    m_outPane->appendText( command );
-    m_outPane->writeText( "\n\n" );
+    m_outPane->writeText( command );
 
     QProcess compGcb( 0l );
     compGcb.setWorkingDirectory( m_fileDir );

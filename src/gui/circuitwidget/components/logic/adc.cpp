@@ -61,10 +61,6 @@ ADC::ADC( QObject* parent, QString type, QString id )
     eLogicDevice::createInput( m_inPin[0] );
 
     setLabelPos(-16,-80, 0);
-
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( property_t {"Vref", tr("Reference Voltage"),"V"} );
-    m_propGroups.append( mainGroup );
 }
 ADC::~ADC(){}
 

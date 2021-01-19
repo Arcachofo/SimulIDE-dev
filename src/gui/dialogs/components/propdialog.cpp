@@ -75,11 +75,9 @@ void PropDialog::setComponent( Component* comp )
                     propWidget->layout()->addWidget( mp );
                     continue;
                 }
-
                 QVariant value = comp->property( name );
+                if( !value.isValid() ) continue;
 
-                if( !value.isValid() )
-                    continue;
                 QVariant::Type type = value.type();
 
                 if( unit == "enum")

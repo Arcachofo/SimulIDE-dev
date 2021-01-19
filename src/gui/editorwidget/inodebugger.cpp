@@ -166,8 +166,7 @@ int InoDebugger::compile()
     command += " "+filePath;
     m_firmware = "";
     
-    m_outPane->appendText( command );
-    m_outPane->writeText( "\n\n" );
+    m_outPane->writeText( command );
     
     m_compProcess.start( command );
     m_compProcess.waitForFinished(-1);

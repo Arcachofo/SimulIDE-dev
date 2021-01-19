@@ -49,7 +49,6 @@ SOURCES += ../src/*.cpp \
     ../src/gui/circuitwidget/components/switches/*.cpp \
     ../src/gui/dataplotwidget/*.cpp \
     ../src/gui/terminalwidget/*.cpp \
-    ../src/gui/QPropertyEditor/*.cpp \
     ../src/gui/componentselector/*.cpp \
     ../src/gui/filebrowser/*.cpp \
     ../src/gui/editorwidget/*.cpp \
@@ -92,7 +91,6 @@ HEADERS += ../src/*.h \
     ../src/gui/circuitwidget/components/switches/*.h \
     ../src/gui/dataplotwidget/*.h \
     ../src/gui/terminalwidget/*.h \
-    ../src/gui/QPropertyEditor/*.h \
     ../src/gui/componentselector/*.h \
     ../src/gui/filebrowser/*.h \
     ../src/gui/editorwidget/*.h \
@@ -137,7 +135,6 @@ INCLUDEPATH += ../src \
     ../src/gui/circuitwidget/components/switches \
     ../src/gui/dataplotwidget \
     ../src/gui/terminalwidget \
-    ../src/gui/QPropertyEditor \
     ../src/gui/componentselector \
     ../src/gui/filebrowser \
     ../src/gui/editorwidget \

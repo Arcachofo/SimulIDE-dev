@@ -66,8 +66,7 @@ int PicAsmDebugger::compile()
     command.append(" -L -w1  -i  -ainhx32 -I "+m_fileDir+" "+ file);
 
     m_outPane->appendText( "Exec: ");
-    m_outPane->appendText( command );
-    m_outPane->writeText( "\n\n" );
+    m_outPane->writeText( command );
     
     QProcess compAsm( this );
     compAsm.start( command  );

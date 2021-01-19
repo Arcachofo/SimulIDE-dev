@@ -34,7 +34,7 @@
 #include "simulator.h"
 #include "circuitwidget.h"
 #include "editorwindow.h"
-#include "propertieswidget.h"
+#include "editorprop.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
 
@@ -68,13 +68,13 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_lNumArea  = new LineNumberArea( this );
     m_hlighter  = new Highlighter( document() );
     
-    m_debugger = 0l;
+    m_debugger = NULL;
     m_debugLine = 0;
     m_brkAction = 0;
 
     m_isCompiled= false;
     m_driveCirc = false;
-    m_properties = false;
+    m_propDialog = NULL;
 
     m_help = "";
     m_state = DBG_STOPPED;
@@ -122,12 +122,11 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 }
 CodeEditor::~CodeEditor()
 {
-    if( !m_properties ) return;
+    if( !m_propDialog ) return;
 
-    m_propertiesW->properties()->removeObject( this );
-    if( m_debugger ) m_propertiesW->properties()->removeObject( m_debugger );
-    m_propertiesW->close();
-    m_propertiesW->deleteLater();
+    m_propDialog->setParent( NULL );
+    m_propDialog->close();
+    m_propDialog->deleteLater();
 }
 
 void CodeEditor::setFile( const QString filePath )
@@ -135,24 +134,22 @@ void CodeEditor::setFile( const QString filePath )
     m_isCompiled= false;
     if( m_file == filePath ) return;
 
-    if( m_properties )
+    if( m_propDialog )
     {
-        m_properties = false;
-        m_propertiesW->properties()->removeObject( this );
-        if( m_debugger ) m_propertiesW->properties()->removeObject( m_debugger );
-        m_propertiesW->close();
-        m_propertiesW->deleteLater();
+        m_propDialog->setParent( NULL );
+        m_propDialog->close();
+        m_propDialog->deleteLater();
+        m_propDialog = NULL;
     }
     if( m_debugger )
     {
         delete m_debugger;
-        m_debugger = 0l;
+        m_debugger = NULL;
     }
     
     m_outPane->appendText( "-------------------------------------------------------\n" );
     m_outPane->appendText( tr(" File: ") );
-    m_outPane->appendText( filePath );
-    m_outPane->writeText( "\n\n" );
+    m_outPane->writeText( filePath );
 
     m_file = filePath;
     QFileInfo fi = QFileInfo( m_file );
@@ -295,8 +292,7 @@ void CodeEditor::compile()
         QString p_stderr = makeproc.readAllStandardError();
         m_outPane->appendText( p_stderr );
         m_outPane->appendText( "\n" );
-        m_outPane->appendText( p_stdout );
-        m_outPane->writeText( "\n\n" );
+        m_outPane->writeText( p_stdout );
 
         if( p_stderr.toUpper().contains("ERROR") || p_stdout.toUpper().contains("ERROR") )
             error = -1;
@@ -333,8 +329,7 @@ void CodeEditor::upload()
     {
         //m_outPane->writeText( "-------------------------------------------------------\n" );
         m_outPane->appendText( "\n"+tr("Uploading: ")+"\n" );
-        m_outPane->appendText( m_file );
-        m_outPane->writeText( "\n\n" );
+        m_outPane->writeText( m_file );
 
         if( McuComponent::self() ) McuComponent::self()->load( m_file );
         return;
@@ -456,7 +451,7 @@ void CodeEditor::lineReached( int line ) // Processor reached PC related to sour
     EditorWindow::self()->pause(); // EditorWindow: calls this->pause as well
 
     int cycle = BaseProcessor::self()->cycle();
-    m_outPane->writeText("\n"+tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
+    m_outPane->writeText( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
     m_lastCycle = cycle;
 }
 
@@ -475,7 +470,7 @@ void CodeEditor::stopDebbuger()
         setReadOnly( false );
         updateScreen();
     }
-    m_outPane->writeText( "\n\n"+tr("Debugger Stopped ")+"\n" );
+    m_outPane->writeText( "\n"+tr("Debugger Stopped ")+"\n" );
 }
 
 void CodeEditor::pause()
@@ -737,7 +732,13 @@ void CodeEditor::contextMenuEvent(QContextMenuEvent* event)
 
 void CodeEditor::slotProperties()
 {
-    if( m_properties ) m_propertiesW->show();
+    if( !m_propDialog )
+    {
+        m_propDialog = new EditorProp( this, m_debugger );
+    }
+    m_propDialog->show();
+
+    /*if( m_properties ) m_propertiesW->show();
     else
     {
         if( m_help == "" )
@@ -752,7 +753,7 @@ void CodeEditor::slotProperties()
         m_propertiesW->move( p.x(), p.y() );
 
         m_properties = true;
-    }
+    }*/
 }
 
 /*void CodeEditor::increaseSelectionIndent()

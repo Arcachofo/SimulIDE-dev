@@ -18,7 +18,6 @@
  ***************************************************************************/
  
 #include "circuitwidget.h"
-#include "propertieswidget.h"
 #include "mainwindow.h"
 #include "simulator.h"
 #include "circuit.h"

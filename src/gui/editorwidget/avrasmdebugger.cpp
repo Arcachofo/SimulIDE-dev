@@ -91,15 +91,13 @@ int AvrAsmDebugger::compile()
     command.append(" "+file );                       // File to assemble
 
     m_outPane->appendText( "Exec: ");
-    m_outPane->appendText( command );
-    m_outPane->writeText( "\n\n" );
+    m_outPane->writeText( command );
     
     m_compProcess.start( command );
     m_compProcess.waitForFinished(-1);
     
     QString p_stderr = m_compProcess.readAllStandardError();
-    m_outPane->appendText( p_stderr );
-    m_outPane->writeText( "\n\n" );
+    m_outPane->writeText( p_stderr );
 
     int error = 0;
 

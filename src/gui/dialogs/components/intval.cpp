@@ -74,20 +74,21 @@ void IntVal::on_value_valueChanged( int val )
     updateValues();
 }
 
-void IntVal::on_unitBox_currentTextChanged( QString unit )
+/*void IntVal::on_unitBox_currentTextChanged( QString unit )
 {
     if( m_blocked ) return;
     m_blocked = true;
     m_component->setUnit( unit );
     updateValues();
     m_blocked = false;
-}
+}*/
 
 void IntVal::updateValues()
 {
     int val = m_component->property( m_propName.toUtf8() ).toInt();
     value->setValue( val );
-    QString unit = m_component->unit();
+
+    /*QString unit = m_component->unit();
     if( unit.size() > 2 ) unit = unit.right( 2 );
-    unitBox->setCurrentText( unit );
+    unitBox->setCurrentText( unit );*/
 }

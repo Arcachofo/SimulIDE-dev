@@ -29,7 +29,6 @@ class InoDebugger : public BaseDebugger
     Q_OBJECT
     Q_PROPERTY( board_t Board        READ board       WRITE setBoard       DESIGNABLE true USER true )
     Q_PROPERTY( QString Custom_Board READ customBoard WRITE setCustomBoard DESIGNABLE true USER true )
-    Q_ENUMS( board_t )
     
     public:
         InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
@@ -43,6 +42,7 @@ class InoDebugger : public BaseDebugger
             Leonardo,
             Custom
         };
+        Q_ENUM( board_t )
         
         QString customBoard() { return m_customBoard; }
         void setCustomBoard( QString b ){ m_customBoard = b; }

@@ -60,23 +60,14 @@ void OutPanelText::writeText( const QString text )
 
 void OutPanelText::step()
 {
-    if( m_text == "" ) return;
+    if( m_text.isEmpty() ) return;
 
-    QString text = this->toPlainText();
+    if( this->document()->characterCount() > 50000 )
+        setPlainText( this->toPlainText().right( 50000 ) );
 
-    if( text.length() > 50000 )
-    {
-        text = text.right( 50000 );
-        text.append( m_text );
-        setPlainText( text );
-    }
-    else
-    {
-        moveCursor( QTextCursor::End );
-        insertPlainText( m_text );
-    }
+    appendPlainText( m_text );
     moveCursor( QTextCursor::End );
-    m_text = "";
+    m_text.clear();
 }
 
 // CLASS OutHighlighter ***********************************************

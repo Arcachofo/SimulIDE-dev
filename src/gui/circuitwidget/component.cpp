@@ -21,13 +21,11 @@
 #include "mainwindow.h"
 #include "connector.h"
 #include "connectorline.h"
-#include "propertieswidget.h"
 #include "circuitwidget.h"
 #include "itemlibrary.h"
 #include "circuit.h"
 #include "utils.h"
 #include "simuapi_apppath.h"
-
 #include "propdialog.h"
 
 #include <math.h>
@@ -306,17 +304,10 @@ void Component::remove()
         m_propDialog->close();
         m_propDialog->deleteLater();
     }
-    if( m_properties )
-    {
-        m_propertiesW->properties()->removeObject( this );
-        m_propertiesW->close();
-        m_propertiesW->deleteLater();
-    }
 
     for( uint i=0; i<m_pin.size(); i++ )   // Remove connectors attached
     {
         Pin* pin = m_pin[i];
-        if( !pin ) continue;
         
         if( pin && pin->connector() )
         {
@@ -335,31 +326,6 @@ void Component::slotProperties()
         m_propDialog->setComponent( this );
     }
     m_propDialog->show();
-
-    /*if( m_properties ) m_propertiesW->show();
-    else
-    {
-        if(( m_help == "" )&&( m_type != "Connector" )&&( m_type != "Node" ))
-        {
-            QString name = m_type;
-
-            if( ( m_type == "Subcircuit" )
-              ||( m_type == "Arduino" )
-              ||( m_type == "MCU" )
-              ||( m_type == "PIC" )
-              ||( m_type == "AVR" ))
-            {
-                name = m_id.split("-").first();
-            }
-            m_help = MainWindow::self()->getHelpFile( name );
-        }
-        m_propertiesW = MainWindow::self()->createPropWidget( this, &m_help );
-        QPoint p = CircuitWidget::self()->mapToGlobal( QPoint(0, 0) );
-        QPoint p2 = CircuitView::self()->mapFromScene( pos() );
-        m_propertiesW->move( p.x()+p2.x(), p.y()+p2.y());
-
-        m_properties = true;
-    }*/
 }
 
 void Component::H_flip()

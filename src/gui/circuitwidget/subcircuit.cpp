@@ -22,7 +22,6 @@
 #include "subcircuit.h"
 #include "itemlibrary.h"
 #include "componentselector.h"
-#include "propertieswidget.h"
 #include "circuit.h"
 #include "tunnel.h"
 #include "utils.h"
@@ -428,13 +427,15 @@ void SubCircuit::remove()
 
 void SubCircuit::slotProperties()
 {
-    if( m_properties ) m_propertiesW->show();
+    Component::slotProperties();
+
+    /*if( m_properties ) m_propertiesW->show();
     else
     {
         Component::slotProperties();
         if( m_mainComponent )
             m_propertiesW->properties()->addObject( m_mainComponent );
-    }
+    }*/
 }
 
 void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )

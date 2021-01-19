@@ -20,7 +20,6 @@
 #include "mainwindow.h"
 #include "appiface.h"
 #include "circuit.h"
-#include "propertieswidget.h"
 #include "componentselector.h"
 #include "editorwindow.h"
 #include "circuitwidget.h"
@@ -280,17 +279,6 @@ QString MainWindow::getHelpFile( QString name )
     }
     m_help[name] = help;
     return help;
-}
-
-PropertiesWidget* MainWindow::createPropWidget( QObject* obj, QString* help )
-{
-    PropertiesWidget* propertiesW = new PropertiesWidget( this );
-    propertiesW->setObjectName( obj->objectName()+"properties" );
-    propertiesW->properties()->setObject( obj );
-    propertiesW->setHelpText( help );
-    propertiesW->setWindowTitle( obj->objectName() );
-    propertiesW->show();
-    return propertiesW;
 }
 
 void MainWindow::loadPlugins()
