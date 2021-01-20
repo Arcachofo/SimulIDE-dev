@@ -1,0 +1,57 @@
+/***************************************************************************
+ *   Copyright (C) 2020 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         */
+
+#include <QDialog>
+
+#include "ui_editorprop.h"
+
+#ifndef EDITORDIALOG_H
+#define EDITORDIALOG_H
+
+class CodeEditor;
+class BaseDebugger;
+
+class EditorProp : public QDialog, private Ui::EditorProp
+{
+    Q_OBJECT
+    
+    public:
+        EditorProp(CodeEditor* parent , BaseDebugger* debugger);
+
+    public slots:
+
+        void on_fontSize_valueChanged( int size );
+        void on_tabSize_valueChanged( int size );
+        void on_tabSpaces_toggled( bool spaces );
+        void on_showSpaces_toggled( bool show );
+        void on_driveCirc_toggled( bool drive );
+
+        void on_compPath_textEdited( QString path );
+        void on_avraInc_textEdited( QString path );
+        void on_ardBoard_currentIndexChanged( int index );
+        void on_customBoard_textEdited( QString board );
+
+    private:
+
+        CodeEditor* m_editor;
+        BaseDebugger* m_debugger;
+
+};
+
+
+#endif
