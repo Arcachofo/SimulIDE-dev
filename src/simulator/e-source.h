@@ -68,7 +68,6 @@ class MAINMODULE_EXPORT eSource : public eElement
         double m_admit;
 
         bool m_out;
-        bool m_nextOut;
         bool m_inverted;
 
         double m_timeLH;

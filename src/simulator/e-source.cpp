@@ -98,12 +98,13 @@ void eSource::setTimedOut( bool out )
         Simulator::self()->addEvent( m_timeHL*1.25, this );
     }
     stampOutput();
-    m_nextOut = out;
+    m_out = out;
 }
 
 void eSource::runEvent()
 {
-    setOut( m_nextOut );
+    if( m_out ) m_voltOut = m_voltHigh;
+    else        m_voltOut = m_voltLow;
     stampOutput();
 }
 
@@ -111,14 +112,11 @@ void eSource::setInverted( bool inverted )
 {
     if( inverted == m_inverted ) return;
 
+    if( inverted ) setTimedOut( !m_out );
+    else           setTimedOut( m_out );
+
     m_inverted = inverted;
     m_ePin[0]->setInverted( inverted );
-    
-    m_out = !m_out;
-    if( m_out ) m_voltOut = m_voltHigh;
-    else        m_voltOut = m_voltLow;
-    
-    stampOutput();
 }
 
 void eSource::setImp( double imp )
