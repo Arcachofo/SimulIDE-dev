@@ -44,6 +44,7 @@ EditorProp::EditorProp( CodeEditor* parent, BaseDebugger* debugger )
             avraIncLabel->setVisible( false );
             avraInc->setVisible( false );
         }
+        else avraInc->setText( value.toString() );
 
         value = debugger->property( "Board" );
         if( !value.isValid() )
@@ -53,6 +54,12 @@ EditorProp::EditorProp( CodeEditor* parent, BaseDebugger* debugger )
             customLabel->setVisible( false );
             customBoard->setVisible( false );
             driveCirc->setVisible( false );
+        }
+        else
+        {
+            ardBoard->setCurrentIndex( value.toInt() );
+            customBoard->setText( debugger->property( "Custom_Board" ).toString() );
+            driveCirc->setChecked( m_editor->driveCirc() );
         }
     }else{
         compPathLabel->setVisible( false );
