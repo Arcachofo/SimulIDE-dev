@@ -198,14 +198,18 @@ bool AvrProcessor::loadFirmware( QString fileN )
 
     m_avrProcessor->frequency = 16000000;
     m_avrProcessor->cycle = 0;
-    m_avrProcessor->gdb_port = 1212;
     m_symbolFile = fileN;
 
     if( m_initGdb )
     {
+        m_avrProcessor->gdb_port = 1212;
         int ok = avr_gdb_init( m_avrProcessor );
-        if( ok < 0 ) qDebug() << "avr_gdb_init ERROR " << ok;
-        else         qDebug() << "avr_gdb_init OK";
+        if( ok < 0 )
+        {
+            m_avrProcessor->gdb_port = 0;
+            qDebug() << "avr_gdb_init ERROR " << ok;
+        }
+        else qDebug() << "avr_gdb_init OK";
     }
 
     BaseProcessor::initialized();
