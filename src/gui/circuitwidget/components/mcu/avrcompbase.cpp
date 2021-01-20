@@ -22,8 +22,8 @@
 
 AvrCompBase::AvrCompBase( QObject* parent, QString type, QString id )
            : McuComponent( parent, type, id )
-           , m_avrI2C("avrI2C")
            , m_avr( this )
+           , m_avrI2C("avrI2C")
 {
     m_processor = &m_avr;
     createRamTable();
