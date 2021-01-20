@@ -125,22 +125,25 @@ int InoDebugger::compile()
     }
     QString command  = m_compilerPath+"arduino";
 
-    #ifndef Q_OS_UNIX
-    command += "_debug";
-    command = addQuotes( command );
-    #endif
-    command += " --get-pref sketchbook.path";
+    if( m_sketchBook.isEmpty() )
+    {
+        #ifndef Q_OS_UNIX
+        command += "_debug";
+        command = addQuotes( command );
+        #endif
+        command += " --get-pref sketchbook.path";
 
-    QProcess getSkBook( this );  // Get sketchBook Path
-    getSkBook.start( command );
-    getSkBook.waitForFinished();
-    QString sketchBook = getSkBook.readAllStandardOutput();
-    sketchBook = sketchBook.remove("\r").remove("\n");
-    getSkBook.close();
-    if( sketchBook.isEmpty() )
-        m_outPane->writeText( "\nNo User sketchBook Found\n\n" );
-    else
-        m_outPane->writeText( "\nFound User sketchBook at:\n"+sketchBook+"\n\n" );
+        QProcess getSkBook( this );  // Get sketchBook Path
+        getSkBook.start( command );
+        getSkBook.waitForFinished();
+        m_sketchBook = getSkBook.readAllStandardOutput();
+        m_sketchBook = m_sketchBook.remove("\r").remove("\n");
+        getSkBook.close();
+        if( m_sketchBook.isEmpty() )
+            m_outPane->writeText( "\nNo User sketchBook Found\n\n" );
+        else
+            m_outPane->writeText( "\nFound User sketchBook at:\n"+m_sketchBook+"\n\n" );
+    }
 
     QString cBuildPath = buildPath;
     QString boardName;
@@ -161,7 +164,7 @@ int InoDebugger::compile()
     command += " -tools "+m_compilerPath+"tools-builder";
     command += " -tools "+m_compilerPath+"hardware/tools/avr";
     command += " -built-in-libraries "+m_compilerPath+"libraries";
-    command += " -libraries "+sketchBook+"/libraries";
+    command += " -libraries "+m_sketchBook+"/libraries";
     command += " -fqbn=arduino:avr:"+boardName;
     command += " -build-path "+cBuildPath+"/build";
     command += " -build-cache "+cBuildPath+"/cache";

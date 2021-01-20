@@ -69,6 +69,8 @@ class InoDebugger : public BaseDebugger
         
         QString m_customBoard;
         board_t m_board;
+
+        QString m_sketchBook;
 };
 
 
