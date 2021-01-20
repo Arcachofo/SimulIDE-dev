@@ -50,6 +50,7 @@ Simulator::Simulator( QObject* parent )
     m_errors[3] = "Add Event: LAST_SIM_EVENT reached";
 
     m_warnings[1] = "NonLinear Not Converging";
+    m_warnings[100] = "AVR crashed !!!";
 
     resetSim();
 
@@ -87,12 +88,13 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
     }
     if( m_warning > 0 )
     {
-        CircuitWidget::self()->setMsg( m_warnings.value( m_warning), 1 );
+        int type = (m_warning < 100)? 1:2;
+        CircuitWidget::self()->setMsg( m_warnings.value( m_warning), type );
         m_warning = -10;
     }
     else if( m_warning < 0 )
     {
-        if( ++m_warning == 0 )CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
+        if( ++m_warning == 0 ) CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
     }
     //if( m_state < SIM_RUNNING ) return;
 

@@ -34,7 +34,7 @@ class AvrProcessor : public BaseProcessor
     Q_OBJECT
 
     public:
-        AvrProcessor( QObject* parent=0 );
+        AvrProcessor( McuComponent* parent );
         ~AvrProcessor();
 
         bool initGdb();
@@ -45,8 +45,7 @@ class AvrProcessor : public BaseProcessor
 
         void reset();
 
-        void stepCpu(){ if( m_avrProcessor->state < cpu_Done )
-                            m_avrProcessor->run( m_avrProcessor );}
+        virtual void stepCpu() override;
 
         virtual int pc();
         virtual uint64_t cycle(){ return m_avrProcessor->cycle; }

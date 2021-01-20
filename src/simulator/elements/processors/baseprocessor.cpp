@@ -29,12 +29,13 @@
 
 BaseProcessor* BaseProcessor::m_pSelf = 0l;
 
-BaseProcessor::BaseProcessor( QObject* parent )
+BaseProcessor::BaseProcessor( McuComponent* parent )
              : QObject( parent )
              , eElement( "baseprocessor" )
              , m_ramTable( this )
 {
     m_pSelf = this;
+    m_mcu = parent;
 
     m_debugger = NULL;
 

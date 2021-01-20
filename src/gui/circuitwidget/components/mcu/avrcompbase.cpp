@@ -17,15 +17,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
-
 #include "avrcompbase.h"
 #include "avr_twi.h"
-
 
 AvrCompBase::AvrCompBase( QObject* parent, QString type, QString id )
            : McuComponent( parent, type, id )
            , m_avrI2C("avrI2C")
+           , m_avr( this )
 {
     m_processor = &m_avr;
     createRamTable();
@@ -247,6 +245,12 @@ bool AvrCompBase::initGdb()
 void AvrCompBase::setInitGdb( bool init )
 {
     m_avr.setInitGdb( init );
+}
+
+void AvrCompBase::crash()
+{
+    m_crashed = true;
+    m_warning = 100 ;
 }
 
 #include "moc_avrcompbase.cpp"

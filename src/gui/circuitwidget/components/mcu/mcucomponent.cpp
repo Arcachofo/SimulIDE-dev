@@ -56,12 +56,14 @@ McuComponent::McuComponent( QObject* parent, QString type, QString id )
     m_pSelf = this;
     m_attached  = false;
     m_autoLoad  = false;
+    m_crashed   = false;
     
     m_processor  = 0l;
     m_symbolFile = "";
     m_device     = "";
     m_subcDir    = "";
     m_error      = 0;
+    m_warning    = 0;
     m_cpi = 1;
     
     // Id Label Pos set in Chip::initChip
@@ -112,6 +114,11 @@ void McuComponent::initialize()
 
 void McuComponent::updateStep()
 {
+    if( m_crashed )
+    {
+        Simulator::self()->setWarning( m_warning );
+        update();
+    }
     m_processor->getRamTable()->updateValues();
 }
 
@@ -225,6 +232,8 @@ void McuComponent::setFreq( double freq )
 
 void McuComponent::reset()
 {
+    m_warning = 0;
+    m_crashed = false;
     m_processor->reset();
 }
 
@@ -464,6 +473,15 @@ void McuComponent::saveData()
 void McuComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Chip::paint( p, option, widget );
+
+    if( m_crashed )
+    {
+static double opCount = 0;
+        opCount += 0.04;
+        if( opCount > 0.6 ) opCount = 0;
+        p->setOpacity( opCount );
+        p->fillRect( boundingRect(), Qt::yellow  );
+    }
 
     if( m_pSelf == this )
     {

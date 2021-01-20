@@ -33,7 +33,7 @@ class PicProcessor : public BaseProcessor
 {
     Q_OBJECT
     public:
-        PicProcessor( QObject* parent=0 );
+        PicProcessor( McuComponent* parent );
         ~PicProcessor();
 
         bool loadFirmware( QString file );

@@ -48,6 +48,8 @@ class AvrCompBase : public McuComponent
 
         virtual void inStateChanged( int value );
 
+        virtual void crash() override;
+
  static void adc_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
             Q_UNUSED(irq);

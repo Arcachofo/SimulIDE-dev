@@ -30,7 +30,7 @@
 #include "eeprom.h"
 #include "hexutils.h"
 
-PicProcessor::PicProcessor( QObject* parent ) 
+PicProcessor::PicProcessor( McuComponent* parent )
             : BaseProcessor( parent )
             , m_hexLoader()
 {

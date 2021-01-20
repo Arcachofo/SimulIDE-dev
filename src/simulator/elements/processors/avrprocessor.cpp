@@ -35,7 +35,7 @@
 extern "C"
 int elf_read_firmware_ext(const char * file, elf_firmware_t * firmware);
 
-AvrProcessor::AvrProcessor( QObject* parent ) 
+AvrProcessor::AvrProcessor( McuComponent* parent )
             : BaseProcessor( parent )
 {
     m_avrProcessor = 0l;
@@ -215,6 +215,12 @@ bool AvrProcessor::loadFirmware( QString fileN )
     BaseProcessor::initialized();
 
     return true;
+}
+
+void AvrProcessor::stepCpu()
+{
+    if( m_avrProcessor->state < cpu_Done ) m_avrProcessor->run( m_avrProcessor );
+    else m_mcu->crash();
 }
 
 void AvrProcessor::reset()

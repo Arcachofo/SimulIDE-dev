@@ -80,6 +80,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         void runCircuit();
 
+        void setWarning( int warning ) { m_warning = warning; }
+
         uint64_t stepSize() { return m_stepSize; }
         void setStepSize( uint64_t stepSize ) { m_stepSize = stepSize; }
         
@@ -136,7 +138,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         inline void solveMatrix();
 
-        simEventList_t   m_eventList;
+        simEventList_t m_eventList;
 
         QFuture<void> m_CircuitFuture;
 

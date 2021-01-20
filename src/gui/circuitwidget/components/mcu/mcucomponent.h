@@ -50,6 +50,9 @@ class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
         virtual void initialize() override;
         virtual void updateStep() override;
         virtual void attach() override;
+        virtual void remove() override;
+
+        virtual void initChip();
 
         QStringList varList();
         void setVarList( QStringList vl ) { m_varList = vl; }
@@ -65,19 +68,16 @@ class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
         
         QString device() { return m_device; }
 
-        virtual void initChip();
-
         void setEeprom(QVector<int> eep );
         QVector<int> eeprom();
         
         QList<McuComponentPin*> getPinList() { return m_pinList; }
 
         virtual void terminate();
-        virtual void remove() override;
         virtual void reset();
         virtual void load( QString fileName );
-
         virtual void setSubcDir( QString dir );
+        virtual void crash(){;}
 
         BaseProcessor* processor() { return m_processor; }
 
@@ -122,6 +122,9 @@ class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
         
         bool m_attached;
         bool m_autoLoad;
+        bool m_crashed;
+
+        int m_warning;
 
         QString m_device;       // Name of device
         QString m_symbolFile;   // firmware file loaded

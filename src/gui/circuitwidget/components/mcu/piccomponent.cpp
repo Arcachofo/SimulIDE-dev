@@ -49,6 +49,7 @@ Component* PICComponent::construct( QObject* parent, QString type, QString id )
 
 PICComponent::PICComponent( QObject* parent, QString type, QString id )
             : McuComponent( parent, type, id )
+            , m_pic( this )
 {
     m_processor = &m_pic;
     createRamTable();

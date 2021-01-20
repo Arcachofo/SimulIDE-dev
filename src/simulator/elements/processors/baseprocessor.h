@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
 
     Q_OBJECT
     public:
-        BaseProcessor( QObject* parent=0 );
+        BaseProcessor( McuComponent* parent );
         ~BaseProcessor();
         
  static BaseProcessor* self() { return m_pSelf; }
@@ -114,6 +114,8 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
 
         bool m_resetStatus;
         bool m_loadStatus;
+
+        McuComponent* m_mcu;
 
         BaseDebugger* m_debugger;
         bool m_debugging;
