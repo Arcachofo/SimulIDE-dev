@@ -64,6 +64,7 @@ void InoDebugger::upload()
     {
         QDir circuitDir = QFileInfo( circDir ).absoluteDir();
         m_firmware = circuitDir.absolutePath()+"/"+m_fileName+".hex";
+        circuitDir.remove( m_fileName+".hex" );
         QFile::copy( firmPath, m_firmware );
     }
     BaseDebugger::upload();
