@@ -117,7 +117,6 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
     }else                           // Read
     {
         m_read = true;
-        m_oeNext = true;
         Simulator::self()->addEvent( m_propDelay, this );
     }
 }
