@@ -189,7 +189,7 @@ int InoDebugger::compile()
             if( line.contains( "error:" ) )
             {
                 QStringList words = line.split(":");
-                error = words.at(1).toInt()-1;
+                error = words.at(1).toInt();
                 break;
             }
         }
