@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,167 +17,96 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDomDocument>
+
 #include "compiler.h"
-#include "baseprocessor.h"
 #include "editorwindow.h"
-#include "mainwindow.h"
-#include "simulator.h"
+#include "outpaneltext.h"
+#include "utils.h"
 
-static const char* Compiler_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Drive Circuit"),
-    QT_TRANSLATE_NOOP("App::Property","Compiler Path")
-};
-
-bool Compiler::m_loadStatus = false;
-
-Compiler::Compiler( CodeEditor* parent, OutPanelText* outPane, QString filePath )
+Compiler::Compiler( EditorWindow* parent, OutPanelText* outPane )
         : QObject( parent )
-        , m_compProcess( 0l )
+        , m_compProcess( NULL )
 {
-    Q_UNUSED( Compiler_properties );
-
     m_editor  = parent;
     m_outPane = outPane;
-    m_appPath = QCoreApplication::applicationDirPath();
-    
-    QFileInfo fi = QFileInfo( filePath );
-    m_file     = filePath;
-    m_fileDir  = fi.absolutePath();
-    m_fileExt  = "."+fi.suffix();
-    m_fileName = fi.completeBaseName();
 
-    m_processorType = 0;
-    type = 0;
-    
-    connect( &m_compProcess, SIGNAL(readyRead()), SLOT(ProcRead()), Qt::UniqueConnection );
+    clearCompiler();
 }
 Compiler::~Compiler( )
 {
-    //if( BaseProcessor::self() ) BaseProcessor::self()->getRamTable()->remDebugger( this );
 }
 
-bool Compiler::loadFirmware()
+void Compiler::clearCompiler()
 {
-    if ( m_firmware == "" )  return false;
-    
-    upload();
-    if( m_loadStatus ) return false;
-    m_loadStatus = true;
-    return true;
+    m_toolChain = false;
+    m_toolPath.clear();
+    m_command.clear();
+    m_arguments.clear();
 }
 
-void Compiler::upload()
+void Compiler::loadCompiler( QString file )
 {
-    if( m_loadStatus )
+    QDomDocument domDoc = fileToDomDoc( file, "Compiler::loadCompiler" );
+    if( domDoc.isNull() )
     {
-        QMessageBox::warning( 0, "Compiler::loadFirmware",
-                                tr("Debugger already running")+"\n"+tr("Stop active session") );
+        m_outPane->writeText( "Error: Compiler file not valid:\n"+file+"\n" );
         return;
     }
-    m_outPane->writeText( "-------------------------------------------------------\n" );
-    m_outPane->appendText( "\n"+tr("Uploading: ")+"\n" );
-    m_outPane->appendText( m_firmware );
-    m_outPane->writeText( "\n\n" );
-    
-    if( McuComponent::self() ) 
+    QDomElement root = domDoc.documentElement();
+
+    QString compName = "";
+
+    if( root.hasAttribute("name") )  compName = root.attribute( "name" );
+    if( root.hasAttribute("toolPath") )  m_toolPath = root.attribute( "toolPath" );
+    if( root.hasAttribute("command") )   m_command  = root.attribute( "command" );
+    if( root.hasAttribute("arguments") ) m_arguments = root.attribute( "arguments" );
+
+    if( !QFile::exists( m_toolPath+m_command ) )
     {
-        McuComponent::self()->load( m_firmware );
-        m_outPane->appendText( "\n"+tr("FirmWare Uploaded to ")+McuComponent::self()->device()+"\n" );
-        m_outPane->writeText( "\n\n" );
-
-        ///BaseProcessor::self()->getRamTable()->setDebugger( this );
-        mapFlashToSource();
-        ///BaseProcessor::self()->m_debugger = this;
+        m_outPane->appendText( tr("Error: ToolChain not found")+"\n" );
+        m_outPane->writeText( m_toolPath+m_command+"\n" );
+        return;
     }
-    else m_outPane->writeText( "\n"+tr("Error: No Mcu in Simulator... ")+"\n" );
+    m_outPane->writeText( compName+" Compiler successfully loaded.\n" );
+    m_toolChain = true;
 }
 
-void Compiler::stop()
+int Compiler::compile( QString file )
 {
-    m_loadStatus = false;
-}
+    if( !m_toolChain ) return -1;
 
-int Compiler::getValidLine( int line )
-{
-    while( !m_sourceToFlash.contains(line) && line<=m_lastLine ) line++;
-    return line;
-}
+    QApplication::setOverrideCursor( Qt::WaitCursor );
 
-QString Compiler::getVarType( QString var )
-{
-    var= var.toUpper();
-    return m_varList[ var ];
-}
+    int error = 0;
 
-QStringList Compiler::getVarList()
-{
-    /*QStringList varList = m_varList.keys();
-    varList.sort();
-    return varList;*/
-    return m_varNames;
-}
+    QString command = m_toolPath+m_command;
 
-void Compiler::ProcRead()
-{
-    while( m_compProcess.canReadLine() ) 
+    #ifndef Q_OS_UNIX
+    command  = addQuotes( command );
+    file     = addQuotes( file );
+    #endif
+
+    QString arguments = m_arguments.replace( "$Fi", file );
+
+    m_outPane->writeText( "\n Executing:\n"+command+arguments+"\n" );
+    m_compProcess.start( command+arguments  );
+    m_compProcess.waitForFinished(-1);
+
+    QString p_stderr = m_compProcess.readAllStandardError();
+    QString p_stdout = m_compProcess.readAllStandardOutput();
+
+    m_outPane->writeText( p_stdout+"\n" );
+    if( !p_stderr.isEmpty() )
     {
-        m_outPane->appendText( QString::fromLocal8Bit( m_compProcess.readLine()) );
-        //m_outPane->writeText( "\n" );
+        m_outPane->writeText( "ERROR OUTPUT:\n" );
+        m_outPane->writeText( p_stderr+"\n" );
     }
-}
 
-void Compiler::readSettings()
-{
-    QSettings* settings = MainWindow::self()->settings();
-    
-    if( settings->contains( m_compSetting ) )
-        m_compilerPath = settings->value( m_compSetting ).toString();
-}
-
-void Compiler::getCompilerPath()
-{
-        m_compilerPath = QFileDialog::getExistingDirectory( 0L,
-                               tr("Select Compiler toolchain directory"),
-                               m_compilerPath,
-                               QFileDialog::ShowDirsOnly
-                             | QFileDialog::DontResolveSymlinks);
-
-        if( m_compilerPath != "" ) m_compilerPath += "/";
-
-        MainWindow::self()->settings()->setValue( m_compSetting, m_compilerPath);
-
-        m_outPane->appendText( "\n"+tr("Using Compiler Path: ")+"\n" );
-        m_outPane->writeText( m_compilerPath+"\n\n" );
-}
-
-bool Compiler::driveCirc()
-{
-    CodeEditor* ce = EditorWindow::self()->getCodeEditor();
-    return ce->driveCirc();
-}
-
-void Compiler::setDriveCirc( bool drive )
-{
-    CodeEditor* ce = EditorWindow::self()->getCodeEditor();
-    ce->setDriveCirc( drive );
-}
-
-QString Compiler::compilerPath()
-{
-    return m_compilerPath;
-}
-
-void Compiler::setCompilerPath( QString path )
-{
-    m_compilerPath = path;
-    MainWindow::self()->settings()->setValue( m_compSetting, m_compilerPath );
-}
-
-void Compiler::toolChainNotFound()
-{
-    m_outPane->appendText( tr(": ToolChain not found")+"\n" );
-    m_outPane->writeText( "\n"+tr("Right-Click on Document Tab to set Path")+"\n\n" );
     QApplication::restoreOverrideCursor();
+    return error;
 }
+
+
 #include "moc_compiler.cpp"
 

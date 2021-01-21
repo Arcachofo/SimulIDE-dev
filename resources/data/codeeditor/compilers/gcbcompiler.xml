@@ -1,0 +1,11 @@
+<!DOCTYPE SimulIDE>
+
+<!-- $Fi = file to compile (complete path) -->
+
+
+<compiler 
+    name="GcBasic"
+    toolPath="/home/user/GreatCowBasic/"
+    command="gcbasic"
+    arguments=" -NP -K:L -A:GCASM -R:text $Fi"
+/>

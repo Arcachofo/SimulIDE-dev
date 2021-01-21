@@ -211,7 +211,6 @@ bool AvrProcessor::loadFirmware( QString fileN )
         }
         else qDebug() << "avr_gdb_init OK";
     }
-
     BaseProcessor::initialized();
 
     return true;

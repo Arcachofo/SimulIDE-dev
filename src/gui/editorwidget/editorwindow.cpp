@@ -17,11 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
-//#include <QtGui>
-
 #include "editorwindow.h"
 #include "mainwindow.h"
 #include "filebrowser.h"
+#include "compiler.h"
 #include "utils.h"
 
 EditorWindow*  EditorWindow::m_pSelf = 0l;
@@ -29,6 +28,8 @@ EditorWindow*  EditorWindow::m_pSelf = 0l;
 EditorWindow::EditorWindow( QWidget* parent )
             : QWidget( parent )
             , m_fileMenu( this )
+            , m_outPane( this )
+            , m_compiler( this, &m_outPane )
 {
     m_pSelf = this;
 
@@ -39,6 +40,8 @@ EditorWindow::EditorWindow( QWidget* parent )
     updateRecentFileActions();
     createToolBars();
     readSettings();
+
+    /// m_compiler.loadCompiler( "/home/user/gcbcompiler.xml");
 }
 EditorWindow::~EditorWindow(){}
 
@@ -92,13 +95,14 @@ void EditorWindow::dropEvent( QDropEvent* event )
 
 void EditorWindow::newFile()
 {
-    CodeEditorWidget* baseWidget = new CodeEditorWidget( this );
+    //CodeEditorWidget* baseWidget = new CodeEditorWidget( this );
+    CodeEditor* codeEditor = new CodeEditor( this, &m_outPane );
+
+    m_docWidget->addTab( codeEditor, "New" );
+    m_docWidget->setCurrentWidget( codeEditor );
     
-    m_docWidget->addTab( baseWidget, "New" );
-    m_docWidget->setCurrentWidget( baseWidget );
-    
-    connect( baseWidget->m_codeEditor->document(), SIGNAL( contentsChanged()),
-             this,                                 SLOT(   documentWasModified()), Qt::UniqueConnection);
+    connect( codeEditor->document(), SIGNAL( contentsChanged()),
+             this,                   SLOT(   documentWasModified()), Qt::UniqueConnection);
             
     m_fileList << "New";
     enableFileActs( true ); 
@@ -304,13 +308,18 @@ void EditorWindow::createWidgets()
     baseWidgetLayout->setSpacing(0);
     baseWidgetLayout->setContentsMargins(0, 0, 0, 0);
     baseWidgetLayout->setObjectName("gridLayout");
-    
+
     m_editorToolBar = new QToolBar( this );
     baseWidgetLayout->addWidget( m_editorToolBar );
     
     m_debuggerToolBar = new QToolBar( this );
     m_debuggerToolBar->setVisible( false );
     baseWidgetLayout->addWidget( m_debuggerToolBar );
+
+    QSplitter* splitter0 = new QSplitter( this );
+    splitter0->setObjectName("splitter0");
+    splitter0->setOrientation( Qt::Vertical );
+    baseWidgetLayout->addWidget( splitter0 );
     
     m_docWidget = new QTabWidget( this );
     m_docWidget->setObjectName("docWidget");
@@ -321,7 +330,12 @@ void EditorWindow::createWidgets()
     QString fontSize = QString::number( int(10*fontScale) );
     m_docWidget->tabBar()->setStyleSheet("QTabBar { font-size:"+fontSize+"px; }");
     //m_docWidget->setMovable( true );
-    baseWidgetLayout->addWidget( m_docWidget );
+    ///baseWidgetLayout->addWidget( m_docWidget );
+    splitter0->addWidget( m_docWidget );
+
+    splitter0->addWidget( &m_outPane );
+    splitter0->setSizes( {300, 100} );
+
     
     connect( m_docWidget, SIGNAL( tabCloseRequested(int)), 
              this,        SLOT(   closeTab(int)), Qt::UniqueConnection);
@@ -456,9 +470,7 @@ void EditorWindow::enableStepOver( bool en )
 
 CodeEditor* EditorWindow::getCodeEditor()
 {
-    CodeEditorWidget* actW = dynamic_cast<CodeEditorWidget*>(m_docWidget->currentWidget());
-    if( actW )return actW->m_codeEditor;
-    else      return 0l;
+    return (CodeEditor*)m_docWidget->currentWidget();
 }
 
 void EditorWindow::closeTab( int index )
@@ -475,9 +487,9 @@ void EditorWindow::closeTab( int index )
     }
     if( m_debuggerToolBar->isVisible() ) stop();
 
-    CodeEditorWidget* actW = dynamic_cast<CodeEditorWidget*>( m_docWidget->widget(index));
+    CodeEditor* doc = (CodeEditor*)m_docWidget->currentWidget();
     m_docWidget->removeTab( index );
-    delete actW;
+    delete doc;
 
     int last = m_docWidget->count()-1;
     if( index > last ) m_docWidget->setCurrentIndex( last );
@@ -558,6 +570,7 @@ void EditorWindow::stop()
 void EditorWindow::compile() 
 { 
     getCodeEditor()->compile();
+    /// m_compiler.compile( getCodeEditor()->getFilePath() );
 }
 
 void EditorWindow::upload()  
@@ -650,15 +663,9 @@ void EditorWindow::writeSettings()
     settings->setValue( "lastDir", m_lastDir );
 }
 
-QString EditorWindow::strippedName(const QString &fullFileName)
+QString EditorWindow::strippedName( const QString &fullFileName )
 {
-    return QFileInfo(fullFileName).fileName();
+    return QFileInfo( fullFileName ).fileName();
 }
 
-void EditorWindow::about()
-{
-   /*QMessageBox::about(this, tr("About Application"),
-            tr(""));*/
-            ;
-}
 #include  "moc_editorwindow.cpp"

@@ -53,7 +53,7 @@ int GcbDebugger::compile()
         return -1;
     }
 
-    QString file = m_fileDir+m_fileName+m_fileExt;
+    QString file = m_file;
     QString args = " -NP -K:L -A:GCASM -R:text  ";
     QString command = m_compilerPath + "gcbasic";
     

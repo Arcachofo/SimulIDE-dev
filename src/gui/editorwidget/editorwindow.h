@@ -21,9 +21,8 @@
 #define EDITORWINDOW_H
 
 #include <QtGui>
-
-#include "codeeditorwidget.h"
 #include "findreplacedialog.h"
+#include "compiler.h"
 
 class EditorWindow : public QWidget
 {
@@ -53,7 +52,6 @@ class EditorWindow : public QWidget
         void newFile();
         void open();
         bool saveAs();
-        void about();
         void closeTab(int);
         void documentWasModified();
         void tabContextMenu( const QPoint & eventpoint );
@@ -92,15 +90,20 @@ class EditorWindow : public QWidget
         void enableFileActs( bool enable );
         void enableDebugActs( bool enable );
         void setStepActs();
-        void keyPressEvent(QKeyEvent *event);
+        void keyPressEvent( QKeyEvent* event );
 
         bool maybeSave();
-        bool saveFile(const QString &fileName);
+        bool saveFile( const QString &fileName );
         
-        QString strippedName(const QString &fullFileName);
+        QString strippedName( const QString &fullFileName );
         
         QGridLayout* baseWidgetLayout;
         QTabWidget*  m_docWidget;
+
+        QMenu        m_fileMenu;
+        OutPanelText m_outPane;
+        Compiler     m_compiler;
+
         
         FindReplaceDialog* findRepDiaWidget;
         
@@ -136,8 +139,6 @@ class EditorWindow : public QWidget
         QAction* compileAct;
         QAction* loadAct;
         QAction* findQtAct;
-
-        QMenu m_fileMenu;
 };
 
 #endif

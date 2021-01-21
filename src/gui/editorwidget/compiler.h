@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,82 +21,34 @@
 #define COMPILER_H
 
 #include <QtGui>
-#include "outpaneltext.h"
-#include "mcucomponent.h"
 
-class CodeEditor;
+class EditorWindow;
+class OutPanelText;
 
-class Compiler : public QObject    // Base Class for all debuggers
+class Compiler : public QObject
 {
-        friend class BaseProcessor;
-
     Q_OBJECT
-    Q_PROPERTY( bool    Drive_Circuit READ driveCirc    WRITE setDriveCirc    DESIGNABLE true USER true )
-    Q_PROPERTY( QString Compiler_Path READ compilerPath WRITE setCompilerPath DESIGNABLE true USER true )
-    
+
     public:
-        Compiler( CodeEditor* parent=0, OutPanelText* outPane=0, QString filePath=0 );
+        Compiler( EditorWindow* parent, OutPanelText* outPane );
         ~Compiler();
-        
-        bool driveCirc();
-        void setDriveCirc( bool drive );
 
-        QString compilerPath();
-        virtual void getCompilerPath();
-        virtual void setCompilerPath( QString path );
-
-        virtual bool loadFirmware();
-        virtual void upload();
-        virtual void stop();
-
-        virtual int  compile()=0;
-        virtual void mapFlashToSource()=0;
-
-        virtual int getValidLine( int pc );
-
-        virtual void readSettings();
-        virtual QString getVarType( QString var );
-        virtual QStringList getVarList();
-        virtual QList<int> getSubLines() { return m_subLines; }
-        
-        int type;
-        
-    public slots:
-        void ProcRead();
+        void clearCompiler();
+        void loadCompiler( QString file );
+        int compile( QString file );
 
     protected:
-        void toolChainNotFound();
-        virtual void getSubs(){;}
-    
-        OutPanelText*  m_outPane;
 
-        CodeEditor* m_editor;
+        bool m_toolChain;
 
- static bool m_loadStatus;                          // Is symbol file loaded?
+        QString m_toolPath;
+        QString m_command;
+        QString m_arguments;
 
-        int m_processorType;
-        int m_lastLine;
-        
-        //QString m_device;
-        QString m_appPath;
-        QString m_firmware;
-        QString m_file;
-        QString m_fileDir;
-        QString m_fileName;
-        QString m_fileExt;
-        QString m_compilerPath;
-        QString m_compSetting;
-        
-        QStringList m_varNames;
-        QStringList m_subs;
-        QList<int>  m_subLines;
-        
-        QHash<QString, QString> m_typesList;
-        QHash<QString, QString> m_varList;
-        QHash<int, int> m_flashToSource;            // Map flash adress to Source code line
-        QHash<int, int> m_sourceToFlash;            // Map .asm code line to flash adress
-        
         QProcess m_compProcess;
+
+        EditorWindow* m_editor;
+        OutPanelText* m_outPane;
 };
 
 #endif
