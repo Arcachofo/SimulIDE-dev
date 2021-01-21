@@ -97,9 +97,8 @@ void eLogicDevice::updateOutEnabled()
 {
     if( m_outEnSource )
     {
-        bool outEn = true;
         bool outEnPrev = m_outEnable;
-        outEn = outputEnabled();              // Refresh m_outEnable
+        bool outEn = outputEnabled();              // Refresh m_outEnable
 
         if( outEnPrev != outEn ) setOutputEnabled( outEn );
     }

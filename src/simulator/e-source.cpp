@@ -136,6 +136,7 @@ void eSource::setImp( double imp )
     m_imp = imp;
     m_admit = 1/m_imp;
     eSource::stamp();
+    m_impNext = imp;
 }
 
 void eSource::setTimedImp( double imp )

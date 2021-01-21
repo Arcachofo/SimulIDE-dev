@@ -25,12 +25,11 @@ eLatchD::eLatchD( QString id, int channels )
 {
     m_oldst = 0;
 }
-eLatchD::~eLatchD()
-{ 
-}
+eLatchD::~eLatchD(){}
 
 void eLatchD::stamp()
 {
+    m_oldst = false;
     if( m_etrigger != Trig_Clk )
     {
         for( uint i=0; i<m_input.size(); ++i )
