@@ -51,6 +51,15 @@ class MAINMODULE_EXPORT I2CRam : public LogicComponent, public eI2C, public MemD
         
         virtual QList<propGroup_t> propGroups() override;
 
+        virtual void stamp() override;
+        virtual void initialize() override;
+        virtual void updateStep() override;
+        virtual void voltChanged() override;
+
+        virtual void startWrite() override;
+        virtual void writeByte() override;
+        virtual void readByte() override;
+
         void setMem( QVector<int> m );
         QVector<int> mem();
 
@@ -62,18 +71,12 @@ class MAINMODULE_EXPORT I2CRam : public LogicComponent, public eI2C, public MemD
 
         bool persistent();
         void setPersistent( bool p );
-        
-        virtual void stamp() override;
-        virtual void initialize() override;
-        virtual void voltChanged() override;
 
-        virtual void startWrite();
-        virtual void writeByte();
-        virtual void readByte();
 
     public slots:
         void loadData();
         void saveData();
+        void showTable();
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
 
     protected:

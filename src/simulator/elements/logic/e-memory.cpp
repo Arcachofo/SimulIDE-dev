@@ -27,6 +27,7 @@ eMemory::eMemory( QString id )
     m_persistent = false;
     m_addrBits = 8;
     m_dataBits = 8;
+    m_dataBytes = 1;
     
     m_dataPinState.resize( 8 );
     m_ram.resize(256);
@@ -176,6 +177,10 @@ void eMemory::setDataBits( int bits )
 {
     if( bits == 0 ) bits = 8;
     m_dataBits = bits;
+
+    int bytes = bits/8;
+    if( bits%8 ) bytes++;
+    m_dataBytes = bytes;
     
     m_dataPinState.resize( bits );
 }

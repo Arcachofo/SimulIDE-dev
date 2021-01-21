@@ -49,6 +49,7 @@ class MAINMODULE_EXPORT eMemory : public eLogicDevice
     protected:
         int m_addrBits;
         int m_dataBits;
+        int m_dataBytes;
         
         QVector<int> m_ram;
         std::vector<bool> m_dataPinState;

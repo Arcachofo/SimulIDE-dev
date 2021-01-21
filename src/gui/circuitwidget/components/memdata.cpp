@@ -22,14 +22,33 @@
 
 #include "memdata.h"
 #include "simulator.h"
+#include "circuitwidget.h"
 #include "circuit.h"
+#include "memtable.h"
 #include "utils.h"
 
 
 MemData::MemData()
 {
+    m_memTable = NULL;
 }
-MemData::~MemData(){}
+MemData::~MemData()
+{
+    if( m_memTable )
+    {
+        m_memTable->setParent( NULL );
+        m_memTable->deleteLater();
+    }
+}
+
+void MemData::showTable( int dataSize, int wordBytes )
+{
+    if( !m_memTable )
+    {
+        m_memTable = new MemTable( CircuitWidget::self(), dataSize, wordBytes );
+    }
+    m_memTable->show();
+}
 
 void MemData::loadData( QVector<int>* toData, bool resize, int bits )
 {

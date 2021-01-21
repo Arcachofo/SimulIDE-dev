@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,27 +17,29 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MEMDATA_H
-#define MEMDATA_H
+#include <QDialog>
 
-class MemTable;
+#include "ui_memtable.h"
 
-class MAINMODULE_EXPORT MemData
+#ifndef MEMTABLE_H
+#define MEMTABLE_H
+
+class Component;
+
+class MemTable : public QDialog, private Ui::MemTable
 {
+    Q_OBJECT
+    
     public:
-        MemData();
-        ~MemData();
+        MemTable( QWidget* parent=0, int dataSize=256, int wordBytes=1 );
 
-        void loadData( QVector<int>* toData , bool resize=false, int bits=8 );
-        void saveData( QVector<int> data, int bits=8 );
+        void updateTable( QVector<int> data );
+        void resizeTable( int dataSize );
 
-    public slots:
-        virtual void showTable( int dataSize=256, int wordBytes=1 );
-
-    protected:
-        MemTable* m_memTable;
+    private:
+        int m_dataSize;
+        int m_wordBytes;
+        int m_updtCount;
 };
 
 #endif
-
-

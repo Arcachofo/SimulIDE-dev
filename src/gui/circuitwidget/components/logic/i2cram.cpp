@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include "i2cram.h"
+#include "memtable.h"
+#include "simulator.h"
 #include "pin.h"
 
 static const char* I2CRam_properties[] = {
@@ -76,6 +78,8 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
     m_persistent = false;
     
     initialize();
+
+    Simulator::self()->addToUpdateList( this );
 }
 I2CRam::~I2CRam(){}
 
@@ -110,6 +114,11 @@ void I2CRam::initialize()
     m_phase = 3;
 }
 
+void I2CRam::updateStep()
+{
+    if( m_memTable ) m_memTable->updateTable( m_ram );
+}
+
 void I2CRam::voltChanged()             // Some Pin Changed State, Manage it
 {
     bool A0 = eLogicDevice::getInputState( 1 );
@@ -126,12 +135,7 @@ void I2CRam::voltChanged()             // Some Pin Changed State, Manage it
     eI2C::voltChanged();                               // Run I2C Engine
 
     //qDebug() <<"I2CRam::setVChanged " << m_state ;
-    
-    /*if( m_state == I2C_STARTED )
-    {
-        if( m_size > 256 ) m_phase = 0;
-        else               m_phase = 1;
-    }*/
+
     if( m_state == I2C_STOPPED ) m_phase = 3;
 }
 
@@ -148,8 +152,6 @@ void I2CRam::readByte() // Write to RAM
 
         if( m_size > 256 ) m_addrPtr += m_rxReg;
         else               m_addrPtr  = m_rxReg;
-        
-        //while( m_addrPtr >= m_size ) m_addrPtr -= m_size;
     }
     else
     {
@@ -165,8 +167,6 @@ void I2CRam::readByte() // Write to RAM
 
 void I2CRam::startWrite()
 {
-    //m_addrPtr = 0;
-    //m_phase = 3;
     if( m_size > 256 ) m_phase = 0;
     else               m_phase = 1;
 }
@@ -177,9 +177,8 @@ void I2CRam::writeByte() // Read from RAM
 
     m_txReg = m_ram[ m_addrPtr ];
 //qDebug() << "I2CRam::writeByte Read from RAM Address:"<<m_addrPtr<<" Value"<< m_txReg;
-    m_addrPtr++;
     
-    if( m_addrPtr >= m_size ) m_addrPtr = 0;
+    if( ++m_addrPtr >= m_size ) m_addrPtr = 0;
 
     eI2C::writeByte();
 }
@@ -221,7 +220,9 @@ void I2CRam::setRSize( int size )
     if( size > 65536 ) size = 65536;
     if( size < 1 ) size = 1;
     m_size = size;
-    //m_ram.resize( size );
+    m_ram.resize( size );
+
+    if( m_memTable ) m_memTable->resizeTable( size );
 }
 
 bool I2CRam::persistent()
@@ -257,6 +258,10 @@ void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     connect( saveAction, SIGNAL(triggered()),
                    this, SLOT(saveData()), Qt::UniqueConnection );
 
+    QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
+    connect( showEepAction, SIGNAL(triggered()),
+                      this, SLOT(showTable()), Qt::UniqueConnection );
+
     menu->addSeparator();
 }
 
@@ -269,4 +274,12 @@ void I2CRam::saveData()
 {
     MemData::saveData( m_ram );
 }
+
+void I2CRam::showTable()
+{
+    MemData::showTable( m_size, 1 );
+    if( m_persistent ) m_memTable->setWindowTitle( "I2C ROM: "+m_idLabel->toPlainText());
+    else               m_memTable->setWindowTitle( "I2C RAM: "+m_idLabel->toPlainText() );
+}
+
 #include "moc_i2cram.cpp"

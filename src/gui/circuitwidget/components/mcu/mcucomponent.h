@@ -98,6 +98,7 @@ class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
 
         void loadData();
         void saveData();
+        void showTable();
 
     protected:
  static McuComponent* m_pSelf;

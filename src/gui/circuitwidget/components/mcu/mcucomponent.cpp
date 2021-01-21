@@ -34,6 +34,7 @@
 #include "serialport.h"
 #include "serialterm.h"
 #include "simuapi_apppath.h"
+#include "memtable.h"
 #include "utils.h"
 
 
@@ -118,6 +119,11 @@ void McuComponent::updateStep()
     {
         Simulator::self()->setWarning( m_warning );
         update();
+    }
+    if( m_memTable )
+    {
+        m_memTable->updateTable( m_processor->eeprom() );
+
     }
     m_processor->getRamTable()->updateValues();
 }
@@ -288,6 +294,7 @@ void McuComponent::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* me
     connect( reloadAction, SIGNAL(triggered()),
                      this, SLOT(slotReload()), Qt::UniqueConnection );
 
+    menu->addSeparator();
     QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load EEPROM data") );
     connect( loadDaAction, SIGNAL(triggered()),
                      this, SLOT(loadData()), Qt::UniqueConnection );
@@ -295,6 +302,10 @@ void McuComponent::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* me
     QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data") );
     connect( saveDaAction, SIGNAL(triggered()),
                      this, SLOT(saveData()), Qt::UniqueConnection );
+
+    QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show EEPROM Table") );
+    connect( showEepAction, SIGNAL(triggered()),
+                      this, SLOT(showTable()), Qt::UniqueConnection );
 
     menu->addSeparator();
     QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open RamTable.") );
@@ -390,6 +401,12 @@ void McuComponent::load( QString fileName )
     //else QMessageBox::warning( 0, tr("Error:"), tr("Could not load: \n")+ fileName );
 
     if( pauseSim ) Simulator::self()->resumeSim();
+}
+
+void McuComponent::showTable()
+{
+    MemData::showTable( 1 );
+    m_memTable->setWindowTitle( m_idLabel->toPlainText()+" EEPROM");
 }
 
 void McuComponent::setSubcDir( QString dir ) // Used in subcircuits

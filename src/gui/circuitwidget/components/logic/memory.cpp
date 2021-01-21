@@ -22,6 +22,7 @@
 #include "simulator.h"
 #include "circuit.h"
 #include "pin.h"
+#include "memtable.h"
 #include "utils.h"
 
 static const char* Memory_properties[] = {
@@ -76,6 +77,8 @@ Memory::Memory( QObject* parent, QString type, QString id )
     m_dataBits = 0;
     setAddrBits( 8 );
     setDataBits( 8 );
+
+    Simulator::self()->addToUpdateList( this );
 }
 Memory::~Memory(){}
 
@@ -89,6 +92,11 @@ QList<propGroup_t> Memory::propGroups()
     QList<propGroup_t> pg = LogicComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
+}
+
+void Memory::updateStep()
+{
+    if( m_memTable ) m_memTable->updateTable( m_ram );
 }
 
 void Memory::updatePins()
@@ -140,6 +148,8 @@ void Memory::setAddrBits( int bits )
     else if( bits > m_addrBits ) createAddrBits( bits-m_addrBits );
     
     eMemory::setAddrBits( bits );
+
+    if( m_memTable ) m_memTable->resizeTable( m_ram.size() );
 
     updatePins();
 
@@ -237,6 +247,10 @@ void Memory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     connect( saveAction, SIGNAL(triggered()),
                    this, SLOT(saveData()), Qt::UniqueConnection );
 
+    QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show Memory Table") );
+    connect( showEepAction, SIGNAL(triggered()),
+                      this, SLOT(showTable()), Qt::UniqueConnection );
+
     menu->addSeparator();
 }
 
@@ -248,6 +262,13 @@ void Memory::loadData()
 void Memory::saveData()
 {
     MemData::saveData( m_ram, m_dataBits );
+}
+
+void Memory::showTable()
+{
+    MemData::showTable( m_ram.size(), m_dataBytes );
+    if( m_persistent ) m_memTable->setWindowTitle( "ROM: "+m_idLabel->toPlainText() );
+    else               m_memTable->setWindowTitle( "RAM: "+m_idLabel->toPlainText() );
 }
 
 void Memory::remove()

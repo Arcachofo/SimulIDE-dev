@@ -52,6 +52,8 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public eMemory, public M
 
         virtual QList<propGroup_t> propGroups() override;
 
+        virtual void updateStep() override;
+
         void setAddrBits( int bits );
         void deleteAddrBits( int bits );
         void createAddrBits( int bits );
@@ -67,10 +69,11 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public eMemory, public M
     public slots:
         void loadData();
         void saveData();
+        void showTable();
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
 
     protected:
-        virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
+        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
         
     private:
         Pin* m_CsPin;
