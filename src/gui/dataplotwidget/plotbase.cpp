@@ -56,14 +56,39 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 }
-
-PlotBase::~PlotBase() 
-{
-}
+PlotBase::~PlotBase() {}
 
 void PlotBase::initialize()
 {
     m_dataPlotW->m_refCondFlag = false;
+}
+
+void PlotBase::setBaSizeX( int size )
+{
+    if( size == 0 ) return;
+    m_baSizeX = size;
+    setAdvanc( m_advanc );
+}
+
+void PlotBase::setBaSizeY( int size )
+{
+    if( size == 0 ) return;
+    m_baSizeY = size;
+    setAdvanc( m_advanc );
+}
+
+void PlotBase::setAdSizeX( int size )
+{
+    if( size == 0 ) return;
+    m_adSizeX = size;
+    setAdvanc( m_advanc );
+}
+
+void PlotBase::setAdSizeY( int size )
+{
+    if( size == 0 ) return;
+    m_adSizeY  = size;
+    setAdvanc( m_advanc );
 }
 
 void PlotBase::pauseOnCond()

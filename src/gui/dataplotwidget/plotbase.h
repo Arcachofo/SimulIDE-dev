@@ -69,16 +69,16 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         Q_ENUM( paCond )
 
         int baSizeX() { return m_baSizeX; }
-        void setBaSizeX( int size ) { m_baSizeX = (size/10)*10; setAdvanc( m_advanc ); }
+        void setBaSizeX( int size );
 
         int baSizeY() { return m_baSizeY; }
-        void setBaSizeY( int size ) { m_baSizeY = (size/10)*10; setAdvanc( m_advanc ); }
+        void setBaSizeY( int size );
 
         int adSizeX() { return m_adSizeX; }
-        void setAdSizeX( int size ) { m_adSizeX = (size/10)*10; setAdvanc( m_advanc ); }
+        void setAdSizeX( int size );
 
         int adSizeY() { return m_adSizeY; }
-        void setAdSizeY( int size ) { m_adSizeY = (size/10)*10; setAdvanc( m_advanc ); }
+        void setAdSizeY( int size );
 
         double dataSize() { return DataChannel::m_dataSize/1e6; }
         void setDataSize( double ds ) { DataChannel::m_dataSize = ds*1e6; }
