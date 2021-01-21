@@ -280,6 +280,7 @@ void I2CRam::showTable()
     MemData::showTable( m_size, 1 );
     if( m_persistent ) m_memTable->setWindowTitle( "I2C ROM: "+m_idLabel->toPlainText());
     else               m_memTable->setWindowTitle( "I2C RAM: "+m_idLabel->toPlainText() );
+    m_memTable->setData( m_ram );
 }
 
 #include "moc_i2cram.cpp"

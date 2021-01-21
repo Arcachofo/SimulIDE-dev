@@ -51,6 +51,7 @@ class MAINMODULE_EXPORT eSource : public eElement
 
         double imp() { return m_imp; }
         virtual void  setImp( double imp );
+        void setTimedImp( double imp );
 
         uint64_t riseTime() { return m_timeLH; }
         void setRiseTime( uint64_t time );
@@ -65,9 +66,11 @@ class MAINMODULE_EXPORT eSource : public eElement
         double m_voltLow;
         double m_voltOut;
         double m_imp;
+        double m_impNext;
         double m_admit;
 
         bool m_out;
+        bool m_outNext;
         bool m_inverted;
 
         double m_timeLH;

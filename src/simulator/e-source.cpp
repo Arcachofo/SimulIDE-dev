@@ -26,12 +26,14 @@ eSource::eSource( QString id, ePin* epin )
     m_ePin.resize(1);
     m_ePin[0] = epin;
     m_out     = false;
+    m_outNext = false;
     m_inverted = false;
 
     m_voltHigh = cero_doub;
     m_voltLow  = cero_doub;
     m_voltOut  = cero_doub;
     m_imp      = cero_doub;
+    m_impNext  = cero_doub;
     m_admit    = 1/m_imp;
 
     m_timeLH = 3000;
@@ -53,6 +55,23 @@ void eSource::stamp()
 {
     m_ePin[0]->stampAdmitance( m_admit );
     stampOutput();
+}
+
+void eSource::runEvent()
+{
+    if( m_outNext != m_out )
+    {
+        m_out = m_outNext;
+        if( m_out ) m_voltOut = m_voltHigh;
+        else        m_voltOut = m_voltLow;
+        stampOutput();
+    }
+    if( m_impNext != m_imp )
+    {
+        m_imp = m_impNext;
+        m_admit = 1/m_imp;
+        eSource::stamp();
+    }
 }
 
 void eSource::stampOutput()
@@ -98,14 +117,7 @@ void eSource::setTimedOut( bool out )
         Simulator::self()->addEvent( m_timeHL*1.25, this );
     }
     stampOutput();
-    m_out = out;
-}
-
-void eSource::runEvent()
-{
-    if( m_out ) m_voltOut = m_voltHigh;
-    else        m_voltOut = m_voltLow;
-    stampOutput();
+    m_outNext = out;
 }
 
 void eSource::setInverted( bool inverted )
@@ -123,6 +135,23 @@ void eSource::setImp( double imp )
 {
     m_imp = imp;
     m_admit = 1/m_imp;
+    eSource::stamp();
+}
+
+void eSource::setTimedImp( double imp )
+{
+    m_impNext = imp;
+    if( imp > m_imp )
+    {
+        imp = m_imp+1e-6;
+        Simulator::self()->addEvent( m_timeLH*1.25, this );
+    }
+    else
+    {
+        imp = m_imp+(imp-m_imp)*1e-3;
+        Simulator::self()->addEvent( m_timeHL*1.25, this );
+    }
+    m_admit = 1/imp;
     eSource::stamp();
 }
 

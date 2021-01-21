@@ -40,6 +40,11 @@ void MemTable::updateTable( QVector<int> data )
     if( ++m_updtCount == 10 ) m_updtCount = 0;
     else                      return;
 
+    setData( data );
+}
+
+void MemTable::setData( QVector<int> data )
+{
     if( data.size() != m_dataSize ) resizeTable( data.size() );
 
     int row = 0;

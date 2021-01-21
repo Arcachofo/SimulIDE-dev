@@ -35,6 +35,7 @@ class MemTable : public QDialog, private Ui::MemTable
 
         void updateTable( QVector<int> data );
         void resizeTable( int dataSize );
+        void setData( QVector<int> data );
 
     private:
         int m_dataSize;
