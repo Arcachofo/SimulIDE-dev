@@ -35,10 +35,10 @@ class MAINMODULE_EXPORT OutPanelText : public QPlainTextEdit, public eElement
         OutPanelText( QWidget* parent=0 );
         ~OutPanelText();
 
+        virtual void updateStep() override;
+
         void appendText( const QString text );
         void writeText( const QString text );
-        
-        virtual void updateStep() override;
 
     private:
         QString m_textBuffer;

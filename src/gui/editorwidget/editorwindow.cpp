@@ -19,6 +19,7 @@
 
 #include "editorwindow.h"
 #include "mainwindow.h"
+#include "simulator.h"
 #include "filebrowser.h"
 #include "compiler.h"
 #include "utils.h"
@@ -516,6 +517,8 @@ void EditorWindow::debug()
         stepOverAct->setEnabled( true );
         resetAct->setEnabled( true );
         pauseAct->setEnabled( false );
+
+        Simulator::self()->addToUpdateList( &m_outPane );
     }
 }
 
@@ -565,6 +568,8 @@ void EditorWindow::stop()
     getCodeEditor()->stopDebbuger();
     m_debuggerToolBar->setVisible( false );
     m_editorToolBar->setVisible( true);
+
+    Simulator::self()->remFromUpdateList( &m_outPane );
 }
 
 void EditorWindow::compile() 

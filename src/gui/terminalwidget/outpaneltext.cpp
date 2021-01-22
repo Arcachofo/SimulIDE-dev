@@ -44,13 +44,8 @@ OutPanelText::OutPanelText( QWidget* parent )
     setMaximumBlockCount( 1000 );
 
     setReadOnly(true);
-
-    Simulator::self()->addToUpdateList( this );
 }
-OutPanelText::~OutPanelText()
-{
-    Simulator::self()->remFromUpdateList( this );
-}
+OutPanelText::~OutPanelText(){}
 
 void OutPanelText::appendText( const QString text )
 {
