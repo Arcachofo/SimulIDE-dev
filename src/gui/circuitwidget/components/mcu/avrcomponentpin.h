@@ -47,8 +47,7 @@ class AVRComponentPin : public McuComponentPin
         virtual void setState( bool state ) override;
 
         virtual void pullupNotConnected( bool up ) override;
-        virtual void setImp( double imp ) override;
-        //virtual void resetOutput();
+        virtual void setTimedImp( double imp ) override;
 
         void adcread();
         void enableIO( bool en );

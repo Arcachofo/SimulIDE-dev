@@ -148,7 +148,7 @@ void McuComponentPin::update()
 
     m_voltOut = 5*vddAdmit*Rth;
 
-    eSource::setImp( Rth );
+    eSource::setTimedImp( Rth );
 }
 
 void McuComponentPin::setPullup( bool up )

@@ -50,8 +50,8 @@ class MAINMODULE_EXPORT eSource : public eElement
         void  setInverted( bool inverted );
 
         double imp() { return m_imp; }
-        virtual void  setImp( double imp );
-        void setTimedImp( double imp );
+        void  setImp( double imp );
+        virtual void setTimedImp( double imp );
 
         uint64_t riseTime() { return m_timeLH; }
         void setRiseTime( uint64_t time );

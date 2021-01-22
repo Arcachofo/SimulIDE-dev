@@ -58,10 +58,8 @@ void eI2C::stamp()                    // Called at Simulation Start
 {
     if( m_input.size() == 0 ) return;
 
-    SDA_PIN->setOut( false );
-    SDA_PIN->setImp( high_imp );
-    SCL_PIN->setOut( false );
-    SCL_PIN->setImp( high_imp );
+    setSDA( true );
+    setSCL( true );
 
     if( !m_enabled ) return;
 
@@ -71,6 +69,20 @@ void eI2C::stamp()                    // Called at Simulation Start
     if( enode ) enode->voltChangedCallback( this );
 }
 
+void eI2C::setSDA( bool state )
+{
+    SDA_PIN->setOut( false );
+    if( state ) SDA_PIN->setTimedImp( high_imp );
+    else        SDA_PIN->setTimedImp( m_outImp );
+}
+
+void eI2C::setSCL( bool state )
+{
+    SCL_PIN->setOut( false );
+    if( state ) SCL_PIN->setTimedImp( high_imp );
+    else        SCL_PIN->setTimedImp( m_outImp );
+}
+
 void eI2C::runEvent()       // We are in Mater mode, controlling Clock
 {
     if( !m_enabled ) return;
@@ -78,9 +90,7 @@ void eI2C::runEvent()       // We are in Mater mode, controlling Clock
     bool clkLow = SCL_PIN->getVolt() < m_inputLowV;
     if( m_toggleScl )
     {
-        SCL_PIN->setOut( false );
-        if( clkLow ) SCL_PIN->setTimedImp( high_imp );
-        else         SCL_PIN->setTimedImp( m_outImp );
+        setSCL( clkLow ); // High if is LOW, LOW if is HIGH
 
         m_toggleScl = false;
         return;
@@ -89,14 +99,14 @@ void eI2C::runEvent()       // We are in Mater mode, controlling Clock
 
     if( m_lowerSda )                 // Used by Slave to send ACK
     {
-        SDA_PIN->setTimedImp( m_outImp );
+        setSDA( false );
         Simulator::self()->addEvent( 0, NULL );
         m_lowerSda = false;
         return;
     }
     else if( m_releaseSda )          // Used by Slave to end ACK
     {
-        SDA_PIN->setTimedImp( high_imp );
+        setSDA( true );
         Simulator::self()->addEvent( 0, NULL );
         m_releaseSda = false;
         return;
@@ -109,8 +119,7 @@ void eI2C::runEvent()       // We are in Mater mode, controlling Clock
     {
         if( m_SDA )                            // Step 1: SDA is High, Lower it
         {
-            SDA_PIN->setOut( false );
-            SDA_PIN->setTimedImp( m_outImp );
+            setSDA( false );
         }
         else if( !clkLow )                    // Step 2: SDA Already Low, Lower Clock
         {
@@ -156,8 +165,7 @@ void eI2C::runEvent()       // We are in Mater mode, controlling Clock
     {
         if     ( m_SDA  && clkLow )         // Step 1: Lower SDA
         {
-            SDA_PIN->setOut( false );
-            SDA_PIN->setTimedImp( m_outImp );
+            setSDA( false );
         }
         else if( !m_SDA && clkLow )        // Step 2: Raise Clock
         {
@@ -166,8 +174,7 @@ void eI2C::runEvent()       // We are in Mater mode, controlling Clock
         }
         else if( !m_SDA && !clkLow)        // Step 3: Raise SDA
         {
-            SDA_PIN->setOut( false );
-            SDA_PIN->setTimedImp( high_imp );
+            setSDA( true );
         }
         else if( m_SDA && !clkLow )        // Step 4: Operation Finished
         {
@@ -258,10 +265,8 @@ void eI2C::masterStart( uint8_t addr )
 {
     //qDebug() << "eI2C::masterStart"<<addr;
 
-    SDA_PIN->setOut( false );
-    SDA_PIN->setImp( high_imp );
-    SCL_PIN->setOut( false );
-    SCL_PIN->setImp( high_imp );
+    setSDA( true );
+    setSCL( true );
 
     m_state = I2C_STARTED;
 }
@@ -278,8 +283,7 @@ void eI2C::masterRead()
 {
     //qDebug() << "eI2C::masterRead";
 
-    SDA_PIN->setOut( false );
-    SDA_PIN->setTimedImp( high_imp );
+    setSDA( true );
 
     m_bitPtr = 0;
     m_state = I2C_READING;
@@ -308,20 +312,13 @@ void eI2C::writeBit()
 {
     if( m_bitPtr < 0 ) { waitACK(); return; }
 
-    bool bit = m_txReg>>m_bitPtr & 1;
-
-    SDA_PIN->setOut( false );
-    if( bit ) SDA_PIN->setTimedImp( high_imp );
-    else      SDA_PIN->setTimedImp( m_outImp );
-
-    if( !m_master ) Simulator::self()->addEvent( 0, NULL );
-
+    setSDA( m_txReg>>m_bitPtr & 1 );
     m_bitPtr--;
+    if( !m_master ) Simulator::self()->addEvent( 0, NULL );
 }
 
 void eI2C::readByte()
 {
-    //qDebug() << "eI2C::readByte()"<<m_rxReg;
     m_bitPtr = 0;
     ACK();
 }
@@ -339,12 +336,10 @@ void eI2C::ACK()
 
 void eI2C::waitACK()
 {
-    SDA_PIN->setOut( false );
-    SDA_PIN->setTimedImp( high_imp ); // Raise SDA
-    if( !m_master ) Simulator::self()->addEvent( 0, NULL );
-    
+    setSDA( true );
     m_lastState = m_state;
     m_state = I2C_WAITACK;
+    if( !m_master ) Simulator::self()->addEvent( 0, NULL );
 }
 
 void eI2C::setEnabled( bool en )
@@ -366,10 +361,8 @@ void eI2C::updatePins()
 {
     if( m_enabled )
     {
-        SDA_PIN->setOut( false );
-        SDA_PIN->setImp( high_imp );
-        SCL_PIN->setOut( false );
-        SCL_PIN->setImp( high_imp );
+        setSDA( true );
+        setSCL( true );
 
         if( m_master )
         {
@@ -398,11 +391,5 @@ void eI2C::setFreq( double f )
     double stepsPerS = 1e12;
     m_stepsPe = stepsPerS/m_freq/2;
     m_propDelay = m_stepsPe/3;
-    //qDebug() << "eI2C::setFreq" << f<< m_stepsPe;
 }
 
-void eI2C::createPins()  // Usually Called by Subcircuit to create ePins
-{
-    createClockPin();            // Clock pin is managed in eLogicDevice
-    eLogicDevice::createPins( 1, 0 );        // Create input Pin for SDA
-}

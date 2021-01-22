@@ -224,15 +224,11 @@ void AVRComponentPin::enableIO( bool en )
     else m_ePin[0]->getEnode()->remFromChangedCallback(this);
 }
 
-void AVRComponentPin::setImp( double imp ) // Used by I2C
+void AVRComponentPin::setTimedImp( double imp ) // Used by I2C
 {
-    if( m_pinType == 1 )                                 // Is an IO Pin
-    {
-        if( imp == high_imp ) m_gndAdmEx = 0;
-        else                  m_gndAdmEx = 1/imp;
-        update();
-    }
-    else eSource::setImp( imp );
+    if( imp == high_imp ) m_gndAdmEx = 0;
+    else                  m_gndAdmEx = 1/imp;
+    update();
 }
 
 #include "moc_avrcomponentpin.cpp"

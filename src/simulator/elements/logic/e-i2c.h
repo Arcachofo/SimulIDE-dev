@@ -53,7 +53,6 @@ class MAINMODULE_EXPORT eI2C : public eLogicDevice
         virtual void writeByte();
         virtual void readByte();
         virtual void slaveStop();
-        //virtual bool isEnabled() { return m_enabled; }
         virtual void setEnabled( bool en );
         virtual void setMaster( bool m );
         virtual void setAddress( int address );
@@ -67,9 +66,9 @@ class MAINMODULE_EXPORT eI2C : public eLogicDevice
 
         virtual int byteReceived() { return m_rxReg; }
 
-        void createPins();
-
     protected:
+        void setSDA( bool state );
+        void setSCL( bool state );
         void readBit();
         void writeBit();
         void ACK();
@@ -88,7 +87,6 @@ class MAINMODULE_EXPORT eI2C : public eLogicDevice
 
         double m_freq;
         double m_stepsPe;
-        //double m_nextCycle;
 
         bool m_SDA;
         bool m_lastSDA;
