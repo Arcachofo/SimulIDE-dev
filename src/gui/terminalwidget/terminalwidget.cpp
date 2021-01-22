@@ -20,6 +20,7 @@
 #include "terminalwidget.h"
 #include "mcucomponent.h"
 #include "baseprocessor.h"
+#include "simulator.h"
 #include "circuit.h"
 #include "serialterm.h"
 
@@ -141,6 +142,9 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
     m_textLayout.addWidget( &m_uartInPanel );
     m_verticalLayout.addLayout( &m_textLayout );
 
+    Simulator::self()->addToUpdateList( &m_uartOutPanel );
+    Simulator::self()->addToUpdateList( &m_uartInPanel );
+
     connect( &m_sendText, SIGNAL( returnPressed() ),
                     this, SLOT( onTextChanged() ), Qt::UniqueConnection);
 
@@ -167,7 +171,11 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
 
     initialize();
 }
-TerminalWidget::~TerminalWidget() { }
+TerminalWidget::~TerminalWidget()
+{
+    Simulator::self()->remFromUpdateList( &m_uartOutPanel );
+    Simulator::self()->remFromUpdateList( &m_uartInPanel );
+}
 
 void TerminalWidget::setMcuId( QString mcu )
 {
