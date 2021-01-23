@@ -96,7 +96,6 @@ void EditorWindow::dropEvent( QDropEvent* event )
 
 void EditorWindow::newFile()
 {
-    //CodeEditorWidget* baseWidget = new CodeEditorWidget( this );
     CodeEditor* codeEditor = new CodeEditor( this, &m_outPane );
     Simulator::self()->addToUpdateList( codeEditor );
 
@@ -174,7 +173,6 @@ bool EditorWindow::saveAs()
     QString ext  = fi.suffix();
     QString path = fi.absolutePath();
     if( path == "" ) path = m_lastDir;
-    //qDebug() << "EditorWindow::saveAs" << path;
 
     QString extensions = "";
     if( ext == "" ) extensions = tr("All files")+" (*);;Arduino (*.ino);;Asm (*.asm);;GcBasic (*.gcb)";
@@ -295,7 +293,7 @@ void EditorWindow::tabContextMenu( const QPoint &eventpoint )
 
 void EditorWindow::tabChanged( int tab )
 {
-    qDebug() << "EditorWindow::tabChanged" << m_docWidget->currentIndex() << tab;
+    //qDebug() << "EditorWindow::tabChanged" << m_docWidget->currentIndex() << tab;
 }
 
 void EditorWindow::setCompiler()
@@ -337,7 +335,6 @@ void EditorWindow::createWidgets()
 
     splitter0->addWidget( &m_outPane );
     splitter0->setSizes( {300, 100} );
-
     
     connect( m_docWidget, SIGNAL( tabCloseRequested(int)), 
              this,        SLOT(   closeTab(int)), Qt::UniqueConnection);
@@ -451,9 +448,6 @@ void EditorWindow::createActions()
     loadAct->setEnabled(false);
     connect( loadAct, SIGNAL(triggered()), this, SLOT(upload()), Qt::UniqueConnection );
 
-    //connect(m_codeEditor, SIGNAL(copyAvailable(bool)), cutAct, SLOT(setEnabled(bool)));
-    //connect(m_codeEditor, SIGNAL(copyAvailable(bool)), copyAct, SLOT(setEnabled(bool)));
-    
     findQtAct = new QAction(QIcon(":/find.png"),tr("Find Replace"), this);
     findQtAct->setStatusTip(tr("Find Replace"));
     findQtAct->setEnabled(false);

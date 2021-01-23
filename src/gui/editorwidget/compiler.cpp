@@ -24,11 +24,11 @@
 #include "outpaneltext.h"
 #include "utils.h"
 
-Compiler::Compiler( EditorWindow* parent, OutPanelText* outPane )
+Compiler::Compiler( QObject* parent, OutPanelText* outPane )
         : QObject( parent )
-        , m_compProcess( NULL )
+        , m_compilerProc( NULL )
 {
-    m_editor  = parent;
+    //m_editor  = parent;
     m_outPane = outPane;
 
     clearCompiler();
@@ -57,15 +57,16 @@ void Compiler::loadCompiler( QString file )
 
     QString compName = "";
 
-    if( root.hasAttribute("name") )  compName = root.attribute( "name" );
-    if( root.hasAttribute("toolPath") )  m_toolPath = root.attribute( "toolPath" );
-    if( root.hasAttribute("command") )   m_command  = root.attribute( "command" );
+    if( root.hasAttribute("name") )      compName    = root.attribute( "name" );
+    if( root.hasAttribute("toolPath") )  m_toolPath  = root.attribute( "toolPath" );
+    if( root.hasAttribute("command") )   m_command   = root.attribute( "command" );
     if( root.hasAttribute("arguments") ) m_arguments = root.attribute( "arguments" );
 
     if( !QFile::exists( m_toolPath+m_command ) )
     {
         m_outPane->appendText( tr("Error: ToolChain not found")+"\n" );
         m_outPane->writeText( m_toolPath+m_command+"\n" );
+        m_outPane->writeText( "Please set Compiler path in file:\n"+file+"\n" );
         return;
     }
     m_outPane->writeText( compName+" Compiler successfully loaded.\n" );
@@ -77,36 +78,49 @@ int Compiler::compile( QString file )
     if( !m_toolChain ) return -1;
 
     QApplication::setOverrideCursor( Qt::WaitCursor );
-
     int error = 0;
+
+    QFileInfo fi = QFileInfo( file );
+    QString filePath  = file;
+    QString fileDir  = fi.absolutePath()+"/";
+    QString fileExt  = "."+fi.suffix();
+    QString fileName = fi.completeBaseName();
 
     QString command = m_toolPath+m_command;
 
     #ifndef Q_OS_UNIX
     command  = addQuotes( command );
-    file     = addQuotes( file );
+    filePath = addQuotes( filePath );
+    fileDir  = addQuotes( fileDir );
+    fileExt  = addQuotes( fileExt );
+    fileName = addQuotes( fileName );
     #endif
 
-    QString arguments = m_arguments.replace( "$Fi", file );
+    QString arguments = m_arguments.replace( "$filePath", filePath )
+                                    .replace( "$fileDir", fileDir )
+                                    .replace( "$fileName", fileName )
+                                    .replace( "$fileExt", fileExt );
 
     m_outPane->writeText( "\n Executing:\n"+command+arguments+"\n" );
-    m_compProcess.start( command+arguments  );
-    m_compProcess.waitForFinished(-1);
+    m_compilerProc.start( command+arguments  );
+    m_compilerProc.waitForFinished(-1);
 
-    QString p_stderr = m_compProcess.readAllStandardError();
-    QString p_stdout = m_compProcess.readAllStandardOutput();
+    QString p_stderr = m_compilerProc.readAllStandardError();
+    QString p_stdout = m_compilerProc.readAllStandardOutput();
+
+    if     ( p_stdout.toLower().contains("error")) error = -1;
+    else if( p_stderr.toLower().contains("error")) error = -1;
 
     m_outPane->writeText( p_stdout+"\n" );
     if( !p_stderr.isEmpty() )
     {
-        m_outPane->writeText( "ERROR OUTPUT:\n" );
+        m_outPane->writeText( "ERROR OUTPUT:" );
         m_outPane->writeText( p_stderr+"\n" );
     }
 
     QApplication::restoreOverrideCursor();
     return error;
 }
-
 
 #include "moc_compiler.cpp"
 

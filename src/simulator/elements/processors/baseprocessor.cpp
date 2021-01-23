@@ -111,15 +111,18 @@ void BaseProcessor::terminate()
 
 void BaseProcessor::setFreq( double freq ) // Instruction exec. freq
 {
-    //m_mcuStepsPT = freq/Simulator::self()->stepsPerus();
     m_stepPS = 1e6/freq; //1e6*m_mcuStepsPT/freq;
 }
 
 QString BaseProcessor::getFileName() { return m_symbolFile; }
 
-void BaseProcessor::setDevice( QString device ) { m_device = device;}
+void BaseProcessor::setDebugger( BaseDebugger* deb )
+{
+    m_debugger = deb;
+    m_ramTable.setDebugger( deb );
+}
 
-QString BaseProcessor::getDevice() { return m_device;}
+void BaseProcessor::setDevice( QString device ) { m_device = device;}
 
 void BaseProcessor::setDataFile( QString datafile ) 
 { 
@@ -309,7 +312,6 @@ void BaseProcessor::setRegisters() // get register addresses from data file
 void BaseProcessor::uartOut( int uart, uint32_t value ) // Send value to OutPanelText
 {
     emit uartDataOut( uart, value );
-
     //qDebug()<<"BaseProcessor::uartOut" << uart << value;
 }
 

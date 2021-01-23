@@ -20,8 +20,6 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-//#include <QtGui>
-
 #include "e-element.h"
 #include "ramtablewidget.h"
 #include "terminalwidget.h"
@@ -30,8 +28,6 @@ class BaseDebugger;
 
 class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
 {
-        friend class BaseDebugger;
-
     Q_OBJECT
     public:
         BaseProcessor( McuComponent* parent );
@@ -45,7 +41,6 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         QString getFileName();
 
         virtual void    setDevice( QString device );
-        virtual QString getDevice();
         
         virtual void setDataFile( QString datafile );
 
@@ -84,6 +79,7 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         virtual void setRegisters();
 
         void setDebugging( bool d ) { m_debugging = d; }
+        void setDebugger( BaseDebugger* deb );
 
         void setMain() { m_pSelf = this; }
 

@@ -20,13 +20,13 @@
 #ifndef BASEDEBUGGER_H
 #define BASEDEBUGGER_H
 
-#include <QtGui>
+#include "compiler.h"
 #include "outpaneltext.h"
 #include "mcucomponent.h"
 
 class CodeEditor;
 
-class BaseDebugger : public QObject    // Base Class for all debuggers
+class BaseDebugger : public Compiler    // Base Class for all debuggers
 {
         friend class BaseProcessor;
 
@@ -41,13 +41,11 @@ class BaseDebugger : public QObject    // Base Class for all debuggers
         bool driveCirc();
         void setDriveCirc( bool drive );
 
-        QString compilerPath();
+        QString compilerPath() { return m_compilerPath; }
         virtual void getCompilerPath();
         virtual void setCompilerPath( QString path );
 
-        virtual bool loadFirmware();
-        virtual void upload();
-        virtual void stop();
+        virtual bool upload();
 
         virtual int  compile()=0;
         virtual void mapFlashToSource()=0;
@@ -56,7 +54,7 @@ class BaseDebugger : public QObject    // Base Class for all debuggers
 
         virtual void readSettings();
         virtual QString getVarType( QString var );
-        virtual QStringList getVarList();
+        virtual QStringList getVarList()  { return m_varNames; }
         virtual QList<int> getSubLines() { return m_subLines; }
         
         int type;
@@ -68,11 +66,9 @@ class BaseDebugger : public QObject    // Base Class for all debuggers
         void toolChainNotFound();
         virtual void getSubs(){;}
     
-        OutPanelText*  m_outPane;
+        //OutPanelText*  m_outPane;
 
         CodeEditor* m_editor;
-
- static bool m_loadStatus;                          // Is symbol file loaded?
 
         int m_processorType;
         int m_lastLine;

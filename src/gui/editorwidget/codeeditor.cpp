@@ -120,8 +120,6 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     setLineWrapMode( QPlainTextEdit::NoWrap );
     updateLineNumberAreaWidth( 0 );
     highlightCurrentLine();
-
-    Simulator::self()->addToUpdateList( this );
 }
 CodeEditor::~CodeEditor()
 {
@@ -154,7 +152,7 @@ void CodeEditor::setFile( const QString filePath )
     
     m_outPane->appendText( "-------------------------------------------------------\n" );
     m_outPane->appendText( tr(" File: ") );
-    m_outPane->writeText( filePath );
+    m_outPane->writeText( filePath+"\n" );
 
     m_file = filePath;
     QFileInfo fi = QFileInfo( m_file );
@@ -166,22 +164,22 @@ void CodeEditor::setFile( const QString filePath )
     QDir::setCurrent( m_file );
 
     QString sintaxPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/sintax/");
+    QString compilerPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");
 
     if( m_fileExt == "gcb" )
     {
-        QString path = sintaxPath + "gcbasic.sintax";
-        m_hlighter->readSintaxFile( path );
+        m_hlighter->readSintaxFile( sintaxPath + "gcbasic.sintax" );
 
         m_debugger = new GcbDebugger( this, m_outPane, filePath );
+        m_debugger->loadCompiler( compilerPath+"gcbcompiler.xml" );
     }
     else if( m_fileExt == "cpp"
           || m_fileExt == "c"
           || m_fileExt == "ino"
           || m_fileExt == "h" )
     {
-        QString path = sintaxPath + "cpp.sintax";
         m_hlighter->setMultiline( true );
-        m_hlighter->readSintaxFile( path );
+        m_hlighter->readSintaxFile( sintaxPath + "cpp.sintax" );
         
         if( m_fileExt == "ino" ) m_debugger = new InoDebugger( this, m_outPane, filePath );
     }
@@ -220,13 +218,11 @@ void CodeEditor::setFile( const QString filePath )
          ||  m_fileExt == "package"
          ||  m_fileExt == "simu" )
     {
-        QString path = sintaxPath + "xml.sintax";
-        m_hlighter->readSintaxFile( path );
+        m_hlighter->readSintaxFile( sintaxPath + "xml.sintax" );
     }
     else if( m_fileName.toLower() == "makefile"  )
     {
-        QString path = sintaxPath + "makef.sintax";
-        m_hlighter->readSintaxFile( path );
+        m_hlighter->readSintaxFile( sintaxPath + "makef.sintax" );
     }
     else if( m_fileExt == "sac" )
     {
@@ -385,7 +381,7 @@ bool CodeEditor::initDebbuger()
             m_outPane->writeText( "\n    "+tr("Error Compiling... ")+"\n" );
             error = true;
         }
-        else if( !m_debugger->loadFirmware() )      // Error Loading Firmware
+        else if( !m_debugger->upload() )      // Error Loading Firmware
         {
             m_outPane->writeText( "\n    "+tr("Error Loading Firmware... ")+"\n" );
             error = true;
@@ -464,7 +460,6 @@ void CodeEditor::stopDebbuger()
 {
     if( m_state > DBG_STOPPED )
     {
-        m_debugger->stop();
         m_brkPoints.clear();
         m_debugLine = 0;
         

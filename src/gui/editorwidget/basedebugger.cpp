@@ -28,11 +28,9 @@ static const char* BaseDebugger_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Compiler Path")
 };
 
-bool BaseDebugger::m_loadStatus = false;
-
 BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
-            : QObject( parent )
-            , m_compProcess( 0l )
+            : Compiler( parent, outPane )
+            //, m_compProcess( NULL )
 {
     Q_UNUSED( BaseDebugger_properties );
 
@@ -56,43 +54,20 @@ BaseDebugger::~BaseDebugger( )
     if( BaseProcessor::self() ) BaseProcessor::self()->getRamTable()->remDebugger( this );
 }
 
-bool BaseDebugger::loadFirmware()
+bool BaseDebugger::upload()
 {
-    if ( m_firmware == "" )  return false;
-    
-    upload();
-    if( m_loadStatus ) return false;
-    m_loadStatus = true;
+    if( !McuComponent::self() )
+    {
+        m_outPane->writeText( "\n"+tr("Error: No Mcu in Simulator... ") );
+        return false;
+    }
+    McuComponent::self()->load( m_firmware );
+    m_outPane->writeText( "\n"+tr("FirmWare Uploaded to ")+McuComponent::self()->device());
+    m_outPane->writeText( m_firmware+"\n" );
+
+    BaseProcessor::self()->setDebugger( this );
+    mapFlashToSource();
     return true;
-}
-
-void BaseDebugger::upload()
-{
-    if( m_loadStatus )
-    {
-        QMessageBox::warning( 0, "BaseDebugger::loadFirmware",
-                                tr("Debugger already running")+"\n"+tr("Stop active session") );
-        return;
-    }
-    m_outPane->writeText( "-------------------------------------------------------\n" );
-    m_outPane->appendText( "\n"+tr("Uploading: ")+"\n" );
-    m_outPane->writeText( m_firmware );
-    
-    if( McuComponent::self() ) 
-    {
-        McuComponent::self()->load( m_firmware );
-        m_outPane->writeText( "\n"+tr("FirmWare Uploaded to ")+McuComponent::self()->device() );
-
-        BaseProcessor::self()->getRamTable()->setDebugger( this );
-        mapFlashToSource();
-        BaseProcessor::self()->m_debugger = this;
-    }
-    else m_outPane->writeText( "\n"+tr("Error: No Mcu in Simulator... ") );
-}
-
-void BaseDebugger::stop()
-{
-    m_loadStatus = false;
 }
 
 int BaseDebugger::getValidLine( int line )
@@ -107,21 +82,10 @@ QString BaseDebugger::getVarType( QString var )
     return m_varList[ var ];
 }
 
-QStringList BaseDebugger::getVarList()
-{
-    /*QStringList varList = m_varList.keys();
-    varList.sort();
-    return varList;*/
-    return m_varNames;
-}
-
 void BaseDebugger::ProcRead()
 {
     while( m_compProcess.canReadLine() ) 
-    {
         m_outPane->appendText( QString::fromLocal8Bit( m_compProcess.readLine()) );
-        //m_outPane->writeText( "\n" );
-    }
 }
 
 void BaseDebugger::readSettings()
@@ -134,18 +98,18 @@ void BaseDebugger::readSettings()
 
 void BaseDebugger::getCompilerPath()
 {
-        m_compilerPath = QFileDialog::getExistingDirectory( 0L,
-                               tr("Select Compiler toolchain directory"),
-                               m_compilerPath,
-                               QFileDialog::ShowDirsOnly
-                             | QFileDialog::DontResolveSymlinks);
+    m_compilerPath = QFileDialog::getExistingDirectory( NULL
+                         , tr("Select Compiler toolchain directory")
+                         , m_compilerPath
+                         , QFileDialog::ShowDirsOnly
+                         | QFileDialog::DontResolveSymlinks);
 
-        if( m_compilerPath != "" ) m_compilerPath += "/";
+    if( m_compilerPath != "" ) m_compilerPath += "/";
 
-        MainWindow::self()->settings()->setValue( m_compSetting, m_compilerPath);
+    MainWindow::self()->settings()->setValue( m_compSetting, m_compilerPath);
 
-        m_outPane->appendText( "\n"+tr("Using Compiler Path: ")+"\n" );
-        m_outPane->writeText( m_compilerPath+"\n" );
+    m_outPane->appendText( "\n"+tr("Using Compiler Path: ")+"\n" );
+    m_outPane->writeText( m_compilerPath+"\n" );
 }
 
 bool BaseDebugger::driveCirc()
@@ -158,11 +122,6 @@ void BaseDebugger::setDriveCirc( bool drive )
 {
     CodeEditor* ce = EditorWindow::self()->getCodeEditor();
     ce->setDriveCirc( drive );
-}
-
-QString BaseDebugger::compilerPath()
-{
-    return m_compilerPath;
 }
 
 void BaseDebugger::setCompilerPath( QString path )

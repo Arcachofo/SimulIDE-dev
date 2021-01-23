@@ -53,7 +53,7 @@ class InoDebugger : public BaseDebugger
         int compile();
         void mapFlashToSource();
         
-        virtual void upload();
+        virtual bool upload();
         
     protected:
         void getVariables();

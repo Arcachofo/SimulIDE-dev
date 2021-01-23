@@ -30,7 +30,7 @@ class Compiler : public QObject
     Q_OBJECT
 
     public:
-        Compiler( EditorWindow* parent, OutPanelText* outPane );
+        Compiler( QObject* parent, OutPanelText* outPane );
         ~Compiler();
 
         void clearCompiler();
@@ -45,9 +45,9 @@ class Compiler : public QObject
         QString m_command;
         QString m_arguments;
 
-        QProcess m_compProcess;
+        QProcess m_compilerProc;
 
-        EditorWindow* m_editor;
+        //EditorWindow* m_editor;
         OutPanelText* m_outPane;
 };
 

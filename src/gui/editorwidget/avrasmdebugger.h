@@ -34,7 +34,7 @@ class AvrAsmDebugger : public BaseDebugger
         AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~AvrAsmDebugger();
         
-        QString avraIncPath();
+        QString avraIncPath()  { return m_avraIncPath; }
         void    setAvraIncPath( QString path );
 
         int  compile();

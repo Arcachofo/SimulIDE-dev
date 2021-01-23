@@ -55,7 +55,7 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString fil
 }
 InoDebugger::~InoDebugger() {}
 
-void InoDebugger::upload()
+bool InoDebugger::upload()
 {
     QString circDir = Circuit::self()->getFileName();
     QString firmPath =  m_firmware;
@@ -67,15 +67,12 @@ void InoDebugger::upload()
         circuitDir.remove( m_fileName+".hex" );
         QFile::copy( firmPath, m_firmware );
     }
-    BaseDebugger::upload();
-    
     m_firmware = firmPath;
+    return BaseDebugger::upload();
 }
 
 int InoDebugger::compile()
 {
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-
     QString builder = "arduino-builder";
     #ifndef Q_OS_UNIX
     builder += ".exe";
@@ -87,6 +84,8 @@ int InoDebugger::compile()
         toolChainNotFound();
         return -1;
     }
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
     QString filePath = m_file;
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
     

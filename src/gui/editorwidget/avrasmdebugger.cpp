@@ -54,28 +54,21 @@ AvrAsmDebugger::~AvrAsmDebugger() {}
 
 int AvrAsmDebugger::compile()
 {
+    if( !QFile::exists( m_compilerPath+"avra") )
+    {
+        m_outPane->appendText( "\nAvra" );
+        toolChainNotFound();
+        return -1;
+    }
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    
-    //getProcType();
-    QString file = m_fileDir+m_fileName+m_fileExt;
+
+    QString file = m_file;
     QString avraIncPath = m_avraIncPath;
     
     m_outPane->writeText( "-------------------------------------------------------\n" );
     
     QString listFile = m_fileDir+m_fileName+".lst";
     QString command  = m_compilerPath+"avra";
-    
-    QProcess checkComp( this );
-    checkComp.start( command  );
-    checkComp.waitForFinished(-1);
-    
-    QString p_stdo = checkComp.readAllStandardOutput();
-    if( !p_stdo.toUpper().contains("VERSION") )
-    {
-        m_outPane->appendText( "\navra" );
-        toolChainNotFound();
-        return -1;
-    }
 
     #ifndef Q_OS_UNIX
     command  = addQuotes( command );
@@ -87,7 +80,7 @@ int AvrAsmDebugger::compile()
     command.append(" -W NoRegDef");             // supress some warnings
     command.append(" -l "+ listFile );               // output list file
     if( m_avraIncPath != "" )
-        command.append(" -I "+ avraIncPath);                // include dir
+        command.append(" -I "+ avraIncPath);              // include dir
     command.append(" "+file );                       // File to assemble
 
     m_outPane->appendText( "Exec: ");
@@ -177,11 +170,6 @@ void AvrAsmDebugger::mapFlashToSource()
         m_sourceToFlash[asmLineNumber] = address;
         //qDebug() <<"AvrAsmDebugger::mapLstToAsm() "<<address<<asmLineNumber;
     }
-}
-
-QString AvrAsmDebugger::avraIncPath()
-{
-    return m_avraIncPath;
 }
 
 void AvrAsmDebugger::setAvraIncPath( QString path )
