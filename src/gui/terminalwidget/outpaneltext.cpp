@@ -49,7 +49,7 @@ OutPanelText::~OutPanelText(){}
 
 void OutPanelText::appendText( const QString text )
 {
-    m_textBuffer.append( text);
+    m_textBuffer.append( text );
 }
 
 void OutPanelText::writeText( const QString text )

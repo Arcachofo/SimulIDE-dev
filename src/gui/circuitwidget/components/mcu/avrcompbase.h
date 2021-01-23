@@ -23,7 +23,7 @@
 #include "avrcomponentpin.h"
 #include "mcucomponent.h"
 #include "avrprocessor.h"
-#include "e-i2c.h"
+#include "e-i2c_master.h"
 
 
 class AvrCompBase : public McuComponent
@@ -87,7 +87,7 @@ class AvrCompBase : public McuComponent
 
         QHash<int, AVRComponentPin*> m_ADCpinList;
 
-        eI2C m_avrI2C;
+        eI2CMaster m_avrI2C;
         AVRComponentPin* m_sda;
         AVRComponentPin* m_scl;
 

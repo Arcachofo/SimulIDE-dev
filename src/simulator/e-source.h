@@ -65,6 +65,7 @@ class MAINMODULE_EXPORT eSource : public eElement
         double m_voltHigh;
         double m_voltLow;
         double m_voltOut;
+        double m_voltOutNext;
         double m_imp;
         double m_impNext;
         double m_admit;

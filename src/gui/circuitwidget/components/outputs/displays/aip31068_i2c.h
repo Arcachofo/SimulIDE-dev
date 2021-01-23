@@ -22,10 +22,10 @@
 
 #include "itemlibrary.h"
 #include "hd44780_base.h"
-#include "e-i2c.h"
+#include "e-i2c_slave.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public eI2C
+class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public eI2CSlave
 {
     Q_OBJECT
     Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode  DESIGNABLE true USER true )

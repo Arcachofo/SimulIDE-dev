@@ -88,7 +88,7 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
     if( oe != m_oe ) m_oeNext = oe;
 
     m_address = 0;
-    for( int i=0; i<m_addrBits; ++i )              // Get Address
+    for( int i=0; i<m_addrBits; ++i )        // Get Address
     {
         bool  state = getInputState(i+2);
         if( state ) m_address += pow( 2, i );
@@ -96,9 +96,9 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
 
     bool weTrig = WE && !m_we;
     m_we = WE;
-    if( WE )                                      // Write
+    if( WE )                                // Write
     {
-        if( csTrig || weTrig)      // Write action triggered
+        if( csTrig || weTrig)  // Write action triggered
         {
             int value = 0;
             for( int i=0; i<m_numOutputs; ++i )
@@ -114,7 +114,7 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
             }
             m_ram[m_address] = value;
         }
-    }else                           // Read
+    }else                                  // Read
     {
         m_read = true;
         Simulator::self()->addEvent( m_propDelay, this );

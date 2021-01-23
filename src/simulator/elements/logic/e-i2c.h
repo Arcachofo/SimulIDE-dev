@@ -40,46 +40,36 @@ enum i2cState_t{
 class MAINMODULE_EXPORT eI2C : public eLogicDevice
 {
     public:
-
         eI2C( QString id );
         ~eI2C();
 
-        virtual void stamp() override;
         virtual void initialize() override;
-        virtual void runEvent() override;
-        virtual void voltChanged() override;
 
+        virtual double freq() { return m_freq/1e3; }
+        virtual void setFreq( double f );
+
+        virtual void setEnabled( bool en );
         virtual void startWrite(){;}
         virtual void writeByte();
         virtual void readByte();
-        virtual void slaveStop();
-        virtual void setEnabled( bool en );
-        virtual void setMaster( bool m );
-        virtual void setAddress( int address );
-        virtual void setFreq( double f );
-        virtual void setComponent( Component* comp ) { m_comp = comp; }
+        virtual void I2Cstop();
 
-        virtual void masterStart( uint8_t addr );
-        virtual void masterWrite( uint8_t data );
-        virtual void masterRead();
-        virtual void masterStop();
+        virtual void setComponent( Component* comp ) { m_comp = comp; }
 
         virtual int byteReceived() { return m_rxReg; }
 
     protected:
-        void setSDA( bool state );
-        void setSCL( bool state );
+        virtual void setSDA( bool state )=0;
+        virtual void setSCL( bool state )=0;
         void readBit();
         void writeBit();
         void ACK();
         void waitACK();
 
-        void updatePins();
-        
-        int m_address;           // Device Address
+        virtual void updatePins()=0;
+
         int m_txReg;             // Byte to Send
         int m_rxReg;             // Byte Received
-        int m_addressBits;       // Number of m_address bits
         int m_bitPtr;            // Bit Pointer
 
         i2cState_t m_state;      // Current State of i2c
@@ -90,11 +80,8 @@ class MAINMODULE_EXPORT eI2C : public eLogicDevice
 
         bool m_SDA;
         bool m_lastSDA;
-        bool m_master;
         bool m_enabled;
-        bool m_toggleScl;
-        bool m_lowerSda;
-        bool m_releaseSda;
+        bool m_lastBit;
 
         Component* m_comp;
 };

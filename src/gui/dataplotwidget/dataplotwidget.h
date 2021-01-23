@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT DataPlotWidget : public QWidget
     Q_OBJECT
 
     public:
-        DataPlotWidget(QWidget* parent , PlotBase* PlotBase );
+        DataPlotWidget( QWidget* parent , PlotBase* PlotBase );
         ~DataPlotWidget();
 
         void setupWidget();

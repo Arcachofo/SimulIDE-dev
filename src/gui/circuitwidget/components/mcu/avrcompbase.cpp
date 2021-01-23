@@ -163,7 +163,7 @@ void AvrCompBase::i2cOut( uint32_t value )
     }
     else if( msg & TWI_COND_STOP )
     {
-        m_avrI2C.masterStop();
+        m_avrI2C.I2Cstop();
     }
     else if( msg & TWI_COND_READ )
     {
@@ -208,7 +208,6 @@ void AvrCompBase::twenChanged( uint32_t value )
     if( value )
     {
         m_avrI2C.setEnabled( true );
-        m_avrI2C.setMaster( true );
         m_sda->enableIO( false );
         m_scl->enableIO( false );
 
@@ -224,14 +223,13 @@ void AvrCompBase::twenChanged( uint32_t value )
             double dpr = 16+2*twbr*pr;
             i2cFreq = this->freq()*1e6/dpr;
         }
-        m_avrI2C.setFreq( i2cFreq );
+        m_avrI2C.setFreq( i2cFreq/1e3 ); // Freq in KHz
 
         qDebug() << "AvrCompBase::twenChanged i2cFreq:" << i2cFreq;
     }
     else // Disable I2C
     {
         m_avrI2C.setEnabled( false );
-        m_avrI2C.setMaster( false );
         m_sda->enableIO( true );
         m_scl->enableIO( true );
     }

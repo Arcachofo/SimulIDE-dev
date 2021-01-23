@@ -26,7 +26,7 @@
 #include "simulator.h"
 #include "utils.h"
 
-DataPlotWidget::DataPlotWidget(  QWidget* parent, PlotBase* plotB  )
+DataPlotWidget::DataPlotWidget( QWidget* parent, PlotBase* plotB  )
               : QWidget( parent )
 {
     m_plotB = plotB;

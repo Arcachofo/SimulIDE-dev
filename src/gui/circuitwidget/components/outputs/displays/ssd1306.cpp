@@ -44,7 +44,7 @@ LibraryItem* Ssd1306::libraryItem()
 
 Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
-       , eI2C( id )
+       , eI2CSlave( id )
        , m_pinSck( 270, QPoint(-48, 48), id+"-PinSck" , 0, this )
        , m_pinSda( 270, QPoint(-40, 48), id+"-PinSda" , 0, this )
        //, m_pinRst( 270, QPoint(-32, 48), id+"-PinRst" , 0, this )
@@ -106,7 +106,7 @@ QList<propGroup_t> Ssd1306::propGroups()
 
 void Ssd1306::initialize()
 {
-    eI2C::initialize();
+    eI2CSlave::initialize();
 
     m_continue = false;
     m_command = false;
@@ -134,9 +134,9 @@ void Ssd1306::initialize()
     //m_input = 0;
 }*/
 
-void Ssd1306::slaveStop()
+void Ssd1306::I2Cstop()
 {
-    eI2C::slaveStop();
+    eI2CSlave::I2Cstop();
 
     m_command = false;
     m_data    = false;
@@ -146,7 +146,7 @@ void Ssd1306::slaveStop()
 
 void Ssd1306::readByte()
 {
-    eI2C::readByte();
+    eI2CSlave::readByte();
 
     //if( m_reset ) return;
 

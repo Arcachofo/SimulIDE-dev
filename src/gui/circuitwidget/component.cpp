@@ -302,7 +302,7 @@ void Component::remove()
     {
         m_propDialog->setParent( NULL );
         m_propDialog->close();
-        m_propDialog->deleteLater();
+        delete m_propDialog;
     }
 
     for( uint i=0; i<m_pin.size(); i++ )   // Remove connectors attached

@@ -59,7 +59,6 @@ class MAINMODULE_EXPORT McuComponentPin : public QObject, public eSource
         double m_gndAdmit;  // Out Stage
         double m_vddAdmEx;  // Extra Source (vref out)
         double m_gndAdmEx;  // Extra Source (vref out)
-        double m_pupAdmit;  // Internal Pullup
         
         bool m_attached;
         bool m_isInput;

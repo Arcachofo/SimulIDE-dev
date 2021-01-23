@@ -145,11 +145,9 @@ void Probe::updateStep()
         {
             m_readPin =  qgraphicsitem_cast<Pin *>( it );
             setVolt( m_readPin->getVolt() );
-            //qDebug() << " probe: Pin found" << volt;
             break;
         }
     }
-    //qDebug() << " probe: " /*<< item->type()*/ << UserType;//con->objectName();
 }
 
 void Probe::setVolt( double volt )
@@ -197,23 +195,11 @@ void Probe::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
 {
     Component::paint( p, option, widget );
 
-    //if( m_plotterLine > 0 )           p->setBrush( m_plotterColor );
-    //else
     if      ( m_voltIn > m_voltTrig)  p->setBrush( QColor( 255, 166, 0 ) );
     else if ( m_voltIn < -m_voltTrig) p->setBrush( QColor( 0, 100, 255 ) );
     else                              p->setBrush( QColor( 230, 230, 255 ) );
 
     p->drawEllipse( m_area );
-    
-    /*if( m_plotterLine > 0 )
-    {
-        //p->drawLine(-4,-7,-5,-1 );
-        p->drawLine(-5,-1, 1,-3 );
-        p->drawLine( 1,-3,-1, 3 );
-        p->drawLine(-1, 3, 5, 1 );
-        //p->drawLine( 6, 1, 4, 7 );
-        //p->drawLine( 5, 3, 8,  0 );
-    }*/
 }
 
 #include "moc_probe.cpp"

@@ -20,11 +20,11 @@
 #ifndef I2CTOPARALLEL_H
 #define I2CTOPARALLEL_H
 
-#include "e-i2c.h"
+#include "e-i2c_slave.h"
 #include "itemlibrary.h"
 #include "logiccomponent.h"
 
-class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2C
+class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2CSlave
 {
     Q_OBJECT
     Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
@@ -57,7 +57,6 @@ class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2C
         
     private:
         int m_cCode;
-        //int m_phase;
 };
 
 #endif

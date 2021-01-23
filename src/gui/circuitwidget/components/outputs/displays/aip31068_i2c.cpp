@@ -43,7 +43,7 @@ LibraryItem* Aip31068_i2c::libraryItem()
 
 Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
             : Hd44780_Base( parent, type, id )
-            , eI2C( id )
+            , eI2CSlave( id )
 {
     Q_UNUSED( Aip31068_i2c_properties );
 
@@ -81,7 +81,7 @@ void Aip31068_i2c::updateStep() { update(); }
 
 void Aip31068_i2c::initialize()
 {
-    eI2C::initialize();
+    eI2CSlave::initialize();
 
     m_address = m_cCode;
     m_controlByte = 0;
@@ -92,7 +92,7 @@ void Aip31068_i2c::initialize()
 
 void Aip31068_i2c::voltChanged()             // Called when clock Pin changes
 {
-    eI2C::voltChanged();
+    eI2CSlave::voltChanged();
 
     if( m_state == I2C_STOPPED ) m_phase = 3;
 }
@@ -112,13 +112,13 @@ void Aip31068_i2c::readByte()
     else if( m_phase == 1 )
     {
         m_phase++;
-        int data = eI2C::byteReceived();
+        int data = eI2CSlave::byteReceived();
         int rs = m_controlByte & 0x40;
 
         if( rs ) writeData(data);
         else     proccessCommand(data);
     }
-    eI2C::readByte();
+    eI2CSlave::readByte();
 }
 
 int Aip31068_i2c::cCode()

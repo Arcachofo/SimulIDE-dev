@@ -65,7 +65,7 @@ void McuComponentPin::stamp()
             if( m_ePin[0]->isConnected() && m_attached )        // Receive voltage change notifications
                 m_ePin[0]->getEnode()->voltChangedCallback( this );
 
-            if( (m_pupAdmit>0) && !(m_ePin[0]->isConnected()) ) // Pullup ?
+            if( (m_vddAdmit>0) && !m_ePin[0]->isConnected() ) // Pullup ?
                 pullupNotConnected( true );
         }
         update();
@@ -84,7 +84,6 @@ void McuComponentPin::initialize()
         m_gndAdmit = cero_doub;
         m_vddAdmEx = 0;
         m_gndAdmEx = 0;
-        m_pupAdmit = 0;
 
         eSource::setVoltHigh( 5 );
         update();
@@ -94,7 +93,6 @@ void McuComponentPin::initialize()
 
 void McuComponentPin::setDirection( bool out )
 {
-    //qDebug() << "McuComponentPin::setDirection "<< m_id << out;
     m_isInput = !out;
 
     if( out )       // Set Pin to Output
@@ -125,28 +123,20 @@ void McuComponentPin::setState( bool state )
 
     if( m_openColl )
     {
-        if( state )
-        {
-            m_vddAdmit = 0;
-            m_gndAdmit = cero_doub;
-        }else{
-            m_vddAdmit = 0;
-            m_gndAdmit = 1./40.;
-        }
+        if( state ) m_gndAdmit = cero_doub;
+        else        m_gndAdmit = 1./40.;
         update();
-    }else{
-        eSource::setOut( state );
-        eSource::stampOutput();
     }
+    else eSource::setTimedOut( state );
 }
 
 void McuComponentPin::update()
 {
-    double vddAdmit = m_vddAdmit+m_vddAdmEx+m_pupAdmit;
+    double vddAdmit = m_vddAdmit+m_vddAdmEx;
     double gndAdmit = m_gndAdmit+m_gndAdmEx;
     double Rth  = 1/(vddAdmit+gndAdmit);
 
-    m_voltOut = 5*vddAdmit*Rth;
+    m_voltOutNext = 5*vddAdmit*Rth;
 
     eSource::setTimedImp( Rth );
 }
@@ -155,8 +145,8 @@ void McuComponentPin::setPullup( bool up )
 {
     if( !m_isInput ) return;
 
-    if( up ) m_pupAdmit = 1/1e5; // Activate pullup
-    else     m_pupAdmit = 0;     // Deactivate pullup
+    if( up ) m_vddAdmit = 1/1e5; // Activate pullup
+    else     m_vddAdmit = 0;     // Deactivate pullup
 
     if( !(m_ePin[0]->isConnected()) )
     {

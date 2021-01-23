@@ -44,7 +44,7 @@ LibraryItem* I2CRam::libraryItem()
 
 I2CRam::I2CRam( QObject* parent, QString type, QString id )
       : LogicComponent( parent, type, id )
-      , eI2C( id )
+      , eI2CSlave( id )
       , MemData()
 {
     Q_UNUSED( I2CRam_properties );
@@ -97,7 +97,7 @@ QList<propGroup_t> I2CRam::propGroups()
 
 void I2CRam::stamp()                     // Called at Simulation Start
 {
-    eI2C::stamp();
+    eI2CSlave::stamp();
     
     for( int i=2; i<5; i++ )                  // Initialize address pins
     {
@@ -108,7 +108,7 @@ void I2CRam::stamp()                     // Called at Simulation Start
 
 void I2CRam::initialize()
 {
-    eI2C::initialize();
+    eI2CSlave::initialize();
     
     m_addrPtr = 0;
     m_phase = 3;
@@ -132,7 +132,7 @@ void I2CRam::voltChanged()             // Some Pin Changed State, Manage it
     
     m_address = address;
     
-    eI2C::voltChanged();                               // Run I2C Engine
+    eI2CSlave::voltChanged();                               // Run I2C Engine
 
     //qDebug() <<"I2CRam::setVChanged " << m_state ;
 
@@ -162,7 +162,7 @@ void I2CRam::readByte() // Write to RAM
         
         if( m_addrPtr >= m_size ) m_addrPtr = 0;
     }
-    eI2C::readByte();
+    eI2CSlave::readByte();
 }
 
 void I2CRam::startWrite()
@@ -180,7 +180,7 @@ void I2CRam::writeByte() // Read from RAM
     
     if( ++m_addrPtr >= m_size ) m_addrPtr = 0;
 
-    eI2C::writeByte();
+    eI2CSlave::writeByte();
 }
 
 void I2CRam::setMem( QVector<int> m )

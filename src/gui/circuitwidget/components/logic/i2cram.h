@@ -20,12 +20,12 @@
 #ifndef I2CRAM_H
 #define I2CRAM_H
 
-#include "e-i2c.h"
+#include "e-i2c_slave.h"
 #include "itemlibrary.h"
 #include "logiccomponent.h"
 #include "memdata.h"
 
-class MAINMODULE_EXPORT I2CRam : public LogicComponent, public eI2C, public MemData
+class MAINMODULE_EXPORT I2CRam : public LogicComponent, public eI2CSlave, public MemData
 {
     Q_OBJECT
     Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )

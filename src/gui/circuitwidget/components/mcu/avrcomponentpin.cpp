@@ -221,13 +221,12 @@ void AVRComponentPin::enableIO( bool en )
     {
         if( m_isInput ) m_ePin[0]->getEnode()->voltChangedCallback( this );
     }
-    else m_ePin[0]->getEnode()->remFromChangedCallback(this);
+    else m_ePin[0]->getEnode()->remFromChangedCallback( this );
 }
 
 void AVRComponentPin::setTimedImp( double imp ) // Used by I2C
 {
-    if( imp == high_imp ) m_gndAdmEx = 0;
-    else                  m_gndAdmEx = 1/imp;
+    m_gndAdmEx = 1/imp;
     update();
 }
 

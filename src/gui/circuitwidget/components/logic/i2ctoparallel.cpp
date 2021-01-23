@@ -37,7 +37,7 @@ LibraryItem* I2CToParallel::libraryItem()
 
 I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
              : LogicComponent( parent, type, id )
-             , eI2C( id )
+             , eI2CSlave( id )
 {
     m_width  = 4;
     m_height = 9;
@@ -113,9 +113,6 @@ void I2CToParallel::voltChanged()             // Some Pin Changed State, Manage 
     m_address = address;
     
     eI2C::voltChanged();                               // Run I2C Engine
-    
-    //if( m_state == I2C_READING ) m_phase = 0;
-    //if( m_state == I2C_STOPPED ) m_phase = 3;
 }
 
 void I2CToParallel::readByte()           // Reading from I2C to Parallel

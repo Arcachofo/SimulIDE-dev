@@ -20,7 +20,7 @@
 #ifndef SSD1306_H
 #define SSD1306_H
 
-#include "e-i2c.h"
+#include "e-i2c_slave.h"
 #include "component.h"
 #include "itemlibrary.h"
 #include "pin.h"
@@ -29,7 +29,7 @@
 #define VERT_ADDR_MODE 1
 #define PAGE_ADDR_MODE 2
 
-class MAINMODULE_EXPORT Ssd1306 : public Component, public eI2C
+class MAINMODULE_EXPORT Ssd1306 : public Component, public eI2CSlave
 {
     Q_OBJECT
     //Q_PROPERTY( bool CS_Active_Low   READ csActLow    WRITE setCsActLow   DESIGNABLE true USER true )
@@ -59,8 +59,8 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public eI2C
         virtual void updateStep() override;
         virtual void remove() override;
 
-        virtual void readByte();
-        virtual void slaveStop();
+        virtual void readByte() override;
+        virtual void I2Cstop() override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

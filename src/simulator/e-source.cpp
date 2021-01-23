@@ -48,6 +48,8 @@ eSource::~eSource(){ delete m_scrEnode; }
 
 void eSource::initialize()
 {
+    m_voltOutNext = 0;
+    m_impNext = 0;
     m_ePin[0]->setEnodeComp( m_scrEnode );
 }
 
@@ -59,19 +61,18 @@ void eSource::stamp()
 
 void eSource::runEvent()
 {
-    if( m_outNext != m_out )
+    if( m_voltOutNext != m_voltOut )
     {
-        m_out = m_outNext;
-        if( m_out ) m_voltOut = m_voltHigh;
-        else        m_voltOut = m_voltLow;
-        stampOutput();
+        m_voltOut = m_voltOutNext;
     }
     if( m_impNext != m_imp )
     {
         m_imp = m_impNext;
         m_admit = 1/m_imp;
-        eSource::stamp();
+        m_ePin[0]->stampAdmitance( m_admit );
     }
+    stampOutput();
+    m_out = m_outNext;
 }
 
 void eSource::stampOutput()
@@ -99,36 +100,8 @@ void eSource::setOut( bool out ) // Set Output to Hight or Low
 
     if( m_out ) m_voltOut = m_voltHigh;
     else        m_voltOut = m_voltLow;
-}
 
-void eSource::setTimedOut( bool out )
-{
-    if( m_inverted ) out = !out;
-    if( out == m_out ) return;
-
-    if( out )
-    {
-        m_voltOut = m_voltLow + 1e-6;
-        Simulator::self()->addEvent( m_timeLH*1.25, this );
-    }
-    else
-    {
-        m_voltOut = m_voltHigh - 1e-6;
-        Simulator::self()->addEvent( m_timeHL*1.25, this );
-    }
-    stampOutput();
-    m_outNext = out;
-}
-
-void eSource::setInverted( bool inverted )
-{
-    if( inverted == m_inverted ) return;
-
-    if( inverted ) setTimedOut( !m_out );
-    else           setTimedOut( m_out );
-
-    m_inverted = inverted;
-    m_ePin[0]->setInverted( inverted );
+    m_voltOutNext = m_voltOut;
 }
 
 void eSource::setImp( double imp )
@@ -139,21 +112,66 @@ void eSource::setImp( double imp )
     m_impNext = imp;
 }
 
-void eSource::setTimedImp( double imp )
+void eSource::setTimedOut( bool out )
 {
-    m_impNext = imp;
-    if( imp > m_imp )
+    if( m_inverted ) out = !out;
+    if( out == m_out ) return;
+
+    if( out )
     {
-        imp = m_imp+1e-6;
+        m_voltOut = m_voltLow + 1e-6;
+        m_voltOutNext = m_voltHigh;
         Simulator::self()->addEvent( m_timeLH*1.25, this );
     }
     else
     {
-        imp = m_imp+(imp-m_imp)*1e-3;
+        m_voltOut = m_voltHigh - 1e-6;
+        m_voltOutNext = m_voltLow;
         Simulator::self()->addEvent( m_timeHL*1.25, this );
     }
-    m_admit = 1/imp;
+    stampOutput();
+    m_outNext = out;
+}
+
+void eSource::setTimedImp( double imp )
+{
+    if( Simulator::self()->simState() < SIM_PAUSED )
+    {
+        m_voltOut = m_voltOutNext;
+        eSource::setImp( imp );
+        return;
+    }
+    if( imp == m_imp && m_voltOut == m_voltOutNext ) return;
+
+    m_impNext = imp;
+
+    if    ( m_voltOutNext > m_voltOut ) m_voltOut = m_voltOut + 1e-6;
+    else if( m_voltOutNext < m_voltOut) m_voltOut = m_voltOut - 1e-6;
+
+    if( m_impNext > m_imp )
+    {
+        m_imp = m_imp*1.05;
+        Simulator::self()->addEvent( m_timeLH*1.25, this );
+    }
+    else
+    {
+        m_imp = m_imp*0.95;
+        Simulator::self()->addEvent( m_timeHL*1.25, this );
+    }
+    m_admit = 1/m_imp;
     eSource::stamp();
+}
+
+
+void eSource::setInverted( bool inverted )
+{
+    if( inverted == m_inverted ) return;
+
+    if( inverted ) setTimedOut( !m_out );
+    else           setTimedOut( m_out );
+
+    m_inverted = inverted;
+    m_ePin[0]->setInverted( inverted );
 }
 
 void eSource::setRiseTime( uint64_t time )
