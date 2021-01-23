@@ -598,8 +598,8 @@ void pic_processor::reset( RESET_TYPE r )// Reset the pic on desired reset type.
         break;
 
     case EXIT_RESET:        // MCLR reset has cleared
-        cout <<"MCLR low, resume execution\n";
-        m_phaseCurr = m_phaseCurr ? m_phaseCurr : m_phase1;
+        cout <<"MCLR exit, resume execution\n";
+        m_phaseCurr = m_phase1;
         m_phaseCurr->setNextPhase(m_phase1);
         m_ActivityState = ePAActive;
         return;
