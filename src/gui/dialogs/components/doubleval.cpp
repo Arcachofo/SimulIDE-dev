@@ -58,48 +58,47 @@ void DoubleVal::setup( Component* comp, QString unit )
             unitBox->addItem( "G"+unit);
             unitBox->addItem( "T"+unit);
         }
-    }
-    else{
+    }else{
         showVal->setVisible( false );
         if( unit.isEmpty() ) unitBox->setVisible( false );
         else                 unitBox->addItem(" "+unit+" ");
         unitBox->setStyleSheet ("QComboBox::drop-down {border-width: 0px;} "
                  "QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
     }
-    updateValues();
+    double val = m_component->property( m_propName.toUtf8() ).toDouble();
+    valueBox->setValue( val );
+    setUnit();
+
     m_blocked = false;
 }
 
-void DoubleVal::on_value_valueChanged( double val )
+void DoubleVal::on_valueBox_valueChanged( double val )
 {
     if( m_blocked ) return;
+    m_blocked = true;
     m_component->setProperty( m_propName.toUtf8(), val );
-    updateValues();
+    if( m_main ) setUnit();
+    m_blocked = false;
 }
 
 void DoubleVal::on_showVal_toggled( bool checked )
 {
-    if( m_blocked ) return;
-    if( m_main ) m_component->setShowVal( checked );
+    if( !m_main | m_blocked ) return;
+    m_component->setShowVal( checked );
 }
 
 void DoubleVal::on_unitBox_currentTextChanged( QString unit )
 {
-    if( !m_main ) return;
-
-    if( m_blocked ) return;
+    if( !m_main | m_blocked ) return;
     m_blocked = true;
     m_component->setUnit( unit );
-    updateValues();
+    double val = m_component->property( m_propName.toUtf8() ).toDouble();
+    valueBox->setValue( val );
     m_blocked = false;
 }
 
-void DoubleVal::updateValues()
+void DoubleVal::setUnit()
 {
-    double val = m_component->property( m_propName.toUtf8() ).toDouble();
-    value->setValue( val );
-
-    if( !m_main ) return;
     QString unit = m_component->unit();
     if( unit.size() > 2 ) unit = unit.right( 2 );
     unitBox->setCurrentText( unit );

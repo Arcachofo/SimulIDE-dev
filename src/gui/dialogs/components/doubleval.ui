@@ -77,12 +77,18 @@
     </widget>
    </item>
    <item>
-    <widget class="QDoubleSpinBox" name="value">
+    <widget class="QDoubleSpinBox" name="valueBox">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="specialValueText">
+      <string notr="true"/>
+     </property>
+     <property name="keyboardTracking">
+      <bool>false</bool>
      </property>
      <property name="prefix">
       <string notr="true"/>

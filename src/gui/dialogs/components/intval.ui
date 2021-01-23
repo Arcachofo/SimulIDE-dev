@@ -53,6 +53,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="keyboardTracking">
+      <bool>false</bool>
+     </property>
      <property name="suffix">
       <string notr="true"/>
      </property>

@@ -34,15 +34,15 @@ class DoubleVal : public QWidget, private Ui::DoubleVal
         DoubleVal( QWidget* parent=0 );
         
         void setup( Component* comp, QString unit );
-        void setPropName(QString name, QString caption );
+        void setPropName( QString name, QString caption );
 
     public slots:
-        void on_value_valueChanged( double val );
+        void on_valueBox_valueChanged( double val );
         void on_showVal_toggled( bool checked );
         void on_unitBox_currentTextChanged( QString unit );
 
     private:
-        void updateValues();
+        void setUnit();
 
         Component* m_component;
         QString m_propName;
