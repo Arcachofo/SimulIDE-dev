@@ -29,7 +29,6 @@
 PlotBase::PlotBase( QObject* parent, QString type, QString id )
         : Component( parent, type, id )
         , eElement( id )
-        , m_topW()
 {
     m_pin.resize(3);
 
@@ -205,6 +204,9 @@ void PlotBase::remove()
     Simulator::self()->remFromUpdateList( this );
 
     for( int i=0; i<2; i++ ) delete m_channel[i];
+
+    m_proxy->setWidget( NULL );
+    delete m_topW;
 
     Component::remove();
 }

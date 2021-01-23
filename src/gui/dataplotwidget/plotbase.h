@@ -36,15 +36,15 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( int Expand_X  READ adSizeX  WRITE setAdSizeX  DESIGNABLE true USER true )
     Q_PROPERTY( int Expand_Y  READ adSizeY  WRITE setAdSizeY  DESIGNABLE true USER true )
 
+    Q_PROPERTY( bool Expand  READ advanc  WRITE setAdvanc )
+    Q_PROPERTY( int  Trigger READ trigger WRITE setTrigger )
+    Q_PROPERTY( int  AutoSC  READ autoSC  WRITE setAutoSC )
+
     Q_PROPERTY( bool    Data_Log READ paOnCond WRITE setPaOnCond DESIGNABLE true USER true )
     Q_PROPERTY( double  Log_us   READ dataSize WRITE setDataSize DESIGNABLE true USER true )
     Q_PROPERTY( paCond  CH1_Cond READ ch1Cond  WRITE setCh1Cond  DESIGNABLE true USER true )
     Q_PROPERTY( paCond  CH2_Cond READ ch2Cond  WRITE setCh2Cond  DESIGNABLE true USER true )
     Q_PROPERTY( paCond  REF_Cond READ refCond  WRITE setRefCond  DESIGNABLE true USER true )
-
-    Q_PROPERTY( bool Expand  READ advanc  WRITE setAdvanc )
-    Q_PROPERTY( int  Trigger READ trigger WRITE setTrigger )
-    Q_PROPERTY( int  AutoSC  READ autoSC  WRITE setAutoSC )
 
     Q_PROPERTY( quint64 hTick  READ hTick  WRITE setHTick )
     Q_PROPERTY( double  vTick1 READ vTick1 WRITE setVTick1 )
@@ -55,7 +55,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( QString Probe2 READ probe2 WRITE setProbe2 )
 
     public:
-
         PlotBase( QObject* parent, QString type, QString id );
         ~PlotBase();
 
@@ -83,17 +82,25 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         double dataSize() { return DataChannel::m_dataSize/1e6; }
         void setDataSize( double ds ) { DataChannel::m_dataSize = ds*1e6; }
 
-        bool paOnCond() {return m_dataPlotW->m_paOnCond; }
-        void setPaOnCond( bool pa ) { m_dataPlotW->m_paOnCond = pa; }
+        bool paOnCond() {
+            return m_dataPlotW->m_paOnCond; }
+        void setPaOnCond( bool pa ) {
+            m_dataPlotW->m_paOnCond = pa; }
 
-        paCond ch1Cond() { return (paCond)m_channel[0]->m_chCond; }
-        void setCh1Cond( paCond cond ) { m_channel[0]->m_chCond = cond; }
+        paCond ch1Cond() {
+            return (paCond)m_channel[0]->m_chCond; }
+        void setCh1Cond( paCond cond ) {
+            m_channel[0]->m_chCond = (int)cond; }
 
-        paCond ch2Cond() { return (paCond)m_channel[1]->m_chCond; }
-        void setCh2Cond( paCond cond ) { m_channel[1]->m_chCond = cond; }
+        paCond ch2Cond() {
+            return (paCond)m_channel[1]->m_chCond; }
+        void setCh2Cond( paCond cond ) {
+            m_channel[1]->m_chCond = (int)cond; }
 
-        paCond refCond() { return (paCond)m_dataPlotW->m_refCond; }
-        void setRefCond( paCond cond ) { m_dataPlotW->m_refCond = cond; }
+        paCond refCond() {
+            return (paCond)m_dataPlotW->m_refCond; }
+        void setRefCond( paCond cond ) {
+            m_dataPlotW->m_refCond = (int)cond; }
 
         int trigger() { return m_dataPlotW->m_trigger; }
         void setTrigger( int ch ) { m_dataPlotW->setTrigger( ch ); }
@@ -162,7 +169,7 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         DataChannel* m_channel[2];
         PlotDisplay* m_display;
 
-        TopWidget*            m_topW;
+        TopWidget*             m_topW;
         DataPlotWidget*       m_dataPlotW;
         QGraphicsProxyWidget* m_proxy;
 };
