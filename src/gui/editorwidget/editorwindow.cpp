@@ -98,6 +98,7 @@ void EditorWindow::newFile()
 {
     //CodeEditorWidget* baseWidget = new CodeEditorWidget( this );
     CodeEditor* codeEditor = new CodeEditor( this, &m_outPane );
+    Simulator::self()->addToUpdateList( codeEditor );
 
     m_docWidget->addTab( codeEditor, "New" );
     m_docWidget->setCurrentWidget( codeEditor );
