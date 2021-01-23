@@ -42,7 +42,7 @@ BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString f
     
     QFileInfo fi = QFileInfo( filePath );
     m_file     = filePath;
-    m_fileDir  = fi.absolutePath();
+    m_fileDir  = fi.absolutePath()+"/";
     m_fileExt  = "."+fi.suffix();
     m_fileName = fi.completeBaseName();
 
