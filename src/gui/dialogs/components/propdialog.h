@@ -31,7 +31,7 @@ class PropDialog : public QDialog, private Ui::PropDialog
     Q_OBJECT
     
     public:
-        PropDialog( QWidget* parent=0 );
+        PropDialog( QWidget* parent=0, QString help="" );
 
         void setComponent( Component* comp );
 
@@ -39,9 +39,12 @@ class PropDialog : public QDialog, private Ui::PropDialog
         void on_labelBox_editingFinished();
         void on_showLabel_toggled( bool checked );
         void on_tabList_currentChanged(int);
+        void on_helpButton_clicked();
 
     private:
         Component* m_component;
+
+        bool m_helpExpanded;
 
 };
 

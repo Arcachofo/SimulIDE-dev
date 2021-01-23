@@ -254,10 +254,12 @@ QString MainWindow::getHelpFile( QString name )
     if( m_help.contains( name )) return m_help.value( name );
 
     //QString locale   = "_"+QLocale::system().name().split("_").first();
-    QString locale = "_"+loc();
+    QString locale = loc();
+    if( loc() != "en" ) locale.prepend("_").append("/");
+    else locale = "";
 
     name= name.toLower().replace( " ", "" );
-    QString dfPath = SIMUAPI_AppPath::self()->availableDataFilePath( "help/"+locale+"/"+name+locale+".txt" );
+    QString dfPath = SIMUAPI_AppPath::self()->availableDataFilePath( "help/"+locale+name+locale+".txt" );
 
     if( dfPath == "" )
         dfPath = SIMUAPI_AppPath::self()->availableDataFilePath( "help/"+name+".txt" );

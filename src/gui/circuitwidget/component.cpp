@@ -322,7 +322,21 @@ void Component::slotProperties()
 {
     if( !m_propDialog )
     {
-        m_propDialog = new PropDialog( CircuitWidget::self() );
+        if(( m_help == "" )&&( m_type != "Connector" )&&( m_type != "Node" ))
+        {
+            QString name = m_type;
+
+            if( ( m_type == "Subcircuit" )
+              ||( m_type == "Arduino" )
+              ||( m_type == "MCU" )
+              ||( m_type == "PIC" )
+              ||( m_type == "AVR" ))
+            {
+                name = m_id.split("-").first();
+            }
+            m_help = MainWindow::self()->getHelpFile( name );
+        }
+        m_propDialog = new PropDialog( CircuitWidget::self(), m_help );
         m_propDialog->setComponent( this );
     }
     m_propDialog->show();

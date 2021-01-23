@@ -27,7 +27,7 @@
 #include "labelval.h"
 #include "colorval.h"
 
-PropDialog::PropDialog( QWidget* parent )
+PropDialog::PropDialog( QWidget* parent, QString help )
           : QDialog( parent )
 {
     setupUi(this);
@@ -35,8 +35,10 @@ PropDialog::PropDialog( QWidget* parent )
 
     m_component = NULL;
 
+    m_helpExpanded = false;
     helpText->setVisible( false );
     mainLayout->removeWidget( helpText );
+    helpText->setText( help );
     //this->adjustSize();
 }
 
@@ -144,5 +146,15 @@ void PropDialog::on_showLabel_toggled( bool checked )
 void PropDialog::on_tabList_currentChanged(int)
 {
     if( !m_component ) return;
+    this->adjustSize();
+}
+
+void PropDialog::on_helpButton_clicked()
+{
+    m_helpExpanded = !m_helpExpanded;
+    if( m_helpExpanded ) mainLayout->addWidget(helpText);
+    else                 mainLayout->removeWidget(helpText);
+    helpText->setVisible( m_helpExpanded );
+
     this->adjustSize();
 }
