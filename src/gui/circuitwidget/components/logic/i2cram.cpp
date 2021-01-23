@@ -88,6 +88,7 @@ QList<propGroup_t> I2CRam::propGroups()
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Size_bytes", tr("Size"),"Bites"} );
     mainGroup.propList.append( {"Control_Code", tr("Control_Code"),""} );
+    mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
     mainGroup.propList.append( {"Persistent", tr("Persistent"),""} );
 
     QList<propGroup_t> pg = LogicComponent::propGroups();

@@ -90,6 +90,7 @@ QList<propGroup_t> Ssd1306::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Color", tr("Color"),"enum"} );
+    mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
     return {mainGroup};
 }
 

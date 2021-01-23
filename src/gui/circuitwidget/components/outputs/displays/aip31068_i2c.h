@@ -29,6 +29,7 @@ class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public eI2CSlave
 {
     Q_OBJECT
     Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode  DESIGNABLE true USER true )
+    Q_PROPERTY( double Frequency  READ freq       WRITE setFreq       DESIGNABLE true USER true )
 
     public:
         Aip31068_i2c( QObject* parent, QString type, QString id );

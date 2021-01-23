@@ -82,6 +82,7 @@ QList<propGroup_t> I2CToParallel::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Control_Code", tr("Control_Code"),""} );
+    mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
 
     QList<propGroup_t> pg = LogicComponent::propGroups();
     pg.prepend( mainGroup );

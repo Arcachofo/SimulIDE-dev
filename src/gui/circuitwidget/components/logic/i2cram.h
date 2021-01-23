@@ -38,6 +38,7 @@ class MAINMODULE_EXPORT I2CRam : public LogicComponent, public eI2CSlave, public
     Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
     Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
     Q_PROPERTY( QVector<int> Mem  READ mem        WRITE setMem )
+    Q_PROPERTY( double Frequency  READ freq       WRITE setFreq       DESIGNABLE true USER true )
     Q_PROPERTY( int  Control_Code READ cCode      WRITE setCcode      DESIGNABLE true USER true )
     Q_PROPERTY( int  Size_bytes   READ rSize      WRITE setRSize      DESIGNABLE true USER true )
     Q_PROPERTY( bool Persistent   READ persistent WRITE setPersistent DESIGNABLE true USER true )

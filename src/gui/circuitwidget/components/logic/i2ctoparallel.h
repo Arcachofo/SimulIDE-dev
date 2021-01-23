@@ -36,6 +36,7 @@ class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2CSlave
     Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
     Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
     Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
+    Q_PROPERTY( double Frequency  READ freq       WRITE setFreq       DESIGNABLE true USER true )
     Q_PROPERTY( int Control_Code READ cCode WRITE setCcode DESIGNABLE true USER true )
 
     public:

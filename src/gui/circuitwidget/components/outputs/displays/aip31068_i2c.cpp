@@ -74,6 +74,7 @@ QList<propGroup_t> Aip31068_i2c::propGroups()
     mainGroup.propList.append( {"Rows", tr("Rows"),""} );
     mainGroup.propList.append( {"Cols", tr("Columns"),""} );
     mainGroup.propList.append( {"Control_Code", tr("Control Code"),""} );
+    mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
     return {mainGroup};
 }
 
