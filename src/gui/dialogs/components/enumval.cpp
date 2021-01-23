@@ -26,6 +26,7 @@ EnumVal::EnumVal( QWidget* parent )
     setupUi(this);
     m_propName = "";
     m_component = NULL;
+    m_blocked = false;
 }
 
 void EnumVal::setPropName( QString name, QString caption )
@@ -36,6 +37,7 @@ void EnumVal::setPropName( QString name, QString caption )
 
 void EnumVal::setup( Component* comp )
 {
+    m_blocked = true;
     m_component = comp;
 
     const QMetaObject* meta = comp->metaObject();
@@ -46,13 +48,18 @@ void EnumVal::setup( Component* comp )
         for( int i=0; i<qenum.keyCount(); ++i ) valueBox->addItem( qenum.key(i) );
     }
 
-    int val = m_component->property( m_propName.toUtf8() ).toInt();
+    QByteArray b = m_propName.toUtf8();
+    QVariant v = m_component->property( b );
+    int val = v.toInt();
     valueBox->setCurrentIndex( val );
+
     this->adjustSize();
+    m_blocked = false;
 }
 
 void EnumVal::on_valueBox_currentIndexChanged( int val )
 {
+    if( m_blocked ) return;
     m_component->setProperty( m_propName.toUtf8(), val );
 }
 
