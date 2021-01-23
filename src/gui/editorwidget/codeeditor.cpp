@@ -211,6 +211,7 @@ void CodeEditor::setFile( const QString filePath )
             m_hlighter->readSintaxFile( path );
 
             m_debugger = new AvrAsmDebugger( this, m_outPane, filePath );
+            m_debugger->loadCompiler( compilerPath+"avracompiler.xml" );
         }
         else m_outPane->writeText( "Unknown\n" );
     }

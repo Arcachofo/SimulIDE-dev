@@ -20,9 +20,6 @@
 #ifndef AVRASMDEBUGGER_H
 #define AVRASMDEBUGGER_H
 
-#include <QtGui>
-#include <QHash>
-
 #include "basedebugger.h"
 
 class AvrAsmDebugger : public BaseDebugger
@@ -37,11 +34,10 @@ class AvrAsmDebugger : public BaseDebugger
         QString avraIncPath()  { return m_avraIncPath; }
         void    setAvraIncPath( QString path );
 
-        int  compile();
         void mapFlashToSource();
         
     private:
-        QString m_avraIncPath;                  // path to avra includes
+        QString m_avraIncPath;    // path to avra includes
 };
 
 

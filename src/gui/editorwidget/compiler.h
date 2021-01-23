@@ -44,6 +44,7 @@ class Compiler : public QObject
         QString m_toolPath;
         QString m_command;
         QString m_arguments;
+        QString m_incDir;
 
         QProcess m_compilerProc;
 

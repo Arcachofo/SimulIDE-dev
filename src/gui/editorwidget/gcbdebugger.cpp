@@ -41,64 +41,6 @@ GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane, QString fil
 }
 GcbDebugger::~GcbDebugger(){}
 
-int GcbDebugger::compile( )
-{
-    int error = Compiler::compile( m_file );
-    if( error == 0 ) m_firmware = m_fileDir+m_fileName+".hex";
-    return error;
-
-
-    if( !QFile::exists( m_compilerPath+"gcbasic") )
-    {
-        m_outPane->appendText( "\nGcBasic" );
-        toolChainNotFound();
-        return -1;
-    }
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-
-    QString file = m_file;
-    QString args = " -NP -K:L -A:GCASM -R:text  ";
-    QString command = m_compilerPath + "gcbasic";
-    
-    #ifndef Q_OS_UNIX
-    command  = addQuotes( command );
-    file     = addQuotes( file );
-    #endif
-
-    command.append( args + file );
-    m_outPane->writeText( command );
-
-    QProcess compGcb( 0l );
-    compGcb.setWorkingDirectory( m_fileDir );
-    compGcb.start( command );
-    compGcb.waitForFinished(-1);
-    QString p_stdout = compGcb.readAllStandardOutput();
-
-    m_outPane->writeText( p_stdout.remove("The message has been logged to the file Errors.txt.\n") );
-
-    //int
-            error = -1;
-    if( p_stdout.toUpper().contains("DONE"))
-    {
-        m_firmware = m_fileDir+m_fileName+".hex";
-        error = 0;
-    }
-    /*else // some error found
-    {
-        QStringList lines = p_stdout.split("\n");
-        for( QString line : lines )
-        {
-            if( !line.contains( "Error:" ) ) continue;
-            QStringList words = line.split(" ");
-            words.removeFirst();
-            error = words.first().remove("(").remove(")").remove(":").toInt();
-            break;
-        }
-    }*/
-    QApplication::restoreOverrideCursor();
-    return error;
-}
-
 void GcbDebugger::getSubs()
 {
     m_subs.clear();

@@ -54,6 +54,13 @@ BaseDebugger::~BaseDebugger( )
     if( BaseProcessor::self() ) BaseProcessor::self()->getRamTable()->remDebugger( this );
 }
 
+int BaseDebugger::compile( )
+{
+    int error = Compiler::compile( m_file );
+    if( error == 0 ) m_firmware = m_fileDir+m_fileName+".hex";
+    return error;
+}
+
 bool BaseDebugger::upload()
 {
     if( !McuComponent::self() )

@@ -48,70 +48,11 @@ AvrAsmDebugger::AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QStri
     if( m_avraIncPath == "" )
         m_avraIncPath = SIMUAPI_AppPath::self()->availableDataDirPath("codeeditor/tools/avra");
 
+    m_incDir = m_avraIncPath;
+
     m_typesList["byte"]    = "uint8";
 }
 AvrAsmDebugger::~AvrAsmDebugger() {}
-
-int AvrAsmDebugger::compile()
-{
-    if( !QFile::exists( m_compilerPath+"avra") )
-    {
-        m_outPane->appendText( "\nAvra" );
-        toolChainNotFound();
-        return -1;
-    }
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-
-    QString file = m_file;
-    QString avraIncPath = m_avraIncPath;
-    
-    m_outPane->writeText( "-------------------------------------------------------\n" );
-    
-    QString listFile = m_fileDir+m_fileName+".lst";
-    QString command  = m_compilerPath+"avra";
-
-    #ifndef Q_OS_UNIX
-    command  = addQuotes( command );
-    listFile = addQuotes( listFile );
-    file     = addQuotes( file );
-    avraIncPath = addQuotes( avraIncPath );
-    #endif
-    
-    command.append(" -W NoRegDef");             // supress some warnings
-    command.append(" -l "+ listFile );               // output list file
-    if( m_avraIncPath != "" )
-        command.append(" -I "+ avraIncPath);              // include dir
-    command.append(" "+file );                       // File to assemble
-
-    m_outPane->appendText( "Exec: ");
-    m_outPane->writeText( command );
-    
-    m_compProcess.start( command );
-    m_compProcess.waitForFinished(-1);
-    
-    QString p_stderr = m_compProcess.readAllStandardError();
-    m_outPane->writeText( p_stderr );
-
-    int error = 0;
-
-    if( p_stderr.toUpper().contains("ERROR ") )
-    {
-        QStringList lines = p_stderr.split("\n");
-        for( QString line : lines )
-        {
-            if( !(line.toUpper().contains( "ERROR " )) ) continue;
-            QStringList words = line.split(":");
-            QString filePath = m_fileDir+m_fileName+m_fileExt;
-            error = words.first().remove(filePath).remove("(").remove(")").toInt();
-            break;
-        }
-        if( error == 0 ) error = 1;
-    }
-    m_firmware = m_fileDir+m_fileName+".hex";
-    
-    QApplication::restoreOverrideCursor();
-    return error;
-}
 
 void AvrAsmDebugger::mapFlashToSource()
 {

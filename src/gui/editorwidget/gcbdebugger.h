@@ -32,7 +32,6 @@ class GcbDebugger : public BaseDebugger
         GcbDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~GcbDebugger();
 
-        int  compile();
         void mapFlashToSource();
         
     protected:

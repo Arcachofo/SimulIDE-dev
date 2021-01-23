@@ -56,13 +56,17 @@ void Compiler::loadCompiler( QString file )
     QDomElement root = domDoc.documentElement();
 
     QString compName = "";
+    QString incDir = "";
 
     if( root.hasAttribute("name") )      compName    = root.attribute( "name" );
     if( root.hasAttribute("toolPath") )  m_toolPath  = root.attribute( "toolPath" );
     if( root.hasAttribute("command") )   m_command   = root.attribute( "command" );
     if( root.hasAttribute("arguments") ) m_arguments = root.attribute( "arguments" );
+    if( root.hasAttribute("incDir") )    incDir      = root.attribute( "incDir" );
 
-    if( !QFile::exists( m_toolPath+m_command ) )
+    if( !incDir.isEmpty() ) m_incDir = incDir;
+
+    if( !m_toolPath.isEmpty() && !QFile::exists( m_toolPath+m_command ) )
     {
         m_outPane->appendText( tr("Error: ToolChain not found")+"\n" );
         m_outPane->writeText( m_toolPath+m_command+"\n" );
@@ -85,6 +89,7 @@ int Compiler::compile( QString file )
     QString fileDir  = fi.absolutePath()+"/";
     QString fileExt  = "."+fi.suffix();
     QString fileName = fi.completeBaseName();
+    QString incDir   = m_incDir;
 
     QString command = m_toolPath+m_command;
 
@@ -94,12 +99,14 @@ int Compiler::compile( QString file )
     fileDir  = addQuotes( fileDir );
     fileExt  = addQuotes( fileExt );
     fileName = addQuotes( fileName );
+    incDir   = addQuotes( incDir );
     #endif
 
     QString arguments = m_arguments.replace( "$filePath", filePath )
-                                    .replace( "$fileDir", fileDir )
-                                    .replace( "$fileName", fileName )
-                                    .replace( "$fileExt", fileExt );
+                                   .replace( "$fileDir",  fileDir )
+                                   .replace( "$fileName", fileName )
+                                   .replace( "$fileExt",  fileExt )
+                                   .replace( "$incDir",   incDir );
 
     m_outPane->writeText( "\n Executing:\n"+command+arguments+"\n" );
     m_compilerProc.start( command+arguments  );
@@ -108,8 +115,8 @@ int Compiler::compile( QString file )
     QString p_stderr = m_compilerProc.readAllStandardError();
     QString p_stdout = m_compilerProc.readAllStandardOutput();
 
-    if     ( p_stdout.toLower().contains("error")) error = -1;
-    else if( p_stderr.toLower().contains("error")) error = -1;
+    if     ( p_stdout.toLower().contains( QRegExp("\berror\b") )) error = -1;
+    else if( p_stderr.toLower().contains( QRegExp("\berror\b") )) error = -1;
 
     m_outPane->writeText( p_stdout+"\n" );
     if( !p_stderr.isEmpty() )
