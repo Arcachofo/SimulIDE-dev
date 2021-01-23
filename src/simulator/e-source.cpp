@@ -48,8 +48,8 @@ eSource::~eSource(){ delete m_scrEnode; }
 
 void eSource::initialize()
 {
-    m_voltOutNext = 0;
-    m_impNext = 0;
+    m_voltOutNext = m_voltOut;
+    m_impNext     = m_imp;
     m_ePin[0]->setEnodeComp( m_scrEnode );
 }
 
