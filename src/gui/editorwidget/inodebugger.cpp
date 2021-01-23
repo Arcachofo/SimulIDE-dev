@@ -91,9 +91,10 @@ int InoDebugger::compile()
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
     
     QDir dir(buildPath);
-    dir.removeRecursively();               // Remove old files
-    dir.mkpath(buildPath+"/build");        // Create build folder
-    dir.mkpath(buildPath+"/cache");        // Create cache folder
+    bool b = dir.cd( "build" );
+    if( b ) dir.removeRecursively(); // Remove old files
+    dir.mkpath(buildPath+"/cache");  // Create cache folder ( if doesn't exist )
+    dir.mkpath(buildPath+"/build");  // Create build folder
     
     //QDir directory( m_fileDir );
     //m_fileList = directory.entryList( QDir::Files );
