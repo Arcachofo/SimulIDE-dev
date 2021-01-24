@@ -36,12 +36,11 @@ void eI2CSlave::initialize()
 void eI2CSlave::stamp()                    // Called at Simulation Start
 {
     if( m_input.size() == 0 ) return;
+    if( !m_enabled ) return;
 
     SDA_PIN->setOut( false );
-    SDA_PIN->setTimedImp( high_imp );
-    SCL_PIN->setTimedImp( high_imp );
-
-    if( !m_enabled ) return;
+    SDA_PIN->setImp( high_imp );
+    SCL_PIN->setImp( high_imp );
 
     eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
 
@@ -80,7 +79,7 @@ void eI2CSlave::voltChanged()   // Some Pin Changed State, Manage it
 
     if(( sclState == Clock_High )&&( m_state != I2C_ACK ))
     {
-        if( !m_SDA  && m_lastSDA ) {     // We are in a Start Condition
+        if( m_lastSDA && !m_SDA ) {     // We are in a Start Condition
             m_bitPtr = 0;
             m_rxReg = 0;
             m_state = I2C_STARTED;
@@ -129,7 +128,6 @@ void eI2CSlave::voltChanged()   // Some Pin Changed State, Manage it
     {
         if( m_state == I2C_ACK ) {                           // Send ACK
             setSDA( false );
-
             m_state = I2C_ENDACK;
         }
         else if( m_state == I2C_ENDACK ) {   // We sent ACK, release SDA
@@ -149,8 +147,8 @@ void eI2CSlave::updatePins()
     if( m_enabled )
     {
         SDA_PIN->setOut( false );
-        SDA_PIN->setTimedImp( high_imp );
-        SCL_PIN->setTimedImp( high_imp );
+        SDA_PIN->setImp( high_imp );
+        SCL_PIN->setImp( high_imp );
 
         eNode* enode = SCL_PIN->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );

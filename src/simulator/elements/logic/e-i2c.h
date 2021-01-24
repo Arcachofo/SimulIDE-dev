@@ -81,7 +81,6 @@ class MAINMODULE_EXPORT eI2C : public eLogicDevice
         bool m_SDA;
         bool m_lastSDA;
         bool m_enabled;
-        bool m_lastBit;
 
         Component* m_comp;
 };

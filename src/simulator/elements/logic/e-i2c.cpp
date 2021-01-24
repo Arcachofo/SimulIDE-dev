@@ -25,7 +25,7 @@ eI2C::eI2C( QString id )
 {
     m_comp = 0l;
     m_enabled = true;
-    m_freq = 100000;
+    m_freq = 1000000;
 }
 eI2C::~eI2C() { }
 
@@ -35,11 +35,12 @@ void eI2C::initialize()
 
     double stepsPerS = 1e12;
     m_stepsPe   = stepsPerS/m_freq/2;
-    m_propDelay = m_stepsPe/3;
+    m_propDelay = m_stepsPe/2;
     
     m_txReg  = 0;
     m_rxReg  = 0;
     m_bitPtr = 0;
+    m_SDA    = false;
     m_lastSDA = false;
     m_state = I2C_IDLE;
 }
@@ -102,6 +103,6 @@ void eI2C::setFreq( double f )
     m_freq = f*1e3;
     double stepsPerS = 1e12;
     m_stepsPe = stepsPerS/m_freq/2;
-    m_propDelay = m_stepsPe/3;
+    m_propDelay = m_stepsPe/2;
 }
 

@@ -28,26 +28,25 @@ eI2CMaster::~eI2CMaster() { }
 
 void eI2CMaster::stamp()                    // Called at Simulation Start
 {
+    m_toggleScl = false;
+
     if( m_input.size() == 0 ) return;
-
-    //setSDA( true );
-    //setSCL( true );
-
     if( !m_enabled ) return;
+
+    SDA_PIN->setImp( high_imp );
+    SCL_PIN->setImp( high_imp );
 
     eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
 }
 
 void eI2CMaster::setSDA( bool state )
 {
-    //SDA_PIN->setOut( state );
     if( state ) SDA_PIN->setTimedImp( high_imp );
     else        SDA_PIN->setTimedImp( m_outImp );
 }
 
 void eI2CMaster::setSCL( bool state )
 {
-    //SCL_PIN->setOut( state );
     if( state ) SCL_PIN->setTimedImp( high_imp );
     else        SCL_PIN->setTimedImp( m_outImp );
 }
@@ -124,8 +123,6 @@ void eI2CMaster::runEvent()       // We are in Mater mode, controlling Clock
 
 void eI2CMaster::masterStart( uint8_t addr )
 {
-    setSDA( true );
-    setSCL( true );
     m_state = I2C_STARTED;
 }
 
