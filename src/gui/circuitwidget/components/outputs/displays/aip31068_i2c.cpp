@@ -47,7 +47,7 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
 {
     Q_UNUSED( Aip31068_i2c_properties );
 
-    m_cCode = 0x3E;
+    m_address = 0x3E;
 
     m_pin.resize( 2 );
 
@@ -73,7 +73,7 @@ QList<propGroup_t> Aip31068_i2c::propGroups()
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Rows", tr("Rows"),""} );
     mainGroup.propList.append( {"Cols", tr("Columns"),""} );
-    mainGroup.propList.append( {"Control_Code", tr("Control Code"),""} );
+    mainGroup.propList.append( {"Control_Code", tr("I2C Address"),""} );
     mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
     return {mainGroup};
 }
@@ -82,9 +82,9 @@ void Aip31068_i2c::updateStep() { update(); }
 
 void Aip31068_i2c::initialize()
 {
+    m_enabled = true;
     eI2CSlave::initialize();
 
-    m_address = m_cCode;
     m_controlByte = 0;
     m_phase = 3;
 
@@ -124,12 +124,12 @@ void Aip31068_i2c::readByte()
 
 int Aip31068_i2c::cCode()
 {
-    return m_cCode;
+    return m_address;
 }
 
 void Aip31068_i2c::setCcode( int code )
 {
-    m_cCode = code;
+    m_address = code;
 }
 
 void Aip31068_i2c::showPins( bool show )

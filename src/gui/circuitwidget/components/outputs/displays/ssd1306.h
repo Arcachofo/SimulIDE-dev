@@ -32,13 +32,16 @@
 class MAINMODULE_EXPORT Ssd1306 : public Component, public eI2CSlave
 {
     Q_OBJECT
-    //Q_PROPERTY( bool CS_Active_Low   READ csActLow    WRITE setCsActLow   DESIGNABLE true USER true )
     Q_PROPERTY( dispColor Color READ color WRITE setColor DESIGNABLE true USER true )
     Q_PROPERTY( double Frequency  READ freq       WRITE setFreq       DESIGNABLE true USER true )
+    Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode  DESIGNABLE true USER true )
     
     public:
         Ssd1306( QObject* parent, QString type, QString id );
         ~Ssd1306();
+
+        static Component* construct( QObject* parent, QString type, QString id );
+        static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
 
@@ -51,9 +54,9 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public eI2CSlave
 
         void setColor( dispColor color );
         dispColor color() { return m_dColor; }
-        
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+
+        int cCode();
+        void setCcode( int code );
 
         virtual void initialize() override;
         virtual void updateStep() override;

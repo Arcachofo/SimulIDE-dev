@@ -57,7 +57,7 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     
     m_area = QRectF( -70, -48, 140, 88 );
 
-    m_address = 0b00111100; // 60
+    m_address = 0b00111100; // 0x3A - 60
     
     m_pinSck.setLabelText( " SCK" );
     m_pinSda.setLabelText( " SDA" );
@@ -90,6 +90,7 @@ QList<propGroup_t> Ssd1306::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Color", tr("Color"),"enum"} );
+    mainGroup.propList.append( {"Control_Code", tr("I2C Address"),""} );
     mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
     return {mainGroup};
 }
@@ -107,15 +108,15 @@ QList<propGroup_t> Ssd1306::propGroups()
 
 void Ssd1306::initialize()
 {
+    m_enabled = true;
     eI2CSlave::initialize();
 
     m_continue = false;
     m_command = false;
     m_data = false;
-    m_addrMode = 0;
+    m_addrMode = HORI_ADDR_MODE;
 
     clearDDRAM();
-    //clearLcd();
     reset() ;
     updateStep();
 }
@@ -149,10 +150,6 @@ void Ssd1306::readByte()
 {
     eI2CSlave::readByte();
 
-    //if( m_reset ) return;
-
-    //if( !m_command && ((m_rxReg & 0b00111111) == 0) )   // Control Byte
-    //if( m_byte == 1 ) // First Byte is Control Byte
     if( !m_command && !m_data )
     {
         if( (m_rxReg & 0b00111111) == 0 ) // Control Byte
@@ -162,13 +159,9 @@ void Ssd1306::readByte()
             else          m_continue = false;
 
             int cd = m_rxReg & 0b01111111;
-            if( cd == 0 )
-                m_command = true;// 0 Command Byte
-            else
-                m_data    = true;// 64 Data Byte
+            if( cd == 0 ) m_command = true;// 0 Command Byte
+            else          m_data    = true;// 64 Data Byte
         }
-        //else            m_command = true;// Command Byte
-        //m_readBytes = 0;
     }
     else                                // Data Byte
     {
@@ -468,6 +461,16 @@ void Ssd1306::updateStep()
         }
     }
     update();
+}
+
+int Ssd1306::cCode()
+{
+    return m_address;
+}
+
+void Ssd1306::setCcode( int code )
+{
+    m_address = code;
 }
 
 void Ssd1306::setColor( dispColor color )

@@ -53,7 +53,6 @@ class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public eI2CSlave
         void showPins( bool show );
 
     private:
-        int m_cCode;
         int m_controlByte;
         int m_phase;
 
