@@ -21,6 +21,7 @@
 #include "connector.h"
 #include "circuit.h"
 #include "itemlibrary.h"
+#include "utils.h"
 
 static const char* Function_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Functions")
@@ -46,6 +47,8 @@ Function::Function( QObject* parent, QString type, QString id )
         , eFunction( id )
 {
     Q_UNUSED( Function_properties );
+
+    m_lastDir = Circuit::self()->getFileName();
     
     setNumInps( 2 );                           // Create Input Pins
     setNumOuts( 1 );
@@ -64,6 +67,71 @@ QList<propGroup_t> Function::propGroups()
     QList<propGroup_t> pg = LogicComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
+}
+
+void Function::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+{
+    if( !acceptedMouseButtons() ) event->ignore();
+    else
+    {
+        event->accept();
+        QMenu* menu = new QMenu();
+        contextMenu( event, menu );
+        Component::contextMenu( event, menu );
+        menu->deleteLater();
+    }
+}
+
+void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    menu->addSeparator();
+    QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load Functions") );
+    connect( loadDaAction, SIGNAL(triggered()),
+                     this, SLOT(loadData()), Qt::UniqueConnection );
+
+    QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save Functions") );
+    connect( saveDaAction, SIGNAL(triggered()),
+                     this, SLOT(saveData()), Qt::UniqueConnection );
+    menu->addSeparator();
+}
+
+void Function::loadData()
+{
+    QString fileName = QFileDialog::getOpenFileName( 0l, "Function::loadData", m_lastDir, "" );
+
+    if( fileName.isEmpty() ) return; // User cancels loading
+    m_lastDir = fileName;
+    QStringList lines = fileToStringList( fileName, "MemData::loadData" );
+
+    int i=0;
+    for( QString line : lines )
+    {
+        if( line.remove(" ").isEmpty() ) continue;
+        if( i >= m_funcList.size() ) break;
+        m_funcList[i++] = line;
+        m_functions = m_funcList.join(",");
+    }
+}
+
+void Function::saveData()
+{
+    QString fileName = QFileDialog::getSaveFileName( 0l, "Function::saveData", m_lastDir, "" );
+
+    if( fileName.isEmpty() ) return; // User cancels saving
+    m_lastDir = fileName;
+    QFile outFile( fileName );
+    QString output = "";
+    for( QString func : m_funcList ) output.append( func+"\n");
+
+    if( !outFile.open( QFile::WriteOnly | QFile::Text ) )
+    {
+          QMessageBox::warning( 0l, "MemData::saveData",
+          QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
+    }else {
+        QTextStream toFile( &outFile );
+        toFile << output;
+        outFile.close();
+    }
 }
 
 void Function::remove()
@@ -88,12 +156,11 @@ void Function::setNumInps( int inputs )
         eLogicDevice::deleteInputs( dif );
         LogicComponent::deleteInputs( dif );
     }
-    else
-    {
+    else{
         m_inPin.resize( inputs );
         m_numInPins = inputs;
     
-        for( int i=m_numInputs; i<inputs; i++ )
+        for( int i=m_numInputs; i<inputs; ++i )
         {
             QString num = QString::number(i);
             m_inPin[i] = new Pin( 180, QPoint(-24, i*8+8 ), m_id+"-in"+num, i, this );
@@ -123,7 +190,7 @@ void Function::setNumOuts( int outs )
         eLogicDevice::deleteOutputs( dif );
         LogicComponent::deleteOutputs( dif );
     
-        for( int i=0; i<dif; i++ )
+        for( int i=0; i<dif; ++i )
         {
             QPushButton* button = m_buttons.takeLast();
             disconnect( button, SIGNAL( released() ), this, SLOT  ( onbuttonclicked() ));
@@ -132,13 +199,11 @@ void Function::setNumOuts( int outs )
             m_proxys.removeLast();
             m_funcList.removeLast();
         }
-    }
-    else
-    {
+    }else{
         m_outPin.resize( outs );
         m_numOutPins = outs;
         
-        for( int i=m_numOutputs; i<outs; i++ )
+        for( int i=m_numOutputs; i<outs; ++i )
         {
             QString num = QString::number(i);
             m_outPin[i] = new Pin( 0, QPoint(24, i*8*2+8 ), m_id+"-out"+num, i, this );
@@ -185,7 +250,7 @@ void Function::onbuttonclicked()
            button->setChecked( false );
            break;
        }
-       i++;
+       ++i;
     }
     bool ok;
     QString text = QInputDialog::getText(0l, tr("Set Function"),

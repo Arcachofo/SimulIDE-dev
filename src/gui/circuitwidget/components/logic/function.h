@@ -59,10 +59,18 @@ class MAINMODULE_EXPORT Function : public LogicComponent, public eFunction
         
     public slots:
         void onbuttonclicked();
+        void loadData();
+        void saveData();
         
+    protected:
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+        virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event);
+
     private:
         QList<QPushButton*> m_buttons;
         QList<QGraphicsProxyWidget*> m_proxys;
+
+        QString m_lastDir;
 };
 
 #endif
