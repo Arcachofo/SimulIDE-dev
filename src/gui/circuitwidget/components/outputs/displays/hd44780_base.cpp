@@ -69,7 +69,7 @@ void Hd44780_Base::init()
     m_imgHeight = (m_rows*9-1)*2;
     m_area = QRectF( 0, -(m_imgHeight+33), m_imgWidth+20, m_imgHeight+33 );
     setTransformOriginPoint( togrid( m_area.center() ));
-    
+
     clearLcd();
 }
 
@@ -106,6 +106,7 @@ void Hd44780_Base::writeData( int data )
 void Hd44780_Base::proccessCommand( int command )
 {
     //qDebug() << "Hd44780_Base::proccessCommand: " << command;
+    if( command ==0 ) return;
     if( command<2 )   { clearLcd();               return; } //00000001 //Clear display           //Clears display and returns cursor to the home position (address 0).//1.52 ms
     if( command<4 )   { cursorHome();             return; } //0000001. //Cursor home             //Returns cursor to home position. Also returns display being shifted to the original position. DDRAM content remains unchanged.//1.52 ms
     if( command<8 )   { entryMode( command );     return; } //000001.. //Entry mode set          //Sets cursor move direction (I/D); specifies to shift the display (S). These operations are performed during data read/write.//37 μs
@@ -143,12 +144,11 @@ void Hd44780_Base::C_D_Shift( int data )
         if( m_shiftPos>lineEnd ) m_shiftPos = 0;
         if( m_shiftPos<0 )       m_shiftPos = lineEnd;
     }
-    else           m_cursPos  += dir;
+    else m_cursPos  += dir;
 }
 
 void Hd44780_Base::dispControl( int data )
 {
-    
     if( data & 4 ) m_dispOn = 1;                       // Display On/Off
     else           m_dispOn = 0;
     
