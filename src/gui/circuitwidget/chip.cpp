@@ -251,7 +251,7 @@ void Chip::setLogicSymbol( bool ls )
     if( !ls && m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
 
     m_error = 0;
-    initChip();
+    Chip::initChip();
     
     if( m_error == 0 ) Circuit::self()->update();
     else               Circuit::self()->unSaveState();
