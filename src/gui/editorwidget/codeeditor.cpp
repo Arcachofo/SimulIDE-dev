@@ -396,6 +396,8 @@ bool CodeEditor::initDebbuger()
         if( m_debugger->type==1 ) EditorWindow::self()->enableStepOver( true );
         else                      EditorWindow::self()->enableStepOver( false );
 
+        Simulator::self()->addToUpdateList( this );
+
         BaseProcessor::self()->setDebugging( true );
         reset();
         setDriveCirc( m_driveCirc );
@@ -466,6 +468,7 @@ void CodeEditor::stopDebbuger()
         
         CircuitWidget::self()->powerCircOff();
         BaseProcessor::self()->setDebugging( false );
+        Simulator::self()->remFromUpdateList( this );
         
         m_state = DBG_STOPPED;
         setReadOnly( false );
