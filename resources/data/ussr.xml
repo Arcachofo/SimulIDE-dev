@@ -1,0 +1,37 @@
+<!DOCTYPE SimulIDE>
+
+<!-- *************************************************************************** -->
+<!-- *   Copyright (C) 2018 by santiago González                               * -->
+<!-- *   santigoro@gmail.com                                                   * -->
+<!-- *                                                                         * -->
+<!-- *   This program is free software; you can redistribute it and/or modify  * -->
+<!-- *   it under the terms of the GNU General Public License as published by  * -->
+<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
+<!-- *   (at your option) any later version.                                   * -->
+<!-- *                                                                         * -->
+<!-- *   This program is distributed in the hope that it will be useful,       * -->
+<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
+<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
+<!-- *   GNU General Public License for more details.                          * -->
+<!-- *                                                                         * -->
+<!-- *   You should have received a copy of the GNU General Public License     * -->
+<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
+<!-- *                                                                         * -->
+<!-- *************************************************************************** -->
+
+<itemlib>
+    <tag>QT_TRANSLATE_NOOP("xmlfile","Logic")</tag>
+    
+    <itemset category="Logic" type="">
+        <item name="USSR IC"  package=""  subcircuit=""  icon="ic2.png" ></item>
+    </itemset>
+    
+    <itemset category="Logic/USSR IC" type="Subcircuit" folder="ICs/ussr">
+    <item name="K176IE3"  info=" module 6 counter with output to a 7-segment indicator" /> 
+    <item name="K176IE4"  info=" module 10 counter with output to a 7-segment indicator" />
+    <item name="K176IE5"  info=" 15-bit binary counter - generator of second pulses" />
+    <item name="K176IE12" info=" 15-bit binary counter and divisor by 60" />
+    </itemset>
+
+</itemlib>
+

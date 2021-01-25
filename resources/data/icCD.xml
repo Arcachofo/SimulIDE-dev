@@ -82,7 +82,7 @@
     <item name="TC4467"  info="  Logic-input CMOS quad drivers, inverted outputs" ></item>
     <item name="TC4468"  info="  Logic-input CMOS quad drivers" ></item>
     <item name="TC4469"  info="  Logic-input CMOS quad drivers, one inverted input " ></item>
-
+    <item name="tpic6a595"  info="  Power Logic 8-bit shift register, 350 mA output " ></item>
     </itemset>
 
 </itemlib>

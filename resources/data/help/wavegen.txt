@@ -1,10 +1,11 @@
 Wave Generator:
 
-Four possible waveforms:
+Five possible waveforms:
 - Sine.
 - Saw.
 - Triangle
 - Square.
+- Random.
 
 
 It can be turned On/Off with the buttton on the left side.

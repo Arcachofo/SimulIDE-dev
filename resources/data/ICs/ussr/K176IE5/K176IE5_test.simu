@@ -1,0 +1,48 @@
+<circuit animate="66" speed="1000000" type="simulide_0.4" reactStep="50" noLinAcc="5">
+ 
+Frequencimeter-13: 
+<item rotation="0" labely="-24" valLabRot="0" labelrot="0" vflip="1" Show_id="false" id="Frequencimeter-13" objectName="Frequencimeter-13" x="-120" hflip="1" y="-192" itemtype="Frequencimeter" valLabelx="0" labelx="-32" valLabely="0"/>
+ 
+Frequencimeter-11: 
+<item rotation="0" labely="-24" valLabRot="0" labelrot="0" vflip="1" Show_id="false" id="Frequencimeter-11" objectName="Frequencimeter-11" x="-116" hflip="1" y="-224" itemtype="Frequencimeter" valLabelx="0" labelx="-32" valLabely="0"/>
+ 
+Frequencimeter-9: 
+<item rotation="0" labely="-24" valLabRot="0" labelrot="0" vflip="1" Show_id="false" id="Frequencimeter-9" objectName="Frequencimeter-9" x="-116" hflip="1" y="-248" itemtype="Frequencimeter" valLabelx="0" labelx="-32" valLabely="0"/>
+ 
+Fixed Voltage-7: 
+<item x="-284" vflip="1" y="-208" labelrot="0" Show_id="false" objectName="Fixed Voltage-7" labelx="-64" labely="-24" itemtype="Fixed Voltage" rotation="0" Voltage="5" valLabRot="0" Show_Volt="true" id="Fixed Voltage-7" valLabelx="-47" hflip="1" valLabely="-8" Unit=" V"/>
+ 
+Clock-5: 
+<item x="-276" vflip="1" y="-180" labelrot="0" Show_id="false" objectName="Clock-5" labelx="-64" labely="-24" itemtype="Clock" rotation="0" Voltage="5" valLabRot="0" Show_Volt="true" id="Clock-5" Running="true" valLabelx="-52" hflip="1" valLabely="-3" Unit=" V" Freq="66666.666666666672"/>
+ 
+Fixed Voltage-3: 
+<item x="-280" vflip="1" y="-240" labelrot="0" Show_id="false" objectName="Fixed Voltage-3" labelx="-64" labely="-24" itemtype="Fixed Voltage" rotation="0" Voltage="5" valLabRot="0" Show_Volt="true" id="Fixed Voltage-3" valLabelx="-50" hflip="1" valLabely="-7" Unit=" V"/>
+ 
+K176IE5-1: 
+<item rotation="0" labely="-20" valLabRot="0" labelrot="0" vflip="1" Show_id="true" id="K176IE5-1" objectName="K176IE5-1" x="-240" hflip="1" y="-264" Logic_Symbol="true" itemtype="Subcircuit" valLabelx="0" labelx="0" valLabely="0"/>
+ 
+Connector-2: 
+<item x="-200" vflip="1" y="-256" labelrot="0" Show_id="false" objectName="Connector-2" labelx="-16" labely="-24" itemtype="Connector" rotation="0" pointList="-200,-256,-180,-256,-180,-284,-252,-284,-252,-256,-248,-256" valLabRot="0" id="Connector-2" startpinid="K176IE5-1-9" valLabelx="0" hflip="1" valLabely="0" enodeid="enode-2" endpinid="K176IE5-1-10"/>
+ 
+Connector-4: 
+<item x="-264" vflip="1" y="-240" labelrot="0" Show_id="false" objectName="Connector-4" labelx="-16" labely="-24" itemtype="Connector" rotation="0" pointList="-264,-240,-248,-240" valLabRot="0" id="Connector-4" startpinid="Fixed Voltage-3-outnod" valLabelx="0" hflip="1" valLabely="0" enodeid="enode-4" endpinid="K176IE5-1-R"/>
+ 
+Connector-6: 
+<item x="-260" vflip="1" y="-180" labelrot="0" Show_id="false" objectName="Connector-6" labelx="-16" labely="-24" itemtype="Connector" rotation="0" pointList="-260,-180,-248,-180,-248,-208" valLabRot="0" id="Connector-6" startpinid="Clock-5-outnod" valLabelx="0" hflip="1" valLabely="0" enodeid="enode-6" endpinid="K176IE5-1-Z"/>
+ 
+Connector-8: 
+<item x="-268" vflip="1" y="-208" labelrot="0" Show_id="false" objectName="Connector-8" labelx="-16" labely="-24" itemtype="Connector" rotation="0" pointList="-268,-208,-260,-208,-260,-224,-248,-224" valLabRot="0" id="Connector-8" startpinid="Fixed Voltage-7-outnod" valLabelx="0" hflip="1" valLabely="0" enodeid="enode-8" endpinid="K176IE5-1-S"/>
+ 
+Connector-10: 
+<item x="-156" vflip="1" y="-248" labelrot="0" Show_id="false" objectName="Connector-10" labelx="-16" labely="-24" itemtype="Connector" rotation="0" pointList="-156,-248,-200,-248" valLabRot="0" id="Connector-10" startpinid="Frequencimeter-9-lPin" valLabelx="0" hflip="1" valLabely="0" enodeid="enode-10" endpinid="K176IE5-1-14"/>
+ 
+Connector-12: 
+<item x="-156" vflip="1" y="-224" labelrot="0" Show_id="false" objectName="Connector-12" labelx="-16" labely="-24" itemtype="Connector" rotation="0" pointList="-156,-224,-156,-240,-200,-240" valLabRot="0" id="Connector-12" startpinid="Frequencimeter-11-lPin" valLabelx="0" hflip="1" valLabely="0" enodeid="enode-12" endpinid="K176IE5-1-15"/>
+ 
+Connector-14: 
+<item x="-160" vflip="1" y="-192" labelrot="0" Show_id="false" objectName="Connector-14" labelx="-16" labely="-24" itemtype="Connector" rotation="0" pointList="-160,-192,-200,-192,-200,-208" valLabRot="0" id="Connector-14" startpinid="Frequencimeter-13-lPin" valLabelx="0" hflip="1" valLabely="0" enodeid="enode-14" endpinid="K176IE5-1-!Z"/>
+ 
+PlotterWidget: 
+<item visible="false" normalGeometry="" childrenRegion="" styleSheet="" maximumHeight="200" minimumSize="" childrenRect="" whatsThis="" pos="" cursor="" toolTip="" enabled="true" acceptDrops="false" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" windowModality="0" sizePolicy="" sizeHint="" locale="" windowModified="false" inputMethodHints="0" geometry="" maximumSize="" Tracks="1" palette="" rect="" contextMenuPolicy="1" sizeIncrement="" windowFilePath="" focus="false" layoutDirection="0" mouseTracking="false" minimumSizeHint="" x="0" height="200" fullScreen="false" y="0" frameGeometry="" width="200" windowIcon="" frameSize="" baseSize="" isActiveWindow="true" windowTitle="" autoFillBackground="false" toolTipDuration="-1" objectName="PlotterWidget" minimized="false" Scale="1" windowOpacity="1" modal="false" maximized="false" statusTip="" updatesEnabled="true" accessibleName="" focusPolicy="0" maximumWidth="1000" size="" windowIconText="" accessibleDescription="" MaxVolt="500" minimumWidth="200" itemtype="Plotter" minimumHeight="200" MinVolt="-500"/>
+ 
+</circuit>
