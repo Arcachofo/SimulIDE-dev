@@ -23,6 +23,7 @@
 #include "intval.h"
 #include "boolval.h"
 #include "stringval.h"
+#include "textval.h"
 #include "enumval.h"
 #include "labelval.h"
 #include "colorval.h"
@@ -70,7 +71,7 @@ void PropDialog::setComponent( Component* comp )
 
                 const char* name = propName.toStdString().c_str();
 
-                if( propName == "")
+                if( propName == "") // Just a label
                 {
                     LabelVal* mp = new LabelVal( this );
                     mp->setLabelVal( prop.caption );
@@ -85,6 +86,13 @@ void PropDialog::setComponent( Component* comp )
                 if( unit == "enum")
                 {
                     EnumVal* mp = new EnumVal( this );
+                    mp->setPropName( propName, prop.caption );
+                    mp->setup( comp );
+                    propWidget->layout()->addWidget( mp );
+                }
+                else if( unit.contains("text"))
+                {
+                    TextVal* mp = new TextVal( this );
                     mp->setPropName( propName, prop.caption );
                     mp->setup( comp );
                     propWidget->layout()->addWidget( mp );

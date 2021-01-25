@@ -91,6 +91,7 @@
 #include "relay-spst.h"
 #include "resistor.h"
 #include "resistordip.h"
+#include "scripted.h"
 #include "serialport.h"
 #include "serialterm.h"
 #include "servo.h"
@@ -219,13 +220,16 @@ void ItemLibrary::loadItems()
     addItem( AndGate::libraryItem() );
     addItem( OrGate::libraryItem() );
     addItem( XorGate::libraryItem() );
-    addItem( Function::libraryItem() );
+
     addItem( FlipFlopD::libraryItem() );
     addItem( FlipFlopJK::libraryItem() );
     addItem( BinCounter::libraryItem() );
     addItem( FullAdder::libraryItem() );
     addItem( LatchD::libraryItem() );
     addItem( ShiftReg::libraryItem() );
+    addItem( Function::libraryItem() );
+    addItem( Scripted::libraryItem() );
+
     addItem( Mux::libraryItem() );
     addItem( Demux::libraryItem() );
     addItem( BcdToDec::libraryItem() );
@@ -239,6 +243,9 @@ void ItemLibrary::loadItems()
     addItem( I2CRam::libraryItem() );
     addItem( I2CToParallel::libraryItem() );
     addItem( Lm555::libraryItem() );
+
+
+
     // Subcircuits
     addItem( SubCircuit::libraryItem() );
 

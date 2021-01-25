@@ -115,7 +115,7 @@ void eSource::setImp( double imp )
 void eSource::setTimedOut( bool out )
 {
     if( m_inverted ) out = !out;
-    if( out == m_out ) return;
+    //if( out == m_out ) return;
 
     if( out )
     {

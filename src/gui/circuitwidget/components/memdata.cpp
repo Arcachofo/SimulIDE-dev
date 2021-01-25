@@ -59,7 +59,7 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
     dir.replace( ".simu", ".data" );
 
     QString fileName = QFileDialog::getOpenFileName( 0l,
-                       QCoreApplication::translate( "MemData", "Load Data"), dir,
+                                                    "MemData::loadData", dir,
                        QCoreApplication::translate( "MemData", ".data (*.data);;.bin (*.bin);;All files (*.*)"));
 
     if( fileName.isEmpty() ) return; // User cancels loading
