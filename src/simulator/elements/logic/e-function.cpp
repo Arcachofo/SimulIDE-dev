@@ -39,24 +39,39 @@ void eFunction::stamp()
         eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
+    m_program.clear();
+    for( int i=0; i<m_numOutputs; ++i )
+    {
+        m_program.append( QScriptProgram( m_funcList.at(i) ));
+    }
 }
 
 void eFunction::voltChanged()
 {
-    //qDebug() <<"\n" << m_functions;
-    
+    //uint bits = 0;
+    uint bit = 0;
+    //uint msb = (m_numInputs+m_numOutputs)*2-1;
     for( int i=0; i<m_numInputs; ++i )
-        m_engine.globalObject().setProperty( "i"+QString::number(i), QScriptValue( eLogicDevice::getInputState( i )) );
-
-    for( int i=0; i<m_numOutputs; ++i )
-        m_engine.globalObject().setProperty( "o"+QString::number(i), QScriptValue( eLogicDevice::getOutputState( i )) );
-        
-    for( int i=0; i<m_numInputs; ++i )
+    {
+        bit = eLogicDevice::getInputState( i );
+        //if( bit ) bits += 1 << (msb-(i*4));
+        //else      bits += 1 << (msb-(i*4)-1);
+        m_engine.globalObject().setProperty( "i"+QString::number(i), QScriptValue( bit ) );
         m_engine.globalObject().setProperty( "vi"+QString::number(i), QScriptValue( m_input[i]->getVolt()) );
+    }
+    //m_engine.globalObject().setProperty( "inBits", QScriptValue( bits ) );
+    //m_engine.globalObject().setProperty( "inputs", QScriptValue( m_numInputs ) );
 
     for( int i=0; i<m_numOutputs; ++i )
+    {
+        bit = eLogicDevice::getOutputState( i );
+        //if( bit ) bits += 1 << (msb-(i*4)-2);
+        //else      bits += 1 << (msb-(i*4)-3);
+        m_engine.globalObject().setProperty( "o"+QString::number(i), QScriptValue( bit ) );
         m_engine.globalObject().setProperty( "vo"+QString::number(i), QScriptValue( m_output[i]->getVolt()) );
-        
+    }
+    //m_engine.globalObject().setProperty( "bits", QScriptValue( bits ) );
+    //m_engine.globalObject().setProperty( "outputs", QScriptValue( m_numOutputs ) );
     Simulator::self()->addEvent( m_propDelay, this );
 }
 
@@ -71,14 +86,15 @@ void eFunction::runEvent()
             
         if( text.startsWith( "vo" ) )
         {
-            float out = m_engine.evaluate( text ).toNumber();
+            float out = m_engine.evaluate( m_program.at(i) ).toNumber();
             m_output[i]->setVoltHigh( out );
-            m_output[i]->setTimedOut( true );
+            m_output[i]->setOut( true );
+            m_output[i]->stampOutput();
             
         }
         else
         {
-            bool out = m_engine.evaluate( text ).toBool();
+            bool out = m_engine.evaluate( m_program.at(i) ).toBool();
             m_output[i]->setTimedOut( out );
         }
         //qDebug()<<"Func:"<< i << text; //textLabel->setText(text);

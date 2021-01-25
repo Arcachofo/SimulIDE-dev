@@ -21,6 +21,7 @@
 #define EFUNCTION_H
 
 #include <QScriptEngine>
+#include <QScriptProgram>
 
 #include "e-logic_device.h"
 
@@ -40,7 +41,8 @@ class MAINMODULE_EXPORT eFunction : public eLogicDevice
 
     protected:
         QScriptEngine m_engine;
-        
+        QList<QScriptProgram> m_program;
+
         QString m_functions;
         QStringList m_funcList;
 };
