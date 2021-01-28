@@ -18,40 +18,48 @@
  ***************************************************************************/
 
 #include "plotbase.h"
+#include "plotdisplay.h"
+#include "datachannel.h"
 #include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
-#include "dataplotwidget.h"
 
 
 PlotBase::PlotBase( QObject* parent, QString type, QString id )
         : Component( parent, type, id )
         , eElement( id )
 {
-    m_pin.resize(3);
+    m_pin.resize(5);
 
-    m_pin[0] = new Pin( 180, QPoint( -80-8, 0 ), id+"-Pin0", 0, this );
-    m_pin[1] = new Pin( 180, QPoint( -80-8, 16), id+"-Pin1", 0, this );
-    m_pin[2] = new Pin( 180, QPoint( -80-8, 40), id+"-PinG", 0, this );
+    m_pin[0] = new Pin( 180, QPoint( -80-8,-56 ), id+"-Pin0", 0, this );
+    m_pin[1] = new Pin( 180, QPoint( -80-8,-24 ), id+"-Pin1", 0, this );
+    m_pin[2] = new Pin( 180, QPoint( -80-8, 8  ), id+"-Pin2", 0, this );
+    m_pin[3] = new Pin( 180, QPoint( -80-8, 40 ), id+"-Pin3", 0, this );
+    m_pin[4] = new Pin( 180, QPoint( -80-8, 64 ), id+"-PinG", 0, this );
 
-    for( int i=0; i<3; i++ )
+    for( int i=0; i<5; i++ )
     {
         m_pin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        m_pin[i]->setLength( 5 );
+        //m_pin[i]->setLength( 5 );
     }
-    for( int ch=0; ch<2; ch++ )
+    for( int ch=0; ch<4; ch++ )
     {
         m_pinConnected[ch]   = false;
         m_probeConnected[ch] = false;
         m_probe[ch] = "";
     }
+    m_color[0] = QColor( 240, 240, 100 );
+    m_color[1] = QColor( 220, 220, 255 );
+    m_color[2] = QColor( 255, 210, 90  );
+    m_color[3] = QColor( 000, 245, 160 );
+    m_color[4] = QColor( 255, 255, 255 );
 
-    m_topW      = 0l;
-    m_proxy     = 0l;
-    m_dataPlotW = 0l;
-    m_advanc    = true; // Force create widgets
+    m_baSizeX = 135;
+    m_baSizeY = 135;
+
+    m_expand = false;
 
     Simulator::self()->addToUpdateList( this );
 }
@@ -59,35 +67,21 @@ PlotBase::~PlotBase() {}
 
 void PlotBase::initialize()
 {
-    m_dataPlotW->m_refCondFlag = false;
+    ///m_dataPlotW->m_refCondFlag = false;
 }
 
 void PlotBase::setBaSizeX( int size )
 {
-    if( size == 0 ) return;
+    if( size < 135 ) size = 135;
     m_baSizeX = size;
-    setAdvanc( m_advanc );
+    expand( m_expand );
 }
 
 void PlotBase::setBaSizeY( int size )
 {
-    if( size == 0 ) return;
+    if( size < 135 ) size = 135;
     m_baSizeY = size;
-    setAdvanc( m_advanc );
-}
-
-void PlotBase::setAdSizeX( int size )
-{
-    if( size == 0 ) return;
-    m_adSizeX = size;
-    setAdvanc( m_advanc );
-}
-
-void PlotBase::setAdSizeY( int size )
-{
-    if( size == 0 ) return;
-    m_adSizeY  = size;
-    setAdvanc( m_advanc );
+    expand( m_expand );
 }
 
 void PlotBase::pauseOnCond()
@@ -99,143 +93,101 @@ void PlotBase::pauseOnCond()
     if( (m_channel[1]->m_chCond != None)
      && (m_channel[1]->m_chCondFlag == false ) ) pause = false;
 
-    if( (m_dataPlotW->m_refCond != None)
-     && (m_dataPlotW->m_refCondFlag == false ) ) pause = false;
+    ///if( (m_dataPlotW->m_refCond != None)
+     ///&& (m_dataPlotW->m_refCondFlag == false ) ) pause = false;
 
     if( pause )
     {
         uint64_t simTime = Simulator::self()->circTime();
-        uint64_t orig = simTime - DataChannel::m_dataSize;
+        uint64_t orig = simTime - m_dataSize;
         CircuitWidget::self()->pauseSim();
 
         m_channel[0]->fetchData( orig, orig, 0 );
-        m_dataPlotW->m_display->setData( 0, m_channel[0]->m_points );
-        m_dataPlotW->m_display->setLimits( 0, m_channel[0]->m_dispMax, m_channel[0]->m_dispMin );
+        m_display->setData( 0, m_channel[0]->m_points );
+        m_display->setLimits( 0, m_channel[0]->m_dispMax, m_channel[0]->m_dispMin );
 
         m_channel[1]->fetchData( orig, orig, 0  );
-        m_dataPlotW->m_display->setData( 1, m_channel[1]->m_points );
-        m_dataPlotW->m_display->setLimits( 1, m_channel[1]->m_dispMax, m_channel[1]->m_dispMin );
+        m_display->setData( 1, m_channel[1]->m_points );
+        m_display->setLimits( 1, m_channel[1]->m_dispMax, m_channel[1]->m_dispMin );
 
-        m_dataPlotW->m_display->setXFrame( m_dataPlotW->m_hTick*10 );
+        m_display->setXFrame( m_timeDiv*10 );
 
         m_channel[0]->m_chCondFlag = false;
         m_channel[1]->m_chCondFlag = false;
-        m_dataPlotW->m_refCondFlag = false;
+        ///m_dataPlotW->m_refCondFlag = false;
     }
 }
 
-void PlotBase::setAdvanc( bool advanc )
+paCond PlotBase::ch1Cond()
 {
-    m_advanc = advanc;
+    return m_channel[0]->m_chCond;
+}
 
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+void PlotBase::setCh1Cond( paCond cond )
+{
+    m_channel[0]->m_chCond = cond;
+}
 
-    if( !m_topW ) m_topW = new TopWidget();
+paCond PlotBase::ch2Cond()
+{
+    return m_channel[1]->m_chCond;
+}
 
-    if( !m_dataPlotW )
-    {
-        m_dataPlotW = new DataPlotWidget( m_topW, this );
-        m_dataPlotW->setupWidget();
-        m_topW->setupWidget( m_dataPlotW );
-    }
-    else m_dataPlotW->setVisible( false );
-    if( !m_proxy )
-    {
-        m_proxy = Circuit::self()->addWidget( m_topW );
-        m_proxy->setParentItem( this );
-    }
-    m_display = m_dataPlotW->m_display;
-
-    if( advanc )
-    {
-        m_sizeX  = m_adSizeX;
-        m_sizeY  = m_adSizeY;
-        m_extraSize = 202+m_display->m_margin*6;
-    }
-    else
-    {
-        m_sizeX  = m_baSizeX;
-        m_sizeY  = m_baSizeY;
-        m_extraSize = 81+m_display->m_margin*6;
-    }
-    double ws = (double)m_sizeY/200;
-    double sc = (7+3*ws)/10;
-    m_extraSize *= sc;
-
-    int widgetSizeX = m_sizeX+m_extraSize;
-    int widgetSizeY = m_sizeY+20;
-    int centerY = widgetSizeY/2;
-
-    m_area = QRectF( -80-4, -centerY-4,  widgetSizeX+8, widgetSizeY+8 );
-    setLabelPos(-80,-centerY-20, 0);
-
-    //m_dataPlotW->m_dataSize = m_dataSize;
-    m_dataPlotW->setSize( m_sizeX, m_sizeY );
-    m_dataPlotW->setFixedSize( widgetSizeX, widgetSizeY );
-    m_dataPlotW->updateWidgets();
-    m_dataPlotW->showControlls( advanc );
-    m_dataPlotW->m_advaCheck->setChecked( advanc );
-    m_dataPlotW->setVisible( true );
-    m_topW->setFixedSize( widgetSizeX, widgetSizeY );
-
-    for( int i=0; i<2; i++ )
-    {
-        m_channel[i]->m_dataPlotW = m_dataPlotW;
-
-        if( m_channel[i]->m_buffer.size() != m_bufferSize )
-        {
-            m_channel[i]->m_buffer.resize( m_bufferSize );
-            m_channel[i]->m_time.resize( m_bufferSize );
-        }
-        m_dataPlotW->setVTick( i, m_dataPlotW->m_vTick[i] );
-        m_dataPlotW->setVPos( i, m_dataPlotW->m_vPos[i] );
-        m_dataPlotW->updateHPosBox( i );
-    }
-    m_dataPlotW->updateHTickBox();
-    m_proxy->setPos( QPoint( -80, -centerY) );
-
-    Circuit::self()->update();
-    if( pauseSim ) Simulator::self()->resumeSim();
+void PlotBase::setCh2Cond( paCond cond )
+{
+    m_channel[1]->m_chCond = cond;
 }
 
 void PlotBase::remove()
 {
     Simulator::self()->remFromUpdateList( this );
 
-    for( int i=0; i<2; i++ ) delete m_channel[i];
+    for( int i=0; i<4; i++ ) delete m_channel[i];
 
-    m_proxy->setWidget( NULL );
-    delete m_topW;
+    //m_proxy->setWidget( NULL );
+    //delete m_topW;
 
     Component::remove();
 }
 
-void PlotBase::updateTrig( int ch )
+void PlotBase::setTimePos(int ch, int64_t tp )
 {
-    m_trigger = ch;
-    //for( int i=0; i<2; i++ ) m_channel[i]->m_trigger = ch;
+    m_timePos[ch] = tp;
+    m_display->setHPos( ch, tp );
+}
+
+void PlotBase::setVoltDiv( int ch, double vd )
+{
+    m_voltDiv[ch] = vd;
+    m_display->setVTick( ch, vd );
+}
+
+void PlotBase::setVoltPos( int ch, double vp )
+{
+    m_voltPos[ch] = vp;
+    m_display->setVPos( ch, vp );
 }
 
 void PlotBase::setProbe1( QString p )
 {
     m_probe[0] = p;
-    m_dataPlotW->m_channel[0]->setText( p );
-    m_dataPlotW->setProbe( 0 );
+    //m_dataPlotW->m_channel[0]->setText( p );
+    //m_dataPlotW->setProbe( 0 );
 }
 
 void PlotBase::setProbe2( QString p )
 {
     m_probe[1] = p;
-    m_dataPlotW->m_channel[1]->setText( p );
-    m_dataPlotW->setProbe( 1 );
+    //m_dataPlotW->m_channel[1]->setText( p );
+    //m_dataPlotW->setProbe( 1 );
 }
 
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     
-    p->setBrush( Qt::darkGray );
+    //p->setBrush( Qt::darkGray );
+    p->setBrush(QColor( 230, 230, 230 ));
     p->drawRoundedRect( m_area, 4, 4 );
     
     p->setBrush( Qt::white );
@@ -244,7 +196,7 @@ void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     pen.setColor( Qt::white );
     p->setPen(pen);
     
-    p->drawRoundedRect( QRectF( -80-4, -(m_sizeY+20)/2-4, m_sizeX+m_extraSize+4, m_sizeY+20+4 ), 3, 3 );
+    //p->drawRoundedRect( QRectF( -80-4, -(m_screenSizeY+20)/2-4, m_screenSizeX+m_extraSize+4, m_screenSizeY+20+4 ), 3, 3 );
 }
 
 #include "moc_plotbase.cpp"

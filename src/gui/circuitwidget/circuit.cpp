@@ -239,8 +239,8 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                             .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
                 if( endpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") || startpinid.contains( "Fixed Volt.") )
                     endpinid.replace( "outnod", "pin").replace( "inpin", "pin" )
-                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );*/
-
+                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
+                */
 
                 startpin = m_pinMap[startpinid];
                 endpin   = m_pinMap[endpinid];

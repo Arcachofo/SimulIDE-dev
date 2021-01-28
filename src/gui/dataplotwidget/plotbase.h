@@ -22,23 +22,25 @@
 
 #include "component.h"
 #include "e-element.h"
-#include "dataplotwidget.h"
 #include "topwidget.h"
-#include "datachannel.h"
+
+
+enum paCond {
+    None = 0,
+    Rising,
+    Falling,
+    High,
+    Low
+};
+
+class PlotDisplay;
+class DataChannel;
 
 class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 {
-    friend class DataPlotWidget;
-
     Q_OBJECT
     Q_PROPERTY( int Basic_X   READ baSizeX  WRITE setBaSizeX  DESIGNABLE true USER true )
     Q_PROPERTY( int Basic_Y   READ baSizeY  WRITE setBaSizeY  DESIGNABLE true USER true )
-    Q_PROPERTY( int Expand_X  READ adSizeX  WRITE setAdSizeX  DESIGNABLE true USER true )
-    Q_PROPERTY( int Expand_Y  READ adSizeY  WRITE setAdSizeY  DESIGNABLE true USER true )
-
-    Q_PROPERTY( bool Expand  READ advanc  WRITE setAdvanc )
-    Q_PROPERTY( int  Trigger READ trigger WRITE setTrigger )
-    Q_PROPERTY( int  AutoSC  READ autoSC  WRITE setAutoSC )
 
     Q_PROPERTY( bool    Data_Log READ paOnCond WRITE setPaOnCond DESIGNABLE true USER true )
     Q_PROPERTY( double  Log_us   READ dataSize WRITE setDataSize DESIGNABLE true USER true )
@@ -46,26 +48,20 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( paCond  CH2_Cond READ ch2Cond  WRITE setCh2Cond  DESIGNABLE true USER true )
     Q_PROPERTY( paCond  REF_Cond READ refCond  WRITE setRefCond  DESIGNABLE true USER true )
 
-    Q_PROPERTY( quint64 hTick  READ hTick  WRITE setHTick )
+    Q_PROPERTY( quint64 hTick  READ timeDiv  WRITE setTimeDiv )
+    Q_PROPERTY( qint64  hPos1  READ hPos1  WRITE setHPos1 )
+    Q_PROPERTY( qint64  hPos2  READ hPos2  WRITE setHPos2 )
     Q_PROPERTY( double  vTick1 READ vTick1 WRITE setVTick1 )
     Q_PROPERTY( double  vTick2 READ vTick2 WRITE setVTick2 )
     Q_PROPERTY( double  vPos1  READ vPos1  WRITE setVPos1 )
     Q_PROPERTY( double  vPos2  READ vPos2  WRITE setVPos2 )
     Q_PROPERTY( QString Probe1 READ probe1 WRITE setProbe1 )
     Q_PROPERTY( QString Probe2 READ probe2 WRITE setProbe2 )
+    Q_ENUM( paCond )
 
     public:
         PlotBase( QObject* parent, QString type, QString id );
         ~PlotBase();
-
-        enum paCond {
-            None = 0,
-            Rising,
-            Falling,
-            High,
-            Low
-        };
-        Q_ENUM( paCond )
 
         int baSizeX() { return m_baSizeX; }
         void setBaSizeX( int size );
@@ -73,42 +69,20 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         int baSizeY() { return m_baSizeY; }
         void setBaSizeY( int size );
 
-        int adSizeX() { return m_adSizeX; }
-        void setAdSizeX( int size );
+        double dataSize() { return m_dataSize/1e6; }
+        void setDataSize( double ds ) { m_dataSize = ds*1e6; }
 
-        int adSizeY() { return m_adSizeY; }
-        void setAdSizeY( int size );
+        bool paOnCond() { return m_paOnCond; }
+        void setPaOnCond( bool pa ) { m_paOnCond = pa; }
 
-        double dataSize() { return DataChannel::m_dataSize/1e6; }
-        void setDataSize( double ds ) { DataChannel::m_dataSize = ds*1e6; }
+        paCond ch1Cond();
+        void setCh1Cond( paCond cond );
 
-        bool paOnCond() {
-            return m_dataPlotW->m_paOnCond; }
-        void setPaOnCond( bool pa ) {
-            m_dataPlotW->m_paOnCond = pa; }
+        paCond ch2Cond();
+        void setCh2Cond( paCond cond );
 
-        paCond ch1Cond() {
-            return (paCond)m_channel[0]->m_chCond; }
-        void setCh1Cond( paCond cond ) {
-            m_channel[0]->m_chCond = (int)cond; }
-
-        paCond ch2Cond() {
-            return (paCond)m_channel[1]->m_chCond; }
-        void setCh2Cond( paCond cond ) {
-            m_channel[1]->m_chCond = (int)cond; }
-
-        paCond refCond() {
-            return (paCond)m_dataPlotW->m_refCond; }
-        void setRefCond( paCond cond ) {
-            m_dataPlotW->m_refCond = (int)cond; }
-
-        int trigger() { return m_dataPlotW->m_trigger; }
-        void setTrigger( int ch ) { m_dataPlotW->setTrigger( ch ); }
-
-        bool advanc() { return m_advanc; }
-
-        int autoSC() { return m_dataPlotW->m_auto; }
-        void setAutoSC( int ch ) { m_dataPlotW->setAuto( ch ); }
+        paCond refCond() { return m_refCond; }
+        void setRefCond( paCond cond ) { m_refCond = cond; }
 
         QString probe1() { return m_probe[0]; }
         void setProbe1( QString p );
@@ -116,61 +90,84 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         QString probe2() { return m_probe[1]; }
         void setProbe2( QString p );
 
-        uint64_t hTick() { return m_dataPlotW->m_hTick; }
-        void setHTick( uint64_t hTick ){ m_dataPlotW->setHTick( hTick );}
+        int hPos1() { return m_timePos[0]; }
+        void setHPos1( int hp ){ setTimePos( 0, hp );}
 
-        double vTick1() { return m_dataPlotW->m_vTick[0]; }
-        void setVTick1( double vTick ){ m_dataPlotW->setVTick( 0, vTick );}
+        int hPos2() { return m_timePos[1]; }
+        void setHPos2( int hp ){ setTimePos( 1, hp );}
 
-        double vTick2() { return m_dataPlotW->m_vTick[1]; }
-        void setVTick2( double vTick ){ m_dataPlotW->setVTick( 1, vTick );}
+        double vTick1() { return m_voltDiv[0]; }
+        void setVTick1( double vd ){ setVoltDiv(0, vd);}
 
-        double vPos1() { return m_dataPlotW->m_vPos[0]; }
-        void setVPos1( double vPos ){ m_dataPlotW->setVPos( 0, vPos );}
+        double vTick2() { return m_voltDiv[1]; }
+        void setVTick2( double vd ){ setVoltDiv( 1, vd );}
 
-        double vPos2() { return m_dataPlotW->m_vPos[1]; }
-        void setVPos2( double vPos ){ m_dataPlotW->setVPos( 1, vPos );}
+        double vPos1() { return m_voltPos[0]; }
+        void setVPos1( double vp ){ setVoltPos( 0, vp );}
+
+        double vPos2() { return m_voltPos[1]; }
+        void setVPos2( double vp ){ setVoltPos( 1, vp );}
+
+
+        uint64_t timeDiv() { return m_timeDiv; }
+        virtual void setTimeDiv( uint64_t td ){ m_timeDiv = td;}
+        int64_t timePos( int ch ){ return m_timePos[ch]; }
+        virtual void setTimePos( int ch, int64_t tp );
+
+        double voltDiv( int ch ){ return m_voltDiv[ch]; }
+        virtual void setVoltDiv( int ch, double vd );
+
+        double voltPos( int ch ){ return m_voltPos[ch]; }
+        virtual void setVoltPos( int ch, double vp );
 
         virtual void initialize() override;
         virtual void remove() override;
 
+        virtual void expand( bool e ){;}
+
         void pauseOnCond();
-        void updateTrig( int ch );
+
+        PlotDisplay* display() { return m_display; }
 
         void connectProbe( int ch, bool con ) { m_probeConnected[ch] = con; }
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        QColor getColor( int c ) { return m_color[c]; }
 
-    public slots:
-        void setAdvanc( bool advanc );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
         int m_bufferSize;
 
-        int m_trigger;
+        bool m_paOnCond;
+        paCond m_refCond;
 
-        bool m_pinConnected[2];
-        bool m_probeConnected[2];
+        bool m_pinConnected[4];
+        bool m_probeConnected[4];
 
-        int m_sizeX;
-        int m_sizeY;
+        bool m_expand;
+
+        int m_screenSizeX;
+        int m_screenSizeY;
         int m_extraSize;
 
         int m_baSizeX;
         int m_baSizeY;
 
-        int m_adSizeX;
-        int m_adSizeY;
+        double m_dataSize;
 
-        bool m_advanc;
+        uint64_t m_timeDiv;
+        int64_t  m_timePos[4];
 
-        QString m_probe[2];
+        double m_voltDiv[4];
+        double m_voltPos[4];
 
-        DataChannel* m_channel[2];
+        QString m_probe[4];
+
+        QColor m_color[5];
+
+        DataChannel* m_channel[4];
         PlotDisplay* m_display;
 
-        TopWidget*             m_topW;
-        DataPlotWidget*       m_dataPlotW;
         QGraphicsProxyWidget* m_proxy;
 };
 

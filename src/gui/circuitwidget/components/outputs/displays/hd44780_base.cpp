@@ -106,7 +106,7 @@ void Hd44780_Base::writeData( int data )
 void Hd44780_Base::proccessCommand( int command )
 {
     //qDebug() << "Hd44780_Base::proccessCommand: " << command;
-    if( command ==0 ) return;
+    if( command == 0 )  return;
     if( command<2 )   { clearLcd();               return; } //00000001 //Clear display           //Clears display and returns cursor to the home position (address 0).//1.52 ms
     if( command<4 )   { cursorHome();             return; } //0000001. //Cursor home             //Returns cursor to home position. Also returns display being shifted to the original position. DDRAM content remains unchanged.//1.52 ms
     if( command<8 )   { entryMode( command );     return; } //000001.. //Entry mode set          //Sets cursor move direction (I/D); specifies to shift the display (S). These operations are performed during data read/write.//37 μs

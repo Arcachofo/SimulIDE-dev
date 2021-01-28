@@ -100,12 +100,10 @@ void Frequencimeter::stamp()                     // Called at Simulation Start
 
 void Frequencimeter::updateStep()
 {
-    //if( m_step > stepsPerS ) initialize() override;
     double freq = 0;
     if( m_numMax > 1 )
         freq = 1e12/((double)m_totalP/(double)(m_numMax-1));
 
-    //qDebug() <<"Frequencimeter::updateStep"<<m_totalP<<m_numMax<<m_totalP/m_numMax;
     if( m_freq != freq )
     {
         m_freq = freq;

@@ -176,8 +176,8 @@ TRANSLATIONS +=  \
 
 FORMS +=   \
     ../src/gui/dialogs/*.ui \
-    ../src/gui/dialogs/components/*.ui
-#    ../src/gui/dataplotwidget/*.ui
+    ../src/gui/dialogs/components/*.ui \
+    ../src/gui/dataplotwidget/*.ui
 
 RESOURCES = ../src/application.qrc
 

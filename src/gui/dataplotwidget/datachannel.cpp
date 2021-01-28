@@ -18,13 +18,13 @@
  ***************************************************************************/
 
 #include "datachannel.h"
+#include "plotdisplay.h"
 #include "simulator.h"
 
-double DataChannel::m_dataSize = 0;
-
-DataChannel::DataChannel( QString id )
+DataChannel::DataChannel( PlotBase* plotBase, QString id )
            : eElement( id )
 {
+    m_plotBase = plotBase;
     m_ePin.resize( 2 );
 
     m_chCond = None;
@@ -61,7 +61,7 @@ void DataChannel::fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset )
     uint64_t time;
     double val;
 
-    uint64_t timeStep = m_dataPlotW->m_hTick/50;
+    uint64_t timeStep = m_plotBase->timeDiv()/50;
     uint64_t lastTime = m_time.at(pos)+timeStep;
     uint64_t maxTime = 0;
     uint64_t minTime = 0;
@@ -107,6 +107,6 @@ void DataChannel::fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset )
         if( time < origAbs ) break; // End of data
         if( --pos < 0 ) pos += m_buffer.size();
     }
-    m_dataPlotW->m_display->setData( m_channel, m_points );
+    m_plotBase->display()->setData( m_channel, m_points );
 }
 

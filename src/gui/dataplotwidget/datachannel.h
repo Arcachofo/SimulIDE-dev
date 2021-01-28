@@ -20,18 +20,17 @@
 #ifndef DATACHANNEL_H
 #define DATACHANNEL_H
 
-#include "dataplotwidget.h"
 #include "e-element.h"
+#include "plotbase.h"
 
 class MAINMODULE_EXPORT DataChannel : public eElement
 {
-    friend class DataPlotWidget;
-    friend class PlotBase;
-    friend class Oscope;
+        friend class PlotBase;
+        friend class Oscope;
 
     public:
 
-        DataChannel( QString id );
+        DataChannel( PlotBase* plotBase, QString id );
         ~DataChannel();
 
         virtual void initialize(){;}
@@ -40,6 +39,11 @@ class MAINMODULE_EXPORT DataChannel : public eElement
 
         virtual void setFilter( double f ){;}
         virtual void fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset );
+
+        //paCond chCond() { return m_chCond; }
+        //bool chCondFlag() { return m_chCondFlag; }
+
+        //QList<QPointF>* points() { return m_points; }
 
     protected:
         QList<QPointF> m_pointsA;
@@ -59,11 +63,10 @@ class MAINMODULE_EXPORT DataChannel : public eElement
         double m_ampli;
         double m_filter;
 
- static double m_dataSize;
-        int    m_chCond;
+        paCond m_chCond;
         bool   m_chCondFlag;
 
-        DataPlotWidget* m_dataPlotW;
+        PlotBase* m_plotBase;
 };
 
 #endif

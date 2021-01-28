@@ -22,6 +22,7 @@
 
 #include "datachannel.h"
 
+class Oscope;
 
 class MAINMODULE_EXPORT OscopeChannel : public DataChannel
 {
@@ -29,7 +30,7 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
 
     public:
 
-        OscopeChannel( QString id );
+        OscopeChannel( Oscope* oscope, QString id );
         ~OscopeChannel();
 
         virtual void initialize() override;
@@ -48,13 +49,14 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
         uint64_t m_period;
         uint64_t m_risEdge;
 
-        double m_vTick;
         double m_lastValue;
         double m_freq;
         double m_mid;
 
         bool m_rising;
         bool m_falling;
+
+        Oscope* m_oscope;
 };
 
 #endif

@@ -53,7 +53,7 @@ SimuProp::SimuProp( QWidget* parent )
     nlStepsBox->setValue( Simulator::self()->maxNlSteps() );
 
     helpText->setVisible( false );
-    mainLayout->removeWidget(helpText);
+    mainLayout->removeWidget( helpText );
     this->adjustSize();
 }
 

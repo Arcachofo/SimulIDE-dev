@@ -79,7 +79,8 @@ QList<propGroup_t> Hd44780::propGroups()
     return {mainGroup};
 }
 
-void Hd44780::updateStep() { update(); }
+void Hd44780::updateStep() {
+    update(); }
 
 void Hd44780::initialize() { Hd44780_Base::init(); }
 

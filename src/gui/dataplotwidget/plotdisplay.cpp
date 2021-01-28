@@ -29,64 +29,45 @@
 PlotDisplay::PlotDisplay( QWidget* parent )
            : QWidget( parent )
 {
-    for( int i=0; i<2; ++i )
+    for( int i=0; i<4; ++i )
     {
         m_scaleY[i] = 1;
         m_hPos[i] = 0;
         m_vMaxVal[i] = 0;
         m_vMinVal[i] = 0;
         m_vMin[i] = 0;
-        m_data[i] = 0l;
+        m_data[i] = NULL;
     }
-    m_margin = 8;
+    m_sizeX = 135;
+    m_sizeY = 135;
+    m_marginX = 3*10;
+    m_marginY = 10;
+    m_tracks = 1;
+    m_expand = false;
 
-    //double fontScale = MainWindow::self()->fontScale();
-    m_fontB.setPixelSize(8);
-    m_fontB.setBold(true);
-    m_fontS.setPixelSize(7);
+    double fontScale = MainWindow::self()->fontScale();
+    m_fontB.setPixelSize( 9*fontScale );
+    m_fontB.setBold( true );
+    m_fontS.setPixelSize( 8*fontScale );
 
     m_scaleColor[0] = QColor( 70, 70, 70 );
     m_scaleColor[1] = QColor( 100, 100, 100 );
     m_scaleColor[2] = QColor( 200, 200, 200 );
-    m_color[0] = QColor( 240, 240, 100 ); //QColor( 190, 190, 0 );
-    m_color[1] = QColor( 220, 220, 255 ); //QColor( 255, 110, 50 );
-    m_color[2] = QColor( 255, 255, 255 );
+
     m_dark[0] = QColor( 200, 200, 60 );
     m_dark[1] = QColor( 180, 180, 215 );
 
     setMouseTracking(true);
 }
 
-QSize PlotDisplay::minimumSizeHint() const  {  return QSize( m_width, m_height );  }
-
-QSize PlotDisplay::sizeHint() const  { return QSize( m_width, m_height ); }
-
-void PlotDisplay::setSize( int width, int height )
+void PlotDisplay::setColor( int ch, QColor color )
 {
-    m_width  = width+6*m_margin;
-    m_height = height+2*m_margin;
+    m_color[ch] = color;
+}
 
-    m_sizeX = width;
-    m_sizeY = height;
-    m_scaleX = 1;
-
-    m_hCenter = (double)m_width/2;
-    m_vCenter = (double)m_height/2;
-    m_ceroX = m_margin*3;
-    m_endX  = m_width-m_ceroX;
-    m_ceroY = m_margin;
-    m_endS  = m_height-m_margin;
-    m_lineX = m_ceroX;
-    m_linWi = (4+6*m_sizeY/200)/10;
-
-    setFixedSize( m_width, m_height );
-
-    for( int i=0; i<2; i++ )
-    {
-        m_vTick[i] = 1;
-        m_vPos[i] = 0;
-        m_data[i] = 0l;
-    }
+void PlotDisplay::setTracks( int tracks )
+{
+    m_tracks = tracks;
     updateValues();
 }
 
@@ -131,10 +112,34 @@ void PlotDisplay::setHPos( int ch, int64_t hPos )
 
 void PlotDisplay::updateValues()
 {
-    for( int i=0; i<2; ++i )
+    if( m_expand )
     {
-        m_sclY[i] = m_sizeY/(m_vTick[i]*10);
+        m_marginX = 3*10;
+        m_marginY = 10;
+    }else{
+        m_marginX = 4;
+        m_marginY = 4;
+    }
+    m_sizeX = width()-2*m_marginX;
+    m_sizeY = height()-2*m_marginY;
+
+    m_hCenter = (double)width()/2;
+    m_vCenter = (double)height()/2;
+    m_ceroX = m_marginX;
+    m_endX  = width()-m_ceroX;
+    m_ceroY = m_marginY;
+    m_endS  = height()-m_marginY;
+    m_lineX = m_ceroX;
+    m_trackScl = (m_tracks+1)/2;
+
+    for( int i=0; i<4; ++i )
+    {
+        m_sclY[i] = m_sizeY/(m_vTick[i]*10)/m_trackScl;
         m_posY[i] = m_vMin[i]+m_vPos[i];
+        if     ( m_tracks == 2 ) m_posY[i] += (i&1)*m_ampli[i]/2;
+        else if( m_tracks == 4 ) m_posY[i] += (i-1)*m_ampli[i]/2;
+
+        //+(m_tracks/2)*(i&1)*m_ampli[i]/2;
     }
     update();
 }
@@ -142,9 +147,9 @@ void PlotDisplay::updateValues()
 void PlotDisplay::drawBackground( QPainter* p )
 {
     p->setBrush( QColor( 0, 0, 0 ) );
-    p->drawRoundRect(0, 0, m_width, m_height, 7, 7 );
+    p->drawRoundRect(0, 0, width(), height(), 7, 7 );
 
-    QPen pen( m_scaleColor[0], 1.5*m_linWi, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    QPen pen( m_scaleColor[0], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
     for( double i=m_ceroY; i<=m_endS; i+=m_sizeY/10. )
         p->drawLine( QPointF(m_ceroX, i), QPointF(m_endX, i) ); //Horizontal lines
@@ -152,17 +157,19 @@ void PlotDisplay::drawBackground( QPainter* p )
     for( double i=m_lineX; i<=m_endX; i+=m_sizeX/10. )
         p->drawLine( QPointF(i, m_ceroY), QPointF(i, m_endS) ); //Vertical lines
 
-    QPen pen2( m_scaleColor[1], 1*m_linWi, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    QPen pen2( m_scaleColor[1], 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen2 );
 
-    double m = 2*m_linWi;
-    for( double i=m_ceroY; i<=m_endS; i+=m_sizeY/50. )
-        p->drawLine( QPointF(m_hCenter-m, i), QPointF(m_hCenter+m, i) ); //Horizontal Marks
+    if( m_expand )
+    {
+        double m = 2;
+        for( double i=m_ceroY; i<=m_endS; i+=m_sizeY/50. )
+            p->drawLine( QPointF(m_hCenter-m, i), QPointF(m_hCenter+m, i) ); //Horizontal Marks
 
-    for( double i=m_lineX; i<=m_endX; i+=m_sizeX/50. )
-        p->drawLine( QPointF(i, m_vCenter-m), QPointF(i, m_vCenter+m) ); //Vertical Marks
-
-    QPen pen3( m_scaleColor[1], 1.5*m_linWi, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+        for( double i=m_lineX; i<=m_endX; i+=m_sizeX/50. )
+            p->drawLine( QPointF(i, m_vCenter-m), QPointF(i, m_vCenter+m) ); //Vertical Marks
+    }
+    QPen pen3( m_scaleColor[1], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen3 );
     p->drawLine( m_ceroX, m_vCenter, m_endX, m_vCenter );  //Horizontal Center line
     p->drawLine( m_hCenter, m_ceroY, m_hCenter, m_endS );  //Vertical Center line
@@ -176,13 +183,13 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     p.setRenderHint( QPainter::Antialiasing, true );
 
     QPoint cPos = QCursor::pos()-mapToGlobal( QPoint(0, 0) );
-    qreal scale = CircuitView::self()->getScale();
-    int cursorX = cPos.x()/scale;
-    int cursorY = cPos.y()/scale;
+    //qreal scale = CircuitView::self()->getScale();
+    int cursorX = cPos.x(); // /scale;
+    int cursorY = cPos.y(); // /scale;
 
     bool drawCursor = false;
     if( (cursorX > m_ceroX) && (cursorX < m_endX ) // Draw Cursor?
-     && (cursorY > 0) && (cursorY < m_height) ) drawCursor = true;
+     && (cursorY > 0) && (cursorY < height()) ) drawCursor = true;
 
     QPointF P1;
     double x1;
@@ -191,14 +198,13 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     double y2;
     double p1Volt = 0;
     double p2Volt = 0;
-    m_volt[0] = -1e12;
-    m_volt[1] = -1e12;
 
-    for( int i=0; i<2; ++i )  // PRINT DATA
+    for( int i=0; i<4; ++i )  // PRINT DATA
     {
         if( !m_data[i] ) continue;
+        m_volt[i] = -1e12;
 
-        QPen pen2( m_color[i], 2*m_linWi, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+        QPen pen2( m_color[i], 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
         p.setPen( pen2 );
 
         int k = 0;
@@ -210,7 +216,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
         for( QPointF P2 : *m_data[i] )
         {
             p2Volt = P2.y();
-            x2 = P2.x()*m_scaleX+m_margin*3+m_hPos[i]*m_scaleX;
+            x2 = P2.x()*m_scaleX+m_marginX+m_hPos[i]*m_scaleX;
             y2 = m_vCenter-(p2Volt-m_posY[i])*m_sclY[i];
             P2.setX( x2 );
             P2.setY( y2 );
@@ -225,7 +231,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
             x1 = P1.x();
             y1 = P1.y();
 
-            if(( x1<0 && x2<0 ) ||( x1>m_width && x2>m_width )) // Out of display
+            if(( x1<0 && x2<0 ) ||( x1>width() && x2>width() )) // Out of display
             {
                 P1 = P2; continue;
             }
@@ -256,36 +262,44 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
             P1 = P2;
         }
     }
-    for( int i=0; i<2; ++i ) // SCALES, MAX-MIN
+    // Draw Rects to crop data plots
+    p.fillRect( 0,                   0, m_marginX-1, height(), QColor( 10, 15, 50 ) );
+    p.fillRect( m_sizeX+m_marginX+1, 0, m_marginX-1, height(), QColor( 10, 15, 50 ) );
+    if( !m_expand || (!m_data[0] && !m_data[1] &&!m_data[2] && !m_data[3]) )
+    { p.end(); return; }
+
+    for( int i=0; i<4; ++i ) // SCALES, MAX-MIN
     {
-        // Draw Rects to crop data plots
-        p.fillRect( i*(m_sizeX+m_margin*3), 0, m_margin*3, m_height, QColor( 10, 15, 50 ) );
-        
         if( !m_data[i] ) continue;
 
-        QPen pen1( m_color[i], 0.5*m_linWi, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+        QPen pen1( m_color[i], 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
         p.setPen( pen1 );
         m_vMaxPos[i] = m_vCenter-(m_vMaxVal[i]-m_posY[i])*m_sclY[i];
         m_vMinPos[i] = m_vCenter-(m_vMinVal[i]-m_posY[i])*m_sclY[i];
         p.drawLine( m_ceroX, m_vMaxPos[i], m_endX, m_vMaxPos[i] );   //Horizontal Max V line
         p.drawLine( m_ceroX, m_vMinPos[i], m_endX, m_vMinPos[i] );   //Horizontal Min V line
 
-        int xPos = 2+i*(m_sizeX+3*m_margin);
+        int xPos = 2+(i&1)*(m_sizeX+m_marginX);
 
-        QPen pen3( m_color[i], 1.5*m_linWi, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+        QPen pen3( m_color[i], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
         p.setPen( pen3 );
         p.setFont( m_fontS );
 
         // Draw Background scale values
         int s = 0;
+        int pY;
         for( double j=m_ceroY; j<=m_endS; j+=m_sizeY/10 )
         {
+            if( i < 2 ) pY = j-4;
+            else        pY = j+4;
             int decs = 0;
-            double volTick = (m_vTick[i]*5-m_vTick[i]*s++);
+            double volTick = (m_vTick[i]*5-m_vTick[i]*s++)*m_trackScl;
             if     ( volTick < 10)   decs = 2;
             else if( volTick < 100)  decs = 1;
+            QString number = QString::number( volTick,'f', decs);
+            if( volTick >= 0 ) number.prepend(" ");
 
-            p.drawText( xPos, j-5, m_width, 10, Qt::AlignVCenter, QString::number( volTick,'f', decs) );
+            p.drawText( xPos, pY-5, width(), 10, Qt::AlignVCenter, number );
         }
         // Draw Rects behind Max & Min Numbers
         p.fillRect( xPos, m_vMaxPos[i]-4, 21, 8, QColor( 10, 15, 50 ) );
@@ -293,28 +307,30 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
         // Draw Max & Min Values
         p.setFont( m_fontB );
-        p.drawText( xPos, m_vMaxPos[i]-5, m_width, 10, Qt::AlignVCenter, QString::number(m_vMaxVal[i],'f', 2) );
-        p.drawText( xPos, m_vMinPos[i]-5, m_width, 10, Qt::AlignVCenter, QString::number(m_vMinVal[i],'f', 2) );
+        p.drawText( xPos, m_vMaxPos[i]-5, width(), 10, Qt::AlignVCenter, QString::number(m_vMaxVal[i],'f', 2) );
+        p.drawText( xPos, m_vMinPos[i]-5, width(), 10, Qt::AlignVCenter, QString::number(m_vMinVal[i],'f', 2) );
 
-        p.setFont( m_fontS );
+        //p.setFont( m_fontS );
         if( drawCursor )              // Draw Cursor Voltages
         {
-            pen3.setColor( m_dark[i] );
+            pen3.setColor( m_color[i] );
             p.setPen( pen3 );
             double val = m_volt[i]*1e12; // Volt in pV m_dark
             QString unit;
             int decs = 0;
             valToUnit( val, unit, decs );
-            p.drawText( cursorX-61, cursorY-15-7*i,60, 10, Qt::AlignRight, QString::number( val,'f', decs) );
-            p.drawText( cursorX-1,  cursorY-15-7*i, 60, 10, Qt::AlignLeft, unit+"V" );
+
+            int y = cursorY-22-10*(3-i);
+            p.drawText( cursorX-62, y, 60, 12, Qt::AlignRight, QString::number( val,'f', decs) );
+            p.drawText( cursorX-1,  y, 60, 12, Qt::AlignLeft, unit+"V" );
         }
     }
     if( drawCursor )  // CURSOR
     {
-        QPen pen1( m_scaleColor[2], 1*m_linWi, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin );
+        QPen pen1( m_scaleColor[2], 1, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin );
         p.setPen( pen1 );
 
-        p.drawLine( cursorX, 0, cursorX, m_height );       //Horizontal Cursor V line
+        p.drawLine( cursorX, 0, cursorX, height() );       //Horizontal Cursor V line
         p.drawLine( m_ceroX, cursorY, m_endX, cursorY );   //Horizontal Cursor H line
 
         pen1.setColor( Qt::white );
@@ -324,8 +340,8 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
         int decs = 0;
         valToUnit( val, unit, decs );
 
-        p.drawText( cursorX-61, cursorY-8, 60, 10, Qt::AlignRight, QString::number( val,'f', decs) );
-        p.drawText( cursorX-1,  cursorY-8, 60, 10, Qt::AlignLeft, unit+"s" );
+        p.drawText( cursorX-62, cursorY-12, 60, 12, Qt::AlignRight, QString::number( val,'f', decs) );
+        p.drawText( cursorX-1,  cursorY-12, 20, 12, Qt::AlignLeft, unit+"s" );
     }
     p.end();
 }

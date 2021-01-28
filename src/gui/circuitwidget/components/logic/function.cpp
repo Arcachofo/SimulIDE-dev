@@ -29,17 +29,17 @@ static const char* Function_properties[] = {
 
 Component* Function::construct( QObject* parent, QString type, QString id )
 {
-        return new Function( parent, type, id );
+    return new Function( parent, type, id );
 }
 
 LibraryItem* Function::libraryItem()
 {
     return new LibraryItem(
-        tr( "Function" ),
-        tr( "Logic/Arithmetic" ),
-        "subc.png",
-        "Function",
-        Function::construct );
+    tr( "Function" ),
+    tr( "Logic/Arithmetic" ),
+    "subc.png",
+    "Function",
+    Function::construct );
 }
 
 Function::Function( QObject* parent, QString type, QString id )

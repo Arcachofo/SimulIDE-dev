@@ -22,14 +22,18 @@
 
 #include "plotbase.h"
 
-
 class LibraryItem;
 class OscopeChannel;
+class OscWidget;
+class DataWidget;
 
 class MAINMODULE_EXPORT Oscope : public PlotBase
 {
     Q_OBJECT
     Q_PROPERTY( double Filter   READ filter  WRITE setFilter DESIGNABLE true USER true )
+    Q_PROPERTY( int  Trigger READ trigger WRITE setTrigger )
+    Q_PROPERTY( int  AutoSC  READ autoSC  WRITE setAutoSC )
+    Q_PROPERTY( int  Tracks  READ tracks  WRITE setTracks )
 
     public:
 
@@ -44,15 +48,37 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         double filter() { return m_filter; }
         void setFilter( double filter );
 
+        int trigger() { return m_trigger; }
+        void setTrigger( int ch );
+
+        int autoSC() { return m_auto; }
+        void setAutoSC( int ch );
+
+        int tracks();
+        void setTracks( int tracks );
+
+        virtual void setTimeDiv( uint64_t td ) override;
+        virtual void setTimePos( int ch, int64_t tp ) override;
+        virtual void setVoltDiv( int ch, double vd ) override;
+        virtual void setVoltPos( int ch, double vp ) override;
+
         virtual void updateStep() override;
 
-        //virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        void toggleExpand();
+        virtual void expand( bool e ) override;
+
+        DataWidget* dataW() { return m_dataWidget; }
 
     private:
 
         double m_filter;
 
-        OscopeChannel* m_oscCh[2];
+        int m_trigger;
+        int m_auto;
+
+        OscopeChannel* m_oscCh[4];
+        OscWidget*  m_oscWidget;
+        DataWidget* m_dataWidget;
 };
 
 #endif

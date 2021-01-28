@@ -56,7 +56,7 @@ Scripted::Scripted( QObject* parent, QString type, QString id )
     m_thisObject = m_engine.newQObject( this );
     m_engine.globalObject().setProperty( "component", m_thisObject );
 
-    //setScript( "component->m_output[0]->setTimedOut( true ); return true;" );
+    //setScript( "" );
 }
 Scripted::~Scripted(){}
 
@@ -137,30 +137,6 @@ QString Scripted::getExceptions()
 
 void Scripted::runEvent()
 {
-    /*for( int i=0; i<m_numOutputs; ++i )
-    {
-        if( i >= m_numOutputs ) break;
-        QString text = m_funcList.at(i).toLower();
-
-        //qDebug() << "eScripted::voltChanged()"<<text<<m_engine.evaluate( text ).toString();
-
-        if( text.startsWith( "vo" ) )
-        {
-            float out = m_engine.evaluate( m_program.at(i) ).toNumber();
-            m_output[i]->setVoltHigh( out );
-            m_output[i]->setOut( true );
-            m_output[i]->stampOutput();
-
-        }
-        else
-        {
-            bool out = m_engine.evaluate( m_program.at(i) ).toBool();
-            m_output[i]->setTimedOut( out );
-        }
-        //qDebug()<<"Func:"<< i << text; //textLabel->setText(text);
-        //qDebug() << ":" << out;
-        //qDebug() << m_engine.globalObject().property("i0").toVariant() << m_engine.globalObject().property("i1").toVariant();
-    }*/
 }
 
 void Scripted::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )

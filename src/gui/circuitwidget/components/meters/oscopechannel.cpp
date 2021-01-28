@@ -18,15 +18,17 @@
  ***************************************************************************/
 
 #include "oscopechannel.h"
-#include "plotbase.h"
+#include "oscope.h"
+#include "plotdisplay.h"
+#include "datawidget.h"
 #include "simulator.h"
 #include "utils.h"
 
-OscopeChannel::OscopeChannel( QString id )
-             : DataChannel( id )
+OscopeChannel::OscopeChannel( Oscope* oscope, QString id )
+             : DataChannel( oscope, id )
 {
+    m_oscope = oscope;
     m_filter = 0.1;
-    m_vTick = 1;
     m_points = &m_pointsA;
 }
 OscopeChannel::~OscopeChannel()  { }
@@ -52,7 +54,6 @@ void OscopeChannel::initialize()
     m_lastValue = 0;
     m_bufferCounter = 0;
 
-    m_vTick = 1;
     m_freq = 0;
 
     m_buffer.fill(0);
@@ -60,9 +61,8 @@ void OscopeChannel::initialize()
     m_pointsA.clear();
     m_pointsB.clear();
 
-    m_dataPlotW->m_data1Label[m_channel]->setText( "---" );
-    m_dataPlotW->m_data2Label[m_channel]->setText( "---" );
-    m_dataPlotW->m_display->update();
+    ///m_dataPlotW->m_data1Label[m_channel]->setText( "---" );
+    ///m_dataPlotW->m_data2Label[m_channel]->setText( "---" );
 }
 
 void OscopeChannel::updateValues()
@@ -71,12 +71,14 @@ void OscopeChannel::updateValues()
     int decs;
     QString unit = " ";
     if( val >= 1 ) valToUnit( val, unit, decs );
-    m_dataPlotW->m_data1Label[m_channel]->setText( " "+QString::number( val, 'f', decs )+unit+"Hz" );
+    QString f = " "+QString::number( val, 'f', decs )+unit+"Hz";
 
     unit = " ";
     val = m_ampli*1e12;
     if( val >= 1 ) valToUnit( val, unit, decs );
-    m_dataPlotW->m_data2Label[m_channel]->setText( "Amp "+QString::number( val,'f', decs )+unit+"V" );
+    QString a = " "+QString::number( val,'f', decs )+unit+"V";
+
+    m_oscope->dataW()->setData( m_channel, f );
 }
 
 void OscopeChannel::updateStep()
@@ -87,34 +89,30 @@ void OscopeChannel::updateStep()
     {
         if( m_numMax > 1 )  // Got enought maximums to calculate Freq
         {
-            m_freq = (m_freq+1e12/((double)m_totalP/(double)(m_numMax-1)))/2;
+            m_freq = (m_freq+9*1e12/((double)m_totalP/(double)(m_numMax-1)))/10;
             m_totalP  = 0;
             m_numMax  = 0;
         }
-    }
-    else
-    {
+    }else{
         m_freq = 0;
         m_maxVal  =-1e12;
         m_minVal  = 1e12;
     }
 
-    if( m_dataPlotW->m_auto == m_channel )
+    if( m_oscope->autoSC() == m_channel )
     {
-        m_dataPlotW->setHPos( m_channel, 0 );
+        m_oscope->setTimePos( m_channel, 0 );
         if( m_period > 10 )
         {
-            m_vTick = m_ampli/10;
-            m_dataPlotW->setHTick( (double)m_period/5 );
-            m_dataPlotW->setVTick( m_channel, m_vTick );
-            m_dataPlotW->setVPos( m_channel, -m_ampli/2 );
-            m_dataPlotW->m_display->setLimits( m_channel, m_dispMax, m_dispMin );
+            m_oscope->setTimeDiv( m_period/5 );
+            m_oscope->setVoltDiv( m_channel, m_ampli/10 );
+            m_oscope->setVoltPos( m_channel, -m_ampli/2 );
+            m_oscope->display()->setLimits( m_channel, m_dispMax, m_dispMin );
         }
-    } else
-    {
-        m_dispMax =  m_dataPlotW->m_vTick[m_channel]*10;
+    } else{
+        m_dispMax = m_oscope->voltDiv( m_channel )*10;
         m_dispMin = 0;
-        m_dataPlotW->m_display->setLimits( m_channel, m_dispMax, m_dispMin );
+        m_oscope->display()->setLimits( m_channel, m_dispMax, m_dispMin );
     }
     updateValues();
 
@@ -170,18 +168,18 @@ void OscopeChannel::voltChanged()
                 m_nCycles++;
                 m_falling = false;
 
-                if( m_dataPlotW->m_paOnCond )
+                if( m_oscope->paOnCond() )
                 {
                     if( (m_chCond == Rising) || (m_chCond == High) ) // Pause on Rising or High
                     {
                         m_chCondFlag = true;
-                        m_dataPlotW->m_plotB->pauseOnCond();
+                        m_oscope->pauseOnCond();
                         if( m_chCond == Rising ) m_chCondFlag = false;
                     }
                     else if( m_chCond == Low ) m_chCondFlag = false;
                 }
             }
-            else if( m_dataPlotW->m_paOnCond )
+            else if( m_oscope->paOnCond() )
             {
                 if( m_chCond == Rising ) m_chCondFlag = false;
             }
@@ -215,18 +213,18 @@ void OscopeChannel::voltChanged()
         {
             m_rising = false;
 
-            if( m_dataPlotW->m_paOnCond )
+            if( m_oscope->paOnCond() )
             {
                 if( (m_chCond == Falling) || (m_chCond == Low) ) // Pause on Falling or Low
                 {
                     m_chCondFlag = true;
-                    m_dataPlotW->m_plotB->pauseOnCond();
+                    m_oscope->pauseOnCond();
                     if( m_chCond == Falling ) m_chCondFlag = false;
                 }
                 else if( m_chCond == High ) m_chCondFlag = false;
             }
         }
-        else if( m_dataPlotW->m_paOnCond )
+        else if( m_oscope->paOnCond() )
         {
             if( m_chCond == Falling ) m_chCondFlag = false;
         }
@@ -243,5 +241,5 @@ void OscopeChannel::setFilter( double f )
     m_numMax  = 0;
 
     m_filter = f;
-    m_dataPlotW->m_display->setFilter(f);
+    //m_dataPlotW->m_display->setFilter(f);
 }

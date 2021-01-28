@@ -19,10 +19,13 @@
 
 #include "oscope.h"
 #include "connector.h"
+#include "circuitwidget.h"
 #include "circuit.h"
 #include "simulator.h"
 #include "itemlibrary.h"
 #include "oscopechannel.h"
+#include "oscwidget.h"
+#include "datawidget.h"
 
 static const char* Oscope_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Filter")
@@ -49,29 +52,46 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     Q_UNUSED( Oscope_properties );
 
     m_graphical = true;
-
-    setLabelPos(-80,-80, 0);
-
-    m_baSizeX = 120;
-    m_baSizeY = 100;
-    m_adSizeX = 240;
-    m_adSizeY = 200;
-
+    m_trigger = 0;
+    m_auto    = 0;
+    m_filter = 0.0;
+    m_extraSize = 68;
     m_bufferSize = 600000;
 
-    for(int i=0; i<2; i++ )
+    m_oscWidget  = new OscWidget( CircuitWidget::self(), this );
+    m_dataWidget = new DataWidget( NULL, this );
+    m_proxy = Circuit::self()->addWidget( m_dataWidget );
+    m_proxy->setParentItem( this );
+    m_dataWidget->show();
+    m_display = m_oscWidget->display();
+    m_display->setFixedSize( m_baSizeX+6*8, m_baSizeY+2*8 );
+
+    for( int i=0; i<4; i++ )
     {
-        m_oscCh[i] = new OscopeChannel( (id+"Chan"+QString::number(i)));
+        m_oscCh[i] = new OscopeChannel( this, id+"Chan"+QString::number(i) );
         m_channel[i] = m_oscCh[i];
         m_channel[i]->m_channel = i;
         m_channel[i]->m_ePin[0] = m_pin[i];
-        m_channel[i]->m_ePin[1] = m_pin[2]; // Ref Pin
-    }
+        m_channel[i]->m_ePin[1] = m_pin[4]; // Ref Pin
+        m_channel[i]->m_buffer.resize( m_bufferSize );
+        m_channel[i]->m_time.resize( m_bufferSize );
 
-    setAdvanc( false ); // Create Widgets
-    m_filter = 0.0;
+        m_display->setColor( i, m_color[i] );
+        m_dataWidget->setColor( i, m_color[i] );
+
+        setTimePos( i, 0 );
+        setVoltDiv( i, 1 );
+        setVoltPos( i, 0 );
+    }
+    setLabelPos(-90,-100, 0);
+    expand( false );
 }
-Oscope::~Oscope() {}
+Oscope::~Oscope()
+{
+    m_oscWidget->setParent( NULL );
+    m_oscWidget->close();
+    delete m_oscWidget;
+}
 
 QList<propGroup_t> Oscope::propGroups()
 {
@@ -82,9 +102,6 @@ QList<propGroup_t> Oscope::propGroups()
     sizeGroup.propList.append( {"", tr("Baisc Mode:"),""} );
     sizeGroup.propList.append( {"Basic_X", tr("Size X"),"Pixels"} );
     sizeGroup.propList.append( {"Basic_Y", tr("Size Y"),"Pixels"} );
-    sizeGroup.propList.append( {"", tr("Expanded Mode:"),""} );
-    sizeGroup.propList.append( {"Expand_X", tr("Size X"),"Pixels"} );
-    sizeGroup.propList.append( {"Expand_Y", tr("Size Y"),"Pixels"} );
 
     propGroup_t logGroup { tr("One Shot") };
     logGroup.propList.append( {"Data_Log", tr("Active (pauses simulation at trigger)"),""} );
@@ -100,8 +117,7 @@ QList<propGroup_t> Oscope::propGroups()
 void Oscope::updateStep()
 {
     uint64_t period = 0;
-    uint64_t hTick  = m_dataPlotW->m_hTick;
-    uint64_t timeFrame = hTick*10;
+    uint64_t timeFrame = m_timeDiv*10;
     uint64_t offset = 0;
     uint64_t orig;
     uint64_t origAbs;
@@ -123,33 +139,108 @@ void Oscope::updateStep()
     }
     else simTime = Simulator::self()->circTime(); // free running
 
-    m_dataPlotW->m_display->setXFrame( timeFrame );
+    m_display->setXFrame( timeFrame );
 
-    if( simTime>timeFrame ) orig = simTime-timeFrame;
+    if( simTime > timeFrame ) orig = simTime-timeFrame;
     else
     {
         orig = 1;
         offset = timeFrame-simTime;
     }
-    if( simTime>timeFrame*2 ) origAbs = simTime-timeFrame*2;
-    else                      origAbs = 1;
+    if( simTime > timeFrame*2 ) origAbs = simTime-timeFrame*2;
+    else                        origAbs = 1;
 
-    for( int i=0; i<2; i++ )
+    for( int i=0; i<4; i++ )
     {
-        if( m_pin[i]->isConnected() )
-        {
-            m_channel[i]->fetchData( orig, origAbs, offset );
-            m_channel[i]->updateStep();
-        }
+        if( !m_pin[i]->isConnected() ) continue;
+        m_channel[i]->fetchData( orig, origAbs, offset );
+        m_channel[i]->updateStep();
     }
-    m_dataPlotW->m_display->update();
+}
+
+void Oscope::toggleExpand()
+{
+    expand( !m_expand );
+}
+
+void Oscope::expand( bool e )
+{
+    m_expand = e;
+
+    if( e )
+    {
+        m_screenSizeY = m_baSizeY+2*10;
+        m_display->setMaximumSize( 9999, 9999 );
+        m_oscWidget->getLayout()->addWidget( m_display );
+        m_oscWidget->setWindowTitle( idLabel() );
+        m_oscWidget->show();
+        m_screenSizeX = 8;
+    }else{
+        m_screenSizeX = m_baSizeX+2*4;
+        m_screenSizeY = m_baSizeY+2*4;
+        m_oscWidget->hide();
+        m_dataWidget->getLayout()->addWidget( m_display );
+        m_display->setMaximumSize( m_screenSizeX, m_screenSizeY );
+    }
+    m_display->setMinimumSize( m_screenSizeX, m_screenSizeY );
+
+    int widgetSizeX = m_screenSizeX+m_extraSize+4;
+    int widgetSizeY = m_screenSizeY+4;
+    int centerY = widgetSizeY/2;
+    m_dataWidget->setFixedSize( widgetSizeX, widgetSizeY );
+    m_proxy->setPos( -80+2, -centerY-2+4 );
+    m_area = QRectF( -80, -centerY, widgetSizeX+4, widgetSizeY+4+2 );
+
+    m_display->setExpand( e );
+    QTimer::singleShot( 20, m_display, SLOT( updateValues() ) );
+
+    Circuit::self()->update();
 }
 
 void Oscope::setFilter( double filter )
 {
     m_filter = filter;
+    for( int i=0; i<2; i++ ) m_channel[i]->setFilter( filter );
+}
 
-    for(int i=0; i<2; i++ ) m_channel[i]->setFilter( filter );
+void Oscope::setTrigger( int ch )
+{
+    m_trigger = ch;
+    m_oscWidget->setTrigger( ch );
+}
+
+void Oscope::setAutoSC( int ch )
+{
+    m_auto = ch;
+    m_oscWidget->setAuto( ch );
+}
+
+int Oscope::tracks() { return m_display->tracks(); }
+void Oscope::setTracks( int tracks ) { m_display->setTracks( tracks ); }
+
+void Oscope::setTimeDiv( uint64_t td )
+{
+    if( td < 1 ) td = 1;
+    PlotBase::setTimeDiv( td );
+    m_oscWidget->updateTimeDivBox( td );
+}
+
+void Oscope::setTimePos(int ch, int64_t tp )
+{
+    PlotBase::setTimePos( ch, tp );
+    m_oscWidget->updateTimePosBox( ch, tp );
+}
+
+void Oscope::setVoltDiv( int ch, double vd )
+{
+    PlotBase::setVoltDiv( ch, vd );
+    m_oscWidget->updateVoltDivBox( ch, vd );
+}
+
+void Oscope::setVoltPos( int ch, double vp )
+{
+    PlotBase::setVoltPos( ch, vp );
+    m_oscWidget->updateVoltPosBox( ch, vp );
 }
 
 #include "moc_oscope.cpp"

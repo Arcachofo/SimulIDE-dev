@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2020 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -14,37 +14,35 @@
  *                                                                         *
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
- *                                                                         *
- ***************************************************************************/
-
-#ifndef CODEEDITORWIDGET_H
-#define CODEEDITORWIDGET_H
+ *                                                                         */
 
 #include <QWidget>
 
-#include "codeeditor.h"
-#include "outpaneltext.h"
+#include "ui_datawidget.h"
 
-class MainWindow;
+#ifndef DATAWIDGET_H
+#define DATAWIDGET_H
 
-class CodeEditorWidget : public QWidget
+class Oscope;
+
+class DataWidget : public QWidget, private Ui::DataWidget
 {
     Q_OBJECT
-
+    
     public:
-        CodeEditorWidget( QWidget *parent );
-        ~CodeEditorWidget();
+        DataWidget(QWidget* parent=0 , Oscope* oscope=0) ;
 
-        CodeEditor* m_codeEditor;
+        void setColor( int ch, QColor c );
+        void setData( int ch, QString freq );
+
+        QHBoxLayout* getLayout() { return mainLayout; }
 
     public slots:
-        void setVisible( bool visible );
+        void on_expandButton_clicked();
 
     private:
-        void createWidgets();
-
-        QGridLayout*  baseWidgetLayout;
-        OutPanelText* m_outPane;
+        Oscope* m_oscope;
 };
 
-#endif // CODEEDITORWIDGET_H
+
+#endif
