@@ -31,7 +31,7 @@ AVRComponentPin::AVRComponentPin( McuComponent* mcu, QString id, QString type, Q
     m_channelAin = -1;
 
     m_avrProcessor = 0l;
-    m_PortChangeIrq = 0l;
+    //m_PortChangeIrq = 0l;
     m_PortRegChangeIrq = 0l;
     m_DdrRegChangeIrq = 0l;
     m_Write_stat_irq = 0l;
@@ -63,10 +63,6 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
         m_PortRegChangeIrq = avr_iomem_getirq( AvrProcessor, portAddr, &m_port, m_pinN );
         avr_irq_register_notify( m_PortRegChangeIrq, port_reg_hook, this );
         
-        // By now need this for pwm to work
-        m_PortChangeIrq = avr_io_getirq( AvrProcessor, AVR_IOCTL_IOPORT_GETIRQ( m_port ), m_pinN );
-        avr_irq_register_notify( m_PortChangeIrq, port_hook, this );
-        
         // DDRX Register change irq
         QString ddrName = "DDR";
         ddrName.append( m_id.at(1) );
@@ -79,15 +75,12 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
         m_DdrRegChangeIrq = avr_iomem_getirq( AvrProcessor, ddrAddr, " ", m_pinN );
         avr_irq_register_notify( m_DdrRegChangeIrq, ddr_hook, this );
         
-        //qDebug()  << m_port << m_pinN;
-        
         m_Write_stat_irq = avr_io_getirq( AvrProcessor, AVR_IOCTL_IOPORT_GETIRQ(m_port), m_pinN );
         
         QStringList types = m_type.split( "," );
         for( QString ty : types )
         {
             ty = ty.toLower();
-
             if( ty.startsWith("adc") )
             {
                 m_channelAdc = ty.remove( "adc" ).toInt();
@@ -117,16 +110,6 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
                 avr_irq_register_notify( pwm_out, pwm_out_hook, this );
             }
         }
-
-
-/*#ifdef AVR_IOPORT_INTRN_PULLUP_IMP
-        // If we wish to take full control over pull-ups,
-        // we can turn off the simavr internall pull-ups support.
-        avr_irq_t *src_imp_irq = avr_io_getirq( m_avrProcessor, AVR_IOCTL_IOPORT_GETIRQ(m_port), m_pinN + IOPORT_IRQ_PIN0_SRC_IMP);
-        avr_raise_irq_float( src_imp_irq, 0, true );
-        // Otherwise it is active and can "override" our handling in some situations.
-        // Verify tests/pullup_disconnect/pullup_disconnect.ino with digitalWrite(1, x) lines uncommented
-#endif //AVR_IOPORT_INTRN_PULLUP_IMP*/
     }
     else if( m_type == "reset" ) 
     {
@@ -151,24 +134,17 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
 
 void AVRComponentPin::initialize()
 {
-    if( m_pinType == 1 )                         // Initialize irq flags
-    {
-        if( m_Write_stat_irq )  m_Write_stat_irq->flags  |= IRQ_FLAG_INIT;
-        if( m_Write_adc_irq )   m_Write_adc_irq->flags   |= IRQ_FLAG_INIT;
-        if( m_Write_acomp_irq ) m_Write_acomp_irq->flags |= IRQ_FLAG_INIT;
-        if( m_PortRegChangeIrq && m_DdrRegChangeIrq )
-        {
-            m_PortChangeIrq->flags    |= IRQ_FLAG_INIT;
-            m_PortRegChangeIrq->flags |= IRQ_FLAG_INIT;
-            m_DdrRegChangeIrq->flags  |= IRQ_FLAG_INIT;
-        }
-        else
-        {
-            qDebug()<< "Pin not properly initialized:" << m_port << m_pinN;
-        }
-        m_enableIO = true;
-        McuComponentPin::initialize();
-    }
+    if( m_pinType != 1 ) return;
+
+    if( m_Write_stat_irq )  m_Write_stat_irq->flags  |= IRQ_FLAG_INIT;
+    if( m_Write_adc_irq )   m_Write_adc_irq->flags   |= IRQ_FLAG_INIT;
+    if( m_Write_acomp_irq ) m_Write_acomp_irq->flags |= IRQ_FLAG_INIT;
+
+    m_PortRegChangeIrq->flags |= IRQ_FLAG_INIT;
+    m_DdrRegChangeIrq->flags  |= IRQ_FLAG_INIT;
+
+    m_enableIO = true;
+    McuComponentPin::initialize();
 }
 
 void AVRComponentPin::voltChanged()
@@ -176,7 +152,7 @@ void AVRComponentPin::voltChanged()
     double volt = m_ePin[0]->getVolt();
 
     //qDebug() << m_id << m_type << volt;
-    if( m_pinType == 1 )                                 // Is an IO Pin
+    if( m_pinType == 1 )                    // Is an IO Pin
     {
         if( volt  > 2.5 ) avr_raise_irq( m_Write_stat_irq, 1 );
         else              avr_raise_irq( m_Write_stat_irq, 0 );
@@ -184,7 +160,7 @@ void AVRComponentPin::voltChanged()
         if( m_Write_acomp_irq ) // Comparator
             avr_raise_irq( m_Write_acomp_irq, m_ePin[0]->getVolt()*1000 );
     }
-    else if( m_pinType == 21 ) // reset
+    else if( m_pinType == 21 )             // reset
     {
         if( volt < 3 )  m_processor->hardReset( true );
         else            m_processor->hardReset( false );
@@ -196,6 +172,7 @@ void AVRComponentPin::voltChanged()
 
 void AVRComponentPin::setState( bool state )
 {
+    if( m_isInput ) setPullup( state );
     if( !m_enableIO ) return;
     McuComponentPin::setState( state );
 }
@@ -214,7 +191,6 @@ void AVRComponentPin::adcread()
 void AVRComponentPin::enableIO( bool en )
 {
     m_enableIO = en;
-
     if( !(m_ePin[0]->isConnected() && m_attached) ) return;
 
     if( en )

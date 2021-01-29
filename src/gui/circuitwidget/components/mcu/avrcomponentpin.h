@@ -20,8 +20,6 @@
 #ifndef AVRCOMPONENTPIN_H
 #define AVRCOMPONENTPIN_H
 
-#include <stdint.h>
-
 #include "mcucomponentpin.h"
 
 //simavr includes
@@ -60,15 +58,6 @@ class AVRComponentPin : public McuComponentPin
 
             ptrAVRComponentPin->setDirection( value>0 );
         }
-
-        static void port_hook( struct avr_irq_t* irq, uint32_t value, void* param )
-        {
-            Q_UNUSED(irq);
-            // get the pointer out of param and asign it to AVRComponentPin*
-            AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
-
-            ptrAVRComponentPin->setState( value>0 );
-        }
         
         static void port_reg_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
@@ -76,7 +65,7 @@ class AVRComponentPin : public McuComponentPin
             // get the pointer out of param and asign it to AVRComponentPin*
             AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
 
-            ptrAVRComponentPin->setPullup( value>0 );
+            ptrAVRComponentPin->setState( value>0 );
         }
 
         static void pwm_pin_hook( struct avr_irq_t* irq, uint32_t value, void* param )
@@ -108,7 +97,6 @@ class AVRComponentPin : public McuComponentPin
  static uint64_t m_lastCycle;
         //from simavr
         avr_t*     m_avrProcessor;
-        avr_irq_t* m_PortChangeIrq;
         avr_irq_t* m_PortRegChangeIrq;
         avr_irq_t* m_DdrRegChangeIrq;
         avr_irq_t* m_Write_stat_irq;

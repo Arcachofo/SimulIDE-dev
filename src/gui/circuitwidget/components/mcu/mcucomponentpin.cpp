@@ -100,7 +100,7 @@ void McuComponentPin::setDirection( bool out )
         if( m_ePin[0]->isConnected() && m_attached )
             m_ePin[0]->getEnode()->remFromChangedCallback( this ); // Don't Receive voltage change notifications
 
-        eSource::setImp( 40 );
+        eSource::setTimedImp( 40 );
         setState( m_state );
     }
     else           // Set Pin to Input
