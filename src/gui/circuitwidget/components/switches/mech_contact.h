@@ -43,6 +43,7 @@ class MAINMODULE_EXPORT MechContact : public Component, public eElement
         virtual bool nClose() const;
         virtual void setNClose( bool nc );
 
+        virtual void attach() override;
         virtual void stamp() override;
         virtual void remove() override;
         virtual void updateStep() override;
