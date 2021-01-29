@@ -256,16 +256,15 @@ void SevenSegment::setMaxCurrent( double current )
     }
 }
 
-void SevenSegment::stamp()
+void SevenSegment::attach()
 {
-    for( int i=0; i<8; i++ ) m_enode[i] = m_ePin[i]->getEnode(); // Get eNode of pin i
-
-    for( int i=0; i<m_numDisplays; i++ )
+    for( int i=0; i<8; ++i ) m_enode[i] = m_ePin[i]->getEnode(); // Get eNode of pin i
+    for( int i=0; i<m_numDisplays; ++i )
     {
         eNode* commonEnode = m_commonPin[i]->getEnode();     // Get eNode of common
 
         int pin;
-        for( int j=0; j<8; j++ )
+        for( int j=0; j<8; ++j )
         {
             pin = i*8+j;
             if( m_commonCathode )
@@ -289,7 +288,7 @@ void SevenSegment::deleteDisplay( int dispNumber )
     pin->reset();
     delete pin;
 
-    for( int i=0; i<8; i++ ) Circuit::self()->removeComp( m_segment[dispNumber*8+i] );
+    for( int i=0; i<8; ++i ) Circuit::self()->removeComp( m_segment[dispNumber*8+i] );
 }
 
 void SevenSegment::createDisplay( int dispNumber )
@@ -297,7 +296,6 @@ void SevenSegment::createDisplay( int dispNumber )
     int x = 32*dispNumber;
     QString nodid;
     QString pinid;
-    //LedSmd* segment[8];
 
     // Pin common
     nodid = m_id;

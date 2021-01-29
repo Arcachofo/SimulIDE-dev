@@ -67,7 +67,7 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         double resistance() { return m_resistance; }
         void   setResistance( double res );
 
-        virtual void stamp() override;
+        virtual void attach() override;
         virtual void remove() override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );

@@ -66,7 +66,7 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         double res();
         void  setRes( double resist );
 
-        virtual void stamp() override;
+        virtual void attach() override;
         virtual void remove() override;
         
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );

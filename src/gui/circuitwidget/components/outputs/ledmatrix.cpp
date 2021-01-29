@@ -73,7 +73,7 @@ QList<propGroup_t> LedMatrix::propGroups()
     return {mainGroup, elecGroup};
 }
 
-void LedMatrix::stamp()
+void LedMatrix::attach()
 {
     for( int row=0; row<m_rows; ++row )
     {
