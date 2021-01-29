@@ -29,7 +29,7 @@
     <pin side="left"  pos="6"  type="bidir" id="RA4" label="A4"/>
     <pin side="left"  pos="7"  type="bidir" id="RA5" label="A5"/>
     
-    <pin side="left"  pos="8"  type="gnd"   id="VSS" label="Vss"/>
+    <pin side="left"  pos="8"  type="gnd"   id="VSS1" label="Vss"/>
     <pin side="left"  pos="9"  type="bidir" id="RA7" label="A7"/>
     <pin side="left"  pos="10" type="bidir" id="RA6" label="A6"/>
     
@@ -44,7 +44,7 @@
     <pin side="right" pos="12" type="bidir" id="RC6" label="C6"/>
     <pin side="right" pos="11" type="avcc"  id="RC7" label="C7"/>
     
-    <pin side="right" pos="10" type="gnd"   id="VSS" label="Vss"/>
+    <pin side="right" pos="10" type="gnd"   id="VSS2" label="Vss"/>
     <pin side="right" pos="9"  type="vdd"   id="VDD" label="Vdd"/>
     
     <pin side="right" pos="8"  type="bidir" id="RB0" label="B0"/>

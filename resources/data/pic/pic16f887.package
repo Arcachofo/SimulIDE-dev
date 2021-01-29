@@ -32,8 +32,8 @@
     <pin side="left"  pos="9"  type="bidir" id="RE1" label="E1"/> 
     <pin side="left"  pos="10" type="bidir" id="RE2" label="E2"/> 
 
-    <pin side="left"  pos="11"  type="vdd"  id="VDD" label="Vdd"/>
-    <pin side="left"  pos="12"  type="gnd"  id="VSS" label="Vss"/>
+    <pin side="left"  pos="11"  type="vdd"  id="VDD1" label="Vdd"/>
+    <pin side="left"  pos="12"  type="gnd"  id="VSS1" label="Vss"/>
 
     <pin side="left"  pos="13" type="bidir" id="RA7" label="A7"/>
     <pin side="left"  pos="14" type="bidir" id="RA6" label="A6"/>
@@ -59,8 +59,8 @@
     <pin side="right" pos="12" type="bidir" id="RD6" label="D6"/>
     <pin side="right" pos="11" type="bidir" id="RD7" label="D7"/>
     
-    <pin side="right" pos="10" type="gnd"   id="VSS" label="Vss"/>
-    <pin side="right" pos="9"  type="vdd"   id="VDD" label="Vdd"/>
+    <pin side="right" pos="10" type="gnd"   id="VSS1" label="Vss"/>
+    <pin side="right" pos="9"  type="vdd"   id="VDD1" label="Vdd"/>
     
     <pin side="right" pos="8"  type="bidir" id="RB0" label="B0"/>
     <pin side="right" pos="7"  type="bidir" id="RB1" label="B1"/>
