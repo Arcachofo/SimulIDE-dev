@@ -154,6 +154,7 @@ double KeyPad::rows()
 
 void KeyPad::setRows( double rows )
 {
+    if( rows < 1 ) rows = 1;
     m_rows = rows;
     setupButtons();
 }
@@ -165,6 +166,7 @@ double KeyPad::cols()
 
 void KeyPad::setCols( double cols )
 {
+    if( cols < 1 ) cols = 1;
     m_cols = cols;
     setupButtons();
 }
