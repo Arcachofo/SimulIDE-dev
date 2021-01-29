@@ -45,11 +45,15 @@ class MAINMODULE_EXPORT McuComponentPin : public QObject, public eSource
 
         virtual void pullupNotConnected( bool up )=0;
 
+        void enableIO( bool en );
+
         void move( int dx, int dy );
         int angle() { return m_angle; }
         
         QString ptype() { return m_type; }
         QString id() { return m_id; }
+
+        bool m_enableIO;
 
     protected:
         McuComponent* m_mcuComponent;

@@ -48,7 +48,6 @@ class AVRComponentPin : public McuComponentPin
         virtual void setTimedImp( double imp ) override;
 
         void adcread();
-        void enableIO( bool en );
 
         static void ddr_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
@@ -58,36 +57,29 @@ class AVRComponentPin : public McuComponentPin
 
             ptrAVRComponentPin->setDirection( value>0 );
         }
-        
         static void port_reg_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
             Q_UNUSED(irq);
             // get the pointer out of param and asign it to AVRComponentPin*
             AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
-
             ptrAVRComponentPin->setState( value>0 );
         }
-
         static void pwm_pin_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
             Q_UNUSED(irq);
             // get the pointer out of param and asign it to AVRComponentPin*
             AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
-
             ptrAVRComponentPin->enableIO( (value==0) );
         }
-
         static void pwm_out_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
             Q_UNUSED(irq);
             // get the pointer out of param and asign it to AVRComponentPin*
             AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
-
             ptrAVRComponentPin->m_enableIO = true;
             ptrAVRComponentPin->setState( value>0 );
             ptrAVRComponentPin->m_enableIO = false;
         }
-        bool m_enableIO;
 
     protected:
         int  m_channelAdc;

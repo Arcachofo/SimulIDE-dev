@@ -134,16 +134,15 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
 
 void AVRComponentPin::initialize()
 {
-    if( m_pinType != 1 ) return;
+    if( m_pinType == 1 )
+    {
+        if( m_Write_stat_irq )  m_Write_stat_irq->flags  |= IRQ_FLAG_INIT;
+        if( m_Write_adc_irq )   m_Write_adc_irq->flags   |= IRQ_FLAG_INIT;
+        if( m_Write_acomp_irq ) m_Write_acomp_irq->flags |= IRQ_FLAG_INIT;
 
-    if( m_Write_stat_irq )  m_Write_stat_irq->flags  |= IRQ_FLAG_INIT;
-    if( m_Write_adc_irq )   m_Write_adc_irq->flags   |= IRQ_FLAG_INIT;
-    if( m_Write_acomp_irq ) m_Write_acomp_irq->flags |= IRQ_FLAG_INIT;
-
-    m_PortRegChangeIrq->flags |= IRQ_FLAG_INIT;
-    m_DdrRegChangeIrq->flags  |= IRQ_FLAG_INIT;
-
-    m_enableIO = true;
+        m_PortRegChangeIrq->flags |= IRQ_FLAG_INIT;
+        m_DdrRegChangeIrq->flags  |= IRQ_FLAG_INIT;
+    }
     McuComponentPin::initialize();
 }
 
@@ -151,7 +150,6 @@ void AVRComponentPin::voltChanged()
 {
     double volt = m_ePin[0]->getVolt();
 
-    //qDebug() << m_id << m_type << volt;
     if( m_pinType == 1 )                    // Is an IO Pin
     {
         if( volt  > 2.5 ) avr_raise_irq( m_Write_stat_irq, 1 );
@@ -173,7 +171,6 @@ void AVRComponentPin::voltChanged()
 void AVRComponentPin::setState( bool state )
 {
     if( m_isInput ) setPullup( state );
-    if( !m_enableIO ) return;
     McuComponentPin::setState( state );
 }
 
@@ -186,18 +183,6 @@ void AVRComponentPin::adcread()
 {
     //qDebug() << "ADC Read channel:    pin: " << m_id <<m_ePin[0]->getVolt()*1000 ;
     if( m_Write_adc_irq ) avr_raise_irq( m_Write_adc_irq, m_ePin[0]->getVolt()*1000 );
-}
-
-void AVRComponentPin::enableIO( bool en )
-{
-    m_enableIO = en;
-    if( !(m_ePin[0]->isConnected() && m_attached) ) return;
-
-    if( en )
-    {
-        if( m_isInput ) m_ePin[0]->getEnode()->voltChangedCallback( this );
-    }
-    else m_ePin[0]->getEnode()->remFromChangedCallback( this );
 }
 
 void AVRComponentPin::setTimedImp( double imp ) // Used by I2C

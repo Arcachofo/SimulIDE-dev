@@ -77,6 +77,7 @@ void McuComponentPin::initialize()
 {
     if( m_pinType == 1 )
     {
+        m_enableIO = true;
         m_state   = false;
         m_isInput = true;
 
@@ -120,7 +121,7 @@ void McuComponentPin::setState( bool state )
     m_state = state;
 
     if( m_isInput )  return;
-
+    if( !m_enableIO ) return;
     if( m_openColl )
     {
         if( state ) m_gndAdmit = cero_doub;
@@ -161,6 +162,18 @@ void McuComponentPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comp
     m_vddAdmEx = vddAdmit;
     m_gndAdmEx = gndAdmit;
     update();
+}
+
+void McuComponentPin::enableIO( bool en )
+{
+    m_enableIO = en;
+    if( !(m_ePin[0]->isConnected() && m_attached) ) return;
+
+    if( en )
+    {
+        if( m_isInput ) m_ePin[0]->getEnode()->voltChangedCallback( this );
+    }
+    else m_ePin[0]->getEnode()->remFromChangedCallback( this );
 }
 
 void McuComponentPin::move( int dx, int dy )
