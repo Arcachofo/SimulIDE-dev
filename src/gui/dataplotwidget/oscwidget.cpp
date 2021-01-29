@@ -323,6 +323,11 @@ void OscWidget::setTrigger( int ch )
     triggerGroup->button( ch )->setChecked( true );
 }
 
+void OscWidget::setTracks( int tr )
+{
+    trackGroup->button( tr )->setChecked( true );
+}
+
 void OscWidget::closeEvent( QCloseEvent* event )
 {
     if( !parent() ) return;

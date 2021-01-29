@@ -216,7 +216,11 @@ void Oscope::setAutoSC( int ch )
 }
 
 int Oscope::tracks() { return m_display->tracks(); }
-void Oscope::setTracks( int tracks ) { m_display->setTracks( tracks ); }
+void Oscope::setTracks( int tracks )
+{
+    m_display->setTracks( tracks );
+    m_oscWidget->setTracks( tracks );
+}
 
 void Oscope::setTimeDiv( uint64_t td )
 {

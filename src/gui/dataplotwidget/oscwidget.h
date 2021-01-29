@@ -41,6 +41,7 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
 
         void setAuto( int ch );
         void setTrigger( int ch );
+        void setTracks( int tr );
 
         void updateTimeDivBox( uint64_t timeDiv);
         void updateTimePosBox( int ch, int64_t timePos );
