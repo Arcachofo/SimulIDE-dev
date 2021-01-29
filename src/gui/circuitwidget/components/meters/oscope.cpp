@@ -123,7 +123,7 @@ void Oscope::updateStep()
     uint64_t origAbs;
     uint64_t simTime;
 
-    if( m_trigger < 2  ) period = m_oscCh[m_trigger]->m_period; // We want a trigger
+    if( m_trigger < 4  ) period = m_oscCh[m_trigger]->m_period; // We want a trigger
 
     if( period > 10 ) // We have a Trigger
     {
@@ -225,21 +225,72 @@ void Oscope::setTimeDiv( uint64_t td )
     m_oscWidget->updateTimeDivBox( td );
 }
 
-void Oscope::setTimePos(int ch, int64_t tp )
+QStringList Oscope::timPos()
 {
-    PlotBase::setTimePos( ch, tp );
+    QStringList list;
+    for( int i=0; i<4; ++i ) list << QString::number( m_timePos[i] );
+    return list;
+}
+
+void Oscope::setTimPos( QStringList tp )
+{
+    for( int i=0; i<4; ++i )
+    {
+        if( i == tp.size() ) break;
+        setTimePos( i, tp.at(i).toLongLong() );
+    }
+}
+
+QStringList Oscope::volDiv()
+{
+    QStringList list;
+    for( int i=0; i<4; ++i ) list << QString::number( m_voltDiv[i] );
+    return list;
+}
+
+void Oscope::setVolDiv( QStringList vd )
+{
+    for( int i=0; i<4; ++i )
+    {
+        if( i == vd.size() ) break;
+        setVoltDiv( i, vd.at(i).toDouble() );
+    }
+}
+
+QStringList Oscope::volPos()
+{
+    QStringList list;
+    for( int i=0; i<4; ++i ) list << QString::number( m_voltPos[i] );
+    return list;
+}
+
+void Oscope::setVolPos( QStringList vp )
+{
+    for( int i=0; i<4; ++i )
+    {
+        if( i == vp.size() ) break;
+        setVoltPos( i, vp.at(i).toDouble() );
+    }
+}
+
+void Oscope::setTimePos( int ch, int64_t tp )
+{
+    m_timePos[ch] = tp;
+    m_display->setHPos( ch, tp );
     m_oscWidget->updateTimePosBox( ch, tp );
 }
 
 void Oscope::setVoltDiv( int ch, double vd )
 {
-    PlotBase::setVoltDiv( ch, vd );
+    m_voltDiv[ch] = vd;
+    m_display->setVTick( ch, vd );
     m_oscWidget->updateVoltDivBox( ch, vd );
 }
 
 void Oscope::setVoltPos( int ch, double vp )
 {
-    PlotBase::setVoltPos( ch, vp );
+    m_voltPos[ch] = vp;
+    m_display->setVPos( ch, vp );
     m_oscWidget->updateVoltPosBox( ch, vp );
 }
 

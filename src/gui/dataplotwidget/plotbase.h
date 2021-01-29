@@ -49,12 +49,7 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( paCond  REF_Cond READ refCond  WRITE setRefCond  DESIGNABLE true USER true )
 
     Q_PROPERTY( quint64 hTick  READ timeDiv  WRITE setTimeDiv )
-    Q_PROPERTY( qint64  hPos1  READ hPos1  WRITE setHPos1 )
-    Q_PROPERTY( qint64  hPos2  READ hPos2  WRITE setHPos2 )
-    Q_PROPERTY( double  vTick1 READ vTick1 WRITE setVTick1 )
-    Q_PROPERTY( double  vTick2 READ vTick2 WRITE setVTick2 )
-    Q_PROPERTY( double  vPos1  READ vPos1  WRITE setVPos1 )
-    Q_PROPERTY( double  vPos2  READ vPos2  WRITE setVPos2 )
+
     Q_PROPERTY( QString Probe1 READ probe1 WRITE setProbe1 )
     Q_PROPERTY( QString Probe2 READ probe2 WRITE setProbe2 )
     Q_ENUM( paCond )
@@ -90,35 +85,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         QString probe2() { return m_probe[1]; }
         void setProbe2( QString p );
 
-        int hPos1() { return m_timePos[0]; }
-        void setHPos1( int hp ){ setTimePos( 0, hp );}
-
-        int hPos2() { return m_timePos[1]; }
-        void setHPos2( int hp ){ setTimePos( 1, hp );}
-
-        double vTick1() { return m_voltDiv[0]; }
-        void setVTick1( double vd ){ setVoltDiv(0, vd);}
-
-        double vTick2() { return m_voltDiv[1]; }
-        void setVTick2( double vd ){ setVoltDiv( 1, vd );}
-
-        double vPos1() { return m_voltPos[0]; }
-        void setVPos1( double vp ){ setVoltPos( 0, vp );}
-
-        double vPos2() { return m_voltPos[1]; }
-        void setVPos2( double vp ){ setVoltPos( 1, vp );}
-
-
         uint64_t timeDiv() { return m_timeDiv; }
         virtual void setTimeDiv( uint64_t td ){ m_timeDiv = td;}
-        int64_t timePos( int ch ){ return m_timePos[ch]; }
-        virtual void setTimePos( int ch, int64_t tp );
-
-        double voltDiv( int ch ){ return m_voltDiv[ch]; }
-        virtual void setVoltDiv( int ch, double vd );
-
-        double voltPos( int ch ){ return m_voltPos[ch]; }
-        virtual void setVoltPos( int ch, double vp );
 
         virtual void initialize() override;
         virtual void remove() override;
@@ -156,13 +124,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         double m_dataSize;
 
         uint64_t m_timeDiv;
-        int64_t  m_timePos[4];
-
-        double m_voltDiv[4];
-        double m_voltPos[4];
 
         QString m_probe[4];
-
         QColor m_color[5];
 
         DataChannel* m_channel[4];

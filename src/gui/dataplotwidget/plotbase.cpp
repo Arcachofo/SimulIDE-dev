@@ -150,24 +150,6 @@ void PlotBase::remove()
     Component::remove();
 }
 
-void PlotBase::setTimePos(int ch, int64_t tp )
-{
-    m_timePos[ch] = tp;
-    m_display->setHPos( ch, tp );
-}
-
-void PlotBase::setVoltDiv( int ch, double vd )
-{
-    m_voltDiv[ch] = vd;
-    m_display->setVTick( ch, vd );
-}
-
-void PlotBase::setVoltPos( int ch, double vp )
-{
-    m_voltPos[ch] = vp;
-    m_display->setVPos( ch, vp );
-}
-
 void PlotBase::setProbe1( QString p )
 {
     m_probe[0] = p;
