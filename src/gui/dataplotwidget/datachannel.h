@@ -37,13 +37,7 @@ class MAINMODULE_EXPORT DataChannel : public eElement
         virtual void stamp() override;
         virtual void voltChanged(){;}
 
-        virtual void setFilter( double f ){;}
         virtual void fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset );
-
-        //paCond chCond() { return m_chCond; }
-        //bool chCondFlag() { return m_chCondFlag; }
-
-        //QList<QPointF>* points() { return m_points; }
 
     protected:
         QList<QPointF> m_pointsA;
@@ -61,11 +55,10 @@ class MAINMODULE_EXPORT DataChannel : public eElement
         double m_dispMax;
         double m_dispMin;
         double m_ampli;
-        double m_filter;
 
-        paCond m_chCond;
         bool   m_chCondFlag;
 
+        PlotBase::paCond m_chCond;
         PlotBase* m_plotBase;
 };
 

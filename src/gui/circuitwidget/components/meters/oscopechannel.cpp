@@ -60,9 +60,6 @@ void OscopeChannel::initialize()
     m_time.fill(0);
     m_pointsA.clear();
     m_pointsB.clear();
-
-    ///m_dataPlotW->m_data1Label[m_channel]->setText( "---" );
-    ///m_dataPlotW->m_data2Label[m_channel]->setText( "---" );
 }
 
 void OscopeChannel::updateValues()
@@ -170,18 +167,19 @@ void OscopeChannel::voltChanged()
 
                 if( m_oscope->paOnCond() )
                 {
-                    if( (m_chCond == Rising) || (m_chCond == High) ) // Pause on Rising or High
+                    if( (m_chCond == PlotBase::Rising)
+                     || (m_chCond == PlotBase::High) ) // Pause on Rising or High
                     {
                         m_chCondFlag = true;
                         m_oscope->pauseOnCond();
-                        if( m_chCond == Rising ) m_chCondFlag = false;
+                        if( m_chCond == PlotBase::Rising ) m_chCondFlag = false;
                     }
-                    else if( m_chCond == Low ) m_chCondFlag = false;
+                    else if( m_chCond == PlotBase::Low ) m_chCondFlag = false;
                 }
             }
             else if( m_oscope->paOnCond() )
             {
-                if( m_chCond == Rising ) m_chCondFlag = false;
+                if( m_chCond == PlotBase::Rising ) m_chCondFlag = false;
             }
             m_rising = true;
             m_lastValue = data;
@@ -215,18 +213,19 @@ void OscopeChannel::voltChanged()
 
             if( m_oscope->paOnCond() )
             {
-                if( (m_chCond == Falling) || (m_chCond == Low) ) // Pause on Falling or Low
+                if( (m_chCond == PlotBase::Falling)
+                 || (m_chCond == PlotBase::Low) ) // Pause on Falling or Low
                 {
                     m_chCondFlag = true;
                     m_oscope->pauseOnCond();
-                    if( m_chCond == Falling ) m_chCondFlag = false;
+                    if( m_chCond == PlotBase::Falling ) m_chCondFlag = false;
                 }
-                else if( m_chCond == High ) m_chCondFlag = false;
+                else if( m_chCond == PlotBase::High ) m_chCondFlag = false;
             }
         }
         else if( m_oscope->paOnCond() )
         {
-            if( m_chCond == Falling ) m_chCondFlag = false;
+            if( m_chCond == PlotBase::Falling ) m_chCondFlag = false;
         }
         m_falling = true;
         m_lastValue = data;
@@ -241,5 +240,4 @@ void OscopeChannel::setFilter( double f )
     m_numMax  = 0;
 
     m_filter = f;
-    //m_dataPlotW->m_display->setFilter(f);
 }

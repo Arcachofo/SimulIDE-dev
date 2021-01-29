@@ -166,7 +166,6 @@ void Oscope::toggleExpand()
 void Oscope::expand( bool e )
 {
     m_expand = e;
-
     if( e )
     {
         m_screenSizeY = m_baSizeY+2*10;
@@ -200,7 +199,7 @@ void Oscope::expand( bool e )
 void Oscope::setFilter( double filter )
 {
     m_filter = filter;
-    for( int i=0; i<2; i++ ) m_channel[i]->setFilter( filter );
+    for( int i=0; i<2; i++ ) m_oscCh[i]->setFilter( filter );
 }
 
 void Oscope::setTrigger( int ch )

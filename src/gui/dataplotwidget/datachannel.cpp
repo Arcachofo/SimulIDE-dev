@@ -27,7 +27,7 @@ DataChannel::DataChannel( PlotBase* plotBase, QString id )
     m_plotBase = plotBase;
     m_ePin.resize( 2 );
 
-    m_chCond = None;
+    m_chCond = PlotBase::None;
 }
 
 DataChannel::~DataChannel()
@@ -46,16 +46,6 @@ void DataChannel::stamp()                     // Called at Simulation Start
 void DataChannel::fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset )
 {
     voltChanged();
-
-    /*if( m_dataPlotW->m_paOnCond ) // Pause on Condition
-    {
-        uint64_t size = edge-origAbs;
-        if( size < m_dataSize )
-        {
-            if( edge < m_dataSize) origAbs = 0;
-            else                   origAbs = edge - m_dataSize;
-        }
-    }*/
 
     int pos = m_bufferCounter;
     uint64_t time;

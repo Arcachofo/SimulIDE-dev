@@ -138,8 +138,6 @@ void PlotDisplay::updateValues()
         m_posY[i] = m_vMin[i]+m_vPos[i];
         if     ( m_tracks == 2 ) m_posY[i] += (i&1)*m_ampli[i]/2;
         else if( m_tracks == 4 ) m_posY[i] += (i-1)*m_ampli[i]/2;
-
-        //+(m_tracks/2)*(i&1)*m_ampli[i]/2;
     }
     update();
 }
@@ -157,11 +155,10 @@ void PlotDisplay::drawBackground( QPainter* p )
     for( double i=m_lineX; i<=m_endX; i+=m_sizeX/10. )
         p->drawLine( QPointF(i, m_ceroY), QPointF(i, m_endS) ); //Vertical lines
 
-    QPen pen2( m_scaleColor[1], 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
-    p->setPen( pen2 );
-
     if( m_expand )
     {
+        QPen pen2( m_scaleColor[1], 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+        p->setPen( pen2 );
         double m = 2;
         for( double i=m_ceroY; i<=m_endS; i+=m_sizeY/50. )
             p->drawLine( QPointF(m_hCenter-m, i), QPointF(m_hCenter+m, i) ); //Horizontal Marks
@@ -183,9 +180,8 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     p.setRenderHint( QPainter::Antialiasing, true );
 
     QPoint cPos = QCursor::pos()-mapToGlobal( QPoint(0, 0) );
-    //qreal scale = CircuitView::self()->getScale();
-    int cursorX = cPos.x(); // /scale;
-    int cursorY = cPos.y(); // /scale;
+    int cursorX = cPos.x();
+    int cursorY = cPos.y();
 
     bool drawCursor = false;
     if( (cursorX > m_ceroX) && (cursorX < m_endX ) // Draw Cursor?
@@ -193,7 +189,6 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
     QPointF P1;
     double x1;
-    double y1;
     double x2;
     double y2;
     double p1Volt = 0;
@@ -208,8 +203,6 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
         p.setPen( pen2 );
 
         int k = 0;
-        //double filter = m_filter*m_sclY[i];//m_ampli[i]*m_sclY[i]/4; //
-
         m_vMaxVal[i] = -1e12;
         m_vMinVal[i] =  1e12;
 
@@ -229,33 +222,19 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                 continue;
             }
             x1 = P1.x();
-            y1 = P1.y();
-
             if(( x1<0 && x2<0 ) ||( x1>width() && x2>width() )) // Out of display
-            {
-                P1 = P2; continue;
-            }
-            //if( fabs( y2-y1 ) <= filter )    // Filter
-            {
-                p.drawLine( P1, P2 );
-                if( drawCursor && cursorX>x1 && cursorX<x2 ) // Cursor Voltage
-                {
-                    double cVolt= p1Volt;
-                    if( x2 != x1 && p2Volt!=p1Volt)
-                        cVolt = p1Volt+(cursorX-x1)*(p2Volt-p1Volt)/(x2-x1);
-                    if( cVolt < 0 )
-                        cVolt += 0;
-                    m_volt[i] = cVolt;
-                }
-            }/*else
-            {
-                QPointF PM = QPointF( x2, y1 );
-                p.drawLine( P1, PM );
-                p.drawLine( PM, P2 );
+            { P1 = P2; continue; }
 
-                if( drawCursor && cursorX>x1 && cursorX<x2)
-                    m_volt[i] = p1Volt ;// Cursor Voltage
-            }*/
+            p.drawLine( P1, P2 );
+            if( drawCursor && cursorX>x1 && cursorX<x2 ) // Cursor Voltage
+            {
+                double cVolt= p1Volt;
+                if( x2 != x1 && p2Volt!=p1Volt)
+                    cVolt = p1Volt+(cursorX-x1)*(p2Volt-p1Volt)/(x2-x1);
+                if( cVolt < 0 )
+                    cVolt += 0;
+                m_volt[i] = cVolt;
+            }
             if( p2Volt > m_vMaxVal[i] ) m_vMaxVal[i] = p2Volt;
             if( p2Volt < m_vMinVal[i] ) m_vMinVal[i] = p2Volt;
             p1Volt = p2Volt;

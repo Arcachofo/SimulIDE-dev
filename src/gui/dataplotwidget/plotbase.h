@@ -22,16 +22,6 @@
 
 #include "component.h"
 #include "e-element.h"
-#include "topwidget.h"
-
-
-enum paCond {
-    None = 0,
-    Rising,
-    Falling,
-    High,
-    Low
-};
 
 class PlotDisplay;
 class DataChannel;
@@ -57,6 +47,13 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         PlotBase( QObject* parent, QString type, QString id );
         ~PlotBase();
 
+        enum paCond {
+            None = 0,
+            Rising,
+            Falling,
+            High,
+            Low
+        };
         Q_ENUM( paCond )
 
         int baSizeX() { return m_baSizeX; }

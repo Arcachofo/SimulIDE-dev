@@ -34,7 +34,6 @@ CircMatrix::~CircMatrix(){}
 
 void CircMatrix::createMatrix( QList<eNode*> &eNodeList )
 {
-    std::cout <<"\n  Initializing Matrix: "<< m_numEnodes << " eNodes"<< std::endl;
     m_eNodeList = &eNodeList;
     m_numEnodes = eNodeList.size();
 
@@ -47,6 +46,8 @@ void CircMatrix::createMatrix( QList<eNode*> &eNodeList )
     m_circChanged  = true;
     m_admitChanged = false;
     m_currChanged  = false;
+
+    std::cout <<"\n  Initializing Matrix: "<< m_numEnodes << " eNodes"<< std::endl;
 }
 
 void CircMatrix::stampMatrix( int row, int col, double value )
@@ -99,23 +100,23 @@ bool CircMatrix::solveMatrix()
         m_ipvtList.clear();
         m_eNodeActList.clear();
         int group = 0;
+        int singleNode = 0;
         
         while( !allNodes.isEmpty() ) // Get a list of groups of nodes interconnected
         {
             QList<int> nodeGroup;
             addConnections( allNodes.first(), &nodeGroup, &allNodes ); // Get a group of nodes interconnected
             //qDebug() <<"CircMatrix::solveMatrix split"<<nodeGroup<<allNodes;
-            
+
             int numEnodes = nodeGroup.size();
             if( numEnodes==1 )           // Sigle nodes do by themselves
             {
                 eNode* enod = m_eNodeList->at( nodeGroup[0]-1 );
                 enod->setSingle( true );
                 enod->solveSingle();
+                singleNode++;
                 //qDebug() <<"CircMatrix::solveMatrix solve single"<<enod->itemId();
-            }
-            else
-            {
+            }else{
                 dp_matrix_t a;
                 d_matrix_t ap;
                 dp_vector_t b;
@@ -160,9 +161,8 @@ bool CircMatrix::solveMatrix()
         }
         m_circChanged  = false;
         //qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
-    }
-    else
-    {
+        //qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes";
+    }else{
         for( int i=0; i<m_bList.size(); i++ )
         {
             m_eNodeActive = &(m_eNodeActList[i]);

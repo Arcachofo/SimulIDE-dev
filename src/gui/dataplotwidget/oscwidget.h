@@ -21,7 +21,6 @@
 #define OSCWIDGET_H
 
 #include <QDialog>
-#include <QVector>
 
 #include "ui_oscwidget.h"
 #include "plotdisplay.h"

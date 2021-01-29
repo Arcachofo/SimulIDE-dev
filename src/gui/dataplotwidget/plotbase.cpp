@@ -20,10 +20,8 @@
 #include "plotbase.h"
 #include "plotdisplay.h"
 #include "datachannel.h"
-#include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "itemlibrary.h"
 #include "circuitwidget.h"
 
 
@@ -39,11 +37,6 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_pin[3] = new Pin( 180, QPoint( -80-8, 40 ), id+"-Pin3", 0, this );
     m_pin[4] = new Pin( 180, QPoint( -80-8, 64 ), id+"-PinG", 0, this );
 
-    for( int i=0; i<5; i++ )
-    {
-        m_pin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        //m_pin[i]->setLength( 5 );
-    }
     for( int ch=0; ch<4; ch++ )
     {
         m_pinConnected[ch]   = false;
@@ -118,7 +111,7 @@ void PlotBase::pauseOnCond()
     }
 }
 
-paCond PlotBase::ch1Cond()
+PlotBase::paCond PlotBase::ch1Cond()
 {
     return m_channel[0]->m_chCond;
 }
@@ -128,7 +121,7 @@ void PlotBase::setCh1Cond( paCond cond )
     m_channel[0]->m_chCond = cond;
 }
 
-paCond PlotBase::ch2Cond()
+PlotBase::paCond PlotBase::ch2Cond()
 {
     return m_channel[1]->m_chCond;
 }
@@ -153,22 +146,17 @@ void PlotBase::remove()
 void PlotBase::setProbe1( QString p )
 {
     m_probe[0] = p;
-    //m_dataPlotW->m_channel[0]->setText( p );
-    //m_dataPlotW->setProbe( 0 );
 }
 
 void PlotBase::setProbe2( QString p )
 {
     m_probe[1] = p;
-    //m_dataPlotW->m_channel[1]->setText( p );
-    //m_dataPlotW->setProbe( 1 );
 }
 
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-    
-    //p->setBrush( Qt::darkGray );
+
     p->setBrush(QColor( 230, 230, 230 ));
     p->drawRoundedRect( m_area, 4, 4 );
     
@@ -177,8 +165,6 @@ void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     pen.setWidth( 0 );
     pen.setColor( Qt::white );
     p->setPen(pen);
-    
-    //p->drawRoundedRect( QRectF( -80-4, -(m_screenSizeY+20)/2-4, m_screenSizeX+m_extraSize+4, m_screenSizeY+20+4 ), 3, 3 );
 }
 
 #include "moc_plotbase.cpp"

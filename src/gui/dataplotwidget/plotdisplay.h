@@ -20,14 +20,10 @@
 #ifndef PLOTDISPLAY_H
 #define PLOTDISPLAY_H
 
-#include <QPixmap>
 #include <QtWidgets>
 
 class PlotDisplay : public QWidget
 {
-    friend class DataPlotWidget;
-    friend class PlotBase;
-
     Q_OBJECT
 
     public:
@@ -62,7 +58,6 @@ class PlotDisplay : public QWidget
 
         double m_sizeX;
         double m_sizeY;
-
         double m_hCenter;
         double m_vCenter;
         double m_marginX;

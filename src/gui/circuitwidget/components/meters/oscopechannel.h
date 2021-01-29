@@ -37,7 +37,7 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
         virtual void updateStep() override;
         virtual void voltChanged() override;
 
-        virtual void setFilter( double f ) override;
+        virtual void setFilter( double f );
 
     private:
         void updateValues();
@@ -50,6 +50,7 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
         uint64_t m_risEdge;
 
         double m_lastValue;
+        double m_filter;
         double m_freq;
         double m_mid;
 
