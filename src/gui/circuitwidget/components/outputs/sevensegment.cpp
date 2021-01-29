@@ -64,7 +64,6 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     m_threshold  = 2.4;
     m_maxCurrent = 0.02;
     m_resistance = 1;
-    m_area = QRect( -16, -24-1, 32, 48+2 );
 
     m_ePin.resize(8);
     m_pin.resize(8);
@@ -132,8 +131,7 @@ void SevenSegment::setNumDisplays( int displays )
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    if( m_verticalPins ) m_area = QRect( -18, -24-1, displays*32+4, 48+2 );
-    else                 m_area = QRect( -16, -24-1, displays*32, 48+2 );
+    m_area = QRect( -18, -24-4, 32*displays+4, 48+8 );
 
     if( displays > m_numDisplays )
     {
@@ -195,10 +193,7 @@ void SevenSegment::setVerticalPins( bool v )
             m_pin[i]->setPos( -16+8*(i-5), 24+8 );
             m_pin[i]->setRotation( -90 );
         }
-        m_area = QRect( -18, -24-1, 32*m_numDisplays+4, 48+2 );
-    }
-    else
-    {
+    }else{
         for( int i=0; i<7; i++ )
         {
             m_pin[i]->setPos( -16-8, -24+i*8 );
@@ -206,8 +201,8 @@ void SevenSegment::setVerticalPins( bool v )
         }
         m_pin[7]->setPos( -8, 24+8 );
         m_pin[7]->setRotation( -90 );
-        m_area = QRect( -16, -24-1, 32*m_numDisplays, 48+2 );
     }
+    m_area = QRect( -18, -24-4, 32*m_numDisplays+4, 48+8 );
     
     for( int i=0; i<8; i++ ) m_pin[i]->isMoved();
     Circuit::self()->update();
@@ -350,7 +345,7 @@ void SevenSegment::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
 
     Component::paint( p, option, widget );
 
-    p->drawRect( boundingRect() );
+    p->drawRect( m_area );
 }
 
 #include "moc_sevensegment.cpp"

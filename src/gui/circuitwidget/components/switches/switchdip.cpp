@@ -244,7 +244,7 @@ void SwitchDip::setSize( int size )
     if     ( size < m_size ) deleteSwitches( m_size-size );
     else if( size > m_size ) createSwitches( size-m_size );
     
-    m_area = QRect( -1, -26, 10, m_size*8-4 );
+    m_area = QRectF( -3, -28, 14, m_size*8 );
 
     Circuit::self()->update();
 }
@@ -262,7 +262,7 @@ void SwitchDip::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWid
     
     //p->setBrush( QColor( 80, 80, 80) );
 
-    p->drawRoundRect( boundingRect(), 4, 4 );
+    p->drawRoundRect( m_area, 4, 4 );
 }
 
 #include "moc_switchdip.cpp"
