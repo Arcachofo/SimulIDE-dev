@@ -382,10 +382,10 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         //Component::paint( p, option, widget );
         painter->setBrush( Qt::white );
         QPen pen = painter->pen();
-        pen.setWidth( 2 );
+        pen.setWidthF( 1.8 );
         //if( isSelected() ) pen.setColor( Qt::darkGray);
         painter->setPen(pen);
-        QRectF rect( 3,-2.5, 5, 5 ); 
+        QRectF rect( 3.5,-2.2, 4.4, 4.4 );
         painter->drawEllipse(rect);
     }
 }
