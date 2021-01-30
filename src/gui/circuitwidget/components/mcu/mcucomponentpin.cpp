@@ -44,6 +44,9 @@ McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QStrin
     pin->setLabelText( label );
     m_ePin[0] = pin;
 
+    setRiseTime( 4000 ); // riseTime != fallTime can cause artifacts in some cases
+    setFallTime( 4000 );
+
     type = type.toLower();
     if( type == "gnd" 
      || type == "vdd" 

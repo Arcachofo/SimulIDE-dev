@@ -55,7 +55,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     m_trigger = 0;
     m_auto    = 0;
     m_filter = 0.0;
-    m_extraSize = 68;
+    m_extraSize = 70;
     m_bufferSize = 600000;
 
     m_oscWidget  = new OscWidget( CircuitWidget::self(), this );

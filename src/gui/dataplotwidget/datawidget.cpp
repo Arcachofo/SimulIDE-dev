@@ -28,7 +28,7 @@ DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
 
     setupUi(this);
 
-    for( int i=0; i<4; ++i ) setData( i, "0.000 Hz" );
+    for( int i=0; i<4; ++i ) setData( i, "0.0000 Hz" );
 
     this->adjustSize();
     //fontScale->setValue( MainWindow::self()->fontScale() );

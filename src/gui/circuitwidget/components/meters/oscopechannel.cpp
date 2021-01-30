@@ -65,15 +65,16 @@ void OscopeChannel::initialize()
 void OscopeChannel::updateValues()
 {
     double val = m_freq*1e12;
-    int decs;
+    int decs = 0;
     QString unit = " ";
     if( val >= 1 ) valToUnit( val, unit, decs );
-    QString f = " "+QString::number( val, 'f', decs )+unit+"Hz";
+    QString f = QString::number( val, 'f' );
+    f= f.left( 6 )+unit+"Hz";
 
     unit = " ";
     val = m_ampli*1e12;
     if( val >= 1 ) valToUnit( val, unit, decs );
-    QString a = " "+QString::number( val,'f', decs )+unit+"V";
+    QString a = QString::number( val,'f', decs )+unit+"V";
 
     m_oscope->dataW()->setData( m_channel, f );
 }
@@ -86,7 +87,9 @@ void OscopeChannel::updateStep()
     {
         if( m_numMax > 1 )  // Got enought maximums to calculate Freq
         {
-            m_freq = (m_freq+9*1e12/((double)m_totalP/(double)(m_numMax-1)))/10;
+            double avgPeriod = (double)m_totalP/(double)(m_numMax-1);
+            m_freq = 1e12/avgPeriod;
+
             m_totalP  = 0;
             m_numMax  = 0;
         }
