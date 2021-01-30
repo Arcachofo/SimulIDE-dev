@@ -66,6 +66,7 @@ void Chip::initChip()
     QFile pfile( fileNameAbs );
     if( !pfile.exists() )   // Check if package file exist, if not try LS or no LS
     {
+        if( m_initialized ) return;
         if     ( m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
         else if( m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
         else qDebug() << "Chip::initChip: No package files found.\nTODO: create dummy package\n";

@@ -52,6 +52,13 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     triggerGroup->addButton( triggerCheck5, 4 );
     triggerGroup->button( 4 )->setChecked( true );
 
+    hideGroup->addButton( hideCheck1, 0 );
+    hideGroup->addButton( hideCheck2, 1 );
+    hideGroup->addButton( hideCheck3, 2 );
+    hideGroup->addButton( hideCheck4, 3 );
+    hideGroup->addButton( hideCheck5, 4 );
+    hideGroup->button( 4 )->setChecked( true );
+
     trackGroup->addButton( trackCheck1, 1 );
     trackGroup->addButton( trackCheck2, 2 );
     trackGroup->addButton( trackCheck4, 4 );
@@ -295,32 +302,46 @@ void OscWidget::on_channelGroup_buttonClicked( int ch )
 void OscWidget::on_autoGroup_buttonClicked( int ch )
 {
     m_oscope->setAutoSC( ch );
-
-    QString color = m_oscope->getColor( ch ).name();
-    autoLabel->setStyleSheet( "background-color:"+color );
 }
 
 void OscWidget::setAuto( int ch )
 {
     autoGroup->button( ch )->setChecked( true );
+    QString color = m_oscope->getColor( ch ).name();
+    autoLabel->setStyleSheet( "background-color:"+color );
 }
 
 void OscWidget::on_triggerGroup_buttonClicked( int ch )
 {
     m_oscope->setTrigger( ch );
-
-    QString color = m_oscope->getColor( ch ).name();
-    trigLabel->setStyleSheet( "background-color:"+color );
-}
-
-void OscWidget::on_trackGroup_buttonClicked( int ch )
-{
-    m_oscope->setTracks( ch );
 }
 
 void OscWidget::setTrigger( int ch )
 {
     triggerGroup->button( ch )->setChecked( true );
+    QString color = m_oscope->getColor( ch ).name();
+    trigLabel->setStyleSheet( "background-color:"+color );
+}
+
+void OscWidget::on_hideGroup_buttonClicked( int ch )
+{
+    m_oscope->hideChannel( ch, hideGroup->button(ch)->isChecked() );
+
+    if( ch == 4 )
+        for( int i=0; i<4; ++i ) m_oscope->hideChannel( i, false );
+}
+
+void OscWidget::hideChannel( int ch, bool hide )
+{
+    hideGroup->button( ch )->setChecked( hide );
+    QString color = m_oscope->getColor( ch ).name();
+    hideLabel->setStyleSheet( "background-color:"+color );
+    if( ch<4 && hide ) hideGroup->button( 4 )->setChecked( false );
+}
+
+void OscWidget::on_trackGroup_buttonClicked( int ch )
+{
+    m_oscope->setTracks( ch );
 }
 
 void OscWidget::setTracks( int tr )

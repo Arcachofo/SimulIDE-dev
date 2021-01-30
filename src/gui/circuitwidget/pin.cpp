@@ -362,9 +362,6 @@ void Pin::setVisible( bool visible )
 
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    Q_UNUSED(option); Q_UNUSED(widget);
-
-
     QPen pen(m_color, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     //painter->setBrush( Qt::red );

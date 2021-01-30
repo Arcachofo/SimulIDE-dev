@@ -202,16 +202,45 @@ void Oscope::setFilter( double filter )
     for( int i=0; i<2; i++ ) m_oscCh[i]->setFilter( filter );
 }
 
+void Oscope::setAutoSC( int ch )
+{
+    m_auto = ch;
+    m_oscWidget->setAuto( ch );
+}
 void Oscope::setTrigger( int ch )
 {
     m_trigger = ch;
     m_oscWidget->setTrigger( ch );
 }
 
-void Oscope::setAutoSC( int ch )
+QStringList Oscope::hideCh()
 {
-    m_auto = ch;
-    m_oscWidget->setAuto( ch );
+    QStringList list;
+    QString hide;
+    for( int i=0; i<4; ++i )
+    {
+        hide = m_hideCh[i]? "true":"false";
+        list << hide;
+    }
+    return list;
+}
+
+void Oscope::setHideCh( QStringList hc )
+{
+    for( int i=0; i<4; ++i )
+    {
+        if( i == hc.size() ) break;
+        bool hide = (hc.at(i) == "true")? true:false;
+        hideChannel( i, hide );
+    }
+}
+
+void Oscope::hideChannel( int ch, bool hide )
+{
+    if( ch > 3 ) return;
+    m_hideCh[ch] = hide;
+    m_display->hideChannel( ch , hide );
+    m_oscWidget->hideChannel( ch, hide );
 }
 
 int Oscope::tracks() { return m_display->tracks(); }

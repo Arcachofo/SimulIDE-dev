@@ -60,13 +60,9 @@ PICComponent::PICComponent( QObject* parent, QString type, QString id )
     if( m_error == 0 )
     {
         setFreq( 20 );
-        
         qDebug() <<"     ..."<<m_id<<"OK\n";
     }
-    else
-    {
-        qDebug() <<"     ..."<<m_id<<"Error!!!\n";
-    }
+    else qDebug() <<"     ..."<<m_id<<"Error!!!\n";
 }
 PICComponent::~PICComponent() { }
 

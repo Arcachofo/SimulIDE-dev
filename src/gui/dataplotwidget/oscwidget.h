@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
 
         void setAuto( int ch );
         void setTrigger( int ch );
+        void hideChannel( int ch, bool hide );
         void setTracks( int tr );
 
         void updateTimeDivBox( uint64_t timeDiv);
@@ -61,6 +62,7 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
         void on_channelGroup_buttonClicked( int ch );
         void on_autoGroup_buttonClicked( int ch );
         void on_triggerGroup_buttonClicked( int ch );
+        void on_hideGroup_buttonClicked( int ch );
         void on_trackGroup_buttonClicked( int ch );
 
     protected:

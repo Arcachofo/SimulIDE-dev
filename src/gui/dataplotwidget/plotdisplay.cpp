@@ -37,6 +37,7 @@ PlotDisplay::PlotDisplay( QWidget* parent )
         m_vMinVal[i] = 0;
         m_vMin[i] = 0;
         m_data[i] = NULL;
+        m_hideCh[i] = false;
     }
     m_sizeX = 135;
     m_sizeY = 135;
@@ -197,6 +198,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     for( int i=0; i<4; ++i )  // PRINT DATA
     {
         if( !m_data[i] ) continue;
+        if( m_hideCh[i] ) continue;
         m_volt[i] = -1e12;
 
         QPen pen2( m_color[i], 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
@@ -250,6 +252,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     for( int i=0; i<4; ++i ) // SCALES, MAX-MIN
     {
         if( !m_data[i] ) continue;
+        if( m_hideCh[i] ) continue;
 
         QPen pen1( m_color[i], 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
         p.setPen( pen1 );

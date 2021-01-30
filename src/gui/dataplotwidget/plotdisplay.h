@@ -30,6 +30,7 @@ class PlotDisplay : public QWidget
         PlotDisplay( QWidget* parent = 0 );
 
         void setExpand( bool expand ) { m_expand = expand; }
+        void hideChannel( int ch, bool hide ) { m_hideCh[ch] = hide; }
         int tracks() { return m_tracks; }
         void setTracks( int tracks );
         void setColor( int ch, QColor color );
@@ -44,7 +45,7 @@ class PlotDisplay : public QWidget
         void updateValues();
 
     protected:
-        virtual void paintEvent( QPaintEvent *event );
+        virtual void paintEvent( QPaintEvent* event );
 
     private:
         void drawBackground( QPainter *p );
@@ -73,6 +74,7 @@ class PlotDisplay : public QWidget
         double m_vTick[4];
         double m_vPos[4];
         int64_t m_hPos[4];
+        bool   m_hideCh[4];
 
         double m_ceroX ;
         double m_endX;
