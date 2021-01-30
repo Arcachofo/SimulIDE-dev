@@ -110,6 +110,7 @@
     <item name="74XX180" info="  9 bit ODD/EVEN parity generator/checker " ></item>
     <item name="74HC181" info="  4-bit arithmetic logic unit and function generator " ></item>
     <item name="74HC182" info="  lookahead carry generator " ></item>
+    <item name="74XX189" info="  64-Bit Random Access Memory with 3-STATE Outputs" ></item>
     <item name="74HC190" info="  synchronous presettable up/down decade counter" ></item>
     <item name="74HC191" info="  synchronous presettable up/down binary counter" ></item>
     <item name="74HC192" info="  synchronous presettable up/down decade counter, clear " ></item>
@@ -136,7 +137,6 @@
     <item name="74HC257" info="  quad 2-line to 1-line data selector/multiplexers, tristate outputs " ></item>
     <item name="74HC258" info="  quad 2-line to 1-line data selector/multiplexers, inverting and tristate outputs " ></item>
     <item name="74HC259" info="  8-bit addressable latch " ></item>
-    <item name="74HC260" info="  octal bus transceivers with tristate and inverted outputputs " ></item>
     <item name="74HC273" info="  8-bit register, asynchronous clear " ></item>
     <item name="74XX276" info="  quadruple J-!K flip-flops with !set, !reset  " ></item>
     <item name="74HC279" info="  quad set-reset latch " ></item>
@@ -179,6 +179,9 @@
     <item name="74HC594" info="  8-bit shift register with output register" ></item>
     <item name="74HC595" info="  8-bit shift registers, output latches, parallel outputs" ></item>
     <item name="74HC597" info="  8-bit shift registers, with input flip-flops" ></item>
+    <item name="74HC640" info="  octal bus transceivers with tristate and inverted outputputs " ></item>
+    <item name="74HC643" info="  octal bus transceivers with tristate true and inverted outputputs " ></item>
+    <item name="74HC645" info="  octal bus transceivers with tristate outputputs " ></item>
     <item name="74HC670" info="  4X4 register file, 3-state output" ></item>
     <item name="74XX682" info="  8-bit magnitude comparator (P=Q, P>Q, Q=pullup)" ></item>
     <item name="74XX684" info="  8-bit magnitude comparator (P=Q, P>Q)" ></item>
