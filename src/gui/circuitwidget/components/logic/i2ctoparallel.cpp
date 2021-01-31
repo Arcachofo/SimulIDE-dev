@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "i2ctoparallel.h"
+#include "itemlibrary.h"
 #include "pin.h"
 
 Component* I2CToParallel::construct( QObject* parent, QString type, QString id )
@@ -69,11 +70,8 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     eLogicDevice::createInput( m_inPin[3] );                 // Input A1
     eLogicDevice::createInput( m_inPin[4] );                 // Input A2
     
-    for( int i=0; i<8; i++ ) 
-    {
-        eLogicDevice::createOutput( m_outPin[i] );
-    }
-    
+    for( int i=0; i<8; ++i ) eLogicDevice::createOutput( m_outPin[i] );
+
     m_cCode = 0b01010000;
 }
 I2CToParallel::~I2CToParallel(){}
@@ -93,10 +91,15 @@ void I2CToParallel::stamp()                     // Called at Simulation Start
 {
     eI2C::stamp();
     
-    for( int i=2; i<5; i++ )                  // Initialize address pins
+    for( int i=2; i<5; ++i )                  // Initialize address pins
     {
         eNode* enode =  m_inPin[i]->getEnode();
         if( enode ) enode->voltChangedCallback( this );
+    }
+    for( int i=0; i<8; ++i )
+    {
+        m_output[i]->setOut( true );
+        m_output[i]->setImp( 1e5 );
     }
 }
 
@@ -116,34 +119,36 @@ void I2CToParallel::voltChanged()             // Some Pin Changed State, Manage 
     eI2C::voltChanged();                               // Run I2C Engine
 }
 
-void I2CToParallel::readByte()           // Reading from I2C to Parallel
+void I2CToParallel::readByte()           // Reading from I2C, Writting to Parallel
 {
     int value = m_rxReg;
                                       //qDebug() << "Reading " << value;
-    for( int i=0; i<8; i++ )
+    for( int i=0; i<8; ++i )
     {
         bool pinState =  value & 1;
+        double imp = pinState? 1e5 : 40;
+
         m_output[i]->setOut( pinState );
-        m_output[i]->stampOutput();
+        m_output[i]->setImp( imp );
                                   //qDebug() << "Bit " << i << pinState;
         value >>= 1;
     }
     eI2C::readByte();
 }
 
-/*void I2CToParallel::writeByte()         // Writting to I2C from Parallel
+void I2CToParallel::writeByte()         // Writting to I2C from Parallel (master is reading)
 {
-    for( int i=0; i<8; i++ )
+    int value = 0;
+    for( int i=0; i<8; ++i )
     {
-        int value = 0;
-        int volt = m_output[i]->getEpin()->getVolt();
+        int volt = m_output[i]->getVolt();
         
-        bool  state = m_dataPinState[i];
+        bool state = false;// = m_dataPinState[i];
         
         if     ( volt > m_inputHighV ) state = true;
-        else if( volt < m_inputLowV )  state = false;
+        //else if( volt < m_inputLowV )  state = false;
         
-        m_dataPinState[i] = state;
+        //m_dataPinState[i] = state;
         //qDebug() << "Bit " << i << state;
         if( state ) value += pow( 2, i );
     }
@@ -151,7 +156,7 @@ void I2CToParallel::readByte()           // Reading from I2C to Parallel
     //qDebug() << "I2CToParallel::writeByte Address:"<<" Value"<< m_txReg;
 
     eI2C::writeByte();
-}*/
+}
 
 int I2CToParallel::cCode()
 {

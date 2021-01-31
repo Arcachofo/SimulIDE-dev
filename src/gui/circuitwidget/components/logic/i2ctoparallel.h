@@ -21,8 +21,9 @@
 #define I2CTOPARALLEL_H
 
 #include "e-i2c_slave.h"
-#include "itemlibrary.h"
 #include "logiccomponent.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2CSlave
 {
@@ -44,7 +45,7 @@ class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2CSlave
         ~I2CToParallel();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
         
         virtual QList<propGroup_t> propGroups() override;
 
@@ -53,7 +54,7 @@ class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2CSlave
         
         virtual void stamp() override;
         virtual void voltChanged() override;
-        //virtual void writeByte();
+        virtual void writeByte();
         virtual void readByte();
         
     private:
