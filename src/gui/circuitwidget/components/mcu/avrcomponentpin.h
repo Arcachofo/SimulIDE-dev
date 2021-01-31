@@ -39,9 +39,11 @@ class AVRComponentPin : public McuComponentPin
         AVRComponentPin( McuComponent *mcu, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle );
         ~AVRComponentPin();
 
-        virtual void attachPin( avr_t* AvrProcessor );
-        virtual void voltChanged() override;
         virtual void initialize() override;
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+
+        virtual void attachPin( avr_t* AvrProcessor );
         virtual void setState( bool state ) override;
 
         virtual void pullupNotConnected( bool up ) override;

@@ -31,7 +31,6 @@ AVRComponentPin::AVRComponentPin( McuComponent* mcu, QString id, QString type, Q
     m_channelAin = -1;
 
     m_avrProcessor = 0l;
-    //m_PortChangeIrq = 0l;
     m_PortRegChangeIrq = 0l;
     m_DdrRegChangeIrq = 0l;
     m_Write_stat_irq = 0l;
@@ -144,6 +143,16 @@ void AVRComponentPin::initialize()
         m_DdrRegChangeIrq->flags  |= IRQ_FLAG_INIT;
     }
     McuComponentPin::initialize();
+}
+
+void AVRComponentPin::stamp()
+{
+    if( m_pinType > 20 )
+    {
+        if( m_ePin[0]->isConnected() && m_attached )
+            m_ePin[0]->getEnode()->voltChangedCallback( this );
+    }
+    McuComponentPin::stamp();
 }
 
 void AVRComponentPin::voltChanged()

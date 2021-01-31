@@ -44,6 +44,10 @@ McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QStrin
     pin->setLabelText( label );
     m_ePin[0] = pin;
 
+    eSource::setImp( high_imp );
+    eSource::setVoltHigh( 5 );
+    eSource::setOut( false );
+
     setRiseTime( 4000 ); // riseTime != fallTime can cause artifacts in some cases
     setFallTime( 4000 );
 
@@ -73,7 +77,8 @@ void McuComponentPin::stamp()
         }
         update();
     }
-    else eSource::stamp();
+    else
+        eSource::stamp();
 }
 
 void McuComponentPin::initialize()
