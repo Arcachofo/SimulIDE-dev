@@ -89,7 +89,7 @@ QList<propGroup_t> I2CToParallel::propGroups()
 
 void I2CToParallel::stamp()                     // Called at Simulation Start
 {
-    eI2C::stamp();
+    eI2CSlave::stamp();
     
     for( int i=2; i<5; ++i )                  // Initialize address pins
     {
@@ -116,7 +116,7 @@ void I2CToParallel::voltChanged()             // Some Pin Changed State, Manage 
     
     m_address = address;
     
-    eI2C::voltChanged();                               // Run I2C Engine
+    eI2CSlave::voltChanged();                               // Run I2C Engine
 }
 
 void I2CToParallel::readByte()           // Reading from I2C, Writting to Parallel
@@ -133,7 +133,7 @@ void I2CToParallel::readByte()           // Reading from I2C, Writting to Parall
                                   //qDebug() << "Bit " << i << pinState;
         value >>= 1;
     }
-    eI2C::readByte();
+    eI2CSlave::readByte();
 }
 
 void I2CToParallel::writeByte()         // Writting to I2C from Parallel (master is reading)
@@ -155,7 +155,7 @@ void I2CToParallel::writeByte()         // Writting to I2C from Parallel (master
     m_txReg = value;
     //qDebug() << "I2CToParallel::writeByte Address:"<<" Value"<< m_txReg;
 
-    eI2C::writeByte();
+    eI2CSlave::writeByte();
 }
 
 int I2CToParallel::cCode()
