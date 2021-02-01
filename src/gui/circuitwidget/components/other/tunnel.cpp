@@ -108,7 +108,7 @@ void Tunnel::setName( QString name )
     if( m_tunnels.contains( name ) ) // There is already tunnel with this name
     {
         QList<Tunnel*>* list = m_tunnels.value( name );
-        if( list ) list->append( this );
+        if( list && !list->contains( this ) ) list->append( this );
     }
     else if( name != "" )
     {
@@ -124,6 +124,7 @@ void Tunnel::setName( QString name )
     else  m_size = m_pin[0]->labelSizeX()+4;
 
     setRotated( m_rotated );
+    registerPins( m_pin[0]->getEnode() );
 }
 
 void Tunnel::setRotated( bool rot )
