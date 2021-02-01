@@ -459,13 +459,13 @@ void Component::setValue( double val)
 
 QString Component::unit()                { return m_mult+m_unit; }
 void Component::setUnit( QString un ) 
-{ 
+{
     QString mul = " ";
     un.replace( " ", "" );
     if( un.size() > 0 ) 
     {
         mul = un.at(0);
-        
+        if( mul == "u" ) mul = "µ";
         double unitMult = 1e12;        // We start in Tera units "TGMk munp"
         
         for( int x=0; x<9; x++ )
