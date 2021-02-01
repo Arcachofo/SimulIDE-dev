@@ -54,7 +54,7 @@ void OutPanelText::appendText( const QString text )
 
 void OutPanelText::writeText( const QString text )
 {
-    m_textBuffer.append( text );
+    m_textBuffer.append( text+"\n" );
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
@@ -63,9 +63,11 @@ void OutPanelText::updateStep()
     if( m_textBuffer.isEmpty() ) return;
 
     if( this->document()->characterCount() > 50000 )
-        setPlainText( this->toPlainText().right( 50000 ) );
+        setPlainText( this->toPlainText().right( 25000 ) );
 
-    appendPlainText( m_textBuffer );
+    moveCursor( QTextCursor::End );
+    insertPlainText( m_textBuffer );
+    moveCursor( QTextCursor::End );
     m_textBuffer.clear();
 }
 
