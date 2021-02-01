@@ -100,9 +100,13 @@ void Frequencimeter::stamp()                     // Called at Simulation Start
 
 void Frequencimeter::updateStep()
 {
-    double freq = 0;
+    double freq = m_freq;
     if( m_numMax > 1 )
+    {
         freq = 1e12/((double)m_totalP/(double)(m_numMax-1));
+        m_totalP = 0;
+        m_numMax = 0;
+    }
 
     if( m_freq != freq )
     {
@@ -126,8 +130,6 @@ void Frequencimeter::updateStep()
         else if( freq < 1000 ) Fdecs = 2;
         m_display.setText(QString::number( freq, 'f', Fdecs )+unit );
     }
-    m_totalP = 0;
-    m_numMax = 0;
 }
 
 void Frequencimeter::voltChanged()
