@@ -48,6 +48,13 @@ Buffer::Buffer( QObject* parent, QString type, QString id )
 }
 Buffer::~Buffer(){}
 
+QList<propGroup_t> Buffer::propGroups()
+{
+    QList<propGroup_t> pg = Gate::propGroups();
+    pg.first().propList.append( {"Tristate", tr("Tristate"),""} );
+    return pg;
+}
+
 void Buffer::setTristate( bool t )
 {
     if( !t ) 
@@ -66,7 +73,7 @@ void Buffer::setTristate( bool t )
 void Buffer::remove()
 {
     if( m_tristate )
-        if( m_outEnPin->isConnected() ) m_outEnPin->connector()->remove();
+        if( m_outEnPin->connector() ) m_outEnPin->connector()->remove();
     
     Gate::remove();
 }

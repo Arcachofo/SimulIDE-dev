@@ -39,6 +39,8 @@ class MAINMODULE_EXPORT Buffer : public Gate
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         virtual void remove() override;
         
         void setTristate( bool t );
