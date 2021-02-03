@@ -159,6 +159,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         simState_t m_state;
 
+        int m_numEvents;
+
         int m_error;
         int m_warning;
         int m_timerId;

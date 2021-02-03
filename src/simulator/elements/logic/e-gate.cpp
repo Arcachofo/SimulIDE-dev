@@ -51,7 +51,7 @@ void eGate::voltChanged()
     m_out = calcOutput( inputs ); // In each gate type
     
     // Add random 1-10 ps to avoid oscillations
-    Simulator::self()->addEvent( m_propDelay+(std::rand() %10), this );
+    Simulator::self()->addEvent( m_propDelay+(std::rand() %2), this );
 }
 
 void eGate::runEvent()

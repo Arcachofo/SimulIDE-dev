@@ -9,7 +9,7 @@
     <pin side="left" pos="3"  type="" id="Q2"  label="Q2" /><!-- packagePin3 -->
     <pin side="left" pos="4"  type="" id="Q5"  label="Q5" /><!-- packagePin4 -->
     <pin side="left" pos="5"  type="" id="Q6"  label="Q6" /><!-- packagePin5 -->
-    <pin side="left" pos="6"  type="unused" id="NC"  label="NC" /><!-- packagePin6 -->
+    <pin side="left" pos="6"  type="unused" id="NC1"  label="NC" /><!-- packagePin6 -->
     <pin side="left" pos="7"  type="" id="Q3"  label="Q3" /><!-- packagePin7 -->
     <pin side="left" pos="8"  type="unused" id="GND"  label="GND" /><!-- packagePin8 -->
     
@@ -21,7 +21,7 @@
     <pin side="right" pos="5"  type="" id="Cout"  label="Cout" /><!-- packagePin13 -->
     <pin side="right" pos="6"  type="" id="Q4"  label="Q4" /><!-- packagePin14 -->
     <pin side="right" pos="7"  type="" id="Q7"  label="Q7" /><!-- packagePin15 -->
-    <pin side="right" pos="8"  type="unused" id="NC"  label="NC" /><!-- packagePin16 -->
+    <pin side="right" pos="8"  type="unused" id="NC2"  label="NC" /><!-- packagePin16 -->
     
     
 </package>

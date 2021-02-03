@@ -20,13 +20,11 @@
 #include "e-element.h"
 #include "simulator.h"
 
-
-//#include <QDebug>
-
 eElement::eElement( QString id )
 {
     m_elmId = id;
 
+    m_changed = false;
     added = false;
 
     digital_high = 5.0;

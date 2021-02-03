@@ -1,60 +1,75 @@
-<circuit reactStep="50" animate="1" type="simulide_0.4" speed="1000000" noLinAcc="5">
- 
-74XX56-9: 
-<item valLabely="0" labelrot="0" objectName="74XX56-9" valLabelx="0" x="-424" labely="-20" hflip="1" Logic_Symbol="true" labelx="0" valLabRot="0" itemtype="Subcircuit" Show_id="true" y="-380" id="74XX56-1" rotation="0" vflip="1"/>
- 
-Fixed Voltage-8: 
-<item itemtype="Fixed Voltage" rotation="0" Unit=" V" Show_id="false" hflip="1" valLabRot="0" Voltage="5" x="-456" id="Fixed Voltage-3" labely="-24" valLabelx="-16" labelrot="0" labelx="-64" vflip="1" Show_Volt="true" y="-332" objectName="Fixed Voltage-8" valLabely="8"/>
- 
-Clock-7: 
-<item itemtype="Clock" rotation="0" Unit=" V" Show_id="false" hflip="1" valLabRot="0" Voltage="5" x="-532" id="Clock-5" labely="-24" Running="true" valLabelx="-16" labelrot="0" labelx="-64" vflip="1" Freq="1000" Show_Volt="true" y="-372" objectName="Clock-7" valLabely="8"/>
- 
-Frequencimeter-6: 
-<item valLabely="0" labelrot="0" objectName="Frequencimeter-6" valLabelx="0" x="-460" labely="-24" hflip="1" labelx="-32" valLabRot="0" itemtype="Frequencimeter" Show_id="false" y="-424" id="Frequencimeter-7" rotation="0" vflip="1"/>
- 
-Node-5: 
-<item valLabely="0" labelrot="0" objectName="Node-5" valLabelx="0" x="-500" labely="-24" hflip="1" labelx="-16" valLabRot="0" itemtype="Node" Show_id="false" y="-372" id="Node-9" rotation="0" vflip="1"/>
- 
-Frequencimeter-4: 
-<item valLabely="0" labelrot="0" objectName="Frequencimeter-4" valLabelx="0" x="-296" labely="-24" hflip="1" labelx="-32" valLabRot="0" itemtype="Frequencimeter" Show_id="false" y="-380" id="Frequencimeter-11" rotation="0" vflip="1"/>
- 
-Frequencimeter-3: 
-<item valLabely="0" labelrot="0" objectName="Frequencimeter-3" valLabelx="0" x="-296" labely="-24" hflip="1" labelx="-32" valLabRot="0" itemtype="Frequencimeter" Show_id="false" y="-356" id="Frequencimeter-15" rotation="0" vflip="1"/>
- 
-Frequencimeter-2: 
-<item valLabely="0" labelrot="0" objectName="Frequencimeter-2" valLabelx="0" x="-296" labely="-24" hflip="1" labelx="-32" valLabRot="0" itemtype="Frequencimeter" Show_id="false" y="-328" id="Frequencimeter-17" rotation="0" vflip="1"/>
- 
-Node-1: 
-<item valLabely="0" labelrot="0" objectName="Node-1" valLabelx="0" x="-368" labely="-24" hflip="1" labelx="-16" valLabRot="0" itemtype="Node" Show_id="false" y="-380" id="Node-22" rotation="0" vflip="1"/>
- 
-Connector-10: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-11" valLabRot="0" x="-440" pointList="-440,-332,-440,-356,-432,-356" startpinid="Fixed Voltage-8-outnod" id="Connector-4" endpinid="74XX56-9-RES" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-332" objectName="Connector-10" valLabely="0"/>
- 
-Connector-12: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-13" valLabRot="0" x="-516" pointList="-516,-372,-500,-372" startpinid="Clock-7-outnod" id="Connector-6" endpinid="Node-5-0" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-372" objectName="Connector-12" valLabely="0"/>
- 
-Connector-14: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-13" valLabRot="0" x="-500" pointList="-500,-424,-500,-372" startpinid="Frequencimeter-6-lPin" id="Connector-8" endpinid="Node-5-1" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-424" objectName="Connector-14" valLabely="0"/>
- 
-Connector-15: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-16" valLabRot="0" x="-336" pointList="-336,-356,-336,-364,-384,-364" startpinid="Frequencimeter-3-lPin" id="Connector-16" endpinid="74XX56-9-QB" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-356" objectName="Connector-15" valLabely="0"/>
- 
-Connector-17: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-18" valLabRot="0" x="-336" pointList="-336,-328,-356,-328,-356,-356,-384,-356" startpinid="Frequencimeter-2-lPin" id="Connector-18" endpinid="74XX56-9-QC" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-328" objectName="Connector-17" valLabely="0"/>
- 
-Connector-19: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-13" valLabRot="0" x="-500" pointList="-500,-372,-432,-372" startpinid="Node-5-2" id="Connector-17" endpinid="74XX56-9-CLKA" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-372" objectName="Connector-19" valLabely="0"/>
- 
-Connector-20: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-21" valLabRot="0" x="-384" pointList="-384,-372,-368,-372,-368,-380" startpinid="74XX56-9-QA" id="Connector-10" endpinid="Node-1-0" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-372" objectName="Connector-20" valLabely="0"/>
- 
-Connector-22: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-21" valLabRot="0" x="-368" pointList="-368,-380,-336,-380" startpinid="Node-1-2" id="Connector-23" endpinid="Frequencimeter-4-lPin" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-380" objectName="Connector-22" valLabely="0"/>
- 
-Connector-23: 
-<item itemtype="Connector" rotation="0" Show_id="false" hflip="1" enodeid="Circ_eNode-21" valLabRot="0" x="-368" pointList="-368,-380,-368,-404,-440,-404,-440,-364,-432,-364" startpinid="Node-1-1" id="Connector-24" endpinid="74XX56-9-CLKB" labely="-24" valLabelx="0" labelrot="0" labelx="-16" vflip="1" y="-380" objectName="Connector-23" valLabely="0"/>
- 
-PlotterWidget-24: 
-<item acceptDrops="false" updatesEnabled="true" maximumWidth="1000" modal="false" y="0" windowModified="false" fullScreen="false" size="" maximumHeight="200" layoutDirection="0" frameSize="" childrenRect="" mouseTracking="false" toolTip="" inputMethodHints="0" windowFilePath="" pos="" windowTitle="" contextMenuPolicy="1" focusPolicy="0" x="0" sizePolicy="" windowIcon="" statusTip="" MinVolt="-500" Scale="1" minimumWidth="200" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" width="200" baseSize="" geometry="" childrenRegion="" minimized="false" sizeHint="" rect="" minimumSize="" whatsThis="" toolTipDuration="-1" autoFillBackground="false" MaxVolt="500" frameGeometry="" locale="" minimumHeight="200" styleSheet="" minimumSizeHint="" objectName="PlotterWidget-24" focus="false" enabled="true" accessibleName="" accessibleDescription="" height="200" Tracks="1" sizeIncrement="" cursor="" normalGeometry="" windowOpacity="1" itemtype="Plotter" palette="" maximumSize="" isActiveWindow="true" windowIconText="" windowModality="0" visible="false" maximized="false"/>
+<circuit stepSize="1000000" type="simulide_0.5" NLsteps="100000" animate="1" stepsPS="1000000">
+
+Unique  Id: Node-1: 
+Circuit Id: Node-22
+<item circRot="0" valLabelx="0" circPos="0,0" labelx="-16" vflip="1" x="-368" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Node-1" id="Node-22" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-380" labely="-24" itemtype="Node" hflip="1" mainComp="false"/>
+
+Unique  Id: Frequencimeter-2: 
+Circuit Id: Frequencimeter-17
+<item circRot="0" valLabelx="0" circPos="0,0" labelx="-32" vflip="1" x="-296" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Frequencimeter-2" Filter="0.10000000000000001" id="Frequencimeter-17" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-328" labely="-24" itemtype="Frequencimeter" hflip="1" mainComp="false"/>
+
+Unique  Id: Frequencimeter-3: 
+Circuit Id: Frequencimeter-15
+<item circRot="-5.4861292803319049e+303" valLabelx="0" circPos="0,0" labelx="-32" vflip="1" x="-296" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Frequencimeter-3" Filter="0.10000000000000001" id="Frequencimeter-15" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-356" labely="-24" itemtype="Frequencimeter" hflip="1" mainComp="false"/>
+
+Unique  Id: Frequencimeter-4: 
+Circuit Id: Frequencimeter-11
+<item circRot="-5.4861292803319049e+303" valLabelx="0" circPos="0,0" labelx="-32" vflip="1" x="-296" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Frequencimeter-4" Filter="0.10000000000000001" id="Frequencimeter-11" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-380" labely="-24" itemtype="Frequencimeter" hflip="1" mainComp="false"/>
+
+Unique  Id: Node-5: 
+Circuit Id: Node-9
+<item circRot="0" valLabelx="0" circPos="0,0" labelx="-16" vflip="1" x="-500" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Node-5" id="Node-9" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-372" labely="-24" itemtype="Node" hflip="1" mainComp="false"/>
+
+Unique  Id: Frequencimeter-6: 
+Circuit Id: Frequencimeter-7
+<item circRot="0" valLabelx="0" circPos="0,0" labelx="-32" vflip="1" x="-460" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Frequencimeter-6" Filter="0.10000000000000001" id="Frequencimeter-7" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-424" labely="-24" itemtype="Frequencimeter" hflip="1" mainComp="false"/>
+
+Unique  Id: Clock-7: 
+Circuit Id: Clock-5
+<item circRot="-5.7573271833069607e+307" valLabelx="-16" Show_Volt="true" Freq="10000" circPos="0,0" labelx="-64" vflip="1" x="-532" valLabRot="0" valLabely="8" boardRot="-1000000" objectName="Clock-7" Voltage="5" id="Clock-5" boardPos="-1e+06,-1e+06" Unit=" V" rotation="0" Show_id="false" Out="false" labelrot="0" y="-372" Running="true" labely="-24" itemtype="Clock" hflip="1" mainComp="false" Always_On="false"/>
+
+Unique  Id: Fixed Voltage-8: 
+Circuit Id: Fixed Voltage-3
+<item circRot="-1.8906779315108938e-310" valLabelx="-16" Show_Volt="true" circPos="0,0" labelx="-64" vflip="1" x="-456" valLabRot="0" valLabely="8" boardRot="-1000000" objectName="Fixed Voltage-8" Voltage="5" id="Fixed Voltage-3" boardPos="-1e+06,-1e+06" Unit=" V" rotation="0" Show_id="false" Out="false" labelrot="0" y="-332" labely="-24" itemtype="Fixed Voltage" hflip="1" mainComp="false"/>
+
+Unique  Id: 74XX56-9: 
+Circuit Id: 74XX56-1
+<item circRot="2.8434743610495785e-312" valLabelx="13" Logic_Symbol="true" circPos="0,0" labelx="0" vflip="1" x="-424" valLabRot="-90" valLabely="26" boardRot="-1000000" objectName="74XX56-9" id="74XX56-1" boardPos="-1e+06,-1e+06" rotation="0" Show_id="true" labelrot="0" y="-380" labely="-20" itemtype="Subcircuit" hflip="1" mainComp="false"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-4
+<item circRot="0" valLabelx="0" endpinid="74XX56-9-RES" pointList="-440,-332,-440,-356,-432,-356" startpinid="Fixed Voltage-8-outnod" circPos="0,0" labelx="-16" vflip="1" x="-440" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-10" id="Connector-4" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-332" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-RES-74XX56-9-RES-eNode"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-6
+<item circRot="0" valLabelx="0" endpinid="Node-5-0" pointList="-516,-372,-500,-372" startpinid="Clock-7-outnod" circPos="0,0" labelx="-16" vflip="1" x="-516" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-12" id="Connector-6" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-372" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-CLKA-74XX56-9-CLKA-eNode"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-8
+<item circRot="0" valLabelx="0" endpinid="Node-5-1" pointList="-500,-424,-500,-372" startpinid="Frequencimeter-6-lPin" circPos="0,0" labelx="-16" vflip="1" x="-500" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-14" id="Connector-8" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-424" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-CLKA-74XX56-9-CLKA-eNode"/>
+
+Unique  Id: Connector-15: 
+Circuit Id: Connector-16
+<item circRot="0" valLabelx="0" endpinid="74XX56-9-QB" pointList="-336,-356,-336,-364,-384,-364" startpinid="Frequencimeter-3-lPin" circPos="0,0" labelx="-16" vflip="1" x="-336" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-15" id="Connector-16" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-356" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-QB-74XX56-9-QB-eNode"/>
+
+Unique  Id: Connector-17: 
+Circuit Id: Connector-18
+<item circRot="0" valLabelx="0" endpinid="74XX56-9-QC" pointList="-336,-328,-356,-328,-356,-356,-384,-356" startpinid="Frequencimeter-2-lPin" circPos="0,0" labelx="-16" vflip="1" x="-336" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-17" id="Connector-18" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-328" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-QC-74XX56-9-QC-eNode"/>
+
+Unique  Id: Connector-19: 
+Circuit Id: Connector-17
+<item circRot="0" valLabelx="0" endpinid="74XX56-9-CLKA" pointList="-500,-372,-432,-372" startpinid="Node-5-2" circPos="0,0" labelx="-16" vflip="1" x="-500" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-19" id="Connector-17" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-372" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-CLKA-74XX56-9-CLKA-eNode"/>
+
+Unique  Id: Connector-20: 
+Circuit Id: Connector-10
+<item circRot="0" valLabelx="0" endpinid="Node-1-0" pointList="-384,-372,-368,-372,-368,-380" startpinid="74XX56-9-QA" circPos="0,0" labelx="-16" vflip="1" x="-384" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-20" id="Connector-10" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-372" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-CLKB-74XX56-9-CLKB-eNode"/>
+
+Unique  Id: Connector-22: 
+Circuit Id: Connector-23
+<item circRot="2.998004734286497e-159" valLabelx="0" endpinid="Frequencimeter-4-lPin" pointList="-368,-380,-336,-380" startpinid="Node-1-2" circPos="0,0" labelx="-16" vflip="1" x="-368" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-22" id="Connector-23" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-380" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-CLKB-74XX56-9-CLKB-eNode"/>
+
+Unique  Id: Connector-23: 
+Circuit Id: Connector-24
+<item circRot="2.998004734286497e-159" valLabelx="0" endpinid="74XX56-9-CLKB" pointList="-368,-380,-368,-404,-440,-404,-440,-364,-432,-364" startpinid="Node-1-1" circPos="0,0" labelx="-16" vflip="1" x="-368" valLabRot="0" valLabely="0" boardRot="-1000000" objectName="Connector-23" id="Connector-24" boardPos="-1e+06,-1e+06" rotation="0" Show_id="false" labelrot="0" y="-380" labely="-24" itemtype="Connector" hflip="1" mainComp="false" enodeid="74XX56-9-CLKB-74XX56-9-CLKB-eNode"/>
  
 </circuit>

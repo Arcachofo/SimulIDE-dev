@@ -141,7 +141,7 @@ void I2CToParallel::writeByte()         // Writting to I2C from Parallel (master
     int value = 0;
     for( int i=0; i<8; ++i )
     {
-        int volt = m_output[i]->getVolt();
+        double volt = m_output[i]->getVolt();
         
         bool state = false;// = m_dataPinState[i];
         

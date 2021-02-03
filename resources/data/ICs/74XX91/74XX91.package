@@ -4,13 +4,13 @@
 
 <package name="Package" pins="14" width="4" height="8" >
 
-    <pin side="left" pos="1"  type="unused" id="NC"  label="NC" /><!-- packagePin1 -->
-    <pin side="left" pos="2"  type="unused" id="NC"  label="NC" /><!-- packagePin2 -->
-    <pin side="left" pos="3"  type="unused" id="NC"  label="NC" /><!-- packagePin3 -->
-    <pin side="left" pos="4"  type="unused" id="NC"  label="NC" /><!-- packagePin4 -->
+    <pin side="left" pos="1"  type="unused" id="NC1"  label="NC" /><!-- packagePin1 -->
+    <pin side="left" pos="2"  type="unused" id="NC2"  label="NC" /><!-- packagePin2 -->
+    <pin side="left" pos="3"  type="unused" id="NC3"  label="NC" /><!-- packagePin3 -->
+    <pin side="left" pos="4"  type="unused" id="NC4"  label="NC" /><!-- packagePin4 -->
     <pin side="left" pos="5"  type="unused" id="Vcc"  label="Vcc" /><!-- packagePin5 -->
-    <pin side="left" pos="6"  type="unused" id="NC"  label="NC" /><!-- packagePin6 -->
-    <pin side="left" pos="7"  type="unused" id="NC"  label="NC" /><!-- packagePin7 -->
+    <pin side="left" pos="6"  type="unused" id="NC5"  label="NC" /><!-- packagePin6 -->
+    <pin side="left" pos="7"  type="unused" id="NC6"  label="NC" /><!-- packagePin7 -->
     
     
     <pin side="right" pos="1"  type="inverted" id="!Q8"  label="!Q8" /><!-- packagePin8 -->
@@ -19,7 +19,7 @@
     <pin side="right" pos="4"  type="" id="B"  label="B" /><!-- packagePin11 -->
     <pin side="right" pos="5"  type="unused" id="Gnd"  label="Gnd" /><!-- packagePin12 -->
     <pin side="right" pos="6"  type="" id="CLK"  label="CLK" /><!-- packagePin13 -->
-    <pin side="right" pos="7"  type="unused" id="NC"  label="NC" /><!-- packagePin14 -->
+    <pin side="right" pos="7"  type="unused" id="NC7"  label="NC" /><!-- packagePin14 -->
     
     
 </package>

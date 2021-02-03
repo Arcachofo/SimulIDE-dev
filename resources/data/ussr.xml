@@ -20,18 +20,18 @@
 <!-- *************************************************************************** -->
 
 <itemlib>
-    <tag>QT_TRANSLATE_NOOP("xmlfile","Logic")</tag>
     
     <itemset category="Logic" type="">
-        <item name="USSR IC"  package=""  subcircuit=""  icon="ic2.png" ></item>
+        <item name="USSR_IC"  package=""  subcircuit=""  icon="ic2.png" ></item>
     </itemset>
     
-    <itemset category="Logic/USSR IC" type="Subcircuit" folder="ICs/ussr">
-    <item name="K176IE3"  info=" module 6 counter with output to a 7-segment indicator" /> 
-    <item name="K176IE4"  info=" module 10 counter with output to a 7-segment indicator" />
-    <item name="K176IE5"  info=" 15-bit binary counter - generator of second pulses" />
+    <itemset category="Logic/USSR_IC" type="Subcircuit" folder="ICs" >
+
+    <item name="K176IE3" info=" module 6 counter with output to a 7-segment indicator" /> 
+    <item name="K176IE4" info=" module 10 counter with output to a 7-segment indicator" />
+    <item name="K176IE5" info=" 15-bit binary counter - generator of second pulses" />
     <item name="K176IE12" info=" 15-bit binary counter and divisor by 60" />
+
     </itemset>
 
 </itemlib>
-

@@ -47,7 +47,7 @@ Simulator::Simulator( QObject* parent )
     m_errors[0] = "";
     m_errors[1] = "Could not solve Matrix";
     m_errors[2] = "Add Event: NULL free event";
-    m_errors[3] = "Add Event: LAST_SIM_EVENT reached";
+    m_errors[3] = "LAST_SIM_EVENT reached";
 
     m_warnings[1] = "NonLinear Not Converging";
     m_warnings[100] = "AVR crashed !!!";
@@ -383,26 +383,31 @@ void Simulator::clearEventList()
         m_eventList.events[i].time = 0;
     }
     m_eventList.free = &(m_eventList.events[0]);
-    m_eventList.first = 0l;
+    m_eventList.first = NULL;
+    m_numEvents = 0;
 }
 
 void Simulator::addEvent( uint64_t time, eElement* comp )
 {
     if( m_state < SIM_STARTING ) return;
+    if( ++m_numEvents > LAST_SIM_EVENT ) { m_error = 3; return; }
+
     time += m_circTime;
     simEvent_t* last  = 0l;
     simEvent_t* event = m_eventList.first;
     simEvent_t* new_event = m_eventList.free;
 
-    //if( new_event == 0 ) { m_error = 2; return; }
-
-    //int i = 0;
     while( event )
     {
-        if( time <= event->time ) break;
+        if( time <= event->time)
+        {
+            if( comp == NULL
+            && event->comp == NULL
+            && time == event->time ) return;
+            break;
+        }
         last  = event;
         event = event->next;
-        //if( ++i > LAST_SIM_EVENT ) { m_error = 3; return; }
     }
     m_eventList.free = new_event->next;
 
@@ -421,7 +426,6 @@ void Simulator::cancelEvents( eElement* comp )
     simEvent_t* last  = 0l;
     simEvent_t* next  = 0l;
 
-    //int i = 0;
     while( event )
     {
         next = event->next;
@@ -432,11 +436,10 @@ void Simulator::cancelEvents( eElement* comp )
 
             event->next = m_eventList.free;
             m_eventList.free = event;
+            m_numEvents--;
         }
         else last = event;
         event = next;
-
-        //if( ++i > LAST_SIM_EVENT ) { m_error = 3; return; }
     }
 }
 
@@ -445,6 +448,7 @@ inline void Simulator::freeEvent( simEvent_t* event )
     m_eventList.first = event->next;
     event->next = m_eventList.free;
     m_eventList.free = event;
+    m_numEvents--;
 }
 
 void Simulator::addToEnodeBusList( eNode* nod )
