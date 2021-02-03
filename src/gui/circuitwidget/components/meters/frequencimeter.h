@@ -61,6 +61,7 @@ class MAINMODULE_EXPORT Frequencimeter : public Component, public eElement
 
         uint64_t m_lastMax;
         uint64_t m_totalP;
+        uint64_t m_period;
         
         QGraphicsSimpleTextItem m_display;
 };

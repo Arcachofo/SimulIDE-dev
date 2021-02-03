@@ -88,6 +88,7 @@ void Frequencimeter::initialize()
     m_numMax   = 0;
     m_lastMax  = 0;
     m_totalP   = 0;
+    m_period   = 0;
     
     m_display.setText( "0 Hz" );
 }
@@ -101,11 +102,27 @@ void Frequencimeter::stamp()                     // Called at Simulation Start
 void Frequencimeter::updateStep()
 {
     double freq = m_freq;
-    if( m_numMax > 1 )
+    if( m_period > 0 )  // We have a wave
     {
-        freq = 1e12/((double)m_totalP/(double)(m_numMax-1));
-        m_totalP = 0;
-        m_numMax = 0;
+        uint64_t simTime = Simulator::self()->circTime();
+        uint64_t stepsPF  = Simulator::self()->stepsPerFrame();
+        uint64_t stepSize = Simulator::self()->stepSize();
+        uint64_t lost = m_period*2;
+        if( lost < stepsPF*2 ) lost = stepsPF*stepSize*2;
+
+        if( simTime-m_lastMax > lost ) // Wave lost
+        {
+            freq = 0;
+            m_period = 0;
+            m_totalP = 0;
+            m_numMax = 0;
+        }
+        else if( m_numMax > 1 )
+        {
+            freq = 1e12/((double)m_totalP/(double)(m_numMax-1));
+            m_totalP = 0;
+            m_numMax = 0;
+        }
     }
 
     if( m_freq != freq )
@@ -149,8 +166,11 @@ void Frequencimeter::voltChanged()
     {
         if( m_rising && !m_falling )                        // Max Found
         {
-            if( m_numMax > 0 ) m_totalP += simTime-m_lastMax;
-
+            if( m_numMax > 0 )
+            {
+                m_period = simTime-m_lastMax;
+                m_totalP += m_period;
+            }
             m_lastMax = simTime;
             m_numMax++;
             m_rising = false;
