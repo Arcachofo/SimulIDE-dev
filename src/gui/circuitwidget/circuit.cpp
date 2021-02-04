@@ -172,9 +172,14 @@ void Circuit::loadCircuit( QString fileName )
         remove();
         for( Component* comp : m_compList ) removeComp( comp ); // Clean Nodes
     }
-    else m_graphicView->centerOn( QPointF(
+    else
+    {
+        m_graphicView->centerOn( QPointF(
             width()/2  + itemsBoundingRect().center().x() - m_graphicView->width()/2,
             height()/2 + itemsBoundingRect().center().y() - m_graphicView->height()/2 ) );
+        qDebug() << "Circuit Loaded: ";
+        qDebug() << fileName;
+    }
 }
 
 void Circuit::loadDomDoc( QDomDocument* doc )
@@ -284,28 +289,35 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     con->setEnode( enode );
 
                     QStringList plist = con->pointList();   // add lines to connector
-                    int p1x = plist.first().toInt();
-                    int p1y = plist.at(1).toInt();
-                    int p2x = plist.at(plist.size()-2).toInt();
-                    int p2y = plist.last().toInt();
-
-                    con->addConLine( con->x(),con->y(), p1x, p1y, 0 );
-
                     int count = plist.size();
-                    for (int i=2; i<count; i+=2)
+                    if( count < 2 )
                     {
-                        p2x = plist.at(i).toInt();
-                        p2y = plist.at(i+1).toInt();
-                        con->addConLine( p1x, p1y, p2x, p2y, i/2 );
-                        p1x = p2x;
-                        p1y = p2y;
+                        qDebug() << "Error creating Connector: empty pointList ";
                     }
-                    con->updateConRoute( startpin, startpin->scenePos() );
-                    con->updateConRoute( endpin, endpin->scenePos() );
-                    con->remNullLines();
-                    conList.append( con );
-                    startpin->registerPins( enode );
-                    endpin->registerPins( enode );
+                    else
+                    {
+                        int p1x = plist.first().toInt();
+                        int p1y = plist.at(1).toInt();
+                        int p2x = plist.at(plist.size()-2).toInt();
+                        int p2y = plist.last().toInt();
+
+                        con->addConLine( con->x(),con->y(), p1x, p1y, 0 );
+
+                        for (int i=2; i<count; i+=2)
+                        {
+                            p2x = plist.at(i).toInt();
+                            p2y = plist.at(i+1).toInt();
+                            con->addConLine( p1x, p1y, p2x, p2y, i/2 );
+                            p1x = p2x;
+                            p1y = p2y;
+                        }
+                        con->updateConRoute( startpin, startpin->scenePos() );
+                        con->updateConRoute( endpin, endpin->scenePos() );
+                        con->remNullLines();
+                        conList.append( con );
+                        startpin->registerPins( enode );
+                        endpin->registerPins( enode );
+                   }
                 }
                 else // Start or End pin not found
                 {
@@ -711,40 +723,40 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
     for( int i=0; i<atrs.length(); ++i )   // Get List of property names in Circuit file
     {
         QString propName = atrs.item( i ).nodeName();
+
         QVariant value( element.attribute( propName ) );
 
         // SUBSTITUTIONS -------------------------------------------------------
 
         if( propName == "Volts") propName = "Voltage";
 
+        QString lowN = propName;
+        lowN = lowN.toLower();
 
-        const char* chName = propName.toStdString().c_str();
-        QString lowN = propName.toLower();
-
-        QVariant comProp = comp->property( chName );
+        QVariant comProp = comp->property( propName.toStdString().c_str() );
         if( !value.isValid()
          || !comProp.isValid() )
         {
-            //qDebug() << "loadObjectProperties Wrong Property: " << propName<<chName;
+            qDebug() << "loadObjectProperties Wrong Property: "<< comp->itemID() << propName << propName.toStdString().c_str();
             continue;
         }
         QVariant::Type type = comProp.type();
-        
-        if     ( type == QVariant::Int    ) comp->setProperty( chName, value.toInt() );
-        else if( type == QVariant::Double ) comp->setProperty( chName, value.toDouble() );
-        else if( type == QVariant::Bool   ) comp->setProperty( chName, value.toBool() );
+
+        if     ( type == QVariant::Int    ) comp->setProperty( propName.toStdString().c_str(), value.toInt() );
+        else if( type == QVariant::Double ) comp->setProperty( propName.toStdString().c_str(), value.toDouble() );
+        else if( type == QVariant::Bool   ) comp->setProperty( propName.toStdString().c_str(), value.toBool() );
         else if( type == QVariant::PointF )
         {
             QStringList coord = value.toString().split(",");
             qreal x = coord.takeFirst().toDouble();
             qreal y = coord.takeFirst().toDouble();
             //qDebug() << "Circuit::loadObjectProperties" <<element.attribute( n )<< n << QPointF( x, y )<<coord;
-            comp->setProperty( chName, QPointF( x, y ) );
+            comp->setProperty( propName.toStdString().c_str(), QPointF( x, y ) );
         }
         else if( type == QVariant::StringList )
         {
             QStringList list= value.toString().split(",");
-            comp->setProperty( chName, list );
+            comp->setProperty( propName.toStdString().c_str(), list );
         }
         else if( (lowN=="mem") || (lowN=="eeprom") )
         {
@@ -759,9 +771,9 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
             for( int x=0; x<lsize; x++ ) vmem[x] = list.at(x).toInt();
 
             QVariant value = QVariant::fromValue( vmem );
-            comp->setProperty( chName, value );
+            comp->setProperty( propName.toStdString().c_str(), value );
         }
-        else comp->setProperty( chName, value );
+        else comp->setProperty( propName.toStdString().c_str(), value );
         //else qDebug() << "    ERROR!!! Circuit::loadObjectProperties\n  unknown type:  "<<"name "<<name<<"   value "<<value ;
     }
 }
@@ -827,7 +839,11 @@ void Circuit::remove() // Remove everything ( Clear Circuit )
 
         comp->objectName().split("-").last().toInt( &isNumber ); // TODO: Find a proper way !!!!!!!!!!!
 
-        if( isNumber && !(comp->itemType()=="Node") ) removeComp( comp );
+        if( isNumber && !(comp->itemType()=="Node") )
+        {
+            if( comp->scene() == this ) removeItem( comp );
+            removeComp( comp );
+        }
     }
     m_busy = false;
 }
