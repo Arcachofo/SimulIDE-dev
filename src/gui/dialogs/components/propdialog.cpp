@@ -32,7 +32,7 @@ PropDialog::PropDialog( QWidget* parent, QString help )
           : QDialog( parent )
 {
     setupUi(this);
-    this->setWindowFlags( Qt::Dialog | Qt::WindowTitleHint );
+    //this->setWindowFlags( Qt::Dialog | Qt::WindowTitleHint );
 
     m_component = NULL;
 
