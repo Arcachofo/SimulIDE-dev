@@ -91,9 +91,10 @@ void MainWindow::closeEvent( QCloseEvent *event )
 
 void MainWindow::readSettings()
 {
-    restoreGeometry(                     m_settings.value( "geometry" ).toByteArray());
-    restoreState(                        m_settings.value( "windowState" ).toByteArray());
-    m_Centralsplitter->restoreState(     m_settings.value( "Centralsplitter/geometry" ).toByteArray());
+    restoreGeometry(                 m_settings.value( "geometry" ).toByteArray());
+    restoreState(                    m_settings.value( "windowState" ).toByteArray());
+    m_Centralsplitter->restoreState( m_settings.value( "Centralsplitter/geometry" ).toByteArray());
+    CircuitWidget::self()->splitter()->restoreState( m_settings.value( "Circsplitter/geometry" ).toByteArray());
 
     m_autoBck = 15;
     if( m_settings.contains( "autoBck" )) m_autoBck = m_settings.value( "autoBck" ).toInt();
@@ -107,6 +108,7 @@ void MainWindow::writeSettings()
     m_settings.setValue( "geometry",  saveGeometry() );
     m_settings.setValue( "windowState", saveState() );
     m_settings.setValue( "Centralsplitter/geometry", m_Centralsplitter->saveState() );
+    m_settings.setValue( "Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
     
     QList<QTreeWidgetItem*> list = m_components->findItems( "", Qt::MatchStartsWith | Qt::MatchRecursive );
 

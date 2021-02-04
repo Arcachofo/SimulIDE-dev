@@ -24,14 +24,13 @@ eElement::eElement( QString id )
 {
     m_elmId = id;
 
-    m_changed = false;
     added = false;
 
     digital_high = 5.0;
     digital_low  = 0.0;
     digital_thre = 2.5;
 
-    Simulator::self()->addToElementList( this );
+    if( Simulator::self() ) Simulator::self()->addToElementList( this );
     //qDebug() << "eElement::eElement" << QString::fromStdString( m_elmId );
     
 }

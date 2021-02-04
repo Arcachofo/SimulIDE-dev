@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2010 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
@@ -32,8 +32,9 @@ CircuitWidget*  CircuitWidget::m_pSelf = 0l;
 CircuitWidget::CircuitWidget( QWidget *parent  )
              : QWidget( parent )
              , m_verticalLayout( this )
-             , m_horizontLayout()
+//             , m_horizontLayout()
              , m_circView( this )
+             , m_outPane( this )
              , m_circToolBar( this )
              , m_fileMenu( this )
              , m_settingsMenu( this )
@@ -51,9 +52,17 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     m_verticalLayout.setSpacing(0);
 
     m_verticalLayout.addWidget( &m_circToolBar );
-    m_verticalLayout.addWidget( &m_circView );
+
+    m_splitter = new QSplitter( this );
+    m_splitter->setObjectName("CircuitSplitter");
+    m_splitter->setOrientation( Qt::Vertical );
+    m_verticalLayout.addWidget( m_splitter );
+
+    m_splitter->addWidget( &m_circView );
+    m_splitter->addWidget( &m_outPane );
+    m_splitter->setSizes( {500, 100} );
     
-    m_verticalLayout.addLayout( &m_horizontLayout );
+    //m_verticalLayout.addLayout( &m_horizontLayout );
     
     m_rateLabel = new QLabel( this );
     QFont font( "Arial", 10, QFont::Normal );
@@ -248,6 +257,7 @@ bool CircuitWidget::newCircuit()
     Circuit::self()->setAutoBck( MainWindow::self()->autoBck() );
 
     m_curCirc = "";
+    Simulator::self()->addToUpdateList( &m_outPane );
 
     MainWindow::self()->setTitle( tr("New Circuit"));
     MainWindow::self()->settings()->setValue( "lastCircDir", m_lastCircDir );
@@ -507,6 +517,12 @@ void CircuitWidget::updateRecentFileActions()
         recentFileActs[i]->setVisible( true );
     }
     for( int i=numRecentFiles; i<MaxRecentFiles; i++ ) recentFileActs[i]->setVisible(false);
+}
+
+void CircuitWidget::simDebug( QString msg )
+{
+    m_outPane.writeText( msg );
+    if( !Simulator::self()->isRunning() ) m_outPane.updateStep();
 }
 
 

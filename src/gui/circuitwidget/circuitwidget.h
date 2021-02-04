@@ -23,6 +23,7 @@
 #include <QtWidgets>
 
 #include "circuitview.h"
+#include "outpaneltext.h"
 
 class AppProp;
 class CircProp;
@@ -49,6 +50,10 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void powerCircOn();
         void powerCircOff();
         void powerCircDebug( bool paused );
+
+        void simDebug( QString msg );
+
+        QSplitter* splitter() { return m_splitter; }
         
     public slots:
         bool newCircuit();
@@ -76,13 +81,15 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         enum { MaxRecentFiles = 10 };
         void updateRecentFileActions();
 
-        QVBoxLayout    m_verticalLayout;
-        QHBoxLayout    m_horizontLayout;
-        CircuitView    m_circView;
+        QVBoxLayout  m_verticalLayout;
+        //QHBoxLayout  m_horizontLayout;
+        CircuitView  m_circView;
+        OutPanelText m_outPane;
         
         QToolBar m_circToolBar;
         QLabel*  m_rateLabel;
         QLabel*  m_msgLabel;
+        QSplitter* m_splitter;
 
         QAction* recentFileActs[MaxRecentFiles];
         QAction* newCircAct;

@@ -47,7 +47,7 @@ void CircMatrix::createMatrix( QList<eNode*> &eNodeList )
     m_admitChanged = false;
     m_currChanged  = false;
 
-    std::cout <<"\n  Initializing Matrix: "<< m_numEnodes << " eNodes"<< std::endl;
+    qDebug() <<"\n  Initializing Matrix: "<< m_numEnodes << " eNodes";
 }
 
 void CircMatrix::stampMatrix( int row, int col, double value )

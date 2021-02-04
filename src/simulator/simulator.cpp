@@ -70,7 +70,7 @@ inline void Simulator::solveMatrix()
     }
     if( !m_matrix.solveMatrix() ) // Try to solve matrix, if not stop simulation
     {
-        std::cout << "Simulator::solveMatrix(), Failed to solve Matrix" << std::endl;
+        qDebug() << "Simulator::solveMatrix(), Failed to solve Matrix";
         m_error = 1;
     }                                // m_matrix sets the eNode voltages
 }
@@ -225,11 +225,11 @@ void Simulator::startSim( bool paused )
     m_state = SIM_STARTING;
     addEvent( 0, NULL );
 
-    std::cout <<"\nStarting Circuit Simulation...\n"<< std::endl;
+    qDebug() <<"\nStarting Circuit Simulation...\n";
 
     for( eNode* busNode : m_eNodeBusList ) busNode->initialize(); // Initialize Bus Nodes
 
-    std::cout <<"  Initializing "<< m_elementList.size() << "\teElements"<< std::endl;
+    qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
     for( eElement* el : m_elementList )    // Initialize all Elements
     {
         //qDebug() << "initializing  "<< el->getId();
@@ -237,13 +237,13 @@ void Simulator::startSim( bool paused )
         el->added = false;
     }
 
-    std::cout <<"  Initializing "<< m_eNodeBusList.size() << "\tBuses"<< std::endl;
+    qDebug() <<"  Initializing "<< m_eNodeBusList.size() << "\tBuses";
     for( eNode* busNode : m_eNodeBusList ) busNode->createBus(); // Create Buses
 
     m_changedNode = NULL;
     for( eElement* el : m_elementList ) el->attach(); // Connect Elements with internal circuits.
 
-    std::cout <<"  Initializing "<< m_eNodeList.size()<< "\teNodes"<< std::endl;
+    qDebug() <<"  Initializing "<< m_eNodeList.size()<< "\teNodes";
     for( int i=0; i<m_eNodeList.size(); i++ )         // Initialize eNodes
     {
         eNode* enode = m_eNodeList.at(i);
@@ -255,29 +255,26 @@ void Simulator::startSim( bool paused )
     m_matrix.createMatrix( m_eNodeList );// Initialize Matrix
     if( !m_matrix.solveMatrix() )        // Try to solve matrix, if it fails, stop simulation // m_matrix.printMatrix();
     {
-        std::cout << "Simulator::startSim, Failed to solve Matrix"
-                  <<  std::endl;
+        qDebug() << "Simulator::startSim, Failed to solve Matrix";
         m_error = 1;
         CircuitWidget::self()->powerCircOff();
         CircuitWidget::self()->setError( m_errors.value( m_error ) );
         m_state = SIM_ERROR;
         return;
     }
-    std::cout << "\nCircuit Matrix looks good" <<  std::endl;
+    qDebug() << "\nCircuit Matrix looks good";
 
     double sps100 = 100*(double)m_stepsPS*m_stepSize/1e12; // Speed %
     double fps = m_stepsPS/m_stepsPF;
 
-    std::cout << "\nFPS:   " << fps        << "\t Frames Per Sec"
+    qDebug()  << "\nFPS:   " << fps        << "\t Frames Per Sec"
               << "\nSpeed: " << sps100     << "%"
               << "\nSpeed: " << m_stepsPS  << "\t Steps Per Sec"
               << "\nStp/F: " << m_stepsPF  << "\t Steps per Frame"
               << "\nNonLi: " << m_maxNlstp << "\t Max Iterations"
-              << "\nStep : " << m_stepSize << "\t picoseconds"
-              << std::endl
-              << std::endl;
+              << "\nStep : " << m_stepSize << "\t picoseconds";
 
-    std::cout << "\n    Simulation Running... \n"<<std::endl;
+    qDebug() << "\n    Simulation Running... \n";
 
     initTimer();
     if( paused ) pauseSim();
@@ -301,7 +298,7 @@ void Simulator::pauseSim()
     m_state = SIM_PAUSED;
 
     CircuitWidget::self()->setMsg( " Simulation Paused ", 1 );
-    std::cout << "\n    Simulation Paused " << std::endl;
+    qDebug() << "\n    Simulation Paused ";
 }
 
 void Simulator::resumeSim()
@@ -309,7 +306,7 @@ void Simulator::resumeSim()
     m_state = SIM_RUNNING;
 
     CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
-    std::cout << "\n    Resuming Simulation" << std::endl;
+    qDebug() << "\n    Resuming Simulation";
 }
 
 void Simulator::stopTimer()
@@ -321,7 +318,7 @@ void Simulator::stopTimer()
     CircuitWidget::self()->setRate( 0, 0 );
     CircuitWidget::self()->setMsg( " Simulation Stopped ", 1 );
     Circuit::self()->update();
-    std::cout << "\n    Simulation Stopped " << std::endl;
+    qDebug() << "\n    Simulation Stopped ";
     m_state = SIM_STOPPED;
 }
 
@@ -393,10 +390,12 @@ void Simulator::addEvent( uint64_t time, eElement* comp )
     if( ++m_numEvents > LAST_SIM_EVENT ) { m_error = 3; return; }
 
     time += m_circTime;
-    simEvent_t* last  = 0l;
+    simEvent_t* last  = NULL;
     simEvent_t* event = m_eventList.first;
     simEvent_t* new_event = m_eventList.free;
 
+    //if( new_event == 0 ) { m_error = 2; return; }
+    //int i = 0;
     while( event )
     {
         if( time <= event->time)
@@ -408,6 +407,7 @@ void Simulator::addEvent( uint64_t time, eElement* comp )
         }
         last  = event;
         event = event->next;
+        //if( ++i > LAST_SIM_EVENT ) { m_error = 3; return; }
     }
     m_eventList.free = new_event->next;
 
