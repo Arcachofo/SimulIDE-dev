@@ -35,6 +35,7 @@ class MAINMODULE_EXPORT eSource : public eElement
         
         void stamp() override;
         void stampOutput();
+        void stampState( bool state, int step );
 
         double voltHight() { return m_voltHigh; }
         void  setVoltHigh( double v );
@@ -43,7 +44,7 @@ class MAINMODULE_EXPORT eSource : public eElement
         void  setVoltLow( double v );
         
         bool out() { return m_out; }
-        void setOut( bool out );
+        void setOut( bool out ,bool stamp=false );
         void setTimedOut( bool out );
 
         bool  isInverted() { return m_inverted; }

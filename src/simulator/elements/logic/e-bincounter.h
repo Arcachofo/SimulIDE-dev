@@ -36,7 +36,6 @@ class MAINMODULE_EXPORT eBinCounter : public eLogicDevice
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
 
         bool resetInv() { return m_resetInv; }
         void setResetInv( bool inv );
@@ -46,8 +45,6 @@ class MAINMODULE_EXPORT eBinCounter : public eLogicDevice
         int m_TopValue;
 
         bool m_resetInv;
-
-        bool m_runOut;
 };
 
 #endif

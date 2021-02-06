@@ -31,12 +31,9 @@ class MAINMODULE_EXPORT eBcdTo7S : public eLogicDevice
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
 
     protected:
-        std::vector<uint8_t> m_values;
-
-        int m_digit;
+ static const uint8_t m_values[];
 };
 
 

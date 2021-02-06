@@ -45,13 +45,8 @@ void eMux::voltChanged()
     for( int i=8; i<11; ++i )
         if( getInputState( i ) ) address += pow( 2, i-8 );
 
-    m_out = getInputState( address );
-
-    Simulator::self()->addEvent( m_propDelay, this );
+    bool out = getInputState( address );
+    m_nextOutVal = out? 1:2;
+    sheduleOutPuts();
 }
 
-void eMux::runEvent()
-{
-    m_output[0]->setTimedOut( m_out );
-    m_output[1]->setTimedOut(!m_out );
-}

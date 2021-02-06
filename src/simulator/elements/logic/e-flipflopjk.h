@@ -30,16 +30,13 @@ class MAINMODULE_EXPORT eFlipFlopJK : public eLogicDevice
         
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
 
         bool srInv() { return m_srInv; }
         void setSrInv( bool inv );
 
     protected:
         bool m_srInv;
-
         bool m_Q0;
-        bool m_Q1;
 };
 
 #endif

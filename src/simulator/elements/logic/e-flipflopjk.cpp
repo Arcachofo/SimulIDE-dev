@@ -31,15 +31,16 @@ eFlipFlopJK::~eFlipFlopJK() {}
 
 void eFlipFlopJK::stamp()
 {
-    eNode* enode = m_input[2]->getEpin(0)->getEnode();         // Set pin
+    m_Q0 = 0;
+    eNode* enode = m_input[2]->getEpin(0)->getEnode(); // Set pin
     if( enode ) enode->voltChangedCallback( this );
     
-    enode = m_input[3]->getEpin(0)->getEnode();              // Reset pin
+    enode = m_input[3]->getEpin(0)->getEnode();        // Reset pin
     if( enode ) enode->voltChangedCallback( this );
 
     if( m_etrigger != Trig_Clk )
     {
-        for( uint i=0; i<2; i++ )
+        for( uint i=0; i<2; i++ ) // J K
         {
             eNode* enode = m_input[i]->getEpin(0)->getEnode();
             if( enode ) enode->voltChangedCallback( this );
@@ -52,34 +53,20 @@ void eFlipFlopJK::voltChanged()
 {
     bool clkAllow = (eLogicDevice::getClockState() == Clock_Allow); // Get Clk to don't miss any clock changes
 
-    if( eLogicDevice::getInputState( 2 )==true )     // Master Set
-    {
-        m_Q0 = true;         // Q
-        m_Q1 = false;        // Q'
-    }
-    else if( eLogicDevice::getInputState( 3 )==true ) // Master Reset
-    {
-        m_Q0 = false;         // Q
-        m_Q1 = true;          // Q'
-    }
-    else if( clkAllow )                              // Allow operation
+    bool set   = getInputState( 2 );
+    bool reset = getInputState( 3 );
+
+    if( set || reset) m_Q0 = set;
+    else if( clkAllow )             // Allow operation
     {
         bool J = eLogicDevice::getInputState( 0 );
         bool K = eLogicDevice::getInputState( 1 );
         bool Q = m_output[0]->out();
         
-        bool state = (J && !Q) || (!K && Q) ;
-
-        m_Q0 = state ;       // Q
-        m_Q1 = !state;       // Q'
+        m_Q0 = (J && !Q) || (!K && Q) ;
     }
-    Simulator::self()->addEvent( m_propDelay, this );
-}
-
-void eFlipFlopJK::runEvent()
-{
-    m_output[0]->setTimedOut( m_Q0 );      // Q
-    m_output[1]->setTimedOut( m_Q1 );      // Q'
+    m_nextOutVal = m_Q0? 1:2;
+    sheduleOutPuts();
 }
 
 void eFlipFlopJK::setSrInv( bool inv )

@@ -20,40 +20,41 @@
 #include "e-bcdto7s.h"
 #include "simulator.h"
 
+const uint8_t eBcdTo7S::m_values[]={
+        0b00111111,
+        0b00000110,
+        0b01011011,
+        0b01001111,
+        0b01100110,
+        0b01101101,
+        0b01111101,
+        0b00000111,
+        0b01111111,
+        0b01101111,
+        0b01110111,
+        0b01111100,
+        0b00111001,
+        0b01011110,
+        0b01111001,
+        0b01110001,
+        0b00000000
+};
+
 eBcdTo7S::eBcdTo7S( QString id )
         : eLogicDevice( id )
 {
-    m_values.resize( 17 );
 
-    m_values[0]  = 0b00111111;
-    m_values[1]  = 0b00000110;
-    m_values[2]  = 0b01011011;
-    m_values[3]  = 0b01001111;
-    m_values[4]  = 0b01100110;
-    m_values[5]  = 0b01101101;
-    m_values[6]  = 0b01111101;
-    m_values[7]  = 0b00000111;
-    m_values[8]  = 0b01111111;
-    m_values[9]  = 0b01101111;
-    m_values[10] = 0b01110111;
-    m_values[11] = 0b01111100;
-    m_values[12] = 0b00111001;
-    m_values[13] = 0b01011110;
-    m_values[14] = 0b01111001;
-    m_values[15] = 0b01110001;
-    m_values[16] = 0b00000000;
 }
 eBcdTo7S::~eBcdTo7S() {}
 
 void eBcdTo7S::stamp()
 {
-    for( int i=0; i<4; i++ )
+    for( int i=0; i<4; ++i )
     {
         eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
     m_changed = true;
-    m_digit = -1;
 
     eLogicDevice::stamp();
 }
@@ -70,14 +71,7 @@ void eBcdTo7S::voltChanged()
     bool d = getInputState( 3 );
 
     int digit = a*1+b*2+c*4+d*8;
-    if( digit == m_digit ) return;
-    m_digit = digit;
+    m_nextOutVal = m_values[digit];
 
-    if( m_numOutputs ) Simulator::self()->addEvent( m_propDelay, this );
-}
-
-void eBcdTo7S::runEvent()
-{
-    uint8_t value = m_values[m_digit];
-    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setTimedOut( value & (1<<i) );
+    if( m_numOutputs ) sheduleOutPuts();
 }

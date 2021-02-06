@@ -32,7 +32,6 @@ void eFullAdder::stamp()
         eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
-    
     eLogicDevice::stamp();
 }
 
@@ -42,15 +41,12 @@ void eFullAdder::voltChanged()
     bool Y  = getInputState( 1 );
     bool Ci = getInputState( 2 );
     
-    m_Sum = (X ^ Y) ^ Ci;                    // Sum
-    m_Co  = (X & Ci) | (Y & Ci) | (X & Y);   // Carry out
+    bool sum = (X ^ Y) ^ Ci;                    // Sum
+    bool co  = (X & Ci) | (Y & Ci) | (X & Y);   // Carry out
 
-    Simulator::self()->addEvent( m_propDelay, this );
-}
-
-void eFullAdder::runEvent()
-{
-    m_output[0]->setTimedOut( m_Sum );
-    m_output[1]->setTimedOut( m_Co );
+    m_nextOutVal = 0;
+    if( sum ) m_nextOutVal += 1;
+    if( co  ) m_nextOutVal += 2;
+    sheduleOutPuts();
 }
 

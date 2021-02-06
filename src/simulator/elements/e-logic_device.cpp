@@ -77,8 +77,49 @@ void eLogicDevice::initialize()
 {
     if( m_clockSource ) m_clock = false;
     
+    for( int i=0; i<m_numOutputs; ++i ) eLogicDevice::setOut( i, false );
+
+    m_outStep = 0;
+    m_outValue = 0;
+    m_nextOutVal = 0;
+}
+
+void eLogicDevice::runEvent()
+{
+    /*for( int i=0; i<m_numOutputs; ++i )
+    {
+        bool state = m_nextOutVal & (1<<i);
+        bool oldst = m_outValue & (1<<i);
+
+        if( state != oldst ) m_output[i]->setOut( state, true );
+    }
+    m_outValue = m_nextOutVal;
+    return;*/
+
     for( int i=0; i<m_numOutputs; ++i )
-        eLogicDevice::setOut( i, false );
+    {
+        bool state = m_nextOutVal & (1<<i);
+        bool oldst = m_outValue   & (1<<i);
+
+        if( state != oldst )
+            m_output[i]->stampState( state, m_outStep );
+    }
+    if( m_outStep == 0 )
+    {
+        m_outStep = 1;
+        Simulator::self()->addEvent( m_timeLH*1.25, this );
+    }
+    else
+    {
+        m_outStep = 0;
+        m_outValue = m_nextOutVal;
+    }
+}
+
+void eLogicDevice::sheduleOutPuts()
+{
+    if( m_nextOutVal != m_outValue )
+        Simulator::self()->addEvent( m_propDelay, this );
 }
 
 bool eLogicDevice::outputEnabled()

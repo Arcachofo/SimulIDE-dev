@@ -75,14 +75,12 @@ QList<propGroup_t> SevenSegmentBCD::propGroups(){ QList<propGroup_t> pg; return 
 
 void SevenSegmentBCD::initialize()
 {
-    m_digit = 16;
+    eBcdTo7S::initialize();
 }
 
 void SevenSegmentBCD::stamp()
 {
     eBcdTo7S::stamp();
-
-    m_digit = 0;
 }
 
 void SevenSegmentBCD::updateStep()
@@ -125,7 +123,7 @@ void SevenSegmentBCD::paint( QPainter *p, const QStyleOptionGraphicsItem *option
      pen.setColor( QColor( 250, 250, 100));
      p->setPen(pen);
 
-     uint8_t value = m_values[m_digit];
+     uint8_t value = m_nextOutVal;
 
      if( value & 1  ) p->drawLine( x1+tk+ds, y1,    x2-tk+ds, y1    );
      if( value & 2  ) p->drawLine( x2+ds,    y1+tk, x2,      -tk    );

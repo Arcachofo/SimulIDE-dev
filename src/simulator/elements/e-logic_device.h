@@ -78,13 +78,16 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         uint64_t fallTime() { return m_timeHL; }
         void setFallTime( uint64_t time );
 
+        virtual void stamp() override;
+        virtual void initialize() override;
+        virtual void runEvent() override;
+
+        void sheduleOutPuts();
+
         virtual ePin* getEpin( QString pinName );
 
         int getClockState();
         bool outputEnabled();
-
-        virtual void stamp() override;
-        virtual void initialize() override;
 
         virtual void createPins( int inputs, int outputs );
         void setClockPin( eSource* clockSource) { m_clockSource = clockSource; }
@@ -123,6 +126,10 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
 
         int m_numInputs;
         int m_numOutputs;
+
+        int m_outValue;
+        int m_nextOutVal;
+        int m_outStep;
 
         int m_etrigger;
 

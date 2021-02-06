@@ -30,11 +30,6 @@ class MAINMODULE_EXPORT eFullAdder : public eLogicDevice
         
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
-
-    protected:
-        bool m_Sum;
-        bool m_Co;
 };
 
 #endif

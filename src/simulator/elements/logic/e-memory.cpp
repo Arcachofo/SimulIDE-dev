@@ -49,8 +49,8 @@ void eMemory::initialize()
 {
     m_we = true;
     m_cs = true;
-    m_oe = false;
-    m_oeNext = false;
+    m_oe = true;
+    m_read = false;
     
     double imp = 1e28;
     for( int i=0; i<m_numOutputs; ++i )
@@ -67,17 +67,16 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
 {
     bool CS = getInputState( 1 );
     bool csTrig = false;
-    m_read = false;
 
     if( CS != m_cs )
     {
         if( CS && !m_cs ) csTrig = true;
         m_cs = CS;
         
-        if( !CS && m_oe ) // Deactivate
+        if( !CS && m_oe )
         {
-            m_oeNext = false;
-            Simulator::self()->addEvent( m_propDelay, this );
+            m_oe = false;
+            setOutputEnabled( false ); // Deactivate
         }
     }
     if( !CS ) return;
@@ -85,12 +84,16 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
     bool WE = getInputState( 0 );
     bool oe = outputEnabled() && !WE;
     
-    if( oe != m_oe ) m_oeNext = oe;
+    if( oe != m_oe )
+    {
+        m_oe = oe;
+        setOutputEnabled( oe );
+    }
 
     m_address = 0;
     for( int i=0; i<m_addrBits; ++i )        // Get Address
     {
-        bool  state = getInputState(i+2);
+        bool state = getInputState(i+2);
         if( state ) m_address += pow( 2, i );
     }
 
@@ -100,40 +103,35 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
     {
         if( csTrig || weTrig)  // Write action triggered
         {
-            int value = 0;
-            for( int i=0; i<m_numOutputs; ++i )
-            {
-                int  volt  = m_output[i]->getEpin(0)->getVolt();
-                bool state = m_dataPinState[i];
-
-                if     ( volt > m_inputHighV ) state = true;
-                else if( volt < m_inputLowV )  state = false;
-
-                m_dataPinState[i] = state;
-                if( state ) value += pow( 2, i );
-            }
-            m_ram[m_address] = value;
+            m_read = false;
+            Simulator::self()->addEvent( m_propDelay, this );
         }
     }else                                  // Read
     {
         m_read = true;
-        Simulator::self()->addEvent( m_propDelay, this );
+        m_nextOutVal = m_ram[m_address];
+        sheduleOutPuts();
     }
 }
 
 void eMemory::runEvent()
 {
-    if( m_oeNext != m_oe )
+    if( m_read ) eLogicDevice::runEvent();
+    else
     {
-        setOutputEnabled( m_oeNext );
-        m_oe = m_oeNext;
-    }
-
-    if( m_read )
-    {
-        int value = m_ram[m_address];
+        int value = 0;
         for( int i=0; i<m_numOutputs; ++i )
-            m_output[i]->setTimedOut( value & (1<<i) );
+        {
+            int  volt  = m_output[i]->getEpin(0)->getVolt();
+            bool state = m_dataPinState[i];
+
+            if     ( volt > m_inputHighV ) state = true;
+            else if( volt < m_inputLowV )  state = false;
+
+            m_dataPinState[i] = state;
+            if( state ) value += pow( 2, i );
+        }
+        m_ram[m_address] = value;
     }
 }
 

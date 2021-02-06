@@ -65,6 +65,7 @@ QList<propGroup_t> WaveGen::propGroups()
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Wave_Type", tr("Wave Type"),"enum"} );
     mainGroup.propList.append( {"Freq", tr("Frequency"),"Hz"} );
+    mainGroup.propList.append( {"Steps", tr("Quality"),"Steps"} );
     mainGroup.propList.append( {"Duty", tr("Duty"),"\%"} );
     mainGroup.propList.append( {"Always_On", tr("Always On"),""} );
 

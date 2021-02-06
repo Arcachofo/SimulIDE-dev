@@ -49,8 +49,7 @@ void eBinCounter::voltChanged()
     if( eLogicDevice::getInputState( 0 ) == true ) // Reset
     {
        m_Counter = 0;
-       m_runOut = false;
-       Simulator::self()->addEvent( m_propDelay, this );
+       m_nextOutVal = 0;
     }
     else if( clkRising )
     {
@@ -58,21 +57,15 @@ void eBinCounter::voltChanged()
 
         if( m_Counter == m_TopValue )
         {
-            m_runOut = true;
-            Simulator::self()->addEvent( m_propDelay, this );
+            m_nextOutVal = 1;
         }
         else if( m_Counter > m_TopValue )
         {
             m_Counter = 0;
-            m_runOut = false;
-            Simulator::self()->addEvent( m_propDelay, this );
+            m_nextOutVal = 0;
         }
     }
-}
-
-void eBinCounter::runEvent()
-{
-    m_output[0]->setTimedOut( m_runOut );
+    sheduleOutPuts();
 }
 
 int eBinCounter::TopValue() const

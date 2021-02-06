@@ -33,8 +33,6 @@ void eBcdToDec::stamp()
         eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
-    m_dec = -1;
-
     eLogicDevice::stamp();
 }
 
@@ -42,27 +40,19 @@ void eBcdToDec::initialize()
 {
     eLogicDevice::initialize();
     setOut( 0, true );
-    m_old = -1;
 }
 
 void eBcdToDec::voltChanged()
 {
     eLogicDevice::updateOutEnabled();
 
-    m_dec = 0;
+    int dec = 0;
 
     for( int i=0; i<4; ++i )
-        if( getInputState( i ) ) m_dec += pow( 2, i );
+        if( getInputState( i ) ) dec += pow( 2, i );
 
-    Simulator::self()->addEvent( m_propDelay, this );
-}
-
-void eBcdToDec::runEvent()
-{
-    if( m_old >= 0 ) m_output[m_old]->setTimedOut( false );
-    if( m_dec >= 0 ) m_output[m_dec]->setTimedOut( true );
-
-    m_old = m_dec;
+    m_nextOutVal = 1<<dec;
+    sheduleOutPuts();
 }
 
 void eBcdToDec::set_16bits( bool set )

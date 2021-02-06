@@ -39,17 +39,22 @@ void eADC::stamp()
 void eADC::voltChanged()
 {
     double volt = m_input[0]->getVolt();
-    m_value = (int)(volt*m_maxValue/m_maxVolt+0.1);
+    m_nextOutVal = (int)(volt*m_maxValue/m_maxVolt+0.1);
+    m_outStep = 0;
 
-    Simulator::self()->addEvent( m_propDelay, this );
+    if( m_outValue != m_nextOutVal )
+        Simulator::self()->addEvent( m_propDelay, this );
 }
 
 void eADC::runEvent()
 {
+    eLogicDevice::runEvent();
+    return;
     for( int i=0; i<m_numOutputs; ++i )
     {
-        //qDebug() << "eADC::setVChanged" << i << (address & 1);
-        m_output[m_numOutputs-1-i]->setTimedOut( m_value & 1 );
-        m_value >>= 1;
+        bool state = m_nextOutVal & (1<<i);
+        bool oldst = m_outValue & (1<<i);
+
+        if( state != oldst ) m_output[m_numOutputs-1-i]->setOut( state );
     }
 }

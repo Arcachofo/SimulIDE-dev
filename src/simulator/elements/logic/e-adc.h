@@ -41,8 +41,6 @@ class MAINMODULE_EXPORT eADC : public eLogicDevice
     protected:
         double m_maxVolt;
         double m_maxValue;
-
-        int    m_value;
 };
 
 #endif

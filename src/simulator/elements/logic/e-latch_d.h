@@ -31,11 +31,6 @@ class MAINMODULE_EXPORT eLatchD : public eLogicDevice
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
-
-    protected:
-        uint32_t m_state;
-        uint32_t m_oldst;
 };
 
 

@@ -72,35 +72,29 @@ void eFunction::voltChanged()
     }
     //m_engine.globalObject().setProperty( "bits", QScriptValue( bits ) );
     //m_engine.globalObject().setProperty( "outputs", QScriptValue( m_numOutputs ) );
-    Simulator::self()->addEvent( m_propDelay, this );
-}
 
-void eFunction::runEvent()
-{
+    m_nextOutVal = 0;
     for( int i=0; i<m_numOutputs; ++i )
     {
         if( i >= m_numOutputs ) break;
         QString text = m_funcList.at(i).toLower();
-        
+
         //qDebug() << "eFunction::voltChanged()"<<text<<m_engine.evaluate( text ).toString();
-            
+
         if( text.startsWith( "vo" ) )
         {
             float out = m_engine.evaluate( m_program.at(i) ).toNumber();
             m_output[i]->setVoltHigh( out );
-            m_output[i]->setOut( true );
-            m_output[i]->stampOutput();
-            
+            m_nextOutVal += 1<<i;
         }
         else
         {
             bool out = m_engine.evaluate( m_program.at(i) ).toBool();
-            m_output[i]->setTimedOut( out );
+            m_output[i]->setVoltHigh( m_outHighV );
+            if( out ) m_nextOutVal += 1<<i;
         }
-        //qDebug()<<"Func:"<< i << text; //textLabel->setText(text);
-        //qDebug() << ":" << out;
-        //qDebug() << m_engine.globalObject().property("i0").toVariant() << m_engine.globalObject().property("i1").toVariant();
     }
+    sheduleOutPuts();
 }
 
 QString eFunction::functions()

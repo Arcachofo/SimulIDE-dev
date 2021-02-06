@@ -32,15 +32,11 @@ class MAINMODULE_EXPORT eBcdToDec : public eLogicDevice
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
 
         virtual void set_16bits( bool set );
 
     protected:
         bool m_16Bits;
-
-        int m_dec;
-        int m_old;
 };
 
 

@@ -67,13 +67,8 @@ BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
 
     eLogicDevice::createOutEnablePin( m_inPin[4] );    // IOutput Enable
 
-    for( int i=0; i<4; i++ )
-        eLogicDevice::createInput( m_inPin[i] );
-        
-    for( int i=0; i<7; i++ )
-    {
-        eLogicDevice::createOutput( m_outPin[i] );
-    }
+    for( int i=0; i<4; ++i ) eLogicDevice::createInput( m_inPin[i] );
+    for( int i=0; i<7; ++i ) eLogicDevice::createOutput( m_outPin[i] );
 }
 BcdTo7S::~BcdTo7S(){}
 

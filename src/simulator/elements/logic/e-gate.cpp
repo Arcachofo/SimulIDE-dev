@@ -37,10 +37,13 @@ void eGate::stamp()
         eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
+    m_out = false;
 }
 
 void eGate::voltChanged()
 {
+    if( m_tristate ) eLogicDevice::updateOutEnabled();
+
     int  inputs = 0;
 
     for( int i=0; i<m_numInputs; ++i )
@@ -48,16 +51,19 @@ void eGate::voltChanged()
         bool state = eLogicDevice::getInputState( i );
         if( state ) inputs++;
     }
-    m_out = calcOutput( inputs ); // In each gate type
-    
-    // Add random 1-10 ps to avoid oscillations
-    Simulator::self()->addEvent( m_propDelay+(std::rand() %2), this );
+    bool out = calcOutput( inputs ); // In each gate type
+
+    m_nextOutVal = out? 1:0;
+    if( m_out == out && !m_tristate ) return;
+    m_out = out;
+
+    // Add random 0-1 ps to avoid oscillations
+    if( m_openCol ) Simulator::self()->addEvent( m_propDelay+(std::rand() %2), this );
+    else sheduleOutPuts();
 }
 
 void eGate::runEvent()
 {
-    if( m_tristate ) eLogicDevice::updateOutEnabled();
-
     if( m_openCol )
     {
         double imp = m_outImp;
@@ -67,7 +73,7 @@ void eGate::runEvent()
 
         m_output[0]->setImp( imp );
     }
-    m_output[0]->setTimedOut( m_out );
+    else eLogicDevice::runEvent();
 }
 
 bool eGate::calcOutput( int inputs ) 

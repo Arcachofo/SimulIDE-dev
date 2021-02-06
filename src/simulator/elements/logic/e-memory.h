@@ -59,7 +59,6 @@ class MAINMODULE_EXPORT eMemory : public eLogicDevice
         bool m_we;
         bool m_cs;
         bool m_oe;
-        bool m_oeNext;
         bool m_read;
         bool m_persistent;
 };

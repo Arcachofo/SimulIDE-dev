@@ -29,6 +29,7 @@ eFlipFlopD::~eFlipFlopD() {}
 
 void eFlipFlopD::stamp()
 {
+    m_Q0 = 0;
     eNode* enode = m_input[1]->getEpin(0)->getEnode();         // Set pin
     if( enode ) enode->voltChangedCallback( this );
     
@@ -51,27 +52,11 @@ void eFlipFlopD::voltChanged()
     bool set   = getInputState( 1 );
     bool reset = getInputState( 2 );
 
-    //qDebug() << "eFlipFlopD::voltChanged()"<<clkRising;
+    if( set || reset)   m_Q0 = set;
+    else if( clkAllow ) m_Q0 = getInputState( 0 );
 
-    if( set || reset)
-    {
-        m_Q0 = set;         // Q
-        m_Q1 = reset;       // Q'
-    }
-    else if( clkAllow )     // Allow operation
-    {
-        bool D = getInputState( 0 );
-
-        m_Q0 =  D;          // Q
-        m_Q1 = !D;          // Q'
-    }
-    Simulator::self()->addEvent( m_propDelay, this );
-}
-
-void eFlipFlopD::runEvent()
-{
-    m_output[0]->setTimedOut( m_Q0 );      // Q
-    m_output[1]->setTimedOut( m_Q1 );      // Q'
+    m_nextOutVal = m_Q0? 1:2;
+    sheduleOutPuts();
 }
 
 void eFlipFlopD::setSrInv( bool inv )

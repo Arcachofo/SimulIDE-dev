@@ -29,13 +29,7 @@ class MAINMODULE_EXPORT eDemux : public eLogicDevice
         ~eDemux();
 
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
-
-    protected:
-        int m_address;
-        int m_oldAddr;
 };
 
 #endif

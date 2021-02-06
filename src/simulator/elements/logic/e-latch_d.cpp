@@ -23,13 +23,11 @@
 eLatchD::eLatchD( QString id, int channels )
        : eLogicDevice( id )
 {
-    m_oldst = 0;
 }
 eLatchD::~eLatchD(){}
 
 void eLatchD::stamp()
 {
-    m_oldst = false;
     if( m_etrigger != Trig_Clk )
     {
         for( uint i=0; i<m_input.size(); ++i )
@@ -47,22 +45,10 @@ void eLatchD::voltChanged()
 
     if( getClockState() == Clock_Allow )
     {
-        m_state = 0;
+        m_nextOutVal = 0;
         for( int i=0; i<m_numOutputs; ++i )
-            if( getInputState( i ) ) m_state |= 1<<i;
+            if( getInputState( i ) ) m_nextOutVal |= 1<<i;
     }
-    Simulator::self()->addEvent( m_propDelay, this );
-}
-
-void eLatchD::runEvent()
-{
-    for( int i=0; i<m_numOutputs; ++i )
-    {
-        bool state = m_state & (1<<i);
-        bool oldst = m_oldst & (1<<i);
-
-        if( state != oldst )  m_output[i]->setTimedOut( state );
-    }
-    m_oldst = m_state;
+    sheduleOutPuts();
 }
 

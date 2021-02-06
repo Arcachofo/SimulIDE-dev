@@ -34,7 +34,6 @@ class MAINMODULE_EXPORT eFunction : public eLogicDevice
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
         
         QString functions();
         void setFunctions( QString f );

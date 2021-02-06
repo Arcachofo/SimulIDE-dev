@@ -84,7 +84,7 @@ void ADC::setNumOuts( int outs )
     LogicComponent::setNumOuts( outs );
     eLogicDevice::deleteOutputs( m_numOutputs );
 
-    for( int i=0; i<outs; i++ )
+    for( int i=0; i<outs; ++i )
     {
         QString num = QString::number(outs-i-1);
         m_outPin[i] = new Pin( 0, QPoint(24,-8*outs+i*8+8 ), m_id+"-out"+num, i, this );

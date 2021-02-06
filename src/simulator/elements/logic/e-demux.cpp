@@ -26,12 +26,6 @@ eDemux::eDemux( QString id )
 }
 eDemux::~eDemux() {}
 
-void eDemux::initialize()
-{
-    m_oldAddr = -1;
-    eLogicDevice::initialize();
-}
-
 void eDemux::stamp()
 {
     for( int i=0; i<4; ++i )
@@ -46,22 +40,16 @@ void eDemux::voltChanged()
 {
     eLogicDevice::updateOutEnabled();
     
-    m_address = -1;
+    int address = 0;
 
     if( getInputState( 3 ) )
     {
-        m_address = 0;
-
         for( int i=0; i<3; ++i )
-            if( getInputState( i ) ) m_address += pow( 2, i );
+            if( getInputState( i ) ) address += pow( 2, i );
+
+        m_nextOutVal = 1<<address;
     }
-    Simulator::self()->addEvent( m_propDelay, this );
-}
+    else m_nextOutVal = 0;
 
-void eDemux::runEvent()
-{
-    if( m_oldAddr >= 0 ) m_output[m_oldAddr]->setTimedOut( false );
-    if( m_address >= 0 ) m_output[m_address]->setTimedOut( true );
-
-    m_oldAddr = m_address;
+    sheduleOutPuts();
 }

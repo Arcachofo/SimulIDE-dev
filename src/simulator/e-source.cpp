@@ -81,6 +81,24 @@ void eSource::stampOutput()
     m_ePin[0]->stampCurrent( m_voltOut/m_imp );
 }
 
+void eSource::stampState( bool state, int step )
+{
+    if( m_inverted ) state = !state;
+
+    if( step == 0 )
+    {
+        if( state ) m_voltOut = m_voltLow + 1e-6;
+        else        m_voltOut = m_voltHigh - 1e-6;
+    }
+    else
+    {
+        m_out = state;
+        if( state ) m_voltOut = m_voltHigh;
+        else        m_voltOut = m_voltLow;
+    }
+    stampOutput();
+}
+
 void eSource::setVoltHigh( double v )
 {
     m_voltHigh = v;
@@ -93,7 +111,7 @@ void eSource::setVoltLow( double v )
     if( !m_out ) m_voltOut = v;
 }
 
-void eSource::setOut( bool out ) // Set Output to Hight or Low
+void eSource::setOut( bool out, bool stamp ) // Set Output to Hight or Low
 {
     if( m_inverted ) m_out = !out;
     else             m_out =  out;
@@ -102,6 +120,7 @@ void eSource::setOut( bool out ) // Set Output to Hight or Low
     else        m_voltOut = m_voltLow;
 
     m_voltOutNext = m_voltOut;
+    if( stamp ) stampOutput();
 }
 
 void eSource::setImp( double imp )
@@ -167,8 +186,8 @@ void eSource::setInverted( bool inverted )
 {
     if( inverted == m_inverted ) return;
 
-    if( inverted ) setTimedOut( !m_out );
-    else           setTimedOut( m_out );
+    if( inverted ) setOut( !m_out );
+    else           setOut( m_out );
 
     m_inverted = inverted;
     m_ePin[0]->setInverted( inverted );
