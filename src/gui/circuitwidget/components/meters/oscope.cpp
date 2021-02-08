@@ -326,4 +326,16 @@ void Oscope::setVoltPos( int ch, double vp )
     m_oscWidget->updateVoltPosBox( ch, vp );
 }
 
+void Oscope::remove()
+{
+    Simulator::self()->remFromUpdateList( this );
+
+    for( int i=0; i<4; i++ ) delete m_oscCh[i];
+
+    m_proxy->setWidget( NULL );
+    delete m_dataWidget;
+
+    Component::remove();
+}
+
 #include "moc_oscope.cpp"

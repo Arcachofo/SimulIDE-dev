@@ -75,6 +75,7 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         void setVolPos( QStringList vp );
 
         virtual void updateStep() override;
+        virtual void remove() override;
 
         virtual void setTimeDiv( uint64_t td ) override;
 

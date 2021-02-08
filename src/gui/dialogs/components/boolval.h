@@ -42,6 +42,8 @@ class BoolVal : public QWidget, private Ui::BoolVal
     private:
         Component* m_component;
         QString m_propName;
+
+        bool m_blocked;
 };
 
 #endif

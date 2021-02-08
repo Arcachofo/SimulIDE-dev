@@ -131,18 +131,6 @@ void PlotBase::setCh2Cond( paCond cond )
     m_channel[1]->m_chCond = cond;
 }
 
-void PlotBase::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-
-    for( int i=0; i<4; i++ ) delete m_channel[i];
-
-    //m_proxy->setWidget( NULL );
-    //delete m_topW;
-
-    Component::remove();
-}
-
 void PlotBase::setProbe1( QString p )
 {
     m_probe[0] = p;

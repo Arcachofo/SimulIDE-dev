@@ -219,8 +219,10 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
 
             if( type == "Connector" )
             {
-                Pin* startpin  = circ->getConPin( element.attribute( "startpinid" ) );
-                Pin* endpin    = circ->getConPin( element.attribute( "endpinid" ) );
+                QString startPinId = element.attribute( "startpinid" ) ;
+                QString endPinId   = element.attribute( "endpinid" )  ;
+                Pin* startpin  = circ->getConPin( startPinId );
+                Pin* endpin    = circ->getConPin( endPinId );
 
                 if( startpin && endpin )    // Create Connector
                 {
@@ -248,8 +250,8 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
                 }
                 else // Start or End pin not found
                 {
-                    if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null startpin in " << objNam;
-                    if( !endpin )   qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null endpin in "   << objNam;
+                    if( !startpin ) qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc:  null startpin in " << objNam<<startPinId;
+                    if( !endpin )   qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc:  null endpin in "   << objNam<<endPinId;
                 }
             }
             else if( type == "Package" ) { ; }
@@ -419,6 +421,7 @@ void SubCircuit::remove()
 {
     for( Component* comp : m_compList )
     {
+        if( comp->itemType()=="Node" ) continue;
         comp->setParentItem( 0l );
         Circuit::self()->removeComp( comp );
     }

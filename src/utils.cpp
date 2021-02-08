@@ -17,9 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "utils.h"
-#include "pin.h"
-
 #include <QDomDocument>
 #include <QString>
 #include <QFile>
@@ -28,6 +25,9 @@
 #include <qpoint.h>
 #include <QPointF>
 #include <cmath>
+
+#include "utils.h"
+#include "pin.h"
 
 
 void MessageBoxNB( const QString &title, const QString &message )

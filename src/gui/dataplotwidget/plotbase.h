@@ -87,7 +87,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         virtual void setTimeDiv( uint64_t td ){ m_timeDiv = td;}
 
         virtual void initialize() override;
-        virtual void remove() override;
 
         virtual void expand( bool e ){;}
 

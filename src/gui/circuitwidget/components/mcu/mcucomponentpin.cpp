@@ -77,8 +77,7 @@ void McuComponentPin::stamp()
         }
         update();
     }
-    else
-        eSource::stamp();
+    else eSource::stamp();
 }
 
 void McuComponentPin::initialize()

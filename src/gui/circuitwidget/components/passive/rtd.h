@@ -32,7 +32,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT RTD : public ThermistorBase
 {
     Q_OBJECT
-    Q_PROPERTY( double R0      READ getR0   WRITE setR0   DESIGNABLE true USER true )
+    Q_PROPERTY( double R0 READ getR0   WRITE setR0   DESIGNABLE true USER true )
     //Q_PROPERTY( bool   Show_sense READ showSense  WRITE setShowSense DESIGNABLE true USER true )
 
  public:
@@ -62,9 +62,9 @@ class MAINMODULE_EXPORT RTD : public ThermistorBase
     double m_r0 = 100.0;
     //double coef_temp = 0.00385;  // linear approximation
     //here we use a more realist third order polynomial approximation
-    double coef_temp_a =3.9083e-3;  // a * T
-    double coef_temp_b = -5.775e-7; // b*T2
-    double coef_temp_c =-4.183e-12;  // c*(T-100)*T3 (T < 0 only)
+    double coef_temp_a = 3.9083e-3;   // a * T
+    double coef_temp_b = -5.775e-7;   // b*T2
+    double coef_temp_c = -4.183e-12;  // c*(T-100)*T3 (T < 0 only)
 };
 
 #endif

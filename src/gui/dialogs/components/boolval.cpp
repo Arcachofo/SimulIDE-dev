@@ -31,20 +31,24 @@ BoolVal::BoolVal( QWidget* parent )
 void BoolVal::setPropName( QString name, QString caption )
 {
     m_propName = name;
+    m_blocked = false;
     trueVal->setText( caption );
 }
 
 void BoolVal::setup( Component* comp )
 {
+    m_blocked = true;
     m_component = comp;
     bool checked = m_component->property( m_propName.toUtf8() ).toBool();
     trueVal->setChecked( checked );
+    m_blocked = false;
 
     this->adjustSize();
 }
 
 void BoolVal::on_trueVal_toggled( bool checked )
 {
+    if( m_blocked ) return;
     m_component->setProperty( m_propName.toUtf8(), checked );
 }
 
