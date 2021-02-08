@@ -118,7 +118,7 @@ void eBJT::voltChanged()
     double voltBE = voltB-voltE;
     if( m_PNP ) { voltBC = -voltBC; voltBE = -voltBE; }
 
-    else if( (fabs(voltBC-m_voltBC) < .01) && (fabs(voltBE-m_voltBE) < .01) )
+    if( (fabs(voltBC-m_voltBC) < .01) && (fabs(voltBE-m_voltBE) < .01) )
     { m_steps = 0; return; }
 
     double gmin = 0;//1e-15;
