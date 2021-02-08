@@ -177,8 +177,8 @@ void LogicInput::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWi
 
     Component::paint( p, option, widget );
 
-    if( m_outValue ) p->setBrush( QColor( 255, 166, 0 ) );
-    else             p->setBrush( QColor( 230, 230, 255 ) );
+    if( m_button->isChecked() ) p->setBrush( QColor( 255, 166, 0 ) );
+    else                        p->setBrush( QColor( 230, 230, 255 ) );
 
     p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
 }
