@@ -30,6 +30,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     m_oscope = oscope;
     m_blocked = false;
     m_channel = 4;
+    QString color = m_oscope->getColor( m_channel ).name();
 
     channelGroup->addButton( chButton1, 0 );
     channelGroup->addButton( chButton2, 1 );
@@ -44,6 +45,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     autoGroup->addButton( autoCheck4, 3 );
     autoGroup->addButton( autoCheck5, 4 );
     autoGroup->button( 4 )->setChecked( true );
+    autoLabel->setStyleSheet( "background-color:"+color );
 
     triggerGroup->addButton( triggerCheck1, 0 );
     triggerGroup->addButton( triggerCheck2, 1 );
@@ -51,6 +53,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     triggerGroup->addButton( triggerCheck4, 3 );
     triggerGroup->addButton( triggerCheck5, 4 );
     triggerGroup->button( 4 )->setChecked( true );
+    trigLabel->setStyleSheet( "background-color:"+color );
 
     hideGroup->addButton( hideCheck1, 0 );
     hideGroup->addButton( hideCheck2, 1 );
@@ -58,6 +61,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     hideGroup->addButton( hideCheck4, 3 );
     hideGroup->addButton( hideCheck5, 4 );
     hideGroup->button( 4 )->setChecked( true );
+    hideLabel->setStyleSheet( "background-color:"+color );
 
     trackGroup->addButton( trackCheck1, 1 );
     trackGroup->addButton( trackCheck2, 2 );
@@ -68,8 +72,9 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     {
         QString color = m_oscope->getColor( i ).name();
         channelGroup->button( i )->setStyleSheet( "background-color:"+color );
-        triggerGroup->button( i )->setStyleSheet( "background-color:"+color );
         autoGroup->button( i )->setStyleSheet( "background-color:"+color );
+        triggerGroup->button( i )->setStyleSheet( "background-color:"+color );
+        hideGroup->button( i )->setStyleSheet( "background-color:"+color );
     }
     mainLayout->setDirection( QBoxLayout::RightToLeft );
 }
@@ -325,10 +330,12 @@ void OscWidget::setTrigger( int ch )
 
 void OscWidget::on_hideGroup_buttonClicked( int ch )
 {
-    m_oscope->hideChannel( ch, hideGroup->button(ch)->isChecked() );
-
     if( ch == 4 )
+    {
         for( int i=0; i<4; ++i ) m_oscope->hideChannel( i, false );
+        hideChannel( ch, hideGroup->button(ch)->isChecked() );
+    }
+    else m_oscope->hideChannel( ch, hideGroup->button(ch)->isChecked() );
 }
 
 void OscWidget::hideChannel( int ch, bool hide )

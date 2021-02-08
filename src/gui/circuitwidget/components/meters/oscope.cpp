@@ -52,8 +52,8 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     Q_UNUSED( Oscope_properties );
 
     m_graphical = true;
-    m_trigger = 0;
-    m_auto    = 0;
+    m_trigger = 4;
+    m_auto    = 4;
     m_filter = 0.0;
     m_extraSize = 70;
     m_bufferSize = 600000;
@@ -76,6 +76,8 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
         m_channel[i]->m_buffer.resize( m_bufferSize );
         m_channel[i]->m_time.resize( m_bufferSize );
 
+        m_hideCh[i] = false;
+
         m_display->setColor( i, m_color[i] );
         m_dataWidget->setColor( i, m_color[i] );
 
@@ -83,6 +85,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
         setVoltDiv( i, 1 );
         setVoltPos( i, 0 );
     }
+    setTimeDiv( 1e9 ); // 1 ms
     setLabelPos(-90,-100, 0);
     expand( false );
 }
