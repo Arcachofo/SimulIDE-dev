@@ -75,7 +75,7 @@ void ClockBase::updateStep()
 void ClockBase::setAlwaysOn( bool on )
 {
     m_alwaysOn = on;
-    setRunning( on );
+    if( on ) setRunning( on );
     m_button->setVisible( !on );
 }
 

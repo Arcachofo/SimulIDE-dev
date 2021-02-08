@@ -43,6 +43,7 @@ class MAINMODULE_EXPORT ClockBase : public LogicInput
         
         bool running();
         virtual void setRunning( bool running );
+        virtual void setOut( bool ){;}
 
         virtual void stamp() override;
         virtual void updateStep() override;

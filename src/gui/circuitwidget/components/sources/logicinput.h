@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eLogicDevice
         virtual QList<propGroup_t> propGroups() override;
 
         bool out() { return m_outValue; }
-        void setOut( bool out );
+        virtual void setOut( bool out );
 
         double volt();
         void setVolt( double v );
