@@ -22,7 +22,6 @@
 
 #include "clock-base.h"
 #include "itemlibrary.h"
-#include <QObject>
 
 class MAINMODULE_EXPORT WaveGen : public ClockBase
 {

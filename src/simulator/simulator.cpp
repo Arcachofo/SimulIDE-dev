@@ -17,8 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <iostream>
+//#include <iostream>
 
+#include "simulator.h"
 #include "circuit.h"
 #include "matrixsolver.h"
 #include "e-element.h"
@@ -27,7 +28,7 @@
 #include "mainwindow.h"
 #include "circuitwidget.h"
 #include "baseprocessor.h"
-#include "simulator.h"
+
 
 Simulator* Simulator::m_pSelf = 0l;
 

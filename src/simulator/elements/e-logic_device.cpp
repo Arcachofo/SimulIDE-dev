@@ -86,23 +86,20 @@ void eLogicDevice::initialize()
 
 void eLogicDevice::runEvent()
 {
-    /*for( int i=0; i<m_numOutputs; ++i )
-    {
-        bool state = m_nextOutVal & (1<<i);
-        bool oldst = m_outValue & (1<<i);
-
-        if( state != oldst ) m_output[i]->setOut( state, true );
-    }
-    m_outValue = m_nextOutVal;
-    return;*/
-
     for( int i=0; i<m_numOutputs; ++i )
     {
         bool state = m_nextOutVal & (1<<i);
         bool oldst = m_outValue   & (1<<i);
 
         if( state != oldst )
-            m_output[i]->stampState( state, m_outStep );
+        {
+            if( m_outStep == 0 )
+            {
+                eNode* enode =  m_output[i]->getPin()->getEnode();
+                if( enode ) enode->saveData();
+            }
+            else m_output[i]->setOut( state, true );
+        }
     }
     if( m_outStep == 0 )
     {
@@ -312,8 +309,7 @@ void eLogicDevice::setNumOuts( int outputs )
 
 void eLogicDevice::setOut( int num, bool out )
 {
-    m_output[num]->setOut( out );
-    m_output[num]->stampOutput();
+    m_output[num]->setOut( out, true );
 }
 
 void eLogicDevice::setOutHighV( double volt )

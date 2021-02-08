@@ -23,6 +23,8 @@
 #include "e-pin.h"
 #include "e-element.h"
 
+class DataChannel;
+
 class MAINMODULE_EXPORT eNode
 {
     public:
@@ -71,6 +73,10 @@ class MAINMODULE_EXPORT eNode
         void createBus();
         void addBusPinList( QList<ePin*> list, int line );
 
+        void addToPlotterList( DataChannel* el );
+        void remFromPlotterList( DataChannel* el );
+        void saveData(); // Plotters will read data
+
         QList<ePin*> getEpins();
         QList<int> getConnections();
 
@@ -84,6 +90,8 @@ class MAINMODULE_EXPORT eNode
 
         QList<eElement*> m_changedFast;
         QList<eElement*> m_nonLinear;
+
+        QList<DataChannel*> m_plotterList;
 
         QHash<ePin*, double> m_admitList;
         QHash<ePin*, double> m_currList;

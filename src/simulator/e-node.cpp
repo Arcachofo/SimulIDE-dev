@@ -20,7 +20,7 @@
 #include "e-node.h"
 #include "simulator.h"
 #include "e-element.h"
-
+#include "datachannel.h"
 
 eNode::eNode( QString id )
 {
@@ -31,15 +31,13 @@ eNode::eNode( QString id )
     m_isBus = false;
 
     initialize();
-    //qDebug() << "+eNode" << m_id;
 
     Simulator::self()->addToEnodeList( this );
 }
-eNode::~eNode(){ /*qDebug() << "~eNode" << m_id;Simulator::self()->remFromEnodeList( this );*/ }
+eNode::~eNode(){}
 
 void eNode::pinChanged( ePin* epin, int enodeComp ) // Add node at other side of pin
 {
-    //qDebug() << "eNode::pinChanged" << m_id << epin << enodeComp;
     m_nodeList[epin] = enodeComp;
 }
 
@@ -64,7 +62,6 @@ void eNode::initialize()
     {
         m_eBusPinList.clear();
         m_eNodeList.clear();
-        //qDebug() << "\neNode::initialize"<<this << m_eBusPinList.size();
     }
 }
 
@@ -73,8 +70,6 @@ void eNode::stampCurrent( ePin* epin, double data )
     if( m_nodeList[epin] == m_nodeNum  ) return; // Be sure msg doesn't come from this node
 
     m_currList[epin] = data;
-
-    //qDebug()<< m_nodeNum << epin << data << m_totalCurr;
 
     m_currChanged = true;
 
@@ -197,10 +192,8 @@ QList<int> eNode::getConnections()
 
 void  eNode::setVolt( double v )
 {
-    //qDebug() << m_id << m_volt << v<<Simulator::self()->NLaccuracy();
     if( m_volt != v ) //( fabs(m_volt-v) > 1e-9 ) //
     {
-        //qDebug() << m_id << "setVChanged";
         m_voltChanged = true;
         m_volt = v;
 
@@ -232,7 +225,6 @@ void eNode::setIsBus( bool bus )
 void eNode::createBus()
 {
     int busSize = m_eBusPinList.size();
-    //qDebug()<<"\neNode::createBus"<< this <<busSize << m_eBusPinList;
 
     m_eNodeList.clear();
     for( int i=0; i<busSize; i++ )
@@ -262,17 +254,11 @@ void eNode::addBusPinList( QList<ePin*> list, int line )
             m_eBusPinList.append( newList );
         }
     }
-
     QList<ePin*> pinList = m_eBusPinList.at( line );
     for( ePin* epin : list )
     {
-        if( !pinList.contains( epin ))
-        {
-            pinList.append( epin );
-            //epin->setEnode( this );
-        }
+        if( !pinList.contains( epin ) ) pinList.append( epin );
     }
-    //qDebug() << "eNode::addBusPinList" <<this<< line << busSize<<"\n"<<pinList;
     m_eBusPinList.replace( line, pinList );
 }
 
@@ -280,16 +266,12 @@ QList<ePin*> eNode::getEpins()    { return m_ePinList; }
 
 void eNode::addEpin( ePin* epin )
 {
-    //qDebug() << "eNode::addEpin" << m_id << QString::fromStdString(epin->getId());
     if( !m_ePinList.contains(epin)) m_ePinList.append(epin);
 }
 
 void eNode::remEpin( ePin* epin )
 {
-    //qDebug() << "eNode::remEpin" << m_id << QString::fromStdString(epin->getId());
     if( m_ePinList.contains(epin) ) m_ePinList.removeOne( epin );
-
-//qDebug() << "eNode::remEpin" << m_id << QString::fromStdString(epin->getId())<<m_ePinList.size();
 
     if( m_ePinList.isEmpty() ) // If No epins then remove this enode
     {
@@ -298,25 +280,26 @@ void eNode::remEpin( ePin* epin )
     }
 }
 
+void eNode::saveData()
+{ for( DataChannel* plotter : m_plotterList ) plotter->voltChanged(); }
+
 void eNode::voltChangedCallback( eElement* el )
-{
-    if( !m_changedFast.contains(el) ) m_changedFast.append(el);
-}
+{ if( !m_changedFast.contains(el) ) m_changedFast.append(el); }
 
 void eNode::remFromChangedCallback( eElement* el )
-{
-    m_changedFast.removeOne(el);
-}
+{  m_changedFast.removeOne(el); }
 
 void eNode::addToNoLinList( eElement* el )
-{
-    if( !m_nonLinear.contains(el) ) m_nonLinear.append(el);
-}
+{ if( !m_nonLinear.contains(el) ) m_nonLinear.append(el); }
 
 void eNode::remFromNoLinList( eElement* el )
-{
-    m_nonLinear.removeOne(el);
-}
+{ m_nonLinear.removeOne(el); }
+
+void eNode::addToPlotterList( DataChannel* el )
+{ if( !m_plotterList.contains(el) ) m_plotterList.append(el);}
+
+void eNode::remFromPlotterList( DataChannel* el )
+{if( m_plotterList.contains(el) ) m_plotterList.removeOne(el);}
 
 void eNode::setSingle( bool single ){ m_single = single; }      // This eNode can calculate it's own Volt
 bool eNode::isSingle(){ return m_single; }

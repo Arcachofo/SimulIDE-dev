@@ -108,7 +108,7 @@ void McuComponentPin::setDirection( bool out )
         if( m_ePin[0]->isConnected() && m_attached )
             m_ePin[0]->getEnode()->remFromChangedCallback( this ); // Don't Receive voltage change notifications
 
-        eSource::setTimedImp( 40 );
+        eSource::setImp( 40 );
         setState( m_state );
     }
     else           // Set Pin to Input
@@ -135,7 +135,7 @@ void McuComponentPin::setState( bool state )
         else        m_gndAdmit = 1./40.;
         update();
     }
-    else eSource::setTimedOut( state );
+    else eSource::setOut( state );
 }
 
 void McuComponentPin::update()
@@ -146,7 +146,7 @@ void McuComponentPin::update()
 
     m_voltOutNext = 5*vddAdmit*Rth;
 
-    eSource::setTimedImp( Rth );
+    eSource::setImp( Rth );
 }
 
 void McuComponentPin::setPullup( bool up )

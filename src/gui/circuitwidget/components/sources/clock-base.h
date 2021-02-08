@@ -40,12 +40,6 @@ class MAINMODULE_EXPORT ClockBase : public LogicInput
 
         double freq() { return m_freq; }
         virtual void setFreq( double freq );
-
-        uint64_t riseTime();
-        void setRiseTime( uint64_t time );
-
-        uint64_t fallTime();
-        void setFallTime( uint64_t time );
         
         bool running();
         virtual void setRunning( bool running );
@@ -64,7 +58,6 @@ class MAINMODULE_EXPORT ClockBase : public LogicInput
         bool m_isRunning;
         bool m_alwaysOn;
 
-        int m_step;
         uint64_t m_stepsPC;
         double m_fstepsPC;
 

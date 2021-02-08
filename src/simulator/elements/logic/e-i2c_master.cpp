@@ -41,14 +41,14 @@ void eI2CMaster::stamp()                    // Called at Simulation Start
 
 void eI2CMaster::setSDA( bool state )
 {
-    if( state ) SDA_PIN->setTimedImp( high_imp );
-    else        SDA_PIN->setTimedImp( m_outImp );
+    if( state ) SDA_PIN->setImp( high_imp );
+    else        SDA_PIN->setImp( m_outImp );
 }
 
 void eI2CMaster::setSCL( bool state )
 {
-    if( state ) SCL_PIN->setTimedImp( high_imp );
-    else        SCL_PIN->setTimedImp( m_outImp );
+    if( state ) SCL_PIN->setImp( high_imp );
+    else        SCL_PIN->setImp( m_outImp );
 }
 
 void eI2CMaster::keepClocking()

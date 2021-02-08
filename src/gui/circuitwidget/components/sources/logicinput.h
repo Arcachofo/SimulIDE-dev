@@ -21,12 +21,14 @@
 #define LOGICINPUT_H
 
 #include "component.h"
-#include "e-source.h"
-#include "pin.h"
+#include "e-logic_device.h"
+//#include "e-source.h"
 
+
+class Pin;
 class LibraryItem;
 
-class MAINMODULE_EXPORT LogicInput : public Component, public eElement
+class MAINMODULE_EXPORT LogicInput : public Component, public eLogicDevice
 {
     Q_OBJECT
     Q_PROPERTY( double   Voltage   READ volt    WRITE setVolt    DESIGNABLE true USER true )
@@ -41,7 +43,7 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eElement
 
         virtual QList<propGroup_t> propGroups() override;
 
-        bool out() { return m_out->out(); }
+        bool out() { return m_outValue; }
         void setOut( bool out );
 
         double volt();
@@ -62,10 +64,10 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eElement
     protected:
         void updateOutput();
 
-        double m_voltHight;
+        //double m_voltHight;
 
-        Pin*     m_outpin;
-        eSource* m_out;
+        Pin*  m_outpin;
+        //eSource* m_out;
 
         QToolButton* m_button;
         QGraphicsProxyWidget* m_proxy;

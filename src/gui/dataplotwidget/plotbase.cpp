@@ -56,7 +56,7 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 }
-PlotBase::~PlotBase() {}
+PlotBase::~PlotBase(){}
 
 void PlotBase::initialize()
 {

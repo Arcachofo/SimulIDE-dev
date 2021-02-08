@@ -17,11 +17,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "logicinput.h"
 #include "connector.h"
 #include "circuit.h"
 #include "itemlibrary.h"
-#include "logicinput.h"
 #include "simulator.h"
+#include "pin.h"
 
 static const char* LogicInput_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Voltage"),
@@ -44,7 +45,7 @@ LibraryItem* LogicInput::libraryItem()
 
 LogicInput::LogicInput( QObject* parent, QString type, QString id )
           : Component( parent, type, id )
-          , eElement( id )
+          , eLogicDevice( id )
 {
     Q_UNUSED( LogicInput_properties );
 
@@ -61,9 +62,10 @@ LogicInput::LogicInput( QObject* parent, QString type, QString id )
     m_outpin = new Pin( 0, nodpos, nodid, 0, this);
     m_pin.resize(1);
     m_pin[0] = m_outpin;
+    m_ePin.resize(1);
+    m_ePin[0] = m_outpin;
 
-    nodid.append(QString("-eSource"));
-    m_out = new eSource( nodid, m_outpin );
+    eLogicDevice::createOutput( m_outpin );
     
     m_unit = "V";
     setVolt(5.0);
@@ -104,18 +106,19 @@ void LogicInput::updateStep()
     {
         m_changed = false;
         Simulator::self()->addEvent( 1, this );
-        //update();
     }
 }
 
 void LogicInput::runEvent()
 {
-    m_out->stampOutput();
+    //m_out->stampOutput();
+    eLogicDevice::setOut( 0, m_button->isChecked() );
 }
 
 void LogicInput::onbuttonclicked()
 {
-    m_out->setOut( m_button->isChecked() );
+    //m_out->setOut( m_button->isChecked() );
+
     m_changed = true;
     update();
 }
@@ -149,8 +152,8 @@ void LogicInput::setUnit( QString un )
 
 void LogicInput::updateOutput()
 {
-    m_voltHight = m_value*m_unitMult;
-    m_out->setVoltHigh( m_voltHight );
+    m_outHighV = m_value*m_unitMult;
+    //m_out->setVoltHigh( m_voltHight );
     m_changed = true;
     Simulator::self()->addEvent( 1, NULL );
 }
@@ -163,8 +166,6 @@ void LogicInput::setOut( bool out )
 
 void LogicInput::remove()
 {
-    delete m_out;
-    
     Simulator::self()->remFromUpdateList( this );
     Component::remove();
 }
@@ -176,10 +177,8 @@ void LogicInput::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWi
 
     Component::paint( p, option, widget );
 
-    if ( m_out->out() )
-        p->setBrush( QColor( 255, 166, 0 ) );
-    else
-        p->setBrush( QColor( 230, 230, 255 ) );
+    if( m_outValue ) p->setBrush( QColor( 255, 166, 0 ) );
+    else             p->setBrush( QColor( 230, 230, 255 ) );
 
     p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
 }

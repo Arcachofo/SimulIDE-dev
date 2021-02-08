@@ -58,13 +58,17 @@ QList<propGroup_t> Clock::propGroups()
 
 void Clock::runEvent()
 {
-    m_out->setTimedOut( !m_out->out() );
+    if( m_outStep == 0 )
+    {
+        m_nextOutVal = m_outValue? 0:1;
 
-    m_remainder += m_fstepsPC-(double)m_stepsPC;
-    uint64_t remainerInt = m_remainder;
-    m_remainder -= remainerInt;
+        m_remainder += m_fstepsPC-(double)m_stepsPC;
+        uint64_t remainerInt = m_remainder;
+        m_remainder -= remainerInt;
 
-    if( m_isRunning ) Simulator::self()->addEvent( m_stepsPC/2+remainerInt, this );
+        if( m_isRunning ) Simulator::self()->addEvent( m_stepsPC/2+remainerInt, this );
+    }
+    eLogicDevice::runEvent();
 }
 
 void Clock::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

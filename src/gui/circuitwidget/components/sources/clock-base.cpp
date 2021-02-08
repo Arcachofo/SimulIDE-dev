@@ -38,7 +38,6 @@ ClockBase::ClockBase( QObject* parent, QString type, QString id )
     m_alwaysOn  = false;
 
     m_stepsPC = 0;
-    m_step = 0;
     setFreq( 1000 );
 
     Simulator::self()->addToUpdateList( this );
@@ -60,16 +59,15 @@ void ClockBase::updateStep()
     {
         if( m_isRunning )
         {
+            eLogicDevice::setOut( 0, true );
             Simulator::self()->cancelEvents( this );
             Simulator::self()->addEvent( 1, this );
         }
         else
         {
-            m_out->setOut( false );
+            eLogicDevice::setOut( 0, false );
             Simulator::self()->addEvent( 0, NULL );
         }
-
-        //LogicInput::updateStep();
         m_changed = false;
     }
 }
@@ -83,15 +81,11 @@ void ClockBase::setAlwaysOn( bool on )
 
 void ClockBase::setFreq( double freq )
 {
-    //double stepsPerS = Simulator::self()->stepsPerus()*1e6*1e6;
-
     m_fstepsPC = 1e6*1e6/freq;
     m_stepsPC  = m_fstepsPC;
     
     m_freq = freq;
     m_remainder = 0;
-    
-    //qDebug() << "ClockBase::setFreq"<<freq<<m_freq<<m_stepsPC;
     
     emit freqChanged();
 }
@@ -107,36 +101,13 @@ void ClockBase::setRunning( bool running )
 {
     m_button->setChecked( running );
     m_isRunning = running;
-    m_step = 0;
     m_changed = true;
     update();
-    //updateStep();
-    //qDebug() << m_stepsPC << m_isRunning ;
 }
 
 void ClockBase::onbuttonclicked()
 {
     setRunning( !m_isRunning );
-}
-
-uint64_t ClockBase::riseTime()
-{
-    return m_out->riseTime();
-}
-
-void ClockBase::setRiseTime( uint64_t time )
-{
-    m_out->setRiseTime( time );
-}
-
-uint64_t ClockBase::fallTime()
-{
-    return m_out->fallTime();
-}
-
-void ClockBase::setFallTime( uint64_t time )
-{
-    m_out->setFallTime( time );
 }
 
 #include "moc_clock-base.cpp"

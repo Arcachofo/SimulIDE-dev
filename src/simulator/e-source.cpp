@@ -81,7 +81,7 @@ void eSource::stampOutput()
     m_ePin[0]->stampCurrent( m_voltOut/m_imp );
 }
 
-void eSource::stampState( bool state, int step )
+/*void eSource::stampState( bool state, int step )
 {
     if( m_inverted ) state = !state;
 
@@ -97,7 +97,7 @@ void eSource::stampState( bool state, int step )
         else        m_voltOut = m_voltLow;
     }
     stampOutput();
-}
+}*/
 
 void eSource::setVoltHigh( double v )
 {
@@ -131,7 +131,7 @@ void eSource::setImp( double imp )
     m_impNext = imp;
 }
 
-void eSource::setTimedOut( bool out )
+/*void eSource::setTimedOut( bool out )
 {
     if( m_inverted ) out = !out;
     //if( out == m_out ) return;
@@ -150,9 +150,9 @@ void eSource::setTimedOut( bool out )
     }
     stampOutput();
     m_outNext = out;
-}
+}*/
 
-void eSource::setTimedImp( double imp )
+/*void eSource::setTimedImp( double imp )
 {
     if( Simulator::self()->simState() < SIM_PAUSED )
     {
@@ -179,7 +179,7 @@ void eSource::setTimedImp( double imp )
     }
     m_admit = 1/m_imp;
     eSource::stamp();
-}
+}*/
 
 
 void eSource::setInverted( bool inverted )

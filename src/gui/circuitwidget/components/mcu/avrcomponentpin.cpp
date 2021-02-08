@@ -194,7 +194,7 @@ void AVRComponentPin::adcread()
     if( m_Write_adc_irq ) avr_raise_irq( m_Write_adc_irq, m_ePin[0]->getVolt()*1000 );
 }
 
-void AVRComponentPin::setTimedImp( double imp ) // Used by I2C
+void AVRComponentPin::setImp( double imp ) // Used by I2C
 {
     m_gndAdmEx = 1/imp;
     update();

@@ -32,12 +32,18 @@ DataChannel::DataChannel( PlotBase* plotBase, QString id )
 
 DataChannel::~DataChannel()
 {
+    eNode* enode =  m_ePin[0]->getEnode();
+    if( enode ) enode->remFromPlotterList( this );
 }
 
 void DataChannel::stamp()                     // Called at Simulation Start
 {
     eNode* enode =  m_ePin[0]->getEnode();
-    if( enode ) enode->voltChangedCallback( this );
+    if( enode )
+    {
+        enode->voltChangedCallback( this );
+        enode->addToPlotterList( this );
+    }
 
     enode =  m_ePin[1]->getEnode();
     if( enode ) enode->voltChangedCallback( this );

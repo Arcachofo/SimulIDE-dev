@@ -96,12 +96,8 @@ void WaveGen::runEvent()
     {
         m_lastVout = m_vOut;
 
-        if( m_type == Square ) m_out->setTimedOut( m_vOut );
-        else
-        {
-            m_out->setVoltHigh( m_voltHight*m_vOut+m_voltBase );
-            m_out->stampOutput();
-        }
+        m_output[0]->setVoltHigh( m_outHighV*m_vOut+m_voltBase );
+        m_output[0]->stampOutput();
     }
 
     m_remainder += m_fstepsPC-(double)m_stepsPC;
@@ -150,6 +146,8 @@ void WaveGen::genSquare()
         m_vOut = 1;
         m_nextStep = m_halfW;
     }
+    eNode* enode =  m_pin[0]->getEnode();
+    if( enode ) enode->saveData();
 }
 
 void WaveGen::genRandom()
@@ -161,10 +159,10 @@ void WaveGen::genRandom()
 
 void WaveGen::updateStep()
 {
-    if(( !m_out->out() )&&( m_isRunning ))
+    /*if(( !m_outValue )&&( m_isRunning ))
     {
         m_out->setOut( true );
-    }
+    }*/
     ClockBase::updateStep();
 }
 
