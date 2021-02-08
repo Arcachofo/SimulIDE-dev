@@ -135,7 +135,7 @@ void McuComponentPin::setState( bool state )
         else        m_gndAdmit = 1./40.;
         update();
     }
-    else eSource::setOut( state );
+    else eSource::setOut( state, true );
 }
 
 void McuComponentPin::update()
@@ -144,7 +144,7 @@ void McuComponentPin::update()
     double gndAdmit = m_gndAdmit+m_gndAdmEx;
     double Rth  = 1/(vddAdmit+gndAdmit);
 
-    m_voltOutNext = 5*vddAdmit*Rth;
+    m_voltOut = 5*vddAdmit*Rth;
 
     eSource::setImp( Rth );
 }
