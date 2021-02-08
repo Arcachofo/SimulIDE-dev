@@ -37,12 +37,6 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_pin[3] = new Pin( 180, QPoint( -80-8, 40 ), id+"-Pin3", 0, this );
     m_pin[4] = new Pin( 180, QPoint( -80-8, 64 ), id+"-PinG", 0, this );
 
-    for( int ch=0; ch<4; ch++ )
-    {
-        m_pinConnected[ch]   = false;
-        m_probeConnected[ch] = false;
-        m_probe[ch] = "";
-    }
     m_color[0] = QColor( 240, 240, 100 );
     m_color[1] = QColor( 220, 220, 255 );
     m_color[2] = QColor( 255, 210, 90  );
@@ -129,16 +123,6 @@ PlotBase::paCond PlotBase::ch2Cond()
 void PlotBase::setCh2Cond( paCond cond )
 {
     m_channel[1]->m_chCond = cond;
-}
-
-void PlotBase::setProbe1( QString p )
-{
-    m_probe[0] = p;
-}
-
-void PlotBase::setProbe2( QString p )
-{
-    m_probe[1] = p;
 }
 
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

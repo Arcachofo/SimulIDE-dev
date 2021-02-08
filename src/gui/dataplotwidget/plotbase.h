@@ -38,10 +38,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( paCond  CH2_Cond READ ch2Cond  WRITE setCh2Cond  DESIGNABLE true USER true )
     Q_PROPERTY( paCond  REF_Cond READ refCond  WRITE setRefCond  DESIGNABLE true USER true )
 
-    Q_PROPERTY( quint64 hTick  READ timeDiv  WRITE setTimeDiv )
-
-    Q_PROPERTY( QString Probe1 READ probe1 WRITE setProbe1 )
-    Q_PROPERTY( QString Probe2 READ probe2 WRITE setProbe2 )
+    Q_PROPERTY( quint64 hTick   READ hTick   WRITE sethTick )
+    Q_PROPERTY( quint64 TimeDiv READ timeDiv WRITE setTimeDiv )
 
     public:
         PlotBase( QObject* parent, QString type, QString id );
@@ -77,11 +75,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         paCond refCond() { return m_refCond; }
         void setRefCond( paCond cond ) { m_refCond = cond; }
 
-        QString probe1() { return m_probe[0]; }
-        void setProbe1( QString p );
-
-        QString probe2() { return m_probe[1]; }
-        void setProbe2( QString p );
+        uint64_t hTick() { return m_timeDiv/1e3; }
+        virtual void sethTick( uint64_t td ){ m_timeDiv = td*1e3;}
 
         uint64_t timeDiv() { return m_timeDiv; }
         virtual void setTimeDiv( uint64_t td ){ m_timeDiv = td;}
@@ -94,8 +89,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         PlotDisplay* display() { return m_display; }
 
-        void connectProbe( int ch, bool con ) { m_probeConnected[ch] = con; }
-
         QColor getColor( int c ) { return m_color[c]; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
@@ -105,9 +98,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         bool m_paOnCond;
         paCond m_refCond;
-
-        bool m_pinConnected[4];
-        bool m_probeConnected[4];
 
         bool m_expand;
 
@@ -122,7 +112,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         uint64_t m_timeDiv;
 
-        QString m_probe[4];
         QColor m_color[5];
 
         DataChannel* m_channel[4];

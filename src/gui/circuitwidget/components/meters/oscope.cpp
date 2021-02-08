@@ -253,6 +253,12 @@ void Oscope::setTracks( int tracks )
     m_oscWidget->setTracks( tracks );
 }
 
+void Oscope::sethTick( uint64_t td )
+{
+    PlotBase::sethTick( td );
+    m_oscWidget->updateTimeDivBox( m_timeDiv );
+}
+
 void Oscope::setTimeDiv( uint64_t td )
 {
     if( td < 1 ) td = 1;
