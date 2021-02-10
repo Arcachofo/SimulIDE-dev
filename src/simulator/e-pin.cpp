@@ -26,6 +26,7 @@ ePin::ePin( QString id, int index )
 {
     m_id    = id;
     m_index = index;
+    m_state = 0;
     m_enode    = 0l;
     m_enodeCon = 0l;
     m_connected = false;

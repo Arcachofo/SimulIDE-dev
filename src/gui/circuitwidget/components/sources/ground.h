@@ -41,8 +41,6 @@ class MAINMODULE_EXPORT Ground : public Component
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     private:
-        double m_Rth;
-
         ePin *groundpin;
         eSource *m_out;
 };

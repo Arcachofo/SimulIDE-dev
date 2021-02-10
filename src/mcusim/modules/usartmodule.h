@@ -20,6 +20,8 @@
 #ifndef USARTM_H
 #define USARTM_H
 
+#include<QHash>
+
 #include "mcuuart.h"
 //#include "regsignal.h"
 

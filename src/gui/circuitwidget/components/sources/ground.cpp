@@ -43,10 +43,10 @@ Ground::Ground( QObject* parent, QString type, QString id )
     QString nodid = id;
     nodid.append(QString("-Gnd"));
     QPoint nodpos = QPoint( 0, -16 );
-    groundpin = new Pin( 90, nodpos, nodid, 0, this);
+    groundpin = new Pin( 90, nodpos, nodid, 0, this );
 
     nodid.append(QString("-eSource"));
-    m_out = new eSource( nodid, groundpin );
+    m_out = new eSource( nodid, groundpin, source );
     
     setLabelPos(-16, 8, 0);
 }

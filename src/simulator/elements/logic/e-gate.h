@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT eGate : public eLogicDevice
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
+        //virtual void runEvent() override;
         
         bool tristate();
         void setTristate( bool t );

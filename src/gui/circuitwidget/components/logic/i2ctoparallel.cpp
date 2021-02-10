@@ -98,7 +98,7 @@ void I2CToParallel::stamp()                     // Called at Simulation Start
     }
     for( int i=0; i<8; ++i )
     {
-        m_output[i]->setOut( true );
+        m_output[i]->setState( true );
         m_output[i]->setImp( 1e5 );
     }
 }
@@ -128,7 +128,7 @@ void I2CToParallel::readByte()           // Reading from I2C, Writting to Parall
         bool pinState =  value & 1;
         double imp = pinState? 1e5 : 40;
 
-        m_output[i]->setOut( pinState );
+        m_output[i]->setState( pinState );
         m_output[i]->setImp( imp );
                                   //qDebug() << "Bit " << i << pinState;
         value >>= 1;

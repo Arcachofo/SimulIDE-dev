@@ -52,9 +52,9 @@ Rail::Rail( QObject* parent, QString type, QString id )
     m_outpin = new Pin( 0, nodpos, nodid, 0, this);
 
     nodid.append(QString("-eSource"));
-    m_out = new eSource( nodid, m_outpin );
+    m_out = new eSource( nodid, m_outpin, source );
     
-    m_out->setOut( true );
+    m_out->setState( true );
     m_unit = "V";
     setVolt(5.0);
     setValLabelPos(-16, 8 , 0 ); // x, y, rot 

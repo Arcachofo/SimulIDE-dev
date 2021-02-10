@@ -22,7 +22,7 @@
 #include "simulator.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
-      : eSource( id, 0l )
+      : eSource( id, 0l, input )
 {
     m_port   = port;
     m_number = i;
@@ -117,8 +117,7 @@ void McuPin::setState( bool state )
     }
     else
     {
-        eSource::setOut( state );
-        eSource::stampOutput();
+        eSource::setState( state, true );
     }
 }
 

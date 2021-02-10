@@ -19,11 +19,11 @@
 
 #include "buffer.h"
 #include "itemlibrary.h"
-
+#include "connector.h"
 
 Component* Buffer::construct( QObject* parent, QString type, QString id )
 {
-        return new Buffer( parent, type, id );
+    return new Buffer( parent, type, id );
 }
 
 LibraryItem* Buffer::libraryItem()

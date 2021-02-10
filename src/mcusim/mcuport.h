@@ -20,6 +20,8 @@
 #ifndef MCUPORT_H
 #define MCUPORT_H
 
+#include<QHash>
+
 #include "e-element.h"
 
 class McuPin;

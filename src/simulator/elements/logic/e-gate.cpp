@@ -25,6 +25,7 @@ eGate::eGate( QString id, int inputs )
 {
     m_tristate = false;
     m_openCol  = false;
+    m_rndPD = true; // Randomize Propagation Delay
 }
 eGate::~eGate() { }
 
@@ -57,23 +58,7 @@ void eGate::voltChanged()
     if( m_out == out && !m_tristate ) return;
     m_out = out;
 
-    // Add random 0-1 ps to avoid oscillations
-    if( m_openCol ) Simulator::self()->addEvent( m_propDelay+(std::rand() %2), this );
-    else sheduleOutPuts();
-}
-
-void eGate::runEvent()
-{
-    if( m_openCol )
-    {
-        double imp = m_outImp;
-        bool  oOut = m_out;
-        if( m_output[0]->isInverted() ) oOut = !m_out;
-        if( oOut || !eLogicDevice::outputEnabled() ) imp = high_imp;
-
-        m_output[0]->setImp( imp );
-    }
-    else eLogicDevice::runEvent();
+    sheduleOutPuts();
 }
 
 bool eGate::calcOutput( int inputs ) 
@@ -81,27 +66,16 @@ bool eGate::calcOutput( int inputs )
     return (inputs==m_numInputs); // Default for: Buffer, Inverter, And, Nand
 }
 
-bool eGate::tristate()
-{
-    return m_tristate;
-}
-void eGate::setTristate( bool t )
-{
-    m_tristate = t;
-}
+bool eGate::tristate() { return m_tristate; }
 
-bool eGate::openCol()
-{
-    return m_openCol;
-}
+void eGate::setTristate( bool t ) { m_tristate = t; }
+
+bool eGate::openCol() { return m_openCol; }
 
 void eGate::setOpenCol( bool op )
 {
     m_openCol = op;
-    
-    double imp = m_outImp;
-    
-    if( op && m_output[0]->out() ) imp = high_imp;
-    
-    m_output[0]->setImp( imp );
+
+    if( op ) m_output[0]->setPinMode( open );
+    else     m_output[0]->setPinMode( output );
 }

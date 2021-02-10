@@ -20,21 +20,31 @@
 #ifndef ESOURCE_H
 #define ESOURCE_H
 
+#include <QColor>
 
 #include "e-element.h"
 #include "e-node.h"
 
+enum pinMode_t{
+    source=0,
+    input,
+    output,
+    open,
+};
+
 class MAINMODULE_EXPORT eSource : public eElement
 {
     public:
-        eSource( QString id, ePin* epin );
+        eSource( QString id, ePin* epin, pinMode_t mode=source );
         virtual ~eSource();
 
         virtual void initialize() override;
-        virtual void runEvent() override;
         
         void stamp() override;
         void stampOutput();
+
+        pinMode_t pinMode() { return m_pinMode; }
+        void setPinMode( pinMode_t mode );
 
         double voltHight() { return m_voltHigh; }
         void  setVoltHigh( double v );
@@ -42,20 +52,19 @@ class MAINMODULE_EXPORT eSource : public eElement
         double voltLow() { return m_voltLow; }
         void  setVoltLow( double v );
         
-        bool out() { return m_out; }
-        void setOut( bool out ,bool stamp=false );
+        bool getState() { return m_state ; }
+        void setState( bool out, bool st=false );
+        void setStateZ( bool z );
 
         bool  isInverted() { return m_inverted; }
         void  setInverted( bool inverted );
 
+        virtual void  setInputImp( double imp ){ m_inputImp = imp; setImp( imp );}
+        //virtual void  setOpenImp( double imp ) { m_openImp  = imp; }
+        virtual void  setOutputImp( double imp ){ m_outputImp = imp; setImp( imp ); }
+
         double imp() { return m_imp; }
         virtual void  setImp( double imp );
-
-        uint64_t riseTime() { return m_timeLH; }
-        void setRiseTime( uint64_t time );
-
-        uint64_t fallTime() { return m_timeHL; }
-        void setFallTime( uint64_t time );
 
         double getVolt();
 
@@ -65,17 +74,18 @@ class MAINMODULE_EXPORT eSource : public eElement
         double m_voltHigh;
         double m_voltLow;
         double m_voltOut;
-        double m_voltOutNext;
+
+        double m_inputImp;
+        double m_outputImp;
+        double m_openImp;
         double m_imp;
-        double m_impNext;
         double m_admit;
 
-        bool m_out;
-        bool m_outNext;
+        bool m_state;
+        bool m_stateZ;
         bool m_inverted;
 
-        double m_timeLH;
-        double m_timeHL;
+        pinMode_t m_pinMode;
 
         eNode* m_scrEnode;
 };

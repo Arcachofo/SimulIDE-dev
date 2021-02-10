@@ -71,7 +71,7 @@ class MAINMODULE_EXPORT Scripted : public LogicComponent, public eLogicDevice
         void displayMsg( QString msg ) { qDebug() << msg; }
         bool getInputState( int i ){ return eLogicDevice::getInputState( i ); }
         bool getOutputState( int o ){ return eLogicDevice::getOutputState( o ); }
-        void setOutputState( int i, bool s ){ if( i < m_numOutputs ) m_output[i]->setOut( s, true ); }
+        void setOutputState( int i, bool s ){ if( i < m_numOutputs ) m_output[i]->setState( s, true ); }
         int  numInps(){ return m_numInputs; }
         int  numOuts(){ return m_numOutputs; }
 

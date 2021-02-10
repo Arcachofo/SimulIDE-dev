@@ -77,13 +77,11 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
         QString pinId = id+"-dataPin"+QString::number(i);
         m_dataPin[i] = new Pin( 270, QPoint(-32+(7-i)*8, pinY), pinId , 0, this );
         m_dataPin[i]->setLabelText( " D"+QString::number(i) );
+        m_pin[i] = m_dataPin[i];
 
         pinId.append(QString("-eSource"));
-        m_dataeSource[i] = new eSource( pinId, m_dataPin[i] );
+        m_dataeSource[i] = new eSource( pinId, m_dataPin[i], input );
         m_dataeSource[i]->setVoltHigh( 5 );
-        m_dataeSource[i]->setImp( high_imp );
-
-        m_pin[i] = m_dataPin[i];
     }
     m_pin[8]  = &m_pinRst;
     m_pin[9]  = &m_pinCs2;
@@ -138,17 +136,13 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
     if( m_Write != Write )               // Set Read or Write Impedances
     {
         m_Write = Write;
-        double imped;
-        if( Write ) imped = high_imp;               // Data bus as Input
-        else        imped = 40;                    // Data bus as Output
         
         for( int i=0; i<8; i++ ) 
         {
-            m_dataeSource[i]->setOut( false );
-            m_dataeSource[i]->setImp( imped );
+            if( Write )m_dataeSource[i]->setPinMode( input );
+            else       m_dataeSource[i]->setPinMode( output );
         }
     }
-    
     bool Scl = (m_pinEn.getVolt()>2.5);
     
     if    ( Scl && !m_lastScl )            // This is a clock Rising Edge
@@ -191,7 +185,7 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
     
     if( (m_pinDC.getVolt()>2.5)               )                  // Data
     {
-        if( m_reset ) return;            // Can't erite data while Reset
+        if( m_reset ) return;            // Can't write data while Reset
         if( Write ) writeData( m_input );                  // Write Data
         else        ReadData();                             // Read Data
     }
@@ -211,8 +205,7 @@ void Ks0108::ReadData()
     for( int i=0; i<8; i++ )
     {
         //qDebug() << "Ks0108::ReadData()" << i<<(data & 1)<<((data & 1)==1);
-        m_dataeSource[i]->setOut( ((data & 1)==1) );
-        m_dataeSource[i]->stampOutput();
+        m_dataeSource[i]->setState( ((data & 1)==1), true );
         data >>= 1;
     }
 }
@@ -226,8 +219,7 @@ void Ks0108::ReadStatus()
         if     ( i == 4 ) out = m_reset;
         else if( i == 5 ) out = !m_dispOn;
         
-        m_dataeSource[i]->setOut( out );
-        m_dataeSource[i]->stampOutput();
+        m_dataeSource[i]->setState( out, true );
     }
 }
 

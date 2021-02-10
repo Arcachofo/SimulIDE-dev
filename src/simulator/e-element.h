@@ -22,8 +22,6 @@
 
 #include <string>
 #include <math.h>
-#include <QPointer>
-//#include <QDebug>
 #include "e-pin.h"
 
 #define Trig_None 0

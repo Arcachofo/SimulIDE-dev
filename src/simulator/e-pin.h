@@ -20,7 +20,6 @@
 #ifndef EPIN_H
 #define EPIN_H
 
-//Have to use #include <QtCore/QtGlobal> for Q_DECL_EXPORT?
 #include <QString>
 
 class eNode;
@@ -29,7 +28,7 @@ class MAINMODULE_EXPORT ePin
 {
     public:
         ePin( QString id, int index );
-        ~ePin();
+        virtual ~ePin();
 
         bool isConnected();
         void setConnected( bool connected );
@@ -48,6 +47,8 @@ class MAINMODULE_EXPORT ePin
         void stampAdmitance( double data );
         void stampCurrent( double data );
 
+        virtual void setState( int st ) { m_state = st; }
+
         void reset();
         
         QString getId();
@@ -59,6 +60,8 @@ class MAINMODULE_EXPORT ePin
 
         QString m_id;
         int m_index;
+
+        int m_state;
 
         bool m_connected;
         bool m_inverted;

@@ -36,7 +36,7 @@ void eI2CMaster::stamp()                    // Called at Simulation Start
     SDA_PIN->setImp( high_imp );
     SCL_PIN->setImp( high_imp );
 
-    eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
+    //eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
 }
 
 void eI2CMaster::setSDA( bool state )

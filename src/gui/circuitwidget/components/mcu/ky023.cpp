@@ -79,9 +79,9 @@ KY023::KY023( QObject* parent, QString type, QString id )
     m_pin[0] = m_vrxpin;
     
     pinid.append(QString("-eSource"));
-    m_vrx = new eSource( pinid, m_vrxpin );
+    m_vrx = new eSource( pinid, m_vrxpin, output );
     m_vrx->setVoltHigh( VIN );
-    m_vrx->setImp( 40 );
+    //m_vrx->setImp( 40 );
     
     pinid = id;
     pinid.append(QString("-vry"));
@@ -91,9 +91,9 @@ KY023::KY023( QObject* parent, QString type, QString id )
     m_pin[1] = m_vrypin;
 
     pinid.append(QString("-eSource"));
-    m_vry = new eSource( pinid, m_vrypin );
+    m_vry = new eSource( pinid, m_vrypin, output );
     m_vry->setVoltHigh( VIN );
-    m_vry->setImp( 40 );
+    //m_vry->setImp( 40 );
     
     pinid = id;
     pinid.append(QString("-sw"));
@@ -103,9 +103,9 @@ KY023::KY023( QObject* parent, QString type, QString id )
     m_pin[2] = m_swpin;
 
     pinid.append(QString("-eSource"));
-    m_sw = new eSource( pinid, m_swpin );
+    m_sw = new eSource( pinid, m_swpin, output );
     m_sw->setVoltHigh( VIN );
-    m_sw->setImp( 40 );
+    //m_sw->setImp( 40 );
     
     Simulator::self()->addToUpdateList( this );
     
@@ -151,15 +151,12 @@ void KY023::updateStep()
     if( m_changed )
     {
         m_vrx->setVoltHigh( m_vOutX );
-        m_vrx->setOut( true );
-        m_vrx->stampOutput();
+        m_vrx->setState( true, true );
         
         m_vry->setVoltHigh( m_vOutY );
-        m_vry->setOut( true );
-        m_vry->stampOutput();
+        m_vry->setState( true, true );
 
-        m_sw->setOut( !m_closed );
-        m_sw->stampOutput();
+        m_sw->setState( !m_closed, true );
         
         m_changed = false;
         Simulator::self()->addEvent( 0, 0l );

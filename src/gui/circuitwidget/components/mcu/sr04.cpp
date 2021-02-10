@@ -84,9 +84,9 @@ SR04::SR04( QObject* parent, QString type, QString id )
     m_pin[4] = m_echopin;
 
     pinid.append(QString("-eSource"));
-    m_echo = new eSource( pinid, m_echopin );
+    m_echo = new eSource( pinid, m_echopin, output );
     m_echo->setVoltHigh( 5 );
-    m_echo->setImp( 40 );
+    //m_echo->setImp( 40 );
     
     initialize();
 }
@@ -133,18 +133,13 @@ void SR04::runEvent()
 {
     if( m_echouS )
     {
-        m_echo->setOut( true );
-        m_echo->stampOutput();
+        m_echo->setState( true, true );
 
         Simulator::self()->addEvent( m_echouS*1e6, this );
 
         m_echouS = 0;
     }
-    else
-    {
-        m_echo->setOut( false );
-        m_echo->stampOutput();
-    }
+    else m_echo->setState( false, true );
 }
 
 void SR04::remove()

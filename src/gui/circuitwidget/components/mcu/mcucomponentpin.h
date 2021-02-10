@@ -65,9 +65,10 @@ class MAINMODULE_EXPORT McuComponentPin : public QObject, public eSource
         double m_gndAdmEx;  // Extra Source (vref out)
         
         bool m_attached;
-        bool m_isInput;
-        bool m_openColl;
-        bool m_state;
+        //bool m_isInput;
+        //bool m_openColl;
+
+        pinMode_t m_prevPinMode;
         
         char m_port;
         int  m_pinN;

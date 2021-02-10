@@ -38,7 +38,7 @@ void eI2CSlave::stamp()                    // Called at Simulation Start
     if( m_input.size() == 0 ) return;
     if( !m_enabled ) return;
 
-    SDA_PIN->setOut( false );
+    SDA_PIN->setState( false );
     SDA_PIN->setImp( high_imp );
     SCL_PIN->setImp( high_imp );
 
@@ -63,7 +63,7 @@ void eI2CSlave::runEvent()       // We are in Mater mode, controlling Clock
 {
     if( !m_enabled ) return;
 
-    SDA_PIN->setOut( false );
+    SDA_PIN->setState( false );
     if( m_nextSDA ) SDA_PIN->setImp( high_imp );
     else            SDA_PIN->setImp( m_outImp );
     Simulator::self()->addEvent( 0, NULL );
@@ -146,7 +146,7 @@ void eI2CSlave::updatePins()
 {
     if( m_enabled )
     {
-        SDA_PIN->setOut( false );
+        SDA_PIN->setState( false );
         SDA_PIN->setImp( high_imp );
         SCL_PIN->setImp( high_imp );
 

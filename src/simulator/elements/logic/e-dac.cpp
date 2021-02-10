@@ -35,9 +35,8 @@ void eDAC::stamp()
         eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
-    m_output[0]->setOut( true );
+    m_output[0]->setState( true );
     m_value = -1;
-    Simulator::self()->addEvent( 1, 0l );
 }
 
 void eDAC::voltChanged()

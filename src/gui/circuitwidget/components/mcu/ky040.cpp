@@ -90,9 +90,9 @@ KY040::KY040( QObject* parent, QString type, QString id )
     m_pin[0] = m_dtpin;
     
     pinid.append(QString("-eSource"));
-    m_dt = new eSource( pinid, m_dtpin );
+    m_dt = new eSource( pinid, m_dtpin, output );
     m_dt->setVoltHigh( VIN );
-    m_dt->setImp( 40 );
+    //m_dt->setImp( 40 );
     
     pinid = id;
     pinid.append(QString("-clk"));
@@ -102,9 +102,9 @@ KY040::KY040( QObject* parent, QString type, QString id )
     m_pin[1] = m_clkpin;
 
     pinid.append(QString("-eSource"));
-    m_clk = new eSource( pinid, m_clkpin );
+    m_clk = new eSource( pinid, m_clkpin, output );
     m_clk->setVoltHigh( VIN );
-    m_clk->setImp( 40 );
+    //m_clk->setImp( 40 );
     
     pinid = id;
     pinid.append(QString("-sw"));
@@ -114,10 +114,10 @@ KY040::KY040( QObject* parent, QString type, QString id )
     m_pin[2] = m_swpin;
 
     pinid.append(QString("-eSource"));
-    m_sw = new eSource( pinid, m_swpin );
+    m_sw = new eSource( pinid, m_swpin, output );
     m_sw->setVoltHigh( VIN );
-    m_sw->setOut( !m_closed );
-    m_sw->setImp( 40 );
+    m_sw->setState( !m_closed );
+    //m_sw->setImp( 40 );
 
     Simulator::self()->addToUpdateList( this );
     
@@ -138,8 +138,7 @@ void KY040::updateStep()
 {
     if( m_changed )
     {
-        m_sw->setOut( !m_closed );
-        m_sw->stampOutput();
+        m_sw->setState( !m_closed, true );
 
         Simulator::self()->addEvent( 0, 0 );
 
@@ -164,11 +163,8 @@ void KY040::runEvent()
             dtOuput  = CCWseq[0][m_seqIndex];
             clkOuput = CCWseq[1][m_seqIndex];
         }
-        m_dt->setOut( dtOuput );
-        m_dt->stampOutput();
-
-        m_clk->setOut( clkOuput );
-        m_clk->stampOutput();
+        m_dt->setState( dtOuput, true );
+        m_clk->setState( clkOuput, true );
 
         m_seqIndex++;
         if( m_seqIndex >= 4 ) m_seqIndex = -1;

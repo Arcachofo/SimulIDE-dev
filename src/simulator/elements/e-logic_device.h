@@ -90,7 +90,7 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         bool outputEnabled();
 
         virtual void createPins( int inputs, int outputs );
-        void setClockPin( eSource* clockSource) { m_clockSource = clockSource; }
+        void setClockPin( eSource* clockSource ) { m_clockSource = clockSource; }
         void setInput( int n, eSource* input );
         void createClockPin();
         void createOutEnablePin();
@@ -118,8 +118,9 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         double m_outLowV;
 
         uint64_t m_propDelay; // Propagation delay
-        uint64_t m_timeLH; // Time for Output voltage to switch from 10% to 90%
-        uint64_t m_timeHL; // Time for Output voltage to switch from 90% to 10%
+        uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90%
+        uint64_t m_timeHL;    // Time for Output voltage to switch from 90% to 10%
+        bool m_rndPD;         // Randomize Propagation Delay
 
         double m_inputImp;
         double m_outImp;

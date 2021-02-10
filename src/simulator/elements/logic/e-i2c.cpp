@@ -23,7 +23,7 @@
 eI2C::eI2C( QString id )
     : eLogicDevice( id )
 {
-    m_comp = 0l;
+    m_comp = NULL;
     m_enabled = true;
     m_freq = 1000000;
 }
@@ -31,6 +31,8 @@ eI2C::~eI2C() { }
 
 void eI2C::initialize()
 {
+    if( !m_enabled ) return;
+
     eLogicDevice::initialize();
 
     double stepsPerS = 1e12;

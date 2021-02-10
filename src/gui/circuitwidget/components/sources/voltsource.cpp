@@ -42,7 +42,7 @@ VoltSource::VoltSource( QObject* parent, QString type, QString id )
     QString nodid = id;
     nodid.append("-outPin");
     nodid.append("-eSource");
-    m_out = new eSource( nodid, m_outpin );
+    m_out = new eSource( nodid, m_outpin, source );
 
     m_out->setVoltHigh( 0 );
     m_out->setVoltLow( 0 );
@@ -65,9 +65,8 @@ void VoltSource::updateStep()
 {
     if( m_changed ) 
     {
-        m_out->setOut( m_button->isChecked() );
         m_out->setVoltHigh( m_outValue );
-        m_out->stampOutput();
+        m_out->setState( m_button->isChecked(), true );
 
         m_changed = false;
         Simulator::self()->addEvent( 1, 0l );

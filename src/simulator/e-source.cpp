@@ -20,36 +20,37 @@
 #include "e-source.h"
 #include "simulator.h"
 
-eSource::eSource( QString id, ePin* epin )
+eSource::eSource( QString id, ePin* epin, pinMode_t mode )
        : eElement( id )
 {
     m_ePin.resize(1);
     m_ePin[0] = epin;
-    m_out     = false;
-    m_outNext = false;
+
+    m_scrEnode = new eNode( id+"scr" );
+    m_scrEnode->setNodeNumber(0);
+    Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
+
+    m_state    = false;
+    m_stateZ   = false;
     m_inverted = false;
 
     m_voltHigh = cero_doub;
     m_voltLow  = cero_doub;
     m_voltOut  = cero_doub;
-    m_imp      = cero_doub;
-    m_impNext  = cero_doub;
-    m_admit    = 1/m_imp;
 
-    m_timeLH = 3000;
-    m_timeHL = 4000;
+    m_inputImp = high_imp;
+    m_openImp  = 1e28;
+    m_outputImp = 40;
+    m_imp = cero_doub;
+    m_admit = 1/ m_imp;
 
-    m_scrEnode = new eNode( id+"scr" );
-    m_scrEnode->setNodeNumber(0);
-
-    Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
+    if( mode > source ) setPinMode( mode );
+    else m_pinMode = source;
 }
 eSource::~eSource(){ delete m_scrEnode; }
 
 void eSource::initialize()
 {
-    m_voltOutNext = m_voltOut;
-    m_impNext     = m_imp;
     m_ePin[0]->setEnodeComp( m_scrEnode );
 }
 
@@ -59,50 +60,81 @@ void eSource::stamp()
     stampOutput();
 }
 
-void eSource::runEvent()
-{
-    if( m_voltOutNext != m_voltOut )
-    {
-        m_voltOut = m_voltOutNext;
-    }
-    if( m_impNext != m_imp )
-    {
-        m_imp = m_impNext;
-        m_admit = 1/m_imp;
-        m_ePin[0]->stampAdmitance( m_admit );
-    }
-    stampOutput();
-    m_out = m_outNext;
-}
-
 void eSource::stampOutput()
 {
     m_scrEnode->setVolt( m_voltOut );
     m_ePin[0]->stampCurrent( m_voltOut/m_imp );
 }
 
+void eSource::setPinMode( pinMode_t mode )
+{
+    m_pinMode = mode;
+
+    if( mode == source )
+    {
+        setImp( cero_doub );
+    }
+    else if( mode == input )
+    {
+        m_voltOut = cero_doub;
+        m_state = false;
+        setImp( m_inputImp );
+    }
+    else if( mode == output )
+    {
+        setState( m_state );
+        setImp( m_outputImp );
+    }
+    else if( mode == open )
+    {
+        m_voltOut = m_voltLow;
+        if( m_state ) setImp( m_openImp );
+        else          setImp( m_outputImp );
+    }
+}
+
 void eSource::setVoltHigh( double v )
 {
     m_voltHigh = v;
-    if( m_out ) m_voltOut = v;
+    if( m_state ) m_voltOut = v;
 }
 
 void eSource::setVoltLow( double v )
 {
     m_voltLow = v;
-    if( !m_out ) m_voltOut = v;
+    if( !m_state ) m_voltOut = v;
 }
 
-void eSource::setOut( bool out, bool stamp ) // Set Output to Hight or Low
+void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
 {
-    if( m_inverted ) m_out = !out;
-    else             m_out =  out;
+    if( m_inverted ) m_state = !out;
+    else             m_state =  out;
 
-    if( m_out ) m_voltOut = m_voltHigh;
-    else        m_voltOut = m_voltLow;
+    if( m_stateZ ) return;
 
-    m_voltOutNext = m_voltOut;
-    if( stamp ) stampOutput();
+    if( m_pinMode == open )
+    {
+        if( m_state ) m_admit = 1/m_openImp;
+        else          m_admit = 1/m_outputImp;
+        if( st ) stamp();
+        m_ePin[0]->setState( m_state? 3:1 ); // Z : Low colors
+    }else{
+        if( m_state ) m_voltOut = m_voltHigh;
+        else          m_voltOut = m_voltLow;
+        if( st ) stampOutput();
+        if( m_pinMode == output ) m_ePin[0]->setState( m_state? 2:1 ); // High : Low colors
+    }
+}
+
+void eSource::setStateZ( bool z )
+{
+    m_stateZ = z;
+    if( z )
+    {
+        setImp( m_openImp );
+        m_ePin[0]->setState( 3 );
+    }
+    else setPinMode( m_pinMode );
 }
 
 void eSource::setImp( double imp )
@@ -110,30 +142,17 @@ void eSource::setImp( double imp )
     m_imp = imp;
     m_admit = 1/m_imp;
     eSource::stamp();
-    m_impNext = imp;
 }
 
 void eSource::setInverted( bool inverted )
 {
     if( inverted == m_inverted ) return;
 
-    if( inverted ) setOut( !m_out );
-    else           setOut( m_out );
+    if( inverted ) setState( !m_state );
+    else           setState( m_state );
 
     m_inverted = inverted;
     m_ePin[0]->setInverted( inverted );
-}
-
-void eSource::setRiseTime( uint64_t time )
-{
-    if( time < 1 ) time = 1;
-    m_timeLH = time;
-}
-
-void eSource::setFallTime( uint64_t time )
-{
-    if( time < 1 ) time = 1;
-    m_timeHL = time;
 }
 
 double eSource::getVolt()

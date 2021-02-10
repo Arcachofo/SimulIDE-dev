@@ -63,8 +63,7 @@ void PICComponentPin::attachPin( pic_processor* PicProcessor )
 
         if( m_pIOPIN->getType() == OPEN_COLLECTOR )
         {
-            m_openColl = true;
-            //eSource::setVoltHigh( 0 );
+            eSource::setPinMode( open );
         }
     }
     else if( m_id.startsWith("MCLR") )
@@ -76,7 +75,7 @@ void PICComponentPin::attachPin( pic_processor* PicProcessor )
 
 void PICComponentPin::voltChanged()
 {
-    if( !m_isInput ) return;      // Nothing to do if pin is output
+    if( m_pinMode != input ) return;      // Nothing to do if pin is output
 
     double volt = m_ePin[0]->getVolt();
     //qDebug() << "PICComponentPin::setVChanged "<< m_id <<volt;

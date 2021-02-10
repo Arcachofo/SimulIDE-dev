@@ -54,8 +54,8 @@ Meter::Meter( QObject* parent, QString type, QString id )
     m_outpin = m_pin[2];
 
     pinId.append(QString("-eSource"));
-    m_out = new eSource( pinId, m_outpin );
-    m_out->setOut( true );
+    m_out = new eSource( pinId, m_outpin, output );
+    m_out->setState( true );
     m_out->setVoltHigh( 0 );
 
     m_idLabel->setPos(-12,-24);

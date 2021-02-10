@@ -61,7 +61,7 @@ void eFlipFlopJK::voltChanged()
     {
         bool J = eLogicDevice::getInputState( 0 );
         bool K = eLogicDevice::getInputState( 1 );
-        bool Q = m_output[0]->out();
+        bool Q = m_output[0]->getState();
         
         m_Q0 = (J && !Q) || (!K && Q) ;
     }

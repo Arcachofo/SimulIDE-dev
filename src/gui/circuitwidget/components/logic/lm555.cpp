@@ -69,9 +69,9 @@ Lm555::Lm555( QObject* parent, QString type, QString id )
     m_pin[2]->setLabelText( "Out" );
     m_ePin[2] = m_pin[2];
     newId.append("-eSource");
-    m_output = new eSource( newId, m_ePin[2] );
-    m_output->setImp( 10 );
-    m_output->setOut( true );
+    m_output = new eSource( newId, m_ePin[2], output );
+    m_output->setOutputImp( 10 );
+    m_output->setState( true );
     
     newId = id;
     newId.append(QString("-ePin3"));
@@ -85,9 +85,9 @@ Lm555::Lm555( QObject* parent, QString type, QString id )
     m_pin[4]->setLabelText( "CV" );
     m_ePin[4] = m_pin[4];
     newId.append("-eSource");
-    m_cv = new eSource( newId, m_ePin[4] );
-    m_cv->setImp( 10 );
-    m_cv->setOut( true );
+    m_cv = new eSource( newId, m_ePin[4], output );
+    m_cv->setOutputImp( 10 );
+    m_cv->setState( true );
     
     newId = id;
     newId.append(QString("-ePin5"));
@@ -101,9 +101,7 @@ Lm555::Lm555( QObject* parent, QString type, QString id )
     m_pin[6]->setLabelText( "Dis" );
     m_ePin[6] = m_pin[6];
     newId.append("-eSource");
-    m_dis = new eSource( newId, m_ePin[6] );
-    m_dis->setImp( high_imp );
-    m_dis->setOut( false );
+    m_dis = new eSource( newId, m_ePin[6], input );
     
     newId = id;
     newId.append(QString("-ePin7"));

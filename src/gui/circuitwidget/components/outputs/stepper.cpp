@@ -17,10 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <cmath>
-
 #include "stepper.h"
 #include "simulator.h"
+#include "connector.h"
 
 static const char* Stepper_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Steps"),

@@ -21,8 +21,9 @@
 #define PIN_H
 
 #include "component.h"
-#include "connector.h"
 #include "e-pin.h"
+
+class Connector;
 
 class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 {
@@ -45,8 +46,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         int length() { return m_length; }
         void setLength( int length );
-        
-        void setColor( QColor color ) { m_color = color; }
+
+        void setColor( QColor color ) { m_color[0] = color; }
         void setPinAngle( int angle );
         int pinAngle() { return m_angle; }
 
@@ -80,6 +81,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setIsBus( bool bus );
         bool isBus();
 
+        virtual void setState( int st ) override;
+
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:
@@ -100,7 +103,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         QString m_labelText;
         
-        QColor     m_color;
+        QColor m_color[4];
         QRect      m_area;
         Connector* my_connector;
         Component* m_component;

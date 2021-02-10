@@ -75,9 +75,8 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     m_pin[2] = new Pin( 0, QPoint(16+8,0), newId, 2, this );
     m_ePin[2] = m_pin[2];
     newId.append("-eSource");
-    m_output = new eSource( newId, m_ePin[2] );
-    //m_output->setImp( 40 );
-    m_output->setOut( true );
+    m_output = new eSource( newId, m_ePin[2], output );
+    m_output->setState( true );
     
     newId = id;
     newId.append(QString("powerPos"));

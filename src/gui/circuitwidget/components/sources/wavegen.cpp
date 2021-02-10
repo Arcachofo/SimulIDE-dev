@@ -83,8 +83,6 @@ QList<propGroup_t> WaveGen::propGroups()
 void WaveGen::runEvent()
 {
     m_time = fmod( Simulator::self()->circTime(), m_fstepsPC );
-
-    //if( m_time == 0 ) return;
     
     if     ( m_type == Sine )     genSine();
     else if( m_type == Saw )      genSaw();

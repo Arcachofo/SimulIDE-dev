@@ -179,7 +179,7 @@ void AVRComponentPin::voltChanged()
 
 void AVRComponentPin::setState( bool state )
 {
-    if( m_isInput ) setPullup( state );
+    if( m_pinMode == input ) setPullup( state );
     McuComponentPin::setState( state );
 }
 

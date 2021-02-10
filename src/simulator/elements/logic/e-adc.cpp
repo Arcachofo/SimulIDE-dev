@@ -55,6 +55,6 @@ void eADC::runEvent()
         bool state = m_nextOutVal & (1<<i);
         bool oldst = m_outValue & (1<<i);
 
-        if( state != oldst ) m_output[m_numOutputs-1-i]->setOut( state );
+        if( state != oldst ) m_output[m_numOutputs-1-i]->setState( state, true );
     }
 }

@@ -72,8 +72,7 @@ Probe::Probe( QObject* parent, QString type, QString id )
     m_pin[0] = m_inputpin;
     
     nodid.append( QString("-eSource") );
-    m_inSource = new eSource( nodid, m_inputpin );
-    m_inSource->setOut(false);
+    m_inSource = new eSource( nodid, m_inputpin, input );
     m_inSource->setImp( 1e9 );
 
     setRotation( rotation() - 45 );

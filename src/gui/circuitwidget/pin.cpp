@@ -42,7 +42,10 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_enode      = 0l;
     m_angle      = angle;
     
-    m_color = Qt::black;
+    m_color[0] = Qt::black;
+    m_color[1] = QColor( 0, 0, 180 );
+    m_color[2] = QColor( 180, 0, 0 );
+    m_color[3] = QColor( 0, 140, 0 );
 
     m_area = QRect(-3, -3, 9, 6);
 
@@ -360,19 +363,26 @@ void Pin::setVisible( bool visible )
     QGraphicsItem::setVisible( visible );
 }
 
+void Pin::setState( int st )
+{
+    m_state = st;
+    if( Circuit::self()->animate() ) update();
+}
+
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    QPen pen(m_color, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     //painter->setBrush( Qt::red );
     //painter->drawRect( boundingRect() );
-    
-    if( m_unused )     pen.setColor( QColor( 75, 120, 170 ));
+
     if( isSelected() ) pen.setColor( Qt::darkGray);
+    else if( m_unused ) pen.setColor( QColor( 75, 120, 170 ));
+    else if( Circuit::self()->animate() ) pen.setColor( m_color[m_state] );
 
     painter->setPen(pen);
     if( m_length > 1 ) painter->drawLine( 0, 0, m_length-1, 0);
-    else painter->drawLine( QPointF(-0.01, 0 ), QPointF( 0.01, 0 ));
+    else painter->drawLine( QPointF(-0.01, 0 ), QPointF( 0.03, 0 ));
     
     if( m_inverted )
     {

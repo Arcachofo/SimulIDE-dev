@@ -45,7 +45,7 @@ QList<propGroup_t> AvrCompBase::propGroups()
 }
 
 void AvrCompBase::attachPins()
-{;
+{
     avr_t* cpu = m_avr.getCpu();
 
     for( int i = 0; i < m_numpins; i++ )

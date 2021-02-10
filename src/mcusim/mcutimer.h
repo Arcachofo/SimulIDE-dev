@@ -20,6 +20,8 @@
 #ifndef MCUTIMER_H
 #define MCUTIMER_H
 
+#include<QHash>
+
 #include "e-element.h"
 #include "regsignal.h"
 #include "mcutypes.h"
