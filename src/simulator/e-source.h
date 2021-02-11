@@ -30,6 +30,7 @@ enum pinMode_t{
     input,
     output,
     open,
+
 };
 
 class MAINMODULE_EXPORT eSource : public eElement

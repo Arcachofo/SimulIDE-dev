@@ -169,14 +169,13 @@ void McuComponentPin::enableIO( bool en )
 
     if( en )
     {
-        setPinMode( m_prevPinMode );
-        if( m_pinMode == input ) m_ePin[0]->getEnode()->voltChangedCallback( this );
+        setDirection( m_prevPinMode == output );
     }
     else
     {
-        m_prevPinMode = m_pinMode;
         m_ePin[0]->getEnode()->remFromChangedCallback( this );
     }
+    m_prevPinMode = m_pinMode;
 }
 
 void McuComponentPin::move( int dx, int dy )

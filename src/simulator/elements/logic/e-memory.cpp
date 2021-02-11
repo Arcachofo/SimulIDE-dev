@@ -51,12 +51,11 @@ void eMemory::initialize()
     m_cs = true;
     m_oe = true;
     m_read = false;
-    
-    double imp = 1e28;
+
     for( int i=0; i<m_numOutputs; ++i )
     {
         m_dataPinState[i] = false;
-        m_output[i]->setImp( imp );
+        m_output[i]->setPinMode( input );
     }
     if( !m_persistent ) m_ram.fill( 0 );
     
@@ -82,7 +81,7 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
     if( !CS ) return;
 
     bool WE = getInputState( 0 );
-    bool oe = outputEnabled() && !WE;
+    bool oe = outputEnabled();// && !WE;
     
     if( oe != m_oe )
     {
@@ -101,13 +100,18 @@ void eMemory::voltChanged()        // Some Pin Changed State, Manage it
     m_we = WE;
     if( WE )                                // Write
     {
-        if( csTrig || weTrig)  // Write action triggered
+        for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setPinMode( input );
+        Simulator::self()->addEvent( 1, NULL );
+
+        if( csTrig || weTrig )  // Write action triggered
         {
             m_read = false;
             Simulator::self()->addEvent( m_propDelay, this );
         }
     }else                                  // Read
     {
+        for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setPinMode( output );
+        Simulator::self()->addEvent( 1, NULL );
         m_read = true;
         m_nextOutVal = m_ram[m_address];
         sheduleOutPuts();
@@ -122,7 +126,7 @@ void eMemory::runEvent()
         int value = 0;
         for( int i=0; i<m_numOutputs; ++i )
         {
-            int  volt  = m_output[i]->getEpin(0)->getVolt();
+            int  volt  = m_output[i]->getVolt();
             bool state = m_dataPinState[i];
 
             if     ( volt > m_inputHighV ) state = true;

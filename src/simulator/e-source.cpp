@@ -44,8 +44,8 @@ eSource::eSource( QString id, ePin* epin, pinMode_t mode )
     m_imp = cero_doub;
     m_admit = 1/ m_imp;
 
+    m_pinMode = source;
     if( mode > source ) setPinMode( mode );
-    else m_pinMode = source;
 }
 eSource::~eSource(){ delete m_scrEnode; }
 
@@ -68,6 +68,7 @@ void eSource::stampOutput()
 
 void eSource::setPinMode( pinMode_t mode )
 {
+    //if( m_pinMode == mode ) return;
     m_pinMode = mode;
 
     if( mode == source )
@@ -77,32 +78,21 @@ void eSource::setPinMode( pinMode_t mode )
     else if( mode == input )
     {
         m_voltOut = cero_doub;
-        m_state = false;
         setImp( m_inputImp );
+        m_ePin[0]->setState( 0 );
     }
     else if( mode == output )
     {
+        if( m_inverted ) m_state = !m_state;
         setState( m_state );
         setImp( m_outputImp );
     }
     else if( mode == open )
     {
         m_voltOut = m_voltLow;
-        if( m_state ) setImp( m_openImp );
-        else          setImp( m_outputImp );
+        if( m_inverted ) m_state = !m_state;
+        setState( m_state );
     }
-}
-
-void eSource::setVoltHigh( double v )
-{
-    m_voltHigh = v;
-    if( m_state ) m_voltOut = v;
-}
-
-void eSource::setVoltLow( double v )
-{
-    m_voltLow = v;
-    if( !m_state ) m_voltOut = v;
 }
 
 void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
@@ -131,10 +121,23 @@ void eSource::setStateZ( bool z )
     m_stateZ = z;
     if( z )
     {
+        m_voltOut = m_voltLow;
         setImp( m_openImp );
         m_ePin[0]->setState( 3 );
     }
     else setPinMode( m_pinMode );
+}
+
+void eSource::setVoltHigh( double v )
+{
+    m_voltHigh = v;
+    if( m_state ) m_voltOut = v;
+}
+
+void eSource::setVoltLow( double v )
+{
+    m_voltLow = v;
+    if( !m_state ) m_voltOut = v;
 }
 
 void eSource::setImp( double imp )
