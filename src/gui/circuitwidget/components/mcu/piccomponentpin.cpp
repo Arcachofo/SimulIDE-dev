@@ -63,7 +63,7 @@ void PICComponentPin::attachPin( pic_processor* PicProcessor )
 
         if( m_pIOPIN->getType() == OPEN_COLLECTOR )
         {
-            eSource::setPinMode( open );
+            eSource::setPinMode( output_open );
         }
     }
     else if( m_id.startsWith("MCLR") )

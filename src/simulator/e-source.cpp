@@ -87,7 +87,7 @@ void eSource::setPinMode( pinMode_t mode )
         setState( m_state );
         setImp( m_outputImp );
     }
-    else if( mode == open )
+    else if( mode == output_open )
     {
         m_voltOut = m_voltLow;
         if( m_inverted ) m_state = !m_state;
@@ -102,7 +102,7 @@ void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
 
     if( m_stateZ ) return;
 
-    if( m_pinMode == open )
+    if( m_pinMode == output_open )
     {
         if( m_state ) m_admit = 1/m_openImp;
         else          m_admit = 1/m_outputImp;

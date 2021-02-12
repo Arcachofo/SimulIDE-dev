@@ -20,6 +20,7 @@
 #ifndef EELEMENT_H
 #define EELEMENT_H
 
+#include <vector>
 #include <string>
 #include <math.h>
 #include "e-pin.h"

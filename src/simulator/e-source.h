@@ -29,7 +29,7 @@ enum pinMode_t{
     source=0,
     input,
     output,
-    open,
+    output_open,
     undefined
 };
 
