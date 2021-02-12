@@ -30,7 +30,7 @@ enum pinMode_t{
     input,
     output,
     open,
-
+    undefined
 };
 
 class MAINMODULE_EXPORT eSource : public eElement
@@ -61,7 +61,6 @@ class MAINMODULE_EXPORT eSource : public eElement
         void  setInverted( bool inverted );
 
         virtual void  setInputImp( double imp ){ m_inputImp = imp; setImp( imp );}
-        //virtual void  setOpenImp( double imp ) { m_openImp  = imp; }
         virtual void  setOutputImp( double imp ){ m_outputImp = imp; setImp( imp ); }
 
         double imp() { return m_imp; }

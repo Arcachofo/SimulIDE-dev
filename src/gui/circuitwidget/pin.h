@@ -103,7 +103,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         QString m_labelText;
         
-        QColor m_color[4];
+        QColor m_color[6];
         QRect      m_area;
         Connector* my_connector;
         Component* m_component;

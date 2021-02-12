@@ -134,6 +134,7 @@ void eMemory::runEvent()
 
             m_dataPinState[i] = state;
             if( state ) value += pow( 2, i );
+            m_output[i]->getPin()->setState( state? 5:4 ); // High : Low colors
         }
         m_ram[m_address] = value;
     }

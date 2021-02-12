@@ -45,9 +45,11 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_color[0] = Qt::black;
     m_color[1] = QColor( 0, 0, 180 );
     m_color[2] = QColor( 180, 0, 0 );
-    m_color[3] = QColor( 0, 140, 0 );
+    m_color[3] = QColor( 60, 120, 60 );
+    m_color[4] = QColor( 100, 100, 250 );
+    m_color[5] = QColor( 250, 120, 0 );
 
-    m_area = QRect(-3, -3, 9, 6);
+    m_area = QRect(-3, -3, 11, 6);
 
     //QString compName = Circuit::self()->getCompId( id );
     //id.replace( compName, parent->objectName() );
@@ -326,7 +328,7 @@ void Pin::setLength( int length )
 {
     if( length < 1 ) length = 1;
     m_length = length;
-    int aLength = 9;
+    int aLength = 11;
     if( length == 1 ) aLength = 6;
     m_area = QRect(-3, -3, aLength, 6);
     setLabelPos();

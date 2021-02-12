@@ -68,7 +68,7 @@ void eSource::stampOutput()
 
 void eSource::setPinMode( pinMode_t mode )
 {
-    //if( m_pinMode == mode ) return;
+    if( m_pinMode == mode ) return;
     m_pinMode = mode;
 
     if( mode == source )
@@ -124,8 +124,11 @@ void eSource::setStateZ( bool z )
         m_voltOut = m_voltLow;
         setImp( m_openImp );
         m_ePin[0]->setState( 3 );
+    }else{
+        pinMode_t pm = m_pinMode; // Force pinMode
+        m_pinMode = undefined;
+        setPinMode( pm );
     }
-    else setPinMode( m_pinMode );
 }
 
 void eSource::setVoltHigh( double v )

@@ -131,6 +131,8 @@ bool eLogicDevice::outputEnabled()
     if     ( volt > m_inputHighV ) m_outEnable = false;   // Active Low
     else if( volt < m_inputLowV )  m_outEnable = true;
 
+    m_outEnSource->getPin()->setState( m_outEnable? 4:5 ); // High : Low colors
+
     return m_outEnable;
 }
 
@@ -445,6 +447,8 @@ int eLogicDevice::getClockState()
     else cState = Clock_Allow;
     m_clock = clock;
 
+    m_clockSource->getPin()->setState( clock? 5:4 ); // High : Low colors
+
     return cState;
 }
 
@@ -455,6 +459,8 @@ bool eLogicDevice::getInputState( int input )
 
     if     ( volt > m_inputHighV ) state = true;
     else if( volt < m_inputLowV )  state = false;
+
+    m_input[input]->getPin()->setState( state? 5:4 ); // High : Low colors
 
     if( m_input[input]->isInverted() ) state = !state;
     m_inputState[input] = state;
