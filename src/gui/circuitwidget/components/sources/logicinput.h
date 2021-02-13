@@ -43,7 +43,7 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eLogicDevice
 
         virtual QList<propGroup_t> propGroups() override;
 
-        bool out() { return m_outValue; }
+        bool out() { return m_button->isChecked(); }
         virtual void setOut( bool out );
 
         double volt();
