@@ -220,7 +220,8 @@ void InoDebugger::getVariables()
 
     QString  p_stdout = getBss.readAllStandardOutput();
     QStringList varNames = m_varList.keys();
-    
+    m_varNames.clear();
+
     for( QString line : p_stdout.split("\n") )
     {
         QStringList words = line.split(" ");
@@ -236,6 +237,7 @@ void InoDebugger::getVariables()
             address -= 0x800000;          // 0x800000 offset
             BaseProcessor* proc = BaseProcessor::self();
             if( proc ) proc->addWatchVar( symbol, address, m_varList.value( symbol ) );
+            m_varNames.append( symbol );
             //qDebug() << "InoDebugger::compile  variable "<<addr<<varName<<address<<i.value();
         }
     }
