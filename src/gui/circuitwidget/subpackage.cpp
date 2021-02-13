@@ -54,7 +54,7 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     
     m_width = 4;
     m_height = 8;
-    
+
     m_changed = false;
     m_fakePin = false;
     m_movePin = false;
@@ -514,6 +514,7 @@ void SubPackage::setPackage( QString package )
     
     setLogicSymbol( m_isLS );
     Circuit::self()->update();
+    m_changed = false;
 }
 
 void SubPackage::setLogicSymbol( bool ls )
