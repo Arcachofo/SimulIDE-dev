@@ -27,7 +27,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT CurrSource : public VarSource
 {
     Q_OBJECT
-    Q_PROPERTY( double Current READ value WRITE setValue DESIGNABLE true USER true )
+    Q_PROPERTY( double Value READ value WRITE setValue DESIGNABLE true USER true )
     public:
         CurrSource( QObject* parent, QString type, QString id );
         ~CurrSource();

@@ -56,7 +56,7 @@ CurrSource::~CurrSource(){}
 QList<propGroup_t> CurrSource::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Current", tr("Max. Current"),"main"} );
+    mainGroup.propList.append( {"Value", tr("Max. Current"),"main"} );
     return {mainGroup};
 }
 

@@ -64,10 +64,7 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eLogicDevice
     protected:
         void updateOutput();
 
-        //double m_voltHight;
-
         Pin*  m_outpin;
-        //eSource* m_out;
 
         QToolButton* m_button;
         QGraphicsProxyWidget* m_proxy;

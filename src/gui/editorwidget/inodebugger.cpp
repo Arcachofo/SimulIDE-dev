@@ -202,7 +202,7 @@ int InoDebugger::compile()
 }
 
 void InoDebugger::getVariables()
-{                                                // Get dissassemble
+{
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
     
     QString objdump = m_compilerPath+"hardware/tools/avr/bin/avr-objdump";

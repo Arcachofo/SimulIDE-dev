@@ -729,6 +729,12 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
         // SUBSTITUTIONS -------------------------------------------------------
 
         if( propName == "Volts") propName = "Voltage";
+        //else if( propName == "Propagation_Delay_ns") propName = "Propagation_Delay";
+        else if( propName == "Show_res"
+              || propName == "Show_Volt"
+              || propName == "Show_Ind"
+              || propName == "Show_Cap" ) propName = "Show_Val";
+        else if( propName == "Duty_Square") propName = "Duty";
 
         QString lowN = propName;
         lowN = lowN.toLower();

@@ -31,6 +31,7 @@ eLogicDevice::eLogicDevice( QString id )
     m_inputLowV  = 2.5;
     m_outHighV   = 5;
     m_outLowV    = 0;
+    m_outValue   = 0;
 
     m_inputImp = 1e9;
     m_outImp   = 40;

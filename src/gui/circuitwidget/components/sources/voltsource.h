@@ -27,7 +27,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT VoltSource : public VarSource
 {
     Q_OBJECT
-    Q_PROPERTY( double Voltage READ value WRITE setValue DESIGNABLE true USER true )
+    Q_PROPERTY( double Value READ value WRITE setValue DESIGNABLE true USER true )
 
     public:
         VoltSource( QObject* parent, QString type, QString id );
