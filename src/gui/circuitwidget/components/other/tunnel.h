@@ -22,11 +22,11 @@
 
 #include "component.h"
 #include "itemlibrary.h"
-#include "e-node.h"
 
+class eNode;
 class Pin;
 
-class MAINMODULE_EXPORT Tunnel : public Component, public eElement
+class MAINMODULE_EXPORT Tunnel : public Component//, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( QString  Uid     READ uid     WRITE setUid )

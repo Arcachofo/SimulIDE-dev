@@ -24,8 +24,9 @@
 #include "componentselector.h"
 #include "circuit.h"
 #include "tunnel.h"
-#include "utils.h"
 #include "node.h"
+#include "e-node.h"
+#include "utils.h"
 #include "simuapi_apppath.h"
 
 Component* SubCircuit::construct( QObject* parent, QString type, QString id )

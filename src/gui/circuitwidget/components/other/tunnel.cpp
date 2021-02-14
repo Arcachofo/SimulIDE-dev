@@ -21,6 +21,7 @@
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "e-node.h"
 #include "pin.h"
 
 QHash<QString, QList<Tunnel*>*> Tunnel::m_tunnels;
@@ -40,7 +41,7 @@ LibraryItem* Tunnel::libraryItem()
 
 Tunnel::Tunnel( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
-      , eElement( id )
+      //, eElement( id )
 {
     setLabelPos(-64,-24 );
 
