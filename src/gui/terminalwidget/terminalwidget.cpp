@@ -289,13 +289,15 @@ void TerminalWidget::uartIn( int uart, int value ) // Receive one byte on Uart
     //qDebug() << "TerminalWidget::uartIn" << m_uart << uart << value;
     if( uart != m_uart ) return;
 
+    uint8_t byte = value & 0xFF;
+
     QString text = "";
     if( m_printASCII )
     {
         if( value == 0 ) return;
-        text.append( value );
+        text.append( byte );
     }
-    else text = QString::number( value )+" ";
+    else text = QString::number( byte )+" ";
 
     m_uartInPanel.appendText( text );
 }
@@ -305,9 +307,11 @@ void TerminalWidget::uartOut( int uart, int value ) // Send value to OutPanelTex
     //qDebug() << "TerminalWidget::uartOut" << m_uart << uart << value;
     if( uart != m_uart ) return;
 
+    uint8_t byte = value & 0xFF;
+
     QString text = "";
-    if( m_printASCII ) text.append( value );
-    else               text = QString::number( value )+" ";
+    if( m_printASCII ) text.append( byte );
+    else               text = QString::number( byte )+" ";
 
     m_uartOutPanel.appendText( text );
 }

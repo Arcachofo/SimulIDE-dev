@@ -203,11 +203,13 @@ void SerialPort::slotWriteData( int uart, int value )
 {
     if( uart != m_uart ) return;
 
+    uint8_t byte = value & 0xFF;
+
     if( m_serial->isOpen() )
     {
         QByteArray ba;
         ba.resize(1);
-        ba[0] = value;
+        ba[0] = byte;
         m_serial->write( ba );
         m_active = !m_active;
         update();
