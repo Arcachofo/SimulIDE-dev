@@ -105,20 +105,12 @@ void LogicInput::updateStep()
     if( m_changed ) 
     {
         m_changed = false;
-        Simulator::self()->addEvent( 1, this );
+        eLogicDevice::setOut( 0, m_button->isChecked() );
     }
-}
-
-void LogicInput::runEvent()
-{
-    //m_out->stampOutput();
-    eLogicDevice::setOut( 0, m_button->isChecked() );
 }
 
 void LogicInput::onbuttonclicked()
 {
-    //m_out->setOut( m_button->isChecked() );
-
     m_changed = true;
     update();
 }
@@ -155,7 +147,6 @@ void LogicInput::updateOutput()
     m_outHighV = m_value*m_unitMult;
     //m_out->setVoltHigh( m_voltHight );
     m_changed = true;
-    Simulator::self()->addEvent( 1, NULL );
 }
 
 void LogicInput::setOut( bool out )

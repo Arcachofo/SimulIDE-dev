@@ -44,7 +44,6 @@ class AudioOut : public Component, public eResistor
         bool buzzer() { return m_buzzer; }
         void setBuzzer( bool buz ) { m_buzzer = buz; }
 
-        virtual void stamp() override;
         virtual void initialize() override;
         virtual void runEvent() override;
         

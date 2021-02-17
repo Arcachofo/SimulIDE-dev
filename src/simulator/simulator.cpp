@@ -142,6 +142,7 @@ void Simulator::runCircuit()
     uint64_t   endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
     uint64_t nextTime;
     //m_maxNlSteps = pow(m_noLinAcc,4);
+    if( m_changedNode ) solveMatrix(); // Solving matrix here save events in updateStep()
 
     while( event )                         // Simulator event loop
     {

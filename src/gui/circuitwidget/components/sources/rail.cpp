@@ -103,7 +103,6 @@ void Rail::updateOutput()
     m_voltHight = m_value*m_unitMult;
     m_out->setVoltHigh( m_voltHight );
     m_out->stampOutput();
-    Simulator::self()->addEvent( 1, NULL );
 }
 
 void Rail::remove()

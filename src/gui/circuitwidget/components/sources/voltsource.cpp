@@ -69,7 +69,6 @@ void VoltSource::updateStep()
         m_out->setState( m_button->isChecked(), true );
 
         m_changed = false;
-        Simulator::self()->addEvent( 1, 0l );
     }
 }
 

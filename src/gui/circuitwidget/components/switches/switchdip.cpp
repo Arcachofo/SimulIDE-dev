@@ -109,7 +109,6 @@ void SwitchDip::updateStep()
        i++;
     }
     m_changed = false;
-    Simulator::self()->addEvent( 0, 0l );
 }
 
 void SwitchDip::onbuttonclicked()

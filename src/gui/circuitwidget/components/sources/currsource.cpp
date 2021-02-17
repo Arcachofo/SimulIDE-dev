@@ -69,7 +69,6 @@ void CurrSource::updateStep()
         m_outpin->stampCurrent( current );
 
         m_changed = false;
-        Simulator::self()->addEvent( 1, 0l );
     }
 }
 

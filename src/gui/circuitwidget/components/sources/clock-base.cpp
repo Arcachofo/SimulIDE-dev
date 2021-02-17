@@ -63,11 +63,7 @@ void ClockBase::updateStep()
             Simulator::self()->cancelEvents( this );
             Simulator::self()->addEvent( 1, this );
         }
-        else
-        {
-            eLogicDevice::setOut( 0, false );
-            Simulator::self()->addEvent( 0, NULL );
-        }
+        else eLogicDevice::setOut( 0, false );
         m_changed = false;
     }
 }

@@ -151,7 +151,6 @@ void Potentiometer::updateStep()
     m_resB.setRes( res2 );
 
     m_changed = false;
-    Simulator::self()->addEvent( 0, 0l );
 }
 
 void Potentiometer::resChanged( int res ) // Called when dial is rotated

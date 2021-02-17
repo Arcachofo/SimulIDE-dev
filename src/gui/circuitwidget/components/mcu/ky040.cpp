@@ -139,9 +139,6 @@ void KY040::updateStep()
     if( m_changed )
     {
         m_sw->setState( !m_closed, true );
-
-        Simulator::self()->addEvent( 0, 0 );
-
         m_changed = false;
     }
 }
@@ -168,8 +165,6 @@ void KY040::runEvent()
 
         m_seqIndex++;
         if( m_seqIndex >= 4 ) m_seqIndex = -1;
-
-        Simulator::self()->addEvent( 0, 0 );
     }
     Simulator::self()->addEvent( 100*1e6, this );
 }

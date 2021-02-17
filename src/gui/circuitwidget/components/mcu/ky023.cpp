@@ -159,7 +159,6 @@ void KY023::updateStep()
         m_sw->setState( !m_closed, true );
         
         m_changed = false;
-        Simulator::self()->addEvent( 0, 0l );
     }
 }
 

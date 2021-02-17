@@ -114,16 +114,6 @@ QList<propGroup_t> AudioOut::propGroups()
     return {mainGroup};
 }
 
-void AudioOut::stamp()
-{
-    if( m_deviceinfo.isNull() ) return;
-    
-    if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
-        Simulator::self()->addEvent( 1, this );
-    
-    eResistor::stamp();
-}
-
 void AudioOut::initialize()
 {
     if( m_deviceinfo.isNull() ) return;

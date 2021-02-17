@@ -83,7 +83,6 @@ void MechContact::updateStep()
 
 void MechContact::setSwitch( bool closed )
 {
-    //qDebug() << "MechContact::setSwitch" << closed;
     m_changed = true;
     m_closed = closed;
 
@@ -102,7 +101,6 @@ void MechContact::setSwitch( bool closed )
             else         m_switches[ switchN ]->setAdmit( 1e3 );
         }
     }
-    Simulator::self()->addEvent( 0, 0l );
 }
 
 void MechContact::remove()

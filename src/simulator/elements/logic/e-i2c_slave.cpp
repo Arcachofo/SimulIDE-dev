@@ -66,7 +66,6 @@ void eI2CSlave::runEvent()       // We are in Mater mode, controlling Clock
     SDA_PIN->setState( false );
     if( m_nextSDA ) SDA_PIN->setImp( high_imp );
     else            SDA_PIN->setImp( m_outImp );
-    Simulator::self()->addEvent( 0, NULL );
 }
 
 void eI2CSlave::voltChanged()   // Some Pin Changed State, Manage it

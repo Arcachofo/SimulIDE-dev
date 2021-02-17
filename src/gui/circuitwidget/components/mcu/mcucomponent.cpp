@@ -110,7 +110,6 @@ void McuComponent::attach()
 void McuComponent::initialize()
 {
     reset();
-    Simulator::self()->addEvent( 1, this );
 }
 
 void McuComponent::updateStep()

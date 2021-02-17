@@ -60,7 +60,6 @@ void VarResistor::updateStep()
     {
         eResistor::setResSafe( m_value );
         m_changed = false;
-        Simulator::self()->addEvent( 1, NULL );
     }
 }
 

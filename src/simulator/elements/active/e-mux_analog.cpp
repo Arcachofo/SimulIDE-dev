@@ -140,7 +140,5 @@ void eMuxAnalog::setBits( int bits )
         m_resistor[i]->setEpin( 1, m_chanPin[i] );
         m_resistor[i]->setAdmit( 0 );
     }
-    Simulator::self()->addEvent( 0, NULL );
-    //qDebug() << "eMuxAnalog::setBits"<<m_ePin.size();
 }
 

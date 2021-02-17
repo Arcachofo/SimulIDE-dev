@@ -53,7 +53,6 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eLogicDevice
 
         virtual void stamp() override;
         virtual void updateStep() override;
-        virtual void runEvent() override;
         virtual void remove() override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
