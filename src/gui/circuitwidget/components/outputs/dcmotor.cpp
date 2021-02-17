@@ -66,12 +66,16 @@ DcMotor::DcMotor( QObject* parent, QString type, QString id )
     pinId.append(QString("-lPin"));
     QPoint pinPos = QPoint(-40,0);
     m_pin[0] = new Pin( 180, pinPos, pinId, 0, this);
+    m_pin[0]->setFontSize( 5 );
+    m_pin[0]->setLabelText("+");
     m_ePin[0] = m_pin[0];
 
     pinId = m_id;
     pinId.append(QString("-rPin"));
     pinPos = QPoint(40,0);
     m_pin[1] = new Pin( 0, pinPos, pinId, 1, this);
+    m_pin[1]->setFontSize( 5 );
+    m_pin[1]->setLabelText("-");
     m_ePin[1] = m_pin[1];
 
     m_idLabel->setPos(-12,-24);
@@ -119,6 +123,7 @@ void DcMotor::stamp()
         enode = m_ePin[1]->getEnode();// Register for changes callback
         if( enode ) enode->voltChangedCallback( this );
      }
+     eResistor::stamp();
 }
 
 void DcMotor::updateStep()
@@ -146,11 +151,10 @@ void DcMotor::updatePos()
     uint64_t duration = timePS-m_lastTime;
     m_updtTime += duration;
     m_lastTime = timePS;
+    eResistor::updateVI();
 
     m_delta += (m_LastVolt/m_voltNom)*(duration/1e12);
-
     m_LastVolt = m_ePin[1]->getVolt() - m_ePin[0]->getVolt();
-    //qDebug() << "DcMotor::updatePos()"<< delta << m_ang << m_motStPs;
 }
 
 int DcMotor::rpm()
@@ -201,16 +205,16 @@ void DcMotor::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
     Component::paint( p, option, widget );
 
     p->setBrush( QColor(50, 70, 100) );
-    p->drawEllipse(-33,-33, 66, 66 );
+    p->drawEllipse(-32,-32, 64, 64 );
 
     p->setPen( QColor(0, 0, 0) );
     p->setBrush( QColor(255, 255, 255) );
-    p->drawEllipse(-28,-28, 56, 56 );
+    p->drawEllipse(-26,-26, 52, 52 );
 
     // rotating pointer
     p->setPen ( QColor(0, 0, 0) );
     p->setBrush( QColor(50, 70, 100) );
-    p->drawPie(-25,-25, 50, 50, m_ang-120, 240 );
+    p->drawPie(-24,-24, 48, 48, m_ang-120, 240 );
 
     p->setBrush( QColor(50, 70, 100) );
     p->drawEllipse(-20,-20, 40, 40 );

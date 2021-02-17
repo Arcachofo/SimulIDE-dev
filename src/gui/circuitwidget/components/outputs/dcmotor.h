@@ -60,7 +60,6 @@ class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
-        //void updateCurrNom();
         void updatePos();
 
         int m_rpm;
