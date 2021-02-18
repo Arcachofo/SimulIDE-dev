@@ -20,7 +20,7 @@
 #include "e-gate.h"
 #include "simulator.h"
 
-eGate::eGate( QString id, int inputs )
+eGate::eGate( QString id )
      : eLogicDevice( id )
 {
     m_tristate = false;

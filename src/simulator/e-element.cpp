@@ -32,12 +32,9 @@ eElement::eElement( QString id )
     digital_thre = 2.5;
 
     if( Simulator::self() ) Simulator::self()->addToElementList( this );
-    //qDebug() << "eElement::eElement" << QString::fromStdString( m_elmId );
-    
 }
 eElement::~eElement()
 {
-    //qDebug() << "eElement::~eElement deleting" << QString::fromStdString( m_elmId );
     Simulator::self()->remFromElementList( this );
     Simulator::self()->cancelEvents( this );
 
@@ -47,15 +44,10 @@ eElement::~eElement()
 void eElement::setNumEpins( int n )
 {
     m_ePin.resize(n);
-    //qDebug() << "eElement::setNumEpins"<< QString::fromStdString( m_elmId )<<m_ePin.size();
     for( int i=0; i<n; i++ )
     {
-        //qDebug() << "eElement::setNumEpins PIN:"<<i<<m_ePin[i];
         if( m_ePin[i] == 0 )
-        {
-            //qDebug() << "eElement::setNumEpins Creating:"<<i;
             m_ePin[i] = new ePin( m_elmId+"-ePin"+QString::number(i), i );
-        }
     }
 }
 

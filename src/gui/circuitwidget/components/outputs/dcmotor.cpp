@@ -130,7 +130,7 @@ void DcMotor::updateStep()
 {
     updatePos();
 
-    m_speed = m_delta/(m_updtTime/1e12);
+    if( m_updtTime ) m_speed = m_delta/(m_updtTime/1e12);
 
     m_ang += m_motStPs*m_delta;
     m_ang = remainder( m_ang, (16.0*360.0) );
@@ -151,7 +151,6 @@ void DcMotor::updatePos()
     uint64_t duration = timePS-m_lastTime;
     m_updtTime += duration;
     m_lastTime = timePS;
-    eResistor::updateVI();
 
     m_delta += (m_LastVolt/m_voltNom)*(duration/1e12);
     m_LastVolt = m_ePin[1]->getVolt() - m_ePin[0]->getVolt();

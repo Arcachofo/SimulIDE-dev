@@ -105,8 +105,6 @@ void SerialPort::setMcuId( QString mcu )
 
     Component* mcuComp = Circuit::self()->getCompById( m_mcuId );
     if( mcuComp ) m_mcuComponent = static_cast<McuComponent*>(mcuComp);
-
-    //qDebug() << "SerialPort::setMcuId" << mcu << name;
 }
 
 void SerialPort::initialize()
@@ -121,14 +119,9 @@ void SerialPort::initialize()
         m_mcuId = m_mcuComponent->objectName();
     }
 
-    {
-        Component* mcu = Circuit::self()->getCompById( m_mcuId );
-        if( mcu )
-        {
-            m_mcuComponent = static_cast<McuComponent*>(mcu);
-            //qDebug() << "SerialPort::resetState" << mcu->objectName();
-        }
-    }
+    Component* mcu = Circuit::self()->getCompById( m_mcuId );
+    if( mcu ) m_mcuComponent = static_cast<McuComponent*>(mcu);
+
     if( m_mcuComponent )
     {
         m_processor = m_mcuComponent->processor();
@@ -185,8 +178,6 @@ void SerialPort::close()
     m_button->setText( "Open" );
     m_active = false;
     update();
-    //ui->openButton->setEnabled( true );
-    //ui->closeButton->setEnabled( false );
 }
 
 void SerialPort::readData()
@@ -194,7 +185,6 @@ void SerialPort::readData()
     QByteArray data = m_serial->readAll();
     m_active = !m_active;
     update();
-    //qDebug()<<"SerialPort::readData" << data;
 
     for( int i=0; i<data.size(); i++ ) m_processor->uartIn( m_uart, data.at(i) );
 }
@@ -213,7 +203,6 @@ void SerialPort::slotWriteData( int uart, int value )
         m_serial->write( ba );
         m_active = !m_active;
         update();
-        //qDebug() << "SerialPort::slotWriteData"<<value;
     }
 }
 

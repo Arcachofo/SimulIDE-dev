@@ -34,7 +34,6 @@ ePin::ePin( QString id, int index )
 }
 ePin::~ePin()
 {
-    //qDebug() << "deleting" << QString::fromStdString( m_id );
     if( m_enode ) m_enode->remEpin( this );
 }
 
@@ -45,15 +44,12 @@ void ePin::reset()
 
 eNode* ePin::getEnode()
 {
-    //qDebug() << "ePin::getEnode" << m_connected<<m_enode;
     return m_enode; 
 }
 
 void ePin::setEnode( eNode* enode )
 {
     if( enode == m_enode ) return;
-
-    //qDebug() << "ePin::setEnode" << QString::fromStdString(m_id) << enode <<m_enode;
 
     if( m_enode ) m_enode->remEpin( this );
     if( enode )   enode->addEpin( this );
@@ -62,11 +58,8 @@ void ePin::setEnode( eNode* enode )
     m_connected = (enode!=0l);
 }
 
-//eNode* ePin::getEnodeComp() { return m_enodeCon; }
-
 void ePin::setEnodeComp( eNode* enode )
 {
-    //std::cout << "\nePin::setEnodeComp "<< m_id << m_connected ;
     m_enodeCon = enode;
     int enodeConNum = 0;
     if( enode ) enodeConNum = enode->getNodeNumber();
@@ -76,7 +69,6 @@ void ePin::setEnodeComp( eNode* enode )
 
 void ePin::stampCurrent( double data )
 {
-    //qDebug() << "ePin::stampCurrent connected" << m_connected << data;
     if( m_connected ) m_enode->stampCurrent( this, data );
 }
 
@@ -92,7 +84,6 @@ void ePin::stampAdmitance( double data )
 
 double ePin::getVolt()
 {
-    //std::cout << "\nePin::getVolt "<< m_id << m_connected ;
     if( m_connected )return m_enode->getVolt();
     if( m_enodeCon ) return m_enodeCon->getVolt();
     return 0;
@@ -112,7 +103,6 @@ QString ePin::getId() { return m_id; }
 
 void ePin::setId( QString id )
 {
-    //Circuit::self()->removePin( m_id );
     Circuit::self()->updatePin( this, id );
     m_id = id;
 }

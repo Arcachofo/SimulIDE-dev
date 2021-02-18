@@ -24,7 +24,7 @@
 
 Gate::Gate( QObject* parent, QString type, QString id, int inputs )
     : Component( parent, type, id )
-    , eGate( id, 0 )
+    , eGate( id )
 {
     setNumInps( inputs );                           // Create Input Pins
     

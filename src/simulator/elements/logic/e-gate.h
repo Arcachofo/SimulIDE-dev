@@ -26,7 +26,7 @@ class MAINMODULE_EXPORT eGate : public eLogicDevice
 {
     public:
 
-        eGate( QString id, int inputs );
+        eGate( QString id );
         ~eGate();
 
         virtual void stamp() override;

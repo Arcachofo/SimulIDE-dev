@@ -29,16 +29,13 @@ eResistor::eResistor( QString id )
     m_current = 0;
     m_ePin.resize(2);
 }
-eResistor::~eResistor(){
-    //qDebug() << "eResistor::~eResistor deleting" << m_elmId ;
-}
+eResistor::~eResistor(){}
 
 void eResistor::stamp()
 {
     m_ePin[0]->setEnodeComp( m_ePin[1]->getEnode() );
     m_ePin[1]->setEnodeComp( m_ePin[0]->getEnode() );
     stampAdmit();
-    //qDebug() << "eResistor::initialize"<< m_elmId;
 }
 
 void eResistor::stampAdmit()
@@ -47,7 +44,6 @@ void eResistor::stampAdmit()
 
     m_ePin[0]->stampAdmitance( m_admit );
     m_ePin[1]->stampAdmitance( m_admit );
-    //qDebug() << "eResistor::stamp" << m_elmId<< m_resist;
 }
 
 void eResistor::stampCurrent( double current )
@@ -56,7 +52,6 @@ void eResistor::stampCurrent( double current )
 
     m_ePin[0]->stampCurrent( current );
     m_ePin[1]->stampCurrent( -current );
-    //qDebug() << "eResistor::stampCurrent" << m_elmId<< m_resist;
 }
 
 double eResistor::res() 
@@ -108,7 +103,6 @@ void eResistor::updateVI()
         double volt = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
 
         m_current = volt/m_resist;
-        //qDebug() << " current " <<m_current<<volt;
     }
     else m_current = 0;
 }

@@ -82,7 +82,7 @@ void Meter::updateStep()
     int decimals = 3;
     double value = fabs(m_dispValue);
 
-    if( value < 1e-12 ) value = 0;
+    if( fabs(value) < 1e-9 ) value = 0;
     else
     {
         value *= 1e12;

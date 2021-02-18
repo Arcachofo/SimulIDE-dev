@@ -23,8 +23,8 @@
 
 #include "e-gate_xor.h"
 
-eXorGate::eXorGate( QString id, int inputs )
-        : eGate( id, inputs )
+eXorGate::eXorGate( QString id )
+        : eGate( id )
 {
 
 }

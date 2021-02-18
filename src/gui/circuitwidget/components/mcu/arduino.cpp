@@ -121,7 +121,7 @@ void Arduino::initBoard()
     m_bufferEnode = new eNode( m_id+"-Lnod");
 
     // Create Led Buffer
-    m_boardLedBuffer = new eGate( m_id+"boardLedBuffer", 0 );
+    m_boardLedBuffer = new eGate( m_id+"boardLedBuffer" );
     m_boardLedBuffer->createPins( 1, 1 );
     m_boardLedBuffer->getEpin( "output0" )->setEnode( m_bufferEnode );
 

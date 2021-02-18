@@ -17,8 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QDebug>
-
 #include "e-flipflopjk.h"
 #include "simulator.h"
 #include "circuit.h"

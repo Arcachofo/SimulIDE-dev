@@ -23,8 +23,8 @@
 
 #include "e-gate_or.h"
 
-eOrGate::eOrGate( QString id, int inputs )
-       : eGate( id, inputs )
+eOrGate::eOrGate( QString id )
+       : eGate( id )
 {
 
 }

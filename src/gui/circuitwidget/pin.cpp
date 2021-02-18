@@ -51,9 +51,6 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
 
     m_area = QRect(-3, -3, 11, 6);
 
-    //QString compName = Circuit::self()->getCompId( id );
-    //id.replace( compName, parent->objectName() );
-
     setObjectName( id );
     setConnector( 0l );
     setPos( pos );
@@ -81,17 +78,12 @@ Pin::~Pin()
 
 void Pin::reset()
 {
-    //qDebug() << "Pin::reset "<<my_connector->objectName();
     if( my_connector ) setConnector( 0l );
     m_connected = false;
     
-    //if( !Circuit::self()->deleting() )
-    {
-        //qDebug() << "ePin::reset new:" << m_numConections;
-        m_component->inStateChanged( 1 );          // Used by node to remove
+    m_component->inStateChanged( 1 );          // Used by node to remove
+    if( m_isBus ) m_component->inStateChanged( 3 ); // Used by Bus to remove
 
-        if( m_isBus ) m_component->inStateChanged( 3 ); // Used by Bus to remove
-    }
     ePin::reset(); 
 }
 
@@ -105,7 +97,6 @@ void Pin::registerPinsW( eNode* enode )     // Called by component, calls conPin
 {
     if( m_blocked ) return;
     m_blocked = true;
-    //qDebug() <<"Pin::registerPinsW "<<m_component->itemID();
 
     ePin::setEnode( enode );
     if( m_conPin ) m_conPin->registerPins( enode ); // Call pin at other side of Connector
@@ -117,7 +108,7 @@ void Pin::registerPins( eNode* enode )     // Called by connector closing or oth
 {
     if( m_blocked ) return;
     m_blocked = true;
-//qDebug() <<"Pin::registerPinsW "<<m_component->itemID();
+
     ePin::setEnode( enode );
 
     if( m_component->itemType() == "Node" )
@@ -145,11 +136,7 @@ void  Pin::setConnector( Connector* connector )
     if( my_connector ) 
     {
         setCursor( Qt::ArrowCursor );
-        if( m_isBus ) 
-        {
-            my_connector->setIsBus( true );
-            //m_component->inStateChanged( 2 );
-        }
+        if( m_isBus ) my_connector->setIsBus( true );
     }
     else setCursor( Qt::CrossCursor );
 }
@@ -163,7 +150,7 @@ void Pin::connectPin()
     {
         if( it->type() == 65536+3 )                         // Pin found
         {
-            Pin* pin =  qgraphicsitem_cast<Pin *>( it );
+            Pin* pin =  qgraphicsitem_cast<Pin*>( it );
 
             if( m_isBus != pin->isBus() ) continue;
             if( !pin->connector() )
@@ -171,7 +158,6 @@ void Pin::connectPin()
                 Circuit::self()->newconnector( this );
                 Circuit::self()->closeconnector( pin );
             }
-            //qDebug() << " Pin: Pin found";
             break;
         }
     }
@@ -217,7 +203,7 @@ void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
 QString Pin::getLabelText()
 {
-    return m_labelText; //m_label.text();
+    return m_labelText;
 }
 
 void Pin::setLabelText( QString label )
@@ -232,19 +218,13 @@ void Pin::setLabelText( QString label )
         {
             QString e = "!";
             QChar ch = label[i];
-            if( ch == e[0] )
-            {
-                inv = true;
-                continue;
-            }
+            if( ch == e[0] ) { inv = true; continue; }
             e = " ";
             text.append( ch );
             if( inv && (ch != e[0]) ) text.append("\u0305");
         }
-        //qDebug() << "Pin::setLabelText" <<text<< label<<"\n";
         label = text;
     }
-    //qDebug() << "Pin::setLabelText" << label<<"\n";
     m_label.setText( label );
     setLabelPos();
 }
@@ -318,7 +298,7 @@ void Pin::setPinId( QString id )
 { 
     m_id = id; 
 }
-        
+
 QString Pin::pinId() 
 { 
     return m_id;
