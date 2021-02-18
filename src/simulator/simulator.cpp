@@ -143,6 +143,12 @@ void Simulator::runCircuit()
     uint64_t nextTime;
     //m_maxNlSteps = pow(m_noLinAcc,4);
     if( m_changedNode ) solveMatrix(); // Solving matrix here save events in updateStep()
+    while( m_voltChanged )
+    {
+        m_voltChanged->added = false;
+        m_voltChanged->voltChanged();
+        m_voltChanged = m_voltChanged->nextChanged;
+    }
 
     while( event )                         // Simulator event loop
     {
