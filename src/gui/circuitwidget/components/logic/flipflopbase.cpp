@@ -55,7 +55,7 @@ void FlipFlopBase::stamp()
 
     if( m_etrigger != Trig_Clk )
     {
-        for( uint i=0; i<m_dataPins; i++ ) // J K or D
+        for( int i=0; i<m_dataPins; i++ ) // J K or D
         {
             eNode* enode = m_input[i]->getEpin(0)->getEnode();
             if( enode ) enode->voltChangedCallback( this );

@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "bincounter.h"
+#include "itemlibrary.h"
 #include "pin.h"
 
 static const char* BinCounter_properties[] = {
@@ -41,26 +42,30 @@ LibraryItem* BinCounter::libraryItem()
 
 BinCounter::BinCounter(QObject *parent, QString type, QString id) 
           : LogicComponent( parent, type, id )
-          , eBinCounter( id )
+          , eLogicDevice( id )
 {
     Q_UNUSED( BinCounter_properties );
     
+    m_TopValue = 1;
+
     m_width  = 3;
     m_height = 3;
 
     QStringList pinList;
     pinList
       << "IL01>"
-      << "IL02 R"
+      << "ID02R"
+      << "IU01S"
       << "OR01Q"
     ;
     init( pinList );
     
     eLogicDevice::createClockPin( m_inPin[0] );      // Input Clock
     eLogicDevice::createInput( m_inPin[1] );         // Input Reset
+    eLogicDevice::createInput( m_inPin[2] );         // Input Set
     eLogicDevice::createOutput( m_outPin[0] );       // Output Q
 
-    setResetInv( true );                             // Invert Reset Pin
+    setSrInv( true );                             // Invert Reset Pin
 }
 BinCounter::~BinCounter(){}
 
@@ -68,12 +73,59 @@ QList<propGroup_t> BinCounter::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
-    mainGroup.propList.append( {"Reset_Inverted", tr("Reset Inverted"),""} );
+    mainGroup.propList.append( {"Reset_Inverted", tr("Set / Reset Inverted"),""} );
     mainGroup.propList.append( {"Max_Value", tr("Count to"),""} );
 
     QList<propGroup_t> pg = LogicComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
+}
+
+void BinCounter::stamp()
+{
+    eNode* enode = m_input[0]->getEpin(0)->getEnode();              // Reset pin
+    if( enode ) enode->voltChangedCallback( this );
+
+    eLogicDevice::stamp();
+}
+
+void BinCounter::initialize()
+{
+    m_Counter = 0;
+    eLogicDevice::initialize();
+}
+
+void BinCounter::voltChanged()
+{
+    bool clkRising = (eLogicDevice::getClockState() == Clock_Rising);
+
+    if( eLogicDevice::getInputState( 0 ) == true ) // Reset
+    {
+       m_Counter = 0;
+       m_nextOutVal = 0;
+    }
+    else if( clkRising )
+    {
+        m_Counter++;
+
+        if( m_Counter == m_TopValue )
+        {
+            m_nextOutVal = 1;
+        }
+        else if( m_Counter > m_TopValue )
+        {
+            m_Counter = 0;
+            m_nextOutVal = 0;
+        }
+    }
+    sheduleOutPuts();
+}
+
+void BinCounter::setSrInv( bool inv )
+{
+    m_resetInv = inv;
+    m_input[1]->setInverted( inv );       // Input Reset
+    m_input[2]->setInverted( inv );       // Input Set
 }
 
 #include "moc_bincounter.cpp"

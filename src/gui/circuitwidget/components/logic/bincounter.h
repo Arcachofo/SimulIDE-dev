@@ -20,11 +20,12 @@
 #ifndef BINCOUNTER_H
 #define BINCOUNTER_H
 
-#include "itemlibrary.h"
 #include "logiccomponent.h"
-#include "e-bincounter.h"
+#include "e-logic_device.h"
 
-class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eBinCounter
+class LibraryItem;
+
+class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eLogicDevice
 {
     Q_OBJECT
     Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
@@ -37,7 +38,7 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eBinCounter
     Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
     Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
     Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Reset_Inverted READ resetInv  WRITE setResetInv  DESIGNABLE true USER true )
+    Q_PROPERTY( bool   Reset_Inverted READ srInv     WRITE setSrInv     DESIGNABLE true USER true )
     Q_PROPERTY( int    Max_Value      READ TopValue  WRITE setTopValue  DESIGNABLE true  USER true )
 
     public:
@@ -47,7 +48,23 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eBinCounter
         virtual QList<propGroup_t> propGroups() override;
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
+
+        int  TopValue() { return m_TopValue; }
+        void setTopValue( int tv ) { m_TopValue = tv; }
+
+        bool srInv() { return m_resetInv; }
+        void setSrInv( bool inv );
+
+        virtual void stamp() override;
+        virtual void initialize() override;
+        virtual void voltChanged() override;
+
+    protected:
+        int m_Counter;
+        int m_TopValue;
+
+        bool m_resetInv;
 };
 
 #endif
