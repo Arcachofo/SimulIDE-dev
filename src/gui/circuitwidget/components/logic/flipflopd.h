@@ -20,27 +20,12 @@
 #ifndef FLIPFLOPD_H
 #define FLIPFLOPD_H
 
-#include "e-flipflopd.h"
-#include "itemlibrary.h"
-#include "logiccomponent.h"
+#include "flipflopbase.h"
 
-class MAINMODULE_EXPORT FlipFlopD : public LogicComponent, public eFlipFlopD
+class LibraryItem;
+
+class MAINMODULE_EXPORT FlipFlopD : public FlipFlopBase
 {
-    Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
-
-    Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
-    Q_PROPERTY( bool   S_R_Inverted   READ srInv     WRITE setSrInv     DESIGNABLE true USER true )
-    Q_PROPERTY( Trigger Trigger       READ trigger   WRITE setTrigger   DESIGNABLE true USER true )
-
     public:
         FlipFlopD( QObject* parent, QString type, QString id );
         ~FlipFlopD();
@@ -48,9 +33,7 @@ class MAINMODULE_EXPORT FlipFlopD : public LogicComponent, public eFlipFlopD
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        virtual void setTrigger( Trigger trigger );
+        virtual void voltChanged() override;
 };
 
 #endif

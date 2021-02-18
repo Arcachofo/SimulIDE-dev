@@ -17,27 +17,26 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "flipflopjk.h"
+#include "flipfloprs.h"
 #include "itemlibrary.h"
 #include "simulator.h"
 
-
-Component* FlipFlopJK::construct( QObject* parent, QString type, QString id )
+Component* FlipFlopRS::construct( QObject* parent, QString type, QString id )
 {
-    return new FlipFlopJK( parent, type, id );
+    return new FlipFlopRS( parent, type, id );
 }
 
-LibraryItem* FlipFlopJK::libraryItem()
+LibraryItem* FlipFlopRS::libraryItem()
 {
     return new LibraryItem(
-        tr( "FlipFlop JK" ),
+        tr( "FlipFlop RS" ),
         tr( "Logic/Memory" ),
-        "3to2.png",
-        "FlipFlopJK",
-        FlipFlopJK::construct );
+        "2to2.png",
+        "FlipFlopRS",
+        FlipFlopRS::construct );
 }
 
-FlipFlopJK::FlipFlopJK( QObject* parent, QString type, QString id )
+FlipFlopRS::FlipFlopRS( QObject* parent, QString type, QString id )
           : FlipFlopBase( parent, type, id )
 {
     m_width  = 3;
@@ -46,10 +45,8 @@ FlipFlopJK::FlipFlopJK( QObject* parent, QString type, QString id )
     QStringList pinList;
 
     pinList // Inputs:
-            << "IL01 J"
-            << "IL03 K"
-            << "IU01S"
-            << "ID02R"
+            << "IL01 S"
+            << "IL03 R"
             << "IL02>"
             
             // Outputs:
@@ -57,45 +54,36 @@ FlipFlopJK::FlipFlopJK( QObject* parent, QString type, QString id )
             << "OR03!Q"
             ;
     init( pinList );
-    
-    eLogicDevice::createInput( m_inPin[0] );                  // Input J
-    eLogicDevice::createInput( m_inPin[1] );                  // Input K
-    eLogicDevice::createInput( m_inPin[2] );                  // Input S
-    eLogicDevice::createInput( m_inPin[3] );                  // Input R
 
-    m_setPin = m_input[2];
-    m_resetPin = m_input[3];
-    m_dataPins = 2;
+    eLogicDevice::createInput( m_inPin[0] );                  // Input S
+    eLogicDevice::createInput( m_inPin[1] );                  // Input R
+
+    m_setPin = m_input[0];
+    m_resetPin = m_input[1];
     
-    m_trigPin = m_inPin[4];
-    eLogicDevice::createClockPin( m_trigPin );            // Input Clock
+    m_trigPin = m_inPin[2];
+    eLogicDevice::createClockPin( m_trigPin );             // Input Clock
     
     eLogicDevice::createOutput( m_outPin[0] );               // Output Q
     eLogicDevice::createOutput( m_outPin[1] );               // Output Q'
 
-    setSrInv( true );                         // Invert Set & Reset pins
-    setClockInv( false );                       //Don't Invert Clock pin
+    setSrInv( true );                           // Inver Set & Reset pins
+    setClockInv( false );                        //Don't Invert Clock pin
     setTrigger( Clock );
 }
-FlipFlopJK::~FlipFlopJK(){}
+FlipFlopRS::~FlipFlopRS(){}
 
-void FlipFlopJK::voltChanged()
+void FlipFlopRS::voltChanged()
 {
-    bool clkAllow = (eLogicDevice::getClockState() == Clock_Allow); // Get Clk to don't miss any clock changes
+    // Get Clk to don't miss any clock changes
+    bool clkAllow = (getClockState() == Clock_Allow);
+    if( !clkAllow ) return;
 
-    bool set   = getInputState( 2 );
-    bool reset = getInputState( 3 );
+    bool set   = getInputState( 0 );
+    bool reset = getInputState( 1 );
 
-    if( set || reset) m_Q0 = set;
-    else if( clkAllow )             // Allow operation
-    {
-        bool J = eLogicDevice::getInputState( 0 );
-        bool K = eLogicDevice::getInputState( 1 );
-        bool Q = m_output[0]->getState();
+    if( set || reset)   m_Q0 = set;
 
-        m_Q0 = (J && !Q) || (!K && Q) ;
-    }
     m_nextOutVal = m_Q0? 1:2;
     sheduleOutPuts();
 }
-

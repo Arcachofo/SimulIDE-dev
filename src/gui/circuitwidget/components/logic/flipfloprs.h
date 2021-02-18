@@ -17,18 +17,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef FLIPFLOPJK_H
-#define FLIPFLOPJK_H
+#ifndef FLIPFLOPRS_H
+#define FLIPFLOPRS_H
 
 #include "flipflopbase.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT FlipFlopJK : public FlipFlopBase
+class MAINMODULE_EXPORT FlipFlopRS : public FlipFlopBase
 {
     public:
-        FlipFlopJK( QObject* parent, QString type, QString id );
-        ~FlipFlopJK();
+        FlipFlopRS( QObject* parent, QString type, QString id );
+        ~FlipFlopRS();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();

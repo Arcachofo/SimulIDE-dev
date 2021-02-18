@@ -48,6 +48,7 @@
 #include "ellipse.h"
 #include "flipflopd.h"
 #include "flipflopjk.h"
+#include "flipfloprs.h"
 #include "frequencimeter.h"
 #include "fulladder.h"
 #include "function.h"
@@ -222,6 +223,7 @@ void ItemLibrary::loadItems()
     addItem( XorGate::libraryItem() );
 
     addItem( FlipFlopD::libraryItem() );
+    addItem( FlipFlopRS::libraryItem() );
     addItem( FlipFlopJK::libraryItem() );
     addItem( BinCounter::libraryItem() );
     addItem( FullAdder::libraryItem() );

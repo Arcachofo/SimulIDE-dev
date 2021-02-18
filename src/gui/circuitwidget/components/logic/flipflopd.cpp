@@ -18,14 +18,12 @@
  ***************************************************************************/
 
 #include "flipflopd.h"
-#include "circuitwidget.h"
+#include "itemlibrary.h"
 #include "simulator.h"
-#include "circuit.h"
-#include "pin.h"
 
 Component* FlipFlopD::construct( QObject* parent, QString type, QString id )
 {
-        return new FlipFlopD( parent, type, id );
+    return new FlipFlopD( parent, type, id );
 }
 
 LibraryItem* FlipFlopD::libraryItem()
@@ -39,8 +37,7 @@ LibraryItem* FlipFlopD::libraryItem()
 }
 
 FlipFlopD::FlipFlopD( QObject* parent, QString type, QString id )
-         : LogicComponent( parent, type, id )
-         , eFlipFlopD( id )
+         : FlipFlopBase( parent, type, id )
 {
     m_width  = 3;
     m_height = 3;
@@ -62,6 +59,10 @@ FlipFlopD::FlipFlopD( QObject* parent, QString type, QString id )
     eLogicDevice::createInput( m_inPin[0] );                  // Input D
     eLogicDevice::createInput( m_inPin[1] );                  // Input S
     eLogicDevice::createInput( m_inPin[2] );                  // Input R
+
+    m_setPin = m_input[1];
+    m_resetPin = m_input[2];
+    m_dataPins = 1;
     
     m_trigPin = m_inPin[3];
     eLogicDevice::createClockPin( m_trigPin );             // Input Clock
@@ -75,27 +76,17 @@ FlipFlopD::FlipFlopD( QObject* parent, QString type, QString id )
 }
 FlipFlopD::~FlipFlopD(){}
 
-QList<propGroup_t> FlipFlopD::propGroups()
+void FlipFlopD::voltChanged()
 {
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
-    mainGroup.propList.append( {"S_R_Inverted", tr("Set / Reset Inverted"),""} );
-    mainGroup.propList.append( {"Trigger", tr("Trigger Type"),"enum"} );
+    // Get Clk to don't miss any clock changes
+    bool clkAllow = (getClockState() == Clock_Allow);
 
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
+    bool set   = getInputState( 1 );
+    bool reset = getInputState( 2 );
+
+    if( set || reset)   m_Q0 = set;
+    else if( clkAllow ) m_Q0 = getInputState( 0 );
+
+    m_nextOutVal = m_Q0? 1:2;
+    sheduleOutPuts();
 }
-
-void FlipFlopD::setTrigger( Trigger trigger )
-{
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-
-    int trig = static_cast<int>( trigger );
-    eLogicDevice::seteTrigger( trig );
-    LogicComponent::setTrigger( trigger );
-
-    Circuit::self()->update();
-}
-
-#include "moc_flipflopd.cpp"
