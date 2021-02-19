@@ -86,16 +86,16 @@ void FlipFlopJK::voltChanged()
     bool set   = getInputState( 2 );
     bool reset = getInputState( 3 );
 
-    if( set || reset) m_Q0 = set;
-    else if( clkAllow )             // Allow operation
+    if( set || reset) m_nextOutVal = (set? 1:0) + (reset? 2:0);
+    else if( clkAllow )              // Allow operation
     {
         bool J = eLogicDevice::getInputState( 0 );
         bool K = eLogicDevice::getInputState( 1 );
         bool Q = m_output[0]->getState();
 
         m_Q0 = (J && !Q) || (!K && Q) ;
+        m_nextOutVal = m_Q0? 1:2;
     }
-    m_nextOutVal = m_Q0? 1:2;
     sheduleOutPuts();
 }
 

@@ -78,15 +78,13 @@ FlipFlopD::~FlipFlopD(){}
 
 void FlipFlopD::voltChanged()
 {
-    // Get Clk to don't miss any clock changes
-    bool clkAllow = (getClockState() == Clock_Allow);
+    bool clkAllow = (getClockState() == Clock_Allow); // Get Clk to don't miss any clock changes
 
     bool set   = getInputState( 1 );
     bool reset = getInputState( 2 );
 
-    if( set || reset)   m_Q0 = set;
-    else if( clkAllow ) m_Q0 = getInputState( 0 );
+    if( set || reset) m_nextOutVal = (set? 1:0) + (reset? 2:0);
+    else if( clkAllow ) m_nextOutVal = getInputState( 0 )? 1:2; // D state
 
-    m_nextOutVal = m_Q0? 1:2;
     sheduleOutPuts();
 }
