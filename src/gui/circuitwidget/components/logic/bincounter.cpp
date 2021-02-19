@@ -104,6 +104,11 @@ void BinCounter::voltChanged()
        m_Counter = 0;
        m_nextOutVal = 0;
     }
+    else if( eLogicDevice::getInputState( 1 ) == true ) // Set
+    {
+       m_Counter = m_TopValue;
+       m_nextOutVal = 1;
+    }
     else if( clkRising )
     {
         m_Counter++;
@@ -124,8 +129,8 @@ void BinCounter::voltChanged()
 void BinCounter::setSrInv( bool inv )
 {
     m_resetInv = inv;
-    m_input[1]->setInverted( inv );       // Input Reset
-    m_input[2]->setInverted( inv );       // Input Set
+    m_input[0]->setInverted( inv );       // Input Reset
+    m_input[1]->setInverted( inv );       // Input Set
 }
 
 #include "moc_bincounter.cpp"
