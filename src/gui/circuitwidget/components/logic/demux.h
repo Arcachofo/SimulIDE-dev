@@ -36,6 +36,7 @@ class MAINMODULE_EXPORT Demux : public LogicComponent, public eDemux
     Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
     Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
     Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
+    Q_PROPERTY( int    Address_Bits READ addrBits   WRITE setAddrBits   DESIGNABLE true USER true )
     Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
     Q_PROPERTY( bool   Tristate     READ tristate   USER true )
 
@@ -48,10 +49,16 @@ class MAINMODULE_EXPORT Demux : public LogicComponent, public eDemux
         
         virtual QList<propGroup_t> propGroups() override;
 
+        int addrBits() { return m_addrBits; }
+        void setAddrBits( int bits );
+
         bool tristate() { return true; }
         
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+
+    private:
+        int m_addrBits;
 };
 
 #endif
