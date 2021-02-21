@@ -61,9 +61,9 @@
     <pin side="right" pos="16" type="devdd" id="DEVDD" label="DEvdd"/>
     <pin side="right" pos="15" type="dvss"  id="DVss" label="Dvss"/>
     <pin side="right" pos="14" type="bidir" id="PB0" label="B0"/>
-    <pin side="right" pos="13" type="bidir" id="PB1" label="B1"/>
-    <pin side="right" pos="12" type="bidir" id="PB2" label="B2"/>
-    <pin side="right" pos="11" type="bidir" id="PB3" label="B3"/>
+    <pin side="right" pos="13" type="sck" id="PB1" label="B1"/>
+    <pin side="right" pos="12" type="mosi" id="PB2" label="B2"/>
+    <pin side="right" pos="11" type="miso" id="PB3" label="B3"/>
     <pin side="right" pos="10" type="OC2A" id="PB4" label="B4"/>
     <pin side="right" pos="9"  type="OC1A" id="PB5" label="B5"/>
     <pin side="right" pos="8"  type="OC1B" id="PB6" label="B6"/>

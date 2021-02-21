@@ -131,9 +131,21 @@ static void avr_spi_write( struct avr_t* avr, avr_io_addr_t addr, uint8_t v, voi
     }
     else if ((addr == p->r_spcr) || (addr == p->r_spsr))
     {
+        uint8_t spe = avr_regbit_get( avr, p->spe ); // Previous Enable State
+
 		avr_core_watch_write(avr, addr, v);
 		avr_bitbang_stop(&(p->bit_bang));
 		avr_bitbang_reset(avr, &(p->bit_bang));
+
+        uint8_t mstr = avr_regbit_get( avr, p->mstr );
+        if( addr == p->r_spcr )
+        {
+            uint8_t speNew = avr_regbit_get( avr, p->spe );  // New Enable State
+            if( spe != speNew )
+            {
+                avr_raise_irq( p->io.irq + SPI_IRQ_ENABLE, speNew );
+            }
+        }
 
         if (avr_regbit_get(avr, p->spe))
         {
@@ -141,7 +153,7 @@ static void avr_spi_write( struct avr_t* avr, avr_io_addr_t addr, uint8_t v, voi
             p->bit_bang.clk_pol    = avr_regbit_get( avr, p->cpol );
             p->bit_bang.data_order = avr_regbit_get( avr, p->dord );
 
-            if( avr_regbit_get( avr, p->mstr ))
+            if( mstr )
             {
 				int clock_divider_ix = (avr_regbit_get(avr, p->spr[0]) | avr_regbit_get(avr, p->spr[1]));
 				int clock_divider = 1;
@@ -233,6 +245,7 @@ void avr_spi_reset( struct avr_io_t* io)
 static const char * irq_names[SPI_IRQ_COUNT] = {
 	[SPI_IRQ_INPUT] = "8<in",
 	[SPI_IRQ_OUTPUT] = "8<out",
+    [SPI_IRQ_ENABLE] = "8<en",
 };
 
 static	avr_io_t	_io = {

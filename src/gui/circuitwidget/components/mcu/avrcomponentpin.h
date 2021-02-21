@@ -49,6 +49,8 @@ class AVRComponentPin : public McuComponentPin
         virtual void pullupNotConnected( bool up ) override;
         virtual void setImp( double imp ) override;
 
+        void enableSPI( uint32_t value );
+
         void adcread();
 
         static void ddr_hook( struct avr_irq_t* irq, uint32_t value, void* param )
@@ -58,6 +60,11 @@ class AVRComponentPin : public McuComponentPin
             AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
 
             ptrAVRComponentPin->setDirection( value>0 );
+        }
+        static void port_hook( struct avr_irq_t* irq, uint32_t value, void* param )
+        {
+            AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
+            ptrAVRComponentPin->setState( value>0 );
         }
         static void port_reg_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
@@ -82,20 +89,29 @@ class AVRComponentPin : public McuComponentPin
             ptrAVRComponentPin->setState( value>0 );
             ptrAVRComponentPin->m_enableIO = false;
         }
+        static void spiEn_hook( struct avr_irq_t* irq, uint32_t value, void* param )
+        {
+            AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
+            ptrAVRComponentPin->enableSPI( value );
+        }
 
     protected:
         int  m_channelAdc;
         int  m_channelAin;
 
+        QString m_spiPin;
+
  static QString m_lastid;
  static uint64_t m_lastCycle;
         //from simavr
         avr_t*     m_avrProcessor;
+        avr_irq_t* m_PortChangeIrq;
         avr_irq_t* m_PortRegChangeIrq;
         avr_irq_t* m_DdrRegChangeIrq;
         avr_irq_t* m_Write_stat_irq;
         avr_irq_t* m_Write_adc_irq;
         avr_irq_t* m_Write_acomp_irq;
+        avr_irq_t* m_Spi_Enable_Irq;
 };
 
 #endif

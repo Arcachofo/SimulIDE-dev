@@ -20,6 +20,7 @@
 #include "avrcomponentpin.h"
 #include "baseprocessor.h"
 #include "simulator.h"
+#include "avr_spi.h"
 
 uint64_t AVRComponentPin::m_lastCycle = 0;
 QString  AVRComponentPin::m_lastid = "";
@@ -30,12 +31,14 @@ AVRComponentPin::AVRComponentPin( McuComponent* mcu, QString id, QString type, Q
     m_channelAdc = -1;
     m_channelAin = -1;
 
-    m_avrProcessor = 0l;
-    m_PortRegChangeIrq = 0l;
-    m_DdrRegChangeIrq = 0l;
-    m_Write_stat_irq = 0l;
-    m_Write_adc_irq = 0l;
-    m_Write_acomp_irq = 0l;
+    m_avrProcessor = NULL;
+    m_PortChangeIrq = NULL;
+    m_PortRegChangeIrq = NULL;
+    m_DdrRegChangeIrq = NULL;
+    m_Write_stat_irq = NULL;
+    m_Write_adc_irq = NULL;
+    m_Write_acomp_irq = NULL;
+    m_Spi_Enable_Irq  = NULL;
 }
 AVRComponentPin::~AVRComponentPin(){}
 
@@ -59,6 +62,9 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
             qDebug()<<"PORT Register for"<<AvrProcessor->mmcu<<"Not found\nAVRComponentPin::attach"<<portName<<m_pinN;
             return;
         }
+        // By now need this for SPI to work
+        m_PortChangeIrq = avr_io_getirq( AvrProcessor, AVR_IOCTL_IOPORT_GETIRQ( m_port ), m_pinN );
+
         m_PortRegChangeIrq = avr_iomem_getirq( AvrProcessor, portAddr, &m_port, m_pinN );
         avr_irq_register_notify( m_PortRegChangeIrq, port_reg_hook, this );
         
@@ -108,6 +114,14 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
                 avr_irq_t* pwm_out = avr_io_getirq( m_avrProcessor, AVR_IOCTL_TIMER_GETIRQ(timer), TIMER_IRQ_OUT_COMP+channel ); //TIMER_IRQ_OUT_PWM0
                 avr_irq_register_notify( pwm_out, pwm_out_hook, this );
             }
+            else if( (ty == "sck")
+                  || (ty == "mosi")
+                  || (ty == "miso") )
+            {
+                m_spiPin = ty;
+                m_Spi_Enable_Irq = avr_io_getirq( m_avrProcessor, AVR_IOCTL_SPI_GETIRQ('0'), SPI_IRQ_ENABLE );
+                avr_irq_register_notify( m_Spi_Enable_Irq, spiEn_hook, this );
+            }
         }
     }
     else if( m_type == "reset" ) 
@@ -138,6 +152,8 @@ void AVRComponentPin::initialize()
         if( m_Write_stat_irq )  m_Write_stat_irq->flags  |= IRQ_FLAG_INIT;
         if( m_Write_adc_irq )   m_Write_adc_irq->flags   |= IRQ_FLAG_INIT;
         if( m_Write_acomp_irq ) m_Write_acomp_irq->flags |= IRQ_FLAG_INIT;
+        if( m_Spi_Enable_Irq )  m_Write_stat_irq->flags  |= IRQ_FLAG_INIT;
+        if( m_PortChangeIrq )   m_Write_stat_irq->flags  |= IRQ_FLAG_INIT;
 
         m_PortRegChangeIrq->flags |= IRQ_FLAG_INIT;
         m_DdrRegChangeIrq->flags  |= IRQ_FLAG_INIT;
@@ -186,6 +202,26 @@ void AVRComponentPin::setState( bool state )
 void AVRComponentPin::pullupNotConnected( bool up )
 {
     avr_raise_irq( m_Write_stat_irq, up? 1:0 );
+}
+
+void AVRComponentPin::enableSPI( uint32_t value )
+{
+    bool en = value & 1;
+    bool slv = value & 2;
+    if( slv )
+    {
+        if( (m_spiPin == "sck") || (m_spiPin == "mosi") || (m_spiPin == "ss") )
+            setDirection( false );
+    }
+    else
+    {
+        if( (m_spiPin == "sck") || (m_spiPin == "mosi") )
+        {
+            if( en ) avr_irq_register_notify( m_PortChangeIrq, port_hook, this );
+            else     avr_irq_unregister_notify( m_PortChangeIrq, port_hook, this );
+        }
+        else if( m_spiPin == "miso" ) setDirection( false );
+    }
 }
 
 void AVRComponentPin::adcread()

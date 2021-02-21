@@ -20,9 +20,9 @@
     <pin side="left" pos="17"  type="bidir" id="PB2"  label="B2" />
     <pin side="left" pos="18"  type="OC0A" id="PB3"  label="B3" />
     <pin side="left" pos="19"  type="OC0B" id="PB4"  label="B4" />
-    <pin side="left" pos="20"  type="bidir" id="PB5"  label="B5" />
-    <pin side="left" pos="21"  type="OC3A" id="PB6"  label="B6" />
-    <pin side="left" pos="22"  type="OC3B" id="PB7"  label="B7" />
+    <pin side="left" pos="20"  type="mosi" id="PB5"  label="B5" />
+    <pin side="left" pos="21"  type="OC3A,miso" id="PB6"  label="B6" />
+    <pin side="left" pos="22"  type="OC3B,sck" id="PB7"  label="B7" />
     
     <pin side="left" pos="23"  type="null" id="VCC"  label="" />
     <pin side="left" pos="24"  type="null" id="GND0"  label="" />
@@ -42,7 +42,7 @@
     <pin side="right" pos="16" type="bidir" id="PD1"  label="D1" />
     <pin side="right" pos="17" type="bidir" id="PD2"  label="D2" />
     <pin side="right" pos="18" type="bidir" id="PD3"  label="D3" />
-    <pin side="right" pos="19" type="open,OC1B"  id="PD4"  label="D4" />
+    <pin side="right" pos="19" type="OC1B"  id="PD4"  label="D4" />
     <pin side="right" pos="20" type="OC1A" id="PD5"  label="D5" />
     <pin side="right" pos="21" type="OC2B" id="PD6"  label="D6" />
     <pin side="right" pos="22" type="OC2A" id="PD7"  label="D7" />

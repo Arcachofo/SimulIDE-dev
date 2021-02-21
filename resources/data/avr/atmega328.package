@@ -40,9 +40,9 @@
 
     <pin side="right"   pos="14" type="OC1A" id="PB1"  label="B1"/>
     <pin side="right"   pos="13" type="OC1B" id="PB2"  label="B2"/>
-    <pin side="right"   pos="12" type="OC2A" id="PB3"  label="B3"/>
-    <pin side="right"   pos="11" type="open"  id="PB4"  label="B4"/>
-    <pin side="right"   pos="10" type="bidir" id="PB5"  label="B5"/>
+    <pin side="right"   pos="12" type="OC2A,mosi" id="PB3"  label="B3"/>
+    <pin side="right"   pos="11" type="miso"  id="PB4"  label="B4"/>
+    <pin side="right"   pos="10" type="sck" id="PB5"  label="B5"/>
 
     <pin side="right"   pos="9"  type="avcc"  id="AVCC" label="A+"/>
     <pin side="right"   pos="8"  type="aref"  id="AREF" label="Ar"/>

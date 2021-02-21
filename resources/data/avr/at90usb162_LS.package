@@ -9,9 +9,9 @@
     <pin side="left" pos="3"  type="OC1B" id="PB2"  label="B2" />
     <pin side="left" pos="4"  type="bidir" id="PB3"  label="B3" />
     <pin side="left" pos="5"  type="bidir" id="PB4"  label="B4" />
-    <pin side="left" pos="6"  type="bidir" id="PB5"  label="B5" />
-    <pin side="left" pos="7"  type="bidir" id="PB6"  label="B6" />
-    <pin side="left" pos="8"  type="bidir" id="PB7"  label="B7" />
+    <pin side="left" pos="6"  type="mosi" id="PB5"  label="B5" />
+    <pin side="left" pos="7"  type="miso" id="PB6"  label="B6" />
+    <pin side="left" pos="8"  type="sck" id="PB7"  label="B7" />
     <pin side="left" pos="10"  type="Xtal"  id="Xtal1" label="X1" />
     <pin side="left" pos="11"  type="bidir" id="PC0"   label="C0" />
     <pin side="left" pos="12"  type="bidir" id="PC2"   label="C2" />

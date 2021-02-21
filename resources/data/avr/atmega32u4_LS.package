@@ -6,9 +6,9 @@
 
     <pin side="left" pos="1"  type="reset" id="RST"  label="!RES" />
     <pin side="left" pos="3"  type="bidir" id="PB0"  label="B0" />
-    <pin side="left" pos="4"  type="bidir" id="PB1"  label="B1" />
-    <pin side="left" pos="5"  type="bidir" id="PB2"  label="B2" />
-    <pin side="left" pos="6"  type="bidir" id="PB3"  label="B3" />
+    <pin side="left" pos="4"  type="sck" id="PB1"  label="B1" />
+    <pin side="left" pos="5"  type="mosi" id="PB2"  label="B2" />
+    <pin side="left" pos="6"  type="miso" id="PB3"  label="B3" />
     <pin side="left" pos="7"  type="adc11" id="PB4"  label="B4" />
     <pin side="left" pos="8"  type="adc12,OC1A" id="PB5"  label="B5" />
     <pin side="left" pos="9"  type="adc13,OC1B" id="PB6"  label="B6" />

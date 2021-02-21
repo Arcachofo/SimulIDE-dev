@@ -32,6 +32,7 @@ extern "C" {
 enum {
 	SPI_IRQ_INPUT = 0,
 	SPI_IRQ_OUTPUT,
+    SPI_IRQ_ENABLE,
 	SPI_IRQ_COUNT
 };
 
@@ -99,6 +100,7 @@ void avr_spi_init(avr_t * avr, avr_spi_t * port);
 
 #define AVR_SPI_DECLARE(_prr, _prspi, _ss_pin_port, _p_sck, _p_miso, _p_mosi, _p_ss) \
 	.spi = { \
+        .name = '0',\
 		.disabled = AVR_IO_REGBIT(_prr, _prspi), \
 	\
 		.r_spdr = SPDR, \

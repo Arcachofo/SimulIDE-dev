@@ -31,9 +31,9 @@
     <pin side="left" pos="9"  type="bidir" id="PE6" label="E6"/>
     <pin side="left" pos="10" type="bidir" id="PE7" label="E7"/>
     <pin side="left" pos="11" type="bidir" id="PB0" label="B0"/>
-    <pin side="left" pos="12" type="bidir" id="PB1" label="B1"/>
-    <pin side="left" pos="13" type="bidir" id="PB2" label="B2"/>
-    <pin side="left" pos="14" type="bidir" id="PB3" label="B3"/>
+    <pin side="left" pos="12" type="sck" id="PB1" label="B1"/>
+    <pin side="left" pos="13" type="mosi" id="PB2" label="B2"/>
+    <pin side="left" pos="14" type="miso" id="PB3" label="B3"/>
     <pin side="left" pos="15" type="OC0A" id="PB4" label="B4"/>
     <pin side="left" pos="16" type="OC1A" id="PB5" label="B5"/>
     <pin side="left" pos="17" type="OC1B" id="PB6" label="B6"/>
