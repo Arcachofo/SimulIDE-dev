@@ -19,6 +19,7 @@
 
 #include "bincounter.h"
 #include "itemlibrary.h"
+#include "connector.h"
 #include "pin.h"
 
 static const char* BinCounter_properties[] = {
@@ -54,7 +55,7 @@ BinCounter::BinCounter(QObject *parent, QString type, QString id)
     QStringList pinList;
     pinList
       << "IL01>"
-      << "ID02R"
+      << "IL02 R"
       << "IU01S"
       << "OR01Q"
     ;
@@ -66,12 +67,14 @@ BinCounter::BinCounter(QObject *parent, QString type, QString id)
     eLogicDevice::createOutput( m_outPin[0] );       // Output Q
 
     setSrInv( true );                             // Invert Reset Pin
+    setPinSet( false );                          // Don't use Set Pin
 }
 BinCounter::~BinCounter(){}
 
 QList<propGroup_t> BinCounter::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Pin_SET", tr("Use Set Pin"),""} );
     mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
     mainGroup.propList.append( {"Reset_Inverted", tr("Set / Reset Inverted"),""} );
     mainGroup.propList.append( {"Max_Value", tr("Count to"),""} );
@@ -130,7 +133,17 @@ void BinCounter::setSrInv( bool inv )
 {
     m_resetInv = inv;
     m_input[0]->setInverted( inv );       // Input Reset
-    m_input[1]->setInverted( inv );       // Input Set
+    if( m_pinSet ) m_input[1]->setInverted( inv );       // Input Set
+    else           m_input[1]->setInverted( false );
+}
+
+void BinCounter::setPinSet( bool set )
+{
+    m_pinSet = set;
+    if( !set && m_inPin[2]->connector() ) m_inPin[2]->connector()->remove();
+
+    m_inPin[2]->setVisible( set );
+    setSrInv( m_resetInv );
 }
 
 #include "moc_bincounter.cpp"
