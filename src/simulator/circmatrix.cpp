@@ -85,8 +85,6 @@ bool CircMatrix::solveMatrix()
 {
     if( !m_admitChanged && !m_currChanged ) return true;
 
-    bool isOk = true;
-
     if( m_circChanged )          // Split Circuit into unconnected parts
     {
         //qDebug() <<"Spliting Circuit...";
@@ -153,8 +151,8 @@ bool CircMatrix::solveMatrix()
                 m_eNodeActList.append( eNodeActive );
                 m_eNodeActive = &eNodeActive;
                 
-                isOk &= factorMatrix( ny, group );
-                isOk &= luSolve( ny, group );
+                if( !factorMatrix( ny, group ) ) return false;
+                if( !luSolve( ny, group ) ) return false;
 
                 group++;
             }
@@ -168,14 +166,13 @@ bool CircMatrix::solveMatrix()
             m_eNodeActive = &(m_eNodeActList[i]);
             int n = m_eNodeActive->size();
 
-            if( m_admitChanged ) factorMatrix( n, i );
-
-            isOk &= luSolve( n, i );
+            if( m_admitChanged ) { if( !factorMatrix( n, i ) ) return false; }
+            if( !luSolve( n, i ) ) return false;
         }
     }
     m_currChanged  = false;
     m_admitChanged = false;
-    return isOk;
+    return true;
 }
 
 bool CircMatrix::factorMatrix( int n, int group  )

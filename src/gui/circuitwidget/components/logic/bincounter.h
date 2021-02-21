@@ -37,6 +37,7 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eLogicDevice
     Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
     Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
     Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
+    Q_PROPERTY( bool   Pin_SET      READ pinSet     WRITE setPinSet     DESIGNABLE true USER true )
     Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
     Q_PROPERTY( bool   Reset_Inverted READ srInv     WRITE setSrInv     DESIGNABLE true USER true )
     Q_PROPERTY( int    Max_Value      READ TopValue  WRITE setTopValue  DESIGNABLE true  USER true )
@@ -56,6 +57,9 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eLogicDevice
         bool srInv() { return m_resetInv; }
         void setSrInv( bool inv );
 
+        bool pinSet() { return m_pinSet; }
+        void setPinSet( bool set );
+
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
@@ -65,6 +69,7 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eLogicDevice
         int m_TopValue;
 
         bool m_resetInv;
+        bool m_pinSet;
 };
 
 #endif
