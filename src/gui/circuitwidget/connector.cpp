@@ -460,6 +460,8 @@ void Connector::updateLines()
     {
         for( ConnectorLine*  line : m_conLineList ) line->update();
     }
+    if( m_startPin ) m_startPin->UpdateState();
+    if( m_endPin )   m_endPin->UpdateState();
 }
 
 QStringList Connector::pointList()             { refreshPointList(); return m_pointList; }

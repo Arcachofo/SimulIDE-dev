@@ -79,7 +79,7 @@ void eSource::setPinMode( pinMode_t mode )
     {
         m_voltOut = cero_doub;
         setImp( m_inputImp );
-        m_ePin[0]->setState( 0 );
+        m_ePin[0]->setPinState( 0 );
     }
     else if( mode == output )
     {
@@ -107,12 +107,12 @@ void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
         if( m_state ) m_admit = 1/m_openImp;
         else          m_admit = 1/m_outputImp;
         if( st ) stamp();
-        m_ePin[0]->setState( m_state? 3:1 ); // Z : Low colors
+        m_ePin[0]->setPinState( m_state? 3:1 ); // Z : Low colors
     }else{
         if( m_state ) m_voltOut = m_voltHigh;
         else          m_voltOut = m_voltLow;
         if( st ) stampOutput();
-        if( m_pinMode == output ) m_ePin[0]->setState( m_state? 2:1 ); // High : Low colors
+        if( m_pinMode == output ) m_ePin[0]->setPinState( m_state? 2:1 ); // High : Low colors
     }
 }
 
@@ -123,7 +123,7 @@ void eSource::setStateZ( bool z )
     {
         m_voltOut = m_voltLow;
         setImp( m_openImp );
-        m_ePin[0]->setState( 3 );
+        m_ePin[0]->setPinState( 3 );
     }else{
         pinMode_t pm = m_pinMode; // Force pinMode
         m_pinMode = undefined;

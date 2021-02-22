@@ -81,7 +81,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setIsBus( bool bus );
         bool isBus();
 
-        virtual void setState( int st ) override;
+        virtual void setPinState( int st ) override;
+        void UpdateState();
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -100,6 +101,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         bool m_blocked;
         bool m_isBus;
         bool m_unused;
+        bool m_changed;
 
         QString m_labelText;
         

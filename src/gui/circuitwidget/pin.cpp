@@ -345,14 +345,22 @@ void Pin::setVisible( bool visible )
     QGraphicsItem::setVisible( visible );
 }
 
-void Pin::setState( int st )
+void Pin::setPinState( int st )
 {
     m_state = st;
-    if( Circuit::self()->animate() ) update();
+    m_changed = true;
+}
+
+void Pin::UpdateState()
+{
+    if( m_changed ) update();
 }
 
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
+    if( !isVisible() ) return;
+    m_changed = false;
+
     QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     //painter->setBrush( Qt::red );

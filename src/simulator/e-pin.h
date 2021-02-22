@@ -47,7 +47,7 @@ class MAINMODULE_EXPORT ePin
         void stampAdmitance( double data );
         void stampCurrent( double data );
 
-        virtual void setState( int st ) { m_state = st; }
+        virtual void setPinState( int st ) { m_state = st; }
 
         void reset();
         
