@@ -138,17 +138,12 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 
 void Simulator::runCircuit()
 {
+    if( m_changedNode ) solveCircuit();  // Solving matrix here save events in updateStep()
+
     simEvent_t* event = m_eventList.first;
     uint64_t   endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
     uint64_t nextTime;
     //m_maxNlSteps = pow(m_noLinAcc,4);
-    if( m_changedNode ) solveMatrix(); // Solving matrix here save events in updateStep()
-    while( m_voltChanged )
-    {
-        m_voltChanged->added = false;
-        m_voltChanged->voltChanged();
-        m_voltChanged = m_voltChanged->nextChanged;
-    }
 
     while( event )                         // Simulator event loop
     {
@@ -166,7 +161,9 @@ void Simulator::runCircuit()
             if( event ) nextTime = event->time;
             else break;
         }
-        if( m_changedNode ) solveMatrix();
+        if( m_changedNode ) solveCircuit();
+
+        /*if( m_changedNode ) solveMatrix();
 
         while( m_nonLin )                  // Non Linear Components
         {
@@ -199,11 +196,41 @@ void Simulator::runCircuit()
             m_voltChanged->added = false;
             m_voltChanged->voltChanged();
             m_voltChanged = m_voltChanged->nextChanged;
-        }
+        }*/
         event = m_eventList.first;
     }
     if( m_state > SIM_WAITING ) m_circTime = endRun;
     m_loopTime = m_RefTimer.nsecsElapsed();
+}
+
+void Simulator::solveCircuit()
+{
+    solveMatrix();
+    while( m_nonLin )                  // Non Linear Components
+    {
+        while( m_nonLin )
+        {
+            m_nonLin->added = false;
+            m_nonLin->voltChanged();
+            m_nonLin = m_nonLin->nextNonLin;
+        }
+        if( m_changedNode )
+        {
+            solveMatrix();
+            m_NLstep++;
+        }
+        if( m_state < SIM_RUNNING ) break;
+        if( m_maxNlstp ) { if( m_NLstep >= m_maxNlstp ) { m_warning = 1; break; } }
+    }
+    if( m_state < SIM_RUNNING ) return;
+//        if( (m_maxNlSteps == 0) && (m_noLinSteps>1) )qDebug() << "Simulator::runCircuit m_noLinSteps" << m_noLinSteps;
+    m_NLstep = 0;
+    while( m_voltChanged )
+    {
+        m_voltChanged->added = false;
+        m_voltChanged->voltChanged();
+        m_voltChanged = m_voltChanged->nextChanged;
+    }
 }
 
 void Simulator::resetSim()

@@ -79,6 +79,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void stopSim();
 
         void runCircuit();
+        void solveCircuit();
 
         void setWarning( int warning ) { m_warning = warning; }
 
