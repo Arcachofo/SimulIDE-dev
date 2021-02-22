@@ -118,7 +118,7 @@ void BcdToDec::set_16bits( bool set )
         for( int i=10; i<16; ++i )
         {
             m_outPin[i]->setVisible( false );
-            if( m_outPin[i]->isConnected() ) m_outPin[i]->connector()->remove();
+            if( m_outPin[i]->connector() ) m_outPin[i]->connector()->remove();
         }
     }
     m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );

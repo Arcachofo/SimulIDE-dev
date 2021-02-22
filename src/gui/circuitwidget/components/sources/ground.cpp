@@ -17,10 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "connector.h"
 #include "ground.h"
+#include "e-source.h"
 #include "itemlibrary.h"
-
+#include "pin.h"
 
 Component* Ground::construct( QObject* parent, QString type, QString id )
 { return new Ground( parent, type, id ); }
@@ -40,23 +40,18 @@ Ground::Ground( QObject* parent, QString type, QString id )
 {
     m_area = QRect( -10, -10, 20, 20 );
 
+    m_pin.resize(1);
     QString nodid = id;
     nodid.append(QString("-Gnd"));
     QPoint nodpos = QPoint( 0, -16 );
-    groundpin = new Pin( 90, nodpos, nodid, 0, this );
+    m_pin[0] = new Pin( 90, nodpos, nodid, 0, this );
 
-    nodid.append(QString("-eSource"));
-    m_out = new eSource( nodid, groundpin, source );
+    nodid.append( QString("-eSource") );
+    m_out = new eSource( nodid, m_pin[0], source );
     
     setLabelPos(-16, 8, 0);
 }
 Ground::~Ground() { delete m_out; }
-
-void Ground::remove()
-{
-    if( groundpin->isConnected() ) (static_cast<Pin*>(groundpin))->connector()->remove();
-    Component::remove();
-}
 
 void Ground::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {

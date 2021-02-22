@@ -210,7 +210,7 @@ void SwitchDip::deleteSwitches( int d )
     for( int i=start*2; i<m_size*2; i++ )
     {
         Pin* pin = m_pin[i];
-        if( pin->isConnected() ) pin->connector()->remove();
+        if( pin->connector() ) pin->connector()->remove();
         
         delete pin;
     }

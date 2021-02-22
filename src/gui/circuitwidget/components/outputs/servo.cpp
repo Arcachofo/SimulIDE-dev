@@ -165,9 +165,9 @@ void Servo::voltChanged()
 
 void Servo::remove()
 {
-    if( m_inPin[0]->isConnected() ) m_inPin[0]->connector()->remove();
-    if( m_inPin[1]->isConnected() ) m_inPin[1]->connector()->remove();
-    if( m_inPin[2]->isConnected() ) m_inPin[2]->connector()->remove();
+    if( m_inPin[0]->connector() ) m_inPin[0]->connector()->remove();
+    if( m_inPin[1]->connector() ) m_inPin[1]->connector()->remove();
+    if( m_inPin[2]->connector() ) m_inPin[2]->connector()->remove();
 
     Simulator::self()->remFromUpdateList( this );
 

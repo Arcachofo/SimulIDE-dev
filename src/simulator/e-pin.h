@@ -30,7 +30,7 @@ class MAINMODULE_EXPORT ePin
         ePin( QString id, int index );
         virtual ~ePin();
 
-        bool isConnected();
+        bool isConnected() { return m_connected; }
         void setConnected( bool connected );
 
         double getVolt();
@@ -38,10 +38,10 @@ class MAINMODULE_EXPORT ePin
         eNode* getEnode();
         void   setEnode( eNode* enode );
 
-        eNode* getEnodeComp();
+        eNode* getEnodeComp() { return m_enodeCon; }
         void   setEnodeComp( eNode* enode ); // The enode at other side of component
 
-        bool inverted();
+        bool inverted() { return m_inverted; }
         void setInverted( bool inverted );
 
         void stampAdmitance( double data );

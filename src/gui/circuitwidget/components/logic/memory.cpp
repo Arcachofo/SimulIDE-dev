@@ -275,9 +275,9 @@ void Memory::showTable()
 
 void Memory::remove()
 {
-    if( m_CsPin->isConnected() )    m_CsPin->connector()->remove();
-    if( m_WePin->isConnected() )    m_WePin->connector()->remove();
-    if( m_outEnPin->isConnected() ) m_outEnPin->connector()->remove();
+    if( m_CsPin->connector() )    m_CsPin->connector()->remove();
+    if( m_WePin->connector() )    m_WePin->connector()->remove();
+    if( m_outEnPin->connector() ) m_outEnPin->connector()->remove();
     
     LogicComponent::remove();
 }

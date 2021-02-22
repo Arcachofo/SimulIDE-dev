@@ -189,18 +189,7 @@ double Potentiometer::val()
 
 void Potentiometer::remove()
 {
-    if( m_pinA.isConnected() ) m_pinA.connector()->remove();
-    if( m_pinB.isConnected() ) m_pinB.connector()->remove();
-    if( m_pinM.isConnected() ) 
-    {
-        Connector* con = m_pinM.connector();
-        if( con ) con->remove();
-    }
-    
-    //if( m_midEnode ) Simulator::self()->remFromEnodeList( m_midEnode, true );
-    
     Simulator::self()->remFromUpdateList( this );
-    
     Component::remove();
 }
 

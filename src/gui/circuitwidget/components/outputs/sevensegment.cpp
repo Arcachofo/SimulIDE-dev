@@ -279,7 +279,7 @@ void SevenSegment::attach()
 void SevenSegment::deleteDisplay( int dispNumber )
 {
     Pin* pin = static_cast<Pin*>(m_commonPin[dispNumber]);
-    if( pin->isConnected() ) pin->connector()->remove();
+    if( pin->connector() ) pin->connector()->remove();
     pin->reset();
     delete pin;
 

@@ -21,9 +21,10 @@
 #define RAIL_H
 
 #include "component.h"
-#include "e-source.h"
-#include "pin.h"
-#include "itemlibrary.h"
+#include "e-element.h"
+
+class LibraryItem;
+class eSource;
 
 class MAINMODULE_EXPORT Rail : public Component, public eElement
 {
@@ -43,15 +44,12 @@ class MAINMODULE_EXPORT Rail : public Component, public eElement
         void setVolt( double v );
         virtual void setUnit( QString un ) override;
 
-        virtual void remove() override;
-
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
         void updateOutput();
         double m_voltHight;
 
-        Pin*     m_outpin;
         eSource* m_out;
 };
 

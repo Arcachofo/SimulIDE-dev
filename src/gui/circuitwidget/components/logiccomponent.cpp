@@ -165,10 +165,10 @@ Pin* LogicComponent::createPin( QString data, QString pinId )
 void LogicComponent::remove()
 {
     for( int i=0; i<m_numInPins; i++ )
-        if( m_inPin[i]->isConnected() ) m_inPin[i]->connector()->remove();
+        if( m_inPin[i]->connector() ) m_inPin[i]->connector()->remove();
 
     for( int i=0; i<m_numOutPins; i++ )
-        if( m_outPin[i]->isConnected() ) m_outPin[i]->connector()->remove();
+        if( m_outPin[i]->connector() ) m_outPin[i]->connector()->remove();
     
     Component::remove();
 }
@@ -181,7 +181,7 @@ void LogicComponent::setNumInps( int inPins )
     
     for( int i=0; i<m_numInPins; i++ )
     {
-        if( m_inPin[i]->isConnected() ) m_inPin[i]->connector()->remove();
+        if( m_inPin[i]->connector() ) m_inPin[i]->connector()->remove();
         if( m_inPin[i]->scene() ) Circuit::self()->removeItem( m_inPin[i] );
         m_inPin[i]->reset();
         delete m_inPin[i];
@@ -199,7 +199,7 @@ void LogicComponent::setNumOuts( int outPins )
     
     for( int i=0; i<m_numOutPins; i++ )
     {
-        if( m_outPin[i]->isConnected() ) m_outPin[i]->connector()->remove();
+        if( m_outPin[i]->connector() ) m_outPin[i]->connector()->remove();
         if( m_outPin[i]->scene() ) Circuit::self()->removeItem( m_outPin[i] );
         m_outPin[i]->reset();
         delete m_outPin[i];
@@ -216,7 +216,7 @@ void LogicComponent::deleteInputs( int inputs )
 
     for( int i=m_numInPins-1; i>m_numInPins-inputs-1; i-- )
     {
-        if( m_inPin[i]->isConnected() ) m_inPin[i]->connector()->remove();
+        if( m_inPin[i]->connector() ) m_inPin[i]->connector()->remove();
         if( m_inPin[i]->scene() ) Circuit::self()->removeItem( m_inPin[i] );
         m_inPin[i]->reset();
         delete m_inPin[i];
@@ -229,7 +229,7 @@ void LogicComponent::deleteOutputs( int outputs )
 {
     for( int i=m_numOutPins-1; i>m_numOutPins-outputs-1; i-- )
     {
-        if( m_outPin[i]->isConnected() ) m_outPin[i]->connector()->remove();
+        if( m_outPin[i]->connector() ) m_outPin[i]->connector()->remove();
         //else                             m_outPin[i]->reset();
 
         if( m_outPin[i]->scene() ) Circuit::self()->removeItem( m_outPin[i] );

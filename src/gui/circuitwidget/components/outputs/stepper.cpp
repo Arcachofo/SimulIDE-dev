@@ -195,7 +195,7 @@ void Stepper::setUnit( QString un )
 void Stepper::setBipolar( bool bi )
 {
     m_bipolar = bi;
-    if( m_pinCo.isConnected() ) m_pinCo.connector()->remove();
+    if( m_pinCo.connector() ) m_pinCo.connector()->remove();
     m_pinCo.setVisible( !bi );
 }
 
@@ -232,11 +232,11 @@ void Stepper::updateStep()
 
 void Stepper::remove()
 {
-    if( m_pinA1.isConnected() ) m_pinA1.connector()->remove();
-    if( m_pinA2.isConnected() ) m_pinA2.connector()->remove();
-    if( m_pinCo.isConnected() ) m_pinCo.connector()->remove();
-    if( m_pinB1.isConnected() ) m_pinB1.connector()->remove();
-    if( m_pinB2.isConnected() ) m_pinB2.connector()->remove();
+    if( m_pinA1.connector() ) m_pinA1.connector()->remove();
+    if( m_pinA2.connector() ) m_pinA2.connector()->remove();
+    if( m_pinCo.connector() ) m_pinCo.connector()->remove();
+    if( m_pinB1.connector() ) m_pinB1.connector()->remove();
+    if( m_pinB2.connector() ) m_pinB2.connector()->remove();
     
     Simulator::self()->remFromUpdateList( this ); 
     

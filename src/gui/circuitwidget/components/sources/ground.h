@@ -20,11 +20,10 @@
 #ifndef GROUND_H
 #define GROUND_H
 
-#include "e-source.h"
 #include "component.h"
-#include "pin.h"
 
 class LibraryItem;
+class eSource;
 
 class MAINMODULE_EXPORT Ground : public Component
 {
@@ -36,13 +35,10 @@ class MAINMODULE_EXPORT Ground : public Component
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        virtual void remove() override;
-
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     private:
-        ePin *groundpin;
-        eSource *m_out;
+        eSource* m_out;
 };
 
 #endif

@@ -174,8 +174,6 @@ double Probe::getVolt()
 
 void Probe::remove()
 {
-    if( m_inputpin->isConnected() ) m_inputpin->connector()->remove();
-
     emit removed( this );
     
     Simulator::self()->remFromUpdateList( this );

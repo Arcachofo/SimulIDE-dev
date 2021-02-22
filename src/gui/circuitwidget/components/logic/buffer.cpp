@@ -59,7 +59,7 @@ void Buffer::setTristate( bool t )
 {
     if( !t ) 
     {
-        if( m_outEnPin->isConnected() )
+        if( m_outEnPin->connector() )
         {
             m_outEnPin->reset();
             m_outEnPin->connector()->remove();

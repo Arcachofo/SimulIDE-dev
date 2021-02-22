@@ -91,12 +91,6 @@ double ePin::getVolt()
 
 void ePin::setConnected( bool connected )  { m_connected = connected; }
 
-bool ePin::isConnected() { return m_connected; }
-
-eNode* ePin::getEnodeComp(){ return m_enodeCon; }
-
-bool ePin::inverted() { return m_inverted; }
-
 void ePin::setInverted( bool inverted ){ m_inverted = inverted; }
 
 QString ePin::getId() { return m_id; }

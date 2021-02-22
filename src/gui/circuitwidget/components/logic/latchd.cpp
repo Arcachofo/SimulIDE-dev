@@ -155,7 +155,7 @@ void LatchD::setTristate( bool t )
 {
     if( !t ) 
     {
-        if( m_outEnPin->isConnected() ) m_outEnPin->connector()->remove();
+        if( m_outEnPin->connector() ) m_outEnPin->connector()->remove();
         m_outEnPin->reset();
         m_outEnPin->setLabelText( "" );
     }

@@ -60,9 +60,9 @@ QList<propGroup_t> Gate::propGroups()
 void Gate::remove()
 {
     for( int i=0; i<m_numInputs; i++ )
-        if( m_inputPin[i]->isConnected() ) m_inputPin[i]->connector()->remove();
+        if( m_inputPin[i]->connector() ) m_inputPin[i]->connector()->remove();
 
-    if( m_outputPin->isConnected() ) m_outputPin->connector()->remove();
+    if( m_outputPin->connector() ) m_outputPin->connector()->remove();
     
     Component::remove();
 }
@@ -75,7 +75,7 @@ void Gate::setNumInps( int inputs )
     for( int i=0; i<m_numInputs; i++ )
     {
         Pin* pin = m_inputPin[i];
-        if( pin->isConnected() ) pin->connector()->remove();
+        if( pin->connector() ) pin->connector()->remove();
         if( pin->scene() ) Circuit::self()->removeItem( pin );
         pin->reset();
         delete pin;

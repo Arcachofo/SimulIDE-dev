@@ -130,7 +130,7 @@ void MuxAnalog::deleteAddrBits( int d )
     for( int i=start; i<m_addrBits; i++ )
     {
         Pin* pin = (static_cast<Pin*>(m_addrPin[i]));
-        if( pin->isConnected() ) pin->connector()->remove();
+        if( pin->connector() ) pin->connector()->remove();
         
         delete pin;
     }
@@ -177,7 +177,7 @@ void MuxAnalog::deleteResistors( int d )
     for( int i=start; i<m_channels; i++ )
     {
         Pin* pin = static_cast<Pin*>(m_chanPin[i]);
-        if( pin->isConnected() ) pin->connector()->remove();
+        if( pin->connector() ) pin->connector()->remove();
         
         delete pin;
         delete m_ePin[i];
@@ -197,7 +197,7 @@ void MuxAnalog::remove()
     for( int i=0; i<m_addrBits; i++ ) 
     {
         Pin* pin = static_cast<Pin*>(m_addrPin[i]);
-        if( pin->isConnected() ) pin->connector()->remove();
+        if( pin->connector() ) pin->connector()->remove();
     }
     deleteResistors( m_channels );
     deleteAddrBits( m_addrBits );

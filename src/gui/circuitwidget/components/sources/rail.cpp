@@ -17,11 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "connector.h"
-#include "circuit.h"
 #include "rail.h"
 #include "simulator.h"
-
+#include "e-source.h"
+#include "itemlibrary.h"
+#include "pin.h"
 
 Component* Rail::construct( QObject* parent, QString type, QString id )
 { return new Rail( parent, type, id ); }
@@ -43,16 +43,16 @@ Rail::Rail( QObject* parent, QString type, QString id )
     setLabelPos(-64,-24 );
 
     m_area = QRect( -10, -10, 20, 20 );
-    
     m_changed = false;
 
+    m_pin.resize(1);
     QString nodid = id;
     nodid.append(QString("-outnod"));
     QPoint nodpos = QPoint(16,0);
-    m_outpin = new Pin( 0, nodpos, nodid, 0, this);
+    m_pin[0] = new Pin( 0, nodpos, nodid, 0, this);
 
     nodid.append(QString("-eSource"));
-    m_out = new eSource( nodid, m_outpin, source );
+    m_out = new eSource( nodid, m_pin[0], source );
     
     m_out->setState( true );
     m_unit = "V";
@@ -62,7 +62,7 @@ Rail::Rail( QObject* parent, QString type, QString id )
     
     setLabelPos(-16,-24, 0);
 }
-Rail::~Rail() {}
+Rail::~Rail() { delete m_out; }
 
 QList<propGroup_t> Rail::propGroups()
 {
@@ -104,15 +104,6 @@ void Rail::updateOutput()
     m_out->setVoltHigh( m_voltHight );
     m_out->stampOutput();
 }
-
-void Rail::remove()
-{
-    if( m_outpin->isConnected() ) m_outpin->connector()->remove();
-    delete m_out;
-    
-    Component::remove();
-}
-
 
 void Rail::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {

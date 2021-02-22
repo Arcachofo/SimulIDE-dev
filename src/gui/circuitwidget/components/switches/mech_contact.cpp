@@ -142,7 +142,7 @@ void MechContact::SetupSwitches( int poles, int throws )
     for( uint i=start; i<m_pin.size(); i++ )
     {
         Pin* pin = m_pin[i];
-        if( pin->isConnected() ) pin->connector()->remove();
+        if( pin->connector() ) pin->connector()->remove();
         pin->reset();
         delete pin;
     }
