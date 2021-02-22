@@ -23,17 +23,17 @@
 
     <pin side="left" pos="2"  type="bidir" id="PD2"  label=" 0  RX "/>
     <pin side="left" pos="3"  type="bidir" id="PD3"  label=" 1  TX "/>
-    <pin side="left" pos="4"  type="bidir,sda" id="PD1"  label=" 2     "/>
-    <pin side="left" pos="5"  type="pwm2B,scl" id="PD0"  label=" 3  PWM"/>
+    <pin side="left" pos="4"  type="sda"   id="PD1"  label=" 2     "/>
+    <pin side="left" pos="5"  type="OC2B,scl" id="PD0"  label=" 3  PWM"/>
     <pin side="left" pos="6"  type="bidir" id="PD4"  label=" 4     "/>
-    <pin side="left" pos="7"  type="pwm0B" id="PC6"  label=" 5  PWM"/>
-    <pin side="left" pos="8"  type="pwm0A" id="PD7"  label=" 6  PWM"/>
+    <pin side="left" pos="7"  type="OC0B"  id="PC6"  label=" 5  PWM"/>
+    <pin side="left" pos="8"  type="OC0A"  id="PD7"  label=" 6  PWM"/>
     <pin side="left" pos="9"  type="bidir" id="PE6"  label=" 7"     />
     
     <pin side="left" pos="11" type="bidir" id="PB4"  label=" 8"     />
-    <pin side="left" pos="12" type="pwm1A" id="PB5"  label=" 9   PWM"/>
-    <pin side="left" pos="13" type="pwm1B" id="PB6"  label=" 10 PWM"/>
-    <pin side="left" pos="14" type="pwm2A" id="PB7"  label=" 11 PWM"/>
+    <pin side="left" pos="12" type="OC1A"  id="PB5"  label=" 9   PWM"/>
+    <pin side="left" pos="13" type="OC1B"  id="PB6"  label=" 10 PWM"/>
+    <pin side="left" pos="14" type="OC2A"  id="PB7"  label=" 11 PWM"/>
     <pin side="left" pos="15" type="open"  id="PD6"  label=" 12    "/>
     <pin side="left" pos="16" type="led"   id="PC7"  label=" 13    "/>
     <pin side="left" pos="17" type="v0v"   id="GND0" label=" GND   "/>

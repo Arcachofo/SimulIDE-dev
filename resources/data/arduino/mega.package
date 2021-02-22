@@ -21,10 +21,10 @@
 
 <package name="arduinoUno" pins="82" width="20" height="41" background="mega_board.png">
 
-    <pin side="left" pos="6"  type="bidir,scl" id="PD0"  label=" 21 SCL "/>
-    <pin side="left" pos="7"  type="bidir,sda" id="PD1"  label=" 20 SDA "/>
-    <pin side="left" pos="8"  type="bidir" id="PD2"  label=" 19 RX1 "/>
-    <pin side="left" pos="9"  type="bidir" id="PD3"  label=" 18 TX1 "/>
+    <pin side="left" pos="6"   type="scl"   id="PD0"  label=" 21 SCL "/>
+    <pin side="left" pos="7"   type="sda"   id="PD1"  label=" 20 SDA "/>
+    <pin side="left" pos="8"   type="bidir" id="PD2"  label=" 19 RX1 "/>
+    <pin side="left" pos="9"   type="bidir" id="PD3"  label=" 18 TX1 "/>
     <pin side="left" pos="10"  type="bidir" id="PH0"  label=" 17 RX2 "/>
     <pin side="left" pos="11"  type="bidir" id="PH1"  label=" 16 TX2 "/>
     <pin side="left" pos="12"  type="bidir" id="PJ0"  label=" 15 RX3 "/>
@@ -33,17 +33,17 @@
     <pin side="left" pos="15"  type="bidir" id="PE0"  label=" 0  RX0 "/>
     <pin side="left" pos="16"  type="bidir" id="PE1"  label=" 1  TX0 "/>
     <pin side="left" pos="17"  type="bidir" id="PE4"  label=" 2  PWM"/>
-    <pin side="left" pos="18"  type="pwm2B" id="PE5"  label=" 3  PWM"/>
+    <pin side="left" pos="18"  type="OC2B"  id="PE5"  label=" 3  PWM"/>
     <pin side="left" pos="19"  type="bidir" id="PG5"  label=" 4  PWM"/>
-    <pin side="left" pos="20"  type="pwm0B" id="PE3"  label=" 5  PWM"/>
-    <pin side="left" pos="21"  type="pwm0A" id="PH3"  label=" 6  PWM"/>
+    <pin side="left" pos="20"  type="OC0B"  id="PE3"  label=" 5  PWM"/>
+    <pin side="left" pos="21"  type="OC0A"  id="PH3"  label=" 6  PWM"/>
     <pin side="left" pos="22"  type="bidir" id="PH4"  label=" 7  PWM"/>
     
     <pin side="left" pos="24" type="bidir" id="PH5"  label=" 8   PWM"/>
-    <pin side="left" pos="25" type="pwm1A" id="PH6"  label=" 9   PWM"/>
-    <pin side="left" pos="26" type="pwm1B" id="PB4"  label=" 10 PWM"/>
-    <pin side="left" pos="27" type="pwm2A" id="PB5"  label=" 11 PWM"/>
-    <pin side="left" pos="28" type="open"  id="PB6"  label=" 12 PWM"/>
+    <pin side="left" pos="25" type="OC1A"  id="PH6"  label=" 9   PWM"/>
+    <pin side="left" pos="26" type="OC1B"  id="PB4"  label=" 10 PWM"/>
+    <pin side="left" pos="27" type="OC2A"  id="PB5"  label=" 11 PWM"/>
+    <pin side="left" pos="28" type="bidir" id="PB6"  label=" 12 PWM"/>
     <pin side="left" pos="29" type="led"   id="PB7"  label=" 13 PWM"/>
     <pin side="left" pos="30" type="v0v"   id="GND0" label=" GND   "/>
     <pin side="left" pos="31" type="aref"  id="AREF" label=" Aref  "/>
@@ -92,8 +92,8 @@
     <pin side="top"   pos="13" type="bidir" id="PL5"  label=" 44" />
     <pin side="top"   pos="14" type="bidir" id="PL3"  label=" 46" />
     <pin side="top"   pos="15" type="bidir" id="PL1"  label=" 48" />
-    <pin side="top"   pos="16" type="bidir" id="PB3"  label=" 50" />
-    <pin side="top"   pos="17" type="bidir" id="PB1"  label=" 52" />
+    <pin side="top"   pos="16" type="miso"  id="PB3"  label=" 50" />
+    <pin side="top"   pos="17" type="sck"   id="PB1"  label=" 52" />
     
     <pin side="top"   pos="18" type="v0v"  id="GND3" label=""/>
     
@@ -114,7 +114,7 @@
     <pin side="bottom"   pos="13" type="bidir" id="PL4"  label=" 45" />
     <pin side="bottom"   pos="14" type="bidir" id="PL2"  label=" 47" />
     <pin side="bottom"   pos="15" type="bidir" id="PL0"  label=" 49" />
-    <pin side="bottom"   pos="16" type="bidir" id="PB2"  label=" 51" />
+    <pin side="bottom"   pos="16" type="mosi"  id="PB2"  label=" 51" />
     <pin side="bottom"   pos="17" type="bidir" id="PB0"  label=" 53" />
     
     <pin side="bottom"   pos="18" type="v0v"  id="GND4" label=""/>
