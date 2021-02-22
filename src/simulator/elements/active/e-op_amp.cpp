@@ -108,7 +108,7 @@ void eOpAmp::voltChanged() // Called when any pin node change volt
     m_lastIn  = vd;
     m_lastOut = out;
     
-    m_ePin[2]->stampCurrent( out/cero_doub );
+    m_ePin[2]->stampCurrent( out/40 );
 }
 
 double eOpAmp::gain()                {return m_gain;}

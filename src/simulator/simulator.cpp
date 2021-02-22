@@ -161,7 +161,7 @@ void Simulator::runCircuit()
             if( event ) nextTime = event->time;
             else break;
         }
-        if( m_changedNode ) solveCircuit();
+        solveCircuit();
         if( m_state < SIM_RUNNING ) break;
 
         /*if( m_changedNode ) solveMatrix();
