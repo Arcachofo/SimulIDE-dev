@@ -216,36 +216,12 @@ void Circuit::loadDomDoc( QDomDocument* doc )
             QString type   = element.attribute( "itemtype"  );
             QString id     = element.attribute( "id"  );//objNam.split("-").first()+"-"+newSceneId(); // Create new id
 
-
-            /*if( (type == "Probe") || (type == "Fixed Voltage") || (type == "Fixed Volt."))
-            {
-                type = "Tunnel";
-                objNam.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
-                id.replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
-                //if( element.attribute( "Name" ) == "" )
-                element.setAttribute( "itemtype", "Tunnel" );
-                element.setAttribute( "Name", element.attribute( "id" ));
-                element.setAttribute( "rotation", "0");
-                element.setAttribute( "labelrot", "0");
-            }*/
-
-
             if( type == "Connector" )
             {
                 Pin* startpin  = 0l;
                 Pin* endpin    = 0l;
                 QString startpinid    = element.attribute( "startpinid" );
                 QString endpinid      = element.attribute( "endpinid" );
-
-
-
-                /*if( startpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") || startpinid.contains( "Fixed Volt."))
-                    startpinid.replace( "outnod", "pin").replace( "inpin", "pin" )
-                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
-                if( endpinid.contains( "Probe") || startpinid.contains( "Fixed Voltage") || startpinid.contains( "Fixed Volt.") )
-                    endpinid.replace( "outnod", "pin").replace( "inpin", "pin" )
-                            .replace( "Probe", "Tunnel" ).replace( "Fixed Voltage", "Tunnel" ).replace( "Fixed Volt.", "Tunnel" );
-                */
 
                 startpin = m_pinMap[startpinid];
                 endpin   = m_pinMap[endpinid];
@@ -729,7 +705,11 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
         // SUBSTITUTIONS -------------------------------------------------------
 
         if( propName == "Volts") propName = "Voltage";
-        //else if( propName == "Propagation_Delay_ns") propName = "Propagation_Delay";
+        else if( propName == "Propagation_Delay_ns")
+        {
+            propName = "Tpd_ps";
+            value.setValue( value.toInt()*1000 );
+        }
         else if( propName == "Show_res"
               || propName == "Show_Volt"
               || propName == "Show_Ind"
