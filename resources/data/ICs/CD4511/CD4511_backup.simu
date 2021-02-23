@@ -1,0 +1,11 @@
+<circuit Speed_sps="1000000" animate="0" reactStep="50" type="simulide_0.4" Speed_per="100" noLinAcc="5" Simu_Step_nS="1000">
+
+Unique  Id: Package-372: 
+Circuit Id: Package-372
+<item mainComp="false" objectName="Package-372" boardPos="-1e+06,-1e+06" Package_File="CD4511.package" y="-168" Logic_Symbol="false" itemtype="Package" labelrot="0" x="-760" Width="4" circPos="0,0" id="Package-372" valLabRot="0" hflip="1" Show_id="true" valLabely="0" circRot="6.9531436082559078e-310" labelx="0" Height="9" rotation="0" labely="-20" Background="" valLabelx="0" boardRot="-1000000" vflip="1"/>
+
+Unique  Id: Package-373: 
+Circuit Id: Package-373
+<item mainComp="false" objectName="Package-373" boardPos="-1e+06,-1e+06" Package_File="CD4511_LS.package" y="-12" Logic_Symbol="true" itemtype="Package" labelrot="0" x="-764" Width="4" circPos="0,0" id="Package-373" valLabRot="0" hflip="1" Show_id="true" valLabely="0" circRot="6.9533558069701918e-310" labelx="0" Height="8" rotation="0" labely="-20" Background="" valLabelx="0" boardRot="-1000000" vflip="1"/>
+ 
+</circuit>
