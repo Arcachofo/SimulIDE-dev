@@ -22,7 +22,7 @@
 #include "simulator.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
-      : eSource( id, 0l, input )
+      : eSource( id, 0l, source )
 {
     m_port   = port;
     m_number = i;
@@ -36,6 +36,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
 
     Pin* pin = new Pin( 0, QPoint( 0, 0 ), mcu->objectName()+id, i, mcu );
     m_ePin[0] = pin;
+    setPinMode( input );
 
     initialize();
 }
