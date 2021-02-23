@@ -415,11 +415,6 @@ void Circuit::pasteDomDoc( QDomDocument* doc )
 
                     endpin = findPin( itemX, itemY, endpinid );
                 }
-                if( m_pasting )
-                {
-                    if( startpin && !startpin->component()->isSelected() ) startpin = 0l;
-                    if( endpin   && !endpin->component()->isSelected() )   endpin = 0l;
-                }
                 if( startpin && startpin->isConnected() ) startpin = 0l;
                 if( endpin   && endpin->isConnected() )   endpin   = 0l;
 
