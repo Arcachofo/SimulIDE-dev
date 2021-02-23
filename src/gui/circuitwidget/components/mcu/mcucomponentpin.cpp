@@ -142,7 +142,7 @@ void McuComponentPin::setPullup( bool up )
 {
     if( m_pinMode != input ) return;
 
-    if( up ) m_vddAdmit = 1/1e5; // Activate pullup
+    if( up ) m_vddAdmit = 2/1e5; // Activate pullup
     else     m_vddAdmit = 0;     // Deactivate pullup
 
     if( !(m_ePin[0]->isConnected()) )

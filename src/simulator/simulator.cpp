@@ -181,12 +181,7 @@ void Simulator::runCircuit()
             }
             if( m_state < SIM_RUNNING ) {
                 addEvent( 0, NULL ); break; } // Add event so non linear keep running at next timer tick
-            if( m_maxNlstp )
-                if( m_NLstep >= m_maxNlstp )
-                {
-                    m_warning = 1;
-                    break;
-                }
+            if( m_maxNlstp ) { if( m_NLstep >= m_maxNlstp ) { m_warning = 1; break; } }
         }
         if( m_state < SIM_RUNNING ) break; // ???? Keep this at the end for debugger to run 1 step
 //        if( (m_maxNlSteps == 0) && (m_noLinSteps>1) )qDebug() << "Simulator::runCircuit m_noLinSteps" << m_noLinSteps;
@@ -206,7 +201,7 @@ void Simulator::runCircuit()
 
 void Simulator::solveCircuit()
 {
-    solveMatrix();
+    if( m_changedNode ) solveMatrix();
     while( m_nonLin )                  // Non Linear Components
     {
         while( m_nonLin )

@@ -52,27 +52,18 @@ class AvrCompBase : public McuComponent
 
  static void adc_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
-            Q_UNUSED(irq);
             AvrCompBase* ptrAvr = reinterpret_cast<AvrCompBase*> (param);
-
             int channel = int( value/524288 );
             ptrAvr->adcread( channel );
-            //qDebug()<<"avr adc_hook"<<value<<channel;
         }
-
  static void i2c_out_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
-            Q_UNUSED(irq);
             AvrCompBase* ptrAvr = reinterpret_cast<AvrCompBase*> (param);
-
             ptrAvr->i2cOut( value );
         }
-
  static void twen_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
-            Q_UNUSED(irq);
             AvrCompBase* ptrAvr = reinterpret_cast<AvrCompBase*> (param);
-
             ptrAvr->twenChanged( value );
         }
 
