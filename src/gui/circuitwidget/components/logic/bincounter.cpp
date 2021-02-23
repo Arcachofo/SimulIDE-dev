@@ -86,8 +86,11 @@ QList<propGroup_t> BinCounter::propGroups()
 
 void BinCounter::stamp()
 {
-    eNode* enode = m_input[0]->getEpin(0)->getEnode();              // Reset pin
+    eNode* enode = m_input[0]->getEpin(0)->getEnode();      // Reset pin
     if( enode ) enode->voltChangedCallback( this );
+
+    enode = m_input[1]->getEpin(0)->getEnode();              // Set pin
+    if( enode ) enode->voltChangedCallback(this);
 
     eLogicDevice::stamp();
 }
