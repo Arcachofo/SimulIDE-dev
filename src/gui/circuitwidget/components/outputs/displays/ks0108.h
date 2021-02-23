@@ -21,9 +21,10 @@
 #define KS0108_H
 
 #include "component.h"
-#include "itemlibrary.h"
 #include "e-source.h"
 #include "pin.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
 {

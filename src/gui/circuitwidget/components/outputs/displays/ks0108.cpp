@@ -17,10 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "ks0108.h"
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
-#include "ks0108.h"
 
 static const char* Ks0108_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","CS Active Low")

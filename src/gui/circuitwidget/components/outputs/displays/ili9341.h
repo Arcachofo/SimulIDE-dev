@@ -22,13 +22,13 @@
 
 #include "e-logic_device.h"
 #include "component.h"
-#include "itemlibrary.h"
 #include "pin.h"
 
-class MAINMODULE_EXPORT Ili9341 : public Component, public eLogicDevice //eI2C
+class LibraryItem;
+
+class MAINMODULE_EXPORT Ili9341 : public Component, public eLogicDevice
 {
     Q_OBJECT
-    //Q_PROPERTY( bool CS_Active_Low   READ csActLow    WRITE setCsActLow   DESIGNABLE true USER true )
     
     public:
         Ili9341( QObject* parent, QString type, QString id );

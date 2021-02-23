@@ -212,7 +212,6 @@ void eLogicDevice::setInput( int n, eSource* input )
 
 void eLogicDevice::createInput( ePin* epin )
 {
-    //qDebug() << "eLogicDevice::createInput"<<QString::fromStdString(m_elmId)<<m_numInputs;
     int totalInps  = m_numInputs + 1;
     m_input.resize( totalInps );
 
