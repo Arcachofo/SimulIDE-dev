@@ -49,6 +49,7 @@ Chip::Chip( QObject* parent, QString type, QString id )
     m_icColor = QColor( 50, 50, 70 );
     
     setLabelPos( m_area.x(), m_area.y()-20, 0);
+    setShowId( true );
 }
 Chip::~Chip()
 {
@@ -90,7 +91,6 @@ void Chip::initChip()
         m_width   = root.attribute( "width" ).toInt();
         m_height  = root.attribute( "height" ).toInt();
         m_area = QRect( 0, 0, 8*m_width, 8*m_height );
-        setShowId( true );
 
         m_numpins = root.attribute( "pins" ).toInt();
 
