@@ -53,6 +53,7 @@ void MemTable::setData( QVector<int> data )
     for( int val : data )
     {
         QString sval = QString::number( val, 16 ).toUpper();
+        sval = sval.right( m_wordBytes*2 );
         while( sval.length() < m_wordBytes*2) sval.prepend( "0" );
         sval.prepend("0x");
         table->item( row, col )->setData( 0, sval );
