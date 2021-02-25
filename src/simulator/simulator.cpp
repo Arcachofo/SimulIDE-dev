@@ -418,15 +418,12 @@ void Simulator::clearEventList()
 void Simulator::addEvent( uint64_t time, eElement* comp )
 {
     if( m_state < SIM_STARTING ) return;
-    if( ++m_numEvents > LAST_SIM_EVENT ) { m_error = 3; return; }
 
     time += m_circTime;
     simEvent_t* last  = NULL;
     simEvent_t* event = m_eventList.first;
     simEvent_t* new_event = m_eventList.free;
 
-    //if( new_event == 0 ) { m_error = 2; return; }
-    //int i = 0;
     while( event )
     {
         if( time <= event->time)
@@ -438,7 +435,6 @@ void Simulator::addEvent( uint64_t time, eElement* comp )
         }
         last  = event;
         event = event->next;
-        //if( ++i > LAST_SIM_EVENT ) { m_error = 3; return; }
     }
     m_eventList.free = new_event->next;
 
@@ -449,6 +445,7 @@ void Simulator::addEvent( uint64_t time, eElement* comp )
     else       m_eventList.first = new_event; // List was empty or insert First
 
     new_event->next = event;
+    if( ++m_numEvents >= LAST_SIM_EVENT ) { m_error = 3; return; }
 }
 
 void Simulator::cancelEvents( eElement* comp )
