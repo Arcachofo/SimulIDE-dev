@@ -64,6 +64,7 @@ class MAINMODULE_EXPORT LatchD : public LogicComponent, public eLatchD
     private:
         void createLatches( int n );
         void deleteLatches( int n );
+        void updateSize();
 
         Pin* m_outEnPin;
         

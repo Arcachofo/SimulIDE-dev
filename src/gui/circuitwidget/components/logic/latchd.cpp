@@ -120,7 +120,7 @@ void LatchD::setChannels( int channels )
     if( channels < 1 ) return;
     
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-    
+
     m_height = channels+2;
     int origY = -(m_height/2)*8;
 
@@ -146,9 +146,8 @@ void LatchD::setChannels( int channels )
     m_outEnPin->setLabelPos();
     
     m_channels = channels;
-    m_area   = QRect( -(m_width/2)*8, origY, m_width*8, m_height*8 );
 
-    Circuit::self()->update();
+    updateSize();
 }
 
 void LatchD::setTristate( bool t )
@@ -162,7 +161,9 @@ void LatchD::setTristate( bool t )
     else m_outEnPin->setLabelText( "OE " );
     m_outEnPin->setVisible( t );
     m_tristate = t;
+
     eLogicDevice::updateOutEnabled();
+    updateSize();
 }
 
 void LatchD::setTrigger( Trigger trigger )
@@ -173,6 +174,14 @@ void LatchD::setTrigger( Trigger trigger )
     eLogicDevice::seteTrigger( trig );
     LogicComponent::setTrigger( trigger );
 
+    updateSize();
+}
+
+void LatchD::updateSize()
+{
+    int height = m_height;
+    if( !m_tristate && (m_trigger == None) ) height--;
+    m_area   = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
     Circuit::self()->update();
 }
 
