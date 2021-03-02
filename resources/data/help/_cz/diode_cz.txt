@@ -1,0 +1,7 @@
+Dioda:
+
+Nastavitelná dioda.
+
+Prahové napětí v propustném směru se nastavuje vlastností "Prahové napětí".
+
+Pokud má být dioda Zenerova, tak stačí nastavit vlastnost "Zenerovo napětí" na hodnotu větší než 0.

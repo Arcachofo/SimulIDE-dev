@@ -1,0 +1,9 @@
+Spínač:
+
+Jedná se o spínač s aretací.
+
+Je možné jej nastavit pomocí vlastnosti "Sepnuto v klidovém stavu" tak, aby bylo v klidovém stavu rozepnuté nebo sepnuté.
+
+Počet pólů je možné změnit pomocí vlastnosti "Počet pólů".
+
+Je možné jej nastavit pomocí vlastnosti "Přepínač", jestli se jedná jenom o spínač nebo o přepínač.

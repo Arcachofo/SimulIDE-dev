@@ -1,0 +1,7 @@
+Klávesnice:
+
+Jedná se o klávesnici s nastavitelným počtem řádků, sloupců a názvem kláves..
+Přednastavená je klávesnice se 4 řádky a 3 sloupci.
+
+Více informací:
+ http://simulide.blogspot.com/p/blog-page_22.html

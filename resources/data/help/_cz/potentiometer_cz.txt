@@ -1,0 +1,7 @@
+Potenciometr:
+
+Poloha jezdce se nastavuje knoflíkem.
+
+Přesné nastavení polohy jezdce se nastavuje vlastností "Odpor jezdce".
+
+Celkový odpor potenciometru se nastavuje vlastností "Odpor".

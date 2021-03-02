@@ -1,0 +1,28 @@
+MCU: ATtiny13
+
+Pouzdro: 8-pin PDIP
+
+1: PB5 ADC0 !Reset dW   PCINT5
+2: PB3 ADC3 CLKI   PCINT3  
+3: PB4 ADC2 PCINT4 
+4: Gnd
+5: PB0 MOSI AIN0   OC0A TXD   PCINT0
+6: PB1 MISO INT0   AIN1 OC0B  RXD  PCINT1
+7: PB2 SCK  ADC1   T0   PCINT2
+8: Vcc
+
+Stručný popis:
+Výkonný nízkopříkonový 8bitový AVR RISC mikrokontroler
+1 KB ISP paměti FLASH s možností čtení během zápisu,
+64 bajtů paměti EEPROM,
+64 bajtů paměti SRAM,
+6 vstupů/výstupů pro obecné použití,
+32 pracovních registrů pro obecné použití,
+1x 8bitový a 1x 16bitový čítač/časovač,
+2 kanály PWM,
+vnitřní a vnější přerušení,
+programování v cílové aplikace přes SPI rozhraní
+4kanálový 10bitový AD převodník,
+nastavitelný časovač watchdog s vnitřním oscilátorem,
+SPI sériové rozhraní,
+Napájecí napětí 1,8 - 5,5 V.

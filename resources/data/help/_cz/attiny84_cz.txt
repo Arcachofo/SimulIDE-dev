@@ -1,0 +1,34 @@
+MCU: ATtiny84
+
+Pouzdro: 14-pin PDIP
+
+ 1: Vcc
+ 2: PB0 PCINT8 XTAL1 CLKI
+ 3: PB1 PCINT9 XTAL2
+ 4: PB3 dW     !Reset PCINT11
+ 5: PB2 PCINT10 INT0 OC0A CKOUT
+ 6: PA7 PCINT7 ICP1 OC0B ADC7
+ 7: PA6 PCINT6 OC1A SDA MOSI DI ADC6
+ 8: PA5 ADC5 DO MISO OC1B PCINT5
+ 9: PA4 ADC4 USCK SCL T1 PCINT4
+10: PA3 ADC3 T0 PCINT3
+11: PA2 ADC2 AIN1 PCINT2
+12: PA1 ADC1 AIN0 PCINT1
+13: PA0 ADC0 AREF PCINT0
+14: Gnd
+
+Stručný popis:
+Výkonný nízkopříkonový 8bitový AVR RISC mikrokontroler
+8 KB ISP paměti FLASH s možností čtení během zápisu,
+512 bajtů paměti EEPROM,
+512 bajtů paměti SRAM,
+12 vstupů/výstupů pro obecné použití,
+32 pracovních registrů pro obecné použití,
+1x 8bitový a 1x 16bitový čítač/časovač,
+4 kanály PWM,
+1 kompatáror,
+vnitřní a vnější přerušení,
+programování v cílové aplikace přes SPI rozhraní
+8+12kanálový 10bitový AD převodník,
+nastavitelný časovač watchdog s vnitřním oscilátorem,
+Napájecí napětí 1,8 - 5,5 V.

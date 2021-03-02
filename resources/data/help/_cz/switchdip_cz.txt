@@ -1,0 +1,9 @@
+DIP spínač:
+
+Jedná se o DIP spínač s nastavitelným počtem spínačů.
+
+Počet spínačů se nastavuje vlastností "Velikost".
+
+Spínače lze zapnout nebo vypnout kliknutím na jednotlivé spínače:
+ - zelená = zapnuto
+ - šedá  = vypnuto

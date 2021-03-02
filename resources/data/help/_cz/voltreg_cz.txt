@@ -1,0 +1,8 @@
+Stabilizátor:
+
+Vývody:
+- I : Vstup.
+- O : Výstup.
+- R : Referenční napětí.
+
+Rozdíl napětí mezi vývody "O" a "R" se nastavuje pomocí vlastnosti "Napětí".

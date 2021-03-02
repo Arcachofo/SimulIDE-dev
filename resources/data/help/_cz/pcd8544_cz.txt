@@ -1,0 +1,5 @@
+PCD8544 grafické LCD:
+
+LCD s rozlišení 48x84 bodů s řídicím obvodem PCD8544.
+
+Řídicí obvod PCD8544 se připojuje k mikrokontroleru pomocí sériové sběrnice.

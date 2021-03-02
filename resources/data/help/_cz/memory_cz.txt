@@ -1,0 +1,14 @@
+RAM/ROM:
+
+Tuto kompunentu je možné nastavit jako paměť RAM nebo ROM. V případě paměti ROM je obsah paměti uložen v souboru s obvodem.
+Aby se obsah paměti ROM uložit je nutné uložit celé schéma.
+
+Obsah paměti je možné nahrát ze souboru nebo uložit do souboru.
+
+Velikos paměti je možné nastavit:
+
+- Počet bitů adresy: velikost paměti ve slovech = 2^Počet bitů adresy.
+
+- Počet bitů dat: velikost slova v bitech.
+
+Přednastavená je paměť o belikost 256 bajtů (8 bitů adresy, 8 bitů dat, paměť typu RAM).

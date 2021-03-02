@@ -1,0 +1,9 @@
+Generátor hodinového signálu:
+
+Jedná se o jednoduchý generátor hodinového signálu.
+
+Generátor je možné zapnout a vypnout tlačítkem na levé straně.
+
+Výstupní kmitočet je možné měnit pomocí vlastnosti "Kmitočet" výše.
+
+Výstupní napětí je možné měnit pomocí vlastnosti "Napětí" výše.

@@ -1,0 +1,5 @@
+Servomotor:
+
+- Nastavitelná rychlost.
+
+

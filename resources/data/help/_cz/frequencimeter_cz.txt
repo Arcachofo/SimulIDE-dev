@@ -1,0 +1,7 @@
+Měřič kmitočtu:
+
+Připojením pinu nalevo k vodiči
+se zobrazí kmitočet signálu.
+
+Minimální kmitočet: 2 Hz.
+

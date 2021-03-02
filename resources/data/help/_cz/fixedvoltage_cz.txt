@@ -1,0 +1,7 @@
+Zdroj pevného napětí:
+
+Jedná se o jednoduchý zdroj napětí.
+
+Zdroj je možné zapnout a vypnout tlačítkem na levé straně.
+
+Výstupní napětí je možné měnit pomocí vlastnosti "Napětí" výše.

@@ -1,0 +1,9 @@
+Zdroj napětí:
+
+Jedná se o nastavitelný zdroj napětí.
+
+Napětí lze nastavit knoflíkem od 0 V do maximální napětí.
+
+Zdroj je možné zapnout a vypnout tlačítkem na spodní straně.
+
+Nastavené výstupní napětí se zobrazuje na tlačítku.

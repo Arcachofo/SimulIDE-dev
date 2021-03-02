@@ -1,0 +1,3 @@
+Elektrolytický kondenzátor:
+
+Kondenzátor bliká v případě špatné polarity napětí.

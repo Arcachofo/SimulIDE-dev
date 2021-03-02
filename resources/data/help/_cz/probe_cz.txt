@@ -1,0 +1,8 @@
+Napěťová sonda:
+
+- Připojením k vodiči nebo pinu zobrazí aktuální napětí.
+
+- Digitální sonda: Oranžová = Stav High
+
+Více informací: 
+ http://simulide.blogspot.com/p/probe.html

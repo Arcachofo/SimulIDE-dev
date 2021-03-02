@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="cs_CZ">
 <context>
     <name>ADC</name>
     <message>
         <source>ADC</source>
-        <translation type="unfinished"></translation>
+        <translation>AD převodník</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Ostatní logika</translation>
     </message>
     <message>
         <source>Main</source>
@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
     <message>
         <source>Reference Voltage</source>
@@ -28,11 +28,21 @@
     <name>AVRComponent</name>
     <message>
         <source>AVR</source>
-        <translation type="unfinished">AVR</translation>
+        <translation>AVR</translation>
     </message>
     <message>
         <source>Micro</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikroprocesory</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="vanished">Chyba</translation>
+    </message>
+    <message>
+        <source>Only 1 Mcu allowed
+ to be in the Circuit.</source>
+        <translation type="vanished">V obvodu může být pouze
+jeden mikroprocesor.</translation>
     </message>
 </context>
 <context>
@@ -51,7 +61,7 @@
     </message>
     <message>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet řádků</translation>
     </message>
     <message>
         <source>Columns</source>
@@ -70,22 +80,22 @@
     <name>Amperimeter</name>
     <message>
         <source>Amperimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Ampérmetr</translation>
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřidla</translation>
     </message>
 </context>
 <context>
     <name>AndGate</name>
     <message>
         <source>And Gate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hradlo AND</translation>
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Hradla</translation>
     </message>
     <message>
         <source>Input Size</source>
@@ -96,515 +106,515 @@
     <name>App::Property</name>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Rychlost</translation>
     </message>
     <message>
         <source>ReactStep</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulace L a C</translation>
     </message>
     <message>
         <source>NoLinAcc</source>
-        <translation type="unfinished"></translation>
+        <translation>Přesnost nelineárních komponent</translation>
     </message>
     <message>
         <source>Draw Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit mřížku</translation>
     </message>
     <message>
         <source>Show ScrollBars</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit posuvníky</translation>
     </message>
     <message>
         <source>id</source>
-        <translation type="unfinished"></translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>Show id</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit id</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Jednotka</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva</translation>
     </message>
     <message>
         <source>H size</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka</translation>
     </message>
     <message>
         <source>V size</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška</translation>
     </message>
     <message>
         <source>Border</source>
-        <translation type="unfinished"></translation>
+        <translation>Síla rámečku</translation>
     </message>
     <message>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Průhlednost</translation>
     </message>
     <message>
         <source>Z Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnota Z</translation>
     </message>
     <message>
         <source>Vref</source>
-        <translation type="unfinished"></translation>
+        <translation>Vref</translation>
     </message>
     <message>
         <source>Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedance</translation>
     </message>
     <message>
         <source>Max Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximální hodnota</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Zesílení</translation>
     </message>
     <message>
         <source>PNP</source>
-        <translation type="unfinished"></translation>
+        <translation>PNP</translation>
     </message>
     <message>
         <source>Capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapacita</translation>
     </message>
     <message>
         <source>Freq</source>
-        <translation type="unfinished"></translation>
+        <translation>Kmitočet</translation>
     </message>
     <message>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Proud</translation>
     </message>
     <message>
         <source>Show Amp</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit proud</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Prahové napětí</translation>
     </message>
     <message>
         <source>Zener Volt</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenerovo napětí</translation>
     </message>
     <message>
         <source>Cols</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet sloupců</translation>
     </message>
     <message>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet řádků</translation>
     </message>
     <message>
         <source>Control Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Řídicí slovo</translation>
     </message>
     <message>
         <source>Size bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Počej bajtů</translation>
     </message>
     <message>
         <source>Inductance</source>
-        <translation type="unfinished"></translation>
+        <translation>Indukčnost</translation>
     </message>
     <message>
         <source>Show Ind</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit indukčnost</translation>
     </message>
     <message>
         <source>Key Labels</source>
-        <translation type="unfinished"></translation>
+        <translation>Popis tlačítek</translation>
     </message>
     <message>
         <source>CS Active Low</source>
-        <translation type="unfinished"></translation>
+        <translation>CS aktivní v L</translation>
     </message>
     <message>
         <source>MaxCurrent</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximální proud</translation>
     </message>
     <message>
         <source>Grounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzemněná</translation>
     </message>
     <message>
         <source>Input High V</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstupní napětí H</translation>
     </message>
     <message>
         <source>Input Low V</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstupní napětí L</translation>
     </message>
     <message>
         <source>Input Imped</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstupní impedance</translation>
     </message>
     <message>
         <source>Out High V</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní napětí H</translation>
     </message>
     <message>
         <source>Out Low V</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní napětí L</translation>
     </message>
     <message>
         <source>Out Imped</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní impedance</translation>
     </message>
     <message>
         <source>Inverted</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertovaný</translation>
     </message>
     <message>
         <source>Tristate</source>
-        <translation type="unfinished"></translation>
+        <translation>Třístavový</translation>
     </message>
     <message>
         <source>Clock Inverted</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertované hodiny</translation>
     </message>
     <message>
         <source>Reset Inverted</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertovaný reset</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertované vstupy</translation>
     </message>
     <message>
         <source>S R Inverted</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertovaný set a reset</translation>
     </message>
     <message>
         <source>Num Inputs</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet vstupů</translation>
     </message>
     <message>
         <source>Num Bits</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet bitů</translation>
     </message>
     <message>
         <source>Channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet kanálů</translation>
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Napětí</translation>
     </message>
     <message>
         <source>Show Volt</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit napětí</translation>
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
+        <translation>Program</translation>
     </message>
     <message>
         <source>RDSon</source>
-        <translation type="unfinished"></translation>
+        <translation>RDSon</translation>
     </message>
     <message>
         <source>P Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>P kanál</translation>
     </message>
     <message>
         <source>Depletion</source>
-        <translation type="unfinished"></translation>
+        <translation>S vodivým kanálem</translation>
     </message>
     <message>
         <source>Power Pins</source>
-        <translation type="unfinished"></translation>
+        <translation>Napájecí piny</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtr</translation>
     </message>
     <message>
         <source>Value Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpor jezdce</translation>
     </message>
     <message>
         <source>Rcoil</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpor cívky</translation>
     </message>
     <message>
         <source>Poles</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet pólů</translation>
     </message>
     <message>
         <source>DT</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepínací kontakt</translation>
     </message>
     <message>
         <source>Norm Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sepnuto v klidovém stavu</translation>
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpor</translation>
     </message>
     <message>
         <source>Show res</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit odpor</translation>
     </message>
     <message>
         <source>NumDisplays</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet číslic</translation>
     </message>
     <message>
         <source>CommonCathode</source>
-        <translation type="unfinished"></translation>
+        <translation>Společná katoda</translation>
     </message>
     <message>
         <source>Steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet kroků</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost písma</translation>
     </message>
     <message>
         <source>Fixed Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Pevná šířka</translation>
     </message>
     <message>
         <source>Margin</source>
-        <translation type="unfinished"></translation>
+        <translation>Okraj</translation>
     </message>
     <message>
         <source>Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>Napětí</translation>
     </message>
     <message>
         <source>Volt Base</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunutí</translation>
     </message>
     <message>
         <source>Duty Square</source>
-        <translation type="unfinished"></translation>
+        <translation>Střída</translation>
     </message>
     <message>
         <source>Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Kvalita</translation>
     </message>
     <message>
         <source>Wave Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvar průběhu</translation>
     </message>
     <message>
         <source>Avra Inc Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta k Avra include</translation>
     </message>
     <message>
         <source>Drive Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Řídit obvod</translation>
     </message>
     <message>
         <source>Compiler Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta k překladači</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka tabulátoru</translation>
     </message>
     <message>
         <source>Spaces Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezery místo tabulátoru</translation>
     </message>
     <message>
         <source>Show Spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit mezery</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="unfinished"></translation>
+        <translation>Deska</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastní deska</translation>
     </message>
     <message>
         <source>Num Outputs</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet výstupů</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation type="unfinished"></translation>
+        <translation>Funkce</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška</translation>
     </message>
     <message>
         <source>Image File</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor</translation>
     </message>
     <message>
         <source>Auto Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatické načtení</translation>
     </message>
     <message>
         <source>Port Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název portu</translation>
     </message>
     <message>
         <source>BaudRate</source>
-        <translation type="unfinished"></translation>
+        <translation>Přenosová rychlost</translation>
     </message>
     <message>
         <source>DataBits</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet bitů dat</translation>
     </message>
     <message>
         <source>Parity</source>
-        <translation type="unfinished"></translation>
+        <translation>Parita</translation>
     </message>
     <message>
         <source>StopBits</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet stop bitů</translation>
     </message>
     <message>
         <source>FlowControl</source>
-        <translation type="unfinished"></translation>
+        <translation>Řízení toku</translation>
     </message>
     <message>
         <source>Mcu Uart</source>
-        <translation type="unfinished"></translation>
+        <translation>Číslo UARTu</translation>
     </message>
     <message>
         <source>Bipolar</source>
-        <translation type="unfinished"></translation>
+        <translation>Bipolární</translation>
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Písmo</translation>
     </message>
     <message>
         <source>BC diode</source>
-        <translation type="unfinished"></translation>
+        <translation>BC dioda</translation>
     </message>
     <message>
         <source>Address Bits</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet bitů adresy</translation>
     </message>
     <message>
         <source>Start Bit</source>
-        <translation type="unfinished"></translation>
+        <translation>Počáteční bit</translation>
     </message>
     <message>
         <source>Animate</source>
-        <translation type="unfinished"></translation>
+        <translation>Animovat</translation>
     </message>
     <message>
         <source>Auto Backup Secs</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatická záloha [s]</translation>
     </message>
     <message>
         <source>Show volt</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit napětí</translation>
     </message>
     <message>
         <source>IOn</source>
-        <translation type="unfinished"></translation>
+        <translation>Proud k sepnutí</translation>
     </message>
     <message>
         <source>IOff</source>
-        <translation type="unfinished"></translation>
+        <translation>Proud na rozepnutí</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Klávesa</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost</translation>
     </message>
     <message>
         <source>Data Bits</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet bitů dat</translation>
     </message>
     <message>
         <source>Persistent</source>
-        <translation type="unfinished"></translation>
+        <translation>Trvalá paměť</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Logický symbol</translation>
     </message>
     <message>
         <source>Font Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřítko písma</translation>
     </message>
     <message>
         <source>Open Collector</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřený kolektor</translation>
     </message>
     <message>
         <source>Trigger</source>
-        <translation type="unfinished"></translation>
+        <translation>Trigger</translation>
     </message>
     <message>
         <source> 16 Bits</source>
-        <translation type="unfinished"></translation>
+        <translation>16 bitů</translation>
     </message>
     <message>
         <source>Mhz</source>
-        <translation type="unfinished"></translation>
+        <translation>MHz</translation>
     </message>
     <message>
         <source>Init gdb</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicializovat gdb</translation>
     </message>
     <message>
         <source>Buzzer</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvukový výstup</translation>
     </message>
     <message>
         <source>Vertical Pins</source>
-        <translation type="unfinished"></translation>
+        <translation>Piny svisle</translation>
     </message>
     <message>
         <source>Show Cap</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit kapacitu</translation>
     </message>
     <message>
         <source>Package File</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor s pouzdrem</translation>
     </message>
     <message>
         <source>RPM Nominal</source>
-        <translation type="unfinished"></translation>
+        <translation>Jmenovité otáčky</translation>
     </message>
     <message>
         <source>Volt Nominal</source>
-        <translation type="unfinished"></translation>
+        <translation>Jmenovité napětí</translation>
     </message>
     <message>
         <source>Max Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximální odpor</translation>
     </message>
     <message>
         <source>Min Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimální odpor</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk</translation>
     </message>
     <message>
         <source>Propagation Delay ns</source>
@@ -644,6 +654,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Dutch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>French</source>
         <translation type="unfinished"></translation>
     </message>
@@ -664,42 +678,48 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Language</source>
+        <source>Pt_Brasil</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation type="unfinished">Jazyk</translation>
     </message>
     <message>
         <source>Font Scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dutch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pt_Brasil</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Měřítko písma</translation>
     </message>
 </context>
 <context>
     <name>Arduino</name>
     <message>
         <source>Arduino</source>
-        <translation type="unfinished"></translation>
+        <translation>Arduino</translation>
     </message>
     <message>
         <source>Micro</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikroprocesory</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="vanished">Chyba</translation>
+    </message>
+    <message>
+        <source>Only 1 Mcu allowed
+ to be in the Circuit.</source>
+        <translation type="vanished">V obvodu může být pouze
+jeden mikroprocesor.</translation>
     </message>
 </context>
 <context>
     <name>AudioOut</name>
     <message>
         <source>Audio Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvukový výstup</translation>
     </message>
     <message>
         <source>Outputs</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupy</translation>
     </message>
     <message>
         <source>Main</source>
@@ -707,11 +727,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Buzzer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zvukový výstup</translation>
     </message>
     <message>
         <source>Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Impedance</translation>
     </message>
 </context>
 <context>
@@ -725,60 +745,64 @@ p, li { white-space: pre-wrap; }
     <name>AvrProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor nenalezen</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor &quot;%1&quot; nebyl nalezen.</translation>
     </message>
     <message>
         <source>Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba:</translation>
     </message>
     <message>
         <source> Unable to load IHEX file %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation> Nelze načíst soubor IHEX %1
+</translation>
     </message>
     <message>
         <source>Failed to load firmware: </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při načítání firmware: </translation>
     </message>
     <message>
         <source>%1 should be .hex or .elf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>%1 musí být hex nebo elf
+</translation>
     </message>
     <message>
         <source>Warning on load firmware: </source>
-        <translation type="unfinished"></translation>
+        <translation>Varování při načítání firmware: </translation>
     </message>
     <message>
         <source>Incompatible firmware: compiled for %1 and your processor is %2
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Nekompatibilní firmware: přeložený pro %1 a použitý procesor je %2
+</translation>
     </message>
     <message>
         <source>The processor model is not specified.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Typ procesoru není zadán.
+</translation>
     </message>
     <message>
         <source>Could not Create AVR Processor: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu vytvořit procesor AVR : &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Wrong firmware!!</source>
-        <translation type="unfinished"></translation>
+        <translation>Špatný firmware!!</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámá chyba:</translation>
     </message>
     <message>
         <source>File %1 is not in valid ELF format
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -786,18 +810,19 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu zapsat soubor %1:
+%2.</translation>
     </message>
 </context>
 <context>
     <name>BJT</name>
     <message>
         <source>BJT</source>
-        <translation type="unfinished"></translation>
+        <translation>Bipolární tranzistor</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivní součástky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -805,49 +830,61 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>PNP</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PNP</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zesílení</translation>
     </message>
 </context>
 <context>
     <name>BaseDebugger</name>
     <message>
+        <source>Debugger already running</source>
+        <translation type="vanished">Debugger stále běží</translation>
+    </message>
+    <message>
+        <source>Stop active session</source>
+        <translation type="vanished">Ukončit ladění</translation>
+    </message>
+    <message>
+        <source>Uploading: </source>
+        <translation type="vanished">Nahrávám: </translation>
+    </message>
+    <message>
         <source>FirmWare Uploaded to </source>
-        <translation type="unfinished"></translation>
+        <translation>Firmware nahraný do </translation>
     </message>
     <message>
         <source>Select Compiler toolchain directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte cestu k překladači</translation>
     </message>
     <message>
         <source>Using Compiler Path: </source>
-        <translation type="unfinished"></translation>
+        <translation>Používám cestu k překladači: </translation>
     </message>
     <message>
         <source>: ToolChain not found</source>
-        <translation type="unfinished"></translation>
+        <translation>: Překladač nenalezen</translation>
     </message>
     <message>
         <source>Right-Click on Document Tab to set Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Klikněte pravým tlačítkem na záložce dokumentu, abyste nastavili cestu</translation>
     </message>
     <message>
         <source>Error: No Mcu in Simulator... </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: V simulátoru chybí procesor... </translation>
     </message>
 </context>
 <context>
     <name>Battery</name>
     <message>
         <source>Battery</source>
-        <translation type="unfinished"></translation>
+        <translation>Baterie</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
     <message>
         <source>Main</source>
@@ -855,18 +892,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napětí</translation>
     </message>
 </context>
 <context>
     <name>BcdTo7S</name>
     <message>
         <source>Bcd To 7S.</source>
-        <translation type="unfinished"></translation>
+        <translation>BCD na sedmisegment</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Převodníky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -881,11 +918,11 @@ p, li { white-space: pre-wrap; }
     <name>BcdToDec</name>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Převodníky</translation>
     </message>
     <message>
         <source>Decoder(4 to 10/16)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekodér (4 na 10/16)</translation>
     </message>
     <message>
         <source>Main</source>
@@ -904,22 +941,14 @@ p, li { white-space: pre-wrap; }
     <name>BinCounter</name>
     <message>
         <source>Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Čítač</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Aritmetické funkce</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Count to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -927,7 +956,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Clock Inverted</source>
+        <translation type="unfinished">Invertované hodiny</translation>
+    </message>
+    <message>
         <source>Set / Reset Inverted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count to</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -935,26 +972,26 @@ p, li { white-space: pre-wrap; }
     <name>Buffer</name>
     <message>
         <source>Buffer</source>
-        <translation type="unfinished"></translation>
+        <translation>Buffer</translation>
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Hradla</translation>
     </message>
     <message>
         <source>Tristate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Třístavový</translation>
     </message>
 </context>
 <context>
     <name>Bus</name>
     <message>
         <source>Bus</source>
-        <translation type="unfinished"></translation>
+        <translation>Sběrnice</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Ostatní logika</translation>
     </message>
     <message>
         <source>Main</source>
@@ -962,22 +999,22 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
     <message>
         <source>Start Bit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počáteční bit</translation>
     </message>
 </context>
 <context>
     <name>Capacitor</name>
     <message>
         <source>Capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kondenzátor</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasivní součástky</translation>
     </message>
 </context>
 <context>
@@ -988,16 +1025,34 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kapacita</translation>
     </message>
 </context>
 <context>
     <name>Chip</name>
     <message>
+        <source>Cannot read file:
+%1:
+%2.</source>
+        <translation type="vanished">Nelze načíst soubor:
+%1:
+%2.</translation>
+    </message>
+    <message>
+        <source>Cannot set file:
+%1
+to DomDocument</source>
+        <translation type="vanished">Nemohu nastavit soubor:
+%1
+na DomDocument</translation>
+    </message>
+    <message>
         <source>Error reading Chip file:
 %1
 No valid Chip</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při čtení souboru integrovaného obvodu:
+%1
+Chybný čip</translation>
     </message>
 </context>
 <context>
@@ -1016,7 +1071,7 @@ No valid Chip</source>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ostatní</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1053,15 +1108,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Draw Grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zobrazit mřížku</translation>
     </message>
     <message>
         <source>Show ScrollBars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zobrazit posuvníky</translation>
     </message>
     <message>
         <source>Animate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animovat</translation>
     </message>
     <message>
         <source>Canvas Refresh</source>
@@ -1076,173 +1131,189 @@ p, li { white-space: pre-wrap; }
     <name>Circuit</name>
     <message>
         <source>Load Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít obvod</translation>
     </message>
     <message>
         <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Obvod (*.simu);;Všechny soubory (*.*)</translation>
+    </message>
+    <message>
+        <source>Cannot read file %1:
+%2.</source>
+        <translation type="vanished">Nelze načíst soubor %1:
+%2.</translation>
+    </message>
+    <message>
+        <source>Cannot set file %1
+to DomDocument</source>
+        <translation type="vanished">Nemohu nastavit soubor %1
+na DomDocument</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu zapsat soubor %1:
+%2.</translation>
     </message>
     <message>
         <source>Bill Of Materials</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam materiálu</translation>
     </message>
 </context>
 <context>
     <name>CircuitView</name>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Znovu</translation>
     </message>
     <message>
         <source>Import Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit obvod</translation>
     </message>
     <message>
         <source>Save Circuit as Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit obvod jako obrázek</translation>
     </message>
     <message>
         <source>Bill of Materials</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam materiálu</translation>
     </message>
     <message>
         <source>Save as Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit jako obrázek</translation>
     </message>
     <message>
         <source>Circuit Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název obvodu</translation>
     </message>
     <message>
         <source>Generated by SimulIDE</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořeno v SimulIDE</translation>
     </message>
     <message>
         <source>Time: </source>
-        <translation type="unfinished"></translation>
+        <translation>Čas: </translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="vanished">Vlastnosti</translation>
     </message>
 </context>
 <context>
     <name>CircuitWidget</name>
     <message>
         <source>New C&amp;ircuit	Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nový obvod	Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit nový obvod</translation>
     </message>
     <message>
         <source>&amp;Open Circuit	Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Otevřít obvod	Ctrl+O</translation>
     </message>
     <message>
         <source>Open an existing Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít existující obvod</translation>
     </message>
     <message>
         <source>&amp;Save Circuit	Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Uložit obvod	Ctrl+S</translation>
     </message>
     <message>
         <source>Save the Circuit to disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit obvod na disk</translation>
     </message>
     <message>
         <source>Save Circuit &amp;As...	Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit obvod &amp;jako...	Ctrl+Shift+S</translation>
     </message>
     <message>
         <source>Save the Circuit under a new name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ulotiž obvod pod novým jménem</translation>
     </message>
     <message>
         <source>Power Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Napájet obvod</translation>
     </message>
     <message>
         <source>Power the Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Napájení obvodu</translation>
     </message>
     <message>
         <source>Online Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Online nápověda</translation>
     </message>
     <message>
         <source>
 Circuit has been modified.
 Do you want to save your changes?
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Obvod byl změněn.
+Chcete uložit změny?
+</translation>
     </message>
     <message>
         <source>New Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový obvod</translation>
     </message>
     <message>
         <source>Load Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít obvod</translation>
     </message>
     <message>
         <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Obvody (*.simu);;Všechny soubory (*.*)</translation>
     </message>
     <message>
         <source>Save Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit obvod</translation>
     </message>
     <message>
         <source>Circuit ERROR!!!</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba v obvodu!!!</translation>
     </message>
     <message>
         <source>About SimulIDE</source>
-        <translation type="unfinished"></translation>
+        <translation>O aplikaci SimulIDE</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>O knihovně Qt</translation>
     </message>
     <message>
         <source>    Real Speed: Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>    Skutečná rychlost Debugger</translation>
     </message>
     <message>
         <source>    Real Speed: </source>
-        <translation type="unfinished"></translation>
+        <translation>    Skutečná rychlost: </translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace</translation>
     </message>
     <message>
         <source>Pause Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozastavit simulaci</translation>
     </message>
     <message>
         <source>Last Circuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Naposledy použité obvody</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>    Load: </source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <source>App Settings</source>
@@ -1260,16 +1331,20 @@ Do you want to save your changes?
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>    Load: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
     <message>
         <source>Clock</source>
-        <translation type="unfinished"></translation>
+        <translation>Generátor hodinového signálu</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1277,7 +1352,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napětí</translation>
     </message>
     <message>
         <source>Frequency</source>
@@ -1304,75 +1379,101 @@ Do you want to save your changes?
     <name>CodeEditor</name>
     <message>
         <source> File: </source>
-        <translation type="unfinished"></translation>
+        <translation> Soubor: </translation>
     </message>
     <message>
         <source>File recognized as: </source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor rozpoznán jako: </translation>
     </message>
     <message>
         <source>File type not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ souboru není podporován</translation>
     </message>
     <message>
         <source>     SUCCESS!!! Compilation Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>     Překlad proběhl v pořádku</translation>
     </message>
     <message>
         <source>Uploading: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrávám: </translation>
+    </message>
+    <message>
+        <source>
+Error:  Mcu Deleted while Debugging!!
+</source>
+        <translation type="vanished">
+Chyba: Mikroprcesor odstraněn během ladění!!
+</translation>
     </message>
     <message>
         <source>Starting Debbuger...</source>
-        <translation type="unfinished"></translation>
+        <translation>Spouštění debuggeru...</translation>
     </message>
     <message>
         <source>Error: No Mcu in Simulator... </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: V simulátoru chybí procesor... </translation>
     </message>
     <message>
         <source>Error: No Debugger Suited for this File... </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: Pro tento soubor chybí vhodný debugger... </translation>
     </message>
     <message>
         <source>Error: No File... </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: Žádný soubor... </translation>
     </message>
     <message>
         <source>Error Compiling... </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při překladu... </translation>
     </message>
     <message>
         <source>Error Loading Firmware... </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při nahrávání firmware... </translation>
     </message>
     <message>
         <source>Clock Cycles: </source>
-        <translation type="unfinished"></translation>
+        <translation>Počet hodinových cyklů: </translation>
     </message>
     <message>
         <source>     ERROR!!! Compilation Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>     Chyba!!! Překlad selhal</translation>
     </message>
     <message>
         <source>Debugger Started </source>
-        <translation type="unfinished"></translation>
+        <translation>Debugger spuštěn </translation>
     </message>
     <message>
         <source>Debugger Stopped </source>
-        <translation type="unfinished"></translation>
+        <translation>Debugger zastaven </translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti</translation>
     </message>
     <message>
         <source>Please save the Document first</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím, nejdříve dokument uložte</translation>
     </message>
     <message>
         <source>No Compiler available for: %1 files</source>
-        <translation type="unfinished"></translation>
+        <translation>Překladač není dostupný pro: %1 souborů</translation>
+    </message>
+</context>
+<context>
+    <name>CodeEditorWidget</name>
+    <message>
+        <source>Ready</source>
+        <translation type="vanished">Ready</translation>
+    </message>
+</context>
+<context>
+    <name>ColorCombo</name>
+    <message>
+        <source>Custom</source>
+        <translation type="vanished">Vlastní</translation>
+    </message>
+    <message>
+        <source>Transparent</source>
+        <translation type="vanished">Průhledná</translation>
     </message>
 </context>
 <context>
@@ -1417,85 +1518,87 @@ p, li { white-space: pre-wrap; }
     <name>Component</name>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti</translation>
     </message>
     <message>
         <source>Rotate CW</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočit o 90° vpravo</translation>
     </message>
     <message>
         <source>Rotate CCW</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočit o 90° vlevo</translation>
     </message>
     <message>
         <source>Rotate 180</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočit o 180°</translation>
     </message>
     <message>
         <source>Horizontal Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Převrátit vodorovně</translation>
     </message>
     <message>
         <source>Vertical Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Převrátit svisle</translation>
     </message>
 </context>
 <context>
     <name>ComponentPlugins</name>
     <message>
         <source>Manage Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Spravovat komponenty</translation>
     </message>
 </context>
 <context>
     <name>ComponentSelector</name>
     <message>
         <source>    Loading Component sets at:</source>
-        <translation type="unfinished"></translation>
+        <translation>    Nahrávám skupinu komponent z:</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze načíst soubor %1:
+%2.</translation>
     </message>
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu nastavit soubor %1
+na DomDocument</translation>
     </message>
     <message>
         <source>        Loaded Component set:           </source>
-        <translation type="unfinished"></translation>
+        <translation>        Nahrána skupina komponent:           </translation>
     </message>
     <message>
         <source>Manage Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Spravovat komponenty</translation>
     </message>
 </context>
 <context>
     <name>ConnectorLine</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit</translation>
     </message>
 </context>
 <context>
     <name>CurrSource</name>
     <message>
         <source>Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroj proudu</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1510,11 +1613,11 @@ to DomDocument</source>
     <name>DAC</name>
     <message>
         <source>DAC</source>
-        <translation type="unfinished"></translation>
+        <translation>DA převodník</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Ostatní logika</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1522,11 +1625,18 @@ to DomDocument</source>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
     <message>
         <source>Reference Voltage</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DataPlotWidget</name>
+    <message>
+        <source>All</source>
+        <translation type="vanished">Vše</translation>
     </message>
 </context>
 <context>
@@ -1548,7 +1658,11 @@ to DomDocument</source>
     <name>DcMotor</name>
     <message>
         <source>Dc Motor</source>
-        <translation type="unfinished"></translation>
+        <translation>Stejnosměrný motor</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -1568,18 +1682,18 @@ to DomDocument</source>
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
 </context>
 <context>
     <name>DecToBcd</name>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Převodníky</translation>
     </message>
     <message>
         <source>Encoder(10/16 to 4)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodér (10/16 na 4)</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1587,7 +1701,7 @@ to DomDocument</source>
     </message>
     <message>
         <source>Invert Inputs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Invertované vstupy</translation>
     </message>
     <message>
         <source>16 Bits</source>
@@ -1598,22 +1712,22 @@ to DomDocument</source>
     <name>Demux</name>
     <message>
         <source>Demux</source>
-        <translation type="unfinished"></translation>
+        <translation>Demultiplexor</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Převodníky</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Outputs</source>
+        <source>Address Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Address Size</source>
+        <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1621,11 +1735,11 @@ to DomDocument</source>
     <name>Diode</name>
     <message>
         <source>Diode</source>
-        <translation type="unfinished"></translation>
+        <translation>Dioda</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivní součástky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1633,7 +1747,7 @@ to DomDocument</source>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prahové napětí</translation>
     </message>
     <message>
         <source>Zener Voltage</source>
@@ -1651,27 +1765,27 @@ to DomDocument</source>
     <name>EditDialog</name>
     <message>
         <source>Pin Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Název pinu:</translation>
     </message>
     <message>
         <source>Pin Id:</source>
-        <translation type="unfinished"></translation>
+        <translation>Id pinu:</translation>
     </message>
     <message>
         <source>Invert Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertovaný pin</translation>
     </message>
     <message>
         <source>Unused Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepoužitý pin</translation>
     </message>
     <message>
         <source>Edit Pin </source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit pin </translation>
     </message>
     <message>
         <source>Point Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Pin ve tvaru bodu</translation>
     </message>
 </context>
 <context>
@@ -1702,11 +1816,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost písma</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Šířka tabulátoru</translation>
     </message>
     <message>
         <source>Pixels</source>
@@ -1718,7 +1832,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show Spaces</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zobrazit mezery</translation>
     </message>
     <message>
         <source>Spaces</source>
@@ -1726,11 +1840,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Drive Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Řídit obvod</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Deska</translation>
     </message>
     <message>
         <source>Uno</source>
@@ -1754,333 +1868,337 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vlastní</translation>
     </message>
     <message>
         <source>Compiler Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cesta k překladači</translation>
     </message>
     <message>
         <source>Avra Inc Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cesta k Avra include</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vlastní deska</translation>
     </message>
 </context>
 <context>
     <name>EditorWindow</name>
     <message>
         <source>Load File</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít soubor</translation>
     </message>
     <message>
         <source>Save Document As</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit soubor jako</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu zapsat soubor %1:
+%2.</translation>
     </message>
     <message>
         <source>
 The Document has been modified.
 Do you want to save your changes?
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Soubor byl změněn.
+Chcete uložit změny?
+</translation>
     </message>
     <message>
         <source>&amp;New	Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nový	Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit nový soubor</translation>
     </message>
     <message>
         <source>&amp;Open...	Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Otevřít...	Ctrl+O</translation>
     </message>
     <message>
         <source>Open an existing file</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít existující soubor</translation>
     </message>
     <message>
         <source>&amp;Save	Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Uložit	Ctrl+S</translation>
     </message>
     <message>
         <source>Save the document to disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit soubor na disk</translation>
     </message>
     <message>
         <source>Save &amp;As...	Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit &amp;jako...	Ctrl+Shift+S</translation>
     </message>
     <message>
         <source>Save the document under a new name</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit soubor pod novým názvem</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>U&amp;končit</translation>
     </message>
     <message>
         <source>Exit the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukončení aplikace</translation>
     </message>
     <message>
         <source>Cu&amp;t	Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyjmoun&amp;t	Ctrl+X</translation>
     </message>
     <message>
         <source>Cut the current selection&apos;s contents to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyjmout aktuální výběr do schránky</translation>
     </message>
     <message>
         <source>&amp;Copy	Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopírovat	Ctrl+C</translation>
     </message>
     <message>
         <source>Copy the current selection&apos;s contents to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovat aktuální výběr do schránky</translation>
     </message>
     <message>
         <source>&amp;Paste	Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vložit	Ctrl+V</translation>
     </message>
     <message>
         <source>Paste the clipboard&apos;s contents into the current selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit obsah schránky na aktuální pozici</translation>
     </message>
     <message>
         <source>Undo	Ctrl+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpět	Ctrl+Z</translation>
     </message>
     <message>
         <source>Undo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Návrat o krok zpět</translation>
     </message>
     <message>
         <source>Redo	Ctrl+Shift+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Znovu	Ctrl+Shift+Z</translation>
     </message>
     <message>
         <source>Redo the last action</source>
-        <translation type="unfinished"></translation>
+        <translation>Zopakování posledního kroku</translation>
     </message>
     <message>
         <source>Run To Breakpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustit po breakpoint</translation>
     </message>
     <message>
         <source>Run to next breakpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustit po další breakpoint</translation>
     </message>
     <message>
         <source>Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Krok</translation>
     </message>
     <message>
         <source>Step debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Krok debuggeru</translation>
     </message>
     <message>
         <source>StepOver</source>
-        <translation type="unfinished"></translation>
+        <translation>Přeskočit</translation>
     </message>
     <message>
         <source>Step Over</source>
-        <translation type="unfinished"></translation>
+        <translation>Přeskočit</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozastavení</translation>
     </message>
     <message>
         <source>Pause debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozastavení debuggeru</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Reset</translation>
     </message>
     <message>
         <source>Reset debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Reset debuggeru</translation>
     </message>
     <message>
         <source>Stop Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastavení debuggeru</translation>
     </message>
     <message>
         <source>Stop debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastavení debuggeru</translation>
     </message>
     <message>
         <source>Compile</source>
-        <translation type="unfinished"></translation>
+        <translation>Přeložit</translation>
     </message>
     <message>
         <source>Compile Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Překlad zdrojového souboru</translation>
     </message>
     <message>
         <source>UpLoad</source>
-        <translation type="unfinished"></translation>
+        <translation>UpLoad</translation>
     </message>
     <message>
         <source>Load Firmware</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst firmware</translation>
     </message>
     <message>
         <source>Find Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Najít nahradit</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladění</translation>
     </message>
     <message>
         <source>Start Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustit debugger</translation>
     </message>
     <message>
         <source>Set Compiler Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit cestup k překladači</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst znovu</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation>Všechny soubory</translation>
     </message>
     <message>
         <source>Last Circuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Poslední obvod</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
 </context>
 <context>
     <name>Ellipse</name>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsa</translation>
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafika</translation>
     </message>
 </context>
 <context>
     <name>FileBrowser</name>
     <message>
         <source>Add Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat do záložek</translation>
     </message>
     <message>
         <source>Open in editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít v editoru</translation>
     </message>
     <message>
         <source>Show Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit skryté soubory</translation>
     </message>
 </context>
 <context>
     <name>FileWidget</name>
     <message>
         <source>cd Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadřazený adresář</translation>
     </message>
     <message>
         <source>Remove Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit záložku</translation>
     </message>
 </context>
 <context>
     <name>FindReplaceDialog</name>
     <message>
         <source>Find/Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Najít/Nahradit</translation>
     </message>
 </context>
 <context>
     <name>FindReplaceForm</name>
     <message>
         <source>no match found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenalezeno</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrazeno %1 výskytů</translation>
     </message>
     <message>
         <source>Find/Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Najít/Nahradit</translation>
     </message>
     <message>
         <source>&amp;Find:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Najít:</translation>
     </message>
     <message>
         <source>R&amp;eplace with:</source>
-        <translation type="unfinished"></translation>
+        <translation>N&amp;ahradit:</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <source>D&amp;irection</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Směr</translation>
     </message>
     <message>
         <source>&amp;Down</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dolů</translation>
     </message>
     <message>
         <source>&amp;Up</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nahoru</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Volby</translation>
     </message>
     <message>
         <source>&amp;Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rozlišovat velikost písmen</translation>
     </message>
     <message>
         <source>&amp;Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pouze celá slova</translation>
     </message>
     <message>
         <source>R&amp;egular Expression</source>
-        <translation type="unfinished"></translation>
+        <translation>R&amp;egulární výraz</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Najít</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zavřít</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nahradit</translation>
     </message>
     <message>
         <source>Replace &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahradit &amp;vše</translation>
     </message>
 </context>
 <context>
@@ -2091,7 +2209,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Clock Inverted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Invertované hodiny</translation>
     </message>
     <message>
         <source>Set / Reset Inverted</source>
@@ -2106,22 +2224,22 @@ Do you want to save your changes?
     <name>FlipFlopD</name>
     <message>
         <source>FlipFlop D</source>
-        <translation type="unfinished"></translation>
+        <translation>Klopný obvod D</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Paměti</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation type="unfinished"></translation>
+        <translation>Klopný obvod JK</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Paměti</translation>
     </message>
 </context>
 <context>
@@ -2132,18 +2250,18 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logika/Paměti</translation>
     </message>
 </context>
 <context>
     <name>Frequencimeter</name>
     <message>
         <source>Frequencimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřič kmitočtu</translation>
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřidla</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2151,37 +2269,37 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Filtr</translation>
     </message>
 </context>
 <context>
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation type="unfinished"></translation>
+        <translation>Úplná sčítačka</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Aritmetické funkce</translation>
     </message>
 </context>
 <context>
     <name>Function</name>
     <message>
         <source>Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Funkce</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Aritmetické funkce</translation>
     </message>
     <message>
         <source>Set Function</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastav funkci</translation>
     </message>
     <message>
         <source> Function:</source>
-        <translation type="unfinished"></translation>
+        <translation> Funkce:</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2197,7 +2315,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Functions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Funkce</translation>
     </message>
     <message>
         <source>Load Functions</source>
@@ -2216,7 +2334,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Inverted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Invertovaný</translation>
     </message>
     <message>
         <source>Open Drain</source>
@@ -2271,18 +2389,22 @@ Do you want to save your changes?
     <name>Ground</name>
     <message>
         <source>Ground (0 V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Země</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
 </context>
 <context>
     <name>Hd44780</name>
     <message>
         <source>Hd44780</source>
-        <translation type="unfinished"></translation>
+        <translation>HD44780</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -2294,7 +2416,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet řádků</translation>
     </message>
     <message>
         <source>Columns</source>
@@ -2305,19 +2427,19 @@ Do you want to save your changes?
     <name>I2CRam</name>
     <message>
         <source>I2C Ram</source>
-        <translation type="unfinished"></translation>
+        <translation>I2C RAM</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Paměti</translation>
     </message>
     <message>
         <source>Load data</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrát data</translation>
     </message>
     <message>
         <source>Save data</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit data</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2325,7 +2447,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
     <message>
         <source>Control_Code</source>
@@ -2337,7 +2459,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Persistent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Trvalá paměť</translation>
     </message>
     <message>
         <source>Show Memory Table</source>
@@ -2348,11 +2470,11 @@ Do you want to save your changes?
     <name>I2CToParallel</name>
     <message>
         <source>I2C to Parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>I2C na paralelní sběrnici</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Převodníky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2382,34 +2504,34 @@ Do you want to save your changes?
     <name>Image</name>
     <message>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrázek</translation>
     </message>
     <message>
         <source>Load Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrát obrázek</translation>
     </message>
     <message>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Všechny soubory (*.*)</translation>
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafika</translation>
     </message>
     <message>
         <source>Image File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Soubor</translation>
     </message>
 </context>
 <context>
     <name>Inductor</name>
     <message>
         <source>Inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Cívka</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasivní součástky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2417,41 +2539,85 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Inductance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indukčnost</translation>
+    </message>
+</context>
+<context>
+    <name>InoDebugger</name>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="vanished">Nemohu zapsat soubor %1:
+%2.</translation>
+    </message>
+</context>
+<context>
+    <name>IntCircuit</name>
+    <message>
+        <source>IntCircuit</source>
+        <translation type="vanished">Integrovaný obvod</translation>
+    </message>
+    <message>
+        <source>There are no data files for </source>
+        <translation type="vanished">Není žádný datový soubor pro </translation>
+    </message>
+    <message>
+        <source>Cannot read file %1:
+%2.</source>
+        <translation type="vanished">Nelze načíst soubor %1:
+%2.</translation>
+    </message>
+    <message>
+        <source>Cannot set file %1
+to DomDocument</source>
+        <translation type="vanished">Nemohu nastavit soubor %1
+na DomDocument</translation>
     </message>
 </context>
 <context>
     <name>ItemLibrary</name>
     <message>
         <source>Gates</source>
-        <translation type="unfinished"></translation>
+        <translation>Hradla</translation>
     </message>
     <message>
         <source>Logic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika</translation>
     </message>
     <message>
         <source>Arithmetic</source>
-        <translation type="unfinished"></translation>
+        <translation>Aritmetické funkce</translation>
     </message>
     <message>
         <source>Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Paměti</translation>
     </message>
     <message>
         <source>Converters</source>
-        <translation type="unfinished"></translation>
+        <translation>Převodníky</translation>
     </message>
     <message>
         <source>Other Logic</source>
-        <translation type="unfinished"></translation>
+        <translation>Ostatní logika</translation>
     </message>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Senzory</translation>
     </message>
     <message>
         <source>Micro</source>
+        <translation>Mikroprocesory</translation>
+    </message>
+    <message>
+        <source>Resistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="unfinished">Pasivní součástky</translation>
+    </message>
+    <message>
+        <source>Resistive Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2460,7 +2626,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Outputs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Výstupy</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -2472,18 +2638,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistive Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2529,11 +2683,11 @@ Do you want to save your changes?
     <name>KeyPad</name>
     <message>
         <source>KeyPad</source>
-        <translation type="unfinished"></translation>
+        <translation>Klávesnice</translation>
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished"></translation>
+        <translation>Spínače</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2541,7 +2695,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet řádků</translation>
     </message>
     <message>
         <source>Columns</source>
@@ -2549,14 +2703,18 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Key Labels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Popis tlačítek</translation>
     </message>
 </context>
 <context>
     <name>Ks0108</name>
     <message>
         <source>Ks0108</source>
-        <translation type="unfinished"></translation>
+        <translation>KS0108</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -2568,7 +2726,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>CS Active Low</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CS aktivní v L</translation>
     </message>
 </context>
 <context>
@@ -2582,11 +2740,11 @@ Do you want to save your changes?
     <name>LatchD</name>
     <message>
         <source>Latch</source>
-        <translation type="unfinished"></translation>
+        <translation>Záchytný obvod</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Paměti</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2594,7 +2752,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Tristate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Třístavový</translation>
     </message>
     <message>
         <source>Invert Outputs</source>
@@ -2602,7 +2760,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
     <message>
         <source>Trigger Type</source>
@@ -2613,7 +2771,11 @@ Do you want to save your changes?
     <name>Ldr</name>
     <message>
         <source>LDR</source>
-        <translation type="unfinished"></translation>
+        <translation>Fotoodpor</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="vanished">Pasivní součástky</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -2652,7 +2814,11 @@ Do you want to save your changes?
     <name>Led</name>
     <message>
         <source>Led</source>
-        <translation type="unfinished"></translation>
+        <translation>LED</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -2664,11 +2830,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barva</translation>
     </message>
     <message>
         <source>Grounded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uzemněná</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2676,7 +2842,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prahové napětí</translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -2684,14 +2850,18 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
 </context>
 <context>
     <name>LedBar</name>
     <message>
         <source>LedBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Bargraf</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -2703,15 +2873,15 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barva</translation>
     </message>
     <message>
         <source>Grounded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uzemněná</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2719,7 +2889,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prahové napětí</translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -2727,14 +2897,18 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
 </context>
 <context>
     <name>LedMatrix</name>
     <message>
         <source>LedMatrix</source>
-        <translation type="unfinished"></translation>
+        <translation>LED matice</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -2746,11 +2920,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Vertical Pins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Piny svisle</translation>
     </message>
     <message>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet řádků</translation>
     </message>
     <message>
         <source>Columns</source>
@@ -2758,7 +2932,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barva</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2766,7 +2940,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prahové napětí</translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -2774,40 +2948,40 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
 </context>
 <context>
     <name>Line</name>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Čára</translation>
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafika</translation>
     </message>
 </context>
 <context>
     <name>LineNumberArea</name>
     <message>
         <source>Add BreakPoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat breakpoint</translation>
     </message>
     <message>
         <source>Remove BreakPoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit breakpoint</translation>
     </message>
 </context>
 <context>
     <name>Lm555</name>
     <message>
         <source>lm555</source>
-        <translation type="unfinished"></translation>
+        <translation>LM555</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Ostatní logika</translation>
     </message>
 </context>
 <context>
@@ -2869,11 +3043,11 @@ Do you want to save your changes?
     <name>LogicInput</name>
     <message>
         <source>Fixed Volt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroj pevného napětí</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2881,18 +3055,18 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napětí</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenty</translation>
     </message>
     <message>
         <source>File explorer</source>
-        <translation type="unfinished"></translation>
+        <translation>Správce souborů</translation>
     </message>
     <message>
         <source> Qt5SerialPort is not installed in your system
@@ -2900,15 +3074,19 @@ Do you want to save your changes?
     Mcu SerialPort will not work
     Just Install libQt5SerialPort package
     To have Mcu Serial Port Working</source>
-        <translation type="unfinished"></translation>
+        <translation> Qt5SerialPort není ve Vašem systému nainstalován
+
+    Sériový port mikroprocesoru nebude fungovat
+    Nainstalujte balíček libQt5SerialPort,
+    aby sériový port mikroprocesoru fungoval.</translation>
     </message>
     <message>
         <source>Plugin Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba pluginu:</translation>
     </message>
     <message>
         <source>Search Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Hledání komponent</translation>
     </message>
 </context>
 <context>
@@ -2927,73 +3105,81 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
 </context>
 <context>
     <name>Mcu</name>
     <message>
         <source>Load Firmware</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Načíst firmware</translation>
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Všechny soubory (*.*);;ELF soubory (*.elf);;Hex soubory (*.hex)</translation>
     </message>
     <message>
         <source>Load firmware</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Načíst firmware</translation>
     </message>
 </context>
 <context>
     <name>McuComponent</name>
     <message>
+        <source>Cannot read file %1:
+%2.</source>
+        <translation type="vanished">Nelze načíst soubor %1:
+%2.</translation>
+    </message>
+    <message>
+        <source>Cannot set file %1
+to DomDocument</source>
+        <translation type="vanished">Nemohu nastavit soubor %1
+na DomDocument</translation>
+    </message>
+    <message>
         <source>Load firmware</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst firmware</translation>
     </message>
     <message>
         <source>Reload firmware</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizovat firmware</translation>
     </message>
     <message>
         <source>Open Serial Monitor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít monitor sériového portu</translation>
     </message>
     <message>
         <source>Open Serial Port.</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít sériový port</translation>
     </message>
     <message>
         <source>Load Firmware</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst firmware</translation>
     </message>
     <message>
         <source>No File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádný soubor:</translation>
     </message>
     <message>
         <source>No File to reload </source>
-        <translation type="unfinished"></translation>
+        <translation>Žádný soubor k aktualizaci </translation>
     </message>
     <message>
         <source>Load EEPROM data</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst data do EEPROM</translation>
     </message>
     <message>
         <source>Save EEPROM data</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit data z EEPROM</translation>
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="unfinished"></translation>
+        <translation>Všechny soubory (*.*);;ELF soubory (*.elf);;Hex soubory (*.hex)</translation>
     </message>
     <message>
         <source>Open RamTable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main Mcu</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít tabulku RAM</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3001,7 +3187,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logický symbol</translation>
     </message>
     <message>
         <source>Frequency</source>
@@ -3016,6 +3202,10 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Main Mcu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show EEPROM Table</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3023,17 +3213,22 @@ Do you want to save your changes?
 <context>
     <name>MemData</name>
     <message>
+        <source>Load Data</source>
+        <translation type="vanished">Načíst data</translation>
+    </message>
+    <message>
         <source>Save Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit data</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu zapsat soubor %1:
+%2.</translation>
     </message>
     <message>
         <source>.data (*.data);;.bin (*.bin);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>.data (*.data);;.bin (*.bin);;Všechny soubory (*.*)</translation>
     </message>
 </context>
 <context>
@@ -3047,19 +3242,19 @@ Do you want to save your changes?
     <name>Memory</name>
     <message>
         <source>Ram/Rom</source>
-        <translation type="unfinished"></translation>
+        <translation>RAM/ROM</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Paměti</translation>
     </message>
     <message>
         <source>Load data</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrát data</translation>
     </message>
     <message>
         <source>Save data</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit data</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3075,7 +3270,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Persistent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Trvalá paměť</translation>
     </message>
     <message>
         <source>Show Memory Table</source>
@@ -3086,11 +3281,11 @@ Do you want to save your changes?
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
-        <translation type="unfinished"></translation>
+        <translation>Unipolární tranzistor</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivní součástky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3098,53 +3293,53 @@ Do you want to save your changes?
     </message>
     <message>
         <source>P Channel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">P kanál</translation>
     </message>
     <message>
         <source>Depletion</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">S vodivým kanálem</translation>
     </message>
     <message>
         <source>RDSon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">RDSon</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prahové napětí</translation>
     </message>
 </context>
 <context>
     <name>Mux</name>
     <message>
         <source>Mux</source>
-        <translation type="unfinished"></translation>
+        <translation>Multiplexor</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Převodníky</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Address Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Address Size</source>
-        <translation type="unfinished"></translation>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Invertované vstupy</translation>
     </message>
 </context>
 <context>
     <name>MuxAnalog</name>
     <message>
         <source>Analog Mux</source>
-        <translation type="unfinished"></translation>
+        <translation>Analogový přepínač</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivní součástky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3156,18 +3351,18 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Impedance</translation>
     </message>
 </context>
 <context>
     <name>OpAmp</name>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>Operační zesilovač</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivní součástky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3175,7 +3370,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zesílení</translation>
     </message>
     <message>
         <source>Supply</source>
@@ -3198,11 +3393,11 @@ Do you want to save your changes?
     <name>OrGate</name>
     <message>
         <source>Or Gate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hradlo OR</translation>
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Hradla</translation>
     </message>
     <message>
         <source>Input Size</source>
@@ -3220,11 +3415,11 @@ Do you want to save your changes?
     <name>Oscope</name>
     <message>
         <source>Oscope</source>
-        <translation type="unfinished"></translation>
+        <translation>Osciloskop</translation>
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřidla</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3232,7 +3427,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Filtr</translation>
     </message>
     <message>
         <source>Screen</source>
@@ -3283,14 +3478,28 @@ Do you want to save your changes?
     <name>PICComponent</name>
     <message>
         <source>Micro</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikroprocesory</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="vanished">Chyba</translation>
+    </message>
+    <message>
+        <source>Only 1 Mcu allowed
+ to be in the Circuit.</source>
+        <translation type="vanished">V obvodu může být pouze
+jeden mikroprocesor.</translation>
     </message>
 </context>
 <context>
     <name>Pcd8544</name>
     <message>
         <source>Pcd8544</source>
-        <translation type="unfinished"></translation>
+        <translation>PCD8544</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -3301,30 +3510,34 @@ Do you want to save your changes?
     <name>PicProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor nenalezen</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor &quot;%1&quot; nebyl nalezen.</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámá chyba:</translation>
     </message>
     <message>
         <source>Could not Create Pic Processor: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu vytvořit procesor PIC: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Could not Load: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu otevřít: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>Potentiometer</name>
     <message>
         <source>Potentiometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Potenciometr</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="vanished">Pasivní součástky</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3336,7 +3549,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
     <message>
         <source>Current Value</source>
@@ -3347,11 +3560,11 @@ Do you want to save your changes?
     <name>Probe</name>
     <message>
         <source>Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonda</translation>
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřidla</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3359,7 +3572,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prahové napětí</translation>
     </message>
 </context>
 <context>
@@ -3401,11 +3614,11 @@ p, li { white-space: pre-wrap; }
     <name>Push</name>
     <message>
         <source>Push</source>
-        <translation type="unfinished"></translation>
+        <translation>Tlačítko</translation>
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished"></translation>
+        <translation>Spínače</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3417,11 +3630,22 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Poles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet pólů</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klávesa</translation>
+    </message>
+</context>
+<context>
+    <name>QPropertyModel</name>
+    <message>
+        <source>Name</source>
+        <translation type="vanished">Název</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="vanished">Hodnota</translation>
     </message>
 </context>
 <context>
@@ -3467,11 +3691,11 @@ p, li { white-space: pre-wrap; }
     <name>Rail</name>
     <message>
         <source>Rail.</source>
-        <translation type="unfinished"></translation>
+        <translation>Napájecí hladina</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3479,77 +3703,78 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napětí</translation>
     </message>
 </context>
 <context>
     <name>RamTable</name>
     <message>
         <source>Reg.</source>
-        <translation type="unfinished"></translation>
+        <translation>Reg.</translation>
     </message>
     <message>
         <source>Dec</source>
-        <translation type="unfinished"></translation>
+        <translation>Dec</translation>
     </message>
     <message>
         <source>Load VarSet</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst sadu registrů</translation>
     </message>
     <message>
         <source>Save VarSet</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit sadu registrů</translation>
     </message>
     <message>
         <source>VarSets (*.vst);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sada registrů (*.vst);;Všechny soubory (*.*)</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu zapsat soubor %1:
+%2.</translation>
     </message>
     <message>
         <source>Clear Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat vybrané</translation>
     </message>
     <message>
         <source>Clear Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat tabulku</translation>
     </message>
     <message>
         <source>Load Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst proměnné</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnota</translation>
     </message>
 </context>
 <context>
     <name>Rectangle</name>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Obdélník</translation>
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafika</translation>
     </message>
 </context>
 <context>
     <name>RelaySPST</name>
     <message>
         <source>Relay (all)</source>
-        <translation type="unfinished"></translation>
+        <translation>Relé</translation>
     </message>
     <message>
         <source>Switches</source>
-        <translation type="unfinished"></translation>
+        <translation>Spínače</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3565,11 +3790,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Poles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet pólů</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klávesa</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3577,26 +3802,30 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
     <message>
         <source>Inductance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indukčnost</translation>
     </message>
     <message>
         <source>IOn</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proud k sepnutí</translation>
     </message>
     <message>
         <source>IOff</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proud na rozepnutí</translation>
     </message>
 </context>
 <context>
     <name>Resistor</name>
     <message>
         <source>Resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpor</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="vanished">Pasivní součástky</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3608,14 +3837,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
 </context>
 <context>
     <name>ResistorDip</name>
     <message>
         <source>ResistorDip</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpor DIP</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="vanished">Pasivní součástky</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3627,22 +3860,22 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
 </context>
 <context>
     <name>SR04</name>
     <message>
         <source>HC-SR04</source>
-        <translation type="unfinished"></translation>
+        <translation>HC-SR04</translation>
     </message>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Senzory</translation>
     </message>
 </context>
 <context>
@@ -3653,7 +3886,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logika/Aritmetické funkce</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3690,7 +3923,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nemohu zapsat soubor %1:
+%2.</translation>
     </message>
 </context>
 <context>
@@ -3698,14 +3932,19 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot Open Port %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu otevřít port %1:
+%2.</translation>
     </message>
 </context>
 <context>
     <name>Servo</name>
     <message>
         <source>Servo</source>
-        <translation type="unfinished"></translation>
+        <translation>Servomotor</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -3724,7 +3963,11 @@ p, li { white-space: pre-wrap; }
     <name>SevenSegment</name>
     <message>
         <source>7 Segment</source>
-        <translation type="unfinished"></translation>
+        <translation>sedmisegmentový displej</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3736,15 +3979,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Vertical Pins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Piny svisle</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barva</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3756,7 +3999,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prahové napětí</translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -3764,18 +4007,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
 </context>
 <context>
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation type="unfinished"></translation>
+        <translation>sedmisegmentová BCD</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Ostatní logika</translation>
     </message>
 </context>
 <context>
@@ -3794,30 +4037,30 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Border</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Síla rámečku</translation>
     </message>
     <message>
         <source>Z Value</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hodnota Z</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barva</translation>
     </message>
     <message>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Průhlednost</translation>
     </message>
 </context>
 <context>
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
-        <translation type="unfinished"></translation>
+        <translation>Posuvný registr</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Aritmetické funkce</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3825,11 +4068,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Clock Inverted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Invertované hodiny</translation>
     </message>
     <message>
         <source>Reset Inverted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Invertovaný reset</translation>
     </message>
 </context>
 <context>
@@ -3934,7 +4177,11 @@ p, li { white-space: pre-wrap; }
     <name>Ssd1306</name>
     <message>
         <source>Ssd1306</source>
-        <translation type="unfinished"></translation>
+        <translation>SSD1306</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -3946,7 +4193,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barva</translation>
     </message>
     <message>
         <source>I2C Address</source>
@@ -3961,7 +4208,11 @@ p, li { white-space: pre-wrap; }
     <name>Stepper</name>
     <message>
         <source>Stepper</source>
-        <translation type="unfinished"></translation>
+        <translation>Krokový motor</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -3973,7 +4224,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bipolar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bipolární</translation>
     </message>
     <message>
         <source>Steps per Rotation</source>
@@ -3985,7 +4236,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odpor</translation>
     </message>
 </context>
 <context>
@@ -4038,21 +4289,29 @@ p, li { white-space: pre-wrap; }
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Podobvod</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze načíst soubor %1:
+%2.</translation>
     </message>
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu nastavit soubor %1
+na DomDocument</translation>
+    </message>
+    <message>
+        <source>Error reading Subcircuit file: %1
+</source>
+        <translation type="vanished">Chyba při načítání souboru podobvodu: %1
+</translation>
     </message>
     <message>
         <source>There are no data files for </source>
-        <translation type="unfinished"></translation>
+        <translation>Nejsou žádná data pro </translation>
     </message>
     <message>
         <source>Main</source>
@@ -4060,62 +4319,74 @@ to DomDocument</source>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logický symbol</translation>
     </message>
 </context>
 <context>
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Pouzdro</translation>
     </message>
     <message>
         <source>
 Package has been modified.
 Do you want to save your changes?
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Pouzdro bylo změněno.
+Chcete uložit změny?
+</translation>
     </message>
     <message>
         <source>Move Pin </source>
-        <translation type="unfinished"></translation>
+        <translation>Přesunout pin </translation>
     </message>
     <message>
         <source>Delete Pin </source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit pin </translation>
     </message>
     <message>
         <source>Load Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst pouzdro</translation>
     </message>
     <message>
         <source>Save Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit pouzdro</translation>
     </message>
     <message>
         <source>Load Package File</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst soubor s pouzdrem</translation>
     </message>
     <message>
         <source>Packages (*.package);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pouzdra (*.package);;Všechny soubory (*.*)</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu zapsat soubor %1:
+%2.</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Ostatní</translation>
     </message>
     <message>
         <source>Edit Pin </source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit pin </translation>
+    </message>
+    <message>
+        <source>Hide Non Graphic</source>
+        <translation type="vanished">Skrýt obvod</translation>
     </message>
     <message>
         <source>Select Main Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat hlavní komponentu</translation>
+    </message>
+    <message>
+        <source>Create Board</source>
+        <translation type="vanished">Vytvořit desku</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -4127,15 +4398,15 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Šířka</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Výška</translation>
     </message>
     <message>
         <source>Package File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Soubor s pouzdrem</translation>
     </message>
     <message>
         <source>Background</source>
@@ -4146,11 +4417,11 @@ Do you want to save your changes?
     <name>Switch</name>
     <message>
         <source>Switches</source>
-        <translation type="unfinished"></translation>
+        <translation>Spínače</translation>
     </message>
     <message>
         <source>Switch (all)</source>
-        <translation type="unfinished"></translation>
+        <translation>Spínač</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4166,22 +4437,22 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Poles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet pólů</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klávesa</translation>
     </message>
 </context>
 <context>
     <name>SwitchDip</name>
     <message>
         <source>Switches</source>
-        <translation type="unfinished"></translation>
+        <translation>Spínače</translation>
     </message>
     <message>
         <source>Switch Dip</source>
-        <translation type="unfinished"></translation>
+        <translation>DIP spínač</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4189,42 +4460,42 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost</translation>
     </message>
 </context>
 <context>
     <name>TerminalWidget</name>
     <message>
         <source>Send Text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Text k odeslání:</translation>
     </message>
     <message>
         <source>    Send Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>    Hodnota k odeslání:</translation>
     </message>
     <message>
         <source>    Print:</source>
-        <translation type="unfinished"></translation>
+        <translation>    Výpis:</translation>
     </message>
     <message>
         <source> Value </source>
-        <translation type="unfinished"></translation>
+        <translation> Číslo </translation>
     </message>
     <message>
         <source>Received From Micro:</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijato z mikroprocesoru:</translation>
     </message>
     <message>
         <source>Sent to Micro:</source>
-        <translation type="unfinished"></translation>
+        <translation>Odesláno do mikroprocesoru:</translation>
     </message>
     <message>
         <source>CR</source>
-        <translation type="unfinished"></translation>
+        <translation>CR</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Smazat</translation>
     </message>
     <message>
         <source>Unknown Mcu</source>
@@ -4232,14 +4503,25 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>Termistor</name>
+    <message>
+        <source>Termistor</source>
+        <translation type="vanished">Termistor</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="vanished">Pasivní součástky</translation>
+    </message>
+</context>
+<context>
     <name>TextComponent</name>
     <message>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Graphical</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafika</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4247,23 +4529,23 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Margin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Okraj</translation>
     </message>
     <message>
         <source>Border</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Síla rámečku</translation>
     </message>
     <message>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Průhlednost</translation>
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Písmo</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Velikost písma</translation>
     </message>
     <message>
         <source>Fixed_Width</source>
@@ -4336,11 +4618,11 @@ Do you want to save your changes?
     <name>Tunnel</name>
     <message>
         <source>Tunnel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Port</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Ostatní</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4348,7 +4630,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Název</translation>
     </message>
     <message>
         <source>Rotated</source>
@@ -4359,7 +4641,11 @@ Do you want to save your changes?
     <name>VarResistor</name>
     <message>
         <source>Variable Resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavitelný odpor</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="vanished">Pasivní součástky</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -4390,11 +4676,11 @@ Do you want to save your changes?
     <name>VoltReg</name>
     <message>
         <source>Volt. Regulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Stabilizátor</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivní součástky</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4409,11 +4695,11 @@ Do you want to save your changes?
     <name>VoltSource</name>
     <message>
         <source>Volt. Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroj napětí</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4421,25 +4707,29 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napětí</translation>
     </message>
 </context>
 <context>
     <name>Voltimeter</name>
     <message>
         <source>Voltimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>Voltmetr</translation>
     </message>
     <message>
         <source>Meters</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřidla</translation>
     </message>
 </context>
 <context>
     <name>WS2812</name>
     <message>
         <source>WS2812 Led</source>
-        <translation type="unfinished"></translation>
+        <translation>WS2812 LED</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -4451,7 +4741,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet řádků</translation>
     </message>
     <message>
         <source>Columns</source>
@@ -4462,11 +4752,11 @@ Do you want to save your changes?
     <name>WaveGen</name>
     <message>
         <source>Wave Gen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Funkční generátor</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroje</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4474,11 +4764,15 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Wave Type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tvar průběhu</translation>
     </message>
     <message>
         <source>Frequency</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished">Kvalita</translation>
     </message>
     <message>
         <source>Duty</source>
@@ -4512,38 +4806,34 @@ Do you want to save your changes?
         <source>Fall Time</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Quality</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>XorGate</name>
     <message>
         <source>Xor Gate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hradlo XOR</translation>
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika/Hradla</translation>
     </message>
 </context>
 <context>
     <name>elCapacitor</name>
     <message>
         <source>Electrolytic Capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektrolytický kondenzátor</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasivní součástky</translation>
     </message>
 </context>
 <context>
     <name>xmlfile</name>
     <message>
         <source>Logic</source>
-        <translation type="unfinished"></translation>
+        <translation>Logika</translation>
     </message>
 </context>
 </TS>

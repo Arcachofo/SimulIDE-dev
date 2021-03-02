@@ -1,0 +1,5 @@
+Analogový přepínač:
+
+Počet kanálů přepínače se nastavuje vlastností "Počet bitů adresy" a jejich počet je dán počtem adres vyjádřených zvoleným počtem bitů.
+
+

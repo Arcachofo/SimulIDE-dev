@@ -1,0 +1,6 @@
+Unipolární tranzistor:
+
+RDSon je odpor mezi D a S v lineární oblasti tranzistoru:
+    VGS > Vth a VDS < ( VGS – Vth )
+
+Tranzistor je možné nastavit na tranzistor s kanálem N nebo P a s indukovaným nebo vodivým kanálem.

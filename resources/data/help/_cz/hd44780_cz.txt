@@ -1,0 +1,5 @@
+HD44780 LCD:
+
+5x8 maticový LCD s řídicím obvodem HD44780.
+
+Je možné nastavit počet řádků a sloupců.

@@ -1,0 +1,10 @@
+Podobvod:
+
+Tato komponenta se s skládá z více částí.
+
+Komponenta uvnitř obsahuje obvody podobně jako tomu je u integrovaných obvodů.
+
+Každý podobvod je popsán ve dvou souborech: v jednom je vlastní obvod a druhý popisuje pouzdro.
+
+Podobvod může být zobrazen jako integrovaný obvod nebo jako logický symbol.
+Mezi zobrazeními se přepíná pomocí vlastnosti "Logický symbol".

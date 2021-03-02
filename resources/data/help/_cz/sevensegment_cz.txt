@@ -1,0 +1,9 @@
+Sedmisegmentový displej:
+
+Sedmisegmentový displej má stejné vlastnosti jako komponenta LED.
+
+- Nastavitelná velikost ( počet sedmisegmentových číslic ).
+- Společná katoda nebo anoda.
+
+Více informací:
+ https://simulide.blogspot.com/p/seven-segment-display.html

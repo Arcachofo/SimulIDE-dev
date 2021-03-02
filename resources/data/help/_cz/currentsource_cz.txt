@@ -1,0 +1,9 @@
+Zdroj proudu:
+
+Jedná se o nastavitelný zdroj proudu.
+
+Proud lze nastavit knoflíkem od 0 A do maximálního proudu.
+
+Zdroj je možné zapnout a vypnout tlačítkem na spodní straně.
+
+Nastavený výstupní proud se zobrazuje na tlačítku.

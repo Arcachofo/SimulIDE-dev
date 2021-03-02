@@ -1,0 +1,7 @@
+LED matice:
+
+LED matice má stejné vlastnosti jako komponenta LED.
+Je možné u ní nastavit velikost (počet řádků a sloupců).
+
+Více informací:
+ http://simulide.blogspot.com/p/leds.html

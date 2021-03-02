@@ -1,0 +1,9 @@
+Relé:
+
+Nastavitelné elektromagnetické relé.
+
+Počet pólů se nastavuje vlastností "Počet pólů".
+
+Jestli má relé spínací nebo přepínací kontakty se nastavuje vlastností "Přepínací kontakt".
+
+Dále je možné nastavit odpor cívky a proud, při kterém relé spíná.

@@ -1,0 +1,12 @@
+Voltmetr:
+
+
+- Červený vstup: Kladný.
+- Černý vstup: Záporný.
+- Výstup vpravo: Napětí odpovídající zobrazené hodnotě
+
+- Obnovovací kmitočet je 50 Hz.
+
+
+Více informací:
+ http://simulide.blogspot.com/p/meters.html

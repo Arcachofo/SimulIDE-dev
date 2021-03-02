@@ -1,0 +1,11 @@
+LED:
+
+Pokud chcete obvod zjednodušit, můžete nastavit vlastnost
+"Uzemněná" na true. Tím se interně připojí katoda k zemi.
+Zemní pin se ze schématické značky odstraní.
+
+LED bliká bíle pokud je maximální proud LED překročen
+přibližně o 40 %.
+
+Více informací:
+ http://simulide.blogspot.com/p/leds.html

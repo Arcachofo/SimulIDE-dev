@@ -1,0 +1,7 @@
+Napájecí hladina:
+
+Jedná se o jednoduchý zdroj napětí.
+
+Zdroj je vždy zapnutý.
+
+Výstupní napětí je možné měnit pomocí vlastnosti "Napětí" výše.

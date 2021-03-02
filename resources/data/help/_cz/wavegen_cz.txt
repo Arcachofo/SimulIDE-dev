@@ -1,0 +1,18 @@
+Funkční generátor:
+
+Čtyři možné průběhy:
+- Sinus.
+- Pila.
+- Trojúhelník.
+- Obdélník.
+
+
+Lze jej zaponout nebo vypnout tlačítkem na levé straně.
+
+Kmitočet se nastavuje ve vlastnosti "Kmitočet" výše.
+
+Minimální napětí se nastavuje vlastností "Posunutí".
+Amplituda průběhu se nastavuje vlastností "Napětí".
+
+U obdélníkového průběhu je možné nastavit šířku pulzu pomocí vlastnosti "Střída".
+Přednastavená hodnota je 50 %.

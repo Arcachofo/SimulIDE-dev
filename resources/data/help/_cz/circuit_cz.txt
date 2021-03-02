@@ -1,0 +1,36 @@
+Obvod:
+
+Vlastnosti: (přednastavená hodnota)
+
+- Rychlost [krok/s]: (1000000)
+   Rychlost simulace v krocích za sekundu.
+
+- Rychlost [%]: (100)
+   Rychlost simulace v procentech. 
+
+- Krok simulace [nS]: (1000)
+   Krok simulace v nanosekundách.
+
+-  Simulace L a C [krok]: (50)
+   Počet kroků po kterých se simulují kondenzátory a cívky.
+
+- Přesnost nelineárních komponent: (5)
+   Přesnost nelineárních komponent. Výšší číslo znamená vyšší přesnost.
+
+- Zobrazit mřížku: (true)
+
+- Zobrazit posuvníky: (false)
+
+- Animovat: (false)
+   Vodiče, na kterých je napětí větší než 2,5 V, se zobrazí červeně a ostatní modře.
+
+- Měřítko písma: (1)
+   Měřítko písma na rozhraní, například 1,5 = 150 %.
+
+- Automatická záloha [s]: (15)
+   Časový interval, po kterém se kontroluje, jestli obvod nebyl změněl.
+   Pokud byl změněn, tak se uloží.
+   Nastavení na 0 jsou automatické zálohy zakázány.
+
+Více informací:
+ http://simulide.blogspot.com/p/blog-page_15.html

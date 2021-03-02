@@ -1,0 +1,9 @@
+Bargraf:
+
+Bargraf má stejné vlastnosti jako komponenta LED.
+Navíc je pouze vlastnost "Velikost", kterou se nastavuje počet LED.
+
+LED jsou umístěny na straně, kde jsou katody.
+
+Více informací:
+ http://simulide.blogspot.com/p/leds.html

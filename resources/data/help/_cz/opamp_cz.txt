@@ -1,0 +1,8 @@
+Operační zesilovač:
+
+Přednastavené napětí na napájecích pinech je 0 V a 5 V a piny nejsou zobrazeny.
+
+Nastavením vlastnost "Napájecí piny" se napájecí piny zobrazí.
+Potom je možné je připojit na jakékoliv napájecí napětí.
+
+Napěťové zesílení se nastavuje vlastností "Zesílení".

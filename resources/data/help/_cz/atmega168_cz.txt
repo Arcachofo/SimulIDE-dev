@@ -1,0 +1,50 @@
+MCU: ATmega168
+
+Pouzdro: 28-pin-PDIP
+
+ 1: Reset
+ 2: PD0 RXD0   PCINT16
+ 3: PD1 TXD0   PCINT17
+ 4: PD2 INT0   PCINT18
+ 5: PD3 INT1   OC2B    PCINT19
+ 6: PD4 T0     XCK0    PCINT20
+ 7: Vcc
+ 8: Gnd
+ 9: PB6 TOSC1  XTAL1   PCINT6
+10: PB7 TOSC2  XTAL2   PCINT7
+11: PD5 T1     OC0B    PCINT21
+12: PD6 AIN0   OC0A    PCINT22
+13: PD7 AIN1   PCINT23
+14: PB0 ICP1   CLKO    PCINT0
+15: PB1 OC1A   PCINT1
+16: PB2 !SS    OC1B    PCINT2
+17: PB3 MOSI   OC2A    PCINT3
+18: PB4 MISO   PCINT4
+19: PB5 USCK   PCINT5
+20: AVCC
+21: AREF
+22: Gnd
+23: PC0 ADC0   PCINT8
+24: PC1 ADC1   PCINT9
+25: PC2 ADC2   PCINT10
+26: PC3 ADC3   PCINT11
+27: PC4 ADC4   SDA     PCINT12
+28: PC5 ADC5   SCL     PCINT13
+
+Stručný popis:
+Výkonný nízkopříkonový 8bitový AVR RISC mikrokontroler
+16 KB ISP paměti FLASH s možností čtení během zápisu,
+512 bajtů paměti EEPROM,
+1 KB paměti SRAM,
+23 vstupů/výstupů pro obecné použití,
+32 pracovních registrů pro obecné použití,
+2x 8bitový a 1x 16bitový čítač/časovač s komparátorem,
+6 kanálů PWM,
+vnitřní a vnější přerušení,
+1 sériové rozhraní USART,
+1 bajtově orientované dvouvodičové rozhraní,
+1 SPI sériové rozhraní,
+6kanálový 10bitový AD převodník,
+nastavitelný časovač watchdog s vnitřním oscilátorem,
+5 softwarově nastavitelných módů úspory energie,
+Napájecí napětí 1,8 - 5,5 V.
