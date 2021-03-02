@@ -62,6 +62,7 @@ void FlipFlopBase::stamp()
         }
     }
     eLogicDevice::stamp();
+    eLogicDevice::setOut( 1, true );
 }
 
 void FlipFlopBase::setTrigger( Trigger trigger )
