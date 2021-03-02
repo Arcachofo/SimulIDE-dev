@@ -962,10 +962,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Reset Inverted</source>
-        <translation type="unfinished">Reiniciar invertido</translation>
+        <translation type="obsolete">Reiniciar invertido</translation>
     </message>
     <message>
         <source>Count to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Set Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set / Reset Inverted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1744,6 +1752,10 @@ como DomDocument</translation>
         <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Address Size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Diode</name>
@@ -2220,15 +2232,7 @@ Deseja salvar as alterações?
     </message>
 </context>
 <context>
-    <name>FlipFlopD</name>
-    <message>
-        <source>FlipFlop D</source>
-        <translation>Flip-flop D</translation>
-    </message>
-    <message>
-        <source>Logic/Memory</source>
-        <translation>Lógicos/Memórias</translation>
-    </message>
+    <name>FlipFlopBase</name>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
@@ -2247,6 +2251,21 @@ Deseja salvar as alterações?
     </message>
 </context>
 <context>
+    <name>FlipFlopD</name>
+    <message>
+        <source>FlipFlop D</source>
+        <translation>Flip-flop D</translation>
+    </message>
+    <message>
+        <source>Logic/Memory</source>
+        <translation>Lógicos/Memórias</translation>
+    </message>
+    <message>
+        <source>Clock Inverted</source>
+        <translation type="obsolete">Sinal de pulso invertido</translation>
+    </message>
+</context>
+<context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
@@ -2257,20 +2276,19 @@ Deseja salvar as alterações?
         <translation>Lógicos/Memórias</translation>
     </message>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clock Inverted</source>
-        <translation type="unfinished">Sinal de pulso invertido</translation>
+        <translation type="obsolete">Sinal de pulso invertido</translation>
     </message>
+</context>
+<context>
+    <name>FlipFlopRS</name>
     <message>
-        <source>Set / Reset Inverted</source>
+        <source>FlipFlop RS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Trigger Type</source>
-        <translation type="unfinished"></translation>
+        <source>Logic/Memory</source>
+        <translation type="unfinished">Lógicos/Memórias</translation>
     </message>
 </context>
 <context>
@@ -3361,6 +3379,10 @@ como DomDocument</translation>
     <message>
         <source>Invert Inputs</source>
         <translation type="unfinished">Inverter entradas</translation>
+    </message>
+    <message>
+        <source>Address Size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4887,6 +4909,10 @@ Deseja salvar as alterações?
     <message>
         <source>Fall Time</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished">Qualidade</translation>
     </message>
 </context>
 <context>

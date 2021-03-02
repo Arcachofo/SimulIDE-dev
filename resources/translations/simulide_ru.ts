@@ -675,11 +675,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Язык</translation>
     </message>
     <message>
         <source>Font Scale</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Масштаб шрифта</translation>
     </message>
     <message>
         <source>Dutch</source>
@@ -958,11 +958,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Reset Inverted</source>
-        <translation>Инвертировать сброс</translation>
+        <translation type="vanished">Инвертировать сброс</translation>
     </message>
     <message>
         <source>Count to</source>
         <translation>Считать до</translation>
+    </message>
+    <message>
+        <source>Use Set Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set / Reset Inverted</source>
+        <translation type="unfinished">Инвертировать Set / Reset</translation>
     </message>
 </context>
 <context>
@@ -1174,7 +1182,7 @@ to DomDocument</source>
     </message>
     <message>
         <source>2 Package Pins connected together</source>
-        <translation>2 вывода корпуса/LS  соединены вместе</translation>
+        <translation type="vanished">2 вывода корпуса/LS  соединены вместе</translation>
     </message>
 </context>
 <context>
@@ -1225,7 +1233,7 @@ to DomDocument</source>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Свойства</translation>
+        <translation type="vanished">Свойства</translation>
     </message>
 </context>
 <context>
@@ -1736,6 +1744,10 @@ to DomDocument</source>
         <source>Invert Outputs</source>
         <translation>Инверсные выходы</translation>
     </message>
+    <message>
+        <source>Address Size</source>
+        <translation type="unfinished">Разрядность адреса</translation>
+    </message>
 </context>
 <context>
     <name>Diode</name>
@@ -2208,6 +2220,25 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>FlipFlopBase</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Clock Inverted</source>
+        <translation type="unfinished">Инвертировать такты</translation>
+    </message>
+    <message>
+        <source>Set / Reset Inverted</source>
+        <translation type="unfinished">Инвертировать Set / Reset</translation>
+    </message>
+    <message>
+        <source>Trigger Type</source>
+        <translation type="unfinished">Тип триггера</translation>
+    </message>
+</context>
+<context>
     <name>FlipFlopD</name>
     <message>
         <source>FlipFlop D</source>
@@ -2219,19 +2250,19 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Clock Inverted</source>
-        <translation>Инвертировать такты</translation>
+        <translation type="vanished">Инвертировать такты</translation>
     </message>
     <message>
         <source>Set / Reset Inverted</source>
-        <translation>Инвертировать Set / Reset</translation>
+        <translation type="vanished">Инвертировать Set / Reset</translation>
     </message>
     <message>
         <source>Trigger Type</source>
-        <translation>Тип триггера</translation>
+        <translation type="vanished">Тип триггера</translation>
     </message>
 </context>
 <context>
@@ -2246,19 +2277,30 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Clock Inverted</source>
-        <translation>Инвертировать такты</translation>
+        <translation type="vanished">Инвертировать такты</translation>
     </message>
     <message>
         <source>Set / Reset Inverted</source>
-        <translation>Инвертировать Set / Reset</translation>
+        <translation type="vanished">Инвертировать Set / Reset</translation>
     </message>
     <message>
         <source>Trigger Type</source>
-        <translation>Тип триггера</translation>
+        <translation type="vanished">Тип триггера</translation>
+    </message>
+</context>
+<context>
+    <name>FlipFlopRS</name>
+    <message>
+        <source>FlipFlop RS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic/Memory</source>
+        <translation type="unfinished">Логика/память</translation>
     </message>
 </context>
 <context>
@@ -2563,18 +2605,18 @@ Do you want to save your changes?
     <name>IntCircuit</name>
     <message>
         <source>There are no data files for </source>
-        <translation>Нет файлов данных для </translation>
+        <translation type="vanished">Нет файлов данных для </translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Не удаётся прочитать файл %1:
+        <translation type="vanished">Не удаётся прочитать файл %1:
 %2.</translation>
     </message>
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation>Не удаётся загрузить файл %1
+        <translation type="vanished">Не удаётся загрузить файл %1
 в DOMDocument</translation>
     </message>
 </context>
@@ -2779,7 +2821,7 @@ to DomDocument</source>
     </message>
     <message>
         <source>Passive</source>
-        <translation>Пассивные элементы</translation>
+        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -3334,6 +3376,10 @@ to DomDocument</source>
         <source>Invert Inputs</source>
         <translation>Инвертировать входы</translation>
     </message>
+    <message>
+        <source>Address Size</source>
+        <translation type="unfinished">Разрядность адреса</translation>
+    </message>
 </context>
 <context>
     <name>MuxAnalog</name>
@@ -3660,7 +3706,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Passive</source>
-        <translation>Пассивные элементы</translation>
+        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -4505,7 +4551,7 @@ Do you want to save your changes?
     <name>Termistor</name>
     <message>
         <source>Passive</source>
-        <translation>Пассивные элементы</translation>
+        <translation type="vanished">Пассивные элементы</translation>
     </message>
 </context>
 <context>
@@ -4580,7 +4626,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Passive</source>
-        <translation>Пассивные элементы</translation>
+        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -4646,7 +4692,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Passive</source>
-        <translation>Пассивные элементы</translation>
+        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -4802,6 +4848,10 @@ Do you want to save your changes?
     <message>
         <source>Fall Time</source>
         <translation>Время спада</translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished">Качество</translation>
     </message>
 </context>
 <context>

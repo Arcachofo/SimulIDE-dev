@@ -298,9 +298,9 @@ void Simulator::startSim( bool paused )
     double sps100 = 100*(double)m_stepsPS*m_stepSize/1e12; // Speed %
     double fps = m_stepsPS/m_stepsPF;
 
-    qDebug()  << "\nFPS:   " << fps        << "\t Frames Per Sec"
+    qDebug()  << "\nFPS:   " << fps        << "\t Frames per Sec"
               << "\nSpeed: " << sps100     << "%"
-              << "\nSpeed: " << m_stepsPS  << "\t Steps Per Sec"
+              << "\nSpeed: " << m_stepsPS  << "\t Steps per Sec"
               << "\nStp/F: " << m_stepsPF  << "\t Steps per Frame"
               << "\nNonLi: " << m_maxNlstp << "\t Max Iterations"
               << "\nStep : " << m_stepSize << "\t picoseconds";

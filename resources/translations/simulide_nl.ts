@@ -958,10 +958,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Reset Inverted</source>
-        <translation type="unfinished">Reset geïnverteerd</translation>
+        <translation type="obsolete">Reset geïnverteerd</translation>
     </message>
     <message>
         <source>Count to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use Set Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set / Reset Inverted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1751,6 +1759,10 @@ niet instellen als DomDucument</translation>
         <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Address Size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Diode</name>
@@ -2223,15 +2235,7 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>FlipFlopD</name>
-    <message>
-        <source>FlipFlop D</source>
-        <translation>D Flipflop</translation>
-    </message>
-    <message>
-        <source>Logic/Memory</source>
-        <translation>Logica/Geheugen</translation>
-    </message>
+    <name>FlipFlopBase</name>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
@@ -2250,6 +2254,21 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
+    <name>FlipFlopD</name>
+    <message>
+        <source>FlipFlop D</source>
+        <translation>D Flipflop</translation>
+    </message>
+    <message>
+        <source>Logic/Memory</source>
+        <translation>Logica/Geheugen</translation>
+    </message>
+    <message>
+        <source>Clock Inverted</source>
+        <translation type="obsolete">Klok geïnverteerd</translation>
+    </message>
+</context>
+<context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
@@ -2260,20 +2279,19 @@ Wijzigingen opslaan?
         <translation>Logica/Geheugen</translation>
     </message>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clock Inverted</source>
-        <translation type="unfinished">Klok geïnverteerd</translation>
+        <translation type="obsolete">Klok geïnverteerd</translation>
     </message>
+</context>
+<context>
+    <name>FlipFlopRS</name>
     <message>
-        <source>Set / Reset Inverted</source>
+        <source>FlipFlop RS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Trigger Type</source>
-        <translation type="unfinished"></translation>
+        <source>Logic/Memory</source>
+        <translation type="unfinished">Logica/Geheugen</translation>
     </message>
 </context>
 <context>
@@ -3348,6 +3366,10 @@ niet instellen als DomDocument</translation>
     <message>
         <source>Invert Inputs</source>
         <translation type="unfinished">Inverteer invoeren</translation>
+    </message>
+    <message>
+        <source>Address Size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4820,6 +4842,10 @@ Wijzigingen opslaan?
     <message>
         <source>Fall Time</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished">Kwaliteit</translation>
     </message>
 </context>
 <context>

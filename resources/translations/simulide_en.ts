@@ -919,11 +919,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reset Inverted</source>
+        <source>Count to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Count to</source>
+        <source>Use Set Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set / Reset Inverted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1608,6 +1612,10 @@ to DomDocument</source>
         <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Address Size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Diode</name>
@@ -2076,15 +2084,7 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>FlipFlopD</name>
-    <message>
-        <source>FlipFlop D</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Logic/Memory</source>
-        <translation></translation>
-    </message>
+    <name>FlipFlopBase</name>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
@@ -2103,6 +2103,17 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>FlipFlopD</name>
+    <message>
+        <source>FlipFlop D</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Logic/Memory</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
@@ -2112,20 +2123,15 @@ Do you want to save your changes?
         <source>Logic/Memory</source>
         <translation></translation>
     </message>
+</context>
+<context>
+    <name>FlipFlopRS</name>
     <message>
-        <source>Main</source>
+        <source>FlipFlop RS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clock Inverted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set / Reset Inverted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trigger Type</source>
+        <source>Logic/Memory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3123,6 +3129,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Invert Inputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Address Size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4500,6 +4510,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Fall Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
