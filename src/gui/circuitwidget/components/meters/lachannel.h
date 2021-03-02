@@ -17,53 +17,35 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef OSCOPECHANNEL_H
-#define OSCOPECHANNEL_H
+#ifndef LACHANNEL_H
+#define LACHANNEL_H
 
 #include "datachannel.h"
+#include "logicanalizer.h"
 
-class Oscope;
 
-class MAINMODULE_EXPORT OscopeChannel : public DataChannel
+class MAINMODULE_EXPORT LaChannel : public DataChannel
 {
-        friend class Oscope;
+        friend class LAnalizer;
 
     public:
 
-        OscopeChannel( Oscope* oscope, QString id );
-        ~OscopeChannel();
+        LaChannel( LAnalizer* la, QString id );
+        ~LaChannel();
 
         virtual void initialize() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
 
-        virtual void setFilter( double f );
-
     private:
-        void updateValues();
-
-        uint64_t m_totalP;
-        uint64_t m_lastMax;
-        uint64_t m_numMax;       // Number of Maximum found
-        uint64_t m_nCycles;
-        uint64_t m_period;
-        uint64_t m_risEdge;
-
         double m_lastValue;
-        double m_freq;
-        double m_mid;
+
+        uint64_t m_risEdge;
 
         bool m_rising;
         bool m_falling;
 
-        double m_maxVal;
-        double m_minVal;
-        double m_dispMax;
-        double m_dispMin;
-        double m_ampli;
-        double m_filter;
-
-        Oscope* m_oscope;
+        LAnalizer* m_analizer;
 };
 
 #endif

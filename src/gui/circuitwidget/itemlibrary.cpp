@@ -73,6 +73,7 @@
 #include "ledmatrix.h"
 #include "line.h"
 #include "lm555.h"
+#include "logicanalizer.h"
 #include "logicinput.h"
 #include "max72xx_matrix.h"
 #include "mcu.h"
@@ -142,6 +143,7 @@ void ItemLibrary::loadItems()
     addItem( Amperimeter::libraryItem() );
     addItem( Frequencimeter::libraryItem() );
     addItem( Oscope::libraryItem() );
+    addItem( LAnalizer::libraryItem() );
     // Sources
     addItem( LogicInput::libraryItem() );
     addItem( Clock::libraryItem() );

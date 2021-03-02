@@ -75,7 +75,6 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         void setVolPos( QStringList vp );
 
         virtual void updateStep() override;
-        virtual void remove() override;
 
         virtual void sethTick( uint64_t td ) override;
         virtual void setTimeDiv( uint64_t td ) override;
@@ -108,7 +107,7 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         double  m_voltPos[4];
         bool    m_hideCh[4];
 
-        OscopeChannel* m_oscCh[4];
+        OscopeChannel* m_channel[4];
         OscWidget*  m_oscWidget;
         DataWidget* m_dataWidget;
 };

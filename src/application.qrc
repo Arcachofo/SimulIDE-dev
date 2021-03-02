@@ -122,6 +122,7 @@
         <file alias="bjt.png">../src/icons/components/bjt.png</file>
         <file alias="wavegen.png">../src/icons/components/wavegen.png</file>
         <file alias="oscope.png">../src/icons/components/oscope.png</file>
+        <file alias="lanalizer.png">../src/icons/components/lanalizer.png</file>
         <file alias="toggleswitch.png">../src/icons/components/toggleswitch.png</file>
         <file alias="audio_out.png">../src/icons/components/audio_out.png</file>
         <file alias="keypad.png">../src/icons/components/keypad.png</file>

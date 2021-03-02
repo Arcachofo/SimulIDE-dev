@@ -66,10 +66,13 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     m_display = m_oscWidget->display();
     m_display->setFixedSize( m_baSizeX+6*8, m_baSizeY+2*8 );
 
+    m_pin.resize(5);
+    m_pin[4] = new Pin( 180, QPoint( -80-8, 64 ), id+"-PinG", 0, this );
+
     for( int i=0; i<4; i++ )
     {
-        m_oscCh[i] = new OscopeChannel( this, id+"Chan"+QString::number(i) );
-        m_channel[i] = m_oscCh[i];
+        m_pin[i] = new Pin( 180, QPoint( -80-8,-48+24*i ), id+"-Pin"+QString::number(i), 0, this );
+        m_channel[i] = new OscopeChannel( this, id+"Chan"+QString::number(i) );
         m_channel[i]->m_channel = i;
         m_channel[i]->m_ePin[0] = m_pin[i];
         m_channel[i]->m_ePin[1] = m_pin[4]; // Ref Pin
@@ -91,9 +94,14 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
 }
 Oscope::~Oscope()
 {
+    m_proxy->setWidget( NULL );
+    delete m_dataWidget;
+
     m_oscWidget->setParent( NULL );
     m_oscWidget->close();
     delete m_oscWidget;
+
+    for( int i=0; i<4; i++ ) delete m_channel[i];
 }
 
 QList<propGroup_t> Oscope::propGroups()
@@ -126,11 +134,11 @@ void Oscope::updateStep()
     uint64_t origAbs;
     uint64_t simTime;
 
-    if( m_trigger < 4  ) period = m_oscCh[m_trigger]->m_period; // We want a trigger
+    if( m_trigger < 4  ) period = m_channel[m_trigger]->m_period; // We want a trigger
 
     if( period > 10 ) // We have a Trigger
     {
-        uint64_t risEdge = m_oscCh[m_trigger]->m_risEdge;
+        uint64_t risEdge = m_channel[m_trigger]->m_risEdge;
 
         uint64_t nCycles = timeFrame*2/period;
         if( timeFrame%period ) nCycles++;
@@ -202,7 +210,7 @@ void Oscope::expand( bool e )
 void Oscope::setFilter( double filter )
 {
     m_filter = filter;
-    for( int i=0; i<2; i++ ) m_oscCh[i]->setFilter( filter );
+    for( int i=0; i<2; i++ ) m_channel[i]->setFilter( filter );
 }
 
 void Oscope::setAutoSC( int ch )
@@ -333,18 +341,6 @@ void Oscope::setVoltPos( int ch, double vp )
     m_voltPos[ch] = vp;
     m_display->setVPos( ch, vp );
     m_oscWidget->updateVoltPosBox( ch, vp );
-}
-
-void Oscope::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-
-    for( int i=0; i<4; i++ ) delete m_oscCh[i];
-
-    m_proxy->setWidget( NULL );
-    delete m_dataWidget;
-
-    Component::remove();
 }
 
 #include "moc_oscope.cpp"

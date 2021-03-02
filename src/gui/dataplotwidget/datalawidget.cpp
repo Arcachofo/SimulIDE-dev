@@ -17,54 +17,60 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef OSCOPECHANNEL_H
-#define OSCOPECHANNEL_H
+#include "datalawidget.h"
+#include "logicanalizer.h"
+//#include "mainwindow.h"
 
-#include "datachannel.h"
-
-class Oscope;
-
-class MAINMODULE_EXPORT OscopeChannel : public DataChannel
+DataLaWidget::DataLaWidget( QWidget* parent, LAnalizer* la )
+          : QWidget( parent )
 {
-        friend class Oscope;
+    m_analizer = la;
 
-    public:
+    setupUi(this);
 
-        OscopeChannel( Oscope* oscope, QString id );
-        ~OscopeChannel();
+    this->adjustSize();
+    //fontScale->setValue( MainWindow::self()->fontScale() );
+}
 
-        virtual void initialize() override;
-        virtual void updateStep() override;
-        virtual void voltChanged() override;
+void DataLaWidget::on_expandButton_clicked()
+{
+    m_analizer->toggleExpand();
+}
 
-        virtual void setFilter( double f );
-
-    private:
-        void updateValues();
-
-        uint64_t m_totalP;
-        uint64_t m_lastMax;
-        uint64_t m_numMax;       // Number of Maximum found
-        uint64_t m_nCycles;
-        uint64_t m_period;
-        uint64_t m_risEdge;
-
-        double m_lastValue;
-        double m_freq;
-        double m_mid;
-
-        bool m_rising;
-        bool m_falling;
-
-        double m_maxVal;
-        double m_minVal;
-        double m_dispMax;
-        double m_dispMin;
-        double m_ampli;
-        double m_filter;
-
-        Oscope* m_oscope;
-};
-
-#endif
+void DataLaWidget::setColor( int ch, QColor c )
+{
+    QString color = c.name();
+    if( ch == 0 )
+    {
+        channel0->setStyleSheet( "background-color:"+color );
+    }
+    else if( ch == 1 )
+    {
+        channel1->setStyleSheet( "background-color:"+color );
+    }
+    else if( ch == 2 )
+    {
+        channel2->setStyleSheet( "background-color:"+color );
+    }
+    else if( ch == 3 )
+    {
+        channel3->setStyleSheet( "background-color:"+color );
+    }
+    else if( ch == 4 )
+    {
+        channel4->setStyleSheet( "background-color:"+color );
+    }
+    else if( ch == 5 )
+    {
+        channel5->setStyleSheet( "background-color:"+color );
+    }
+    else if( ch == 6 )
+    {
+        channel6->setStyleSheet( "background-color:"+color );
+    }
+    else if( ch == 7 )
+    {
+        channel7->setStyleSheet( "background-color:"+color );
+    }
+}
 

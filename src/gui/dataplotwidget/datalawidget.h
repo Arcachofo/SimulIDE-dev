@@ -14,57 +14,34 @@
  *                                                                         *
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
- *                                                                         *
- ***************************************************************************/
+ *                                                                         */
 
-#ifndef OSCOPECHANNEL_H
-#define OSCOPECHANNEL_H
+#include <QWidget>
 
-#include "datachannel.h"
+#include "ui_datalawidget.h"
 
-class Oscope;
+#ifndef DATALAWIDGET_H
+#define DATALAWIDGET_H
 
-class MAINMODULE_EXPORT OscopeChannel : public DataChannel
+class LAnalizer;
+
+class DataLaWidget : public QWidget, private Ui::DataLaWidget
 {
-        friend class Oscope;
-
+    Q_OBJECT
+    
     public:
+        DataLaWidget(QWidget* parent=0 , LAnalizer* la=0) ;
 
-        OscopeChannel( Oscope* oscope, QString id );
-        ~OscopeChannel();
+        void setColor( int ch, QColor c );
 
-        virtual void initialize() override;
-        virtual void updateStep() override;
-        virtual void voltChanged() override;
+        QHBoxLayout* getLayout() { return mainLayout; }
 
-        virtual void setFilter( double f );
+    public slots:
+        void on_expandButton_clicked();
 
     private:
-        void updateValues();
-
-        uint64_t m_totalP;
-        uint64_t m_lastMax;
-        uint64_t m_numMax;       // Number of Maximum found
-        uint64_t m_nCycles;
-        uint64_t m_period;
-        uint64_t m_risEdge;
-
-        double m_lastValue;
-        double m_freq;
-        double m_mid;
-
-        bool m_rising;
-        bool m_falling;
-
-        double m_maxVal;
-        double m_minVal;
-        double m_dispMax;
-        double m_dispMin;
-        double m_ampli;
-        double m_filter;
-
-        Oscope* m_oscope;
+        LAnalizer* m_analizer;
 };
 
-#endif
 
+#endif

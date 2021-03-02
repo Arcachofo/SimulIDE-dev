@@ -20,18 +20,23 @@
 #ifndef PLOTDISPLAY_H
 #define PLOTDISPLAY_H
 
+#include <QPixmap>
 #include <QtWidgets>
 
 class PlotDisplay : public QWidget
 {
+    friend class DataPlotWidget;
+    friend class PlotBase;
+
     Q_OBJECT
 
     public:
         PlotDisplay( QWidget* parent = 0 );
 
         void setExpand( bool expand ) { m_expand = expand; }
-        void hideChannel( int ch, bool hide ) { m_hideCh[ch] = hide; }
+         void hideChannel( int ch, bool hide ) { m_hideCh[ch] = hide; }
         int tracks() { return m_tracks; }
+        void setChannels( int ch );
         void setTracks( int tracks );
         void setColor( int ch, QColor color );
         void setData( int ch, QList<QPointF>* data );
@@ -45,36 +50,38 @@ class PlotDisplay : public QWidget
         void updateValues();
 
     protected:
-        virtual void paintEvent( QPaintEvent* event );
+        virtual void paintEvent( QPaintEvent *event );
 
     private:
         void drawBackground( QPainter *p );
 
-        QList<QPointF>* m_data[4];
+        QList<QPointF>* m_data[8];
 
         bool m_expand;
 
+        int m_channels;
         int m_tracks;
         int m_trackScl;
 
         double m_sizeX;
         double m_sizeY;
+
         double m_hCenter;
         double m_vCenter;
         double m_marginX;
         double m_marginY;
-        double m_scaleY[4];
+        //double m_scaleY[8];
         double m_scaleX;
 
-        double m_volt[4];
-        double m_vMaxVal[4];
-        double m_vMinVal[4];
-        double m_vMin[4];
-        double m_ampli[4];
-        double m_vTick[4];
-        double m_vPos[4];
-        int64_t m_hPos[4];
-        bool   m_hideCh[4];
+        double m_volt[8];
+        double m_vMaxVal[8];
+        double m_vMinVal[8];
+        double m_vMin[8];
+        double m_ampli[8];
+        double m_vTick[8];
+        double m_vPos[8];
+        int64_t m_hPos[8];
+        bool   m_hideCh[8];
 
         double m_ceroX ;
         double m_endX;
@@ -82,14 +89,14 @@ class PlotDisplay : public QWidget
         double m_endS;
         double m_lineX;
 
-        double m_sclY[4];
-        double m_posY[4];
-        double m_vMaxPos[4];
-        double m_vMinPos[4];
+        double m_sclY[8];
+        double m_posY[8];
+        double m_vMaxPos[8];
+        double m_vMinPos[8];
 
         QFont m_fontB;
         QFont m_fontS;
-        QColor m_color[5];
+        QColor m_color[8];
         QColor m_dark[2];
         QColor m_scaleColor[3];
 };

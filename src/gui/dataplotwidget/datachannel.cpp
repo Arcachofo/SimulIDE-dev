@@ -26,8 +26,7 @@ DataChannel::DataChannel( PlotBase* plotBase, QString id )
 {
     m_plotBase = plotBase;
     m_ePin.resize( 2 );
-
-    m_chCond = PlotBase::None;
+    m_ePin[1] = NULL;
 }
 
 DataChannel::~DataChannel()
@@ -45,6 +44,7 @@ void DataChannel::stamp()                     // Called at Simulation Start
         enode->addToPlotterList( this );
     }
 
+    if( !m_ePin[1] ) return;
     enode =  m_ePin[1]->getEnode();
     if( enode ) enode->voltChangedCallback( this );
 }

@@ -17,69 +17,73 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "plotbase.h"
+#include "lachannel.h"
 #include "plotdisplay.h"
-#include "datachannel.h"
 #include "simulator.h"
-#include "circuit.h"
-#include "circuitwidget.h"
+#include "utils.h"
 
-
-PlotBase::PlotBase( QObject* parent, QString type, QString id )
-        : Component( parent, type, id )
-        , eElement( id )
+LaChannel::LaChannel( LAnalizer* la, QString id )
+         : DataChannel( la, id )
 {
-    m_color[0] = QColor( 240, 240, 100 );
-    m_color[1] = QColor( 220, 220, 255 );
-    m_color[2] = QColor( 255, 210, 90  );
-    m_color[3] = QColor( 000, 245, 160 );
-    m_color[4] = QColor( 255, 255, 255 );
-
-    m_baSizeX = 135;
-    m_baSizeY = 135;
-
-    m_expand = false;
-
-    Simulator::self()->addToUpdateList( this );
+    m_analizer = la;
+    m_points = &m_pointsA;
 }
-PlotBase::~PlotBase()
-{
-    Simulator::self()->remFromUpdateList( this );
-}
+LaChannel::~LaChannel()  { }
 
-void PlotBase::initialize()
+void LaChannel::initialize()
 {
-    ///m_dataPlotW->m_refCondFlag = false;
+    m_rising   = false;
+    m_falling  = false;
+
+    m_risEdge = 0;
+    m_lastValue = 0;
+    m_bufferCounter = 0;
+
+    m_buffer.fill(0);
+    m_time.fill(0);
+    m_pointsA.clear();
+    m_pointsB.clear();
+
+    updateStep();
 }
 
-void PlotBase::setBaSizeX( int size )
+void LaChannel::updateStep()
 {
-    if( size < 135 ) size = 135;
-    m_baSizeX = size;
-    expand( m_expand );
+    double dispMax = m_analizer->voltDiv()*10;
+    double dispMin = 0;
+    m_analizer->display()->setLimits( m_channel, dispMax, dispMin );
 }
 
-void PlotBase::setBaSizeY( int size )
+void LaChannel::voltChanged()
 {
-    if( size < 135 ) size = 135;
-    m_baSizeY = size;
-    expand( m_expand );
+    uint64_t simTime = Simulator::self()->circTime();
+
+    double data = m_ePin[0]->getVolt();
+
+    if( ++m_bufferCounter >= m_buffer.size() ) m_bufferCounter = 0;
+    m_buffer[m_bufferCounter] = data;
+    m_time[m_bufferCounter] = simTime;
+
+    double delta = data-m_lastValue;
+
+    if( delta > 0 )               // Rising
+    {
+        if( m_falling && !m_rising )     // Min To Rising
+        {
+            m_falling = false;
+        }
+        m_rising = true;
+        m_risEdge = simTime;
+        m_lastValue = data;
+    }
+    else                        // Falling
+    {
+        if( m_rising && !m_falling )    // Max Found
+        {
+            m_rising = false;
+        }
+        m_falling = true;
+        m_lastValue = data;
+    }
 }
-
-void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
-{
-    Component::paint( p, option, widget );
-
-    p->setBrush(QColor( 230, 230, 230 ));
-    p->drawRoundedRect( m_area, 4, 4 );
-    
-    p->setBrush( Qt::white );
-    QPen pen = p->pen();
-    pen.setWidth( 0 );
-    pen.setColor( Qt::white );
-    p->setPen(pen);
-}
-
-#include "moc_plotbase.cpp"
-
 

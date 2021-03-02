@@ -37,7 +37,6 @@ void OscopeChannel::initialize()
 {
     m_rising   = false;
     m_falling  = false;
-    m_chCondFlag = false;
 
     m_period = 0;
     m_risEdge = 0;
@@ -167,22 +166,6 @@ void OscopeChannel::voltChanged()
                 m_numMax++;
                 m_nCycles++;
                 m_falling = false;
-
-                if( m_oscope->paOnCond() )
-                {
-                    if( (m_chCond == PlotBase::Rising)
-                     || (m_chCond == PlotBase::High) ) // Pause on Rising or High
-                    {
-                        m_chCondFlag = true;
-                        m_oscope->pauseOnCond();
-                        if( m_chCond == PlotBase::Rising ) m_chCondFlag = false;
-                    }
-                    else if( m_chCond == PlotBase::Low ) m_chCondFlag = false;
-                }
-            }
-            else if( m_oscope->paOnCond() )
-            {
-                if( m_chCond == PlotBase::Rising ) m_chCondFlag = false;
             }
             m_rising = true;
             m_lastValue = data;
@@ -213,22 +196,6 @@ void OscopeChannel::voltChanged()
         if( m_rising && !m_falling )    // Max Found
         {
             m_rising = false;
-
-            if( m_oscope->paOnCond() )
-            {
-                if( (m_chCond == PlotBase::Falling)
-                 || (m_chCond == PlotBase::Low) ) // Pause on Falling or Low
-                {
-                    m_chCondFlag = true;
-                    m_oscope->pauseOnCond();
-                    if( m_chCond == PlotBase::Falling ) m_chCondFlag = false;
-                }
-                else if( m_chCond == PlotBase::High ) m_chCondFlag = false;
-            }
-        }
-        else if( m_oscope->paOnCond() )
-        {
-            if( m_chCond == PlotBase::Falling ) m_chCondFlag = false;
         }
         m_falling = true;
         m_lastValue = data;

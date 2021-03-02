@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,40 +17,59 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef DATACHANNEL_H
-#define DATACHANNEL_H
+#ifndef LAWIDGET_H
+#define LAWIDGET_H
 
-#include "e-element.h"
-#include "plotbase.h"
+#include <QDialog>
+#include <QVector>
 
-class MAINMODULE_EXPORT DataChannel : public eElement
+#include "ui_lawidget.h"
+#include "plotdisplay.h"
+
+class LAnalizer;
+
+class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
 {
-        friend class PlotBase;
-        friend class Oscope;
+        Q_OBJECT
 
     public:
+        LaWidget( QWidget* parent, LAnalizer* la );
+        ~LaWidget();
 
-        DataChannel( PlotBase* plotBase, QString id );
-        ~DataChannel();
+        PlotDisplay* display() { return plotDisplay; }
+        QHBoxLayout* getLayout() { return mainLayout; }
 
-        virtual void initialize(){;}
-        virtual void stamp() override;
-        virtual void voltChanged(){;}
+        void setTrigger( int ch );
 
-        virtual void fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset );
+        void updateTimeDivBox( uint64_t timeDiv);
+        void updateTimePosBox( int64_t timePos );
+        void updateVoltDivBox( double voltDiv);
+
+    public slots:
+        void on_timeDivDial_valueChanged( int DialPos );
+        void on_timeDivBox_valueChanged( double val );
+        void on_timePosDial_valueChanged( int DialPos );
+        void on_timePosBox_valueChanged( double val );
+
+        void on_voltDivDial_valueChanged( int DialPos );
+        void on_voltDivBox_valueChanged( double voltDiv );
+
+        void on_triggerBox_currentIndexChanged( int index );
 
     protected:
-        QList<QPointF> m_pointsA;
-        QList<QPointF> m_pointsB;
-        QList<QPointF>* m_points;
+        void closeEvent( QCloseEvent* event );
+        void resizeEvent( QResizeEvent* event );
 
-        QVector<double> m_buffer;
-        QVector<uint64_t> m_time;
+        int m_timeDivDialPos;
+        int m_timePosDialPos;
+        int m_voltDivDialPos;
 
         int m_channel;
-        int m_bufferCounter;
 
-        PlotBase* m_plotBase;
+        bool m_blocked;
+
+        LAnalizer* m_analizer;
 };
+
 
 #endif

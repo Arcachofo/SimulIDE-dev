@@ -32,11 +32,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( int Basic_X   READ baSizeX  WRITE setBaSizeX  DESIGNABLE true USER true )
     Q_PROPERTY( int Basic_Y   READ baSizeY  WRITE setBaSizeY  DESIGNABLE true USER true )
 
-    Q_PROPERTY( bool    Data_Log READ paOnCond WRITE setPaOnCond DESIGNABLE true USER true )
-    Q_PROPERTY( double  Log_us   READ dataSize WRITE setDataSize DESIGNABLE true USER true )
-    Q_PROPERTY( paCond  CH1_Cond READ ch1Cond  WRITE setCh1Cond  DESIGNABLE true USER true )
-    Q_PROPERTY( paCond  CH2_Cond READ ch2Cond  WRITE setCh2Cond  DESIGNABLE true USER true )
-    Q_PROPERTY( paCond  REF_Cond READ refCond  WRITE setRefCond  DESIGNABLE true USER true )
 
     Q_PROPERTY( quint64 hTick   READ hTick   WRITE sethTick )
     Q_PROPERTY( quint64 TimeDiv READ timeDiv WRITE setTimeDiv )
@@ -44,15 +39,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     public:
         PlotBase( QObject* parent, QString type, QString id );
         ~PlotBase();
-
-        enum paCond {
-            None = 0,
-            Rising,
-            Falling,
-            High,
-            Low
-        };
-        Q_ENUM( paCond )
 
         int baSizeX() { return m_baSizeX; }
         void setBaSizeX( int size );
@@ -62,18 +48,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         double dataSize() { return m_dataSize/1e6; }
         void setDataSize( double ds ) { m_dataSize = ds*1e6; }
-
-        bool paOnCond() { return m_paOnCond; }
-        void setPaOnCond( bool pa ) { m_paOnCond = pa; }
-
-        paCond ch1Cond();
-        void setCh1Cond( paCond cond );
-
-        paCond ch2Cond();
-        void setCh2Cond( paCond cond );
-
-        paCond refCond() { return m_refCond; }
-        void setRefCond( paCond cond ) { m_refCond = cond; }
 
         uint64_t hTick() { return m_timeDiv/1e3; }
         virtual void sethTick( uint64_t td ){ m_timeDiv = td*1e3;}
@@ -85,8 +59,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         virtual void expand( bool e ){;}
 
-        void pauseOnCond();
-
         PlotDisplay* display() { return m_display; }
 
         QColor getColor( int c ) { return m_color[c]; }
@@ -95,9 +67,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
     protected:
         int m_bufferSize;
-
-        bool m_paOnCond;
-        paCond m_refCond;
 
         bool m_expand;
 
@@ -114,7 +83,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         QColor m_color[5];
 
-        DataChannel* m_channel[4];
         PlotDisplay* m_display;
 
         QGraphicsProxyWidget* m_proxy;
