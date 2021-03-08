@@ -49,8 +49,8 @@ void AvrUsart::configure( uint8_t val )
 {
     // clockPol = getRegBitsVal( val, UCPOLn );
 
-    m_mode = getRegBitsVal( val, m_modeRB );
-    m_stopBits = getRegBitsVal( val, m_stopRB )+1;
+    m_mode = getRegBitsVal( val, m_modeRB );        // UMSELn1, UMSELn0
+    m_stopBits = getRegBitsVal( val, m_stopRB )+1;  // UPMn1, UPMno
     m_dataBits = getRegBitsVal( val, m_dataRB )+5;
 
     uint8_t par = getRegBitsVal( val, m_pariRB );

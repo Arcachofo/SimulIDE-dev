@@ -186,7 +186,7 @@ void UartRx::processData( uint8_t data )
     m_framesize = 1+mDATABITS+mPARITY+mSTOPBITS;
 
     m_currentBit = 0;
-    ///Simulator::self()->addEvent( m_period/2, this ); // Shedule recetion
+    ///Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
 }
 
 void UartRx::readBit()

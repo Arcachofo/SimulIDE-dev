@@ -264,8 +264,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                     double cVolt= p1Volt;
                     if( x2 != x1 && p2Volt!=p1Volt)
                         cVolt = p1Volt+(cursorX-x1)*(p2Volt-p1Volt)/(x2-x1);
-                    if( cVolt < 0 )
-                        cVolt += 0;
+                    if( cVolt < 0 ) cVolt += 0;
                     m_volt[i] = cVolt;
                 }
             }/*else

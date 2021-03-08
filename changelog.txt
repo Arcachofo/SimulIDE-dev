@@ -1,148 +1,108 @@
 
-simulide 0.5.15
+simulide 0.5.16
 
 Changes:
   RC1:
-    - Old Subcircuits not supported.
-    
-  RC2:
-    - Component Selector: "Outputs" grouped by type.
-    - Component Selector: New category Micro=>Perifericals.
-    - New simulation core: Events Loop instead of Clock Loop.
-    - Simulation time step to 1 picosecond.
-    - Wavegen: "Quality" Property dissapears.
-    - Wavegen: New "Steps" property.
-    
-  RC3:
-    - Clean remainings of old Subcircuits.
-    - Convert Arduinos to new Boards (old Arduinos still there).
-    - Convert Logic Devices to new simulation core.
-    - Split loadDomDoc and pasteDomDoc (Solves some issues with old simu files).
-    
-  RC4:
-    - Group Resitors and Resistive Sensors.
-    - Circuit->Properties moved to new Settings Menu.
+    - Debugger updated to new simulation engine.
+    - Remove libglibc dependency in Windows build (by acebrian).
     
 New Features:
   RC1:
-    - Some new Russian help files (Sergey Roenko).
-    - Boards finished.
-    - Subcircuits converted to new system.
-    - Multy Mcu working (experimental).
+    - Dutch translation by mvandorp.
+    - New Dialogs for Component properties.
+    - New dialog for Editor/Compiler properties.
+    - Frequency property for I2C Devices.
+    - Increase Frequency meter resolution to 5 digits.
+    - SSD1306 I2C Address property.
+    - Logic Components Slew Rate.
+    - Memory Viewer for RAM/ROM, I2C RAM/ROM and MCU EEPROM.
+    - Speed up recompilations with Arduino (by acebrian).
+    - MCU crash Warning message and animation.
+    - Editable compilers first steps (gcbasic and avra).
+    - Load and Save to file for Function Component.
+    - Oscope V3.
+    - I2C to Parallel: read implemented.
     
   RC2:
-    - Wavegen: Duty applies to triangle wave.
-    - Oscope: Channels trigger linked.
-    - Oscope: Zoom upto 1ps.
-    - Oscope: cursor shows time at location.
-    - Italian translation (@rcanoid).
-    - Frequencimeter: Add "Filter" property.
-    - Added "Step" property to variable resistors.
+    - Debug Panel.
+    - Colorize Logic Input/Output state.
+    - Binary Couter: add Set Pin.
+    - Resizable Multiplexer and Demultiplexer
+    - Czech translation and help files.
     
-  RC3:
-    - Clock & WaveGen "Always On" Property (needed in subcircuits).
-    - Tunnel: color inicator of connection.
-    - Oscope: Take snapshot on condition.
-    - Logic devices: "Propagation delay" property.
-    
-  RC4:
-    - New Subcircuits and MCUs show device name.
-    - Uart Module (basic implementation).
-    - New MCUs: 8051 Timers mostly working.
-    - New MCUs: 8051 Uart basic implementation.
-    - New MCUs: PIC14 core added.
-    - New MCUs: AVR Timer0 mostly working (including PWM).
-    - Simulation Time indicator shows units (upto ps).
-    - App, Circuit and Simulation Settings Dialogs.
-    - Oscope: Cursor time with unit multiplier.
-    - Oscope: Cursor shows voltages.
-    - Circuit: Refresh speed editable (fps).
     
 Bug Fixes:
   RC1:
-    - Undo/Redo: errors after new circuit.
-    - Undo/Redo: move single wire or component not saved.
-    - Attiny13 Timer0 pwm not working.
-    - Variable Resistors not updating values if simulation not running.
-    - Redraw problems moving Variable Resistor or Resistor Dip when zoomed.
-    - Error in Logical symbols for AtMega1280, 1281, 2560
-    - "Recently Used Circuits" button not showing ToolTip.
-    - Help text not shown for MCUs and Subcircuits.
-    - Some Russian help files fixed (Sergey Roenko).
-    - Font scale can lead to unreadable sizes, limit scale to 0.5->2.0
-    - Ramtable: missing first row after saving + reloading circuit (0.4.14-F).
-    - AVR: Flags ADIF in ADC must be cleared by writing a 1.
-    - AVR Comparators not working.
-    - Package Pins should not go outside limits.
-    - Package Pins not visible when "Point Pin" selected.
-    - Missing avra and gpasm executables in Win 64 version.
+    - Error in 8051 Component name in mcs-51_test.simu.
+    - Crash on new_mcu mega48,88,168. 
+    - Oscope: printing wave out of display with only 1 channel connected.
+    - Oscope: Pause on condition not working (RC4).
+    - AVR I2C not working after circuit restart.
+    - AVR: I2C module interfering pullups.
+    - I2C Module randomly not working.
+    - AudioOut: Crash when no audio output device found (by acebrian).
+    - KY023: Button not working (by acebrian).
+    - Arduino compiler can't find includes.
+    - Audio Output cracking souds.
+    - Ampmeter & Voltmeter wrong decimals.
+    - Crash with new subcircuits connected to buses.
+    - Circuit not animating wires in some cases.
+    - MCU with Autoload activated brokens simulation.
+    - Issues with Arduino debugger under Windows (by acebrian).
+    - AVR "bricks" after avrcpu crash.
+    - PIC MCUs not recovering from MCLR.
+    - MCU logic symbol not working.
+    - Hd44780 Error on command = 0.
+    - Many subcircuit errors (by Sergey Roenko).
+    - Crash connecting/disconnecting to switch, 7Segment, Ledmatrix.
+    - AVR can miss port states in some cases.
+    - Crash setting Keypad rows or cols to 0.
+    - Some Pic Package errors.
+    - Redraw trazes in inverted Pins, SevenSegment and SwitchDip.
+    - AVR Aref Pin not working.
+    - Tunnel not working if name is assigned after connection.
+    - Frequencimeter not detecting low freqs.
     
   RC2:
-    - AVR fails to read some hex files (unordered address).
-    - Crash compiling some Arduino sketches (var type and name not in same line).
-    - Crash reading Arduino Mega ADC (0.5.15-RC1).
-    - AVR AtTinyX5: Timer1 not working in some cases.
-    - Arduino: Changing Mcu Freq does nothing (simulide 0.5.15-RC1).
-    - Mcu Serial Monitor multi mcu: Monitors duplicated on Power On if not saved.
-    - AVR Phase Correct PWM not working correctly.
-    - Fixed Volt. not updated if simulation not running.
-    - Backspace key should delete components (Jan K. S.).
-    - Fix MacOs build problems (Jan K. S.).
-        Buttons not showing properly.
-        Missing MacOs simulide icon.
-        Child windows stay on top.
-        Editor monospaced Font.
-        Fix simulation crashes/bugs.
-    - Fix center position after loading circuit (Jan K. S.).
-    - Serial Monitor: Limit output size to avoid exesive memory usage.
-    - Crash opening and using Serial Monitor while simulation is running (0.5.15-RC1).
-    - AVR load firmware fails with non english characters.
-    
-  RC3:
-    - Fixed Volt. not saving state.
-    - Ammeter and voltmeter redraw problems (zooming).
-    - Battery doesn't show Volt. label.
-    - Subcircuit: Tunnel boundingRect problem (0.5.15-RC1).
-    - AVR PWM not taking total control of OC pins.
-    - AVR eeprom: unwritten value at address 0 should be 0xFF;
-    - Crash opening Serial Monitor (Qt >= 5.12.2).
-    - Oscope does not save Time step correctly (0.5.15-RC2).
-    - Oscope several display issues (0.5.15-RC2).
-    - Crash connecting Subcircuits together (at 2nd run) (0.5.15-RC1).
-    - More than 1 tunnel per eNode not working (can Crash).
-    - Clock & WaveGen not working properly in Subcircuits (0.5.15-RC1).
-    - Crash on Elements deleted without cancel pending events (0.5.15-RC2).
-    - Dc Motor rotation error (0.5.15-RC2).
-    - Dc Motor speed indicator not working with PWM.
-    - Mosfet error, happens whith switches in the circuit.
-    - Current Source not working (0.5.15-RC2).
-    - I2C not working (0.5.15-RC2).
-    
-  RC4:
-    - Oscope: Wrong Trigger & Auto at circuit load (0.5.15-RC3).
-    - Oscope: wrong readings after change expand mode (0.5.15-RC2).
-    - Oscope: Time step goes crazy if "auto" with no wave (0.5.15-RC2).
-    - Oscope: Max & Min values wrong update in non-auto (0.5.15-RC2).
-    - Oscope: Cursor randomly wrong scale.
-    - Oscope: Slow down simulation on long time steps.
-    - Oscope: Not showing wave at start for time steps.
-    - Oscope: Time Position Box value not update after change channel.
-    - Oscope: Circuit powers off when deletimg value.
-    - Crash: Simulator::calcelEvents error (0.5.15-RC3).
-    - Events with same timeStamp should be done at once (0.5.15-RC3).
-    - Relay Normally Closed not behaving correctly.
-    - WaveGen: square wave wrong duty (0.5.15-RC2).
-    - Bjt: fails to converge in some cases.
-    - Variable Resistor: wrong value label if defaults changed (0.5.15-RC2).
-    - Crash setting very large Component values.
-    - Clock: Wrong wave shape after changing frequency (0.5.15-RC2).
-    - Led: Wrong time values while updating bright (0.5.15-RC2).
+    - Buffer: missing "Tristate" property.
+    - Several subcircuit fixed (sergey Roenko).
+    - Frequencimeter not updating after wave is lost.
+    - Component Properties dialog can't be closed in Windows version.
+    - Logic Components: rewrite slew rate simulation.
+    - AVR Timer1 not working in CTC OCRA mode (4).
+    - Error in Bjt.
+    - Oscope initialization issues.
+    - Oscope: ensure compatibility with old timeDiv.
+    - Clock and WaveGen not saving On/Off state properly.
+    - Problems in Windows build (by acebrian).
+    - Arduino not showing variables in RamTable.
+    - Package asking to be saved when it's unmodified.
+    - Fixed Volt. not saving state properly.
+    - Compatibility of some properties with older versions.
+    - DC Motor problems.
+    - AVR SPI not working.
+    - Circuit: Copy/Paste missing connectors.
+    - New MCus crash at creation.
+    - Simulator: error in event counter.
+    - Memtable: error representing negative values.
+    - Chip: show Id property overriden at initChip.
+    - Latch D: Size error when no OE and no Tristate.
     
     
 New Components:
+  RC1:
+    - aip31068 I2C LCD (by acebrian).
+    - Max72xx Led matrix (by acebrian).
+    - 74XX189.
+    - "Scripted" component (basic implementation).
+    - Subcircuits (by Sergey Roenko):
+        tpic6a595,
+        K176IE3, K176IE4, K176IE5, K176IE12,
+        74HC640, 74HC643, 74HC645,
+
   RC2:
-    - Ili9341 (basic implementation).
-    - Ky-023 Joystic (Jan K. S.).
-    - KY-040 Rotary Encoder (Jan K. S.).
-    - RTD PT100 (Benoit ZERR).
-    - Strain Gauge (Benoit ZERR).
+    - FlipFlop RS.
+    - Logic Analizer basic implementation.
+    - New Subcircuits (sergey Roenko): 
+      7489, 74200, 74219, 74301.
+      
