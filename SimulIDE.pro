@@ -19,7 +19,7 @@
 
 
 VERSION = "0.5.16"
-RELEASE = "-RC1"
+RELEASE = "-RC2"
 
 TEMPLATE = app
 
