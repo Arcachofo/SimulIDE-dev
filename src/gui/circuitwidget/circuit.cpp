@@ -355,6 +355,112 @@ void Circuit::loadDomDoc( QDomDocument* doc )
     QApplication::restoreOverrideCursor();
 }
 
+void Circuit::loadProperties( QDomElement element, Component* comp )
+{
+    if( element.hasChildNodes() )
+    {
+        QDomNode nod = element.childNodes().at(0);
+        QDomElement el = nod.toElement();
+        if( el.tagName() == "mainCompProps") // Load Subcircuit Main Component properties
+        {
+            if( comp->itemType() == "Subcircuit" )
+            {
+                SubCircuit* subc = (SubCircuit*)comp;
+                Component* mainComp = subc->getMainComp();
+                if( mainComp ) loadObjectProperties( el, mainComp );
+                element.removeChild( nod );
+            }
+        }
+    }
+    loadObjectProperties( element, comp );
+
+    comp->setLabelPos();
+    comp->setValLabelPos();
+    addItem( comp );
+
+    int number = comp->objectName().split("-").last().toInt();
+    if ( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
+}
+
+void Circuit::loadObjectProperties( QDomElement element, Component* comp )
+{
+    QDomNamedNodeMap atrs = element.attributes();
+
+    for( int i=0; i<atrs.length(); ++i )   // Get List of property names in Circuit file
+    {
+        QString propName = atrs.item(i).nodeName();
+        if( propName == "mainCompProps") // Load Subcircuit Main Component properties
+        {
+            if( comp->itemType() == "Subcircuit" )
+            {
+                SubCircuit* subc = (SubCircuit*)comp;
+                Component* mainComp = subc->getMainComp();
+                if( mainComp ) loadObjectProperties( atrs.item(i).toElement(), mainComp );
+                continue;
+            }
+        }
+        QVariant value( element.attribute( propName ) );
+
+        // SUBSTITUTIONS -------------------------------------------------------
+
+        if( propName == "Volts") propName = "Voltage";
+        else if( propName == "Propagation_Delay_ns")
+        {
+            propName = "Tpd_ps";
+            value.setValue( value.toInt()*1000 );
+        }
+        else if( propName == "Show_res"
+              || propName == "Show_Volt"
+              || propName == "Show_Ind"
+              || propName == "Show_Cap" ) propName = "Show_Val";
+        else if( propName == "Duty_Square") propName = "Duty";
+
+        QString lowN = propName;
+        lowN = lowN.toLower();
+
+        QVariant comProp = comp->property( propName.toStdString().c_str() );
+        if( !value.isValid()
+         || !comProp.isValid() )
+        {
+            qDebug() << "loadObjectProperties Wrong Property: "<< comp->itemID() << propName << propName.toStdString().c_str();
+            continue;
+        }
+        QVariant::Type type = comProp.type();
+
+        if     ( type == QVariant::Int    ) comp->setProperty( propName.toStdString().c_str(), value.toInt() );
+        else if( type == QVariant::Double ) comp->setProperty( propName.toStdString().c_str(), value.toDouble() );
+        else if( type == QVariant::Bool   ) comp->setProperty( propName.toStdString().c_str(), value.toBool() );
+        else if( type == QVariant::PointF )
+        {
+            QStringList coord = value.toString().split(",");
+            qreal x = coord.takeFirst().toDouble();
+            qreal y = coord.takeFirst().toDouble();
+            comp->setProperty( propName.toStdString().c_str(), QPointF( x, y ) );
+        }
+        else if( type == QVariant::StringList )
+        {
+            QStringList list= value.toString().split(",");
+            comp->setProperty( propName.toStdString().c_str(), list );
+        }
+        else if( (lowN=="mem") || (lowN=="eeprom") )
+        {
+            QString data = value.toString();
+            if( data.isEmpty() ) continue;
+            QStringList list = data.split(",");
+
+            QVector<int> vmem;
+            int lsize = list.size();
+            vmem.resize( lsize );
+
+            for( int x=0; x<lsize; x++ ) vmem[x] = list.at(x).toInt();
+
+            QVariant value = QVariant::fromValue( vmem );
+            comp->setProperty( propName.toStdString().c_str(), value );
+        }
+        else comp->setProperty( propName.toStdString().c_str(), value );
+    }
+}
+
 void Circuit::pasteDomDoc( QDomDocument* doc )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -537,39 +643,66 @@ void Circuit::circuitToDom()
 
 void Circuit::listToDom( QDomDocument* doc, QList<Component*>* complist )
 {
-    for( Component* item : *complist )
+    for( Component* comp : *complist )
     {
-        if( item->isHidden() ) continue;
+        if( comp->isHidden() ) continue;
 
         bool isNumber = false;  // Don't save internal items
-        item->objectName().split("-").last().toInt( &isNumber );
+        comp->objectName().split("-").last().toInt( &isNumber );
 
-        if( isNumber ) objectToDom( doc, item );
+        if( isNumber )
+        {
+            QDomElement root = doc->firstChild().toElement();
+            QDomElement elm = doc->createElement("item");
+
+            objectToDom( &elm, comp );
+            if( comp->itemType() == "Subcircuit" )
+            {
+                SubCircuit* subc = (SubCircuit*)comp;
+                Component* mainComp = subc->getMainComp();
+                if( mainComp )
+                {
+                    QDomElement mainElm = doc->createElement("mainCompProps");
+                    objectToDom( &mainElm, mainComp, true );
+                    elm.appendChild( mainElm );
+                }
+            }
+            QDomText objId = m_domDoc.createTextNode(  "\n\nUnique  Id: "+comp->objectName()
+                                                      +": \nCircuit Id: "+comp->idLabel()+"\n" );
+            root.appendChild( objId );
+            root.appendChild( elm );
+        }
     }
 }
 
-void Circuit::objectToDom( QDomDocument* doc, Component* object )
+void Circuit::objectToDom( QDomElement* elm, Component* comp, bool onlyMain )
 {
-    QDomElement root = doc->firstChild().toElement();
-    QDomElement elm = m_domDoc.createElement("item");
-    const QMetaObject* metaobject = object->metaObject();
+    const QMetaObject* metaobject = comp->metaObject();
 
     int count = metaobject->propertyCount();
     for( int i=0; i<count; i++ )
     {
         QMetaProperty metaproperty = metaobject->property(i);
         const char* name = metaproperty.name();
+        if( onlyMain ) // Main Component in Subcircuit: don't load basic properties.
+        {
+            if( !metaproperty.isUser() )        continue;
+            if( !metaproperty.isDesignable() )  continue;
+            if( strcmp(name, "itemtype") == 0 ) continue;
+            if( strcmp(name, "Show_id") == 0 )  continue;
+            if( strcmp(name, "id") == 0 )       continue;
+        }
 
-        QVariant value = object->property( name );
+        QVariant value = comp->property( name );
         if( metaproperty.type() == QVariant::StringList )
         {
             QStringList list= value.toStringList();
-            elm.setAttribute( name, list.join(",") );
+            elm->setAttribute( name, list.join(",") );
         }
         else if( metaproperty.type() == QVariant::PointF )
         {
             QPointF point = value.toPointF();
-            elm.setAttribute( name, QString::number(point.x())+","+QString::number(point.y())  );
+            elm->setAttribute( name, QString::number(point.x())+","+QString::number(point.y())  );
         }
         else if( (QString(name)=="Mem") || (QString(name)=="eeprom") )
         {
@@ -578,15 +711,10 @@ void Circuit::objectToDom( QDomDocument* doc, Component* object )
             QStringList list;
             for( int val : vmem ) list << QString::number( val );
 
-            elm.setAttribute( name, list.join(",") );
+            elm->setAttribute( name, list.join(",") );
         }
-        else elm.setAttribute( name, value.toString() );
-
+        else elm->setAttribute( name, value.toString() );
     }
-    QDomText objId = m_domDoc.createTextNode(  "\n\nUnique  Id: "+object->objectName()
-                                              +": \nCircuit Id: "+object->idLabel()+"\n" );
-    root.appendChild( objId );
-    root.appendChild( elm );
 }
 
 bool Circuit::saveDom( QString &fileName, QDomDocument* doc )
@@ -673,90 +801,6 @@ Component* Circuit::createItem( QString type, QString id, QString objNam )
         return comp;
     }
     return 0l;
-}
-
-void Circuit::loadProperties( QDomElement element, Component* comp )
-{
-    loadObjectProperties( element, comp );
-    
-    comp->setLabelPos();
-    comp->setValLabelPos();
-    addItem( comp );
-
-    int number = comp->objectName().split("-").last().toInt();
-    if ( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
-}
-
-void Circuit::loadObjectProperties( QDomElement element, Component* comp )
-{
-    QDomNamedNodeMap atrs = element.attributes();
-
-    for( int i=0; i<atrs.length(); ++i )   // Get List of property names in Circuit file
-    {
-        QString propName = atrs.item( i ).nodeName();
-
-        QVariant value( element.attribute( propName ) );
-
-        // SUBSTITUTIONS -------------------------------------------------------
-
-        if( propName == "Volts") propName = "Voltage";
-        else if( propName == "Propagation_Delay_ns")
-        {
-            propName = "Tpd_ps";
-            value.setValue( value.toInt()*1000 );
-        }
-        else if( propName == "Show_res"
-              || propName == "Show_Volt"
-              || propName == "Show_Ind"
-              || propName == "Show_Cap" ) propName = "Show_Val";
-        else if( propName == "Duty_Square") propName = "Duty";
-
-        QString lowN = propName;
-        lowN = lowN.toLower();
-
-        QVariant comProp = comp->property( propName.toStdString().c_str() );
-        if( !value.isValid()
-         || !comProp.isValid() )
-        {
-            qDebug() << "loadObjectProperties Wrong Property: "<< comp->itemID() << propName << propName.toStdString().c_str();
-            continue;
-        }
-        QVariant::Type type = comProp.type();
-
-        if     ( type == QVariant::Int    ) comp->setProperty( propName.toStdString().c_str(), value.toInt() );
-        else if( type == QVariant::Double ) comp->setProperty( propName.toStdString().c_str(), value.toDouble() );
-        else if( type == QVariant::Bool   ) comp->setProperty( propName.toStdString().c_str(), value.toBool() );
-        else if( type == QVariant::PointF )
-        {
-            QStringList coord = value.toString().split(",");
-            qreal x = coord.takeFirst().toDouble();
-            qreal y = coord.takeFirst().toDouble();
-            //qDebug() << "Circuit::loadObjectProperties" <<element.attribute( n )<< n << QPointF( x, y )<<coord;
-            comp->setProperty( propName.toStdString().c_str(), QPointF( x, y ) );
-        }
-        else if( type == QVariant::StringList )
-        {
-            QStringList list= value.toString().split(",");
-            comp->setProperty( propName.toStdString().c_str(), list );
-        }
-        else if( (lowN=="mem") || (lowN=="eeprom") )
-        {
-            QString data = value.toString();
-            if( data.isEmpty() ) continue;
-            QStringList list = data.split(",");
-            
-            QVector<int> vmem;
-            int lsize = list.size();
-            vmem.resize( lsize );
-            
-            for( int x=0; x<lsize; x++ ) vmem[x] = list.at(x).toInt();
-
-            QVariant value = QVariant::fromValue( vmem );
-            comp->setProperty( propName.toStdString().c_str(), value );
-        }
-        else comp->setProperty( propName.toStdString().c_str(), value );
-        //else qDebug() << "    ERROR!!! Circuit::loadObjectProperties\n  unknown type:  "<<"name "<<name<<"   value "<<value ;
-    }
 }
 
 void Circuit::removeItems()                     // Remove Selected items

@@ -126,10 +126,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void loadDomDoc( QDomDocument* doc );
         void pasteDomDoc( QDomDocument* doc );
         void loadProperties( QDomElement element, Component* comp );
-        void loadObjectProperties(QDomElement element, Component* comp );
+        void loadObjectProperties( QDomElement element, Component* comp );
         void circuitToDom();
         void listToDom( QDomDocument* doc, QList<Component*>* complist );
-        void objectToDom( QDomDocument* doc, Component* object );
+        void objectToDom( QDomElement* elm, Component* comp, bool onlyMain=false );
         bool saveDom( QString &fileName, QDomDocument* doc );
 
         void updatePinName( QString* name );
