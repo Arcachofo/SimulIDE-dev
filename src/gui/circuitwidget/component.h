@@ -119,13 +119,13 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
         void setLabelPos();
         
         int valLabelx();
-        void setValLabelX( int x );
+        virtual void setValLabelX( int x );
 
         int valLabely();
-        void setValLabelY( int y );
+        virtual void setValLabelY( int y );
 
         int valLabRot();
-        void setValLabRot( int rot );
+        virtual void setValLabRot( int rot );
         
         int hflip();
         void setHflip( int hf );

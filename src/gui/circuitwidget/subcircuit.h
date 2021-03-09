@@ -43,6 +43,10 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
 
         virtual void setLogicSymbol( bool ls );
 
+ virtual void setValLabelX( int x ) override { ;/* Do Nothing*/ }
+ virtual void setValLabelY( int y ) override {  ;/* Do Nothing*/ }
+ virtual void setValLabRot( int rot ) override { ;/* Do Nothing*/ }
+
         Component* getMainComp(){ return m_mainComponent; }
 
     public slots:
