@@ -26,7 +26,6 @@
 #include "amperimeter.h"
 #include "adc.h"
 #include "aip31068_i2c.h"
-#include "arduino.h"
 #include "audio_out.h"
 #include "avrcomponent.h"
 #include "battery.h"
@@ -204,8 +203,7 @@ void ItemLibrary::loadItems()
     // Micro
     addItem( PICComponent::libraryItem() );
     addItem( AVRComponent::libraryItem() );
-    addItem( Arduino::libraryItem() );
-    //addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "arduino.png","", 0l ) );
+    addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "arduino.png","", 0l ) );
     addItem( new LibraryItem( tr("Sensors"),tr("Micro"), "1to2.png","", 0l ) );
     addItem( SR04::libraryItem() );
     addItem( new LibraryItem( tr("Perifericals"),tr("Micro"), "perif.png","", 0l ) );

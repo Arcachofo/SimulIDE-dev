@@ -314,25 +314,24 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                  && ( element.attribute( "visible" ) == "false" ) ) ;// Old Serial Port Widget
             else
             {
-                /*bool oldArduino = false;
+                bool oldArduino = false;
                 if( type == "Arduino" )
                 {
                     oldArduino = true;
                     type = "Subcircuit";
                     id = id.remove( "Arduino " );
                     objNam = objNam.remove( "Arduino " );
-                }*/
+                }
                 Component* item = createItem( type, objNam, objNam );
 
                 if( item )
                 {
                     loadProperties( element, item );
 
-                    /*if( oldArduino ) // Load mcu properties & change subcircuit names
+                    if( oldArduino ) // Load mcu properties & change subcircuit names
                     {
                         SubCircuit* subci = static_cast<SubCircuit*>(item);
                         McuComponent* mcu = static_cast<McuComponent*>( subci->getMainComp() );
-                        //loadObjectProperties( element, mcu );
                         mcu->setSubcDir("");
                         mcu->setProgram( element.attribute("Program") );
                         mcu->setFreq( element.attribute("Mhz").toDouble() );
@@ -340,7 +339,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
 
                         subci->setObjectName( subci->objectName().remove( "Arduino " ) );
                         subci->setId( subci->itemID().remove( "Arduino " ) );
-                    }*/
+                    }
                     compList.append( item );
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << objNam;
