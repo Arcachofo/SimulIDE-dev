@@ -462,8 +462,8 @@ P12F683::P12F683(const char *_name )
       osctune(this, "osctune" )
 {
     internal_osc = false;
-    pir1->valid_bits |= PIR1v12f::TMR2IF;
-    pir1->writable_bits |= PIR1v12f::TMR2IF;
+    pir1->valid_bits |= PIR1v12f::TMR2IF | 1<<5 /*CCP1IF*/;
+    pir1->writable_bits |= PIR1v12f::TMR2IF | 1<<5 /*CCP1IF*/;
 }
 
 P12F683::~P12F683()
@@ -520,7 +520,7 @@ void P12F683::create_sfr_map()
     tmr2.add_ccp ( &ccp1con );
     pr2.tmr2    = &tmr2;
 
-    ccp1con.setCrosslinks(&ccpr1l, pir1, PIR1v1::CCP1IF, &tmr2);
+    ccp1con.setCrosslinks(&ccpr1l, pir1, 1<<5 /*CCP1IF*/, &tmr2);
     ccp1con.setIOpin(&((*m_gpio)[2]));
     ccpr1l.ccprh  = &ccpr1h;
     ccpr1l.tmrl   = &tmr1l;
