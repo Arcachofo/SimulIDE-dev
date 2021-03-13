@@ -28,16 +28,12 @@
 #include "pin.h"
 #include "simuapi_apppath.h"
 
-static const char* Chip_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Logic Symbol")
-};
 
 Chip::Chip( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
     , eElement( id )
 {
-    Q_UNUSED( Chip_properties );
-
+    m_subcType = subcNone;
     m_numpins = 0;
     m_isLS = false;
     m_initialized = false;
@@ -107,6 +103,11 @@ void Chip::initChip()
         m_pin.resize( m_numpins );
 
         if( root.hasAttribute("background")) setBackground( root.attribute( "background") );
+        if( root.hasAttribute("type"))
+        {
+            QMetaEnum metaEnum = QMetaEnum::fromType<Chip::subcType_t>();
+            m_subcType = (subcType_t)metaEnum.keyToValue( root.attribute( "type").toUtf8().data() );
+        }
 
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );

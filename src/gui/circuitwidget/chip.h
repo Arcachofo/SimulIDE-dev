@@ -33,10 +33,23 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
     public:
         Chip( QObject* parent, QString type, QString id );
         ~Chip();
+
+        enum subcType_t{
+            subcNone=0,
+            subcLogic,
+            subcBoard,
+            subcShield,
+        };
+        Q_ENUM(subcType_t)
         
         bool logicSymbol();
         virtual void setLogicSymbol( bool ls );
         virtual void setBackground( QString bck );
+
+        subcType_t subcType() { return m_subcType; }
+        void setSubcType( subcType_t type ) { m_subcType = type; }
+
+        int pkgWidth() { return m_width; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -59,6 +72,8 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         
         bool m_isLS;
         bool m_initialized;
+
+        subcType_t m_subcType;
 
         QColor m_lsColor;
         QColor m_icColor;

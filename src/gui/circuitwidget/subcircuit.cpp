@@ -22,6 +22,8 @@
 #include "subcircuit.h"
 #include "itemlibrary.h"
 #include "componentselector.h"
+#include "circuitwidget.h"
+#include "simulator.h"
 #include "circuit.h"
 #include "tunnel.h"
 #include "node.h"
@@ -58,6 +60,8 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
     QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
 
     m_icColor = QColor( 20, 30, 60 );
+    m_attached = false;
+    m_board = NULL;
 
     QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
     f.setFamily("Monospace");
@@ -285,6 +289,7 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
                         Tunnel* tunnel = static_cast<Tunnel*>( comp );
                         tunnel->setUid( tunnel->name() );
                         tunnel->setName( m_id+"-"+tunnel->name() );
+                        m_subcTunnels.append( tunnel );
                     }
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << id;
@@ -296,7 +301,7 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
 
 void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
 {
-    if( m_initialized && m_tunnelList.contains( m_id+"-"+id ) )
+    if( m_initialized && m_pinTunnels.contains( m_id+"-"+id ) )
     {
         updatePin( id, type, label, pos, xpos, ypos, angle, length );
     }
@@ -310,13 +315,14 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
         Circuit::self()->compList()->removeOne( tunnel );
         m_compList.append( tunnel );
 
+        QString pId = m_id+"-"+id;
         tunnel->setParentItem( this );
         tunnel->setAcceptedMouseButtons( Qt::NoButton );
         tunnel->setShowId( false );
-        tunnel->setName( m_id+"-"+id ); // Make tunel name unique for this component
+        tunnel->setName( pId ); // Make tunel name unique for this component
         tunnel->setPos( xpos, ypos );
         tunnel->setPacked( true );
-        m_tunnelList.insert( m_id+"-"+id, tunnel );
+        m_pinTunnels.insert( pId, tunnel );
 
         Pin* pin = tunnel->getPin();
         pin->setObjectName( m_id+"-"+id );
@@ -347,7 +353,7 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
 void SubCircuit::updatePin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
 {
     Pin* pin = NULL;
-    Tunnel* tunnel = m_tunnelList.value( m_id+"-"+id );
+    Tunnel* tunnel = m_pinTunnels.value( m_id+"-"+id );
     tunnel->setPos( xpos, ypos );
     tunnel->setRotated( false );
     tunnel->setRotation( angle );
@@ -401,9 +407,9 @@ void SubCircuit::setLogicSymbol( bool ls )
 
     if( m_isLS )
     {
-        for( QString tNam : m_tunnelList.keys() )
+        for( QString tNam : m_pinTunnels.keys() )
         {
-            Tunnel* tunnel = m_tunnelList.value( tNam );
+            Tunnel* tunnel = m_pinTunnels.value( tNam );
             Pin* pin = tunnel->getPin();
             if( pin->unused() )
             {
@@ -438,6 +444,53 @@ void SubCircuit::slotProperties()
     }*/
 }
 
+void SubCircuit::slotAttach()
+{
+    QList<QGraphicsItem*> list = this->collidingItems();
+    for( QGraphicsItem* it : list )
+    {
+        if( it->type() == 65536+1 )    // Component found
+        {
+            Component* comp =  qgraphicsitem_cast<Component*>( it );
+            if( comp->itemType() == "Subcircuit" )
+            {
+                if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+                Circuit::self()->saveState();
+
+                m_board =  (SubCircuit*)comp;
+                if( !(m_board->subcType() == subcBoard) ) continue;
+
+                m_circPos = this->pos();
+
+                int origX = 8*(m_board->pkgWidth()-m_width)/2;
+                this->setParentItem( m_board );
+                this->moveTo( QPointF(origX, 0) );
+
+                for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_board->itemID()+"-"+tunnel->uid() );
+                m_attached = true;
+
+                //qDebug() << " SubCircuit::slotAttach: Component found" << comp->objectName();
+                break;
+            }
+        }
+    }
+}
+
+void SubCircuit::slotDetach()
+{
+    if( m_board )
+    {
+        if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+        Circuit::self()->saveState();
+
+        this->moveTo( m_circPos );
+        this->setParentItem( NULL );
+        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->uid() );
+        m_board = NULL;
+    }
+    m_attached = false;
+}
+
 void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();
@@ -451,7 +504,26 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
             m_mainComponent->contextMenu( event, menu );
             menu->addSection( "Subcircuit" );
         }
-        Component::contextMenu( event, menu );
+        if( m_subcType == subcShield )
+        {
+            if( m_attached )
+            {
+                QAction* detachAction = menu->addAction(QIcon(":/detach.png"),tr("Detach") );
+                connect( detachAction, SIGNAL( triggered()), this, SLOT(slotDetach()) );
+            }
+            else
+            {
+                QAction* attachAction = menu->addAction(QIcon(":/attach.png"),tr("Attach") );
+                connect( attachAction, SIGNAL( triggered()), this, SLOT(slotAttach()) );
+            }
+        }
+        /*if( this->parentItem() )  // Shield is rotated instead of board
+        {                           // But we want to access Shield properties
+            Component* parentComp = static_cast<Component*>( this->parentItem() );
+            parentComp->contextMenu( event, menu );
+        }
+        else */
+            Component::contextMenu( event, menu );
         menu->deleteLater();
     }
 }

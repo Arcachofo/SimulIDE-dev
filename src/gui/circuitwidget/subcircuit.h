@@ -51,6 +51,8 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
 
     public slots:
         virtual void slotProperties();
+        void slotAttach();
+        void slotDetach();
 
     protected:
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
@@ -64,11 +66,14 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         virtual void updatePin( QString id, QString type, QString label,
                                 int pos, int xpos, int ypos, int angle, int length=8  );
 
+        bool m_attached;
+
         Component* m_mainComponent;
+        SubCircuit* m_board;
 
         QList<Component*> m_compList;
-        QHash<QString, Tunnel*> m_tunnelList;
-        //QList<Tunnel*> m_tunnelList;
+        QHash<QString, Tunnel*> m_pinTunnels;
+        QList<Tunnel*> m_subcTunnels;
 };
 #endif
 

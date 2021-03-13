@@ -31,6 +31,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip
     Q_PROPERTY( int      Width         READ width      WRITE setWidth    DESIGNABLE true USER true )
     Q_PROPERTY( int      Height        READ height     WRITE setHeight   DESIGNABLE true USER true )
     Q_PROPERTY( QString  Background    READ backGround WRITE setBackground DESIGNABLE true USER true )
+    Q_PROPERTY( subcType_t SubcType    READ subcType   WRITE setSubcType   DESIGNABLE true USER true )
     
     public:
 
