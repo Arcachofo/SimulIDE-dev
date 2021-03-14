@@ -240,8 +240,11 @@ CONFIG += warn_on
 CONFIG += no_qml_debug
 CONFIG *= c++11
 
+BUILD_DATE = $$system(date +\"\\\"%d-%m-%y\\\"\")
+
 DEFINES += MAINMODULE_EXPORT=
 DEFINES += APP_VERSION=\\\"$$VERSION$$RELEASE\\\"
+DEFINES += BUILDDATE=\\\"$$BUILD_DATE\\\"
 
 TARGET_NAME   = SimulIDE_$$VERSION$$RELEASE$$
 TARGET_PREFIX = $$BUILD_DIR/executables/$$TARGET_NAME

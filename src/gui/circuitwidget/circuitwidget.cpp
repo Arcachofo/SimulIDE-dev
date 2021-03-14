@@ -430,8 +430,8 @@ void CircuitWidget::openInfo()
 
 void CircuitWidget::about()
 {
-    QString date = QDate::currentDate().toString( "dd-MM-yyyy" );
-    date.append( " (dd-MM-yyyy)" );
+    QString date = QString( BUILDDATE );
+    date.append( " (dd-MM-yy)" );
 
     QString r = "&nbsp;";
     QString s = "&nbsp;&nbsp;&nbsp;";
