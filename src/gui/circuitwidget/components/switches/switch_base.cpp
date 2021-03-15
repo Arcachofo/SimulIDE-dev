@@ -68,9 +68,9 @@ void SwitchBase::updateStep()
     }
 }
 
-void SwitchBase::setHidden( bool hide )
+void SwitchBase::setHidden( bool hide, bool hidLabel )
 {
-    Component::setHidden( hide );
+    Component::setHidden( hide, hidLabel );
 
     if( hide ) m_area = QRectF( -8,-2, 16, 4 );
     else       m_area = QRectF( -13,-16*m_numPoles, 26, 16*m_numPoles );
