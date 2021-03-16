@@ -336,6 +336,7 @@ void pic_processor::createMCLRPin(int pkgPinNumber)
 {
     if( m_MCLR) cout << "BUG?: assigning multiple MCLR pins: " << __FILE__ << dec << " " << __LINE__ << endl;
 
+    new IOPIN( "MCLR", OPEN_COLLECTOR ) ;
     assign_pin( pkgPinNumber, m_MCLR );
 
     m_MCLRMonitor = new MCLRPinMonitor(this);
