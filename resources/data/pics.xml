@@ -121,14 +121,14 @@
     <item name="pic18c452"  package="pic/pic16f877"  data="pic/pic18c452"  device="pic18c452"  ></item>
     </itemset>
     <itemset category="PIC/18F" type="PIC">
-    <item name="pic18f242"  package="pic/pic18f2550" data="pic/pic18f242"  device="pic18f242"  ></item>
-    <item name="pic18f248"  package="pic/pic18f2550" data="pic/pic18f248"  device="pic18f248"  ></item>
-    <item name="pic18f252"  package="pic/pic18f2550" data="pic/pic18f242"  device="pic18f252"  ></item>
-    <item name="pic18f258"  package="pic/pic18f2550" data="pic/pic18f258"  device="pic18f258"  ></item>
-    <item name="pic18f442"  package="pic/pic18f4550" data="pic/pic18f442"  device="pic18f442"  ></item>
-    <item name="pic18f448"  package="pic/pic18f4550" data="pic/pic18f448"  device="pic18f448"  ></item>
-    <item name="pic18f452"  package="pic/pic18f4550" data="pic/pic18f442"  device="pic18f452"  ></item>
-    <item name="pic18f458"  package="pic/pic18f4550" data="pic/pic18f458"  device="pic18f458"  ></item>
+    <item name="pic18f242"  package="pic/pic18f242"  data="pic/pic18f242"  device="pic18f242"  ></item>
+    <item name="pic18f248"  package="pic/pic18f242"  data="pic/pic18f248"  device="pic18f248"  ></item>
+    <item name="pic18f252"  package="pic/pic18f242"  data="pic/pic18f242"  device="pic18f252"  ></item>
+    <item name="pic18f258"  package="pic/pic18f242"  data="pic/pic18f258"  device="pic18f258"  ></item>
+    <item name="pic18f442"  package="pic/pic18f442"  data="pic/pic18f442"  device="pic18f442"  ></item>
+    <item name="pic18f448"  package="pic/pic18f442"  data="pic/pic18f448"  device="pic18f448"  ></item>
+    <item name="pic18f452"  package="pic/pic18f442"  data="pic/pic18f442"  device="pic18f452"  ></item>
+    <item name="pic18f458"  package="pic/pic18f442"  data="pic/pic18f458"  device="pic18f458"  ></item>
     <item name="pic18f2221" package="pic/pic16f886"  data="pic/pic18f2221" device="pic18f2221" ></item>
     <item name="pic18f2321" package="pic/pic16f886"  data="pic/pic18f2221" device="pic18f2321" ></item>
     <item name="pic18f2420" package="pic/pic16f886"  data="pic/pic18f2420" device="pic18f2420" ></item>
