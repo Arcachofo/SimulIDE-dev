@@ -36,31 +36,27 @@ class PicProcessor : public BaseProcessor
         PicProcessor( McuComponent* parent );
         ~PicProcessor();
 
-        bool loadFirmware( QString file );
-        void terminate();
+        virtual void setDevice( QString device ) override;
+        virtual bool loadFirmware( QString file ) override;
+        virtual void reset() override;
+        virtual void stepCpu() override { m_pPicProcessor->stepCpuClock(); }
 
-        virtual void reset();
+        virtual int pc() override;
+        virtual uint64_t cycle() override { return m_pPicProcessor->currentCycle(); }
+        virtual void setFreq( double freq ) override;
 
-        void stepCpu(){ m_pPicProcessor->stepCpuClock(); }
+        virtual int  getRamValue( int address ) override;
+        virtual void setRamValue( int address, uint8_t value ) override;
+        virtual int  getFlashValue( int address ) override;
+        virtual void setFlashValue( int address, uint8_t value ) override;
+        virtual int  getRomValue( int address ) override;
+        virtual void setRomValue( int address, uint8_t value ) override;
 
-        virtual int pc();
-        virtual uint64_t cycle(){ return m_pPicProcessor->currentCycle(); }
-        virtual void setFreq( double freq );
+        virtual void uartIn( int uart, uint32_t value ) override;
 
-        int getRamValue( int address );
-
-        void uartIn( int uart, uint32_t value );
-
-        virtual QVector<int> eeprom();
-        virtual void setEeprom( QVector<int> eep );
-
-        virtual void setDevice( QString device );
-        
         pic_processor* getCpu() { return m_pPicProcessor; }
 
     private:
-        virtual int validate( int address );
-
         pic_processor* m_pPicProcessor;
         
         HexLoader m_hexLoader;

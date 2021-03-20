@@ -34,9 +34,9 @@
 #include "serialport.h"
 #include "serialterm.h"
 #include "simuapi_apppath.h"
-#include "memtable.h"
+#include "memdata.h"
+#include "mcumonitor.h"
 #include "utils.h"
-
 
 static const char* McuComponent_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Program"),
@@ -49,7 +49,6 @@ McuComponent* McuComponent::m_pSelf = 0l;
 
 McuComponent::McuComponent( QObject* parent, QString type, QString id )
             : Chip( parent, type, id )
-            , MemData()
 {
     Q_UNUSED( McuComponent_properties );
 
@@ -58,7 +57,9 @@ McuComponent::McuComponent( QObject* parent, QString type, QString id )
     m_attached  = false;
     m_autoLoad  = false;
     m_crashed   = false;
-    
+
+    m_mcuMonitor = NULL;
+
     m_processor  = 0l;
     m_symbolFile = "";
     m_device     = "";
@@ -66,7 +67,7 @@ McuComponent::McuComponent( QObject* parent, QString type, QString id )
     m_error      = 0;
     m_warning    = 0;
     m_cpi = 1;
-    
+
     // Id Label Pos set in Chip::initChip
     m_color = QColor( 50, 50, 70 );
 
@@ -82,7 +83,7 @@ McuComponent::McuComponent( QObject* parent, QString type, QString id )
 }
 McuComponent::~McuComponent()
 {
-    delete m_ramTabWidget;
+    if( m_mcuMonitor ) delete m_mcuMonitor;
 }
 
 QList<propGroup_t> McuComponent::propGroups()
@@ -101,7 +102,6 @@ void McuComponent::attach()
     {
         m_processor->setFreq( m_freq/m_cpi );
 
-        //qDebug() << "McuComponent::runAutoLoad Autoreloading";
         if( m_autoLoad ) load( m_symbolFile );
         emit openSerials();
     }
@@ -119,12 +119,8 @@ void McuComponent::updateStep()
         Simulator::self()->setWarning( m_warning );
         update();
     }
-    if( m_memTable )
-    {
-        m_memTable->updateTable( m_processor->eeprom() );
-
-    }
-    m_processor->getRamTable()->updateValues();
+    if( m_mcuMonitor
+     && m_mcuMonitor->isVisible() ) m_mcuMonitor->updateStep();
 }
 
 void McuComponent::initChip()
@@ -132,7 +128,7 @@ void McuComponent::initChip()
     QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
 
     QString xmlFile = ComponentSelector::self()->getXmlFile( compName );
-    
+
     QDomDocument domDoc = fileToDomDoc( xmlFile, "McuComponent::initChip" );
     if( domDoc.isNull() ) { m_error = 1; return; }
 
@@ -145,7 +141,7 @@ void McuComponent::initChip()
         QDomElement element = rNode.toElement();
         QDomNode    node    = element.firstChild();
 
-        while( !node.isNull() ) 
+        while( !node.isNull() )
         {
             QDomElement element = node.toElement();
             if( element.attribute("name")==compName )
@@ -154,11 +150,11 @@ void McuComponent::initChip()
                 QDir dataDir( xmlFile );
                 dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
                 m_pkgeFile = dataDir.filePath( element.attribute( "package" ) )+".package";
-                
+
                 // Get device
                 m_device = element.attribute( "device" );
                 m_processor->setDevice( m_device );
-                
+
                 // Get data file
                 QString dataFile = dataDir.filePath( element.attribute( "data" ) )+".data";
 
@@ -170,7 +166,7 @@ void McuComponent::initChip()
         rNode = rNode.nextSibling();
     }
     if( m_device != "" ) Chip::initChip();
-    else 
+    else
     {
         m_error = 1;
         qDebug() << compName << "ERROR!! McuComponent::initChip Chip not Found: " << package;
@@ -228,11 +224,11 @@ void McuComponent::updatePin( QString id, QString type, QString label, int pos, 
 }
 
 void McuComponent::setFreq( double freq )
-{ 
+{
     if     ( freq < 0  )  freq = 0;
     else if( freq > 100 ) freq = 100;
 
-    m_freq = freq; 
+    m_freq = freq;
 }
 
 void McuComponent::reset()
@@ -257,7 +253,7 @@ void McuComponent::remove()
     Simulator::self()->remFromUpdateList( this );
     for( McuComponentPin* mcupin : m_pinList )
     {
-        Pin* pin = mcupin->pin(); 
+        Pin* pin = mcupin->pin();
         if( pin->connector() ) pin->connector()->remove();
     }
     terminate();
@@ -281,6 +277,8 @@ void McuComponent::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void McuComponent::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
+    event->accept();
+
     QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
     connect( mainAction, SIGNAL(triggered()),
                    this, SLOT(slotmain()), Qt::UniqueConnection );
@@ -302,15 +300,11 @@ void McuComponent::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* me
     connect( saveDaAction, SIGNAL(triggered()),
                      this, SLOT(saveData()), Qt::UniqueConnection );
 
-    QAction* showEepAction = menu->addAction(QIcon(":/save.png"), tr("Show EEPROM Table") );
-    connect( showEepAction, SIGNAL(triggered()),
-                      this, SLOT(showTable()), Qt::UniqueConnection );
-
     menu->addSeparator();
-    QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open RamTable.") );
+    QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open Mcu Monitor.") );
     connect( openRamTab, SIGNAL(triggered()),
-                   this, SLOT(slotOpenRamTable()), Qt::UniqueConnection );
-    
+                   this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
+
     QAction* openTerminal = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
     connect( openTerminal, SIGNAL(triggered()),
                      this, SLOT(slotOpenTerm()), Qt::UniqueConnection );
@@ -328,13 +322,14 @@ void McuComponent::slotmain()
     m_processor->setMain();
     Circuit::self()->update();
 }
-void McuComponent::slotOpenRamTable()
+void McuComponent::slotOpenMcuMonitor()
 {
-    m_ramTabWidget->move( CircuitWidget::self()->mapToGlobal( QPoint(-100, 85) ) );
-    m_ramTabWidget->setWindowTitle( idLabel() );
-    RamTable* rt = m_processor->getRamTable();
-    rt->show();
-    m_ramTabWidget->show();
+    if( !m_mcuMonitor )
+    {
+        m_mcuMonitor = new MCUMonitor( CircuitWidget::self(), m_processor );
+        m_mcuMonitor->setWindowTitle( idLabel() );
+    }
+    m_mcuMonitor->show();
 }
 
 void McuComponent::slotOpenSerial()
@@ -362,9 +357,9 @@ void McuComponent::slotLoad()
     const QString dir = m_lastFirmDir;
     QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Firmware"), dir,
                        tr("All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)"));
-                       
+
     if( fileName.isEmpty() ) return; // User cancels loading
-    
+
     load( fileName );
 }
 
@@ -390,7 +385,7 @@ void McuComponent::load( QString fileName )
         if( !m_attached ) attachPins();
 
         if( !m_varList.isEmpty() ) m_processor->getRamTable()->loadVarSet( m_varList );
-        
+
         m_symbolFile = circuitDir.relativeFilePath( fileName );
         m_lastFirmDir = cleanPathAbs;
 
@@ -402,35 +397,10 @@ void McuComponent::load( QString fileName )
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 
-void McuComponent::showTable()
-{
-    MemData::showTable( 1 );
-    m_memTable->setWindowTitle( m_idLabel->toPlainText()+" EEPROM");
-}
-
 void McuComponent::setSubcDir( QString dir ) // Used in subcircuits
 {
     m_subcDir = dir;
     setProgram( m_symbolFile );
-}
-
-void McuComponent::createRamTable()
-{
-    m_ramTabWidget = new QWidget( CircuitWidget::self() );
-    m_ramTabWidget->setObjectName( "ramTabWidget" );
-    m_ramTabWidgetLayout = new QVBoxLayout( m_ramTabWidget );
-    m_ramTabWidgetLayout->setSpacing(0);
-    m_ramTabWidgetLayout->setContentsMargins(0, 0, 0, 0);
-    m_ramTabWidgetLayout->setObjectName( "ramTabWidgetLayout" );
-    m_ramTabWidget->setWindowFlags( Qt::Window | Qt::WindowTitleHint | Qt::Tool
-                         | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint );
-    m_ramTabWidget->hide();
-
-    RamTable* rt = m_processor->getRamTable();
-
-    m_ramTabWidgetLayout->addWidget( &rt->m_pc );
-    m_ramTabWidgetLayout->addWidget( &rt->m_status );
-    m_ramTabWidgetLayout->addWidget( rt );
 }
 
 QStringList McuComponent::varList()
@@ -451,39 +421,31 @@ void McuComponent::setProgram( QString pro )
     else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
     QString fileNameAbs = circuitDir.absoluteFilePath( m_symbolFile );
 
-    if( QFileInfo::exists( fileNameAbs ) ) // Load firmware at circuit load
-    // && !m_processor->getLoadStatus() )
-    {
-        load( m_symbolFile );
-    }
+    if( QFileInfo::exists( fileNameAbs ) ) load( m_symbolFile );// Load firmware at circuit load
 }
 
 void McuComponent::setEeprom( QVector<int> eep )
 {
-    m_processor->setEeprom( eep );
+    m_processor->setEeprom( &eep );
 }
 
 QVector<int> McuComponent::eeprom()
 {
-    QVector<int> eep = m_processor->eeprom();
-    return eep;
+    return *(m_processor->eeprom());
 }
 
 void McuComponent::loadData()
 {
-    QVector<int> data = m_processor->eeprom();
-
     bool resize = false;
     if( !m_processor->getLoadStatus() ) resize = true; // No eeprom initialized yet
 
-    MemData::loadData( &data, resize );
-    m_processor->setEeprom( data );
+    MemData::loadData( m_processor->eeprom(), resize );
+    //m_processor->setEeprom( data );
 }
 
 void McuComponent::saveData()
 {
-    QVector<int> data = m_processor->eeprom();
-    MemData::saveData( data );
+    MemData::saveData( m_processor->eeprom() );
 }
 
 void McuComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

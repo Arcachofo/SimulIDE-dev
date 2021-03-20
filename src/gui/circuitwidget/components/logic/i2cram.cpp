@@ -117,7 +117,7 @@ void I2CRam::initialize()
 
 void I2CRam::updateStep()
 {
-    if( m_memTable ) m_memTable->updateTable( m_ram );
+    if( m_memTable ) m_memTable->updateTable( &m_ram );
 }
 
 void I2CRam::voltChanged()             // Some Pin Changed State, Manage it
@@ -273,7 +273,7 @@ void I2CRam::loadData()
 
 void I2CRam::saveData()
 {
-    MemData::saveData( m_ram );
+    MemData::saveData( &m_ram );
 }
 
 void I2CRam::showTable()
@@ -281,7 +281,7 @@ void I2CRam::showTable()
     MemData::showTable( m_size, 1 );
     if( m_persistent ) m_memTable->setWindowTitle( "I2C ROM: "+m_idLabel->toPlainText());
     else               m_memTable->setWindowTitle( "I2C RAM: "+m_idLabel->toPlainText() );
-    m_memTable->setData( m_ram );
+    m_memTable->setData( &m_ram );
 }
 
 #include "moc_i2cram.cpp"

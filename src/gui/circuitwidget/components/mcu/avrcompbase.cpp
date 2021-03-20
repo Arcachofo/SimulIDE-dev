@@ -26,7 +26,6 @@ AvrCompBase::AvrCompBase( QObject* parent, QString type, QString id )
            , m_avrI2C("avrI2C")
 {
     m_processor = &m_avr;
-    createRamTable();
 
     m_avrI2C.setEnabled( false );
     m_avrI2C.setComponent( this );

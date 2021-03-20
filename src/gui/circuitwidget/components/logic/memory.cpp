@@ -96,7 +96,7 @@ QList<propGroup_t> Memory::propGroups()
 
 void Memory::updateStep()
 {
-    if( m_memTable ) m_memTable->updateTable( m_ram );
+    if( m_memTable ) m_memTable->updateTable( &m_ram );
 }
 
 void Memory::updatePins()
@@ -257,12 +257,12 @@ void Memory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 void Memory::loadData()
 {
     MemData::loadData( &m_ram, false, m_dataBits );
-    if( m_memTable ) m_memTable->setData( m_ram );
+    if( m_memTable ) m_memTable->setData( &m_ram );
 }
 
 void Memory::saveData()
 {
-    MemData::saveData( m_ram, m_dataBits );
+    MemData::saveData( &m_ram, m_dataBits );
 }
 
 void Memory::showTable()
@@ -270,7 +270,7 @@ void Memory::showTable()
     MemData::showTable( m_ram.size(), m_dataBytes );
     if( m_persistent ) m_memTable->setWindowTitle( "ROM: "+m_idLabel->toPlainText() );
     else               m_memTable->setWindowTitle( "RAM: "+m_idLabel->toPlainText() );
-    m_memTable->setData( m_ram );
+    m_memTable->setData( &m_ram );
 }
 
 void Memory::remove()

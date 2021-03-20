@@ -67,7 +67,7 @@ public:
   virtual int instruction_size() { return 1;}
   virtual uint get_opcode() { return opcode; }
   virtual uint get_value() { return opcode; }
-  virtual void put_value(uint new_value) { }
+  virtual void put_value(uint new_value) { opcode = new_value; }
   virtual uint getAddress() { return m_uAddrOfInstr;}
   virtual void setAddress(uint addr) { m_uAddrOfInstr = addr;}
 

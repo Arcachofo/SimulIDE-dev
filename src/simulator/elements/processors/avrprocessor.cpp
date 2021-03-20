@@ -33,12 +33,13 @@
 #include "avr_eeprom.h"
 
 extern "C"
-int elf_read_firmware_ext(const char * file, elf_firmware_t * firmware);
+int elf_read_firmware_ext( const char* file, elf_firmware_t* firmware );
 
 AvrProcessor::AvrProcessor( McuComponent* parent )
             : BaseProcessor( parent )
 {
-    m_avrProcessor = 0l;
+    m_avrProcessor = NULL;
+    m_avrEEPROM = NULL;
     m_initGdb = false;
     m_statusReg = "SREG";
     QStringList statusBits;
@@ -55,11 +56,74 @@ void AvrProcessor::terminate()
         avr_deinit_gdb( m_avrProcessor );
         avr_terminate( m_avrProcessor );
     }
-    m_avrProcessor = 0l;
+}
+
+void AvrProcessor::setDevice( QString device )
+{
+    m_device = device;
+    if( !m_avrProcessor )
+    {
+        m_avrProcessor = avr_make_mcu_by_name( m_device.toUtf8().constData() );
+
+        if( !m_avrProcessor )
+        {
+            QMessageBox::warning( 0, tr("Unkown Error:")
+                                   , tr("Could not Create AVR Processor: \"%1\"").arg(m_device) );
+            return;
+        }
+        int started = avr_init( m_avrProcessor );
+
+        m_uartInIrq.resize( 6 );
+        m_uartInIrq.fill(0);
+        for( int i=0; i<6; i++ )// Uart interface
+        {
+            avr_irq_t* src = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_OUTPUT);
+            if( src )
+            {
+                qDebug() << "    UART"<<i;
+                intptr_t uart = i;
+                avr_irq_register_notify( src, uart_pty_out_hook, (void*)uart ); // Irq to get data coming from AVR
+
+                // Irq to send data to AVR:
+                m_uartInIrq[i] = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_INPUT);
+            }
+        }
+        qDebug() << "\nAvrProcessor::setDevice Avr Init: "<< m_device << (started==0);
+
+        ///setEeprom( m_eeprom ); // Load EEPROM
+
+        m_avrProcessor->frequency = 16000000;
+        m_avrProcessor->cycle = 0;
+
+        m_ramSize   = m_avrProcessor->ramend+1;
+        m_flashSize = m_avrProcessor->flashend+1;
+        m_romSize   = m_avrProcessor->e2end+1;
+
+        avr_eeprom_desc_t ee;
+        ee.ee = 0;
+        ee.offset = 0;
+        ee.size = m_romSize;
+        int ok = avr_ioctl( m_avrProcessor, AVR_IOCTL_EEPROM_GET, &ee );
+        if( ok ) m_avrEEPROM = ee.ee;
+        m_eeprom.resize( m_romSize );
+
+        if( m_initGdb )
+        {
+            m_avrProcessor->gdb_port = 1212;
+            int ok = avr_gdb_init( m_avrProcessor );
+            if( ok < 0 )
+            {
+                m_avrProcessor->gdb_port = 0;
+                qDebug() << "avr_gdb_init ERROR " << ok;
+            }
+            else qDebug() << "avr_gdb_init OK";
+        }
+    }
 }
 
 bool AvrProcessor::loadFirmware( QString fileN )
 {
+    if( !m_avrProcessor ) return false;
     if( fileN == "" ) return false;
     QFileInfo fileInfo( fileN );
 
@@ -147,9 +211,7 @@ bool AvrProcessor::loadFirmware( QString fileN )
             QMessageBox::warning(0,tr("Warning on load firmware: "), tr("Incompatible firmware: compiled for %1 and your processor is %2\n").arg(mmcu).arg(m_device) );
             return false;
         }
-    } 
-    else 
-    {
+    }else{
         if( !strlen( name ) )
         {
             QMessageBox::warning( 0,tr("Failed to load firmware: "), tr("The processor model is not specified.\n") );
@@ -157,36 +219,7 @@ bool AvrProcessor::loadFirmware( QString fileN )
         }
         strcpy( f.mmcu, name );
     }
-    if( !m_avrProcessor )
-    {
-        m_avrProcessor = avr_make_mcu_by_name(f.mmcu);
 
-        if( !m_avrProcessor )
-        {
-            QMessageBox::warning( 0, tr("Unkown Error:")
-                                   , tr("Could not Create AVR Processor: \"%1\"").arg(f.mmcu) );
-            return false;
-        }
-        int started = avr_init( m_avrProcessor );
-
-        m_uartInIrq.resize( 6 );
-        m_uartInIrq.fill(0);
-        for( int i=0; i<6; i++ )// Uart interface
-        {
-            avr_irq_t* src = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_OUTPUT);
-            if( src )
-            {
-                qDebug() << "    UART"<<i;
-                intptr_t uart = i;
-                avr_irq_register_notify( src, uart_pty_out_hook, (void*)uart ); // Irq to get data coming from AVR
-
-                // Irq to send data to AVR:
-                m_uartInIrq[i] = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_INPUT);
-            }
-        }
-        qDebug() << "\nAvrProcessor::loadFirmware Avr Init: "<< name << (started==0);
-    }
-    
     if( avr_load_firmware( m_avrProcessor, &f ) != 0 )
     {
         QMessageBox::warning(0,tr("Error:"), tr("Wrong firmware!!").arg(f.mmcu) );
@@ -194,24 +227,8 @@ bool AvrProcessor::loadFirmware( QString fileN )
     }
     if( f.flashbase ) m_avrProcessor->pc = f.flashbase;
 
-    setEeprom( m_eeprom ); // Load EEPROM
-
-    m_avrProcessor->frequency = 16000000;
-    m_avrProcessor->cycle = 0;
     m_symbolFile = fileN;
-
-    if( m_initGdb )
-    {
-        m_avrProcessor->gdb_port = 1212;
-        int ok = avr_gdb_init( m_avrProcessor );
-        if( ok < 0 )
-        {
-            m_avrProcessor->gdb_port = 0;
-            qDebug() << "avr_gdb_init ERROR " << ok;
-        }
-        else qDebug() << "avr_gdb_init OK";
-    }
-    BaseProcessor::initialized();
+    m_loadStatus = true;
 
     return true;
 }
@@ -237,16 +254,28 @@ void AvrProcessor::reset()
 }
 
 int AvrProcessor::pc()
-{
-    if( !m_avrProcessor ) return 0;
-    return m_avrProcessor->pc;
-}
+{ return m_avrProcessor->pc; }
 
 int AvrProcessor::getRamValue( int address )
 {
     if( !m_avrProcessor ) return 0;
     return m_avrProcessor->data[address];
 }
+
+void AvrProcessor::setRamValue( int address, uint8_t value )
+{ m_avrProcessor->data[address] = value; }
+
+int AvrProcessor::getFlashValue( int address )
+{ return m_avrProcessor->flash[address]; }
+
+void AvrProcessor::setFlashValue( int address, uint8_t value )
+{ *(m_avrProcessor->flash + address) = value; }
+
+int AvrProcessor::getRomValue( int address )
+{ return m_avrEEPROM[address]; }
+
+void AvrProcessor::setRomValue( int address, uint8_t value )
+{ *(m_avrEEPROM + address) = value; }
 
 int AvrProcessor::validate( int address )
 {
@@ -263,73 +292,7 @@ void AvrProcessor::uartIn( int uart, uint32_t value ) // Receive one byte on Uar
     {
         BaseProcessor::uartIn( uart, value );
         avr_raise_irq( uartInIrq, value );
-        //qDebug() << "AvrProcessor::uartIn: " << value;
     }
-}
-
-QVector<int> AvrProcessor::eeprom()
-{
-    if( m_avrProcessor )
-    {
-        int rom_size = m_avrProcessor->e2end + 1;
-        m_eeprom.resize( rom_size );
-
-        avr_eeprom_desc_t ee;
-        ee.ee = 0;
-        ee.offset = 0;
-        ee.size = rom_size;
-        int ok = avr_ioctl( m_avrProcessor, AVR_IOCTL_EEPROM_GET, &ee );
-        //qDebug() << "avr epprom read ok =" ;//<< ok ;//<< m_eeprom;
-        if( ok )
-        {
-            //qDebug() << "avr epprom Reading...";
-            uint8_t* src = ee.ee;
-            for( int i=0; i<rom_size; i++ ) m_eeprom[i] = src[i];
-        }
-    }
-    return m_eeprom;
-}
-
-void AvrProcessor::setEeprom( QVector<int> eep )
-{
-    m_eeprom = eep;
-    //qDebug() << "BaseProcessor::setEeprom" <<eep.size()<< eep;
-
-    if( !m_avrProcessor ) return;
-
-    int rom_size = m_avrProcessor->e2end+1;
-    int eep_size = m_eeprom.size();
-
-    //qDebug() << "eeprom size at Load:" << rom_size << eep_size;
-
-    if( eep_size < rom_size ) rom_size = eep_size;
-
-    if( rom_size )
-    {
-        uint8_t rep[rom_size];
-
-        for( int i=0; i<rom_size; i++ )
-        {
-            uint8_t val = m_eeprom[i];
-            rep[i] = val;
-            //qDebug() << i << val;
-        }
-        avr_eeprom_desc_t ee;
-        ee.offset = 0;
-        ee.size = rom_size;
-        ee.ee = &rep[0];
-        avr_ioctl( m_avrProcessor, AVR_IOCTL_EEPROM_SET, &ee );
-    }
-}
-
-bool AvrProcessor::initGdb()
-{
-    return m_initGdb;
-}
-
-void AvrProcessor::setInitGdb( bool init )
-{
-    m_initGdb = init;
 }
 
 void AvrProcessor::setRegisters()

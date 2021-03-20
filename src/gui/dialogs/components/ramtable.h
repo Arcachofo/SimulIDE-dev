@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,30 +17,33 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QWidget>
+
+#include "ui_ramtable.h"
+
 #ifndef RAMTABLE_H
 #define RAMTABLE_H
 
-#include <QtWidgets>
-
-
 class BaseProcessor;
 class BaseDebugger;
+class QStandardItemModel;
 
-class RamTable : public QTableWidget
+class RamTable : public QWidget, private Ui::RamTable
 {
     Q_OBJECT
+
     public:
-        RamTable( BaseProcessor* processor );
-        ~RamTable();
+        RamTable( QWidget* parent=0, BaseProcessor* processor=0 );
 
         void updateValues();
-        
+
         void setItemValue( int col, QString value );
         void setItemValue( int col, int32_t value );
         void setItemValue( int col, float value );
 
         void setStatusBits( QStringList statusBits );
-        
+
+        void setRegisters();
         void setDebugger( BaseDebugger*  deb );
         void remDebugger( BaseDebugger*  deb );
 
@@ -51,6 +54,7 @@ class RamTable : public QTableWidget
         QTableWidget m_pc;
 
     public slots:
+        void RegDoubleClick( const QModelIndex& index );
         void clearSelected();
         void clearTable();
         void loadVarSet();
@@ -65,13 +69,13 @@ class RamTable : public QTableWidget
         BaseProcessor* m_processor;
         BaseDebugger*  m_debugger;
 
+        QStandardItemModel* m_registerModel;
+
         QHash<int, QString> watchList;
-        
+
         bool m_loadingVars;
 
         int m_numRegs;
         int m_currentRow;
 };
-
 #endif // RAMTABLE_H
-

@@ -37,30 +37,31 @@ class AvrProcessor : public BaseProcessor
         AvrProcessor( McuComponent* parent );
         ~AvrProcessor();
 
-        bool initGdb();
-        void setInitGdb( bool init );
+        bool initGdb() { return m_initGdb; }
+        void setInitGdb( bool init ){ m_initGdb = init; }
 
-        bool loadFirmware( QString file );
-        void terminate();
-
-        void reset();
-
+        virtual void setDevice( QString device ) override;
+        virtual bool loadFirmware( QString file ) override;
+        virtual void terminate() override;
+        virtual void reset() override;
         virtual void stepCpu() override;
 
-        virtual int pc();
-        virtual uint64_t cycle(){ return m_avrProcessor->cycle; }
+        virtual int pc() override;
+        virtual uint64_t cycle() override { return m_avrProcessor->cycle; }
 
-        int getRamValue( int address );
+        virtual int  getRamValue( int address ) override;
+        virtual void setRamValue( int address, uint8_t value ) override;
+        virtual int  getFlashValue( int address ) override;
+        virtual void setFlashValue( int address, uint8_t value ) override;
+        virtual int  getRomValue( int address ) override;
+        virtual void setRomValue( int address, uint8_t value ) override;
 
-        virtual QVector<int> eeprom();
-        virtual void setEeprom( QVector<int> eep );
-        
         avr_t* getCpu() { return m_avrProcessor; }
         void setCpu( avr_t* avrProc ) { m_avrProcessor = avrProc; }
 
-        virtual void setRegisters();
+        virtual void setRegisters() override;
 
-        void uartIn( int uart, uint32_t value );
+        virtual void uartIn( int uart, uint32_t value ) override;
         
         static void uart_pty_out_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
@@ -74,11 +75,12 @@ class AvrProcessor : public BaseProcessor
         }
 
     private:
-        virtual int  validate( int address );
+        virtual int validate( int address ) override;
 
         bool m_initGdb;
 
         //From simavr
+        uint8_t* m_avrEEPROM;
         avr_t*     m_avrProcessor;
         QVector<avr_irq_t*> m_uartInIrq;
 };

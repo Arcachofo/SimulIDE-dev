@@ -28,8 +28,8 @@ class MAINMODULE_EXPORT MemData
         MemData();
         ~MemData();
 
-        void loadData( QVector<int>* toData , bool resize=false, int bits=8 );
-        void saveData( QVector<int> data, int bits=8 );
+        static void loadData( QVector<int>* toData , bool resize=false, int bits=8 );
+        static void saveData( QVector<int>* data, int bits=8 );
 
     public slots:
         virtual void showTable( int dataSize=256, int wordBytes=1 );

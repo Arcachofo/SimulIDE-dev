@@ -21,15 +21,15 @@
 #define MCUCOMPONENT_H
 
 #include <QtWidgets>
+#include <QtSerialPort/QSerialPort>
 
 #include "chip.h"
-#include "memdata.h"
-#include <QtSerialPort/QSerialPort>
 
 class BaseProcessor;
 class McuComponentPin;
+class MCUMonitor;
 
-class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
+class MAINMODULE_EXPORT McuComponent : public Chip
 {
     Q_OBJECT
     Q_PROPERTY( QStringList varList  READ varList  WRITE setVarList )
@@ -94,11 +94,10 @@ class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
         void slotReload();
         void slotOpenTerm();
         void slotOpenSerial();
-        void slotOpenRamTable();
+        void slotOpenMcuMonitor();
 
         void loadData();
         void saveData();
-        void showTable();
 
     protected:
  static McuComponent* m_pSelf;
@@ -113,8 +112,6 @@ class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
                                 int pos, int xpos, int ypos, int angle );
 
         virtual void attachPins()=0;
-
-        void createRamTable();
 
         BaseProcessor* m_processor;
 
@@ -135,7 +132,8 @@ class MAINMODULE_EXPORT McuComponent : public Chip, public MemData
         QList<McuComponentPin*> m_pinList;
         QStringList m_varList;
 
-        QWidget*     m_ramTabWidget;
-        QVBoxLayout* m_ramTabWidgetLayout;
+        MCUMonitor* m_mcuMonitor;
+        //QWidget*     m_ramTabWidget;
+        //QVBoxLayout* m_ramTabWidgetLayout;
 };
 #endif

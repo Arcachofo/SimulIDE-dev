@@ -21,7 +21,7 @@
 #define PROCESSOR_H
 
 #include "e-element.h"
-#include "ramtablewidget.h"
+#include "ramtable.h"
 #include "terminalwidget.h"
 
 class BaseDebugger;
@@ -38,10 +38,9 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         virtual void stamp() override;
         virtual void runEvent() override;
  
-        QString getFileName();
+        QString getFileName() { return m_symbolFile; }
 
-        virtual void    setDevice( QString device );
-        
+        virtual void setDevice( QString device ){;}
         virtual void setDataFile( QString datafile );
 
         virtual bool loadFirmware( QString file )=0;
@@ -52,29 +51,38 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         virtual void stepCpu()=0;
         virtual void reset()=0;
 
-        virtual int  pc()=0;
+        virtual int pc()=0;
         virtual uint64_t cycle()=0;
-        virtual int  status();
+        virtual int status();
 
         void stepOne( int line );
         
         virtual void hardReset( bool reset );
         virtual int  getRamValue( QString name );
-        virtual int  getRamValue( int address )=0;
         virtual int  getRegAddress( QString name );
         virtual void addWatchVar( QString name, int address, QString type );
         virtual void updateRamValue( QString name );
 
+        virtual int  getRamValue( int address )=0;
+        virtual void setRamValue( int address, uint8_t value )=0;
+        virtual int  getFlashValue( int address )=0;
+        virtual void setFlashValue( int address, uint8_t value )=0;
+        virtual int  getRomValue( int address )=0;
+        virtual void setRomValue( int address, uint8_t value )=0;
+
         virtual void uartOut( int uart, uint32_t value );
         virtual void uartIn( int uart, uint32_t value );
-        
-        virtual void initialized();
+
         virtual QStringList getRegList() { return m_regList; }
         
         virtual RamTable* getRamTable() { return &m_ramTable; }
 
-        virtual QVector<int> eeprom()=0;
-        virtual void setEeprom( QVector<int> eep )=0;
+        int ramSize() { return m_ramSize; }
+        int flashSize(){ return m_flashSize; }
+        int romSize(){ return m_romSize; }
+
+        virtual QVector<int>* eeprom();
+        virtual void setEeprom( QVector<int>* eep );
         
         virtual void setRegisters();
 
@@ -90,7 +98,11 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
     protected:
  static BaseProcessor* m_pSelf;
         
-        virtual int validate( int address )=0;
+        virtual int validate( int address ) { return address; }
+
+        int m_ramSize;
+        int m_flashSize;
+        int m_romSize;
 
         QString m_symbolFile;
         QString m_dataFile;

@@ -25,7 +25,7 @@
 
 #include "highlighter.h"
 #include "outpaneltext.h"
-#include "ramtablewidget.h"
+#include "ramtable.h"
 #include "e-element.h"
 
 enum bebugState_t{

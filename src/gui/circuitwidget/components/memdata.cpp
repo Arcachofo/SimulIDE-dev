@@ -46,6 +46,8 @@ void MemData::showTable( int dataSize, int wordBytes )
     if( !m_memTable )
     {
         m_memTable = new MemTable( CircuitWidget::self(), dataSize, wordBytes );
+        m_memTable->setWindowFlags( Qt::Window | Qt::WindowTitleHint | Qt::Tool
+                                  | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint );
     }
     m_memTable->show();
 }
@@ -139,7 +141,7 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 
-void MemData::saveData( QVector<int> data, int bits )
+void MemData::saveData( QVector<int>* data, int bits )
 {
     bool pauseSim = Simulator::self()->isRunning();
     if( pauseSim )  Simulator::self()->pauseSim();
@@ -160,7 +162,7 @@ void MemData::saveData( QVector<int> data, int bits )
     if( fileName.endsWith(".data") )
     {
         QString output = "";
-        for( int val : data )
+        for( int val : *data )
         {
             QString sval = QString::number( val );
             while( sval.length() < 4) sval.prepend( " " );
@@ -192,7 +194,7 @@ void MemData::saveData( QVector<int> data, int bits )
         }
         else
         {
-            for( int val : data )
+            for( int val : *data )
             {
                 for( int by=0; by<bytes; by++ ) // Separate bytes little-endian
                 {

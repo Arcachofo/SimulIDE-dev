@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QDialog>
+#include <QWidget>
 
 #include "ui_memtable.h"
 
@@ -26,21 +26,36 @@
 
 class Component;
 
-class MemTable : public QDialog, private Ui::MemTable
+class MemTable : public QWidget, private Ui::MemTable
 {
     Q_OBJECT
     
     public:
         MemTable( QWidget* parent=0, int dataSize=256, int wordBytes=1 );
 
-        void updateTable( QVector<int> data );
+        void updateTable(QVector<int>* data );
         void resizeTable( int dataSize );
-        void setData( QVector<int> data );
+        void setData(QVector<int>* data );
+        void setValue( int address, int val );
+
+    signals:
+        void dataChanged( int address, int val );
+
+    public slots:
+        void on_table_itemChanged( QTableWidgetItem* item );
+        void on_table_cellClicked( int row, int col ) { cellClicked( row, col ); }
 
     private:
+        void cellClicked( int row, int col );
+        QString valToHex( int val );
+
         int m_dataSize;
         int m_wordBytes;
         int m_updtCount;
+
+        bool m_blocked;
+
+        QVector<int>* m_data;
 };
 
 #endif

@@ -20,46 +20,55 @@
 #include "memtable.h"
 #include "mainwindow.h"
 
+
 MemTable::MemTable( QWidget* parent, int dataSize, int wordBytes )
-        : QDialog( parent )
+        : QWidget( parent )
 {
     setupUi(this);
 
     m_wordBytes = wordBytes;
     m_updtCount = 0;
+    m_data = NULL;
+    m_blocked = true;
 
     table->setHorizontalHeaderLabels( QStringList()
       <<"0x0"<<"0x1"<<"0x2"<<"0x3"<<"0x4"<<"0x5"<<"0x6"<<"0x7"
-      <<"0x8"<<"0x9"<<"0xA"<<"0xB"<<"0xC"<<"0xD"<<"0xE"<<"0xF");
+      <<"0x8"<<"0x9"<<"0xA"<<"0xB"<<"0xC"<<"0xD"<<"0xE"<<"0xF"
+      << " "
+      <<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"
+      <<"8"<<"9"<<"A"<<"B"<<"C"<<"D"<<"E"<<"F");
+
+    table->setColumnWidth( 16, 5 );
 
     resizeTable( dataSize );
+    m_blocked = false;
 }
 
-void MemTable::updateTable( QVector<int> data )
+void MemTable::updateTable( QVector<int>* data )
 {
-    if( ++m_updtCount == 10 ) m_updtCount = 0;
+    if( ++m_updtCount >= 10 ) m_updtCount = 0;
     else                      return;
 
     setData( data );
 }
 
-void MemTable::setData( QVector<int> data )
+void MemTable::setValue( int address, int val )
 {
-    if( data.size() != m_dataSize ) resizeTable( data.size() );
+    int row = address/16;
+    int colRam = address%16;
+    int colAscii = colRam +17;
+    m_blocked = true;
+    table->item( row, colRam )->setData( 0, valToHex( val ) );
+    table->item( row, colAscii )->setData( 0, QChar(val) );
+    m_blocked = false;
+}
 
-    int row = 0;
-    int col = 0;
+void MemTable::setData( QVector<int>* data )
+{
+    m_data = data;
+    if( data->size() != m_dataSize ) resizeTable( data->size() );
 
-    for( int val : data )
-    {
-        QString sval = QString::number( val, 16 ).toUpper();
-        sval = sval.right( m_wordBytes*2 );
-        while( sval.length() < m_wordBytes*2) sval.prepend( "0" );
-        sval.prepend("0x");
-        table->item( row, col )->setData( 0, sval );
-
-        if( ++col == 16 ) { row++; col = 0; }
-    }
+    for( int i=0; i<data->size(); ++i ) setValue( i, data->at(i) );
 }
 
 void MemTable::resizeTable( int dataSize )
@@ -73,41 +82,82 @@ void MemTable::resizeTable( int dataSize )
 
     int scale = MainWindow::self()->fontScale();
     QFont font;
-    font.setBold(true);
     font.setPixelSize( 12*scale );
     font.setFamily("Monospace");
 
     QTableWidgetItem* it;
 
-    int row_heigh = 20*scale;
-    int col_width = (1+m_wordBytes)*20*scale;
-
     for( int row=0; row<rows; ++row )
     {
-        QString addr = QString::number( row*16, 16 ).toUpper()+" ";
-        while( addr.length() < 4) addr.prepend( "0" );
-        addr.prepend("0x");
-
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
         it->setFont( font );
-
+        it->setText( valToHex( row*16 ) );
         table->setVerticalHeaderItem( row, it );
-        table->verticalHeaderItem( row )->setText( addr );
-        table->verticalHeaderItem( row )->setFont( font );
 
-        for( int col=0; col<16; ++col )
+        for( int col=0; col<33; ++col )
         {
-            QTableWidgetItem *it = new QTableWidgetItem(0);
-            it->setFlags( Qt::ItemIsEnabled );
+            if( col == 16 ) continue;
+
+            it = new QTableWidgetItem(0);
+            it->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable );
             it->setFont( font );
             table->setItem( row, col, it );
         }
-        table->setRowHeight(row, row_heigh);
+        table->setRowHeight( row, 20*scale );
     }
     for( int col=0; col<16; ++col )
     {
-        table->setColumnWidth( col, col_width );
-        table->horizontalHeaderItem( col )->setFont( font );
+        table->setColumnWidth( col, (1+m_wordBytes)*20*scale );
+        table->setColumnWidth( col+17, 15*scale );
     }
+    font.setBold(true);
+    table->horizontalHeader()->setFont( font );
+    table->verticalHeader()->setFont( font );
+}
+
+void MemTable::on_table_itemChanged( QTableWidgetItem* item )
+{
+    if( m_blocked ) return;
+    m_blocked = true;
+    int val;
+    bool ok;
+
+    int col = item->column();
+    if( col > 16 )
+    {
+        col -= 17;
+        ok = !item->text().isEmpty();
+        if( ok) val = item->text().toUtf8().at(0);
+    }
+    else val = item->text().toInt( &ok, 16 );
+
+    int address = item->row()*16+col;
+    if( ok )
+    {
+        if( m_data) m_data->replace( address, val );
+        setValue( address, val );
+        emit dataChanged( address, val );
+    }
+    else if( m_data) setValue( address, m_data->at( address ) );
+
+    m_blocked = false;
+}
+
+void MemTable::cellClicked( int row, int col )
+{
+    if( col > 16 ) col -= 17;
+    table->clearSelection();
+    table->item( row, col )->setSelected( true );
+    table->item( row, col+17 )->setSelected( true );
+}
+
+QString MemTable::valToHex( int val )
+{
+    QString sval = QString::number( val, 16 ).toUpper();
+    sval = sval.right( m_wordBytes*2 );
+    while( sval.length() < m_wordBytes*2) sval.prepend( "0" );
+    sval.prepend("0x");
+
+    return sval;
 }

@@ -52,8 +52,6 @@ PICComponent::PICComponent( QObject* parent, QString type, QString id )
             , m_pic( this )
 {
     m_processor = &m_pic;
-    createRamTable();
-
     m_cpi = 4;
 
     initChip();

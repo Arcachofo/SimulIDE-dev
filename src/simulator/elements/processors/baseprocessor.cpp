@@ -32,7 +32,7 @@ BaseProcessor* BaseProcessor::m_pSelf = 0l;
 BaseProcessor::BaseProcessor( McuComponent* parent )
              : QObject( parent )
              , eElement( "baseprocessor" )
-             , m_ramTable( this )
+             , m_ramTable( NULL, this )
 {
     m_pSelf = this;
     m_mcu = parent;
@@ -45,6 +45,9 @@ BaseProcessor::BaseProcessor( McuComponent* parent )
     m_symbolFile = "";
     m_device     = "";
 
+    m_ramSize   = 0;
+    m_flashSize = 0;
+
     m_ramTable.hide();
 }
 BaseProcessor::~BaseProcessor() 
@@ -53,10 +56,7 @@ BaseProcessor::~BaseProcessor()
 
 void BaseProcessor::stamp()
 {
-    //if( m_loadStatus ) Simulator::self()->addEvent( 1, this );
-
     m_debugStep = false;
-    //m_lastPC = 0;
 }
 
 void BaseProcessor::runEvent()
@@ -92,21 +92,9 @@ void BaseProcessor::stepOne( int line )
     m_debugStep = true;
 }
 
-void BaseProcessor::initialized()
-{
-    //qDebug() << "\nBaseProcessor::initialized  Firmware: " << m_symbolFile;
-    //qDebug() << "\nBaseProcessor::initialized Data File: " << m_dataFile;
-
-    m_loadStatus = true;
-}
-
 void BaseProcessor::terminate()
 {
-    //qDebug() <<"\nBaseProcessor::terminate "<<m_device<<m_symbolFile<<"\n";
-
-    m_pSelf = 0l;
-    m_loadStatus = false;
-    m_symbolFile = "";
+    if( m_pSelf == this ) m_pSelf= NULL;
 }
 
 void BaseProcessor::setFreq( double freq ) // Instruction exec. freq
@@ -114,26 +102,20 @@ void BaseProcessor::setFreq( double freq ) // Instruction exec. freq
     m_stepPS = 1e6/freq; //1e6*m_mcuStepsPT/freq;
 }
 
-QString BaseProcessor::getFileName() { return m_symbolFile; }
-
 void BaseProcessor::setDebugger( BaseDebugger* deb )
 {
     m_debugger = deb;
     m_ramTable.setDebugger( deb );
 }
 
-void BaseProcessor::setDevice( QString device ) { m_device = device;}
-
 void BaseProcessor::setDataFile( QString datafile ) 
 { 
     m_dataFile = datafile;
     setRegisters();
+    m_ramTable.setRegisters();
 }
 
-int BaseProcessor::status()
-{
-    return getRamValue( m_statusReg );
-}
+int BaseProcessor::status() { return getRamValue( m_statusReg ); }
 
 void BaseProcessor::hardReset( bool rst )
 {
@@ -242,8 +224,6 @@ void BaseProcessor::updateRamValue( QString name )
             m_ramTable.setItemValue( 3, strVal  );
         }
     }
-    //qDebug()<<name<<type <<address<<value;
-    //if( !type.contains( "8" ) ) 
     m_ramTable.setItemValue( 1, type  );
 }
 
@@ -304,20 +284,31 @@ void BaseProcessor::setRegisters() // get register addresses from data file
                 address = validate( address );
                 addWatchVar( name, address, "u8" );        // type uint8 
             }
-            //qDebug() << name << address<<"\n";
         }
     }
+}
+
+QVector<int>* BaseProcessor::eeprom()
+{
+    for( int i=0; i<m_romSize; ++i ) m_eeprom[i] = getRomValue( i );
+    return &m_eeprom;
+}
+
+void BaseProcessor::setEeprom( QVector<int>* eep )
+{
+    int size = m_romSize;
+    if( eep->size() < size ) size = eep->size();
+
+    for( int i=0; i<size; ++i ) setRomValue( i, eep->at(i) );
 }
 
 void BaseProcessor::uartOut( int uart, uint32_t value ) // Send value to OutPanelText
 {
     emit uartDataOut( uart, value );
-    //qDebug()<<"BaseProcessor::uartOut" << uart << value;
 }
 
 void BaseProcessor::uartIn( int uart, uint32_t value ) // Receive one byte on Uart
 {
-    //qDebug()<<"BaseProcessor::uartIn" << uart << value;
     emit uartDataIn( uart, value );
 }
 

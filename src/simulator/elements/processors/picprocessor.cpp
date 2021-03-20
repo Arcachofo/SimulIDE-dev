@@ -35,79 +35,36 @@ PicProcessor::PicProcessor( McuComponent* parent )
             , m_hexLoader()
 {
     //m_pSelf = this;
-    m_pPicProcessor = 0l;
+    m_pPicProcessor = NULL;
     m_loadStatus    = false;
     m_statusReg = "STATUS";
     // Staus Bits defined in PicProcessor::setDevice
 }
 PicProcessor::~PicProcessor(){}
 
-void PicProcessor::terminate()
+void PicProcessor::setDevice( QString device )
 {
-    BaseProcessor::terminate();
- 
-    m_pPicProcessor = 0l;
-}
+    if( m_pPicProcessor ) return;
+    m_device = device;
 
-bool PicProcessor::loadFirmware( QString fileN )
-{
-    if( fileN == "" ) return false;
-    
-    m_symbolFile = fileN; 
-    
-    if( !QFile::exists( m_symbolFile ) )
-    {
-        QMessageBox::warning( 0, tr("File Not Found")
-                               , tr("The file \"%1\" was not found.").arg(m_symbolFile) );
-        return false;
-    }
-    QByteArray symbolFile = m_symbolFile.toUtf8();
-    QByteArray device     = m_device.toUtf8();
-    
-    m_loadStatus = false;
-    
+    QStringList statusBits;
+
+    if( m_device.startsWith( "pic18" ) )
+            statusBits <<" X "<<" X "<<" X "<<" N "<<"OV "<<" Z "<<"DC "<<" C ";
+    else    statusBits <<"IRP"<<"RP1"<<"RP0"<<"TO "<<"PD "<<" Z "<<"DC "<<" C ";
+
+    m_ramTable.setStatusBits( statusBits );
+
+    qDebug() << "Creating Proccessor:    "<<m_device<<"\n" ;
+
+    Processor* p = ProcessorConstructor::CreatePic( m_device.toUtf8().constData() );
+    m_pPicProcessor = dynamic_cast<pic_processor*>( p );
+
     if( !m_pPicProcessor )
     {
-        qDebug() << "Creating Proccessor:    "<<m_device<<"\n" ;
-
-        Processor* p = ProcessorConstructor::CreatePic( device.constData() );
-        m_pPicProcessor = dynamic_cast<pic_processor*>( p );
-
-        if( !m_pPicProcessor )
-        {
-            QMessageBox::warning( 0, tr("Unkown Error:")
-                                   , tr("Could not Create Pic Processor: \"%1\"").arg(m_device) );
-            return false;
-        }
-    }
-    qDebug() << "Loading HexFile:\n"<<m_symbolFile<<"\n" ;
-    
-    FILE* pFile  = fopen( symbolFile.constData(), "r" );
-    int load = m_hexLoader.readihex16( m_pPicProcessor, pFile );
-    if( load == HexLoader::SUCCESS ) m_loadStatus = true;
-    
-    if( !m_loadStatus )
-    {
         QMessageBox::warning( 0, tr("Unkown Error:")
-                               , tr("Could not Load: \"%1\"").arg(m_symbolFile) );
-        return false;
-    }
-    m_pPicProcessor->set_Vdd( 5 );
-
-    setEeprom( m_eeprom ); // Load EEPROM
-
-    //m_pPicProcessor->set_frequency( (double)McuComponent::self()->freq()*1e6 );
-    qDebug() << "\nProcessor Ready:";
-    qDebug() << "    Device    =" << m_pPicProcessor->name_str;
-    //qDebug() << "    Freq. MHz =" << freq;
-    qDebug() << "    Int. OSC  =" << (m_pPicProcessor->get_int_osc()? "true":"false");
-    qDebug() << "    Use PLLx4 =" << (m_pPicProcessor->get_pplx4_osc()? "true":"false");
-
-    int address = getRegAddress( "OSCCAL" );
-    if( address > 0 ) // Initialize Program Memory at 0x3FF for OSCCAL
-    {
-        qDebug() << "    OSCCAL    = true";
-        m_pPicProcessor->init_program_memory_at_index(0x3FF, 0x3400);
+                               , tr("Could not Create Pic Processor: \"%1\"").arg(m_device) );
+        return;
     }
 
     qDebug() << "    UARTs:";
@@ -128,15 +85,61 @@ bool PicProcessor::loadFirmware( QString fileN )
             rcsta->m_picProc = this;
         }
     }
-    initialized();
+    m_ramSize   = m_pPicProcessor->register_memory_size();
+    m_flashSize = m_pPicProcessor->program_memory_size();
+    m_romSize   = m_pPicProcessor->eeprom->get_rom_size();
+
+    m_eeprom.resize( m_romSize );
+}
+
+bool PicProcessor::loadFirmware( QString fileN )
+{
+    if( !m_pPicProcessor ) return false;
+    if( fileN == "" ) return false;
+    
+    m_symbolFile = fileN; 
+    
+    if( !QFile::exists( m_symbolFile ) )
+    {
+        QMessageBox::warning( 0, tr("File Not Found")
+                               , tr("The file \"%1\" was not found.").arg(m_symbolFile) );
+        return false;
+    }
+    QByteArray symbolFile = m_symbolFile.toUtf8();
+    
+    m_loadStatus = false;
+
+    qDebug() << "Loading HexFile:\n"<<m_symbolFile<<"\n" ;
+    
+    FILE* pFile  = fopen( symbolFile.constData(), "r" );
+    int load = m_hexLoader.readihex16( m_pPicProcessor, pFile );
+    if( load == HexLoader::SUCCESS ) m_loadStatus = true;
+    
+    if( !m_loadStatus )
+    {
+        QMessageBox::warning( 0, tr("Unkown Error:")
+                               , tr("Could not Load: \"%1\"").arg(m_symbolFile) );
+        return false;
+    }
+    m_pPicProcessor->set_Vdd( 5 );
+
+    qDebug() << "\nProcessor Ready:";
+    qDebug() << "    Device    =" << m_pPicProcessor->name_str;
+    qDebug() << "    Int. OSC  =" << (m_pPicProcessor->get_int_osc()? "true":"false");
+    qDebug() << "    Use PLLx4 =" << (m_pPicProcessor->get_pplx4_osc()? "true":"false");
+
+    int address = getRegAddress( "OSCCAL" );
+    if( address > 0 ) // Initialize Program Memory at 0x3FF for OSCCAL
+    {
+        qDebug() << "    OSCCAL    = true";
+        m_pPicProcessor->init_program_memory_at_index( 0x3FF, 0x3400 );
+    }
+    m_loadStatus = true;
     return true;
 }
 
 int PicProcessor::pc()
-{
-    if( !m_pPicProcessor ) return 0;
-    return m_pPicProcessor->pc->get_value();
-}
+{ return m_pPicProcessor->pc->get_value(); }
 
 void PicProcessor::setFreq( double freq ) // Instruction exec. freq
 {
@@ -156,12 +159,22 @@ void PicProcessor::reset()
 }
 
 int PicProcessor::getRamValue( int address )
-{ 
-    if( !m_pPicProcessor) return 0;
-    return m_pPicProcessor->registers[address]->get_value();
-}
+{ return m_pPicProcessor->registers[address]->get_value(); }
 
-int PicProcessor::validate( int address ) { return address; }
+void PicProcessor::setRamValue( int address, uint8_t value )
+{ m_pPicProcessor->registers[address]->put_value( value ); }
+
+int PicProcessor::getFlashValue( int address )
+{ return m_pPicProcessor->program_memory[address]->get_value(); }
+
+void PicProcessor::setFlashValue( int address, uint8_t value )
+{ m_pPicProcessor->program_memory[address]->put_value( value ); }
+
+int PicProcessor::getRomValue( int address )
+{ return m_pPicProcessor->eeprom->rom[address]->get_value(); }
+
+void PicProcessor::setRomValue(int address, uint8_t value)
+{ m_pPicProcessor->eeprom->rom[address]->put_value( value ); }
 
 void PicProcessor::uartIn( int uart, uint32_t value ) // Receive one byte on Uart
 {
@@ -172,58 +185,7 @@ void PicProcessor::uartIn( int uart, uint32_t value ) // Receive one byte on Uar
     {
         BaseProcessor::uartIn( uart, value );
         rcsta->queueData( value );
-        //qDebug() << "PicProcessor::uartIn: " << value<<m_pPicProcessor->rma[26].get_value();
     }
-}
-
-QVector<int> PicProcessor::eeprom()
-{
-
-    if( m_pPicProcessor )
-    {
-        int rom_size = m_pPicProcessor->eeprom->get_rom_size();
-        m_eeprom.resize( rom_size );
-
-        for( int i=0; i<rom_size; i++ )
-        {
-            m_eeprom[i] = m_pPicProcessor->eeprom->rom[i]->get_value();
-        }
-     }
-    //qDebug() << m_eeprom;
-
-    //m_pPicProcessor->eeprom->dump();
-    return m_eeprom;
-}
-
-void PicProcessor::setEeprom( QVector<int> eep )
-{
-    m_eeprom = eep;
-
-    if( !m_pPicProcessor ) return;
-
-    int rom_size = m_pPicProcessor->eeprom->get_rom_size();
-    int eep_size = m_eeprom.size();
-
-    if( eep_size < rom_size ) rom_size = eep_size;
-
-    for( int i=0; i<rom_size; i++ )
-    {
-        m_pPicProcessor->eeprom->rom[i]->put_value( m_eeprom[i] );
-    }
-}
-
-void PicProcessor::setDevice( QString device )
-{
-    m_device = device;
-
-    QStringList statusBits;
-    //qDebug()<<"PicProcessor::PicProcessor"<<m_device;
-
-    if( m_device.startsWith( "pic18" ) )
-            statusBits <<" X "<<" X "<<" X "<<" N "<<"OV "<<" Z "<<"DC "<<" C ";
-    else    statusBits <<"IRP"<<"RP1"<<"RP0"<<"TO "<<"PD "<<" Z "<<"DC "<<" C ";
-
-    m_ramTable.setStatusBits( statusBits );
 }
 
 #include "moc_picprocessor.cpp"
