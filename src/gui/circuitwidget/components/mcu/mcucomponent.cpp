@@ -426,7 +426,7 @@ void McuComponent::setProgram( QString pro )
 
 void McuComponent::setEeprom( QVector<int> eep )
 {
-    m_processor->setEeprom( &eep );
+    if( eep.size() > 1 ) m_processor->setEeprom( &eep );
 }
 
 QVector<int> McuComponent::eeprom()
