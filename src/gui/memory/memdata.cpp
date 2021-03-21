@@ -21,10 +21,10 @@
 #include <QTranslator>
 
 #include "memdata.h"
+#include "memtable.h"
 #include "simulator.h"
 #include "circuitwidget.h"
 #include "circuit.h"
-#include "memtable.h"
 #include "utils.h"
 
 

@@ -60,64 +60,61 @@ void AvrProcessor::terminate()
 
 void AvrProcessor::setDevice( QString device )
 {
+    if( m_avrProcessor ) return;
     m_device = device;
+    
+    m_avrProcessor = avr_make_mcu_by_name( m_device.toUtf8().constData() );
+
     if( !m_avrProcessor )
     {
-        m_avrProcessor = avr_make_mcu_by_name( m_device.toUtf8().constData() );
+        QMessageBox::warning( 0, tr("Unkown Error:")
+                               , tr("Could not Create AVR Processor: \"%1\"").arg(m_device) );
+        return;
+    }
+    int started = avr_init( m_avrProcessor );
 
-        if( !m_avrProcessor )
+    m_uartInIrq.resize( 6 );
+    m_uartInIrq.fill(0);
+    for( int i=0; i<6; i++ )// Uart interface
+    {
+        avr_irq_t* src = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_OUTPUT);
+        if( src )
         {
-            QMessageBox::warning( 0, tr("Unkown Error:")
-                                   , tr("Could not Create AVR Processor: \"%1\"").arg(m_device) );
-            return;
-        }
-        int started = avr_init( m_avrProcessor );
+            qDebug() << "    UART"<<i;
+            intptr_t uart = i;
+            avr_irq_register_notify( src, uart_pty_out_hook, (void*)uart ); // Irq to get data coming from AVR
 
-        m_uartInIrq.resize( 6 );
-        m_uartInIrq.fill(0);
-        for( int i=0; i<6; i++ )// Uart interface
+            // Irq to send data to AVR:
+            m_uartInIrq[i] = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_INPUT);
+        }
+    }
+    qDebug() << "\nAvrProcessor::setDevice Avr Init: "<< m_device << (started==0);
+
+    m_avrProcessor->frequency = 16000000;
+    m_avrProcessor->cycle = 0;
+
+    m_ramSize   = m_avrProcessor->ramend+1;
+    m_flashSize = m_avrProcessor->flashend+1;
+    m_romSize   = m_avrProcessor->e2end+1;
+
+    avr_eeprom_desc_t ee;
+    ee.ee = 0;
+    ee.offset = 0;
+    ee.size = m_romSize;
+    int ok = avr_ioctl( m_avrProcessor, AVR_IOCTL_EEPROM_GET, &ee );
+    if( ok ) m_avrEEPROM = ee.ee;
+    m_eeprom.resize( m_romSize );
+
+    if( m_initGdb )
+    {
+        m_avrProcessor->gdb_port = 1212;
+        int ok = avr_gdb_init( m_avrProcessor );
+        if( ok < 0 )
         {
-            avr_irq_t* src = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_OUTPUT);
-            if( src )
-            {
-                qDebug() << "    UART"<<i;
-                intptr_t uart = i;
-                avr_irq_register_notify( src, uart_pty_out_hook, (void*)uart ); // Irq to get data coming from AVR
-
-                // Irq to send data to AVR:
-                m_uartInIrq[i] = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_INPUT);
-            }
+            m_avrProcessor->gdb_port = 0;
+            qDebug() << "avr_gdb_init ERROR " << ok;
         }
-        qDebug() << "\nAvrProcessor::setDevice Avr Init: "<< m_device << (started==0);
-
-        ///setEeprom( m_eeprom ); // Load EEPROM
-
-        m_avrProcessor->frequency = 16000000;
-        m_avrProcessor->cycle = 0;
-
-        m_ramSize   = m_avrProcessor->ramend+1;
-        m_flashSize = m_avrProcessor->flashend+1;
-        m_romSize   = m_avrProcessor->e2end+1;
-
-        avr_eeprom_desc_t ee;
-        ee.ee = 0;
-        ee.offset = 0;
-        ee.size = m_romSize;
-        int ok = avr_ioctl( m_avrProcessor, AVR_IOCTL_EEPROM_GET, &ee );
-        if( ok ) m_avrEEPROM = ee.ee;
-        m_eeprom.resize( m_romSize );
-
-        if( m_initGdb )
-        {
-            m_avrProcessor->gdb_port = 1212;
-            int ok = avr_gdb_init( m_avrProcessor );
-            if( ok < 0 )
-            {
-                m_avrProcessor->gdb_port = 0;
-                qDebug() << "avr_gdb_init ERROR " << ok;
-            }
-            else qDebug() << "avr_gdb_init OK";
-        }
+        else qDebug() << "avr_gdb_init OK";
     }
 }
 
@@ -257,10 +254,7 @@ int AvrProcessor::pc()
 { return m_avrProcessor->pc; }
 
 int AvrProcessor::getRamValue( int address )
-{
-    if( !m_avrProcessor ) return 0;
-    return m_avrProcessor->data[address];
-}
+{ return m_avrProcessor->data[address]; }
 
 void AvrProcessor::setRamValue( int address, uint8_t value )
 { m_avrProcessor->data[address] = value; }

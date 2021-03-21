@@ -34,11 +34,9 @@ PicProcessor::PicProcessor( McuComponent* parent )
             : BaseProcessor( parent )
             , m_hexLoader()
 {
-    //m_pSelf = this;
     m_pPicProcessor = NULL;
     m_loadStatus    = false;
-    m_statusReg = "STATUS";
-    // Staus Bits defined in PicProcessor::setDevice
+    m_statusReg = "STATUS"; // Staus Bits defined in PicProcessor::setDevice
 }
 PicProcessor::~PicProcessor(){}
 

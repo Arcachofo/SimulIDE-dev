@@ -58,9 +58,7 @@ class PicProcessor : public BaseProcessor
 
     private:
         pic_processor* m_pPicProcessor;
-        
         HexLoader m_hexLoader;
-        
         QVector<_RCSTA*> m_rcsta;
 };
 

@@ -48,13 +48,14 @@ SOURCES += ../src/*.cpp \
     ../src/gui/circuitwidget/components/sources/*.cpp \
     ../src/gui/circuitwidget/components/switches/*.cpp \
     ../src/gui/dataplotwidget/*.cpp \
-    ../src/gui/terminalwidget/*.cpp \
+    ../src/gui/serial/*.cpp \
     ../src/gui/componentselector/*.cpp \
     ../src/gui/filebrowser/*.cpp \
     ../src/gui/editorwidget/*.cpp \
     ../src/gui/editorwidget/findreplacedialog/*.cpp \
     ../src/gui/dialogs/*.cpp \
-    ../src/gui/dialogs/components/*.cpp \
+    ../src/gui/dialogs/properties/*.cpp \
+    ../src/gui/memory/*.cpp \
     ../src/simulator/*.cpp \
     ../src/simulator/elements/*.cpp \
     ../src/simulator/elements/active/*.cpp \
@@ -90,13 +91,14 @@ HEADERS += ../src/*.h \
     ../src/gui/circuitwidget/components/sources/*.h \
     ../src/gui/circuitwidget/components/switches/*.h \
     ../src/gui/dataplotwidget/*.h \
-    ../src/gui/terminalwidget/*.h \
+    ../src/gui/serial/*.h \
     ../src/gui/componentselector/*.h \
     ../src/gui/filebrowser/*.h \
     ../src/gui/editorwidget/*.h \
     ../src/gui/editorwidget/findreplacedialog/*.h \
     ../src/gui/dialogs/*.h \
-    ../src/gui/dialogs/components/*.h \
+    ../src/gui/dialogs/properties/*.h \
+    ../src/gui/memory/*.h \
     ../src/simulator/*.h \
     ../src/simulator/elements/*.h \
     ../src/simulator/elements/active/*.h \
@@ -134,13 +136,14 @@ INCLUDEPATH += ../src \
     ../src/gui/circuitwidget/components/sources \
     ../src/gui/circuitwidget/components/switches \
     ../src/gui/dataplotwidget \
-    ../src/gui/terminalwidget \
+    ../src/gui/serial \
     ../src/gui/componentselector \
     ../src/gui/filebrowser \
     ../src/gui/editorwidget \
     ../src/gui/editorwidget/findreplacedialog \
     ../src/gui/dialogs \
-    ../src/gui/dialogs/components \
+    ../src/gui/dialogs/properties \
+    ../src/gui/memory \
     ../src/simulator \
     ../src/simulator/elements \
     ../src/simulator/elements/active \
@@ -177,7 +180,8 @@ TRANSLATIONS +=  \
 
 FORMS +=   \
     ../src/gui/dialogs/*.ui \
-    ../src/gui/dialogs/components/*.ui \
+    ../src/gui/dialogs/properties/*.ui \
+    ../src/gui/memory/*.ui \
     ../src/gui/dataplotwidget/*.ui
 
 RESOURCES = ../src/application.qrc

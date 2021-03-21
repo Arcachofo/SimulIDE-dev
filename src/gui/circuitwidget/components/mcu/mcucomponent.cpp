@@ -78,7 +78,6 @@ McuComponent::McuComponent( QObject* parent, QString type, QString id )
         m_lastFirmDir = QCoreApplication::applicationDirPath();
 
     Simulator::self()->addToUpdateList( this );
-
     Circuit::self()->update();
 }
 McuComponent::~McuComponent()
@@ -322,6 +321,7 @@ void McuComponent::slotmain()
     m_processor->setMain();
     Circuit::self()->update();
 }
+
 void McuComponent::slotOpenMcuMonitor()
 {
     if( !m_mcuMonitor )
@@ -440,7 +440,6 @@ void McuComponent::loadData()
     if( !m_processor->getLoadStatus() ) resize = true; // No eeprom initialized yet
 
     MemData::loadData( m_processor->eeprom(), resize );
-    //m_processor->setEeprom( data );
 }
 
 void McuComponent::saveData()

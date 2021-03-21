@@ -133,7 +133,5 @@ class MAINMODULE_EXPORT McuComponent : public Chip
         QStringList m_varList;
 
         MCUMonitor* m_mcuMonitor;
-        //QWidget*     m_ramTabWidget;
-        //QVBoxLayout* m_ramTabWidgetLayout;
 };
 #endif
