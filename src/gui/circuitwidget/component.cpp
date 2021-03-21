@@ -282,6 +282,11 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
     menu->exec(event->screenPos());
 }
 
+void Component::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( event->button() == Qt::LeftButton ) slotProperties();
+}
+
 void Component::slotCopy()
 {
     if( !isSelected() ) Circuit::self()->clearSelection();
