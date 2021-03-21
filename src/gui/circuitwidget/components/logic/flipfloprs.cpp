@@ -85,3 +85,4 @@ void FlipFlopRS::voltChanged()
 
     sheduleOutPuts();
 }
+#include "moc_flipfloprs.cpp"

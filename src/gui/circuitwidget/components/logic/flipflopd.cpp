@@ -88,3 +88,5 @@ void FlipFlopD::voltChanged()
 
     sheduleOutPuts();
 }
+
+#include "moc_flipflopd.cpp"

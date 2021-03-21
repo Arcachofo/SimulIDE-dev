@@ -225,9 +225,12 @@ void ItemLibrary::loadItems()
     addItem( FlipFlopD::libraryItem() );
     addItem( FlipFlopRS::libraryItem() );
     addItem( FlipFlopJK::libraryItem() );
+    addItem( LatchD::libraryItem() );
+    addItem( Memory::libraryItem() );
+    addItem( I2CRam::libraryItem() );
+
     addItem( BinCounter::libraryItem() );
     addItem( FullAdder::libraryItem() );
-    addItem( LatchD::libraryItem() );
     addItem( ShiftReg::libraryItem() );
     addItem( Function::libraryItem() );
     addItem( Scripted::libraryItem() );
@@ -237,13 +240,12 @@ void ItemLibrary::loadItems()
     addItem( BcdToDec::libraryItem() );
     addItem( DecToBcd::libraryItem() );
     addItem( BcdTo7S::libraryItem() );
+    addItem( I2CToParallel::libraryItem() );
+
     addItem( ADC::libraryItem() );
     addItem( DAC::libraryItem() );
     addItem( Bus::libraryItem() );
     addItem( SevenSegmentBCD::libraryItem() );
-    addItem( Memory::libraryItem() );
-    addItem( I2CRam::libraryItem() );
-    addItem( I2CToParallel::libraryItem() );
     addItem( Lm555::libraryItem() );
 
 

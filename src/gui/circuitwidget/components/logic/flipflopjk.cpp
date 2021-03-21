@@ -98,4 +98,4 @@ void FlipFlopJK::voltChanged()
     }
     sheduleOutPuts();
 }
-
+#include "moc_flipflopjk.cpp"
