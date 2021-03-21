@@ -34,16 +34,6 @@
         <source>Micro</source>
         <translation>Микроконтроллеры</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Ошибка</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">В схеме допускается
-только 1 микроконтроллер.</translation>
-    </message>
 </context>
 <context>
     <name>Aip31068_i2c</name>
@@ -453,14 +443,6 @@
         <translation>Функции</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation>ширина</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation>высота</translation>
-    </message>
-    <message>
         <source>Image File</source>
         <translation>Файл рисунка</translation>
     </message>
@@ -545,10 +527,6 @@
         <translation>Количество</translation>
     </message>
     <message>
-        <source>Logic Symbol</source>
-        <translation>Логический символ</translation>
-    </message>
-    <message>
         <source>Font Scale</source>
         <translation>Масштаб шрифта</translation>
     </message>
@@ -591,10 +569,6 @@
     <message>
         <source>Show Cap</source>
         <translation>Показать емкость</translation>
-    </message>
-    <message>
-        <source>Package File</source>
-        <translation>Файл корпуса</translation>
     </message>
     <message>
         <source>RPM Nominal</source>
@@ -689,26 +663,9 @@ p, li { white-space: pre-wrap; }
         <source>Pt_Brasil</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>Arduino</name>
     <message>
-        <source>Arduino</source>
-        <translation>Arduino</translation>
-    </message>
-    <message>
-        <source>Micro</source>
-        <translation>Микроконтроллеры</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Ошибка</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">В схеме допускается
-только 1 микроконтроллер.</translation>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -841,18 +798,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BaseDebugger</name>
     <message>
-        <source>Debugger already running</source>
-        <translation type="vanished">Отладчик уже работает</translation>
-    </message>
-    <message>
-        <source>Stop active session</source>
-        <translation type="vanished">Остановка активной сессии</translation>
-    </message>
-    <message>
-        <source>Uploading: </source>
-        <translation type="vanished">Загрузка: </translation>
-    </message>
-    <message>
         <source>FirmWare Uploaded to </source>
         <translation>Прошивка загружена в </translation>
     </message>
@@ -957,10 +902,6 @@ p, li { white-space: pre-wrap; }
         <translation>Инвертировать такты</translation>
     </message>
     <message>
-        <source>Reset Inverted</source>
-        <translation type="vanished">Инвертировать сброс</translation>
-    </message>
-    <message>
         <source>Count to</source>
         <translation>Считать до</translation>
     </message>
@@ -1035,22 +976,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>Chip</name>
-    <message>
-        <source>Cannot read file:
-%1:
-%2.</source>
-        <translation type="vanished">Не удаётся прочитать файл:
-%1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file:
-%1
-to DomDocument</source>
-        <translation type="vanished">Не удаётся загрузить файл:
-%1
-в DOMDocument</translation>
-    </message>
     <message>
         <source>Error reading Chip file:
 %1
@@ -1143,18 +1068,6 @@ p, li { white-space: pre-wrap; }
         <translation>Схемы (*.simu);;Все файлы (*.*)</translation>
     </message>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Не удаётся прочитать файл %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Не удаётся загрузить файл %1
-в DOMDocument</translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Не удаётся записать файл %1:
@@ -1163,26 +1076,6 @@ to DomDocument</source>
     <message>
         <source>Bill Of Materials</source>
         <translation>Спецификация материалов</translation>
-    </message>
-    <message>
-        <source>Create Subcircuit</source>
-        <translation type="vanished">Создать подсхему</translation>
-    </message>
-    <message>
-        <source>Select Directory</source>
-        <translation type="vanished">Выбор каталога</translation>
-    </message>
-    <message>
-        <source>Cannot set file:
-%1
-to DomDocument</source>
-        <translation type="vanished">Не удаётся загрузить файл:
-%1
-в DOMDocument</translation>
-    </message>
-    <message>
-        <source>2 Package Pins connected together</source>
-        <translation type="vanished">2 вывода корпуса/LS  соединены вместе</translation>
     </message>
 </context>
 <context>
@@ -1208,10 +1101,6 @@ to DomDocument</source>
         <translation>Сохранить схему как изображение</translation>
     </message>
     <message>
-        <source>Create SubCircuit</source>
-        <translation type="vanished">Создать подсхему</translation>
-    </message>
-    <message>
         <source>Bill of Materials</source>
         <translation>Спецификация материалов</translation>
     </message>
@@ -1230,10 +1119,6 @@ to DomDocument</source>
     <message>
         <source>Time: </source>
         <translation>Bремя: </translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="vanished">Свойства</translation>
     </message>
 </context>
 <context>
@@ -1427,14 +1312,6 @@ Do you want to save your changes?
         <translation>Загрузка: </translation>
     </message>
     <message>
-        <source>
-Error:  Mcu Deleted while Debugging!!
-</source>
-        <translation type="vanished">
-Ошибка: микроконтроллер удалён при отладке!!!
-</translation>
-    </message>
-    <message>
         <source>Starting Debbuger...</source>
         <translation>Запуск отладчика...</translation>
     </message>
@@ -1485,24 +1362,6 @@ Error:  Mcu Deleted while Debugging!!
     <message>
         <source>No Compiler available for: %1 files</source>
         <translation>Компилятор недоступен для: %1 файла</translation>
-    </message>
-</context>
-<context>
-    <name>CodeEditorWidget</name>
-    <message>
-        <source>Ready</source>
-        <translation type="vanished">Готов</translation>
-    </message>
-</context>
-<context>
-    <name>ColorCombo</name>
-    <message>
-        <source>Custom</source>
-        <translation type="vanished">Настройка</translation>
-    </message>
-    <message>
-        <source>Transparent</source>
-        <translation type="vanished">Непрозрачность</translation>
     </message>
 </context>
 <context>
@@ -1659,6 +1518,17 @@ to DomDocument</source>
     <message>
         <source>Reference Voltage</source>
         <translation>Опорное напряжение</translation>
+    </message>
+</context>
+<context>
+    <name>DataLaWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
+    </message>
+    <message>
+        <source>Expand</source>
+        <translation type="unfinished">Развернуть</translation>
     </message>
 </context>
 <context>
@@ -2248,22 +2118,6 @@ Do you want to save your changes?
         <source>Logic/Memory</source>
         <translation>Логика/память</translation>
     </message>
-    <message>
-        <source>Main</source>
-        <translation type="vanished">Основные</translation>
-    </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="vanished">Инвертировать такты</translation>
-    </message>
-    <message>
-        <source>Set / Reset Inverted</source>
-        <translation type="vanished">Инвертировать Set / Reset</translation>
-    </message>
-    <message>
-        <source>Trigger Type</source>
-        <translation type="vanished">Тип триггера</translation>
-    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
@@ -2274,22 +2128,6 @@ Do you want to save your changes?
     <message>
         <source>Logic/Memory</source>
         <translation>Логика/память</translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="vanished">Основные</translation>
-    </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="vanished">Инвертировать такты</translation>
-    </message>
-    <message>
-        <source>Set / Reset Inverted</source>
-        <translation type="vanished">Инвертировать Set / Reset</translation>
-    </message>
-    <message>
-        <source>Trigger Type</source>
-        <translation type="vanished">Тип триггера</translation>
     </message>
 </context>
 <context>
@@ -2453,10 +2291,6 @@ Do you want to save your changes?
         <translation>HD44780</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Выходы</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation>Дисплеи</translation>
     </message>
@@ -2593,34 +2427,6 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>InoDebugger</name>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="vanished">Не удаётся записать файл %1:
-%2.</translation>
-    </message>
-</context>
-<context>
-    <name>IntCircuit</name>
-    <message>
-        <source>There are no data files for </source>
-        <translation type="vanished">Нет файлов данных для </translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Не удаётся прочитать файл %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Не удаётся загрузить файл %1
-в DOMDocument</translation>
-    </message>
-</context>
-<context>
     <name>ItemLibrary</name>
     <message>
         <source>Gates</source>
@@ -2702,6 +2508,10 @@ to DomDocument</source>
         <source>I51</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Arduino</source>
+        <translation type="unfinished">Arduino</translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2759,10 +2569,6 @@ to DomDocument</source>
         <translation>KS0108</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Выходы</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation>Дисплеи</translation>
     </message>
@@ -2773,6 +2579,60 @@ to DomDocument</source>
     <message>
         <source>CS Active Low</source>
         <translation>CS активный низкий</translation>
+    </message>
+</context>
+<context>
+    <name>LAnalizer</name>
+    <message>
+        <source>Logic Analizer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meters</source>
+        <translation type="unfinished">Измерение</translation>
+    </message>
+</context>
+<context>
+    <name>LaWidget</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Диалог</translation>
+    </message>
+    <message>
+        <source>Ch 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2820,10 +2680,6 @@ to DomDocument</source>
         <translation>Фоторезистор</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Пассивные элементы</translation>
-    </message>
-    <message>
         <source>Resistive Sensors</source>
         <translation>Резистивные сенсоры</translation>
     </message>
@@ -2863,10 +2719,6 @@ to DomDocument</source>
         <translation>Светодиод</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Светодиоды</translation>
-    </message>
-    <message>
         <source>Leds</source>
         <translation>Светодиоды</translation>
     </message>
@@ -2904,10 +2756,6 @@ to DomDocument</source>
     <message>
         <source>LedBar</source>
         <translation>Светодиодная сборка</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Светодиоды</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -2951,10 +2799,6 @@ to DomDocument</source>
     <message>
         <source>LedMatrix</source>
         <translation>Светодиодная матрица</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Светодиоды</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3111,10 +2955,6 @@ to DomDocument</source>
         <translation>Компоненты</translation>
     </message>
     <message>
-        <source>RamTable</source>
-        <translation type="vanished">Таблица RAM</translation>
-    </message>
-    <message>
         <source>File explorer</source>
         <translation>Файловый проводник</translation>
     </message>
@@ -3176,18 +3016,6 @@ to DomDocument</source>
 <context>
     <name>McuComponent</name>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Не удаётся прочитать файл %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Не удаётся загрузить файл %1
-в DOMDocument</translation>
-    </message>
-    <message>
         <source>Load firmware</source>
         <translation>Загрузить прошивку</translation>
     </message>
@@ -3228,10 +3056,6 @@ to DomDocument</source>
         <translation>Все файлы (*.*);;ELF файлы (*.elf);;Hex файлы (*.hex)</translation>
     </message>
     <message>
-        <source>Open RamTable.</source>
-        <translation>Открыть таблицу памяти</translation>
-    </message>
-    <message>
         <source>Main Mcu</source>
         <translation>Основной МК</translation>
     </message>
@@ -3256,16 +3080,19 @@ to DomDocument</source>
         <translation>Автозагрузка прошивки</translation>
     </message>
     <message>
-        <source>Show EEPROM Table</source>
-        <translation>Показать содержимое EEPROM</translation>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>McuMonitor</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Диалог</translation>
     </message>
 </context>
 <context>
     <name>MemData</name>
-    <message>
-        <source>Load Data</source>
-        <translation type="vanished">Загрузить данные</translation>
-    </message>
     <message>
         <source>Save Data</source>
         <translation>Сохранить данные</translation>
@@ -3284,8 +3111,8 @@ to DomDocument</source>
 <context>
     <name>MemTable</name>
     <message>
-        <source>Memory View</source>
-        <translation>Просмотр памяти</translation>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
     </message>
 </context>
 <context>
@@ -3530,26 +3357,12 @@ to DomDocument</source>
         <source>Micro</source>
         <translation>Микроконтроллеры</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Ошибка</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">В схеме допускается
-только 1 микроконтроллер.</translation>
-    </message>
 </context>
 <context>
     <name>Pcd8544</name>
     <message>
         <source>Pcd8544</source>
         <translation>PCD8544</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Выходы</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -3584,10 +3397,6 @@ to DomDocument</source>
     <message>
         <source>Potentiometer</source>
         <translation>Потенциометр</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3688,25 +3497,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QPropertyModel</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Имя</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Значение</translation>
-    </message>
-</context>
-<context>
     <name>RTD</name>
     <message>
         <source>RTD</source>
         <translation>Термометр сопротивления RTD</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -3808,6 +3602,10 @@ p, li { white-space: pre-wrap; }
         <source>Value</source>
         <translation>Значение</translation>
     </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Форма</translation>
+    </message>
 </context>
 <context>
     <name>Rectangle</name>
@@ -3878,10 +3676,6 @@ p, li { white-space: pre-wrap; }
         <translation>Резистор</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Пассивные элементы</translation>
-    </message>
-    <message>
         <source>Resistors</source>
         <translation>Резисторы</translation>
     </message>
@@ -3899,10 +3693,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ResistorDip</source>
         <translation>Резисторная сборка</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3997,10 +3787,6 @@ p, li { white-space: pre-wrap; }
         <translation>Сервопривод</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Выходы</translation>
-    </message>
-    <message>
         <source>Motors</source>
         <translation>Двигатели</translation>
     </message>
@@ -4018,10 +3804,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>7 Segment</source>
         <translation>7-сегментный индикатор</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Светодиоды</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -4234,10 +4016,6 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Выходы</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation>Дисплеи</translation>
     </message>
@@ -4263,10 +4041,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Stepper</source>
         <translation>Шаговый двигатель</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Выходы</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -4358,12 +4132,6 @@ to DomDocument</source>
 в DOMDocument</translation>
     </message>
     <message>
-        <source>Error reading Subcircuit file: %1
-</source>
-        <translation type="vanished">Ошибка чтения файла подсхемы: %1
-</translation>
-    </message>
-    <message>
         <source>There are no data files for </source>
         <translation>Нет файлов данных для </translation>
     </message>
@@ -4374,6 +4142,14 @@ to DomDocument</source>
     <message>
         <source>Logic Symbol</source>
         <translation>Логический символ</translation>
+    </message>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4456,6 +4232,10 @@ Do you want to save your changes?
     <message>
         <source>Background</source>
         <translation>Фон</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Тип</translation>
     </message>
 </context>
 <context>
@@ -4548,13 +4328,6 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>Termistor</name>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Пассивные элементы</translation>
-    </message>
-</context>
-<context>
     <name>TextComponent</name>
     <message>
         <source>Text</source>
@@ -4625,10 +4398,6 @@ Do you want to save your changes?
         <translation>Терморезистор</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Пассивные элементы</translation>
-    </message>
-    <message>
         <source>Resistive Sensors</source>
         <translation>Резистивные сенсоры</translation>
     </message>
@@ -4689,10 +4458,6 @@ Do you want to save your changes?
     <message>
         <source>Variable Resistor</source>
         <translation>Переменный резистор</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -4773,10 +4538,6 @@ Do you want to save your changes?
     <message>
         <source>WS2812 Led</source>
         <translation>WS2812 светодиод</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Светодиоды</translation>
     </message>
     <message>
         <source>Leds</source>

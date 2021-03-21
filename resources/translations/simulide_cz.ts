@@ -34,16 +34,6 @@
         <source>Micro</source>
         <translation>Mikroprocesory</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Chyba</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">V obvodu může být pouze
-jeden mikroprocesor.</translation>
-    </message>
 </context>
 <context>
     <name>Aip31068_i2c</name>
@@ -453,14 +443,6 @@ jeden mikroprocesor.</translation>
         <translation>Funkce</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation>Šířka</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation>Výška</translation>
-    </message>
-    <message>
         <source>Image File</source>
         <translation>Soubor</translation>
     </message>
@@ -553,10 +535,6 @@ jeden mikroprocesor.</translation>
         <translation>Trvalá paměť</translation>
     </message>
     <message>
-        <source>Logic Symbol</source>
-        <translation>Logický symbol</translation>
-    </message>
-    <message>
         <source>Font Scale</source>
         <translation>Měřítko písma</translation>
     </message>
@@ -591,10 +569,6 @@ jeden mikroprocesor.</translation>
     <message>
         <source>Show Cap</source>
         <translation>Zobrazit kapacitu</translation>
-    </message>
-    <message>
-        <source>Package File</source>
-        <translation>Soubor s pouzdrem</translation>
     </message>
     <message>
         <source>RPM Nominal</source>
@@ -689,26 +663,9 @@ p, li { white-space: pre-wrap; }
         <source>Font Scale</source>
         <translation type="unfinished">Měřítko písma</translation>
     </message>
-</context>
-<context>
-    <name>Arduino</name>
     <message>
-        <source>Arduino</source>
-        <translation>Arduino</translation>
-    </message>
-    <message>
-        <source>Micro</source>
-        <translation>Mikroprocesory</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Chyba</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">V obvodu může být pouze
-jeden mikroprocesor.</translation>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -839,18 +796,6 @@ jeden mikroprocesor.</translation>
 </context>
 <context>
     <name>BaseDebugger</name>
-    <message>
-        <source>Debugger already running</source>
-        <translation type="vanished">Debugger stále běží</translation>
-    </message>
-    <message>
-        <source>Stop active session</source>
-        <translation type="vanished">Ukončit ladění</translation>
-    </message>
-    <message>
-        <source>Uploading: </source>
-        <translation type="vanished">Nahrávám: </translation>
-    </message>
     <message>
         <source>FirmWare Uploaded to </source>
         <translation>Firmware nahraný do </translation>
@@ -1031,22 +976,6 @@ jeden mikroprocesor.</translation>
 <context>
     <name>Chip</name>
     <message>
-        <source>Cannot read file:
-%1:
-%2.</source>
-        <translation type="vanished">Nelze načíst soubor:
-%1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file:
-%1
-to DomDocument</source>
-        <translation type="vanished">Nemohu nastavit soubor:
-%1
-na DomDocument</translation>
-    </message>
-    <message>
         <source>Error reading Chip file:
 %1
 No valid Chip</source>
@@ -1138,18 +1067,6 @@ p, li { white-space: pre-wrap; }
         <translation>Obvod (*.simu);;Všechny soubory (*.*)</translation>
     </message>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Nelze načíst soubor %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Nemohu nastavit soubor %1
-na DomDocument</translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Nemohu zapsat soubor %1:
@@ -1201,10 +1118,6 @@ na DomDocument</translation>
     <message>
         <source>Time: </source>
         <translation>Čas: </translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="vanished">Vlastnosti</translation>
     </message>
 </context>
 <context>
@@ -1398,14 +1311,6 @@ Chcete uložit změny?
         <translation>Nahrávám: </translation>
     </message>
     <message>
-        <source>
-Error:  Mcu Deleted while Debugging!!
-</source>
-        <translation type="vanished">
-Chyba: Mikroprcesor odstraněn během ladění!!
-</translation>
-    </message>
-    <message>
         <source>Starting Debbuger...</source>
         <translation>Spouštění debuggeru...</translation>
     </message>
@@ -1456,24 +1361,6 @@ Chyba: Mikroprcesor odstraněn během ladění!!
     <message>
         <source>No Compiler available for: %1 files</source>
         <translation>Překladač není dostupný pro: %1 souborů</translation>
-    </message>
-</context>
-<context>
-    <name>CodeEditorWidget</name>
-    <message>
-        <source>Ready</source>
-        <translation type="vanished">Ready</translation>
-    </message>
-</context>
-<context>
-    <name>ColorCombo</name>
-    <message>
-        <source>Custom</source>
-        <translation type="vanished">Vlastní</translation>
-    </message>
-    <message>
-        <source>Transparent</source>
-        <translation type="vanished">Průhledná</translation>
     </message>
 </context>
 <context>
@@ -1633,10 +1520,14 @@ na DomDocument</translation>
     </message>
 </context>
 <context>
-    <name>DataPlotWidget</name>
+    <name>DataLaWidget</name>
     <message>
-        <source>All</source>
-        <translation type="vanished">Vše</translation>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expand</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1659,10 +1550,6 @@ na DomDocument</translation>
     <message>
         <source>Dc Motor</source>
         <translation>Stejnosměrný motor</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -2403,10 +2290,6 @@ Chcete uložit změny?
         <translation>HD44780</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2543,38 +2426,6 @@ Chcete uložit změny?
     </message>
 </context>
 <context>
-    <name>InoDebugger</name>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="vanished">Nemohu zapsat soubor %1:
-%2.</translation>
-    </message>
-</context>
-<context>
-    <name>IntCircuit</name>
-    <message>
-        <source>IntCircuit</source>
-        <translation type="vanished">Integrovaný obvod</translation>
-    </message>
-    <message>
-        <source>There are no data files for </source>
-        <translation type="vanished">Není žádný datový soubor pro </translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Nelze načíst soubor %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Nemohu nastavit soubor %1
-na DomDocument</translation>
-    </message>
-</context>
-<context>
     <name>ItemLibrary</name>
     <message>
         <source>Gates</source>
@@ -2656,6 +2507,10 @@ na DomDocument</translation>
         <source>I51</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arduino</source>
+        <translation type="unfinished">Arduino</translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2713,10 +2568,6 @@ na DomDocument</translation>
         <translation>KS0108</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2727,6 +2578,60 @@ na DomDocument</translation>
     <message>
         <source>CS Active Low</source>
         <translation type="unfinished">CS aktivní v L</translation>
+    </message>
+</context>
+<context>
+    <name>LAnalizer</name>
+    <message>
+        <source>Logic Analizer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meters</source>
+        <translation type="unfinished">Měřidla</translation>
+    </message>
+</context>
+<context>
+    <name>LaWidget</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2774,10 +2679,6 @@ na DomDocument</translation>
         <translation>Fotoodpor</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivní součástky</translation>
-    </message>
-    <message>
         <source>Resistive Sensors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2817,10 +2718,6 @@ na DomDocument</translation>
         <translation>LED</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
-    </message>
-    <message>
         <source>Leds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2858,10 +2755,6 @@ na DomDocument</translation>
     <message>
         <source>LedBar</source>
         <translation>Bargraf</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -2905,10 +2798,6 @@ na DomDocument</translation>
     <message>
         <source>LedMatrix</source>
         <translation>LED matice</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3126,18 +3015,6 @@ na DomDocument</translation>
 <context>
     <name>McuComponent</name>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Nelze načíst soubor %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Nemohu nastavit soubor %1
-na DomDocument</translation>
-    </message>
-    <message>
         <source>Load firmware</source>
         <translation>Načíst firmware</translation>
     </message>
@@ -3178,10 +3055,6 @@ na DomDocument</translation>
         <translation>Všechny soubory (*.*);;ELF soubory (*.elf);;Hex soubory (*.hex)</translation>
     </message>
     <message>
-        <source>Open RamTable.</source>
-        <translation>Otevřít tabulku RAM</translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3206,16 +3079,19 @@ na DomDocument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show EEPROM Table</source>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>McuMonitor</name>
+    <message>
+        <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MemData</name>
-    <message>
-        <source>Load Data</source>
-        <translation type="vanished">Načíst data</translation>
-    </message>
     <message>
         <source>Save Data</source>
         <translation>Uložit data</translation>
@@ -3234,7 +3110,7 @@ na DomDocument</translation>
 <context>
     <name>MemTable</name>
     <message>
-        <source>Memory View</source>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3480,26 +3356,12 @@ na DomDocument</translation>
         <source>Micro</source>
         <translation>Mikroprocesory</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Chyba</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">V obvodu může být pouze
-jeden mikroprocesor.</translation>
-    </message>
 </context>
 <context>
     <name>Pcd8544</name>
     <message>
         <source>Pcd8544</source>
         <translation>PCD8544</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -3534,10 +3396,6 @@ jeden mikroprocesor.</translation>
     <message>
         <source>Potentiometer</source>
         <translation>Potenciometr</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivní součástky</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3635,17 +3493,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Key</source>
         <translation type="unfinished">Klávesa</translation>
-    </message>
-</context>
-<context>
-    <name>QPropertyModel</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Název</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Hodnota</translation>
     </message>
 </context>
 <context>
@@ -3754,6 +3601,10 @@ p, li { white-space: pre-wrap; }
         <source>Value</source>
         <translation>Hodnota</translation>
     </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Rectangle</name>
@@ -3824,10 +3675,6 @@ p, li { white-space: pre-wrap; }
         <translation>Odpor</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivní součástky</translation>
-    </message>
-    <message>
         <source>Resistors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3845,10 +3692,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ResistorDip</source>
         <translation>Odpor DIP</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivní součástky</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3943,10 +3786,6 @@ p, li { white-space: pre-wrap; }
         <translation>Servomotor</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
-    </message>
-    <message>
         <source>Motors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3964,10 +3803,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>7 Segment</source>
         <translation>sedmisegmentový displej</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -4180,10 +4015,6 @@ p, li { white-space: pre-wrap; }
         <translation>SSD1306</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4209,10 +4040,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Stepper</source>
         <translation>Krokový motor</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -4304,12 +4131,6 @@ to DomDocument</source>
 na DomDocument</translation>
     </message>
     <message>
-        <source>Error reading Subcircuit file: %1
-</source>
-        <translation type="vanished">Chyba při načítání souboru podobvodu: %1
-</translation>
-    </message>
-    <message>
         <source>There are no data files for </source>
         <translation>Nejsou žádná data pro </translation>
     </message>
@@ -4320,6 +4141,14 @@ na DomDocument</translation>
     <message>
         <source>Logic Symbol</source>
         <translation type="unfinished">Logický symbol</translation>
+    </message>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4377,16 +4206,8 @@ Chcete uložit změny?
         <translation>Upravit pin </translation>
     </message>
     <message>
-        <source>Hide Non Graphic</source>
-        <translation type="vanished">Skrýt obvod</translation>
-    </message>
-    <message>
         <source>Select Main Component</source>
         <translation>Vybrat hlavní komponentu</translation>
-    </message>
-    <message>
-        <source>Create Board</source>
-        <translation type="vanished">Vytvořit desku</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -4411,6 +4232,10 @@ Chcete uložit změny?
     <message>
         <source>Background</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Typ</translation>
     </message>
 </context>
 <context>
@@ -4500,17 +4325,6 @@ Chcete uložit změny?
     <message>
         <source>Unknown Mcu</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Termistor</name>
-    <message>
-        <source>Termistor</source>
-        <translation type="vanished">Termistor</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivní součástky</translation>
     </message>
 </context>
 <context>
@@ -4644,10 +4458,6 @@ Chcete uložit změny?
         <translation>Nastavitelný odpor</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivní součástky</translation>
-    </message>
-    <message>
         <source>Resistors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4726,10 +4536,6 @@ Chcete uložit změny?
     <message>
         <source>WS2812 Led</source>
         <translation>WS2812 LED</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Výstupy</translation>
     </message>
     <message>
         <source>Leds</source>

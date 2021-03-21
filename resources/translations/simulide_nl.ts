@@ -34,16 +34,6 @@
         <source>Micro</source>
         <translation></translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Fout</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">Slechts 1 MCU toegestaan
- in de schakeling.</translation>
-    </message>
 </context>
 <context>
     <name>Aip31068_i2c</name>
@@ -453,14 +443,6 @@
         <translation>Functies</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation>Breedte</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation>Hoogte</translation>
-    </message>
-    <message>
         <source>Image File</source>
         <translation>Afbeeldingsbestand</translation>
     </message>
@@ -553,10 +535,6 @@
         <translation>Persistent</translation>
     </message>
     <message>
-        <source>Logic Symbol</source>
-        <translation>Logisch symbool</translation>
-    </message>
-    <message>
         <source>Font Scale</source>
         <translation>Letterschaal</translation>
     </message>
@@ -591,10 +569,6 @@
     <message>
         <source>Show Cap</source>
         <translation>Toon Cap</translation>
-    </message>
-    <message>
-        <source>Package File</source>
-        <translation>Pakketbestand</translation>
     </message>
     <message>
         <source>RPM Nominal</source>
@@ -689,26 +663,9 @@ p, li { white-space: pre-wrap; }
         <source>Font Scale</source>
         <translation type="unfinished">Letterschaal</translation>
     </message>
-</context>
-<context>
-    <name>Arduino</name>
     <message>
-        <source>Arduino</source>
-        <translation>Arduino</translation>
-    </message>
-    <message>
-        <source>Micro</source>
-        <translation>Micro</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Fout</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">Slechts 1 MCU toegestaan
- in de schakeling.</translation>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -841,18 +798,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BaseDebugger</name>
     <message>
-        <source>Debugger already running</source>
-        <translation type="vanished">Debugger wordt al uitgevoerd</translation>
-    </message>
-    <message>
-        <source>Stop active session</source>
-        <translation type="vanished">Stop actieve sessie</translation>
-    </message>
-    <message>
-        <source>Uploading: </source>
-        <translation type="vanished">Aan het uploaden: </translation>
-    </message>
-    <message>
         <source>FirmWare Uploaded to </source>
         <translation>Firmware geüploaded naar </translation>
     </message>
@@ -957,10 +902,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Klok geïnverteerd</translation>
     </message>
     <message>
-        <source>Reset Inverted</source>
-        <translation type="obsolete">Reset geïnverteerd</translation>
-    </message>
-    <message>
         <source>Count to</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1035,22 +976,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>Chip</name>
-    <message>
-        <source>Cannot read file:
-%1:
-%2.</source>
-        <translation type="vanished">Kan bestand niet lezen:
-%1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file:
-%1
-to DomDocument</source>
-        <translation type="vanished">Kan bestand:
-%1
-niet instellen als DomDocument</translation>
-    </message>
     <message>
         <source>Error reading Chip file:
 %1
@@ -1143,18 +1068,6 @@ p, li { white-space: pre-wrap; }
         <translation>Schakelingen (*.simu);;Alle bestanden (*.*)</translation>
     </message>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Kan bestand niet lezen: %1
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Kan bestand %1
-niet instellen als DomDocument</translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Kan niet schrijven naar bestand %1:
@@ -1206,10 +1119,6 @@ niet instellen als DomDocument</translation>
     <message>
         <source>Time: </source>
         <translation>Tijd: </translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="vanished">Eigenschappen</translation>
     </message>
 </context>
 <context>
@@ -1403,14 +1312,6 @@ Wijzigingen opslaan?
         <translation>Uploaden: </translation>
     </message>
     <message>
-        <source>
-Error:  Mcu Deleted while Debugging!!
-</source>
-        <translation type="vanished">
-Fout: MCU verwijderd tijdens debuggen!!
-</translation>
-    </message>
-    <message>
         <source>Starting Debbuger...</source>
         <translation>Start de debugger...</translation>
     </message>
@@ -1464,24 +1365,6 @@ Fout: MCU verwijderd tijdens debuggen!!
     </message>
 </context>
 <context>
-    <name>CodeEditorWidget</name>
-    <message>
-        <source>Ready</source>
-        <translation type="vanished">Klaar</translation>
-    </message>
-</context>
-<context>
-    <name>ColorCombo</name>
-    <message>
-        <source>Custom</source>
-        <translation type="vanished">Maatwerk</translation>
-    </message>
-    <message>
-        <source>Transparent</source>
-        <translation type="vanished">Transparant</translation>
-    </message>
-</context>
-<context>
     <name>CompilDialog</name>
     <message>
         <source>Type: </source>
@@ -1514,34 +1397,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>Compiler</name>
-    <message>
-        <source>Debugger already running</source>
-        <translation type="obsolete">Debugger wordt al uitgevoerd</translation>
-    </message>
-    <message>
-        <source>Stop active session</source>
-        <translation type="obsolete">Stop actieve sessie</translation>
-    </message>
-    <message>
-        <source>FirmWare Uploaded to </source>
-        <translation type="obsolete">Firmware geüploaded naar </translation>
-    </message>
-    <message>
-        <source>Select Compiler toolchain directory</source>
-        <translation type="obsolete">Selecteer Compiler toolchain folder</translation>
-    </message>
-    <message>
-        <source>Using Compiler Path: </source>
-        <translation type="obsolete">Gebruikt compiler pad: </translation>
-    </message>
-    <message>
-        <source>: ToolChain not found</source>
-        <translation type="obsolete">:Toolchain niet gevonden</translation>
-    </message>
-    <message>
-        <source>Right-Click on Document Tab to set Path</source>
-        <translation type="obsolete">Rechtsklik op document tab om het pad in te stellen</translation>
-    </message>
     <message>
         <source>Error: ToolChain not found</source>
         <translation type="unfinished"></translation>
@@ -1666,10 +1521,14 @@ niet instellen als DomDucument</translation>
     </message>
 </context>
 <context>
-    <name>DataPlotWidget</name>
+    <name>DataLaWidget</name>
     <message>
-        <source>All</source>
-        <translation type="vanished">Alles</translation>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expand</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1692,10 +1551,6 @@ niet instellen als DomDucument</translation>
     <message>
         <source>Dc Motor</source>
         <translation>DC Motor</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -2263,10 +2118,6 @@ Wijzigingen opslaan?
         <source>Logic/Memory</source>
         <translation>Logica/Geheugen</translation>
     </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="obsolete">Klok geïnverteerd</translation>
-    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
@@ -2277,10 +2128,6 @@ Wijzigingen opslaan?
     <message>
         <source>Logic/Memory</source>
         <translation>Logica/Geheugen</translation>
-    </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="obsolete">Klok geïnverteerd</translation>
     </message>
 </context>
 <context>
@@ -2444,10 +2291,6 @@ Wijzigingen opslaan?
         <translation>Hd44780</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2584,38 +2427,6 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>InoDebugger</name>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="vanished">Kan niet schrijven naar bestand %1:
-%2.</translation>
-    </message>
-</context>
-<context>
-    <name>IntCircuit</name>
-    <message>
-        <source>IntCircuit</source>
-        <translation type="vanished">Intschakeling</translation>
-    </message>
-    <message>
-        <source>There are no data files for </source>
-        <translation type="vanished">Er zijn databestanden voor </translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Kan bestand niet lezen: %1
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Kan bestand %1
-niet instellen als DomDocument</translation>
-    </message>
-</context>
-<context>
     <name>ItemLibrary</name>
     <message>
         <source>Gates</source>
@@ -2697,6 +2508,10 @@ niet instellen als DomDocument</translation>
         <source>I51</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arduino</source>
+        <translation type="unfinished">Arduino</translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2754,10 +2569,6 @@ niet instellen als DomDocument</translation>
         <translation>KS0108</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2768,6 +2579,60 @@ niet instellen als DomDocument</translation>
     <message>
         <source>CS Active Low</source>
         <translation type="unfinished">CS Actief laag</translation>
+    </message>
+</context>
+<context>
+    <name>LAnalizer</name>
+    <message>
+        <source>Logic Analizer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meters</source>
+        <translation type="unfinished">Meters</translation>
+    </message>
+</context>
+<context>
+    <name>LaWidget</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2815,10 +2680,6 @@ niet instellen als DomDocument</translation>
         <translation>LDR</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
-    </message>
-    <message>
         <source>Resistive Sensors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2858,10 +2719,6 @@ niet instellen als DomDocument</translation>
         <translation>LED</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
-    </message>
-    <message>
         <source>Leds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2899,10 +2756,6 @@ niet instellen als DomDocument</translation>
     <message>
         <source>LedBar</source>
         <translation>LEDbalk</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -2946,10 +2799,6 @@ niet instellen als DomDocument</translation>
     <message>
         <source>LedMatrix</source>
         <translation>LEDmatrix</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3167,18 +3016,6 @@ niet instellen als DomDocument</translation>
 <context>
     <name>McuComponent</name>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Kan bestand niet lezen: %1
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Kan bestand %1
-niet instellen als DomDocument</translation>
-    </message>
-    <message>
         <source>Load firmware</source>
         <translation>Firmware laden</translation>
     </message>
@@ -3219,10 +3056,6 @@ niet instellen als DomDocument</translation>
         <translation>Alle bestanden (*.*);;ELF bestanden (*.elf);;HEX bestanden (*.hex)</translation>
     </message>
     <message>
-        <source>Open RamTable.</source>
-        <translation>Open RAM tabel.</translation>
-    </message>
-    <message>
         <source>Main Mcu</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3247,16 +3080,19 @@ niet instellen als DomDocument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show EEPROM Table</source>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>McuMonitor</name>
+    <message>
+        <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MemData</name>
-    <message>
-        <source>Load Data</source>
-        <translation type="vanished">Laad data</translation>
-    </message>
     <message>
         <source>Save Data</source>
         <translation>Sla data op</translation>
@@ -3275,7 +3111,7 @@ niet instellen als DomDocument</translation>
 <context>
     <name>MemTable</name>
     <message>
-        <source>Memory View</source>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3521,26 +3357,12 @@ niet instellen als DomDocument</translation>
         <source>Micro</source>
         <translation>Micro</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Fout</translation>
-    </message>
-    <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">Slechts 1 MCU toegestaan
- in de schakeling.</translation>
-    </message>
 </context>
 <context>
     <name>Pcd8544</name>
     <message>
         <source>Pcd8544</source>
         <translation>Pcd8544</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -3575,10 +3397,6 @@ niet instellen als DomDocument</translation>
     <message>
         <source>Potentiometer</source>
         <translation>Potmeter</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3676,17 +3494,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Key</source>
         <translation type="unfinished">Sleutel</translation>
-    </message>
-</context>
-<context>
-    <name>QPropertyModel</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Naam</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Waarde</translation>
     </message>
 </context>
 <context>
@@ -3795,6 +3602,10 @@ p, li { white-space: pre-wrap; }
         <source>Value</source>
         <translation>Waarde</translation>
     </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Rectangle</name>
@@ -3865,10 +3676,6 @@ p, li { white-space: pre-wrap; }
         <translation>Weerstand</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
-    </message>
-    <message>
         <source>Resistors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3886,10 +3693,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ResistorDip</source>
         <translation>WeerstandDip</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3984,10 +3787,6 @@ p, li { white-space: pre-wrap; }
         <translation>Servo</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
-    </message>
-    <message>
         <source>Motors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4005,10 +3804,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>7 Segment</source>
         <translation>7 segment</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -4221,10 +4016,6 @@ p, li { white-space: pre-wrap; }
         <translation>SSD1306</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4250,10 +4041,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Stepper</source>
         <translation>Stepper</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -4345,12 +4132,6 @@ to DomDocument</source>
 niet instellen als DomDocument</translation>
     </message>
     <message>
-        <source>Error reading Subcircuit file: %1
-</source>
-        <translation type="vanished">Fout bij lezen Subschakeling bestand: %1
-</translation>
-    </message>
-    <message>
         <source>There are no data files for </source>
         <translation>Er zijn geen databestanden voor </translation>
     </message>
@@ -4361,6 +4142,14 @@ niet instellen als DomDocument</translation>
     <message>
         <source>Logic Symbol</source>
         <translation type="unfinished">Logisch symbool</translation>
+    </message>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4418,16 +4207,8 @@ Wijzigingen opslaan?
         <translation>Bewerk pin </translation>
     </message>
     <message>
-        <source>Hide Non Graphic</source>
-        <translation type="vanished">Verberg niet-grafisch</translation>
-    </message>
-    <message>
         <source>Select Main Component</source>
         <translation>Selecteer hoofdcomponent</translation>
-    </message>
-    <message>
-        <source>Create Board</source>
-        <translation type="vanished">Maak bord</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -4452,6 +4233,10 @@ Wijzigingen opslaan?
     <message>
         <source>Background</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
     </message>
 </context>
 <context>
@@ -4541,17 +4326,6 @@ Wijzigingen opslaan?
     <message>
         <source>Unknown Mcu</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Termistor</name>
-    <message>
-        <source>Termistor</source>
-        <translation type="vanished">Thermistor</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
     </message>
 </context>
 <context>
@@ -4685,10 +4459,6 @@ Wijzigingen opslaan?
         <translation>Variabele weerstand</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
-    </message>
-    <message>
         <source>Resistors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4767,10 +4537,6 @@ Wijzigingen opslaan?
     <message>
         <source>WS2812 Led</source>
         <translation>WS2812 LED</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Uitgangen</translation>
     </message>
     <message>
         <source>Leds</source>

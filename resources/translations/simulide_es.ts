@@ -27,12 +27,6 @@
 <context>
     <name>AVRComponent</name>
     <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">Solo puede haber
-1 Microcontrolador en el Circuito.</translation>
-    </message>
-    <message>
         <source>AVR</source>
         <translation>AVR</translation>
     </message>
@@ -449,14 +443,6 @@
         <translation>Funciones</translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation>Ancho</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation>Alto</translation>
-    </message>
-    <message>
         <source>Image File</source>
         <translation>Archivo de Imagen</translation>
     </message>
@@ -549,10 +535,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic Symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Font Scale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -586,10 +568,6 @@
     </message>
     <message>
         <source>Show Cap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Package File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -685,22 +663,9 @@ p, li { white-space: pre-wrap; }
         <source>Pt_Brasil</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>Arduino</name>
     <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">Solo puede haber
-1 Microcontrolador en el Circuito.</translation>
-    </message>
-    <message>
-        <source>Arduino</source>
-        <translation>Arduino</translation>
-    </message>
-    <message>
-        <source>Micro</source>
-        <translation></translation>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -833,18 +798,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BaseDebugger</name>
     <message>
-        <source>Debugger already running</source>
-        <translation type="vanished">Depurador iniciado</translation>
-    </message>
-    <message>
-        <source>Stop active session</source>
-        <translation type="vanished">Detenga la sesion primero</translation>
-    </message>
-    <message>
-        <source>Uploading: </source>
-        <translation type="vanished">Cargando: </translation>
-    </message>
-    <message>
         <source>FirmWare Uploaded to </source>
         <translation>FirmWare Cargado en </translation>
     </message>
@@ -949,10 +902,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Reloj Invertido</translation>
     </message>
     <message>
-        <source>Reset Inverted</source>
-        <translation type="obsolete">Reset Invertido</translation>
-    </message>
-    <message>
         <source>Count to</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1027,22 +976,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>Chip</name>
-    <message>
-        <source>Cannot read file:
-%1:
-%2.</source>
-        <translation type="vanished">No se pudo leer el archivo:
-%1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file:
-%1
-to DomDocument</source>
-        <translation type="vanished">No se pudo convertir el archivo:
-%1
-a DomDocument</translation>
-    </message>
     <message>
         <source>Error reading Chip file:
 %1
@@ -1135,18 +1068,6 @@ p, li { white-space: pre-wrap; }
         <translation>Circuitos (*.simu);;Todos (*.*)</translation>
     </message>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">No se pudo leer el archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">No se pudo convertir el archivo %1
-a DomDocument</translation>
-    </message>
-    <message>
         <source>Bill Of Materials</source>
         <translation>Lista de Materiales</translation>
     </message>
@@ -1155,26 +1076,6 @@ a DomDocument</translation>
 %2.</source>
         <translation>No se pudo escribir el archivo %1:
 %2.</translation>
-    </message>
-    <message>
-        <source>Create Subcircuit</source>
-        <translation type="vanished">Crear Subcircuito</translation>
-    </message>
-    <message>
-        <source>Select Directory</source>
-        <translation type="vanished">Seleccionar Carpeta</translation>
-    </message>
-    <message>
-        <source>Cannot set file:
-%1
-to DomDocument</source>
-        <translation type="vanished">No se pudo convertir el archivo:
-%1
-a DomDocument</translation>
-    </message>
-    <message>
-        <source>2 Package Pins connected together</source>
-        <translation type="vanished">2 Pines connectados juntos</translation>
     </message>
 </context>
 <context>
@@ -1200,10 +1101,6 @@ a DomDocument</translation>
         <translation>Grabar Circuito como Imagen</translation>
     </message>
     <message>
-        <source>Create SubCircuit</source>
-        <translation type="vanished">Crear Subcircuito</translation>
-    </message>
-    <message>
         <source>Bill of Materials</source>
         <translation>Lista de Materiales</translation>
     </message>
@@ -1222,10 +1119,6 @@ a DomDocument</translation>
     <message>
         <source>Time: </source>
         <translation>Tiempo: </translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="obsolete">Propiedades</translation>
     </message>
 </context>
 <context>
@@ -1418,14 +1311,6 @@ Quiere guardar los cambios?</translation>
         <translation>Cargando: </translation>
     </message>
     <message>
-        <source>
-Error:  Mcu Deleted while Debugging!!
-</source>
-        <translation type="vanished">
-Error:  Mcu Borrado mientras se Depuraba!!
-</translation>
-    </message>
-    <message>
         <source>Starting Debbuger...</source>
         <translation>Iniciando Depurador...</translation>
     </message>
@@ -1476,24 +1361,6 @@ Error:  Mcu Borrado mientras se Depuraba!!
     <message>
         <source>No Compiler available for: %1 files</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CodeEditorWidget</name>
-    <message>
-        <source>Ready</source>
-        <translation type="vanished">Listo</translation>
-    </message>
-</context>
-<context>
-    <name>ColorCombo</name>
-    <message>
-        <source>Custom</source>
-        <translation type="vanished">Personalizado</translation>
-    </message>
-    <message>
-        <source>Transparent</source>
-        <translation type="vanished">Transparente</translation>
     </message>
 </context>
 <context>
@@ -1653,6 +1520,17 @@ a DomDocument</translation>
     </message>
 </context>
 <context>
+    <name>DataLaWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expand</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataWidget</name>
     <message>
         <source>Form</source>
@@ -1672,10 +1550,6 @@ a DomDocument</translation>
     <message>
         <source>Dc Motor</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="obsolete">Salidas</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -2242,10 +2116,6 @@ Quiere guardar los cambios?</translation>
         <source>Logic/Memory</source>
         <translation>Logica/Memoria</translation>
     </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="obsolete">Reloj Invertido</translation>
-    </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
@@ -2256,10 +2126,6 @@ Quiere guardar los cambios?</translation>
     <message>
         <source>Logic/Memory</source>
         <translation>Logica/Memoria</translation>
-    </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="obsolete">Reloj Invertido</translation>
     </message>
 </context>
 <context>
@@ -2419,10 +2285,6 @@ Quiere guardar los cambios?</translation>
 <context>
     <name>Hd44780</name>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
-    </message>
-    <message>
         <source>Hd44780</source>
         <translation></translation>
     </message>
@@ -2563,34 +2425,6 @@ Quiere guardar los cambios?</translation>
     </message>
 </context>
 <context>
-    <name>InoDebugger</name>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="vanished">No se pudo escribir el archivo %1:
-%2.</translation>
-    </message>
-</context>
-<context>
-    <name>IntCircuit</name>
-    <message>
-        <source>There are no data files for </source>
-        <translation type="obsolete">No hay archivo de datos para </translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="obsolete">No se pudo leer el archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="obsolete">No se pudo convertir el archivo %1
-a DomDocument</translation>
-    </message>
-</context>
-<context>
     <name>ItemLibrary</name>
     <message>
         <source>Gates</source>
@@ -2672,6 +2506,10 @@ a DomDocument</translation>
         <source>I51</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arduino</source>
+        <translation type="unfinished">Arduino</translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2725,10 +2563,6 @@ a DomDocument</translation>
 <context>
     <name>Ks0108</name>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
-    </message>
-    <message>
         <source>Ks0108</source>
         <translation></translation>
     </message>
@@ -2743,6 +2577,60 @@ a DomDocument</translation>
     <message>
         <source>CS Active Low</source>
         <translation type="unfinished">DS Activo Bajo</translation>
+    </message>
+</context>
+<context>
+    <name>LAnalizer</name>
+    <message>
+        <source>Logic Analizer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meters</source>
+        <translation type="unfinished">Medida</translation>
+    </message>
+</context>
+<context>
+    <name>LaWidget</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2790,10 +2678,6 @@ a DomDocument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="obsolete">Pasivos</translation>
-    </message>
-    <message>
         <source>Resistive Sensors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2828,10 +2712,6 @@ a DomDocument</translation>
 </context>
 <context>
     <name>Led</name>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
-    </message>
     <message>
         <source>Led</source>
         <translation></translation>
@@ -2876,10 +2756,6 @@ a DomDocument</translation>
         <translation>Led (Barra)</translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
-    </message>
-    <message>
         <source>Leds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2921,10 +2797,6 @@ a DomDocument</translation>
     <message>
         <source>LedMatrix</source>
         <translation>Matriz Led</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3142,18 +3014,6 @@ a DomDocument</translation>
 <context>
     <name>McuComponent</name>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">No se pudo leer el archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">No se pudo convertir el archivo %1
-a DomDocument</translation>
-    </message>
-    <message>
         <source>Load firmware</source>
         <translation>Cargar firmware</translation>
     </message>
@@ -3194,10 +3054,6 @@ a DomDocument</translation>
         <translation>Todos (*.*);;archivos ELF (*.elf);;archivos Hex (*.hex)</translation>
     </message>
     <message>
-        <source>Open RamTable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main Mcu</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3222,16 +3078,19 @@ a DomDocument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show EEPROM Table</source>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>McuMonitor</name>
+    <message>
+        <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MemData</name>
-    <message>
-        <source>Load Data</source>
-        <translation type="vanished">Cargar Datos</translation>
-    </message>
     <message>
         <source>Save Data</source>
         <translation>Guardar Datos</translation>
@@ -3250,7 +3109,7 @@ a DomDocument</translation>
 <context>
     <name>MemTable</name>
     <message>
-        <source>Memory View</source>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3493,22 +3352,12 @@ a DomDocument</translation>
 <context>
     <name>PICComponent</name>
     <message>
-        <source>Only 1 Mcu allowed
- to be in the Circuit.</source>
-        <translation type="vanished">Solo puede haber
-1 Microcontrolador en el Circuito.</translation>
-    </message>
-    <message>
         <source>Micro</source>
         <translation></translation>
     </message>
 </context>
 <context>
     <name>Pcd8544</name>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
-    </message>
     <message>
         <source>Pcd8544</source>
         <translation></translation>
@@ -3546,10 +3395,6 @@ a DomDocument</translation>
     <message>
         <source>Potentiometer</source>
         <translation>Potenciometro</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivos</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3650,25 +3495,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QPropertyModel</name>
-    <message>
-        <source>Name</source>
-        <translation type="vanished">Nombre</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Valor</translation>
-    </message>
-</context>
-<context>
     <name>RTD</name>
     <message>
         <source>RTD</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="obsolete">Pasivos</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -3770,6 +3600,10 @@ p, li { white-space: pre-wrap; }
         <source>Value</source>
         <translation>Valor</translation>
     </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Rectangle</name>
@@ -3840,10 +3674,6 @@ p, li { white-space: pre-wrap; }
         <translation>Reistencia</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivos</translation>
-    </message>
-    <message>
         <source>Resistors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3861,10 +3691,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>ResistorDip</source>
         <translation>Resistencia (Dip)</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Pasivos</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -3955,10 +3781,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Servo</name>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
-    </message>
-    <message>
         <source>Servo</source>
         <translation></translation>
     </message>
@@ -3980,10 +3802,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>7 Segment</source>
         <translation>7 Segmentos</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -4196,10 +4014,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
-    </message>
-    <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4225,10 +4039,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Stepper</source>
         <translation>Motor de Pasos</translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -4320,12 +4130,6 @@ to DomDocument</source>
 a DomDocument</translation>
     </message>
     <message>
-        <source>Error reading Subcircuit file: %1
-</source>
-        <translation type="vanished">Error leyendo archivo de Subcircuito: %1
-</translation>
-    </message>
-    <message>
         <source>There are no data files for </source>
         <translation>No hay archivo de datos para </translation>
     </message>
@@ -4335,6 +4139,14 @@ a DomDocument</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4419,6 +4231,10 @@ Quiere guardar los cambios?
     <message>
         <source>Background</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
     </message>
 </context>
 <context>
@@ -4511,13 +4327,6 @@ Quiere guardar los cambios?
     </message>
 </context>
 <context>
-    <name>Termistor</name>
-    <message>
-        <source>Passive</source>
-        <translation type="obsolete">Pasivos</translation>
-    </message>
-</context>
-<context>
     <name>TextComponent</name>
     <message>
         <source>Text</source>
@@ -4586,10 +4395,6 @@ Quiere guardar los cambios?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="obsolete">Pasivos</translation>
-    </message>
-    <message>
         <source>Resistive Sensors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4650,10 +4455,6 @@ Quiere guardar los cambios?
     <message>
         <source>Variable Resistor</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="obsolete">Pasivos</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -4734,10 +4535,6 @@ Quiere guardar los cambios?
     <message>
         <source>WS2812 Led</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="vanished">Salidas</translation>
     </message>
     <message>
         <source>Leds</source>

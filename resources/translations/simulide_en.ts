@@ -443,14 +443,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Image File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -543,10 +535,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logic Symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Font Scale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -580,10 +568,6 @@
     </message>
     <message>
         <source>Show Cap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Package File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -679,16 +663,9 @@ p, li { white-space: pre-wrap; }
         <source>Pt_Brasil</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>Arduino</name>
     <message>
-        <source>Arduino</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Micro</source>
-        <translation></translation>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1526,6 +1503,17 @@ to DomDocument</source>
     </message>
     <message>
         <source>Reference Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DataLaWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expand</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2502,6 +2490,10 @@ Do you want to save your changes?
         <source>I51</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arduino</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2568,6 +2560,60 @@ Do you want to save your changes?
     </message>
     <message>
         <source>CS Active Low</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LAnalizer</name>
+    <message>
+        <source>Logic Analizer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LaWidget</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ch 8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2988,10 +3034,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open RamTable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main Mcu</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3016,7 +3058,14 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show EEPROM Table</source>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>McuMonitor</name>
+    <message>
+        <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3039,7 +3088,7 @@ Do you want to save your changes?
 <context>
     <name>MemTable</name>
     <message>
-        <source>Memory View</source>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3527,6 +3576,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4062,6 +4115,14 @@ to DomDocument</source>
         <source>Logic Symbol</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SubPackage</name>
@@ -4139,6 +4200,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
