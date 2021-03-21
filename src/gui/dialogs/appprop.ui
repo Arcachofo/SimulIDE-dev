@@ -190,6 +190,11 @@ p, li { white-space: pre-wrap; }
    </item>
    <item>
     <property name="text">
+     <string>Czech</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>Dutch</string>
     </property>
    </item>

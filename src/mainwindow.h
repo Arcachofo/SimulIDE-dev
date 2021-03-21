@@ -29,6 +29,7 @@ class FileWidget;
 
 enum Langs {
     English = 0,
+    Czech,
     Dutch,
     French,
     German,
