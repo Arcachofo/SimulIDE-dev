@@ -21,8 +21,8 @@
 #define OSCOPECHANNEL_H
 
 #include "datachannel.h"
+#include "oscope.h"
 
-class Oscope;
 
 class MAINMODULE_EXPORT OscopeChannel : public DataChannel
 {

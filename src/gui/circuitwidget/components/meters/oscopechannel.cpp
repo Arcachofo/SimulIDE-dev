@@ -29,7 +29,6 @@ OscopeChannel::OscopeChannel( Oscope* oscope, QString id )
 {
     m_oscope = oscope;
     m_filter = 0.1;
-    m_points = &m_pointsA;
 }
 OscopeChannel::~OscopeChannel()  { }
 
@@ -57,23 +56,25 @@ void OscopeChannel::initialize()
 
     m_buffer.fill(0);
     m_time.fill(0);
-    m_pointsA.clear();
-    m_pointsB.clear();
+
+    updateStep();
+
+    ///m_dataPlotW->m_data1Label[m_channel]->setText( "---" );
+    ///m_dataPlotW->m_data2Label[m_channel]->setText( "---" );
 }
 
 void OscopeChannel::updateValues()
 {
     double val = m_freq*1e12;
-    int decs = 0;
+    int decs;
     QString unit = " ";
     if( val >= 1 ) valToUnit( val, unit, decs );
-    QString f = QString::number( val, 'f' );
-    f= f.left( 6 )+unit+"Hz";
+    QString f = " "+QString::number( val, 'f', decs )+unit+"Hz";
 
     unit = " ";
     val = m_ampli*1e12;
     if( val >= 1 ) valToUnit( val, unit, decs );
-    QString a = QString::number( val,'f', decs )+unit+"V";
+    QString a = " "+QString::number( val,'f', decs )+unit+"V";
 
     m_oscope->dataW()->setData( m_channel, f );
 }
@@ -188,6 +189,7 @@ void OscopeChannel::voltChanged()
 
                 if( m_risEdge > 0 ) m_period = simTime-m_risEdge; // period = this_edge_time - last_edge_time
                 m_risEdge = simTime;
+                //if( m_trigger ) m_oscope->triggerEvent();
             }
         }
     }
@@ -210,4 +212,5 @@ void OscopeChannel::setFilter( double f )
     m_numMax  = 0;
 
     m_filter = f;
+    //m_dataPlotW->m_display->setFilter(f);
 }

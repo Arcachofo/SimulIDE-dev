@@ -50,12 +50,10 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         void setDataSize( double ds ) { m_dataSize = ds*1e6; }
 
         uint64_t hTick() { return m_timeDiv/1e3; }
-        virtual void sethTick( uint64_t td ){ m_timeDiv = td*1e3;}
+        virtual void sethTick( uint64_t td ){ setTimeDiv( td*1e3 );}
 
         uint64_t timeDiv() { return m_timeDiv; }
-        virtual void setTimeDiv( uint64_t td ){ m_timeDiv = td;}
-
-        virtual void initialize() override;
+        virtual void setTimeDiv( uint64_t td );
 
         virtual void expand( bool e ){;}
 
@@ -89,4 +87,3 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 };
 
 #endif
-

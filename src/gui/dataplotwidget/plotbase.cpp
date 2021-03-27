@@ -38,18 +38,12 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_baSizeX = 135;
     m_baSizeY = 135;
 
-    m_expand = false;
 
     Simulator::self()->addToUpdateList( this );
 }
 PlotBase::~PlotBase()
 {
     Simulator::self()->remFromUpdateList( this );
-}
-
-void PlotBase::initialize()
-{
-    ///m_dataPlotW->m_refCondFlag = false;
 }
 
 void PlotBase::setBaSizeX( int size )
@@ -66,10 +60,17 @@ void PlotBase::setBaSizeY( int size )
     expand( m_expand );
 }
 
+void PlotBase::setTimeDiv( uint64_t td )
+{
+    m_timeDiv = td;
+    m_display->setTimeDiv( td );
+}
+
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-
+    
+    //p->setBrush( Qt::darkGray );
     p->setBrush(QColor( 230, 230, 230 ));
     p->drawRoundedRect( m_area, 4, 4 );
     
@@ -78,6 +79,8 @@ void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     pen.setWidth( 0 );
     pen.setColor( Qt::white );
     p->setPen(pen);
+    
+    //p->drawRoundedRect( QRectF( -80-4, -(m_screenSizeY+20)/2-4, m_screenSizeX+m_extraSize+4, m_screenSizeY+20+4 ), 3, 3 );
 }
 
 #include "moc_plotbase.cpp"

@@ -23,6 +23,8 @@
 #include <QPixmap>
 #include <QtWidgets>
 
+class DataChannel;
+
 class PlotDisplay : public QWidget
 {
     friend class DataPlotWidget;
@@ -34,65 +36,68 @@ class PlotDisplay : public QWidget
         PlotDisplay( QWidget* parent = 0 );
 
         void setExpand( bool expand ) { m_expand = expand; }
-         void hideChannel( int ch, bool hide ) { m_hideCh[ch] = hide; }
+        void hideChannel( int ch, bool hide ) { m_hideCh[ch] = hide; }
+        void connectChannel( int ch, bool con ) { m_ncCh[ch] = !con; }
         int tracks() { return m_tracks; }
-        void setChannels( int ch );
-        void setTracks( int tracks );
-        void setColor( int ch, QColor color );
-        void setData( int ch, QList<QPointF>* data );
-        void setXFrame( uint64_t tf );
-        void setVTick( int ch, double tick );
-        void setVPos( int ch, double vPos );
-        void setHPos( int ch, int64_t hPos );
-        void setLimits( int ch, double max, double min );
+        void setTracks( int tracks ) { m_tracks = tracks; update();}
+        void setChannel( int ch, DataChannel* channel ) { m_channel[ch] = channel; }
+        void setChannels( int ch ) { m_channels = ch; }
+        void setColor( int ch, QColor color ) { m_color[ch] = color; }
+        void setTimeDiv( uint64_t td );
+        void setTimeEnd( double timeEnd );
+        void setVTick( int ch, double tick ) { m_vTick[ch] = tick; }
+        void setVPos( int ch, double vPos ) { m_vPos[ch] = -vPos; }
+        void setHPos( int ch, int64_t hPos ) { m_hPos[ch] = -hPos; }
+        void setLimits( int ch, double max, double min ) { m_vMin[ch]  = min; }
 
-    public slots:
         void updateValues();
 
     protected:
         virtual void paintEvent( QPaintEvent *event );
 
     private:
-        void drawBackground( QPainter *p );
+        inline void drawBackground( QPainter *p );
 
-        QList<QPointF>* m_data[8];
+        DataChannel* m_channel[8];
+
+        QVector<double>* m_buffer[8];
+        QVector<uint64_t>* m_time[8];
+        int m_bufferCounter[8];
+
+        double m_timeStart;
+        double m_timeEnd;
+        double m_timeDiv;
 
         bool m_expand;
 
         int m_channels;
         int m_tracks;
-        int m_trackScl;
 
         double m_sizeX;
         double m_sizeY;
 
+        double m_ceroX ;
+        double m_endX;
+        double m_ceroY;
+        double m_endY;
         double m_hCenter;
         double m_vCenter;
         double m_marginX;
         double m_marginY;
-        //double m_scaleY[8];
+        double m_scaleY[8];
         double m_scaleX;
 
-        double m_volt[8];
+        double m_cursorVolt[8];
         double m_vMaxVal[8];
         double m_vMinVal[8];
         double m_vMin[8];
-        double m_ampli[8];
         double m_vTick[8];
         double m_vPos[8];
-        int64_t m_hPos[8];
-        bool   m_hideCh[8];
-
-        double m_ceroX ;
-        double m_endX;
-        double m_ceroY;
-        double m_endS;
-        double m_lineX;
-
-        double m_sclY[8];
+        double m_hPos[8];
         double m_posY[8];
-        double m_vMaxPos[8];
-        double m_vMinPos[8];
+
+        bool   m_hideCh[8];
+        bool   m_ncCh[8];
 
         QFont m_fontB;
         QFont m_fontS;

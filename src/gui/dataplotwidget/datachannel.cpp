@@ -22,87 +22,34 @@
 #include "simulator.h"
 
 DataChannel::DataChannel( PlotBase* plotBase, QString id )
-           : eElement( id )
+           : eElement( id  )
 {
     m_plotBase = plotBase;
     m_ePin.resize( 2 );
     m_ePin[1] = NULL;
+    m_trigIndex = 0;
 }
 
 DataChannel::~DataChannel()
 {
-    eNode* enode =  m_ePin[0]->getEnode();
-    if( enode ) enode->remFromPlotterList( this );
 }
 
-void DataChannel::stamp()                     // Called at Simulation Start
+void DataChannel::stamp()    // Called at Simulation Start
 {
+    bool connected = false;
     eNode* enode =  m_ePin[0]->getEnode();
     if( enode )
     {
         enode->voltChangedCallback( this );
-        enode->addToPlotterList( this );
+        connected = true;
     }
+    m_plotBase->display()->connectChannel( m_channel, connected );
 
     if( !m_ePin[1] ) return;
     enode =  m_ePin[1]->getEnode();
     if( enode ) enode->voltChangedCallback( this );
-}
 
-void DataChannel::fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset )
-{
-    voltChanged();
-
-    int pos = m_bufferCounter;
-    uint64_t time;
-    double val;
-
-    uint64_t timeStep = m_plotBase->timeDiv()/50;
-    uint64_t lastTime = m_time.at(pos)+timeStep;
-    uint64_t maxTime = 0;
-    uint64_t minTime = 0;
-    double   maxVal  = -1e12;
-    double   minVal  = 1e12;
-    bool subSample = false;
-
-    m_points->clear();
-
-    for( int i=0; i<m_buffer.size(); ++i ) // Read Backwards
-    {
-        time = m_time.at(pos);
-        val  = m_buffer[pos];
-
-        if( lastTime-time < timeStep ) // SubSample
-        {
-            subSample = true;
-            if     ( val > maxVal ) { maxVal = val; maxTime = time; }
-            else if( val < minVal ) { minVal = val; minTime = time; }
-        }
-        else {
-            if( subSample )
-            {
-                if( maxTime > minTime )
-                {
-                    m_points->prepend( QPointF( (int64_t)(maxTime-orig+offset), maxVal ));
-                    if( minTime > 0 ) m_points->prepend( QPointF( (int64_t)(minTime-orig+offset), minVal ));
-                }
-                else if ( minTime > maxTime )
-                {
-                    m_points->prepend( QPointF( (int64_t)(minTime-orig+offset), minVal ));
-                    if( maxTime > 0 ) m_points->prepend( QPointF( (int64_t)(maxTime-orig+offset), maxVal ));
-                }
-                subSample = false;
-                maxVal = -1e12;
-                minVal = 1e12;
-                maxTime = 0;
-                minTime = 0;
-            }
-            lastTime = time;
-            m_points->prepend( QPointF( (int64_t)(time-orig+offset), val ));
-        }
-        if( time < origAbs ) break; // End of data
-        if( --pos < 0 ) pos += m_buffer.size();
-    }
-    m_plotBase->display()->setData( m_channel, m_points );
+    m_bufferCounter = 0;
+    m_trigIndex = 0;
 }
 

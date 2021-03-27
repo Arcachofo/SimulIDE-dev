@@ -31,8 +31,8 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 {
     Q_OBJECT
     Q_PROPERTY( double Filter   READ filter  WRITE setFilter DESIGNABLE true USER true )
-    Q_PROPERTY( int  AutoSC  READ autoSC  WRITE setAutoSC )
     Q_PROPERTY( int  Trigger READ trigger WRITE setTrigger )
+    Q_PROPERTY( int  AutoSC  READ autoSC  WRITE setAutoSC )
     Q_PROPERTY( int  Tracks  READ tracks  WRITE setTracks )
 
     Q_PROPERTY( QStringList HideCh  READ hideCh  WRITE setHideCh )
@@ -47,8 +47,6 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         double filter() { return m_filter; }
         void setFilter( double filter );
@@ -76,7 +74,6 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         virtual void updateStep() override;
 
-        virtual void sethTick( uint64_t td ) override;
         virtual void setTimeDiv( uint64_t td ) override;
 
         int64_t timePos( int ch ){ return m_timePos[ch]; }
@@ -95,8 +92,9 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         DataWidget* dataW() { return m_dataWidget; }
 
-    private:
+        void triggerEvent();
 
+    private:
         double m_filter;
 
         int m_trigger;

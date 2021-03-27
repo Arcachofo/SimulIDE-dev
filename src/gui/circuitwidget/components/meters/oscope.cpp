@@ -55,7 +55,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     m_trigger = 4;
     m_auto    = 4;
     m_filter = 0.0;
-    m_extraSize = 70;
+    m_extraSize = 68;
     m_bufferSize = 600000;
 
     m_oscWidget  = new OscWidget( CircuitWidget::self(), this );
@@ -71,7 +71,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
 
     for( int i=0; i<4; i++ )
     {
-        m_pin[i] = new Pin( 180, QPoint( -80-8,-48+24*i ), id+"-Pin"+QString::number(i), 0, this );
+        m_pin[i] = new Pin( 180, QPoint( -80-8,-48+32*i ), id+"-Pin"+QString::number(i), 0, this );
         m_channel[i] = new OscopeChannel( this, id+"Chan"+QString::number(i) );
         m_channel[i]->m_channel = i;
         m_channel[i]->m_ePin[0] = m_pin[i];
@@ -81,6 +81,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
 
         m_hideCh[i] = false;
 
+        m_display->setChannel( i, m_channel[i] );
         m_display->setColor( i, m_color[i] );
         m_dataWidget->setColor( i, m_color[i] );
 
@@ -88,7 +89,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
         setVoltDiv( i, 1 );
         setVoltPos( i, 0 );
     }
-    setTimeDiv( 1e9 ); // 1 ms
+    setTimeDiv( 1e6 ); // 1 ms
     setLabelPos(-90,-100, 0);
     expand( false );
 }
@@ -104,34 +105,10 @@ Oscope::~Oscope()
     for( int i=0; i<4; i++ ) delete m_channel[i];
 }
 
-QList<propGroup_t> Oscope::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Filter", tr("Filter"),"V"} );
-
-    propGroup_t sizeGroup { tr("Screen") };
-    sizeGroup.propList.append( {"", tr("Baisc Mode:"),""} );
-    sizeGroup.propList.append( {"Basic_X", tr("Size X"),"Pixels"} );
-    sizeGroup.propList.append( {"Basic_Y", tr("Size Y"),"Pixels"} );
-
-    propGroup_t logGroup { tr("One Shot") };
-    logGroup.propList.append( {"Data_Log", tr("Active (pauses simulation at trigger)"),""} );
-    logGroup.propList.append( {"Log_us", tr("Log Size"),"µs"} );
-    logGroup.propList.append( {"", tr("Conditions:"),""} );
-    logGroup.propList.append( {"CH1_Cond", tr("Channel 1"),"enum"} );
-    logGroup.propList.append( {"CH2_Cond", tr("Channel 2"),"enum"} );
-    logGroup.propList.append( {"REF_Cond", tr("Ref. Pin"),"enum"} );
-
-    return {mainGroup, sizeGroup, logGroup};
-}
-
 void Oscope::updateStep()
 {
     uint64_t period = 0;
     uint64_t timeFrame = m_timeDiv*10;
-    uint64_t offset = 0;
-    uint64_t orig;
-    uint64_t origAbs;
     uint64_t simTime;
 
     if( m_trigger < 4  ) period = m_channel[m_trigger]->m_period; // We want a trigger
@@ -150,23 +127,15 @@ void Oscope::updateStep()
     }
     else simTime = Simulator::self()->circTime(); // free running
 
-    m_display->setXFrame( timeFrame );
-
-    if( simTime > timeFrame ) orig = simTime-timeFrame;
-    else
-    {
-        orig = 1;
-        offset = timeFrame-simTime;
-    }
-    if( simTime > timeFrame*2 ) origAbs = simTime-timeFrame*2;
-    else                        origAbs = 1;
+    m_display->setTimeEnd( simTime );
 
     for( int i=0; i<4; i++ )
     {
-        if( !m_pin[i]->isConnected() ) continue;
-        m_channel[i]->fetchData( orig, origAbs, offset );
-        m_channel[i]->updateStep();
+        if( !m_pin[i]->isConnected() ) m_channel[i]->initialize();
+        else                           m_channel[i]->updateStep();
+        m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
     }
+    m_display->update(); //redrawScreen();
 }
 
 void Oscope::toggleExpand()
@@ -177,6 +146,7 @@ void Oscope::toggleExpand()
 void Oscope::expand( bool e )
 {
     m_expand = e;
+
     if( e )
     {
         m_screenSizeY = m_baSizeY+2*10;
@@ -202,9 +172,15 @@ void Oscope::expand( bool e )
     m_area = QRectF( -80, -centerY, widgetSizeX+4, widgetSizeY+4+2 );
 
     m_display->setExpand( e );
-    QTimer::singleShot( 20, m_display, SLOT( updateValues() ) );
+    m_display->updateValues();
+    //QTimer::singleShot( 20, m_display, SLOT( updateValues() ) );
 
     Circuit::self()->update();
+}
+
+void Oscope::triggerEvent()
+{
+    for( int i=0; i<4; ++i ) m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
 }
 
 void Oscope::setFilter( double filter )
@@ -213,16 +189,25 @@ void Oscope::setFilter( double filter )
     for( int i=0; i<2; i++ ) m_channel[i]->setFilter( filter );
 }
 
+void Oscope::setTrigger( int ch )
+{
+    m_trigger = ch;
+    m_oscWidget->setTrigger( ch );
+
+    if( ch > 3 ) return;
+    for( int i=0; i<4; ++i )
+    {
+        if( ch == i ) m_channel[i]->m_trigger = true;
+        else          m_channel[i]->m_trigger = false;
+    }
+}
+
 void Oscope::setAutoSC( int ch )
 {
     m_auto = ch;
     m_oscWidget->setAuto( ch );
 }
-void Oscope::setTrigger( int ch )
-{
-    m_trigger = ch;
-    m_oscWidget->setTrigger( ch );
-}
+
 
 QStringList Oscope::hideCh()
 {
@@ -259,12 +244,6 @@ void Oscope::setTracks( int tracks )
 {
     m_display->setTracks( tracks );
     m_oscWidget->setTracks( tracks );
-}
-
-void Oscope::sethTick( uint64_t td )
-{
-    PlotBase::sethTick( td );
-    m_oscWidget->updateTimeDivBox( m_timeDiv );
 }
 
 void Oscope::setTimeDiv( uint64_t td )

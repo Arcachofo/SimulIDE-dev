@@ -26,7 +26,6 @@ LaChannel::LaChannel( LAnalizer* la, QString id )
          : DataChannel( la, id )
 {
     m_analizer = la;
-    m_points = &m_pointsA;
 }
 LaChannel::~LaChannel()  { }
 
@@ -41,14 +40,13 @@ void LaChannel::initialize()
 
     m_buffer.fill(0);
     m_time.fill(0);
-    m_pointsA.clear();
-    m_pointsB.clear();
 
     updateStep();
 }
 
 void LaChannel::updateStep()
 {
+    voltChanged();
     double dispMax = m_analizer->voltDiv()*10;
     double dispMin = 0;
     m_analizer->display()->setLimits( m_channel, dispMax, dispMin );

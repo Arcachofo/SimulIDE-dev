@@ -27,25 +27,22 @@ class MAINMODULE_EXPORT DataChannel : public eElement
 {
         friend class PlotBase;
         friend class Oscope;
+        friend class LAnalizer;
+        friend class PlotDisplay;
 
     public:
 
         DataChannel( PlotBase* plotBase, QString id );
         ~DataChannel();
 
-        virtual void initialize(){;}
         virtual void stamp() override;
-        virtual void voltChanged(){;}
-
-        virtual void fetchData( uint64_t orig, uint64_t origAbs , uint64_t offset );
 
     protected:
-        QList<QPointF> m_pointsA;
-        QList<QPointF> m_pointsB;
-        QList<QPointF>* m_points;
-
         QVector<double> m_buffer;
         QVector<uint64_t> m_time;
+
+        bool m_trigger;
+        int m_trigIndex;
 
         int m_channel;
         int m_bufferCounter;

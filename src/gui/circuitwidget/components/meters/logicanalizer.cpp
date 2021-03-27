@@ -96,10 +96,6 @@ LAnalizer::~LAnalizer()
 
 void LAnalizer::updateStep()
 {
-    uint64_t timeFrame = m_timeDiv*10;
-    uint64_t offset = 0;
-    uint64_t orig;
-    uint64_t origAbs;
     uint64_t simTime = Simulator::self()->circTime(); // free running
 
     if( m_trigger < 8 )
@@ -115,27 +111,14 @@ void LAnalizer::updateStep()
         else if( ++m_updtCount < 20 ) return;
     }
 
-    m_display->setXFrame( timeFrame );
-
-    if( simTime > timeFrame ) orig = simTime-timeFrame;
-    else
-    {
-        orig = 1;
-        offset = timeFrame-simTime;
-    }
-    if( simTime > timeFrame*2 ) origAbs = simTime-timeFrame*2;
-    else                        origAbs = 1;
+    m_display->setTimeEnd( simTime );
 
     for( int i=0; i<8; i++ )
     {
         if( !m_pin[i]->isConnected() ) m_channel[i]->initialize();
-        else
-        {
-            m_channel[i]->fetchData( orig, origAbs, offset );
-            m_channel[i]->updateStep();
-        }
+        else                           m_channel[i]->updateStep();
     }
-    m_display->updateValues();
+    m_display->update(); //redrawScreen();
 }
 
 void LAnalizer::toggleExpand()
@@ -172,7 +155,6 @@ void LAnalizer::expand( bool e )
     m_area = QRectF( -80, -centerY, widgetSizeX+4, widgetSizeY+4+2 );
 
     m_display->setExpand( e );
-    QTimer::singleShot( 20, m_display, SLOT( updateValues() ) );
 
     Circuit::self()->update();
 }
