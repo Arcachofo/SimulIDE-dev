@@ -708,7 +708,7 @@ void ADCON1::set_channel_in(uint channel, bool on)
 
 ANSEL::ANSEL(Processor *pCpu, const char *pName )
     : SfrReg(pCpu, pName ),
-      adcon1(0), anselh(0), valid_bits(0x7f)
+      adcon1(0), anselh(0), valid_bits(0xff)
 {
 }
 
