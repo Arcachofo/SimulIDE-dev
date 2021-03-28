@@ -120,8 +120,8 @@ void McuComponentPin::setState( bool state )
     if( m_pinMode == input )  return;
     if( !m_enableIO ) return;
 
-    eNode* enode = m_ePin[0]->getEnode();
-    if( enode ) enode->saveData();
+    //eNode* enode = m_ePin[0]->getEnode();
+    //if( enode ) enode->saveData();
     eSource::setState( state, true );
 }
 
@@ -133,8 +133,8 @@ void McuComponentPin::update()
 
     m_voltOut = 5*vddAdmit*Rth;
 
-    eNode* enode = m_ePin[0]->getEnode();
-    if( enode ) enode->saveData();
+    //eNode* enode = m_ePin[0]->getEnode();
+    //if( enode ) enode->saveData();
     eSource::setImp( Rth );
 }
 

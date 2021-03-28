@@ -280,8 +280,8 @@ void eNode::remEpin( ePin* epin )
     }
 }
 
-void eNode::saveData()
-{ for( DataChannel* plotter : m_plotterList ) plotter->voltChanged(); }
+/*void eNode::saveData()
+{ for( DataChannel* plotter : m_plotterList ) plotter->voltChanged(); }*/
 
 void eNode::voltChangedCallback( eElement* el )
 { if( !m_changedFast.contains(el) ) m_changedFast.append(el); }
@@ -295,11 +295,11 @@ void eNode::addToNoLinList( eElement* el )
 void eNode::remFromNoLinList( eElement* el )
 { m_nonLinear.removeOne(el); }
 
-void eNode::addToPlotterList( DataChannel* el )
+/*void eNode::addToPlotterList( DataChannel* el )
 { if( !m_plotterList.contains(el) ) m_plotterList.append(el);}
 
 void eNode::remFromPlotterList( DataChannel* el )
-{if( m_plotterList.contains(el) ) m_plotterList.removeOne(el);}
+{if( m_plotterList.contains(el) ) m_plotterList.removeOne(el);}*/
 
 void eNode::setSingle( bool single ){ m_single = single; }      // This eNode can calculate it's own Volt
 bool eNode::isSingle(){ return m_single; }

@@ -75,9 +75,9 @@ class MAINMODULE_EXPORT eNode
         void createBus();
         void addBusPinList( QList<ePin*> list, int line );
 
-        void addToPlotterList( DataChannel* el );
-        void remFromPlotterList( DataChannel* el );
-        void saveData(); // Plotters will read data
+        //void addToPlotterList( DataChannel* el );
+        //void remFromPlotterList( DataChannel* el );
+        //void saveData(); // Plotters will read data
 
         QList<ePin*> getEpins();
         QList<int> getConnections();

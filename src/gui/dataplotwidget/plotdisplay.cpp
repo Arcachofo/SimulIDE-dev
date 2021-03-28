@@ -153,7 +153,6 @@ void PlotDisplay::drawBackground( QPainter* p )
             for( double i=m_ceroX; i<=m_endX; i+=m_sizeX/50. )
                 p->drawLine( QPointF(i, y-m), QPointF(i, y+m) ); // Horizontal Center Marks
         }
-
         p->drawLine( m_hCenter, m_ceroY, m_hCenter, m_endY );    //Vertical Center line
     }
 }

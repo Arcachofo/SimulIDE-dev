@@ -95,22 +95,23 @@ void eLogicDevice::runEvent()
 
         if( state != oldst )
         {
-            if( m_outStep == 0 )
+            /*if( m_outStep == 0 )
             {
                 eNode* enode =  m_output[i]->getPin()->getEnode();
                 if( enode ) enode->saveData();
             }
-            else m_output[i]->setState( state, true );
+            else */
+                m_output[i]->setState( state, true );
         }
     }
-    if( m_outStep == 0 )
+    /*if( m_outStep == 0 )
     {
         m_outStep = 1;
         Simulator::self()->addEvent( m_timeLH*1.25, this );
     }
-    else
+    else*/
     {
-        m_outStep = 0;
+        //m_outStep = 0;
         m_outValue = m_nextOutVal;
     }
 }

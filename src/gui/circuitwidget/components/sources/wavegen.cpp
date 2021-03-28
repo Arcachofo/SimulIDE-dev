@@ -144,8 +144,8 @@ void WaveGen::genSquare()
         m_vOut = 1;
         m_nextStep = m_halfW;
     }
-    eNode* enode =  m_pin[0]->getEnode();
-    if( enode ) enode->saveData();
+    //eNode* enode =  m_pin[0]->getEnode();
+    //if( enode ) enode->saveData();
 }
 
 void WaveGen::genRandom()
