@@ -257,7 +257,7 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
             else if( type == "Package" ) { ; }
             else
             {
-                Component* comp = 0l;
+                Component* comp = NULL;
                 if( type == "Node" )
                 {
                     comp = new Node( this, type, id );
@@ -282,7 +282,11 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
                     circ->compList()->removeOne( comp );
                     m_compList.append( comp );
 
-                    if( comp->isMainComp() ) m_mainComponent = comp; // This component will add it's Context Menu
+                    if( comp->isMainComp() )
+                    {
+                        m_mainComponent = comp; // This component will add it's Context Menu
+                        comp->setSubcircuit( this );
+                    }
 
                     if( type == "Tunnel" ) // Make Tunnel names unique for this subcircuit
                     {

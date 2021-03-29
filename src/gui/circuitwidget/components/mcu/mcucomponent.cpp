@@ -348,8 +348,11 @@ void McuComponent::slotOpenTerm()
     ser->setPos( pos() );
     Circuit::self()->addItem( ser );
 
+    Component* comp = this;
+    if( this->isMainComp() ) comp = m_subcircuit;
+
     SerialTerm* serial = static_cast<SerialTerm*>(ser);
-    serial->setMcuId( this->objectName() );
+    serial->setMcuId( comp->objectName() );
 }
 
 void McuComponent::slotLoad()

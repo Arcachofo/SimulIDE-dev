@@ -19,6 +19,7 @@
 
 #include "terminalwidget.h"
 #include "mcucomponent.h"
+#include "subcircuit.h"
 #include "baseprocessor.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -26,25 +27,26 @@
 
 TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
               : QWidget( parent )
-              ,m_verticalLayout(this)
-              ,m_sendLayout()
-              ,m_textLayout()
-              ,m_sendText(this)
-              ,m_sendValue(this)
-              ,m_uartInPanel(this)
-              ,m_uartOutPanel(this)
-              ,m_ascciButton(this)
-              ,m_valueButton(this)
-              ,m_addCrButton(this)
-              ,m_clearInButton(this)
-              ,m_clearOutButton(this)
-              ,m_uartBox(this)
+              , m_verticalLayout(this)
+              , m_sendLayout()
+              , m_textLayout()
+              , m_sendText(this)
+              , m_sendValue(this)
+              , m_uartInPanel(this)
+              , m_uartOutPanel(this)
+              , m_ascciButton(this)
+              , m_valueButton(this)
+              , m_addCrButton(this)
+              , m_clearInButton(this)
+              , m_clearOutButton(this)
+              , m_uartBox(this)
 {
     m_serComp = ser;
 
     m_printASCII = true;
     m_addCR = false;
     m_uart = 0;
+    m_mcuId = "";
     
     setMinimumSize( QSize(200, 200) );
 
@@ -169,7 +171,19 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
     connect( &m_uartBox, SIGNAL( valueChanged(int) ),
               m_serComp, SLOT( setUart(int) ), Qt::UniqueConnection );
 
-    initialize();
+    int circVersion = Circuit::self()->circType().split(".").last().toInt();
+
+    if( circVersion < 5 )
+    {
+        m_mcuComponent = McuComponent::self();
+        if( !m_mcuComponent ) return;
+
+        QString mcuId = m_mcuComponent->objectName();
+        if( m_mcuComponent->isMainComp() )
+            mcuId = m_mcuComponent->getSubcircuit()->objectName();
+
+        setMcuId( mcuId );
+    }
 }
 TerminalWidget::~TerminalWidget()
 {
@@ -179,37 +193,36 @@ TerminalWidget::~TerminalWidget()
 
 void TerminalWidget::setMcuId( QString mcu )
 {
+    if( m_mcuId != "" ) return;
+
     QString name = Circuit::self()->origId( mcu );
     if( name == "" ) name = mcu;
     m_mcuId =  name;
 
     Component* mcuComp = Circuit::self()->getCompById( m_mcuId );
+    Component* ct = mcuComp;
     if( mcuComp )
     {
+        if( mcuComp->itemType() == "Subcircuit" )
+        {
+            SubCircuit* sc = static_cast<SubCircuit*>(mcuComp);
+            ct = sc;
+            mcuComp = sc->getMainComp();
+        }
         m_mcuComponent = static_cast<McuComponent*>(mcuComp);
+        this->setWindowTitle( ct->idLabel() );
         connectMcu();
     }
     else setWindowTitle( tr("Unknown Mcu") );
-
-    //qDebug() << "TerminalWidget::setMcuId" << mcu << name;
 }
 
 void TerminalWidget::initialize()
 {
-    int circVersion = Circuit::self()->circType().split(".").last().toInt();
 
-    if( circVersion < 5 )
-    {
-        m_mcuComponent = McuComponent::self();
-        m_mcuId = m_mcuComponent->objectName();
-        setMcuId( m_mcuId );
-    }
 }
 
 void TerminalWidget::connectMcu()
 {
-    this->setWindowTitle( m_mcuComponent->idLabel() );
-
     m_processor = m_mcuComponent->processor();
 
     connect( m_mcuComponent, SIGNAL( closeSerials()),
@@ -224,7 +237,6 @@ void TerminalWidget::connectMcu()
 
 void TerminalWidget::closeEvent( QCloseEvent* event )
 {
-    //m_serComp->slotClose();
     Circuit::self()->removeComp( m_serComp );
     QWidget::closeEvent( event );
 }
@@ -232,7 +244,6 @@ void TerminalWidget::closeEvent( QCloseEvent* event )
 void TerminalWidget::onTextChanged()
 {
     QString text = m_sendText.text();
-    //qDebug()<< "TerminalWidget::onTextChanged" << text ;
     
     QByteArray array = text.toUtf8();
     
@@ -269,13 +280,11 @@ void TerminalWidget::addCRClicked()
 void TerminalWidget::clearInClicked()
 {
     m_uartInPanel.clear();
-    //qDebug() << "TerminalWidget::clearInClicked";
 }
 
 void TerminalWidget::clearOutClicked()
 {
     m_uartOutPanel.clear();
-    //qDebug() << "TerminalWidget::clearOutClicked";
 }
 
 void TerminalWidget::uartChanged( int uart )
@@ -286,7 +295,6 @@ void TerminalWidget::uartChanged( int uart )
 
 void TerminalWidget::uartIn( int uart, int value ) // Receive one byte on Uart
 {
-    //qDebug() << "TerminalWidget::uartIn" << m_uart << uart << value;
     if( uart != m_uart ) return;
 
     uint8_t byte = value & 0xFF;
@@ -304,7 +312,6 @@ void TerminalWidget::uartIn( int uart, int value ) // Receive one byte on Uart
 
 void TerminalWidget::uartOut( int uart, int value ) // Send value to OutPanelText
 {
-    //qDebug() << "TerminalWidget::uartOut" << m_uart << uart << value;
     if( uart != m_uart ) return;
 
     uint8_t byte = value & 0xFF;

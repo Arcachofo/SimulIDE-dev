@@ -207,7 +207,6 @@ void ConnectorLine::updateNext()
 void ConnectorLine::updatePos()
 {
     setPos( m_p1X, m_p1Y );
-    
     update();
 }
 
@@ -223,11 +222,12 @@ void ConnectorLine::setNextLine( ConnectorLine* nextLine )
 
 void ConnectorLine::remove() 
 { 
-    if( !isSelected() ) Circuit::self()->clearSelection();
-    setSelected( true );
+    if( !isSelected() )
+    {
+        Circuit::self()->clearSelection();
+        setSelected( true );
+    }
     Circuit::self()->removeItems();
-
-    //m_pConnector->remove(); 
 }
 
 void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
@@ -239,7 +239,6 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
         if     ( dy() == 0 ) CircuitView::self()->viewport()->setCursor( Qt::SplitVCursor );
         else if( dx() == 0 ) CircuitView::self()->viewport()->setCursor( Qt::SplitHCursor );
         else                 CircuitView::self()->viewport()->setCursor( Qt::SizeAllCursor );
-        //m_moving = true;
     }
     else if( event->button() == Qt::LeftButton )
     {

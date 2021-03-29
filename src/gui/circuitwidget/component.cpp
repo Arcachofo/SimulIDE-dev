@@ -296,8 +296,11 @@ void Component::slotCopy()
 
 void Component::slotRemove()
 {
-    if( !isSelected() ) Circuit::self()->clearSelection();
-    setSelected( true );
+    if( !isSelected() )
+    {
+        Circuit::self()->clearSelection();
+        setSelected( true );
+    }
     Circuit::self()->removeItems();
 }
 

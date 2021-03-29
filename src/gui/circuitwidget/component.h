@@ -163,6 +163,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
  static bool m_selMainCo;
         bool isMainComp() { return m_mainComp; }
         void setMainComp( bool main ) { m_mainComp = main; }
+        Component* getSubcircuit() { return m_subcircuit; }
+        void setSubcircuit( Component* sc ) { m_subcircuit = sc; }
 
         virtual void remove();
 
@@ -231,6 +233,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
         bool m_hidden;
         bool m_graphical;
         bool m_mainComp;
+
+        Component* m_subcircuit;
 
         PropDialog* m_propDialog;
         

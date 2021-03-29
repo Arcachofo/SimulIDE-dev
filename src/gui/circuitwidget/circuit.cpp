@@ -809,8 +809,12 @@ void Circuit::removeItems()                     // Remove Selected items
     saveState();
     m_busy = true;
 
-    foreach( Component* comp, m_compList )
-        if( comp->isSelected() && !(comp->itemType()=="Node") ) removeComp( comp ); // Don't remove Graphical Nodes
+    for( Component* comp : m_compList )
+    {
+        if( m_compList.contains( comp ) )
+            if( comp->isSelected() && !(comp->itemType()=="Node") )
+                removeComp( comp ); // Don't remove Graphical Nodes
+    }
 
     QList<Connector*> connectors;
 
@@ -857,7 +861,6 @@ void Circuit::remove() // Remove everything ( Clear Circuit )
     while( !m_compList.isEmpty() )
     {
         Component* comp = m_compList.takeFirst();
-        //qDebug() << "Circuit::remove" << comp->itemID()<<comp->objectName();
 
         bool isNumber = false;               // Don't remove internal items
 
