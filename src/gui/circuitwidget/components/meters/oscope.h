@@ -92,8 +92,6 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         DataWidget* dataW() { return m_dataWidget; }
 
-        void triggerEvent();
-
     private:
         double m_filter;
 

@@ -69,16 +69,17 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
         m_channel[i]->m_buffer.resize( m_bufferSize );
         m_channel[i]->m_time.resize( m_bufferSize );
 
+        m_display->setChannel( i, m_channel[i] );
         m_display->setColor( i, m_color[i%4] );
         m_display->setLimits( i, 5, 0 );
-        //m_display->setVPos( i, 18-6*i );
+        m_display->setVPos( i, -2.5 );
 
         m_dataWidget->setColor( i, m_color[i%4] );
     }
     m_updtCount = 0;
     m_trigger = 0;
     setTimeDiv( 1e6 ); // 1 ms
-    setVoltDiv( 1.2 );
+    setVoltDiv( 6 );
     setLabelPos(-90,-100, 0);
     expand( false );
 }
@@ -117,6 +118,7 @@ void LAnalizer::updateStep()
     {
         if( !m_pin[i]->isConnected() ) m_channel[i]->initialize();
         else                           m_channel[i]->updateStep();
+        m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
     }
     m_display->update(); //redrawScreen();
 }

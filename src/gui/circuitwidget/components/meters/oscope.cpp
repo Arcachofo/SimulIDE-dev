@@ -178,11 +178,6 @@ void Oscope::expand( bool e )
     Circuit::self()->update();
 }
 
-void Oscope::triggerEvent()
-{
-    for( int i=0; i<4; ++i ) m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
-}
-
 void Oscope::setFilter( double filter )
 {
     m_filter = filter;
