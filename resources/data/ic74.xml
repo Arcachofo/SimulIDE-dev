@@ -59,12 +59,14 @@
     <item name="74XX83"  info="  4-bit binary full adder with fast carry" ></item>
     <item name="74HC85"  info="  4-bit magnitude comparator" ></item>
     <item name="74HC86"  info="  quad 2-input XOR gate" ></item>
+    <item name="74XX89"  info="  64-Bit Random Access Memory with Open Collector" ></item>
     <item name="74XX90"  info="  decade counter (separate divide-by-2 and divide-by-5 sections) " ></item>
     <item name="74XX91"  info="  serial-in, serial-out, 8-bit shift register " ></item>
     <item name="74XX92"  info="  divide-by-12 counter (separate divide-by-2 and divide-by-6 sections) " ></item>
     <item name="74XX93"  info="  4-bit binary counter (separate divide-by-2 and divide-by-8 sections) " ></item>
     <item name="74XX95"  info="  4-bit parallel-access shift register " ></item>
     <item name="74XX96"  info="  5-bit parallel-load shift register " ></item>
+    <item name="74XX97"  info="  synchronous 6-BIT binary rate multipliers " ></item>
     </itemset>
     
     <itemset category="IC 74/74100-74199" type="Subcircuit" folder="ICs">
@@ -110,7 +112,9 @@
     <item name="74XX180" info="  9 bit ODD/EVEN parity generator/checker " ></item>
     <item name="74HC181" info="  4-bit arithmetic logic unit and function generator " ></item>
     <item name="74HC182" info="  lookahead carry generator " ></item>
-    <item name="74XX189" info="  64-Bit Random Access Memory with 3-STATE Outputs" ></item>
+    <item name="74XX184" info="  BCD to Binary converter " ></item>
+    <item name="74XX185" info="  Binary to BCD converter " ></item>
+    <item name="74XX189" info="  64-Bit Random Access Memory with 3-STATE Outputs (16x4)" ></item>
     <item name="74HC190" info="  synchronous presettable up/down decade counter" ></item>
     <item name="74HC191" info="  synchronous presettable up/down binary counter" ></item>
     <item name="74HC192" info="  synchronous presettable up/down decade counter, clear " ></item>
@@ -124,6 +128,8 @@
     </itemset>
     
     <itemset category="IC 74/74200-741999" type="Subcircuit" folder="ICs">
+    <item name="74XX200" info="  256-Bit Random Access Memory with 3-STATE Outputs (256x1)" ></item>
+    <item name="74XX219" info="  64-Bit Random Access Memory with 3-STATE Outputs (16x4)" ></item>
     <item name="74HC238" info="  3-of-8 decoder/demultiplexer, active high outputs " ></item>
     <item name="74XX240" info="  octal (2*4 bit) buffers/drivers with tristate outputs " ></item>
     <item name="74XX242" info="  Quadruple inverting bus transceivers with tristate outputs " ></item>
@@ -145,6 +151,7 @@
     <item name="74XX295" info="  4-bit shift register with 3-state outputs" ></item>
     <item name="74HC298" info="  quad 2-line to 1-line multiplexers with storage " ></item>
     <item name="74XX299" info="  8-bit shift/storage register with 3-state outputs" ></item>
+    <item name="74XX301" info="  256-Bit Random Access Memory with Open Colector Outputs (256x1)" ></item>
     <item name="74XX323" info="  8-bit shift/storage register with synchronous clear and 3-state outputs" ></item>
     <item name="74HC352" info="  dual 4-line to 1-line data selector/multiplexer, inverting outputs " ></item>
     <item name="74HC353" info="  dual 4-line to 1-line data selector/multiplexer, inverting  and tristate outputs " ></item>
@@ -167,6 +174,9 @@
     <item name="74HC393" info="  dual 4-bit binary counter" ></item>
     <item name="74XX395" info="  4-bit shift register with 3-state outputs" ></item>
     <item name="74XX490" info="  dual decade counter " ></item>
+    <item name="74XX502" info="  8-Bit Successive Approximation Register  " ></item>
+    <item name="74XX503" info="  8-Bit Successive Approximation Register  " ></item>
+    <item name="74XX504" info="  12-Bit Successive Approximation Register  " ></item>
     <item name="74XX540" info="  octal buffers/drivers with tristate outputs " ></item>
     <item name="74XX541" info="  octal buffers/line drivers with tristate outputs " ></item>
     <item name="74HC573" info="  octal D-type transparent latch" ></item>

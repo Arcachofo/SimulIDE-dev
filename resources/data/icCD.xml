@@ -43,6 +43,9 @@
     <item name="CD4042"  info="  quad clocked D-latch" ></item>
     <item name="CD4043"  info="  quad R/S latch (active HIGH), tristate outputs " ></item>
     <item name="CD4044"  info="  quad R/S latch (active LOW), tristate outputs " ></item>
+    <item name="CD4054"  info="  cmos 4-segment LCD driver" ></item>
+    <item name="CD4055"  info="  cmos BCD to 7-segment LCD driver" ></item>
+    <item name="CD4056"  info="  cmos BCD to 7-segment LCD driver with latch "  ></item>
     <item name="CD4066"  info="  cmos quad bilateral switch" ></item>
     <item name="CD4076"  info="  4-bit D-type registers, tristate outputs" ></item>
     <item name="CD4085"  info="  Dual 2 wide 2 input AND-OR-INVERT gate" ></item>
