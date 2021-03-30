@@ -277,7 +277,7 @@ void BaseProcessor::setRegisters() // get register addresses from data file
             name    = wordList.takeFirst();
             while( addrtxt.isEmpty() ) addrtxt = wordList.takeFirst();
 
-            address = addrtxt.toInt( &isNumber, 10 );
+            address = addrtxt.toInt( &isNumber, 0 );
             
             if( isNumber )        // If found a valid address add to map
             {

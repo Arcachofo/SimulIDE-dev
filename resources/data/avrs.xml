@@ -63,6 +63,7 @@
     <item name="atmega1281" package="avr/atmega1280" data="avr/atmega1281" device="atmega1281" ></item>
     <item name="atmega1284" package="avr/atmega32"   data="avr/atmega1284" device="atmega1284" ></item>
     <item name="atmega2560" package="avr/atmega1280" data="avr/atmega2560" device="atmega2560" ></item>
-    
+    <item name="atmega8515" package="avr/atmega8515" data="avr/atmega32"   device="atmega8515" ></item>
+
     </itemset>
 </itemlib>

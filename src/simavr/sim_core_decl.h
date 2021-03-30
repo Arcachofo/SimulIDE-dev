@@ -57,6 +57,7 @@ extern avr_kind_t tiny44;
 extern avr_kind_t mega128;
 extern avr_kind_t mega48;
 extern avr_kind_t mega32;
+extern avr_kind_t mega8515;
 extern avr_kind_t * avr_kind[];
 
 avr_kind_t * avr_kind[] = {
@@ -96,6 +97,7 @@ avr_kind_t * avr_kind[] = {
     &mega128,
     &mega48,
     &mega32,
+    &mega8515,
     NULL
 };
 
