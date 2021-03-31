@@ -20,15 +20,16 @@
 #ifndef VARRESISTOR_H
 #define VARRESISTOR_H
 
-#include "itemlibrary.h"
 #include "varresbase.h"
 
+class LibraryItem;
 
 class MAINMODULE_EXPORT VarResistor : public VarResBase
 {
     Q_OBJECT
-    Q_PROPERTY( double Max_Resistance READ maxRes WRITE setMax DESIGNABLE true USER true )
-    Q_PROPERTY( double Min_Resistance READ minRes WRITE setMin DESIGNABLE true USER true )
+    Q_PROPERTY( double Max_Resistance READ maxVal WRITE setMaxVal DESIGNABLE true USER true )
+    Q_PROPERTY( double Min_Resistance READ minVal WRITE setMinVal DESIGNABLE true USER true )
+    Q_PROPERTY( double Value_Ohm      READ getVal WRITE setVal    DESIGNABLE true USER true )
 
     public:
         VarResistor( QObject* parent, QString type, QString id );
@@ -39,13 +40,9 @@ class MAINMODULE_EXPORT VarResistor : public VarResBase
 
         virtual QList<propGroup_t> propGroups() override;
 
-        void setMax( double r );
-        void setMin( double r );
-
         virtual void updateStep() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget *widget );
-
 };
 
 #endif

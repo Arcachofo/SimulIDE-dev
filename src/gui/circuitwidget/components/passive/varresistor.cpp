@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "varresistor.h"
+#include "itemlibrary.h"
 #include "simulator.h"
 
 Component* VarResistor::construct( QObject* parent, QString type, QString id )
@@ -37,9 +38,6 @@ VarResistor::VarResistor( QObject* parent, QString type, QString id )
            : VarResBase( parent, type, id  )
 {
     m_unit = "Ω";
-
-    setMinRes( 0 );
-    setMaxRes( 1000 );
     setVal( 0 );
 }
 VarResistor::~VarResistor(){}
@@ -58,21 +56,9 @@ void VarResistor::updateStep()
 {
     if( m_changed )
     {
-        eResistor::setResSafe( m_value );
+        eResistor::setResSafe( m_value*m_unitMult );
         m_changed = false;
     }
-}
-
-void VarResistor::setMax( double r )
-{
-    setMaxRes( r );
-    setMaxVal( m_maxRes );
-}
-
-void VarResistor::setMin( double r )
-{
-    setMinRes( r );
-    setMinVal( m_minRes );
 }
 
 void VarResistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

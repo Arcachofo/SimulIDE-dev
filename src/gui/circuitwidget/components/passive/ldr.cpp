@@ -51,7 +51,6 @@ Ldr::~Ldr(){}
 QList<propGroup_t> Ldr::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
-    //mainGroup.propList.append( {"Value_Ohm", tr("Current Value"),"main"} );
     mainGroup.propList.append( {"Lux", tr("Current Value"),"main"} );
     mainGroup.propList.append( {"Min_Lux", tr("Minimum Value"),"Lux"} );
     mainGroup.propList.append( {"Max_Lux", tr("Maximum Value"),"Lux"} );
@@ -65,12 +64,9 @@ void Ldr::updateStep()
 {
     if( m_changed )
     {
-        //double res = double( m_maxRes-(m_maxRes-m_minRes)*val/1000 );
-        double res = double(m_r1)*pow( double(m_value), -m_gamma );
-
+        double res = double(m_r1)*pow( m_value*m_unitMult, -m_gamma );
         eResistor::setResSafe( res );
         m_changed = false;
-        //qDebug()<<"Ldr::updateStep"<<m_resist;
     }
 }
 

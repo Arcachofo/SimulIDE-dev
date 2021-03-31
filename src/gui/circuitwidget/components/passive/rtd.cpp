@@ -60,14 +60,6 @@ QList<propGroup_t> RTD::propGroups()
     return {mainGroup};
 }
 
-void RTD::initialize()
-{
-  //m_lastTime =  Simulator::self()->circTime();
-  double res = sensorFunction( m_dial->value() );
-
-  eResistor::setResSafe( res );
-}
-
 void RTD::updateStep()
 {
     if( !m_changed ) return;
@@ -80,7 +72,7 @@ void RTD::updateStep()
     //double dr = sensorFunction( m_temp )-m_resist;
 
     //double res = m_resist + dr*(1.0 -exp(-dt/m_tau));
-    double res = sensorFunction( m_value );
+    double res = sensorFunction( m_value*m_unitMult );
     eResistor::setResSafe( res );
    
     //m_lastTime = time;

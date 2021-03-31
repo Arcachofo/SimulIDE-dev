@@ -47,7 +47,6 @@ class MAINMODULE_EXPORT RTD : public ThermistorBase
     double getR0() { return m_r0; }
     void setR0( double r0 ) { m_r0 = r0; }
 
-    virtual void initialize() override;
     virtual void updateStep() override;
 
     double sensorFunction ( double temp );

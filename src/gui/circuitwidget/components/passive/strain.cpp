@@ -65,7 +65,6 @@ Strain::~Strain() { }
 QList<propGroup_t> Strain::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
-    //mainGroup.propList.append( {"Value_Ohm", tr("Current Value"),"main"} );
     mainGroup.propList.append( {"Force_N", tr("Current Value"),"N"} );
     mainGroup.propList.append( {"Min_Force_N", tr("Minimum Value"),"N"} );
     mainGroup.propList.append( {"Max_Force_N", tr("Maximum Value"),"N"} );
@@ -104,7 +103,7 @@ void Strain::updateStep()
     //	     << m_ePinTst1->isConnected() << m_ePinTst2->isConnected() ;
     //m_last_step = m_step;
 
-    double res = sensorFunction( m_value );
+    double res = sensorFunction( m_value*m_unitMult );
     eResistor::setResSafe( res );
     m_changed = false;
 }

@@ -462,7 +462,8 @@ void Component::setValue( double val)
         if( m_mult != " " ) m_mult.prepend( " " );
         m_value = val;
     }
-    m_valLabel->setPlainText( QString::number(m_value)+m_mult+m_unit );
+    QString valStr = QString::number(m_value);
+    m_valLabel->setPlainText( valStr.left(5)+m_mult+m_unit );
 }
 
 QString Component::unit()                { return m_mult+m_unit; }

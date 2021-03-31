@@ -69,15 +69,15 @@ VarResBase::VarResBase( QObject* parent, QString type, QString id )
     setValLabelPos(-16, 30, 0);
     setShowVal( true );
 
-    setMinRes( 0 );
-    setMaxRes( 10000000 );
+    m_dial->setMinimum(0);
+    m_dial->setMaximum(999);
 
     m_step = 1;
 
     Simulator::self()->addToUpdateList( this );
 
     connect( m_dial, SIGNAL(valueChanged(int)),
-             this,   SLOT  (dialChanged(int)), Qt::UniqueConnection );
+             this,   SLOT  (setVal(int)), Qt::UniqueConnection );
 }
 VarResBase::~VarResBase(){}
 
@@ -86,40 +86,18 @@ void VarResBase::initialize()
     m_changed = true;
 }
 
-void VarResBase::dialChanged( int val ) // Called when dial is rotated
+int VarResBase::getVal()
 {
-    //qDebug() <<"VarResBase::dialChanged"<< res << m_resist;
-    setVal( val );
-    if( !Simulator::self()->isRunning() ) updateStep();
-}
-
-void VarResBase::setMinRes( double r )
-{
-    if( r < 0.000001 ) r = 0.000001;
-    m_minRes = r;
-}
-
-void VarResBase::setValRes( double val )
-{
-    if     ( val < m_minRes ) val = m_minRes;
-    else if( val > m_maxRes ) val = m_maxRes;
-
-    m_dial->setValue( val*1000/(m_maxRes-m_minRes) );
+    return m_dial->value();
 }
 
 void VarResBase::setVal( int val )
 {
-    int max = m_dial->maximum();
-    int min = m_dial->minimum();
+    if( m_step > 0 ) val = round(val/m_step)*m_step;
+    Component::setValue( val/m_unitMult ); // Takes care about units multiplier
 
-    if     ( val > max ) val = max;
-    else if( val < min ) val = min;
-    else val = round(val/(double)m_step)*(double)m_step;
-
-    Component::setValue( val );       // Takes care about units multiplier
-    m_dial->setValue( val );
-    //m_valLabel->setPlainText( QString::number(m_value)+" "+m_unit );
     m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 #include "moc_varresbase.cpp"

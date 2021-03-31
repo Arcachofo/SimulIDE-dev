@@ -61,17 +61,15 @@ void Thermistor::updateStep()
 {
     if( !m_changed ) return;
 
-    double t0 = 25+273.15;    // Temp in Kelvin
-    double t = m_value+273.15;
+    double t0 = 25+273.15;              // Temp in Kelvin
+    double t = m_value*m_unitMult+273.15;
     double e = 2.7182;
     double k = t*t0/(t-t0);
 
     double res = m_r25/pow( e, m_bVal/k );
-    //double res = double( m_maxRes-(m_maxRes-m_minRes)*val/1000 );
 
     eResistor::setResSafe( res );
     m_changed = false;
-    //qDebug()<<"Thermistor::updateStep"<<m_resist;
 
 }
 

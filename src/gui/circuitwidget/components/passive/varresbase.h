@@ -27,21 +27,11 @@
 class MAINMODULE_EXPORT VarResBase : public Component, public eResistor
 {
     Q_OBJECT
-    Q_PROPERTY( double Value_Ohm READ ValRes   WRITE setValRes DESIGNABLE true USER true )
-    Q_PROPERTY( double Dial_Step READ getStep  WRITE setStep   DESIGNABLE true USER true )
+    Q_PROPERTY( int Dial_Step READ getStep WRITE setStep DESIGNABLE true USER true )
 
     public:
         VarResBase( QObject* parent, QString type, QString id );
         ~VarResBase();
-
-        double maxRes()  { return m_maxRes; }
-        void setMaxRes( double r ) { m_maxRes = r; }
-
-        double minRes() { return m_minRes; }
-        void setMinRes( double r );
-
-        void setValRes( double val );
-        double ValRes() { return eResistor::m_resist; }
 
         int  maxVal()  { return m_dial->maximum(); }
         void setMaxVal( int max ) { m_dial->setMaximum( max ); }
@@ -49,21 +39,17 @@ class MAINMODULE_EXPORT VarResBase : public Component, public eResistor
         int  minVal() { return m_dial->minimum(); }
         void setMinVal( int min ) { m_dial->setMinimum( min ); }
 
-        int getVal() { return m_dial->value(); }
-        void setVal( int val );
+        int getVal();
 
         int  getStep() { return m_step; }
-        void setStep( int step ) { m_step = step; }
+        void setStep( int step ) { m_step = step ; }
 
         virtual void initialize() override;
 
     public slots:
-        void dialChanged( int val );
+        void setVal( int val );
 
     protected:
-        double m_maxRes;
-        double m_minRes;
-
         int m_step;
 
         DialWidget m_dialW;
