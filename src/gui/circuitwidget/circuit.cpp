@@ -562,6 +562,8 @@ void Circuit::pasteDomDoc( QDomDocument* doc )
                     con->updateConRoute( endpin, endpin->scenePos() );
                     con->remNullLines();
                     conList.append( con );
+                    startpin->registerPins( enode );
+                    endpin->registerPins( enode );
                 }
                 else // Start or End pin not found
                 {
