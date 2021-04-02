@@ -25,6 +25,7 @@
 #include "circprop.h"
 #include "simuprop.h"
 #include "filebrowser.h"
+#include "about.h"
 #include "utils.h"
 
 CircuitWidget*  CircuitWidget::m_pSelf = 0l;
@@ -46,6 +47,7 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     m_cirPropW = NULL;
     m_simPropW = NULL;
     m_appPropW = NULL;
+    m_about = NULL;
 
     m_verticalLayout.setObjectName( "verticalLayout" );
     m_verticalLayout.setContentsMargins(0, 0, 0, 0);
@@ -430,43 +432,11 @@ void CircuitWidget::openInfo()
 
 void CircuitWidget::about()
 {
-    QString date = QString( BUILDDATE );
-    date.append( " (dd-MM-yy)" );
-
-    QString r = "&nbsp;";
-    QString s = "&nbsp;&nbsp;&nbsp;";
-    QString t = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
-    QMessageBox::about( this, tr("About SimulIDE"),
-                        "<br><br>"
-    "<b>Version:</b>&nbsp; &nbsp; &nbsp;"+QString( APP_VERSION )+"<br><b>Compiled:</b> "+date+"<br><br><br>"
-    "<b>Web site:</b> <a href=\"https://simulide.com/\"> https://simulide.com/ </a><br><br>"
-    "<b>Become a Patron:</b> <a href=\"https://www.patreon.com/simulide\"> https://www.patreon.com/simulide </a><br><br>"
-    "<br><br>"
-               "<b>Creator:</b> Santiago Gonzalez. <br>"
-               "<br>"
-               "<b>Developers:</b> <br>"
-               +t+"Santiago Gonzalez. <br>"
-               +t+"Popov Alexey <br>"
-               "<br>"
-               "<b>Contributors:</b> <br>"
-               +t+"Chris Roper <br>"
-               +t+"Sergey Chiyanov <br>"
-               +t+"Sergey Roenko <br>"
-               +t+"Gabor Nagy <br>"
-               +t+"Tim Fischer <br>"
-               +t+"Benoit ZERR <br>"
-               +t+"Jan K. S. <br>"
-               "<br>"
-               "<b>Translations:</b> <br>"
-               +t+"Spanish:"+r+"Santiago Gonzalez. <br>"
-               +t+s+s+s+s+r+r+"   Kike Gl. <br>"
-               +t+"Russian:"+r+"Sergey Chiyanov <br>"
-               +t+s+s+s+s+r+r+"   Sergey Roenko <br>"
-               +t+"French:"+s+"Pascal Cotret <br>"
-               +t+"German:    Tim Fischer <br>"
-               +t+"Brasilian: Maico Smaniotto <br>"
-               +t+"Italian:"+s+r+"@rkanoid <br>"
-               );
+    if( !m_about )
+    {
+        m_about = new AboutDialog( this );
+    }
+    m_about->show();
 }
 
 void CircuitWidget::setRate( double rate, int load )

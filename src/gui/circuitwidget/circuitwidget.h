@@ -28,6 +28,7 @@
 class AppProp;
 class CircProp;
 class SimuProp;
+class AboutDialog;
 
 class MAINMODULE_EXPORT CircuitWidget : public QWidget
 {
@@ -115,6 +116,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         AppProp*  m_appPropW;
         CircProp* m_cirPropW;
         SimuProp* m_simPropW;
+        AboutDialog* m_about;
 };
 
 #endif
