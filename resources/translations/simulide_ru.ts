@@ -36,6 +36,25 @@
     </message>
 </context>
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Диалог</translation>
+    </message>
+    <message>
+        <source> Version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished">Метка</translation>
+    </message>
+    <message>
+        <source> Compiled:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Aip31068_i2c</name>
     <message>
         <source>Aip31068_i2c</source>
@@ -3297,58 +3316,6 @@ Do you want to save your changes?
     <message>
         <source>Meters</source>
         <translation>Измерение</translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation>Основные</translation>
-    </message>
-    <message>
-        <source>Filter</source>
-        <translation>Фильтр</translation>
-    </message>
-    <message>
-        <source>Screen</source>
-        <translation>Экран</translation>
-    </message>
-    <message>
-        <source>Baisc Mode:</source>
-        <translation>Основной режим:</translation>
-    </message>
-    <message>
-        <source>Size X</source>
-        <translation>Размер X</translation>
-    </message>
-    <message>
-        <source>Size Y</source>
-        <translation>Размер Y</translation>
-    </message>
-    <message>
-        <source>One Shot</source>
-        <translation>Однократный</translation>
-    </message>
-    <message>
-        <source>Active (pauses simulation at trigger)</source>
-        <translation>Активный (пауза симуляции от триггера)</translation>
-    </message>
-    <message>
-        <source>Log Size</source>
-        <translation>Размер лога</translation>
-    </message>
-    <message>
-        <source>Conditions:</source>
-        <translation>Условия:</translation>
-    </message>
-    <message>
-        <source>Channel 1</source>
-        <translation>Канал 1</translation>
-    </message>
-    <message>
-        <source>Channel 2</source>
-        <translation>Канал 2</translation>
-    </message>
-    <message>
-        <source>Ref. Pin</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -47,7 +47,6 @@ Thermistor::~Thermistor(){}
 QList<propGroup_t> Thermistor::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
-    //mainGroup.propList.append( {"Value_Ohm", tr("Current Value"),"main"} );
     mainGroup.propList.append( {"Temp", tr("Current Value"),"ºC"} );
     mainGroup.propList.append( {"Min_Temp", tr("Minimum Value"),"ºC"} );
     mainGroup.propList.append( {"Max_Temp", tr("Maximum Value"),"ºC"} );

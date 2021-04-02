@@ -36,6 +36,25 @@
     </message>
 </context>
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Compiled:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Aip31068_i2c</name>
     <message>
         <source>Aip31068_i2c</source>
@@ -3302,58 +3321,6 @@ Vuoi salvare le modifiche?
     <message>
         <source>Meters</source>
         <translation>Strumenti di misura</translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filter</source>
-        <translation type="unfinished">Filtro</translation>
-    </message>
-    <message>
-        <source>Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Baisc Mode:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>One Shot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active (pauses simulation at trigger)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Conditions:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Channel 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Channel 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ref. Pin</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
