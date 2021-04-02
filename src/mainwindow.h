@@ -37,6 +37,7 @@ enum Langs {
     Russian,
     Spanish,
     Pt_Brasil,
+    Turkish
 };
 
 class MAINMODULE_EXPORT MainWindow : public QMainWindow
@@ -81,7 +82,6 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         void closeEvent( QCloseEvent* event );
 
     private slots:
-        void about();
         void searchChanged();
 
     private:

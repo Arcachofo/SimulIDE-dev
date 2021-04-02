@@ -176,7 +176,8 @@ TRANSLATIONS +=  \
     ../resources/translations/simulide_pt_BR.ts \
     ../resources/translations/simulide_ru.ts \
     ../resources/translations/simulide_nl.ts \
-    ../resources/translations/simulide_it.ts
+    ../resources/translations/simulide_it.ts \
+    ../resources/translations/simulide_tr.ts
 
 FORMS +=   \
     ../src/gui/dialogs/*.ui \

@@ -136,6 +136,7 @@ QString MainWindow::loc()
     else if( m_lang == Spanish )   locale = "es";
     else if( m_lang == Pt_Brasil ) locale = "pt_BR";
     else if( m_lang == Dutch )     locale = "nl";
+    else if( m_lang == Turkish )   locale = "tr";
 
     return locale;
 }
@@ -151,6 +152,7 @@ void MainWindow::setLoc( QString loc )
     else if( loc == "es" )    lang = Spanish;
     else if( loc == "pt_BR" ) lang = Pt_Brasil;
     else if( loc == "nl" )    lang = Dutch;
+    else if( loc == "tr" )    lang = Turkish;
 
     m_lang = lang;
 }
@@ -174,13 +176,6 @@ void MainWindow::setAutoBck( int secs )
 void MainWindow::setTitle( QString title )
 {
     setWindowTitle( m_version+"  -  "+title );
-}
-
-void MainWindow::about()
-{
-   /*QMessageBox::about(this, tr("About Application"),
-            tr("Circuit simulation"
-               "and IDE for mcu development"));*/
 }
 
 void MainWindow::createWidgets()
