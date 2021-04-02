@@ -484,6 +484,7 @@ void SubCircuit::slotAttach()
                 int origX = 8*(m_board->pkgWidth()-m_width)/2;
                 this->setParentItem( m_board );
                 this->moveTo( QPointF(origX, 0) );
+                this->setRotation(0);
 
                 for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->uid() );
                 m_attached = true;
