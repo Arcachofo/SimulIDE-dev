@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
 
         QString boardId() { return m_boardId; }
         void setBoardId( QString id );
+        void setBoard( SubCircuit* board ) { m_board = board;  }
 
         void connectBoard();
         void setShield( SubCircuit* shield ) { m_shield = shield; }

@@ -428,19 +428,19 @@ void SubCircuit::setLogicSymbol( bool ls )
 
 void SubCircuit::remove()
 {
+    if( m_board ) return;
+
     for( Component* comp : m_compList )
     {
         if( comp->itemType()=="Node" ) continue;
-        comp->setParentItem( 0l );
+        comp->setParentItem( NULL );
         Circuit::self()->removeComp( comp );
-    }
-    if( m_board ) // This is a shield attached to a board
-    {
-        this->setParentItem( NULL );
     }
     if( m_shield ) // there is a shield attached to this
     {
         m_shield->setParentItem( NULL );
+        m_shield->setBoard( NULL );
+        Circuit::self()->removeComp( m_shield );
     }
     Component::remove();
 }
@@ -468,11 +468,14 @@ void SubCircuit::slotAttach()
             Component* comp =  qgraphicsitem_cast<Component*>( it );
             if( comp->itemType() == "Subcircuit" )
             {
+                SubCircuit* board =  (SubCircuit*)comp;
+                if( !(board->subcType() == subcBoard) ) continue;
+
                 if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
                 Circuit::self()->saveState();
+                Circuit::self()->compList()->removeOne( this );
 
-                m_board =  (SubCircuit*)comp;
-                if( !(m_board->subcType() == subcBoard) ) continue;
+                m_board = board;
                 m_boardId = m_board->itemID();
                 m_board->setShield( this );
 
@@ -499,6 +502,8 @@ void SubCircuit::slotDetach()
         if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
         Circuit::self()->saveState();
 
+        Circuit::self()->compList()->prepend( this );
+
         m_board->setShield( NULL );
         this->moveTo( m_circPos );
         this->setParentItem( NULL );
@@ -521,6 +526,8 @@ void SubCircuit::connectBoard()
     Component* comp = Circuit::self()->getCompById( m_boardId );
     if( comp && comp->itemType() == "Subcircuit" )
     {
+        Circuit::self()->compList()->removeOne( this );
+
         m_board = static_cast<SubCircuit*>(comp);
 
         m_board->setShield( this );
@@ -556,13 +563,11 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
                 connect( attachAction, SIGNAL( triggered()), this, SLOT(slotAttach()) );
             }
         }
-        /*if( this->parentItem() )  // Shield is rotated instead of board
+        if( m_board )  // Shield is rotated instead of board
         {                           // But we want to access Shield properties
-            Component* parentComp = static_cast<Component*>( this->parentItem() );
-            parentComp->contextMenu( event, menu );
+            m_board->contextMenu( event, menu );
         }
-        else */
-            Component::contextMenu( event, menu );
+        else Component::contextMenu( event, menu );
         menu->deleteLater();
     }
 }
