@@ -189,6 +189,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
     QList<Component*> compList;   // Component List
     QList<Component*> conList;    // Connector List
     QList<Node*>      jointList;  // Joint List
+    QList<SubCircuit*> shieldList;
 
     QHash<QString, eNode*> nodMap;
 
@@ -340,6 +341,11 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                         subci->setObjectName( subci->objectName().remove( "Arduino " ) );
                         subci->setId( subci->itemID().remove( "Arduino " ) );
                     }
+                    else if( item->itemType() == "Subcircuit")
+                    {
+                        SubCircuit* shield = static_cast<SubCircuit*>(item);
+                        if( shield->subcType() == Chip::subcShield )shieldList.append( shield );
+                    }
                     compList.append( item );
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << objNam;
@@ -349,6 +355,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
     }
     // Take care about unconnected Joints
     for( Node* joint : jointList ) joint->remove(); // Only removed if some missing connector
+    for( SubCircuit* shield : shieldList ) shield->connectBoard();
 
     m_busy = false;
     QApplication::restoreOverrideCursor();

@@ -61,7 +61,9 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 
     m_icColor = QColor( 20, 30, 60 );
     m_attached = false;
+    m_boardId = "";
     m_board = NULL;
+    m_shield = NULL;
 
     QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
     f.setFamily("Monospace");
@@ -432,6 +434,14 @@ void SubCircuit::remove()
         comp->setParentItem( 0l );
         Circuit::self()->removeComp( comp );
     }
+    if( m_board ) // This is a shield attached to a board
+    {
+        this->setParentItem( NULL );
+    }
+    if( m_shield ) // there is a shield attached to this
+    {
+        m_shield->setParentItem( NULL );
+    }
     Component::remove();
 }
 
@@ -463,6 +473,8 @@ void SubCircuit::slotAttach()
 
                 m_board =  (SubCircuit*)comp;
                 if( !(m_board->subcType() == subcBoard) ) continue;
+                m_boardId = m_board->itemID();
+                m_board->setShield( this );
 
                 m_circPos = this->pos();
 
@@ -470,7 +482,7 @@ void SubCircuit::slotAttach()
                 this->setParentItem( m_board );
                 this->moveTo( QPointF(origX, 0) );
 
-                for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_board->itemID()+"-"+tunnel->uid() );
+                for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->uid() );
                 m_attached = true;
 
                 //qDebug() << " SubCircuit::slotAttach: Component found" << comp->objectName();
@@ -487,12 +499,35 @@ void SubCircuit::slotDetach()
         if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
         Circuit::self()->saveState();
 
+        m_board->setShield( NULL );
         this->moveTo( m_circPos );
         this->setParentItem( NULL );
         for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->uid() );
         m_board = NULL;
     }
     m_attached = false;
+}
+
+void SubCircuit::setBoardId( QString id )
+{
+    m_boardId = id;
+}
+
+void SubCircuit::connectBoard()
+{
+    QString name = Circuit::self()->origId( m_boardId );
+    if( name != "" ) m_boardId = name;
+
+    Component* comp = Circuit::self()->getCompById( m_boardId );
+    if( comp && comp->itemType() == "Subcircuit" )
+    {
+        m_board = static_cast<SubCircuit*>(comp);
+
+        m_board->setShield( this );
+        this->setParentItem( m_board );
+        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->uid() );
+        m_attached = true;
+    }
 }
 
 void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )

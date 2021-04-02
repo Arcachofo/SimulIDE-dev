@@ -29,6 +29,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT SubCircuit : public Chip
 {
     Q_OBJECT
+    Q_PROPERTY( QString BoardId READ boardId WRITE setBoardId )
 
     public:
         SubCircuit( QObject* parent, QString type, QString id );
@@ -36,6 +37,12 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
+
+        QString boardId() { return m_boardId; }
+        void setBoardId( QString id );
+
+        void connectBoard();
+        void setShield( SubCircuit* shield ) { m_shield = shield; }
 
         virtual QList<propGroup_t> propGroups() override;
 
@@ -66,10 +73,12 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         virtual void updatePin( QString id, QString type, QString label,
                                 int pos, int xpos, int ypos, int angle, int length=8  );
 
-        bool m_attached;
+        bool m_attached; // This is a shield which is attached to a board
 
-        Component* m_mainComponent;
-        SubCircuit* m_board;
+        Component*  m_mainComponent;
+        SubCircuit* m_shield; // A shield attached to this
+        SubCircuit* m_board;  // A board this is attached to (this is a shield)
+        QString     m_boardId;
 
         QList<Component*> m_compList;
         QHash<QString, Tunnel*> m_pinTunnels;
