@@ -19,6 +19,7 @@
 
 #include <QDomDocument>
 #include <QFileInfo>
+#include <QTranslator>
 
 #include "mcu.h"
 #include "mcuport.h"
@@ -135,6 +136,16 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
 }
 Mcu::~Mcu(){}
+
+QList<propGroup_t> Mcu::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    //mainGroup.propList.append( {"Logic_Symbol", tr("Logic Symbol"),""} );
+    mainGroup.propList.append( {"Mhz", tr("Frequency"),"MHz"} );
+    mainGroup.propList.append( {"Program", tr("Fimware"),""} );
+    //mainGroup.propList.append( {"Auto_Load", tr("Auto Load Firmware at Start"),""} );
+    return {mainGroup};
+}
 
 void Mcu::setLogicSymbol( bool ls )
 {

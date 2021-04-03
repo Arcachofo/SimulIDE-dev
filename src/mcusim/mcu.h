@@ -42,6 +42,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        virtual QList<propGroup_t> propGroups() override;
+
         QString program()   const { return m_firmware; }
         void setProgram( QString pro );
 
