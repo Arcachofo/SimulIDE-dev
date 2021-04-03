@@ -6,6 +6,11 @@ Changes:
     - Debugger updated to new simulation engine.
     - Remove libglibc dependency in Windows build (by acebrian).
     
+  RC3:
+    - Arduinos to Subcircuits.
+    - Slew rate deactivated.
+    - "About SimulIDE" dialog updated.
+    
 New Features:
   RC1:
     - Dutch translation by mvandorp.
@@ -30,6 +35,13 @@ New Features:
     - Resizable Multiplexer and Demultiplexer
     - Czech translation and help files.
     
+  RC3:
+    - Oscope & Analizer extended time frame.
+    - MCU Monitor.
+    - Open Component Properties at Double-Click.
+    - Arduino Shields (experimental).
+    - Memtable: accept decimal, octal or hexadecimal values.
+    - Turkish translation (by Aejwt).
     
 Bug Fixes:
   RC1:
@@ -88,7 +100,25 @@ Bug Fixes:
     - Chip: show Id property overriden at initChip.
     - Latch D: Size error when no OE and no Tristate.
     
-    
+  RC3:
+    - Several Oscope issues.
+    - FlipFlop not shown in non english languages.
+    - Subcircuits not saving Main Component properties.
+    - Subcircuit label wrong pos in old circuits.
+    - Pic12F683 CCP1If flag not set.
+    - Wrong Build date in About Widget.
+    - Switches:label not hidden in Subcircuits.
+    - PIC: Crash creating Mclr Pin.
+    - Errors in some PIC packages.
+    - MCU EEPROM: First value = 0.
+    - PIC16F887 ADC Channel 7 not working.
+    - Serial Monitor not working in new Arduinos.
+    - All Variable Resistors: Errors in value multipliers.
+    - Subcircuits not working after pasting.
+    - Subcircuits fixed (sergey Roenko):
+      7445, 74137, 74138, 74139, 74141,
+      74145, 75154, 744028, 744514, 744515
+      
 New Components:
   RC1:
     - aip31068 I2C LCD (by acebrian).
@@ -106,3 +136,11 @@ New Components:
     - New Subcircuits (sergey Roenko): 
       7489, 74200, 74219, 74301.
       
+  RC3:
+    - atmega8515 (by avklab)
+    
+    - New Subcircuits (sergey Roenko): 
+      7497, 74184, 74185, 74502, 74503, 
+      CD4054, CD4055, CD4056,
+      K155ID11, K155ID13, 564Ik2
+      L298, ULN2001, ULN2803
