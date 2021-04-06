@@ -345,8 +345,8 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
             pin->setVisible( false );
             pin->setLabelText( "" );
         }
-        if     ( angle == 90 )  tunnel->setRotation( angle );
-        else if( angle >= 180 ) tunnel->setRotated( true );
+        if     ( angle == 90 )  tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
+        else if( angle >= 180 ) tunnel->setRotated( true ); // Our Pins at left side
         if( angle == 270 ) tunnel->setRotation( angle );
 
         pin->setLength( length );
