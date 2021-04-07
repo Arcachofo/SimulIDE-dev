@@ -131,13 +131,13 @@ class MAINMODULE_EXPORT eMcu : public eElement
             if( regAddr )
                 watchRegister( regAddr, write, inst, func, bitMask );
         }
-        uint8_t getBitMask( QStringList bitList ) // Get mask for a group of bits in a register
+        uint8_t getBitMask( QStringList bitList ) // Get mask for a group of bits in a Register
         {
             uint8_t bitMask;
             for( QString bitName : bitList ) bitMask |= m_bitMasks.value( bitName );
             return bitMask;
         }
-        regBits_t getRegBits( QString bitNames )
+        regBits_t getRegBits( QString bitNames ) // Get a set of consecutive bits in a Register
         {
             regBits_t regBits;
             QStringList bitList = bitNames.split(",");

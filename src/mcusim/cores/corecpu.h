@@ -66,7 +66,7 @@ class MAINMODULE_EXPORT CoreCpu : public McuCore
             if( addr > m_lowDataMemEnd && addr < m_regEnd ) // Read Register
                 return m_mcu->readReg( addr );              // and call Watchers
 
-            else if( addr <= m_dataMemEnd) return m_dataMem[addr]; // Read Ram
+            else if( addr <= m_dataMemEnd ) return m_dataMem[addr]; // Read Ram
             return 0;
         }
         virtual void SET_RAM( uint16_t addr, uint8_t v )  //

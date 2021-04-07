@@ -1323,22 +1323,14 @@ void I51Core::runDecoder()
 
     switch( m_opcode )
     {
-        case 0x00:
-                nop(); break;
-        case 0x01:
-                ajmp_offset(); break;
-        case 0x02:
-                ljmp_address(); break;
-        case 0x03:
-                rr_a(); break;
-        case 0x04:
-                inc_a(); break;
-        case 0x05:
-                inc_mem(); break;
-        case 0x06:
-                inc_indir_rx(); break;
-        case 0x07:
-                inc_indir_rx(); break;
+        case 0x00: nop(); break;
+        case 0x01: ajmp_offset(); break;
+        case 0x02: ljmp_address(); break;
+        case 0x03: rr_a(); break;
+        case 0x04: inc_a(); break;
+        case 0x05: inc_mem(); break;
+        case 0x06: inc_indir_rx(); break;
+        case 0x07: inc_indir_rx(); break;
 
         case 0x08:
         case 0x09:
@@ -1347,25 +1339,16 @@ void I51Core::runDecoder()
         case 0x0c:
         case 0x0d:
         case 0x0e:
-        case 0x0f:
-                inc_rx(); break;
+        case 0x0f: inc_rx(); break;
 
-        case 0x10:
-                jbc_bitaddr_offset(); break;
-        case 0x11:
-                acall_offset(); break;
-        case 0x12:
-                lcall_address(); break;
-        case 0x13:
-                rrc_a(); break;
-        case 0x14:
-                dec_a(); break;
-        case 0x15:
-                dec_mem(); break;
-        case 0x16:
-                dec_indir_rx(); break;
-        case 0x17:
-                dec_indir_rx(); break;
+        case 0x10: jbc_bitaddr_offset(); break;
+        case 0x11: acall_offset(); break;
+        case 0x12: lcall_address(); break;
+        case 0x13: rrc_a(); break;
+        case 0x14: dec_a(); break;
+        case 0x15: dec_mem(); break;
+        case 0x16: dec_indir_rx(); break;
+        case 0x17: dec_indir_rx(); break;
 
         case 0x18:
         case 0x19:
@@ -1374,25 +1357,16 @@ void I51Core::runDecoder()
         case 0x1c:
         case 0x1d:
         case 0x1e:
-        case 0x1f:
-                dec_rx(); break;
+        case 0x1f: dec_rx(); break;
 
-        case 0x20:
-                jb_bitaddr_offset(); break;
-        case 0x21:
-                ajmp_offset(); break;
-        case 0x22:
-                ret(); break;
-        case 0x23:
-                rl_a(); break;
-        case 0x24:
-                add_a_imm(); break;
-        case 0x25:
-                add_a_mem(); break;
-        case 0x26:
-                add_a_indir_rx(); break;
-        case 0x27:
-                add_a_indir_rx(); break;
+        case 0x20: jb_bitaddr_offset(); break;
+        case 0x21: ajmp_offset(); break;
+        case 0x22: ret(); break;
+        case 0x23: rl_a(); break;
+        case 0x24: add_a_imm(); break;
+        case 0x25: add_a_mem(); break;
+        case 0x26: add_a_indir_rx(); break;
+        case 0x27: add_a_indir_rx(); break;
 
         case 0x28:
         case 0x29:
@@ -1401,25 +1375,16 @@ void I51Core::runDecoder()
         case 0x2c:
         case 0x2d:
         case 0x2e:
-        case 0x2f:
-                add_a_rx(); break;
+        case 0x2f: add_a_rx(); break;
 
-        case 0x30:
-                jnb_bitaddr_offset(); break;
-        case 0x31:
-                acall_offset(); break;
-        case 0x32:
-                reti(); break;
-        case 0x33:
-                rlc_a(); break;
-        case 0x34:
-                addc_a_imm(); break;
-        case 0x35:
-                addc_a_mem(); break;
-        case 0x36:
-                addc_a_indir_rx(); break;
-        case 0x37:
-                addc_a_indir_rx(); break;
+        case 0x30: jnb_bitaddr_offset(); break;
+        case 0x31: acall_offset(); break;
+        case 0x32: reti(); break;
+        case 0x33: rlc_a(); break;
+        case 0x34: addc_a_imm(); break;
+        case 0x35: addc_a_mem(); break;
+        case 0x36: addc_a_indir_rx(); break;
+        case 0x37: addc_a_indir_rx(); break;
 
         case 0x38:
         case 0x39:
@@ -1428,25 +1393,16 @@ void I51Core::runDecoder()
         case 0x3c:
         case 0x3d:
         case 0x3e:
-        case 0x3f:
-                addc_a_rx(); break;
+        case 0x3f: addc_a_rx(); break;
 
-        case 0x40:
-                jc_offset(); break;
-        case 0x41:
-                ajmp_offset(); break;
-        case 0x42:
-                orl_mem_a(); break;
-        case 0x43:
-                orl_mem_imm(); break;
-        case 0x44:
-                orl_a_imm(); break;
-        case 0x45:
-                orl_a_mem(); break;
-        case 0x46:
-                orl_a_indir_rx(); break;
-        case 0x47:
-                orl_a_indir_rx(); break;
+        case 0x40: jc_offset(); break;
+        case 0x41: ajmp_offset(); break;
+        case 0x42: orl_mem_a(); break;
+        case 0x43: orl_mem_imm(); break;
+        case 0x44: orl_a_imm(); break;
+        case 0x45: orl_a_mem(); break;
+        case 0x46: orl_a_indir_rx(); break;
+        case 0x47: orl_a_indir_rx(); break;
 
         case 0x48:
         case 0x49:
@@ -1455,25 +1411,16 @@ void I51Core::runDecoder()
         case 0x4c:
         case 0x4d:
         case 0x4e:
-        case 0x4f:
-                orl_a_rx(); break;
+        case 0x4f: orl_a_rx(); break;
 
-        case 0x50:
-                jnc_offset(); break;
-        case 0x51:
-                acall_offset(); break;
-        case 0x52:
-                anl_mem_a(); break;
-        case 0x53:
-                anl_mem_imm(); break;
-        case 0x54:
-                anl_a_imm(); break;
-        case 0x55:
-                anl_a_mem(); break;
-        case 0x56:
-                anl_a_indir_rx(); break;
-        case 0x57:
-                anl_a_indir_rx(); break;
+        case 0x50: jnc_offset(); break;
+        case 0x51: acall_offset(); break;
+        case 0x52: anl_mem_a(); break;
+        case 0x53: anl_mem_imm(); break;
+        case 0x54: anl_a_imm(); break;
+        case 0x55: anl_a_mem(); break;
+        case 0x56: anl_a_indir_rx(); break;
+        case 0x57: anl_a_indir_rx(); break;
 
         case 0x58:
         case 0x59:
@@ -1482,25 +1429,16 @@ void I51Core::runDecoder()
         case 0x5c:
         case 0x5d:
         case 0x5e:
-        case 0x5f:
-                anl_a_rx(); break;
+        case 0x5f: anl_a_rx(); break;
 
-        case 0x60:
-                jz_offset(); break;
-        case 0x61:
-                ajmp_offset(); break;
-        case 0x62:
-                xrl_mem_a(); break;
-        case 0x63:
-                xrl_mem_imm(); break;
-        case 0x64:
-                xrl_a_imm(); break;
-        case 0x65:
-                xrl_a_mem(); break;
-        case 0x66:
-                xrl_a_indir_rx(); break;
-        case 0x67:
-                xrl_a_indir_rx(); break;
+        case 0x60: jz_offset(); break;
+        case 0x61: ajmp_offset(); break;
+        case 0x62: xrl_mem_a(); break;
+        case 0x63: xrl_mem_imm(); break;
+        case 0x64: xrl_a_imm(); break;
+        case 0x65: xrl_a_mem(); break;
+        case 0x66: xrl_a_indir_rx(); break;
+        case 0x67: xrl_a_indir_rx(); break;
 
         case 0x68:
         case 0x69:
@@ -1509,25 +1447,16 @@ void I51Core::runDecoder()
         case 0x6c:
         case 0x6d:
         case 0x6e:
-        case 0x6f:
-                xrl_a_rx(); break;
+        case 0x6f: xrl_a_rx(); break;
 
-        case 0x70:
-                jnz_offset(); break;
-        case 0x71:
-                acall_offset(); break;
-        case 0x72:
-                orl_c_bitaddr(); break;
-        case 0x73:
-                jmp_indir_a_dptr(); break;
-        case 0x74:
-                mov_a_imm(); break;
-        case 0x75:
-                mov_mem_imm(); break;
-        case 0x76:
-                mov_indir_rx_imm(); break;
-        case 0x77:
-                mov_indir_rx_imm(); break;
+        case 0x70: jnz_offset(); break;
+        case 0x71: acall_offset(); break;
+        case 0x72: orl_c_bitaddr(); break;
+        case 0x73: jmp_indir_a_dptr(); break;
+        case 0x74: mov_a_imm(); break;
+        case 0x75: mov_mem_imm(); break;
+        case 0x76: mov_indir_rx_imm(); break;
+        case 0x77: mov_indir_rx_imm(); break;
 
         case 0x78:
         case 0x79:
@@ -1536,25 +1465,16 @@ void I51Core::runDecoder()
         case 0x7c:
         case 0x7d:
         case 0x7e:
-        case 0x7f:
-                mov_rx_imm(); break;
+        case 0x7f: mov_rx_imm(); break;
 
-        case 0x80:
-                sjmp_offset(); break;
-        case 0x81:
-                ajmp_offset(); break;
-        case 0x82:
-                anl_c_bitaddr(); break;
-        case 0x83:
-                movc_a_indir_a_pc(); break;
-        case 0x84:
-                div_ab(); break;
-        case 0x85:
-                mov_mem_mem(); break;
-        case 0x86:
-                mov_mem_indir_rx(); break;
-        case 0x87:
-                mov_mem_indir_rx(); break;
+        case 0x80: sjmp_offset(); break;
+        case 0x81: ajmp_offset(); break;
+        case 0x82: anl_c_bitaddr(); break;
+        case 0x83: movc_a_indir_a_pc(); break;
+        case 0x84: div_ab(); break;
+        case 0x85: mov_mem_mem(); break;
+        case 0x86: mov_mem_indir_rx(); break;
+        case 0x87: mov_mem_indir_rx(); break;
 
         case 0x88:
         case 0x89:
@@ -1563,25 +1483,16 @@ void I51Core::runDecoder()
         case 0x8c:
         case 0x8d:
         case 0x8e:
-        case 0x8f:
-                mov_mem_rx(); break;
+        case 0x8f: mov_mem_rx(); break;
 
-        case 0x90:
-                mov_dptr_imm(); break;
-        case 0x91:
-                acall_offset(); break;
-        case 0x92:
-                mov_bitaddr_c(); break;
-        case 0x93:
-                movc_a_indir_a_dptr(); break;
-        case 0x94:
-                subb_a_imm(); break;
-        case 0x95:
-                subb_a_mem(); break;
-        case 0x96:
-                subb_a_indir_rx(); break;
-        case 0x97:
-                subb_a_indir_rx(); break;
+        case 0x90: mov_dptr_imm(); break;
+        case 0x91: acall_offset(); break;
+        case 0x92: mov_bitaddr_c(); break;
+        case 0x93: movc_a_indir_a_dptr(); break;
+        case 0x94: subb_a_imm(); break;
+        case 0x95: subb_a_mem(); break;
+        case 0x96: subb_a_indir_rx(); break;
+        case 0x97: subb_a_indir_rx(); break;
 
         case 0x98:
         case 0x99:
@@ -1590,25 +1501,16 @@ void I51Core::runDecoder()
         case 0x9c:
         case 0x9d:
         case 0x9e:
-        case 0x9f:
-                subb_a_rx(); break;
+        case 0x9f: subb_a_rx(); break;
 
-        case 0xa0:
-                orl_c_compl_bitaddr(); break;
-        case 0xa1:
-                ajmp_offset(); break;
-        case 0xa2:
-                mov_c_bitaddr(); break;
-        case 0xa3:
-                inc_dptr(); break;
-        case 0xa4:
-                mul_ab(); break;
-        case 0xa5:
-                nop(); break; // unused
-        case 0xa6:
-                mov_indir_rx_mem(); break;
-        case 0xa7:
-                mov_indir_rx_mem(); break;
+        case 0xa0: orl_c_compl_bitaddr(); break;
+        case 0xa1: ajmp_offset(); break;
+        case 0xa2: mov_c_bitaddr(); break;
+        case 0xa3: inc_dptr(); break;
+        case 0xa4: mul_ab(); break;
+        case 0xa5: nop(); break; // unused
+        case 0xa6: mov_indir_rx_mem(); break;
+        case 0xa7: mov_indir_rx_mem(); break;
 
         case 0xa8:
         case 0xa9:
@@ -1617,25 +1519,16 @@ void I51Core::runDecoder()
         case 0xac:
         case 0xad:
         case 0xae:
-        case 0xaf:
-                mov_rx_mem(); break;
+        case 0xaf: mov_rx_mem(); break;
 
-        case 0xb0:
-                anl_c_compl_bitaddr(); break;
-        case 0xb1:
-                acall_offset(); break;
-        case 0xb2:
-                cpl_bitaddr(); break;
-        case 0xb3:
-                cpl_c(); break;
-        case 0xb4:
-                cjne_a_imm_offset(); break;
-        case 0xb5:
-                cjne_a_mem_offset(); break;
-        case 0xb6:
-                cjne_indir_rx_imm_offset(); break;
-        case 0xb7:
-                cjne_indir_rx_imm_offset(); break;
+        case 0xb0: anl_c_compl_bitaddr(); break;
+        case 0xb1: acall_offset(); break;
+        case 0xb2: cpl_bitaddr(); break;
+        case 0xb3: cpl_c(); break;
+        case 0xb4: cjne_a_imm_offset(); break;
+        case 0xb5: cjne_a_mem_offset(); break;
+        case 0xb6: cjne_indir_rx_imm_offset(); break;
+        case 0xb7: cjne_indir_rx_imm_offset(); break;
 
         case 0xb8:
         case 0xb9:
@@ -1644,29 +1537,16 @@ void I51Core::runDecoder()
         case 0xbc:
         case 0xbd:
         case 0xbe:
-        case 0xbf:
-                cjne_rx_imm_offset(); break;
+        case 0xbf: cjne_rx_imm_offset(); break;
 
-        case 0xc0:
-                push_mem(); break;
-        case 0xc1:
-                ajmp_offset(); break;
-        case 0xc2:
-                clr_bitaddr(); break;
-        case 0xc3:
-                clr_c(); break;
-        case 0xc4:
-                swap_a(); break;
-        case 0xc5://xch_a_mem(); break;
-            {
-                xch( OPERAND1 );
-                PC ++;
-            }   break;
-        case 0xc6: //xch_a_indir_rx(); break;
-        case 0xc7://xch_a_indir_rx(); break;
-            {
-                xch( INDIR_RX_ADDRESS );
-            }   break;
+        case 0xc0: push_mem(); break;
+        case 0xc1: ajmp_offset(); break;
+        case 0xc2: clr_bitaddr(); break;
+        case 0xc3: clr_c(); break;
+        case 0xc4: swap_a(); break;
+        case 0xc5: { xch( OPERAND1 ); PC ++; } break;
+        case 0xc6:
+        case 0xc7: xch( INDIR_RX_ADDRESS ); break;
 
         case 0xc8:
         case 0xc9:
@@ -1675,25 +1555,16 @@ void I51Core::runDecoder()
         case 0xcc:
         case 0xcd:
         case 0xce:
-        case 0xcf:
-                xch_a_rx(); break;
+        case 0xcf: xch_a_rx(); break;
 
-        case 0xd0:
-                pop_mem(); break;
-        case 0xd1:
-                acall_offset(); break;
-        case 0xd2:
-                setb_bitaddr(); break;
-        case 0xd3:
-                setb_c(); break;
-        case 0xd4:
-                da_a(); break;
-        case 0xd5:
-                djnz_mem_offset(); break;
-        case 0xd6:
-                xchd_a_indir_rx(); break;
-        case 0xd7:
-                xchd_a_indir_rx(); break;
+        case 0xd0: pop_mem(); break;
+        case 0xd1: acall_offset(); break;
+        case 0xd2: setb_bitaddr(); break;
+        case 0xd3: setb_c(); break;
+        case 0xd4: da_a(); break;
+        case 0xd5: djnz_mem_offset(); break;
+        case 0xd6: xchd_a_indir_rx(); break;
+        case 0xd7: xchd_a_indir_rx(); break;
 
         case 0xd8:
         case 0xd9:
@@ -1702,25 +1573,16 @@ void I51Core::runDecoder()
         case 0xdc:
         case 0xdd:
         case 0xde:
-        case 0xdf:
-                djnz_rx_offset(); break;
+        case 0xdf: djnz_rx_offset(); break;
 
-        case 0xe0:
-                movx_a_indir_dptr(); break;
-        case 0xe1:
-                ajmp_offset(); break;
-        case 0xe2:
-                movx_a_indir_rx(); break;
-        case 0xe3:
-                movx_a_indir_rx(); break;
-        case 0xe4:
-                clr_a(); break;
-        case 0xe5:
-                mov_a_mem(); break;
-        case 0xe6:
-                mov_a_indir_rx(); break;
-        case 0xe7:
-                mov_a_indir_rx(); break;
+        case 0xe0: movx_a_indir_dptr(); break;
+        case 0xe1: ajmp_offset(); break;
+        case 0xe2: movx_a_indir_rx(); break;
+        case 0xe3: movx_a_indir_rx(); break;
+        case 0xe4: clr_a(); break;
+        case 0xe5: mov_a_mem(); break;
+        case 0xe6: mov_a_indir_rx(); break;
+        case 0xe7: mov_a_indir_rx(); break;
 
         case 0xe8:
         case 0xe9:
@@ -1729,25 +1591,16 @@ void I51Core::runDecoder()
         case 0xec:
         case 0xed:
         case 0xee:
-        case 0xef:
-                mov_a_rx(); break;
+        case 0xef: mov_a_rx(); break;
 
-        case 0xf0:
-                movx_indir_dptr_a(); break;
-        case 0xf1:
-                acall_offset(); break;
-        case 0xf2:
-                movx_indir_rx_a(); break;
-        case 0xf3:
-                movx_indir_rx_a(); break;
-        case 0xf4:
-                cpl_a(); break;
-        case 0xf5:
-                mov_mem_a(); break;
-        case 0xf6:
-                mov_indir_rx_a(); break;
-        case 0xf7:
-                mov_indir_rx_a(); break;
+        case 0xf0: movx_indir_dptr_a(); break;
+        case 0xf1: acall_offset(); break;
+        case 0xf2: movx_indir_rx_a(); break;
+        case 0xf3: movx_indir_rx_a(); break;
+        case 0xf4: cpl_a(); break;
+        case 0xf5: mov_mem_a(); break;
+        case 0xf6: mov_indir_rx_a(); break;
+        case 0xf7: mov_indir_rx_a(); break;
 
         case 0xf8:
         case 0xf9:
@@ -1756,8 +1609,7 @@ void I51Core::runDecoder()
         case 0xfc:
         case 0xfd:
         case 0xfe:
-        case 0xff:
-                mov_rx_a(); break;
+        case 0xff: mov_rx_a(); break;
        }
 }
 

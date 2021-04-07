@@ -32,6 +32,7 @@
 #include "avrcore.h"
 #include "avrtimer.h"
 #include "avrocunit.h"
+#include "avrinterrupt.h"
 
 #include "pic14core.h"
 
@@ -235,7 +236,8 @@ void McuCreator::createInterrupts( QDomElement* i, eMcu* mcu )
         uint16_t intVector  = el.attribute("vector").toUInt(0,0);
 
         Interrupt* iv = NULL;
-        if( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
+        if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
+        else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
         if( !iv ) return;
 
         mcu->m_interrupts.m_intList.insert( intName, iv );

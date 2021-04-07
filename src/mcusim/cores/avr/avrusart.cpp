@@ -45,7 +45,7 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name )
 }
 AvrUsart::~AvrUsart(){}
 
-void AvrUsart::configure( uint8_t val )
+void AvrUsart::configure( uint8_t val ) // UCSRnC changed
 {
     // clockPol = getRegBitsVal( val, UCPOLn );
 
