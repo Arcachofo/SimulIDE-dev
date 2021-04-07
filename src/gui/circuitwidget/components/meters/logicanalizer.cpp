@@ -79,7 +79,7 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     m_updtCount = 0;
     m_trigger = 0;
     setTimeDiv( 1e6 ); // 1 ms
-    setVoltDiv( 6 );
+    setVoltDiv( 0.6 );
     setLabelPos(-90,-100, 0);
     expand( false );
 }
