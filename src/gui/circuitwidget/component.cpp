@@ -127,13 +127,19 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
         if( event->modifiers() == Qt::ControlModifier ) setSelected( !isSelected() );
         else
         {
+            QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
             if( !isSelected() )     // Unselect everything and select this
             {
-                QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
-
                 for( QGraphicsItem* item : itemlist ) item->setSelected( false );
-
                 setSelected( true );
+            }
+            else                    // Deselect childs
+            {
+                for( QGraphicsItem* item : itemlist )
+                {
+                    QList<QGraphicsItem*> childs = item->childItems();
+                    for( QGraphicsItem* child : childs ) child->setSelected( false );
+                }
             }
             setCursor( Qt::ClosedHandCursor );
         }
