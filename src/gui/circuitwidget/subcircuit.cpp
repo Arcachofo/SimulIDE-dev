@@ -260,17 +260,10 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
             else
             {
                 Component* comp = NULL;
-                if( type == "Node" )
-                {
-                    comp = new Node( this, type, id );
-                    circ->m_idMap[objNam] = id; // Map simu id to new id
-                }
-                else
-                {
-                    if( objNam == "" ) objNam = id;
-                    Circuit::self()->m_idMap[objNam] = id; // Map simu id to new id
-                    comp = circ->createItem( type, id, objNam );
-                }
+                if( objNam == "" ) objNam = id;
+                if( type == "Node" ) comp = new Node( this, type, id );
+                else                 comp = circ->createItem( type, id, objNam );
+                circ->m_idMap[objNam] = id; // Map simu id to new id
 
                 if( comp )
                 {

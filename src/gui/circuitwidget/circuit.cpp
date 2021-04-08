@@ -112,14 +112,7 @@ Component* Circuit::getCompById( QString id )
 
 QString Circuit::getCompId( QString name )
 {
-    QStringList nameSplit = name.split("-");
-    if( nameSplit.isEmpty() ) return "";
-
-    QString compId  = nameSplit.takeFirst();
-    if( nameSplit.isEmpty() ) return "";
-
-    QString compNum = nameSplit.takeFirst();
-    return compId+"-"+compNum;
+    return name.remove( name.lastIndexOf("-"), 100 );
 }
 
 Pin* Circuit::findPin( int x, int y, QString id )
