@@ -145,7 +145,8 @@ void LogicInput::setUnit( QString un )
 void LogicInput::updateOutput()
 {
     m_outHighV = m_value*m_unitMult;
-    //m_out->setVoltHigh( m_voltHight );
+    m_output[0]->setVoltHigh( m_outHighV );
+
     m_changed = true;
 }
 
