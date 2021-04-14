@@ -55,7 +55,7 @@ void OutPanelText::appendText( const QString text )
 void OutPanelText::writeText( const QString text )
 {
     m_textBuffer.append( text+"\n" );
-    if( !Simulator::self()->isRunning() ) updateStep();
+    if( !Simulator::self() || !Simulator::self()->isRunning() ) updateStep();
 }
 
 void OutPanelText::updateStep()

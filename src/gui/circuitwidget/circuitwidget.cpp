@@ -492,7 +492,6 @@ void CircuitWidget::updateRecentFileActions()
 void CircuitWidget::simDebug( QString msg )
 {
     m_outPane.writeText( msg );
-    if( !Simulator::self()->isRunning() ) m_outPane.updateStep();
 }
 
 

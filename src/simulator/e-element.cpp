@@ -35,10 +35,10 @@ eElement::eElement( QString id )
 }
 eElement::~eElement()
 {
+    m_ePin.clear();
+    if( !Simulator::self() ) return;
     Simulator::self()->remFromElementList( this );
     Simulator::self()->cancelEvents( this );
-
-    m_ePin.clear();
 }
 
 void eElement::setNumEpins( int n )

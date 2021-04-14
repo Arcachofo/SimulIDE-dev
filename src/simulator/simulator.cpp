@@ -30,7 +30,7 @@
 #include "baseprocessor.h"
 
 
-Simulator* Simulator::m_pSelf = 0l;
+Simulator* Simulator::m_pSelf = NULL;
 
 Simulator::Simulator( QObject* parent )
          : QObject( parent )
@@ -60,6 +60,7 @@ Simulator::Simulator( QObject* parent )
 Simulator::~Simulator()
 {
     m_CircuitFuture.waitForFinished();
+    m_pSelf = NULL;
 }
 
 inline void Simulator::solveMatrix()
