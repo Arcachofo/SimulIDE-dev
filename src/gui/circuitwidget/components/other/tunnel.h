@@ -64,6 +64,8 @@ class MAINMODULE_EXPORT Tunnel : public Component//, public eElement
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
+ static QHash<QString, eNode*> m_eNodes;
+
     protected:
         int m_size;
         QString m_name;

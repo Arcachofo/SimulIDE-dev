@@ -24,6 +24,7 @@
 #include "e-node.h"
 #include "pin.h"
 
+QHash<QString, eNode*> Tunnel::m_eNodes;
 QHash<QString, QList<Tunnel*>*> Tunnel::m_tunnels;
 
 Component* Tunnel::construct( QObject* parent, QString type, QString id )
@@ -73,8 +74,8 @@ QList<propGroup_t> Tunnel::propGroups()
 
 void Tunnel::setEnode( eNode* node )
 {
-    if( !m_tunnels.contains( m_name )
-     || !m_pin[0]->isConnected() ) return;
+    if( !m_tunnels.contains( m_name ) ||
+        !m_pin[0]->isConnected() ) return;
 
     if( m_blocked ) return;
     m_blocked = true;
@@ -90,6 +91,7 @@ void Tunnel::registerPins( eNode* enode ) // called by m_pin[0]
     QList<Tunnel*>* list = m_tunnels.value( m_name );
     if( !list ) return;
 
+    m_eNodes[m_name] = enode;
     m_blocked = true;
 
     for( Tunnel* tunnel: *list )
@@ -104,28 +106,35 @@ void Tunnel::setName( QString name )
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    removeTunnel(); // Remove old name
+    removeTunnel(); // Remove old name before setting new one
+
+    m_name = name;
+    m_pin[0]->setLabelText( name );
+    if( name == "" ) m_size = 20;
+    else  m_size = m_pin[0]->labelSizeX()+4;
+    setRotated( m_rotated );
+
+    if( name.isEmpty() ) { setEnode( NULL ); return; }
+
+    eNode* node = m_pin[0]->getEnode();
 
     if( m_tunnels.contains( name ) ) // There is already tunnel with this name
     {
         QList<Tunnel*>* list = m_tunnels.value( name );
-        if( list && !list->contains( this ) ) list->append( this );
+        if( !list->contains( this ) ) list->append( this );
+        if( !node ) node = m_eNodes.value( name );
     }
-    else if( name != "" )
+    else   // name doesn't exist: Create a new List for this name
     {
+        node = new eNode( name+"eNode" );
+
         QList<Tunnel*>* list = new QList<Tunnel*>();
         list->append( this );
-        m_tunnels.insert( name, list );
+        m_tunnels[name] = list;
+        m_eNodes[name] = node;
     }
-
-    m_name = name;
-    m_pin[0]->setLabelText( name );
-
-    if( name == "" ) m_size = 20;
-    else  m_size = m_pin[0]->labelSizeX()+4;
-
-    setRotated( m_rotated );
-    registerPins( m_pin[0]->getEnode() );
+    setEnode( node );
+    registerPins( node );
 }
 
 void Tunnel::setRotated( bool rot )
@@ -135,14 +144,12 @@ void Tunnel::setRotated( bool rot )
     {
         m_area = QRect( 4, -4, m_size+4, 8 );
         m_pin[0]->setPinAngle( 180 );
-        m_pin[0]->setLabelPos();
     }
     else {
         m_area = QRect( -m_size-8, -4, m_size+4, 8 );
         m_pin[0]->setPinAngle( 0 );
-        m_pin[0]->setLabelPos();
     }
-    Circuit::self()->update();
+    m_pin[0]->setLabelPos();
 }
 
 void Tunnel::removeTunnel()
@@ -156,6 +163,7 @@ void Tunnel::removeTunnel()
         if( list->isEmpty() )
         {
             m_tunnels.remove( m_name );
+            m_eNodes.remove( m_name );
             delete list;
         }
     }
