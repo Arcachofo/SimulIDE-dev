@@ -50,7 +50,7 @@ void Compiler::loadCompiler( QString file )
     QDomDocument domDoc = fileToDomDoc( file, "Compiler::loadCompiler" );
     if( domDoc.isNull() )
     {
-        m_outPane->writeText( "Error: Compiler file not valid:\n"+file+"\n" );
+        m_outPane->appendLine( "Error: Compiler file not valid:\n"+file+"\n" );
         return;
     }
     QDomElement root = domDoc.documentElement();
@@ -68,12 +68,12 @@ void Compiler::loadCompiler( QString file )
 
     if( !m_toolPath.isEmpty() && !QFile::exists( m_toolPath+m_command ) )
     {
-        m_outPane->appendText( tr("Error: ToolChain not found")+"\n" );
-        m_outPane->writeText( m_toolPath+m_command+"\n" );
-        m_outPane->writeText( "Please set Compiler path in file:\n"+file+"\n" );
+        m_outPane->appendLine( tr("Error: ToolChain not found") );
+        m_outPane->appendLine( m_toolPath+m_command+"\n" );
+        m_outPane->appendLine( "Please set Compiler path in file:\n"+file+"\n" );
         return;
     }
-    m_outPane->writeText( compName+" Compiler successfully loaded.\n" );
+    m_outPane->appendLine( compName+" Compiler successfully loaded.\n" );
     m_toolChain = true;
 }
 
@@ -85,7 +85,7 @@ int Compiler::compile( QString file )
     int error = 0;
 
     QFileInfo fi = QFileInfo( file );
-    QString filePath  = file;
+    QString filePath = file;
     QString fileDir  = fi.absolutePath()+"/";
     QString fileExt  = "."+fi.suffix();
     QString fileName = fi.completeBaseName();
@@ -108,7 +108,7 @@ int Compiler::compile( QString file )
                                    .replace( "$fileExt",  fileExt )
                                    .replace( "$incDir",   incDir );
 
-    m_outPane->writeText( "\n Executing:\n"+command+arguments+"\n" );
+    m_outPane->appendLine( "\n Executing:\n"+command+arguments+"\n" );
     m_compilerProc.start( command+arguments  );
     m_compilerProc.waitForFinished(-1);
 
@@ -118,11 +118,11 @@ int Compiler::compile( QString file )
     if     ( p_stdout.toLower().contains( QRegExp("\berror\b") )) error = -1;
     else if( p_stderr.toLower().contains( QRegExp("\berror\b") )) error = -1;
 
-    m_outPane->writeText( p_stdout+"\n" );
+    m_outPane->appendLine( p_stdout+"\n" );
     if( !p_stderr.isEmpty() )
     {
-        m_outPane->writeText( "ERROR OUTPUT:" );
-        m_outPane->writeText( p_stderr+"\n" );
+        m_outPane->appendLine( "ERROR OUTPUT:" );
+        m_outPane->appendLine( p_stderr+"\n" );
     }
 
     QApplication::restoreOverrideCursor();

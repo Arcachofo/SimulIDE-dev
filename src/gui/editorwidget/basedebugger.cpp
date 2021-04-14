@@ -65,12 +65,12 @@ bool BaseDebugger::upload()
 {
     if( !McuComponent::self() )
     {
-        m_outPane->writeText( "\n"+tr("Error: No Mcu in Simulator... ") );
+        m_outPane->appendLine( "\n"+tr("Error: No Mcu in Simulator... ") );
         return false;
     }
     McuComponent::self()->load( m_firmware );
-    m_outPane->writeText( "\n"+tr("FirmWare Uploaded to ")+McuComponent::self()->device());
-    m_outPane->writeText( m_firmware+"\n" );
+    m_outPane->appendLine( "\n"+tr("FirmWare Uploaded to ")+McuComponent::self()->device());
+    m_outPane->appendLine( m_firmware+"\n" );
 
     BaseProcessor::self()->setDebugger( this );
     mapFlashToSource();
@@ -115,8 +115,8 @@ void BaseDebugger::getCompilerPath()
 
     MainWindow::self()->settings()->setValue( m_compSetting, m_compilerPath);
 
-    m_outPane->appendText( "\n"+tr("Using Compiler Path: ")+"\n" );
-    m_outPane->writeText( m_compilerPath+"\n" );
+    m_outPane->appendLine( "\n"+tr("Using Compiler Path: ") );
+    m_outPane->appendLine( m_compilerPath+"\n" );
 }
 
 bool BaseDebugger::driveCirc()
@@ -139,8 +139,8 @@ void BaseDebugger::setCompilerPath( QString path )
 
 void BaseDebugger::toolChainNotFound()
 {
-    m_outPane->appendText( tr(": ToolChain not found")+"\n" );
-    m_outPane->writeText( "\n"+tr("Right-Click on Document Tab to set Path")+"\n" );
+    m_outPane->appendLine( tr(": ToolChain not found") );
+    m_outPane->appendLine( "\n"+tr("Right-Click on Document Tab to set Path")+"\n" );
     QApplication::restoreOverrideCursor();
 }
 #include "moc_basedebugger.cpp"

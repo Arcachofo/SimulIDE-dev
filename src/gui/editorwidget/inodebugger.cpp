@@ -141,9 +141,9 @@ int InoDebugger::compile()
         m_sketchBook = m_sketchBook.remove("\r").remove("\n");
         getSkBook.close();
         if( m_sketchBook.isEmpty() )
-            m_outPane->writeText( "\nNo User sketchBook Found\n\n" );
+            m_outPane->appendLine( "\nNo User sketchBook Found\n\n" );
         else
-            m_outPane->writeText( "\nFound User sketchBook at:\n"+m_sketchBook+"\n\n" );
+            m_outPane->appendLine( "\nFound User sketchBook at:\n"+m_sketchBook+"\n\n" );
     }
 
     QString cBuildPath = buildPath;
@@ -172,7 +172,7 @@ int InoDebugger::compile()
     command += " "+filePath;
     m_firmware = "";
     
-    m_outPane->writeText( command );
+    m_outPane->appendLine( command );
     
     m_compProcess.start( command );
     m_compProcess.waitForFinished(-1);
@@ -182,7 +182,7 @@ int InoDebugger::compile()
     int error = -1;
     if( p_stderr.toUpper().contains("ERROR:") )
     {
-        m_outPane->writeText( p_stderr );
+        m_outPane->appendLine( p_stderr );
         QStringList lines = p_stderr.split("\n");
         for( QString line : lines )
         {

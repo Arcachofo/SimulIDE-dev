@@ -43,7 +43,7 @@ int PicAsmDebugger::compile()
     //getProcType();
     QString file = m_fileDir+m_fileName+m_fileExt;
     
-    m_outPane->writeText( "-------------------------------------------------------\n" );
+    m_outPane->appendLine( "-------------------------------------------------------\n" );
     QString command = m_compilerPath+"gpasm";
     
     QProcess checkComp( this );
@@ -66,7 +66,7 @@ int PicAsmDebugger::compile()
     command.append(" -L -w1  -i  -ainhx32 -I "+m_fileDir+" "+ file);
 
     m_outPane->appendText( "Exec: ");
-    m_outPane->writeText( command );
+    m_outPane->appendLine( command );
     
     QProcess compAsm( this );
     compAsm.start( command  );
@@ -74,8 +74,8 @@ int PicAsmDebugger::compile()
     
     QString p_stdout = compAsm.readAllStandardOutput();
     QString p_stderr = compAsm.readAllStandardError();
-    m_outPane->writeText( p_stdout );
-    m_outPane->writeText( p_stderr );
+    m_outPane->appendLine( p_stdout );
+    m_outPane->appendLine( p_stderr );
 
     int error = 0;
     if( p_stdout.toUpper().contains("ERROR") ) 

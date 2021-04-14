@@ -150,9 +150,8 @@ void CodeEditor::setFile( const QString filePath )
         m_debugger = NULL;
     }
     
-    m_outPane->appendText( "-------------------------------------------------------\n" );
-    m_outPane->appendText( tr(" File: ") );
-    m_outPane->writeText( filePath+"\n" );
+    m_outPane->appendLine( "-------------------------------------------------------" );
+    m_outPane->appendLine( tr(" File: ")+filePath+"\n" );
 
     m_file = filePath;
     QFileInfo fi = QFileInfo( m_file );
@@ -192,11 +191,11 @@ void CodeEditor::setFile( const QString filePath )
         
         if( isPic < 50 ) isAvr = getSintaxCoincidences( m_file, m_avrInstr );
 
-        m_outPane->writeText( tr("File recognized as: ") );
+        m_outPane->appendLine( tr("File recognized as: ") );
 
         if( isPic > isAvr )   // Is Pic
         {
-            m_outPane->writeText( "Pic asm\n" );
+            m_outPane->appendLine( "Pic asm\n" );
 
             QString path = sintaxPath + "pic14asm.sintax";
             m_hlighter->readSintaxFile( path );
@@ -205,7 +204,7 @@ void CodeEditor::setFile( const QString filePath )
         }
         else if( isAvr > isPic )  // Is Avr
         {
-            m_outPane->writeText( "Avr asm\n" );
+            m_outPane->appendLine( "Avr asm\n" );
 
             QString path = sintaxPath + "avrasm.sintax";
             m_hlighter->readSintaxFile( path );
@@ -213,7 +212,7 @@ void CodeEditor::setFile( const QString filePath )
             m_debugger = new AvrAsmDebugger( this, m_outPane, filePath );
             m_debugger->loadCompiler( compilerPath+"avracompiler.xml" );
         }
-        else m_outPane->writeText( "Unknown\n" );
+        else m_outPane->appendLine( "Unknown\n" );
     }
     else if( m_fileExt == "xml"
          ||  m_fileExt == "package"
@@ -277,13 +276,13 @@ void CodeEditor::compile()
     int error=-2;
     m_isCompiled = false;
     
-    m_outPane->appendText( "-------------------------------------------------------\n" );
+    m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendText( "Exec: ");
 
     if( m_fileExt == "Makefile"
      || m_fileExt == "makefile" )          // Is a Makefile, make it
     {
-        m_outPane->writeText( "make "+m_file+"\n" );
+        m_outPane->appendLine( "make "+m_file+"\n" );
 
         QProcess makeproc( 0l );
         makeproc.setWorkingDirectory( m_fileDir );
@@ -294,7 +293,7 @@ void CodeEditor::compile()
         QString p_stderr = makeproc.readAllStandardError();
         m_outPane->appendText( p_stderr );
         m_outPane->appendText( "\n" );
-        m_outPane->writeText( p_stdout );
+        m_outPane->appendLine( p_stdout );
 
         if( p_stderr.toUpper().contains("ERROR") || p_stdout.toUpper().contains("ERROR") )
             error = -1;
@@ -303,7 +302,7 @@ void CodeEditor::compile()
     else{
         if( !m_debugger )
         {
-            m_outPane->writeText( "\n"+tr("File type not supported")+"\n" );
+            m_outPane->appendLine( "\n"+tr("File type not supported")+"\n" );
             return;
         }
         error = m_debugger->compile();
@@ -311,11 +310,11 @@ void CodeEditor::compile()
 
     if( error == 0 )
     {
-        m_outPane->writeText( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
+        m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
         m_isCompiled = true;
     }
     else{
-        m_outPane->writeText( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
+        m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
         
         if( error > 0 ) // goto error line number
         {
@@ -329,9 +328,9 @@ void CodeEditor::upload()
 {
     if( m_file.endsWith(".hex") )     // is an .hex file, upload to proccessor
     {
-        //m_outPane->writeText( "-------------------------------------------------------\n" );
-        m_outPane->appendText( "\n"+tr("Uploading: ")+"\n" );
-        m_outPane->writeText( m_file );
+        //m_outPane->appendLine( "-------------------------------------------------------\n" );
+        m_outPane->appendLine( "\n"+tr("Uploading: ") );
+        m_outPane->appendLine( m_file );
 
         if( McuComponent::self() ) McuComponent::self()->load( m_file );
         return;
@@ -353,25 +352,25 @@ void CodeEditor::remBreakPoint( int line ) { m_brkPoints.removeOne( line ); }
 
 bool CodeEditor::initDebbuger()
 {
-    m_outPane->writeText( "-------------------------------------------------------\n" );
-    m_outPane->writeText( tr("Starting Debbuger...")+"\n" );
+    m_outPane->appendLine( "-------------------------------------------------------\n" );
+    m_outPane->appendLine( tr("Starting Debbuger...")+"\n" );
 
     bool error = false;
     m_state = DBG_STOPPED;
     
     if( !McuComponent::self() )             // Must be an Mcu in Circuit
     {
-        m_outPane->writeText( "\n    "+tr("Error: No Mcu in Simulator... ")+"\n" );
+        m_outPane->appendLine( "\n    "+tr("Error: No Mcu in Simulator... ")+"\n" );
         error = true;
     }
     else if( !m_debugger )             // No debugger for this file type
     {
-        m_outPane->writeText( "\n    "+tr("Error: No Debugger Suited for this File... ")+"\n" );
+        m_outPane->appendLine( "\n    "+tr("Error: No Debugger Suited for this File... ")+"\n" );
         error = true;
     }
     else if( m_file == "" )                                   // No File
     {
-        m_outPane->writeText( "\n    "+tr("Error: No File... ")+"\n" );
+        m_outPane->appendLine( "\n    "+tr("Error: No File... ")+"\n" );
         error = true;
     }
     else
@@ -379,16 +378,16 @@ bool CodeEditor::initDebbuger()
         compile();
         if( !m_isCompiled )                           // Error compiling
         {
-            m_outPane->writeText( "\n    "+tr("Error Compiling... ")+"\n" );
+            m_outPane->appendLine( "\n    "+tr("Error Compiling... ")+"\n" );
             error = true;
         }
         else if( !m_debugger->upload() )      // Error Loading Firmware
         {
-            m_outPane->writeText( "\n    "+tr("Error Loading Firmware... ")+"\n" );
+            m_outPane->appendLine( "\n    "+tr("Error Loading Firmware... ")+"\n" );
             error = true;
         }
     }
-    m_outPane->writeText( "\n" );
+    m_outPane->appendLine( "\n" );
 
     if( error ) stopDebbuger();
     else                                          // OK: Start Debugging
@@ -403,7 +402,7 @@ bool CodeEditor::initDebbuger()
         setDriveCirc( m_driveCirc );
         CircuitWidget::self()->powerCircDebug( m_driveCirc );
 
-        m_outPane->writeText( tr("Debugger Started ")+"\n" );
+        m_outPane->appendLine( tr("Debugger Started ")+"\n" );
         setReadOnly( true );
     }
     return ( m_state == DBG_PAUSED );
@@ -455,7 +454,7 @@ void CodeEditor::lineReached( int line ) // Processor reached PC related to sour
     EditorWindow::self()->pause(); // EditorWindow: calls this->pause as well
 
     int cycle = BaseProcessor::self()->cycle();
-    m_outPane->writeText( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
+    m_outPane->appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
     m_lastCycle = cycle;
 }
 
@@ -474,7 +473,7 @@ void CodeEditor::stopDebbuger()
         setReadOnly( false );
         updateScreen();
     }
-    m_outPane->writeText( "\n"+tr("Debugger Stopped ")+"\n" );
+    m_outPane->appendLine( "\n"+tr("Debugger Stopped ")+"\n" );
 }
 
 void CodeEditor::pause()

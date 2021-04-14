@@ -491,7 +491,7 @@ void CircuitWidget::updateRecentFileActions()
 
 void CircuitWidget::simDebug( QString msg )
 {
-    m_outPane.writeText( msg );
+    m_outPane.appendLine( msg );
 }
 
 
