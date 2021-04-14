@@ -1,0 +1,11 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+    <itemset category="Shields" type="Subcircuit" folder="shields">
+    
+        <item name="LcdShield" info=" (experimental)" icon="lcdshield_icon.png"/> 
+        
+    </itemset>
+
+</itemlib>

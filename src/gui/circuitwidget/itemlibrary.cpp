@@ -204,6 +204,7 @@ void ItemLibrary::loadItems()
     addItem( PICComponent::libraryItem() );
     addItem( AVRComponent::libraryItem() );
     addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "arduino.png","", 0l ) );
+    addItem( new LibraryItem( tr("Shields"),tr("Micro"), "shield.png","", 0l ) );
     addItem( new LibraryItem( tr("Sensors"),tr("Micro"), "1to2.png","", 0l ) );
     addItem( SR04::libraryItem() );
     addItem( new LibraryItem( tr("Perifericals"),tr("Micro"), "perif.png","", 0l ) );

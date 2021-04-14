@@ -66,7 +66,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void drawBackground( QPainter* painter, const QRectF &rect );
 
         Pin* findPin( int x, int y, QString id );
-        Pin* getConPin( QString pinId );
 
         void loadCircuit(QString fileName );
         bool saveCircuit( QString fileName );

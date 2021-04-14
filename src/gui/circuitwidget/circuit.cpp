@@ -112,7 +112,17 @@ Component* Circuit::getCompById( QString id )
 
 QString Circuit::getCompId( QString name )
 {
-    return name.remove( name.lastIndexOf("-"), 100 );
+    //return name.remove( name.lastIndexOf("-"), 100 );
+
+    QStringList nameSplit = name.split("-");
+    if( nameSplit.isEmpty() ) return "";
+
+    QString compId  = nameSplit.takeFirst();
+    if( nameSplit.isEmpty() ) return "";
+
+    QString compNum = nameSplit.takeFirst();
+
+    return compId+"-"+compNum;
 }
 
 Pin* Circuit::findPin( int x, int y, QString id )
@@ -133,19 +143,6 @@ Pin* Circuit::findPin( int x, int y, QString id )
         if( pin ) return pin;
     }
     return 0l;
-}
-
-Pin* Circuit::getConPin( QString pinId )
-{
-    Pin* pin = 0l;
-    QString compName = Circuit::self()->getCompId( pinId );
-    QString newName  = m_idMap.value( compName );
-
-    pinId.replace( compName, newName );
-    pin = m_pinMap[pinId];
-    if( pin && pin->isConnected() ) pin = 0l;
-
-    return pin;
 }
 
 void Circuit::loadCircuit( QString fileName )

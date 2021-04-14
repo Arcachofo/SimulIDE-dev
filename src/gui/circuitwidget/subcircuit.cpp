@@ -215,16 +215,19 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
         {
             QString objNam = element.attribute( "objectName"  ); // Data in simu file
             QString type   = element.attribute( "itemtype"  );
-            QString id     = objNam.split("-").first()+"-"+circ->newSceneId(); // Create new id
+            QString id     = objNam;
+            id = id.remove( id.lastIndexOf("-"), 100 )+"-"+circ->newSceneId(); // Create new id
+            if( id.contains("Seg"))
+                qDebug() << "seg";
 
             element.setAttribute( "objectName", id  );
 
             if( type == "Connector" )
             {
-                QString startPinId = element.attribute( "startpinid" ) ;
-                QString endPinId   = element.attribute( "endpinid" )  ;
-                Pin* startpin  = circ->getConPin( startPinId );
-                Pin* endpin    = circ->getConPin( endPinId );
+                QString startPinId = element.attribute( "startpinid" );
+                QString endPinId   = element.attribute( "endpinid" );
+                Pin* startpin  = getConPin( startPinId );
+                Pin* endpin    = getConPin( endPinId );
 
                 if( startpin && endpin )    // Create Connector
                 {
@@ -249,17 +252,19 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
                     con->setParentItem( this );
                     con->setPos( 0, 0 );
                     circ->conList()->removeOne( con );
+                    startpin->registerPins( enode );
+                    endpin->registerPins( enode );
                 }
                 else // Start or End pin not found
                 {
-                    if( !startpin ) qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc:  null startpin in " << objNam<<startPinId;
-                    if( !endpin )   qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc:  null endpin in "   << objNam<<endPinId;
+                    if( !startpin ) qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null startpin in " << objNam<<startPinId;
+                    if( !endpin )   qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null endpin in "   << objNam<<endPinId;
                 }
             }
             else if( type == "Package" ) { ; }
             else
             {
-                Component* comp = NULL;
+                Component* comp = 0l;
                 if( objNam == "" ) objNam = id;
                 if( type == "Node" ) comp = new Node( this, type, id );
                 else                 comp = circ->createItem( type, id, objNam );
@@ -277,11 +282,7 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
                     circ->compList()->removeOne( comp );
                     m_compList.append( comp );
 
-                    if( comp->isMainComp() )
-                    {
-                        m_mainComponent = comp; // This component will add it's Context Menu
-                        comp->setSubcircuit( this );
-                    }
+                    if( comp->isMainComp() ) m_mainComponent = comp; // This component will add it's Context Menu
 
                     if( type == "Tunnel" ) // Make Tunnel names unique for this subcircuit
                     {
@@ -296,6 +297,25 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
         }
         node = node.nextSibling();
     }
+}
+
+Pin* SubCircuit::getConPin( QString pinId )
+{
+    Pin* pin = 0l;
+    QString compName;
+    if( pinId.contains("Seg"))
+    {
+        compName = pinId;
+        compName = compName.remove( compName.lastIndexOf("-"), 100 );
+    }
+    else                       compName = Circuit::self()->getCompId( pinId );
+    QString newName  = Circuit::self()->m_idMap.value( compName );
+
+    if( !newName.isEmpty() ) pinId.replace( compName, newName );
+    pin = Circuit::self()->m_pinMap[pinId];
+    if( pin && pin->isConnected() ) pin = 0l;
+
+    return pin;
 }
 
 void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
@@ -538,12 +558,9 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     {
         event->accept();
         QMenu* menu = new QMenu();
-        if( m_mainComponent )
-        {
-            menu->addSection( m_mainComponent->itemType() );
-            m_mainComponent->contextMenu( event, menu );
-            menu->addSection( "Subcircuit" );
-        }
+        Component* mainComp = m_mainComponent;
+        QString id = m_id;
+
         if( m_subcType == subcShield )
         {
             if( m_attached )
@@ -556,12 +573,22 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
                 QAction* attachAction = menu->addAction(QIcon(":/attach.png"),tr("Attach") );
                 connect( attachAction, SIGNAL( triggered()), this, SLOT(slotAttach()) );
             }
+            menu->addSection( "" );
+            if( m_board && m_board->m_mainComponent )
+            {
+                mainComp = m_board->m_mainComponent;
+                id = "Board - "+m_board->itemID();
+            }
         }
-        if( m_board )  // Shield is rotated instead of board
-        {                           // But we want to access Shield properties
-            m_board->contextMenu( event, menu );
+        if( mainComp )
+        {
+            menu->addSection( id+" - "+mainComp->itemType() );
+            menu->addSection( "                            " );
+            mainComp->contextMenu( event, menu );
+            menu->addSection( m_id );
+            menu->addSection( "                            " );
         }
-        else Component::contextMenu( event, menu );
+        Component::contextMenu( event, menu );
         menu->deleteLater();
     }
 }

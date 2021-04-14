@@ -63,6 +63,9 @@
         
         <file alias="breakpoint.png">../src/icons/mainwindow/breakpoint.png</file>
         <file alias="nobreakpoint.png">../src/icons/mainwindow/nobreakpoint.png</file>
+        
+        <file alias="attach.png">../src/icons/mainwindow/attach.png</file>
+        <file alias="detach.png">../src/icons/mainwindow/detach.png</file>
     
         <file alias="led.png">../src/icons/components/led.png</file>
         <file alias="diode.png">../src/icons/components/diode.png</file>
@@ -92,8 +95,6 @@
         <file alias="andgate.png">../src/icons/components/andgate.png</file>
         <file alias="orgate.png">../src/icons/components/orgate.png</file>
         <file alias="xorgate.png">../src/icons/components/xorgate.png</file>
-        <file alias="flipflopd.png">../src/icons/components/flipflopd.png</file>
-        <file alias="flipflopjk.png">../src/icons/components/flipflopjk.png</file>
         <file alias="potentiometer.png">../src/icons/components/potentiometer.png</file>
         <file alias="push.png">../src/icons/components/push.png</file>
         <file alias="opamp.png">../src/icons/components/opamp.png</file>
@@ -159,7 +160,9 @@
         
         <file alias="switchbut.png">../src/icons/mainwindow/switchbut.png</file>
         
-        <file alias="arduino.png">../src/icons/components/arduino.png</file>
+        <file alias="arduinoUnoIcon.png">../src/icons/components/arduinoUnoIcon.png</file>
+        <file alias="shield.png">../src/icons/components/shield.png</file>
+        
         <file alias="sr04.png">../src/icons/components/sr04.png</file>
         <file alias="sr04_ico.png">../src/icons/components/sr04_ico.png</file>
         <file alias="ky-023.png">../src/icons/components/ky-023.png</file>
