@@ -26,12 +26,12 @@
 void myMessageOutput( QtMsgType type, const QMessageLogContext &context, const QString &msg )
 {
     QByteArray localMsg = msg.toLocal8Bit();
-    const char *file = context.file ? context.file : "";
-    const char *function = context.function ? context.function : "";
+    const char* file = context.file ? context.file : "";
+    const char* function = context.function ? context.function : "";
     switch (type) {
     case QtDebugMsg:
          CircuitWidget::self()->simDebug( msg );
-        fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        fprintf( stderr, "%s \n", localMsg.constData() );
         break;
     case QtInfoMsg:
         fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
