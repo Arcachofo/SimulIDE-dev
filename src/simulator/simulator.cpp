@@ -60,7 +60,6 @@ Simulator::Simulator( QObject* parent )
 Simulator::~Simulator()
 {
     m_CircuitFuture.waitForFinished();
-    m_pSelf = NULL;
 }
 
 inline void Simulator::solveMatrix()
