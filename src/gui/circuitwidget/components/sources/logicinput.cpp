@@ -66,6 +66,7 @@ LogicInput::LogicInput( QObject* parent, QString type, QString id )
     m_ePin[0] = m_outpin;
 
     eLogicDevice::createOutput( m_outpin );
+    m_output[0]->setPinMode( source );
     
     m_unit = "V";
     setVolt(5.0);
