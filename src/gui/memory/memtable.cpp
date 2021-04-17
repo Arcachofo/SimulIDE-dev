@@ -97,11 +97,13 @@ void MemTable::resizeTable( int dataSize )
 
         for( int col=0; col<33; ++col )
         {
-            if( col == 16 ) continue;
-
             it = new QTableWidgetItem(0);
-            it->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable );
-            it->setFont( font );
+            if( col == 16 ) it->setFlags( 0 );
+            else
+            {
+                it->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable );
+                it->setFont( font );
+            }
             table->setItem( row, col, it );
         }
         table->setRowHeight( row, 20*scale );
@@ -146,6 +148,8 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
 
 void MemTable::cellClicked( int row, int col )
 {
+    if( col == 16 ) return;
+
     if( col > 16 ) col -= 17;
     table->clearSelection();
     table->item( row, col )->setSelected( true );
