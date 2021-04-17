@@ -114,6 +114,13 @@ void eOpAmp::voltChanged() // Called when any pin node change volt
 double eOpAmp::gain()                {return m_gain;}
 void   eOpAmp::setGain( double gain ){m_gain = gain;}
 
+double eOpAmp::outImp() const { return m_output->imp(); }
+void   eOpAmp::setOutImp( double imp )
+{
+    if( imp < cero_doub ) imp = cero_doub;
+    m_output->setImp( imp );
+}
+
 bool eOpAmp::hasPowerPins()          {return m_powerPins;}
 void eOpAmp::setPowerPins( bool set ){m_powerPins = set;}
 

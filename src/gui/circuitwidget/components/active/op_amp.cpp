@@ -76,6 +76,7 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     m_ePin[2] = m_pin[2];
     newId.append("-eSource");
     m_output = new eSource( newId, m_ePin[2], output );
+    m_output->setImp( cero_doub );
     m_output->setState( true );
     
     newId = id;
@@ -100,6 +101,7 @@ QList<propGroup_t> OpAmp::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Gain", tr("Gain"),""} );
+    mainGroup.propList.append( {"Out_Imped", tr("Output Impedance"),"Ω"} );
 
     propGroup_t supGroup { tr("Supply") };
     supGroup.propList.append( {"Volt_Pos", tr("V+"),"V"} );

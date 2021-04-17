@@ -38,6 +38,9 @@ class MAINMODULE_EXPORT eOpAmp : public eElement
         virtual double gain();
         virtual void setGain( double gain );
 
+        double outImp() const;
+        void  setOutImp( double imp );
+
         virtual double voltPos(){ return m_voltPosDef; }
         virtual void setVoltPos( double volt ){ m_voltPosDef = volt; }
 
