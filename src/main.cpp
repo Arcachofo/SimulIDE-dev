@@ -30,7 +30,7 @@ void myMessageOutput( QtMsgType type, const QMessageLogContext &context, const Q
     const char* function = context.function ? context.function : "";
     switch (type) {
     case QtDebugMsg:
-         CircuitWidget::self()->simDebug( msg );
+        if( CircuitWidget::self() ) CircuitWidget::self()->simDebug( msg );
         fprintf( stderr, "%s \n", localMsg.constData() );
         break;
     case QtInfoMsg:
