@@ -39,7 +39,8 @@ class MAINMODULE_EXPORT VarResBase : public Component, public eResistor
         int  minVal() { return m_dial->minimum(); }
         void setMinVal( int min ) { m_dial->setMinimum( min ); }
 
-        int getVal();
+        int  getVal();
+        void setVal( int val );
 
         int  getStep() { return m_step; }
         void setStep( int step ) { m_step = step ; }
@@ -47,7 +48,7 @@ class MAINMODULE_EXPORT VarResBase : public Component, public eResistor
         virtual void initialize() override;
 
     public slots:
-        void setVal( int val );
+        void dialChanged( int val );
 
     protected:
         int m_step;

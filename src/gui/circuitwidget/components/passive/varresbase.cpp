@@ -77,13 +77,22 @@ VarResBase::VarResBase( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     connect( m_dial, SIGNAL(valueChanged(int)),
-             this,   SLOT  (setVal(int)), Qt::UniqueConnection );
+             this,   SLOT  (dialChanged(int)), Qt::UniqueConnection );
 }
 VarResBase::~VarResBase(){}
 
 void VarResBase::initialize()
 {
     m_changed = true;
+}
+
+void VarResBase::dialChanged( int val )
+{
+    if( m_step > 0 ) val = round(val/m_step)*m_step;
+    Component::setValue( val/m_unitMult ); // Takes care about units multiplier
+
+    m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 int VarResBase::getVal()
@@ -93,11 +102,7 @@ int VarResBase::getVal()
 
 void VarResBase::setVal( int val )
 {
-    if( m_step > 0 ) val = round(val/m_step)*m_step;
-    Component::setValue( val/m_unitMult ); // Takes care about units multiplier
-
-    m_changed = true;
-    if( !Simulator::self()->isRunning() ) updateStep();
+    m_dial->setValue( val );
 }
 
 #include "moc_varresbase.cpp"
