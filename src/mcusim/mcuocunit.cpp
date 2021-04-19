@@ -52,7 +52,7 @@ void McuOcUnit::tov()
     drivePin( m_tovAct );
 }
 
-void McuOcUnit::drivePin(  ocAct_t act )
+void McuOcUnit::drivePin( ocAct_t act )
 {
     if( !act ) return;
     bool pinState;

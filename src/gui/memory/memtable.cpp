@@ -130,7 +130,7 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
     {
         col -= 17;
         ok = !item->text().isEmpty();
-        if( ok) val = item->text().toUtf8().at(0);
+        if( ok ) val = item->text().toUtf8().at(0);
     }
     else val = item->text().toInt( &ok, 0 );
 

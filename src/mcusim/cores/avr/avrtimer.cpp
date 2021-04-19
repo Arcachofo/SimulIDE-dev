@@ -70,7 +70,7 @@ void AvrTimer0::addocUnit( McuOcUnit* ocUnit )
     else if( ocUnit->getId().endsWith("B") ) m_OCB = ocUnit;
 }
 
-void AvrTimer0::configureA( uint8_t val ) // WGM00,WGM01
+void AvrTimer0::configureA( uint8_t val ) // TCCR0A  // WGM00,WGM01
 {
     //val = getRegBitsVal( val, m_configBitsA );
     wgmMode_t wgmMode = (wgmMode_t)(val & 0b00000011);
@@ -86,7 +86,7 @@ void AvrTimer0::configureA( uint8_t val ) // WGM00,WGM01
     }
 }
 
-void AvrTimer0::configureB( uint8_t val ) // TCCRXB
+void AvrTimer0::configureB( uint8_t val ) // TCCR0B
 {
     //getRegBitsVal( val, m_configBitsB );
     uint8_t mode = val & 0b00000111; // CSX0-3
