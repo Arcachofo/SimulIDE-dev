@@ -142,10 +142,10 @@ void AvrTimer0::updtWgm()
     {
         if( m_WGM02 )
         {
-            m_ovfMatch = OCR0A-1;
+            m_ovfMatch = OCR0A;
         }
         else {
-            m_ovfMatch = 0xFF-1;
+            m_ovfMatch = 0xFF;
             if( comActA == ocTOGGLE ) comActA = ocNONE;
         }
         if( comActB == ocTOGGLE ) comActB = ocNONE;
@@ -173,7 +173,8 @@ void AvrTimer0::updtWgm()
         else if( comActB == ocCLEAR )  tovActB = ocSET;
         else if( comActB == ocSET )    tovActB = ocCLEAR;
     }
-    m_ovfPeriod = m_ovfMatch+1;
+    if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
+    else            m_ovfPeriod = m_ovfMatch+1;
 
     m_OCA->setOcActs( comActA, tovActA );
     m_OCB->setOcActs( comActB, tovActB );
@@ -186,6 +187,7 @@ void AvrTimer0::OCRAchanged( uint8_t val )
                       ||(m_wgmMode == wgmFAST)) ) )
     {
         m_ovfMatch = val;
-        m_ovfPeriod = m_ovfMatch+1;
+        if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
+        else            m_ovfPeriod = m_ovfMatch+1;
     }
 }

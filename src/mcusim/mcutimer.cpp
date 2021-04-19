@@ -90,7 +90,7 @@ void McuTimer::sheduleEvents()
         m_ovfCycle = circTime + cycles;// In simulation time (ps)
 
         Simulator::self()->addEvent( cycles, this );
-        for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfPeriod, m_countVal );
+        for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfMatch, m_countVal );
     }
     else
     {
