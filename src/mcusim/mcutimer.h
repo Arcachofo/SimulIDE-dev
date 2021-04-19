@@ -85,6 +85,7 @@ class MAINMODULE_EXPORT McuTimer : public eElement
         uint32_t m_countVal;  // Value of counter
         uint32_t m_countStart; // Value of counter after ovf
 
+        uint16_t m_maxCount;  // Maximum value of the counter
         uint16_t m_ovfMatch;  // counter vale to match an overflow
         uint32_t m_ovfPeriod; // overflow period
         uint64_t m_ovfCycle;  // absolute cycle of next overflow

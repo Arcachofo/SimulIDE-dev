@@ -53,6 +53,7 @@ void McuTimer::initialize()
     m_ovfMatch   = 0;
     m_ovfPeriod  = 0;
     m_ovfCycle   = 0;
+    m_maxCount   = 255; // Default to 8 bit counter
 
     m_prescaler = 1;
 
@@ -82,7 +83,10 @@ void McuTimer::sheduleEvents()
         uint64_t circTime = Simulator::self()->circTime();
         m_scale = m_prescaler*m_mcu->simCycPI();
 
-        uint64_t cycles = (m_ovfPeriod-m_countVal)*m_scale; // cycles in ps
+        uint32_t ovfPeriod = m_ovfPeriod;
+        if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount;
+
+        uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
         m_ovfCycle = circTime + cycles;// In simulation time (ps)
 
         Simulator::self()->addEvent( cycles, this );
@@ -107,7 +111,6 @@ void McuTimer::countWriteL( uint8_t val ) // Someone wrote to counter low byte
 {
     updtCount();
     m_countL[0] = val;
-    Simulator::self()->cancelEvents( this );
     updtCycles();                             // update & Reshedule
 }
 
@@ -115,7 +118,6 @@ void McuTimer::countWriteH( uint8_t val ) // Someone wrote to counter high byte
 {
     updtCount();
     m_countH[0] = val;
-    Simulator::self()->cancelEvents( this );
     updtCycles();                             // update & Reshedule
 }
 
@@ -137,6 +139,7 @@ void McuTimer::updtCycles() // Recalculate ovf, comps, etc
     m_countVal |= m_countL[0];
     m_countStart = 0;
 
+    Simulator::self()->cancelEvents( this );
     sheduleEvents();
 }
 
