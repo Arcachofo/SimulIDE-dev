@@ -33,6 +33,7 @@
 #include "avrtimer.h"
 #include "avrocunit.h"
 #include "avrinterrupt.h"
+#include "avrusart.h"
 
 #include "pic14core.h"
 
@@ -462,6 +463,7 @@ void McuCreator::createUsart( QDomElement* u, eMcu* mcu )
     QString name = u->attribute( "name" );
     UsartM* usartM;
     if     ( m_core == "8051" ) usartM = new I51Usart( mcu, name );
+    else if( m_core == "AVR" )  usartM = new AvrUsart( mcu, name );
     else return;
 
     UsartM::m_usarts.insert( name, usartM );

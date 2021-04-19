@@ -46,6 +46,8 @@ class MAINMODULE_EXPORT AvrTimer0 : public McuTimer
         AvrTimer0( eMcu* mcu, QString name );
         ~AvrTimer0();
 
+        virtual void runEvent() override;
+
         virtual void initialize() override;
         virtual void configureA( uint8_t val ) override;
         virtual void configureB( uint8_t val ) override;

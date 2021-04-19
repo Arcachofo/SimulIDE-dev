@@ -46,6 +46,11 @@ AvrTimer0::AvrTimer0( eMcu* mcu, QString name)
 }
 AvrTimer0::~AvrTimer0(){}
 
+void AvrTimer0::runEvent()
+{
+    McuTimer::runEvent();
+}
+
 void AvrTimer0::initialize()
 {
     McuTimer::initialize();
@@ -89,9 +94,8 @@ void AvrTimer0::configureB( uint8_t val ) // TCCRXB
     if( mode != m_mode )
     {
         m_mode = mode;
+        if( mode ) configureClock();
         enable( m_mode );
-
-        if( mode )  configureClock();
     }
 
     uint8_t wgm02 = val & 0b00001000; // WGM02
