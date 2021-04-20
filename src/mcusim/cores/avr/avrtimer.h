@@ -29,45 +29,50 @@ enum wgmMode_t{
     wgmFAST,
 };
 
-class MAINMODULE_EXPORT AvrTimer
+class MAINMODULE_EXPORT AvrTimer : public McuTimer
 {
     public:
-        AvrTimer();
+        AvrTimer( eMcu* mcu, QString name );
         ~AvrTimer();
 
  static McuTimer* makeTimer( eMcu* mcu, QString name );
+
+        virtual void initialize() override;
+
+        virtual void addocUnit( McuOcUnit* ocUnit ) override;
+
+        virtual void configureA( uint8_t val );
+        virtual void configureB( uint8_t val );
+
+    protected:
+        virtual void configureClock();
+        virtual void updtWgm()=0;
+        virtual void setOCRXA( QString reg )=0;
+
+        wgmMode_t m_wgmMode;
+        uint8_t m_WGM10;
+        uint8_t m_WGM32;
+
+        McuOcUnit* m_OCA;
+        McuOcUnit* m_OCB;
+
+        uint8_t* m_ocrxaL;
+        uint8_t* m_ocrxaH;
 };
 
 class AvrOcUnit;
 
-class MAINMODULE_EXPORT AvrTimer8bit : public McuTimer
+class MAINMODULE_EXPORT AvrTimer8bit : public AvrTimer
 {
     public:
         AvrTimer8bit( eMcu* mcu, QString name );
         ~AvrTimer8bit();
 
-        virtual void runEvent() override;
-
-        virtual void initialize() override;
-        virtual void configureA( uint8_t val ) override;
-        virtual void configureB( uint8_t val ) override;
-
         virtual void OCRXAchanged( uint8_t val );
 
-        virtual void addocUnit( McuOcUnit* ocUnit ) override;
-
     protected:
-        virtual void configureClock();
-        void updtWgm();
-        void setOCRXA( QString reg );
-
-        wgmMode_t m_wgmMode;
-        bool      m_WGM02;
-
-        uint8_t* m_ocrxa;
-
-        McuOcUnit* m_OCA;
-        McuOcUnit* m_OCB;
+        virtual void updtWgm() override;
+        virtual void setOCRXA( QString reg ) override;
 };
 
 class MAINMODULE_EXPORT AvrTimer0 : public AvrTimer8bit
@@ -85,6 +90,33 @@ class MAINMODULE_EXPORT AvrTimer2 : public AvrTimer8bit
     public:
         AvrTimer2( eMcu* mcu, QString name );
         ~AvrTimer2();
+};
+
+
+class MAINMODULE_EXPORT AvrTimer16bit : public AvrTimer
+{
+    public:
+        AvrTimer16bit( eMcu* mcu, QString name );
+        ~AvrTimer16bit();
+
+        virtual void OCRXAchanged( uint8_t val );
+
+    protected:
+        virtual void updtWgm() override;
+        virtual void setOCRXA( QString reg ) override;
+
+        uint8_t* m_icrxL;
+        uint8_t* m_icrxH;
+};
+
+class MAINMODULE_EXPORT AvrTimer1 : public AvrTimer16bit
+{
+    public:
+        AvrTimer1( eMcu* mcu, QString name );
+        ~AvrTimer1();
+
+    protected:
+        virtual void configureClock() override;
 };
 
 #endif

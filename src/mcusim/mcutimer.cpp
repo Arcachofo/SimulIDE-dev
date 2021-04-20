@@ -53,7 +53,6 @@ void McuTimer::initialize()
     m_ovfMatch   = 0;
     m_ovfPeriod  = 0;
     m_ovfCycle   = 0;
-    m_maxCount   = 255; // Default to 8 bit counter
 
     m_prescaler = 1;
 

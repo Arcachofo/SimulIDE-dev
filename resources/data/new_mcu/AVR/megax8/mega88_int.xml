@@ -1,0 +1,19 @@
+<parts>
+    <interrupts enable="I">
+        <interrupt name="RESET"                                priority="26" vector="0x000"/>
+        <interrupt name="INT0"    enable="INT0"   flag="INTF0" priority="25" vector="0x001"/>
+        <interrupt name="INT1"    enable="INT1"   flag="INTF1" priority="24" vector="0x002"/>
+        <interrupt name="PCINT0"  enable="PCIE0"  flag="PCIF0" priority="23" vector="0x003"/>
+        <interrupt name="PCINT1"  enable="PCIE1"  flag="PCIF1" priority="22" vector="0x004"/>
+        <interrupt name="PCINT2"  enable="PCIE2"  flag="PCIF2" priority="21" vector="0x005"/>
+        
+        <interrupt name="T2_OVF"  enable="TOIE2"  flag="TOV2"  priority="17" vector="0x009"/>
+        
+        <interrupt name="T1_OVF"  enable="TOIE1"  flag="TOV1"  priority="13" vector="0x00D"/>
+        
+        <interrupt name="T0_OVF"  enable="TOIE0"  flag="TOV0"  priority="10" vector="0x010"/>
+        
+        <interrupt name="USART_R" enable="RXCIE0" flag="RXC0"  priority="8"  vector="0x0012" />
+        <interrupt name="USART_T" enable="TXCIE0" flag="TXC0"  priority="6"  vector="0x0014" />
+    </interrupts>
+</parts>

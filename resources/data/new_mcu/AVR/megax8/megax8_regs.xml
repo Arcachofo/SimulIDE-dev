@@ -1,24 +1,3 @@
-<!DOCTYPE SimulIDE>
-
-<!-- *************************************************************************** -->
-<!-- *   Copyright (C) 2020 by santiago González                               * -->
-<!-- *   santigoro@gmail.com                                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is free software; you can redistribute it and/or modify  * -->
-<!-- *   it under the terms of the GNU General Public License as published by  * -->
-<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
-<!-- *   (at your option) any later version.                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is distributed in the hope that it will be useful,       * -->
-<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
-<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
-<!-- *   GNU General Public License for more details.                          * -->
-<!-- *                                                                         * -->
-<!-- *   You should have received a copy of the GNU General Public License     * -->
-<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
-<!-- *                                                                         * -->
-<!-- *************************************************************************** -->
-
 <parts>
     <datablock name="GPR" start="0x0000" end="0x001F"/>
     <regblock  name="SFR" start="0x0020" end="0x00FF">
@@ -70,9 +49,9 @@
         <register name="PCMSK0" addr="107" bits=""/>
         <register name="PCMSK1" addr="108" bits=""/>
         <register name="PCMSK2" addr="109" bits=""/>
-        <register name="TIMSK0" addr="110" bits=""/>
-        <register name="TIMSK1" addr="111" bits=""/>
-        <register name="TIMSK2" addr="112" bits=""/>
+        <register name="TIMSK0" addr="110" bits="TOIE0,OCIE0A,OCIE0B"/>
+        <register name="TIMSK1" addr="111" bits="TOIE1,OCIE1A,OCIE1B,0,0,ICIE1"/>
+        <register name="TIMSK2" addr="112" bits="TOIE2,OCIE2A,OCIE2B"/>
         <register name="ADCL"   addr="120" bits=""/>
         <register name="ADCH"   addr="121" bits=""/>
         <register name="ADCSRA" addr="122" bits=""/>
@@ -80,9 +59,9 @@
         <register name="ADMUX"  addr="124" bits=""/>
         <register name="DIDR0"  addr="126" bits=""/>
         <register name="DIDR1"  addr="127" bits=""/>
-        <register name="TCCR1A" addr="128" bits=""/>
-        <register name="TCCR1B" addr="129" bits=""/>
-        <register name="TCCR1C" addr="130" bits=""/>
+        <register name="TCCR1A" addr="128" bits="WGM10,WGM11,0,0,COM1B0,COM1B1,COM1A0,COM1A1"/>
+        <register name="TCCR1B" addr="129" bits="CS10,CS11,CS12,WGM12,WGM13,0,ICES1,ICNC1"/>
+        <register name="TCCR1C" addr="130" bits="0,0,0,0,0,0,FOC1B,FOC1A"/>
         <register name="TCNT1L" addr="132" bits=""/>
         <register name="TCNT1H" addr="133" bits=""/>
         <register name="ICR1L"  addr="134" bits=""/>
@@ -91,7 +70,7 @@
         <register name="OCR1AH" addr="137" bits=""/>
         <register name="OCR1BL" addr="138" bits=""/>
         <register name="OCR1BH" addr="139" bits=""/>
-        <register name="TCCR2A" addr="176" bits=""/>
+        <register name="TCCR2A" addr="176" bits="WGM20,WGM21,0,0,COM2B0,COM2B1,COM2A0,COM2A1"/>
         <register name="TCCR2B" addr="177" bits=""/>
         <register name="TCNT2"  addr="178" bits=""/>
         <register name="OCR2A"  addr="179" bits=""/>
@@ -113,43 +92,4 @@
     </regblock>
     <stack  spreg="SPL,SPH" increment="postdec" />
     <status streg="SREG" />
-    
-    <interrupts enable="I">
-        <interrupt name="RESET"                                priority="26" vector="0x000"/>
-        <interrupt name="INT0"    enable="INT0"   flag="INTF0" priority="25" vector="0x002"/>
-        <interrupt name="INT1"    enable="INT1"   flag="INTF1" priority="24" vector="0x004"/>
-        <interrupt name="PCINT0"  enable="PCIE0"  flag="PCIF0" priority="23" vector="0x006"/>
-        <interrupt name="PCINT1"  enable="PCIE1"  flag="PCIF1" priority="22" vector="0x008"/>
-        <interrupt name="PCINT2"  enable="PCIE2"  flag="PCIF2" priority="21" vector="0x00A"/>
-        
-        <interrupt name="T0_OVF"  enable="TOIE0"  flag="TOV0"  priority="10" vector="0x020"/>
-        
-        <interrupt name="USART_R" enable="RXCIE0" flag="RXC0"  priority="4"  vector="0x0012" />
-        <interrupt name="USART_T" enable="TXCIE0" flag="TXC0"  priority="2"  vector="0x0014" />
-    </interrupts>
-    
-    <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
-        <raiseint intname="PCINT0" source="PINB" mask="PCMSK0"/>
-    </port>
-    <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
-        <raiseint intname="PCINT1" source="PINC" mask="PCMSK1"/>
-    </port>
-    <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
-        <raiseint intname="PCINT2" source="PIND" mask="PCMSK2"/>
-    </port>
-    
-    <timer name="TIMER0" enable="PRTIM0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
-        <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
-        <extclock type="PIN" source="PORTD4"/>
-        
-        <ocunit   name="OC0A" pin="PORTD6" ocreg="OCR0A" configbits="COM0A0,COM0A1"/>
-        <ocunit   name="OC0B" pin="PORTD5" ocreg="OCR0B" configbits="COM0B0,COM0B1"/>
-        
-        <raiseint intname="T0_OVF" source="OVERFLOW" />
-    </timer>
-    
-    <usart name="USART0" configregs="UCSR0C" >
-        <trunit type="tx" pin="PORTD1" register="UDR0"   raiseint="USART_T" enable="TXEN0"/>
-        <trunit type="rx" pin="PORTD0" register="UDR0RX" raiseint="USART_R" enable="RXEN0"/>
-    </usart>
 </parts>

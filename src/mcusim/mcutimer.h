@@ -65,10 +65,9 @@ class MAINMODULE_EXPORT McuTimer : public eElement
     protected:
         QString m_name;
         int     m_number;
-
         eMcu*   m_mcu;
 
-        int      m_nBits;
+        //int      m_nBits;
         uint16_t m_prescaler;
         uint64_t m_scale;
 
@@ -81,10 +80,10 @@ class MAINMODULE_EXPORT McuTimer : public eElement
         clkSource_t m_clkSrc;  // Source of Timer clock
         uint8_t     m_clkEdge; // Clock edge in ext pin clock
 
-        uint8_t* m_countL; // Actual ram for counter low byte
-        uint8_t* m_countH; // Actual ram for counter high byte
+        uint8_t* m_countL; // Actual ram for counter Low byte
+        uint8_t* m_countH; // Actual ram for counter High byte
 
-        uint32_t m_countVal;  // Value of counter
+        uint32_t m_countVal;   // Value of counter
         uint32_t m_countStart; // Value of counter after ovf
 
         uint16_t m_maxCount;  // Maximum value of the counter

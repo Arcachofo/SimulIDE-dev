@@ -1,0 +1,66 @@
+<!DOCTYPE SimulIDE>
+
+<!-- *************************************************************************** -->
+<!-- *   Copyright (C) 2020 by santiago González                               * -->
+<!-- *   santigoro@gmail.com                                                   * -->
+<!-- *                                                                         * -->
+<!-- *   This program is free software; you can redistribute it and/or modify  * -->
+<!-- *   it under the terms of the GNU General Public License as published by  * -->
+<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
+<!-- *   (at your option) any later version.                                   * -->
+<!-- *                                                                         * -->
+<!-- *   This program is distributed in the hope that it will be useful,       * -->
+<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
+<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
+<!-- *   GNU General Public License for more details.                          * -->
+<!-- *                                                                         * -->
+<!-- *   You should have received a copy of the GNU General Public License     * -->
+<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
+<!-- *                                                                         * -->
+<!-- *************************************************************************** -->
+
+<parts>
+    <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
+        <raiseint intname="PCINT0" source="PINB" mask="PCMSK0"/>
+    </port>
+    <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
+        <raiseint intname="PCINT1" source="PINC" mask="PCMSK1"/>
+    </port>
+    <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
+        <raiseint intname="PCINT2" source="PIND" mask="PCMSK2"/>
+    </port>
+    
+    <timer name="TIMER0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
+        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+        <extclock type="PIN" source="PORTD4"/>
+        
+        <ocunit   name="OC0A" pin="PORTD6" ocreg="OCR0A" configbits="COM0A0,COM0A1"/>
+        <ocunit   name="OC0B" pin="PORTD5" ocreg="OCR0B" configbits="COM0B0,COM0B1"/>
+        
+        <raiseint intname="T0_OVF" source="OVERFLOW" />
+    </timer>
+    
+    <timer name="TIMER1" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B">
+        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+        <extclock type="PIN" source="PORTD5"/>
+        
+        <ocunit   name="OC1A" pin="PORTB1" ocreg="OCR1A" configbits="COM1A0,COM1A1"/>
+        <ocunit   name="OC1B" pin="PORTB2" ocreg="OCR1B" configbits="COM1B0,COM1B1"/>
+        
+        <raiseint intname="T1_OVF" source="OVERFLOW" />
+    </timer>
+    
+    <timer name="TIMER2" counter="TCNT2" configregsA="TCCR2A" configregsB="TCCR2B">
+        <prescaler select="" values="0,1,8,32,64,128,256,1024"/>
+        
+        <ocunit   name="OC2A" pin="PORTB3" ocreg="OCR2A" configbits="COM2A0,COM2A1"/>
+        <ocunit   name="OC2B" pin="PORTD3" ocreg="OCR2B" configbits="COM2B0,COM2B1"/>
+        
+        <raiseint intname="T2_OVF" source="OVERFLOW" />
+    </timer>
+    
+    <usart name="USART0" configregs="UCSR0C" >
+        <trunit type="tx" pin="PORTD1" register="UDR0"   raiseint="USART_T" enable="TXEN0"/>
+        <trunit type="rx" pin="PORTD0" register="UDR0RX" raiseint="USART_R" enable="RXEN0"/>
+    </usart>
+</parts>
