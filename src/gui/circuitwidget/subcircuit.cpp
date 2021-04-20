@@ -144,6 +144,7 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
                     dataDir.setPath( subcFile );
                     dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
                     m_mainComponent->setSubcDir( dataDir.absolutePath() );
+                    m_mainComponent->setSubcircuit( this );
                 }
                 break;
             }
