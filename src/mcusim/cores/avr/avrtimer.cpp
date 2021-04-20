@@ -22,7 +22,7 @@
 #include "e_mcu.h"
 #include "simulator.h"
 
-#define OCR0A m_ocr0a[0]
+#define OCRXA m_ocrxa[0]
 
 AvrTimer::AvrTimer()
 {
@@ -31,27 +31,24 @@ AvrTimer::~AvrTimer(){}
 
 McuTimer* AvrTimer::makeTimer( eMcu* mcu, QString name ) // Static
 {
-    if( name.toLower() == "timer0" ) return new AvrTimer0( mcu, name );
+    QString n = name.toLower();
+    if     ( n == "timer0" ) return new AvrTimer0( mcu, name );
+    else if( n == "timer2" ) return new AvrTimer2( mcu, name );
     return NULL;
 }
 
-// TIMER0 --------------------------------------
-
-AvrTimer0::AvrTimer0( eMcu* mcu, QString name)
-         : McuTimer( mcu, name )
+AvrTimer8bit::AvrTimer8bit( eMcu* mcu, QString name)
+            : McuTimer( mcu, name )
 {
-    m_ocr0a = m_mcu->getReg( "OCR0A" );
-    mcu->watchRegNames( "OCR0A", R_WRITE, this, &AvrTimer0::OCRAchanged );
-
 }
-AvrTimer0::~AvrTimer0(){}
+AvrTimer8bit::~AvrTimer8bit(){}
 
-void AvrTimer0::runEvent()
+void AvrTimer8bit::runEvent()
 {
     McuTimer::runEvent();
 }
 
-void AvrTimer0::initialize()
+void AvrTimer8bit::initialize()
 {
     McuTimer::initialize();
 
@@ -62,7 +59,7 @@ void AvrTimer0::initialize()
     m_WGM02 = false;
 }
 
-void AvrTimer0::addocUnit( McuOcUnit* ocUnit )
+void AvrTimer8bit::addocUnit( McuOcUnit* ocUnit )
 {
     m_ocUnit.emplace_back( ocUnit );
 
@@ -70,7 +67,7 @@ void AvrTimer0::addocUnit( McuOcUnit* ocUnit )
     else if( ocUnit->getId().endsWith("B") ) m_OCB = ocUnit;
 }
 
-void AvrTimer0::configureA( uint8_t val ) // TCCR0A  // WGM00,WGM01
+void AvrTimer8bit::configureA( uint8_t val ) // TCCR0A  // WGM00,WGM01
 {
     //val = getRegBitsVal( val, m_configBitsA );
     wgmMode_t wgmMode = (wgmMode_t)(val & 0b00000011);
@@ -86,7 +83,7 @@ void AvrTimer0::configureA( uint8_t val ) // TCCR0A  // WGM00,WGM01
     }
 }
 
-void AvrTimer0::configureB( uint8_t val ) // TCCR0B
+void AvrTimer8bit::configureB( uint8_t val ) // TCCR0B
 {
     //getRegBitsVal( val, m_configBitsB );
     uint8_t mode = val & 0b00000111; // CSX0-3
@@ -106,24 +103,13 @@ void AvrTimer0::configureB( uint8_t val ) // TCCR0B
     }
 }
 
-void AvrTimer0::configureClock()
+void AvrTimer8bit::configureClock()
 {
+    m_prescaler = m_prescList.at( m_mode );
     m_clkSrc = clkMCU;
-
-    if     ( m_mode == 1 ) m_prescaler = 1;
-    else if( m_mode == 2 ) m_prescaler = 8;
-    else if( m_mode == 3 ) m_prescaler = 64;
-    else if( m_mode == 4 ) m_prescaler = 256;
-    else if( m_mode == 5 ) m_prescaler = 1024;
-    else
-    {
-        m_clkSrc = clkEXT;
-        if     ( m_mode == 6 ) m_clkEdge = Clock_Falling;
-        else if( m_mode == 7 ) m_clkEdge = Clock_Rising;
-    }
 }
 
-void AvrTimer0::updtWgm()
+void AvrTimer8bit::updtWgm()
 {
     ocAct_t comActA = (ocAct_t)m_OCA->getMode();
     ocAct_t comActB = (ocAct_t)m_OCB->getMode();
@@ -142,7 +128,7 @@ void AvrTimer0::updtWgm()
     {
         if( m_WGM02 )
         {
-            m_ovfMatch = OCR0A;
+            m_ovfMatch = OCRXA;
         }
         else {
             m_ovfMatch = 0xFF;
@@ -153,13 +139,13 @@ void AvrTimer0::updtWgm()
     }
     else if( m_wgmMode == wgmCTC )    // CTC
     {
-        m_ovfMatch = OCR0A;
+        m_ovfMatch = OCRXA;
     }
     else  if( m_wgmMode == wgmFAST )  // Fast PWM
     {
         if( m_WGM02 )
         {
-            m_ovfMatch = OCR0A;
+            m_ovfMatch = OCRXA;
             if( comActA == ocTOGGLE ) comActA = ocTOGGLE;
         }
         else {
@@ -180,7 +166,7 @@ void AvrTimer0::updtWgm()
     m_OCB->setOcActs( comActB, tovActB );
 }
 
-void AvrTimer0::OCRAchanged( uint8_t val )
+void AvrTimer8bit::OCRXAchanged( uint8_t val )
 {
     if( (m_wgmMode == wgmCTC)
       ||((m_WGM02) && (( m_wgmMode == wgmPHASE)
@@ -191,3 +177,43 @@ void AvrTimer0::OCRAchanged( uint8_t val )
         else            m_ovfPeriod = m_ovfMatch+1;
     }
 }
+
+void AvrTimer8bit::setOCRXA( QString reg )
+{
+    m_ocrxa = m_mcu->getReg( reg );
+    m_mcu->watchRegNames( reg, R_WRITE, this, &AvrTimer8bit::OCRXAchanged );
+}
+
+//--------------------------------------------------
+// TIMER 0 -----------------------------------------
+
+AvrTimer0::AvrTimer0( eMcu* mcu, QString name)
+         : AvrTimer8bit( mcu, name )
+{
+    setOCRXA( "OCR0A" );
+}
+AvrTimer0::~AvrTimer0(){}
+
+void AvrTimer0::configureClock()
+{
+    if( m_mode > 5 )
+    {
+        m_prescaler = 1;
+        m_clkSrc = clkEXT;
+        if     ( m_mode == 6 ) m_clkEdge = Clock_Falling;
+        else if( m_mode == 7 ) m_clkEdge = Clock_Rising;
+    }
+    else AvrTimer8bit::configureClock();
+}
+
+//--------------------------------------------------
+// TIMER 2 -----------------------------------------
+
+AvrTimer2::AvrTimer2( eMcu* mcu, QString name)
+         : AvrTimer8bit( mcu, name )
+{
+    setOCRXA( "OCR2A" );
+
+}
+AvrTimer2::~AvrTimer2(){}
+

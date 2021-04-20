@@ -40,11 +40,11 @@ class MAINMODULE_EXPORT AvrTimer
 
 class AvrOcUnit;
 
-class MAINMODULE_EXPORT AvrTimer0 : public McuTimer
+class MAINMODULE_EXPORT AvrTimer8bit : public McuTimer
 {
     public:
-        AvrTimer0( eMcu* mcu, QString name );
-        ~AvrTimer0();
+        AvrTimer8bit( eMcu* mcu, QString name );
+        ~AvrTimer8bit();
 
         virtual void runEvent() override;
 
@@ -52,21 +52,39 @@ class MAINMODULE_EXPORT AvrTimer0 : public McuTimer
         virtual void configureA( uint8_t val ) override;
         virtual void configureB( uint8_t val ) override;
 
-        void OCRAchanged( uint8_t val );
+        virtual void OCRXAchanged( uint8_t val );
 
         virtual void addocUnit( McuOcUnit* ocUnit ) override;
 
     protected:
-        void configureClock();
+        virtual void configureClock();
         void updtWgm();
+        void setOCRXA( QString reg );
 
         wgmMode_t m_wgmMode;
         bool      m_WGM02;
 
-        uint8_t* m_ocr0a;
+        uint8_t* m_ocrxa;
 
         McuOcUnit* m_OCA;
         McuOcUnit* m_OCB;
+};
+
+class MAINMODULE_EXPORT AvrTimer0 : public AvrTimer8bit
+{
+    public:
+        AvrTimer0( eMcu* mcu, QString name );
+        ~AvrTimer0();
+
+    protected:
+        virtual void configureClock() override;
+};
+
+class MAINMODULE_EXPORT AvrTimer2 : public AvrTimer8bit
+{
+    public:
+        AvrTimer2( eMcu* mcu, QString name );
+        ~AvrTimer2();
 };
 
 #endif

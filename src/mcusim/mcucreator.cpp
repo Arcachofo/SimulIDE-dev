@@ -427,11 +427,19 @@ void McuCreator::createTimer( QDomElement* t, eMcu* mcu )
             if( source == "OVERFLOW" ) timer->on_tov.connect( inte, &Interrupt::raise );
 //            if( source == "COMP"     ) timer->on_comp.connect( inte, &Interrupt::raise );
         }
-        if( el.tagName() == "extclock" )
+        else if( el.tagName() == "prescaler" )
+        {
+            QStringList prescalers = el.attribute("values").remove(" ").split(",");
+            timer->m_prescList.resize( prescalers.size() );
+
+            for( int i=0; i<prescalers.size(); ++i )
+                timer->m_prescList[i] = prescalers.at(i).toUInt();
+        }
+        else if( el.tagName() == "extclock" )
         {
             /// TODO
         }
-        if( el.tagName() == "ocunit" )
+        else if( el.tagName() == "ocunit" )
         {
             McuOcUnit* ocUnit = NULL;
             if( m_core == "AVR" ) ocUnit = new AvrOcUnit( mcu, el.attribute("name") );
