@@ -45,9 +45,11 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         virtual void configureB( uint8_t val );
 
     protected:
-        virtual void configureClock();
         virtual void updtWgm()=0;
         virtual void setOCRXA( QString reg )=0;
+        virtual void configureClock();
+        void configureExtClock();
+        void configureOcUnits( bool disable );
 
         wgmMode_t m_wgmMode;
         uint8_t m_WGM10;
@@ -104,6 +106,7 @@ class MAINMODULE_EXPORT AvrTimer16bit : public AvrTimer
     protected:
         virtual void updtWgm() override;
         virtual void setOCRXA( QString reg ) override;
+        void setICRX( QString reg );
 
         uint8_t* m_icrxL;
         uint8_t* m_icrxH;
