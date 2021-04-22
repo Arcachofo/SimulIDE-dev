@@ -45,17 +45,6 @@ class MAINMODULE_EXPORT AvrCore : public CoreCpu
 
         ///uint8_t m_address_size;    // 2, or 3 for cores >128KB in flash
 
-        uint8_t GET_DATA( uint16_t addr )
-        {
-            if( (addr > 63) && (addr < m_regEnd) ) addr += 32 ;
-            return CoreCpu::GET_RAM( addr );
-        }
-        void SET_DATA( uint16_t addr, uint8_t v )
-        {
-            if( (addr > 63) && (addr < m_regEnd) ) addr += 32 ;
-            CoreCpu::SET_RAM( addr, v );
-        }
-
         void createInstructions();
 
         void flags_Rzns( uint8_t res );

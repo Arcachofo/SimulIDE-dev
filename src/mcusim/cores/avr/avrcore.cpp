@@ -480,7 +480,7 @@ if( PC == 78 )
                             uint16_t x =( m_dataMem[R_XH] << 8) | m_dataMem[R_XL];
                             cycle++; // 2 cycles, except tinyavr
                             if( op == 2) x--;
-                            SET_DATA( x, vd );
+                            SET_RAM( x, vd );
                             if( op == 1) x++;
                             SET_REG16_HL( R_XL, x);
                         }    break;
@@ -503,7 +503,7 @@ if( PC == 78 )
                             uint16_t y =( m_dataMem[R_YH] << 8) | m_dataMem[R_YL];
                              cycle++;
                             if( op == 2) y--;
-                            SET_DATA( y, vd );
+                            SET_RAM( y, vd );
                             if( op == 1) y++;
                             SET_REG16_HL( R_YL, y);
                         }    break;
@@ -512,7 +512,7 @@ if( PC == 78 )
                             uint16_t x = m_progMem[new_pc];
                             new_pc += 1;
                             cycle++;
-                            SET_DATA( x, vd);
+                            SET_RAM( x, vd);
                         }    break;
                         case 0x9001:
                         case 0x9002: {    // LD -- Load Indirect from Data using Z -- 1001 000d dddd 00oo
@@ -533,7 +533,7 @@ if( PC == 78 )
                             uint16_t z =( m_dataMem[R_ZH] << 8) | m_dataMem[R_ZL];
                              cycle++; // 2 cycles, except tinyavr
                             if( op == 2) z--;
-                            SET_DATA( z, vd);
+                            SET_RAM( z, vd);
                             if( op == 1 ) z++;
                             SET_REG16_HL( R_ZL, z);
                         }    break;

@@ -22,7 +22,7 @@
 <parts>
             
     <datablock name="GPR" start="0x0000" end="0x007F"/>
-    <regblock  name="SFR" start="0x0080" end="0x00FF">
+    <regblock  name="SFR" start="0x0080" end="0x00FF" offset="0x0080">
         <register name="P0"     addr="0"   bits="0-7" reset="0xFF"/>
         <register name="SP"     addr="1"   bits="" reset="7"/>
         <register name="DPL"    addr="2"   bits=""/>

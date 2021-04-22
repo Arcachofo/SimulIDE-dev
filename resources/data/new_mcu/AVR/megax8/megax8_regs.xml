@@ -1,6 +1,6 @@
 <parts>
     <datablock name="GPR" start="0x0000" end="0x001F"/>
-    <regblock  name="SFR" start="0x0020" end="0x00FF">
+    <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
         <register name="PINB"   addr="3"   bits="0-7"/>
         <register name="DDRB"   addr="4"   bits="0-7"/>
         <register name="PORTB"  addr="5"   bits="0-7"/>
@@ -40,6 +40,8 @@
         <register name="SPL"    addr="61"  bits=""/>
         <register name="SPH"    addr="62"  bits=""/>
         <register name="SREG"   addr="63"  bits=""/>
+    </regblock>
+    <regblock  name="EXT_I/O_REG" start="0x0060" end="0x00FF" offset="0">
         <register name="WDTCSR" addr="96"  bits=""/>
         <register name="CLKPR"  addr="97"  bits=""/>
         <register name="PRR"    addr="100" bits=""/>

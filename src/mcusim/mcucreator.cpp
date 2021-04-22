@@ -148,6 +148,7 @@ void McuCreator::createRegisters( QDomElement* e, eMcu* mcu )
 {
     uint16_t regStart = e->attribute("start").toUInt(0,0);
     uint16_t regEnd   = e->attribute("end").toUInt(0,0);
+    uint16_t offset   = e->attribute("offset").toUInt(0,0);
 
     if( regEnd >= mcu->m_dataMemSize )
     {
@@ -168,7 +169,7 @@ void McuCreator::createRegisters( QDomElement* e, eMcu* mcu )
         if( el.tagName() == "register" )
         {
             QString  regName = el.attribute("name");
-            uint16_t regAddr = el.attribute("addr").toUInt(0,0)+mcu->m_regStart;
+            uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
             uint8_t resetVal = el.attribute("reset").toUInt(0,0);
 
             mcu->m_addrMap[regAddr] = regAddr;
@@ -203,7 +204,7 @@ void McuCreator::createRegisters( QDomElement* e, eMcu* mcu )
             }
         }else if( el.tagName() == "alias" )
         {
-            uint16_t regAddr = el.attribute("addr").toUInt(0,0)+mcu->m_regStart;
+            uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
             uint16_t mapTo   = el.attribute("mapto").toUInt(0,0);
             mcu->m_addrMap[regAddr] = mapTo;
         }
