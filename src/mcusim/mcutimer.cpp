@@ -17,8 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QDomDocument>
-
 #include "mcutimer.h"
 #include "e_mcu.h"
 #include "mcuocunit.h"
@@ -69,8 +67,7 @@ void McuTimer::runEvent()            // Overflow
     m_countVal = m_countStart;                // Reset count value
     if( m_bidirec ) m_reverse = !m_reverse;
 
-    if( !m_reverse )
-        on_tov.emitValue( 1 );
+    if( !m_reverse ) on_tov.emitValue( 1 );
 
     sheduleEvents();
 }
