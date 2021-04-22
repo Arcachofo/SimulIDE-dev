@@ -94,6 +94,7 @@ void OscopeChannel::updateStep()
             m_numMax  = 0;
         }
     }else{
+        voltChanged();
         m_freq = 0;
         m_maxVal  =-1e12;
         m_minVal  = 1e12;
