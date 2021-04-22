@@ -133,7 +133,8 @@ void AvrCore::runDecoder()
 
     uint32_t new_pc = PC + 1;    // future "default" pc
     int cycle = 1;
-
+if( PC == 78 )
+    cycle = 1;
     switch( instruction & 0xf000) {
         case 0x0000: {
             switch( instruction) {
@@ -479,7 +480,7 @@ void AvrCore::runDecoder()
                             uint16_t x =( m_dataMem[R_XH] << 8) | m_dataMem[R_XL];
                             cycle++; // 2 cycles, except tinyavr
                             if( op == 2) x--;
-                            SET_RAM( x, vd );
+                            SET_DATA( x, vd );
                             if( op == 1) x++;
                             SET_REG16_HL( R_XL, x);
                         }    break;
@@ -502,7 +503,7 @@ void AvrCore::runDecoder()
                             uint16_t y =( m_dataMem[R_YH] << 8) | m_dataMem[R_YL];
                              cycle++;
                             if( op == 2) y--;
-                            SET_RAM( y, vd );
+                            SET_DATA( y, vd );
                             if( op == 1) y++;
                             SET_REG16_HL( R_YL, y);
                         }    break;
@@ -511,7 +512,7 @@ void AvrCore::runDecoder()
                             uint16_t x = m_progMem[new_pc];
                             new_pc += 1;
                             cycle++;
-                            SET_RAM( x, vd);
+                            SET_DATA( x, vd);
                         }    break;
                         case 0x9001:
                         case 0x9002: {    // LD -- Load Indirect from Data using Z -- 1001 000d dddd 00oo
@@ -532,7 +533,7 @@ void AvrCore::runDecoder()
                             uint16_t z =( m_dataMem[R_ZH] << 8) | m_dataMem[R_ZL];
                              cycle++; // 2 cycles, except tinyavr
                             if( op == 2) z--;
-                            SET_RAM( z, vd);
+                            SET_DATA( z, vd);
                             if( op == 1 ) z++;
                             SET_REG16_HL( R_ZL, z);
                         }    break;

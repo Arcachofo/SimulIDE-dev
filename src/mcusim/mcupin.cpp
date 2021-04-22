@@ -39,6 +39,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     setPinMode( input );
 
     initialize();
+    setState( false );
 }
 McuPin::~McuPin() {}
 

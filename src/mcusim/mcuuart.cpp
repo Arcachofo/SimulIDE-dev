@@ -64,7 +64,7 @@ void UartTx::enable( uint8_t en )
         m_state = usartIDLE;
         m_ioPin->setState( 1 );
     }
-    else     m_state = usartSTOPPED;
+    else m_state = usartSTOPPED;
 }
 
 void UartTx::runEvent()
