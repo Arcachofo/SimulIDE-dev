@@ -35,74 +35,71 @@ RamTable::RamTable( QWidget* parent, BaseProcessor* processor )
     m_numRegs = 60;
     m_loadingVars = false;
 
-    QTableWidgetItem* it;
+    int scale = MainWindow::self()->fontScale();
     QFont font;
+    font.setPixelSize( 11*scale );
+    font.setFamily("Monospace");
+    font.setBold(true);
+
+    int row_heigh = 23*scale;
+
+    QTableWidgetItem* it;
 
     m_pc.setVerticalHeaderLabels( QStringList()<<" PC     "  );
     m_pc.horizontalHeader()->hide();
-    m_pc.verticalHeaderItem( 0 )->setSizeHint( QSize( 65, 23));
-    m_pc.setFixedHeight( 23 );
     m_pc.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    m_pc.setRowHeight( 0, row_heigh );
+    m_pc.setFixedHeight( row_heigh  );
+
     it = new QTableWidgetItem(0);
     it->setFlags( Qt::ItemIsEnabled );
+    it->setFont( font );
     m_pc.setItem( 0, 0, it );
-    m_pc.setColumnWidth(0, 50);
+    m_pc.setColumnWidth(0, 50*scale);
+
     it = new QTableWidgetItem(0);
     it->setFlags( Qt::ItemIsEnabled );
+    it->setFont( font );
     m_pc.setItem( 0, 1, it );
-    m_pc.setColumnWidth(1, 75);
-    font = m_pc.item( 0, 0 )->font();
-    font.setBold(true);
-    font.setPixelSize( 10*MainWindow::self()->fontScale() );
-    m_pc.item( 0, 0 )->setFont( font );
-    m_pc.item( 0, 1 )->setFont( font );
+    m_pc.setColumnWidth(1, 75*scale);
 
     m_status.setVerticalHeaderLabels( QStringList()<<" STATUS"  );
     m_status.horizontalHeader()->hide();
-    m_status.verticalHeaderItem( 0 )->setSizeHint( QSize( 65, 23));
-    m_status.setFixedHeight( 23 );
     m_status.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    m_status.setRowHeight( 0, row_heigh );
+    m_status.setFixedHeight( row_heigh );
 
     for( int i=0; i<8; i++ )
     {
-        m_status.setColumnWidth( i, 28 );
+        m_status.setColumnWidth( i, 28*scale );
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
-        font = it->font();
-        font.setBold(true);
-        font.setPixelSize( 9 );
         it->setFont( font );
         m_status.setItem( 0, i, it );
     }
 
     table->verticalHeader()->setSectionsMovable( true );
+    table->setColumnWidth( 0, 60*scale );
+    table->setColumnWidth( 1, 55*scale );
+    table->setColumnWidth( 2, 35*scale );
+    table->setColumnWidth( 3, 80*scale );
 
-    table->setColumnWidth( 0, 60 );
-    table->setColumnWidth( 1, 55 );
-    table->setColumnWidth( 2, 35 );
-    table->setColumnWidth( 3, 80 );
-
-    int row_heigh = 23;
     for( int row=0; row<m_numRegs; row++ )
     {
         it = new QTableWidgetItem(0);
+        it->setFont( font );
         it->setText( "---" );
         table->setVerticalHeaderItem( row, it );
         for( int col=0; col<4; col++ )
         {
             QTableWidgetItem *it = new QTableWidgetItem(0);
-            if( col>0 ) it->setFlags( Qt::ItemIsEnabled );
+            if( col>0 ){
+                it->setFlags( Qt::ItemIsEnabled );
+                it->setText("---");
+            }
+            it->setFont( font );
             table->setItem( row, col, it );
         }
-        QFont font = table->item( 0, 0 )->font();
-        font.setBold(true);
-        font.setPixelSize( 10*MainWindow::self()->fontScale() );
-        for( int col=0; col<4; col++ ) table->item( row, col )->setFont( font );
-
-        table->item( row, 1 )->setText("---");
-        table->item( row, 2 )->setText("---");
-        table->item( row, 3 )->setText("---");
-
         table->setRowHeight(row, row_heigh);
     }
     table->setHorizontalHeaderLabels( QStringList()<<tr("Reg.")<<tr("Type")<<tr("Dec")<<tr("Value")  );
@@ -110,7 +107,7 @@ RamTable::RamTable( QWidget* parent, BaseProcessor* processor )
     setContextMenuPolicy( Qt::CustomContextMenu );
 
     registers->setFont( font );
-    registers->setFixedWidth( 80 );
+    registers->setFixedWidth( 80*scale );
     registers->setEditTriggers( QAbstractItemView::NoEditTriggers );
     m_registerModel = new QStandardItemModel(this);
     registers->setModel( m_registerModel );
@@ -282,7 +279,7 @@ void RamTable::updateValues()
 
         int pc = m_processor->pc();
         m_pc.item( 0, 0 )->setData( 0, pc );
-        m_pc.item( 0, 1 )->setText("  0x"+decToBase(pc, 16, 4) );
+        m_pc.item( 0, 1 )->setText("  0x"+decToBase(pc, 16, 4).remove(0,1) );
 
         for( int _row: watchList.keys() )
         {
