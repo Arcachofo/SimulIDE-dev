@@ -150,14 +150,13 @@ void McuComponent::initChip()
                 dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
                 m_pkgeFile = dataDir.filePath( element.attribute( "package" ) )+".package";
 
+                // Get data file
+                QString dataFile = dataDir.filePath( element.attribute( "data" ) )+".data";
+                m_processor->setDataFile( dataFile );
+
                 // Get device
                 m_device = element.attribute( "device" );
                 m_processor->setDevice( m_device );
-
-                // Get data file
-                QString dataFile = dataDir.filePath( element.attribute( "data" ) )+".data";
-
-                m_processor->setDataFile( dataFile );
                 break;
             }
             node = node.nextSibling();
