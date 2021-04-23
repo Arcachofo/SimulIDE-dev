@@ -59,6 +59,9 @@ Mosfet::Mosfet( QObject* parent, QString type, QString id )
     newPin->setLabelText( "" );
     newPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_ePin[2] = newPin;
+    newId.append("-eSource");
+    m_gate = new eSource( newId, m_ePin[2], input );
+    m_gate->setImp( 1e6 );
 
     // D,S pins m_ePin[0] m_ePin[1] 
     newId = id;
