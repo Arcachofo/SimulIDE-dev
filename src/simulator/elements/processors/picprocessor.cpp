@@ -85,9 +85,13 @@ void PicProcessor::setDevice( QString device )
     }
     m_ramSize   = m_pPicProcessor->register_memory_size();
     m_flashSize = m_pPicProcessor->program_memory_size();
-    m_romSize   = m_pPicProcessor->eeprom->get_rom_size();
 
-    m_eeprom.resize( m_romSize );
+    EEPROM* eeprom = m_pPicProcessor->eeprom;
+    if( eeprom )
+    {
+        m_romSize = eeprom->get_rom_size();
+        m_eeprom.resize( m_romSize );
+    }
 }
 
 bool PicProcessor::loadFirmware( QString fileN )

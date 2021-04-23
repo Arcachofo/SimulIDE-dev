@@ -47,6 +47,7 @@ BaseProcessor::BaseProcessor( McuComponent* parent )
 
     m_ramSize   = 0;
     m_flashSize = 0;
+    m_romSize = 0;
 
     m_ramTable.hide();
 }
