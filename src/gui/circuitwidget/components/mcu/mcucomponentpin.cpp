@@ -58,13 +58,13 @@ McuComponentPin::~McuComponentPin(){ }
 
 void McuComponentPin::stamp()
 {
+    if( m_ePin[0]->isConnected() && m_attached )        // Receive voltage change notifications
+        m_ePin[0]->getEnode()->voltChangedCallback( this );
+
     if( m_pinType == 1 )
     {
         if( m_pinMode == input )
         {
-            if( m_ePin[0]->isConnected() && m_attached )        // Receive voltage change notifications
-                m_ePin[0]->getEnode()->voltChangedCallback( this );
-
             if( (m_vddAdmit>0) && !m_ePin[0]->isConnected() ) // Pullup ?
                 pullupNotConnected( true );
         }

@@ -66,9 +66,10 @@ void PICComponentPin::attachPin( pic_processor* PicProcessor )
             eSource::setPinMode( output_open );
         }
     }
-    else if( m_id.startsWith("MCLR") )
+    else if( m_type == "mclr" )
     {
         m_pinType = 21;
+        m_pinMode = input;
     }
     m_attached = true;
 }
