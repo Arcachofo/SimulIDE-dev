@@ -1,3 +1,0 @@
-QLabel#freq0, QLabel#freq1, QLabel#freq2, QLabel#freq3{
-    font: bold 9px;
-}

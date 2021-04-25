@@ -403,6 +403,10 @@ void MainWindow::applyStyle()
         m_styleSheet = QLatin1String(file.readAll());
         qApp->setStyleSheet( m_styleSheet );
     }
+    else
+    {
+        QApplication::setStyle(QStyleFactory::create("Fusion"));
+    }
 }
 
 QSettings* MainWindow::settings() { return &m_settings; }
