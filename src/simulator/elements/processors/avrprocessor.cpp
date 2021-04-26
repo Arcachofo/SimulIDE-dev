@@ -104,18 +104,6 @@ void AvrProcessor::setDevice( QString device )
     int ok = avr_ioctl( m_avrProcessor, AVR_IOCTL_EEPROM_GET, &ee );
     if( ok ) m_avrEEPROM = ee.ee;
     m_eeprom.resize( m_romSize );
-
-    if( m_initGdb )
-    {
-        m_avrProcessor->gdb_port = 1212;
-        int ok = avr_gdb_init( m_avrProcessor );
-        if( ok < 0 )
-        {
-            m_avrProcessor->gdb_port = 0;
-            qDebug() << "avr_gdb_init ERROR " << ok;
-        }
-        else qDebug() << "avr_gdb_init OK";
-    }
 }
 
 bool AvrProcessor::loadFirmware( QString fileN )
@@ -286,6 +274,32 @@ void AvrProcessor::uartIn( int uart, uint32_t value ) // Receive one byte on Uar
     {
         BaseProcessor::uartIn( uart, value );
         avr_raise_irq( uartInIrq, value );
+    }
+}
+
+bool AvrProcessor::initGdb()
+{
+    return m_initGdb;
+}
+
+void AvrProcessor::setInitGdb( bool init )
+{
+    m_initGdb = init;
+    if( m_initGdb )
+    {
+        m_avrProcessor->gdb_port = 1212;
+        int ok = avr_gdb_init( m_avrProcessor );
+        if( ok < 0 )
+        {
+            m_avrProcessor->gdb_port = 0;
+            qDebug() << "avr_gdb_init ERROR " << ok;
+        }
+        else qDebug() << "avr gdb Initialized at IP: 127.0.0.1  PORT: 1212";
+    }
+    else
+    {
+        m_avrProcessor->gdb_port = 0;
+        qDebug() << "avr gdb Disabled";
     }
 }
 

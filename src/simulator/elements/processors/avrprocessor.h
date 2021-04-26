@@ -37,8 +37,8 @@ class AvrProcessor : public BaseProcessor
         AvrProcessor( McuComponent* parent );
         ~AvrProcessor();
 
-        bool initGdb() { return m_initGdb; }
-        void setInitGdb( bool init ){ m_initGdb = init; }
+        bool initGdb();
+        void setInitGdb( bool init );
 
         virtual void setDevice( QString device ) override;
         virtual bool loadFirmware( QString file ) override;
