@@ -264,10 +264,10 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                             }
                             subSample = false;
                             maxY = -1e12; minY = 1e12; maxX = 0; minX = 0;
-                            P1 = QPointF( x1, y1 );
-                            p.drawLine( P1, P2 );
+                            //P1 = QPointF( x1, y1 );
+                            //p.drawLine( P1, P2 );
                         }
-                        else
+                        //else
                         {
                             P2 = QPointF( x2, y2 );
                             P1 = QPointF( x1, y1 );
