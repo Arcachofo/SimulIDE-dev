@@ -555,8 +555,7 @@ void SubCircuit::connectBoard()
 void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();
-    else
-    {
+    else{
         event->accept();
         QMenu* menu = new QMenu();
         Component* mainComp = m_mainComponent;
@@ -568,9 +567,7 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
             {
                 QAction* detachAction = menu->addAction(QIcon(":/detach.png"),tr("Detach") );
                 connect( detachAction, SIGNAL( triggered()), this, SLOT(slotDetach()) );
-            }
-            else
-            {
+            }else{
                 QAction* attachAction = menu->addAction(QIcon(":/attach.png"),tr("Attach") );
                 connect( attachAction, SIGNAL( triggered()), this, SLOT(slotAttach()) );
             }
@@ -578,18 +575,22 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
             if( m_board && m_board->m_mainComponent )
             {
                 mainComp = m_board->m_mainComponent;
-                id = "Board - "+m_board->itemID();
+                id = "Board "+m_board->itemID();
             }
         }
         if( mainComp )
         {
-            menu->addSection( id+" - "+mainComp->itemType() );
             menu->addSection( "                            " );
+            menu->addSection( mainComp->itemType()+" at "+id );
+            menu->addSection( "" );
             mainComp->contextMenu( event, menu );
-            menu->addSection( m_id );
+
             menu->addSection( "                            " );
+            menu->addSection( id );
+            menu->addSection( "" );
         }
-        Component::contextMenu( event, menu );
+        if( m_board ) m_board->contextMenu( event, menu );
+        else         Component::contextMenu( event, menu );
         menu->deleteLater();
     }
 }
