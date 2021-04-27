@@ -90,7 +90,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
         setVoltDiv( i, 1 );
         setVoltPos( i, 0 );
     }
-    setTimeDiv( 1e6 ); // 1 ms
+    setTimeDiv( 1e9 ); // 1 ms
     setLabelPos(-90,-100, 0);
     expand( false );
 }
