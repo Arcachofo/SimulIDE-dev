@@ -633,7 +633,9 @@ static void avr_timer_write_ocr( struct avr_t* avr, avr_io_addr_t addr, uint8_t 
             if( timer->countUp == 0 )               // Counting Down
                 ocr_cycles = timer->tov_cycles-ocr_cycles;
 
-        avr_cycle_timer_register( avr, ocr_cycles, dispatch[comp_n], timer );
+        uint32_t tcntCycles = _avr_timer_get_current_tcnt(timer)*prescaler;
+        if( ocr_cycles > tcntCycles )
+            avr_cycle_timer_register( avr, ocr_cycles-tcntCycles, dispatch[comp_n], timer );
     }
     return;
 
