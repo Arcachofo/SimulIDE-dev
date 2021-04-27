@@ -19,7 +19,6 @@
 
 #include "datawidget.h"
 #include "oscope.h"
-//#include "mainwindow.h"
 
 DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
           : QWidget( parent )
@@ -28,7 +27,20 @@ DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
 
     setupUi(this);
 
-    for( int i=0; i<4; ++i ) setData( i, "0.0000 Hz" );
+    m_chNames.append( channel0 );
+    m_chNames.append( channel1 );
+    m_chNames.append( channel2 );
+    m_chNames.append( channel3 );
+
+    QFont font = freq0->font();
+    font.setPixelSize( 9 );
+    freq0->setFont( font );
+    freq1->setFont( font );
+    freq2->setFont( font );
+    freq3->setFont( font );
+    expandButton->setFont( font );
+
+    for( int i=0; i<4; ++i ) setData( i, "0.000 Hz" );
 
     this->adjustSize();
     //fontScale->setValue( MainWindow::self()->fontScale() );
@@ -42,44 +54,33 @@ void DataWidget::on_expandButton_clicked()
 void DataWidget::setColor( int ch, QColor c )
 {
     QString color = c.name();
-    if( ch == 0 )
-    {
-        freq0->setStyleSheet( "background-color:"+color );
-        channel0->setStyleSheet( "background-color:"+color );
-    }
-    else if( ch == 1 )
-    {
-        freq1->setStyleSheet( "background-color:"+color );
-        channel1->setStyleSheet( "background-color:"+color );
-    }
-    else if( ch == 2 )
-    {
-        freq2->setStyleSheet( "background-color:"+color );
-        channel2->setStyleSheet( "background-color:"+color );
-    }
-    else if( ch == 3 )
-    {
-        freq3->setStyleSheet( "background-color:"+color );
-        channel3->setStyleSheet( "background-color:"+color );
-    }
+    m_chNames.at( ch )->setStyleSheet( "background-color:"+color );
 }
 
 void DataWidget::setData( int ch, QString freq )
 {
-    if( ch == 0 )
+    switch( ch )
     {
-        freq0->setText( freq );
-    }
-    else if( ch == 1 )
-    {
-        freq1->setText( freq );
-    }
-    else if( ch == 2 )
-    {
-        freq2->setText( freq );
-    }
-    else if( ch == 3 )
-    {
-        freq3->setText( freq );
+    case 0: freq0->setText( freq ); break;
+    case 1: freq1->setText( freq ); break;
+    case 2: freq2->setText( freq ); break;
+    case 3: freq3->setText( freq );
     }
 }
+
+void DataWidget::setTunnel( int ch, QString name )
+{
+    m_chNames.at( ch )->setText( name );
+}
+
+void DataWidget::on_channel0_editingFinished()
+{ m_oscope->channelChanged( 0 , channel0->text() ); }
+
+void DataWidget::on_channel1_editingFinished()
+{ m_oscope->channelChanged( 1 , channel1->text() ); }
+
+void DataWidget::on_channel2_editingFinished()
+{ m_oscope->channelChanged( 2 , channel2->text() ); }
+
+void DataWidget::on_channel3_editingFinished()
+{ m_oscope->channelChanged( 3 , channel3->text() ); }

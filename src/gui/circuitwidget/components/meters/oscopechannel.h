@@ -48,6 +48,13 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
         uint64_t m_nCycles;
         uint64_t m_period;
         uint64_t m_risEdge;
+        uint64_t m_dataZero;
+
+        int m_dataTime;
+
+        double   m_subRate;
+        uint64_t m_subSample;
+        uint64_t m_subStep;
 
         double m_lastValue;
         double m_freq;
@@ -55,6 +62,7 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
 
         bool m_rising;
         bool m_falling;
+        bool m_connected;
 
         double m_maxVal;
         double m_minVal;

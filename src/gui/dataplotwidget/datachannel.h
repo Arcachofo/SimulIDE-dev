@@ -47,6 +47,8 @@ class MAINMODULE_EXPORT DataChannel : public eElement
         int m_channel;
         int m_bufferCounter;
 
+        QString m_chTunnel;
+
         PlotBase* m_plotBase;
 };
 

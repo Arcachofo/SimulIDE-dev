@@ -26,6 +26,7 @@
 #include "oscopechannel.h"
 #include "oscwidget.h"
 #include "datawidget.h"
+#include "tunnel.h"
 
 static const char* Oscope_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Filter")
@@ -117,7 +118,7 @@ void Oscope::updateStep()
     {
         uint64_t risEdge = m_channel[m_trigger]->m_risEdge;
 
-        uint64_t nCycles = timeFrame*2/period;
+        uint64_t nCycles = timeFrame/period;
         if( timeFrame%period ) nCycles++;
         if( nCycles%2 )        nCycles++;
 
@@ -131,16 +132,26 @@ void Oscope::updateStep()
 
     for( int i=0; i<4; i++ )
     {
-        if( !m_pin[i]->isConnected() ) m_channel[i]->initialize();
-        else                           m_channel[i]->updateStep();
+        bool connected = m_pin[i]->connector();
+        if( !connected )
+        {
+            QString chTunnel = m_channel[i]->m_chTunnel;
+
+            eNode* enode = Tunnel::m_eNodes.value(  chTunnel, NULL );
+            m_pin[i]->setEnode( enode );
+            if( enode )
+            {
+                enode->voltChangedCallback( m_channel[i] );
+                connected = true;
+            }
+            display()->connectChannel( i, connected );
+        }
+        m_channel[i]->m_subRate = (double)timeFrame/5e10;
+        m_channel[i]->m_connected = connected;
+        if( connected ) m_channel[i]->updateStep();
         m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
     }
     m_display->update(); //redrawScreen();
-}
-
-void Oscope::toggleExpand()
-{
-    expand( !m_expand );
 }
 
 void Oscope::expand( bool e )
@@ -176,6 +187,11 @@ void Oscope::expand( bool e )
     //QTimer::singleShot( 20, m_display, SLOT( updateValues() ) );
 
     Circuit::self()->update();
+}
+
+void Oscope::channelChanged( int ch, QString name )
+{
+    m_channel[ch]->m_chTunnel = name;
 }
 
 void Oscope::setFilter( double filter )
@@ -315,6 +331,23 @@ void Oscope::setVoltPos( int ch, double vp )
     m_voltPos[ch] = vp;
     m_display->setVPos( ch, vp );
     m_oscWidget->updateVoltPosBox( ch, vp );
+}
+
+QStringList Oscope::tunnels()
+{
+    QStringList list;
+    for( int i=0; i<4; ++i ) list << m_channel[i]->m_chTunnel;
+    return list;
+}
+
+void Oscope::setTunnels( QStringList tunnels )
+{
+    for( int i=0; i<tunnels.size(); i++ )
+    {
+        if( i > 3 ) break;
+        m_channel[i]->m_chTunnel = tunnels.at(i);
+        m_dataWidget->setTunnel( i, tunnels.at(i) );
+    }
 }
 
 #include "moc_oscope.cpp"

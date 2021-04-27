@@ -62,8 +62,12 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
         int trigger() { return m_trigger; }
         void setTrigger( int ch );
 
-        void toggleExpand();
+        virtual QStringList tunnels() override;
+        virtual void setTunnels( QStringList tunnels ) override;
+
         virtual void expand( bool e ) override;
+
+        virtual void channelChanged( int ch, QString name ) override;
 
     private:
         double m_voltDiv;

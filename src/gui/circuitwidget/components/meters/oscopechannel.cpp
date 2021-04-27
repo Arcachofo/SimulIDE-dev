@@ -37,6 +37,10 @@ void OscopeChannel::initialize()
     m_rising   = false;
     m_falling  = false;
 
+    m_dataTime = 0;
+    m_dataZero = 0;
+    m_subSample = 0;
+    m_subRate = 0;
     m_period = 0;
     m_risEdge = 0;
     m_nCycles = 0;
@@ -93,6 +97,7 @@ void OscopeChannel::updateStep()
             m_totalP  = 0;
             m_numMax  = 0;
         }
+        if( (m_subSample<1) && (m_freq<20) )voltChanged();
     }else{
         voltChanged();
         m_freq = 0;
@@ -140,7 +145,21 @@ void OscopeChannel::updateStep()
 
 void OscopeChannel::voltChanged()
 {
+    if( !m_connected ) return;
     uint64_t simTime = Simulator::self()->circTime();
+
+    if( ++m_dataTime > m_buffer.size() ) // Measure time taken to fill buffer
+    {
+        m_dataTime = 0;
+        if( m_subRate > 0 )
+            m_subSample = (simTime-m_dataZero)*m_subRate/m_buffer.size();
+        m_dataZero = simTime;
+    }
+    if( m_subSample > 0 ) // Buffer should hold enought time to display
+    {                   // Skip samples acordingly
+        if( ++m_subStep > m_subSample ) m_subStep = 0;
+        else return;
+    }
 
     double d0 = m_ePin[0]->getVolt();
     double d1 = m_ePin[1]->getVolt();

@@ -487,7 +487,7 @@ void SubCircuit::slotAttach()
 
                 if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
                 Circuit::self()->saveState();
-                Circuit::self()->compList()->removeOne( this );
+                /// Circuit::self()->compList()->removeOne( this );
 
                 m_board = board;
                 m_boardId = m_board->itemID();
@@ -517,7 +517,7 @@ void SubCircuit::slotDetach()
         if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
         Circuit::self()->saveState();
 
-        Circuit::self()->compList()->prepend( this );
+        /// Circuit::self()->compList()->prepend( this );
 
         m_board->setShield( NULL );
         this->moveTo( m_circPos );

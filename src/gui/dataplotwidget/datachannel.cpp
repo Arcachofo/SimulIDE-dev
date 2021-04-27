@@ -27,6 +27,7 @@ DataChannel::DataChannel( PlotBase* plotBase, QString id )
     m_plotBase = plotBase;
     m_ePin.resize( 2 );
     m_ePin[1] = NULL;
+    m_chTunnel = "";
     m_trigIndex = 0;
 }
 

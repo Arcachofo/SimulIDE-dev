@@ -32,8 +32,9 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( int Basic_X   READ baSizeX  WRITE setBaSizeX  DESIGNABLE true USER true )
     Q_PROPERTY( int Basic_Y   READ baSizeY  WRITE setBaSizeY  DESIGNABLE true USER true )
 
-
+    Q_PROPERTY( QStringList Tunnels  READ tunnels  WRITE setTunnels )
     Q_PROPERTY( quint64 hTick   READ hTick   WRITE sethTick )
+
     Q_PROPERTY( quint64 TimeDiv READ timeDiv WRITE setTimeDiv )
 
     public:
@@ -55,7 +56,13 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         uint64_t timeDiv() { return m_timeDiv; }
         virtual void setTimeDiv( uint64_t td );
 
+        virtual QStringList tunnels()=0;
+        virtual void setTunnels( QStringList tunnels )=0;
+
         virtual void expand( bool e ){;}
+        void toggleExpand();
+
+        virtual void channelChanged( int ch, QString name ){;}
 
         PlotDisplay* display() { return m_display; }
 

@@ -66,6 +66,11 @@ void PlotBase::setTimeDiv( uint64_t td )
     m_display->setTimeDiv( td );
 }
 
+void PlotBase::toggleExpand()
+{
+    expand( !m_expand );
+}
+
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

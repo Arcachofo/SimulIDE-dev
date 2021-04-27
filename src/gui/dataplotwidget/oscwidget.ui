@@ -345,7 +345,7 @@
             <number>0</number>
            </property>
            <property name="maximum">
-            <double>1000.000000000000000</double>
+            <double>1000000.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -432,10 +432,10 @@
             <number>0</number>
            </property>
            <property name="minimum">
-            <double>-1000.000000000000000</double>
+            <double>-1000000.000000000000000</double>
            </property>
            <property name="maximum">
-            <double>1000.000000000000000</double>
+            <double>1000000.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -541,7 +541,7 @@
             <number>0</number>
            </property>
            <property name="maximum">
-            <double>1000.000000000000000</double>
+            <double>1000000.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -628,10 +628,10 @@
             <number>0</number>
            </property>
            <property name="minimum">
-            <double>-1000.000000000000000</double>
+            <double>-1000000.000000000000000</double>
            </property>
            <property name="maximum">
-            <double>1000.000000000000000</double>
+            <double>1000000.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -1236,10 +1236,9 @@
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="trackGroup"/>
-  <buttongroup name="autoGroup">
+  <buttongroup name="hideGroup">
    <property name="exclusive">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
   </buttongroup>
   <buttongroup name="triggerGroup">
@@ -1247,9 +1246,10 @@
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="hideGroup">
+  <buttongroup name="trackGroup"/>
+  <buttongroup name="autoGroup">
    <property name="exclusive">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </buttongroup>
  </buttongroups>

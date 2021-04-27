@@ -658,7 +658,7 @@ void Circuit::listToDom( QDomDocument* doc, QList<Component*>* complist )
             {
                 SubCircuit* subc = (SubCircuit*)comp;
                 Component* mainComp = subc->getMainComp();
-                if( mainComp )
+                if( mainComp )                            // Save MainComp Properties.
                 {
                     QDomElement mainElm = doc->createElement("mainCompProps");
                     objectToDom( &mainElm, mainComp, true );

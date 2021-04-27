@@ -26,6 +26,7 @@
 #include "lachannel.h"
 #include "lawidget.h"
 #include "datalawidget.h"
+#include "tunnel.h"
 
 Component* LAnalizer::construct( QObject* parent, QString type, QString id )
 {
@@ -116,16 +117,25 @@ void LAnalizer::updateStep()
 
     for( int i=0; i<8; i++ )
     {
-        if( !m_pin[i]->isConnected() ) m_channel[i]->initialize();
-        else                           m_channel[i]->updateStep();
+        bool connected = m_pin[i]->connector();
+        if( !connected )
+        {
+            QString chTunnel = m_channel[i]->m_chTunnel;
+
+            eNode* enode = Tunnel::m_eNodes.value(  chTunnel, NULL );
+            m_pin[i]->setEnode( enode );
+            if( enode )
+            {
+                enode->voltChangedCallback( m_channel[i] );
+                connected = true;
+            }
+            display()->connectChannel( i, connected );
+        }
+        if( connected ) m_channel[i]->updateStep();
+        else            m_channel[i]->initialize();
         m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
     }
     m_display->update(); //redrawScreen();
-}
-
-void LAnalizer::toggleExpand()
-{
-    expand( !m_expand );
 }
 
 void LAnalizer::expand( bool e )
@@ -161,6 +171,11 @@ void LAnalizer::expand( bool e )
     Circuit::self()->update();
 }
 
+void LAnalizer::channelChanged( int ch, QString name )
+{
+    m_channel[ch]->m_chTunnel = name;
+}
+
 void LAnalizer::setTimeDiv( uint64_t td )
 {
     if( td < 1 ) td = 1;
@@ -186,6 +201,23 @@ void LAnalizer::setTrigger( int ch )
 {
     m_trigger = ch;
     m_laWidget->setTrigger( ch );
+}
+
+QStringList LAnalizer::tunnels()
+{
+    QStringList list;
+    for( int i=0; i<8; ++i ) list << m_channel[i]->m_chTunnel;
+    return list;
+}
+
+void LAnalizer::setTunnels( QStringList tunnels )
+{
+    for( int i=0; i< tunnels.size(); i++ )
+    {
+        if( i > 7 ) break;
+        m_channel[i]->m_chTunnel = tunnels.at(i);
+        m_dataWidget->setTunnel( i, tunnels.at(i) );
+    }
 }
 
 #include "moc_logicanalizer.cpp"

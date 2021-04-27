@@ -72,6 +72,9 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         QStringList volPos();
         void setVolPos( QStringList vp );
 
+        virtual QStringList tunnels() override;
+        virtual void setTunnels( QStringList tunnels ) override;
+
         virtual void updateStep() override;
 
         virtual void setTimeDiv( uint64_t td ) override;
@@ -87,8 +90,9 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         void hideChannel( int ch, bool hide );
 
-        void toggleExpand();
         virtual void expand( bool e ) override;
+
+        virtual void channelChanged( int ch, QString name )override;
 
         DataWidget* dataW() { return m_dataWidget; }
 
