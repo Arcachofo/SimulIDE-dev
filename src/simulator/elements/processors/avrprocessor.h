@@ -49,12 +49,12 @@ class AvrProcessor : public BaseProcessor
         virtual int pc() override;
         virtual uint64_t cycle() override { return m_avrProcessor->cycle; }
 
-        virtual int  getRamValue( int address ) override;
-        virtual void setRamValue( int address, uint8_t value ) override;
+        virtual uint8_t getRamValue( int address ) override;
+        virtual void   setRamValue( int address, uint8_t value ) override;
         virtual int  getFlashValue( int address ) override;
         virtual void setFlashValue( int address, uint8_t value ) override;
-        virtual int  getRomValue( int address ) override;
-        virtual void setRomValue( int address, uint8_t value ) override;
+        virtual uint8_t getRomValue( int address ) override;
+        virtual void    setRomValue( int address, uint8_t value ) override;
 
         avr_t* getCpu() { return m_avrProcessor; }
         void setCpu( avr_t* avrProc ) { m_avrProcessor = avrProc; }

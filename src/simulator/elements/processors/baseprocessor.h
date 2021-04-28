@@ -21,12 +21,13 @@
 #define PROCESSOR_H
 
 #include "e-element.h"
-#include "ramtable.h"
+
 #include "terminalwidget.h"
+#include "mcuinterface.h"
 
 class BaseDebugger;
 
-class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
+class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
 {
     Q_OBJECT
     public:
@@ -37,8 +38,6 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
 
         virtual void stamp() override;
         virtual void runEvent() override;
- 
-        QString getFileName() { return m_symbolFile; }
 
         virtual void setDevice( QString device ){;}
         virtual void setDataFile( QString datafile );
@@ -51,39 +50,22 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         virtual void stepCpu()=0;
         virtual void reset()=0;
 
-        virtual int pc()=0;
         virtual uint64_t cycle()=0;
-        virtual int status();
+        virtual int status() override;
 
         void stepOne( int line );
         
         virtual void hardReset( bool reset );
-        virtual int  getRamValue( QString name );
-        virtual int  getRegAddress( QString name );
+        virtual uint8_t getRamValue( QString name );
+        virtual uint8_t getRamValue( int address ) override {return 0;} // Implemented in child classes
+        virtual uint16_t getRegAddress( QString name ) override;
         virtual void addWatchVar( QString name, int address, QString type );
-        virtual void updateRamValue( QString name );
-
-        virtual int  getRamValue( int address )=0;
-        virtual void setRamValue( int address, uint8_t value )=0;
-        virtual int  getFlashValue( int address )=0;
-        virtual void setFlashValue( int address, uint8_t value )=0;
-        virtual int  getRomValue( int address )=0;
-        virtual void setRomValue( int address, uint8_t value )=0;
 
         virtual void uartOut( int uart, uint32_t value );
         virtual void uartIn( int uart, uint32_t value );
 
-        virtual QStringList getRegList() { return m_regList; }
-        
-        virtual RamTable* getRamTable() { return &m_ramTable; }
+        virtual QStringList getRegList() override { return m_regList; }
 
-        int ramSize() { return m_ramSize; }
-        int flashSize(){ return m_flashSize; }
-        int romSize(){ return m_romSize; }
-
-        virtual QVector<int>* eeprom();
-        virtual void setEeprom( QVector<int>* eep );
-        
         virtual void setRegisters();
 
         void setDebugging( bool d ) { m_debugging = d; }
@@ -100,25 +82,14 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public eElement
         
         virtual int validate( int address ) { return address; }
 
-        int m_ramSize;
-        int m_flashSize;
-        int m_romSize;
-
-        QString m_symbolFile;
+        QString m_firmware;
         QString m_dataFile;
         QString m_device;
         QString m_statusReg;
 
         double m_stepPS;
 
-        RamTable m_ramTable;
-
-        QStringList m_regList;
-
-        QHash<QString, int>     m_regsTable;   // int max 32 bits
-        QHash<QString, QString> m_typeTable;
-
-        QVector<int> m_eeprom;
+        QHash<QString, int> m_regsTable;   // int max 32 bits
 
         bool m_resetStatus;
         bool m_loadStatus;

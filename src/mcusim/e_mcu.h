@@ -29,6 +29,7 @@
 #include "mcuport.h"
 #include "mcutimer.h"
 #include "mcuinterrupts.h"
+#include "mcuinterface.h"
 
 class McuCore;
 class McuTimer;
@@ -38,7 +39,7 @@ enum{
     R_WRITE,
 };
 
-class MAINMODULE_EXPORT eMcu : public eElement
+class MAINMODULE_EXPORT eMcu : public McuInterface
 {
         friend class McuCreator;
         friend class McuCore;
@@ -61,6 +62,16 @@ class MAINMODULE_EXPORT eMcu : public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
+        virtual uint8_t getRamValue( int address ) override;
+        virtual void    setRamValue( int address, uint8_t value ) override;
+        virtual int  getFlashValue( int address ) override;
+        virtual void setFlashValue( int address, uint8_t value ) override;
+        virtual uint8_t getRomValue( int address ) override;
+        virtual void    setRomValue( int address, uint8_t value ) override;
+
+        virtual int status() override;
+        virtual int pc() override;
+
         void setFreq( double freq );
         uint64_t simCycPI() { return m_simCycPI; }
         //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle
@@ -76,7 +87,7 @@ class MAINMODULE_EXPORT eMcu : public eElement
 
         void enableInterrupts( uint8_t en );
 
-        uint8_t* getRam() { return m_dataMem.data(); }    // Get pointer to Ram data
+        uint8_t* getRam() { return m_dataMem.data(); }  // Get pointer to Ram data
 
         uint8_t  readReg( uint16_t addr );            // Read Register (call watchers)
         void     writeReg( uint16_t addr, uint8_t v );// Write Register (call watchers)
@@ -84,7 +95,7 @@ class MAINMODULE_EXPORT eMcu : public eElement
         uint8_t* getReg( QString reg )                // Get pointer to Reg data by name
         { return &m_dataMem[m_regInfo.value( reg ).address]; }
 
-        uint16_t getRegAddress( QString reg )             // Get Reg address by name
+        uint16_t getRegAddress( QString reg )         // Get Reg address by name
         { return m_regInfo.value( reg ).address; }
 
         uint16_t getMapperAddr( uint16_t addr ) { return m_addrMap[addr]; }

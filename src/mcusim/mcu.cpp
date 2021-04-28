@@ -32,6 +32,7 @@
 #include "circuitwidget.h"
 #include "mainwindow.h"
 #include "componentselector.h"
+#include "mcumonitor.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
 
@@ -67,6 +68,8 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
    , m_eMcu( id )
 {
     QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
+
+    m_mcuMonitor = NULL;
 
     m_icColor = QColor( 20, 30, 60 );
 
@@ -160,20 +163,22 @@ void Mcu::setLogicSymbol( bool ls )
     setValLabelPos();
 }
 
+QString Mcu::program() { return m_eMcu.getFileName(); }
+
 void Mcu::setProgram( QString pro )
 {
     if( pro == "" ) return;
-    m_firmware = pro;
+    m_eMcu.m_firmware = pro;
 
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
     else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
-    QString fileNameAbs = circuitDir.absoluteFilePath( m_firmware );
+    QString fileNameAbs = circuitDir.absoluteFilePath( m_eMcu.m_firmware );
 
     if( QFileInfo::exists( fileNameAbs ) ) // Load firmware at circuit load
     // && !m_processor->getLoadStatus() )
     {
-        load( m_firmware );
+        load( m_eMcu.m_firmware );
     }
 }
 
@@ -224,7 +229,7 @@ void Mcu::load( QString fileName )
 
         //if( !m_varList.isEmpty() ) m_processor->getRamTable()->loadVarSet( m_varList );
 
-        m_firmware = circuitDir.relativeFilePath( fileName );
+        m_eMcu.m_firmware = circuitDir.relativeFilePath( fileName );
         m_lastFirmDir = cleanPathAbs;
 
         QSettings* settings = MainWindow::self()->settings();
@@ -282,6 +287,19 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
                    this, SLOT(slotOpenSerial()), Qt::UniqueConnection );*/
 
     menu->addSeparator();
+    QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open Mcu Monitor.") );
+    connect( openRamTab, SIGNAL(triggered()),
+                   this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
+}
+
+void Mcu::slotOpenMcuMonitor()
+{
+    if( !m_mcuMonitor )
+    {
+        m_mcuMonitor = new MCUMonitor( CircuitWidget::self(), &m_eMcu );
+        m_mcuMonitor->setWindowTitle( idLabel() );
+    }
+    m_mcuMonitor->show();
 }
 
 void Mcu::addPin( QString id, QString type, QString label,

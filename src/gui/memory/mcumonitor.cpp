@@ -1,11 +1,11 @@
 #include "mcumonitor.h"
 #include "simulator.h"
-#include "baseprocessor.h"
+#include "mcuinterface.h"
 #include "memtable.h"
 
 #define BYTES_PER_LINE 16
 
-MCUMonitor::MCUMonitor( QWidget* parent, BaseProcessor* mcu )
+MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
           : QDialog( parent )
 {
     setupUi(this);

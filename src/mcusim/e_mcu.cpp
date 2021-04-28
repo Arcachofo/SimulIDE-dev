@@ -24,7 +24,7 @@
 #include "simulator.h"
 
 eMcu::eMcu( QString id )
-    : eElement( id )
+    : McuInterface( id )
     , m_interrupts( this )
     , m_ports( this )
     , m_timers( this )
@@ -86,6 +86,36 @@ void eMcu::runEvent()
     }
 }
 
+uint8_t eMcu::getRamValue( int address )
+{
+
+}
+
+void eMcu::setRamValue( int address, uint8_t value )
+{
+
+}
+
+int eMcu::getFlashValue( int address )
+{
+
+}
+
+void eMcu::setFlashValue( int address, uint8_t value )
+{
+
+}
+
+uint8_t eMcu::getRomValue( int address )
+{
+
+}
+
+void eMcu::setRomValue( int address, uint8_t value )
+{
+
+}
+
 void eMcu::enableInterrupts( uint8_t en )
 {
     m_interrupts.enableGlobal( en );
@@ -118,6 +148,10 @@ void eMcu::writeStatus( uint8_t v ) // Write SREG values from RAM
 {
     for( int i=0; i<8; i++ ) m_sreg[i] = v & (1<<i);
 }
+
+int eMcu::status() { return getRamValue( m_sregAddr ); }
+
+int eMcu::pc() { return cpu->PC; }
 
 void eMcu::setFreq( double freq )
 {

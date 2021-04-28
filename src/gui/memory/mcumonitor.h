@@ -5,7 +5,7 @@
 
 #include "ui_mcumonitor.h"
 
-class BaseProcessor;
+class McuInterface;
 class MemTable;
 class RamTable;
 
@@ -14,7 +14,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
     Q_OBJECT
     
     public:
-        MCUMonitor( QWidget* parent=0, BaseProcessor* mcu=0 );
+        MCUMonitor( QWidget* parent=0, McuInterface* mcu=0 );
 
         void updateStep();
 
@@ -26,7 +26,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
 
     private:
         void updateTable( int index );
-        BaseProcessor* m_processor;
+        McuInterface* m_processor;
 
         RamTable* m_ramTable;
         MemTable* m_ramMonitor;

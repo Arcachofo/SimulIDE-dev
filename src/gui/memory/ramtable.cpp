@@ -18,12 +18,12 @@
  ***************************************************************************/
 
 #include "ramtable.h"
-#include "baseprocessor.h"
+#include "mcuinterface.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
 #include "utils.h"
 
-RamTable::RamTable( QWidget* parent, BaseProcessor* processor )
+RamTable::RamTable( QWidget* parent, McuInterface* processor )
         : QWidget( parent )
         , m_status( 1, 8 )
         , m_pc( 1, 2 )
@@ -292,14 +292,11 @@ void RamTable::updateValues()
             if( !ok ) m_processor->updateRamValue( name );  // Var or Reg name
             else                                            // Address
             {
-                int value = m_processor->getRamValue( addr );
+                uint8_t value = m_processor->getRamValue( addr );
 
-                if( value >= 0 )
-                {
-                    table->item( _row, 1 )->setText("uint8");
-                    table->item( _row, 2 )->setData( 0, value );
-                    table->item( _row, 3 )->setData( 0, decToBase(value, 2, 8) );
-                }
+                table->item( _row, 1 )->setText("uint8");
+                table->item( _row, 2 )->setData( 0, value );
+                table->item( _row, 3 )->setData( 0, decToBase(value, 2, 8) );
             }
         }
     }

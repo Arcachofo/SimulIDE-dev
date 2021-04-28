@@ -45,12 +45,12 @@ class PicProcessor : public BaseProcessor
         virtual uint64_t cycle() override { return m_pPicProcessor->currentCycle(); }
         virtual void setFreq( double freq ) override;
 
-        virtual int  getRamValue( int address ) override;
-        virtual void setRamValue( int address, uint8_t value ) override;
+        virtual uint8_t getRamValue( int address ) override;
+        virtual void    setRamValue( int address, uint8_t value ) override;
         virtual int  getFlashValue( int address ) override;
         virtual void setFlashValue( int address, uint8_t value ) override;
-        virtual int  getRomValue( int address ) override;
-        virtual void setRomValue( int address, uint8_t value ) override;
+        virtual uint8_t getRomValue( int address ) override;
+        virtual void    setRomValue( int address, uint8_t value ) override;
 
         virtual void uartIn( int uart, uint32_t value ) override;
 

@@ -212,7 +212,7 @@ bool AvrProcessor::loadFirmware( QString fileN )
     }
     if( f.flashbase ) m_avrProcessor->pc = f.flashbase;
 
-    m_symbolFile = fileN;
+    m_firmware = fileN;
     m_loadStatus = true;
 
     return true;
@@ -241,7 +241,7 @@ void AvrProcessor::reset()
 int AvrProcessor::pc()
 { return m_avrProcessor->pc; }
 
-int AvrProcessor::getRamValue( int address )
+uint8_t AvrProcessor::getRamValue( int address )
 { return m_avrProcessor->data[address]; }
 
 void AvrProcessor::setRamValue( int address, uint8_t value )
@@ -253,7 +253,7 @@ int AvrProcessor::getFlashValue( int address )
 void AvrProcessor::setFlashValue( int address, uint8_t value )
 { *(m_avrProcessor->flash + address) = value; }
 
-int AvrProcessor::getRomValue( int address )
+uint8_t AvrProcessor::getRomValue( int address )
 { return m_avrEEPROM[address]; }
 
 void AvrProcessor::setRomValue( int address, uint8_t value )

@@ -26,6 +26,7 @@
 #include "chip.h"
 
 class LibraryItem;
+class MCUMonitor;
 
 class MAINMODULE_EXPORT Mcu : public Chip
 {
@@ -44,7 +45,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         virtual QList<propGroup_t> propGroups() override;
 
-        QString program()   const { return m_firmware; }
+        QString program();
         void setProgram( QString pro );
 
         double freq(){ return m_eMcu.m_freq; }
@@ -62,6 +63,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
     public slots:
         void slotLoad();
+        void slotOpenMcuMonitor();
 
     protected:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
@@ -69,13 +71,14 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         QString m_subcDir;      // Subcircuit Path
         QString m_lastFirmDir;  // Last firmware folder used
-        QString m_firmware;     // firmware file loaded
         QString m_dataFile;
         QString m_device;       // Name of device
 
         eMcu m_eMcu;
 
         QList<Pin*> m_pinList;
+
+        MCUMonitor* m_mcuMonitor;
 };
 
 

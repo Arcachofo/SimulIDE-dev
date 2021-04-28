@@ -99,19 +99,19 @@ bool PicProcessor::loadFirmware( QString fileN )
     if( !m_pPicProcessor ) return false;
     if( fileN == "" ) return false;
     
-    m_symbolFile = fileN; 
+    m_firmware = fileN;
     
-    if( !QFile::exists( m_symbolFile ) )
+    if( !QFile::exists( m_firmware ) )
     {
         QMessageBox::warning( 0, tr("File Not Found")
-                               , tr("The file \"%1\" was not found.").arg(m_symbolFile) );
+                               , tr("The file \"%1\" was not found.").arg(m_firmware) );
         return false;
     }
-    QByteArray symbolFile = m_symbolFile.toUtf8();
+    QByteArray symbolFile = m_firmware.toUtf8();
     
     m_loadStatus = false;
 
-    qDebug() << "Loading HexFile:\n"<<m_symbolFile<<"\n" ;
+    qDebug() << "Loading HexFile:\n"<<m_firmware<<"\n" ;
     
     FILE* pFile  = fopen( symbolFile.constData(), "r" );
     int load = m_hexLoader.readihex16( m_pPicProcessor, pFile );
@@ -120,7 +120,7 @@ bool PicProcessor::loadFirmware( QString fileN )
     if( !m_loadStatus )
     {
         QMessageBox::warning( 0, tr("Unkown Error:")
-                               , tr("Could not Load: \"%1\"").arg(m_symbolFile) );
+                               , tr("Could not Load: \"%1\"").arg(m_firmware) );
         return false;
     }
     m_pPicProcessor->set_Vdd( 5 );
@@ -160,7 +160,7 @@ void PicProcessor::reset()
     Simulator::self()->addEvent( 1, this );
 }
 
-int PicProcessor::getRamValue( int address )
+uint8_t PicProcessor::getRamValue( int address )
 { return m_pPicProcessor->registers[address]->get_value(); }
 
 void PicProcessor::setRamValue( int address, uint8_t value )
@@ -172,7 +172,7 @@ int PicProcessor::getFlashValue( int address )
 void PicProcessor::setFlashValue( int address, uint8_t value )
 { m_pPicProcessor->program_memory[address]->put_value( value ); }
 
-int PicProcessor::getRomValue( int address )
+uint8_t PicProcessor::getRomValue( int address )
 { return m_pPicProcessor->eeprom->rom[address]->get_value(); }
 
 void PicProcessor::setRomValue(int address, uint8_t value)
