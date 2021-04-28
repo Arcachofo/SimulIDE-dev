@@ -52,6 +52,7 @@ void I51Usart::configure( uint8_t val )
         {
             m_timerConnected = true;
             m_timer1->on_tov.connect( this, &I51Usart::step );
+            setPeriod( 0 );
         }
     }
     if( sm0 )  // modes 2 and 3
@@ -62,6 +63,7 @@ void I51Usart::configure( uint8_t val )
         {
             /// setPeriod(  m_mcu->simCycPI() );// Fixed baudrate 32 or 64
         }
+        m_timerConnected = false;
     }
     else // Modes 0 and 1
     {
@@ -69,6 +71,8 @@ void I51Usart::configure( uint8_t val )
 
         if( !sm1 ) // Mode 0
             setPeriod(  m_mcu->simCycPI() ); // Cycles in 1 machine cycle
+
+        m_timerConnected = false;
     }
 }
 

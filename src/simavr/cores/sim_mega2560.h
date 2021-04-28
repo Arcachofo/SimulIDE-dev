@@ -352,7 +352,6 @@ const struct mcu_t {
                     },
              },
         },
-
     },
     .timer2 = {
         .name = '2',

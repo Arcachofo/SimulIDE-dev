@@ -30,9 +30,6 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name )
     m_dataMask = 0xFF;
     m_parity   = parNONE;
 
-    //m_timerConnected = false;
-    //m_timer1 = mcu->getTimer( "TIMER1" );
-
     QString n = m_name.right(1);
     m_ucsrnb = mcu->getReg( "SUCSR"+n+"B" );
     m_bit9Tx = mcu->getRegBits( "TXB8"+n );

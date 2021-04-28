@@ -110,7 +110,7 @@ void UartTx::processData( uint8_t data )
         m_framesize++;
     }
     m_currentBit = 0;
-    //sendBit();                            // Start transmission
+    if( m_period ) sendBit();                            // Start transmission
 }
 
 void UartTx::sendBit()
@@ -123,7 +123,7 @@ void UartTx::sendBit()
     {
         m_state = usartTXEND;
     }
-    ///Simulator::self()->addEvent( m_period, this ); // Shedule next bit
+    if( m_period ) Simulator::self()->addEvent( m_period, this ); // Shedule next bit
 }
 
 
@@ -162,13 +162,9 @@ void UartRx::runEvent()
             bool parity = getParity( data );
             bool parityBit = m_frame |= 1<<m_framesize;
 
-            if( parity != parityBit )
-            {
-                m_usart->parityError();
-                return;
-            }
+            if( parity != parityBit ) { m_usart->parityError(); return; }
         }
-        *m_register  = data; // Save data to Ram
+        *m_register = data; // Save data to Ram
 
         if( mDATABITS == 9 ) m_usart->setBit9( m_bit9 ); // Save Bit 9
 
@@ -186,21 +182,17 @@ void UartRx::processData( uint8_t data )
     m_framesize = 1+mDATABITS+mPARITY+mSTOPBITS;
 
     m_currentBit = 0;
-    ///Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
+    if( m_period ) Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
 }
 
 void UartRx::readBit()
 {
+    if( m_period ) Simulator::self()->addEvent( m_period, this ); // Shedule next sample
+
     bool bit = m_ioPin->getState();
 
     if( (m_currentBit == 0) && bit ) return; // Wait for start bit
-
     if( bit ) m_frame += 1<<m_currentBit;    // Get bit into frame
 
-    m_currentBit++;
-    if( m_currentBit == m_framesize )        // Data reception finished
-    {
-        m_state = usartRXEND;
-    }
-    ///Simulator::self()->addEvent( m_period, this ); // Shedule next bit
+    if( ++m_currentBit == m_framesize ) m_state = usartRXEND;  // Data reception finished
 }
