@@ -64,6 +64,8 @@ void PicProcessor::setDevice( QString device )
                                , tr("Could not Create Pic Processor: \"%1\"").arg(m_device) );
         return;
     }
+    m_ramSize   = m_pPicProcessor->register_memory_size();
+    m_flashSize = m_pPicProcessor->program_memory_size();
 
     qDebug() << "    UARTs:";
     m_rcsta.resize(6);
@@ -73,7 +75,7 @@ void PicProcessor::setDevice( QString device )
         QString rc = "RCSTA";
         if( i > 0 ) rc += QString::number(i);
         int address = getRegAddress( rc );
-        if( address > 0 )
+        if( address < m_ramSize )
         {
             int uart = i;
             if( i > 0 ) uart--;  // Uart 0 and 1 are the same
@@ -83,9 +85,6 @@ void PicProcessor::setDevice( QString device )
             rcsta->m_picProc = this;
         }
     }
-    m_ramSize   = m_pPicProcessor->register_memory_size();
-    m_flashSize = m_pPicProcessor->program_memory_size();
-
     EEPROM* eeprom = m_pPicProcessor->eeprom;
     if( eeprom )
     {
@@ -128,7 +127,7 @@ bool PicProcessor::loadFirmware( QString fileN )
     qDebug() << "\nProcessor Ready:";
     qDebug() << "    Device    =" << m_pPicProcessor->name_str;
     qDebug() << "    Int. OSC  =" << (m_pPicProcessor->get_int_osc()? "true":"false");
-    qDebug() << "    Use PLLx4 =" << (m_pPicProcessor->get_pplx4_osc()? "true":"false");
+    qDebug() << "    Use PLLx4 =" << (m_pPicProcessor->get_pplx4_osc()? "true":"false")<<"\n";
 
     int address = getRegAddress( "OSCCAL" );
     if( address > 0 ) // Initialize Program Memory at 0x3FF for OSCCAL
@@ -166,10 +165,10 @@ uint8_t PicProcessor::getRamValue( int address )
 void PicProcessor::setRamValue( int address, uint8_t value )
 { m_pPicProcessor->registers[address]->put_value( value ); }
 
-int PicProcessor::getFlashValue( int address )
+uint16_t PicProcessor::getFlashValue( int address )
 { return m_pPicProcessor->program_memory[address]->get_value(); }
 
-void PicProcessor::setFlashValue( int address, uint8_t value )
+void PicProcessor::setFlashValue( int address, uint16_t value )
 { m_pPicProcessor->program_memory[address]->put_value( value ); }
 
 uint8_t PicProcessor::getRomValue( int address )

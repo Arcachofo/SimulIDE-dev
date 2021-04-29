@@ -76,7 +76,7 @@ void eMcu::runEvent()
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
 
-        else if( cpu->PC < m_progMemSize )
+        else if( cpu->PC < m_flashSize )
         {
             m_interrupts.runInterrupts();     // Run Interrupts
 
@@ -88,7 +88,7 @@ void eMcu::runEvent()
 
 uint8_t eMcu::getRamValue( int address )
 {
-
+    return m_dataMem[address];
 }
 
 void eMcu::setRamValue( int address, uint8_t value )
@@ -96,19 +96,19 @@ void eMcu::setRamValue( int address, uint8_t value )
 
 }
 
-int eMcu::getFlashValue( int address )
+uint16_t eMcu::getFlashValue( int address )
 {
-
+    return m_progMem[address];
 }
 
-void eMcu::setFlashValue( int address, uint8_t value )
+void eMcu::setFlashValue( int address, uint16_t value )
 {
-
+    m_progMem[address] = value;
 }
 
 uint8_t eMcu::getRomValue( int address )
 {
-
+    return 0;
 }
 
 void eMcu::setRomValue( int address, uint8_t value )

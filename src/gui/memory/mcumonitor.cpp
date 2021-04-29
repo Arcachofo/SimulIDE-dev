@@ -17,7 +17,7 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     verticalLayout->insertWidget( 0, &m_ramTable->m_pc);
 
     m_ramMonitor    = new MemTable( tabWidget, m_processor->ramSize() );
-    m_flashMonitor  = new MemTable( tabWidget, m_processor->flashSize() );
+    m_flashMonitor  = new MemTable( tabWidget, m_processor->flashSize(), m_processor->wordSize() );
     m_romMonitor    = new MemTable( tabWidget, m_processor->romSize() );
 
     tabWidget->addTab( m_ramTable, "Variables" );

@@ -94,7 +94,7 @@ void AvrProcessor::setDevice( QString device )
     m_avrProcessor->cycle = 0;
 
     m_ramSize   = m_avrProcessor->ramend+1;
-    m_flashSize = m_avrProcessor->flashend+1;
+    m_flashSize = (m_avrProcessor->flashend+1)/2;
     m_romSize   = m_avrProcessor->e2end+1;
 
     avr_eeprom_desc_t ee;
@@ -239,7 +239,7 @@ void AvrProcessor::reset()
 }
 
 int AvrProcessor::pc()
-{ return m_avrProcessor->pc; }
+{ return m_avrProcessor->pc/2; }
 
 uint8_t AvrProcessor::getRamValue( int address )
 { return m_avrProcessor->data[address]; }
@@ -247,11 +247,19 @@ uint8_t AvrProcessor::getRamValue( int address )
 void AvrProcessor::setRamValue( int address, uint8_t value )
 { m_avrProcessor->data[address] = value; }
 
-int AvrProcessor::getFlashValue( int address )
-{ return m_avrProcessor->flash[address]; }
+uint16_t AvrProcessor::getFlashValue( int address )
+{
+    address *= 2;
+    return( m_avrProcessor->flash[address]
+         | (m_avrProcessor->flash[address+1] << 8) );
+}
 
-void AvrProcessor::setFlashValue( int address, uint8_t value )
-{ *(m_avrProcessor->flash + address) = value; }
+void AvrProcessor::setFlashValue( int address, uint16_t value )
+{
+    address *= 2;
+    *(m_avrProcessor->flash + address)   = value & 0x00FF;
+    *(m_avrProcessor->flash + address+1) = value & 0xFF00;
+}
 
 uint8_t AvrProcessor::getRomValue( int address )
 { return m_avrEEPROM[address]; }

@@ -137,8 +137,13 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     m_subcDir = "";
 
+    Simulator::self()->addToUpdateList( this );
 }
-Mcu::~Mcu(){}
+Mcu::~Mcu()
+{
+    if( m_mcuMonitor ) delete m_mcuMonitor;
+    Simulator::self()->remFromUpdateList( this );
+}
 
 QList<propGroup_t> Mcu::propGroups()
 {
@@ -184,6 +189,17 @@ void Mcu::setProgram( QString pro )
 
 void Mcu::initialize()
 {
+}
+
+void Mcu::updateStep()
+{
+    /*if( m_crashed )
+    {
+        Simulator::self()->setWarning( m_warning );
+        update();
+    }*/
+    if( m_mcuMonitor
+     && m_mcuMonitor->isVisible() ) m_mcuMonitor->updateStep();
 }
 
 void Mcu::remove()
@@ -286,10 +302,12 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     connect( openSerial, SIGNAL(triggered()),
                    this, SLOT(slotOpenSerial()), Qt::UniqueConnection );*/
 
-    menu->addSeparator();
+
     QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open Mcu Monitor.") );
     connect( openRamTab, SIGNAL(triggered()),
                    this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
+
+    menu->addSeparator();
 }
 
 void Mcu::slotOpenMcuMonitor()

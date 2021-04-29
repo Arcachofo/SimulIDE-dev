@@ -110,13 +110,13 @@ int McuCreator::processFile( QString fileName )
 
 void McuCreator::createProgMem( uint32_t size, eMcu* mcu )
 {
-    mcu->m_progMemSize = size;
+    mcu->m_flashSize = size;
     mcu->m_progMem.resize( size, 0xFFFF );
 }
 
 void McuCreator::createDataMem( uint32_t size, eMcu* mcu )
 {
-    mcu->m_dataMemSize = size;
+    mcu->m_ramSize = size;
     mcu->m_dataMem.resize( size, 0 );
     mcu->m_addrMap.resize( size, 0xFFFF ); // Not Maped values = 0xFFFF -> don't exist
 }
@@ -127,10 +127,10 @@ void McuCreator::createDataBlock( QDomElement* d, eMcu* mcu )
     uint16_t datEnd   = d->attribute("end").toUInt(0,0);
     uint16_t mapTo    = datStart;
 
-    if( datEnd >= mcu->m_dataMemSize )
+    if( datEnd >= mcu->m_ramSize )
     {
         qDebug() << "McuCreator::createDataBlock  ERROR creating DataBlock";
-        qDebug() << "dataMemSize  = " << mcu->m_dataMemSize;
+        qDebug() << "dataMemSize  = " << mcu->m_ramSize;
         qDebug() << "dataBlockEnd = " << datEnd;
         return;
     }
@@ -150,10 +150,10 @@ void McuCreator::createRegisters( QDomElement* e, eMcu* mcu )
     uint16_t regEnd   = e->attribute("end").toUInt(0,0);
     uint16_t offset   = e->attribute("offset").toUInt(0,0);
 
-    if( regEnd >= mcu->m_dataMemSize )
+    if( regEnd >= mcu->m_ramSize )
     {
         qDebug() << "McuCreator::createRegisters  ERROR creating Registers";
-        qDebug() << "dataMemSize  = " << mcu->m_dataMemSize;
+        qDebug() << "dataMemSize  = " << mcu->m_ramSize;
         qDebug() << "RegistersEnd = " << regEnd;
         return;
     }

@@ -62,12 +62,12 @@ class MAINMODULE_EXPORT eMcu : public McuInterface
         virtual void initialize() override;
         virtual void runEvent() override;
 
-        virtual uint8_t getRamValue( int address ) override;
-        virtual void    setRamValue( int address, uint8_t value ) override;
-        virtual int  getFlashValue( int address ) override;
-        virtual void setFlashValue( int address, uint8_t value ) override;
-        virtual uint8_t getRomValue( int address ) override;
-        virtual void    setRomValue( int address, uint8_t value ) override;
+        virtual uint8_t  getRamValue( int address ) override;
+        virtual void     setRamValue( int address, uint8_t value ) override;
+        virtual uint16_t getFlashValue( int address ) override;
+        virtual void     setFlashValue( int address, uint16_t value ) override;
+        virtual uint8_t  getRomValue( int address ) override;
+        virtual void     setRomValue( int address, uint8_t value ) override;
 
         virtual int status() override;
         virtual int pc() override;
@@ -169,12 +169,11 @@ class MAINMODULE_EXPORT eMcu : public McuInterface
 
     protected:
         std::vector<uint16_t> m_progMem;           // Program memory
-        uint32_t m_progMemSize;
-        uint8_t  m_wordSize;                       // Size of Program memory word in bytes
+        //uint32_t m_progMemSize;
 
         std::vector<uint16_t> m_addrMap;           // Maps addresses in Data space
         std::vector<uint8_t>  m_dataMem;           // Whole Ram space including Registers
-        uint32_t m_dataMemSize;
+        //uint32_t m_dataMemSize;
 
         QHash<QString, regInfo_t>     m_regInfo;   // Access Reg Info by  Reg name
         QHash<uint16_t, regSignal_t*> m_regSignals;// Access Reg Signals by Reg address

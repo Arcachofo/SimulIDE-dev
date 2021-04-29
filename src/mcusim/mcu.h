@@ -52,6 +52,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         virtual void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
 
         virtual void initialize() override;
+        virtual void updateStep() override;
         virtual void remove() override;
         virtual void setLogicSymbol( bool ls ) override;
 
