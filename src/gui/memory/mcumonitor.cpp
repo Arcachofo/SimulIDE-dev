@@ -2,6 +2,7 @@
 #include "simulator.h"
 #include "mcuinterface.h"
 #include "memtable.h"
+#include "utils.h"
 
 #define BYTES_PER_LINE 16
 
@@ -13,6 +14,8 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     m_processor = mcu;
 
     m_ramTable = m_processor->getRamTable();
+    m_status = &m_ramTable->m_status;
+    m_pc     = &m_ramTable->m_pc;
     verticalLayout->insertWidget( 0, &m_ramTable->m_status);
     verticalLayout->insertWidget( 0, &m_ramTable->m_pc);
 
@@ -52,6 +55,19 @@ void MCUMonitor::tabChanged( int index )
 
 void MCUMonitor::updateTable( int index )
 {
+    int status = m_processor->status();
+    for( int i=0; i<8; i++ )
+    {
+        int bit = status & 1;
+        if( bit ) m_status->item( 0, 7-i )->setBackground( QColor( 255, 150, 00 ) );
+        else      m_status->item( 0, 7-i )->setBackground( QColor( 120, 230, 255 ) );
+        status >>= 1;
+    }
+
+    int pc = m_processor->pc();
+    m_pc->item( 0, 0 )->setData( 0, pc );
+    m_pc->item( 0, 1 )->setText("  0x"+decToBase(pc, 16, 4).remove(0,1) );
+
     switch( index )
     {
     case 0:

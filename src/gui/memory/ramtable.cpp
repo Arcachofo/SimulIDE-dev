@@ -268,19 +268,6 @@ void RamTable::updateValues()
 {
     if( m_processor )
     {
-        int status = m_processor->status();
-        for( int i=0; i<8; i++ )
-        {
-            int bit = status & 1;
-            if( bit ) m_status.item( 0, 7-i )->setBackground( QColor( 255, 150, 00 ) );
-            else      m_status.item( 0, 7-i )->setBackground( QColor( 120, 230, 255 ) );
-            status >>= 1;
-        }
-
-        int pc = m_processor->pc();
-        m_pc.item( 0, 0 )->setData( 0, pc );
-        m_pc.item( 0, 1 )->setText("  0x"+decToBase(pc, 16, 4).remove(0,1) );
-
         for( int _row: watchList.keys() )
         {
             m_currentRow = _row;

@@ -8,6 +8,7 @@
 class McuInterface;
 class MemTable;
 class RamTable;
+class QTableWidget;
 
 class MCUMonitor : public QDialog, private Ui::McuMonitor
 {
@@ -32,6 +33,9 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
         MemTable* m_ramMonitor;
         MemTable* m_flashMonitor;
         MemTable* m_romMonitor;
+
+        QTableWidget* m_status;
+        QTableWidget* m_pc;
 };
 
 
