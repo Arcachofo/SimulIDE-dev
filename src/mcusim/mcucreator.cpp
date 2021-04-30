@@ -189,8 +189,7 @@ void McuCreator::createRegisters( QDomElement* e, eMcu* mcu )
                         mcu->m_bitMasks.insert( bitName, mask );
                         mcu->m_bitRegs.insert( bitName, regAddr );
                     }
-                }else
-                {
+                }else{
                     QStringList bitList = bits.split(",");
                     for( int i=0; i< bitList.size(); ++i )
                     {
@@ -481,6 +480,11 @@ void McuCreator::createUsart( QDomElement* u, eMcu* mcu )
     {
         QString mode = u->attribute("configregs");
         mcu->watchRegNames( mode, R_WRITE, usartM, &UsartM::configure );
+    }
+    if( u->hasAttribute("configbits") )
+    {
+        QString configBits = u->attribute("configbits");
+        mcu->watchBitNames( configBits, R_WRITE, usartM, &UsartM::configure );
     }
     QDomNode node = u->firstChild();
     while( !node.isNull() )

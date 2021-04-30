@@ -67,6 +67,8 @@ class MAINMODULE_EXPORT UartTR : public eElement
         uint8_t m_bit9;
         state_t m_state;
 
+        bool m_enabled;
+
         uint64_t m_period; // Baudrate period
 };
 

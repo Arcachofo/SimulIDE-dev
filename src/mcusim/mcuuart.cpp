@@ -34,6 +34,7 @@ UartTR::UartTR( UsartM* usart, QString name )
     m_usart = usart;
 
     m_state = usartSTOPPED;
+    m_enabled = false;
 }
 UartTR::~UartTR( ){}
 
@@ -54,12 +55,17 @@ bool UartTR::getParity( uint8_t data )
 UartTx::UartTx( UsartM* usart, QString  name )
        : UartTR( usart, name )
 {
+    m_period = 0;
 }
 UartTx::~UartTx( ){}
 
 void UartTx::enable( uint8_t en )
 {
-    if( en )
+    bool enabled = en > 0;
+    if( enabled == m_enabled ) return;
+    m_enabled = enabled;
+
+    if( enabled )
     {
         m_state = usartIDLE;
         m_ioPin->setState( 1 );
@@ -110,7 +116,8 @@ void UartTx::processData( uint8_t data )
         m_framesize++;
     }
     m_currentBit = 0;
-    if( m_period ) sendBit();                            // Start transmission
+    if( m_period )
+        sendBit();                            // Start transmission
 }
 
 void UartTx::sendBit()
@@ -123,7 +130,8 @@ void UartTx::sendBit()
     {
         m_state = usartTXEND;
     }
-    if( m_period ) Simulator::self()->addEvent( m_period, this ); // Shedule next bit
+    if( m_period )
+        Simulator::self()->addEvent( m_period, this ); // Shedule next bit
 }
 
 
@@ -132,12 +140,17 @@ void UartTx::sendBit()
 UartRx::UartRx( UsartM* usart, QString name )
       : UartTR( usart, name )
 {
+    m_period = 0;
 }
 UartRx::~UartRx( ){}
 
 void UartRx::enable( uint8_t en )
 {
-    if( en ) processData( 0 );
+    bool enabled = en > 0;
+    if( enabled == m_enabled ) return;
+    m_enabled = enabled;
+
+    if( enabled ) processData( 0 );
     else m_state = usartSTOPPED;
     m_frame = 0;
 }
@@ -173,6 +186,8 @@ void UartRx::runEvent()
         m_state = usartRECEIVE;
         on_dataEnd.emitValue( data );
     }
+    if( m_period )
+        Simulator::self()->addEvent( m_period, this ); // Shedule next sample
 }
 
 void UartRx::processData( uint8_t data )
@@ -182,13 +197,12 @@ void UartRx::processData( uint8_t data )
     m_framesize = 1+mDATABITS+mPARITY+mSTOPBITS;
 
     m_currentBit = 0;
-    if( m_period ) Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
+    if( m_period )
+        Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
 }
 
 void UartRx::readBit()
 {
-    if( m_period ) Simulator::self()->addEvent( m_period, this ); // Shedule next sample
-
     bool bit = m_ioPin->getState();
 
     if( (m_currentBit == 0) && bit ) return; // Wait for start bit

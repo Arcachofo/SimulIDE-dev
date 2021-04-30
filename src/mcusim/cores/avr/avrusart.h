@@ -36,9 +36,16 @@ class MAINMODULE_EXPORT AvrUsart : public UsartM
         virtual uint8_t getBit9();
         virtual void setBit9( uint8_t bit );
 
+        void setUBRRnL( uint8_t val );
+        void setUBRRnH( uint8_t val );
+
     private:
-       // McuTimer* m_timer1;
+        void setBaurrate( uint16_t ubrr );
+
+        uint8_t*  m_ucsrna;
         uint8_t*  m_ucsrnb;
+        uint8_t*  m_ubrrnL;
+        uint8_t*  m_ubrrnH;
 
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;
@@ -47,6 +54,7 @@ class MAINMODULE_EXPORT AvrUsart : public UsartM
         regBits_t m_pariRB;
         regBits_t m_stopRB;
         regBits_t m_dataRB;
+        regBits_t m_u2xn;
 
         //bool m_timerConnected;
 };

@@ -31,7 +31,10 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name )
     m_parity   = parNONE;
 
     QString n = m_name.right(1);
-    m_ucsrnb = mcu->getReg( "SUCSR"+n+"B" );
+    m_ucsrna = mcu->getReg( "UCSR"+n+"A" );
+    m_ucsrnb = mcu->getReg( "UCSR"+n+"B" );
+    m_u2xn   = mcu->getRegBits( "U2X"+n );
+
     m_bit9Tx = mcu->getRegBits( "TXB8"+n );
     m_bit9Rx = mcu->getRegBits( "RXB8"+n );
 
@@ -39,6 +42,11 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name )
     m_pariRB = mcu->getRegBits( "UPM"+n+"0,UPM"+n+"1"  );
     m_stopRB = mcu->getRegBits( "USBS"+n );
     m_dataRB = mcu->getRegBits( "UCSZ"+n+"0,UCSZ"+n+"1" );
+
+    m_ubrrnL = mcu->getReg( "UBRR"+n+"L" );
+    m_ubrrnH = mcu->getReg( "UBRR"+n+"H" );
+    m_mcu->watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setUBRRnL );
+    m_mcu->watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH );
 }
 AvrUsart::~AvrUsart(){}
 
@@ -61,6 +69,23 @@ void AvrUsart::configure( uint8_t val ) // UCSRnC changed
             /// setPeriod(  m_mcu->simCycPI() );// Fixed baudrate 32 or 64
         }
     }*/
+}
+
+void AvrUsart::setUBRRnL( uint8_t val )
+{
+    setBaurrate( val |( (*m_ubrrnH & 0x0F)<<8 ) );
+}
+
+void AvrUsart::setUBRRnH( uint8_t val )
+{
+    setBaurrate( *m_ubrrnL |( (val & 0x0F)<<8 ) );
+}
+
+void AvrUsart::setBaurrate( uint16_t ubrr )
+{
+    uint8_t doub = getRegBitsVal( *m_ucsrna, m_u2xn );
+    if( doub ) ubrr /= 2;
+    setPeriod( 1e6*16*(ubrr+1) ); // period in picoseconds
 }
 
 void AvrUsart::step( uint8_t )

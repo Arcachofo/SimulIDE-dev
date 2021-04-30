@@ -60,7 +60,7 @@
     </timer>
     
     <usart name="USART0" configregs="UCSR0C" >
-        <trunit type="tx" pin="PORTD1" register="UDR0"   raiseint="USART_T" enable="TXEN0"/>
-        <trunit type="rx" pin="PORTD0" register="UDR0RX" raiseint="USART_R" enable="RXEN0"/>
+        <trunit type="tx" pin="PORTD1" register="UDR0" raiseint="USART_T" enable="TXEN0"/>
+        <trunit type="rx" pin="PORTD0" register="UDR0" raiseint="USART_R" enable="RXEN0"/>
     </usart>
 </parts>

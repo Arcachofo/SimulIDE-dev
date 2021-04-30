@@ -98,7 +98,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface
         uint16_t getRegAddress( QString reg )         // Get Reg address by name
         { return m_regInfo.value( reg ).address; }
 
-        uint16_t getMapperAddr( uint16_t addr ) { return m_addrMap[addr]; }
+        uint16_t getMapperAddr( uint16_t addr ) { return m_addrMap[addr]; } // Get mapped addresses in Data space
 
         template <typename T>                      // Add callback for Register changes by names
         void watchRegNames( QString regNames, int write

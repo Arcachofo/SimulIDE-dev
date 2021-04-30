@@ -149,7 +149,11 @@ void eMcu::writeStatus( uint8_t v ) // Write SREG values from RAM
     for( int i=0; i<8; i++ ) m_sreg[i] = v & (1<<i);
 }
 
-int eMcu::status() { return getRamValue( m_sregAddr ); }
+int eMcu::status()
+{
+    readStatus( 0 );
+    return getRamValue( m_sregAddr );
+}
 
 int eMcu::pc() { return cpu->PC; }
 
