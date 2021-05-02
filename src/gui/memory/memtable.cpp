@@ -29,19 +29,8 @@ MemTable::MemTable( QWidget* parent, int dataSize, int wordBytes )
     m_wordBytes = wordBytes;
     m_updtCount = 0;
     m_data = NULL;
-    m_blocked = true;
-
-    table->setHorizontalHeaderLabels( QStringList()
-      <<"0x0"<<"0x1"<<"0x2"<<"0x3"<<"0x4"<<"0x5"<<"0x6"<<"0x7"
-      <<"0x8"<<"0x9"<<"0xA"<<"0xB"<<"0xC"<<"0xD"<<"0xE"<<"0xF"
-      << " "
-      <<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"
-      <<"8"<<"9"<<"A"<<"B"<<"C"<<"D"<<"E"<<"F");
-
-    table->setColumnWidth( 16, 5 );
 
     resizeTable( dataSize );
-    m_blocked = false;
 }
 
 void MemTable::updateTable( QVector<int>* data )
@@ -73,13 +62,24 @@ void MemTable::setData( QVector<int>* data )
 
 void MemTable::resizeTable( int dataSize )
 {
-    m_dataSize = dataSize;
+    m_blocked = true;
 
+    m_dataSize = dataSize;
     int addrBytes = ceil( ceil(log2(dataSize))/8 );
 
     int rows = dataSize/16;
     if( dataSize%16) rows++;
 
+    table->clear();
+
+    table->setHorizontalHeaderLabels( QStringList()
+      <<"0x0"<<"0x1"<<"0x2"<<"0x3"<<"0x4"<<"0x5"<<"0x6"<<"0x7"
+      <<"0x8"<<"0x9"<<"0xA"<<"0xB"<<"0xC"<<"0xD"<<"0xE"<<"0xF"
+      << " "
+      <<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"
+      <<"8"<<"9"<<"A"<<"B"<<"C"<<"D"<<"E"<<"F");
+
+    table->setColumnWidth( 16, 5 );
     table->setRowCount( rows );
 
     int scale = MainWindow::self()->fontScale();
@@ -118,6 +118,7 @@ void MemTable::resizeTable( int dataSize )
     font.setBold(true);
     table->horizontalHeader()->setFont( font );
     table->verticalHeader()->setFont( font );
+    m_blocked = false;
 }
 
 void MemTable::on_table_itemChanged( QTableWidgetItem* item )

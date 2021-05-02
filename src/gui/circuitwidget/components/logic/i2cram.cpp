@@ -223,7 +223,11 @@ void I2CRam::setRSize( int size )
     m_size = size;
     m_ram.resize( size );
 
-    if( m_memTable ) m_memTable->resizeTable( size );
+    if( m_memTable )
+    {
+        m_memTable->resizeTable( size );
+        m_memTable->setData( &m_ram );
+    }
 }
 
 bool I2CRam::persistent()
