@@ -68,7 +68,7 @@ void UartTx::enable( uint8_t en )
     if( enabled )
     {
         m_state = usartIDLE;
-        m_ioPin->setState( 1 );
+        m_ioPin->setOutState( 1 );
     }
     else m_state = usartSTOPPED;
 }
@@ -86,7 +86,7 @@ void UartTx::runEvent()
         on_dataEnd.emitValue( 0 );
         //m_usart->dataSent();
         m_state = usartIDLE;
-        m_ioPin->setState( 1 );
+        m_ioPin->setOutState( 1 );
     }
 }
 
@@ -122,7 +122,7 @@ void UartTx::processData( uint8_t data )
 
 void UartTx::sendBit()
 {
-    m_ioPin->setState( m_frame & 1 );
+    m_ioPin->setOutState( m_frame & 1 );
     m_frame >>= 1;
 
     m_currentBit++;

@@ -36,8 +36,6 @@ class PICComponentPin : public McuComponentPin
         virtual void attachPin( pic_processor* PicProcessor );
         virtual void voltChanged() override;
 
-        virtual void pullupNotConnected( bool up );
-
     protected:
 
         pic_processor* m_PicProcessor;

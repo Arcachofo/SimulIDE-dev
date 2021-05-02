@@ -161,7 +161,7 @@ void AVRComponentPin::initialize()
     McuComponentPin::initialize();
 }
 
-void AVRComponentPin::stamp()
+/*void AVRComponentPin::stamp()
 {
     if( m_pinType > 20 )
     {
@@ -169,7 +169,7 @@ void AVRComponentPin::stamp()
             m_ePin[0]->getEnode()->voltChangedCallback( this );
     }
     McuComponentPin::stamp();
-}
+}*/
 
 void AVRComponentPin::voltChanged()
 {
@@ -197,11 +197,6 @@ void AVRComponentPin::setState( bool state )
 {
     if( m_pinMode == input ) setPullup( state );
     McuComponentPin::setState( state );
-}
-
-void AVRComponentPin::pullupNotConnected( bool up )
-{
-    avr_raise_irq( m_Write_stat_irq, up? 1:0 );
 }
 
 void AVRComponentPin::enableSPI( uint32_t value )

@@ -63,7 +63,7 @@ void PICComponentPin::attachPin( pic_processor* PicProcessor )
 
         if( m_pIOPIN->getType() == OPEN_COLLECTOR )
         {
-            eSource::setPinMode( output_open );
+            m_openColl = true;
         }
     }
     else if( m_type == "mclr" )
@@ -91,11 +91,5 @@ void PICComponentPin::voltChanged()
         else            m_processor->hardReset( false );
     }
 }
-
-void PICComponentPin::pullupNotConnected( bool up )
-{
-    m_pIOPIN->set_nodeVoltage( up? 5:0);
-}
-
 
 #include "moc_piccomponentpin.cpp"

@@ -42,6 +42,7 @@ class MAINMODULE_EXPORT eSource : public eElement
         virtual void initialize() override;
         
         void stamp() override;
+        void stampAll();
         void stampOutput();
 
         pinMode_t pinMode() { return m_pinMode; }
@@ -53,7 +54,7 @@ class MAINMODULE_EXPORT eSource : public eElement
         double voltLow() { return m_voltLow; }
         void  setVoltLow( double v );
         
-        bool getState() { return m_state ; }
+        bool getState() { return m_state; }
         void setState( bool out, bool st=false );
         void setStateZ( bool z );
 
@@ -71,9 +72,16 @@ class MAINMODULE_EXPORT eSource : public eElement
         ePin* getPin() { return m_ePin[0]; }
 
     protected:
+        void update();
+
         double m_voltHigh;
         double m_voltLow;
         double m_voltOut;
+
+        double m_vddAdmit;  // Out stage
+        double m_gndAdmit;  // Out Stage
+        double m_vddAdmEx;  // Extra Source (vref out)
+        double m_gndAdmEx;  // Extra Source (vref out)
 
         double m_inputImp;
         double m_outputImp;

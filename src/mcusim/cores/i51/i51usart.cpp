@@ -69,8 +69,8 @@ void I51Usart::configure( uint8_t val )
     {
         m_dataBits = 8;
 
-        if( !sm1 ) // Mode 0
-            setPeriod(  m_mcu->simCycPI() ); // Cycles in 1 machine cycle
+        /// if( !sm1 ) // Mode 0
+        ///    setPeriod(  m_mcu->simCycPI() ); // Cycles in 1 machine cycle
 
         m_timerConnected = false;
     }

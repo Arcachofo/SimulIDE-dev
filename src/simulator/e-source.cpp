@@ -38,14 +38,19 @@ eSource::eSource( QString id, ePin* epin, pinMode_t mode )
     m_voltLow  = cero_doub;
     m_voltOut  = cero_doub;
 
+    m_vddAdmit = 0;
+    m_gndAdmit = cero_doub;
+    m_vddAdmEx = 0;
+    m_gndAdmEx = 0;
+
     m_inputImp = high_imp;
     m_openImp  = 1e28;
     m_outputImp = 40;
     m_imp = cero_doub;
     m_admit = 1/ m_imp;
 
-    m_pinMode = source;
-    if( mode > source ) setPinMode( mode );
+    m_pinMode = undefined;
+    if( epin ) setPinMode( source );
 }
 eSource::~eSource(){ delete m_scrEnode; }
 
@@ -55,6 +60,11 @@ void eSource::initialize()
 }
 
 void eSource::stamp()
+{
+    stampAll();
+}
+
+void eSource::stampAll()
 {
     m_ePin[0]->stampAdmitance( m_admit );
     stampOutput();
@@ -73,26 +83,43 @@ void eSource::setPinMode( pinMode_t mode )
 
     if( mode == source )
     {
-        setImp( cero_doub );
+        m_vddAdmit = 1/cero_doub;
+        m_gndAdmit = cero_doub;
     }
     else if( mode == input )
     {
-        m_voltOut = cero_doub;
-        setImp( m_inputImp );
+        m_vddAdmit = 0;
+        m_gndAdmit = 1/m_inputImp;
+
         m_ePin[0]->setPinState( 0 );
     }
     else if( mode == output )
     {
+        m_vddAdmit = 1/m_outputImp;
+        m_gndAdmit = cero_doub;
+
         if( m_inverted ) m_state = !m_state;
         setState( m_state );
-        setImp( m_outputImp );
     }
     else if( mode == output_open )
     {
-        m_voltOut = m_voltLow;
+        m_vddAdmit = cero_doub;
+
         if( m_inverted ) m_state = !m_state;
         setState( m_state );
     }
+    update();
+}
+
+void eSource::update()
+{
+    double vddAdmit = m_vddAdmit+m_vddAdmEx;
+    double gndAdmit = m_gndAdmit+m_gndAdmEx;
+    double Rth  = 1/(vddAdmit+gndAdmit);
+
+    m_voltOut = m_voltHigh*vddAdmit*Rth;
+
+    eSource::setImp( Rth );
 }
 
 void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
@@ -104,15 +131,19 @@ void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
 
     if( m_pinMode == output_open )
     {
-        if( m_state ) m_admit = 1/m_openImp;
-        else          m_admit = 1/m_outputImp;
-        if( st ) stamp();
-        m_ePin[0]->setPinState( m_state? 3:1 ); // Z : Low colors
-    }else{
+        if( m_state ) m_gndAdmit = 1/m_openImp;
+        else          m_gndAdmit = 1/m_outputImp;
+
+        if( st ) update();
+        m_ePin[0]->setPinState( m_state? 3:1 ); // Z-Low colors
+    }
+    else
+    {
         if( m_state ) m_voltOut = m_voltHigh;
         else          m_voltOut = m_voltLow;
+
         if( st ) stampOutput();
-        if( m_pinMode == output ) m_ePin[0]->setPinState( m_state? 2:1 ); // High : Low colors
+        if( m_pinMode == output ) m_ePin[0]->setPinState( m_state? 2:1 ); // High-Low colors
     }
 }
 
@@ -124,7 +155,9 @@ void eSource::setStateZ( bool z )
         m_voltOut = m_voltLow;
         setImp( m_openImp );
         m_ePin[0]->setPinState( 3 );
-    }else{
+    }
+    else
+    {
         pinMode_t pm = m_pinMode; // Force pinMode
         m_pinMode = undefined;
         setPinMode( pm );
@@ -147,7 +180,7 @@ void eSource::setImp( double imp )
 {
     m_imp = imp;
     m_admit = 1/m_imp;
-    eSource::stamp();
+    stampAll();
 }
 
 void eSource::setInverted( bool inverted )

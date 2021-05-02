@@ -50,30 +50,10 @@ void McuPort::initialize()
 
 void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin State is masked in val
 {
-    /*if( m_inAddr )
-    {
-        uint8_t in = *m_inReg;
+    if( val ) m_pinState |= pinMask;
+    else      m_pinState &= ~pinMask;
 
-        if( val ) in |= pinMask;
-        else      in &= ~pinMask;
-
-        uint8_t changed = in ^ *m_inReg;
-
-        if( changed ) m_mcu->writeReg( m_inAddr, in );
-    }*/
-
-    uint8_t in = m_pinState;
-
-    if( val ) in |= pinMask;
-    else      in &= ~pinMask;
-
-    uint8_t changed = in ^ m_pinState;
-
-    if( changed )
-    {
-        m_pinState = in;
-        m_mcu->writeReg( m_inAddr, in );
-    }
+    m_mcu->writeReg( m_inAddr, m_pinState );
 }
 
 void McuPort::readInReg( uint8_t )
@@ -91,7 +71,7 @@ void McuPort::outChanged( uint8_t val )
         {
             if( ( changed & (1<<i) )      // Pin changed
              && (!m_pins[i]->m_extCtrl )) // Port is controlling Pin
-                m_pins[i]->setPortState( val & (1<<i) );
+                m_pins[i]->setOutState( val & (1<<i) );
         }
     }
 }

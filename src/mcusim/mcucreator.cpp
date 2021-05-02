@@ -329,7 +329,7 @@ void McuCreator::createPort( QDomElement* p, eMcu* mcu )
     {
         uint8_t opencol = p->attribute("opencol").toUInt( 0, 2 );
         for( int i=0; i<port->m_numPins; ++i )
-            port->m_pins[i]->m_openColl = (opencol & 1<<i);
+            if( opencol & 1<<i ) port->m_pins[i]->m_openColl = true;
     }
     // Interrupts and...
     QDomNode node = p->firstChild();

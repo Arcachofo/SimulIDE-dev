@@ -41,9 +41,6 @@ class MAINMODULE_EXPORT McuComponentPin : public QObject, public eSource
         void setDirection( bool out );
         void setPullup(bool up );
         void setExtraSource( double vddAdmit, double gndAdmit );
-        void update();
-
-        virtual void pullupNotConnected( bool up )=0;
 
         void enableIO( bool en );
 
@@ -58,15 +55,10 @@ class MAINMODULE_EXPORT McuComponentPin : public QObject, public eSource
     protected:
         McuComponent* m_mcuComponent;
         BaseProcessor* m_processor;
-
-        double m_vddAdmit;  // Out stage
-        double m_gndAdmit;  // Out Stage
-        double m_vddAdmEx;  // Extra Source (vref out)
-        double m_gndAdmEx;  // Extra Source (vref out)
         
         bool m_attached;
         //bool m_isInput;
-        //bool m_openColl;
+        bool m_openColl;
 
         pinMode_t m_prevPinMode;
         

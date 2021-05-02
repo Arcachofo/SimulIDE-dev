@@ -25,7 +25,6 @@ McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QStrin
                : QObject( mcuComponent )
                , eSource( id, 0l )
 {
-    //qDebug()<<"McuComponentPin::McuComponentPin"<<id;
     m_mcuComponent = mcuComponent;
     m_processor = mcuComponent->processor();
 
@@ -36,6 +35,7 @@ McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QStrin
     
     m_pinType = 0;
     m_attached = false;
+    m_openColl = false;
 
     Pin* pin = new Pin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, m_mcuComponent );
     pin->setLabelText( label );
@@ -61,16 +61,7 @@ void McuComponentPin::stamp()
     if( m_ePin[0]->isConnected() && m_attached )        // Receive voltage change notifications
         m_ePin[0]->getEnode()->voltChangedCallback( this );
 
-    if( m_pinType == 1 )
-    {
-        if( m_pinMode == input )
-        {
-            if( (m_vddAdmit>0) && !m_ePin[0]->isConnected() ) // Pullup ?
-                pullupNotConnected( true );
-        }
-        update();
-    }
-    else eSource::stamp();
+    eSource::stamp();
 }
 
 void McuComponentPin::initialize()
@@ -79,13 +70,6 @@ void McuComponentPin::initialize()
     {
         m_enableIO = true;
         setPinMode( input );
-
-        m_vddAdmit = 0;
-        m_gndAdmit = cero_doub;
-        m_vddAdmEx = 0;
-        m_gndAdmEx = 0;
-
-        update();
     }
     eSource::initialize();
 }
@@ -97,8 +81,9 @@ void McuComponentPin::setDirection( bool out )
         if( m_ePin[0]->isConnected() && m_attached )
             m_ePin[0]->getEnode()->remFromChangedCallback( this ); // Don't Receive voltage change notifications
 
-        setPinMode( output );
-        setState( m_state );
+        if( m_openColl ) setPinMode( output_open );
+        else             setPinMode( output );
+        //eSource::setState( m_outState, true );
     }
     else           // Set Pin to Input
     {
@@ -106,50 +91,28 @@ void McuComponentPin::setDirection( bool out )
             m_ePin[0]->getEnode()->voltChangedCallback( this ); // Receive voltage change notifications
 
         setPinMode( input );
-
-        m_vddAdmit = 0;
-        m_gndAdmit = cero_doub;
-        update();
     }
+    setState( m_state );
 }
 
 void McuComponentPin::setState( bool state )
 {
-    if( state == m_state ) return;
+    //if( state == m_state ) return;
 
     if( m_pinMode == input )  return;
     if( !m_enableIO ) return;
 
-    //eNode* enode = m_ePin[0]->getEnode();
-    //if( enode ) enode->saveData();
     eSource::setState( state, true );
 }
 
-void McuComponentPin::update()
-{
-    double vddAdmit = m_vddAdmit+m_vddAdmEx;
-    double gndAdmit = m_gndAdmit+m_gndAdmEx;
-    double Rth  = 1/(vddAdmit+gndAdmit);
-
-    m_voltOut = 5*vddAdmit*Rth;
-
-    //eNode* enode = m_ePin[0]->getEnode();
-    //if( enode ) enode->saveData();
-    eSource::setImp( Rth );
-}
 
 void McuComponentPin::setPullup( bool up )
 {
     if( m_pinMode != input ) return;
 
-    if( up ) m_vddAdmit = 2/1e5; // Activate pullup
-    else     m_vddAdmit = 0;     // Deactivate pullup
+    if( up ) m_vddAdmEx = 2/1e5; // Activate pullup
+    else     m_vddAdmEx = 0;     // Deactivate pullup
 
-    if( !(m_ePin[0]->isConnected()) )
-    {
-        pullupNotConnected( up );
-        return;
-    }
     update();
 }
 

@@ -30,36 +30,27 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
 
     m_pinMask = 1<<i;
 
+    m_outState = false;
     m_openColl = false;
     m_puMask   = false;
     m_dirMask  = false;
 
     Pin* pin = new Pin( 0, QPoint( 0, 0 ), mcu->objectName()+id, i, mcu );
     m_ePin[0] = pin;
-    setPinMode( input );
 
+    setVoltHigh( 5 );
+    setPinMode( input );
     initialize();
-    setState( false );
 }
 McuPin::~McuPin() {}
 
 void McuPin::initialize()
 {
-    m_extCtrl  = false;
-    m_gndAdmit = cero_doub;
-    m_vddAdmit = 0;
-    m_vddAdmEx = 0;
-    m_gndAdmEx = 0;
-    m_pupAdmit = 0;
-    //m_lastTime = 0;
-    m_volt = 0;
+    m_extCtrl = false;
+    m_inState = false;
 
     setDirection( m_dirMask );
-    //setState( false );
     setPullup( m_puMask );
-
-    eSource::setVoltHigh( 5 );
-    update();
 
     eSource::initialize();
 }
@@ -74,53 +65,26 @@ void McuPin::stamp()
 
 void McuPin::voltChanged()
 {
-    //if( m_lastTime == Simulator::self()->circTime() ) return; // Avoid self-triggered changes
+    bool state = m_ePin[0]->getVolt() > digital_thre;
 
-    double volt = m_ePin[0]->getVolt();
+    if( state == m_inState ) return;
+    m_inState = state;
 
-    if( fabs( volt-m_volt ) < 1e-5 ) return; // Avoid triggering because small volt changes
-
-    if( volt > digital_thre ) m_state = 1;
-    else                      m_state = 0;
-
-    m_port->pinChanged( m_pinMask, m_state );
-    m_volt = volt;
+    m_port->pinChanged( m_pinMask, state );
 }
 
-void McuPin::controlPin( bool ctrl )
+void McuPin::setOutState( bool state )
 {
-    m_extCtrl = ctrl;
-}
-
-void McuPin::setPortState( bool state )
-{
-    if( m_extCtrl ) return;
-    setState( state );
-}
-
-void McuPin::setState( bool state )
-{
-    m_state = state;
+    m_outState = state;
     if( !m_isOut ) return;
 
-    if( m_openColl )
-    {
-        if( state )
-        {
-            m_vddAdmit = 0;
-            m_gndAdmit = cero_doub;
-        }
-        else
-        {
-            m_vddAdmit = 0;
-            m_gndAdmit = 1./40.;
-        }
-        update();
-    }
-    else
-    {
-        eSource::setState( state, true );
-    }
+    eSource::setState( state, true );
+}
+
+bool McuPin::getState()
+{
+    if( m_pinMode == input ) return m_inState;
+    else                     return m_outState;
 }
 
 void McuPin::setDirection( bool out )
@@ -129,21 +93,16 @@ void McuPin::setDirection( bool out )
 
     if( out )       // Set Pin to Output
     {
-        //if( m_ePin[0]->isConnected() )
-        //    m_ePin[0]->getEnode()->remFromChangedCallback( this ); // Don't Receive voltage change notifications
+        if( m_openColl ) setPinMode( output_open );
+        else             setPinMode( output );
 
-        eSource::setImp( 40 );
-        setState( m_state );
+        eSource::setState( m_outState, true );
+        //setState( m_state );
     }
     else           // Set Pin to Input
     {
-        //if( m_ePin[0]->isConnected() )
-        //    m_ePin[0]->getEnode()->voltChangedCallback( this ); // Receive voltage change notifications
-
-        //m_lastTime = Simulator::self()->circTime();
-        m_vddAdmit = 0;
-        m_gndAdmit = cero_doub;
-        update();
+        setPinMode( input );
+        //update();
     }
 }
 
@@ -151,24 +110,23 @@ void McuPin::setPullup( bool up )
 {
     m_pullup = up;
 
-    if( up ) m_pupAdmit = 1/1e5; // Activate pullup
-    else     m_pupAdmit = 0;     // Deactivate pullup
+    if( up ) m_vddAdmEx = 1/1e5; // Activate pullup
+    else     m_vddAdmEx = 0;     // Deactivate pullup
 
-    /*if( !(m_ePin[0]->isConnected()) )
-    {
-        pullupNotConnected( up );
-        return;
-    }*/
     update();
 }
 
-void McuPin::update()
+void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example
 {
-    double vddAdmit = m_vddAdmit+m_vddAdmEx+m_pupAdmit;
-    double gndAdmit = m_gndAdmit+m_gndAdmEx;
-    double Rth  = 1/(vddAdmit+gndAdmit);
+    m_vddAdmEx = vddAdmit;
+    m_gndAdmEx = gndAdmit;
 
-    m_voltOut = 5*vddAdmit*Rth; // Vth
-
-    eSource::setImp( Rth );
+    update();
 }
+
+void McuPin::controlPin( bool ctrl )
+{
+    m_extCtrl = ctrl;
+}
+
+
