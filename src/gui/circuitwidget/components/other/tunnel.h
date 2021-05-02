@@ -67,6 +67,8 @@ class MAINMODULE_EXPORT Tunnel : public Component//, public eElement
  static QHash<QString, eNode*> m_eNodes;
 
     protected:
+        void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
+
         int m_size;
         QString m_name;
         QString m_uid;

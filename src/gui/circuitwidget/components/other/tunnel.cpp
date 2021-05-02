@@ -182,6 +182,12 @@ QRectF Tunnel::boundingRect() const
     else return Component::boundingRect();
 }
 
+void Tunnel::mousePressEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( !m_selMainCo )  // Used when creating Boards to set this as main component
+        Component::mousePressEvent( event );
+}
+
 void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     if( m_hidden || m_packed ) return;
