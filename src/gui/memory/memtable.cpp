@@ -58,7 +58,7 @@ void MemTable::setValue( int address, int val )
     int colRam = address%16;
     int colAscii = colRam +17;
     m_blocked = true;
-    table->item( row, colRam )->setData( 0, valToHex( val ) );
+    table->item( row, colRam )->setData( 0, valToHex( val, m_wordBytes ) );
     table->item( row, colAscii )->setData( 0, QChar(val) );
     m_blocked = false;
 }
@@ -74,6 +74,8 @@ void MemTable::setData( QVector<int>* data )
 void MemTable::resizeTable( int dataSize )
 {
     m_dataSize = dataSize;
+
+    int addrBytes = ceil( ceil(log2(dataSize))/8 );
 
     int rows = dataSize/16;
     if( dataSize%16) rows++;
@@ -92,7 +94,7 @@ void MemTable::resizeTable( int dataSize )
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
         it->setFont( font );
-        it->setText( valToHex( row*16 ) );
+        it->setText( valToHex( row*16, addrBytes ));
         table->setVerticalHeaderItem( row, it );
 
         for( int col=0; col<33; ++col )
@@ -160,11 +162,11 @@ void MemTable::cellClicked( int row, int col )
     table->item( row, col+17 )->setSelected( true );
 }
 
-QString MemTable::valToHex( int val )
+QString MemTable::valToHex( int val, int bytes )
 {
     QString sval = QString::number( val, 16 ).toUpper();
-    sval = sval.right( m_wordBytes*2 );
-    while( sval.length() < m_wordBytes*2) sval.prepend( "0" );
+    sval = sval.right( bytes*2 );
+    while( sval.length() < bytes*2) sval.prepend( "0" );
     sval.prepend("0x");
 
     return sval;

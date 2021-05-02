@@ -47,7 +47,7 @@ class MemTable : public QWidget, private Ui::MemTable
 
     private:
         void cellClicked( int row, int col );
-        QString valToHex( int val );
+        QString valToHex( int val, int bytes );
 
         int m_dataSize;
         int m_wordBytes;
