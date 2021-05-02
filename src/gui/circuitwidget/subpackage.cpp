@@ -145,6 +145,8 @@ void SubPackage::hoverLeaveEvent( QGraphicsSceneHoverEvent* event )
 
 void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
+    if( m_selMainCo ) return; // Used when creating Boards to set this as main component
+
     if( m_fakePin )
     {
         event->accept();

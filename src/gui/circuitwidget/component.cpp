@@ -106,14 +106,6 @@ Component::~Component(){}
 
 void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
-    if( m_selMainCo )  // Used when creating Boards to set this as main component
-    {
-        QList<Component*>* compList = Circuit::self()->compList();
-        for( Component* comp : *compList ) comp->m_mainComp = false;
-        m_selMainCo = false;
-        m_mainComp = true;
-        return;
-    }
     if( this->parentItem() )
     {
         Component* parentComp = static_cast<Component*>( this->parentItem() );
@@ -123,7 +115,19 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
     if( event->button() == Qt::LeftButton )
     {
         event->accept();
-
+        if( m_selMainCo )  // Used when creating Boards to set this as main component
+        {
+            if( m_mainComp ) m_mainComp = false;
+            else
+            {
+                QList<Component*>* compList = Circuit::self()->compList();
+                for( Component* comp : *compList ) comp->m_mainComp = false;
+                m_selMainCo = false;
+                m_mainComp  = true;
+            }
+            update();
+            return;
+        }
         if( event->modifiers() == Qt::ControlModifier ) setSelected( !isSelected() );
         else
         {
