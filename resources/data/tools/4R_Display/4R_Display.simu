@@ -1,0 +1,55 @@
+<circuit reactStep="50" Speed_per="100" noLinAcc="5" Simu_Step_nS="1000" type="simulide_0.4" animate="0" Speed_sps="1000000">
+
+Unique  Id: Package-11: 
+Circuit Id: Package-11
+<item boardRot="-1000000" hflip="1" x="-388" y="-252" Show_id="true" Package_File="4R_Display_LS.package" boardPos="-1e+06,-1e+06" circPos="0,0" Logic_Symbol="true" valLabRot="0" Width="3" circRot="-2.7609588585781603e-312" labelrot="0" SubcType="0" Background="" id="Package-11" objectName="Package-11" rotation="0" Height="8" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" labely="-23" itemtype="Package"/>
+
+Unique  Id: Probe-12: 
+Circuit Id: Probe-12
+<item boardRot="-45" hflip="1" x="-296" y="-264" Show_id="false" boardPos="8,8" circPos="-296,-264" Threshold="2.5" valLabRot="45" circRot="-45" labelrot="45" id="Probe-12" objectName="Probe-12" Show_volt="false" rotation="-45" valLabely="0" vflip="1" mainComp="false" valLabelx="16" labelx="16" labely="-16" itemtype="Probe"/>
+
+Unique  Id: Tunnel-13: 
+Circuit Id: Tunnel-13
+<item boardRot="0" hflip="1" x="-320" Rotated="false" y="-248" Show_id="false" boardPos="68,4" circPos="-320,-248" valLabRot="0" circRot="0" labelrot="0" Uid="" Name="0" id="Tunnel-13" objectName="Tunnel-13" rotation="0" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" labely="-24" itemtype="Tunnel"/>
+
+Unique  Id: Tunnel-15: 
+Circuit Id: Tunnel-13
+<item boardRot="0" hflip="1" x="-320" Rotated="false" y="-232" Show_id="false" boardPos="68,20" circPos="-320,-232" valLabRot="0" circRot="0" labelrot="0" Uid="" Name="1" id="Tunnel-13" objectName="Tunnel-15" rotation="0" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" labely="-24" itemtype="Tunnel"/>
+
+Unique  Id: Probe-16: 
+Circuit Id: Probe-12
+<item boardRot="-45" hflip="1" x="-296" y="-248" Show_id="false" boardPos="8,24" circPos="-296,-248" Threshold="2.5" valLabRot="45" circRot="-45" labelrot="45" id="Probe-12" objectName="Probe-16" Show_volt="false" rotation="-45" valLabely="0" vflip="1" mainComp="false" valLabelx="16" labelx="16" labely="-16" itemtype="Probe"/>
+
+Unique  Id: Probe-26: 
+Circuit Id: Probe-26
+<item boardRot="-45" hflip="1" x="-296" y="-228" Show_id="false" boardPos="8,40" circPos="-296,-228" Threshold="2.5" valLabRot="45" circRot="-45" labelrot="45" id="Probe-26" objectName="Probe-26" Show_volt="false" rotation="-45" valLabely="0" vflip="1" mainComp="false" valLabelx="16" labelx="16" labely="-16" itemtype="Probe"/>
+
+Unique  Id: Tunnel-27: 
+Circuit Id: Tunnel-27
+<item boardRot="0" hflip="1" x="-316" Rotated="false" y="-212" Show_id="false" boardPos="72,40" circPos="-316,-212" valLabRot="0" circRot="0" labelrot="0" Uid="" Name="2" id="Tunnel-27" objectName="Tunnel-27" rotation="0" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" labely="-24" itemtype="Tunnel"/>
+
+Unique  Id: Probe-29: 
+Circuit Id: Probe-29
+<item boardRot="-45" hflip="1" x="-296" y="-200" Show_id="false" boardPos="8,56" circPos="-296,-200" Threshold="2.5" valLabRot="45" circRot="-45" labelrot="45" id="Probe-29" objectName="Probe-29" Show_volt="false" rotation="-45" valLabely="0" vflip="1" mainComp="false" valLabelx="16" labelx="16" labely="-16" itemtype="Probe"/>
+
+Unique  Id: Tunnel-30: 
+Circuit Id: Tunnel-30
+<item boardRot="0" hflip="1" x="-316" Rotated="false" y="-184" Show_id="false" boardPos="72,68" circPos="-316,-184" valLabRot="0" circRot="0" labelrot="0" Uid="" Name="3" id="Tunnel-30" objectName="Tunnel-30" rotation="0" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" labely="-24" itemtype="Tunnel"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-14
+<item boardRot="-1000000" hflip="1" enodeid="Circ_eNode-31" x="-320" y="-248" Show_id="false" boardPos="-1e+06,-1e+06" circPos="0,0" valLabRot="0" circRot="0" labelrot="0" endpinid="Probe-12-inpin" startpinid="Tunnel-13-pin" id="Connector-14" objectName="Connector-14" rotation="0" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" pointList="-320,-248,-312,-248" labely="-24" itemtype="Connector"/>
+
+Unique  Id: Connector-17: 
+Circuit Id: Connector-14
+<item boardRot="-1000000" hflip="1" enodeid="Circ_eNode-32" x="-320" y="-232" Show_id="false" boardPos="-1e+06,-1e+06" circPos="0,0" valLabRot="0" circRot="0" labelrot="0" endpinid="Probe-16-inpin" startpinid="Tunnel-15-pin" id="Connector-14" objectName="Connector-17" rotation="0" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" pointList="-320,-232,-312,-232" labely="-24" itemtype="Connector"/>
+
+Unique  Id: Connector-28: 
+Circuit Id: Connector-28
+<item boardRot="-1000000" hflip="1" enodeid="Circ_eNode-33" x="-316" y="-212" Show_id="false" boardPos="-1e+06,-1e+06" circPos="0,0" valLabRot="0" circRot="0" labelrot="0" endpinid="Probe-26-inpin" startpinid="Tunnel-27-pin" id="Connector-28" objectName="Connector-28" rotation="0" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" pointList="-316,-212,-312,-212" labely="-24" itemtype="Connector"/>
+
+Unique  Id: Connector-31: 
+Circuit Id: Connector-31
+<item boardRot="-1000000" hflip="1" enodeid="Circ_eNode-34" x="-316" y="-184" Show_id="false" boardPos="-1e+06,-1e+06" circPos="0,0" valLabRot="0" circRot="0" labelrot="0" endpinid="Probe-29-inpin" startpinid="Tunnel-30-pin" id="Connector-31" objectName="Connector-31" rotation="0" valLabely="0" vflip="1" mainComp="false" valLabelx="0" labelx="-16" pointList="-316,-184,-312,-184" labely="-24" itemtype="Connector"/>
+ 
+</circuit>

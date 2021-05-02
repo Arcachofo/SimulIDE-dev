@@ -1,0 +1,18 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+    <itemset category="Tools" type="Subcircuit" icon="subc.png" >
+    
+        <item name="ENCODER_BCD" folder="tools" info=" 10 State Thumbwheel Switch" /> 
+        <item name="ENCODER_HEX" folder="tools" info=" 16 State Thumbwheel Switch" /> 
+        <item name="2L_Display" folder="tools" info=" 2-bit probe. (L)" /> 
+        <item name="2R_Display" folder="tools" info=" 2-bit probe. (R)" />         
+        <item name="4L_Display" folder="tools" info=" 4-bit probe. (L)" /> 
+        <item name="4R_Display" folder="tools" info=" 4-bit probe. (R)" /> 
+        <item name="8L_Display" folder="tools" info=" 8-bit probe. (L)" /> 
+        <item name="8R_Display" folder="tools" info=" 8-bit probe. (R)" /> 
+        <item name="Pulse_probe" folder="tools" info=" Short pulse detector" /> 
+    </itemset>
+
+</itemlib>
