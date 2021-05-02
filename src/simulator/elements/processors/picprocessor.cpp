@@ -74,7 +74,7 @@ void PicProcessor::setDevice( QString device )
     {
         QString rc = "RCSTA";
         if( i > 0 ) rc += QString::number(i);
-        int address = getRegAddress( rc );
+        uint32_t address = getRegAddress( rc );
         if( address < m_ramSize )
         {
             int uart = i;

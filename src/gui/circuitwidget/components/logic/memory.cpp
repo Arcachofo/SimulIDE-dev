@@ -148,8 +148,7 @@ void Memory::setAddrBits( int bits )
     else if( bits > m_addrBits ) createAddrBits( bits-m_addrBits );
     
     eMemory::setAddrBits( bits );
-
-    if( m_memTable ) m_memTable->resizeTable( m_ram.size() );
+    if( m_memTable ) m_memTable->setData( &m_ram );
 
     updatePins();
 
