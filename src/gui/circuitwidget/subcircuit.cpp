@@ -175,8 +175,6 @@ void SubCircuit::loadSubCircuit( QString fileName )
 {
     QFile file( fileName );
 
-    //qDebug() << "Circuit::loadCircuit"<<m_filePath;
-
     if( !file.open(QFile::ReadOnly | QFile::Text) )
     {
         MessageBoxNB( "SubCircuit::loadSubCircuit", "                               \n"+

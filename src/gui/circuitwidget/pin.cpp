@@ -23,7 +23,7 @@
 #include "tunnel.h"
 #include "connector.h"
 #include "circuit.h"
-
+#include "simulator.h"
 
 Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent )
    : QObject()
@@ -368,7 +368,8 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 
     if( isSelected() ) pen.setColor( Qt::darkGray);
     else if( m_unused ) pen.setColor( QColor( 75, 120, 170 ));
-    else if( Circuit::self()->animate() ) pen.setColor( m_color[m_pinState] );
+    else if( Circuit::self()->animate()
+          && Simulator::self()->isRunning() ) pen.setColor( m_color[m_pinState] );
 
     painter->setPen(pen);
     if( m_length > 1 ) painter->drawLine( 0, 0, m_length-1, 0);

@@ -219,7 +219,7 @@ void eLogicDevice::createInput( ePin* epin )
     epin->setId( m_elmId+"-ePin-input"+m_numInputs );
 
     m_input[m_numInputs] = new eSource( m_elmId+"-eSource-input"+QString::number(m_numInputs), epin, input );
-    m_input[m_numInputs]->setInputImp( m_inputImp );
+    //m_input[m_numInputs]->setInputImp( m_inputImp );
 
     m_inputState.resize( totalInps );
     m_inputState[m_numInputs] = false;
@@ -237,7 +237,7 @@ void eLogicDevice::createInputs( int inputs )
         ePin* epin = new ePin( m_elmId+"-ePin-input"+i, i );
 
         m_input[i] = new eSource( m_elmId+"-eSource-input"+i, epin, input );
-        m_input[i]->setInputImp( m_inputImp );
+        //m_input[i]->setInputImp( m_inputImp );
     }
     m_numInputs = totalInps;
 }
@@ -251,7 +251,7 @@ void eLogicDevice::createOutput( ePin* epin )
 
     m_output[m_numOutputs] = new eSource( m_elmId+"-eSource-output"+m_numOutputs, epin, output );
     m_output[m_numOutputs]->setVoltHigh( m_outHighV );
-    m_output[m_numOutputs]->setOutputImp( m_outImp );
+    //m_output[m_numOutputs]->setOutputImp( m_outImp );
 
     m_numOutputs = totalOuts;
 }
@@ -267,7 +267,7 @@ void eLogicDevice::createOutputs( int outputs )
 
         m_output[i] = new eSource( m_elmId+"-eSource-output"+i, epin, output );
         m_output[i]->setVoltHigh( m_outHighV );
-        m_output[i]->setOutputImp( m_outImp );
+        //m_output[i]->setOutputImp( m_outImp );
     }
     m_numOutputs = totalOuts;
 }

@@ -50,7 +50,7 @@ eSource::eSource( QString id, ePin* epin, pinMode_t mode )
     m_admit = 1/ m_imp;
 
     m_pinMode = undef_mode;
-    if( epin ) setPinMode( source );
+    if( epin ) setPinMode( mode );
 }
 eSource::~eSource(){ delete m_scrEnode; }
 
@@ -85,13 +85,14 @@ void eSource::setPinMode( pinMode_t mode )
     {
         m_vddAdmit = 1/cero_doub;
         m_gndAdmit = cero_doub;
+        m_ePin[0]->setPinState( out_high );
     }
     else if( mode == input )
     {
         m_vddAdmit = 0;
         m_gndAdmit = 1/m_inputImp;
 
-        m_ePin[0]->setPinState( undef_state );
+        m_ePin[0]->setPinState( input_low );
     }
     else if( mode == output )
     {
@@ -143,7 +144,7 @@ void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
         else          m_voltOut = m_voltLow;
 
         if( st ) stampOutput();
-        if( m_pinMode == output ) m_ePin[0]->setPinState( m_state? out_high:out_low ); // High-Low colors
+        m_ePin[0]->setPinState( m_state? out_high:out_low ); // High-Low colors
     }
 }
 

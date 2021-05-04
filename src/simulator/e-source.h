@@ -27,10 +27,10 @@
 
 enum pinMode_t{
     undef_mode=0,
-    source,
     input,
     output,
     open_col,
+    source
 };
 
 class MAINMODULE_EXPORT eSource : public eElement
