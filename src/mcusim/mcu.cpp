@@ -88,6 +88,8 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     if(( xmlFile == "" ) || ( !file.exists() ))
     {
+        MessageBoxNB( "Mcu::Mcu", "                               \n"+
+                  tr("xml file not found: %1").arg(xmlFile) );
         m_error = 1;
         return;
     }

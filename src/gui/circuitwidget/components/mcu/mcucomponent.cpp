@@ -133,7 +133,6 @@ void McuComponent::initChip()
 
     QDomElement root  = domDoc.documentElement();
     QDomNode    rNode = root.firstChild();
-    QString package;
 
     while( !rNode.isNull() )
     {
@@ -166,8 +165,9 @@ void McuComponent::initChip()
     if( m_device != "" ) Chip::initChip();
     else
     {
+        MessageBoxNB( "McuComponent::initChip", "                               \n"+
+                  tr("Chip not Found: %1").arg(compName) );
         m_error = 1;
-        qDebug() << compName << "ERROR!! McuComponent::initChip Chip not Found: " << package;
     }
 }
 

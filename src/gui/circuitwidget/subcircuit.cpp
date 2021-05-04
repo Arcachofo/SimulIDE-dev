@@ -179,8 +179,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
 
     if( !file.open(QFile::ReadOnly | QFile::Text) )
     {
-        QMessageBox::warning(0l, "SubCircuit::loadSubCircuit",
-        tr("Cannot read file %1:\n%2.").arg(fileName).arg(file.errorString()));
+        MessageBoxNB( "SubCircuit::loadSubCircuit", "                               \n"+
+                  tr("Cannot read file %1:\n%2.").arg(fileName).arg(file.errorString()));
         m_error = 32;
         return;
     }
@@ -188,8 +188,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
 
     if( !domDoc.setContent(&file) )
     {
-        QMessageBox::warning( 0l, "SubCircuit::loadSubCircuit",
-        tr("Cannot set file %1\nto DomDocument").arg(fileName));
+        MessageBoxNB( "SubCircuit::loadSubCircuit", "                               \n"+
+                  tr("Cannot set file %1\nto DomDocument").arg(fileName) );
         file.close();
         m_error = 33;
         return;
