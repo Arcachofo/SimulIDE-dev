@@ -93,7 +93,7 @@ void McuPin::setDirection( bool out )
 
     if( out )       // Set Pin to Output
     {
-        if( m_openColl ) setPinMode( output_open );
+        if( m_openColl ) setPinMode( open_col );
         else             setPinMode( output );
 
         eSource::setState( m_outState, true );

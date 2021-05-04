@@ -26,11 +26,11 @@
 #include "e-node.h"
 
 enum pinMode_t{
-    source=0,
+    undef_mode=0,
+    source,
     input,
     output,
-    output_open,
-    undefined
+    open_col,
 };
 
 class MAINMODULE_EXPORT eSource : public eElement

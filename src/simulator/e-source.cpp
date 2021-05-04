@@ -49,7 +49,7 @@ eSource::eSource( QString id, ePin* epin, pinMode_t mode )
     m_imp = cero_doub;
     m_admit = 1/ m_imp;
 
-    m_pinMode = undefined;
+    m_pinMode = undef_mode;
     if( epin ) setPinMode( source );
 }
 eSource::~eSource(){ delete m_scrEnode; }
@@ -91,7 +91,7 @@ void eSource::setPinMode( pinMode_t mode )
         m_vddAdmit = 0;
         m_gndAdmit = 1/m_inputImp;
 
-        m_ePin[0]->setPinState( 0 );
+        m_ePin[0]->setPinState( undef_state );
     }
     else if( mode == output )
     {
@@ -101,7 +101,7 @@ void eSource::setPinMode( pinMode_t mode )
         if( m_inverted ) m_state = !m_state;
         setState( m_state );
     }
-    else if( mode == output_open )
+    else if( mode == open_col )
     {
         m_vddAdmit = cero_doub;
 
@@ -129,13 +129,13 @@ void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
 
     if( m_stateZ ) return;
 
-    if( m_pinMode == output_open )
+    if( m_pinMode == open_col )
     {
         if( m_state ) m_gndAdmit = 1/m_openImp;
         else          m_gndAdmit = 1/m_outputImp;
 
         if( st ) update();
-        m_ePin[0]->setPinState( m_state? 3:1 ); // Z-Low colors
+        m_ePin[0]->setPinState( m_state? out_open:out_low ); // Z-Low colors
     }
     else
     {
@@ -143,7 +143,7 @@ void eSource::setState( bool out, bool st ) // Set Output to Hight or Low
         else          m_voltOut = m_voltLow;
 
         if( st ) stampOutput();
-        if( m_pinMode == output ) m_ePin[0]->setPinState( m_state? 2:1 ); // High-Low colors
+        if( m_pinMode == output ) m_ePin[0]->setPinState( m_state? out_high:out_low ); // High-Low colors
     }
 }
 
@@ -154,12 +154,12 @@ void eSource::setStateZ( bool z )
     {
         m_voltOut = m_voltLow;
         setImp( m_openImp );
-        m_ePin[0]->setPinState( 3 );
+        m_ePin[0]->setPinState( out_open );
     }
     else
     {
         pinMode_t pm = m_pinMode; // Force pinMode
-        m_pinMode = undefined;
+        m_pinMode = undef_mode;
         setPinMode( pm );
     }
 }

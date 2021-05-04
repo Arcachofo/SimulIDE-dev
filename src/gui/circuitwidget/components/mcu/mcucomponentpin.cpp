@@ -81,7 +81,7 @@ void McuComponentPin::setDirection( bool out )
         if( m_ePin[0]->isConnected() && m_attached )
             m_ePin[0]->getEnode()->remFromChangedCallback( this ); // Don't Receive voltage change notifications
 
-        if( m_openColl ) setPinMode( output_open );
+        if( m_openColl ) setPinMode( open_col );
         else             setPinMode( output );
         //eSource::setState( m_outState, true );
     }

@@ -76,6 +76,6 @@ void eGate::setOpenCol( bool op )
 {
     m_openCol = op;
 
-    if( op ) m_output[0]->setPinMode( output_open );
+    if( op ) m_output[0]->setPinMode( open_col );
     else     m_output[0]->setPinMode( output );
 }

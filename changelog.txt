@@ -11,6 +11,15 @@ Changes:
     - Slew rate deactivated.
     - "About SimulIDE" dialog updated.
     
+  RC4:
+    - New MCUs properties updated to new dialog.
+    - Create Base class for old and new MCUs.
+    - MCUs: move pin management to eSource.
+    - Clean debug msgs to stdout.
+    - RamTable: scale sizes to font scale.
+    - SubPackage: Allow unselect Main Component.
+    - Set "Fusion" as default style.
+  
 New Features:
   RC1:
     - Dutch translation by mvandorp.
@@ -42,6 +51,11 @@ New Features:
     - Arduino Shields (experimental).
     - Memtable: accept decimal, octal or hexadecimal values.
     - Turkish translation (by Aejwt).
+    
+  RC4:
+    - New AVRs: added 16 bit Timer base and Timer1.
+    - New AVRs: Usart basic implementation (kindof working).
+    - New MCUs: McuMonitor basic implementation.
     
 Bug Fixes:
   RC1:
@@ -119,6 +133,50 @@ Bug Fixes:
       7445, 74137, 74138, 74139, 74141,
       74145, 75154, 744028, 744514, 744515
       
+  RC4:
+     - Boards: error in some Pin angles.
+    - Logic Analizer: wrong defaul Volt. Div.
+    - Logic Analizer: set default Time Div to 1 ms.
+    - 7 Seg BCD not working in Subcircuits.
+    - Boards(Subcircuits): Childs moving if selected.
+    - Fixed Volt: Error setting output voltage.
+    - OutPanelText: Crash if Simulator does not exist.
+    - Package errors: 74377, 74373, 74688
+    - Tunnels: several errors.
+    - Shields: several errors, icons.
+    - Memory table: Crash clicking on column 16.
+    - Fixed Volt, WaveGen, Clock: wrong output impedance.
+    - Op Amp: new Output Impedance property (default to zero).
+    - Crash in some systems due to MessageHandler.
+    - Variable Resistors: error setting value from properties.
+    - New MCU Timers: Error if counter > top.
+    - New AVR: Reset Oc Pin at OcUnit enable.
+    - New AVRs: PWM Phase Correct wrong freq.
+    - New Arduinos: Crash opening Serial Monitor.
+    - New AVRs: avoid pulses when Compare match = timer overflow.
+    - New AVRs: address error setting extended I/O Regs.
+    - Editor/Compiler: makefiles not working.
+    - PIC Crash using Usart.
+    - PIC: Crash in devices with no EEPROM.
+    - Mosfet: error in some cases.
+    - MCUs: dedicated Reset Pin not working.
+    - AVR gdb not initialized.
+    - Oscope not showing DC.
+    - Oscope & LA: pulses not shown when subsample is active.
+    - Oscope & LA: Connect to Tunnel not working
+    - Oscope: Missing graphic if no wave detected.
+    - Oscope: Error changing Time Div in box.
+    - Oscope not working at long Time Div.
+    - Oscope: fix square wave at low freq & long Time Div.
+    - Oscope: default Time Div to 1 ms
+    - Shields: Fix Context Menu.
+    - AVR Timer: Error writting OCRA, wrong next compare match.
+    - McuMonitor: Flash table to 16 bit.
+    - McuMonitor: PC & Status only updated if tab0 selected.
+    - Memory Table: wrong Address column size for memories > 256.
+    - Crash resizing Memory after opening MemTable.
+    - Tunnels & SubPackage should not be Main Component is Subcircuits.
+      
 New Components:
   RC1:
     - aip31068 I2C LCD (by acebrian).
@@ -144,3 +202,6 @@ New Components:
       CD4054, CD4055, CD4056,
       K155ID11, K155ID13, 564Ik2
       L298, ULN2001, ULN2803
+    
+  RC4:
+    - "Tools" Boards (by Sergey Roenko).

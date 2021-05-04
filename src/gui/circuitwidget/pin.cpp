@@ -345,9 +345,9 @@ void Pin::setVisible( bool visible )
     QGraphicsItem::setVisible( visible );
 }
 
-void Pin::setPinState( int st )
+void Pin::setPinState( pinState_t st )
 {
-    m_state = st;
+    m_pinState = st;
     m_changed = true;
 }
 
@@ -368,12 +368,12 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 
     if( isSelected() ) pen.setColor( Qt::darkGray);
     else if( m_unused ) pen.setColor( QColor( 75, 120, 170 ));
-    else if( Circuit::self()->animate() ) pen.setColor( m_color[m_state] );
+    else if( Circuit::self()->animate() ) pen.setColor( m_color[m_pinState] );
 
     painter->setPen(pen);
     if( m_length > 1 ) painter->drawLine( 0, 0, m_length-1, 0);
     else painter->drawLine( QPointF(-0.01, 0 ), QPointF( 0.03, 0 ));
-    
+
     if( m_inverted )
     {
         //Component::paint( p, option, widget );
@@ -384,6 +384,22 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         painter->setPen(pen);
         QRectF rect( 3.5,-2.2, 4.4, 4.4 );
         painter->drawEllipse(rect);
+    }
+
+    if( Circuit::self()->animate() )
+    {
+        pen.setWidth( 2 );
+        painter->setPen(pen);
+        if( m_pinState >= input_low ) // Draw Input arrow
+        {
+            painter->drawLine( 2, 0, 0, 2);
+            painter->drawLine( 0,-2, 2, 0);
+        }
+        else if( m_pinState >= out_low ) // Draw Output arrow
+        {
+            painter->drawLine( 0, 0, 2, 2);
+            painter->drawLine( 2,-2, 0, 0);
+        }
     }
 }
 #include "moc_pin.cpp"

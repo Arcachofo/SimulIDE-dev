@@ -22,6 +22,15 @@
 
 #include <QString>
 
+enum pinState_t{
+    undef_state=0,
+    out_low,
+    out_high,
+    out_open,
+    input_low,
+    input_high
+};
+
 class eNode;
 
 class MAINMODULE_EXPORT ePin
@@ -47,7 +56,7 @@ class MAINMODULE_EXPORT ePin
         void stampAdmitance( double data );
         void stampCurrent( double data );
 
-        virtual void setPinState( int st ) { m_state = st; }
+        virtual void setPinState( pinState_t st ) { m_pinState = st; }
 
         void reset();
         
@@ -61,7 +70,7 @@ class MAINMODULE_EXPORT ePin
         QString m_id;
         int m_index;
 
-        int m_state;
+        pinState_t m_pinState;
 
         bool m_connected;
         bool m_inverted;

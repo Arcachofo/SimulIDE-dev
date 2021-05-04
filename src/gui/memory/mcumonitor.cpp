@@ -74,14 +74,14 @@ void MCUMonitor::updateTable( int index )
         m_ramTable->updateValues();
         break;
     case 1:
-        for( int i=0; i<m_processor->ramSize(); ++i )
+        for( uint32_t i=0; i<m_processor->ramSize(); ++i )
             m_ramMonitor->setValue( i, m_processor->getRamValue(i));
         break;
     case 2:
         m_romMonitor->setData( m_processor->eeprom() );
         break;
     case 3:
-        for( int i=0; i<m_processor->flashSize(); ++i )
+        for( uint32_t i=0; i<m_processor->flashSize(); ++i )
             m_flashMonitor->setValue( i, m_processor->getFlashValue(i));
         break;
     }
