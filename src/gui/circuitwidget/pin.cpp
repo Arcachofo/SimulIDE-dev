@@ -43,9 +43,9 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_angle      = angle;
     
     m_color[0] = Qt::black;
-    m_color[1] = QColor( 0, 0, 180 );
-    m_color[2] = QColor( 180, 0, 0 );
-    m_color[3] = QColor( 60, 120, 60 );
+    m_color[1] = QColor( 60, 120, 60 );
+    m_color[2] = QColor( 0, 0, 180 );
+    m_color[3] = QColor( 180, 0, 0 );
     m_color[4] = QColor( 100, 100, 250 );
     m_color[5] = QColor( 250, 120, 0 );
 
@@ -396,10 +396,12 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
             painter->drawLine( 2, 0, 0, 2);
             painter->drawLine( 0,-2, 2, 0);
         }
-        else if( m_pinState >= out_low ) // Draw Output arrow
+        else if( m_pinState >= out_open )
         {
-            painter->drawLine( 0, 0, 2, 2);
-            painter->drawLine( 2,-2, 0, 0);
+            painter->drawLine( 2,-2, 0, 0);// Draw Half Output arrow
+
+            if( m_pinState >= out_low ) // Draw Full Output arrow
+                painter->drawLine( 0, 0, 2, 2);
         }
     }
 }

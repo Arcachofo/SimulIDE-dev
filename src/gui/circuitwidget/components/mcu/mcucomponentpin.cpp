@@ -42,7 +42,7 @@ McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QStrin
     m_ePin[0] = pin;
 
     setVoltHigh( 5 );
-    setPinMode( input );
+    setPinMode( undef_mode );
 
     type = type.toLower();
     if( type == "gnd" 

@@ -24,9 +24,9 @@
 
 enum pinState_t{
     undef_state=0,
+    out_open,
     out_low,
     out_high,
-    out_open,
     input_low,
     input_high
 };
