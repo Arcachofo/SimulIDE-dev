@@ -54,6 +54,7 @@ void eBcdTo7S::stamp()
         eNode* enode = m_input[i]->getEpin(0)->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
+    m_nextOutVal = m_values[0];
     m_changed = true;
 
     eLogicDevice::stamp();
