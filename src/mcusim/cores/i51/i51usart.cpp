@@ -39,12 +39,49 @@ I51Usart::I51Usart( eMcu* mcu,  QString name )
 }
 I51Usart::~I51Usart(){}
 
-void I51Usart::configure( uint8_t val )
+void I51Usart::configure( uint8_t val ) //SCON
 {
     m_sender.enable( true );
 
-    uint8_t sm0 = val & 0b10000000;
+    uint8_t mode = val >> 6;
+    if( mode == m_mode ) return;
+    m_mode = mode;
+
+    bool useTimer = false;
+
+    switch( mode )
+    {
+        case 0:             // synchronous
+            setPeriod(  m_mcu->simCycPI() );// Fixed baudrate 32 or 64
+            m_dataBits = 8;
+            break;
+        case 1:             // asynchronous Timer1
+            useTimer = true;
+            m_dataBits = 8;
+            break;
+        case 2:             // asynchronous MCU Clock
+            setPeriod(  m_mcu->simCycPI() );// Fixed baudrate 32 or 64
+            m_dataBits = 9;
+            break;
+        case 3:             // asynchronous Timer1
+            useTimer = true;
+            m_dataBits = 9;
+            break;
+    }
+
+    if( useTimer )
+    {
+        if( !m_timerConnected )
+        {
+            m_timerConnected = true;
+            m_timer1->on_tov.connect( this, &I51Usart::step );
+        }
+        setPeriod( 0 );
+    }
+
+    /*uint8_t sm0 = val & 0b10000000;
     uint8_t sm1 = val & 0b01000000;
+
 
     if( sm1 ) // Modes 1 and 3
     {
@@ -52,8 +89,8 @@ void I51Usart::configure( uint8_t val )
         {
             m_timerConnected = true;
             m_timer1->on_tov.connect( this, &I51Usart::step );
-            setPeriod( 0 );
         }
+        setPeriod( 0 );
     }
     if( sm0 )  // modes 2 and 3
     {
@@ -73,7 +110,7 @@ void I51Usart::configure( uint8_t val )
         ///    setPeriod(  m_mcu->simCycPI() ); // Cycles in 1 machine cycle
 
         m_timerConnected = false;
-    }
+    }*/
 }
 
 void I51Usart::step( uint8_t )

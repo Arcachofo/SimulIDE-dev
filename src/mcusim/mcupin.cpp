@@ -83,8 +83,7 @@ void McuPin::setOutState( bool state )
 
 bool McuPin::getState()
 {
-    if( m_pinMode == input ) return m_inState;
-    else                     return m_outState;
+    return m_inState;
 }
 
 void McuPin::setDirection( bool out )
