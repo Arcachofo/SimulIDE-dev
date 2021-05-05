@@ -56,9 +56,9 @@
         <register name="TIMSK2" addr="112" bits="TOIE2,OCIE2A,OCIE2B"/>
         <register name="ADCL"   addr="120" bits=""/>
         <register name="ADCH"   addr="121" bits=""/>
-        <register name="ADCSRA" addr="122" bits=""/>
-        <register name="ADCSRB" addr="123" bits=""/>
-        <register name="ADMUX"  addr="124" bits=""/>
+        <register name="ADCSRA" addr="122" bits="ADPS0,ADPS1,ADPS3,ADIE,ADIF,ADATE,ADSC,ADEN"/>
+        <register name="ADCSRB" addr="123" bits="ADTS0,ADTS1,ADTS2"/>
+        <register name="ADMUX"  addr="124" bits="MUX0,MUX1,MUX2,MUX3,0,ADLAR,REFS0,REFS1"/>
         <register name="DIDR0"  addr="126" bits=""/>
         <register name="DIDR1"  addr="127" bits=""/>
         <register name="TCCR1A" addr="128" bits="WGM10,WGM11,0,0,COM1B0,COM1B1,COM1A0,COM1A1"/>

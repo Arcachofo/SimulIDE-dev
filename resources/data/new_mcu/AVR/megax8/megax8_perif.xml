@@ -63,4 +63,9 @@
         <trunit type="tx" pin="PORTD1" register="UDR0" raiseint="USART_T" enable="TXEN0"/>
         <trunit type="rx" pin="PORTD0" register="UDR0" raiseint="USART_R" enable="RXEN0"/>
     </usart>
+    
+    <adc name="ADC" bits="10" valueregs="ADCL,ADCH" configregsA="ADCSRA" configregsB="ADCSRB" multiplex="ADMUX">
+        <prescaler select="" values="2,2,4,8,16,32,64,128"/>
+        
+    </adc>
 </parts>

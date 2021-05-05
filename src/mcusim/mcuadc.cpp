@@ -38,19 +38,26 @@ McuAdc::~McuAdc()
 void McuAdc::initialize()
 {
     m_channel = 0;
+    m_enabled = false;
+    m_converting = false;
 }
 
 void McuAdc::runEvent()
 {
     if( m_ADCL ) *m_ADCL = m_adcValue && 0x00FF;
     if( m_ADCH ) *m_ADCH = (m_adcValue && 0xFF00) >> 8;
+    m_converting = false;
+    endConversion();
 }
 
 void McuAdc::startConversion()
 {
+    if( !m_enabled ) return;
+    m_converting = true;
+
     double volt = m_adcPin[m_channel]->getVolt();
 
-    m_adcValue = (double)m_maxValue*volt/m_vRef;
+    m_adcValue = (double)m_maxValue*volt/getVref();
     if( m_adcValue > m_maxValue ) m_adcValue = m_maxValue;
 
     Simulator::self()->addEvent( m_convTime, this );

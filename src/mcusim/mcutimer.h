@@ -71,7 +71,7 @@ class MAINMODULE_EXPORT McuTimer : public eElement
         uint16_t m_prescaler;
         uint64_t m_scale;
 
-        std::vector<uint16_t> m_prescList;
+        std::vector<uint16_t> m_prescList; // Prescaler values
 
         bool m_running;  // is Timer running?
         bool m_bidirec;  // is Timer bidirectional?

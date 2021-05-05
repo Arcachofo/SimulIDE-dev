@@ -34,6 +34,7 @@
 #include "avrocunit.h"
 #include "avrinterrupt.h"
 #include "avrusart.h"
+#include "avradc.h"
 
 #include "pic14core.h"
 
@@ -99,6 +100,7 @@ int McuCreator::processFile( QString fileName )
         else if( el.tagName() == "port" )       createPort( &el, mcu );
         else if( el.tagName() == "timer" )      createTimer( &el, mcu );
         else if( el.tagName() == "usart" )      createUsart( &el, mcu );
+        else if( el.tagName() == "adc" )        createAdc( &el, mcu );
         else if( el.tagName() == "include" )    processFile( el.attribute("file") );
 
         node = node.nextSibling();
@@ -520,6 +522,82 @@ void McuCreator::createUsart( QDomElement* u, eMcu* mcu )
             }
         }
         node = node.nextSibling();
+    }
+}
+
+void McuCreator::createAdc( QDomElement* e, eMcu* mcu )
+{
+    QString name = e->attribute( "name" );
+    McuAdc* adc;
+    if( m_core == "AVR" ) adc = new AvrAdc( mcu, name );
+    else return;
+
+    if( e->hasAttribute("bits") )
+    {
+        bool ok = false;
+        int bits = e->attribute("bits").toInt( &ok );
+        if( ok )
+        {
+            //adc->m_bits = bits;
+            adc->m_maxValue = pow( 2, bits );
+        }
+    }
+    if( e->hasAttribute("valueregs") )
+    {
+        QString valueregs = e->attribute("valueregs");
+        QString lowByte = valueregs;
+        QString highByte ="";
+
+        if( valueregs.contains(",") )
+        {
+            QStringList regs = valueregs.split(",");
+
+            lowByte = regs.takeFirst();
+            highByte = regs.takeFirst();
+        }
+        if( !lowByte.isEmpty() )  adc->m_ADCL = mcu->getReg( lowByte );
+        if( !highByte.isEmpty() ) adc->m_ADCH = mcu->getReg( highByte );
+    }
+
+    if( e->hasAttribute("configbitsA") )
+    {
+        QString configBits = e->attribute("configbitsA");
+        mcu->watchBitNames( configBits, R_WRITE, adc, &McuAdc::configureA );
+    }
+    if( e->hasAttribute("configbitsB") )
+    {
+        QString configBits = e->attribute("configbitsB");
+        mcu->watchBitNames( configBits, R_WRITE, adc, &McuAdc::configureB );
+    }
+    if( e->hasAttribute("multiplex") )
+    {
+        QString configBits = e->attribute("multiplex");
+        mcu->watchBitNames( configBits, R_WRITE, adc, &McuAdc::setChannel );
+    }
+
+    QDomNode node = e->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+
+        /*if( el.tagName() == "raiseint" )
+        {
+            QString intName = el.attribute("intname");
+            Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
+
+            QString source  = el.attribute("source");
+            if( source == "OVERFLOW" ) timer->on_tov.connect( inte, &Interrupt::raise );
+//            if( source == "COMP"     ) timer->on_comp.connect( inte, &Interrupt::raise );
+        }
+        else */
+        if( el.tagName() == "prescaler" )
+        {
+            QStringList prescalers = el.attribute("values").remove(" ").split(",");
+            adc->m_prescList.resize( prescalers.size() );
+
+            for( int i=0; i<prescalers.size(); ++i )
+                adc->m_prescList[i] = prescalers.at(i).toUInt();
+        }
     }
 }
 

@@ -27,6 +27,8 @@ class McuPin;
 
 class MAINMODULE_EXPORT McuAdc : public eElement
 {
+        friend class McuCreator;
+
     public:
         McuAdc( eMcu* mcu, QString name );
         ~McuAdc();
@@ -36,12 +38,19 @@ class MAINMODULE_EXPORT McuAdc : public eElement
 
         virtual void configureA( uint8_t val ){;}
         virtual void configureB( uint8_t val ){;}
+        virtual void setChannel( uint8_t val ){;}
 
         void startConversion();
 
     protected:
+        virtual double getVref()=0;
+        virtual void endConversion(){;}
+
         QString m_name;
         eMcu*   m_mcu;
+
+        bool m_enabled;
+        bool m_converting;
 
         uint16_t m_adcValue; // Value obtained in last conversion
         uint16_t m_maxValue; // Maximum value = 2^m_bits
@@ -51,12 +60,14 @@ class MAINMODULE_EXPORT McuAdc : public eElement
 
         std::vector<McuPin*> m_adcPin; // ADC Pins
 
+        std::vector<uint16_t> m_prescList; // Prescaler values
+
         uint64_t m_convTime;          // Time to complete a conversion in ps
 
-        int m_bits;                   // ADC resolution in bits
+        //int m_bits;                   // ADC resolution in bits
         int m_channel;                // Channel number for current conversion
 
-        double m_vRef;                // Reference Voltage
+        //double m_vRef;                // Reference Voltage
 };
 
 #endif

@@ -47,6 +47,7 @@ class MAINMODULE_EXPORT McuCreator
         static void createPort( QDomElement* p, eMcu* mcu );
         static void createTimer( QDomElement* t, eMcu* mcu );
         static void createUsart( QDomElement* u, eMcu* mcu );
+        static void createAdc( QDomElement* e, eMcu* mcu );
         static void createCore( QString core, eMcu* mcu);
         static void createStack( QDomElement* s, eMcu* mcu );
 
