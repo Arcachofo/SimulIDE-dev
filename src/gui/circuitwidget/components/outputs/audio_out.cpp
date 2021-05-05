@@ -120,6 +120,9 @@ void AudioOut::initialize()
     m_dataCount = 0;
     
     m_auIObuffer = m_audioOutput->start();
+
+    if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
+            Simulator::self()->addEvent( 1, this );
 }
 
 void AudioOut::runEvent()
