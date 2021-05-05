@@ -127,6 +127,7 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
     else if( m_type == "reset" ) 
     {
         m_pinType = 21;
+        setPinMode( input );
     }
     else if( m_type == "vcc"  ) 
     {
@@ -135,10 +136,12 @@ void AVRComponentPin::attachPin( avr_t*  AvrProcessor )
     else if( m_type == "avcc" ) 
     {
         m_pinType = 23;
+        setPinMode( input );
     }
     else if( m_type == "aref" )
     {
          m_pinType = 24;
+         setPinMode( input );
     }
     m_attached = true;
     
