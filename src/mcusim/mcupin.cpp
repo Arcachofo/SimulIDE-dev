@@ -57,7 +57,7 @@ void McuPin::initialize()
 
 void McuPin::stamp()
 {
-    if( m_ePin[0]->isConnected() )
+    if( m_ePin[0]->isConnected() ) // Outputs are also called so they set Input register if needed
         m_ePin[0]->getEnode()->voltChangedCallback( this ); // Receive voltage change notifications
 
     eSource::stamp();
