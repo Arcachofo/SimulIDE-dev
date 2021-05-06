@@ -56,6 +56,7 @@ void McuAdc::runEvent()
 void McuAdc::startConversion()
 {
     if( !m_enabled ) return;
+    if( m_channel >= m_adcPin.size() ) return;
     m_converting = true;
 
     double volt = m_adcPin[m_channel]->getVolt();

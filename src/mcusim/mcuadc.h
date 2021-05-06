@@ -69,7 +69,7 @@ class MAINMODULE_EXPORT McuAdc : public eElement
         uint64_t m_convTime;          // Time to complete a conversion in ps
 
         //int m_bits;                   // ADC resolution in bits
-        int m_channel;                // Channel number for current conversion
+        uint m_channel;                // Channel number for current conversion
 
         //double m_vRef;                // Reference Voltage
 };
