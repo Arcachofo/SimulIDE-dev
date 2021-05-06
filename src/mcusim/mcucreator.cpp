@@ -173,10 +173,11 @@ void McuCreator::createRegisters( QDomElement* e, eMcu* mcu )
             QString  regName = el.attribute("name");
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
             uint8_t resetVal = el.attribute("reset").toUInt(0,0);
+            //uint8_t writeMask = el.attribute("writemask").toUInt(0,0); // Write mask is inverted: 0 means write allowed
 
             mcu->m_addrMap[regAddr] = regAddr;
 
-            eMcu::regInfo_t regInfo = { regAddr, resetVal };
+            eMcu::regInfo_t regInfo = { regAddr, resetVal/*, writeMask*/ };
             mcu->m_regInfo.insert( regName, regInfo );
 
             QString bits = el.attribute( "bits" );
@@ -283,51 +284,54 @@ void McuCreator::createPort( QDomElement* p, eMcu* mcu )
         McuPin* pin = new McuPin( port, i, port->m_name+QString::number(i), m_mcuComp );
         port->m_pins[i] = pin;
     }
-    // Connect to PORT Out Register
-    uint16_t   addr = mcu->getRegAddress( p->attribute( "outreg" ) );
-    port->m_outAddr = addr;
-    port->m_outReg  = mcu->m_dataMem.data()+addr;
-    mcu->watchRegister( addr, R_WRITE, port, &McuPort::outChanged );
-
-    // Connect to PORT In Register
-    QString inreg = p->attribute( "inreg" );
-    if( !inreg.isEmpty() )
+    uint16_t addr = 0;
+    if( p->hasAttribute( "outreg" )) // Connect to PORT Out Register
     {
-        addr = mcu->getRegAddress( inreg );
-        port->m_inAddr = addr;
-        port->m_inReg  = mcu->m_dataMem.data()+port->m_inAddr;
-        mcu->watchRegister( addr, R_READ, port, &McuPort::readInReg );
+        addr = mcu->getRegAddress( p->attribute( "outreg" ) );
+        port->m_outAddr = addr;
+        port->m_outReg  = mcu->m_dataMem.data()+addr;
+        mcu->watchRegister( addr, R_WRITE, port, &McuPort::outChanged );
     }
-    // Connect to PORT Dir Register
-    QString dirreg = p->attribute( "dirreg" );
-    if( !dirreg.isEmpty() )
+    if( p->hasAttribute( "dirreg" ) ) // Connect to PORT In Register
     {
-        if( dirreg.startsWith("!") )
+        QString inreg = p->attribute( "inreg" );
+        if( !inreg.isEmpty() )
         {
-            port->m_dirInv = true;
-            dirreg.remove( 0, 1 );
+            addr = mcu->getRegAddress( inreg );
+            port->m_inAddr = addr;
+            port->m_inReg  = mcu->m_dataMem.data()+port->m_inAddr;
+            mcu->watchRegister( addr, R_READ, port, &McuPort::readInReg );
         }
-        addr = mcu->getRegAddress( dirreg );
-        port->m_dirAddr = addr;
-        port->m_dirReg  = mcu->m_dataMem.data()+addr;
-        mcu->watchRegister( addr, R_WRITE, port, &McuPort::dirChanged );
     }
-    // Permanent Directions
-    if( p->hasAttribute("dirmask") )
+    if( p->hasAttribute( "dirreg" ) ) // Connect to PORT Dir Register
+    {
+        QString dirreg = p->attribute( "dirreg" );
+        if( !dirreg.isEmpty() )
+        {
+            if( dirreg.startsWith("!") )
+            {
+                port->m_dirInv = true;
+                dirreg.remove( 0, 1 );
+            }
+            addr = mcu->getRegAddress( dirreg );
+            port->m_dirAddr = addr;
+            port->m_dirReg  = mcu->m_dataMem.data()+addr;
+            mcu->watchRegister( addr, R_WRITE, port, &McuPort::dirChanged );
+        }
+    }
+    if( p->hasAttribute("dirmask") ) // Permanent Directions
     {
         uint8_t dirMask = p->attribute("dirmask").toUInt( 0, 2 );
         for( int i=0; i<port->m_numPins; ++i )
             port->m_pins[i]->m_dirMask = (dirMask & 1<<i);
     }
-    // Permanent Pullups
-    if( p->hasAttribute("pullups") )
+    if( p->hasAttribute("pullups") ) // Permanent Pullups
     {
         uint8_t pullup = p->attribute("pullups").toUInt( 0, 2 );
         for( int i=0; i<port->m_numPins; ++i )
             port->m_pins[i]->m_puMask = (pullup & 1<<i);
     }
-    // OPen Drain
-    if( p->hasAttribute("opencol") )
+    if( p->hasAttribute("opencol") ) // OPen Drain
     {
         uint8_t opencol = p->attribute("opencol").toUInt( 0, 2 );
         for( int i=0; i<port->m_numPins; ++i )
@@ -539,7 +543,7 @@ void McuCreator::createAdc( QDomElement* e, eMcu* mcu )
         if( ok )
         {
             //adc->m_bits = bits;
-            adc->m_maxValue = pow( 2, bits );
+            adc->m_maxValue = pow( 2, bits )-1;
         }
     }
     if( e->hasAttribute("valueregs") )
@@ -559,20 +563,20 @@ void McuCreator::createAdc( QDomElement* e, eMcu* mcu )
         if( !highByte.isEmpty() ) adc->m_ADCH = mcu->getReg( highByte );
     }
 
-    if( e->hasAttribute("configbitsA") )
+    if( e->hasAttribute("configregsA") )
     {
-        QString configBits = e->attribute("configbitsA");
-        mcu->watchBitNames( configBits, R_WRITE, adc, &McuAdc::configureA );
+        QString configRegs = e->attribute("configregsA");
+        mcu->watchRegNames( configRegs, R_WRITE, adc, &McuAdc::configureA );
     }
-    if( e->hasAttribute("configbitsB") )
+    if( e->hasAttribute("configregsB") )
     {
-        QString configBits = e->attribute("configbitsB");
-        mcu->watchBitNames( configBits, R_WRITE, adc, &McuAdc::configureB );
+        QString configRegs = e->attribute("configregsB");
+        mcu->watchRegNames( configRegs, R_WRITE, adc, &McuAdc::configureB );
     }
     if( e->hasAttribute("multiplex") )
     {
-        QString configBits = e->attribute("multiplex");
-        mcu->watchBitNames( configBits, R_WRITE, adc, &McuAdc::setChannel );
+        QString configRegs = e->attribute("multiplex");
+        mcu->watchRegNames( configRegs, R_WRITE, adc, &McuAdc::setChannel );
     }
 
     QDomNode node = e->firstChild();
@@ -598,6 +602,20 @@ void McuCreator::createAdc( QDomElement* e, eMcu* mcu )
             for( int i=0; i<prescalers.size(); ++i )
                 adc->m_prescList[i] = prescalers.at(i).toUInt();
         }
+        else if( el.tagName() == "inputs" )
+        {
+            QString type = el.attribute("type");
+            if( type == "PIN" )
+            {
+                QStringList pins = el.attribute("source").remove(" ").split(",");
+                for( QString pinName : pins )
+                {
+                    McuPin* pin = mcu->m_ports.getPin( pinName );
+                    if( pin ) adc->m_adcPin.emplace_back( pin );
+                }
+            }
+        }
+        node = node.nextSibling();
     }
 }
 

@@ -82,6 +82,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface
         uint32_t ramSize()   { return m_dataMem.size(); }
         uint32_t flashSize() { return m_progMem.size(); }
 
+        McuPin* getPin( QString name ) { return m_ports.getPin( name ); }
         QHash<QString, McuPort*> getPorts() { return m_ports.getPorts(); }
         McuTimer* getTimer( QString name ) { return m_timers.getTimer( name ); }
 
@@ -166,6 +167,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface
 
         McuCore* cpu;
         int cyclesDone;
+
+        int m_regOverride;                         // Register value is overriden at write time
 
     protected:
         std::vector<uint16_t> m_progMem;           // Program memory

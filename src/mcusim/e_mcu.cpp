@@ -132,8 +132,12 @@ uint8_t eMcu::readReg( uint16_t addr )
 void eMcu::writeReg( uint16_t addr, uint8_t v )
 {
     regSignal_t* regSignal = m_regSignals.value( addr );
-    if( regSignal ) regSignal->on_write.emitValue( v );
-
+    if( regSignal )
+    {
+        m_regOverride = -1;
+        regSignal->on_write.emitValue( v );
+        if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
+    }
     m_dataMem[addr] = v;
 }
 

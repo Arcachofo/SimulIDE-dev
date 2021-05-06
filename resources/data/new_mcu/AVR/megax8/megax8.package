@@ -44,8 +44,8 @@
     <pin side="right"   pos="11" type="IO" id="PB4"  label="B4"/>
     <pin side="right"   pos="10" type="IO" id="PB5"  label="B5"/>
 
-    <pin side="right"   pos="9"  type="avcc"   id="AVCC" label="A+"/>
-    <pin side="right"   pos="8"  type="aref"   id="AREF" label="Ar"/>
+    <pin side="right"   pos="9"  type="IO" id="PV0" label="A+"/><!-- aVcc -->
+    <pin side="right"   pos="8"  type="IO" id="PV1" label="Ar"/><!-- aRef -->
     <pin side="right"   pos="7"  type="unused" id="GND2"  label="Gnd"/>
 
     <pin side="right"   pos="6"  type="IO"  id="PC0"  label="C0"/>
