@@ -15,5 +15,6 @@
         
         <interrupt name="USART_R" enable="RXCIE0" flag="RXC0"  priority="4"  vector="0x0024" />
         <interrupt name="USART_T" enable="TXCIE0" flag="TXC0"  priority="2"  vector="0x0028" />
+        <interrupt name="ADC"     enable="ADIE"   flag="ADIF"  priority="1"  vector="0x002A" />
     </interrupts>
 </parts>

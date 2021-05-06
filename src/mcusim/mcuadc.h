@@ -21,6 +21,7 @@
 #define MCUADC_H
 
 #include "e-element.h"
+#include "regsignal.h"
 
 class eMcu;
 class McuPin;
@@ -41,6 +42,9 @@ class MAINMODULE_EXPORT McuAdc : public eElement
         virtual void setChannel( uint8_t val ){;}
 
         void startConversion();
+
+        //Signals:
+        RegSignal<uint8_t> on_conv;
 
     protected:
         virtual double getVref()=0;

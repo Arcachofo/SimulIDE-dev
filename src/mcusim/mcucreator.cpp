@@ -584,17 +584,15 @@ void McuCreator::createAdc( QDomElement* e, eMcu* mcu )
     {
         QDomElement el = node.toElement();
 
-        /*if( el.tagName() == "raiseint" )
+        if( el.tagName() == "raiseint" )
         {
             QString intName = el.attribute("intname");
             Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
 
             QString source  = el.attribute("source");
-            if( source == "OVERFLOW" ) timer->on_tov.connect( inte, &Interrupt::raise );
-//            if( source == "COMP"     ) timer->on_comp.connect( inte, &Interrupt::raise );
+            if( source == "CONVERSION" ) adc->on_conv.connect( inte, &Interrupt::raise );
         }
-        else */
-        if( el.tagName() == "prescaler" )
+        else if( el.tagName() == "prescaler" )
         {
             QStringList prescalers = el.attribute("values").remove(" ").split(",");
             adc->m_prescList.resize( prescalers.size() );
