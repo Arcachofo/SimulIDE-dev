@@ -99,14 +99,14 @@ void BaseProcessor::setFreq( double freq ) // Instruction exec. freq
 void BaseProcessor::setDebugger( BaseDebugger* deb )
 {
     m_debugger = deb;
-    m_ramTable.setDebugger( deb );
+    m_ramTable->setDebugger( deb );
 }
 
 void BaseProcessor::setDataFile( QString datafile ) 
 { 
     m_dataFile = datafile;
     setRegisters();
-    m_ramTable.setRegisters();
+    m_ramTable->setRegisters();
 }
 
 int BaseProcessor::status() { return getRamValue( m_statusReg ); }

@@ -55,7 +55,7 @@ class MAINMODULE_EXPORT McuInterface : public eElement
         virtual void updateRamValue( QString name );
 
         QString getFileName() { return m_firmware; }
-        virtual RamTable* getRamTable() { return &m_ramTable; }
+        virtual RamTable* getRamTable() { return m_ramTable; }
 
     protected:
 
@@ -72,7 +72,7 @@ class MAINMODULE_EXPORT McuInterface : public eElement
         uint32_t m_romSize;
         uint8_t  m_wordSize; // Size of Program memory word in bytes
 
-        RamTable m_ramTable;
+        RamTable* m_ramTable;
 };
 
 

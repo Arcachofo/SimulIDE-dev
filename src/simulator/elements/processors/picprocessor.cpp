@@ -51,7 +51,7 @@ void PicProcessor::setDevice( QString device )
             statusBits <<" X "<<" X "<<" X "<<" N "<<"OV "<<" Z "<<"DC "<<" C ";
     else    statusBits <<"IRP"<<"RP1"<<"RP0"<<"TO "<<"PD "<<" Z "<<"DC "<<" C ";
 
-    m_ramTable.setStatusBits( statusBits );
+    m_ramTable->setStatusBits( statusBits );
 
     qDebug() << "Creating Proccessor:    "<<m_device<<"\n" ;
 

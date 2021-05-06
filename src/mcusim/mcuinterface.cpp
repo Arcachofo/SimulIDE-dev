@@ -22,14 +22,14 @@
 
 McuInterface::McuInterface( QString id )
             : eElement( id )
-            , m_ramTable( NULL, this )
 {
+    m_ramTable = new RamTable( NULL, this );
     m_ramSize   = 0;
     m_flashSize = 0;
     m_romSize   = 0;
     m_wordSize  = 2;
 
-    m_ramTable.hide();
+    m_ramTable->hide();
 }
 
 McuInterface::~McuInterface()
@@ -93,7 +93,7 @@ void McuInterface::updateRamValue( QString name )
     {
         float value = 0;
         memcpy(&value, ba, 4);
-        m_ramTable.setItemValue( 1, value  );
+        m_ramTable->setItemValue( 1, value  );
     }
     else                                              // char, int, long
     {
@@ -126,9 +126,9 @@ void McuInterface::updateRamValue( QString name )
                 value = val;
             }
         }
-        m_ramTable.setItemValue( 2, value  );
+        m_ramTable->setItemValue( 2, value  );
 
-        if     ( type.contains( "8" ) ) m_ramTable.setItemValue( 3, decToBase(value, 2, 8)  );
+        if     ( type.contains( "8" ) ) m_ramTable->setItemValue( 3, decToBase(value, 2, 8)  );
         else if( type.contains( "string" ) )
         {
             QString strVal = "";
@@ -141,8 +141,8 @@ void McuInterface::updateRamValue( QString name )
                 strVal += str; //QByteArray::fromHex( getRamValue( i ) );
             }
             //qDebug() << "string" << name << value << strVal;
-            m_ramTable.setItemValue( 3, strVal  );
+            m_ramTable->setItemValue( 3, strVal  );
         }
     }
-    m_ramTable.setItemValue( 1, type  );
+    m_ramTable->setItemValue( 1, type  );
 }
