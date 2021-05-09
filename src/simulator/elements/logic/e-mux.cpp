@@ -19,6 +19,7 @@
 
 #include "e-mux.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eMux::eMux( QString id )
     : eLogicDevice( id )

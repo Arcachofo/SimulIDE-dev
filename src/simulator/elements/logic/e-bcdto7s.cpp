@@ -19,6 +19,7 @@
 
 #include "e-bcdto7s.h"
 #include "simulator.h"
+#include "e-source.h"
 
 const uint8_t eBcdTo7S::m_values[]={
         0b00111111,

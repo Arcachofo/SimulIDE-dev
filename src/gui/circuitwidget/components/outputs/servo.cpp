@@ -20,6 +20,7 @@
 #include "servo.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "e-source.h"
 
 static const char* Servo_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Speed")

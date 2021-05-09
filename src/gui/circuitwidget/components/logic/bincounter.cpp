@@ -20,6 +20,7 @@
 #include "bincounter.h"
 #include "itemlibrary.h"
 #include "connector.h"
+#include "e-source.h"
 #include "pin.h"
 
 static const char* BinCounter_properties[] = {

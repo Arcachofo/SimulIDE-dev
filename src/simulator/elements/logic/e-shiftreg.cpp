@@ -19,6 +19,7 @@
 
 #include "e-shiftreg.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eShiftReg::eShiftReg( QString id )
          : eLogicDevice( id )

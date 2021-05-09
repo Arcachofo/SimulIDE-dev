@@ -90,8 +90,8 @@ void AvrTimer::configureExtClock()
 {
     m_prescaler = 1;
     m_clkSrc = clkEXT;
-    if     ( m_mode == 6 ) m_clkEdge = Clock_Falling;
-    else if( m_mode == 7 ) m_clkEdge = Clock_Rising;
+    /// if     ( m_mode == 6 ) m_clkEdge = Clock_Falling;
+    /// else if( m_mode == 7 ) m_clkEdge = Clock_Rising;
 }
 
 void AvrTimer::configureOcUnits( bool disable )

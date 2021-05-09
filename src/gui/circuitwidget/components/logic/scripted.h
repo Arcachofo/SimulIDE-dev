@@ -25,6 +25,7 @@
 
 #include "e-logic_device.h"
 #include "logiccomponent.h"
+#include "e-source.h"
 
 class LibraryItem;
 

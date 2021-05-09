@@ -19,6 +19,7 @@
 
 #include "flipflopjk.h"
 #include "itemlibrary.h"
+#include "e-source.h"
 #include "simulator.h"
 
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2017 by Santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,75 +17,66 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "e-i2c_slave.h"
+#include "twislave.h"
 #include "simulator.h"
 #include "e-source.h"
 
-eI2CSlave::eI2CSlave( QString id )
-         : eI2C( id )
+TwiSlave::TwiSlave( TwiModule* twi, QString name )
+        : TwiTR( twi, name )
 {
-    m_address = 0x00;
 }
-eI2CSlave::~eI2CSlave() { }
+TwiSlave::~TwiSlave( ){}
 
-void eI2CSlave::initialize()
+void TwiSlave::initialize()
 {
-    eI2C::initialize();
     m_addressBits = 7;
 }
 
-void eI2CSlave::stamp()                    // Called at Simulation Start
+void TwiSlave::stamp()      // Called at Simulation Start
 {
-    if( m_input.size() == 0 ) return;
+    //if( m_input.size() == 0 ) return;
     if( !m_enabled ) return;
 
-    SDA_PIN->setState( false );
+    /*SDA_PIN->setState( false );
     SDA_PIN->setImp( high_imp );
     SCL_PIN->setImp( high_imp );
+*/
+    eClockedDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eClockedDevice )
 
-    eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
-
-    eNode* enode = SDA_PIN->getEpin(0)->getEnode(); // Register for SDA voltage changes
+    eNode* enode = m_twi->sda()->getPin()->getEnode(); // Register for SDA voltage changes
     if( enode ) enode->voltChangedCallback( this );
 }
 
-void eI2CSlave::setSDA( bool state )
+void TwiSlave::setSDA( bool state )
 {
     m_nextSDA = state;
-    Simulator::self()->addEvent( m_propDelay, this );
+    Simulator::self()->addEvent( m_clockPeriod/2, this );
 }
 
-void eI2CSlave::setSCL( bool )
-{
-    SCL_PIN->setImp( high_imp );
-}
-
-void eI2CSlave::runEvent()       // We are in Mater mode, controlling Clock
+void TwiSlave::runEvent()       // We are in Mater mode, controlling Clock
 {
     if( !m_enabled ) return;
 
-    SDA_PIN->setState( false );
-    if( m_nextSDA ) SDA_PIN->setImp( high_imp );
-    else            SDA_PIN->setImp( m_outImp );
+    m_twi->sda()->setState( m_nextSDA );
 }
 
-void eI2CSlave::voltChanged()   // Some Pin Changed State, Manage it
+void TwiSlave::voltChanged()   // Some Pin Changed State, Manage it
 {
     if( !m_enabled ) return;
 
-    int sclState = eLogicDevice::getClockState(); // Get Clk to don't miss any clock changes
+    int sclState = eClockedDevice::getClockState(); // Get Clk to don't miss any clock changes
 
-    m_SDA = eLogicDevice::getInputState( 0 );        // State of SDA pin
+    m_sdaState = getSdaState();        // State of SDA pin
 
     if(( sclState == Clock_High )&&( m_state != I2C_ACK ))
     {
-        if( m_lastSDA && !m_SDA ) {     // We are in a Start Condition
+        if( m_lastSdaState && !m_sdaState ) {     // We are in a Start Condition
             m_bitPtr = 0;
             m_rxReg = 0;
             m_state = I2C_STARTED;
         }
-        else if( m_SDA && !m_lastSDA ) {   // We are in a Stop Condition
-           I2Cstop();
+        else if( m_sdaState && !m_lastSdaState ) {   // We are in a Stop Condition
+           m_state = I2C_STOPPED;;// I2Cstop();
         }
     }
     else if( sclState == Clock_Rising )  // We are in a SCL Rissing edge
@@ -104,7 +95,7 @@ void eI2CSlave::voltChanged()   // Some Pin Changed State, Manage it
                     } else {                        // Master is Writting
                         m_state = I2C_WRITTING;
                         m_bitPtr = 0;
-                        startWrite();
+                        //startWrite();
                     }
                     ACK();
                 } else {
@@ -118,7 +109,7 @@ void eI2CSlave::voltChanged()   // Some Pin Changed State, Manage it
         }
         else if( m_state == I2C_WAITACK )      // We wait for Master ACK
         {
-            if( !m_SDA ) {                      // ACK: Continue Sending
+            if( !m_sdaState ) {                      // ACK: Continue Sending
                 m_state = m_lastState;
                 writeByte();
             } else m_state = I2C_IDLE;
@@ -139,25 +130,5 @@ void eI2CSlave::voltChanged()   // Some Pin Changed State, Manage it
         }
         if( m_state == I2C_READING ) writeBit();
     }
-    m_lastSDA = m_SDA;
+    m_lastSdaState = m_sdaState;
 }
-
-void eI2CSlave::updatePins()
-{
-    if( m_enabled )
-    {
-        SDA_PIN->setState( false );
-        SDA_PIN->setImp( high_imp );
-        SCL_PIN->setImp( high_imp );
-
-        eNode* enode = SCL_PIN->getEpin(0)->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
-    else m_state = I2C_IDLE;
-}
-
-void eI2CSlave::setAddress( int address )
-{
-    m_address = address;
-}
-

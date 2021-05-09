@@ -21,12 +21,13 @@
 #define MCUTWI_H
 
 #include "mcumodule.h"
+#include "twimodule.h"
 //#include "mcutypes.h"
 
 class eMcu;
 class McuPin;
 
-class MAINMODULE_EXPORT McuTwi : public McuModule
+class MAINMODULE_EXPORT McuTwi : public McuModule, public TwiModule
 {
         friend class McuCreator;
 
@@ -39,16 +40,11 @@ class MAINMODULE_EXPORT McuTwi : public McuModule
         virtual void writeStatus( uint8_t val ){;}
 
     protected:
-        uint16_t m_clockPeriod;            // TWI Clock period in ps
         uint8_t m_prescaler;
         std::vector<uint16_t> m_prescList; // Prescaler values
 
         uint8_t* m_twiReg;
-        uint8_t* m_address;
         uint8_t* m_twiStatus;
-
-        McuPin* m_sdaPin;
-        McuPin* m_sclPin;
 };
 
 #endif

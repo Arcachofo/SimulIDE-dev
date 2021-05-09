@@ -53,7 +53,7 @@ void McuTimer::initialize()
     m_prescaler = 1;
 
     m_clkSrc  = clkMCU;
-    m_clkEdge = Clock_Rising;
+    /// m_clkEdge = Clock_Rising;
 }
 
 void McuTimer::runEvent()            // Overflow

@@ -20,6 +20,7 @@
 #include "mux.h"
 #include "circuitwidget.h"
 #include "simulator.h"
+#include "e-source.h"
 #include "circuit.h"
 #include "connector.h"
 #include "pin.h"

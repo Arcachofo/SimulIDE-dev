@@ -19,6 +19,7 @@
 
 #include "flipflopbase.h"
 #include "circuitwidget.h"
+#include "e-source.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "pin.h"

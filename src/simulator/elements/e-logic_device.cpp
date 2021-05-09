@@ -18,11 +18,12 @@
  ***************************************************************************/
 
 #include "e-logic_device.h"
+#include "e-source.h"
 #include "simulator.h"
 #include "circuit.h"
 
 eLogicDevice::eLogicDevice( QString id )
-            : eElement( id )
+            : eClockedDevice( id )
 {
     m_numInputs  = 0;
     m_numOutputs = 0;
@@ -60,14 +61,10 @@ eLogicDevice::~eLogicDevice()
     if( m_outEnSource ) delete m_outEnSource;
 }
 
-void eLogicDevice::stamp()
+void eLogicDevice::stamp() // Register for callBack when eNode volt change on clock or OE pins
 {
-    // Register for callBack when eNode volt change on clock or OE pins
-    if( m_clockSource )
-    {
-        eNode* enode = m_clockSource->getEpin(0)->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    eClockedDevice::stamp();
+
     if( m_outEnSource )
     {
         eNode* enode = m_outEnSource->getEpin(0)->getEnode();
@@ -153,26 +150,6 @@ void eLogicDevice::setOutputEnabled( bool enabled )
 {
     for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setStateZ( !enabled );
     Simulator::self()->addEvent( 1, NULL );
-}
-
-void eLogicDevice::createClockPin()
-{
-    ePin* epin = new ePin( m_elmId+"-ePin-clock", 0 );
-
-    createClockeSource( epin );
-}
-
-void eLogicDevice::createClockPin( ePin* epin )
-{
-    epin->setId( m_elmId+"-ePin-clock" );
-
-    createClockeSource( epin );
-}
-
-void eLogicDevice::createClockeSource( ePin* epin )
-{
-    m_clockSource = new eSource( m_elmId+"-eSource-clock", epin, input );
-    m_clockSource->setInputImp( m_inputImp );
 }
 
 void eLogicDevice::createOutEnablePin()
@@ -321,9 +298,7 @@ void eLogicDevice::setOutHighV( double volt )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_outHighV = volt;
-
-    for( int i=0; i<m_numOutputs; ++i )
-        m_output[i]->setVoltHigh( volt );
+    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setVoltHigh( volt );
 
     if( pauseSim ) Simulator::self()->resumeSim();
 }
@@ -334,9 +309,7 @@ void eLogicDevice::setOutLowV( double volt )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_outLowV = volt;
-
-    for( int i=0; i<m_numOutputs; ++i )
-        m_output[i]->setVoltLow( volt );
+    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setVoltLow( volt );
 
     if( pauseSim ) Simulator::self()->resumeSim();
 }
@@ -347,8 +320,9 @@ void eLogicDevice::setInputImp( double imp )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_inputImp = imp;
-    for( int i=0; i<m_numInputs; ++i )
-        m_input[i]->setImp( imp );
+    for( int i=0; i<m_numInputs; ++i ) m_input[i]->setInputImp( imp );
+
+    m_clockSource->setInputImp( imp );
 
     if( pauseSim ) Simulator::self()->resumeSim();
 }
@@ -361,11 +335,8 @@ void eLogicDevice::setOutImp( double imp )
     if( m_outImp == imp ) return;
 
     m_outImp = imp;
+    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setOutputImp( imp );
 
-    for( int i=0; i<m_numOutputs; ++i )
-    {
-        m_output[i]->setImp( imp );
-    }
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 
@@ -375,13 +346,9 @@ void eLogicDevice::setInverted( bool inverted )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_inverted = inverted;
-    
-    for( int i=0; i<m_numOutputs; ++i )
-    {
-        m_output[i]->setInverted( inverted );
-    }
-    Circuit::self()->update();
+    for( int i=0; i<m_numOutputs; ++i ) m_output[i]->setInverted( inverted );
 
+    Circuit::self()->update();
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 
@@ -391,66 +358,10 @@ void eLogicDevice::setInvertInps( bool invert )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_invInputs = invert;
-    for( int i=0; i<m_numInputs; ++i )
-    {
-        m_input[i]->setInverted( invert );
-    }
+    for( int i=0; i<m_numInputs; ++i ) m_input[i]->setInverted( invert );
+
     Circuit::self()->update();
-
     if( pauseSim ) Simulator::self()->resumeSim();
-}
-
-void eLogicDevice::seteTrigger( int trigger )
-{
-    //qDebug() << "eLogicDevice::seteTrigger"<<trigger;
-    m_etrigger = trigger;
-    m_clock = false;
-}
-
-void eLogicDevice::setClockInv( bool inv )     
-{
-    if( !m_clockSource ) return;
-
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
-
-    m_clockSource->setInverted(inv);
-    Circuit::self()->update();
-
-    if( pauseSim ) Simulator::self()->resumeSim();
-}
-
-int eLogicDevice::getClockState()
-{
-    if( !m_clockSource ) return Clock_Allow;
-
-    int cState = 0;
-
-    bool clock = m_clock;
-    double volt = m_clockSource->getVolt(); // Clock pin volt.
-
-    if     ( volt > m_inputHighV ) clock = true;
-    else if( volt < m_inputLowV )  clock = false;
-
-    if( m_clockSource->isInverted() ) clock = !clock;
-
-    if( m_etrigger == Trig_InEn )
-    {
-        if     (!clock ) cState = Clock_Low;
-        else if( clock ) cState = Clock_Allow;
-    }
-    else if( m_etrigger == Trig_Clk )
-    {
-        if     (!m_clock &&  clock ) cState = Clock_Rising;
-        else if( m_clock &&  clock ) cState = Clock_High;
-        else if( m_clock && !clock ) cState = Clock_Falling;
-    }
-    else cState = Clock_Allow;
-    m_clock = clock;
-
-    m_clockSource->getPin()->setPinState( clock? input_high:input_low ); // High-Low colors
-
-    return cState;
 }
 
 bool eLogicDevice::getInputState( int input )
@@ -491,13 +402,11 @@ ePin* eLogicDevice::getEpin( QString pinName )
     if( pinName.contains("input") )
     {
         int pin = pinName.remove("input").toInt();
-
         return m_input[pin]->getEpin(0);
     }
     else if( pinName.contains("output") )
     {
         int pin = pinName.remove("output").toInt();
-
         return m_output[pin]->getEpin(0);
     }
     else if( pinName.contains("clock")
@@ -509,7 +418,6 @@ ePin* eLogicDevice::getEpin( QString pinName )
     {
         return m_outEnSource->getEpin(0);
     }
-    
-    return 0l;
+    return NULL;
 }
 

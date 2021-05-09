@@ -19,6 +19,7 @@
 
 #include "e-function.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eFunction::eFunction( QString id )
          : eLogicDevice( id )

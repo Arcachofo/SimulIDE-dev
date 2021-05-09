@@ -21,7 +21,7 @@
 #include "e-source.h"
 #include "simulator.h"
 
-UartTx::UartTx( UsartM* usart, QString  name )
+UartTx::UartTx( UsartModule* usart, QString  name )
       : UartTR( usart, name )
 {
     m_period = 0;

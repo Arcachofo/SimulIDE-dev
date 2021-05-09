@@ -19,6 +19,7 @@
 
 #include "e-latch_d.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eLatchD::eLatchD( QString id, int channels )
        : eLogicDevice( id )

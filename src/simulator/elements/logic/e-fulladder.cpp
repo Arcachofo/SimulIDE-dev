@@ -19,6 +19,7 @@
 
 #include "e-fulladder.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eFullAdder::eFullAdder( QString id ) 
           : eLogicDevice( id )

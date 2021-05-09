@@ -61,8 +61,8 @@ class MAINMODULE_EXPORT eSource : public eElement
         bool  isInverted() { return m_inverted; }
         void  setInverted( bool inverted );
 
-        virtual void  setInputImp( double imp ){ m_inputImp = imp; setImp( imp );}
-        virtual void  setOutputImp( double imp ){ m_outputImp = imp; setImp( imp ); }
+        virtual void  setInputImp( double imp );
+        virtual void  setOutputImp( double imp );
 
         double imp() { return m_imp; }
         virtual void  setImp( double imp );

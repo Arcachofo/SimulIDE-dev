@@ -19,6 +19,7 @@
 
 #include "e-gate.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eGate::eGate( QString id )
      : eLogicDevice( id )

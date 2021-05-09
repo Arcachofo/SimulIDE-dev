@@ -25,15 +25,6 @@
 #include <math.h>
 #include "e-pin.h"
 
-#define Trig_None 0
-#define Trig_Clk  1
-#define Trig_InEn 2
-
-#define Clock_Low      0
-#define Clock_Rising   1
-#define Clock_Allow    1
-#define Clock_High     2
-#define Clock_Falling  3
 
 class MAINMODULE_EXPORT eElement
 {

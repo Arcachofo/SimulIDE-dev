@@ -21,6 +21,7 @@
 
 #include "e-dac.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eDAC::eDAC( QString id )
     : eLogicDevice( id )

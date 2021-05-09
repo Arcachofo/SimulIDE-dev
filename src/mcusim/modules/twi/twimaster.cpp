@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2017 by Santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,67 +17,59 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "e-i2c_master.h"
+#include "twimaster.h"
 #include "simulator.h"
-#include "e-source.h"
+#include "component.h"
+//#include "e-source.h"
 
-eI2CMaster::eI2CMaster( QString id )
-          : eI2C( id )
+TwiMaster::TwiMaster( TwiModule* twi, QString name )
+         : TwiTR( twi, name )
 {
+    m_comp = NULL;
 }
-eI2CMaster::~eI2CMaster() { }
+TwiMaster::~TwiMaster( ){}
 
-void eI2CMaster::stamp()                    // Called at Simulation Start
+void TwiMaster::stamp()                    // Called at Simulation Start
 {
     m_toggleScl = false;
 
-    if( m_input.size() == 0 ) return;
+    //if( m_input.size() == 0 ) return;
     if( !m_enabled ) return;
 
-    SDA_PIN->setImp( high_imp );
-    SCL_PIN->setImp( high_imp );
+    /// SDA_PIN->setImp( high_imp );
+    /// SCL_PIN->setImp( high_imp );
 
-    //eLogicDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eLogicDevice )
+    eClockedDevice::stamp();   // Initialize Base Class ( Clock pin is managed in eClockedDevice )
 }
 
-void eI2CMaster::setSDA( bool state )
-{
-    if( state ) SDA_PIN->setImp( high_imp );
-    else        SDA_PIN->setImp( m_outImp );
-}
-
-void eI2CMaster::setSCL( bool state )
-{
-    if( state ) SCL_PIN->setImp( high_imp );
-    else        SCL_PIN->setImp( m_outImp );
-}
-
-void eI2CMaster::keepClocking()
+void TwiMaster::keepClocking()
 {
     m_toggleScl = true;
-    Simulator::self()->addEvent( m_propDelay, this );
+    Simulator::self()->addEvent( m_clockPeriod/2, this );
 }
 
-void eI2CMaster::runEvent()       // We are in Mater mode, controlling Clock
+void TwiMaster::runEvent()       // We are in Mater mode, controlling Clock
 {
     if( !m_enabled ) return;
 
-    bool clkLow = SCL_PIN->getVolt() < m_inputLowV;
+    int sclState = eClockedDevice::getClockState();
+    bool clkLow = ((sclState == Clock_Low) | (sclState == Clock_Falling));
+
     if( m_toggleScl )
     {
         setSCL( clkLow ); // High if is LOW, LOW if is HIGH
         m_toggleScl = false;
         return;
     }
-    m_SDA = eLogicDevice::getInputState( 0 );       // State of SDA pin
+    m_sdaState = getSdaState();        // State of SDA pin
 
-    Simulator::self()->addEvent( m_stepsPe, this ); //
+    Simulator::self()->addEvent( m_clockPeriod, this ); //
     if( m_state == I2C_IDLE ) return;
 
     if( m_state == I2C_STARTED )                    // Send Start Condition
     {
-        if     ( m_SDA ) setSDA( false );     // Step 1: SDA is High, Lower it
-        else if( !clkLow )                    // Step 2: SDA Already Low, Lower Clock
+        if     ( m_sdaState ) setSDA( false ); // Step 1: SDA is High, Lower it
+        else if( !clkLow )                     // Step 2: SDA Already Low, Lower Clock
         {
             if( m_comp ) m_comp->inStateChanged( 128 ); // Set TWINT
             keepClocking();
@@ -104,17 +96,17 @@ void eI2CMaster::runEvent()       // We are in Mater mode, controlling Clock
     else if( m_state == I2C_WAITACK )                // Read ACK
     {
         int ack = 257;                               //  ACK
-        if( m_SDA ) ack = 256;                       // NACK
+        if( m_sdaState ) ack = 256;                  // NACK
         if( m_comp ) m_comp->inStateChanged( ack );
         m_state = I2C_ACK;
         keepClocking();
     }
     else if( m_state == I2C_STOPPED )                // Send Stop Condition
     {
-        if     (  m_SDA && clkLow )  setSDA( false ); // Step 1: Lower SDA
-        else if( !m_SDA && clkLow )  keepClocking();  // Step 2: Raise Clock
-        else if( !m_SDA && !clkLow ) setSDA( true );  // Step 3: Raise SDA
-        else if(  m_SDA && !clkLow )                  // Step 4: Operation Finished
+        if     (  m_sdaState && clkLow )  setSDA( false ); // Step 1: Lower SDA
+        else if( !m_sdaState && clkLow )  keepClocking();  // Step 2: Raise Clock
+        else if( !m_sdaState && !clkLow ) setSDA( true );  // Step 3: Raise SDA
+        else if(  m_sdaState && !clkLow )                  // Step 4: Operation Finished
         {
             m_state = I2C_IDLE;
             if( m_comp ) m_comp->inStateChanged( 128+I2C_STOPPED ); // Set TWINT ( set to 0 )
@@ -122,32 +114,21 @@ void eI2CMaster::runEvent()       // We are in Mater mode, controlling Clock
     }
 }
 
-void eI2CMaster::masterStart( uint8_t addr )
+void TwiMaster::masterStart( uint8_t addr )
 {
     m_state = I2C_STARTED;
 }
 
-void eI2CMaster::masterWrite( uint8_t data )
+void TwiMaster::masterWrite( uint8_t data )
 {
     m_state = I2C_WRITTING;
     m_txReg = data;
     writeByte();
 }
 
-void eI2CMaster::masterRead()
+void TwiMaster::masterRead()
 {
     setSDA( true );
     m_bitPtr = 0;
     m_state = I2C_READING;
-}
-
-void eI2CMaster::updatePins()
-{
-    if( m_enabled )
-    {
-        setSDA( true );
-        setSCL( true );
-        Simulator::self()->addEvent( m_stepsPe, this );
-    }
-    else m_state = I2C_IDLE;
 }

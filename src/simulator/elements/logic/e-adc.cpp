@@ -19,6 +19,7 @@
 
 #include "e-adc.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eADC::eADC( QString id )
     : eLogicDevice( id )

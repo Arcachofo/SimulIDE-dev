@@ -21,6 +21,7 @@
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "e-source.h"
 #include "pin.h"
 #include "memtable.h"
 #include "utils.h"

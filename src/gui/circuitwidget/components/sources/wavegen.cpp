@@ -20,6 +20,7 @@
 #include "wavegen.h"
 #include "pin.h"
 #include "simulator.h"
+#include "e-source.h"
 
 static const char* WaveGen_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Volt Base"),

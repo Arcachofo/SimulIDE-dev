@@ -168,13 +168,13 @@ void eSource::setStateZ( bool z )
 void eSource::setVoltHigh( double v )
 {
     m_voltHigh = v;
-    if( m_state ) m_voltOut = v;
+    /// if( m_state ) m_voltOut = v;
 }
 
 void eSource::setVoltLow( double v )
 {
     m_voltLow = v;
-    if( !m_state ) m_voltOut = v;
+    /// if( !m_state ) m_voltOut = v;
 }
 
 void eSource::setImp( double imp )
@@ -182,6 +182,18 @@ void eSource::setImp( double imp )
     m_imp = imp;
     m_admit = 1/m_imp;
     stampAll();
+}
+
+void eSource::setInputImp( double imp )
+{
+    m_inputImp = imp;
+    if( m_pinMode == input ) m_gndAdmit = 1/m_inputImp;
+}
+
+void eSource::setOutputImp( double imp )
+{
+    m_outputImp = imp;
+    if( m_pinMode == output ) m_vddAdmit = 1/m_outputImp;
 }
 
 void eSource::setInverted( bool inverted )

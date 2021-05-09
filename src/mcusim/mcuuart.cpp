@@ -19,11 +19,11 @@
 
 #include "mcuuart.h"
 
-QHash<QString, UsartM*> McuUsart::m_usarts;
+QHash<QString, UsartModule*> McuUsart::m_usarts;
 
 McuUsart::McuUsart(eMcu* mcu, QString name )
         : McuModule( mcu, name )
-        , UsartM( name )
+        , UsartModule( name )
 {
     m_mode = 0xFF; // Force first mode change.
 }

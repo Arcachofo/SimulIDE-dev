@@ -17,8 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef USARTM_H
-#define USARTM_H
+#ifndef USARTMODULE_H
+#define USARTMODULE_H
 
 #include<QHash>
 
@@ -37,14 +37,13 @@ enum parity_t{
 };
 
 class eSource;
-class UartTx;
-class UartRx;
+class UartTR;
 
-class MAINMODULE_EXPORT UsartM
+class MAINMODULE_EXPORT UsartModule
 {
     public:
-        UsartM( QString name );
-        ~UsartM();
+        UsartModule( QString name );
+        ~UsartModule();
 
         virtual void step( uint8_t ){;}
 
@@ -64,8 +63,8 @@ class MAINMODULE_EXPORT UsartM
     protected:
         void setPeriod( uint64_t period );
 
-        UartTx* m_sender;
-        UartRx* m_receiver;
+        UartTR* m_sender;
+        UartTR* m_receiver;
 
         bool m_running;   // is Uart running?
 };
@@ -73,7 +72,7 @@ class MAINMODULE_EXPORT UsartM
 class MAINMODULE_EXPORT UartTR : public eElement
 {
     public:
-        UartTR( UsartM* usart, QString name );
+        UartTR( UsartModule* usart, QString name );
         ~UartTR();
 
         enum state_t{
@@ -98,7 +97,7 @@ class MAINMODULE_EXPORT UartTR : public eElement
         RegSignal<uint8_t> on_dataEnd;
 
     protected:
-        UsartM* m_usart;
+        UsartModule* m_usart;
         eSource* m_ioPin;
 
         uint16_t m_frame;

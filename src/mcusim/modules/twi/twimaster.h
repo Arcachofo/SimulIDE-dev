@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,53 +17,33 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "usartmodule.h"
-#include "usarttx.h"
-#include "usartrx.h"
+#ifndef TWISMASTER_H
+#define TWIMASTER_H
 
-UsartModule::UsartModule( QString name )
+#include "twimodule.h"
+
+class Component;
+
+class MAINMODULE_EXPORT TwiMaster : public TwiTR
 {
-    m_sender   = new UartTx( this, name+"Tx" );
-    m_receiver = new UartRx( this, name+"Rx" );
+    public:
+        TwiMaster( TwiModule* twi, QString name );
+        ~TwiMaster();
 
-    m_mode = 0xFF; // Force first mode change.
-}
-UsartModule::~UsartModule( )
-{
-    delete m_sender;
-    delete m_receiver;
-}
+        virtual void stamp() override;
+        virtual void runEvent() override;
 
-void UsartModule::parityError()
-{
+        virtual void masterStart( uint8_t addr );
+        virtual void masterWrite( uint8_t data );
+        virtual void masterRead();
 
-}
+    protected:
+        void keepClocking();
 
-void UsartModule::setPeriod( uint64_t period )
-{
-    m_sender->setPeriod( period );
-    m_receiver->setPeriod( period );
-}
+        bool m_toggleScl;
 
-UartTR::UartTR( UsartModule* usart, QString name )
-      : eElement( name )
-{
-    m_usart = usart;
+        Component* m_comp;
+};
 
-    m_state = usartSTOPPED;
-    m_enabled = false;
-}
-UartTR::~UartTR( ){}
-
-bool UartTR::getParity( uint8_t data )
-{
-    bool parity = false;
-    for( int i=0; i<mDATABITS; ++i )
-    {
-        parity ^= data & 1;
-        data >>= 1;
-    }
-    if( mPARITY == parODD ) parity ^= 1;
-    return parity;
-}
+#endif
 

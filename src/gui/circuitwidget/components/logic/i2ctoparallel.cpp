@@ -19,6 +19,7 @@
 
 #include "i2ctoparallel.h"
 #include "itemlibrary.h"
+#include "e-source.h"
 #include "pin.h"
 
 Component* I2CToParallel::construct( QObject* parent, QString type, QString id )

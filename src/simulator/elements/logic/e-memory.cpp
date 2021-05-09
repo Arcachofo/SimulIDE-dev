@@ -19,6 +19,7 @@
 
 #include "e-memory.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eMemory::eMemory( QString id )
        : eLogicDevice( id )

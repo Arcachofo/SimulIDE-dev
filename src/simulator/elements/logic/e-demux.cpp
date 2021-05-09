@@ -19,6 +19,7 @@
 
 #include "e-demux.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eDemux::eDemux( QString id )
       : eLogicDevice( id )

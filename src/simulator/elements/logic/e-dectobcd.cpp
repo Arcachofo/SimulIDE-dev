@@ -19,6 +19,7 @@
 
 #include "e-dectobcd.h"
 #include "simulator.h"
+#include "e-source.h"
 
 eDecToBcd::eDecToBcd( QString id )
          : eLogicDevice( id )

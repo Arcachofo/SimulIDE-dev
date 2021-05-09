@@ -24,7 +24,7 @@
 #include "mcumodule.h"
 
 
-class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartM
+class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
 {
         friend class McuCreator;
 
@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartM
 
         virtual void dataAvailable( uint8_t data ) override;
 
- static QHash<QString, UsartM*> m_usarts; // Access Usarts by name
+ static QHash<QString, UsartModule*> m_usarts; // Access Usarts by name
 
     protected:
         uint8_t* m_rxRegister;

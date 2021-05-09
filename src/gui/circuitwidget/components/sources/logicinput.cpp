@@ -22,6 +22,7 @@
 #include "circuit.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "e-source.h"
 #include "pin.h"
 
 static const char* LogicInput_properties[] = {

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,53 +17,59 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "usartmodule.h"
-#include "usarttx.h"
-#include "usartrx.h"
+#ifndef ECLOCKEDDEVICE_H
+#define ECLOCKEDDEVICE_H
 
-UsartModule::UsartModule( QString name )
+#include "e-element.h"
+
+enum trigtType_t{
+    Trig_None = 0,
+    Trig_Clk,
+    Trig_InEn,
+};
+
+enum clockState_t{
+    Clock_Low = 0,
+    Clock_Rising,
+    Clock_Allow,
+    Clock_High,
+    Clock_Falling,
+};
+
+class eSource;
+
+class MAINMODULE_EXPORT eClockedDevice : public eElement
 {
-    m_sender   = new UartTx( this, name+"Tx" );
-    m_receiver = new UartRx( this, name+"Rx" );
+    public:
+        eClockedDevice( QString id );
+        ~eClockedDevice();
 
-    m_mode = 0xFF; // Force first mode change.
-}
-UsartModule::~UsartModule( )
-{
-    delete m_sender;
-    delete m_receiver;
-}
+        int eTrigger() { return m_etrigger; }
+        virtual void seteTrigger( int trigger );
 
-void UsartModule::parityError()
-{
+        void setClockPin( eSource* clockSource ) { m_clockSource = clockSource; }
+        void createClockPin();
 
-}
+        bool clockInv();
+        void setClockInv( bool inv );
 
-void UsartModule::setPeriod( uint64_t period )
-{
-    m_sender->setPeriod( period );
-    m_receiver->setPeriod( period );
-}
+        virtual void stamp() override;
 
-UartTR::UartTR( UsartModule* usart, QString name )
-      : eElement( name )
-{
-    m_usart = usart;
+        int getClockState();
 
-    m_state = usartSTOPPED;
-    m_enabled = false;
-}
-UartTR::~UartTR( ){}
+    protected:
+        void createClockPin( ePin* epin );
+        void createClockeSource( ePin* epin );
 
-bool UartTR::getParity( uint8_t data )
-{
-    bool parity = false;
-    for( int i=0; i<mDATABITS; ++i )
-    {
-        parity ^= data & 1;
-        data >>= 1;
-    }
-    if( mPARITY == parODD ) parity ^= 1;
-    return parity;
-}
+        bool m_clock;
 
+        int m_etrigger;
+
+        double m_inputImp;
+        double m_inputHighV;
+        double m_inputLowV;
+
+        eSource* m_clockSource;
+};
+
+#endif

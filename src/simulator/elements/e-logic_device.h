@@ -20,10 +20,10 @@
 #ifndef ELOGICDEVICE_H
 #define ELOGICDEVICE_H
 
-#include "e-source.h"
+#include "e-clocked_device.h"
 #include "e-pin.h"
 
-class MAINMODULE_EXPORT eLogicDevice : public eElement
+class MAINMODULE_EXPORT eLogicDevice : public eClockedDevice
 {
     public:
 
@@ -54,18 +54,12 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         double outImp() const            { return m_outImp; }
         void  setOutImp( double imp );
 
-        bool clockInv() const            { return m_clockSource->isInverted(); }
-        void setClockInv( bool inv );
-
         bool inverted() { return m_inverted; }
         void setInverted( bool inverted );
 
         bool invertInps() { return m_invInputs; }
         void setInvertInps( bool invert );
 
-        int eTrigger() { return m_etrigger; }
-        virtual void seteTrigger( int trigger );
-        
         void setOutputEnabled( bool enabled );
         void updateOutEnabled();
 
@@ -86,18 +80,14 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
 
         virtual ePin* getEpin( QString pinName );
 
-        int getClockState();
         bool outputEnabled();
 
         virtual void createPins( int inputs, int outputs );
-        void setClockPin( eSource* clockSource ) { m_clockSource = clockSource; }
-        void setInput( int n, eSource* input );
-        void createClockPin();
         void createOutEnablePin();
 
+        void setInput( int n, eSource* input );
+
     protected:
-        void createClockPin( ePin* epin );
-        void createClockeSource( ePin* epin );
         void createOutEnablePin( ePin* epin );
         void createOutEnableeSource( ePin* epin );
         void createInput( ePin* epin );
@@ -112,8 +102,8 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         bool getInputState( int input );
         bool getOutputState( int output );
 
-        double m_inputHighV;
-        double m_inputLowV;
+        /// double m_inputHighV;  // currently in eClockedDevice
+        /// double m_inputLowV;  // currently in eClockedDevice
         double m_outHighV;
         double m_outLowV;
 
@@ -122,7 +112,7 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         uint64_t m_timeHL;    // Time for Output voltage to switch from 90% to 10%
         bool m_rndPD;         // Randomize Propagation Delay
 
-        double m_inputImp;
+        /// double m_inputImp;  // currently in eClockedDevice
         double m_outImp;
 
         int m_numInputs;
@@ -132,15 +122,11 @@ class MAINMODULE_EXPORT eLogicDevice : public eElement
         int m_nextOutVal;
         int m_outStep;
 
-        int m_etrigger;
-
-        bool m_clock;
         bool m_outEnable;
         bool m_inverted;
         bool m_invInputs;
 
         eSource* m_outEnSource;
-        eSource* m_clockSource;
 
         std::vector<eSource*> m_output;
         std::vector<eSource*> m_input;
