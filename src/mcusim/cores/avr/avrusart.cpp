@@ -18,13 +18,15 @@
  ***************************************************************************/
 
 #include "avrusart.h"
-#include "mcutimer.h"
+#include "usarttx.h"
+#include "usartrx.h"
+//#include "mcutimer.h"
 #include "e_mcu.h"
 
 #define UCSRNB *m_ucsrnb
 
 AvrUsart::AvrUsart( eMcu* mcu,  QString name )
-        : UsartM( mcu, name )
+        : McuUsart( mcu, name )
 {
     m_stopBits = 1;
     m_dataMask = 0xFF;
@@ -50,7 +52,7 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name )
 }
 AvrUsart::~AvrUsart(){}
 
-void AvrUsart::configure( uint8_t val ) // UCSRnC changed
+void AvrUsart::configureA( uint8_t val ) // UCSRnC changed
 {
     // clockPol = getRegBitsVal( val, UCPOLn );
 
@@ -90,8 +92,8 @@ void AvrUsart::setBaurrate( uint16_t ubrr )
 
 void AvrUsart::step( uint8_t )
 {
-    m_sender.runEvent();
-    m_receiver.runEvent();
+    m_sender->runEvent();
+    m_receiver->runEvent();
 }
 
 uint8_t AvrUsart::getBit9()

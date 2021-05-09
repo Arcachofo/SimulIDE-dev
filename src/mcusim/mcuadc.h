@@ -20,13 +20,12 @@
 #ifndef MCUADC_H
 #define MCUADC_H
 
-#include "e-element.h"
-#include "regsignal.h"
+#include "mcumodule.h"
 
 class eMcu;
 class McuPin;
 
-class MAINMODULE_EXPORT McuAdc : public eElement
+class MAINMODULE_EXPORT McuAdc : public McuModule
 {
         friend class McuCreator;
 
@@ -37,21 +36,13 @@ class MAINMODULE_EXPORT McuAdc : public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
-        virtual void configureA( uint8_t val ){;}
-        virtual void configureB( uint8_t val ){;}
         virtual void setChannel( uint8_t val ){;}
 
         void startConversion();
 
-        //Signals:
-        RegSignal<uint8_t> on_conv;
-
     protected:
         virtual double getVref()=0;
         virtual void endConversion(){;}
-
-        QString m_name;
-        eMcu*   m_mcu;
 
         bool m_enabled;
         bool m_converting;

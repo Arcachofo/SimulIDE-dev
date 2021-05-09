@@ -54,8 +54,8 @@ class MAINMODULE_EXPORT eSource : public eElement
         double voltLow() { return m_voltLow; }
         void  setVoltLow( double v );
         
-        bool getState() { return m_state; }
-        void setState( bool out, bool st=false );
+        virtual bool getState() { return m_state; }
+        virtual void setState( bool out, bool st=false );
         void setStateZ( bool z );
 
         bool  isInverted() { return m_inverted; }

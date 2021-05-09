@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,56 +17,42 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef USARTM_H
-#define USARTM_H
+#ifndef AVRADC_H
+#define AVRADC_H
 
-#include<QHash>
-
-#include "mcuuart.h"
-//#include "regsignal.h"
+#include "mcuadc.h"
+#include "mcutypes.h"
 
 class eMcu;
+class McuPin;
 
-enum parity_t{
-    parNONE=0,
-    parEVEN,
-    parODD,
-};
-
-class MAINMODULE_EXPORT UsartM
+class MAINMODULE_EXPORT AvrAdc : public McuAdc
 {
-        friend class McuCreator;
-
     public:
-        UsartM( eMcu* mcu,  QString name );
-        ~UsartM();
+        AvrAdc( eMcu* mcu, QString name );
+        ~AvrAdc();
 
-        virtual void configure( uint8_t ){;}
-        virtual void step( uint8_t ){;}
+        virtual void initialize() override;
 
-        virtual uint8_t getBit9(){return 0;}
-        virtual void    setBit9( uint8_t bit ){;}
-
-        void parityError();
-
-        uint8_t m_mode;
-        uint8_t m_stopBits;
-        uint8_t m_dataBits;
-        uint8_t m_dataMask;
-        parity_t m_parity;
+        virtual void configureA( uint8_t val ) override;
+        virtual void configureB( uint8_t val ) override;
+        virtual void setChannel( uint8_t val ) override;
 
     protected:
-        void setPeriod( uint64_t period );
+        virtual double getVref() override;
+        virtual void endConversion() override;
 
-        QString m_name;
-        eMcu*   m_mcu;
+        bool m_leftAdjust;
+        bool m_autoTrigger;
 
-        UartTx m_sender;
-        UartRx m_receiver;
+        uint8_t m_refSelect;
 
-        bool m_running;   // is Uart running?
+        uint8_t* m_ADCSRA;
+        regBits_t m_ADSC;
+        regBits_t m_ADIF;
 
- static QHash<QString, UsartM*> m_usarts; // Access Usarts by name
+        McuPin* m_aRefPin;
+        McuPin* m_aVccPin;
 };
 
 #endif

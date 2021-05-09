@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,56 +17,34 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUPIN_H
-#define MCUPIN_H
+#ifndef MCUMODULE_H
+#define MCUMODULE_H
 
-#include "e-source.h"
-#include "pin.h"
+#include "e-element.h"
+#include "mcutypes.h"
+#include "regsignal.h"
 
-class McuPort;
 class eMcu;
 
-class MAINMODULE_EXPORT McuPin : public eSource
+class MAINMODULE_EXPORT McuModule : public eElement
 {
-    friend class McuPort;
-    friend class McuCreator;
+        friend class McuCreator;
 
     public:
-        McuPin( McuPort* port, int i, QString id , Component* mcu );
-        ~McuPin();
 
-        virtual void initialize() override;
-        virtual void stamp() override;
-        virtual void voltChanged() override;
+        McuModule( eMcu* mcu, QString name );
+        ~McuModule();
 
-        void controlPin( bool ctrl );
-        virtual void setState( bool state, bool st=false ) override;
-        void setDirection( bool out );
-        void setPullup( bool up );
-        void setPullupMask( bool up ) { m_puMask = up;}
-        void setExtraSource( double vddAdmit, double gndAdmit );
+        virtual void configureA( uint8_t ){;}
+        virtual void configureB( uint8_t ){;}
 
-        virtual bool getState() override;
-
-        Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
+        RegSignal<uint8_t> interrupt;
 
     protected:
-        QString m_id;
+        QString m_name;
+        eMcu*   m_mcu;
 
-        McuPort* m_port;
-
-        int m_number;
-
-        bool m_outState;
-        bool m_inState;
-        bool m_isOut;
-        bool m_dirMask; // Pin always output
-        bool m_extCtrl;
-        bool m_pullup;
-        bool m_puMask; // Pullup always on
-        bool m_openColl;
-
-        uint8_t m_pinMask;
+        regBits_t m_configBitsA;
+        regBits_t m_configBitsB;
 };
-
 #endif

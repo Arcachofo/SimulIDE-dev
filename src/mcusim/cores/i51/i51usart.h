@@ -20,18 +20,18 @@
 #ifndef I51USART_H
 #define I51USART_H
 
-#include "usartmodule.h"
+#include "mcuuart.h"
 #include "mcutypes.h"
 
 class McuTimer;
 
-class MAINMODULE_EXPORT I51Usart : public UsartM
+class MAINMODULE_EXPORT I51Usart : public McuUsart
 {
     public:
         I51Usart( eMcu* mcu, QString name );
         ~I51Usart();
 
-        virtual void configure( uint8_t val ) override;
+        virtual void configureA( uint8_t val ) override;
         virtual void step( uint8_t ) override;
         virtual uint8_t getBit9();
         virtual void setBit9( uint8_t bit );

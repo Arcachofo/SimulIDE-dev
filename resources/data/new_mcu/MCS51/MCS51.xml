@@ -90,16 +90,16 @@
     </port>
     
     <timer name="TIMER0" enable="TR0" counter="TL0,TH0" configbitsA="T0M0,T0M1" configbitsB="C/T0,GATE0">
-        <raiseint intname="T0_OVF" source="OVERFLOW" />
+        <raiseint intname="T0_OVF" source="MAIN" />
         <extclock type="PIN" source="PIN34"/>
     </timer>
     
     <timer name="TIMER1" enable="TR1" counter="TL1,TH1" configbitsA="T1M0,T1M1" configbitsB="C/T1,GATE1">
-        <raiseint intname="T1_OVF" source="OVERFLOW" />
+        <raiseint intname="T1_OVF" source="MAIN" />
         <extclock type="PIN" source="PIN35"/>
     </timer>
     
-    <usart name="USART" configregs="SCON" >
+    <usart name="USART" configregsA="SCON" >
         <trunit type="tx" pin="PORT31" register="SBUF"   raiseint="USART_T"/>
         <trunit type="rx" pin="PORT30" register="SBUFRX" raiseint="USART_R" enable="REN"/>
     </usart>

@@ -20,18 +20,18 @@
 #ifndef AVRUSART_H
 #define AVRUSART_H
 
-#include "usartmodule.h"
+#include "mcuuart.h"
 #include "mcutypes.h"
 
 class McuTimer;
 
-class MAINMODULE_EXPORT AvrUsart : public UsartM
+class MAINMODULE_EXPORT AvrUsart : public McuUsart
 {
     public:
         AvrUsart( eMcu* mcu, QString name );
         ~AvrUsart();
 
-        virtual void configure( uint8_t val ) override;
+        virtual void configureA( uint8_t val ) override;
         virtual void step( uint8_t ) override;
         virtual uint8_t getBit9();
         virtual void setBit9( uint8_t bit );

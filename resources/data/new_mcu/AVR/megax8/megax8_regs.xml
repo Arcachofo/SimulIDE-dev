@@ -79,10 +79,10 @@
         <register name="OCR2B"  addr="180" bits=""/>
         <register name="ASSR"   addr="182" bits=""/>
         <register name="TWBR"   addr="184" bits=""/>
-        <register name="TWSR"   addr="185" bits=""/>
-        <register name="TWAR"   addr="186" bits=""/>
+        <register name="TWSR"   addr="185" bits="TWPS0,TWPS1,0,TWS3,TWS4,TWS5,TWS6,TWS7"/>
+        <register name="TWAR"   addr="186" bits="TWGCE,TWA0,TWA1,TWA2,TWA3,TWA4,TWA5,TWA6"/>
         <register name="TWDR"   addr="187" bits=""/>
-        <register name="TWCR"   addr="188" bits=""/>
+        <register name="TWCR"   addr="188" bits="TWIE,0,TWEN,TWWC,TWSTO,TWSTA,TWEA,TWINT"/>
         <register name="TWAMR"  addr="189" bits=""/>
         <register name="UCSR0A" addr="192" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0"/>
         <register name="UCSR0B" addr="193" bits="TXB80,RXB80,UCSZ02,TXEN0,RXEN0,UDRIE0,TXCIE0,RXCIE0"/>

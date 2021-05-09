@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,29 +17,30 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "usartmodule.h"
-#include "simulator.h"
+#ifndef AVRTWI_H
+#define AVRTWI_H
 
-QHash<QString, UsartM*> UsartM::m_usarts;
+#include "mcutwi.h"
+//#include "mcutypes.h"
 
-UsartM::UsartM( eMcu* mcu, QString name )
-      : m_sender( this, name+"Tx" )
-      , m_receiver( this, name+"Rx" )
+class eMcu;
+//class McuPin;
+
+class MAINMODULE_EXPORT AvrTwi : public McuTwi
 {
-    m_mcu = mcu;
-    m_name = name;
-    m_mode = 0xFF; // Force first mode change.
-}
-UsartM::~UsartM( ){}
+    public:
+        AvrTwi( eMcu* mcu, QString name );
+        ~AvrTwi();
 
-void UsartM::parityError()
-{
+        virtual void initialize() override;
 
-}
+        virtual void configureA( uint8_t val ) override;
+        virtual void configureB( uint8_t val ) override;
 
-void UsartM::setPeriod( uint64_t period )
-{
-    m_sender.setPeriod( period );
-    m_receiver.setPeriod( period );
-}
+        virtual void writeStatus( uint8_t val ) override;
 
+    protected:
+
+};
+
+#endif

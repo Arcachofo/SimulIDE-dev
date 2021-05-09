@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,56 +17,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUPIN_H
-#define MCUPIN_H
+#include "avrtwi.h"
+#include "mcupin.h"
+#include "e_mcu.h"
 
-#include "e-source.h"
-#include "pin.h"
-
-class McuPort;
-class eMcu;
-
-class MAINMODULE_EXPORT McuPin : public eSource
+AvrTwi::AvrTwi( eMcu* mcu, QString name )
+      : McuTwi( mcu, name )
 {
-    friend class McuPort;
-    friend class McuCreator;
+}
 
-    public:
-        McuPin( McuPort* port, int i, QString id , Component* mcu );
-        ~McuPin();
+AvrTwi::~AvrTwi()
+{
+}
 
-        virtual void initialize() override;
-        virtual void stamp() override;
-        virtual void voltChanged() override;
+void AvrTwi::initialize()
+{
+}
 
-        void controlPin( bool ctrl );
-        virtual void setState( bool state, bool st=false ) override;
-        void setDirection( bool out );
-        void setPullup( bool up );
-        void setPullupMask( bool up ) { m_puMask = up;}
-        void setExtraSource( double vddAdmit, double gndAdmit );
+void AvrTwi::configureA( uint8_t val ) // TWCR
+{
+    bool enable =  (( val & 0b00000100 )>0);
+}
 
-        virtual bool getState() override;
+void AvrTwi::configureB( uint8_t val )
+{
+}
 
-        Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
+void AvrTwi::writeStatus( uint8_t val )
+{
+    val &= 0b00000011;
+    m_prescaler = val;
 
-    protected:
-        QString m_id;
-
-        McuPort* m_port;
-
-        int m_number;
-
-        bool m_outState;
-        bool m_inState;
-        bool m_isOut;
-        bool m_dirMask; // Pin always output
-        bool m_extCtrl;
-        bool m_pullup;
-        bool m_puMask; // Pullup always on
-        bool m_openColl;
-
-        uint8_t m_pinMask;
-};
-
-#endif
+    m_mcu->m_regOverride = val | (*m_twiStatus & 0b11111100); // Preserve Status bits
+}

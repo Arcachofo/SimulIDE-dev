@@ -18,13 +18,15 @@
  ***************************************************************************/
 
 #include "i51usart.h"
+#include "usarttx.h"
+#include "usartrx.h"
 #include "mcutimer.h"
 #include "e_mcu.h"
 
 #define SCON *m_scon
 
 I51Usart::I51Usart( eMcu* mcu,  QString name )
-        : UsartM( mcu, name )
+        : McuUsart( mcu, name )
 {
     m_stopBits = 1;
     m_dataMask = 0xFF;
@@ -39,13 +41,13 @@ I51Usart::I51Usart( eMcu* mcu,  QString name )
 }
 I51Usart::~I51Usart(){}
 
-void I51Usart::configure( uint8_t val ) //SCON
+void I51Usart::configureA( uint8_t val ) //SCON
 {
     uint8_t mode = val >> 6;
     if( mode == m_mode ) return;
     m_mode = mode;
 
-    m_sender.enable( true );
+    m_sender->enable( true );
 
     m_useTimer = false;
 
@@ -84,8 +86,8 @@ void I51Usart::step( uint8_t )
 {
     if( !m_useTimer ) return;
 
-    m_sender.runEvent();
-    m_receiver.runEvent();
+    m_sender->runEvent();
+    m_receiver->runEvent();
 }
 
 uint8_t I51Usart::getBit9()

@@ -24,10 +24,8 @@
 
 
 McuTimer::McuTimer( eMcu* mcu, QString name )
-        : eElement( "McuTimer"+name )
+        : McuModule( mcu, name )
 {
-    m_mcu = mcu;
-    m_name = name;
     m_number = name.right(1).toInt();
 
     m_countL = NULL;

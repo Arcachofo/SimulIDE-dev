@@ -22,14 +22,14 @@
 
 #include<QHash>
 
-#include "e-element.h"
+#include "mcumodule.h"
 #include "regsignal.h"
-#include "mcutypes.h"
+
 
 class eMcu;
 class McuOcUnit;
 
-class MAINMODULE_EXPORT McuTimer : public eElement
+class MAINMODULE_EXPORT McuTimer : public McuModule
 {
         friend class McuCreator;
         friend class McuOcUnit;
@@ -48,8 +48,6 @@ class MAINMODULE_EXPORT McuTimer : public eElement
 
         virtual void sheduleEvents();
         virtual void enable( uint8_t en );
-        virtual void configureA( uint8_t val ){;}
-        virtual void configureB( uint8_t val ){;}
         virtual void countWriteL( uint8_t val );
         virtual void countWriteH( uint8_t val );
         virtual void updtCycles();
@@ -63,11 +61,8 @@ class MAINMODULE_EXPORT McuTimer : public eElement
         RegSignal<uint8_t> on_tov;
 
     protected:
-        QString m_name;
         int     m_number;
-        eMcu*   m_mcu;
 
-        //int      m_nBits;
         uint16_t m_prescaler;
         uint64_t m_scale;
 
@@ -90,9 +85,6 @@ class MAINMODULE_EXPORT McuTimer : public eElement
         uint16_t m_ovfMatch;  // counter vale to match an overflow
         uint32_t m_ovfPeriod; // overflow period
         uint64_t m_ovfCycle;  // absolute cycle of next overflow
-
-        regBits_t m_configBitsA;
-        regBits_t m_configBitsB;
 
         uint8_t m_mode;
 

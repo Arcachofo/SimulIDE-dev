@@ -27,6 +27,7 @@ class eMcu;
 class Component;
 class QString;
 class QDomElement;
+class McuModule;
 
 class MAINMODULE_EXPORT McuCreator
 {
@@ -38,18 +39,22 @@ class MAINMODULE_EXPORT McuCreator
 
     private:
         static int  processFile( QString fileName );
-        static void createProgMem( uint32_t size , eMcu* mcu);
-        static void createDataMem( uint32_t size, eMcu* mcu );
-        static void createDataBlock( QDomElement* d, eMcu* mcu );
-        static void createRegisters( QDomElement* e, eMcu* mcu);
-        static void createStatusReg( QDomElement* s, eMcu* mcu );
-        static void createInterrupts( QDomElement* i, eMcu* mcu );
-        static void createPort( QDomElement* p, eMcu* mcu );
-        static void createTimer( QDomElement* t, eMcu* mcu );
-        static void createUsart( QDomElement* u, eMcu* mcu );
-        static void createAdc( QDomElement* e, eMcu* mcu );
-        static void createCore( QString core, eMcu* mcu);
-        static void createStack( QDomElement* s, eMcu* mcu );
+        static void createProgMem( uint32_t size );
+        static void createDataMem( uint32_t size );
+        static void createDataBlock( QDomElement* d );
+        static void createRegisters( QDomElement* e );
+        static void createStatusReg( QDomElement* s );
+        static void createInterrupts( QDomElement* i );
+        static void createPort( QDomElement* p );
+        static void createTimer( QDomElement* t );
+        static void createUsart( QDomElement* u );
+        static void createAdc( QDomElement* e );
+        static void createTwi( QDomElement* e );
+        static void createCore( QString core );
+        static void createStack( QDomElement* s );
+
+        static void setInterrupt( QDomElement* el, McuModule* module );
+        static void setConfigRegs( QDomElement* u, McuModule* module );
 
         static QString m_CompName;
         static QString m_basePath;

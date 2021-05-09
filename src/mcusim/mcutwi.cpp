@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,56 +17,21 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUPIN_H
-#define MCUPIN_H
+#include "mcutwi.h"
 
-#include "e-source.h"
-#include "pin.h"
-
-class McuPort;
-class eMcu;
-
-class MAINMODULE_EXPORT McuPin : public eSource
+McuTwi::McuTwi( eMcu* mcu, QString name )
+      : McuModule( mcu, name )
 {
-    friend class McuPort;
-    friend class McuCreator;
+    m_twiReg    = NULL;
+    m_address   = NULL;
+    m_twiStatus = NULL;
+}
 
-    public:
-        McuPin( McuPort* port, int i, QString id , Component* mcu );
-        ~McuPin();
+McuTwi::~McuTwi()
+{
+}
 
-        virtual void initialize() override;
-        virtual void stamp() override;
-        virtual void voltChanged() override;
-
-        void controlPin( bool ctrl );
-        virtual void setState( bool state, bool st=false ) override;
-        void setDirection( bool out );
-        void setPullup( bool up );
-        void setPullupMask( bool up ) { m_puMask = up;}
-        void setExtraSource( double vddAdmit, double gndAdmit );
-
-        virtual bool getState() override;
-
-        Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
-
-    protected:
-        QString m_id;
-
-        McuPort* m_port;
-
-        int m_number;
-
-        bool m_outState;
-        bool m_inState;
-        bool m_isOut;
-        bool m_dirMask; // Pin always output
-        bool m_extCtrl;
-        bool m_pullup;
-        bool m_puMask; // Pullup always on
-        bool m_openColl;
-
-        uint8_t m_pinMask;
-};
-
-#endif
+void McuTwi::initialize()
+{
+    m_prescaler = 1;
+}

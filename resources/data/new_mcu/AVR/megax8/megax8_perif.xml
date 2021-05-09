@@ -37,7 +37,7 @@
         <ocunit   name="OC0A" pin="PORTD6" ocreg="OCR0A" configbits="COM0A0,COM0A1"/>
         <ocunit   name="OC0B" pin="PORTD5" ocreg="OCR0B" configbits="COM0B0,COM0B1"/>
         
-        <raiseint intname="T0_OVF" source="OVERFLOW" />
+        <raiseint intname="T0_OVF" source="MAIN" />
     </timer>
     
     <timer name="TIMER1" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B">
@@ -47,7 +47,7 @@
         <ocunit   name="OC1A" pin="PORTB1" ocreg="OCR1A" configbits="COM1A0,COM1A1"/>
         <ocunit   name="OC1B" pin="PORTB2" ocreg="OCR1B" configbits="COM1B0,COM1B1"/>
         
-        <raiseint intname="T1_OVF" source="OVERFLOW" />
+        <raiseint intname="T1_OVF" source="MAIN" />
     </timer>
     
     <timer name="TIMER2" counter="TCNT2" configregsA="TCCR2A" configregsB="TCCR2B">
@@ -56,19 +56,22 @@
         <ocunit   name="OC2A" pin="PORTB3" ocreg="OCR2A" configbits="COM2A0,COM2A1"/>
         <ocunit   name="OC2B" pin="PORTD3" ocreg="OCR2B" configbits="COM2B0,COM2B1"/>
         
-        <raiseint intname="T2_OVF" source="OVERFLOW" />
+        <raiseint intname="T2_OVF" source="MAIN" />
     </timer>
     
-    <usart name="USART0" configregs="UCSR0C" >
+    <usart name="USART0" configregsA="UCSR0C" >
         <trunit type="tx" pin="PORTD1" register="UDR0" raiseint="USART_T" enable="TXEN0"/>
         <trunit type="rx" pin="PORTD0" register="UDR0" raiseint="USART_R" enable="RXEN0"/>
     </usart>
     
     <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->
-    
     <adc name="ADC" bits="10" valueregs="ADCL,ADCH" configregsA="ADCSRA" configregsB="ADCSRB" multiplex="ADMUX">
         <prescaler select="" values="2,2,4,8,16,32,64,128"/>
         <inputs type="PIN" source="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5" />
-        <raiseint intname="ADC" source="CONVERSION" />
+        <raiseint intname="ADC" source="MAIN" />
     </adc>
+    
+    <twi name="TWI0" valueregs="TWDR" addressreg="TWAR" twistatus="TWSR" configregsA="TWCR">
+        <prescaler select="" values="1,4,16,64"/>
+    </twi>
 </parts>

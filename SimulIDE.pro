@@ -74,7 +74,7 @@ SOURCES += ../src/*.cpp \
     ../src/mcusim/cores/avr/*.cpp \
     ../src/mcusim/cores/i51/*.cpp \
     ../src/mcusim/cores/pic/*.cpp \
-    ../src/mcusim/modules/*.cpp
+    ../src/mcusim/modules/usart/*.cpp
 
 HEADERS += ../src/*.h \
     ../src/gui/*.h \
@@ -119,7 +119,7 @@ HEADERS += ../src/*.h \
     ../src/mcusim/cores/avr/*.h \
     ../src/mcusim/cores/i51/*.h \
     ../src/mcusim/cores/pic/*.h \
-    ../src/mcusim/modules/*.h
+    ../src/mcusim/modules/usart/*.h
 
 INCLUDEPATH += ../src \
     ../src/gui \
@@ -164,7 +164,8 @@ INCLUDEPATH += ../src \
     ../src/mcusim/cores/avr \
     ../src/mcusim/cores/i51 \
     ../src/mcusim/cores/pic \
-    ../src/mcusim/modules
+    ../src/mcusim/modules \
+    ../src/mcusim/modules/usart
 
 TRANSLATIONS +=  \
     ../resources/translations/simulide.ts \

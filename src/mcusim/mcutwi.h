@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,56 +17,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUPIN_H
-#define MCUPIN_H
+#ifndef MCUTWI_H
+#define MCUTWI_H
 
-#include "e-source.h"
-#include "pin.h"
+#include "mcumodule.h"
+//#include "mcutypes.h"
 
-class McuPort;
 class eMcu;
+class McuPin;
 
-class MAINMODULE_EXPORT McuPin : public eSource
+class MAINMODULE_EXPORT McuTwi : public McuModule
 {
-    friend class McuPort;
-    friend class McuCreator;
+        friend class McuCreator;
 
     public:
-        McuPin( McuPort* port, int i, QString id , Component* mcu );
-        ~McuPin();
+        McuTwi( eMcu* mcu, QString name );
+        ~McuTwi();
 
         virtual void initialize() override;
-        virtual void stamp() override;
-        virtual void voltChanged() override;
 
-        void controlPin( bool ctrl );
-        virtual void setState( bool state, bool st=false ) override;
-        void setDirection( bool out );
-        void setPullup( bool up );
-        void setPullupMask( bool up ) { m_puMask = up;}
-        void setExtraSource( double vddAdmit, double gndAdmit );
-
-        virtual bool getState() override;
-
-        Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
+        virtual void writeStatus( uint8_t val ){;}
 
     protected:
-        QString m_id;
+        uint16_t m_clockPeriod;            // TWI Clock period in ps
+        uint8_t m_prescaler;
+        std::vector<uint16_t> m_prescList; // Prescaler values
 
-        McuPort* m_port;
+        uint8_t* m_twiReg;
+        uint8_t* m_address;
+        uint8_t* m_twiStatus;
 
-        int m_number;
-
-        bool m_outState;
-        bool m_inState;
-        bool m_isOut;
-        bool m_dirMask; // Pin always output
-        bool m_extCtrl;
-        bool m_pullup;
-        bool m_puMask; // Pullup always on
-        bool m_openColl;
-
-        uint8_t m_pinMask;
+        McuPin* m_sdaPin;
+        McuPin* m_sclPin;
 };
 
 #endif

@@ -17,56 +17,53 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUPIN_H
-#define MCUPIN_H
+#include "usartmodule.h"
+#include "usarttx.h"
+#include "usartrx.h"
 
-#include "e-source.h"
-#include "pin.h"
-
-class McuPort;
-class eMcu;
-
-class MAINMODULE_EXPORT McuPin : public eSource
+UsartM::UsartM( QString name )
 {
-    friend class McuPort;
-    friend class McuCreator;
+    m_sender   = new UartTx( this, name+"Tx" );
+    m_receiver = new UartRx( this, name+"Rx" );
 
-    public:
-        McuPin( McuPort* port, int i, QString id , Component* mcu );
-        ~McuPin();
+    m_mode = 0xFF; // Force first mode change.
+}
+UsartM::~UsartM( )
+{
+    delete m_sender;
+    delete m_receiver;
+}
 
-        virtual void initialize() override;
-        virtual void stamp() override;
-        virtual void voltChanged() override;
+void UsartM::parityError()
+{
 
-        void controlPin( bool ctrl );
-        virtual void setState( bool state, bool st=false ) override;
-        void setDirection( bool out );
-        void setPullup( bool up );
-        void setPullupMask( bool up ) { m_puMask = up;}
-        void setExtraSource( double vddAdmit, double gndAdmit );
+}
 
-        virtual bool getState() override;
+void UsartM::setPeriod( uint64_t period )
+{
+    m_sender->setPeriod( period );
+    m_receiver->setPeriod( period );
+}
 
-        Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
+UartTR::UartTR( UsartM* usart, QString name )
+      : eElement( name )
+{
+    m_usart = usart;
 
-    protected:
-        QString m_id;
+    m_state = usartSTOPPED;
+    m_enabled = false;
+}
+UartTR::~UartTR( ){}
 
-        McuPort* m_port;
+bool UartTR::getParity( uint8_t data )
+{
+    bool parity = false;
+    for( int i=0; i<mDATABITS; ++i )
+    {
+        parity ^= data & 1;
+        data >>= 1;
+    }
+    if( mPARITY == parODD ) parity ^= 1;
+    return parity;
+}
 
-        int m_number;
-
-        bool m_outState;
-        bool m_inState;
-        bool m_isOut;
-        bool m_dirMask; // Pin always output
-        bool m_extCtrl;
-        bool m_pullup;
-        bool m_puMask; // Pullup always on
-        bool m_openColl;
-
-        uint8_t m_pinMask;
-};
-
-#endif

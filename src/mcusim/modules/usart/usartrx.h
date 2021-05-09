@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,56 +17,24 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUPIN_H
-#define MCUPIN_H
+#ifndef USARTRX_H
+#define USARTRX_H
 
-#include "e-source.h"
-#include "pin.h"
+#include "usartmodule.h"
 
-class McuPort;
-class eMcu;
 
-class MAINMODULE_EXPORT McuPin : public eSource
+class MAINMODULE_EXPORT UartRx : public UartTR
 {
-    friend class McuPort;
-    friend class McuCreator;
-
     public:
-        McuPin( McuPort* port, int i, QString id , Component* mcu );
-        ~McuPin();
+        UartRx( UsartM* usart, QString name );
+        ~UartRx();
 
-        virtual void initialize() override;
-        virtual void stamp() override;
-        virtual void voltChanged() override;
-
-        void controlPin( bool ctrl );
-        virtual void setState( bool state, bool st=false ) override;
-        void setDirection( bool out );
-        void setPullup( bool up );
-        void setPullupMask( bool up ) { m_puMask = up;}
-        void setExtraSource( double vddAdmit, double gndAdmit );
-
-        virtual bool getState() override;
-
-        Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
+        virtual void enable( uint8_t en ) override;
+        virtual void runEvent() override;
+        virtual void processData( uint8_t data ) override;
 
     protected:
-        QString m_id;
-
-        McuPort* m_port;
-
-        int m_number;
-
-        bool m_outState;
-        bool m_inState;
-        bool m_isOut;
-        bool m_dirMask; // Pin always output
-        bool m_extCtrl;
-        bool m_pullup;
-        bool m_puMask; // Pullup always on
-        bool m_openColl;
-
-        uint8_t m_pinMask;
+        void readBit();
 };
 
 #endif
