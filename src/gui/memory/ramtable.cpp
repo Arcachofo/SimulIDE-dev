@@ -125,6 +125,8 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
 void RamTable::RegDoubleClick(const QModelIndex& index)
 {
     m_currentRow = table->currentRow();
+    if( m_currentRow < 0 ) return;
+
     setItemValue( 0, m_registerModel->item(index.row())->text() );
 }
 
