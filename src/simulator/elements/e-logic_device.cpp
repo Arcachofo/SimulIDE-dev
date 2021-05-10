@@ -49,8 +49,6 @@ eLogicDevice::eLogicDevice( QString id )
     m_propDelay = 10*1000; // 10 ns
     m_timeLH = 3000;
     m_timeHL = 4000;
-
-    m_etrigger = Trig_Clk;
 }
 eLogicDevice::~eLogicDevice()
 {
@@ -322,7 +320,7 @@ void eLogicDevice::setInputImp( double imp )
     m_inputImp = imp;
     for( int i=0; i<m_numInputs; ++i ) m_input[i]->setInputImp( imp );
 
-    m_clockSource->setInputImp( imp );
+    if( m_clockSource) m_clockSource->setInputImp( imp );
 
     if( pauseSim ) Simulator::self()->resumeSim();
 }

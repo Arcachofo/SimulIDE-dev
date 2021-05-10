@@ -27,6 +27,7 @@ eClockedDevice::eClockedDevice( QString id )
 {
     m_clock     = false;
     m_clockSource = NULL;
+    m_etrigger = Trig_Clk;
 
     m_inputImp = 1e9;
 
@@ -35,15 +36,24 @@ eClockedDevice::eClockedDevice( QString id )
 }
 eClockedDevice::~eClockedDevice()
 {
-    if( m_clockSource ) delete m_clockSource;
+    //if( m_clockSource ) delete m_clockSource;
 }
 
 void eClockedDevice::stamp() // Register for callBack when eNode volt change on clock pin
 {
+    callBack( true );
+}
+
+void eClockedDevice::callBack( bool en )
+{
     if( m_clockSource )
     {
         eNode* enode = m_clockSource->getEpin(0)->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
+        if( enode )
+        {
+            if( en) enode->voltChangedCallback( this );
+            else    enode->remFromChangedCallback( this );
+        }
     }
 }
 

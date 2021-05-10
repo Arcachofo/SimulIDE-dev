@@ -32,7 +32,13 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         TwiModule( QString name );
         ~TwiModule();
 
-        enum trState_t{
+        enum twiMode_t{
+            TWI_OFF=0,
+            TWI_MASTER,
+            TWI_SLAVE
+        };
+
+        enum i2cState_t{
             I2C_IDLE=0,
             I2C_START,
             I2C_READ,
@@ -48,6 +54,11 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         virtual void runEvent() override;
         virtual void voltChanged() override;
 
+        virtual double freq() { return m_freq/1e3; }
+        virtual void setFreq( double f );
+
+        void setMode( twiMode_t mode );
+
         void sheduleSDA( bool state );
         void getSdaState();
 
@@ -59,6 +70,8 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         void masterStart( uint8_t addr );
         void masterWrite( uint8_t data, bool isAddr );
         void masterRead( bool ack );
+
+        virtual void I2Cstop();
 
         RegSignal<uint8_t> twiState; // Signal to propagate TWI state
 
@@ -72,9 +85,9 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         uint8_t m_address;           // Device Address
         int m_addressBits;
 
-        uint64_t m_clockPeriod;   // TWI Clock period in ps
+        double m_freq;
+        uint64_t m_clockPeriod;   // TWI Clock half period in ps
 
-        bool m_enabled;
         bool m_sheduleSDA;
         bool m_lastSDA;
         bool m_nextSDA;
@@ -88,10 +101,10 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         uint8_t m_txReg;    // Byte to Send
         uint8_t m_rxReg;    // Byte Received
 
-        trState_t m_state;      // Current State of i2c
-        trState_t m_lastState;  // Last State of i2c
-
+        twiMode_t  m_mode;
         twiState_t m_twiState;
+        i2cState_t m_state;      // Current State of i2c
+        i2cState_t m_lastState;  // Last State of i2c
 
         eSource* m_sda;
         eSource* m_scl;

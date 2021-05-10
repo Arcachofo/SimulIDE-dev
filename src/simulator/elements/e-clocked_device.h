@@ -55,6 +55,8 @@ class MAINMODULE_EXPORT eClockedDevice : public eElement
 
         virtual void stamp() override;
 
+        void callBack( bool en );
+
         clkState_t getClockState();
 
     protected:

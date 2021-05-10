@@ -20,6 +20,7 @@
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
+#include "e-source.h"
 #include "ssd1306.h"
 
 static const char* Ssd1306_properties[] = {
@@ -44,7 +45,7 @@ LibraryItem* Ssd1306::libraryItem()
 
 Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
-       , eI2CSlave( id )
+       , TwiModule( id )
        , m_pinSck( 270, QPoint(-48, 48), id+"-PinSck" , 0, this )
        , m_pinSda( 270, QPoint(-40, 48), id+"-PinSda" , 0, this )
        //, m_pinRst( 270, QPoint(-32, 48), id+"-PinRst" , 0, this )
@@ -69,8 +70,12 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     m_pin[0] = &m_pinSck;
     m_pin[1] = &m_pinSda;
 
-    eLogicDevice::createInput( &m_pinSda );                // Input SDA
-    eLogicDevice::createClockPin( &m_pinSck );             // Input SCL
+    //epin->setId( id+"-ePin-input0" );
+
+    m_sda = new eSource( id+"-eSource-input0", &m_pinSda, open_col );
+    //eLogicDevice::createInput( &m_pinSda );                // Input SDA
+    eClockedDevice::createClockPin( &m_pinSck );             // Input SCL
+    m_scl = m_clockSource;
 
     m_pdisplayImg = new QImage( 128, 64, QImage::Format_MonoLSB );
     m_pdisplayImg->setColor( 0, qRgb(0, 0, 0));
@@ -95,21 +100,21 @@ QList<propGroup_t> Ssd1306::propGroups()
     return {mainGroup};
 }
 
-/*void Ssd1306::stamp()
+void Ssd1306::stamp()
 {
-    eI2C::stamp();
+    //TwiModule::stamp();
+    setMode( TWI_SLAVE );
 
-    eNode* enode = m_pinCS.getEnode();// Register for CS changes callback
+    /*eNode* enode = m_pinCS.getEnode();// Register for CS changes callback
     if( enode ) enode->voltChangedCallback( this ); 
     
     enode = m_pinRst.getEnode();       // Register for Rst changes callback
-    if( enode ) enode->voltChangedCallback( this ); 
-}*/
+    if( enode ) enode->voltChangedCallback( this ); */
+}
 
 void Ssd1306::initialize()
 {
-    m_enabled = true;
-    eI2CSlave::initialize();
+    TwiModule::initialize();
 
     m_continue = false;
     m_command = false;
@@ -138,7 +143,7 @@ void Ssd1306::initialize()
 
 void Ssd1306::I2Cstop()
 {
-    eI2CSlave::I2Cstop();
+    TwiModule::I2Cstop();
 
     m_command = false;
     m_data    = false;
@@ -148,7 +153,7 @@ void Ssd1306::I2Cstop()
 
 void Ssd1306::readByte()
 {
-    eI2CSlave::readByte();
+    TwiModule::readByte();
 
     if( !m_command && !m_data )
     {

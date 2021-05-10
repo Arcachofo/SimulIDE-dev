@@ -20,7 +20,7 @@
 #ifndef SSD1306_H
 #define SSD1306_H
 
-#include "e-i2c_slave.h"
+#include "twimodule.h"
 #include "component.h"
 #include "itemlibrary.h"
 #include "pin.h"
@@ -29,12 +29,12 @@
 #define VERT_ADDR_MODE 1
 #define PAGE_ADDR_MODE 2
 
-class MAINMODULE_EXPORT Ssd1306 : public Component, public eI2CSlave
+class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 {
     Q_OBJECT
-    Q_PROPERTY( dispColor Color READ color WRITE setColor DESIGNABLE true USER true )
-    Q_PROPERTY( double Frequency  READ freq       WRITE setFreq       DESIGNABLE true USER true )
-    Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode  DESIGNABLE true USER true )
+    Q_PROPERTY( dispColor Color   READ color WRITE setColor DESIGNABLE true USER true )
+    Q_PROPERTY( double Frequency  READ freq  WRITE setFreq  DESIGNABLE true USER true )
+    Q_PROPERTY( int Control_Code  READ cCode WRITE setCcode DESIGNABLE true USER true )
     
     public:
         Ssd1306( QObject* parent, QString type, QString id );
@@ -59,6 +59,7 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public eI2CSlave
         void setCcode( int code );
 
         virtual void initialize() override;
+        virtual void stamp() override;
         virtual void updateStep() override;
         virtual void remove() override;
 
