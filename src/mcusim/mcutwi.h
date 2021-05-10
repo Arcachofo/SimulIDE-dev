@@ -40,6 +40,8 @@ class MAINMODULE_EXPORT McuTwi : public McuModule, public TwiModule
         virtual void writeStatus( uint8_t val ){;}
 
     protected:
+        uint8_t* m_addressReg;
+
         uint8_t m_prescaler;
         std::vector<uint16_t> m_prescList; // Prescaler values
 

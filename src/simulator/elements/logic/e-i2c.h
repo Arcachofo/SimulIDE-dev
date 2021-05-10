@@ -22,6 +22,7 @@
 
 #include "e-logic_device.h"
 #include "component.h"
+#include "avrtwicodes.h"
 
 #define SDA_PIN m_input[0]
 #define SCL_PIN m_clockSource

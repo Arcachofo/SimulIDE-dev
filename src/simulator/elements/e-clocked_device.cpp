@@ -87,11 +87,11 @@ void eClockedDevice::setClockInv( bool inv )
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 
-int eClockedDevice::getClockState()
+clkState_t eClockedDevice::getClockState()
 {
     if( !m_clockSource ) return Clock_Allow;
 
-    int cState = 0;
+    clkState_t cState = Clock_Low;
 
     bool clock = m_clock;
     double volt = m_clockSource->getVolt(); // Clock pin volt.

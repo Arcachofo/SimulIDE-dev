@@ -19,6 +19,7 @@
 
 #include "avrcompbase.h"
 #include "avr_twi.h"
+#include "avrtwicodes.h"
 
 AvrCompBase::AvrCompBase( QObject* parent, QString type, QString id )
            : McuComponent( parent, type, id )
@@ -166,7 +167,7 @@ void AvrCompBase::i2cOut( uint32_t value )
     }
     else if( msg & TWI_COND_READ )
     {
-        m_avrI2C.masterRead();
+        m_avrI2C.masterRead( msg & TWI_COND_ACK );
     }
     else
         qDebug() << "AvrCompBase::i2cOut UNKNOWN ACTION";
@@ -174,28 +175,22 @@ void AvrCompBase::i2cOut( uint32_t value )
 
 void AvrCompBase::inStateChanged( int value )
 {
-    if( value < 128 ) return;
+    if( value < TWI_MSG ) return;
+    uint8_t cond = value &= ~TWI_MSG;
+    uint8_t data = 0;
 
-    if( value & 256 ) // ACK received
+    if( cond & TWI_COND_ACK ) // ACK received
     {
-        uint32_t irqMsg = avr_twi_irq_msg( TWI_COND_ACK, m_slvAddr, value & 1 );
-        avr_raise_irq( m_i2cInIrq, irqMsg );
+        data = cond & 1 ;
+        cond &= ~1;
     }
-    else if( value == 128 ) // Start Condition sent
+    else if( cond & TWI_COND_READ ) // Received a byte
     {
-        uint32_t irqMsg = avr_twi_irq_msg( TWI_COND_START, m_slvAddr, 0 );
-        avr_raise_irq( m_i2cInIrq, irqMsg );
+        data = m_avrI2C.byteReceived();
     }
-    else if( value == 130 ) // Received a byte
-    {
-        uint32_t irqMsg = avr_twi_irq_msg( TWI_COND_READ, m_slvAddr, m_avrI2C.byteReceived() );
-        avr_raise_irq( m_i2cInIrq, irqMsg );
-    }
-    else if( value == 132 ) // Stop Condition sent
-    {
-        uint32_t irqMsg = avr_twi_irq_msg( TWI_COND_STOP, m_slvAddr, 0 );
-        avr_raise_irq( m_i2cInIrq, irqMsg );
-    }
+
+    uint32_t irqMsg = avr_twi_irq_msg( cond, m_slvAddr, data );
+    avr_raise_irq( m_i2cInIrq, irqMsg );
 }
 
 void AvrCompBase::twenChanged( uint32_t value )

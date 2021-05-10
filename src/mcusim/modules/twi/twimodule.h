@@ -20,80 +20,81 @@
 #ifndef TWIMODULE_H
 #define TWIMODULE_H
 
-enum i2cState_t{
-    I2C_IDLE=0,
-    I2C_STARTED,
-    I2C_READING,
-    I2C_WRITTING,
-    I2C_STOPPED,
-    I2C_ACK,
-    I2C_ENDACK,
-    I2C_WAITACK
-};
-
 #include "e-clocked_device.h"
 #include "regsignal.h"
+#include "avrtwicodes.h" // Using AVR states comes at hand
 
 class eSource;
-class TwiTR;
 
-class MAINMODULE_EXPORT TwiModule
+class MAINMODULE_EXPORT TwiModule : public eClockedDevice
 {
     public:
-        TwiModule(bool master, bool slave, QString name );
+        TwiModule( QString name );
         ~TwiModule();
 
-        eSource* sda() { return m_sda; }
-        eSource* scl() { return m_scl; }
+        enum trState_t{
+            I2C_IDLE=0,
+            I2C_START,
+            I2C_READ,
+            I2C_WRITE,
+            I2C_STOP,
+            I2C_ACK,
+            I2C_ENDACK,
+            I2C_READACK
+        };
 
-    protected:
-        uint8_t* m_address;
+        virtual void initialize() override;
+        virtual void stamp() override;
+        virtual void runEvent() override;
+        virtual void voltChanged() override;
 
-        eSource* m_sda;
-        eSource* m_scl;
+        void sheduleSDA( bool state );
+        void getSdaState();
 
-        TwiTR* m_master;
-        TwiTR* m_slave;
-};
-
-class MAINMODULE_EXPORT TwiTR : public eClockedDevice
-{
-    public:
-        TwiTR( TwiModule* twi, QString name );
-        ~TwiTR();
+        void setTwiState( twiState_t state );
 
         virtual void writeByte();
         virtual void readByte();
-        //virtual void I2Cstop();
 
-        RegSignal<uint8_t> on_dataEnd;
+        void masterStart( uint8_t addr );
+        void masterWrite( uint8_t data, bool isAddr );
+        void masterRead( bool ack );
+
+        RegSignal<uint8_t> twiState; // Signal to propagate TWI state
 
     protected:
-        virtual void setSDA( bool state );
-        virtual void setSCL( bool state );
-
-        bool getSdaState();
+        void keepClocking();
         void readBit();
         void writeBit();
         void waitACK();
         void ACK();
 
-        TwiModule* m_twi;
-
-        bool m_enabled;
-
-        bool m_sdaState;
-        bool m_lastSdaState;
-
-        int m_bitPtr;       // Bit Pointer
+        uint8_t m_address;           // Device Address
+        int m_addressBits;
 
         uint64_t m_clockPeriod;   // TWI Clock period in ps
+
+        bool m_enabled;
+        bool m_sheduleSDA;
+        bool m_lastSDA;
+        bool m_nextSDA;
+        bool m_sdaState;
+        bool m_toggleScl;
+        bool m_isAddr;
+        bool m_masterACK;
+
+        int m_bitPtr;       // Bit Pointer
 
         uint8_t m_txReg;    // Byte to Send
         uint8_t m_rxReg;    // Byte Received
 
-        i2cState_t m_state;      // Current State of i2c
-        i2cState_t m_lastState;  // Last State of i2c
+        trState_t m_state;      // Current State of i2c
+        trState_t m_lastState;  // Last State of i2c
+
+        twiState_t m_twiState;
+
+        eSource* m_sda;
+        eSource* m_scl;
 };
 
 #endif

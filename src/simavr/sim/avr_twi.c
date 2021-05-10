@@ -21,51 +21,7 @@
 
 #include <stdio.h>
 #include "avr_twi.h"
-/*
- * This block respectfully nicked straight out from the Atmel sample
- * code for AVR315. Typos and all.
- * There is no copyright notice on the original file.
- */
-/****************************************************************************
-  TWI State codes
-****************************************************************************/
-// General TWI Master status codes
-#define TWI_START                  0x08 // 008 START has been transmitted
-#define TWI_REP_START              0x10 // 016 Repeated START has been transmitted
-#define TWI_ARB_LOST               0x38 // 056 Arbitration lost
-
-// TWI Master Transmitter status codes
-#define TWI_MTX_ADR_ACK            0x18 // 024 SLA+W has been transmitted and ACK received
-#define TWI_MTX_ADR_NACK           0x20 // 032 SLA+W has been transmitted and NACK received
-#define TWI_MTX_DATA_ACK           0x28 // 040 Data byte has been transmitted and ACK received
-#define TWI_MTX_DATA_NACK          0x30 // 048 Data byte has been transmitted and NACK received
-// TWI Master Receiver status codes
-#define TWI_MRX_ADR_ACK            0x40  // SLA+R has been transmitted and ACK received
-#define TWI_MRX_ADR_NACK           0x48  // SLA+R has been transmitted and NACK received
-#define TWI_MRX_DATA_ACK           0x50  // Data byte has been received and ACK transmitted
-#define TWI_MRX_DATA_NACK          0x58  // Data byte has been received and NACK transmitted
-
-// TWI Slave Transmitter status codes
-#define TWI_STX_ADR_ACK            0xA8  // Own SLA+R has been received; ACK has been returned
-#define TWI_STX_ADR_ACK_M_ARB_LOST 0xB0  // Arbitration lost in SLA+R/W as Master; own SLA+R has been received; ACK has been returned
-#define TWI_STX_DATA_ACK           0xB8  // Data byte in TWDR has been transmitted; ACK has been received
-#define TWI_STX_DATA_NACK          0xC0  // Data byte in TWDR has been transmitted; NOT ACK has been received
-#define TWI_STX_DATA_ACK_LAST_BYTE 0xC8  // Last data byte in TWDR has been transmitted (TWEA = �0�); ACK has been received
-
-// TWI Slave Receiver status codes
-#define TWI_SRX_ADR_ACK            0x60  // Own SLA+W has been received ACK has been returned
-#define TWI_SRX_ADR_ACK_M_ARB_LOST 0x68  // Arbitration lost in SLA+R/W as Master; own SLA+W has been received; ACK has been returned
-#define TWI_SRX_GEN_ACK            0x70  // General call address has been received; ACK has been returned
-#define TWI_SRX_GEN_ACK_M_ARB_LOST 0x78  // Arbitration lost in SLA+R/W as Master; General call address has been received; ACK has been returned
-#define TWI_SRX_ADR_DATA_ACK       0x80                                   // Previously addressed with own SLA+W; data has been received; ACK has been returned
-#define TWI_SRX_ADR_DATA_NACK      0x88  // Previously addressed with own SLA+W; data has been received; NOT ACK has been returned
-#define TWI_SRX_GEN_DATA_ACK       0x90  // Previously addressed with general call; data has been received; ACK has been returned
-#define TWI_SRX_GEN_DATA_NACK      0x98  // Previously addressed with general call; data has been received; NOT ACK has been returned
-#define TWI_SRX_STOP_RESTART       0xA0  // A STOP condition or repeated START condition has been received while still addressed as Slave
-
-// TWI Miscellaneous status codes
-#define TWI_NO_STATE               0xF8  // No relevant state information available; TWINT = �0�
-#define TWI_BUS_ERROR              0x00  // Bus error due to an illegal START or STOP condition
+#include "avrtwicodes.h"
 
 #define AVR_TWI_DEBUG 1
 
@@ -82,27 +38,6 @@ static __attribute__ ((unused)) inline uint8_t _avr_twi_status_get( avr_twi_t* p
 {
     return avr_regbit_get_raw( p->io.avr, p->twsr );
 }
-
-/*static avr_cycle_count_t avr_twi_set_state_timer( struct avr_t* avr, avr_cycle_count_t when, void* param)
-{
-    avr_twi_t* p = (avr_twi_t *)param;
-    _avr_twi_status_set( p, p->next_twstate, 1 );
-    p->next_twstate = 0;
-    return 0;
-}*/
-
-/*
- * This is supposed to trigger a timer whose duration is a multiple
- * of 'twi' clock cycles, which should be derived from the prescaler
- * (100khz, 400khz etc).
- * Right now it cheats and uses one twi cycle == one usec.
- */
-/*static void _avr_twi_delay_state( avr_twi_t* p, int twi_cycles, uint8_t state)
-{
-    p->next_twstate = state;
-    // TODO: calculate clock rate, convert to cycles, and use that
-    avr_cycle_timer_register_usec( p->io.avr, twi_cycles, avr_twi_set_state_timer, p );
-}*/
 
 static void avr_twi_write( struct avr_t* avr, avr_io_addr_t addr, uint8_t v, void* param )
 {
@@ -152,18 +87,11 @@ static void avr_twi_write( struct avr_t* avr, avr_io_addr_t addr, uint8_t v, voi
                 avr_raise_irq(p->io.irq + TWI_IRQ_OUTPUT, avr_twi_irq_msg(TWI_COND_STOP, p->peer_addr, 1));
             }
         }
-
     }
     if( !twsta && avr_regbit_get(avr, p->twsta) ) // generate a start condition
     {
         uint32_t msg = avr_twi_irq_msg( TWI_COND_START, p->peer_addr, 0 );
-
         avr_raise_irq( p->io.irq + TWI_IRQ_OUTPUT, msg );
-
-        /*if( p->state & TWI_COND_START )
-            _avr_twi_delay_state( p, 0, TWI_REP_START );
-        else
-            _avr_twi_delay_state( p, 0, TWI_START );*/
     }
 
     int data = cleared && !avr_regbit_get(avr, p->twsta) && !avr_regbit_get(avr, p->twsto);
@@ -219,20 +147,8 @@ static void avr_twi_write( struct avr_t* avr, avr_io_addr_t addr, uint8_t v, voi
 
             if( p->state & msgv ) // if the latch is ready... as set by writing/reading the TWDR
             {
-                // we send an IRQ and we /expect/ a slave to reply
-                // immediately via an IRQ to set the COND_ACK bit
-                // otherwise it's assumed it's been nacked...
                 uint32_t irqMsg = avr_twi_irq_msg( msgv, p->peer_addr, avr->data[p->r_twdr]);
                 avr_raise_irq( p->io.irq + TWI_IRQ_OUTPUT, irqMsg );
-
-                /*if( do_read ) // read ?
-                {
-                    _avr_twi_delay_state( p, 9, msgv & TWI_COND_ACK ? TWI_MRX_DATA_ACK : TWI_MRX_DATA_NACK);
-                }
-                else
-                {
-                    _avr_twi_delay_state( p, 9, p->state & TWI_COND_ACK ? TWI_MTX_DATA_ACK : TWI_MTX_DATA_NACK);
-                }*/
             }
         }
         else if( p->state ) // send the address
@@ -251,21 +167,7 @@ static void avr_twi_write( struct avr_t* avr, avr_io_addr_t addr, uint8_t v, voi
             if( p->peer_addr & 1 )  // read ?
             {
                 p->state |= TWI_COND_READ;    // always allow read to start with
-                //uint8_t sta = p->state & TWI_COND_ACK ? TWI_MRX_ADR_ACK:TWI_MRX_ADR_NACK;
-                //_avr_twi_delay_state( p, 9, sta );
             }
-            /*else
-            {
-                if(p->state & TWI_COND_WRITE)
-                {
-                    _avr_twi_delay_state(p, 0, p->state & TWI_COND_ACK ? TWI_MTX_DATA_ACK : TWI_MTX_DATA_NACK);
-                }
-                else
-                {
-                    _avr_twi_delay_state(p, 9, p->state & TWI_COND_ACK ? TWI_MTX_ADR_ACK : TWI_MTX_ADR_NACK);
-                }
-            }*/
-
         }
         p->state &= ~TWI_COND_WRITE;
     }
@@ -338,18 +240,15 @@ static void avr_twi_irq_input( struct avr_irq_t* irq, uint32_t value, void* para
 
                 uint8_t sta = msg.u.twi.msg & TWI_COND_WRITE ? TWI_SRX_ADR_ACK : TWI_STX_ADR_ACK;
                 _avr_twi_status_set( p, sta, 1);
-                //_avr_twi_delay_state(p, 0, msg.u.twi.msg & TWI_COND_WRITE ? TWI_SRX_ADR_ACK : TWI_STX_ADR_ACK );
             }
         }
         else
         {
             if( p->state & TWI_COND_START )
                 _avr_twi_status_set( p, TWI_REP_START, 1);
-                //_avr_twi_delay_state( p, 0, TWI_REP_START );
             else
             {
                 _avr_twi_status_set( p, TWI_START, 1);
-                //_avr_twi_delay_state( p, 0, TWI_START );
                 p->peer_addr = 0;
                 p->state = TWI_COND_START;
             }
@@ -395,22 +294,7 @@ static void avr_twi_irq_input( struct avr_irq_t* irq, uint32_t value, void* para
                 sta = ack ? TWI_MTX_ADR_ACK : TWI_MTX_ADR_NACK;
         }
 
-        /*if( p->state & TWI_COND_WRITE )
-        {
-            if( p->state & TWI_COND_ADDR )
-                sta = ack ? TWI_MTX_ADR_ACK : TWI_MTX_ADR_NACK;
-            else
-                sta = ack ? TWI_MTX_DATA_ACK : TWI_MTX_DATA_NACK;
-        }
-        else
-        {
-            if( p->state & TWI_COND_ADDR )
-                sta = ack ? TWI_MRX_ADR_ACK : TWI_MRX_ADR_NACK;
-            else
-                sta = ack ? TWI_MRX_DATA_ACK : TWI_MRX_DATA_NACK;
-        }*/
         _avr_twi_status_set( p, sta, 1);
-        //_avr_twi_delay_state( p, 0, sta );
     }
     if( p->state & TWI_COND_SLAVE )
     {
@@ -418,18 +302,11 @@ static void avr_twi_irq_input( struct avr_irq_t* irq, uint32_t value, void* para
         {
             avr->data[p->r_twdr] = msg.u.twi.data;
             _avr_twi_status_set( p, TWI_SRX_ADR_DATA_ACK, 1);
-            //_avr_twi_delay_state( p, 9, TWI_SRX_ADR_DATA_ACK );
         }
     }
     else // receive a data byte from a slave
     {
-        if( msg.u.twi.msg & TWI_COND_READ )
-        {
-            avr->data[p->r_twdr] = msg.u.twi.data;
-            uint8_t sta = p->state & TWI_COND_ACK ? TWI_MRX_DATA_ACK : TWI_MRX_DATA_NACK;
-            _avr_twi_status_set( p, sta, 1);
-            //_avr_twi_delay_state( p, 0, p->state & TWI_COND_ACK ? TWI_MRX_DATA_ACK : TWI_MRX_DATA_NACK);
-        }
+        if( msg.u.twi.msg & TWI_COND_READ ) avr->data[p->r_twdr] = msg.u.twi.data;
     }
 }
 

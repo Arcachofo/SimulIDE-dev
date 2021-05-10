@@ -568,7 +568,7 @@ void McuCreator::createTwi( QDomElement* e )
     if( e->hasAttribute("addressreg") )
     {
         QString addressReg = e->attribute("addressreg");
-        if( !addressReg.isEmpty() ) twi->m_address = mcu->getReg( addressReg );
+        if( !addressReg.isEmpty() ) twi->m_addressReg = mcu->getReg( addressReg );
     }
     if( e->hasAttribute("twistatus") )
     {

@@ -28,7 +28,7 @@ enum trigtType_t{
     Trig_InEn,
 };
 
-enum clockState_t{
+enum clkState_t{
     Clock_Low = 0,
     Clock_Rising,
     Clock_Allow,
@@ -55,7 +55,7 @@ class MAINMODULE_EXPORT eClockedDevice : public eElement
 
         virtual void stamp() override;
 
-        int getClockState();
+        clkState_t getClockState();
 
     protected:
         void createClockPin( ePin* epin );

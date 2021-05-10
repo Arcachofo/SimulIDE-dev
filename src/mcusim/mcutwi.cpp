@@ -21,10 +21,10 @@
 
 McuTwi::McuTwi( eMcu* mcu, QString name )
       : McuModule( mcu, name )
-      , TwiModule( true, true, name )
+      , TwiModule( name )
 {
     m_twiReg    = NULL;
-    m_address   = NULL;
+    m_addressReg   = NULL;
     m_twiStatus = NULL;
 }
 

@@ -64,7 +64,7 @@ class RegSignal
     private:
         std::map<int, std::function<void(uint8_t)>> m_slots;
 
-        std::map<int, uint8_t> m_masks;
+        std::map<int, uint8_t> m_masks;  // Mask which bits should be sent
 
         int m_curId{0};
 };

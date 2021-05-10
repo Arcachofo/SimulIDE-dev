@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT eI2CMaster : public eI2C
 
         virtual void masterStart( uint8_t addr );
         virtual void masterWrite( uint8_t data );
-        virtual void masterRead();
+        virtual void masterRead( uint8_t ack );
 
     protected:
         virtual void setSDA( bool state ) override;
@@ -45,6 +45,8 @@ class MAINMODULE_EXPORT eI2CMaster : public eI2C
         void updatePins();
 
         bool m_toggleScl;
+
+        uint8_t m_masterACK;
 };
 
 #endif

@@ -79,7 +79,7 @@ void eI2CMaster::runEvent()       // We are in Mater mode, controlling Clock
         if     ( m_SDA ) setSDA( false );     // Step 1: SDA is High, Lower it
         else if( !clkLow )                    // Step 2: SDA Already Low, Lower Clock
         {
-            if( m_comp ) m_comp->inStateChanged( 128 ); // Set TWINT
+            if( m_comp ) m_comp->inStateChanged( TWI_MSG+TWI_COND_START ); // Set TWINT
             keepClocking();
         }
     }
@@ -93,20 +93,40 @@ void eI2CMaster::runEvent()       // We are in Mater mode, controlling Clock
         if( !clkLow )                               // Read bit while clk is high
         {
             readBit();
-            if( m_bitPtr == 8 )
-            {
-                readByte();
-                if( m_comp ) m_comp->inStateChanged( 128+I2C_READING );
-            }
+            if( m_bitPtr == 8 ) readByte();
         }
         keepClocking();
     }
+    else if( m_state == I2C_ACK )      // Send ACK
+    {
+        if( clkLow )
+        {
+            if( m_masterACK ) setSDA( false );
+            m_state = I2C_ENDACK;
+        }
+        keepClocking();
+    }
+    else if( m_state == I2C_ENDACK )    // We sent ACK, release SDA
+    {
+        if( clkLow )
+        {
+            setSDA( true );
+            if( m_comp && m_lastState == I2C_READING )
+            {
+                m_comp->inStateChanged( TWI_MSG+TWI_COND_READ );
+                m_comp->inStateChanged( TWI_MSG+TWI_COND_ACK+m_masterACK ); // ACK/NACK sent
+            }
+            m_state = I2C_IDLE;
+        }
+        else keepClocking();
+    }
     else if( m_state == I2C_WAITACK )                // Read ACK
     {
-        int ack = 257;                               //  ACK
-        if( m_SDA ) ack = 256;                       // NACK
-        if( m_comp ) m_comp->inStateChanged( ack );
-        m_state = I2C_ACK;
+        int ack = 1;                                 //  ACK
+        if( m_SDA ) ack = 0;                         // NACK
+        if( m_comp ) m_comp->inStateChanged( TWI_MSG+TWI_COND_ACK+ack );
+
+        m_state = I2C_IDLE;
         keepClocking();
     }
     else if( m_state == I2C_STOPPED )                // Send Stop Condition
@@ -117,7 +137,7 @@ void eI2CMaster::runEvent()       // We are in Mater mode, controlling Clock
         else if(  m_SDA && !clkLow )                  // Step 4: Operation Finished
         {
             m_state = I2C_IDLE;
-            if( m_comp ) m_comp->inStateChanged( 128+I2C_STOPPED ); // Set TWINT ( set to 0 )
+            if( m_comp ) m_comp->inStateChanged( TWI_MSG+TWI_COND_STOP ); // Set TWINT ( set to 0 )
         }
     }
 }
@@ -134,10 +154,13 @@ void eI2CMaster::masterWrite( uint8_t data )
     writeByte();
 }
 
-void eI2CMaster::masterRead()
+void eI2CMaster::masterRead( uint8_t ack )
 {
+    m_masterACK = ack? 1:0;
+
     setSDA( true );
     m_bitPtr = 0;
+    m_rxReg = 0;
     m_state = I2C_READING;
 }
 
