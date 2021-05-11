@@ -38,6 +38,8 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_baSizeX = 135;
     m_baSizeY = 135;
 
+    m_oneShot = false;
+    m_sampling = true;
 
     Simulator::self()->addToUpdateList( this );
 }
@@ -69,6 +71,11 @@ void PlotBase::setTimeDiv( uint64_t td )
 void PlotBase::toggleExpand()
 {
     expand( !m_expand );
+}
+
+void PlotBase::setOneShot( bool shot )
+{
+    m_oneShot = shot;
 }
 
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

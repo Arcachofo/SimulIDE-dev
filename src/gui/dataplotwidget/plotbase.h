@@ -62,6 +62,9 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         virtual void expand( bool e ){;}
         void toggleExpand();
 
+        bool oneShot(){ return m_oneShot; }
+        virtual void setOneShot( bool shot );
+
         virtual void channelChanged( int ch, QString name ){;}
 
         PlotDisplay* display() { return m_display; }
@@ -73,6 +76,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     protected:
         int m_bufferSize;
 
+        bool m_sampling;
+        bool m_oneShot;
         bool m_expand;
 
         int m_screenSizeX;

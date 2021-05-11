@@ -42,6 +42,7 @@ class MAINMODULE_EXPORT LaChannel : public DataChannel
 
         uint64_t m_risEdge;
 
+        bool m_sampling;
         bool m_rising;
         bool m_falling;
 

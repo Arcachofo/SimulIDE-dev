@@ -163,6 +163,11 @@ void LaWidget::setTrigger( int ch )
     triggerBox->setCurrentIndex( ch );
 }
 
+void LaWidget::on_oneShot_toggled( bool state )
+{
+    m_analizer->setOneShot( state );
+}
+
 void LaWidget::closeEvent( QCloseEvent* event )
 {
     if( !parent() ) return;

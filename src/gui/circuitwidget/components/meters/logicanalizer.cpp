@@ -98,6 +98,12 @@ LAnalizer::~LAnalizer()
 
 void LAnalizer::updateStep()
 {
+    if( !m_sampling )
+    {
+        m_display->update();
+        return;
+    }
+
     uint64_t simTime = Simulator::self()->circTime(); // free running
 
     if( m_trigger < 8 )
@@ -106,6 +112,11 @@ void LAnalizer::updateStep()
 
         if( risEdge > 0 ) // We have a Trigger
         {
+            if( m_oneShot )
+            {
+                m_sampling = false;
+                for( int i=0; i<8; ++i ) m_channel[i]->m_sampling = false;
+            }
             m_channel[m_trigger]->m_risEdge = 0;
             simTime = risEdge;
             m_updtCount = 0;
@@ -218,6 +229,13 @@ void LAnalizer::setTunnels( QStringList tunnels )
         m_channel[i]->m_chTunnel = tunnels.at(i);
         m_dataWidget->setTunnel( i, tunnels.at(i) );
     }
+}
+
+void LAnalizer::setOneShot( bool shot )
+{
+    m_oneShot = shot;
+    m_sampling = true;
+    for( int i=0; i<8; ++i ) m_channel[i]->m_sampling = true;
 }
 
 #include "moc_logicanalizer.cpp"

@@ -56,6 +56,8 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
 
         void on_triggerBox_currentIndexChanged( int index );
 
+        void on_oneShot_toggled( bool state );
+
     protected:
         void closeEvent( QCloseEvent* event );
         void resizeEvent( QResizeEvent* event );

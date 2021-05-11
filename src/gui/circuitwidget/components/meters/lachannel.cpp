@@ -31,6 +31,7 @@ LaChannel::~LaChannel()  { }
 
 void LaChannel::initialize()
 {
+    m_sampling = true;
     m_rising   = false;
     m_falling  = false;
 
@@ -54,6 +55,8 @@ void LaChannel::updateStep()
 
 void LaChannel::voltChanged()
 {
+    if( ! m_sampling ) return;
+
     uint64_t simTime = Simulator::self()->circTime();
 
     double data = m_ePin[0]->getVolt();

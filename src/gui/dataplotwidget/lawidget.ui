@@ -364,6 +364,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QRadioButton" name="oneShot">
+       <property name="text">
+        <string>One Shot</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QComboBox" name="triggerBox">
        <item>
         <property name="text">

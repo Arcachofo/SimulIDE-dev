@@ -67,6 +67,8 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         virtual void expand( bool e ) override;
 
+        virtual void setOneShot( bool shot ) override;
+
         virtual void channelChanged( int ch, QString name ) override;
 
     private:
