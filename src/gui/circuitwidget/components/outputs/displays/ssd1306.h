@@ -32,9 +32,9 @@
 class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 {
     Q_OBJECT
-    Q_PROPERTY( dispColor Color   READ color WRITE setColor DESIGNABLE true USER true )
-    Q_PROPERTY( double Frequency  READ freq  WRITE setFreq  DESIGNABLE true USER true )
-    Q_PROPERTY( int Control_Code  READ cCode WRITE setCcode DESIGNABLE true USER true )
+    Q_PROPERTY( dispColor Color   READ color   WRITE setColor   DESIGNABLE true USER true )
+    Q_PROPERTY( double Frequency  READ freqKHz WRITE setFreqKHz DESIGNABLE true USER true )
+    Q_PROPERTY( int Control_Code  READ cCode   WRITE setCcode  DESIGNABLE true USER true )
     
     public:
         Ssd1306( QObject* parent, QString type, QString id );

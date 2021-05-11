@@ -103,7 +103,7 @@ clkState_t eClockedDevice::getClockState()
 
     clkState_t cState = Clock_Low;
 
-    bool clock = m_clock;
+    bool  clock = m_clock;
     double volt = m_clockSource->getVolt(); // Clock pin volt.
 
     if     ( volt > m_inputHighV ) clock = true;

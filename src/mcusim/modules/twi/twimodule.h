@@ -54,8 +54,8 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         virtual void runEvent() override;
         virtual void voltChanged() override;
 
-        virtual double freq() { return m_freq/1e3; }
-        virtual void setFreq( double f );
+        virtual double freqKHz() { return m_freq/1e3; }
+        virtual void setFreqKHz( double f );
 
         virtual void writeByte();
         virtual void readByte();

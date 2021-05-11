@@ -87,8 +87,8 @@ void TwiModule::runEvent()
             else if( !clkLow )                // Step 2: SDA Already Low, Lower Clock
             {
                 //if( m_comp ) m_comp->inStateChanged( TWI_MSG+TWI_COND_START ); // Set TWINT
+                setSCL( false ); //keepClocking();
                 setTwiState( TWI_START );
-                keepClocking();
             }
         }break;
 
@@ -345,11 +345,11 @@ void TwiModule::masterRead( bool ack )
 
 void TwiModule::I2Cstop() { m_i2cState = I2C_STOP; }
 
-void TwiModule::setFreq( double f )
+void TwiModule::setFreqKHz( double f )
 {
     m_freq = f*1e3;
     double stepsPerS = 1e12;
     m_clockPeriod = stepsPerS/m_freq/2;
 }
 void TwiModule::setSdaPin( eSource* pin ) { m_sda = pin; }
-void TwiModule::setSclPin( eSource* pin ) { m_scl = pin; }
+void TwiModule::setSclPin( eSource* pin ) { m_scl = pin; m_clockSource = pin; }

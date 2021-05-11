@@ -39,7 +39,7 @@
         <register name="SPMCSR" addr="55"  bits=""/>
         <register name="SPL"    addr="61"  bits=""/>
         <register name="SPH"    addr="62"  bits=""/>
-        <register name="SREG"   addr="63"  bits=""/>
+        <register name="SREG"   addr="63"  bits="C,Z,N,V,S,H,T,I"/>
     </regblock>
     <regblock  name="EXT_I/O_REG" start="0x0060" end="0x00FF" offset="0">
         <register name="WDTCSR" addr="96"  bits=""/>
@@ -79,9 +79,9 @@
         <register name="OCR2B"  addr="180" bits=""/>
         <register name="ASSR"   addr="182" bits=""/>
         <register name="TWBR"   addr="184" bits=""/>
-        <register name="TWSR"   addr="185" bits="TWPS0,TWPS1,0,TWS3,TWS4,TWS5,TWS6,TWS7"/>
-        <register name="TWAR"   addr="186" bits="TWGCE,TWA0,TWA1,TWA2,TWA3,TWA4,TWA5,TWA6"/>
-        <register name="TWDR"   addr="187" bits=""/>
+        <register name="TWSR"   addr="185" reset="0xF8" bits="TWPS0,TWPS1,0,TWS3,TWS4,TWS5,TWS6,TWS7"/>
+        <register name="TWAR"   addr="186" reset="0xFE" bits="TWGCE,TWA0,TWA1,TWA2,TWA3,TWA4,TWA5,TWA6"/>
+        <register name="TWDR"   addr="187" reset="0xFF" bits=""/>
         <register name="TWCR"   addr="188" bits="TWIE,0,TWEN,TWWC,TWSTO,TWSTA,TWEA,TWINT"/>
         <register name="TWAMR"  addr="189" bits=""/>
         <register name="UCSR0A" addr="192" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0"/>

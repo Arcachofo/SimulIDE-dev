@@ -32,6 +32,7 @@
 
 // Cores
 #include "avrcore.h"
+#include "avrpin.h"
 #include "avrtimer.h"
 #include "avrocunit.h"
 #include "avrinterrupt.h"
@@ -278,7 +279,9 @@ void McuCreator::createPort( QDomElement* p )
     port->m_pins.resize( port->m_numPins );
     for( int i=0; i<port->m_numPins; ++i )
     {
-        port->m_pins[i] = new McuPin( port, i, port->m_name+QString::number(i), m_mcuComp );
+        if( m_core == "AVR" )
+            port->m_pins[i] = new AvrPin( port, i, port->m_name+QString::number(i), m_mcuComp );
+        else port->m_pins[i] = new McuPin( port, i, port->m_name+QString::number(i), m_mcuComp );
     }
     uint16_t addr = 0;
     if( p->hasAttribute( "outreg" ) ) // Connect to PORT Out Register
@@ -560,6 +563,7 @@ void McuCreator::createTwi( QDomElement* e )
     if( m_core == "AVR" ) twi = new AvrTwi( mcu, name );
     else return;
 
+    setConfigRegs( e, twi );
     if( e->hasAttribute("valueregs") )
     {
         QString twiReg = e->attribute("valueregs");
@@ -580,7 +584,33 @@ void McuCreator::createTwi( QDomElement* e )
             mcu->watchRegNames( twiStatus, R_WRITE, twi, &McuTwi::writeStatus );
         }
     }
-    setConfigRegs( e, twi );
+    QDomNode node = e->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+
+        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, twi );
+        else if( el.tagName() == "prescaler" )
+        {
+            QStringList prescalers = el.attribute("values").remove(" ").split(",");
+            twi->m_prescList.resize( prescalers.size() );
+
+            for( int i=0; i<prescalers.size(); ++i )
+                twi->m_prescList[i] = prescalers.at(i).toUInt();
+        }
+        else if( el.tagName() == "inputpin" )
+        {
+            QString pinName = el.attribute("pin");
+            McuPin* pin = mcu->m_ports.getPin( pinName );
+            if( pin )
+            {
+                QString name = el.attribute("name");
+                if     ( name == "sda" ) twi->setSdaPin( pin );
+                else if( name == "scl" ) twi->setSclPin( pin );
+            }
+        }
+        node = node.nextSibling();
+    }
 }
 
 void McuCreator::createCore( QString core )

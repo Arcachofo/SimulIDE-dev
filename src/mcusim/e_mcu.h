@@ -72,6 +72,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface
         virtual int status() override;
         virtual int pc() override;
 
+        double freqMHz() { return m_freq; }
         void setFreq( double freq );
         uint64_t simCycPI() { return m_simCycPI; }  // Simulation cycles per instruction cycle
         //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle

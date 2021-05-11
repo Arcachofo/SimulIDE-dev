@@ -25,6 +25,7 @@ AvrTwi::AvrTwi( eMcu* mcu, QString name )
       : McuTwi( mcu, name )
 {
     m_TWCR = mcu->getReg( "TWCR" );
+    m_TWSR = mcu->getReg( "TWSR" );
 
     m_TWEN  = mcu->getRegBits( "TWEN" );
     m_TWWC  = mcu->getRegBits( "TWWC" );
@@ -37,6 +38,9 @@ AvrTwi::~AvrTwi(){}
 
 void AvrTwi::initialize()
 {
+    McuTwi::initialize();
+    *m_TWSR= 0xF8; /// TODO: reset value is overriden
+    m_bitRate = 0;
 }
 
 void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
@@ -61,7 +65,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         m_scl->setPinMode( open_col );
     }
 
-    bool clearTwint = getRegBitsVal( *m_TWCR, m_TWINT );
+    bool clearTwint = getRegBitsVal( newTWCR, m_TWINT );
     if( clearTwint )                       /// Writting 1 to TWINT clears the flag
     {
         m_mcu->m_regOverride = newTWCR & ~m_TWINT.mask; // Clear TWINT flag
@@ -107,14 +111,17 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
     }
 }
 
-void AvrTwi::configureB( uint8_t val )
+void AvrTwi::configureB( uint8_t val ) // TWBR is being written
 {
+    m_bitRate = val;
+    updateClock();
 }
 
 void AvrTwi::writeStatus( uint8_t val )  // TWI Status Register is being written
 {
     val &= 0b00000011;
-    m_prescaler = val;
+    m_prescaler = m_prescList[val];
+    updateClock();
 
     m_mcu->m_regOverride = val | (*m_twiStatus & 0b11111100); // Preserve Status bits
 }
@@ -140,9 +147,9 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 {
     TwiModule::setTwiState( state );
 
-    *m_twiStatus &= 0b00000011;      // Clear old status
+    *m_twiStatus &= 0b00000111;      // Clear old status
     *m_twiStatus |= state;           // Write new status
-    *m_TWCR      |= m_TWINT.mask;    // Set TWINT bit
+    interrupt.emitValue(1);
 
     if( (state == TWI_NO_STATE) && (m_i2cState == I2C_STOP) ) // Stop Condition sent
     {
@@ -154,3 +161,8 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
     }
 }
 
+void AvrTwi::updateClock()
+{
+    double freq = m_mcu->freqMHz()*1e6/(16+2*m_bitRate*m_prescaler);
+    setFreqKHz( freq/1e3 );
+}

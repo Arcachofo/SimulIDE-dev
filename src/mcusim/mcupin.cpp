@@ -73,12 +73,16 @@ void McuPin::voltChanged()
     m_port->pinChanged( m_pinMask, state );
 }
 
-void McuPin::setState( bool state, bool )
+void McuPin::setPortState( bool state )
 {
     m_outState = state;
     if( !m_isOut ) return;
-
     eSource::setState( state, true );
+}
+
+void McuPin::setState( bool state, bool )
+{
+    if( m_extCtrl ) eSource::setState( state, true );
 }
 
 bool McuPin::getState()

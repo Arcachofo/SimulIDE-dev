@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT McuPin : public eSource
         virtual void voltChanged() override;
 
         virtual void setState( bool state, bool st=false ) override;
+        virtual void setPortState( bool state );
         void setDirection( bool out );
         void setPullup( bool up );
         void setPullupMask( bool up ) { m_puMask = up;}

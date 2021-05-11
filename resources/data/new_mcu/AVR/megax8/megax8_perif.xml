@@ -71,7 +71,13 @@
         <raiseint intname="ADC" source="MAIN" />
     </adc>
     
-    <twi name="TWI0" valueregs="TWDR" addressreg="TWAR" twistatus="TWSR" configregsA="TWCR">
+    <twi name="TWI0" valueregs="TWDR" addressreg="TWAR" twistatus="TWSR" 
+                     configregsA="TWCR" configregsB="TWBR">
         <prescaler select="" values="1,4,16,64"/>
+        
+        <inputpin name="sda" pin="PORTC4" />
+        <inputpin name="scl" pin="PORTC5" />
+        
+        <raiseint intname="TWI" source="MAIN" />
     </twi>
 </parts>

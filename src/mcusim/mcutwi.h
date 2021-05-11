@@ -22,7 +22,6 @@
 
 #include "mcumodule.h"
 #include "twimodule.h"
-//#include "mcutypes.h"
 
 class eMcu;
 class McuPin;

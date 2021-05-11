@@ -62,7 +62,7 @@ void Interrupt::raise( uint8_t v )
     if( !m_enable ) return;
     m_raised = true;
 
-    // Interrupt are stored in static std::multimap
+    // Interrupt are stored in std::multimap
     // by priority order, highest at end
     m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
 }
@@ -102,6 +102,7 @@ void Interrupts::retI()
 
 void Interrupts::enableGlobal( uint8_t en )
 {
+    if( m_enGlobal && !en ) resetInts();
     m_enGlobal = en;
 }
 
@@ -146,7 +147,7 @@ void Interrupts::remove()
 
 void Interrupts::addToPending( uint8_t pri, Interrupt* i )
 {
-    m_pending.emplace( pri, i );
+    if( m_enGlobal ) m_pending.emplace( pri, i );
 }
 
 
