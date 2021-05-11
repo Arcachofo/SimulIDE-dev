@@ -70,12 +70,11 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     m_pin[0] = &m_pinSck;
     m_pin[1] = &m_pinSda;
 
-    //epin->setId( id+"-ePin-input0" );
-
-    m_sda = new eSource( id+"-eSource-input0", &m_pinSda, open_col );
-    //eLogicDevice::createInput( &m_pinSda );                // Input SDA
     eClockedDevice::createClockPin( &m_pinSck );             // Input SCL
-    m_scl = m_clockSource;
+    TwiModule::setSclPin( m_clockSource );
+    TwiModule::setSdaPin( new eSource( id+"-eSource-input0", &m_pinSda, open_col ) );
+    //epin->setId( id+"-ePin-input0" );
+    //eLogicDevice::createInput( &m_pinSda );                // Input SDA
 
     m_pdisplayImg = new QImage( 128, 64, QImage::Format_MonoLSB );
     m_pdisplayImg->setColor( 0, qRgb(0, 0, 0));

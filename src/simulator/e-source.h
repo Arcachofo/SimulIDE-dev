@@ -71,6 +71,8 @@ class MAINMODULE_EXPORT eSource : public eElement
 
         ePin* getPin() { return m_ePin[0]; }
 
+        void controlPin( bool ctrl );
+
     protected:
         void update();
 
@@ -92,8 +94,10 @@ class MAINMODULE_EXPORT eSource : public eElement
         bool m_state;
         bool m_stateZ;
         bool m_inverted;
+        bool m_extCtrl;
 
         pinMode_t m_pinMode;
+        pinMode_t m_oldPinMode;
 
         eNode* m_scrEnode;
 };

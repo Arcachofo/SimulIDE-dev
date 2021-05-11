@@ -24,29 +24,133 @@
 AvrTwi::AvrTwi( eMcu* mcu, QString name )
       : McuTwi( mcu, name )
 {
-}
+    m_TWCR = mcu->getReg( "TWCR" );
 
-AvrTwi::~AvrTwi()
-{
+    m_TWEN  = mcu->getRegBits( "TWEN" );
+    m_TWWC  = mcu->getRegBits( "TWWC" );
+    m_TWSTO = mcu->getRegBits( "TWSTO" );
+    m_TWSTA = mcu->getRegBits( "TWSTA" );
+    m_TWEA  = mcu->getRegBits( "TWEA" );
+    m_TWINT = mcu->getRegBits( "TWINT" );
 }
+AvrTwi::~AvrTwi(){}
 
 void AvrTwi::initialize()
 {
 }
 
-void AvrTwi::configureA( uint8_t val ) // TWCR
+void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 {
-    bool enable =  (( val & 0b00000100 )>0);
+    bool oldEn  = getRegBitsVal( *m_TWCR, m_TWEN );
+    bool enable = getRegBitsVal( newTWCR, m_TWEN );
+
+    if( oldEn && !enable )                 /// Disable TWI
+    {
+        setMode( TWI_OFF );
+        m_sda->controlPin( false ); // Release control of MCU PIns
+        m_scl->controlPin( false );
+    }
+    if( !enable ) return;
+
+    if( !oldEn )                           /// Enable TWI if it was disabled
+    {
+        m_sda->controlPin( true ); // Get control of MCU PIns
+        m_sda->setPinMode( open_col );
+
+        m_scl->controlPin( true );
+        m_scl->setPinMode( open_col );
+    }
+
+    bool clearTwint = getRegBitsVal( *m_TWCR, m_TWINT );
+    if( clearTwint )                       /// Writting 1 to TWINT clears the flag
+    {
+        m_mcu->m_regOverride = newTWCR & ~m_TWINT.mask; // Clear TWINT flag
+    }
+
+    bool oldStop = getRegBitsVal( *m_TWCR, m_TWSTO );
+    bool newStop = getRegBitsVal( newTWCR, m_TWSTO );
+
+    if( newStop && !oldStop )              /// Generate Stop Condition
+    {
+        if( m_mode == TWI_MASTER ) // Master: Stop if I2C was started
+        {
+            if( m_i2cState > I2C_STOP ) I2Cstop();
+        }
+        else setMode( TWI_SLAVE ); // Slave: Stop Cond restarts Slave mode (can be used to recover from an error condition)
+    }
+
+    bool oldStart = getRegBitsVal( *m_TWCR, m_TWSTA );
+    bool newStart = getRegBitsVal( newTWCR, m_TWSTA );
+
+    /// TODO if Stop and Start at same time, then Start Condition should be sheduled
+    if( newStart && !oldStart )            /// Generate Start Condition
+    {
+        if( m_mode != TWI_MASTER ) setMode( TWI_MASTER );
+        masterStart();
+    }
+
+    bool data = clearTwint && !newStop && !newStart; // No start or stop and TWINT cleared = send or receive data
+    if( !data ) return;
+
+    bool ack = getRegBitsVal( newTWCR, m_TWEA );
+
+    if( m_mode == TWI_MASTER )
+    {
+        if( m_twiState == TWI_MRX_ADR_ACK ) // We sent Slave Address + R and received ACK
+        {
+            masterRead( ack ); // Read a byte and send ACK/NACK
+        }
+    }
+    else
+    {
+        ; /// TODO
+    }
 }
 
 void AvrTwi::configureB( uint8_t val )
 {
 }
 
-void AvrTwi::writeStatus( uint8_t val )
+void AvrTwi::writeStatus( uint8_t val )  // TWI Status Register is being written
 {
     val &= 0b00000011;
     m_prescaler = val;
 
     m_mcu->m_regOverride = val | (*m_twiStatus & 0b11111100); // Preserve Status bits
 }
+
+void AvrTwi::writeTwiReg( uint8_t val ) // TWDR is being written
+{
+    if( m_mode != TWI_MASTER ) return;
+
+    bool twint = getRegBitsVal( *m_TWCR, m_TWINT ); // Check if TWINT is set
+    if( !twint )                  // If not, the access will be discarded
+    {
+        *m_TWCR |= m_TWWC.mask;   // set Write Collision bit TWWC
+         return;
+    }
+    bool write = false;
+    bool isAddr = (m_i2cState == I2C_START); // We just sent Start, so this must be slave address
+    if( isAddr ) write = val & 1;            // Sendind address for Read or Write?
+
+    masterWrite( val, isAddr, write );       /// Write data or address to Slave
+}
+
+void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
+{
+    TwiModule::setTwiState( state );
+
+    *m_twiStatus &= 0b00000011;      // Clear old status
+    *m_twiStatus |= state;           // Write new status
+    *m_TWCR      |= m_TWINT.mask;    // Set TWINT bit
+
+    if( (state == TWI_NO_STATE) && (m_i2cState == I2C_STOP) ) // Stop Condition sent
+    {
+        *m_TWCR &= ~m_TWSTO.mask;  // Clear TWSTO bit
+    }
+    else if( (state == TWI_MRX_DATA_ACK) || (state == TWI_MRX_DATA_NACK) ) // Data received
+    {
+        *m_twiReg = m_rxReg; // Save data received into TWDR
+    }
+}
+

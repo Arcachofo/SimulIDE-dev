@@ -92,17 +92,16 @@ void McuPin::setDirection( bool out )
 
     if( out )       // Set Pin to Output
     {
-        if( m_openColl ) setPinMode( open_col );
-        else             setPinMode( output );
+        if( m_openColl ) m_oldPinMode =  open_col;
+        else             m_oldPinMode =  output;
 
         eSource::setState( m_outState, true );
-        //setState( m_state );
     }
     else           // Set Pin to Input
     {
-        setPinMode( input );
-        //update();
+        m_oldPinMode = input;
     }
+    if( !m_extCtrl ) setPinMode( m_oldPinMode ); // Is someone is controlling us, just save Pin Mode
 }
 
 void McuPin::setPullup( bool up )
@@ -122,10 +121,4 @@ void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vr
 
     update();
 }
-
-void McuPin::controlPin( bool ctrl )
-{
-    m_extCtrl = ctrl;
-}
-
 

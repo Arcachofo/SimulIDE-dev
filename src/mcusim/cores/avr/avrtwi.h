@@ -34,12 +34,23 @@ class MAINMODULE_EXPORT AvrTwi : public McuTwi
 
         virtual void initialize() override;
 
-        virtual void configureA( uint8_t val ) override;
+        virtual void configureA( uint8_t newTWCR ) override;
         virtual void configureB( uint8_t val ) override;
 
         virtual void writeStatus( uint8_t val ) override;
+        virtual void writeTwiReg( uint8_t val ) override;
 
     protected:
+        virtual void setTwiState( twiState_t state ) override;
+
+        uint8_t*  m_TWCR;
+
+        regBits_t m_TWEN;
+        regBits_t m_TWWC;
+        regBits_t m_TWSTO;
+        regBits_t m_TWSTA;
+        regBits_t m_TWEA;
+        regBits_t m_TWINT;
 
 };
 

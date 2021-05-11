@@ -85,7 +85,7 @@ void AvrUsart::setUBRRnH( uint8_t val )
 
 void AvrUsart::setBaurrate( uint16_t ubrr )
 {
-    uint8_t doub = getRegBitsVal( *m_ucsrna, m_u2xn );
+    uint8_t doub = getRegBitsVal( *m_ucsrna, m_u2xn ); // Double Speed?
     if( doub ) ubrr /= 2;
     setPeriod( 1e6*16*(ubrr+1) ); // period in picoseconds
 }

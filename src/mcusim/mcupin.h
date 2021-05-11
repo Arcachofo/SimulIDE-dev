@@ -39,7 +39,6 @@ class MAINMODULE_EXPORT McuPin : public eSource
         virtual void stamp() override;
         virtual void voltChanged() override;
 
-        void controlPin( bool ctrl );
         virtual void setState( bool state, bool st=false ) override;
         void setDirection( bool out );
         void setPullup( bool up );
@@ -61,7 +60,6 @@ class MAINMODULE_EXPORT McuPin : public eSource
         bool m_inState;
         bool m_isOut;
         bool m_dirMask; // Pin always output
-        bool m_extCtrl;
         bool m_pullup;
         bool m_puMask; // Pullup always on
         bool m_openColl;

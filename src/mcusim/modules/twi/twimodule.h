@@ -21,7 +21,7 @@
 #define TWIMODULE_H
 
 #include "e-clocked_device.h"
-#include "regsignal.h"
+// #include "regsignal.h"
 #include "avrtwicodes.h" // Using AVR states comes at hand
 
 class eSource;
@@ -40,10 +40,10 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
 
         enum i2cState_t{
             I2C_IDLE=0,
+            I2C_STOP,
             I2C_START,
             I2C_READ,
             I2C_WRITE,
-            I2C_STOP,
             I2C_ACK,
             I2C_ENDACK,
             I2C_READACK
@@ -57,33 +57,36 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         virtual double freq() { return m_freq/1e3; }
         virtual void setFreq( double f );
 
-        void setMode( twiMode_t mode );
-
-        void sheduleSDA( bool state );
-        void getSdaState();
-
-        void setTwiState( twiState_t state );
-
         virtual void writeByte();
         virtual void readByte();
 
-        void masterStart( uint8_t addr );
-        void masterWrite( uint8_t data, bool isAddr );
+        void setSdaPin( eSource* pin );
+        void setSclPin( eSource* pin );
+        void setMode( twiMode_t mode );
+
+        void masterStart();
+        void masterWrite( uint8_t data, bool isAddr, bool write );
         void masterRead( bool ack );
 
         virtual void I2Cstop();
 
-        RegSignal<uint8_t> twiState; // Signal to propagate TWI state
+        // RegSignal<uint8_t> twiState; // Signal to propagate TWI state
 
     protected:
-        void keepClocking();
-        void readBit();
-        void writeBit();
-        void waitACK();
-        void ACK();
+        inline void setSCL( bool st );
+        inline void setSDA( bool st );
+        inline void sheduleSDA( bool state );
+        inline void keepClocking();
+        inline void readBit();
+        inline void writeBit();
+        inline void waitACK();
+        inline void ACK();
 
-        uint8_t m_address;           // Device Address
-        int m_addressBits;
+        virtual void setTwiState( twiState_t state );
+        void getSdaState();
+
+        uint m_address;           // Device Address
+        int  m_addrBits;
 
         double m_freq;
         uint64_t m_clockPeriod;   // TWI Clock half period in ps
@@ -94,6 +97,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         bool m_sdaState;
         bool m_toggleScl;
         bool m_isAddr;
+        bool m_write;
         bool m_masterACK;
 
         int m_bitPtr;       // Bit Pointer
@@ -103,7 +107,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
 
         twiMode_t  m_mode;
         twiState_t m_twiState;
-        i2cState_t m_state;      // Current State of i2c
+        i2cState_t m_i2cState;   // Current State of i2c
         i2cState_t m_lastState;  // Last State of i2c
 
         eSource* m_sda;

@@ -564,11 +564,12 @@ void McuCreator::createTwi( QDomElement* e )
     {
         QString twiReg = e->attribute("valueregs");
         if( !twiReg.isEmpty() )  twi->m_twiReg = mcu->getReg( twiReg );
+        mcu->watchRegNames( twiReg, R_WRITE, twi, &McuTwi::writeTwiReg );
     }
     if( e->hasAttribute("addressreg") )
     {
-        QString addressReg = e->attribute("addressreg");
-        if( !addressReg.isEmpty() ) twi->m_addressReg = mcu->getReg( addressReg );
+        QString addrReg = e->attribute("addressreg");
+        if( !addrReg.isEmpty() ) twi->m_addrReg = mcu->getReg( addrReg );
     }
     if( e->hasAttribute("twistatus") )
     {

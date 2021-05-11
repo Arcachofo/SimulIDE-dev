@@ -212,3 +212,18 @@ double eSource::getVolt()
     if( m_ePin[0]->isConnected() ) return m_ePin[0]->getVolt();
     else                           return m_voltOut;
 }
+
+void eSource::controlPin( bool ctrl )
+{
+    if( ctrl == m_extCtrl ) return;
+
+    if( ctrl && !m_extCtrl ) // Someone is getting control
+    {
+        m_oldPinMode = m_pinMode; // Save old Pin Mode to restore later
+    }
+    else                     // External control is being released
+    {
+        setPinMode( m_oldPinMode ); // Set Previous Pin MOde
+    }
+    m_extCtrl = ctrl;
+}
