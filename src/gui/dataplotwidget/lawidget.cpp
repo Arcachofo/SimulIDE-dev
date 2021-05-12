@@ -29,9 +29,31 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
 
     m_analizer = la;
     m_blocked = false;
-    m_channel = 4;
 
-    QString color = m_analizer->getColor( m_channel ).name();
+    QString color = m_analizer->getColor( 0 ).name();
+    cond1->setStyleSheet( "background-color:"+color );
+    condt1->setStyleSheet( "background-color:"+color );
+    color = m_analizer->getColor( 1 ).name();
+    cond2->setStyleSheet( "background-color:"+color );
+    condt2->setStyleSheet( "background-color:"+color );
+    color = m_analizer->getColor( 2 ).name();
+    cond3->setStyleSheet( "background-color:"+color );
+    condt3->setStyleSheet( "background-color:"+color );
+    color = m_analizer->getColor( 3 ).name();
+    cond4->setStyleSheet( "background-color:"+color );
+    condt4->setStyleSheet( "background-color:"+color );
+    color = m_analizer->getColor( 0 ).name();
+    cond5->setStyleSheet( "background-color:"+color );
+    condt5->setStyleSheet( "background-color:"+color );
+    color = m_analizer->getColor( 1 ).name();
+    cond6->setStyleSheet( "background-color:"+color );
+    condt6->setStyleSheet( "background-color:"+color );
+    color = m_analizer->getColor( 2 ).name();
+    cond7->setStyleSheet( "background-color:"+color );
+    condt7->setStyleSheet( "background-color:"+color );
+    color = m_analizer->getColor( 3 ).name();
+    cond8->setStyleSheet( "background-color:"+color );
+    condt8->setStyleSheet( "background-color:"+color );
 
     /// mainLayout->setDirection( QBoxLayout::RightToLeft );
 }
@@ -173,9 +195,6 @@ void LaWidget::setCond( int ch, int cond )
         case 7: cond8->setCurrentIndex( cond ); break;
     }
 }
-
-void LaWidget::on_oneShot_toggled( bool state )
-{ m_analizer->setOneShot( state ); }
 
 void LaWidget::on_cond1_currentIndexChanged( int index )
 { m_analizer->setCond( 0, index ); }

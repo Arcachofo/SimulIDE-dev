@@ -36,7 +36,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( quint64     hTick   READ hTick   WRITE sethTick )
 
     Q_PROPERTY( quint64      TimeDiv READ timeDiv WRITE setTimeDiv )
-    //Q_PROPERTY( bool         OneShot READ oneShot WRITE setOneShot )
     Q_PROPERTY( QVector<int> Conds   READ conds   WRITE setConds )
 
     public:
@@ -64,9 +63,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         virtual void expand( bool e ){;}
         void toggleExpand();
 
-        //bool oneShot(){ return m_oneShot; }
-        virtual void setOneShot( bool shot );
-
         QVector<int> conds();
         virtual void setConds( QVector<int> conds );
         virtual void setCond( int ch, int cond );
@@ -84,7 +80,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     protected:
         int m_bufferSize;
 
-        bool m_oneShot;
+        int m_trigger;
+
         bool m_expand;
 
         int m_screenSizeX;

@@ -40,8 +40,6 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_conditions.resize(8);
     m_condTarget.resize(8);
 
-    m_oneShot = false;
-
     Simulator::self()->addToUpdateList( this );
 }
 PlotBase::~PlotBase()
@@ -74,12 +72,6 @@ void PlotBase::toggleExpand()
     expand( !m_expand );
 }
 
-void PlotBase::setOneShot( bool shot )
-{
-    m_risEdge = 0;
-    m_oneShot = shot;
-}
-
 QVector<int> PlotBase::conds()
 {
     QVector<int> conds;
@@ -107,9 +99,12 @@ void PlotBase::conditonMet( int ch, cond_t cond )
 {
     m_conditions[ch] = cond;
 
+    if( m_trigger != 8 ) return;
+
     if( m_conditions == m_condTarget ) // All conditions met
     {                                  // Trigger Pause Simulation
         m_risEdge = Simulator::self()->circTime();
+        CircuitWidget::self()->pauseSim();
     }
     /*else  // Rising will be High and Falling Low in next cycles
     {

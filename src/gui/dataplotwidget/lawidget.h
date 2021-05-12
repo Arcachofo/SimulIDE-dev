@@ -55,7 +55,6 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         void on_voltDivBox_valueChanged( double voltDiv );
 
         void on_triggerBox_currentIndexChanged( int index );
-        void on_oneShot_toggled( bool state );
 
         void setCond( int ch, int cond );
         void on_cond1_currentIndexChanged( int index );
@@ -74,8 +73,6 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         int m_timeDivDialPos;
         int m_timePosDialPos;
         int m_voltDivDialPos;
-
-        int m_channel;
 
         bool m_blocked;
 

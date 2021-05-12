@@ -82,7 +82,6 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
         double m_voltDiv;
         double m_threshold;
 
-        int m_trigger;
         int m_updtCount;
 
         int64_t m_timePos;

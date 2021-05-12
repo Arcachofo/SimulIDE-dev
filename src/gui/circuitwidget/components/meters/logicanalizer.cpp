@@ -67,7 +67,7 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     m_display->setTracks( 8 );
 
     m_pin.resize(8);
-    for( int i=0; i<8; i++ )
+    for( int i=0; i<8; ++i )
     {
         m_pin[i] = new Pin( 180, QPoint( -80-8,-64+16*i ), id+"-Pin"+QString::number(i), 0, this );
         m_channel[i] = new LaChannel( this, id+"Chan"+QString::number(i) );
@@ -125,12 +125,6 @@ void LAnalizer::updateStep()
 
         if( risEdge > 0 ) // We have a Trigger
         {
-            if( m_oneShot )
-            {
-                CircuitWidget::self()->pauseSim();
-                //for( int i=0; i<8; ++i ) m_conditions[i] = C_NONE;
-                m_risEdge = 0;
-            }
             m_channel[m_trigger]->m_risEdge = 0;
             simTime = risEdge;
             m_updtCount = 0;
@@ -161,6 +155,7 @@ void LAnalizer::updateStep()
         m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
     }
     m_display->update(); //redrawScreen();
+    m_risEdge = 0;
 }
 
 void LAnalizer::expand( bool e )
