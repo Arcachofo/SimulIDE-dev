@@ -26,19 +26,18 @@ LaChannel::LaChannel( LAnalizer* la, QString id )
          : DataChannel( la, id )
 {
     m_analizer = la;
+
+    m_cond = C_NONE;
+    m_lastCond = C_NONE;
 }
 LaChannel::~LaChannel()  { }
 
 void LaChannel::initialize()
 {
-    m_sampling = true;
-    m_rising   = false;
-    m_falling  = false;
-
+    m_rising  = false;
     m_risEdge = 0;
-    m_lastValue = 0;
-    m_bufferCounter = 0;
 
+    m_bufferCounter = 0;
     m_buffer.fill(0);
     m_time.fill(0);
 
@@ -55,36 +54,44 @@ void LaChannel::updateStep()
 
 void LaChannel::voltChanged()
 {
-    if( ! m_sampling ) return;
-
     uint64_t simTime = Simulator::self()->circTime();
 
-    double data = m_ePin[0]->getVolt();
+    double volt = m_ePin[0]->getVolt();
 
     if( ++m_bufferCounter >= m_buffer.size() ) m_bufferCounter = 0;
-    m_buffer[m_bufferCounter] = data;
+    m_buffer[m_bufferCounter] = volt;
     m_time[m_bufferCounter] = simTime;
 
-    double delta = data-m_lastValue;
-
-    if( delta > 0 )               // Rising
+    if( volt > m_analizer->threshold() )             // High
     {
-        if( m_falling && !m_rising )     // Min To Rising
+        if( !m_rising )     // Rising Edge
         {
-            m_falling = false;
+            m_rising = true;
+            m_risEdge = simTime;
+
+            if( m_cond != C_NONE )
+                m_analizer->conditonMet( m_channel, C_RISING );
         }
-        m_rising = true;
-        m_risEdge = simTime;
-        m_lastValue = data;
+        if( (m_cond != C_NONE) && (m_lastCond != C_HIGH) )
+        {
+            m_analizer->conditonMet( m_channel, C_HIGH );
+            m_lastCond = C_HIGH;
+        }
     }
-    else                        // Falling
+    else                                // Low
     {
-        if( m_rising && !m_falling )    // Max Found
+        if( m_rising  )    // Falling Edge
         {
             m_rising = false;
+
+            if( m_cond != C_NONE )
+                m_analizer->conditonMet( m_channel, C_FALLING );
         }
-        m_falling = true;
-        m_lastValue = data;
+        if( (m_cond != C_NONE) && (m_lastCond != C_LOW) )
+        {
+            m_analizer->conditonMet( m_channel, C_LOW );
+            m_lastCond = C_LOW;
+        }
     }
 }
 

@@ -47,7 +47,6 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
         uint64_t m_numMax;       // Number of Maximum found
         uint64_t m_nCycles;
         uint64_t m_period;
-        uint64_t m_risEdge;
         uint64_t m_dataZero;
 
         int m_dataTime;

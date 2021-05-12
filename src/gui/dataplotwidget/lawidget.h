@@ -37,7 +37,7 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         ~LaWidget();
 
         PlotDisplay* display() { return plotDisplay; }
-        QHBoxLayout* getLayout() { return mainLayout; }
+        QVBoxLayout* getDispLayout() { return dispLayout; }
 
         void setTrigger( int ch );
 
@@ -55,8 +55,17 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         void on_voltDivBox_valueChanged( double voltDiv );
 
         void on_triggerBox_currentIndexChanged( int index );
-
         void on_oneShot_toggled( bool state );
+
+        void setCond( int ch, int cond );
+        void on_cond1_currentIndexChanged( int index );
+        void on_cond2_currentIndexChanged( int index );
+        void on_cond3_currentIndexChanged( int index );
+        void on_cond4_currentIndexChanged( int index );
+        void on_cond5_currentIndexChanged( int index );
+        void on_cond6_currentIndexChanged( int index );
+        void on_cond7_currentIndexChanged( int index );
+        void on_cond8_currentIndexChanged( int index );
 
     protected:
         void closeEvent( QCloseEvent* event );

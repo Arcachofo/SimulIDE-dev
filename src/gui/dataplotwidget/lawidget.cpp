@@ -33,7 +33,7 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
 
     QString color = m_analizer->getColor( m_channel ).name();
 
-    mainLayout->setDirection( QBoxLayout::RightToLeft );
+    /// mainLayout->setDirection( QBoxLayout::RightToLeft );
 }
 LaWidget::~LaWidget()
 {
@@ -154,19 +154,52 @@ void LaWidget::updateVoltDivBox( double voltDiv )
 }
 
 void LaWidget::on_triggerBox_currentIndexChanged( int index )
-{
-    m_analizer->setTrigger( index );
-}
+{ m_analizer->setTrigger( index ); }
 
 void LaWidget::setTrigger( int ch )
+{ triggerBox->setCurrentIndex( ch ); }
+
+void LaWidget::setCond( int ch, int cond )
 {
-    triggerBox->setCurrentIndex( ch );
+    switch( ch )
+    {
+        case 0: cond1->setCurrentIndex( cond ); break;
+        case 1: cond2->setCurrentIndex( cond ); break;
+        case 2: cond3->setCurrentIndex( cond ); break;
+        case 3: cond4->setCurrentIndex( cond ); break;
+        case 4: cond5->setCurrentIndex( cond ); break;
+        case 5: cond6->setCurrentIndex( cond ); break;
+        case 6: cond7->setCurrentIndex( cond ); break;
+        case 7: cond8->setCurrentIndex( cond ); break;
+    }
 }
 
 void LaWidget::on_oneShot_toggled( bool state )
-{
-    m_analizer->setOneShot( state );
-}
+{ m_analizer->setOneShot( state ); }
+
+void LaWidget::on_cond1_currentIndexChanged( int index )
+{ m_analizer->setCond( 0, index ); }
+
+void LaWidget::on_cond2_currentIndexChanged( int index )
+{ m_analizer->setCond( 1, index ); }
+
+void LaWidget::on_cond3_currentIndexChanged( int index )
+{ m_analizer->setCond( 2, index ); }
+
+void LaWidget::on_cond4_currentIndexChanged( int index )
+{ m_analizer->setCond( 3, index ); }
+
+void LaWidget::on_cond5_currentIndexChanged( int index )
+{ m_analizer->setCond( 4, index ); }
+
+void LaWidget::on_cond6_currentIndexChanged( int index )
+{ m_analizer->setCond( 5, index ); }
+
+void LaWidget::on_cond7_currentIndexChanged( int index )
+{ m_analizer->setCond( 6, index ); }
+
+void LaWidget::on_cond8_currentIndexChanged( int index )
+{ m_analizer->setCond( 7, index ); }
 
 void LaWidget::closeEvent( QCloseEvent* event )
 {

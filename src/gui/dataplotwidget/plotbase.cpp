@@ -19,7 +19,6 @@
 
 #include "plotbase.h"
 #include "plotdisplay.h"
-#include "datachannel.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "circuitwidget.h"
@@ -38,8 +37,10 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_baSizeX = 135;
     m_baSizeY = 135;
 
+    m_conditions.resize(8);
+    m_condTarget.resize(8);
+
     m_oneShot = false;
-    m_sampling = true;
 
     Simulator::self()->addToUpdateList( this );
 }
@@ -75,7 +76,46 @@ void PlotBase::toggleExpand()
 
 void PlotBase::setOneShot( bool shot )
 {
+    m_risEdge = 0;
     m_oneShot = shot;
+}
+
+QVector<int> PlotBase::conds()
+{
+    QVector<int> conds;
+    for( int i=0; i<m_condTarget.size(); ++i )
+        conds.append( (int)m_condTarget[i] );
+
+    return conds;
+}
+
+void PlotBase::setConds( QVector<int> conds )
+{
+    for( int i=0; i<m_condTarget.size(); ++i )
+    {
+        if( i >= conds.size() ) break;
+        m_condTarget[i] = (cond_t)conds[i];
+    }
+}
+
+void PlotBase::setCond( int ch, int cond )
+{
+    m_condTarget[ch] = (cond_t)cond;
+}
+
+void PlotBase::conditonMet( int ch, cond_t cond )
+{
+    m_conditions[ch] = cond;
+
+    if( m_conditions == m_condTarget ) // All conditions met
+    {                                  // Trigger Pause Simulation
+        m_risEdge = Simulator::self()->circTime();
+    }
+    /*else  // Rising will be High and Falling Low in next cycles
+    {
+        if     ( cond == C_RISING )  m_conditions[ch] = C_HIGH;
+        else if( cond == C_FALLING ) m_conditions[ch] = C_LOW;
+    }*/
 }
 
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

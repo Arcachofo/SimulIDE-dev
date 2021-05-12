@@ -19,6 +19,7 @@
 
 #include "datachannel.h"
 #include "plotdisplay.h"
+#include "plotbase.h"
 #include "simulator.h"
 
 DataChannel::DataChannel( PlotBase* plotBase, QString id )

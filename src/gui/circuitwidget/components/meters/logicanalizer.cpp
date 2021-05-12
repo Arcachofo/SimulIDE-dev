@@ -28,6 +28,10 @@
 #include "datalawidget.h"
 #include "tunnel.h"
 
+static const char* LAnalizer_properties[] = {
+    QT_TRANSLATE_NOOP("App::Property","Threshold")
+};
+
 Component* LAnalizer::construct( QObject* parent, QString type, QString id )
 {
     return new LAnalizer( parent, type, id );
@@ -46,6 +50,8 @@ LibraryItem* LAnalizer::libraryItem()
 LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
          : PlotBase( parent, type, id )
 {
+    Q_UNUSED( LAnalizer_properties );
+
     m_graphical = true;
     m_extraSize = 68-12;
     m_bufferSize = 600000;
@@ -79,8 +85,12 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     }
     m_updtCount = 0;
     m_trigger = 0;
+
+    m_threshold = 2.5;
+
     setTimeDiv( 1e9 ); // 1 ms
     setVoltDiv( 0.6 );
+
     setLabelPos(-90,-100, 0);
     expand( false );
 }
@@ -96,26 +106,30 @@ LAnalizer::~LAnalizer()
     for( int i=0; i<8; i++ ) delete m_channel[i];
 }
 
+QList<propGroup_t> LAnalizer::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Treshold", tr("Treshold"),"V"} );
+    return {mainGroup};
+}
+
 void LAnalizer::updateStep()
 {
-    if( !m_sampling )
-    {
-        m_display->update();
-        return;
-    }
-
     uint64_t simTime = Simulator::self()->circTime(); // free running
 
-    if( m_trigger < 8 )
+    if( m_trigger < 9 )
     {
-        uint64_t risEdge = m_channel[m_trigger]->m_risEdge;
+        uint64_t risEdge;
+        if( m_trigger == 8 ) risEdge = m_risEdge;
+        else                 risEdge = m_channel[m_trigger]->m_risEdge;
 
         if( risEdge > 0 ) // We have a Trigger
         {
             if( m_oneShot )
             {
-                m_sampling = false;
-                for( int i=0; i<8; ++i ) m_channel[i]->m_sampling = false;
+                CircuitWidget::self()->pauseSim();
+                //for( int i=0; i<8; ++i ) m_conditions[i] = C_NONE;
+                m_risEdge = 0;
             }
             m_channel[m_trigger]->m_risEdge = 0;
             simTime = risEdge;
@@ -157,7 +171,7 @@ void LAnalizer::expand( bool e )
     {
         m_screenSizeY = m_baSizeY+2*10;
         m_display->setMaximumSize( 9999, 9999 );
-        m_laWidget->getLayout()->addWidget( m_display );
+        m_laWidget->getDispLayout()->insertWidget( 0, m_display );
         m_laWidget->setWindowTitle( idLabel() );
         m_laWidget->show();
         m_screenSizeX = 8;
@@ -223,7 +237,7 @@ QStringList LAnalizer::tunnels()
 
 void LAnalizer::setTunnels( QStringList tunnels )
 {
-    for( int i=0; i< tunnels.size(); i++ )
+    for( int i=0; i<tunnels.size(); i++ )
     {
         if( i > 7 ) break;
         m_channel[i]->m_chTunnel = tunnels.at(i);
@@ -231,11 +245,21 @@ void LAnalizer::setTunnels( QStringList tunnels )
     }
 }
 
-void LAnalizer::setOneShot( bool shot )
+void LAnalizer::setConds( QVector<int> conds )
 {
-    m_oneShot = shot;
-    m_sampling = true;
-    for( int i=0; i<8; ++i ) m_channel[i]->m_sampling = true;
+    PlotBase::setConds( conds );
+
+    for( int i=0; i<8; ++i )
+    {
+        if( i >= conds.size() ) break;
+        m_laWidget->setCond( i, conds[i] );
+        m_channel[i]->m_cond = (cond_t)conds[i];
+    }
 }
 
+void LAnalizer::setCond( int ch, int cond )
+{
+    PlotBase::setCond( ch, cond );
+    m_channel[ch]->m_cond = (cond_t)cond;
+}
 #include "moc_logicanalizer.cpp"

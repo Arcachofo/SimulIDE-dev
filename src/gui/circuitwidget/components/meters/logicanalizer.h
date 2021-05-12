@@ -37,14 +37,17 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
     Q_PROPERTY( double  vTick    READ voltDiv  WRITE setVoltDiv )
     Q_PROPERTY( int     Trigger  READ trigger  WRITE setTrigger )
     Q_PROPERTY( qint64  TimePos  READ timePos  WRITE setTimePos )
+    Q_PROPERTY( double  Treshold READ threshold  WRITE setThreshold )
 
     public:
 
         LAnalizer( QObject* parent, QString type, QString id );
         ~LAnalizer();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
+
+        virtual QList<propGroup_t> propGroups() override;
 
         double dataSize() { return m_dataSize/1e6; }
         void setDataSize( double ds ) { m_dataSize = ds*1e6; }
@@ -62,17 +65,22 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
         int trigger() { return m_trigger; }
         void setTrigger( int ch );
 
+        double threshold() { return m_threshold; }
+        void setThreshold( double thr ) { m_threshold = thr; }
+
         virtual QStringList tunnels() override;
         virtual void setTunnels( QStringList tunnels ) override;
 
-        virtual void expand( bool e ) override;
+        virtual void setConds( QVector<int> conds ) override;
+        virtual void setCond( int ch, int cond ) override;
 
-        virtual void setOneShot( bool shot ) override;
+        virtual void expand( bool e ) override;
 
         virtual void channelChanged( int ch, QString name ) override;
 
     private:
         double m_voltDiv;
+        double m_threshold;
 
         int m_trigger;
         int m_updtCount;

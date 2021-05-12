@@ -21,7 +21,18 @@
 #define DATACHANNEL_H
 
 #include "e-element.h"
-#include "plotbase.h"
+
+#include <QVector>
+
+enum cond_t{
+    C_NONE=0,
+    C_LOW,
+    C_RISING,
+    C_HIGH,
+    C_FALLING
+};
+
+class PlotBase;
 
 class MAINMODULE_EXPORT DataChannel : public eElement
 {
@@ -44,8 +55,13 @@ class MAINMODULE_EXPORT DataChannel : public eElement
         bool m_trigger;
         int m_trigIndex;
 
+        uint64_t m_risEdge;
+
         int m_channel;
         int m_bufferCounter;
+
+        cond_t m_cond;
+        cond_t m_lastCond;
 
         QString m_chTunnel;
 
