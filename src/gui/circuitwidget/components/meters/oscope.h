@@ -51,7 +51,6 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         double filter() { return m_filter; }
         void setFilter( double filter );
 
-        int trigger() { return m_trigger; }
         void setTrigger( int ch );
 
         int autoSC() { return m_auto; }
@@ -72,9 +71,6 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         QStringList volPos();
         void setVolPos( QStringList vp );
 
-        virtual QStringList tunnels() override;
-        virtual void setTunnels( QStringList tunnels ) override;
-
         virtual void updateStep() override;
 
         virtual void setTimeDiv( uint64_t td ) override;
@@ -90,16 +86,15 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         void hideChannel( int ch, bool hide );
 
-        virtual void expand( bool e ) override;
+        virtual void setTunnels( QStringList tunnels ) override;
 
-        virtual void channelChanged( int ch, QString name )override;
+        virtual void expand( bool e ) override;
 
         DataWidget* dataW() { return m_dataWidget; }
 
     private:
         double m_filter;
 
-        int m_trigger;
         int m_auto;
 
         int64_t m_timePos[4];
@@ -107,7 +102,6 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         double  m_voltPos[4];
         bool    m_hideCh[4];
 
-        OscopeChannel* m_channel[4];
         OscWidget*  m_oscWidget;
         DataWidget* m_dataWidget;
 };

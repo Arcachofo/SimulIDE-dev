@@ -62,21 +62,16 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
         double voltDiv(){ return m_voltDiv; }
         void setVoltDiv( double vd );
 
-        int trigger() { return m_trigger; }
         void setTrigger( int ch );
 
         double threshold() { return m_threshold; }
         void setThreshold( double thr ) { m_threshold = thr; }
 
-        virtual QStringList tunnels() override;
+        virtual void setConds( QVector<int> conds ) override;
+
         virtual void setTunnels( QStringList tunnels ) override;
 
-        virtual void setConds( QVector<int> conds ) override;
-        virtual void setCond( int ch, int cond ) override;
-
         virtual void expand( bool e ) override;
-
-        virtual void channelChanged( int ch, QString name ) override;
 
     private:
         double m_voltDiv;
@@ -86,7 +81,7 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         int64_t m_timePos;
 
-        LaChannel* m_channel[8];
+        //DataChannel* m_channel[8];
         LaWidget*  m_laWidget;
         DataLaWidget* m_dataWidget;
 };

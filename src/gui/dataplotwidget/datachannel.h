@@ -48,14 +48,22 @@ class MAINMODULE_EXPORT DataChannel : public eElement
 
         virtual void stamp() override;
 
+        virtual void setFilter( double f ) {;}
+
     protected:
         QVector<double> m_buffer;
         QVector<uint64_t> m_time;
 
+        bool m_connected;
+        bool m_rising;
+        bool m_falling;
         bool m_trigger;
         int m_trigIndex;
 
         uint64_t m_risEdge;
+        uint64_t m_period;
+
+        double   m_subRate;
 
         int m_channel;
         int m_bufferCounter;

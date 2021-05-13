@@ -59,6 +59,8 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     m_extraSize = 68;
     m_bufferSize = 600000;
 
+    m_numChannels = 4;
+
     m_oscWidget  = new OscWidget( CircuitWidget::self(), this );
     m_dataWidget = new DataWidget( NULL, this );
     m_proxy = Circuit::self()->addWidget( m_dataWidget );
@@ -102,8 +104,6 @@ Oscope::~Oscope()
     m_oscWidget->setParent( NULL );
     m_oscWidget->close();
     delete m_oscWidget;
-
-    for( int i=0; i<4; i++ ) delete m_channel[i];
 }
 
 void Oscope::updateStep()
@@ -184,14 +184,8 @@ void Oscope::expand( bool e )
 
     m_display->setExpand( e );
     m_display->updateValues();
-    //QTimer::singleShot( 20, m_display, SLOT( updateValues() ) );
 
     Circuit::self()->update();
-}
-
-void Oscope::channelChanged( int ch, QString name )
-{
-    m_channel[ch]->m_chTunnel = name;
 }
 
 void Oscope::setFilter( double filter )
@@ -213,12 +207,21 @@ void Oscope::setTrigger( int ch )
     }
 }
 
+void Oscope::setTunnels( QStringList tunnels )
+{
+    for( int i=0; i<tunnels.size(); i++ )
+    {
+        if( i >= m_numChannels ) break;
+        m_channel[i]->m_chTunnel = tunnels.at(i);
+        m_dataWidget->setTunnel( i, tunnels.at(i) );
+    }
+}
+
 void Oscope::setAutoSC( int ch )
 {
     m_auto = ch;
     m_oscWidget->setAuto( ch );
 }
-
 
 QStringList Oscope::hideCh()
 {
@@ -331,23 +334,6 @@ void Oscope::setVoltPos( int ch, double vp )
     m_voltPos[ch] = vp;
     m_display->setVPos( ch, vp );
     m_oscWidget->updateVoltPosBox( ch, vp );
-}
-
-QStringList Oscope::tunnels()
-{
-    QStringList list;
-    for( int i=0; i<4; ++i ) list << m_channel[i]->m_chTunnel;
-    return list;
-}
-
-void Oscope::setTunnels( QStringList tunnels )
-{
-    for( int i=0; i<tunnels.size(); i++ )
-    {
-        if( i > 3 ) break;
-        m_channel[i]->m_chTunnel = tunnels.at(i);
-        m_dataWidget->setTunnel( i, tunnels.at(i) );
-    }
 }
 
 #include "moc_oscope.cpp"

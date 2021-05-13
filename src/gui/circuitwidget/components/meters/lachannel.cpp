@@ -54,6 +54,7 @@ void LaChannel::updateStep()
 
 void LaChannel::voltChanged()
 {
+    if( !m_connected ) return;
     uint64_t simTime = Simulator::self()->circTime();
 
     double volt = m_ePin[0]->getVolt();

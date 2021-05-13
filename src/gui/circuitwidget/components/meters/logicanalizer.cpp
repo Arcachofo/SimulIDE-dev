@@ -56,6 +56,8 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     m_extraSize = 68-12;
     m_bufferSize = 600000;
 
+    m_numChannels = 8;
+
     m_laWidget  = new LaWidget( CircuitWidget::self(), this );
     m_dataWidget = new DataLaWidget( NULL, this );
     m_proxy = Circuit::self()->addWidget( m_dataWidget );
@@ -102,8 +104,6 @@ LAnalizer::~LAnalizer()
     m_laWidget->setParent( NULL );
     m_laWidget->close();
     delete m_laWidget;
-
-    for( int i=0; i<8; i++ ) delete m_channel[i];
 }
 
 QList<propGroup_t> LAnalizer::propGroups()
@@ -150,6 +150,7 @@ void LAnalizer::updateStep()
             }
             display()->connectChannel( i, connected );
         }
+        m_channel[i]->m_connected = connected;
         if( connected ) m_channel[i]->updateStep();
         else            m_channel[i]->initialize();
         m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
@@ -191,11 +192,6 @@ void LAnalizer::expand( bool e )
     Circuit::self()->update();
 }
 
-void LAnalizer::channelChanged( int ch, QString name )
-{
-    m_channel[ch]->m_chTunnel = name;
-}
-
 void LAnalizer::setTimeDiv( uint64_t td )
 {
     if( td < 1 ) td = 1;
@@ -223,23 +219,6 @@ void LAnalizer::setTrigger( int ch )
     m_laWidget->setTrigger( ch );
 }
 
-QStringList LAnalizer::tunnels()
-{
-    QStringList list;
-    for( int i=0; i<8; ++i ) list << m_channel[i]->m_chTunnel;
-    return list;
-}
-
-void LAnalizer::setTunnels( QStringList tunnels )
-{
-    for( int i=0; i<tunnels.size(); i++ )
-    {
-        if( i > 7 ) break;
-        m_channel[i]->m_chTunnel = tunnels.at(i);
-        m_dataWidget->setTunnel( i, tunnels.at(i) );
-    }
-}
-
 void LAnalizer::setConds( QVector<int> conds )
 {
     PlotBase::setConds( conds );
@@ -252,9 +231,14 @@ void LAnalizer::setConds( QVector<int> conds )
     }
 }
 
-void LAnalizer::setCond( int ch, int cond )
+void LAnalizer::setTunnels( QStringList tunnels )
 {
-    PlotBase::setCond( ch, cond );
-    m_channel[ch]->m_cond = (cond_t)cond;
+    for( int i=0; i<tunnels.size(); i++ )
+    {
+        if( i >= m_numChannels ) break;
+        m_channel[i]->m_chTunnel = tunnels.at(i);
+        m_dataWidget->setTunnel( i, tunnels.at(i) );
+    }
 }
+
 #include "moc_logicanalizer.cpp"

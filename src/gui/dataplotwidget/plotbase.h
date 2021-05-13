@@ -57,7 +57,9 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         uint64_t timeDiv() { return m_timeDiv; }
         virtual void setTimeDiv( uint64_t td );
 
-        virtual QStringList tunnels()=0;
+        int trigger() { return m_trigger; }
+
+        virtual QStringList tunnels();
         virtual void setTunnels( QStringList tunnels )=0;
 
         virtual void expand( bool e ){;}
@@ -67,7 +69,7 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         virtual void setConds( QVector<int> conds );
         virtual void setCond( int ch, int cond );
 
-        virtual void channelChanged( int ch, QString name ){;}
+        virtual void channelChanged( int ch, QString name );
 
         PlotDisplay* display() { return m_display; }
 
@@ -95,6 +97,9 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         uint64_t m_timeDiv;
         uint64_t m_risEdge;
+
+        int m_numChannels;
+        DataChannel* m_channel[8];
 
         QVector<cond_t> m_conditions;
         QVector<cond_t> m_condTarget;

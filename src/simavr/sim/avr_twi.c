@@ -48,7 +48,6 @@ static void avr_twi_write( struct avr_t* avr, avr_io_addr_t addr, uint8_t v, voi
     uint8_t twsto = avr_regbit_get( avr, p->twsto );
     uint8_t twint = avr_regbit_get( avr, p->twi.raised );
 
-    //if( twint ) v &= ~(1<<7); // Clear TWINT flag
     avr_core_watch_write( avr, addr, v );
 
     if( twen != avr_regbit_get(avr, p->twen) )

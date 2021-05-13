@@ -45,6 +45,8 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
 PlotBase::~PlotBase()
 {
     Simulator::self()->remFromUpdateList( this );
+
+    for( int i=0; i<m_numChannels; i++ ) delete m_channel[i];
 }
 
 void PlotBase::setBaSizeX( int size )
@@ -72,6 +74,13 @@ void PlotBase::toggleExpand()
     expand( !m_expand );
 }
 
+QStringList PlotBase::tunnels()
+{
+    QStringList list;
+    for( int i=0; i<m_numChannels; ++i ) list << m_channel[i]->m_chTunnel;
+    return list;
+}
+
 QVector<int> PlotBase::conds()
 {
     QVector<int> conds;
@@ -92,7 +101,11 @@ void PlotBase::setConds( QVector<int> conds )
 
 void PlotBase::setCond( int ch, int cond )
 {
-    m_condTarget[ch] = (cond_t)cond;
+    cond_t cCond = (cond_t)cond;
+    m_condTarget[ch] = cCond;
+    if( cCond == C_NONE ) m_conditions[ch] = C_NONE;
+
+    m_channel[ch]->m_cond = (cond_t)cond;
 }
 
 void PlotBase::conditonMet( int ch, cond_t cond )
@@ -111,6 +124,11 @@ void PlotBase::conditonMet( int ch, cond_t cond )
         if     ( cond == C_RISING )  m_conditions[ch] = C_HIGH;
         else if( cond == C_FALLING ) m_conditions[ch] = C_LOW;
     }*/
+}
+
+void PlotBase::channelChanged( int ch, QString name )
+{
+    m_channel[ch]->m_chTunnel = name;
 }
 
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
