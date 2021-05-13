@@ -68,7 +68,8 @@ class MAINMODULE_EXPORT DataChannel : public eElement
         int m_channel;
         int m_bufferCounter;
 
-        cond_t m_cond;
+        bool m_pauseOnCond;
+        //cond_t m_cond;
         cond_t m_lastCond;
 
         QString m_chTunnel;

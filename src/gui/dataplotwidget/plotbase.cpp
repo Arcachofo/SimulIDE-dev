@@ -37,8 +37,15 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_baSizeX = 135;
     m_baSizeY = 135;
 
-    m_conditions.resize(8);
-    m_condTarget.resize(8);
+    QString n;
+    for( int i=1; i<9; ++i ) // Condition simple to script: ch1l to (ch1==1)
+    {
+        n = QString::number(i);
+        m_condTo["ch"+n+"l"] = "(ch"+n+"==1)";
+        m_condTo["ch"+n+"r"] = "(ch"+n+"==2)";
+        m_condTo["ch"+n+"h"] = "(ch"+n+"==3)";
+        m_condTo["ch"+n+"f"] = "(ch"+n+"==4)";
+    }
 
     Simulator::self()->addToUpdateList( this );
 }
@@ -81,44 +88,51 @@ QStringList PlotBase::tunnels()
     return list;
 }
 
-QVector<int> PlotBase::conds()
+QString PlotBase::conds()
 {
-    QVector<int> conds;
-    for( int i=0; i<m_condTarget.size(); ++i )
-        conds.append( (int)m_condTarget[i] );
-
-    return conds;
+    return m_conditions;
 }
 
-void PlotBase::setConds( QVector<int> conds )
+void PlotBase::updateConds(  QString conds )
 {
-    for( int i=0; i<m_condTarget.size(); ++i )
+    m_conditions = conds;
+    conds = conds.toLower();
+
+    QString n;
+    for( int i=1; i<9; ++i ) // Condition simple to script: ch1l to (ch1==1)
     {
-        if( i >= conds.size() ) break;
-        m_condTarget[i] = (cond_t)conds[i];
+        n = QString::number(i);
+        conds.replace( "ch"+n+"l", m_condTo.value("ch"+n+"l") );
+        conds.replace( "ch"+n+"r", m_condTo.value("ch"+n+"r") );
+        conds.replace( "ch"+n+"h", m_condTo.value("ch"+n+"h") );
+        conds.replace( "ch"+n+"f", m_condTo.value("ch"+n+"f") );
     }
-}
 
-void PlotBase::setCond( int ch, int cond )
-{
-    cond_t cCond = (cond_t)cond;
-    m_condTarget[ch] = cCond;
-    if( cCond == C_NONE ) m_conditions[ch] = C_NONE;
-
-    m_channel[ch]->m_cond = (cond_t)cond;
+    m_condProgram = QScriptProgram( conds );
 }
 
 void PlotBase::conditonMet( int ch, cond_t cond )
 {
-    m_conditions[ch] = cond;
+    m_engine.globalObject().setProperty( "ch"+QString::number(ch+1), QScriptValue( (int)cond ) );
 
-    if( m_trigger != 8 ) return;
+    if( Simulator::self()->simState() <= SIM_PAUSED ) return;
+    if( m_condProgram.isNull() ) return;
 
-    if( m_conditions == m_condTarget ) // All conditions met
-    {                                  // Trigger Pause Simulation
+    // Check if condition met:
+    bool pause = m_engine.evaluate( m_condProgram ).toBool();
+    if( pause )
+    {
         m_risEdge = Simulator::self()->circTime();
         CircuitWidget::self()->pauseSim();
     }
+
+    //if( m_trigger != 8 ) return;
+
+    /*if( m_conditions == m_condTarget ) // All conditions met
+    {                                  // Trigger Pause Simulation
+        m_risEdge = Simulator::self()->circTime();
+        CircuitWidget::self()->pauseSim();
+    }*/
     /*else  // Rising will be High and Falling Low in next cycles
     {
         if     ( cond == C_RISING )  m_conditions[ch] = C_HIGH;

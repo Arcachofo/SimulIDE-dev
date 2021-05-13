@@ -27,7 +27,7 @@ LaChannel::LaChannel( LAnalizer* la, QString id )
 {
     m_analizer = la;
 
-    m_cond = C_NONE;
+    //m_cond = C_NONE;
     m_lastCond = C_NONE;
 }
 LaChannel::~LaChannel()  { }
@@ -42,6 +42,12 @@ void LaChannel::initialize()
     m_time.fill(0);
 
     updateStep();
+}
+
+void LaChannel::stamp()    // Called at Simulation Start
+{
+    DataChannel::stamp();
+    m_analizer->conditonMet( m_channel, C_LOW );
 }
 
 void LaChannel::updateStep()
@@ -70,10 +76,10 @@ void LaChannel::voltChanged()
             m_rising = true;
             m_risEdge = simTime;
 
-            if( m_cond != C_NONE )
+            if( m_pauseOnCond )
                 m_analizer->conditonMet( m_channel, C_RISING );
         }
-        if( (m_cond != C_NONE) && (m_lastCond != C_HIGH) )
+        if( m_pauseOnCond && (m_lastCond != C_HIGH) )
         {
             m_analizer->conditonMet( m_channel, C_HIGH );
             m_lastCond = C_HIGH;
@@ -85,10 +91,10 @@ void LaChannel::voltChanged()
         {
             m_rising = false;
 
-            if( m_cond != C_NONE )
+            if( m_pauseOnCond )
                 m_analizer->conditonMet( m_channel, C_FALLING );
         }
-        if( (m_cond != C_NONE) && (m_lastCond != C_LOW) )
+        if( m_pauseOnCond && (m_lastCond != C_LOW) )
         {
             m_analizer->conditonMet( m_channel, C_LOW );
             m_lastCond = C_LOW;

@@ -30,6 +30,7 @@ DataChannel::DataChannel( PlotBase* plotBase, QString id )
     m_ePin[1] = NULL;
     m_chTunnel = "";
     m_trigIndex = 0;
+    m_pauseOnCond = false;
 }
 
 DataChannel::~DataChannel()

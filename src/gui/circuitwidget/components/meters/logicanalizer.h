@@ -67,7 +67,7 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
         double threshold() { return m_threshold; }
         void setThreshold( double thr ) { m_threshold = thr; }
 
-        virtual void setConds( QVector<int> conds ) override;
+        virtual void setConds( QString conds ) override;
 
         virtual void setTunnels( QStringList tunnels ) override;
 

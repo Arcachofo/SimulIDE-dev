@@ -56,15 +56,8 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
 
         void on_triggerBox_currentIndexChanged( int index );
 
-        void setCond( int ch, int cond );
-        void on_cond1_currentIndexChanged( int index );
-        void on_cond2_currentIndexChanged( int index );
-        void on_cond3_currentIndexChanged( int index );
-        void on_cond4_currentIndexChanged( int index );
-        void on_cond5_currentIndexChanged( int index );
-        void on_cond6_currentIndexChanged( int index );
-        void on_cond7_currentIndexChanged( int index );
-        void on_cond8_currentIndexChanged( int index );
+        void on_condEdit_editingFinished();
+        void setConds( QString conds );
 
     protected:
         void closeEvent( QCloseEvent* event );

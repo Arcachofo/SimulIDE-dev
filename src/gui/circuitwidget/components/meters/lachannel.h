@@ -34,6 +34,7 @@ class MAINMODULE_EXPORT LaChannel : public DataChannel
         ~LaChannel();
 
         virtual void initialize() override;
+        virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
 

@@ -20,6 +20,9 @@
 #ifndef PLOTBASE_H
 #define PLOTBASE_H
 
+#include <QScriptEngine>
+#include <QScriptProgram>
+
 #include "component.h"
 #include "e-element.h"
 #include "datachannel.h"
@@ -35,8 +38,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
     Q_PROPERTY( QStringList Tunnels READ tunnels WRITE setTunnels )
     Q_PROPERTY( quint64     hTick   READ hTick   WRITE sethTick )
 
-    Q_PROPERTY( quint64      TimeDiv READ timeDiv WRITE setTimeDiv )
-    Q_PROPERTY( QVector<int> Conds   READ conds   WRITE setConds )
+    Q_PROPERTY( quint64 TimeDiv READ timeDiv WRITE setTimeDiv )
+    Q_PROPERTY( QString Conds   READ conds   WRITE setConds )
 
     public:
         PlotBase( QObject* parent, QString type, QString id );
@@ -65,9 +68,9 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         virtual void expand( bool e ){;}
         void toggleExpand();
 
-        QVector<int> conds();
-        virtual void setConds( QVector<int> conds );
-        virtual void setCond( int ch, int cond );
+        QString conds();
+        virtual void setConds( QString conds ){;}
+        void updateConds( QString conds );
 
         virtual void channelChanged( int ch, QString name );
 
@@ -101,8 +104,11 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         int m_numChannels;
         DataChannel* m_channel[8];
 
-        QVector<cond_t> m_conditions;
-        QVector<cond_t> m_condTarget;
+        QString m_conditions;
+        QScriptProgram m_condProgram;
+        QScriptEngine m_engine;
+
+        QHash<QString, QString> m_condTo;
 
         QColor m_color[5];
 

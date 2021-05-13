@@ -30,30 +30,9 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
     m_analizer = la;
     m_blocked = false;
 
-    QString color = m_analizer->getColor( 0 ).name();
-    cond1->setStyleSheet( "background-color:"+color );
-    condt1->setStyleSheet( "background-color:"+color );
-    color = m_analizer->getColor( 1 ).name();
-    cond2->setStyleSheet( "background-color:"+color );
-    condt2->setStyleSheet( "background-color:"+color );
-    color = m_analizer->getColor( 2 ).name();
-    cond3->setStyleSheet( "background-color:"+color );
-    condt3->setStyleSheet( "background-color:"+color );
-    color = m_analizer->getColor( 3 ).name();
-    cond4->setStyleSheet( "background-color:"+color );
-    condt4->setStyleSheet( "background-color:"+color );
-    color = m_analizer->getColor( 0 ).name();
-    cond5->setStyleSheet( "background-color:"+color );
-    condt5->setStyleSheet( "background-color:"+color );
-    color = m_analizer->getColor( 1 ).name();
-    cond6->setStyleSheet( "background-color:"+color );
-    condt6->setStyleSheet( "background-color:"+color );
-    color = m_analizer->getColor( 2 ).name();
-    cond7->setStyleSheet( "background-color:"+color );
-    condt7->setStyleSheet( "background-color:"+color );
-    color = m_analizer->getColor( 3 ).name();
-    cond8->setStyleSheet( "background-color:"+color );
-    condt8->setStyleSheet( "background-color:"+color );
+    //QString color = m_analizer->getColor( 0 ).name();
+    //cond1->setStyleSheet( "background-color:"+color );
+
 
     /// mainLayout->setDirection( QBoxLayout::RightToLeft );
 }
@@ -176,49 +155,24 @@ void LaWidget::updateVoltDivBox( double voltDiv )
 }
 
 void LaWidget::on_triggerBox_currentIndexChanged( int index )
-{ m_analizer->setTrigger( index ); }
-
-void LaWidget::setTrigger( int ch )
-{ triggerBox->setCurrentIndex( ch ); }
-
-void LaWidget::setCond( int ch, int cond )
 {
-    switch( ch )
-    {
-        case 0: cond1->setCurrentIndex( cond ); break;
-        case 1: cond2->setCurrentIndex( cond ); break;
-        case 2: cond3->setCurrentIndex( cond ); break;
-        case 3: cond4->setCurrentIndex( cond ); break;
-        case 4: cond5->setCurrentIndex( cond ); break;
-        case 5: cond6->setCurrentIndex( cond ); break;
-        case 6: cond7->setCurrentIndex( cond ); break;
-        case 7: cond8->setCurrentIndex( cond ); break;
-    }
+    m_analizer->setTrigger( index );
 }
 
-void LaWidget::on_cond1_currentIndexChanged( int index )
-{ m_analizer->setCond( 0, index ); }
+void LaWidget::setTrigger( int ch )
+{
+    triggerBox->setCurrentIndex( ch );
+}
 
-void LaWidget::on_cond2_currentIndexChanged( int index )
-{ m_analizer->setCond( 1, index ); }
+void LaWidget::setConds( QString conds )
+{
+    condEdit->setText( conds );
+}
 
-void LaWidget::on_cond3_currentIndexChanged( int index )
-{ m_analizer->setCond( 2, index ); }
-
-void LaWidget::on_cond4_currentIndexChanged( int index )
-{ m_analizer->setCond( 3, index ); }
-
-void LaWidget::on_cond5_currentIndexChanged( int index )
-{ m_analizer->setCond( 4, index ); }
-
-void LaWidget::on_cond6_currentIndexChanged( int index )
-{ m_analizer->setCond( 5, index ); }
-
-void LaWidget::on_cond7_currentIndexChanged( int index )
-{ m_analizer->setCond( 6, index ); }
-
-void LaWidget::on_cond8_currentIndexChanged( int index )
-{ m_analizer->setCond( 7, index ); }
+void LaWidget::on_condEdit_editingFinished()
+{
+    m_analizer->updateConds( condEdit->text() );
+}
 
 void LaWidget::closeEvent( QCloseEvent* event )
 {

@@ -217,18 +217,15 @@ void LAnalizer::setTrigger( int ch )
 {
     m_trigger = ch;
     m_laWidget->setTrigger( ch );
+
+    bool pauseOnCond = ( m_trigger == 8 ); // Pause on condition
+    for( int i=0; i<8; i++ ) m_channel[i]->m_pauseOnCond = pauseOnCond;
 }
 
-void LAnalizer::setConds( QVector<int> conds )
+void LAnalizer::setConds( QString conds )
 {
-    PlotBase::setConds( conds );
-
-    for( int i=0; i<8; ++i )
-    {
-        if( i >= conds.size() ) break;
-        m_laWidget->setCond( i, conds[i] );
-        m_channel[i]->m_cond = (cond_t)conds[i];
-    }
+    m_laWidget->setConds( conds );
+    updateConds( conds );
 }
 
 void LAnalizer::setTunnels( QStringList tunnels )
