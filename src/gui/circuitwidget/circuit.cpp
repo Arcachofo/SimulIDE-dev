@@ -411,8 +411,8 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
               || propName == "Show_Cap" ) propName = "Show_Val";
         else if( propName == "Duty_Square") propName = "Duty";
 
-        QString lowN = propName;
-        lowN = lowN.toLower();
+        //QString lowN = propName;
+        //lowN = lowN.toLower();
 
         QVariant comProp = comp->property( propName.toStdString().c_str() );
         if( !value.isValid()
@@ -438,19 +438,17 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
             QStringList list= value.toString().split(",");
             comp->setProperty( propName.toStdString().c_str(), list );
         }
-        else if( (lowN=="mem") || (lowN=="eeprom") )
+        else if//( (lowN=="mem") || (lowN=="eeprom") ) //
+            ( type == QVariant::UserType ) // QList<int> or ?? QVector<int>
         {
             QString data = value.toString();
             if( data.isEmpty() ) continue;
             QStringList list = data.split(",");
 
             QVector<int> vmem;
-            int lsize = list.size();
-            vmem.resize( lsize );
+            for( int x=0; x<list.size(); ++x ) vmem.append( list.at(x).toInt() );
 
-            for( int x=0; x<lsize; x++ ) vmem[x] = list.at(x).toInt();
-
-            QVariant value = QVariant::fromValue( vmem );
+            value = QVariant::fromValue( vmem );
             comp->setProperty( propName.toStdString().c_str(), value );
         }
         else comp->setProperty( propName.toStdString().c_str(), value );
@@ -692,17 +690,20 @@ void Circuit::objectToDom( QDomElement* elm, Component* comp, bool onlyMain )
         }
 
         QVariant value = comp->property( name );
-        if( metaproperty.type() == QVariant::StringList )
+        QVariant::Type type = metaproperty.type();
+
+        if( type == QVariant::StringList )
         {
             QStringList list= value.toStringList();
             elm->setAttribute( name, list.join(",") );
         }
-        else if( metaproperty.type() == QVariant::PointF )
+        else if( type == QVariant::PointF )
         {
             QPointF point = value.toPointF();
             elm->setAttribute( name, QString::number(point.x())+","+QString::number(point.y())  );
         }
-        else if( (QString(name)=="Mem") || (QString(name)=="eeprom") )
+        else if//  ( (QString(name)=="Mem") || (QString(name)=="eeprom") )
+            ( type == QVariant::UserType ) // QList<int> or ?? QVector<int>
         {
             QVector<int> vmem = value.value<QVector<int>>();
 

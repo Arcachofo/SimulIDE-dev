@@ -25,11 +25,22 @@
 struct regBits_t{
     uint8_t bit0;
     uint8_t mask;
+    uint8_t* reg;
 };
 
 static inline uint8_t getRegBitsVal( uint8_t val, regBits_t rb )
 {
     return (val & rb.mask)>>rb.bit0;
+}
+
+static inline void setRegBits( regBits_t bits )
+{
+    *(bits.reg) |= bits.mask;
+}
+
+static inline void clearRegBits( regBits_t bits )
+{
+    *(bits.reg) &= ~bits.mask;
 }
 
 #endif

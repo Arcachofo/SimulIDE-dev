@@ -78,7 +78,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
     {
         if( m_mode == TWI_MASTER ) // Master: Stop if I2C was started
         {
-            if( m_i2cState > I2C_STOP ) I2Cstop();
+            if( getStaus() < TWI_NO_STATE ) I2Cstop();
         }
         else setMode( TWI_SLAVE ); // Slave: Stop Cond restarts Slave mode (can be used to recover from an error condition)
     }
@@ -100,7 +100,8 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 
     if( m_mode == TWI_MASTER )
     {
-        if( m_twiState == TWI_MRX_ADR_ACK ) // We sent Slave Address + R and received ACK
+        if( (m_twiState == TWI_MRX_ADR_ACK)   // We sent Slave Address + R and received ACK
+         || (m_twiState == TWI_MRX_DATA_ACK) ) // We sent data and received ACK
         {
             masterRead( ack ); // Read a byte and send ACK/NACK
         }
@@ -133,12 +134,13 @@ void AvrTwi::writeTwiReg( uint8_t val ) // TWDR is being written
     bool twint = getRegBitsVal( *m_TWCR, m_TWINT ); // Check if TWINT is set
     if( !twint )                  // If not, the access will be discarded
     {
-        *m_TWCR |= m_TWWC.mask;   // set Write Collision bit TWWC
+        setRegBits( m_TWWC ); //*m_TWCR |= m_TWWC.mask;   // set Write Collision bit TWWC
          return;
     }
     bool write = false;
-    bool isAddr = (m_i2cState == I2C_START); // We just sent Start, so this must be slave address
-    if( isAddr ) write = val & 1;            // Sendind address for Read or Write?
+    bool isAddr = (getStaus() == TWI_START
+                || getStaus() == TWI_REP_START); // We just sent Start, so this must be slave address
+    if( isAddr ) write = ((val & 1) == 0);         // Sendind address for Read or Write?
 
     masterWrite( val, isAddr, write );       /// Write data or address to Slave
 }
@@ -153,7 +155,7 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 
     if( (state == TWI_NO_STATE) && (m_i2cState == I2C_STOP) ) // Stop Condition sent
     {
-        *m_TWCR &= ~m_TWSTO.mask;  // Clear TWSTO bit
+        clearRegBits( m_TWSTO ); //*m_TWCR &= ~m_TWSTO.mask;  // Clear TWSTO bit
     }
     else if( (state == TWI_MRX_DATA_ACK) || (state == TWI_MRX_DATA_NACK) ) // Data received
     {

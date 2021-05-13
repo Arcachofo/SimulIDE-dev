@@ -61,7 +61,7 @@ void eI2C::writeBit()
     bool bit = m_txReg>>m_bitPtr & 1;
     m_bitPtr--;
 
-    if( bit != m_SDA ) setSDA( bit ); // Save some events
+    setSDA( bit );
 }
 
 void eI2C::readByte()

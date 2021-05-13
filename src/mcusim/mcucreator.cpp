@@ -221,8 +221,8 @@ void McuCreator::createStatusReg( QDomElement* s ) // CReate STATUS Reg
     mcu->m_sregAddr = addr;
     mcu->m_sreg.resize( 8 );
 
-    mcu->watchRegister( addr, R_WRITE, mcu, &eMcu::writeStatus );
-    mcu->watchRegister( addr, R_READ,  mcu, &eMcu::readStatus );
+    mcu->watchRegister( addr, R_WRITE, (DataSpace*)mcu, &DataSpace::writeStatus );
+    mcu->watchRegister( addr, R_READ,  (DataSpace*)mcu, &DataSpace::readStatus );
 }
 
 void McuCreator::createInterrupts( QDomElement* i )

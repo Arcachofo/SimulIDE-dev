@@ -83,7 +83,7 @@ Interrupts::Interrupts( eMcu* mcu )
 {
     m_mcu = mcu;
     m_enGlobal = 0;
-    m_active = 0l;
+    m_active = NULL;
 }
 Interrupts::~Interrupts(){}
 
@@ -102,7 +102,7 @@ void Interrupts::retI()
 
 void Interrupts::enableGlobal( uint8_t en )
 {
-    if( m_enGlobal && !en ) resetInts();
+    /// if( m_enGlobal && !en ) resetInts();
     m_enGlobal = en;
 }
 

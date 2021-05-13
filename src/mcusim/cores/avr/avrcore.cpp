@@ -133,14 +133,17 @@ void AvrCore::runDecoder()
 
     uint32_t new_pc = PC + 1;    // future "default" pc
     int cycle = 1;
-if( PC == 78 )
-    cycle = 1;
-    switch( instruction & 0xf000) {
-        case 0x0000: {
-            switch( instruction) {
+
+    switch( instruction & 0xf000)
+    {
+        case 0x0000:
+        {
+            switch( instruction)
+            {
                 case 0x0000: {    // NOP
                 }    break;
-                default: {
+                default:
+                {
                     switch( instruction & 0xfc00) {
                         case 0x0400: {    // CPC -- Compare with carry -- 0000 01rd dddd rrrr
                             get_vd5_vr5( instruction );
@@ -347,12 +350,24 @@ if( PC == 78 )
         }    break;
 
         case 0x9000: {
-            /* this is an annoying special case, but at least these lines handle all the SREG set/clear instructions */
-            if( (instruction & 0xff0f) == 0x9408) {
+            /* this is an annoying special case, but at least these lines handle all the SREG set/clear instructions
+            if( (instruction & 0xff0f) == 0x9408)
+            {
                 uint8_t b = (instruction >> 4) & 7;
                 SREG[b] = ( (instruction & 0x0080) == 0);
-            }
-            else switch( instruction) {
+            }*/
+            switch( instruction )
+            {
+                case 0x9478: // SEI -- 1001 0100 0111 1000
+                {
+                    SREG[S_I] = 1;
+                    m_mcu->enableInterrupts( 1 );
+                }break;
+                case 0x94F8: // CLI -- 1001 0100 1111 1000
+                {
+                    SREG[S_I] = 0;
+                    m_mcu->enableInterrupts( 0 );
+                }break;
                 case 0x9588: { // SLEEP -- 1001 0101 1000 1000
                     /* Don't sleep if there are interrupts about to be serviced.
                      * Without this check, it was possible to incorrectly enter a state

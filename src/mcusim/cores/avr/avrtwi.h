@@ -42,6 +42,7 @@ class MAINMODULE_EXPORT AvrTwi : public McuTwi
 
     protected:
         virtual void setTwiState( twiState_t state ) override;
+        uint8_t getStaus() { return *m_twiStatus &= 0b11111000; }
         void updateClock();
 
         uint8_t m_bitRate;

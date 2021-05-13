@@ -25,6 +25,7 @@
 
 eMcu::eMcu( QString id )
     : McuInterface( id )
+    , DataSpace()
     , m_interrupts( this )
     , m_ports( this )
     , m_timers( this )
@@ -44,12 +45,7 @@ eMcu::~eMcu()
     m_timers.remove();
     m_ports.remove();
 
-    for( uint16_t addr : m_regSignals.keys() )
-        delete m_regSignals.value( addr );
-
-    m_regSignals.clear();
     m_progMem.clear();
-    m_dataMem.clear();
 }
 
 void eMcu::initialize()
@@ -57,14 +53,8 @@ void eMcu::initialize()
     cyclesDone = 0;
     cpu->reset();
 
-    std::fill( m_dataMem.begin(), m_dataMem.end(), 0 );
-    std::fill( m_sreg.begin(), m_sreg.end(), 0 );
+    DataSpace::initialize();
 
-    for( QString regName : m_regInfo.keys() )  // Set Registers Reset Values
-    {
-        regInfo_t regInfo = m_regInfo[regName];
-        writeReg( regInfo.address, regInfo.resetVal );
-    }
     m_interrupts.resetInts();
 
     Simulator::self()->addEvent( 1, this );
@@ -78,9 +68,9 @@ void eMcu::runEvent()
 
         else if( cpu->PC < m_flashSize )
         {
-            m_interrupts.runInterrupts();     // Run Interrupts
-
             cpu->runDecoder();              // Run Decoder
+
+            m_interrupts.runInterrupts();     // Run Interrupts
         }
         Simulator::self()->addEvent( m_simCycPI, this );
     }
@@ -93,7 +83,7 @@ uint8_t eMcu::getRamValue( int address )
 
 void eMcu::setRamValue( int address, uint8_t value )
 {
-
+    /// TODO (used by McuMonitor)
 }
 
 uint16_t eMcu::getFlashValue( int address )
@@ -119,38 +109,6 @@ void eMcu::setRomValue( int address, uint8_t value )
 void eMcu::enableInterrupts( uint8_t en )
 {
     m_interrupts.enableGlobal( en );
-}
-
-uint8_t eMcu::readReg( uint16_t addr )
-{
-    regSignal_t* regSignal = m_regSignals.value( addr );
-    if( regSignal ) regSignal->on_read.emitValue( m_dataMem[addr] );
-
-    return m_dataMem[addr];
-}
-
-void eMcu::writeReg( uint16_t addr, uint8_t v )
-{
-    regSignal_t* regSignal = m_regSignals.value( addr );
-    if( regSignal )
-    {
-        m_regOverride = -1;
-        regSignal->on_write.emitValue( v );
-        if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
-    }
-    m_dataMem[addr] = v;
-}
-
-void eMcu::readStatus( uint8_t v ) // Read SREG values and write to RAM
-{
-    uint8_t val = 0;
-    for( int i=0; i<8; i++ ) val |= m_sreg[i];
-    m_dataMem[m_sregAddr] = val;
-}
-
-void eMcu::writeStatus( uint8_t v ) // Write SREG values from RAM
-{
-    for( int i=0; i<8; i++ ) m_sreg[i] = v & (1<<i);
 }
 
 int eMcu::status()

@@ -21,6 +21,7 @@
 #define AVRINTERRUPT_H
 
 #include "mcuinterrupts.h"
+#include "mcutypes.h"
 
 class MAINMODULE_EXPORT AVRInterrupt : public Interrupt
 {
@@ -28,9 +29,15 @@ class MAINMODULE_EXPORT AVRInterrupt : public Interrupt
         AVRInterrupt( QString name, uint16_t vector, eMcu* mcu );
         ~AVRInterrupt();
 
+        virtual void raise( uint8_t v ) override;
+        virtual void exitInt() override;
+
  static Interrupt* getInterrupt( QString name, uint16_t vector, eMcu* mcu );
 
     private:
+        //uint8_t*  m_SREG;
+
+        regBits_t m_I;
 };
 
 #endif

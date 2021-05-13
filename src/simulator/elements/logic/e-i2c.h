@@ -69,8 +69,8 @@ class MAINMODULE_EXPORT eI2C : public eLogicDevice
 
         virtual void updatePins()=0;
 
-        int m_txReg;             // Byte to Send
-        int m_rxReg;             // Byte Received
+        uint8_t m_txReg;    // Byte to Send
+        uint8_t m_rxReg;    // Byte Received
         int m_bitPtr;            // Bit Pointer
 
         i2cState_t m_state;      // Current State of i2c

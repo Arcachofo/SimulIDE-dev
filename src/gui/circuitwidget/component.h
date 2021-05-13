@@ -35,7 +35,8 @@ struct propGroup_t{
         QList<property_t> propList;
 };
 
-Q_DECLARE_METATYPE( QList<int> )
+//Q_DECLARE_METATYPE( QList<int> )
+//Q_DECLARE_METATYPE( QVector<int> )
 
 class Pin;
 class Label;

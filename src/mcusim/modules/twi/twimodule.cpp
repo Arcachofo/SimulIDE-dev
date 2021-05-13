@@ -89,6 +89,7 @@ void TwiModule::runEvent()
                 //if( m_comp ) m_comp->inStateChanged( TWI_MSG+TWI_COND_START ); // Set TWINT
                 setSCL( false ); //keepClocking();
                 setTwiState( TWI_START );
+                m_i2cState = I2C_IDLE;
             }
         }break;
 
@@ -297,7 +298,7 @@ void TwiModule::writeBit()
     bool bit = m_txReg>>m_bitPtr & 1;
     m_bitPtr--;
 
-    if( bit != m_sdaState ) setSDA( bit ); // Save some events
+    setSDA( bit );
 }
 
 void TwiModule::readByte()
