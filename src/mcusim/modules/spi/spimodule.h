@@ -17,24 +17,30 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcutwi.h"
+#ifndef SPIMODULE_H
+#define SPIMODULE_H
 
-McuTwi::McuTwi( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
-      , TwiModule( name )
+#include "e-clocked_device.h"
+
+class eSource;
+
+class MAINMODULE_EXPORT SpiModule : public eClockedDevice
 {
-    m_dataReg = NULL;
-    m_addrReg = NULL;
-    m_statReg = NULL;
-}
+    public:
+        SpiModule( QString name );
+        ~SpiModule();
 
-McuTwi::~McuTwi()
-{
-}
+        void setMosiPin( eSource* pin );
+        void setMisoPin( eSource* pin );
+        void setSckPin( eSource* pin );
+        void setSsPin( eSource* pin );
 
-void McuTwi::initialize()
-{
-    TwiModule::initialize();
+    protected:
 
-    m_prescaler = 1;
-}
+        eSource* m_MOSI;
+        eSource* m_MISO;
+        eSource* m_SCK;
+        eSource* m_SS;
+};
+#endif
+

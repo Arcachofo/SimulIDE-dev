@@ -33,7 +33,7 @@ void AVRInterrupt::raise( uint8_t v )
 {
     if( m_name == "T1_OVF" )
         m_name = "T1_OVF";
-    clearRegBits( m_I );// Deactivate Interrupts: SREG.I = 0
+    //clearRegBits( m_I );// Deactivate Interrupts: SREG.I = 0
     Interrupt::raise( v );
 }
 

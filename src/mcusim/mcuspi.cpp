@@ -17,24 +17,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcutwi.h"
+#include "mcuspi.h"
 
-McuTwi::McuTwi( eMcu* mcu, QString name )
+McuSpi::McuSpi( eMcu* mcu, QString name )
       : McuModule( mcu, name )
-      , TwiModule( name )
-{
-    m_dataReg = NULL;
-    m_addrReg = NULL;
-    m_statReg = NULL;
-}
-
-McuTwi::~McuTwi()
+      , SpiModule( name )
 {
 }
 
-void McuTwi::initialize()
+McuSpi::~McuSpi()
 {
-    TwiModule::initialize();
+}
 
-    m_prescaler = 1;
+void McuSpi::initialize()
+{
+    SpiModule::initialize();
+
 }

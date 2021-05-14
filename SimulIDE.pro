@@ -75,7 +75,8 @@ SOURCES += ../src/*.cpp \
     ../src/mcusim/cores/i51/*.cpp \
     ../src/mcusim/cores/pic/*.cpp \
     ../src/mcusim/modules/usart/*.cpp \
-    ../src/mcusim/modules/twi/*.cpp
+    ../src/mcusim/modules/twi/*.cpp \
+    ../src/mcusim/modules/spi/*.cpp
 
 HEADERS += ../src/*.h \
     ../src/gui/*.h \
@@ -121,7 +122,8 @@ HEADERS += ../src/*.h \
     ../src/mcusim/cores/i51/*.h \
     ../src/mcusim/cores/pic/*.h \
     ../src/mcusim/modules/usart/*.h \
-    ../src/mcusim/modules/twi/*.h
+    ../src/mcusim/modules/twi/*.h \
+    ../src/mcusim/modules/spi/*.h
 
 INCLUDEPATH += ../src \
     ../src/gui \
@@ -168,7 +170,8 @@ INCLUDEPATH += ../src \
     ../src/mcusim/cores/pic \
     ../src/mcusim/modules \
     ../src/mcusim/modules/usart \
-    ../src/mcusim/modules/twi
+    ../src/mcusim/modules/twi \
+    ../src/mcusim/modules/spi
 
 TRANSLATIONS +=  \
     ../resources/translations/simulide.ts \

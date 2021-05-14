@@ -29,8 +29,8 @@
         <register name="OCR0B"  addr="40"  bits=""/>
         <register name="GPIOR1" addr="42"  bits=""/>
         <register name="GPIOR2" addr="43"  bits=""/>
-        <register name="SPCR"   addr="44"  bits=""/>
-        <register name="SPSR"   addr="45"  bits=""/>
+        <register name="SPCR"   addr="44"  bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE"/>
+        <register name="SPSR"   addr="45"  bits="SPI2X,0,0,0,0,0,WCOL,SPIF"/>
         <register name="SPDR"   addr="46"  bits=""/>
         <register name="ACSR"   addr="48"  bits=""/>
         <register name="SMCR"   addr="51"  bits=""/>

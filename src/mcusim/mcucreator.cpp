@@ -235,7 +235,7 @@ void McuCreator::createInterrupts( QDomElement* i )
     {
         QDomElement el = node.toElement();
 
-        QString  intName    = el.attribute("name");
+        QString  intName = el.attribute("name");
         if( !intName.isEmpty() )
         {
             uint16_t intVector  = el.attribute("vector").toUInt(0,0);
@@ -506,15 +506,15 @@ void McuCreator::createAdc( QDomElement* e )
         int bits = e->attribute("bits").toInt( &ok );
         if( ok ) adc->m_maxValue = pow( 2, bits )-1;
     }
-    if( e->hasAttribute("valueregs") )
+    if( e->hasAttribute("dataregs") )
     {
-        QString valueregs = e->attribute("valueregs");
-        QString lowByte = valueregs;
+        QString dataregs = e->attribute("dataregs");
+        QString lowByte = dataregs;
         QString highByte ="";
 
-        if( valueregs.contains(",") )
+        if( dataregs.contains(",") )
         {
-            QStringList regs = valueregs.split(",");
+            QStringList regs = dataregs.split(",");
 
             lowByte = regs.takeFirst();
             highByte = regs.takeFirst();
@@ -567,24 +567,24 @@ void McuCreator::createTwi( QDomElement* e )
     else return;
 
     setConfigRegs( e, twi );
-    if( e->hasAttribute("valueregs") )
+    if( e->hasAttribute("dataregs") )
     {
-        QString twiReg = e->attribute("valueregs");
-        if( !twiReg.isEmpty() )  twi->m_twiReg = mcu->getReg( twiReg );
-        mcu->watchRegNames( twiReg, R_WRITE, twi, &McuTwi::writeTwiReg );
+        QString dataReg = e->attribute("dataregs");
+        if( !dataReg.isEmpty() )  twi->m_dataReg = mcu->getReg( dataReg );
+        mcu->watchRegNames( dataReg, R_WRITE, twi, &McuTwi::writeTwiReg );
     }
     if( e->hasAttribute("addressreg") )
     {
         QString addrReg = e->attribute("addressreg");
         if( !addrReg.isEmpty() ) twi->m_addrReg = mcu->getReg( addrReg );
     }
-    if( e->hasAttribute("twistatus") )
+    if( e->hasAttribute("statusreg") )
     {
-        QString twiStatus = e->attribute("twistatus");
-        if( !twiStatus.isEmpty() )
+        QString statReg = e->attribute("statusreg");
+        if( !statReg.isEmpty() )
         {
-            twi->m_twiStatus = mcu->getReg( twiStatus );
-            mcu->watchRegNames( twiStatus, R_WRITE, twi, &McuTwi::writeStatus );
+            twi->m_statReg = mcu->getReg( statReg );
+            mcu->watchRegNames( statReg, R_WRITE, twi, &McuTwi::writeStatus );
         }
     }
     QDomNode node = e->firstChild();

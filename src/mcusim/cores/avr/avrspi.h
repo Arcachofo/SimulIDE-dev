@@ -17,24 +17,31 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcutwi.h"
+#ifndef AVRSPI_H
+#define AVRSPI_H
 
-McuTwi::McuTwi( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
-      , TwiModule( name )
+#include "mcuspi.h"
+//#include "mcutypes.h"
+
+class eMcu;
+//class McuPin;
+
+class MAINMODULE_EXPORT AvrSpi : public McuSpi
 {
-    m_dataReg = NULL;
-    m_addrReg = NULL;
-    m_statReg = NULL;
-}
+    public:
+        AvrSpi( eMcu* mcu, QString name );
+        ~AvrSpi();
 
-McuTwi::~McuTwi()
-{
-}
+        virtual void initialize() override;
 
-void McuTwi::initialize()
-{
-    TwiModule::initialize();
+        virtual void configureA( uint8_t newSPCR ) override;
+        virtual void writeStatus( uint8_t newSPSR ) override;
+        virtual void writeSpiReg( uint8_t newSPDR ) override;
 
-    m_prescaler = 1;
-}
+
+    protected:
+
+
+};
+
+#endif

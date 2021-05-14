@@ -17,24 +17,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcutwi.h"
+#include "spimodule.h"
+#include "e-source.h"
+//#include "simulator.h"
 
-McuTwi::McuTwi( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
-      , TwiModule( name )
+SpiModule::SpiModule( QString name )
+         : eClockedDevice( name )
 {
-    m_dataReg = NULL;
-    m_addrReg = NULL;
-    m_statReg = NULL;
+    m_MOSI = NULL;
+    m_MISO = NULL;
+    m_SCK  = NULL;
+    m_SS   = NULL;
+}
+SpiModule::~SpiModule( ){}
+
+
+void SpiModule::setMosiPin( eSource* pin )
+{
+    m_MOSI = pin;
 }
 
-McuTwi::~McuTwi()
+void SpiModule::setMisoPin( eSource* pin )
 {
+    m_MISO = pin;
 }
 
-void McuTwi::initialize()
+void SpiModule::setSckPin( eSource* pin )
 {
-    TwiModule::initialize();
+    m_SCK = pin;
+    m_clockSource = pin;
+}
 
-    m_prescaler = 1;
+void SpiModule::setSsPin( eSource* pin )
+{
+    m_SS = pin;
 }

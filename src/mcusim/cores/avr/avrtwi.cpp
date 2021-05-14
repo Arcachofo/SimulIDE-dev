@@ -25,7 +25,7 @@ AvrTwi::AvrTwi( eMcu* mcu, QString name )
       : McuTwi( mcu, name )
 {
     m_TWCR = mcu->getReg( "TWCR" );
-    m_TWSR = mcu->getReg( "TWSR" );
+    //m_TWSR = mcu->getReg( "TWSR" );
 
     m_TWEN  = mcu->getRegBits( "TWEN" );
     m_TWWC  = mcu->getRegBits( "TWWC" );
@@ -39,7 +39,7 @@ AvrTwi::~AvrTwi(){}
 void AvrTwi::initialize()
 {
     McuTwi::initialize();
-    *m_TWSR= 0xF8; /// TODO: reset value is overriden
+    //*m_TWSR= 0xF8; /// TODO: reset value is overriden
     m_bitRate = 0;
 }
 
@@ -118,16 +118,16 @@ void AvrTwi::configureB( uint8_t val ) // TWBR is being written
     updateClock();
 }
 
-void AvrTwi::writeStatus( uint8_t val )  // TWI Status Register is being written
+void AvrTwi::writeStatus( uint8_t newTWSR )  // TWSR Status Register is being written
 {
-    val &= 0b00000011;
-    m_prescaler = m_prescList[val];
+    newTWSR &= 0b00000011;
+    m_prescaler = m_prescList[newTWSR];
     updateClock();
 
-    m_mcu->m_regOverride = val | (*m_twiStatus & 0b11111100); // Preserve Status bits
+    m_mcu->m_regOverride = newTWSR | (*m_statReg & 0b11111100); // Preserve Status bits
 }
 
-void AvrTwi::writeTwiReg( uint8_t val ) // TWDR is being written
+void AvrTwi::writeTwiReg(uint8_t newTWDR ) // TWDR is being written
 {
     if( m_mode != TWI_MASTER ) return;
 
@@ -141,17 +141,17 @@ void AvrTwi::writeTwiReg( uint8_t val ) // TWDR is being written
     bool isAddr = (getStaus() == TWI_START
                 || getStaus() == TWI_REP_START); // We just sent Start, so this must be slave address
 
-    if( isAddr ) write = ((val & 1) == 0);       // Sendind address for Read or Write?
+    if( isAddr ) write = ((newTWDR & 1) == 0);       // Sendind address for Read or Write?
 
-    masterWrite( val, isAddr, write );       /// Write data or address to Slave
+    masterWrite( newTWDR, isAddr, write );       /// Write data or address to Slave
 }
 
 void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 {
     TwiModule::setTwiState( state );
 
-    *m_twiStatus &= 0b00000111;      // Clear old status
-    *m_twiStatus |= state;           // Write new status
+    *m_statReg &= 0b00000111;      // Clear old status
+    *m_statReg |= state;           // Write new status
     interrupt.emitValue(1);
 
     if( (state == TWI_NO_STATE) && (m_i2cState == I2C_STOP) ) // Stop Condition sent
@@ -160,7 +160,7 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
     }
     else if( (state == TWI_MRX_DATA_ACK) || (state == TWI_MRX_DATA_NACK) ) // Data received
     {
-        *m_twiReg = m_rxReg; // Save data received into TWDR
+        *m_dataReg = m_rxReg; // Save data received into TWDR
     }
 }
 

@@ -353,4 +353,8 @@ void TwiModule::setFreqKHz( double f )
     m_clockPeriod = stepsPerS/m_freq/2;
 }
 void TwiModule::setSdaPin( eSource* pin ) { m_sda = pin; }
-void TwiModule::setSclPin( eSource* pin ) { m_scl = pin; m_clockSource = pin; }
+void TwiModule::setSclPin( eSource* pin )
+{
+    m_scl = pin;
+    m_clockSource = pin;
+}

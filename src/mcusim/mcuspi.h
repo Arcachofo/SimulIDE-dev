@@ -17,24 +17,35 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcutwi.h"
+#ifndef MCUSPI_H
+#define MCUSPI_H
 
-McuTwi::McuTwi( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
-      , TwiModule( name )
+#include "mcumodule.h"
+#include "spimodule.h"
+
+class eMcu;
+class McuPin;
+
+class MAINMODULE_EXPORT McuSpi : public McuModule, public SpiModule
 {
-    m_dataReg = NULL;
-    m_addrReg = NULL;
-    m_statReg = NULL;
-}
+        friend class McuCreator;
 
-McuTwi::~McuTwi()
-{
-}
+    public:
+        McuSpi( eMcu* mcu, QString name );
+        ~McuSpi();
 
-void McuTwi::initialize()
-{
-    TwiModule::initialize();
+        virtual void initialize() override;
 
-    m_prescaler = 1;
-}
+        virtual void writeStatus( uint8_t val ){;}
+        virtual void writeSpiReg( uint8_t val ){;}
+
+    protected:
+
+        uint8_t m_prescaler;
+        std::vector<uint16_t> m_prescList; // Prescaler values
+
+        uint8_t* m_dataReg;
+        uint8_t* m_statReg;
+};
+
+#endif

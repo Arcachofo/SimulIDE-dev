@@ -1,24 +1,5 @@
 <!DOCTYPE SimulIDE>
 
-<!-- *************************************************************************** -->
-<!-- *   Copyright (C) 2020 by santiago González                               * -->
-<!-- *   santigoro@gmail.com                                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is free software; you can redistribute it and/or modify  * -->
-<!-- *   it under the terms of the GNU General Public License as published by  * -->
-<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
-<!-- *   (at your option) any later version.                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is distributed in the hope that it will be useful,       * -->
-<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
-<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
-<!-- *   GNU General Public License for more details.                          * -->
-<!-- *                                                                         * -->
-<!-- *   You should have received a copy of the GNU General Public License     * -->
-<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
-<!-- *                                                                         * -->
-<!-- *************************************************************************** -->
-
 <parts>
     <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
         <raiseint intname="PCINT0" source="PINB" mask="PCMSK0"/>
@@ -65,13 +46,13 @@
     </usart>
     
     <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->
-    <adc name="ADC" bits="10" valueregs="ADCL,ADCH" configregsA="ADCSRA" configregsB="ADCSRB" multiplex="ADMUX">
+    <adc name="ADC" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" configregsB="ADCSRB" multiplex="ADMUX">
         <prescaler select="" values="2,2,4,8,16,32,64,128"/>
         <inputs type="PIN" source="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5" />
         <raiseint intname="ADC" source="MAIN" />
     </adc>
     
-    <twi name="TWI0" valueregs="TWDR" addressreg="TWAR" twistatus="TWSR" 
+    <twi name="TWI0" dataregs="TWDR" addressreg="TWAR" statusreg="TWSR" 
                      configregsA="TWCR" configregsB="TWBR">
         <prescaler select="" values="1,4,16,64"/>
         

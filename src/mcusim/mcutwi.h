@@ -45,8 +45,8 @@ class MAINMODULE_EXPORT McuTwi : public McuModule, public TwiModule
         uint8_t m_prescaler;
         std::vector<uint16_t> m_prescList; // Prescaler values
 
-        uint8_t* m_twiReg;
-        uint8_t* m_twiStatus;
+        uint8_t* m_dataReg;
+        uint8_t* m_statReg;
 };
 
 #endif
