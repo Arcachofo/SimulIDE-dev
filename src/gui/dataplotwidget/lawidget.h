@@ -60,12 +60,17 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         void setConds( QString conds );
 
     protected:
+        void mousePressEvent( QMouseEvent* event );
+        void mouseMoveEvent( QMouseEvent* event );
+        void mouseReleaseEvent( QMouseEvent* event );
         void closeEvent( QCloseEvent* event );
         void resizeEvent( QResizeEvent* event );
 
         int m_timeDivDialPos;
         int m_timePosDialPos;
         int m_voltDivDialPos;
+
+        int m_mousePos;
 
         bool m_blocked;
 

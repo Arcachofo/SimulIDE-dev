@@ -193,6 +193,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
         int bufferSize = m_channel[i]->m_buffer.size();
 
         double timeStart = m_timeStart-m_hPos[i];
+        if( timeStart < 0 ) timeStart = 0;
         double timeEnd   = m_timeEnd-m_hPos[i];
         double time, x1, x2, y1, y2;
         double p1Volt=0;//, p2Volt=0;
@@ -278,7 +279,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                         lastX = x1;
                     }
                 }
-                if( time < timeStart ) break;
+                if( time <= timeStart ) break;
             }
             x2 = x1; y2 = y1;
             //p2Volt = p1Volt;

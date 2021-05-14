@@ -32,8 +32,6 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
 
     //QString color = m_analizer->getColor( 0 ).name();
     //cond1->setStyleSheet( "background-color:"+color );
-
-
     /// mainLayout->setDirection( QBoxLayout::RightToLeft );
 }
 LaWidget::~LaWidget()
@@ -184,4 +182,29 @@ void LaWidget::closeEvent( QCloseEvent* event )
 void LaWidget::resizeEvent( QResizeEvent* event )
 {
     plotDisplay->updateValues();
+}
+
+void LaWidget::mousePressEvent( QMouseEvent* event )
+{
+    m_mousePos = event->globalX();
+    setCursor( Qt::ClosedHandCursor );
+}
+
+void LaWidget::mouseMoveEvent( QMouseEvent* event )
+{
+    int pos = event->globalX();
+
+    int64_t timePos = m_analizer->timePos();
+    double timeX = m_analizer->timeDiv()*10;
+    double sizeX = plotDisplay->sizeX();
+    double deltaT = (m_mousePos - pos)*timeX/sizeX;
+
+    m_analizer->setTimePos( timePos+deltaT );
+
+    m_mousePos = pos;
+}
+
+void LaWidget::mouseReleaseEvent( QMouseEvent* event )
+{
+    setCursor( Qt::ArrowCursor );
 }

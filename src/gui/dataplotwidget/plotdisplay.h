@@ -50,6 +50,8 @@ class PlotDisplay : public QWidget
         void setHPos( int ch, int64_t hPos ) { m_hPos[ch] = -hPos; }
         void setLimits( int ch, double max, double min ) { m_vMin[ch]  = min; }
 
+        double sizeX() { return m_sizeX; }
+
         void updateValues();
 
     protected:
