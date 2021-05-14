@@ -90,6 +90,7 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
 
     m_threshold = 2.5;
 
+    setTimePos( 0 );
     setTimeDiv( 1e9 ); // 1 ms
     setVoltDiv( 0.6 );
 

@@ -58,6 +58,8 @@ void McuTimer::initialize()
 
 void McuTimer::runEvent()            // Overflow
 {
+    if( m_name == "TIMER1")
+        m_running = m_running;
     if( !m_running ) return;
 
     for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->tov();
@@ -65,7 +67,7 @@ void McuTimer::runEvent()            // Overflow
     m_countVal = m_countStart;                // Reset count value
     if( m_bidirec ) m_reverse = !m_reverse;
 
-    if( !m_reverse ) on_tov.emitValue( 1 );
+    if( !m_reverse ) interrupt.emitValue( 1 );
 
     sheduleEvents();
 }
@@ -104,14 +106,14 @@ void McuTimer::enable( uint8_t en )
 void McuTimer::countWriteL( uint8_t val ) // Someone wrote to counter low byte
 {
     updtCount();
-    m_countL[0] = val;
+    *m_countL = val;
     updtCycles();                             // update & Reshedule
 }
 
 void McuTimer::countWriteH( uint8_t val ) // Someone wrote to counter high byte
 {
     updtCount();
-    m_countH[0] = val;
+    *m_countH = val;
     updtCycles();                             // update & Reshedule
 }
 
@@ -120,17 +122,17 @@ void McuTimer::updtCount( uint8_t )          // Write counter values to Ram
     if( m_running ) // If no running, values were already written at timer stop.
     {
         uint64_t timTime = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
-        uint16_t countVal = timTime/m_mcu->simCycPI()/m_prescaler;
+        uint16_t countVal = m_ovfMatch-timTime/m_mcu->simCycPI()/m_prescaler;
 
-        if( m_countL ) m_countL[0] = countVal & 0xFF;
-        if( m_countH ) m_countH[0] = (countVal>>8) & 0xFF;
+        if( m_countL ) *m_countL = countVal & 0xFF;
+        if( m_countH ) *m_countH = (countVal>>8) & 0xFF;
     }
 }
 
 void McuTimer::updtCycles() // Recalculate ovf, comps, etc
 {
-    if( m_countH ) m_countVal  = m_countH[0] << 8;
-    m_countVal |= m_countL[0];
+    if( m_countH ) m_countVal  = *m_countH << 8;
+    m_countVal |= *m_countL;
     m_countStart = 0;
 
     Simulator::self()->cancelEvents( this );

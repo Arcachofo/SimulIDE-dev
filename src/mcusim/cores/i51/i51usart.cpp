@@ -76,7 +76,7 @@ void I51Usart::configureA( uint8_t val ) //SCON
         if( !m_timerConnected )
         {
             m_timerConnected = true;
-            m_timer1->on_tov.connect( this, &I51Usart::step );
+            m_timer1->interrupt.connect( this, &I51Usart::step );
         }
         setPeriod( 0 );
     }

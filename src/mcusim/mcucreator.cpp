@@ -236,33 +236,36 @@ void McuCreator::createInterrupts( QDomElement* i )
         QDomElement el = node.toElement();
 
         QString  intName    = el.attribute("name");
-        uint16_t intVector  = el.attribute("vector").toUInt(0,0);
-
-        Interrupt* iv = NULL;
-        if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
-        else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
-        if( !iv ) return;
-
-        mcu->m_interrupts.m_intList.insert( intName, iv );
-        iv->m_interrupts = &(mcu->m_interrupts);
-
-        enable = el.attribute("enable");
-        mcu->watchBitNames( enable, R_WRITE, iv, &Interrupt::enableFlag );
-
-        QString intFlag = el.attribute("flag");
-        iv->m_flagMask = mcu->m_bitMasks.value( intFlag );
-        iv->m_flagReg  = mcu->m_bitRegs.value( intFlag );
-
-        QString intPrio = el.attribute("priority");
-        bool ok = false;
-        uint8_t prio = intPrio.toUInt(&ok,0);
-        if( ok ) iv->setPriority( prio );
-        else     mcu->watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority );
-
-        if( el.hasAttribute("mode") )
+        if( !intName.isEmpty() )
         {
-            QString mode = el.attribute("mode");
-            mcu->watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode );
+            uint16_t intVector  = el.attribute("vector").toUInt(0,0);
+
+            Interrupt* iv = NULL;
+            if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
+            else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
+            if( !iv ) return;
+
+            mcu->m_interrupts.m_intList.insert( intName, iv );
+            iv->m_interrupts = &(mcu->m_interrupts);
+
+            enable = el.attribute("enable");
+            mcu->watchBitNames( enable, R_WRITE, iv, &Interrupt::enableFlag );
+
+            QString intFlag = el.attribute("flag");
+            iv->m_flagMask = mcu->m_bitMasks.value( intFlag );
+            iv->m_flagReg  = mcu->m_bitRegs.value( intFlag );
+
+            QString intPrio = el.attribute("priority");
+            bool ok = false;
+            uint8_t prio = intPrio.toUInt(&ok,0);
+            if( ok ) iv->setPriority( prio );
+            else     mcu->watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority );
+
+            if( el.hasAttribute("mode") )
+            {
+                QString mode = el.attribute("mode");
+                mcu->watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode );
+            }
         }
         node = node.nextSibling();
     }

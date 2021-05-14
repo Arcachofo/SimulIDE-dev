@@ -37,7 +37,6 @@ void Interrupt::reset()
     m_mode   = 0;
     m_raised = 0;
     m_enable = 0;
-    m_priority = 0;
 }
 
 void Interrupt::clearFlag()

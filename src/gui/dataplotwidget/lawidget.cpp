@@ -194,7 +194,7 @@ void LaWidget::mouseMoveEvent( QMouseEvent* event )
 {
     int pos = event->globalX();
 
-    int64_t timePos = m_analizer->timePos();
+    double timePos = m_analizer->timePos();
     double timeX = m_analizer->timeDiv()*10;
     double sizeX = plotDisplay->sizeX();
     double deltaT = (m_mousePos - pos)*timeX/sizeX;

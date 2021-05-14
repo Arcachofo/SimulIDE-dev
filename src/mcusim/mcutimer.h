@@ -57,9 +57,6 @@ class MAINMODULE_EXPORT McuTimer : public McuModule
 
         QString name() { return m_name; }
 
-        //Signals:
-        RegSignal<uint8_t> on_tov;
-
     protected:
         int     m_number;
 
