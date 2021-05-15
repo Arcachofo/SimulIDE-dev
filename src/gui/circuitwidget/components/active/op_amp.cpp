@@ -20,10 +20,10 @@
  ***************************************************************************/
 
 #include "op_amp.h"
-#include "e-source.h"
 #include "itemlibrary.h"
 #include "connector.h"
-#include "pin.h"
+#include "simulator.h"
+#include "iopin.h"
 
 static const char* OpAmp_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Power Pins")
@@ -46,7 +46,7 @@ LibraryItem* OpAmp::libraryItem()
 
 OpAmp::OpAmp( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
-     , eOpAmp( id )
+     , eElement( id )
 {
     Q_UNUSED( OpAmp_properties );
     
@@ -54,46 +54,29 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     setLabelPos(-16,-32, 0);
     
     m_pin.resize( 5 );
-    
-    QString newId = id;
-    
-    newId.append(QString("-inputNinv"));
-    m_pin[0] = new Pin( 180, QPoint(-16-8,-8), newId, 0, this );
+
+    m_inputP = new IoPin( 180, QPoint(-16-8,-8), id+"-inputNinv", 0, this, input );
+    m_pin[0] = m_inputP;
     m_pin[0]->setLabelText( "+" );
     m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[0] = m_pin[0];
-    
-    newId = id;
-    newId.append(QString("-inputInv"));
-    m_pin[1] = new Pin( 180, QPoint(-16-8,8), newId, 1, this );
+
+    m_inputN = new IoPin( 180, QPoint(-16-8, 8), id+"-inputInv", 1, this, input );
+    m_pin[1] = m_inputN;
     m_pin[1]->setLabelText( " -" );
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[1] = m_pin[1];
-    
-    newId = id;
-    newId.append(QString("-output"));
-    m_pin[2] = new Pin( 0, QPoint(16+8,0), newId, 2, this );
-    m_ePin[2] = m_pin[2];
-    newId.append("-eSource");
-    m_output = new eSource( newId, m_ePin[2], output );
-    m_output->setImp( cero_doub );
-    m_output->setState( true );
-    
-    newId = id;
-    newId.append(QString("powerPos"));
-    m_pin[3] = new Pin( 90, QPoint(0,-16), newId, 3, this );
-    m_ePin[3] = m_pin[3];
-    //newId.append("-eSource");
-    //m_powerPos = new eSource( newId.toStdString(), m_ePin[2] );
-    
-    newId = id;
-    newId.append(QString("powerNeg"));
-    m_pin[4] = new Pin( 270, QPoint(0, 16), newId, 4, this );
-    m_ePin[4] = m_pin[4];
-    //newId.append("-eSource");
-    //m_powerNeg = new eSource( newId.toStdString(), m_ePin[3] );
+
+    m_output = new IoPin(   0, QPoint( 16+8, 0), id+"-output",   2, this, source );
+    m_pin[2] = m_output;
+
+    m_pin[3] = new Pin(  90, QPoint(0,-16), id+"powerPos", 3, this );
+    m_pin[4] = new Pin( 270, QPoint(0, 16), id+"powerNeg", 4, this );
     
     setPowerPins( false );
+
+    m_gain = 1000;
+    m_outImp = cero_doub;
+    m_voltPosDef = 5;
+    m_voltNegDef = 0;
 }
 OpAmp::~OpAmp(){}
 
@@ -108,6 +91,87 @@ QList<propGroup_t> OpAmp::propGroups()
     supGroup.propList.append( {"Volt_Neg", tr("V-"),"V"} );
     supGroup.propList.append( {"Power_Pins", tr("Supply Pins"),""} );
     return {mainGroup, supGroup};
+}
+
+void OpAmp::initialize()
+{
+    m_accuracy = Simulator::self()->NLaccuracy();
+
+    m_lastOut = 0;
+    m_lastIn  = 0;
+    m_k = 1e-6/m_gain;
+    m_firstStep = true;
+}
+
+void OpAmp::stamp()
+{
+    if( m_inputP->isConnected() ) m_inputP->getEnode()->addToNoLinList(this);
+    if( m_inputN->isConnected() ) m_inputN->getEnode()->addToNoLinList(this);
+    if( m_output->isConnected() ) m_output->getEnode()->addToNoLinList(this);
+}
+
+void OpAmp::voltChanged() // Called when any pin node change volt
+{
+    if( m_powerPins )
+    {
+        m_voltPos = m_pin[3]->getVolt();
+        m_voltNeg = m_pin[4]->getVolt();
+    }
+    else
+    {
+        m_voltPos = m_voltPosDef;
+        m_voltNeg = m_voltNegDef;
+    }
+    double vd = m_inputP->getVolt()-m_inputN->getVolt();
+    if( m_firstStep && fabs(m_lastIn-vd) < m_accuracy )
+    {
+        m_converged = true;
+        m_firstStep = true;
+        return;
+    }
+
+    double out = vd * m_gain;
+    if     ( out > m_voltPos ) out = m_voltPos;
+    else if( out < m_voltNeg ) out = m_voltNeg;
+
+    if( fabs(out-m_lastOut) < m_accuracy )
+    {
+        m_converged = true;
+        m_firstStep = true;
+        return;
+    }
+    m_converged = false;
+
+    if( m_firstStep )                  // First step after a convergence
+    {
+        double dOut = -1e-6;           // Do a tiny step to se what happens
+        if( vd>0 ) dOut = 1e-6;
+
+        out = m_lastOut + dOut;
+        m_firstStep = false;
+    }
+    else {
+        if( m_lastIn != vd ) // We problably are in a close loop configuration
+        {
+            double dIn  = fabs(m_lastIn-vd); // Input diff with last step
+            out = (m_lastOut*dIn + vd*1e-6)/(dIn + m_k); // Guess next converging output:
+        }
+        m_firstStep = true;
+    }
+    if     ( out >= m_voltPos ) out = m_voltPos;
+    else if( out <= m_voltNeg ) out = m_voltNeg;
+
+    m_lastIn  = vd;
+    m_lastOut = out;
+
+    m_output->stampCurrent( out/m_outImp );
+}
+
+void OpAmp::setOutImp( double imp )
+{
+    if( imp < cero_doub ) imp = cero_doub;
+    m_outImp = imp;
+    m_output->setImp( imp );
 }
 
 void OpAmp::setPowerPins( bool set )

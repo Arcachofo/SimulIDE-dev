@@ -22,6 +22,7 @@
 #include "simulator.h"
 #include "circuit.h"
 
+
 #define WIDTH 40
 #define HEIGHT 56
 #define DIAL_SIZE 36
@@ -49,15 +50,6 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     m_dial = m_voltw.dial;
     m_dial->setMaximum( 1000 );
-
-    QString nodid = id;
-    nodid.append(QString("-outPin"));
-    QPoint nodpos = QPoint(28,16);
-    m_outpin = new Pin( 0, nodpos, nodid, 0, this );
-    m_pin.resize(1);
-    m_pin[0] = m_outpin;
-
-    m_out = 0l;
 
     setValLabelPos( -8, 30 , 0 ); // x, y, rot
     setLabelPos(-32,-48, 0);
@@ -122,8 +114,6 @@ void VarSource::setUnit( QString un )
 void VarSource::remove()
 {
     Simulator::self()->remFromUpdateList( this );
-    if( m_out) delete m_out;
-    
     Component::remove();
 }
 

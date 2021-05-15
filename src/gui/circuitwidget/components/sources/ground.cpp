@@ -18,9 +18,8 @@
  ***************************************************************************/
 
 #include "ground.h"
-#include "e-source.h"
 #include "itemlibrary.h"
-#include "pin.h"
+#include "iopin.h"
 
 Component* Ground::construct( QObject* parent, QString type, QString id )
 { return new Ground( parent, type, id ); }
@@ -41,17 +40,11 @@ Ground::Ground( QObject* parent, QString type, QString id )
     m_area = QRect( -10, -10, 20, 20 );
 
     m_pin.resize(1);
-    QString nodid = id;
-    nodid.append(QString("-Gnd"));
-    QPoint nodpos = QPoint( 0, -16 );
-    m_pin[0] = new Pin( 90, nodpos, nodid, 0, this );
-
-    nodid.append( QString("-eSource") );
-    m_out = new eSource( nodid, m_pin[0], source );
+    m_pin[0] = new IoPin( 90, QPoint( 0,-16 ), id+"-Gnd", 0, this, source );
     
     setLabelPos(-16, 8, 0);
 }
-Ground::~Ground() { delete m_out; }
+Ground::~Ground() { /*delete m_out;*/ }
 
 void Ground::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {

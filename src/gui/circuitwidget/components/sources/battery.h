@@ -20,12 +20,12 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
-#include "e-battery.h"
+#include "e-element.h"
 #include "component.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Battery : public Component, public eBattery
+class MAINMODULE_EXPORT Battery : public Component, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( double Voltage READ volt WRITE setVolt DESIGNABLE true USER true )
@@ -34,18 +34,25 @@ class MAINMODULE_EXPORT Battery : public Component, public eBattery
         Battery( QObject* parent, QString type, QString id );
         ~Battery();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem *libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
 
-        virtual double volt() override;
-        virtual void setVolt( double volt ) override;
+        virtual double volt();
+        virtual void setVolt( double volt );
+
+        virtual void stamp() override;
+        virtual void initialize() override;
+
         virtual void setUnit( QString un ) override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     private:
+        double m_volt;
+        double m_accuracy;
+        double m_lastOut;
 };
 
 #endif

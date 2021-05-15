@@ -20,6 +20,7 @@
 #include "voltsource.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "iopin.h"
 
 Component* VoltSource::construct( QObject* parent, QString type, QString id )
 {
@@ -42,10 +43,13 @@ VoltSource::VoltSource( QObject* parent, QString type, QString id )
     QString nodid = id;
     nodid.append("-outPin");
     nodid.append("-eSource");
-    m_out = new eSource( nodid, m_outpin, source );
 
-    m_out->setVoltHigh( 0 );
-    m_out->setVoltLow( 0 );
+    m_outPin = new IoPin( 0, QPoint(28,16), id+"-outPin", 0, this, source );
+    m_pin.resize(1);
+    m_pin[0] = m_outPin;
+
+    m_outPin->setVoltHigh( 0 );
+    m_outPin->setVoltLow( 0 );
 
     m_unit = "V";
     m_button->setText( QString("-- V") );
@@ -65,8 +69,8 @@ void VoltSource::updateStep()
 {
     if( m_changed ) 
     {
-        m_out->setVoltHigh( m_outValue );
-        m_out->setState( m_button->isChecked(), true );
+        m_outPin->setVoltHigh( m_outValue );
+        m_outPin->setState( m_button->isChecked(), true );
 
         m_changed = false;
     }

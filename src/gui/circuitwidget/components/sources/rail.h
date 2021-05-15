@@ -24,19 +24,19 @@
 #include "e-element.h"
 
 class LibraryItem;
-class eSource;
+class IoPin;
 
 class MAINMODULE_EXPORT Rail : public Component, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( double   Voltage   READ volt    WRITE setVolt    DESIGNABLE true USER true )
+    Q_PROPERTY( double Voltage READ volt WRITE setVolt DESIGNABLE true USER true )
 
     public:
         Rail( QObject* parent, QString type, QString id );
         ~Rail();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
 
@@ -44,13 +44,13 @@ class MAINMODULE_EXPORT Rail : public Component, public eElement
         void setVolt( double v );
         virtual void setUnit( QString un ) override;
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void updateOutput();
         double m_voltHight;
 
-        eSource* m_out;
+        IoPin* m_out;
 };
 
 

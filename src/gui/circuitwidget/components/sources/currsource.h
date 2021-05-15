@@ -23,6 +23,7 @@
 #include "varsource.h"
 
 class LibraryItem;
+class Pin;
 
 class MAINMODULE_EXPORT CurrSource : public VarSource
 {
@@ -38,6 +39,9 @@ class MAINMODULE_EXPORT CurrSource : public VarSource
         virtual QList<propGroup_t> propGroups() override;
 
         virtual void updateStep() override;
+
+    private:
+        Pin* m_outPin;
 };
 
 #endif

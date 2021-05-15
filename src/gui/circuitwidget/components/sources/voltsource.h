@@ -23,6 +23,7 @@
 #include "varsource.h"
 
 class LibraryItem;
+class IoPin;
 
 class MAINMODULE_EXPORT VoltSource : public VarSource
 {
@@ -39,6 +40,9 @@ class MAINMODULE_EXPORT VoltSource : public VarSource
         virtual QList<propGroup_t> propGroups() override;
 
         virtual void updateStep() override;
+
+    private:
+        IoPin* m_outPin;
 };
 
 #endif

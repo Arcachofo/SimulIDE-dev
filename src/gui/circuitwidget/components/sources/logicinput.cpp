@@ -22,8 +22,8 @@
 #include "circuit.h"
 #include "itemlibrary.h"
 #include "simulator.h"
-#include "e-source.h"
-#include "pin.h"
+//#include "e-source.h"
+#include "iopin.h"
 
 static const char* LogicInput_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Voltage"),
@@ -46,7 +46,7 @@ LibraryItem* LogicInput::libraryItem()
 
 LogicInput::LogicInput( QObject* parent, QString type, QString id )
           : Component( parent, type, id )
-          , eLogicDevice( id )
+          , eElement( id )
 {
     Q_UNUSED( LogicInput_properties );
 
@@ -57,17 +57,9 @@ LogicInput::LogicInput( QObject* parent, QString type, QString id )
     
     m_changed = false;
 
-    QString nodid = id;
-    nodid.append(QString("-outnod"));
-    QPoint nodpos = QPoint(16,0);
-    m_outpin = new Pin( 0, nodpos, nodid, 0, this);
+    m_outpin = new IoPin( 0, QPoint(16,0), id+"-outnod", 0, this, source );
     m_pin.resize(1);
     m_pin[0] = m_outpin;
-    m_ePin.resize(1);
-    m_ePin[0] = m_outpin;
-
-    eLogicDevice::createOutput( m_outpin );
-    m_output[0]->setPinMode( source );
     
     m_unit = "V";
     setVolt(5.0);
@@ -107,7 +99,7 @@ void LogicInput::updateStep()
     if( m_changed ) 
     {
         m_changed = false;
-        eLogicDevice::setOut( 0, m_button->isChecked() );
+        m_outpin->setState( m_button->isChecked(), true );
     }
 }
 
@@ -146,9 +138,7 @@ void LogicInput::setUnit( QString un )
 
 void LogicInput::updateOutput()
 {
-    m_outHighV = m_value*m_unitMult;
-    m_output[0]->setVoltHigh( m_outHighV );
-
+    m_outpin->setVoltHigh( m_value*m_unitMult );
     m_changed = true;
 }
 

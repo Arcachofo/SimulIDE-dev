@@ -20,6 +20,7 @@
 #include "currsource.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "pin.h"
 
 static const char* CurrSource_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Current"),
@@ -46,6 +47,10 @@ CurrSource::CurrSource( QObject* parent, QString type, QString id )
 {
     Q_UNUSED( CurrSource_properties );
 
+    m_outPin = new Pin( 0, QPoint(28,16), id+"-outPin", 0, this );
+    m_pin.resize(1);
+    m_pin[0] = m_outPin;
+
     m_unit = "A";
     m_button->setText( QString("-- A") );
     setValue( 1 );
@@ -66,7 +71,7 @@ void CurrSource::updateStep()
     {
         double current = 0;
         if( m_button->isChecked() ) current = m_outValue;
-        m_outpin->stampCurrent( current );
+        m_outPin->stampCurrent( current );
 
         m_changed = false;
     }

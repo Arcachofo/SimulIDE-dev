@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include "clock.h"
-#include "pin.h"
+#include "iopin.h"
 #include "simulator.h"
 
 Component* Clock::construct( QObject* parent, QString type, QString id )
@@ -50,25 +50,21 @@ QList<propGroup_t> Clock::propGroups()
     mainGroup.propList.append( {"Always_On", tr("Always On"),""} );
 
     propGroup_t timeGroup { tr("Edges") };
-    timeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
-    timeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
+    //timeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
+    //timeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
 
     return {mainGroup, timeGroup};
 }
 
 void Clock::runEvent()
 {
-    if( m_outStep == 0 )
-    {
-        m_nextOutVal = m_outValue? 0:1;
+    m_outpin->setState( !m_outpin->getState(), true );
 
-        m_remainder += m_fstepsPC-(double)m_stepsPC;
-        uint64_t remainerInt = m_remainder;
-        m_remainder -= remainerInt;
+    m_remainder += m_fstepsPC-(double)m_stepsPC;
+    uint64_t remainerInt = m_remainder;
+    m_remainder -= remainerInt;
 
-        if( m_isRunning ) Simulator::self()->addEvent( m_stepsPC/2+remainerInt, this );
-    }
-    eLogicDevice::runEvent();
+    if( m_isRunning ) Simulator::self()->addEvent( m_stepsPC/2+remainerInt, this );
 }
 
 void Clock::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

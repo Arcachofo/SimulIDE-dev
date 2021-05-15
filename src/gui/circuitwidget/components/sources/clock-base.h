@@ -27,8 +27,8 @@ class MAINMODULE_EXPORT ClockBase : public LogicInput
     Q_OBJECT
     Q_PROPERTY( bool Always_On READ alwaysOn WRITE setAlwaysOn DESIGNABLE true USER true )
     Q_PROPERTY( double    Freq READ freq     WRITE setFreq     DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
+    //Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
+    //Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
     Q_PROPERTY( bool   Running READ running  WRITE setRunning )
 
     public:

@@ -39,7 +39,7 @@ void AvrSpi::configureA( uint8_t newSPCR ) // SPCR is being written
 
 void AvrSpi::writeStatus( uint8_t newSPSR ) // SPSR is being written
 {
-    m_mcu->m_regOverride = newSPSR | (*m_spiStatus & 0b00000001); // Preserve Status bits
+    m_mcu->m_regOverride = newSPSR | (*m_statReg & 0b00000001); // Preserve Status bits
 }
 
 void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written

@@ -18,9 +18,9 @@
  ***************************************************************************/
 
 #include "wavegen.h"
-#include "pin.h"
+#include "iopin.h"
 #include "simulator.h"
-#include "e-source.h"
+//#include "e-source.h"
 
 static const char* WaveGen_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Volt Base"),
@@ -75,8 +75,8 @@ QList<propGroup_t> WaveGen::propGroups()
     elecGroup.propList.append( {"Volt_Base", tr("Base Voltage"),"V"} );
 
     propGroup_t timeGroup { tr("Edges") };
-    timeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
-    timeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
+    //timeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
+    //timeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
 
     return {mainGroup, elecGroup, timeGroup};
 }
@@ -95,8 +95,8 @@ void WaveGen::runEvent()
     {
         m_lastVout = m_vOut;
 
-        m_output[0]->setVoltHigh( m_outHighV*m_vOut+m_voltBase );
-        m_output[0]->stampOutput();
+        m_outpin->setVoltHigh( m_value*m_unitMult*m_vOut+m_voltBase );
+        m_outpin->setState( true, true );
     }
 
     m_remainder += m_fstepsPC-(double)m_stepsPC;

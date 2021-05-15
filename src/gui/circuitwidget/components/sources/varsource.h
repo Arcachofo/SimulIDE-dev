@@ -21,10 +21,8 @@
 #define VARSOURCE_H
 
 #include "component.h"
-#include "e-source.h"
 #include "voltwidget.h"
-#include "pin.h"
-
+#include "e-element.h"
 
 class MAINMODULE_EXPORT VarSource : public Component, public eElement
 {
@@ -56,9 +54,6 @@ class MAINMODULE_EXPORT VarSource : public Component, public eElement
         
         double m_maxValue;
         double m_outValue;
-
-        Pin*     m_outpin;
-        eSource* m_out;
         
         VoltWidget m_voltw;
 

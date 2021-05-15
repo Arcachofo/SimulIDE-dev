@@ -22,14 +22,13 @@
 #ifndef OPAMP_H
 #define OPAMP_H
 
-#include "e-op_amp.h"
+#include "e-element.h"
 #include "component.h"
 
-#include <QObject>
-
 class LibraryItem;
+class IoPin;
 
-class MAINMODULE_EXPORT OpAmp : public Component, public eOpAmp
+class MAINMODULE_EXPORT OpAmp : public Component, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( double Gain       READ gain          WRITE setGain      DESIGNABLE true USER true )
@@ -48,10 +47,48 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eOpAmp
         
         virtual QList<propGroup_t> propGroups() override;
 
+
+        virtual void initialize() override;
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+
+        double gain() {return m_gain;}
+        void setGain( double gain ) {m_gain = gain;}
+
+        double outImp() const { return m_outImp; }
+        void  setOutImp( double imp );
+
+        double voltPos(){ return m_voltPosDef; }
+        void setVoltPos( double volt ){ m_voltPosDef = volt; }
+
+        double voltNeg(){ return m_voltNegDef; }
+        void setVoltNeg( double volt ){ m_voltNegDef = volt; }
+
+        bool hasPowerPins(){return m_powerPins;}
         void setPowerPins( bool set );
+
 
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+
+    protected:
+        bool m_firstStep;
+        bool m_powerPins;
+
+        double m_accuracy;
+        double m_gain;
+        double m_k;
+        double m_voltPos;
+        double m_voltNeg;
+        double m_voltPosDef;
+        double m_voltNegDef;
+        double m_lastOut;
+        double m_lastIn;
+        double m_outImp;
+
+        IoPin* m_inputP;
+        IoPin* m_inputN;
+        IoPin* m_output;
 };
 
 #endif

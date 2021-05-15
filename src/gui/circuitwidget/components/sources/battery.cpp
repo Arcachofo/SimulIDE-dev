@@ -17,9 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "connector.h"
 #include "battery.h"
 #include "simulator.h"
+#include "circuitwidget.h"
 #include "itemlibrary.h"
 #include "pin.h"
 
@@ -38,23 +38,20 @@ LibraryItem* Battery::libraryItem()
 
 Battery::Battery( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
-      , eBattery( id )
+      , eElement( id )
 {
     m_area = QRect( -10, -10, 20, 20 );
 
-    m_unit = "V";
-
     m_pin.resize( 2 );
-
     m_pin[0] = new Pin( 180, QPoint(-16, 0 ), id+"-Pin0", 0, this);
     m_pin[1] = new Pin(   0, QPoint( 16, 0 ), id+"-Pin1", 1, this);
-    m_ePin[0] = m_pin[0];
-    m_ePin[1] = m_pin[1];
+
+    m_unit = "V";
+    setVolt( 5.0 );
 
     setLabelPos(-18,-22, 0);
     setValLabelPos(-10, 10 , 0 ); // x, y, rot
     setShowVal( true );
-    setVolt( 5.0 );
 }
 Battery::~Battery() {}
 
@@ -65,6 +62,23 @@ QList<propGroup_t> Battery::propGroups()
     return {mainGroup};
 }
 
+
+void Battery::stamp()
+{
+    m_pin[0]->setEnodeComp( m_pin[1]->getEnode() );
+    m_pin[1]->setEnodeComp( m_pin[0]->getEnode() );
+    m_pin[0]->stampAdmitance( 1/cero_doub );
+    m_pin[1]->stampAdmitance( 1/cero_doub );
+    m_pin[0]->stampCurrent( m_volt/cero_doub );
+    m_pin[1]->stampCurrent(-m_volt/cero_doub );
+}
+
+void Battery::initialize()
+{
+    m_accuracy = Simulator::self()->NLaccuracy();
+    m_lastOut = 0;
+}
+
 double Battery::volt()
 {
     return m_value;
@@ -72,24 +86,20 @@ double Battery::volt()
 
 void Battery::setVolt( double volt )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    if( volt < 1e-12 ) volt = 1e-12;
 
     Component::setValue( volt );       // Takes care about units multiplier
-    eBattery::setVolt(  m_value*m_unitMult  );
-
-    if( pauseSim ) Simulator::self()->resumeSim();
+    m_volt = m_value*m_unitMult;
 }
 
 void Battery::setUnit( QString un )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     Component::setUnit( un );
-    eBattery::setVolt( m_value*m_unitMult );
-
-    if( pauseSim ) Simulator::self()->resumeSim();
+    m_volt = m_value*m_unitMult;
 }
 
 void Battery::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

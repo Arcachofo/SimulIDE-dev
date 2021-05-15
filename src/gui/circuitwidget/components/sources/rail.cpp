@@ -19,7 +19,7 @@
 
 #include "rail.h"
 #include "simulator.h"
-#include "e-source.h"
+#include "iopin.h"
 #include "itemlibrary.h"
 #include "pin.h"
 
@@ -46,15 +46,9 @@ Rail::Rail( QObject* parent, QString type, QString id )
     m_changed = false;
 
     m_pin.resize(1);
-    QString nodid = id;
-    nodid.append(QString("-outnod"));
-    QPoint nodpos = QPoint(16,0);
-    m_pin[0] = new Pin( 0, nodpos, nodid, 0, this);
+    m_out = new IoPin( 0, QPoint(16,0), id+"-outnod", 0, this, source );
+    m_pin[0] = m_out;
 
-    nodid.append(QString("-eSource"));
-    m_out = new eSource( nodid, m_pin[0], source );
-    
-    m_out->setState( true );
     m_unit = "V";
     setVolt(5.0);
     setValLabelPos(-16, 8 , 0 ); // x, y, rot 
@@ -100,9 +94,8 @@ void Rail::setUnit( QString un )
 
 void Rail::updateOutput()
 {
-    m_voltHight = m_value*m_unitMult;
-    m_out->setVoltHigh( m_voltHight );
-    m_out->stampOutput();
+    m_out->setVoltHigh( m_value*m_unitMult );
+    m_out->setState( true );
 }
 
 void Rail::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include "clock-base.h"
-#include "pin.h"
+#include "iopin.h"
 #include "simulator.h"
 
 static const char* ClockBase_properties[] = {
@@ -59,11 +59,11 @@ void ClockBase::updateStep()
     {
         if( m_isRunning )
         {
-            eLogicDevice::setOut( 0, true );
+            m_outpin->setState( true, true );
             Simulator::self()->cancelEvents( this );
             Simulator::self()->addEvent( 1, this );
         }
-        else eLogicDevice::setOut( 0, false );
+        else m_outpin->setState( false, true );
         m_changed = false;
     }
 }
