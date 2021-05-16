@@ -21,8 +21,8 @@
 #include "simulator.h"
 
 IoPin::IoPin(int angle, const QPoint pos, QString id, int index, Component* parent, pinMode_t mode )
-       : Pin( angle, pos, id, index, parent )
-       , eElement( id )
+     : Pin( angle, pos, id, index, parent )
+     , eElement( id )
 {
     m_scrEnode = new eNode( id+"scr" );
     m_scrEnode->setNodeNumber(0);

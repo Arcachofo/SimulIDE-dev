@@ -20,12 +20,7 @@
 #ifndef ECLOCKEDDEVICE_H
 #define ECLOCKEDDEVICE_H
 
-
-enum trigtType_t{
-    Trig_None = 0,
-    Trig_Clk,
-    Trig_InEn,
-};
+#include "component.h"
 
 enum clkState_t{
     Clock_Low = 0,
@@ -47,8 +42,8 @@ class MAINMODULE_EXPORT eClockedDevice
         void initState();
         void stamp( eElement* el );
 
-        int eTrigger() { return m_etrigger; }
-        virtual void seteTrigger( int trigger );
+        Component::trigger_t trigger() { return m_trigger; }
+        virtual void setTrigger( Component::trigger_t trigger );
 
         void setClockPin( IoPin* clockPin ) { m_clockPin = clockPin; }
 
@@ -60,7 +55,7 @@ class MAINMODULE_EXPORT eClockedDevice
     protected:
         bool m_clock;
 
-        trigtType_t m_etrigger;
+        Component::trigger_t m_trigger;
 
         IoPin* m_clockPin;
 };

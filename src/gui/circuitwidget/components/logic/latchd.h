@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT LatchD : public LogicComponent, public eElement
     Q_PROPERTY( int    Channels     READ channels   WRITE setChannels   DESIGNABLE true USER true )
     Q_PROPERTY( bool   Tristate     READ tristate   WRITE setTristate   DESIGNABLE true USER true )
     Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
-    Q_PROPERTY( Trigger Trigger     READ trigger    WRITE setTrigger    DESIGNABLE true USER true )
+    Q_PROPERTY( trigger_t Trigger     READ trigger    WRITE setTrigger    DESIGNABLE true USER true )
 
     public:
         LatchD( QObject* parent, QString type, QString id );
@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT LatchD : public LogicComponent, public eElement
         bool tristate() { return m_tristate; }
         void setTristate( bool t );
 
-        virtual void setTrigger( Trigger trigger );
+        virtual void setTrigger( trigger_t trigger );
 
     private:
         void createLatches( int n );

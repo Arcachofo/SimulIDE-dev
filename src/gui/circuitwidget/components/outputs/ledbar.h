@@ -20,9 +20,10 @@
 #ifndef LEDBAR_H
 #define LEDBAR_H
 
-#include "itemlibrary.h"
 #include "component.h"
 #include "ledsmd.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT LedBar : public Component
 {
@@ -40,7 +41,7 @@ class MAINMODULE_EXPORT LedBar : public Component
         ~LedBar();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
         
         virtual QList<propGroup_t> propGroups() override;
 

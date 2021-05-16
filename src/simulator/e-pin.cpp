@@ -39,7 +39,7 @@ ePin::~ePin()
 
 void ePin::reset()
 {
-    setEnode( 0l );
+    setEnode( NULL );
 }
 
 eNode* ePin::getEnode()
@@ -55,7 +55,7 @@ void ePin::setEnode( eNode* enode )
     if( enode )   enode->addEpin( this );
 
     m_enode = enode;
-    m_connected = (enode!=0l);
+    m_connected = (enode!=NULL);
 }
 
 void ePin::setEnodeComp( eNode* enode )
@@ -76,8 +76,7 @@ void ePin::stampAdmitance( double data )
 {
     if( m_connected )
     {
-        if( !m_enodeCon )
-            data = 1e-12;
+        if( !m_enodeCon ) data = 1e-12;
         m_enode->stampAdmitance( this, data );
     }
 }
@@ -100,5 +99,3 @@ void ePin::setId( QString id )
     Circuit::self()->updatePin( this, id );
     m_id = id;
 }
-
-

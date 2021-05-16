@@ -18,15 +18,16 @@
  ***************************************************************************/
 
 #include "e-clocked_device.h"
+#include "circuitwidget.h"
 #include "simulator.h"
-#include "iopin.h"
 #include "circuit.h"
+#include "iopin.h"
 
 eClockedDevice::eClockedDevice()
 {
     m_clock    = false;
     m_clockPin = NULL;
-    m_etrigger = Trig_Clk;
+    m_trigger  = Component::Clock;
 }
 eClockedDevice::~eClockedDevice(){}
 
@@ -43,12 +44,6 @@ void eClockedDevice::stamp( eElement* el )
         eNode* enode = m_clockPin->getEnode();
         if( enode ) enode->voltChangedCallback( el );
     }
-}
-
-void eClockedDevice::seteTrigger( int trigger )
-{
-    m_etrigger = (trigtType_t)trigger;
-    m_clock = false;
 }
 
 bool eClockedDevice::clockInv()
@@ -77,12 +72,12 @@ clkState_t eClockedDevice::getClockState()
 
     bool clock = m_clockPin->getInpState(); // Clock pin volt.
 
-    if( m_etrigger == Trig_InEn )
+    if( m_trigger == Component::InEnable )
     {
         if     (!clock ) cState = Clock_Low;
         else if( clock ) cState = Clock_Allow;
     }
-    else if( m_etrigger == Trig_Clk )
+    else if( m_trigger == Component::Clock )
     {
         if     (!m_clock &&  clock ) cState = Clock_Rising;
         else if( m_clock &&  clock ) cState = Clock_High;
@@ -94,3 +89,29 @@ clkState_t eClockedDevice::getClockState()
     return cState;
 }
 
+void eClockedDevice::setTrigger( Component::trigger_t trigger )
+{
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    m_trigger = trigger;
+    m_clock = false;
+
+    if( trigger == Component::None )
+    {
+        if( m_clockPin->connector() ) m_clockPin->connector()->remove();
+        m_clockPin->reset();
+        m_clockPin->setLabelText( "" );
+        m_clockPin->setVisible( false );
+    }
+    else if( trigger == Component::Clock )
+    {
+        m_clockPin->setLabelText( ">" );
+        m_clockPin->setVisible( true );
+    }
+    else if( trigger == Component::InEnable )
+    {
+        m_clockPin->setLabelText( " IE" );
+        m_clockPin->setVisible( true );
+    }
+    Circuit::self()->update();
+}

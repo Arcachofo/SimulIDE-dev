@@ -80,7 +80,7 @@ QList<propGroup_t> LatchD::propGroups()
 
 void LatchD::stamp()
 {
-    if( m_etrigger != Trig_Clk )
+    if( m_trigger != Clock )
     {
         for( int i=0; i<m_numInputs; ++i )
         {
@@ -187,9 +187,9 @@ void LatchD::setTristate( bool t )
     updateSize();
 }
 
-void LatchD::setTrigger( Trigger trigger )
+void LatchD::setTrigger( trigger_t trigger )
 {
-    LogicComponent::setTrigger( trigger );
+    eClockedDevice::setTrigger( trigger );
     updateSize();
 }
 

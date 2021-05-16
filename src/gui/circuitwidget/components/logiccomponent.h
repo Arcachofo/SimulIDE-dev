@@ -33,13 +33,6 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
         LogicComponent( QObject* parent, QString type, QString id );
         ~LogicComponent();
 
-        enum Trigger {
-            None = 0,
-            Clock,
-            InEnable
-        };
-        Q_ENUM( Trigger )
-
         void initState();
         void stamp( eElement* el );
 
@@ -47,10 +40,6 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
         void setOutputEnabled( bool enabled );
         void updateOutEnabled();
         bool outputEnabled();
-
-
-        Trigger trigger() { return m_trigger; }
-        virtual void setTrigger( Trigger trigger );
 
         virtual void remove() override;
 
@@ -61,7 +50,7 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
 
         IoPin*  m_oePin;
 
-        Trigger m_trigger;
+        //Trigger m_trigger;
 };
 
 #endif

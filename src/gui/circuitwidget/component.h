@@ -35,9 +35,6 @@ struct propGroup_t{
         QList<property_t> propList;
 };
 
-//Q_DECLARE_METATYPE( QList<int> )
-//Q_DECLARE_METATYPE( QVector<int> )
-
 class Pin;
 class Label;
 class PropDialog;
@@ -45,7 +42,7 @@ class PropDialog;
 class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
 {
     Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
+    Q_INTERFACES( QGraphicsItem )
 
     Q_PROPERTY( QString  itemtype  READ itemType  USER  true )
     Q_PROPERTY( QString  id        READ idLabel   WRITE setIdLabel DESIGNABLE true USER true )
@@ -74,6 +71,13 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
 
         Component( QObject* parent, QString type, QString id );
         ~Component();
+
+        enum trigger_t {
+            None = 0,
+            Clock,
+            InEnable
+        };
+        Q_ENUM( trigger_t ) // We need this here bcos eClockedDevice is not a QObject
 
         virtual QList<propGroup_t> propGroups(){ QList<propGroup_t> pg; return pg;}
 

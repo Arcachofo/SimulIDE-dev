@@ -53,9 +53,6 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
     Q_UNUSED( LogicComponent_properties );
 
     m_oePin   = NULL;
-    //m_trigPin = NULL ;
-    //m_trigger;
-
     m_outEnable = true;
 }
 LogicComponent::~LogicComponent(){}
@@ -125,32 +122,7 @@ void LogicComponent::setOutputEnabled( bool enabled )
     Simulator::self()->addEvent( 1, NULL );
 }
 
-void LogicComponent::setTrigger( Trigger trigger )
-{
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-    m_trigger = trigger;
 
-    if( trigger == None )
-    {
-        if( m_clockPin->connector() ) m_clockPin->connector()->remove();
-        m_clockPin->reset();
-        m_clockPin->setLabelText( "" );
-        m_clockPin->setVisible( false );
-    }
-    else if( trigger == Clock )
-    {
-        m_clockPin->setLabelText( ">" );
-        m_clockPin->setVisible( true );
-    }
-    else if( trigger == InEnable )
-    {
-        m_clockPin->setLabelText( " IE" );
-        m_clockPin->setVisible( true );
-    }
-    eClockedDevice::seteTrigger( (int)trigger );
-
-    Circuit::self()->update();
-}
 
 void LogicComponent::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {

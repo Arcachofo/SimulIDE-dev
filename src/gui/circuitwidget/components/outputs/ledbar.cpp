@@ -18,12 +18,12 @@
  ***************************************************************************/
 
 #include "ledbar.h"
+#include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "pin.h"
-
 
 Component* LedBar::construct( QObject* parent, QString type, QString id )
 { return new LedBar( parent, type, id ); }
@@ -82,26 +82,21 @@ void LedBar::createLeds( int c )
     {
         int index = i*2;
         
-        /*QString reid = m_id;
-        reid.append(QString("-resistor"+QString::number(i)));
-        m_resistor[i] = new eResistor( reid );*/
-        
         QString ledid = m_id;
         ledid.append(QString("-led"+QString::number(i)));
         m_led[i] = new LedSmd( this, "LEDSMD", ledid, QRectF(0, 0, 4, 4) );
         m_led[i]->setParentItem(this);
         m_led[i]->setPos( 0, -28+2+i*8 );
-        //m_led[i]->setEnabled( false );
         m_led[i]->setFlag( QGraphicsItem::ItemIsSelectable, false );
         m_led[i]->setAcceptedMouseButtons(0);
         
         QPoint pinpos = QPoint(-16,-32+8+i*8 );
-        Pin* pin = new Pin( 180, pinpos, ledid+"-pinP", 0, this);
+        Pin* pin = new Pin( 180, pinpos, ledid+"-pinP", 0, this );
         m_led[i]->setEpin( 0, pin );
         m_pin[index] = pin;
         
         pinpos = QPoint( 16,-32+8+i*8 );
-        pin = new Pin( 0, pinpos, ledid+"-pinN", 0, this);
+        pin = new Pin( 0, pinpos, ledid+"-pinN", 0, this );
         m_led[i]->setEpin( 1, pin );
         m_pin[index+1] = pin;
         
@@ -114,7 +109,6 @@ void LedBar::createLeds( int c )
             m_led[i]->setColor( color() ); 
         }
     }
-    //update();
 }
 
 void LedBar::deleteLeds( int d )
@@ -126,7 +120,6 @@ void LedBar::deleteLeds( int d )
     {
         for( int i=start; i<m_size; i++ ) m_led[i]->setGrounded( false );
     }
-
     for( int i=start*2; i<m_size*2; i++ )
     {
         Pin* pin = m_pin[i];
@@ -138,7 +131,6 @@ void LedBar::deleteLeds( int d )
     m_size = m_size-d;
     m_led.resize( m_size );
     m_pin.resize( m_size*2 );
-    //Circuit::self()->update();
 }
 
 void LedBar::setColor( LedBase::LedColor color ) 
@@ -169,7 +161,7 @@ void LedBar::setSize( int size )
     Circuit::self()->update();
 }
 
-double LedBar::threshold()                     
+double LedBar::threshold()
 { 
     return m_led[0]->threshold(); 
 }
@@ -179,7 +171,7 @@ void LedBar::setThreshold( double threshold )
     for( int i=0; i<m_size; i++ ) m_led[i]->setThreshold( threshold );
 }
 
-double LedBar::maxCurrent()                   
+double LedBar::maxCurrent()
 { 
     return m_led[0]->maxCurrent(); 
 }
@@ -211,7 +203,6 @@ void LedBar::setGrounded( bool grounded )
 void LedBar::remove()
 {
     deleteLeds( m_size );
-
     Component::remove();
 }
 void LedBar::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
@@ -219,7 +210,6 @@ void LedBar::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
     if( m_hidden ) return;
 
     Component::paint( p, option, widget );
-
     p->drawRoundRect( m_area, 4, 4 );
 }
 

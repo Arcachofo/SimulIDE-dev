@@ -37,7 +37,7 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
     m_graphical = true;
     m_overCurrent = false;
     m_grounded = false;
-    m_scrEnode = 0l;
+    m_scrEnode = NULL;
     m_counter = 0;
     m_bright = 0;
     
@@ -49,7 +49,7 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 }
-LedBase::~LedBase() {}
+LedBase::~LedBase(){}
 
 void LedBase::initialize()
 {
@@ -96,7 +96,7 @@ void LedBase::setGrounded( bool grounded )
 
     if( grounded )
     {
-        Pin* pin1 = (static_cast<Pin*>(m_ePin[1]));
+        Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
         if( pin1->connector() ) pin1->connector()->remove();
         pin1->setEnabled( false );
         pin1->setVisible( false );
@@ -111,12 +111,12 @@ void LedBase::setGrounded( bool grounded )
     }
     else
     {
-        Pin* pin1 = (static_cast<Pin*>(m_ePin[1]));
+        Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
 
         pin1->setEnabled( true );
         pin1->setVisible( true );
 
-        m_ePin[1]->setEnode( 0l );
+        m_ePin[1]->setEnode( NULL );
     }
     m_grounded = grounded;
 }

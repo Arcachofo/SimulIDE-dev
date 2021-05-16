@@ -21,10 +21,9 @@
 #define IOCOMPONENT_H
 
 #include "component.h"
-//#include "e-element.h"
 #include "iopin.h"
 
-class MAINMODULE_EXPORT IoComponent : public Component//, public eElement
+class MAINMODULE_EXPORT IoComponent : public Component
 {
         Q_OBJECT
         Q_PROPERTY( quint64 Tpd_ps READ propDelay WRITE setPropDelay DESIGNABLE true USER true )
@@ -75,7 +74,6 @@ class MAINMODULE_EXPORT IoComponent : public Component//, public eElement
         virtual uint64_t propDelay() { return m_propDelay; }
         virtual void     setPropDelay( uint64_t pd ) { m_propDelay = pd; }
 
-
         uint64_t riseTime() { return m_timeLH; }
         void setRiseTime( uint64_t time ) {m_timeLH = time; }
 
@@ -88,12 +86,10 @@ class MAINMODULE_EXPORT IoComponent : public Component//, public eElement
         int  numOuts() const { return m_numOutputs; }
         void setNumOuts( int outputs );
 
-
         void init( QStringList pins );
         void initPin( IoPin* pin );
 
     protected:
-        //bool getInputState( int input );
         IoPin* createPin( QString data , QString id , QString label, pinMode_t mode );
         void deleteInputs( int inputs );
         void deleteOutputs( int inputs );
@@ -106,7 +102,6 @@ class MAINMODULE_EXPORT IoComponent : public Component//, public eElement
         uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90%
         uint64_t m_timeHL;    // Time for Output voltage to switch from 90% to 10%
         bool m_rndPD;         // Randomize Propagation Delay
-
 
         double m_inHighV;  // currently in eClockedDevice
         double m_inLowV;  // currently in eClockedDevice
@@ -125,7 +120,6 @@ class MAINMODULE_EXPORT IoComponent : public Component//, public eElement
         int m_numInputs;
         int m_numOutputs;
 
-        std::vector<bool> m_inputState;
         std::vector<IoPin*> m_inPin;
         std::vector<IoPin*> m_outPin;
 };

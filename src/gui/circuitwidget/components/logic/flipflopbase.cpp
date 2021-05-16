@@ -51,7 +51,7 @@ void FlipFlopBase::stamp()
     enode = m_resetPin->getEnode();              // Reset pin
     if( enode ) enode->voltChangedCallback( this );
 
-    if( m_etrigger != Trig_Clk )
+    if( m_trigger != Clock )
     {
         for( int i=0; i<m_dataPins; i++ ) // J K or D
         {

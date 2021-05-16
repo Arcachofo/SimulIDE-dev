@@ -37,9 +37,9 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_isBus   = false;
     m_unused  = false;
     
-    my_connector = 0l;
-    m_conPin     = 0l;
-    m_enode      = 0l;
+    my_connector = NULL;
+    m_conPin     = NULL;
+    m_enode      = NULL;
     m_angle      = angle;
     
     m_color[0] = Qt::black;
@@ -78,7 +78,7 @@ Pin::~Pin()
 
 void Pin::reset()
 {
-    if( my_connector ) setConnector( 0l );
+    if( my_connector ) setConnector( NULL );
     m_connected = false;
     
     m_component->inStateChanged( 1 );          // Used by node to remove

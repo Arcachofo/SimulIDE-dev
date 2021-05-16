@@ -63,8 +63,8 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         virtual void drawBackground( QPainter *p )=0;
         virtual void drawForeground( QPainter *p )=0;
         
-        bool     m_grounded;
-        eNode*   m_scrEnode;
+        bool   m_grounded;
+        eNode* m_scrEnode;
         
         LedColor m_ledColor;
         

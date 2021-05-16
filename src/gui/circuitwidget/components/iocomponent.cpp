@@ -23,7 +23,6 @@
 
 IoComponent::IoComponent( QObject* parent, QString type, QString id)
            : Component( parent, type, id )
-           //, eElement( id )
 {
     m_numInputs  = 0;
     m_numOutputs = 0;
@@ -366,3 +365,5 @@ void IoComponent::deleteOutputs( int outputs )
     m_numOutputs -= outputs;
     m_outPin.resize( m_numOutputs );
 }
+
+#include "moc_iocomponent.cpp"
