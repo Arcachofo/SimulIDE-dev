@@ -78,7 +78,7 @@ void PICComponentPin::voltChanged()
 {
     if( m_pinMode != input ) return;      // Nothing to do if pin is output
 
-    double volt = m_ePin[0]->getVolt();
+    double volt = getVolt();
     //qDebug() << "PICComponentPin::setVChanged "<< m_id <<volt;
     
     if( m_pinType == 1 )                       // Is an IO Pin

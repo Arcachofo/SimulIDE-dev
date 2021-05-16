@@ -22,7 +22,7 @@
 #include "simulator.h"
 
 McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle )
-               : IoPin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, m_mcuComponent, input )
+               : IoPin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, mcuComponent, input )
 {
     m_mcuComponent = mcuComponent;
     m_processor = mcuComponent->processor();
@@ -76,8 +76,8 @@ void McuComponentPin::setDirection( bool out )
 {
     if( out )       // Set Pin to Output
     {
-        if( m_ePin[0]->isConnected() && m_attached )
-            m_ePin[0]->getEnode()->remFromChangedCallback( this ); // Don't Receive voltage change notifications
+        if( m_enode && m_attached )
+            m_enode->remFromChangedCallback( this ); // Don't Receive voltage change notifications
 
         if( m_openColl ) setPinMode( open_col );
         else             setPinMode( output );
@@ -85,8 +85,8 @@ void McuComponentPin::setDirection( bool out )
     }
     else           // Set Pin to Input
     {
-        if( m_ePin[0]->isConnected() && m_attached )
-            m_ePin[0]->getEnode()->voltChangedCallback( this ); // Receive voltage change notifications
+        if( m_enode && m_attached )
+            m_enode->voltChangedCallback( this ); // Receive voltage change notifications
 
         setPinMode( input );
     }
@@ -126,7 +126,7 @@ void McuComponentPin::enableIO( bool en )
     if( m_enableIO == en ) return;
     m_enableIO = en;
 
-    if( !(m_ePin[0]->isConnected() && m_attached) ) return;
+    if( !(m_enode && m_attached) ) return;
 
     if( en )
     {
@@ -134,7 +134,7 @@ void McuComponentPin::enableIO( bool en )
     }
     else
     {
-        m_ePin[0]->getEnode()->remFromChangedCallback( this );
+        m_enode->remFromChangedCallback( this );
     }
     m_prevPinMode = m_pinMode;
 }

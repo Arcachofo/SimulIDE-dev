@@ -168,15 +168,15 @@ void AVRComponentPin::initialize()
 {
     if( m_pinType > 20 )
     {
-        if( m_ePin[0]->isConnected() && m_attached )
-            m_ePin[0]->getEnode()->voltChangedCallback( this );
+        if( isConnected() && m_attached )
+            getEnode()->voltChangedCallback( this );
     }
     McuComponentPin::stamp();
 }*/
 
 void AVRComponentPin::voltChanged()
 {
-    double volt = m_ePin[0]->getVolt();
+    double volt = getVolt();
 
     if( m_pinType == 1 )                    // Is an IO Pin
     {
@@ -184,7 +184,7 @@ void AVRComponentPin::voltChanged()
         else              avr_raise_irq( m_Write_stat_irq, 0 );
 
         if( m_Write_acomp_irq ) // Comparator
-            avr_raise_irq( m_Write_acomp_irq, m_ePin[0]->getVolt()*1000 );
+            avr_raise_irq( m_Write_acomp_irq, getVolt()*1000 );
     }
     else if( m_pinType == 21 )             // reset
     {
@@ -224,8 +224,7 @@ void AVRComponentPin::enableSPI( uint32_t value )
 
 void AVRComponentPin::adcread()
 {
-    //qDebug() << "ADC Read channel:    pin: " << m_id <<m_ePin[0]->getVolt()*1000 ;
-    if( m_Write_adc_irq ) avr_raise_irq( m_Write_adc_irq, m_ePin[0]->getVolt()*1000 );
+    if( m_Write_adc_irq ) avr_raise_irq( m_Write_adc_irq, getVolt()*1000 );
 }
 
 void AVRComponentPin::setImp( double imp ) // Used by I2C

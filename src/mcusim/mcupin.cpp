@@ -57,15 +57,15 @@ void McuPin::initialize()
 
 void McuPin::stamp()
 {
-    if( m_ePin[0]->isConnected() ) // Outputs are also called so they set Input register if needed
-        m_ePin[0]->getEnode()->voltChangedCallback( this ); // Receive voltage change notifications
+    if( isConnected() ) // Outputs are also called so they set Input register if needed
+        getEnode()->voltChangedCallback( this ); // Receive voltage change notifications
 
     IoPin::stamp();
 }
 
 void McuPin::voltChanged()
 {
-    bool state = m_ePin[0]->getVolt() > digital_thre;
+    bool state = getVolt() > digital_thre;
 
     if( state == m_inpState ) return;
     m_inpState = state;
