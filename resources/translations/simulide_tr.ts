@@ -687,6 +687,10 @@ p, li { white-space: pre-wrap; }
         <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -1321,11 +1325,11 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Rise Time</source>
-        <translation>Yükselme Süresi</translation>
+        <translation type="vanished">Yükselme Süresi</translation>
     </message>
     <message>
         <source>Fall Time</source>
-        <translation>Düşme Süresi</translation>
+        <translation type="vanished">Düşme Süresi</translation>
     </message>
 </context>
 <context>
@@ -1566,7 +1570,7 @@ to DomDocument</source>
     <name>DataLaWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation type="obsolete">Form</translation>
     </message>
     <message>
         <source>Expand</source>
@@ -1577,11 +1581,11 @@ to DomDocument</source>
     <name>DataWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="vanished">Form</translation>
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>Etiket</translation>
+        <translation type="vanished">Etiket</translation>
     </message>
     <message>
         <source>Expand</source>
@@ -2474,6 +2478,61 @@ Değişiklikler kaydedilsin mi?
     </message>
 </context>
 <context>
+    <name>IoComponent</name>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Elektrik</translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished">Girişler:</translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished">Giriş Empedansı</translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished">Çıkışlar:</translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Edges</translation>
+    </message>
+    <message>
+        <source>Propagation Delay</source>
+        <translation type="unfinished">Yayılım Gecikmesi</translation>
+    </message>
+    <message>
+        <source>Rise Time</source>
+        <translation type="unfinished">Yükselme Süresi</translation>
+    </message>
+    <message>
+        <source>Fall Time</source>
+        <translation type="unfinished">Düşme Süresi</translation>
+    </message>
+</context>
+<context>
     <name>ItemLibrary</name>
     <message>
         <source>Gates</source>
@@ -2560,6 +2619,10 @@ Değişiklikler kaydedilsin mi?
         <source>Arduino</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2641,6 +2704,14 @@ Değişiklikler kaydedilsin mi?
         <source>Meters</source>
         <translation type="unfinished">Ölçerler</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
+    <message>
+        <source>Treshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LaWidget</name>
@@ -2682,6 +2753,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2929,55 +3004,47 @@ Değişiklikler kaydedilsin mi?
     <name>LogicComponent</name>
     <message>
         <source>Electric</source>
-        <translation>Elektrik</translation>
+        <translation type="vanished">Elektrik</translation>
     </message>
     <message>
         <source>Inputs:</source>
-        <translation>Girişler:</translation>
-    </message>
-    <message>
-        <source>Low to High Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High to Low Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Girişler:</translation>
     </message>
     <message>
         <source>Input Impedance</source>
-        <translation>Giriş Empedansı</translation>
+        <translation type="vanished">Giriş Empedansı</translation>
     </message>
     <message>
         <source>Outputs:</source>
-        <translation>Çıkışlar:</translation>
+        <translation type="vanished">Çıkışlar:</translation>
     </message>
     <message>
         <source>Output High Voltage</source>
-        <translation>Yüksek Çıktı Gerilimi</translation>
+        <translation type="vanished">Yüksek Çıktı Gerilimi</translation>
     </message>
     <message>
         <source>Output Low Voltage</source>
-        <translation>Düşük Çıktı Gerilimi</translation>
+        <translation type="vanished">Düşük Çıktı Gerilimi</translation>
     </message>
     <message>
         <source>Output Impedance</source>
-        <translation>Çıktı Empedansı</translation>
+        <translation type="vanished">Çıktı Empedansı</translation>
     </message>
     <message>
         <source>Edges</source>
-        <translation type="unfinished">Edges</translation>
+        <translation type="obsolete">Edges</translation>
     </message>
     <message>
         <source>Propagation Delay</source>
-        <translation>Yayılım Gecikmesi</translation>
+        <translation type="vanished">Yayılım Gecikmesi</translation>
     </message>
     <message>
         <source>Rise Time</source>
-        <translation>Yükselme Süresi</translation>
+        <translation type="vanished">Yükselme Süresi</translation>
     </message>
     <message>
         <source>Fall Time</source>
-        <translation>Düşme Süresi</translation>
+        <translation type="vanished">Düşme Süresi</translation>
     </message>
 </context>
 <context>
@@ -3063,6 +3130,26 @@ Değişiklikler kaydedilsin mi?
         <source>Load firmware</source>
         <translation>Firmware yükle</translation>
     </message>
+    <message>
+        <source>xml file not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished">Frekans</translation>
+    </message>
+    <message>
+        <source>Fimware</source>
+        <translation type="unfinished">Firmware</translation>
+    </message>
+    <message>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuComponent</name>
@@ -3134,6 +3221,10 @@ Değişiklikler kaydedilsin mi?
         <source>Open Mcu Monitor.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Chip not Found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuMonitor</name>
@@ -3155,7 +3246,11 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>.data (*.data);;.bin (*.bin);;All files (*.*)</source>
-        <translation>.data (*.data);;.bin (*.bin);;Tüm dosyalar (*.*)</translation>
+        <translation type="vanished">.data (*.data);;.bin (*.bin);;Tüm dosyalar (*.*)</translation>
+    </message>
+    <message>
+        <source>All files (*.*);;.data (*.data);;.bin (*.bin)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3314,6 +3409,10 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Supply Pins</source>
         <translation>Besleme Pinleri</translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4630,11 +4729,11 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Rise Time</source>
-        <translation>Yükselme Süresi</translation>
+        <translation type="vanished">Yükselme Süresi</translation>
     </message>
     <message>
         <source>Fall Time</source>
-        <translation>Düşme Süresi</translation>
+        <translation type="vanished">Düşme Süresi</translation>
     </message>
     <message>
         <source>Quality</source>

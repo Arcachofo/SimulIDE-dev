@@ -18,11 +18,11 @@
  ***************************************************************************/
 
 #include "spimodule.h"
-#include "e-source.h"
+#include "iopin.h"
 //#include "simulator.h"
 
-SpiModule::SpiModule( QString name )
-         : eClockedDevice( name )
+SpiModule::SpiModule()
+         : eClockedDevice()
 {
     m_MOSI = NULL;
     m_MISO = NULL;
@@ -32,23 +32,23 @@ SpiModule::SpiModule( QString name )
 SpiModule::~SpiModule( ){}
 
 
-void SpiModule::setMosiPin( eSource* pin )
+void SpiModule::setMosiPin( IoPin* pin )
 {
     m_MOSI = pin;
 }
 
-void SpiModule::setMisoPin( eSource* pin )
+void SpiModule::setMisoPin( IoPin* pin )
 {
     m_MISO = pin;
 }
 
-void SpiModule::setSckPin( eSource* pin )
+void SpiModule::setSckPin( IoPin* pin )
 {
     m_SCK = pin;
-    m_clockSource = pin;
+    m_clockPin = pin;
 }
 
-void SpiModule::setSsPin( eSource* pin )
+void SpiModule::setSsPin( IoPin* pin )
 {
     m_SS = pin;
 }

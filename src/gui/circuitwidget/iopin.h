@@ -49,37 +49,41 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         pinMode_t pinMode() { return m_pinMode; }
         void setPinMode( pinMode_t mode );
 
-        double voltHight() { return m_voltHigh; }
-        void  setVoltHigh( double v );
-
-        double voltLow() { return m_voltLow; }
-        void  setVoltLow( double v );
-
-        virtual bool getState() { return m_state; }
-        virtual void setState( bool out, bool st=false );
-        void setStateZ( bool z );
-
-        bool  isInverted() { return m_inverted; }
-        void  setInverted( bool inverted );
-
+        void  setInputHighV( double volt ) { m_inpHighV = volt; }
+        void  setInputLowV( double volt ) { m_inpLowV = volt; }
         virtual void  setInputImp( double imp );
+
+        double outHighV() { return m_outHighV; }
+        void  setOutHighV( double v ) { m_outHighV = v; }
+
+        double outLowV() { return m_outLowV; }
+        void  setOutLowV( double v ) { m_outLowV = v; }
+
         virtual void  setOutputImp( double imp );
 
         double imp() { return m_imp; }
         virtual void  setImp( double imp );
 
-        double getVolt();
+        virtual bool getInpState();
+        virtual bool getOutState() { return m_outState; }
+        virtual void setOutState( bool out, bool st=true );
 
-        ePin* getPin() { return m_ePin[0]; }
+        void setStateZ( bool z );
+
+        bool  isInverted() { return m_inverted; }
+        void  setInverted( bool inverted );
 
         void controlPin( bool ctrl );
 
     protected:
         void update();
 
-        double m_voltHigh;
-        double m_voltLow;
-        double m_voltOut;
+        double m_inpHighV;  // currently in eClockedDevice
+        double m_inpLowV;
+
+        double m_outHighV;
+        double m_outLowV;
+        double m_outVolt;
 
         double m_vddAdmit;  // Out stage
         double m_gndAdmit;  // Out Stage
@@ -92,7 +96,8 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         double m_imp;
         double m_admit;
 
-        bool m_state;
+        bool m_inpState;
+        bool m_outState;
         bool m_stateZ;
         bool m_inverted;
         bool m_extCtrl;

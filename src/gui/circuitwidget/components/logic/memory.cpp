@@ -18,11 +18,11 @@
  ***************************************************************************/
 
 #include "memory.h"
+#include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "e-source.h"
-#include "pin.h"
+#include "iopin.h"
 #include "memtable.h"
 #include "utils.h"
 
@@ -48,7 +48,7 @@ LibraryItem* Memory::libraryItem()
 
 Memory::Memory( QObject* parent, QString type, QString id )
       : LogicComponent( parent, type, id )
-      , eMemory( id )
+      , eElement( id )
       , MemData()
 {
     Q_UNUSED( Memory_properties );
@@ -56,24 +56,21 @@ Memory::Memory( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 11;
     
-    m_WePin = new Pin( 180, QPoint( 0,0 ), m_id+"-Pin-We", 0, this );
+    m_WePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-We", 0, this, input );
     m_WePin->setLabelText( " WE" );
     m_WePin->setLabelColor( QColor( 0, 0, 0 ) );
     
-    m_CsPin = new Pin(  0, QPoint( 0,0 ), m_id+"-Pin-Cs", 0, this );
+    m_CsPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin-Cs", 0, this, input );
     m_CsPin->setLabelText( "CS " );
     m_CsPin->setLabelColor( QColor( 0, 0, 0 ) );
     
-    m_outEnPin = new Pin( 180, QPoint( 0,0 ), m_id+"-Pin-outEnable"  , 0, this );
-    m_outEnPin->setLabelText( " OE" );
-    m_outEnPin->setLabelColor( QColor( 0, 0, 0 ) );
-    
-    eLogicDevice::createInput( m_WePin );                          // WE
-    eLogicDevice::createInput( m_CsPin );                          // CS
-    eLogicDevice::createOutEnablePin( m_outEnPin );                // OE
-    
-    for( int i=0; i<2; i++ ) m_input[i]->setInverted( true ); // Invert control pins
-    
+    m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-outEnable" , 0, this, input );
+    m_oePin->setLabelText( " OE" );
+    m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
+
+    for( int i=0; i<2; i++ ) m_inPin[i]->setInverted( true ); // Invert control pins
+
+    m_dataBytes = 1;
     m_addrBits = 0;
     m_dataBits = 0;
     setAddrBits( 8 );
@@ -95,9 +92,123 @@ QList<propGroup_t> Memory::propGroups()
     return pg;
 }
 
+void Memory::stamp()                   // Called at Simulation Start
+{
+    for( int i=0; i<2+m_addrBits; ++i ) // Initialize control pins
+    {
+        eNode* enode =  m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    LogicComponent::stamp( this );
+}
+
 void Memory::updateStep()
 {
     if( m_memTable ) m_memTable->updateTable( &m_ram );
+}
+
+void Memory::initialize()
+{
+    m_we = true;
+    m_cs = true;
+    m_oe = true;
+    m_read = false;
+
+    for( int i=0; i<m_numOutputs; ++i )
+    {
+        m_outPin[i]->setPinMode( input );
+    }
+    if( !m_persistent ) m_ram.fill( 0 );
+
+    LogicComponent::initState();
+}
+
+void Memory::voltChanged()        // Some Pin Changed State, Manage it
+{
+    bool CS = m_CsPin->getInpState();
+    bool csTrig = false;
+
+    if( CS != m_cs )
+    {
+        if( CS && !m_cs ) csTrig = true;
+        m_cs = CS;
+
+        if( !CS && m_oe )
+        {
+            m_oe = false;
+            LogicComponent::setOutputEnabled( false ); // Deactivate
+        }
+    }
+    if( !CS ) return;
+
+    bool WE = m_WePin->getInpState();
+    bool oe = LogicComponent::outputEnabled();// && !WE;
+
+    if( oe != m_oe )
+    {
+        m_oe = oe;
+        setOutputEnabled( oe );
+    }
+
+    m_address = 0;
+    for( int i=0; i<m_addrBits; ++i )        // Get Address
+    {
+        bool state = m_inPin[i+2]->getInpState();//getInputState(i+2);
+        if( state ) m_address += pow( 2, i );
+    }
+
+    bool weTrig = WE && !m_we;
+    m_we = WE;
+    if( WE )                                // Write
+    {
+        for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setPinMode( input );
+        Simulator::self()->addEvent( 1, NULL );
+
+        if( csTrig || weTrig )  // Write action triggered
+        {
+            m_read = false;
+            Simulator::self()->addEvent( m_propDelay, this );
+        }
+    }else                                  // Read
+    {
+        for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setPinMode( output );
+        Simulator::self()->addEvent( 1, NULL );
+        m_read = true;
+        m_nextOutVal = m_ram[m_address];
+        IoComponent::sheduleOutPuts( this );
+    }
+}
+
+void Memory::runEvent()
+{
+    if( m_read ) IoComponent::runOutputs();
+    else
+    {
+        int value = 0;
+        for( int i=0; i<m_numOutputs; ++i )
+        {
+            bool state = m_outPin[i]->getInpState();
+            if( state ) value += pow( 2, i );
+            m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
+        }
+        m_ram[m_address] = value;
+    }
+}
+
+void Memory::setMem( QVector<int> m )
+{
+    if( m.size() == 1 ) return;       // Avoid loading data if not saved
+    m_ram = m;
+}
+
+QVector<int> Memory::mem()
+{
+    if( !m_persistent )
+    {
+        QVector<int> null;
+        return null;
+    }
+    return m_ram;
 }
 
 void Memory::updatePins()
@@ -130,9 +241,9 @@ void Memory::updatePins()
     m_CsPin->isMoved();
     m_CsPin->setLabelPos();
     
-    m_outEnPin->setPos( QPoint(-24,origY+8+h*8 ) );        // OE
-    m_outEnPin->isMoved();
-    m_outEnPin->setLabelPos();
+    m_oePin->setPos( QPoint(-24,origY+8+h*8 ) );        // OE
+    m_oePin->isMoved();
+    m_oePin->setLabelPos();
     
     m_area   = QRect( -(m_width/2)*8, origY, m_width*8, m_height*8 );
 }
@@ -142,13 +253,15 @@ void Memory::setAddrBits( int bits )
     if( bits == m_addrBits ) return;
     if( bits == 0 ) bits = 8;
     if( bits > 18 ) bits = 18;
+    m_addrBits = bits;
+
+    m_ram.resize( pow( 2, bits ) );
     
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
     
     if     ( bits < m_addrBits ) deleteAddrBits( m_addrBits-bits );
     else if( bits > m_addrBits ) createAddrBits( bits-m_addrBits );
-    
-    eMemory::setAddrBits( bits );
+
     if( m_memTable ) m_memTable->setData( &m_ram );
 
     updatePins();
@@ -163,22 +276,22 @@ void Memory::createAddrBits( int bits )
     int origY = -(m_height/2)*8;
     
     m_inPin.resize( chans );
-    m_numInPins = chans;
+    m_numInputs = chans;
     
     for( int i=m_addrBits; i<chans; i++ )
     {
         QString number = QString::number(i);
 
-        m_inPin[i] = new Pin( 180, QPoint(-24,origY+8+i*8 ), m_id+"-in"+number, i, this );
+        m_inPin[i] = new IoPin( 180, QPoint(-24,origY+8+i*8 ), m_id+"-in"+number, i, this, input );
         m_inPin[i]->setLabelText( " A"+number );
         m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        eLogicDevice::createInput( m_inPin[i] );
+        ///LogicComponent::createInput( m_inPin[i] );
     }
 }
 
 void Memory::deleteAddrBits( int bits )
 {
-    eLogicDevice::deleteInputs( bits );
+    LogicComponent::deleteInputs( bits );
     LogicComponent::deleteInputs( bits );
 }
 
@@ -205,22 +318,21 @@ void Memory::createDataBits( int bits )
     int origY = -(m_height/2)*8;
     
     m_outPin.resize( chans );
-    m_numOutPins = chans;
+    m_numOutputs = chans;
     
     for( int i=m_dataBits; i<chans; i++ )
     {
         QString number = QString::number(i);
         
-        m_outPin[i] = new Pin( 0, QPoint(24,origY+8+i*8 ), m_id+"-out"+number, i, this );
+        m_outPin[i] = new IoPin( 0, QPoint(24,origY+8+i*8 ), m_id+"-out"+number, i, this, output );
         m_outPin[i]->setLabelText( "D"+number+" " );
         m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        eLogicDevice::createOutput( m_outPin[i] );
     }
 }
 
 void Memory::deleteDataBits( int bits )
 {
-    eLogicDevice::deleteOutputs( bits );
+    LogicComponent::deleteOutputs( bits );
     LogicComponent::deleteOutputs( bits );
 }
 
@@ -277,7 +389,7 @@ void Memory::remove()
 {
     if( m_CsPin->connector() )    m_CsPin->connector()->remove();
     if( m_WePin->connector() )    m_WePin->connector()->remove();
-    if( m_outEnPin->connector() ) m_outEnPin->connector()->remove();
+    if( m_oePin->connector() ) m_oePin->connector()->remove();
     
     LogicComponent::remove();
 }

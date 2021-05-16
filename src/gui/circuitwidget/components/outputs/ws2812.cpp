@@ -18,10 +18,11 @@
  ***************************************************************************/
 
 #include "ws2812.h"
-#include "mcucomponent.h"
+#include "itemlibrary.h"
+//#include "mcucomponent.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "pin.h"
+#include "iopin.h"
 
 
 Component* WS2812::construct( QObject* parent, QString type, QString id )
@@ -41,28 +42,19 @@ LibraryItem* WS2812::libraryItem()
 
 WS2812::WS2812( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
-      , eLogicDevice( id )
+      , eElement( id )
+      , eClockedDevice()
 {
     m_graphical = true;
 
-    m_pin.resize( 2 );
-    m_ePin.resize( 2 );
     m_rgb.resize( 3 );
+    m_pin.resize( 2 );
 
-    QString pinId = m_id;
-    pinId.append(QString("-InPin"));
-    QPoint pinPos = QPoint(-4-8,0);
-    m_pin[0] = new Pin( 180, pinPos, pinId, 0, this);
-    m_ePin[0] = m_pin[0];
+    m_clockPin = new IoPin( 180, QPoint(-4-8,0), id+"-InPin", 0, this, input );
+    m_pin[0] = m_clockPin;
 
-    pinId = m_id;
-    pinId.append(QString("-OutPin"));
-    pinPos = QPoint(4+8,0);
-    m_pin[1] = new Pin( 0, pinPos, pinId, 1, this);
-    m_ePin[1] = m_pin[1];
-
-    eLogicDevice::createClockPin( m_pin[0] );             // Input
-    eLogicDevice::createOutput( m_pin[1] );               // Output
+    m_output = new IoPin( 0, QPoint(4+8,0), id+"-OutPin", 1, this, output );
+    m_pin[1] = m_output;
 
     setClockInv( false );                       //Don't Invert Clock pin
 
@@ -100,7 +92,7 @@ void WS2812::initialize()
 }
 void WS2812::voltChanged()
 {
-    int clkState = eLogicDevice::getClockState(); // Get Clk to don't miss any clock changes
+    int clkState = eClockedDevice::getClockState(); // Get Clk to don't miss any clock changes
 
     uint64_t CircTime = Simulator::self()->circTime();
     uint64_t time = CircTime - m_lastTime;
@@ -119,7 +111,7 @@ void WS2812::voltChanged()
         {
             if( m_word >= m_leds )
             {
-                eLogicDevice::setOut( 0, true );
+                m_output->setOutState( true );
             }
             else if( m_newWord )
             {
@@ -136,7 +128,7 @@ void WS2812::voltChanged()
     {
         if( m_word >= m_leds )
         {
-            eLogicDevice::setOut( 0, false );
+            m_output->setOutState( false );
         }
         else if(( time > 199*1e3 )&&( time < 851*1e3 )) // Valid H State Time
         {

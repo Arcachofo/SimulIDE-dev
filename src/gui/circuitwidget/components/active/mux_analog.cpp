@@ -18,12 +18,12 @@
  ***************************************************************************/
 
 #include "mux_analog.h"
+#include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "e-source.h"
 #include "e-resistor.h"
-#include "pin.h"
+#include "iopin.h"
 
 static const char* MuxAnalog_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Address Bits")
@@ -45,8 +45,8 @@ LibraryItem* MuxAnalog::libraryItem()
 }
 
 MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
-         : Component( parent, type, id )
-         , eMuxAnalog( id )
+         : LogicComponent( parent, type, id )
+         , eElement( id )
 {
     Q_UNUSED( MuxAnalog_properties );
 
@@ -65,7 +65,12 @@ MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
     
     setAddrBits( 3 );
 }
-MuxAnalog::~MuxAnalog(){}
+MuxAnalog::~MuxAnalog()
+{
+    for( eResistor* res : m_resistor ) delete res;
+    //for( ePin* pin : m_chanPin ) delete pin;
+    //for( ePin* pin : m_addrPin ) delete pin;
+}
 
 QList<propGroup_t> MuxAnalog::propGroups()
 {
@@ -73,6 +78,71 @@ QList<propGroup_t> MuxAnalog::propGroups()
     mainGroup.propList.append( {"Address_Bits", tr("Address Size"),"Bits"} );
     mainGroup.propList.append( {"Impedance", tr("Impedance"),"Ω"} );
     return {mainGroup};
+}
+
+void MuxAnalog::stamp()
+{
+    eNode* enode = m_inputPin->getEnode();
+    if( enode ) enode->setSwitched( true );
+
+    for( int i=0; i<m_channels; ++i )
+    {
+        m_ePin[i]->setEnode( enode );
+
+       eNode* node = m_chanPin[i]->getEnode();
+       if( node ) node->setSwitched( true );
+    }
+
+    enode = m_enablePin->getEnode();
+    if( enode ) enode->voltChangedCallback( this );
+
+    for( int i=0; i<m_addrBits; ++i )
+    {
+        enode = m_addrPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    m_enabled = false;
+}
+
+void MuxAnalog::voltChanged()
+{
+    bool enabled = m_enablePin->getVolt() < 2.5;
+
+    m_enabled = enabled;
+
+    int address = 0;
+    for( int i=0; i<m_addrBits; ++i )
+    {
+        bool state = (m_addrPin[i]->getVolt()>2.5);
+        if( state ) address += pow( 2, i );
+    }
+    m_address = address;
+
+    Simulator::self()->addEvent( m_propDelay, this );
+}
+
+void MuxAnalog::runEvent()
+{
+    for( int i=0; i<m_channels; ++i )
+    {
+        if( m_enabled && (i == m_address) )
+        {
+            if( m_resistor[i]->admit() == 0 )
+                m_resistor[i]->setAdmit( m_admit );
+        }
+        else if( m_resistor[i]->admit() != 0 )
+            m_resistor[i]->setAdmit( 0 );
+    }
+}
+
+double MuxAnalog::resist()
+{
+    return 1/m_admit;
+}
+
+void MuxAnalog::setResist( double r )
+{
+    m_admit = 1/r;
 }
 
 void MuxAnalog::setAddrBits( int bits )

@@ -18,8 +18,10 @@
  ***************************************************************************/
 
 #include "adc.h"
-#include "connector.h"
 #include "itemlibrary.h"
+#include "connector.h"
+#include "simulator.h"
+#include "iopin.h"
 
 static const char* ADC_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Vref")
@@ -42,23 +44,21 @@ LibraryItem* ADC::libraryItem()
 
 ADC::ADC( QObject* parent, QString type, QString id )
    : LogicComponent( parent, type, id )
-   , eADC( id )
+   , eElement( id )
 {
     Q_UNUSED( ADC_properties );
     
     m_width  = 4;
     m_height = 9;
 
-    setNumOuts( 8 );                           // Create Output Pins
+    setNumOuts( 8 );    // Create Output Pins
     setMaxVolt( 5 );
 
     LogicComponent::setNumInps( 1 );
     
-    m_inPin[0] = new Pin( 180, QPoint( -24, -8 ), m_id+"-in", 1, this );
+    m_inPin[0] = new IoPin( 180, QPoint( -24, -8 ), m_id+"-in", 1, this,input );
     m_inPin[0]->setLabelText( " In" );
     m_inPin[0]->setLabelColor( QColor( 0, 0, 0 ) );
-                          
-    eLogicDevice::createInput( m_inPin[0] );
 
     setLabelPos(-16,-80, 0);
 }
@@ -76,23 +76,43 @@ QList<propGroup_t> ADC::propGroups()
     return pg;
 }
 
+void ADC::stamp()
+{
+    eNode* enode = m_inPin[0]->getEnode();
+    if( enode ) enode->voltChangedCallback( this );
+
+    //LogicComponent::stamp();
+}
+
+void ADC::voltChanged()
+{
+    double volt = m_inPin[0]->getVolt();
+    m_nextOutVal = (int)(volt*m_maxValue/m_maxVolt+0.1);
+    m_outStep = 0;
+
+    if( m_outValue != m_nextOutVal )
+        Simulator::self()->addEvent( m_propDelay, this );
+}
+
+void ADC::runEvent()
+{
+    IoComponent::runOutputs();
+}
+
 void ADC::setNumOuts( int outs )
 {
     if( outs == m_numOutputs ) return;
     if( outs < 1 ) return;
 
     LogicComponent::setNumOuts( outs );
-    eLogicDevice::deleteOutputs( m_numOutputs );
 
     for( int i=0; i<outs; ++i )
     {
         QString num = QString::number(outs-i-1);
-        m_outPin[i] = new Pin( 0, QPoint(24,-8*outs+i*8+8 ), m_id+"-out"+num, i, this );
+        m_outPin[i] = new IoPin( 0, QPoint(24,-8*outs+i*8+8 ), m_id+"-out"+num, i, this, output );
 
         m_outPin[i]->setLabelText( "D"+num+" " );
         m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-
-        eLogicDevice::createOutput( m_outPin[i] );
     }
     m_maxValue = pow( 2, m_numOutputs )-1;
 

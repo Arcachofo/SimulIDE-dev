@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include "avrpin.h"
-#include "e-source.h"
+#include "iopin.h"
 
 AvrPin::AvrPin( McuPort* port, int i, QString id, Component* mcu )
       : McuPin( port, i, id, mcu )

@@ -20,13 +20,12 @@
 #ifndef VOLTREG_H
 #define VOLTREG_H
 
-#include "e-volt_reg.h"
-#include "itemlibrary.h"
+#include "component.h"
+#include "e-resistor.h"
 
-#include <QObject>
+class LibraryItem;
 
-
-class MAINMODULE_EXPORT VoltReg : public Component, public eVoltReg
+class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
 {
     Q_OBJECT
     Q_PROPERTY( double Voltage READ vRef WRITE setVRef DESIGNABLE true USER true )
@@ -37,15 +36,26 @@ class MAINMODULE_EXPORT VoltReg : public Component, public eVoltReg
         ~VoltReg();
         
  static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
+ static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
 
-        virtual double vRef() override;
-        virtual void setVRef( double vref ) override;
+        virtual void stamp() override;
+        virtual void initialize() override;
+        virtual void voltChanged() override;
+
+        double vRef();
+        void setVRef( double vref );
         virtual void setUnit( QString un ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+
+    protected:
+        double m_accuracy;
+        double m_vRef;
+        double m_voltPos;
+        double m_voltNeg;
+        double m_lastOut;
 };
 
 

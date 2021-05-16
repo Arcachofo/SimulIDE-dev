@@ -686,6 +686,10 @@ p, li { white-space: pre-wrap; }
         <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -1287,14 +1291,6 @@ Do you want to save your changes?
         <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Rise Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fall Time</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CodeEditor</name>
@@ -1528,24 +1524,12 @@ to DomDocument</source>
 <context>
     <name>DataLaWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Expand</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DataWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Expand</source>
         <translation type="unfinished"></translation>
@@ -2428,6 +2412,61 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>IoComponent</name>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Propagation Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fall Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ItemLibrary</name>
     <message>
         <source>Gates</source>
@@ -2513,6 +2552,10 @@ Do you want to save your changes?
         <source>Arduino</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2592,6 +2635,14 @@ Do you want to save your changes?
         <source>Meters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Treshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LaWidget</name>
@@ -2633,6 +2684,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2876,61 +2931,6 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>LogicComponent</name>
-    <message>
-        <source>Electric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inputs:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Low to High Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High to Low Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input Impedance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outputs:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output High Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Low Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Impedance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Propagation Delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rise Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fall Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LogicInput</name>
     <message>
         <source>Fixed Volt.</source>
@@ -3009,6 +3009,26 @@ Do you want to save your changes?
         <source>Load firmware</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>xml file not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fimware</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuComponent</name>
@@ -3080,6 +3100,10 @@ Do you want to save your changes?
         <source>Open Mcu Monitor.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Chip not Found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuMonitor</name>
@@ -3100,7 +3124,7 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>.data (*.data);;.bin (*.bin);;All files (*.*)</source>
+        <source>All files (*.*);;.data (*.data);;.bin (*.bin)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3259,6 +3283,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Supply Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4534,14 +4562,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rise Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fall Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

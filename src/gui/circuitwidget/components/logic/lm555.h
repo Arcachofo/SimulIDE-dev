@@ -22,18 +22,16 @@
 #ifndef LM555_H
 #define LM555_H
 
-#include "e-lm555.h"
+#include "e-element.h"
 #include "component.h"
 
-#include <QObject>
-
 class LibraryItem;
+class IoPin;
 
-class MAINMODULE_EXPORT Lm555 : public Component, public eLm555
+class MAINMODULE_EXPORT Lm555 : public Component, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-
+    /// Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
 
     public:
 
@@ -42,8 +40,32 @@ class MAINMODULE_EXPORT Lm555 : public Component, public eLm555
         
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
+
+        virtual void stamp() override;
+        virtual void initialize() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override;
         
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+
+    protected:
+
+        IoPin* m_output;
+        IoPin* m_cv;
+        IoPin* m_dis;
+
+        double m_volt;
+        double m_voltLast;
+        double m_voltNeg;
+        double m_voltNegLast;
+        double m_voltHight;
+        double m_voltHightLast;
+        double m_disImp;
+        double m_disImpLast;
+
+        uint64_t m_propDelay;
+
+        bool m_outState;
 };
 
 #endif

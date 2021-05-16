@@ -21,21 +21,11 @@
 #define FLIPFLOPBASE_H
 
 #include "logiccomponent.h"
-#include "e-logic_device.h"
+#include "e-element.h"
 
-class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent, public eLogicDevice
+class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
-
     Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
     Q_PROPERTY( bool   S_R_Inverted   READ srInv     WRITE setSrInv     DESIGNABLE true USER true )
     Q_PROPERTY( Trigger Trigger       READ trigger   WRITE setTrigger   DESIGNABLE true USER true )
@@ -49,8 +39,6 @@ class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent, public eLogicDevic
         bool srInv() { return m_srInv; }
         void setSrInv( bool inv );
 
-        virtual void setTrigger( Trigger trigger );
-
         virtual void stamp() override;
 
     protected:
@@ -59,8 +47,8 @@ class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent, public eLogicDevic
 
         int m_dataPins;
 
-        eSource* m_setPin;
-        eSource* m_resetPin;
+        IoPin* m_setPin;
+        IoPin* m_resetPin;
 };
 
 #endif

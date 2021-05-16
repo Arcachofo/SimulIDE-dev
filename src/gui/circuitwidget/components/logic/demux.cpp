@@ -19,10 +19,11 @@
 
 #include "demux.h"
 #include "circuitwidget.h"
+#include "itemlibrary.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "connector.h"
-#include "pin.h"
+#include "iopin.h"
 
 Component* Demux::construct( QObject* parent, QString type, QString id )
 {
@@ -41,7 +42,7 @@ LibraryItem* Demux::libraryItem()
 
 Demux::Demux( QObject* parent, QString type, QString id )
      : LogicComponent( parent, type, id )
-     , eDemux( id )
+     , eElement( id )
 {
     m_width  = 4;
     m_height = 10;
@@ -72,13 +73,7 @@ Demux::Demux( QObject* parent, QString type, QString id )
     init( pinList );
     m_area = QRect( -(m_width/2)*8-1, -(m_height/2)*8-8-1, m_width*8+2, m_height*8+16+2 );
     
-    eLogicDevice::createOutEnablePin( m_inPin[4] );    // IOutput Enable
-    
-    for( int i=0; i<4; i++ )
-        eLogicDevice::createInput( m_inPin[i] );
-        
-    for( int i=0; i<8; i++ )
-        eLogicDevice::createOutput( m_outPin[i] );
+    m_oePin = m_inPin[4];    // IOutput Enable
 }
 Demux::~Demux(){}
 
@@ -91,6 +86,34 @@ QList<propGroup_t> Demux::propGroups()
     QList<propGroup_t> pg = LogicComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
+}
+
+void Demux::stamp()
+{
+    for( int i=0; i<4; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    ///LogicComponent::stamp();
+}
+
+void Demux::voltChanged()
+{
+    LogicComponent::updateOutEnabled();
+
+    int address = 0;
+
+    if( m_inPin[3]->getInpState() )
+    {
+        for( int i=0; i<3; ++i )
+            if( m_inPin[i]->getInpState() ) address += pow( 2, i );
+
+        m_nextOutVal = 1<<address;
+    }
+    else m_nextOutVal = 0;
+
+    sheduleOutPuts( this );
 }
 
 void Demux::setAddrBits( int bits )

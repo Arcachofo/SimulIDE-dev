@@ -56,8 +56,6 @@ class MAINMODULE_EXPORT ePin
         void stampAdmitance( double data );
         void stampCurrent( double data );
 
-        virtual void setPinState( pinState_t st ) { m_pinState = st; }
-
         void reset();
         
         QString getId();

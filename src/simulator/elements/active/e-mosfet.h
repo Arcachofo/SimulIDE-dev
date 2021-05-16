@@ -22,8 +22,6 @@
 
 #include "e-resistor.h"
 
-class eSource;
-
 class MAINMODULE_EXPORT eMosfet : public eResistor
 {
     public:
@@ -62,8 +60,6 @@ class MAINMODULE_EXPORT eMosfet : public eResistor
         bool m_Sfollow;
         //bool m_converged;
         bool m_firtStage;
-
-        eSource* m_gate;
 };
 
 #endif

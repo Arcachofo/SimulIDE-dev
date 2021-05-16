@@ -22,12 +22,13 @@
 
 #include "twimodule.h"
 #include "component.h"
-#include "itemlibrary.h"
-#include "pin.h"
 
 #define HORI_ADDR_MODE 0
 #define VERT_ADDR_MODE 1
 #define PAGE_ADDR_MODE 2
+
+class LibraryItem;
+class IoPin;
 
 class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 {
@@ -118,8 +119,7 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         bool m_scrollV;
 
         //Inputs
-        Pin m_pinSck;
-        Pin m_pinSda;
+        IoPin* m_pinSda;
         //Pin m_pinRst;
         //Pin m_pinDC;
         //Pin m_pinCS;

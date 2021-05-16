@@ -333,7 +333,7 @@ void Mcu::addPin( QString id, QString type, QString label,
         {
             QString portName = "PORT"+id.mid(1,1);
             McuPort* port = m_eMcu.m_ports.getPort( portName );
-            Pin* pin = port->getPin( pinNum )->pin();
+            McuPin* pin = port->getPin( pinNum );
 
             pin->setPos( QPoint( xpos, ypos ) );
             pin->setPinAngle( angle );

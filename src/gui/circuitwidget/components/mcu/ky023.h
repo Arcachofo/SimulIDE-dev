@@ -24,11 +24,12 @@
 #ifndef KY023_H
 #define KY023_H
 
-#include "e-source.h"
 #include "e-element.h"
 #include "component.h"
-#include "itemlibrary.h"
 #include "joystickwidget.h"
+
+class LibraryItem;
+class IoPin;
 
 class MAINMODULE_EXPORT KY023 : public Component, public eElement
 {
@@ -47,7 +48,6 @@ class MAINMODULE_EXPORT KY023 : public Component, public eElement
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
         
     public slots:
-        virtual void remove() override;
         void onbuttonpressed();
         void onbuttonreleased();
         void onvaluechanged(int xValue, int yValue);
@@ -65,13 +65,9 @@ class MAINMODULE_EXPORT KY023 : public Component, public eElement
         double m_vOutX;
         double m_vOutY;
         
-        Pin* m_vrxpin;
-        Pin* m_vrypin;
-        Pin* m_swpin;
-        
-        eSource* m_vrx;
-        eSource* m_vry;
-        eSource* m_sw;
+        IoPin* m_vrx;
+        IoPin* m_vry;
+        IoPin* m_sw;
 };
 
 #endif

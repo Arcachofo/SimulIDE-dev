@@ -181,7 +181,7 @@ void McuComponent::updatePin( QString id, QString type, QString label, int pos, 
 
         if( id == pinId )
         {
-            pin = mcuPin->pin();
+            pin = mcuPin;
             break;
         }
     }
@@ -251,7 +251,7 @@ void McuComponent::remove()
     Simulator::self()->remFromUpdateList( this );
     for( McuComponentPin* mcupin : m_pinList )
     {
-        Pin* pin = mcupin->pin();
+        Pin* pin = mcupin;
         if( pin->connector() ) pin->connector()->remove();
     }
     terminate();

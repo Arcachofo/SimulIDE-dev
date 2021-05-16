@@ -17,21 +17,25 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "gate.h"
 #include "connector.h"
 #include "circuit.h"
-#include "gate.h"
+#include "iopin.h"
 
 
 Gate::Gate( QObject* parent, QString type, QString id, int inputs )
-    : Component( parent, type, id )
-    , eGate( id )
+    : LogicComponent( parent, type, id )
+    , eElement( id )
 {
     setNumInps( inputs );                           // Create Input Pins
+    m_outPin.resize( 1 );
     
-    m_outputPin = new Pin( 0, QPoint( 16,-8+0*16+8 )
-                          , m_id+"-out", 1, this );
+    m_outPin[0] = new IoPin( 0, QPoint( 16, 0 ), m_id+"-out", 1, this, output );
+    initPin( m_outPin[0] );
                           
-    eLogicDevice::createOutput( m_outputPin );
+    m_tristate = false;
+    m_openCol  = false;
+    m_rndPD = true; // Randomize Propagation Delay
 }
 Gate::~Gate(){}
 
@@ -57,14 +61,55 @@ QList<propGroup_t> Gate::propGroups()
     return {mainGroup, elecGroup, edgeGroup};
 }
 
-void Gate::remove()
+void Gate::stamp()
 {
-    for( int i=0; i<m_numInputs; i++ )
-        if( m_inputPin[i]->connector() ) m_inputPin[i]->connector()->remove();
+    LogicComponent::stamp( this );
 
-    if( m_outputPin->connector() ) m_outputPin->connector()->remove();
-    
-    Component::remove();
+    for( int i=0; i<m_numInputs; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    m_out = false;
+}
+
+void Gate::voltChanged()
+{
+    if( m_tristate ) LogicComponent::updateOutEnabled();
+
+    int  inputs = 0;
+
+    for( int i=0; i<m_numInputs; ++i )
+    {
+        bool state = m_inPin[i]->getInpState();
+        if( state ) inputs++;
+    }
+    bool out = calcOutput( inputs ); // In each gate type
+
+    m_nextOutVal = out? 1:0;
+    if( m_out == out && !m_tristate ) return;
+    m_out = out;
+
+    sheduleOutPuts( this );
+}
+
+bool Gate::calcOutput( int inputs )
+{
+    return (inputs==m_numInputs); // Default for: Buffer, Inverter, And, Nand
+}
+
+bool Gate::tristate() { return m_tristate; }
+
+void Gate::setTristate( bool t ) { m_tristate = t; }
+
+bool Gate::openCol() { return m_openCol; }
+
+void Gate::setOpenCol( bool op )
+{
+    m_openCol = op;
+
+    if( op ) m_outPin[0]->setPinMode( open_col );
+    else     m_outPin[0]->setPinMode( output );
 }
 
 void Gate::setNumInps( int inputs )
@@ -74,22 +119,19 @@ void Gate::setNumInps( int inputs )
 
     for( int i=0; i<m_numInputs; i++ )
     {
-        Pin* pin = m_inputPin[i];
+        IoPin* pin = m_inPin[i];
         if( pin->connector() ) pin->connector()->remove();
         if( pin->scene() ) Circuit::self()->removeItem( pin );
         pin->reset();
         delete pin;
     }
-    eLogicDevice::deleteInputs( m_numInputs );
 
-    m_inputPin.resize( inputs );
+    m_inPin.resize( inputs );
 
     for( int i=0; i<inputs; i++ )
     {
-        m_inputPin[i] = new Pin( 180, QPoint(-8-8,-4*inputs+i*8+4 )
-                               , m_id+"-in"+QString::number(i), i, this );
-
-        eLogicDevice::createInput( m_inputPin[i] );
+        m_inPin[i] = new IoPin( 180, QPoint(-8-8,-4*inputs+i*8+4 )
+                               , m_id+"-in"+QString::number(i), i, this, input );
     }
     m_area = QRect( -20, -4*m_numInputs, 32, 4*2*m_numInputs );
     
@@ -98,7 +140,7 @@ void Gate::setNumInps( int inputs )
 
 void Gate::setInverted( bool inverted )
 {
-    eLogicDevice::setInverted( inverted );
+    LogicComponent::setInverted( inverted );
     Circuit::self()->update();
 }
 

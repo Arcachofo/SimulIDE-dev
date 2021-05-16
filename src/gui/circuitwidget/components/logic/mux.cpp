@@ -18,16 +18,16 @@
  ***************************************************************************/
 
 #include "mux.h"
+#include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "simulator.h"
-#include "e-source.h"
 #include "circuit.h"
 #include "connector.h"
-#include "pin.h"
+#include "iopin.h"
 
 Component* Mux::construct( QObject* parent, QString type, QString id )
 {
-        return new Mux( parent, type, id );
+    return new Mux( parent, type, id );
 }
 
 LibraryItem* Mux::libraryItem()
@@ -42,7 +42,7 @@ LibraryItem* Mux::libraryItem()
 
 Mux::Mux( QObject* parent, QString type, QString id )
    : LogicComponent( parent, type, id )
-   , eMux( id )
+   , eElement( id )
 {
     m_width  = 4;
     m_height = 10;
@@ -74,14 +74,8 @@ Mux::Mux( QObject* parent, QString type, QString id )
     init( pinList );
     m_area = QRect( -(m_width/2)*8-1, -(m_height/2)*8-8-1, m_width*8+2, m_height*8+16+2 );
     
-    eLogicDevice::createOutEnablePin( m_inPin[11] );    // IOutput Enable
-    
-    for( int i=0; i<11; i++ )
-        eLogicDevice::createInput( m_inPin[i] );
-        
-    eLogicDevice::createOutput( m_outPin[0] );
-    eLogicDevice::createOutput( m_outPin[1] );
-    
+    m_oePin = m_inPin[11];    // IOutput Enable
+
 }
 Mux::~Mux(){}
 
@@ -94,6 +88,30 @@ QList<propGroup_t> Mux::propGroups()
     QList<propGroup_t> pg = LogicComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
+}
+
+void Mux::stamp()
+{
+    for( int i=0; i<11; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    LogicComponent::stamp( this );
+}
+
+void Mux::voltChanged()
+{
+    LogicComponent::updateOutEnabled();
+
+    int address = 0;
+
+    for( int i=8; i<11; ++i )
+        if( m_inPin[i]->getInpState() ) address += pow( 2, i-8 );
+
+    bool out = m_inPin[address]->getInpState();
+    m_nextOutVal = out? 1:2;
+    sheduleOutPuts( this );
 }
 
 void Mux::setAddrBits( int bits )
@@ -170,7 +188,7 @@ void Mux::setAddrBits( int bits )
 void Mux::setInvertInps( bool invert )
 {
     m_invInputs = invert;
-    for( int i=0; i<8; ++i ) m_input[i]->setInverted( invert );
+    for( int i=0; i<8; ++i ) m_inPin[i]->setInverted( invert );
 }
 
 QPainterPath Mux::shape() const

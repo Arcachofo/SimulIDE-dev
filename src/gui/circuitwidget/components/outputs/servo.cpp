@@ -18,9 +18,10 @@
  ***************************************************************************/
 
 #include "servo.h"
+#include "itemlibrary.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "e-source.h"
+#include "iopin.h"
 
 static const char* Servo_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Speed")
@@ -43,7 +44,7 @@ LibraryItem* Servo::libraryItem()
 
 Servo::Servo( QObject* parent, QString type, QString id )
      : LogicComponent( parent, type, id )
-     , eLogicDevice( id )
+     , eElement( id )
 {
     Q_UNUSED( Servo_properties );
 
@@ -64,9 +65,7 @@ Servo::Servo( QObject* parent, QString type, QString id )
 
     for( int i=0; i<3;i++ ) m_inPin[i]->setLabelColor( QColor( 250, 250, 200 ) );
 
-    eLogicDevice::createInput( m_inPin[0] );                       // V+
-    eLogicDevice::createInput( m_inPin[1] );                      // Gnd
-    eLogicDevice::createClockPin( m_inPin[2] );           // Input Clock
+    m_clockPin = m_inPin[2];         // Input Clock
 
     m_pos = 90;
     m_speed = 0.2;
@@ -93,13 +92,13 @@ void Servo::stamp()
       & m_inPin[1]->isConnected()
       & m_inPin[2]->isConnected() )
     {
-        eNode* enode = m_input[0]->getEpin(0)->getEnode();  // Gnd pin
+        eNode* enode = m_inPin[0]->getEnode();  // Gnd pin
         if( enode ) enode->voltChangedCallback( this );
 
-        enode = m_input[1]->getEpin(0)->getEnode();         // V+ pin
+        enode = m_inPin[1]->getEnode();         // V+ pin
         if( enode ) enode->voltChangedCallback( this );
 
-        eLogicDevice::stamp();
+        LogicComponent::stamp( this );
     }
 }
 
@@ -109,7 +108,7 @@ void Servo::initialize()
     m_pulseStart = 0;
     m_lastUpdate = Simulator::self()->circTime()/1e6;
     
-    eLogicDevice::initialize();
+    LogicComponent::initState();
 }
 
 void Servo::updateStep()
@@ -135,11 +134,11 @@ void Servo::updateStep()
 
 void Servo::voltChanged()
 {
-    int clkState = eLogicDevice::getClockState();
+    int clkState = LogicComponent::getClockState();
 
     int time_us = Simulator::self()->circTime()/1e6;
     
-    if(!(eLogicDevice::getInputState(0)-eLogicDevice::getInputState(1)))// not power
+    if(!(m_inPin[0]->getInpState()-m_inPin[1]->getInpState()))// not power
     {
         m_targetPos = 90;
         m_pulseStart = 0;
@@ -160,7 +159,6 @@ void Servo::voltChanged()
         else if( m_targetPos<0 )   m_targetPos = 0;
         
         m_pulseStart = 0;
-        //qDebug() << "Servo::voltChanged() m_targetPos" << m_targetPos;
     }
 }
 

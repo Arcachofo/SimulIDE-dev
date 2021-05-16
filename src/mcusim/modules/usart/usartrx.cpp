@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include "usartrx.h"
-#include "e-source.h"
+#include "iopin.h"
 #include "simulator.h"
 
 UartRx::UartRx( UsartModule* usart, QString name )
@@ -87,7 +87,7 @@ void UartRx::processData( uint8_t data )
 
 void UartRx::readBit()
 {
-    bool bit = m_ioPin->getState();
+    bool bit = m_ioPin->getInpState();
 
     if( (m_currentBit == 0) && bit ) return; // Wait for start bit
     if( bit ) m_frame += 1<<m_currentBit;    // Get bit into frame

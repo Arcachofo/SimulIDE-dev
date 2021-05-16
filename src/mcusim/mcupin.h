@@ -20,13 +20,12 @@
 #ifndef MCUPIN_H
 #define MCUPIN_H
 
-#include "e-source.h"
-#include "pin.h"
+#include "iopin.h"
 
 class McuPort;
 class eMcu;
 
-class MAINMODULE_EXPORT McuPin : public eSource
+class MAINMODULE_EXPORT McuPin : public IoPin
 {
     friend class McuPort;
     friend class McuCreator;
@@ -39,16 +38,16 @@ class MAINMODULE_EXPORT McuPin : public eSource
         virtual void stamp() override;
         virtual void voltChanged() override;
 
-        virtual void setState( bool state, bool st=false ) override;
+        virtual void setOutState( bool state, bool st=true ) override;
         virtual void setPortState( bool state );
         void setDirection( bool out );
         void setPullup( bool up );
         void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
 
-        virtual bool getState() override;
+        virtual bool getInpState() override;
 
-        Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
+        ///Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
 
     protected:
         QString m_id;
@@ -57,8 +56,8 @@ class MAINMODULE_EXPORT McuPin : public eSource
 
         int m_number;
 
-        bool m_outState;
-        bool m_inState;
+        //bool m_outState;
+        //bool m_inState;
         bool m_isOut;
         bool m_dirMask; // Pin always output
         bool m_pullup;

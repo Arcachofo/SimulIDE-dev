@@ -21,8 +21,8 @@
 #define KS0108_H
 
 #include "component.h"
-#include "e-source.h"
-#include "pin.h"
+#include "e-element.h"
+#include "iopin.h"
 
 class LibraryItem;
 
@@ -44,7 +44,6 @@ class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void updateStep() override;
-        virtual void remove() override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -99,8 +98,7 @@ class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
         Pin m_pinRW;
         Pin m_pinDC;
         
-        std::vector<Pin*> m_dataPin;
-        std::vector<eSource*> m_dataeSource;
+        std::vector<IoPin*> m_dataPin;
 };
 
 #endif

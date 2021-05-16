@@ -22,9 +22,10 @@
  *                                                                         */
 
 #include "ky040.h"
-#include "pin.h"
+#include "iopin.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "itemlibrary.h"
 
 #define WIDTH 40
 #define HEIGHT 56
@@ -81,43 +82,22 @@ KY040::KY040( QObject* parent, QString type, QString id )
     setLabelPos(-WIDTH/2, -HEIGHT/2 - GAP, 0);
     
     m_pin.resize(3);
-    
-    QString pinid = id;
-    pinid.append(QString("-dt"));
-    QPoint pinpos = QPoint(-4,36);
-    m_dtpin = new Pin( 270, pinpos, pinid, 0, this);
-    m_dtpin->setLabelText( " DT" );
-    m_pin[0] = m_dtpin;
-    
-    pinid.append(QString("-eSource"));
-    m_dt = new eSource( pinid, m_dtpin, output );
-    m_dt->setVoltHigh( VIN );
-    //m_dt->setImp( 40 );
-    
-    pinid = id;
-    pinid.append(QString("-clk"));
-    pinpos = QPoint(4,36);
-    m_clkpin = new Pin( 270, pinpos, pinid, 0, this);
-    m_clkpin->setLabelText( " CLK" );
-    m_pin[1] = m_clkpin;
 
-    pinid.append(QString("-eSource"));
-    m_clk = new eSource( pinid, m_clkpin, output );
-    m_clk->setVoltHigh( VIN );
-    //m_clk->setImp( 40 );
-    
-    pinid = id;
-    pinid.append(QString("-sw"));
-    pinpos = QPoint(-12,36);
-    m_swpin = new Pin( 270, pinpos, pinid, 0, this);
-    m_swpin->setLabelText( " SW" );
-    m_pin[2] = m_swpin;
+    m_dt = new IoPin( 270, QPoint(-4,36), id+"-dt", 0, this, output );
+    m_dt->setOutHighV( VIN );
+    m_dt->setLabelText( " DT" );
+    m_pin[0] = m_dt;
 
-    pinid.append(QString("-eSource"));
-    m_sw = new eSource( pinid, m_swpin, output );
-    m_sw->setVoltHigh( VIN );
-    m_sw->setState( !m_closed );
-    //m_sw->setImp( 40 );
+    m_clk = new IoPin( 270, QPoint(4,36), id+"-clk", 0, this, output );
+    m_clk->setOutHighV( VIN );
+    m_clk->setLabelText( " CLK" );
+    m_pin[1] = m_clk;
+
+    m_sw = new IoPin( 270, QPoint(-12,36), id+"-sw", 0, this, output );
+    m_sw->setOutHighV( VIN );
+    m_sw->setOutState( !m_closed );
+    m_sw->setLabelText( " SW" );
+    m_pin[2] = m_sw;
 
     Simulator::self()->addToUpdateList( this );
     
@@ -138,7 +118,7 @@ void KY040::updateStep()
 {
     if( m_changed )
     {
-        m_sw->setState( !m_closed, true );
+        m_sw->setOutState( !m_closed, true );
         m_changed = false;
     }
 }
@@ -160,8 +140,8 @@ void KY040::runEvent()
             dtOuput  = CCWseq[0][m_seqIndex];
             clkOuput = CCWseq[1][m_seqIndex];
         }
-        m_dt->setState( dtOuput, true );
-        m_clk->setState( clkOuput, true );
+        m_dt->setOutState( dtOuput, true );
+        m_clk->setOutState( clkOuput, true );
 
         m_seqIndex++;
         if( m_seqIndex >= 4 ) m_seqIndex = -1;
@@ -217,14 +197,6 @@ void KY040::posChanged( int value )
                     && value < m_detents-3 ));
     
     m_prevDialVal = value;
-}
-
-void KY040::remove()
-{
-    delete m_sw;
-    delete m_clk;
-    delete m_dt;
-    Component::remove();
 }
 
 void KY040::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

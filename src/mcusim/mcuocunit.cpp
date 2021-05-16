@@ -57,11 +57,11 @@ void McuOcUnit::drivePin( ocAct_t act )
     if( !act ) return;
     bool pinState;
 
-    if     ( act == ocTOGGLE ) pinState = !m_ocPin->getState();
+    if     ( act == ocTOGGLE ) pinState = !m_ocPin->getInpState();
     else if( act == ocCLEAR )  pinState = !m_pinSet;
     else if( act == ocSET )    pinState =  m_pinSet;
 
-    m_ocPin->setState( pinState );
+    m_ocPin->setOutState( pinState );
 }
 
 void McuOcUnit::sheduleEvents( uint32_t ovf, uint8_t countVal )

@@ -67,7 +67,7 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     m_pinEn.setLabelText(  " En" );
     
     m_dataPin.resize( 8 );
-    m_dataeSource.resize( 8 );
+    m_dataPin.resize( 8 );
     m_pin.resize( 14 );
     
     int pinY = 56;
@@ -75,13 +75,10 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     for( int i=0; i<8; i++ )
     {
         QString pinId = id+"-dataPin"+QString::number(i);
-        m_dataPin[i] = new Pin( 270, QPoint(-32+(7-i)*8, pinY), pinId , 0, this );
+        m_dataPin[i] = new IoPin( 270, QPoint(-32+(7-i)*8, pinY), pinId , 0, this, input );
         m_dataPin[i]->setLabelText( " D"+QString::number(i) );
+        m_dataPin[i]->setOutHighV( 5 );
         m_pin[i] = m_dataPin[i];
-
-        pinId.append(QString("-eSource"));
-        m_dataeSource[i] = new eSource( pinId, m_dataPin[i], input );
-        m_dataeSource[i]->setVoltHigh( 5 );
     }
     m_pin[8]  = &m_pinRst;
     m_pin[9]  = &m_pinCs2;
@@ -101,7 +98,11 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     
     initialize();
 }
-Ks0108::~Ks0108(){}
+Ks0108::~Ks0108()
+{
+    delete m_pdisplayImg;
+    Simulator::self()->remFromUpdateList( this );
+}
 
 QList<propGroup_t> Ks0108::propGroups()
 {
@@ -139,8 +140,8 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
         
         for( int i=0; i<8; i++ ) 
         {
-            if( Write )m_dataeSource[i]->setPinMode( input );
-            else       m_dataeSource[i]->setPinMode( output );
+            if( Write ) m_dataPin[i]->setPinMode( input );
+            else        m_dataPin[i]->setPinMode( output );
         }
     }
     bool Scl = (m_pinEn.getVolt()>2.5);
@@ -163,14 +164,10 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
     m_input = 0;
     if( Write )
     {
-        //qDebug()<<"Reading "<<m_input;
         for( int pin=0; pin<8; pin++ )                     // Read input
-            if( m_dataPin[pin]->getVolt()>2.5 )
-            {
-                //qDebug()<<pin<<pow( 2, pin );
-                m_input += pow( 2, pin );
-            }
-            //qDebug()<<"Data =  "<<m_input;
+        {
+            if( m_dataPin[pin]->getVolt()>2.5 )  m_input += pow( 2, pin );
+        }
     }
     
     m_Cs1 =  (m_pinCs1.getVolt()>2.5);               // Half 1 selected?
@@ -191,8 +188,8 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
     }
     else                                                      // Command
     {
-        if( Write )proccessCommand( m_input );          // Write Command
-        else       ReadStatus();                          // Read Status
+        if( Write ) proccessCommand( m_input );          // Write Command
+        else        ReadStatus();                          // Read Status
     }
 }
 
@@ -201,11 +198,10 @@ void Ks0108::ReadData()
     int data = 0;
     if( m_Cs1 ) data = m_aDispRam[m_addrX1][m_addrY1];
     if( m_Cs2 ) data = m_aDispRam[m_addrX2][m_addrY2+64];
-    //qDebug() << "Ks0108::ReadData()" << data;
+
     for( int i=0; i<8; i++ )
     {
-        //qDebug() << "Ks0108::ReadData()" << i<<(data & 1)<<((data & 1)==1);
-        m_dataeSource[i]->setState( ((data & 1)==1), true );
+        m_dataPin[i]->setOutState( ((data & 1)==1), true );
         data >>= 1;
     }
 }
@@ -219,23 +215,14 @@ void Ks0108::ReadStatus()
         if     ( i == 4 ) out = m_reset;
         else if( i == 5 ) out = !m_dispOn;
         
-        m_dataeSource[i]->setState( out, true );
+        m_dataPin[i]->setOutState( out, true );
     }
 }
 
 void Ks0108::writeData( int data )
 {
-    //qDebug() << "Ks0108::writeData "<<data <<m_Cs1<<m_Cs2;
-    if( m_Cs1 ) 
-    {
-        //qDebug() << "Ks0108::writeData 1  "<<m_addrX1 <<m_addrY1<<data;
-        m_aDispRam[m_addrX1][m_addrY1]    = data;  // Write Half 1 
-    }
-    if( m_Cs2 ) 
-    {
-        //qDebug() << "Ks0108::writeData 2  "<<m_addrX2 <<m_addrY2<<data;
-        m_aDispRam[m_addrX2][m_addrY2+64] = data;  // Write Half 2 
-    }
+    if( m_Cs1 ) m_aDispRam[m_addrX1][m_addrY1]    = data;  // Write Half 1
+    if( m_Cs2 ) m_aDispRam[m_addrX2][m_addrY2+64] = data;  // Write Half 2
     incrementPointer();
 }
 
@@ -256,14 +243,12 @@ void Ks0108::dispOn( int state )
 
 void Ks0108::setYaddr( int addr )
 {
-    //qDebug() << "Ks0108::setYaddr "<<addr <<m_Cs1<<m_Cs2;
     if( m_Cs1 ) m_addrY1  = addr ;
     if( m_Cs2 ) m_addrY2  = addr ;
 }
 
 void Ks0108::setXaddr( int addr )
 {
-    //qDebug() << "Ks0108::setXaddr "<<addr <<m_Cs1<<m_Cs2;
     if( m_Cs1 ) m_addrX1  = addr ;
     if( m_Cs2 ) m_addrX2  = addr ;
 }
@@ -290,28 +275,12 @@ void Ks0108::incrementPointer()
     if( m_Cs1 )
     {
         m_addrY1++;
-        if( m_addrY1 > 63 )
-        {
-            m_addrY1 = 0;
-            //m_addrX++;
-        }
-        /*if( m_addrX > 7 ) 
-        {
-            m_addrX = 0;
-        }*/
+        if( m_addrY1 > 63 )m_addrY1 = 0;
     }
     if( m_Cs2 )
     {
         m_addrY2++;
-        if( m_addrY2 > 63 )
-        {
-            m_addrY2 = 0;
-            //m_addrX++;
-        }
-        /*if( m_addrX > 7 ) 
-        {
-            m_addrX = 0;
-        }*/
+        if( m_addrY2 > 63 )m_addrY2 = 0;
     }
 }
 
@@ -324,16 +293,6 @@ void Ks0108::reset()
     m_startLin = 0;
     m_dispOn = false;
     m_reset = true;
-}
-
-void Ks0108::remove()
-{
-    for( int i=0; i<8; i++ ) delete m_dataeSource[i];
-    
-    delete m_pdisplayImg;
-    Simulator::self()->remFromUpdateList( this );
-    
-    Component::remove();
 }
 
 void Ks0108::updateStep()

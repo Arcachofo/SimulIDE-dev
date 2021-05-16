@@ -17,9 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
-
-#include "simulator.h"
 #include "aip31068_i2c.h"
+#include "itemlibrary.h"
+#include "simulator.h"
+#include "iopin.h"
 #include "utils.h"
 
 static const char* Aip31068_i2c_properties[] = {
@@ -43,7 +44,7 @@ LibraryItem* Aip31068_i2c::libraryItem()
 
 Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
             : Hd44780_Base( parent, type, id )
-            , eI2CSlave( id )
+            , TwiModule( id )
 {
     Q_UNUSED( Aip31068_i2c_properties );
 
@@ -51,16 +52,13 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
 
     m_pin.resize( 2 );
 
-    m_pinSDA = new Pin( 270, QPoint(16, 8), id+"PinSDA", 0, this );
-    m_pinSCL = new Pin( 270, QPoint(24, 8), id+"PinSCL", 0, this );
+    m_pinSDA = new IoPin( 270, QPoint(16, 8), id+"PinSDA", 0, this, open_col );
     m_pinSDA->setLabelText( " SDA" );
-    m_pinSCL->setLabelText( " SCL" );
-
     m_pin[0] = m_pinSDA;
-    m_pin[1] = m_pinSCL;
 
-    eLogicDevice::createInput( m_pinSDA );
-    eLogicDevice::createClockPin( m_pinSCL );
+    m_clockPin = new IoPin( 270, QPoint(24, 8), id+"PinSCL", 0, this, open_col );
+    m_clockPin->setLabelText( " SCL" );
+    m_pin[1] = m_clockPin;
 
     Simulator::self()->addToUpdateList( this );
     
@@ -82,8 +80,8 @@ void Aip31068_i2c::updateStep() { update(); }
 
 void Aip31068_i2c::initialize()
 {
-    m_enabled = true;
-    eI2CSlave::initialize();
+    /// m_enabled = true;
+    TwiModule::initialize();
 
     m_controlByte = 0;
     m_phase = 3;
@@ -93,9 +91,9 @@ void Aip31068_i2c::initialize()
 
 void Aip31068_i2c::voltChanged()             // Called when clock Pin changes
 {
-    eI2CSlave::voltChanged();
+    TwiModule::voltChanged();
 
-    if( m_state == I2C_STOPPED ) m_phase = 3;
+    if( m_i2cState == I2C_STOP ) m_phase = 3;
 }
 
 void Aip31068_i2c::startWrite()
@@ -113,13 +111,13 @@ void Aip31068_i2c::readByte()
     else if( m_phase == 1 )
     {
         m_phase++;
-        int data = eI2CSlave::byteReceived();
+        int data = TwiModule::byteReceived();
         int rs = m_controlByte & 0x40;
 
         if( rs ) writeData(data);
         else     proccessCommand(data);
     }
-    eI2CSlave::readByte();
+    TwiModule::readByte();
 }
 
 int Aip31068_i2c::cCode()
@@ -135,7 +133,7 @@ void Aip31068_i2c::setCcode( int code )
 void Aip31068_i2c::showPins( bool show )
 {
     m_pinSDA->setVisible( show );
-    m_pinSCL->setVisible( show );
+    m_clockPin->setVisible( show );
 }
 
 void Aip31068_i2c::remove()

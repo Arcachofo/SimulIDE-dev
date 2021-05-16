@@ -19,10 +19,11 @@
 
 #include "dectobcd.h"
 #include "circuit.h"
+#include "itemlibrary.h"
 
 Component* DecToBcd::construct( QObject* parent, QString type, QString id )
 {
-        return new DecToBcd( parent, type, id );
+    return new DecToBcd( parent, type, id );
 }
 
 LibraryItem* DecToBcd::libraryItem()
@@ -37,10 +38,13 @@ LibraryItem* DecToBcd::libraryItem()
 
 DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eDecToBcd( id )
+        , eElement( id )
 {
     m_width  = 4;
     m_height = 10;
+
+    m_16Bits = false;
+    m_bits = 10;
 
     QStringList pinList;
 
@@ -71,11 +75,9 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    eLogicDevice::createOutEnablePin( m_inPin[15] );    // IOutput Enable
+    m_oePin = m_inPin[15];    // Output Enable
 
-    for( int i=0; i<15; ++i ) eLogicDevice::createInput( m_inPin[i] );
     for( int i=9; i<15; ++i ) m_inPin[i]->setVisible( false );
-    for( int i=0; i<4; ++i ) eLogicDevice::createOutput( m_outPin[i] );
 }
 DecToBcd::~DecToBcd(){}
 
@@ -90,6 +92,32 @@ QList<propGroup_t> DecToBcd::propGroups()
     return pg;
 }
 
+void DecToBcd::stamp()
+{
+    for( int i=0; i<15; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    LogicComponent::stamp( this);
+}
+
+void DecToBcd::voltChanged()
+{
+    LogicComponent::updateOutEnabled();
+
+    int i;
+    for( i=m_bits-2; i>=0; --i )
+        if( m_inPin[i]->getInpState() ) break;
+
+    m_nextOutVal = i+1;
+    sheduleOutPuts( this );
+}
+
+void DecToBcd::runEvent()
+{
+    IoComponent::runOutputs();
+}
 
 bool DecToBcd::_16bits()
 {
@@ -99,6 +127,9 @@ bool DecToBcd::_16bits()
 void DecToBcd::set_16bits( bool set )
 {
     m_16Bits = set;
+
+    if( m_16Bits ) m_bits = 16;
+    else           m_bits = 10;
 
     int height = m_height;
     if( set )

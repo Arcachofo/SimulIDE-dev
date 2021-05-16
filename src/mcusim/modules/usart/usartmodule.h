@@ -36,7 +36,7 @@ enum parity_t{
     parODD,
 };
 
-class eSource;
+class IoPin;
 class UartTR;
 
 class MAINMODULE_EXPORT UsartModule
@@ -92,13 +92,13 @@ class MAINMODULE_EXPORT UartTR : public eElement
 
         state_t state() { return m_state; }
 
-        void setPin( eSource* pin ) { m_ioPin = pin; }
+        void setPin( IoPin* pin ) { m_ioPin = pin; }
 
         RegSignal<uint8_t> on_dataEnd;
 
     protected:
         UsartModule* m_usart;
-        eSource* m_ioPin;
+        IoPin* m_ioPin;
 
         uint16_t m_frame;
         uint8_t m_framesize;

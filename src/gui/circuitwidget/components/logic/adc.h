@@ -21,19 +21,13 @@
 #define ADC_H
 
 #include "logiccomponent.h"
-#include "e-adc.h"
+#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT ADC : public LogicComponent, public eADC
+class MAINMODULE_EXPORT ADC : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V  READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V   READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped   READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
     Q_PROPERTY( double Vref        READ maxVolt    WRITE setMaxVolt    DESIGNABLE true USER true )
     Q_PROPERTY( int    Num_Bits    READ numOuts    WRITE setNumOuts    DESIGNABLE true USER true )
 
@@ -41,14 +35,26 @@ class MAINMODULE_EXPORT ADC : public LogicComponent, public eADC
         ADC( QObject* parent, QString type, QString id );
         ~ADC();
 
- static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
+        static Component* construct( QObject* parent, QString type, QString id );
+        static LibraryItem *libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
+
+        double maxVolt()               { return m_maxVolt; }
+        void setMaxVolt( double volt ) { m_maxVolt = volt; }
+
+        double maxValue()               { return m_maxValue; }
+        void setMaxValue( double volt ) { m_maxValue = volt; }
+
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override;
 
         virtual void setNumOuts( int outs );
         
     protected:
+        double m_maxVolt;
+        double m_maxValue;
 };
 
 #endif

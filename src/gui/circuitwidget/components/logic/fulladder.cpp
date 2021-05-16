@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "fulladder.h"
+#include "itemlibrary.h"
 
 Component* FullAdder::construct(QObject *parent, QString type, QString id)
 {
@@ -36,7 +37,7 @@ LibraryItem* FullAdder::libraryItem()
 
 FullAdder::FullAdder(QObject *parent, QString type, QString id) 
           : LogicComponent( parent, type, id )
-          , eFullAdder( id )
+          , eElement( id )
 {
     m_width  = 3;
     m_height = 4;
@@ -45,19 +46,43 @@ FullAdder::FullAdder(QObject *parent, QString type, QString id)
     pinList
         << "IL01 A"
         << "IL03 B"
-        
         << "IR01Ci "
 
         // Outputs:
-
         << "OR02S "
         << "OR03Co "
         ;
     init( pinList );
-    
-    for( int i=0; i<m_numInPins; ++i )  eLogicDevice::createInput( m_inPin[i] );
-    for( int i=0; i<m_numOutPins; ++i ) eLogicDevice::createOutput( m_outPin[i] );
 }
 FullAdder::~FullAdder(){}
 
+void FullAdder::stamp()
+{
+    for( int i=0; i<m_numInputs; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    LogicComponent::stamp( this );
+}
+
+void FullAdder::voltChanged()
+{
+    bool X  = m_inPin[0]->getInpState();
+    bool Y  = m_inPin[1]->getInpState();
+    bool Ci = m_inPin[2]->getInpState();
+
+    bool sum = (X ^ Y) ^ Ci;                    // Sum
+    bool co  = (X & Ci) | (Y & Ci) | (X & Y);   // Carry out
+
+    m_nextOutVal = 0;
+    if( sum ) m_nextOutVal += 1;
+    if( co  ) m_nextOutVal += 2;
+    sheduleOutPuts( this );
+}
+
+void FullAdder::runEvent()
+{
+    IoComponent::runOutputs();
+}
 #include "moc_fulladder.cpp"

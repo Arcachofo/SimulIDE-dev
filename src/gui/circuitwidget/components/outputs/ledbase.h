@@ -21,9 +21,7 @@
 #define LEDBASE_H
 
 #include "e-led.h"
-#include "e-source.h"
 #include "component.h"
-//#include <QWidget>
 #include <QColor>
 
 class MAINMODULE_EXPORT LedBase : public Component, public eLed

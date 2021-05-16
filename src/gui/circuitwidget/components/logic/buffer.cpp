@@ -20,6 +20,7 @@
 #include "buffer.h"
 #include "itemlibrary.h"
 #include "connector.h"
+#include "iopin.h"
 
 Component* Buffer::construct( QObject* parent, QString type, QString id )
 {
@@ -41,8 +42,8 @@ Buffer::Buffer( QObject* parent, QString type, QString id )
 {
     m_area = QRect( -19, -17, 38, 34 ); 
     
-    m_outEnPin = new Pin( 90, QPoint( 0,-12 ), m_id+"-ePin-outEnable", 0, this );
-    eLogicDevice::createOutEnablePin( m_outEnPin );
+    m_outEnPin = new IoPin( 90, QPoint( 0,-12 ), m_id+"-ePin-outEnable", 0, this, input );
+    ///eLogicDevice::createOutEnablePin( m_outEnPin );
     
     setTristate( false );
 }
@@ -67,15 +68,7 @@ void Buffer::setTristate( bool t )
     }
     m_outEnPin->setVisible( t );
     m_tristate = t;
-    eLogicDevice::updateOutEnabled();
-}
-
-void Buffer::remove()
-{
-    if( m_tristate )
-        if( m_outEnPin->connector() ) m_outEnPin->connector()->remove();
-    
-    Gate::remove();
+    LogicComponent::updateOutEnabled();
 }
 
 QPainterPath Buffer::shape() const

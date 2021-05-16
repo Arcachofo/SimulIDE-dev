@@ -20,24 +20,15 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#include "itemlibrary.h"
 #include "logiccomponent.h"
-#include "e-memory.h"
+#include "e-element.h"
 #include "memdata.h"
 
+class LibraryItem;
 
-class MAINMODULE_EXPORT Memory : public LogicComponent, public eMemory, public MemData
+class MAINMODULE_EXPORT Memory : public LogicComponent, public eElement, public MemData
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps    READ propDelay  WRITE setPropDelay  DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tr_ps     READ riseTime   WRITE setRiseTime   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tf_ps     READ fallTime   WRITE setFallTime   DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
     Q_PROPERTY( QVector<int> Mem  READ mem        WRITE setMem )
     Q_PROPERTY( int  Address_Bits READ addrBits   WRITE setAddrBits   DESIGNABLE true USER true )
     Q_PROPERTY( int  Data_Bits    READ dataBits   WRITE setDataBits   DESIGNABLE true USER true )
@@ -48,19 +39,31 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public eMemory, public M
         ~Memory();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
 
         virtual void updateStep() override;
+        virtual void stamp() override;
+        virtual void initialize() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override;
 
+        void setMem( QVector<int> m );
+        QVector<int> mem();
+
+        int addrBits(){ return m_addrBits; }
         void setAddrBits( int bits );
         void deleteAddrBits( int bits );
         void createAddrBits( int bits );
 
+        int dataBits(){ return m_dataBits; }
         void setDataBits( int bits );
         void deleteDataBits( int bits );
         void createDataBits( int bits );
+
+        bool persistent() { return m_persistent; }
+        void setPersistent( bool p ){ m_persistent = p; }
 
         void updatePins();
 
@@ -76,9 +79,21 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public eMemory, public M
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
         
     private:
-        Pin* m_CsPin;
-        Pin* m_WePin;
-        Pin* m_outEnPin;
+        int m_addrBits;
+        int m_dataBits;
+        int m_dataBytes;
+        int m_address;
+
+        QVector<int> m_ram;
+
+        bool m_we;
+        bool m_cs;
+        bool m_oe;
+        bool m_read;
+        bool m_persistent;
+
+        IoPin* m_CsPin;
+        IoPin* m_WePin;
 };
 
 #endif

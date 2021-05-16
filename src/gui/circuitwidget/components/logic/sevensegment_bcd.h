@@ -20,12 +20,12 @@
 #ifndef SEVENSEGMENTBCD_H
 #define SEVENSEGMENTBCD_H
 
-#include "itemlibrary.h"
 #include "logiccomponent.h"
-#include "e-bcdto7s.h"
+#include "e-element.h"
 
+class LibraryItem;
 
-class MAINMODULE_EXPORT SevenSegmentBCD : public LogicComponent, public eBcdTo7S
+class MAINMODULE_EXPORT SevenSegmentBCD : public LogicComponent, public eElement
 {
     Q_OBJECT
 
@@ -34,21 +34,17 @@ class MAINMODULE_EXPORT SevenSegmentBCD : public LogicComponent, public eBcdTo7S
         ~SevenSegmentBCD();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
 
-        void initialize() override;
         void updateStep() override;
-        void stamp() override;
-
-        void remove() override;
         
         void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     private:
-        int m_origx;
-        int m_origy;
+        //int m_origx;
+        //int m_origy;
 };
 
 #endif

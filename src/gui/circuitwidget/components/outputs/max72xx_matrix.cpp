@@ -17,10 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "max72xx_matrix.h"
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
-#include "max72xx_matrix.h"
+#include "iopin.h"
 
 static const char* Max72xx_matrix_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","NumDisplays")
@@ -42,8 +43,8 @@ LibraryItem* Max72xx_matrix::libraryItem()
 }
 
 Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
-         : Component( parent, type, id )
-         , eLogicDevice( (id+"-eElement") )
+              : LogicComponent( parent, type, id )
+              , eElement( id )
 {
     Q_UNUSED( Max72xx_matrix_properties );
 
@@ -53,9 +54,9 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
 
     m_area = QRectF(-36, -44, 4+64*m_numDisplays+4, 88 );
 
-    m_pinCS = new Pin( 270, QPoint(-12, 52), id+"PinCS", 0, this );
+    m_pinCS  = new Pin( 270, QPoint(-12, 52), id+"PinCS", 0, this );
     m_pinDin = new Pin( 270, QPoint(-20, 52), id+"PinDin", 0, this );
-    m_pinSck = new Pin( 270, QPoint(-28, 52), id+"PinSck", 0, this );
+    m_pinSck = new IoPin( 270, QPoint(-28, 52), id+"PinSck", 0, this, input );
 
     m_pinCS->setLabelText(  " CS" );
     m_pinDin->setLabelText( " DIN" );
@@ -66,9 +67,7 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     m_pin[1] = m_pinDin;
     m_pin[2] = m_pinSck;
 
-    eLogicDevice::createInput( m_pinCS );
-    eLogicDevice::createInput( m_pinDin );
-    eLogicDevice::createClockPin( m_pinSck );
+    eClockedDevice::setClockPin( m_pinSck );
 
     Simulator::self()->addToUpdateList( this );
 
@@ -124,7 +123,7 @@ void Max72xx_matrix::voltChanged()
         m_inDisplay = 0;
         return;
     }
-    if( eLogicDevice::getClockState() != Clock_Rising ) return;
+    if( eClockedDevice::getClockState() != Clock_Rising ) return;
 
     m_rxReg &= ~1;
 

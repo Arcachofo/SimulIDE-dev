@@ -20,12 +20,12 @@
 #ifndef SERVO_H
 #define SERVO_H
 
-#include "e-logic_device.h"
-#include "itemlibrary.h"
 #include "logiccomponent.h"
+#include "e-element.h"
 
+class LibraryItem;
 
-class MAINMODULE_EXPORT Servo : public LogicComponent, public eLogicDevice
+class MAINMODULE_EXPORT Servo : public LogicComponent, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( double Speed   READ speed    WRITE setSpeed    DESIGNABLE true USER true )

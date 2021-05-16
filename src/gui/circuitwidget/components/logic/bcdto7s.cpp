@@ -18,8 +18,29 @@
  ***************************************************************************/
 
 #include "bcdto7s.h"
+#include "itemlibrary.h"
 #include "simulator.h"
-#include "pin.h"
+#include "iopin.h"
+
+const uint8_t BcdTo7S::m_values[]={
+        0b00111111,
+        0b00000110,
+        0b01011011,
+        0b01001111,
+        0b01100110,
+        0b01101101,
+        0b01111101,
+        0b00000111,
+        0b01111111,
+        0b01101111,
+        0b01110111,
+        0b01111100,
+        0b00111001,
+        0b01011110,
+        0b01111001,
+        0b01110001,
+        0b00000000
+};
 
 Component* BcdTo7S::construct( QObject* parent, QString type, QString id )
 {
@@ -38,7 +59,7 @@ LibraryItem* BcdTo7S::libraryItem()
 
 BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
        : LogicComponent( parent, type, id )
-       , eBcdTo7S( id )
+       , eElement( id )
 {
     m_width  = 4;
     m_height = 8;
@@ -65,10 +86,7 @@ BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    eLogicDevice::createOutEnablePin( m_inPin[4] );    // IOutput Enable
-
-    for( int i=0; i<4; ++i ) eLogicDevice::createInput( m_inPin[i] );
-    for( int i=0; i<7; ++i ) eLogicDevice::createOutput( m_outPin[i] );
+    m_oePin = m_inPin[4];    // IOutput Enable
 }
 BcdTo7S::~BcdTo7S(){}
 
@@ -84,10 +102,38 @@ QList<propGroup_t> BcdTo7S::propGroups()
 
 void BcdTo7S::stamp()
 {
-    eBcdTo7S::stamp();
+    for( int i=0; i<4; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    m_nextOutVal = m_values[0];
+    m_changed = true;
 
     uint8_t value = m_values[0];
-    for( int i=0; i<7; ++i ) setOut( i, value & (1<<i) );
+    for( int i=0; i<7; ++i ) m_outPin[i]->setOutState( value & (1<<i) );
+}
+
+void BcdTo7S::voltChanged()
+{
+    LogicComponent::updateOutEnabled();
+
+    m_changed = true;
+
+    bool a = m_inPin[0]->getInpState();
+    bool b = m_inPin[1]->getInpState();
+    bool c = m_inPin[2]->getInpState();
+    bool d = m_inPin[3]->getInpState();
+
+    int digit = a*1+b*2+c*4+d*8;
+    m_nextOutVal = m_values[digit];
+
+    if( m_numOutputs ) sheduleOutPuts( this );
+}
+
+void BcdTo7S::runEvent()
+{
+    IoComponent::runOutputs();
 }
 
 #include "moc_bcdto7s.cpp"

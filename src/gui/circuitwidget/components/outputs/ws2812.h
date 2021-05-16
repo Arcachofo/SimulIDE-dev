@@ -20,11 +20,13 @@
 #ifndef WS2812_H
 #define WS2812_H
 
-#include "e-logic_device.h"
+#include "e-clocked_device.h"
+#include "e-element.h"
 #include "component.h"
-#include "itemlibrary.h"
 
-class MAINMODULE_EXPORT WS2812 : public Component, public eLogicDevice
+class LibraryItem;
+
+class MAINMODULE_EXPORT WS2812 : public Component, public eElement, public eClockedDevice
 {
     Q_OBJECT
     Q_PROPERTY( int Rows READ rows WRITE setRows DESIGNABLE true USER true )
@@ -74,6 +76,8 @@ class MAINMODULE_EXPORT WS2812 : public Component, public eLogicDevice
 
         std::vector<int> m_rgb;
         std::vector<QColor> m_led;
+
+        IoPin* m_output;
 };
 
 #endif

@@ -20,17 +20,14 @@
 #ifndef DAC_H
 #define DAC_H
 
-#include "itemlibrary.h"
 #include "logiccomponent.h"
-#include "e-dac.h"
+#include "e-element.h"
 
-class MAINMODULE_EXPORT DAC : public LogicComponent, public eDAC
+class LibraryItem;
+
+class MAINMODULE_EXPORT DAC : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
     Q_PROPERTY( double Vref         READ maxVolt    WRITE setMaxVolt    DESIGNABLE true USER true )
     Q_PROPERTY( int    Num_Bits     READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
 
@@ -38,14 +35,28 @@ class MAINMODULE_EXPORT DAC : public LogicComponent, public eDAC
         DAC( QObject* parent, QString type, QString id );
         ~DAC();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem *libraryItem();
         
         virtual QList<propGroup_t> propGroups() override;
+
+        double maxVolt()               { return m_maxVolt; }
+        void setMaxVolt( double volt ) { m_maxVolt = volt; }
+
+        double maxValue()               { return m_maxValue; }
+        void setMaxValue( double volt ) { m_maxValue = volt; }
+
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override;
 
         virtual void setNumInps( int inputs );
         
     protected:
+        double m_maxVolt;
+        double m_maxValue;
+
+        int m_value;
 };
 
 #endif

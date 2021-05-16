@@ -20,23 +20,14 @@
 #ifndef SHIFTREG_H
 #define SHIFTREG_H
 
-#include "e-shiftreg.h"
-#include "itemlibrary.h"
 #include "logiccomponent.h"
+#include "e-element.h"
 
-class MAINMODULE_EXPORT ShiftReg : public LogicComponent, public eShiftReg
+class LibraryItem;
+
+class MAINMODULE_EXPORT ShiftReg : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
-
     Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
     Q_PROPERTY( bool   Reset_Inverted READ resetInv  WRITE setResetInv  DESIGNABLE true USER true )
     Q_PROPERTY( bool   Tristate       READ tristate                                     USER true )
@@ -50,7 +41,17 @@ class MAINMODULE_EXPORT ShiftReg : public LogicComponent, public eShiftReg
 
         virtual QList<propGroup_t> propGroups() override;
 
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override{ IoComponent::runOutputs(); }
+
+        bool resetInv() { return m_resetInv; }
+        void setResetInv( bool inv );
+
         bool tristate() { return true; }
+
+    private:
+        bool m_resetInv;
 };
 
 #endif

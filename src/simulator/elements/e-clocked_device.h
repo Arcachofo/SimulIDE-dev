@@ -20,7 +20,6 @@
 #ifndef ECLOCKEDDEVICE_H
 #define ECLOCKEDDEVICE_H
 
-#include "e-element.h"
 
 enum trigtType_t{
     Trig_None = 0,
@@ -36,42 +35,34 @@ enum clkState_t{
     Clock_Falling,
 };
 
-class eSource;
+class eElement;
+class IoPin;
 
-class MAINMODULE_EXPORT eClockedDevice : public eElement
+class MAINMODULE_EXPORT eClockedDevice
 {
     public:
-        eClockedDevice( QString id );
+        eClockedDevice();
         ~eClockedDevice();
+
+        void initState();
+        void stamp( eElement* el );
 
         int eTrigger() { return m_etrigger; }
         virtual void seteTrigger( int trigger );
 
-        void setClockPin( eSource* clockSource ) { m_clockSource = clockSource; }
-        void createClockPin();
+        void setClockPin( IoPin* clockPin ) { m_clockPin = clockPin; }
 
         bool clockInv();
         void setClockInv( bool inv );
 
-        virtual void stamp() override;
-
-        void callBack( bool en );
-
         clkState_t getClockState();
 
     protected:
-        void createClockPin( ePin* epin );
-        void createClockeSource( ePin* epin );
-
         bool m_clock;
 
-        int m_etrigger;
+        trigtType_t m_etrigger;
 
-        double m_inputImp;
-        double m_inputHighV;
-        double m_inputLowV;
-
-        eSource* m_clockSource;
+        IoPin* m_clockPin;
 };
 
 #endif

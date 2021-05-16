@@ -22,9 +22,10 @@
  *                                                                         */
 
 #include "ky023.h"
-#include "pin.h"
+#include "iopin.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "itemlibrary.h"
 
 #define WIDTH 40
 #define HEIGHT 56
@@ -70,42 +71,21 @@ KY023::KY023( QObject* parent, QString type, QString id )
     setLabelPos(-WIDTH/2, -HEIGHT/2 - GAP, 0);
     
     m_pin.resize(3);
-    
-    QString pinid = id;
-    pinid.append(QString("-vrx"));
-    QPoint pinpos = QPoint(-12,36);
-    m_vrxpin = new Pin( 270, pinpos, pinid, 0, this);
-    m_vrxpin->setLabelText( " VRX" );
-    m_pin[0] = m_vrxpin;
-    
-    pinid.append(QString("-eSource"));
-    m_vrx = new eSource( pinid, m_vrxpin, output );
-    m_vrx->setVoltHigh( VIN );
-    //m_vrx->setImp( 40 );
-    
-    pinid = id;
-    pinid.append(QString("-vry"));
-    pinpos = QPoint(-4,36);
-    m_vrypin = new Pin( 270, pinpos, pinid, 0, this);
-    m_vrypin->setLabelText( " VRY" );
-    m_pin[1] = m_vrypin;
 
-    pinid.append(QString("-eSource"));
-    m_vry = new eSource( pinid, m_vrypin, output );
-    m_vry->setVoltHigh( VIN );
-    //m_vry->setImp( 40 );
-    
-    pinid = id;
-    pinid.append(QString("-sw"));
-    pinpos = QPoint(4,36);
-    m_swpin = new Pin( 270, pinpos, pinid, 0, this);
-    m_swpin->setLabelText( " SW" );
-    m_pin[2] = m_swpin;
+    m_vrx = new IoPin( 270, QPoint(-12,36), id+"-vrx", 0, this, output );
+    m_vrx->setOutHighV( VIN );
+    m_vrx->setLabelText( " VRX" );
+    m_pin[0] = m_vrx;
 
-    pinid.append(QString("-eSource"));
-    m_sw = new eSource( pinid, m_swpin, output );
-    m_sw->setVoltHigh( VIN );
-    //m_sw->setImp( 40 );
+    m_vry = new IoPin( 270, QPoint(-4,36), id+"-vry", 0, this, output );
+    m_vry->setOutHighV( VIN );
+    m_vry->setLabelText( " VRY" );
+    m_pin[1] = m_vry;
+
+    m_sw = new IoPin( 270, QPoint(4,36), id+"-sw", 0, this, output );
+    m_sw->setOutHighV( VIN );
+    m_sw->setLabelText( " SW" );
+    m_pin[2] = m_sw;
     
     Simulator::self()->addToUpdateList( this );
     
@@ -148,25 +128,17 @@ void KY023::onvaluechanged(int xValue, int yValue)
 
 void KY023::updateStep()
 {
-    if( m_changed )
-    {
-        m_vrx->setVoltHigh( m_vOutX );
-        m_vrx->setState( true, true );
-        
-        m_vry->setVoltHigh( m_vOutY );
-        m_vry->setState( true, true );
+    if( !m_changed ) return;
 
-        m_sw->setState( !m_closed, true );
-        
-        m_changed = false;
-    }
-}
+    m_vrx->setOutHighV( m_vOutX );
+    m_vrx->setOutState( true );
 
-void KY023::remove()
-{
-    delete m_vrx;
-    delete m_vry;
-    Component::remove();
+    m_vry->setOutHighV( m_vOutY );
+    m_vry->setOutState( true );
+
+    m_sw->setOutState( !m_closed );
+
+    m_changed = false;
 }
 
 void KY023::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

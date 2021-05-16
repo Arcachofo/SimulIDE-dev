@@ -353,7 +353,8 @@ void Pin::setPinState( pinState_t st )
 
 void Pin::UpdateState()
 {
-    if( m_changed ) update();
+    //if( m_changed )
+        update();
 }
 
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
@@ -368,8 +369,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 
     if( isSelected() ) pen.setColor( Qt::darkGray);
     else if( m_unused ) pen.setColor( QColor( 75, 120, 170 ));
-    else if( Circuit::self()->animate()
-          && Simulator::self()->isRunning() ) pen.setColor( m_color[m_pinState] );
+    else if( Circuit::self()->animate() ) pen.setColor( m_color[m_pinState] );
 
     painter->setPen(pen);
     if( m_length > 1 ) painter->drawLine( 0, 0, m_length-1, 0);

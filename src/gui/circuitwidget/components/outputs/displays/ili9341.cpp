@@ -39,13 +39,13 @@ LibraryItem* Ili9341::libraryItem()
 }
 
 Ili9341::Ili9341( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
-       , eLogicDevice( id )
-       , m_pinCS (  270, QPoint(-56, 184), id+"-PinCS"  , 0, this )
-       , m_pinRst(  270, QPoint(-48, 184), id+"-PinRst" , 0, this )
-       , m_pinDC (  270, QPoint(-40, 184), id+"-PinDC"  , 0, this )
-       , m_pinMosi( 270, QPoint(-32, 184), id+"-PinMosi" , 0, this )
-       , m_pinSck(  270, QPoint(-24, 184), id+"-PinSck" , 0, this )
+       : LogicComponent( parent, type, id )
+       , eElement( id )
+       , m_pinCS (  270, QPoint(-56, 184), id+"-PinCS"  , 0, this, input )
+       , m_pinRst(  270, QPoint(-48, 184), id+"-PinRst" , 0, this, input )
+       , m_pinDC (  270, QPoint(-40, 184), id+"-PinDC"  , 0, this, input )
+       , m_pinMosi( 270, QPoint(-32, 184), id+"-PinMosi" , 0, this, input )
+       , m_pinSck(  270, QPoint(-24, 184), id+"-PinSck" , 0, this, input )
        //, m_pinMiso( 270, QPoint(-16, 184), id+"-PinMiso" , 0, this )
 {
     m_graphical = true;
@@ -67,11 +67,7 @@ Ili9341::Ili9341( QObject* parent, QString type, QString id )
     m_pin[4] = &m_pinSck;
     //m_pin[5] = &m_pinMiso;
 
-    eLogicDevice::createInput( &m_pinCS );
-    eLogicDevice::createInput( &m_pinRst );
-    eLogicDevice::createInput( &m_pinDC );
-    eLogicDevice::createInput( &m_pinMosi );
-    eLogicDevice::createClockPin( &m_pinSck );
+    m_clockPin = &m_pinSck;
 
     m_pdisplayImg = new QImage( 240, 320, QImage::Format_RGB888 );
 
@@ -109,26 +105,26 @@ void Ili9341::initialize()
 
 void Ili9341::voltChanged()                 // Called when En Pin changes
 {
-    if( !eLogicDevice::getInputState(1) )  // Reset Pin is Low
+    if( !m_pinRst.getInpState() )  // Reset Pin is Low
     {
         reset();
         return;
     }
-    if( eLogicDevice::getInputState(0) )   // Cs Pin High: Lcd not selected
+    if( m_pinCS.getInpState() )   // Cs Pin High: Lcd not selected
     {
         m_rxReg = 0;                       // Initialize serial buffer
         m_inBit = 0;
         return;
     }
-    if( eLogicDevice::getClockState() != Clock_Rising ) return;
+    if( LogicComponent::getClockState() != Clock_Rising ) return;
 
     m_rxReg &= ~1; //Clear bit 0
 
-    if( eLogicDevice::getInputState(3) ) m_rxReg |= 1; // Pin Mosi
+    if( m_pinMosi.getInpState() ) m_rxReg |= 1; // Pin Mosi
 
     if( m_inBit == 7 )
     {
-        if( eLogicDevice::getInputState(2) )       // Pin DC Write Data
+        if( m_pinDC.getInpState() )       // Pin DC Write Data
         {
             if( m_readBytes == 0 )        // Write DDRAM
             {

@@ -58,7 +58,7 @@ QList<propGroup_t> Clock::propGroups()
 
 void Clock::runEvent()
 {
-    m_outpin->setState( !m_outpin->getState(), true );
+    m_outpin->setOutState( !m_outpin->getOutState(), true );
 
     m_remainder += m_fstepsPC-(double)m_stepsPC;
     uint64_t remainerInt = m_remainder;

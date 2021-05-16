@@ -686,6 +686,10 @@ p, li { white-space: pre-wrap; }
         <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -1301,11 +1305,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Rise Time</source>
-        <translation>Время нарастания</translation>
+        <translation type="vanished">Время нарастания</translation>
     </message>
     <message>
         <source>Fall Time</source>
-        <translation>Время спада</translation>
+        <translation type="vanished">Время спада</translation>
     </message>
 </context>
 <context>
@@ -1543,7 +1547,7 @@ to DomDocument</source>
     <name>DataLaWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation type="obsolete">Форма</translation>
     </message>
     <message>
         <source>Expand</source>
@@ -1554,11 +1558,11 @@ to DomDocument</source>
     <name>DataWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation type="vanished">Форма</translation>
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>Метка</translation>
+        <translation type="vanished">Метка</translation>
     </message>
     <message>
         <source>Expand</source>
@@ -2446,6 +2450,61 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>IoComponent</name>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished">Входов:</translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished">Порог 1 -&gt; 0</translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished">Входной импеданс</translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished">Выходов:</translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished">Выходное напряжение 1</translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished">Выходное напряжение 0</translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished">Выходной импеданс</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
+    <message>
+        <source>Propagation Delay</source>
+        <translation type="unfinished">Задержка распространения</translation>
+    </message>
+    <message>
+        <source>Rise Time</source>
+        <translation type="unfinished">Время нарастания</translation>
+    </message>
+    <message>
+        <source>Fall Time</source>
+        <translation type="unfinished">Время спада</translation>
+    </message>
+</context>
+<context>
     <name>ItemLibrary</name>
     <message>
         <source>Gates</source>
@@ -2531,6 +2590,10 @@ Do you want to save your changes?
         <source>Arduino</source>
         <translation type="unfinished">Arduino</translation>
     </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2610,6 +2673,14 @@ Do you want to save your changes?
         <source>Meters</source>
         <translation type="unfinished">Измерение</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Treshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LaWidget</name>
@@ -2651,6 +2722,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2897,55 +2972,55 @@ Do you want to save your changes?
     <name>LogicComponent</name>
     <message>
         <source>Electric</source>
-        <translation>Электрические</translation>
+        <translation type="vanished">Электрические</translation>
     </message>
     <message>
         <source>Inputs:</source>
-        <translation>Входов:</translation>
+        <translation type="vanished">Входов:</translation>
     </message>
     <message>
         <source>Low to High Threshold</source>
-        <translation>Порог 0-&gt;1</translation>
+        <translation type="vanished">Порог 0-&gt;1</translation>
     </message>
     <message>
         <source>High to Low Threshold</source>
-        <translation>Порог 1 -&gt; 0</translation>
+        <translation type="vanished">Порог 1 -&gt; 0</translation>
     </message>
     <message>
         <source>Input Impedance</source>
-        <translation>Входной импеданс</translation>
+        <translation type="vanished">Входной импеданс</translation>
     </message>
     <message>
         <source>Outputs:</source>
-        <translation>Выходов:</translation>
+        <translation type="vanished">Выходов:</translation>
     </message>
     <message>
         <source>Output High Voltage</source>
-        <translation>Выходное напряжение 1</translation>
+        <translation type="vanished">Выходное напряжение 1</translation>
     </message>
     <message>
         <source>Output Low Voltage</source>
-        <translation>Выходное напряжение 0</translation>
+        <translation type="vanished">Выходное напряжение 0</translation>
     </message>
     <message>
         <source>Output Impedance</source>
-        <translation>Выходной импеданс</translation>
+        <translation type="vanished">Выходной импеданс</translation>
     </message>
     <message>
         <source>Edges</source>
-        <translation>Фронты</translation>
+        <translation type="vanished">Фронты</translation>
     </message>
     <message>
         <source>Propagation Delay</source>
-        <translation>Задержка распространения</translation>
+        <translation type="vanished">Задержка распространения</translation>
     </message>
     <message>
         <source>Rise Time</source>
-        <translation>Время нарастания</translation>
+        <translation type="vanished">Время нарастания</translation>
     </message>
     <message>
         <source>Fall Time</source>
-        <translation>Время спада</translation>
+        <translation type="vanished">Время спада</translation>
     </message>
 </context>
 <context>
@@ -3031,6 +3106,26 @@ Do you want to save your changes?
         <source>Load firmware</source>
         <translation>Загрузить прошивку</translation>
     </message>
+    <message>
+        <source>xml file not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished">Частота</translation>
+    </message>
+    <message>
+        <source>Fimware</source>
+        <translation type="unfinished">Прошивка</translation>
+    </message>
+    <message>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuComponent</name>
@@ -3102,6 +3197,10 @@ Do you want to save your changes?
         <source>Open Mcu Monitor.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Chip not Found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuMonitor</name>
@@ -3123,8 +3222,8 @@ Do you want to save your changes?
 %2.</translation>
     </message>
     <message>
-        <source>.data (*.data);;.bin (*.bin);;All files (*.*)</source>
-        <translation></translation>
+        <source>All files (*.*);;.data (*.data);;.bin (*.bin)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3283,6 +3382,10 @@ Do you want to save your changes?
     <message>
         <source>Supply Pins</source>
         <translation>Выводы питания</translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished">Выходной импеданс</translation>
     </message>
 </context>
 <context>
@@ -4571,11 +4674,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Rise Time</source>
-        <translation>Время нарастания</translation>
+        <translation type="vanished">Время нарастания</translation>
     </message>
     <message>
         <source>Fall Time</source>
-        <translation>Время спада</translation>
+        <translation type="vanished">Время спада</translation>
     </message>
     <message>
         <source>Quality</source>

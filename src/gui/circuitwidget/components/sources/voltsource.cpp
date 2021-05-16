@@ -48,8 +48,8 @@ VoltSource::VoltSource( QObject* parent, QString type, QString id )
     m_pin.resize(1);
     m_pin[0] = m_outPin;
 
-    m_outPin->setVoltHigh( 0 );
-    m_outPin->setVoltLow( 0 );
+    m_outPin->setOutHighV( 0 );
+    m_outPin->setOutLowV( 0 );
 
     m_unit = "V";
     m_button->setText( QString("-- V") );
@@ -69,8 +69,8 @@ void VoltSource::updateStep()
 {
     if( m_changed ) 
     {
-        m_outPin->setVoltHigh( m_outValue );
-        m_outPin->setState( m_button->isChecked(), true );
+        m_outPin->setOutHighV( m_outValue );
+        m_outPin->setOutState( m_button->isChecked(), true );
 
         m_changed = false;
     }

@@ -18,15 +18,16 @@
  ***************************************************************************/
 
 #include "latchd.h"
+#include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "pin.h"
+#include "iopin.h"
 
 
 Component* LatchD::construct( QObject* parent, QString type, QString id )
 {
-        return new LatchD( parent, type, id );
+    return new LatchD( parent, type, id );
 }
 
 LibraryItem* LatchD::libraryItem()
@@ -41,22 +42,20 @@ LibraryItem* LatchD::libraryItem()
 
 LatchD::LatchD( QObject* parent, QString type, QString id )
       : LogicComponent( parent, type, id )
-      , eLatchD( id )
+      , eElement( id )
 {
     m_width  = 4;
     m_height = 10;
     
     m_tristate = true;
     
-    m_outEnPin = new Pin( 0, QPoint( 0,0 ), m_id+"-Pin-outEnable", 0, this );
-    m_outEnPin->setLabelText( "OE " );
-    m_outEnPin->setLabelColor( QColor( 0, 0, 0 ) );
-    eLogicDevice::createOutEnablePin( m_outEnPin );                    // Output Enable
+    m_oePin = new IoPin( 0, QPoint( 0,0 ), m_id+"-Pin-outEnable", 0, this, input );
+    m_oePin->setLabelText( "OE " );
+    m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
 
-    m_trigPin = new Pin( 180, QPoint( 0,0 ), m_id+"-Pin-clock", 0, this );
-    m_trigPin->setLabelText( ">" );
-    m_trigPin->setLabelColor( QColor( 0, 0, 0 ) );
-    eLogicDevice::createClockPin( m_trigPin );
+    m_clockPin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-clock", 0, this, input );
+    m_clockPin->setLabelText( ">" );
+    m_clockPin->setLabelColor( QColor( 0, 0, 0 ) );
 
     setTrigger( InEnable );
 
@@ -79,6 +78,32 @@ QList<propGroup_t> LatchD::propGroups()
     return pg;
 }
 
+void LatchD::stamp()
+{
+    if( m_etrigger != Trig_Clk )
+    {
+        for( int i=0; i<m_numInputs; ++i )
+        {
+            eNode* enode = m_inPin[i]->getEnode();
+            if( enode ) enode->voltChangedCallback( this );
+        }
+    }
+    LogicComponent::stamp( this );
+}
+
+void LatchD::voltChanged()
+{
+    LogicComponent::updateOutEnabled();
+
+    if( getClockState() == Clock_Allow )
+    {
+        m_nextOutVal = 0;
+        for( int i=0; i<m_numOutputs; ++i )
+            if( m_inPin[i]->getInpState() ) m_nextOutVal |= 1<<i;
+    }
+    sheduleOutPuts( this );
+}
+
 void LatchD::createLatches( int n )
 {
     int chans = m_channels + n;
@@ -86,30 +111,26 @@ void LatchD::createLatches( int n )
     int origY = -(m_height/2)*8;
     
     m_outPin.resize( chans );
-    m_numOutPins = chans;
+    m_numOutputs = chans;
     m_inPin.resize( chans );
-    m_numInPins = chans;
+    m_numInputs = chans;
     
     for( int i=m_channels; i<chans; i++ )
     {
         QString number = QString::number(i);
 
-        m_inPin[i] = new Pin( 180, QPoint(-24,origY+8+i*8 ), m_id+"-in"+number, i, this );
+        m_inPin[i] = new IoPin( 180, QPoint(-24,origY+8+i*8 ), m_id+"-in"+number, i, this, input );
         m_inPin[i]->setLabelText( " D"+number );
         m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        eLogicDevice::createInput( m_inPin[i] );
 
-        m_outPin[i] = new Pin( 0, QPoint(24,origY+8+i*8 ), m_id+"-out"+number, i, this );
+        m_outPin[i] = new IoPin( 0, QPoint(24,origY+8+i*8 ), m_id+"-out"+number, i, this, output );
         m_outPin[i]->setLabelText( "O"+number+" " );
         m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        eLogicDevice::createOutput( m_outPin[i] );
     }
 }
 
 void LatchD::deleteLatches( int n )
 {
-    eLogicDevice::deleteOutputs( n );
-    eLogicDevice::deleteInputs( n );
     LogicComponent::deleteOutputs( n );
     LogicComponent::deleteInputs( n );
 }
@@ -137,13 +158,13 @@ void LatchD::setChannels( int channels )
         m_outPin[i]->isMoved();
     }
     
-    m_trigPin->setPos( QPoint(-24,origY+8+channels*8 ) );
-    m_trigPin->isMoved();
-    m_trigPin->setLabelPos();
+    m_clockPin->setPos( QPoint(-24,origY+8+channels*8 ) );
+    m_clockPin->isMoved();
+    m_clockPin->setLabelPos();
     
-    m_outEnPin->setPos( QPoint(24,origY+8+channels*8) );
-    m_outEnPin->isMoved();
-    m_outEnPin->setLabelPos();
+    m_oePin->setPos( QPoint(24,origY+8+channels*8) );
+    m_oePin->isMoved();
+    m_oePin->setLabelPos();
     
     m_channels = channels;
 
@@ -154,26 +175,21 @@ void LatchD::setTristate( bool t )
 {
     if( !t ) 
     {
-        if( m_outEnPin->connector() ) m_outEnPin->connector()->remove();
-        m_outEnPin->reset();
-        m_outEnPin->setLabelText( "" );
+        if( m_oePin->connector() ) m_oePin->connector()->remove();
+        m_oePin->reset();
+        m_oePin->setLabelText( "" );
     }
-    else m_outEnPin->setLabelText( "OE " );
-    m_outEnPin->setVisible( t );
+    else m_oePin->setLabelText( "OE " );
+    m_oePin->setVisible( t );
     m_tristate = t;
 
-    eLogicDevice::updateOutEnabled();
+    LogicComponent::updateOutEnabled();
     updateSize();
 }
 
 void LatchD::setTrigger( Trigger trigger )
 {
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-
-    int trig = static_cast<int>( trigger );
-    eLogicDevice::seteTrigger( trig );
     LogicComponent::setTrigger( trigger );
-
     updateSize();
 }
 
@@ -185,11 +201,4 @@ void LatchD::updateSize()
     Circuit::self()->update();
 }
 
-void LatchD::remove()
-{
-    if( m_trigPin->connector() )  m_trigPin->connector()->remove();
-    if( m_outEnPin->connector() ) m_outEnPin->connector()->remove();
-    
-    LogicComponent::remove();
-}
 #include "moc_latchd.cpp"

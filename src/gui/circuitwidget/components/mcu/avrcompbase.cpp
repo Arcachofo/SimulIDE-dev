@@ -28,8 +28,8 @@ AvrCompBase::AvrCompBase( QObject* parent, QString type, QString id )
 {
     m_processor = &m_avr;
 
-    m_avrI2C.setEnabled( false );
-    m_avrI2C.setComponent( this );
+    //m_avrI2C.setEnabled( false );
+    //m_avrI2C.setComponent( this );
     m_i2cInIrq = NULL;
     m_twenIrq = NULL;
     m_sda = NULL;
@@ -72,7 +72,7 @@ void AvrCompBase::attachPins()
         else
         {
             qDebug()<<"AvrCompBase::attachPins Found SDA SCL";
-            m_avrI2C.setInput( 0, m_sda );         // Input SDA
+            m_avrI2C.setSdaPin( m_sda );         // Input SDA
             m_avrI2C.setClockPin( m_scl );         // Input SCL
 
             m_twenIrq = avr_iomem_getirq( cpu, twcrAddr, 0l, 2 );
@@ -116,7 +116,7 @@ void AvrCompBase::reset()
         m_twenIrq->flags  |= IRQ_FLAG_INIT;
         m_i2cInIrq->flags |= IRQ_FLAG_INIT;
     }
-    m_avrI2C.setEnabled( false );
+    /// m_avrI2C.setEnabled( false );
 }
 
 QString AvrCompBase::getType( QString type, QString t )
@@ -150,16 +150,16 @@ void AvrCompBase::i2cOut( uint32_t value )
     if( msg & TWI_COND_START )
     {
         //m_slvAddr = v.u.twi.addr;
-        m_avrI2C.masterStart( 0 );
+        m_avrI2C.masterStart();
     }
     else if( msg & TWI_COND_ADDR )
     {
         m_slvAddr = v.u.twi.addr;
-        m_avrI2C.masterWrite( m_slvAddr );
+        m_avrI2C.masterWrite( m_slvAddr, true, true );
     }
     else if( msg & TWI_COND_WRITE )
     {
-        m_avrI2C.masterWrite( v.u.twi.data );
+        m_avrI2C.masterWrite( v.u.twi.data, false, true );
     }
     else if( msg & TWI_COND_STOP )
     {
@@ -201,7 +201,7 @@ void AvrCompBase::twenChanged( uint32_t value )
 
     if( value )
     {
-        m_avrI2C.setEnabled( true );
+        /// m_avrI2C.setEnabled( true );
         m_sda->enableIO( false );
         m_scl->enableIO( false );
 
@@ -217,13 +217,13 @@ void AvrCompBase::twenChanged( uint32_t value )
             double dpr = 16+2*twbr*pr;
             i2cFreq = this->freq()*1e6/dpr;
         }
-        m_avrI2C.setFreq( i2cFreq/1e3 ); // Freq in KHz
+        m_avrI2C.setFreqKHz( i2cFreq/1e3 ); // Freq in KHz
 
         qDebug() << "AvrCompBase::twenChanged i2cFreq:" << i2cFreq;
     }
     else // Disable I2C
     {
-        m_avrI2C.setEnabled( false );
+        /// m_avrI2C.setEnabled( false );
         m_sda->enableIO( true );
         m_scl->enableIO( true );
     }

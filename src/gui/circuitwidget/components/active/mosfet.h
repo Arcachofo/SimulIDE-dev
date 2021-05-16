@@ -45,7 +45,6 @@ class MAINMODULE_EXPORT Mosfet : public Component, public eMosfet
         virtual QList<propGroup_t> propGroups() override;
 
         virtual void updateStep() override;
-        virtual void remove() override;
         
         void setPchannel( bool pc );
         void setDepletion( bool dep );

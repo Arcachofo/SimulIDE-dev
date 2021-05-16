@@ -18,16 +18,13 @@
  ***************************************************************************/
 
 #include "flipflopbase.h"
-#include "circuitwidget.h"
-#include "e-source.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "pin.h"
-
+#include "iopin.h"
 
 FlipFlopBase::FlipFlopBase( QObject* parent, QString type, QString id )
          : LogicComponent( parent, type, id )
-         , eLogicDevice( id )
+         , eElement( id )
 {
     m_dataPins = 0;
 }
@@ -48,33 +45,22 @@ QList<propGroup_t> FlipFlopBase::propGroups()
 void FlipFlopBase::stamp()
 {
     m_Q0 = 0;
-    eNode* enode = m_setPin->getEpin(0)->getEnode();         // Set pin
+    eNode* enode = m_setPin->getEnode();         // Set pin
     if( enode ) enode->voltChangedCallback( this );
 
-    enode = m_resetPin->getEpin(0)->getEnode();              // Reset pin
+    enode = m_resetPin->getEnode();              // Reset pin
     if( enode ) enode->voltChangedCallback( this );
 
     if( m_etrigger != Trig_Clk )
     {
         for( int i=0; i<m_dataPins; i++ ) // J K or D
         {
-            eNode* enode = m_input[i]->getEpin(0)->getEnode();
+            eNode* enode = m_inPin[i]->getEnode();
             if( enode ) enode->voltChangedCallback( this );
         }
     }
-    eLogicDevice::stamp();
-    eLogicDevice::setOut( 1, true );
-}
-
-void FlipFlopBase::setTrigger( Trigger trigger )
-{
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-
-    int trig = static_cast<int>( trigger );
-    eLogicDevice::seteTrigger( trig );
-    LogicComponent::setTrigger( trigger );
-
-    Circuit::self()->update();
+    LogicComponent::stamp( this );
+    m_outPin[0]->setOutState( true );
 }
 
 void FlipFlopBase::setSrInv( bool inv )

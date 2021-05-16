@@ -20,8 +20,7 @@
 #include "bincounter.h"
 #include "itemlibrary.h"
 #include "connector.h"
-#include "e-source.h"
-#include "pin.h"
+#include "iopin.h"
 
 static const char* BinCounter_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Max Value")
@@ -44,7 +43,7 @@ LibraryItem* BinCounter::libraryItem()
 
 BinCounter::BinCounter(QObject *parent, QString type, QString id) 
           : LogicComponent( parent, type, id )
-          , eLogicDevice( id )
+          , eElement( id )
 {
     Q_UNUSED( BinCounter_properties );
     
@@ -62,13 +61,12 @@ BinCounter::BinCounter(QObject *parent, QString type, QString id)
     ;
     init( pinList );
     
-    eLogicDevice::createClockPin( m_inPin[0] );      // Input Clock
-    eLogicDevice::createInput( m_inPin[1] );         // Input Reset
-    eLogicDevice::createInput( m_inPin[2] );         // Input Set
-    eLogicDevice::createOutput( m_outPin[0] );       // Output Q
+    m_clockPin = m_inPin[0];     // eClockedDevice
+    m_resetPin = m_inPin[1];
+    m_setPin   = m_inPin[2];
 
-    setSrInv( true );                             // Invert Reset Pin
-    setPinSet( false );                          // Don't use Set Pin
+    setSrInv( true );            // Invert Reset Pin
+    useSetPin( false );          // Don't use Set Pin
 }
 BinCounter::~BinCounter(){}
 
@@ -87,31 +85,31 @@ QList<propGroup_t> BinCounter::propGroups()
 
 void BinCounter::stamp()
 {
-    eNode* enode = m_input[0]->getEpin(0)->getEnode();      // Reset pin
+    eNode* enode = m_inPin[0]->getEnode();      // Reset pin
     if( enode ) enode->voltChangedCallback( this );
 
-    enode = m_input[1]->getEpin(0)->getEnode();              // Set pin
+    enode = m_inPin[1]->getEnode();              // Set pin
     if( enode ) enode->voltChangedCallback(this);
 
-    eLogicDevice::stamp();
+    //LogicComponent::stamp();
 }
 
 void BinCounter::initialize()
 {
     m_Counter = 0;
-    eLogicDevice::initialize();
+    LogicComponent::initState();
 }
 
 void BinCounter::voltChanged()
 {
-    bool clkRising = (eLogicDevice::getClockState() == Clock_Rising);
+    bool clkRising = (LogicComponent::getClockState() == Clock_Rising);
 
-    if( eLogicDevice::getInputState( 0 ) == true ) // Reset
+    if( m_resetPin->getInpState() ) // Reset
     {
        m_Counter = 0;
        m_nextOutVal = 0;
     }
-    else if( eLogicDevice::getInputState( 1 ) == true ) // Set
+    else if( m_setPin->getInpState() ) // Set
     {
        m_Counter = m_TopValue;
        m_nextOutVal = 1;
@@ -130,23 +128,28 @@ void BinCounter::voltChanged()
             m_nextOutVal = 0;
         }
     }
-    sheduleOutPuts();
+    IoComponent::sheduleOutPuts( this );
+}
+
+void BinCounter::runEvent()
+{
+    IoComponent::runOutputs();
 }
 
 void BinCounter::setSrInv( bool inv )
 {
     m_resetInv = inv;
-    m_input[0]->setInverted( inv );       // Input Reset
-    if( m_pinSet ) m_input[1]->setInverted( inv );       // Input Set
-    else           m_input[1]->setInverted( false );
+    m_inPin[0]->setInverted( inv );       // Input Reset
+    if( m_pinSet ) m_inPin[1]->setInverted( inv );       // Input Set
+    else           m_inPin[1]->setInverted( false );
 }
 
-void BinCounter::setPinSet( bool set )
+void BinCounter::useSetPin( bool set )
 {
     m_pinSet = set;
-    if( !set && m_inPin[2]->connector() ) m_inPin[2]->connector()->remove();
+    if( !set && m_setPin->connector() ) m_setPin->connector()->remove();
 
-    m_inPin[2]->setVisible( set );
+    m_setPin->setVisible( set );
     setSrInv( m_resetInv );
 }
 

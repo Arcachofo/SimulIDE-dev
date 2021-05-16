@@ -59,7 +59,6 @@ SOURCES += ../src/*.cpp \
     ../src/simulator/*.cpp \
     ../src/simulator/elements/*.cpp \
     ../src/simulator/elements/active/*.cpp \
-    ../src/simulator/elements/logic/*.cpp \
     ../src/simulator/elements/outputs/*.cpp \
     ../src/simulator/elements/passive/*.cpp \
     ../src/simulator/elements/processors/*.cpp \
@@ -104,7 +103,6 @@ HEADERS += ../src/*.h \
     ../src/simulator/*.h \
     ../src/simulator/elements/*.h \
     ../src/simulator/elements/active/*.h \
-    ../src/simulator/elements/logic/*.h \
     ../src/simulator/elements/outputs/*.h \
     ../src/simulator/elements/passive/*.h \
     ../src/simulator/elements/processors/*.h \
@@ -151,7 +149,6 @@ INCLUDEPATH += ../src \
     ../src/simulator \
     ../src/simulator/elements \
     ../src/simulator/elements/active \
-    ../src/simulator/elements/logic \
     ../src/simulator/elements/outputs \
     ../src/simulator/elements/passive \
     ../src/simulator/elements/processors \

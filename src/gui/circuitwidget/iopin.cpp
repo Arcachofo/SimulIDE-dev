@@ -28,13 +28,13 @@ IoPin::IoPin(int angle, const QPoint pos, QString id, int index, Component* pare
     m_scrEnode->setNodeNumber(0);
     Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
 
-    m_state    = false;
+    m_outState    = false;
     m_stateZ   = false;
     m_inverted = false;
 
-    m_voltHigh = cero_doub;
-    m_voltLow  = cero_doub;
-    m_voltOut  = cero_doub;
+    m_outHighV = cero_doub;
+    m_outLowV  = cero_doub;
+    m_outVolt  = cero_doub;
 
     m_vddAdmit = 0;
     m_gndAdmit = cero_doub;
@@ -55,6 +55,7 @@ IoPin::~IoPin(){ delete m_scrEnode; }
 void IoPin::initialize()
 {
     ePin::setEnodeComp( m_scrEnode );
+    m_inpState = false;
 }
 
 void IoPin::stamp()
@@ -70,8 +71,8 @@ void IoPin::stampAll()
 
 void IoPin::stampOutput()
 {
-    m_scrEnode->setVolt( m_voltOut );
-    ePin::stampCurrent( m_voltOut/m_imp );
+    m_scrEnode->setVolt( m_outVolt );
+    ePin::stampCurrent( m_outVolt/m_imp );
 }
 
 void IoPin::setPinMode( pinMode_t mode )
@@ -83,29 +84,29 @@ void IoPin::setPinMode( pinMode_t mode )
     {
         m_vddAdmit = 1/cero_doub;
         m_gndAdmit = cero_doub;
-        ePin::setPinState( out_high );
+        setPinState( out_high );
     }
     else if( mode == input )
     {
         m_vddAdmit = 0;
         m_gndAdmit = 1/m_inputImp;
 
-        ePin::setPinState( input_low );
+        setPinState( input_low );
     }
     else if( mode == output )
     {
         m_vddAdmit = 1/m_outputImp;
         m_gndAdmit = cero_doub;
 
-        if( m_inverted ) m_state = !m_state;
-        setState( m_state );
+        if( m_inverted ) m_outState = !m_outState;
+        setOutState( m_outState );
     }
     else if( mode == open_col )
     {
         m_vddAdmit = cero_doub;
 
-        if( m_inverted ) m_state = !m_state;
-        setState( m_state );
+        if( m_inverted ) m_outState = !m_outState;
+        setOutState( m_outState );
     }
     update();
 }
@@ -116,33 +117,45 @@ void IoPin::update()
     double gndAdmit = m_gndAdmit+m_gndAdmEx;
     double Rth  = 1/(vddAdmit+gndAdmit);
 
-    m_voltOut = m_voltHigh*vddAdmit*Rth;
+    m_outVolt = m_outHighV*vddAdmit*Rth;
 
     IoPin::setImp( Rth );
 }
 
-void IoPin::setState( bool out, bool st ) // Set Output to Hight or Low
+bool IoPin::getInpState()
 {
-    if( m_inverted ) m_state = !out;
-    else             m_state =  out;
+    double volt = getVolt();
+
+    if     ( volt > m_inpHighV ) m_inpState = true;
+    else if( volt < m_inpLowV )  m_inpState = false;
+
+    m_pinState = m_inpState? input_high:input_low; // High : Low colors
+
+    return m_inverted ? !m_inpState : m_inpState;
+}
+
+void IoPin::setOutState( bool out, bool st ) // Set Output to Hight or Low
+{
+    if( m_inverted ) m_outState = !out;
+    else             m_outState =  out;
 
     if( m_stateZ ) return;
 
     if( m_pinMode == open_col )
     {
-        if( m_state ) m_gndAdmit = 1/m_openImp;
+        if( m_outState ) m_gndAdmit = 1/m_openImp;
         else          m_gndAdmit = 1/m_outputImp;
 
         if( st ) update();
-        ePin::setPinState( m_state? out_open:out_low ); // Z-Low colors
+        setPinState( m_outState? out_open:out_low ); // Z-Low colors
     }
     else
     {
-        if( m_state ) m_voltOut = m_voltHigh;
-        else          m_voltOut = m_voltLow;
+        if( m_outState ) m_outVolt = m_outHighV;
+        else          m_outVolt = m_outLowV;
 
         if( st ) stampOutput();
-        ePin::setPinState( m_state? out_high:out_low ); // High-Low colors
+        setPinState( m_outState? out_high:out_low ); // High-Low colors
     }
 }
 
@@ -151,9 +164,9 @@ void IoPin::setStateZ( bool z )
     m_stateZ = z;
     if( z )
     {
-        m_voltOut = m_voltLow;
+        m_outVolt = m_outLowV;
         setImp( m_openImp );
-        ePin::setPinState( out_open );
+        setPinState( out_open );
     }
     else
     {
@@ -161,18 +174,6 @@ void IoPin::setStateZ( bool z )
         m_pinMode = undef_mode;
         setPinMode( pm );
     }
-}
-
-void IoPin::setVoltHigh( double v )
-{
-    m_voltHigh = v;
-    /// if( m_state ) m_voltOut = v;
-}
-
-void IoPin::setVoltLow( double v )
-{
-    m_voltLow = v;
-    /// if( !m_state ) m_voltOut = v;
 }
 
 void IoPin::setImp( double imp )
@@ -198,17 +199,11 @@ void IoPin::setInverted( bool inverted )
 {
     if( inverted == m_inverted ) return;
 
-    if( inverted ) setState( !m_state );
-    else           setState( m_state );
+    if( inverted ) setOutState( !m_outState );
+    else           setOutState( m_outState );
 
     m_inverted = inverted;
     ePin::setInverted( inverted );
-}
-
-double IoPin::getVolt()
-{
-    if( ePin::isConnected() ) return ePin::getVolt();
-    else                           return m_voltOut;
 }
 
 void IoPin::controlPin( bool ctrl )

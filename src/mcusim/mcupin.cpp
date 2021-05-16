@@ -22,7 +22,7 @@
 #include "simulator.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
-      : eSource( id, 0l, source )
+      : IoPin( 0, QPoint(0,0), mcu->objectName()+id, 0, mcu, source )
 {
     m_port   = port;
     m_number = i;
@@ -35,10 +35,10 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_puMask   = false;
     m_dirMask  = false;
 
-    Pin* pin = new Pin( 0, QPoint( 0, 0 ), mcu->objectName()+id, i, mcu );
-    m_ePin[0] = pin;
+    //Pin* pin = new Pin( 0, QPoint( 0, 0 ), mcu->objectName()+id, i, mcu );
+    //m_ePin[0] = pin;
 
-    setVoltHigh( 5 );
+    setOutHighV( 5 );
     setPinMode( input );
     initialize();
 }
@@ -47,12 +47,12 @@ McuPin::~McuPin() {}
 void McuPin::initialize()
 {
     m_extCtrl = false;
-    m_inState = false;
+    m_inpState = false;
 
     setDirection( m_dirMask );
     setPullup( m_puMask );
 
-    eSource::initialize();
+    IoPin::initialize();
 }
 
 void McuPin::stamp()
@@ -60,15 +60,15 @@ void McuPin::stamp()
     if( m_ePin[0]->isConnected() ) // Outputs are also called so they set Input register if needed
         m_ePin[0]->getEnode()->voltChangedCallback( this ); // Receive voltage change notifications
 
-    eSource::stamp();
+    IoPin::stamp();
 }
 
 void McuPin::voltChanged()
 {
     bool state = m_ePin[0]->getVolt() > digital_thre;
 
-    if( state == m_inState ) return;
-    m_inState = state;
+    if( state == m_inpState ) return;
+    m_inpState = state;
 
     m_port->pinChanged( m_pinMask, state );
 }
@@ -77,17 +77,17 @@ void McuPin::setPortState( bool state )
 {
     m_outState = state;
     if( !m_isOut ) return;
-    eSource::setState( state, true );
+    IoPin::setOutState( state, true );
 }
 
-void McuPin::setState( bool state, bool )
+void McuPin::setOutState( bool state, bool )
 {
-    if( m_extCtrl ) eSource::setState( state, true );
+    if( m_extCtrl ) IoPin::setOutState( state, true );
 }
 
-bool McuPin::getState()
+bool McuPin::getInpState()
 {
-    return m_inState;
+    return m_inpState;
 }
 
 void McuPin::setDirection( bool out )
@@ -99,7 +99,7 @@ void McuPin::setDirection( bool out )
         if( m_openColl ) m_oldPinMode =  open_col;
         else             m_oldPinMode =  output;
 
-        eSource::setState( m_outState, true );
+        IoPin::setOutState( m_outState );
     }
     else           // Set Pin to Input
     {

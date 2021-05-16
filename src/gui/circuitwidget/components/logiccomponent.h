@@ -20,15 +20,16 @@
 #ifndef LOGICCOMPONENT_H
 #define LOGICCOMPONENT_H
 
-#include "component.h"
-#include "pin.h"
+#include "iocomponent.h"
+#include "e-clocked_device.h"
 
-class MAINMODULE_EXPORT LogicComponent : public Component
+class IoPin;
+
+class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevice
 {
     Q_OBJECT
 
     public:
-
         LogicComponent( QObject* parent, QString type, QString id );
         ~LogicComponent();
 
@@ -39,37 +40,28 @@ class MAINMODULE_EXPORT LogicComponent : public Component
         };
         Q_ENUM( Trigger )
 
-        virtual QList<propGroup_t> propGroups() override;
+        void initState();
+        void stamp( eElement* el );
+
+        void setOePin( IoPin* pin );
+        void setOutputEnabled( bool enabled );
+        void updateOutEnabled();
+        bool outputEnabled();
+
 
         Trigger trigger() { return m_trigger; }
         virtual void setTrigger( Trigger trigger );
-
-        virtual void init( QStringList pins );
-
-        virtual void setNumInps( int inPins );
-        virtual void setNumOuts(int outPins );
 
         virtual void remove() override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     protected:
-        Pin* createPin( QString data , QString pinId );
+        bool m_outEnable;
 
-        Pin*    m_trigPin;
+        IoPin*  m_oePin;
+
         Trigger m_trigger;
-        
-        void deleteInputs( int inputs );
-        void deleteOutputs( int inputs );
-    
-        std::vector<Pin*> m_inPin;
-        std::vector<Pin*> m_outPin;
-        
-        int m_width;
-        int m_height;
-    
-        int m_numInPins;
-        int m_numOutPins;
 };
 
 #endif

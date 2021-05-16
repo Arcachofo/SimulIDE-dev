@@ -20,22 +20,14 @@
 #ifndef BCDTO7S_H
 #define BCDTO7S_H
 
-#include "e-bcdto7s.h"
-#include "itemlibrary.h"
 #include "logiccomponent.h"
+#include "e-element.h"
 
-class MAINMODULE_EXPORT BcdTo7S : public LogicComponent, public eBcdTo7S
+class LibraryItem;
+
+class MAINMODULE_EXPORT BcdTo7S : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay WRITE setPropDelay DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tr_ps   READ riseTime  WRITE setRiseTime  DESIGNABLE true USER true )
-    Q_PROPERTY( quint64 Tf_ps   READ fallTime  WRITE setFallTime  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
     Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
     Q_PROPERTY( bool   Tristate     READ tristate   USER true )
 
@@ -44,13 +36,18 @@ class MAINMODULE_EXPORT BcdTo7S : public LogicComponent, public eBcdTo7S
         ~BcdTo7S();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
         
         virtual QList<propGroup_t> propGroups() override;
 
         bool tristate() { return true; }
 
-        void stamp() override;
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override;
+
+    protected:
+ static const uint8_t m_values[];
 };
 
 #endif

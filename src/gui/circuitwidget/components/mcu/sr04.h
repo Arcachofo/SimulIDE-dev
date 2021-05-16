@@ -20,10 +20,11 @@
 #ifndef SR04_H
 #define SR04_H
 
-#include "e-source.h"
 #include "e-element.h"
 #include "component.h"
-#include "itemlibrary.h"
+
+class LibraryItem;
+class IoPin;
 
 class MAINMODULE_EXPORT SR04 : public Component, public eElement
 {
@@ -53,9 +54,8 @@ class MAINMODULE_EXPORT SR04 : public Component, public eElement
         
         Pin* m_inpin;
         Pin* m_trigpin;
-        Pin* m_echopin;
         
-        eSource* m_echo;
+        IoPin* m_echo;
 };
 
 #endif

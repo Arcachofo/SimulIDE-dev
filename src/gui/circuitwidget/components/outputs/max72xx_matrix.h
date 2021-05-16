@@ -20,12 +20,14 @@
 #ifndef MAX72XX_MATRIX_H
 #define MAX72XX_MATRIX_H
 
-#include "itemlibrary.h"
-#include "component.h"
-#include "e-logic_device.h"
-#include "pin.h"
+#include "logiccomponent.h"
+#include "e-element.h"
 
-class MAINMODULE_EXPORT Max72xx_matrix : public Component, public eLogicDevice
+class LibraryItem;
+class IoPin;
+class Pin;
+
+class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( int  NumDisplays   READ numDisplays WRITE setNumDisplays DESIGNABLE true USER true )
@@ -35,7 +37,7 @@ class MAINMODULE_EXPORT Max72xx_matrix : public Component, public eLogicDevice
         ~Max72xx_matrix();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
         
@@ -69,7 +71,7 @@ class MAINMODULE_EXPORT Max72xx_matrix : public Component, public eLogicDevice
         //Inputs
         Pin* m_pinCS;
         Pin* m_pinDin;
-        Pin* m_pinSck;
+        IoPin* m_pinSck;
 };
 
 #endif

@@ -23,8 +23,7 @@
 #include "e-resistor.h"
 #include "component.h"
 
-class eSource;
-class Pin;
+class IoPin;
 
 class MAINMODULE_EXPORT Meter : public Component, public eResistor
 {
@@ -36,15 +35,13 @@ class MAINMODULE_EXPORT Meter : public Component, public eResistor
         ~Meter();
 
         virtual void updateStep() override;
-        virtual void remove() override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     protected:
         double m_dispValue;
 
-        Pin*     m_outpin;
-        eSource* m_out;
+        IoPin* m_outPin;
 
         QGraphicsSimpleTextItem m_display;
 };

@@ -22,25 +22,25 @@
 
 #include "e-clocked_device.h"
 
-class eSource;
+class IoPin;
 
 class MAINMODULE_EXPORT SpiModule : public eClockedDevice
 {
     public:
-        SpiModule( QString name );
+        SpiModule( );
         ~SpiModule();
 
-        void setMosiPin( eSource* pin );
-        void setMisoPin( eSource* pin );
-        void setSckPin( eSource* pin );
-        void setSsPin( eSource* pin );
+        void setMosiPin( IoPin* pin );
+        void setMisoPin( IoPin* pin );
+        void setSckPin( IoPin* pin );
+        void setSsPin( IoPin* pin );
 
     protected:
 
-        eSource* m_MOSI;
-        eSource* m_MISO;
-        eSource* m_SCK;
-        eSource* m_SS;
+        IoPin* m_MOSI;
+        IoPin* m_MISO;
+        IoPin* m_SCK;
+        IoPin* m_SS;
 };
 #endif
 

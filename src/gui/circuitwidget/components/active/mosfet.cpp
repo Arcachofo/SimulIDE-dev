@@ -18,12 +18,11 @@
  ***************************************************************************/
 
 #include "mosfet.h"
-#include "connector.h"
+//#include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"
-#include "e-source.h"
-#include "pin.h"
+#include "iopin.h"
 
 static const char* Mosfet_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","RDSon"),
@@ -52,35 +51,31 @@ Mosfet::Mosfet( QObject* parent, QString type, QString id )
     
     m_area =  QRectF( -12, -14, 28, 28 );
     setLabelPos(18, 0, 0);
-    
-    QString newId = id;
-    newId.append(QString("-Gate"));
-    Pin* newPin = new Pin( 180, QPoint(-16, 0), newId, 0, this );
-    newPin->setLabelText( "" );
-    newPin->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[2] = newPin;
-    newId.append("-eSource");
-    m_gate = new eSource( newId, m_ePin[2], input );
-    m_gate->setImp( 1e6 );
+
+    m_pin.resize(3);
 
     // D,S pins m_ePin[0] m_ePin[1] 
-    newId = id;
-    newId.append(QString("-Dren"));
-    newPin = new Pin( 90, QPoint(8,-16), newId, 0, this );
-    newPin->setLabelText( "" );
-    newPin->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[0] = newPin;
-    
-    newId = id;
-    newId.append(QString("-Sour"));
-    newPin = new Pin( 270, QPoint(8, 16), newId, 1, this );
-    newPin->setLabelText( "" );
-    newPin->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[1] = newPin;
+    m_pin[0] = new Pin( 90, QPoint(8,-16), id+"-Dren", 0, this );
+    m_pin[0]->setLabelText( "" );
+    m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_ePin[0] = m_pin[0];
+
+    m_pin[1] = new Pin( 270, QPoint(8, 16), id+"-Sour", 1, this );
+    m_pin[1]->setLabelText( "" );
+    m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_ePin[1] = m_pin[1];
+
+    m_pin[2] = new IoPin( 180, QPoint(-16, 0), id+"-Gate", 0, this, input );
+    m_pin[2]->setLabelText( "" );
+    m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_ePin[2] = m_pin[2];
     
     Simulator::self()->addToUpdateList( this );
 }
-Mosfet::~Mosfet(){}
+Mosfet::~Mosfet()
+{
+    Simulator::self()->remFromUpdateList( this );
+}
 
 QList<propGroup_t> Mosfet::propGroups()
 {
@@ -94,7 +89,7 @@ QList<propGroup_t> Mosfet::propGroups()
 
 void Mosfet::updateStep()
 {
-    update();
+    if( Circuit::self()->animate() ) update();
 }
 
 void Mosfet::setPchannel( bool pc )
@@ -107,17 +102,6 @@ void Mosfet::setDepletion( bool dep )
 {
     m_depletion = dep;
     update();
-}
-
-void Mosfet::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-    
-    if( m_ePin[0]->isConnected() ) (static_cast<Pin*>(m_ePin[0]))->connector()->remove();
-    if( m_ePin[1]->isConnected() ) (static_cast<Pin*>(m_ePin[1]))->connector()->remove();
-    if( m_ePin[2]->isConnected() ) (static_cast<Pin*>(m_ePin[2]))->connector()->remove();
-    
-    Component::remove();
 }
 
 void Mosfet::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

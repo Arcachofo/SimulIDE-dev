@@ -18,10 +18,12 @@
  ***************************************************************************/
 
 #include "dac.h"
+#include "itemlibrary.h"
+#include "simulator.h"
 
 Component* DAC::construct( QObject* parent, QString type, QString id )
 {
-        return new DAC( parent, type, id );
+    return new DAC( parent, type, id );
 }
 
 LibraryItem* DAC::libraryItem()
@@ -36,21 +38,19 @@ LibraryItem* DAC::libraryItem()
 
 DAC::DAC( QObject* parent, QString type, QString id )
    : LogicComponent( parent, type, id )
-   , eDAC( id )
+   , eElement( id )
 {    
     m_width  = 4;
     m_height = 9;
 
-    setNumInps( 8 );                           // Create Input Pins
+    setNumInps( 8 );       // Create Input Pins
     setMaxVolt( 5 );
 
     LogicComponent::setNumOuts( 1 );
     
-    m_outPin[0] = new Pin( 0, QPoint( 24, -8 ), m_id+"-out", 1, this );
+    m_outPin[0] = new IoPin( 0, QPoint( 24, -8 ), m_id+"-out", 1, this, output );
     m_outPin[0] ->setLabelText( "Out " );
     m_outPin[0] ->setLabelColor( QColor( 0, 0, 0 ) );
-                          
-    eLogicDevice::createOutput( m_outPin[0] );
 }
 DAC::~DAC(){}
 
@@ -66,23 +66,49 @@ QList<propGroup_t> DAC::propGroups()
     return pg;
 }
 
+void DAC::stamp()
+{
+    for( int i=0; i<m_numInputs; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    m_outPin[0]->setOutState( true );
+    m_value = -1;
+}
+
+void DAC::voltChanged()
+{
+    m_value = 0;
+
+    for( int i=0; i<m_numOutputs; ++i )
+        if( m_inPin[i]->getInpState() ) m_value += pow( 2, m_numInputs-1-i );
+
+    Simulator::self()->addEvent( m_propDelay, this );
+}
+
+void DAC::runEvent()
+{
+    double v = m_maxVolt*m_value/m_maxValue;
+
+    m_outPin[0]->setOutHighV( v );
+    m_outPin[0]->stampOutput();
+}
+
 void DAC::setNumInps( int inputs )
 {
     if( inputs == m_numInputs ) return;
     if( inputs < 1 ) return;
 
     LogicComponent::setNumInps( inputs );
-    eLogicDevice::deleteInputs( m_numInputs );
 
     for( int i=0; i<inputs; i++ )
     {
         QString num = QString::number( inputs-i-1 );
-        m_inPin[i] = new Pin( 180, QPoint(-24,-8*inputs+i*8+8 ), m_id+"-in"+num, i, this );
+        m_inPin[i] = new IoPin( 180, QPoint(-24,-8*inputs+i*8+8 ), m_id+"-in"+num, i, this, input );
 
         m_inPin[i]->setLabelText( "D"+num+" " );
         m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-
-        eLogicDevice::createInput( m_inPin[i] );
     }
     m_maxValue = pow( 2, m_numInputs )-1;
 

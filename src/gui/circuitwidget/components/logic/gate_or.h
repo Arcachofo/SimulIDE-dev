@@ -23,14 +23,12 @@
 #include "gate.h"
 #include "component.h"
 
-#include <QObject>
-
 class LibraryItem;
 
 class MAINMODULE_EXPORT OrGate : public Gate
 {
     Q_OBJECT
-    Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
+    Q_PROPERTY( int Num_Inputs READ numInps WRITE setNumInps DESIGNABLE true USER true )
 
     public:
 

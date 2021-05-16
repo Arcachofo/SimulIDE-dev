@@ -20,13 +20,13 @@
 #ifndef MUXANALOG_H
 #define MUXANALOG_H
 
-#include "e-mux_analog.h"
-#include "itemlibrary.h"
-#include "component.h"
+#include "logiccomponent.h"
+#include "e-element.h"
 
 class eResistor;
+class LibraryItem;
 
-class MAINMODULE_EXPORT MuxAnalog : public Component, public eMuxAnalog
+class MAINMODULE_EXPORT MuxAnalog : public LogicComponent, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( int    Address_Bits READ addrBits WRITE setAddrBits DESIGNABLE true USER true )
@@ -37,9 +37,16 @@ class MAINMODULE_EXPORT MuxAnalog : public Component, public eMuxAnalog
         ~MuxAnalog();
         
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
+
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override;
+
+        double resist();
+        void setResist( double r );
 
         virtual void remove() override;
         
@@ -53,6 +60,21 @@ class MAINMODULE_EXPORT MuxAnalog : public Component, public eMuxAnalog
         void deleteAddrBits( int d );
         void createResistors( int c );
         void deleteResistors( int d );
+
+        int m_addrBits;
+        int m_channels;
+        int m_address;
+
+        double m_admit;
+
+        bool m_enabled;
+
+        ePin* m_inputPin;
+        ePin* m_enablePin;
+
+        std::vector<eResistor*> m_resistor;
+        std::vector<ePin*> m_addrPin;
+        std::vector<ePin*> m_chanPin;
 };
 
 #endif

@@ -19,8 +19,7 @@
 
 #include "meter.h"
 #include "simulator.h"
-#include "e-source.h"
-#include "pin.h"
+#include "iopin.h"
 #include "utils.h"
 
 Meter::Meter( QObject* parent, QString type, QString id )
@@ -34,29 +33,17 @@ Meter::Meter( QObject* parent, QString type, QString id )
 
     m_pin.resize( 3 );
 
-    QString pinId = m_id;
-    pinId.append(QString("-lPin"));
-    QPoint pinPos = QPoint(-8, 16);
-    m_pin[0] = new Pin( 270, pinPos, pinId, 0, this);
+    m_pin[0] = new Pin( 270, QPoint(-8, 16), id+"-lPin", 0, this);
     m_pin[0]->setColor( Qt::red );
     m_ePin[0] = m_pin[0];
 
-    pinId = m_id;
-    pinId.append(QString("-rPin"));
-    pinPos = QPoint(8, 16);
-    m_pin[1] = new Pin( 270, pinPos, pinId, 1, this);
+    m_pin[1] = new Pin( 270, QPoint(8, 16), id+"-rPin", 1, this);
     m_ePin[1] = m_pin[1];
 
-    pinId = id;
-    pinId.append(QString("-outnod"));
-    pinPos = QPoint(32,-8);
-    m_pin[2] = new Pin( 0, pinPos, pinId, 0, this);
-    m_outpin = m_pin[2];
-
-    pinId.append(QString("-eSource"));
-    m_out = new eSource( pinId, m_outpin, output );
-    m_out->setState( true );
-    m_out->setVoltHigh( 0 );
+    m_outPin = new IoPin( 0, QPoint(32,-8), id+"-outnod", 0, this, output );
+    m_outPin->setOutHighV( 0 );
+    m_outPin->setOutState( true );
+    m_pin[2] = m_outPin;
 
     m_idLabel->setPos(-12,-24);
     setLabelPos(-24,-40, 0);
@@ -73,7 +60,10 @@ Meter::Meter( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 }
-Meter::~Meter(){}
+Meter::~Meter()
+{
+    Simulator::self()->remFromUpdateList( this );
+}
 
 void Meter::updateStep()
 {
@@ -91,17 +81,8 @@ void Meter::updateStep()
     }
     m_display.setText( sign+QString::number( value,'f', decimals )+"\n"+mult+m_unit );
 
-    m_out->setVoltHigh( m_dispValue );
-    m_out->stampOutput();
-}
-
-void Meter::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-
-    delete m_out;
-
-    Component::remove();
+    m_outPin->setOutHighV( m_dispValue );
+    m_outPin->stampOutput();
 }
 
 void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

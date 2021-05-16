@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 #include "bcdtodec.h"
+#include "itemlibrary.h"
 #include "circuit.h"
-
 
 Component* BcdToDec::construct( QObject* parent, QString type, QString id )
 {
@@ -38,7 +38,7 @@ LibraryItem* BcdToDec::libraryItem()
 
 BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eBcdToDec( id )
+        , eElement( id )
 {
     m_width  = 4;
     m_height = 11;
@@ -48,7 +48,6 @@ BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
     QStringList pinList;
 
     pinList // Inputs:
-            
             << "IL04 S0"
             << "IL05 S1"
             << "IL06 S2"
@@ -76,14 +75,9 @@ BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    eLogicDevice::createOutEnablePin( m_inPin[4] );    // IOutput Enable
-
-    for( int i=0; i<4; i++ )
-        eLogicDevice::createInput( m_inPin[i] );
+    m_oePin = m_inPin[4];    // Output Enable
         
-    for( int i=0; i<16; ++i ) eLogicDevice::createOutput( m_outPin[i] );
-    for( int i=10; i<16; ++i ) m_outPin[i]->setVisible( false );
-
+    for( int i=10; i<16; ++i ) m_outPin[i]->setVisible( false ); // 10 bit by default
 }
 BcdToDec::~BcdToDec(){}
 
@@ -93,9 +87,39 @@ QList<propGroup_t> BcdToDec::propGroups()
     mainGroup.propList.append( {"Inverted", tr("Invert Outputs"),""} );
     mainGroup.propList.append( {"_16_Bits", tr("16 Bits"),""} );
 
-    QList<propGroup_t> pg = LogicComponent::propGroups();
+    QList<propGroup_t> pg = IoComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
+}
+
+void BcdToDec::initialize()
+{
+    LogicComponent::initState();
+    m_outPin[0]->setOutState( true );
+    m_outValue = 1;
+}
+
+void BcdToDec::stamp()
+{
+    for( int i=0; i<4; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    LogicComponent::stamp( this );
+}
+
+void BcdToDec::voltChanged()
+{
+    LogicComponent::updateOutEnabled();
+
+    int dec = 0;
+
+    for( int i=0; i<4; ++i )
+        if( m_inPin[i]->getInpState() ) dec += pow( 2, i );
+
+    m_nextOutVal = 1<<dec;
+    sheduleOutPuts( this );
 }
 
 bool BcdToDec::_16bits()
@@ -113,8 +137,7 @@ void BcdToDec::set_16bits( bool set )
         for( int i=10; i<16; ++i ) m_outPin[i]->setVisible( true );
         height = 17;
     }
-    else
-    {
+    else{
         for( int i=10; i<16; ++i )
         {
             m_outPin[i]->setVisible( false );

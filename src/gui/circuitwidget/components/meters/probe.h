@@ -23,8 +23,7 @@
 #include "component.h"
 #include "e-element.h"
 
-class Pin;
-class eSource;
+class IoPin;
 class Connector;
 class LibraryItem;
 
@@ -64,10 +63,9 @@ class MAINMODULE_EXPORT Probe : public Component, public eElement
 
         QColor m_plotterColor;
 
-        Pin*       m_inputpin;
+        IoPin*     m_inputPin;
         Pin*       m_readPin;
         Connector* m_readConn;
-        eSource*   m_inSource;
 };
 
 

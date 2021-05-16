@@ -24,11 +24,12 @@
 #ifndef KY040_H
 #define KY040_H
 
-#include "e-source.h"
 #include "e-element.h"
 #include "component.h"
-#include "itemlibrary.h"
 #include "dialwidget.h"
+
+class LibraryItem;
+class IoPin;
 
 class MAINMODULE_EXPORT KY040 : public Component, public eElement
 {
@@ -53,7 +54,6 @@ class MAINMODULE_EXPORT KY040 : public Component, public eElement
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
         
     public slots:
-        virtual void remove() override;
         void posChanged(int pos);
         void onbuttonpressed();
         void onbuttonreleased();
@@ -74,14 +74,10 @@ class MAINMODULE_EXPORT KY040 : public Component, public eElement
         
         QToolButton* m_button;
         QGraphicsProxyWidget* m_proxy_button;
-        
-        Pin* m_dtpin;
-        Pin* m_clkpin;
-        Pin* m_swpin;
-        
-        eSource* m_dt;
-        eSource* m_clk;
-        eSource* m_sw;
+
+        IoPin* m_dt;
+        IoPin* m_clk;
+        IoPin* m_sw;
 };
 
 #endif

@@ -18,11 +18,13 @@
  ***************************************************************************/
 
 #include "twimodule.h"
-#include "e-source.h"
+#include "iopin.h"
 #include "simulator.h"
 
 TwiModule::TwiModule( QString name )
-         : eClockedDevice( name )
+         : eElement( name )
+         , eClockedDevice()
+
 {
     m_sda = NULL;
     m_scl = NULL;
@@ -34,7 +36,7 @@ void TwiModule::initialize()
 {
     m_mode      = TWI_OFF;
     m_twiState  = TWI_NO_STATE;
-    m_i2cState     = I2C_IDLE;
+    m_i2cState  = I2C_IDLE;
     m_lastState = I2C_IDLE;
 
     m_sheduleSDA = false;
@@ -200,6 +202,7 @@ void TwiModule::voltChanged() // Used by slave
                     } else {                   // Master is Writting
                         m_i2cState = I2C_WRITE;
                         m_bitPtr = 0;
+                        startWrite(); // Notify posible child class
                     }
                     ACK();
                 } else {
@@ -241,9 +244,15 @@ void TwiModule::setMode( twiMode_t mode )
 {
     if( mode == TWI_MASTER ) Simulator::self()->addEvent( m_clockPeriod, this ); // Start Clock
 
-    eClockedDevice::callBack( mode == TWI_SLAVE ); // If Slave Register for Clock Pin changes
+    //eClockedDevice::callBack( mode == TWI_SLAVE ); // If Slave Register for Clock Pin changes
 
-    eNode* enode = m_sda->getEpin(0)->getEnode(); // If Slave Register for SDA voltage changes
+    eNode* enode = m_scl->getEnode(); // If Slave Register for SCL voltage changes
+    if( enode )
+    {
+        if( mode == TWI_SLAVE ) enode->voltChangedCallback( this );
+        else                    enode->remFromChangedCallback( this );
+    }
+    enode = m_sda->getEnode(); // If Slave Register for SDA voltage changes
     if( enode )
     {
         if( mode == TWI_SLAVE ) enode->voltChangedCallback( this );
@@ -267,15 +276,13 @@ void TwiModule::setTwiState( twiState_t state )
 
 void TwiModule::getSdaState()
 {
-    double volt = m_sda->getVolt();
-    if     ( volt > m_inputHighV ) m_sdaState = true;
-    else if( volt < m_inputLowV )  m_sdaState = false;
+    m_sdaState = m_sda->getInpState();
 
-    m_sda->getPin()->setPinState( m_sdaState? input_high:input_low ); // High : Low colors
+    m_sda->setPinState( m_sdaState? input_high:input_low ); // High : Low colors
 }
 
-void TwiModule::setSCL( bool st ) { m_scl->setState( st, true ); }
-void TwiModule::setSDA( bool st ) { m_sda->setState( st, true ); }
+void TwiModule::setSCL( bool st ) { m_scl->setOutState( st, true ); }
+void TwiModule::setSDA( bool st ) { m_sda->setOutState( st, true ); }
 
 void TwiModule::sheduleSDA( bool state )
 {
@@ -352,9 +359,9 @@ void TwiModule::setFreqKHz( double f )
     double stepsPerS = 1e12;
     m_clockPeriod = stepsPerS/m_freq/2;
 }
-void TwiModule::setSdaPin( eSource* pin ) { m_sda = pin; }
-void TwiModule::setSclPin( eSource* pin )
+void TwiModule::setSdaPin( IoPin* pin ) { m_sda = pin; }
+void TwiModule::setSclPin( IoPin* pin )
 {
     m_scl = pin;
-    m_clockSource = pin;
+    m_clockPin = pin;
 }

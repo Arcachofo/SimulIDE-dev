@@ -51,8 +51,8 @@ LibraryItem* SerialPort::libraryItem()
 }
 
 SerialPort::SerialPort( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
-      , eElement( (id+"-eElement") )
+          : Component( parent, type, id )
+          , eElement( (id+"-eElement") )
 {
     Q_UNUSED( SerialPort_properties );
 

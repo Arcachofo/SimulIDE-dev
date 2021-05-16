@@ -55,17 +55,9 @@ FlipFlopRS::FlipFlopRS( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    eLogicDevice::createInput( m_inPin[0] );                  // Input S
-    eLogicDevice::createInput( m_inPin[1] );                  // Input R
-
-    m_setPin = m_input[0];
-    m_resetPin = m_input[1];
-    
-    m_trigPin = m_inPin[2];
-    eLogicDevice::createClockPin( m_trigPin );             // Input Clock
-    
-    eLogicDevice::createOutput( m_outPin[0] );               // Output Q
-    eLogicDevice::createOutput( m_outPin[1] );               // Output Q'
+    m_setPin = m_inPin[0];
+    m_resetPin = m_inPin[1];
+    m_clockPin = m_inPin[2];
 
     setSrInv( true );                           // Inver Set & Reset pins
     setClockInv( false );                        //Don't Invert Clock pin
@@ -78,11 +70,11 @@ void FlipFlopRS::voltChanged()
     bool clkAllow = (getClockState() == Clock_Allow); // Get Clk to don't miss any clock changes
     if( !clkAllow ) return;
 
-    bool set   = getInputState( 0 );
-    bool reset = getInputState( 1 );
+    bool set   = m_setPin->getInpState();
+    bool reset = m_resetPin->getInpState();
 
     if( set || reset) m_nextOutVal = (set? 1:0) + (reset? 2:0);
 
-    sheduleOutPuts();
+    sheduleOutPuts( this );
 }
 #include "moc_flipfloprs.cpp"

@@ -22,8 +22,7 @@
 #include "simulator.h"
 
 McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle )
-               : QObject( mcuComponent )
-               , eSource( id, 0l )
+               : IoPin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, m_mcuComponent, input )
 {
     m_mcuComponent = mcuComponent;
     m_processor = mcuComponent->processor();
@@ -37,11 +36,10 @@ McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QStrin
     m_attached = false;
     m_openColl = false;
 
-    Pin* pin = new Pin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, m_mcuComponent );
-    pin->setLabelText( label );
-    m_ePin[0] = pin;
+    //Pin* pin = new Pin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, m_mcuComponent );
+    setLabelText( label );
 
-    setVoltHigh( 5 );
+    setOutHighV( 5 );
     setPinMode( undef_mode );
 
     type = type.toLower();
@@ -50,7 +48,7 @@ McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QStrin
      || type == "vcc" 
      || type == "unused" 
      || type == "nc" ) 
-     pin->setUnused( true );
+     this->setUnused( true );
      
     initialize();
 }
@@ -58,10 +56,10 @@ McuComponentPin::~McuComponentPin(){ }
 
 void McuComponentPin::stamp()
 {
-    if( m_ePin[0]->isConnected() && m_attached )        // Receive voltage change notifications
-        m_ePin[0]->getEnode()->voltChangedCallback( this );
+    if( this->isConnected() && m_attached )        // Receive voltage change notifications
+        this->getEnode()->voltChangedCallback( this );
 
-    eSource::stamp();
+    IoPin::stamp();
 }
 
 void McuComponentPin::initialize()
@@ -71,7 +69,7 @@ void McuComponentPin::initialize()
         m_enableIO = true;
         setPinMode( input );
     }
-    eSource::initialize();
+    IoPin::initialize();
 }
 
 void McuComponentPin::setDirection( bool out )
@@ -92,7 +90,7 @@ void McuComponentPin::setDirection( bool out )
 
         setPinMode( input );
     }
-    setState( m_state );
+    setOutState( m_outState );
 }
 
 void McuComponentPin::setState( bool state )
@@ -102,7 +100,7 @@ void McuComponentPin::setState( bool state )
     if( m_pinMode == input )  return;
     if( !m_enableIO ) return;
 
-    eSource::setState( state, true );
+    IoPin::setOutState( state, true );
 }
 
 
@@ -141,9 +139,9 @@ void McuComponentPin::enableIO( bool en )
     m_prevPinMode = m_pinMode;
 }
 
-void McuComponentPin::move( int dx, int dy )
+/*void McuComponentPin::move( int dx, int dy )
 {
-    pin()->moveBy( dx, dy );
-}
+    this->moveBy( dx, dy );
+}*/
 
 #include "moc_mcucomponentpin.cpp"

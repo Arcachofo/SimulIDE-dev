@@ -20,25 +20,16 @@
 #ifndef I2CTOPARALLEL_H
 #define I2CTOPARALLEL_H
 
-#include "e-i2c_slave.h"
-#include "logiccomponent.h"
+#include "twimodule.h"
+#include "iocomponent.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT I2CToParallel : public LogicComponent, public eI2CSlave
+class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
-    Q_PROPERTY( double Frequency  READ freq       WRITE setFreq       DESIGNABLE true USER true )
-    Q_PROPERTY( int Control_Code READ cCode WRITE setCcode DESIGNABLE true USER true )
+    Q_PROPERTY( double Frequency    READ freqKHz    WRITE setFreqKHz    DESIGNABLE true USER true )
+    Q_PROPERTY( int Control_Code    READ cCode WRITE setCcode DESIGNABLE true USER true )
 
     public:
         I2CToParallel( QObject* parent, QString type, QString id );

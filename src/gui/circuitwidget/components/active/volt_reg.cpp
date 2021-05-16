@@ -20,6 +20,7 @@
 #include "volt_reg.h"
 #include "connector.h"
 #include "simulator.h"
+#include "itemlibrary.h"
 #include "pin.h"
 
 static const char* VoltReg_properties[] = {
@@ -43,7 +44,7 @@ LibraryItem* VoltReg::libraryItem()
 
 VoltReg::VoltReg( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
-       , eVoltReg( id )
+       , eResistor( id )
 {
     Q_UNUSED( VoltReg_properties );
     
@@ -68,13 +69,11 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
     m_pin[1]->setLength(6);
     m_pin[1]->setLabelText( "O" );
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[1] = m_pin[1];
 
     m_pin[2] = new Pin( 270, QPoint( 0, 16 ), id+"-ref", 2, this );
     m_pin[2]->setLength(6);
     m_pin[2]->setLabelText( "R" );
     m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[2] = m_pin[2];
 }
 VoltReg::~VoltReg(){}
 
@@ -83,6 +82,46 @@ QList<propGroup_t> VoltReg::propGroups()
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Voltage", tr("Output Voltage"),"main"} );
     return {mainGroup};
+}
+
+void VoltReg::stamp()
+{
+    if( m_ePin[0]->isConnected() ) m_ePin[0]->getEnode()->addToNoLinList(this);
+    if( m_ePin[1]->isConnected() ) m_ePin[1]->getEnode()->addToNoLinList(this);
+    if( m_ePin[2]->isConnected() ) m_ePin[2]->getEnode()->addToNoLinList(this);
+
+    eResistor::stamp();
+}
+
+void VoltReg::initialize()
+{
+    eResistor::setRes( 1e-6 );
+
+    m_accuracy = Simulator::self()->NLaccuracy();
+
+    m_lastOut = 0;
+}
+
+void VoltReg::voltChanged()
+{
+    double inVolt = m_pin[0]->getVolt();
+
+    m_voltPos = inVolt;
+    if( m_voltPos > 0.7 ) m_voltPos -= 0.7;
+    else                  m_voltPos = 0;
+
+    double outVolt = m_ePin[2]->getVolt()+m_vRef;
+
+    if     ( outVolt > m_voltPos ) outVolt = m_voltPos;
+    else if( outVolt < m_voltNeg ) outVolt = m_voltNeg;
+
+    double current = (inVolt-outVolt)/m_resist;
+    if( fabs(current-m_lastOut)<m_accuracy ) return;
+
+    m_lastOut = current;
+
+    m_pin[0]->stampCurrent( current );
+    m_pin[1]->stampCurrent(-current );
 }
 
 double VoltReg::vRef()
@@ -96,7 +135,7 @@ void VoltReg::setVRef( double vref )
     if( pauseSim )  Simulator::self()->pauseSim();
 
     Component::setValue( vref );       // Takes care about units multiplier
-    eVoltReg::setVRef( m_value*m_unitMult );
+    m_vRef = m_value*m_unitMult;
     
     if( pauseSim ) Simulator::self()->resumeSim();
 }
@@ -107,7 +146,7 @@ void VoltReg::setUnit( QString un )
     if( pauseSim )  Simulator::self()->pauseSim();
 
     Component::setUnit( un );
-    eVoltReg::setVRef( m_value*m_unitMult );
+    m_vRef = m_value*m_unitMult;
 
     if( pauseSim ) Simulator::self()->resumeSim();
 }

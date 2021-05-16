@@ -21,6 +21,7 @@
 #include "connector.h"
 #include "circuit.h"
 #include "itemlibrary.h"
+#include "iopin.h"
 #include "utils.h"
 
 static const char* Scripted_properties[] = {
@@ -44,7 +45,7 @@ LibraryItem* Scripted::libraryItem()
 
 Scripted::Scripted( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eLogicDevice( id )
+        , eElement( id )
 {
     Q_UNUSED( Scripted_properties );
 
@@ -79,7 +80,7 @@ QList<propGroup_t> Scripted::propGroups()
 void Scripted::stamp()
 {
     m_canRun = false;
-    eLogicDevice::stamp();
+    ///LogicComponent::stamp();
 
     QString excep = evaluate( m_script );
     if( excep != "" ) return;
@@ -87,7 +88,7 @@ void Scripted::stamp()
 
     for( int i=0; i<m_numInputs; ++i )
     {
-        eNode* enode = m_input[i]->getEpin(0)->getEnode();
+        eNode* enode = m_inPin[i]->getEnode();
         if( enode ) enode->voltChangedCallback( this );
     }
 }
@@ -201,22 +202,19 @@ void Scripted::setNumInps( int inputs )
     if( inputs < m_numInputs ) 
     {
         int dif = m_numInputs-inputs;
-        
-        eLogicDevice::deleteInputs( dif );
+
         LogicComponent::deleteInputs( dif );
     }
     else{
         m_inPin.resize( inputs );
-        m_numInPins = inputs;
+        m_numInputs = inputs;
     
         for( int i=m_numInputs; i<inputs; ++i )
         {
             QString num = QString::number(i);
-            m_inPin[i] = new Pin( 180, QPoint(-24, i*8+8 ), m_id+"-in"+num, i, this );
+            m_inPin[i] = new IoPin( 180, QPoint(-24, i*8+8 ), m_id+"-in"+num, i, this, input );
             m_inPin[i]->setLabelText( " I"+num );
             m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-
-            eLogicDevice::createInput( m_inPin[i] );
         }
     }
     m_height = m_numOutputs;
@@ -234,22 +232,19 @@ void Scripted::setNumOuts( int outs )
     if( outs < m_numOutputs ) 
     {
         int dif = m_numOutputs-outs;
-        
-        eLogicDevice::deleteOutputs( dif );
+
         LogicComponent::deleteOutputs( dif );
     }
     else{
         m_outPin.resize( outs );
-        m_numOutPins = outs;
+        m_numOutputs = outs;
         
         for( int i=m_numOutputs; i<outs; ++i )
         {
             QString num = QString::number(i);
-            m_outPin[i] = new Pin( 0, QPoint(24, i*8+8 ), m_id+"-out"+num, i, this );
+            m_outPin[i] = new IoPin( 0, QPoint(24, i*8+8 ), m_id+"-out"+num, i, this, output );
             m_outPin[i]->setLabelText( "O"+num+" " );
             m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-
-            eLogicDevice::createOutput( m_outPin[i] );
         }
     }
     m_height = m_numOutputs;

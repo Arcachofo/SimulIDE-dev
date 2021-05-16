@@ -19,79 +19,51 @@
 
 #include "e-clocked_device.h"
 #include "simulator.h"
-#include "e-source.h"
+#include "iopin.h"
 #include "circuit.h"
 
-eClockedDevice::eClockedDevice( QString id )
-              : eElement( id )
+eClockedDevice::eClockedDevice()
 {
-    m_clock     = false;
-    m_clockSource = NULL;
+    m_clock    = false;
+    m_clockPin = NULL;
     m_etrigger = Trig_Clk;
-
-    m_inputImp = 1e9;
-
-    m_inputHighV = 2.5;
-    m_inputLowV  = 2.5;
 }
-eClockedDevice::~eClockedDevice()
+eClockedDevice::~eClockedDevice(){}
+
+void eClockedDevice::initState()
 {
-    //if( m_clockSource ) delete m_clockSource;
+    m_clock = false;
 }
 
-void eClockedDevice::stamp() // Register for callBack when eNode volt change on clock pin
+void eClockedDevice::stamp( eElement* el )
 {
-    callBack( true );
-}
-
-void eClockedDevice::callBack( bool en )
-{
-    if( m_clockSource )
+    // Register for callBack when eNode volt change on clock pin
+    if( m_clockPin )
     {
-        eNode* enode = m_clockSource->getEpin(0)->getEnode();
-        if( enode )
-        {
-            if( en) enode->voltChangedCallback( this );
-            else    enode->remFromChangedCallback( this );
-        }
+        eNode* enode = m_clockPin->getEnode();
+        if( enode ) enode->voltChangedCallback( el );
     }
 }
 
 void eClockedDevice::seteTrigger( int trigger )
 {
-    m_etrigger = trigger;
+    m_etrigger = (trigtType_t)trigger;
     m_clock = false;
 }
 
-void eClockedDevice::createClockPin()
-{
-    ePin* epin = new ePin( m_elmId+"-ePin-clock", 0 );
-    createClockeSource( epin );
-}
-
-void eClockedDevice::createClockPin( ePin* epin )
-{
-    epin->setId( m_elmId+"-ePin-clock" );
-    createClockeSource( epin );
-}
-
-void eClockedDevice::createClockeSource( ePin* epin )
-{
-    m_clockSource = new eSource( m_elmId+"-eSource-clock", epin, input );
-    m_clockSource->setInputImp( m_inputImp );
-}
-
 bool eClockedDevice::clockInv()
-{ return m_clockSource->isInverted(); }
+{
+    return m_clockPin->isInverted();
+}
 
 void eClockedDevice::setClockInv( bool inv )
 {
-    if( !m_clockSource ) return;
+    if( !m_clockPin ) return;
 
     bool pauseSim = Simulator::self()->isRunning();
     if( pauseSim ) Simulator::self()->pauseSim();
 
-    m_clockSource->setInverted(inv);
+    m_clockPin->setInverted( inv );
     Circuit::self()->update();
 
     if( pauseSim ) Simulator::self()->resumeSim();
@@ -99,17 +71,11 @@ void eClockedDevice::setClockInv( bool inv )
 
 clkState_t eClockedDevice::getClockState()
 {
-    if( !m_clockSource ) return Clock_Allow;
+    if( !m_clockPin ) return Clock_Allow;
 
     clkState_t cState = Clock_Low;
 
-    bool  clock = m_clock;
-    double volt = m_clockSource->getVolt(); // Clock pin volt.
-
-    if     ( volt > m_inputHighV ) clock = true;
-    else if( volt < m_inputLowV )  clock = false;
-
-    if( m_clockSource->isInverted() ) clock = !clock;
+    bool clock = m_clockPin->getInpState(); // Clock pin volt.
 
     if( m_etrigger == Trig_InEn )
     {
@@ -124,8 +90,6 @@ clkState_t eClockedDevice::getClockState()
     }
     else cState = Clock_Allow;
     m_clock = clock;
-
-    m_clockSource->getPin()->setPinState( clock? input_high:input_low ); // High-Low colors
 
     return cState;
 }

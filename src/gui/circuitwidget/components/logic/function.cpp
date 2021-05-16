@@ -44,7 +44,9 @@ LibraryItem* Function::libraryItem()
 
 Function::Function( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eFunction( id )
+        , eElement( id )
+        , m_engine()
+        , m_functions()
 {
     Q_UNUSED( Function_properties );
 
@@ -67,6 +69,86 @@ QList<propGroup_t> Function::propGroups()
     QList<propGroup_t> pg = LogicComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
+}
+
+void Function::stamp()
+{
+    ///LogicComponent::stamp();
+
+    for( int i=0; i<m_numInputs; ++i )
+    {
+        eNode* enode = m_inPin[i]->getEnode();
+        if( enode ) enode->voltChangedCallback( this );
+    }
+    m_program.clear();
+    for( int i=0; i<m_numOutputs; ++i )
+    {
+        m_program.append( QScriptProgram( m_funcList.at(i) ));
+    }
+}
+
+void Function::voltChanged()
+{
+    //uint bits = 0;
+    uint bit = 0;
+    //uint msb = (m_numInputs+m_numOutputs)*2-1;
+    for( int i=0; i<m_numInputs; ++i )
+    {
+        bit = m_inPin[i]->getInpState();
+        //if( bit ) bits += 1 << (msb-(i*4));
+        //else      bits += 1 << (msb-(i*4)-1);
+        m_engine.globalObject().setProperty( "i"+QString::number(i), QScriptValue( bit ) );
+        m_engine.globalObject().setProperty( "vi"+QString::number(i), QScriptValue( m_inPin[i]->getVolt()) );
+    }
+    //m_engine.globalObject().setProperty( "inBits", QScriptValue( bits ) );
+    //m_engine.globalObject().setProperty( "inputs", QScriptValue( m_numInputs ) );
+
+    for( int i=0; i<m_numOutputs; ++i )
+    {
+        bit = m_outPin[i]->getOutState();
+        //if( bit ) bits += 1 << (msb-(i*4)-2);
+        //else      bits += 1 << (msb-(i*4)-3);
+        m_engine.globalObject().setProperty( "o"+QString::number(i), QScriptValue( bit ) );
+        m_engine.globalObject().setProperty( "vo"+QString::number(i), QScriptValue( m_outPin[i]->getVolt()) );
+    }
+    //m_engine.globalObject().setProperty( "bits", QScriptValue( bits ) );
+    //m_engine.globalObject().setProperty( "outputs", QScriptValue( m_numOutputs ) );
+
+    m_nextOutVal = 0;
+    for( int i=0; i<m_numOutputs; ++i )
+    {
+        if( i >= m_numOutputs ) break;
+        QString text = m_funcList.at(i).toLower();
+
+        //qDebug() << "eFunction::voltChanged()"<<text<<m_engine.evaluate( text ).toString();
+
+        if( text.startsWith( "vo" ) )
+        {
+            float out = m_engine.evaluate( m_program.at(i) ).toNumber();
+            m_outPin[i]->setOutHighV( out );
+            m_nextOutVal += 1<<i;
+        }
+        else
+        {
+            bool out = m_engine.evaluate( m_program.at(i) ).toBool();
+            m_outPin[i]->setOutHighV( m_ouHighV );
+            if( out ) m_nextOutVal += 1<<i;
+        }
+    }
+    sheduleOutPuts( this );
+}
+
+QString Function::functions()
+{
+    return m_functions;
+}
+
+void Function::setFunctions( QString f )
+{
+    //qDebug()<<"eFunction::setFunctions"<<f;
+    if( f.isEmpty() ) return;
+    m_functions = f;
+    m_funcList = f.split(",");
 }
 
 void Function::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
@@ -152,23 +234,19 @@ void Function::setNumInps( int inputs )
     if( inputs < m_numInputs ) 
     {
         int dif = m_numInputs-inputs;
-        
-        eLogicDevice::deleteInputs( dif );
+
         LogicComponent::deleteInputs( dif );
     }
     else{
         m_inPin.resize( inputs );
-        m_numInPins = inputs;
+        m_numInputs = inputs;
     
         for( int i=m_numInputs; i<inputs; ++i )
         {
             QString num = QString::number(i);
-            m_inPin[i] = new Pin( 180, QPoint(-24, i*8+8 ), m_id+"-in"+num, i, this );
-                                   
+            m_inPin[i] = new IoPin( 180, QPoint(-24, i*8+8 ), m_id+"-in"+num, i, this,input );
             m_inPin[i]->setLabelText( " I"+num );
             m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-
-            eLogicDevice::createInput( m_inPin[i] );
         }
     }
     m_height = m_numOutputs*2-1;
@@ -186,8 +264,7 @@ void Function::setNumOuts( int outs )
     if( outs < m_numOutputs ) 
     {
         int dif = m_numOutputs-outs;
-        
-        eLogicDevice::deleteOutputs( dif );
+
         LogicComponent::deleteOutputs( dif );
     
         for( int i=0; i<dif; ++i )
@@ -201,14 +278,12 @@ void Function::setNumOuts( int outs )
         }
     }else{
         m_outPin.resize( outs );
-        m_numOutPins = outs;
+        m_numOutputs = outs;
         
         for( int i=m_numOutputs; i<outs; ++i )
         {
             QString num = QString::number(i);
-            m_outPin[i] = new Pin( 0, QPoint(24, i*8*2+8 ), m_id+"-out"+num, i, this );
-
-            eLogicDevice::createOutput( m_outPin[i] );
+            m_outPin[i] = new IoPin( 0, QPoint(24, i*8*2+8 ), m_id+"-out"+num, i, this, output );
             
             QPushButton* button = new QPushButton( );
             button->setMaximumSize( 14,14 );

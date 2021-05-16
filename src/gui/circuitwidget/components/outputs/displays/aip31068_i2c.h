@@ -20,16 +20,17 @@
 #ifndef AIP31068_I2C_H
 #define AIP31068_I2C_H
 
-#include "itemlibrary.h"
 #include "hd44780_base.h"
-#include "e-i2c_slave.h"
-#include "pin.h"
+#include "twimodule.h"
 
-class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public eI2CSlave
+class LibraryItem;
+class IoPin;
+
+class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
 {
     Q_OBJECT
-    Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode  DESIGNABLE true USER true )
-    Q_PROPERTY( double Frequency  READ freq       WRITE setFreq       DESIGNABLE true USER true )
+    Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode   DESIGNABLE true USER true )
+    Q_PROPERTY( double Frequency READ freqKHz WRITE setFreqKHz DESIGNABLE true USER true )
 
     public:
         Aip31068_i2c( QObject* parent, QString type, QString id );
@@ -57,8 +58,7 @@ class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public eI2CSlave
         int m_phase;
 
         //Inputs
-        Pin* m_pinSDA;
-        Pin* m_pinSCL;
+        IoPin* m_pinSDA;
 };
 
 #endif

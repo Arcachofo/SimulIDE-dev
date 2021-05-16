@@ -20,23 +20,14 @@
 #ifndef LATCHD_H
 #define LATCHD_H
 
-#include "e-latch_d.h"
-#include "itemlibrary.h"
 #include "logiccomponent.h"
+#include "e-element.h"
 
-class MAINMODULE_EXPORT LatchD : public LogicComponent, public eLatchD
+class LibraryItem;
+
+class MAINMODULE_EXPORT LatchD : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
-
     Q_PROPERTY( int    Channels     READ channels   WRITE setChannels   DESIGNABLE true USER true )
     Q_PROPERTY( bool   Tristate     READ tristate   WRITE setTristate   DESIGNABLE true USER true )
     Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
@@ -47,9 +38,13 @@ class MAINMODULE_EXPORT LatchD : public LogicComponent, public eLatchD
         ~LatchD();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
+
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override{ IoComponent::runOutputs(); }
 
         int channels() { return m_channels; }
         void setChannels( int channels );
@@ -58,15 +53,11 @@ class MAINMODULE_EXPORT LatchD : public LogicComponent, public eLatchD
         void setTristate( bool t );
 
         virtual void setTrigger( Trigger trigger );
-        
-        virtual void remove() override;
-        
+
     private:
         void createLatches( int n );
         void deleteLatches( int n );
         void updateSize();
-
-        Pin* m_outEnPin;
         
         int m_channels;
         

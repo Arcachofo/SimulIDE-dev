@@ -17,10 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "bus.h"
 #include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "bus.h"
+#include "itemlibrary.h"
 
 static const char* Bus_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Num Bits"),
@@ -44,7 +45,7 @@ LibraryItem* Bus::libraryItem()
 
 Bus::Bus( QObject* parent, QString type, QString id )
    : Component( parent, type, id )
-   , eBus( id )
+   , eElement( id )
 {
     Q_UNUSED( Bus_properties );
 
@@ -62,6 +63,8 @@ Bus::Bus( QObject* parent, QString type, QString id )
     m_busPin0->setIsBus( true );
     m_pin[0]  = m_busPin0;
     m_ePin[0] = m_busPin0;
+
+    m_startBit = 0;
 }
 Bus::~Bus(){}
 
@@ -118,7 +121,6 @@ void Bus::inStateChanged( int msg )
     }
 }
 
-
 void Bus::registerPins( eNode* enode )
 {
     if( !enode->isBus() ) return;
@@ -167,7 +169,8 @@ void Bus::setNumLines( int lines )
 
 void Bus::setStartBit( int bit )
 {
-    eBus::setStartBit( bit );
+    if( bit < 0 ) bit = 0;
+    m_startBit = bit;
 
     for( int i=1; i<=m_numLines; i++ )
     {

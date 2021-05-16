@@ -21,7 +21,7 @@
 
 McuSpi::McuSpi( eMcu* mcu, QString name )
       : McuModule( mcu, name )
-      , SpiModule( name )
+      , SpiModule()
 {
 }
 
@@ -31,6 +31,6 @@ McuSpi::~McuSpi()
 
 void McuSpi::initialize()
 {
-    SpiModule::initialize();
+    //SpiModule::initialize();
 
 }

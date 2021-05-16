@@ -40,8 +40,6 @@ class MAINMODULE_EXPORT Buffer : public Gate
         static LibraryItem *libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
-
-        virtual void remove() override;
         
         void setTristate( bool t );
         

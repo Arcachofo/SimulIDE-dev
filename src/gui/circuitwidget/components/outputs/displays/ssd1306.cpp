@@ -17,11 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "itemlibrary.h"
-#include "connector.h"
-#include "simulator.h"
-#include "e-source.h"
 #include "ssd1306.h"
+#include "itemlibrary.h"
+#include "simulator.h"
+#include "iopin.h"
+
 
 static const char* Ssd1306_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Color")
@@ -46,8 +46,6 @@ LibraryItem* Ssd1306::libraryItem()
 Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
        , TwiModule( id )
-       , m_pinSck( 270, QPoint(-48, 48), id+"-PinSck" , 0, this )
-       , m_pinSda( 270, QPoint(-40, 48), id+"-PinSda" , 0, this )
        //, m_pinRst( 270, QPoint(-32, 48), id+"-PinRst" , 0, this )
        //, m_pinDC ( 270, QPoint(-24, 48), id+"-PinDC"  , 0, this )
        //, m_pinCS ( 270, QPoint(-16, 48), id+"-PinCS"  , 0, this )
@@ -55,26 +53,24 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     Q_UNUSED( Ssd1306_properties );
 
     m_graphical = true;
-    
     m_area = QRectF( -70, -48, 140, 88 );
 
     m_address = 0b00111100; // 0x3A - 60
-    
-    m_pinSck.setLabelText( " SCK" );
-    m_pinSda.setLabelText( " SDA" );
+
+    m_pin.resize( 2 );
+    m_clockPin = new IoPin( 270, QPoint(-48, 48), id+"-PinSck" , 0, this, open_col );
+    m_clockPin->setLabelText( " SCK" );
+    m_pin[0] = m_clockPin;
+    TwiModule::setSclPin( m_clockPin );
+
+    m_pinSda = new IoPin( 270, QPoint(-40, 48), id+"-PinSda" , 0, this, open_col );
+    m_pin[1] = m_pinSda;
+    m_pinSda->setLabelText( " SDA" );
+    TwiModule::setSdaPin( m_pinSda );
+
     //m_pinRst.setLabelText( " Res" );
     //m_pinDC.setLabelText(  " DC" );
     //m_pinCS.setLabelText(  " CS" );
-
-    m_pin.resize( 2 );
-    m_pin[0] = &m_pinSck;
-    m_pin[1] = &m_pinSda;
-
-    eClockedDevice::createClockPin( &m_pinSck );             // Input SCL
-    TwiModule::setSclPin( m_clockSource );
-    TwiModule::setSdaPin( new eSource( id+"-eSource-input0", &m_pinSda, open_col ) );
-    //epin->setId( id+"-ePin-input0" );
-    //eLogicDevice::createInput( &m_pinSda );                // Input SDA
 
     m_pdisplayImg = new QImage( 128, 64, QImage::Format_MonoLSB );
     m_pdisplayImg->setColor( 0, qRgb(0, 0, 0));

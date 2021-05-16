@@ -99,7 +99,7 @@ void LogicInput::updateStep()
     if( m_changed ) 
     {
         m_changed = false;
-        m_outpin->setState( m_button->isChecked(), true );
+        m_outpin->setOutState( m_button->isChecked(), true );
     }
 }
 
@@ -138,7 +138,7 @@ void LogicInput::setUnit( QString un )
 
 void LogicInput::updateOutput()
 {
-    m_outpin->setVoltHigh( m_value*m_unitMult );
+    m_outpin->setOutHighV( m_value*m_unitMult );
     m_changed = true;
 }
 

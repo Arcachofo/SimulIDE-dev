@@ -18,9 +18,9 @@
  ***************************************************************************/
 
 #include "sevensegment_bcd.h"
+#include "itemlibrary.h"
 #include "simulator.h"
 #include "connector.h"
-
 
 Component* SevenSegmentBCD::construct( QObject* parent, QString type, QString id )
 {
@@ -39,7 +39,7 @@ LibraryItem* SevenSegmentBCD::libraryItem()
 
 SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
                : LogicComponent( parent, type, id )
-               , eBcdTo7S( id )
+               , eElement( id )
 {
     m_graphical = true;
 
@@ -57,31 +57,20 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
     init( pinList );
 
     m_pin.resize( 4 );
-    for( int i=0; i<m_numInPins; i++ )
-    {
-        eLogicDevice::createInput( m_inPin[i] );
-        m_pin[i] = m_inPin[i];
-    }
+    for( int i=0; i<m_numInputs; i++ )m_pin[i] = m_inPin[i];
 
     setLabelPos(-16,-40, 0);
         
     Simulator::self()->addToUpdateList( this );
     
-    initialize();
+    ///initialize();
 }
-SevenSegmentBCD::~SevenSegmentBCD(){}
+SevenSegmentBCD::~SevenSegmentBCD()
+{
+    Simulator::self()->remFromUpdateList( this );
+}
 
 QList<propGroup_t> SevenSegmentBCD::propGroups(){ QList<propGroup_t> pg; return pg;}
-
-void SevenSegmentBCD::initialize()
-{
-    eBcdTo7S::initialize();
-}
-
-void SevenSegmentBCD::stamp()
-{
-    eBcdTo7S::stamp();
-}
 
 void SevenSegmentBCD::updateStep()
 {
@@ -90,12 +79,6 @@ void SevenSegmentBCD::updateStep()
         update();
         m_changed = false;
     }
-}
-
-void SevenSegmentBCD::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-    LogicComponent::remove();
 }
 
 void SevenSegmentBCD::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

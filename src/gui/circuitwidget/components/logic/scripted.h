@@ -23,24 +23,15 @@
 #include <QScriptEngine>
 #include <QScriptProgram>
 
-#include "e-logic_device.h"
 #include "logiccomponent.h"
-#include "e-source.h"
+#include "e-element.h"
 
 class LibraryItem;
+class IoPin;
 
-class MAINMODULE_EXPORT Scripted : public LogicComponent, public eLogicDevice
+class MAINMODULE_EXPORT Scripted : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
     Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
     Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
     Q_PROPERTY( int    Num_Outputs  READ numOuts    WRITE setNumOuts    DESIGNABLE true USER true )
@@ -70,9 +61,9 @@ class MAINMODULE_EXPORT Scripted : public LogicComponent, public eLogicDevice
         
     public slots:
         void displayMsg( QString msg ) { qDebug() << msg; }
-        bool getInputState( int i ){ return eLogicDevice::getInputState( i ); }
-        bool getOutputState( int o ){ return eLogicDevice::getOutputState( o ); }
-        void setOutputState( int i, bool s ){ if( i < m_numOutputs ) m_output[i]->setState( s, true ); }
+        bool getInputState( int i ){ return m_inPin[i]->getInpState(); }
+        bool getOutputState( int o ){ return m_outPin[o]->getOutState(); }
+        void setOutputState( int i, bool s ){ if( i < m_numOutputs ) m_outPin[i]->setOutState( s, true ); }
         int  numInps(){ return m_numInputs; }
         int  numOuts(){ return m_numOutputs; }
 

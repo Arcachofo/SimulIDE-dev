@@ -20,11 +20,10 @@
 #include "probe.h"
 #include "connector.h"
 #include "connectorline.h"
-#include "e-source.h"
 #include "simulator.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
-#include "pin.h"
+#include "iopin.h"
 
 #include <math.h>
 
@@ -63,17 +62,13 @@ Probe::Probe( QObject* parent, QString type, QString id )
     // Create Input Pin
     m_ePin.resize(1);
     m_pin.resize(1);
-    QString nodid = id;
-    nodid.append(QString("-inpin"));
-    QPoint nodpos = QPoint(-22,0);
-    m_inputpin = new Pin( 180, nodpos, nodid, 0, this);
-    m_inputpin->setLength( 20 );
-    m_inputpin->setBoundingRect( QRect(-2, -2, 6, 4) );
-    m_pin[0] = m_inputpin;
-    
-    nodid.append( QString("-eSource") );
-    m_inSource = new eSource( nodid, m_inputpin, input );
-    m_inSource->setImp( 1e9 );
+
+    m_inputPin = new IoPin( 180, QPoint(-22,0), id+"-inpin", 0, this, input);
+    m_inputPin->setLength( 20 );
+    m_inputPin->setBoundingRect( QRect(-2, -2, 6, 4) );
+    m_inputPin->setImp( 1e9 );
+    m_pin[0] = m_inputPin;
+
 
     setRotation( rotation() - 45 );
     
@@ -88,10 +83,7 @@ Probe::Probe( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 }
-Probe::~Probe()
-{
-    delete m_inSource;
-}
+Probe::~Probe(){}
 
 QList<propGroup_t> Probe::propGroups()
 {
@@ -111,14 +103,14 @@ void Probe::updateStep()
         return;
     }
 
-    if( m_inputpin->isConnected() )// Voltage from connected pin
+    if( m_inputPin->isConnected() )// Voltage from connected pin
     {
-         setVolt( m_inputpin->getVolt() );
+         setVolt( m_inputPin->getVolt() );
          return;
     }
 
     // Voltage from connector or Pin behind inputPin
-    QList<QGraphicsItem*> list = m_inputpin->collidingItems();
+    QList<QGraphicsItem*> list = m_inputPin->collidingItems();
 
     if( list.isEmpty() )
     {
@@ -166,7 +158,7 @@ void Probe::setVolt( double volt )
 double Probe::getVolt()
 {
     double volt = 0;
-    if     ( m_inputpin->isConnected() ) volt = m_inputpin->getVolt();
+    if     ( m_inputPin->isConnected() ) volt = m_inputPin->getVolt();
     else if( m_readConn != 0l )          volt = m_readConn->getVolt();
     else if( m_readPin != 0l )           volt = m_readPin->getVolt();
     return volt;

@@ -20,7 +20,8 @@
 #include "i2cram.h"
 #include "memtable.h"
 #include "simulator.h"
-#include "pin.h"
+#include "itemlibrary.h"
+#include "iopin.h"
 
 static const char* I2CRam_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Control Code"),
@@ -43,8 +44,8 @@ LibraryItem* I2CRam::libraryItem()
 }
 
 I2CRam::I2CRam( QObject* parent, QString type, QString id )
-      : LogicComponent( parent, type, id )
-      , eI2CSlave( id )
+      : IoComponent( parent, type, id )
+      , TwiModule( id )
       , MemData()
 {
     Q_UNUSED( I2CRam_properties );
@@ -63,14 +64,13 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
             // Outputs:
             ;
     init( pinList );                   // Create Pins Defined in pinList
-    
-    eLogicDevice::createInput( m_inPin[0] );                // Input SDA
-    eLogicDevice::createClockPin( m_inPin[1] );             // Input SCL
-    
-    eLogicDevice::createInput( m_inPin[2] );                 // Input A0
-    eLogicDevice::createInput( m_inPin[3] );                 // Input A1
-    eLogicDevice::createInput( m_inPin[4] );                 // Input A2
-    
+
+    m_inPin[0]->setPinMode( open_col );
+    TwiModule::setSdaPin( m_inPin[0] );
+
+    m_inPin[1]->setPinMode( open_col );
+    TwiModule::setSclPin( m_inPin[1] );
+
     m_cCode = 0b01010000;
     m_size  = 65536;
     m_ram.resize( m_size );
@@ -91,14 +91,14 @@ QList<propGroup_t> I2CRam::propGroups()
     mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
     mainGroup.propList.append( {"Persistent", tr("Persistent"),""} );
 
-    QList<propGroup_t> pg = LogicComponent::propGroups();
+    QList<propGroup_t> pg = IoComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
 }
 
 void I2CRam::stamp()                     // Called at Simulation Start
 {
-    eI2CSlave::stamp();
+    TwiModule::stamp();
     
     for( int i=2; i<5; i++ )                  // Initialize address pins
     {
@@ -109,7 +109,7 @@ void I2CRam::stamp()                     // Called at Simulation Start
 
 void I2CRam::initialize()
 {
-    eI2CSlave::initialize();
+    TwiModule::initialize();
     
     m_addrPtr = 0;
     m_phase = 3;
@@ -122,22 +122,14 @@ void I2CRam::updateStep()
 
 void I2CRam::voltChanged()             // Some Pin Changed State, Manage it
 {
-    bool A0 = eLogicDevice::getInputState( 1 );
-    bool A1 = eLogicDevice::getInputState( 2 );
-    bool A2 = eLogicDevice::getInputState( 3 );
-    
-    int  address = m_cCode;
-    if( A0 ) address += 1;
-    if( A1 ) address += 2;
-    if( A2 ) address += 4;
-    
-    m_address = address;
-    
-    eI2CSlave::voltChanged();                               // Run I2C Engine
+    m_address = m_cCode;
+    if( m_inPin[1]->getInpState() ) m_address += 1;
+    if( m_inPin[2]->getInpState() ) m_address += 2;
+    if( m_inPin[3]->getInpState() ) m_address += 4;
 
-    //qDebug() <<"I2CRam::setVChanged " << m_state ;
+    TwiModule::voltChanged();        // Run I2C Engine
 
-    if( m_state == I2C_STOPPED ) m_phase = 3;
+    if( m_i2cState == I2C_STOP ) m_phase = 3;
 }
 
 void I2CRam::readByte() // Write to RAM
@@ -150,20 +142,18 @@ void I2CRam::readByte() // Write to RAM
     else if( m_phase == 1 )
     {
         m_phase++;
-
         if( m_size > 256 ) m_addrPtr += m_rxReg;
         else               m_addrPtr  = m_rxReg;
     }
     else
     {
         while( m_addrPtr >= m_size ) m_addrPtr -= m_size;
-        //qDebug() << "I2CRam::readByte Write to RAM Address:"<<m_addrPtr<<" Value"<< m_rxReg;
         m_ram[ m_addrPtr ] = m_rxReg;
         m_addrPtr++;
         
         if( m_addrPtr >= m_size ) m_addrPtr = 0;
     }
-    eI2CSlave::readByte();
+   TwiModule::readByte();
 }
 
 void I2CRam::startWrite()
@@ -177,11 +167,10 @@ void I2CRam::writeByte() // Read from RAM
     while( m_addrPtr >= m_size ) m_addrPtr -= m_size;
 
     m_txReg = m_ram[ m_addrPtr ];
-//qDebug() << "I2CRam::writeByte Read from RAM Address:"<<m_addrPtr<<" Value"<< m_txReg;
-    
+
     if( ++m_addrPtr >= m_size ) m_addrPtr = 0;
 
-    eI2CSlave::writeByte();
+    TwiModule::writeByte();
 }
 
 void I2CRam::setMem( QVector<int> m )
@@ -197,7 +186,6 @@ QVector<int> I2CRam::mem()
         QVector<int> null;
         return null;
     }
-    //qDebug() << m_ram.size() <<"Ram:\n" << m_ram;
     return m_ram;
 }
 

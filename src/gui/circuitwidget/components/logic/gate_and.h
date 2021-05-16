@@ -23,8 +23,6 @@
 #include "gate.h"
 #include "component.h"
 
-//#include <QObject>
-
 class LibraryItem;
 
 class MAINMODULE_EXPORT AndGate : public Gate
@@ -43,7 +41,7 @@ class MAINMODULE_EXPORT AndGate : public Gate
         virtual QList<propGroup_t> propGroups() override;
 
         virtual QPainterPath shape() const;
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget ) override;
 };
 
 

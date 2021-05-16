@@ -21,23 +21,14 @@
 #define BINCOUNTER_H
 
 #include "logiccomponent.h"
-#include "e-logic_device.h"
+#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eLogicDevice
+class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Pin_SET      READ pinSet     WRITE setPinSet     DESIGNABLE true USER true )
+    Q_PROPERTY( bool   Pin_SET      READ pinSet     WRITE useSetPin     DESIGNABLE true USER true )
     Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
     Q_PROPERTY( bool   Reset_Inverted READ srInv     WRITE setSrInv     DESIGNABLE true USER true )
     Q_PROPERTY( int    Max_Value      READ TopValue  WRITE setTopValue  DESIGNABLE true  USER true )
@@ -58,11 +49,12 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eLogicDevice
         void setSrInv( bool inv );
 
         bool pinSet() { return m_pinSet; }
-        void setPinSet( bool set );
+        void useSetPin( bool set );
 
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
+        virtual void runEvent() override;
 
     protected:
         int m_Counter;
@@ -70,6 +62,9 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eLogicDevice
 
         bool m_resetInv;
         bool m_pinSet;
+
+        IoPin* m_setPin;
+        IoPin* m_resetPin;
 };
 
 #endif

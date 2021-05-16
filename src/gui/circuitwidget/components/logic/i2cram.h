@@ -20,25 +20,17 @@
 #ifndef I2CRAM_H
 #define I2CRAM_H
 
-#include "e-i2c_slave.h"
-#include "itemlibrary.h"
-#include "logiccomponent.h"
+#include "twimodule.h"
+#include "iocomponent.h"
 #include "memdata.h"
 
-class MAINMODULE_EXPORT I2CRam : public LogicComponent, public eI2CSlave, public MemData
+class LibraryItem;
+
+class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public MemData
 {
     Q_OBJECT
-    Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-    Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
     Q_PROPERTY( QVector<int> Mem  READ mem        WRITE setMem )
-    Q_PROPERTY( double Frequency  READ freq       WRITE setFreq       DESIGNABLE true USER true )
+    Q_PROPERTY( double Frequency  READ freqKHz    WRITE setFreqKHz    DESIGNABLE true USER true )
     Q_PROPERTY( int  Control_Code READ cCode      WRITE setCcode      DESIGNABLE true USER true )
     Q_PROPERTY( int  Size_bytes   READ rSize      WRITE setRSize      DESIGNABLE true USER true )
     Q_PROPERTY( bool Persistent   READ persistent WRITE setPersistent DESIGNABLE true USER true )

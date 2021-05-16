@@ -59,11 +59,11 @@ void ClockBase::updateStep()
     {
         if( m_isRunning )
         {
-            m_outpin->setState( true, true );
+            m_outpin->setOutState( true, true );
             Simulator::self()->cancelEvents( this );
             Simulator::self()->addEvent( 1, this );
         }
-        else m_outpin->setState( false, true );
+        else m_outpin->setOutState( false, true );
         m_changed = false;
     }
 }

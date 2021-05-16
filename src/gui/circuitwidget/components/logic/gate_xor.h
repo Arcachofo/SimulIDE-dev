@@ -23,8 +23,6 @@
 #include "gate.h"
 #include "component.h"
 
-#include <QObject>
-
 class LibraryItem;
 
 class MAINMODULE_EXPORT XorGate : public Gate

@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 #include "shiftreg.h"
-#include "pin.h"
-
+#include "itemlibrary.h"
+#include "iopin.h"
 
 Component* ShiftReg::construct( QObject* parent, QString type, QString id )
 {
@@ -38,7 +38,7 @@ LibraryItem* ShiftReg::libraryItem()
 
 ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eShiftReg( id )
+        , eElement( id )
 {
     m_width  = 4;
     m_height = 9;
@@ -64,14 +64,6 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    eLogicDevice::createInput( m_inPin[0] );                 // Input DI
-    eLogicDevice::createClockPin( m_inPin[1] );           // Input Clock
-    eLogicDevice::createInput( m_inPin[2] );                // Input Rst
-    eLogicDevice::createOutEnablePin( m_inPin[3] );    // IOutput Enable
-
-    for( int i=0; i<m_numOutPins; i++ )
-        eLogicDevice::createOutput( m_outPin[i] );
-
     setResetInv( true );                             // Invert Reset Pin
 }
 ShiftReg::~ShiftReg(){}
@@ -85,6 +77,38 @@ QList<propGroup_t> ShiftReg::propGroups()
     QList<propGroup_t> pg = LogicComponent::propGroups();
     pg.prepend( mainGroup );
     return pg;
+}
+
+void ShiftReg::stamp()
+{
+    eNode* enode = m_inPin[1]->getEnode(); // m_input[1] = Reset pin
+    if( enode ) enode->voltChangedCallback( this );
+
+    ///LogicComponent::stamp();
+}
+
+void ShiftReg::voltChanged()
+{
+    LogicComponent::updateOutEnabled();
+
+    bool clkRising = (LogicComponent::getClockState() == Clock_Rising);// Get Clk to don't miss any clock changes
+    bool     reset = m_inPin[1]->getInpState();
+
+    if( reset ) m_nextOutVal = 0;        // Reset shift register
+    else if( clkRising )                 // Clock rising edge
+    {
+        m_nextOutVal <<= 1;
+
+        bool data = m_inPin[0]->getInpState();
+        if( data ) m_nextOutVal += 1;
+    }
+    sheduleOutPuts( this );
+}
+
+void ShiftReg::setResetInv( bool inv )
+{
+    m_resetInv = inv;
+    m_inPin[1]->setInverted( inv );
 }
 
 #include "moc_shiftreg.cpp"

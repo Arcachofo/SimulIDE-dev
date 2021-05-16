@@ -21,12 +21,12 @@
 #define TWIMODULE_H
 
 #include "e-clocked_device.h"
-// #include "regsignal.h"
+#include "e-element.h"
 #include "avrtwicodes.h" // Using AVR states comes at hand
 
 class eSource;
 
-class MAINMODULE_EXPORT TwiModule : public eClockedDevice
+class MAINMODULE_EXPORT TwiModule : public eElement, public eClockedDevice
 {
     public:
         TwiModule( QString name );
@@ -57,11 +57,14 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         virtual double freqKHz() { return m_freq/1e3; }
         virtual void setFreqKHz( double f );
 
+        virtual void startWrite(){;} // Notify posible child class
         virtual void writeByte();
         virtual void readByte();
 
-        void setSdaPin( eSource* pin );
-        void setSclPin( eSource* pin );
+        uint8_t byteReceived() { return m_rxReg; }
+
+        void setSdaPin( IoPin* pin );
+        void setSclPin( IoPin* pin );
         void setMode( twiMode_t mode );
 
         void masterStart();
@@ -110,8 +113,8 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         i2cState_t m_i2cState;   // Current State of i2c
         i2cState_t m_lastState;  // Last State of i2c
 
-        eSource* m_sda;
-        eSource* m_scl;
+        IoPin* m_sda;
+        IoPin* m_scl;
 };
 
 #endif

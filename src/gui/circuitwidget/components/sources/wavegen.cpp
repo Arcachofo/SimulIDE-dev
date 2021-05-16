@@ -95,8 +95,8 @@ void WaveGen::runEvent()
     {
         m_lastVout = m_vOut;
 
-        m_outpin->setVoltHigh( m_value*m_unitMult*m_vOut+m_voltBase );
-        m_outpin->setState( true, true );
+        m_outpin->setOutHighV( m_value*m_unitMult*m_vOut+m_voltBase );
+        m_outpin->setOutState( true  );
     }
 
     m_remainder += m_fstepsPC-(double)m_stepsPC;

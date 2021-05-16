@@ -21,18 +21,16 @@
 #define MCUCOMPONENTPIN_H
 
 #include "mcucomponent.h"
-#include "e-source.h"
-#include "pin.h"
+#include "iopin.h"
 
 
-class MAINMODULE_EXPORT McuComponentPin : public QObject, public eSource
+class MAINMODULE_EXPORT McuComponentPin : public IoPin
 {
     Q_OBJECT
+
     public:
         McuComponentPin( McuComponent *mcu, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle );
         ~McuComponentPin();
-
-        Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
 
         virtual void stamp() override;
         virtual void initialize() override;
@@ -44,7 +42,7 @@ class MAINMODULE_EXPORT McuComponentPin : public QObject, public eSource
 
         void enableIO( bool en );
 
-        void move( int dx, int dy );
+        //void move( int dx, int dy );
         int angle() { return m_angle; }
         
         QString ptype() { return m_type; }

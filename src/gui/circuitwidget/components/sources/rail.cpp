@@ -94,8 +94,8 @@ void Rail::setUnit( QString un )
 
 void Rail::updateOutput()
 {
-    m_out->setVoltHigh( m_value*m_unitMult );
-    m_out->setState( true );
+    m_out->setOutHighV( m_value*m_unitMult );
+    m_out->setOutState( true );
 }
 
 void Rail::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

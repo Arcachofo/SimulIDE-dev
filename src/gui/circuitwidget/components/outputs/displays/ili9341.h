@@ -20,13 +20,13 @@
 #ifndef ILI9341_H
 #define ILI9341_H
 
-#include "e-logic_device.h"
-#include "component.h"
-#include "pin.h"
+#include "logiccomponent.h"
+#include "e-element.h"
+#include "iopin.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Ili9341 : public Component, public eLogicDevice
+class MAINMODULE_EXPORT Ili9341 : public LogicComponent, public eElement
 {
     Q_OBJECT
     
@@ -90,11 +90,11 @@ class MAINMODULE_EXPORT Ili9341 : public Component, public eLogicDevice
         bool m_scrollV;
 
         //Inputs
-        Pin m_pinCS;
-        Pin m_pinRst;
-        Pin m_pinDC;
-        Pin m_pinMosi;
-        Pin m_pinSck;
+        IoPin m_pinCS;
+        IoPin m_pinRst;
+        IoPin m_pinDC;
+        IoPin m_pinMosi;
+        IoPin m_pinSck;
         //Pin m_pinMiso;
 };
 

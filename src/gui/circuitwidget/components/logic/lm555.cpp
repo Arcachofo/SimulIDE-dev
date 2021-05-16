@@ -20,10 +20,9 @@
  ***************************************************************************/
 
 #include "lm555.h"
-#include "e-source.h"
+#include "simulator.h"
 #include "itemlibrary.h"
-#include "connector.h"
-#include "pin.h"
+#include "iopin.h"
 
 
 Component* Lm555::construct( QObject* parent, QString type, QString id )
@@ -43,75 +42,147 @@ LibraryItem* Lm555::libraryItem()
 
 Lm555::Lm555( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
-     , eLm555( id )
+     , eElement( id )
 {
     m_area = QRect( 0, 0, 8*4, 8*5 );
     m_color = QColor( 50, 50, 70 );
     
     m_pin.resize( 8 );
     
-    QString newId = id;
-    
-    newId.append(QString("-ePin0"));
-    m_pin[0] = new Pin( 180, QPoint(-8, 8*1), newId, 0, this );
+    m_pin[0] = new Pin( 180, QPoint(-8, 8*1), id+"-ePin0", 0, this );
     m_pin[0]->setLabelText( "Gnd" );
-    m_ePin[0] = m_pin[0];
-    
-    newId = id;
-    newId.append(QString("-ePin1"));
-    m_pin[1] = new Pin( 180, QPoint(-8, 8*2), newId, 1, this );
+    m_pin[0] = m_pin[0];
+
+    m_pin[1] = new Pin( 180, QPoint(-8, 8*2), id+"-ePin1", 1, this );
     m_pin[1]->setLabelText( "Trg" );
-    m_ePin[1] = m_pin[1];
-    
-    newId = id;
-    newId.append(QString("-ePin2"));
-    m_pin[2] = new Pin( 180, QPoint(-8, 8*3), newId, 2, this );
-    m_pin[2]->setLabelText( "Out" );
-    m_ePin[2] = m_pin[2];
-    newId.append("-eSource");
-    m_output = new eSource( newId, m_ePin[2], output );
+    m_pin[1] = m_pin[1];
+
+    m_output = new IoPin( 180, QPoint(-8, 8*3), id+"-ePin2", 2, this, output );
+    m_output->setLabelText( "Out" );
     m_output->setOutputImp( 10 );
-    m_output->setState( true );
-    
-    newId = id;
-    newId.append(QString("-ePin3"));
-    m_pin[3] = new Pin( 180, QPoint(-8, 8*4), newId, 3, this );
+    m_output->setOutState( true );
+    m_pin[2] = m_output;
+
+    m_pin[3] = new Pin( 180, QPoint(-8, 8*4), id+"-ePin3", 3, this );
     m_pin[3]->setLabelText( "Rst" );
-    m_ePin[3] = m_pin[3];
-    
-    newId = id;
-    newId.append(QString("-ePin4"));
-    m_pin[4] = new Pin( 0, QPoint(4*8+8, 8*4), newId, 4, this );
-    m_pin[4]->setLabelText( "CV" );
-    m_ePin[4] = m_pin[4];
-    newId.append("-eSource");
-    m_cv = new eSource( newId, m_ePin[4], output );
+
+    m_cv = new IoPin( 0, QPoint(4*8+8, 8*4), id+"-ePin4", 4, this, output );
+    m_cv->setLabelText( "CV" );
     m_cv->setOutputImp( 10 );
-    m_cv->setState( true );
-    
-    newId = id;
-    newId.append(QString("-ePin5"));
-    m_pin[5] = new Pin( 0, QPoint(4*8+8, 8*3), newId, 5, this );
+    m_cv->setOutState( true );
+    m_pin[4] = m_cv;
+
+    m_pin[5] = new Pin( 0, QPoint(4*8+8, 8*3), id+"-ePin5", 5, this );
     m_pin[5]->setLabelText( "Thr" );
-    m_ePin[5] = m_pin[5];
-    
-    newId = id;
-    newId.append(QString("-ePin6"));
-    m_pin[6] = new Pin( 0, QPoint(4*8+8, 8*2), newId, 6, this );
+
+    m_dis = new IoPin( 0, QPoint(4*8+8, 8*2), id+"-ePin6", 6, this, input );
     m_pin[6]->setLabelText( "Dis" );
-    m_ePin[6] = m_pin[6];
-    newId.append("-eSource");
-    m_dis = new eSource( newId, m_ePin[6], input );
-    
-    newId = id;
-    newId.append(QString("-ePin7"));
-    m_pin[7] = new Pin( 0, QPoint(4*8+8, 8*1), newId, 7, this );
+    m_pin[6] = m_dis;
+
+    m_pin[7] = new Pin( 0, QPoint(4*8+8, 8*1),id+"-ePin7", 7, this );
     m_pin[7]->setLabelText( "Vcc" );
-    m_ePin[7] = m_pin[7];
+
+    m_propDelay = 10*1000; // 10 ns
     
 }
 Lm555::~Lm555()
 {
+}
+
+void Lm555::stamp()
+{
+    for( int i=0; i<8; ++i )
+    {
+        if( i == 2 ) continue; // Output
+        if( i == 6 ) continue; // Discharge
+
+        if( m_pin[i]->isConnected() ) m_pin[i]->getEnode()->addToNoLinList(this);
+    }
+}
+
+void Lm555::initialize()
+{
+    m_outState = false;
+
+    m_voltLast = 0;
+    m_voltNegLast = 0;
+    m_voltHightLast = 0;
+    m_disImpLast = cero_doub;
+}
+
+void Lm555::voltChanged()
+{
+    bool changed = false;
+    double voltPos = m_pin[7]->getVolt();
+    m_voltNeg = m_pin[0]->getVolt();
+    m_volt    = voltPos - m_voltNeg;
+
+    double reftTh = m_pin[4]->getVolt();
+    double reftTr = reftTh/2;
+
+    if( m_voltLast != m_volt ) changed = true;
+
+    double voltTr = m_pin[1]->getVolt();
+    double voltTh = m_pin[5]->getVolt();
+
+    double voltRst = m_pin[3]->getVolt();
+
+    bool reset = ( voltRst < (m_voltNeg+0.7) );
+    bool th    = ( voltTh > reftTh );
+    bool tr    = ( reftTr > voltTr );
+
+    bool outState = m_outState;
+
+    if     ( reset )     outState = false;
+    else if( tr )        outState =  true;
+    else if( !tr && th ) outState =  false;
+
+    //qDebug() << "eLm555::setVChanged" << outState<<"th"<<th<<"tr"<<tr;
+    if( outState != m_outState )
+    {
+        m_outState = outState;
+        m_voltHight = m_voltNeg;
+
+        if( outState )
+        {
+            m_voltHight = voltPos - 1.7;
+            if( m_voltHight < m_voltNeg ) m_voltHight = m_voltNeg;
+            m_disImp = high_imp;
+        }
+        else m_disImp = 1;
+
+        changed = true;
+
+        //qDebug() << "eLm555::setVChanged" << outState<<reset<<th<<tr;
+    }
+    if( changed ) Simulator::self()->addEvent( m_propDelay, this );
+}
+
+void Lm555::runEvent()
+{
+    if( m_voltLast != m_volt )
+    {
+        m_cv->setOutHighV( m_volt*2/3 );
+        m_cv->stampOutput();
+        m_voltLast = m_volt;
+    }
+    if( m_voltNegLast != m_voltNeg )
+    {
+        m_dis->setOutHighV( m_voltNeg );
+        m_dis->stampOutput();
+        m_voltNegLast = m_voltNeg;
+    }
+    if( m_voltHightLast != m_voltHight )
+    {
+        m_output->setOutHighV( m_voltHight );
+        m_output->stampOutput();
+        m_voltHightLast = m_voltHight;
+    }
+    if( m_disImpLast != m_disImp )
+    {
+        m_dis->setImp( m_disImp );
+        m_disImpLast = m_disImp;
+    }
 }
 
 void Lm555::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
