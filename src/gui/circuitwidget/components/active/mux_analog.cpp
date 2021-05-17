@@ -93,14 +93,9 @@ void MuxAnalog::stamp()
        if( node ) node->setSwitched( true );
     }
 
-    enode = m_enablePin->getEnode();
-    if( enode ) enode->voltChangedCallback( this );
+    m_enablePin->changeCallBack( this );
+    for( Pin* pin : m_addrPin ) pin->changeCallBack( this );
 
-    for( int i=0; i<m_addrBits; ++i )
-    {
-        enode = m_addrPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
     m_enabled = false;
 }
 
@@ -190,7 +185,6 @@ void MuxAnalog::createAddrBits( int c )
         pin->setLabelColor( QColor( 0, 0, 0 ) );
         m_addrPin[i] = pin;
     }
-    //update();
 }
 
 void MuxAnalog::deleteAddrBits( int d )
@@ -200,13 +194,12 @@ void MuxAnalog::deleteAddrBits( int d )
     for( int i=start; i<m_addrBits; i++ )
     {
         Pin* pin = (static_cast<Pin*>(m_addrPin[i]));
-        if( pin->connector() ) pin->connector()->remove();
+        pin->removeConnector();
         
         delete pin;
     }
     m_addrBits = m_addrBits-d;
     m_addrPin.resize( m_addrBits );
-    //Circuit::self()->update();
 }
 
 void MuxAnalog::createResistors( int c )
@@ -237,7 +230,6 @@ void MuxAnalog::createResistors( int c )
 
         m_resistor[i]->setAdmit( 0 );
     }
-    //update();
 }
 
 void MuxAnalog::deleteResistors( int d )
@@ -247,7 +239,7 @@ void MuxAnalog::deleteResistors( int d )
     for( int i=start; i<m_channels; i++ )
     {
         Pin* pin = static_cast<Pin*>(m_chanPin[i]);
-        if( pin->connector() ) pin->connector()->remove();
+        pin->removeConnector();
         
         delete pin;
         delete m_ePin[i];
@@ -256,19 +248,14 @@ void MuxAnalog::deleteResistors( int d )
     m_resistor.resize( start );
     m_chanPin.resize( start );
     m_ePin.resize( start );
-    //Circuit::self()->update();
 }
 
 void MuxAnalog::remove()
 {
-    if( m_inputPin->isConnected() )  (static_cast<Pin*>(m_inputPin))->connector()->remove();
-    if( m_enablePin->isConnected() ) (static_cast<Pin*>(m_enablePin))->connector()->remove();
-    
-    for( int i=0; i<m_addrBits; i++ ) 
-    {
-        Pin* pin = static_cast<Pin*>(m_addrPin[i]);
-        if( pin->connector() ) pin->connector()->remove();
-    }
+    m_inputPin->removeConnector();
+    m_enablePin->removeConnector();
+    for( Pin* pin :m_addrPin  ) pin->removeConnector();
+
     deleteResistors( m_channels );
     deleteAddrBits( m_addrBits );
     
@@ -278,7 +265,6 @@ void MuxAnalog::remove()
 void MuxAnalog::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
-    
     p->drawRoundRect( m_area, 4, 4 );
 }
 #include "moc_mux_analog.cpp"

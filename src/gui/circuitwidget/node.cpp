@@ -70,22 +70,18 @@ void Node::remove() // Only remove if there are less than 3 connectors
 
     for( int i=0; i< 3; i++)
     {
-        if( m_pin[i]->isConnected() )
+        if( m_pin[i]->connector() )
         {
             if( conecteds == 0 ) { conecteds++; con[0] = i; }
             else con[1] = i;
             conectors++;
         }
     }
-    //qDebug() << conectors << " connectors";
-
     if( conectors < 3 ) 
     { 
         if( conectors == 2 ) joinConns( con[0], con[1] );  // 2 Conn
-        else                                               // 1 Conn
-        {
-             if( m_pin[con[0]]->connector() ) m_pin[con[0]]->connector()->remove();
-        }
+        else                 m_pin[con[0]]->removeConnector();
+
         Circuit::self()->compList()->removeOne( this );
         if( this->scene() ) Circuit::self()->removeItem( this );
     }
@@ -98,8 +94,6 @@ void Node::joinConns( int c0, int c1 )
 
     Connector* con0 = pin0->connector();
     Connector* con1 = pin1->connector();
-    con0->remNullLines();
-    con1->remNullLines();
     
     Connector* con = new Connector( this, con0->itemType(), con0->itemID(), pin0->conPin() );
 
@@ -150,13 +144,11 @@ void Node::joinConns( int c0, int c1 )
     pin0->setEnode( 0l );
     con0->setStartPin( 0l );
     con0->setEndPin( 0l );
-    //qDebug() << "Node::joinConns removing con0" << con0->objectName();
     con0->remove();
     
     pin1->setEnode( 0l );
     con1->setStartPin( 0l );
     con1->setEndPin( 0l );
-    //qDebug() << "Node::joinConns removing con1" << con1->objectName();
     con1->remove();
 
     con->closeCon( pin1->conPin(), true );

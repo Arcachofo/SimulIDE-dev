@@ -322,17 +322,9 @@ void Component::remove()
         m_propDialog->close();
         delete m_propDialog;
     }
+    for( uint i=0; i<m_pin.size(); i++ )
+        if( m_pin[i] ) m_pin[i]->removeConnector();
 
-    for( uint i=0; i<m_pin.size(); i++ )   // Remove connectors attached
-    {
-        Pin* pin = m_pin[i];
-        
-        if( pin && pin->connector() )
-        {
-            Connector* con = pin->connector();
-            if( con ) con->remove();
-        }
-    }
     Circuit::self()->compRemoved( true );
 }
 

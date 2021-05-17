@@ -50,7 +50,7 @@ class MAINMODULE_EXPORT DAC : public LogicComponent, public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        virtual void setNumInps( int inputs );
+        virtual void setNumInps( uint inputs );
         
     protected:
         double m_maxVolt;

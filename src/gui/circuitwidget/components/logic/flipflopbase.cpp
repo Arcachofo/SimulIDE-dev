@@ -45,19 +45,12 @@ QList<propGroup_t> FlipFlopBase::propGroups()
 void FlipFlopBase::stamp()
 {
     m_Q0 = 0;
-    eNode* enode = m_setPin->getEnode();         // Set pin
-    if( enode ) enode->voltChangedCallback( this );
+    m_setPin->changeCallBack( this );
+    m_resetPin->changeCallBack( this );
 
-    enode = m_resetPin->getEnode();              // Reset pin
-    if( enode ) enode->voltChangedCallback( this );
-
-    if( m_trigger != Clock )
+    if( m_trigger != Clock ) // J K or D
     {
-        for( int i=0; i<m_dataPins; i++ ) // J K or D
-        {
-            eNode* enode = m_inPin[i]->getEnode();
-            if( enode ) enode->voltChangedCallback( this );
-        }
+        for( int i=0; i<m_dataPins; i++ ) m_inPin[i]->changeCallBack( this );
     }
     LogicComponent::stamp( this );
     m_outPin[0]->setOutState( true );

@@ -160,12 +160,11 @@ void Tunnel::removeTunnel()
     if( list )
     {
         list->removeAll( this );
-        if( list->isEmpty() )
-        {
-            m_tunnels.remove( m_name );
-            m_eNodes.remove( m_name );
-            delete list;
-        }
+        if( !list->isEmpty() ) return;
+
+        m_tunnels.remove( m_name );
+        m_eNodes.remove( m_name );
+        delete list;
     }
 }
 

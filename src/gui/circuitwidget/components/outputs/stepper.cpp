@@ -195,7 +195,7 @@ void Stepper::setUnit( QString un )
 void Stepper::setBipolar( bool bi )
 {
     m_bipolar = bi;
-    if( m_pinCo.connector() ) m_pinCo.connector()->remove();
+    m_pinCo.removeConnector();
     m_pinCo.setVisible( !bi );
 }
 
@@ -209,20 +209,11 @@ void Stepper::stamp()
         m_ePinB1Co.setEnode( enode );
         m_ePinB2Co.setEnode( enode );
     }
-    enode = m_pinA1.getEnode();// Register for changes callback
-    if( enode ) enode->voltChangedCallback( this );
-
-    enode = m_pinA2.getEnode();// Register for changes callback
-    if( enode ) enode->voltChangedCallback( this );
-
-    enode = m_pinB1.getEnode();// Register for changes callback
-    if( enode ) enode->voltChangedCallback( this );
-
-    enode = m_pinB2.getEnode();// Register for changes callback
-    if( enode ) enode->voltChangedCallback( this );
-    
-    enode = m_pinCo.getEnode();// Register for changes callback
-    if( enode ) enode->voltChangedCallback( this );
+    m_pinA1.changeCallBack( this );// Register for changes callback
+    m_pinA2.changeCallBack( this );// Register for changes callback
+    m_pinB1.changeCallBack( this );// Register for changes callback
+    m_pinB2.changeCallBack( this );// Register for changes callback
+    m_pinCo.changeCallBack( this );// Register for changes callback
 }
 
 void Stepper::updateStep()
@@ -232,11 +223,11 @@ void Stepper::updateStep()
 
 void Stepper::remove()
 {
-    if( m_pinA1.connector() ) m_pinA1.connector()->remove();
-    if( m_pinA2.connector() ) m_pinA2.connector()->remove();
-    if( m_pinCo.connector() ) m_pinCo.connector()->remove();
-    if( m_pinB1.connector() ) m_pinB1.connector()->remove();
-    if( m_pinB2.connector() ) m_pinB2.connector()->remove();
+    m_pinA1.removeConnector();
+    m_pinA2.removeConnector();
+    m_pinCo.removeConnector();
+    m_pinB1.removeConnector();
+    m_pinB2.removeConnector();
     
     Simulator::self()->remFromUpdateList( this ); 
     

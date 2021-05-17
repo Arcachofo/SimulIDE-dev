@@ -75,7 +75,7 @@ BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    m_oePin = m_inPin[4];    // Output Enable
+    setOePin( m_inPin[4] );    // Output Enable
         
     for( int i=10; i<16; ++i ) m_outPin[i]->setVisible( false ); // 10 bit by default
 }
@@ -101,11 +101,7 @@ void BcdToDec::initialize()
 
 void BcdToDec::stamp()
 {
-    for( int i=0; i<4; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    for( int i=0; i<4; ++i )m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp( this );
 }
 
@@ -141,7 +137,7 @@ void BcdToDec::set_16bits( bool set )
         for( int i=10; i<16; ++i )
         {
             m_outPin[i]->setVisible( false );
-            if( m_outPin[i]->connector() ) m_outPin[i]->connector()->remove();
+            m_outPin[i]->removeConnector();
         }
     }
     m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );

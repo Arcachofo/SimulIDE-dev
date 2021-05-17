@@ -86,8 +86,7 @@ void Hd44780::initialize() { Hd44780_Base::init(); }
 
 void Hd44780::stamp()
 {
-    eNode* enode = m_pinEn->getEnode();// Register for clk changes callback
-    if( enode ) enode->voltChangedCallback( this );
+    m_pinEn->changeCallBack( this );// Register for clk changes callback
 }
 
 void Hd44780::voltChanged()             // Called when clock Pin changes 

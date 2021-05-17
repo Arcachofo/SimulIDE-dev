@@ -76,9 +76,7 @@ void SwitchDip::stamp()
     {
         int pin1 = i*2;
         int pin2 = pin1+1;
-        
-        //qDebug()<<"SwitchDip::initialize"<< i<<m_size<<m_pin.size()<<pin1<<pin2;
-        
+
         eNode* node0 = m_pin[pin1]->getEnode();
         eNode* node1 = m_pin[pin2]->getEnode();
 
@@ -199,7 +197,6 @@ void SwitchDip::createSwitches( int c )
         
         m_state |= 1<<i;                          // default state = on;
     }
-    //update();
 }
 
 void SwitchDip::deleteSwitches( int d )
@@ -209,10 +206,8 @@ void SwitchDip::deleteSwitches( int d )
 
     for( int i=start*2; i<m_size*2; i++ )
     {
-        Pin* pin = m_pin[i];
-        if( pin->connector() ) pin->connector()->remove();
-        
-        delete pin;
+        m_pin[i]->removeConnector();
+        delete m_pin[i];
     }
     for( int i=start; i<m_size; i++ )
     {

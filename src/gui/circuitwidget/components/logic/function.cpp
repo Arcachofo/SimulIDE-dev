@@ -52,6 +52,7 @@ Function::Function( QObject* parent, QString type, QString id )
 
     m_lastDir = Circuit::self()->getFileName();
     
+    m_width = 4;
     setNumInps( 2 );                           // Create Input Pins
     setNumOuts( 1 );
     
@@ -73,15 +74,12 @@ QList<propGroup_t> Function::propGroups()
 
 void Function::stamp()
 {
-    ///LogicComponent::stamp();
+    LogicComponent::stamp( this );
 
-    for( int i=0; i<m_numInputs; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
+
     m_program.clear();
-    for( int i=0; i<m_numOutputs; ++i )
+    for( uint i=0; i<m_outPin.size(); ++i )
     {
         m_program.append( QScriptProgram( m_funcList.at(i) ));
     }
@@ -91,8 +89,8 @@ void Function::voltChanged()
 {
     //uint bits = 0;
     uint bit = 0;
-    //uint msb = (m_numInputs+m_numOutputs)*2-1;
-    for( int i=0; i<m_numInputs; ++i )
+    //uint msb = (m_inPin.size()+m_outPin.size())*2-1;
+    for( uint i=0; i<m_inPin.size(); ++i )
     {
         bit = m_inPin[i]->getInpState();
         //if( bit ) bits += 1 << (msb-(i*4));
@@ -101,9 +99,9 @@ void Function::voltChanged()
         m_engine.globalObject().setProperty( "vi"+QString::number(i), QScriptValue( m_inPin[i]->getVolt()) );
     }
     //m_engine.globalObject().setProperty( "inBits", QScriptValue( bits ) );
-    //m_engine.globalObject().setProperty( "inputs", QScriptValue( m_numInputs ) );
+    //m_engine.globalObject().setProperty( "inputs", QScriptValue( m_inPin.size() ) );
 
-    for( int i=0; i<m_numOutputs; ++i )
+    for( uint i=0; i<m_outPin.size(); ++i )
     {
         bit = m_outPin[i]->getOutState();
         //if( bit ) bits += 1 << (msb-(i*4)-2);
@@ -112,12 +110,12 @@ void Function::voltChanged()
         m_engine.globalObject().setProperty( "vo"+QString::number(i), QScriptValue( m_outPin[i]->getVolt()) );
     }
     //m_engine.globalObject().setProperty( "bits", QScriptValue( bits ) );
-    //m_engine.globalObject().setProperty( "outputs", QScriptValue( m_numOutputs ) );
+    //m_engine.globalObject().setProperty( "outputs", QScriptValue( m_outPin.size() ) );
 
     m_nextOutVal = 0;
-    for( int i=0; i<m_numOutputs; ++i )
+    for( uint i=0; i<m_outPin.size(); ++i )
     {
-        if( i >= m_numOutputs ) break;
+        if( i >= m_outPin.size() ) break;
         QString text = m_funcList.at(i).toLower();
 
         //qDebug() << "eFunction::voltChanged()"<<text<<m_engine.evaluate( text ).toString();
@@ -145,7 +143,6 @@ QString Function::functions()
 
 void Function::setFunctions( QString f )
 {
-    //qDebug()<<"eFunction::setFunctions"<<f;
     if( f.isEmpty() ) return;
     m_functions = f;
     m_funcList = f.split(",");
@@ -226,46 +223,28 @@ void Function::remove()
     LogicComponent::remove();
 }
 
-void Function::setNumInps( int inputs )
+void Function::setNumInps( uint inputs )
 {
-    if( inputs == m_numInputs ) return;
+    if( inputs == m_inPin.size() ) return;
     if( inputs < 1 ) return;
-    
-    if( inputs < m_numInputs ) 
-    {
-        int dif = m_numInputs-inputs;
 
-        LogicComponent::deleteInputs( dif );
-    }
-    else{
-        m_inPin.resize( inputs );
-        m_numInputs = inputs;
+    m_height = m_outPin.size()*2-1;
+    if( inputs > m_height ) m_height = inputs;
     
-        for( int i=m_numInputs; i<inputs; ++i )
-        {
-            QString num = QString::number(i);
-            m_inPin[i] = new IoPin( 180, QPoint(-24, i*8+8 ), m_id+"-in"+num, i, this,input );
-            m_inPin[i]->setLabelText( " I"+num );
-            m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        }
-    }
-    m_height = m_numOutputs*2-1;
-    if( m_numInputs > m_height ) m_height = m_numInputs;
-    m_area = QRect( -16, 0, 32, 8*m_height+8 );
-    
-    Circuit::self()->update();
+    IoComponent::setNumInps( inputs, "I" );
+    //m_area = QRect( -16, 0, 32, 8*m_height+8 );
 }
 
-void Function::setNumOuts( int outs )
+void Function::setNumOuts( uint outs )
 {
-    if( outs == m_numOutputs ) return;
+    if( outs == m_outPin.size() ) return;
     if( outs < 1 ) return;
     
-    if( outs < m_numOutputs ) 
+    if( outs < m_outPin.size() )
     {
-        int dif = m_numOutputs-outs;
+        int dif = m_outPin.size()-outs;
 
-        LogicComponent::deleteOutputs( dif );
+        IoComponent::deletePins( &m_outPin, dif );
     
         for( int i=0; i<dif; ++i )
         {
@@ -278,9 +257,8 @@ void Function::setNumOuts( int outs )
         }
     }else{
         m_outPin.resize( outs );
-        m_numOutputs = outs;
         
-        for( int i=m_numOutputs; i<outs; ++i )
+        for( uint i=m_outPin.size(); i<outs; ++i )
         {
             QString num = QString::number(i);
             m_outPin[i] = new IoPin( 0, QPoint(24, i*8*2+8 ), m_id+"-out"+num, i, this, output );
@@ -306,8 +284,8 @@ void Function::setNumOuts( int outs )
                        this, SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
         }
     }
-    m_height = m_numOutputs*2-1;
-    if( m_numInputs > m_height ) m_height = m_numInputs;
+    m_height = m_outPin.size()*2-1;
+    if( m_inPin.size() > m_height ) m_height = m_inPin.size();
     m_area = QRect( -16, 0, 32, 8*m_height+8 );
     
     m_functions = m_funcList.join(",");

@@ -103,7 +103,7 @@ void KeyPad::setupButtons()
     
     for( Pin* pin : m_pin ) 
     {
-        if( pin->connector() ) pin->connector()->remove();
+        pin->removeConnector();
         if( pin->scene() ) Circuit::self()->removeItem( pin );
         delete pin;
     }

@@ -27,14 +27,12 @@ Gate::Gate( QObject* parent, QString type, QString id, int inputs )
     : LogicComponent( parent, type, id )
     , eElement( id )
 {
-    setNumInps( inputs );                           // Create Input Pins
-    m_outPin.resize( 1 );
-    
+    m_width = 2;
+    setNumInps( inputs, "" );  // Create Input Pins
+
+    m_outPin.resize(1);
     m_outPin[0] = new IoPin( 0, QPoint( 16, 0 ), m_id+"-out", 1, this, output );
-    initPin( m_outPin[0] );
-                          
-    m_tristate = false;
-    m_openCol  = false;
+
     m_rndPD = true; // Randomize Propagation Delay
 }
 Gate::~Gate(){}
@@ -65,11 +63,8 @@ void Gate::stamp()
 {
     LogicComponent::stamp( this );
 
-    for( int i=0; i<m_numInputs; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
+
     m_out = false;
 }
 
@@ -77,9 +72,9 @@ void Gate::voltChanged()
 {
     if( m_tristate ) LogicComponent::updateOutEnabled();
 
-    int  inputs = 0;
+    int inputs = 0;
 
-    for( int i=0; i<m_numInputs; ++i )
+    for( uint i=0; i<m_inPin.size(); ++i )
     {
         bool state = m_inPin[i]->getInpState();
         if( state ) inputs++;
@@ -93,55 +88,9 @@ void Gate::voltChanged()
     sheduleOutPuts( this );
 }
 
-bool Gate::calcOutput( int inputs )
+bool Gate::calcOutput( uint inputs )
 {
-    return (inputs==m_numInputs); // Default for: Buffer, Inverter, And, Nand
-}
-
-bool Gate::tristate() { return m_tristate; }
-
-void Gate::setTristate( bool t ) { m_tristate = t; }
-
-bool Gate::openCol() { return m_openCol; }
-
-void Gate::setOpenCol( bool op )
-{
-    m_openCol = op;
-
-    if( op ) m_outPin[0]->setPinMode( open_col );
-    else     m_outPin[0]->setPinMode( output );
-}
-
-void Gate::setNumInps( int inputs )
-{
-    if( inputs == m_numInputs ) return;
-    if( inputs < 1 ) return;
-
-    for( int i=0; i<m_numInputs; i++ )
-    {
-        IoPin* pin = m_inPin[i];
-        if( pin->connector() ) pin->connector()->remove();
-        if( pin->scene() ) Circuit::self()->removeItem( pin );
-        pin->reset();
-        delete pin;
-    }
-
-    m_inPin.resize( inputs );
-
-    for( int i=0; i<inputs; i++ )
-    {
-        m_inPin[i] = new IoPin( 180, QPoint(-8-8,-4*inputs+i*8+4 )
-                               , m_id+"-in"+QString::number(i), i, this, input );
-    }
-    m_area = QRect( -20, -4*m_numInputs, 32, 4*2*m_numInputs );
-    
-    Circuit::self()->update();
-}
-
-void Gate::setInverted( bool inverted )
-{
-    LogicComponent::setInverted( inverted );
-    Circuit::self()->update();
+    return (inputs==m_inPin.size()); // Default for: Buffer, Inverter, And, Nand
 }
 
 #include "moc_gate.cpp"

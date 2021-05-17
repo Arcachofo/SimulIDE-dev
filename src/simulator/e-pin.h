@@ -22,16 +22,8 @@
 
 #include <QString>
 
-enum pinState_t{
-    undef_state=0,
-    out_open,
-    out_low,
-    out_high,
-    input_low,
-    input_high
-};
-
 class eNode;
+class eElement;
 
 class MAINMODULE_EXPORT ePin
 {
@@ -39,8 +31,7 @@ class MAINMODULE_EXPORT ePin
         ePin( QString id, int index );
         virtual ~ePin();
 
-        bool isConnected() { return m_connected; }
-        void setConnected( bool connected );
+        bool isConnected() { return (m_enode!=NULL); }
 
         double getVolt();
 
@@ -49,6 +40,8 @@ class MAINMODULE_EXPORT ePin
 
         eNode* getEnodeComp() { return m_enodeCon; }
         void   setEnodeComp( eNode* enode ); // The enode at other side of component
+
+        void changeCallBack( eElement* el , bool cb= true );
 
         bool inverted() { return m_inverted; }
         void setInverted( bool inverted );
@@ -68,9 +61,6 @@ class MAINMODULE_EXPORT ePin
         QString m_id;
         int m_index;
 
-        pinState_t m_pinState;
-
-        bool m_connected;
         bool m_inverted;
 };
 

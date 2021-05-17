@@ -28,8 +28,8 @@ class LibraryItem;
 class MAINMODULE_EXPORT BcdToDec : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( bool Inverted READ inverted WRITE setInverted DESIGNABLE true USER true )
-    Q_PROPERTY( bool _16_Bits READ _16bits  WRITE set_16bits  DESIGNABLE true USER true )
+    Q_PROPERTY( bool Inverted READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
+    Q_PROPERTY( bool _16_Bits READ _16bits    WRITE set_16bits    DESIGNABLE true USER true )
     Q_PROPERTY( bool Tristate READ tristate USER true )
 
     public:

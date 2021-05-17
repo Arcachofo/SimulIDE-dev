@@ -86,7 +86,7 @@ BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    m_oePin = m_inPin[4];    // IOutput Enable
+    setOePin(  m_inPin[4] );    // IOutput Enable
 }
 BcdTo7S::~BcdTo7S(){}
 
@@ -128,7 +128,7 @@ void BcdTo7S::voltChanged()
     int digit = a*1+b*2+c*4+d*8;
     m_nextOutVal = m_values[digit];
 
-    if( m_numOutputs ) sheduleOutPuts( this );
+    if( m_outPin.size() ) sheduleOutPuts( this );
 }
 
 void BcdTo7S::runEvent()

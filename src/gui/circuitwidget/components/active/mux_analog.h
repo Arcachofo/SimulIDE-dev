@@ -69,12 +69,12 @@ class MAINMODULE_EXPORT MuxAnalog : public LogicComponent, public eElement
 
         bool m_enabled;
 
-        ePin* m_inputPin;
-        ePin* m_enablePin;
+        Pin* m_inputPin;
+        Pin* m_enablePin;
 
         std::vector<eResistor*> m_resistor;
-        std::vector<ePin*> m_addrPin;
-        std::vector<ePin*> m_chanPin;
+        std::vector<Pin*> m_addrPin;
+        std::vector<Pin*> m_chanPin;
 };
 
 #endif

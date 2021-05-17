@@ -244,20 +244,8 @@ void TwiModule::setMode( twiMode_t mode )
 {
     if( mode == TWI_MASTER ) Simulator::self()->addEvent( m_clockPeriod, this ); // Start Clock
 
-    //eClockedDevice::callBack( mode == TWI_SLAVE ); // If Slave Register for Clock Pin changes
-
-    eNode* enode = m_scl->getEnode(); // If Slave Register for SCL voltage changes
-    if( enode )
-    {
-        if( mode == TWI_SLAVE ) enode->voltChangedCallback( this );
-        else                    enode->remFromChangedCallback( this );
-    }
-    enode = m_sda->getEnode(); // If Slave Register for SDA voltage changes
-    if( enode )
-    {
-        if( mode == TWI_SLAVE ) enode->voltChangedCallback( this );
-        else                    enode->remFromChangedCallback( this );
-    }
+    m_scl->changeCallBack( this, mode == TWI_SLAVE );
+    m_sda->changeCallBack( this, mode == TWI_SLAVE );
 
     setSCL( true );
     setSDA( true );

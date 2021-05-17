@@ -129,10 +129,8 @@ void MechContact::SetupSwitches( int poles, int throws )
     else               m_area = QRectF( -12, -8-16*poles-4, 24, 8+16*poles+8+4 ); // Relays
     int start = m_pin0/2;
 
-    for( uint i=0; i<m_switches.size(); i++ )
-        delete m_switches[i];
+    for( uint i=0; i<m_switches.size(); i++ ) delete m_switches[i];
         
-    //qDebug() << "MechContact::SetupSwitches Pins:"<<poles<<throws<<m_numPoles<<m_numthrows;
     for( int i=0; i<m_numPoles; i++ )
     {
         int epinN = m_pin0+i*m_numthrows*2;
@@ -141,19 +139,16 @@ void MechContact::SetupSwitches( int poles, int throws )
     }
     for( uint i=start; i<m_pin.size(); i++ )
     {
-        Pin* pin = m_pin[i];
-        if( pin->connector() ) pin->connector()->remove();
-        pin->reset();
-        delete pin;
+        m_pin[i]->removeConnector();
+        m_pin[i]->reset();
+        delete m_pin[i];
     }
     m_numPoles = poles;
     m_numthrows = throws;
 
     m_switches.resize( poles*throws );
     m_pin.resize( start+poles+poles*throws);
-
     m_ePin.resize(m_pin0+2*poles*throws);
-//qDebug() << "MechContact::SetupSwitches" << poles+poles*throws;
 
     int cont = 0;
     for( int i=0; i<poles; i++ )              // Create Resistors

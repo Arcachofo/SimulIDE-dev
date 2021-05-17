@@ -59,16 +59,17 @@ Memory::Memory( QObject* parent, QString type, QString id )
     m_WePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-We", 0, this, input );
     m_WePin->setLabelText( " WE" );
     m_WePin->setLabelColor( QColor( 0, 0, 0 ) );
+    m_WePin->setInverted( true );
     
     m_CsPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin-Cs", 0, this, input );
     m_CsPin->setLabelText( "CS " );
     m_CsPin->setLabelColor( QColor( 0, 0, 0 ) );
+    m_WePin->setInverted( true );
     
     m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-outEnable" , 0, this, input );
     m_oePin->setLabelText( " OE" );
     m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
-
-    for( int i=0; i<2; i++ ) m_inPin[i]->setInverted( true ); // Invert control pins
+    m_WePin->setInverted( true );
 
     m_dataBytes = 1;
     m_addrBits = 0;
@@ -114,7 +115,7 @@ void Memory::initialize()
     m_oe = true;
     m_read = false;
 
-    for( int i=0; i<m_numOutputs; ++i )
+    for( uint i=0; i<m_outPin.size(); ++i )
     {
         m_outPin[i]->setPinMode( input );
     }
@@ -161,7 +162,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     m_we = WE;
     if( WE )                                // Write
     {
-        for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setPinMode( input );
+        for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( input );
         Simulator::self()->addEvent( 1, NULL );
 
         if( csTrig || weTrig )  // Write action triggered
@@ -171,7 +172,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
         }
     }else                                  // Read
     {
-        for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setPinMode( output );
+        for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( output );
         Simulator::self()->addEvent( 1, NULL );
         m_read = true;
         m_nextOutVal = m_ram[m_address];
@@ -185,7 +186,7 @@ void Memory::runEvent()
     else
     {
         int value = 0;
-        for( int i=0; i<m_numOutputs; ++i )
+        for( uint i=0; i<m_outPin.size(); ++i )
         {
             bool state = m_outPin[i]->getInpState();
             if( state ) value += pow( 2, i );
@@ -253,7 +254,6 @@ void Memory::setAddrBits( int bits )
     if( bits == m_addrBits ) return;
     if( bits == 0 ) bits = 8;
     if( bits > 18 ) bits = 18;
-    m_addrBits = bits;
 
     m_ram.resize( pow( 2, bits ) );
     
@@ -262,10 +262,11 @@ void Memory::setAddrBits( int bits )
     if     ( bits < m_addrBits ) deleteAddrBits( m_addrBits-bits );
     else if( bits > m_addrBits ) createAddrBits( bits-m_addrBits );
 
+    m_addrBits = bits;
+
     if( m_memTable ) m_memTable->setData( &m_ram );
 
     updatePins();
-
     Circuit::self()->update();
 }
 
@@ -276,7 +277,6 @@ void Memory::createAddrBits( int bits )
     int origY = -(m_height/2)*8;
     
     m_inPin.resize( chans );
-    m_numInputs = chans;
     
     for( int i=m_addrBits; i<chans; i++ )
     {
@@ -285,14 +285,12 @@ void Memory::createAddrBits( int bits )
         m_inPin[i] = new IoPin( 180, QPoint(-24,origY+8+i*8 ), m_id+"-in"+number, i, this, input );
         m_inPin[i]->setLabelText( " A"+number );
         m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        ///LogicComponent::createInput( m_inPin[i] );
     }
 }
 
 void Memory::deleteAddrBits( int bits )
 {
-    LogicComponent::deleteInputs( bits );
-    LogicComponent::deleteInputs( bits );
+    LogicComponent::deletePins( &m_inPin, bits );
 }
 
 void Memory::setDataBits( int bits )
@@ -314,11 +312,9 @@ void Memory::setDataBits( int bits )
 void Memory::createDataBits( int bits )
 {
     int chans = m_dataBits + bits;
-    
     int origY = -(m_height/2)*8;
     
     m_outPin.resize( chans );
-    m_numOutputs = chans;
     
     for( int i=m_dataBits; i<chans; i++ )
     {
@@ -332,8 +328,7 @@ void Memory::createDataBits( int bits )
 
 void Memory::deleteDataBits( int bits )
 {
-    LogicComponent::deleteOutputs( bits );
-    LogicComponent::deleteOutputs( bits );
+    LogicComponent::deletePins( &m_outPin, bits );
 }
 
 void Memory::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
@@ -387,9 +382,9 @@ void Memory::showTable()
 
 void Memory::remove()
 {
-    if( m_CsPin->connector() )    m_CsPin->connector()->remove();
-    if( m_WePin->connector() )    m_WePin->connector()->remove();
-    if( m_oePin->connector() ) m_oePin->connector()->remove();
+    m_CsPin->removeConnector();
+    m_WePin->removeConnector();
+    m_oePin->removeConnector();
     
     LogicComponent::remove();
 }

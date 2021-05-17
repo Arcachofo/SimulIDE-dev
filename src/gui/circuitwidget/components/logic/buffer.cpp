@@ -42,9 +42,7 @@ Buffer::Buffer( QObject* parent, QString type, QString id )
 {
     m_area = QRect( -19, -17, 38, 34 ); 
     
-    m_outEnPin = new IoPin( 90, QPoint( 0,-12 ), m_id+"-ePin-outEnable", 0, this, input );
-    ///eLogicDevice::createOutEnablePin( m_outEnPin );
-    
+    setOePin( new IoPin( 90, QPoint( 0,-12 ), m_id+"-ePin-outEnable", 0, this, input ) );
     setTristate( false );
 }
 Buffer::~Buffer(){}
@@ -54,21 +52,6 @@ QList<propGroup_t> Buffer::propGroups()
     QList<propGroup_t> pg = Gate::propGroups();
     pg.first().propList.append( {"Tristate", tr("Tristate"),""} );
     return pg;
-}
-
-void Buffer::setTristate( bool t )
-{
-    if( !t ) 
-    {
-        if( m_outEnPin->connector() )
-        {
-            m_outEnPin->reset();
-            m_outEnPin->connector()->remove();
-        }
-    }
-    m_outEnPin->setVisible( t );
-    m_tristate = t;
-    LogicComponent::updateOutEnabled();
 }
 
 QPainterPath Buffer::shape() const

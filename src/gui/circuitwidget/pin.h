@@ -23,6 +23,15 @@
 #include "component.h"
 #include "e-pin.h"
 
+enum pinState_t{
+    undef_state=0,
+    out_open,
+    out_low,
+    out_high,
+    input_low,
+    input_high
+};
+
 class Connector;
 
 class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
@@ -51,12 +60,15 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setPinAngle( int angle );
         int pinAngle() { return m_angle; }
 
+        void setY( qreal y );
+
         void setBoundingRect( QRect area );
         
         Component* component() { return m_component; }
 
         Connector* connector();
         void setConnector( Connector* c );
+        void removeConnector();
 
         void setConPin( Pin* pin );
         Pin* conPin();
@@ -93,6 +105,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent* event);
+
+        pinState_t m_pinState;
 
     private:
         int m_angle;

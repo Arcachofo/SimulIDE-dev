@@ -48,6 +48,7 @@ Demux::Demux( QObject* parent, QString type, QString id )
     m_height = 10;
 
     m_addrBits = 3;
+    m_tristate = true;
 
     QStringList pinList;
 
@@ -71,9 +72,10 @@ Demux::Demux( QObject* parent, QString type, QString id )
             << "OR08O7 "
             ;
     init( pinList );
-    m_area = QRect( -(m_width/2)*8-1, -(m_height/2)*8-8-1, m_width*8+2, m_height*8+16+2 );
-    
-    m_oePin = m_inPin[4];    // IOutput Enable
+
+    setOePin( m_inPin[4] );    // IOutput Enable
+
+    m_area = QRect(-(int)m_width*8/2-1,-(int)m_height*8/2-8-1, m_width*8+2, m_height*8+16+2 );
 }
 Demux::~Demux(){}
 
@@ -90,12 +92,8 @@ QList<propGroup_t> Demux::propGroups()
 
 void Demux::stamp()
 {
-    for( int i=0; i<4; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
-    ///LogicComponent::stamp();
+    for( int i=0; i<4; ++i )m_inPin[i]->changeCallBack( this );
+    LogicComponent::stamp( this );
 }
 
 void Demux::voltChanged()
@@ -137,22 +135,17 @@ void Demux::setAddrBits( int bits )
         {
             pin->setVisible( true );
             pin->setY( m_height*8/2+8 );
-            if( i == 0 )
+            if( i != 0 ) continue;
+            if( bits == 1 )
             {
-                if( bits == 1 )
-                {
-                    pin->setX( 0 );
-                    pin->setLabelText(" S0");
-                }else{
-                    pin->setX( 8 );
-                    pin->setLabelText("S0");
-                }
+                pin->setX( 0 );
+                pin->setLabelText(" S0");
+            }else{
+                pin->setX( 8 );
+                pin->setLabelText("S0");
             }
-            pin->isMoved();
-            pin->setLabelPos();
-        }
-        else{
-            if( pin->connector() ) pin->connector()->remove();
+        }else{
+            pin->removeConnector();
             pin->setVisible( false );
         }
     }
@@ -163,19 +156,14 @@ void Demux::setAddrBits( int bits )
         {
             pin->setVisible( true );
             pin->setY( i*8-(bits+bits/3)*8 );
-            pin->isMoved();
-            pin->setLabelPos();
-        }
-        else{
-            if( pin->connector() ) pin->connector()->remove();
+        }else{
+            pin->removeConnector();
             pin->setVisible( false );
         }
     }
-    m_inPin[4]->setY( -m_height*8/2-8 ); // OE
-    m_inPin[4]->isMoved();
-    m_inPin[4]->setLabelPos();
+    m_oePin->setY( -(m_height*8/2)-8 ); // OE
 
-    m_area = QRect( -(m_width/2)*8-1, -(m_height/2)*8-8-1, m_width*8+2, m_height*8+16+2 );
+    m_area = QRect(-(m_width*8/2-1),-(m_height*8/2)-8-1, m_width*8+2, m_height*8+16+2 );
     Circuit::self()->update();
 }
 

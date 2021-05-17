@@ -44,13 +44,9 @@ DAC::DAC( QObject* parent, QString type, QString id )
     m_height = 9;
 
     setNumInps( 8 );       // Create Input Pins
-    setMaxVolt( 5 );
+    setNumOuts( 1 );
 
-    LogicComponent::setNumOuts( 1 );
-    
-    m_outPin[0] = new IoPin( 0, QPoint( 24, -8 ), m_id+"-out", 1, this, output );
-    m_outPin[0] ->setLabelText( "Out " );
-    m_outPin[0] ->setLabelColor( QColor( 0, 0, 0 ) );
+    setMaxVolt( 5 );
 }
 DAC::~DAC(){}
 
@@ -68,11 +64,8 @@ QList<propGroup_t> DAC::propGroups()
 
 void DAC::stamp()
 {
-    for( int i=0; i<m_numInputs; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
+
     m_outPin[0]->setOutState( true );
     m_value = -1;
 }
@@ -81,8 +74,8 @@ void DAC::voltChanged()
 {
     m_value = 0;
 
-    for( int i=0; i<m_numOutputs; ++i )
-        if( m_inPin[i]->getInpState() ) m_value += pow( 2, m_numInputs-1-i );
+    for( uint i=0; i<m_outPin.size(); ++i )
+        if( m_inPin[i]->getInpState() ) m_value += pow( 2, m_inPin.size()-1-i );
 
     Simulator::self()->addEvent( m_propDelay, this );
 }
@@ -95,25 +88,14 @@ void DAC::runEvent()
     m_outPin[0]->stampOutput();
 }
 
-void DAC::setNumInps( int inputs )
+void DAC::setNumInps( uint inputs )
 {
-    if( inputs == m_numInputs ) return;
+    if( inputs == m_inPin.size() ) return;
     if( inputs < 1 ) return;
 
-    LogicComponent::setNumInps( inputs );
+    m_maxValue = pow( 2, inputs )-1;
 
-    for( int i=0; i<inputs; i++ )
-    {
-        QString num = QString::number( inputs-i-1 );
-        m_inPin[i] = new IoPin( 180, QPoint(-24,-8*inputs+i*8+8 ), m_id+"-in"+num, i, this, input );
-
-        m_inPin[i]->setLabelText( "D"+num+" " );
-        m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-    }
-    m_maxValue = pow( 2, m_numInputs )-1;
-
-    m_height = inputs+1;
-    m_area = QRect( -(m_width/2)*8, -m_height*8+8, m_width*8, m_height*8 );
+    IoComponent::setNumInps( inputs, "D" );
 }
 
 #include "moc_dac.cpp"

@@ -64,6 +64,8 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
+    m_clockPin = m_inPin[1];
+    setOePin( m_inPin[3] );
     setResetInv( true );                             // Invert Reset Pin
 }
 ShiftReg::~ShiftReg(){}
@@ -81,10 +83,8 @@ QList<propGroup_t> ShiftReg::propGroups()
 
 void ShiftReg::stamp()
 {
-    eNode* enode = m_inPin[1]->getEnode(); // m_input[1] = Reset pin
-    if( enode ) enode->voltChangedCallback( this );
-
-    ///LogicComponent::stamp();
+    m_inPin[1]->changeCallBack( this );
+    LogicComponent::stamp( this );
 }
 
 void ShiftReg::voltChanged()
@@ -108,7 +108,7 @@ void ShiftReg::voltChanged()
 void ShiftReg::setResetInv( bool inv )
 {
     m_resetInv = inv;
-    m_inPin[1]->setInverted( inv );
+    m_inPin[2]->setInverted( inv );
 }
 
 #include "moc_shiftreg.cpp"

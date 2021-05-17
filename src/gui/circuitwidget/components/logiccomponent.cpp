@@ -53,6 +53,8 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
     Q_UNUSED( LogicComponent_properties );
 
     m_oePin   = NULL;
+    m_tristate = false;
+    m_openCol  = false;
     m_outEnable = true;
 }
 LogicComponent::~LogicComponent(){}
@@ -65,24 +67,15 @@ void LogicComponent::initState()
 
 void LogicComponent::stamp( eElement* el )
 {
-    // Register for callBack when eNode volt change on clock or OE pins
-    if( m_oePin )
-    {
-        eNode* enode = m_oePin->getEnode();
-        if( enode ) enode->voltChangedCallback( el );
-    }
+    if( m_oePin ) m_oePin->changeCallBack( el );
     eClockedDevice::stamp( el );
 }
 
 void LogicComponent::remove()
 {
-    for( int i=0; i<m_numInputs; i++ )
-        if( m_inPin[i]->connector() ) m_inPin[i]->connector()->remove();
-
-    for( int i=0; i<m_numOutputs; i++ )
-        if( m_outPin[i]->connector() ) m_outPin[i]->connector()->remove();
-    
-    Component::remove();
+    if( m_oePin ) m_oePin->removeConnector();
+    eClockedDevice::remove();
+    IoComponent::remove();
 }
 
 void LogicComponent::setOePin( IoPin* pin )
@@ -107,28 +100,34 @@ bool LogicComponent::outputEnabled()
 
 void LogicComponent::updateOutEnabled()
 {
-    if( m_oePin )
-    {
-        bool outEnPrev = m_outEnable;
-        bool outEn = outputEnabled();              // Refresh m_outEnable
+    if( !m_oePin ) return;
 
-        if( outEnPrev != outEn ) setOutputEnabled( outEn );
+    bool outEnPrev = m_outEnable;
+    bool outEn = outputEnabled();              // Refresh m_outEnable
+
+    if( outEnPrev != outEn ) setOutputEnabled( outEn );
+}
+
+void LogicComponent::setTristate( bool t )
+{
+    if( !t )
+    {
+        m_oePin->removeConnector();
+        m_oePin->reset();
+        m_oePin->setLabelText( "" );
     }
+    else m_oePin->setLabelText( "OE " );
+
+    m_oePin->setVisible( t );
+    m_tristate = t;
+
+    updateOutEnabled();
 }
 
 void LogicComponent::setOutputEnabled( bool enabled )
 {
-    for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setStateZ( !enabled );
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !enabled );
     Simulator::self()->addEvent( 1, NULL );
-}
-
-
-
-void LogicComponent::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
-{
-    Component::paint( p, option, widget );
-
-    p->drawRect( m_area );
 }
 
 #include "moc_logiccomponent.cpp"

@@ -54,7 +54,7 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eElement
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
+        virtual void runEvent() override { IoComponent::runOutputs(); }
 
     protected:
         int m_Counter;

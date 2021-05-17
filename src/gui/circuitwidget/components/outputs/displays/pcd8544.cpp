@@ -93,14 +93,9 @@ Pcd8544::~Pcd8544()
 
 void Pcd8544::stamp()
 {
-    eNode* enode = m_pScl.getEnode();// Register for Scl changes callback
-    if( enode ) enode->voltChangedCallback( this ); 
-    
-    enode = m_pRst.getEnode();       // Register for Rst changes callback
-    if( enode ) enode->voltChangedCallback( this );
-
-    enode = m_pCs.getEnode();       // Register for Cs changes callback
-    if( enode ) enode->voltChangedCallback( this );
+    m_pScl.changeCallBack( this ); // Register for Scl changes callback
+    m_pRst.changeCallBack( this ); // Register for Rst changes callback
+    m_pCs.changeCallBack( this ); // Register for Cs changes callback
 }
 
 void Pcd8544::initialize()

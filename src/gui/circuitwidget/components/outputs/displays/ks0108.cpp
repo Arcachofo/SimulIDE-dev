@@ -113,11 +113,8 @@ QList<propGroup_t> Ks0108::propGroups()
 
 void Ks0108::stamp()
 {
-    eNode* enode = m_pinEn.getEnode();// Register for Scl changes callback
-    if( enode ) enode->voltChangedCallback( this ); 
-    
-    enode = m_pinRst.getEnode();       // Register for Rst changes callback
-    if( enode ) enode->voltChangedCallback( this ); 
+    m_pinEn.changeCallBack( this ); // Register for Scl changes callback
+    m_pinRst.changeCallBack( this ); // Register for Rst changes callback
 }
 
 void Ks0108::initialize()

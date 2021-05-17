@@ -87,12 +87,11 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         
         LedBase::LedColor m_ledColor;
 
-        std::vector<ePin*>  m_commonPin;
+        std::vector<Pin*>   m_commonPin;
         std::vector<ePin*>  m_cathodePin;
         std::vector<ePin*>  m_anodePin;
         std::vector<LedSmd*> m_segment;
         eNode* m_enode[8];
-        //eNode* m_virtGnd;
 };
 
 #endif

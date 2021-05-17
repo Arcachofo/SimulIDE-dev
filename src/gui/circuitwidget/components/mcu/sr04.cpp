@@ -74,8 +74,7 @@ SR04::~SR04(){}
 
 void SR04::stamp()
 {
-    eNode* enode = m_trigpin->getEnode(); // Register for Trigger Pin changes
-    if( enode ) enode->voltChangedCallback( this );
+    m_trigpin->changeCallBack( this ); // Register for Trigger Pin changes
 }
 
 void SR04::initialize()

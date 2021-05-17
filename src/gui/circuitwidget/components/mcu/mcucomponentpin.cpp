@@ -56,9 +56,7 @@ McuComponentPin::~McuComponentPin(){ }
 
 void McuComponentPin::stamp()
 {
-    if( this->isConnected() && m_attached )        // Receive voltage change notifications
-        this->getEnode()->voltChangedCallback( this );
-
+    if( m_enode && m_attached ) changeCallBack( this ); // Receive voltage change notifications
     IoPin::stamp();
 }
 

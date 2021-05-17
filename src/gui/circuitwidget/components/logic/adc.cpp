@@ -52,13 +52,9 @@ ADC::ADC( QObject* parent, QString type, QString id )
     m_height = 9;
 
     setNumOuts( 8 );    // Create Output Pins
-    setMaxVolt( 5 );
+    setNumInps( 1, "I" );
 
-    LogicComponent::setNumInps( 1 );
-    
-    m_inPin[0] = new IoPin( 180, QPoint( -24, -8 ), m_id+"-in", 1, this,input );
-    m_inPin[0]->setLabelText( " In" );
-    m_inPin[0]->setLabelColor( QColor( 0, 0, 0 ) );
+    setMaxVolt( 5 );
 
     setLabelPos(-16,-80, 0);
 }
@@ -78,10 +74,8 @@ QList<propGroup_t> ADC::propGroups()
 
 void ADC::stamp()
 {
-    eNode* enode = m_inPin[0]->getEnode();
-    if( enode ) enode->voltChangedCallback( this );
-
-    //LogicComponent::stamp();
+    m_inPin[0]->changeCallBack( this );
+    LogicComponent::stamp( this );
 }
 
 void ADC::voltChanged()
@@ -101,23 +95,8 @@ void ADC::runEvent()
 
 void ADC::setNumOuts( int outs )
 {
-    if( outs == m_numOutputs ) return;
     if( outs < 1 ) return;
-
-    LogicComponent::setNumOuts( outs );
-
-    for( int i=0; i<outs; ++i )
-    {
-        QString num = QString::number(outs-i-1);
-        m_outPin[i] = new IoPin( 0, QPoint(24,-8*outs+i*8+8 ), m_id+"-out"+num, i, this, output );
-
-        m_outPin[i]->setLabelText( "D"+num+" " );
-        m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-    }
-    m_maxValue = pow( 2, m_numOutputs )-1;
-
-    m_height = outs+1;
-    m_area = QRect( -(m_width/2)*8, -m_height*8+8, m_width*8, m_height*8 );
+    LogicComponent::setNumOuts( outs, "D" );
 }
 
 #include "moc_adc.cpp"

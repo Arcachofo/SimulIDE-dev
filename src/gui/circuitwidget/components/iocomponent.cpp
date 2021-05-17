@@ -18,15 +18,13 @@
  ***************************************************************************/
 
 #include "iocomponent.h"
+#include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
 
 IoComponent::IoComponent( QObject* parent, QString type, QString id)
            : Component( parent, type, id )
 {
-    m_numInputs  = 0;
-    m_numOutputs = 0;
-
     m_inHighV = 2.5;
     m_inLowV  = 2.5;
     m_ouHighV   = 5;
@@ -38,7 +36,7 @@ IoComponent::IoComponent( QObject* parent, QString type, QString id)
 
     m_rndPD = false;
     m_invInputs = false;
-    m_inverted  = false;
+    m_invOutputs  = false;
 
     m_propDelay = 10*1000; // 10 ns
     m_timeLH = 3000;
@@ -68,10 +66,7 @@ QList<propGroup_t> IoComponent::propGroups()
 
 void IoComponent::initState()
 {
-    for( int i=0; i<m_numOutputs; ++i )
-    {
-        m_outPin[i]->setOutState( false );
-    }
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutState( false );
 
     m_outStep = 0;
     m_outValue = 0;
@@ -80,7 +75,7 @@ void IoComponent::initState()
 
 void IoComponent::runOutputs()
 {
-    for( int i=0; i<m_numOutputs; ++i )
+    for( uint i=0; i<m_outPin.size(); ++i )
     {
         bool state = m_nextOutVal & (1<<i);
         bool oldst = m_outValue   & (1<<i);
@@ -122,7 +117,7 @@ void IoComponent::setInputHighV( double volt )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_inHighV = volt;
-    for( int i=0; i<m_numInputs; ++i ) m_inPin[i]->setInputHighV( volt );
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputHighV( volt );
 
     ///if( m_clockPin) m_clockPin->setInputHighV( volt );
 
@@ -135,7 +130,7 @@ void IoComponent::setInputLowV( double volt )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_inLowV = volt;
-    for( int i=0; i<m_numInputs; ++i ) m_inPin[i]->setInputLowV( volt );
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputLowV( volt );
 
     ///if( m_clockPin) m_clockPin->setInputLowV( volt );
 
@@ -148,7 +143,7 @@ void IoComponent::setOutHighV( double volt )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_ouHighV = volt;
-    for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setOutHighV( volt );
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutHighV( volt );
 
     if( pauseSim ) Simulator::self()->resumeSim();
 }
@@ -159,7 +154,7 @@ void IoComponent::setOutLowV( double volt )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_ouLowV = volt;
-    for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setOutLowV( volt );
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutLowV( volt );
 
     if( pauseSim ) Simulator::self()->resumeSim();
 }
@@ -170,7 +165,7 @@ void IoComponent::setInputImp( double imp )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_inImp = imp;
-    for( int i=0; i<m_numInputs; ++i ) m_inPin[i]->setInputImp( imp );
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputImp( imp );
 
     ///if( m_clockPin) m_clockPin->setInputImp( imp );
 
@@ -185,18 +180,18 @@ void IoComponent::setOutImp( double imp )
     if( m_ouImp == imp ) return;
 
     m_ouImp = imp;
-    for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setOutputImp( imp );
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutputImp( imp );
 
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 
-void IoComponent::setInverted( bool inverted )
+void IoComponent::setInvertOuts( bool inverted )
 {
     bool pauseSim = Simulator::self()->isRunning();
     if( pauseSim ) Simulator::self()->pauseSim();
 
-    m_inverted = inverted;
-    for( int i=0; i<m_numOutputs; ++i ) m_outPin[i]->setInverted( inverted );
+    m_invOutputs = inverted;
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setInverted( inverted );
 
     Circuit::self()->update();
     if( pauseSim ) Simulator::self()->resumeSim();
@@ -208,17 +203,26 @@ void IoComponent::setInvertInps( bool invert )
     if( pauseSim ) Simulator::self()->pauseSim();
 
     m_invInputs = invert;
-    for( int i=0; i<m_numInputs; ++i ) m_inPin[i]->setInverted( invert );
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInverted( invert );
 
     Circuit::self()->update();
     if( pauseSim ) Simulator::self()->resumeSim();
 }
 
+void IoComponent::setOpenCol( bool op )
+{
+    m_openCol = op;
 
+    for( uint i=0; i<m_outPin.size(); ++i )
+    {
+        if( op ) m_outPin[i]->setPinMode( open_col );
+        else     m_outPin[i]->setPinMode( output );
+    }
+}
 
 void IoComponent::init( QStringList pins )
 {
-    m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, m_height*8 );
+    m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
 
     QStringList inputs;                                    // Input Pins
     QStringList outputs;                                  // Output Pins
@@ -231,9 +235,8 @@ void IoComponent::init( QStringList pins )
         else if( pin.startsWith( "O" ) ) outputs.append( pin.remove(0,1) );
         else qDebug() << " LogicComponent::init: pin name error "<<pin;
     }
-
-
-    setNumInps( inputs.length() ); // Create Input Pins
+    //setNumInps( inputs.length(), " I" ); // Create Input Pins
+    m_inPin.resize( inputs.length() );
     int i = 0;
     for( QString inp : inputs ) // Example input = "L02Name"
     {
@@ -242,7 +245,8 @@ void IoComponent::init( QStringList pins )
         m_inPin[i] = createPin( pinPos, m_id+"-in"+QString::number(i), label, input );
         i++;
     }
-    setNumOuts( outputs.length() ); // Create Output Pins
+    //setNumOuts( outputs.length() ); // Create Output Pins
+    m_outPin.resize( outputs.length() );
     i = 0;
     for( QString out : outputs ) // Example output = "L02Name"
     {
@@ -304,66 +308,84 @@ void IoComponent::initPin( IoPin* pin )
     pin->setOutputImp( m_ouImp  );
 }
 
-void IoComponent::setNumInps( int inPins )
+void IoComponent::setNumInps( uint pins, QString label )
 {
-    if( inPins == m_numInputs ) return;
-    if( inPins < 1 ) return;
-
-    for( int i=0; i<m_numInputs; i++ )
-    {
-        if( m_inPin[i]->connector() ) m_inPin[i]->connector()->remove();
-        if( m_inPin[i]->scene() ) Circuit::self()->removeItem( m_inPin[i] );
-        m_inPin[i]->reset();
-        delete m_inPin[i];
-    }
-    m_inPin.resize( inPins );
-
-    m_numInputs = inPins;
+    setNumPins( &m_inPin, pins, label, false );
 }
 
-void IoComponent::setNumOuts( int outPins )
+void IoComponent::setNumOuts( uint pins, QString label )
 {
-    if( outPins == m_numOutputs ) return;
-    if( outPins < 1 ) return;
+    setNumPins( &m_outPin, pins, label, true );
+}
 
-    for( int i=0; i<m_numOutputs; i++ )
+void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
+                              , QString label, bool out )
+{
+    uint oldSize = pinList->size();
+    if( pins == oldSize ) return;
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    int x           = out ? m_width*8/2+8 : -(m_width*8/2)-8;
+    int angle       = out ?  0  : 180;
+    QString preLab  = out ? ""  : " ";
+    QString PostLab = out ? " " : "";
+    QString id      = out ? "-out" : "-in";
+
+    if( pins < oldSize ) deletePins( pinList, oldSize-pins );
+    else                 pinList->resize( pins );
+
+    if( m_outPin.size() > m_inPin.size() ) m_height = m_outPin.size();
+    else                                   m_height = m_inPin.size();
+    if( !label.isEmpty() ) m_height += 1;
+
+    int start = (m_height-pins)*8/2+4;
+
+    for( uint i=0; i<pins; ++i )
     {
-        if( m_outPin[i]->connector() ) m_outPin[i]->connector()->remove();
-        if( m_outPin[i]->scene() ) Circuit::self()->removeItem( m_outPin[i] );
-        m_outPin[i]->reset();
-        delete m_outPin[i];
-    }
-    m_outPin.resize( outPins );
+        int y = -(int)m_height*8/2 + start+i*8;
 
-    m_numOutputs = outPins;
+        if( i < oldSize ) pinList->at(i)->setY( y );
+        else{
+            QString num = QString::number(i);
+            pinList->at(i) = new IoPin( angle, QPoint( x, y), m_id+id+num, i, this, input );
+            initPin( pinList->at(i) );
+
+            if( !label.isEmpty() ) pinList->at(i)->setLabelText( preLab+label+num+PostLab );
+            pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );
+        }
+    }
+    m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
     Circuit::self()->update();
 }
 
-void IoComponent::deleteInputs( int inputs )
+void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
 {
-    if( m_numInputs-inputs < 0 ) inputs = m_numInputs;
+    uint oldSize = pinList->size();
+    if( pins > oldSize ) pins = oldSize;
 
-    for( int i=m_numInputs-1; i>m_numInputs-inputs-1; i-- )
+    uint newSize = oldSize-pins;
+
+    for( uint i=oldSize-1; i>newSize-1; --i )
     {
-        if( m_inPin[i]->connector() ) m_inPin[i]->connector()->remove();
-        if( m_inPin[i]->scene() ) Circuit::self()->removeItem( m_inPin[i] );
-        m_inPin[i]->reset();
-        delete m_inPin[i];
+        pinList->at(i)->removeConnector();
+        if( pinList->at(i)->scene() ) Circuit::self()->removeItem( pinList->at(i) );
+        pinList->at(i)->reset();
+        delete pinList->at(i);
     }
-    m_numInputs -= inputs;
-    m_inPin.resize( m_numInputs );
+    pinList->resize( newSize );
 }
 
-void IoComponent::deleteOutputs( int outputs )
+void IoComponent::remove()
 {
-    for( int i=m_numOutputs-1; i>m_numOutputs-outputs-1; i-- )
-    {
-        if( m_outPin[i]->connector() ) m_outPin[i]->connector()->remove();
-        if( m_outPin[i]->scene() ) Circuit::self()->removeItem( m_outPin[i] );
-        delete m_outPin[i];
-    }
-    m_numOutputs -= outputs;
-    m_outPin.resize( m_numOutputs );
+    for( uint i=0; i<m_inPin.size(); i++ )  m_inPin[i]->removeConnector();
+    for( uint i=0; i<m_outPin.size(); i++ ) m_outPin[i]->removeConnector();
+
+    Component::remove();
+}
+void IoComponent::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+{
+    Component::paint( p, option, widget );
+    p->drawRect( m_area );
 }
 
 #include "moc_iocomponent.cpp"

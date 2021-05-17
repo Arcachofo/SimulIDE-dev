@@ -52,6 +52,8 @@ class MAINMODULE_EXPORT eClockedDevice
 
         clkState_t getClockState();
 
+        void remove();
+
     protected:
         bool m_clock;
 

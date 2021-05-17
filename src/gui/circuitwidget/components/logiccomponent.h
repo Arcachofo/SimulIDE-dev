@@ -41,16 +41,16 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
         void updateOutEnabled();
         bool outputEnabled();
 
-        virtual void remove() override;
+        bool tristate() { return m_tristate; }
+        virtual void setTristate( bool t );
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void remove() override;
 
     protected:
         bool m_outEnable;
+        bool m_tristate;
 
         IoPin*  m_oePin;
-
-        //Trigger m_trigger;
 };
 
 #endif

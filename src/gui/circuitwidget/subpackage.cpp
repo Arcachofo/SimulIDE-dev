@@ -360,10 +360,7 @@ void SubPackage::remove()
         if     ( ret == QMessageBox::Save ) slotSave();
         else if( ret == QMessageBox::Cancel ) return;
     }
-    for( Pin* pin : m_pins )
-    {
-        if( pin->connector() ) pin->connector()->remove();
-    }
+    for( Pin* pin : m_pins ) pin->removeConnector();
     Circuit::self()->compRemoved( true );
 }
 

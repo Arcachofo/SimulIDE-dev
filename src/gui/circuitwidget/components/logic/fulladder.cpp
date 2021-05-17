@@ -58,11 +58,7 @@ FullAdder::~FullAdder(){}
 
 void FullAdder::stamp()
 {
-    for( int i=0; i<m_numInputs; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    for( uint i=0; i<m_inPin.size(); ++i )m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp( this );
 }
 
@@ -81,8 +77,4 @@ void FullAdder::voltChanged()
     sheduleOutPuts( this );
 }
 
-void FullAdder::runEvent()
-{
-    IoComponent::runOutputs();
-}
 #include "moc_fulladder.cpp"

@@ -69,7 +69,7 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     m_inPin[1]->setPinMode( open_col );
     TwiModule::setSclPin( m_inPin[1] );
 
-    for( int i=0; i<8; ++i ) m_outPin[1]->setPinMode( open_col );
+    for( int i=0; i<8; ++i ) m_outPin[i]->setPinMode( open_col );
 
     m_cCode = 0b01010000;
 }
@@ -91,10 +91,8 @@ void I2CToParallel::stamp()                     // Called at Simulation Start
     TwiModule::stamp();
     
     for( int i=2; i<5; ++i )                  // Initialize address pins
-    {
-        eNode* enode =  m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+        m_inPin[i]->changeCallBack( this );
+
     for( int i=0; i<8; ++i ) m_outPin[i]->setOutState( true );
 }
 

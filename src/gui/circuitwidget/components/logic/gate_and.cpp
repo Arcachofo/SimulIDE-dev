@@ -54,7 +54,7 @@ QPainterPath AndGate::shape() const
     
     QVector<QPointF> points;
     
-    int size = m_numInputs*4;
+    int size = (int)m_inPin.size()*4;
     
     points << QPointF( -9,-size )
            << QPointF( -9, size )

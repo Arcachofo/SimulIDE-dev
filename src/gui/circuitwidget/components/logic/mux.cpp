@@ -48,6 +48,7 @@ Mux::Mux( QObject* parent, QString type, QString id )
     m_height = 10;
 
     m_addrBits = 3;
+    m_tristate = true;
     
     QStringList pinList;
 
@@ -72,10 +73,10 @@ Mux::Mux( QObject* parent, QString type, QString id )
             << "OR03!Y "
             ;
     init( pinList );
-    m_area = QRect( -(m_width/2)*8-1, -(m_height/2)*8-8-1, m_width*8+2, m_height*8+16+2 );
     
-    m_oePin = m_inPin[11];    // IOutput Enable
+    setOePin( m_inPin[11] );    // IOutput Enable
 
+    m_area = QRect(-(int)m_width*8/2-1,-(int)m_height*8/2-8-1, m_width*8+2, m_height*8+16+2 );
 }
 Mux::~Mux(){}
 
@@ -116,7 +117,7 @@ void Mux::voltChanged()
 
 void Mux::setAddrBits( int bits )
 {
-    if( m_addrBits == bits ) return;
+    //if( m_addrBits == bits ) return;
 
     if     ( bits < 1 ) bits = 1;
     else if( bits > 3 ) bits = 3;
@@ -136,31 +137,21 @@ void Mux::setAddrBits( int bits )
         {
             pin->setVisible( true );
             pin->setY( m_height*8/2+8 );
-            if( i == 0 )
+            if( i != 0 ) continue;
+            if( bits == 1 )
             {
-                if( bits == 1 )
-                {
-                    pin->setX( 0 );
-                    pin->setLabelText(" S0");
-                }else{
-                    pin->setX( 8 );
-                    pin->setLabelText("  S0");
-                }
+                pin->setX( 0 );
+                pin->setLabelText(" S0");
+            }else{
+                pin->setX( 8 );
+                pin->setLabelText("  S0");
             }
-            pin->isMoved();
-            pin->setLabelPos();
-        }
-        else{
-            if( pin->connector() ) pin->connector()->remove();
+        }else{
+            pin->removeConnector();
             pin->setVisible( false );
         }
         if( i < 2 ) // Outputs
-        {
-            pin = m_outPin[i];
-            pin->setY( -m_height*8/2+i*8+16 );
-            pin->isMoved();
-            pin->setLabelPos();
-        }
+            m_outPin[i]->setY( -m_height*8/2+i*8+16 );
     }
     for( int i=0; i<8; ++i )
     {
@@ -169,19 +160,15 @@ void Mux::setAddrBits( int bits )
         {
             pin->setVisible( true );
             pin->setY( i*8-(bits+bits/3)*8 );
-            pin->isMoved();
-            pin->setLabelPos();
         }
         else{
-            if( pin->connector() ) pin->connector()->remove();
+            pin->removeConnector();
             pin->setVisible( false );
         }
     }
-    m_inPin[11]->setY( -m_height*8/2-8 ); // OE
-    m_inPin[11]->isMoved();
-    m_inPin[11]->setLabelPos();
+    m_oePin->setY( -m_height*8/2-8 ); // OE
 
-    m_area = QRect( -(m_width/2)*8-1, -(m_height/2)*8-8-1, m_width*8+2, m_height*8+16+2 );
+    m_area = QRect(-(int)m_width*8/2-1,-(int)m_height*8/2-8-1, m_width*8+2, m_height*8+16+2 );
     Circuit::self()->update();
 }
 

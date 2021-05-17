@@ -57,7 +57,7 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
     init( pinList );
 
     m_pin.resize( 4 );
-    for( int i=0; i<m_numInputs; i++ )m_pin[i] = m_inPin[i];
+    for( uint i=0; i<m_inPin.size(); i++ )m_pin[i] = m_inPin[i];
 
     setLabelPos(-16,-40, 0);
         

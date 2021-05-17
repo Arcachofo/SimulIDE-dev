@@ -249,11 +249,8 @@ void McuComponent::remove()
     emit closeSerials();
 
     Simulator::self()->remFromUpdateList( this );
-    for( McuComponentPin* mcupin : m_pinList )
-    {
-        Pin* pin = mcupin;
-        if( pin->connector() ) pin->connector()->remove();
-    }
+    for( McuComponentPin* mcupin : m_pinList ) mcupin->removeConnector();
+
     terminate();
     m_pinList.clear();
 

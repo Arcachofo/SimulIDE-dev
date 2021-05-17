@@ -209,10 +209,8 @@ void Mcu::remove()
     //emit closeSerials();
 
     //Simulator::self()->remFromUpdateList( this );
-    for( Pin* pin : m_pinList )
-    {
-        if( pin->connector() ) pin->connector()->remove();
-    }
+    for( Pin* pin : m_pinList ) pin->removeConnector();
+
     //terminate();
     m_pinList.clear();
 

@@ -28,8 +28,8 @@ class LibraryItem;
 class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
 {
     Q_OBJECT
-    Q_PROPERTY( double Frequency    READ freqKHz    WRITE setFreqKHz    DESIGNABLE true USER true )
-    Q_PROPERTY( int Control_Code    READ cCode WRITE setCcode DESIGNABLE true USER true )
+    Q_PROPERTY( double Frequency READ freqKHz WRITE setFreqKHz DESIGNABLE true USER true )
+    Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode   DESIGNABLE true USER true )
 
     public:
         I2CToParallel( QObject* parent, QString type, QString id );

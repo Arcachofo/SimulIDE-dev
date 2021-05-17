@@ -75,7 +75,7 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    m_oePin = m_inPin[15];    // Output Enable
+    setOePin( m_inPin[15] );    // Output Enable
 
     for( int i=9; i<15; ++i ) m_inPin[i]->setVisible( false );
 }
@@ -94,11 +94,7 @@ QList<propGroup_t> DecToBcd::propGroups()
 
 void DecToBcd::stamp()
 {
-    for( int i=0; i<15; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    for( int i=0; i<15; ++i )m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp( this);
 }
 
@@ -136,16 +132,14 @@ void DecToBcd::set_16bits( bool set )
     {
         for( int i=9; i<15; ++i ) m_inPin[i]->setVisible( true );
         height = 16;
-    }
-    else
-    {
+    } else {
         for( int i=9; i<15; ++i )
         {
             m_inPin[i]->setVisible( false );
-            if( m_inPin[i]->connector() ) m_inPin[i]->connector()->remove();
+            m_inPin[i]->removeConnector();
         }
     }
-     m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
+    m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
     Circuit::self()->update();
 }
 

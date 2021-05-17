@@ -30,7 +30,7 @@ class LibraryItem;
 class MAINMODULE_EXPORT Function : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
+    Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
     Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
     Q_PROPERTY( int    Num_Outputs  READ numOuts    WRITE setNumOuts    DESIGNABLE true USER true )
     Q_PROPERTY( QString Functions   READ functions  WRITE setFunctions  DESIGNABLE true USER true )
@@ -54,8 +54,8 @@ class MAINMODULE_EXPORT Function : public LogicComponent, public eElement
 
         virtual void remove() override;
         
-        void setNumInps( int inputs );
-        void setNumOuts( int outs );
+        void setNumInps( uint inputs );
+        void setNumOuts(uint outs );
         
     public slots:
         void onbuttonclicked();

@@ -29,8 +29,8 @@ class MAINMODULE_EXPORT Demux : public LogicComponent, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( int    Address_Bits READ addrBits   WRITE setAddrBits   DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Tristate     READ tristate   USER true )
+    Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
+    ///Q_PROPERTY( bool   Tristate     READ tristate   USER true )
 
     public:
         Demux( QObject* parent, QString type, QString id );
@@ -47,8 +47,6 @@ class MAINMODULE_EXPORT Demux : public LogicComponent, public eElement
 
         int addrBits() { return m_addrBits; }
         void setAddrBits( int bits );
-
-        bool tristate() { return true; }
         
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );

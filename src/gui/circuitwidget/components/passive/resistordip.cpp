@@ -102,16 +102,13 @@ void ResistorDip::deleteResistors( int d )
 
     for( int i=start*2; i<m_size*2; i++ )
     {
-        Pin* pin = m_pin[i];
-        if( pin->connector() ) pin->connector()->remove();
-        
-        delete pin;
+        m_pin[i]->removeConnector();
+        delete m_pin[i];
     }
     for( int i=start; i<m_size; i++ ) delete m_resistor[i];
     m_size = m_size-d;
     m_resistor.resize( m_size );
     m_pin.resize( m_size*2 );
-    //Circuit::self()->update();
 }
 
 int ResistorDip::size()

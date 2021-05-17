@@ -32,6 +32,9 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
    , m_label( parent )
 {
     m_component = parent;
+    m_area = QRect(-3, -3, 11, 6);
+
+    m_pinState = undef_state;
 
     m_blocked = false;
     m_isBus   = false;
@@ -49,10 +52,8 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_color[4] = QColor( 100, 100, 250 );
     m_color[5] = QColor( 250, 120, 0 );
 
-    m_area = QRect(-3, -3, 11, 6);
-
     setObjectName( id );
-    setConnector( 0l );
+    setConnector( NULL );
     setPos( pos );
     setRotation( 180-angle );
     setLength(8);
@@ -79,7 +80,6 @@ Pin::~Pin()
 void Pin::reset()
 {
     if( my_connector ) setConnector( NULL );
-    m_connected = false;
     
     m_component->inStateChanged( 1 );          // Used by node to remove
     if( m_isBus ) m_component->inStateChanged( 3 ); // Used by Bus to remove
@@ -129,6 +129,8 @@ void Pin::registerPins( eNode* enode )     // Called by connector closing or oth
     m_blocked = false;
 }
 
+Connector* Pin::connector() { return my_connector; }
+
 void  Pin::setConnector( Connector* connector )
 {
     my_connector = connector;
@@ -141,9 +143,12 @@ void  Pin::setConnector( Connector* connector )
     else setCursor( Qt::CrossCursor );
 }
 
-Connector* Pin::connector() { return my_connector; }
+void Pin::removeConnector()
+{
+    if( my_connector ) my_connector->remove();
+}
 
-void Pin::connectPin()
+void Pin::connectPin()      // Auto-Connect
 {
     QList<QGraphicsItem*> list = this->collidingItems();
     for( QGraphicsItem* it : list )
@@ -152,7 +157,7 @@ void Pin::connectPin()
         {
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
 
-            if( m_isBus != pin->isBus() ) continue;
+            if( m_isBus != pin->isBus() ) continue; // Only connect Bus to Bus
             if( !pin->connector() )
             {
                 Circuit::self()->newconnector( this );
@@ -167,22 +172,24 @@ void Pin::isMoved()
 {
     if( my_connector ) my_connector->updateConRoute( this, scenePos() );
     else
-    {
+    {                            // Auto-Connect
         if( m_isBus ) return;
         if( QApplication::queryKeyboardModifiers() & Qt::ControlModifier )
         {
             connectPin();
         }
     }
+    setLabelPos();
 }
 
 void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
     if( m_unused ) return;
     
-    if( event->button() == Qt::LeftButton )
+    if( event->button() == Qt::LeftButton ) // Start/Close Connector
     {
-        if( my_connector==0l )
+        if( my_connector ) event->ignore();
+        else
         {
             if( Circuit::self()->is_constarted() )
             {
@@ -197,7 +204,6 @@ void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
             if( Circuit::self()->is_constarted() ) Circuit::self()->closeconnector( this );
             else                                   Circuit::self()->newconnector( this );
         }
-        else event->ignore();
     }
 }
 
@@ -286,6 +292,12 @@ void Pin::setPinAngle( int angle )
 {
     m_angle= angle;
     setRotation( 180-angle );
+}
+
+void Pin::setY( qreal y )
+{
+    QGraphicsItem::setY( y );
+    isMoved();
 }
 
 void Pin::moveBy( int dx, int dy )

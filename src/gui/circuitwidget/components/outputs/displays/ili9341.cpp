@@ -83,22 +83,14 @@ Ili9341::~Ili9341(){}
 
 void Ili9341::stamp()
 {
-    eNode* enode = m_pinSck.getEnode();// Register for Scl changes callback
-    if( enode ) enode->voltChangedCallback( this );
-
-    enode = m_pinCS.getEnode();// Register for CS changes callback
-    if( enode ) enode->voltChangedCallback( this ); 
-    
-    enode = m_pinRst.getEnode();       // Register for Rst changes callback
-    if( enode ) enode->voltChangedCallback( this ); 
+    m_pinSck.changeCallBack( this ); // Register for Scl changes callback
+    m_pinCS.changeCallBack( this ); // Register for CS changes callback
+    m_pinRst.changeCallBack( this ); // Register for Rst changes callback
 }
 
 void Ili9341::initialize()
 {
-    //m_addrMode = 0;
-
     clearDDRAM();
-    //clearLcd();
     reset() ;
     updateStep();
 }

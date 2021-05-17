@@ -65,8 +65,8 @@ class MAINMODULE_EXPORT IoComponent : public Component
         double outImp() const            { return m_ouImp; }
         void  setOutImp( double imp );
 
-        bool inverted() { return m_inverted; }
-        void setInverted( bool inverted );
+        bool invertOuts() { return m_invOutputs; }
+        void setInvertOuts( bool inverted );
 
         bool invertInps() { return m_invInputs; }
         void setInvertInps( bool invert );
@@ -80,19 +80,26 @@ class MAINMODULE_EXPORT IoComponent : public Component
         uint64_t fallTime() { return m_timeHL; }
         void setFallTime( uint64_t time ) {m_timeHL = time; }
 
-        int  numInps() const { return m_numInputs; }
-        virtual void setNumInps( int inputs );
+        int  numInps() const { return m_inPin.size(); }
+        virtual void setNumInps( uint pins, QString label="I" );
 
-        int  numOuts() const { return m_numOutputs; }
-        void setNumOuts( int outputs );
+        int  numOuts() const { return m_outPin.size(); }
+        void setNumOuts( uint pins, QString label="O" );
+
+        bool openCol() { return m_openCol; }
+        void setOpenCol( bool op );
 
         void init( QStringList pins );
         void initPin( IoPin* pin );
 
+        virtual void remove() override;
+
+        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+
     protected:
         IoPin* createPin( QString data , QString id , QString label, pinMode_t mode );
-        void deleteInputs( int inputs );
-        void deleteOutputs( int inputs );
+        void setNumPins(std::vector<IoPin*>* pinList, uint pins, QString label, bool out );
+        void deletePins( std::vector<IoPin*>* pinList, uint pins );
 
         int m_outValue;
         int m_nextOutVal;
@@ -111,14 +118,12 @@ class MAINMODULE_EXPORT IoComponent : public Component
         double m_inImp;  // currently in eClockedDevice
         double m_ouImp;
 
-        bool m_inverted;
+        bool m_openCol;
+        bool m_invOutputs;
         bool m_invInputs;
 
-        int m_width;
-        int m_height;
-
-        int m_numInputs;
-        int m_numOutputs;
+        uint m_width;
+        uint m_height;
 
         std::vector<IoPin*> m_inPin;
         std::vector<IoPin*> m_outPin;

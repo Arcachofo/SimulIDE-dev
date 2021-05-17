@@ -76,7 +76,7 @@ Lm555::Lm555( QObject* parent, QString type, QString id )
     m_pin[5]->setLabelText( "Thr" );
 
     m_dis = new IoPin( 0, QPoint(4*8+8, 8*2), id+"-ePin6", 6, this, input );
-    m_pin[6]->setLabelText( "Dis" );
+    m_dis->setLabelText( "Dis" );
     m_pin[6] = m_dis;
 
     m_pin[7] = new Pin( 0, QPoint(4*8+8, 8*1),id+"-ePin7", 7, this );
@@ -137,7 +137,6 @@ void Lm555::voltChanged()
     else if( tr )        outState =  true;
     else if( !tr && th ) outState =  false;
 
-    //qDebug() << "eLm555::setVChanged" << outState<<"th"<<th<<"tr"<<tr;
     if( outState != m_outState )
     {
         m_outState = outState;
@@ -152,8 +151,6 @@ void Lm555::voltChanged()
         else m_disImp = 1;
 
         changed = true;
-
-        //qDebug() << "eLm555::setVChanged" << outState<<reset<<th<<tr;
     }
     if( changed ) Simulator::self()->addEvent( m_propDelay, this );
 }

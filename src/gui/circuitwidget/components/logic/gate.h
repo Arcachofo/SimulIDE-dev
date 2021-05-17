@@ -29,7 +29,7 @@ class MAINMODULE_EXPORT Gate : public LogicComponent, public eElement
 {
     Q_OBJECT
     //Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
+    Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
     Q_PROPERTY( bool Open_Collector READ openCol  WRITE setOpenCol  DESIGNABLE true USER true )
     
 
@@ -43,22 +43,11 @@ class MAINMODULE_EXPORT Gate : public LogicComponent, public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
-        bool tristate();
-        void setTristate( bool t );
-
-        bool openCol();
-        void setOpenCol( bool op );
-        
-        virtual void setNumInps( int inputs );
-
-        void setInverted( bool inverted );
-
     protected:
-        virtual bool calcOutput( int inputs );
+        virtual bool calcOutput( uint inputs );
 
         bool m_out;
-        bool m_tristate;
-        bool m_openCol;
+
 };
 
 #endif

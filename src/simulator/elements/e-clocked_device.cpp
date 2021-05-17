@@ -38,12 +38,7 @@ void eClockedDevice::initState()
 
 void eClockedDevice::stamp( eElement* el )
 {
-    // Register for callBack when eNode volt change on clock pin
-    if( m_clockPin )
-    {
-        eNode* enode = m_clockPin->getEnode();
-        if( enode ) enode->voltChangedCallback( el );
-    }
+    if( m_clockPin ) m_clockPin->changeCallBack( el );
 }
 
 bool eClockedDevice::clockInv()
@@ -98,7 +93,7 @@ void eClockedDevice::setTrigger( Component::trigger_t trigger )
 
     if( trigger == Component::None )
     {
-        if( m_clockPin->connector() ) m_clockPin->connector()->remove();
+        m_clockPin->removeConnector();
         m_clockPin->reset();
         m_clockPin->setLabelText( "" );
         m_clockPin->setVisible( false );
@@ -114,4 +109,9 @@ void eClockedDevice::setTrigger( Component::trigger_t trigger )
         m_clockPin->setVisible( true );
     }
     Circuit::self()->update();
+}
+
+void eClockedDevice::remove()
+{
+    if( m_clockPin) m_clockPin->removeConnector();
 }

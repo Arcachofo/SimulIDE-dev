@@ -55,7 +55,7 @@ QPainterPath XorGate::shape() const
     
     QVector<QPointF> points;
     
-    int size = m_numInputs*4;
+    int size = (int)m_inPin.size()*4;
     
     points << QPointF(-15,-size+2 )
            << QPointF( -9,-8  )

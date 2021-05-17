@@ -347,8 +347,7 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
         pin->setId( m_id+"-"+id );
         pin->setLabelColor( color );
         pin->setLabelText( label );
-        connect( this, SIGNAL( moved() ),
-                  pin, SLOT( isMoved() ), Qt::UniqueConnection );
+        connect( this, SIGNAL( moved() ), pin, SLOT( isMoved() ), Qt::UniqueConnection );
 
         if     ( type == "inverted" ) pin->setInverted( true );
         else if( type == "unused" )   pin->setUnused( true );

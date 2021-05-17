@@ -87,11 +87,8 @@ QList<propGroup_t> Max72xx_matrix::propGroups()
 
 void Max72xx_matrix::stamp()
 {
-    eNode* enode = m_pinSck->getEnode();    // Register for Sck changes callback
-    if( enode ) enode->voltChangedCallback( this );
-
-    enode = m_pinCS->getEnode();            // Register for CS changes callback
-    if( enode ) enode->voltChangedCallback( this );
+    m_pinSck->changeCallBack( this ); // Register for Sck changes callback
+    m_pinCS->changeCallBack( this ); // Register for CS changes callback
 }
 
 void Max72xx_matrix::initialize()

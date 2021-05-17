@@ -475,12 +475,9 @@ void Connector::setEndPinId( QString pinid)   { m_endpinid = pinid; }
 QString Connector::enodId() 
 {
     eNode *node = m_startPin->getEnode();
-
     if( node ) return node->itemId();
     return "";
 }
-//void Connector::setEnodId( QString enodid ) { m_enodid = enodid; }
-
 Pin* Connector::startPin()             { return m_startPin;}
 void Connector::setStartPin( Pin* pin) { m_startPin = pin; }
 Pin* Connector::endPin()               { return m_endPin; }

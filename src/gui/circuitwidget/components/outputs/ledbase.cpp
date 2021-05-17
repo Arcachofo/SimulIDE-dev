@@ -97,7 +97,7 @@ void LedBase::setGrounded( bool grounded )
     if( grounded )
     {
         Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
-        if( pin1->connector() ) pin1->connector()->remove();
+        pin1->removeConnector();
         pin1->setEnabled( false );
         pin1->setVisible( false );
 

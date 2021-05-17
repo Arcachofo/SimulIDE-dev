@@ -231,7 +231,7 @@ void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, i
 void Chip::deletePin( Pin* pin )
 {
     if( !pin ) return;
-    if( pin->connector() ) pin->connector()->remove();
+    pin->removeConnector();
     if( pin->scene() ) Circuit::self()->removeItem( pin );
     pin->reset();
     delete pin;

@@ -51,6 +51,7 @@ Scripted::Scripted( QObject* parent, QString type, QString id )
 
     m_lastDir = Circuit::self()->getFileName();
     
+    m_width = 4;
     setNumInps( 2 );                           // Create Input Pins
     setNumOuts( 1 );
 
@@ -80,13 +81,13 @@ QList<propGroup_t> Scripted::propGroups()
 void Scripted::stamp()
 {
     m_canRun = false;
-    ///LogicComponent::stamp();
+    LogicComponent::stamp( this );
 
     QString excep = evaluate( m_script );
     if( excep != "" ) return;
     m_canRun = true;
 
-    for( int i=0; i<m_numInputs; ++i )
+    for( uint i=0; i<m_inPin.size(); ++i )
     {
         eNode* enode = m_inPin[i]->getEnode();
         if( enode ) enode->voltChangedCallback( this );
@@ -193,66 +194,4 @@ void Scripted::saveScript()
         outFile.close();
     }
 }
-
-void Scripted::setNumInps( int inputs )
-{
-    if( inputs == m_numInputs ) return;
-    if( inputs < 1 ) return;
-    
-    if( inputs < m_numInputs ) 
-    {
-        int dif = m_numInputs-inputs;
-
-        LogicComponent::deleteInputs( dif );
-    }
-    else{
-        m_inPin.resize( inputs );
-        m_numInputs = inputs;
-    
-        for( int i=m_numInputs; i<inputs; ++i )
-        {
-            QString num = QString::number(i);
-            m_inPin[i] = new IoPin( 180, QPoint(-24, i*8+8 ), m_id+"-in"+num, i, this, input );
-            m_inPin[i]->setLabelText( " I"+num );
-            m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        }
-    }
-    m_height = m_numOutputs;
-    if( m_numInputs > m_height ) m_height = m_numInputs;
-    m_area = QRect( -16, 0, 32, 8*m_height+8 );
-    
-    Circuit::self()->update();
-}
-
-void Scripted::setNumOuts( int outs )
-{
-    if( outs == m_numOutputs ) return;
-    if( outs < 1 ) return;
-    
-    if( outs < m_numOutputs ) 
-    {
-        int dif = m_numOutputs-outs;
-
-        LogicComponent::deleteOutputs( dif );
-    }
-    else{
-        m_outPin.resize( outs );
-        m_numOutputs = outs;
-        
-        for( int i=m_numOutputs; i<outs; ++i )
-        {
-            QString num = QString::number(i);
-            m_outPin[i] = new IoPin( 0, QPoint(24, i*8+8 ), m_id+"-out"+num, i, this, output );
-            m_outPin[i]->setLabelText( "O"+num+" " );
-            m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
-        }
-    }
-    m_height = m_numOutputs;
-    if( m_numInputs > m_height ) m_height = m_numInputs;
-    m_area = QRect( -16, 0, 32, 8*m_height+8 );
-
-    Circuit::self()->update();
-}
-
-
 #include "moc_scripted.cpp"

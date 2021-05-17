@@ -32,7 +32,7 @@ class IoPin;
 class MAINMODULE_EXPORT Scripted : public LogicComponent, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( bool   Inverted     READ inverted   WRITE setInverted   DESIGNABLE true USER true )
+    Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
     Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
     Q_PROPERTY( int    Num_Outputs  READ numOuts    WRITE setNumOuts    DESIGNABLE true USER true )
     Q_PROPERTY( QString Script      READ getScript  WRITE setScript     DESIGNABLE true USER true )
@@ -55,17 +55,14 @@ class MAINMODULE_EXPORT Scripted : public LogicComponent, public eElement
          void setScript( QString f ) { m_script = f; }
 
          QString evaluate( QString script );
-        
-        void setNumInps( int inputs );
-        void setNumOuts( int outs );
-        
+
     public slots:
         void displayMsg( QString msg ) { qDebug() << msg; }
         bool getInputState( int i ){ return m_inPin[i]->getInpState(); }
         bool getOutputState( int o ){ return m_outPin[o]->getOutState(); }
-        void setOutputState( int i, bool s ){ if( i < m_numOutputs ) m_outPin[i]->setOutState( s, true ); }
-        int  numInps(){ return m_numInputs; }
-        int  numOuts(){ return m_numOutputs; }
+        void setOutputState( int i, bool s ){ if( (uint)i < m_outPin.size() ) m_outPin[i]->setOutState( s, true ); }
+        int  numInps(){ return m_inPin.size(); }
+        int  numOuts(){ return m_outPin.size(); }
 
     private slots:
         void loadScript();

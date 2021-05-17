@@ -85,13 +85,10 @@ QList<propGroup_t> BinCounter::propGroups()
 
 void BinCounter::stamp()
 {
-    eNode* enode = m_inPin[0]->getEnode();      // Reset pin
-    if( enode ) enode->voltChangedCallback( this );
+    m_resetPin->changeCallBack( this );
+    m_setPin->changeCallBack( this );
 
-    enode = m_inPin[1]->getEnode();              // Set pin
-    if( enode ) enode->voltChangedCallback(this);
-
-    //LogicComponent::stamp();
+    LogicComponent::stamp( this );
 }
 
 void BinCounter::initialize()
@@ -131,23 +128,19 @@ void BinCounter::voltChanged()
     IoComponent::sheduleOutPuts( this );
 }
 
-void BinCounter::runEvent()
-{
-    IoComponent::runOutputs();
-}
-
 void BinCounter::setSrInv( bool inv )
 {
     m_resetInv = inv;
-    m_inPin[0]->setInverted( inv );       // Input Reset
-    if( m_pinSet ) m_inPin[1]->setInverted( inv );       // Input Set
-    else           m_inPin[1]->setInverted( false );
+    m_resetPin->setInverted( inv );
+
+    if( m_pinSet ) m_setPin->setInverted( inv );
+    else           m_setPin->setInverted( false );
 }
 
 void BinCounter::useSetPin( bool set )
 {
     m_pinSet = set;
-    if( !set && m_setPin->connector() ) m_setPin->connector()->remove();
+    if( !set ) m_setPin->removeConnector();
 
     m_setPin->setVisible( set );
     setSrInv( m_resetInv );

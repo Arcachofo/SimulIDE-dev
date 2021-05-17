@@ -38,7 +38,7 @@ class MAINMODULE_EXPORT FullAdder : public LogicComponent, public eElement
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
+        virtual void runEvent() override { IoComponent::runOutputs(); }
 };
 
 #endif

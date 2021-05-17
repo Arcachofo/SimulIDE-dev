@@ -40,14 +40,9 @@ class MAINMODULE_EXPORT Buffer : public Gate
         static LibraryItem *libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
-        
-        void setTristate( bool t );
-        
+
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
-     
-    private:
-        Pin* m_outEnPin;
 };
 
 #endif
