@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT Gate : public LogicComponent, public eElement
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
     protected:
-        virtual bool calcOutput( uint inputs );
+        virtual bool calcOutput( int inputs );
 
         bool m_out;
 

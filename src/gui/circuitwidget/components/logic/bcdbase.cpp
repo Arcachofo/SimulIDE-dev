@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2010 by santiago González                               *
+ *   Copyright (C) 2018 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,44 +17,62 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef LOGICCOMPONENT_H
-#define LOGICCOMPONENT_H
+#include "bcdbase.h"
 
-#include "iocomponent.h"
-#include "e-clocked_device.h"
-
-class IoPin;
-
-class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevice
-{
-    Q_OBJECT
-
-    public:
-        LogicComponent( QObject* parent, QString type, QString id );
-        ~LogicComponent();
-
-        void initState();
-        void stamp( eElement* el );
-
-        void setOePin( IoPin* pin );
-        void setOutputEnabled( bool enabled );
-        void updateOutEnabled();
-        bool outputEnabled();
-
-        virtual void setInputHighV( double volt ) override;
-        virtual void setInputLowV( double volt ) override;
-        virtual void setInputImp( double imp ) override;
-
-        bool tristate() { return m_tristate; }
-        virtual void setTristate( bool t );
-
-        virtual void remove() override;
-
-    protected:
-        bool m_outEnable;
-        bool m_tristate;
-
-        IoPin*  m_oePin;
+const uint8_t BcdBase::m_values[]={
+        0b00111111,
+        0b00000110,
+        0b01011011,
+        0b01001111,
+        0b01100110,
+        0b01101101,
+        0b01111101,
+        0b00000111,
+        0b01111111,
+        0b01101111,
+        0b01110111,
+        0b01111100,
+        0b00111001,
+        0b01011110,
+        0b01111001,
+        0b01110001,
+        0b00000000
 };
 
-#endif
+BcdBase::BcdBase( QObject* parent, QString type, QString id )
+       : LogicComponent( parent, type, id )
+       , eElement( id )
+{
+    m_nextOutVal = m_values[0];
+
+}
+BcdBase::~BcdBase(){}
+
+void BcdBase::initialize()
+{
+    LogicComponent::initState();
+    update();
+}
+
+void BcdBase::stamp()
+{
+    for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
+
+    m_nextOutVal = m_values[0];
+    m_changed = true;
+}
+
+void BcdBase::voltChanged()
+{
+    m_changed = true;
+
+    bool a = m_inPin[0]->getInpState();
+    bool b = m_inPin[1]->getInpState();
+    bool c = m_inPin[2]->getInpState();
+    bool d = m_inPin[3]->getInpState();
+
+    int digit = a*1+b*2+c*4+d*8;
+    m_nextOutVal = m_values[digit];
+}
+
+//#include "moc_bcdbase.cpp"

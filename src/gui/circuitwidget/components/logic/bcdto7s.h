@@ -20,12 +20,11 @@
 #ifndef BCDTO7S_H
 #define BCDTO7S_H
 
-#include "logiccomponent.h"
-#include "e-element.h"
+#include "bcdbase.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT BcdTo7S : public LogicComponent, public eElement
+class MAINMODULE_EXPORT BcdTo7S : public BcdBase
 {
     Q_OBJECT
     Q_PROPERTY( bool Inverted READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
@@ -44,10 +43,8 @@ class MAINMODULE_EXPORT BcdTo7S : public LogicComponent, public eElement
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
+        virtual void runEvent() override { IoComponent::runOutputs(); }
 
-    protected:
- static const uint8_t m_values[];
 };
 
 #endif

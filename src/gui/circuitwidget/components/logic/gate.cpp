@@ -88,9 +88,9 @@ void Gate::voltChanged()
     sheduleOutPuts( this );
 }
 
-bool Gate::calcOutput( uint inputs )
+bool Gate::calcOutput( int inputs )
 {
-    return (inputs==m_inPin.size()); // Default for: Buffer, Inverter, And, Nand
+    return ((uint)inputs == m_inPin.size()); // Default for: Buffer, Inverter, And, Nand
 }
 
 #include "moc_gate.cpp"

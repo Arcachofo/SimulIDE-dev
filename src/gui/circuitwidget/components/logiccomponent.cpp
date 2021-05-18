@@ -130,4 +130,37 @@ void LogicComponent::setOutputEnabled( bool enabled )
     Simulator::self()->addEvent( 1, NULL );
 }
 
+void LogicComponent::setInputHighV( double volt )
+{
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim ) Simulator::self()->pauseSim();
+
+    IoComponent::setInputHighV( volt );
+    if( m_clockPin) m_clockPin->setInputHighV( volt );
+
+    if( pauseSim ) Simulator::self()->resumeSim();
+}
+
+void LogicComponent::setInputLowV( double volt )
+{
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim ) Simulator::self()->pauseSim();
+
+    IoComponent::setInputLowV( volt );
+    if( m_clockPin) m_clockPin->setInputLowV( volt );
+
+    if( pauseSim ) Simulator::self()->resumeSim();
+}
+
+void LogicComponent::setInputImp( double imp )
+{
+    bool pauseSim = Simulator::self()->isRunning();
+    if( pauseSim ) Simulator::self()->pauseSim();
+
+    IoComponent::setInputImp( imp );
+    if( m_clockPin) m_clockPin->setInputImp( imp );
+
+    if( pauseSim ) Simulator::self()->resumeSim();
+}
+
 #include "moc_logiccomponent.cpp"

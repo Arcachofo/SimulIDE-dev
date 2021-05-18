@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2010 by santiago González                               *
+ *   Copyright (C) 2018 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,44 +17,29 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef LOGICCOMPONENT_H
-#define LOGICCOMPONENT_H
+#ifndef BCDBASE_H
+#define BCDBASE_H
 
-#include "iocomponent.h"
-#include "e-clocked_device.h"
+#include "logiccomponent.h"
+#include "e-element.h"
 
-class IoPin;
-
-class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevice
+class MAINMODULE_EXPORT BcdBase : public LogicComponent, public eElement
 {
     Q_OBJECT
 
     public:
-        LogicComponent( QObject* parent, QString type, QString id );
-        ~LogicComponent();
+        BcdBase( QObject* parent, QString type, QString id );
+        ~BcdBase();
 
-        void initState();
-        void stamp( eElement* el );
+        bool tristate() { return true; }
 
-        void setOePin( IoPin* pin );
-        void setOutputEnabled( bool enabled );
-        void updateOutEnabled();
-        bool outputEnabled();
-
-        virtual void setInputHighV( double volt ) override;
-        virtual void setInputLowV( double volt ) override;
-        virtual void setInputImp( double imp ) override;
-
-        bool tristate() { return m_tristate; }
-        virtual void setTristate( bool t );
-
-        virtual void remove() override;
+        virtual void initialize() override;
+        virtual void stamp() override;
+        virtual void voltChanged() override;
 
     protected:
-        bool m_outEnable;
-        bool m_tristate;
-
-        IoPin*  m_oePin;
+ static const uint8_t m_values[];
 };
 
 #endif
+

@@ -38,8 +38,7 @@ LibraryItem* SevenSegmentBCD::libraryItem()
 }
 
 SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
-               : LogicComponent( parent, type, id )
-               , eElement( id )
+               : BcdBase( parent, type, id )
 {
     m_graphical = true;
 
@@ -63,7 +62,7 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
         
     Simulator::self()->addToUpdateList( this );
     
-    ///initialize();
+    initialize();
 }
 SevenSegmentBCD::~SevenSegmentBCD()
 {

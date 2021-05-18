@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT XorGate : public Gate
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     protected:
-        virtual bool calcOutput( int inputs );
+        virtual bool calcOutput( int inputs ) override;
 };
 
 

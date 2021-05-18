@@ -330,6 +330,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     QString preLab  = out ? ""  : " ";
     QString PostLab = out ? " " : "";
     QString id      = out ? "-out" : "-in";
+    pinMode_t mode  = out ? output : input;
 
     if( pins < oldSize ) deletePins( pinList, oldSize-pins );
     else                 pinList->resize( pins );
@@ -347,7 +348,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
         if( i < oldSize ) pinList->at(i)->setY( y );
         else{
             QString num = QString::number(i);
-            pinList->at(i) = new IoPin( angle, QPoint( x, y), m_id+id+num, i, this, input );
+            pinList->at(i) = new IoPin( angle, QPoint( x, y), m_id+id+num, i, this, mode );
             initPin( pinList->at(i) );
 
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( preLab+label+num+PostLab );

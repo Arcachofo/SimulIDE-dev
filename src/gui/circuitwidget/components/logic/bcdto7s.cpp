@@ -19,32 +19,12 @@
 
 #include "bcdto7s.h"
 #include "itemlibrary.h"
-#include "simulator.h"
 #include "iopin.h"
 
-const uint8_t BcdTo7S::m_values[]={
-        0b00111111,
-        0b00000110,
-        0b01011011,
-        0b01001111,
-        0b01100110,
-        0b01101101,
-        0b01111101,
-        0b00000111,
-        0b01111111,
-        0b01101111,
-        0b01110111,
-        0b01111100,
-        0b00111001,
-        0b01011110,
-        0b01111001,
-        0b01110001,
-        0b00000000
-};
 
 Component* BcdTo7S::construct( QObject* parent, QString type, QString id )
 {
-        return new BcdTo7S( parent, type, id );
+    return new BcdTo7S( parent, type, id );
 }
 
 LibraryItem* BcdTo7S::libraryItem()
@@ -58,8 +38,7 @@ LibraryItem* BcdTo7S::libraryItem()
 }
 
 BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
-       : LogicComponent( parent, type, id )
-       , eElement( id )
+       : BcdBase( parent, type, id )
 {
     m_width  = 4;
     m_height = 8;
@@ -102,13 +81,7 @@ QList<propGroup_t> BcdTo7S::propGroups()
 
 void BcdTo7S::stamp()
 {
-    for( int i=0; i<4; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
-    m_nextOutVal = m_values[0];
-    m_changed = true;
+    BcdBase::stamp();
 
     uint8_t value = m_values[0];
     for( int i=0; i<7; ++i ) m_outPin[i]->setOutState( value & (1<<i) );
@@ -118,22 +91,9 @@ void BcdTo7S::voltChanged()
 {
     LogicComponent::updateOutEnabled();
 
-    m_changed = true;
+    BcdBase::voltChanged();
 
-    bool a = m_inPin[0]->getInpState();
-    bool b = m_inPin[1]->getInpState();
-    bool c = m_inPin[2]->getInpState();
-    bool d = m_inPin[3]->getInpState();
-
-    int digit = a*1+b*2+c*4+d*8;
-    m_nextOutVal = m_values[digit];
-
-    if( m_outPin.size() ) sheduleOutPuts( this );
-}
-
-void BcdTo7S::runEvent()
-{
-    IoComponent::runOutputs();
+    sheduleOutPuts( this );
 }
 
 #include "moc_bcdto7s.cpp"

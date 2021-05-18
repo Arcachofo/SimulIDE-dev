@@ -48,10 +48,10 @@ class MAINMODULE_EXPORT IoComponent : public Component
         void sheduleOutPuts( eElement* el );
 
         double inputHighV() const          { return m_inHighV; }
-        void  setInputHighV( double volt );
+        virtual void setInputHighV( double volt );
 
         double inputLowV() const          { return m_inLowV; }
-        void  setInputLowV( double volt );
+        virtual void setInputLowV( double volt );
 
         double outHighV() const           { return m_ouHighV; }
         void  setOutHighV( double volt );
@@ -60,7 +60,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
         void  setOutLowV( double volt );
 
         double inputImp() const           { return m_inImp; }
-        void  setInputImp( double imp );
+        virtual void setInputImp( double imp );
 
         double outImp() const            { return m_ouImp; }
         void  setOutImp( double imp );

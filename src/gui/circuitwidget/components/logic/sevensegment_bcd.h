@@ -20,12 +20,11 @@
 #ifndef SEVENSEGMENTBCD_H
 #define SEVENSEGMENTBCD_H
 
-#include "logiccomponent.h"
-#include "e-element.h"
+#include "bcdbase.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT SevenSegmentBCD : public LogicComponent, public eElement
+class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
 {
     Q_OBJECT
 
@@ -41,10 +40,6 @@ class MAINMODULE_EXPORT SevenSegmentBCD : public LogicComponent, public eElement
         void updateStep() override;
         
         void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
-
-    private:
-        //int m_origx;
-        //int m_origy;
 };
 
 #endif
