@@ -44,6 +44,7 @@ class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
         void setCcode( int code );
         
         virtual void stamp() override;
+        virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void writeByte();
         virtual void readByte();

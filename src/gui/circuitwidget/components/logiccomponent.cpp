@@ -59,6 +59,13 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
 }
 LogicComponent::~LogicComponent(){}
 
+void LogicComponent::updateStep()
+{
+    IoComponent::updateStep();
+    if( m_oePin ) m_oePin->updateStep();
+    if( m_clockPin) m_clockPin->updateStep();
+}
+
 void LogicComponent::initState()
 {
     IoComponent::initState();
@@ -105,10 +112,10 @@ void LogicComponent::updateOutEnabled()
     bool outEnPrev = m_outEnable;
     bool outEn = outputEnabled();              // Refresh m_outEnable
 
-    if( outEnPrev != outEn ) setOutputEnabled( outEn );
+    if( outEnPrev != outEn ) enableOutputs( outEn );
 }
 
-void LogicComponent::setTristate( bool t )
+void LogicComponent::setTristate( bool t )  // Activate or deactivate OE Pin
 {
     if( !t )
     {
@@ -124,43 +131,40 @@ void LogicComponent::setTristate( bool t )
     updateOutEnabled();
 }
 
-void LogicComponent::setOutputEnabled( bool enabled )
+void LogicComponent::enableOutputs( bool en )
 {
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !enabled );
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !en );
     Simulator::self()->addEvent( 1, NULL );
 }
 
 void LogicComponent::setInputHighV( double volt )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
     IoComponent::setInputHighV( volt );
     if( m_clockPin) m_clockPin->setInputHighV( volt );
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void LogicComponent::setInputLowV( double volt )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
     IoComponent::setInputLowV( volt );
     if( m_clockPin) m_clockPin->setInputLowV( volt );
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void LogicComponent::setInputImp( double imp )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
     IoComponent::setInputImp( imp );
     if( m_clockPin) m_clockPin->setInputImp( imp );
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 #include "moc_logiccomponent.cpp"

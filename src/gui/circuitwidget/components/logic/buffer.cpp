@@ -19,7 +19,6 @@
 
 #include "buffer.h"
 #include "itemlibrary.h"
-#include "connector.h"
 #include "iopin.h"
 
 Component* Buffer::construct( QObject* parent, QString type, QString id )

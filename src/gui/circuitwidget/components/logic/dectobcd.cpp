@@ -43,6 +43,7 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 10;
 
+    m_tristate = true;
     m_16Bits = false;
     m_bits = 10;
 
@@ -92,9 +93,14 @@ QList<propGroup_t> DecToBcd::propGroups()
     return pg;
 }
 
+void DecToBcd::initialize()
+{
+    LogicComponent::initState();
+}
+
 void DecToBcd::stamp()
 {
-    for( int i=0; i<15; ++i )m_inPin[i]->changeCallBack( this );
+    for( int i=0; i<15; ++i ) m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp( this);
 }
 
@@ -104,20 +110,11 @@ void DecToBcd::voltChanged()
 
     int i;
     for( i=m_bits-2; i>=0; --i )
+    {
         if( m_inPin[i]->getInpState() ) break;
-
+    }
     m_nextOutVal = i+1;
     sheduleOutPuts( this );
-}
-
-void DecToBcd::runEvent()
-{
-    IoComponent::runOutputs();
-}
-
-bool DecToBcd::_16bits()
-{
-    return m_16Bits;
 }
 
 void DecToBcd::set_16bits( bool set )
@@ -127,17 +124,12 @@ void DecToBcd::set_16bits( bool set )
     if( m_16Bits ) m_bits = 16;
     else           m_bits = 10;
 
-    int height = m_height;
-    if( set )
+    int height = set ? 16 : m_height;
+
+    for( int i=9; i<15; ++i )
     {
-        for( int i=9; i<15; ++i ) m_inPin[i]->setVisible( true );
-        height = 16;
-    } else {
-        for( int i=9; i<15; ++i )
-        {
-            m_inPin[i]->setVisible( false );
-            m_inPin[i]->removeConnector();
-        }
+        m_inPin[i]->setVisible( set );
+        if( !set ) m_inPin[i]->removeConnector();
     }
     m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
     Circuit::self()->update();

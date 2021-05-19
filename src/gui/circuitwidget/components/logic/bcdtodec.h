@@ -30,7 +30,6 @@ class MAINMODULE_EXPORT BcdToDec : public LogicComponent, public eElement
     Q_OBJECT
     Q_PROPERTY( bool Inverted READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
     Q_PROPERTY( bool _16_Bits READ _16bits    WRITE set_16bits    DESIGNABLE true USER true )
-    Q_PROPERTY( bool Tristate READ tristate USER true )
 
     public:
         BcdToDec( QObject* parent, QString type, QString id );
@@ -46,7 +45,6 @@ class MAINMODULE_EXPORT BcdToDec : public LogicComponent, public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
-        bool tristate() { return true; }
 
         bool _16bits();
         void set_16bits( bool set );

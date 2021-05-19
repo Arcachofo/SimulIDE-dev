@@ -96,10 +96,8 @@ QList<propGroup_t> Memory::propGroups()
 void Memory::stamp()                   // Called at Simulation Start
 {
     for( int i=0; i<2+m_addrBits; ++i ) // Initialize control pins
-    {
-        eNode* enode =  m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+        ;///m_inPin[i]->changeCallBack( this );
+
     LogicComponent::stamp( this );
 }
 
@@ -115,10 +113,8 @@ void Memory::initialize()
     m_oe = true;
     m_read = false;
 
-    for( uint i=0; i<m_outPin.size(); ++i )
-    {
-        m_outPin[i]->setPinMode( input );
-    }
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( input );
+
     if( !m_persistent ) m_ram.fill( 0 );
 
     LogicComponent::initState();
@@ -137,7 +133,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
         if( !CS && m_oe )
         {
             m_oe = false;
-            LogicComponent::setOutputEnabled( false ); // Deactivate
+            LogicComponent::enableOutputs( false ); // Deactivate
         }
     }
     if( !CS ) return;
@@ -148,7 +144,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     if( oe != m_oe )
     {
         m_oe = oe;
-        setOutputEnabled( oe );
+        enableOutputs( oe );
     }
 
     m_address = 0;

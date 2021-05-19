@@ -135,26 +135,24 @@ double ResistorDip::resist() { return m_value; }
 
 void ResistorDip::setResist( double r )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
     
     if( r == 0 ) r = 0.001;
     Component::setValue( r );       // Takes care about units multiplier
     
     setRes( m_value*m_unitMult );
     
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void ResistorDip::setUnit( QString un ) 
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
     
     Component::setUnit( un );
     setRes( m_value*m_unitMult );
     
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void ResistorDip::remove()

@@ -33,11 +33,13 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
         LogicComponent( QObject* parent, QString type, QString id );
         ~LogicComponent();
 
+        virtual void updateStep() override;
+
         void initState();
         void stamp( eElement* el );
 
         void setOePin( IoPin* pin );
-        void setOutputEnabled( bool enabled );
+        void enableOutputs( bool en );
         void updateOutEnabled();
         bool outputEnabled();
 

@@ -86,14 +86,19 @@ QList<propGroup_t> I2CToParallel::propGroups()
     return pg;
 }
 
+void I2CToParallel::initialize()
+{
+    TwiModule::initialize();
+    IoComponent::initState();
+    for( int i=0; i<8; ++i ) m_outPin[i]->setOutState( true );
+}
+
 void I2CToParallel::stamp()                     // Called at Simulation Start
 {
     TwiModule::stamp();
     
     for( int i=2; i<5; ++i )                  // Initialize address pins
         m_inPin[i]->changeCallBack( this );
-
-    for( int i=0; i<8; ++i ) m_outPin[i]->setOutState( true );
 }
 
 void I2CToParallel::voltChanged()             // Some Pin Changed State, Manage it
@@ -129,8 +134,7 @@ void I2CToParallel::writeByte()         // Writting to I2C from Parallel (master
     int value = 0;
     for( int i=0; i<8; ++i )
     {
-        bool state = m_outPin[i]->getInpState();
-        if( state ) value += pow( 2, i );
+        if( m_outPin[i]->getInpState() ) value += pow( 2, i );
     }
     m_txReg = value;
 

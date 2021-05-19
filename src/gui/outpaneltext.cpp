@@ -23,7 +23,7 @@
 
 OutPanelText::OutPanelText( QWidget* parent )
             : QPlainTextEdit( parent )
-            , eElement( "outPanel" )
+            , Updatable()
 {
     m_textBuffer = "";
     this->setObjectName( "outPanel" );

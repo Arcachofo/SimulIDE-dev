@@ -21,7 +21,6 @@
 #define BUFFER_H
 
 #include "gate.h"
-#include "component.h"
 
 class LibraryItem;
 

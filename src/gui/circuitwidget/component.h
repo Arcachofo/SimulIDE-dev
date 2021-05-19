@@ -24,6 +24,8 @@
 #include <QtWidgets>
 #include <QPointer>
 
+#include "updatable.h"
+
 struct property_t{
         QString name;
         QString caption;
@@ -39,7 +41,7 @@ class Pin;
 class Label;
 class PropDialog;
 
-class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem
+class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public Updatable
 {
     Q_OBJECT
     Q_INTERFACES( QGraphicsItem )

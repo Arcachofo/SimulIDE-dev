@@ -90,8 +90,7 @@ void KeyPad::stamp()
 
 void KeyPad::setupButtons()
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
     
     m_area = QRectF( -12, -4, 16*m_cols+8, 16*m_rows+8 );
     
@@ -143,7 +142,7 @@ void KeyPad::setupButtons()
             }
         }
     }
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
     Circuit::self()->update();
 }
 

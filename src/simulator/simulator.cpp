@@ -22,6 +22,7 @@
 #include "simulator.h"
 #include "circuit.h"
 #include "matrixsolver.h"
+#include "updatable.h"
 #include "e-element.h"
 #include "outpaneltext.h"
 #include "mcucomponent.h"
@@ -120,7 +121,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         for( eNode* enode : m_eNodeList ) enode->setVoltChanged( false );
     }
 
-    for( eElement* el : m_updateList ) el->updateStep();
+    for( Updatable* el : m_updateList ) el->updateStep();
 
     if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
         m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
@@ -318,7 +319,7 @@ void Simulator::stopSim()
 
     for( eNode* node  : m_eNodeList  )  node->setVolt( 0 );
     for( eElement* el : m_elementList ) el->initialize();
-    for( eElement* el : m_updateList )  el->updateStep();
+    for( Updatable* el : m_updateList )  el->updateStep();
 
     clearEventList();
     m_changedNode = NULL;
@@ -326,6 +327,8 @@ void Simulator::stopSim()
 
 void Simulator::pauseSim()
 {
+    if( m_state <= SIM_PAUSED ) return;
+    m_oldState = m_state;
     m_state = SIM_PAUSED;
 
     CircuitWidget::self()->setMsg( " Simulation Paused ", 1 );
@@ -334,7 +337,8 @@ void Simulator::pauseSim()
 
 void Simulator::resumeSim()
 {
-    m_state = SIM_RUNNING;
+    if( m_state != SIM_PAUSED ) return;
+    m_state = m_oldState; // SIM_RUNNING;
 
     CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
     qDebug() << "\n    Resuming Simulation";
@@ -506,10 +510,10 @@ void Simulator::addToElementList( eElement* el )
 void Simulator::remFromElementList( eElement* el )
 { if( m_elementList.contains(el) ) m_elementList.removeOne(el); }
 
-void Simulator::addToUpdateList( eElement* el )
+void Simulator::addToUpdateList( Updatable* el )
 { if( !m_updateList.contains(el) ) m_updateList.append(el); }
 
-void Simulator::remFromUpdateList( eElement* el )
+void Simulator::remFromUpdateList( Updatable* el )
 { m_updateList.removeOne(el); }
 
 void Simulator::addToChangedFast( eElement* el )

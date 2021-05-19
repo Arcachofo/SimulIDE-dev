@@ -43,20 +43,19 @@ void eClockedDevice::stamp( eElement* el )
 
 bool eClockedDevice::clockInv()
 {
-    return m_clockPin->isInverted();
+    return m_clockPin->inverted();
 }
 
 void eClockedDevice::setClockInv( bool inv )
 {
     if( !m_clockPin ) return;
 
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
     m_clockPin->setInverted( inv );
     Circuit::self()->update();
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 clkState_t eClockedDevice::getClockState()

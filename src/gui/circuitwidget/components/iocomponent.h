@@ -27,8 +27,8 @@ class MAINMODULE_EXPORT IoComponent : public Component
 {
         Q_OBJECT
         Q_PROPERTY( quint64 Tpd_ps READ propDelay WRITE setPropDelay DESIGNABLE true USER true )
-        Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-        Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
+        Q_PROPERTY( quint64  Tr_ps READ riseTime  WRITE setRiseTime DESIGNABLE true USER true )
+        Q_PROPERTY( quint64  Tf_ps READ fallTime  WRITE setFallTime DESIGNABLE true USER true )
 
         Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
         Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
@@ -42,6 +42,8 @@ class MAINMODULE_EXPORT IoComponent : public Component
         ~IoComponent();
 
         virtual QList<propGroup_t> propGroups() override;
+
+        virtual void updateStep() override;
 
         void initState();
         void runOutputs();

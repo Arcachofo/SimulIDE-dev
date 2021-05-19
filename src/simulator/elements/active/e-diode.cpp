@@ -122,14 +122,13 @@ double eDiode::res()
 
 void eDiode::setRes( double resist )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
     if( resist == 0 ) resist = 0.1;
     m_imped = resist;
     voltChanged();
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void  eDiode::setZenerV( double zenerV ) 

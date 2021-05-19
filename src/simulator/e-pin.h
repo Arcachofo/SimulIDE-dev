@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT ePin
         void changeCallBack( eElement* el , bool cb= true );
 
         bool inverted() { return m_inverted; }
-        void setInverted( bool inverted );
+        virtual void setInverted( bool inverted );
 
         void stampAdmitance( double data );
         void stampCurrent( double data );

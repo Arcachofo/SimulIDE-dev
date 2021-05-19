@@ -77,7 +77,7 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
 
     m_persistent = false;
     
-    initialize();
+    IoComponent::initState();
 
     Simulator::self()->addToUpdateList( this );
 }
@@ -96,20 +96,18 @@ QList<propGroup_t> I2CRam::propGroups()
     return pg;
 }
 
-void I2CRam::stamp()                     // Called at Simulation Start
+void I2CRam::stamp()           // Called at Simulation Start
 {
     TwiModule::stamp();
     
-    for( int i=2; i<5; i++ )                  // Initialize address pins
-    {
-        eNode* enode =  m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    for( int i=2; i<5; i++ )     // Initialize address pins
+        m_inPin[i]->changeCallBack( this );
 }
 
 void I2CRam::initialize()
 {
     TwiModule::initialize();
+    IoComponent::initState();
     
     m_addrPtr = 0;
     m_phase = 3;

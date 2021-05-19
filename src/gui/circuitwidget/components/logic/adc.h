@@ -48,7 +48,7 @@ class MAINMODULE_EXPORT ADC : public LogicComponent, public eElement
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
+        virtual void runEvent() override { IoComponent::runOutputs(); }
 
         virtual void setNumOuts( int outs );
         

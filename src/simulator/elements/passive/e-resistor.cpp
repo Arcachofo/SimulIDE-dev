@@ -82,12 +82,9 @@ void eResistor::setAdmit( double admit )               // Admit can be 0
 
 void eResistor::setResSafe( double resist )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
-    
+    Simulator::self()->pauseSim();
     setRes( resist );
-    
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 double eResistor::current()

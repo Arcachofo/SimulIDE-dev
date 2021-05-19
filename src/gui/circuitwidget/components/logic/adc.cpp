@@ -52,7 +52,7 @@ ADC::ADC( QObject* parent, QString type, QString id )
     m_height = 9;
 
     setNumOuts( 8 );    // Create Output Pins
-    setNumInps( 1, "I" );
+    setNumInps( 1 );
 
     setMaxVolt( 5 );
 
@@ -88,14 +88,10 @@ void ADC::voltChanged()
         Simulator::self()->addEvent( m_propDelay, this );
 }
 
-void ADC::runEvent()
-{
-    IoComponent::runOutputs();
-}
-
 void ADC::setNumOuts( int outs )
 {
     if( outs < 1 ) return;
+    m_maxValue = pow( 2, outs )-1;
     LogicComponent::setNumOuts( outs, "D" );
 }
 

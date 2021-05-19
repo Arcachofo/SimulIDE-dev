@@ -26,7 +26,7 @@
 #include "highlighter.h"
 #include "outpaneltext.h"
 #include "ramtable.h"
-#include "e-element.h"
+#include "updatable.h"
 
 enum bebugState_t{
     DBG_STOPPED = 0,
@@ -44,7 +44,7 @@ class EditorProp;
 class BaseDebugger;
 class LineNumberArea;
 
-class CodeEditor : public QPlainTextEdit, public eElement
+class CodeEditor : public QPlainTextEdit, public Updatable
 {
     Q_OBJECT
     //Q_PROPERTY( bool   centerOnScroll   READ centerOnScroll    WRITE setCenterOnScroll  DESIGNABLE true USER true )

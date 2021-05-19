@@ -37,7 +37,6 @@ class MAINMODULE_EXPORT eElement
         virtual void stamp(){;}
 
         virtual void runEvent(){;}
-        virtual void updateStep(){;}
         virtual void voltChanged(){;}
 
         virtual void setNumEpins( int n );

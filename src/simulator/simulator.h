@@ -39,6 +39,7 @@ enum simState_t{
 };
 
 class BaseProcessor;
+class Updatable;
 class eElement;
 class eNode;
 
@@ -124,8 +125,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void addToElementList( eElement* el );
         void remFromElementList( eElement* el );
         
-        void addToUpdateList( eElement* el );
-        void remFromUpdateList( eElement* el );
+        void addToUpdateList( Updatable* el );
+        void remFromUpdateList(Updatable* el );
 
         void addToChangedFast( eElement* el );
 
@@ -156,9 +157,10 @@ class MAINMODULE_EXPORT Simulator : public QObject
         eElement* m_nonLin;
 
         QList<eElement*> m_elementList;
-        QList<eElement*> m_updateList;
+        QList<Updatable*> m_updateList;
 
         simState_t m_state;
+        simState_t m_oldState;
 
         int m_numEvents;
 

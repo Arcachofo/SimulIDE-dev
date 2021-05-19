@@ -59,7 +59,7 @@ QFont CodeEditor::m_font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           : QPlainTextEdit( parent )
-          , eElement( "CodeEditor" )
+          , Updatable()
 {
     Q_UNUSED( CodeEditor_properties );
     

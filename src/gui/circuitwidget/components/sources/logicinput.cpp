@@ -116,24 +116,22 @@ double LogicInput::volt()
 
 void LogicInput::setVolt( double v )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
 
     Component::setValue( v );       // Takes care about units multiplier
     updateOutput();
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void LogicInput::setUnit( QString un ) 
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
 
     Component::setUnit( un );
     updateOutput();
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void LogicInput::updateOutput()

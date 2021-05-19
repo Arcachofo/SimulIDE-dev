@@ -21,6 +21,7 @@
 #define DATACHANNEL_H
 
 #include "e-element.h"
+#include "updatable.h"
 
 #include <QVector>
 
@@ -34,7 +35,7 @@ enum cond_t{
 
 class PlotBase;
 
-class MAINMODULE_EXPORT DataChannel : public eElement
+class MAINMODULE_EXPORT DataChannel : public eElement, public Updatable
 {
         friend class PlotBase;
         friend class Oscope;

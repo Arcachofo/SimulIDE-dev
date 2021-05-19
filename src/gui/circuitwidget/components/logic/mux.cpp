@@ -93,11 +93,7 @@ QList<propGroup_t> Mux::propGroups()
 
 void Mux::stamp()
 {
-    for( int i=0; i<11; ++i )
-    {
-        eNode* enode = m_inPin[i]->getEnode();
-        if( enode ) enode->voltChangedCallback( this );
-    }
+    for( int i=0; i<11; ++i ) m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp( this );
 }
 
@@ -117,7 +113,7 @@ void Mux::voltChanged()
 
 void Mux::setAddrBits( int bits )
 {
-    //if( m_addrBits == bits ) return;
+    if( m_addrBits == bits ) return;
 
     if     ( bits < 1 ) bits = 1;
     else if( bits > 3 ) bits = 3;

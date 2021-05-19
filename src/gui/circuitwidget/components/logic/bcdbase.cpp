@@ -56,9 +56,11 @@ void BcdBase::initialize()
 
 void BcdBase::stamp()
 {
+    LogicComponent::stamp( this );
     for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
 
     m_nextOutVal = m_values[0];
+    m_outValue = m_nextOutVal;
     m_changed = true;
 }
 

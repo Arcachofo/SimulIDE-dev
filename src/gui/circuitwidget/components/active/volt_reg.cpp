@@ -131,24 +131,22 @@ double VoltReg::vRef()
 
 void VoltReg::setVRef( double vref )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
     Component::setValue( vref );       // Takes care about units multiplier
     m_vRef = m_value*m_unitMult;
     
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void VoltReg::setUnit( QString un )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
     Component::setUnit( un );
     m_vRef = m_value*m_unitMult;
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void VoltReg::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

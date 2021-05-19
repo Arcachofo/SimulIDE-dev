@@ -24,6 +24,7 @@
 
 DataChannel::DataChannel( PlotBase* plotBase, QString id )
            : eElement( id  )
+           , Updatable()
 {
     m_plotBase = plotBase;
     m_ePin.resize( 2 );
@@ -49,8 +50,7 @@ void DataChannel::stamp()    // Called at Simulation Start
     m_plotBase->display()->connectChannel( m_channel, connected );
 
     if( !m_ePin[1] ) return;
-    enode =  m_ePin[1]->getEnode();
-    if( enode ) enode->voltChangedCallback( this );
+    m_ePin[1]->changeCallBack( this );
 
     m_bufferCounter = 0;
     m_trigIndex = 0;

@@ -55,9 +55,6 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    m_pin.resize( 4 );
-    for( uint i=0; i<m_inPin.size(); i++ )m_pin[i] = m_inPin[i];
-
     setLabelPos(-16,-40, 0);
         
     Simulator::self()->addToUpdateList( this );

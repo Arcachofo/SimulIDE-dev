@@ -54,8 +54,7 @@ void MemData::showTable( int dataSize, int wordBytes )
 
 void MemData::loadData( QVector<int>* toData, bool resize, int bits )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
 
     QString dir = Circuit::self()->getFileName();
     dir.replace( ".simu", ".data" );
@@ -138,13 +137,12 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
             toData->replace( i, data );
         }
     }
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void MemData::saveData( QVector<int>* data, int bits )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
 
     QString dir = Circuit::self()->getFileName();
     dir.replace( ".simu", ".data" );
@@ -209,5 +207,5 @@ void MemData::saveData( QVector<int>* data, int bits )
             //qDebug()<<"MemData::saveData bits"<< bits << bytes <<i;
         }
     }
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }

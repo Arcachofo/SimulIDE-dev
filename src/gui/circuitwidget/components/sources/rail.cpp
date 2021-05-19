@@ -72,24 +72,22 @@ double Rail::volt()
 
 void Rail::setVolt( double v )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
 
     Component::setValue( v );       // Takes care about units multiplier
     updateOutput();
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void Rail::setUnit( QString un ) 
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
 
     Component::setUnit( un );
     updateOutput();
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void Rail::updateOutput()

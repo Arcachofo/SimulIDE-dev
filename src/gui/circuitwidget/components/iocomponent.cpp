@@ -64,8 +64,17 @@ QList<propGroup_t> IoComponent::propGroups()
     return {elecGroup, edgeGroup};
 }
 
+void IoComponent::updateStep()
+{
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->updateStep();
+    for( uint i=0; i<m_inPin.size(); ++i )  m_inPin[i]->updateStep();
+}
+
 void IoComponent::initState()
 {
+    if( Circuit::self()->animate( ) ) Simulator::self()->addToUpdateList( this );
+    else                              Simulator::self()->remFromUpdateList( this );
+
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutState( false );
 
     m_outStep = 0;
@@ -113,104 +122,97 @@ void IoComponent::sheduleOutPuts(  eElement* el )
 
 void IoComponent::setInputHighV( double volt )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    if( m_inHighV == volt ) return;
+    Simulator::self()->pauseSim();
 
     m_inHighV = volt;
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputHighV( volt );
 
-    ///if( m_clockPin) m_clockPin->setInputHighV( volt );
-
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInputLowV( double volt )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    if( m_inLowV == volt ) return;
+    Simulator::self()->pauseSim();
 
     m_inLowV = volt;
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputLowV( volt );
 
-    ///if( m_clockPin) m_clockPin->setInputLowV( volt );
-
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutHighV( double volt )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    if( m_ouHighV == volt ) return;
+    Simulator::self()->pauseSim();
 
     m_ouHighV = volt;
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutHighV( volt );
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutLowV( double volt )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    if( m_ouLowV == volt ) return;
+    Simulator::self()->pauseSim();
 
     m_ouLowV = volt;
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutLowV( volt );
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInputImp( double imp )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    if( m_inImp == imp ) return;
+    Simulator::self()->pauseSim();
 
     m_inImp = imp;
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputImp( imp );
 
-    ///if( m_clockPin) m_clockPin->setInputImp( imp );
-
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutImp( double imp )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
-
     if( m_ouImp == imp ) return;
+    Simulator::self()->pauseSim();
 
     m_ouImp = imp;
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutputImp( imp );
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInvertOuts( bool inverted )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    if( m_invOutputs == inverted ) return;
+    Simulator::self()->pauseSim();
 
     m_invOutputs = inverted;
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setInverted( inverted );
 
     Circuit::self()->update();
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInvertInps( bool invert )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim ) Simulator::self()->pauseSim();
+    if( m_invInputs == invert ) return;
+    Simulator::self()->pauseSim();
 
     m_invInputs = invert;
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInverted( invert );
 
     Circuit::self()->update();
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOpenCol( bool op )
 {
+    if( m_openCol == op ) return;
     m_openCol = op;
 
     for( uint i=0; i<m_outPin.size(); ++i )
@@ -235,7 +237,6 @@ void IoComponent::init( QStringList pins )
         else if( pin.startsWith( "O" ) ) outputs.append( pin.remove(0,1) );
         else qDebug() << " LogicComponent::init: pin name error "<<pin;
     }
-    //setNumInps( inputs.length(), " I" ); // Create Input Pins
     m_inPin.resize( inputs.length() );
     int i = 0;
     for( QString inp : inputs ) // Example input = "L02Name"
@@ -245,7 +246,6 @@ void IoComponent::init( QStringList pins )
         m_inPin[i] = createPin( pinPos, m_id+"-in"+QString::number(i), label, input );
         i++;
     }
-    //setNumOuts( outputs.length() ); // Create Output Pins
     m_outPin.resize( outputs.length() );
     i = 0;
     for( QString out : outputs ) // Example output = "L02Name"

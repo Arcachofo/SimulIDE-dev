@@ -363,10 +363,9 @@ void Pin::setPinState( pinState_t st )
     m_changed = true;
 }
 
-void Pin::UpdateState()
+void Pin::updateStep()
 {
-    //if( m_changed )
-        update();
+    if( m_changed ) update();
 }
 
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )

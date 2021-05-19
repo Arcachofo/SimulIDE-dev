@@ -24,11 +24,11 @@
 #include <QSyntaxHighlighter>
 #include <QObject>
 
-#include "e-element.h"
+#include "updatable.h"
 
 class OutHighlighter;
 
-class MAINMODULE_EXPORT OutPanelText : public QPlainTextEdit, public eElement
+class MAINMODULE_EXPORT OutPanelText : public QPlainTextEdit, public Updatable
 {
     Q_OBJECT
     public:

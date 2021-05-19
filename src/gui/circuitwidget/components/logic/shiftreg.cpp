@@ -66,7 +66,7 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
 
     m_clockPin = m_inPin[1];
     setOePin( m_inPin[3] );
-    setResetInv( true );                             // Invert Reset Pin
+    setResetInv( true );         // Invert Reset Pin
 }
 ShiftReg::~ShiftReg(){}
 
@@ -83,7 +83,6 @@ QList<propGroup_t> ShiftReg::propGroups()
 
 void ShiftReg::stamp()
 {
-    m_inPin[1]->changeCallBack( this );
     LogicComponent::stamp( this );
 }
 
@@ -91,7 +90,7 @@ void ShiftReg::voltChanged()
 {
     LogicComponent::updateOutEnabled();
 
-    bool clkRising = (LogicComponent::getClockState() == Clock_Rising);// Get Clk to don't miss any clock changes
+    bool clkRising = (getClockState() == Clock_Rising);// Get Clk to don't miss any clock changes
     bool     reset = m_inPin[1]->getInpState();
 
     if( reset ) m_nextOutVal = 0;        // Reset shift register

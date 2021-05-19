@@ -30,7 +30,6 @@
 Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, Pin* endpin )
          : Component( parent, type, id )
 {
-    //m_eNode = 0l;
     m_actLine   = 0;
     m_lastindex = 0;
     
@@ -44,7 +43,6 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
         setPos( startpin->scenePos() );
         if( m_startPin->isBus() ) setIsBus( true );
     }
-
     if( endpin )
     {
         m_endPin   = endpin;
@@ -71,7 +69,6 @@ void Connector::remNullLines()      // Remove lines with leght = 0 or aligned
         refreshPointList();
         return;
     }
-
     for( ConnectorLine* line : m_conLineList )
     {
         if( line->isDiagonal() ) continue;
@@ -90,7 +87,6 @@ void Connector::remNullLines()      // Remove lines with leght = 0 or aligned
             }
         }
     }
-    //
     if( m_conLineList.length() < 2 )
     {
         m_lastindex = 0;
@@ -131,7 +127,6 @@ void Connector::refreshPointList()
     setPos( m_conLineList.first()->scenePos() );
 
     setPointList( list );
-    //qDebug() << "lines " << count << "connector poinlist" << m_conLineList;
 }
 
 void Connector::addConLine( ConnectorLine* line, int index )
@@ -200,7 +195,6 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
         remNullLines();
         return;
     }
-
     bool diagonal = false;
     int length = m_conLineList.length();
     ConnectorLine* line;
@@ -210,7 +204,6 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
     {
         line = m_conLineList.first();
         diagonal = line->isDiagonal();
-        //qDebug() << "Connector::updateConRoute StartPin";
         
         line->sSetP1( thisPoint.toPoint() );
 
@@ -232,9 +225,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
     else
     {
         line = m_conLineList.last();
-        
         diagonal = line->isDiagonal();
-        //qDebug() << "Connector::updateConRoute EndPin";
         
         line->sSetP2( togrid( thisPoint ).toPoint() );
         
@@ -263,8 +254,6 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
     
     if( (line->dx() == 0) && (line->dy() == 0) && (length > 1) ) // Null Line
     {
-        //if( preline && preline->isDiagonal() ) return;
-        
         Circuit::self()->removeItem( line );
         m_conLineList.removeOne( line );
 
@@ -460,8 +449,6 @@ void Connector::updateLines()
     {
         for( ConnectorLine*  line : m_conLineList ) line->update();
     }
-    if( m_startPin ) m_startPin->UpdateState();
-    if( m_endPin )   m_endPin->UpdateState();
 }
 
 QStringList Connector::pointList()             { refreshPointList(); return m_pointList; }

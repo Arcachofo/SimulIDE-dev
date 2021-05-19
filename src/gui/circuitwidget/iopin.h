@@ -41,8 +41,8 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         ~IoPin();
 
         virtual void initialize() override;
+        virtual void stamp() override;
 
-        void stamp() override;
         void stampAll();
         void stampOutput();
 
@@ -70,13 +70,12 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         void setStateZ( bool z );
 
-        bool  isInverted() { return m_inverted; }
-        void  setInverted( bool inverted );
+        virtual void setInverted( bool inverted ) override;
 
         void controlPin( bool ctrl );
 
     protected:
-        void update();
+        void updtState();
 
         double m_inpHighV;  // currently in eClockedDevice
         double m_inpLowV;
@@ -99,7 +98,6 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         bool m_inpState;
         bool m_outState;
         bool m_stateZ;
-        bool m_inverted;
         bool m_extCtrl;
 
         pinMode_t m_pinMode;

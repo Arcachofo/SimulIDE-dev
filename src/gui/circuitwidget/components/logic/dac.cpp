@@ -74,8 +74,8 @@ void DAC::voltChanged()
 {
     m_value = 0;
 
-    for( uint i=0; i<m_outPin.size(); ++i )
-        if( m_inPin[i]->getInpState() ) m_value += pow( 2, m_inPin.size()-1-i );
+    for( uint i=0; i<m_inPin.size(); ++i )
+        if( m_inPin[i]->getInpState() ) m_value += pow( 2, i );
 
     Simulator::self()->addEvent( m_propDelay, this );
 }
@@ -85,16 +85,13 @@ void DAC::runEvent()
     double v = m_maxVolt*m_value/m_maxValue;
 
     m_outPin[0]->setOutHighV( v );
-    m_outPin[0]->stampOutput();
+    m_outPin[0]->setOutState( true );
 }
 
 void DAC::setNumInps( uint inputs )
 {
-    if( inputs == m_inPin.size() ) return;
     if( inputs < 1 ) return;
-
     m_maxValue = pow( 2, inputs )-1;
-
     IoComponent::setNumInps( inputs, "D" );
 }
 

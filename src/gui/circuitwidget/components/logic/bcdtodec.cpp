@@ -43,6 +43,7 @@ BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 11;
 
+    m_tristate = true;
     m_16Bits = false;
 
     QStringList pinList;
@@ -101,7 +102,7 @@ void BcdToDec::initialize()
 
 void BcdToDec::stamp()
 {
-    for( int i=0; i<4; ++i )m_inPin[i]->changeCallBack( this );
+    for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp( this );
 }
 

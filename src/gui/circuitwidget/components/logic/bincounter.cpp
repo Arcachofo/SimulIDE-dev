@@ -115,10 +115,7 @@ void BinCounter::voltChanged()
     {
         m_Counter++;
 
-        if( m_Counter == m_TopValue )
-        {
-            m_nextOutVal = 1;
-        }
+        if(      m_Counter == m_TopValue ) m_nextOutVal = 1;
         else if( m_Counter > m_TopValue )
         {
             m_Counter = 0;

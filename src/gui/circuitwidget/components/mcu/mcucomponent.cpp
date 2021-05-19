@@ -370,8 +370,7 @@ void McuComponent::slotReload()
 
 void McuComponent::load( QString fileName )
 {
-    bool pauseSim = Simulator::self()->isRunning();
-    if( pauseSim )  Simulator::self()->pauseSim();
+     Simulator::self()->pauseSim();
 
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
@@ -393,7 +392,7 @@ void McuComponent::load( QString fileName )
     }
     //else QMessageBox::warning( 0, tr("Error:"), tr("Could not load: \n")+ fileName );
 
-    if( pauseSim ) Simulator::self()->resumeSim();
+    Simulator::self()->resumeSim();
 }
 
 void McuComponent::setSubcDir( QString dir ) // Used in subcircuits
