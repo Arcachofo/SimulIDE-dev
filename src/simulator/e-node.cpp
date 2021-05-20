@@ -227,7 +227,7 @@ void eNode::createBus()
     int busSize = m_eBusPinList.size();
 
     m_eNodeList.clear();
-    for( int i=0; i<busSize; i++ )
+    for( int i=0; i<busSize; ++i )
     {
         QList<ePin*> pinList = m_eBusPinList.at( i );
         eNode* enode = 0l;
@@ -248,7 +248,7 @@ void eNode::addBusPinList( QList<ePin*> list, int line )
 
     if( size > busSize )
     {
-        for( int i=0; i<size-busSize; i++ )
+        for( int i=0; i<size-busSize; ++i )
         {
             QList<ePin*> newList;
             m_eBusPinList.append( newList );

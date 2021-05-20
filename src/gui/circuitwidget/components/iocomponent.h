@@ -86,7 +86,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
         virtual void setNumInps( uint pins, QString label="I" );
 
         int  numOuts() const { return m_outPin.size(); }
-        void setNumOuts( uint pins, QString label="O" );
+        virtual void setNumOuts( uint pins, QString label="O" );
 
         bool openCol() { return m_openCol; }
         void setOpenCol( bool op );

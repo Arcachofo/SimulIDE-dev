@@ -43,6 +43,8 @@ class MAINMODULE_EXPORT Gate : public LogicComponent, public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
+        virtual void setNumInps( uint pins );
+
     protected:
         virtual bool calcOutput( int inputs );
 

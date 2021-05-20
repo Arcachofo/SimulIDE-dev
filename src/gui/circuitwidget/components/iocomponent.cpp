@@ -351,7 +351,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     m_area = QRect(-halfW,-halfH, m_width*8, m_height*8 );
 
     int start = (m_height-pins)*8/2;
-    if( start%8 ) start +=4;
+    if( start%8 || label.isEmpty() ) start +=4;
 
     for( uint i=0; i<pins; ++i )
     {
@@ -360,7 +360,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
         QString num = "";
         if( i < oldSize ) pinList->at(i)->setY( y );
         else{
-            if( pins > 1 ) num = QString::number(i);
+            if( (pins > 1) || label.isEmpty() ) num = QString::number(i);
             pinList->at(i) = new IoPin( angle, QPoint( x, y ), m_id+id+num, i, this, mode );
             initPin( pinList->at(i) );
 

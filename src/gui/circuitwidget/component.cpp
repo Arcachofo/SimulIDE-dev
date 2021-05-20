@@ -603,8 +603,6 @@ QString Component::print()
 
 void Component::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    Q_UNUSED(option); Q_UNUSED(widget);
-
     QPen pen(Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     QColor color;

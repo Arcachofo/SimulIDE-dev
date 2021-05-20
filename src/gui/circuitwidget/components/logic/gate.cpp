@@ -28,10 +28,9 @@ Gate::Gate( QObject* parent, QString type, QString id, int inputs )
     , eElement( id )
 {
     m_width = 2;
-    setNumInps( inputs, "" );  // Create Input Pins
 
-    m_outPin.resize(1);
-    m_outPin[0] = new IoPin( 0, QPoint( 16, 0 ), m_id+"-out", 1, this, output );
+    setNumOuts( 1, "" );
+    setNumInps( inputs );  // Create Input Pins
 
     m_rndPD = true; // Randomize Propagation Delay
 }
@@ -62,9 +61,7 @@ QList<propGroup_t> Gate::propGroups()
 void Gate::stamp()
 {
     LogicComponent::stamp( this );
-
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
-
     m_out = false;
 }
 
@@ -91,6 +88,15 @@ void Gate::voltChanged()
 bool Gate::calcOutput( int inputs )
 {
     return ((uint)inputs == m_inPin.size()); // Default for: Buffer, Inverter, And, Nand
+}
+
+void Gate::setNumInps( uint inputs )
+{
+    if( inputs < 1 ) return;
+    IoComponent::setNumInps( inputs, "" );
+    int zero = 0;
+    if( m_height%2 ) zero = 4;
+    m_outPin[0]->setY( zero );
 }
 
 #include "moc_gate.cpp"

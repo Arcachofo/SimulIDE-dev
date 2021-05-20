@@ -46,22 +46,22 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         
         virtual QList<propGroup_t> propGroups() override;
 
-        LedBase::LedColor color();
+        LedBase::LedColor color() { return m_ledColor; }
         void setColor( LedBase::LedColor color );
 
-        int numDisplays();
+        int numDisplays() { return m_numDisplays; }
         void setNumDisplays( int dispNumber );
 
-        bool verticalPins();
+        bool verticalPins() { return m_verticalPins; }
         void setVerticalPins( bool v );
         
-        bool isCommonCathode();
+        bool isCommonCathode() { return m_commonCathode; }
         void setCommonCathode( bool isCommonCathode );
         
-        double threshold();
+        double threshold() { return m_threshold; }
         void   setThreshold( double threshold );
         
-        double maxCurrent();
+        double maxCurrent() { return m_maxCurrent; }
         void   setMaxCurrent( double current );
 
         double resistance() { return m_resistance; }

@@ -50,7 +50,7 @@ class MAINMODULE_EXPORT ADC : public LogicComponent, public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
 
-        virtual void setNumOuts( int outs );
+        virtual void setNumOuts( uint pins, QString label="O" ) override;
         
     protected:
         double m_maxVolt;

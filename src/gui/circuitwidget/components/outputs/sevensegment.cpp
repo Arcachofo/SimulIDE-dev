@@ -68,23 +68,15 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     m_ePin.resize(8);
     m_pin.resize(8);
 
-    QString nodid;
     QString pinid;
-
-    // Create Pins & eNodes for 7 segments
-    for( int i=0; i<7; i++ )
+    for( int i=0; i<7; ++i ) // Create Pins & eNodes for 7 segments
     {
-        pinid = QString( 97+i ); // a..g
-
-        nodid = m_id;
-        nodid.append(QString("-pin_")).append( pinid );
-        m_pin[i] = new Pin( 180, QPoint( -16-8, -24+i*8 ), nodid, 0, this );
+        pinid = m_id+"-pin_"+QString( 97+i ); // a..g
+        m_pin[i] = new Pin( 180, QPoint(-16-8,-24+i*8 ), pinid, 0, this );
         m_ePin[i] = m_pin[i];
     }
     // Pin dot
-    nodid = m_id;
-    nodid.append(QString("-pin_dot"));
-    m_pin[7] = new Pin( 270, QPoint( -8, 24+8 ), nodid, 0, this );
+    m_pin[7] = new Pin( 270, QPoint( -8, 24+8 ), m_id+"-pin_dot", 0, this );
     m_ePin[7] = m_pin[7];
 
     setNumDisplays(1);
@@ -107,21 +99,10 @@ QList<propGroup_t> SevenSegment::propGroups()
     return {mainGroup, elecGroup};
 }
 
-int SevenSegment::numDisplays()
-{
-    return m_numDisplays;
-}
-
 void SevenSegment::setColor( LedBase::LedColor color ) 
 { 
     m_ledColor = color;
-    
     for( LedSmd* segment : m_segment ) segment->setColor( color ); 
-}
-
-LedBase::LedColor SevenSegment::color() 
-{ 
-    return m_ledColor; 
 }
 
 void SevenSegment::setNumDisplays( int displays )
@@ -131,16 +112,14 @@ void SevenSegment::setNumDisplays( int displays )
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    m_area = QRect( -18, -24-4, 32*displays+4, 48+8 );
+    m_area = QRect(-18,-24-4, 32*displays+4, 48+8 );
 
     if( displays > m_numDisplays )
     {
         resizeData( displays );
-        for( int i=m_numDisplays; i<displays; i++ ) createDisplay( i );
-    }
-    else
-    {
-        for( int i=displays; i<m_numDisplays; i++ ) deleteDisplay( i );
+        for( int i=m_numDisplays; i<displays; ++i ) createDisplay( i );
+    }else{
+        for( int i=displays; i<m_numDisplays; ++i ) deleteDisplay( i );
         resizeData( displays );
     }
     m_numDisplays = displays;
@@ -159,21 +138,10 @@ void SevenSegment::resizeData( int displays )
     m_segment.resize( displays*8 );
 }
 
-bool SevenSegment::isCommonCathode()
-{
-    return m_commonCathode;
-}
-
 void SevenSegment::setCommonCathode( bool isCommonCathode )
 {
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
-
     m_commonCathode = isCommonCathode;
-}
-
-bool SevenSegment::verticalPins()
-{
-    return m_verticalPins;
 }
 
 void SevenSegment::setVerticalPins( bool v )
@@ -181,30 +149,29 @@ void SevenSegment::setVerticalPins( bool v )
     if( v == m_verticalPins ) return;
     m_verticalPins = v;
     
-    if( v )
-    {
-        for( int i=0; i<5; i++ ) 
+    if( v ) {
+        for( int i=0; i<5; ++i )
         {
-            m_pin[i]->setPos( -16+8*i, -24-8 );
+            m_pin[i]->setPos(-16+8*i,-24-8 );
             m_pin[i]->setRotation( 90 );
         }
-        for( int i=5; i<8; i++ ) 
+        for( int i=5; i<8; ++i )
         {
-            m_pin[i]->setPos( -16+8*(i-5), 24+8 );
-            m_pin[i]->setRotation( -90 );
+            m_pin[i]->setPos(-16+8*(i-5), 24+8 );
+            m_pin[i]->setRotation(-90 );
         }
     }else{
-        for( int i=0; i<7; i++ )
+        for( int i=0; i<7; ++i )
         {
-            m_pin[i]->setPos( -16-8, -24+i*8 );
+            m_pin[i]->setPos(-16-8,-24+i*8 );
             m_pin[i]->setRotation( 0 );
         }
-        m_pin[7]->setPos( -8, 24+8 );
-        m_pin[7]->setRotation( -90 );
+        m_pin[7]->setPos(-8, 24+8 );
+        m_pin[7]->setRotation(-90 );
     }
-    m_area = QRect( -18, -24-4, 32*m_numDisplays+4, 48+8 );
+    m_area = QRect(-18,-24-4, 32*m_numDisplays+4, 48+8 );
     
-    for( int i=0; i<8; i++ ) m_pin[i]->isMoved();
+    for( int i=0; i<8; ++i ) m_pin[i]->isMoved();
     Circuit::self()->update();
 }
         
@@ -212,43 +179,21 @@ void SevenSegment::setResistance( double res )
 {
     if( res < 1e-6 ) res = 1;
     m_resistance = res;
-    
-    for( uint i=0; i<m_segment.size(); i++ )
-    {
-        m_segment[i]->setRes( res );
-    }
-}
-
-double SevenSegment::threshold()
-{
-    return m_threshold;
+    for( uint i=0; i<m_segment.size(); ++i ) m_segment[i]->setRes( res );
 }
 
 void SevenSegment::setThreshold( double threshold )
 {
     if( threshold < 1e-6 ) threshold = 2.4;
     m_threshold = threshold;
-    
-    for( uint i=0; i<m_segment.size(); i++ )
-    {
-        m_segment[i]->setThreshold( threshold );
-    }
-}
-
-double SevenSegment::maxCurrent()
-{
-    return m_maxCurrent;
+    for( uint i=0; i<m_segment.size(); ++i ) m_segment[i]->setThreshold( threshold );
 }
 
 void SevenSegment::setMaxCurrent( double current )
 {
     if( current < 1e-6 ) current = 0.02;
     m_maxCurrent = current;
-    
-    for( uint i=0; i<m_segment.size(); i++ )
-    {
-        m_segment[i]->setMaxCurrent( current );
-    }
+    for( uint i=0; i<m_segment.size(); ++i ) m_segment[i]->setMaxCurrent( current );
 }
 
 void SevenSegment::attach()
@@ -266,9 +211,7 @@ void SevenSegment::attach()
             {
                 m_cathodePin[pin]->setEnode( commonEnode );
                 m_anodePin[pin]->setEnode( m_enode[j] );
-            }
-            else
-            {
+            }else{
                 m_anodePin[pin]->setEnode( commonEnode );
                 m_cathodePin[pin]->setEnode( m_enode[j] );
             }
@@ -289,23 +232,17 @@ void SevenSegment::deleteDisplay( int dispNumber )
 void SevenSegment::createDisplay( int dispNumber )
 {
     int x = 32*dispNumber;
-    QString nodid;
-    QString pinid;
 
     // Pin common
-    nodid = m_id;
-    nodid.append(QString("-pin_common")).append( QString( 97+dispNumber ) );
-    m_commonPin[dispNumber] = new Pin( 270, QPoint( x+8, 24+8 ), nodid, 0, this );
+    QString pinid = m_id+"-pin_common"+QString( 97+dispNumber );
+    m_commonPin[dispNumber] = new Pin( 270, QPoint( x+8, 24+8 ), pinid, 0, this );
 
-    // Create segments
-    for( int i=0; i<8; i++ )
+    for( int i=0; i<8; ++i ) // Create segments
     {
-        nodid = m_id;
-        pinid = QString( 97+i );
-        nodid.append(QString("-led_")).append( pinid );
+        pinid = m_id+"-led_"+QString( 97+i );
         LedSmd* lsmd;
-        if( i<7 ) lsmd = new LedSmd( this, "LEDSMD", nodid, QRectF(0, 0, 13.5, 1.5) ); // Segment
-        else      lsmd = new LedSmd( this, "LEDSMD", nodid, QRectF(0, 0, 1.5, 1.5) );  // Point
+        if( i<7 ) lsmd = new LedSmd( this, "LEDSMD", pinid, QRectF(0, 0, 13.5, 1.5) ); // Segment
+        else      lsmd = new LedSmd( this, "LEDSMD", pinid, QRectF(0, 0, 1.5, 1.5) );  // Point
         lsmd->setParentItem(this);
         //lsmd->setEnabled(false);
         lsmd->setFlag( QGraphicsItem::ItemIsSelectable, false );
@@ -313,10 +250,9 @@ void SevenSegment::createDisplay( int dispNumber )
         lsmd->setNumEpins(2);
         lsmd->setMaxCurrent( 0.02 );
 
-        m_anodePin[dispNumber*8+i]= lsmd->getEpin(0);
+        m_anodePin  [dispNumber*8+i] = lsmd->getEpin(0);
         m_cathodePin[dispNumber*8+i] = lsmd->getEpin(1);
-
-        m_segment[dispNumber*8+i] = lsmd;
+        m_segment   [dispNumber*8+i] = lsmd;
     }
     m_segment[dispNumber*8+0]->setPos( x-5, -20 );
     m_segment[dispNumber*8+1]->setPos( x+11.5, -16 );
@@ -334,19 +270,14 @@ void SevenSegment::createDisplay( int dispNumber )
 
 void SevenSegment::remove()
 {
-    for( int i=0; i<m_numDisplays; i++ ) deleteDisplay( i );
-
+    for( int i=0; i<m_numDisplays; ++i ) deleteDisplay( i );
     Component::remove();
 }
 
 void SevenSegment::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    Q_UNUSED(option); Q_UNUSED(widget);
-
     Component::paint( p, option, widget );
-
     p->drawRect( m_area );
 }
 
 #include "moc_sevensegment.cpp"
-
