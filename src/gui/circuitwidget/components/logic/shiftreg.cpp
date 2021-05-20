@@ -49,23 +49,14 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
             << "IL03 DI"
             << "IL05>"
             << "IL07 Rst"
-
-            << "IU01OE "
-            
-            // Outputs:
-            << "OR01Q0 "
-            << "OR02Q1 "
-            << "OR03Q2 "
-            << "OR04Q3 "
-            << "OR05Q4 "
-            << "OR06Q5 "
-            << "OR07Q6 "
-            << "OR08Q7 "
             ;
     init( pinList );
 
+    setNumOuts( 8, "Q" );
+    createOePin( "IU01OE ", id+"-in4");
+
     m_clockPin = m_inPin[1];
-    setOePin( m_inPin[3] );
+    //setOePin( m_inPin[3] );
     setResetInv( true );         // Invert Reset Pin
 }
 ShiftReg::~ShiftReg(){}

@@ -46,26 +46,23 @@ BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
     QStringList pinList;
 
     pinList // Inputs:
-            
             << "IL03 S0"
             << "IL04 S1"
             << "IL05 S2"
             << "IL06 S3"
-
-            << "IU01OE "
             
             // Outputs:
-            << "OR01a  "
-            << "OR02b  "
-            << "OR03c  "
+            << "OR01a "
+            << "OR02b "
+            << "OR03c "
             << "OR04d "
-            << "OR05e  "
-            << "OR06f  "
+            << "OR05e "
+            << "OR06f "
             << "OR07g "
             ;
     init( pinList );
 
-    setOePin(  m_inPin[4] );    // IOutput Enable
+    createOePin( "IU01OE ", id+"-in4");
 }
 BcdTo7S::~BcdTo7S(){}
 

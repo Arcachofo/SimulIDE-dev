@@ -115,6 +115,7 @@ void I2CRam::initialize()
 
 void I2CRam::updateStep()
 {
+    IoComponent::updateStep();
     if( m_memTable ) m_memTable->updateTable( &m_ram );
 }
 

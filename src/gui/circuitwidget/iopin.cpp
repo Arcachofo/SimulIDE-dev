@@ -125,7 +125,7 @@ bool IoPin::getInpState()
     if     ( volt > m_inpHighV ) m_inpState = true;
     else if( volt < m_inpLowV )  m_inpState = false;
 
-    m_pinState = m_inpState? input_high:input_low; // High : Low colors
+    setPinState( m_inpState? input_high:input_low ); // High : Low colors
 
     return m_inverted ? !m_inpState : m_inpState;
 }

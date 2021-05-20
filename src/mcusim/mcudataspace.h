@@ -21,6 +21,7 @@
 #define MCUDATASPACE_H
 
 #include <QHash>
+#include <vector>
 
 #include "regsignal.h"
 #include "mcutypes.h"

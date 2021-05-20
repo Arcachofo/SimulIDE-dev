@@ -44,7 +44,7 @@ DAC::DAC( QObject* parent, QString type, QString id )
     m_height = 9;
 
     setNumInps( 8 );       // Create Input Pins
-    setNumOuts( 1 );
+    setNumOuts( 1, "Out" );
 
     setMaxVolt( 5 );
 }

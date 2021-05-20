@@ -46,13 +46,11 @@ LatchD::LatchD( QObject* parent, QString type, QString id )
 {
     m_width  = 4;
     m_height = 10;
+    m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
     
     m_tristate = true;
     
-    m_oePin = new IoPin( 0, QPoint( 24,0 ), m_id+"-Pin-outEnable", 0, this, input );
-    m_oePin->setLabelText( "OE " );
-    m_oePin->setInverted( true );
-    m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
+    createOePin( "IR13OE ", id+"-Pin-outEnable");
 
     m_clockPin = new IoPin( 180, QPoint( -24,0 ), m_id+"-Pin-clock", 0, this, input );
     m_clockPin->setLabelText( ">" );
@@ -130,10 +128,10 @@ void LatchD::updateSize()
     int height = m_height;
     if( m_tristate | (m_trigger != None) ) height++;
 
-    m_oePin->setY( m_height*8/2 );
-    m_clockPin->setY( m_height*8/2 );
+    m_oePin->setY( m_height*8/2+4 );
+    m_clockPin->setY( m_height*8/2+4 );
 
-    m_area   = QRect(-(int)m_width*8/2,-(int)m_height*8/2, m_width*8, height*8 );
+    m_area = QRect(-(int)m_width*8/2,-(int)m_height*8/2+4, m_width*8, height*8 );
     Circuit::self()->update();
 }
 

@@ -38,6 +38,7 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
         void initState();
         void stamp( eElement* el );
 
+        void createOePin (QString d, QString id);
         void setOePin( IoPin* pin );
         void enableOutputs( bool en );
         void updateOutEnabled();

@@ -99,13 +99,13 @@ class MAINMODULE_EXPORT IoComponent : public Component
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     protected:
-        IoPin* createPin( QString data , QString id , QString label, pinMode_t mode );
+        IoPin* createPin( QString data, QString id );
         void setNumPins(std::vector<IoPin*>* pinList, uint pins, QString label, bool out );
         void deletePins( std::vector<IoPin*>* pinList, uint pins );
 
-        int m_outValue;
-        int m_nextOutVal;
-        int m_outStep;
+        uint m_outValue;
+        uint m_nextOutVal;
+        //int m_outStep;
 
         uint64_t m_propDelay; // Propagation delay
         uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90%

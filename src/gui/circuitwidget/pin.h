@@ -48,7 +48,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         enum { Type = UserType + 3 };
         int type() const { return Type; }
 
-        QString pinId();
+        QString pinId() { return m_id; }
         
         bool unused() {return m_unused; }
         void setUnused( bool unused );
@@ -62,7 +62,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         void setY( qreal y );
 
-        void setBoundingRect( QRect area );
+        void setBoundingRect( QRect area ) { m_area = area; }
         
         Component* component() { return m_component; }
 
@@ -70,8 +70,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setConnector( Connector* c );
         void removeConnector();
 
-        void setConPin( Pin* pin );
-        Pin* conPin();
+        void setConPin( Pin* pin ) { m_conPin = pin; }
+        Pin* conPin(){ return m_conPin; }
 
         void connectPin();
 
@@ -91,18 +91,18 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void registerPinsW( eNode* enode );
         
         void setIsBus( bool bus );
-        bool isBus();
+        bool isBus() { return m_isBus; }
 
         void setPinState( pinState_t st );
 
-        void updateStep();
+        void updateStep() { if( m_changed ) update(); }
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:
         void isMoved();
         void setLabelText( QString label );
-        void setPinId( QString id );
+        void setPinId( QString id ) { m_id = id; }
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent* event);

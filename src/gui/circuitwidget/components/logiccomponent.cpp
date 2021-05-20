@@ -85,6 +85,11 @@ void LogicComponent::remove()
     IoComponent::remove();
 }
 
+void LogicComponent::createOePin( QString d, QString id )
+{
+    setOePin( createPin( d, id ) );
+}
+
 void LogicComponent::setOePin( IoPin* pin )
 {
     pin->setInverted( true );

@@ -66,18 +66,20 @@ QList<propGroup_t> IoComponent::propGroups()
 
 void IoComponent::updateStep()
 {
+    if( !Circuit::self()->animate( ) ) return;
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->updateStep();
     for( uint i=0; i<m_inPin.size(); ++i )  m_inPin[i]->updateStep();
 }
 
 void IoComponent::initState()
 {
-    if( Circuit::self()->animate( ) ) Simulator::self()->addToUpdateList( this );
-    else                              Simulator::self()->remFromUpdateList( this );
+    Simulator::self()->addToUpdateList( this );
+    //if( Circuit::self()->animate( ) ) Simulator::self()->addToUpdateList( this );
+    //else                              Simulator::self()->remFromUpdateList( this );
 
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutState( false );
 
-    m_outStep = 0;
+    //m_outStep = 0;
     m_outValue = 0;
     m_nextOutVal = 0;
 }
@@ -224,7 +226,9 @@ void IoComponent::setOpenCol( bool op )
 
 void IoComponent::init( QStringList pins )
 {
-    m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
+    int halfH = m_height*8/2;
+    if( halfH%8 ) halfH -=4;
+    m_area = QRect(-(m_width*8/2),-halfH, m_width*8, m_height*8 );
 
     QStringList inputs;                                    // Input Pins
     QStringList outputs;                                  // Output Pins
@@ -233,36 +237,37 @@ void IoComponent::init( QStringList pins )
 
     for( QString pin : pins )
     {
-             if( pin.startsWith( "I" ) ) inputs.append(  pin.remove(0,1) );
-        else if( pin.startsWith( "O" ) ) outputs.append( pin.remove(0,1) );
+             if( pin.startsWith( "I" ) ) inputs.append( pin );
+        else if( pin.startsWith( "O" ) ) outputs.append( pin );
         else qDebug() << " LogicComponent::init: pin name error "<<pin;
     }
-    m_inPin.resize( inputs.length() );
-    int i = 0;
+    int i = m_inPin.size();
+    m_inPin.resize( i+inputs.length() );
     for( QString inp : inputs ) // Example input = "L02Name"
     {
-        QString pinPos  = inp.left(3);      // Pin position
-        QString label = inp.remove(0,3);  // Pin name
-        m_inPin[i] = createPin( pinPos, m_id+"-in"+QString::number(i), label, input );
+        m_inPin[i] = createPin( inp, m_id+"-in"+QString::number(i) );
         i++;
     }
-    m_outPin.resize( outputs.length() );
-    i = 0;
+    i = m_outPin.size();
+    m_outPin.resize( i+outputs.length() );
     for( QString out : outputs ) // Example output = "L02Name"
     {
-        QString pin   = out.left(3);      // Pin position
-        QString label = out.remove(0,3);  // Pin name
-        m_outPin[i] = createPin( pin, m_id+"-out"+QString::number(i), label, output );
+        m_outPin[i] = createPin( out, m_id+"-out"+QString::number(i) );
         i++;
     }
 }
 
-IoPin* IoComponent::createPin(QString data, QString id, QString label, pinMode_t mode )
+IoPin* IoComponent::createPin( QString data, QString id )
 {
     // Example data = "L02" => left side, number 2
 
+    pinMode_t mode = (data.left(1) == "I") ? input : output ;
+    data.remove(0,1);
     QString pos = data.left(1);
-    int     num = data.remove(0,1).toInt();
+    data.remove(0,1);
+    int num = data.left(2).toInt();
+    data.remove(0,2);
+    QString label = data;
 
     int angle = 0;
     int x = 0;
@@ -325,7 +330,8 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     if( pins == oldSize ) return;
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    int x           = out ? m_width*8/2+8 : -(m_width*8/2)-8;
+    int halfW = m_width*8/2;
+    int x           = out ? halfW+8 : -(halfW)-8;
     int angle       = out ?  0  : 180;
     QString preLab  = out ? ""  : " ";
     QString PostLab = out ? " " : "";
@@ -337,25 +343,31 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
 
     if( m_outPin.size() > m_inPin.size() ) m_height = m_outPin.size();
     else                                   m_height = m_inPin.size();
-    if( !label.isEmpty() ) m_height += 1;
 
-    int start = (m_height-pins)*8/2+4;
+    if( !label.isEmpty() ) m_height += 1;
+    int halfH = m_height*8/2;
+    if( halfH%8 ) halfH -=4;
+
+    m_area = QRect(-halfW,-halfH, m_width*8, m_height*8 );
+
+    int start = (m_height-pins)*8/2;
+    if( start%8 ) start +=4;
 
     for( uint i=0; i<pins; ++i )
     {
-        int y = -(int)m_height*8/2 + start+i*8;
+        int y = m_area.y() + start+i*8;
 
+        QString num = "";
         if( i < oldSize ) pinList->at(i)->setY( y );
         else{
-            QString num = QString::number(i);
-            pinList->at(i) = new IoPin( angle, QPoint( x, y), m_id+id+num, i, this, mode );
+            if( pins > 1 ) num = QString::number(i);
+            pinList->at(i) = new IoPin( angle, QPoint( x, y ), m_id+id+num, i, this, mode );
             initPin( pinList->at(i) );
 
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( preLab+label+num+PostLab );
             pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );
         }
     }
-    m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
     Circuit::self()->update();
 }
 
@@ -378,6 +390,8 @@ void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
 
 void IoComponent::remove()
 {
+    Simulator::self()->remFromUpdateList( this );
+
     for( uint i=0; i<m_inPin.size(); i++ )  m_inPin[i]->removeConnector();
     for( uint i=0; i<m_outPin.size(); i++ ) m_outPin[i]->removeConnector();
 

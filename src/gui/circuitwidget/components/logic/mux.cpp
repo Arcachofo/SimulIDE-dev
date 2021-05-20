@@ -47,36 +47,27 @@ Mux::Mux( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 10;
 
-    m_addrBits = 3;
     m_tristate = true;
+
+    setNumInps( 8,"D" );
     
     QStringList pinList;
 
     pinList // Inputs:
-            << "IL01 D0"
-            << "IL02 D1"
-            << "IL03 D2"
-            << "IL04 D3"
-            << "IL05 D4"
-            << "IL06 D5"
-            << "IL07 D6"
-            << "IL08 D7"
-            
             << "ID03  S0"
             << "ID02 S1 "
             << "ID01S2 "
-            
-            << "IU03OE "
             
             // Outputs:
             << "OR02Y "
             << "OR03!Y "
             ;
     init( pinList );
-    
-    setOePin( m_inPin[11] );    // IOutput Enable
 
-    m_area = QRect(-(int)m_width*8/2-1,-(int)m_height*8/2-8-1, m_width*8+2, m_height*8+16+2 );
+    createOePin( "IU03OE ", id+"-in11");
+
+    m_addrBits = 0;
+    setAddrBits( 3 );
 }
 Mux::~Mux(){}
 
@@ -123,6 +114,8 @@ void Mux::setAddrBits( int bits )
 
     m_height = channels+2;
     int bit0 = 8;
+    int w = m_width*8/2;
+    int h = m_height*8/2;
 
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
@@ -132,7 +125,7 @@ void Mux::setAddrBits( int bits )
         if( i < bits )
         {
             pin->setVisible( true );
-            pin->setY( m_height*8/2+8 );
+            pin->setY( h+8 );
             if( i != 0 ) continue;
             if( bits == 1 )
             {
@@ -147,7 +140,7 @@ void Mux::setAddrBits( int bits )
             pin->setVisible( false );
         }
         if( i < 2 ) // Outputs
-            m_outPin[i]->setY( -m_height*8/2+i*8+16 );
+            m_outPin[i]->setY( -h+i*8+16 );
     }
     for( int i=0; i<8; ++i )
     {
@@ -162,9 +155,9 @@ void Mux::setAddrBits( int bits )
             pin->setVisible( false );
         }
     }
-    m_oePin->setY( -m_height*8/2-8 ); // OE
+    m_oePin->setY( -h-8 ); // OE
 
-    m_area = QRect(-(int)m_width*8/2-1,-(int)m_height*8/2-8-1, m_width*8+2, m_height*8+16+2 );
+    m_area = QRect(-w-1,-h-8-1, w*2, h*2+16+2 );
     Circuit::self()->update();
 }
 
@@ -178,12 +171,15 @@ QPainterPath Mux::shape() const
 {
     QPainterPath path;
     
+    int w = m_width*8/2;
+    int h = m_height*8/2;
+
     QVector<QPointF> points;
     
-    points << QPointF(-(m_width/2)*8,-(m_height/2)*8-6 )
-           << QPointF(-(m_width/2)*8, (m_height/2)*8+6 )
-           << QPointF( (m_width/2)*8, (m_height/2)*8-2 )
-           << QPointF( (m_width/2)*8,-(m_height/2)*8+2 );
+    points << QPointF(-w,-h-6 )
+           << QPointF(-w, h+6 )
+           << QPointF( w, h-2 )
+           << QPointF( w,-h+2 );
         
     path.addPolygon( QPolygonF(points) );
     path.closeSubpath();

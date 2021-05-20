@@ -51,17 +51,10 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
             << "IL05 A0"
             << "IL06 A1"
             << "IL07 A2"
-            // Outputs:
-            << "OR01 D0"
-            << "OR02 D1"
-            << "OR03 D2"
-            << "OR04 D3"
-            << "OR05 D4"
-            << "OR06 D5"
-            << "OR07 D6"
-            << "OR08 D7"
             ;
     init( pinList );                   // Create Pins Defined in pinList
+
+    setNumOuts( 8, "D" );
 
     m_inPin[0]->setPinMode( open_col );
     TwiModule::setSdaPin( m_inPin[0] );

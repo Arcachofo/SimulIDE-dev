@@ -306,16 +306,6 @@ void Pin::moveBy( int dx, int dy )
     QGraphicsItem::moveBy( dx, dy );
 }
 
-void Pin::setPinId( QString id ) 
-{ 
-    m_id = id; 
-}
-
-QString Pin::pinId() 
-{ 
-    return m_id;
-}
-
 void Pin::setLength( int length )
 {
     if( length < 1 ) length = 1;
@@ -324,14 +314,6 @@ void Pin::setLength( int length )
     if( length == 1 ) aLength = 6;
     m_area = QRect(-3, -3, aLength, 6);
     setLabelPos();
-}
-
-void Pin::setConPin( Pin* pin ){ m_conPin = pin; }
-Pin* Pin::conPin()             { return m_conPin; }
-
-void Pin::setBoundingRect( QRect area )
-{
-    m_area = area;
 }
 
 void Pin::setIsBus( bool bus )
@@ -346,11 +328,6 @@ void Pin::setIsBus( bool bus )
     m_component->inStateChanged( 2 );         // Propagate Is Bus (Node)
 }
 
-bool Pin::isBus()
-{
-    return m_isBus;
-}
-
 void Pin::setVisible( bool visible )
 {
     m_label.setVisible( visible );
@@ -361,11 +338,6 @@ void Pin::setPinState( pinState_t st )
 {
     m_pinState = st;
     m_changed = true;
-}
-
-void Pin::updateStep()
-{
-    if( m_changed ) update();
 }
 
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )

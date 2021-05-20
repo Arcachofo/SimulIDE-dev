@@ -47,7 +47,6 @@ Demux::Demux( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 10;
 
-    m_addrBits = 3;
     m_tristate = true;
 
     QStringList pinList;
@@ -58,24 +57,14 @@ Demux::Demux( QObject* parent, QString type, QString id )
             << "ID01  S2"
             
             << "IL05 DI"
-            
-            << "IU01OE "
-            
-            // Outputs:
-            << "OR01O0 "
-            << "OR02O1 "
-            << "OR03O2 "
-            << "OR04O3 "
-            << "OR05O4 "
-            << "OR06O5 "
-            << "OR07O6 "
-            << "OR08O7 "
             ;
     init( pinList );
 
-    setOePin( m_inPin[4] );    // IOutput Enable
+    setNumOuts( 8 );
+    createOePin( "IU01OE ", id+"-in4");
 
-    m_area = QRect(-(int)m_width*8/2-1,-(int)m_height*8/2-8-1, m_width*8+2, m_height*8+16+2 );
+    m_addrBits = 0;
+    setAddrBits( 3 );
 }
 Demux::~Demux(){}
 
@@ -126,6 +115,9 @@ void Demux::setAddrBits( int bits )
 
     m_height = channels+2;
 
+    int w = m_width*8/2;
+    int h = m_height*8/2;
+
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     for( int i=0; i<3; ++i )
@@ -134,7 +126,7 @@ void Demux::setAddrBits( int bits )
         if( i < bits )
         {
             pin->setVisible( true );
-            pin->setY( m_height*8/2+8 );
+            pin->setY( h+8 );
             if( i != 0 ) continue;
             if( bits == 1 )
             {
@@ -161,22 +153,25 @@ void Demux::setAddrBits( int bits )
             pin->setVisible( false );
         }
     }
-    m_oePin->setY( -(m_height*8/2)-8 ); // OE
+    m_oePin->setY( -h-8 ); // OE
 
-    m_area = QRect(-(m_width*8/2-1),-(m_height*8/2)-8-1, m_width*8+2, m_height*8+16+2 );
+    m_area = QRect(-w-1,-h-8-1, w*2, h*2+16+2 );
     Circuit::self()->update();
 }
 
 QPainterPath Demux::shape() const
 {
     QPainterPath path;
+
+    int w = m_width*8/2;
+    int h = m_height*8/2;
     
     QVector<QPointF> points;
     
-    points << QPointF(-(m_width/2)*8,-(m_height/2)*8+2 )
-           << QPointF(-(m_width/2)*8, (m_height/2)*8-2 )
-           << QPointF( (m_width/2)*8, (m_height/2)*8+6 )
-           << QPointF( (m_width/2)*8,-(m_height/2)*8-6 );
+    points << QPointF(-w,-h+2 )
+           << QPointF(-w, h-2 )
+           << QPointF( w, h+6 )
+           << QPointF( w,-h-6 );
         
     path.addPolygon( QPolygonF(points) );
     path.closeSubpath();

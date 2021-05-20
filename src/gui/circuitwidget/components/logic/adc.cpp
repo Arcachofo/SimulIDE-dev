@@ -52,7 +52,7 @@ ADC::ADC( QObject* parent, QString type, QString id )
     m_height = 9;
 
     setNumOuts( 8 );    // Create Output Pins
-    setNumInps( 1 );
+    setNumInps( 1, "In" );
 
     setMaxVolt( 5 );
 
@@ -82,7 +82,7 @@ void ADC::voltChanged()
 {
     double volt = m_inPin[0]->getVolt();
     m_nextOutVal = (int)(volt*m_maxValue/m_maxVolt+0.1);
-    m_outStep = 0;
+    //m_outStep = 0;
 
     if( m_outValue != m_nextOutVal )
         Simulator::self()->addEvent( m_propDelay, this );

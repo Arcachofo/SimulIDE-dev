@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 #include "dectobcd.h"
-#include "circuit.h"
 #include "itemlibrary.h"
+#include "circuit.h"
 
 Component* DecToBcd::construct( QObject* parent, QString type, QString id )
 {
@@ -66,8 +66,6 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
             << "IL14 D14"
             << "IL15 D15"
 
-            << "IU03OE "
-
             // Outputs:
             << "OR03A "
             << "OR04B "
@@ -76,7 +74,7 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    setOePin( m_inPin[15] );    // Output Enable
+    createOePin( "IU03OE ", id+"-in15"); // Output Enable
 
     for( int i=9; i<15; ++i ) m_inPin[i]->setVisible( false );
 }

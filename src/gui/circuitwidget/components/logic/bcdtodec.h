@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT BcdToDec : public LogicComponent, public eElement
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
 
-        bool _16bits();
+        bool _16bits() { return m_16Bits; }
         void set_16bits( bool set );
 
    private:
