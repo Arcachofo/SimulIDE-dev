@@ -49,24 +49,7 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
 
     QStringList pinList;
 
-    pinList // Inputs:
-            << "IL01 D1"
-            << "IL02 D2"
-            << "IL03 D3"
-            << "IL04 D4"
-            << "IL05 D5"
-            << "IL06 D6"
-            << "IL07 D7"
-            << "IL08 D8"
-            << "IL09 D9"
-            << "IL10 D10"
-            << "IL11 D11"
-            << "IL12 D12"
-            << "IL13 D13"
-            << "IL14 D14"
-            << "IL15 D15"
-
-            // Outputs:
+    pinList// Outputs:
             << "OR03A "
             << "OR04B "
             << "OR05C "
@@ -74,9 +57,9 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
             ;
     init( pinList );
 
-    createOePin( "IU03OE ", id+"-in15"); // Output Enable
+    setNumInps( 10,"D", 1 );
 
-    for( int i=9; i<15; ++i ) m_inPin[i]->setVisible( false );
+    createOePin( "IU03OE ", id+"-in15"); // Output Enable
 }
 DecToBcd::~DecToBcd(){}
 
@@ -119,18 +102,8 @@ void DecToBcd::set_16bits( bool set )
 {
     m_16Bits = set;
 
-    if( m_16Bits ) m_bits = 16;
-    else           m_bits = 10;
-
-    int height = set ? 16 : m_height;
-
-    for( int i=9; i<15; ++i )
-    {
-        m_inPin[i]->setVisible( set );
-        if( !set ) m_inPin[i]->removeConnector();
-    }
-    m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
-    Circuit::self()->update();
+    setNumInps( m_16Bits ? 16 : 10 );
+    m_oePin->setY( m_area.y()-8 );
 }
 
 #include "moc_dectobcd.cpp"

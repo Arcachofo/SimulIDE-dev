@@ -88,7 +88,7 @@ void DAC::runEvent()
     m_outPin[0]->setOutState( true );
 }
 
-void DAC::setNumInps( uint inputs, QString )
+void DAC::setNumInps( uint inputs, QString, int )
 {
     if( inputs < 1 ) return;
     m_maxValue = pow( 2, inputs )-1;

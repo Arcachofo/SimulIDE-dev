@@ -226,9 +226,9 @@ void IoComponent::setOpenCol( bool op )
 
 void IoComponent::init( QStringList pins )
 {
-    int halfH = m_height*8/2;
-    if( halfH%8 ) halfH -=4;
-    m_area = QRect(-(m_width*8/2),-halfH, m_width*8, m_height*8 );
+    //int halfH = m_height*8/2;
+    //if( halfH%8 ) halfH -=4;
+    m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, m_height*8 );
 
     QStringList inputs;                                    // Input Pins
     QStringList outputs;                                  // Output Pins
@@ -313,24 +313,24 @@ void IoComponent::initPin( IoPin* pin )
     pin->setOutputImp( m_ouImp  );
 }
 
-void IoComponent::setNumInps( uint pins, QString label )
+void IoComponent::setNumInps( uint pins, QString label, int bit0 )
 {
-    setNumPins( &m_inPin, pins, label, false );
+    setNumPins( &m_inPin, pins, label, bit0, false );
 }
 
-void IoComponent::setNumOuts( uint pins, QString label )
+void IoComponent::setNumOuts( uint pins, QString label, int bit0 )
 {
-    setNumPins( &m_outPin, pins, label, true );
+    setNumPins( &m_outPin, pins, label, bit0, true );
 }
 
 void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
-                              , QString label, bool out )
+                              , QString label, int bit0, bool out )
 {
     uint oldSize = pinList->size();
     if( pins == oldSize ) return;
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    int halfW = m_width*8/2;
+    int halfW = (m_width/2)*8;//m_width*8/2;
     int x           = out ? halfW+8 : -(halfW)-8;
     int angle       = out ?  0  : 180;
     QString preLab  = out ? ""  : " ";
@@ -344,23 +344,28 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     if( m_outPin.size() > m_inPin.size() ) m_height = m_outPin.size();
     else                                   m_height = m_inPin.size();
 
-    if( !label.isEmpty() ) m_height += 1;
-    int halfH = m_height*8/2;
-    if( halfH%8 ) halfH -=4;
+    int halfH;
+    if( label.isEmpty() ) halfH = m_height*8/2; // Gates
+    else
+    {
+        m_height += 1;
+        halfH = (m_height/2)*8;
+    }
 
     m_area = QRect(-halfW,-halfH, m_width*8, m_height*8 );
 
-    int start = (m_height-pins)*8/2;
-    if( start%8 || label.isEmpty() ) start +=4;
+    int start = 8;
+    if( label.isEmpty() ) start = 4;  // Gates
+    else if( start%8 ) start +=4;
 
     for( uint i=0; i<pins; ++i )
     {
-        int y = m_area.y() + start+i*8;
+        int y = m_area.y() + i*8 + start;
 
         QString num = "";
         if( i < oldSize ) pinList->at(i)->setY( y );
         else{
-            if( (pins > 1) || label.isEmpty() ) num = QString::number(i);
+            if( (pins > 1) || label.isEmpty() ) num = QString::number(i+bit0);
             pinList->at(i) = new IoPin( angle, QPoint( x, y ), m_id+id+num, i, this, mode );
             initPin( pinList->at(i) );
 

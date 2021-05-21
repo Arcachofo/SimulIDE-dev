@@ -94,9 +94,7 @@ void Gate::setNumInps( uint inputs )
 {
     if( inputs < 1 ) return;
     IoComponent::setNumInps( inputs, "" );
-    int zero = 0;
-    if( m_height%2 ) zero = 4;
-    m_outPin[0]->setY( zero );
+    m_outPin[0]->setY( 0 );
 }
 
 #include "moc_gate.cpp"

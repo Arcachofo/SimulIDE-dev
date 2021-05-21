@@ -108,6 +108,18 @@ void LatchD::setChannels( int channels )
     setNumOuts( channels );
     m_channels = channels;
 
+    m_height = channels+2;
+    int y = -(m_height/2)*8+8;
+
+    for( int i=0; i<channels; i++ )
+    {
+        m_inPin[i]->setY( y+i*8 );
+        m_outPin[i]->setY( y+i*8 );
+    }
+    y += channels*8;
+    m_clockPin->setY( y );
+    m_oePin->setY( y );
+
     updateSize();
 }
 
@@ -126,12 +138,8 @@ void LatchD::setTrigger( trigger_t trigger )
 void LatchD::updateSize()
 {
     int height = m_height;
-    if( m_tristate | (m_trigger != None) ) height++;
-
-    m_oePin->setY( m_height*8/2+4 );
-    m_clockPin->setY( m_height*8/2+4 );
-
-    m_area = QRect(-(int)m_width*8/2,-(int)m_height*8/2+4, m_width*8, height*8 );
+    if( !m_tristate && (m_trigger == None) ) height--;
+    m_area   = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
     Circuit::self()->update();
 }
 

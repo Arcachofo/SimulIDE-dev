@@ -46,39 +46,9 @@ BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
     m_tristate = true;
     m_16Bits = false;
 
-    QStringList pinList;
-
-        pinList // Inputs:
-                << "IL04 S0"
-                << "IL05 S1"
-                << "IL06 S2"
-                << "IL07 S3"
-
-                // Outputs:
-                << "OR01O0 "
-                << "OR02O1 "
-                << "OR03O2 "
-                << "OR04O3 "
-                << "OR05O4 "
-                << "OR06O5 "
-                << "OR07O6 "
-                << "OR08O7 "
-                << "OR09O8 "
-                << "OR10O9 "
-                << "OR1110 "
-                << "OR1211 "
-                << "OR1312 "
-                << "OR1413 "
-                << "OR1514 "
-                << "OR1615 "
-                ;
-        init( pinList );
-
+    setNumInps( 4,"S" );
+    setNumOuts( 10 );
     createOePin( "IU01OE ", id+"-in4"); // Output Enable
-    //setNumInps( 4,"S" );
-    //setNumOuts( 16 );
-
-    for( int i=10; i<16; ++i ) m_outPin[i]->setVisible( false );
 }
 BcdToDec::~BcdToDec(){}
 
@@ -122,17 +92,8 @@ void BcdToDec::voltChanged()
 void BcdToDec::set_16bits( bool set )
 {
     m_16Bits = set;
-
-    int height = set ? 17 : m_height;
-
-    for( int i=10; i<16; ++i )
-    {
-        m_outPin[i]->setVisible( set );
-        if( !set ) m_outPin[i]->removeConnector();
-    }
-    m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
-    Circuit::self()->update();
-    //setNumOuts( m_16Bits ? 16 : 10 );
+    setNumOuts( m_16Bits ? 16 : 10 );
+    m_oePin->setY( m_area.y()-8 );
 }
 
 #include "moc_bcdtodec.cpp"
