@@ -146,7 +146,7 @@ void Oscope::updateStep()
             }
             display()->connectChannel( i, connected );
         }
-        m_channel[i]->m_subRate = (double)timeFrame/5e10;
+        m_channel[i]->m_subRate = (double)timeFrame/5e13;
         m_channel[i]->m_connected = connected;
         if( connected ) m_channel[i]->updateStep();
         m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;

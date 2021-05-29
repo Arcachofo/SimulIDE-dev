@@ -152,7 +152,7 @@ void OscopeChannel::voltChanged()
     {
         m_dataTime = 0;
         if( m_subRate > 0 )
-            m_subSample = (simTime-m_dataZero)*m_subRate/m_buffer.size();
+            m_subSample = (simTime-m_dataZero)/1e3*m_subRate/m_buffer.size();
         m_dataZero = simTime;
     }
     if( m_subSample > 0 ) // Buffer should hold enought time to display
