@@ -46,7 +46,8 @@
     </usart>
     
     <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->
-    <adc name="ADC" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" configregsB="ADCSRB" multiplex="ADMUX">
+    <adc name="ADC" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" 
+                    configregsB="ADCSRB" multiplex="ADMUX">
         <prescaler select="" values="2,2,4,8,16,32,64,128"/>
         <inputs type="PIN" source="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5" />
         <raiseint intname="ADC" source="MAIN" />
@@ -61,4 +62,15 @@
         
         <raiseint intname="TWI" source="MAIN" />
     </twi>
+    
+    <spi name="SPI0" dataregs="SPDR" statusreg="SPSR" configregsA="SPCR">
+        <prescaler select="" values="4,16,64,128,2,8,32,64"/>
+        
+        <inputpin name="mosi" pin="PORTB3" />
+        <inputpin name="miso" pin="PORTB4" />
+        <inputpin name="sck"  pin="PORTB5" />
+        <inputpin name="ss"   pin="PORTB2" />
+        
+        <raiseint intname="SPI" source="MAIN" />
+    </spi>
 </parts>

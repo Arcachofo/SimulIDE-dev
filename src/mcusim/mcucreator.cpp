@@ -39,6 +39,7 @@
 #include "avrusart.h"
 #include "avradc.h"
 #include "avrtwi.h"
+#include "avrspi.h"
 
 #include "pic14core.h"
 
@@ -103,6 +104,7 @@ int McuCreator::processFile( QString fileName )
         else if( el.tagName() == "usart" )      createUsart( &el );
         else if( el.tagName() == "adc" )        createAdc( &el );
         else if( el.tagName() == "twi" )        createTwi( &el );
+        else if( el.tagName() == "spi" )        createTwi( &el );
         else if( el.tagName() == "include" )    processFile( el.attribute("file") );
 
         node = node.nextSibling();
@@ -610,6 +612,60 @@ void McuCreator::createTwi( QDomElement* e )
                 QString name = el.attribute("name");
                 if     ( name == "sda" ) twi->setSdaPin( pin );
                 else if( name == "scl" ) twi->setSclPin( pin );
+            }
+        }
+        node = node.nextSibling();
+    }
+}
+
+void McuCreator::createSpi( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+    McuSpi* spi;
+    if( m_core == "AVR" ) spi = new AvrSpi( mcu, name );
+    else return;
+
+    setConfigRegs( e, spi );
+    if( e->hasAttribute("dataregs") )
+    {
+        QString dataReg = e->attribute("dataregs");
+        if( !dataReg.isEmpty() )  spi->m_dataReg = mcu->getReg( dataReg );
+        mcu->watchRegNames( dataReg, R_WRITE, spi, &McuSpi::writeSpiReg );
+    }
+    if( e->hasAttribute("statusreg") )
+    {
+        QString statReg = e->attribute("statusreg");
+        if( !statReg.isEmpty() )
+        {
+            spi->m_statReg = mcu->getReg( statReg );
+            mcu->watchRegNames( statReg, R_WRITE, spi, &McuSpi::writeStatus );
+        }
+    }
+    QDomNode node = e->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+
+        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, spi );
+        else if( el.tagName() == "prescaler" )
+        {
+            QStringList prescalers = el.attribute("values").remove(" ").split(",");
+            spi->m_prescList.resize( prescalers.size() );
+
+            for( int i=0; i<prescalers.size(); ++i )
+                spi->m_prescList[i] = prescalers.at(i).toUInt();
+        }
+        else if( el.tagName() == "inputpin" )
+        {
+            QString pinName = el.attribute("pin");
+            McuPin* pin = mcu->m_ports.getPin( pinName );
+            if( pin )
+            {
+                QString name = el.attribute("name");
+                if     ( name == "mosi" ) spi->setMosiPin( pin );
+                else if( name == "miso" ) spi->setMisoPin( pin );
+                if     ( name == "sck" )  spi->setSckPin( pin );
+                else if( name == "ss" )   spi->setSsPin( pin );
             }
         }
         node = node.nextSibling();

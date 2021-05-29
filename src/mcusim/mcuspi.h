@@ -36,6 +36,7 @@ class MAINMODULE_EXPORT McuSpi : public McuModule, public SpiModule
 
         virtual void initialize() override;
 
+        virtual void setMode( spiMode_t mode ) override;
         virtual void writeStatus( uint8_t val ){;}
         virtual void writeSpiReg( uint8_t val ){;}
 

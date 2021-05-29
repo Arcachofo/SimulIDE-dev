@@ -19,36 +19,137 @@
 
 #include "spimodule.h"
 #include "iopin.h"
-//#include "simulator.h"
+#include "simulator.h"
 
-SpiModule::SpiModule()
-         : eClockedDevice()
+SpiModule::SpiModule( QString name )
+         : eElement( name )
+         , eClockedDevice()
 {
     m_MOSI = NULL;
     m_MISO = NULL;
-    m_SCK  = NULL;
+    //m_SCK  = NULL;
     m_SS   = NULL;
+
+    m_dataOut = NULL;
+    m_dataIn  = NULL;
 }
 SpiModule::~SpiModule( ){}
 
-
-void SpiModule::setMosiPin( IoPin* pin )
+void SpiModule::initialize()
 {
-    m_MOSI = pin;
+    m_mode = SPI_OFF;
+
+    m_lsbFirst = false;
+    m_bitInc = 1;
+
+    m_leadEdge   = Clock_Rising;
+    m_sampleEdge = Clock_Rising;
 }
 
-void SpiModule::setMisoPin( IoPin* pin )
+void SpiModule::stamp()      // Called at Simulation Start
+{ /* We are just avoiding eClockedDevice::stamp() call*/ }
+
+void SpiModule::runEvent()
 {
-    m_MISO = pin;
+    if( m_mode != SPI_MASTER ) return;
+
 }
 
-void SpiModule::setSckPin( IoPin* pin )
+void SpiModule::voltChanged()
 {
-    m_SCK = pin;
-    m_clockPin = pin;
+    if( m_mode != SPI_SLAVE ) return;
+
+    clkState_t clkState = eClockedDevice::getClockState();
+
+    bool enabled = true;
+    if( m_SS ) enabled = m_SS->getInpState() ? true : false;
+
+    if( !enabled ) return;
+
+    if( clkState == m_sampleEdge ) // Sample data
+    {
+        readBit();
+    }
 }
 
-void SpiModule::setSsPin( IoPin* pin )
+void SpiModule::readByte()
 {
-    m_SS = pin;
+
 }
+
+void SpiModule::readBit()
+{
+    /// if( m_bitPtr > 0 ) m_rxReg <<= 1;
+    if( m_lsbFirst )
+    {
+        if( m_bitPtr < 8 ) m_rxReg >>= 1;
+    }
+    else
+    {
+        if( m_bitPtr > 0 ) m_rxReg <<= 1;
+    }
+
+    if( m_dataIn->getInpState() ) m_rxReg += 1;  //Read one bit
+    m_bitPtr += m_bitInc;
+}
+
+void SpiModule::writeByte()
+{
+
+    if( m_mode == SPI_MASTER ) Simulator::self()->addEvent( m_clockPeriod, this ); // Start Clock
+}
+
+void SpiModule::writeBit()
+{
+    if( m_bitPtr < 0 ) { return; }
+
+    bool bit = m_txReg>>m_bitPtr & 1;
+    m_bitPtr += m_bitInc;
+
+    m_dataOut->setOutState( bit );
+}
+
+void SpiModule::setMode( spiMode_t mode )
+{
+    if( mode == m_mode ) return;
+    m_mode = mode;
+
+    switch( mode ) {
+    case SPI_OFF:
+        {
+            m_MOSI->changeCallBack( this, false );
+            m_MISO->changeCallBack( this, false );
+            m_clkPin->changeCallBack( this, false );
+            if( m_SS ) m_SS->changeCallBack( this, false );
+        }
+        break;
+    case SPI_MASTER:
+        {
+            if( !m_MOSI || !m_MISO || !m_clkPin )
+            {
+                m_mode = SPI_OFF;
+                return;
+            }
+            m_dataOut = m_MOSI;
+            m_dataIn  = m_MISO;
+            // Simulator::self()->addEvent( m_clockPeriod, this ); // Start Clock
+        }
+        break;
+    case SPI_SLAVE:
+        {
+            if( !m_MOSI || !m_MISO || !m_clkPin )
+            {
+                m_mode = SPI_OFF;
+                return;
+            }
+            m_dataOut = m_MISO;
+            m_dataIn  = m_MOSI;
+
+            //m_MOSI->changeCallBack( this, true );
+            m_clkPin->changeCallBack( this, true );
+            if( m_SS ) m_SS->changeCallBack( this, true );
+        }
+        break;
+    }
+}
+
