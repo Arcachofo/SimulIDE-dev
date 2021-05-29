@@ -26,7 +26,7 @@
 eClockedDevice::eClockedDevice()
 {
     m_clock    = false;
-    m_clockPin = NULL;
+    m_clkPin = NULL;
     m_trigger  = Component::Clock;
 }
 eClockedDevice::~eClockedDevice(){}
@@ -38,21 +38,21 @@ void eClockedDevice::initState()
 
 void eClockedDevice::stamp( eElement* el )
 {
-    if( m_clockPin ) m_clockPin->changeCallBack( el );
+    if( m_clkPin ) m_clkPin->changeCallBack( el );
 }
 
 bool eClockedDevice::clockInv()
 {
-    return m_clockPin->inverted();
+    return m_clkPin->inverted();
 }
 
 void eClockedDevice::setClockInv( bool inv )
 {
-    if( !m_clockPin ) return;
+    if( !m_clkPin ) return;
 
     Simulator::self()->pauseSim();
 
-    m_clockPin->setInverted( inv );
+    m_clkPin->setInverted( inv );
     Circuit::self()->update();
 
     Simulator::self()->resumeSim();
@@ -60,11 +60,11 @@ void eClockedDevice::setClockInv( bool inv )
 
 clkState_t eClockedDevice::getClockState()
 {
-    if( !m_clockPin ) return Clock_Allow;
+    if( !m_clkPin ) return Clock_Allow;
 
     clkState_t cState = Clock_Low;
 
-    bool clock = m_clockPin->getInpState(); // Clock pin volt.
+    bool clock = m_clkPin->getInpState(); // Clock pin volt.
 
     if( m_trigger == Component::InEnable )
     {
@@ -92,25 +92,25 @@ void eClockedDevice::setTrigger( Component::trigger_t trigger )
 
     if( trigger == Component::None )
     {
-        m_clockPin->removeConnector();
-        m_clockPin->reset();
-        m_clockPin->setLabelText( "" );
-        m_clockPin->setVisible( false );
+        m_clkPin->removeConnector();
+        m_clkPin->reset();
+        m_clkPin->setLabelText( "" );
+        m_clkPin->setVisible( false );
     }
     else if( trigger == Component::Clock )
     {
-        m_clockPin->setLabelText( ">" );
-        m_clockPin->setVisible( true );
+        m_clkPin->setLabelText( ">" );
+        m_clkPin->setVisible( true );
     }
     else if( trigger == Component::InEnable )
     {
-        m_clockPin->setLabelText( " IE" );
-        m_clockPin->setVisible( true );
+        m_clkPin->setLabelText( " IE" );
+        m_clkPin->setVisible( true );
     }
     Circuit::self()->update();
 }
 
 void eClockedDevice::remove()
 {
-    if( m_clockPin) m_clockPin->removeConnector();
+    if( m_clkPin) m_clkPin->removeConnector();
 }

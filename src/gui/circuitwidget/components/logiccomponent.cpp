@@ -63,7 +63,7 @@ void LogicComponent::updateStep()
 {
     IoComponent::updateStep();
     if( m_oePin ) m_oePin->updateStep();
-    if( m_clockPin) m_clockPin->updateStep();
+    if( m_clkPin) m_clkPin->updateStep();
 }
 
 void LogicComponent::initState()
@@ -147,7 +147,7 @@ void LogicComponent::setInputHighV( double volt )
     Simulator::self()->pauseSim();
 
     IoComponent::setInputHighV( volt );
-    if( m_clockPin) m_clockPin->setInputHighV( volt );
+    if( m_clkPin) m_clkPin->setInputHighV( volt );
 
     Simulator::self()->resumeSim();
 }
@@ -157,7 +157,7 @@ void LogicComponent::setInputLowV( double volt )
     Simulator::self()->pauseSim();
 
     IoComponent::setInputLowV( volt );
-    if( m_clockPin) m_clockPin->setInputLowV( volt );
+    if( m_clkPin) m_clkPin->setInputLowV( volt );
 
     Simulator::self()->resumeSim();
 }
@@ -167,7 +167,7 @@ void LogicComponent::setInputImp( double imp )
     Simulator::self()->pauseSim();
 
     IoComponent::setInputImp( imp );
-    if( m_clockPin) m_clockPin->setInputImp( imp );
+    if( m_clkPin) m_clkPin->setInputImp( imp );
 
     Simulator::self()->resumeSim();
 }

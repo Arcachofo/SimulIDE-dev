@@ -98,7 +98,7 @@ void McuComponentPin::setState( bool state )
     if( m_pinMode == input )  return;
     if( !m_enableIO ) return;
 
-    IoPin::setOutState( state, true );
+    IoPin::setOutState( state );
 }
 
 

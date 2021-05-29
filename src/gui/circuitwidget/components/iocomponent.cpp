@@ -74,8 +74,6 @@ void IoComponent::updateStep()
 void IoComponent::initState()
 {
     Simulator::self()->addToUpdateList( this );
-    //if( Circuit::self()->animate( ) ) Simulator::self()->addToUpdateList( this );
-    //else                              Simulator::self()->remFromUpdateList( this );
 
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutState( false );
 
@@ -226,8 +224,6 @@ void IoComponent::setOpenCol( bool op )
 
 void IoComponent::init( QStringList pins )
 {
-    //int halfH = m_height*8/2;
-    //if( halfH%8 ) halfH -=4;
     m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, m_height*8 );
 
     QStringList inputs;                                    // Input Pins
@@ -366,7 +362,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
         if( i < oldSize ) pinList->at(i)->setY( y );
         else{
             if( (pins > 1) || label.isEmpty() ) num = QString::number(i+bit0);
-            pinList->at(i) = new IoPin( angle, QPoint( x, y ), m_id+id+num, i, this, mode );
+            pinList->at(i) = new IoPin( angle, QPoint( x, y ), m_id+id+QString::number(i), i, this, mode );
             initPin( pinList->at(i) );
 
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( preLab+label+num+PostLab );

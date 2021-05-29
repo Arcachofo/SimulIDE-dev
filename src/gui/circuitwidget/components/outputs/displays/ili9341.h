@@ -20,13 +20,14 @@
 #ifndef ILI9341_H
 #define ILI9341_H
 
-#include "logiccomponent.h"
+#include "component.h"
+#include "e-clocked_device.h"
 #include "e-element.h"
 #include "iopin.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Ili9341 : public LogicComponent, public eElement
+class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice, public eElement
 {
     Q_OBJECT
     
@@ -59,7 +60,8 @@ class MAINMODULE_EXPORT Ili9341 : public LogicComponent, public eElement
 
         int m_inBit;        //How many bits have we read since last byte
         int m_inByte;
-        int m_data;
+        uint m_data;
+        int m_dataBytes;
 
         int m_addrX;              // X RAM address
         int m_addrY;              // Y RAM address

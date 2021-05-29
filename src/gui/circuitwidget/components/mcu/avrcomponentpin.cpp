@@ -204,7 +204,7 @@ void AVRComponentPin::setState( bool state )
 
 void AVRComponentPin::enableSPI( uint32_t value )
 {
-    bool en = value & 1;
+    bool en  = value & 1;
     bool slv = value & 2;
     if( slv )
     {
@@ -220,6 +220,7 @@ void AVRComponentPin::enableSPI( uint32_t value )
         }
         else if( m_spiPin == "miso" ) setDirection( false );
     }
+    enableIO( !en );
 }
 
 void AVRComponentPin::adcread()

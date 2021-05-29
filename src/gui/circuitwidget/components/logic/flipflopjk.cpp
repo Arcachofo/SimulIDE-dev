@@ -62,7 +62,7 @@ FlipFlopJK::FlipFlopJK( QObject* parent, QString type, QString id )
 
     m_setPin = m_inPin[2];
     m_resetPin = m_inPin[3];
-    m_clockPin = m_inPin[4];
+    m_clkPin = m_inPin[4];
 
     setSrInv( true );           // Invert Set & Reset pins
     setClockInv( false );       //Don't Invert Clock pin

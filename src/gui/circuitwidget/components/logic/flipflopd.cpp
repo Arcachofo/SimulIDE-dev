@@ -60,7 +60,7 @@ FlipFlopD::FlipFlopD( QObject* parent, QString type, QString id )
     m_resetPin = m_inPin[2];
     m_dataPins = 1;
     
-    m_clockPin = m_inPin[3];
+    m_clkPin = m_inPin[3];
 
     setSrInv( true );                           // Inver Set & Reset pins
     setClockInv( false );                       // Don't Invert Clock pin

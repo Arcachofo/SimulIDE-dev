@@ -52,9 +52,9 @@ LatchD::LatchD( QObject* parent, QString type, QString id )
     
     createOePin( "IR13OE ", id+"-Pin-outEnable");
 
-    m_clockPin = new IoPin( 180, QPoint( -24,0 ), m_id+"-Pin-clock", 0, this, input );
-    m_clockPin->setLabelText( ">" );
-    m_clockPin->setLabelColor( QColor( 0, 0, 0 ) );
+    m_clkPin = new IoPin( 180, QPoint( -24,0 ), m_id+"-Pin-clock", 0, this, input );
+    m_clkPin->setLabelText( ">" );
+    m_clkPin->setLabelColor( QColor( 0, 0, 0 ) );
 
     setTrigger( InEnable );
 
@@ -117,7 +117,7 @@ void LatchD::setChannels( int channels )
         m_outPin[i]->setY( y+i*8 );
     }
     y += channels*8;
-    m_clockPin->setY( y );
+    m_clkPin->setY( y );
     m_oePin->setY( y );
 
     updateSize();

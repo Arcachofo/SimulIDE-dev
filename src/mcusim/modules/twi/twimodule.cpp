@@ -351,5 +351,5 @@ void TwiModule::setSdaPin( IoPin* pin ) { m_sda = pin; }
 void TwiModule::setSclPin( IoPin* pin )
 {
     m_scl = pin;
-    m_clockPin = pin;
+    m_clkPin = pin;
 }

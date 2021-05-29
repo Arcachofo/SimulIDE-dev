@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT eClockedDevice
         Component::trigger_t trigger() { return m_trigger; }
         virtual void setTrigger( Component::trigger_t trigger );
 
-        void setClockPin( IoPin* clockPin ) { m_clockPin = clockPin; }
+        void setClockPin( IoPin* clockPin ) { m_clkPin = clockPin; }
 
         bool clockInv();
         void setClockInv( bool inv );
@@ -59,7 +59,7 @@ class MAINMODULE_EXPORT eClockedDevice
 
         Component::trigger_t m_trigger;
 
-        IoPin* m_clockPin;
+        IoPin* m_clkPin;
 };
 
 #endif

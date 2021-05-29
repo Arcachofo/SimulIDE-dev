@@ -63,7 +63,7 @@ class AVRComponentPin : public McuComponentPin
         static void port_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {
             AVRComponentPin* ptrAVRComponentPin = reinterpret_cast<AVRComponentPin*> (param);
-            ptrAVRComponentPin->setState( value>0 );
+            ptrAVRComponentPin->setOutState( value>0 );
         }
         static void port_reg_hook( struct avr_irq_t* irq, uint32_t value, void* param )
         {

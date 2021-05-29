@@ -72,7 +72,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void setInverted( bool inverted ) override;
 
-        void controlPin( bool ctrl );
+        virtual void controlPin( bool ctrl );
 
     protected:
         void updtState();

@@ -56,9 +56,9 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
     m_pinSDA->setLabelText( " SDA" );
     m_pin[0] = m_pinSDA;
 
-    m_clockPin = new IoPin( 270, QPoint(24, 8), id+"PinSCL", 0, this, open_col );
-    m_clockPin->setLabelText( " SCL" );
-    m_pin[1] = m_clockPin;
+    m_clkPin = new IoPin( 270, QPoint(24, 8), id+"PinSCL", 0, this, open_col );
+    m_clkPin->setLabelText( " SCL" );
+    m_pin[1] = m_clkPin;
 
     Simulator::self()->addToUpdateList( this );
     
@@ -133,7 +133,7 @@ void Aip31068_i2c::setCcode( int code )
 void Aip31068_i2c::showPins( bool show )
 {
     m_pinSDA->setVisible( show );
-    m_clockPin->setVisible( show );
+    m_clkPin->setVisible( show );
 }
 
 void Aip31068_i2c::remove()

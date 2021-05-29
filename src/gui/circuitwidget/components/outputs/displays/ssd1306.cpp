@@ -58,10 +58,10 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     m_address = 0b00111100; // 0x3A - 60
 
     m_pin.resize( 2 );
-    m_clockPin = new IoPin( 270, QPoint(-48, 48), id+"-PinSck" , 0, this, open_col );
-    m_clockPin->setLabelText( " SCK" );
-    m_pin[0] = m_clockPin;
-    TwiModule::setSclPin( m_clockPin );
+    m_clkPin = new IoPin( 270, QPoint(-48, 48), id+"-PinSck" , 0, this, open_col );
+    m_clkPin->setLabelText( " SCK" );
+    m_pin[0] = m_clkPin;
+    TwiModule::setSclPin( m_clkPin );
 
     m_pinSda = new IoPin( 270, QPoint(-40, 48), id+"-PinSda" , 0, this, open_col );
     m_pin[1] = m_pinSda;

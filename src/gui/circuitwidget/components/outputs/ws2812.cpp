@@ -50,8 +50,8 @@ WS2812::WS2812( QObject* parent, QString type, QString id )
     m_rgb.resize( 3 );
     m_pin.resize( 2 );
 
-    m_clockPin = new IoPin( 180, QPoint(-4-8,0), id+"-InPin", 0, this, input );
-    m_pin[0] = m_clockPin;
+    m_clkPin = new IoPin( 180, QPoint(-4-8,0), id+"-InPin", 0, this, input );
+    m_pin[0] = m_clkPin;
 
     m_output = new IoPin( 0, QPoint(4+8,0), id+"-OutPin", 1, this, output );
     m_pin[1] = m_output;

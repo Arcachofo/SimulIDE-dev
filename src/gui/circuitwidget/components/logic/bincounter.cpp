@@ -61,7 +61,7 @@ BinCounter::BinCounter(QObject *parent, QString type, QString id)
     ;
     init( pinList );
     
-    m_clockPin = m_inPin[0];     // eClockedDevice
+    m_clkPin = m_inPin[0];     // eClockedDevice
     m_resetPin = m_inPin[1];
     m_setPin   = m_inPin[2];
 

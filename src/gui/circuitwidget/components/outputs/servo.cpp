@@ -65,7 +65,7 @@ Servo::Servo( QObject* parent, QString type, QString id )
 
     for( int i=0; i<3;i++ ) m_inPin[i]->setLabelColor( QColor( 250, 250, 200 ) );
 
-    m_clockPin = m_inPin[2];         // Input Clock
+    m_clkPin = m_inPin[2];         // Input Clock
 
     m_pos = 90;
     m_speed = 0.2;
