@@ -42,7 +42,6 @@ LibraryItem* Mux::libraryItem()
 
 Mux::Mux( QObject* parent, QString type, QString id )
    : LogicComponent( parent, type, id )
-   , eElement( id )
 {
     m_width  = 4;
     m_height = 10;
@@ -85,7 +84,7 @@ QList<propGroup_t> Mux::propGroups()
 void Mux::stamp()
 {
     for( int i=0; i<11; ++i ) m_inPin[i]->changeCallBack( this );
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void Mux::voltChanged()

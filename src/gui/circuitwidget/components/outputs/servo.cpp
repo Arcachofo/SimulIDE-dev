@@ -44,7 +44,6 @@ LibraryItem* Servo::libraryItem()
 
 Servo::Servo( QObject* parent, QString type, QString id )
      : LogicComponent( parent, type, id )
-     , eElement( id )
 {
     Q_UNUSED( Servo_properties );
 
@@ -98,7 +97,7 @@ void Servo::stamp()
         enode = m_inPin[1]->getEnode();         // V+ pin
         if( enode ) enode->voltChangedCallback( this );
 
-        LogicComponent::stamp( this );
+        LogicComponent::stamp();
     }
 }
 
@@ -108,7 +107,7 @@ void Servo::initialize()
     m_pulseStart = 0;
     m_lastUpdate = Simulator::self()->circTime()/1e6;
     
-    LogicComponent::initState();
+    LogicComponent::initialize();
 }
 
 void Servo::updateStep()

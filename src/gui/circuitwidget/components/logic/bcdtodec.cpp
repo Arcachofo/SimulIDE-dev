@@ -38,7 +38,6 @@ LibraryItem* BcdToDec::libraryItem()
 
 BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eElement( id )
 {
     m_width  = 4;
     m_height = 11;
@@ -65,7 +64,7 @@ QList<propGroup_t> BcdToDec::propGroups()
 
 void BcdToDec::initialize()
 {
-    LogicComponent::initState();
+    LogicComponent::initialize();
     m_outPin[0]->setOutState( true );
     m_outValue = 1;
 }
@@ -73,7 +72,7 @@ void BcdToDec::initialize()
 void BcdToDec::stamp()
 {
     for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void BcdToDec::voltChanged()

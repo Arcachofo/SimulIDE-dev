@@ -22,12 +22,11 @@
 
 #include "component.h"
 #include "e-clocked_device.h"
-#include "e-element.h"
 #include "iopin.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice, public eElement
+class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
 {
     Q_OBJECT
     

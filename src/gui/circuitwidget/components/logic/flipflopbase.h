@@ -21,9 +21,8 @@
 #define FLIPFLOPBASE_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
-class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent, public eElement
+class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )

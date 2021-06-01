@@ -44,7 +44,6 @@ LibraryItem* Max72xx_matrix::libraryItem()
 
 Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
               : LogicComponent( parent, type, id )
-              , eElement( id )
 {
     Q_UNUSED( Max72xx_matrix_properties );
 

@@ -21,12 +21,11 @@
 #define TWIMODULE_H
 
 #include "e-clocked_device.h"
-#include "e-element.h"
 #include "avrtwicodes.h" // Using AVR states comes at hand
 
 class eSource;
 
-class MAINMODULE_EXPORT TwiModule : public eElement, public eClockedDevice
+class MAINMODULE_EXPORT TwiModule : public eClockedDevice
 {
     public:
         TwiModule( QString name );

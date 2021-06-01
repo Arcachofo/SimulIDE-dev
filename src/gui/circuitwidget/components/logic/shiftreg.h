@@ -21,11 +21,10 @@
 #define SHIFTREG_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT ShiftReg : public LogicComponent, public eElement
+class MAINMODULE_EXPORT ShiftReg : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )

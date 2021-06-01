@@ -41,7 +41,6 @@ const uint8_t BcdBase::m_values[]={
 
 BcdBase::BcdBase( QObject* parent, QString type, QString id )
        : LogicComponent( parent, type, id )
-       , eElement( id )
 {
     m_nextOutVal = m_values[0];
 
@@ -50,17 +49,17 @@ BcdBase::~BcdBase(){}
 
 void BcdBase::initialize()
 {
-    LogicComponent::initState();
+    LogicComponent::initialize();
     update();
 }
 
 void BcdBase::stamp()
 {
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
     for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
 
     m_nextOutVal = m_values[0];
-    m_outValue = m_nextOutVal;
+    //m_outValue = m_nextOutVal;
     m_changed = true;
 }
 

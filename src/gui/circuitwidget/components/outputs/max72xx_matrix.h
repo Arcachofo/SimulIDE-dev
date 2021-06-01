@@ -21,13 +21,12 @@
 #define MAX72XX_MATRIX_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 class IoPin;
 class Pin;
 
-class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent, public eElement
+class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( int  NumDisplays   READ numDisplays WRITE setNumDisplays DESIGNABLE true USER true )

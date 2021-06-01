@@ -38,7 +38,6 @@ LibraryItem* DAC::libraryItem()
 
 DAC::DAC( QObject* parent, QString type, QString id )
    : LogicComponent( parent, type, id )
-   , eElement( id )
 {    
     m_width  = 4;
     m_height = 9;

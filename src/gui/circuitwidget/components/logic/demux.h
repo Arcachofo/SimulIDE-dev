@@ -21,11 +21,10 @@
 #define DEMUX_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Demux : public LogicComponent, public eElement
+class MAINMODULE_EXPORT Demux : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( int    Address_Bits READ addrBits   WRITE setAddrBits   DESIGNABLE true USER true )

@@ -21,12 +21,11 @@
 #define MEMORY_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 #include "memdata.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Memory : public LogicComponent, public eElement, public MemData
+class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
 {
     Q_OBJECT
     Q_PROPERTY( QVector<int> Mem  READ mem        WRITE setMem )

@@ -42,7 +42,6 @@ LibraryItem* LatchD::libraryItem()
 
 LatchD::LatchD( QObject* parent, QString type, QString id )
       : LogicComponent( parent, type, id )
-      , eElement( id )
 {
     m_width  = 4;
     m_height = 10;
@@ -83,7 +82,7 @@ void LatchD::stamp()
     {
         for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
     }
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void LatchD::voltChanged()

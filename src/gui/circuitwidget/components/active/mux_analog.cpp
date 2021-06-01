@@ -46,7 +46,6 @@ LibraryItem* MuxAnalog::libraryItem()
 
 MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
          : LogicComponent( parent, type, id )
-         , eElement( id )
 {
     Q_UNUSED( MuxAnalog_properties );
 

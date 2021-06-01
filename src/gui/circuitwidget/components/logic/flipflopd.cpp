@@ -75,7 +75,7 @@ void FlipFlopD::voltChanged()
     bool set   = m_setPin->getInpState();
     bool reset = m_resetPin->getInpState();
 
-    if( set || reset) m_nextOutVal = (set? 1:0) + (reset? 2:0);
+    if( set || reset)   m_nextOutVal = (set? 1:0) + (reset? 2:0);
     else if( clkAllow ) m_nextOutVal = m_inPin[0]->getInpState()? 1:2; // D state
 
     sheduleOutPuts( this );

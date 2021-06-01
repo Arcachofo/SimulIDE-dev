@@ -22,9 +22,7 @@
 #include "simulator.h"
 
 TwiModule::TwiModule( QString name )
-         : eElement( name )
-         , eClockedDevice()
-
+         : eClockedDevice( name )
 {
     m_sda = NULL;
     m_scl = NULL;

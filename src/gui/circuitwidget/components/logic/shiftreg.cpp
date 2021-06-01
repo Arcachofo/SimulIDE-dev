@@ -38,7 +38,6 @@ LibraryItem* ShiftReg::libraryItem()
 
 ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eElement( id )
 {
     m_width  = 4;
     m_height = 9;
@@ -75,8 +74,7 @@ QList<propGroup_t> ShiftReg::propGroups()
 void ShiftReg::stamp()
 {
     m_inPin[2]->changeCallBack( this );
-    LogicComponent::initState();
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void ShiftReg::voltChanged()

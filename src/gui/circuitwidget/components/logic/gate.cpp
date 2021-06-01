@@ -25,7 +25,6 @@
 
 Gate::Gate( QObject* parent, QString type, QString id, int inputs )
     : LogicComponent( parent, type, id )
-    , eElement( id )
 {
     m_width = 2;
 
@@ -60,7 +59,7 @@ QList<propGroup_t> Gate::propGroups()
 
 void Gate::stamp()
 {
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
     m_out = false;
 }

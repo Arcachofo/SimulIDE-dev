@@ -21,11 +21,10 @@
 #define BINCOUNTER_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT BinCounter : public LogicComponent, public eElement
+class MAINMODULE_EXPORT BinCounter : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( bool   Pin_SET      READ pinSet     WRITE useSetPin     DESIGNABLE true USER true )

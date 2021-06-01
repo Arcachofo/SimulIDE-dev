@@ -22,8 +22,7 @@
 #include "simulator.h"
 
 SpiModule::SpiModule( QString name )
-         : eElement( name )
-         , eClockedDevice()
+         : eClockedDevice( name )
 {
     m_MOSI = NULL;
     m_MISO = NULL;

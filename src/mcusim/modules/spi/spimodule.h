@@ -21,11 +21,10 @@
 #define SPIMODULE_H
 
 #include "e-clocked_device.h"
-#include "e-element.h"
 
 class IoPin;
 
-class MAINMODULE_EXPORT SpiModule : public eElement, public eClockedDevice
+class MAINMODULE_EXPORT SpiModule : public eClockedDevice
 {
     public:
         SpiModule( QString name );

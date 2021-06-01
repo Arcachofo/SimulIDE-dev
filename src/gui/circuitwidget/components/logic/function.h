@@ -23,11 +23,10 @@
 #include <QScriptEngine>
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Function : public LogicComponent, public eElement
+class MAINMODULE_EXPORT Function : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )

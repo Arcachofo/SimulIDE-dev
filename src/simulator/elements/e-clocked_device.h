@@ -21,11 +21,12 @@
 #define ECLOCKEDDEVICE_H
 
 #include "component.h"
+#include "e-element.h"
 
 enum clkState_t{
     Clock_Low = 0,
-    Clock_Rising,
-    Clock_Allow,
+    Clock_Rising=1,
+    Clock_Allow=1,
     Clock_High,
     Clock_Falling,
 };
@@ -33,14 +34,14 @@ enum clkState_t{
 class eElement;
 class IoPin;
 
-class MAINMODULE_EXPORT eClockedDevice
+class MAINMODULE_EXPORT eClockedDevice : public eElement
 {
     public:
-        eClockedDevice();
+        eClockedDevice( QString id );
         ~eClockedDevice();
 
-        void initState();
-        void stamp( eElement* el );
+        virtual void initialize() override;
+        virtual void stamp() override;
 
         Component::trigger_t trigger() { return m_trigger; }
         virtual void setTrigger( Component::trigger_t trigger );

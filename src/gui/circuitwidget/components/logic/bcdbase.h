@@ -21,9 +21,8 @@
 #define BCDBASE_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
-class MAINMODULE_EXPORT BcdBase : public LogicComponent, public eElement
+class MAINMODULE_EXPORT BcdBase : public LogicComponent
 {
     Q_OBJECT
 

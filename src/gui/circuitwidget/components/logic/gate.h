@@ -21,11 +21,10 @@
 #define GATE_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class IoPin;
 
-class MAINMODULE_EXPORT Gate : public LogicComponent, public eElement
+class MAINMODULE_EXPORT Gate : public LogicComponent
 {
     Q_OBJECT
     //Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )

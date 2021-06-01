@@ -21,11 +21,10 @@
 #define DECTOBCD_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT DecToBcd : public LogicComponent, public eElement
+class MAINMODULE_EXPORT DecToBcd : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( bool Invert_Inputs READ invertInps WRITE setInvertInps DESIGNABLE true USER true )
@@ -41,7 +40,6 @@ class MAINMODULE_EXPORT DecToBcd : public LogicComponent, public eElement
         virtual QList<propGroup_t> propGroups() override;
 
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
 

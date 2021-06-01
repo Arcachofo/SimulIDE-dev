@@ -44,7 +44,6 @@ LibraryItem* Function::libraryItem()
 
 Function::Function( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eElement( id )
         , m_engine()
         , m_functions()
 {
@@ -74,7 +73,7 @@ QList<propGroup_t> Function::propGroups()
 
 void Function::stamp()
 {
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
 

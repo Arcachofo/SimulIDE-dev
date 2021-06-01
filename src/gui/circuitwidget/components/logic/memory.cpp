@@ -48,7 +48,6 @@ LibraryItem* Memory::libraryItem()
 
 Memory::Memory( QObject* parent, QString type, QString id )
       : LogicComponent( parent, type, id )
-      , eElement( id )
       , MemData()
 {
     Q_UNUSED( Memory_properties );
@@ -98,7 +97,7 @@ void Memory::stamp()                   // Called at Simulation Start
     for( int i=0; i<2+m_addrBits; ++i ) // Initialize control pins
         ;///m_inPin[i]->changeCallBack( this );
 
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void Memory::updateStep()
@@ -117,7 +116,7 @@ void Memory::initialize()
 
     if( !m_persistent ) m_ram.fill( 0 );
 
-    LogicComponent::initState();
+    LogicComponent::initialize();
 }
 
 void Memory::voltChanged()        // Some Pin Changed State, Manage it

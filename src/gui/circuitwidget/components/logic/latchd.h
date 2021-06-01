@@ -21,11 +21,10 @@
 #define LATCHD_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT LatchD : public LogicComponent, public eElement
+class MAINMODULE_EXPORT LatchD : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( int    Channels   READ channels   WRITE setChannels   DESIGNABLE true USER true )

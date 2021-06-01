@@ -43,7 +43,6 @@ LibraryItem* BinCounter::libraryItem()
 
 BinCounter::BinCounter(QObject *parent, QString type, QString id) 
           : LogicComponent( parent, type, id )
-          , eElement( id )
 {
     Q_UNUSED( BinCounter_properties );
     
@@ -88,13 +87,13 @@ void BinCounter::stamp()
     m_resetPin->changeCallBack( this );
     m_setPin->changeCallBack( this );
 
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void BinCounter::initialize()
 {
     m_Counter = 0;
-    LogicComponent::initState();
+    LogicComponent::initialize();
 }
 
 void BinCounter::voltChanged()

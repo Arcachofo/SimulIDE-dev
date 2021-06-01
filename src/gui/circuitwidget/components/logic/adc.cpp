@@ -44,7 +44,6 @@ LibraryItem* ADC::libraryItem()
 
 ADC::ADC( QObject* parent, QString type, QString id )
    : LogicComponent( parent, type, id )
-   , eElement( id )
 {
     Q_UNUSED( ADC_properties );
     
@@ -75,7 +74,7 @@ QList<propGroup_t> ADC::propGroups()
 void ADC::stamp()
 {
     m_inPin[0]->changeCallBack( this );
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void ADC::voltChanged()
@@ -84,8 +83,7 @@ void ADC::voltChanged()
     m_nextOutVal = (int)(volt*m_maxValue/m_maxVolt+0.1);
     //m_outStep = 0;
 
-    if( m_outValue != m_nextOutVal )
-        Simulator::self()->addEvent( m_propDelay, this );
+    LogicComponent::sheduleOutPuts( this );
 }
 
 void ADC::setNumOuts( uint outs, QString, int, bool )

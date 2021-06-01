@@ -23,7 +23,8 @@
 #include "circuit.h"
 #include "iopin.h"
 
-eClockedDevice::eClockedDevice()
+eClockedDevice::eClockedDevice( QString id )
+              : eElement ( id )
 {
     m_clock    = false;
     m_clkPin = NULL;
@@ -31,14 +32,14 @@ eClockedDevice::eClockedDevice()
 }
 eClockedDevice::~eClockedDevice(){}
 
-void eClockedDevice::initState()
+void eClockedDevice::initialize()
 {
     m_clock = false;
 }
 
-void eClockedDevice::stamp( eElement* el )
+void eClockedDevice::stamp()
 {
-    if( m_clkPin ) m_clkPin->changeCallBack( el );
+    if( m_clkPin ) m_clkPin->changeCallBack( this );
 }
 
 bool eClockedDevice::clockInv()

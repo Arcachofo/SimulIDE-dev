@@ -45,7 +45,6 @@ LibraryItem* Scripted::libraryItem()
 
 Scripted::Scripted( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
-        , eElement( id )
 {
     Q_UNUSED( Scripted_properties );
 
@@ -81,7 +80,7 @@ QList<propGroup_t> Scripted::propGroups()
 void Scripted::stamp()
 {
     m_canRun = false;
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 
     QString excep = evaluate( m_script );
     if( excep != "" ) return;

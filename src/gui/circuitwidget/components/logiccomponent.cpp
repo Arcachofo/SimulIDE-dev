@@ -48,7 +48,7 @@ static const char* LogicComponent_properties[] = {
 
 LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
               : IoComponent( parent, type, id )
-              , eClockedDevice()
+              , eClockedDevice( id )
 {
     Q_UNUSED( LogicComponent_properties );
 
@@ -66,16 +66,16 @@ void LogicComponent::updateStep()
     if( m_clkPin) m_clkPin->updateStep();
 }
 
-void LogicComponent::initState()
+void LogicComponent::initialize()
 {
     IoComponent::initState();
-    eClockedDevice::initState();
+    eClockedDevice::initialize();
 }
 
-void LogicComponent::stamp( eElement* el )
+void LogicComponent::stamp()
 {
-    if( m_oePin ) m_oePin->changeCallBack( el );
-    eClockedDevice::stamp( el );
+    if( m_oePin ) m_oePin->changeCallBack( this );
+    eClockedDevice::stamp();
 }
 
 void LogicComponent::remove()

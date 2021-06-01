@@ -21,11 +21,10 @@
 #define FULLADDER_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT FullAdder : public LogicComponent, public eElement
+class MAINMODULE_EXPORT FullAdder : public LogicComponent
 {
     Q_OBJECT
 

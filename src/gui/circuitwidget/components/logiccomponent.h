@@ -35,8 +35,8 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
 
         virtual void updateStep() override;
 
-        void initState();
-        void stamp( eElement* el );
+        virtual void initialize() override;
+        virtual void stamp() override;
 
         void createOePin (QString d, QString id);
         void setOePin( IoPin* pin );

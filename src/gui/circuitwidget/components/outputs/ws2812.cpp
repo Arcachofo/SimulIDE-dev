@@ -42,8 +42,7 @@ LibraryItem* WS2812::libraryItem()
 
 WS2812::WS2812( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
-      , eElement( id )
-      , eClockedDevice()
+      , eClockedDevice( id )
 {
     m_graphical = true;
 

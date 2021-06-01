@@ -24,7 +24,6 @@
 
 FlipFlopBase::FlipFlopBase( QObject* parent, QString type, QString id )
          : LogicComponent( parent, type, id )
-         , eElement( id )
 {
     m_dataPins = 0;
 }
@@ -52,7 +51,7 @@ void FlipFlopBase::stamp()
     {
         for( int i=0; i<m_dataPins; i++ ) m_inPin[i]->changeCallBack( this );
     }
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
     m_outPin[0]->setOutState( true );
 }
 

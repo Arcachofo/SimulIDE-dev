@@ -37,7 +37,6 @@ LibraryItem* FullAdder::libraryItem()
 
 FullAdder::FullAdder(QObject *parent, QString type, QString id) 
           : LogicComponent( parent, type, id )
-          , eElement( id )
 {
     m_width  = 3;
     m_height = 4;
@@ -59,7 +58,7 @@ FullAdder::~FullAdder(){}
 void FullAdder::stamp()
 {
     for( uint i=0; i<m_inPin.size(); ++i )m_inPin[i]->changeCallBack( this );
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void FullAdder::voltChanged()

@@ -21,11 +21,10 @@
 #define ADC_H
 
 #include "logiccomponent.h"
-#include "e-element.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT ADC : public LogicComponent, public eElement
+class MAINMODULE_EXPORT ADC : public LogicComponent
 {
     Q_OBJECT
     Q_PROPERTY( double Vref        READ maxVolt    WRITE setMaxVolt    DESIGNABLE true USER true )

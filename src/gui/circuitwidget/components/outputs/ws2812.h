@@ -21,12 +21,11 @@
 #define WS2812_H
 
 #include "e-clocked_device.h"
-#include "e-element.h"
 #include "component.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT WS2812 : public Component, public eElement, public eClockedDevice
+class MAINMODULE_EXPORT WS2812 : public Component, public eClockedDevice
 {
     Q_OBJECT
     Q_PROPERTY( int Rows READ rows WRITE setRows DESIGNABLE true USER true )

@@ -42,7 +42,6 @@ LibraryItem* Demux::libraryItem()
 
 Demux::Demux( QObject* parent, QString type, QString id )
      : LogicComponent( parent, type, id )
-     , eElement( id )
 {
     m_width  = 4;
     m_height = 10;
@@ -82,7 +81,7 @@ QList<propGroup_t> Demux::propGroups()
 void Demux::stamp()
 {
     for( int i=0; i<4; ++i )m_inPin[i]->changeCallBack( this );
-    LogicComponent::stamp( this );
+    LogicComponent::stamp();
 }
 
 void Demux::voltChanged()
