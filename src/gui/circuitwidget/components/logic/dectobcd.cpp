@@ -81,7 +81,7 @@ void DecToBcd::initialize()
 
 void DecToBcd::stamp()
 {
-    for( int i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp( this);
 }
 

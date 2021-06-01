@@ -88,7 +88,7 @@ void ADC::voltChanged()
         Simulator::self()->addEvent( m_propDelay, this );
 }
 
-void ADC::setNumOuts( uint outs, QString, int )
+void ADC::setNumOuts( uint outs, QString, int, bool )
 {
     if( outs < 1 ) return;
     m_maxValue = pow( 2, outs )-1;

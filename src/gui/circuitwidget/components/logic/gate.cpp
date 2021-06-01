@@ -29,7 +29,7 @@ Gate::Gate( QObject* parent, QString type, QString id, int inputs )
 {
     m_width = 2;
 
-    setNumOuts( 1, "" );
+    setNumOuts( 1, "", 0, false );
     setNumInps( inputs );  // Create Input Pins
 
     m_rndPD = true; // Randomize Propagation Delay

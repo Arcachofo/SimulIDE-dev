@@ -83,10 +83,10 @@ class MAINMODULE_EXPORT IoComponent : public Component
         void setFallTime( uint64_t time ) {m_timeHL = time; }
 
         int  numInps() const { return m_inPin.size(); }
-        virtual void setNumInps( uint pins, QString label="I", int bit0=0 );
+        virtual void setNumInps( uint pins, QString label="I", int bit0=0, bool number=true );
 
         int  numOuts() const { return m_outPin.size(); }
-        virtual void setNumOuts( uint pins, QString label="O", int bit0=0 );
+        virtual void setNumOuts( uint pins, QString label="O", int bit0=0, bool number=true );
 
         bool openCol() { return m_openCol; }
         void setOpenCol( bool op );
@@ -100,7 +100,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
 
     protected:
         IoPin* createPin( QString data, QString id );
-        void setNumPins( std::vector<IoPin*>* pinList, uint pins, QString label, int bit0, bool out );
+        void setNumPins( std::vector<IoPin*>* pinList, uint pins, QString label, int bit0, bool out, bool number );
         void deletePins( std::vector<IoPin*>* pinList, uint pins );
 
         uint m_outValue;

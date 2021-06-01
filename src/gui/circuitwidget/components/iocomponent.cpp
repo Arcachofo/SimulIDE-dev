@@ -309,18 +309,18 @@ void IoComponent::initPin( IoPin* pin )
     pin->setOutputImp( m_ouImp  );
 }
 
-void IoComponent::setNumInps( uint pins, QString label, int bit0 )
+void IoComponent::setNumInps( uint pins, QString label, int bit0, bool number )
 {
-    setNumPins( &m_inPin, pins, label, bit0, false );
+    setNumPins( &m_inPin, pins, label, bit0, false, number );
 }
 
-void IoComponent::setNumOuts( uint pins, QString label, int bit0 )
+void IoComponent::setNumOuts( uint pins, QString label, int bit0, bool number )
 {
-    setNumPins( &m_outPin, pins, label, bit0, true );
+    setNumPins( &m_outPin, pins, label, bit0, true, number );
 }
 
 void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
-                              , QString label, int bit0, bool out )
+                              , QString label, int bit0, bool out, bool number )
 {
     uint oldSize = pinList->size();
     if( pins == oldSize ) return;
@@ -360,9 +360,15 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
 
         QString num = "";
         if( i < oldSize ) pinList->at(i)->setY( y );
-        else{
-            if( (pins > 1) || label.isEmpty() ) num = QString::number(i+bit0);
-            pinList->at(i) = new IoPin( angle, QPoint( x, y ), m_id+id+QString::number(i), i, this, mode );
+        else
+        {
+            id = m_id+id;
+            if( number )
+            {
+                id = id+QString::number(i);
+                num = QString::number(i+bit0);
+            }
+            pinList->at(i) = new IoPin( angle, QPoint( x, y ), id, i, this, mode );
             initPin( pinList->at(i) );
 
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( preLab+label+num+PostLab );
