@@ -53,9 +53,10 @@ IoPin::~IoPin(){ delete m_scrEnode; }
 
 void IoPin::initialize()
 {
+    m_inpState = false;
+    m_outState = false;
     ePin::setEnodeComp( m_scrEnode );
     setPinMode( m_pinMode );
-    m_inpState = false;
 }
 
 void IoPin::stamp()
