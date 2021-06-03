@@ -32,6 +32,7 @@
 Chip::Chip( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
     , eElement( id )
+    , m_label( this )
 {
     m_subcType = subcNone;
     m_numpins = 0;
@@ -108,9 +109,12 @@ void Chip::initChip()
             QMetaEnum metaEnum = QMetaEnum::fromType<Chip::subcType_t>();
             m_subcType = (subcType_t)metaEnum.keyToValue( root.attribute( "type").toUtf8().data() );
         }
-
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );
+
+        m_label.adjustSize();
+        m_label.setY( m_area.height()/2+m_label.textWidth()/2 );
+        m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );
     }
     else
     {

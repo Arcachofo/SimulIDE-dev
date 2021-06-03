@@ -84,6 +84,7 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         QList<Pin*> m_pins;
 
         QPixmap* m_BackPixmap;
+        QGraphicsTextItem m_label;
 };
 #endif
 

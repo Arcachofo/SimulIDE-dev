@@ -54,6 +54,7 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
  virtual void setValLabelX( int x ) override { ;/* Do Nothing*/ }
  virtual void setValLabelY( int y ) override {  ;/* Do Nothing*/ }
  virtual void setValLabRot( int rot ) override { ;/* Do Nothing*/ }
+ virtual void setUnit( QString un ) override { ;/* Do Nothing*/ }
 
         Component* getMainComp(){ return m_mainComponent; }
 

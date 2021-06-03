@@ -64,20 +64,20 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
     m_boardId = "";
     m_board = NULL;
     m_shield = NULL;
+    m_mainComponent = NULL;
 
     QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
     f.setFamily("Monospace");
     f.setPixelSize(5);
     f.setLetterSpacing( QFont::PercentageSpacing, 120 );
-    m_valLabel->setFont( f );
-    m_valLabel->setPlainText( compName );
-    m_valLabel->setDefaultTextColor( QColor( 110, 110, 110 ) );
-    m_valLabel->setAcceptedMouseButtons( 0 );
-    setShowVal( true );
-
+    m_label.setFont( f );
+    m_label.setPlainText( compName );
+    m_label.setDefaultTextColor( QColor( 110, 110, 110 ) );
+    m_label.setAcceptedMouseButtons( 0 );
+    m_label.setRotation( -90 );
+    m_label.setVisible( true );
     QString dataFile = ComponentSelector::self()->getXmlFile( compName );
 
-    m_mainComponent = 0l;
     //qDebug()<<"SubCircuit::SubCircuit"<<compName<<dataFile;
 
     if( dataFile == "" )
@@ -413,11 +413,6 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int pos, in
 
 void SubCircuit::setLogicSymbol( bool ls )
 {
-    Component::setValLabelX( m_area.width()/2-3 );
-    Component::setValLabelY( m_area.height()/2+m_valLabel->textWidth()/2 );
-    Component::setValLabRot(-90 );
-    setValLabelPos();
-
     if( !m_initialized ) return;
     if( m_isLS == ls ) return;
     Chip::setLogicSymbol( ls );
@@ -435,6 +430,11 @@ void SubCircuit::setLogicSymbol( bool ls )
             }
         }
     }
+
+    /*Component::setValLabelX( m_area.width()/2-3 );
+    Component::setValLabelY( m_area.height()/2+m_valLabel->textWidth()/2 );
+    Component::setValLabRot(-90 );
+    setValLabelPos();*/
 }
 
 void SubCircuit::remove()
