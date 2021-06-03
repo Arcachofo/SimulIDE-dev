@@ -75,6 +75,7 @@
     <item name="74HC112" info="  dual J-K negative-edge-triggered flip-flop, clear and preset " ></item>
     <item name="74HC113" info="  dual J-K negative-edge-triggered flip-flop, preset " ></item>
     <item name="74XX114" info="  dual J-K negative-edge-triggered flip-flop, preset, common clock, common reset " ></item>
+    <item name="74XX121" info="  monostable multivibrator " ></item>
     <item name="74HC137" info="  3-line to 8-line decoder/demultiplexer, address latch, inverting outputs " ></item>
     <item name="74HC138" info="  3-line to 8-line decoder/demultiplexer, inverting outputs " ></item>
     <item name="74HC139" info="  dual 2 to 4-line decoder/demultiplexer, inverting outputs " ></item>

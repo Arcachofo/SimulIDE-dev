@@ -1,0 +1,99 @@
+<circuit Speed_per="100" Simu_Step_nS="1000" reactStep="50" animate="0" Speed_sps="1000000" type="simulide_0.4" noLinAcc="5">
+
+Unique  Id: Fixed Voltage-1341: 
+Circuit Id: Fixed Voltage-1341
+<item x="-372" itemtype="Fixed Voltage" Unit=" V" labely="-24" boardPos="-1e+06,-1e+06" valLabely="8" circRot="4.0742319208667369e-312" mainComp="false" Show_id="false" labelrot="0" Out="false" objectName="Fixed Voltage-1341" hflip="1" labelx="-64" circPos="0,0" id="Fixed Voltage-1341" Show_Volt="true" vflip="1" boardRot="-1000000" valLabRot="0" rotation="0" Voltage="5" valLabelx="-16" y="-252"/>
+
+Unique  Id: Probe-1339: 
+Circuit Id: Probe-1339
+<item x="-200" itemtype="Probe" labely="-16" boardPos="-1e+06,-1e+06" valLabely="0" circRot="-5.4861292803319049e+303" mainComp="false" Show_id="false" labelrot="45" objectName="Probe-1339" hflip="1" labelx="16" circPos="0,0" id="Probe-1339" Show_volt="true" vflip="1" boardRot="-1000000" valLabRot="45" rotation="-45" valLabelx="16" y="-172" Threshold="2.5"/>
+
+Unique  Id: Node-1336: 
+Circuit Id: Node-1336
+<item x="-336" itemtype="Node" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" circRot="-5.4861292803319049e+303" mainComp="false" Show_id="false" labelrot="0" objectName="Node-1336" hflip="1" labelx="-16" circPos="0,0" id="Node-1336" vflip="1" boardRot="-1000000" valLabRot="0" rotation="0" valLabelx="0" y="-184"/>
+
+Unique  Id: Node-1333: 
+Circuit Id: Node-1333
+<item x="-332" itemtype="Node" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" circRot="-5.4861292803319049e+303" mainComp="false" Show_id="false" labelrot="0" objectName="Node-1333" hflip="1" labelx="-16" circPos="0,0" id="Node-1333" vflip="1" boardRot="-1000000" valLabRot="0" rotation="0" valLabelx="0" y="-168"/>
+
+Unique  Id: Oscope-1330: 
+Circuit Id: Oscope-1330
+<item x="-116" itemtype="Oscope" Tracks="1" labely="-100" TimPos="0,0,0,0" boardPos="-1e+06,-1e+06" Basic_Y="135" valLabely="0" VolPos="-6.57572,0,0,0" circRot="0" mainComp="false" Trigger="0" HideCh="false,false,false,false" Show_id="false" labelrot="0" Tunnels=",,," objectName="Oscope-1330" hflip="1" labelx="-90" circPos="0,0" id="Oscope-1330" vflip="1" boardRot="-1000000" Filter="0" valLabRot="0" AutoSC="4" Basic_X="135" rotation="0" valLabelx="0" y="-332" VolDiv="1.48749,1.48749,1.48749,1.48749" hTick="800000"/>
+
+Unique  Id: Buffer-1327: 
+Circuit Id: Buffer-1325
+<item x="-372" itemtype="Buffer" Input_High_V="2.5" Out_Imped="40" labely="-24" boardPos="-1e+06,-1e+06" Out_High_V="5" valLabely="0" circRot="0" mainComp="false" Inverted="true" Show_id="false" labelrot="0" objectName="Buffer-1327" hflip="1" labelx="-16" circPos="0,0" id="Buffer-1325" Tristate="false" vflip="1" Open_Collector="false" boardRot="-1000000" valLabRot="0" Input_Imped="100000000000000" Out_Low_V="0" Input_Low_V="2.5" rotation="0" valLabelx="0" y="-168"/>
+
+Unique  Id: Buffer-1325: 
+Circuit Id: Buffer-1325
+<item x="-372" itemtype="Buffer" Input_High_V="2.5" Out_Imped="40" labely="-24" boardPos="-1e+06,-1e+06" Out_High_V="5" valLabely="0" circRot="0" mainComp="false" Inverted="true" Show_id="false" labelrot="0" objectName="Buffer-1325" hflip="1" labelx="-16" circPos="0,0" id="Buffer-1325" Tristate="false" vflip="1" Open_Collector="false" boardRot="-1000000" valLabRot="0" Input_Imped="100000000000000" Out_Low_V="0" Input_Low_V="2.5" rotation="0" valLabelx="0" y="-184"/>
+
+Unique  Id: Ground-1323: 
+Circuit Id: Ground-1323
+<item x="-476" itemtype="Ground" labely="8" boardPos="-1e+06,-1e+06" valLabely="0" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Ground-1323" hflip="1" labelx="-16" circPos="0,0" id="Ground-1323" vflip="1" boardRot="-1000000" valLabRot="0" rotation="0" valLabelx="0" y="-152"/>
+
+Unique  Id: Clock-1321: 
+Circuit Id: Clock-1321
+<item x="-508" itemtype="Clock" Unit=" V" labely="-24" boardPos="-1e+06,-1e+06" valLabely="8" circRot="0" mainComp="false" Show_id="false" labelrot="0" Out="true" objectName="Clock-1321" hflip="1" labelx="-64" circPos="0,0" id="Clock-1321" Show_Volt="true" Freq="1000" vflip="1" boardRot="-1000000" valLabRot="0" Always_On="false" rotation="0" Voltage="5" valLabelx="-16" y="-184"/>
+
+Unique  Id: 74HC4022-1166: 
+Circuit Id: 74HC4022-1166
+<item x="-448" itemtype="Subcircuit" labely="-20" boardPos="-1e+06,-1e+06" valLabely="35" circRot="-1.3898183180427132e+306" mainComp="false" Show_id="true" labelrot="0" objectName="74HC4022-1166" hflip="1" labelx="0" circPos="0,0" id="74HC4022-1166" BoardId="" Logic_Symbol="true" vflip="1" boardRot="-1000000" valLabRot="-90" rotation="0" valLabelx="13" y="-192"/>
+
+Unique  Id: AM1404_ttl-1: 
+Circuit Id: AM1404_ttl-1
+<item x="-296" itemtype="Subcircuit" labely="-20" boardPos="-1e+06,-1e+06" valLabely="19" circRot="0" mainComp="false" Show_id="true" labelrot="0" objectName="AM1404_ttl-1" hflip="1" labelx="0" circPos="0,0" id="AM1404_ttl-1" BoardId="" Logic_Symbol="true" vflip="1" boardRot="-1000000" valLabRot="-90" rotation="0" valLabelx="13" y="-164"/>
+
+Unique  Id: Connector-1322: 
+Circuit Id: Connector-1322
+<item x="-492" itemtype="Connector" enodeid="enode-1322" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Clock-1321-outnod" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1322" hflip="1" labelx="-16" circPos="0,0" id="Connector-1322" endpinid="74HC4022-1166-CLK" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-492,-184,-456,-184" rotation="0" valLabelx="0" y="-184"/>
+
+Unique  Id: Connector-1324: 
+Circuit Id: Connector-1324
+<item x="-476" itemtype="Connector" enodeid="enode-1324" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Ground-1323-Gnd" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1324" hflip="1" labelx="-16" circPos="0,0" id="Connector-1324" endpinid="74HC4022-1166-!CE" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-476,-168,-456,-168" rotation="0" valLabelx="0" y="-168"/>
+
+Unique  Id: Connector-1326: 
+Circuit Id: Connector-1326
+<item x="-388" itemtype="Connector" enodeid="enode-1326" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Buffer-1325-in0" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1326" hflip="1" labelx="-16" circPos="0,0" id="Connector-1326" endpinid="74HC4022-1166-Q0" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-388,-184,-400,-184" rotation="0" valLabelx="0" y="-184"/>
+
+Unique  Id: Connector-1328: 
+Circuit Id: Connector-1328
+<item x="-388" itemtype="Connector" enodeid="enode-1328" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Buffer-1327-in0" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1328" hflip="1" labelx="-16" circPos="0,0" id="Connector-1328" endpinid="74HC4022-1166-Q2" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-388,-168,-400,-168" rotation="0" valLabelx="0" y="-168"/>
+
+Unique  Id: Connector-1329: 
+Circuit Id: Connector-1329
+<item x="-400" itemtype="Connector" enodeid="enode-1329" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="74HC4022-1166-Q4" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1329" hflip="1" labelx="-16" circPos="0,0" id="Connector-1329" endpinid="74HC4022-1166-MR" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-400,-152,-384,-152,-384,-84,-456,-84,-456,-112" rotation="0" valLabelx="0" y="-152"/>
+
+Unique  Id: Connector-1331: 
+Circuit Id: Connector-1331
+<item x="-204" itemtype="Connector" enodeid="enode-1338" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Oscope-1330-Pin0" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1331" hflip="1" labelx="-16" circPos="0,0" id="Connector-1331" endpinid="Node-1336-0" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-204,-380,-336,-380,-336,-184" rotation="0" valLabelx="0" y="-380"/>
+
+Unique  Id: Connector-1332: 
+Circuit Id: Connector-1332
+<item x="-204" itemtype="Connector" enodeid="enode-1335" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Oscope-1330-Pin1" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1332" hflip="1" labelx="-16" circPos="0,0" id="Connector-1332" endpinid="Node-1333-0" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-204,-348,-332,-348,-332,-168" rotation="0" valLabelx="0" y="-348"/>
+
+Unique  Id: Connector-1334: 
+Circuit Id: Connector-1334
+<item x="-332" itemtype="Connector" enodeid="enode-1335" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Node-1333-2" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1334" hflip="1" labelx="-16" circPos="0,0" id="Connector-1334" endpinid="Buffer-1327-out" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-332,-168,-356,-168" rotation="0" valLabelx="0" y="-168"/>
+
+Unique  Id: Connector-1335: 
+Circuit Id: Connector-1335
+<item x="-332" itemtype="Connector" enodeid="enode-1335" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Node-1333-1" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1335" hflip="1" labelx="-16" circPos="0,0" id="Connector-1335" endpinid="AM1404_ttl-1-F1" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-332,-168,-332,-132,-304,-132" rotation="0" valLabelx="0" y="-168"/>
+
+Unique  Id: Connector-1337: 
+Circuit Id: Connector-1337
+<item x="-336" itemtype="Connector" enodeid="enode-1338" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Node-1336-2" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1337" hflip="1" labelx="-16" circPos="0,0" id="Connector-1337" endpinid="Buffer-1325-out" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-336,-184,-356,-184" rotation="0" valLabelx="0" y="-184"/>
+
+Unique  Id: Connector-1338: 
+Circuit Id: Connector-1338
+<item x="-336" itemtype="Connector" enodeid="enode-1338" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Node-1336-1" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1338" hflip="1" labelx="-16" circPos="0,0" id="Connector-1338" endpinid="AM1404_ttl-1-F0" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-336,-184,-336,-140,-304,-140" rotation="0" valLabelx="0" y="-184"/>
+
+Unique  Id: Connector-1340: 
+Circuit Id: Connector-1340
+<item x="-216" itemtype="Connector" enodeid="enode-1340" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Probe-1339-inpin" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1340" hflip="1" labelx="-16" circPos="0,0" id="Connector-1340" endpinid="AM1404_ttl-1-Do" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-216,-156,-256,-156" rotation="0" valLabelx="0" y="-156"/>
+
+Unique  Id: Connector-1342: 
+Circuit Id: Connector-1342
+<item x="-356" itemtype="Connector" enodeid="enode-1342" labely="-24" boardPos="-1e+06,-1e+06" valLabely="0" startpinid="Fixed Voltage-1341-outnod" circRot="0" mainComp="false" Show_id="false" labelrot="0" objectName="Connector-1342" hflip="1" labelx="-16" circPos="0,0" id="Connector-1342" endpinid="AM1404_ttl-1-Di" vflip="1" boardRot="-1000000" valLabRot="0" pointList="-356,-252,-304,-252,-304,-156" rotation="0" valLabelx="0" y="-252"/>
+ 
+</circuit>

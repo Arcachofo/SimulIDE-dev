@@ -5,7 +5,6 @@
     <itemset category="Shields" type="Subcircuit" folder="shields">
     
         <item name="LcdShield"   info=" (experimental)"                icon="lcdshield_icon.png"/> 
-        <item name="LOL_Shield"  info=" LED module (126 LEDs)"         icon="LOL_Shield_icon.png"/> 
         <item name="DigitShield" info=" 4 digit 7-segment LED display" icon="DigitShield_icon.png"/>
         
     </itemset>

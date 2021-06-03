@@ -106,9 +106,6 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         bool m_circPosSaved;
         bool m_boardMode;
         QAction* m_boardModeAction;
-        //bool m_hideGrComp;
-        //bool m_parentGrComp;
-        //QAction* m_hideAction;
 
         Pin* m_eventPin;
 };

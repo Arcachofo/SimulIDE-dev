@@ -52,6 +52,7 @@
     <item name="CD4094"  info="  8-stage shift and store register, tristate outputs" ></item>
     <item name="CD4095"  info="  J-K flip-flop with triple JK AND-ed inputs" ></item>
     <item name="CD4096"  info="  J-K flip-flop with triple JK AND-ed inputs (one inverted)" ></item>
+    <item name="CD4098"  info="  dual monostable multivibrator" ></item>
     <item name="CD4099"  info="  8-bit adressable latch" ></item>
     <item name="CD4502"  info="  Strobed Hex inverter/buffer" ></item>
     <item name="CD4503"  info="  Hex buffer, tristate outputs" ></item>
