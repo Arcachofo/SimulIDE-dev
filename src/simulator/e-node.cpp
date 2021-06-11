@@ -34,7 +34,10 @@ eNode::eNode( QString id )
 
     Simulator::self()->addToEnodeList( this );
 }
-eNode::~eNode(){}
+eNode::~eNode()
+{
+    for( QList<ePin*>* list: m_eBusPinList ) delete list;
+}
 
 void eNode::pinChanged( ePin* epin, int enodeComp ) // Add node at other side of pin
 {
@@ -58,11 +61,7 @@ void eNode::initialize()
 
     m_volt = 0;
 
-    if( m_isBus )
-    {
-        m_eBusPinList.clear();
-        m_eNodeList.clear();
-    }
+    if( m_isBus ) m_eBusPinList.clear();
 }
 
 void eNode::stampCurrent( ePin* epin, double data )
@@ -226,40 +225,40 @@ void eNode::createBus()
 {
     int busSize = m_eBusPinList.size();
 
-    m_eNodeList.clear();
-    for( int i=0; i<busSize; ++i )
+    for( int i=0; i<busSize; i++ )
     {
-        QList<ePin*> pinList = m_eBusPinList.at( i );
-        eNode* enode = 0l;
+        QList<ePin*>* pinList = m_eBusPinList.at( i );
 
-        if( !pinList.isEmpty() )
+        if( !pinList->isEmpty() )
         {
-            enode = new eNode( m_id+"-eNode-"+QString::number( i ) );
-            for( ePin* epin : pinList ) epin->setEnode( enode );
+            eNode* enode = new eNode( m_id+"-eNode-"+QString::number( i ) );
+            for( ePin* epin : *pinList )
+            {
+                eNode* en = epin->getEnode();
+                for( ePin* ep : en->getEpins() ) ep->setEnode( enode );
+            }
         }
-        m_eNodeList.append( enode );
     }
 }
 
 void eNode::addBusPinList( QList<ePin*> list, int line )
 {
     int size = line+1;
-    int busSize = m_eBusPinList.size();
+    int listSize = m_eBusPinList.size();
 
-    if( size > busSize )
+    if( size > listSize )
     {
-        for( int i=0; i<size-busSize; ++i )
+        for( int i=0; i<size-listSize; i++ )
         {
-            QList<ePin*> newList;
+            QList<ePin*>* newList = new QList<ePin*>;
             m_eBusPinList.append( newList );
         }
     }
-    QList<ePin*> pinList = m_eBusPinList.at( line );
+    QList<ePin*>* pinList = m_eBusPinList.at( line );
     for( ePin* epin : list )
     {
-        if( !pinList.contains( epin ) ) pinList.append( epin );
+        if( !pinList->contains( epin ) ) pinList->append( epin );
     }
-    m_eBusPinList.replace( line, pinList );
 }
 
 QList<ePin*> eNode::getEpins()    { return m_ePinList; }

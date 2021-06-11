@@ -53,6 +53,7 @@ Bus::Bus( QObject* parent, QString type, QString id )
     m_busPin1->setLength( 1 );
     m_busPin1->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
+    m_numLines = 0;
     setNumLines( 8 );                           // Create Input Pins
 
     m_busPin0 = new Pin( 90, QPoint( 0, 0 ), m_id+"-ePin0", 1, this );
@@ -78,36 +79,30 @@ QList<propGroup_t> Bus::propGroups()
 
 void Bus::initialize()
 {
-    if( !m_busPin0->isConnected() && !m_busPin1->isConnected() ) return;
-
     eNode* busEnode = m_busPin0->getEnode();
     if( !busEnode ) busEnode = m_busPin1->getEnode();
+    if( !busEnode ) return;
 
     for( int i=1; i<=m_numLines; i++ )
     {
         if( !m_pin[i]->isConnected() ) continue;
-
         eNode* enode = new eNode( m_id+"eNode"+QString::number( i ) );
-        Pin* pin = m_pin[i];
-        pin->registerPinsW( enode );
+        m_pin[i]->registerPinsW( enode );
 
-        if( busEnode )
-        {
-            QList<ePin*> epins = enode->getEpins();
-            busEnode->addBusPinList( epins, m_startBit+i-1 );
-        }
+        QList<ePin*> epins = enode->getEpins();
+        busEnode->addBusPinList( epins, m_startBit+i-1 );
     }
 }
 
 void Bus::inStateChanged( int msg )
 {
-    if( m_busPin0->isConnected() || m_busPin1->isConnected() )
+    /*if( m_busPin0->isConnected() || m_busPin1->isConnected() )
     {
         eNode* enode = new eNode( m_id+"busNode" );
         enode->setIsBus( true );
         registerPins( enode );
         return;
-    }
+    }*/
     if( msg == 3 ) // Called by m_busPin When disconnected
     {
         for( int i=1; i<=m_numLines; i++ )

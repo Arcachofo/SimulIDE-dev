@@ -111,20 +111,24 @@ void Pin::registerPins( eNode* enode )     // Called by connector closing or oth
 
     ePin::setEnode( enode );
 
-    if( m_component->itemType() == "Node" )
+    if( m_isBus )
     {
-        Node* node = dynamic_cast<Node*>(m_component);
-        node->registerPins( enode );
-    }
-    else if( m_component->itemType() == "Bus" )
-    {
-        Bus* bus = dynamic_cast<Bus*>(m_component);
-        bus->registerPins( enode );
-    }
-    else if( m_component->itemType() == "Tunnel" )
-    {
-        Tunnel* tunnel = dynamic_cast<Tunnel*>(m_component);
-        tunnel->registerPins( enode );
+        if( m_component->itemType() == "Bus" )
+        {
+            Bus* bus = dynamic_cast<Bus*>(m_component);
+            bus->registerPins( enode );
+        }
+    }else{
+        if( m_component->itemType() == "Node" )
+        {
+            Node* node = dynamic_cast<Node*>(m_component);
+            node->registerPins( enode );
+        }
+        else if( m_component->itemType() == "Tunnel" )
+        {
+            Tunnel* tunnel = dynamic_cast<Tunnel*>(m_component);
+            tunnel->registerPins( enode );
+        }
     }
     m_blocked = false;
 }

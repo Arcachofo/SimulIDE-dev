@@ -87,8 +87,7 @@ class MAINMODULE_EXPORT eNode
     private:
         QList<ePin*>     m_ePinList;
 
-        QList<QList<ePin*>> m_eBusPinList;
-        QList<eNode*>       m_eNodeList;
+        QList<QList<ePin*>*> m_eBusPinList;
 
         QList<eElement*> m_changedFast;
         QList<eElement*> m_nonLinear;
