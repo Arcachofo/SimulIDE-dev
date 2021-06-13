@@ -29,6 +29,7 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( bool Logic_Symbol READ logicSymbol WRITE setLogicSymbol DESIGNABLE true USER true )
+    Q_PROPERTY( QString      Name READ name        WRITE setName    DESIGNABLE true USER true )
 
     public:
         Chip( QObject* parent, QString type, QString id );
@@ -45,6 +46,9 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         bool logicSymbol();
         virtual void setLogicSymbol( bool ls );
         virtual void setBackground( QString bck );
+
+        QString name() { return m_name; }
+        void setName( QString name ) { m_name = name; }
 
         subcType_t subcType() { return m_subcType; }
         void setSubcType( subcType_t type ) { m_subcType = type; }
@@ -77,6 +81,8 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         QColor m_lsColor;
         QColor m_icColor;
+
+        QString m_name;
 
         QString m_pkgeFile;     // file containig package defs
         //QString m_dataFile;     // xml file containig entry

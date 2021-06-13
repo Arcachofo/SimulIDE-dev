@@ -44,6 +44,16 @@ Chip::Chip( QObject* parent, QString type, QString id )
     
     m_lsColor = QColor( 255, 255, 255 );
     m_icColor = QColor( 50, 50, 70 );
+
+    QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
+    f.setFamily("Monospace");
+    f.setPixelSize(5);
+    f.setLetterSpacing( QFont::PercentageSpacing, 120 );
+    m_label.setFont( f );
+    m_label.setDefaultTextColor( QColor( 110, 110, 110 ) );
+    m_label.setAcceptedMouseButtons( 0 );
+    m_label.setRotation( -90 );
+    m_label.setVisible( true );
     
     setLabelPos( m_area.x(), m_area.y()-20, 0);
     setShowId( true );
@@ -108,6 +118,15 @@ void Chip::initChip()
         {
             QMetaEnum metaEnum = QMetaEnum::fromType<Chip::subcType_t>();
             m_subcType = (subcType_t)metaEnum.keyToValue( root.attribute( "type").toUtf8().data() );
+        }
+        if( root.hasAttribute("name"))
+        {
+            QString name = root.attribute( "name");
+            if( name != "Package" )
+            {
+                m_name = name;
+                m_label.setPlainText( m_name );
+            }
         }
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );

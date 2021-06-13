@@ -57,7 +57,8 @@ LibraryItem* SubCircuit::libraryItem()
 SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
           : Chip( parent, type, id )
 {
-    QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
+    m_name = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
+    m_label.setPlainText( m_name );
 
     m_icColor = QColor( 20, 30, 60 );
     m_attached = false;
@@ -66,24 +67,14 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
     m_shield = NULL;
     m_mainComponent = NULL;
 
-    QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
-    f.setFamily("Monospace");
-    f.setPixelSize(5);
-    f.setLetterSpacing( QFont::PercentageSpacing, 120 );
-    m_label.setFont( f );
-    m_label.setPlainText( compName );
-    m_label.setDefaultTextColor( QColor( 110, 110, 110 ) );
-    m_label.setAcceptedMouseButtons( 0 );
-    m_label.setRotation( -90 );
-    m_label.setVisible( true );
-    QString dataFile = ComponentSelector::self()->getXmlFile( compName );
+    QString dataFile = ComponentSelector::self()->getXmlFile( m_name );
 
-    //qDebug()<<"SubCircuit::SubCircuit"<<compName<<dataFile;
+    //qDebug()<<"SubCircuit::SubCircuit"<<m_name<<dataFile;
 
     if( dataFile == "" )
     {
           MessageBoxNB( "SubCircuit::SubCircuit", "                               \n"+
-                    tr( "There are no data files for " )+compName+"    ");
+                    tr( "There are no data files for " )+m_name+"    ");
           m_error = 23;
           return;
     }
@@ -106,7 +97,7 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
         {
             QDomElement element = node.toElement();
 
-            if( element.attribute("name") == compName )
+            if( element.attribute("name") == m_name )
             {
                 QDir dataDir( dataFile );
                 dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
@@ -116,13 +107,13 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 
                 if( folder != "" )
                 {
-                    path = folder+"/"+compName+"/"+compName;
+                    path = folder+"/"+m_name+"/"+m_name;
                     m_pkgeFile = dataDir.filePath( path+".package" );
                     subcFile = dataDir.filePath( path+".simu" );
                 }
                 if( element.hasAttribute( "folder") )
                 {
-                    path = element.attribute( "folder" )+"/"+compName+"/"+compName;
+                    path = element.attribute( "folder" )+"/"+m_name+"/"+m_name;
                     m_pkgeFile = dataDir.filePath( path+".package" );
                     subcFile = dataDir.filePath( path+".simu" );
                 }
