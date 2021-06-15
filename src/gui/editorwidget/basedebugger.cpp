@@ -68,8 +68,10 @@ bool BaseDebugger::upload()
         m_outPane->appendLine( "\n"+tr("Error: No Mcu in Simulator... ") );
         return false;
     }
-    McuComponent::self()->load( m_firmware );
-    m_outPane->appendLine( "\n"+tr("FirmWare Uploaded to ")+McuComponent::self()->device());
+    if( McuComponent::self()->load( m_firmware ) ) m_outPane->appendText( "\n"+tr("FirmWare Uploaded to ") );
+    else                                           m_outPane->appendText( "\n"+tr("Error uploading firmware to ") );
+
+    m_outPane->appendLine( McuComponent::self()->device() );
     m_outPane->appendLine( m_firmware+"\n" );
 
     BaseProcessor::self()->setDebugger( this );

@@ -368,10 +368,11 @@ void McuComponent::slotReload()
     else QMessageBox::warning( 0, tr("No File:"), tr("No File to reload ") );
 }
 
-void McuComponent::load( QString fileName )
+bool McuComponent::load( QString fileName )
 {
-     Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
+    bool ok = false;
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
     else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
@@ -389,10 +390,12 @@ void McuComponent::load( QString fileName )
 
         QSettings* settings = MainWindow::self()->settings();
         settings->setValue( "lastFirmDir", m_symbolFile );
+        ok = true;
     }
     //else QMessageBox::warning( 0, tr("Error:"), tr("Could not load: \n")+ fileName );
 
     Simulator::self()->resumeSim();
+    return ok;
 }
 
 void McuComponent::setSubcDir( QString dir ) // Used in subcircuits

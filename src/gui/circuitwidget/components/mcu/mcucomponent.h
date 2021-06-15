@@ -75,7 +75,7 @@ class MAINMODULE_EXPORT McuComponent : public Chip
 
         virtual void terminate();
         virtual void reset();
-        virtual void load( QString fileName );
+        virtual bool load( QString fileName );
         virtual void setSubcDir( QString dir );
         virtual void crash(){;}
 
