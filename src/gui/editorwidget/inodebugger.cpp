@@ -88,7 +88,7 @@ int InoDebugger::compile()
 
     QString filePath = m_file;
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
-    
+
     QDir dir(buildPath);
     bool b = dir.cd( "build" );
     if( b ) dir.removeRecursively(); // Remove old files
@@ -180,7 +180,7 @@ int InoDebugger::compile()
     QString p_stderr = m_compProcess.readAllStandardError();
 
     int error = -1;
-    if( p_stderr.toUpper().contains("ERROR:") )
+    if( !p_stderr.isEmpty() )
     {
         m_outPane->appendLine( p_stderr );
         QStringList lines = p_stderr.split("\n");
