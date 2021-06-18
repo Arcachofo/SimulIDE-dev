@@ -62,8 +62,8 @@ void TwiModule::runEvent()
     }
     if( m_mode != TWI_MASTER ) return;
 
-    clkState_t sclState = getClockState();
-    bool clkLow = ((sclState == Clock_Low) | (sclState == Clock_Falling));
+    updateClock();
+    bool clkLow = ((m_clkState == Clock_Low) || (m_clkState == Clock_Falling));
 
     if( m_toggleScl )
     {
@@ -170,10 +170,10 @@ void TwiModule::voltChanged() // Used by slave
 {
     if( m_mode != TWI_SLAVE ) return;
 
-    clkState_t sclState = getClockState();           // Get Clk to don't miss any clock changes
+    updateClock();
     getSdaState();                             // State of SDA pin
 
-    if(( sclState == Clock_High )&&( m_i2cState != I2C_ACK ))
+    if(( m_clkState == Clock_High )&&( m_i2cState != I2C_ACK ))
     {
         if( m_lastSDA && !m_sdaState ) {       // We are in a Start Condition
             m_bitPtr = 0;
@@ -184,7 +184,7 @@ void TwiModule::voltChanged() // Used by slave
            I2Cstop();
         }
     }
-    else if( sclState == Clock_Rising )        // We are in a SCL Rissing edge
+    else if( m_clkState == Clock_Rising )        // We are in a SCL Rissing edge
     {
         if( m_i2cState == I2C_START )             // Get Transaction Info
         {
@@ -220,7 +220,7 @@ void TwiModule::voltChanged() // Used by slave
             } else m_i2cState = I2C_IDLE;
         }
     }
-    else if( sclState == Clock_Falling )
+    else if( m_clkState == Clock_Falling )
     {
         if( m_i2cState == I2C_ACK ) {             // Send ACK
             sheduleSDA( false );

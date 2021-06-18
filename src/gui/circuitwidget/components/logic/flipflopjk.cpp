@@ -72,7 +72,8 @@ FlipFlopJK::~FlipFlopJK(){}
 
 void FlipFlopJK::voltChanged()
 {
-    bool clkAllow = (LogicComponent::getClockState() == Clock_Allow); // Get Clk to don't miss any clock changes
+    updateClock();
+    bool clkAllow = (m_clkState == Clock_Allow); // Get Clk to don't miss any clock changes
 
     bool set   = m_setPin->getInpState();
     bool reset = m_resetPin->getInpState();

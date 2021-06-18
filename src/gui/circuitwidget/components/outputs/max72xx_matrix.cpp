@@ -112,6 +112,8 @@ void Max72xx_matrix::initialize()
 
 void Max72xx_matrix::voltChanged()
 {
+    updateClock();
+
     if( m_pinCS->getVolt()>1.6 )            // CS high: not selected
     {
         m_rxReg = 0;
@@ -119,7 +121,7 @@ void Max72xx_matrix::voltChanged()
         m_inDisplay = 0;
         return;
     }
-    if( eClockedDevice::getClockState() != Clock_Rising ) return;
+    if( m_clkState != Clock_Rising ) return;
 
     m_rxReg &= ~1;
 

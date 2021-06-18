@@ -53,6 +53,8 @@ IoPin::~IoPin(){ delete m_scrEnode; }
 
 void IoPin::initialize()
 {
+    m_outCtrl = false;
+    m_dirCtrl = false;
     m_inpState = false;
     m_outState = false;
     ePin::setEnodeComp( m_scrEnode );
@@ -104,7 +106,7 @@ void IoPin::setPinMode( pinMode_t mode )
         m_vddAdmit = cero_doub;
     }
     updtState();
-    if( m_pinMode >= output ) setOutState( m_outState );
+    if( m_pinMode >= output ) IoPin::setOutState( m_outState );
     update();
 }
 
@@ -197,17 +199,17 @@ void IoPin::setInverted( bool inverted )
     update();
 }
 
-void IoPin::controlPin( bool ctrl )
+void IoPin::controlPin( bool outCtrl, bool dirCtrl )
 {
-    if( ctrl == m_extCtrl ) return;
+    m_outCtrl = outCtrl;
 
-    if( ctrl && !m_extCtrl ) // Someone is getting control
+    if( dirCtrl && !dirCtrl )      // Someone is getting control
     {
-        m_oldPinMode = m_pinMode; // Save old Pin Mode to restore later
+        m_oldPinMode = m_pinMode;  // Save old Pin Mode to restore later
     }
-    else                     // External control is being released
+    else if( !dirCtrl && dirCtrl ) // External control is being released
     {
         setPinMode( m_oldPinMode ); // Set Previous Pin MOde
     }
-    m_extCtrl = ctrl;
+    m_dirCtrl = dirCtrl;
 }

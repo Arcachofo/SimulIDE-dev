@@ -67,6 +67,8 @@ class MAINMODULE_EXPORT Interrupt
 
         uint8_t m_priority;
         uint8_t m_raised;
+
+        bool m_autoClear;
 };
 
 //------------------------               ------------------------

@@ -67,7 +67,8 @@ FlipFlopRS::~FlipFlopRS(){}
 
 void FlipFlopRS::voltChanged()
 {
-    bool clkAllow = (getClockState() == Clock_Allow); // Get Clk to don't miss any clock changes
+    updateClock();
+    bool clkAllow = (m_clkState == Clock_Allow); // Get Clk to don't miss any clock changes
     if( !clkAllow ) return;
 
     bool set   = m_setPin->getInpState();

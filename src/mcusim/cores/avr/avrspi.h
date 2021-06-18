@@ -38,7 +38,7 @@ class MAINMODULE_EXPORT AvrSpi : public McuSpi
         virtual void configureA( uint8_t newSPCR ) override;
         virtual void writeStatus( uint8_t newSPSR ) override;
         virtual void writeSpiReg( uint8_t newSPDR ) override;
-
+        virtual void endTransaction() override;
 
     protected:
 
@@ -50,6 +50,7 @@ class MAINMODULE_EXPORT AvrSpi : public McuSpi
         regBits_t m_MSTR;
         regBits_t m_CPOL;
         regBits_t m_CPHA;
+        regBits_t m_SPIF;
 };
 
 #endif

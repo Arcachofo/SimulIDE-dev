@@ -33,6 +33,7 @@ AvrSpi::AvrSpi( eMcu* mcu, QString name )
     m_MSTR = mcu->getRegBits( "MSTR" );
     m_CPOL = mcu->getRegBits( "CPOL" );
     m_CPHA = mcu->getRegBits( "CPHA" );
+    m_SPIF = mcu->getRegBits( "SPIF" );
 }
 AvrSpi::~AvrSpi(){}
 
@@ -48,25 +49,28 @@ void AvrSpi::setMode( spiMode_t mode )
 
     if( mode == SPI_OFF )
     {
-        m_MOSI->controlPin( false );
-        m_MISO->controlPin( false );
-        m_clkPin->controlPin( false );
-        m_SS->controlPin( false );
+        m_MOSI->controlPin( false, false );
+        m_MISO->controlPin( false, false );
+        m_clkPin->controlPin( false, false );
+        m_SS->controlPin( false, false );
     }
-    else
+    else if     ( mode == SPI_MASTER )
     {
-        m_MOSI->controlPin( true );
-        m_MISO->controlPin( true );
-        m_clkPin->controlPin( true );
-        m_SS->controlPin( true );
-
-        if     ( mode == SPI_MASTER ) m_MISO->setPinMode( input );
-        else if( mode == SPI_SLAVE )
-        {
-            m_MOSI->setPinMode( input );
-            m_clkPin->setPinMode( input );
-            m_SS->setPinMode( input );
-        }
+        m_MOSI->controlPin( true, false );
+        m_MISO->setPinMode( input );
+        m_MISO->controlPin( true, true );
+        m_clkPin->controlPin( true, false );
+        //m_SS->controlPin( true, false );
+    }
+    else if( mode == SPI_SLAVE )
+    {
+        m_MOSI->setPinMode( input );
+        m_MOSI->controlPin( true, true );
+        m_clkPin->setPinMode( input );
+        m_clkPin->controlPin( true, true );
+        m_SS->setPinMode( input );
+        m_SS->controlPin( true, true );
+        m_MISO->controlPin( true, false );
     }
 }
 
@@ -87,16 +91,17 @@ void AvrSpi::configureA( uint8_t newSPCR ) // SPCR is being written
         spiMode_t mode = master ? SPI_MASTER : SPI_SLAVE;
         setMode( mode );
     }
-
     m_lsbFirst  = getRegBitsVal( newSPCR, m_DODR ); // Data order
 
     bool clkPol = getRegBitsVal( newSPCR, m_CPOL ); // Clock polarity
     m_leadEdge = clkPol ? Clock_Falling : Clock_Rising;
+    m_tailEdge = clkPol ? Clock_Rising : Clock_Falling;
 
     bool clkPha = getRegBitsVal( newSPCR, m_CPHA ); // Clock phase
-    m_sampleEdge = ( clkPol == clkPha ) ? Clock_Rising : Clock_Falling;
+    m_sampleEdge = ( clkPol == clkPha ) ? Clock_Rising : Clock_Falling; // This shows up in the truth table
 
     m_prescaler = m_prescList[newSPCR & 0b00000011];
+    m_clockPeriod = m_mcu->simCycPI()*m_prescaler/2;
 }
 
 void AvrSpi::writeStatus( uint8_t newSPSR ) // SPSR is being written
@@ -106,5 +111,17 @@ void AvrSpi::writeStatus( uint8_t newSPSR ) // SPSR is being written
 
 void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written
 {
+    m_txReg = newSPDR;
 
+    /// SPIF is cleared by first reading the SPI Status Register with SPIF set,
+    /// then accessing the SPI Data Register (SPDR).
+    clearRegBits( m_SPIF ); // Clear Iterrupt flag
+
+    if( m_mode == SPI_MASTER ) StartTransaction();
+}
+
+void AvrSpi::endTransaction()
+{
+    SpiModule::endTransaction();
+    interrupt.emitValue(1);
 }

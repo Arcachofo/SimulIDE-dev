@@ -67,12 +67,13 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual bool getInpState();
         virtual bool getOutState() { return m_outState; }
         virtual void setOutState( bool out, bool st=true );
+        virtual void toggleOutState() { IoPin::setOutState( !m_outState ); }
 
         void setStateZ( bool z );
 
         virtual void setInverted( bool inverted ) override;
 
-        virtual void controlPin( bool ctrl );
+        virtual void controlPin( bool outCtrl , bool dirCtrl );
 
     protected:
         void updtState();
@@ -98,7 +99,8 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         bool m_inpState;
         bool m_outState;
         bool m_stateZ;
-        bool m_extCtrl;
+        bool m_outCtrl;
+        bool m_dirCtrl;
 
         pinMode_t m_pinMode;
         pinMode_t m_oldPinMode;

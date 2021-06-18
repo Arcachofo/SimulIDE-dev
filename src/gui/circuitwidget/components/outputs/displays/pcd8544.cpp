@@ -135,12 +135,13 @@ void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin chan
     {
         if( m_pDc.getVolt()>1.6 )                        // Write Data
         {
-            //qDebug() << "Pcd8544::setVChanged"<< m_addrY<<m_addrX<< m_cinBuf;
+            qDebug() << "Pcd8544::setVChanged"<< m_addrY<<m_addrX<< m_cinBuf;
             m_aDispRam[m_addrY][m_addrX] = m_cinBuf;
             incrementPointer();
         } 
         else                                            // Write Command
         {
+            qDebug() << "Pcd8544::setVChanged    Command:  "<< m_cinBuf;
             //if(m_cinBuf == 0) { //(NOP) } 
                 
             if((m_cinBuf & 0xF8) == 0x20)               // Function set

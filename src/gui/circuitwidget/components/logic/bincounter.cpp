@@ -98,7 +98,8 @@ void BinCounter::initialize()
 
 void BinCounter::voltChanged()
 {
-    bool clkRising = (LogicComponent::getClockState() == Clock_Rising);
+    updateClock();
+    bool clkRising = ( m_clkState == Clock_Rising );
 
     if( m_resetPin->getInpState() ) // Reset
     {

@@ -87,9 +87,9 @@ void LatchD::stamp()
 
 void LatchD::voltChanged()
 {
-    LogicComponent::updateOutEnabled();
-
-    if( getClockState() == Clock_Allow )
+    updateOutEnabled();
+    updateClock();
+    if( m_clkState == Clock_Allow )
     {
         m_nextOutVal = 0;
         for( uint i=0; i<m_outPin.size(); ++i )

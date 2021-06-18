@@ -79,9 +79,10 @@ void ShiftReg::stamp()
 
 void ShiftReg::voltChanged()
 {
-    LogicComponent::updateOutEnabled();
+    updateOutEnabled();
+    updateClock();
 
-    bool clkRising = (getClockState() == Clock_Rising);// Get Clk to don't miss any clock changes
+    bool clkRising = (m_clkState == Clock_Rising);// Get Clk to don't miss any clock changes
     bool     reset = m_inPin[2]->getInpState();
 
     if( reset ) m_nextOutVal = 0;        // Reset shift register

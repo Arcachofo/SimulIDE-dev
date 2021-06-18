@@ -51,12 +51,14 @@ class MAINMODULE_EXPORT eClockedDevice : public eElement
         bool clockInv();
         void setClockInv( bool inv );
 
-        clkState_t getClockState();
+        void updateClock();
 
         void remove();
 
     protected:
         bool m_clock;
+
+        clkState_t m_clkState;
 
         Component::trigger_t m_trigger;
 

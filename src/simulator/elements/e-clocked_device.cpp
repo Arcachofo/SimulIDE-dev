@@ -59,29 +59,30 @@ void eClockedDevice::setClockInv( bool inv )
     Simulator::self()->resumeSim();
 }
 
-clkState_t eClockedDevice::getClockState()
+void eClockedDevice::updateClock()
 {
-    if( !m_clkPin ) return Clock_Allow;
+    if( !m_clkPin )
+    {
+        m_clkState = Clock_Allow;
+        return;
+    }
 
-    clkState_t cState = Clock_Low;
+    m_clkState = Clock_Low;
 
     bool clock = m_clkPin->getInpState(); // Clock pin volt.
 
     if( m_trigger == Component::InEnable )
     {
-        if     (!clock ) cState = Clock_Low;
-        else if( clock ) cState = Clock_Allow;
+        if( clock ) m_clkState = Clock_Allow;
     }
     else if( m_trigger == Component::Clock )
     {
-        if     (!m_clock &&  clock ) cState = Clock_Rising;
-        else if( m_clock &&  clock ) cState = Clock_High;
-        else if( m_clock && !clock ) cState = Clock_Falling;
+        if     (!m_clock &&  clock ) m_clkState = Clock_Rising;
+        else if( m_clock &&  clock ) m_clkState = Clock_High;
+        else if( m_clock && !clock ) m_clkState = Clock_Falling;
     }
-    else cState = Clock_Allow;
+    else m_clkState = Clock_Allow;
     m_clock = clock;
-
-    return cState;
 }
 
 void eClockedDevice::setTrigger( Component::trigger_t trigger )

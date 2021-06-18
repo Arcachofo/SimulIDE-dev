@@ -91,13 +91,13 @@ void WS2812::initialize()
 }
 void WS2812::voltChanged()
 {
-    int clkState = eClockedDevice::getClockState(); // Get Clk to don't miss any clock changes
+    updateClock();
 
     uint64_t CircTime = Simulator::self()->circTime();
     uint64_t time = CircTime - m_lastTime;
     m_lastTime = CircTime;
 
-    if( clkState == Clock_Rising )               // Input Rising edge
+    if( m_clkState == Clock_Rising )               // Input Rising edge
     {
         if( time > 50*1e6 )                      // Time > 50uS -> Reset
         {
@@ -123,7 +123,7 @@ void WS2812::voltChanged()
         }
         m_newWord = true;
     }
-    else if( clkState == Clock_Falling )               // Input Falling edge
+    else if( m_clkState == Clock_Falling )               // Input Falling edge
     {
         if( m_word >= m_leds )
         {

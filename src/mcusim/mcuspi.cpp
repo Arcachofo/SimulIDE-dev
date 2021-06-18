@@ -32,7 +32,7 @@ McuSpi::~McuSpi()
 
 void McuSpi::initialize()
 {
-    //SpiModule::initialize();
+    SpiModule::initialize();
 
 }
 

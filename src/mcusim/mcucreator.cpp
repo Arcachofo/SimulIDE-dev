@@ -104,7 +104,7 @@ int McuCreator::processFile( QString fileName )
         else if( el.tagName() == "usart" )      createUsart( &el );
         else if( el.tagName() == "adc" )        createAdc( &el );
         else if( el.tagName() == "twi" )        createTwi( &el );
-        else if( el.tagName() == "spi" )        createTwi( &el );
+        else if( el.tagName() == "spi" )        createSpi( &el );
         else if( el.tagName() == "include" )    processFile( el.attribute("file") );
 
         node = node.nextSibling();

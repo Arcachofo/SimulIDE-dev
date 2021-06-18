@@ -133,7 +133,7 @@ void Servo::updateStep()
 
 void Servo::voltChanged()
 {
-    int clkState = LogicComponent::getClockState();
+    updateClock();
 
     int time_us = Simulator::self()->circTime()/1e6;
     
@@ -142,11 +142,11 @@ void Servo::voltChanged()
         m_targetPos = 90;
         m_pulseStart = 0;
     }
-    else if( clkState == Clock_Rising )
+    else if( m_clkState == Clock_Rising )
     {
         m_pulseStart = time_us;
     }
-    else if( clkState == Clock_Falling )
+    else if( m_clkState == Clock_Falling )
     {
         if( m_pulseStart == 0 ) return;
         

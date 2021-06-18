@@ -51,18 +51,18 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
     if( oldEn && !enable )                 /// Disable TWI
     {
         setMode( TWI_OFF );
-        m_sda->controlPin( false ); // Release control of MCU PIns
-        m_scl->controlPin( false );
+        m_sda->controlPin( false, false ); // Release control of MCU PIns
+        m_scl->controlPin( false, false );
     }
     if( !enable ) return;           // Not enabled, do nothing
 
     if( !oldEn )                           /// Enable TWI if it was disabled
     {
-        m_sda->controlPin( true ); // Get control of MCU PIns
         m_sda->setPinMode( open_col );
+        m_sda->controlPin( true, true ); // Get control of MCU PIns
 
-        m_scl->controlPin( true );
         m_scl->setPinMode( open_col );
+        m_scl->controlPin( true, true );
     }
 
     bool clearTwint = getRegBitsVal( newTWCR, m_TWINT );

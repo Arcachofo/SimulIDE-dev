@@ -27,6 +27,7 @@ Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
     m_name = name;
     m_vector = vector;
     m_mode = 0;
+    m_autoClear = false;
 
     m_ram = mcu->getRam();
 }
@@ -73,6 +74,7 @@ void Interrupt::execute()
 
 void Interrupt::exitInt() // Exit from this interrupt
 {
+    if( m_autoClear ) clearFlag();
 }
 
 //------------------------               ------------------------

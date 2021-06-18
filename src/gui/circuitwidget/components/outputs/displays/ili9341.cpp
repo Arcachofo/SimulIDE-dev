@@ -119,7 +119,8 @@ void Ili9341::voltChanged()                 // Called when En Pin changes
         m_inBit  = 0;
         ret = true;
     }
-    if( eClockedDevice::getClockState() != Clock_Rising ) ret = true;
+    updateClock();
+    if( m_clkState != Clock_Rising ) ret = true;
     if( ret ) return;
 
     m_rxReg &= ~1; //Clear bit 0

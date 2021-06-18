@@ -43,8 +43,8 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
 
         virtual void setMode( spiMode_t mode );
 
-        virtual void readByte();
-        virtual void writeByte();
+        virtual void endTransaction();
+        virtual void StartTransaction();
 
         virtual void setMosiPin( IoPin* pin ) { m_MOSI = pin; }
         virtual void setMisoPin( IoPin* pin ) { m_MISO = pin; }
@@ -52,19 +52,25 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
         virtual void setSsPin( IoPin* pin )   { m_SS = pin; }
 
     protected:
-        inline void readBit();
-        inline void writeBit();
+        inline void stepBit();
+        //inline void writeBit();
+        inline void step();
+        inline void keepClocking();
 
         uint64_t m_clockPeriod;   // SPI Clock half period in ps
 
         //bool m_dataState;
         bool m_lsbFirst;
+        bool m_toggleSck;
+        bool m_enabled;
 
         clkState_t m_sampleEdge;
         clkState_t m_leadEdge;
+        clkState_t m_tailEdge;
 
-        int m_bitPtr;       // Bit Pointer
-        int m_bitInc;       // Bit Pointer increment: LSB first or MSB first??
+        int m_bitPtr;       // Bit Pointer Mask
+        int m_endOfByte;
+        //int m_bitInc;       // Bit Pointer increment: LSB first or MSB first??
 
         uint8_t m_txReg;    // Byte to Send
         uint8_t m_rxReg;    // Byte Received

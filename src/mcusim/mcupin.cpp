@@ -46,9 +46,6 @@ McuPin::~McuPin() {}
 
 void McuPin::initialize()
 {
-    m_extCtrl = false;
-    m_inpState = false;
-
     setDirection( m_dirMask );
     setPullup( m_puMask );
 
@@ -82,7 +79,7 @@ void McuPin::setPortState( bool state )
 
 void McuPin::setOutState( bool state, bool )
 {
-    if( m_extCtrl ) IoPin::setOutState( state, true );
+    if( m_outCtrl ) IoPin::setOutState( state, true );
 }
 
 bool McuPin::getInpState()
@@ -99,13 +96,13 @@ void McuPin::setDirection( bool out )
         if( m_openColl ) m_oldPinMode =  open_col;
         else             m_oldPinMode =  output;
 
-        IoPin::setOutState( m_outState );
+        //IoPin::setOutState( m_outState );
     }
     else           // Set Pin to Input
     {
         m_oldPinMode = input;
     }
-    if( !m_extCtrl ) setPinMode( m_oldPinMode ); // Is someone is controlling us, just save Pin Mode
+    if( !m_dirCtrl ) setPinMode( m_oldPinMode ); // Is someone is controlling us, just save Pin Mode
 }
 
 void McuPin::setPullup( bool up )

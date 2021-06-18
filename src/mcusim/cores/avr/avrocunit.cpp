@@ -45,11 +45,11 @@ void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
 
         if( m_mode == 0 )           // OC Pin disconnected
         {
-             m_ocPin->controlPin( false );
+             m_ocPin->controlPin( false, false );
         }
         else                        // OC Pin connected
         {
-             m_ocPin->controlPin( true );
+             m_ocPin->controlPin( true, true );
              m_ocPin->setOutState( false );
         }
     }
