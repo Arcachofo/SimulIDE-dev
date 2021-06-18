@@ -94,7 +94,11 @@ int InoDebugger::compile()
     if( b ) dir.removeRecursively(); // Remove old files
     dir.mkpath(buildPath+"/cache");  // Create cache folder ( if doesn't exist )
     dir.mkpath(buildPath+"/build");  // Create build folder
-    
+
+    if( !QFile::exists(buildPath+"/build") || !QFile::exists(buildPath+"/cache") )
+        m_outPane->appendLine( "\n    ERROR: Build folders NOT found at:\n    "+buildPath );
+    else m_outPane->appendLine( "\nFound Build folders at:\n"+buildPath );
+
     //QDir directory( m_fileDir );
     //m_fileList = directory.entryList( QDir::Files );
     m_fileList.clear();
@@ -141,38 +145,36 @@ int InoDebugger::compile()
         m_sketchBook = m_sketchBook.remove("\r").remove("\n");
         getSkBook.close();
         if( m_sketchBook.isEmpty() )
-            m_outPane->appendLine( "\nNo User sketchBook Found\n\n" );
+            m_outPane->appendLine( "\nNo User sketchBook Found\n" );
         else
-            m_outPane->appendLine( "\nFound User sketchBook at:\n"+m_sketchBook+"\n\n" );
+            m_outPane->appendLine( "\nFound User sketchBook at:\n"+m_sketchBook+"\n" );
     }
-
-    QString cBuildPath = buildPath;
+    filePath           = addQuotes( filePath );
+    command            = addQuotes( m_compilerPath+"arduino-builder" );
+    QString hardware   = addQuotes( m_compilerPath+"hardware" );
+    QString toolsBuild = addQuotes( m_compilerPath+"tools-builder" );
+    QString toolsAvr   = addQuotes( m_compilerPath+"hardware/tools/avr" );
+    QString libraries  = addQuotes( m_compilerPath+"libraries" );
+    QString userLibrar = addQuotes( m_sketchBook+"/libraries" );
+    QString cBuildPath = addQuotes( buildPath+"/build" );
+    QString cCachePath = addQuotes( buildPath+"/cache" );
     QString boardName;
-
     if( m_board < Custom ) boardName = m_boardList.at( m_board );
     else                   boardName = m_customBoard;
 
-    command  = m_compilerPath+"arduino-builder";
-    
-    #ifndef Q_OS_UNIX
-    command    = addQuotes( command );
-    //cBuildPath = addQuotes( cBuildPath );
-    filePath   = addQuotes( filePath );
-    #endif
-
     command += " -compile";
-    command += " -hardware "+m_compilerPath+"hardware";
-    command += " -tools "+m_compilerPath+"tools-builder";
-    command += " -tools "+m_compilerPath+"hardware/tools/avr";
-    command += " -built-in-libraries "+m_compilerPath+"libraries";
-    command += " -libraries "+m_sketchBook+"/libraries";
+    command += " -hardware "+hardware;
+    command += " -tools "+toolsBuild;
+    command += " -tools "+toolsAvr;
+    command += " -built-in-libraries "+libraries;
+    command += " -libraries "+userLibrar;
     command += " -fqbn=arduino:avr:"+boardName;
-    command += " -build-path "+cBuildPath+"/build";
-    command += " -build-cache "+cBuildPath+"/cache";
+    command += " -build-path "+cBuildPath;
+    command += " -build-cache "+cCachePath;
     command += " "+filePath;
     m_firmware = "";
     
-    m_outPane->appendLine( command );
+    m_outPane->appendLine( command+"\n" );
     
     m_compProcess.start( command );
     m_compProcess.waitForFinished(-1);

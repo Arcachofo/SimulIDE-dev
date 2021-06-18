@@ -32,13 +32,12 @@ MainWindow* MainWindow::m_pSelf = 0l;
 
 MainWindow::MainWindow()
           : QMainWindow()
-          , m_settings( QStandardPaths::standardLocations(
-                            QStandardPaths::DataLocation).first()
+          , m_settings( QStandardPaths::writableLocation( QStandardPaths::DataLocation)
                             +"/simulide.ini", QSettings::IniFormat, this )
 {
     setWindowIcon( QIcon(":/simulide.png") );
     m_pSelf   = this;
-    m_circuit = 0l;
+    m_circuit = NULL;
     m_autoBck = 15;
     m_version = "SimulIDE-"+QString( APP_VERSION );
     
@@ -61,18 +60,14 @@ MainWindow::MainWindow()
         scale = dpiX/96.0;
     }
     setFontScale( scale );
-    //qDebug()<<dpiX;
     createWidgets();
     readSettings();
-    
     loadPlugins();
-
     applyStyle();
 
     QString backPath = m_settings.value( "backupPath" ).toString();
     if( !backPath.isEmpty() )
     {
-        //qDebug() << "MainWindow::readSettings" << backPath;
         if( QFile::exists( backPath ) )
             CircuitWidget::self()->loadCirc( backPath );
     }
@@ -252,7 +247,6 @@ QString MainWindow::getHelpFile( QString name )
 
     if( m_help.contains( name )) return m_help.value( name );
 
-    //QString locale   = "_"+QLocale::system().name().split("_").first();
     QString locale = loc();
     if( loc() != "en" ) locale.prepend("_").append("/");
     else locale = "";
@@ -276,7 +270,7 @@ QString MainWindow::getHelpFile( QString name )
 
             file.close();
         }
-        else qDebug() << "LibraryItem::getHelpFile ERROR"<<dfPath;
+        else qDebug() << "MainWindow::getHelpFile ERROR"<<dfPath;
     }
     m_help[name] = help;
     return help;
@@ -306,7 +300,6 @@ void MainWindow::loadPlugins()
     for( QString pluginFolder : pluginsDir.entryList( QDir::Dirs ) )
     {
         if( pluginFolder.contains( "." ) ) continue;
-        //qDebug() << pluginFolder;
         pluginsDir.cd( pluginFolder );
 
         ComponentSelector::self()->LoadCompSetAt( pluginsDir );

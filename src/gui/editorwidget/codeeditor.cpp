@@ -277,7 +277,7 @@ void CodeEditor::compile()
     m_isCompiled = false;
     
     m_outPane->appendLine( "-------------------------------------------------------" );
-    m_outPane->appendText( "Exec: ");
+    m_outPane->appendLine( "Exec: ");
 
     if( m_fileName.toLower() == "makefile" )          // Is a Makefile, make it
     {
