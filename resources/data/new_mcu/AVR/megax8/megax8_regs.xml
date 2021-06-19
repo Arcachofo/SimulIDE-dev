@@ -42,7 +42,7 @@
         <register name="SREG"   addr="63"  bits="C,Z,N,V,S,H,T,I"/>
     </regblock>
     <regblock  name="EXT_I/O_REG" start="0x0060" end="0x00FF" offset="0">
-        <register name="WDTCSR" addr="96"  bits=""/>
+        <register name="WDTCSR" addr="96"  bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDIE,WDIF"/>
         <register name="CLKPR"  addr="97"  bits=""/>
         <register name="PRR"    addr="100" bits=""/>
         <register name="OSCCAL" addr="102" bits=""/>

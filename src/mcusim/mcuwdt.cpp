@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,40 +17,34 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "avrinterrupt.h"
+#include "mcuwdt.h"
 #include "e_mcu.h"
+#include "mcucore.h"
+#include "simulator.h"
 
-AVRInterrupt::AVRInterrupt( QString name, uint16_t vector, eMcu* mcu )
-            : Interrupt( name, vector, mcu )
+McuWdt::McuWdt( eMcu* mcu, QString name )
+      : McuModule( mcu, name )
 {
-    //m_SREG = mcu->getReg( "SREG" );
-
-    m_I = mcu->getRegBits( "I" );
-
-    m_autoClear = true;
-}
-AVRInterrupt::~AVRInterrupt(){}
-
-void AVRInterrupt::raise( uint8_t v )
-{
-    //if( m_name == "T1_OVF" )
-       // m_name = "T1_OVF";
-    //clearRegBits( m_I );// Deactivate Interrupts: SREG.I = 0
-    Interrupt::raise( v );
 }
 
-void AVRInterrupt::exitInt() // Exit from this interrupt
+McuWdt::~McuWdt()
 {
-    //setRegBits( m_I );// Activate Interrupts: SREG.I = 1
-    Interrupt::exitInt();
 }
 
-
-
-// Static --------------------------
-
-Interrupt* AVRInterrupt::getInterrupt( QString name, uint16_t vector, eMcu* mcu )
+void McuWdt::initialize()
 {
-    return new AVRInterrupt( name, vector, mcu );
+    m_enabled  = false;
+    m_ovfInter = false;
+    m_ovfReset = false;
+}
+
+void McuWdt::runEvent()            // Overflow
+{
+    if( !m_enabled ) return;
+
+    if( m_ovfInter ) interrupt.emitValue(1);
+    if( m_ovfReset ) m_mcu->cpu->reset();
+
+    Simulator::self()->addEvent( m_ovfPeriod, this );
 }
 

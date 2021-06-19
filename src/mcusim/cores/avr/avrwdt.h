@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,40 +17,32 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "avrinterrupt.h"
-#include "e_mcu.h"
+#ifndef AVRWDT_H
+#define AVRWDT_H
 
-AVRInterrupt::AVRInterrupt( QString name, uint16_t vector, eMcu* mcu )
-            : Interrupt( name, vector, mcu )
+#include "mcuwdt.h"
+
+class eMcu;
+
+class MAINMODULE_EXPORT AvrWdt : public McuWdt
 {
-    //m_SREG = mcu->getReg( "SREG" );
+        //friend class McuCreator;
 
-    m_I = mcu->getRegBits( "I" );
+    public:
+        AvrWdt( eMcu* mcu, QString name );
+        ~AvrWdt();
 
-    m_autoClear = true;
-}
-AVRInterrupt::~AVRInterrupt(){}
+        virtual void initialize() override;
 
-void AVRInterrupt::raise( uint8_t v )
-{
-    //if( m_name == "T1_OVF" )
-       // m_name = "T1_OVF";
-    //clearRegBits( m_I );// Deactivate Interrupts: SREG.I = 0
-    Interrupt::raise( v );
-}
+        virtual void configureA( uint8_t newWDTCSR ) override;
 
-void AVRInterrupt::exitInt() // Exit from this interrupt
-{
-    //setRegBits( m_I );// Activate Interrupts: SREG.I = 1
-    Interrupt::exitInt();
-}
+    private:
+        void wdtEnable();
 
-
-
-// Static --------------------------
-
-Interrupt* AVRInterrupt::getInterrupt( QString name, uint16_t vector, eMcu* mcu )
-{
-    return new AVRInterrupt( name, vector, mcu );
-}
-
+        regBits_t m_WDIF;
+        regBits_t m_WDIE;
+        regBits_t m_WDCE;
+        regBits_t m_WDE;
+        regBits_t m_WDP;
+};
+#endif

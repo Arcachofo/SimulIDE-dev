@@ -23,8 +23,6 @@
 #include<QHash>
 
 #include "mcumodule.h"
-#include "regsignal.h"
-
 
 class eMcu;
 class McuOcUnit;

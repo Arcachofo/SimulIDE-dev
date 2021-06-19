@@ -41,8 +41,8 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
 
         virtual void addocUnit( McuOcUnit* ocUnit ) override;
 
-        virtual void configureA( uint8_t val );
-        virtual void configureB( uint8_t val );
+        virtual void configureA( uint8_t val ) override;
+        virtual void configureB( uint8_t val ) override;
 
     protected:
         virtual void updtWgm()=0;

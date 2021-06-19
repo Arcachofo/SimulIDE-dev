@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,40 +17,34 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "avrinterrupt.h"
-#include "e_mcu.h"
+#ifndef MCUWDT_H
+#define MCUWDT_H
 
-AVRInterrupt::AVRInterrupt( QString name, uint16_t vector, eMcu* mcu )
-            : Interrupt( name, vector, mcu )
+#include "mcumodule.h"
+
+class eMcu;
+
+class MAINMODULE_EXPORT McuWdt : public McuModule
 {
-    //m_SREG = mcu->getReg( "SREG" );
+        friend class McuCreator;
 
-    m_I = mcu->getRegBits( "I" );
+    public:
+        McuWdt( eMcu* mcu, QString name );
+        ~McuWdt();
 
-    m_autoClear = true;
-}
-AVRInterrupt::~AVRInterrupt(){}
+        virtual void initialize() override;
+        virtual void runEvent() override;
 
-void AVRInterrupt::raise( uint8_t v )
-{
-    //if( m_name == "T1_OVF" )
-       // m_name = "T1_OVF";
-    //clearRegBits( m_I );// Deactivate Interrupts: SREG.I = 0
-    Interrupt::raise( v );
-}
+    protected:
 
-void AVRInterrupt::exitInt() // Exit from this interrupt
-{
-    //setRegBits( m_I );// Activate Interrupts: SREG.I = 1
-    Interrupt::exitInt();
-}
+        bool m_enabled;
+        bool m_ovfInter;
+        bool m_ovfReset;
 
+        uint8_t m_prescaler;
+        std::vector<uint16_t> m_prescList; // Prescaler values
 
-
-// Static --------------------------
-
-Interrupt* AVRInterrupt::getInterrupt( QString name, uint16_t vector, eMcu* mcu )
-{
-    return new AVRInterrupt( name, vector, mcu );
-}
-
+        uint64_t m_ovfPeriod; // overflow period in ps
+        uint64_t m_clkPeriod; // clock period in ps
+};
+#endif

@@ -40,6 +40,7 @@
 #include "avradc.h"
 #include "avrtwi.h"
 #include "avrspi.h"
+#include "avrwdt.h"
 
 #include "pic14core.h"
 
@@ -105,6 +106,7 @@ int McuCreator::processFile( QString fileName )
         else if( el.tagName() == "adc" )        createAdc( &el );
         else if( el.tagName() == "twi" )        createTwi( &el );
         else if( el.tagName() == "spi" )        createSpi( &el );
+        else if( el.tagName() == "wdt" )        createWdt( &el );
         else if( el.tagName() == "include" )    processFile( el.attribute("file") );
 
         node = node.nextSibling();
@@ -667,6 +669,32 @@ void McuCreator::createSpi( QDomElement* e )
                 if     ( name == "sck" )  spi->setSckPin( pin );
                 else if( name == "ss" )   spi->setSsPin( pin );
             }
+        }
+        node = node.nextSibling();
+    }
+}
+
+void McuCreator::createWdt( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+    McuWdt* wdt;
+    if( m_core == "AVR" ) wdt = new AvrWdt( mcu, name );
+    else return;
+
+    setConfigRegs( e, wdt );
+    QDomNode node = e->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+
+        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, wdt );
+        else if( el.tagName() == "prescaler" )
+        {
+            QStringList prescalers = el.attribute("values").remove(" ").split(",");
+            wdt->m_prescList.resize( prescalers.size() );
+
+            for( int i=0; i<prescalers.size(); ++i )
+                wdt->m_prescList[i] = prescalers.at(i).toUInt();
         }
         node = node.nextSibling();
     }
