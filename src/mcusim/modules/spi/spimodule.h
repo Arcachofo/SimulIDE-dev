@@ -52,8 +52,6 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
         virtual void setSsPin( IoPin* pin )   { m_SS = pin; }
 
     protected:
-        inline void stepBit();
-        //inline void writeBit();
         inline void step();
         inline void keepClocking();
 

@@ -26,7 +26,6 @@ SpiModule::SpiModule( QString name )
 {
     m_MOSI = NULL;
     m_MISO = NULL;
-    //m_SCK  = NULL;
     m_SS   = NULL;
 
     m_dataOut = NULL;
@@ -41,7 +40,6 @@ void SpiModule::initialize()
     m_toggleSck = false;
     m_lsbFirst  = false;
     m_enabled   = false;
-    //m_bitInc = 1;
 
     m_leadEdge   = Clock_Rising;
     m_tailEdge   = Clock_Falling;
@@ -127,28 +125,20 @@ void SpiModule::step()
     {
         if( m_bitPtr == m_endOfByte ) // Check end of byte
         {
-            //if( m_sampleEdge != m_leadEdge )  // if m_sampleEdge == m_leadEdge we are done
             endTransaction();
             return;
         }
         if( m_lsbFirst ) m_bitPtr <<= 1;
         else             m_bitPtr >>= 1;
     }
-    stepBit();
-
-    if( m_mode == SPI_MASTER ) keepClocking();
-}
-
-void SpiModule::stepBit()
-{
     if( m_clkState == m_sampleEdge )         //Read one bit
     {
         if( m_dataIn->getInpState() ) m_rxReg |= m_bitPtr;
     }
-    else if( m_dataOut ) // Write one bit (Only if dataOut Pin exist)
-    {
+    else if( m_dataOut )                     // Write one bit (Only if dataOut Pin exist)
         m_dataOut->setOutState( m_txReg & m_bitPtr );
-    }
+
+    if( m_mode == SPI_MASTER ) keepClocking();
 }
 
 void SpiModule::setMode( spiMode_t mode )
@@ -156,13 +146,16 @@ void SpiModule::setMode( spiMode_t mode )
     if( mode == m_mode ) return;
     m_mode = mode;
 
+    m_dataOut = NULL;
+    m_dataIn  = NULL;
+
     switch( mode ) {
     case SPI_OFF:
         {
-            m_MOSI->changeCallBack( this, false );
-            m_MISO->changeCallBack( this, false );
-            m_clkPin->changeCallBack( this, false );
-            if( m_SS ) m_SS->changeCallBack( this, false );
+            if( m_MOSI )   m_MOSI->changeCallBack( this, false );
+            if( m_MISO )   m_MISO->changeCallBack( this, false );
+            if( m_clkPin ) m_clkPin->changeCallBack( this, false );
+            if( m_SS )     m_SS->changeCallBack( this, false );
         }
         break;
     case SPI_MASTER:
@@ -178,7 +171,7 @@ void SpiModule::setMode( spiMode_t mode )
         break;
     case SPI_SLAVE:
         {
-            if( !m_MOSI || !m_MISO || !m_clkPin )
+            if( !m_MOSI || !m_clkPin )
             {
                 m_mode = SPI_OFF;
                 return;
@@ -187,9 +180,10 @@ void SpiModule::setMode( spiMode_t mode )
             m_dataIn  = m_MOSI;
 
             m_clkPin->changeCallBack( this, true );
-            m_SS->changeCallBack( this, true );
+            if( m_SS ) m_SS->changeCallBack( this, true );
         }
         break;
     }
+    if( m_dataOut ) m_dataOut->setOutState( true );
 }
 
