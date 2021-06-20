@@ -93,27 +93,28 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         masterStart();
     }
     bool ack = getRegBitsVal( newTWCR, m_TWEA );
-    if( ack && !clearTwint )
+    if( ack && !clearTwint && !newStop && !newStart )
     {
         if( m_mode != TWI_SLAVE ) setMode( TWI_SLAVE );
+        return;
     }
-
-    bool data = clearTwint && !newStop && !newStart; // No start or stop and TWINT cleared = receive data?
-    if( !data ) return;
-
-
 
     if( m_mode == TWI_MASTER )
     {
+        bool data = clearTwint && !newStop && !newStart; // No start or stop and TWINT cleared, receive data
+        if( !data ) return;
+
         if( (m_twiState == TWI_MRX_ADR_ACK)    // We sent Slave Address + R and received ACK
          || (m_twiState == TWI_MRX_DATA_ACK) ) // We sent data and received ACK
         {
             masterRead( ack );  // Read a byte and send ACK/NACK
         }
     }
-    else // We are Slave
+    else if( m_mode == TWI_SLAVE )
     {
-        ; /// TODO
+        bool data = clearTwint && !newStop; // No stop and TWINT cleared, receive data
+        if( !data ) return;
+        m_sendACK = ack;
     }
 }
 
@@ -123,7 +124,13 @@ void AvrTwi::configureB( uint8_t val ) // TWBR is being written
     updateClock();
 }
 
-void AvrTwi::writeStatus( uint8_t newTWSR )  // TWSR Status Register is being written
+void AvrTwi::writeAddrReg( uint8_t newTWAR ) // TWAR is being written
+{
+    m_genCall = newTWAR & 1;
+    m_address = newTWAR >> 1;
+}
+
+void AvrTwi::writeStatus( uint8_t newTWSR ) // TWSR Status Register is being written
 {
     newTWSR &= 0b00000011;
     m_prescaler = m_prescList[newTWSR];
@@ -155,8 +162,8 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 {
     TwiModule::setTwiState( state );
 
-    *m_statReg &= 0b00000111;      // Clear old status
-    *m_statReg |= state;           // Write new status
+    *m_statReg &= 0b00000111;      // Clear old state
+    *m_statReg |= state;           // Write new state
     interrupt.emitValue(1);
 
     if( (state == TWI_NO_STATE) && (m_i2cState == I2C_STOP) ) // Stop Condition sent

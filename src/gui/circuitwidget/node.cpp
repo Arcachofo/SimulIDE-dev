@@ -95,7 +95,7 @@ void Node::joinConns( int c0, int c1 )
     Connector* con0 = pin0->connector();
     Connector* con1 = pin1->connector();
     
-    Connector* con = new Connector( this, con0->itemType(), con0->itemID(), pin0->conPin() );
+    Connector* con = new Connector( Circuit::self(), con0->itemType(), con0->itemID(), pin0->conPin() );
 
     QStringList list0 = con0->pointList();
     QStringList list1 = con1->pointList();

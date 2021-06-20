@@ -39,6 +39,7 @@ void TwiModule::initialize()
 
     m_sheduleSDA = false;
     m_toggleScl  = false;
+    m_genCall    = false;
 
     m_lastSDA = true; // SDA High = inactive
 }
@@ -113,7 +114,7 @@ void TwiModule::runEvent()
         {
             if( clkLow )
             {
-                if( m_masterACK ) setSDA( false);
+                if( m_sendACK ) setSDA( false);
                 m_i2cState = I2C_ENDACK;
             }
             keepClocking();
@@ -125,10 +126,8 @@ void TwiModule::runEvent()
             {
                 setSDA( true ); //if( m_lastState == I2C_READ )
 
-                twiState = m_masterACK ? TWI_MRX_DATA_ACK : TWI_MRX_DATA_NACK ;
+                twiState = m_sendACK ? TWI_MRX_DATA_ACK : TWI_MRX_DATA_NACK ;
                 setTwiState( twiState );
-                //m_comp->inStateChanged( TWI_MSG+TWI_COND_READ );
-                //m_comp->inStateChanged( TWI_MSG+TWI_COND_ACK+m_masterACK ); // ACK/NACK sent
                 m_i2cState = I2C_IDLE;
             }
             else keepClocking();
@@ -145,7 +144,6 @@ void TwiModule::runEvent()
                 twiState = m_sdaState ? TWI_MTX_DATA_NACK : TWI_MTX_DATA_ACK;
 
             setTwiState( twiState );
-            //if( m_comp ) m_comp->inStateChanged( TWI_MSG+TWI_COND_ACK+ack );
 
             m_i2cState = I2C_IDLE;
             keepClocking();
@@ -160,7 +158,6 @@ void TwiModule::runEvent()
             {
                 setTwiState( TWI_NO_STATE ); // Set State first so old m_i2cState is still avilable
                 m_i2cState = I2C_IDLE;
-                //if( m_comp ) m_comp->inStateChanged( 128+I2C_STOPPED ); // Set TWINT ( set to 0 )
             }
         }
     }
@@ -193,41 +190,63 @@ void TwiModule::voltChanged() // Used by slave
             {
                 bool rw = m_rxReg % 2;         //Last bit is R/W
                 m_rxReg >>= 1;
-                if( m_rxReg == m_address ) {   // Address match
-                    if( rw ) {                 // Master is Reading
+
+                m_addrMatch = m_rxReg == m_address;
+                bool genCall = m_genCall && (m_rxReg == 0);
+                if( m_addrMatch || genCall ) // Address match or General Call
+                {
+                    m_sendACK = true;
+                    if( rw )                  // Master is Reading
+                    {
+                        m_nextState = TWI_STX_ADR_ACK;
                         m_i2cState = I2C_READ;
                         writeByte();
-                    } else {                   // Master is Writting
+                    }
+                    else                      // Master is Writting
+                    {
+                        m_nextState = m_addrMatch ? TWI_SRX_ADR_ACK : TWI_SRX_GEN_ACK;
                         m_i2cState = I2C_WRITE;
                         m_bitPtr = 0;
                         startWrite(); // Notify posible child class
                     }
                     ACK();
-                } else {
+                }
+                else {
                     m_i2cState = I2C_STOP;
                     m_rxReg = 0;
                 }
             }
         }else if( m_i2cState == I2C_WRITE ){
             readBit();
-            if( m_bitPtr == 8 ) readByte();
+            if( m_bitPtr == 8 )
+            {
+                if( m_addrMatch )
+                     m_nextState = m_sendACK ? TWI_SRX_ADR_DATA_ACK : TWI_SRX_ADR_DATA_NACK;
+                else m_nextState = m_sendACK ? TWI_SRX_GEN_DATA_ACK : TWI_SRX_GEN_DATA_NACK;
+                readByte();
+            }
         }
         else if( m_i2cState == I2C_READACK )      // We wait for Master ACK
         {
+            setTwiState( m_sdaState ? TWI_STX_DATA_NACK : TWI_STX_DATA_ACK );
             if( !m_sdaState ) {                // ACK: Continue Sending
                 m_i2cState = m_lastState;
                 writeByte();
-            } else m_i2cState = I2C_IDLE;
+            }
+            else m_i2cState = I2C_IDLE;
         }
     }
     else if( m_clkState == Clock_Falling )
     {
         if( m_i2cState == I2C_ACK ) {             // Send ACK
-            sheduleSDA( false );
+            sheduleSDA( !m_sendACK );
             m_i2cState = I2C_ENDACK;
         }
-        else if( m_i2cState == I2C_ENDACK ) {     // We sent ACK, release SDA
+        else if( m_i2cState == I2C_ENDACK )      // We sent ACK, release SDA
+        {
+            setTwiState( m_nextState );
             m_i2cState = m_lastState;
+
             bool releaseSda = true;
             if( m_i2cState == I2C_READ ) releaseSda = m_txReg>>m_bitPtr & 1; // Keep Sending
             sheduleSDA( releaseSda );
@@ -329,7 +348,7 @@ void TwiModule::masterWrite( uint8_t data , bool isAddr, bool write )
 
 void TwiModule::masterRead( bool ack )
 {
-    m_masterACK = ack;
+    m_sendACK = ack;
 
     setSDA( true );
     m_bitPtr = 0;

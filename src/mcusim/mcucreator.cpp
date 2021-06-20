@@ -580,7 +580,11 @@ void McuCreator::createTwi( QDomElement* e )
     if( e->hasAttribute("addressreg") )
     {
         QString addrReg = e->attribute("addressreg");
-        if( !addrReg.isEmpty() ) twi->m_addrReg = mcu->getReg( addrReg );
+        if( !addrReg.isEmpty() )
+        {
+            twi->m_addrReg = mcu->getReg( addrReg );
+            mcu->watchRegNames( addrReg, R_WRITE, twi, &McuTwi::writeAddrReg );
+        }
     }
     if( e->hasAttribute("statusreg") )
     {

@@ -37,6 +37,7 @@ class MAINMODULE_EXPORT AvrTwi : public McuTwi
         virtual void configureA( uint8_t newTWCR ) override;
         virtual void configureB( uint8_t val ) override;
 
+        virtual void writeAddrReg( uint8_t newTWAR ) override;
         virtual void writeStatus( uint8_t newTWSR ) override;
         virtual void writeTwiReg( uint8_t newTWDR ) override;
 

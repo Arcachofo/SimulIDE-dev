@@ -20,6 +20,9 @@ Changes:
     - SubPackage: Allow unselect Main Component.
     - Set "Fusion" as default style.
   
+  RC5:
+    - Logic Components complete refactoring.
+    
 New Features:
   RC1:
     - Dutch translation by mvandorp.
@@ -56,6 +59,17 @@ New Features:
     - New AVRs: added 16 bit Timer base and Timer1.
     - New AVRs: Usart basic implementation (kindof working).
     - New MCUs: McuMonitor basic implementation.
+    
+  RC5:
+    - Animate Inputs/Outputs as arrows.
+    - McuMonitor: Sort Register list.
+    - New Avrs: ADC.
+    - New TWI Module.
+    - New AVRs: TWI master read/write implemented.
+    - New SPI Module.
+    - New AVRs: SPI basic implementation.
+    - Logic Analizer: change Time Pos by mouse click+move.
+    - Logic Analizer: Condition Trigger.
     
 Bug Fixes:
   RC1:
@@ -177,6 +191,17 @@ Bug Fixes:
     - Crash resizing Memory after opening MemTable.
     - Tunnels & SubPackage should not be Main Component is Subcircuits.
       
+  RC5:
+    - 7Segment BCD not initialized.
+    - All Message Boxes to non-blocking.
+    - Audio Out not working.
+    - AVR ADC wrong AVcc.
+    - New MCUs: Crash deleting Mcu Monitor.
+    - New MCUs: several errors.
+    - MCU: Load EEPROM data not working.
+    - New MCUs: several errors inTimers.
+    - Oscope stops working after some time.
+    
 New Components:
   RC1:
     - aip31068 I2C LCD (by acebrian).
@@ -205,3 +230,8 @@ New Components:
     
   RC4:
     - "Tools" Boards (by Sergey Roenko).
+
+  RC5:
+    - Subcircuits (by Sergey Roenko).
+    74XX121, CD4098, K490IP1, K490Ip2
+    AM1402ttl, AM1403ttl, AM1404_ttl.

@@ -100,7 +100,9 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         bool m_toggleScl;
         bool m_isAddr;
         bool m_write;
-        bool m_masterACK;
+        bool m_sendACK;
+        bool m_addrMatch;
+        bool m_genCall;
 
         int m_bitPtr;       // Bit Pointer
 
@@ -109,6 +111,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
 
         twiMode_t  m_mode;
         twiState_t m_twiState;
+        twiState_t m_nextState;
         i2cState_t m_i2cState;   // Current State of i2c
         i2cState_t m_lastState;  // Last State of i2c
 

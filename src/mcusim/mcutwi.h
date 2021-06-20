@@ -36,6 +36,7 @@ class MAINMODULE_EXPORT McuTwi : public McuModule, public TwiModule
 
         virtual void initialize() override;
 
+        virtual void writeAddrReg( uint8_t val ){;}
         virtual void writeStatus( uint8_t val ){;}
         virtual void writeTwiReg( uint8_t val ){;}
 
