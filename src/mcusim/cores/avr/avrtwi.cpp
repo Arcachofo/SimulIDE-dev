@@ -92,11 +92,16 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         if( m_mode != TWI_MASTER ) setMode( TWI_MASTER );
         masterStart();
     }
+    bool ack = getRegBitsVal( newTWCR, m_TWEA );
+    if( ack && !clearTwint )
+    {
+        if( m_mode != TWI_SLAVE ) setMode( TWI_SLAVE );
+    }
 
     bool data = clearTwint && !newStop && !newStart; // No start or stop and TWINT cleared = receive data?
     if( !data ) return;
 
-    bool ack = getRegBitsVal( newTWCR, m_TWEA );
+
 
     if( m_mode == TWI_MASTER )
     {

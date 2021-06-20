@@ -73,4 +73,9 @@
         
         <raiseint intname="SPI" source="MAIN" />
     </spi>
+    
+    <wdt name="WatchDog" configregsA="WDTCSR">
+		<prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
+		<raiseint intname="WDT" source="MAIN" />
+	</wdt>
 </parts>
