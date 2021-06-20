@@ -181,9 +181,9 @@ void TwiModule::voltChanged() // Used by slave
            I2Cstop();
         }
     }
-    else if( m_clkState == Clock_Rising )        // We are in a SCL Rissing edge
+    else if( m_clkState == Clock_Rising )      // We are in a SCL Rissing edge
     {
-        if( m_i2cState == I2C_START )             // Get Transaction Info
+        if( m_i2cState == I2C_START )          // Get Transaction Info
         {
             readBit();
             if( m_bitPtr > m_addrBits )
@@ -193,21 +193,22 @@ void TwiModule::voltChanged() // Used by slave
 
                 m_addrMatch = m_rxReg == m_address;
                 bool genCall = m_genCall && (m_rxReg == 0);
-                if( m_addrMatch || genCall ) // Address match or General Call
+
+                if( m_addrMatch || genCall )   // Address match or General Call
                 {
                     m_sendACK = true;
-                    if( rw )                  // Master is Reading
+                    if( rw )                   // Master is Reading
                     {
                         m_nextState = TWI_STX_ADR_ACK;
                         m_i2cState = I2C_READ;
                         writeByte();
                     }
-                    else                      // Master is Writting
+                    else                       // Master is Writting
                     {
                         m_nextState = m_addrMatch ? TWI_SRX_ADR_ACK : TWI_SRX_GEN_ACK;
                         m_i2cState = I2C_WRITE;
                         m_bitPtr = 0;
-                        startWrite(); // Notify posible child class
+                        startWrite();          // Notify posible child class
                     }
                     ACK();
                 }

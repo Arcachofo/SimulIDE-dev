@@ -19,22 +19,23 @@
 
 #include "mcuport.h"
 #include "mcupin.h"
+#include "mcu.h"
 #include "e_mcu.h"
 
-
-McuPort::McuPort( eMcu* mcu )
-       : eElement( "McuPort" )
+McuPort::McuPort( Mcu* mcuComp, eMcu* mcu, QString name, uint8_t numPins )
+       : McuModule( mcu, name )
 {
-    m_mcu = mcu;
+    m_numPins = numPins;
 
     m_outReg = NULL;
-    m_inReg  = NULL;
     m_dirReg = NULL;
 
     m_outAddr = 0;
     m_inAddr  = 0;
     m_dirAddr = 0;
     m_dirInv  = false;
+
+    createPins( mcuComp );
 }
 
 McuPort::~McuPort()
@@ -46,19 +47,17 @@ McuPort::~McuPort()
 void McuPort::initialize()
 {
     m_pinState = 0;
+    m_intMask = 0;
 }
 
-void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin State is masked in val
+void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMask
 {
     if( val ) m_pinState |= pinMask;
     else      m_pinState &= ~pinMask;
 
-    m_mcu->writeReg( m_inAddr, m_pinState );
-}
+    if( m_intMask & pinMask ) interrupt.emitValue(1); // Pin change interrupt
 
-void McuPort::readInReg( uint8_t )
-{
-    *m_inReg = m_pinState;
+    m_mcu->writeReg( m_inAddr, m_pinState );
 }
 
 void McuPort::outChanged( uint8_t val )
@@ -91,15 +90,21 @@ void McuPort::dirChanged( uint8_t val )
     }
 }
 
-void McuPort::setPullups(uint8_t puMask )
+void McuPort::setPullups( uint8_t puMask )
 {
-    //m_pullups = pu;
-
     for( int i=0; i<m_numPins; ++i )
     {
         bool pinPu = (puMask & 1<<i);// && !m_pins[i]->m_isOut;
         m_pins[i]->setPullup( pinPu );
     }
+}
+
+void McuPort::createPins( Mcu* mcuComp )
+{
+    m_pins.resize( m_numPins );
+
+    for( int i=0; i<m_numPins; ++i )
+        m_pins[i] = new McuPin( this, i, m_name+QString::number(i), mcuComp );
 }
 
 //  ------------------------------------------

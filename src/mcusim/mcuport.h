@@ -22,25 +22,25 @@
 
 #include<QHash>
 
-#include "e-element.h"
+#include "mcumodule.h"
 
-class McuPin;
+class Mcu;
 class eMcu;
+class McuPin;
 class Component;
 
-class MAINMODULE_EXPORT McuPort : public eElement
+class MAINMODULE_EXPORT McuPort : public McuModule
 {
         friend class McuCreator;
         friend class McuPorts;
 
     public:
-        McuPort( eMcu* mcu );
+        McuPort( Mcu* mcuComp, eMcu* mcu, QString name, uint8_t numPins );
         ~McuPort();
 
         virtual void initialize() override;
 
-        void pinChanged( uint8_t pinMask, uint8_t val );
-        void readInReg( uint8_t );
+        virtual void pinChanged( uint8_t pinMask, uint8_t val );
 
         void setPullups( uint8_t puMask );
 
@@ -50,24 +50,23 @@ class MAINMODULE_EXPORT McuPort : public eElement
 
         void outChanged( uint8_t val );
         void dirChanged( uint8_t val );
+        void intMaskChanged( uint8_t val ) { m_intMask = val; }
 
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }
 
     protected:
-
-        QString m_name;
-
-        eMcu* m_mcu;
+        virtual void createPins( Mcu* mcuComp );
 
         std::vector<McuPin*> m_pins;
         uint8_t m_numPins;
         uint8_t m_pinState;
 
+        uint8_t m_intMask;
+
         bool m_dirInv;
 
         uint8_t* m_outReg; // Pointer to m_ram[m_outAddr]
-        uint8_t* m_inReg;  // Pointer to m_ram[m_inAddr]
         uint8_t* m_dirReg; // Pointer to m_ram[m_dirAddr]
 
         uint16_t m_outAddr;

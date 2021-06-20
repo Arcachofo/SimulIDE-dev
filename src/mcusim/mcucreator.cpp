@@ -277,19 +277,12 @@ void McuCreator::createInterrupts( QDomElement* i )
 
 void McuCreator::createPort( QDomElement* p )
 {
-    McuPort* port = new McuPort( mcu );
-    port->m_name = p->attribute( "name" );
-    mcu->m_ports.m_portList.insert( port->name(), port );
+    QString name = p->attribute( "name" );
+    uint8_t numPins = p->attribute( "pins" ).toUInt(0,0);
 
-    // Create PORT Pins
-    port->m_numPins = p->attribute( "pins" ).toUInt(0,0);
-    port->m_pins.resize( port->m_numPins );
-    for( int i=0; i<port->m_numPins; ++i )
-    {
-        if( m_core == "AVR" )
-            port->m_pins[i] = new AvrPin( port, i, port->m_name+QString::number(i), m_mcuComp );
-        else port->m_pins[i] = new McuPin( port, i, port->m_name+QString::number(i), m_mcuComp );
-    }
+    McuPort* port = new McuPort( m_mcuComp, mcu, name, numPins );
+    mcu->m_ports.m_portList.insert( name, port );
+
     uint16_t addr = 0;
     if( p->hasAttribute( "outreg" ) ) // Connect to PORT Out Register
     {
@@ -302,8 +295,6 @@ void McuCreator::createPort( QDomElement* p )
     {
         addr = mcu->getRegAddress( p->attribute( "inreg" ) );
         port->m_inAddr = addr;
-        port->m_inReg  = mcu->m_dataMem.data()+port->m_inAddr;
-        mcu->watchRegister( addr, R_READ, port, &McuPort::readInReg );
     }
     if( p->hasAttribute( "dirreg" ) ) // Connect to PORT Dir Register
     {
@@ -342,15 +333,16 @@ void McuCreator::createPort( QDomElement* p )
     {
         QDomElement el = node.toElement();
 
-        /// TODO: PORT interrupts
-        /*if( el.tagName() == "raiseint" )  // Interrupts
+        if( el.tagName() == "raiseint" )
         {
-            QString intName = el.attribute("intname");
-            Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
+            setInterrupt( &el, port ); // Pin change interrupt
+            if( el.hasAttribute("mask") )
+            {
+                uint16_t maskReg = mcu->getRegAddress( p->attribute( "mask" ) );
+                mcu->watchRegister( maskReg, R_WRITE, port, &McuPort::intMaskChanged );
+            }
+        }
 
-            QString source = el.attribute("source");
-            mcu->watchBitNames( source, R_WRITE, inte, &Interrupt::raise );
-        }*/
         node = node.nextSibling();
     }
 }

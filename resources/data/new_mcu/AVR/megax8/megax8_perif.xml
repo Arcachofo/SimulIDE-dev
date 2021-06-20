@@ -2,13 +2,13 @@
 
 <parts>
     <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
-        <raiseint intname="PCINT0" source="PINB" mask="PCMSK0"/>
+        <raiseint intname="PCINT0" source="MAIN" mask="PCMSK0"/>
     </port>
     <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
-        <raiseint intname="PCINT1" source="PINC" mask="PCMSK1"/>
+        <raiseint intname="PCINT1" source="MAIN" mask="PCMSK1"/>
     </port>
     <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
-        <raiseint intname="PCINT2" source="PIND" mask="PCMSK2"/>
+        <raiseint intname="PCINT2" source="MAIN" mask="PCMSK2"/>
     </port>
     
     <timer name="TIMER0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">

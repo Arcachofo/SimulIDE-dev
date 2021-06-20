@@ -31,7 +31,6 @@ class MAINMODULE_EXPORT McuModule : public eElement
         friend class McuCreator;
 
     public:
-
         McuModule( eMcu* mcu, QString name );
         ~McuModule();
 
