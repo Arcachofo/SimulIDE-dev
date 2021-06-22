@@ -33,6 +33,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         Q_OBJECT
         Q_PROPERTY( double   Mhz         READ freq     WRITE setFreq     DESIGNABLE true  USER true )
         Q_PROPERTY( QString  Program     READ program  WRITE setProgram  DESIGNABLE true  USER true )
+        Q_PROPERTY( bool     Auto_Load   READ autoLoad WRITE setAutoLoad DESIGNABLE true  USER true )
 
         friend class McuCreator;
 
@@ -48,11 +49,15 @@ class MAINMODULE_EXPORT Mcu : public Chip
         QString program();
         void setProgram( QString pro );
 
+        bool autoLoad() { return m_autoLoad; }
+        void setAutoLoad( bool al ) { m_autoLoad = al; }
+
         double freq(){ return m_eMcu.m_freq; }
         virtual void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
 
         virtual void initialize() override;
         virtual void updateStep() override;
+        virtual void attach() override;
         virtual void remove() override;
         virtual void setLogicSymbol( bool ls ) override;
 
@@ -64,11 +69,14 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
     public slots:
         void slotLoad();
+        void slotReload();
         void slotOpenMcuMonitor();
 
     protected:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
+
+        bool m_autoLoad;
 
         QString m_subcDir;      // Subcircuit Path
         QString m_lastFirmDir;  // Last firmware folder used

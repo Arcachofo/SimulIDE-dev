@@ -29,6 +29,8 @@ McuInterface::McuInterface( QString id )
     m_romSize   = 0;
     m_wordSize  = 2;
 
+    m_firmware = "";
+
     m_ramTable->hide();
 }
 

@@ -71,17 +71,9 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     m_mcuMonitor = NULL;
 
-    m_icColor = QColor( 20, 30, 60 );
+    m_autoLoad  = false;
 
-    QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
-    f.setFamily("Monospace");
-    f.setPixelSize(5);
-    f.setLetterSpacing( QFont::PercentageSpacing, 120 );
-    m_valLabel->setFont( f );
-    m_valLabel->setPlainText( compName );
-    m_valLabel->setDefaultTextColor( QColor( 110, 110, 110 ) );
-    m_valLabel->setAcceptedMouseButtons( 0 );
-    setShowVal( true );
+    m_icColor = QColor( 20, 30, 60 );
 
     QString xmlFile = ComponentSelector::self()->getXmlFile( compName );
     QFile file( xmlFile );
@@ -153,7 +145,7 @@ QList<propGroup_t> Mcu::propGroups()
     //mainGroup.propList.append( {"Logic_Symbol", tr("Logic Symbol"),""} );
     mainGroup.propList.append( {"Mhz", tr("Frequency"),"MHz"} );
     mainGroup.propList.append( {"Program", tr("Fimware"),""} );
-    //mainGroup.propList.append( {"Auto_Load", tr("Auto Load Firmware at Start"),""} );
+    mainGroup.propList.append( {"Auto_Load", tr("Auto Load Firmware at Start"),""} );
     return {mainGroup};
 }
 
@@ -204,6 +196,14 @@ void Mcu::updateStep()
      && m_mcuMonitor->isVisible() ) m_mcuMonitor->updateStep();
 }
 
+void Mcu::attach()
+{
+    if( m_autoLoad )
+    {
+        if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );
+    }
+}
+
 void Mcu::remove()
 {
     //emit closeSerials();
@@ -228,12 +228,18 @@ void Mcu::slotLoad()
     load( fileName );
 }
 
+void Mcu::slotReload()
+{
+    if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );
+    else QMessageBox::warning( 0, tr("No File:"), tr("No File to reload ") );
+}
+
 void Mcu::load( QString fileName )
 {
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
     else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
-    QString fileNameAbs = circuitDir.absoluteFilePath( fileName );
+    QString fileNameAbs  = circuitDir.absoluteFilePath( fileName );
     QString cleanPathAbs = circuitDir.cleanPath( fileNameAbs );
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
@@ -277,22 +283,17 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     connect( loadAction, SIGNAL(triggered()),
                    this, SLOT(slotLoad()), Qt::UniqueConnection );
 
-    /*QAction* reloadAction = menu->addAction( QIcon(":/reload.png"),tr("Reload firmware") );
+    QAction* reloadAction = menu->addAction( QIcon(":/reload.png"),tr("Reload firmware") );
     connect( reloadAction, SIGNAL(triggered()),
                      this, SLOT(slotReload()), Qt::UniqueConnection );
 
-    QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load EEPROM data") );
+    /*QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load EEPROM data") );
     connect( loadDaAction, SIGNAL(triggered()),
                      this, SLOT(loadData()), Qt::UniqueConnection );
 
     QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data") );
     connect( saveDaAction, SIGNAL(triggered()),
                      this, SLOT(saveData()), Qt::UniqueConnection );
-
-    menu->addSeparator();
-    QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open RamTable.") );
-    connect( openRamTab, SIGNAL(triggered()),
-                   this, SLOT(slotOpenRamTable()), Qt::UniqueConnection );
 
     QAction* openTerminal = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
     connect( openTerminal, SIGNAL(triggered()),
