@@ -62,7 +62,7 @@ void AvrAdc::configureA( uint8_t val ) // ADCSRA
 
 void AvrAdc::configureB( uint8_t val ) // ADCSRB
 {
-    uint8_t trigger  = val & 0b00000111;
+    uint8_t trigger = val & 0b00000111;
 
     switch( trigger ) /// TODO
     {

@@ -44,23 +44,15 @@ void I51Timer::configureA( uint8_t val ) // TxM0,TxM1
 {
     uint8_t mode = getRegBitsVal( val, m_configBitsA );//val & 0b00000011;
 
-    if( mode != m_mode )
-    {
-        m_mode = mode;
+    if( mode == m_mode ) return;
+    m_mode = mode;
 
-        if     ( mode == 0 )  // 13 bits
-        {
-            m_ovfMatch = 0x1FFF;
-        }
-        else if( mode == 1 ) // 16 bits
-        {
-            m_ovfMatch = 0xFFFF;
-        }
-        else if( mode == 2 ) // 8 bits
-        {
-            m_ovfMatch = 0x00FF;
-        }
-        else                 // 8+8 bits
+    switch( mode )
+    {
+        case 0: m_ovfMatch = 0x1FFF; break; // 13 bits
+        case 1: m_ovfMatch = 0xFFFF; break; // 16 bits
+        case 2: m_ovfMatch = 0x00FF; break; // 8 bits
+        case 3:                             // 8+8 bits
         {
             m_ovfMatch = 0x00FF;
 
@@ -71,8 +63,8 @@ void I51Timer::configureA( uint8_t val ) // TxM0,TxM1
             {
             }
         }
-        m_ovfPeriod = m_ovfMatch+1;
     }
+    m_ovfPeriod = m_ovfMatch+1;
 }
 
 void I51Timer::configureB( uint8_t val ) // C/Tx,GATEx
@@ -89,40 +81,38 @@ void I51Timer::configureB( uint8_t val ) // C/Tx,GATEx
     if( gate != m_gate )
     {
         m_gate = gate;
+        /// TODO
     }
 }
 
 void I51Timer::updtCycles() // Recalculate ovf, comps, etc
 {
-    if     ( m_mode == 0 )  // 13 bits
+    switch( m_mode )
     {
-        m_countVal  = COUNT_H << 5;
-        m_countVal |= COUNT_L & 0b00011111;
-        m_countStart = 0;
-    }
-    else if( m_mode == 1 ) // 16 bits
-    {
-        m_countVal  = COUNT_H << 8;
-        m_countVal |= COUNT_L;
-        m_countStart = 0;
-    }
-    else if( m_mode == 2 ) // 8 bits
-    {
-        //m_ovfMatch = m_ovfPeriod-m_countH;
-        m_countVal   = COUNT_H;
-        m_countStart = COUNT_H;
-    }
-    else if( m_mode == 3 ) // 8+8 bits
-    {
-        if( m_number == 0 )
+        case 0:  // 13 bits
         {
-            m_countVal = COUNT_L;
-        }
-        else if( m_number == 1 )
+            m_countVal  = COUNT_H << 5;
+            m_countVal |= COUNT_L & 0b00011111;
+            m_countStart = 0;
+        } break;
+        case 1: // 16 bits
         {
-            m_countVal = COUNT_H;
+            m_countVal  = COUNT_H << 8;
+            m_countVal |= COUNT_L;
+            m_countStart = 0;
+        } break;
+        case 2: // 8 bits
+        {
+            //m_ovfMatch = m_ovfPeriod-m_countH;
+            m_countVal   = COUNT_H;
+            m_countStart = COUNT_H;
+        } break;
+        case 3: // 8+8 bits
+        {
+            if     ( m_number == 0 ) m_countVal = COUNT_L;
+            else if( m_number == 1 ) m_countVal = COUNT_H;
+            m_countStart = 0;
         }
-        m_countStart = 0;
     }
     sheduleEvents();
 }
@@ -143,7 +133,6 @@ void I51Timer::updtCount( uint8_t )     // Write counter values to Ram
         {
             COUNT_L = countVal & 0b00011111;
             COUNT_H = (countVal>>5) & 0xFF;
-
         }
         else if( m_mode == 2 ) // 8 bits
         {
@@ -152,14 +141,8 @@ void I51Timer::updtCount( uint8_t )     // Write counter values to Ram
         }
         else                 // 8+8 bits
         {
-            if( m_number == 0 )
-            {
-                COUNT_L = countVal & 0xFF;
-            }
-            else if( m_number == 1 )
-            {
-                COUNT_H = countVal & 0xFF;
-            }
+            if     ( m_number == 0 ) COUNT_L = countVal & 0xFF;
+            else if( m_number == 1 ) COUNT_H = countVal & 0xFF;
         }
     }
 }

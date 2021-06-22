@@ -62,14 +62,14 @@ void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMas
 
 void McuPort::outChanged( uint8_t val )
 {
-    uint8_t changed = *m_outReg ^ val;
+    uint8_t changed = *m_outReg ^ val; // See which Pins have actually changed
 
     if( changed )
     {
         for( int i=0; i<m_numPins; ++i )
         {
-            if( ( changed & 1<<i )      // Pin changed
-             && (!m_pins[i]->m_outCtrl )) // Port is controlling Pin
+            if( ( changed & 1<<i )        // Pin changed
+             && (!m_pins[i]->m_outCtrl )) // Port is controlling Pin State
                 m_pins[i]->setPortState( val & (1<<i) );
         }
     }
@@ -77,14 +77,15 @@ void McuPort::outChanged( uint8_t val )
 
 void McuPort::dirChanged( uint8_t val )
 {
-    uint8_t changed = *m_dirReg ^ val;
+    uint8_t changed = *m_dirReg ^ val;  // See which Pins have actually changed
     if( m_dirInv ) val = ~val & 0xFF;
 
     if( changed )
     {
         for( int i=0; i<m_numPins; ++i )
         {
-            if( (changed & 1<<i) )  // Pin changed
+            if( (changed & 1<<i)          // Pin changed
+             && (!m_pins[i]->m_dirCtrl )) // Port is controlling Pin Direction
                 m_pins[i]->setDirection( val & (1<<i));
         }
     }

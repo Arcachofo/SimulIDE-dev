@@ -186,24 +186,23 @@ void McuCreator::createRegisters( QDomElement* e )
             mcu->m_regInfo.insert( regName, regInfo );
 
             QString bits = el.attribute( "bits" );
-            if( !bits.isEmpty() ) // Create bitMasks
+            if( !bits.isEmpty() )                    // Create bitMasks
             {
+                QString bitName;
                 if( bits == "0-7"){
                     for( int i=0; i<8; ++i )
                     {
-                        QString bitName = regName+QString::number( i );
-                        uint8_t mask = 1<<i;
-                        mcu->m_bitMasks.insert( bitName, mask );
+                        bitName = regName+QString::number( i );
+                        mcu->m_bitMasks.insert( bitName, 1<<i );
                         mcu->m_bitRegs.insert( bitName, regAddr );
                     }
                 }else{
                     QStringList bitList = bits.split(",");
-                    for( int i=0; i< bitList.size(); ++i )
+                    for( int i=0; i<bitList.size(); ++i )
                     {
-                        QString bitName = bitList.at( i );
+                        bitName = bitList.at( i );
                         if( bitName == "0" ) continue;
-                        uint8_t mask = 1<<i;
-                        mcu->m_bitMasks.insert( bitName, mask );
+                        mcu->m_bitMasks.insert( bitName, 1<<i );
                         mcu->m_bitRegs.insert( bitName, regAddr );
                     }
                 }
@@ -342,7 +341,6 @@ void McuCreator::createPort( QDomElement* p )
                 mcu->watchRegister( maskReg, R_WRITE, port, &McuPort::intMaskChanged );
             }
         }
-
         node = node.nextSibling();
     }
 }
