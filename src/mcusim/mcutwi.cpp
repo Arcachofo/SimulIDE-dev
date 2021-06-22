@@ -37,4 +37,5 @@ void McuTwi::initialize()
     TwiModule::initialize();
 
     m_prescaler = 1;
+    updateFreq();
 }

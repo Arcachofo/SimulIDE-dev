@@ -121,7 +121,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 void AvrTwi::configureB( uint8_t val ) // TWBR is being written
 {
     m_bitRate = val;
-    updateClock();
+    updateFreq();
 }
 
 void AvrTwi::writeAddrReg( uint8_t newTWAR ) // TWAR is being written
@@ -134,7 +134,7 @@ void AvrTwi::writeStatus( uint8_t newTWSR ) // TWSR Status Register is being wri
 {
     newTWSR &= 0b00000011;
     m_prescaler = m_prescList[newTWSR];
-    updateClock();
+    updateFreq();
 
     m_mcu->m_regOverride = newTWSR | (*m_statReg & 0b11111100); // Preserve Status bits
 }
@@ -176,7 +176,7 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
     }
 }
 
-void AvrTwi::updateClock()
+void AvrTwi::updateFreq()
 {
     double freq = m_mcu->freqMHz()*1e6/(16+2*m_bitRate*m_prescaler);
     setFreqKHz( freq/1e3 );

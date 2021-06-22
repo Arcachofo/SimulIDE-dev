@@ -36,11 +36,15 @@ class MAINMODULE_EXPORT McuTwi : public McuModule, public TwiModule
 
         virtual void initialize() override;
 
+        virtual void readByte() override{ *m_dataReg = m_rxReg; }
+
         virtual void writeAddrReg( uint8_t val ){;}
         virtual void writeStatus( uint8_t val ){;}
         virtual void writeTwiReg( uint8_t val ){;}
 
     protected:
+        virtual void updateFreq() {;}
+
         uint8_t* m_addrReg;
 
         uint8_t m_prescaler;
