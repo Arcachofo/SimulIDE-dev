@@ -179,5 +179,5 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 void AvrTwi::updateFreq()
 {
     double freq = m_mcu->freqMHz()*1e6/(16+2*m_bitRate*m_prescaler);
-    setFreqKHz( freq/1e3 );
+    if( freq != m_freq ) setFreqKHz( freq/1e3 );
 }

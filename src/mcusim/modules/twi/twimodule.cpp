@@ -260,7 +260,11 @@ void TwiModule::voltChanged() // Used by slave
 
 void TwiModule::setMode( twiMode_t mode )
 {
-    if( mode == TWI_MASTER ) Simulator::self()->addEvent( m_clockPeriod, this ); // Start Clock
+    if( mode == TWI_MASTER )
+    {
+        Simulator::self()->cancelEvents( this );
+        Simulator::self()->addEvent( m_clockPeriod, this ); // Start Clock
+    }
 
     m_scl->changeCallBack( this, mode == TWI_SLAVE );
     m_sda->changeCallBack( this, mode == TWI_SLAVE );
@@ -294,7 +298,7 @@ void TwiModule::sheduleSDA( bool state )
 {
     m_sheduleSDA = true;
     m_nextSDA = state;
-    Simulator::self()->addEvent( m_clockPeriod/2, this );
+    Simulator::self()->addEvent( m_clockPeriod/4, this );
 }
 
 void TwiModule::readBit()
@@ -311,7 +315,8 @@ void TwiModule::writeBit()
     bool bit = m_txReg>>m_bitPtr & 1;
     m_bitPtr--;
 
-    setSDA( bit );
+    if( m_mode == TWI_MASTER ) setSDA( bit );
+    else                       sheduleSDA( bit );
 }
 
 void TwiModule::readByte()
