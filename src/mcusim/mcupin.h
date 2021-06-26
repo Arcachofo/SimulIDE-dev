@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
 
-        virtual bool getInpState() override;
+        //virtual bool getInpState() override;
 
         ///Pin* pin() const { return ( static_cast<Pin*>(m_ePin[0]) ); }
 

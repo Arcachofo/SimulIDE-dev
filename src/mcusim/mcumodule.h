@@ -20,13 +20,14 @@
 #ifndef MCUMODULE_H
 #define MCUMODULE_H
 
-#include "e-element.h"
+#include <QString>
+
 #include "mcutypes.h"
 #include "regsignal.h"
 
 class eMcu;
 
-class MAINMODULE_EXPORT McuModule : public eElement
+class MAINMODULE_EXPORT McuModule
 {
         friend class McuCreator;
 

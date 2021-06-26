@@ -23,6 +23,7 @@
 
 McuAdc::McuAdc( eMcu* mcu, QString name )
       : McuModule( mcu, name )
+      , eElement( name )
 {
     m_ADCL = NULL;
     m_ADCH = NULL;

@@ -31,6 +31,8 @@ IoPin::IoPin(int angle, const QPoint pos, QString id, int index, Component* pare
     m_outState    = false;
     m_stateZ   = false;
 
+    m_inpHighV = 2.5;
+    m_inpLowV  = 2.5;
     m_outHighV = cero_doub;
     m_outLowV  = cero_doub;
     m_outVolt  = cero_doub;
@@ -103,7 +105,7 @@ void IoPin::setPinMode( pinMode_t mode )
     }
     else if( mode == open_col )
     {
-        m_vddAdmit = cero_doub;
+        m_vddAdmit = 0;
     }
     updtState();
     if( m_pinMode >= output ) IoPin::setOutState( m_outState );

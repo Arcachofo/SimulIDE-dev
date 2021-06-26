@@ -24,6 +24,7 @@
 
 McuWdt::McuWdt( eMcu* mcu, QString name )
       : McuModule( mcu, name )
+      , eElement( name )
 {
 }
 

@@ -219,7 +219,7 @@ void Simulator::solveCircuit()
         if( m_state < SIM_RUNNING ) break;
         if( m_maxNlstp ) { if( m_NLstep >= m_maxNlstp ) { m_warning = 1; break; } }
     }
-    if( m_state < SIM_RUNNING ) return;
+    ///if( m_state < SIM_RUNNING ) return;
 //        if( (m_maxNlSteps == 0) && (m_noLinSteps>1) )qDebug() << "Simulator::runCircuit m_noLinSteps" << m_noLinSteps;
     m_NLstep = 0;
     while( m_voltChanged )

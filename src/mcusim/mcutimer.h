@@ -23,11 +23,12 @@
 #include<QHash>
 
 #include "mcumodule.h"
+#include "e-element.h"
 
 class eMcu;
 class McuOcUnit;
 
-class MAINMODULE_EXPORT McuTimer : public McuModule
+class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
 {
         friend class McuCreator;
         friend class McuOcUnit;

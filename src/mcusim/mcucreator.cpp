@@ -32,7 +32,7 @@
 
 // Cores
 #include "avrcore.h"
-#include "avrpin.h"
+#include "avrport.h"
 #include "avrtimer.h"
 #include "avrocunit.h"
 #include "avrinterrupt.h"
@@ -279,8 +279,11 @@ void McuCreator::createPort( QDomElement* p )
     QString name = p->attribute( "name" );
     uint8_t numPins = p->attribute( "pins" ).toUInt(0,0);
 
-    McuPort* port = new McuPort( m_mcuComp, mcu, name, numPins );
+    McuPort* port;;
+    if( m_core == "AVR" ) port = new AvrPort( mcu, name, numPins );
+    else                  port = new McuPort( mcu, name, numPins );
     mcu->m_ports.m_portList.insert( name, port );
+    port->createPins( m_mcuComp );
 
     uint16_t addr = 0;
     if( p->hasAttribute( "outreg" ) ) // Connect to PORT Out Register

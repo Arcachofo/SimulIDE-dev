@@ -21,11 +21,12 @@
 #define MCUADC_H
 
 #include "mcumodule.h"
+#include "e-element.h"
 
 class eMcu;
 class McuPin;
 
-class MAINMODULE_EXPORT McuAdc : public McuModule
+class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
 {
         friend class McuCreator;
 

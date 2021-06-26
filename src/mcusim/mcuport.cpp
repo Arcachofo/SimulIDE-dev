@@ -22,8 +22,9 @@
 #include "mcu.h"
 #include "e_mcu.h"
 
-McuPort::McuPort( Mcu* mcuComp, eMcu* mcu, QString name, uint8_t numPins )
+McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
        : McuModule( mcu, name )
+       , eElement( name )
 {
     m_numPins = numPins;
 
@@ -34,14 +35,13 @@ McuPort::McuPort( Mcu* mcuComp, eMcu* mcu, QString name, uint8_t numPins )
     m_inAddr  = 0;
     m_dirAddr = 0;
     m_dirInv  = false;
-
-    createPins( mcuComp );
 }
 
 McuPort::~McuPort()
 {
-    for( int i=0; i<m_numPins; ++i ) delete m_pins[i];
-    m_pins.clear();
+    /*for( int i=0; i<m_numPins; ++i ) delete m_pins[i];
+    m_numPins = 0;
+    m_pins.clear();*/
 }
 
 void McuPort::initialize()

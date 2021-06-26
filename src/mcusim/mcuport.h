@@ -23,19 +23,20 @@
 #include<QHash>
 
 #include "mcumodule.h"
+#include "e-element.h"
 
 class Mcu;
 class eMcu;
 class McuPin;
 class Component;
 
-class MAINMODULE_EXPORT McuPort : public McuModule
+class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
 {
         friend class McuCreator;
         friend class McuPorts;
 
     public:
-        McuPort( Mcu* mcuComp, eMcu* mcu, QString name, uint8_t numPins );
+        McuPort( eMcu* mcu, QString name, uint8_t numPins );
         ~McuPort();
 
         virtual void initialize() override;

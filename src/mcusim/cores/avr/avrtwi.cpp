@@ -96,6 +96,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
     if( ack && !clearTwint && !newStop && !newStart )
     {
         if( m_mode != TWI_SLAVE ) setMode( TWI_SLAVE );
+        m_sendACK = ack;
         return;
     }
 
@@ -120,6 +121,7 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 
 void AvrTwi::configureB( uint8_t val ) // TWBR is being written
 {
+    if( m_bitRate == val ) return;
     m_bitRate = val;
     updateFreq();
 }
@@ -133,9 +135,12 @@ void AvrTwi::writeAddrReg( uint8_t newTWAR ) // TWAR is being written
 void AvrTwi::writeStatus( uint8_t newTWSR ) // TWSR Status Register is being written
 {
     newTWSR &= 0b00000011;
-    m_prescaler = m_prescList[newTWSR];
-    updateFreq();
-
+    uint8_t prescaler = m_prescList[newTWSR];
+    if( m_prescaler != prescaler )
+    {
+        m_prescaler = prescaler;
+        updateFreq();
+    }
     m_mcu->m_regOverride = newTWSR | (*m_statReg & 0b11111100); // Preserve Status bits
 }
 
@@ -170,14 +175,26 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
     {
         clearRegBits( m_TWSTO ); // Clear TWSTO bit
     }
-    else if( (state == TWI_MRX_DATA_ACK) || (state == TWI_MRX_DATA_NACK) ) // Data received
+    else
     {
-        *m_dataReg = m_rxReg; // Save data received into TWDR
+        if( m_mode == TWI_MASTER )
+        {
+            if( (state == TWI_MRX_DATA_ACK) || (state == TWI_MRX_DATA_NACK) ) // Data received
+            {
+                *m_dataReg = m_rxReg; // Save data received into TWDR
+            }
+        }
+        else // Slave
+        {
+            if( (state == TWI_SRX_ADR_DATA_ACK) || (state == TWI_SRX_ADR_DATA_NACK)
+             || (state == TWI_SRX_GEN_DATA_ACK) || (state == TWI_SRX_GEN_DATA_NACK) )
+                *m_dataReg = m_rxReg; // Save data received into TWDR
+        }
     }
 }
 
 void AvrTwi::updateFreq()
 {
     double freq = m_mcu->freqMHz()*1e6/(16+2*m_bitRate*m_prescaler);
-    if( freq != m_freq ) setFreqKHz( freq/1e3 );
+    setFreqKHz( freq/1e3 );
 }

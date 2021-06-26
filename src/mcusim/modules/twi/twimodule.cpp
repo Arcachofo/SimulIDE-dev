@@ -55,10 +55,16 @@ void TwiModule::keepClocking()
 
 void TwiModule::runEvent()
 {
-    if( m_sheduleSDA && (m_mode == TWI_SLAVE) ) // Used by Slave to set SDA state at 1/2 Clock
+    if( m_sheduleSDA) // Used by Slave to set SDA state at 1/2 Clock
     {
         setSDA( m_nextSDA );
         m_sheduleSDA = false;
+        return;
+    }
+    if( m_sheduleSCL) // Used by Slave to set SDA state at 1/2 Clock
+    {
+        setSCL( m_nextSCL );
+        m_sheduleSCL = false;
         return;
     }
     if( m_mode != TWI_MASTER ) return;
@@ -87,7 +93,6 @@ void TwiModule::runEvent()
             if( m_sdaState ) setSDA( false ); // Step 1: SDA is High, Lower it
             else if( !clkLow )                // Step 2: SDA Already Low, Lower Clock
             {
-                //if( m_comp ) m_comp->inStateChanged( TWI_MSG+TWI_COND_START ); // Set TWINT
                 setSCL( false ); //keepClocking();
                 setTwiState( TWI_START );
                 m_i2cState = I2C_IDLE;
@@ -96,7 +101,10 @@ void TwiModule::runEvent()
 
         case I2C_WRITE :                // We are Writting data
         {
-            if( clkLow ) writeBit();    // Set SDA while clk is Low
+            if( clkLow )
+            {
+                writeBit();    // Set SDA while clk is Low
+            }
             keepClocking();
         }break;
 
@@ -135,18 +143,22 @@ void TwiModule::runEvent()
 
         case I2C_READACK:            // Read ACK
         {
-            if( m_isAddr ) // ACK after sendind Slave address
+            if( clkLow )
             {
-                if( m_write ) twiState = m_sdaState ? TWI_MTX_ADR_NACK : TWI_MTX_ADR_ACK; // Transmition started
-                else          twiState = m_sdaState ? TWI_MRX_ADR_NACK : TWI_MRX_ADR_ACK; // Reception started
+                setTwiState( m_nextState );
+                m_i2cState = I2C_IDLE;
             }
-            else           // ACK after sendind data
-                twiState = m_sdaState ? TWI_MTX_DATA_NACK : TWI_MTX_DATA_ACK;
-
-            setTwiState( twiState );
-
-            m_i2cState = I2C_IDLE;
-            keepClocking();
+            else
+            {
+                if( m_isAddr ) // ACK after sendind Slave address
+                {
+                    if( m_write ) m_nextState = m_sdaState ? TWI_MTX_ADR_NACK : TWI_MTX_ADR_ACK; // Transmition started
+                    else          m_nextState = m_sdaState ? TWI_MRX_ADR_NACK : TWI_MRX_ADR_ACK; // Reception started
+                }
+                else           // ACK after sendind data
+                    m_nextState = m_sdaState ? TWI_MTX_DATA_NACK : TWI_MTX_DATA_ACK;
+                keepClocking();
+            }
         }break;
 
         case I2C_STOP:           // Send Stop Condition
@@ -253,7 +265,10 @@ void TwiModule::voltChanged() // Used by slave
             sheduleSDA( releaseSda );
             m_rxReg = 0;
         }
-        if( m_i2cState == I2C_READ ) writeBit();
+        if( m_i2cState == I2C_READ )
+        {
+           writeBit();
+        }
     }
     m_lastSDA = m_sdaState;
 }
@@ -269,7 +284,7 @@ void TwiModule::setMode( twiMode_t mode )
     m_scl->changeCallBack( this, mode == TWI_SLAVE );
     m_sda->changeCallBack( this, mode == TWI_SLAVE );
 
-    setSCL( true );
+    sheduleSCL( true ); // Avoid false stop condition
     setSDA( true );
 
     m_mode = mode;
@@ -298,6 +313,13 @@ void TwiModule::sheduleSDA( bool state )
 {
     m_sheduleSDA = true;
     m_nextSDA = state;
+    Simulator::self()->addEvent( m_clockPeriod/4, this );
+}
+
+void TwiModule::sheduleSCL( bool state )
+{
+    m_sheduleSCL = true;
+    m_nextSCL = state;
     Simulator::self()->addEvent( m_clockPeriod/4, this );
 }
 

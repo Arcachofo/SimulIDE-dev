@@ -78,6 +78,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         inline void setSCL( bool st );
         inline void setSDA( bool st );
         inline void sheduleSDA( bool state );
+        inline void sheduleSCL( bool state );
         inline void keepClocking();
         inline void readBit();
         inline void writeBit();
@@ -94,6 +95,8 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         uint64_t m_clockPeriod;   // TWI Clock half period in ps
 
         bool m_sheduleSDA;
+        bool m_sheduleSCL;
+        bool m_nextSCL;
         bool m_lastSDA;
         bool m_nextSDA;
         bool m_sdaState;

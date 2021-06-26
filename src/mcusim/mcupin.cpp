@@ -82,10 +82,10 @@ void McuPin::setOutState( bool state, bool )
     if( m_outCtrl ) IoPin::setOutState( state, true );
 }
 
-bool McuPin::getInpState()
+/*bool McuPin::getInpState()
 {
     return m_inpState;
-}
+}*/
 
 void McuPin::setDirection( bool out )
 {

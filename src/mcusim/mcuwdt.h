@@ -21,10 +21,11 @@
 #define MCUWDT_H
 
 #include "mcumodule.h"
+#include "e-element.h"
 
 class eMcu;
 
-class MAINMODULE_EXPORT McuWdt : public McuModule
+class MAINMODULE_EXPORT McuWdt : public McuModule, public eElement
 {
         friend class McuCreator;
 

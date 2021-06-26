@@ -847,7 +847,7 @@ void Circuit::removeComp( Component* comp )
         removeItem( comp );
         m_compList.removeOne( comp );
     }
-    delete comp;
+    /// delete comp; // crash in recent versions bcos already removed in removeItem( comp );
 }
 
 void Circuit::compRemoved( bool removed )

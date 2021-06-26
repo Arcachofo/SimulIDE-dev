@@ -25,6 +25,7 @@
 
 McuTimer::McuTimer( eMcu* mcu, QString name )
         : McuModule( mcu, name )
+        , eElement( name )
 {
     m_number = name.right(1).toInt();
 

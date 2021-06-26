@@ -20,7 +20,6 @@
 #include "mcumodule.h"
 
 McuModule::McuModule( eMcu* mcu, QString name )
-         : eElement( name )
 {
     m_mcu = mcu;
     m_name = name;
