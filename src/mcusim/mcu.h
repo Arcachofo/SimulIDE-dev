@@ -69,6 +69,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
     public slots:
         void slotLoad();
         void slotReload();
+        void slotOpenTerm();
         void slotOpenMcuMonitor();
 
     protected:

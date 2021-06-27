@@ -43,10 +43,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool drawGrid();
         void setDrawGrid( bool draw );
         
-        bool showScroll();
+        bool showScroll() { return m_showScroll; }
         void setShowScroll( bool show );
         
-        bool animate();
+        bool animate() { return m_animate; }
         void setAnimate( bool an );
 
         int autoBck();
@@ -56,10 +56,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void removeComp( Component* comp );
         void remove();
         bool deleting() { return m_deleting; }
-        void compRemoved( bool removed );
+        void compRemoved( bool removed ) { m_compRemoved = removed; }
         void saveState();
         void unSaveState();
-        void setChanged();
+        void setChanged() { m_changed = true; }
 
         void deselectAll();
 
@@ -80,8 +80,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void updateConnectors();
         Connector* getNewConnector() { return new_connector; }
 
-        QList<Component*>* compList();
-        QList<Component*>* conList();
+        QList<Component*>* compList() { return &m_compList; }
+        QList<Component*>* conList()  { return &m_conList; }
 
         Component* getComponent( QString name );
         Component* getCompById( QString id );
@@ -90,8 +90,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         bool is_constarted() { return m_conStarted ; }
 
-        bool  pasting();
-        QPointF deltaMove();
+        bool  pasting() { return m_pasting; }
+        QPointF deltaMove() { return m_deltaMove; }
         
         void addPin( Pin* pin, QString pinId );
         void updatePin( ePin* epin, QString newId );

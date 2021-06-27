@@ -27,9 +27,9 @@ IoComponent::IoComponent( QObject* parent, QString type, QString id)
 {
     m_inHighV = 2.5;
     m_inLowV  = 2.5;
-    m_ouHighV   = 5;
-    m_ouLowV    = 0;
-    m_outValue   = 0;
+    m_ouHighV = 5;
+    m_ouLowV  = 0;
+    m_outValue = 0;
 
     m_inImp = 1e9;
     m_ouImp   = 40;

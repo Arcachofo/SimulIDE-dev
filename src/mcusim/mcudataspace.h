@@ -100,7 +100,7 @@ class MAINMODULE_EXPORT DataSpace
         }
         uint8_t getBitMask( QStringList bitList ) // Get mask for a group of bits in a Register
         {
-            uint8_t bitMask;
+            uint8_t bitMask = 0;
             for( QString bitName : bitList ) bitMask |= m_bitMasks.value( bitName );
             return bitMask;
         }

@@ -33,6 +33,7 @@
 #include "mainwindow.h"
 #include "componentselector.h"
 #include "mcumonitor.h"
+#include "serialterm.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
 
@@ -279,13 +280,13 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 
     QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data") );
     connect( saveDaAction, SIGNAL(triggered()),
-                     this, SLOT(saveData()), Qt::UniqueConnection );
+                     this, SLOT(saveData()), Qt::UniqueConnection );*/
 
-    QAction* openTerminal = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
+    /*QAction* openTerminal = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
     connect( openTerminal, SIGNAL(triggered()),
-                     this, SLOT(slotOpenTerm()), Qt::UniqueConnection );
+                     this, SLOT(slotOpenTerm()), Qt::UniqueConnection );*/
 
-    QAction* openSerial = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Port.") );
+    /*QAction* openSerial = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Port.") );
     connect( openSerial, SIGNAL(triggered()),
                    this, SLOT(slotOpenSerial()), Qt::UniqueConnection );*/
 
@@ -305,6 +306,19 @@ void Mcu::slotOpenMcuMonitor()
         m_mcuMonitor->setWindowTitle( idLabel() );
     }
     m_mcuMonitor->show();
+}
+
+void Mcu::slotOpenTerm()
+{
+    Component* ser = Circuit::self()->createItem( "SerialTerm", "SerialTerm-"+Circuit::self()->newSceneId());
+    ser->setPos( pos() );
+    Circuit::self()->addItem( ser );
+
+    Component* comp = this;
+    if( this->isMainComp() ) comp = m_subcircuit;
+
+    SerialTerm* serial = static_cast<SerialTerm*>(ser);
+    serial->setMcuId( comp->objectName() );
 }
 
 void Mcu::addPin( QString id, QString type, QString label,

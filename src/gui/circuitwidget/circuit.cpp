@@ -847,11 +847,8 @@ void Circuit::removeComp( Component* comp )
         removeItem( comp );
         m_compList.removeOne( comp );
     }
-    /// delete comp; // crash in recent versions bcos already removed in removeItem( comp );
+    delete comp; // crash in recent versions bcos already removed in removeItem( comp );
 }
-
-void Circuit::compRemoved( bool removed )
-{ m_compRemoved = removed; }
 
 void Circuit::remove() // Remove everything ( Clear Circuit )
 {
@@ -929,8 +926,6 @@ void Circuit::saveChanges()
     if( saveDom( m_backupPath, &m_domDoc ) )
         MainWindow::self()->settings()->setValue( "backupPath", m_backupPath );
 }
-
-void Circuit::setChanged() { m_changed = true; }
 
 void Circuit::undo()
 {
@@ -1037,9 +1032,6 @@ void Circuit::paste( QPointF eventpoint )
     m_pasting = false;
     setAnimate( animate );
 }
-
-bool  Circuit::pasting() { return m_pasting; }
-QPointF Circuit::deltaMove(){ return m_deltaMove; }
 
 void Circuit::newconnector( Pin*  startpin )
 {
@@ -1323,7 +1315,6 @@ void Circuit::setDrawGrid( bool draw )
     update();
 }
 
-bool Circuit::showScroll() { return m_showScroll; }
 void Circuit::setShowScroll( bool show )
 {
     m_showScroll = show;
@@ -1341,7 +1332,6 @@ void Circuit::setShowScroll( bool show )
     }
 }
 
-bool Circuit::animate() { return m_animate; }
 void Circuit::setAnimate( bool an ) { m_animate = an; update(); }
 
 int Circuit::autoBck() { return MainWindow::self()->autoBck(); }
@@ -1353,9 +1343,6 @@ void Circuit::setAutoBck( int secs )
 
     MainWindow::self()->setAutoBck( secs );
 }
-
-QList<Component*>* Circuit::compList() { return &m_compList; }
-QList<Component*>* Circuit::conList()  { return &m_conList; }
 
 QString Circuit::newSceneId() { return QString("%1").arg(++m_seqNumber) ; }
 

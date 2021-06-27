@@ -38,6 +38,7 @@ void McuSpi::initialize()
 
 void McuSpi::setMode( spiMode_t mode )
 {
+    SpiModule::setMode(  mode );
     /*switch (mode) {
     case SPI_OFF:
         {
