@@ -59,7 +59,6 @@ class MAINMODULE_EXPORT Mcu : public Chip
         virtual void updateStep() override;
         virtual void attach() override;
         virtual void remove() override;
-        virtual void setLogicSymbol( bool ls ) override;
 
         void load( QString fileName );
 

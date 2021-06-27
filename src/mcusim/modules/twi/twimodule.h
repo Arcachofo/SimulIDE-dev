@@ -57,7 +57,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         virtual void setFreqKHz( double f );
 
         virtual void startWrite(){;} // Notify posible child class
-        virtual void writeByte();
+        virtual void writeByte() { m_bitPtr = 7;}
         virtual void readByte();
 
         uint8_t byteReceived() { return m_rxReg; }
@@ -66,17 +66,16 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         void setSclPin( IoPin* pin );
         void setMode( twiMode_t mode );
 
-        void masterStart();
+        void masterStart() { m_i2cState = I2C_START; }
         void masterWrite( uint8_t data, bool isAddr, bool write );
         void masterRead( bool ack );
 
-        virtual void I2Cstop();
-
-        // RegSignal<uint8_t> twiState; // Signal to propagate TWI state
+        virtual void I2Cstop() { m_i2cState = I2C_STOP; }
 
     protected:
         inline void setSCL( bool st );
         inline void setSDA( bool st );
+        inline void getSdaState();
         inline void sheduleSDA( bool state );
         inline void sheduleSCL( bool state );
         inline void keepClocking();
@@ -85,8 +84,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         inline void waitACK();
         inline void ACK();
 
-        virtual void setTwiState( twiState_t state );
-        void getSdaState();
+        virtual void setTwiState( twiState_t state ) { m_twiState = state; }
 
         uint m_address;           // Device Address
         int  m_addrBits;

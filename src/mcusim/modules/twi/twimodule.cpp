@@ -81,14 +81,26 @@ void TwiModule::runEvent()
     Simulator::self()->addEvent( m_clockPeriod, this );
     if( m_i2cState == I2C_IDLE ) return;
 
-    getSdaState();                     // Update state of SDA pin
+    getSdaState();               // Update state of SDA pin
 
     twiState_t twiState;
     switch( m_i2cState )
     {
         case I2C_IDLE: return;
 
-        case I2C_START :               // Send Start Condition
+        case I2C_STOP:           // Send Stop Condition
+        {
+            if     (  m_sdaState && clkLow )  setSDA( false ); // Step 1: Lower SDA
+            else if( !m_sdaState && clkLow )  keepClocking();  // Step 2: Raise Clock
+            else if( !m_sdaState && !clkLow ) setSDA( true );  // Step 3: Raise SDA
+            else if(  m_sdaState && !clkLow )                  // Step 4: Operation Finished
+            {
+                setTwiState( TWI_NO_STATE ); // Set State first so old m_i2cState is still avilable
+                m_i2cState = I2C_IDLE;
+            }
+        } break;
+
+        case I2C_START :         // Send Start Condition
         {
             if( m_sdaState ) setSDA( false ); // Step 1: SDA is High, Lower it
             else if( !clkLow )                // Step 2: SDA Already Low, Lower Clock
@@ -99,7 +111,17 @@ void TwiModule::runEvent()
             }
         }break;
 
-        case I2C_WRITE :                // We are Writting data
+        case I2C_READ:            // We are Reading data
+        {
+            if( !clkLow )         // Read bit while clk is high
+            {
+                readBit();
+                if( m_bitPtr == 8 ) readByte();
+            }
+            keepClocking();
+        }break;
+
+        case I2C_WRITE :          // We are Writting data
         {
             if( clkLow )
             {
@@ -108,17 +130,7 @@ void TwiModule::runEvent()
             keepClocking();
         }break;
 
-        case I2C_READ:                  // We are Reading data
-        {
-            if( !clkLow )               // Read bit while clk is high
-            {
-                readBit();
-                if( m_bitPtr == 8 ) readByte();
-            }
-            keepClocking();
-        }break;
-
-        case I2C_ACK:                   // Send ACK
+        case I2C_ACK:             // Send ACK
         {
             if( clkLow )
             {
@@ -128,7 +140,7 @@ void TwiModule::runEvent()
             keepClocking();
         }break;
 
-        case I2C_ENDACK:               // We sent ACK, release SDA
+        case I2C_ENDACK:         // We sent ACK, release SDA
         {
             if( clkLow )
             {
@@ -141,7 +153,7 @@ void TwiModule::runEvent()
             else keepClocking();
         }break;
 
-        case I2C_READACK:            // Read ACK
+        case I2C_READACK:         // Read ACK
         {
             if( clkLow )
             {
@@ -160,18 +172,6 @@ void TwiModule::runEvent()
                 keepClocking();
             }
         }break;
-
-        case I2C_STOP:           // Send Stop Condition
-        {
-            if     (  m_sdaState && clkLow )  setSDA( false ); // Step 1: Lower SDA
-            else if( !m_sdaState && clkLow )  keepClocking();  // Step 2: Raise Clock
-            else if( !m_sdaState && !clkLow ) setSDA( true );  // Step 3: Raise SDA
-            else if(  m_sdaState && !clkLow )                  // Step 4: Operation Finished
-            {
-                setTwiState( TWI_NO_STATE ); // Set State first so old m_i2cState is still avilable
-                m_i2cState = I2C_IDLE;
-            }
-        }
     }
 }
 
@@ -293,21 +293,9 @@ void TwiModule::setMode( twiMode_t mode )
     m_toggleScl  = false;
 }
 
-void TwiModule::setTwiState( twiState_t state )
-{
-    m_twiState = state;
-    //twiState.emitValue( state );
-}
-
-void TwiModule::getSdaState()
-{
-    m_sdaState = m_sda->getInpState();
-
-    m_sda->setPinState( m_sdaState? input_high:input_low ); // High : Low colors
-}
-
-void TwiModule::setSCL( bool st ) { m_scl->setOutState( st, true ); }
-void TwiModule::setSDA( bool st ) { m_sda->setOutState( st, true ); }
+void TwiModule::setSCL( bool st ) { m_scl->setOutState( st ); }
+void TwiModule::setSDA( bool st ) { m_sda->setOutState( st ); }
+void TwiModule::getSdaState() { m_sdaState = m_sda->getInpState(); }
 
 void TwiModule::sheduleSDA( bool state )
 {
@@ -347,8 +335,6 @@ void TwiModule::readByte()
     ACK();
 }
 
-void TwiModule::writeByte() { m_bitPtr = 7;}
-
 void TwiModule::waitACK()
 {
     setSDA( true );
@@ -361,8 +347,6 @@ void TwiModule::ACK()
     m_lastState = m_i2cState;
     m_i2cState = I2C_ACK;
 }
-
-void TwiModule::masterStart() { m_i2cState = I2C_START; }
 
 void TwiModule::masterWrite( uint8_t data , bool isAddr, bool write )
 {
@@ -383,8 +367,6 @@ void TwiModule::masterRead( bool ack )
     m_rxReg = 0;
     m_i2cState = I2C_READ;
 }
-
-void TwiModule::I2Cstop() { m_i2cState = I2C_STOP; }
 
 void TwiModule::setFreqKHz( double f )
 {

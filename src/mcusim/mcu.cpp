@@ -70,7 +70,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
 
     m_mcuMonitor = NULL;
-
     m_autoLoad  = false;
 
     m_icColor = QColor( 20, 30, 60 );
@@ -147,19 +146,6 @@ QList<propGroup_t> Mcu::propGroups()
     mainGroup.propList.append( {"Program", tr("Fimware"),""} );
     mainGroup.propList.append( {"Auto_Load", tr("Auto Load Firmware at Start"),""} );
     return {mainGroup};
-}
-
-void Mcu::setLogicSymbol( bool ls )
-{
-    Chip::setLogicSymbol( ls );
-
-    //QFontMetrics fm( m_valLabel->font() );
-    //fm.width( m_valLabel->text() );
-
-    setValLabelX( m_area.width()/2-3 );
-    setValLabelY( m_area.height()/2+m_valLabel->textWidth()/2 );
-    setValLabRot(-90 );
-    setValLabelPos();
 }
 
 QString Mcu::program() { return m_eMcu.getFileName(); }
