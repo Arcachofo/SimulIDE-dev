@@ -361,9 +361,8 @@ void RamTable::addToWatch( QTableWidgetItem* it )
     }
 }
 
-void RamTable::setRegisters()
+void RamTable::setRegisters( QStringList regs )
 {
-    QStringList regs = m_processor->getRegList();
     regs.sort();
     for( QString reg : regs ) m_registerModel->appendRow( new QStandardItem(reg) );
 }

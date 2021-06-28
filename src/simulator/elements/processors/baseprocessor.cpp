@@ -106,7 +106,7 @@ void BaseProcessor::setDataFile( QString datafile )
 { 
     m_dataFile = datafile;
     setRegisters();
-    m_ramTable->setRegisters();
+    m_ramTable->setRegisters( m_regList );
 }
 
 int BaseProcessor::status() { return getRamValue( m_statusReg ); }

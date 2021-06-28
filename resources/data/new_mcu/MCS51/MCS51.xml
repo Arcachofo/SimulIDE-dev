@@ -3,7 +3,7 @@
 <parts>
             
     <datablock name="GPR" start="0x0000" end="0x007F"/>
-    <regblock  name="SFR" start="0x0080" end="0x00FF" offset="0x0080">
+    <regblock  name="SFR" start="0x0080" end="0x00FF" offset="0x0080" streg="PSW">
         <register name="P0"     addr="0"   bits="0-7" reset="0xFF"/>
         <register name="SP"     addr="1"   bits="" reset="7"/>
         <register name="DPL"    addr="2"   bits=""/>
@@ -40,7 +40,6 @@
         <register name="B"      addr="112" bits=""/>
     </regblock>
     <stack  spreg="SP" increment="preinc" />
-    <status streg="PSW" />
     
     <interrupts enable="EA">
         <interrupt name="RESET"                                         vector="0x0000" />

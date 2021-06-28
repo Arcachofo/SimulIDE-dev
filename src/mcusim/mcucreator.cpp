@@ -72,7 +72,10 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
     m_basePath = QFileInfo( dataFile ).absolutePath();
     dataFile = QFileInfo( dataFile ).fileName();
 
-    return processFile( dataFile );
+    int error = processFile( dataFile );
+
+    if( error == 0 ) mcu->getRamTable()->setRegisters( mcu->m_regInfo.keys() );
+    return error;
 }
 
 int McuCreator::processFile( QString fileName )
@@ -98,7 +101,7 @@ int McuCreator::processFile( QString fileName )
         if     ( el.tagName() == "regblock" )   createRegisters( &el );
         else if( el.tagName() == "datablock" )  createDataBlock( &el );
         else if( el.tagName() == "stack" )      m_stackEl = el;
-        else if( el.tagName() == "status" )     createStatusReg( &el );
+        //else if( el.tagName() == "status" )     createStatusReg( &el );
         else if( el.tagName() == "interrupts" ) createInterrupts( &el );
         else if( el.tagName() == "port" )       createPort( &el );
         else if( el.tagName() == "timer" )      createTimer( &el );
@@ -156,6 +159,8 @@ void McuCreator::createRegisters( QDomElement* e )
     uint16_t regStart = e->attribute("start").toUInt(0,0);
     uint16_t regEnd   = e->attribute("end").toUInt(0,0);
     uint16_t offset   = e->attribute("offset").toUInt(0,0);
+    QString stReg;
+    if( e->hasAttribute( "streg" ) ) stReg = e->attribute( "streg" );
 
     if( regEnd >= mcu->m_ramSize )
     {
@@ -205,6 +210,15 @@ void McuCreator::createRegisters( QDomElement* e )
                         mcu->m_bitMasks.insert( bitName, 1<<i );
                         mcu->m_bitRegs.insert( bitName, regAddr );
                     }
+                    if( (!stReg.isEmpty()) && ( regName == stReg ) )
+                    {
+                        mcu->m_sregAddr = regAddr;
+                        mcu->m_sreg.resize( 8 );
+
+                        mcu->watchRegister( regAddr, R_WRITE, (DataSpace*)mcu, &DataSpace::writeStatus );
+                        mcu->watchRegister( regAddr, R_READ,  (DataSpace*)mcu, &DataSpace::readStatus );
+                        mcu->getRamTable()->setStatusBits( bitList );
+                    }
                 }
             }
         }else if( el.tagName() == "alias" )
@@ -221,11 +235,7 @@ void McuCreator::createStatusReg( QDomElement* s ) // CReate STATUS Reg
 {
     QString sregName = s->attribute( "streg" );
     uint16_t addr = mcu->m_regInfo.value( sregName ).address;
-    mcu->m_sregAddr = addr;
-    mcu->m_sreg.resize( 8 );
 
-    mcu->watchRegister( addr, R_WRITE, (DataSpace*)mcu, &DataSpace::writeStatus );
-    mcu->watchRegister( addr, R_READ,  (DataSpace*)mcu, &DataSpace::readStatus );
 }
 
 void McuCreator::createInterrupts( QDomElement* i )

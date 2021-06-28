@@ -43,7 +43,7 @@ class RamTable : public QWidget, private Ui::RamTable
 
         void setStatusBits( QStringList statusBits );
 
-        void setRegisters();
+        void setRegisters( QStringList regs );
         void setDebugger( BaseDebugger*  deb );
         void remDebugger( BaseDebugger*  deb );
 
