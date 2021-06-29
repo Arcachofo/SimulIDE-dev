@@ -78,7 +78,7 @@ void I51ExtInt::exitInt() // Exit from this interrupt
 //_________________________________________________________________
 
 I51T1Int::I51T1Int( QString name, uint16_t vector, eMcu* mcu )
-         : Interrupt( name, vector, mcu )
+        : Interrupt( name, vector, mcu )
 {}
 I51T1Int::~I51T1Int(){}
 
@@ -93,5 +93,5 @@ void I51T1Int::raise( uint8_t v )
     if( !m_enable ) return;
 
     if( m_usart ) m_usart->step();
-    Interrupt::raise( v ); // Low  state: raise
+    Interrupt::raise( v );
 }

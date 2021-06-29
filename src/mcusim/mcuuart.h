@@ -38,7 +38,6 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
 
     protected:
         uint8_t* m_rxRegister;
-        //uint8_t* m_txRegister;
 };
 
 

@@ -43,7 +43,6 @@ class MAINMODULE_EXPORT Interrupt
         void enableFlag( uint8_t en ) { m_enable = en; }
         void setPriority( uint8_t p ) { m_priority = p; }
         void setMode( uint8_t mod ){ m_mode = mod;}
-        //void readFlag( uint8_t p );
 
         void clearFlag();
 

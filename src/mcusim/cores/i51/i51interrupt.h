@@ -61,7 +61,6 @@ class MAINMODULE_EXPORT I51T1Int : public Interrupt
 
         virtual void reset() override;
         virtual void raise( uint8_t v ) override;
-        //virtual void exitInt() override;
 
         void setUsart( I51Usart* usart ) { m_usart = usart; }
 

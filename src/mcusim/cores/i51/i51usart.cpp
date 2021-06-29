@@ -85,7 +85,7 @@ void I51Usart::configureA( uint8_t val ) //SCON
     else t1Int->setUsart( NULL );
 }
 
-void I51Usart::step( uint8_t )
+void I51Usart::step()
 {
     if( !m_useTimer ) return;
 

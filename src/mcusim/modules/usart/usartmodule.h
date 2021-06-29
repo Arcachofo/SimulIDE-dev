@@ -45,8 +45,6 @@ class MAINMODULE_EXPORT UsartModule
         UsartModule( QString name );
         ~UsartModule();
 
-        virtual void step( uint8_t ){;}
-
         virtual uint8_t getBit9(){return 0;}
         virtual void    setBit9( uint8_t bit ){;}
 

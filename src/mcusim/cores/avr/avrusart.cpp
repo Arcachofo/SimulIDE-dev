@@ -90,12 +90,6 @@ void AvrUsart::setBaurrate( uint16_t ubrr )
     setPeriod( 1e6*16*(ubrr+1) ); // period in picoseconds
 }
 
-void AvrUsart::step( uint8_t )
-{
-    m_sender->runEvent();
-    m_receiver->runEvent();
-}
-
 uint8_t AvrUsart::getBit9()
 {
     return getRegBitsVal( UCSRNB, m_bit9Tx );

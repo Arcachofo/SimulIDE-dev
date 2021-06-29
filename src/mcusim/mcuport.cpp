@@ -40,9 +40,6 @@ McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
 
 McuPort::~McuPort()
 {
-    /*for( int i=0; i<m_numPins; ++i ) delete m_pins[i];
-    m_numPins = 0;
-    m_pins.clear();*/
 }
 
 void McuPort::initialize()

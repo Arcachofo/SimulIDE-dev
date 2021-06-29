@@ -32,7 +32,6 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         ~AvrUsart();
 
         virtual void configureA( uint8_t val ) override;
-        virtual void step( uint8_t ) override;
         virtual uint8_t getBit9();
         virtual void setBit9( uint8_t bit );
 
@@ -55,8 +54,6 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         regBits_t m_stopRB;
         regBits_t m_dataRB;
         regBits_t m_u2xn;
-
-        //bool m_timerConnected;
 };
 
 #endif

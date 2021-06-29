@@ -32,7 +32,7 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
         ~I51Usart();
 
         virtual void configureA( uint8_t val ) override;
-        virtual void step( uint8_t v=0 ) override;
+        virtual void step();
         virtual uint8_t getBit9();
         virtual void setBit9( uint8_t bit );
 
