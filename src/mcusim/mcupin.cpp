@@ -112,7 +112,7 @@ void McuPin::setPullup( bool up )
     if( up ) m_vddAdmEx = 1/1e5; // Activate pullup
     else     m_vddAdmEx = 0;     // Deactivate pullup
 
-    update();
+    updtState();
 }
 
 void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example
