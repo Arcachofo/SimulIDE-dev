@@ -231,13 +231,6 @@ void McuCreator::createRegisters( QDomElement* e )
     }
 }
 
-void McuCreator::createStatusReg( QDomElement* s ) // CReate STATUS Reg
-{
-    QString sregName = s->attribute( "streg" );
-    uint16_t addr = mcu->m_regInfo.value( sregName ).address;
-
-}
-
 void McuCreator::createInterrupts( QDomElement* i )
 {
     QString enable = i->attribute("enable");
@@ -350,7 +343,7 @@ void McuCreator::createPort( QDomElement* p )
             setInterrupt( &el, port ); // Pin change interrupt
             if( el.hasAttribute("mask") )
             {
-                uint16_t maskReg = mcu->getRegAddress( p->attribute( "mask" ) );
+                uint16_t maskReg = mcu->getRegAddress( el.attribute( "mask" ) );
                 mcu->watchRegister( maskReg, R_WRITE, port, &McuPort::intMaskChanged );
             }
         }

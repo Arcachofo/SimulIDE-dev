@@ -43,7 +43,6 @@ class MAINMODULE_EXPORT McuCreator
         static void createDataMem( uint32_t size );
         static void createDataBlock( QDomElement* d );
         static void createRegisters( QDomElement* e );
-        static void createStatusReg( QDomElement* s );
         static void createInterrupts( QDomElement* i );
         static void createPort( QDomElement* p );
         static void createTimer( QDomElement* t );
