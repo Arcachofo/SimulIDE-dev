@@ -20,6 +20,7 @@
 #include "mcuwdt.h"
 #include "e_mcu.h"
 #include "mcucore.h"
+#include "mcuinterrupts.h"
 #include "simulator.h"
 
 McuWdt::McuWdt( eMcu* mcu, QString name )
@@ -43,7 +44,7 @@ void McuWdt::runEvent()            // Overflow
 {
     if( !m_enabled ) return;
 
-    if( m_ovfInter ) interrupt.emitValue(1);
+    if( m_ovfInter ) m_interrupt->raise(); // .emitValue(1);
     if( m_ovfReset ) m_mcu->cpu->reset();
 
     Simulator::self()->addEvent( m_ovfPeriod, this );

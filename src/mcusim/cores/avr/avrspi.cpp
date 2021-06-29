@@ -21,6 +21,7 @@
 //#include "mcupin.h"
 #include "iopin.h"
 #include "e_mcu.h"
+#include "mcuinterrupts.h"
 
 AvrSpi::AvrSpi( eMcu* mcu, QString name )
       : McuSpi( mcu, name )
@@ -124,5 +125,5 @@ void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written
 void AvrSpi::endTransaction()
 {
     SpiModule::endTransaction();
-    interrupt.emitValue(1);
+    m_interrupt->raise(); // interrupt.emitValue(1);
 }

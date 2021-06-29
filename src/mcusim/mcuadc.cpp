@@ -19,6 +19,7 @@
 
 #include "mcuadc.h"
 #include "mcupin.h"
+#include "mcuinterrupts.h"
 #include "simulator.h"
 
 McuAdc::McuAdc( eMcu* mcu, QString name )
@@ -45,7 +46,7 @@ void McuAdc::runEvent()
     if( m_ADCL ) *m_ADCL = m_adcValue & 0x00FF;
     if( m_ADCH ) *m_ADCH = (m_adcValue & 0xFF00) >> 8;
 
-    interrupt.emitValue( 1 );
+    m_interrupt->raise(); // .emitValue( 1 );
 
     m_converting = false;
     endConversion();

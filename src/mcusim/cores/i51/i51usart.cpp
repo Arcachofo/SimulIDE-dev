@@ -22,6 +22,7 @@
 #include "usartrx.h"
 #include "mcutimer.h"
 #include "e_mcu.h"
+#include "i51interrupt.h"
 
 #define SCON *m_scon
 
@@ -71,15 +72,17 @@ void I51Usart::configureA( uint8_t val ) //SCON
             break;
     }
 
+    I51T1Int* t1Int = static_cast<I51T1Int*>( m_timer1->getInterrupt() ); //  .connect( this, &I51Usart::step );
     if( m_useTimer )
     {
         if( !m_timerConnected )
         {
             m_timerConnected = true;
-            m_timer1->interrupt.connect( this, &I51Usart::step );
+            t1Int->setUsart( this );
         }
         setPeriod( 0 );
     }
+    else t1Int->setUsart( NULL );
 }
 
 void I51Usart::step( uint8_t )

@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
 
         virtual void initialize() override;
 
-        virtual void configureA( uint8_t val ) override;
+        virtual void configureA( uint8_t newADCSRA ) override;
         virtual void configureB( uint8_t val ) override;
         virtual void setChannel( uint8_t val ) override;
 

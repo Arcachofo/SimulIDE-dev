@@ -31,13 +31,13 @@ AVRInterrupt::AVRInterrupt( QString name, uint16_t vector, eMcu* mcu )
 }
 AVRInterrupt::~AVRInterrupt(){}
 
-void AVRInterrupt::raise( uint8_t v )
+/*void AVRInterrupt::raise()
 {
     //if( m_name == "T1_OVF" )
        // m_name = "T1_OVF";
     //clearRegBits( m_I );// Deactivate Interrupts: SREG.I = 0
     Interrupt::raise( v );
-}
+}*/
 
 void AVRInterrupt::exitInt() // Exit from this interrupt
 {

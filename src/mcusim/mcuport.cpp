@@ -21,6 +21,7 @@
 #include "mcupin.h"
 #include "mcu.h"
 #include "e_mcu.h"
+#include "mcuinterrupts.h"
 
 McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
        : McuModule( mcu, name )
@@ -55,7 +56,7 @@ void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMas
     if( val ) m_pinState |= pinMask;
     else      m_pinState &= ~pinMask;
 
-    if( m_intMask & pinMask ) interrupt.emitValue(1); // Pin change interrupt
+    if( m_intMask & pinMask ) m_interrupt->raise(); // interrupt.emitValue(1); // Pin change interrupt
 
     m_mcu->writeReg( m_inAddr, m_pinState );
 }

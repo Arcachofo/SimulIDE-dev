@@ -20,6 +20,7 @@
 #include "avrtwi.h"
 #include "mcupin.h"
 #include "e_mcu.h"
+#include "mcuinterrupts.h"
 
 AvrTwi::AvrTwi( eMcu* mcu, QString name )
       : McuTwi( mcu, name )
@@ -169,7 +170,7 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 
     *m_statReg &= 0b00000111;      // Clear old state
     *m_statReg |= state;           // Write new state
-    interrupt.emitValue(1);
+    m_interrupt->raise(); //interrupt.emitValue(1);
 
     if( (state == TWI_NO_STATE) && (m_i2cState == I2C_STOP) ) // Stop Condition sent
     {

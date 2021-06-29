@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include "i51interrupt.h"
-#include "i51extint.h"
+#include "i51usart.h"
 
 I51Interrupt::I51Interrupt( QString name, uint16_t vector, eMcu* mcu )
             : Interrupt( name, vector, mcu )
@@ -34,3 +34,64 @@ Interrupt* I51Interrupt::getInterrupt( QString name, uint16_t vector, eMcu* mcu 
     return new Interrupt( name, vector, mcu );
 }
 
+//_________________________________________________________________
+//_________________________________________________________________
+
+I51ExtInt::I51ExtInt( QString name, uint16_t vector, eMcu* mcu )
+         : Interrupt( name, vector, mcu )
+{}
+I51ExtInt::~I51ExtInt(){}
+
+void I51ExtInt::reset()
+{
+    m_lastValue = 0;
+    Interrupt::reset();
+}
+
+void I51ExtInt::raise( uint8_t v )
+{
+    if( !m_enable ) return;
+
+    if( m_mode == 0 )
+    {
+        if( v == 0 ) Interrupt::raise( v ); // Low  state: raise
+        else         m_raised = false;      // High state: stop triggering
+    }
+    else if( m_mode == 1 )
+    {
+        if( (v==0) && m_lastValue ) Interrupt::raise( v ); // Falling edge
+    }
+    m_lastValue = v;
+}
+
+void I51ExtInt::exitInt() // Exit from this interrupt
+{
+    Interrupt::exitInt();
+
+    if( (m_mode == 0) && m_raised ) //In mode 0 keep triggering until pin change state
+        m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
+
+    else if( m_mode == 1 ) Interrupt::clearFlag();
+}
+
+//_________________________________________________________________
+//_________________________________________________________________
+
+I51T1Int::I51T1Int( QString name, uint16_t vector, eMcu* mcu )
+         : Interrupt( name, vector, mcu )
+{}
+I51T1Int::~I51T1Int(){}
+
+void I51T1Int::reset()
+{
+    m_usart = NULL;
+    Interrupt::reset();
+}
+
+void I51T1Int::raise( uint8_t v )
+{
+    if( !m_enable ) return;
+
+    if( m_usart ) m_usart->step();
+    Interrupt::raise( v ); // Low  state: raise
+}

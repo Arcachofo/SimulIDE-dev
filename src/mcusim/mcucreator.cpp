@@ -484,7 +484,8 @@ void McuCreator::createUsart( QDomElement* u )
             {
                 QString intName = el.attribute("raiseint");
                 Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
-                trUnit->on_dataEnd.connect( inte, &Interrupt::raise );
+                trUnit->m_interrupt = inte;
+                //trUnit->on_dataEnd.connect( inte, &Interrupt::raise );
             }
         }
         node = node.nextSibling();
@@ -733,7 +734,8 @@ void McuCreator::setInterrupt( QDomElement* el, McuModule* module )
     Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
 
     QString source  = el->attribute("source");
-    if( source == "MAIN" ) module->interrupt.connect( inte, &Interrupt::raise );
+    if( source == "MAIN" ) module->m_interrupt = inte;
+        //module->interrupt.connect( inte, &Interrupt::raise );
 }
 
 void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )

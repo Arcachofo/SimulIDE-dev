@@ -36,12 +36,12 @@ class MAINMODULE_EXPORT Interrupt
         virtual ~Interrupt();
 
         virtual void reset();
-        virtual void raise( uint8_t v );
+        virtual void raise( uint8_t v=1 );
         virtual void execute();
         virtual void exitInt();
 
-        void enableFlag( uint8_t en );
-        void setPriority( uint8_t p );
+        void enableFlag( uint8_t en ) { m_enable = en; }
+        void setPriority( uint8_t p ) { m_priority = p; }
         void setMode( uint8_t mod ){ m_mode = mod;}
         //void readFlag( uint8_t p );
 

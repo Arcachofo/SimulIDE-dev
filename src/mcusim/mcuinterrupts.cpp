@@ -45,16 +45,6 @@ void Interrupt::clearFlag()
     m_ram[m_flagReg] &= ~m_flagMask; // Clear Interrupt flag
 }
 
-void Interrupt::enableFlag( uint8_t en )
-{
-    m_enable = en;
-}
-
-void Interrupt::setPriority( uint8_t p )
-{
-    m_priority = p;
-}
-
 void Interrupt::raise( uint8_t v )
 {
     m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag

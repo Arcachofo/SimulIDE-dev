@@ -26,6 +26,7 @@
 #include "regsignal.h"
 
 class eMcu;
+class Interrupt;
 
 class MAINMODULE_EXPORT McuModule
 {
@@ -38,11 +39,15 @@ class MAINMODULE_EXPORT McuModule
         virtual void configureA( uint8_t ){;}
         virtual void configureB( uint8_t ){;}
 
-        RegSignal<uint8_t> interrupt;
+        Interrupt* getInterrupt() { return m_interrupt; }
+
+        //RegSignal<uint8_t> interrupt;
 
     protected:
         QString m_name;
         eMcu*   m_mcu;
+
+        Interrupt*  m_interrupt;
 
         regBits_t m_configBitsA;
         regBits_t m_configBitsB;

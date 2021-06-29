@@ -42,20 +42,20 @@ void AvrAdc::initialize()
     m_autoTrigger = false;
 }
 
-void AvrAdc::configureA( uint8_t val ) // ADCSRA
+void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
 {
-    if( val & m_ADIF.mask )
-        m_mcu->m_regOverride = val & ~(m_ADIF.mask); // Clear ADIF by writting it to 1
+    if( newADCSRA & m_ADIF.mask )
+          m_mcu->m_regOverride = newADCSRA & ~(m_ADIF.mask); // Clear ADIF by writting it to 1
 
-    m_enabled = (( val & 0b10000000 )>0);
+    m_enabled = (( newADCSRA & 0b10000000 )>0);
 
-    uint8_t prs = val & 0b00000111;
+    uint8_t prs = newADCSRA & 0b00000111;
     m_convTime = m_mcu->simCycPI()*14.5*m_prescList[prs];
 
     /// TODO Auto Trigger
-    m_autoTrigger = (( val & 0b00100000 )>0);
+    m_autoTrigger = (( newADCSRA & 0b00100000 )>0);
 
-    bool convert = (( val & 0b01000000 )>0);
+    bool convert = (( newADCSRA & 0b01000000 )>0);
 
     if( !m_converting && convert ) startConversion();
 }

@@ -20,6 +20,7 @@
 #include "mcutimer.h"
 #include "e_mcu.h"
 #include "mcuocunit.h"
+#include "mcuinterrupts.h"
 #include "simulator.h"
 
 
@@ -68,7 +69,7 @@ void McuTimer::runEvent()            // Overflow
     m_countVal = m_countStart;                // Reset count value
     if( m_bidirec ) m_reverse = !m_reverse;
 
-    if( !m_reverse ) interrupt.emitValue( 1 );
+    if( !m_reverse ) m_interrupt->raise(); // interrupt.emitValue( 1 );
 
     sheduleEvents();
 }

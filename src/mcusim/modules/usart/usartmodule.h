@@ -69,8 +69,12 @@ class MAINMODULE_EXPORT UsartModule
         bool m_running;   // is Uart running?
 };
 
+class Interrupt;
+
 class MAINMODULE_EXPORT UartTR : public eElement
 {
+        friend class McuCreator;
+
     public:
         UartTR( UsartModule* usart, QString name );
         ~UartTR();
@@ -99,6 +103,8 @@ class MAINMODULE_EXPORT UartTR : public eElement
     protected:
         UsartModule* m_usart;
         IoPin* m_ioPin;
+
+        Interrupt*  m_interrupt;
 
         uint16_t m_frame;
         uint8_t m_framesize;
