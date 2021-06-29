@@ -43,7 +43,7 @@ AvrProcessor::AvrProcessor( McuComponent* parent )
     m_initGdb = false;
     m_statusReg = "SREG";
     QStringList statusBits;
-    statusBits <<" I "<<" T "<<" H "<<" S "<<" V "<<" N "<<" Z "<<" C ";
+    statusBits <<" C "<<" Z "<<" N "<<" V "<<" S "<<" H "<<" T "<<" I ";
     m_ramTable->setStatusBits( statusBits );
 }
 AvrProcessor::~AvrProcessor() {}

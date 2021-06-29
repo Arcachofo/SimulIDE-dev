@@ -132,10 +132,10 @@ void RamTable::RegDoubleClick(const QModelIndex& index)
 
 void RamTable::setStatusBits( QStringList statusBits )
 {
-    for( int i=0; i<8; i++ )
+    for( int i=7; i>=0; --i )
     {
         //qDebug()<<"RamTable::setStatusBits"<<i<<statusBits.at( i );
-        m_status.item( 0, i )->setText( statusBits.at( i ));
+        m_status.item( 0, i )->setText( statusBits.takeFirst() );
     }
 }
 
