@@ -40,7 +40,7 @@ class AvrProcessor : public BaseProcessor
         bool initGdb();
         void setInitGdb( bool init );
 
-        virtual void setDevice( QString device ) override;
+        virtual bool setDevice( QString device ) override;
         virtual bool loadFirmware( QString file ) override;
         virtual void terminate() override;
         virtual void reset() override;

@@ -36,7 +36,7 @@ class PicProcessor : public BaseProcessor
         PicProcessor( McuComponent* parent );
         ~PicProcessor();
 
-        virtual void setDevice( QString device ) override;
+        virtual bool setDevice( QString device ) override;
         virtual bool loadFirmware( QString file ) override;
         virtual void reset() override;
         virtual void stepCpu() override { m_pPicProcessor->stepCpuClock(); }

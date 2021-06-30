@@ -58,18 +58,18 @@ void AvrProcessor::terminate()
     }
 }
 
-void AvrProcessor::setDevice( QString device )
+bool AvrProcessor::setDevice( QString device )
 {
-    if( m_avrProcessor ) return;
+    if( m_avrProcessor ) return false;
     m_device = device;
     
     m_avrProcessor = avr_make_mcu_by_name( m_device.toUtf8().constData() );
 
     if( !m_avrProcessor )
     {
-        QMessageBox::warning( 0, tr("Unkown Error:")
-                               , tr("Could not Create AVR Processor: \"%1\"").arg(m_device) );
-        return;
+        MessageBoxNB( "AvrProcessor::setDevice"
+                    , tr("Could not Create AVR Processor: \"%1\"").arg(m_device) );
+        return false;
     }
     int started = avr_init( m_avrProcessor );
 
@@ -104,6 +104,7 @@ void AvrProcessor::setDevice( QString device )
     int ok = avr_ioctl( m_avrProcessor, AVR_IOCTL_EEPROM_GET, &ee );
     if( ok ) m_avrEEPROM = ee.ee;
     m_eeprom.resize( m_romSize );
+    return true;
 }
 
 bool AvrProcessor::loadFirmware( QString fileN )

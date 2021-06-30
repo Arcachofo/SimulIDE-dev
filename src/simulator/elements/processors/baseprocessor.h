@@ -39,7 +39,7 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
         virtual void stamp() override;
         virtual void runEvent() override;
 
-        virtual void setDevice( QString device ){;}
+        virtual bool setDevice( QString device ){return false;}
         virtual void setDataFile( QString datafile );
 
         virtual bool loadFirmware( QString file )=0;

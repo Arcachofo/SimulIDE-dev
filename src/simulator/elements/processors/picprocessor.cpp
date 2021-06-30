@@ -40,9 +40,9 @@ PicProcessor::PicProcessor( McuComponent* parent )
 }
 PicProcessor::~PicProcessor(){}
 
-void PicProcessor::setDevice( QString device )
+bool PicProcessor::setDevice( QString device )
 {
-    if( m_pPicProcessor ) return;
+    if( m_pPicProcessor ) return false;
     m_device = device;
 
     QStringList statusBits;
@@ -60,9 +60,9 @@ void PicProcessor::setDevice( QString device )
 
     if( !m_pPicProcessor )
     {
-        QMessageBox::warning( 0, tr("Unkown Error:")
-                               , tr("Could not Create Pic Processor: \"%1\"").arg(m_device) );
-        return;
+        MessageBoxNB( "PicProcessor::setDevice"
+                    , tr("Could not Create Pic Processor: \"%1\"").arg(m_device) );
+        return false ;
     }
     m_ramSize   = m_pPicProcessor->register_memory_size();
     m_flashSize = m_pPicProcessor->program_memory_size();
@@ -91,6 +91,7 @@ void PicProcessor::setDevice( QString device )
         m_romSize = eeprom->get_rom_size();
         m_eeprom.resize( m_romSize );
     }
+    return true;
 }
 
 bool PicProcessor::loadFirmware( QString fileN )

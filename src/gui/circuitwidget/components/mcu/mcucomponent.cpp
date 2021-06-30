@@ -155,7 +155,11 @@ void McuComponent::initChip()
 
                 // Get device
                 m_device = element.attribute( "device" );
-                m_processor->setDevice( m_device );
+                if( !m_processor->setDevice( m_device ) )
+                {
+                    m_error = 1;
+                    return;
+                }
                 break;
             }
             node = node.nextSibling();
