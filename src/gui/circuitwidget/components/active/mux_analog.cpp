@@ -62,6 +62,8 @@ MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
     pin->setInverted( true );
     m_enablePin = pin;
     
+    m_addrBits = 0;
+    m_channels = 0;
     setAddrBits( 3 );
 }
 MuxAnalog::~MuxAnalog()
