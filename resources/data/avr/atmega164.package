@@ -13,7 +13,7 @@
 
     <pin side="left" pos="9"  type="rst"   id="RST"  label="Rst"/>
     <pin side="left" pos="10" type="vcc"   id="VCC"  label="Vcc"/>
-    <pin side="left" pos="11" type="gnd"   id="GND"  label="Gnd"/>
+    <pin side="left" pos="11" type="gnd"   id="GND0"  label="Gnd"/>
     <pin side="left" pos="12" type="osc"   id="OSC2" label="Osc"/>
     <pin side="left" pos="13" type="osc"   id="OSC1" label="Osc"/>
 
@@ -36,7 +36,7 @@
     <pin side="right" pos="12" type="bidir" id="PC7"  label="C7"/>
     
     <pin side="right" pos="11" type="avcc"  id="AVCC" label="A+"/>
-    <pin side="right" pos="10" type="gnd"   id="GND"  label="Gnd"/>
+    <pin side="right" pos="10" type="gnd"   id="GND1"  label="Gnd"/>
     <pin side="right" pos="9"  type="aref"  id="AREF" label="Ar"/>
     
     <pin side="right" pos="8"  type="adc7"  id="PA7"  label="A7"/>

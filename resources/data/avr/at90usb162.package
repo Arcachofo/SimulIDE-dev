@@ -15,12 +15,12 @@
     
     <pin side="bottom" pos="2"  type="bidir" id="PD3"  label="D3"/>
     <pin side="bottom" pos="3"  type="bidir" id="PD4"  label="D4"/>
-    <pin side="bottom" pos="4"  type="OC0B" id="PD5"  label="D5"/>
+    <pin side="bottom" pos="4"  type="OC0B"  id="PD5"  label="D5"/>
     <pin side="bottom" pos="5"  type="OC0A"  id="PD6"  label="D6"/>
     <pin side="bottom" pos="6"  type="bidir" id="PD7"  label="D7"/>
     <pin side="bottom" pos="7"  type="bidir" id="PB0"  label="B0"/>
-    <pin side="bottom" pos="8"  type="OC1A" id="PB1"  label="B1"/>
-    <pin side="bottom" pos="9"  type="OC1B" id="PB2"  label="B2"/>
+    <pin side="bottom" pos="8"  type="OC1A"  id="PB1"  label="B1"/>
+    <pin side="bottom" pos="9"  type="OC1B"  id="PB2"  label="B2"/>
     
     
     <pin side="top" pos="2"  type="avcc"  id="Avcc" label="Avcc"/>
@@ -34,9 +34,9 @@
     
     <pin side="right" pos="9"  type="bidir" id="PB3"  label="B3"/>
     <pin side="right" pos="8"  type="bidir" id="PB4"  label="B4"/>
-    <pin side="right" pos="7"  type="mosi" id="PB5"  label="B5"/>
-    <pin side="right" pos="6"  type="miso" id="PB6"  label="B6"/>
-    <pin side="right" pos="5"  type="sck" id="PB7"  label="B7"/>
+    <pin side="right" pos="7"  type="mosi"  id="PB5"  label="B5"/>
+    <pin side="right" pos="6"  type="miso"  id="PB6"  label="B6"/>
+    <pin side="right" pos="5"  type="sck"   id="PB7"  label="B7"/>
     <pin side="right" pos="4"  type="bidir" id="PC7"  label="C7"/>
     <pin side="right" pos="3"  type="bidir" id="PC6"  label="C6"/>
     <pin side="right" pos="2"  type="reset" id="RST"  label="Rst"/>
