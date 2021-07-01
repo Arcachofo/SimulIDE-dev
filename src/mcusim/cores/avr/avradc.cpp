@@ -40,6 +40,7 @@ void AvrAdc::initialize()
 {
     m_leftAdjust = false;
     m_autoTrigger = false;
+    McuAdc::initialize();
 }
 
 void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
