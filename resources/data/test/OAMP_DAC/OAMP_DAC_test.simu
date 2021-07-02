@@ -1,0 +1,51 @@
+<circuit Speed_sps="1000000" type="simulide_0.4" Simu_Step_nS="1000" reactStep="50" noLinAcc="5" Speed_per="100" animate="0">
+
+Unique  Id: Node-103: 
+Circuit Id: Node-103
+<item boardRot="-1000000" mainComp="false" valLabely="0" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Node-103" circRot="-5.4861292837647503e+303" labelrot="0" y="-8" valLabRot="0" itemtype="Node" objectName="Node-103" circPos="0,0" valLabelx="0" x="-308" rotation="0" hflip="1" labely="-24"/>
+
+Unique  Id: Clock-101: 
+Circuit Id: Clock-101
+<item boardRot="-1000000" mainComp="false" valLabely="8" Show_id="false" labelx="-64" vflip="1" boardPos="-1e+06,-1e+06" id="Clock-101" circRot="0" Freq="1000" labelrot="0" y="-8" valLabRot="0" Always_On="false" itemtype="Clock" Voltage="5" objectName="Clock-101" circPos="0,0" valLabelx="-16" Out="true" x="-344" Unit=" V" rotation="0" Show_Volt="true" hflip="1" labely="-24"/>
+
+Unique  Id: OAMP_DAC-1: 
+Circuit Id: OAMP_DAC-1
+<item boardRot="-1000000" mainComp="false" valLabely="20" Show_id="true" labelx="0" vflip="1" boardPos="-1e+06,-1e+06" id="OAMP_DAC-1" circRot="-3.7716202991400174e+304" BoardId="" Logic_Symbol="true" labelrot="0" y="-16" valLabRot="-90" itemtype="Subcircuit" objectName="OAMP_DAC-1" circPos="0,0" valLabelx="13" x="-288" rotation="0" hflip="1" labely="-20"/>
+
+Unique  Id: Rail-18: 
+Circuit Id: Rail-18
+<item boardRot="-1000000" mainComp="false" valLabely="8" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Rail-18" circRot="0" labelrot="0" y="64" valLabRot="0" itemtype="Rail" Voltage="5" objectName="Rail-18" circPos="0,0" valLabelx="-16" x="-248" Unit=" V" rotation="0" Show_Volt="true" hflip="1" labely="-24"/>
+
+Unique  Id: Rail-20: 
+Circuit Id: Rail-20
+<item boardRot="-1000000" mainComp="false" valLabely="8" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Rail-20" circRot="0" labelrot="0" y="44" valLabRot="0" itemtype="Rail" Voltage="-5" objectName="Rail-20" circPos="0,0" valLabelx="-16" x="-256" Unit=" V" rotation="0" Show_Volt="true" hflip="1" labely="-24"/>
+
+Unique  Id: Oscope-24: 
+Circuit Id: Oscope-24
+<item TimPos="0,0,0,0" boardRot="-1000000" mainComp="false" valLabely="0" Tracks="2" Show_id="false" labelx="-90" vflip="1" boardPos="-1e+06,-1e+06" id="Oscope-24" Filter="0" Tunnels=",,," HideCh="false,false,false,false" circRot="4.2439915878593324e-314" VolDiv="1,0.5,1,1" hTick="2915015" labelrot="0" y="28" Trigger="0" valLabRot="0" itemtype="Oscope" AutoSC="4" objectName="Oscope-24" Basic_X="135" VolPos="0,-2.5,0,0" circPos="0,0" valLabelx="0" x="-80" rotation="0" hflip="1" Basic_Y="135" labely="-100"/>
+
+Unique  Id: Connector-19: 
+Circuit Id: Connector-19
+<item boardRot="-1000000" mainComp="false" valLabely="0" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Connector-19" circRot="0" enodeid="Circ_eNode-98" labelrot="0" y="64" pointList="-232,64,-232,8,-248,8" valLabRot="0" itemtype="Connector" objectName="Connector-19" startpinid="Rail-18-outnod" endpinid="OAMP_DAC-1-Vdd" circPos="0,0" valLabelx="0" x="-232" rotation="0" hflip="1" labely="-24"/>
+
+Unique  Id: Connector-21: 
+Circuit Id: Connector-21
+<item boardRot="-1000000" mainComp="false" valLabely="0" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Connector-21" circRot="0" enodeid="Circ_eNode-99" labelrot="0" y="44" pointList="-240,44,-240,16,-248,16" valLabRot="0" itemtype="Connector" objectName="Connector-21" startpinid="Rail-20-outnod" endpinid="OAMP_DAC-1-Vss" circPos="0,0" valLabelx="0" x="-240" rotation="0" hflip="1" labely="-24"/>
+
+Unique  Id: Connector-17: 
+Circuit Id: Connector-17
+<item boardRot="-1000000" mainComp="false" valLabely="0" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Connector-17" circRot="0" enodeid="enode-17" labelrot="0" y="-8" pointList="-248,-8,-200,-8,-200,-20,-168,-20" valLabRot="0" itemtype="Connector" objectName="Connector-17" startpinid="OAMP_DAC-1-Out" endpinid="Oscope-24-Pin0" circPos="0,0" valLabelx="0" x="-248" rotation="0" hflip="1" labely="-24"/>
+
+Unique  Id: Connector-28: 
+Circuit Id: Connector-28
+<item boardRot="-1000000" mainComp="false" valLabely="0" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Connector-28" circRot="0" enodeid="enode-102" labelrot="0" y="12" pointList="-168,12,-168,-52,-308,-52,-308,-8" valLabRot="0" itemtype="Connector" objectName="Connector-28" startpinid="Oscope-24-Pin1" endpinid="Node-103-0" circPos="0,0" valLabelx="0" x="-168" rotation="0" hflip="1" labely="-24"/>
+
+Unique  Id: Connector-102: 
+Circuit Id: Connector-102
+<item boardRot="-1000000" mainComp="false" valLabely="0" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Connector-102" circRot="0" enodeid="enode-102" labelrot="0" y="-8" pointList="-328,-8,-308,-8" valLabRot="0" itemtype="Connector" objectName="Connector-102" startpinid="Clock-101-outnod" endpinid="Node-103-1" circPos="0,0" valLabelx="0" x="-328" rotation="0" hflip="1" labely="-24"/>
+
+Unique  Id: Connector-104: 
+Circuit Id: Connector-104
+<item boardRot="-1000000" mainComp="false" valLabely="0" Show_id="false" labelx="-16" vflip="1" boardPos="-1e+06,-1e+06" id="Connector-104" circRot="0" enodeid="enode-102" labelrot="0" y="-8" pointList="-308,-8,-296,-8" valLabRot="0" itemtype="Connector" objectName="Connector-104" startpinid="Node-103-2" endpinid="OAMP_DAC-1-Clk" circPos="0,0" valLabelx="0" x="-308" rotation="0" hflip="1" labely="-24"/>
+ 
+</circuit>

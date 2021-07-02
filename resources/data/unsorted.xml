@@ -1,24 +1,5 @@
 <!DOCTYPE SimulIDE>
 
-<!-- *************************************************************************** -->
-<!-- *   Copyright (C) 2018 by santiago González                               * -->
-<!-- *   santigoro@gmail.com                                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is free software; you can redistribute it and/or modify  * -->
-<!-- *   it under the terms of the GNU General Public License as published by  * -->
-<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
-<!-- *   (at your option) any later version.                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is distributed in the hope that it will be useful,       * -->
-<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
-<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
-<!-- *   GNU General Public License for more details.                          * -->
-<!-- *                                                                         * -->
-<!-- *   You should have received a copy of the GNU General Public License     * -->
-<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
-<!-- *                                                                         * -->
-<!-- *************************************************************************** -->
-
 <itemlib>
     
     <itemset category="Logic" type="">
@@ -26,10 +7,16 @@
     </itemset>
     
     <itemset category="Logic/unsorted_IC" type="Subcircuit" folder="ICs" >
-
+    <item name="AD7224" info=" 8-Bit DAC with Output Amplifiers" />
+    <item name="AD7520" info=" 10-Bit, Multiplying D/A Converter (DAC)" /> 
+    <item name="AD7521" info=" 12-Bit, Multiplying D/A Converter (DAC)" /> 
+    <item name="AD7524" info=" 8-Bit Buffered Multiplying DAC" /> 
+    <item name="AD7845" info=" Complete 12-Bit Multiplying DAC" /> 
     <item name="AM1404_ttl" info=" 1024-Bit Dynamic Shift Registers (TTL compatible)" /> 
     <item name="AM1403_ttl" info=" dual 512-bit Dynamic Shift Registers (TTL compatible)" /> 
     <item name="AM1402_ttl" info=" quad 256-bit Dynamic Shift Registers (TTL compatible)" />    
-    </itemset>
+    <item name="DAC8562" info=" +5 Volt, Parallel Input Complete 12-Bit DAC" />           
+    <item name="DAC7621" info=" +5 Volt, Parallel Input 12-Bit DAC" /> 
+ </itemset>
 
 </itemlib>
