@@ -222,6 +222,15 @@ void Function::remove()
     LogicComponent::remove();
 }
 
+void Function::updateArea( uint ins, uint outs )
+{
+    uint inSize = ins+1;
+    m_height = outs*2;
+    if( inSize > m_height ) m_height = inSize;
+    int halfH = (m_height/2)*8;
+    m_area = QRect(-16,-halfH, m_width*8, m_height*8 );
+}
+
 void Function::setNumInps( uint inputs )
 {
     if( inputs == m_inPin.size() ) return;
@@ -232,6 +241,7 @@ void Function::setNumInps( uint inputs )
     
     IoComponent::setNumInps( inputs, "I" );
     //m_area = QRect( -16, 0, 32, 8*m_height+8 );
+    updateArea( inputs, m_outPin.size() );
 }
 
 void Function::setNumOuts( uint outs )
@@ -239,54 +249,71 @@ void Function::setNumOuts( uint outs )
     if( outs == m_outPin.size() ) return;
     if( outs < 1 ) return;
     
-    if( outs < m_outPin.size() )
+    updateArea( m_inPin.size(), outs );
+    int halfH = (m_height/2)*8;
+
+    uint oldSize = m_outPin.size();
+    if( outs < oldSize )
     {
         int dif = m_outPin.size()-outs;
 
         IoComponent::deletePins( &m_outPin, dif );
     
-        for( int i=0; i<dif; ++i )
+        //for( int i=0; i<dif; ++i )
+        for( uint i=0; i<oldSize; ++i )
         {
-            QPushButton* button = m_buttons.takeLast();
-            disconnect( button, SIGNAL( released() ), this, SLOT  ( onbuttonclicked() ));
-            delete button;
-            
-            m_proxys.removeLast();
-            m_funcList.removeLast();
+            if( i < outs )
+            {
+                m_outPin[i]->setY( -halfH+(int)i*16+8 );
+                m_proxys.at(i)->setPos( QPoint( 0, -halfH+(int)i*16+1 ) );
+            }
+            else
+            {
+                QPushButton* button = m_buttons.takeLast();
+                disconnect( button, SIGNAL( released() ), this, SLOT  ( onbuttonclicked() ));
+                delete button;
+
+                m_proxys.removeLast();
+                m_funcList.removeLast();
+            }
         }
     }else{
         m_outPin.resize( outs );
-        
-        for( uint i=m_outPin.size(); i<outs; ++i )
-        {
-            QString num = QString::number(i);
-            m_outPin[i] = new IoPin( 0, QPoint(24, i*8*2+8 ), m_id+"-out"+num, i, this, output );
-            
-            QPushButton* button = new QPushButton( );
-            button->setMaximumSize( 14,14 );
-            button->setGeometry(-14,-14,14,14);
-            QFont font = button->font();
-            font.setPixelSize(7);
-            button->setFont(font);
-            button->setText( "O"+num );
-            button->setCheckable( true );
-            m_buttons.append( button );
 
-            QGraphicsProxyWidget* proxy = Circuit::self()->addWidget( button );
-            proxy->setParentItem( this );
-            proxy->setPos( QPoint( 0, i*8*2+1 ) );
-            
-            m_proxys.append( proxy );
-            m_funcList.append( "" );
-            
-            connect( button, SIGNAL( released() ),
-                       this, SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
+        for( uint i=0; i<outs; ++i )
+        {
+            if( i<oldSize )
+            {
+                m_outPin[i]->setY( -halfH+(int)i*16+8 );
+                m_proxys.at(i)->setPos( QPoint( 0, -halfH+i*16+1 ) );
+            }
+            else
+            {
+                QString num = QString::number(i);
+                m_outPin[i] = new IoPin( 0, QPoint(24, -halfH+i*16+8 ), m_id+"-out"+num, i, this, output );
+
+                QPushButton* button = new QPushButton( );
+                button->setMaximumSize( 14,14 );
+                button->setGeometry(-14,-14,14,14);
+                QFont font = button->font();
+                font.setPixelSize(7);
+                button->setFont(font);
+                button->setText( "O"+num );
+                button->setCheckable( true );
+                m_buttons.append( button );
+
+                QGraphicsProxyWidget* proxy = Circuit::self()->addWidget( button );
+                proxy->setParentItem( this );
+                proxy->setPos( QPoint( 0, -halfH+i*16+1 ) );
+
+                m_proxys.append( proxy );
+                m_funcList.append( "" );
+
+                connect( button, SIGNAL( released() ),
+                           this, SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
+            }
         }
     }
-    m_height = m_outPin.size()*2-1;
-    if( m_inPin.size() > m_height ) m_height = m_inPin.size();
-    m_area = QRect( -16, 0, 32, 8*m_height+8 );
-    
     m_functions = m_funcList.join(",");
     
     Circuit::self()->update();

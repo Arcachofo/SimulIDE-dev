@@ -66,6 +66,8 @@ class MAINMODULE_EXPORT Function : public LogicComponent
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event);
 
     private:
+        void updateArea( uint ins, uint outs );
+
         QScriptEngine m_engine;
         QList<QScriptProgram> m_program;
 
