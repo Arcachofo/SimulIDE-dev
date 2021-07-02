@@ -149,7 +149,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     m_address = 0;
     for( int i=0; i<m_addrBits; ++i )        // Get Address
     {
-        bool state = m_inPin[i+2]->getInpState();//getInputState(i+2);
+        bool state = m_inPin[i]->getInpState();//getInputState(i+2);
         if( state ) m_address += pow( 2, i );
     }
 
