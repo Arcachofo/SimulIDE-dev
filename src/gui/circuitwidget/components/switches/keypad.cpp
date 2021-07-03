@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "keypad.h"
+#include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"
@@ -71,11 +72,13 @@ void KeyPad::stamp()
     {
         Pin* rowPin = m_pin[row];
         eNode* rowNode = rowPin->getEnode();
+        if( rowNode ) rowNode->setSwitched( true );
         
         for( int col=0; col<m_cols; col++ )
         {
             Pin* colPin = m_pin[m_rows+col];
             eNode* colNode = colPin->getEnode();
+            if( colNode ) colNode->setSwitched( true );
             
             PushBase* button = m_buttons.at( row*m_cols+col );
             
@@ -90,7 +93,7 @@ void KeyPad::stamp()
 
 void KeyPad::setupButtons()
 {
-    Simulator::self()->pauseSim();
+    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
     
     m_area = QRectF( -12, -4, 16*m_cols+8, 16*m_rows+8 );
     
@@ -142,8 +145,6 @@ void KeyPad::setupButtons()
             }
         }
     }
-    Simulator::self()->resumeSim();
-    Circuit::self()->update();
 }
 
 double KeyPad::rows()
