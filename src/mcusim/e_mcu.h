@@ -51,12 +51,12 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         // Overrides of McuInterface-----------------------------------
         //-------------------------------------------------------------
-        virtual uint8_t  getRamValue( int address ) override;
-        virtual void     setRamValue( int address, uint8_t value ) override;
-        virtual uint16_t getFlashValue( int address ) override;
-        virtual void     setFlashValue( int address, uint16_t value ) override;
-        virtual uint8_t  getRomValue( int address ) override;
-        virtual void     setRomValue( int address, uint8_t value ) override;
+        virtual uint8_t  getRamValue( int address ) override { return m_dataMem[address]; }
+        virtual void     setRamValue( int address, uint8_t value ) override { m_dataMem[address] = value; }
+        virtual uint16_t getFlashValue( int address ) override { return m_progMem[address]; }
+        virtual void     setFlashValue( int address, uint16_t value ) override { m_progMem[address] = value; }
+        virtual uint8_t  getRomValue( int address ) override { return m_eeprom[address]; }
+        virtual void     setRomValue( int address, uint8_t value ) override { m_eeprom[address] = value; }
 
         virtual uint16_t getRegAddress( QString reg ) override  // Get Reg address by name
         { return m_regInfo.value( reg ).address; }
@@ -89,7 +89,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         Interrupts m_interrupts;
         McuPorts   m_ports;
         McuTimers  m_timers;
-        
+
         double m_freq;                             // Clock Frequency in MegaHerzs
         double m_cPerInst;                         // Clock ticks per Instruction Cycle
         uint64_t m_simCycPI;                       // Simulation cycles per Instruction Cycle

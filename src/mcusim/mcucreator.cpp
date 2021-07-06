@@ -89,7 +89,7 @@ int McuCreator::processFile( QString fileName )
     if( root.hasAttribute("core") )       m_core = root.attribute( "core" );
     if( root.hasAttribute("data") )       createDataMem( root.attribute( "data" ).toUInt(0,0) );
     if( root.hasAttribute("prog") )       createProgMem( root.attribute( "prog" ).toUInt(0,0) );
-    //if( root.hasAttribute("eeprom") )     createEeprom( root.attribute( "eeprom" ).toUInt(0,0) );
+    if( root.hasAttribute("eeprom") )     createEeprom( root.attribute( "eeprom" ).toUInt(0,0) );
     if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute( "progword" ).toUInt(0,0);
     if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute( "inst_cycle" ).toDouble();
 
@@ -130,6 +130,13 @@ void McuCreator::createDataMem( uint32_t size )
     mcu->m_ramSize = size;
     mcu->m_dataMem.resize( size, 0 );
     mcu->m_addrMap.resize( size, 0xFFFF ); // Not Maped values = 0xFFFF -> don't exist
+}
+
+void McuCreator::createEeprom( uint32_t size )
+{
+    mcu->m_romSize = size;
+    mcu->m_eeprom.resize( size );
+    mcu->m_eeprom.fill( 0xFF );
 }
 
 void McuCreator::createDataBlock( QDomElement* d )

@@ -76,36 +76,6 @@ void eMcu::runEvent()
     }
 }
 
-uint8_t eMcu::getRamValue( int address )
-{
-    return m_dataMem[address];
-}
-
-void eMcu::setRamValue( int address, uint8_t value )
-{
-    /// TODO (used by McuMonitor)
-}
-
-uint16_t eMcu::getFlashValue( int address )
-{
-    return m_progMem[address];
-}
-
-void eMcu::setFlashValue( int address, uint16_t value )
-{
-    m_progMem[address] = value;
-}
-
-uint8_t eMcu::getRomValue( int address )
-{
-    return 0;
-}
-
-void eMcu::setRomValue( int address, uint8_t value )
-{
-
-}
-
 void eMcu::enableInterrupts( uint8_t en )
 {
     m_interrupts.enableGlobal( en );
