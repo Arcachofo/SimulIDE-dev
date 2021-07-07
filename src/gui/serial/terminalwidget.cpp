@@ -21,6 +21,7 @@
 #include "mcucomponent.h"
 #include "subcircuit.h"
 #include "baseprocessor.h"
+#include "mcuinterface.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "serialterm.h"
@@ -175,12 +176,12 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
 
     if( circVersion < 5 )
     {
-        m_mcuComponent = McuComponent::self();
-        if( !m_mcuComponent ) return;
+        Component* mcu = McuComponent::self();
+        if( !mcu ) return;
 
-        QString mcuId = m_mcuComponent->objectName();
-        if( m_mcuComponent->isMainComp() )
-            mcuId = m_mcuComponent->getSubcircuit()->objectName();
+        QString mcuId = mcu->objectName();
+        if( mcu->isMainComp() )
+            mcuId = mcu->getSubcircuit()->objectName();
 
         setMcuId( mcuId );
     }
@@ -209,31 +210,34 @@ void TerminalWidget::setMcuId( QString mcu )
             ct = sc;
             mcuComp = sc->getMainComp();
         }
-        m_mcuComponent = static_cast<McuComponent*>(mcuComp);
+        if( mcuComp->itemType() == "MCU")
+        {
+            qDebug() << ct->idLabel();
+        }
+        else
+        {
+            McuComponent* mcu = static_cast<McuComponent*>(mcuComp);
+
+            BaseProcessor* bp = mcu->processor();
+            m_processor = bp;
+
+            connect( mcu, SIGNAL( closeSerials()),
+                    m_serComp, SLOT(   slotClose()), Qt::UniqueConnection );
+
+            connect( bp, SIGNAL( uartDataOut( int, int )),
+                    this, SLOT(   uartOut( int, int )), Qt::UniqueConnection );
+
+            connect( bp, SIGNAL( uartDataIn( int, int )),
+                    this, SLOT(   uartIn( int, int )), Qt::UniqueConnection );
+        }
         this->setWindowTitle( ct->idLabel() );
-        connectMcu();
     }
     else setWindowTitle( tr("Unknown Mcu") );
 }
 
-void TerminalWidget::initialize()
+/*void TerminalWidget::initialize()
 {
-
-}
-
-void TerminalWidget::connectMcu()
-{
-    m_processor = m_mcuComponent->processor();
-
-    connect( m_mcuComponent, SIGNAL( closeSerials()),
-                  m_serComp, SLOT(   slotClose()), Qt::UniqueConnection );
-
-    connect( m_processor, SIGNAL( uartDataOut( int, int )),
-                    this, SLOT(   uartOut( int, int )), Qt::UniqueConnection );
-
-    connect( m_processor, SIGNAL( uartDataIn( int, int )),
-                    this, SLOT(   uartIn( int, int )), Qt::UniqueConnection );
-}
+}*/
 
 void TerminalWidget::closeEvent( QCloseEvent* event )
 {
@@ -243,9 +247,7 @@ void TerminalWidget::closeEvent( QCloseEvent* event )
 
 void TerminalWidget::onTextChanged()
 {
-    QString text = m_sendText.text();
-    
-    QByteArray array = text.toUtf8();
+    QByteArray array = m_sendText.text().toUtf8();
     
     for( int i=0; i<array.size(); i++ )
         m_processor->uartIn( m_uart, array.at(i) );
@@ -297,6 +299,18 @@ void TerminalWidget::uartIn( int uart, int value ) // Receive one byte on Uart
 {
     if( uart != m_uart ) return;
 
+    printIn( value );
+}
+
+void TerminalWidget::uartOut( int uart, int value ) // Send value to OutPanelText
+{
+    if( uart != m_uart ) return;
+
+    printOut( value );
+}
+
+void TerminalWidget::printIn( int value ) // Receive one byte on Uart
+{
     uint8_t byte = value & 0xFF;
 
     QString text = "";
@@ -310,10 +324,8 @@ void TerminalWidget::uartIn( int uart, int value ) // Receive one byte on Uart
     m_uartInPanel.appendText( text );
 }
 
-void TerminalWidget::uartOut( int uart, int value ) // Send value to OutPanelText
+void TerminalWidget::printOut( int value ) // Send value to OutPanelText
 {
-    if( uart != m_uart ) return;
-
     uint8_t byte = value & 0xFF;
 
     QString text = "";

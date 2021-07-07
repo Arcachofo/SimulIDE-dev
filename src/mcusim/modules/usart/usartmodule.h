@@ -48,7 +48,8 @@ class MAINMODULE_EXPORT UsartModule
         virtual uint8_t getBit9(){return 0;}
         virtual void    setBit9( uint8_t bit ){;}
 
-        virtual void dataAvailable( uint8_t data ){;}
+        virtual void byteSent( uint8_t data ){;}
+        virtual void byteReceived( uint8_t data ){;}
 
         void parityError();
 
@@ -108,6 +109,7 @@ class MAINMODULE_EXPORT UartTR : public eElement
         uint8_t m_framesize;
         uint8_t m_currentBit;
         uint8_t m_bit9;
+        uint8_t m_data;
         state_t m_state;
 
         bool m_enabled;

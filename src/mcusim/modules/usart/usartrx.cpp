@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "usartrx.h"
+#include "mcuinterrupts.h"
 #include "iopin.h"
 #include "simulator.h"
 
@@ -61,14 +62,15 @@ void UartRx::runEvent()
 
             if( parity != parityBit ) { m_usart->parityError(); return; }
         }
-        m_usart->dataAvailable( data );
+        m_usart->byteReceived( data );
 
         if( mDATABITS == 9 ) m_usart->setBit9( m_bit9 ); // Save Bit 9
 
         m_currentBit = 0;
         m_frame = 0;
         m_state = usartRECEIVE;
-        on_dataEnd.emitValue( data );
+        //on_dataEnd.emitValue( data );
+        m_interrupt->raise( data );
     }
     if( m_period )
         Simulator::self()->addEvent( m_period, this ); // Shedule next sample

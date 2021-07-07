@@ -79,7 +79,7 @@
         <extclock type="PIN" source="PIN35"/>
     </timer>
     
-    <usart name="USART" configregsA="SCON" >
+    <usart name="USART0" number="1" configregsA="SCON" >
         <trunit type="tx" pin="PORT31" register="SBUF"   raiseint="USART_T"/>
         <trunit type="rx" pin="PORT30" register="SBUFRX" raiseint="USART_R" enable="REN"/>
     </usart>

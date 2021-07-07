@@ -28,7 +28,7 @@ class McuTimer;
 class MAINMODULE_EXPORT AvrUsart : public McuUsart
 {
     public:
-        AvrUsart( eMcu* mcu, QString name );
+        AvrUsart( eMcu* mcu, QString name, int number );
         ~AvrUsart();
 
         virtual void configureA( uint8_t val ) override;

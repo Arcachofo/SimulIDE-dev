@@ -26,7 +26,7 @@
 
 class SerialTerm;
 class McuComponent;
-class BaseProcessor;
+class McuInterface;
 
 class MAINMODULE_EXPORT TerminalWidget : public QWidget
 {
@@ -36,13 +36,16 @@ class MAINMODULE_EXPORT TerminalWidget : public QWidget
         TerminalWidget( QWidget* parent=0, SerialTerm* ser=0 );
         ~TerminalWidget();
 
-        void initialize();
+        //void initialize();
 
         QString mcuId() { return m_mcuId; }
         void setMcuId( QString mcu );
 
         int uart() { return m_uart+1; }
         void setUart( int uart );
+
+        void printIn( int value );
+        void printOut( int value );
 
     public slots:
         void uartChanged( int uart );
@@ -63,8 +66,6 @@ class MAINMODULE_EXPORT TerminalWidget : public QWidget
         void uartOut( int uart, int value );
 
     private:
-        void connectMcu();
-
         QVBoxLayout   m_verticalLayout;
         QHBoxLayout   m_sendLayout;
         QHBoxLayout   m_textLayout;
@@ -81,9 +82,8 @@ class MAINMODULE_EXPORT TerminalWidget : public QWidget
 
         QString m_mcuId;
 
-        SerialTerm* m_serComp;
-        McuComponent* m_mcuComponent;
-        BaseProcessor* m_processor;
+        SerialTerm*   m_serComp;
+        McuInterface* m_processor;
 
         bool m_printASCII;
         bool m_addCR;

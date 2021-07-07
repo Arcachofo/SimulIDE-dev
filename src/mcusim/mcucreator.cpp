@@ -450,12 +450,13 @@ void McuCreator::createTimer( QDomElement* t )
 void McuCreator::createUsart( QDomElement* u )
 {
     QString name = u->attribute( "name" );
+    int number = u->attribute( "number" ).toInt();
     McuUsart* usartM;
-    if     ( m_core == "8051" ) usartM = new I51Usart( mcu, name );
-    else if( m_core == "AVR" )  usartM = new AvrUsart( mcu, name );
+    if     ( m_core == "8051" ) usartM = new I51Usart( mcu, name, number );
+    else if( m_core == "AVR" )  usartM = new AvrUsart( mcu, name, number );
     else return;
 
-    McuUsart::m_usarts.insert( name, usartM );
+    mcu->m_usarts.emplace_back( usartM ); //  .m_usartList.insert( name, usartM );
 
     setConfigRegs( u, usartM );
 

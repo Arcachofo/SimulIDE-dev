@@ -20,6 +20,7 @@
 #include "e_mcu.h"
 #include "mcucore.h"
 #include "mcupin.h"
+#include "usartmodule.h"
 
 #include "simulator.h"
 
@@ -29,6 +30,7 @@ eMcu::eMcu( QString id )
     , m_interrupts( this )
     , m_ports( this )
     , m_timers( this )
+    //, m_usarts( this )
 {
     m_regStart = 0xFFFF;
     m_regEnd   = 0;
@@ -97,3 +99,14 @@ void eMcu::setFreq( double freq )
     m_freq = freq;
     m_simCycPI = 1e6*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }
+
+void eMcu::uartOut( int uart, uint32_t value ) // Send value to OutPanelText
+{
+}
+
+void eMcu::uartIn( int number, uint32_t value ) // Receive one byte on Uart
+{
+    if( (uint)number > m_usarts.size() ) return;
+    m_usarts.at(number-1)->byteReceived( value );
+}
+

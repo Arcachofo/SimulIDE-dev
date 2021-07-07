@@ -57,6 +57,9 @@ class MAINMODULE_EXPORT McuInterface : public eElement
         QString getFileName() { return m_firmware; }
         virtual RamTable* getRamTable() { return m_ramTable; }
 
+        virtual void uartOut( int uart, uint32_t value )=0;
+        virtual void uartIn( int uart, uint32_t value )=0;
+
     protected:
 
         QString m_firmware;     // firmware file loaded

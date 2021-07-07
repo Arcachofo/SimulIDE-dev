@@ -18,19 +18,41 @@
  ***************************************************************************/
 
 #include "mcuuart.h"
+#include "serialmon.h"
 
-QHash<QString, UsartModule*> McuUsart::m_usarts;
-
-McuUsart::McuUsart(eMcu* mcu, QString name )
+McuUsart::McuUsart( eMcu* mcu, QString name, int number )
         : McuModule( mcu, name )
         , UsartModule( name )
 {
+    m_number = number;
     m_mode = 0xFF; // Force first mode change.
+
+    m_monitor = NULL;
 }
 McuUsart::~McuUsart( ){}
 
-void McuUsart::dataAvailable( uint8_t data )
+void McuUsart::byteSent( uint8_t data )
 {
-    *m_rxRegister = data; // Save data to Ram
+    if( m_monitor ) m_monitor->printOut( data );
 }
 
+void McuUsart::byteReceived( uint8_t data )
+{
+    *m_rxRegister = data; // Save data to Ram
+    if( m_monitor ) m_monitor->printIn( data );
+}
+
+// ----------------------------------------
+
+McuUsarts::McuUsarts( eMcu* mcu  )
+{
+    m_mcu = mcu;
+}
+
+McuUsarts::~McuUsarts(){}
+
+void McuUsarts::remove()
+{
+    for( McuUsart* usart : m_usartList ) delete usart;
+    m_usartList.clear();
+}

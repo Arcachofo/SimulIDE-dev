@@ -20,6 +20,7 @@
 #include <QDomDocument>
 #include <QFileInfo>
 #include <QTranslator>
+#include <QSignalMapper>
 
 #include "mcu.h"
 #include "mcuport.h"
@@ -33,7 +34,9 @@
 #include "mainwindow.h"
 #include "componentselector.h"
 #include "mcumonitor.h"
-#include "serialterm.h"
+//#include "serialterm.h"
+#include "serialmon.h"
+#include "mcuuart.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
 
@@ -72,6 +75,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     m_mcuMonitor = NULL;
     m_autoLoad  = false;
+    m_serMonMask = 0;
 
     m_icColor = QColor( 20, 30, 60 );
 
@@ -274,6 +278,26 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     connect( reloadAction, SIGNAL(triggered()),
                      this, SLOT(slotReload()), Qt::UniqueConnection );
 
+    QMenu* serMonMenu = menu->addMenu( tr("Open Serial Monitor.") );
+
+    QSignalMapper* sm = new QSignalMapper(this);
+
+    for( uint i=0; i<m_eMcu.m_usarts.size(); ++i )
+    {
+        QAction* openSerMonAct = serMonMenu->addAction( "USart"+QString::number(i+1) );
+        openSerMonAct->setCheckable( true );
+
+        if( m_serMonMask & (1<<i) ) openSerMonAct->setChecked( true );
+        else
+        {
+            openSerMonAct->setChecked( false );
+            connect( openSerMonAct, SIGNAL(triggered()), sm, SLOT(map()) );
+            sm->setMapping( openSerMonAct, i+1 );
+        }
+        m_serMonMask |= 1<<i;
+    }
+    connect( sm, SIGNAL(mapped(int)), this, SLOT(slotOpenTerm(int)) );
+
     /*QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load EEPROM data") );
     connect( loadDaAction, SIGNAL(triggered()),
                      this, SLOT(loadData()), Qt::UniqueConnection );
@@ -308,17 +332,12 @@ void Mcu::slotOpenMcuMonitor()
     m_mcuMonitor->show();
 }
 
-void Mcu::slotOpenTerm()
+void Mcu::slotOpenTerm( int num )
 {
-    Component* ser = Circuit::self()->createItem( "SerialTerm", "SerialTerm-"+Circuit::self()->newSceneId());
-    ser->setPos( pos() );
-    Circuit::self()->addItem( ser );
-
-    Component* comp = this;
-    if( this->isMainComp() ) comp = m_subcircuit;
-
-    SerialTerm* serial = static_cast<SerialTerm*>(ser);
-    serial->setMcuId( comp->objectName() );
+    SerialMonitor* ser = new SerialMonitor( CircuitWidget::self(), &m_eMcu, num );
+    ser->setWindowTitle( this->idLabel()+" - Uart"+QString::number(num) );
+    ser->show();
+    m_eMcu.m_usarts.at(num-1)->setMonitor( ser );
 }
 
 void Mcu::addPin( QString id, QString type, QString label,

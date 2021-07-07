@@ -69,7 +69,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
     public slots:
         void slotLoad();
         void slotReload();
-        void slotOpenTerm();
+        void slotOpenTerm( int num );
         void slotOpenMcuMonitor();
 
     protected:
@@ -82,6 +82,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_dataFile;
         QString m_device;       // Name of device
+
+        uint8_t m_serMonMask;
 
         eMcu m_eMcu;
 

@@ -168,7 +168,8 @@ FORMS +=   \
     ../src/gui/dialogs/*.ui \
     ../src/gui/dialogs/properties/*.ui \
     ../src/gui/memory/*.ui \
-    ../src/gui/dataplotwidget/*.ui
+    ../src/gui/dataplotwidget/*.ui \
+    ../src/gui/serial/serialmon.ui
 
 RESOURCES = ../src/application.qrc
 

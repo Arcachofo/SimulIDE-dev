@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "usarttx.h"
+#include "mcuinterrupts.h"
 #include "iopin.h"
 #include "simulator.h"
 
@@ -52,7 +53,9 @@ void UartTx::runEvent()
     }
     else if( m_state == usartTXEND )
     {
-        on_dataEnd.emitValue( 0 );
+        //on_dataEnd.emitValue( m_data );
+        m_usart->byteSent( m_data );
+        m_interrupt->raise();
         //m_usart->dataSent();
         m_state = usartIDLE;
         m_ioPin->setOutState( 1 );
@@ -62,6 +65,7 @@ void UartTx::runEvent()
 void UartTx::processData( uint8_t data )
 {
     m_state = usartTRANSMIT;
+    m_data = data;
 
     data &= mDATAMASK;
     m_frame = data<<1;    // Data + Start bit

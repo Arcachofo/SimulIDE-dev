@@ -23,23 +23,46 @@
 #include "usartmodule.h"
 #include "mcumodule.h"
 
+class SerialMonitor;
 
 class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
 {
         friend class McuCreator;
 
     public:
-        McuUsart( eMcu* mcu, QString name );
-        ~McuUsart();
+        McuUsart( eMcu* mcu, QString name, int number );
+        virtual ~McuUsart();
 
-        virtual void dataAvailable( uint8_t data ) override;
+        virtual void byteSent( uint8_t data ) override;
+        virtual void byteReceived( uint8_t data ) override;
 
- static QHash<QString, UsartModule*> m_usarts; // Access Usarts by name
+        void setMonitor( SerialMonitor* mon ) { m_monitor = mon; }
 
     protected:
         uint8_t* m_rxRegister;
+
+        SerialMonitor* m_monitor;
+
+        int m_number;
 };
 
+// ----------------------------------------
 
+class MAINMODULE_EXPORT McuUsarts
+{
+        friend class McuCreator;
+
+    public:
+        McuUsarts( eMcu* mcu );
+        ~McuUsarts();
+
+       void remove();
+       McuUsart* getUsart( int number ) { return m_usartList.at(number); }
+
+    protected:
+       eMcu* m_mcu;
+
+       std::vector<McuUsart*> m_usartList;// Access Usarts by name
+};
 
 #endif

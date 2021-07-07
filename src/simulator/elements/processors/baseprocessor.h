@@ -61,8 +61,8 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
         virtual uint16_t getRegAddress( QString name ) override;
         virtual void addWatchVar( QString name, int address, QString type );
 
-        virtual void uartOut( int uart, uint32_t value );
-        virtual void uartIn( int uart, uint32_t value );
+        virtual void uartOut( int uart, uint32_t value ) override;
+        virtual void uartIn( int uart, uint32_t value ) override;
 
         virtual QStringList getRegList() override { return m_regList; }
 

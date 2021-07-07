@@ -25,8 +25,8 @@
 
 #define UCSRNB *m_ucsrnb
 
-AvrUsart::AvrUsart( eMcu* mcu,  QString name )
-        : McuUsart( mcu, name )
+AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
+        : McuUsart( mcu, name, number )
 {
     m_stopBits = 1;
     m_dataMask = 0xFF;

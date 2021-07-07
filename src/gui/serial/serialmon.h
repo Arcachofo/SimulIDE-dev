@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,35 +17,45 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef I51USART_H
-#define I51USART_H
+#ifndef SERIALMON_H
+#define SERIALMON_H
 
-#include "mcuuart.h"
-#include "mcutypes.h"
+#include <QDialog>
 
-class McuTimer;
+#include "ui_serialmon.h"
+#include "outpaneltext.h"
 
-class MAINMODULE_EXPORT I51Usart : public McuUsart
+class McuInterface;
+
+class SerialMonitor : public QDialog, private Ui::SerialMonitor
 {
-    public:
-        I51Usart( eMcu* mcu, QString name, int number );
-        ~I51Usart();
+    Q_OBJECT
 
-        virtual void configureA( uint8_t val ) override;
-        virtual void step();
-        virtual uint8_t getBit9();
-        virtual void setBit9( uint8_t bit );
+    public:
+        SerialMonitor( QWidget* parent, McuInterface* mcu, int uartNum=1 );
+
+        void printIn( int value );
+        void printOut( int value );
+
+    public slots:
+        void on_text_returnPressed();
+        void on_value_returnPressed();
+        void on_valueButton_clicked();
+        void on_asciiButton_clicked();
+        void on_addCR_clicked() { m_addCR = addCrButton->isChecked(); }
+        void on_clearIn_clicked() { m_uartInPanel.clear(); }
+        void on_clearOut_clicked() { m_uartOutPanel.clear(); }
 
     private:
-        McuTimer* m_timer1;
-        uint8_t*  m_scon;
+        OutPanelText m_uartInPanel;
+        OutPanelText m_uartOutPanel;
 
-        regBits_t m_bit9Tx;
-        regBits_t m_bit9Rx;
+        McuInterface* m_processor;
 
-        bool m_timerConnected;
-        bool m_useTimer;
+        int m_uartNum;
+
+        bool m_printASCII;
+        bool m_addCR;
 };
 
 #endif
-

@@ -26,8 +26,8 @@
 
 #define SCON *m_scon
 
-I51Usart::I51Usart( eMcu* mcu,  QString name )
-        : McuUsart( mcu, name )
+I51Usart::I51Usart( eMcu* mcu, QString name, int number )
+        : McuUsart( mcu, name, number )
 {
     m_stopBits = 1;
     m_dataMask = 0xFF;

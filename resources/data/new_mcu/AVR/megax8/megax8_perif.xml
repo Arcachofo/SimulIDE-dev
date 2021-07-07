@@ -40,7 +40,7 @@
         <raiseint intname="T2_OVF" source="MAIN" />
     </timer>
     
-    <usart name="USART0" configregsA="UCSR0C" >
+    <usart name="USART0"  number="1" configregsA="UCSR0C" >
         <trunit type="tx" pin="PORTD1" register="UDR0" raiseint="USART_T" enable="TXEN0"/>
         <trunit type="rx" pin="PORTD0" register="UDR0" raiseint="USART_R" enable="RXEN0"/>
     </usart>
@@ -75,7 +75,7 @@
     </spi>
     
     <wdt name="WatchDog" configregsA="WDTCSR">
-		<prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
-		<raiseint intname="WDT" source="MAIN" />
-	</wdt>
+        <prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
+        <raiseint intname="WDT" source="MAIN" />
+    </wdt>
 </parts>

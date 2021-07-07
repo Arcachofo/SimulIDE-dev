@@ -24,6 +24,7 @@
 #include "itemlibrary.h"
 #include "mcuport.h"
 #include "mcutimer.h"
+#include "mcuuart.h"
 #include "mcuinterrupts.h"
 #include "mcudataspace.h"
 #include "mcuinterface.h"
@@ -63,8 +64,9 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         virtual int status() override;
         virtual int pc() override;
-        //virtual uint32_t ramSize()   override { return m_dataMem.size(); }
-        //virtual uint32_t flashSize() override { return m_progMem.size(); }
+
+        virtual void uartOut( int uart, uint32_t value ) override;
+        virtual void uartIn( int number, uint32_t value ) override;
         //-------------------------------------------------------------
         // End Overrides of McuInterface-------------------------------
 
@@ -89,6 +91,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         Interrupts m_interrupts;
         McuPorts   m_ports;
         McuTimers  m_timers;
+        //McuUsarts  m_usarts;
+        std::vector<McuUsart*> m_usarts;
 
         double m_freq;                             // Clock Frequency in MegaHerzs
         double m_cPerInst;                         // Clock ticks per Instruction Cycle

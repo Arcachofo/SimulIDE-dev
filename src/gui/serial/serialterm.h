@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT SerialTerm : public Component, public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual void initialize() override { m_serialWidget->initialize(); }
+        //virtual void initialize() override { m_serialWidget->initialize(); }
         virtual void updateStep() override;
 
         int uart() { return m_serialWidget->uart(); }
