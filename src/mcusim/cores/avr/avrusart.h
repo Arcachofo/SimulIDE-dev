@@ -31,7 +31,8 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         AvrUsart( eMcu* mcu, QString name, int number );
         ~AvrUsart();
 
-        virtual void configureA( uint8_t val ) override;
+        virtual void configureA( uint8_t newUCSRnC ) override;
+        virtual void configureB( uint8_t newUCSRnB ) override;
         virtual uint8_t getBit9();
         virtual void setBit9( uint8_t bit );
 
@@ -48,6 +49,9 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
 
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;
+
+        regBits_t m_txEn;
+        regBits_t m_rxEn;
 
         regBits_t m_modeRB;
         regBits_t m_pariRB;

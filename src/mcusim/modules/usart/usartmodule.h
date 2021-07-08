@@ -90,12 +90,15 @@ class MAINMODULE_EXPORT UartTR : public eElement
         virtual void processData( uint8_t data )=0;
         virtual void enable( uint8_t en ){;}
 
+        bool isEnabled() { return m_enabled; }
+
         void setPeriod( uint64_t period ) { m_period = period; }
         bool getParity( uint8_t data );
 
         state_t state() { return m_state; }
 
         void setPin( IoPin* pin ) { m_ioPin = pin; }
+        IoPin* getPin() { return m_ioPin; }
 
         RegSignal<uint8_t> on_dataEnd;
 

@@ -361,7 +361,7 @@ void Mcu::addPin( QString id, QString type, QString label,
             m_pinList.append( pin );
         }
     }
-    if( !portPin ) Chip::addPin( id,  type, label, pos, xpos, ypos, angle, length );
+    if( !portPin ) Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
 }
 
 QString Mcu::loadHex( QString file, int WordSize )

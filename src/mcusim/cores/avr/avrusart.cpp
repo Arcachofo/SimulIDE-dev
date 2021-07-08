@@ -20,8 +20,8 @@
 #include "avrusart.h"
 #include "usarttx.h"
 #include "usartrx.h"
-//#include "mcutimer.h"
 #include "e_mcu.h"
+#include "iopin.h"
 
 #define UCSRNB *m_ucsrnb
 
@@ -40,6 +40,9 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
     m_bit9Tx = mcu->getRegBits( "TXB8"+n );
     m_bit9Rx = mcu->getRegBits( "RXB8"+n );
 
+    m_txEn = mcu->getRegBits( "TXEN"+n );
+    m_rxEn = mcu->getRegBits( "RXEN"+n );
+
     m_modeRB = mcu->getRegBits( "UMSEL"+n+"0,UMSEL"+n+"1" );
     m_pariRB = mcu->getRegBits( "UPM"+n+"0,UPM"+n+"1"  );
     m_stopRB = mcu->getRegBits( "USBS"+n );
@@ -52,15 +55,15 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
 }
 AvrUsart::~AvrUsart(){}
 
-void AvrUsart::configureA( uint8_t val ) // UCSRnC changed
+void AvrUsart::configureA( uint8_t newUCSRnC ) // UCSRnC changed
 {
     // clockPol = getRegBitsVal( val, UCPOLn );
 
-    m_mode = getRegBitsVal( val, m_modeRB );        // UMSELn1, UMSELn0
-    m_stopBits = getRegBitsVal( val, m_stopRB )+1;  // UPMn1, UPMno
-    m_dataBits = getRegBitsVal( val, m_dataRB )+5;
+    m_mode = getRegBitsVal( newUCSRnC, m_modeRB );        // UMSELn1, UMSELn0
+    m_stopBits = getRegBitsVal( newUCSRnC, m_stopRB )+1;  // UPMn1, UPMno
+    m_dataBits = getRegBitsVal( newUCSRnC, m_dataRB )+5;
 
-    uint8_t par = getRegBitsVal( val, m_pariRB );
+    uint8_t par = getRegBitsVal( newUCSRnC, m_pariRB );
     if( par > 0 ) m_parity = (parity_t)(par-1);
     else          m_parity = parNONE;
 
@@ -71,6 +74,33 @@ void AvrUsart::configureA( uint8_t val ) // UCSRnC changed
             /// setPeriod(  m_mcu->simCycPI() );// Fixed baudrate 32 or 64
         }
     }*/
+}
+
+void AvrUsart::configureB( uint8_t newUCSRnB ) // UCSRnB changed
+{
+    uint8_t txEn = getRegBitsVal( newUCSRnB, m_txEn );
+    if( txEn != m_sender->isEnabled() )
+    {
+        m_sender->enable( txEn );
+        if( txEn )
+        {
+            m_sender->getPin()->controlPin( true, true );
+            m_sender->getPin()->setPinMode( output );
+        }
+        else m_sender->getPin()->controlPin( false, false );
+    }
+
+    uint8_t rxEn = getRegBitsVal( newUCSRnB, m_rxEn );
+    if( rxEn != m_receiver->isEnabled() )
+    {
+        m_receiver->enable( rxEn );
+        if( rxEn )
+        {
+            m_receiver->getPin()->controlPin( true, true );
+            m_receiver->getPin()->setPinMode( input );
+        }
+        else m_receiver->getPin()->controlPin( false, false );
+    }
 }
 
 void AvrUsart::setUBRRnL( uint8_t val )

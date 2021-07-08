@@ -28,8 +28,8 @@ SerialMonitor::SerialMonitor( QWidget* parent, McuInterface* mcu, int uartNum )
 {
     setupUi(this);
 
-    panelLayout->addWidget( &m_uartOutPanel );
     panelLayout->addWidget( &m_uartInPanel );
+    panelLayout->addWidget( &m_uartOutPanel );
 
     m_processor = mcu;
     m_uartNum = uartNum;
@@ -39,7 +39,6 @@ SerialMonitor::SerialMonitor( QWidget* parent, McuInterface* mcu, int uartNum )
     Simulator::self()->addToUpdateList( &m_uartOutPanel );
     Simulator::self()->addToUpdateList( &m_uartInPanel );
 }
-
 
 void SerialMonitor::on_text_returnPressed()
 {
@@ -54,7 +53,6 @@ void SerialMonitor::on_text_returnPressed()
 void SerialMonitor::on_value_returnPressed()
 {
     QString text = value->text();
-
     m_processor->uartIn( m_uartNum, text.toInt() );
 }
 
