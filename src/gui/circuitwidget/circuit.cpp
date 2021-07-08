@@ -809,28 +809,41 @@ void Circuit::removeItems()                     // Remove Selected items
     saveState();
     m_busy = true;
 
-    for( Component* comp : m_compList )
+    /*for( Component* comp : m_compList )
     {
         if( m_compList.contains( comp ) )
             if( comp->isSelected() && !(comp->itemType()=="Node") )
                 removeComp( comp ); // Don't remove Graphical Nodes
-    }
+    }*/
 
     QList<Connector*> connectors;
+    QList<Component*> components;
 
     for( QGraphicsItem* item : selectedItems() )
     {
-        ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine* >( item );
-        if( line->objectName() == "" )
+        Component* comp = qgraphicsitem_cast<Component* >( item );
+        if( comp )
         {
-            Connector* con = line->connector();
-            if( !connectors.contains( con ) ) connectors.append( con );
+            if( (comp->itemType()!="Node")
+             && (comp->itemType()!="Connector")
+             && !components.contains( comp ) )
+                components.append( comp );
+        }
+        else
+        {
+            ConnectorLine* line = qgraphicsitem_cast<ConnectorLine* >( item );
+            if( line->objectName() == "" )
+            {
+                Connector* con = line->connector();
+                if( !connectors.contains( con ) ) connectors.append( con );
+            }
         }
     }
-    if( !connectors.isEmpty() ) if( m_simulator->isRunning() )
+    //if( !connectors.isEmpty() ) if( m_simulator->isRunning() )
         if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     for( Connector* con : connectors ) con->remove();
+    for( Component* comp : components ) removeComp( comp );
     for( QGraphicsItem* item : selectedItems() ) item->setSelected( false );
     m_busy = false;
 }
