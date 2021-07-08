@@ -64,6 +64,8 @@ void UartTx::runEvent()
 
 void UartTx::processData( uint8_t data )
 {
+    if( !m_enabled ) return;
+
     m_state = usartTRANSMIT;
     m_data = data;
 
