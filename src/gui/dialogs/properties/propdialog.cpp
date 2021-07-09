@@ -79,8 +79,11 @@ void PropDialog::setComponent( Component* comp )
                     continue;
                 }
                 QVariant value = comp->property( name );
-                if( !value.isValid() ) continue;
-
+                if( !value.isValid() )
+                {
+                    qDebug() <<"Property not valid: " << propName << name << unit;
+                    continue;
+                }
                 QVariant::Type type = value.type();
 
                 if( unit == "enum")
