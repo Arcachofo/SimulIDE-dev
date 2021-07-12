@@ -88,7 +88,7 @@ void McuComponentPin::setDirection( bool out )
 
         setPinMode( input );
     }
-    setOutState( m_outState );
+    //setOutState( m_outState );
 }
 
 void McuComponentPin::setState( bool state )
@@ -109,7 +109,7 @@ void McuComponentPin::setPullup( bool up )
     if( up ) m_vddAdmEx = 2/1e5; // Activate pullup
     else     m_vddAdmEx = 0;     // Deactivate pullup
 
-    update();
+    updtState();
 }
 
 void McuComponentPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example
