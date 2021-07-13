@@ -71,7 +71,7 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
     m_inPin[1]->setPinMode( open_col );
     TwiModule::setSclPin( m_inPin[1] );
 
-    m_cCode = 0b01010000;
+    m_address = 0b01010000;
     m_size  = 65536;
     m_ram.resize( m_size );
 
@@ -99,6 +99,7 @@ QList<propGroup_t> I2CRam::propGroups()
 void I2CRam::stamp()           // Called at Simulation Start
 {
     TwiModule::stamp();
+    TwiModule::setMode( TWI_SLAVE );
     
     for( int i=2; i<5; i++ )     // Initialize address pins
         m_inPin[i]->changeCallBack( this );
@@ -121,10 +122,9 @@ void I2CRam::updateStep()
 
 void I2CRam::voltChanged()             // Some Pin Changed State, Manage it
 {
-    m_address = m_cCode;
-    if( m_inPin[1]->getInpState() ) m_address += 1;
-    if( m_inPin[2]->getInpState() ) m_address += 2;
-    if( m_inPin[3]->getInpState() ) m_address += 4;
+    if( m_inPin[2]->getInpState() ) m_address += 1;
+    if( m_inPin[3]->getInpState() ) m_address += 2;
+    if( m_inPin[4]->getInpState() ) m_address += 4;
 
     TwiModule::voltChanged();        // Run I2C Engine
 
@@ -186,16 +186,6 @@ QVector<int> I2CRam::mem()
         return null;
     }
     return m_ram;
-}
-
-int I2CRam::cCode()
-{
-    return m_cCode;
-}
-
-void I2CRam::setCcode( int code )
-{
-    m_cCode = code;
 }
 
 int I2CRam::rSize()

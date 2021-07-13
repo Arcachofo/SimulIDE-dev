@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
     Q_OBJECT
     Q_PROPERTY( QVector<int> Mem  READ mem        WRITE setMem )
     Q_PROPERTY( double Frequency  READ freqKHz    WRITE setFreqKHz    DESIGNABLE true USER true )
-    Q_PROPERTY( int  Control_Code READ cCode      WRITE setCcode      DESIGNABLE true USER true )
+    Q_PROPERTY( uint Control_Code READ cCode      WRITE setCcode      DESIGNABLE true USER true )
     Q_PROPERTY( int  Size_bytes   READ rSize      WRITE setRSize      DESIGNABLE true USER true )
     Q_PROPERTY( bool Persistent   READ persistent WRITE setPersistent DESIGNABLE true USER true )
 
@@ -56,8 +56,8 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
         void setMem( QVector<int> m );
         QVector<int> mem();
 
-        int cCode();
-        void setCcode( int code );
+        uint cCode() { return m_address; }
+        void setCcode( uint code ) { m_address = code; }
         
         int rSize();
         void setRSize( int size );
@@ -79,7 +79,7 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
         QVector<int> m_ram;
         int m_size;
         int m_addrPtr;
-        int m_cCode;
+        //int m_cCode;
         int m_phase;
 
         bool m_persistent;
