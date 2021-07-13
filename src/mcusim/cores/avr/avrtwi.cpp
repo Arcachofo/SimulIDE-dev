@@ -94,7 +94,8 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         masterStart();
     }
     bool ack = getRegBitsVal( newTWCR, m_TWEA );
-    if( ack && !clearTwint && !newStop && !newStart )
+    bool addrSet = ( m_address != 0b01111111);
+    if( addrSet && ack && !clearTwint && !newStop && !newStart )
     {
         if( m_mode != TWI_SLAVE ) setMode( TWI_SLAVE );
         m_sendACK = ack;
