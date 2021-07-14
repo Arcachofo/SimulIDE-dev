@@ -27,6 +27,7 @@ TwiModule::TwiModule( QString name )
     m_sda = NULL;
     m_scl = NULL;
     m_addrBits = 7;
+    m_address = 0;
 }
 TwiModule::~TwiModule( ){}
 

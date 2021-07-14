@@ -73,8 +73,12 @@ void AvrTimer::configureB( uint8_t val ) // TCCRXB
     if( mode != m_mode )
     {
         m_mode = mode;
+
+        updtCount();    // write counter values to Ram
         if( mode ) configureClock();
-        enable( m_mode );
+        updtCycles();  // This will shedule or cancel events
+        //enable( m_mode );
+        m_running = ( val > 0 );
     }
     m_WGM32 = (val & 0b00011000)>>1; // WGMX3,WGMX2
     updtWgm();

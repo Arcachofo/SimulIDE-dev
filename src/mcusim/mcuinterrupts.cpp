@@ -138,7 +138,8 @@ void Interrupts::remove()
 
 void Interrupts::addToPending( uint8_t pri, Interrupt* i )
 {
-    if( m_enGlobal ) m_pending.emplace( pri, i );
+    //if( m_enGlobal )
+        m_pending.emplace( pri, i );
 }
 
 

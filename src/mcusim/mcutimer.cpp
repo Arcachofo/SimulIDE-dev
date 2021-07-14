@@ -60,8 +60,8 @@ void McuTimer::initialize()
 
 void McuTimer::runEvent()            // Overflow
 {
-    if( m_name == "TIMER1")
-        m_running = m_running;
+    //if( m_name == "TIMER0")
+    //    m_running = m_running;
     if( !m_running ) return;
 
     for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->tov();

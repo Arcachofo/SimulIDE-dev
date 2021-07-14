@@ -80,7 +80,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         McuTimer* getTimer( QString name ) { return m_timers.getTimer( name ); }
 
-        void enableInterrupts( uint8_t en );
+        void enableInterrupts( uint8_t en ) { m_interrupts.enableGlobal( en ); }
 
         McuCore* cpu;
         int cyclesDone;

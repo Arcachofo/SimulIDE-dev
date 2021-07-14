@@ -78,11 +78,6 @@ void eMcu::runEvent()
     }
 }
 
-void eMcu::enableInterrupts( uint8_t en )
-{
-    m_interrupts.enableGlobal( en );
-}
-
 int eMcu::status()
 {
     readStatus( 0 );
