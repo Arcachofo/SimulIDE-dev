@@ -94,8 +94,11 @@ QList<propGroup_t> Memory::propGroups()
 
 void Memory::stamp()                   // Called at Simulation Start
 {
-    for( int i=0; i<2+m_addrBits; ++i ) // Initialize control pins
+    //for( int i=0; i<2+m_addrBits; ++i ) // Initialize control pins
         ;///m_inPin[i]->changeCallBack( this );
+
+    m_WePin->changeCallBack( this );
+    m_CsPin->changeCallBack( this );
 
     LogicComponent::stamp();
 }
