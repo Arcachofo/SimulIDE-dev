@@ -40,13 +40,13 @@ void eDiode::stamp()
     {
         eNode* node = m_ePin[0]->getEnode();
         node->addToNoLinList( this );
-        node->setSwitched( true );
+        ///node->setSwitched( true );
     }
     if( m_ePin[1]->isConnected() )
     {
         eNode* node = m_ePin[1]->getEnode();
         node->addToNoLinList( this );
-        node->setSwitched( true );
+        ///node->setSwitched( true );
     }
     eResistor::stamp();
 }
@@ -54,7 +54,8 @@ void eDiode::stamp()
 void eDiode::initialize()
 {
     m_resist = high_imp;
-    m_admit = 0;
+    //m_admit = 0;
+    m_admit = 1/high_imp; /// changed to non-switched
     m_converged = true;
     m_voltPN  = 0;
     m_deltaV  = 0;
@@ -86,8 +87,9 @@ void eDiode::voltChanged()
     if( deltaR != m_resist )
     {
         m_resist = deltaR;
-        if( deltaR == high_imp ) eResistor::setAdmit( 0 );
-        else                     eResistor::setAdmit( 1/m_resist );
+        ///if( deltaR == high_imp ) eResistor::setAdmit( 0 );
+        ///else
+            eResistor::setAdmit( 1/m_resist );
         //m_converged = false;
     }
     //if( fabs(deltaV - m_deltaV) > 1e-18 ) 
@@ -96,7 +98,7 @@ void eDiode::voltChanged()
 
         double current = deltaV/m_resist;
         //qDebug() <<"eDiode::setVChanged current: "<< current;
-        if( deltaR == high_imp ) current = 0;
+        ///if( deltaR == high_imp ) current = 0;
         if( current == m_lastC )
         {
             //m_converged = true;
