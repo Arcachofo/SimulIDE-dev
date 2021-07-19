@@ -73,7 +73,8 @@ QList<propGroup_t> ShiftReg::propGroups()
 
 void ShiftReg::stamp()
 {
-    m_inPin[2]->changeCallBack( this );
+    m_clkPin->changeCallBack( this );
+    m_inPin[2]->changeCallBack( this ); // Reset
     LogicComponent::stamp();
 }
 
