@@ -34,10 +34,10 @@ class MAINMODULE_EXPORT VarResBase : public Component, public eResistor
         ~VarResBase();
 
         int  maxVal()  { return m_dial->maximum(); }
-        void setMaxVal( int max ) { m_dial->setMaximum( max ); }
+        void setMaxVal( int max ) { if( max<0 ) max=0; m_dial->setMaximum( max ); }
 
         int  minVal() { return m_dial->minimum(); }
-        void setMinVal( int min ) { m_dial->setMinimum( min ); }
+        void setMinVal( int min ) { if( min<0 ) min=0; m_dial->setMinimum( min ); }
 
         int  getVal();
         void setVal( int val );
