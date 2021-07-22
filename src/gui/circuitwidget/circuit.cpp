@@ -396,25 +396,29 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
             }
         }
         QVariant value( element.attribute( propName ) );
+        QVariant comProp = comp->property( propName.toStdString().c_str() );
 
         // SUBSTITUTIONS -------------------------------------------------------
-
-        if( propName == "Volts") propName = "Voltage";
-        else if( propName == "Propagation_Delay_ns")
+        if( !comProp.isValid() )
         {
-            propName = "Tpd_ps";
-            value.setValue( value.toInt()*1000 );
-        }
-        else if( propName == "Show_res"
-              || propName == "Show_Volt"
-              || propName == "Show_Ind"
-              || propName == "Show_Cap" ) propName = "Show_Val";
-        else if( propName == "Duty_Square") propName = "Duty";
+            if( propName == "Volts") propName = "Voltage";
+            else if( propName == "Propagation_Delay_ns")
+            {
+                propName = "Tpd_ps";
+                value.setValue( value.toInt()*1000 );
+            }
+            else if( propName == "Show_res"
+                  || propName == "Show_Volt"
+                  || propName == "Show_Ind"
+                  || propName == "Show_Cap" ) propName = "Show_Val";
+            else if( propName == "Duty_Square") propName = "Duty";
+            else if( propName == "Inverted") propName = "InvertOuts";
 
+            comProp = comp->property( propName.toStdString().c_str() );
+        }
         //QString lowN = propName;
         //lowN = lowN.toLower();
 
-        QVariant comProp = comp->property( propName.toStdString().c_str() );
         if( !value.isValid()
          || !comProp.isValid() )
         {

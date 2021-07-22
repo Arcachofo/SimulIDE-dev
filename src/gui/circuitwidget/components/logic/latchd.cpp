@@ -67,7 +67,7 @@ QList<propGroup_t> LatchD::propGroups()
     propGroup_t mainGroup { tr("Main") };
 
     mainGroup.propList.append( {"Tristate", tr("Tristate"),""} );
-    mainGroup.propList.append( {"Inverted", tr("Invert Outputs"),""} );
+    mainGroup.propList.append( {"InvertOuts", tr("Invert Outputs"),""} );
     mainGroup.propList.append( {"Channels", tr("Size"),"Channels"} );
     mainGroup.propList.append( {"Trigger", tr("Trigger Type"),"enum"} );
 
