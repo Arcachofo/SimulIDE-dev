@@ -1,0 +1,11 @@
+﻿<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+    <itemset category="Test" type="Subcircuit" icon="subc.png" >
+    
+        <item name="OAMP_DAC" folder="test" info=" test DAC+OAMP" /> 
+        
+    </itemset>
+
+</itemlib>
