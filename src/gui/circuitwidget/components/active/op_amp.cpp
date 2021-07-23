@@ -69,7 +69,11 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     m_pin[2] = m_output;
 
     m_pin[3] = new Pin(  90, QPoint(0,-16), id+"-powerPos", 3, this );
+    m_pin[3]->setLabelText( "+" );
+    m_pin[3]->setLabelColor( QColor( 0, 0, 0 ) );
     m_pin[4] = new Pin( 270, QPoint(0, 16), id+"-powerNeg", 4, this );
+    m_pin[4]->setLabelText( "-" );
+    m_pin[4]->setLabelColor( QColor( 0, 0, 0 ) );
     
     setPowerPins( false );
 
