@@ -109,6 +109,7 @@ int Compiler::compile( QString file )
                                    .replace( "$incDir",   incDir );
 
     m_outPane->appendLine( "\n Executing:\n"+command+arguments+"\n" );
+    m_compilerProc.setWorkingDirectory( fileDir );
     m_compilerProc.start( command+arguments  );
     m_compilerProc.waitForFinished(-1);
 
