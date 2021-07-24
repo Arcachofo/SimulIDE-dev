@@ -130,8 +130,8 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();
 
-    if( m_lastFirmDir.isEmpty() )
-        m_lastFirmDir = QCoreApplication::applicationDirPath();
+    QDir dir( m_lastFirmDir );
+    if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFileName();
 
     m_subcDir = "";
 
@@ -210,8 +210,10 @@ void Mcu::remove()
 
 void Mcu::slotLoad()
 {
-    const QString dir = m_lastFirmDir;
-    QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Firmware"), dir,
+    QDir dir( m_lastFirmDir );
+    if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFileName();
+
+    QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Firmware"), m_lastFirmDir,
                        tr("All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)"));
 
     if( fileName.isEmpty() ) return; // User cancels loading
