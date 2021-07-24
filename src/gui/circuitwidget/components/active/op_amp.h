@@ -32,10 +32,11 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
 {
     Q_OBJECT
     Q_PROPERTY( double Gain       READ gain          WRITE setGain      DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped  READ outImp        WRITE setOutImp     DESIGNABLE true USER true )
+    Q_PROPERTY( double Out_Imped  READ outImp        WRITE setOutImp    DESIGNABLE true USER true )
     Q_PROPERTY( double Volt_Pos   READ voltPos       WRITE setVoltPos   DESIGNABLE true USER true )
     Q_PROPERTY( double Volt_Neg   READ voltNeg       WRITE setVoltNeg   DESIGNABLE true USER true )
     Q_PROPERTY( bool   Power_Pins READ hasPowerPins  WRITE setPowerPins DESIGNABLE true USER true )
+    Q_PROPERTY( bool   Switch_Pins READ switchPins  WRITE setSwitchPins DESIGNABLE true USER true )
     
     public:
 
@@ -67,6 +68,9 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
         bool hasPowerPins(){return m_powerPins;}
         void setPowerPins( bool set );
 
+        bool switchPins() { return m_switchPins; }
+        void setSwitchPins( bool s );
+
 
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
@@ -74,6 +78,7 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
     protected:
         bool m_firstStep;
         bool m_powerPins;
+        bool m_switchPins;
 
         double m_accuracy;
         double m_gain;

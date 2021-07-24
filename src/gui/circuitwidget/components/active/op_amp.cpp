@@ -75,6 +75,7 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     m_pin[4]->setLabelText( "-" );
     m_pin[4]->setLabelColor( QColor( 0, 0, 0 ) );
     
+    m_switchPins = false;
     setPowerPins( false );
 
     m_gain = 1000;
@@ -94,6 +95,7 @@ QList<propGroup_t> OpAmp::propGroups()
     supGroup.propList.append( {"Volt_Pos", tr("V+"),"V"} );
     supGroup.propList.append( {"Volt_Neg", tr("V-"),"V"} );
     supGroup.propList.append( {"Power_Pins", tr("Supply Pins"),""} );
+    supGroup.propList.append( {"Switch_Pins", tr("Switch Supply Pins"),""} );
     return {mainGroup, supGroup};
 }
 
@@ -186,6 +188,18 @@ void OpAmp::setPowerPins( bool set )
     m_pin[4]->setVisible( set );
     
     m_powerPins = set;
+}
+
+void OpAmp::setSwitchPins( bool s )
+{
+    int angleP = s ? 270 : 90;
+    int angleN = s ? 90  : 270;
+    qreal yP   = s ?  16 : -16;
+    qreal yN   = s ? -16 : 16;
+    m_pin[3]->setPinAngle( angleP );
+    m_pin[3]->setY( yP );
+    m_pin[4]->setPinAngle( angleN );
+    m_pin[4]->setY( yN );
 }
 
 QPainterPath OpAmp::shape() const
