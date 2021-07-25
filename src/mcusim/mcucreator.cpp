@@ -41,6 +41,7 @@
 #include "avrtwi.h"
 #include "avrspi.h"
 #include "avrwdt.h"
+#include "avreeprom.h"
 
 #include "pic14core.h"
 
@@ -89,7 +90,7 @@ int McuCreator::processFile( QString fileName )
     if( root.hasAttribute("core") )       m_core = root.attribute( "core" );
     if( root.hasAttribute("data") )       createDataMem( root.attribute( "data" ).toUInt(0,0) );
     if( root.hasAttribute("prog") )       createProgMem( root.attribute( "prog" ).toUInt(0,0) );
-    if( root.hasAttribute("eeprom") )     createEeprom( root.attribute( "eeprom" ).toUInt(0,0) );
+    if( root.hasAttribute("eeprom") )     createRomMem( root.attribute( "eeprom" ).toUInt(0,0) );
     if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute( "progword" ).toUInt(0,0);
     if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute( "inst_cycle" ).toDouble();
 
@@ -110,6 +111,7 @@ int McuCreator::processFile( QString fileName )
         else if( el.tagName() == "twi" )        createTwi( &el );
         else if( el.tagName() == "spi" )        createSpi( &el );
         else if( el.tagName() == "wdt" )        createWdt( &el );
+        else if( el.tagName() == "eeprom" )     createEeprom( &el );
         else if( el.tagName() == "include" )    processFile( el.attribute("file") );
 
         node = node.nextSibling();
@@ -132,11 +134,65 @@ void McuCreator::createDataMem( uint32_t size )
     mcu->m_addrMap.resize( size, 0xFFFF ); // Not Maped values = 0xFFFF -> don't exist
 }
 
-void McuCreator::createEeprom( uint32_t size )
+void McuCreator::createRomMem( uint32_t size )
 {
+    if( size == 0 ) return;
+
     mcu->m_romSize = size;
     mcu->m_eeprom.resize( size );
     mcu->m_eeprom.fill( 0xFF );
+
+}
+
+void McuCreator::createEeprom(  QDomElement* e )
+{
+    McuEeprom* eeprom = NULL;
+    QString eepromName = e->attribute("name");
+
+    if( m_core == "AVR" )  eeprom = new AvrEeprom( mcu, eepromName );
+    else return;
+
+    setConfigRegs( e, eeprom );
+
+    if( e->hasAttribute("dataregs") )
+    {
+        QString datareg = e->attribute("dataregs");
+        eeprom->m_dataReg = mcu->getReg( datareg );
+    }
+
+    if( e->hasAttribute("addressreg") )
+    {
+        QString addrReg = e->attribute("addressreg");
+        QString lowByte = addrReg;
+        QString highByte ="";
+
+        if( addrReg.contains(",") )
+        {
+            QStringList regs = addrReg.split(",");
+
+            lowByte  = regs.takeFirst();
+            highByte = regs.takeFirst();
+        }
+        if( !lowByte.isEmpty() )
+        {
+            eeprom->m_addressL = mcu->getReg( lowByte );
+            mcu->watchRegNames( lowByte, R_WRITE, eeprom, &McuEeprom::addrWriteL );
+        }
+        if( !highByte.isEmpty() )
+        {
+            eeprom->m_addressH = mcu->getReg( highByte );
+            mcu->watchRegNames( highByte, R_WRITE, eeprom, &McuEeprom::addrWriteH );
+        }
+    }
+
+    QDomNode node = e->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+
+        if( el.tagName() == "raiseint" ) setInterrupt( &el, eeprom );
+        node = node.nextSibling();
+    }
 }
 
 void McuCreator::createDataBlock( QDomElement* d )

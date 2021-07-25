@@ -41,7 +41,8 @@ class MAINMODULE_EXPORT McuCreator
         static int  processFile( QString fileName );
         static void createProgMem( uint32_t size );
         static void createDataMem( uint32_t size );
-        static void createEeprom( uint32_t size );
+        static void createRomMem( uint32_t size );
+        static void createEeprom(  QDomElement* e );
         static void createDataBlock( QDomElement* d );
         static void createRegisters( QDomElement* e );
         static void createInterrupts( QDomElement* i );

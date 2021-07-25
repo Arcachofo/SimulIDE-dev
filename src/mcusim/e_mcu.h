@@ -74,6 +74,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         void setFreq( double freq );
         uint64_t simCycPI() { return m_simCycPI; }  // Simulation cycles per instruction cycle
         //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle
+        uint64_t cycle() { return m_cycle; }
 
         McuPin* getPin( QString name ) { return m_ports.getPin( name ); }
         QHash<QString, McuPort*> getPorts() { return m_ports.getPorts(); }
@@ -86,6 +87,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         int cyclesDone;
 
     protected:
+        uint64_t m_cycle;
         std::vector<uint16_t> m_progMem;           // Program memory
 
         Interrupts m_interrupts;

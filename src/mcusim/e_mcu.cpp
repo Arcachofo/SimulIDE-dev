@@ -52,6 +52,7 @@ eMcu::~eMcu()
 
 void eMcu::initialize()
 {
+    m_cycle = 0;
     cyclesDone = 0;
     cpu->reset();
 
@@ -66,6 +67,7 @@ void eMcu::runEvent()
 {
     //if( m_state == cpu_Running )
     {
+        m_cycle++;
         if( cyclesDone > 1 ) cyclesDone -= 1;
 
         else if( cpu->PC < m_flashSize )

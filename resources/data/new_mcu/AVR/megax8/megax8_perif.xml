@@ -78,4 +78,8 @@
         <prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
         <raiseint intname="WDT" source="MAIN" />
     </wdt>
+    
+    <eeprom name="EEPROM" dataregs="EEDR" addressreg="EEARL,EEARH" configregsA="EECR">
+        <raiseint intname="EEPR" source="MAIN" />
+    </eeprom>
 </parts>
