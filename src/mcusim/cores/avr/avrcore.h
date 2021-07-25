@@ -47,9 +47,11 @@ class MAINMODULE_EXPORT AvrCore : public CoreCpu
 
         void createInstructions();
 
-        void flags_Rzns( uint8_t res );
-        void flags_sub_Rzns( uint8_t res, uint8_t rd, uint8_t rr );
+        void flags_ns( uint8_t res );
         void flags_zns( uint8_t res );
+        void flags_Rzns( uint8_t res );
+        void flags_sub( uint8_t res, uint8_t rd, uint8_t rr );
+        void flags_sub_Rzns( uint8_t res, uint8_t rd, uint8_t rr );
         void flags_add_zns( uint8_t res, uint8_t rd, uint8_t rr );
         void flags_sub_zns( uint8_t res, uint8_t rd, uint8_t rr );
         void flags_znv0s( uint8_t res );

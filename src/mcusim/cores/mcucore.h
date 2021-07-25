@@ -53,6 +53,7 @@ class MAINMODULE_EXPORT McuCore
         uint16_t  m_regEnd;
 
         uint8_t* m_sreg;  // Mirror of the STATUS register
+        uint8_t* m_STATUS;  // MSTATUS register
         uint8_t* m_spl;   // STACK POINTER low byte
         uint8_t* m_sph;   // STACK POINTER high byte
         bool     m_spPre; // STACK pre-increment?

@@ -276,10 +276,10 @@ void McuCreator::createRegisters( QDomElement* e )
                     if( (!stReg.isEmpty()) && ( regName == stReg ) )
                     {
                         mcu->m_sregAddr = regAddr;
-                        mcu->m_sreg.resize( 8 );
+                        //mcu->m_sreg.resize( 8 );
 
-                        mcu->watchRegister( regAddr, R_WRITE, (DataSpace*)mcu, &DataSpace::writeStatus );
-                        mcu->watchRegister( regAddr, R_READ,  (DataSpace*)mcu, &DataSpace::readStatus );
+                        //mcu->watchRegister( regAddr, R_WRITE, (DataSpace*)mcu, &DataSpace::writeStatus );
+                        //mcu->watchRegister( regAddr, R_READ,  (DataSpace*)mcu, &DataSpace::readStatus );
                         mcu->getRamTable()->setStatusBits( bitList );
                     }
                 }
