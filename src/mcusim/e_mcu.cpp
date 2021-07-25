@@ -67,16 +67,17 @@ void eMcu::runEvent()
 {
     //if( m_state == cpu_Running )
     {
-        m_cycle++;
-        if( cyclesDone > 1 ) cyclesDone -= 1;
 
-        else if( cpu->PC < m_flashSize )
+        //if( cyclesDone > 1 ) cyclesDone -= 1;
+        //else
+        if( cpu->PC < m_flashSize )
         {
             cpu->runDecoder();              // Run Decoder
 
             m_interrupts.runInterrupts();     // Run Interrupts
         }
-        Simulator::self()->addEvent( m_simCycPI, this );
+        m_cycle += cyclesDone;
+        Simulator::self()->addEvent( cyclesDone*m_simCycPI, this );
     }
 }
 

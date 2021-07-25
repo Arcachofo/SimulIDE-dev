@@ -50,11 +50,12 @@ void McuEeprom::writeEeprom()
 
 void McuEeprom::addrWriteL( uint8_t val )
 {
-    m_address = (*m_addressH << 8) + val;
+    m_address = val;
+    if( m_addressH ) m_address += *m_addressH << 8;
 }
 
 void McuEeprom::addrWriteH( uint8_t val )
 {
-    m_address = ( val << 8) + *m_addressL;
+    m_address = (val << 8) + *m_addressL;
 }
 

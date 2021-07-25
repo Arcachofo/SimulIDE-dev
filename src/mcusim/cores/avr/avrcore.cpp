@@ -129,6 +129,7 @@ inline int AvrCore::is_instr_32b( uint32_t pc )
 
 void AvrCore::runDecoder()
 {
+    m_mcu->cyclesDone = 0;
     uint16_t instruction = m_progMem[PC];
 
     uint32_t new_pc = PC + 1;    // future "default" pc
@@ -783,7 +784,7 @@ void AvrCore::runDecoder()
         default: ;//_avr_invalid_instruction(avr);
     }
     PC = new_pc;
-    m_mcu->cyclesDone = cycle;
+    m_mcu->cyclesDone += cycle;
 }
 
 void AvrCore::createInstructions()

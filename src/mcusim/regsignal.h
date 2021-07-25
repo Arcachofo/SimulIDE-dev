@@ -50,14 +50,13 @@ class RegSignal
             m_curId++;
         }
 
-        void emitValue( uint8_t p ) // Calls all connected functions.
+        void emitValue( uint8_t val ) // Calls all connected functions.
         {
             for( auto const& it : m_slots )
             {
                 int id = it.first;
                 uint8_t mask = m_masks.at( id );
-                uint8_t val = p & mask;
-                it.second( val );
+                it.second( val & mask );
             }
         }
 
