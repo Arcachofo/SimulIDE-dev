@@ -177,7 +177,6 @@ void CodeEditor::setFile( const QString filePath )
           || m_fileExt == "ino"
           || m_fileExt == "h" )
     {
-        m_hlighter->setMultiline( true );
         m_hlighter->readSintaxFile( sintaxPath + "cpp.sintax" );
         
         if( m_fileExt == "ino" ) m_debugger = new InoDebugger( this, m_outPane, filePath );

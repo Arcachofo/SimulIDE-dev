@@ -40,8 +40,6 @@ class Highlighter : public QSyntaxHighlighter
         void readSintaxFile( const QString &fileName );
 
         void addRegisters( QStringList patterns );
-        
-        void setMultiline( bool set );
 
     protected:
         void highlightBlock(const QString &text);
@@ -61,20 +59,10 @@ class Highlighter : public QSyntaxHighlighter
         
         QVector<HighlightingRule> m_highlightingRules;
 
-        QRegExp commentStartExpression;
-        QRegExp commentEndExpression;
+        QRegExp m_multiStart;
+        QRegExp m_multiEnd;
 
-        QTextCharFormat keyword1Format;
-        QTextCharFormat registerFormat;
-        //QTextCharFormat classFormat;
-        QTextCharFormat lineCommentFormat;
-        QTextCharFormat preprocessorFormat;
-        QTextCharFormat dataTypeFormat;
-        QTextCharFormat numberFormat;
-        QTextCharFormat multiLineCommentFormat;
-        QTextCharFormat quotationFormat;
-        QTextCharFormat htmlTagFormat;
-        QTextCharFormat functionFormat;
+        QTextCharFormat m_multiFormat;
 };
 
 #endif
