@@ -83,7 +83,7 @@ void eMcu::runEvent()
 
 int eMcu::status()
 {
-    readStatus( 0 );
+    /// readStatus( 0 );
     return getRamValue( m_sregAddr );
 }
 

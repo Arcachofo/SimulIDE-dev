@@ -22,6 +22,17 @@
 
 #include "e_mcu.h"
 
+#define clear_S_Bit(bit) \
+        *m_STATUS &= ~(1<<bit);
+
+#define set_S_Bit( bit ) \
+        *m_STATUS |= 1<<bit;
+
+#define write_S_Bit(bit,val) \
+        if( val ) *m_STATUS |= 1<<bit; \
+        else      *m_STATUS &= ~(1<<bit);
+
+#define STATUS(bit) (*m_STATUS & (1<<bit))
 
 class MAINMODULE_EXPORT McuCore
 {
@@ -52,7 +63,7 @@ class MAINMODULE_EXPORT McuCore
         uint16_t  m_lowDataMemEnd;
         uint16_t  m_regEnd;
 
-        uint8_t* m_sreg;  // Mirror of the STATUS register
+        /// uint8_t* m_sreg;  // Mirror of the STATUS register
         uint8_t* m_STATUS;  // MSTATUS register
         uint8_t* m_spl;   // STACK POINTER low byte
         uint8_t* m_sph;   // STACK POINTER high byte

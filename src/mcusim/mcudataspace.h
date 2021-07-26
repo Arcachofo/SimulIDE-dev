@@ -53,8 +53,8 @@ class MAINMODULE_EXPORT DataSpace
         uint8_t* getReg( QString reg )                // Get pointer to Reg data by name
         { return &m_dataMem[m_regInfo.value( reg ).address]; }
 
-        void readStatus( uint8_t v );                 // Update STATUS Reg when is readen
-        void writeStatus( uint8_t v );                // Update STATUS Reg when is written
+        /// void readStatus( uint8_t v );                 // Update STATUS Reg when is readen
+        /// void writeStatus( uint8_t v );                // Update STATUS Reg when is written
 
         template <typename T>                // Add callback for Register changes by names
         void watchRegNames( QString regNames, int write
@@ -137,7 +137,7 @@ class MAINMODULE_EXPORT DataSpace
         QHash<QString, uint8_t>       m_bitMasks;  // Access Bit mask by bit name
         QHash<QString, uint16_t>      m_bitRegs;   // Access Reg. address by bit name
 
-        std::vector<uint8_t> m_sreg;               // STATUS Reg splitted in bits
+        /// std::vector<uint8_t> m_sreg;               // STATUS Reg splitted in bits
         uint16_t m_sregAddr;                       // STATUS Reg Address
 };
 

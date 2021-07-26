@@ -19,7 +19,7 @@
 
 #include "pic14core.h"
 
-#define STATUS m_sreg
+/// #define STATUS m_sreg
 
 Pic14Core::Pic14Core( eMcu* mcu )
          : CoreCpu( mcu )
@@ -34,14 +34,14 @@ Pic14Core::Pic14Core( eMcu* mcu )
         m_inPortAddr.emplace_back( port->getInAddr() );
     }
 
-    m_C   = m_mcu->getRegBits("C").bit0;
-    m_DC  = m_mcu->getRegBits("DC").bit0;
-    m_Z   = m_mcu->getRegBits("Z").bit0;
+    /*C   = m_mcu->getRegBits("C").bit0;
+    DC  = m_mcu->getRegBits("DC").bit0;
+    Z   = m_mcu->getRegBits("Z").bit0;
     m_PD  = m_mcu->getRegBits("PD").bit0;
     m_TO  = m_mcu->getRegBits("TO").bit0;
     m_RP0 = m_mcu->getRegBits("RP0").bit0;
     m_RP1 = m_mcu->getRegBits("RP1").bit0;
-    m_IRP = m_mcu->getRegBits("IRP").bit0;
+    m_IRP = m_mcu->getRegBits("IRP").bit0;*/
 
     m_bankBits = mcu->getRegBits( "RP0,RP1" );
     mcu->watchBitNames( "RP0,RP1", R_WRITE, this, &Pic14Core::setBank );
@@ -65,21 +65,32 @@ inline void Pic14Core::setValue( uint8_t newV, uint8_t f, uint8_t d )
 inline void Pic14Core::setValueZ( uint8_t newV, uint8_t f, uint8_t d )
 {
     setValue( newV, f, d );
-    STATUS[m_Z]  = newV? 0:1;
+    /// STATUS[Z]  = newV? 0:1;
+    write_S_Bit( Z, newV==0 );
 }
 
 inline void Pic14Core::setAddFlags( uint8_t oldV, uint8_t newV, uint8_t src2 )
 {
-    STATUS[m_Z]  = newV? 0:1;
-    STATUS[m_C]  = (newV & 0x100)? 1:0;
-    STATUS[m_DC] = (((newV^oldV^src2) & 0x10)? 1:0);
+    /// STATUS[Z]  = newV? 0:1;
+    write_S_Bit( Z, newV==0 );
+
+    /// STATUS[C]  = (newV & 0x100)? 1:0;
+    write_S_Bit( C, newV & 0x100 );
+
+    /// STATUS[DC] = (((newV^oldV^src2) & 0x10)? 1:0);
+    write_S_Bit( DC, (newV^oldV^src2) & 0x10 );
 }
 
 inline void Pic14Core::setSubFlags( uint8_t oldV, uint8_t newV, uint8_t src2 )
 {
-    STATUS[m_Z]  = newV? 0:1;
-    STATUS[m_C]  = (newV & 0x100)? 1:0;
-    STATUS[m_DC] = (((newV^oldV^src2) & 0x10)? 0:1);
+    /// STATUS[Z]  = newV? 0:1;
+    write_S_Bit( Z, newV==0 );
+
+    /// STATUS[C]  = (newV & 0x100)? 1:0;
+    write_S_Bit( C, newV & 0x100 );
+
+    /// STATUS[DC] = (((newV^oldV^src2) & 0x10)? 0:1);
+    write_S_Bit( DC, (newV^oldV^src2) & 0x10 );
 }
 
 
@@ -203,7 +214,9 @@ inline void Pic14Core::RRF( uint8_t f, uint8_t d )
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV >> 1;
     setValue( newV, f, d );
-    STATUS[m_C] = oldV & 1;
+
+    /// STATUS[C] = oldV & 1;
+    write_S_Bit( C, oldV & 1 );
 }
 
 inline void Pic14Core::RLF( uint8_t f, uint8_t d )
@@ -211,7 +224,9 @@ inline void Pic14Core::RLF( uint8_t f, uint8_t d )
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV << 1;
     setValue( newV, f, d );
-    STATUS[m_C] = oldV & 0x80;
+
+    //STATUS[C] = oldV & 0x80;
+    write_S_Bit( C, oldV & 0x80 );
 }
 
 inline void Pic14Core::SWAPF( uint8_t f, uint8_t d )
@@ -299,35 +314,40 @@ inline void Pic14Core::RETLW( uint8_t k )
 inline void Pic14Core::IORLW( uint8_t k )
 {
     m_Wreg |= k;
-    STATUS[m_Z]  = m_Wreg? 0:1;
+    /// STATUS[Z]  = m_Wreg? 0:1;
+    write_S_Bit( Z, m_Wreg==0 );
     incDefault();
 }
 
 inline void Pic14Core::ANDLW( uint8_t k )
 {
     m_Wreg &= k;
-    STATUS[m_Z]  = m_Wreg? 0:1;
+    /// STATUS[Z]  = m_Wreg? 0:1;
+    write_S_Bit( Z, m_Wreg==0 );
     incDefault();
 }
 
 inline void Pic14Core::XORLW( uint8_t k )
 {
     m_Wreg ^= k;
-    STATUS[m_Z]  = m_Wreg? 0:1;
+    /// STATUS[Z]  = m_Wreg? 0:1;
+    write_S_Bit( Z, m_Wreg==0 );
     incDefault();
 }
 
 inline void Pic14Core::SUBLW( uint8_t k )
 {
     m_Wreg -= k;
-    STATUS[m_Z]  = m_Wreg? 0:1;
+    /// STATUS[Z]  = m_Wreg? 0:1;
+    write_S_Bit( Z, m_Wreg==0 );
     incDefault();
 }
 
 inline void Pic14Core::ADDLW( uint8_t k )
 {
     m_Wreg += k;
-    STATUS[m_Z]  = m_Wreg? 0:1;
+    /// STATUS[Z]  = m_Wreg? 0:1;
+    write_S_Bit( Z, m_Wreg==0 );
     incDefault();
 }
 

@@ -19,18 +19,6 @@ enum {
     cpu_Crashed,    // avr software crashed (watchdog fired)
 };*/
 
-#define clear_S_Bit( bit ) \
-        *m_STATUS &= ~(1<<bit);
-
-#define set_S_Bit( bit ) \
-        *m_STATUS |= 1<<bit;
-
-#define write_S_Bit( bit, val ) \
-        if( val ) *m_STATUS |= 1<<bit; \
-        else      *m_STATUS &= ~(1<<bit);
-
-#define STATUS( bit ) (*m_STATUS & (1<<bit))
-
 #define get_d5(o) \
         const uint8_t d = (o >> 4) & 0x1f;
 

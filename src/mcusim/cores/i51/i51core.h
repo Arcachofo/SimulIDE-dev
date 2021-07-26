@@ -31,6 +31,10 @@ enum SFR_REGS
     REG_DPH  = 0x83,
 };
 
+enum {
+    P=0,k,OV,RS0,RS1,F0,AC,CY
+};
+
 /*enum EM8051_EXCEPTION
 {
     EXCEPTION_STACK,  // stack address > 127 with no upper memory, or roll over
@@ -56,13 +60,13 @@ class MAINMODULE_EXPORT I51Core : public CoreCpu
         uint16_t m_opcode;
         uint8_t* m_acc;
 
-        uint8_t m_P;
+        /*uint8_t m_P;
         uint8_t m_OV;
         uint8_t m_RS0;
         uint8_t m_RS1;
         uint8_t m_F0;
         uint8_t m_AC;
-        uint8_t m_CY;
+        uint8_t m_CY;*/
 
         bool m_upperData;
 

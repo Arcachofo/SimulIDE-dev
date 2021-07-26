@@ -22,6 +22,10 @@
 
 #include "corecpu.h"
 
+enum {
+    C=0,DC,Z,PD,TO,RP0,RP1,IRP
+};
+
 class MAINMODULE_EXPORT Pic14Core : public CoreCpu
 {
     public:
@@ -40,14 +44,14 @@ class MAINMODULE_EXPORT Pic14Core : public CoreCpu
         uint32_t m_stack[8];
         uint8_t  m_sp;
 
-        uint8_t m_C;
+        /*uint8_t m_C;
         uint8_t m_DC;
         uint8_t m_Z;
         uint8_t m_PD;
         uint8_t m_TO;
         uint8_t m_RP0;
         uint8_t m_RP1;
-        uint8_t m_IRP;
+        uint8_t m_IRP;*/
 
         std::vector<uint16_t> m_outPortAddr;
         std::vector<uint16_t> m_inPortAddr;

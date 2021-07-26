@@ -35,7 +35,7 @@ McuCore::McuCore( eMcu* mcu )
     else                      m_lowDataMemEnd = 0;
     m_regEnd = mcu->m_regEnd;
 
-    m_sreg = mcu->m_sreg.data();
+    /// m_sreg = mcu->m_sreg.data();
     m_STATUS = &m_dataMem[mcu->m_sregAddr];
 
     if     ( m_progSize <= 0xFF )     m_progAddrSize = 1;
