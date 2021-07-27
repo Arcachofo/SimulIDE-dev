@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>290</width>
-    <height>370</height>
+    <width>349</width>
+    <height>405</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -246,6 +246,15 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="locale">
+            <locale language="C" country="AnyCountry"/>
+           </property>
+           <property name="specialValueText">
+            <string notr="true"/>
+           </property>
+           <property name="keyboardTracking">
+            <bool>false</bool>
            </property>
            <property name="suffix">
             <string notr="true"> %</string>
