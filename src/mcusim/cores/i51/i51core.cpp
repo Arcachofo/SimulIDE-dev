@@ -83,7 +83,7 @@ I51Core::I51Core( eMcu* mcu  )
     RS1 = m_mcu->getRegBits("RS1").bit0;
     m_F0  = m_mcu->getRegBits("F0").bit0;
     AC  = m_mcu->getRegBits("AC").bit0;
-    CY  = m_mcu->getRegBits("CY").bit0;*/
+    Cy  = m_mcu->getRegBits("Cy").bit0;*/
 }
 I51Core::~I51Core() {}
 
@@ -132,29 +132,29 @@ uint8_t I51Core::popStack8()
 void I51Core::add_solve_flags( uint8_t value1, uint8_t value2, uint8_t acc )
 {
     /* Carry: overflow from 7th bit to 8th bit */
-    /// PSW[CY] = ( value1+value2+acc ) >> 8;
+    /// PSW[Cy] = ( value1+value2+acc ) >> 8;
     uint8_t cy = ((value1+value2+acc)>>1) & 1<<7;
-    write_S_Bit( CY, cy )
+    write_S_Bit( Cy, cy )
 
     /* Auxiliary carry: overflow from 3th bit to 4th bit */
     ///PSW[AC] =( (value1 & 7 )+( value2 & 7 ) + acc ) >> 3;
     write_S_Bit( AC, ((value1 & 7 )+( value2 & 7 ) + acc) & 1<<3 )
 
     /* Overflow: overflow from 6th or 7th bit, but not both */
-    /// PSW[OV] =( ((value1 & 127 )+( value2 & 127 ) + acc ) >> 7 )^PSW[CY];
+    /// PSW[OV] =( ((value1 & 127 )+( value2 & 127 ) + acc ) >> 7 )^PSW[Cy];
     write_S_Bit( OV, ((value1 & 127 )+( value2 & 127 ) + acc ) ^ cy )
 }
 
 void I51Core::sub_solve_flags( uint8_t value1, uint8_t value2 )
 {
-    ///PSW[CY] =( (value1-value2) >> 8 ) & 1;
+    ///PSW[Cy] =( (value1-value2) >> 8 ) & 1;
     uint8_t cy = ((value1-value2)>>1) & 1<<7; //Carry: overflow from 7th bit to 8th bit
-    write_S_Bit( CY, cy )
+    write_S_Bit( Cy, cy )
 
     /// PSW[AC] =( ((value1 & 7 )-( value2 & 7 )) >> 3 ) & 1;
     write_S_Bit( AC, ((value1 & 7 )-( value2 & 7 )) & 1<<3 )
 
-    /// PSW[OV] =( (((value1 & 127 )-( value2 & 127 )) >> 7 ) & 1 )^PSW[CY];
+    /// PSW[OV] =( (((value1 & 127 )-( value2 & 127 )) >> 7 ) & 1 )^PSW[Cy];
     write_S_Bit( OV, ((value1 & 127 )-( value2 & 127 )) ^ cy )
 }
 
@@ -207,19 +207,19 @@ void I51Core::rlc_a()
 {
     uint8_t newc = ACC & (1<<7);
 
-    /// ACC = (ACC << 1) | PSW[CY];
+    /// ACC = (ACC << 1) | PSW[Cy];
     ACC = ACC << 1;
-    if( STATUS(CY) ) ACC += 1;
+    if( STATUS(Cy) ) ACC += 1;
 
-    //PSW[CY] = newc;
-    write_S_Bit( CY, newc );
+    //PSW[Cy] = newc;
+    write_S_Bit( Cy, newc );
 
     incDefault();
 }
 
 void I51Core::addc_a_imm()
 {
-    uint8_t carry = STATUS(CY) >> CY;///  PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy;///  PSW[Cy];
 
     add_solve_flags(ACC, OPERAND1, carry );
 
@@ -230,7 +230,7 @@ void I51Core::addc_a_imm()
 
 void I51Core::addc_a_mem()
 {
-    uint8_t carry = STATUS(CY) >> CY;///  PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy;///  PSW[Cy];
     int value = GET_RAM( OPERAND1 );
     add_solve_flags(ACC, value, carry );
     ACC += value + carry;
@@ -338,10 +338,10 @@ void I51Core::lcall_address()
 
 void I51Core::rrc_a()
 {
-    uint8_t c = STATUS(CY); /// PSW[CY];
+    uint8_t c = STATUS(Cy); /// PSW[Cy];
 
-    ///PSW[CY] = ACC & 1;
-    write_S_Bit( CY, ACC & 1 );
+    ///PSW[Cy] = ACC & 1;
+    write_S_Bit( Cy, ACC & 1 );
 
     ACC = (ACC >> 1);
     if( c ) ACC |= c; // STATUS carry is already in bit 7
@@ -439,7 +439,7 @@ void I51Core::jnb_bitaddr_offset()
 
 void I51Core::jc_offset()
 {
-    if( STATUS(CY) ) PC += (signed char)OPERAND1;
+    if( STATUS(Cy) ) PC += (signed char)OPERAND1;
     PC += 2;
     m_mcu->cyclesDone = 2;
 }
@@ -451,7 +451,7 @@ void I51Core::reti()
 
 void I51Core::addc_a_indir_rx()
 {
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
 
     int value = GET_RAM( INDIR_RX_ADDRESS );
 
@@ -503,7 +503,7 @@ void I51Core::orl_a_indir_rx()
 
 void I51Core::jnc_offset()
 {
-    if( STATUS(CY) ) PC += 2;
+    if( STATUS(Cy) ) PC += 2;
     else            PC +=(signed char)OPERAND1 + 2;
     m_mcu->cyclesDone = 1;
 }
@@ -563,7 +563,7 @@ void I51Core::jnz_offset()
 void I51Core::orl_c_bitaddr()
 {
     int address = OPERAND1;
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
 
     int bit = address & 7;
     int bitmask = 1 << bit;
@@ -571,8 +571,8 @@ void I51Core::orl_c_bitaddr()
     address &= 0xf8;
     int value = getValue( address );
     value = (value & bitmask) ? 1 : carry;
-    /// PSW[CY] = value;
-    write_S_Bit( CY, value );
+    /// PSW[Cy] = value;
+    write_S_Bit( Cy, value );
 
     PC += 2;
     m_mcu->cyclesDone = 1;
@@ -628,15 +628,15 @@ void I51Core::sjmp_offset()
 void I51Core::anl_c_bitaddr()
 {
     int address = OPERAND1;
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
 
     int bit = address & 7;
     int bitmask =( 1 << bit );
     address &= 0xf8;
     int value =( getValue( address ) & bitmask ) ? carry : 0;
 
-    /// PSW[CY] = value ;
-    write_S_Bit( CY, value );
+    /// PSW[Cy] = value ;
+    write_S_Bit( Cy, value );
 
     PC += 2;
     m_mcu->cyclesDone = 1;
@@ -655,8 +655,8 @@ void I51Core::div_ab()
     int b = m_dataMem[REG_B];
     int res;
     //PSW &= ~(PSWMASK_C|PSWMASK_OV );
-    /// PSW[CY] = 0;
-    clear_S_Bit( CY );
+    /// PSW[Cy] = 0;
+    clear_S_Bit( Cy );
 
     //PSW[OV] = 0;
     clear_S_Bit( OV );
@@ -726,7 +726,7 @@ void I51Core::mov_dptr_imm()
 void I51Core::mov_bitaddr_c()
 {
     int address = OPERAND1;
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
     if( address > m_lowDataMemEnd )
     {
         int bit = address & 7;
@@ -756,7 +756,7 @@ void I51Core::movc_a_indir_a_dptr()
 
 void I51Core::subb_a_imm()
 {
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
     sub_solve_flags(ACC, OPERAND1 + carry );
     ACC -= OPERAND1 + carry;
     PC += 2;
@@ -766,7 +766,7 @@ void I51Core::subb_a_imm()
 void I51Core::subb_a_mem()
 {
     int value = GET_RAM( OPERAND1 );
-    if( STATUS(CY) ) value++;
+    if( STATUS(Cy) ) value++;
     sub_solve_flags(ACC, value );
     ACC -= value;
 
@@ -779,7 +779,7 @@ void I51Core::subb_a_indir_rx()
     int address = INDIR_RX_ADDRESS;
 
     if( address <= m_lowDataMemEnd )
-    { if( STATUS(CY) ) value += 1;}
+    { if( STATUS(Cy) ) value += 1;}
 
     sub_solve_flags( ACC, value );
     ACC -= value;
@@ -790,14 +790,14 @@ void I51Core::subb_a_indir_rx()
 void I51Core::orl_c_compl_bitaddr()
 {
     int address = OPERAND1;
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
 
     int bit = address & 7;
     int bitmask =( 1 << bit );
     address &= 0xf8;
     int value =( getValue( address ) & bitmask ) ? carry : 1;
-    /// PSW[CY] = value ;
-    write_S_Bit( CY, value );
+    /// PSW[Cy] = value ;
+    write_S_Bit( Cy, value );
 
     PC += 2;
     m_mcu->cyclesDone = 1;
@@ -813,8 +813,8 @@ void I51Core::mov_c_bitaddr()
     int value = getValue( address );
     value =( value & bitmask ) ? 1 : 0;
 
-    /// PSW[CY] = value ;
-    write_S_Bit( CY, value );
+    /// PSW[Cy] = value ;
+    write_S_Bit( Cy, value );
 
     PC += 2;
     m_mcu->cyclesDone = 1;
@@ -838,8 +838,8 @@ void I51Core::mul_ab()
 
     //PSW &= ~(PSWMASK_C|PSWMASK_OV );
 
-    /// PSW[CY] = 0;
-    clear_S_Bit( CY );
+    /// PSW[Cy] = 0;
+    clear_S_Bit( Cy );
 
     /// PSW[OV] = 0;
     clear_S_Bit( OV );
@@ -867,14 +867,14 @@ void I51Core::mov_indir_rx_mem()
 void I51Core::anl_c_compl_bitaddr()
 {
     int address = OPERAND1;
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
 
     int bit = address & 7;
     int bitmask =( 1 << bit );
     address &= 0xf8;
     int value =(  getValue( address ) & bitmask ) ? 0 : carry;
-    /// PSW[CY] = value ;
-    write_S_Bit( CY, value );
+    /// PSW[Cy] = value ;
+    write_S_Bit( Cy, value );
 
     PC += 2;
     m_mcu->cyclesDone = 1;
@@ -895,8 +895,8 @@ void I51Core::cpl_bitaddr()
 
 void I51Core::cpl_c()
 {
-    /// PSW[CY] ^= 1;
-    *m_STATUS ^= 1 << CY;
+    /// PSW[Cy] ^= 1;
+    *m_STATUS ^= 1 << Cy;
     incDefault();
 }
 
@@ -904,9 +904,9 @@ void I51Core::cjne_a_imm_offset()
 {
     int value = OPERAND1;
 
-    /// if( ACC < value ) PSW[CY] = 1;
-    /// else              PSW[CY] = 0;
-    write_S_Bit( CY, ACC < value );
+    /// if( ACC < value ) PSW[Cy] = 1;
+    /// else              PSW[Cy] = 0;
+    write_S_Bit( Cy, ACC < value );
 
     if( ACC != value ) PC +=(signed char)OPERAND2 + 3;
     else               PC += 3;
@@ -919,9 +919,9 @@ void I51Core::cjne_a_mem_offset()
     int address = OPERAND1;
     int value = getValue( address );
 
-    /// if( ACC < value ) PSW[CY] = 1;
-    /// else              PSW[CY] = 0;
-    write_S_Bit( CY, ACC < value );
+    /// if( ACC < value ) PSW[Cy] = 1;
+    /// else              PSW[Cy] = 0;
+    write_S_Bit( Cy, ACC < value );
 
     if( ACC != value ) PC +=(signed char)OPERAND2 + 3;
     else               PC += 3;
@@ -941,9 +941,9 @@ void I51Core::cjne_indir_rx_imm_offset()
     }
     else value1 = m_dataMem[address];
 
-    /// if( value1 < value2 ) PSW[CY] = 1;
-    /// else                  PSW[CY] = 0;
-    write_S_Bit( CY, value1 < value2 );
+    /// if( value1 < value2 ) PSW[Cy] = 1;
+    /// else                  PSW[Cy] = 0;
+    write_S_Bit( Cy, value1 < value2 );
 
     if( value1 != value2 ) PC +=(signed char)OPERAND2 + 3;
     else                   PC += 3;
@@ -983,8 +983,8 @@ void I51Core::clr_bitaddr()
 
 void I51Core::clr_c()
 {
-    /// PSW[CY] = 0;
-    clear_S_Bit( CY );
+    /// PSW[Cy] = 0;
+    clear_S_Bit( Cy );
     incDefault();
 }
 
@@ -1063,8 +1063,8 @@ void I51Core::setb_bitaddr()
 
 void I51Core::setb_c()
 {
-    /// PSW[CY] = 1;
-    set_S_Bit( CY );
+    /// PSW[Cy] = 1;
+    set_S_Bit( Cy );
     incDefault();
 }
 
@@ -1078,10 +1078,10 @@ void I51Core::da_a()
     if( (result & 0xf ) > 9 || STATUS(AC) )
         result += 0x6;
 
-    if( (result & 0xff0 ) > 0x90 || STATUS(CY) )
+    if( (result & 0xff0 ) > 0x90 || STATUS(Cy) )
         result += 0x60;
 
-    if( result > 0x99 ) set_S_Bit(CY); /// PSW[CY] = 1;
+    if( result > 0x99 ) set_S_Bit(Cy); /// PSW[Cy] = 1;
 
     ACC = result;
 
@@ -1268,7 +1268,7 @@ void I51Core::add_a_rx()
 void I51Core::addc_a_rx()
 {
     int rx = RX_ADDRESS;
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
     add_solve_flags(m_dataMem[rx], ACC, carry );
     ACC += m_dataMem[rx] + carry;
     incDefault();
@@ -1306,7 +1306,7 @@ void I51Core::mov_mem_rx()
 void I51Core::subb_a_rx()
 {
     int rx = RX_ADDRESS;
-    uint8_t carry = STATUS(CY) >> CY; /// PSW[CY];
+    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
     sub_solve_flags( ACC, m_dataMem[rx] + carry );
     ACC -= m_dataMem[rx] + carry;
     incDefault();
@@ -1326,9 +1326,9 @@ void I51Core::cjne_rx_imm_offset()
     int rx = RX_ADDRESS;
     int value = OPERAND1;
 
-    /// if( m_dataMem[rx] < value ) PSW[CY] = 1;
-    /// else                        PSW[CY] = 1;
-    write_S_Bit( CY, m_dataMem[rx] < value );
+    /// if( m_dataMem[rx] < value ) PSW[Cy] = 1;
+    /// else                        PSW[Cy] = 1;
+    write_S_Bit( Cy, m_dataMem[rx] < value );
 
     PC += 3;
     if( m_dataMem[rx] != value ) PC += (int8_t)OPERAND2;

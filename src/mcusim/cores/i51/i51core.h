@@ -32,7 +32,7 @@ enum SFR_REGS
 };
 
 enum {
-    P=0,k,OV,RS0,RS1,F0,AC,CY
+    P=0,k,OV,RS0,RS1,F0,AC,Cy
 };
 
 /*enum EM8051_EXCEPTION

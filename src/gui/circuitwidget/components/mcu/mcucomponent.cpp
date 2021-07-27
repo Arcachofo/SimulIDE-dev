@@ -90,7 +90,7 @@ QList<propGroup_t> McuComponent::propGroups()
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Logic_Symbol", tr("Logic Symbol"),""} );
     mainGroup.propList.append( {"Mhz", tr("Frequency"),"MHz"} );
-    mainGroup.propList.append( {"Program", tr("Fimware"),""} );
+    mainGroup.propList.append( {"Program", tr("Firmware"),""} );
     mainGroup.propList.append( {"Auto_Load", tr("Auto Load Firmware at Start"),""} );
     return {mainGroup};
 }

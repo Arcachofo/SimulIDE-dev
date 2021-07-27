@@ -273,7 +273,7 @@ void McuCreator::createRegisters( QDomElement* e )
                         mcu->m_bitMasks.insert( bitName, 1<<i );
                         mcu->m_bitRegs.insert( bitName, regAddr );
                     }
-                    if( (!stReg.isEmpty()) && ( regName == stReg ) )
+                    if( !stReg.isEmpty() && ( regName == stReg ) )
                     {
                         mcu->m_sregAddr = regAddr;
                         //mcu->m_sreg.resize( 8 );

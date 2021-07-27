@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>327</width>
+    <width>350</width>
     <height>23</height>
    </rect>
   </property>
@@ -83,6 +83,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="locale">
+      <locale language="C" country="AnyCountry"/>
      </property>
      <property name="specialValueText">
       <string notr="true"/>
