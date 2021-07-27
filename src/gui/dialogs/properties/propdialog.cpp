@@ -69,8 +69,6 @@ void PropDialog::setComponent( Component* comp )
                 QString propName = prop.name;
                 QString unit     = prop.unit;
 
-                const char* name = propName.toStdString().c_str();
-
                 if( propName == "" ) // Just a label
                 {
                     LabelVal* mp = new LabelVal( this );
@@ -78,10 +76,11 @@ void PropDialog::setComponent( Component* comp )
                     propWidget->layout()->addWidget( mp );
                     continue;
                 }
-                const QVariant value = comp->property( name );
+                //const char* name = propName.toStdString().c_str();
+                const QVariant value = comp->property( propName.toStdString().c_str() );
                 if( !value.isValid() )
                 {
-                    qDebug() <<"Property not valid: " << propName << name << unit;
+                    qDebug() <<"Property not valid: QString:"<<propName<<" char*:"<<propName.toStdString().c_str()<<" type:"<<unit;
                     continue;
                 }
                 QVariant::Type type = value.type();
