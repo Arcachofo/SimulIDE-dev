@@ -1,4 +1,4 @@
-rules: modifiers keyword1 keyword2 number preprocessor lineComment1 lineComment2 lineComment3 multiLineComment htmlTag quotation
+rules: modifiers keyword1 preprocessor number subroutine operator lineComment1 lineComment2 lineComment3 multiLineComment htmlTag quotation
 
 
 modifiers-style: #00008b default true false
@@ -11,12 +11,18 @@ preprocessor-style: #00008b default true false
 preprocessor: "#[chip|config|define|endif|ifdef|ifndef|include|mem|script|startup]+[\^]*"
 
 number-style: #FF0000 default True false
-number: "\b[0-9]+\b"
+number: "\b[0-9]+\b" "0[xX][0-9a-fA-F]+"
 
-htmlTag-style: #303078 default false false
-htmlTag: "<.*>" 
+subroutine-style: #FF1493 default true false
+subroutine: "^(.+[^\s-]):"
 
-quotation-style: #FF1493 default True false
+#htmlTag-style: #303078 default false false
+#htmlTag: "<.*>" 
+
+operator-style: #800000 default true false
+operator: "[\(\)\/\=\+\-\<\>]"
+
+quotation-style: #DC143C default True false
 quotation: "\"(\\.|[^\"])*\""
 
 lineComment1-style: #00a651 default false true
