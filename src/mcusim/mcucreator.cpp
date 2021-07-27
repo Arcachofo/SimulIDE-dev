@@ -42,6 +42,7 @@
 #include "avrspi.h"
 #include "avrwdt.h"
 #include "avreeprom.h"
+#include "avrcomparator.h"
 
 #include "pic14core.h"
 
@@ -108,6 +109,7 @@ int McuCreator::processFile( QString fileName )
         else if( el.tagName() == "timer" )      createTimer( &el );
         else if( el.tagName() == "usart" )      createUsart( &el );
         else if( el.tagName() == "adc" )        createAdc( &el );
+        else if( el.tagName() == "acomp" )      createAcomp( &el );
         else if( el.tagName() == "twi" )        createTwi( &el );
         else if( el.tagName() == "spi" )        createSpi( &el );
         else if( el.tagName() == "wdt" )        createWdt( &el );
@@ -618,6 +620,36 @@ void McuCreator::createAdc( QDomElement* e )
                     McuPin* pin = mcu->m_ports.getPin( pinName );
                     if( pin ) adc->m_adcPin.emplace_back( pin );
                 }
+            }
+        }
+        node = node.nextSibling();
+    }
+}
+
+void McuCreator::createAcomp( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+    McuComp* comp;
+    if( m_core == "AVR" ) comp = new AvrComp( mcu, name );
+    else return;
+
+    setConfigRegs( e, comp );
+
+    QDomNode node = e->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+
+        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, comp );
+        else if( el.tagName() == "inputpin" )
+        {
+            QString pinName = el.attribute("pin");
+            McuPin* pin = mcu->m_ports.getPin( pinName );
+            if( pin )
+            {
+                QString name = el.attribute("name");
+                if     ( name == "positive" ) comp->m_pinP = pin ;
+                else if( name == "negative" ) comp->m_pinN = pin ;
             }
         }
         node = node.nextSibling();

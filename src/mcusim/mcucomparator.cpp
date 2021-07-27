@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,51 +17,14 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef EPIN_H
-#define EPIN_H
+#include "mcucomparator.h"
 
-#include <QString>
-
-class eNode;
-class eElement;
-
-class MAINMODULE_EXPORT ePin
+McuComp::McuComp( eMcu* mcu, QString name )
+      : McuModule( mcu, name )
+      , eElement( name )
 {
-    public:
-        ePin( QString id, int index );
-        virtual ~ePin();
+    m_pinP = NULL;
+    m_pinN = NULL;
+}
+McuComp::~McuComp(){}
 
-        bool isConnected() { return (m_enode!=NULL); }
-
-        double getVolt();
-
-        eNode* getEnode();
-        void   setEnode( eNode* enode );
-
-        eNode* getEnodeComp() { return m_enodeCon; }
-        void   setEnodeComp( eNode* enode ); // The enode at other side of component
-
-        void changeCallBack( eElement* el , bool cb=true );
-
-        bool inverted() { return m_inverted; }
-        virtual void setInverted( bool inverted );
-
-        void stampAdmitance( double data );
-        void stampCurrent( double data );
-
-        void reset();
-        
-        QString getId();
-        void setId( QString id );
-
-    protected:
-        eNode* m_enode;
-        eNode* m_enodeCon;
-
-        QString m_id;
-        int m_index;
-
-        bool m_inverted;
-};
-
-#endif

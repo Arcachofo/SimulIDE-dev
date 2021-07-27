@@ -50,6 +50,7 @@ class MAINMODULE_EXPORT McuCreator
         static void createTimer( QDomElement* t );
         static void createUsart( QDomElement* u );
         static void createAdc( QDomElement* e );
+        static void createAcomp( QDomElement* e );
         static void createTwi( QDomElement* e );
         static void createSpi( QDomElement* e );
         static void createWdt( QDomElement* e );

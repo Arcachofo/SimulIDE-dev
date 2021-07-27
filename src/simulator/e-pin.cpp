@@ -21,7 +21,6 @@
 #include "e-node.h"
 #include "circuit.h"
 
-
 ePin::ePin( QString id, int index )
 {
     m_id    = id;
@@ -65,9 +64,11 @@ void ePin::setEnodeComp( eNode* enode )
 
 void ePin::changeCallBack( eElement* el, bool cb )
 {
-    if( !m_enode ) return;
-    if( cb ) m_enode->voltChangedCallback( el );
-    else     m_enode->remFromChangedCallback( el );
+    if( m_enode )
+    {
+        if( cb ) m_enode->voltChangedCallback( el );
+        else     m_enode->remFromChangedCallback( el );
+    }
 }
 
 void ePin::stampCurrent( double data )

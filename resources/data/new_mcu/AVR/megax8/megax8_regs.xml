@@ -66,7 +66,7 @@
         <register name="SPCR"   addr="44"  bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE"/>
         <register name="SPSR"   addr="45"  bits="SPI2X,0,0,0,0,0,WCOL,SPIF"/>
         <register name="SPDR"   addr="46"  bits=""/>
-        <register name="ACSR"   addr="48"  bits=""/>
+        <register name="ACSR"   addr="48"  bits="ACIS0,ACIS1,ACIC,ACIE,ACI,ACO,ACBG,ACD"/>
         <register name="SMCR"   addr="51"  bits=""/>
         <register name="MCUSR"  addr="52"  bits=""/>
         <register name="MCUCR"  addr="53"  bits=""/>
@@ -94,7 +94,7 @@
         <register name="ADCSRB" addr="123" bits="ADTS0,ADTS1,ADTS2"/>
         <register name="ADMUX"  addr="124" bits="MUX0,MUX1,MUX2,MUX3,0,ADLAR,REFS0,REFS1"/>
         <register name="DIDR0"  addr="126" bits=""/>
-        <register name="DIDR1"  addr="127" bits=""/>
+        <register name="DIDR1"  addr="127" bits="AIN0D,AIN1D"/>
         <register name="TCCR1A" addr="128" bits="WGM10,WGM11,0,0,COM1B0,COM1B1,COM1A0,COM1A1"/>
         <register name="TCCR1B" addr="129" bits="CS10,CS11,CS12,WGM12,WGM13,0,ICES1,ICNC1"/>
         <register name="TCCR1C" addr="130" bits="0,0,0,0,0,0,FOC1B,FOC1A"/>

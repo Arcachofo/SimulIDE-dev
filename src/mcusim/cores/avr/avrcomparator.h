@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,51 +17,45 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef EPIN_H
-#define EPIN_H
+#ifndef AVRCOMPARATOR_H
+#define AVRCOMPARATOR_H
 
-#include <QString>
+#include "mcucomparator.h"
+#include "mcutypes.h"
 
-class eNode;
-class eElement;
-
-class MAINMODULE_EXPORT ePin
+class MAINMODULE_EXPORT AvrComp : public McuComp
 {
+        friend class AvrCreator;
+
     public:
-        ePin( QString id, int index );
-        virtual ~ePin();
+        AvrComp( eMcu* mcu, QString name );
+        ~AvrComp();
 
-        bool isConnected() { return (m_enode!=NULL); }
+        virtual void initialize() override;
 
-        double getVolt();
-
-        eNode* getEnode();
-        void   setEnode( eNode* enode );
-
-        eNode* getEnodeComp() { return m_enodeCon; }
-        void   setEnodeComp( eNode* enode ); // The enode at other side of component
-
-        void changeCallBack( eElement* el , bool cb=true );
-
-        bool inverted() { return m_inverted; }
-        virtual void setInverted( bool inverted );
-
-        void stampAdmitance( double data );
-        void stampCurrent( double data );
-
-        void reset();
-        
-        QString getId();
-        void setId( QString id );
+        virtual void configureA( uint8_t newACSR ) override;
+        virtual void configureB( uint8_t newDIDR1 ) override;
 
     protected:
-        eNode* m_enode;
-        eNode* m_enodeCon;
+        void compare( uint8_t );
 
-        QString m_id;
-        int m_index;
+        bool m_fixVref;
+        bool m_enabled;
+        bool m_compOut;
 
-        bool m_inverted;
+        uint8_t m_mode;
+
+        //uint8_t*  m_ACSR;
+        regBits_t m_ACD;
+        regBits_t m_ACBG;
+        regBits_t m_ACO;
+        regBits_t m_ACI;
+        regBits_t m_ACIC;
+        regBits_t m_ACIS;
+
+        //uint8_t*  m_DIDR1;
+        regBits_t m_AIN0D;
+        regBits_t m_AIN1D;
 };
 
 #endif
