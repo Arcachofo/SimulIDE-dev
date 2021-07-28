@@ -72,7 +72,7 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint8_t countVal )
         match = m_comMatch;
         m_pinSet = true;
     }
-    if( (match < ovf )&&(match > countVal) ) // be sure next comp match is still ahead
+    if( (match <= ovf )&&(match > countVal) ) // be sure next comp match is still ahead
         cycles = (match-countVal)*m_timer->m_scale; // cycles in ps
 
     if( cycles ) Simulator::self()->addEvent( cycles, this );
