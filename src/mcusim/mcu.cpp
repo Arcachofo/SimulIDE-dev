@@ -235,7 +235,7 @@ void Mcu::load( QString fileName )
     QString fileNameAbs  = circuitDir.absoluteFilePath( fileName );
     QString cleanPathAbs = circuitDir.cleanPath( fileNameAbs );
 
-    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
+    if( Simulator::self()->simState() > SIM_STARTING )  CircuitWidget::self()->powerCircOff();
 
     QString msg = loadHex( cleanPathAbs, m_eMcu.m_wordSize );
     if( msg.isEmpty() )
