@@ -20,9 +20,8 @@
 #ifndef MCUOCUNIT_H
 #define MCUOCUNIT_H
 
+#include "mcumodule.h"
 #include "e-element.h"
-#include "regsignal.h"
-#include "mcutypes.h"
 
 class eMcu;
 class McuPin;
@@ -35,7 +34,7 @@ enum ocAct_t{
     ocSET,
 };
 
-class MAINMODULE_EXPORT McuOcUnit : public eElement
+class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
 {
         friend class McuCreator;
 
@@ -53,8 +52,6 @@ class MAINMODULE_EXPORT McuOcUnit : public eElement
         virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
 
         uint8_t getMode() { return m_mode; }
-
-        RegSignal<uint8_t> on_match;
 
     protected:
         void drivePin( ocAct_t act );

@@ -26,10 +26,7 @@ AvrOcUnit::AvrOcUnit( eMcu* mcu, QString name )
          : McuOcUnit( mcu, name )
 {
 }
-
-AvrOcUnit::~AvrOcUnit( )
-{
-}
+AvrOcUnit::~AvrOcUnit( ){}
 
 /*void AvrOcUnit::initialize()
 {

@@ -22,8 +22,8 @@
 
 #include<QHash>
 
+#include "mcumodule.h"
 #include "e-element.h"
-#include "regsignal.h"
 
 #define mSTOPBITS m_usart->m_stopBits
 #define mDATABITS m_usart->m_dataBits
@@ -42,7 +42,7 @@ class UartTR;
 class MAINMODULE_EXPORT UsartModule
 {
     public:
-        UsartModule( QString name );
+        UsartModule( eMcu* mcu, QString name );
         ~UsartModule();
 
         virtual uint8_t getBit9(){return 0;}
@@ -70,12 +70,12 @@ class MAINMODULE_EXPORT UsartModule
 
 class Interrupt;
 
-class MAINMODULE_EXPORT UartTR : public eElement
+class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
 {
         friend class McuCreator;
 
     public:
-        UartTR( UsartModule* usart, QString name );
+        UartTR( UsartModule* usart, eMcu* mcu, QString name );
         ~UartTR();
 
         enum state_t{
@@ -99,8 +99,6 @@ class MAINMODULE_EXPORT UartTR : public eElement
 
         void setPin( IoPin* pin ) { m_ioPin = pin; }
         IoPin* getPin() { return m_ioPin; }
-
-        RegSignal<uint8_t> on_dataEnd;
 
     protected:
         UsartModule* m_usart;

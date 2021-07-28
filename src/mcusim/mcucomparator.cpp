@@ -20,8 +20,8 @@
 #include "mcucomparator.h"
 
 McuComp::McuComp( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
-      , eElement( name )
+       : McuModule( mcu, name )
+       , eElement( name )
 {
     m_pinP = NULL;
     m_pinN = NULL;

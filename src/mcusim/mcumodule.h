@@ -41,8 +41,6 @@ class MAINMODULE_EXPORT McuModule
 
         Interrupt* getInterrupt() { return m_interrupt; }
 
-        //RegSignal<uint8_t> interrupt;
-
     protected:
         QString m_name;
         eMcu*   m_mcu;

@@ -25,7 +25,7 @@
 class MAINMODULE_EXPORT UartTx : public UartTR
 {
     public:
-        UartTx( UsartModule* usart, QString name );
+        UartTx( UsartModule* usart, eMcu* mcu, QString name );
         ~UartTx();
 
         virtual void enable( uint8_t en ) override;

@@ -192,7 +192,7 @@ void McuCreator::createEeprom(  QDomElement* e )
     {
         QDomElement el = node.toElement();
 
-        if( el.tagName() == "raiseint" ) setInterrupt( &el, eeprom );
+        if( el.tagName() == "interrupt" ) setInterrupt( &el, eeprom );
         node = node.nextSibling();
     }
 }
@@ -300,46 +300,6 @@ void McuCreator::createInterrupts( QDomElement* i )
 {
     QString enable = i->attribute("enable");
     mcu->watchBitNames( enable, R_WRITE, (eMcu*)mcu, &eMcu::enableInterrupts );
-
-    QDomNode node = i->firstChild();
-    while( !node.isNull() )
-    {
-        QDomElement el = node.toElement();
-
-        QString  intName = el.attribute("name");
-        if( !intName.isEmpty() )
-        {
-            uint16_t intVector  = el.attribute("vector").toUInt(0,0);
-
-            Interrupt* iv = NULL;
-            if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
-            else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
-            if( !iv ) return;
-
-            mcu->m_interrupts.m_intList.insert( intName, iv );
-            iv->m_interrupts = &(mcu->m_interrupts);
-
-            enable = el.attribute("enable");
-            mcu->watchBitNames( enable, R_WRITE, iv, &Interrupt::enableFlag );
-
-            QString intFlag = el.attribute("flag");
-            iv->m_flagMask = mcu->m_bitMasks.value( intFlag );
-            iv->m_flagReg  = mcu->m_bitRegs.value( intFlag );
-
-            QString intPrio = el.attribute("priority");
-            bool ok = false;
-            uint8_t prio = intPrio.toUInt(&ok,0);
-            if( ok ) iv->setPriority( prio );
-            else     mcu->watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority );
-
-            if( el.hasAttribute("mode") )
-            {
-                QString mode = el.attribute("mode");
-                mcu->watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode );
-            }
-        }
-        node = node.nextSibling();
-    }
 }
 
 void McuCreator::createPort( QDomElement* p )
@@ -403,7 +363,7 @@ void McuCreator::createPort( QDomElement* p )
     {
         QDomElement el = node.toElement();
 
-        if( el.tagName() == "raiseint" )
+        if( el.tagName() == "interrupt" )
         {
             setInterrupt( &el, port ); // Pin change interrupt
             if( el.hasAttribute("mask") )
@@ -465,7 +425,7 @@ void McuCreator::createTimer( QDomElement* t )
     {
         QDomElement el = node.toElement();
 
-        if     ( el.tagName() == "raiseint" )  setInterrupt( &el, timer );
+        if     ( el.tagName() == "interrupt" )  setInterrupt( &el, timer );
         else if( el.tagName() == "prescaler" )
         {
             QStringList prescalers = el.attribute("values").remove(" ").split(",");
@@ -499,6 +459,14 @@ void McuCreator::createTimer( QDomElement* t )
                 QString configBits = el.attribute("configbits");
                 mcu->watchBitNames( configBits, R_WRITE, ocUnit, &McuOcUnit::configure );
                 ocUnit->m_configBits = mcu->getRegBits( configBits );
+            }
+            QDomNode node1 = el.firstChild();
+            while( !node1.isNull() )
+            {
+                QDomElement el1 = node1.toElement();
+                if( el1.tagName() == "interrupt" )  setInterrupt( &el1, ocUnit );
+
+                node1 = node1.nextSibling();
             }
         }
         node = node.nextSibling();
@@ -546,12 +514,13 @@ void McuCreator::createUsart( QDomElement* u )
                 QString enable = el.attribute( "enable" );
                 mcu->watchBitNames( enable, R_WRITE, trUnit, &UartTR::enable );
             }
-            if( el.hasAttribute("raiseint") )
+            QDomNode node1 = el.firstChild();
+            while( !node1.isNull() )
             {
-                QString intName = el.attribute("raiseint");
-                Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
-                trUnit->m_interrupt = inte;
-                //trUnit->on_dataEnd.connect( inte, &Interrupt::raise );
+                QDomElement el1 = node1.toElement();
+                if( el1.tagName() == "interrupt" )  setInterrupt( &el1, trUnit );
+
+                node1 = node1.nextSibling();
             }
         }
         node = node.nextSibling();
@@ -600,7 +569,7 @@ void McuCreator::createAdc( QDomElement* e )
     {
         QDomElement el = node.toElement();
 
-        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, adc );
+        if     ( el.tagName() == "interrupt" ) setInterrupt( &el, adc );
         else if( el.tagName() == "prescaler" )
         {
             QStringList prescalers = el.attribute("values").remove(" ").split(",");
@@ -640,7 +609,7 @@ void McuCreator::createAcomp( QDomElement* e )
     {
         QDomElement el = node.toElement();
 
-        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, comp );
+        if     ( el.tagName() == "interrupt" ) setInterrupt( &el, comp );
         else if( el.tagName() == "inputpin" )
         {
             QString pinName = el.attribute("pin");
@@ -693,7 +662,7 @@ void McuCreator::createTwi( QDomElement* e )
     {
         QDomElement el = node.toElement();
 
-        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, twi );
+        if     ( el.tagName() == "interrupt" ) setInterrupt( &el, twi );
         else if( el.tagName() == "prescaler" )
         {
             QStringList prescalers = el.attribute("values").remove(" ").split(",");
@@ -745,7 +714,7 @@ void McuCreator::createSpi( QDomElement* e )
     {
         QDomElement el = node.toElement();
 
-        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, spi );
+        if     ( el.tagName() == "interrupt" ) setInterrupt( &el, spi );
         else if( el.tagName() == "prescaler" )
         {
             QStringList prescalers = el.attribute("values").remove(" ").split(",");
@@ -784,7 +753,7 @@ void McuCreator::createWdt( QDomElement* e )
     {
         QDomElement el = node.toElement();
 
-        if     ( el.tagName() == "raiseint" ) setInterrupt( &el, wdt );
+        if     ( el.tagName() == "interrupt" ) setInterrupt( &el, wdt );
         else if( el.tagName() == "prescaler" )
         {
             QStringList prescalers = el.attribute("values").remove(" ").split(",");
@@ -826,12 +795,38 @@ void McuCreator::createStack( QDomElement* s )
 
 void McuCreator::setInterrupt( QDomElement* el, McuModule* module )
 {
-    QString intName = el->attribute("intname");
-    Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
+    QString  intName = el->attribute("name");
+    if( intName.isEmpty() ) return;
 
-    QString source  = el->attribute("source");
-    if( source == "MAIN" ) module->m_interrupt = inte;
-        //module->interrupt.connect( inte, &Interrupt::raise );
+    uint16_t intVector  = el->attribute("vector").toUInt(0,0);
+
+    Interrupt* iv = NULL;
+    if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
+    else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
+    if( !iv ) return;
+
+    mcu->m_interrupts.m_intList.insert( intName, iv );
+    iv->m_interrupts = &(mcu->m_interrupts);
+
+    QString enable = el->attribute("enable");
+    mcu->watchBitNames( enable, R_WRITE, iv, &Interrupt::enableFlag );
+
+    QString intFlag = el->attribute("flag");
+    iv->m_flagMask = mcu->m_bitMasks.value( intFlag );
+    iv->m_flagReg  = mcu->m_bitRegs.value( intFlag );
+
+    QString intPrio = el->attribute("priority");
+    bool ok = false;
+    uint8_t prio = intPrio.toUInt(&ok,0);
+    if( ok ) iv->setPriority( prio );
+    else     mcu->watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority );
+
+    if( el->hasAttribute("mode") )
+    {
+        QString mode = el->attribute("mode");
+        mcu->watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode );
+    }
+    module->m_interrupt = iv;
 }
 
 void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )

@@ -22,7 +22,7 @@
 
 McuUsart::McuUsart( eMcu* mcu, QString name, int number )
         : McuModule( mcu, name )
-        , UsartModule( name )
+        , UsartModule( mcu, name )
 {
     m_number = number;
     m_mode = 0xFF; // Force first mode change.

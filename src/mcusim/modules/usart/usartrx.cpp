@@ -22,8 +22,8 @@
 #include "iopin.h"
 #include "simulator.h"
 
-UartRx::UartRx( UsartModule* usart, QString name )
-      : UartTR( usart, name )
+UartRx::UartRx( UsartModule* usart, eMcu* mcu, QString name )
+      : UartTR( usart, mcu, name )
 {
     m_period = 0;
 }

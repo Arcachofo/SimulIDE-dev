@@ -21,10 +21,10 @@
 #include "usarttx.h"
 #include "usartrx.h"
 
-UsartModule::UsartModule( QString name )
+UsartModule::UsartModule( eMcu* mcu, QString name )
 {
-    m_sender   = new UartTx( this, name+"Tx" );
-    m_receiver = new UartRx( this, name+"Rx" );
+    m_sender   = new UartTx( this, mcu, name+"Tx" );
+    m_receiver = new UartRx( this, mcu, name+"Rx" );
 
     m_mode = 0xFF; // Force first mode change.
 }
@@ -45,8 +45,9 @@ void UsartModule::setPeriod( uint64_t period )
     m_receiver->setPeriod( period );
 }
 
-UartTR::UartTR( UsartModule* usart, QString name )
-      : eElement( name )
+UartTR::UartTR( UsartModule* usart, eMcu* mcu, QString name )
+      : McuModule( mcu, name )
+      , eElement( name )
 {
     m_usart = usart;
 

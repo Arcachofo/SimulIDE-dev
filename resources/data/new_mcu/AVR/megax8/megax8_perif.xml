@@ -2,47 +2,71 @@
 
 <parts>
     <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
-        <raiseint intname="PCINT0" source="MAIN" mask="PCMSK0"/>
+        <interrupt name="PCINT0" enable="PCIE0" flag="PCIF0" priority="23" vector="0x0006"/>
     </port>
+    
     <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
-        <raiseint intname="PCINT1" source="MAIN" mask="PCMSK1"/>
+        <interrupt name="PCINT1" enable="PCIE1" flag="PCIF1" priority="22" vector="0x0008"/>
     </port>
+    
     <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
-        <raiseint intname="PCINT2" source="MAIN" mask="PCMSK2"/>
+        <interrupt name="PCINT2" enable="PCIE2" flag="PCIF2" priority="21" vector="0x000A"/>
     </port>
     
     <timer name="TIMER0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
         <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTD4"/>
         
-        <ocunit   name="OC0A" pin="PORTD6" ocreg="OCR0A" configbits="COM0A0,COM0A1"/>
-        <ocunit   name="OC0B" pin="PORTD5" ocreg="OCR0B" configbits="COM0B0,COM0B1"/>
+        <ocunit name="OC0A" pin="PORTD6" ocreg="OCR0A" configbits="COM0A0,COM0A1">
+            <interrupt name="T0COA" enable="OCIE0A" flag="OCF0A" priority="12" vector="0x01C"/>
+        </ocunit>
         
-        <raiseint intname="T0_OVF" source="MAIN" />
+        <ocunit name="OC0B" pin="PORTD5" ocreg="OCR0B" configbits="COM0B0,COM0B1">
+            <interrupt name="T0COB"  enable="OCIE0B"  flag="OCF0B" priority="11" vector="0x01E"/>
+        </ocunit>
+        
+        <interrupt name="T0_OVF" enable="TOIE0" flag="TOV0" priority="10" vector="0x0020"/>
     </timer>
     
     <timer name="TIMER1" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B">
         <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTD5"/>
         
-        <ocunit   name="OC1A" pin="PORTB1" ocreg="OCR1A" configbits="COM1A0,COM1A1"/>
-        <ocunit   name="OC1B" pin="PORTB2" ocreg="OCR1B" configbits="COM1B0,COM1B1"/>
+        <ocunit name="OC1A" pin="PORTB1" ocreg="OCR1A" configbits="COM1A0,COM1A1">
+            <interrupt name="T1COA" enable="OCIE1A" flag="OCF1A" priority="15" vector="0x016"/>
+        </ocunit>
         
-        <raiseint intname="T1_OVF" source="MAIN" />
+        <ocunit name="OC1B" pin="PORTB2" ocreg="OCR1B" configbits="COM1B0,COM1B1">
+            <interrupt name="T1COB" enable="OCIE1B" flag="OCF1B" priority="14" vector="0x018"/>
+        </ocunit>
+        
+        <interrupt name="T1_OVF" enable="TOIE1" flag="TOV1" priority="13" vector="0x001A"/>
     </timer>
     
     <timer name="TIMER2" counter="TCNT2" configregsA="TCCR2A" configregsB="TCCR2B">
         <prescaler select="" values="0,1,8,32,64,128,256,1024"/>
         
-        <ocunit   name="OC2A" pin="PORTB3" ocreg="OCR2A" configbits="COM2A0,COM2A1"/>
-        <ocunit   name="OC2B" pin="PORTD3" ocreg="OCR2B" configbits="COM2B0,COM2B1"/>
+        <ocunit name="OC2A" pin="PORTB3" ocreg="OCR2A" configbits="COM2A0,COM2A1">
+            <interrupt name="T2COA" enable="OCIE2A" flag="OCF2A" priority="19" vector="0x00E"/>
+        </ocunit>
         
-        <raiseint intname="T2_OVF" source="MAIN" />
+        <ocunit name="OC2B" pin="PORTD3" ocreg="OCR2B" configbits="COM2B0,COM2B1">
+            <interrupt name="T2COB" enable="OCIE2B" flag="OCF2B" priority="18" vector="0x010"/>
+        </ocunit>
+        
+        <interrupt name="T2_OVF" enable="TOIE2" flag="TOV2" priority="17" vector="0x0012"/>
     </timer>
     
     <usart name="USART0"  number="1" configregsA="UCSR0C" configbitsB="UCSR0B">
-        <trunit type="tx" pin="PORTD1" register="UDR0" raiseint="USART_T"/>
-        <trunit type="rx" pin="PORTD0" register="UDR0" raiseint="USART_R"/>
+        <trunit type="tx" pin="PORTD1" register="UDR0">
+            <interrupt name="USART_T" enable="TXCIE0" flag="TXC0"  priority="6" vector="0x0028"/>
+        </trunit>
+        
+        <trunit type="rx" pin="PORTD0" register="UDR0">
+            <interrupt name="USART_R" enable="RXCIE0" flag="RXC0"  priority="8" vector="0x0024" />
+        </trunit>
+        
+        
     </usart>
     
     <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->
@@ -51,7 +75,7 @@
         <prescaler select="" values="2,2,4,8,16,32,64,128"/>
         <inputs type="PIN" source="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5" />
         
-        <raiseint intname="ADC" source="MAIN" />
+        <interrupt name="ADC" enable="ADIE" flag="ADIF" priority="5" vector="0x002A"/>
     </adc>
     
     <twi name="TWI0" dataregs="TWDR" addressreg="TWAR" statusreg="TWSR" 
@@ -61,7 +85,7 @@
         <inputpin name="sda" pin="PORTC4" />
         <inputpin name="scl" pin="PORTC5" />
         
-        <raiseint intname="TWI" source="MAIN" />
+        <interrupt name="TWI" enable="TWIE" flag="TWINT" priority="2" vector="0x0030" />
     </twi>
     
     <spi name="SPI0" dataregs="SPDR" statusreg="SPSR" configregsA="SPCR">
@@ -72,22 +96,21 @@
         <inputpin name="sck"  pin="PORTB5" />
         <inputpin name="ss"   pin="PORTB2" />
         
-        <raiseint intname="SPI" source="MAIN" />
+        <interrupt name="SPI" enable="SPIE" flag="SPIF" priority="9" vector="0x0022"/>
     </spi>
     
     <wdt name="WatchDog" configregsA="WDTCSR">
         <prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
-        <raiseint intname="WDT" source="MAIN" />
+        <interrupt name="WDT" enable="WDIE" flag="WDIF" priority="20" vector="0x000C"/>
     </wdt>
     
     <eeprom name="EEPROM" dataregs="EEDR" addressreg="EEARL,EEARH" configregsA="EECR">
-        <raiseint intname="EEPR" source="MAIN" />
+        <interrupt name="EEPR" enable="EERIE" flag="" priority="4" vector="0x02C"/>
     </eeprom>
     
     <acomp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D">
         <inputpin name="positive" pin="PORTD6" />
         <inputpin name="negative" pin="PORTD7" />
-        
-        <raiseint intname="ACOMP" source="MAIN" />
+        <interrupt name="ACOMP" enable="ACIE" flag="ACI" priority="3" vector="0x02E"/>
     </acomp>
 </parts>

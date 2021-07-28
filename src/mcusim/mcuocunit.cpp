@@ -23,7 +23,8 @@
 #include "simulator.h"
 
 McuOcUnit::McuOcUnit( eMcu* mcu, QString name )
-         : eElement( name )
+         : McuModule( mcu, name )
+         , eElement( name )
 {
     m_mcu = mcu;
     m_timer = NULL;
@@ -42,7 +43,7 @@ void McuOcUnit::initialize()
 
 void McuOcUnit::runEvent()           // Compare match
 {
-    on_match.emitValue( 1 );         // Trigger interrupt
+    m_interrupt->raise();         // Trigger interrupt
 
     drivePin( m_comAct );
 }
