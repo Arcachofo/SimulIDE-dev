@@ -70,7 +70,8 @@ void AvrTimer::configureB( uint8_t val ) // TCCRXB
 {
     uint8_t mode = val & 0b00000111; // CSX0-3
 
-    if( mode != m_mode )
+    /// Not working after Rev 376
+    /*if( mode != m_mode )
     {
         m_mode = mode;
 
@@ -79,6 +80,12 @@ void AvrTimer::configureB( uint8_t val ) // TCCRXB
         updtCycles();  // This will shedule or cancel events
         //enable( m_mode );
         m_running = ( val > 0 );
+    }*/
+    if( mode != m_mode )
+    {
+        m_mode = mode;
+        if( mode ) configureClock();
+        enable( m_mode );
     }
     m_WGM32 = (val & 0b00011000)>>1; // WGMX3,WGMX2
     updtWgm();
