@@ -26,6 +26,7 @@
 
 class eMcu;
 class Interrupts;
+class McuModule;
 
 class MAINMODULE_EXPORT Interrupt
 {
@@ -48,6 +49,8 @@ class MAINMODULE_EXPORT Interrupt
 
         uint8_t priority() { return m_priority; }
 
+        void callBack( McuModule* mod, bool call );
+
     protected:
         eMcu* m_mcu;
         uint8_t* m_ram;
@@ -68,6 +71,8 @@ class MAINMODULE_EXPORT Interrupt
         uint8_t m_raised;
 
         bool m_autoClear;
+
+        QList<McuModule*> m_callBacks;
 };
 
 //------------------------               ------------------------

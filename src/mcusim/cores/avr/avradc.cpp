@@ -19,6 +19,7 @@
 
 #include "avradc.h"
 #include "avrtimer.h"
+#include "mcuocunit.h"
 #include "mcupin.h"
 #include "e_mcu.h"
 
@@ -39,6 +40,9 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
 
     m_timer0 = (AvrTimer0*)mcu->getTimer( "TIMER0" );
     m_timer1 = (AvrTimer1*)mcu->getTimer( "TIMER1" );
+
+    m_t0OCA = m_timer0->getOcUnit("OCA");
+    m_t1OCB = m_timer1->getOcUnit("OCB");
 }
 AvrAdc::~AvrAdc(){}
 
@@ -83,13 +87,18 @@ void AvrAdc::configureB( uint8_t newADCSRB ) // ADCSRB
 
 void AvrAdc::autotriggerConf()
 {
-    m_freeRunning = false;
+    uint8_t trigger = m_trigger;
+    if( !m_autoTrigger ) trigger = 255;
 
-    if( !m_autoTrigger )
-    {
-        ; /// TODO
-    }
-    switch( m_trigger ) /// TODO
+    m_freeRunning = trigger == 0;
+    /// TODO Analog Comparator
+    m_t0OCA->getInterrupt()->callBack( this, m_trigger == 3 );
+    m_timer0->getInterrupt()->callBack( this, m_trigger == 4 );
+    m_t1OCB->getInterrupt()->callBack( this, m_trigger == 5 );
+    m_timer1->getInterrupt()->callBack( this, m_trigger == 6 );
+    /// TODO Timer/Counter1 Capture Event
+
+    /*switch( m_trigger ) /// TODO
     {
         case 0:     // Free Running mode
             m_freeRunning = true;
@@ -108,7 +117,7 @@ void AvrAdc::autotriggerConf()
             break;
         case 7:     // Timer/Counter1 Capture Event
             break;
-    }
+    }*/
 }
 
 void AvrAdc::setChannel( uint8_t val ) // ADMUX
@@ -145,3 +154,4 @@ void AvrAdc::endConversion() // Clear ADSC bit
     *m_ADCSRA &= ~(m_ADSC.mask);
     if( m_autoTrigger && m_freeRunning ) startConversion();
 }
+

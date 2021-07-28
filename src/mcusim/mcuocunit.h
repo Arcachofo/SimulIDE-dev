@@ -45,9 +45,9 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
         virtual void initialize();
         virtual void runEvent();
         virtual void configure( uint8_t ){;}
-        virtual void ocrChanged( uint8_t val );
+        virtual void ocrChanged( uint8_t val ) { m_comMatch = val; }
         virtual void sheduleEvents( uint32_t ovf , uint8_t countVal );
-        virtual void tov();
+        virtual void tov() { drivePin( m_tovAct ); }
 
         virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
 

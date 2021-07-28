@@ -25,8 +25,8 @@
 
 class eMcu;
 class McuPin;
-class AvrTimer1;
-class AvrTimer0;
+class AvrTimer;
+class McuOcUnit;
 
 class MAINMODULE_EXPORT AvrAdc : public McuAdc
 {
@@ -39,6 +39,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         virtual void configureA( uint8_t newADCSRA ) override;
         virtual void configureB( uint8_t newADCSRB ) override;
         virtual void setChannel( uint8_t val ) override;
+        virtual void callBack() override { if( !m_converting ) startConversion(); }
 
     protected:
         void autotriggerConf();
@@ -65,8 +66,10 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         McuPin* m_aRefPin;
         McuPin* m_aVccPin;
 
-        AvrTimer0* m_timer0;
-        AvrTimer1* m_timer1;
+        AvrTimer*  m_timer0;
+        AvrTimer*  m_timer1;
+        McuOcUnit* m_t0OCA;
+        McuOcUnit* m_t1OCB;
 };
 
 #endif

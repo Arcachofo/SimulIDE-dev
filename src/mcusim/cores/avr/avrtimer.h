@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2020 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
@@ -39,7 +39,8 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
 
         virtual void initialize() override;
 
-        virtual void addocUnit( McuOcUnit* ocUnit ) override;
+        virtual void addOcUnit( McuOcUnit* ocUnit ) override;
+        virtual McuOcUnit* getOcUnit( QString name ) override;
 
         virtual void configureA( uint8_t val ) override;
         virtual void configureB( uint8_t val ) override;

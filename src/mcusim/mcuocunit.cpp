@@ -44,13 +44,7 @@ void McuOcUnit::initialize()
 void McuOcUnit::runEvent()           // Compare match
 {
     m_interrupt->raise();         // Trigger interrupt
-
     drivePin( m_comAct );
-}
-
-void McuOcUnit::tov()
-{
-    drivePin( m_tovAct );
 }
 
 void McuOcUnit::drivePin( ocAct_t act )
@@ -72,11 +66,9 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint8_t countVal )
 
     if( m_timer->m_reverse )
     {
-         match = ovf-m_comMatch;
-         m_pinSet = false;
-    }
-    else
-    {
+        match = ovf-m_comMatch;
+        m_pinSet = false;
+    }else{
         match = m_comMatch;
         m_pinSet = true;
     }
@@ -85,11 +77,6 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint8_t countVal )
 
     if( cycles ) Simulator::self()->addEvent( cycles, this );
     else         Simulator::self()->cancelEvents( this );
-}
-
-void McuOcUnit::ocrChanged( uint8_t val )
-{
-    m_comMatch = val;
 }
 
 void McuOcUnit::setOcActs( ocAct_t comAct, ocAct_t tovAct )

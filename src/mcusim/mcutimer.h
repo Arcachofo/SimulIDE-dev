@@ -52,7 +52,8 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         virtual void updtCycles();
         virtual void updtCount( uint8_t val=0 );
 
-        virtual void addocUnit( McuOcUnit* ocUnit ) { m_ocUnit.emplace_back( ocUnit ); }
+        virtual void addOcUnit( McuOcUnit* ocUnit ) { m_ocUnit.emplace_back( ocUnit ); }
+        virtual McuOcUnit* getOcUnit( QString name ) {return NULL;}
 
         QString name() { return m_name; }
 

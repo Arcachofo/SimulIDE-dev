@@ -49,12 +49,19 @@ void AvrTimer::initialize()
     m_WGM32 = 0;
 }
 
-void AvrTimer::addocUnit( McuOcUnit* ocUnit )
+void AvrTimer::addOcUnit( McuOcUnit* ocUnit )
 {
     m_ocUnit.emplace_back( ocUnit );
 
     if     ( ocUnit->getId().endsWith("A") ) m_OCA = ocUnit;
     else if( ocUnit->getId().endsWith("B") ) m_OCB = ocUnit;
+}
+
+McuOcUnit* AvrTimer::getOcUnit( QString name )
+{
+    if     ( name.endsWith("A") ) return m_OCA;
+    else if( name.endsWith("B") ) return m_OCB;
+    return NULL;
 }
 
 void AvrTimer::configureA( uint8_t val ) // TCCRXA  // WGM00,WGM01
@@ -337,3 +344,5 @@ void AvrTimer1::configureClock()
     if( m_mode > 5 ) AvrTimer::configureExtClock();
     else             AvrTimer::configureClock();
 }
+
+

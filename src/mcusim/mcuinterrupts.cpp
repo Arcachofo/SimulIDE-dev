@@ -55,6 +55,8 @@ void Interrupt::raise( uint8_t v )
     // Interrupt are stored in std::multimap
     // by priority order, highest at end
     m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
+
+    if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
 }
 
 void Interrupt::execute()
@@ -65,6 +67,13 @@ void Interrupt::execute()
 void Interrupt::exitInt() // Exit from this interrupt
 {
     if( m_autoClear ) clearFlag();
+}
+
+void Interrupt::callBack( McuModule* mod, bool call ) // Add Modules to be called at Interrupt raise
+{
+    if( call )
+    { if( !m_callBacks.contains( mod ) ) m_callBacks.append( mod ); }
+    else m_callBacks.removeAll( mod );
 }
 
 //------------------------               ------------------------

@@ -448,7 +448,7 @@ void McuCreator::createTimer( QDomElement* t )
             QString ocrRegName = el.attribute("ocreg");
             //uint8_t*   ocrReg = mcu->getReg(  );
 
-            timer->addocUnit( ocUnit );
+            timer->addOcUnit( ocUnit );
             ocUnit->m_timer = timer;
             ocUnit->m_ocPin = pin;
             mcu->watchRegNames( ocrRegName, R_WRITE, ocUnit, &McuOcUnit::ocrChanged );
