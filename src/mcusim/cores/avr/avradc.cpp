@@ -18,28 +18,39 @@
  ***************************************************************************/
 
 #include "avradc.h"
+#include "avrtimer.h"
 #include "mcupin.h"
 #include "e_mcu.h"
 
 AvrAdc::AvrAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
 {
-    m_ADIF = mcu->getRegBits( "ADIF" );
-    m_ADSC = mcu->getRegBits( "ADSC" );
     m_ADCSRA = mcu->getReg( "ADCSRA" );
+    m_ADEN  = mcu->getRegBits( "ADEN" );
+    m_ADSC  = mcu->getRegBits( "ADSC" );
+    m_ADATE = mcu->getRegBits( "ADATE" );
+    m_ADIF  = mcu->getRegBits( "ADIF" );
+    m_ADPS  = mcu->getRegBits( "ADPS0,ADPS1.ADPS2" );
+
+    m_ADTS  = mcu->getRegBits( "ADTS0,ADTS1.ADTS2" );
 
     m_aVccPin = mcu->getPin( "PORTV0" );
     m_aRefPin = mcu->getPin( "PORTV1" );
-}
 
-AvrAdc::~AvrAdc()
-{
+    m_timer0 = (AvrTimer0*)mcu->getTimer( "TIMER0" );
+    m_timer1 = (AvrTimer1*)mcu->getTimer( "TIMER1" );
 }
+AvrAdc::~AvrAdc(){}
 
 void AvrAdc::initialize()
 {
-    m_leftAdjust = false;
+    m_leftAdjust  = false;
     m_autoTrigger = false;
+    m_freeRunning = false;
+
+    m_trigger = 0;
+    m_refSelect = 0;
+
     McuAdc::initialize();
 }
 
@@ -48,26 +59,40 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     if( newADCSRA & m_ADIF.mask )
           m_mcu->m_regOverride = newADCSRA & ~(m_ADIF.mask); // Clear ADIF by writting it to 1
 
-    m_enabled = (( newADCSRA & 0b10000000 )>0);
+    m_enabled = getRegBitsBool( newADCSRA, m_ADEN );
 
-    uint8_t prs = newADCSRA & 0b00000111;
+    uint8_t prs = getRegBitsVal( newADCSRA, m_ADPS );
     m_convTime = m_mcu->simCycPI()*14.5*m_prescList[prs];
 
     /// TODO Auto Trigger
-    m_autoTrigger = (( newADCSRA & 0b00100000 )>0);
+    m_autoTrigger = getRegBitsBool( newADCSRA, m_ADATE );
+    if( m_autoTrigger ) autotriggerConf();
 
-    bool convert = (( newADCSRA & 0b01000000 )>0);
+    bool convert = getRegBitsBool( newADCSRA, m_ADSC );
 
     if( !m_converting && convert ) startConversion();
 }
 
-void AvrAdc::configureB( uint8_t val ) // ADCSRB
+void AvrAdc::configureB( uint8_t newADCSRB ) // ADCSRB
 {
-    uint8_t trigger = val & 0b00000111;
+    m_trigger = getRegBitsVal( newADCSRB, m_ADTS );
+    if( m_autoTrigger ) autotriggerConf();
 
-    switch( trigger ) /// TODO
+    /// TODO: ACME ???
+}
+
+void AvrAdc::autotriggerConf()
+{
+    m_freeRunning = false;
+
+    if( !m_autoTrigger )
+    {
+        ; /// TODO
+    }
+    switch( m_trigger ) /// TODO
     {
         case 0:     // Free Running mode
+            m_freeRunning = true;
             break;
         case 1:     // Analog Comparator
             break;
@@ -84,7 +109,6 @@ void AvrAdc::configureB( uint8_t val ) // ADCSRB
         case 7:     // Timer/Counter1 Capture Event
             break;
     }
-    /// if( m_autoTrigger )
 }
 
 void AvrAdc::setChannel( uint8_t val ) // ADMUX
@@ -119,4 +143,5 @@ double AvrAdc::getVref()
 void AvrAdc::endConversion() // Clear ADSC bit
 {
     *m_ADCSRA &= ~(m_ADSC.mask);
+    if( m_autoTrigger && m_freeRunning ) startConversion();
 }

@@ -33,6 +33,11 @@ static inline uint8_t getRegBitsVal( uint8_t val, regBits_t rb )
     return (val & rb.mask)>>rb.bit0;
 }
 
+static inline uint8_t getRegBitsBool( uint8_t val, regBits_t rb )
+{
+    return (val & rb.mask) > 0;
+}
+
 static inline void setRegBits( regBits_t bits )
 {
     *(bits.reg) |= bits.mask;
