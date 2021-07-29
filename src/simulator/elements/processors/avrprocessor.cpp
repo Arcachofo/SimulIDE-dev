@@ -55,8 +55,7 @@ void AvrProcessor::terminate()
     {
         avr_deinit_gdb( m_avrProcessor );
         avr_terminate( m_avrProcessor );
-    }
-}
+}   }
 
 bool AvrProcessor::setDevice( QString device )
 {
@@ -86,8 +85,7 @@ bool AvrProcessor::setDevice( QString device )
 
             // Irq to send data to AVR:
             m_uartInIrq[i] = avr_io_getirq( m_avrProcessor, AVR_IOCTL_UART_GETIRQ('0'+i), UART_IRQ_INPUT);
-        }
-    }
+    }   }
     qDebug() << "\nAvrProcessor::setDevice Avr Init: "<< m_device << (started==0);
 
     m_avrProcessor->frequency = 16000000;
@@ -111,13 +109,13 @@ bool AvrProcessor::loadFirmware( QString fileN )
 {
     if( !m_avrProcessor ) return false;
     if( fileN == "" ) return false;
-    QFileInfo fileInfo( fileN );
 
+    QFileInfo fileInfo( fileN );
     if( fileInfo.completeSuffix().isEmpty() ) fileN.append(".hex");
 
     if( !QFile::exists( fileN ) )     // File not found
     {
-        QMessageBox::warning( 0, tr("File Not Found"),
+        QMessageBox::warning( 0, "AvrProcessor::loadFirmware",
                                  tr("The file \"%1\" was not found.").arg(fileN) );
         return false;
     }
@@ -126,23 +124,25 @@ bool AvrProcessor::loadFirmware( QString fileN )
     strncpy( name, m_device.toUtf8(), sizeof(name)-1 );
     *(name + sizeof(name) -1) = 0;
 
-    char filename[1000]="";
+    /*char filename[1000]="";
     strncpy( filename, fileN.toUtf8(), sizeof(filename)-1 );
-    *(filename + sizeof(filename) -1) = 0;
+    *(filename + sizeof(filename) -1) = 0;*/
+
+    QByteArray ba = fileN.toLocal8Bit();
+    const char* charName = ba.data();
 
     elf_firmware_t f = {{0}};
 
     if( fileN.endsWith("hex") )
     {
         ihex_chunk_p chunk = NULL;
-        int cnt = read_ihex_chunks( filename, &chunk );
+        int cnt = read_ihex_chunks( charName, &chunk );
 
         if( cnt <= 0 )
         {
-            QMessageBox::warning(0,tr("Error:"), tr(" Unable to load IHEX file %1\n").arg(fileN) );
+            QMessageBox::warning(0,"AvrProcessor::loadFirmware", tr(" Unable to load IHEX file %1\n").arg(fileN) );
             return false;
         }
-
         int lastFChunk = 0;
 
         for( int ci=0; ci<cnt; ci++ )
@@ -150,8 +150,7 @@ bool AvrProcessor::loadFirmware( QString fileN )
             if( chunk[ci].baseaddr < (1*1024*1024) )
             {
                 if( chunk[ci].baseaddr > chunk[lastFChunk].baseaddr) lastFChunk = ci;
-            }
-        }
+        }   }
         f.flashbase = chunk[ 0 ].baseaddr;
         f.flashsize = chunk[ lastFChunk ].baseaddr + chunk[ lastFChunk ].size;
         f.flash = (uint8_t*) malloc( f.flashsize+1 );
@@ -168,21 +167,19 @@ bool AvrProcessor::loadFirmware( QString fileN )
             {
                 f.eeprom = chunk[ci].data;
                 f.eesize = chunk[ci].size;
-            }
-        }
+        }   }
         free_ihex_chunks(chunk);
     }
     else if( fileN.endsWith(".elf") )
     {
         f.flashsize = 0;
-        elf_read_firmware_ext( filename, &f );
+        elf_read_firmware_ext( charName, &f );
         
         if( !f.flashsize )
         {
             QMessageBox::warning(0,tr("Failed to load firmware: "), tr("File %1 is not in valid ELF format\n").arg(fileN) );
             return false;
-        }
-    }
+    }   }
     else                                    // File extension not valid
     {
         QMessageBox::warning(0,tr("Error:"), tr("%1 should be .hex or .elf\n").arg(fileN) );
@@ -196,8 +193,8 @@ bool AvrProcessor::loadFirmware( QString fileN )
         {
             QMessageBox::warning(0,tr("Warning on load firmware: "), tr("Incompatible firmware: compiled for %1 and your processor is %2\n").arg(mmcu).arg(m_device) );
             return false;
-        }
-    }else{
+    }   }
+    else{
         if( !strlen( name ) )
         {
             QMessageBox::warning( 0,tr("Failed to load firmware: "), tr("The processor model is not specified.\n") );
@@ -309,8 +306,7 @@ void AvrProcessor::setInitGdb( bool init )
     {
         m_avrProcessor->gdb_port = 0;
         qDebug() << "avr gdb Disabled";
-    }
-}
+}   }
 
 void AvrProcessor::setRegisters()
 {
@@ -320,8 +316,7 @@ void AvrProcessor::setRegisters()
     {
         QString name = "R"+QString::number( i );
         addWatchVar( name, i, "u8" );
-    }
-}
+}   }
 
 #include "moc_avrprocessor.cpp"
 
