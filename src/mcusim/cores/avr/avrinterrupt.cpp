@@ -23,28 +23,11 @@
 AVRInterrupt::AVRInterrupt( QString name, uint16_t vector, eMcu* mcu )
             : Interrupt( name, vector, mcu )
 {
-    //m_SREG = mcu->getReg( "SREG" );
-
-    m_I = mcu->getRegBits( "I" );
+    //m_I = mcu->getRegBits( "I" );
 
     m_autoClear = true;
 }
 AVRInterrupt::~AVRInterrupt(){}
-
-/*void AVRInterrupt::raise()
-{
-    //if( m_name == "T1_OVF" )
-       // m_name = "T1_OVF";
-    //clearRegBits( m_I );// Deactivate Interrupts: SREG.I = 0
-    Interrupt::raise( v );
-}*/
-
-void AVRInterrupt::exitInt() // Exit from this interrupt
-{
-    //setRegBits( m_I );// Activate Interrupts: SREG.I = 1
-    Interrupt::exitInt();
-}
-
 
 
 // Static --------------------------

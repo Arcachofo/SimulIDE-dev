@@ -22,9 +22,11 @@
 
 #include <QHash>
 #include <vector>
+#include <QDebug>
 
-#include "regsignal.h"
+#include "mcusignal.h"
 #include "mcutypes.h"
+
 
 class MAINMODULE_EXPORT DataSpace
 {
@@ -38,8 +40,8 @@ class MAINMODULE_EXPORT DataSpace
         };
 
         struct regSignal_t{
-            RegSignal<uint8_t> on_write;
-            RegSignal<uint8_t> on_read;
+            McuSignal on_write;
+            McuSignal on_read;
         };
 
         void initialize();
@@ -53,10 +55,7 @@ class MAINMODULE_EXPORT DataSpace
         uint8_t* getReg( QString reg )                // Get pointer to Reg data by name
         { return &m_dataMem[m_regInfo.value( reg ).address]; }
 
-        /// void readStatus( uint8_t v );                 // Update STATUS Reg when is readen
-        /// void writeStatus( uint8_t v );                // Update STATUS Reg when is written
-
-        template <typename T>                // Add callback for Register changes by names
+        template <class T>                // Add callback for Register changes by names
         void watchRegNames( QString regNames, int write
                       , T* inst, void (T::*func)(uint8_t) )
         {
@@ -69,7 +68,7 @@ class MAINMODULE_EXPORT DataSpace
                 watchRegister( addr, write, inst, func, 0xFF );
             }
         }
-        template <typename T>                // Add callback for Register changes by address
+        template <class T>                // Add callback for Register changes by address
         void watchRegister( uint16_t addr, int write
                           , T* inst, void (T::*func)(uint8_t), uint8_t mask=0xFF )
         {
@@ -83,7 +82,7 @@ class MAINMODULE_EXPORT DataSpace
             else        regSignal->on_read.connect( inst, func, mask  );
         }
 
-        template <typename T>              // Add callback for Register bit changes by names
+        template <class T>              // Add callback for Register bit changes by names
         void watchBitNames( QString bitNames, int write
                       , T* inst, void (T::*func)(uint8_t) )
         {
@@ -137,7 +136,6 @@ class MAINMODULE_EXPORT DataSpace
         QHash<QString, uint8_t>       m_bitMasks;  // Access Bit mask by bit name
         QHash<QString, uint16_t>      m_bitRegs;   // Access Reg. address by bit name
 
-        /// std::vector<uint8_t> m_sreg;               // STATUS Reg splitted in bits
         uint16_t m_sregAddr;                       // STATUS Reg Address
 };
 

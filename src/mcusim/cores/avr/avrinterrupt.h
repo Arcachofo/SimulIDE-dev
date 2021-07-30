@@ -29,15 +29,10 @@ class MAINMODULE_EXPORT AVRInterrupt : public Interrupt
         AVRInterrupt( QString name, uint16_t vector, eMcu* mcu );
         ~AVRInterrupt();
 
-        //virtual void raise() override;
-        virtual void exitInt() override;
-
  static Interrupt* getInterrupt( QString name, uint16_t vector, eMcu* mcu );
 
     private:
-        //uint8_t*  m_SREG;
-
-        regBits_t m_I;
+        //regBits_t m_I;
 };
 
 #endif

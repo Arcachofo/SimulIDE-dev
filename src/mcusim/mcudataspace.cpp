@@ -21,6 +21,9 @@
 
 DataSpace::DataSpace()
 {
+    //McuSignal<DataSpace>* kk = new McuSignal<DataSpace>( this, &DataSpace::deleteme );
+    //m_sig.emplace_back( kk );
+    //m_sig.at(0)->call( 125 );
 }
 
 DataSpace::~DataSpace()

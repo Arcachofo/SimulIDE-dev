@@ -23,7 +23,6 @@
 #include <QString>
 
 #include "mcutypes.h"
-#include "regsignal.h"
 
 class eMcu;
 class Interrupt;

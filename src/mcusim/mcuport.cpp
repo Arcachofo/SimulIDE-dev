@@ -37,10 +37,7 @@ McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
     m_dirAddr = 0;
     m_dirInv  = false;
 }
-
-McuPort::~McuPort()
-{
-}
+McuPort::~McuPort(){}
 
 void McuPort::initialize()
 {
@@ -53,7 +50,7 @@ void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMas
     if( val ) m_pinState |= pinMask;
     else      m_pinState &= ~pinMask;
 
-    if( m_intMask & pinMask ) m_interrupt->raise(); // interrupt.emitValue(1); // Pin change interrupt
+    if( m_intMask & pinMask ) m_interrupt->raise(); // Pin change interrupt
 
     m_mcu->writeReg( m_inAddr, m_pinState );
 }
@@ -69,9 +66,7 @@ void McuPort::outChanged( uint8_t val )
             if( ( changed & 1<<i )        // Pin changed
              && (!m_pins[i]->m_outCtrl )) // Port is controlling Pin State
                 m_pins[i]->setPortState( val & (1<<i) );
-        }
-    }
-}
+}   }   }
 
 void McuPort::dirChanged( uint8_t val )
 {
@@ -85,9 +80,7 @@ void McuPort::dirChanged( uint8_t val )
             if( (changed & 1<<i)          // Pin changed
              && (!m_pins[i]->m_dirCtrl )) // Port is controlling Pin Direction
                 m_pins[i]->setDirection( val & (1<<i));
-        }
-    }
-}
+}   }   }
 
 void McuPort::setPullups( uint8_t puMask )
 {
@@ -95,8 +88,7 @@ void McuPort::setPullups( uint8_t puMask )
     {
         bool pinPu = (puMask & 1<<i);// && !m_pins[i]->m_isOut;
         m_pins[i]->setPullup( pinPu );
-    }
-}
+}   }
 
 void McuPort::createPins( Mcu* mcuComp )
 {
@@ -107,13 +99,12 @@ void McuPort::createPins( Mcu* mcuComp )
 }
 
 //  ------------------------------------------
+
 McuPorts::McuPorts( eMcu* mcu )
 {
     m_mcu = mcu;
 }
-McuPorts::~McuPorts()
-{
-}
+McuPorts::~McuPorts(){}
 
 void McuPorts::remove()
 {

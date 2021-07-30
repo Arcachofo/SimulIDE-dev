@@ -35,9 +35,6 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_puMask   = false;
     m_dirMask  = false;
 
-    //Pin* pin = new Pin( 0, QPoint( 0, 0 ), mcu->objectName()+id, i, mcu );
-    //m_ePin[0] = pin;
-
     setOutHighV( 5 );
     setPinMode( input );
     initialize();
@@ -82,11 +79,6 @@ void McuPin::setOutState( bool state, bool )
     if( m_outCtrl ) IoPin::setOutState( state, true );
 }
 
-/*bool McuPin::getInpState()
-{
-    return m_inpState;
-}*/
-
 void McuPin::setDirection( bool out )
 {
     m_isOut = out;
@@ -95,8 +87,6 @@ void McuPin::setDirection( bool out )
     {
         if( m_openColl ) m_oldPinMode =  open_col;
         else             m_oldPinMode =  output;
-
-        //IoPin::setOutState( m_outState );
     }
     else           // Set Pin to Input
     {
@@ -120,6 +110,6 @@ void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vr
     m_vddAdmEx = vddAdmit;
     m_gndAdmEx = gndAdmit;
 
-    update();
+    updtState();
 }
 
