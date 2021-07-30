@@ -40,7 +40,7 @@ Meter::Meter( QObject* parent, QString type, QString id )
     m_pin[1] = new Pin( 270, QPoint(8, 16), id+"-rPin", 1, this);
     m_ePin[1] = m_pin[1];
 
-    m_outPin = new IoPin( 0, QPoint(32,-8), id+"-outnod", 0, this, output );
+    m_outPin = new IoPin( 0, QPoint(32,-8), id+"-outnod", 0, this, source );
     m_outPin->setOutHighV( 0 );
     m_outPin->setOutState( true );
     m_pin[2] = m_outPin;
@@ -82,7 +82,7 @@ void Meter::updateStep()
     m_display.setText( sign+QString::number( value,'f', decimals )+"\n"+mult+m_unit );
 
     m_outPin->setOutHighV( m_dispValue );
-    m_outPin->stampOutput();
+    m_outPin->setOutState( true );
 }
 
 void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
