@@ -53,7 +53,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         uint8_t m_refSelect;
         uint8_t m_trigger;
 
-        uint8_t* m_ADCSRA;
+        //uint8_t* m_ADCSRA;
         regBits_t m_ADEN;
         regBits_t m_ADSC;
         regBits_t m_ADATE;

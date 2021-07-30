@@ -63,49 +63,32 @@ void IoPin::initialize()
     setPinMode( m_pinMode );
 }
 
-void IoPin::stamp()
-{
-    stampAll();
-}
-
-void IoPin::stampAll()
-{
-    ePin::stampAdmitance( m_admit );
-    stampOutput();
-}
-
-void IoPin::stampOutput()
-{
-    m_scrEnode->setVolt( m_outVolt );
-    ePin::stampCurrent( m_outVolt/m_imp );
-}
-
 void IoPin::setPinMode( pinMode_t mode )
 {
     if( m_pinMode == mode ) return;
     m_pinMode = mode;
 
-    if( mode == source )
+    switch( mode )
     {
-        m_vddAdmit = 1/cero_doub;
-        m_gndAdmit = cero_doub;
-        setPinState( out_high );
-    }
-    else if( mode == input )
-    {
-        m_vddAdmit = 0;
-        m_gndAdmit = 1/m_inputImp;
-
-        setPinState( input_low );
-    }
-    else if( mode == output )
-    {
-        m_vddAdmit = 1/m_outputImp;
-        m_gndAdmit = cero_doub;
-    }
-    else if( mode == open_col )
-    {
-        m_vddAdmit = 0;
+        case undef_mode:
+            return;
+        case input:
+            m_vddAdmit = 0;
+            m_gndAdmit = 1/m_inputImp;
+            setPinState( input_low );
+            break;
+        case output:
+            m_vddAdmit = 1/m_outputImp;
+            m_gndAdmit = cero_doub;
+            break;
+        case open_col:
+            m_vddAdmit = 0;
+            break;
+        case source:
+            m_vddAdmit = 1/cero_doub;
+            m_gndAdmit = cero_doub;
+            setPinState( out_high );
+            break;
     }
     updtState();
     if( m_pinMode >= output ) IoPin::setOutState( m_outState );
@@ -119,7 +102,6 @@ void IoPin::updtState()
     double Rth  = 1/(vddAdmit+gndAdmit);
 
     m_outVolt = m_outHighV*vddAdmit*Rth;
-
     IoPin::setImp( Rth );
 }
 
@@ -154,8 +136,7 @@ void IoPin::setOutState( bool out, bool st ) // Set Output to Hight or Low
 
         if( st ) stampOutput();
         setPinState( out? out_high:out_low ); // High-Low colors
-    }
-}
+}   }
 
 void IoPin::setStateZ( bool z )
 {
@@ -170,8 +151,7 @@ void IoPin::setStateZ( bool z )
         pinMode_t pm = m_pinMode; // Force pinMode
         m_pinMode = undef_mode;
         setPinMode( pm );
-    }
-}
+}   }
 
 void IoPin::setImp( double imp )
 {

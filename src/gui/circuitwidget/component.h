@@ -17,13 +17,13 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #ifndef COMPONENTITEM_H
 #define COMPONENTITEM_H
 
 #include <QtWidgets>
 #include <QPointer>
 
+#include "label.h"
 #include "updatable.h"
 
 struct property_t{
@@ -38,7 +38,6 @@ struct propGroup_t{
 };
 
 class Pin;
-class Label;
 class PropDialog;
 
 class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public Updatable
@@ -86,19 +85,19 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         enum { Type = UserType + 1 };
         int type() const { return Type; }
 
-        QString idLabel();
-        void setIdLabel( QString id );
+        QString idLabel() { return m_idLabel->toPlainText(); }
+        void setIdLabel( QString id ) { m_idLabel->setPlainText( id ); }
 
-        QString itemID();
-        void setId( QString id );
+        QString itemID() { return  m_id; }
+        void setId( QString id ) {  m_id = id;  }
         
-        bool showId();
-        void setShowId( bool show );
+        bool showId() { return m_showId; }
+        void setShowId( bool show ) { m_idLabel->setVisible( show ); m_showId = show; }
         
-        bool showVal();
-        void setShowVal( bool show );
+        bool showVal() { return m_showVal; }
+        void setShowVal( bool show ) { m_valLabel->setVisible( show ); m_showVal = show; }
         
-        QString unit();
+        QString unit() { return m_mult+m_unit; }
         virtual void setUnit( QString un );
 
         QPointF boardPos() { return m_boardPos; }
@@ -113,50 +112,50 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         qreal circRot() { return m_circRot; }
         void setCircRot( qreal rot ) { m_circRot = rot; }
 
-        int labelx();
-        void setLabelX( int x );
+        int labelx() { return m_idLabel->m_labelx; }
+        void setLabelX( int x ) { m_idLabel->m_labelx = x; }
 
-        int labely();
-        void setLabelY( int y );
+        int labely() { return m_idLabel->m_labely; }
+        void setLabelY( int y ) { m_idLabel->m_labely = y; }
 
-        int labelRot();
-        void setLabelRot( int rot );
+        int labelRot() { return m_idLabel->m_labelrot; }
+        void setLabelRot( int rot ) { m_idLabel->m_labelrot = rot; }
         
         void setLabelPos( int x, int y, int rot=0 );
-        void setLabelPos();
+        void setLabelPos() { m_idLabel->setLabelPos(); }
         
-        int valLabelx();
-        virtual void setValLabelX( int x );
+        int valLabelx() { return m_valLabel->m_labelx; }
+        virtual void setValLabelX( int x )  { m_valLabel->m_labelx = x; }
 
-        int valLabely();
-        virtual void setValLabelY( int y );
+        int valLabely() { return m_valLabel->m_labely; }
+        virtual void setValLabelY( int y ) { m_valLabel->m_labely = y; }
 
-        int valLabRot();
-        virtual void setValLabRot( int rot );
+        int valLabRot() { return m_valLabel->m_labelrot; }
+        virtual void setValLabRot( int rot ) { m_valLabel->m_labelrot = rot; }
         
-        int hflip();
+        int hflip() { return m_Hflip; }
         void setHflip( int hf );
         
-        int vflip();
+        int vflip() { return m_Vflip; }
         void setVflip( int vf );
         
         void setValLabelPos( int x, int y, int rot );
-        void setValLabelPos();
+        void setValLabelPos() { m_valLabel->setLabelPos(); }
         
         void updateLabel( Label* label, QString txt );
         
-        double getmultValue();
+        double getmultValue() { return m_value*m_unitMult; }
 
         QString backGround() { return m_BackGround; }
         virtual void setBackground( QString bck ){ m_BackGround = bck; }
         virtual void setSubcDir( QString dir ) { ; }
         
-        void setPrintable( bool p );
+        void setPrintable( bool p ) { m_printable = p; }
         QString print();
 
-        QString itemType();
-        QString category();
-        QIcon   icon();
+        QString itemType() { return m_type; }
+        QString category() { return m_category; }
+        QIcon   icon() { return m_icon; }
 
         bool isGraphical() { return m_graphical; }
         bool isHidden() { return m_hidden; }
@@ -164,8 +163,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
 
         virtual void inStateChanged( int ){}
 
-        virtual void move( QPointF delta );
-        void moveTo( QPointF pos );
+        virtual void move( QPointF delta ) { setPos( pos() + delta ); emit moved(); }
+        void moveTo( QPointF pos ){ setPos( pos ); emit moved(); }
 
  static bool m_selMainCo;
         bool isMainComp() { return m_mainComp; }
@@ -197,7 +196,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
         void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
-        void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event );
+        void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
+            { if( event->button() == Qt::LeftButton ) slotProperties(); }
 
         void setValue( double val );
         void setflip();
@@ -250,39 +250,5 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
 
 typedef Component* (*createItemPtr)( QObject* parent, QString type, QString id );
 
-
-class Label : public QGraphicsTextItem
-{
-    friend class Component;
-    
-    Q_OBJECT
-    public:
-        Label( Component* parent );
-        ~Label();
-
-        void setLabelPos();
-
-    public slots:
-        void rotateCW();
-        void rotateCCW();
-        void rotate180();
-        void H_flip( int hf );
-        void V_flip( int vf );
-        void updateGeometry(int, int, int);
-
-    protected:
-        void mousePressEvent( QGraphicsSceneMouseEvent* event );
-        void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
-        void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
-        void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
-        void focusOutEvent( QFocusEvent* event );
-
-    private:
-        Component* m_parentComp;
-        
-        int m_labelx;
-        int m_labely;
-        int m_labelrot;
-};
 #endif
 

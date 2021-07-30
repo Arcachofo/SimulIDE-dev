@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void powerCircOff();
         void powerCircDebug( bool paused );
 
-        void simDebug( QString msg );
+        void simDebug( QString msg ) { m_outPane.appendLine( msg ); }
 
         QSplitter* splitter() { return m_splitter; }
         
@@ -83,7 +83,6 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void updateRecentFileActions();
 
         QVBoxLayout  m_verticalLayout;
-        //QHBoxLayout  m_horizontLayout;
         CircuitView  m_circView;
         OutPanelText m_outPane;
         

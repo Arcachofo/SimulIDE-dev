@@ -41,10 +41,10 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         ~IoPin();
 
         virtual void initialize() override;
-        virtual void stamp() override;
+        virtual void stamp() override { stampAll(); }
 
-        void stampAll();
-        void stampOutput();
+        void stampAll() { ePin::stampAdmitance( m_admit ); stampOutput(); }
+        void stampOutput() { m_scrEnode->setVolt( m_outVolt ); ePin::stampCurrent( m_outVolt/m_imp ); }
 
         pinMode_t pinMode() { return m_pinMode; }
         void setPinMode( pinMode_t mode );

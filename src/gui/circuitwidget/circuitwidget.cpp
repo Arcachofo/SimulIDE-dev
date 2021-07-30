@@ -33,7 +33,6 @@ CircuitWidget*  CircuitWidget::m_pSelf = 0l;
 CircuitWidget::CircuitWidget( QWidget *parent  )
              : QWidget( parent )
              , m_verticalLayout( this )
-//             , m_horizontLayout()
              , m_circView( this )
              , m_outPane( this )
              , m_circToolBar( this )
@@ -63,9 +62,7 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     m_splitter->addWidget( &m_circView );
     m_splitter->addWidget( &m_outPane );
     m_splitter->setSizes( {500, 100} );
-    
-    //m_verticalLayout.addLayout( &m_horizontLayout );
-    
+
     m_rateLabel = new QLabel( this );
     QFont font( "Arial", 10, QFont::Normal );
     double fontScale = MainWindow::self()->fontScale();
@@ -75,7 +72,6 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     m_msgLabel  = new QLabel( this );
     m_msgLabel->setFont( font );
     m_msgLabel->setMaximumSize( 200, 15 );
-    //m_errorLabel->setStyleSheet("QLabel { background-color: lightgreen; color: blue; }");
 
     createActions();
     updateRecentFileActions();
@@ -166,8 +162,6 @@ void CircuitWidget::createActions()
     settSimAct->setStatusTip(tr("Simulation Settings"));
     connect( settSimAct, SIGNAL(triggered()),
                    this, SLOT(settSim()), Qt::UniqueConnection );
-
-
     
     infoAct = new QAction( QIcon(":/help.png"),tr("Online Help"), this);
     infoAct->setStatusTip(tr("Online Help"));
@@ -304,8 +298,7 @@ void CircuitWidget::loadCirc( QString path )
         updateRecentFileActions();
 
         m_circView.setCircTime( 0 );
-    }
-}
+}   }
 
 void CircuitWidget::saveCirc()
 {
@@ -319,8 +312,7 @@ void CircuitWidget::saveCirc()
     {
         QString fileName = m_curCirc;
         MainWindow::self()->setTitle(fileName.split("/").last());
-    }
-}
+}   }
 
 bool CircuitWidget::saveCircAs()
 {
@@ -393,8 +385,7 @@ void CircuitWidget::pauseSim()
         powerCircAct->setIcon(QIcon(":/poweron.png"));
         powerCircAct->setIconText("On");
         //powerCircAct->setEnabled( true );
-    }
-}
+}   }
 
 void CircuitWidget::settApp()
 {
@@ -430,16 +421,11 @@ void CircuitWidget::settSim()
 }
 
 void CircuitWidget::openInfo()
-{
-    QDesktopServices::openUrl(QUrl("http://simulide.blogspot.com"));
-}
+{ QDesktopServices::openUrl(QUrl("http://simulide.blogspot.com")); }
 
 void CircuitWidget::about()
 {
-    if( !m_about )
-    {
-        m_about = new AboutDialog( this );
-    }
+    if( !m_about ) m_about = new AboutDialog( this );
     m_about->show();
 }
 
@@ -459,8 +445,7 @@ void CircuitWidget::setRate( double rate, int load )
 
         m_rateLabel->setText( tr("    Real Speed: ")+Srate+" %"
                             + tr("    Load: "      )+Sload+" %    ");
-    }
-}
+}   }
 
 void CircuitWidget::setError( QString error )
 {
@@ -492,11 +477,5 @@ void CircuitWidget::updateRecentFileActions()
     }
     for( int i=numRecentFiles; i<MaxRecentFiles; i++ ) recentFileActs[i]->setVisible(false);
 }
-
-void CircuitWidget::simDebug( QString msg )
-{
-    m_outPane.appendLine( msg );
-}
-
 
 #include "moc_circuitwidget.cpp"

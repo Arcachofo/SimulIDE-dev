@@ -63,16 +63,3 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v )
     }
     m_dataMem[addr] = v;
 }
-
-/*void DataSpace::readStatus( uint8_t v ) // Read SREG values and write to RAM
-{
-    return;
-    uint8_t val = 0;
-    for( int i=0; i<8; i++ ) { if( m_sreg[i] ) val |= 1<<i; }
-    m_dataMem[m_sregAddr] = val;
-}
-
-void DataSpace::writeStatus( uint8_t v ) // Write SREG values from RAM
-{
-    for( int i=0; i<8; i++ ) m_sreg[i] = v & (1<<i);
-}*/

@@ -66,7 +66,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         
         Component* component() { return m_component; }
 
-        Connector* connector();
+        Connector* connector() { return my_connector; }
         void setConnector( Connector* c );
         void removeConnector();
 
@@ -75,9 +75,9 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         void connectPin();
 
-        QString getLabelText();
+        QString getLabelText() { return m_labelText; }
         void setLabelPos();
-        void setLabelColor( QColor color );
+        void setLabelColor( QColor color ) { m_label.setBrush( color ); }
         void setFontSize( int size );
         int  labelSizeX();
 
@@ -93,7 +93,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setIsBus( bool bus );
         bool isBus() { return m_isBus; }
 
-        void setPinState( pinState_t st );
+        void setPinState( pinState_t st ) { m_pinState = st; m_changed = true; }
 
         void updateStep() { if( m_changed ) update(); }
 

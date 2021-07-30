@@ -94,8 +94,7 @@ void McuTimer::sheduleEvents()
     {
         Simulator::self()->cancelEvents( this );
         for( McuOcUnit* ocUnit : m_ocUnit ) Simulator::self()->cancelEvents( ocUnit );
-    }
-}
+}   }
 
 void McuTimer::enable( uint8_t en )
 {
@@ -128,8 +127,7 @@ void McuTimer::updtCount( uint8_t )          // Write counter values to Ram
 
         if( m_countL ) *m_countL = countVal & 0xFF;
         if( m_countH ) *m_countH = (countVal>>8) & 0xFF;
-    }
-}
+}   }
 
 void McuTimer::updtCycles() // Recalculate ovf, comps, etc
 {

@@ -133,7 +133,6 @@ void SubPackage::hoverMoveEvent( QGraphicsSceneHoverEvent* event )
         else m_fakePin = false;
 
         Circuit::self()->update();
-        //qDebug() <<"Mouse hovered"<<xPos<<yPos;
     }
     else QGraphicsItem::hoverMoveEvent(event);
 }
@@ -192,8 +191,6 @@ void SubPackage::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         int Ymax = m_area.height();
         int pinX = m_eventPin->pos().x();
         int pinY = m_eventPin->pos().y();
-        //qDebug() << "SubPackage::mouseMoveEvent" << pinX<<pinY<<Xmax<<Ymax;
-
         QPointF delta = toCompGrid(event->scenePos()) - toCompGrid(event->lastScenePos());
         
         int deltaX = delta.x();
@@ -204,7 +201,6 @@ void SubPackage::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         {
             if( (pinY >= Ymax) && (deltaY>0) ) return;
             if( (pinY <= 0)    && (deltaY<0) ) return;
-            //if( pinLenth > 1 ) deltaX = 0;
             else
             {
                 if( (pinX >= Xmax+pinLenth)&& (deltaX>0) ) return;
@@ -216,7 +212,6 @@ void SubPackage::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         {
             if( (pinX >= Xmax) && (deltaX>0) ) return;
             if( (pinX <= 0)    && (deltaX<0) ) return;
-            //if( pinLenth > 1 ) deltaY = 0;
             else
             {
                 if( (pinY >= Ymax) && (deltaY>0) ) return;
@@ -246,8 +241,6 @@ void SubPackage::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         else if( angle == 90 )  yPin += 8; // Top
         else if( angle == 270 ) yPin -= 8; // Bottom
 
-        //qDebug() << "\nSubPackage::contextMenuEvent" <<pin->y()<<yPos<<pin->x()<< xPos<<angle;
-        //qDebug() << "SubPackage::contextMenuEvent" <<abs(yPin-yPos) << abs(xPin-xPos);
         if(( abs(yPin-yPos)<4 ) && ( abs(xPin-xPos)<4 ) )
         { m_eventPin = pin; break; }
     }
@@ -293,11 +286,6 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 
         Component::contextMenu( event, menu );
     }
-}
-
-void SubPackage::mainComp()
-{
-    Component::m_selMainCo = true;
 }
 
 void SubPackage::boardMode()
@@ -346,8 +334,7 @@ void SubPackage::savingCirc()
     {
         m_boardMode = false;
         setBoardMode();
-    }
-}
+}   }
 
 void SubPackage::remove()
 {
@@ -376,17 +363,7 @@ void SubPackage::setWidth( int width )
     m_width = width;
     m_area = QRect(0, 0, m_width*8, m_height*8);
     
-    /*for( Pin* pin : m_rigPin )
-    {
-        pin->setX( m_width*8+8 );
-        pin->setLabelPos();
-    }*/
     Circuit::self()->update();
-}
-
-int SubPackage::height()
-{
-    return m_height;
 }
 
 void SubPackage::setHeight( int height )
@@ -397,11 +374,6 @@ void SubPackage::setHeight( int height )
     m_height = height;
     m_area = QRect( 0, 0, m_width*8, m_height*8 );
     
-    /*for( Pin* pin : m_botPin )
-    {
-        pin->setY( m_height*8+8 );
-        pin->setLabelPos();
-    }*/
     Circuit::self()->update();
 }
 
@@ -431,9 +403,7 @@ void SubPackage::editPin()
 }
 
 void SubPackage::editFinished( int r )
-{
-    if( m_changed ) Circuit::self()->saveState();
-}
+{ if( m_changed ) Circuit::self()->saveState(); }
 
 void SubPackage::deleteEventPin()
 {
@@ -538,7 +508,6 @@ void SubPackage::slotSave()
     QDir pdir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
     QString pkgeFile = pdir.absoluteFilePath( m_pkgeFile );
 
-    //qDebug() << "SubPackage::slotSave"<<pkgeFile;
     const QString dir = pkgeFile;
     QString fileName = QFileDialog::getSaveFileName( 0l, tr("Save Package"), dir,
                                                      tr("Packages (*.package);;All files (*.*)"));
@@ -604,7 +573,6 @@ void SubPackage::loadPackage()
 
 void SubPackage::savePackage( QString fileName )
 {
-    //qDebug() <<"SubPackage::savePackage fileName"<< fileName;
     if( !fileName.endsWith(".package") ) fileName.append(".package");
 
     QFile file( fileName );
@@ -667,7 +635,6 @@ void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
         p->drawLine( m_p1X, m_p1Y, m_p2X, m_p2Y);
     }
 }
-
 
 //_____________________________________________________________
 //_____________________________________________________________

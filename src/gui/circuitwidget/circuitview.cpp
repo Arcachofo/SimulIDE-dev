@@ -176,7 +176,6 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
             SubCircuit* subC = static_cast<SubCircuit*>( m_enterItem );
             subC->setLogicSymbol( true );
         }
-
         m_enterItem->setPos( mapToScene( event->pos() ) );
         m_circuit->addItem( m_enterItem );
         //qDebug()<<"CircuitView::dragEnterEvent"<<m_enterItem->itemID()<< type<< id;
@@ -199,8 +198,7 @@ void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )
         m_circuit->removeComp( m_enterItem );
         m_enterItem = 0l;
         Circuit::self()->unSaveState();
-    }
-}
+}   }
 
 void CircuitView::resizeEvent( QResizeEvent *event )
 {
@@ -226,13 +224,11 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
             QMouseEvent eve( QEvent::MouseButtonPress, event->pos(),
                 Qt::LeftButton, Qt::LeftButton, Qt::NoModifier   );
             QGraphicsView::mousePressEvent( &eve );
-        }
-    }
+    }   }
     else
     {
         QGraphicsView::mousePressEvent( event );
-    }
-}
+}   }
 
 void CircuitView::mouseReleaseEvent( QMouseEvent* event )
 {
@@ -291,18 +287,13 @@ void CircuitView::contextMenuEvent(QContextMenuEvent* event)
                    m_circuit, SLOT( bom() ), Qt::UniqueConnection );
 
         menu.exec( mapFromScene( eventPos ) );
-    }
-}
+}   }
 
 void CircuitView::importCirc()
-{
-    Circuit::self()->importCirc( m_eventpoint );
-}
+{ Circuit::self()->importCirc( m_eventpoint ); }
 
 void CircuitView::slotPaste()
-{
-    Circuit::self()->paste( m_eventpoint );
-}
+{ Circuit::self()->paste( m_eventpoint ); }
 
 void CircuitView::saveImage()
 {
@@ -332,8 +323,6 @@ void CircuitView::saveImage()
         {
             QPixmap pixMap = this->grab();
             pixMap.save( fileName );
-        }
-    }
-}
-#include "moc_circuitview.cpp"
+}   }    }
 
+#include "moc_circuitview.cpp"

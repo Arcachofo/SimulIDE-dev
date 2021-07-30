@@ -184,16 +184,13 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
             if( (state == TWI_MRX_DATA_ACK) || (state == TWI_MRX_DATA_NACK) ) // Data received
             {
                 *m_dataReg = m_rxReg; // Save data received into TWDR
-            }
-        }
+        }   }
         else // Slave
         {
             if( (state == TWI_SRX_ADR_DATA_ACK) || (state == TWI_SRX_ADR_DATA_NACK)
              || (state == TWI_SRX_GEN_DATA_ACK) || (state == TWI_SRX_GEN_DATA_NACK) )
                 *m_dataReg = m_rxReg; // Save data received into TWDR
-        }
-    }
-}
+}   }   }
 
 void AvrTwi::updateFreq()
 {

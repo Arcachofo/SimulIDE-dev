@@ -126,8 +126,7 @@ void Chip::initChip()
             {
                 m_name = name;
                 m_label.setPlainText( m_name );
-            }
-        }
+        }   }
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );
 
@@ -195,8 +194,7 @@ void Chip::initPackage_old( QDomElement root )
             addPin( id, type, label, chipPos, xpos, ypos, angle, 8 );
         }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void Chip::initPackage( QDomElement root )
 {
@@ -222,14 +220,11 @@ void Chip::initPackage( QDomElement root )
             addPin( id, type, label, chipPos, xpos, ypos, angle, length );
         }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
 {
     Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
-    
-    //m_pinMap[id] = pin;
 
     pin->setLabelText( label );
 
@@ -240,7 +235,6 @@ void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, i
         pin->setVisible( false );
         pin->setLabelText( "" );
     }
-
     pin->setLength( length );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
@@ -258,11 +252,6 @@ void Chip::deletePin( Pin* pin )
     if( pin->scene() ) Circuit::self()->removeItem( pin );
     pin->reset();
     delete pin;
-}
-
-bool Chip::logicSymbol()
-{
-    return m_isLS;
 }
 
 void Chip::setLogicSymbol( bool ls )
@@ -291,8 +280,7 @@ void Chip::setBackground( QString bck )
         {
             delete m_BackPixmap;
             m_BackPixmap = 0l;
-        }
-    }
+    }   }
     else
     {
         m_BackPixmap = new QPixmap();
@@ -320,8 +308,6 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
         {
             p->setPen( QColor( 170, 170, 150 ) );
             p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
-        }
-    }
-}
+}   }   }
 
 #include "moc_chip.cpp"

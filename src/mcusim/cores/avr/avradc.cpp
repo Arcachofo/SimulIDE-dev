@@ -26,7 +26,7 @@
 AvrAdc::AvrAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
 {
-    m_ADCSRA = mcu->getReg( "ADCSRA" );
+    //m_ADCSRA = mcu->getReg( "ADCSRA" );
     m_ADEN  = mcu->getRegBits( "ADEN" );
     m_ADSC  = mcu->getRegBits( "ADSC" );
     m_ADATE = mcu->getRegBits( "ADATE" );
@@ -149,9 +149,9 @@ double AvrAdc::getVref()
     return vRef;
 }
 
-void AvrAdc::endConversion() // Clear ADSC bit
+void AvrAdc::endConversion()
 {
-    *m_ADCSRA &= ~(m_ADSC.mask);
+    clearRegBits( m_ADSC ); // Clear ADSC bit
     if( m_autoTrigger && m_freeRunning ) startConversion();
 }
 

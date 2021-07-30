@@ -39,7 +39,7 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
  static LibraryItem* libraryItem();
 
         QString boardId() { return m_boardId; }
-        void setBoardId( QString id );
+        void setBoardId( QString id ) { m_boardId = id; }
         void setBoard( SubCircuit* board ) { m_board = board;  }
 
         void connectBoard();

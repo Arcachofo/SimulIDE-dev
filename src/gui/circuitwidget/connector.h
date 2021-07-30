@@ -41,13 +41,13 @@ class MAINMODULE_EXPORT Connector : public Component
         ~Connector();
 
         // PROPERTIES-----------------------------------
-        QStringList pointList();
-        void setPointList( QStringList pl );
+        QStringList pointList() { refreshPointList(); return m_pointList; }
+        void setPointList( QStringList pl ) { m_pointList = pl;}
 
-        QString startPinId();
-        void setStartPinId( QString pinid);
-        QString endPinId();
-        void setEndPinId( QString pinid);
+        QString startPinId() { return m_startpinid;}
+        void setStartPinId( QString pinid) { m_startpinid = pinid; }
+        QString endPinId() { return m_endpinid; }
+        void setEndPinId( QString pinid) { m_endpinid = pinid; }
 
         QString enodId();
         void setEnodId( QString /*nodid*/ ){;}
@@ -57,19 +57,19 @@ class MAINMODULE_EXPORT Connector : public Component
 
         void refreshPointList();
 
-        Pin* startPin();
-        void setStartPin( Pin* pin);
-        Pin* endPin();
-        void setEndPin( Pin* pin);
+        Pin* startPin() { return m_startPin;}
+        void setStartPin( Pin* pin) { m_startPin = pin; }
+        Pin* endPin() { return m_endPin; }
+        void setEndPin( Pin* pin) { m_endPin = pin; }
 
         eNode* enode();
         void setEnode( eNode* enode );
 
         double getVolt();
 
-        QList<ConnectorLine*>* lineList();
+        QList<ConnectorLine*>* lineList() { return &m_conLineList; }
 
-        void incActLine();
+        void incActLine() { if( m_actLine < m_conLineList.size()-1 ) m_actLine += 1; }
 
         ConnectorLine* addConLine( int x1, int y1, int x2, int y2, int index );
 
@@ -80,10 +80,6 @@ class MAINMODULE_EXPORT Connector : public Component
 
         void updateConRoute( Pin* nod, QPointF this_point );
 
-        /**
-        * Finish the creation of this connector,
-        * adding the end-pin
-        */
         void closeCon( Pin* endpin, bool connect=false );
 
         /**
@@ -99,7 +95,7 @@ class MAINMODULE_EXPORT Connector : public Component
         void setVisib(  bool vis );
         
         void setIsBus( bool bus );
-        bool isBus();
+        bool isBus() { return m_isBus; }
         
         bool m_freeLine;
 
@@ -112,11 +108,6 @@ class MAINMODULE_EXPORT Connector : public Component
 
     private:
         void updateCon();
-        /**
-        * Connect signals to update lines positions of lines at inex1 and index2,
-        * note that the lines are connected in the given order,
-        * this is: end point of line1 to start point of line2.
-        */
         void connectLines( int index1, int index2 );
         void disconnectLines( int index1, int index2 );
 

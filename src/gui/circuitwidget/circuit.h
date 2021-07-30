@@ -40,14 +40,14 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
  static Circuit* self() { return m_pSelf; }
         
-        bool drawGrid();
+        bool drawGrid() { return !m_hideGrid; }
         void setDrawGrid( bool draw );
         
         bool showScroll() { return m_showScroll; }
         void setShowScroll( bool show );
         
         bool animate() { return m_animate; }
-        void setAnimate( bool an );
+        void setAnimate( bool an ) { m_animate = an; update(); }
 
         int autoBck();
         void setAutoBck( int secs );
@@ -58,7 +58,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool deleting() { return m_deleting; }
         void compRemoved( bool removed ) { m_compRemoved = removed; }
         void saveState();
-        void unSaveState();
+        void unSaveState() { m_undoStack.takeLast(); }
         void setChanged() { m_changed = true; }
 
         void deselectAll();
@@ -67,12 +67,12 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         Pin* findPin( int x, int y, QString id );
 
-        void loadCircuit(QString fileName );
+        void loadCircuit( QString fileName );
         bool saveCircuit( QString fileName );
 
-        Component* createItem(QString name, QString id , QString objNam="" );
+        Component* createItem( QString name, QString id , QString objNam="" );
 
-        QString newSceneId();
+        QString newSceneId() { return QString("%1").arg(++m_seqNumber) ; }
 
         void newconnector( Pin*  startpin );
         void closeconnector( Pin* endpin );
@@ -93,9 +93,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool  pasting() { return m_pasting; }
         QPointF deltaMove() { return m_deltaMove; }
         
-        void addPin( Pin* pin, QString pinId );
+        void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; }
         void updatePin( ePin* epin, QString newId );
-        void removePin( QString pinId );
+        void removePin( QString pinId ) { m_pinMap.remove( pinId ); }
 
         const QString getFileName() const { return m_filePath; }
 

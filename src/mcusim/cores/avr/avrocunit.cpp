@@ -48,7 +48,4 @@ void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
         {
              m_ocPin->controlPin( true, true );
              m_ocPin->setOutState( false );
-        }
-    }
-}
-
+}   }   }

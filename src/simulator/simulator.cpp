@@ -74,8 +74,7 @@ inline void Simulator::solveMatrix()
     {
         qDebug() << "Simulator::solveMatrix(), Failed to solve Matrix";
         m_error = 1;
-    }                                // m_matrix sets the eNode voltages
-}
+}   }                                // m_matrix sets the eNode voltages
 
 void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 ms, 20 Hz max)
 {
@@ -227,8 +226,7 @@ void Simulator::solveCircuit()
         m_voltChanged->added = false;
         m_voltChanged->voltChanged();
         m_voltChanged = m_voltChanged->nextChanged;
-    }
-}
+}   }
 
 void Simulator::resetSim()
 {
@@ -385,14 +383,12 @@ void Simulator::setStepsPerSec( uint64_t sps )
         m_stepsPF = 1;
         m_timerTick = 1000/sps; // ms
     }
-
     if( this->isRunning() )
     {
         pauseSim();
         emit rateChanged();
         resumeSim();
-    }
-}
+}   }
 
 void  Simulator::setNoLinAcc( int ac )
 {
@@ -472,8 +468,7 @@ void Simulator::cancelEvents( eElement* comp )
         }
         else last = event;
         event = next;
-    }
-}
+}   }
 
 inline void Simulator::freeEvent( simEvent_t* event )
 {

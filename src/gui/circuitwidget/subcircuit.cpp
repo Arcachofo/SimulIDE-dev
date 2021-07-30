@@ -69,8 +69,6 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 
     QString dataFile = ComponentSelector::self()->getXmlFile( m_name );
 
-    //qDebug()<<"SubCircuit::SubCircuit"<<m_name<<dataFile;
-
     if( dataFile == "" )
     {
           MessageBoxNB( "SubCircuit::SubCircuit", "                               \n"+
@@ -149,8 +147,7 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
         {
             comp->setParentItem( 0l );
             Circuit::self()->removeComp( comp );
-        }
-    }
+    }   }
     else    initChip();
 }
 SubCircuit::~SubCircuit(){}
@@ -249,8 +246,7 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
                 {
                     if( !startpin ) qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null startpin in " << objNam<<startPinId;
                     if( !endpin )   qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null endpin in "   << objNam<<endPinId;
-                }
-            }
+            }   }
             else if( type == "Package" ) { ; }
             else
             {
@@ -280,14 +276,11 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
                         tunnel->setUid( tunnel->name() );
                         tunnel->setName( m_id+"-"+tunnel->name() );
                         m_subcTunnels.append( tunnel );
-                    }
-                }
+                }   }
                 else qDebug() << " ERROR Creating Component: "<< type << id;
-            }
-        }
+        }   }
         node = node.nextSibling();
-    }
-}
+}   }
 
 Pin* SubCircuit::getConPin( QString pinId )
 {
@@ -355,8 +348,7 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
 
         m_ePin[pos-1] = pin;
-    }
-}
+}   }
 
 void SubCircuit::updatePin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
 {
@@ -418,15 +410,7 @@ void SubCircuit::setLogicSymbol( bool ls )
             {
                 pin->setVisible( false );
                 pin->setLabelText( "" );
-            }
-        }
-    }
-
-    /*Component::setValLabelX( m_area.width()/2-3 );
-    Component::setValLabelY( m_area.height()/2+m_valLabel->textWidth()/2 );
-    Component::setValLabRot(-90 );
-    setValLabelPos();*/
-}
+}   }   }   }
 
 void SubCircuit::remove()
 {
@@ -493,10 +477,7 @@ void SubCircuit::slotAttach()
 
                 //qDebug() << " SubCircuit::slotAttach: Component found" << comp->objectName();
                 break;
-            }
-        }
-    }
-}
+}   }   }   }
 
 void SubCircuit::slotDetach()
 {
@@ -516,11 +497,6 @@ void SubCircuit::slotDetach()
     m_attached = false;
 }
 
-void SubCircuit::setBoardId( QString id )
-{
-    m_boardId = id;
-}
-
 void SubCircuit::connectBoard()
 {
     QString name = Circuit::self()->origId( m_boardId );
@@ -537,8 +513,7 @@ void SubCircuit::connectBoard()
         this->setParentItem( m_board );
         for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->uid() );
         m_attached = true;
-    }
-}
+}   }
 
 void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
@@ -564,8 +539,7 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
             {
                 mainComp = m_board->m_mainComponent;
                 id = "Board "+m_board->itemID();
-            }
-        }
+        }   }
         if( mainComp )
         {
             menu->addSection( "                            " );
@@ -580,7 +554,6 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         if( m_board ) m_board->contextMenu( event, menu );
         else         Component::contextMenu( event, menu );
         menu->deleteLater();
-    }
-}
+}   }
 
 #include "moc_subcircuit.cpp"

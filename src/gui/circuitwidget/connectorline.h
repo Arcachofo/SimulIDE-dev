@@ -34,33 +34,33 @@ class MAINMODULE_EXPORT ConnectorLine : public QGraphicsObject
 
         virtual QRectF boundingRect() const;
 
-        void setConnector( Connector* con );
-        Connector* connector();
+        void setConnector( Connector* con ) { m_pConnector = con; }
+        Connector* connector() { return m_pConnector; }
         
-        void setPrevLine( ConnectorLine* prevLine );
-        void setNextLine( ConnectorLine* nextLine );
+        void setPrevLine( ConnectorLine* prevLine ) { m_prevLine = prevLine; }
+        void setNextLine( ConnectorLine* nextLine ) { m_nextLine = nextLine; }
 
-        void setP1( QPoint );
-        void setP2( QPoint );
+        void setP1( QPoint p ) { if( m_prevLine ) m_prevLine->sSetP2( p ); sSetP1( p ); }
+        void setP2( QPoint p ) { if( m_nextLine ) m_nextLine->sSetP1( p ); sSetP2( p ); }
 
-        QPoint p1();
-        QPoint p2();
+        QPoint p1() { return QPoint( m_p1X, m_p1Y ); }
+        QPoint p2() { return QPoint( m_p2X, m_p2Y ); }
 
-        int dx();
-        int dy();
+        int dx() { return (m_p2X - m_p1X);}
+        int dy() { return (m_p2Y - m_p1Y);}
         
-        bool isDiagonal();
+        bool isDiagonal() { return ( abs(m_p2X - m_p1X)>0 && abs(m_p2Y - m_p1Y)>0 ); }
 
         void move( QPointF delta );
         void moveLine( QPoint delta );
         void moveSimple( QPointF delta );
 
-        void updatePos();
-        void updateLines();
-        void updatePrev();
+        void updatePos() { setPos( m_p1X, m_p1Y ); update(); }
+        void updateLines() { updatePrev(); updateNext(); }
+        void updatePrev() { if( m_prevLine ) m_prevLine->sSetP2( QPoint( m_p1X, m_p1Y) ); }
         void updateNext();
         
-        void setIsBus( bool bus );
+        void setIsBus( bool bus ) { m_isBus = bus; }
 
         void mousePressEvent( QGraphicsSceneMouseEvent* event );
         void mouseMoveEvent( QGraphicsSceneMouseEvent* event );

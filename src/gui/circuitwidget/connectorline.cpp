@@ -48,10 +48,7 @@ ConnectorLine::ConnectorLine( int x1, int y1, int x2, int y2, Connector* connect
     this->setFlag( QGraphicsItem::ItemIsSelectable, true );
 
     setCursor( Qt::CrossCursor );
-
-    //setZValue( -0.5 );
     setZValue( 1 );
-
     updatePos();
 }
 ConnectorLine::~ConnectorLine(){}
@@ -86,18 +83,6 @@ void ConnectorLine::sSetP2( QPoint point )
     m_p2X = point.x();
     m_p2Y = point.y();
     updatePos();
-}
-
-void ConnectorLine::setP1( QPoint point )
-{
-    if( m_prevLine ) m_prevLine->sSetP2( point );
-    sSetP1( point );
-}
-
-void ConnectorLine::setP2( QPoint point )
-{
-    if( m_nextLine ) m_nextLine->sSetP1( point );
-    sSetP2( point );
 }
 
 void ConnectorLine::moveSimple( QPointF delta )
@@ -181,18 +166,6 @@ void ConnectorLine::moveLine( QPoint delta )
        m_p1X = m_p1X + delta.x();
        m_p2X = m_p2X + delta.x();
     }
-    //else return;                     //line is "0"
-}
-
-void ConnectorLine::updateLines()
-{
-    updatePrev();
-    updateNext();
-}
-
-void ConnectorLine::updatePrev()
-{
-    if( m_prevLine ) m_prevLine->sSetP2( QPoint( m_p1X, m_p1Y) );
 }
 
 void ConnectorLine::updateNext()
@@ -202,22 +175,6 @@ void ConnectorLine::updateNext()
         m_nextLine->sSetP1( QPoint( m_p2X, m_p2Y) );
         m_nextLine->updatePos();
     }
-}
-
-void ConnectorLine::updatePos()
-{
-    setPos( m_p1X, m_p1Y );
-    update();
-}
-
-void ConnectorLine::setPrevLine( ConnectorLine* prevLine )
-{
-    m_prevLine = prevLine;
-}
-
-void ConnectorLine::setNextLine( ConnectorLine* nextLine )
-{
-    m_nextLine = nextLine;
 }
 
 void ConnectorLine::remove() 
@@ -270,8 +227,7 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
                {
                    event->ignore();
                    return;
-               }
-           }
+           }   }
            int index;
            int myindex = m_pConnector->lineList()->indexOf( this );
            QPoint point1 = togrid(event->scenePos()).toPoint();
@@ -338,10 +294,7 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
                Circuit::self()->closeconnector( node->getPin(1) );
            else                                     // A new Connector created here (starts in a node)
                Circuit::self()->newconnector( node->getPin(1) );      // start a new connector
-        }
-    }
-    //else setSelected( true );
-}
+}   }   }
 
 void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 {
@@ -402,30 +355,7 @@ void ConnectorLine::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
                        this, SLOT(remove()), Qt::UniqueConnection );
 
        menu.exec(event->screenPos());
-
-       //qDebug() << "ConnectorLine::contextMenuEvent\n" << m_pConnector->pointList();
-    }
-}
-
-void ConnectorLine::setIsBus( bool bus )
-{
-    m_isBus = bus;
-}
-
-void ConnectorLine::setConnector( Connector* con ) { m_pConnector = con; }
-
-QPoint ConnectorLine::p1() { return QPoint( m_p1X, m_p1Y ); }
-QPoint ConnectorLine::p2() { return QPoint( m_p2X, m_p2Y ); }
-
-int ConnectorLine::dx() { return (m_p2X - m_p1X);}
-int ConnectorLine::dy() { return (m_p2Y - m_p1Y);}
-
-bool ConnectorLine::isDiagonal()
-{
-    return ( abs(m_p2X - m_p1X)>0 && abs(m_p2Y - m_p1Y)>0 );
-}
-
-Connector* ConnectorLine::connector(){ return m_pConnector; }
+}   }
 
 QPainterPath ConnectorLine::shape() const
 {

@@ -75,13 +75,15 @@ Component::Component( QObject* parent, QString type, QString id )
     QFont f;
     f.setPixelSize(10);
     
-    m_idLabel = new Label( this );
+    m_idLabel = new Label();
+    m_idLabel->setComponent( this );
     m_idLabel->setDefaultTextColor( Qt::darkBlue );
     m_idLabel->setFont(f);
     setLabelPos(-16,-24, 0);
     setShowId( false );
     
-    m_valLabel = new Label( this );
+    m_valLabel = new Label();
+    m_valLabel->setComponent( this );
     m_valLabel->setDefaultTextColor( Qt::black );
     setValLabelPos( 0, 0, 0);
     f.setPixelSize(9);
@@ -143,14 +145,12 @@ void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
                 {
                     QList<QGraphicsItem*> childs = item->childItems();
                     for( QGraphicsItem* child : childs ) child->setSelected( false );
-                }
-            }
+            }   }
             setCursor( Qt::ClosedHandCursor );
         }
         QApplication::focusWidget()->clearFocus();
         CircuitView::self()->setFocus();
-    }
-}
+}   }
 
 void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 {
@@ -187,36 +187,21 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
             {
                 //line->move( delta );
                 line->moveSimple( delta );
-            }
-        }
+        }   }
         for( QGraphicsItem* item : itemlist )
         {
             Component* comp =  qgraphicsitem_cast<Component*>( item );
             if(comp && (comp->objectName() != "") && (!comp->objectName().contains("Connector")) )
             {
                 comp->move( delta );
-            }
-        }
+        }   }
         for( Component* comp : *(Circuit::self()->conList()) )
         {
             Connector* con = static_cast<Connector*>( comp );
             con->startPin()->isMoved();
             con->endPin()->isMoved();
-        }
-    }
+    }   }
     else this->move( delta );
-}
-
-void Component::move( QPointF delta )
-{
-    setPos( pos() + delta );
-    emit moved();
-}
-
-void Component::moveTo( QPointF pos )
-{
-    setPos( pos );
-    emit moved();
 }
 
 void Component::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
@@ -249,8 +234,7 @@ void Component::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         QMenu* menu = new QMenu();
         contextMenu( event, menu );
         menu->deleteLater();
-    }
-}
+}   }
 
 void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -290,11 +274,6 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
                      this, SLOT(V_flip()), Qt::UniqueConnection );
 
     menu->exec(event->screenPos());
-}
-
-void Component::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
-{
-    if( event->button() == Qt::LeftButton ) slotProperties();
 }
 
 void Component::slotCopy()
@@ -404,8 +383,7 @@ void Component::updateLabel( Label* label, QString txt )
         
         setUnit( unit );
         setValue( value.toDouble() );
-    }
-}
+}   }
 
 void Component::setLabelPos( int x, int y, int rot )
 {
@@ -415,21 +393,11 @@ void Component::setLabelPos( int x, int y, int rot )
     m_idLabel->setLabelPos();
 }
 
-void Component::setLabelPos()
-{
-    m_idLabel->setLabelPos();
-}
-
 void Component::setValLabelPos( int x, int y, int rot )
 {
     m_valLabel->m_labelx = x;
     m_valLabel->m_labely = y;
     m_valLabel->m_labelrot = rot;
-    m_valLabel->setLabelPos();
-}
-
-void Component::setValLabelPos()
-{
     m_valLabel->setLabelPos();
 }
 
@@ -468,7 +436,6 @@ void Component::setValue( double val)
     m_valLabel->setPlainText( valStr.left(5)+m_mult+m_unit );
 }
 
-QString Component::unit()                { return m_mult+m_unit; }
 void Component::setUnit( QString un ) 
 {
     QString mul = " ";
@@ -490,62 +457,19 @@ void Component::setUnit( QString un )
                 return;
             }
             unitMult = unitMult/1000;
-        }
-    }
+    }   }
     m_unitMult = 1;
     m_mult     = " ";
     m_valLabel->setPlainText( QString::number(m_value)+m_mult+m_unit );
 }
 
-double Component::getmultValue() { return m_value*m_unitMult; }
-
-bool Component::showId()               { return m_showId; }
-void Component::setShowId( bool show ) 
-{ 
-    m_idLabel->setVisible( show );
-    m_showId = show;
-}
-
-bool Component::showVal()               { return m_showVal;}
-void Component::setShowVal( bool show ) 
-{ 
-    m_valLabel->setVisible( show );
-    m_showVal = show; 
-}
-
-QString Component::idLabel() { return m_idLabel->toPlainText(); }
-void Component::setIdLabel( QString id ) { m_idLabel->setPlainText( id ); }
-
-QString Component::itemID()         { return  m_id; }
-void Component::setId( QString id ) {  m_id = id;  }
-
-int Component::labelx()            { return m_idLabel->m_labelx; }
-void Component::setLabelX( int x ) { m_idLabel->m_labelx = x; }
-
-int Component::labely()            { return m_idLabel->m_labely; }
-void Component::setLabelY( int y ) { m_idLabel->m_labely = y; }
-
-int Component::labelRot()              { return m_idLabel->m_labelrot; }
-void Component::setLabelRot( int rot ) { m_idLabel->m_labelrot = rot; }
-
-int Component::valLabelx()            { return m_valLabel->m_labelx; }
-void Component::setValLabelX( int x ) { m_valLabel->m_labelx = x; }
-
-int Component::valLabely()            { return m_valLabel->m_labely; }
-void Component::setValLabelY( int y ) { m_valLabel->m_labely = y; }
-
-int Component::valLabRot()              { return m_valLabel->m_labelrot; }
-void Component::setValLabRot( int rot ) { m_valLabel->m_labelrot = rot; }
-
-int Component::hflip()            { return m_Hflip; }
 void Component::setHflip( int hf )
 { 
     if(( hf != 1 )&( hf != -1 )) hf = 1;
     m_Hflip = hf;
     setflip();
 }
-        
-int Component::vflip(){ return m_Vflip; }
+
 void Component::setVflip( int vf )
 { 
     if(( vf != 1 )&( vf != -1 )) vf = 1;
@@ -561,10 +485,6 @@ void Component::setflip()
     emit moved();
 }
 
-QString Component::itemType()  { return m_type; }
-QString Component::category()  { return m_category; }
-QIcon   Component::icon()      { return m_icon; }
-
 void Component::setHidden( bool hid, bool hidLabel )
 {
     m_hidden = hid;
@@ -579,15 +499,7 @@ void Component::setHidden( bool hid, bool hidLabel )
     {
         setShowId( false );
         setShowVal( false );
-    }
-}
-
-//bool Component::isChanged(){ return m_changed;}
-
-void Component::setPrintable( bool p )
-{
-    m_printable = p;
-}
+}   }
 
 QString Component::print()
 {
@@ -603,7 +515,7 @@ QString Component::print()
 
 void Component::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    QPen pen(Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
     QColor color;
 
@@ -611,157 +523,16 @@ void Component::paint( QPainter* painter, const QStyleOptionGraphicsItem* option
     {
         pen.setColor( Qt::darkGray);
         color = Qt::darkGray;
-        //label->setBrush( Qt::darkGray );
     }
-    else
-    {
-        color = m_color;
-        //label->setBrush( Qt::darkBlue );
-    }
+    else color = m_color;
+
     if( m_mainComp )
     {
-        //QPen pen2(Qt::black, 0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-        //painter->setPen( pen2 );
-        //painter->setBrush( Qt::yellow );
         painter->fillRect( boundingRect(), Qt::yellow  );
         painter->setOpacity( 0.5 );
-        //painter->setOpacity( 1 );
     }
     painter->setBrush( color );
     painter->setPen( pen );
 }
-
-
-// CLASS Label  *****************************************************************************
-
-Label::Label( Component* parent )
-     : QGraphicsTextItem( parent )
-{
-    m_parentComp = parent;
-    m_labelrot = 0;
-    setCursor( Qt::OpenHandCursor );
-    
-    this->document()->setDocumentMargin(0);
-    
-    connect( document(), SIGNAL( contentsChange(int, int, int)),
-             this,       SLOT(   updateGeometry(int, int, int)), Qt::UniqueConnection );
-            
-    //document()->setDefaultStyleSheet( QString("p {max-width: 500px;}") );
-}
-Label::~Label() { }
-
-void Label::updateGeometry( int, int, int )
-{
-    document()->setTextWidth( -1 );
-    //setTextWidth( boundingRect().width() );
-    //setItemSize(boundingRect().width(), boundingRect().height());
-    //adjustSize();
-}
-
-void Label::focusOutEvent( QFocusEvent* event )
-{
-    setTextInteractionFlags( Qt::NoTextInteraction );
-    m_parentComp->updateLabel( this, document()->toPlainText() );
-    
-    QGraphicsTextItem::focusOutEvent(event);
-}
-
-void Label::mousePressEvent( QGraphicsSceneMouseEvent* event )
-{
-    if( event->button() == Qt::LeftButton )
-    {
-        event->accept();
-        setCursor( Qt::ClosedHandCursor );
-        grabMouse();
-    }
-}
-
-void Label::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
-{
-    event->accept();
-    setPos(  pos() + mapToItem( m_parentComp, event->pos() ) - mapToItem( m_parentComp, event->lastPos() ) );
-    m_labelx = int(pos().x());
-    m_labely = int(pos().y());
-}
-
-void Label::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
-{
-    event->accept();
-    setCursor( Qt::OpenHandCursor );
-    ungrabMouse();
-}
-
-void Label::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) event->ignore();
-    else
-    {
-        event->accept();
-        QMenu menu;
-
-        QAction* rotateCWAction = menu.addAction(QIcon(":/rotateCW.png"),"Rotate CW");
-        connect(rotateCWAction, SIGNAL(triggered()),
-                          this, SLOT(rotateCW()), Qt::UniqueConnection );
-
-        QAction* rotateCCWAction = menu.addAction(QIcon(":/rotateCCW.png"),"Rotate CCW");
-        connect(rotateCCWAction, SIGNAL(triggered()),
-                           this, SLOT(rotateCCW()), Qt::UniqueConnection );
-
-        QAction* rotate180Action = menu.addAction(QIcon(":/rotate180.png"),"Rotate 180º");
-        connect(rotate180Action, SIGNAL(triggered()),
-                           this, SLOT(rotate180()), Qt::UniqueConnection );
-
-        /*QAction* selectedAction = */menu.exec(event->screenPos());
-    }
-}
-
-void Label::setLabelPos()
-{
-    setX( m_labelx );
-    setY( m_labely );
-    setRotation( m_labelrot );
-    adjustSize();
-}
-
-void Label::rotateCW()
-{
-    if( !isEnabled() ) return;
-    setRotation( rotation() + 90 );
-    m_labelrot = int(rotation()) ;
-}
-
-void Label::rotateCCW()
-{
-    if( !isEnabled() ) return;
-    setRotation( rotation() - 90 );
-    m_labelrot = int(rotation()) ;
-}
-
-void Label::rotate180()
-{
-    if( !isEnabled() ) return;
-    setRotation( rotation() - 180 );
-    m_labelrot = int(rotation()) ;
-}
-
-void Label::H_flip( int hf )
-{
-    if( !isEnabled() ) return;
-    setTransform( QTransform::fromScale(hf, 1) );
-    //m_idLabel->rotateCCW();
-}
-
-void Label::V_flip( int vf )
-{
-    if( !isEnabled() ) return;
-    setTransform( QTransform::fromScale(1, vf) );
-}
-
-/*void Label::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
-{
-    painter->setBrush( Qt::blue );
-    painter->drawRect( boundingRect() );
-    QGraphicsTextItem::paint( painter, option, widget );
-}*/
 
 #include "moc_component.cpp"

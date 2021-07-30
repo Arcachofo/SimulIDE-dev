@@ -75,8 +75,7 @@ void Node::remove() // Only remove if there are less than 3 connectors
             if( conecteds == 0 ) { conecteds++; con[0] = i; }
             else con[1] = i;
             conectors++;
-        }
-    }
+    }   }
     if( conectors < 3 ) 
     { 
         if( conectors == 2 ) joinConns( con[0], con[1] );  // 2 Conn
@@ -84,8 +83,7 @@ void Node::remove() // Only remove if there are less than 3 connectors
 
         Circuit::self()->compList()->removeOne( this );
         if( this->scene() ) Circuit::self()->removeItem( this );
-    }
-}
+}   }
 
 void Node::joinConns( int c0, int c1 )
 {

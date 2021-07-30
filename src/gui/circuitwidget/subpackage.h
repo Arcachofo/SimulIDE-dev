@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         int width();
         void setWidth( int width );
         
-        int height();
+        int height() { return m_height; }
         void setHeight( int height );
         
         QString  package();
@@ -66,7 +66,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         void setPinName( QString name );
         void boardMode();
         void savingCirc();
-        void mainComp();
+        void mainComp() { Component::m_selMainCo = true; }
     
     private slots:
         void loadPackage();

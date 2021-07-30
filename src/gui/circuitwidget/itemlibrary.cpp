@@ -249,8 +249,6 @@ void ItemLibrary::loadItems()
     addItem( SevenSegmentBCD::libraryItem() );
     addItem( Lm555::libraryItem() );
 
-
-
     // Subcircuits
     addItem( SubCircuit::libraryItem() );
 

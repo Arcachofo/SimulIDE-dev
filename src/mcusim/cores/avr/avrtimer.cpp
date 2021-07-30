@@ -170,9 +170,8 @@ void AvrTimer8bit::OCRXAchanged( uint8_t val )
     if( (m_wgmMode == wgmCTC)
       ||((m_WGM32) && (( m_wgmMode == wgmPHASE)
                       ||(m_wgmMode == wgmFAST)) ) )
-    {
-        m_ovfMatch = val;
-    }
+    { m_ovfMatch = val; }
+
     if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
     else            m_ovfPeriod = m_ovfMatch+1;
 }
@@ -295,11 +294,6 @@ void AvrTimer16bit::updtWgm()
     }
     bool disable = (m_WGM32 & 0b00001000)==0;
     configureOcUnits( disable );
-}
-
-void AvrTimer16bit::OCRXAchanged( uint8_t val )
-{
-    updtWgm();
 }
 
 void AvrTimer16bit::setOCRXA( QString reg )

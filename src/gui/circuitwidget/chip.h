@@ -43,7 +43,7 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         };
         Q_ENUM(subcType_t)
         
-        bool logicSymbol();
+        bool logicSymbol() { return m_isLS; }
         virtual void setLogicSymbol( bool ls );
         virtual void setBackground( QString bck );
 

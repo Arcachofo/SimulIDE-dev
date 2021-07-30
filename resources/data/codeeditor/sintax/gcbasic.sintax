@@ -14,13 +14,13 @@ number-style: #FF0000 default True false
 number: "\b[0-9]+\b" "0[xX][0-9a-fA-F]+"
 
 subroutine-style: #FF1493 default true false
-subroutine: "^(.+[^\s-]):"
-
-#htmlTag-style: #303078 default false false
-#htmlTag: "<.*>" 
+subroutine: "^[A-Za-z_]\w+:"
 
 operator-style: #800000 default true false
 operator: "[\(\)\/\=\+\-\<\>]"
+
+#htmlTag-style: #303078 default false false
+#htmlTag: "<.*>" 
 
 quotation-style: #DC143C default True false
 quotation: "\"(\\.|[^\"])*\""

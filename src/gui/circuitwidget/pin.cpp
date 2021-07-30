@@ -129,8 +129,6 @@ void Pin::registerPins( eNode* enode )     // Called by connector closing or oth
     m_blocked = false;
 }
 
-Connector* Pin::connector() { return my_connector; }
-
 void  Pin::setConnector( Connector* connector )
 {
     my_connector = connector;
@@ -144,9 +142,7 @@ void  Pin::setConnector( Connector* connector )
 }
 
 void Pin::removeConnector()
-{
-    if( my_connector ) my_connector->remove();
-}
+{ if( my_connector ) my_connector->remove(); }
 
 void Pin::connectPin()      // Auto-Connect
 {
@@ -164,9 +160,7 @@ void Pin::connectPin()      // Auto-Connect
                 Circuit::self()->closeconnector( pin );
             }
             break;
-        }
-    }
-}
+}   }   }
 
 void Pin::isMoved()
 {
@@ -177,8 +171,7 @@ void Pin::isMoved()
         if( QApplication::queryKeyboardModifiers() & Qt::ControlModifier )
         {
             connectPin();
-        }
-    }
+    }   }
     setLabelPos();
 }
 
@@ -198,19 +191,11 @@ void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
                 {
                     event->ignore();
                     return;
-                }
-            }
+            }   }
             event->accept();
             if( Circuit::self()->is_constarted() ) Circuit::self()->closeconnector( this );
             else                                   Circuit::self()->newconnector( this );
-        }
-    }
-}
-
-QString Pin::getLabelText()
-{
-    return m_labelText;
-}
+}   }   }
 
 void Pin::setLabelText( QString label )
 {
@@ -276,11 +261,6 @@ int Pin::labelSizeX()
     return fm.width( m_label.text() );
 }
 
-void Pin::setLabelColor( QColor color )
-{
-    m_label.setBrush( color );
-}
-
 void Pin::setFontSize( int size )
 {
     QFont font = m_label.font();
@@ -334,12 +314,6 @@ void Pin::setVisible( bool visible )
     QGraphicsItem::setVisible( visible );
 }
 
-void Pin::setPinState( pinState_t st )
-{
-    m_pinState = st;
-    m_changed = true;
-}
-
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( !isVisible() ) return;
@@ -385,7 +359,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 
             if( m_pinState >= out_low ) // Draw Full Output arrow
                 painter->drawLine( 0, 0, 2, 2);
-        }
-    }
-}
+}   }   }
+
+
 #include "moc_pin.cpp"

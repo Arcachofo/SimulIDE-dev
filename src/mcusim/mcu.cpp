@@ -167,9 +167,7 @@ void Mcu::setProgram( QString pro )
 
     if( QFileInfo::exists( fileNameAbs ) ) // Load firmware at circuit load
     // && !m_processor->getLoadStatus() )
-    {
-        load( m_eMcu.m_firmware );
-    }
+    { load( m_eMcu.m_firmware ); }
 }
 
 void Mcu::initialize()
@@ -263,8 +261,7 @@ void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         contextMenu( event, menu );
         Component::contextMenu( event, menu );
         menu->deleteLater();
-    }
-}
+}   }
 
 void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -361,8 +358,7 @@ void Mcu::addPin( QString id, QString type, QString label,
             pin->setLabelText( label );
             pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
             m_pinList.append( pin );
-        }
-    }
+    }   }
     if( !portPin ) Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
 }
 
