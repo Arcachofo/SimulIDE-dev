@@ -394,14 +394,16 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
         // SUBSTITUTIONS -------------------------------------------------------
         if( !comProp.isValid() )
         {
-            if( propName == "Volts") propName = "Voltage";
+            if     ( propName == "Volts")   propName = "Voltage";
+            else if( propName == "Current") propName = "Value";
             else if( propName == "Propagation_Delay_ns")
             {
                 propName = "Tpd_ps";
                 value.setValue( value.toInt()*1000 );
             }
             else if( propName == "Show_res"
-                  || propName == "Show_Volt"
+                  || propName == "Show_Amp"
+                  || propName == "Show_Ind"
                   || propName == "Show_Ind"
                   || propName == "Show_Cap" ) propName = "Show_Val";
             else if( propName == "Duty_Square") propName = "Duty";
@@ -409,8 +411,6 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
 
             comProp = comp->property( propName.toStdString().c_str() );
         }
-        //QString lowN = propName;
-        //lowN = lowN.toLower();
 
         if( !value.isValid()
          || !comProp.isValid() )
