@@ -17,32 +17,31 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QWidget>
-
-#include "ui_intval.h"
-
 #ifndef INTVAL_H
 #define INTVAL_H
 
+#include "ui_intval.h"
+#include "propval.h"
+
 class Component;
 
-class IntVal : public QWidget, private Ui::IntVal
+class IntVal : public PropVal, private Ui::IntVal
 {
     Q_OBJECT
     
     public:
         IntVal( QWidget* parent=0 );
-        
-        void setup( Component* comp, QString unit );
-        void setPropName(QString name, QString caption );
+        ~IntVal();
+
+        virtual void setup( Component* comp, QString unit ) override;
+        virtual void setPropName( QString name, QString caption ) override;
+        virtual void updtValues() override;
 
     public slots:
         void on_value_valueChanged( int val );
         //void on_unitBox_currentTextChanged( QString unit );
 
     private:
-        void updateValues();
-
         Component* m_component;
         QString m_propName;
 

@@ -21,12 +21,13 @@
 #include "component.h"
 
 ColorVal::ColorVal( QWidget* parent )
-        : QWidget( parent )
+        : PropVal( parent )
 {
     setupUi(this);
     m_propName = "";
     m_component = NULL;
 }
+ColorVal::~ColorVal() {;}
 
 void ColorVal::setPropName( QString name, QString caption )
 {
@@ -34,7 +35,7 @@ void ColorVal::setPropName( QString name, QString caption )
     valLabel->setText( caption );
 }
 
-void ColorVal::setup( Component* comp )
+void ColorVal::setup( Component* comp, QString )
 {
     m_color = comp->property( m_propName.toUtf8() ).value<QColor>();
     QString cname = m_color.name();
@@ -82,5 +83,10 @@ void ColorVal::on_valueBox_currentIndexChanged( int index )
     QPalette pal = colorW->palette();
     pal.setColor( QPalette::Base, m_color );
     colorW->setPalette( pal );
+}
+
+void ColorVal::updtValues()
+{
+
 }
 

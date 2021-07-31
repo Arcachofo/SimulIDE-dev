@@ -17,44 +17,24 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "stringval.h"
-#include "component.h"
+#ifndef PROPVAL_H
+#define PROPVAL_H
 
-StringVal::StringVal( QWidget* parent )
-         : PropVal( parent )
+#include <QWidget>
+
+class Component;
+
+class PropVal : public QWidget
 {
-    setupUi(this);
-    m_propName = "";
-    m_component = NULL;
-}
-StringVal::~StringVal() {}
+    public:
+        PropVal( QWidget* parent=0 );
+        ~PropVal();
 
-void StringVal::setPropName( QString name, QString caption )
-{
-    m_propName = name;
-    valLabel->setText( caption );
-}
+        virtual void setup( Component* comp, QString unit="" ){;}
+        virtual void setPropName( QString name, QString caption ){;}
+        virtual void updtValues() {;}
 
-void StringVal::setup( Component* comp, QString )
-{
-    m_component = comp;
-    updatValue();
-    this->adjustSize();
-}
+};
 
-void StringVal::on_value_editingFinished()
-{
-    m_component->setProperty( m_propName.toUtf8(), value->text() );
-    updatValue();
-}
+#endif
 
-void StringVal::updatValue()
-{
-    QString text = m_component->property( m_propName.toUtf8() ).toString();
-    value->setText( text );
-}
-
-void StringVal::updtValues()
-{
-
-}

@@ -21,12 +21,13 @@
 #include "component.h"
 
 BoolVal::BoolVal( QWidget* parent )
-      : QWidget( parent )
+      : PropVal( parent )
 {
     setupUi(this);
     m_propName = "";
     m_component = NULL;
 }
+BoolVal::~BoolVal() {;}
 
 void BoolVal::setPropName( QString name, QString caption )
 {
@@ -35,7 +36,7 @@ void BoolVal::setPropName( QString name, QString caption )
     trueVal->setText( caption );
 }
 
-void BoolVal::setup( Component* comp )
+void BoolVal::setup( Component* comp, QString )
 {
     m_blocked = true;
     m_component = comp;
@@ -52,4 +53,7 @@ void BoolVal::on_trueVal_toggled( bool checked )
     m_component->setProperty( m_propName.toUtf8(), checked );
 }
 
+void BoolVal::updtValues()
+{
 
+}

@@ -17,24 +17,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QWidget>
-
-#include "ui_enumval.h"
-
 #ifndef ENUMVAL_H
 #define ENUMVAL_H
 
+#include "ui_enumval.h"
+#include "propval.h"
+
 class Component;
 
-class EnumVal : public QWidget, private Ui::EnumVal
+class EnumVal : public PropVal, private Ui::EnumVal
 {
     Q_OBJECT
     
     public:
         EnumVal( QWidget* parent=0 );
-        
-        void setup( Component* comp );
-        void setPropName(QString name, QString caption );
+        ~EnumVal();
+
+        virtual void setup( Component* comp, QString ) override;
+        virtual void setPropName( QString name, QString caption ) override;
+        virtual void updtValues() override;
 
     public slots:
         void on_valueBox_currentIndexChanged( int val );

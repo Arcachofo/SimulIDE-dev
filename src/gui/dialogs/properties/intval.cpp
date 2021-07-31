@@ -21,13 +21,14 @@
 #include "component.h"
 
 IntVal::IntVal( QWidget* parent )
-      : QWidget( parent )
+      : PropVal( parent )
 {
     setupUi(this);
     m_propName = "";
     m_component = NULL;
     m_blocked = false;
 }
+IntVal::~IntVal() {}
 
 void IntVal::setPropName( QString name, QString caption )
 {
@@ -62,7 +63,7 @@ void IntVal::setup( Component* comp, QString unit )
         unitBox->setStyleSheet ("QComboBox::drop-down {border-width: 0px;} "
                  "QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
     }
-    updateValues();
+    updtValues();
     m_blocked = false;
     this->adjustSize();
 }
@@ -71,7 +72,7 @@ void IntVal::on_value_valueChanged( int val )
 {
     if( m_blocked ) return;
     m_component->setProperty( m_propName.toUtf8(), val );
-    updateValues();
+    updtValues();
 }
 
 /*void IntVal::on_unitBox_currentTextChanged( QString unit )
@@ -83,12 +84,8 @@ void IntVal::on_value_valueChanged( int val )
     m_blocked = false;
 }*/
 
-void IntVal::updateValues()
+void IntVal::updtValues()
 {
     int val = m_component->property( m_propName.toUtf8() ).toInt();
     value->setValue( val );
-
-    /*QString unit = m_component->unit();
-    if( unit.size() > 2 ) unit = unit.right( 2 );
-    unitBox->setCurrentText( unit );*/
 }

@@ -17,12 +17,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifndef LABELVAL_H
+#define LABELVAL_H
+
 #include <QWidget>
 
 #include "ui_labelval.h"
-
-#ifndef LABELVAL_H
-#define LABELVAL_H
 
 class LabelVal : public QWidget, private Ui::LabelVal
 {

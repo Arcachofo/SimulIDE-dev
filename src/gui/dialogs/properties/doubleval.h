@@ -17,24 +17,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QWidget>
-
-#include "ui_doubleval.h"
-
 #ifndef DOUBLEVAL_H
 #define DOUBLEVAL_H
 
+#include "ui_doubleval.h"
+#include "propval.h"
+
 class Component;
 
-class DoubleVal : public QWidget, private Ui::DoubleVal
+class DoubleVal : public PropVal, private Ui::DoubleVal
 {
     Q_OBJECT
     
     public:
         DoubleVal( QWidget* parent=0 );
-        
-        void setup( Component* comp, QString unit );
-        void setPropName( QString name, QString caption );
+        ~DoubleVal();
+
+        virtual void setup( Component* comp, QString unit ) override;
+        virtual void setPropName( QString name, QString caption ) override;
+        virtual void updtValues() override;
 
     public slots:
         void on_valueBox_valueChanged( double val );

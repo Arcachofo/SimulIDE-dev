@@ -27,6 +27,7 @@
 #include "enumval.h"
 #include "labelval.h"
 #include "colorval.h"
+#include "propval.h"
 
 PropDialog::PropDialog( QWidget* parent, QString help )
           : QDialog( parent )
@@ -85,56 +86,22 @@ void PropDialog::setComponent( Component* comp )
                 }
                 QVariant::Type type = value.type();
 
-                if( unit == "enum")
-                {
-                    EnumVal* mp = new EnumVal( this );
-                    mp->setPropName( propName, prop.caption );
-                    mp->setup( comp );
-                    propWidget->layout()->addWidget( mp );
-                }
-                else if( unit.contains("text"))
-                {
-                    TextVal* mp = new TextVal( this );
-                    mp->setPropName( propName, prop.caption );
-                    mp->setup( comp );
-                    propWidget->layout()->addWidget( mp );
-                }
-                else if( type == QVariant::Double )
-                {
-                    DoubleVal* mp = new DoubleVal( this );
-                    mp->setPropName( propName, prop.caption );
-                    mp->setup( comp, unit );
-                    propWidget->layout()->addWidget( mp );
-                }
+                PropVal* mp = NULL;
+
+                if     ( unit == "enum")               mp = new EnumVal( this );
+                else if( unit.contains("text"))        mp = new TextVal( this );
+                else if( type == QVariant::Double )    mp = new DoubleVal( this );
                 else if( type == QVariant::Int
-                      || type == QVariant::ULongLong  )
-                {
-                    IntVal* mp = new IntVal( this );
-                    mp->setPropName( propName, prop.caption );
-                    mp->setup( comp, unit );
-                    propWidget->layout()->addWidget( mp );
-                }
-                else if( type == QVariant::Bool )
-                {
-                    BoolVal* mp = new BoolVal( this );
-                    mp->setPropName( propName, prop.caption );
-                    mp->setup( comp );
-                    propWidget->layout()->addWidget( mp );
-                }
-                else if( type == QVariant::String )
-                {
-                    StringVal* mp = new StringVal( this );
-                    mp->setPropName( propName, prop.caption );
-                    mp->setup( comp );
-                    propWidget->layout()->addWidget( mp );
-                }
-                else if( type == QVariant::Color )
-                {
-                    ColorVal* mp = new ColorVal( this );
-                    mp->setPropName( propName, prop.caption );
-                    mp->setup( comp );
-                    propWidget->layout()->addWidget( mp );
-                }
+                      || type == QVariant::ULongLong  ) mp = new IntVal( this );
+                else if( type == QVariant::Bool )       mp = new BoolVal( this );
+                else if( type == QVariant::String )     mp = new StringVal( this );
+                else if( type == QVariant::Color )      mp = new ColorVal( this );
+
+                if( !mp ) continue;
+                m_propList.append( mp );
+                mp->setPropName( propName, prop.caption );
+                mp->setup( comp, unit );
+                propWidget->layout()->addWidget( mp );
             }
             tabList->addTab( propWidget, group.name );
         }
@@ -168,3 +135,6 @@ void PropDialog::on_helpButton_clicked()
 
     this->adjustSize();
 }
+
+void PropDialog::updtValues()
+{ for( PropVal* prop : m_propList )  prop->updtValues(); }

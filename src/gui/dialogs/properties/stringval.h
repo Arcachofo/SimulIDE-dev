@@ -17,24 +17,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QWidget>
-
-#include "ui_stringval.h"
-
 #ifndef SRTINGVAL_H
 #define SRTINGVAL_H
 
+#include "ui_stringval.h"
+#include "propval.h"
+
 class Component;
 
-class StringVal : public QWidget, private Ui::StringVal
+class StringVal : public PropVal, private Ui::StringVal
 {
     Q_OBJECT
     
     public:
         StringVal( QWidget* parent=0 );
-        
-        void setup( Component* comp );
-        void setPropName( QString name, QString caption );
+        ~StringVal();
+
+        virtual void setup( Component* comp, QString ) override;
+        virtual void setPropName( QString name, QString caption ) override;
+        virtual void updtValues() override;
 
     public slots:
         void on_value_editingFinished();

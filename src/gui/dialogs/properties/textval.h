@@ -17,25 +17,26 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QWidget>
-
-#include "ui_textval.h"
-
 #ifndef TEXTVAL_H
 #define TEXTVAL_H
+
+#include "ui_textval.h"
+#include "propval.h"
 
 class Component;
 class Scripted;
 
-class TextVal : public QWidget, private Ui::TextVal
+class TextVal : public PropVal, private Ui::TextVal
 {
     Q_OBJECT
     
     public:
         TextVal( QWidget* parent=0 );
+        ~TextVal();
         
-        void setup( Component* comp );
-        void setPropName( QString name, QString caption );
+        virtual void setup( Component* comp, QString ) override;
+        virtual void setPropName( QString name, QString caption ) override;
+        virtual void updtValues() override;
 
     public slots:
         void on_saveButton_clicked();

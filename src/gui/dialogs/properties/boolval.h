@@ -17,24 +17,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QWidget>
-
-#include "ui_boolval.h"
-
 #ifndef BOOLVAL_H
 #define BOOLVAL_H
 
+#include "ui_boolval.h"
+#include "propval.h"
+
 class Component;
 
-class BoolVal : public QWidget, private Ui::BoolVal
+class BoolVal : public PropVal, private Ui::BoolVal
 {
     Q_OBJECT
     
     public:
         BoolVal( QWidget* parent=0 );
+        ~BoolVal();
         
-        void setup( Component* comp );
-        void setPropName( QString name, QString caption );
+        virtual void setup( Component* comp, QString ) override;
+        virtual void setPropName( QString name, QString caption ) override;
+        virtual void updtValues() override;
 
     public slots:
         void on_trueVal_toggled( bool checked );

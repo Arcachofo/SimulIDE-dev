@@ -17,24 +17,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QWidget>
-
-#include "ui_colorval.h"
-
 #ifndef COLORVAL_H
 #define COLORVAL_H
 
+#include "ui_colorval.h"
+#include "propval.h"
+
 class Component;
 
-class ColorVal : public QWidget, private Ui::ColorVal
+class ColorVal : public PropVal, private Ui::ColorVal
 {
     Q_OBJECT
     
     public:
         ColorVal( QWidget* parent=0 );
-        
-        void setup( Component* comp );
-        void setPropName(QString name, QString caption );
+        ~ColorVal();
+
+        virtual void setup( Component* comp, QString ) override;
+        virtual void setPropName( QString name, QString caption ) override;
+        virtual void updtValues() override;
 
     public slots:
         void on_valueBox_currentIndexChanged( int index );

@@ -21,7 +21,7 @@
 #include "component.h"
 
 DoubleVal::DoubleVal( QWidget* parent )
-         : QWidget( parent )
+         : PropVal( parent )
 {
     setupUi(this);
     m_propName = "";
@@ -29,6 +29,7 @@ DoubleVal::DoubleVal( QWidget* parent )
     m_blocked = false;
     m_main    = false;
 }
+DoubleVal::~DoubleVal() {}
 
 void DoubleVal::setPropName( QString name, QString caption )
 {
@@ -45,19 +46,17 @@ void DoubleVal::setup( Component* comp, QString unit )
     {
         m_main = true;
         showVal->setChecked( comp->showVal() );
-        if( !unit.isEmpty() )
-        {
-            unit = comp->unit().right(1);
-            unitBox->addItem( "p"+unit);
-            unitBox->addItem( "n"+unit);
-            unitBox->addItem( "µ"+unit);
-            unitBox->addItem( "m"+unit);
-            unitBox->addItem( " "+unit);
-            unitBox->addItem( "k"+unit);
-            unitBox->addItem( "M"+unit);
-            unitBox->addItem( "G"+unit);
-            unitBox->addItem( "T"+unit);
-        }
+
+        unit = comp->unit().remove(" ");
+        unitBox->addItem( "p"+unit);
+        unitBox->addItem( "n"+unit);
+        unitBox->addItem( "µ"+unit);
+        unitBox->addItem( "m"+unit);
+        unitBox->addItem( " "+unit);
+        unitBox->addItem( "k"+unit);
+        unitBox->addItem( "M"+unit);
+        unitBox->addItem( "G"+unit);
+        unitBox->addItem( "T"+unit);
     }else{
         showVal->setVisible( false );
         if( unit.isEmpty() ) unitBox->setVisible( false );
@@ -65,10 +64,7 @@ void DoubleVal::setup( Component* comp, QString unit )
         unitBox->setStyleSheet ("QComboBox::drop-down {border-width: 0px;} "
                  "QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
     }
-    double val = m_component->property( m_propName.toUtf8() ).toDouble();
-    valueBox->setValue( val );
-    setUnit();
-
+    updtValues();
     m_blocked = false;
 }
 
@@ -92,14 +88,20 @@ void DoubleVal::on_unitBox_currentTextChanged( QString unit )
     if( !m_main | m_blocked ) return;
     m_blocked = true;
     m_component->setUnit( unit );
-    double val = m_component->property( m_propName.toUtf8() ).toDouble();
-    valueBox->setValue( val );
+    updtValues();
     m_blocked = false;
 }
 
 void DoubleVal::setUnit()
 {
     QString unit = m_component->unit();
-    if( unit.size() > 2 ) unit = unit.right( 2 );
+    //if( unit.size() > 2 ) unit = unit.right( 2 );
     unitBox->setCurrentText( unit );
+}
+
+void DoubleVal::updtValues()
+{
+    double val = m_component->property( m_propName.toUtf8() ).toDouble();
+    valueBox->setValue( val );
+    setUnit();
 }

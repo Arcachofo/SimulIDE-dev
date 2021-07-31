@@ -21,12 +21,13 @@
 #include "scripted.h"
 
 TextVal::TextVal( QWidget* parent )
-         : QWidget( parent )
+       : PropVal( parent )
 {
     setupUi(this);
     m_propName = "";
     m_component = NULL;
 }
+TextVal::~TextVal() {}
 
 void TextVal::setPropName( QString name, QString caption )
 {
@@ -34,7 +35,7 @@ void TextVal::setPropName( QString name, QString caption )
     valLabel->setText( caption );
 }
 
-void TextVal::setup( Component* comp )
+void TextVal::setup( Component* comp, QString )
 {
     m_component = (Scripted*)comp;
     updatValue();
@@ -60,4 +61,9 @@ void TextVal::updatValue()
 {
     QString text = m_component->property( m_propName.toUtf8() ).toString();
     textBox->setPlainText( text );
+}
+
+void TextVal::updtValues()
+{
+
 }

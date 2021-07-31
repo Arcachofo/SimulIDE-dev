@@ -21,13 +21,14 @@
 #include "component.h"
 
 EnumVal::EnumVal( QWidget* parent )
-       : QWidget( parent )
+       : PropVal( parent )
 {
     setupUi(this);
     m_propName = "";
     m_component = NULL;
     m_blocked = false;
 }
+EnumVal::~EnumVal() {}
 
 void EnumVal::setPropName( QString name, QString caption )
 {
@@ -35,7 +36,7 @@ void EnumVal::setPropName( QString name, QString caption )
     valLabel->setText( caption );
 }
 
-void EnumVal::setup( Component* comp )
+void EnumVal::setup( Component* comp, QString )
 {
     m_blocked = true;
     m_component = comp;
@@ -61,5 +62,10 @@ void EnumVal::on_valueBox_currentIndexChanged( int val )
 {
     if( m_blocked ) return;
     m_component->setProperty( m_propName.toUtf8(), val );
+}
+
+void EnumVal::updtValues()
+{
+
 }
 
