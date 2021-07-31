@@ -44,8 +44,8 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         
         virtual QList<propGroup_t> propGroups() override;
 
-        void setVal( double val );
-        double val();
+        void setVal( double val ) { m_dial->setValue( val*1000/m_resist ); }
+        double val() { return m_resist*m_dial->value()/1000; }
         
         double res() const      { return m_value; }
         void setRes( double v );

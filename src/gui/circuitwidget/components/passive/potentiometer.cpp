@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "potentiometer.h"
+#include "propdialog.h"
 #include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -146,17 +147,18 @@ void Potentiometer::updateStep()
         res2 = 1e-6;
         res1 = m_resist-res2;
     }
-    //qDebug()<<"Potentiometer::updateStep"<<res1<<res2;
     m_resA.setRes( res1 );
     m_resB.setRes( res2 );
+
+    if( m_propDialog ) m_propDialog->updtValues();
 
     m_changed = false;
 }
 
 void Potentiometer::resChanged( int res ) // Called when dial is rotated
 {
-    //qDebug() << res << m_resist;
     m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void Potentiometer::setRes( double res ) // Called when property resistance is changed
@@ -166,6 +168,7 @@ void Potentiometer::setRes( double res ) // Called when property resistance is c
     m_resist = m_value*m_unitMult;
     
     m_changed = true;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void Potentiometer::setUnit( QString un ) 
@@ -174,17 +177,7 @@ void Potentiometer::setUnit( QString un )
     m_resist = m_value*m_unitMult;
 
     m_changed = true;
-}
-
-void Potentiometer::setVal( double val )
-{
-    m_dial->setValue( val*1000/m_resist );
-    //resChanged( val );
-}
-
-double Potentiometer::val()
-{
-    return m_resist*m_dial->value()/1000;
+    if( !Simulator::self()->isRunning() ) updateStep();
 }
 
 void Potentiometer::remove()
@@ -196,13 +189,6 @@ void Potentiometer::remove()
 void Potentiometer::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     if( m_hidden ) return;
-    //p->setBrush(Qt::white);
-    //p->drawRoundedRect( QRect( 0, 0, 48, 48 ), 1, 1 );
-    //p->setBrush(Qt::darkGray);
-    //p->fillRect( QRect( 3, 3, 45, 45 ), Qt::darkGray );
-
-    
-    //p->drawRoundedRect( QRect( 8, -56, 8, 40 ), 1, 1 );
 
     Component::paint( p, option, widget );
     p->drawRect( -10.5, -4, 21, 8 );
@@ -215,5 +201,3 @@ void Potentiometer::paint( QPainter *p, const QStyleOptionGraphicsItem *option, 
 }
 
 #include "moc_potentiometer.cpp"
-
-
