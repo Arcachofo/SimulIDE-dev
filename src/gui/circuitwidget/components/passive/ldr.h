@@ -27,11 +27,11 @@ class LibraryItem;
 class MAINMODULE_EXPORT Ldr : public VarResBase
 {
     Q_OBJECT
-    Q_PROPERTY( int Min_Lux   READ minVal WRITE setMinVal DESIGNABLE true USER true )
-    Q_PROPERTY( int Max_Lux   READ maxVal WRITE setMaxVal DESIGNABLE true USER true )
-    Q_PROPERTY( int    Lux    READ getVal WRITE setVal    DESIGNABLE true USER true )
-    Q_PROPERTY( double Gamma  READ gamma  WRITE setGamma  DESIGNABLE true USER true )
-    Q_PROPERTY( int    R1     READ r1     WRITE setR1     DESIGNABLE true USER true )
+    Q_PROPERTY( double Min_Lux READ minVal WRITE setMinVal DESIGNABLE true USER true )
+    Q_PROPERTY( double Max_Lux READ maxVal WRITE setMaxVal DESIGNABLE true USER true )
+    Q_PROPERTY( double Lux     READ getVal WRITE setVal    DESIGNABLE true USER true )
+    Q_PROPERTY( double Gamma   READ gamma  WRITE setGamma  DESIGNABLE true USER true )
+    Q_PROPERTY( int    R1      READ r1     WRITE setR1     DESIGNABLE true USER true )
 
     public:
         Ldr( QObject* parent, QString type, QString id );

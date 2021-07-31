@@ -27,31 +27,37 @@
 class MAINMODULE_EXPORT VarResBase : public Component, public eResistor
 {
     Q_OBJECT
-    Q_PROPERTY( int Dial_Step READ getStep WRITE setStep DESIGNABLE true USER true )
+    Q_PROPERTY( double Dial_Step READ getStep WRITE setStep DESIGNABLE true USER true )
 
     public:
         VarResBase( QObject* parent, QString type, QString id );
         ~VarResBase();
 
-        int  maxVal()  { return m_dial->maximum(); }
-        void setMaxVal( int max ) { if( max<0 ) max=0; m_dial->setMaximum( max ); }
+        double  maxVal()  { return m_maxVal; }
+        void setMaxVal( double max );
 
-        int  minVal() { return m_dial->minimum(); }
-        void setMinVal( int min ) { if( min<0 ) min=0; m_dial->setMinimum( min ); }
+        double  minVal() { return m_minVal; }
+        void setMinVal( double min );
 
-        int  getVal();
-        void setVal( int val );
+        double  getVal() { return m_value; }
+        void setVal( double val );
 
-        int  getStep() { return m_step; }
-        void setStep( int step ) { m_step = step ; }
+        double  getStep() { return m_step; }
+        void setStep( double step ) { if( step<0 ) step=0;m_step = step ; }
 
         virtual void initialize() override;
+
+        virtual void setUnit( QString un ) override;
 
     public slots:
         void dialChanged( int val );
 
     protected:
-        int m_step;
+        void updtValue();
+
+        double m_minVal;
+        double m_maxVal;
+        double m_step;
 
         DialWidget m_dialW;
         QDial*     m_dial;

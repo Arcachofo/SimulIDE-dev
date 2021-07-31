@@ -27,11 +27,9 @@ ThermistorBase::ThermistorBase( QObject* parent, QString type, QString id )
     setShowVal( true );
 
     m_unit = "ºC";
-
     m_ptc  = false;
 
-    m_dial->setMinimum(0);
-    m_dial->setMaximum(200);
+    setMaxVal( 200 );
     setVal( 25 );
 }
 ThermistorBase::~ThermistorBase(){}

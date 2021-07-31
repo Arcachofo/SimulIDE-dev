@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "varresbase.h"
+#include "propdialog.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "pin.h"
@@ -69,14 +70,13 @@ VarResBase::VarResBase( QObject* parent, QString type, QString id )
     setValLabelPos(-16, 30, 0);
     setShowVal( true );
 
-    m_dial->setMinimum(0);
-    m_dial->setMaximum(999);
-
-    m_step = 1;
+    m_minVal = 0;
+    m_maxVal = 1000;
+    m_step = 0;
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_dial, SIGNAL(valueChanged(int)),
+    connect( m_dial, SIGNAL(sliderMoved(int)),
              this,   SLOT  (dialChanged(int)), Qt::UniqueConnection );
 }
 VarResBase::~VarResBase(){}
@@ -86,23 +86,62 @@ void VarResBase::initialize()
     m_changed = true;
 }
 
+void VarResBase::setMinVal( double min )
+{
+    if( min < 0 ) min = 0;
+    if( min > m_maxVal ) min = m_maxVal;
+    m_minVal = min;
+
+    updtValue();
+}
+
+void VarResBase::setMaxVal( double max )
+{
+    if( max < 0 ) max = 0;
+    if( max < m_minVal ) max = m_minVal;
+    m_maxVal = max;
+
+    updtValue();
+}
+
+void VarResBase::setVal( double val )
+{
+    m_value = val/m_unitMult;
+    updtValue();
+}
+
+void VarResBase::setUnit( QString un )
+{
+    Component::setUnit( un );
+    updtValue();
+}
+
 void VarResBase::dialChanged( int val )
 {
-    if( m_step > 0 ) val = round(val/m_step)*m_step;
-    Component::setValue( val/m_unitMult ); // Takes care about units multiplier
+    double value = m_minVal+val*( m_maxVal-m_minVal)/1000;
+    if( m_step > 0 ) value = round(value/m_step)*m_step;
+
+    Component::setValue( value/m_unitMult ); // Takes care about units multiplier
 
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();
+
+    if( m_propDialog ) m_propDialog->updtValues();
 }
 
-int VarResBase::getVal()
+void VarResBase::updtValue()
 {
-    return m_dial->value();
-}
+    double value = m_value*m_unitMult;
 
-void VarResBase::setVal( int val )
-{
-    m_dial->setValue( val );
+    if     ( value > m_maxVal ) value = m_maxVal;
+    else if( value < m_minVal ) value = m_minVal;
+
+    Component::setValue( value/m_unitMult ); // Takes care about units multiplier
+
+    double dialV = (m_value*m_unitMult-m_minVal)*1000/( m_maxVal-m_minVal);
+    m_dial->setValue( dialV );
+
+    if( m_propDialog ) m_propDialog->updtValues();
 }
 
 #include "moc_varresbase.cpp"

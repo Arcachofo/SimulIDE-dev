@@ -41,10 +41,7 @@ Ldr::Ldr( QObject* parent, QString type, QString id )
     m_r1    = 127410;
     m_gamma = 0.8582;
 
-    m_dial->setMinimum(1);
-
-    Component::setValue( 1 );
-    eResistor::setResSafe( m_r1 );
+    setVal( 1 );
 }
 Ldr::~Ldr(){}
 

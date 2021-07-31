@@ -38,9 +38,6 @@ Thermistor::Thermistor( QObject* parent, QString type, QString id )
 {
     m_bVal = 3455;
     m_r25  = 10000;
-
-    Component::setValue( 25 );
-    eResistor::setResSafe( m_r25 );
 }
 Thermistor::~Thermistor(){}
 

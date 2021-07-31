@@ -56,9 +56,7 @@ Strain::Strain( QObject* parent, QString type, QString id )
 
     m_unit = "N";
 
-    m_dial->setMinimum(0);
-    m_dial->setMaximum(250);
-    setVal( 0 );  // start at 0 °C
+    //setVal( 0 );  // start at 0 °C
 }
 Strain::~Strain() { }
 
