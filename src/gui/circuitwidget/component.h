@@ -144,7 +144,7 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         
         void updateLabel( Label* label, QString txt );
         
-        double getmultValue() { return m_value*m_unitMult; }
+        // double getmultValue() { return m_value*m_unitMult; }
 
         QString backGround() { return m_BackGround; }
         virtual void setBackground( QString bck ){ m_BackGround = bck; }

@@ -401,9 +401,10 @@ void Component::setValLabelPos( int x, int y, int rot )
     m_valLabel->setLabelPos();
 }
 
-void Component::setValue( double val) 
+void Component::setValue( double val )
 { 
-    if( fabs(val) < 1e-12 ) 
+    m_value = val;
+    /*if( fabs(val) < 1e-12 )
     {
         m_value = 0;
         m_mult = " ";
@@ -431,9 +432,10 @@ void Component::setValue( double val)
         m_mult = multUnits.at( index );
         if( m_mult != " " ) m_mult.prepend( " " );
         m_value = val;
-    }
+    }*/
     QString valStr = QString::number(m_value);
-    m_valLabel->setPlainText( valStr.left(5)+m_mult+m_unit );
+    //m_valLabel->setPlainText( valStr.left(5)+m_mult+m_unit );
+    m_valLabel->setPlainText( valStr+m_mult+m_unit );
 }
 
 void Component::setUnit( QString un ) 
