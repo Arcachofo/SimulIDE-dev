@@ -101,6 +101,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         QString circType() { return m_circType; }
 
+        void setBackupPath( QString path ) { m_backupPath = path; }
+
     signals:
         void keyEvent( QString key, bool pressed );
 
