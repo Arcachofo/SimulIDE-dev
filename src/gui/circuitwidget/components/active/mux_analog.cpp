@@ -69,8 +69,6 @@ MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
 MuxAnalog::~MuxAnalog()
 {
     for( eResistor* res : m_resistor ) delete res;
-    //for( ePin* pin : m_chanPin ) delete pin;
-    //for( ePin* pin : m_addrPin ) delete pin;
 }
 
 QList<propGroup_t> MuxAnalog::propGroups()
@@ -93,7 +91,6 @@ void MuxAnalog::stamp()
        eNode* node = m_chanPin[i]->getEnode();
        if( node ) node->setSwitched( true );
     }
-
     m_enablePin->changeCallBack( this );
     for( Pin* pin : m_addrPin ) pin->changeCallBack( this );
 
@@ -128,18 +125,7 @@ void MuxAnalog::runEvent()
         }
         else if( m_resistor[i]->admit() != 0 )
             m_resistor[i]->setAdmit( 0 );
-    }
-}
-
-double MuxAnalog::resist()
-{
-    return 1/m_admit;
-}
-
-void MuxAnalog::setResist( double r )
-{
-    m_admit = 1/r;
-}
+}   }
 
 void MuxAnalog::setAddrBits( int bits )
 {
@@ -185,8 +171,7 @@ void MuxAnalog::createAddrBits( int c )
         pin->setLabelText( " A"+QString::number(i) );
         pin->setLabelColor( QColor( 0, 0, 0 ) );
         m_addrPin[i] = pin;
-    }
-}
+}   }
 
 void MuxAnalog::deleteAddrBits( int d )
 {
@@ -230,8 +215,7 @@ void MuxAnalog::createResistors( int c )
         m_chanPin[i] = pin;
 
         m_resistor[i]->setAdmit( 0 );
-    }
-}
+}   }
 
 void MuxAnalog::deleteResistors( int d )
 {

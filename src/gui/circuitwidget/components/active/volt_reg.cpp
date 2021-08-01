@@ -96,9 +96,7 @@ void VoltReg::stamp()
 void VoltReg::initialize()
 {
     eResistor::setRes( 1e-6 );
-
     m_accuracy = Simulator::self()->NLaccuracy();
-
     m_lastOut = 0;
 }
 
@@ -124,11 +122,6 @@ void VoltReg::voltChanged()
     m_pin[1]->stampCurrent(-current );
 }
 
-double VoltReg::vRef()
-{
-    return m_value;
-}
-
 void VoltReg::setVRef( double vref )
 {
     Simulator::self()->pauseSim();
@@ -152,7 +145,6 @@ void VoltReg::setUnit( QString un )
 void VoltReg::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
-
     p->drawRect( m_area );
 }
 

@@ -21,9 +21,6 @@
 
 DataSpace::DataSpace()
 {
-    //McuSignal<DataSpace>* kk = new McuSignal<DataSpace>( this, &DataSpace::deleteme );
-    //m_sig.emplace_back( kk );
-    //m_sig.at(0)->call( 125 );
 }
 
 DataSpace::~DataSpace()
@@ -38,7 +35,6 @@ DataSpace::~DataSpace()
 void DataSpace::initialize()
 {
     std::fill( m_dataMem.begin(), m_dataMem.end(), 0 );
-    /// std::fill( m_sreg.begin(), m_sreg.end(), 0 );
 
     for( QString regName : m_regInfo.keys() )  // Set Registers Reset Values
     {

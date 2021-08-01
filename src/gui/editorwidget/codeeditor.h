@@ -57,7 +57,7 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         CodeEditor( QWidget* parent, OutPanelText* outPane );
         ~CodeEditor();
         
-        virtual void updateStep() override;
+        virtual void updateStep() override { if( m_state == DBG_PAUSED ) updateScreen(); }
 
         int fontSize() { return m_fontSize; }
         void setFontSize( int size );
@@ -65,10 +65,10 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         int tabSize() { return m_tabSize; }
         void setTabSize( int size );
         
-        bool showSpaces();
+        bool showSpaces() { return m_showSpaces; }
         void setShowSpaces( bool on );
         
-        bool spaceTabs();
+        bool spaceTabs() { return m_spaceTabs; }
         void setSpaceTabs( bool on );
         
         bool driveCirc() { return m_driveCirc; }
@@ -111,14 +111,14 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         void contextMenuEvent(QContextMenuEvent* event);
 
     private slots:
-        void updateLineNumberAreaWidth(int newBlockCount);
+        void updateLineNumberAreaWidth(int) { setViewportMargins( lineNumberAreaWidth(), 0, 0, 0 ); }
         void updateLineNumberArea( const QRect &, int );
         void highlightCurrentLine();
 
     private:
         int  getSintaxCoincidences(QString& fileName, QStringList& instructions );
         void addBreakPoint( int line );
-        void remBreakPoint( int line );
+        void remBreakPoint( int line ) { m_brkPoints.removeOne( line ); }
         void updateScreen();
         
         void indentSelection( bool unIndent );

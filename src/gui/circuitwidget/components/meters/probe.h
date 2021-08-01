@@ -54,9 +54,6 @@ class MAINMODULE_EXPORT Probe : public Component, public eElement
         virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
-    signals:
-        void removed( Probe* probe );
-
     private: 
         double m_voltIn;
         double m_voltTrig;

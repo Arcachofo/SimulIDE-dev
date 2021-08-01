@@ -36,9 +36,9 @@ class EditorWindow : public QWidget
 
         bool close();
         
-        void enableStepOver( bool en );
+        void enableStepOver( bool en ) { stepOverAct->setVisible( en ); }
 
-        CodeEditor* getCodeEditor();
+        CodeEditor* getCodeEditor() { return (CodeEditor*)m_docWidget->currentWidget(); }
 
     public slots:
         void loadFile(const QString &fileName);
@@ -59,18 +59,19 @@ class EditorWindow : public QWidget
         void setCompiler();
         void reload();
 
-        void cut();
-        void copy();
-        void paste();
-        void undo();
-        void redo();
+        void cut()   { getCodeEditor()->cut(); }
+        void copy()  { getCodeEditor()->copy(); }
+        void paste() { getCodeEditor()->paste(); }
+        void undo()  { getCodeEditor()->undo(); }
+        void redo()  { getCodeEditor()->redo(); }
         
         void debug();
         void step();
         void stepOver();
-        void reset();
-        void compile();
-        void upload();
+        void reset() { getCodeEditor()->reset(); }
+        void compile() { getCodeEditor()->compile(); } /// m_compiler.compile( getCodeEditor()->getFilePath() );
+
+        void upload() { getCodeEditor()->upload(); }
         void findReplaceDialog();
 
     protected:
@@ -95,7 +96,7 @@ class EditorWindow : public QWidget
         bool maybeSave();
         bool saveFile( const QString &fileName );
         
-        QString strippedName( const QString &fullFileName );
+        QString strippedName( const QString &n ){ return QFileInfo( n ).fileName(); }
         
         QGridLayout* baseWidgetLayout;
         QTabWidget*  m_docWidget;
@@ -103,7 +104,6 @@ class EditorWindow : public QWidget
         QMenu        m_fileMenu;
         OutPanelText m_outPane;
         Compiler     m_compiler;
-
         
         FindReplaceDialog* findRepDiaWidget;
         

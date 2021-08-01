@@ -102,7 +102,6 @@ void Probe::updateStep()
         setVolt( 0.0 );
         return;
     }
-
     if( m_inputPin->isConnected() )// Voltage from connected pin
     {
          setVolt( m_inputPin->getVolt() );
@@ -137,14 +136,11 @@ void Probe::updateStep()
             m_readPin =  qgraphicsitem_cast<Pin *>( it );
             setVolt( m_readPin->getVolt() );
             break;
-        }
-    }
-}
+}   }   }
 
 void Probe::setVolt( double volt )
 {
     if( m_voltIn == volt ) return;
-
     m_voltIn = volt;
 
     if( fabs(volt) < 0.01 ) volt = 0;
@@ -166,10 +162,7 @@ double Probe::getVolt()
 
 void Probe::remove()
 {
-    emit removed( this );
-    
     Simulator::self()->remFromUpdateList( this );
-    
     Component::remove();
 }
 
@@ -192,4 +185,3 @@ void Probe::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
 }
 
 #include "moc_probe.cpp"
-

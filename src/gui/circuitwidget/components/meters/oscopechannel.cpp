@@ -62,9 +62,6 @@ void OscopeChannel::initialize()
     m_time.fill(0);
 
     updateStep();
-
-    ///m_dataPlotW->m_data1Label[m_channel]->setText( "---" );
-    ///m_dataPlotW->m_data2Label[m_channel]->setText( "---" );
 }
 
 void OscopeChannel::updateValues()
@@ -104,7 +101,6 @@ void OscopeChannel::updateStep()
         m_maxVal  =-1e12;
         m_minVal  = 1e12;
     }
-
     if( m_oscope->autoSC() == m_channel )
     {
         m_oscope->setTimePos( m_channel, 0 );
@@ -114,8 +110,8 @@ void OscopeChannel::updateStep()
             m_oscope->setVoltDiv( m_channel, m_ampli/10 );
             m_oscope->setVoltPos( m_channel, -m_ampli/2 );
             m_oscope->display()->setLimits( m_channel, m_dispMax, m_dispMin );
-        }
-    } else{
+    }   }
+    else{
         m_dispMax = m_oscope->voltDiv( m_channel )*10;
         m_dispMin = 0;
         m_oscope->display()->setLimits( m_channel, m_dispMax, m_dispMin );
@@ -139,9 +135,7 @@ void OscopeChannel::updateStep()
             m_numMax  = 0;
             m_lastMax = 0;
             m_ampli   = 0;
-        }
-    }
-}
+}   }   }
 
 void OscopeChannel::voltChanged()
 {
@@ -156,11 +150,10 @@ void OscopeChannel::voltChanged()
         m_dataZero = simTime;
     }
     if( m_subSample > 0 ) // Buffer should hold enought time to display
-    {                   // Skip samples acordingly
+    {                     // Skip samples acordingly
         if( ++m_subStep > m_subSample ) m_subStep = 0;
         else return;
     }
-
     double d0 = m_ePin[0]->getVolt();
     double d1 = m_ePin[1]->getVolt();
     double data = d0+d1;
@@ -210,9 +203,8 @@ void OscopeChannel::voltChanged()
                 if( m_risEdge > 0 ) m_period = simTime-m_risEdge; // period = this_edge_time - last_edge_time
                 m_risEdge = simTime;
                 //if( m_trigger ) m_oscope->triggerEvent();
-            }
-        }
-    }
+    }   }   }
+
     else if( delta < -m_filter )         // Falling
     {
         if( m_rising && !m_falling )    // Max Found
@@ -221,8 +213,7 @@ void OscopeChannel::voltChanged()
         }
         m_falling = true;
         m_lastValue = data;
-    }
-}
+}   }
 
 void OscopeChannel::setFilter( double f )
 {
@@ -232,5 +223,4 @@ void OscopeChannel::setFilter( double f )
     m_numMax  = 0;
 
     m_filter = f;
-    //m_dataPlotW->m_display->setFilter(f);
 }

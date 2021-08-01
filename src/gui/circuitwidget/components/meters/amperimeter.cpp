@@ -53,7 +53,6 @@ void Amperimeter::updateStep()
         setUnit("A");
         m_dispValue = curr;
         Meter::updateStep();
-    }
-}
+}   }
 
 #include "moc_amperimeter.cpp"

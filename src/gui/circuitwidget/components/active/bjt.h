@@ -41,9 +41,9 @@ class MAINMODULE_EXPORT BJT : public Component, public eBJT
         
         virtual QList<propGroup_t> propGroups() override;
 
-        virtual void updateStep() override;
+        virtual void updateStep() override { update(); }
         
-        void setPnp( bool pnp );
+        void setPnp( bool pnp ) { m_PNP = pnp; update(); }
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 };

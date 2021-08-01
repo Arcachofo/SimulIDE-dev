@@ -44,8 +44,8 @@ class MAINMODULE_EXPORT MuxAnalog : public LogicComponent
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        double resist();
-        void setResist( double r );
+        double resist() { return 1/m_admit; }
+        void setResist( double r ) { m_admit = 1/r; }
 
         virtual void remove() override;
         

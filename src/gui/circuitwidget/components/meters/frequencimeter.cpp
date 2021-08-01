@@ -122,9 +122,7 @@ void Frequencimeter::updateStep()
             freq = 1e12/((double)m_totalP/(double)(m_numMax-1));
             m_totalP = 0;
             m_numMax = 0;
-        }
-    }
-
+    }   }
     if( m_freq != freq )
     {
         m_freq = freq;
@@ -139,15 +137,12 @@ void Frequencimeter::updateStep()
                 freq /= 1e3; unit = " MHz";
                 if( freq > 999 ) {
                     freq /= 1e3; unit = " GHz";
-                }
-            }
-        }
+        }   }   }
         if     ( freq < 10 )   Fdecs = 4;
         else if( freq < 100 )  Fdecs = 3;
         else if( freq < 1000 ) Fdecs = 2;
         m_display.setText(QString::number( freq, 'f', Fdecs )+unit );
-    }
-}
+}   }
 
 void Frequencimeter::voltChanged()
 {
@@ -177,8 +172,7 @@ void Frequencimeter::voltChanged()
         }
         m_falling = true;
         m_lastData = data;
-    }
-}
+}   }
 
 void Frequencimeter::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {

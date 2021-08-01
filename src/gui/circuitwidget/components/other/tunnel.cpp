@@ -42,7 +42,6 @@ LibraryItem* Tunnel::libraryItem()
 
 Tunnel::Tunnel( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
-      //, eElement( id )
 {
     setLabelPos(-64,-24 );
 
@@ -62,7 +61,7 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
 
     setLabelPos(-16,-24, 0);
 }
-Tunnel::~Tunnel() { }
+Tunnel::~Tunnel() {}
 
 QList<propGroup_t> Tunnel::propGroups()
 {
@@ -165,8 +164,7 @@ void Tunnel::removeTunnel()
         m_tunnels.remove( m_name );
         m_eNodes.remove( m_name );
         delete list;
-    }
-}
+}   }
 
 void Tunnel::remove()
 {
@@ -196,8 +194,6 @@ void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
 
     Component::paint( p, option, widget );
 
-    //p->setBrush( QColor( 255, 166, 0 ) );
-
     if( m_rotated )
     {
         QPointF points[5] =        {
@@ -208,9 +204,7 @@ void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
             QPointF( m_size+8, 5 ) };
 
         p->drawPolygon( points, 5 );
-    }
-    else
-    {
+    } else {
         QPointF points[5] =        {
             QPointF(-m_size-8,-5 ),
             QPointF(  -8,-5 ),
@@ -219,8 +213,6 @@ void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
             QPointF(-m_size-8, 5 ) };
 
         p->drawPolygon( points, 5 );
-    }
-}
+}   }
 
 #include "moc_tunnel.cpp"
-

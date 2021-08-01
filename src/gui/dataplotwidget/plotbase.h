@@ -66,13 +66,13 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         virtual void setTunnels( QStringList tunnels )=0;
 
         virtual void expand( bool e ){;}
-        void toggleExpand();
+        void toggleExpand() { expand( !m_expand ); }
 
-        QString conds();
+        QString conds() { return m_conditions; }
         virtual void setConds( QString conds ){;}
         void updateConds( QString conds );
 
-        virtual void channelChanged( int ch, QString name );
+        virtual void channelChanged( int ch, QString name ) { m_channel[ch]->m_chTunnel = name; }
 
         PlotDisplay* display() { return m_display; }
 

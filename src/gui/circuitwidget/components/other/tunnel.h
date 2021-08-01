@@ -26,7 +26,7 @@
 class eNode;
 class Pin;
 
-class MAINMODULE_EXPORT Tunnel : public Component//, public eElement
+class MAINMODULE_EXPORT Tunnel : public Component
 {
     Q_OBJECT
     Q_PROPERTY( QString  Uid     READ uid     WRITE setUid )

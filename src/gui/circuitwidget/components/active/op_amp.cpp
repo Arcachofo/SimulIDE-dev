@@ -122,9 +122,7 @@ void OpAmp::voltChanged() // Called when any pin node change volt
     {
         m_voltPos = m_pin[3]->getVolt();
         m_voltNeg = m_pin[4]->getVolt();
-    }
-    else
-    {
+    } else {
         m_voltPos = m_voltPosDef;
         m_voltNeg = m_voltNegDef;
     }
@@ -135,7 +133,6 @@ void OpAmp::voltChanged() // Called when any pin node change volt
         m_firstStep = true;
         return;
     }
-
     double out = vd * m_gain;
     if     ( out > m_voltPos ) out = m_voltPos;
     else if( out < m_voltNeg ) out = m_voltNeg;
@@ -155,8 +152,7 @@ void OpAmp::voltChanged() // Called when any pin node change volt
 
         out = m_lastOut + dOut;
         m_firstStep = false;
-    }
-    else {
+    } else {
         if( m_lastIn != vd ) // We problably are in a close loop configuration
         {
             double dIn  = fabs(m_lastIn-vd); // Input diff with last step

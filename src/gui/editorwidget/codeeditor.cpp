@@ -149,7 +149,6 @@ void CodeEditor::setFile( const QString filePath )
         delete m_debugger;
         m_debugger = NULL;
     }
-    
     m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendLine( tr(" File: ")+filePath+"\n" );
 
@@ -178,7 +177,6 @@ void CodeEditor::setFile( const QString filePath )
           || m_fileExt == "h" )
     {
         m_hlighter->readSintaxFile( sintaxPath + "cpp.sintax" );
-        
         if( m_fileExt == "ino" ) m_debugger = new InoDebugger( this, m_outPane, filePath );
     }
     else if( m_fileExt == "asm" ) // We should identify if pic or avr asm
@@ -226,8 +224,7 @@ void CodeEditor::setFile( const QString filePath )
     else if( m_fileExt == "sac" )
     {
         m_debugger = new B16AsmDebugger( this, m_outPane, filePath );
-    }
-}
+}   }
 
 int CodeEditor::getSintaxCoincidences( QString& fileName, QStringList& instructions )
 {
@@ -249,8 +246,7 @@ int CodeEditor::getSintaxCoincidences( QString& fileName, QStringList& instructi
                 coincidences++;
             
             if( coincidences > 50 ) break;
-        }
-    }
+    }   }
     return coincidences;
 }
 
@@ -263,8 +259,7 @@ void CodeEditor::setCompilerPath()
                                         tr( "Please save the Document first" ) );
         else MessageBoxNB( "CodeEditor::setCompilerPath",
                        tr( "No Compiler available for: %1 files" ).arg(m_fileExt));
-    }
-}
+}   }
 
 void CodeEditor::compile()
 {
@@ -318,9 +313,7 @@ void CodeEditor::compile()
         {
             m_debugLine = error; // Show arrow in error line
             updateScreen();
-        }
-    }
-}
+}   }   }
 
 void CodeEditor::upload()
 {
@@ -345,8 +338,6 @@ void CodeEditor::addBreakPoint( int line )
     line = m_debugger->getValidLine( line );
     if( !m_brkPoints.contains( line ) ) m_brkPoints.append( line );
 }
-
-void CodeEditor::remBreakPoint( int line ) { m_brkPoints.removeOne( line ); }
 
 bool CodeEditor::initDebbuger()
 {
@@ -383,8 +374,7 @@ bool CodeEditor::initDebbuger()
         {
             m_outPane->appendLine( "\n    "+tr("Error Loading Firmware... ")+"\n" );
             error = true;
-        }
-    }
+    }   }
     m_outPane->appendLine( "\n" );
 
     if( error ) stopDebbuger();
@@ -427,8 +417,7 @@ void CodeEditor::step( bool over )
         m_state = DBG_STEPING;
         BaseProcessor::self()->stepOne( m_debugLine );
         if( m_driveCirc ) Simulator::self()->resumeSim();
-    }
-}
+}   }
 
 void CodeEditor::stepOver()
 {
@@ -482,7 +471,6 @@ void CodeEditor::pause()
 
     m_resume = m_state;
     m_state  = DBG_PAUSED;
-    //updateScreen();
 }
 
 void CodeEditor::reset()
@@ -504,13 +492,7 @@ void CodeEditor::setDriveCirc( bool drive )
     if( m_state == DBG_PAUSED )
     {
         if( drive ) Simulator::self()->pauseSim();
-    }
-}
-
-void CodeEditor::updateStep()
-{
-    if( m_state == DBG_PAUSED ) updateScreen();
-}
+}   }
 
 void CodeEditor::updateScreen()
 {
@@ -525,11 +507,6 @@ int CodeEditor::lineNumberAreaWidth()
     int max = qMax( 1, blockCount() );
     while( max >= 10 ) { max /= 10; ++digits; }
     return  fontMetrics().height() + fontMetrics().width( QLatin1Char( '9' ) ) * digits;
-}
-
-void CodeEditor::updateLineNumberAreaWidth( int /* newBlockCount */ )
-{
-    setViewportMargins( lineNumberAreaWidth(), 0, 0, 0 );
 }
 
 void CodeEditor::updateLineNumberArea( const QRect &rect, int dy )
@@ -592,8 +569,7 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
                 m_brkAction = 0;
                 m_lNumArea->lastPos = 0;
             }
-            // Draw breakPoint icon
-            if( m_brkPoints.contains(lineNumber) )
+            if( m_brkPoints.contains(lineNumber) ) // Draw breakPoint icon
             {
                 painter.setBrush( QColor(Qt::yellow) );
                 painter.setPen( Qt::NoPen );
@@ -610,15 +586,7 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
         block = block.next();
         top = bottom;
         ++blockNumber;
-    }
-}
-
-/*void CodeEditor::focusInEvent( QFocusEvent* event)
-{
-    //QPropertyEditorWidget::self()->setObject( this );
-    //if( m_debugger ) QPropertyEditorWidget::self()->addObject( m_debugger );
-    QPlainTextEdit::focusInEvent( event );
-}*/
+}   }
 
 void CodeEditor::setFontSize( int size )
 {
@@ -641,10 +609,6 @@ void CodeEditor::setTabSize( int size )
     if( m_spaceTabs ) setSpaceTabs( true );
 }
 
-bool CodeEditor::showSpaces()
-{
-    return m_showSpaces;
-}
 void CodeEditor::setShowSpaces( bool on )
 {
     m_showSpaces = on;
@@ -660,11 +624,6 @@ void CodeEditor::setShowSpaces( bool on )
     if( m_showSpaces )
          MainWindow::self()->settings()->setValue( "Editor_show_spaces", "true" );
     else MainWindow::self()->settings()->setValue( "Editor_show_spaces", "false" );
-}
-
-bool CodeEditor::spaceTabs()
-{
-    return m_spaceTabs;
 }
 
 void CodeEditor::setSpaceTabs( bool on )
@@ -704,8 +663,8 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
         else
         {
             textCursor().movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor , m_tab.size() );
-        }
-    }else{
+    }   }
+    else{
         int tabs = 0;
         if( event->key() == Qt::Key_Return )
         {
@@ -718,14 +677,12 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
                 QString part = line.mid( n0, n );
                 if( part == m_tab ) { n0 += n; tabs += 1; }
                 else break;
-            }
-        } 
+        }   }
         QPlainTextEdit::keyPressEvent( event );
         
         if( event->key() == Qt::Key_Return )
             for( int i=0; i<tabs; i++ ) insertPlainText( m_tab );
-    }
-}
+}   }
 
 void CodeEditor::contextMenuEvent(QContextMenuEvent* event)
 {
@@ -743,71 +700,7 @@ void CodeEditor::slotProperties()
         m_propDialog = new EditorProp( this, m_debugger );
     }
     m_propDialog->show();
-
-    /*if( m_properties ) m_propertiesW->show();
-    else
-    {
-        if( m_help == "" )
-        {
-            m_help = MainWindow::self()->getHelpFile( "editor" );
-        }
-        m_propertiesW = MainWindow::self()->createPropWidget( this, &m_help );
-        if( m_debugger ) m_propertiesW->properties()->addObject( m_debugger );
-        m_propertiesW->setWindowTitle( m_fileName+m_fileExt );
-
-        QPoint p = EditorWindow::self()->mapToGlobal( QPoint(0, 0) );
-        m_propertiesW->move( p.x(), p.y() );
-
-        m_properties = true;
-    }*/
 }
-
-/*void CodeEditor::increaseSelectionIndent()
-{
-    QTextCursor curs = textCursor();
-
-    // Get the first and count of lines to indent.
-
-    int spos = curs.anchor();
-    int epos = curs.position();
-
-    if( spos > epos ) std::swap(spos, epos);
-
-    curs.setPosition( spos, QTextCursor::MoveAnchor );
-    int sblock = curs.block().blockNumber();
-
-    curs.setPosition( epos, QTextCursor::MoveAnchor );
-    int eblock = curs.block().blockNumber();
-
-    // Do the indent.
-
-    curs.setPosition( spos, QTextCursor::MoveAnchor );
-
-    curs.beginEditBlock();
-
-    for( int i = 0; i <= ( eblock-sblock); ++i )
-    {
-        curs.movePosition( QTextCursor::StartOfBlock, QTextCursor::MoveAnchor );
-
-        curs.insertText( m_tab );
-
-        curs.movePosition( QTextCursor::NextBlock, QTextCursor::MoveAnchor );
-    }
-    curs.endEditBlock();
-
-    // Set our cursor's selection to span all of the involved lines.
-
-    curs.setPosition(spos, QTextCursor::MoveAnchor);
-    curs.movePosition(QTextCursor::StartOfBlock, QTextCursor::MoveAnchor );
-
-    while( curs.block().blockNumber() < eblock )
-    {
-        curs.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor );
-    }
-    curs.movePosition( QTextCursor::EndOfBlock, QTextCursor::KeepAnchor );
-
-    setTextCursor( curs );
-}*/
 
 void CodeEditor::indentSelection( bool unIndent )
 {
@@ -868,7 +761,6 @@ void CodeEditor::indentSelection( bool unIndent )
     cur.setPosition( p, QTextCursor::KeepAnchor );
 
     setTextCursor(cur);
-
     cur.endEditBlock();
 }
 

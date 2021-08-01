@@ -76,21 +76,11 @@ void PlotBase::setTimeDiv( uint64_t td )
     m_display->setTimeDiv( td );
 }
 
-void PlotBase::toggleExpand()
-{
-    expand( !m_expand );
-}
-
 QStringList PlotBase::tunnels()
 {
     QStringList list;
     for( int i=0; i<m_numChannels; ++i ) list << m_channel[i]->m_chTunnel;
     return list;
-}
-
-QString PlotBase::conds()
-{
-    return m_conditions;
 }
 
 void PlotBase::updateConds(  QString conds )
@@ -140,11 +130,6 @@ void PlotBase::conditonMet( int ch, cond_t cond )
     }*/
 }
 
-void PlotBase::channelChanged( int ch, QString name )
-{
-    m_channel[ch]->m_chTunnel = name;
-}
-
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
@@ -158,10 +143,6 @@ void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     pen.setWidth( 0 );
     pen.setColor( Qt::white );
     p->setPen(pen);
-    
-    //p->drawRoundedRect( QRectF( -80-4, -(m_screenSizeY+20)/2-4, m_screenSizeX+m_extraSize+4, m_screenSizeY+20+4 ), 3, 3 );
 }
 
 #include "moc_plotbase.cpp"
-
-

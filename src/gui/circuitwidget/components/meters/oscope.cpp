@@ -204,8 +204,7 @@ void Oscope::setTrigger( int ch )
     {
         if( ch == i ) m_channel[i]->m_trigger = true;
         else          m_channel[i]->m_trigger = false;
-    }
-}
+}   }
 
 void Oscope::setTunnels( QStringList tunnels )
 {
@@ -214,8 +213,7 @@ void Oscope::setTunnels( QStringList tunnels )
         if( i >= m_numChannels ) break;
         m_channel[i]->m_chTunnel = tunnels.at(i);
         m_dataWidget->setTunnel( i, tunnels.at(i) );
-    }
-}
+}   }
 
 void Oscope::setAutoSC( int ch )
 {
@@ -242,8 +240,7 @@ void Oscope::setHideCh( QStringList hc )
         if( i == hc.size() ) break;
         bool hide = (hc.at(i) == "true")? true:false;
         hideChannel( i, hide );
-    }
-}
+}   }
 
 void Oscope::hideChannel( int ch, bool hide )
 {

@@ -34,23 +34,23 @@ class MAINMODULE_EXPORT TextComponent : public Component
         int  margin();
         void setMargin( int margin );
         
-        int  border();
-        void setBorder( int border );
+        int  border() { return m_border; }
+        void setBorder( int border ) { m_border = border; }
         
-        int  fontSize();
+        int  fontSize() { return m_fontSize; }
         void setFontSize( int size );
         
-        bool fixedW();
+        bool fixedW() { return m_fixedW; }
         void setFixedW( bool fixedW );
 
-        QString getText();
-        void    setText( QString text );
+        QString getText() { return m_text->toPlainText(); }
+        void    setText( QString text ) { m_text->document()->setPlainText( text ); }
         
-        QString getFont();
+        QString getFont() { return m_font; }
         void    setFont( QString font );
 
-        qreal opac();
-        void setOpac( qreal op );
+        qreal opac() { return m_opac; }
+        void setOpac( qreal op ) { m_opac = op; update(); }
 
         bool eventFilter( QObject* object, QEvent* event );
 

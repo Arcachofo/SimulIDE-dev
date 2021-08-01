@@ -19,7 +19,6 @@
 
 #include "line.h"
 
-
 Component* Line::construct( QObject* parent, QString type, QString id )
 { return new Line( parent, type, id ); }
 
@@ -58,7 +57,6 @@ void Line::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *
     if ( isSelected() ) pen.setColor( Qt::darkGray);
 
     p->setPen( pen );
-    
     p->drawLine( -m_hSize/2, m_vSize/2, m_hSize/2, -m_vSize/2 );
 }
 

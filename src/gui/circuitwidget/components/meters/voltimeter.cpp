@@ -21,7 +21,6 @@
 #include "simulator.h"
 #include "connector.h"
 
-
 Component* Voltimeter::construct( QObject* parent, QString type, QString id )
 { return new Voltimeter( parent, type, id ); }
 
@@ -53,7 +52,6 @@ void Voltimeter::updateStep()
         setUnit("V");
         m_dispValue = volt;
         Meter::updateStep();
-    }
-}
+}   }
 
 #include "moc_voltimeter.cpp"

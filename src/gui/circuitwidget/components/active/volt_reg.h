@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
         virtual void initialize() override;
         virtual void voltChanged() override;
 
-        double vRef();
+        double vRef() { return m_value; }
         void setVRef( double vref );
         virtual void setUnit( QString un ) override;
 

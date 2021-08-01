@@ -93,7 +93,6 @@ void Diode::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
    {
        p->drawLine( 7,-6, 4,-6 );
        p->drawLine( 7, 6, 10, 6 );
-   }
-}
+}  }
 
 #include "moc_diode.cpp"

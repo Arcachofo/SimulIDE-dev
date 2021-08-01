@@ -108,7 +108,6 @@ void TextComponent::updateGeometry(int, int, int)
     m_text->document()->setTextWidth(-1);
     
     int margin = m_margin;
-    
     m_area = QRect( -margin, -margin, m_text->boundingRect().width()+margin*2, m_text->boundingRect().height()+margin*2 );
     
     Circuit::self()->update();
@@ -123,8 +122,6 @@ void TextComponent::setMargin( int margin )
     updateGeometry( 0, 0, 0 );
 }
 
-bool TextComponent::fixedW() { return m_fixedW; }
-
 void TextComponent::setFixedW( bool fixedW ) 
 { 
     m_fixedW = fixedW;
@@ -133,11 +130,6 @@ void TextComponent::setFixedW( bool fixedW )
     font.setFixedPitch( fixedW );
     m_text->setFont( font );
     updateGeometry( 0, 0, 0 );
-}
-
-QString TextComponent::getFont()
-{
-    return m_font;
 }
 
 void TextComponent::setFont( QString font )
@@ -151,11 +143,6 @@ void TextComponent::setFont( QString font )
     updateGeometry( 0, 0, 0 );
 }
 
-int TextComponent::fontSize()
-{
-    return m_fontSize;
-}
-
 void TextComponent::setFontSize( int size )
 {
     if( size < 1 ) return;
@@ -167,23 +154,6 @@ void TextComponent::setFontSize( int size )
     updateGeometry( 0, 0, 0 );
 }
 
-int  TextComponent::border() { return m_border; }
-void TextComponent::setBorder( int border ) { m_border = border; }
-
-QString TextComponent::getText() { return m_text->toPlainText(); }
-void    TextComponent::setText( QString text ) { m_text->document()->setPlainText( text ); }
-
-qreal TextComponent::opac()
-{
-    return m_opac;
-}
-
-void TextComponent::setOpac( qreal op )
-{
-    m_opac = op;
-    update();
-}
-
 void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
 {
     if( event->button() == Qt::LeftButton )
@@ -192,17 +162,13 @@ void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
         m_text->setCursor( Qt::IBeamCursor );
         m_text->setFocus();
         setSelected( false );
-    }
-}
+}   }
 
 bool TextComponent::eventFilter( QObject* object, QEvent* event )
 {
     if( event->type() == QEvent::FocusIn )
     {
-        if( object == m_text)
-        {
-            Circuit::self()->deselectAll();
-        }
+        if( object == m_text) Circuit::self()->deselectAll();
     }
     return false;
 }

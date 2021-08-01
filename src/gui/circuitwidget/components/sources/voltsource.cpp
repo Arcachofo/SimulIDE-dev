@@ -61,7 +61,7 @@ VoltSource::~VoltSource() {}
 QList<propGroup_t> VoltSource::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Value", tr("Voltage"),"main"} );
+    mainGroup.propList.append( {"Value", tr("Max. Voltage"),"main"} );
     return {mainGroup};
 }
 

@@ -18,7 +18,6 @@
  ***************************************************************************/
 
 #include "mosfet.h"
-//#include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"
@@ -92,18 +91,6 @@ void Mosfet::updateStep()
     if( Circuit::self()->animate() ) update();
 }
 
-void Mosfet::setPchannel( bool pc )
-{ 
-    m_Pchannel = pc;
-    update();
-}
-
-void Mosfet::setDepletion( bool dep )
-{
-    m_depletion = dep;
-    update();
-}
-
 void Mosfet::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
@@ -131,9 +118,7 @@ void Mosfet::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
          QPointF( 3,-2 ),
          QPointF( 3, 2 ) };
          p->drawPolygon(points, 3);
-    }
-    else
-    {
+    } else {
         QPointF points[3] = {
         QPointF( 1, 0 ),
         QPointF( 5,-2 ),
@@ -145,13 +130,11 @@ void Mosfet::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
         QPen pen(Qt::black, 2.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
         p->setPen( pen );
         p->drawLine( 0,-9, 0, 9 );
-    }
-    else
-    {
+    } else {
         p->drawLine( 0,-9, 0, -5 );
         p->drawLine( 0,-2, 0, 2 );
         p->drawLine( 0, 5, 0, 9 );
-    }
-}
+}   }
+
 
 #include "moc_mosfet.cpp"

@@ -236,7 +236,6 @@ void LAnalizer::setTunnels( QStringList tunnels )
         if( i >= m_numChannels ) break;
         m_channel[i]->m_chTunnel = tunnels.at(i);
         m_dataWidget->setTunnel( i, tunnels.at(i) );
-    }
-}
+}   }
 
 #include "moc_logicanalizer.cpp"

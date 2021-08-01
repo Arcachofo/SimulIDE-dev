@@ -458,16 +458,6 @@ void EditorWindow::createActions()
     connect(debugAct, SIGNAL(triggered()), this, SLOT(debug()), Qt::UniqueConnection);
 }
 
-void EditorWindow::enableStepOver( bool en )
-{
-    stepOverAct->setVisible( en );
-}
-
-CodeEditor* EditorWindow::getCodeEditor()
-{
-    return (CodeEditor*)m_docWidget->currentWidget();
-}
-
 void EditorWindow::closeTab( int index )
 {
     m_docWidget->setCurrentIndex( index );
@@ -491,12 +481,6 @@ void EditorWindow::closeTab( int index )
     else               m_docWidget->setCurrentIndex( index );
 }
 
-void EditorWindow::cut()     { getCodeEditor()->cut(); }
-void EditorWindow::copy()    { getCodeEditor()->copy(); }
-void EditorWindow::paste()   { getCodeEditor()->paste(); }
-void EditorWindow::undo()    { getCodeEditor()->undo(); }
-void EditorWindow::redo()    { getCodeEditor()->redo(); }
-
 void EditorWindow::debug()    
 { 
     CodeEditor* ce = getCodeEditor();
@@ -513,8 +497,7 @@ void EditorWindow::debug()
         pauseAct->setEnabled( false );
 
         Simulator::self()->addToUpdateList( &m_outPane );
-    }
-}
+}   }
 
 void EditorWindow::run()
 { 
@@ -552,10 +535,6 @@ void EditorWindow::pause()
     resetAct->setEnabled( true );
     pauseAct->setEnabled( false );
 }
-void EditorWindow::reset()   
-{ 
-    getCodeEditor()->reset();
-}
 
 void EditorWindow::stop()    
 { 
@@ -564,17 +543,6 @@ void EditorWindow::stop()
     m_editorToolBar->setVisible( true);
 
     Simulator::self()->remFromUpdateList( &m_outPane );
-}
-
-void EditorWindow::compile() 
-{ 
-    getCodeEditor()->compile();
-    /// m_compiler.compile( getCodeEditor()->getFilePath() );
-}
-
-void EditorWindow::upload()  
-{ 
-    getCodeEditor()->upload();
 }
 
 void EditorWindow::findReplaceDialog() 
@@ -660,11 +628,6 @@ void EditorWindow::writeSettings()
     settings->setValue( "geometry", saveGeometry() );
     settings->setValue( "docWidget/geometry", m_docWidget->saveGeometry() );
     settings->setValue( "lastDir", m_lastDir );
-}
-
-QString EditorWindow::strippedName( const QString &fullFileName )
-{
-    return QFileInfo( fullFileName ).fileName();
 }
 
 #include  "moc_editorwindow.cpp"

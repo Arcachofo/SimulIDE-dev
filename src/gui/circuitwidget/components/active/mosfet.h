@@ -46,8 +46,8 @@ class MAINMODULE_EXPORT Mosfet : public Component, public eMosfet
 
         virtual void updateStep() override;
         
-        void setPchannel( bool pc );
-        void setDepletion( bool dep );
+        void setPchannel( bool pc ) { m_Pchannel = pc; update(); }
+        void setDepletion( bool dep ) { m_depletion = dep; update(); }
         
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 

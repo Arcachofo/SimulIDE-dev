@@ -26,8 +26,6 @@ LaChannel::LaChannel( LAnalizer* la, QString id )
          : DataChannel( la, id )
 {
     m_analizer = la;
-
-    //m_cond = C_NONE;
     m_lastCond = C_NONE;
 }
 LaChannel::~LaChannel()  { }
@@ -83,8 +81,7 @@ void LaChannel::voltChanged()
         {
             m_analizer->conditonMet( m_channel, C_HIGH );
             m_lastCond = C_HIGH;
-        }
-    }
+    }   }
     else                                // Low
     {
         if( m_rising  )    // Falling Edge
@@ -98,7 +95,5 @@ void LaChannel::voltChanged()
         {
             m_analizer->conditonMet( m_channel, C_LOW );
             m_lastCond = C_LOW;
-        }
-    }
-}
+}   }   }
 
