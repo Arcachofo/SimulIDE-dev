@@ -68,7 +68,7 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     m_output = new IoPin(   0, QPoint( 16+8, 0), id+"-output",   2, this, source );
     m_pin[2] = m_output;
 
-    m_pin[3] = new Pin(  90, QPoint(0,-16), id+"-powerPos", 3, this );
+    m_pin[3] = new Pin( 90, QPoint(0,-16), id+"-powerPos", 3, this );
     m_pin[3]->setLabelText( "+" );
     m_pin[3]->setLabelColor( QColor( 0, 0, 0 ) );
     m_pin[4] = new Pin( 270, QPoint(0, 16), id+"-powerNeg", 4, this );
@@ -188,6 +188,7 @@ void OpAmp::setPowerPins( bool set )
 
 void OpAmp::setSwitchPins( bool s )
 {
+    m_switchPins = s;
     int angleP = s ? 270 : 90;
     int angleN = s ? 90  : 270;
     qreal yP   = s ?  16 : -16;
