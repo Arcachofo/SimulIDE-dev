@@ -47,9 +47,7 @@ DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
 }
 
 void DataWidget::on_expandButton_clicked()
-{
-    m_oscope->toggleExpand();
-}
+{ m_oscope->toggleExpand(); }
 
 void DataWidget::setColor( int ch, QColor c )
 {
@@ -65,13 +63,10 @@ void DataWidget::setData( int ch, QString freq )
     case 1: freq1->setText( freq ); break;
     case 2: freq2->setText( freq ); break;
     case 3: freq3->setText( freq );
-    }
-}
+}   }
 
 void DataWidget::setTunnel( int ch, QString name )
-{
-    m_chNames.at( ch )->setText( name );
-}
+{ m_chNames.at( ch )->setText( name ); }
 
 void DataWidget::on_channel0_editingFinished()
 { m_oscope->channelChanged( 0 , channel0->text() ); }

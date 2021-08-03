@@ -37,7 +37,6 @@ void MemTable::updateTable( QVector<int>* data )
 {
     if( ++m_updtCount >= 10 ) m_updtCount = 0;
     else                      return;
-
     setData( data );
 }
 
@@ -137,8 +136,8 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
         {
             QChar cv = item->text().toUtf8().at(0);
             val = cv.cell() | (cv.row()<<8);
-        }
-    }
+    }   }
+
     else val = item->text().toInt( &ok, 0 );
 
     int address = item->row()*16+col;

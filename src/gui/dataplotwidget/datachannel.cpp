@@ -33,10 +33,7 @@ DataChannel::DataChannel( PlotBase* plotBase, QString id )
     m_trigIndex = 0;
     m_pauseOnCond = false;
 }
-
-DataChannel::~DataChannel()
-{
-}
+DataChannel::~DataChannel(){}
 
 void DataChannel::stamp()    // Called at Simulation Start
 {

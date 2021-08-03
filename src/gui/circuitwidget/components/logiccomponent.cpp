@@ -67,10 +67,7 @@ void LogicComponent::updateStep()
 }
 
 void LogicComponent::initialize()
-{
-    IoComponent::initState();
-    eClockedDevice::initialize();
-}
+{ IoComponent::initState(); eClockedDevice::initialize(); }
 
 void LogicComponent::stamp()
 {
@@ -85,15 +82,9 @@ void LogicComponent::remove()
     IoComponent::remove();
 }
 
-void LogicComponent::createOePin( QString d, QString id )
-{
-    setOePin( createPin( d, id ) );
-}
-
 void LogicComponent::setOePin( IoPin* pin )
 {
-    pin->setInverted( true );
-    m_oePin = pin;
+    pin->setInverted( true ); m_oePin = pin;
 }
 
 bool LogicComponent::outputEnabled()

@@ -134,18 +134,7 @@ void SerialPort::initialize()
 
         connect( m_processor, SIGNAL( uartDataOut( int, int )),
                         this, SLOT(   slotWriteData( int, int )), Qt::UniqueConnection );
-    }
-}
-
-void SerialPort::updateStep()
-{
-    update();
-}
-
-void SerialPort::slotAutoOpen()
-{
-    if( m_autoOpen ) open();
-}
+}   }
 
 void SerialPort::open()
 {
@@ -203,8 +192,7 @@ void SerialPort::slotWriteData( int uart, int value )
         m_serial->write( ba );
         m_active = !m_active;
         update();
-    }
-}
+}   }
 
 void SerialPort::slotClose()
 {
@@ -255,5 +243,3 @@ void SerialPort::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWi
 }
 
 #include "moc_serialport.cpp"
-
-

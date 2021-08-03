@@ -128,38 +128,6 @@ void RelayBase::remove()
     MechContact::remove();
 }
 
-double RelayBase::rCoil() const
-{ return m_resistor->res(); }
-
-void RelayBase::setRCoil( double res )
-{
-    if( res > 0.0 ) m_resistor->setResSafe(res);
-}
-
-double RelayBase::iTrig() const { return m_trigCurrent; }
-
-void RelayBase::setITrig( double current )
-{
-    if( current > 0.0 ) m_trigCurrent = current;
-}
-
-double RelayBase::iRel() const
-{
-    return m_relCurrent;
-}
-
-void RelayBase::setIRel( double current )
-{
-    m_relCurrent = current;
-}
-
-double RelayBase::induc() { return m_inductor->ind(); }
-
-void RelayBase::setInduc( double i )
-{
-    m_inductor->setInd( i );
-}
-
 void RelayBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

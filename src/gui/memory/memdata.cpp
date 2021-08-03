@@ -38,8 +38,7 @@ MemData::~MemData()
     {
         m_memTable->setParent( NULL );
         m_memTable->deleteLater();
-    }
-}
+    }   }
 
 void MemData::showTable( int dataSize, int wordBytes )
 {
@@ -103,15 +102,12 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
             {
                 qDebug() << "\nMemData::loadData: Data doesn't fit in Memory"<<ramEnd<<"\n";
                 break;
-            }
-        }
-    }
+    }   }   }
     else                                 // Binary Format
     {
         int bytes = (bits+7)/8;
 
         QByteArray ba = fileToByteArray( fileName, "MemData::loadData" );
-
         int memSize = ba.size()/bytes;
 
         if( resize )
@@ -119,7 +115,6 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
             ramEnd = memSize-1;
             toData->resize( memSize );
         }
-
         for( int i=0; i<memSize; i++ )
         {
             if( i > ramEnd )
@@ -135,8 +130,7 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
                 data += val;
             }
             toData->replace( i, data );
-        }
-    }
+    }   }
     Simulator::self()->resumeSim();
 }
 
@@ -178,11 +172,9 @@ void MemData::saveData( QVector<int>* data, int bits )
         else
         {
             QTextStream toFile( &outFile );
-            //toFile.setCodec("UTF-8");
             toFile << output;
             outFile.close();
-        }
-    }
+    }   }
     else                          // Binary Format
     {
         if( !outFile.open( QFile::WriteOnly ) )
@@ -199,13 +191,9 @@ void MemData::saveData( QVector<int>* data, int bits )
                     char byte = val & 0xFF;
                     val >>= 8;
                     outFile.write( &byte, 1 );
-                    //qDebug()<<"MemData::saveData data"<< i << byte;
-                }
-                //i++;
-            }
+            }   }
             outFile.close();
-            //qDebug()<<"MemData::saveData bits"<< bits << bytes <<i;
-        }
-    }
+    }   }
+
     Simulator::self()->resumeSim();
 }

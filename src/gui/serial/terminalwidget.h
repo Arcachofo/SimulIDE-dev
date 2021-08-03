@@ -58,9 +58,9 @@ class MAINMODULE_EXPORT TerminalWidget : public QWidget
         void onValueChanged();
         void valueButtonClicked();
         void ascciButtonClicked();
-        void addCRClicked();
-        void clearInClicked();
-        void clearOutClicked();
+        void addCRClicked() { m_addCR = m_addCrButton.isChecked(); }
+        void clearInClicked() { m_uartInPanel.clear(); }
+        void clearOutClicked() {  m_uartOutPanel.clear(); }
 
         void uartIn( int uart, int value );
         void uartOut( int uart, int value );

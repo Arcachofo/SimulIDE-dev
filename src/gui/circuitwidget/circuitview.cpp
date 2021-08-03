@@ -147,7 +147,6 @@ void CircuitView::clear()
     m_circuit = new Circuit( -1600, -1200, 3200, 2400, this );
     setScene( m_circuit );
     centerOn( 900, 600 );
-    //setCircTime( 0 );
 }
 
 void CircuitView::wheelEvent( QWheelEvent* event )

@@ -39,7 +39,7 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         PlotDisplay* display() { return plotDisplay; }
         QVBoxLayout* getDispLayout() { return dispLayout; }
 
-        void setTrigger( int ch );
+        void setTrigger( int ch ) { triggerBox->setCurrentIndex( ch ); }
 
         void updateTimeDivBox( uint64_t timeDiv);
         void updateTimePosBox( int64_t timePos );
@@ -57,14 +57,14 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         void on_triggerBox_currentIndexChanged( int index );
 
         void on_condEdit_editingFinished();
-        void setConds( QString conds );
+        void setConds( QString conds ) { condEdit->setText( conds ); }
 
     protected:
         void mousePressEvent( QMouseEvent* event );
         void mouseMoveEvent( QMouseEvent* event );
-        void mouseReleaseEvent( QMouseEvent* event );
+        void mouseReleaseEvent( QMouseEvent* event ) { setCursor( Qt::ArrowCursor ); }
         void closeEvent( QCloseEvent* event );
-        void resizeEvent( QResizeEvent* event );
+        void resizeEvent( QResizeEvent* ) { plotDisplay->updateValues(); }
 
         int m_timeDivDialPos;
         int m_timePosDialPos;

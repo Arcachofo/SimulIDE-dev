@@ -310,14 +310,10 @@ void IoComponent::initPin( IoPin* pin )
 }
 
 void IoComponent::setNumInps( uint pins, QString label, int bit0, bool number )
-{
-    setNumPins( &m_inPin, pins, label, bit0, false, number );
-}
+{ setNumPins( &m_inPin, pins, label, bit0, false, number ); }
 
 void IoComponent::setNumOuts( uint pins, QString label, int bit0, bool number )
-{
-    setNumPins( &m_outPin, pins, label, bit0, true, number );
-}
+{ setNumPins( &m_outPin, pins, label, bit0, true, number ); }
 
 void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
                               , QString label, int bit0, bool out, bool number )

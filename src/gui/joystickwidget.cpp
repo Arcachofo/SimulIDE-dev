@@ -43,14 +43,6 @@ void JoystickWidget::setupWidget()
     updateOutputValues();
 }
 
-int JoystickWidget::getXValue() {
-    return m_xValue;
-}
-
-int JoystickWidget::getYValue() {
-    return m_yValue;
-}
-
 void JoystickWidget::updateOutputValues() {
     m_xValue = m_movingOffset.x() * 1000 / width();
     m_yValue = m_movingOffset.y() * 1000 / height();
@@ -58,36 +50,36 @@ void JoystickWidget::updateOutputValues() {
     emit valueChanged(m_xValue, m_yValue);
 }
 
-void JoystickWidget::mousePressEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton) {
+void JoystickWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
         m_grabCenter = centerEllipse().contains(event->pos());
-    }
-    else {
-        QWidget::mousePressEvent(event);
-    }
+    else QWidget::mousePressEvent(event);
 }
  
-void JoystickWidget::mouseMoveEvent(QMouseEvent *event) {
-    if (m_grabCenter) {
+void JoystickWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    if (m_grabCenter)
+    {
         QLineF limitLine = QLineF(center(), event->pos());
         int maxDistance = width() / 2;
-        if (limitLine.length() > maxDistance){
-            limitLine.setLength(maxDistance);
-        }
+        if (limitLine.length() > maxDistance) limitLine.setLength(maxDistance);
+
         m_movingOffset = limitLine.p2();
         update();
         updateOutputValues();
-    }
-}       
+}   }
 
-void JoystickWidget::mouseReleaseEvent(QMouseEvent *event) {
+void JoystickWidget::mouseReleaseEvent(QMouseEvent *event)
+{
     m_grabCenter = false;
     m_movingOffset = center();
     update();
     updateOutputValues();
 }
 
-void JoystickWidget::paintEvent(QPaintEvent *) {
+void JoystickWidget::paintEvent(QPaintEvent *)
+{
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     
@@ -99,17 +91,17 @@ void JoystickWidget::paintEvent(QPaintEvent *) {
     painter.drawEllipse(centerEllipse());
 }
 
-QRectF JoystickWidget::centerEllipse(){
+QRectF JoystickWidget::centerEllipse()
+{
     int radius = width() * STICK_PERCENTAGE_SIZE / 2;
     QRectF rect = QRectF(-radius, -radius, 2*radius, 2*radius);
-    if (m_grabCenter) {
-        return rect.translated(m_movingOffset);
-    }
-    
+
+    if (m_grabCenter) return rect.translated(m_movingOffset);
     return rect.translated(center());
 }
 
-QPointF JoystickWidget::center() {
+QPointF JoystickWidget::center()
+{
     return QPointF(width()/2, height()/2);
 }
 

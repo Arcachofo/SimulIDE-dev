@@ -36,7 +36,6 @@ LibraryItem* RelaySPST::libraryItem()
 RelaySPST::RelaySPST( QObject* parent, QString type, QString id )
          : RelayBase( parent, type, id )
 {
-    //m_area = QRectF( -10, -26, 20, 36 );
 }
 RelaySPST::~RelaySPST(){}
 

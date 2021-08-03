@@ -29,9 +29,7 @@ PushBase::PushBase( QObject* parent, QString type, QString id )
     connect( m_button, SIGNAL( released() ),
                  this, SLOT  ( onbuttonReleased() ), Qt::UniqueConnection);
 }
-PushBase::~PushBase()
-{
-}
+PushBase::~PushBase(){}
 
 void PushBase::onbuttonPressed()
 {
@@ -57,7 +55,6 @@ void PushBase::keyEvent( QString key, bool pressed )
     {
         if( pressed ) onbuttonPressed();
         else          onbuttonReleased();
-    }
-}
+}   }
 
 #include "moc_push_base.cpp"

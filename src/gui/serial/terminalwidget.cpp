@@ -118,11 +118,7 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
     m_sendLayout.addWidget( &m_ascciButton );
     m_sendLayout.addWidget( &m_valueButton );
     m_verticalLayout.addLayout( &m_sendLayout );
-    
-    /*QFrame* myFrame = new QFrame();
-    myFrame->setFrameShape(QFrame::HLine);
-    m_verticalLayout.addWidget( myFrame );*/
-    
+
     QHBoxLayout* textLabelsLayoutI = new QHBoxLayout();
     QLabel* sentLabel = new QLabel(this);
     sentLabel->setText(tr("Received From Micro:"));
@@ -235,10 +231,6 @@ void TerminalWidget::setMcuId( QString mcu )
     else setWindowTitle( tr("Unknown Mcu") );
 }
 
-/*void TerminalWidget::initialize()
-{
-}*/
-
 void TerminalWidget::closeEvent( QCloseEvent* event )
 {
     Circuit::self()->removeComp( m_serComp );
@@ -274,21 +266,6 @@ void TerminalWidget::ascciButtonClicked()
     m_valueButton.setChecked( !m_printASCII );
 }
 
-void TerminalWidget::addCRClicked()
-{
-    m_addCR = m_addCrButton.isChecked();
-}
-
-void TerminalWidget::clearInClicked()
-{
-    m_uartInPanel.clear();
-}
-
-void TerminalWidget::clearOutClicked()
-{
-    m_uartOutPanel.clear();
-}
-
 void TerminalWidget::uartChanged( int uart )
 {
     m_uart = uart-1;
@@ -298,14 +275,12 @@ void TerminalWidget::uartChanged( int uart )
 void TerminalWidget::uartIn( int uart, int value ) // Receive one byte on Uart
 {
     if( uart != m_uart ) return;
-
     printIn( value );
 }
 
 void TerminalWidget::uartOut( int uart, int value ) // Send value to OutPanelText
 {
     if( uart != m_uart ) return;
-
     printOut( value );
 }
 

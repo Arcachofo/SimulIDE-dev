@@ -45,16 +45,16 @@ class MAINMODULE_EXPORT Shape : public Component
 
         virtual QList<propGroup_t> propGroups() override;
         
-        int hSize();
+        int hSize() { return m_hSize; }
         void setHSize( int size );
         
-        int vSize();
+        int vSize() { return m_vSize; }
         void setVSize( int size );
         
-        int border();
+        int border() { return m_border; }
         void setBorder( int border );
         
-        QColor color();
+        QColor color() { return m_color; }
         void setColor( QColor color );
         
 

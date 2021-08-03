@@ -42,9 +42,7 @@ DataLaWidget::DataLaWidget( QWidget* parent, PlotBase* pb )
 }
 
 void DataLaWidget::on_expandButton_clicked()
-{
-    m_plotBase->toggleExpand();
-}
+{ m_plotBase->toggleExpand(); }
 
 void DataLaWidget::setColor( int ch, QColor c )
 {
@@ -53,9 +51,7 @@ void DataLaWidget::setColor( int ch, QColor c )
 }
 
 void DataLaWidget::setTunnel( int ch, QString name )
-{
-    m_chNames.at( ch )->setText( name );
-}
+{ m_chNames.at( ch )->setText( name ); }
 
 void DataLaWidget::on_channel0_editingFinished()
 { m_plotBase->channelChanged( 0 , channel0->text() ); }

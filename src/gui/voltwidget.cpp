@@ -24,7 +24,6 @@
 VoltWidget::VoltWidget()
 {
     setupWidget();
-    
     setFixedSize( 60, 90 );
 }
 VoltWidget::~VoltWidget() {}

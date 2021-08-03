@@ -41,9 +41,9 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
         void LoadCompSetAt( QDir compSetDir );
         void loadXml( const QString &setFile );
 
-        QString getXmlFile( QString compName );
+        QString getXmlFile( QString compName ) { return m_xmlFileList[ compName ]; }
 
-        void mouseReleaseEvent(QMouseEvent*);
+        void mouseReleaseEvent( QMouseEvent* ) { setCursor( Qt::OpenHandCursor ); }
 
         void search( QString filter );
 

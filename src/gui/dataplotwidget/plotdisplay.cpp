@@ -154,8 +154,7 @@ void PlotDisplay::drawBackground( QPainter* p )
                 p->drawLine( QPointF(i, y-m), QPointF(i, y+m) ); // Horizontal Center Marks
         }
         p->drawLine( m_hCenter, m_ceroY, m_hCenter, m_endY );    //Vertical Center line
-    }
-}
+}   }
 
 void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 {
@@ -277,15 +276,13 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                             p.drawLine( Pm, P2 );
                         }
                         lastX = x1;
-                    }
-                }
+                }   }
                 if( time <= timeStart ) break;
             }
             x2 = x1; y2 = y1;
             //p2Volt = p1Volt;
             if( --pos < 0 ) pos += bufferSize;
-        }
-    }
+    }   }
     // Draw Rects to crop data plots
     p.fillRect( 0,                   0, m_marginX-1, height(), QColor( 10, 15, 50 ) );
     p.fillRect( m_sizeX+m_marginX+1, 0, m_marginX-1, height(), QColor( 10, 15, 50 ) );
@@ -348,9 +345,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                 int y = cursorY-22-10*(3-i);
                 p.drawText( cursorX-62, y, 60, 12, Qt::AlignRight, QString::number( val,'f', decs) );
                 p.drawText( cursorX-1,  y, 60, 12, Qt::AlignLeft, unit+"V" );
-            }
-        }
-    }
+    }   }   }
     if( drawCursor )  // CURSOR and cursor Time
     {
         QPen pen1( m_scaleColor[2], 1, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin );

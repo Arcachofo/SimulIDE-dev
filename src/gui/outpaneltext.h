@@ -37,7 +37,7 @@ class MAINMODULE_EXPORT OutPanelText : public QPlainTextEdit, public Updatable
 
         virtual void updateStep() override;
 
-        void appendText( const QString text );
+        void appendText( const QString text ) { m_textBuffer.append( text ); }
         void appendLine( const QString text );
 
     private:
@@ -66,14 +66,6 @@ class OutHighlighter : public QSyntaxHighlighter
             QTextCharFormat format;
         };
         QVector<HighlightingRule> highlightingRules;
-
-        QTextCharFormat errorFormat;
-        QTextCharFormat fileFormat;
-        QTextCharFormat successFormat;
-        QTextCharFormat sentFormat;
-        QTextCharFormat warningFormat;
-        QTextCharFormat numberFormat;
-        QTextCharFormat quotationFormat;
 };
 
 #endif

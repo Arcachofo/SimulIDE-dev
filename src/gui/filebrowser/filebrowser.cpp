@@ -98,10 +98,7 @@ void FileBrowser::setPath( QString path )
 
 void FileBrowser::addBookMark()
 {
-    
-    //QString fileName = m_fileSystemModel->fileName( currentIndex() );
     QString filePath = m_fileSystemModel->filePath( currentIndex() );
-    
     FileWidget::self()->addBookMark( filePath );
 }
 
@@ -146,18 +143,11 @@ void FileBrowser::contextMenuEvent( QContextMenuEvent* event )
         connect( showHidden, SIGNAL( triggered()), 
                  this,       SLOT(   showHidden()), Qt::UniqueConnection );
         menu.exec( eventPos );
-    }
-}
-
-void FileBrowser::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    open();
-}
+}   }
 
 void FileBrowser::keyPressEvent( QKeyEvent *event )
 {
     bool isEnter = ((event->key() == Qt::Key_Enter) || (event->key() == Qt::Key_Return));
-    
     if( isEnter ) open();
 }
 

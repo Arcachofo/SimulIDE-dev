@@ -42,8 +42,6 @@ ComponentSelector::ComponentSelector( QWidget* parent )
     setCursor( Qt::OpenHandCursor );
     headerItem()->setHidden( true );
     setIconSize( QSize( 32, 24));
-    
-    //QWhatsThis::add( this, QString::fromUtf8( gettext("Drag a Component and drop it into the Circuit." ) ) );
 
     LoadLibraryItems();
     //LoadCompSet();
@@ -62,12 +60,7 @@ ComponentSelector::~ComponentSelector()
 
 void ComponentSelector::LoadLibraryItems()
 {
-    QList<LibraryItem*> itemList = m_itemLibrary.items();
-    
-    for( LibraryItem* libItem : itemList )
-    {
-        this->addItem( libItem );
-    }
+    for( LibraryItem* libItem : m_itemLibrary.items() ) addItem( libItem );
 }
 
 /*void ComponentSelector::LoadCompSet()
@@ -152,8 +145,7 @@ void ComponentSelector::loadXml( const QString &setFile )
                 addItem( name, category, icon, type );
                 
                 node = node.nextSibling();
-            }
-        }
+        }   }
         rNode = rNode.nextSibling();
     }
     QString compSetName = setFile.split( "/").last();
@@ -161,11 +153,6 @@ void ComponentSelector::loadXml( const QString &setFile )
     qDebug() << tr("        Loaded Component set:           ") << compSetName;
 
     m_compSetUnique.append( compSetName );
-}
-
-QString ComponentSelector::getXmlFile( QString compName )
-{
-    return m_xmlFileList[ compName ];
 }
 
 void ComponentSelector::addLibraryItem( LibraryItem* libItem ) // Used By Plugins
@@ -181,8 +168,7 @@ void ComponentSelector::addItem( LibraryItem* libItem )
     {
         QString icon = ":/"+libItem->iconfile();
         addItem( libItem->name(), category, icon, libItem->type() );
-    }
-}
+}   }
 
 void ComponentSelector::addItem( const QString &caption, const QString &_category, const QString &icon, const QString &type )
 {
@@ -236,8 +222,7 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
             {
                 QTreeWidgetItem* topItem = list.first();
                 topItem->addChild( catItem );
-            }
-        }
+        }   }
         else if( name != "" ) addTopLevelItem( catItem );
 
         if( MainWindow::self()->settings()->contains( category+"/hidden" ) )
@@ -290,39 +275,7 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
     {
         bool expanded = !MainWindow::self()->settings()->value( name+"/collapsed" ).toBool();
         item->setExpanded( expanded );
-    }
-}
-
-/*void ComponentSelector::removeLibItem( LibraryItem* libItem )
-{
-    QString category = libItem->category();
-    QString     name = libItem->name();
-
-    QTreeWidgetItem* cat = 0l;
-
-    for( int i=0; i<topLevelItemCount(); i++ )
-    {
-        cat = topLevelItem( i );
-        if( cat->text(0) == category ) break;
-    }
-    if( cat == 0l ) return;
-
-    for( int i=0; i<cat->childCount(); i++ )
-    {
-        if( cat->child( i )->text( 0 ) == name )
-        {
-            cat->takeChild( i );
-            delete libItem;
-            break;
-        }
-    }
-
-}*/
-
-void ComponentSelector::mouseReleaseEvent( QMouseEvent* event )
-{
-    setCursor( Qt::OpenHandCursor );
-}
+}   }
 
 void ComponentSelector::slotItemClicked( QTreeWidgetItem* item, int column )
 {
@@ -337,7 +290,7 @@ void ComponentSelector::slotItemClicked( QTreeWidgetItem* item, int column )
     QMimeData* mimeData = new QMimeData;
     
     QString name = item->data(0, Qt::WhatsThisRole).toString(); //item->text(0);
-    //qDebug() <<"ComponentSelector::slotItemClicked"<<name<<type;
+
     mimeData->setText( name );
     mimeData->setHtml( type );              // esto hay que revisarlo
     
@@ -377,11 +330,7 @@ void ComponentSelector::search( QString filter )
     {
         item->setHidden( true );
 
-        if( item->childCount() > 0 )
-        {
-            //qDebug()<<"ComponentSelector::search Category" << item->text( 0 );
-            continue;
-        }
+        if( item->childCount() > 0 ) continue;
         if( cList.contains( item ) )
         {
             item->setHidden( false );
@@ -391,10 +340,7 @@ void ComponentSelector::search( QString filter )
             {
                 parent->setHidden( false );
                 parent = parent->parent();
-            }
-        }
-    }
-}
+}   }   }   }
 
 /*void ComponentSelector::unistallPlugin( QString item )
 {

@@ -84,6 +84,4 @@ void MCUMonitor::updateTable( int index )
         for( uint32_t i=0; i<m_processor->flashSize(); ++i )
             m_flashMonitor->setValue( i, m_processor->getFlashValue(i));
         break;
-    }
-}
-
+}   }

@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
         void setAuto( int ch );
         void setTrigger( int ch );
         void hideChannel( int ch, bool hide );
-        void setTracks( int tr );
+        void setTracks( int tr ) { trackGroup->button( tr )->setChecked( true ); }
 
         void updateTimeDivBox( uint64_t timeDiv);
         void updateTimePosBox( int ch, int64_t timePos );
@@ -67,7 +67,7 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
 
     protected:
         void closeEvent( QCloseEvent* event );
-        void resizeEvent( QResizeEvent* event );
+        void resizeEvent( QResizeEvent* ) { plotDisplay->updateValues(); }
 
         int m_timeDivDialPos;
         int m_timePosDialPos;

@@ -37,7 +37,7 @@ class MAINMODULE_EXPORT SwitchBase : public MechContact
 
         virtual void setHidden( bool hid , bool hidLabel=false ) override;
         
-        void setButtonText( QString text );
+        void setButtonText( QString text ) {  m_button->setText( text ); }
 
         QString key();
         void setKey( QString key );

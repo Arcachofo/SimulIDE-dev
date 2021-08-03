@@ -131,11 +131,6 @@ void SwitchDip::onbuttonclicked()
     update();
 }
 
-int SwitchDip::state()
-{
-    return m_state;
-}
-
 void SwitchDip::setState( int state )
 {
     if( m_state == state ) return;
@@ -196,8 +191,7 @@ void SwitchDip::createSwitches( int c )
         m_pin[index+1] = pin;
         
         m_state |= 1<<i;                          // default state = on;
-    }
-}
+}   }
 
 void SwitchDip::deleteSwitches( int d )
 {
@@ -218,15 +212,9 @@ void SwitchDip::deleteSwitches( int d )
         m_proxys.removeLast();
     }
     m_size = m_size-d;
-
     m_pin.resize( m_size*2 );
     
     Circuit::self()->update();
-}
-
-int SwitchDip::size()
-{
-    return m_size;
 }
 
 void SwitchDip::setSize( int size )
@@ -253,9 +241,6 @@ void SwitchDip::remove()
 void SwitchDip::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
-    
-    //p->setBrush( QColor( 80, 80, 80) );
-
     p->drawRoundRect( m_area, 4, 4 );
 }
 

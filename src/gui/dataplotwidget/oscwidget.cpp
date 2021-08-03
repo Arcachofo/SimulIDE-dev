@@ -78,9 +78,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     }
     mainLayout->setDirection( QBoxLayout::RightToLeft );
 }
-OscWidget::~OscWidget()
-{
-}
+OscWidget::~OscWidget(){}
 
 void OscWidget::on_timeDivDial_valueChanged( int DialPos )
 {
@@ -301,13 +299,11 @@ void OscWidget::on_channelGroup_buttonClicked( int ch )
         updateTimePosBox( ch, m_oscope->timePos( ch ) );
         updateVoltDivBox( ch, m_oscope->voltDiv( ch ) );
         updateVoltPosBox( ch, m_oscope->voltPos( ch ) );
-    }
-}
+}    }
+
 
 void OscWidget::on_autoGroup_buttonClicked( int ch )
-{
-    m_oscope->setAutoSC( ch );
-}
+{ m_oscope->setAutoSC( ch ); }
 
 void OscWidget::setAuto( int ch )
 {
@@ -317,9 +313,7 @@ void OscWidget::setAuto( int ch )
 }
 
 void OscWidget::on_triggerGroup_buttonClicked( int ch )
-{
-    m_oscope->setTrigger( ch );
-}
+{ m_oscope->setTrigger( ch ); }
 
 void OscWidget::setTrigger( int ch )
 {
@@ -347,23 +341,11 @@ void OscWidget::hideChannel( int ch, bool hide )
 }
 
 void OscWidget::on_trackGroup_buttonClicked( int ch )
-{
-    m_oscope->setTracks( ch );
-}
-
-void OscWidget::setTracks( int tr )
-{
-    trackGroup->button( tr )->setChecked( true );
-}
+{ m_oscope->setTracks( ch ); }
 
 void OscWidget::closeEvent( QCloseEvent* event )
 {
     if( !parent() ) return;
     m_oscope->expand( false );
     QWidget::closeEvent( event );
-}
-
-void OscWidget::resizeEvent( QResizeEvent* event )
-{
-    plotDisplay->updateValues();
 }

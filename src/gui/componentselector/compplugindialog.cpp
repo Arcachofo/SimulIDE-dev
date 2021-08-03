@@ -33,17 +33,13 @@ CompPluginDialog::CompPluginDialog( QWidget *parent )
     ui->setupUi(this);
 
     m_compList = ui->compList;
-
     m_initialized = false;
 
     connect( m_compList, SIGNAL( itemChanged( QListWidgetItem* )),
                    this, SLOT( slotItemChanged( QListWidgetItem* )), Qt::UniqueConnection );
 }
 
-CompPluginDialog::~CompPluginDialog()
-{
-    delete ui;
-}
+CompPluginDialog::~CompPluginDialog() { delete ui; }
 
 void CompPluginDialog::addItem( QTreeWidgetItem* item )
 {
@@ -56,7 +52,6 @@ void CompPluginDialog::addItem( QTreeWidgetItem* item )
 
     m_compList->addItem( listItem );
     m_qtwItem[ listItem ] = item;
-    //qDebug() << itemName;
 
     int childCount = item->childCount();
     if( childCount > 0 )
@@ -72,8 +67,7 @@ void CompPluginDialog::addItem( QTreeWidgetItem* item )
     else
     {
         listItem->setIcon( QIcon(":/blanc.png") );
-    }
-}
+}   }
 
 void CompPluginDialog::setPluginList()
 {
@@ -81,10 +75,7 @@ void CompPluginDialog::setPluginList()
 
     QList<QTreeWidgetItem*> itemList = ComponentSelector::self()->findItems("",Qt::MatchStartsWith);
 
-    for( QTreeWidgetItem* item : itemList )
-    {
-        addItem( item );
-    }
+    for( QTreeWidgetItem* item : itemList ) addItem( item );
 
     m_initialized = true;
 
@@ -122,7 +113,6 @@ void CompPluginDialog::setPluginList()
 void CompPluginDialog::slotItemChanged( QListWidgetItem* item )
 {
     if( !m_initialized ) return;
-
     setItemVisible( item, item->checkState() );
 }
 
@@ -140,9 +130,7 @@ void CompPluginDialog::setItemVisible( QListWidgetItem* listIt, bool visible )
 
             if( visible ) listItem->setCheckState( Qt::Checked );
             else          listItem->setCheckState( Qt::Unchecked );
-        }
-    }
-}
+}   }   }
 
 void CompPluginDialog::reject()
 {
@@ -151,9 +139,7 @@ void CompPluginDialog::reject()
     for( QListWidgetItem* listItem : m_compList->findItems("",Qt::MatchStartsWith) )
     {
         bool hidden = ( listItem->checkState() == Qt::Unchecked );
-
         MainWindow::self()->settings()->setValue( listItem->text()+"/hidden", hidden );
-    }
-}
+}   }
 
 #include "moc_compplugindialog.cpp"

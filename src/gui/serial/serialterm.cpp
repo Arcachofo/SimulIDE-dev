@@ -64,11 +64,6 @@ SerialTerm::~SerialTerm()
     Simulator::self()->remFromUpdateList( this );
 }
 
-void SerialTerm::updateStep()
-{
-    m_serialWidget->update();
-}
-
 void SerialTerm::setUart( int uart )
 {
     if( uart == m_serialWidget->uart() ) return;
@@ -86,10 +81,9 @@ void SerialTerm::slotClose()
     Circuit::self()->removeComp( this );
 }
 
-void SerialTerm::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void SerialTerm::paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* )
 {
     return;
-    //p->drawRoundedRect( QRectF( -114, -79, 345, 185 ), 3, 3 );
 }
 
 #include "moc_serialterm.cpp"

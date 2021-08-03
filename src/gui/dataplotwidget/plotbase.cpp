@@ -52,7 +52,6 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
 PlotBase::~PlotBase()
 {
     Simulator::self()->remFromUpdateList( this );
-
     for( int i=0; i<m_numChannels; i++ ) delete m_channel[i];
 }
 
@@ -97,7 +96,6 @@ void PlotBase::updateConds(  QString conds )
         conds.replace( "ch"+n+"h", m_condTo.value("ch"+n+"h") );
         conds.replace( "ch"+n+"f", m_condTo.value("ch"+n+"f") );
     }
-
     m_condProgram = QScriptProgram( conds );
 }
 

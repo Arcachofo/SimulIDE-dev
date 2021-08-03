@@ -33,8 +33,8 @@ class JoystickWidget : public QWidget
 
         void setupWidget();
         
-        int getXValue();
-        int getYValue();
+        int getXValue() { return m_xValue; }
+        int getYValue()  { return m_yValue; }
         
         void mousePressEvent(QMouseEvent *event);
         void mouseMoveEvent(QMouseEvent *event);

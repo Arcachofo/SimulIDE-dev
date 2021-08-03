@@ -63,7 +63,6 @@ QList<propGroup_t> Switch::propGroups()
 void Switch::stamp()
 {
     MechContact::stamp();
-
     onbuttonclicked();
 }
 
@@ -75,9 +74,7 @@ void Switch::keyEvent( QString key, bool pressed )
         {
             m_button->setChecked( !m_button->isChecked() );
             SwitchBase::onbuttonclicked();
-        }
-    }
-}
+}   }   }
 
 void Switch::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {

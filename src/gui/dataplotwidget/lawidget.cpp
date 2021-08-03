@@ -34,9 +34,7 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
     //cond1->setStyleSheet( "background-color:"+color );
     /// mainLayout->setDirection( QBoxLayout::RightToLeft );
 }
-LaWidget::~LaWidget()
-{
-}
+LaWidget::~LaWidget(){}
 
 void LaWidget::on_timeDivDial_valueChanged( int DialPos )
 {
@@ -48,7 +46,6 @@ void LaWidget::on_timeDivDial_valueChanged( int DialPos )
     else                             timeDiv -= delta;
 
     m_analizer->setTimeDiv( timeDiv );
-
     m_timeDivDialPos = DialPos;
 }
 
@@ -86,7 +83,6 @@ void LaWidget::on_timePosDial_valueChanged( int DialPos )
     else                             timePos -= delta;
 
     m_analizer->setTimePos( timePos );
-
     m_timePosDialPos = DialPos;
 }
 
@@ -123,7 +119,6 @@ void LaWidget::on_voltDivDial_valueChanged( int DialPos )
     else                             voltDiv -= delta;
 
     m_analizer->setVoltDiv( voltDiv );
-
     m_voltDivDialPos = DialPos;
 }
 
@@ -153,35 +148,17 @@ void LaWidget::updateVoltDivBox( double voltDiv )
 }
 
 void LaWidget::on_triggerBox_currentIndexChanged( int index )
-{
-    m_analizer->setTrigger( index );
-}
+{ m_analizer->setTrigger( index ); }
 
-void LaWidget::setTrigger( int ch )
-{
-    triggerBox->setCurrentIndex( ch );
-}
-
-void LaWidget::setConds( QString conds )
-{
-    condEdit->setText( conds );
-}
 
 void LaWidget::on_condEdit_editingFinished()
-{
-    m_analizer->updateConds( condEdit->text() );
-}
+{ m_analizer->updateConds( condEdit->text() ); }
 
 void LaWidget::closeEvent( QCloseEvent* event )
 {
     if( !parent() ) return;
     m_analizer->expand( false );
     QWidget::closeEvent( event );
-}
-
-void LaWidget::resizeEvent( QResizeEvent* event )
-{
-    plotDisplay->updateValues();
 }
 
 void LaWidget::mousePressEvent( QMouseEvent* event )
@@ -200,11 +177,5 @@ void LaWidget::mouseMoveEvent( QMouseEvent* event )
     double deltaT = (m_mousePos - pos)*timeX/sizeX;
 
     m_analizer->setTimePos( timePos+deltaT );
-
     m_mousePos = pos;
-}
-
-void LaWidget::mouseReleaseEvent( QMouseEvent* event )
-{
-    setCursor( Qt::ArrowCursor );
 }

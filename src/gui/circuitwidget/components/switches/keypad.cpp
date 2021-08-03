@@ -87,9 +87,7 @@ void KeyPad::stamp()
             
             ePin* epin1 = button->getEpin( 1 );
             epin1->setEnode( colNode );
-        }
-    }
-}
+}   }   }
 
 void KeyPad::setupButtons()
 {
@@ -142,26 +140,13 @@ void KeyPad::setupButtons()
                 pinId.append( QString("-Pin")+QString::number(m_rows+col)) ;
                 QPoint pinPos = QPoint( col*16, m_rows*16+8);
                 m_pin[m_rows+col] = new Pin( 270, pinPos, pinId, 0, this);
-            }
-        }
-    }
-}
-
-double KeyPad::rows()
-{
-    return m_rows;
-}
+}   }   }   }
 
 void KeyPad::setRows( double rows )
 {
     if( rows < 1 ) rows = 1;
     m_rows = rows;
     setupButtons();
-}
-
-double KeyPad::cols()
-{
-    return m_cols;
 }
 
 void KeyPad::setCols( double cols )
@@ -171,10 +156,6 @@ void KeyPad::setCols( double cols )
     setupButtons();
 }
 
-QString KeyPad::keyLabels()
-{
-    return m_keyLabels;
-}
 void KeyPad::setKeyLabels( QString keyLabels )
 {
     m_keyLabels = keyLabels;
@@ -191,9 +172,7 @@ void KeyPad::setKeyLabels( QString keyLabels )
             QString buttonLabel = "";
             if( pos <= labelMax ) buttonLabel = m_keyLabels.mid( pos, 1 );
             button->setKey( buttonLabel );
-        }
-    }
-}
+}   }   }
 
 void KeyPad::remove()
 {
@@ -206,7 +185,6 @@ void KeyPad::remove()
 void KeyPad::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
-
     p->drawRoundedRect( m_area,2,2 );
 }
 

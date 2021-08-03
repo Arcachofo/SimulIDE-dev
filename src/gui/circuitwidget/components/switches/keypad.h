@@ -41,13 +41,13 @@ class MAINMODULE_EXPORT KeyPad : public Component, public eElement
 
         virtual QList<propGroup_t> propGroups() override;
 
-        double rows();
+        double rows() { return m_rows; }
         void setRows( double rows );
         
-        double cols();
+        double cols() { return m_cols; }
         void setCols( double cols );
         
-        QString keyLabels();
+        QString keyLabels() { return m_keyLabels; }
         void setKeyLabels( QString keyLabels );
         
         virtual void stamp() override;

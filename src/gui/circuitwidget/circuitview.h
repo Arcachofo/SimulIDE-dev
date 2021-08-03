@@ -22,7 +22,6 @@
 
 #include <QtWidgets>
 
-
 class Component;
 class Circuit;
 class SimuProp;

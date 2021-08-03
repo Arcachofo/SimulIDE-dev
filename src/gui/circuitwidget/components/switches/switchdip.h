@@ -40,10 +40,10 @@ class MAINMODULE_EXPORT SwitchDip : public Component, public eElement
 
         virtual QList<propGroup_t> propGroups() override;
 
-        int  size();
+        int  size() { return m_size; }
         void setSize( int size );
 
-        int  state();
+        int  state() { return m_state; }
         void setState( int state );
 
         virtual void stamp() override;

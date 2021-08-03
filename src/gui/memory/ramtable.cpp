@@ -136,8 +136,7 @@ void RamTable::setStatusBits( QStringList statusBits )
     {
         //qDebug()<<"RamTable::setStatusBits"<<i<<statusBits.at( i );
         m_status.item( 0, i )->setText( statusBits.takeFirst() );
-    }
-}
+}   }
 
 void RamTable::slotContextMenu( const QPoint& point )
 {
@@ -183,7 +182,6 @@ void RamTable::loadVariables()
 
     m_loadingVars = true;
     QStringList variables = m_debugger->getVarList();
-    //qDebug() << "RamTable::loadVariables" << variables;
 
     loadVarSet( variables );
 }
@@ -198,8 +196,7 @@ void RamTable::loadVarSet()
     {
         QStringList varSet = fileToStringList( fileName, "RamTable::loadVarSet" );
         if( !varSet.isEmpty() ) loadVarSet( varSet );
-    }
-}
+}   }
 
 void RamTable::loadVarSet( QStringList varSet )
 {
@@ -263,8 +260,7 @@ void RamTable::saveVarSet()
         }
         file.close();
         QApplication::restoreOverrideCursor();
-    }
-}
+}   }
 
 void RamTable::updateValues()
 {
@@ -286,25 +282,7 @@ void RamTable::updateValues()
                 table->item( _row, 1 )->setText("uint8");
                 table->item( _row, 2 )->setData( 0, value );
                 table->item( _row, 3 )->setData( 0, decToBase(value, 2, 8) );
-            }
-        }
-    }
-}
-
-void RamTable::setItemValue( int col, QString value  )
-{
-    table->item( m_currentRow, col )->setData( 0, value );
-}
-
-void RamTable::setItemValue( int col, float value  )
-{
-    table->item( m_currentRow, col )->setData( 0, value );
-}
-
-void RamTable::setItemValue( int col, int32_t value  )
-{
-    table->item( m_currentRow, col )->setData( 0, value );
-}
+}   }   }   }
 
 void RamTable::addToWatch( QTableWidgetItem* it )
 {
@@ -356,10 +334,7 @@ void RamTable::addToWatch( QTableWidgetItem* it )
 
                 QString varName = variables.at( index );
                 if( varName.contains( name ) ) table->item( _row+i, 0 )->setText( varName );
-            }
-        }
-    }
-}
+}   }   }   }
 
 void RamTable::setRegisters( QStringList regs )
 {
@@ -367,16 +342,4 @@ void RamTable::setRegisters( QStringList regs )
     for( QString reg : regs ) m_registerModel->appendRow( new QStandardItem(reg) );
 }
 
-void RamTable::setDebugger( BaseDebugger* deb )
-{
-    m_debugger = deb;
-}
-
-void RamTable::remDebugger( BaseDebugger* deb )
-{
-    if( m_debugger == deb ) m_debugger = NULL;
-}
-
 //#include "moc_ramtable.cpp"
-
-

@@ -47,11 +47,6 @@ OutPanelText::OutPanelText( QWidget* parent )
 }
 OutPanelText::~OutPanelText(){}
 
-void OutPanelText::appendText( const QString text )
-{
-    m_textBuffer.append( text );
-}
-
 void OutPanelText::appendLine( const QString text )
 {
     m_textBuffer.append( text+"\n" );
@@ -77,45 +72,43 @@ OutHighlighter::OutHighlighter( QTextDocument* parent )
               : QSyntaxHighlighter( parent )
 {
     HighlightingRule rule;
+    QTextCharFormat format;
 
-    fileFormat.setForeground( QColor(110, 180, 100) );
+    format.setForeground( QColor(110, 180, 100) );
     rule.pattern = QRegExp( "/[^\n]*" );
-    rule.format = fileFormat;
+    rule.format = format;
     highlightingRules.append( rule );
 
-    numberFormat.setForeground( QColor(120, 120, 250) );
+    format.setForeground( QColor(120, 120, 250) );
     rule.pattern = QRegExp("[0-9]+");
-    rule.format = numberFormat;
+    rule.format = format;
     highlightingRules.append(rule);
 
-    quotationFormat.setForeground( QColor(50, 200, 100) );
+    format.setForeground( QColor(50, 200, 100) );
     rule.pattern = QRegExp( "\".*\"" );
-    rule.format = quotationFormat;
+    rule.format = format;
     highlightingRules.append( rule );
 
-    successFormat.setForeground( QColor(255, 255, 200) );
-    successFormat.setFontWeight( QFont::Bold );
+    format.setForeground( QColor(255, 255, 200) );
+    format.setFontWeight( QFont::Bold );
     rule.pattern = QRegExp("SUCCESS");
-    rule.format = successFormat;
+    rule.format = format;
     highlightingRules.append(rule);
     
-    sentFormat.setForeground( QColor(255, 255, 200) );
-    sentFormat.setFontWeight( QFont::Bold );
+    format.setForeground( QColor(255, 255, 200) );
     rule.pattern = QRegExp("SENT:");
-    rule.format = sentFormat;
+    rule.format = format;
     highlightingRules.append(rule);
 
-    warningFormat.setForeground( QColor(255, 200, 100) );
-    warningFormat.setFontWeight( QFont::Bold );
+    format.setForeground( QColor(255, 200, 100) );
     rule.pattern = QRegExp("WARNING");
-    rule.format = warningFormat;
+    rule.format = format;
     highlightingRules.append(rule);
 
-    errorFormat.setForeground( QColor(100, 50, 0) );
-    errorFormat.setBackground( QColor(255, 255, 100) );
-    errorFormat.setFontWeight( QFont::Bold );
+    format.setForeground( QColor(100, 50, 0) );
+    format.setBackground( QColor(255, 255, 100) );
     rule.pattern = QRegExp(" ERROR");
-    rule.format = errorFormat;
+    rule.format = format;
     highlightingRules.append(rule);
 }
 OutHighlighter::~OutHighlighter(){}
@@ -134,7 +127,6 @@ void OutHighlighter::highlightBlock( const QString &text )
             int length = expression.matchedLength();
             setFormat( index, length, rule.format );
             index = expression.indexIn( upText, index + length );
-        }
-    }
-}
+}   }   }
+
 #include "moc_outpaneltext.cpp"

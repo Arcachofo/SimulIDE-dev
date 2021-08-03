@@ -23,6 +23,9 @@ Changes:
   RC5:
     - Logic Components complete refactoring.
     
+  RC6:
+    - New MCUs: Interrupt raise from signal/slot to direct call.
+    
 New Features:
   RC1:
     - Dutch translation by mvandorp.
@@ -70,6 +73,14 @@ New Features:
     - New AVRs: SPI basic implementation.
     - Logic Analizer: change Time Pos by mouse click+move.
     - Logic Analizer: Condition Trigger.
+    
+RC6:
+    - Subcircuit: Name label editable.
+    - AVR SPI: Basic case working.
+    - New MCUs: Watchdog Timer basic implementation.
+    - New AVRs: Watchdog Timer.
+    - New MCUs: Reload and Autoload added.
+    - New MCUs: Status & Registers added to Mcu Monitor.
     
 Bug Fixes:
   RC1:
@@ -202,6 +213,33 @@ Bug Fixes:
     - New MCUs: several errors inTimers.
     - Oscope stops working after some time.
     
+  RC6:
+    - Buses not working if Pins share eNode.
+    - Editor/Compiler: no Error msg if upload not successful.
+    - Arduino compiler: some errors not detected.
+    - Arduino compiler: Errors with some file paths.
+    - New AVRs: I2C Slave pulls SDA/SCL LOW.
+    - New AVRs: Errors in TWI Slave.
+    - New AVRs: TWI not saving received byte.
+    - New AVRs: TWI Clock period not initialized.
+    - TWI Module: Frequency doubles at reinitialization.
+    - TWI Module: Slave not ACKing data received.
+    - New AVRs: Wrong Stop Condition at I2C init.
+    - TWI Module: I2C works even without pullups
+    - New AVRs: Pullups not working.
+    - SPI Module: wrong clock polarity in Windows version.
+    - New AVRs: Pin Change Interrupt not working.
+    - New AVRs: Pullups not working if no Port change.
+    - New AVRs: Mcu Monitor Status bits wrong order.
+    - Typos in some Example files.
+    - Crash at Ananlog Multiplexer creation (random).
+    - MCUs: msg NB Dialog: proccessor can not be created & delete component.
+    - Errors in some AVR Packages.
+    - New AVRs: ADC randomly not working.
+    - OpAmp: Wrong Power Pin names (not working in subcircuits).
+    - Function: wrong Pin positions.
+    - Crash: Memory component running simulation.
+    
 New Components:
   RC1:
     - aip31068 I2C LCD (by acebrian).
@@ -223,15 +261,20 @@ New Components:
     - atmega8515 (by avklab)
     
     - New Subcircuits (sergey Roenko): 
-      7497, 74184, 74185, 74502, 74503, 
-      CD4054, CD4055, CD4056,
-      K155ID11, K155ID13, 564Ik2
-      L298, ULN2001, ULN2803
+        7497, 74184, 74185, 74502, 74503, 
+        CD4054, CD4055, CD4056,
+        K155ID11, K155ID13, 564Ik2
+        L298, ULN2001, ULN2803
     
   RC4:
     - "Tools" Boards (by Sergey Roenko).
 
   RC5:
     - Subcircuits (by Sergey Roenko).
-    74XX121, CD4098, K490IP1, K490Ip2
-    AM1402ttl, AM1403ttl, AM1404_ttl.
+        74XX121, CD4098, K490IP1, K490Ip2
+        AM1402ttl, AM1403ttl, AM1404_ttl.
+
+  RC6:
+    - Subcircuits (by Sergey Roenko):
+        AD7224, AD7520, AD7521, AD7524, AD7845,
+        DAC7621, DAC8562, 74HC139.

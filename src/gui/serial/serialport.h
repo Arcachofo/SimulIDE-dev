@@ -51,7 +51,7 @@ class MAINMODULE_EXPORT SerialPort : public Component, public eElement
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;
-        virtual void updateStep() override;
+        virtual void updateStep() override { update(); }
 
 
         QString mcuId() { return m_mcuId; }
@@ -87,7 +87,7 @@ class MAINMODULE_EXPORT SerialPort : public Component, public eElement
         void onbuttonclicked();
         void slotWriteData( int uart, int value );
         void slotClose();
-        void slotAutoOpen();
+        void slotAutoOpen() { if( m_autoOpen ) open(); }
 
     private slots:
         void readData();

@@ -23,7 +23,6 @@
 #include "e-inductor.h"
 #include "mech_contact.h"
 
-
 class MAINMODULE_EXPORT RelayBase : public MechContact
 {
     Q_OBJECT
@@ -38,17 +37,17 @@ class MAINMODULE_EXPORT RelayBase : public MechContact
         RelayBase( QObject* parent, QString type, QString id );
         ~RelayBase();
 
-        double rCoil() const;
-        void setRCoil(double res);
+        double rCoil() const { return m_resistor->res(); }
+        void setRCoil( double res ) { if( res > 0.0 ) m_resistor->setResSafe(res); }
 
-        double iTrig() const;
-        void setITrig( double current );
+        double iTrig() const { return m_trigCurrent; }
+        void setITrig( double c ) { if( c > 0.0 ) m_trigCurrent = c; }
 
-        double iRel() const;
-        void setIRel( double current );
+        double iRel() const { return m_relCurrent; }
+        void setIRel( double current ) { m_relCurrent = current; }
 
-        double induc();
-        void  setInduc( double c );
+        double induc() { return m_inductor->ind(); }
+        void  setInduc( double i ) { m_inductor->setInd( i ); }
 
         virtual void stamp() override;
         virtual void voltChanged() override;

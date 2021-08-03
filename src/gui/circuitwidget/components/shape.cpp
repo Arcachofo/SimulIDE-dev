@@ -62,21 +62,11 @@ QList<propGroup_t> Shape::propGroups()
     return {mainGroup, colorGroup};
 }
 
-int Shape::hSize()
-{
-    return m_hSize;
-}
-
 void Shape::setHSize( int size )
 {
     m_hSize = size;
     m_area = QRectF( -m_hSize/2, -m_vSize/2, m_hSize, m_vSize );
     Circuit::self()->update();
-}
-
-int Shape::vSize()
-{
-    return m_vSize;
 }
 
 void Shape::setVSize( int size )
@@ -86,21 +76,11 @@ void Shape::setVSize( int size )
     Circuit::self()->update();
 }
 
-int Shape::border() 
-{ 
-    return m_border; 
-}
-
 void Shape::setBorder( int border ) 
 { 
     if( border < 0 ) border = 0;
     m_border = border; 
     update();
-}
-
-QColor Shape::color()
-{
-    return m_color;
 }
 
 void Shape::setColor( QColor color )

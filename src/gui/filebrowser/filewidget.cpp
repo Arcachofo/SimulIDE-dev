@@ -80,9 +80,7 @@ FileWidget::FileWidget( QWidget* parent )
     }
     settings->endArray();
 }
-FileWidget::~FileWidget()
-{
-}
+FileWidget::~FileWidget(){}
 
 void FileWidget::writeSettings()
 {
@@ -131,8 +129,7 @@ void FileWidget::addBookMark( QString path )
     {
         m_bookmarkList.append( dirPath );
         addEntry( name, dirPath );
-    }
-}
+}   }
 
 void FileWidget::remBookMark()
 {
@@ -146,7 +143,6 @@ void FileWidget::remBookMark()
 void FileWidget::itemClicked( QListWidgetItem* item  )
 {
     QString path = item->data( 4 ).toString();
-    
     m_fileBrowser->setPath( path );
 }
 
@@ -186,5 +182,4 @@ void FileWidget::contextMenuEvent( QContextMenuEvent* event )
                  this,              SLOT(   remBookMark() ) );
                  
         menu.exec( eventPos );
-    }
-}
+}   }

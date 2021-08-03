@@ -34,19 +34,19 @@ class MAINMODULE_EXPORT MechContact : public Component, public eElement
         MechContact( QObject* parent, QString type, QString id );
         ~MechContact();
 
-        virtual int poles() const;
+        virtual int poles() const { return m_numPoles; }
         virtual void setPoles( int poles );
 
-        virtual bool dt() const;
+        virtual bool dt() const { return (m_numthrows>1); }
         virtual void setDt( bool dt );
         
-        virtual bool nClose() const;
+        virtual bool nClose() const { return m_nClose; }
         virtual void setNClose( bool nc );
 
         virtual void attach() override;
         virtual void stamp() override;
         virtual void remove() override;
-        virtual void updateStep() override;
+        virtual void updateStep() override { if( m_changed ) { m_changed = false; update(); } }
 
         void  SetupSwitches( int poles, int throws );
         void  SetupButton();

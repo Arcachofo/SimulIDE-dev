@@ -32,13 +32,11 @@ SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
     Q_UNUSED( SwitchBase_properties );
 
     m_graphical = true;
+    m_changed = true;
+    m_key = "";
 
     m_area =  QRectF( 0,0,0,0 );
-
     m_ePin.resize(2);
-
-    m_changed = true;
-
     m_idLabel->setPos(-12,-24);
 
     m_button = new QToolButton( );
@@ -48,13 +46,10 @@ SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
 
     m_proxy = Circuit::self()->addWidget( m_button );
     m_proxy->setParentItem( this );
-    //m_proxy->setPos( QPoint(-8, 4) );
 
     connect( Circuit::self(), SIGNAL( keyEvent( QString, bool ) ),
                         this, SLOT(   keyEvent( QString, bool ) )
                             , Qt::UniqueConnection );
-
-    m_key = "";
 }
 SwitchBase::~SwitchBase(){}
 
@@ -99,19 +94,10 @@ void SwitchBase::setKey( QString key )
     m_button->setText( key );
 }
 
-/*void SwitchBase::keyEvent( QString key, bool pressed )
-{
-}*/
-
-void SwitchBase::setButtonText( QString text )
-{
-    m_button->setText( text );
-}
 
 void SwitchBase::remove()
 {
     Simulator::self()->remFromUpdateList( this );
-
     MechContact::remove();
 }
 

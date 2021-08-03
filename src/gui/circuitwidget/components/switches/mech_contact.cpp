@@ -58,8 +58,7 @@ void MechContact::attach()
         m_ePin[ epinN ]->setEnode( enode );
 
         if( m_numthrows > 1 ) m_ePin[ epinN+2 ]->setEnode( enode );
-    }
-}
+}   }
 
 void MechContact::stamp()
 {
@@ -70,15 +69,6 @@ void MechContact::stamp()
         if( enode ) enode->setSwitched( true );
     }
     setSwitch( m_nClose );
-}
-
-void MechContact::updateStep()
-{
-    if( m_changed )
-    {
-        m_changed = false;
-        update();
-    }
 }
 
 void MechContact::setSwitch( bool closed )
@@ -99,9 +89,7 @@ void MechContact::setSwitch( bool closed )
 
             if( closed ) m_switches[ switchN ]->setAdmit( 0 );
             else         m_switches[ switchN ]->setAdmit( 1e3 );
-        }
-    }
-}
+}   }   }
 
 void MechContact::remove()
 {
@@ -190,12 +178,7 @@ void MechContact::SetupSwitches( int poles, int throws )
         cont++;
     }
     Circuit::self()->update();
-    //for( Pin* pin : m_pin )
-    //    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false ); // draw Pins on top
 }
-
-int MechContact::poles() const
-{ return m_numPoles; }
 
 void MechContact::setPoles( int poles )
 {
@@ -204,9 +187,6 @@ void MechContact::setPoles( int poles )
     if( poles != m_numPoles )
         SetupSwitches( poles, m_numthrows );
 }
-
-bool MechContact::dt() const
-{ return (m_numthrows>1); }
 
 void MechContact::setDt( bool dt )
 {
@@ -217,18 +197,12 @@ void MechContact::setDt( bool dt )
         SetupSwitches( m_numPoles, throws );
 }
 
-bool MechContact::nClose() const
-{
-    return m_nClose;
-}
-
 void MechContact::setNClose( bool nc )
 {
     m_nClose = nc;
     setSwitch( m_nClose );
     update();
 }
-
 
 void MechContact::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
@@ -253,5 +227,5 @@ void MechContact::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
         pen.setWidth(1);
         p->setPen(pen);
         p->drawLine(-0, 4-4*m_pin0, 0, -3*m_pin0-16*m_numPoles+4 );
-    }
-}
+}   }
+

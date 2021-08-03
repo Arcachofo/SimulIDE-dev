@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT SerialTerm : public Component, public eElement
  static LibraryItem* libraryItem();
 
         //virtual void initialize() override { m_serialWidget->initialize(); }
-        virtual void updateStep() override;
+        virtual void updateStep() override { m_serialWidget->update(); }
 
         int uart() { return m_serialWidget->uart(); }
 
@@ -64,7 +64,7 @@ class MAINMODULE_EXPORT SerialTerm : public Component, public eElement
         QString mcuId() { return m_serialWidget->mcuId(); }
         void setMcuId( QString mcu ){ m_serialWidget->setMcuId( mcu); }
 
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void paint( QPainter* , const QStyleOptionGraphicsItem* , QWidget* );
 
     public slots:
         void slotClose();
