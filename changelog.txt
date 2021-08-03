@@ -26,6 +26,14 @@ Changes:
   RC6:
     - New MCUs: Interrupt raise from signal/slot to direct call.
     
+  RC7:
+    - Compiler: set working directory to source file.
+    - New MCUs: load firmware default dir to circuit file.
+    - NEW MCUs: STATUS from vector to bitwise.
+    - McuCreator change Interrupt ceation.
+    - New MCUs: regSignal optimization.
+    - Component: setValue does not change units.
+    
 New Features:
   RC1:
     - Dutch translation by mvandorp.
@@ -82,6 +90,19 @@ RC6:
     - New MCUs: Reload and Autoload added.
     - New MCUs: Status & Registers added to Mcu Monitor.
     
+  RC7:
+    - New MCUs: EEPROM added.
+    - New AVRs: EEPROM Working.
+    - New MCUs: Usart Monitor added.
+    - New AVRs: Analog Comparator basic implementation.
+    - New AVRs: ADC triggers implemented (T1 capt. & Comp. still pending).
+    - Component properties: Warning if property not valid.
+    - OpAmp: Power Pins labels.
+    - OpAmp: Switch Power Pins property.
+    - Editor: multiline comment added to sintax files.
+    - Editor: GcBasic sintax updated to match GCB IDE.
+    - Warning Message after crash: save backup file.
+  
 Bug Fixes:
   RC1:
     - Error in 8051 Component name in mcs-51_test.simu.
@@ -239,6 +260,31 @@ Bug Fixes:
     - OpAmp: Wrong Power Pin names (not working in subcircuits).
     - Function: wrong Pin positions.
     - Crash: Memory component running simulation.
+    
+  RC7:
+    - Keypad not working.
+    - New AVRs: Usart not taking control of I/O Pins.
+    - New MCUs Usart: Error in first byte.
+    - Error removing selected Components.
+    - Old MCUs: pullup not working.
+    - I2C Ram not working.
+    - AVR TWI: Wrong Slave mode in some cases.
+    - RAM/ROM not working.
+    - Errors in Diode.
+    - 74HC164 not working.
+    - Latch: Invert Outputs property error.
+    - New AVRs: EEPROM Working.
+    - L298P not working.
+    - Simulator Properties: Speed% spinbox decimal as dot.
+    - Component Properties Dialog: missing properties.
+    - New AVRs Timers not working properly after Rev 376.
+    - New AVRs: PWM CTC OCA channel not working.
+    - New MCUs: AutoLoad firmware stops simulation.
+    - Avrs: Can't find hex file with non-latin characters in path.
+    - Current Source: "Current" Prop. from Olver versions not loading.
+    - Meters: Output pin not working.
+    - Variable Resistors Properties: several issues.
+    - Monospace font not working in MacOs version.
     
 New Components:
   RC1:
