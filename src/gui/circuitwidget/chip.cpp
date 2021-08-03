@@ -45,8 +45,9 @@ Chip::Chip( QObject* parent, QString type, QString id )
     m_lsColor = QColor( 255, 255, 255 );
     m_icColor = QColor( 50, 50, 70 );
 
-    QFont f = QFontDatabase::systemFont( QFontDatabase::FixedFont );
-    f.setFamily("Monospace");
+    QFont f; // = QFontDatabase::systemFont( QFontDatabase::FixedFont );
+    f.setFamily("Andale Mono");
+
     f.setPixelSize(5);
     f.setLetterSpacing( QFont::PercentageSpacing, 120 );
     m_label.setFont( f );

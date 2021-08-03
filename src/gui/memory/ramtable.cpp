@@ -38,7 +38,7 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     int scale = MainWindow::self()->fontScale();
     QFont font;
     font.setPixelSize( 11*scale );
-    font.setFamily("Monospace");
+    font.setFamily("Andale Mono");
     font.setBold(true);
 
     int row_heigh = 23*scale;

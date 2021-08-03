@@ -55,7 +55,7 @@ bool  CodeEditor::m_spaceTabs  = false;
 bool  CodeEditor::m_driveCirc  = false;
 int   CodeEditor::m_fontSize = 13;
 int   CodeEditor::m_tabSize = 4;
-QFont CodeEditor::m_font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+QFont CodeEditor::m_font = QFont(); //Database::systemFont(QFontDatabase::FixedFont);
 
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           : QPlainTextEdit( parent )
@@ -80,7 +80,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_help = "";
     m_state = DBG_STOPPED;
 
-    m_font.setFamily("Monospace");
+    m_font.setFamily("Andale Mono");
     m_font.setFixedPitch( true );
     m_font.setPixelSize( m_fontSize );
     setFont( m_font );
