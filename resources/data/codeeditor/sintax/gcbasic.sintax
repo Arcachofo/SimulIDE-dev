@@ -1,40 +1,38 @@
-rules: modifiers keyword1 preprocessor number subroutine operator lineComment1 lineComment2 lineComment3 multiLineComment htmlTag quotation
+#################################################
+# This header is while the file is WIP (Tonigau)
+# 2021-08-02 Add REM to comments rule, move lineComment2,3 exp --> lineComment1, change name Operator --> Symbol, Add ! to Symbol rule, add binary number exp., add keyword2 (string manipulate, Hser, LCD), Improve label rule exp. ,Delete htmlTag rule, Add comment # Dec Bin Hex
+#  2021-08-02  Delete  commented pre-test expressions, consistent capitalization
+#################################################
+
+rules: Modifiers Keyword1 Keyword2 preProcessor Number Label Symbol lineComment1 multiLineComment Quotation 
 
 
-modifiers-style: #00008b default true false
-modifiers: bit byte word integer array string optional off on out in right left simple ms s sec us
+Modifiers-style: #0000C0 default True false
+Modifiers: bit byte word integer array string optional off on out in right left simple ms s sec us
 
-keyword1-style: #00008b default true false
-keyword1: and as call case const dim dir do else end exit for function goto gosub if interrupt intoff inton loop macro next not or return peek poke pulseout readtable repeat rotate set select step stop sub then to until wait when while xor Table
+Keyword1-style: #000080 default True false
+Keyword1: and as call case const dim dir do else end exit for function goto gosub if interrupt intoff inton loop macro next not or return peek poke pulseout readtable repeat rotate set select step stop sub then to until wait when while xor table true false forever
 
-preprocessor-style: #00008b default true false
-preprocessor: "#[chip|config|define|endif|ifdef|ifndef|include|mem|script|startup]+[\^]*"
+Keyword2-style: #000060 default True False
+Keyword2: Asc Bytetobin Chr Fill Hex Instr Lcase Left Leftpad Len Mid Pad Right Rtrim Str Trim Ucase Val Wordtobin HSerPrint HSerPrintCRLF HSerSend HSerReceive PWMOn PWMOff LCDCMD LCDHome LCDOFF LCDON LCD_IO
 
-number-style: #FF0000 default True false
-number: "\b[0-9]+\b" "0[xX][0-9a-fA-F]+"
+preProcessor-style: #0000C0 default True False
+preProcessor: "#[chip|config|define|endif|ifdef|ifndef|include|mem|script|startup]+[\^]*"
 
-subroutine-style: #FF1493 default true false
-subroutine: "^[A-Za-z_]\w+:"
+Number-style: #FF0000 default False False
+Number: "\b[0-9]+\b" "0[bB][0-1]+" "0[xX][0-9a-fA-F]+"  # Dec Bin Hex
 
-operator-style: #800000 default true false
-operator: "[\(\)\/\=\+\-\<\>]"
+Label-style: #FF1493 default False False
+Label: "^[\x20\x09]*\w+:"
 
-#htmlTag-style: #303078 default false false
-#htmlTag: "<.*>" 
+Symbol-style: #800000 default True False
+Symbol: "[\(\)\/\=\+\-\<\>\!]"
 
-quotation-style: #DC143C default True false
-quotation: "\"(\\.|[^\"])*\""
+Quotation-style: #C00000 default False False
+Quotation: "\"(\\.|[^\"])*\""
 
-lineComment1-style: #00a651 default false true
-lineComment1: "'[^\n]*"
+lineComment1-style: #00A651 default False True
+lineComment1: "'[^\n]*"  ";[^\n]*"  "//[^\n]*"  "REM[^\n]*"
 
-lineComment2-style: #00a651 default false true
-lineComment2: ";[^\n]*"
-
-lineComment3-style: #00a651 default false true
-lineComment3: "//[^\n]*"
-
-multiLineComment-style: #00a651 default false true
+multiLineComment-style: #00A651 default False True
 multiLineComment: "/\\*" "\\*/"
-
-
