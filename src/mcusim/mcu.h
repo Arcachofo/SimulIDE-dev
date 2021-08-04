@@ -89,6 +89,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         QList<Pin*> m_pinList;
 
+        QList<SerialMonitor*> m_serialMons;
         MCUMonitor* m_mcuMonitor;
 };
 

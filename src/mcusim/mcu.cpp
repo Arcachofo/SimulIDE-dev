@@ -195,12 +195,9 @@ void Mcu::attach()
 
 void Mcu::remove()
 {
-    //emit closeSerials();
+    for( SerialMonitor* ser: m_serialMons ) ser->close();
 
-    //Simulator::self()->remFromUpdateList( this );
     for( Pin* pin : m_pinList ) pin->removeConnector();
-
-    //terminate();
     m_pinList.clear();
 
     Component::remove();
@@ -337,6 +334,7 @@ void Mcu::slotOpenTerm( int num )
     ser->setWindowTitle( this->idLabel()+" - Uart"+QString::number(num) );
     ser->show();
     m_eMcu.m_usarts.at(num-1)->setMonitor( ser );
+    m_serialMons.append( ser );
 }
 
 void Mcu::addPin( QString id, QString type, QString label,
