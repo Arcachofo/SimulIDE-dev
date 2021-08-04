@@ -161,23 +161,26 @@ void Potentiometer::resChanged( int res ) // Called when dial is rotated
     if( !Simulator::self()->isRunning() ) updateStep();
 }
 
+void Potentiometer::setVal( double val )
+{
+    m_dial->setValue( val*1000/m_resist );
+    m_res1 = val;
+    updateStep();
+}
+
 void Potentiometer::setRes( double res ) // Called when property resistance is changed
 {
     if( res == 0 ) res = 0.001;
     Component::setValue( res );       // Takes care about units multiplier
     m_resist = m_value*m_unitMult;
-    
-    m_changed = true;
-    if( !Simulator::self()->isRunning() ) updateStep();
+    setVal( m_res1 );
 }
 
 void Potentiometer::setUnit( QString un ) 
 {
     Component::setUnit( un );
     m_resist = m_value*m_unitMult;
-
-    m_changed = true;
-    if( !Simulator::self()->isRunning() ) updateStep();
+    setVal( m_res1 );
 }
 
 void Potentiometer::remove()

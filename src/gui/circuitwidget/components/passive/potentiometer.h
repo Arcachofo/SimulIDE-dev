@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         
         virtual QList<propGroup_t> propGroups() override;
 
-        void setVal( double val ) { m_dial->setValue( val*1000/m_resist ); }
+        void setVal( double val );
         double val() { return m_resist*m_dial->value()/1000; }
         
         double res() const      { return m_value; }
@@ -64,7 +64,8 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
     private:
         double m_resist;
         double m_voltOut;
-        
+        double m_res1;
+
         bool m_changed;
         
         Pin m_pinA;
