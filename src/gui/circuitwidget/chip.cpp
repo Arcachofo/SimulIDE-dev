@@ -66,7 +66,6 @@ Chip::~Chip()
 
 void Chip::initChip()
 {
-    //qDebug() << "Chip::initChip m_pkgeFile"<<m_pkgeFile;
     m_error = 0;
 
     QDir circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
@@ -119,6 +118,8 @@ void Chip::initChip()
         {
             QMetaEnum metaEnum = QMetaEnum::fromType<Chip::subcType_t>();
             m_subcType = (subcType_t)metaEnum.keyToValue( root.attribute( "type").toUtf8().data() );
+            if( (m_subcType == subcBoard) || (m_subcType == subcShield) )
+                setTransformOriginPoint( togrid( boundingRect().center()) );
         }
         if( root.hasAttribute("name"))
         {
