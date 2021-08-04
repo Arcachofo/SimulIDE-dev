@@ -309,6 +309,11 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     id = id.remove( "Arduino " );
                     objNam = objNam.remove( "Arduino " );
                 }
+                else if( type == "AVR" )
+                {
+                    type = "MCU";
+                    objNam = objNam.replace( "atmega", "mega" );
+                }
                 Component* item = createItem( type, objNam, objNam );
 
                 if( item )
