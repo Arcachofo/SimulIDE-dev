@@ -27,7 +27,7 @@
 #include "node.h"
 #include "utils.h"
 #include "subcircuit.h"
-#include "mcucomponent.h"
+#include "mcu.h"
 #include "simulator.h"
 
 static const char* Circuit_properties[] = {
@@ -318,7 +318,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     if( oldArduino ) // Load mcu properties & change subcircuit names
                     {
                         SubCircuit* subci = static_cast<SubCircuit*>(item);
-                        McuComponent* mcu = static_cast<McuComponent*>( subci->getMainComp() );
+                        Mcu* mcu = static_cast<Mcu*>( subci->getMainComp() );
                         mcu->setSubcDir("");
                         mcu->setProgram( element.attribute("Program") );
                         mcu->setFreq( element.attribute("Mhz").toDouble() );

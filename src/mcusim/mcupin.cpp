@@ -22,7 +22,7 @@
 #include "simulator.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
-      : IoPin( 0, QPoint(0,0), mcu->objectName()+id, 0, mcu, source )
+      : IoPin( 0, QPoint(0,0), mcu->objectName()+"-"+id, 0, mcu, source )
 {
     m_port   = port;
     m_number = i;
