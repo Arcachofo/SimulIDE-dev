@@ -1,6 +1,6 @@
 
 VERSION = "0.5.16"
-RELEASE = "-RC6"
+RELEASE = "-RC7"
 
 TEMPLATE = app
 
@@ -43,8 +43,6 @@ SOURCES += ../src/*.cpp \
     ../src/simulator/elements/outputs/*.cpp \
     ../src/simulator/elements/passive/*.cpp \
     ../src/simulator/elements/processors/*.cpp \
-    ../src/simavr/sim/*.c \
-    ../src/simavr/cores/*.c \
     ../src/gpsim/*.cc \
     ../src/gpsim/devices/*.cc \
     ../src/gpsim/modules/*.cc \
@@ -87,9 +85,6 @@ HEADERS += ../src/*.h \
     ../src/simulator/elements/outputs/*.h \
     ../src/simulator/elements/passive/*.h \
     ../src/simulator/elements/processors/*.h \
-    ../src/simavr/sim/*.h \
-    ../src/simavr/sim/avr/*.h  \
-    ../src/simavr/cores/*.h \
     ../resources/data/*.xml \
     ../src/gpsim/*.h \
     ../src/gpsim/devices/*.h \
@@ -133,10 +128,6 @@ INCLUDEPATH += ../src \
     ../src/simulator/elements/outputs \
     ../src/simulator/elements/passive \
     ../src/simulator/elements/processors \
-    ../src/simavr \
-    ../src/simavr/sim \
-    ../src/simavr/sim/avr \
-    ../src/simavr/cores \
     ../src/gpsim \
     ../src/gpsim/devices \
     ../src/gpsim/modules \
@@ -185,43 +176,17 @@ QMAKE_CXXFLAGS_DEBUG -= -O2
 QMAKE_CXXFLAGS_DEBUG -= -O3
 QMAKE_CXXFLAGS_DEBUG += -O0
 
-QMAKE_CFLAGS += --std=gnu11
-QMAKE_CFLAGS += -Wno-unused-result
-QMAKE_CFLAGS += -Wno-unused-parameter
-QMAKE_CFLAGS += -Wno-missing-field-initializers
-QMAKE_CFLAGS += -Wno-implicit-function-declaration
-QMAKE_CFLAGS += -Wno-implicit-fallthrough
-QMAKE_CFLAGS += -Wno-int-conversion
-QMAKE_CFLAGS += -Wno-sign-compare
-QMAKE_CFLAGS += -Ofast
-QMAKE_CFLAGS -= -fPIC
-QMAKE_CFLAGS += -fno-pic
-QMAKE_CFLAGS_DEBUG -= -O
-QMAKE_CFLAGS_DEBUG -= -O1
-QMAKE_CFLAGS_DEBUG -= -O2
-QMAKE_CFLAGS_DEBUG -= -O3
-QMAKE_CFLAGS_DEBUG += -O0
-
 win32 {
     OS = Windows
-    INCLUDEPATH += deps/libelf \
-                   deps
     QMAKE_LIBS += -lwsock32
-    LIBS +=  deps/libelf.a
     RC_ICONS += ../src/icons/simulide.ico
 }
 linux {
     OS = Linux
-    QMAKE_LIBS += -lelf
     QMAKE_LFLAGS += -no-pie
 }
 macx {
     OS = MacOs
-    INCLUDEPATH += \
-        /usr/local/Cellar/libelf/0.8.13_1/include \
-        /usr/local/Cellar/libelf/0.8.13_1/include/libelf
-    
-    LIBS += /usr/local/lib/libelf.a
     QMAKE_LFLAGS += -no-pie
     ICON = ../src/icons/simulide.icns
 }

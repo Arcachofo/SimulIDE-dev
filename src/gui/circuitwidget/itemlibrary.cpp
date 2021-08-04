@@ -27,7 +27,6 @@
 #include "adc.h"
 #include "aip31068_i2c.h"
 #include "audio_out.h"
-#include "avrcomponent.h"
 #include "battery.h"
 #include "bcdto7s.h"
 #include "bcdtodec.h"
@@ -201,8 +200,9 @@ void ItemLibrary::loadItems()
     addItem( Servo::libraryItem() );
     addItem( AudioOut::libraryItem() );
     // Micro
+    addItem( new LibraryItem( tr("AVRs"),tr("Micro"), "ic2.png","", 0l ) );
     addItem( PICComponent::libraryItem() );
-    addItem( AVRComponent::libraryItem() );
+    addItem( new LibraryItem( tr("I51"),tr("Micro"), "ic2.png","", 0l ) );
     addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "arduino.png","", 0l ) );
     addItem( new LibraryItem( tr("Shields"),tr("Micro"), "shield.png","", 0l ) );
     addItem( new LibraryItem( tr("Sensors"),tr("Micro"), "1to2.png","", 0l ) );
@@ -259,11 +259,9 @@ void ItemLibrary::loadItems()
     addItem( Ellipse::libraryItem() );
     addItem( Line::libraryItem() );
     addItem( Tunnel::libraryItem() );
-
     addItem( SubPackage::libraryItem() );
-    addItem( new LibraryItem( tr("AVRs"),tr("NEW_MCU"), "ic2.png","", 0l ) );
+
     addItem( new LibraryItem( tr("PICs"),tr("NEW_MCU"), "ic2.png","", 0l ) );
-    addItem( new LibraryItem( tr("I51"),tr("NEW_MCU"), "ic2.png","", 0l ) );
     addItem( Mcu::libraryItem() );
 }
 
