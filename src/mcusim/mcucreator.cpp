@@ -184,9 +184,7 @@ void McuCreator::createEeprom(  QDomElement* e )
         {
             eeprom->m_addressH = mcu->getReg( highByte );
             mcu->watchRegNames( highByte, R_WRITE, eeprom, &McuEeprom::addrWriteH );
-        }
-    }
-
+    }   }
     QDomNode node = e->firstChild();
     while( !node.isNull() )
     {
@@ -194,8 +192,7 @@ void McuCreator::createEeprom(  QDomElement* e )
 
         if( el.tagName() == "interrupt" ) setInterrupt( &el, eeprom );
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createDataBlock( QDomElement* d )
 {
@@ -216,8 +213,7 @@ void McuCreator::createDataBlock( QDomElement* d )
     {
         mcu->m_addrMap[i] = mapTo;
         mapTo++;
-    }
-}
+}   }
 
 void McuCreator::createRegisters( QDomElement* e )
 {
@@ -278,14 +274,8 @@ void McuCreator::createRegisters( QDomElement* e )
                     if( !stReg.isEmpty() && ( regName == stReg ) )
                     {
                         mcu->m_sregAddr = regAddr;
-                        //mcu->m_sreg.resize( 8 );
-
-                        //mcu->watchRegister( regAddr, R_WRITE, (DataSpace*)mcu, &DataSpace::writeStatus );
-                        //mcu->watchRegister( regAddr, R_READ,  (DataSpace*)mcu, &DataSpace::readStatus );
                         mcu->getRamTable()->setStatusBits( bitList );
-                    }
-                }
-            }
+            }   }   }
         }else if( el.tagName() == "alias" )
         {
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
@@ -293,14 +283,20 @@ void McuCreator::createRegisters( QDomElement* e )
             mcu->m_addrMap[regAddr] = mapTo;
         }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createInterrupts( QDomElement* i )
 {
     QString enable = i->attribute("enable");
     mcu->watchBitNames( enable, R_WRITE, (eMcu*)mcu, &eMcu::enableInterrupts );
-}
+
+    QDomNode node = i->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+        if( el.tagName() == "interrupt" ) createInterrupt( &el );
+        node = node.nextSibling();
+}   }
 
 void McuCreator::createPort( QDomElement* p )
 {
@@ -370,11 +366,9 @@ void McuCreator::createPort( QDomElement* p )
             {
                 uint16_t maskReg = mcu->getRegAddress( el.attribute( "mask" ) );
                 mcu->watchRegister( maskReg, R_WRITE, port, &McuPort::intMaskChanged );
-            }
-        }
+        }   }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createTimer( QDomElement* t )
 {
@@ -467,11 +461,9 @@ void McuCreator::createTimer( QDomElement* t )
                 if( el1.tagName() == "interrupt" )  setInterrupt( &el1, ocUnit );
 
                 node1 = node1.nextSibling();
-            }
-        }
+        }   }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createUsart( QDomElement* u )
 {
@@ -521,11 +513,9 @@ void McuCreator::createUsart( QDomElement* u )
                 if( el1.tagName() == "interrupt" )  setInterrupt( &el1, trUnit );
 
                 node1 = node1.nextSibling();
-            }
-        }
+        }   }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createAdc( QDomElement* e )
 {
@@ -588,12 +578,9 @@ void McuCreator::createAdc( QDomElement* e )
                 {
                     McuPin* pin = mcu->m_ports.getPin( pinName );
                     if( pin ) adc->m_adcPin.emplace_back( pin );
-                }
-            }
-        }
+        }   }   }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createAcomp( QDomElement* e )
 {
@@ -619,11 +606,9 @@ void McuCreator::createAcomp( QDomElement* e )
                 QString name = el.attribute("name");
                 if     ( name == "positive" ) comp->m_pinP = pin ;
                 else if( name == "negative" ) comp->m_pinN = pin ;
-            }
-        }
+        }   }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createTwi( QDomElement* e )
 {
@@ -646,8 +631,7 @@ void McuCreator::createTwi( QDomElement* e )
         {
             twi->m_addrReg = mcu->getReg( addrReg );
             mcu->watchRegNames( addrReg, R_WRITE, twi, &McuTwi::writeAddrReg );
-        }
-    }
+    }   }
     if( e->hasAttribute("statusreg") )
     {
         QString statReg = e->attribute("statusreg");
@@ -655,8 +639,7 @@ void McuCreator::createTwi( QDomElement* e )
         {
             twi->m_statReg = mcu->getReg( statReg );
             mcu->watchRegNames( statReg, R_WRITE, twi, &McuTwi::writeStatus );
-        }
-    }
+    }   }
     QDomNode node = e->firstChild();
     while( !node.isNull() )
     {
@@ -680,11 +663,9 @@ void McuCreator::createTwi( QDomElement* e )
                 QString name = el.attribute("name");
                 if     ( name == "sda" ) twi->setSdaPin( pin );
                 else if( name == "scl" ) twi->setSclPin( pin );
-            }
-        }
+        }   }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createSpi( QDomElement* e )
 {
@@ -707,8 +688,7 @@ void McuCreator::createSpi( QDomElement* e )
         {
             spi->m_statReg = mcu->getReg( statReg );
             mcu->watchRegNames( statReg, R_WRITE, spi, &McuSpi::writeStatus );
-        }
-    }
+    }   }
     QDomNode node = e->firstChild();
     while( !node.isNull() )
     {
@@ -734,11 +714,9 @@ void McuCreator::createSpi( QDomElement* e )
                 else if( name == "miso" ) spi->setMisoPin( pin );
                 if     ( name == "sck" )  spi->setSckPin( pin );
                 else if( name == "ss" )   spi->setSsPin( pin );
-            }
-        }
+        }   }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createWdt( QDomElement* e )
 {
@@ -763,8 +741,7 @@ void McuCreator::createWdt( QDomElement* e )
                 wdt->m_prescList[i] = prescalers.at(i).toUInt();
         }
         node = node.nextSibling();
-    }
-}
+}   }
 
 void McuCreator::createCore( QString core )
 {
@@ -793,7 +770,7 @@ void McuCreator::createStack( QDomElement* s )
     mcu->cpu->m_spInc = ((inc.contains("inc"))?  1:-1);
 }
 
-void McuCreator::setInterrupt( QDomElement* el, McuModule* module )
+void McuCreator::createInterrupt( QDomElement* el )
 {
     QString  intName = el->attribute("name");
     if( intName.isEmpty() ) return;
@@ -826,7 +803,11 @@ void McuCreator::setInterrupt( QDomElement* el, McuModule* module )
         QString mode = el->attribute("mode");
         mcu->watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode );
     }
-    module->m_interrupt = iv;
+}
+
+void McuCreator::setInterrupt( QDomElement* el, McuModule* module )
+{
+    module->m_interrupt = mcu->m_interrupts.m_intList.value( el->attribute("name") );
 }
 
 void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )
@@ -852,5 +833,4 @@ void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )
         QString configBits = u->attribute("configbitsB");
         mcu->watchBitNames( configBits, R_WRITE, module, &McuModule::configureB );
         module->m_configBitsB = mcu->getRegBits( configBits );
-    }
-}
+}   }

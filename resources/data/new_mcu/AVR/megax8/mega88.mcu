@@ -4,7 +4,7 @@
             inst_cycle="1">
 
     <include file="megax8_regs.xml" />
-    <include file="mega88_int.xml" />
+    <include file="megax8_int.xml" />
     <include file="megax8_perif.xml" />
     
     <datablock name="RAM" start="0x0100" end="0x04FF"/>

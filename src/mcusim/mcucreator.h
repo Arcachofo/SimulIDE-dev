@@ -28,6 +28,7 @@ class Component;
 class QString;
 class QDomElement;
 class McuModule;
+class Interrupt;
 
 class MAINMODULE_EXPORT McuCreator
 {
@@ -56,7 +57,7 @@ class MAINMODULE_EXPORT McuCreator
         static void createWdt( QDomElement* e );
         static void createCore( QString core );
         static void createStack( QDomElement* s );
-
+        static void createInterrupt( QDomElement* el );
         static void setInterrupt( QDomElement* el, McuModule* module );
         static void setConfigRegs( QDomElement* u, McuModule* module );
 
