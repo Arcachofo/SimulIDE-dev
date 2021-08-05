@@ -118,6 +118,7 @@ void Chip::initChip()
         {
             QMetaEnum metaEnum = QMetaEnum::fromType<Chip::subcType_t>();
             m_subcType = (subcType_t)metaEnum.keyToValue( root.attribute( "type").toUtf8().data() );
+
             if( (m_subcType == subcBoard) || (m_subcType == subcShield) )
                 setTransformOriginPoint( togrid( boundingRect().center()) );
         }

@@ -48,6 +48,7 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
     m_addCR = false;
     m_uart = 0;
     m_mcuId = "";
+    m_processor = NULL;
     
     setMinimumSize( QSize(200, 200) );
 

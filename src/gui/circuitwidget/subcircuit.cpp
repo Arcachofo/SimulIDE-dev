@@ -125,7 +125,6 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 
                 if( !subcFile.endsWith( ".simu" ) ) subcFile += ".simu" ;
 
-                //qDebug() << "SubCircuit::SubCircuit"<<m_pkgeFile <<m_subcFile ;
                 loadSubCircuit( subcFile );
 
                 if( m_mainComponent )  // Example MCU in subcircuit needs to know where subcircuit is.
@@ -309,7 +308,6 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
     }
     else
     {
-        //qDebug() << "SubCircuit::addPin"<<id<<label;
         QColor color = Qt::black;
         if( !m_isLS ) color = QColor( 250, 250, 200 );
 

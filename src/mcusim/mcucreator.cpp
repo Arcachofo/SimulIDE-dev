@@ -440,13 +440,11 @@ void McuCreator::createTimer( QDomElement* t )
 
             McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );
             QString ocrRegName = el.attribute("ocreg");
-            //uint8_t*   ocrReg = mcu->getReg(  );
 
             timer->addOcUnit( ocUnit );
             ocUnit->m_timer = timer;
             ocUnit->m_ocPin = pin;
             mcu->watchRegNames( ocrRegName, R_WRITE, ocUnit, &McuOcUnit::ocrChanged );
-            //ocUnit->m_ocrReg = ocrReg;
 
             if( el.hasAttribute("configbits") )
             {
