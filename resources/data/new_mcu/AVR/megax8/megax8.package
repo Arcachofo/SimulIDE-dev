@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<package name="atmega328" pins="28" width="4" height="15">
+<package name="" pins="28" width="4" height="15">
 
     <pin side="left" pos="1"  type="IO" id="PC6"  label="C6"/>
     <pin side="left" pos="2"  type="IO" id="PD0"  label="D0"/>

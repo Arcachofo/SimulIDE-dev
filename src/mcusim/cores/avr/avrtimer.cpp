@@ -26,8 +26,8 @@ McuTimer* AvrTimer::makeTimer( eMcu* mcu, QString name ) // Static
 {
     QString n = name.toLower();
     if     ( n == "timer0" ) return new AvrTimer0( mcu, name );
-    else if( n == "timer1" ) return new AvrTimer1( mcu, name );
     else if( n == "timer2" ) return new AvrTimer2( mcu, name );
+    else                     return new AvrTimer1( mcu, name );
     return NULL;
 }
 

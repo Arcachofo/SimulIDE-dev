@@ -3,9 +3,9 @@
 <mcu name="mega168" core="AVR" data="1280" prog="8192" progword="2" eeprom="512"
             inst_cycle="1">
 
-    <include file="megax8_regs.xml" />
-    <include file="megaxx8_int.xml" />
-    <include file="megax8_perif.xml" />
+    <include file="megax8/megax8_regs.xml" />
+    <include file="megax8/megaxx8_int.xml" />
+    <include file="megax8/megax8_perif.xml" />
     
     <datablock name="RAM" start="0x0100" end="0x04FF"/>
     
