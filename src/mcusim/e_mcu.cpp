@@ -67,10 +67,10 @@ void eMcu::runEvent()
 {
     //if( m_state == cpu_Running )
     {
-
+        uint32_t pc = cpu->PC;
         //if( cyclesDone > 1 ) cyclesDone -= 1;
         //else
-        if( cpu->PC < m_flashSize )
+        if( pc < m_flashSize )
         {
             cpu->runDecoder();              // Run Decoder
 

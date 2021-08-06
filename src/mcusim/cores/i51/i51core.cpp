@@ -134,28 +134,28 @@ void I51Core::add_solve_flags( uint8_t value1, uint8_t value2, uint8_t acc )
     /* Carry: overflow from 7th bit to 8th bit */
     /// PSW[Cy] = ( value1+value2+acc ) >> 8;
     uint8_t cy = ((value1+value2+acc)>>1) & 1<<7;
-    write_S_Bit( Cy, cy )
+    write_S_Bit( Cy, cy );
 
     /* Auxiliary carry: overflow from 3th bit to 4th bit */
     ///PSW[AC] =( (value1 & 7 )+( value2 & 7 ) + acc ) >> 3;
-    write_S_Bit( AC, ((value1 & 7 )+( value2 & 7 ) + acc) & 1<<3 )
+    write_S_Bit( AC, ((value1 & 7 )+( value2 & 7 ) + acc) & 1<<3 );
 
     /* Overflow: overflow from 6th or 7th bit, but not both */
     /// PSW[OV] =( ((value1 & 127 )+( value2 & 127 ) + acc ) >> 7 )^PSW[Cy];
-    write_S_Bit( OV, ((value1 & 127 )+( value2 & 127 ) + acc ) ^ cy )
+    write_S_Bit( OV, ((value1 & 127 )+( value2 & 127 ) + acc ) ^ cy );
 }
 
 void I51Core::sub_solve_flags( uint8_t value1, uint8_t value2 )
 {
     ///PSW[Cy] =( (value1-value2) >> 8 ) & 1;
     uint8_t cy = ((value1-value2)>>1) & 1<<7; //Carry: overflow from 7th bit to 8th bit
-    write_S_Bit( Cy, cy )
+    write_S_Bit( Cy, cy );
 
     /// PSW[AC] =( ((value1 & 7 )-( value2 & 7 )) >> 3 ) & 1;
-    write_S_Bit( AC, ((value1 & 7 )-( value2 & 7 )) & 1<<3 )
+    write_S_Bit( AC, ((value1 & 7 )-( value2 & 7 )) & 1<<3 );
 
     /// PSW[OV] =( (((value1 & 127 )-( value2 & 127 )) >> 7 ) & 1 )^PSW[Cy];
-    write_S_Bit( OV, ((value1 & 127 )-( value2 & 127 )) ^ cy )
+    write_S_Bit( OV, ((value1 & 127 )-( value2 & 127 )) ^ cy );
 }
 
 // INSTRUCTIONS -----------------------------

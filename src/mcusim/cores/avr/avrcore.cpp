@@ -33,7 +33,9 @@
 AvrCore::AvrCore( eMcu* mcu )
        : CoreCpu( mcu )
 {
-    ///m_address_size = 2; //= avr->eind ? 3 : 2;
+    EIND  = m_mcu->getReg( "EIND" );
+    RAMPZ = m_mcu->getReg( "RAMPZ" );
+    m_rampzAddr = m_mcu->getRegAddress( "RAMPZ" );
 }
 AvrCore::~AvrCore() {}
 
@@ -46,23 +48,19 @@ inline void AvrCore::flags_ns( uint8_t res )
 {
     /// SREG[S_N] = (res >> 7) & 1;
     uint8_t sn = res & (1<<7);
-    write_S_Bit( S_N, sn )
+    write_S_Bit( S_N, sn );
 
     /// SREG[S_S] = SREG[S_N] ^ SREG[S_V];
     write_S_Bit( S_S, sn ^ STATUS(S_V) );
 }
 inline void AvrCore::flags_zns( uint8_t res )
 {
-    /// SREG[S_Z] = res == 0;
     write_S_Bit( S_Z, (res == 0) );
-
     flags_ns( res );
 }
 inline void AvrCore::flags_Rzns( uint8_t res )
 {
-    /// if( res ) SREG[S_Z] = 0;
     if( res ) clear_S_Bit( S_Z );
-
     flags_ns( res );
 }
 inline void AvrCore::flags_sub( uint8_t res, uint8_t rd, uint8_t rr )
@@ -108,23 +106,19 @@ inline void AvrCore::flags_sub_zns( uint8_t res, uint8_t rd, uint8_t rr )
 }
 inline void AvrCore::flags_znv0s( uint8_t res )
 {
-    /// SREG[S_V] = 0;
     clear_S_Bit( S_V );
-
     flags_zns( res );
 }
 inline void AvrCore::flags_zcnvs( uint8_t res, uint8_t vr )
 {
-    /// SREG[S_Z] = res == 0;
     write_S_Bit( S_Z, (res == 0) );
 
-    /// SREG[S_C] = vr & 1;
     uint8_t sc = vr & 1;
     write_S_Bit( S_C, sc );
 
     /// SREG[S_N] = res >> 7;
     uint8_t sn = res & (1<<7);
-    write_S_Bit( S_N, sn )
+    write_S_Bit( S_N, sn );
 
     /// SREG[S_V] = SREG[S_N] ^ SREG[S_C];
     uint8_t sv = sn ^ sc;
@@ -135,10 +129,8 @@ inline void AvrCore::flags_zcnvs( uint8_t res, uint8_t vr )
 }
 inline void AvrCore::flags_zcvs( uint8_t res, uint8_t vr )
 {
-    /// SREG[S_Z] = res == 0;
     write_S_Bit( S_Z, (res == 0) );
 
-    /// SREG[S_C] = vr & 1;
     uint8_t sc = vr & 1;
     write_S_Bit( S_C, sc );
 
@@ -153,12 +145,11 @@ inline void AvrCore::flags_zcvs( uint8_t res, uint8_t vr )
 }
 inline void AvrCore::flags_zns16( uint16_t res )
 {
-    /// SREG[S_Z] = res == 0;
     write_S_Bit( S_Z, (res == 0) );
 
     /// SREG[S_N] = (res >> 15) & 1;
     uint8_t sn = res & (1<<15);
-    write_S_Bit( S_N, sn )
+    write_S_Bit( S_N, sn );
 
     /// SREG[S_S] = SREG[S_N] ^ SREG[S_V];
     write_S_Bit( S_S, sn ^ STATUS(S_V) );
@@ -179,6 +170,8 @@ void AvrCore::runDecoder()
 {
     m_mcu->cyclesDone = 0;
     uint16_t instruction = m_progMem[PC];
+    if( instruction == 37913 )
+        instruction = 37913;
 
     uint32_t new_pc = PC + 1;    // future "default" pc
     int cycle = 1;
@@ -225,9 +218,8 @@ void AvrCore::runDecoder()
                                     int16_t res =( (int8_t)m_dataMem[r]) *( (int8_t)m_dataMem[d]);
                                     SET_REG16_LH( 0, res);
                                     /// SREG[S_C] =( res >> 15) & 1;
-                                    write_S_Bit( S_C, res & 1<<15 )
-                                    /// SREG[S_Z] = res == 0;
-                                    write_S_Bit( S_Z, res == 0 )
+                                    write_S_Bit( S_C, res & 1<<15 );
+                                    write_S_Bit( S_Z, res == 0 );
                                     cycle++;
                                 }    break;
                                 case 0x0300: {    // MUL -- Multiply -- 0000 0011 fddd frrr
@@ -235,38 +227,32 @@ void AvrCore::runDecoder()
                                     int8_t d = 16 +( (instruction >> 4) & 0x7);
                                     int16_t res = 0;
                                     uint8_t c = 0;
-                                    //const char* name = "";
+
                                     switch( instruction & 0x88) {
                                         case 0x00:     // MULSU -- Multiply Signed Unsigned -- 0000 0011 0ddd 0rrr
                                             res =( (uint8_t)m_dataMem[r]) *( (int8_t)m_dataMem[d]);
                                             c =( res >> 15) & 1;
-                                            //name = "mulsu";
                                             break;
                                         case 0x08:     // FMUL -- Fractional Multiply Unsigned -- 0000 0011 0ddd 1rrr
                                             res =( (uint8_t)m_dataMem[r]) *( (uint8_t)m_dataMem[d]);
                                             c =( res >> 15) & 1;
                                             res <<= 1;
-                                            //name = "fmul";
                                             break;
                                         case 0x80:     // FMULS -- Multiply Signed -- 0000 0011 1ddd 0rrr
                                             res =( (int8_t)m_dataMem[r]) *( (int8_t)m_dataMem[d]);
                                             c =( res >> 15) & 1;
                                             res <<= 1;
-                                            //name = "fmuls";
                                             break;
                                         case 0x88:     // FMULSU -- Multiply Signed Unsigned -- 0000 0011 1ddd 1rrr
                                             res =( (uint8_t)m_dataMem[r]) *( (int8_t)m_dataMem[d]);
                                             c =( res >> 15) & 1;
                                             res <<= 1;
-                                            //name = "fmulsu";
                                             break;
                                     }
                                     cycle++;
                                     SET_REG16_LH( 0, res);
-                                    /// SREG[S_C] = c;
-                                    write_S_Bit( S_C, c )
-                                    /// SREG[S_Z] = res == 0;
-                                    write_S_Bit( S_Z, res == 0 )
+                                    write_S_Bit( S_C, c );
+                                    write_S_Bit( S_Z, res == 0 );
                                 }    break;
                                 default: ;//_avr_invalid_instruction(avr);
                             }
@@ -285,7 +271,7 @@ void AvrCore::runDecoder()
                 }    break;
                 case 0x1000: {    // CPSE -- Compare, skip if equal -- 0001 00rd dddd rrrr
                     get_vd5_vr5( instruction );
-                    uint16_t res = vd == vr;
+                    bool res = vd == vr;
                     if( res )
                     {
                         if( is_instr_32b( new_pc ) ) { new_pc += 2; cycle += 2; }
@@ -307,33 +293,30 @@ void AvrCore::runDecoder()
             }
         }    break;
 
-        case 0x2000: {
-            switch( instruction & 0xfc00) {
+        case 0x2000:
+        {
+            get_vd5_vr5( instruction );
+            uint8_t res = vr;
+            bool znv = true;
+            switch( instruction & 0xfc00)
+            {
                 case 0x2000: {    // AND -- Logical AND -- 0010 00rd dddd rrrr
-                    get_vd5_vr5( instruction );
-                    uint8_t res = vd & vr;
-                    m_mcu->writeReg( d, res);
-                    flags_znv0s( res );
+                    res &= vd;
                 }    break;
                 case 0x2400: {    // EOR -- Logical Exclusive OR -- 0010 01rd dddd rrrr
-                    get_vd5_vr5( instruction );
-                    uint8_t res = vd ^ vr;
-                    m_mcu->writeReg( d, res);
-                    flags_znv0s( res);
+                    res ^= vd;
                 }    break;
                 case 0x2800: {    // OR -- Logical OR -- 0010 10rd dddd rrrr
-                    get_vd5_vr5( instruction );
-                    uint8_t res = vd | vr;
-                    m_mcu->writeReg( d, res);
-                    flags_znv0s( res);
+                    res |= vd;
                 }    break;
                 case 0x2c00: {    // MOV -- 0010 11rd dddd rrrr
-                    get_d5_vr5( instruction );
-                    uint8_t res = vr;
-                    m_mcu->writeReg( d, res);
+                    //res = vr;
+                    znv = false;
                 }    break;
                 default: ;//_avr_invalid_instruction(avr);
             }
+            if( znv ) flags_znv0s( res);
+            m_mcu->writeReg( d, res );
         }    break;
 
         case 0x3000: {    // CPI -- Compare Immediate -- 0011 kkkk hhhh kkkk
@@ -380,26 +363,23 @@ void AvrCore::runDecoder()
              * y = 16 bits register index, 1 = Y, 0 = X
              * q = 6 bit displacement
              */
-            switch( instruction & 0xd008 ) {
+            uint16_t v = 0;
+            switch( instruction & 0xd008 )
+            {
                 case 0xa000:
                 case 0x8000: {    // LD( LDD) -- Load Indirect using Z -- 10q0 qqsd dddd yqqq
-                    uint16_t v = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8);
-                    get_d5_q6( instruction );
-                    if( instruction & 0x0200) SET_RAM( v+q, m_dataMem[d]);
-                    else                      m_mcu->writeReg( d, GET_RAM(v+q));
-
-                    cycle += 1; // 2 cycles, 3 for tinyavr
+                    v = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8);
                 }    break;
                 case 0xa008:
                 case 0x8008: {    // LD( LDD) -- Load Indirect using Y -- 10q0 qqsd dddd yqqq
-                    uint16_t v = m_dataMem[R_YL] |( m_dataMem[R_YH] << 8);
-                    get_d5_q6( instruction );
-                    if( instruction & 0x0200) SET_RAM( v+q, m_dataMem[d]);
-                    else                      m_mcu->writeReg( d, GET_RAM(v+q));
-                    cycle += 1; // 2 cycles, 3 for tinyavr
+                    v = m_dataMem[R_YL] |( m_dataMem[R_YH] << 8);
                 }    break;
                 //default: ;//_avr_invalid_instruction(avr);
             }
+            get_d5_q6( instruction );
+            if( instruction & 0x0200) SET_RAM( v+q, m_dataMem[d]);
+            else                      m_mcu->writeReg( d, GET_RAM(v+q));
+            cycle += 1; // 2 cycles, 3 for tinyavr
         }    break;
 
         case 0x9000: {
@@ -413,13 +393,11 @@ void AvrCore::runDecoder()
             {
                 case 0x9478: // SEI -- 1001 0100 0111 1000
                 {
-                    /// SREG[S_I] = 1;
                     set_S_Bit( S_I );
                     m_mcu->enableInterrupts( 1 );
                 }break;
                 case 0x94F8: // CLI -- 1001 0100 1111 1000
                 {
-                    /// SREG[S_I] = 0;
                     clear_S_Bit( S_I );
                     m_mcu->enableInterrupts( 0 );
                 }break;
@@ -453,7 +431,7 @@ void AvrCore::runDecoder()
                     int e = instruction & 0x10;
                     int p = instruction & 0x100;
                     uint32_t z = m_dataMem[R_ZL] | (m_dataMem[R_ZH] << 8);
-                    if( e ) z |= m_dataMem[eind] << 16;
+                    if( e ) z |= *EIND << 16;
                     if( p )
                     {
                         PUSH_STACK( new_pc );
@@ -480,7 +458,7 @@ void AvrCore::runDecoder()
                 }    break;
                 case 0x95d8: {    // ELPM -- Load Program Memory R0 <-( Z) -- 1001 0101 1101 1000
                     //if( !rampz) _avr_invalid_instruction(avr);
-                    uint32_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8) |( m_dataMem[rampz] << 16);
+                    uint32_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8) | (*RAMPZ << 16);
                     uint16_t prgData = m_progMem[z/2];
                     if( z&1 ) prgData >>= 8;
                     m_mcu->writeReg( 0, prgData & 0xFF );
@@ -509,7 +487,7 @@ void AvrCore::runDecoder()
                         case 0x9006:
                         case 0x9007: {    // ELPM -- Extended Load Program Memory -- 1001 000d dddd 01oo
                             //if( !rampz) _avr_invalid_instruction(avr);
-                            uint16_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8) |( m_dataMem[rampz] << 16);
+                            uint16_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8) | (*RAMPZ << 16);
                             get_d5( instruction );
                             int op = instruction & 1;
                             uint16_t prgData = m_progMem[z/2];
@@ -517,7 +495,7 @@ void AvrCore::runDecoder()
                             m_mcu->writeReg( d, prgData & 0xFF );
                             if( op) {
                                 z++;
-                                m_mcu->writeReg( rampz, z >> 16);
+                                m_mcu->writeReg( m_rampzAddr, z >> 16);
                                 SET_REG16_HL( R_ZL, z );
                             }
                             cycle += 2; // 3 cycles
@@ -611,13 +589,11 @@ void AvrCore::runDecoder()
                         case 0x900f: {    // POP -- 1001 000d dddd 1111
                             get_d5( instruction );
                             m_mcu->writeReg( d, POP_STACK8() );
-                            //uint16_t sp = getSP();
                             cycle++;
                         }    break;
                         case 0x920f: {    // PUSH -- 1001 001d dddd 1111
                             get_vd5( instruction );
                             PUSH_STACK8(vd);
-                            //uint16_t sp = getSP();
                             cycle++;
                         }    break;
                         case 0x9400: {    // COM -- One's Complement -- 1001 010d dddd 0000
@@ -625,7 +601,6 @@ void AvrCore::runDecoder()
                             uint8_t res = 0xff - vd;
                             m_mcu->writeReg( d, res );
                             flags_znv0s( res );
-                            ///SREG[S_C] = 1;
                             set_S_Bit( S_C );
                         }    break;
                         case 0x9401: {    // NEG -- Two's Complement -- 1001 010d dddd 0001
@@ -634,13 +609,8 @@ void AvrCore::runDecoder()
                             m_mcu->writeReg( d, res );
                             /// SREG[S_H] = ((res >> 3) |( vd >> 3)) & 1;
                             write_S_Bit( S_H, ((res >> 3) |( vd >> 3)) & 1 );
-
-                            /// SREG[S_V] = res == 0x80;
                             write_S_Bit( S_V, res == 0x80 );
-
-                            /// SREG[S_C] = res != 0;
                             write_S_Bit( S_V, res != 0 );
-
                             flags_zns( res );
                         }    break;
                         case 0x9402: {    // SWAP -- Swap Nibbles -- 1001 010d dddd 0010
@@ -652,9 +622,7 @@ void AvrCore::runDecoder()
                             get_vd5( instruction );
                             uint8_t res = vd + 1;
                             m_mcu->writeReg( d, res);
-                            /// SREG[S_V] = res == 0x80;
                             write_S_Bit( S_V, res == 0x80 );
-
                             flags_zns( res);
                         }    break;
                         case 0x9405: {    // ASR -- Arithmetic Shift Right -- 1001 010d dddd 0101
@@ -667,9 +635,7 @@ void AvrCore::runDecoder()
                             get_vd5( instruction );
                             uint8_t res = vd >> 1;
                             m_mcu->writeReg( d, res );
-                            //SREG[S_N] = 0;
                             clear_S_Bit( S_N );
-
                             flags_zcvs( res, vd);
                         }    break;
                         case 0x9407: {    // ROR -- Rotate Right -- 1001 010d dddd 0111
@@ -682,7 +648,6 @@ void AvrCore::runDecoder()
                             get_vd5( instruction );
                             uint8_t res = vd - 1;
                             m_mcu->writeReg( d, res );
-                            /// SREG[S_V] = res == 0x7f;
                             write_S_Bit( S_V, res == 0x7f );
                             flags_zns( res );
                         }    break;
@@ -714,7 +679,7 @@ void AvrCore::runDecoder()
                                     /// SREG[S_V] =( (~vp & res) >> 15) & 1;
                                     write_S_Bit( S_V, (~vp & res) & (1<<15) );
 
-                                    //SREG[S_C] =( (~res & vp) >> 15) & 1;
+                                    ///SREG[S_C] =( (~res & vp) >> 15) & 1;
                                     write_S_Bit( S_C, (~res & vp) & (1<<15) );
 
                                     flags_zns16( res );
@@ -770,7 +735,6 @@ void AvrCore::runDecoder()
                                             uint16_t res = vd * vr;
                                             cycle++;
                                             SET_REG16_LH( 0, res );
-                                            /// SREG[S_Z] = res == 0;
                                             write_S_Bit( S_Z, res == 0 );
 
                                             /// SREG[S_C] =( res >> 15) & 1;
@@ -826,7 +790,7 @@ void AvrCore::runDecoder()
                 case 0xf600: {    // BRXC/BRXS -- All the SREG branches -- 1111 0Boo oooo osss
                     int16_t o =( (int16_t)(instruction << 6)) >> 9; // offset
                     uint8_t s = instruction & 7;
-                    int set =( instruction & 0x0400) == 0;        // this bit means BRXC otherwise BRXS
+                    bool set =( instruction & 0x0400) == 0;        // this bit means BRXC otherwise BRXS
                     int branch =( STATUS(s) && set) ||( !STATUS(s) && !set);
                     if( branch) {
                         cycle++; // 2 cycles if taken, 1 otherwise
@@ -842,8 +806,8 @@ void AvrCore::runDecoder()
                 case 0xfa00:
                 case 0xfb00:{    // BST -- Bit Store into T from bit in Register -- 1111 101d dddd 0bbb
                     get_vd5_s3( instruction )
-                    //SREG[S_T] =( vd >> s) & 1;
-                    write_S_Bit( S_T, ( vd >> s) & 1 )
+                    ///SREG[S_T] =( vd >> s) & 1;
+                    write_S_Bit( S_T, ( vd >> s) & 1 );
                 }    break;
                 case 0xfc00:
                 case 0xfe00: {    // SBRS/SBRC -- Skip if Bit in Register is Set/Clear -- 1111 11sd dddd 0bbb
@@ -862,11 +826,8 @@ void AvrCore::runDecoder()
         }    break;
         default: ;//_avr_invalid_instruction(avr);
     }
+    if( new_pc > m_progSize )
+        qDebug() << "PC ERROR" << new_pc << m_progSize;
     PC = new_pc;
     m_mcu->cyclesDone += cycle;
-}
-
-void AvrCore::createInstructions()
-{
-
 }

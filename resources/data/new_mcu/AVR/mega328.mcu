@@ -3,9 +3,9 @@
 <mcu name="mega328" core="AVR" data="2304" prog="16384" progword="2" eeprom="1024"
             inst_cycle="1">
 
-    <include file="megax8_regs.xml" />
-    <include file="megaxx8_int.xml" />
-    <include file="megax8_perif.xml" />
+    <include file="megax8/megax8_regs.xml" />
+    <include file="megax8/megaxx8_int.xml" />
+    <include file="megax8/megax8_perif.xml" />
     
     <datablock name="RAM" start="0x0100" end="0x08FF"/>
     

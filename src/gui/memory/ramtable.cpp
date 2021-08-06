@@ -55,7 +55,7 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     it->setFlags( Qt::ItemIsEnabled );
     it->setFont( font );
     m_pc.setItem( 0, 0, it );
-    m_pc.setColumnWidth(0, 50*scale);
+    m_pc.setColumnWidth(0, 60*scale);
 
     it = new QTableWidgetItem(0);
     it->setFlags( Qt::ItemIsEnabled );

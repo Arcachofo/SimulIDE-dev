@@ -22,16 +22,6 @@
 
 #include "e_mcu.h"
 
-#define clear_S_Bit(bit) \
-        *m_STATUS &= ~(1<<bit);
-
-#define set_S_Bit( bit ) \
-        *m_STATUS |= 1<<bit;
-
-#define write_S_Bit(bit,val) \
-        if( val ) *m_STATUS |= 1<<bit; \
-        else      *m_STATUS &= ~(1<<bit);
-
 #define STATUS(bit) (*m_STATUS & (1<<bit))
 
 class MAINMODULE_EXPORT McuCore
@@ -69,6 +59,15 @@ class MAINMODULE_EXPORT McuCore
         uint8_t* m_sph;   // STACK POINTER high byte
         bool     m_spPre; // STACK pre-increment?
         int      m_spInc; // STACK grows up or down? (+1 or -1)
+
+        void clear_S_Bit( uint8_t bit) { *m_STATUS &= ~(1<<bit); }
+        void set_S_Bit( uint8_t bit ) { *m_STATUS |= 1<<bit; }
+
+        void write_S_Bit( uint8_t  bit, bool val )
+        {
+            if( val ) *m_STATUS |= 1<<bit; \
+            else      *m_STATUS &= ~(1<<bit);
+        }
 
         /*std::vector<std::function<void()>> m_instructions;
 

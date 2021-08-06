@@ -200,9 +200,9 @@ Unique  Id: Package-64:
 Circuit Id: Arduino Mega Board
 <item Logic_Symbol="false" mainComp="false" Show_id="true" hflip="1" rotation="0" valLabelx="0" labelrot="0" boardRot="-1e+6" y="-392" labelx="9" boardPos="-1e+6,-1e+6" Height="41" Width="20" x="-580" valLabRot="0" Show_Val="false" Name="Mega" circRot="4.728303169285713e-308" SubcType="2" Unit="  " valLabely="0" objectName="Package-64" Package_File="Mega.package" id="Arduino Mega Board" vflip="1" Background="mega_board.png" labely="-26" circPos="0,0" itemtype="Package"/>
 
-Unique  Id: atmega2560-63: 
-Circuit Id: atmega2560
-<item Logic_Symbol="false" Mhz="16" mainComp="true" Show_id="true" hflip="1" rotation="0" valLabelx="0" Auto_Load="false" labelrot="0" boardRot="0" y="-420" labelx="81" boardPos="240,-28" x="-340" valLabRot="0" Show_Val="false" Name="" circRot="0" Unit="  " valLabely="0" objectName="atmega2560-63" Program="" id="atmega2560" vflip="1" labely="74" circPos="-340,-420" itemtype="MCU"/>
+Unique  Id: mega2560-63: 
+Circuit Id: mega2560
+<item Logic_Symbol="false" Mhz="16" mainComp="true" Show_id="true" hflip="1" rotation="0" valLabelx="0" Auto_Load="false" labelrot="0" boardRot="0" y="-420" labelx="81" boardPos="240,-28" x="-340" valLabRot="0" Show_Val="false" Name="" circRot="0" Unit="  " valLabely="0" objectName="mega2560-63" Program="" id="mega2560" vflip="1" labely="74" circPos="-340,-420" itemtype="MCU"/>
 
 Unique  Id: Tunnel-62: 
 Circuit Id: Tunnel-3

@@ -316,6 +316,14 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
                    this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
 
     menu->addSeparator();
+
+    if( !event )
+    {
+        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
+        connect( propertiesAction, SIGNAL( triggered()),
+                             this, SLOT(slotProperties()), Qt::UniqueConnection );
+        menu->addSeparator();
+    }
 }
 
 void Mcu::slotOpenMcuMonitor()

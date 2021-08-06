@@ -83,8 +83,10 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
 int McuCreator::processFile( QString fileName )
 {
     fileName = m_basePath+"/"+fileName;
-    QDomDocument domDoc = fileToDomDoc( fileName, "SubCircuit::SubCircuit" );
-    if( domDoc.isNull() ) { return 1; }
+    QDomDocument domDoc = fileToDomDoc( fileName, "McuCreator::processFile" );
+    if( domDoc.isNull() )
+    {
+        return 1; }
 
     QDomElement root = domDoc.documentElement();
 
@@ -95,6 +97,7 @@ int McuCreator::processFile( QString fileName )
     if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute( "progword" ).toUInt(0,0);
     if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute( "inst_cycle" ).toDouble();
 
+    int error = 0;
     QDomNode node = root.firstChild();
     while( !node.isNull() )
     {
@@ -114,7 +117,11 @@ int McuCreator::processFile( QString fileName )
         else if( el.tagName() == "spi" )        createSpi( &el );
         else if( el.tagName() == "wdt" )        createWdt( &el );
         else if( el.tagName() == "eeprom" )     createEeprom( &el );
-        else if( el.tagName() == "include" )    processFile( el.attribute("file") );
+        else if( el.tagName() == "include" )
+        {
+            error = processFile( el.attribute("file") );
+            if( error ) return error;
+        }
 
         node = node.nextSibling();
     }
@@ -800,8 +807,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     {
         QString mode = el->attribute("mode");
         mcu->watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode );
-    }
-}
+}   }
 
 void McuCreator::setInterrupt( QDomElement* el, McuModule* module )
 {

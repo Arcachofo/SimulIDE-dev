@@ -324,11 +324,13 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     {
                         SubCircuit* subci = static_cast<SubCircuit*>(item);
                         Mcu* mcu = static_cast<Mcu*>( subci->getMainComp() );
-                        mcu->setSubcDir("");
-                        mcu->setProgram( element.attribute("Program") );
-                        mcu->setFreq( element.attribute("Mhz").toDouble() );
-                        mcu->setAutoLoad( element.attribute("Auto_Load").toInt() );
-
+                        if( mcu )
+                        {
+                            mcu->setSubcDir("");
+                            mcu->setProgram( element.attribute("Program") );
+                            mcu->setFreq( element.attribute("Mhz").toDouble() );
+                            mcu->setAutoLoad( element.attribute("Auto_Load").toInt() );
+                        }
                         subci->setObjectName( subci->objectName().remove( "Arduino " ) );
                         subci->setId( subci->itemID().remove( "Arduino " ) );
                     }

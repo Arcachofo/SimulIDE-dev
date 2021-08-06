@@ -38,14 +38,10 @@ class MAINMODULE_EXPORT AvrCore : public CoreCpu
         virtual void reset();
         virtual void runDecoder();
 
-
-    protected:
-        uint16_t rampz;   // optional, only for ELPM/SPM on >64Kb cores
-        uint16_t eind;    // optional, only for EIJMP/EICALL on >64Kb cores
-
-        ///uint8_t m_address_size;    // 2, or 3 for cores >128KB in flash
-
-        void createInstructions();
+    private:
+        uint16_t m_rampzAddr;
+        uint8_t* RAMPZ;   // optional, only for ELPM/SPM on >64Kb cores
+        uint8_t* EIND;    // optional, only for EIJMP/EICALL on >64Kb cores
 
         void flags_ns( uint8_t res );
         void flags_zns( uint8_t res );

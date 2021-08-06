@@ -94,6 +94,8 @@
         
         <register name="SPMCSR" addr="55"  bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,SIGRD,RWWSB,SPMIE"/>
         
+        <register name="RAMPZ"  addr="59"  bits=""/>
+        <register name="EIND"   addr="60"  bits=""/>
         <register name="SPL"    addr="61"  bits=""/>
         <register name="SPH"    addr="62"  bits=""/>
         <register name="SREG"   addr="63"  bits="C,Z,N,V,S,H,T,I"/>

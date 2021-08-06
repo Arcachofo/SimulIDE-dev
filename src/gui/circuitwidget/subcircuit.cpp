@@ -543,7 +543,7 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
             menu->addSection( "                            " );
             menu->addSection( mainComp->itemType()+" at "+id );
             menu->addSection( "" );
-            mainComp->contextMenu( event, menu );
+            mainComp->contextMenu( NULL, menu );
 
             menu->addSection( "                            " );
             menu->addSection( id );
