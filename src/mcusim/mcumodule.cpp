@@ -23,6 +23,7 @@ McuModule::McuModule( eMcu* mcu, QString name )
 {
     m_mcu = mcu;
     m_name = name;
+    m_interrupt = NULL;
 }
 McuModule::~McuModule( ){}
 

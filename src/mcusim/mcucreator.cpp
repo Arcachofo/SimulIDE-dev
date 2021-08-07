@@ -473,7 +473,8 @@ void McuCreator::createTimer( QDomElement* t )
 void McuCreator::createUsart( QDomElement* u )
 {
     QString name = u->attribute( "name" );
-    int number = u->attribute( "number" ).toInt();
+    int   number = u->attribute( "number" ).toInt();
+
     McuUsart* usartM;
     if     ( m_core == "8051" ) usartM = new I51Usart( mcu, name, number );
     else if( m_core == "AVR" )  usartM = new AvrUsart( mcu, name, number );
@@ -811,7 +812,9 @@ void McuCreator::createInterrupt( QDomElement* el )
 
 void McuCreator::setInterrupt( QDomElement* el, McuModule* module )
 {
-    module->m_interrupt = mcu->m_interrupts.m_intList.value( el->attribute("name") );
+    QString intName = el->attribute("name");
+    Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
+    module->m_interrupt = inte;
 }
 
 void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )

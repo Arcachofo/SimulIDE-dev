@@ -57,7 +57,7 @@
         <interrupt name="T2_OVF" />
     </timer>
     
-    <usart name="USART0"  number="1" configregsA="UCSR0C" configbitsB="UCSR0B">
+    <usart name="USART0"  number="1" configregsA="UCSR0C" configregsB="UCSR0B">
         <trunit type="tx" pin="PORTD1" register="UDR0">
             <interrupt name="USART_T" />
         </trunit>
@@ -65,7 +65,6 @@
         <trunit type="rx" pin="PORTD0" register="UDR0">
             <interrupt name="USART_R" />
         </trunit>
-        
     </usart>
     
     <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->

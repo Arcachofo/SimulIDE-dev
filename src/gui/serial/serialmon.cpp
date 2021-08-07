@@ -36,6 +36,8 @@ SerialMonitor::SerialMonitor( QWidget* parent, McuInterface* mcu, int uartNum )
     m_printASCII = true;
     m_addCR = false;
 
+    asciiButton->setChecked( true );
+
     Simulator::self()->addToUpdateList( &m_uartOutPanel );
     Simulator::self()->addToUpdateList( &m_uartInPanel );
 }
@@ -58,13 +60,15 @@ void SerialMonitor::on_value_returnPressed()
 
 void SerialMonitor::on_valueButton_clicked()
 {
-    m_printASCII = !valueButton->isChecked();
+    m_printASCII = valueButton->isChecked(); // Button is not yet checked
     asciiButton->setChecked( m_printASCII );
+    valueButton->setChecked( !m_printASCII );
 }
 
 void SerialMonitor::on_asciiButton_clicked()
 {
-    m_printASCII = asciiButton->isChecked();
+    m_printASCII = !asciiButton->isChecked();  // Button is not yet checked
+    asciiButton->setChecked( m_printASCII );
     valueButton->setChecked( !m_printASCII );
 }
 

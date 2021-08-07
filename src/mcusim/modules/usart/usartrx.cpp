@@ -69,7 +69,7 @@ void UartRx::runEvent()
         m_currentBit = 0;
         m_frame = 0;
         m_state = usartRECEIVE;
-        //on_dataEnd.emitValue( data );
+
         m_interrupt->raise( data );
     }
     if( m_period )

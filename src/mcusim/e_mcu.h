@@ -65,7 +65,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         virtual int status() override;
         virtual int pc() override;
 
-        virtual void uartOut( int uart, uint32_t value ) override;
+        virtual void uartOut( int number, uint32_t value ) override;
         virtual void uartIn( int number, uint32_t value ) override;
         //-------------------------------------------------------------
         // End Overrides of McuInterface-------------------------------

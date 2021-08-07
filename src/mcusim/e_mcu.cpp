@@ -98,8 +98,10 @@ void eMcu::setFreq( double freq )
     m_simCycPI = 1e6*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }
 
-void eMcu::uartOut( int uart, uint32_t value ) // Send value to OutPanelText
+void eMcu::uartOut( int number, uint32_t value ) // Send value to OutPanelText
 {
+    //if( (uint)number > m_usarts.size() ) return;
+    //m_usarts.at(number-1)->byteSent( value );
 }
 
 void eMcu::uartIn( int number, uint32_t value ) // Receive one byte on Uart

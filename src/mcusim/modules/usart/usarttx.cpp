@@ -53,10 +53,9 @@ void UartTx::runEvent()
     }
     else if( m_state == usartTXEND )
     {
-        //on_dataEnd.emitValue( m_data );
         m_usart->byteSent( m_data );
         m_interrupt->raise();
-        //m_usart->dataSent();
+
         m_state = usartIDLE;
         m_ioPin->setOutState( 1 );
     }

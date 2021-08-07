@@ -290,7 +290,7 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
             connect( openSerMonAct, SIGNAL(triggered()), sm, SLOT(map()) );
             sm->setMapping( openSerMonAct, i+1 );
         }
-        m_serMonMask |= 1<<i;
+        //m_serMonMask |= 1<<i;
     }
     connect( sm, SIGNAL(mapped(int)), this, SLOT(slotOpenTerm(int)) );
 
@@ -338,6 +338,8 @@ void Mcu::slotOpenMcuMonitor()
 
 void Mcu::slotOpenTerm( int num )
 {
+    m_serMonMask |= 1<<num;
+
     SerialMonitor* ser = new SerialMonitor( CircuitWidget::self(), &m_eMcu, num );
     ser->setWindowTitle( this->idLabel()+" - Uart"+QString::number(num) );
     ser->show();

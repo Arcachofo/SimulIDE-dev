@@ -132,7 +132,7 @@
         <interrupt name="T5_OVF" />
     </timer>
     
-    <usart name="USART0"  number="1" configregsA="UCSR0C" configbitsB="UCSR0B">
+    <usart name="USART0"  number="1" configregsA="UCSR0C" configregsB="UCSR0B">
         <trunit type="tx" pin="PORTE1" register="UDR0">
             <interrupt name="USART0_T" />
         </trunit>
@@ -142,7 +142,7 @@
         </trunit>
     </usart>
     
-    <usart name="USART1"  number="2" configregsA="UCSR1C" configbitsB="UCSR1B">
+    <usart name="USART1"  number="2" configregsA="UCSR1C" configregsB="UCSR1B">
         <trunit type="tx" pin="PORTD3" register="UDR1">
             <interrupt name="USART1_T" />
         </trunit>
@@ -152,7 +152,7 @@
         </trunit>
     </usart>
     
-    <usart name="USART2"  number="3" configregsA="UCSR2C" configbitsB="UCSR2B">
+    <usart name="USART2"  number="3" configregsA="UCSR2C" configregsB="UCSR2B">
         <trunit type="tx" pin="PORTH1" register="UDR2">
             <interrupt name="USART2_T" />
         </trunit>
@@ -162,7 +162,7 @@
         </trunit>
     </usart>
     
-    <usart name="USART3"  number="4" configregsA="UCSR3C" configbitsB="UCSR3B">
+    <usart name="USART3"  number="4" configregsA="UCSR3C" configregsB="UCSR3B">
         <trunit type="tx" pin="PORTJ1" register="UDR3">
             <interrupt name="USART3_T" />
         </trunit>
