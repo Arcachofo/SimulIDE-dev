@@ -170,8 +170,6 @@ void AvrCore::runDecoder()
 {
     m_mcu->cyclesDone = 0;
     uint16_t instruction = m_progMem[PC];
-    if( instruction == 37913 )
-        instruction = 37913;
 
     uint32_t new_pc = PC + 1;    // future "default" pc
     int cycle = 1;

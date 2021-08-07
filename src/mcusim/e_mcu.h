@@ -93,6 +93,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         Interrupts m_interrupts;
         McuPorts   m_ports;
         McuTimers  m_timers;
+        std::vector<McuModule*> m_modules;
         //McuUsarts  m_usarts;
         std::vector<McuUsart*> m_usarts;
 

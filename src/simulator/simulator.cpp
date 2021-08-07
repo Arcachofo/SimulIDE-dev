@@ -279,6 +279,7 @@ void Simulator::startSim( bool paused )
         eNode* enode = m_eNodeList.at(i);
         enode->setNodeNumber( i+1 );
         enode->initialize();
+        //qDebug() << "initializing  "<< enode->itemId();
     }
     for( eElement* el : m_elementList ) el->stamp();
 

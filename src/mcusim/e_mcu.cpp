@@ -44,10 +44,13 @@ eMcu::~eMcu()
     delete cpu;
 
     m_interrupts.remove();
-    m_timers.remove();
-    m_ports.remove();
+   // m_timers.remove();
+   //m_ports.remove();
 
-    m_progMem.clear();
+    for( McuModule* module : m_modules ) delete module;
+    //m_usarts.clear();
+
+    //m_progMem.clear();
 }
 
 void eMcu::initialize()

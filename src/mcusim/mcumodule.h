@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT McuModule
 
     public:
         McuModule( eMcu* mcu, QString name );
-        ~McuModule();
+        virtual ~McuModule();
 
         virtual void configureA( uint8_t ){;}
         virtual void configureB( uint8_t ){;}

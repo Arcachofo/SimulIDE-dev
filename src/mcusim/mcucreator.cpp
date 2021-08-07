@@ -161,6 +161,8 @@ void McuCreator::createEeprom(  QDomElement* e )
     if( m_core == "AVR" )  eeprom = new AvrEeprom( mcu, eepromName );
     else return;
 
+    mcu->m_modules.emplace_back( eeprom );
+
     setConfigRegs( e, eeprom );
 
     if( e->hasAttribute("dataregs") )
@@ -314,6 +316,7 @@ void McuCreator::createPort( QDomElement* p )
     if( m_core == "AVR" ) port = new AvrPort( mcu, name, numPins );
     else                  port = new McuPort( mcu, name, numPins );
     mcu->m_ports.m_portList.insert( name, port );
+    mcu->m_modules.emplace_back( port );
     port->createPins( m_mcuComp );
 
     uint16_t addr = 0;
@@ -387,6 +390,7 @@ void McuCreator::createTimer( QDomElement* t )
     else return;
 
     mcu->m_timers.m_timerList.insert( timerName, timer );
+    mcu->m_modules.emplace_back( timer );
 
     if( t->hasAttribute("counter") )
     {
@@ -497,6 +501,8 @@ void McuCreator::createUsart( QDomElement* u )
             else if( type == "rx" ) trUnit = usartM->m_receiver;
             else continue;
 
+            mcu->m_modules.emplace_back( trUnit );
+
             QString regName = el.attribute( "register" );
 
             if( type == "tx" )
@@ -529,6 +535,8 @@ void McuCreator::createAdc( QDomElement* e )
     McuAdc* adc;
     if( m_core == "AVR" ) adc = new AvrAdc( mcu, name );
     else return;
+
+    mcu->m_modules.emplace_back( adc );
 
     setConfigRegs( e, adc );
 
@@ -595,6 +603,8 @@ void McuCreator::createAcomp( QDomElement* e )
     if( m_core == "AVR" ) comp = new AvrComp( mcu, name );
     else return;
 
+    mcu->m_modules.emplace_back( comp );
+
     setConfigRegs( e, comp );
 
     QDomNode node = e->firstChild();
@@ -622,6 +632,8 @@ void McuCreator::createTwi( QDomElement* e )
     McuTwi* twi;
     if( m_core == "AVR" ) twi = new AvrTwi( mcu, name );
     else return;
+
+    mcu->m_modules.emplace_back( twi );
 
     setConfigRegs( e, twi );
     if( e->hasAttribute("dataregs") )
@@ -680,6 +692,8 @@ void McuCreator::createSpi( QDomElement* e )
     if( m_core == "AVR" ) spi = new AvrSpi( mcu, name );
     else return;
 
+    mcu->m_modules.emplace_back( spi );
+
     setConfigRegs( e, spi );
     if( e->hasAttribute("dataregs") )
     {
@@ -730,6 +744,8 @@ void McuCreator::createWdt( QDomElement* e )
     McuWdt* wdt;
     if( m_core == "AVR" ) wdt = new AvrWdt( mcu, name );
     else return;
+
+    mcu->m_modules.emplace_back( wdt );
 
     setConfigRegs( e, wdt );
     QDomNode node = e->firstChild();

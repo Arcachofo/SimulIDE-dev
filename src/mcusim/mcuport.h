@@ -91,7 +91,7 @@ class MAINMODULE_EXPORT McuPorts
     protected:
        eMcu* m_mcu;
 
-       QHash<QString, McuPort*>  m_portList; // Access PORTS by name
+       QHash<QString, McuPort*> m_portList; // Access PORTS by name
 };
 
 #endif

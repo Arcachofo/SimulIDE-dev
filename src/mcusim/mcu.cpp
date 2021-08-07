@@ -338,7 +338,7 @@ void Mcu::slotOpenMcuMonitor()
 
 void Mcu::slotOpenTerm( int num )
 {
-    m_serMonMask |= 1<<num;
+    m_serMonMask |= 1<<(num-1);
 
     SerialMonitor* ser = new SerialMonitor( CircuitWidget::self(), &m_eMcu, num );
     ser->setWindowTitle( this->idLabel()+" - Uart"+QString::number(num) );
