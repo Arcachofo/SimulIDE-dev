@@ -96,7 +96,6 @@ class MAINMODULE_EXPORT McuTimers
         McuTimers( eMcu* mcu );
         ~McuTimers();
 
-       void remove();
        McuTimer* getTimer( QString name ) { return m_timerList.value( name ); }
 
     protected:

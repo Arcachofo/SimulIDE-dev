@@ -41,7 +41,6 @@ class MAINMODULE_EXPORT McuCore
         uint32_t PC;
 
     protected:
-
         eMcu* m_mcu;
 
         uint8_t*  m_dataMem;
@@ -53,12 +52,11 @@ class MAINMODULE_EXPORT McuCore
         uint16_t  m_lowDataMemEnd;
         uint16_t  m_regEnd;
 
-        /// uint8_t* m_sreg;  // Mirror of the STATUS register
-        uint8_t* m_STATUS;  // MSTATUS register
-        uint8_t* m_spl;   // STACK POINTER low byte
-        uint8_t* m_sph;   // STACK POINTER high byte
-        bool     m_spPre; // STACK pre-increment?
-        int      m_spInc; // STACK grows up or down? (+1 or -1)
+        uint8_t* m_STATUS;  // STATUS register
+        uint8_t* m_spl;     // STACK POINTER low byte
+        uint8_t* m_sph;     // STACK POINTER high byte
+        bool     m_spPre;   // STACK pre-increment?
+        int      m_spInc;   // STACK grows up or down? (+1 or -1)
 
         void clear_S_Bit( uint8_t bit) { *m_STATUS &= ~(1<<bit); }
         void set_S_Bit( uint8_t bit ) { *m_STATUS |= 1<<bit; }
@@ -68,15 +66,6 @@ class MAINMODULE_EXPORT McuCore
             if( val ) *m_STATUS |= 1<<bit; \
             else      *m_STATUS &= ~(1<<bit);
         }
-
-        /*std::vector<std::function<void()>> m_instructions;
-
-        template <typename T>
-        void insertIntr( uint16_t opcode, T* core, void (T::*func)())
-        {
-            m_instructions.at( opcode ) = std::bind( func, core );
-        }*/
-        //virtual void createInstructions()=0;
 };
 
 #endif

@@ -44,7 +44,7 @@ void McuUsart::byteReceived( uint8_t data )
 
 // ----------------------------------------
 
-McuUsarts::McuUsarts( eMcu* mcu  )
+/*McuUsarts::McuUsarts( eMcu* mcu  )
 {
     m_mcu = mcu;
 }
@@ -55,4 +55,4 @@ void McuUsarts::remove()
 {
     for( McuUsart* usart : m_usartList ) delete usart;
     m_usartList.clear();
-}
+}*/

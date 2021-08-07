@@ -83,7 +83,6 @@ class MAINMODULE_EXPORT McuPorts
         McuPorts( eMcu* mcu );
         ~McuPorts();
 
-       void remove();
        McuPort* getPort( QString name ) { return m_portList.value( name ); }
        McuPin*  getPin( QString name );
        QHash<QString, McuPort*> getPorts() { return m_portList; }

@@ -106,12 +106,6 @@ McuPorts::McuPorts( eMcu* mcu )
 }
 McuPorts::~McuPorts(){}
 
-void McuPorts::remove()
-{
-    for( McuPort* port : m_portList ) delete port;
-    m_portList.clear();
-}
-
 McuPin* McuPorts::getPin( QString name )
 {
     int pinNumber = name.right(1).toInt();

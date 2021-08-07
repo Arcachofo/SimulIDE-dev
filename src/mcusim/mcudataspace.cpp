@@ -19,9 +19,7 @@
 
 #include "mcudataspace.h"
 
-DataSpace::DataSpace()
-{
-}
+DataSpace::DataSpace(){}
 
 DataSpace::~DataSpace()
 {
@@ -40,8 +38,7 @@ void DataSpace::initialize()
     {
         regInfo_t regInfo = m_regInfo[regName];
         writeReg( regInfo.address, regInfo.resetVal );
-    }
-}
+}   }
 
 uint8_t DataSpace::readReg( uint16_t addr )
 {

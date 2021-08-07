@@ -42,15 +42,8 @@ eMcu::eMcu( QString id )
 eMcu::~eMcu()
 {
     delete cpu;
-
     m_interrupts.remove();
-   // m_timers.remove();
-   //m_ports.remove();
-
     for( McuModule* module : m_modules ) delete module;
-    //m_usarts.clear();
-
-    //m_progMem.clear();
 }
 
 void eMcu::initialize()
@@ -84,11 +77,7 @@ void eMcu::runEvent()
     }
 }
 
-int eMcu::status()
-{
-    /// readStatus( 0 );
-    return getRamValue( m_sregAddr );
-}
+int eMcu::status() { return getRamValue( m_sregAddr ); }
 
 int eMcu::pc() { return cpu->PC; }
 

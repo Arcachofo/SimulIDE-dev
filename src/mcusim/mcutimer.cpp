@@ -145,11 +145,5 @@ McuTimers::McuTimers( eMcu* mcu  )
 {
     m_mcu = mcu;
 }
-
 McuTimers::~McuTimers(){}
 
-void McuTimers::remove()
-{
-    for( McuTimer* timer : m_timerList ) delete timer;
-    m_timerList.clear();
-}

@@ -48,7 +48,7 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
 
 // ----------------------------------------
 
-class MAINMODULE_EXPORT McuUsarts
+/*class MAINMODULE_EXPORT McuUsarts
 {
         friend class McuCreator;
 
@@ -63,6 +63,6 @@ class MAINMODULE_EXPORT McuUsarts
        eMcu* m_mcu;
 
        std::vector<McuUsart*> m_usartList;// Access Usarts by name
-};
+};*/
 
 #endif
