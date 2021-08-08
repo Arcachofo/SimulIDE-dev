@@ -32,6 +32,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
 {
         Q_OBJECT
         Q_PROPERTY( QStringList varList  READ varList  WRITE setVarList )
+        Q_PROPERTY( QVector<int> eeprom  READ eeprom   WRITE setEeprom )
         Q_PROPERTY( double   Mhz         READ freq     WRITE setFreq     DESIGNABLE true  USER true )
         Q_PROPERTY( QString  Program     READ program  WRITE setProgram  DESIGNABLE true  USER true )
         Q_PROPERTY( bool     Auto_Load   READ autoLoad WRITE setAutoLoad DESIGNABLE true  USER true )
@@ -49,6 +50,9 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         QStringList varList();
         void setVarList( QStringList vl );
+
+        void setEeprom(QVector<int> eep );
+        QVector<int> eeprom();
 
         QString program();
         void setProgram( QString pro );

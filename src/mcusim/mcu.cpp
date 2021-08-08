@@ -180,6 +180,16 @@ void Mcu::setVarList( QStringList vl )
     m_eMcu.getRamTable()->loadVarSet( vl );
 }
 
+void Mcu::setEeprom( QVector<int> eep )
+{
+    if( eep.size() > 1 ) m_eMcu.setEeprom( &eep );
+}
+
+QVector<int> Mcu::eeprom()
+{
+    return *(m_eMcu.eeprom());
+}
+
 void Mcu::initialize()
 {
 }
