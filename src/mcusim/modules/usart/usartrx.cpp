@@ -21,6 +21,7 @@
 #include "mcuinterrupts.h"
 #include "iopin.h"
 #include "simulator.h"
+#include "connector.h"
 
 UartRx::UartRx( UsartModule* usart, eMcu* mcu, QString name )
       : UartTR( usart, mcu, name )
@@ -34,8 +35,9 @@ void UartRx::enable( uint8_t en )
     bool enabled = en > 0;
     if( enabled == m_enabled ) return;
     m_enabled = enabled;
+    m_runHardware = m_ioPin->connector();
 
-    if( enabled ) processData( 0 );
+    if( enabled && m_runHardware) processData( 0 ); // Start reading
     else m_state = usartSTOPPED;
     m_frame = 0;
 }
@@ -62,15 +64,14 @@ void UartRx::runEvent()
 
             if( parity != parityBit ) { m_usart->parityError(); return; }
         }
-        m_usart->byteReceived( data );
-
         if( mDATABITS == 9 ) m_usart->setBit9( m_bit9 ); // Save Bit 9
 
         m_currentBit = 0;
         m_frame = 0;
         m_state = usartRECEIVE;
 
-        m_interrupt->raise( data );
+        m_usart->byteReceived( data );
+        /// m_interrupt->raise( data ); implemented in bytereceived
     }
     if( m_period )
         Simulator::self()->addEvent( m_period, this ); // Shedule next sample

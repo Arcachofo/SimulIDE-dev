@@ -40,6 +40,7 @@ void McuUsart::byteReceived( uint8_t data )
 {
     *m_rxRegister = data; // Save data to Ram
     if( m_monitor ) m_monitor->printIn( data );
+    m_receiver->raiseInt( data );
 }
 
 // ----------------------------------------

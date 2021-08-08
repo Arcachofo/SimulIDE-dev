@@ -65,6 +65,8 @@
         <trunit type="rx" pin="PORTD0" register="UDR0">
             <interrupt name="USART_R" />
         </trunit>
+        
+        <interrupt name="USART_U" />
     </usart>
     
     <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->

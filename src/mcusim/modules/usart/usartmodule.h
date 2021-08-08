@@ -87,6 +87,8 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
             usartRXEND,
         };
 
+        virtual void initialize() override;
+
         virtual void processData( uint8_t data )=0;
         virtual void enable( uint8_t en ){;}
 
@@ -100,6 +102,8 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
         void setPin( IoPin* pin ) { m_ioPin = pin; }
         IoPin* getPin() { return m_ioPin; }
 
+        void raiseInt( uint8_t data );
+
     protected:
         UsartModule* m_usart;
         IoPin* m_ioPin;
@@ -112,6 +116,7 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
         state_t m_state;
 
         bool m_enabled;
+        bool m_runHardware; // If m_ioPin is not connected don't run hardware
 
         uint64_t m_period; // Baudrate period
 };

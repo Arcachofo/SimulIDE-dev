@@ -33,8 +33,10 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
 
         virtual void configureA( uint8_t newUCSRnC ) override;
         virtual void configureB( uint8_t newUCSRnB ) override;
-        virtual uint8_t getBit9();
-        virtual void setBit9( uint8_t bit );
+        virtual uint8_t getBit9() override;
+        virtual void setBit9( uint8_t bit ) override;
+
+        virtual void byteSent( uint8_t data ) override;
 
         void setUBRRnL( uint8_t val );
         void setUBRRnH( uint8_t val );

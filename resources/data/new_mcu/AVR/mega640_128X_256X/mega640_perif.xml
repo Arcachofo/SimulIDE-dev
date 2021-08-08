@@ -140,6 +140,8 @@
         <trunit type="rx" pin="PORTE0" register="UDR0">
             <interrupt name="USART0_R" />
         </trunit>
+        
+        <interrupt name="USART0_U" />
     </usart>
     
     <usart name="USART1"  number="2" configregsA="UCSR1C" configregsB="UCSR1B">
@@ -150,6 +152,8 @@
         <trunit type="rx" pin="PORTD2" register="UDR1">
             <interrupt name="USART1_R" />
         </trunit>
+        
+        <interrupt name="USART1_U" />
     </usart>
     
     <usart name="USART2"  number="3" configregsA="UCSR2C" configregsB="UCSR2B">
@@ -160,6 +164,8 @@
         <trunit type="rx" pin="PORTH0" register="UDR2">
             <interrupt name="USART2_R" />
         </trunit>
+        
+        <interrupt name="USART2_U" />
     </usart>
     
     <usart name="USART3"  number="4" configregsA="UCSR3C" configregsB="UCSR3B">
@@ -170,6 +176,8 @@
         <trunit type="rx" pin="PORTJ0" register="UDR3">
             <interrupt name="USART3_R" />
         </trunit>
+        
+        <interrupt name="USART3_U" />
     </usart>
     
     <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->

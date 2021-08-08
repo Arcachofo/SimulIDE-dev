@@ -32,10 +32,7 @@ AvrWdt::AvrWdt( eMcu* mcu, QString name )
     m_WDE  = mcu->getRegBits( "WDE" );
     m_WDP  = mcu->getRegBits( "WDP0, WDP1, WDP2, WDP3" );
 }
-
-AvrWdt::~AvrWdt()
-{
-}
+AvrWdt::~AvrWdt(){}
 
 void AvrWdt::initialize()
 {

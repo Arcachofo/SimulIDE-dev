@@ -28,10 +28,7 @@ McuWdt::McuWdt( eMcu* mcu, QString name )
       , eElement( name )
 {
 }
-
-McuWdt::~McuWdt()
-{
-}
+McuWdt::~McuWdt(){}
 
 void McuWdt::initialize()
 {
@@ -44,9 +41,12 @@ void McuWdt::runEvent()            // Overflow
 {
     if( !m_enabled ) return;
 
-    if( m_ovfInter ) m_interrupt->raise(); // .emitValue(1);
-    if( m_ovfReset ) m_mcu->cpu->reset();
-
+    if( m_ovfInter ) m_interrupt->raise();
+    if( m_ovfReset )
+    {
+        qDebug() << "McuWdt::runEvent - Watchdog Reset\n";
+        m_mcu->cpu->reset();
+    }
     Simulator::self()->addEvent( m_ovfPeriod, this );
 }
 

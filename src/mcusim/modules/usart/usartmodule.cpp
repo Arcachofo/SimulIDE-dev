@@ -20,6 +20,7 @@
 #include "usartmodule.h"
 #include "usarttx.h"
 #include "usartrx.h"
+#include "mcuinterrupts.h"
 
 UsartModule::UsartModule( eMcu* mcu, QString name )
 {
@@ -56,6 +57,12 @@ UartTR::UartTR( UsartModule* usart, eMcu* mcu, QString name )
 }
 UartTR::~UartTR( ){}
 
+void UartTR::initialize()
+{
+    m_enabled = false;
+    m_runHardware = false;
+}
+
 bool UartTR::getParity( uint8_t data )
 {
     bool parity = false;
@@ -66,5 +73,10 @@ bool UartTR::getParity( uint8_t data )
     }
     if( mPARITY == parODD ) parity ^= 1;
     return parity;
+}
+
+void UartTR::raiseInt( uint8_t data )
+{
+    m_interrupt->raise( data );
 }
 

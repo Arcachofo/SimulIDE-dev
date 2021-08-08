@@ -131,3 +131,8 @@ void AvrUsart::setBit9( uint8_t bit )
     if( bit ) UCSRNB |= m_bit9Rx.mask;
 }
 
+void AvrUsart::byteSent( uint8_t data )
+{
+    McuUsart::byteSent( data );
+    m_interrupt->raise(); // USART Data Register Empty Interrupt
+}

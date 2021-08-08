@@ -34,6 +34,7 @@ void UartTx::enable( uint8_t en )
     bool enabled = en > 0;
     if( enabled == m_enabled ) return;
     m_enabled = enabled;
+    m_runHardware = m_ioPin->connector();
 
     if( enabled )
     {
@@ -58,8 +59,7 @@ void UartTx::runEvent()
 
         m_state = usartIDLE;
         m_ioPin->setOutState( 1 );
-    }
-}
+}   }
 
 void UartTx::processData( uint8_t data )
 {
@@ -69,7 +69,7 @@ void UartTx::processData( uint8_t data )
     m_data = data;
 
     data &= mDATAMASK;
-    m_frame = data<<1;    // Data + Start bit
+    m_frame = data<<1;                   // Data + Start bit
     if( mDATABITS == 9 )
     {
         m_bit9  = m_usart->getBit9();
@@ -77,22 +77,27 @@ void UartTx::processData( uint8_t data )
     }
     m_framesize = mDATABITS+1;
 
-    if( mPARITY > parNONE )                       // Parity bit
+    if( mPARITY > parNONE )              // Parity bit
     {
         bool parity = getParity( data );
 
         if( parity ) m_frame |= 1<<m_framesize;
         m_framesize++;
     }
-    for( int i=0; i<mSTOPBITS; ++i )     // Stop bits
+    for( int i=0; i<mSTOPBITS; ++i )    // Stop bits
     {
         m_frame |= 1<<m_framesize;
         m_framesize++;
     }
     m_currentBit = 0;
     if( m_period )
-        sendBit();                            // Start transmission
-}
+    {
+        if( m_runHardware ) sendBit(); // Start transmission
+        else                           // Not running Hardwware
+        {
+            m_state = usartTXEND;      // Shedule End of transmission
+            Simulator::self()->addEvent( m_period*m_framesize, this );
+}   }   }
 
 void UartTx::sendBit()
 {
@@ -100,7 +105,7 @@ void UartTx::sendBit()
     m_frame >>= 1;
 
     m_currentBit++;
-    if( m_currentBit == m_framesize )        // Data transmission finished
+    if( m_currentBit == m_framesize ) // Data transmission finished
     {
         m_state = usartTXEND;
     }

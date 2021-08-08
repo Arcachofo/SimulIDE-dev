@@ -15,16 +15,16 @@
         <interrupt name="T1COB"   enable="OCIE1B" flag="OCF1B" priority="14" vector="0x00C"/>
         <interrupt name="T1_OVF"  enable="TOIE1"  flag="TOV1"  priority="13" vector="0x00D"/>
         <interrupt name="T0COA"   enable="OCIE0A" flag="OCF0A" priority="12" vector="0x00E"/>
-        <interrupt name="T0COB"   enable="OCIE0B" flag="OCF0B" priority="11" vector="0x00F"/>>
+        <interrupt name="T0COB"   enable="OCIE0B" flag="OCF0B" priority="11" vector="0x00F"/>
         <interrupt name="T0_OVF"  enable="TOIE0"  flag="TOV0"  priority="10" vector="0x010"/>
         <interrupt name="SPI"     enable="SPIE"   flag="SPIF"  priority="9"  vector="0x011"/>
-        <interrupt name="USART_R" enable="RXCIE0" flag="RXC0"  priority="8"  vector="0x012" />
-        <!--interrupt name="USART_U"  enable=" "  flag=" " priority="7" vector="0x013"/ -->
-        <interrupt name="USART_T" enable="TXCIE0" flag="TXC0"  priority="6"  vector="0x014" />
-        <interrupt name="ADC"     enable="ADIE"   flag="ADIF"  priority="5"  vector="0x015" />
+        <interrupt name="USART_R" enable="RXCIE0" flag="RXC0"  priority="8"  vector="0x012"/>
+        <interrupt name="USART_U" enable="UDRIE0" flag="UDRE0" priority="7"  vector="0x013"/>
+        <interrupt name="USART_T" enable="TXCIE0" flag="TXC0"  priority="6"  vector="0x014"/>
+        <interrupt name="ADC"     enable="ADIE"   flag="ADIF"  priority="5"  vector="0x015"/>
         <interrupt name="EEPR"    enable="EERIE"  flag=""      priority="4"  vector="0x016"/>
         <interrupt name="ACOMP"   enable="ACIE"   flag="ACI"   priority="3"  vector="0x017"/>
-        <interrupt name="TWI"     enable="TWIE"   flag="TWINT" priority="2"  vector="0x018" />
+        <interrupt name="TWI"     enable="TWIE"   flag="TWINT" priority="2"  vector="0x018"/>
         <!--interrupt name="SPM"  enable=" "  flag=" " priority="1" vector="0x0319"/ -->
     </interrupts>
 </parts>

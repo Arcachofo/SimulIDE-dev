@@ -522,10 +522,11 @@ void McuCreator::createUsart( QDomElement* u )
             while( !node1.isNull() )
             {
                 QDomElement el1 = node1.toElement();
-                if( el1.tagName() == "interrupt" )  setInterrupt( &el1, trUnit );
+                if( el1.tagName() == "interrupt" ) setInterrupt( &el1, trUnit );
 
                 node1 = node1.nextSibling();
         }   }
+        else if( el.tagName() == "interrupt" ) setInterrupt( &el, usartM );
         node = node.nextSibling();
 }   }
 
