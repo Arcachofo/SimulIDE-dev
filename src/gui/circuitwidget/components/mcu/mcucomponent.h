@@ -55,7 +55,7 @@ class MAINMODULE_EXPORT McuComponent : public Chip
         virtual void initChip();
 
         QStringList varList();
-        void setVarList( QStringList vl ) { m_varList = vl; }
+        void setVarList( QStringList vl );
 
         QString program()   const { return m_symbolFile; }
         void setProgram( QString pro );
@@ -130,7 +130,6 @@ class MAINMODULE_EXPORT McuComponent : public Chip
         QString m_subcDir;      // Subcircuit Path
 
         QList<McuComponentPin*> m_pinList;
-        QStringList m_varList;
 
         MCUMonitor* m_mcuMonitor;
 };

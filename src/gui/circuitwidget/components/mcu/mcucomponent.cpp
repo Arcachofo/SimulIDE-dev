@@ -387,8 +387,6 @@ bool McuComponent::load( QString fileName )
     {
         if( !m_attached ) attachPins();
 
-        if( !m_varList.isEmpty() ) m_processor->getRamTable()->loadVarSet( m_varList );
-
         m_symbolFile = circuitDir.relativeFilePath( fileName );
         m_lastFirmDir = cleanPathAbs;
 
@@ -410,10 +408,12 @@ void McuComponent::setSubcDir( QString dir ) // Used in subcircuits
 
 QStringList McuComponent::varList()
 {
-    if( m_processor->getLoadStatus() )
-        return m_processor->getRamTable()->getVarSet();
+    return m_processor->getRamTable()->getVarSet();
+}
 
-    return m_varList;
+void McuComponent::setVarList( QStringList vl )
+{
+    m_processor->getRamTable()->loadVarSet( vl );
 }
 
 void McuComponent::setProgram( QString pro )

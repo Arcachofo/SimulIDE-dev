@@ -31,6 +31,7 @@ class MCUMonitor;
 class MAINMODULE_EXPORT Mcu : public Chip
 {
         Q_OBJECT
+        Q_PROPERTY( QStringList varList  READ varList  WRITE setVarList )
         Q_PROPERTY( double   Mhz         READ freq     WRITE setFreq     DESIGNABLE true  USER true )
         Q_PROPERTY( QString  Program     READ program  WRITE setProgram  DESIGNABLE true  USER true )
         Q_PROPERTY( bool     Auto_Load   READ autoLoad WRITE setAutoLoad DESIGNABLE true  USER true )
@@ -45,6 +46,9 @@ class MAINMODULE_EXPORT Mcu : public Chip
         static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
+
+        QStringList varList();
+        void setVarList( QStringList vl );
 
         QString program();
         void setProgram( QString pro );

@@ -170,6 +170,16 @@ void Mcu::setProgram( QString pro )
     { load( m_eMcu.m_firmware ); }
 }
 
+QStringList Mcu::varList()
+{
+    return m_eMcu.getRamTable()->getVarSet();
+}
+
+void Mcu::setVarList( QStringList vl )
+{
+    m_eMcu.getRamTable()->loadVarSet( vl );
+}
+
 void Mcu::initialize()
 {
 }
