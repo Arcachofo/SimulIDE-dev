@@ -159,7 +159,7 @@ int InoDebugger::compile()
     QString cBuildPath = addQuotes( buildPath+"/build" );
     QString cCachePath = addQuotes( buildPath+"/cache" );
     QString boardName;
-    if( m_board < Custom ) boardName = m_boardList.at( m_board );
+    if( m_board < Custom ) boardName = "arduino:avr:"+m_boardList.at( m_board );
     else                   boardName = m_customBoard;
 
     command += " -compile";
@@ -168,7 +168,7 @@ int InoDebugger::compile()
     command += " -tools "+toolsAvr;
     command += " -built-in-libraries "+libraries;
     command += " -libraries "+userLibrar;
-    command += " -fqbn=arduino:avr:"+boardName;
+    command += " -fqbn="+boardName;
     command += " -build-path "+cBuildPath;
     command += " -build-cache "+cCachePath;
     command += " "+filePath;
