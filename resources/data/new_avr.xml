@@ -2,12 +2,12 @@
 
 <itemlib>
     
-    <itemset category="AVRs" type="MCU">
-        <item name="mega48"  package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega48" ></item>
-        <item name="mega88"  package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega88" ></item>
-        <item name="mega168" package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega168"></item>
-        <item name="mega328" package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega328"></item>
-        <item name="mega640" package="new_mcu/AVR/mega640_128X_256X/mega640" data="new_mcu/AVR/mega640"></item>
+    <itemset category="AVR" type="MCU">
+        <item name="mega48"   package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega48" ></item>
+        <item name="mega88"   package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega88" ></item>
+        <item name="mega168"  package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega168"></item>
+        <item name="mega328"  package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega328"></item>
+        <item name="mega640"  package="new_mcu/AVR/mega640_128X_256X/mega640" data="new_mcu/AVR/mega640"></item>
         <item name="mega1280" package="new_mcu/AVR/mega640_128X_256X/mega640" data="new_mcu/AVR/mega1280"></item>
         <item name="mega2560" package="new_mcu/AVR/mega640_128X_256X/mega640" data="new_mcu/AVR/mega2560"></item>
     </itemset>

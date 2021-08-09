@@ -200,10 +200,10 @@ void ItemLibrary::loadItems()
     addItem( Servo::libraryItem() );
     addItem( AudioOut::libraryItem() );
     // Micro
-    addItem( new LibraryItem( tr("AVRs"),tr("Micro"), "ic2.png","", 0l ) );
+    addItem( new LibraryItem( tr("AVR"),tr("Micro"), "ic2.png","", 0l ) );
     addItem( PICComponent::libraryItem() );
     addItem( new LibraryItem( tr("I51"),tr("Micro"), "ic2.png","", 0l ) );
-    addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "arduino.png","", 0l ) );
+    addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "board.png","", 0l ) );
     addItem( new LibraryItem( tr("Shields"),tr("Micro"), "shield.png","", 0l ) );
     addItem( new LibraryItem( tr("Sensors"),tr("Micro"), "1to2.png","", 0l ) );
     addItem( SR04::libraryItem() );

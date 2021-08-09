@@ -160,7 +160,7 @@
         
         <file alias="switchbut.png">../src/icons/mainwindow/switchbut.png</file>
         
-        <file alias="arduinoUnoIcon.png">../src/icons/components/arduinoUnoIcon.png</file>
+        <file alias="board.png">../src/icons/components/board.png</file>
         <file alias="shield.png">../src/icons/components/shield.png</file>
         
         <file alias="sr04.png">../src/icons/components/sr04.png</file>

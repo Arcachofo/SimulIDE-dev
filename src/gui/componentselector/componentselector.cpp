@@ -178,7 +178,6 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
     if( nameFull.size() > 1 ) info = nameFull.last();
     
     //qDebug()<<name<<info;
-    
     bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
 
     QTreeWidgetItem* catItem = 0l;
@@ -217,7 +216,6 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
             QString topCat = catPath.takeLast();
 
             QList<QTreeWidgetItem*> list = findItems( topCat, Qt::MatchExactly | Qt::MatchRecursive );
-
             if( !list.isEmpty() )
             {
                 QTreeWidgetItem* topItem = list.first();
@@ -237,7 +235,6 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
     else                                                                // Find Category
     {
         QList<QTreeWidgetItem*> list = findItems( category, Qt::MatchExactly | Qt::MatchRecursive );
-
         if( !list.isEmpty() ) catItem = list.first();
     }
     if( !catItem ) return;
@@ -260,10 +257,8 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
     item->setData( 0, Qt::UserRole, type );
 
     if( ( type == "Subcircuit" )
-      ||( type == "Arduino" )
       ||( type == "MCU" )
-      ||( type == "PIC" )
-      ||( type == "AVR" ))
+      ||( type == "PIC" ))
     {
          item->setData( 0, Qt::WhatsThisRole, name );
     }
