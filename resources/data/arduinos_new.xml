@@ -1,16 +1,12 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-    
     <itemset category="Arduino" type="Subcircuit" folder="arduino_new">
-
-    <item name="Uno"         icon="uno_icon.png" /> 
-    <item name="Mega"        icon="mega_icon.png" /> 
-    <item name="Nano"        icon="nano_icon.png" /> 
-    <item name="Duemilanove" icon="due_icon.png" /> 
-    <item name="Leonardo"    icon="leo_icon.png" /> 
-    
+        <item name="Uno"         icon="uno_icon.png"  /> 
+        <item name="Mega"        icon="mega_icon.png" /> 
+        <item name="Nano"        icon="nano_icon.png" /> 
+        <item name="Duemilanove" icon="due_icon.png"  /> 
+        <item name="Leonardo"    icon="leo_icon.png"  /> 
     </itemset>
-    
 </itemlib>
 

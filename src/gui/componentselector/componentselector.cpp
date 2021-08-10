@@ -97,57 +97,55 @@ void ComponentSelector::loadXml( const QString &setFile )
           QMessageBox::warning(0, "ComponentSelector::loadXml", tr("Cannot read file %1:\n%2.").arg(setFile).arg(file.errorString()));
           return;
     }
-    QDomDocument domDoc;
-    if( !domDoc.setContent(&file) )
+    QXmlStreamReader reader(&file);
+    if( reader.readNextStartElement() )
     {
-         QMessageBox::warning(0, "ComponentSelector::loadXml", tr("Cannot set file %1\nto DomDocument").arg(setFile));
-         file.close();
-         return;
-    }
-    file.close();
-
-    QDomElement root  = domDoc.documentElement();
-    QDomNode    rNode = root.firstChild();
-
-    while( !rNode.isNull() )
-    {
-        QDomElement element = rNode.toElement();
-        QDomNode    node    = element.firstChild();
-
-        QString category = element.attribute( "category" );
-        std::string stdCat = category.toStdString();
-        const char* charCat = &(stdCat[0]);
-        category = QApplication::translate( "xmlfile", charCat );
-        //qDebug()<<"category = " <<category;
-        
-        QString type = element.attribute( "type");
-        LibraryItem* parent = m_itemLibrary.libraryItem( type );
-
-        if( parent )
+        if( reader.name() != "itemlib" )
         {
-            while( !node.isNull() )
+            QMessageBox::warning(0, "ComponentSelector::loadXml"
+                                 , tr("Error parsing file (itemlib):\n%1.").arg(setFile) );
+            file.close();
+            return;
+        }
+        while( reader.readNextStartElement() )
+        {
+            if( reader.name() != "itemset" ) reader.skipCurrentElement();
+
+            QString category = reader.attributes().value("category").toString();
+            std::string stdCat = category.toStdString();
+            const char* charCat = &(stdCat[0]);
+            category = QApplication::translate( "xmlfile", charCat );
+            //qDebug()<<"category = " <<category;
+
+            QString type = reader.attributes().value("type").toString();
+            LibraryItem* parent = m_itemLibrary.libraryItem( type );
+
+            if( parent )
             {
-                element = node.toElement();
-                QString icon = "";
-
-                if( element.hasAttribute("icon") )
+                while( reader.readNextStartElement() )
                 {
-                    QDir compSetDir( qApp->applicationDirPath() );
-                    compSetDir.cd( "../share/simulide/data/images" );
-                    icon = compSetDir.absoluteFilePath( element.attribute("icon") );
-                }
-                QString name = element.attribute( "name" );
-                
-                m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
-                //qDebug()<<"ComponentSelector::loadXml" <<name<< category<< icon<< type<<setFile;
-                if( element.hasAttribute("info") ) name += "???"+element.attribute( "info" );
+                    if(reader.name() == "item")
+                    {
+                        QString icon = "";
 
-                addItem( name, category, icon, type );
-                
-                node = node.nextSibling();
-        }   }
-        rNode = rNode.nextSibling();
-    }
+                        if( reader.attributes().hasAttribute("icon") )
+                        {
+                            QDir compSetDir( qApp->applicationDirPath() );
+                            compSetDir.cd( "../share/simulide/data/images" );
+                            icon = compSetDir.absoluteFilePath(
+                                       reader.attributes().value("icon").toString() );
+                        }
+                        QString name = reader.attributes().value("name").toString();
+
+                        m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
+                        //qDebug()<<"ComponentSelector::loadXml" <<name<< category<< icon<< type<<setFile;
+                        if( reader.attributes().hasAttribute("info") )
+                            name += "???"+reader.attributes().value("info").toString();
+
+                        addItem( name, category, icon, type );
+                        reader.skipCurrentElement();
+    }   }   }   }   }
+
     QString compSetName = setFile.split( "/").last();
 
     qDebug() << tr("        Loaded Component set:           ") << compSetName;
