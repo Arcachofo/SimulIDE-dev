@@ -84,10 +84,11 @@ class MAINMODULE_EXPORT Hd44780_Base : public Component
         int m_nibble;
         int m_input;
         
-        int m_blinkStep;
-        
         bool m_lastClock;
         bool m_writeDDRAM;
+        bool m_blinking;
+
+        uint64_t m_lastCircTime;
 
         //Inputs
         Pin* m_pinRS;

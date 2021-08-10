@@ -48,8 +48,10 @@ Hd44780_Base::~Hd44780_Base(){}
 void Hd44780_Base::init()
 {
     //qDebug() << "Hd44780_Base::initialize()" ;
+    m_lastCircTime = Simulator::self()->circTime();
     m_lastClock = false;
     m_writeDDRAM = true;
+    m_blinking = false;
     m_cursPos     = 0;
     m_shiftPos    = 0;
     m_direction   = 1;
@@ -250,14 +252,22 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
 
     QPen pen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
-    
+
     p->setBrush( QColor(50, 70, 100) );
     p->drawRoundedRect( m_area, 2, 2 );
     p->setBrush( QColor(200, 220, 180) );
     p->drawRoundedRect( 4, -(29+m_imgHeight), m_imgWidth+12, m_imgHeight+12, 8, 8 );
 
     if( m_dispOn == 0 ) return;
-    
+
+    uint64_t circTime = Simulator::self()->circTime();
+    if( circTime-m_lastCircTime >= 409600*1e6 )  // Blink period = 409.6 ms
+    {
+        m_lastCircTime = circTime;
+        if( m_cursorBlink ) m_blinking = !m_blinking;
+        else                m_blinking = false;
+    }
+
     for( int row=0; row<m_rows; row++ )
     {
         for( int col=0; col<m_cols; col++ )
@@ -265,33 +275,56 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
             int mem_pos = 0;
             if( row < 2 ) mem_pos += row*40+col;
             else          mem_pos += (row-2)*40+20+col;
-            
+
             int lineEnd = 79;
             int lineStart = 0;
-            
-            if( m_lineLength == 40 ) 
+
+            if( m_lineLength == 40 )
             {
                 if( mem_pos < 40 ) lineEnd   = 39;
                 else               lineStart = 40;
             }
-            
+
             mem_pos += m_shiftPos;
             if( mem_pos>lineEnd )   mem_pos -= m_lineLength;
             if( mem_pos<lineStart ) mem_pos += m_lineLength;
-            
+
             //qDebug() << row << col << mem_pos;
             int char_num = m_DDram[mem_pos];
-            QImage charact = m_fontImg.copy(char_num*10, 0, 10, 14);
-            
+            QImage charact( 10, 16, QImage::Format_RGB32 );
+
+            if( mem_pos == m_DDaddr )
+            {
+                if( m_blinking )     // Draw black instead of character
+                {
+                    charact.fill(qRgb(0, 0, 0));
+                    p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
+                    continue;
+                }
+                if( m_cursorOn )     // Draw cursor if enabled
+                {
+                    charact = m_fontImg.copy( 0, 0, 10, 16 );
+                    int y = 14;
+                    for( int x=9; x>0; x-=2 )
+                    {
+                        charact.setPixel(x,   y,   qRgb(0, 0, 0));
+                        charact.setPixel(x-1, y,   qRgb(0, 0, 0));
+                        charact.setPixel(x,   y+1, qRgb(0, 0, 0));
+                        charact.setPixel(x-1, y+1, qRgb(0, 0, 0));
+                    }
+                    p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
+                }
+            }
+
             if( char_num < 8 )                        // CGRam Character
             {
                 int addr = char_num*8;
-                
+
                 for( int y=0; y<14; y+=2 )
                 {
                     int data = m_CGram[ addr ];
                     addr++;
-                    
+
                     for( int x=9; x>0; x-=2 )
                     {
                         if( data & 1 )
@@ -302,27 +335,13 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
                             charact.setPixel(x-1, y+1, qRgb(0, 0, 0));
                         }
                         data = data>>1;
-                    }
-                }
-            }
+            }   }   }
+            else
+                charact = m_fontImg.copy( char_num*10, 0, 10, 16 );
+
             p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
-            
-            if( (mem_pos == m_DDaddr) & m_cursorOn )      // Draw cursor
-            {
-                if( m_cursorBlink ) m_blinkStep++;
-                else                m_blinkStep = 0;
-                
-                if( m_blinkStep < 20 )//m_cursorBlink
-                {
-                    charact = m_fontImg.copy(95*10, 0, 10, 14);
-                    p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
-                }
-                if( m_blinkStep == 40 ) m_blinkStep = 0;
-            }
         }
     }
 }
 
-
 #include "moc_hd44780_base.cpp"
-
