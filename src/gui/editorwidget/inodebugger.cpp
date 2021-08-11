@@ -134,8 +134,8 @@ int InoDebugger::compile()
     {
         #ifndef Q_OS_UNIX
         command += "_debug";
-        command = addQuotes( command );
         #endif
+        command = addQuotes( command );
         command += " --get-pref sketchbook.path";
 
         QProcess getSkBook( this );  // Get sketchBook Path
@@ -210,10 +210,8 @@ void InoDebugger::getVariables()
     QString objdump = m_compilerPath+"hardware/tools/avr/bin/avr-objdump";
     QString elfPath = buildPath+"/build/"+m_fileName+".ino.elf";
     
-    #ifndef Q_OS_UNIX
     objdump = addQuotes( objdump );
     elfPath = addQuotes( elfPath );
-    #endif
 
     QProcess getBss( 0l );      // Get var addresses from .bss section
     QString command  = objdump+" -t -j.bss "+elfPath;
@@ -256,11 +254,9 @@ void InoDebugger::mapFlashToSource()
     QString avrSize = m_compilerPath+"hardware/tools/avr/bin/avr-size";
     QString addr2li = m_compilerPath+"hardware/tools/avr/bin/avr-addr2line";
 
-    #ifndef Q_OS_UNIX
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );
     elfPath = addQuotes( elfPath );
-    #endif
 
     QProcess getSize( this );  // Get Firmware size
     getSize.start( avrSize + " " + elfPath );
