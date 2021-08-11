@@ -318,6 +318,7 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
 
             if( char_num < 8 )                        // CGRam Character
             {
+                charact = m_fontImg.copy( 0, 0, 10, 16 );
                 int addr = char_num*8;
 
                 for( int y=0; y<14; y+=2 )
