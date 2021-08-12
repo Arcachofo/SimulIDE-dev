@@ -68,7 +68,7 @@ Memory::Memory( QObject* parent, QString type, QString id )
     m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-outEnable" , 0, this, input );
     m_oePin->setLabelText( " OE" );
     m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
-    m_WePin->setInverted( true );
+    m_oePin->setInverted( true );
 
     m_dataBytes = 1;
     m_addrBits = 0;
@@ -146,7 +146,8 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     if( oe != m_oe )
     {
         m_oe = oe;
-        enableOutputs( oe );
+        for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !oe );
+        //enableOutputs( oe );
     }
 
     m_address = 0;
@@ -171,7 +172,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     }else                                  // Read
     {
         for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( output );
-        Simulator::self()->addEvent( 1, NULL );
+        //Simulator::self()->addEvent( 1, NULL );
         m_read = true;
         m_nextOutVal = m_ram[m_address];
         IoComponent::sheduleOutPuts( this );
@@ -283,6 +284,7 @@ void Memory::createAddrBits( int bits )
         m_inPin[i] = new IoPin( 180, QPoint(-24,origY+8+i*8 ), m_id+"-in"+number, i, this, input );
         m_inPin[i]->setLabelText( " A"+number );
         m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
+        initPin( m_inPin[i] );
     }
 }
 
@@ -321,6 +323,7 @@ void Memory::createDataBits( int bits )
         m_outPin[i] = new IoPin( 0, QPoint(24,origY+8+i*8 ), m_id+"-out"+number, i, this, output );
         m_outPin[i]->setLabelText( "D"+number+" " );
         m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
+        initPin( m_outPin[i] );
     }
 }
 
