@@ -62,17 +62,13 @@ QList<propGroup_t> BcdToDec::propGroups()
     return pg;
 }
 
-void BcdToDec::initialize()
-{
-    LogicComponent::initialize();
-    m_outPin[0]->setOutState( true );
-    m_outValue = 1;
-}
-
 void BcdToDec::stamp()
 {
     for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp();
+
+    m_outPin[0]->setOutState( true );
+    m_outValue = 1;
 }
 
 void BcdToDec::voltChanged()

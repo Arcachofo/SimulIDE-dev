@@ -40,7 +40,6 @@ class MAINMODULE_EXPORT BcdToDec : public LogicComponent
         virtual QList<propGroup_t> propGroups() override;
 
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
