@@ -37,7 +37,8 @@ enum parity_t{
 };
 
 class IoPin;
-class UartTR;
+class UartTx;
+class UartRx;
 
 class MAINMODULE_EXPORT UsartModule
 {
@@ -50,6 +51,7 @@ class MAINMODULE_EXPORT UsartModule
 
         virtual void byteSent( uint8_t data ){;}
         virtual void byteReceived( uint8_t data ){;}
+        virtual void txDataEmpty(){;}
 
         void parityError();
 
@@ -62,8 +64,8 @@ class MAINMODULE_EXPORT UsartModule
     protected:
         void setPeriod( uint64_t period );
 
-        UartTR* m_sender;
-        UartTR* m_receiver;
+        UartTx* m_sender;
+        UartRx* m_receiver;
 
         bool m_running;   // is Uart running?
 };
@@ -98,6 +100,8 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
         bool getParity( uint8_t data );
 
         state_t state() { return m_state; }
+
+        uint8_t getData() { return  m_data; }
 
         void setPin( IoPin* pin ) { m_ioPin = pin; }
         IoPin* getPin() { return m_ioPin; }

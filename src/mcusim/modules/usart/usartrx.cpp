@@ -53,13 +53,13 @@ void UartRx::runEvent()
     else if( m_state == usartRXEND )
     {
         m_frame >>= 1;  // Start bit
-        uint8_t data = m_frame & mDATAMASK;
+        m_data = m_frame & mDATAMASK;
 
         if( mDATABITS == 9 ) m_bit9 = (m_frame>>8) & 1;
 
         if( mPARITY > parNONE )        // Check Parity bit
         {
-            bool parity = getParity( data );
+            bool parity = getParity( m_data );
             bool parityBit = m_frame |= 1<<m_framesize;
 
             if( parity != parityBit ) { m_usart->parityError(); return; }
@@ -70,7 +70,7 @@ void UartRx::runEvent()
         m_frame = 0;
         m_state = usartRECEIVE;
 
-        m_usart->byteReceived( data );
+        m_usart->byteReceived( m_data );
         /// m_interrupt->raise( data ); implemented in bytereceived
     }
     if( m_period )
@@ -80,10 +80,9 @@ void UartRx::runEvent()
 void UartRx::processData( uint8_t data )
 {
     m_state = usartRECEIVE;
-
     m_framesize = 1+mDATABITS+mPARITY+mSTOPBITS;
-
     m_currentBit = 0;
+
     if( m_period )
         Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
 }

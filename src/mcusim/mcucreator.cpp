@@ -241,7 +241,11 @@ void McuCreator::createRegisters( QDomElement* e )
     }
 
     if( regStart < mcu->m_regStart ) mcu->m_regStart = regStart;
-    if( regEnd   > mcu->m_regEnd )   mcu->m_regEnd   = regEnd;
+    if( regEnd   > mcu->m_regEnd )
+    {
+        mcu->m_regEnd = regEnd;
+        mcu->m_regMask.resize( regEnd, 0xFF );
+    }
 
     QDomNode node = e->firstChild();
     while( !node.isNull() ) // Create Registers
@@ -253,7 +257,12 @@ void McuCreator::createRegisters( QDomElement* e )
             QString  regName = el.attribute("name");
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
             uint8_t resetVal = el.attribute("reset").toUInt(0,0);
-            //uint8_t writeMask = el.attribute("writemask").toUInt(0,0); // Write mask is inverted: 0 means write allowed
+
+            if( el.hasAttribute("mask") )
+            {
+                uint8_t writeMask = el.attribute("mask").toUInt(0,0);
+                mcu->m_regMask[regAddr] = writeMask;
+            }
 
             mcu->m_addrMap[regAddr] = regAddr;
 
@@ -503,12 +512,12 @@ void McuCreator::createUsart( QDomElement* u )
 
             mcu->m_modules.emplace_back( trUnit );
 
-            QString regName = el.attribute( "register" );
-
             if( type == "tx" )
-                mcu->watchRegNames( regName, R_WRITE, trUnit, &UartTR::processData );
-            else if( type == "rx" )
-                usartM->m_rxRegister = mcu->getReg( regName );
+            {
+                QString regName = el.attribute( "register" );
+                mcu->watchRegNames( regName, R_WRITE, usartM, &McuUsart::sendByte );
+                mcu->watchRegNames( regName, R_READ,  usartM, &McuUsart::readByte );
+            }
 
             QString pinName = el.attribute( "pin" );
             trUnit->setPin( mcu->m_ports.getPin( pinName ) );

@@ -19,6 +19,8 @@
 
 #include "mcuuart.h"
 #include "serialmon.h"
+#include "usartrx.h"
+#include "usarttx.h"
 
 McuUsart::McuUsart( eMcu* mcu, QString name, int number )
         : McuModule( mcu, name )
@@ -31,6 +33,11 @@ McuUsart::McuUsart( eMcu* mcu, QString name, int number )
 }
 McuUsart::~McuUsart( ){}
 
+void McuUsart::sendByte(  uint8_t data )
+{
+    m_sender->processData( data );
+}
+
 void McuUsart::byteSent( uint8_t data )
 {
     if( m_monitor ) m_monitor->printOut( data );
@@ -38,7 +45,6 @@ void McuUsart::byteSent( uint8_t data )
 
 void McuUsart::byteReceived( uint8_t data )
 {
-    *m_rxRegister = data; // Save data to Ram
     if( m_monitor ) m_monitor->printIn( data );
     m_receiver->raiseInt( data );
 }

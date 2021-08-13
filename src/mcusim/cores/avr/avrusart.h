@@ -36,10 +36,16 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         virtual uint8_t getBit9() override;
         virtual void setBit9( uint8_t bit ) override;
 
+        virtual void sendByte(  uint8_t data ) override;
         virtual void byteSent( uint8_t data ) override;
+        virtual void readByte( uint8_t ) override;
+
+        virtual void txDataEmpty() override;
 
         void setUBRRnL( uint8_t val );
         void setUBRRnH( uint8_t val );
+
+        void setUCSRnA(uint8_t newUCSRnA );
 
     private:
         void setBaurrate( uint16_t ubrr );
@@ -60,6 +66,10 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         regBits_t m_stopRB;
         regBits_t m_dataRB;
         regBits_t m_u2xn;
+
+        regBits_t m_UDRE;
+        regBits_t m_TXC;
+        regBits_t m_RXC;
 };
 
 #endif

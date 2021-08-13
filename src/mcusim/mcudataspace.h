@@ -37,6 +37,7 @@ class MAINMODULE_EXPORT DataSpace
         struct regInfo_t{
             uint16_t address;
             uint8_t  resetVal;
+            uint8_t  writeMask;
         };
 
         struct regSignal_t{
@@ -130,6 +131,7 @@ class MAINMODULE_EXPORT DataSpace
 
         std::vector<uint16_t> m_addrMap;           // Maps addresses in Data space
         std::vector<uint8_t>  m_dataMem;           // Whole Ram space including Registers
+        std::vector<uint8_t>  m_regMask;           // Registers Write mask
 
         QHash<QString, regInfo_t>     m_regInfo;   // Access Reg Info by  Reg name
         QHash<uint16_t, regSignal_t*> m_regSignals;// Access Reg Signals by Reg address

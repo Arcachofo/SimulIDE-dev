@@ -187,32 +187,29 @@
         <register name="TWCR"   addr="188" bits="TWIE,0,TWEN,TWWC,TWSTO,TWSTA,TWEA,TWINT"/>
         <register name="TWAMR"  addr="189" bits=""/>
         
-        <register name="UCSR0A" addr="192" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0"/>
+        <register name="UCSR0A" addr="192" reset="0x20" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0"/>
         <register name="UCSR0B" addr="193" bits="TXB80,RXB80,UCSZ02,TXEN0,RXEN0,UDRIE0,TXCIE0,RXCIE0"/>
         <register name="UCSR0C" addr="194" bits="UCPOL0,UCSZ00,UCSZ01,USBS0,UPM00,UPM01,UMSEL00,UMSEL01"/>
         
         <register name="UBRR0L" addr="196" bits=""/>
         <register name="UBRR0H" addr="197" bits=""/>
         <register name="UDR0"   addr="198" bits=""/>
-        <register name="UDR0RX" addr="199" bits=""/><!-- Fake Uart0 Input Register -->
         
-        <register name="UCSR1A" addr="200" bits="MPCM1,U2X1,UPE1,DOR1,FE1,UDRE1,TXC1,RXC1"/>
+        <register name="UCSR1A" addr="200" reset="0x20" bits="MPCM1,U2X1,UPE1,DOR1,FE1,UDRE1,TXC1,RXC1"/>
         <register name="UCSR1B" addr="201" bits="TXB81,RXB81,UCSZ12,TXEN1,RXEN1,UDRIE1,TXCIE1,RXCIE1"/>
         <register name="UCSR1C" addr="202" bits="UCPOL1,UCSZ10,UCSZ11,USBS1,UPM10,UPM11,UMSEL10,UMSEL11"/>
         
         <register name="UBRR1L" addr="204" bits=""/>
         <register name="UBRR1H" addr="205" bits=""/>
         <register name="UDR1"   addr="206" bits=""/>
-        <register name="UDR1RX" addr="207" bits=""/><!-- Fake Uart1 Input Register -->
         
-        <register name="UCSR2A" addr="208" bits="MPCM2,U2X2,UPE2,DOR2,FE2,UDRE2,TXC2,RXC2"/>
+        <register name="UCSR2A" addr="208" reset="0x20" bits="MPCM2,U2X2,UPE2,DOR2,FE2,UDRE2,TXC2,RXC2"/>
         <register name="UCSR2B" addr="209" bits="TXB82,RXB82,UCSZ22,TXEN2,RXEN2,UDRIE2,TXCIE2,RXCIE2"/>
         <register name="UCSR2C" addr="210" bits="UCPOL2,UCSZ20,UCSZ21,USBS2,UPM20,UPM21,UMSEL20,UMSEL21"/>
         
         <register name="UBRR2L" addr="212" bits=""/>
         <register name="UBRR2H" addr="213" bits=""/>
         <register name="UDR2"   addr="214" bits=""/>
-        <register name="UDR2RX" addr="215" bits=""/><!-- Fake Uart1 Input Register -->
         
         <register name="PINH"   addr="256" bits="0-7"/>
         <register name="DDRH"   addr="257" bits="0-7"/>
@@ -242,14 +239,13 @@
         <register name="OCR5CL" addr="300" bits=""/>
         <register name="OCR5CH" addr="301" bits=""/>
         
-        <register name="UCSR3A" addr="304" bits="MPCM3,U2X3,UPE3,DOR3,FE3,UDRE3,TXC3,RXC3"/>
+        <register name="UCSR3A" addr="304" reset="0x20" bits="MPCM3,U2X3,UPE3,DOR3,FE3,UDRE3,TXC3,RXC3"/>
         <register name="UCSR3B" addr="305" bits="TXB83,RXB83,UCSZ32,TXEN3,RXEN3,UDRIE3,TXCIE3,RXCIE3"/>
         <register name="UCSR3C" addr="306" bits="UCPOL3,UCSZ30,UCSZ31,USBS3,UPM30,UPM31,UMSEL30,UMSEL31"/>
         
         <register name="UBRR3L" addr="308" bits=""/>
         <register name="UBRR3H" addr="309" bits=""/>
         <register name="UDR3"   addr="310" bits=""/>
-        <register name="UDR3RX" addr="311" bits=""/><!-- Fake Uart1 Input Register -->
     </regblock>
     <stack  spreg="SPL,SPH" increment="postdec" />
 </parts>

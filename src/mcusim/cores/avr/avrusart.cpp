@@ -22,6 +22,7 @@
 #include "usartrx.h"
 #include "e_mcu.h"
 #include "iopin.h"
+#include "serialmon.h"
 
 #define UCSRNB *m_ucsrnb
 
@@ -52,6 +53,12 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
     m_ubrrnH = mcu->getReg( "UBRR"+n+"H" );
     m_mcu->watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setUBRRnL );
     m_mcu->watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH );
+
+    m_UDRE = mcu->getRegBits( "UDRE"+n );
+    m_TXC  = mcu->getRegBits( "TXC"+n );
+    m_RXC  = mcu->getRegBits( "RXC"+n );
+
+    mcu->watchRegNames( "UCSR"+n+"A", R_WRITE, this, &AvrUsart::setUCSRnA );
 }
 AvrUsart::~AvrUsart(){}
 
@@ -131,8 +138,37 @@ void AvrUsart::setBit9( uint8_t bit )
     if( bit ) UCSRNB |= m_bit9Rx.mask;
 }
 
+void AvrUsart::sendByte(  uint8_t data )
+{
+    if( !m_sender->isEnabled() ) return;
+
+    if( getRegBitsVal( *m_ucsrna, m_UDRE ) )  // Buffer is empty
+    {
+        clearRegBits( m_UDRE ); // Transmit buffer full: Clear UDREn bit
+        m_sender->processData( data );
+}   }
+
 void AvrUsart::byteSent( uint8_t data )
 {
-    McuUsart::byteSent( data );
+    if( m_monitor ) m_monitor->printOut( data );
+
+    if( getRegBitsVal( *m_ucsrna, m_UDRE ) ) return; // Buffer is empty
+    m_sender->startTransmission();                   // Buffer contains data, send it
+}
+
+void AvrUsart::readByte( uint8_t )   // UDRn is being readed
+{
+    m_mcu->m_regOverride = m_receiver->getData();
+    clearRegBits( m_RXC );                 // Clear RXCn flag
+}
+
+void AvrUsart::txDataEmpty()
+{
     m_interrupt->raise(); // USART Data Register Empty Interrupt
+}
+
+void AvrUsart::setUCSRnA( uint8_t newUCSRnA )
+{
+    if( getRegBitsVal( newUCSRnA, m_TXC ) )
+        m_mcu->m_regOverride = newUCSRnA & ~m_TXC.mask; // Clear TXCn flag
 }

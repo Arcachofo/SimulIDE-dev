@@ -32,6 +32,8 @@ class MAINMODULE_EXPORT UartTx : public UartTR
         virtual void runEvent() override;
         virtual void processData( uint8_t data ) override;
 
+        void startTransmission();
+
     protected:
         void sendBit();
 };

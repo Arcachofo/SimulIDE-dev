@@ -118,13 +118,12 @@
         <register name="TWDR"   addr="187" reset="0xFF" bits=""/>
         <register name="TWCR"   addr="188" bits="TWIE,0,TWEN,TWWC,TWSTO,TWSTA,TWEA,TWINT"/>
         <register name="TWAMR"  addr="189" bits=""/>
-        <register name="UCSR0A" addr="192" reset="0x20" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0"/>
+        <register name="UCSR0A" addr="192" reset="0x20" mask="0x43" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0"/>
         <register name="UCSR0B" addr="193" bits="TXB80,RXB80,UCSZ02,TXEN0,RXEN0,UDRIE0,TXCIE0,RXCIE0"/>
         <register name="UCSR0C" addr="194" reset="0x06" bits="UCPOL0,UCSZ00,UCSZ01,USBS0,UPM00,UPM01,UMSEL00,UMSEL01"/>
         <register name="UBRR0L" addr="196" bits=""/>
         <register name="UBRR0H" addr="197" bits=""/>
         <register name="UDR0"   addr="198" bits=""/>
-        <register name="UDR0RX" addr="199" bits=""/><!-- Fake Uart Input Register -->
     </regblock>
     <stack  spreg="SPL,SPH" increment="postdec" />
 </parts>

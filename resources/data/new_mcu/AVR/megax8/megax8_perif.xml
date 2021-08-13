@@ -62,7 +62,7 @@
             <interrupt name="USART_T" />
         </trunit>
         
-        <trunit type="rx" pin="PORTD0" register="UDR0">
+        <trunit type="rx" pin="PORTD0" >
             <interrupt name="USART_R" />
         </trunit>
         

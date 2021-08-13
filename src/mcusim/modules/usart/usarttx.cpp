@@ -54,6 +54,7 @@ void UartTx::runEvent()
     }
     else if( m_state == usartTXEND )
     {
+        m_usart->txDataEmpty();
         m_usart->byteSent( m_data );
         m_interrupt->raise();
 
@@ -65,11 +66,17 @@ void UartTx::processData( uint8_t data )
 {
     if( !m_enabled ) return;
 
-    m_state = usartTRANSMIT;
     m_data = data;
+    if( m_state == usartIDLE ) startTransmission();
+}
 
-    data &= mDATAMASK;
+void UartTx::startTransmission()
+{
+    m_state = usartTRANSMIT;
+
+    uint8_t data = m_data & mDATAMASK;
     m_frame = data<<1;                   // Data + Start bit
+
     if( mDATABITS == 9 )
     {
         m_bit9  = m_usart->getBit9();
@@ -92,6 +99,7 @@ void UartTx::processData( uint8_t data )
     m_currentBit = 0;
     if( m_period )
     {
+        sendBit();
         if( m_runHardware ) sendBit(); // Start transmission
         else                           // Not running Hardwware
         {

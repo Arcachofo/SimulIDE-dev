@@ -37,7 +37,6 @@ UsartModule::~UsartModule( )
 
 void UsartModule::parityError()
 {
-
 }
 
 void UsartModule::setPeriod( uint64_t period )
@@ -45,6 +44,9 @@ void UsartModule::setPeriod( uint64_t period )
     m_sender->setPeriod( period );
     m_receiver->setPeriod( period );
 }
+
+//---------------------------------------
+//---------------------------------------
 
 UartTR::UartTR( UsartModule* usart, eMcu* mcu, QString name )
       : McuModule( mcu, name )
