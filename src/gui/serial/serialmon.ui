@@ -68,7 +68,13 @@
         </size>
        </property>
        <property name="text">
-        <string>CR</string>
+        <string notr="true">CR</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -167,7 +173,16 @@
         </size>
        </property>
        <property name="text">
-        <string>ASCII</string>
+        <string notr="true">ASCII</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -192,7 +207,13 @@
         </size>
        </property>
        <property name="text">
-        <string>Value</string>
+        <string notr="true">Value</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -230,7 +251,10 @@
           </size>
          </property>
          <property name="text">
-          <string>Clear</string>
+          <string notr="true">Clear</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -272,7 +296,10 @@
           </size>
          </property>
          <property name="text">
-          <string>Clear</string>
+          <string notr="true">Clear</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>

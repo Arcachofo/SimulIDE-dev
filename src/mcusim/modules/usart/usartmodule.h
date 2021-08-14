@@ -42,6 +42,7 @@ class UartRx;
 
 class MAINMODULE_EXPORT UsartModule
 {
+        friend class eMcu;
     public:
         UsartModule( eMcu* mcu, QString name );
         ~UsartModule();

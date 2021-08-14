@@ -25,14 +25,14 @@
 #include "ui_serialmon.h"
 #include "outpaneltext.h"
 
-class McuInterface;
+class eMcu;
 
 class SerialMonitor : public QDialog, private Ui::SerialMonitor
 {
     Q_OBJECT
 
     public:
-        SerialMonitor( QWidget* parent, McuInterface* mcu, int uartNum=1 );
+        SerialMonitor( QWidget* parent, eMcu* mcu, int uartNum=1 );
 
         void printIn( int value );
         void printOut( int value );
@@ -42,7 +42,7 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor
         void on_value_returnPressed();
         void on_valueButton_clicked();
         void on_asciiButton_clicked();
-        void on_addCR_clicked() { m_addCR = addCrButton->isChecked(); }
+        void on_addCrButton_clicked() { m_addCR = addCrButton->isChecked(); }
         void on_clearIn_clicked() { m_uartInPanel.clear(); }
         void on_clearOut_clicked() { m_uartOutPanel.clear(); }
 
@@ -50,7 +50,7 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor
         OutPanelText m_uartInPanel;
         OutPanelText m_uartOutPanel;
 
-        McuInterface* m_processor;
+        eMcu* m_processor;
 
         int m_uartNum;
 

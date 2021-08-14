@@ -18,16 +18,18 @@
  ***************************************************************************/
 
 #include "serialmon.h"
-#include "mcuinterface.h"
+#include "e_mcu.h"
 #include "simulator.h"
 
-SerialMonitor::SerialMonitor( QWidget* parent, McuInterface* mcu, int uartNum )
+SerialMonitor::SerialMonitor( QWidget* parent, eMcu* mcu, int uartNum )
              : QDialog( parent )
              , m_uartInPanel(this)
              , m_uartOutPanel(this)
 {
     setupUi(this);
 
+    m_uartInPanel.setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    m_uartOutPanel.setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     panelLayout->addWidget( &m_uartInPanel );
     panelLayout->addWidget( &m_uartOutPanel );
 
@@ -35,8 +37,6 @@ SerialMonitor::SerialMonitor( QWidget* parent, McuInterface* mcu, int uartNum )
     m_uartNum = uartNum;
     m_printASCII = true;
     m_addCR = false;
-
-    asciiButton->setChecked( true );
 
     Simulator::self()->addToUpdateList( &m_uartOutPanel );
     Simulator::self()->addToUpdateList( &m_uartInPanel );
@@ -60,15 +60,13 @@ void SerialMonitor::on_value_returnPressed()
 
 void SerialMonitor::on_valueButton_clicked()
 {
-    m_printASCII = valueButton->isChecked(); // Button is not yet checked
+    m_printASCII = !valueButton->isChecked(); // Button is not yet checked
     asciiButton->setChecked( m_printASCII );
-    valueButton->setChecked( !m_printASCII );
 }
 
 void SerialMonitor::on_asciiButton_clicked()
 {
-    m_printASCII = !asciiButton->isChecked();  // Button is not yet checked
-    asciiButton->setChecked( m_printASCII );
+    m_printASCII = asciiButton->isChecked();  // Button is not yet checked
     valueButton->setChecked( !m_printASCII );
 }
 

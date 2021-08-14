@@ -20,6 +20,8 @@
 #ifndef USARTRX_H
 #define USARTRX_H
 
+#include <queue>
+
 #include "usartmodule.h"
 
 
@@ -33,8 +35,14 @@ class MAINMODULE_EXPORT UartRx : public UartTR
         virtual void runEvent() override;
         virtual void processData( uint8_t ) override;
 
+        void queueData( uint8_t data );
+
     protected:
         void readBit();
+
+        bool m_startHigh;
+
+        std::queue<uint8_t> m_inBuffer;
 };
 
 #endif

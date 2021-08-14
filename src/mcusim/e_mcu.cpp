@@ -21,7 +21,7 @@
 #include "mcucore.h"
 #include "mcupin.h"
 #include "usartmodule.h"
-
+#include "usartrx.h"
 #include "simulator.h"
 
 eMcu::eMcu( QString id )
@@ -99,6 +99,8 @@ void eMcu::uartOut( int number, uint32_t value ) // Send value to OutPanelText
 void eMcu::uartIn( int number, uint32_t value ) // Receive one byte on Uart
 {
     if( (uint)number > m_usarts.size() ) return;
-    m_usarts.at(number-1)->byteReceived( value );
+    //m_usarts.at(number-1)->byteReceived( value );
+
+    m_usarts.at(number-1)->m_receiver->queueData( value );
 }
 

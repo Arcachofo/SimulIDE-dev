@@ -79,6 +79,7 @@ bool UartTR::getParity( uint8_t data )
 
 void UartTR::raiseInt( uint8_t data )
 {
+    m_data = data;
     m_interrupt->raise( data );
 }
 
