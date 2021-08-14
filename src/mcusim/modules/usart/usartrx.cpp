@@ -35,7 +35,7 @@ void UartRx::enable( uint8_t en )
     bool enabled = en > 0;
     if( enabled == m_enabled ) return;
     m_enabled = enabled;
-    m_runHardware = m_ioPin->connector();
+    m_runHardware = false; //m_ioPin->connector();
     while( !m_inBuffer.empty() ) m_inBuffer.pop();
 
     if( enabled ) processData( 0 ); // Start reading
@@ -56,7 +56,7 @@ void UartRx::runEvent()
                 m_usart->byteReceived( m_inBuffer.front() );
                 m_inBuffer.pop();
             }
-            Simulator::self()->addEvent( m_period*(m_framesize+2), this );
+            Simulator::self()->addEvent( m_period*(m_framesize ), this );
             return;
         }
     }

@@ -51,8 +51,8 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
 
     m_ubrrnL = mcu->getReg( "UBRR"+n+"L" );
     m_ubrrnH = mcu->getReg( "UBRR"+n+"H" );
-    m_mcu->watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setUBRRnL );
-    m_mcu->watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH );
+    m_mcu->watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setBaurrate );
+    m_mcu->watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setBaurrate );
 
     m_UDRE = mcu->getRegBits( "UDRE"+n );
     m_TXC  = mcu->getRegBits( "TXC"+n );
@@ -73,6 +73,9 @@ void AvrUsart::configureA( uint8_t newUCSRnC ) // UCSRnC changed
     uint8_t par = getRegBitsVal( newUCSRnC, m_pariRB );
     if( par > 0 ) m_parity = (parity_t)(par-1);
     else          m_parity = parNONE;
+
+    m_speedx2 = getRegBitsVal( newUCSRnC, m_u2xn ); // Double Speed?
+    setBaurrate();
 
     /*if( sm0 )  // modes 2 and 3
     {
@@ -107,24 +110,14 @@ void AvrUsart::configureB( uint8_t newUCSRnB ) // UCSRnB changed
             m_receiver->getPin()->setPinMode( input );
         }
         else m_receiver->getPin()->controlPin( false, false );
-    }
-}
+}   }
 
-void AvrUsart::setUBRRnL( uint8_t val )
+void AvrUsart::setBaurrate( uint8_t )
 {
-    setBaurrate( val |( (*m_ubrrnH & 0x0F)<<8 ) );
-}
-
-void AvrUsart::setUBRRnH( uint8_t val )
-{
-    setBaurrate( *m_ubrrnL |( (val & 0x0F)<<8 ) );
-}
-
-void AvrUsart::setBaurrate( uint16_t ubrr )
-{
-    uint8_t doub = getRegBitsVal( *m_ucsrna, m_u2xn ); // Double Speed?
-    if( doub ) ubrr /= 2;
-    setPeriod( 1e6*16*(ubrr+1) ); // period in picoseconds
+    uint16_t ubrr = *m_ubrrnL | (*m_ubrrnH & 0x0F)<<8 ;
+    uint64_t mult = 16;
+    if( m_speedx2 ) mult = 8;
+    setPeriod( mult*(ubrr+1)*m_mcu->simCycPI() ); // period in picoseconds
 }
 
 uint8_t AvrUsart::getBit9()

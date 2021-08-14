@@ -137,7 +137,7 @@
             <interrupt name="USART0_T" />
         </trunit>
         
-        <trunit type="rx" pin="PORTE0" register="UDR0">
+        <trunit type="rx" pin="PORTE0">
             <interrupt name="USART0_R" />
         </trunit>
         
@@ -149,7 +149,7 @@
             <interrupt name="USART1_T" />
         </trunit>
         
-        <trunit type="rx" pin="PORTD2" register="UDR1">
+        <trunit type="rx" pin="PORTD2" >
             <interrupt name="USART1_R" />
         </trunit>
         
@@ -161,7 +161,7 @@
             <interrupt name="USART2_T" />
         </trunit>
         
-        <trunit type="rx" pin="PORTH0" register="UDR2">
+        <trunit type="rx" pin="PORTH0" >
             <interrupt name="USART2_R" />
         </trunit>
         
@@ -173,7 +173,7 @@
             <interrupt name="USART3_T" />
         </trunit>
         
-        <trunit type="rx" pin="PORTJ0" register="UDR3">
+        <trunit type="rx" pin="PORTJ0" >
             <interrupt name="USART3_R" />
         </trunit>
         

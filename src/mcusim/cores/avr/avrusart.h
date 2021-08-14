@@ -42,13 +42,13 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
 
         virtual void txDataEmpty() override;
 
-        void setUBRRnL( uint8_t val );
-        void setUBRRnH( uint8_t val );
+        void setBaurrate( uint8_t val=0 );
 
         void setUCSRnA(uint8_t newUCSRnA );
 
     private:
-        void setBaurrate( uint16_t ubrr );
+
+        uint8_t m_speedx2;
 
         uint8_t*  m_ucsrna;
         uint8_t*  m_ucsrnb;
