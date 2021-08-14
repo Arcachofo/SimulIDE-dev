@@ -20,6 +20,7 @@
 #include "function.h"
 #include "connector.h"
 #include "circuit.h"
+#include "simulator.h"
 #include "itemlibrary.h"
 #include "utils.h"
 
@@ -81,7 +82,16 @@ void Function::stamp()
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         m_program.append( QScriptProgram( m_funcList.at(i) ));
+}   }
+
+void Function::runEvent()
+{
+    for( uint i=0; i<m_outPin.size(); ++i )
+    {
+        bool state = m_nextOutVal & (1<<i);
+        m_outPin[i]->setOutState( state, true );
     }
+        m_outValue = m_nextOutVal;
 }
 
 void Function::voltChanged()
@@ -117,23 +127,19 @@ void Function::voltChanged()
         if( i >= m_outPin.size() ) break;
         QString text = m_funcList.at(i).toLower();
 
-        //qDebug() << "eFunction::voltChanged()"<<text<<m_engine.evaluate( text ).toString();
-
         if( text.startsWith( "vo" ) )
         {
             float out = m_engine.evaluate( m_program.at(i) ).toNumber();
             m_outPin[i]->setOutHighV( out );
             m_nextOutVal += 1<<i;
+            Simulator::self()->addEvent( m_propDelay, this );
         }
-        else
-        {
+        else {
             bool out = m_engine.evaluate( m_program.at(i) ).toBool();
             m_outPin[i]->setOutHighV( m_ouHighV );
             if( out ) m_nextOutVal += 1<<i;
-        }
-    }
-    sheduleOutPuts( this );
-}
+            sheduleOutPuts( this );
+}   }   }
 
 QString Function::functions()
 {
@@ -157,8 +163,7 @@ void Function::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         contextMenu( event, menu );
         Component::contextMenu( event, menu );
         menu->deleteLater();
-    }
-}
+}   }
 
 void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -188,8 +193,7 @@ void Function::loadData()
         if( i >= m_funcList.size() ) break;
         m_funcList[i++] = line;
         m_functions = m_funcList.join(",");
-    }
-}
+}   }
 
 void Function::saveData()
 {
@@ -209,8 +213,7 @@ void Function::saveData()
         QTextStream toFile( &outFile );
         toFile << output;
         outFile.close();
-    }
-}
+}   }
 
 void Function::remove()
 {
@@ -240,7 +243,7 @@ void Function::setNumInps( uint inputs )
     if( inputs > m_height ) m_height = inputs;
     
     IoComponent::setNumInps( inputs, "I" );
-    //m_area = QRect( -16, 0, 32, 8*m_height+8 );
+
     updateArea( inputs, m_outPin.size() );
 }
 
@@ -258,8 +261,7 @@ void Function::setNumOuts( uint outs )
         int dif = m_outPin.size()-outs;
 
         IoComponent::deletePins( &m_outPin, dif );
-    
-        //for( int i=0; i<dif; ++i )
+
         for( uint i=0; i<oldSize; ++i )
         {
             if( i < outs )
@@ -275,9 +277,8 @@ void Function::setNumOuts( uint outs )
 
                 m_proxys.removeLast();
                 m_funcList.removeLast();
-            }
-        }
-    }else{
+    }   }   }
+    else{
         m_outPin.resize( outs );
 
         for( uint i=0; i<outs; ++i )
@@ -311,9 +312,7 @@ void Function::setNumOuts( uint outs )
 
                 connect( button, SIGNAL( released() ),
                            this, SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
-            }
-        }
-    }
+    }   }   }
     m_functions = m_funcList.join(",");
     
     Circuit::self()->update();
@@ -340,7 +339,7 @@ void Function::onbuttonclicked()
     {
         m_funcList[i] = text;
         m_functions = m_funcList.join(",");
-    }
-}
+}   }
+
 
 #include "moc_function.cpp"
