@@ -91,7 +91,7 @@ void Function::runEvent()
         bool state = m_nextOutVal & (1<<i);
         m_outPin[i]->setOutState( state, true );
     }
-        m_outValue = m_nextOutVal;
+    m_outValue = m_nextOutVal;
 }
 
 void Function::voltChanged()

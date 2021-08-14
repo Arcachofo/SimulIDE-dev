@@ -36,7 +36,7 @@ OutPanelText::OutPanelText( QWidget* parent )
     setPalette(p);
     
     QFont font;
-    font.setFamily("Andale Mono");
+    font.setFamily("Monospace");
     font.setFixedPitch(true);
     font.setPixelSize( 12*MainWindow::self()->fontScale() );
     setFont(font);

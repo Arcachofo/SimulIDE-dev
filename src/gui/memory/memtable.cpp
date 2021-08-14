@@ -84,7 +84,7 @@ void MemTable::resizeTable( int dataSize )
     int scale = MainWindow::self()->fontScale();
     QFont font;
     font.setPixelSize( 12*scale );
-    font.setFamily("Andale Mono");
+    font.setFamily("Monospace");
 
     QTableWidgetItem* it;
 

@@ -80,7 +80,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_help = "";
     m_state = DBG_STOPPED;
 
-    m_font.setFamily("Andale Mono");
+    m_font.setFamily("Monospace");
     m_font.setFixedPitch( true );
     m_font.setPixelSize( m_fontSize );
     setFont( m_font );
