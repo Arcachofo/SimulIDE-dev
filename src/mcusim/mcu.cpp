@@ -112,8 +112,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
                 // Get data file
                 m_dataFile = dataDir.filePath( element.attribute( "data" ) )+".mcu";
-                //create( dataFile );
-
                 break;
             }
             node = node.nextSibling();
@@ -140,7 +138,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 Mcu::~Mcu()
 {
     if( m_mcuMonitor ) delete m_mcuMonitor;
-    Simulator::self()->remFromUpdateList( this );
 }
 
 QList<propGroup_t> Mcu::propGroups()
@@ -165,8 +162,7 @@ void Mcu::setProgram( QString pro )
     else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
     QString fileNameAbs = circuitDir.absoluteFilePath( m_eMcu.m_firmware );
 
-    if( QFileInfo::exists( fileNameAbs ) ) // Load firmware at circuit load
-    // && !m_processor->getLoadStatus() )
+    if( QFileInfo::exists( fileNameAbs ) )
     { load( m_eMcu.m_firmware ); }
 }
 
@@ -210,8 +206,7 @@ void Mcu::attach()
     if( m_autoLoad )
     {
         if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );
-    }
-}
+}   }
 
 void Mcu::remove()
 {
@@ -304,13 +299,9 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
         openSerMonAct->setCheckable( true );
 
         if( m_serMonMask & (1<<i) ) openSerMonAct->setChecked( true );
-        else
-        {
-            openSerMonAct->setChecked( false );
-            connect( openSerMonAct, SIGNAL(triggered()), sm, SLOT(map()) );
-            sm->setMapping( openSerMonAct, i+1 );
-        }
-        //m_serMonMask |= 1<<i;
+        else                        openSerMonAct->setChecked( false );
+        connect( openSerMonAct, SIGNAL(triggered()), sm, SLOT(map()) );
+        sm->setMapping( openSerMonAct, i+1 );
     }
     connect( sm, SIGNAL(mapped(int)), this, SLOT(slotOpenTerm(int)) );
 
@@ -321,10 +312,6 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data") );
     connect( saveDaAction, SIGNAL(triggered()),
                      this, SLOT(saveData()), Qt::UniqueConnection );*/
-
-    /*QAction* openTerminal = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
-    connect( openTerminal, SIGNAL(triggered()),
-                     this, SLOT(slotOpenTerm()), Qt::UniqueConnection );*/
 
     /*QAction* openSerial = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Port.") );
     connect( openSerial, SIGNAL(triggered()),
@@ -343,8 +330,7 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
         connect( propertiesAction, SIGNAL( triggered()),
                              this, SLOT(slotProperties()), Qt::UniqueConnection );
         menu->addSeparator();
-    }
-}
+}   }
 
 void Mcu::slotOpenMcuMonitor()
 {
@@ -358,14 +344,22 @@ void Mcu::slotOpenMcuMonitor()
 
 void Mcu::slotOpenTerm( int num )
 {
-    m_serMonMask |= 1<<(num-1);
+    if( m_serMonMask & (1<<(num-1)) )
+    {
+        for( SerialMonitor* ser : m_serialMons )
+        {
+            if( ser->uartNum() == num )
+            { ser->show(); break; }
+    }   }
+    else{
+        m_serMonMask |= 1<<(num-1);
 
-    SerialMonitor* ser = new SerialMonitor( CircuitWidget::self(), &m_eMcu, num );
-    ser->setWindowTitle( this->idLabel()+" - Uart"+QString::number(num) );
-    ser->show();
-    m_eMcu.m_usarts.at(num-1)->setMonitor( ser );
-    m_serialMons.append( ser );
-}
+        SerialMonitor* ser = new SerialMonitor( CircuitWidget::self(), &m_eMcu, num );
+        ser->setWindowTitle( this->idLabel()+" - Uart"+QString::number(num) );
+        ser->show();
+        m_eMcu.m_usarts.at(num-1)->setMonitor( ser );
+        m_serialMons.append( ser );
+}   }
 
 void Mcu::addPin( QString id, QString type, QString label,
                      int pos, int xpos, int ypos, int angle, int length )

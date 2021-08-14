@@ -37,6 +37,8 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor
         void printIn( int value );
         void printOut( int value );
 
+        int uartNum() { return m_uartNum; }
+
     public slots:
         void on_text_returnPressed();
         void on_value_returnPressed();
