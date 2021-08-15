@@ -125,23 +125,13 @@ void AvrTimer::configureOcUnits( bool disable )
     m_reverse = false;
 
     ocAct_t comActA, comActB, comActC;
-    ocAct_t tovActA, tovActB, tovActC;
+    ocAct_t tovActA = ocNONE;
+    ocAct_t tovActB = ocNONE;
+    ocAct_t tovActC = ocNONE;
 
-    if( m_OCA )
-    {
-        comActA = (ocAct_t)m_OCA->getMode(); // Default modes
-        tovActA = ocNONE;
-    }
-    if( m_OCB )
-    {
-        comActB = (ocAct_t)m_OCB->getMode();
-        tovActB = ocNONE;
-    }
-    if( m_OCC )
-    {
-        comActC = (ocAct_t)m_OCC->getMode();
-        tovActC = ocNONE;
-    }
+    if( m_OCA ) comActA = (ocAct_t)m_OCA->getMode(); // Default modes
+    if( m_OCB ) comActB = (ocAct_t)m_OCB->getMode();
+    if( m_OCC ) comActC = (ocAct_t)m_OCC->getMode();
 
     if( m_wgmMode == wgmPHASE )  // Phase Correct PWM
     {
@@ -169,8 +159,7 @@ void AvrTimer::configureOcUnits( bool disable )
             if     ( comActC == ocTOGGLE ) comActC = ocNONE;
             else if( comActC == ocCLEAR )  tovActC = ocSET;
             else if( comActC == ocSET )    tovActC = ocCLEAR;
-        }
-    }
+    }   }
     if( m_OCA ) m_OCA->setOcActs( comActA, tovActA );
     if( m_OCB ) m_OCB->setOcActs( comActB, tovActB );
     if( m_OCC ) m_OCC->setOcActs( comActC, tovActC );

@@ -36,7 +36,7 @@ AvrComp::AvrComp( eMcu* mcu, QString name )
     m_AIN0D = mcu->getRegBits( "AIN0D" );
     m_AIN1D = mcu->getRegBits( "AIN1D" );
 
-    mcu->watchBitNames( "ACO", R_READ, this, &AvrComp::configureB );
+    //mcu->watchBitNames( "ACO", R_READ, this, &AvrComp::configureB );
 }
 AvrComp::~AvrComp(){}
 
@@ -68,6 +68,7 @@ void AvrComp::configureB( uint8_t newDIDR1 ) // AIN0D,AIN1D being written
     m_pinP->changeCallBack( m_pinP, getRegBitsVal( newDIDR1, m_AIN0D ) );
     m_pinN->changeCallBack( m_pinN, getRegBitsVal( newDIDR1, m_AIN1D ) );
 
+    //// ?????
     m_mcu->m_regOverride = newDIDR1; // Keep rest of bits at 0
 }
 

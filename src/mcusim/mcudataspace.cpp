@@ -50,6 +50,7 @@ uint8_t DataSpace::readReg( uint16_t addr )
         m_regOverride = -1;
         regSignal->on_read.emitValue( v );
         if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
+        else                     v = m_dataMem[addr]; // Timers update their counters in callback
     }
     return v;
 }
@@ -64,6 +65,6 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v )
         if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
     }
     uint8_t mask = m_regMask[addr];
-    uint8_t value = (m_dataMem[addr] & ~mask) | (v & mask);
-    m_dataMem[addr] = value;
+    if( mask != 0xFF ) v = (m_dataMem[addr] & ~mask) | (v & mask);
+    m_dataMem[addr] = v;
 }

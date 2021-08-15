@@ -37,7 +37,6 @@ class MAINMODULE_EXPORT DataSpace
         struct regInfo_t{
             uint16_t address;
             uint8_t  resetVal;
-            uint8_t  writeMask;
         };
 
         struct regSignal_t{
