@@ -3,13 +3,20 @@
 <itemlib>
     
     <itemset category="AVR" type="MCU">
-        <item name="mega48"   package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega48" ></item>
-        <item name="mega88"   package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega88" ></item>
-        <item name="mega168"  package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega168"></item>
-        <item name="mega328"  package="new_mcu/AVR/megax8/megax8" data="new_mcu/AVR/mega328"></item>
-        <item name="mega640"  package="new_mcu/AVR/mega640_128X_256X/mega640" data="new_mcu/AVR/mega640"></item>
-        <item name="mega1280" package="new_mcu/AVR/mega640_128X_256X/mega640" data="new_mcu/AVR/mega1280"></item>
-        <item name="mega2560" package="new_mcu/AVR/mega640_128X_256X/mega640" data="new_mcu/AVR/mega2560"></item>
+        <item name="mega48"   package="new_mcu/AVR/megax8/megax8"    data="new_mcu/AVR/mega48" ></item>
+        <item name="m48_TQFP" package="new_mcu/AVR/megax8/mx8_tqfp"  data="new_mcu/AVR/mega48"></item>
+        <item name="mega88"   package="new_mcu/AVR/megax8/megax8"    data="new_mcu/AVR/mega88" ></item>
+        <item name="m88_TQFP" package="new_mcu/AVR/megax8/mx8_tqfp"  data="new_mcu/AVR/mega88"></item>
+        <item name="mega168"  package="new_mcu/AVR/megax8/megax8"    data="new_mcu/AVR/mega168"></item>
+        <item name="m168_TQFP" package="new_mcu/AVR/megax8/mx8_tqfp" data="new_mcu/AVR/mega168"></item>
+        <item name="mega328"  package="new_mcu/AVR/megax8/megax8"    data="new_mcu/AVR/mega328"></item>
+        <item name="m328_TQFP" package="new_mcu/AVR/megax8/mx8_tqfp" data="new_mcu/AVR/mega328"></item>
+        
+        <item name="mega640"  package="new_mcu/AVR/m640_1280_2560/m640" data="new_mcu/AVR/mega640"></item>
+        <item name="mega1280" package="new_mcu/AVR/m640_1280_2560/m640" data="new_mcu/AVR/mega1280"></item>
+        <item name="mega1281" package="new_mcu/AVR/m1281_2561/m1281"    data="new_mcu/AVR/mega1281"></item>
+        <item name="mega2560" package="new_mcu/AVR/m640_1280_2560/m640" data="new_mcu/AVR/mega2560"></item>
+        <item name="mega2561" package="new_mcu/AVR/m1281_2561/m1281"    data="new_mcu/AVR/mega2561"></item>
     </itemset>
     
 </itemlib>

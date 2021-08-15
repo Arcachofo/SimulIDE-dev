@@ -11,8 +11,8 @@
     <pin side="left"   pos="8"  type="IO" id="PE5"  label="E5"/>
     <pin side="left"   pos="9"  type="IO" id="PE6"  label="E6"/>
     <pin side="left"   pos="10" type="IO" id="PE7"  label="E7"/>
-    <pin side="left"   pos="11" type="vcc"   id="VCC0" label="Vcc"/>
-    <pin side="left"   pos="12" type="gnd"   id="GND0" label="Gnd"/>
+    <pin side="left"   pos="11" type="unused" id="VCC0" label="Vcc"/>
+    <pin side="left"   pos="12" type="unused" id="GND0" label="Gnd"/>
     <pin side="left"   pos="13" type="IO" id="PH0"  label="H0"/>
     <pin side="left"   pos="14" type="IO" id="PH1"  label="H1"/>
     <pin side="left"   pos="15" type="IO" id="PH2"  label="H2"/>
@@ -33,10 +33,10 @@
     <pin side="bottom" pos="4"  type="IO" id="PG3"  label="G3"/>
     <pin side="bottom" pos="5"  type="IO"  id="PG4"  label="G4"/>
     <pin side="bottom" pos="6"  type="reset" id="RST"  label="Rst"/>
-    <pin side="bottom" pos="7"  type="vcc"   id="VCC1" label="Vcc"/>
-    <pin side="bottom" pos="8"  type="gnd"   id="GND1" label="Gnd"/>
-    <pin side="bottom" pos="9"  type="osc"   id="XTAL2" label="XTAL2"/>
-    <pin side="bottom" pos="10" type="osc"   id="XTAL1" label="XTAL1"/>
+    <pin side="bottom" pos="7"  type="unused"   id="VCC1" label="Vcc"/>
+    <pin side="bottom" pos="8"  type="unused"   id="GND1" label="Gnd"/>
+    <pin side="bottom" pos="9"  type="unused"   id="XTAL2" label="XTAL2"/>
+    <pin side="bottom" pos="10" type="unused"   id="XTAL1" label="XTAL1"/>
     <pin side="bottom" pos="11" type="IO" id="PL0"  label="L0"/>
     <pin side="bottom" pos="12" type="IO" id="PL1"  label="L1"/>
     <pin side="bottom" pos="13" type="IO" id="PL2"  label="L2"/>
@@ -64,8 +64,8 @@
     <pin side="right"  pos="19" type="IO" id="PC5"  label="C5"/>
     <pin side="right"  pos="18" type="IO" id="PC6"  label="C6"/>
     <pin side="right"  pos="17" type="IO" id="PC7"  label="C7"/>
-    <pin side="right"  pos="16" type="vcc"   id="VCC2" label="Vcc"/>
-    <pin side="right"  pos="15" type="gnd"   id="GND2" label="Gnd"/>
+    <pin side="right"  pos="16" type="unused" id="VCC2" label="Vcc"/>
+    <pin side="right"  pos="15" type="unused" id="GND2" label="Gnd"/>
     <pin side="right"  pos="14" type="IO" id="PJ0"  label="J0"/>
     <pin side="right"  pos="13" type="IO" id="PJ1"  label="J1"/>
     <pin side="right"  pos="12" type="IO" id="PJ2"  label="J2"/>
@@ -84,8 +84,8 @@
     <pin side="top"    pos="25" type="IO" id="PA1"  label="A1"/>
     <pin side="top"    pos="24" type="IO" id="PA0"  label="A0"/>
     <pin side="top"    pos="23" type="IO" id="PJ7"  label=" J7"/>
-    <pin side="top"    pos="22" type="vcc"   id="VCC3" label="Vcc"/>
-    <pin side="top"    pos="21" type="gnd"   id="GND3" label="Gnd"/>
+    <pin side="top"    pos="22" type="unused" id="VCC3" label="Vcc"/>
+    <pin side="top"    pos="21" type="unused" id="GND3" label="Gnd"/>
     <pin side="top"    pos="20" type="IO" id="PK7"  label="K7"/>
     <pin side="top"    pos="19" type="IO" id="PK6"  label="K6"/>
     <pin side="top"    pos="18" type="IO" id="PK5"  label="K5"/>
@@ -102,8 +102,8 @@
     <pin side="top"    pos="7"  type="IO" id="PF2"  label="F2"/>
     <pin side="top"    pos="6"  type="IO" id="PF1"  label="F1"/>
     <pin side="top"    pos="5"  type="IO" id="PF0"  label="F0"/>
-    <pin side="top"    pos="4"  type="IO" id="AREF" label="Aref"/>
-    <pin side="top"    pos="3"  type="gnd"   id="GND4" label="Gnd"/>
-    <pin side="top"    pos="2"  type="avcc"  id="AVCC" label="Avcc"/>
+    <pin side="top"    pos="4"  type="IO" id="PV1"  label="Aref"/>
+    <pin side="top"    pos="3"  type="unused" id="GND4" label="Gnd"/>
+    <pin side="top"    pos="2"  type="IO" id="PV0"  label="Avcc"/>
     
 </package>

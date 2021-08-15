@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
 
         void setPullups( uint8_t puMask );
 
-        McuPin* getPin( uint8_t i ) { return m_pins[i]; }
+        McuPin* getPin( uint8_t i );
 
         QString name() { return m_name; }
 

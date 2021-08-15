@@ -252,8 +252,6 @@ void Mcu::load( QString fileName )
     {
         msg ="hex file succesfully loaded";
 
-        //if( !m_varList.isEmpty() ) m_processor->getRamTable()->loadVarSet( m_varList );
-
         m_eMcu.m_firmware = circuitDir.relativeFilePath( fileName );
         m_lastFirmDir = cleanPathAbs;
 
@@ -364,24 +362,30 @@ void Mcu::slotOpenTerm( int num )
 void Mcu::addPin( QString id, QString type, QString label,
                      int pos, int xpos, int ypos, int angle, int length )
 {
-    bool portPin = false;
-    if( type == "IO" )
+    McuPin* pin = NULL;
+
+    if( id.startsWith("P") )
     {
+        bool portPin = false;
         int pinNum = id.right(1).toInt( &portPin );
         if( portPin )
         {
             QString portName = "PORT"+id.mid(1,1);
             McuPort* port = m_eMcu.m_ports.getPort( portName );
-            McuPin* pin = port->getPin( pinNum );
-
-            pin->setPos( QPoint( xpos, ypos ) );
-            pin->setPinAngle( angle );
-            pin->setLength( length );
-            pin->setLabelText( label );
-            pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
-            m_pinList.append( pin );
-    }   }
-    if( !portPin ) Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
+            if( port )
+            {
+                pin = port->getPin( pinNum );
+                if( pin )
+                {
+                    if( type == "null" ) { pin->setVisible( false ); pin->setLabelText( "" ); }
+                    pin->setPos( QPoint( xpos, ypos ) );
+                    pin->setPinAngle( angle );
+                    pin->setLength( length );
+                    pin->setLabelText( label );
+                    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+                    m_pinList.append( pin );
+    }   }   }   }
+    if( !pin ) Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
 }
 
 QString Mcu::loadHex( QString file, int WordSize )

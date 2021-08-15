@@ -1,0 +1,74 @@
+<!DOCTYPE SimulIDE>
+
+<package name="" pins="64" width="19" height="19">
+
+    <pin side="left" pos="2"  type="IO" id="PG5" label="G5"/>
+    <pin side="left" pos="3"  type="IO" id="PE0" label="E0"/>
+    <pin side="left" pos="4"  type="IO" id="PE1" label="E1"/>
+    <pin side="left" pos="5"  type="IO" id="PE2" label="E2"/>
+    <pin side="left" pos="6"  type="IO" id="PE3" label="E3"/>
+    <pin side="left" pos="7"  type="IO" id="PE4" label="E4"/>
+    <pin side="left" pos="8"  type="IO" id="PE5" label="E5"/>
+    <pin side="left" pos="9"  type="IO" id="PE6" label="E6"/>
+    <pin side="left" pos="10" type="IO" id="PE7" label="E7"/>
+    <pin side="left" pos="11" type="IO" id="PB0" label="B0"/>
+    <pin side="left" pos="12" type="IO" id="PB1" label="B1"/>
+    <pin side="left" pos="13" type="IO" id="PB2" label="B2"/>
+    <pin side="left" pos="14" type="IO" id="PB3" label="B3"/>
+    <pin side="left" pos="15" type="IO" id="PB4" label="B4"/>
+    <pin side="left" pos="16" type="IO" id="PB5" label="B5"/>
+    <pin side="left" pos="17" type="IO" id="PB6" label="B6"/>
+
+    <pin side="bottom" pos="2"  type="IO" id="PB7" label="B7"/>
+    <pin side="bottom" pos="3"  type="IO" id="PG3" label="G3"/>
+    <pin side="bottom" pos="4"  type="IO" id="PG4" label="G4"/>
+    <pin side="bottom" pos="5"  type="reset" id="RST" label="Rst"/>
+    <pin side="bottom" pos="6"  type="unused"   id="VCC1" label="Vcc"/>
+    <pin side="bottom" pos="6"  type="unused"   id="VCC1" label="Vcc"/>
+    <pin side="bottom" pos="7"  type="unused"   id="GND1" label="Gnd"/>
+    <pin side="bottom" pos="8"  type="unused"   id="XTAL2" label="XTAL2"/>
+    <pin side="bottom" pos="9"  type="unused"   id="XTAL1" label="XTAL1"/>
+    <pin side="bottom" pos="10" type="IO" id="PD0" label="D0"/>
+    <pin side="bottom" pos="11" type="IO" id="PD1" label="D1"/>
+    <pin side="bottom" pos="12" type="IO" id="PD2" label="D2"/>
+    <pin side="bottom" pos="13" type="IO" id="PD3" label="D3"/>
+    <pin side="bottom" pos="14" type="IO" id="PD4" label="D4"/>
+    <pin side="bottom" pos="15" type="IO" id="PD5" label="D5"/>
+    <pin side="bottom" pos="16" type="IO" id="PD6" label="D6"/>
+    <pin side="bottom" pos="17" type="IO" id="PD7" label="D7"/>
+
+    <pin side="right" pos="17" type="IO" id="PG0" label="G0"/>
+    <pin side="right" pos="16" type="IO" id="PG1" label="G1"/>
+    <pin side="right" pos="15" type="IO" id="PC0" label="C0"/>
+    <pin side="right" pos="14" type="IO" id="PC1" label="C1"/>
+    <pin side="right" pos="13" type="IO" id="PC2" label="C2"/>
+    <pin side="right" pos="12" type="IO" id="PC3" label="C3"/>
+    <pin side="right" pos="11" type="IO" id="PC4" label="C4"/>
+    <pin side="right" pos="10" type="IO" id="PC5" label="C5"/>
+    <pin side="right" pos="9"  type="IO" id="PC6" label="C6"/>
+    <pin side="right" pos="8"  type="IO" id="PC7" label="C7"/>
+    <pin side="right" pos="7"  type="IO" id="PG2" label="G2"/>
+    <pin side="right" pos="6"  type="IO" id="PA7" label="A7"/>
+    <pin side="right" pos="5"  type="IO" id="PA6" label="A6"/>
+    <pin side="right" pos="4"  type="IO" id="PA5" label="A5"/>
+    <pin side="right" pos="3"  type="IO" id="PA4" label="A4"/>
+    <pin side="right" pos="2"  type="IO" id="PA3" label="A3"/>
+                             
+    <pin side="top" pos="17" type="IO" id="PA2"  label="A2"/>
+    <pin side="top" pos="16" type="IO" id="PA1"  label="A1"/>
+    <pin side="top" pos="15" type="IO" id="PA0"  label="A0"/>
+    <pin side="top" pos="14" type="unused"   id="VCC2"  label="Vcc"/>
+    <pin side="top" pos="13" type="unused"   id="GND2"  label="Gnd"/>
+    <pin side="top" pos="12" type="IO"  id="PF7"  label="F7"/>
+    <pin side="top" pos="11" type="IO"  id="PF6"  label="F6"/>
+    <pin side="top" pos="10" type="IO"  id="PF5"  label="F5"/>
+    <pin side="top" pos="9"  type="IO"  id="PF4"  label="F4"/>
+    <pin side="top" pos="8"  type="IO"  id="PF3"  label="F3"/>
+    <pin side="top" pos="7"  type="IO"  id="PF2"  label="F2"/>
+    <pin side="top" pos="6"  type="IO"  id="PF1"  label="F1"/>
+    <pin side="top" pos="5"  type="IO"  id="PF0"  label="F0"/>
+    <pin side="top" pos="4"  type="IO"  id="PV1" label="Aref"/>
+    <pin side="top" pos="3"  type="unused"   id="GND3"  label="Gnd"/>
+    <pin side="top" pos="2"  type="IO"  id="PV0" label="Avcc"/>
+    
+</package>

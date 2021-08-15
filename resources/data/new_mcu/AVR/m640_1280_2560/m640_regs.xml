@@ -1,0 +1,251 @@
+<parts>
+    <datablock name="GPR" start="0x0000" end="0x001F"/>
+    <regblock  name="REGISTERS" start="0x0000" end="0x0019" offset="0">
+        <register name="R00"   addr="0"   bits=""/>
+        <register name="R01"   addr="1"   bits=""/>
+        <register name="R02"   addr="2"   bits=""/>
+        <register name="R03"   addr="3"   bits=""/>
+        <register name="R04"   addr="4"   bits=""/>
+        <register name="R05"   addr="5"   bits=""/>
+        <register name="R06"   addr="6"   bits=""/>
+        <register name="R07"   addr="7"   bits=""/>
+        <register name="R08"   addr="8"   bits=""/>
+        <register name="R09"   addr="9"   bits=""/>
+        <register name="R10"   addr="10"  bits=""/>
+        <register name="R11"   addr="11"  bits=""/>
+        <register name="R12"   addr="12"  bits=""/>
+        <register name="R13"   addr="13"  bits=""/>
+        <register name="R14"   addr="14"  bits=""/>
+        <register name="R15"   addr="15"  bits=""/>
+        <register name="R16"   addr="16"  bits=""/>
+        <register name="R17"   addr="17"  bits=""/>
+        <register name="R18"   addr="18"  bits=""/>
+        <register name="R19"   addr="19"  bits=""/>
+        <register name="R20"   addr="20"  bits=""/>
+        <register name="R21"   addr="21"  bits=""/>
+        <register name="R22"   addr="22"  bits=""/>
+        <register name="R23"   addr="23"  bits=""/>
+        <register name="R24"   addr="24"  bits=""/>
+        <register name="R25"   addr="25"  bits=""/>
+        <register name="R26"   addr="26"  bits=""/>
+        <register name="R27"   addr="27"  bits=""/>
+        <register name="R28"   addr="28"  bits=""/>
+        <register name="R29"   addr="29"  bits=""/>
+        <register name="R30"   addr="30"  bits=""/>
+        <register name="R31"   addr="31"  bits=""/>
+    </regblock>
+    <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32" streg="SREG">
+        <register name="PINA"   addr="0"   bits="0-7"/>
+        <register name="DDRA"   addr="1"   bits="0-7"/>
+        <register name="PORTA"  addr="2"   bits="0-7"/>
+        <register name="PINB"   addr="3"   bits="0-7"/>
+        <register name="DDRB"   addr="4"   bits="0-7"/>
+        <register name="PORTB"  addr="5"   bits="0-7"/>
+        <register name="PINC"   addr="6"   bits="0-7"/>
+        <register name="DDRC"   addr="7"   bits="0-7"/>
+        <register name="PORTC"  addr="8"   bits="0-7"/>
+        <register name="PIND"   addr="9"   bits="0-7"/>
+        <register name="DDRD"   addr="10"  bits="0-7"/>
+        <register name="PORTD"  addr="11"  bits="0-7"/>
+        <register name="PINE"   addr="12"  bits="0-7"/>
+        <register name="DDRE"   addr="13"  bits="0-7"/>
+        <register name="PORTE"  addr="14"  bits="0-7"/>
+        <register name="PINF"   addr="15"  bits="0-7"/>
+        <register name="DDRF"   addr="16"  bits="0-7"/>
+        <register name="PORTF"  addr="17"  bits="0-7"/>
+        <register name="PING"   addr="18"  bits="0-5"/>
+        <register name="DDRG"   addr="19"  bits="0-5"/>
+        <register name="PORTG"  addr="20"  bits="0-5"/>
+        
+        <register name="TIFR0"  addr="21"  bits="TOV0,OCF0A,OCF0B"/>
+        <register name="TIFR1"  addr="22"  bits="TOV1,OCF1A,OCF1B,OCF1C,0,ICF1"/>
+        <register name="TIFR2"  addr="23"  bits="TOV2,OCF2A,OCF2B"/>
+        <register name="TIFR3"  addr="24"  bits="TOV3,OCF3A,OCF3B,OCF3C,0,ICF3"/>
+        <register name="TIFR4"  addr="25"  bits="TOV4,OCF4A,OCF4B,OCF4C,0,ICF4"/>
+        <register name="TIFR5"  addr="26"  bits="TOV5,OCF5A,OCF5B,OCF5C,0,ICF5"/>
+        
+        <register name="PCIFR"  addr="27"  bits="PCIF0,PCIF1,PCIF2"/>
+        <register name="EIFR"   addr="28"  bits="INTF0,INTF1,INTF2,INTF3,INTF4,INTF5,INTF6,INTF7"/>
+        <register name="EIMSK"  addr="29"  bits="INT0,INT1,INT2,INT3,INT4,INT5,INT6,INT7"/>
+        <register name="GPIOR0" addr="30"  bits=""/>
+        <register name="EECR"   addr="31"  bits="EERE,EEPE,EEMPE,EERIE,EEPM0,EEPM1"/>
+        <register name="EEDR"   addr="32"  bits=""/>
+        <register name="EEARL"  addr="33"  bits=""/>
+        <register name="EEARH"  addr="34"  bits=""/>
+        <register name="GTCCR"  addr="35"  bits="PSRSYNC,PSRASY,0,0,0,0,0,TSM"/>
+        <register name="TCCR0A" addr="36"  bits="WGM00,WGM01,0,0,COM0B0,COM0B1,COM0A0,COM0A1"/>
+        <register name="TCCR0B" addr="37"  bits="CS00,CS01,CS02,WGM02,0,0,FOC0B,FOC0A"/>
+        <register name="TCNT0"  addr="38"  bits=""/>
+        <register name="OCR0A"  addr="39"  bits=""/>
+        <register name="OCR0B"  addr="40"  bits=""/>
+        
+        <register name="GPIOR1" addr="42"  bits=""/>
+        <register name="GPIOR2" addr="43"  bits=""/>
+        <register name="SPCR"   addr="44"  bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE"/>
+        <register name="SPSR"   addr="45"  bits="SPI2X,0,0,0,0,0,WCOL,SPIF"/>
+        <register name="SPDR"   addr="46"  bits=""/>
+        
+        <register name="ACSR"   addr="48"  bits="ACIS0,ACIS1,ACIC,ACIE,ACI,ACO,ACBG,ACD"/>
+        <register name="OCDR"   addr="49"  bits="0-7"/>
+        
+        <register name="SMCR"   addr="51"  bits="SE,SM0,SM1,SM2"/>
+        <register name="MCUSR"  addr="52"  bits="PORF,EXTRF,BORF,WDRF,JTRF"/>
+        <register name="MCUCR"  addr="53"  bits="IVCE,IVSEL,0,0,PUD,0,0,JTD"/>
+        
+        <register name="SPMCSR" addr="55"  bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,SIGRD,RWWSB,SPMIE"/>
+        
+        <register name="RAMPZ"  addr="59"  bits=""/>
+        <register name="EIND"   addr="60"  bits=""/>
+        <register name="SPL"    addr="61"  bits=""/>
+        <register name="SPH"    addr="62"  bits=""/>
+        <register name="SREG"   addr="63"  bits="C,Z,N,V,S,H,T,I"/>
+    </regblock>
+    <regblock  name="EXT_I/O_REG" start="0x0060" end="0x01FF" offset="0">
+        <register name="WDTCSR" addr="96"  bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDIE,WDIF"/>
+        <register name="CLKPR"  addr="97"  bits=""/>
+        <register name="PRR0"   addr="100" bits=""/>
+        <register name="PRR1"   addr="101" bits=""/>
+        <register name="OSCCAL" addr="102" bits=""/>
+        <register name="PCICR"  addr="104" bits="PCIE0,PCIE1,PCIE2"/>
+        <register name="EICRA"  addr="105" bits=""/>
+        <register name="PCMSK0" addr="107" bits=""/>
+        <register name="PCMSK1" addr="108" bits=""/>
+        <register name="PCMSK2" addr="109" bits=""/>
+        <register name="TIMSK0" addr="110" bits="TOIE0,OCIE0A,OCIE0B"/>
+        <register name="TIMSK1" addr="111" bits="TOIE1,OCIE1A,OCIE1B,OCIE1C,0,ICIE1"/>
+        <register name="TIMSK2" addr="112" bits="TOIE2,OCIE2A,OCIE2B"/>
+        <register name="TIMSK3" addr="113" bits="TOIE3,OCIE3A,OCIE3B,OCIE3C,0,ICIE3"/>
+        <register name="TIMSK4" addr="114" bits="TOIE4,OCIE4A,OCIE4B,OCIE4C,0,ICIE4"/>
+        <register name="TIMSK5" addr="115" bits="TOIE5,OCIE5A,OCIE5B,OCIE5C,0,ICIE5"/>
+        <register name="XMCRA"  addr="116" bits=""/>
+        <register name="XMCRB"  addr="117" bits=""/>
+        
+        <register name="ADCL"   addr="120" bits=""/>
+        <register name="ADCH"   addr="121" bits=""/>
+        <register name="ADCSRA" addr="122" bits="ADPS0,ADPS1,ADPS3,ADIE,ADIF,ADATE,ADSC,ADEN"/>
+        <register name="ADCSRB" addr="123" bits="ADTS0,ADTS1,ADTS2,MUX5,0,0,ACME"/>
+        <register name="ADMUX"  addr="124" bits="MUX0,MUX1,MUX2,MUX3,MUX4,ADLAR,REFS0,REFS1"/>
+        <register name="DIDR2"  addr="126" bits=""/>
+        <register name="DIDR0"  addr="126" bits=""/>
+        <register name="DIDR1"  addr="127" bits="AIN0D,AIN1D"/>
+        
+        <register name="TCCR1A" addr="128" bits="WGM10,WGM11,COM1C0,COM1C1,COM1B0,COM1B1,COM1A0,COM1A1"/>
+        <register name="TCCR1B" addr="129" bits="CS10,CS11,CS12,WGM12,WGM13,0,ICES1,ICNC1"/>
+        <register name="TCCR1C" addr="130" bits="0,0,0,0,0,FOC1C,FOC1B,FOC1A"/>
+        
+        <register name="TCNT1L" addr="132" bits=""/>
+        <register name="TCNT1H" addr="133" bits=""/>
+        <register name="ICR1L"  addr="134" bits=""/>
+        <register name="ICR1H"  addr="135" bits=""/>
+        <register name="OCR1AL" addr="136" bits=""/>
+        <register name="OCR1AH" addr="137" bits=""/>
+        <register name="OCR1BL" addr="138" bits=""/>
+        <register name="OCR1BH" addr="139" bits=""/>
+        <register name="OCR1CL" addr="140" bits=""/>
+        <register name="OCR1CH" addr="141" bits=""/>
+        
+        <register name="TCCR3A" addr="144" bits="WGM30,WGM31,COM3C0,COM3C1,COM3B0,COM3B1,COM3A0,COM3A1"/>
+        <register name="TCCR3B" addr="145" bits="CS30,CS31,CS32,WGM32,WGM33,0,ICES3,ICNC3"/>
+        <register name="TCCR3C" addr="146" bits="0,0,0,0,0,FOC3C,FOC3B,FOC3A"/>
+        
+        <register name="TCNT3L" addr="148" bits=""/>
+        <register name="TCNT3H" addr="149" bits=""/>
+        <register name="ICR3L"  addr="150" bits=""/>
+        <register name="ICR3H"  addr="151" bits=""/>
+        <register name="OCR3AL" addr="152" bits=""/>
+        <register name="OCR3AH" addr="153" bits=""/>
+        <register name="OCR3BL" addr="154" bits=""/>
+        <register name="OCR3BH" addr="155" bits=""/>
+        <register name="OCR3CL" addr="156" bits=""/>
+        <register name="OCR3CH" addr="157" bits=""/>
+        
+        <register name="TCCR4A" addr="160" bits="WGM40,WGM41,COM4C0,COM4C1,COM4B0,COM4B1,COM4A0,COM4A1"/>
+        <register name="TCCR4B" addr="161" bits="CS40,CS41,CS42,WGM42,WGM43,0,ICES4,ICNC4"/>
+        <register name="TCCR4C" addr="162" bits="0,0,0,0,0,FOC4C,FOC4B,FOC4A"/>
+        
+        <register name="TCNT4L" addr="164" bits=""/>
+        <register name="TCNT4H" addr="165" bits=""/>
+        <register name="ICR4L"  addr="166" bits=""/>
+        <register name="ICR4H"  addr="167" bits=""/>
+        <register name="OCR4AL" addr="168" bits=""/>
+        <register name="OCR4AH" addr="169" bits=""/>
+        <register name="OCR4BL" addr="179" bits=""/>
+        <register name="OCR4BH" addr="171" bits=""/>
+        <register name="OCR4CL" addr="172" bits=""/>
+        <register name="OCR4CH" addr="173" bits=""/>
+        
+        <register name="TCCR2A" addr="176" bits="WGM20,WGM21,0,0,COM2B0,COM2B1,COM2A0,COM2A1"/>
+        <register name="TCCR2B" addr="177" bits=""/>
+        <register name="TCNT2"  addr="178" bits=""/>
+        <register name="OCR2A"  addr="179" bits=""/>
+        <register name="OCR2B"  addr="180" bits=""/>
+        <register name="ASSR"   addr="182" bits=""/>
+        <register name="TWBR"   addr="184" bits=""/>
+        <register name="TWSR"   addr="185" reset="0xF8" bits="TWPS0,TWPS1,0,TWS3,TWS4,TWS5,TWS6,TWS7"/>
+        <register name="TWAR"   addr="186" reset="0xFE" bits="TWGCE,TWA0,TWA1,TWA2,TWA3,TWA4,TWA5,TWA6"/>
+        <register name="TWDR"   addr="187" reset="0xFF" bits=""/>
+        <register name="TWCR"   addr="188" bits="TWIE,0,TWEN,TWWC,TWSTO,TWSTA,TWEA,TWINT"/>
+        <register name="TWAMR"  addr="189" bits=""/>
+        
+        <register name="UCSR0A" addr="192" reset="0x20" mask="0x43" bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0"/>
+        <register name="UCSR0B" addr="193" bits="TXB80,RXB80,UCSZ02,TXEN0,RXEN0,UDRIE0,TXCIE0,RXCIE0"/>
+        <register name="UCSR0C" addr="194" bits="UCPOL0,UCSZ00,UCSZ01,USBS0,UPM00,UPM01,UMSEL00,UMSEL01"/>
+        
+        <register name="UBRR0L" addr="196" bits=""/>
+        <register name="UBRR0H" addr="197" bits=""/>
+        <register name="UDR0"   addr="198" bits=""/>
+        
+        <register name="UCSR1A" addr="200" reset="0x20" mask="0x43" bits="MPCM1,U2X1,UPE1,DOR1,FE1,UDRE1,TXC1,RXC1"/>
+        <register name="UCSR1B" addr="201" bits="TXB81,RXB81,UCSZ12,TXEN1,RXEN1,UDRIE1,TXCIE1,RXCIE1"/>
+        <register name="UCSR1C" addr="202" bits="UCPOL1,UCSZ10,UCSZ11,USBS1,UPM10,UPM11,UMSEL10,UMSEL11"/>
+        
+        <register name="UBRR1L" addr="204" bits=""/>
+        <register name="UBRR1H" addr="205" bits=""/>
+        <register name="UDR1"   addr="206" bits=""/>
+        
+        <register name="UCSR2A" addr="208" reset="0x20" mask="0x43" bits="MPCM2,U2X2,UPE2,DOR2,FE2,UDRE2,TXC2,RXC2"/>
+        <register name="UCSR2B" addr="209" bits="TXB82,RXB82,UCSZ22,TXEN2,RXEN2,UDRIE2,TXCIE2,RXCIE2"/>
+        <register name="UCSR2C" addr="210" bits="UCPOL2,UCSZ20,UCSZ21,USBS2,UPM20,UPM21,UMSEL20,UMSEL21"/>
+        
+        <register name="UBRR2L" addr="212" bits=""/>
+        <register name="UBRR2H" addr="213" bits=""/>
+        <register name="UDR2"   addr="214" bits=""/>
+        
+        <register name="PINH"   addr="256" bits="0-7"/>
+        <register name="DDRH"   addr="257" bits="0-7"/>
+        <register name="PORTH"  addr="258" bits="0-7"/>
+        <register name="PINJ"   addr="259" bits="0-7"/>
+        <register name="DDRJ"   addr="260" bits="0-7"/>
+        <register name="PORTJ"  addr="261" bits="0-7"/>
+        <register name="PINK"   addr="262" bits="0-7"/>
+        <register name="DDRK"   addr="263" bits="0-7"/>
+        <register name="PORTK"  addr="264" bits="0-7"/>
+        <register name="PINL"   addr="265" bits="0-7"/>
+        <register name="DDRL"   addr="266" bits="0-7"/>
+        <register name="PORTL"  addr="267" bits="0-7"/>
+        
+        <register name="TCCR5A" addr="288" bits="WGM50,WGM51,COM5C0,COM5C1,COM5B0,COM5B1,COM5A0,COM5A1"/>
+        <register name="TCCR5B" addr="289" bits="CS50,CS51,CS52,WGM52,WGM53,0,ICES5,ICNC5"/>
+        <register name="TCCR5C" addr="290" bits="0,0,0,0,0,FOC5C,FOC5B,FOC5A"/>
+        
+        <register name="TCNT5L" addr="292" bits=""/>
+        <register name="TCNT5H" addr="293" bits=""/>
+        <register name="ICR5L"  addr="294" bits=""/>
+        <register name="ICR5H"  addr="295" bits=""/>
+        <register name="OCR5AL" addr="296" bits=""/>
+        <register name="OCR5AH" addr="297" bits=""/>
+        <register name="OCR5BL" addr="298" bits=""/>
+        <register name="OCR5BH" addr="299" bits=""/>
+        <register name="OCR5CL" addr="300" bits=""/>
+        <register name="OCR5CH" addr="301" bits=""/>
+        
+        <register name="UCSR3A" addr="304" reset="0x20" mask="0x43" bits="MPCM3,U2X3,UPE3,DOR3,FE3,UDRE3,TXC3,RXC3"/>
+        <register name="UCSR3B" addr="305" bits="TXB83,RXB83,UCSZ32,TXEN3,RXEN3,UDRIE3,TXCIE3,RXCIE3"/>
+        <register name="UCSR3C" addr="306" bits="UCPOL3,UCSZ30,UCSZ31,USBS3,UPM30,UPM31,UMSEL30,UMSEL31"/>
+        
+        <register name="UBRR3L" addr="308" bits=""/>
+        <register name="UBRR3H" addr="309" bits=""/>
+        <register name="UDR3"   addr="310" bits=""/>
+    </regblock>
+    <stack  spreg="SPL,SPH" increment="postdec" />
+</parts>

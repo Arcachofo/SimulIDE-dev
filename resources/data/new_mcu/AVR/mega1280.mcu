@@ -1,11 +1,10 @@
 <!DOCTYPE SimulIDE>
 
-<mcu name="mega2560" core="AVR" data="8704" prog="131072" progword="2" eeprom="4096"
-            inst_cycle="1">
+<mcu name="mega1280" core="AVR" data="8704" prog="131072" progword="2" eeprom="4096" inst_cycle="1">
 
-    <include file="mega640_128X_256X/mega640_regs.xml" />
-    <include file="mega640_128X_256X/mega640_int.xml" />
-    <include file="mega640_128X_256X/mega640_perif.xml" />
+    <include file="m640_1280_2560/m640_regs.xml" />
+    <include file="m640_1280_2560/m640_int.xml" />
+    <include file="m640_1280_2560/m640_perif.xml" />
     
     <datablock name="RAM" start="0x0200" end="0x21FF"/>
     

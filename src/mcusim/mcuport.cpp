@@ -98,6 +98,12 @@ void McuPort::createPins( Mcu* mcuComp )
         m_pins[i] = new McuPin( this, i, m_name+QString::number(i), mcuComp );
 }
 
+McuPin* McuPort::getPin( uint8_t i )
+{
+    if( i >= m_pins.size() ) return NULL;
+    return m_pins[i];
+}
+
 //  ------------------------------------------
 
 McuPorts::McuPorts( eMcu* mcu )
@@ -110,5 +116,7 @@ McuPin* McuPorts::getPin( QString name )
 {
     int pinNumber = name.right(1).toInt();
     QString portName = name.remove( name.size()-1, 1 );
-    return getPort( portName )->m_pins[pinNumber];
+    McuPort* port = getPort( portName );
+    if( port ) return port->getPin( pinNumber );
+    return NULL;
 }

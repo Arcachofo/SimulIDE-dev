@@ -310,7 +310,10 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
         if( !m_isLS )
         {
             p->setPen( QColor( 170, 170, 150 ) );
-            p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
+            if( m_width == m_height )
+                p->drawEllipse( 4, 4, 4, 4);
+            else
+                p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
 }   }   }
 
 #include "moc_chip.cpp"

@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<package name="" pins="28" width="4" height="15">
+<package name="" pins="30" width="4" height="15">
 
     <pin side="left" pos="1"  type="IO" id="PC6"  label="C6"/>
     <pin side="left" pos="2"  type="IO" id="PD0"  label="D0"/>
@@ -9,8 +9,8 @@
     <pin side="left" pos="5"  type="IO" id="PD3"  label="D3"/>
     <pin side="left" pos="6"  type="IO" id="PD4"  label="D4"/>
 
-    <pin side="left" pos="7"  type="unused"   id="VCC"  label="Vcc"/>
-    <pin side="left" pos="8"  type="unused"   id="GND1"  label="Gnd"/>
+    <pin side="left" pos="7"  type="unused" id="VCC"  label="Vcc"/>
+    <pin side="left" pos="8"  type="unused" id="GND1" label="Gnd"/>
 
     <pin side="left" pos="9"  type="IO" id="PB6"  label="B6"/>
     <pin side="left" pos="10" type="IO" id="PB7"  label="B7"/>
@@ -27,6 +27,10 @@
 
     <pin side="right"   pos="9"  type="IO" id="PV0" label="A+"/><!-- aVcc -->
     <pin side="right"   pos="8"  type="IO" id="PV1" label="Ar"/><!-- aRef -->
+    
+    <pin side="right"   pos="0"  type="null" id="PV2" label=""/><!-- ADC6 -->
+    <pin side="right"   pos="0"  type="null" id="PV3" label=""/><!-- ADC7 -->
+    
     <pin side="right"   pos="7"  type="unused" id="GND2"  label="Gnd"/>
 
     <pin side="right"   pos="6"  type="IO"  id="PC0"  label="C0"/>

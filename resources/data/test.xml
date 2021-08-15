@@ -4,7 +4,8 @@
     
     <itemset category="Test" type="Subcircuit" icon="subc.png" >
     
-        <item name="OAMP_DAC" folder="test" info=" test DAC+OAMP" /> 
+        <item name="OAMP_DAC" folder="test" info=" test DAC+OAMP" />
+        <item name="Volt_Div" folder="test" info=" test Volt Div" /> 
         
     </itemset>
 
