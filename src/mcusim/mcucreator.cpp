@@ -459,17 +459,34 @@ void McuCreator::createTimer( QDomElement* t )
             if( !ocUnit ) continue;
 
             McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );
-            QString ocrRegName = el.attribute("ocreg");
 
             timer->addOcUnit( ocUnit );
             ocUnit->m_timer = timer;
             ocUnit->m_ocPin = pin;
-            mcu->watchRegNames( ocrRegName, R_WRITE, ocUnit, &McuOcUnit::ocrChanged );
+
+            QString ocrReg = el.attribute("ocreg");
+            //mcu->watchRegNames( ocrRegName, R_WRITE, ocUnit, &McuOcUnit::ocrChanged );
+
+            QString lowByte = ocrReg;
+            QString highByte ="";
+
+            if( ocrReg.contains(",") )
+            {
+                QStringList regs = ocrReg.split(",");
+
+                lowByte = regs.takeFirst();
+                highByte = regs.takeFirst();
+            }
+            if( !lowByte.isEmpty() )
+                mcu->watchRegNames( lowByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteL );
+
+            if( !highByte.isEmpty() )
+                mcu->watchRegNames( highByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteH );
 
             if( el.hasAttribute("configbits") )
             {
                 QString configBits = el.attribute("configbits");
-                mcu->watchBitNames( configBits, R_WRITE, ocUnit, &McuOcUnit::configure );
+                //mcu->watchBitNames( configBits, R_WRITE, ocUnit, &McuOcUnit::configure );
                 ocUnit->m_configBits = mcu->getRegBits( configBits );
             }
             QDomNode node1 = el.firstChild();

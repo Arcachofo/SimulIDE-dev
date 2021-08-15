@@ -27,13 +27,17 @@ McuTimer* AvrTimer::makeTimer( eMcu* mcu, QString name ) // Static
     QString n = name.toLower();
     if     ( n == "timer0" ) return new AvrTimer0( mcu, name );
     else if( n == "timer2" ) return new AvrTimer2( mcu, name );
-    else                     return new AvrTimer1( mcu, name );
+    else                     return new AvrTimer16bit( mcu, name );
+
     return NULL;
 }
 
 AvrTimer::AvrTimer(  eMcu* mcu, QString name )
         : McuTimer( mcu, name )
 {
+    m_OCA = NULL;
+    m_OCB = NULL;
+    m_OCC = NULL;
 }
 AvrTimer::~AvrTimer(){}
 
@@ -55,19 +59,22 @@ void AvrTimer::addOcUnit( McuOcUnit* ocUnit )
 
     if     ( ocUnit->getId().endsWith("A") ) m_OCA = ocUnit;
     else if( ocUnit->getId().endsWith("B") ) m_OCB = ocUnit;
+    else if( ocUnit->getId().endsWith("C") ) m_OCC = ocUnit;
 }
 
 McuOcUnit* AvrTimer::getOcUnit( QString name )
 {
     if     ( name.endsWith("A") ) return m_OCA;
     else if( name.endsWith("B") ) return m_OCB;
+    else if( name.endsWith("C") ) return m_OCC;
     return NULL;
 }
 
 void AvrTimer::configureA( uint8_t val ) // TCCRXA  // WGM00,WGM01
 {
-    m_OCA->configure( val & 0b11000000 );
-    m_OCB->configure( val & 0b00110000 );
+    if( m_OCA ) m_OCA->configure( val ); // Done in ocunits
+    if( m_OCB ) m_OCB->configure( val );
+    if( m_OCC ) m_OCC->configure( val );
 
     m_WGM10 = val & 0b00000011;  // WGMX1,WGMX0
     updtWgm();
@@ -117,29 +124,56 @@ void AvrTimer::configureOcUnits( bool disable )
     m_bidirec = false;
     m_reverse = false;
 
-    ocAct_t comActA = (ocAct_t)m_OCA->getMode(); // Default modes
-    ocAct_t comActB = (ocAct_t)m_OCB->getMode();
-    ocAct_t tovActA = ocNONE;
-    ocAct_t tovActB = ocNONE;
+    ocAct_t comActA, comActB, comActC;
+    ocAct_t tovActA, tovActB, tovActC;
+
+    if( m_OCA )
+    {
+        comActA = (ocAct_t)m_OCA->getMode(); // Default modes
+        tovActA = ocNONE;
+    }
+    if( m_OCB )
+    {
+        comActB = (ocAct_t)m_OCB->getMode();
+        tovActB = ocNONE;
+    }
+    if( m_OCC )
+    {
+        comActC = (ocAct_t)m_OCC->getMode();
+        tovActC = ocNONE;
+    }
 
     if( m_wgmMode == wgmPHASE )  // Phase Correct PWM
     {
-        if((comActA == ocTOGGLE) && disable ) comActA = ocNONE;
-        if( comActB == ocTOGGLE ) comActB = ocNONE;
+        if( m_OCA ) { if((comActA == ocTOGGLE) && disable ) comActA = ocNONE; }
+        if( m_OCB ) { if( comActB == ocTOGGLE ) comActB = ocNONE; }
+        if( m_OCC ) { if( comActC == ocTOGGLE ) comActC = ocNONE; }
         m_bidirec = true;
     }
     else  if( m_wgmMode == wgmFAST )  // Fast PWM
     {
-        if((comActA == ocTOGGLE) && disable ) comActA = ocNONE;
-        if     ( comActA == ocCLEAR ) tovActA = ocSET;
-        else if( comActA == ocSET )   tovActA = ocCLEAR;
-
-        if     ( comActB == ocTOGGLE ) comActB = ocNONE;
-        else if( comActB == ocCLEAR )  tovActB = ocSET;
-        else if( comActB == ocSET )    tovActB = ocCLEAR;
+        if( m_OCA )
+        {
+            if((comActA == ocTOGGLE) && disable ) comActA = ocNONE;
+            if     ( comActA == ocCLEAR ) tovActA = ocSET;
+            else if( comActA == ocSET )   tovActA = ocCLEAR;
+        }
+        if( m_OCB )
+        {
+            if     ( comActB == ocTOGGLE ) comActB = ocNONE;
+            else if( comActB == ocCLEAR )  tovActB = ocSET;
+            else if( comActB == ocSET )    tovActB = ocCLEAR;
+        }
+        if( m_OCC )
+        {
+            if     ( comActC == ocTOGGLE ) comActC = ocNONE;
+            else if( comActC == ocCLEAR )  tovActC = ocSET;
+            else if( comActC == ocSET )    tovActC = ocCLEAR;
+        }
     }
-    m_OCA->setOcActs( comActA, tovActA );
-    m_OCB->setOcActs( comActB, tovActB );
+    if( m_OCA ) m_OCA->setOcActs( comActA, tovActA );
+    if( m_OCB ) m_OCB->setOcActs( comActB, tovActB );
+    if( m_OCC ) m_OCC->setOcActs( comActC, tovActC );
 
     if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
     else            m_ovfPeriod = m_ovfMatch+1;
@@ -219,6 +253,10 @@ AvrTimer16bit::AvrTimer16bit( eMcu* mcu, QString name )
              : AvrTimer( mcu, name )
 {
     m_maxCount = 0xFFFF;
+
+    QString num = name.right(1);
+    setOCRXA( "OCR"+num+"AL,OCR"+num+"AH" );
+    setICRX( "ICR"+num+"L,ICR"+num+"H" );
 }
 AvrTimer16bit::~AvrTimer16bit(){}
 
@@ -322,21 +360,8 @@ void AvrTimer16bit::setICRX( QString reg )
     m_mcu->watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged );
 }
 
-//--------------------------------------------------
-// TIMER 1 -----------------------------------------
-
-AvrTimer1::AvrTimer1( eMcu* mcu, QString name)
-         : AvrTimer16bit( mcu, name )
-{
-    setOCRXA( "OCR1AL,OCR1AH" );
-    setICRX( "ICR1L,ICR1H" );
-}
-AvrTimer1::~AvrTimer1(){}
-
-void AvrTimer1::configureClock()
+void AvrTimer16bit::configureClock()
 {
     if( m_mode > 5 ) AvrTimer::configureExtClock();
     else             AvrTimer::configureClock();
 }
-
-

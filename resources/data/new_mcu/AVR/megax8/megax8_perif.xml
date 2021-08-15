@@ -32,11 +32,11 @@
         <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTD5"/>
         
-        <ocunit name="OC1A" pin="PORTB1" ocreg="OCR1A" configbits="COM1A0,COM1A1">
+        <ocunit name="OC1A" pin="PORTB1" ocreg="OCR1AL,OCR1AH" configbits="COM1A0,COM1A1">
             <interrupt name="T1COA" />
         </ocunit>
         
-        <ocunit name="OC1B" pin="PORTB2" ocreg="OCR1B" configbits="COM1B0,COM1B1">
+        <ocunit name="OC1B" pin="PORTB2" ocreg="OCR1BL,OCR1BH" configbits="COM1B0,COM1B1">
             <interrupt name="T1COB" />
         </ocunit>
         

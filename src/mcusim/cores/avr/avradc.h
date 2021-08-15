@@ -25,7 +25,8 @@
 
 class eMcu;
 class McuPin;
-class AvrTimer;
+class AvrTimer0;
+class AvrTimer16bit;
 class McuOcUnit;
 
 class MAINMODULE_EXPORT AvrAdc : public McuAdc
@@ -66,8 +67,9 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         McuPin* m_aRefPin;
         McuPin* m_aVccPin;
 
-        AvrTimer*  m_timer0;
-        AvrTimer*  m_timer1;
+        AvrTimer0*      m_timer0;
+        AvrTimer16bit*  m_timer1;
+
         McuOcUnit* m_t0OCA;
         McuOcUnit* m_t1OCB;
 };

@@ -58,6 +58,7 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
 
         McuOcUnit* m_OCA;
         McuOcUnit* m_OCB;
+        McuOcUnit* m_OCC;
 
         uint8_t* m_ocrxaL;
         uint8_t* m_ocrxaH;
@@ -107,20 +108,11 @@ class MAINMODULE_EXPORT AvrTimer16bit : public AvrTimer
     protected:
         virtual void updtWgm() override;
         virtual void setOCRXA( QString reg ) override;
+        virtual void configureClock() override;
         void setICRX( QString reg );
 
         uint8_t* m_icrxL;
         uint8_t* m_icrxH;
-};
-
-class MAINMODULE_EXPORT AvrTimer1 : public AvrTimer16bit
-{
-    public:
-        AvrTimer1( eMcu* mcu, QString name );
-        ~AvrTimer1();
-
-    protected:
-        virtual void configureClock() override;
 };
 
 #endif

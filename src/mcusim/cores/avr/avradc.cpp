@@ -39,7 +39,7 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
     m_aRefPin = mcu->getPin( "PORTV1" );
 
     m_timer0 = (AvrTimer0*)mcu->getTimer( "TIMER0" );
-    m_timer1 = (AvrTimer1*)mcu->getTimer( "TIMER1" );
+    m_timer1 = (AvrTimer16bit*)mcu->getTimer( "TIMER1" );
 
     m_t0OCA = m_timer0->getOcUnit("OCA");
     m_t1OCB = m_timer1->getOcUnit("OCB");

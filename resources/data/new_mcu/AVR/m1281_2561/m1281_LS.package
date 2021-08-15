@@ -4,9 +4,9 @@
 
 <package name="" pins="64" width="5" height="34" >
 
-    <pin side="left" pos="1"  type="rescc"  id="RST"  label="!RES" />
-    <pin side="left" pos="2"  type="unused" id="XTAL1"  label="XTAL1" />
-    <pin side="left" pos="3"  type="unused" id="XTAL2"  label="XTAL2" />
+    <pin side="left" pos="1"  type="reset"  id="RST"   label="!RES" />
+    <pin side="left" pos="2"  type="unused" id="XTAL1" label="XTAL1" />
+    <pin side="left" pos="3"  type="unused" id="XTAL2" label="XTAL2" />
 
     <pin side="left" pos="5"   type="IO" id="PA0"  label="A0" />
     <pin side="left" pos="6"   type="IO" id="PA1"  label="A1" />
@@ -35,8 +35,8 @@
     <pin side="left" pos="29"  type="IO" id="PC6"  label="C6" />
     <pin side="left" pos="30"  type="IO" id="PC7"  label="C7" />
 
-    <pin side="left" pos="32"  type="IO" id="AREF"  label="Aref" />
-    <pin side="left" pos="33"  type="IO" id="AVCC"  label="Avcc" />
+    <pin side="left" pos="32"  type="IO" id="PV1"  label="Aref" />
+    <pin side="left" pos="33"  type="IO" id="PV0"  label="Avcc" />
     
     
     <pin side="right" pos="1"  type="IO" id="PD0"  label="D0" />

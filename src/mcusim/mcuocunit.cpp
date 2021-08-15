@@ -34,7 +34,7 @@ McuOcUnit::~McuOcUnit( ){}
 
 void McuOcUnit::initialize()
 {
-    m_comMatch  = 0;
+    m_comMatch = 0;
     m_mode = 0;
 
     m_comAct = ocNONE;
@@ -84,3 +84,9 @@ void McuOcUnit::setOcActs( ocAct_t comAct, ocAct_t tovAct )
     m_comAct = comAct;
     m_tovAct = tovAct;
 }
+
+void McuOcUnit::ocrWriteL( uint8_t val )
+{ m_comMatch = (m_comMatch & 0xFF00) | val; }
+
+void McuOcUnit::ocrWriteH( uint8_t val )
+{ m_comMatch = (m_comMatch & 0x00FF) | (uint16_t)val<<8; }

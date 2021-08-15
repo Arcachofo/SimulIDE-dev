@@ -38,15 +38,15 @@
         <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTD6"/>
         
-        <ocunit name="OC1A" pin="PORTB5" ocreg="OCR1A" configbits="COM1A0,COM1A1">
+        <ocunit name="OC1A" pin="PORTB5" ocreg="OCR1AL,OCR1AH" configbits="COM1A0,COM1A1">
             <interrupt name="T1COA" />
         </ocunit>
         
-        <ocunit name="OC1B" pin="PORTB6" ocreg="OCR1B" configbits="COM1B0,COM1B1">
+        <ocunit name="OC1B" pin="PORTB6" ocreg="OCR1BL,OCR1BH" configbits="COM1B0,COM1B1">
             <interrupt name="T1COB" />
         </ocunit>
         
-        <ocunit name="OC1C" pin="PORTB7" ocreg="OCR1C" configbits="COM1C0,COM1C1">
+        <ocunit name="OC1C" pin="PORTB7" ocreg="OCR1CL,OCR1CH" configbits="COM1C0,COM1C1">
             <interrupt name="T1COC" />
         </ocunit>
         
@@ -67,15 +67,15 @@
         <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTE6"/>
         
-        <ocunit name="OC3A" pin="PORTE3" ocreg="OCR3A" configbits="COM3A0,COM3A1">
+        <ocunit name="OC3A" pin="PORTE3" ocreg="OCR3AL,OCR3AH" configbits="COM3A0,COM3A1">
             <interrupt name="T3COA" />
         </ocunit>
         
-        <ocunit name="OC3B" pin="PORTE4" ocreg="OCR3B" configbits="COM3B0,COM3B1">
+        <ocunit name="OC3B" pin="PORTE4" ocreg="OCR3BL,OCR3BH" configbits="COM3B0,COM3B1">
             <interrupt name="T3COB" />
         </ocunit>
         
-        <ocunit name="OC3C" pin="PORTE5" ocreg="OCR3C" configbits="COM3C0,COM3C1">
+        <ocunit name="OC3C" pin="PORTE5" ocreg="OCR3CL,OCR3CH" configbits="COM3C0,COM3C1">
             <interrupt name="T3COC" />
         </ocunit>
         
