@@ -53,10 +53,6 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
     Q_PROPERTY( qreal    rotation  READ rotation  WRITE setRotation )
     Q_PROPERTY( int      x         READ x         WRITE setX )
     Q_PROPERTY( int      y         READ y         WRITE setY )
-    Q_PROPERTY( QPointF  boardPos  READ boardPos  WRITE setBoardPos )
-    Q_PROPERTY( QPointF  circPos   READ circPos   WRITE setCircPos )
-    Q_PROPERTY( qreal    boardRot  READ boardRot  WRITE setBoardRot )
-    Q_PROPERTY( qreal    circRot   READ circRot   WRITE setCircRot )
     Q_PROPERTY( int      labelx    READ labelx    WRITE setLabelX )
     Q_PROPERTY( int      labely    READ labely    WRITE setLabelY )
     Q_PROPERTY( int      labelrot  READ labelRot  WRITE setLabelRot )
@@ -65,7 +61,12 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
     Q_PROPERTY( int      valLabRot READ valLabRot WRITE setValLabRot )
     Q_PROPERTY( int      hflip     READ hflip     WRITE setHflip )
     Q_PROPERTY( int      vflip     READ vflip     WRITE setVflip )
-    Q_PROPERTY( bool     mainComp  READ isMainComp  WRITE setMainComp )
+    // Related to Subcircuit:
+    Q_PROPERTY( bool     mainComp  READ isMainComp  WRITE setMainComp SCRIPTABLE false )
+    Q_PROPERTY( QPointF  boardPos  READ boardPos  WRITE setBoardPos SCRIPTABLE false )
+    Q_PROPERTY( QPointF  circPos   READ circPos   WRITE setCircPos  SCRIPTABLE false )
+    Q_PROPERTY( qreal    boardRot  READ boardRot  WRITE setBoardRot SCRIPTABLE false )
+    Q_PROPERTY( qreal    circRot   READ circRot   WRITE setCircRot  SCRIPTABLE false )
 
     public:
         QRectF boundingRect() const { return QRectF( m_area.x()-2, m_area.y()-2, m_area.width()+4 ,m_area.height()+4 ); }

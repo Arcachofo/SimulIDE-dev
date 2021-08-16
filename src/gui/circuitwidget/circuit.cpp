@@ -66,6 +66,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView*  p
     m_pasting    = false;
     m_deleting   = false;
     m_conStarted = false;
+    m_savingSub  = false;
 
     new_connector = 0l;
     m_seqNumber   = 0;
@@ -386,7 +387,7 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
     for( int i=0; i<atrs.length(); ++i )   // Get List of property names in Circuit file
     {
         QString propName = atrs.item(i).nodeName();
-        if( propName == "mainCompProps") // Load Subcircuit Main Component properties
+        /*if( propName == "mainCompProps") // Load Subcircuit Main Component properties
         {
             if( comp->itemType() == "Subcircuit" )
             {
@@ -394,7 +395,7 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
                 Component* mainComp = subc->getMainComp();
                 if( mainComp ) loadObjectProperties( atrs.item(i).toElement(), mainComp );
                 continue;
-        }   }
+        }   }*/
         QVariant value( element.attribute( propName ) );
         QVariant comProp = comp->property( propName.toStdString().c_str() );
 
@@ -678,7 +679,7 @@ void Circuit::objectToDom( QDomElement* elm, Component* comp, bool onlyMain )
     {
         QMetaProperty metaproperty = metaobject->property(i);
         const char* name = metaproperty.name();
-        if( onlyMain ) // Main Component in Subcircuit: don't load basic properties.
+        if( onlyMain ) // Main Component in Subcircuit: don't save basic properties.
         {
             if( !metaproperty.isUser() )        continue;
             if( !metaproperty.isDesignable() )  continue;
@@ -686,6 +687,7 @@ void Circuit::objectToDom( QDomElement* elm, Component* comp, bool onlyMain )
             if( strcmp(name, "Show_id") == 0 )  continue;
             if( strcmp(name, "id") == 0 )       continue;
         }
+        if( !m_savingSub && !metaproperty.isScriptable() ) continue; // Avoid saving unnecesary properties
 
         QVariant value = comp->property( name );
         QVariant::Type type = metaproperty.type();
@@ -754,6 +756,8 @@ bool Circuit::saveCircuit( QString fileName )
             m_backupPath = "";
     }   }
     else m_filePath = oldFilePath;
+
+    m_savingSub  = false;
 
     QApplication::restoreOverrideCursor();
     return saved;

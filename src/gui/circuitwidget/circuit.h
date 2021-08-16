@@ -103,6 +103,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         void setBackupPath( QString path ) { m_backupPath = path; }
 
+        void savingSub() { m_savingSub = true; }
+
     signals:
         void keyEvent( QString key, bool pressed );
 
@@ -151,6 +153,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         int m_seqNumber;
         int m_error;
         
+        bool m_savingSub;
         bool m_pasting;
         bool m_deleting;
         bool m_conStarted;

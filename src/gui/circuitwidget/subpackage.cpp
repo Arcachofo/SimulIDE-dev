@@ -73,7 +73,7 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_pkgeFile = SIMUAPI_AppPath::self()->RODataFolder().absolutePath();
     //if( m_lastPkg == "" ) m_lastPkg = m_pkgeFile;
 
-    connect( CircuitWidget::self(), SIGNAL( saving()),
+    connect( CircuitWidget::self(), SIGNAL( saving() ),
                               this, SLOT( savingCirc() ), Qt::UniqueConnection );
 }
 SubPackage::~SubPackage(){}
@@ -330,6 +330,7 @@ void SubPackage::setBoardMode()
 
 void SubPackage::savingCirc()
 {
+    Circuit::self()->savingSub();
     if( m_boardMode )
     {
         m_boardMode = false;
