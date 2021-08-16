@@ -48,6 +48,7 @@ eMcu::~eMcu()
 
 void eMcu::initialize()
 {
+    m_debugStep = false;
     m_cycle = 0;
     cyclesDone = 0;
     cpu->reset();
@@ -61,20 +62,30 @@ void eMcu::initialize()
 
 void eMcu::runEvent()
 {
-    //if( m_state == cpu_Running )
+    if( m_debugging )
     {
-        uint32_t pc = cpu->PC;
-        //if( cyclesDone > 1 ) cyclesDone -= 1;
-        //else
-        if( pc < m_flashSize )
-        {
-            cpu->runDecoder();              // Run Decoder
-
-            m_interrupts.runInterrupts();     // Run Interrupts
-        }
-        m_cycle += cyclesDone;
+        if( cyclesDone > 1 ) cyclesDone -= 1;
+        else                 stepDebug();
+        Simulator::self()->addEvent( m_simCycPI, this );
+    }
+    else
+    {
+        stepCpu();//if( m_state == cpu_Running )
         Simulator::self()->addEvent( cyclesDone*m_simCycPI, this );
     }
+}
+void eMcu::stepCpu()
+{
+    uint32_t pc = cpu->PC;
+    //if( cyclesDone > 1 ) cyclesDone -= 1;
+    //else
+    if( pc < m_flashSize )
+    {
+        cpu->runDecoder();              // Run Decoder
+
+        m_interrupts.runInterrupts();     // Run Interrupts
+    }
+    m_cycle += cyclesDone;
 }
 
 int eMcu::status() { return getRamValue( m_sregAddr ); }

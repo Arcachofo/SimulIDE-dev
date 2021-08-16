@@ -30,7 +30,6 @@ static const char* BaseDebugger_properties[] = {
 
 BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
             : Compiler( parent, outPane )
-            //, m_compProcess( NULL )
 {
     Q_UNUSED( BaseDebugger_properties );
 
@@ -51,7 +50,7 @@ BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString f
 }
 BaseDebugger::~BaseDebugger( )
 {
-    if( BaseProcessor::self() ) BaseProcessor::self()->getRamTable()->remDebugger( this );
+    if( McuInterface::self() ) McuInterface::self()->getRamTable()->remDebugger( this );
 }
 
 int BaseDebugger::compile( )
@@ -63,21 +62,21 @@ int BaseDebugger::compile( )
 
 bool BaseDebugger::upload()
 {
-    if( !McuComponent::self() )
+    if( !McuBase::self() )
     {
         m_outPane->appendLine( "\n"+tr("Error: No Mcu in Simulator... ") );
         return false;
     }
-    bool ok = McuComponent::self()->load( m_firmware );
+    bool ok = McuBase::self()->load( m_firmware );
     if( ok ) m_outPane->appendText( "\n"+tr("FirmWare Uploaded to ") );
     else     m_outPane->appendText( "\n"+tr("Error uploading firmware to ") );
 
-    m_outPane->appendLine( McuComponent::self()->device() );
+    m_outPane->appendLine( McuBase::self()->device() );
     m_outPane->appendLine( m_firmware+"\n" );
 
     if( ok )
     {
-        BaseProcessor::self()->setDebugger( this );
+        McuInterface::self()->setDebugger( this );
         mapFlashToSource();
     }
     return ok;

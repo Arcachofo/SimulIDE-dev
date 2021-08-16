@@ -28,7 +28,7 @@ class CodeEditor;
 
 class BaseDebugger : public Compiler    // Base Class for all debuggers
 {
-        friend class BaseProcessor;
+        friend class McuInterface;
 
     Q_OBJECT
     Q_PROPERTY( bool    Drive_Circuit READ driveCirc    WRITE setDriveCirc    DESIGNABLE true USER true )

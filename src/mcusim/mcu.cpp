@@ -34,7 +34,6 @@
 #include "mainwindow.h"
 #include "componentselector.h"
 #include "mcumonitor.h"
-//#include "serialterm.h"
 #include "serialmon.h"
 #include "mcuuart.h"
 #include "simuapi_apppath.h"
@@ -53,14 +52,14 @@ LibraryItem* Mcu::libraryItem()
 
 Component* Mcu::construct( QObject* parent, QString type, QString id )
 {
-    Mcu* mcu = new Mcu( parent, type,  id );
+    Mcu* mcu = new Mcu( parent, type, id );
     if( !m_error) m_error = McuCreator::createMcu( mcu, id );
     if( !m_error) mcu->setLogicSymbol( false );
 
     if( m_error > 0 )
     {
         //Circuit::self()->removeComp( mcu );
-        mcu = 0l;
+        mcu = NULL;
         m_error = 0;
         //m_pSelf = 0l;
     }
@@ -68,10 +67,12 @@ Component* Mcu::construct( QObject* parent, QString type, QString id )
 }
 
 Mcu::Mcu( QObject* parent, QString type, QString id )
-   : Chip( parent, type, id )
+   : McuBase( parent, type, id )
    , m_eMcu( id )
 {
-    QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
+    m_pSelf = this;
+    m_proc = &m_eMcu;
+    m_device = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
 
     m_mcuMonitor = NULL;
     m_autoLoad  = false;
@@ -79,7 +80,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     m_icColor = QColor( 20, 30, 60 );
 
-    QString xmlFile = ComponentSelector::self()->getXmlFile( compName );
+    QString xmlFile = ComponentSelector::self()->getXmlFile( m_device );
     QFile file( xmlFile );
 
     if(( xmlFile == "" ) || ( !file.exists() ))
@@ -103,7 +104,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
         while( !node.isNull() )
         {
             QDomElement element = node.toElement();
-            if( element.attribute("name")==compName )
+            if( element.attribute("name") == m_device )
             {
                 // Get package file
                 QDir dataDir( xmlFile );
@@ -121,7 +122,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     /*if( m_device == "" ) //return;//Chip::initChip();
     {
         m_error = 1;
-        qDebug() << compName << "ERROR!! Mcu::Mcu Chip not Found: " << compName;
+        qDebug() << m_device << "ERROR!! Mcu::Mcu Chip not Found: " << m_device;
         return;
     }*/
 
@@ -218,6 +219,11 @@ void Mcu::remove()
     Component::remove();
 }
 
+void Mcu::reset()
+{
+    m_eMcu.initialize();
+}
+
 void Mcu::slotLoad()
 {
     QDir dir( m_lastFirmDir );
@@ -237,7 +243,7 @@ void Mcu::slotReload()
     else QMessageBox::warning( 0, tr("No File:"), tr("No File to reload ") );
 }
 
-void Mcu::load( QString fileName )
+bool Mcu::load( QString fileName )
 {
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
@@ -247,9 +253,12 @@ void Mcu::load( QString fileName )
 
     if( Simulator::self()->simState() > SIM_STARTING )  CircuitWidget::self()->powerCircOff();
 
+    bool ok = false;
+
     QString msg = loadHex( cleanPathAbs, m_eMcu.m_wordSize );
     if( msg.isEmpty() )
     {
+        ok = true;
         msg ="hex file succesfully loaded";
 
         m_eMcu.m_firmware = circuitDir.relativeFilePath( fileName );
@@ -259,6 +268,7 @@ void Mcu::load( QString fileName )
         settings->setValue( "lastFirmDir", circuitDir.relativeFilePath( fileName ) );
     }
     qDebug() << msg << "\n";
+    return ok;
 }
 
 void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
@@ -275,9 +285,9 @@ void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    /*QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
+    QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
     connect( mainAction, SIGNAL(triggered()),
-                   this, SLOT(slotmain()), Qt::UniqueConnection );*/
+                   this, SLOT(slotmain()), Qt::UniqueConnection );
 
     QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load firmware") );
     connect( loadAction, SIGNAL(triggered()),
@@ -329,6 +339,13 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
                              this, SLOT(slotProperties()), Qt::UniqueConnection );
         menu->addSeparator();
 }   }
+
+void Mcu::slotmain()
+{
+    m_pSelf = this;
+    /// m_proc->setMain();
+    Circuit::self()->update();
+}
 
 void Mcu::slotOpenMcuMonitor()
 {
@@ -447,6 +464,28 @@ QString Mcu::loadHex( QString file, int WordSize )
         nLine++;
     }
     return "Error: No End Of File reached";
+}
+
+void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+{
+    Chip::paint( p, option, widget );
+
+    if( m_crashed ) /// TODO
+    {
+static double opCount = 0;
+        opCount += 0.04;
+        if( opCount > 0.6 ) opCount = 0;
+        p->setOpacity( opCount );
+        p->fillRect( boundingRect(), Qt::yellow  );
+    }
+
+    if( m_pSelf == this )
+    {
+        QPen pen( Qt::black, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        p->setPen( pen );
+        p->setBrush( Qt::yellow );
+        p->drawRoundedRect( m_area.width()/2-2, m_area.height()/2-2, 4, 4 , 2, 2);
+    }
 }
 
 #include "moc_mcu.cpp"

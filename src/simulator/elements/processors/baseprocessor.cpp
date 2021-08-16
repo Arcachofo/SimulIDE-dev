@@ -18,35 +18,23 @@
  ***************************************************************************/
 
 #include "baseprocessor.h"
-#include "basedebugger.h"
-#include "codeeditor.h"
 #include "mcucomponent.h"
-#include "circuitwidget.h"
-#include "mainwindow.h"
 #include "utils.h"
-#include "simuapi_apppath.h"
 #include "simulator.h"
 
-BaseProcessor* BaseProcessor::m_pSelf = 0l;
+//BaseProcessor* BaseProcessor::m_pSelf = 0l;
 
 BaseProcessor::BaseProcessor( McuComponent* parent )
              : QObject( parent )
              , McuInterface( "baseprocessor" )
 {
-    m_pSelf = this;
+    //m_pSelf = this;
     m_mcu = parent;
-
-    m_debugger = NULL;
 
     m_loadStatus  = false;
     m_resetStatus = false;
-    m_debugging   = false;
-    m_firmware = "";
-    m_device     = "";
 }
-BaseProcessor::~BaseProcessor() 
-{
-}
+BaseProcessor::~BaseProcessor() {}
 
 void BaseProcessor::stamp()
 {
@@ -55,51 +43,15 @@ void BaseProcessor::stamp()
 
 void BaseProcessor::runEvent()
 {
-    if( m_debugging )
-    {
-        if( m_debugStep )
-        {
-            int lastPC = pc();
-            stepCpu();
-            int PC = pc();
-
-            if( ( lastPC != PC )
-            && ( m_debugger->m_flashToSource.contains( PC ) ) )
-            {
-                int line = m_debugger->m_flashToSource[ PC ];
-                if( line != m_prevLine )
-                {
-                    m_debugStep = false;
-                    m_debugger->m_editor->lineReached( line );
-                }
-            }
-        }
-    }
-    else stepCpu();
+    if( m_debugging ) stepDebug();
+    else              stepCpu();
 
     Simulator::self()->addEvent( m_stepPS, this );
-}
-
-void BaseProcessor::stepOne( int line )
-{
-    m_prevLine = line;
-    m_debugStep = true;
-}
-
-void BaseProcessor::terminate()
-{
-    if( m_pSelf == this ) m_pSelf= NULL;
 }
 
 void BaseProcessor::setFreq( double freq ) // Instruction exec. freq
 {
     m_stepPS = 1e6/freq; //1e6*m_mcuStepsPT/freq;
-}
-
-void BaseProcessor::setDebugger( BaseDebugger* deb )
-{
-    m_debugger = deb;
-    m_ramTable->setDebugger( deb );
 }
 
 void BaseProcessor::setDataFile( QString datafile ) 
@@ -114,7 +66,7 @@ int BaseProcessor::status() { return getRamValue( m_statusReg ); }
 void BaseProcessor::hardReset( bool rst )
 {
     m_resetStatus = rst;
-    if( rst ) McuComponent::self()->reset();
+    if( rst ) McuBase::self()->reset();
 }
 
 uint16_t BaseProcessor::getRegAddress( QString name )
@@ -136,14 +88,6 @@ uint8_t BaseProcessor::getRamValue( QString name )
     return getRamValue( address );
 }
 
-void BaseProcessor::addWatchVar( QString name, int address, QString type )
-{
-    name = name.toUpper();
-    if( !m_regsTable.contains(name) ) m_regList.append( name );
-    m_regsTable[ name ] = address;
-    m_typeTable[ name ] = type;
-}
-
 void BaseProcessor::setRegisters() // get register addresses from data file
 {
     QStringList lineList = fileToStringList( m_dataFile, "BaseProcessor::setRegisters" );
@@ -154,7 +98,6 @@ void BaseProcessor::setRegisters() // get register addresses from data file
         m_regsTable.clear();
         m_typeTable.clear();
     }
-
     for( QString line : lineList )
     {
         if( line.contains("EQU ") )   // This line contains a definition
@@ -179,10 +122,7 @@ void BaseProcessor::setRegisters() // get register addresses from data file
             {
                 address = validate( address );
                 addWatchVar( name, address, "u8" );        // type uint8 
-            }
-        }
-    }
-}
+}   }   }   }
 
 void BaseProcessor::uartOut( int uart, uint32_t value ) // Send value to OutPanelText
 {

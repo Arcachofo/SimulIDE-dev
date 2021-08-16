@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,60 +17,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUCOMPONENTPIN_H
-#define MCUCOMPONENTPIN_H
+#include "mcubase.h"
 
-#include "mcucomponent.h"
-#include "iopin.h"
+McuBase* McuBase::m_pSelf = 0l;
 
-class BaseProcessor;
-
-class MAINMODULE_EXPORT McuComponentPin : public IoPin
+McuBase::McuBase( QObject* parent, QString type, QString id )
+       : Chip( parent, type, id )
 {
-    Q_OBJECT
 
-    public:
-        McuComponentPin( McuComponent *mcu, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle );
-        ~McuComponentPin();
-
-        virtual void stamp() override;
-        virtual void initialize() override;
-        virtual void setState( bool state );
-
-        void setDirection( bool out );
-        void setPullup(bool up );
-        void setExtraSource( double vddAdmit, double gndAdmit );
-
-        void enableIO( bool en );
-
-        //void move( int dx, int dy );
-        int angle() { return m_angle; }
-        
-        QString ptype() { return m_type; }
-        QString id() { return m_id; }
-
-        bool m_enableIO;
-
-    protected:
-        McuComponent* m_mcuComponent;
-        BaseProcessor* m_processor;
-        
-        bool m_attached;
-        //bool m_isInput;
-        bool m_openColl;
-
-        pinMode_t m_prevPinMode;
-        
-        char m_port;
-        int  m_pinN;
-        int  m_pos;
-
-        int m_pinType;
-        int m_angle;
-
-        QString m_type;
-        QString m_id;
-};
-
-#endif
-
+}
+McuBase::~McuBase(){}

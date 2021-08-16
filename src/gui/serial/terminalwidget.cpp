@@ -173,7 +173,7 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
 
     if( circVersion < 5 )
     {
-        Component* mcu = McuComponent::self();
+        Component* mcu = McuBase::self();
         if( !mcu ) return;
 
         QString mcuId = mcu->objectName();

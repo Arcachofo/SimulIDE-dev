@@ -23,12 +23,13 @@
 #include <QHash>
 
 #include "e_mcu.h"
-#include "chip.h"
+#include "mcubase.h"
+//#include "chip.h"
 
 class LibraryItem;
 class MCUMonitor;
 
-class MAINMODULE_EXPORT Mcu : public Chip
+class MAINMODULE_EXPORT Mcu : public McuBase
 {
         Q_OBJECT
         Q_PROPERTY( QStringList varList  READ varList  WRITE setVarList )
@@ -60,7 +61,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         bool autoLoad() { return m_autoLoad; }
         void setAutoLoad( bool al ) { m_autoLoad = al; }
 
-        double freq(){ return m_eMcu.m_freq; }
+        virtual double freq() override { return m_eMcu.m_freq; }
         virtual void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
 
         virtual void initialize() override;
@@ -68,13 +69,18 @@ class MAINMODULE_EXPORT Mcu : public Chip
         virtual void attach() override;
         virtual void remove() override;
 
-        void load( QString fileName );
+        virtual void reset() override;
+
+        virtual bool load( QString fileName ) override;
 
         virtual void addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle , int length=8);
         QString loadHex( QString file, int WordSize );
 
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+
     public slots:
+        void slotmain();
         void slotLoad();
         void slotReload();
         void slotOpenTerm( int num );
@@ -89,7 +95,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         QString m_subcDir;      // Subcircuit Path
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_dataFile;
-        QString m_device;       // Name of device
+        //QString m_device;       // Name of device
 
         uint8_t m_serMonMask;
 

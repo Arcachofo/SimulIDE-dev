@@ -18,24 +18,31 @@
  ***************************************************************************/
 
 #include "mcuinterface.h"
+#include "basedebugger.h"
+#include "codeeditor.h"
 #include "utils.h"
+
+McuInterface* McuInterface::m_pSelf = NULL;
 
 McuInterface::McuInterface( QString id )
             : eElement( id )
 {
-    m_ramTable = new RamTable( NULL, this );
+    m_pSelf = this;
     m_ramSize   = 0;
     m_flashSize = 0;
     m_romSize   = 0;
     m_wordSize  = 2;
-
     m_firmware = "";
+    m_device   = "";
+    m_debugger = NULL;
+    m_debugging   = false;
 
+    m_ramTable = new RamTable( NULL, this );
     m_ramTable->hide();
 }
-
 McuInterface::~McuInterface()
 {
+    if( m_pSelf == this ) m_pSelf= NULL;
 }
 
 QVector<int>* McuInterface::eeprom()
@@ -147,4 +154,45 @@ void McuInterface::updateRamValue( QString name )
         }
     }
     m_ramTable->setItemValue( 1, type  );
+}
+
+void McuInterface::addWatchVar( QString name, int address, QString type )
+{
+    name = name.toUpper();
+    if( !m_regsTable.contains(name) ) m_regList.append( name );
+    m_regsTable[ name ] = address;
+    m_typeTable[ name ] = type;
+}
+
+void McuInterface::setDebugger( BaseDebugger* deb )
+{
+    m_debugger = deb;
+    m_ramTable->setDebugger( deb );
+}
+
+void McuInterface::stepOne( int line )
+{
+    m_prevLine = line;
+    m_debugStep = true;
+}
+
+void McuInterface::stepDebug()
+{
+    if( m_debugStep )
+    {
+        int lastPC = pc()*2;
+        stepCpu();
+        int PC = pc()*2;
+
+        if( ( lastPC != PC )
+        && ( m_debugger->m_flashToSource.contains( PC ) ) )
+        {
+            int line = m_debugger->m_flashToSource[ PC ];
+            if( line != m_prevLine )
+            {
+                m_debugStep = false;
+                m_debugger->m_editor->lineReached( line );
+            }
+        }
+    }
 }

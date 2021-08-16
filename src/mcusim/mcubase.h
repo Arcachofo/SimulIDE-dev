@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,60 +17,37 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUCOMPONENTPIN_H
-#define MCUCOMPONENTPIN_H
+#ifndef MCUBASE_H
+#define MCUBASE_H
 
-#include "mcucomponent.h"
-#include "iopin.h"
+#include "chip.h"
 
-class BaseProcessor;
+class McuInterface;
 
-class MAINMODULE_EXPORT McuComponentPin : public IoPin
+class MAINMODULE_EXPORT McuBase : public Chip
 {
-    Q_OBJECT
-
     public:
-        McuComponentPin( McuComponent *mcu, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle );
-        ~McuComponentPin();
+        McuBase(  QObject* parent, QString type, QString id  );
+        ~McuBase();
 
-        virtual void stamp() override;
-        virtual void initialize() override;
-        virtual void setState( bool state );
+ static McuBase* self() { return m_pSelf; }
 
-        void setDirection( bool out );
-        void setPullup(bool up );
-        void setExtraSource( double vddAdmit, double gndAdmit );
+        virtual bool load( QString fileName )=0;
+        virtual double freq()=0;
 
-        void enableIO( bool en );
+        virtual void reset()=0;
 
-        //void move( int dx, int dy );
-        int angle() { return m_angle; }
-        
-        QString ptype() { return m_type; }
-        QString id() { return m_id; }
+        QString device() { return m_device; }
 
-        bool m_enableIO;
+        McuInterface* proc() { return m_proc; }
 
     protected:
-        McuComponent* m_mcuComponent;
-        BaseProcessor* m_processor;
-        
-        bool m_attached;
-        //bool m_isInput;
-        bool m_openColl;
+ static McuBase* m_pSelf;
 
-        pinMode_t m_prevPinMode;
-        
-        char m_port;
-        int  m_pinN;
-        int  m_pos;
+        McuInterface* m_proc;
+        QString m_device;       // Name of device
 
-        int m_pinType;
-        int m_angle;
-
-        QString m_type;
-        QString m_id;
+        bool m_crashed;
 };
 
 #endif
-

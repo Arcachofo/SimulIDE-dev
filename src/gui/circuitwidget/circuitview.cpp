@@ -123,10 +123,10 @@ void CircuitView::setCircTime( uint64_t tStep )
     
     QString strMcu = " ";
     
-    if( McuComponent::self() ) 
+    if( McuBase::self() )
     {
-        QString device = McuComponent::self()->device();
-        QString freq = QString::number( McuComponent::self()->freq() );
+        QString device = McuBase::self()->device();
+        QString freq = QString::number( McuBase::self()->freq() );
         strMcu = "      Mcu: "+device+" at "+freq+" MHz";
     }
     m_info->setPlainText( tr("Time: ")+strH+":"+strM+":"+strS+" s  "

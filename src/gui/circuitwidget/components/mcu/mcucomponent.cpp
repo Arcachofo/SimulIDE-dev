@@ -45,10 +45,10 @@ static const char* McuComponent_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Init gdb")
 };
 
-McuComponent* McuComponent::m_pSelf = 0l;
+//McuComponent* McuComponent::m_pSelf = 0l;
 
 McuComponent::McuComponent( QObject* parent, QString type, QString id )
-            : Chip( parent, type, id )
+            : McuBase( parent, type, id )
 {
     Q_UNUSED( McuComponent_properties );
 
@@ -97,7 +97,7 @@ QList<propGroup_t> McuComponent::propGroups()
 
 void McuComponent::attach()
 {
-    if( m_processor->getLoadStatus() )
+    //if( m_processor->getLoadStatus() )
     {
         m_processor->setFreq( m_freq/m_cpi );
 

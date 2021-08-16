@@ -52,6 +52,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         // Overrides of McuInterface-----------------------------------
         //-------------------------------------------------------------
+        virtual void stepCpu() override;
+
         virtual uint8_t  getRamValue( int address ) override { return m_dataMem[address]; }
         virtual void     setRamValue( int address, uint8_t value ) override { m_dataMem[address] = value; }
         virtual uint16_t getFlashValue( int address ) override { return m_progMem[address]; }
@@ -64,6 +66,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         virtual int status() override;
         virtual int pc() override;
+        virtual uint64_t cycle() override { return m_cycle; }
 
         virtual void uartOut( int number, uint32_t value ) override;
         virtual void uartIn( int number, uint32_t value ) override;
@@ -74,7 +77,6 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         void setFreq( double freq );
         uint64_t simCycPI() { return m_simCycPI; }  // Simulation cycles per instruction cycle
         //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle
-        uint64_t cycle() { return m_cycle; }
 
         McuPin* getPin( QString name ) { return m_ports.getPin( name ); }
         QHash<QString, McuPort*> getPorts() { return m_ports.getPorts(); }

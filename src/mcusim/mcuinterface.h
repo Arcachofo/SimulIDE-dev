@@ -25,10 +25,11 @@
 
 class MAINMODULE_EXPORT McuInterface : public eElement
 {
-
     public:
         McuInterface( QString id );
         ~McuInterface();
+
+ static McuInterface* self() { return m_pSelf; }
 
         virtual uint8_t getRamValue( int address )=0;
         virtual void    setRamValue( int address, uint8_t value )=0;
@@ -41,6 +42,7 @@ class MAINMODULE_EXPORT McuInterface : public eElement
 
         virtual int status()=0;
         virtual int pc()=0;
+        virtual uint64_t cycle()=0;
 
         virtual QStringList getRegList() { return m_regList; }
 
@@ -52,6 +54,7 @@ class MAINMODULE_EXPORT McuInterface : public eElement
         uint32_t romSize()  { return m_romSize; }
         uint32_t wordSize() { return m_wordSize; }
 
+        virtual void addWatchVar( QString name, int address, QString type );
         virtual void updateRamValue( QString name );
 
         QString getFileName() { return m_firmware; }
@@ -60,14 +63,24 @@ class MAINMODULE_EXPORT McuInterface : public eElement
         virtual void uartOut( int uart, uint32_t value )=0;
         virtual void uartIn( int uart, uint32_t value )=0;
 
+        void setDebugger( BaseDebugger* deb );
+        void setDebugging( bool d ) { m_debugging = d; }
+
+        void stepDebug();
+        void stepOne( int line );
+        virtual void stepCpu()=0;
+
     protected:
+ static McuInterface* m_pSelf;
 
         QString m_firmware;     // firmware file loaded
+        QString m_device;
 
         QStringList m_regList;  // List of Register names
 
         QVector<int> m_eeprom;
 
+        QHash<QString, int>     m_regsTable;   // int max 32 bits
         QHash<QString, QString> m_typeTable;
 
         uint32_t m_ramSize;
@@ -76,8 +89,11 @@ class MAINMODULE_EXPORT McuInterface : public eElement
         uint8_t  m_wordSize; // Size of Program memory word in bytes
 
         RamTable* m_ramTable;
+
+        BaseDebugger* m_debugger;
+        bool m_debugging;
+        bool m_debugStep;
+        int  m_prevLine;
 };
 
-
 #endif
-

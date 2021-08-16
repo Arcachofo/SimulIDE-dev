@@ -115,7 +115,7 @@ void SerialPort::initialize()
 
     if( circVersion < 5 )
     {
-        m_mcuComponent = McuComponent::self();
+        m_mcuComponent = static_cast<McuComponent*>(McuBase::self());
         m_mcuId = m_mcuComponent->objectName();
     }
 

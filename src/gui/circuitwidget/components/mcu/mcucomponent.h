@@ -23,13 +23,14 @@
 #include <QtWidgets>
 #include <QtSerialPort/QSerialPort>
 
-#include "chip.h"
+#include "mcubase.h"
+//#include "chip.h"
 
 class BaseProcessor;
 class McuComponentPin;
 class MCUMonitor;
 
-class MAINMODULE_EXPORT McuComponent : public Chip
+class MAINMODULE_EXPORT McuComponent : public McuBase
 {
     Q_OBJECT
     Q_PROPERTY( QStringList varList  READ varList  WRITE setVarList )
@@ -43,7 +44,7 @@ class MAINMODULE_EXPORT McuComponent : public Chip
         McuComponent( QObject* parent, QString type, QString id );
         ~McuComponent();
         
- static McuComponent* self() { return m_pSelf; }
+// static McuComponent* self() { return m_pSelf; }
 
         virtual QList<propGroup_t> propGroups() override;
 
@@ -60,13 +61,13 @@ class MAINMODULE_EXPORT McuComponent : public Chip
         QString program()   const { return m_symbolFile; }
         void setProgram( QString pro );
 
-        double freq(){ return m_freq; }
+        virtual double freq() override { return m_freq; }
         virtual void setFreq( double freq );
 
         bool autoLoad() { return m_autoLoad; }
         void setAutoLoad( bool al ) { m_autoLoad = al; }
         
-        QString device() { return m_device; }
+        //QString device() { return m_device; }
 
         void setEeprom(QVector<int> eep );
         QVector<int> eeprom();
@@ -74,7 +75,7 @@ class MAINMODULE_EXPORT McuComponent : public Chip
         QList<McuComponentPin*> getPinList() { return m_pinList; }
 
         virtual void terminate();
-        virtual void reset();
+        virtual void reset() override;
         virtual bool load( QString fileName );
         virtual void setSubcDir( QString dir );
         virtual void crash(){;}
@@ -100,7 +101,7 @@ class MAINMODULE_EXPORT McuComponent : public Chip
         void saveData();
 
     protected:
- static McuComponent* m_pSelf;
+ //static McuComponent* m_pSelf;
 
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
@@ -120,11 +121,11 @@ class MAINMODULE_EXPORT McuComponent : public Chip
         
         bool m_attached;
         bool m_autoLoad;
-        bool m_crashed;
+        //bool m_crashed;
 
         int m_warning;
 
-        QString m_device;       // Name of device
+        //QString m_device;       // Name of device
         QString m_symbolFile;   // firmware file loaded
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_subcDir;      // Subcircuit Path

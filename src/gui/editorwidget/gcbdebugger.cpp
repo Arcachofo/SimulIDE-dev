@@ -201,7 +201,7 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             int  address = text.last().toInt();
             QString type = "uint8";
             if( m_varList.contains( name ) ) type = m_varList[ name ];
-            BaseProcessor::self()->addWatchVar( name, address ,type  );
+            McuInterface::self()->addWatchVar( name, address ,type  );
             //qDebug()<<"GcbDebugger::mapGcbToAsm var:"<<asmLine<<name<< address<<type;
             
             if( type.contains( "array" ) )
@@ -214,7 +214,7 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
                 for( int i=1; i<size; i++ )
                 {
                     QString elmName = name+"("+QString::number( i )+")";
-                    BaseProcessor::self()->addWatchVar( elmName, address+i ,"uint8"  );
+                    McuInterface::self()->addWatchVar( elmName, address+i ,"uint8"  );
                     if( !m_varList.contains( elmName ) ) 
                     {
                         m_varList[ elmName ] = m_typesList[ "uint8" ];

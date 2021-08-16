@@ -323,7 +323,7 @@ void CodeEditor::upload()
         m_outPane->appendLine( "\n"+tr("Uploading: ") );
         m_outPane->appendLine( m_file );
 
-        if( McuComponent::self() ) McuComponent::self()->load( m_file );
+        if( McuBase::self() ) McuBase::self()->load( m_file );
         return;
     }
     if( !m_isCompiled ) compile();
@@ -347,7 +347,7 @@ bool CodeEditor::initDebbuger()
     bool error = false;
     m_state = DBG_STOPPED;
     
-    if( !McuComponent::self() )             // Must be an Mcu in Circuit
+    if( !McuBase::self() )             // Must be an Mcu in Circuit
     {
         m_outPane->appendLine( "\n    "+tr("Error: No Mcu in Simulator... ")+"\n" );
         error = true;
@@ -385,7 +385,7 @@ bool CodeEditor::initDebbuger()
 
         Simulator::self()->addToUpdateList( this );
 
-        BaseProcessor::self()->setDebugging( true );
+        McuInterface::self()->setDebugging( true );
         reset();
         setDriveCirc( m_driveCirc );
         CircuitWidget::self()->powerCircDebug( m_driveCirc );
@@ -402,7 +402,7 @@ void CodeEditor::runToBreak()
 
     m_state = DBG_RUNNING;
     if( m_driveCirc ) Simulator::self()->resumeSim();
-    BaseProcessor::self()->stepOne( m_debugLine );
+    McuInterface::self()->stepOne( m_debugLine );
 }
 
 void CodeEditor::step( bool over )
@@ -415,7 +415,7 @@ void CodeEditor::step( bool over )
         EditorWindow::self()->run();
     }else {
         m_state = DBG_STEPING;
-        BaseProcessor::self()->stepOne( m_debugLine );
+        McuInterface::self()->stepOne( m_debugLine );
         if( m_driveCirc ) Simulator::self()->resumeSim();
 }   }
 
@@ -435,12 +435,12 @@ void CodeEditor::lineReached( int line ) // Processor reached PC related to sour
     if( ( m_state == DBG_RUNNING )  // We are running to Breakpoint
      && !m_brkPoints.contains( m_debugLine ) ) // Breakpoint not reached, Keep stepping
     {
-        BaseProcessor::self()->stepOne( m_debugLine );
+        McuInterface::self()->stepOne( m_debugLine );
         return;
     }
     EditorWindow::self()->pause(); // EditorWindow: calls this->pause as well
 
-    int cycle = BaseProcessor::self()->cycle();
+    int cycle = McuInterface::self()->cycle();
     m_outPane->appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
     m_lastCycle = cycle;
 }
@@ -453,7 +453,7 @@ void CodeEditor::stopDebbuger()
         m_debugLine = 0;
         
         CircuitWidget::self()->powerCircOff();
-        BaseProcessor::self()->setDebugging( false );
+        McuInterface::self()->setDebugging( false );
         Simulator::self()->remFromUpdateList( this );
         
         m_state = DBG_STOPPED;
@@ -477,7 +477,7 @@ void CodeEditor::reset()
 {
     if( m_state == DBG_RUNNING ) pause();
 
-    McuComponent::self()->reset();
+    McuBase::self()->reset();
     m_debugLine = 1;
     m_lastCycle = 0;
     m_state = DBG_PAUSED;

@@ -25,8 +25,6 @@
 #include "terminalwidget.h"
 #include "mcuinterface.h"
 
-class BaseDebugger;
-
 class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
 {
     Q_OBJECT
@@ -34,7 +32,7 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
         BaseProcessor( McuComponent* parent );
         ~BaseProcessor();
         
- static BaseProcessor* self() { return m_pSelf; }
+// static BaseProcessor* self() { return m_pSelf; }
 
         virtual void stamp() override;
         virtual void runEvent() override;
@@ -44,22 +42,18 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
 
         virtual bool loadFirmware( QString file )=0;
         virtual bool getLoadStatus() { return m_loadStatus; }
-        virtual void terminate();
+        virtual void terminate(){;}
 
         virtual void setFreq( double freq );
         virtual void stepCpu()=0;
         virtual void reset()=0;
 
-        virtual uint64_t cycle()=0;
         virtual int status() override;
 
-        void stepOne( int line );
-        
         virtual void hardReset( bool reset );
         virtual uint8_t getRamValue( QString name );
         virtual uint8_t getRamValue( int address ) override {return 0;} // Implemented in child classes
         virtual uint16_t getRegAddress( QString name ) override;
-        virtual void addWatchVar( QString name, int address, QString type );
 
         virtual void uartOut( int uart, uint32_t value ) override;
         virtual void uartIn( int uart, uint32_t value ) override;
@@ -68,9 +62,6 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
 
         virtual void setRegisters();
 
-        void setDebugging( bool d ) { m_debugging = d; }
-        void setDebugger( BaseDebugger* deb );
-
         void setMain() { m_pSelf = this; }
 
     signals:
@@ -78,28 +69,19 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
         void uartDataIn(  int uart, int value );
     
     protected:
- static BaseProcessor* m_pSelf;
+// static BaseProcessor* m_pSelf;
         
         virtual int validate( int address ) { return address; }
 
-        QString m_firmware;
         QString m_dataFile;
-        QString m_device;
         QString m_statusReg;
 
         double m_stepPS;
-
-        QHash<QString, int> m_regsTable;   // int max 32 bits
 
         bool m_resetStatus;
         bool m_loadStatus;
 
         McuComponent* m_mcu;
-
-        BaseDebugger* m_debugger;
-        bool m_debugging;
-        bool m_debugStep;
-        int  m_prevLine;
 };
 
 

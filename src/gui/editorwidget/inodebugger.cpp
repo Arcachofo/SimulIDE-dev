@@ -235,7 +235,7 @@ void InoDebugger::getVariables()
             int address = addr.toInt( &ok, 16 );
             if( !ok ) continue;
             address -= 0x800000;          // 0x800000 offset
-            BaseProcessor* proc = BaseProcessor::self();
+            McuInterface* proc = McuInterface::self();
             if( proc ) proc->addWatchVar( symbol, address, m_varList.value( symbol ) );
             m_varNames.append( symbol );
             //qDebug() << "InoDebugger::compile  variable "<<addr<<varName<<address<<i.value();
