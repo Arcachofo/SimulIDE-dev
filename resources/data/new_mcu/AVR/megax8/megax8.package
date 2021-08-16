@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<package name="" pins="30" width="4" height="15">
+<package name="Package" pins="30" width="4" height="15">
 
     <pin side="left" pos="1"  type="IO" id="PC6"  label="C6"/>
     <pin side="left" pos="2"  type="IO" id="PD0"  label="D0"/>

@@ -51,7 +51,7 @@ Chip::Chip( QObject* parent, QString type, QString id )
     f.setPixelSize(5);
     f.setLetterSpacing( QFont::PercentageSpacing, 120 );
     m_label.setFont( f );
-    m_label.setDefaultTextColor( QColor( 110, 110, 110 ) );
+    m_label.setDefaultTextColor( QColor( 125, 125, 110 ) );
     m_label.setAcceptedMouseButtons( 0 );
     m_label.setRotation( -90 );
     m_label.setVisible( true );
@@ -125,14 +125,12 @@ void Chip::initChip()
         if( root.hasAttribute("name"))
         {
             QString name = root.attribute( "name");
-            if( name != "Package" )
-            {
-                m_name = name;
-                m_label.setPlainText( m_name );
-        }   }
+            if( name.toLower() != "package" ) m_name = name;
+        }
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );
 
+        m_label.setPlainText( m_name );
         m_label.adjustSize();
         m_label.setY( m_area.height()/2+m_label.textWidth()/2 );
         m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );

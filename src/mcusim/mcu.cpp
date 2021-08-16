@@ -73,6 +73,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_pSelf = this;
     m_proc = &m_eMcu;
     m_device = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
+    m_name = m_device;
 
     m_mcuMonitor = NULL;
     m_autoLoad  = false;
@@ -485,7 +486,10 @@ static double opCount = 0;
         QPen pen( Qt::black, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
         p->setPen( pen );
         p->setBrush( Qt::yellow );
-        p->drawRoundedRect( m_area.width()/2-2, m_area.height()/2-2, 4, 4 , 2, 2);
+        if( m_width == m_height )
+            p->drawRoundedRect( 4, 4, 4, 4 , 2, 2);
+        else
+            p->drawRoundedRect( m_area.width()/2-2, -1, 4, 4 , 2, 2);
     }
 }
 
