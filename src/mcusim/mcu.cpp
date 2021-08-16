@@ -189,15 +189,16 @@ QVector<int> Mcu::eeprom()
 
 void Mcu::initialize()
 {
+    m_crashed = false;
 }
 
 void Mcu::updateStep()
 {
-    /*if( m_crashed )
+    if( m_crashed )
     {
-        Simulator::self()->setWarning( m_warning );
+        Simulator::self()->setWarning( /*m_warning*/0 );
         update();
-    }*/
+    }
     if( m_mcuMonitor
      && m_mcuMonitor->isVisible() ) m_mcuMonitor->updateStep();
 }

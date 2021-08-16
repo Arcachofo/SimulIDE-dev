@@ -29,16 +29,14 @@ McuAdc::McuAdc( eMcu* mcu, QString name )
     m_ADCL = NULL;
     m_ADCH = NULL;
 }
-
-McuAdc::~McuAdc()
-{
-}
+McuAdc::~McuAdc(){}
 
 void McuAdc::initialize()
 {
     m_channel = 0;
     m_enabled = false;
     m_converting = false;
+    m_leftAdjust = false;
 }
 
 void McuAdc::runEvent()

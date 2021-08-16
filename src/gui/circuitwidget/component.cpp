@@ -316,10 +316,8 @@ void Component::slotProperties()
             QString name = m_type;
 
             if( ( m_type == "Subcircuit" )
-              ||( m_type == "Arduino" )
               ||( m_type == "MCU" )
-              ||( m_type == "PIC" )
-              ||( m_type == "AVR" ))
+              ||( m_type == "PIC" ))
             {
                 name = m_id.split("-").first();
             }
