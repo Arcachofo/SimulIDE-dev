@@ -42,7 +42,6 @@ class MAINMODULE_EXPORT SR04 : public Component, public eElement
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
-        virtual void remove() override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 

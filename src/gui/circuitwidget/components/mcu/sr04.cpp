@@ -99,7 +99,8 @@ void SR04::voltChanged()              // Called when Trigger Pin changes
         if( time >= 10*1e6 )     // >=10 uS Trigger pulse
         {
             m_echouS = (m_inpin->getVolt()*2000/0.344+0.5);
-            if( m_echouS < 10 ) m_echouS = 10;
+            if     ( m_echouS < 116 )   m_echouS = 116;   // Min range 2 cm = 116 us pulse
+            else if( m_echouS > 38000 ) m_echouS = 38000; // Timeout 38 ms
             
             Simulator::self()->addEvent( 200*1e6, this ); // Send echo after 200 us
         }
@@ -116,12 +117,6 @@ void SR04::runEvent()
         m_echouS = 0;
     }
     else m_echo->setOutState( false );
-}
-
-void SR04::remove()
-{
-    delete m_echo;
-    Component::remove();
 }
 
 void SR04::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

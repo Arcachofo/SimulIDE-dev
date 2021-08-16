@@ -28,21 +28,22 @@ void loop()
   // Get Pulse duration with more accuracy than pulseIn()
   duration = 0;
   counter = 0;
-  while(  --counter!=0  )
-  {
-	if( PINB & 2 ) 
-	{
-	  time = micros();
-	  break;
-	}
-  }
   while( --counter!=0 )
   {
-	if( (PINB & 2)==0 ) 
-	{
-	  duration = micros()-time;
-	  break;
-	}
+    	if( PINB & 2 ) 
+    	{
+    	  time = micros();
+    	  break;
+    	}
+  }
+  counter = 0;
+  while( --counter!=0 )
+  {
+    	if( (PINB & 2)==0 ) 
+    	{
+    	  duration = micros()-time;
+    	  break;
+    	}
   }
 
   distance = ( duration/2 ) * 0.0344;
