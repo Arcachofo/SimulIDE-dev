@@ -351,7 +351,8 @@ void SubPackage::remove()
         else if( ret == QMessageBox::Cancel ) return;
     }
     for( Pin* pin : m_pins ) pin->removeConnector();
-    Circuit::self()->compRemoved( true );
+    Component::remove();
+    //Circuit::self()->compRemoved( true );
 }
 
 int SubPackage::width() { return m_width; }
