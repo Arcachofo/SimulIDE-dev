@@ -61,8 +61,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         virtual uint8_t  getRomValue( int address ) override { return m_eeprom[address]; }
         virtual void     setRomValue( int address, uint8_t value ) override { m_eeprom[address] = value; }
 
-        virtual uint16_t getRegAddress( QString reg ) override  // Get Reg address by name
-        { return m_regInfo.value( reg ).address; }
+        virtual uint16_t getRegAddress( QString reg ) override;  // Get Reg address by name
 
         virtual int status() override;
         virtual int pc() override;

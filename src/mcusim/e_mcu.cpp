@@ -101,8 +101,17 @@ void eMcu::setFreq( double freq )
     m_simCycPI = 1e6*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }
 
+uint16_t eMcu::getRegAddress( QString reg )// Get Reg address by name
+{
+    uint16_t addr = McuInterface::getRegAddress( reg );
+    if( addr < 65535 ) return (uint16_t)addr;
+
+    return m_regInfo.value( reg ).address;
+}
+
 void eMcu::uartOut( int number, uint32_t value ) // Send value to OutPanelText
 {
+    /// TODELETE
     //if( (uint)number > m_usarts.size() ) return;
     //m_usarts.at(number-1)->byteSent( value );
 }

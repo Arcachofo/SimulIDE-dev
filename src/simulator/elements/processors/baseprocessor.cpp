@@ -69,13 +69,6 @@ void BaseProcessor::hardReset( bool rst )
     if( rst ) McuBase::self()->reset();
 }
 
-uint16_t BaseProcessor::getRegAddress( QString name )
-{
-    name = name.toUpper();
-    if( m_regsTable.contains( name ) ) return m_regsTable.value( name ); 
-    return -1;
-}
-
 uint8_t BaseProcessor::getRamValue( QString name )
 {
     if( m_regsTable.isEmpty() ) return -1;

@@ -53,7 +53,6 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
         virtual void hardReset( bool reset );
         virtual uint8_t getRamValue( QString name );
         virtual uint8_t getRamValue( int address ) override {return 0;} // Implemented in child classes
-        virtual uint16_t getRegAddress( QString name ) override;
 
         virtual void uartOut( int uart, uint32_t value ) override;
         virtual void uartIn( int uart, uint32_t value ) override;

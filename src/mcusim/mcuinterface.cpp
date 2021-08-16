@@ -45,6 +45,14 @@ McuInterface::~McuInterface()
     if( m_pSelf == this ) m_pSelf= NULL;
 }
 
+uint16_t McuInterface::getRegAddress( QString name )
+{
+    if( m_regsTable.contains( name ) ) return m_regsTable.value( name );
+    name = name.toUpper();
+    if( m_regsTable.contains( name ) ) return m_regsTable.value( name );
+    return -1;
+}
+
 QVector<int>* McuInterface::eeprom()
 {
     for( uint32_t i=0; i<m_romSize; ++i ) m_eeprom[i] = getRomValue( i );

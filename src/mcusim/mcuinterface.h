@@ -38,7 +38,7 @@ class MAINMODULE_EXPORT McuInterface : public eElement
         virtual uint8_t getRomValue( int address )=0;
         virtual void    setRomValue( int address, uint8_t value )=0;
 
-        virtual uint16_t getRegAddress( QString name ) =0;
+        virtual uint16_t getRegAddress( QString name );
 
         virtual int status()=0;
         virtual int pc()=0;
