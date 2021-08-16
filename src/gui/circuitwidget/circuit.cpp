@@ -410,6 +410,7 @@ void Circuit::loadObjectProperties( QDomElement element, Component* comp )
                 value.setValue( value.toInt()*1000 );
             }
             else if( propName == "Show_res"
+                  || propName == "Show_Volt"
                   || propName == "Show_Amp"
                   || propName == "Show_Ind"
                   || propName == "Show_Ind"
@@ -816,9 +817,10 @@ void Circuit::removeItems()                     // Remove Selected items
         Component* comp = qgraphicsitem_cast<Component* >( item );
         if( comp )
         {
-            if( (comp->itemType()!="Node")
-             && (comp->itemType()!="Connector")
-             && !components.contains( comp ) )
+            if( m_compList.contains( comp )
+            && (comp->itemType()!="Node")
+            && (comp->itemType()!="Connector")
+            && !components.contains( comp ) )
                 components.append( comp );
         }
         else
