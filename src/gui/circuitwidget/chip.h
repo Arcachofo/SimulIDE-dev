@@ -36,10 +36,10 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         ~Chip();
 
         enum subcType_t{
-            subcNone=0,
-            subcLogic,
-            subcBoard,
-            subcShield,
+            None=0,
+            Logic,
+            Board,
+            Shield,
         };
         Q_ENUM(subcType_t)
         

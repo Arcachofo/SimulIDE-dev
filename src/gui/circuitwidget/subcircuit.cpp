@@ -453,7 +453,7 @@ void SubCircuit::slotAttach()
             if( comp->itemType() == "Subcircuit" )
             {
                 SubCircuit* board =  (SubCircuit*)comp;
-                if( !(board->subcType() == subcBoard) ) continue;
+                if( !(board->subcType() == Board) ) continue;
 
                 if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
                 Circuit::self()->saveState();
@@ -522,7 +522,7 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         Component* mainComp = m_mainComponent;
         QString id = m_id;
 
-        if( m_subcType == subcShield )
+        if( m_subcType == Shield )
         {
             if( m_attached )
             {

@@ -338,7 +338,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     else if( item->itemType() == "Subcircuit")
                     {
                         SubCircuit* shield = static_cast<SubCircuit*>(item);
-                        if( shield->subcType() == Chip::subcShield )shieldList.append( shield );
+                        if( shield->subcType() == Chip::Shield )shieldList.append( shield );
                     }
                     compList.append( item );
                 }

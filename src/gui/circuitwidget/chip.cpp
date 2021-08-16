@@ -34,7 +34,7 @@ Chip::Chip( QObject* parent, QString type, QString id )
     , eElement( id )
     , m_label( this )
 {
-    m_subcType = subcNone;
+    m_subcType = None;
     m_numpins = 0;
     m_isLS = false;
     m_initialized = false;
@@ -117,9 +117,9 @@ void Chip::initChip()
         if( root.hasAttribute("type"))
         {
             QMetaEnum metaEnum = QMetaEnum::fromType<Chip::subcType_t>();
-            m_subcType = (subcType_t)metaEnum.keyToValue( root.attribute( "type").toUtf8().data() );
+            m_subcType = (subcType_t)metaEnum.keyToValue( root.attribute("type").toUtf8().data() );
 
-            if( (m_subcType == subcBoard) || (m_subcType == subcShield) )
+            if( (m_subcType == Board) || (m_subcType == Shield) )
                 setTransformOriginPoint( togrid( boundingRect().center()) );
         }
         if( root.hasAttribute("name"))
