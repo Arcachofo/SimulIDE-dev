@@ -35,6 +35,9 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
 
     m_ADTS  = mcu->getRegBits( "ADTS0,ADTS1.ADTS2" );
 
+    m_ADLAR = mcu->getRegBits( "ADLAR" );
+    m_REFS  = mcu->getRegBits( "REFS0,REFS1" );
+
     m_aVccPin = mcu->getPin( "PORTV0" );
     m_aRefPin = mcu->getPin( "PORTV1" );
 
@@ -120,12 +123,12 @@ void AvrAdc::autotriggerConf()
     }*/
 }
 
-void AvrAdc::setChannel( uint8_t val ) // ADMUX
+void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
 {
-    m_channel = val & 0x0F;
-    m_leftAdjust = (( val & 0b00100000 )>0);
+    m_channel = newADMUX & 0x0F;
+    m_leftAdjust = getRegBitsBool( newADMUX, m_ADLAR );
 
-    m_refSelect = (val & 0b11000000) >> 6;
+    m_refSelect = getRegBitsVal( newADMUX, m_REFS );
 }
 
 double AvrAdc::getVref()
@@ -151,6 +154,8 @@ double AvrAdc::getVref()
 
 void AvrAdc::endConversion()
 {
+    if( m_leftAdjust ) m_adcValue <<= 6;
+
     clearRegBits( m_ADSC ); // Clear ADSC bit
     if( m_autoTrigger && m_freeRunning ) startConversion();
 }

@@ -47,6 +47,7 @@ class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
 
         bool m_enabled;
         bool m_converting;
+        bool m_leftAdjust;
 
         uint16_t m_adcValue; // Value obtained in last conversion
         uint16_t m_maxValue; // Maximum value = 2^m_bits

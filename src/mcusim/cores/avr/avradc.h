@@ -39,7 +39,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
 
         virtual void configureA( uint8_t newADCSRA ) override;
         virtual void configureB( uint8_t newADCSRB ) override;
-        virtual void setChannel( uint8_t val ) override;
+        virtual void setChannel( uint8_t newADMUX ) override;
         virtual void callBack() override { if( !m_converting ) startConversion(); }
 
     protected:
@@ -47,7 +47,6 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         virtual double getVref() override;
         virtual void endConversion() override;
 
-        bool m_leftAdjust;
         bool m_autoTrigger;
         bool m_freeRunning;
 
@@ -63,6 +62,10 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
 
         // ADCSB
         regBits_t m_ADTS;
+
+        //ADMUX
+        regBits_t m_ADLAR;
+        regBits_t m_REFS;
 
         McuPin* m_aRefPin;
         McuPin* m_aVccPin;
