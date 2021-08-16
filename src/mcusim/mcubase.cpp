@@ -26,4 +26,7 @@ McuBase::McuBase( QObject* parent, QString type, QString id )
 {
 
 }
-McuBase::~McuBase(){}
+McuBase::~McuBase()
+{
+    if( m_pSelf == this ) m_pSelf= NULL;
+}
