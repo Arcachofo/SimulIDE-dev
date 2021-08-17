@@ -181,6 +181,18 @@ void CircuitWidget::createActions()
 
 void CircuitWidget::createToolBars()
 {
+    m_settingsMenu.addAction( settAppAct );
+    m_settingsMenu.addAction( settCirAct );
+    m_settingsMenu.addAction( settSimAct );
+
+    QToolButton* settingsButton = new QToolButton( this );
+    settingsButton->setToolTip( tr("Settings") );
+    settingsButton->setMenu( &m_settingsMenu );
+    settingsButton->setIcon( QIcon(":/config.png") );
+    settingsButton->setPopupMode( QToolButton::InstantPopup );
+    m_circToolBar.addWidget( settingsButton );
+    m_circToolBar.addSeparator();//..........................
+
     for( int i=0; i<MaxRecentFiles; i++ ) m_fileMenu.addAction( recentFileActs[i] );
     QToolButton* fileButton = new QToolButton( this );
     fileButton->setToolTip( tr("Last Circuits") );
@@ -208,20 +220,9 @@ void CircuitWidget::createToolBars()
     spacerWidget->setVisible( true );
     m_circToolBar.addWidget( spacerWidget );
 
-    m_settingsMenu.addAction( settAppAct );
-    m_settingsMenu.addAction( settCirAct );
-    m_settingsMenu.addAction( settSimAct );
-
     m_infoMenu.addAction( infoAct );
     m_infoMenu.addAction( aboutAct );
     m_infoMenu.addAction( aboutQtAct );
-
-    QToolButton* settingsButton = new QToolButton( this );
-    settingsButton->setToolTip( tr("Settings") );
-    settingsButton->setMenu( &m_settingsMenu );
-    settingsButton->setIcon( QIcon(":/config.png") );
-    settingsButton->setPopupMode( QToolButton::InstantPopup );
-    m_circToolBar.addWidget( settingsButton );
 
     QToolButton* infoButton = new QToolButton( this );
     infoButton->setToolTip( tr("Info") );
