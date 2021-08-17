@@ -21,6 +21,7 @@
 #include "circuitwidget.h"
 #include "circuit.h"
 #include "simulator.h"
+#include "e-node.h"
 
 static const char* MechContact_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Poles"),

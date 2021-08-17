@@ -23,6 +23,7 @@
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"
+#include "e-node.h"
 
 static const char* Potentiometer_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Value Ohm")

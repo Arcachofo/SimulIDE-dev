@@ -22,6 +22,7 @@
 #include "simulator.h"
 #include "itemlibrary.h"
 #include "pin.h"
+#include "e-node.h"
 
 static const char* VoltReg_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Volts")

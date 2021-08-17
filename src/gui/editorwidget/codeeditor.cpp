@@ -123,7 +123,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 }
 CodeEditor::~CodeEditor()
 {
-    Simulator::self()->remFromUpdateList( this );
+    if( m_debugger ) delete m_debugger;
 
     if( !m_propDialog ) return;
 
@@ -144,11 +144,9 @@ void CodeEditor::setFile( const QString filePath )
         m_propDialog->deleteLater();
         m_propDialog = NULL;
     }
-    if( m_debugger )
-    {
-        delete m_debugger;
-        m_debugger = NULL;
-    }
+    if( m_debugger )delete m_debugger;
+    m_debugger = NULL;
+
     m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendLine( tr(" File: ")+filePath+"\n" );
 

@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-//#include <iostream>
+#include <qtconcurrentrun.h>
 
 #include "simulator.h"
 #include "circuit.h"
@@ -29,7 +29,7 @@
 #include "mainwindow.h"
 #include "circuitwidget.h"
 #include "baseprocessor.h"
-
+#include "circmatrix.h"
 
 Simulator* Simulator::m_pSelf = NULL;
 
@@ -37,6 +37,8 @@ Simulator::Simulator( QObject* parent )
          : QObject( parent )
 {
     m_pSelf = this;
+
+    m_matrix = new CircMatrix();
 
     m_fps = 20;
     m_timerId   = 0;
@@ -61,6 +63,8 @@ Simulator::Simulator( QObject* parent )
 Simulator::~Simulator()
 {
     m_CircuitFuture.waitForFinished();
+
+    delete m_matrix;
 }
 
 inline void Simulator::solveMatrix()
@@ -70,7 +74,7 @@ inline void Simulator::solveMatrix()
         m_changedNode->stampMatrix();
         m_changedNode = m_changedNode->nextCH;
     }
-    if( !m_matrix.solveMatrix() ) // Try to solve matrix, if not stop simulation
+    if( !m_matrix->solveMatrix() ) // Try to solve matrix, if not stop simulation
     {
         qDebug() << "Simulator::solveMatrix(), Failed to solve Matrix";
         m_error = 1;
@@ -95,9 +99,8 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
     }
     else if( m_warning < 0 )
     {
-        if( ++m_warning == 0 ) CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
+        if( ++m_warning == 0 ) CircuitWidget::self()->setMsg( " Running ", 0 );
     }
-    //if( m_state < SIM_RUNNING ) return;
 
     if( !m_CircuitFuture.isFinished() ) // Stop remaining parallel thread
     {
@@ -143,7 +146,6 @@ void Simulator::runCircuit()
     simEvent_t* event = m_eventList.first;
     uint64_t   endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
     uint64_t nextTime;
-    //m_maxNlSteps = pow(m_noLinAcc,4);
 
     while( event )                         // Simulator event loop
     {
@@ -154,9 +156,7 @@ void Simulator::runCircuit()
         {
             m_circTime = event->time;
             freeEvent( event );
-
             if( event->comp ) event->comp->runEvent(); // Run event callback
-
             event = m_eventList.first;
             if( event ) nextTime = event->time;
             else break;
@@ -164,35 +164,6 @@ void Simulator::runCircuit()
         solveCircuit();
         if( m_state < SIM_RUNNING ) break;
 
-        /*if( m_changedNode ) solveMatrix();
-
-        while( m_nonLin )                  // Non Linear Components
-        {
-            while( m_nonLin )
-            {
-                m_nonLin->added = false;
-                m_nonLin->voltChanged();
-                m_nonLin = m_nonLin->nextNonLin;
-            }
-            if( m_changedNode )
-            {
-                solveMatrix();
-                m_NLstep++;
-            }
-            if( m_state < SIM_RUNNING ) {
-                addEvent( 0, NULL ); break; } // Add event so non linear keep running at next timer tick
-            if( m_maxNlstp ) { if( m_NLstep >= m_maxNlstp ) { m_warning = 1; break; } }
-        }
-        if( m_state < SIM_RUNNING ) break; // ???? Keep this at the end for debugger to run 1 step
-//        if( (m_maxNlSteps == 0) && (m_noLinSteps>1) )qDebug() << "Simulator::runCircuit m_noLinSteps" << m_noLinSteps;
-        m_NLstep = 0;
-
-        while( m_voltChanged )           // Other Components
-        {
-            m_voltChanged->added = false;
-            m_voltChanged->voltChanged();
-            m_voltChanged = m_voltChanged->nextChanged;
-        }*/
         event = m_eventList.first;
     }
     if( m_state > SIM_WAITING ) m_circTime = endRun;
@@ -218,8 +189,6 @@ void Simulator::solveCircuit()
         if( m_state < SIM_RUNNING ) break;
         if( m_maxNlstp ) { if( m_NLstep >= m_maxNlstp ) { m_warning = 1; break; } }
     }
-    ///if( m_state < SIM_RUNNING ) return;
-//        if( (m_maxNlSteps == 0) && (m_noLinSteps>1) )qDebug() << "Simulator::runCircuit m_noLinSteps" << m_noLinSteps;
     m_NLstep = 0;
     while( m_voltChanged )
     {
@@ -245,7 +214,7 @@ void Simulator::resetSim()
     m_voltChanged = NULL;
     m_nonLin = NULL;
 
-    CircuitWidget::self()->setMsg( " Simulation Stopped ", 1 );
+    CircuitWidget::self()->setMsg( " Stopped ", 1 );
 }
 
 void Simulator::startSim( bool paused )
@@ -283,8 +252,8 @@ void Simulator::startSim( bool paused )
     }
     for( eElement* el : m_elementList ) el->stamp();
 
-    m_matrix.createMatrix( m_eNodeList );// Initialize Matrix
-    if( !m_matrix.solveMatrix() )        // Try to solve matrix, if it fails, stop simulation // m_matrix.printMatrix();
+    m_matrix->createMatrix( m_eNodeList );// Initialize Matrix
+    if( !m_matrix->solveMatrix() )        // Try to solve matrix, if it fails, stop simulation // m_matrix.printMatrix();
     {
         qDebug() << "Simulator::startSim, Failed to solve Matrix";
         m_error = 1;
@@ -318,7 +287,7 @@ void Simulator::stopSim()
 
     for( eNode* node  : m_eNodeList  )  node->setVolt( 0 );
     for( eElement* el : m_elementList ) el->initialize();
-    for( Updatable* el : m_updateList )  el->updateStep();
+    for( Updatable* el : m_updateList ) el->updateStep();
 
     clearEventList();
     m_changedNode = NULL;
@@ -330,7 +299,7 @@ void Simulator::pauseSim()
     m_oldState = m_state;
     m_state = SIM_PAUSED;
 
-    CircuitWidget::self()->setMsg( " Simulation Paused ", 1 );
+    CircuitWidget::self()->setMsg( " Paused ", 1 );
     qDebug() << "\n    Simulation Paused ";
 }
 
@@ -339,7 +308,7 @@ void Simulator::resumeSim()
     if( m_state != SIM_PAUSED ) return;
     m_state = m_oldState; // SIM_RUNNING;
 
-    CircuitWidget::self()->setMsg( " Simulation Running ", 0 );
+    CircuitWidget::self()->setMsg( " Running ", 0 );
     qDebug() << "\n    Resuming Simulation";
 }
 
@@ -350,7 +319,7 @@ void Simulator::stopTimer()
     m_timerId = 0;
 
     CircuitWidget::self()->setRate( 0, 0 );
-    CircuitWidget::self()->setMsg( " Simulation Stopped ", 1 );
+    CircuitWidget::self()->setMsg( " Stopped ", 1 );
     Circuit::self()->update();
     qDebug() << "\n    Simulation Stopped ";
     m_state = SIM_STOPPED;
@@ -359,7 +328,7 @@ void Simulator::stopTimer()
 void Simulator::initTimer()
 {
     if( m_timerId != 0 ) return;
-    CircuitWidget::self()->setMsg( " Simulation Running ", 0  );
+    CircuitWidget::self()->setMsg( " Running ", 0  );
     m_timerId = this->startTimer( m_timerTick, Qt::PreciseTimer );
     m_state = SIM_RUNNING;
 }
@@ -383,15 +352,9 @@ void Simulator::setStepsPerSec( uint64_t sps )
     {
         m_stepsPF = 1;
         m_timerTick = 1000/sps; // ms
-    }
-    if( this->isRunning() )
-    {
-        pauseSim();
-        emit rateChanged();
-        resumeSim();
 }   }
 
-void  Simulator::setNoLinAcc( int ac )
+/*void  Simulator::setNoLinAcc( int ac )
 {
     bool running = isRunning();
     if( running ) pauseSim();
@@ -401,7 +364,7 @@ void  Simulator::setNoLinAcc( int ac )
     m_noLinAcc = ac;
 
     if( running ) resumeSim();
-}
+}*/
 
 void Simulator::clearEventList()
 {
@@ -519,4 +482,3 @@ void Simulator::addToNoLinList( eElement* el )
 { el->nextNonLin = m_nonLin; m_nonLin = el; }
 
 #include "moc_simulator.cpp"
-

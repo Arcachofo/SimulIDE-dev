@@ -20,9 +20,10 @@
 #ifndef FREQUENCIMETER_H
 #define FREQUENCIMETER_H
 
-#include "itemlibrary.h"
 #include "component.h"
 #include "e-element.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT Frequencimeter : public Component, public eElement
 {
@@ -35,7 +36,7 @@ class MAINMODULE_EXPORT Frequencimeter : public Component, public eElement
         ~Frequencimeter();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         virtual QList<propGroup_t> propGroups() override;
 

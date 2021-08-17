@@ -20,10 +20,10 @@
 #ifndef DCMOTOR_H
 #define DCMOTOR_H
 
-#include "itemlibrary.h"
 #include "component.h"
 #include "e-resistor.h"
 
+class LibraryItem;
 
 class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
 {

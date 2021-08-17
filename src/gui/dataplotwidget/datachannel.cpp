@@ -17,10 +17,13 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "datachannel.h"
 #include "plotdisplay.h"
 #include "plotbase.h"
 #include "simulator.h"
+#include "e-node.h"
 
 DataChannel::DataChannel( PlotBase* plotBase, QString id )
            : eElement( id  )

@@ -17,11 +17,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "relay_base.h"
 #include "simulator.h"
 #include "circuit.h"
-
-#include <math.h>
+#include "e-node.h"
 
 static const char* RelayBase_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Rcoil"),

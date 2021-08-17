@@ -23,6 +23,7 @@
 #include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "e-node.h"
 #include "pin.h"
 
 static const char* SwitchDip_properties[] = {

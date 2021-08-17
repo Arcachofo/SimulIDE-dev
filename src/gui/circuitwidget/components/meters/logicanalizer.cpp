@@ -18,15 +18,16 @@
  ***************************************************************************/
 
 #include "logicanalizer.h"
+#include "itemlibrary.h"
 #include "connector.h"
 #include "circuitwidget.h"
 #include "circuit.h"
 #include "simulator.h"
-#include "itemlibrary.h"
 #include "lachannel.h"
 #include "lawidget.h"
 #include "datalawidget.h"
 #include "tunnel.h"
+#include "e-node.h"
 
 static const char* LAnalizer_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Threshold")

@@ -41,9 +41,6 @@ ClockBase::ClockBase( QObject* parent, QString type, QString id )
     setFreq( 1000 );
 
     Simulator::self()->addToUpdateList( this );
-
-    connect( Simulator::self(), &Simulator::rateChanged,
-             this,              &ClockBase::rateChanged, Qt::UniqueConnection );
 }
 ClockBase::~ClockBase(){}
 
@@ -84,11 +81,6 @@ void ClockBase::setFreq( double freq )
     m_remainder = 0;
     
     emit freqChanged();
-}
-
-void ClockBase::rateChanged()
-{
-    setFreq( m_freq );
 }
 
 bool ClockBase::running() { return m_isRunning; }

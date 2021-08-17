@@ -21,6 +21,7 @@
 #include "simulator.h"
 #include "e-element.h"
 #include "datachannel.h"
+#include "circmatrix.h"
 
 eNode::eNode( QString id )
 {

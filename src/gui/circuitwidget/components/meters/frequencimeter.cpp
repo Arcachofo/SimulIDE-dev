@@ -18,7 +18,9 @@
  ***************************************************************************/
 
 #include "frequencimeter.h"
+#include "itemlibrary.h"
 #include "simulator.h"
+#include "e-node.h"
 #include "pin.h"
 
 Component* Frequencimeter::construct( QObject* parent, QString type, QString id )

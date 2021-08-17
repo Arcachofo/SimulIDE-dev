@@ -368,7 +368,7 @@ void CircuitWidget::powerCircDebug( bool paused )
     powerCircAct->setEnabled( true );
 
     Simulator::self()->startSim( paused );
-    if( paused ) m_rateLabel->setText( tr("    Real Speed: Debugger") );
+    if( paused ) m_rateLabel->setText( tr("    Speed: Debugger") );
 }
 
 void CircuitWidget::pauseSim()
@@ -444,7 +444,7 @@ void CircuitWidget::setRate( double rate, int load )
         if( load < 100 ) Sload = "0"+Sload;
         if( load < 10 )  Sload = "0"+Sload;
 
-        m_rateLabel->setText( tr("    Real Speed: ")+Srate+" %"
+        m_rateLabel->setText( tr("    Speed: ")+Srate+" %"
                             + tr("    Load: "      )+Sload+" %    ");
 }   }
 

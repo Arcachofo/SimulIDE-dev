@@ -20,12 +20,6 @@
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-#include <qtconcurrentrun.h>
-#include <QElapsedTimer>
-
-#include "circmatrix.h"
-#include "component.h"
-
 #define LAST_SIM_EVENT 999
 
 enum simState_t{
@@ -38,10 +32,15 @@ enum simState_t{
     SIM_DEBUG,
 };
 
+#include <QElapsedTimer>
+#include <QFuture>
+#include <QHash>
+
 class BaseProcessor;
 class Updatable;
 class eElement;
 class eNode;
+class CircMatrix;
 
 class MAINMODULE_EXPORT Simulator : public QObject
 {
@@ -66,21 +65,11 @@ class MAINMODULE_EXPORT Simulator : public QObject
          void addEvent( uint64_t time, eElement* comp );
          void cancelEvents( eElement* comp );
 
- inline void freeEvent( simEvent_t* event );
-        void clearEventList();
-
-        void resetSim();
         void startSim( bool paused=false );
         void resumeSim();
 
-        void stopTimer();
-        void initTimer();
-
         void pauseSim();
         void stopSim();
-
-        void runCircuit();
-        void solveCircuit();
 
         void setWarning( int warning ) { m_warning = warning; }
 
@@ -94,8 +83,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t stepsPerSec() { return m_stepsPS; }
         void setStepsPerSec( uint64_t sps );
 
-        int    noLinAcc() { return m_noLinAcc; }
-        void   setNoLinAcc( int ac );
+        //int    noLinAcc() { return m_noLinAcc; }
+        //void   setNoLinAcc( int ac );
         double NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
 
         void  setMaxNlSteps( uint32_t steps ) { m_maxNlstp = steps; }
@@ -105,10 +94,10 @@ class MAINMODULE_EXPORT Simulator : public QObject
         bool isPaused()  { return (m_state == SIM_PAUSED); }
 
         uint64_t circTime() { return m_circTime; }
-        void setCircTime( uint64_t time );
+        //void setCircTime( uint64_t time );
 
         void timerEvent( QTimerEvent* e );
-        uint64_t mS(){ return m_RefTimer.elapsed(); }
+        //uint64_t mS(){ return m_RefTimer.elapsed(); }
 
         double realSpeed() { return m_realSpeed; } // 0 to 10000 => 0 to 100%
 
@@ -126,25 +115,28 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void remFromElementList( eElement* el );
         
         void addToUpdateList( Updatable* el );
-        void remFromUpdateList(Updatable* el );
+        void remFromUpdateList( Updatable* el );
 
         void addToChangedFast( eElement* el );
-
         void addToNoLinList( eElement* el );
-
-    signals:
-        void rateChanged();
         
     private:
  static Simulator* m_pSelf;
 
-        inline void solveMatrix();
+        void resetSim();
+        void runCircuit();
+        void solveMatrix();
+        void solveCircuit();
+        void clearEventList();
+        inline void freeEvent( simEvent_t* event );
+        inline void stopTimer();
+        inline void initTimer();
 
         simEventList_t m_eventList;
 
         QFuture<void> m_CircuitFuture;
 
-        CircMatrix m_matrix;
+        CircMatrix* m_matrix;
 
         QHash<int, QString> m_errors;
         QHash<int, QString> m_warnings;

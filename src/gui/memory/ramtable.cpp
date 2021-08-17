@@ -264,25 +264,25 @@ void RamTable::saveVarSet()
 
 void RamTable::updateValues()
 {
-    if( m_processor )
+    if( !m_processor ) return;
+
+    for( int _row: watchList.keys() )
     {
-        for( int _row: watchList.keys() )
+        m_currentRow = _row;
+        QString name = watchList[_row];
+
+        bool ok;
+        int addr = name.toInt(&ok, 10);
+        if( !ok ) addr = name.toInt(&ok, 16);
+        if( !ok ) m_processor->updateRamValue( name );  // Var or Reg name
+        else                                            // Address
         {
-            m_currentRow = _row;
-            QString name = watchList[_row];
+            uint8_t value = m_processor->getRamValue( addr );
 
-            bool ok;
-            int addr = name.toInt(&ok, 10);
-            if( !ok ) addr = name.toInt(&ok, 16);
-            if( !ok ) m_processor->updateRamValue( name );  // Var or Reg name
-            else                                            // Address
-            {
-                uint8_t value = m_processor->getRamValue( addr );
-
-                table->item( _row, 1 )->setText("uint8");
-                table->item( _row, 2 )->setData( 0, value );
-                table->item( _row, 3 )->setData( 0, decToBase(value, 2, 8) );
-}   }   }   }
+            table->item( _row, 1 )->setText("uint8");
+            table->item( _row, 2 )->setData( 0, value );
+            table->item( _row, 3 )->setData( 0, decToBase(value, 2, 8) );
+}   }   }
 
 void RamTable::addToWatch( QTableWidgetItem* it )
 {

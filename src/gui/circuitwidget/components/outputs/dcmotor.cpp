@@ -20,7 +20,9 @@
 #include <cmath>
 
 #include "dcmotor.h"
+#include "itemlibrary.h"
 #include "simulator.h"
+#include "e-node.h"
 #include "pin.h"
 
 static const char* DcMotor_properties[] = {

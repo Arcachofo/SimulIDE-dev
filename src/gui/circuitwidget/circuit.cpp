@@ -29,6 +29,7 @@
 #include "subcircuit.h"
 #include "mcu.h"
 #include "simulator.h"
+#include "e-node.h"
 
 static const char* Circuit_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Speed"),

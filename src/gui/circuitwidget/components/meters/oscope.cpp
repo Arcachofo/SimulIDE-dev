@@ -27,6 +27,7 @@
 #include "oscwidget.h"
 #include "datawidget.h"
 #include "tunnel.h"
+#include "e-node.h"
 
 static const char* Oscope_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Filter")

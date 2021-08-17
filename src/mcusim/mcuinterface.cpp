@@ -69,12 +69,9 @@ void McuInterface::setEeprom( QVector<int>* eep )
 
 void McuInterface::updateRamValue( QString name )
 {
-    //if( !m_loadStatus ) return;
-
     name = name.toUpper();
     QString type = "u8";
     if( m_typeTable.contains( name )) type = m_typeTable[ name ];
-    //else return;
 
     QByteArray ba;
     ba.resize(4);
@@ -99,21 +96,19 @@ void McuInterface::updateRamValue( QString name )
         ba[2] = 0;
         ba[3] = 0;
     }
-    else                                  // 1 byte
-    {
+    else{                             // 1 byte
         ba[0] = getRamValue( address );
         ba[1] = 0;
         ba[2] = 0;
         ba[3] = 0;
     }
-    if( type.contains( "f" ) )                          // float, double
+    if( type.contains( "f" ) )        // float, double
     {
         float value = 0;
         memcpy(&value, ba, 4);
         m_ramTable->setItemValue( 1, value  );
     }
-    else                                              // char, int, long
-    {
+    else{                             // char, int, long
         int32_t value = 0;
 
         if( type.contains( "u" ) )
@@ -122,8 +117,7 @@ void McuInterface::updateRamValue( QString name )
             memcpy(&val, ba, 4);
             value = val;
         }
-        else
-        {
+        else{
             if( bits == 32 )
             {
                 int32_t val = 0;
@@ -136,13 +130,11 @@ void McuInterface::updateRamValue( QString name )
                 memcpy(&val, ba, 2);
                 value = val;
             }
-            else
-            {
+            else{
                 int8_t val = 0;
                 memcpy(&val, ba, 1);
                 value = val;
-            }
-        }
+        }   }
         m_ramTable->setItemValue( 2, value  );
 
         if     ( type.contains( "8" ) ) m_ramTable->setItemValue( 3, decToBase(value, 2, 8)  );
@@ -157,10 +149,8 @@ void McuInterface::updateRamValue( QString name )
 
                 strVal += str; //QByteArray::fromHex( getRamValue( i ) );
             }
-            //qDebug() << "string" << name << value << strVal;
             m_ramTable->setItemValue( 3, strVal  );
-        }
-    }
+    }   }
     m_ramTable->setItemValue( 1, type  );
 }
 
@@ -186,21 +176,18 @@ void McuInterface::stepOne( int line )
 
 void McuInterface::stepDebug()
 {
-    if( m_debugStep )
-    {
-        int lastPC = pc()*2;
-        stepCpu();
-        int PC = pc()*2;
+    if( !m_debugStep ) return;
 
-        if( ( lastPC != PC )
-        && ( m_debugger->m_flashToSource.contains( PC ) ) )
+    int lastPC = pc()*2;
+    stepCpu();
+    int PC = pc()*2;
+
+    if( ( lastPC != PC )
+    && ( m_debugger->m_flashToSource.contains( PC ) ) )
+    {
+        int line = m_debugger->m_flashToSource[ PC ];
+        if( line != m_prevLine )
         {
-            int line = m_debugger->m_flashToSource[ PC ];
-            if( line != m_prevLine )
-            {
-                m_debugStep = false;
-                m_debugger->m_editor->lineReached( line );
-            }
-        }
-    }
-}
+            m_debugStep = false;
+            m_debugger->m_editor->lineReached( line );
+}   }   }

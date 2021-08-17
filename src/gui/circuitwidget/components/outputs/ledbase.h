@@ -22,7 +22,6 @@
 
 #include "e-led.h"
 #include "component.h"
-#include <QColor>
 
 class MAINMODULE_EXPORT LedBase : public Component, public eLed
 {

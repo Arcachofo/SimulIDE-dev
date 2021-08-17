@@ -21,6 +21,7 @@
 #include "circuitwidget.h"
 #include "connector.h"
 #include "simulator.h"
+#include "e-node.h"
 #include "pin.h"
 
 static const char* LedBase_properties[] = {
