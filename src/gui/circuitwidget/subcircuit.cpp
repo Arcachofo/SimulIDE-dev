@@ -248,7 +248,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
 
                 if( comp )
                 {
-                    QStringList userProps = comp->userProperties(); // Get list of User Properties, we only want to load these
+                    QStringList userProps = {"mainComp","boardPos","circPos","boardRot","circRot"};
+                    userProps.append( comp->userProperties() ); // Get list of User Properties, we only want to load these
 
                     QDomNamedNodeMap atrs = element.attributes();
 

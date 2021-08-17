@@ -1,0 +1,43 @@
+
+#chip mega32u4, 16
+
+Dir PORTB.7 out
+
+Dim coDir as byte
+Dim count as byte
+
+  On Interrupt Timer0Overflow Call T0_OV
+  'On Interrupt Timer1Overflow Call IncCounter_1
+
+
+coDir = 0
+'DDRB = 0b00100110
+
+    'PwmFreq = Freq/(Presc*510)
+    
+TCCR0A = 0b10000001 'Mode 1 Phase Correct Top 0xFF
+TCCR0B = 0b00000011 'Prescaler 64, PwmFreq = 1.960 KHz
+OCR0A = 200
+'OCR0B = 200;
+
+  IntOn   'enable Interrupts
+
+Do
+    wait 10 ms
+
+Loop
+
+Sub T0_OV
+    count += 1
+    if count = 20 then
+        count = 0
+        if coDir = 0 then 
+            OCR0A -= 1
+            if OCR0A < 50 then coDir = 1
+        
+        else 
+            OCR0A += 1
+            if OCR0A > 200 then  coDir = 0
+        end if
+    end if
+End Sub

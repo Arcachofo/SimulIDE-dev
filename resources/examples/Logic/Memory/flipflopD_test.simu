@@ -1,0 +1,55 @@
+<circuit NLsteps="100000" stepSize="1000000" type="simulide_0.5" stepsPS="1000000" animate="0">
+
+Unique  Id: FlipFlopD-1: 
+Circuit Id: FlipFlopD-1
+<item boardRot="-1000000" itemtype="FlipFlopD" mainComp="false" Tpd_ps="10000" id="FlipFlopD-1" Input_High_V="2.5" Unit="  " Out_Low_V="0" Show_id="false" Clock_Inverted="false" x="-484" rotation="0" hflip="1" valLabelx="0" Input_Low_V="2.5" labelrot="0" Input_Imped="100000000000000" Trigger="1" Show_Val="false" valLabely="0" Tr_ps="3000" boardPos="-1e+06,-1e+06" objectName="FlipFlopD-1" labelx="-16" y="-292" S_R_Inverted="true" Tf_ps="4000" valLabRot="0" labely="-24" vflip="1" Out_High_V="5" circRot="0" circPos="0,0" Out_Imped="40"/>
+
+Unique  Id: Fixed Voltage-2: 
+Circuit Id: Set
+<item boardRot="-1000000" itemtype="Fixed Voltage" mainComp="false" id="Set" Unit=" V" Show_id="true" x="-548" rotation="0" hflip="1" valLabelx="-16" labelrot="0" Show_Val="false" Out="false" valLabely="8" Voltage="5" boardPos="-1e+06,-1e+06" objectName="Fixed Voltage-2" labelx="-50" y="-316" valLabRot="0" labely="-7" vflip="1" circRot="0" circPos="0,0"/>
+
+Unique  Id: Fixed Voltage-4: 
+Circuit Id: Reset
+<item boardRot="-1000000" itemtype="Fixed Voltage" mainComp="false" id="Reset" Unit=" V" Show_id="true" x="-548" rotation="0" hflip="1" valLabelx="-16" labelrot="0" Show_Val="false" Out="false" valLabely="8" Voltage="5" boardPos="-1e+06,-1e+06" objectName="Fixed Voltage-4" labelx="-58" y="-268" valLabRot="0" labely="-7" vflip="1" circRot="0" circPos="0,0"/>
+
+Unique  Id: Probe-6: 
+Circuit Id: Probe-6
+<item boardRot="-1000000" itemtype="Probe" mainComp="false" id="Probe-6" Unit="  V" Show_id="false" x="-412" rotation="-45" hflip="1" valLabelx="16" labelrot="45" Show_Val="true" valLabely="0" Threshold="2.5" boardPos="-1e+06,-1e+06" objectName="Probe-6" labelx="16" y="-316" valLabRot="45" Show_volt="true" labely="-16" vflip="1" circRot="0" circPos="0,0"/>
+
+Unique  Id: Probe-8: 
+Circuit Id: Probe-8
+<item boardRot="-1000000" itemtype="Probe" mainComp="false" id="Probe-8" Unit="  V" Show_id="false" x="-412" rotation="-45" hflip="1" valLabelx="16" labelrot="45" Show_Val="true" valLabely="0" Threshold="2.5" boardPos="-1e+06,-1e+06" objectName="Probe-8" labelx="16" y="-300" valLabRot="45" Show_volt="true" labely="-16" vflip="1" circRot="0" circPos="0,0"/>
+
+Unique  Id: Fixed Voltage-10: 
+Circuit Id: Data
+<item boardRot="-1000000" itemtype="Fixed Voltage" mainComp="false" id="Data" Unit=" V" Show_id="true" x="-548" rotation="0" hflip="1" valLabelx="-16" labelrot="0" Show_Val="false" Out="false" valLabely="8" Voltage="5" boardPos="-1e+06,-1e+06" objectName="Fixed Voltage-10" labelx="-54" y="-300" valLabRot="0" labely="-7" vflip="1" circRot="0" circPos="0,0"/>
+
+Unique  Id: Fixed Voltage-11: 
+Circuit Id: Clock
+<item boardRot="-1000000" itemtype="Fixed Voltage" mainComp="false" id="Clock" Unit=" V" Show_id="true" x="-548" rotation="0" hflip="1" valLabelx="-16" labelrot="0" Show_Val="false" Out="false" valLabely="8" Voltage="5" boardPos="-1e+06,-1e+06" objectName="Fixed Voltage-11" labelx="-58" y="-284" valLabRot="0" labely="-7" vflip="1" circRot="1.1126055129035961e-306" circPos="0,0"/>
+
+Unique  Id: Connector-3: 
+Circuit Id: Connector-3
+<item boardRot="-1000000" itemtype="Connector" mainComp="false" id="Connector-3" Unit="  " Show_id="false" startpinid="Fixed Voltage-2-outnod" x="-532" rotation="0" hflip="1" valLabelx="0" labelrot="0" Show_Val="false" valLabely="0" enodeid="Circ_eNode-12" boardPos="-1e+06,-1e+06" pointList="-532,-316,-484,-316,-484,-308" objectName="Connector-3" labelx="-16" y="-316" endpinid="FlipFlopD-1-in1" valLabRot="0" labely="-24" vflip="1" circRot="0" circPos="0,0"/>
+
+Unique  Id: Connector-5: 
+Circuit Id: Connector-5
+<item boardRot="-1000000" itemtype="Connector" mainComp="false" id="Connector-5" Unit="  " Show_id="false" startpinid="Fixed Voltage-4-outnod" x="-532" rotation="0" hflip="1" valLabelx="0" labelrot="0" Show_Val="false" valLabely="0" enodeid="Circ_eNode-13" boardPos="-1e+06,-1e+06" pointList="-532,-268,-476,-268" objectName="Connector-5" labelx="-16" y="-268" endpinid="FlipFlopD-1-in2" valLabRot="0" labely="-24" vflip="1" circRot="9.9197156513448793e-317" circPos="0,0"/>
+
+Unique  Id: Connector-7: 
+Circuit Id: Connector-7
+<item boardRot="-1000000" itemtype="Connector" mainComp="false" id="Connector-7" Unit="  " Show_id="false" startpinid="Probe-6-inpin" x="-428" rotation="0" hflip="1" valLabelx="0" labelrot="0" Show_Val="false" valLabely="0" enodeid="Circ_eNode-14" boardPos="-1e+06,-1e+06" pointList="-428,-300,-460,-300,-460,-292" objectName="Connector-7" labelx="-16" y="-300" endpinid="FlipFlopD-1-out0" valLabRot="0" labely="-24" vflip="1" circRot="0" circPos="0,0"/>
+
+Unique  Id: Connector-9: 
+Circuit Id: Connector-9
+<item boardRot="-1000000" itemtype="Connector" mainComp="false" id="Connector-9" Unit="  " Show_id="false" startpinid="FlipFlopD-1-out1" x="-460" rotation="0" hflip="1" valLabelx="0" labelrot="0" Show_Val="false" valLabely="0" enodeid="Circ_eNode-15" boardPos="-1e+06,-1e+06" pointList="-460,-284,-428,-284" objectName="Connector-9" labelx="-16" y="-284" endpinid="Probe-8-inpin" valLabRot="0" labely="-24" vflip="1" circRot="0" circPos="0,0"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item boardRot="-1000000" itemtype="Connector" mainComp="false" id="Connector-12" Unit="  " Show_id="false" startpinid="Fixed Voltage-11-outnod" x="-532" rotation="0" hflip="1" valLabelx="0" labelrot="0" Show_Val="false" valLabely="0" enodeid="Circ_eNode-16" boardPos="-1e+06,-1e+06" pointList="-532,-284,-500,-284" objectName="Connector-12" labelx="-16" y="-284" endpinid="FlipFlopD-1-in3" valLabRot="0" labely="-24" vflip="1" circRot="8.6226450167558443e-308" circPos="0,0"/>
+
+Unique  Id: Connector-13: 
+Circuit Id: Connector-13
+<item boardRot="-1000000" itemtype="Connector" mainComp="false" id="Connector-13" Unit="  " Show_id="false" startpinid="Fixed Voltage-10-outnod" x="-532" rotation="0" hflip="1" valLabelx="0" labelrot="0" Show_Val="false" valLabely="0" enodeid="Circ_eNode-17" boardPos="-1e+06,-1e+06" pointList="-532,-300,-500,-300,-500,-292" objectName="Connector-13" labelx="-16" y="-300" endpinid="FlipFlopD-1-in0" valLabRot="0" labely="-24" vflip="1" circRot="2.4209216646221081e-322" circPos="0,0"/>
+ 
+</circuit>

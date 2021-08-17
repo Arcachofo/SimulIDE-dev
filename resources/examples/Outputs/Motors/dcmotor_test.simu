@@ -1,0 +1,39 @@
+<circuit Simu_Step_nS="1000" noLinAcc="5" reactStep="50" animate="0" Speed_sps="1000000" type="simulide_0.5" Speed_per="100">
+
+Unique  Id: Switch-11: 
+Circuit Id: Switch-11
+<item rotation="-180" labely="-24" valLabRot="0" circPos="0,0" vflip="1" hflip="1" DT="true" Norm_Close="false" Key="" mainComp="false" circRot="6.9533558069701918e-310" objectName="Switch-11" valLabely="0" boardPos="-1e+06,-1e+06" boardRot="-1000000" x="-400" itemtype="Switch" y="-292" labelrot="0" Show_id="false" id="Switch-11" Poles="1" labelx="-16" valLabelx="0"/>
+
+Unique  Id: Rail-10: 
+Circuit Id: Rail-10
+<item rotation="0" labely="-24" valLabRot="0" circPos="0,0" vflip="1" hflip="1" mainComp="false" Unit=" V" circRot="6.9533558069701918e-310" Voltage="-5" objectName="Rail-10" valLabely="8" boardPos="-1e+06,-1e+06" boardRot="-1000000" Show_Volt="true" x="-468" itemtype="Rail" y="-220" labelrot="0" Show_id="false" id="Rail-10" labelx="-16" valLabelx="-16"/>
+
+Unique  Id: Rail-9: 
+Circuit Id: Rail-9
+<item rotation="0" labely="-24" valLabRot="0" circPos="0,0" vflip="1" hflip="1" mainComp="false" Unit=" V" circRot="2.3715151000379834e-322" Voltage="5" objectName="Rail-9" valLabely="8" boardPos="-1e+06,-1e+06" boardRot="-1000000" Show_Volt="true" x="-468" itemtype="Rail" y="-360" labelrot="0" Show_id="false" id="Rail-9" labelx="-16" valLabelx="-16"/>
+
+Unique  Id: Ground-3: 
+Circuit Id: Ground-4
+<item rotation="0" labely="8" valLabRot="0" circPos="0,0" vflip="1" hflip="1" mainComp="false" circRot="0" objectName="Ground-3" valLabely="0" boardPos="-1e+06,-1e+06" boardRot="-1000000" x="-244" itemtype="Ground" y="-252" labelrot="0" Show_id="false" id="Ground-4" labelx="-16" valLabelx="0"/>
+
+Unique  Id: DcMotor-1: 
+Circuit Id: DcMotor-1
+<item rotation="0" labely="-48" valLabRot="0" circPos="0,0" vflip="1" hflip="1" Resistance="100" mainComp="false" Unit=" Ω" circRot="1.4505898783360792e-316" objectName="DcMotor-1" RPM_Nominal="60" valLabely="0" boardPos="-1e+06,-1e+06" boardRot="-1000000" x="-316" itemtype="DcMotor" y="-292" labelrot="0" Show_id="true" id="DcMotor-1" labelx="-22" Volt_Nominal="5" valLabelx="0"/>
+
+Unique  Id: Connector-6: 
+Circuit Id: Connector-5
+<item rotation="0" labely="-24" valLabRot="0" circPos="0,0" vflip="1" hflip="1" mainComp="false" enodeid="Circ_eNode-7" circRot="0" objectName="Connector-6" valLabely="0" pointList="-276,-292,-244,-292,-244,-268" boardPos="-1e+06,-1e+06" boardRot="-1000000" endpinid="Ground-3-Gnd" startpinid="DcMotor-1-rPin" x="-276" itemtype="Connector" y="-292" labelrot="0" Show_id="false" id="Connector-5" labelx="-16" valLabelx="0"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item rotation="0" labely="-24" valLabRot="0" circPos="0,0" vflip="1" hflip="1" mainComp="false" enodeid="enode-12" circRot="6.9533558071796756e-310" objectName="Connector-12" valLabely="0" pointList="-384,-292,-356,-292" boardPos="-1e+06,-1e+06" boardRot="-1000000" endpinid="DcMotor-1-lPin" startpinid="Switch-11-pinP0" x="-384" itemtype="Connector" y="-292" labelrot="0" Show_id="false" id="Connector-12" labelx="-16" valLabelx="0"/>
+
+Unique  Id: Connector-13: 
+Circuit Id: Connector-13
+<item rotation="0" labely="-24" valLabRot="0" circPos="0,0" vflip="1" hflip="1" mainComp="false" enodeid="enode-13" circRot="6.9533558071796756e-310" objectName="Connector-13" valLabely="0" pointList="-452,-360,-452,-292,-416,-292" boardPos="-1e+06,-1e+06" boardRot="-1000000" endpinid="Switch-11-switch0pinN" startpinid="Rail-9-outnod" x="-452" itemtype="Connector" y="-360" labelrot="0" Show_id="false" id="Connector-13" labelx="-16" valLabelx="0"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-14
+<item rotation="0" labely="-24" valLabRot="0" circPos="0,0" vflip="1" hflip="1" mainComp="false" enodeid="enode-14" circRot="6.9533558071796756e-310" objectName="Connector-14" valLabely="0" pointList="-416,-284,-416,-288,-452,-288,-452,-220" boardPos="-1e+06,-1e+06" boardRot="-1000000" endpinid="Rail-10-outnod" startpinid="Switch-11-switch1pinN" x="-416" itemtype="Connector" y="-284" labelrot="0" Show_id="false" id="Connector-14" labelx="-16" valLabelx="0"/>
+ 
+</circuit>

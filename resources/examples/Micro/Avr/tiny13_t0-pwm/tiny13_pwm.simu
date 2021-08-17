@@ -1,0 +1,15 @@
+<circuit type="simulide_0.4" Simu_Step_nS="1000" noLinAcc="5" Speed_sps="1000000" animate="0" Speed_per="100" reactStep="50">
+
+Unique  Id: Oscope-2: 
+Circuit Id: Oscope-2
+<item valLabRot="0" Autoad1="true" Filter="0.10000000000000001" valLabelx="0" mainComp="false" hflip="1" Probe2="" id="Oscope-2" valLabely="0" Probe1="" objectName="Oscope-2" vflip="1" Expand_Y="200" hTick1="1" vPos1="0" labely="-80" labelx="-80" Expand="false" labelrot="0" Basic_Y="100" Expand_X="240" vPos2="0" Trigger2="true" Show_id="false" hTick2="1" x="-420" Basic_X="120" Data_Size="200" Autoad2="true" vTick2="1" itemtype="Oscope" vTick1="1" y="-364" rotation="0" Trigger1="true"/>
+
+Unique  Id: attiny13-1: 
+Circuit Id: attiny13-1
+<item valLabRot="0" Logic_Symbol="false" valLabelx="0" mainComp="false" hflip="1" id="attiny13-1" valLabely="0" objectName="attiny13-1" vflip="1" eeprom="255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255" Program="tiny13_pwm.hex" labely="-20" labelx="0" labelrot="0" Init_gdb="false" Auto_Load="false" Show_id="true" x="-612" varList=",PORTB,DDRB,,,,TCNT0,,TCCR0A,TCCR0B,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," itemtype="AVR" y="-380" rotation="0" Mhz="1.2"/>
+
+Unique  Id: Connector-3: 
+Circuit Id: Connector-3
+<item valLabRot="0" valLabelx="0" mainComp="false" enodeid="enode-3" hflip="1" startpinid="attiny13-1-PB0" id="Connector-3" valLabely="0" objectName="Connector-3" vflip="1" labely="-24" labelx="-16" labelrot="0" pointList="-572,-348,-548,-348,-548,-364,-508,-364" Show_id="false" x="-572" itemtype="Connector" endpinid="Oscope-2-Pin0" y="-348" rotation="0"/>
+ 
+</circuit>

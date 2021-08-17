@@ -1,0 +1,56 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 0.98.02 2018-05-16 (Linux)
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: MEGA32U4
+Program Memory: 125/16384 words (.76%)
+RAM: 8/2560 bytes (.31%)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 12
+Compiled Size (words): 37
+Outgoing calls: T0_OV(1), Delay_MS(1), INITSYS(1)
+
+T0_OV
+Code Size (lines): 15
+Compiled Size (words): 37
+
+INITSYS
+Code Size (lines): 650
+Compiled Size (words): 11
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 12
+
+SysIntContextSave
+Code Size (lines): 0
+Compiled Size (words): 12
+
+SysIntContextRestore
+Code Size (lines): 0
+Compiled Size (words): 12
+
+IntTIMER0_OVF
+Code Size (lines): 0
+Compiled Size (words): 4
+
+;********************************************************************************
+

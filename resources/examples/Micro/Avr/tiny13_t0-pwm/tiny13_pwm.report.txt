@@ -1,0 +1,36 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 0.98.02 2018-05-16 (Linux)
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: TINY13
+Program Memory: 16/512 words (3.12%)
+RAM: 0/64 bytes (0.%)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 6
+Compiled Size (words): 13
+Outgoing calls: INITSYS(1)
+
+INITSYS
+Code Size (lines): 650
+Compiled Size (words): 3
+
+;********************************************************************************
+

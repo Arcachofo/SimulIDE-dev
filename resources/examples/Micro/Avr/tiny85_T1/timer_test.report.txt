@@ -1,0 +1,72 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 0.98.02 2018-05-16 (Linux)
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: TINY85
+Program Memory: 178/4096 words (4.35%)
+RAM: 13/512 bytes (2.54%)
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 31
+Compiled Size (words): 84
+Outgoing calls: INCCOUNTER_1(1), INCCOUNTER_0(1), INITTIMER1(1), STARTTIMER(2), INITTIMER0(1), INITSYS(3)
+
+INCCOUNTER_0
+Code Size (lines): 1
+Compiled Size (words): 6
+
+INCCOUNTER_1
+Code Size (lines): 2
+Compiled Size (words): 8
+
+STARTTIMER
+Code Size (lines): 143
+Compiled Size (words): 25
+
+INITTIMER0
+Code Size (lines): 70
+Compiled Size (words): 12
+
+INITTIMER1
+Code Size (lines): 75
+Compiled Size (words): 12
+
+INITSYS
+Code Size (lines): 650
+Compiled Size (words): 3
+
+SysIntContextSave
+Code Size (lines): 0
+Compiled Size (words): 8
+
+SysIntContextRestore
+Code Size (lines): 0
+Compiled Size (words): 8
+
+IntTIMER0_OVF
+Code Size (lines): 0
+Compiled Size (words): 6
+
+IntTIMER1_OVF
+Code Size (lines): 0
+Compiled Size (words): 6
+
+;********************************************************************************
+
