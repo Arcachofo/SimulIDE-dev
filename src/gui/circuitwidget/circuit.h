@@ -103,7 +103,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         void setBackupPath( QString path ) { m_backupPath = path; }
 
-        void savingSub() { m_savingSub = true; }
+        void saveBoard() {m_saveBoard = true; }
 
     signals:
         void keyEvent( QString key, bool pressed );
@@ -127,9 +127,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
     private:
         void loadDomDoc( QDomDocument* doc );
-        void pasteDomDoc( QDomDocument* doc );
-        void loadProperties( QDomElement element, Component* comp );
-        void loadObjectProperties( QDomElement element, Component* comp );
+        void loadProperties( QDomElement* element, Component* comp );
+        void loadCompProperties( QDomElement* element, Component* comp );
+        void loadObjectProperties( QDomElement* element, Component* comp );
+        void loadProperty( QVariant value, QString propName, Component* comp );
         void circuitToDom();
         void listToDom( QDomDocument* doc, QList<Component*>* complist );
         void objectToDom( QDomElement* elm, Component* comp, bool onlyMain=false );
@@ -153,7 +154,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         int m_seqNumber;
         int m_error;
         
-        bool m_savingSub;
+        bool m_saveBoard;
         bool m_pasting;
         bool m_deleting;
         bool m_conStarted;

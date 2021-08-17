@@ -28,11 +28,11 @@
     <name>AVRComponent</name>
     <message>
         <source>AVR</source>
-        <translation>AVR</translation>
+        <translation type="vanished">AVR</translation>
     </message>
     <message>
         <source>Micro</source>
-        <translation>Mikroprocesory</translation>
+        <translation type="vanished">Mikroprocesory</translation>
     </message>
 </context>
 <context>
@@ -715,74 +715,62 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AvrCompBase</name>
-    <message>
-        <source>Init gdb server at restart</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AvrProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>Soubor nenalezen</translation>
+        <translation type="vanished">Soubor nenalezen</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>Soubor &quot;%1&quot; nebyl nalezen.</translation>
+        <translation type="vanished">Soubor &quot;%1&quot; nebyl nalezen.</translation>
     </message>
     <message>
         <source>Error:</source>
-        <translation>Chyba:</translation>
+        <translation type="vanished">Chyba:</translation>
     </message>
     <message>
         <source> Unable to load IHEX file %1
 </source>
-        <translation> Nelze načíst soubor IHEX %1
+        <translation type="vanished"> Nelze načíst soubor IHEX %1
 </translation>
     </message>
     <message>
         <source>Failed to load firmware: </source>
-        <translation>Chyba při načítání firmware: </translation>
+        <translation type="vanished">Chyba při načítání firmware: </translation>
     </message>
     <message>
         <source>%1 should be .hex or .elf
 </source>
-        <translation>%1 musí být hex nebo elf
+        <translation type="vanished">%1 musí být hex nebo elf
 </translation>
     </message>
     <message>
         <source>Warning on load firmware: </source>
-        <translation>Varování při načítání firmware: </translation>
+        <translation type="vanished">Varování při načítání firmware: </translation>
     </message>
     <message>
         <source>Incompatible firmware: compiled for %1 and your processor is %2
 </source>
-        <translation>Nekompatibilní firmware: přeložený pro %1 a použitý procesor je %2
+        <translation type="vanished">Nekompatibilní firmware: přeložený pro %1 a použitý procesor je %2
 </translation>
     </message>
     <message>
         <source>The processor model is not specified.
 </source>
-        <translation>Typ procesoru není zadán.
+        <translation type="vanished">Typ procesoru není zadán.
 </translation>
     </message>
     <message>
         <source>Could not Create AVR Processor: &quot;%1&quot;</source>
-        <translation>Nemohu vytvořit procesor AVR : &quot;%1&quot;</translation>
+        <translation type="vanished">Nemohu vytvořit procesor AVR : &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Wrong firmware!!</source>
-        <translation>Špatný firmware!!</translation>
+        <translation type="vanished">Špatný firmware!!</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Neznámá chyba:</translation>
-    </message>
-    <message>
-        <source>File %1 is not in valid ELF format
-</source>
-        <translation></translation>
+        <translation type="vanished">Neznámá chyba:</translation>
     </message>
 </context>
 <context>
@@ -842,6 +830,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Error: No Mcu in Simulator... </source>
         <translation>Chyba: V simulátoru chybí procesor... </translation>
+    </message>
+    <message>
+        <source>Error uploading firmware to </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1473,7 +1465,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation>Nemohu nastavit soubor %1
+        <translation type="vanished">Nemohu nastavit soubor %1
 na DomDocument</translation>
     </message>
     <message>
@@ -1483,6 +1475,11 @@ na DomDocument</translation>
     <message>
         <source>Manage Components</source>
         <translation>Spravovat komponenty</translation>
+    </message>
+    <message>
+        <source>Error parsing file (itemlib):
+%1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2550,10 +2547,6 @@ Chcete uložit změny?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AVRs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NEW_MCU</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2572,6 +2565,10 @@ Chcete uložit změny?
     <message>
         <source>Shields</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AVR</source>
+        <translation type="unfinished">AVR</translation>
     </message>
 </context>
 <context>
@@ -2996,6 +2993,27 @@ Chcete uložit změny?
         <source>Search Components</source>
         <translation>Hledání komponent</translation>
     </message>
+    <message>
+        <source>Looks like SimulIDE crashed...
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the last auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Max72xx_matrix</name>
@@ -3049,6 +3067,34 @@ Chcete uložit změny?
     <message>
         <source>Open Mcu Monitor.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Load Firmware at Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No File:</source>
+        <translation type="unfinished">Žádný soubor:</translation>
+    </message>
+    <message>
+        <source>No File to reload </source>
+        <translation type="unfinished">Žádný soubor k aktualizaci </translation>
+    </message>
+    <message>
+        <source>Main Mcu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload firmware</source>
+        <translation type="unfinished">Aktualizovat firmware</translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished">Otevřít monitor sériového portu</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Vlastnosti</translation>
     </message>
 </context>
 <context>
@@ -3106,10 +3152,6 @@ Chcete uložit změny?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fimware</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Auto Load Firmware at Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3123,6 +3165,10 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Chip not Found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3313,6 +3359,10 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3767,6 +3817,33 @@ p, li { white-space: pre-wrap; }
 %2.</source>
         <translation type="unfinished">Nemohu zapsat soubor %1:
 %2.</translation>
+    </message>
+</context>
+<context>
+    <name>SerialMonitor</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send Text:</source>
+        <translation type="unfinished">Text k odeslání:</translation>
+    </message>
+    <message>
+        <source>Send Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4516,7 +4593,11 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished">Napětí</translation>
+        <translation type="obsolete">Napětí</translation>
+    </message>
+    <message>
+        <source>Max. Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

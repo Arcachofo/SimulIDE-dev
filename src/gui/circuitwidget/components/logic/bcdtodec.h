@@ -43,13 +43,11 @@ class MAINMODULE_EXPORT BcdToDec : public LogicComponent
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
-
         bool _16bits() { return m_16Bits; }
         void set_16bits( bool set );
 
    private:
         bool m_16Bits;
-
 };
 
 #endif

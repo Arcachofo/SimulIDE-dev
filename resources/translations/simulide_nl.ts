@@ -28,11 +28,7 @@
     <name>AVRComponent</name>
     <message>
         <source>AVR</source>
-        <translation>AVR</translation>
-    </message>
-    <message>
-        <source>Micro</source>
-        <translation></translation>
+        <translation type="vanished">AVR</translation>
     </message>
 </context>
 <context>
@@ -715,74 +711,67 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AvrCompBase</name>
-    <message>
-        <source>Init gdb server at restart</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AvrProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>Bestand niet gevonden</translation>
+        <translation type="vanished">Bestand niet gevonden</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>Het bestand &quot;%1&quot; is niet gevonden.</translation>
+        <translation type="vanished">Het bestand &quot;%1&quot; is niet gevonden.</translation>
     </message>
     <message>
         <source>Error:</source>
-        <translation>Fout:</translation>
+        <translation type="vanished">Fout:</translation>
     </message>
     <message>
         <source> Unable to load IHEX file %1
 </source>
-        <translation> Onmogelijk om IHEX bestand %1 te laden
+        <translation type="vanished"> Onmogelijk om IHEX bestand %1 te laden
 </translation>
     </message>
     <message>
         <source>Failed to load firmware: </source>
-        <translation>Niet gelukt om firmware te laden: </translation>
+        <translation type="vanished">Niet gelukt om firmware te laden: </translation>
     </message>
     <message>
         <source>%1 should be .hex or .elf
 </source>
-        <translation>%1 moet .hex of .elf zijn
+        <translation type="vanished">%1 moet .hex of .elf zijn
 </translation>
     </message>
     <message>
         <source>Warning on load firmware: </source>
-        <translation>Waarschuwing bij laden firmware: </translation>
+        <translation type="vanished">Waarschuwing bij laden firmware: </translation>
     </message>
     <message>
         <source>Incompatible firmware: compiled for %1 and your processor is %2
 </source>
-        <translation>Incompatibele firmware: gecompileerd voor %1 en deze processor is %2
+        <translation type="vanished">Incompatibele firmware: gecompileerd voor %1 en deze processor is %2
 </translation>
     </message>
     <message>
         <source>The processor model is not specified.
 </source>
-        <translation>Het processor model is niet opgegeven.
+        <translation type="vanished">Het processor model is niet opgegeven.
 </translation>
     </message>
     <message>
         <source>Could not Create AVR Processor: &quot;%1&quot;</source>
-        <translation>Kon niet aanmaken AVR Processor: &quot;%1&quot;</translation>
+        <translation type="vanished">Kon niet aanmaken AVR Processor: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Wrong firmware!!</source>
-        <translation>Verkeerde firmware!!</translation>
+        <translation type="vanished">Verkeerde firmware!!</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Onbekende fout:</translation>
+        <translation type="vanished">Onbekende fout:</translation>
     </message>
     <message>
         <source>File %1 is not in valid ELF format
 </source>
-        <translation>Bestand %1 is niet in geldig ELF formaat
+        <translation type="vanished">Bestand %1 is niet in geldig ELF formaat
 </translation>
     </message>
 </context>
@@ -843,6 +832,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Error: No Mcu in Simulator... </source>
         <translation>Fout: geen MCU in de simulator... </translation>
+    </message>
+    <message>
+        <source>Error uploading firmware to </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1474,7 +1467,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation>Kan bestand %1
+        <translation type="vanished">Kan bestand %1
 niet instellen als DomDucument</translation>
     </message>
     <message>
@@ -1484,6 +1477,11 @@ niet instellen als DomDucument</translation>
     <message>
         <source>Manage Components</source>
         <translation>Componenten beheren</translation>
+    </message>
+    <message>
+        <source>Error parsing file (itemlib):
+%1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2551,10 +2549,6 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AVRs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NEW_MCU</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2573,6 +2567,10 @@ Wijzigingen opslaan?
     <message>
         <source>Shields</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AVR</source>
+        <translation type="unfinished">AVR</translation>
     </message>
 </context>
 <context>
@@ -2997,6 +2995,27 @@ Wijzigingen opslaan?
         <source>Search Components</source>
         <translation>Zoek componenten</translation>
     </message>
+    <message>
+        <source>Looks like SimulIDE crashed...
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the last auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Max72xx_matrix</name>
@@ -3050,6 +3069,34 @@ Wijzigingen opslaan?
     <message>
         <source>Open Mcu Monitor.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Load Firmware at Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No File:</source>
+        <translation type="unfinished">Geen bestand:</translation>
+    </message>
+    <message>
+        <source>No File to reload </source>
+        <translation type="unfinished">Geen bestand om te herladen </translation>
+    </message>
+    <message>
+        <source>Main Mcu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload firmware</source>
+        <translation type="unfinished">Firmware herladen</translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished">Open Seriële Monitor.</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Eigenschappen</translation>
     </message>
 </context>
 <context>
@@ -3111,10 +3158,6 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fimware</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Auto Load Firmware at Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3124,6 +3167,10 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Chip not Found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3314,6 +3361,10 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3768,6 +3819,33 @@ p, li { white-space: pre-wrap; }
 %2.</source>
         <translation type="unfinished">Kan niet schrijven naar bestand %1:
 %2.</translation>
+    </message>
+</context>
+<context>
+    <name>SerialMonitor</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send Text:</source>
+        <translation type="unfinished">Verstuur tekst:</translation>
+    </message>
+    <message>
+        <source>Send Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4517,7 +4595,11 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished">Spanning</translation>
+        <translation type="obsolete">Spanning</translation>
+    </message>
+    <message>
+        <source>Max. Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

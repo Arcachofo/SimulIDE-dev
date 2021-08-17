@@ -28,11 +28,11 @@
     <name>AVRComponent</name>
     <message>
         <source>AVR</source>
-        <translation>AVR</translation>
+        <translation type="vanished">AVR</translation>
     </message>
     <message>
         <source>Micro</source>
-        <translation type="unfinished">Mikro</translation>
+        <translation type="obsolete">Mikro</translation>
     </message>
 </context>
 <context>
@@ -719,71 +719,71 @@ p, li { white-space: pre-wrap; }
     <name>AvrCompBase</name>
     <message>
         <source>Init gdb server at restart</source>
-        <translation>Yeniden başlarken GDB sunucusunu başlat</translation>
+        <translation type="vanished">Yeniden başlarken GDB sunucusunu başlat</translation>
     </message>
 </context>
 <context>
     <name>AvrProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>Dosya bulunamadı</translation>
+        <translation type="vanished">Dosya bulunamadı</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>&quot;%1&quot; dosyası bulunamadı.</translation>
+        <translation type="vanished">&quot;%1&quot; dosyası bulunamadı.</translation>
     </message>
     <message>
         <source>Error:</source>
-        <translation>Hata:</translation>
+        <translation type="vanished">Hata:</translation>
     </message>
     <message>
         <source> Unable to load IHEX file %1
 </source>
-        <translation> %1 isimli IHEX dosyası yüklenemedi
+        <translation type="vanished"> %1 isimli IHEX dosyası yüklenemedi
 </translation>
     </message>
     <message>
         <source>Failed to load firmware: </source>
-        <translation>Firmware yüklenemedi: </translation>
+        <translation type="vanished">Firmware yüklenemedi: </translation>
     </message>
     <message>
         <source>%1 should be .hex or .elf
 </source>
-        <translation>%1 hex ya da elf olmalı
+        <translation type="vanished">%1 hex ya da elf olmalı
 </translation>
     </message>
     <message>
         <source>Warning on load firmware: </source>
-        <translation>Firmware yüklenirken uyarı: </translation>
+        <translation type="vanished">Firmware yüklenirken uyarı: </translation>
     </message>
     <message>
         <source>Incompatible firmware: compiled for %1 and your processor is %2
 </source>
-        <translation>Uyumsuz firmware: %1 için derlenmiş işlemciniz %2
+        <translation type="vanished">Uyumsuz firmware: %1 için derlenmiş işlemciniz %2
 </translation>
     </message>
     <message>
         <source>The processor model is not specified.
 </source>
-        <translation>İşlemci modeli belirtilmedi.
+        <translation type="vanished">İşlemci modeli belirtilmedi.
 </translation>
     </message>
     <message>
         <source>Could not Create AVR Processor: &quot;%1&quot;</source>
-        <translation>AVR işlemci oluşturulamadı : &quot;%1&quot;</translation>
+        <translation type="vanished">AVR işlemci oluşturulamadı : &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Wrong firmware!!</source>
-        <translation>Hatalı firmware!!</translation>
+        <translation type="vanished">Hatalı firmware!!</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Bilinmeyen hata:</translation>
+        <translation type="vanished">Bilinmeyen hata:</translation>
     </message>
     <message>
         <source>File %1 is not in valid ELF format
 </source>
-        <translation>%1 dosyası geçerli bir ELF dosyası değil
+        <translation type="vanished">%1 dosyası geçerli bir ELF dosyası değil
 </translation>
     </message>
 </context>
@@ -844,6 +844,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Error: No Mcu in Simulator... </source>
         <translation>Hata : Simülatörde MCU yok... </translation>
+    </message>
+    <message>
+        <source>Error uploading firmware to </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1506,7 +1510,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation>%1 dosyası DomDocument ayarlanamıyor</translation>
+        <translation type="vanished">%1 dosyası DomDocument ayarlanamıyor</translation>
     </message>
     <message>
         <source>        Loaded Component set:           </source>
@@ -1515,6 +1519,11 @@ to DomDocument</source>
     <message>
         <source>Manage Components</source>
         <translation>Elemanları düzenle</translation>
+    </message>
+    <message>
+        <source>Error parsing file (itemlib):
+%1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2601,7 +2610,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>AVRs</source>
-        <translation>AVR</translation>
+        <translation type="vanished">AVR</translation>
     </message>
     <message>
         <source>NEW_MCU</source>
@@ -2622,6 +2631,10 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Shields</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AVR</source>
+        <translation type="unfinished">AVR</translation>
     </message>
 </context>
 <context>
@@ -3096,6 +3109,27 @@ Değişiklikler kaydedilsin mi?
         <source>Search Components</source>
         <translation>Eleman Ara</translation>
     </message>
+    <message>
+        <source>Looks like SimulIDE crashed...
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the last auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Max72xx_matrix</name>
@@ -3149,6 +3183,34 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Open Mcu Monitor.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Load Firmware at Start</source>
+        <translation type="unfinished">Başlarken otomatik firmware yükle</translation>
+    </message>
+    <message>
+        <source>No File:</source>
+        <translation type="unfinished">Dosya Yok:</translation>
+    </message>
+    <message>
+        <source>No File to reload </source>
+        <translation type="unfinished">Yükleme için dosya yok </translation>
+    </message>
+    <message>
+        <source>Main Mcu</source>
+        <translation type="unfinished">Ana MCU</translation>
+    </message>
+    <message>
+        <source>Reload firmware</source>
+        <translation type="unfinished">Firmware verisini yeniden yükle</translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished">Seri Monitörü Aç.</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Özellikler</translation>
     </message>
 </context>
 <context>
@@ -3211,7 +3273,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Fimware</source>
-        <translation>Firmware</translation>
+        <translation type="vanished">Firmware</translation>
     </message>
     <message>
         <source>Auto Load Firmware at Start</source>
@@ -3223,6 +3285,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Chip not Found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3412,6 +3478,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3866,6 +3936,33 @@ p, li { white-space: pre-wrap; }
 %2.</source>
         <translation>%1 dosyasına yazılamıyor:
 %2.</translation>
+    </message>
+</context>
+<context>
+    <name>SerialMonitor</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Diyalog</translation>
+    </message>
+    <message>
+        <source>Send Text:</source>
+        <translation type="unfinished">Yazı gönder:</translation>
+    </message>
+    <message>
+        <source>Send Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4644,7 +4741,11 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Voltage</source>
-        <translation>Voltaj</translation>
+        <translation type="vanished">Voltaj</translation>
+    </message>
+    <message>
+        <source>Max. Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

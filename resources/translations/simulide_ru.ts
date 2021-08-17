@@ -28,11 +28,11 @@
     <name>AVRComponent</name>
     <message>
         <source>AVR</source>
-        <translation>AVR</translation>
+        <translation type="vanished">AVR</translation>
     </message>
     <message>
         <source>Micro</source>
-        <translation>Микроконтроллеры</translation>
+        <translation type="vanished">Микроконтроллеры</translation>
     </message>
 </context>
 <context>
@@ -718,72 +718,72 @@ p, li { white-space: pre-wrap; }
     <name>AvrCompBase</name>
     <message>
         <source>Init gdb server at restart</source>
-        <translation type="unfinished">Инициализация GDB сервера при перезагрузке</translation>
+        <translation type="obsolete">Инициализация GDB сервера при перезагрузке</translation>
     </message>
 </context>
 <context>
     <name>AvrProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>Файл не найден</translation>
+        <translation type="vanished">Файл не найден</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>Файл &quot;%1&quot; не был найден.</translation>
+        <translation type="vanished">Файл &quot;%1&quot; не был найден.</translation>
     </message>
     <message>
         <source>Error:</source>
-        <translation>Ошибка:</translation>
+        <translation type="vanished">Ошибка:</translation>
     </message>
     <message>
         <source> Unable to load IHEX file %1
 </source>
-        <translation> Невозможно загрузить IHEX файл %1
+        <translation type="vanished"> Невозможно загрузить IHEX файл %1
 </translation>
     </message>
     <message>
         <source>Failed to load firmware: </source>
-        <translation>Не удалось загрузить прошивку: </translation>
+        <translation type="vanished">Не удалось загрузить прошивку: </translation>
     </message>
     <message>
         <source>File %1 is not in valid ELF format
 </source>
-        <translation>У файла %1 не действительный ELF формат
+        <translation type="vanished">У файла %1 не действительный ELF формат
 </translation>
     </message>
     <message>
         <source>%1 should be .hex or .elf
 </source>
-        <translation>%1 должен быть .hex или .elf
+        <translation type="vanished">%1 должен быть .hex или .elf
 </translation>
     </message>
     <message>
         <source>Warning on load firmware: </source>
-        <translation>Предупреждение о загрузке прошивки: </translation>
+        <translation type="vanished">Предупреждение о загрузке прошивки: </translation>
     </message>
     <message>
         <source>Incompatible firmware: compiled for %1 and your processor is %2
 </source>
-        <translation>Несовместимая прошивка: скомпилировано для %1 и микроконтроллера %2
+        <translation type="vanished">Несовместимая прошивка: скомпилировано для %1 и микроконтроллера %2
 </translation>
     </message>
     <message>
         <source>The processor model is not specified.
 </source>
-        <translation>Не указана модель микроконтроллера.
+        <translation type="vanished">Не указана модель микроконтроллера.
 </translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Неизвестная ошибка:</translation>
+        <translation type="vanished">Неизвестная ошибка:</translation>
     </message>
     <message>
         <source>Could not Create AVR Processor: &quot;%1&quot;</source>
-        <translation>Не удалось создать AVR микроконтроллер: &quot;%1&quot;</translation>
+        <translation type="vanished">Не удалось создать AVR микроконтроллер: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Wrong firmware!!</source>
-        <translation>Неправильная прошивка!</translation>
+        <translation type="vanished">Неправильная прошивка!</translation>
     </message>
 </context>
 <context>
@@ -843,6 +843,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Error: No Mcu in Simulator... </source>
         <translation>Ошибка: нет микроконтроллера в симуляторе... </translation>
+    </message>
+    <message>
+        <source>Error uploading firmware to </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1482,7 +1486,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation>Не удаётся загрузить файл %1
+        <translation type="vanished">Не удаётся загрузить файл %1
 в DOMDocument</translation>
     </message>
     <message>
@@ -1492,6 +1496,11 @@ to DomDocument</source>
     <message>
         <source>Manage Components</source>
         <translation>Управление компонентами</translation>
+    </message>
+    <message>
+        <source>Error parsing file (itemlib):
+%1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2571,10 +2580,6 @@ Do you want to save your changes?
         <translation>Резтистивные сенсоры</translation>
     </message>
     <message>
-        <source>AVRs</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>NEW_MCU</source>
         <translation></translation>
     </message>
@@ -2593,6 +2598,10 @@ Do you want to save your changes?
     <message>
         <source>Shields</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AVR</source>
+        <translation type="unfinished">AVR</translation>
     </message>
 </context>
 <context>
@@ -3072,6 +3081,27 @@ Do you want to save your changes?
         <source>Search Components</source>
         <translation>Поиск компонентов</translation>
     </message>
+    <message>
+        <source>Looks like SimulIDE crashed...
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the last auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Max72xx_matrix</name>
@@ -3125,6 +3155,34 @@ Do you want to save your changes?
     <message>
         <source>Open Mcu Monitor.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Load Firmware at Start</source>
+        <translation type="unfinished">Автозагрузка прошивки</translation>
+    </message>
+    <message>
+        <source>No File:</source>
+        <translation type="unfinished">Нет файла:</translation>
+    </message>
+    <message>
+        <source>No File to reload </source>
+        <translation type="unfinished">Нет файла для перезагрузки </translation>
+    </message>
+    <message>
+        <source>Main Mcu</source>
+        <translation type="unfinished">Основной МК</translation>
+    </message>
+    <message>
+        <source>Reload firmware</source>
+        <translation type="unfinished">Перезагрузить прошивку</translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished">Открыть Serial Monitor.</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Свойства</translation>
     </message>
 </context>
 <context>
@@ -3187,7 +3245,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Fimware</source>
-        <translation>Прошивка</translation>
+        <translation type="vanished">Прошивка</translation>
     </message>
     <message>
         <source>Auto Load Firmware at Start</source>
@@ -3199,6 +3257,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Chip not Found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3386,6 +3448,10 @@ Do you want to save your changes?
     <message>
         <source>Output Impedance</source>
         <translation type="unfinished">Выходной импеданс</translation>
+    </message>
+    <message>
+        <source>Switch Supply Pins</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3839,6 +3905,33 @@ p, li { white-space: pre-wrap; }
 %2.</source>
         <translation>Не удаётся записать файл %1:
 %2.</translation>
+    </message>
+</context>
+<context>
+    <name>SerialMonitor</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Диалог</translation>
+    </message>
+    <message>
+        <source>Send Text:</source>
+        <translation type="unfinished">Текст:</translation>
+    </message>
+    <message>
+        <source>Send Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4589,7 +4682,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Voltage</source>
-        <translation>НапряжениеНапряжение</translation>
+        <translation type="vanished">НапряжениеНапряжение</translation>
+    </message>
+    <message>
+        <source>Max. Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

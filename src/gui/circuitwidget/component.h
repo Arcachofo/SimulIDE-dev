@@ -82,6 +82,7 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         Q_ENUM( trigger_t ) // We need this here bcos eClockedDevice is not a QObject
 
         virtual QList<propGroup_t> propGroups(){ QList<propGroup_t> pg; return pg;}
+        QStringList userProperties();
 
         enum { Type = UserType + 1 };
         int type() const { return Type; }

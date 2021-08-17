@@ -96,8 +96,6 @@ Component::Component( QObject* parent, QString type, QString id )
 
     setCursor( Qt::OpenHandCursor );
     this->setFlag( QGraphicsItem::ItemIsSelectable, true );
-    
-    //setTransformOriginPoint( boundingRect().center() );
 
     if     ( type == "Connector" )  Circuit::self()->conList()->append( this );
     else if( type == "SerialPort" ) Circuit::self()->compList()->append( this );
@@ -105,6 +103,17 @@ Component::Component( QObject* parent, QString type, QString id )
     else                            Circuit::self()->compList()->prepend( this );
 }
 Component::~Component(){}
+
+QStringList Component::userProperties()
+{
+    QStringList userProps;
+    QList<propGroup_t> pgs = propGroups();
+    for( propGroup_t pg : pgs )
+    {
+        for( property_t prop : pg.propList ) userProps.append( prop.name );
+    }
+    return userProps;
+}
 
 void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {

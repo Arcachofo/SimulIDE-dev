@@ -76,7 +76,6 @@ void BcdToDec::voltChanged()
     LogicComponent::updateOutEnabled();
 
     int dec = 0;
-
     for( int i=0; i<4; ++i )
         if( m_inPin[i]->getInpState() ) dec += pow( 2, i );
 

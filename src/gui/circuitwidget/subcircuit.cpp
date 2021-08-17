@@ -181,16 +181,9 @@ void SubCircuit::loadSubCircuit( QString fileName )
     }
     file.close();
 
-    loadDomDoc( &domDoc );
-}
-
-void SubCircuit::loadDomDoc( QDomDocument* doc )
-{
     Circuit* circ = Circuit::self();
-
     QHash<QString, eNode*> nodMap;
-
-    QDomNode node = doc->documentElement().firstChild();
+    QDomNode node = domDoc.documentElement().firstChild();
 
     while( !node.isNull() )
     {
@@ -203,8 +196,6 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
             QString type   = element.attribute( "itemtype"  );
             QString id     = objNam;
             id = id.remove( id.lastIndexOf("-"), 100 )+"-"+circ->newSceneId(); // Create new id
-            if( id.contains("Seg"))
-                qDebug() << "seg";
 
             element.setAttribute( "objectName", id  );
 
@@ -222,7 +213,7 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
                     element.setAttribute( "startpinid", startpin->objectName() );
                     element.setAttribute(   "endpinid", endpin->objectName() );
 
-                    circ->loadProperties( element, con );
+                    circ->loadProperties( &element, con );
 
                     QString enodeId = element.attribute( "enodeid" );
                     eNode*  enode   = nodMap[enodeId];
@@ -249,7 +240,7 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
             else if( type == "Package" ) { ; }
             else
             {
-                Component* comp = 0l;
+                Component* comp = NULL;
                 if( objNam == "" ) objNam = id;
                 if( type == "Node" ) comp = new Node( this, type, id );
                 else                 comp = circ->createItem( type, id, objNam );
@@ -257,7 +248,21 @@ void SubCircuit::loadDomDoc( QDomDocument* doc )
 
                 if( comp )
                 {
-                    circ->loadProperties( element, comp );
+                    QStringList userProps = comp->userProperties(); // Get list of User Properties, we only want to load these
+
+                    QDomNamedNodeMap atrs = element.attributes();
+
+                    for( int i=0; i<atrs.length(); ++i ) // Get List of property names in Circuit file
+                    {
+                        QString propName = atrs.item(i).nodeName();
+                        if( !userProps.contains( propName) ) continue; // Not an user Property
+
+                        QVariant value( element.attribute( propName ) );
+                        circ->loadProperty( value, propName, comp );
+                    }
+                    int number = comp->objectName().split("-").last().toInt();
+                    if ( number > circ->m_seqNumber ) circ->m_seqNumber = number; // Adjust item counter: m_seqNumber
+
                     comp->setParentItem( this );
                     QPointF pos = comp->boardPos();
                     if( pos == QPointF( -1e6, -1e6 ) ) pos = QPointF( 0, 0 );
@@ -295,7 +300,7 @@ Pin* SubCircuit::getConPin( QString pinId )
 
     if( !newName.isEmpty() ) pinId.replace( compName, newName );
     pin = Circuit::self()->m_pinMap[pinId];
-    if( pin && pin->isConnected() ) pin = 0l;
+    if( pin && pin->isConnected() ) pin = NULL;
 
     return pin;
 }
@@ -305,9 +310,7 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
     if( m_initialized && m_pinTunnels.contains( m_id+"-"+id ) )
     {
         updatePin( id, type, label, pos, xpos, ypos, angle, length );
-    }
-    else
-    {
+    }else{
         QColor color = Qt::black;
         if( !m_isLS ) color = QColor( 250, 250, 200 );
 
@@ -359,7 +362,6 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int pos, in
     if( angle == 180)  tunnel->setRotation( 0 );
 
     pin = tunnel->getPin();
-
     if( !pin )
     {
         qDebug() <<"SubCircuit::updatePin Pin Not Found:"<<id<<type<<label;
@@ -429,19 +431,6 @@ void SubCircuit::remove()
     Component::remove();
 }
 
-void SubCircuit::slotProperties()
-{
-    Component::slotProperties();
-
-    /*if( m_properties ) m_propertiesW->show();
-    else
-    {
-        Component::slotProperties();
-        if( m_mainComponent )
-            m_propertiesW->properties()->addObject( m_mainComponent );
-    }*/
-}
-
 void SubCircuit::slotAttach()
 {
     QList<QGraphicsItem*> list = this->collidingItems();
@@ -457,7 +446,6 @@ void SubCircuit::slotAttach()
 
                 if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
                 Circuit::self()->saveState();
-                /// Circuit::self()->compList()->removeOne( this );
 
                 m_board = board;
                 m_boardId = m_board->itemID();
@@ -472,8 +460,6 @@ void SubCircuit::slotAttach()
 
                 for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->uid() );
                 m_attached = true;
-
-                //qDebug() << " SubCircuit::slotAttach: Component found" << comp->objectName();
                 break;
 }   }   }   }
 
@@ -483,8 +469,6 @@ void SubCircuit::slotDetach()
     {
         if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
         Circuit::self()->saveState();
-
-        /// Circuit::self()->compList()->prepend( this );
 
         m_board->setShield( NULL );
         this->moveTo( m_circPos );

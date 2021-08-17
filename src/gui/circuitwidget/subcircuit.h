@@ -59,7 +59,6 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         Component* getMainComp(){ return m_mainComponent; }
 
     public slots:
-        virtual void slotProperties();
         void slotAttach();
         void slotDetach();
 
@@ -67,7 +66,7 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
 
         void loadSubCircuit( QString file );
-        void loadDomDoc( QDomDocument* doc );
+        //void loadDomDoc( QDomDocument* doc );
 
         Pin* getConPin( QString pinId );
 

@@ -28,11 +28,11 @@
     <name>AVRComponent</name>
     <message>
         <source>AVR</source>
-        <translation>AVR</translation>
+        <translation type="vanished">AVR</translation>
     </message>
     <message>
         <source>Micro</source>
-        <translation>Micro</translation>
+        <translation type="vanished">Micro</translation>
     </message>
 </context>
 <context>
@@ -720,74 +720,67 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AvrCompBase</name>
-    <message>
-        <source>Init gdb server at restart</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AvrProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>File Non Trovato</translation>
+        <translation type="vanished">File Non Trovato</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>File &quot;%1&quot; non trovato.</translation>
+        <translation type="vanished">File &quot;%1&quot; non trovato.</translation>
     </message>
     <message>
         <source>Error:</source>
-        <translation>Errore:</translation>
+        <translation type="vanished">Errore:</translation>
     </message>
     <message>
         <source> Unable to load IHEX file %1
 </source>
-        <translation> Non riesco a caricare il file HEX %1
+        <translation type="vanished"> Non riesco a caricare il file HEX %1
 </translation>
     </message>
     <message>
         <source>Failed to load firmware: </source>
-        <translation>Caricamento Firmware Fallito: </translation>
+        <translation type="vanished">Caricamento Firmware Fallito: </translation>
     </message>
     <message>
         <source>%1 should be .hex or .elf
 </source>
-        <translation>%1 deve essere .hex oppure .elf
+        <translation type="vanished">%1 deve essere .hex oppure .elf
 </translation>
     </message>
     <message>
         <source>Warning on load firmware: </source>
-        <translation>Warning generati durante il caricamento: </translation>
+        <translation type="vanished">Warning generati durante il caricamento: </translation>
     </message>
     <message>
         <source>Incompatible firmware: compiled for %1 and your processor is %2
 </source>
-        <translation>Firmware incompatibile: compilato per %1 e il tuo processore è %2
+        <translation type="vanished">Firmware incompatibile: compilato per %1 e il tuo processore è %2
 </translation>
     </message>
     <message>
         <source>The processor model is not specified.
 </source>
-        <translation>Modello Processore non specificato.
+        <translation type="vanished">Modello Processore non specificato.
 </translation>
     </message>
     <message>
         <source>Could not Create AVR Processor: &quot;%1&quot;</source>
-        <translation>Non si poteva creare il processore AVR: &quot;%1&quot;</translation>
+        <translation type="vanished">Non si poteva creare il processore AVR: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Wrong firmware!!</source>
-        <translation>Firmware Errato!!</translation>
+        <translation type="vanished">Firmware Errato!!</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Errore Sconosciuto:</translation>
+        <translation type="vanished">Errore Sconosciuto:</translation>
     </message>
     <message>
         <source>File %1 is not in valid ELF format
 </source>
-        <translation>Il File %1 non è in un formato ELF valido
+        <translation type="vanished">Il File %1 non è in un formato ELF valido
 </translation>
     </message>
 </context>
@@ -848,6 +841,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Error: No Mcu in Simulator... </source>
         <translation>Errore: Non ci sono Micro nel simulatore... </translation>
+    </message>
+    <message>
+        <source>Error uploading firmware to </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1479,7 +1476,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation>Non si setta il file:%1
+        <translation type="vanished">Non si setta il file:%1
 in DomDocument</translation>
     </message>
     <message>
@@ -1489,6 +1486,11 @@ in DomDocument</translation>
     <message>
         <source>Manage Components</source>
         <translation>Gestisci i componenti</translation>
+    </message>
+    <message>
+        <source>Error parsing file (itemlib):
+%1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2556,10 +2558,6 @@ Vuoi salvare le modifiche?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AVRs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NEW_MCU</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2578,6 +2576,10 @@ Vuoi salvare le modifiche?
     <message>
         <source>Shields</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AVR</source>
+        <translation type="unfinished">AVR</translation>
     </message>
 </context>
 <context>
@@ -3002,6 +3004,27 @@ Vuoi salvare le modifiche?
         <source>Search Components</source>
         <translation>Cerca Componenti</translation>
     </message>
+    <message>
+        <source>Looks like SimulIDE crashed...
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This is the last auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Max72xx_matrix</name>
@@ -3055,6 +3078,34 @@ Vuoi salvare le modifiche?
     <message>
         <source>Open Mcu Monitor.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Load Firmware at Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No File:</source>
+        <translation type="unfinished">Nessun File:</translation>
+    </message>
+    <message>
+        <source>No File to reload </source>
+        <translation type="unfinished">Nessun File da Ricaricare </translation>
+    </message>
+    <message>
+        <source>Main Mcu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload firmware</source>
+        <translation type="unfinished">Ricarica Firmware</translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished">Apri Monitor Seriale.</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Proprietà</translation>
     </message>
 </context>
 <context>
@@ -3116,10 +3167,6 @@ Vuoi salvare le modifiche?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fimware</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Auto Load Firmware at Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3129,6 +3176,10 @@ Vuoi salvare le modifiche?
     </message>
     <message>
         <source>Chip not Found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3319,6 +3370,10 @@ Vuoi salvare le modifiche?
     </message>
     <message>
         <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3773,6 +3828,33 @@ p, li { white-space: pre-wrap; }
 %2.</source>
         <translation type="unfinished">Non posso scrivere il file %1:
 %2.</translation>
+    </message>
+</context>
+<context>
+    <name>SerialMonitor</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send Text:</source>
+        <translation type="unfinished">Trasmetti testo:</translation>
+    </message>
+    <message>
+        <source>Send Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCU Output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4522,7 +4604,11 @@ Vuoi salvare le modifiche?
     </message>
     <message>
         <source>Voltage</source>
-        <translation type="unfinished">Tensione</translation>
+        <translation type="obsolete">Tensione</translation>
+    </message>
+    <message>
+        <source>Max. Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -330,7 +330,7 @@ void SubPackage::setBoardMode()
 
 void SubPackage::savingCirc()
 {
-    Circuit::self()->savingSub();
+    if( m_subcType >= Board ) Circuit::self()->saveBoard();
     if( m_boardMode )
     {
         m_boardMode = false;
