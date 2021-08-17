@@ -37,6 +37,7 @@ EditorProp::EditorProp( CodeEditor* parent, BaseDebugger* debugger )
     if( m_debugger )
     {
         compPath->setText( debugger->compilerPath() );
+        driveCirc->setChecked( m_editor->driveCirc() );
 
         QVariant value = debugger->property( "Avra_Inc_Path" );
         if( !value.isValid() )
@@ -53,19 +54,22 @@ EditorProp::EditorProp( CodeEditor* parent, BaseDebugger* debugger )
             ardBoard->setVisible( false );
             customLabel->setVisible( false );
             customBoard->setVisible( false );
-            driveCirc->setVisible( false );
         }
-        else
-        {
+        else{
             ardBoard->setCurrentIndex( value.toInt() );
             customBoard->setText( debugger->property( "Custom_Board" ).toString() );
-            driveCirc->setChecked( m_editor->driveCirc() );
         }
     }else{
         compPathLabel->setVisible( false );
         compPath->setVisible( false );
-    }
-}
+        driveCirc->setVisible( false );
+        avraIncLabel->setVisible( false );
+        avraInc->setVisible( false );
+        boardLabel->setVisible( false );
+        ardBoard->setVisible( false );
+        customLabel->setVisible( false );
+        customBoard->setVisible( false );
+}   }
 
 void EditorProp::on_fontSize_valueChanged( int size )
 {
