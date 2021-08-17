@@ -99,7 +99,7 @@ QStringList fileToStringList( const QString &fileName, const QString &caller )
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
-        MessageBoxNB( "ERROR", "Cannot read file "+fileName+":\n"+file.errorString() );
+        MessageBoxNB( caller, "Cannot read file "+fileName+":\n"+file.errorString() );
         return text;
     }
     QTextStream in(&file);

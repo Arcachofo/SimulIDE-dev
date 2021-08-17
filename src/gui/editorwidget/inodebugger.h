@@ -59,12 +59,13 @@ class InoDebugger : public BaseDebugger
         void getVariables();
         
     private:
+        QString getBoard( QString line );
+
         int m_lastInoLine;
         int m_loopInoLine;
         int m_processorType;
         
         QStringList m_boardList;
-
         QStringList m_fileList;
         
         QString m_customBoard;

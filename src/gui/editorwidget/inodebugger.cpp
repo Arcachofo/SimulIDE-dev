@@ -105,15 +105,17 @@ int InoDebugger::compile()
     m_fileList.append( m_fileName+m_fileExt );
     
     QStringList inoLines = fileToStringList( filePath, "InoDebugger::compile" );
-    QString line;
-    
+    QString line = inoLines.takeFirst(); // First line is empty
+    QString boardName = getBoard( inoLines.first() );
+
     m_varList.clear();
-    for( QString inoLine : inoLines )                        // Get Variables
+    for( QString inoLine : inoLines )          // Get Variables
     {
         line = inoLine;
         line = line.replace( "\t", " " ).remove(";");
         QStringList wordList= line.split( " " );
-        wordList.removeAll( "" );        
+        wordList.removeAll( "" );
+
         if( !wordList.isEmpty())
         {
             QString type = wordList.takeFirst();
@@ -125,9 +127,7 @@ int InoDebugger::compile()
                 if( !m_varList.contains( varName ) )
                     m_varList[ varName ] = m_typesList[ type ];
                 //qDebug() << "InoDebugger::compile  variable "<<type<<varName<<m_typesList[ type ];
-            }
-        }
-    }
+    }   }   }
     QString command  = m_compilerPath+"arduino";
 
     if( m_sketchBook.isEmpty() )
@@ -147,7 +147,7 @@ int InoDebugger::compile()
         if( m_sketchBook.isEmpty() )
             m_outPane->appendLine( "\nNo User sketchBook Found\n" );
         else
-            m_outPane->appendLine( "\nFound User sketchBook at:\n"+m_sketchBook+"\n" );
+            m_outPane->appendLine( "\nFound User sketchBook at:\n"+m_sketchBook );
     }
     filePath           = addQuotes( filePath );
     command            = addQuotes( m_compilerPath+"arduino-builder" );
@@ -158,9 +158,13 @@ int InoDebugger::compile()
     QString userLibrar = addQuotes( m_sketchBook+"/libraries" );
     QString cBuildPath = addQuotes( buildPath+"/build" );
     QString cCachePath = addQuotes( buildPath+"/cache" );
-    QString boardName;
-    if( m_board < Custom ) boardName = "arduino:avr:"+m_boardList.at( m_board );
-    else                   boardName = m_customBoard;
+
+    if( boardName.isEmpty() )
+    {
+        if( m_board < Custom ) boardName = "arduino:avr:"+m_boardList.at( m_board );
+        else                   boardName = m_customBoard;
+    }
+    else boardName.prepend("arduino:avr:") ;
 
     command += " -compile";
     command += " -hardware "+hardware;
@@ -174,7 +178,7 @@ int InoDebugger::compile()
     command += " "+filePath;
     m_firmware = "";
     
-    m_outPane->appendLine( command+"\n" );
+    m_outPane->appendLine( "\n"+command+"\n" );
     
     m_compProcess.start( command );
     m_compProcess.waitForFinished(-1);
@@ -184,7 +188,7 @@ int InoDebugger::compile()
     int error = -1;
     if( !p_stderr.isEmpty() )
     {
-        m_outPane->appendLine( p_stderr );
+        m_outPane->appendLine( "\n"+p_stderr );
         QStringList lines = p_stderr.split("\n");
         for( QString line : lines )
         {
@@ -193,9 +197,9 @@ int InoDebugger::compile()
                 QStringList words = line.split(":");
                 error = words.at(1).toInt();
                 break;
-            }
-        }
-    }else{
+    }   }   }
+    else{
+        m_outPane->appendLine( "\nSketch Compiled for "+addQuotes( boardName )+"\n" );
         m_firmware = buildPath+"/build/"+m_fileName+".ino.hex";
         error = 0;
     }
@@ -239,9 +243,7 @@ void InoDebugger::getVariables()
             if( proc ) proc->addWatchVar( symbol, address, m_varList.value( symbol ) );
             m_varNames.append( symbol );
             //qDebug() << "InoDebugger::compile  variable "<<addr<<varName<<address<<i.value();
-        }
-    }
-}
+}   }   }
 
 void InoDebugger::mapFlashToSource()
 {
@@ -302,9 +304,30 @@ void InoDebugger::mapFlashToSource()
 
             m_flashToSource[ flashAddr ]  = inoLineNum;
             m_sourceToFlash[ inoLineNum ] = flashAddr;
-        }
-    }
+    }   }
     flashToLine.close();
+}
+
+QString InoDebugger::getBoard( QString line )
+{
+    line = line.toLower();
+    QStringList wordList= line.split( " " );
+    wordList.removeAll( "" );
+    wordList.removeAll( "//" );
+
+    QString board = "";
+    if( wordList.size() > 2 )
+    {
+        QString word = wordList.takeFirst();
+        if( word != "board" ) return "";
+        word = wordList.takeFirst();
+        if( word != "=" ) return "";
+        board = wordList.takeFirst();
+        if( board == "mega" ) board = "megaADK";
+        if( !m_boardList.contains( board ) ) board = "";
+        else m_outPane->appendLine( "\nFound Board in file: "+board );
+    }
+    return board;
 }
 
 #include "moc_inodebugger.cpp"
