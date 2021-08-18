@@ -28,8 +28,8 @@
     <pin side="right"   pos="9"  type="IO" id="PV0" label="A+"/><!-- aVcc -->
     <pin side="right"   pos="8"  type="IO" id="PV1" label="Ar"/><!-- aRef -->
     
-    <pin side="right"   pos="0"  type="null" id="PV2" label=""/><!-- ADC6 -->
-    <pin side="right"   pos="0"  type="null" id="PV3" label=""/><!-- ADC7 -->
+    <pin side="right"   pos="0"  type="IOnull" id="PV2" label=""/><!-- ADC6 -->
+    <pin side="right"   pos="0"  type="IOnull" id="PV3" label=""/><!-- ADC7 -->
     
     <pin side="right"   pos="7"  type="unused" id="GND2"  label="Gnd"/>
 

@@ -1,24 +1,3 @@
-<!DOCTYPE SimulIDE>
-
-<!-- *************************************************************************** -->
-<!-- *   Copyright (C) 2020 by santiago González                               * -->
-<!-- *   santigoro@gmail.com                                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is free software; you can redistribute it and/or modify  * -->
-<!-- *   it under the terms of the GNU General Public License as published by  * -->
-<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
-<!-- *   (at your option) any later version.                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is distributed in the hope that it will be useful,       * -->
-<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
-<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
-<!-- *   GNU General Public License for more details.                          * -->
-<!-- *                                                                         * -->
-<!-- *   You should have received a copy of the GNU General Public License     * -->
-<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
-<!-- *                                                                         * -->
-<!-- *************************************************************************** -->
-
 <parts>
     <!-- BANK 0 -->
     <regblock name="SFR0" start="0x0000" end="0x001F">
@@ -101,16 +80,4 @@
     </regblock>
     <datablock name="RAM3" start="0x01F0" end="0x01FF"  mapto="0x0070"/>
     <status streg="STATUS" />
-
-    <interrupts enable="GIE">
-    </interrupts>
-    
-
-    <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="!TRISA"
-                       dirmask="11011111" pullups="00000000" opencol="00010000">
-    </port>
-    
-    <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="!TRISB"
-                       dirmask="11111111" pullups="00000000" opencol="00000000">
-    </port>
 </parts>

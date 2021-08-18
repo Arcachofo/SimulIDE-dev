@@ -1,0 +1,9 @@
+<parts>
+    <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="!TRISA"
+                       dirmask="11011111" pullups="00000000" opencol="00010000">
+    </port>
+    
+    <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="!TRISB"
+                       dirmask="11111111" pullups="00000000" opencol="00000000">
+    </port>
+</parts>

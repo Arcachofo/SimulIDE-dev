@@ -383,7 +383,7 @@ void Mcu::addPin( QString id, QString type, QString label,
 {
     McuPin* pin = NULL;
 
-    if( id.startsWith("P") )
+    if( type.contains("IO") )
     {
         bool portPin = false;
         int pinNum = id.right(1).toInt( &portPin );
@@ -396,7 +396,7 @@ void Mcu::addPin( QString id, QString type, QString label,
                 pin = port->getPin( pinNum );
                 if( pin )
                 {
-                    if( type == "null" ) { pin->setVisible( false ); pin->setLabelText( "" ); }
+                    if( type.contains("null") ) { pin->setVisible( false ); pin->setLabelText( "" ); }
                     pin->setPos( QPoint( xpos, ypos ) );
                     pin->setPinAngle( angle );
                     pin->setLength( length );
