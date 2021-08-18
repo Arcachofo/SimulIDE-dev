@@ -62,7 +62,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
     Q_PROPERTY( int      hflip     READ hflip     WRITE setHflip )
     Q_PROPERTY( int      vflip     READ vflip     WRITE setVflip )
     // Related to Subcircuit:
-    Q_PROPERTY( bool     mainComp  READ isMainComp  WRITE setMainComp SCRIPTABLE false ) // Hack: SCRIPTABLE is used to identify Subcircuit properties
+    Q_PROPERTY( bool     mainComp  READ isMainComp  WRITE setMainComp )
+        // Hack: SCRIPTABLE is used to identify Board properties
     Q_PROPERTY( QPointF  boardPos  READ boardPos  WRITE setBoardPos SCRIPTABLE false )
     Q_PROPERTY( QPointF  circPos   READ circPos   WRITE setCircPos  SCRIPTABLE false )
     Q_PROPERTY( qreal    boardRot  READ boardRot  WRITE setBoardRot SCRIPTABLE false )
