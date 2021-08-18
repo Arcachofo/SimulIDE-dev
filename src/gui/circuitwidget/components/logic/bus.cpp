@@ -55,7 +55,8 @@ Bus::Bus( QObject* parent, QString type, QString id )
     m_busPin1->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
     m_numLines = 0;
-    setNumLines( 8 );                           // Create Input Pins
+    m_startBit = 0;
+    setNumLines( 8 );       // Create Input Pins
 
     m_busPin0 = new Pin( 90, QPoint( 0, 0 ), m_id+"-ePin0", 1, this );
     m_busPin0->setLength( 1 );
@@ -65,8 +66,6 @@ Bus::Bus( QObject* parent, QString type, QString id )
     m_busPin0->setIsBus( true );
     m_pin[0]  = m_busPin0;
     m_ePin[0] = m_busPin0;
-
-    m_startBit = 0;
 }
 Bus::~Bus(){}
 
@@ -169,9 +168,7 @@ void Bus::setStartBit( int bit )
     m_startBit = bit;
 
     for( int i=1; i<=m_numLines; i++ )
-    {
         m_pin[i]->setLabelText( " "+QString::number( m_startBit+i-1 ) );
-    }
 }
 
 void Bus::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
