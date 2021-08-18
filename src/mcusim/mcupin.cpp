@@ -33,7 +33,8 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_outState = false;
     m_openColl = false;
     m_puMask   = false;
-    m_dirMask  = false;
+    m_outMask  = false;
+    m_inpMask  = true;
 
     setOutHighV( 5 );
     setPinMode( input );
@@ -43,7 +44,7 @@ McuPin::~McuPin() {}
 
 void McuPin::initialize()
 {
-    setDirection( m_dirMask );
+    setDirection( m_outMask );
     setPullup( m_puMask );
 
     IoPin::initialize();
@@ -81,9 +82,9 @@ void McuPin::setOutState( bool state, bool )
 
 void McuPin::setDirection( bool out )
 {
-    m_isOut = out;
+    m_isOut = (out || m_outMask) && m_inpMask;
 
-    if( out )       // Set Pin to Output
+    if( m_isOut )  // Set Pin to Output
     {
         if( m_openColl ) m_oldPinMode =  open_col;
         else             m_oldPinMode =  output;
