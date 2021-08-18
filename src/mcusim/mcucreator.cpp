@@ -45,6 +45,7 @@
 #include "avrcomparator.h"
 
 #include "pic14core.h"
+#include "pictimer.h"
 
 #include "i51core.h"
 #include "i51timer.h"
@@ -396,6 +397,7 @@ void McuCreator::createTimer( QDomElement* t )
 
     if     ( m_core == "8051" ) timer = new I51Timer( mcu, timerName );
     else if( m_core == "AVR" )  timer = AvrTimer::makeTimer( mcu, timerName );
+    else if( m_core == "Pic14" ) timer = PicTimer::makeTimer( mcu, timerName );
     else return;
 
     mcu->m_timers.m_timerList.insert( timerName, timer );
@@ -829,6 +831,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     Interrupt* iv = NULL;
     if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
     else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
+    else if( m_core == "Pic14" ) iv = new Interrupt( intName, intVector, (eMcu*)mcu );
     if( !iv ) return;
 
     mcu->m_interrupts.m_intList.insert( intName, iv );

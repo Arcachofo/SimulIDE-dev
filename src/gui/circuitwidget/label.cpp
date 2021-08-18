@@ -26,8 +26,6 @@ Label::Label()
     m_labelrot = 0;
     setCursor( Qt::OpenHandCursor );
 
-    this->document()->setDocumentMargin(0);
-
     connect( document(), SIGNAL( contentsChange(int, int, int)),
              this,       SLOT(   updateGeometry(int, int, int)), Qt::UniqueConnection );
 }
@@ -37,6 +35,7 @@ void Label::setComponent( Component* parent )
 {
     m_parentComp = parent;
     this->setParentItem( parent );
+    this->document()->setDocumentMargin(0);
 }
 
 void Label::focusOutEvent( QFocusEvent* event )

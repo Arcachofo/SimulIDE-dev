@@ -45,6 +45,7 @@ void AvrTimer::initialize()
 {
     McuTimer::initialize();
 
+    m_mode = 0;
     m_ovfMatch  = m_maxCount;
     m_ovfPeriod = m_ovfMatch + 1;
 

@@ -21,10 +21,8 @@
 #define AVRSPI_H
 
 #include "mcuspi.h"
-//#include "mcutypes.h"
 
 class eMcu;
-//class McuPin;
 
 class MAINMODULE_EXPORT AvrSpi : public McuSpi
 {

@@ -1,9 +1,16 @@
 <parts>
     <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="!TRISA"
-                       dirmask="11011111" pullups="00000000" opencol="00010000">
+                       pullups="00000000" opencol="00010000">
     </port>
     
     <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="!TRISB"
-                       dirmask="11111111" pullups="00000000" opencol="00000000">
+                       pullups="00000000" opencol="00000000">
     </port>
+    
+    <timer name="TIMER0" counter="TMR0" configregsA="OPTION">
+        <prescaler select="" values="2,4,8,16,32,64,128,256"/>
+        <extclock type="PIN" source="PORTA4"/>
+        <interrupt name="T0_OVF" />
+    </timer>
+    
 </parts>
