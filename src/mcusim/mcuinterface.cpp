@@ -178,9 +178,9 @@ void McuInterface::stepDebug()
 {
     if( !m_debugStep ) return;
 
-    int lastPC = pc()*2;
+    int lastPC = pc();
     stepCpu();
-    int PC = pc()*2;
+    int PC = pc();
 
     if( ( lastPC != PC )
     && ( m_debugger->m_flashToSource.contains( PC ) ) )

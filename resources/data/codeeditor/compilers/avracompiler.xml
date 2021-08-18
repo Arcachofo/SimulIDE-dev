@@ -12,5 +12,5 @@
     toolPath=""
     command="avra"
     incDir=""
-    arguments=" -W NoRegDef -l $filePath$fileName.lst -I $incDir $filePath"
+    arguments=" -W NoRegDef -l $fileDir$fileName.lst -I $incDir $filePath"
 />

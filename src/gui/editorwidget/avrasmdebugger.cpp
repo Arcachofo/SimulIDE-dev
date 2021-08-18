@@ -94,7 +94,7 @@ void AvrAsmDebugger::mapFlashToSource()
         }
         QString numberText = lstLine.left( 6 );    // first 6 digits in lst file is address
         bool ok = false;
-        int address = numberText.toInt( &ok, 16 )*2;         // adress*2: instruc = 2 bytes
+        int address = numberText.toInt( &ok, 16 );         /// adress*2: instruc = 2 bytes
         if( ok )
         {
             m_flashToSource[address] = asmLineNumber;
