@@ -308,8 +308,8 @@ void InoDebugger::mapFlashToSource()
             int inoLineNum = p_stdout.mid( idx+1 ).toInt( &ok );
             if( !ok ) continue;
 
-            m_flashToSource[ flashAddr ]  = inoLineNum;
-            m_sourceToFlash[ inoLineNum ] = flashAddr;
+            m_flashToSource[ flashAddr/2 ]  = inoLineNum;
+            m_sourceToFlash[ inoLineNum ] = flashAddr/2;
     }   }
     flashToLine.close();
 }
