@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include <qtconcurrentrun.h>
+#include <math.h>
 
 #include "simulator.h"
 #include "circuit.h"
@@ -365,6 +366,7 @@ void Simulator::setStepsPerSec( uint64_t sps )
 
     if( running ) resumeSim();
 }*/
+double Simulator::NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
 
 void Simulator::clearEventList()
 {

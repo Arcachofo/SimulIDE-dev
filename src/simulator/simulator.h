@@ -85,7 +85,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         //int    noLinAcc() { return m_noLinAcc; }
         //void   setNoLinAcc( int ac );
-        double NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
+        double NLaccuracy();
 
         void  setMaxNlSteps( uint32_t steps ) { m_maxNlstp = steps; }
         uint32_t maxNlSteps( ) { return m_maxNlstp; }
