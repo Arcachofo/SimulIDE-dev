@@ -45,13 +45,16 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString fil
     
     m_typesList["char"]   = "int8";
     m_typesList["uchar"]  = "uint8";
+    m_typesList["byte"]   = "uint8";
     m_typesList["int"]    = "int16";
     m_typesList["uint"]   = "uint16";
     m_typesList["short"]  = "int16";
     m_typesList["ushort"] = "uint16";
+    m_typesList["word"]   = "uint16";
     m_typesList["long"]   = "int32";
     m_typesList["ulong"]  = "uint32";
     m_typesList["float"]  = "float32";
+    m_typesList["double"] = "float32";
 }
 InoDebugger::~InoDebugger() {}
 
@@ -120,13 +123,17 @@ int InoDebugger::compile()
             QString type = wordList.takeFirst();
             if( type == "unsigned" ) type = "u"+wordList.takeFirst();
 
-            if( m_typesList.contains( type ) && !wordList.isEmpty() )
+            if( m_typesList.contains( type ) )
+                for( QString word : wordList )
             {
-                QString varName = wordList.at(0);
-                if( !m_varList.contains( varName ) )
-                    m_varList[ varName ] = m_typesList[ type ];
-                //qDebug() << "InoDebugger::compile  variable "<<type<<varName<<m_typesList[ type ];
-    }   }   }
+                for( QString varName : word.split(",") )
+                {
+                    if( varName.isEmpty() ) continue;
+                    varName.remove(" ");
+                    if( !m_varList.contains( varName ) )
+                        m_varList[ varName ] = m_typesList[ type ];
+                    //qDebug() << "InoDebugger::compile  variable "<<type<<varName<<m_typesList[ type ];
+    }   }   }   }
     QString command  = m_compilerPath+"arduino";
 
     if( m_sketchBook.isEmpty() )
