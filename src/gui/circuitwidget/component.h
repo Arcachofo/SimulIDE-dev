@@ -206,6 +206,7 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         void setflip();
         
         double m_value;
+        double m_opCount;
 
         const QString multUnits;
         double  m_unitMult;

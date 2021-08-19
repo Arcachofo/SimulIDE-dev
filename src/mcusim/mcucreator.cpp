@@ -46,6 +46,7 @@
 
 #include "pic14core.h"
 #include "pictimer.h"
+#include "picusart.h"
 
 #include "i51core.h"
 #include "i51timer.h"
@@ -516,6 +517,7 @@ void McuCreator::createUsart( QDomElement* u )
     McuUsart* usartM;
     if     ( m_core == "8051" ) usartM = new I51Usart( mcu, name, number );
     else if( m_core == "AVR" )  usartM = new AvrUsart( mcu, name, number );
+    else if( m_core == "Pic14" ) usartM = new PicUsart( mcu, name, number );
     else return;
 
     mcu->m_usarts.emplace_back( usartM ); //  .m_usartList.insert( name, usartM );

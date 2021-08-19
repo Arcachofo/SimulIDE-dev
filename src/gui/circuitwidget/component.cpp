@@ -508,10 +508,9 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 
     if( m_crashed )
     {
-static double opCount = 0.2;
-        opCount += 0.04;
-        if( opCount > 0.8 ) opCount = 0.2;
-        p->setOpacity( opCount );
+        m_opCount += 0.04;
+        if( m_opCount > 0.8 ) m_opCount = 0.2;
+        p->setOpacity( m_opCount );
         p->fillRect( boundingRect(), Qt::yellow  );
     }
     else if( m_mainComp )

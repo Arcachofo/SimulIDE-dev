@@ -143,6 +143,8 @@ void PicTimer0::configureA( uint8_t NewOPTION )
 PicTimer2::PicTimer2( eMcu* mcu, QString name)
          : PicTimer8bit( mcu, name )
 {
+    m_ps = 0;
+
     m_PR2 = mcu->getReg( "PR2" );
 
     m_TMR2ON = mcu->getRegBits( "TMR2ON" );
