@@ -1,0 +1,45 @@
+<!DOCTYPE SimulIDE>
+
+<parts>
+    <port name="PORTB" pins="6" outreg="PORTB" inreg="PINB" dirreg="DDRB">
+        <interrupt name="PCINT0" />
+    </port>
+    
+    <timer name="TIMER0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
+        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+        <extclock type="PIN" source="PORTB2"/>
+        
+        <ocunit name="OC0A" pin="PORTB0" ocreg="OCR0A" configbits="COM0A0,COM0A1">
+            <interrupt name="T0COA" />
+        </ocunit>
+        
+        <ocunit name="OC0B" pin="PORTB1" ocreg="OCR0B" configbits="COM0B0,COM0B1">
+            <interrupt name="T0COB" />
+        </ocunit>
+        º
+        <interrupt name="T0_OVF" />
+    </timer>
+
+    <adc name="ADC" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" 
+                    configregsB="ADCSRB" multiplex="ADMUX">
+        <prescaler select="" values="2,2,4,8,16,32,64,128"/>
+        <inputs type="PIN" source="PORTB5,PORTB2,PORTB4,PORTB3" />
+        
+        <interrupt name="ADC" />
+    </adc>
+    
+    <wdt name="WatchDog" configregsA="WDTCSR">
+        <prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
+        <interrupt name="WDT" />
+    </wdt>
+    
+    <eeprom name="EEPROM" dataregs="EEDR" addressreg="EEARL" configregsA="EECR">
+        <interrupt name="EEPR" />
+    </eeprom>
+    
+    <acomp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D">
+        <inputpin name="positive" pin="PORTB0" />
+        <inputpin name="negative" pin="PORTB1" />
+        <interrupt name="ACOMP" />
+    </acomp>
+</parts>

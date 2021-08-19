@@ -45,7 +45,7 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
     m_timer1 = (AvrTimer16bit*)mcu->getTimer( "TIMER1" );
 
     m_t0OCA = m_timer0->getOcUnit("OCA");
-    m_t1OCB = m_timer1->getOcUnit("OCB");
+    if( m_timer1 ) m_t1OCB = m_timer1->getOcUnit("OCB");
 }
 AvrAdc::~AvrAdc(){}
 

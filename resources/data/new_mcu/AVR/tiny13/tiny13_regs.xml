@@ -1,0 +1,74 @@
+<parts>
+    <datablock name="GPR" start="0x0000" end="0x001F"/>
+    <regblock  name="REGISTERS" start="0x0000" end="0x001F" offset="0">
+        <register name="R00"   addr="0"   bits=""/>
+        <register name="R01"   addr="1"   bits=""/>
+        <register name="R02"   addr="2"   bits=""/>
+        <register name="R03"   addr="3"   bits=""/>
+        <register name="R04"   addr="4"   bits=""/>
+        <register name="R05"   addr="5"   bits=""/>
+        <register name="R06"   addr="6"   bits=""/>
+        <register name="R07"   addr="7"   bits=""/>
+        <register name="R08"   addr="8"   bits=""/>
+        <register name="R09"   addr="9"   bits=""/>
+        <register name="R10"   addr="10"  bits=""/>
+        <register name="R11"   addr="11"  bits=""/>
+        <register name="R12"   addr="12"  bits=""/>
+        <register name="R13"   addr="13"  bits=""/>
+        <register name="R14"   addr="14"  bits=""/>
+        <register name="R15"   addr="15"  bits=""/>
+        <register name="R16"   addr="16"  bits=""/>
+        <register name="R17"   addr="17"  bits=""/>
+        <register name="R18"   addr="18"  bits=""/>
+        <register name="R19"   addr="19"  bits=""/>
+        <register name="R20"   addr="20"  bits=""/>
+        <register name="R21"   addr="21"  bits=""/>
+        <register name="R22"   addr="22"  bits=""/>
+        <register name="R23"   addr="23"  bits=""/>
+        <register name="R24"   addr="24"  bits=""/>
+        <register name="R25"   addr="25"  bits=""/>
+        <register name="R26"   addr="26"  bits=""/>
+        <register name="R27"   addr="27"  bits=""/>
+        <register name="R28"   addr="28"  bits=""/>
+        <register name="R29"   addr="29"  bits=""/>
+        <register name="R30"   addr="30"  bits=""/>
+        <register name="R31"   addr="31"  bits=""/>
+    </regblock>
+    <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32" streg="SREG">
+        <register name="ADCSRB" addr="0x03" bits="ADTS0,ADTS1,ADTS2,0,0,0,ACME"/>
+        <register name="ADCL"   addr="0x04" bits=""/>
+        <register name="ADCH"   addr="0x05" bits=""/>
+        <register name="ADCSRA" addr="0x06" bits="ADPS0,ADPS1,ADPS2,ADIE,ADIF,ADATE,ADSC,ADEN"/>
+        <register name="ADMUX"  addr="0x07" bits="MUX0,MUX1,0,0,0,ADLAR,REFS0"/>
+        <register name="ACSR"   addr="0x08" bits="ACIS0,ACIS1,0,ACIE,ACI,ACO,ACBG,ACD"/>
+        <register name="DIDR0"  addr="0x14" bits="AIN0D,AIN1D,ADC1D,ADC3D,ADC2D,ADC0D"/>
+        <register name="PCMSK0" addr="0x15" bits="0-5"/>
+        <register name="PINB"   addr="0x16" bits="0-5"/>
+        <register name="DDRB"   addr="0x17" bits="0-5"/>
+        <register name="PORTB"  addr="0x18" bits="0-5"/>
+        <register name="EECR"   addr="0x1C" bits="EERE,EEPE,EEMPE,EERIE,EEPM0,EEPM1"/>
+        <register name="EEDR"   addr="0x1D" bits=""/>
+        <register name="EEARL"  addr="0x1E" bits=""/>
+        <register name="WDTCR"  addr="0x21" bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDTIE,WDIF"/>
+        <register name="CLKPR"  addr="0x26" bits="CLKPS0,CLKPS1,CLKPS2,CLKPS3,0,0,0,CLKPE"/>
+        <register name="GTCCR"  addr="0x28" bits="PSR10,0,0,0,0,0,0,TSM"/>
+        <register name="OCR0B"  addr="0x29" bits=""/>
+        <register name="DWDR"   addr="0x2E" bits=""/>
+        <register name="TCCR0A" addr="0x2F" bits="WGM00,WGM01,0,0,COM0B0,COM0B1,COM0A0,COM0A1"/>
+        <register name="OSCCAL" addr="0x31" bits=""/>
+        <register name="TCNT0"  addr="0x32" bits=""/>
+        <register name="TCCR0B" addr="0x33" bits="CS00,CS01,CS02,WGM02,0,0,FOC0B,FOC0A"/>
+        <register name="MCUSR"  addr="0x34" bits="PORF,EXTRF,BORF,WDRF"/>
+        <register name="MCUCR"  addr="0x35" bits="ISC00,ISC01,0,SM0,SM1,SE,PUD"/>
+        <register name="OCR0A"  addr="0x36" bits=""/>
+        <register name="SPMCSR" addr="0x37" bits=""/>
+        <register name="TIFR0"  addr="0x38" bits="0,TOV0,OCF0A,OCF0B"/>
+        <register name="TIMSK0" addr="0x39" bits="0,TOIE0,OCIE0A,OCIE0B"/>
+        <register name="GIFR"   addr="0x3A" bits=""/>
+        <register name="GIMSK"  addr="0x3B" bits=""/>
+        <register name="SPL"    addr="0x3D" bits=""/>
+        <register name="SREG"   addr="0x3F" bits="C,Z,N,V,S,H,T,I"/>
+    </regblock>
+    
+    <stack  spreg="SPL" increment="postdec" />
+</parts>

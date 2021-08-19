@@ -1,8 +1,10 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-    
-    <itemset category="AVR" type="MCU">
+    <itemset category="AVR/attiny" type="MCU">
+        <item name="tiny13"   package="new_mcu/AVR/tiny13/tiny13"    data="new_mcu/AVR/tiny13" ></item>
+    </itemset>
+    <itemset category="AVR/atmega" type="MCU">
         <item name="mega48"   package="new_mcu/AVR/megax8/megax8"    data="new_mcu/AVR/mega48" ></item>
         <item name="m48_TQFP" package="new_mcu/AVR/megax8/mx8_tqfp"  data="new_mcu/AVR/mega48"></item>
         <item name="mega88"   package="new_mcu/AVR/megax8/megax8"    data="new_mcu/AVR/mega88" ></item>
