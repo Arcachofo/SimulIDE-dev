@@ -28,11 +28,17 @@ class IoPin;
 class MAINMODULE_EXPORT Meter : public Component, public eResistor
 {
     Q_OBJECT
+    Q_PROPERTY( bool SwitchPins READ switchPins  WRITE setSwitchPins DESIGNABLE true USER true )
 
     public:
 
         Meter( QObject* parent, QString type, QString id );
         ~Meter();
+
+        virtual QList<propGroup_t> propGroups() override;
+
+        bool switchPins() { return m_switchPins; }
+        void setSwitchPins( bool s );
 
         virtual void updateStep() override;
 
@@ -40,6 +46,8 @@ class MAINMODULE_EXPORT Meter : public Component, public eResistor
 
     protected:
         double m_dispValue;
+
+        bool m_switchPins;
 
         IoPin* m_outPin;
 

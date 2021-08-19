@@ -67,6 +67,14 @@ Meter::~Meter()
     Simulator::self()->remFromUpdateList( this );
 }
 
+QList<propGroup_t> Meter::propGroups()
+{
+    propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"SwitchPins", tr("Switch Pins"),""} );
+
+    return {mainGroup};
+}
+
 void Meter::updateStep()
 {
     QString sign = " ";
@@ -85,6 +93,21 @@ void Meter::updateStep()
 
     m_outPin->setOutHighV( m_dispValue );
     m_outPin->setOutState( true );
+}
+
+void Meter::setSwitchPins( bool s )
+{
+    if( s == m_switchPins ) return;
+    m_switchPins = s;
+
+    qreal x0 = s ? 8 :-8;
+    qreal x1 = s ?-8 : 8;
+
+    m_pin[0]->setX( x0 );
+    m_pin[1]->setX( x1 );
+
+    m_pin[0]->isMoved();
+    m_pin[1]->isMoved();
 }
 
 void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
