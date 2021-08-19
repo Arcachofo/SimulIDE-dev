@@ -19,4 +19,9 @@
         <interrupt name="T1_OVF" />
     </timer>
     
+    <timer name="TIMER2" counter="TMR2" configregsA="T2CON" configregsB="PR2">
+        <prescaler values="1,4,16,16"/>
+        <interrupt name="T2_MATCH" />
+    </timer>
+    
 </parts>
