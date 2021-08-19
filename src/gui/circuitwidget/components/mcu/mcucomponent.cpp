@@ -459,15 +459,6 @@ void McuComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
 {
     Chip::paint( p, option, widget );
 
-    if( m_crashed )
-    {
-static double opCount = 0;
-        opCount += 0.04;
-        if( opCount > 0.6 ) opCount = 0;
-        p->setOpacity( opCount );
-        p->fillRect( boundingRect(), Qt::yellow  );
-    }
-
     if( m_pSelf == this )
     {
         QPen pen( Qt::black, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);

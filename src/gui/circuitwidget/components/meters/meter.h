@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT Meter : public Component, public eResistor
         bool switchPins() { return m_switchPins; }
         void setSwitchPins( bool s );
 
+        virtual void initialize(){ m_crashed = false;}
         virtual void updateStep() override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );

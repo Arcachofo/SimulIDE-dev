@@ -46,8 +46,6 @@ class MAINMODULE_EXPORT McuBase : public Chip
 
         McuInterface* m_proc;
         QString m_device;       // Name of device
-
-        bool m_crashed;
 };
 
 #endif

@@ -45,6 +45,7 @@ Meter::Meter( QObject* parent, QString type, QString id )
     m_outPin = new IoPin( 0, QPoint(32,-8), id+"-outnod", 0, this, source );
     m_outPin->setOutHighV( 0 );
     m_outPin->setOutState( true );
+    //m_outPin->setPinState( out_low );
     m_pin[2] = m_outPin;
 
     m_idLabel->setPos(-12,-24);
@@ -53,7 +54,6 @@ Meter::Meter( QObject* parent, QString type, QString id )
     QFont f( "Helvetica [Cronyx]", 10, QFont::Bold );
     f.setPixelSize(12);
     m_display.setFont(f);
-    m_display.setText( "Freq: 0 Hz" );
     m_display.setBrush(  Qt::yellow );
     m_display.setPos( -22, -22 );
     m_display.setVisible( true );
@@ -82,14 +82,19 @@ void Meter::updateStep()
     int decimals = 3;
     double value = fabs(m_dispValue);
 
-    if( fabs(value) < 1e-9 ) value = 0;
+    if( value < 1e-9 ) value = 0;
     else
     {
         value *= 1e12;
         if( m_dispValue < 0 ) sign = "-";
         valToUnit( value, mult, decimals )
     }
-    m_display.setText( sign+QString::number( value,'f', decimals )+"\n"+mult+m_unit );
+    if( value > 999 )
+    {
+        m_display.setText( " ----" );
+        m_crashed = true;
+    }
+    else m_display.setText( sign+QString::number( value,'f', decimals )+"\n"+mult+m_unit );
 
     m_outPin->setOutHighV( m_dispValue );
     m_outPin->setOutState( true );
@@ -122,7 +127,7 @@ void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     QPointF points[3] = {
     QPointF( 26,-11 ),
     QPointF( 31, -8 ),
-    QPointF( 26, -5 )     };
+    QPointF( 26, -5 )   };
     p->drawPolygon(points, 3);
 }
 

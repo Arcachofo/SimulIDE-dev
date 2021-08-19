@@ -54,6 +54,7 @@ LedBase::~LedBase(){}
 
 void LedBase::initialize()
 {
+    m_crashed = false;
     eLed::initialize();
     update();
 }
@@ -77,6 +78,7 @@ void LedBase::updateStep()
     }
     else if( m_overCurrent )
     {
+        m_crashed = true;
         m_overCurrent = false;
         m_counter = 0;
         update();

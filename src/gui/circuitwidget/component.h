@@ -177,7 +177,7 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
 
         virtual void remove();
 
-        virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+        virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
 
     signals:
         void moved();
@@ -243,6 +243,7 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         bool m_hidden;
         bool m_graphical;
         bool m_mainComp;
+        bool m_crashed;
 
         Component* m_subcircuit;
 

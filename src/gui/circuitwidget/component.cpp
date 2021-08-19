@@ -65,6 +65,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_hidden     = false;
     m_graphical  = false;
     m_mainComp   = false;
+    m_crashed    = false;
     m_BackGround = "";
 
     m_propDialog = NULL;
@@ -327,9 +328,8 @@ void Component::slotProperties()
             if( ( m_type == "Subcircuit" )
               ||( m_type == "MCU" )
               ||( m_type == "PIC" ))
-            {
-                name = m_id.split("-").first();
-            }
+            { name = m_id.split("-").first(); }
+
             m_help = MainWindow::self()->getHelpFile( name );
         }
         m_propDialog = new PropDialog( CircuitWidget::self(), m_help );
@@ -411,37 +411,8 @@ void Component::setValLabelPos( int x, int y, int rot )
 void Component::setValue( double val )
 { 
     m_value = val;
-    /*if( fabs(val) < 1e-12 )
-    {
-        m_value = 0;
-        m_mult = " ";
-    }
-    else
-    {
-        val = val*m_unitMult;
-        
-        int index = 4;   // We are in bare units "TGMK munp"
-        m_unitMult = 1;
-        while( fabs(val) >= 1000 )
-        {
-            if( --index < 0 ) { index = 0; break; }
 
-            m_unitMult = m_unitMult*1000;
-            val = val/1000;
-        }
-        while( fabs(val) < 1 )
-        {
-            if( ++index > 8 ) { index = 8; break; }
-
-            m_unitMult = m_unitMult/1000;
-            val = val*1000;
-        }
-        m_mult = multUnits.at( index );
-        if( m_mult != " " ) m_mult.prepend( " " );
-        m_value = val;
-    }*/
     QString valStr = QString::number(m_value);
-    //m_valLabel->setPlainText( valStr.left(5)+m_mult+m_unit );
     m_valLabel->setPlainText( valStr+m_mult+m_unit );
 }
 
@@ -522,7 +493,7 @@ QString Component::print()
     return str;
 }
 
-void Component::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
+void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 {
     QPen pen( Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
@@ -535,13 +506,21 @@ void Component::paint( QPainter* painter, const QStyleOptionGraphicsItem* option
     }
     else color = m_color;
 
-    if( m_mainComp )
+    if( m_crashed )
     {
-        painter->fillRect( boundingRect(), Qt::yellow  );
-        painter->setOpacity( 0.5 );
+static double opCount = 0.2;
+        opCount += 0.04;
+        if( opCount > 0.8 ) opCount = 0.2;
+        p->setOpacity( opCount );
+        p->fillRect( boundingRect(), Qt::yellow  );
     }
-    painter->setBrush( color );
-    painter->setPen( pen );
+    else if( m_mainComp )
+    {
+        p->fillRect( boundingRect(), Qt::yellow  );
+        p->setOpacity( 0.5 );
+    }
+    p->setBrush( color );
+    p->setPen( pen );
 }
 
 #include "moc_component.cpp"

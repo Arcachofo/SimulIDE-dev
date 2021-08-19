@@ -24,7 +24,6 @@ McuBase* McuBase::m_pSelf = 0l;
 McuBase::McuBase( QObject* parent, QString type, QString id )
        : Chip( parent, type, id )
 {
-    m_crashed = false;
 }
 McuBase::~McuBase()
 {
