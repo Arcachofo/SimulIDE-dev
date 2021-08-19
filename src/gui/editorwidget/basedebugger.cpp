@@ -22,6 +22,7 @@
 #include "editorwindow.h"
 #include "mainwindow.h"
 #include "simulator.h"
+#include "mcubase.h"
 
 static const char* BaseDebugger_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Drive Circuit"),
@@ -90,7 +91,7 @@ int BaseDebugger::getValidLine( int line )
 
 QString BaseDebugger::getVarType( QString var )
 {
-    var= var.toUpper();
+    var = var.toUpper();
     return m_varList[ var ];
 }
 
@@ -148,5 +149,5 @@ void BaseDebugger::toolChainNotFound()
     m_outPane->appendLine( "\n"+tr("Right-Click on Document Tab to set Path")+"\n" );
     QApplication::restoreOverrideCursor();
 }
-#include "moc_basedebugger.cpp"
 
+#include "moc_basedebugger.cpp"

@@ -33,9 +33,7 @@ Compiler::Compiler( QObject* parent, OutPanelText* outPane )
 
     clearCompiler();
 }
-Compiler::~Compiler( )
-{
-}
+Compiler::~Compiler( ){}
 
 void Compiler::clearCompiler()
 {
@@ -116,19 +114,17 @@ int Compiler::compile( QString file )
     QString p_stderr = m_compilerProc.readAllStandardError();
     QString p_stdout = m_compilerProc.readAllStandardOutput();
 
-    if     ( p_stdout.toLower().contains( QRegExp("\berror\b") )) error = -1;
-    else if( p_stderr.toLower().contains( QRegExp("\berror\b") )) error = -1;
-
     m_outPane->appendLine( p_stdout+"\n" );
     if( !p_stderr.isEmpty() )
     {
         m_outPane->appendLine( "ERROR OUTPUT:" );
         m_outPane->appendLine( p_stderr+"\n" );
     }
-
     QApplication::restoreOverrideCursor();
+
+    if     ( p_stdout.toLower().contains( QRegExp("\berror\b") )) error = -1;
+    else if( p_stderr.toLower().contains( QRegExp("\berror\b") )) error = -1;
     return error;
 }
 
 #include "moc_compiler.cpp"
-

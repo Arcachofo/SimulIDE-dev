@@ -50,7 +50,6 @@ void eMosfet::initialize()
     m_lastCurrent = 0;
     m_Vs = 0;
     m_Sfollow = false;
-    m_converged = true;
     m_firtStage = true;
     
     m_kRDSon = m_RDSon*(10-m_threshold);

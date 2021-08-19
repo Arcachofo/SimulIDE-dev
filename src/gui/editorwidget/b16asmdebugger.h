@@ -20,9 +20,6 @@
 #ifndef B16ASMDEBUGGER_H
 #define B16ASMDEBUGGER_H
 
-#include <QtGui>
-#include <QHash>
-
 #include "basedebugger.h"
 
 class B16AsmDebugger : public BaseDebugger

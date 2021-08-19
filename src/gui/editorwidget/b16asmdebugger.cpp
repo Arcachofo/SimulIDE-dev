@@ -17,12 +17,14 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "b16asmdebugger.h"
-//#include "baseprocessor.h"
-//#include "mainwindow.h"
-#include "utils.h"
-//#include "simuapi_apppath.h"
+#include <QApplication>
+#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
 
+#include "b16asmdebugger.h"
+#include "utils.h"
 
 B16AsmDebugger::B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
               : BaseDebugger( parent, outPane, filePath )
@@ -112,8 +114,6 @@ int B16AsmDebugger::compile()
     toFile.setCodec("UTF-8");
     toFile << output;
     outFile.close();
-
-    //qDebug() << data;
     
     QApplication::restoreOverrideCursor();
     return 0;
@@ -121,11 +121,9 @@ int B16AsmDebugger::compile()
 
 void B16AsmDebugger::loadCodes()
 {
-    //qDebug() <<"B16AsmDebugger::loadCodes"<<m_compilerPath+"opcodes";
     if( m_compilerPath.isEmpty() ) return;
 
     QStringList lines = fileToStringList( m_compilerPath+"opcodes", "B16AsmDebugger::loadCodes" );
-
     QString li = "";
 
     while( li.isEmpty() )
@@ -160,8 +158,7 @@ void B16AsmDebugger::loadCodes()
         qDebug() << codeName << code;
 
         m_opcodes.insert( codeName, code );
-    }
-}
+}   }
 
 void B16AsmDebugger::mapFlashToSource()
 {

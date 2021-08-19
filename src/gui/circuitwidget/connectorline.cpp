@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "connectorline.h"
 #include "connector.h"
 #include "circuitview.h"

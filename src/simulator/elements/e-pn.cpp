@@ -22,6 +22,7 @@
 
 #include "e-pn.h"
 #include "simulator.h"
+#include "e-pin.h"
 
 ePN::ePN( QString id )
    : eResistor(id )

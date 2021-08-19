@@ -20,6 +20,7 @@
 #include "lachannel.h"
 #include "plotdisplay.h"
 #include "simulator.h"
+#include "e-pin.h"
 #include "utils.h"
 
 LaChannel::LaChannel( LAnalizer* la, QString id )

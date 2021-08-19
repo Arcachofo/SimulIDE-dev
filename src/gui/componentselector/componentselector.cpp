@@ -54,9 +54,7 @@ ComponentSelector::ComponentSelector( QWidget* parent )
     connect( this, SIGNAL(itemPressed(QTreeWidgetItem*, int)),
              this, SLOT  (slotItemClicked(QTreeWidgetItem*, int)), Qt::UniqueConnection );
 }
-ComponentSelector::~ComponentSelector()
-{
-}
+ComponentSelector::~ComponentSelector(){}
 
 void ComponentSelector::LoadLibraryItems()
 {
@@ -120,37 +118,34 @@ void ComponentSelector::loadXml( const QString &setFile )
             QString type = reader.attributes().value("type").toString();
             LibraryItem* parent = m_itemLibrary.libraryItem( type );
 
-            if( parent )
+            if( !parent ) continue;
+
+            while( reader.readNextStartElement() )
             {
-                while( reader.readNextStartElement() )
+                if(reader.name() == "item")
                 {
-                    if(reader.name() == "item")
+                    QString icon = "";
+
+                    if( reader.attributes().hasAttribute("icon") )
                     {
-                        QString icon = "";
+                        QDir compSetDir( qApp->applicationDirPath() );
+                        compSetDir.cd( "../share/simulide/data/images" );
+                        icon = compSetDir.absoluteFilePath(
+                                   reader.attributes().value("icon").toString() );
+                    }
+                    QString name = reader.attributes().value("name").toString();
 
-                        if( reader.attributes().hasAttribute("icon") )
-                        {
-                            QDir compSetDir( qApp->applicationDirPath() );
-                            compSetDir.cd( "../share/simulide/data/images" );
-                            icon = compSetDir.absoluteFilePath(
-                                       reader.attributes().value("icon").toString() );
-                        }
-                        QString name = reader.attributes().value("name").toString();
+                    m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
+                    //qDebug()<<"ComponentSelector::loadXml" <<name<< category<< icon<< type<<setFile;
+                    if( reader.attributes().hasAttribute("info") )
+                        name += "???"+reader.attributes().value("info").toString();
 
-                        m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
-                        //qDebug()<<"ComponentSelector::loadXml" <<name<< category<< icon<< type<<setFile;
-                        if( reader.attributes().hasAttribute("info") )
-                            name += "???"+reader.attributes().value("info").toString();
-
-                        addItem( name, category, icon, type );
-                        reader.skipCurrentElement();
-    }   }   }   }   }
-
+                    addItem( name, category, icon, type );
+                    reader.skipCurrentElement();
+    }   }   }   }
     QString compSetName = setFile.split( "/").last();
-
-    qDebug() << tr("        Loaded Component set:           ") << compSetName;
-
     m_compSetUnique.append( compSetName );
+    qDebug() << tr("        Loaded Component set:           ") << compSetName;
 }
 
 void ComponentSelector::addLibraryItem( LibraryItem* libItem ) // Used By Plugins

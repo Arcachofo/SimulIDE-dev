@@ -55,8 +55,7 @@ void GcbDebugger::getSubs()
         {
             m_subs.append( lines.takeFirst() );
             break;
-        }
-    }
+    }   }
     while( true )
     {
         if( lines.isEmpty() ) break;
@@ -66,10 +65,7 @@ void GcbDebugger::getSubs()
             if( lines.isEmpty() ) break;
             line = lines.takeFirst();
             if( !line.startsWith( ";" ) && !line.isEmpty() ) m_subs.append( line.toUpper() );
-        }
-    }
-    //qDebug() << "GcbDebugger::getSubs()\n" << m_subs;
-}
+}   }   }
 
 void GcbDebugger::mapFlashToSource()
 {
@@ -77,7 +73,6 @@ void GcbDebugger::mapFlashToSource()
     getSubs();
     mapLstToAsm();
     mapGcbToAsm();
-    //qDebug() << "GcbDebugger::mapFlashToSource() Done";
 }
 
 void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
@@ -140,8 +135,8 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             {
                 m_varList[ varName ] = type;
                 m_varNames.append( varName );
-            }//qDebug() << "GcbDebugger::mapGcbToAsm  Array "<<type<<varName;
-        }else{
+        }   }
+        else{
             if( wordList.first().toUpper() != "DIM" ) continue;
             if( wordList.size() < 4 ) continue;
             
@@ -153,10 +148,7 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
                 {
                     m_varList[ varName ] = m_typesList[ type ];
                     m_varNames.append( varName );
-                }//qDebug() << "GcbDebugger::mapGcbToAsm  variable "<<type<<varName<<m_typesList[ type ];
-            }
-        }
-    }//qDebug() << "GcbDebugger::mapGcbToAsm() SubLines\n" << m_subLines;
+    }   }   }   }
     m_flashToSource.clear();
     m_sourceToFlash.clear();
     
@@ -182,7 +174,6 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             
             int flashAddr = m_asmToFlash[asmLineNum];
             m_flashToSource[ flashAddr ]  = gcbLineNum;
-            //qDebug()<<"GcbDebugger::mapGcbToAsm  gcb:" << gcbLineNum <<"  flashAddr:"<< flashAddr;
         }
         else if( asmLine.contains("locations for variables")) haveVariable = true;
         else if( asmLine.contains(";*"))                      haveVariable = false;
@@ -202,7 +193,6 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             QString type = "uint8";
             if( m_varList.contains( name ) ) type = m_varList[ name ];
             McuInterface::self()->addWatchVar( name, address ,type  );
-            //qDebug()<<"GcbDebugger::mapGcbToAsm var:"<<asmLine<<name<< address<<type;
             
             if( type.contains( "array" ) )
             {
@@ -219,10 +209,7 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
                     {
                         m_varList[ elmName ] = m_typesList[ "uint8" ];
                         m_varNames.append( elmName );
-                    }
-                }
-            }
-        }
+        }   }   }   }
         asmLineNumber++;
     }
     QHashIterator<int, int> i(m_flashToSource);
@@ -232,21 +219,20 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
         int address    = i.key();
         int gcbLineNum = i.value();
         m_sourceToFlash[ gcbLineNum ] = address;
-        //qDebug()<<"GcbDebugger::mapGcbToAsm  gcb:" << gcbLineNum <<"  flashAddr:"<< address;
-    }
-}
+}   }
 
 void GcbDebugger::mapLstToAsm()
 {
     m_flashToAsm.clear();
     m_asmToFlash.clear();
-    QString asmFileName = m_fileDir + m_fileName + ".asm";
 
+    QString asmFileName = m_fileDir + m_fileName + ".asm";
     QString lstFileName = m_fileDir + m_fileName + ".lst";
 
     QStringList asmLines = fileToStringList( asmFileName, "GcbDebugger::mapLstToAsm" );
     QStringList lstLines = fileToStringList( lstFileName, "GcbDebugger::mapLstToAsm" );
 
+    QString asmLine;
     int asmLineNumber = 0;
     int lastAsmLine = asmLines.size();
 
@@ -267,7 +253,7 @@ void GcbDebugger::mapLstToAsm()
         while( true )
         {
             if( ++asmLineNumber >= lastAsmLine ) break; // End of asm file
-            QString asmLine = asmLines.at( asmLineNumber ).toUpper();
+            asmLine = asmLines.at( asmLineNumber ).toUpper();
             asmLine = asmLine.replace("\t", " ").remove(" ");
             if( asmLine.isEmpty() ) continue;
             if( asmLine.startsWith("_")) continue;
@@ -276,7 +262,6 @@ void GcbDebugger::mapLstToAsm()
             if( asmLine.startsWith(".")) continue;
 
             asmLine = asmLine.split(";").first();
-            //qDebug() << "GcbDebugger::mapLstToAsm" << line << asmLine;
             if( line.contains(asmLine) ) break;
         }
         if( asmLineNumber >= lastAsmLine ) { asmLineNumber = 0; continue; } // End of asm file
@@ -292,9 +277,7 @@ void GcbDebugger::mapLstToAsm()
                 hasCeroAddr = true;
             }
             m_flashToAsm[address] = asmLineNumber;
-           //qDebug() << "GcbDebugger::mapLstToAsm........." << address << asmLineNumber;
-        }
-    }
+    }   }
     QHashIterator<int, int> i(m_flashToAsm);
     while( i.hasNext() )
     {
@@ -302,13 +285,10 @@ void GcbDebugger::mapLstToAsm()
         int address       = i.key();
         int asmLineNumber = i.value();
         m_asmToFlash[asmLineNumber] = address;
-        //qDebug() << "GcbDebugger::mapLstToAsm........." << address << asmLineNumber;
-    }
-}
+}   }
 
 void GcbDebugger::getProcType()
 {
-   //qDebug() << "m_asmPath: " << m_asmPath;
     QStringList lines = fileToStringList( m_fileDir+m_fileName+".asm", "CodeEditor::getProcType" );
 
     for( QString line : lines )
@@ -320,8 +300,6 @@ void GcbDebugger::getProcType()
             if(line.startsWith("p")) m_processorType = 1; // if mcu name starts with p then is Pic
             else                     m_processorType = 2; // Avr
             break;
-        }
-    }
-    //qDebug() << "Processor Type: " << m_processorType;
-}
+}   }   }
+
 #include "moc_gcbdebugger.cpp"

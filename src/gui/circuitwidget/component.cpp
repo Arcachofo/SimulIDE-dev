@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "component.h"
 #include "mainwindow.h"
 #include "connector.h"
@@ -27,8 +29,6 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 #include "propdialog.h"
-
-#include <math.h>
 
 int Component::m_error = 0;
 bool Component::m_selMainCo = false;

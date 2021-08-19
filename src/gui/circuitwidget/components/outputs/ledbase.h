@@ -23,6 +23,8 @@
 #include "e-led.h"
 #include "component.h"
 
+class eNode;
+
 class MAINMODULE_EXPORT LedBase : public Component, public eLed
 {
     Q_OBJECT

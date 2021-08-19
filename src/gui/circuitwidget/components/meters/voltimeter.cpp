@@ -20,6 +20,7 @@
 #include "voltimeter.h"
 #include "simulator.h"
 #include "connector.h"
+#include "e-pin.h"
 
 Component* Voltimeter::construct( QObject* parent, QString type, QString id )
 { return new Voltimeter( parent, type, id ); }

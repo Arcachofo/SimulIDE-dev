@@ -20,9 +20,6 @@
 #ifndef GCBDEBUGGER_H
 #define GCBDEBUGGER_H
 
-#include <QtGui>
-#include <QHash>
-
 #include "basedebugger.h"
 
 class GcbDebugger : public BaseDebugger
@@ -47,8 +44,6 @@ class GcbDebugger : public BaseDebugger
         QHash<int, int> m_flashToAsm;               // Map flash adress to .asm code line
         
         int m_processorType;
-        
-        //QString m_gcBasic;                      // path to gcBasic executable
 };
 
 

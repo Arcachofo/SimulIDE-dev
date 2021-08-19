@@ -107,13 +107,11 @@ int InoDebugger::compile()
     m_fileList.append( m_fileName+m_fileExt );
     
     QStringList inoLines = fileToStringList( filePath, "InoDebugger::compile" );
-    QString line = inoLines.takeFirst(); // First line is empty
     QString boardName = getBoard( inoLines.first() );
 
     m_varList.clear();
-    for( QString inoLine : inoLines )          // Get Variables
+    for( QString line : inoLines )          // Get Variables
     {
-        line = inoLine;
         line = line.replace( "\t", " " ).remove(";");
         QStringList wordList= line.split( " " );
         wordList.removeAll( "" );

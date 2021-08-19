@@ -29,7 +29,6 @@
 #include "utils.h"
 #include "pin.h"
 
-
 void MessageBoxNB( const QString &title, const QString &message )
 {
     QMessageBox* msgBox = new QMessageBox( 0l );
@@ -81,7 +80,7 @@ QString fileToString( const QString &fileName, const QString &caller )
     QFile file( fileName );
     if (!file.open( QFile::ReadOnly | QFile::Text) )
     {
-        MessageBoxNB( "ERROR", "Cannot read file "+fileName+":\n"+file.errorString() );
+        MessageBoxNB( caller, "Cannot read file "+fileName+":\n"+file.errorString() );
         return "";
     }
     QTextStream in(&file);
@@ -94,20 +93,7 @@ QString fileToString( const QString &fileName, const QString &caller )
 
 QStringList fileToStringList( const QString &fileName, const QString &caller )
 {
-    QStringList text;
-    text << " ";
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly | QFile::Text))
-    {
-        MessageBoxNB( caller, "Cannot read file "+fileName+":\n"+file.errorString() );
-        return text;
-    }
-    QTextStream in(&file);
-    in.setCodec("UTF-8");
-    while( !in.atEnd() ) text.append( in.readLine() );
-    file.close();
-
-    return text;
+    return fileToString( fileName, caller ).split('\n');
 }
 
 QByteArray fileToByteArray( const QString &fileName, const QString &caller )
@@ -117,11 +103,10 @@ QByteArray fileToByteArray( const QString &fileName, const QString &caller )
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text))
     {
-        MessageBoxNB( "ERROR", "Cannot read file "+fileName+":\n"+file.errorString() );
+        MessageBoxNB( caller, "Cannot read file "+fileName+":\n"+file.errorString() );
         return ba;
     }
     ba = file.readAll();
-
     file.close();
 
     return ba;

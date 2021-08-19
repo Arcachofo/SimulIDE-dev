@@ -70,7 +70,7 @@ QString decToBase( int value, int base, int digits );
 
 int roundDown( int x, int roundness );
 int roundDown( float x, int roundness );
-QPoint roundDown( const QPoint & p, int roundness );
+QPoint roundDown( const QPoint &p, int roundness );
 
 int snapToGrid( int x );
 int snapToCompGrid( int x );

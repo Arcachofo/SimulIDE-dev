@@ -1,7 +1,6 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-    <tag>QT_TRANSLATE_NOOP("xmlfile","Logic")</tag>
     
     <itemset category="Logic" type="">
         <item name="Ternary logic"  package=""  subcircuit=""  icon="ic2.png" ></item>

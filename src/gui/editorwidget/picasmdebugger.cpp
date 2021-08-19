@@ -138,11 +138,8 @@ void PicAsmDebugger::mapFlashToSource()
             QString lstline = line;
             if( lstline.remove(" ").contains(asmLine) ) break;
         }
-        if( asmLineNumber >= lastAsmLine )
-        {
-            asmLineNumber = 0;
-            continue; // End of asm file
-        }
+        if( asmLineNumber >= lastAsmLine ) { asmLineNumber = 0; continue; } // End of asm file
+
         QStringList words = line.split(' ');
         QString numberText = words.at(0);
         //QString numberText = line.left( 4 );

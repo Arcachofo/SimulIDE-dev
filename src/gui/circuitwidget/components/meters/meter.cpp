@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "meter.h"
 #include "simulator.h"
 #include "iopin.h"

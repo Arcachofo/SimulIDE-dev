@@ -24,6 +24,7 @@
 #include "e-element.h"
 
 class LibraryItem;
+class eNode;
 
 class MAINMODULE_EXPORT Bus : public Component, public eElement
 {

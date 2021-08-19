@@ -79,6 +79,7 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
         bool m_firstStep;
         bool m_powerPins;
         bool m_switchPins;
+        bool m_converged;
 
         double m_accuracy;
         double m_gain;

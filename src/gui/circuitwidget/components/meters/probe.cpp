@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "probe.h"
 #include "connector.h"
 #include "connectorline.h"
@@ -24,8 +26,6 @@
 #include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "iopin.h"
-
-#include <math.h>
 
 static const char* Probe_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Show volt"),

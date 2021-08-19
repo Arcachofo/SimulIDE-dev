@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "e-led.h"
 #include "simulator.h"
 
@@ -46,6 +48,7 @@ void eLed::voltChanged()
     eDiode::voltChanged();
     updateVI();
 }
+
 void eLed::updateVI()
 {
     eDiode::updateVI();
@@ -84,5 +87,4 @@ void eLed::updateBright()
         m_avg_brightness   = 0;
         m_lastUpdatePeriod = 0;
         m_bright = uint32_t(m_disp_brightness*255)+25;
-    }
-}
+}   }

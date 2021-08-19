@@ -20,9 +20,10 @@
 #ifndef COMPILER_H
 #define COMPILER_H
 
-#include <QtGui>
+#include <QString>
+#include <QProcess>
 
-class EditorWindow;
+//class EditorWindow;
 class OutPanelText;
 
 class Compiler : public QObject
@@ -53,4 +54,3 @@ class Compiler : public QObject
 };
 
 #endif
-

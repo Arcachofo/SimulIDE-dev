@@ -22,6 +22,7 @@
 #include "plotdisplay.h"
 #include "datawidget.h"
 #include "simulator.h"
+#include "e-pin.h"
 #include "utils.h"
 
 OscopeChannel::OscopeChannel( Oscope* oscope, QString id )

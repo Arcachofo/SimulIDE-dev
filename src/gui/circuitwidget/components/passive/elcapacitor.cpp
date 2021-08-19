@@ -18,7 +18,9 @@
  ***************************************************************************/
 
 #include "elcapacitor.h"
+#include "itemlibrary.h"
 #include "simulator.h"
+#include "e-pin.h"
 
 Component* elCapacitor::construct( QObject* parent, QString type, QString id )
 { return new elCapacitor( parent, type, id ); }

@@ -49,4 +49,3 @@ class MAINMODULE_EXPORT eLed : public eDiode
 };
 
 #endif
-

@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "volt_reg.h"
 #include "connector.h"
 #include "simulator.h"

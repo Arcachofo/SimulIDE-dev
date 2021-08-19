@@ -20,9 +20,6 @@
 #ifndef PICASMDEBUGGER_H
 #define PICASMDEBUGGER_H
 
-#include <QtGui>
-#include <QHash>
-
 #include "basedebugger.h"
 
 class PicAsmDebugger : public BaseDebugger

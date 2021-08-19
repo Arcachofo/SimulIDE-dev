@@ -74,9 +74,8 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
 
         for( QString line : lines )
         {
-            if( line.isEmpty() ) continue;
-
             line = line.replace("\t", "").replace(" ", "");
+            if( line.isEmpty() ) continue;
 
             QStringList words = line.split( "," );
             words.removeAll(QString(""));
@@ -93,7 +92,6 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
                     ramEnd++;
                     toData->resize( ramEnd+1 );
                 }
-
                 if( addr > ramEnd ) break;
                 toData->replace( addr, data );
                 addr++;
@@ -163,14 +161,12 @@ void MemData::saveData( QVector<int>* data, int bits )
             if( i == 15 ) { output += "\n"; i = 0; }
             else          { output += ",";  i++;  }
         }
-
         if( !outFile.open( QFile::WriteOnly | QFile::Text ) )
         {
               QMessageBox::warning(0l, "MemData::saveData",
               QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
         }
-        else
-        {
+        else{
             QTextStream toFile( &outFile );
             toFile << output;
             outFile.close();
@@ -182,8 +178,7 @@ void MemData::saveData( QVector<int>* data, int bits )
               QMessageBox::warning(0l, "MemData::saveData",
               QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
         }
-        else
-        {
+        else{
             for( int val : *data )
             {
                 for( int by=0; by<bytes; by++ ) // Separate bytes little-endian
@@ -194,6 +189,5 @@ void MemData::saveData( QVector<int>* data, int bits )
             }   }
             outFile.close();
     }   }
-
     Simulator::self()->resumeSim();
 }

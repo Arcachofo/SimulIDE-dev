@@ -23,6 +23,8 @@
 #include "e-inductor.h"
 #include "mech_contact.h"
 
+class eNode;
+
 class MAINMODULE_EXPORT RelayBase : public MechContact
 {
     Q_OBJECT

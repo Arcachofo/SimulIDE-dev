@@ -20,8 +20,6 @@
 #ifndef INODEBUGGER_H
 #define INODEBUGGER_H
 
-#include <QHash>
-
 #include "basedebugger.h"
 
 class InoDebugger : public BaseDebugger

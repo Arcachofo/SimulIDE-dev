@@ -21,10 +21,9 @@
 #define EELEMENT_H
 
 #include <vector>
-#include <string>
-#include <math.h>
-#include "e-pin.h"
+#include <QString>
 
+class ePin;
 
 class MAINMODULE_EXPORT eElement
 {
@@ -46,15 +45,8 @@ class MAINMODULE_EXPORT eElement
 
         QString getId(){ return m_elmId; }
 
-        bool converged() { return m_converged; }
-        bool m_converged;
-
         static constexpr double cero_doub = 1e-14;
         static constexpr double high_imp  = 1e14;
-
-        double digital_high;
-        double digital_low;
-        double digital_thre;
 
         // Simulator engine
         eElement* nextChanged;

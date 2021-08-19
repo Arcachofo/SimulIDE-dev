@@ -21,7 +21,8 @@
 #define ELCAPACITOR_H
 
 #include "capacitorbase.h"
-#include "itemlibrary.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT elCapacitor : public CapacitorBase
 {

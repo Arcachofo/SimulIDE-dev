@@ -20,9 +20,9 @@
 #ifndef BASEDEBUGGER_H
 #define BASEDEBUGGER_H
 
+#include <QHash>
+
 #include "compiler.h"
-#include "outpaneltext.h"
-#include "mcucomponent.h"
 
 class CodeEditor;
 
@@ -54,7 +54,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         virtual void readSettings();
         virtual QString getVarType( QString var );
-        virtual QStringList getVarList()  { return m_varNames; }
+        virtual QStringList getVarList() { return m_varNames; }
         virtual QList<int> getSubLines() { return m_subLines; }
         
         int type;
@@ -65,15 +65,12 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
     protected:
         void toolChainNotFound();
         virtual void getSubs(){;}
-    
-        //OutPanelText*  m_outPane;
 
         CodeEditor* m_editor;
 
         int m_processorType;
         int m_lastLine;
-        
-        //QString m_device;
+
         QString m_appPath;
         QString m_firmware;
         QString m_file;

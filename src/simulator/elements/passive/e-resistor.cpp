@@ -19,7 +19,7 @@
 
 #include "e-resistor.h"
 #include "simulator.h"
-
+#include "e-pin.h"
 
 eResistor::eResistor( QString id )
          : eElement( id )

@@ -58,8 +58,8 @@ void AvrAsmDebugger::mapFlashToSource()
 {
     m_flashToSource.clear();
     m_sourceToFlash.clear();
-    QString asmFileName = m_fileDir + m_fileName + ".asm";
 
+    QString asmFileName = m_fileDir + m_fileName + ".asm";
     QString lstFileName = m_fileDir + m_fileName + ".lst";
 
     QStringList asmLines = fileToStringList( asmFileName, "AvrAsmDebugger::mapLstToAsm" );
@@ -87,9 +87,6 @@ void AvrAsmDebugger::mapFlashToSource()
             if( asmLine.startsWith("#")) continue;
             if( asmLine.startsWith(".")) continue;
 
-            //qDebug() <<"AvrAsmDebugger::mapLstToAsm() "<<asmLine;
-            //qDebug() <<"AvrAsmDebugger::mapLstToAsm() "<<lstLine;
-
             if( lstLine.contains(asmLine) ) break;                            // Line found
         }
         QString numberText = lstLine.left( 6 );    // first 6 digits in lst file is address
@@ -99,9 +96,7 @@ void AvrAsmDebugger::mapFlashToSource()
         {
             m_flashToSource[address] = asmLineNumber;
             if( asmLineNumber > m_lastLine ) m_lastLine = asmLineNumber;
-            //qDebug() <<"AvrAsmDebugger::mapLstToAsm() "<<address<<asmLineNumber;
-        }
-    }
+    }   }
     QHashIterator<int, int> i(m_flashToSource);
     while( i.hasNext() )
     {
@@ -109,9 +104,7 @@ void AvrAsmDebugger::mapFlashToSource()
         int address       = i.key();
         int asmLineNumber = i.value();
         m_sourceToFlash[asmLineNumber] = address;
-        //qDebug() <<"AvrAsmDebugger::mapLstToAsm() "<<address<<asmLineNumber;
-    }
-}
+}   }
 
 void AvrAsmDebugger::setAvraIncPath( QString path )
 {

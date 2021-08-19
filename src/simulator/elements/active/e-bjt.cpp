@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "e-bjt.h"
 #include "e-node.h"
 #include "simulator.h"

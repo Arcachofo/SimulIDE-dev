@@ -1,24 +1,5 @@
 <!DOCTYPE SimulIDE>
 
-<!-- *************************************************************************** -->
-<!-- *   Copyright (C) 2018 by santiago González                               * -->
-<!-- *   santigoro@gmail.com                                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is free software; you can redistribute it and/or modify  * -->
-<!-- *   it under the terms of the GNU General Public License as published by  * -->
-<!-- *   the Free Software Foundation; either version 3 of the License, or     * -->
-<!-- *   (at your option) any later version.                                   * -->
-<!-- *                                                                         * -->
-<!-- *   This program is distributed in the hope that it will be useful,       * -->
-<!-- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        * -->
-<!-- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         * -->
-<!-- *   GNU General Public License for more details.                          * -->
-<!-- *                                                                         * -->
-<!-- *   You should have received a copy of the GNU General Public License     * -->
-<!-- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  * -->
-<!-- *                                                                         * -->
-<!-- *************************************************************************** -->
-
 <itemlib>
     
     <itemset category="Logic" type="">
@@ -26,14 +7,13 @@
     </itemset>
     
     <itemset category="Logic/Keys" type="Subcircuit" folder="ICs" >
-
-    <item name="DG401" info=" High-Speed CMOS Analog Switches" /> 
-    <item name="DG403" info=" High-Speed CMOS Analog Switches" /> 
-    <item name="DG405" info=" High-Speed CMOS Analog Switches" />     
-    <item name="L293"  info=" Quadruple half-H drivers" />
-    <item name="L298P"  info=" Dual Full-Bridge Driver" />
-	<item name="ULN2803"  info=" 8 high-current Darlington transistor keys" />
-	<item name="ULN2001"  info=" 7 high-current Darlington transistor keys" />
+        <item name="DG401" info=" High-Speed CMOS Analog Switches" /> 
+        <item name="DG403" info=" High-Speed CMOS Analog Switches" /> 
+        <item name="DG405" info=" High-Speed CMOS Analog Switches" />     
+        <item name="L293"  info=" Quadruple half-H drivers" />
+        <item name="L298P"  info=" Dual Full-Bridge Driver" />
+        <item name="ULN2803"  info=" 8 high-current Darlington transistor keys" />
+        <item name="ULN2001"  info=" 7 high-current Darlington transistor keys" />
     </itemset>
 
 </itemlib>

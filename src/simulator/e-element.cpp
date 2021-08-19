@@ -19,17 +19,12 @@
 
 #include "e-element.h"
 #include "simulator.h"
-
+#include "e-pin.h"
 
 eElement::eElement( QString id )
 {
     m_elmId = id;
-
     added = false;
-
-    digital_high = 5.0;
-    digital_low  = 0.0;
-    digital_thre = 2.5;
 
     if( Simulator::self() ) Simulator::self()->addToElementList( this );
 }

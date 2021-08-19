@@ -56,7 +56,6 @@ void eDiode::initialize()
     m_resist = high_imp;
     //m_admit = 0;
     m_admit = 1/high_imp; /// changed to non-switched
-    m_converged = true;
     m_voltPN  = 0;
     m_deltaV  = 0;
     m_current = 0;
@@ -65,7 +64,6 @@ void eDiode::initialize()
 
 void eDiode::voltChanged()
 {
-    m_converged = false;
     m_voltPN = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
 
     double deltaR = m_imped;
