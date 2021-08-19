@@ -53,9 +53,9 @@ void eDiode::stamp()
 
 void eDiode::initialize()
 {
-    m_resist = high_imp;
+    m_resist = off_imp;
     //m_admit = 0;
-    m_admit = 1/high_imp; /// changed to non-switched
+    m_admit = 1/off_imp; /// changed to non-switched
     m_voltPN  = 0;
     m_deltaV  = 0;
     m_current = 0;
@@ -76,7 +76,7 @@ void eDiode::voltChanged()
         else                        
         {
             deltaV = m_voltPN;
-            deltaR = high_imp;
+            deltaR = off_imp;
         }
     }
     //qDebug() <<"eDiode::setVChanged,  deltaR: "<< deltaR << "  deltaV" << deltaV << "m_voltPN" << m_voltPN<<m_threshold<<m_imped ;
@@ -85,7 +85,7 @@ void eDiode::voltChanged()
     if( deltaR != m_resist )
     {
         m_resist = deltaR;
-        ///if( deltaR == high_imp ) eResistor::setAdmit( 0 );
+        ///if( deltaR == off_imp ) eResistor::setAdmit( 0 );
         ///else
             eResistor::setAdmit( 1/m_resist );
         //m_converged = false;
@@ -96,7 +96,7 @@ void eDiode::voltChanged()
 
         double current = deltaV/m_resist;
         //qDebug() <<"eDiode::setVChanged current: "<< current;
-        ///if( deltaR == high_imp ) current = 0;
+        ///if( deltaR == off_imp ) current = 0;
         if( current == m_lastC )
         {
             //m_converged = true;
@@ -142,7 +142,7 @@ void eDiode::updateVI()
 {
     m_current = 0;
     
-    if( m_resist == high_imp ) return;
+    if( m_resist == off_imp ) return;
 
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
     {
