@@ -23,7 +23,6 @@
 #include "mcuinterrupts.h"
 #include "simulator.h"
 
-
 McuTimer::McuTimer( eMcu* mcu, QString name )
         : McuModule( mcu, name )
         , eElement( name )
@@ -108,17 +107,17 @@ void McuTimer::countWriteL( uint8_t val ) // Someone wrote to counter low byte
 {
     updtCount();
     *m_countL = val;
-    updtCycles();                             // update & Reshedule
+    updtCycles();       // update & Reshedule
 }
 
 void McuTimer::countWriteH( uint8_t val ) // Someone wrote to counter high byte
 {
     updtCount();
     *m_countH = val;
-    updtCycles();                             // update & Reshedule
+    updtCycles();      // update & Reshedule
 }
 
-void McuTimer::updtCount( uint8_t )          // Write counter values to Ram
+void McuTimer::updtCount( uint8_t )       // Write counter values to Ram
 {
     if( m_running ) // If no running, values were already written at timer stop.
     {

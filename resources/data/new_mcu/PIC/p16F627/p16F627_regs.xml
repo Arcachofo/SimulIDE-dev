@@ -14,10 +14,10 @@
         <register name="INTCON"  addr="0x0B" bits="RBIF,INTF,T0IF,RBIE,INTE,T0IE,PEIE,GIE" reset="0x00"/>
         <register name="PIR1"    addr="0x0C" bits="TMR1IF,TMR2IF,CCP1IF,0,TXIF,RCIF,CMIF,EEIF" reset="0x00"/>
         <register name="TMR1L"   addr="0x0E" bits=""/>
-        <register name="TMR1H"   addr="0x0E" bits=""/>
+        <register name="TMR1H"   addr="0x0F" bits=""/>
         <register name="T1CON"   addr="0x10" bits="TMR1ON,TMR1CS,T1SYNC,T1OSCEN,T1CKPS0,T1CKPS1" reset="0x00"/>
         <register name="TMR2"    addr="0x11" bits=""/>
-        <register name="T2CON"   addr="0x12" bits="T2CKPS0,T2CKPS1,TMR1ON,TOUTPS0,TOUTPS1,TOUTPS2,TOUTPS3" reset="0x00"/>
+        <register name="T2CON"   addr="0x12" bits="T2CKPS0,T2CKPS1,TMR2ON,TOUTPS0,TOUTPS1,TOUTPS2,TOUTPS3" reset="0x00"/>
         <register name="CCPR1L"  addr="0x15" bits=""/>
         <register name="CCPR1H"  addr="0x16" bits=""/>
         <register name="CCP1CON" addr="0x17" bits="CCP1M0,CCP1M1,CCP1M2,CCP1M3,CCP1X" reset="0x00"/>

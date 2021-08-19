@@ -106,14 +106,12 @@ class MAINMODULE_EXPORT CoreCpu : public McuCore
         virtual void PUSH_STACK( uint32_t addr )
         {
             uint16_t sp = GET_SP();
-
             if( m_spPre ) sp += m_spInc;
 
             for( int i=0; i<m_progAddrSize; i++, addr>>=8, sp += m_spInc )
                 SET_RAM( sp, addr & 0xFF );
 
             if( m_spPre )  sp -= m_spInc;
-
             SET_SP( sp );
         }
 
@@ -128,7 +126,6 @@ class MAINMODULE_EXPORT CoreCpu : public McuCore
                 res = (res<<8) | GET_RAM( sp );
 
             if( !m_spPre ) sp += m_spInc;
-
             SET_SP( sp );
             return res;
         }

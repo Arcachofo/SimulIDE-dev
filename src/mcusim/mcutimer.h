@@ -45,12 +45,9 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
-        virtual void sheduleEvents();
         virtual void enable( uint8_t en );
         virtual void countWriteL( uint8_t val );
         virtual void countWriteH( uint8_t val );
-        virtual void updtCycles();
-        virtual void updtCount( uint8_t val=0 );
 
         virtual void addOcUnit( McuOcUnit* ocUnit ) { m_ocUnit.emplace_back( ocUnit ); }
         virtual McuOcUnit* getOcUnit( QString name ) {return NULL;}
@@ -58,6 +55,10 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         QString name() { return m_name; }
 
     protected:
+        virtual void sheduleEvents();
+        virtual void updtCycles();
+        virtual void updtCount( uint8_t val=0 );
+
         int     m_number;
 
         uint16_t m_prescaler;
