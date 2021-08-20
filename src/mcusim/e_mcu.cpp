@@ -20,6 +20,7 @@
 #include "e_mcu.h"
 #include "mcucore.h"
 #include "mcupin.h"
+#include "mcuwdt.h"
 #include "usartmodule.h"
 #include "usartrx.h"
 #include "simulator.h"
@@ -124,3 +125,7 @@ void eMcu::uartIn( int number, uint32_t value ) // Receive one byte on Uart
     m_usarts.at(number-1)->m_receiver->queueData( value );
 }
 
+void eMcu::wdr()
+{
+    m_wdt->reset();
+}

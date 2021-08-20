@@ -33,10 +33,11 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
         McuUsart( eMcu* mcu, QString name, int number );
         virtual ~McuUsart();
 
-        virtual void sendByte( uint8_t data );
-        virtual void byteSent( uint8_t data ) override;
+        virtual void sendByte( uint8_t data ) override;
+        virtual void bufferEmpty() override;
+        virtual void frameSent( uint8_t data ) override;
+        virtual void readByte( uint8_t data ) override {;}
         virtual void byteReceived( uint8_t data ) override;
-        virtual void readByte( uint8_t data ){;}
 
         void setMonitor( SerialMonitor* mon ) { m_monitor = mon; }
 

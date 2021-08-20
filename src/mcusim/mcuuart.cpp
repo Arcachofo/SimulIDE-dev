@@ -21,6 +21,7 @@
 #include "serialmon.h"
 #include "usartrx.h"
 #include "usarttx.h"
+#include "mcuinterrupts.h"
 
 McuUsart::McuUsart( eMcu* mcu, QString name, int number )
         : McuModule( mcu, name )
@@ -33,14 +34,20 @@ McuUsart::McuUsart( eMcu* mcu, QString name, int number )
 }
 McuUsart::~McuUsart( ){}
 
-void McuUsart::sendByte(  uint8_t data )
+void McuUsart::sendByte(  uint8_t data )  // Buffer is being written
 {
     m_sender->processData( data );
 }
 
-void McuUsart::byteSent( uint8_t data )
+void McuUsart::bufferEmpty()
+{
+    if( m_interrupt ) m_interrupt->raise(); // USART Data Register Empty Interrupt
+}
+
+void McuUsart::frameSent( uint8_t data )
 {
     if( m_monitor ) m_monitor->printOut( data );
+    m_sender->raiseInt();
 }
 
 void McuUsart::byteReceived( uint8_t data )

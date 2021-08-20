@@ -125,7 +125,7 @@ inline void Pic14Core::SUBWF( uint8_t f, uint8_t d )
 inline void Pic14Core::DECF( uint8_t f, uint8_t d )
 {
     uint8_t newV = GET_RAM( f );
-    setValueZ( newV--, f, d );
+    setValueZ( --newV, f, d );
 }
 
 inline void Pic14Core::IORWF( uint8_t f, uint8_t d )

@@ -16,11 +16,11 @@
         <ocunit name="OC0B" pin="PORTB1" ocreg="OCR0B" configbits="COM0B0,COM0B1">
             <interrupt name="T0COB" />
         </ocunit>
-        º
+
         <interrupt name="T0_OVF" />
     </timer>
 
-    <adc name="ADC" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" 
+    <adc name="ADC" type="1" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" 
                     configregsB="ADCSRB" multiplex="ADMUX">
         <prescaler select="" values="2,2,4,8,16,32,64,128"/>
         <inputs type="PIN" source="PORTB5,PORTB2,PORTB4,PORTB3" />
@@ -28,7 +28,7 @@
         <interrupt name="ADC" />
     </adc>
     
-    <wdt name="WatchDog" configregsA="WDTCSR">
+    <wdt name="WatchDog" configregsA="WDTCR">
         <prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
         <interrupt name="WDT" />
     </wdt>

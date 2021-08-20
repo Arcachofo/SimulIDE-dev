@@ -80,7 +80,7 @@ void AvrAsmDebugger::mapFlashToSource()
         while( true )
         {
             if( ++asmLineNumber >= lastAsmLine ) break;                   // End of asm file
-            asmLine = asmLines.at( asmLineNumber ).toUpper();
+            asmLine = asmLines.at( asmLineNumber-1 ).toUpper();
             asmLine = asmLine.replace("\t", " ").remove(" ");
             if( asmLine.isEmpty() ) continue;
             if( asmLine.startsWith(";")) continue;

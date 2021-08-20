@@ -141,7 +141,7 @@ void Interrupts::remove()
     for( QString  inte : m_intList.keys() )
         delete m_intList.value( inte );
 
-    m_intList.clear();
+    //m_intList.clear();
 }
 
 void Interrupts::addToPending( uint8_t pri, Interrupt* i )

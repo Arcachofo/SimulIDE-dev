@@ -417,7 +417,7 @@ void AvrCore::runDecoder()
                     }*/
                 }    break;
                 case 0x95a8: { // WDR -- Watchdog Reset -- 1001 0101 1010 1000
-                    ////avr_ioctl(avr, AVR_IOCTL_WATCHDOG_RESET, 0);
+                    m_mcu->wdr();
                 }    break;
                 case 0x95e8: { // SPM -- Store Program Memory -- 1001 0101 1110 1000
                     ////avr_ioctl(avr, AVR_IOCTL_FLASH_SPM, 0);

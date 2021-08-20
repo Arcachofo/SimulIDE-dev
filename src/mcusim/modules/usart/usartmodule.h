@@ -50,9 +50,11 @@ class MAINMODULE_EXPORT UsartModule
         virtual uint8_t getBit9(){return 0;}
         virtual void    setBit9( uint8_t bit ){;}
 
-        virtual void byteSent( uint8_t data ){;}
+        virtual void sendByte( uint8_t data ){;}
+        virtual void bufferEmpty(){;}
+        virtual void frameSent( uint8_t data ){;}
+        virtual void readByte( uint8_t data ){;}
         virtual void byteReceived( uint8_t data ){;}
-        virtual void txDataEmpty(){;}
 
         void parityError();
 
@@ -107,7 +109,7 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
         void setPin( IoPin* pin ) { m_ioPin = pin; }
         IoPin* getPin() { return m_ioPin; }
 
-        void raiseInt( uint8_t data );
+        void raiseInt( uint8_t data=0 );
 
     protected:
         UsartModule* m_usart;

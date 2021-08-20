@@ -31,6 +31,7 @@
 
 class McuCore;
 class McuTimer;
+class McuWdt;
 
 enum{
     R_READ = 0,
@@ -82,6 +83,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         McuTimer* getTimer( QString name ) { return m_timers.getTimer( name ); }
 
+        void wdr();
+
         void enableInterrupts( uint8_t en ) { m_interrupts.enableGlobal( en ); }
 
         McuCore* cpu;
@@ -97,6 +100,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         std::vector<McuModule*> m_modules;
         //McuUsarts  m_usarts;
         std::vector<McuUsart*> m_usarts;
+
+        McuWdt* m_wdt;
 
         double m_freq;                             // Clock Frequency in MegaHerzs
         double m_cPerInst;                         // Clock ticks per Instruction Cycle

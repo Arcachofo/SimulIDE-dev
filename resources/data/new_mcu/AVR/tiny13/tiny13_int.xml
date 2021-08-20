@@ -8,7 +8,7 @@
         <interrupt name="ACOMP"   enable="ACIE"   flag="ACI"   priority="5" vector="0x005"/>
         <interrupt name="T0COA"   enable="OCIE0A" flag="OCF0A" priority="4" vector="0x006"/>
         <interrupt name="T0COB"   enable="OCIE0B" flag="OCF0B" priority="3" vector="0x007"/>
-        <interrupt name="WDT"     enable="WDIE"   flag="WDIF"  priority="2" vector="0x008"/>
+        <interrupt name="WDT"     enable="WDTIE"  flag="WDTIF" priority="2" vector="0x008"/>
         <interrupt name="ADC"     enable="ADIE"   flag="ADIF"  priority="1" vector="0x009"/>
     </interrupts>
 </parts>

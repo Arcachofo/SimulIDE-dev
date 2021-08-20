@@ -332,7 +332,8 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     else if( type == "AVR" )
                     {
                         type = "MCU";
-                        objNam = objNam.replace( "atmega", "mega" );
+                        objNam = objNam.replace( "atmega", "mega" )
+                                       .replace( "attiny", "tiny" );
                     }
                     item = createItem( type, objNam, objNam );
                 }

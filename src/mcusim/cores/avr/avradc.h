@@ -32,7 +32,7 @@ class McuOcUnit;
 class MAINMODULE_EXPORT AvrAdc : public McuAdc
 {
     public:
-        AvrAdc( eMcu* mcu, QString name );
+        AvrAdc( eMcu* mcu, QString name ,int type );
         ~AvrAdc();
 
         virtual void initialize() override;
@@ -46,6 +46,8 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         void autotriggerConf();
         virtual double getVref() override;
         virtual void endConversion() override;
+
+        int m_type;
 
         bool m_autoTrigger;
         bool m_freeRunning;
@@ -74,7 +76,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         AvrTimer16bit*  m_timer1;
 
         McuOcUnit* m_t0OCA;
-        McuOcUnit* m_t1OCB;
+        McuOcUnit* m_tOCB;
 };
 
 #endif

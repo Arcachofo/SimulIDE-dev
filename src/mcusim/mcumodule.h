@@ -39,6 +39,7 @@ class MAINMODULE_EXPORT McuModule
         virtual void configureB( uint8_t ){;}
         virtual void callBack() {;}
 
+        //void raiseInt();
         Interrupt* getInterrupt() { return m_interrupt; }
 
     protected:

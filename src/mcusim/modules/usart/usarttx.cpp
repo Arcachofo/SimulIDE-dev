@@ -54,9 +54,8 @@ void UartTx::runEvent()
     }
     else if( m_state == usartTXEND )
     {
-        m_usart->txDataEmpty();
-        m_usart->byteSent( m_data );
-        m_interrupt->raise();
+        m_usart->frameSent( m_data );
+        /// m_interrupt->raise();
 
         m_state = usartIDLE;
         m_ioPin->setOutState( 1 );
@@ -70,8 +69,10 @@ void UartTx::processData( uint8_t data )
     if( m_state == usartIDLE ) startTransmission();
 }
 
-void UartTx::startTransmission()
+void UartTx::startTransmission() // Data loaded to ShiftReg
 {
+    m_usart->bufferEmpty();
+
     m_state = usartTRANSMIT;
 
     uint8_t data = m_data & mDATAMASK;
@@ -99,7 +100,6 @@ void UartTx::startTransmission()
     m_currentBit = 0;
     if( m_period )
     {
-        sendBit();
         if( m_runHardware ) sendBit(); // Start transmission
         else                           // Not running Hardwware
         {

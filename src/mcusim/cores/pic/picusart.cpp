@@ -33,7 +33,7 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
 
     //QString n = m_name.right(1);
 
-    m_TXSTA = mcu->getReg( "TXSTA" );
+    m_PIR1  = mcu->getReg( "PIR1" );
     m_RCSTA = mcu->getReg( "RCSTA" );
     m_SPBRG = mcu->getReg( "SPBRG" );
 
@@ -47,7 +47,7 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
     m_rxEn = mcu->getRegBits( "CREN:" );
     m_TX9  = mcu->getRegBits( "TX9" );
     m_RX9  = mcu->getRegBits( "RX9" );
-    m_TRMT = mcu->getRegBits( "TRMT" );
+    m_TXIF = mcu->getRegBits( "TXIF" );
 
     m_mcu->watchRegNames( "SPBRG", R_WRITE, this, &PicUsart::setBaurrate );
 }
@@ -60,6 +60,7 @@ void PicUsart::configureA( uint8_t newTXSTA ) // TXSTA changed
     bool txEn = getRegBitsBool( newTXSTA, m_txEn );
     if( txEn != m_sender->isEnabled() )
     {
+        if( txEn ) setRegBits( m_TXIF );
         m_sender->enable( txEn );
         m_sender->getPin()->controlPin( txEn, false );
     }
@@ -76,8 +77,8 @@ void PicUsart::configureB( uint8_t newRCSTA ) // RCSTA changed
     bool rxEn = getRegBitsVal( newRCSTA, m_rxEn );
     if( rxEn != m_receiver->isEnabled() )
     {
-        m_receiver->enable( rxEn );
         m_receiver->getPin()->controlPin( rxEn, false );
+        m_receiver->enable( rxEn );
 }   }
 
 void PicUsart::setBaurrate( uint8_t )
@@ -102,18 +103,18 @@ void PicUsart::sendByte(  uint8_t data )
 {
     if( !m_sender->isEnabled() ) return;
 
-    if( getRegBitsVal( *m_TXSTA, m_TRMT ) )  // Buffer is empty
+    if( getRegBitsVal( *m_PIR1, m_TXIF ) )  // Buffer is empty
     {
-        clearRegBits( m_TRMT ); // Transmit buffer full: Clear TRMTn bit
+        clearRegBits( m_TXIF ); // Transmit buffer full: Clear TXIF bit
         m_sender->processData( data );
 }   }
 
-void PicUsart::byteSent( uint8_t data )
+void PicUsart::frameSent( uint8_t data )
 {
     if( m_monitor ) m_monitor->printOut( data );
 
-    if( getRegBitsVal( *m_TXSTA, m_TRMT ) ) return; // Buffer is empty
-    m_sender->startTransmission();                  // Buffer contains data, send it
+    if( getRegBitsVal( *m_PIR1, m_TXIF ) ) return; // Buffer is empty
+    m_sender->startTransmission();                 // Buffer contains data, send it
 }
 
 /*void PicUsart::readByte( uint8_t )   // UDRn is being readed
@@ -121,10 +122,6 @@ void PicUsart::byteSent( uint8_t data )
     m_mcu->m_regOverride = m_receiver->getData();
     //clearRegBits( m_RXC );                 // Clear RXCn flag
 }*/
-
-void PicUsart::txDataEmpty()
-{
-}
 
 /*void PicUsart::setUCSRnA( uint8_t newUCSRnA )
 {

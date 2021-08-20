@@ -23,9 +23,11 @@
 #include "mcupin.h"
 #include "e_mcu.h"
 
-AvrAdc::AvrAdc( eMcu* mcu, QString name )
+AvrAdc::AvrAdc( eMcu* mcu, QString name, int type )
       : McuAdc( mcu, name )
 {
+    m_type = type;
+
     //m_ADCSRA = mcu->getReg( "ADCSRA" );
     m_ADEN  = mcu->getRegBits( "ADEN" );
     m_ADSC  = mcu->getRegBits( "ADSC" );
@@ -45,7 +47,9 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
     m_timer1 = (AvrTimer16bit*)mcu->getTimer( "TIMER1" );
 
     m_t0OCA = m_timer0->getOcUnit("OCA");
-    if( m_timer1 ) m_t1OCB = m_timer1->getOcUnit("OCB");
+    if     ( type == 0 ) m_tOCB = m_timer1->getOcUnit("OCB");
+    else if( type == 1 ) m_tOCB = m_timer0->getOcUnit("OCB");
+
 }
 AvrAdc::~AvrAdc(){}
 
@@ -97,9 +101,13 @@ void AvrAdc::autotriggerConf()
     /// TODO Analog Comparator
     m_t0OCA->getInterrupt()->callBack( this, m_trigger == 3 );
     m_timer0->getInterrupt()->callBack( this, m_trigger == 4 );
-    m_t1OCB->getInterrupt()->callBack( this, m_trigger == 5 );
-    m_timer1->getInterrupt()->callBack( this, m_trigger == 6 );
-    /// TODO Timer/Counter1 Capture Event
+    m_tOCB->getInterrupt()->callBack( this, m_trigger == 5 );
+    if( m_type == 0 )
+    {
+        m_timer1->getInterrupt()->callBack( this, m_trigger == 6 );
+        /// TODO Timer/Counter1 Capture Event
+    }
+
 
     /*switch( m_trigger ) /// TODO
     {
@@ -129,6 +137,7 @@ void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
     m_leftAdjust = getRegBitsBool( newADMUX, m_ADLAR );
 
     m_refSelect = getRegBitsVal( newADMUX, m_REFS );
+    if( m_type == 1 ) m_refSelect = (m_refSelect << 1) + 1; // tiny
 }
 
 double AvrAdc::getVref()
@@ -141,7 +150,8 @@ double AvrAdc::getVref()
             vRef = m_aRefPin->getVolt();
             break;
         case 1:     // AVcc
-            vRef = m_aVccPin->getVolt();
+            if( m_type == 1 ) vRef = 5; // tiny
+            else              vRef = m_aVccPin->getVolt();
             break;
         case 2:     // Reserved
             break;

@@ -28,6 +28,16 @@ struct regBits_t{
     uint8_t* reg;
 };
 
+static inline uint8_t override( uint8_t val, regBits_t bits ) // Replace bits in val with current value in register bits.reg
+{
+    return (val & ~bits.mask) | (*(bits.reg) | bits.mask);
+}
+
+static inline uint8_t getRegBits( uint8_t val, regBits_t rb )
+{
+    return (val & rb.mask);
+}
+
 static inline uint8_t getRegBitsVal( uint8_t val, regBits_t rb )
 {
     return (val & rb.mask)>>rb.bit0;

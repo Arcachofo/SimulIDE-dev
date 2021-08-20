@@ -36,11 +36,9 @@ class MAINMODULE_EXPORT PicUsart : public McuUsart
         virtual uint8_t getBit9() override;
         virtual void setBit9( uint8_t bit ) override;
 
-        virtual void sendByte(  uint8_t data ) override;
-        virtual void byteSent( uint8_t data ) override;
+        virtual void sendByte( uint8_t data ) override;
+        virtual void frameSent( uint8_t data ) override;
         //virtual void readByte( uint8_t ) override;
-
-        virtual void txDataEmpty() override;
 
         void setBaurrate( uint8_t val=0 );
 
@@ -50,7 +48,7 @@ class MAINMODULE_EXPORT PicUsart : public McuUsart
 
         uint8_t m_speedx2;
 
-        uint8_t*  m_TXSTA;
+        uint8_t*  m_PIR1;
         uint8_t*  m_RCSTA;
         uint8_t*  m_SPBRG;
 
@@ -60,7 +58,7 @@ class MAINMODULE_EXPORT PicUsart : public McuUsart
         regBits_t m_txEn;
         regBits_t m_rxEn;
 
-        regBits_t m_TRMT;
+        regBits_t m_TXIF;
         regBits_t m_BRGH;
         regBits_t m_SPEN;
         regBits_t m_TX9;

@@ -33,16 +33,26 @@ class MAINMODULE_EXPORT AvrWdt : public McuWdt
         ~AvrWdt();
 
         virtual void initialize() override;
+        virtual void runEvent() override;
 
         virtual void configureA( uint8_t newWDTCSR ) override;
 
+        virtual void reset() override;
+
     private:
         void wdtEnable();
+
+        bool m_allowChanges;
+
+        uint8_t*  m_WDTCSR;
 
         regBits_t m_WDIF;
         regBits_t m_WDIE;
         regBits_t m_WDCE;
         regBits_t m_WDE;
-        regBits_t m_WDP;
+        regBits_t m_WDP02;
+        regBits_t m_WDP3;
+
+        regBits_t m_WDRF;
 };
 #endif

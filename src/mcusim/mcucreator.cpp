@@ -59,6 +59,7 @@
 QString McuCreator::m_core = "";
 QString McuCreator::m_CompName = "";
 QString McuCreator::m_basePath = "";
+QString McuCreator::m_txRegName = "";
 Mcu*    McuCreator::m_mcuComp = NULL;
 eMcu*   McuCreator::mcu = NULL;
 QDomElement McuCreator::m_stackEl;
@@ -288,15 +289,17 @@ void McuCreator::createRegisters( QDomElement* e )
                     {
                         bitName = bitList.at( i );
                         if( bitName == "0" ) continue;
-                        mcu->m_bitMasks.insert( bitName, 1<<i );
-                        mcu->m_bitRegs.insert( bitName, regAddr );
-                    }
+                        for( QString alias : bitName.split("|") ) // Bit name variations: alias first used bit name
+                        {                                         // Example tiny WDTCR.WDTIE is 328 WDTCSR.WDIE
+                            mcu->m_bitMasks.insert( alias, 1<<i );
+                            mcu->m_bitRegs.insert( alias, regAddr );
+                    }   }
                     if( !stReg.isEmpty() && ( regName == stReg ) )
                     {
                         mcu->m_sregAddr = regAddr;
                         mcu->getRamTable()->setStatusBits( bitList );
             }   }   }
-        }else if( el.tagName() == "alias" )
+        }else if( el.tagName() == "mapped" )
         {
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
             uint16_t mapTo   = el.attribute("mapto").toUInt(0,0);
@@ -541,8 +544,13 @@ void McuCreator::createUsart( QDomElement* u )
 
             if( type == "tx" )
             {
+                m_txRegName = el.attribute( "register" );
+                mcu->watchRegNames( m_txRegName, R_WRITE, usartM, &McuUsart::sendByte );
+            }
+            else if( type == "rx" )
+            {
                 QString regName = el.attribute( "register" );
-                mcu->watchRegNames( regName, R_WRITE, usartM, &McuUsart::sendByte );
+                if( regName.isEmpty() ) regName = m_txRegName; // Tx and rx using the same register
                 mcu->watchRegNames( regName, R_READ,  usartM, &McuUsart::readByte );
             }
 
@@ -570,7 +578,9 @@ void McuCreator::createAdc( QDomElement* e )
 {
     QString name = e->attribute( "name" );
     McuAdc* adc;
-    if( m_core == "AVR" ) adc = new AvrAdc( mcu, name );
+
+    int type = e->attribute("type").toInt();
+    if( m_core == "AVR" ) adc = new AvrAdc( mcu, name, type );
     else return;
 
     mcu->m_modules.emplace_back( adc );
@@ -783,6 +793,7 @@ void McuCreator::createWdt( QDomElement* e )
     else return;
 
     mcu->m_modules.emplace_back( wdt );
+    mcu->m_wdt = wdt;
 
     setConfigRegs( e, wdt );
     QDomNode node = e->firstChild();
@@ -846,7 +857,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     iv->m_interrupts = &(mcu->m_interrupts);
 
     QString enable = el->attribute("enable");
-    mcu->watchBitNames( enable, R_WRITE, iv, &Interrupt::enableFlag );
+    if( !enable.isEmpty() ) mcu->watchBitNames( enable, R_WRITE, iv, &Interrupt::enableFlag );
 
     QString intFlag = el->attribute("flag");
     iv->m_flagMask = mcu->m_bitMasks.value( intFlag );

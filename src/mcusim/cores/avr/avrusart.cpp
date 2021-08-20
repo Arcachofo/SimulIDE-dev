@@ -64,6 +64,8 @@ AvrUsart::~AvrUsart(){}
 
 void AvrUsart::configureA( uint8_t newUCSRnC ) // UCSRnC changed
 {
+
+
     // clockPol = getRegBitsVal( val, UCPOLn );
 
     m_mode = getRegBitsVal( newUCSRnC, m_modeRB );        // UMSELn1, UMSELn0
@@ -131,33 +133,30 @@ void AvrUsart::setBit9( uint8_t bit )
     if( bit ) UCSRNB |= m_bit9Rx.mask;
 }
 
-void AvrUsart::sendByte(  uint8_t data )
+void AvrUsart::sendByte(  uint8_t data ) // Buffer is being written
 {
     if( !m_sender->isEnabled() ) return;
 
     if( getRegBitsVal( *m_ucsrna, m_UDRE ) )  // Buffer is empty
     {
-        clearRegBits( m_UDRE ); // Transmit buffer full: Clear UDREn bit
+        clearRegBits( m_UDRE );         // Transmit buffer full: Clear UDREn bit
         m_sender->processData( data );
 }   }
 
-void AvrUsart::byteSent( uint8_t data )
+void AvrUsart::frameSent( uint8_t data )
 {
     if( m_monitor ) m_monitor->printOut( data );
 
-    if( getRegBitsVal( *m_ucsrna, m_UDRE ) ) return; // Buffer is empty
-    m_sender->startTransmission();                   // Buffer contains data, send it
+    if( getRegBitsVal( *m_ucsrna, m_UDRE ) ) // Buffer is empty, raise USART Transmit Complete
+        m_sender->raiseInt();
+    else                                     // Buffer contains data, send it
+        m_sender->startTransmission();
 }
 
 void AvrUsart::readByte( uint8_t )   // UDRn is being readed
 {
     m_mcu->m_regOverride = m_receiver->getData();
     clearRegBits( m_RXC );                 // Clear RXCn flag
-}
-
-void AvrUsart::txDataEmpty()
-{
-    m_interrupt->raise(); // USART Data Register Empty Interrupt
 }
 
 void AvrUsart::setUCSRnA( uint8_t newUCSRnA )

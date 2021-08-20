@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "mcumodule.h"
+#include "mcuinterrupts.h"
 
 McuModule::McuModule( eMcu* mcu, QString name )
 {
@@ -27,3 +28,7 @@ McuModule::McuModule( eMcu* mcu, QString name )
 }
 McuModule::~McuModule( ){}
 
+/*void McuModule::raiseInt()
+{
+    if( m_interrupt ) m_interrupt->raise();
+}*/

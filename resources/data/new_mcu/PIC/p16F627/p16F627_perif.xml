@@ -32,6 +32,8 @@
         <trunit type="rx" pin="PORTB1" register="RCREG">
             <interrupt name="USART_R" />
         </trunit>
+        
+        <interrupt name="USART_U" />
     </usart>
     
 </parts>

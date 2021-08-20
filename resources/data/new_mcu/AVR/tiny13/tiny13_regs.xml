@@ -49,7 +49,7 @@
         <register name="EECR"   addr="0x1C" bits="EERE,EEPE,EEMPE,EERIE,EEPM0,EEPM1"/>
         <register name="EEDR"   addr="0x1D" bits=""/>
         <register name="EEARL"  addr="0x1E" bits=""/>
-        <register name="WDTCR"  addr="0x21" bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDTIE,WDIF"/>
+        <register name="WDTCR"  addr="0x21" bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDTIE|WDIE,WDTIF|WDIF"/>
         <register name="CLKPR"  addr="0x26" bits="CLKPS0,CLKPS1,CLKPS2,CLKPS3,0,0,0,CLKPE"/>
         <register name="GTCCR"  addr="0x28" bits="PSR10,0,0,0,0,0,0,TSM"/>
         <register name="OCR0B"  addr="0x29" bits=""/>

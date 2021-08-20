@@ -36,6 +36,8 @@ class MAINMODULE_EXPORT McuWdt : public McuModule, public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
+        virtual void reset(){;}
+
     protected:
 
         bool m_enabled;
