@@ -66,6 +66,7 @@ void Interrupt::execute()
 void Interrupt::exitInt() // Exit from this interrupt
 {
     if( m_autoClear ) clearFlag();
+    if( !m_exitCallBacks.isEmpty() ) { for( McuModule* mod : m_exitCallBacks ) mod->callBack(); }
 }
 
 void Interrupt::callBack( McuModule* mod, bool call ) // Add Modules to be called at Interrupt raise
@@ -73,6 +74,13 @@ void Interrupt::callBack( McuModule* mod, bool call ) // Add Modules to be calle
     if( call )
     { if( !m_callBacks.contains( mod ) ) m_callBacks.append( mod ); }
     else m_callBacks.removeAll( mod );
+}
+
+void Interrupt::exitCallBack( McuModule* mod, bool call )
+{
+    if( call )
+    { if( !m_exitCallBacks.contains( mod ) ) m_exitCallBacks.append( mod ); }
+    else m_exitCallBacks.removeAll( mod );
 }
 
 //------------------------               ------------------------

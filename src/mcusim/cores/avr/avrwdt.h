@@ -39,6 +39,8 @@ class MAINMODULE_EXPORT AvrWdt : public McuWdt
 
         virtual void reset() override;
 
+        virtual void callBack() override;
+
     private:
         void wdtEnable();
 
