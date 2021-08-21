@@ -115,11 +115,12 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
         UsartModule* m_usart;
         IoPin* m_ioPin;
 
+        uint8_t m_buffer;
+        uint8_t m_data;
         uint16_t m_frame;
         uint8_t m_framesize;
         uint8_t m_currentBit;
         uint8_t m_bit9;
-        uint8_t m_data;
         state_t m_state;
 
         bool m_enabled;

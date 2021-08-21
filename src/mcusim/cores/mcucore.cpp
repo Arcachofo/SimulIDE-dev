@@ -23,6 +23,8 @@ McuCore::McuCore( eMcu* mcu )
 {
     m_mcu = mcu;
 
+    m_retCycles = 2;
+
     m_spl = NULL;
     m_sph = NULL;
 
@@ -43,4 +45,8 @@ McuCore::McuCore( eMcu* mcu )
 }
 McuCore::~McuCore() {}
 
+void McuCore::reset()
+{
+    PC = 0;
+}
 

@@ -20,7 +20,7 @@
 #ifndef I51CORE_H
 #define I51CORE_H
 
-#include "corecpu.h"
+#include "mcucore.h"
 
 // SFR register locations
 enum SFR_REGS
@@ -47,7 +47,7 @@ enum {
 
 
 
-class MAINMODULE_EXPORT I51Core : public CoreCpu
+class MAINMODULE_EXPORT I51Core : public McuCore
 {
     public:
         I51Core( eMcu* mcu );
@@ -107,7 +107,7 @@ class MAINMODULE_EXPORT I51Core : public CoreCpu
             {
                 if( addr > m_lowDataMemEnd ) addr += m_regEnd;
             }
-            return CoreCpu::GET_RAM( addr );
+            return McuCore::GET_RAM( addr );
         }
         inline void SET_RAM( uint16_t addr , uint8_t val )
         {
@@ -115,7 +115,7 @@ class MAINMODULE_EXPORT I51Core : public CoreCpu
             {
                 if( addr > m_lowDataMemEnd ) addr += m_regEnd;
             }
-            CoreCpu::SET_RAM( addr, val );
+            McuCore::SET_RAM( addr, val );
         }
 
         //void push_to_stack( int aValue );

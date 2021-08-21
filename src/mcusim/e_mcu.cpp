@@ -110,6 +110,16 @@ uint16_t eMcu::getRegAddress( QString reg )// Get Reg address by name
     return m_regInfo.value( reg ).address;
 }
 
+uint8_t eMcu::getRamValue( int address )
+{
+    return m_dataMem[getMapperAddr(address)];   //m_dataMem[address];
+}
+
+void eMcu::setRamValue( int address, uint8_t value )
+{
+    m_dataMem[getMapperAddr(address)] = value;
+}
+
 void eMcu::uartOut( int number, uint32_t value ) // Send value to OutPanelText
 {
     /// TODELETE

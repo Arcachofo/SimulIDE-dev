@@ -20,13 +20,13 @@
 #ifndef PIC14CORE_H
 #define PIC14CORE_H
 
-#include "corecpu.h"
+#include "mcucore.h"
 
 enum {
     C=0,DC,Z,PD,TO,RP0,RP1,IRP
 };
 
-class MAINMODULE_EXPORT Pic14Core : public CoreCpu
+class MAINMODULE_EXPORT Pic14Core : public McuCore
 {
     public:
         Pic14Core( eMcu* mcu );
@@ -41,17 +41,12 @@ class MAINMODULE_EXPORT Pic14Core : public CoreCpu
         regBits_t m_bankBits;
         uint16_t  m_bank;
 
+        uint16_t m_PCLaddr;
+        uint16_t m_PCHaddr;
+
         uint32_t m_stack[8];
         uint8_t  m_sp;
 
-        /*uint8_t m_C;
-        uint8_t m_DC;
-        uint8_t m_Z;
-        uint8_t m_PD;
-        uint8_t m_TO;
-        uint8_t m_RP0;
-        uint8_t m_RP1;
-        uint8_t m_IRP;*/
 
         std::vector<uint16_t> m_outPortAddr;
         std::vector<uint16_t> m_inPortAddr;
@@ -74,12 +69,15 @@ class MAINMODULE_EXPORT Pic14Core : public CoreCpu
                     break;
                 }
             }
-            return CoreCpu::GET_RAM( addr );
+            return McuCore::GET_RAM( addr );
         }
         virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
         {
             addr = m_mcu->getMapperAddr( addr+m_bank );
-            CoreCpu::SET_RAM( addr, v );
+
+            if( addr == m_PCLaddr ) PC = v + (m_dataMem[m_PCHaddr]<<8); // Writting to PCL
+
+            McuCore::SET_RAM( addr, v );
         }
 
         virtual void PUSH_STACK( uint32_t addr ) override // Harware circular Stack
@@ -98,8 +96,8 @@ class MAINMODULE_EXPORT Pic14Core : public CoreCpu
         inline void setValue( uint8_t newV, uint8_t f, uint8_t d );
         inline void setValueZ( uint8_t newV, uint8_t f, uint8_t d );
 
-        inline void setAddFlags( uint8_t oldV, uint8_t newV, uint8_t src2 );
-        inline void setSubFlags( uint8_t oldV, uint8_t newV, uint8_t src2 );
+        inline void setAddFlags( uint8_t oldV, uint16_t newV, uint8_t src2 );
+        inline void setSubFlags( uint8_t oldV, uint16_t newV, uint8_t src2 );
 
         // Miscellaneous instructions
         inline void RETURN();

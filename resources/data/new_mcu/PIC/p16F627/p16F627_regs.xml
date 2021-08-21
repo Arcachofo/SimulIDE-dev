@@ -65,6 +65,7 @@
         <mapped                  addr="0x10A" mapto="0x0A"/><!-- PCLATCH -->
         <mapped                  addr="0x10B" mapto="0x0B"/><!-- INTCON -->
     </regblock>
+    <datablock name="GPR2" start="0x0120" end="0x014F"/>
     <datablock name="RAM2" start="0x0170" end="0x017F"  mapto="0x0070"/>
     
     <!-- BANK 3 -->

@@ -20,9 +20,12 @@
 #include "pic14core.h"
 
 Pic14Core::Pic14Core( eMcu* mcu )
-         : CoreCpu( mcu )
+         : McuCore( mcu )
 {
     m_sp = 0;
+
+    m_PCLaddr = mcu->getRegAddress("PCL");
+    m_PCHaddr = mcu->getRegAddress("PCLATCH");
 
     QHash<QString, McuPort*>  ports = m_mcu->getPorts();
     for( QString portName : ports.keys() )
@@ -38,7 +41,7 @@ Pic14Core::~Pic14Core() {}
 
 void Pic14Core::reset()
 {
-    CoreCpu::reset();
+    McuCore::reset();
 
     m_Wreg = 0;
 }
@@ -56,17 +59,17 @@ inline void Pic14Core::setValueZ( uint8_t newV, uint8_t f, uint8_t d )
     write_S_Bit( Z, newV==0 );
 }
 
-inline void Pic14Core::setAddFlags( uint8_t oldV, uint8_t newV, uint8_t src2 )
+inline void Pic14Core::setAddFlags( uint8_t oldV, uint16_t newV, uint8_t src2 )
 {
     write_S_Bit( Z, newV==0 );
-    write_S_Bit( C, newV & 0x100 );
+    write_S_Bit( C, !(newV & 0x100) );
     write_S_Bit( DC, (newV^oldV^src2) & 0x10 );
 }
 
-inline void Pic14Core::setSubFlags( uint8_t oldV, uint8_t newV, uint8_t src2 )
+inline void Pic14Core::setSubFlags( uint8_t oldV, uint16_t newV, uint8_t src2 )
 {
     write_S_Bit( Z, newV==0 );
-    write_S_Bit( C, newV & 0x100 );
+    write_S_Bit( C, !(newV & 0x100) );
     write_S_Bit( DC, (newV^oldV^src2) & 0x10 );
 }
 
@@ -110,13 +113,14 @@ inline void Pic14Core::MOVWF( uint8_t f )
 inline void Pic14Core::CLRF( uint8_t f )
 {
     SET_RAM( f, 0 );
+    write_S_Bit( Z, true );
     incDefault();
 }
 
 inline void Pic14Core::SUBWF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
-    uint8_t newV = oldV - m_Wreg;
+    int16_t newV = oldV - m_Wreg;
 
     setValue( newV, f, d );
     setSubFlags( oldV, newV, m_Wreg );
@@ -155,7 +159,7 @@ inline void Pic14Core::XORWF( uint8_t f, uint8_t d )
 inline void Pic14Core::ADDWF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
-    uint8_t newV = oldV + m_Wreg;
+    uint16_t newV = oldV + m_Wreg;
 
     setValue( newV, f, d );
     setAddFlags( oldV, newV, m_Wreg );
@@ -305,17 +309,19 @@ inline void Pic14Core::XORLW( uint8_t k )
     incDefault();
 }
 
-inline void Pic14Core::SUBLW( uint8_t k )
+inline void Pic14Core::SUBLW( uint8_t k ) //// C,DC,Z
 {
+    uint8_t oldW = m_Wreg;
     m_Wreg -= k;
-    write_S_Bit( Z, m_Wreg==0 );
+    setSubFlags( oldW, m_Wreg, k );
     incDefault();
 }
 
-inline void Pic14Core::ADDLW( uint8_t k )
+inline void Pic14Core::ADDLW( uint8_t k ) //// C,DC,Z
 {
+    uint8_t oldW = m_Wreg;
     m_Wreg += k;
-    write_S_Bit( Z, m_Wreg==0 );
+    setAddFlags( oldW, m_Wreg, k );
     incDefault();
 }
 
@@ -409,4 +415,5 @@ void Pic14Core::runDecoder()
             }
         }
     }
+    m_dataMem[ m_PCLaddr] = PC&0xFF;
 }

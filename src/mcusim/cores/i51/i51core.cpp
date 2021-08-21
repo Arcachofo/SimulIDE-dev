@@ -60,10 +60,8 @@
 #define INDIR_RX_ADDRESS ( m_dataMem[(m_opcode & 1) + 8*BANK_SELECT] )
 #define RX_ADDRESS ( (m_opcode & 7) + 8*BANK_SELECT )
 
-//#define CARRY ((PSW & PSWMASK_C) >> PSW_C)
-
 I51Core::I51Core( eMcu* mcu  )
-       : CoreCpu( mcu  )
+       : McuCore( mcu  )
 {
     m_acc = m_mcu->getReg( "ACC" );
 
@@ -76,20 +74,12 @@ I51Core::I51Core( eMcu* mcu  )
         m_outPortAddr.emplace_back( port->getOutAddr() );
         m_inPortAddr.emplace_back( port->getInAddr() );
     }
-
-    /*m_P   = m_mcu->getRegBits("P").bit0;
-    OV  = m_mcu->getRegBits("OV").bit0;
-    RS0 = m_mcu->getRegBits("RS0").bit0;
-    RS1 = m_mcu->getRegBits("RS1").bit0;
-    m_F0  = m_mcu->getRegBits("F0").bit0;
-    AC  = m_mcu->getRegBits("AC").bit0;
-    Cy  = m_mcu->getRegBits("Cy").bit0;*/
 }
 I51Core::~I51Core() {}
 
 void I51Core::reset()
 {
-    CoreCpu::reset();
+    McuCore::reset();
 }
 
 void I51Core::pushStack8( uint8_t aValue )

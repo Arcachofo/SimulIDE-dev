@@ -26,16 +26,15 @@
 #ifndef AVRCORE_H
 #define AVRCORE_H
 
-#include "corecpu.h"
+#include "mcucore.h"
 
-
-class MAINMODULE_EXPORT AvrCore : public CoreCpu
+class MAINMODULE_EXPORT AvrCore : public McuCore
 {
     public:
         AvrCore( eMcu* mcu );
         ~AvrCore();
 
-        virtual void reset();
+        //virtual void reset();
         virtual void runDecoder();
 
     private:

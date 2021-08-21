@@ -31,7 +31,7 @@
 /// #define SREG m_sreg
 
 AvrCore::AvrCore( eMcu* mcu )
-       : CoreCpu( mcu )
+       : McuCore( mcu )
 {
     EIND  = m_mcu->getReg( "EIND" );
     RAMPZ = m_mcu->getReg( "RAMPZ" );
@@ -39,10 +39,10 @@ AvrCore::AvrCore( eMcu* mcu )
 }
 AvrCore::~AvrCore() {}
 
-void AvrCore::reset()
+/*void AvrCore::reset()
 {
-    CoreCpu::reset();
-}
+    McuCore::reset();
+}*/
 
 inline void AvrCore::flags_ns( uint8_t res )
 {

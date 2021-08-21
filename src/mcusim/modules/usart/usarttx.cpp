@@ -54,24 +54,24 @@ void UartTx::runEvent()
     }
     else if( m_state == usartTXEND )
     {
-        m_usart->frameSent( m_data );
-        /// m_interrupt->raise();
-
         m_state = usartIDLE;
         m_ioPin->setOutState( 1 );
+        m_usart->frameSent( m_data );
+        /// m_interrupt->raise();
 }   }
 
 void UartTx::processData( uint8_t data )
 {
     if( !m_enabled ) return;
 
-    m_data = data;
+    m_buffer = data;
     if( m_state == usartIDLE ) startTransmission();
 }
 
 void UartTx::startTransmission() // Data loaded to ShiftReg
 {
     m_usart->bufferEmpty();
+    m_data = m_buffer;
 
     m_state = usartTRANSMIT;
 

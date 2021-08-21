@@ -161,22 +161,35 @@ void PicProcessor::reset()
 }
 
 uint8_t PicProcessor::getRamValue( int address )
-{ return m_pPicProcessor->registers[address]->get_value(); }
-
+{
+    if( (uint32_t)address > m_ramSize ) return 0;
+    return m_pPicProcessor->registers[address]->get_value();
+}
 void PicProcessor::setRamValue( int address, uint8_t value )
-{ m_pPicProcessor->registers[address]->put_value( value ); }
-
+{
+    if( (uint32_t)address > m_ramSize ) return;
+    m_pPicProcessor->registers[address]->put_value( value );
+}
 uint16_t PicProcessor::getFlashValue( int address )
-{ return m_pPicProcessor->program_memory[address]->get_value(); }
-
+{
+    if( (uint32_t)address > m_flashSize ) return 0;
+    return m_pPicProcessor->program_memory[address]->get_value();
+}
 void PicProcessor::setFlashValue( int address, uint16_t value )
-{ m_pPicProcessor->program_memory[address]->put_value( value ); }
-
+{
+    if( (uint32_t)address > m_flashSize  ) return;
+    m_pPicProcessor->program_memory[address]->put_value( value );
+}
 uint8_t PicProcessor::getRomValue( int address )
-{ return m_pPicProcessor->eeprom->rom[address]->get_value(); }
-
+{
+    if( (uint32_t)address > m_romSize  ) return 0;
+    return m_pPicProcessor->eeprom->rom[address]->get_value();
+}
 void PicProcessor::setRomValue(int address, uint8_t value)
-{ m_pPicProcessor->eeprom->rom[address]->put_value( value ); }
+{
+    if( (uint32_t)address > m_romSize  ) return;
+    m_pPicProcessor->eeprom->rom[address]->put_value( value );
+}
 
 void PicProcessor::uartIn( int uart, uint32_t value ) // Receive one byte on Uart
 {

@@ -55,8 +55,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         //-------------------------------------------------------------
         virtual void stepCpu() override;
 
-        virtual uint8_t  getRamValue( int address ) override { return m_dataMem[address]; }
-        virtual void     setRamValue( int address, uint8_t value ) override { m_dataMem[address] = value; }
+        virtual uint8_t  getRamValue( int address ) override;
+        virtual void     setRamValue( int address, uint8_t value ) override;
         virtual uint16_t getFlashValue( int address ) override { return m_progMem[address]; }
         virtual void     setFlashValue( int address, uint16_t value ) override { m_progMem[address] = value; }
         virtual uint8_t  getRomValue( int address ) override { return m_eeprom[address]; }
