@@ -47,8 +47,8 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name, int type )
     m_timer1 = (AvrTimer16bit*)mcu->getTimer( "TIMER1" );
 
     m_t0OCA = m_timer0->getOcUnit("OCA");
-    if     ( type == 0 ) m_tOCB = m_timer1->getOcUnit("OCB");
-    else if( type == 1 ) m_tOCB = m_timer0->getOcUnit("OCB");
+    if     ( type == 0 ) m_txOCB = m_timer1->getOcUnit("OCB");
+    else if( type == 1 ) m_txOCB = m_timer0->getOcUnit("OCB");
 
 }
 AvrAdc::~AvrAdc(){}
@@ -98,18 +98,20 @@ void AvrAdc::autotriggerConf()
     if( !m_autoTrigger ) trigger = 255;
 
     m_freeRunning = trigger == 0;
-    /// TODO Analog Comparator
-    m_t0OCA->getInterrupt()->callBack( this, m_trigger == 3 );
-    m_timer0->getInterrupt()->callBack( this, m_trigger == 4 );
-    m_tOCB->getInterrupt()->callBack( this, m_trigger == 5 );
+    /// TODO                                                  // Analog Comparator
+    m_t0OCA->getInterrupt()->callBack( this, trigger == 3 );  // Timer/Counter0 Compare Match A
+    m_timer0->getInterrupt()->callBack( this, trigger == 4 ); // Timer/Counter0 Overflow
+
     if( m_type == 0 )
     {
-        m_timer1->getInterrupt()->callBack( this, m_trigger == 6 );
-        /// TODO Timer/Counter1 Capture Event
+        m_txOCB->getInterrupt()->callBack( this, trigger == 5 );  // Timer/Counter1 Compare Match B
+        m_timer1->getInterrupt()->callBack( this, trigger == 6 ); // Timer/Counter1 Overflow
+        /// TODO                                                  // Timer/Counter1 Capture Event
     }
+    else if( m_type == 1 )
+        m_txOCB->getInterrupt()->callBack( this, trigger == 5 ); // Timer/Counter0 Compare Match B
 
-
-    /*switch( m_trigger ) /// TODO
+    /*switch( m_trigger )
     {
         case 0:     // Free Running mode
             m_freeRunning = true;

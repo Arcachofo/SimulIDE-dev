@@ -76,7 +76,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         AvrTimer16bit*  m_timer1;
 
         McuOcUnit* m_t0OCA;
-        McuOcUnit* m_tOCB;
+        McuOcUnit* m_txOCB;
 };
 
 #endif
