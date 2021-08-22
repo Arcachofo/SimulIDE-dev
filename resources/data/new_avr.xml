@@ -3,6 +3,7 @@
 <itemlib>
     <itemset category="AVR/attiny" type="MCU">
         <item name="tiny13"   package="new_mcu/AVR/tiny13/tiny13"    data="new_mcu/AVR/tiny13" ></item>
+        <item name="tiny13a"  package="new_mcu/AVR/tiny13/tiny13"    data="new_mcu/AVR/tiny13a" ></item>
     </itemset>
     <itemset category="AVR/atmega" type="MCU">
         <item name="mega48"   package="new_mcu/AVR/megax8/megax8"    data="new_mcu/AVR/mega48" ></item>

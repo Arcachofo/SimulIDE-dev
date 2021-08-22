@@ -15,11 +15,13 @@
     <register  name="EEDR"    addr="0x001D" bits="EEDR0,EEDR1,EEDR2,EEDR3,EEDR4,EEDR5,EEDR6,EEDR7" />
     <register  name="EEAR"    addr="0x001E" bits="EEAR0,EEAR1,EEAR2,EEAR3,EEAR4,EEAR5,0,0" />
     <register  name="WDTCR"   addr="0x0021" bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDTIE,WDTIF" />
+    <register  name="PRR"     addr="0x0025" bits="PRADC,PRTIM0,0,0,0,0,0,0" />
     <register  name="CLKPR"   addr="0x0026" bits="CLKPS0,CLKPS1,CLKPS2,CLKPS3,0,0,0,CLKPCE" />
     <register  name="GTCCR"   addr="0x0028" bits="PSR10,0,0,0,0,0,0,TSM" />
     <register  name="OCR0B"   addr="0x0029" bits="OCR0B_0,OCR0B_1,OCR0B_2,OCR0B_3,OCR0B_4,OCR0B_5,OCR0B_6,OCR0B_7" />
     <register  name="DWDR"    addr="0x002E" bits="DWDR0,DWDR1,DWDR2,DWDR3,DWDR4,DWDR5,DWDR6,DWDR7" />
     <register  name="TCCR0A"  addr="0x002F" bits="WGM00,WGM01,0,0,COM0B0,COM0B1,COM0A0,COM0A1" />
+    <register  name="BODCR"   addr="0x0030" bits="BPDSE,BPDS,0,0,0,0,0,0" />
     <register  name="OSCCAL"  addr="0x0031" bits="CAL0,CAL1,CAL2,CAL3,CAL4,CAL5,CAL6,OSCCAL7" />
     <register  name="TCNT0"   addr="0x0032" bits="TCNT0_0,TCNT0_1,TCNT0_2,TCNT0_3,TCNT0_4,TCNT0_5,TCNT0_6,TCNT0_7" />
     <register  name="TCCR0B"  addr="0x0033" bits="CS00,CS01,CS02,WGM02,0,0,FOC0B,FOC0A" />
