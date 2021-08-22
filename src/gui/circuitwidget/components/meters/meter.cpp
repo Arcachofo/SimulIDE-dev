@@ -30,6 +30,7 @@ Meter::Meter( QObject* parent, QString type, QString id )
      , m_display( this )
 {
     m_graphical = true;
+    m_switchPins = false;
 
     m_area = QRectF( -24, -24, 50, 32 );
 
