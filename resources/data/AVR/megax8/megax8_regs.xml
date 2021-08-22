@@ -34,7 +34,7 @@
     <register  name="ACSR"    addr="0x0030" bits="ACIS0,ACIS1,ACIC,ACIE,ACI,ACO,ACBG,ACD" />
     <register  name="SMCR"    addr="0x0033" bits="SE,SM0,SM1,SM2,0,0,0,0" />
     <register  name="MCUSR"   addr="0x0034" bits="PORF,EXTREF,BORF,WDRF,0,0,0,0" />
-    <register  name="MCUCR"   addr="0x0035" bits="IVCE,IVSEL,0,0,PUD,BODSE,BODS,0" />
+    <register  name="MCUCR"   addr="0x0035" bits="IVCE,IVSEL,0,0,PUD,0,0,0" />
     <register  name="SPMCSR"  addr="0x0037" bits="SELFPRGEN,PGERS,PGWRT,BLBSET,RWWSRE,0,RWWSB,SPMIE" />
     <register  name="SPL"     addr="0x003D" bits="" />
     <register  name="SPH"     addr="0x003E" bits="" />

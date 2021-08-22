@@ -1,0 +1,64 @@
+<!DOCTYPE SimulIDE>
+
+<parts>
+    <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="DDRA">
+        <interrupt name="PCINT0" />
+    </port>
+    
+    <port name="PORTB" pins="4" outreg="PORTB" inreg="PINB" dirreg="DDRB">
+        <interrupt name="PCINT1" />
+    </port>
+    
+    <timer name="TIMER0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
+        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+        <extclock type="PIN" source="PORTA3"/>
+        
+        <ocunit name="OC0A" pin="PORTB2" ocreg="OCR0A" configbits="COM0A0,COM0A1">
+            <interrupt name="T0COA" />
+        </ocunit>
+        
+        <ocunit name="OC0B" pin="PORTA7" ocreg="OCR0B" configbits="COM0B0,COM0B1">
+            <interrupt name="T0COB" />
+        </ocunit>
+
+        <interrupt name="T0_OVF" />
+    </timer>
+    
+    <timer name="TIMER1" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B">
+        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+        <extclock type="PIN" source="PORTA4"/>
+        
+        <ocunit name="OC1A" pin="PORTA6" ocreg="OCR1AL,OCR1AH" configbits="COM1A0,COM1A1">
+            <interrupt name="T1COA" />
+        </ocunit>
+        
+        <ocunit name="OC1B" pin="PORTA5" ocreg="OCR1BL,OCR1BH" configbits="COM1B0,COM1B1">
+            <interrupt name="T1COB" />
+        </ocunit>
+        
+        <interrupt name="T1_OVF" />
+    </timer>
+
+    <adc name="ADC" type="1" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" 
+                    configregsB="ADCSRB" multiplex="ADMUX">
+        <prescaler select="" values="2,2,4,8,16,32,64,128"/>
+        <inputs type="PIN" source="PORTA0,PORA1,PORTA2,PORTA3,PORTA4,PORTA5,PORTA6,PORTA7" />
+        
+        <interrupt name="ADC" />
+    </adc>
+    
+    <wdt name="WatchDog" configregsA="WDTCR">
+        <prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
+        <interrupt name="WDT" />
+    </wdt>
+    
+    <eeprom name="EEPROM" dataregs="EEDR" addressreg="EEARL" configregsA="EECR">
+        <interrupt name="EEPR" />
+    </eeprom>
+    
+    <acomp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D">
+        <inputpin name="positive" pin="PORTA1" />
+        <inputpin name="negative" pin="PORTA2" />
+        <interrupt name="ACOMP" />
+    </acomp>
+</parts>

@@ -2,9 +2,9 @@
 
 <itemlib>
     
-    <itemset category="I51" type="MCU">
+    <itemset category="I51" type="MCU" >
         
-        <item name="8051" package="new_mcu/MCS51/MCS51" data="new_mcu/MCS51/MCS51"></item>
+        <item name="8051" package="MCS51/MCS51" data="MCS51/MCS51"></item>
     
     </itemset>
     
