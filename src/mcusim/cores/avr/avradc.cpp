@@ -23,11 +23,21 @@
 #include "mcupin.h"
 #include "e_mcu.h"
 
-AvrAdc::AvrAdc( eMcu* mcu, QString name, int type )
+AvrAdc* AvrAdc::CreateAdc( eMcu* mcu, QString name ,int type )
+{
+    switch ( type )
+    {
+        case 0: return new AvrAdc0( mcu, name ); break;
+        case 1: return new AvrAdc1( mcu, name ); break;
+        case 2: return new AvrAdc2( mcu, name ); break;
+        case 3: return new AvrAdc3( mcu, name ); break;
+        default: return NULL;
+    }
+}
+
+AvrAdc::AvrAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
 {
-    m_type = type;
-
     //m_ADCSRA = mcu->getReg( "ADCSRA" );
     m_ADEN  = mcu->getRegBits( "ADEN" );
     m_ADSC  = mcu->getRegBits( "ADSC" );
@@ -44,12 +54,10 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name, int type )
     m_aRefPin = mcu->getPin( "PORTV1" );
 
     m_timer0 = (AvrTimer0*)mcu->getTimer( "TIMER0" );
-    m_timer1 = (AvrTimer16bit*)mcu->getTimer( "TIMER1" );
+    m_timer1 = NULL;
 
     m_t0OCA = m_timer0->getOcUnit("OCA");
-    if     ( type == 0 ) m_txOCB = m_timer1->getOcUnit("OCB");
-    else if( type == 1 ) m_txOCB = m_timer0->getOcUnit("OCB");
-
+    m_txOCB = NULL;
 }
 AvrAdc::~AvrAdc(){}
 
@@ -92,76 +100,12 @@ void AvrAdc::configureB( uint8_t newADCSRB ) // ADCSRB
     /// TODO: ACME ???
 }
 
-void AvrAdc::autotriggerConf()
-{
-    uint8_t trigger = m_trigger;
-    if( !m_autoTrigger ) trigger = 255;
-
-    m_freeRunning = trigger == 0;
-    /// TODO                                                  // Analog Comparator
-    m_t0OCA->getInterrupt()->callBack( this, trigger == 3 );  // Timer/Counter0 Compare Match A
-    m_timer0->getInterrupt()->callBack( this, trigger == 4 ); // Timer/Counter0 Overflow
-
-    if( m_type == 0 )
-    {
-        m_txOCB->getInterrupt()->callBack( this, trigger == 5 );  // Timer/Counter1 Compare Match B
-        m_timer1->getInterrupt()->callBack( this, trigger == 6 ); // Timer/Counter1 Overflow
-        /// TODO                                                  // Timer/Counter1 Capture Event
-    }
-    else if( m_type == 1 )
-        m_txOCB->getInterrupt()->callBack( this, trigger == 5 ); // Timer/Counter0 Compare Match B
-
-    /*switch( m_trigger )
-    {
-        case 0:     // Free Running mode
-            m_freeRunning = true;
-            break;
-        case 1:     // Analog Comparator
-            break;
-        case 2:     // External Interrupt Request 0
-            break;
-        case 3:     // Timer/Counter0 Compare Match A
-            break;
-        case 4:     // Timer/Counter0 Overflow
-            break;
-        case 5:     // Timer/Counter1 Compare Match B
-            break;
-        case 6:     // Timer/Counter1 Overflow
-            break;
-        case 7:     // Timer/Counter1 Capture Event
-            break;
-    }*/
-}
-
 void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
 {
     m_channel = newADMUX & 0x0F;
     m_leftAdjust = getRegBitsBool( newADMUX, m_ADLAR );
 
     m_refSelect = getRegBitsVal( newADMUX, m_REFS );
-    if( m_type == 1 ) m_refSelect = (m_refSelect << 1) + 1; // tiny
-}
-
-double AvrAdc::getVref()
-{
-    double vRef = 0;
-
-    switch( m_refSelect )
-    {
-        case 0:     // AREF
-            vRef = m_aRefPin->getVolt();
-            break;
-        case 1:     // AVcc
-            if( m_type == 1 ) vRef = 5; // tiny
-            else              vRef = m_aVccPin->getVolt();
-            break;
-        case 2:     // Reserved
-            break;
-        case 3:     // Internal 1.1 Volt
-            vRef = 1.1;
-            break;
-    }
-    return vRef;
 }
 
 void AvrAdc::endConversion()
@@ -172,3 +116,152 @@ void AvrAdc::endConversion()
     if( m_autoTrigger && m_freeRunning ) startConversion();
 }
 
+//------------------------------------------------------
+//-- AVR ADC Type 0 ------------------------------------
+
+AvrAdc0::AvrAdc0( eMcu* mcu, QString name )
+      : AvrAdc( mcu, name )
+{
+    m_timer1 = (AvrTimer16bit*)mcu->getTimer("TIMER1");
+    m_txOCB = m_timer1->getOcUnit("OCB");
+}
+AvrAdc0::~AvrAdc0(){}
+
+void AvrAdc0::autotriggerConf()
+{
+    uint8_t trigger = m_trigger;
+    if( !m_autoTrigger ) trigger = 255;
+
+    m_freeRunning = trigger == 0;
+    /// TODO                                     trigger == 1 // Analog Comparator
+    /// TODO                                     trigger == 2 //External Interrupt Request 0
+    m_t0OCA->getInterrupt()->callBack( this, trigger == 3 );  // Timer/Counter0 Compare Match A
+    m_timer0->getInterrupt()->callBack( this, trigger == 4 ); // Timer/Counter0 Overflow
+    m_txOCB->getInterrupt()->callBack( this, trigger == 5 );  // Timer/Counter1 Compare Match B
+    m_timer1->getInterrupt()->callBack( this, trigger == 6 ); // Timer/Counter1 Overflow
+    /// TODO                                     trigger == 7 // Timer/Counter1 Capture Event
+}
+
+double AvrAdc0::getVref()
+{
+    double vRef = 0;
+
+    switch( m_refSelect )
+    {
+        case 0:     // AREF
+            vRef = m_aRefPin->getVolt();
+            break;
+        case 1:     // AVcc
+            vRef = m_aVccPin->getVolt();
+            break;
+        case 2:     // Reserved
+            break;
+        case 3:     // Internal 1.1 Volt
+            vRef = 1.1;
+            break;
+    }
+    return vRef;
+}
+
+//------------------------------------------------------
+//-- AVR ADC Type 1 ------------------------------------
+
+AvrAdc1::AvrAdc1( eMcu* mcu, QString name )
+      : AvrAdc( mcu, name )
+{
+    m_txOCB = m_timer0->getOcUnit("OCB");
+}
+AvrAdc1::~AvrAdc1(){}
+
+void AvrAdc1::autotriggerConf()
+{
+    uint8_t trigger = m_trigger;
+    if( !m_autoTrigger ) trigger = 255;
+
+    m_freeRunning = trigger == 0;
+    /// TODO                                     trigger == 1 // Analog Comparator
+    /// TODO                                     trigger == 2 //External Interrupt Request 0
+    m_t0OCA->getInterrupt()->callBack( this, trigger == 3 );  // Timer/Counter0 Compare Match A
+    m_timer0->getInterrupt()->callBack( this, trigger == 4 ); // Timer/Counter0 Overflow
+    m_txOCB->getInterrupt()->callBack( this, trigger == 5 );  // Timer/Counter0 Compare Match B
+    /// TODO                                     trigger == 6 // Pin Change Interrupt Request
+}
+
+double AvrAdc1::getVref()
+{
+    double vRef = 0;
+
+    switch( m_refSelect )
+    {
+        case 0:     // Vcc
+            vRef = 5;
+            break;
+        case 1:     ///TODO // Internal Vref. = ??? 1.1 Volt
+            vRef = 1.1;
+            break;
+    }
+    return vRef;
+}
+
+//------------------------------------------------------
+//-- AVR ADC Type 2 ------------------------------------
+
+AvrAdc2::AvrAdc2( eMcu* mcu, QString name )
+      : AvrAdc0( mcu, name )
+{
+}
+AvrAdc2::~AvrAdc2(){}
+
+double AvrAdc2::getVref()
+{
+    double vRef = 0;
+
+    switch( m_refSelect )
+    {
+        case 0:     // Vcc
+            vRef = 5;
+            break;
+        case 1:    // External voltage reference at PA0 (AREF)
+            /// TODO
+            break;
+        case 2:    // Internal Vref. 1.1 Volt
+            vRef = 1.1;
+            break;
+    }
+    return vRef;
+}
+
+//------------------------------------------------------
+//-- AVR ADC Type 3 ------------------------------------
+
+AvrAdc3::AvrAdc3( eMcu* mcu, QString name )
+       : AvrAdc1( mcu, name )
+{
+}
+AvrAdc3::~AvrAdc3(){}
+
+double AvrAdc3::getVref()
+{
+    double vRef = 0;
+
+    switch( m_refSelect )
+    {
+        case 0:     // Vcc
+            vRef = 5;
+            break;
+        case 1:    // External voltage reference at PB0 (AREF)
+            /// TODO
+            break;
+        case 2:    // Internal Vref. 1.1 Volt
+            vRef = 1.1;
+            break;
+        case 3:    // Reserved
+            break;
+        case 4:    // Internal 2.56V Voltage Reference without external capacitor
+            // fallthrough
+        case 5:    // Internal 2.56V Voltage Reference with external capacitor
+            vRef = 2.56;
+            break;
+    }
+    return vRef;
+}

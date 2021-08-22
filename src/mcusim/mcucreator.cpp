@@ -580,7 +580,7 @@ void McuCreator::createAdc( QDomElement* e )
     McuAdc* adc;
 
     int type = e->attribute("type").toInt();
-    if( m_core == "AVR" ) adc = new AvrAdc( mcu, name, type );
+    if( m_core == "AVR" ) adc = AvrAdc::CreateAdc( mcu, name, type );
     else return;
 
     mcu->m_modules.emplace_back( adc );
@@ -906,3 +906,94 @@ void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )
         mcu->watchBitNames( configBits, R_WRITE, module, &McuModule::configureB );
         module->m_configBitsB = mcu->getRegBits( configBits );
 }   }
+
+void McuCreator::convert( QString fileName )
+{
+    //const QString dir = "/home/user/GreatCowBasic/chipdata";
+    //QString fileName = QFileDialog::getOpenFileName( NULL, "Convert", dir,"All files (*.*)");
+
+    QStringList lines = fileToStringList( fileName, "AvrAsmDebugger::mapLstToAsm" );
+    bool regs = false;
+    bool bits = false;
+    int max = 0;
+    int min = 999;
+    QMap<int, QString> regMap;
+    QHash<QString,QVector<QString> > bitHash;
+    for( QString line : lines )
+    {
+        if( regs )
+        {
+            if( line.remove(" ").isEmpty() ) continue;
+            if( line.contains("[Bits]") ) { bits = true; regs = false; continue;}
+            QStringList words = line.split(",");
+            regMap[words.at(1).toInt()] = words.at(0);
+        }
+        else if( bits )
+        {
+            if( line.remove(" ").isEmpty() ) continue;
+            if( line.contains("[") ) break;
+            QStringList words = line.split(",");
+            QString bit = words.at(0);
+            QString reg = words.at(1);
+
+            QVector<QString> bh = bitHash[reg];
+            if( bh.isEmpty() )  bh.fill("0",8);
+
+            int i = words.at(2).toInt();
+            if( i > max ) max = i;
+            if( i < min ) min = i;
+
+            bh[i] = bit;
+            bitHash[reg] = bh;
+        }
+        if( line.contains("[Registers]") ) regs = true;
+    }
+    QString doc;
+    doc.append("<parts>\n");
+
+    QList<int> addresses = regMap.keys();
+
+    for( int addr : addresses )
+    {
+        doc.append("    <register ");
+
+        QString regName = regMap.value(addr);
+        QString ad = QString::number(addr,16).toUpper();
+        while( ad.size() < 4 ) ad.prepend("0");
+        QString nameEntry = " name=\""+regName+"\" ";
+        while( nameEntry.size() < 15 ) nameEntry.append(" ");
+
+        doc.append( nameEntry );
+        doc.append(" addr=\"0x"+ad+"\" ");
+
+        QString bitsList;
+        QVector<QString> bitVec = bitHash.value(regName);
+        if( !bitVec.isEmpty() )
+        {
+            for( int i=0; i<8; i++ )
+            {
+                QString bitName = bitVec.at(i);
+                if( bitName.isEmpty() ) continue;
+                bitsList.append( bitName+",");
+            }
+            bitsList.remove(bitsList.size()-1,1);
+        }
+        doc.append("bits=\""+bitsList+"\" />\n");
+    }
+    doc.append("</parts>\n\n");
+    fileName.replace(".dat","_regs-aut.xml");
+    QFile file( fileName );
+
+    if( !file.open( QFile::WriteOnly | QFile::Text ))
+    {
+        QApplication::restoreOverrideCursor();
+        QMessageBox::warning(0l, "McuCreator::convert",
+        "Cannot write file:\n+."+fileName+file.errorString() );
+        return ;
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << doc;
+    file.close();
+}
+

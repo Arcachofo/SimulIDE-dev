@@ -37,7 +37,7 @@ class MAINMODULE_EXPORT McuCreator
         ~McuCreator();
 
         static int createMcu( Mcu* mcuComp, QString name );
-
+        static void convert( QString fileName );
     private:
         static int  processFile( QString fileName );
         static void createProgMem( uint32_t size );

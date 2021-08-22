@@ -29,11 +29,15 @@ class AvrTimer0;
 class AvrTimer16bit;
 class McuOcUnit;
 
+
+
 class MAINMODULE_EXPORT AvrAdc : public McuAdc
 {
     public:
-        AvrAdc( eMcu* mcu, QString name ,int type );
+        AvrAdc( eMcu* mcu, QString name );
         ~AvrAdc();
+
+ static AvrAdc* CreateAdc( eMcu* mcu, QString name ,int type );
 
         virtual void initialize() override;
 
@@ -43,11 +47,8 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         virtual void callBack() override { if( !m_converting ) startConversion(); }
 
     protected:
-        void autotriggerConf();
-        virtual double getVref() override;
+        virtual void autotriggerConf(){;}
         virtual void endConversion() override;
-
-        int m_type;
 
         bool m_autoTrigger;
         bool m_freeRunning;
@@ -79,4 +80,50 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         McuOcUnit* m_txOCB;
 };
 
+class MAINMODULE_EXPORT AvrAdc0 : public AvrAdc
+{
+    public:
+        AvrAdc0( eMcu* mcu, QString name );
+        ~AvrAdc0();
+
+        //virtual void initialize() override;
+
+        //virtual void configureA( uint8_t newADCSRA ) override;
+        //virtual void configureB( uint8_t newADCSRB ) override;
+
+    protected:
+        virtual void autotriggerConf() override;
+        virtual double getVref() override;
+};
+
+class MAINMODULE_EXPORT AvrAdc1 : public AvrAdc
+{
+    public:
+        AvrAdc1( eMcu* mcu, QString name );
+        ~AvrAdc1();
+
+    protected:
+        virtual void autotriggerConf() override;
+        virtual double getVref() override;
+};
+
+class MAINMODULE_EXPORT AvrAdc2 : public AvrAdc0
+{
+    public:
+        AvrAdc2( eMcu* mcu, QString name );
+        ~AvrAdc2();
+
+    protected:
+        virtual double getVref() override;
+};
+
+class MAINMODULE_EXPORT AvrAdc3 : public AvrAdc1
+{
+    public:
+        AvrAdc3( eMcu* mcu, QString name );
+        ~AvrAdc3();
+
+    protected:
+        virtual double getVref() override;
+};
 #endif
