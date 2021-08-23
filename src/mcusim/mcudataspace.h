@@ -43,9 +43,9 @@ class MAINMODULE_EXPORT DataSpace
         uint8_t* getReg( QString reg )                // Get pointer to Reg data by name
         { return &m_dataMem[m_regInfo.value( reg ).address]; }
 
-        QHash<QString, uint8_t>* bitMasks() { return &m_bitMasks; }
-        QHash<QString, uint16_t>* bitRegs() { return &m_bitRegs; }
-        QHash<QString, regInfo_t>* regInfo()  { return &m_regInfo; }
+        QHash<QString, uint8_t>*       bitMasks() { return &m_bitMasks; }
+        QHash<QString, uint16_t>*      bitRegs() { return &m_bitRegs; }
+        QHash<QString, regInfo_t>*     regInfo()  { return &m_regInfo; }
         QHash<uint16_t, regSignal_t*>* regSignals() { return &m_regSignals; }
 
         int m_regOverride;                         // Register value is overriden at write time

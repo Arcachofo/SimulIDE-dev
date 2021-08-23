@@ -50,6 +50,7 @@ void McuTimer::initialize()
     m_ovfMatch   = 0;
     m_ovfPeriod  = 0;
     m_ovfCycle   = 0;
+    m_mode       = 0;
 
     m_prescaler = 1;
     m_prIndex = 0;
@@ -66,7 +67,7 @@ void McuTimer::runEvent()            // Overflow
 
     for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->tov();
 
-    m_countVal = m_countStart;                // Reset count value
+    m_countVal = m_countStart;             // Reset count value
     if( m_bidirec ) m_reverse = !m_reverse;
 
     if( !m_reverse ) m_interrupt->raise(); // interrupt.emitValue( 1 );

@@ -97,13 +97,10 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         QString m_dataFile;
         //QString m_device;       // Name of device
 
-        uint8_t m_serMonMask;
-
         eMcu m_eMcu;
 
         QList<Pin*> m_pinList;
 
-        QList<SerialMonitor*> m_serialMons;
         MCUMonitor* m_mcuMonitor;
 };
 

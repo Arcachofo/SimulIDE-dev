@@ -60,8 +60,8 @@ class MAINMODULE_EXPORT McuInterface : public eElement
         QString getFileName() { return m_firmware; }
         virtual RamTable* getRamTable() { return m_ramTable; }
 
-        virtual void uartOut( int uart, uint32_t value )=0;
-        virtual void uartIn( int uart, uint32_t value )=0;
+        virtual void uartOut( int uart, uint32_t value ){;}
+        virtual void uartIn( int uart, uint32_t value ){;}
 
         void setDebugger( BaseDebugger* deb );
         void setDebugging( bool d ) { m_debugging = d; }

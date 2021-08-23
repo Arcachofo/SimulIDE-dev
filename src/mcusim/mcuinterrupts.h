@@ -41,11 +41,10 @@ class MAINMODULE_EXPORT Interrupt
         virtual void execute();
         virtual void exitInt();
 
+        void clearFlag();
         void enableFlag( uint8_t en ) { m_enable = en; }
         void setPriority( uint8_t p ) { m_priority = p; }
-        void setMode( uint8_t mod ){ m_mode = mod;}
-
-        void clearFlag();
+        void setMode( uint8_t mod )   { m_mode = mod;}
 
         uint8_t priority() { return m_priority; }
 
@@ -102,7 +101,7 @@ class MAINMODULE_EXPORT Interrupts
 
         std::multimap<uint8_t, Interrupt*> m_running; // Interrups that were interrupted
         std::multimap<uint8_t, Interrupt*> m_pending; // Interrupts pending to service
-        QHash<QString, Interrupt*> m_intList;      // Access Interrupts by name
+        QHash<QString, Interrupt*> m_intList;         // Access Interrupts by name
 };
 
 #endif

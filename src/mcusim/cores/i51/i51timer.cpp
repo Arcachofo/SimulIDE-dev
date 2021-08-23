@@ -38,7 +38,6 @@ void I51Timer::initialize()
     m_ovfMatch = 0x1FFF;
     m_ovfPeriod = m_ovfMatch + 1;
     m_gate = 0;
-    m_mode = 0;
 }
 
 void I51Timer::configureA( uint8_t val ) // TxM0,TxM1

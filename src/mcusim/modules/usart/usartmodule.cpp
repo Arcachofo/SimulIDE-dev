@@ -21,6 +21,8 @@
 #include "usarttx.h"
 #include "usartrx.h"
 #include "mcuinterrupts.h"
+#include "circuitwidget.h"
+#include "serialmon.h"
 
 UsartModule::UsartModule( eMcu* mcu, QString name )
 {
@@ -28,11 +30,13 @@ UsartModule::UsartModule( eMcu* mcu, QString name )
     m_receiver = new UartRx( this, mcu, name+"Rx" );
 
     m_mode = 0xFF; // Force first mode change.
+    m_monitor = NULL;
 }
 UsartModule::~UsartModule( )
 {
     delete m_sender;
     delete m_receiver;
+    if( m_monitor ) m_monitor->close();
 }
 
 void UsartModule::parityError()
@@ -45,6 +49,35 @@ void UsartModule::setPeriod( uint64_t period )
     m_receiver->setPeriod( period );
 }
 
+void UsartModule::sendByte(  uint8_t data )  // Buffer is being written
+{
+    m_sender->processData( data );
+}
+
+void UsartModule::frameSent( uint8_t data )
+{
+    if( m_monitor ) m_monitor->printOut( data );
+}
+
+void UsartModule::byteReceived( uint8_t data )
+{
+    if( m_monitor ) m_monitor->printIn( data );
+}
+
+void UsartModule::openMonitor( QString id, int num )
+{
+    if( !m_monitor )
+        m_monitor = new SerialMonitor( CircuitWidget::self(), this );
+
+    if( num > 0 ) id.append(" - Uart"+QString::number(num) );
+    m_monitor->setWindowTitle( id );
+    m_monitor->show();
+}
+
+void UsartModule::uartIn( uint8_t value )
+{
+    m_receiver->queueData( value );
+}
 //---------------------------------------
 //---------------------------------------
 

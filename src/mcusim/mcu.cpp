@@ -26,7 +26,6 @@
 #include "mcuport.h"
 #include "mcupin.h"
 #include "mcucreator.h"
-
 #include "circuit.h"
 #include "simulator.h"
 #include "itemlibrary.h"
@@ -34,7 +33,6 @@
 #include "mainwindow.h"
 #include "componentselector.h"
 #include "mcumonitor.h"
-#include "serialmon.h"
 #include "mcuuart.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
@@ -77,7 +75,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     m_mcuMonitor = NULL;
     m_autoLoad  = false;
-    m_serMonMask = 0;
 
     m_icColor = QColor( 20, 30, 60 );
 
@@ -215,8 +212,6 @@ void Mcu::attach()
 
 void Mcu::remove()
 {
-    for( SerialMonitor* ser: m_serialMons ) ser->close();
-
     for( Pin* pin : m_pinList ) pin->removeConnector();
     m_pinList.clear();
 
@@ -308,10 +303,6 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     for( uint i=0; i<m_eMcu.m_usarts.size(); ++i )
     {
         QAction* openSerMonAct = serMonMenu->addAction( "USart"+QString::number(i+1) );
-        openSerMonAct->setCheckable( true );
-
-        if( m_serMonMask & (1<<i) ) openSerMonAct->setChecked( true );
-        else                        openSerMonAct->setChecked( false );
         connect( openSerMonAct, SIGNAL(triggered()), sm, SLOT(map()) );
         sm->setMapping( openSerMonAct, i+1 );
     }
@@ -363,25 +354,11 @@ void Mcu::slotOpenMcuMonitor()
 
 void Mcu::slotOpenTerm( int num )
 {
-    if( m_serMonMask & (1<<(num-1)) )
-    {
-        for( SerialMonitor* ser : m_serialMons )
-        {
-            if( ser->uartNum() == num )
-            { ser->show(); break; }
-    }   }
-    else{
-        m_serMonMask |= 1<<(num-1);
-
-        SerialMonitor* ser = new SerialMonitor( CircuitWidget::self(), &m_eMcu, num );
-        ser->setWindowTitle( this->idLabel()+" - Uart"+QString::number(num) );
-        ser->show();
-        m_eMcu.m_usarts.at(num-1)->setMonitor( ser );
-        m_serialMons.append( ser );
-}   }
+    m_eMcu.m_usarts.at(num-1)->openMonitor( idLabel(), num );
+}
 
 void Mcu::addPin( QString id, QString type, QString label,
-                     int pos, int xpos, int ypos, int angle, int length )
+                  int pos, int xpos, int ypos, int angle, int length )
 {
     McuPin* pin = NULL;
 
@@ -422,6 +399,7 @@ QString Mcu::loadHex( QString file, int WordSize )
     int checksum;
     int hiByte;
     uint16_t data;
+    int progSize = m_eMcu.m_progMem.size();
     bool ok;
 
     for( QString line : lineList )
@@ -460,6 +438,7 @@ QString Mcu::loadHex( QString file, int WordSize )
                 data += (hiByte<<8);
                 checksum += hiByte;
             }
+            if( addr >= progSize ) return "Error: Program Memory End reached";
             m_eMcu.m_progMem[addr] = data;
             addr++;
         }
@@ -474,15 +453,6 @@ void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
 {
     Chip::paint( p, option, widget );
 
-    if( m_crashed ) /// TODO
-    {
-static double opCount = 0;
-        opCount += 0.04;
-        if( opCount > 0.6 ) opCount = 0;
-        p->setOpacity( opCount );
-        p->fillRect( boundingRect(), Qt::yellow  );
-    }
-
     if( m_pSelf == this )
     {
         QPen pen( Qt::black, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -492,7 +462,6 @@ static double opCount = 0;
             p->drawRoundedRect( 4, 4, 4, 4 , 2, 2);
         else
             p->drawRoundedRect( m_area.width()/2-2, -1, 4, 4 , 2, 2);
-    }
-}
+}   }
 
 #include "moc_mcu.cpp"

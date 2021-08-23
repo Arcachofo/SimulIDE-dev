@@ -25,19 +25,17 @@
 #include "ui_serialmon.h"
 #include "outpaneltext.h"
 
-class eMcu;
+class UsartModule;
 
 class SerialMonitor : public QDialog, private Ui::SerialMonitor
 {
     Q_OBJECT
 
     public:
-        SerialMonitor( QWidget* parent, eMcu* mcu, int uartNum=1 );
+        SerialMonitor( QWidget* parent, UsartModule* usart );
 
         void printIn( int value );
         void printOut( int value );
-
-        int uartNum() { return m_uartNum; }
 
     public slots:
         void on_text_returnPressed();
@@ -52,9 +50,7 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor
         OutPanelText m_uartInPanel;
         OutPanelText m_uartOutPanel;
 
-        eMcu* m_processor;
-
-        int m_uartNum;
+        UsartModule* m_usart;
 
         bool m_printASCII;
         bool m_addCR;

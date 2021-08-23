@@ -39,6 +39,7 @@ enum parity_t{
 class IoPin;
 class UartTx;
 class UartRx;
+class SerialMonitor;
 
 class MAINMODULE_EXPORT UsartModule
 {
@@ -50,13 +51,16 @@ class MAINMODULE_EXPORT UsartModule
         virtual uint8_t getBit9(){return 0;}
         virtual void    setBit9( uint8_t bit ){;}
 
-        virtual void sendByte( uint8_t data ){;}
+        virtual void sendByte( uint8_t data );
         virtual void bufferEmpty(){;}
-        virtual void frameSent( uint8_t data ){;}
+        virtual void frameSent( uint8_t data );
         virtual void readByte( uint8_t data ){;}
-        virtual void byteReceived( uint8_t data ){;}
+        virtual void byteReceived( uint8_t data );
 
         void parityError();
+
+        void openMonitor(QString id, int num=0 );
+        void uartIn( uint8_t value );
 
         uint8_t m_mode;
         uint8_t m_stopBits;
@@ -66,6 +70,8 @@ class MAINMODULE_EXPORT UsartModule
 
     protected:
         void setPeriod( uint64_t period );
+
+        SerialMonitor* m_monitor;
 
         UartTx* m_sender;
         UartRx* m_receiver;

@@ -18,10 +18,10 @@
  ***************************************************************************/
 
 #include "serialmon.h"
-#include "e_mcu.h"
+#include "usartmodule.h"
 #include "simulator.h"
 
-SerialMonitor::SerialMonitor( QWidget* parent, eMcu* mcu, int uartNum )
+SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
              : QDialog( parent )
              , m_uartInPanel(this)
              , m_uartOutPanel(this)
@@ -33,8 +33,7 @@ SerialMonitor::SerialMonitor( QWidget* parent, eMcu* mcu, int uartNum )
     panelLayout->addWidget( &m_uartInPanel );
     panelLayout->addWidget( &m_uartOutPanel );
 
-    m_processor = mcu;
-    m_uartNum = uartNum;
+    m_usart = usart;
     m_printASCII = true;
     m_addCR = false;
 
@@ -47,15 +46,15 @@ void SerialMonitor::on_text_returnPressed()
     QByteArray array = text->text().toUtf8();
 
     for( int i=0; i<array.size(); i++ )
-        m_processor->uartIn( m_uartNum, array.at(i) );
+        m_usart->uartIn( array.at(i) );
 
-    if( m_addCR ) m_processor->uartIn( m_uartNum, 13 );
+    if( m_addCR ) m_usart->uartIn( 13 );
 }
 
 void SerialMonitor::on_value_returnPressed()
 {
     QString text = value->text();
-    m_processor->uartIn( m_uartNum, text.toInt() );
+    m_usart->uartIn( text.toInt() );
 }
 
 void SerialMonitor::on_valueButton_clicked()

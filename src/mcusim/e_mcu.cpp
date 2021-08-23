@@ -49,10 +49,9 @@ void eMcu::initialize()
     m_debugStep = false;
     m_cycle = 0;
     cyclesDone = 0;
+
     cpu->reset();
-
     DataSpace::initialize();
-
     m_interrupts.resetInts();
 
     Simulator::self()->addEvent( 1, this );
@@ -115,21 +114,6 @@ uint8_t eMcu::getRamValue( int address )
 void eMcu::setRamValue( int address, uint8_t value )
 {
     m_dataMem[getMapperAddr(address)] = value;
-}
-
-void eMcu::uartOut( int number, uint32_t value ) // Send value to OutPanelText
-{
-    /// TODELETE
-    //if( (uint)number > m_usarts.size() ) return;
-    //m_usarts.at(number-1)->byteSent( value );
-}
-
-void eMcu::uartIn( int number, uint32_t value ) // Receive one byte on Uart
-{
-    if( (uint)number > m_usarts.size() ) return;
-    //m_usarts.at(number-1)->byteReceived( value );
-
-    m_usarts.at(number-1)->m_receiver->queueData( value );
 }
 
 void eMcu::wdr()

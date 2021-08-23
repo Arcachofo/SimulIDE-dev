@@ -28,16 +28,8 @@ McuUsart::McuUsart( eMcu* mcu, QString name, int number )
         , UsartModule( mcu, name )
 {
     m_number = number;
-    m_mode = 0xFF; // Force first mode change.
-
-    m_monitor = NULL;
 }
 McuUsart::~McuUsart( ){}
-
-void McuUsart::sendByte(  uint8_t data )  // Buffer is being written
-{
-    m_sender->processData( data );
-}
 
 void McuUsart::bufferEmpty()
 {

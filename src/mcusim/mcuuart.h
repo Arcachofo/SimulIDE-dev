@@ -23,7 +23,7 @@
 #include "usartmodule.h"
 #include "mcumodule.h"
 
-class SerialMonitor;
+
 
 class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
 {
@@ -33,17 +33,13 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
         McuUsart( eMcu* mcu, QString name, int number );
         virtual ~McuUsart();
 
-        virtual void sendByte( uint8_t data ) override;
+        virtual void sendByte( uint8_t data ) override{;}
         virtual void bufferEmpty() override;
         virtual void frameSent( uint8_t data ) override;
         virtual void readByte( uint8_t data ) override {;}
         virtual void byteReceived( uint8_t data ) override;
 
-        void setMonitor( SerialMonitor* mon ) { m_monitor = mon; }
-
     protected:
-        SerialMonitor* m_monitor;
-
         int m_number;
 };
 
