@@ -54,8 +54,8 @@ void McuPin::initialize()
 
 void McuPin::stamp()
 {
-    if( m_enode ) // Outputs are also called so they set Input register if needed
-        changeCallBack( this ); // Receive voltage change notifications
+    //if( m_enode ) // Outputs are also called so they set Input register if needed
+    //   changeCallBack( this ); // Receive voltage change notifications
 
     IoPin::stamp();
 }
@@ -95,6 +95,7 @@ void McuPin::setDirection( bool out )
     {
         m_oldPinMode = input;
     }
+    if( m_enode ) changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
     if( !m_dirCtrl ) setPinMode( m_oldPinMode ); // Is someone is controlling us, just save Pin Mode
 }
 
@@ -105,7 +106,7 @@ void McuPin::setPullup( bool up )
     if( up ) m_vddAdmEx = 1/1e5; // Activate pullup
     else     m_vddAdmEx = 0;     // Deactivate pullup
 
-    updtState();
+    if( !m_isOut ) updtState();
 }
 
 void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example

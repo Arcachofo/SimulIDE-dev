@@ -56,7 +56,7 @@ uint8_t DataSpace::readReg( uint16_t addr )
     return v;
 }
 
-void DataSpace::writeReg( uint16_t addr, uint8_t v )
+void DataSpace::writeReg( uint16_t addr, uint8_t v, bool masked )
 {
     regSignal_t* regSignal = m_regSignals.value( addr );
     if( regSignal )
@@ -65,10 +65,10 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v )
         regSignal->on_write.emitValue( v );
         if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
     }
-    uint8_t mask = m_regMask[addr];
-    if( mask != 0xFF ) v = (m_dataMem[addr] & ~mask) | (v & mask);
+    if( masked)
+    {
+        uint8_t mask = m_regMask[addr];
+        if( mask != 0xFF ) v = (m_dataMem[addr] & ~mask) | (v & mask);
+    }
     m_dataMem[addr] = v;
 }
-
-
-

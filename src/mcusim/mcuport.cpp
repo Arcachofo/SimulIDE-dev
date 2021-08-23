@@ -52,7 +52,7 @@ void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMas
 
     if( m_intMask & pinMask ) m_interrupt->raise(); // Pin change interrupt
 
-    m_mcu->writeReg( m_inAddr, m_pinState );
+    m_mcu->writeReg( m_inAddr, m_pinState, false );
 }
 
 void McuPort::outChanged( uint8_t val )
@@ -61,6 +61,7 @@ void McuPort::outChanged( uint8_t val )
 
     if( changed )
     {
+        if( m_inAddr ) m_mcu->writeReg( m_inAddr, val, false ); // write to Pin input state Register
         for( int i=0; i<m_numPins; ++i )
         {
             if( ( changed & 1<<i )        // Pin changed
