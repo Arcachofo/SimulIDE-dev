@@ -1227,11 +1227,11 @@ Voulez-vous sauvegarder les changements ?
     </message>
     <message>
         <source>    Real Speed: Debugger</source>
-        <translation>    Vitesse réelle : debugger</translation>
+        <translation type="vanished">    Vitesse réelle : debugger</translation>
     </message>
     <message>
         <source>    Real Speed: </source>
-        <translation>    Vitesse réelle : </translation>
+        <translation type="vanished">    Vitesse réelle : </translation>
     </message>
     <message>
         <source>Pause Simulation</source>
@@ -1267,6 +1267,14 @@ Voulez-vous sauvegarder les changements ?
     </message>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3249,6 +3257,17 @@ Voulez-vous sauvegarder les changements?
     </message>
 </context>
 <context>
+    <name>Meter</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
@@ -4711,7 +4730,7 @@ Voulez-vous sauvegarder les changements ?
     <name>xmlfile</name>
     <message>
         <source>Logic</source>
-        <translation>Logique</translation>
+        <translation type="vanished">Logique</translation>
     </message>
 </context>
 </TS>

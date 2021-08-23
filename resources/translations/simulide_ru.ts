@@ -1234,11 +1234,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>    Real Speed: Debugger</source>
-        <translation>    Реальная скорость: Отладчик</translation>
+        <translation type="vanished">    Реальная скорость: Отладчик</translation>
     </message>
     <message>
         <source>    Real Speed: </source>
-        <translation>    Реальная скорость: </translation>
+        <translation type="vanished">    Реальная скорость: </translation>
     </message>
     <message>
         <source>Info</source>
@@ -1275,6 +1275,14 @@ Do you want to save your changes?
     <message>
         <source>Settings</source>
         <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>    Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3335,6 +3343,17 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>Meter</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Switch Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
@@ -4808,7 +4827,7 @@ Do you want to save your changes?
     <name>xmlfile</name>
     <message>
         <source>Logic</source>
-        <translation>Логика</translation>
+        <translation type="vanished">Логика</translation>
     </message>
 </context>
 </TS>

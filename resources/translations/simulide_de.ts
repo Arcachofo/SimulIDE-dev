@@ -1229,11 +1229,11 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>    Real Speed: Debugger</source>
-        <translation>    tatsächliche Geschwindigkeit: Debugger</translation>
+        <translation type="vanished">    tatsächliche Geschwindigkeit: Debugger</translation>
     </message>
     <message>
         <source>    Real Speed: </source>
-        <translation>    tatsächliche Geschwindigkeit: </translation>
+        <translation type="vanished">    tatsächliche Geschwindigkeit: </translation>
     </message>
     <message>
         <source>Info</source>
@@ -1269,6 +1269,14 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3251,6 +3259,17 @@ Sollen die Änderungen gespeichert werden?
     </message>
 </context>
 <context>
+    <name>Meter</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
@@ -4715,7 +4734,7 @@ Sollen die Änderungen gespeichert werden?
     <name>xmlfile</name>
     <message>
         <source>Logic</source>
-        <translation>Logikkomponenten</translation>
+        <translation type="vanished">Logikkomponenten</translation>
     </message>
 </context>
 </TS>

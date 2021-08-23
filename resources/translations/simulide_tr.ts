@@ -1254,11 +1254,11 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>    Real Speed: Debugger</source>
-        <translation>    Gerçek Hız: Hata Ayıklayıcı</translation>
+        <translation type="vanished">    Gerçek Hız: Hata Ayıklayıcı</translation>
     </message>
     <message>
         <source>    Real Speed: </source>
-        <translation>    Gerçek Hız: </translation>
+        <translation type="vanished">    Gerçek Hız: </translation>
     </message>
     <message>
         <source>Info</source>
@@ -1295,6 +1295,14 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Settings</source>
         <translation>Ayarlar</translation>
+    </message>
+    <message>
+        <source>    Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3366,6 +3374,17 @@ Değişiklikler kaydedilsin mi?
     </message>
 </context>
 <context>
+    <name>Meter</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
+    <message>
+        <source>Switch Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
@@ -4867,7 +4886,7 @@ Değişiklikler kaydedilsin mi?
     <name>xmlfile</name>
     <message>
         <source>Logic</source>
-        <translation>Mantık</translation>
+        <translation type="vanished">Mantık</translation>
     </message>
 </context>
 </TS>

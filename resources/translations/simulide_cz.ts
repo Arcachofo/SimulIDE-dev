@@ -1221,11 +1221,11 @@ Chcete uložit změny?
     </message>
     <message>
         <source>    Real Speed: Debugger</source>
-        <translation>    Skutečná rychlost Debugger</translation>
+        <translation type="vanished">    Skutečná rychlost Debugger</translation>
     </message>
     <message>
         <source>    Real Speed: </source>
-        <translation>    Skutečná rychlost: </translation>
+        <translation type="vanished">    Skutečná rychlost: </translation>
     </message>
     <message>
         <source>Info</source>
@@ -1261,6 +1261,14 @@ Chcete uložit změny?
     </message>
     <message>
         <source>    Load: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3247,6 +3255,17 @@ Chcete uložit změny?
     </message>
 </context>
 <context>
+    <name>Meter</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
@@ -4711,7 +4730,7 @@ Chcete uložit změny?
     <name>xmlfile</name>
     <message>
         <source>Logic</source>
-        <translation>Logika</translation>
+        <translation type="vanished">Logika</translation>
     </message>
 </context>
 </TS>

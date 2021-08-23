@@ -1223,11 +1223,11 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>    Real Speed: Debugger</source>
-        <translation>    Ware snelheid:  Debugger</translation>
+        <translation type="vanished">    Ware snelheid:  Debugger</translation>
     </message>
     <message>
         <source>    Real Speed: </source>
-        <translation>    Ware snelheid: </translation>
+        <translation type="vanished">    Ware snelheid: </translation>
     </message>
     <message>
         <source>Info</source>
@@ -1263,6 +1263,14 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>    Load: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    Speed: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3249,6 +3257,17 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
+    <name>Meter</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
@@ -4713,7 +4732,7 @@ Wijzigingen opslaan?
     <name>xmlfile</name>
     <message>
         <source>Logic</source>
-        <translation>Logica</translation>
+        <translation type="vanished">Logica</translation>
     </message>
 </context>
 </TS>
