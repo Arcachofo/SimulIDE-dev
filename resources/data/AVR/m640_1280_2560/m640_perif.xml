@@ -27,8 +27,8 @@
     <port name="PORTL" pins="8" outreg="PORTL" inreg="PINL" dirreg="DDRL">
     </port>
     
-    <timer name="TIMER0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
-        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <timer name="TIMER0" type="80" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
+        <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTD7"/>
         
         <ocunit name="OC0A" pin="PORTB7" ocreg="OCR0A" configbits="COM0A0,COM0A1">
@@ -42,8 +42,8 @@
         <interrupt name="T0_OVF" />
     </timer>
     
-    <timer name="TIMER1" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B">
-        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <timer name="TIMER1" type="160" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B">
+        <prescaler select="CS10,CS11,CS12" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTD6"/>
         
         <ocunit name="OC1A" pin="PORTB5" ocreg="OCR1AL,OCR1AH" configbits="COM1A0,COM1A1">
@@ -61,8 +61,8 @@
         <interrupt name="T1_OVF" />
     </timer>
     
-    <timer name="TIMER2" counter="TCNT2" configregsA="TCCR2A" configregsB="TCCR2B">
-        <prescaler select="" values="0,1,8,32,64,128,256,1024"/>
+    <timer name="TIMER2" type="82" counter="TCNT2" configregsA="TCCR2A" configregsB="TCCR2B">
+        <prescaler select="CS20,CS21,CS22" values="0,1,8,32,64,128,256,1024"/>
         
         <ocunit name="OC2A" pin="PORTB4" ocreg="OCR2A" configbits="COM2A0,COM2A1">
             <interrupt name="T2COA" />
@@ -75,8 +75,8 @@
         <interrupt name="T2_OVF" />
     </timer>
     
-    <timer name="TIMER3" counter="TCNT3L,TCNT3H" configregsA="TCCR3A" configregsB="TCCR3B">
-        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <timer name="TIMER3" type="160" counter="TCNT3L,TCNT3H" configregsA="TCCR3A" configregsB="TCCR3B">
+        <prescaler select="CS30,CS31,CS32" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTE6"/>
         
         <ocunit name="OC3A" pin="PORTE3" ocreg="OCR3AL,OCR3AH" configbits="COM3A0,COM3A1">
@@ -94,8 +94,8 @@
         <interrupt name="T3_OVF" />
     </timer>
     
-    <timer name="TIMER4" counter="TCNT4L,TCNT4H" configregsA="TCCR4A" configregsB="TCCR4B">
-        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <timer name="TIMER4" type="160" counter="TCNT4L,TCNT4H" configregsA="TCCR4A" configregsB="TCCR4B">
+        <prescaler select="CS40,CS41,CS42" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTH7"/>
         
         <ocunit name="OC4A" pin="PORTH3" ocreg="OCR4AL,OCR4AH" configbits="COM4A0,COM4A1">
@@ -113,8 +113,8 @@
         <interrupt name="T4_OVF" />
     </timer>
     
-    <timer name="TIMER5" counter="TCNT5L,TCNT5H" configregsA="TCCR5A" configregsB="TCCR5B">
-        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <timer name="TIMER5" type="160" counter="TCNT5L,TCNT5H" configregsA="TCCR5A" configregsB="TCCR5B">
+        <prescaler select="CS50,CS51,CS52" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTL2"/>
         
         <ocunit name="OC5A" pin="PORTL3" ocreg="OCR5AL,OCR5AH" configbits="COM5A0,COM5A1">

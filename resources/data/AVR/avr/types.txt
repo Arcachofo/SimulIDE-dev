@@ -1,0 +1,30 @@
+
+ADC:
+- Type 0: mebaX8, mega640, mega1281.
+- Type 1: tiny13.
+- Type 2: tinyx4.
+- Type 3: tinyx5.
+
+Timer:
+- Type 80: 8 bits.
+    tiny13   Timer0.
+    tinyx4   Timer0.
+    tinyx5   Timer0.
+    mebaX8   Timer0.
+    mega640  Timer0.
+    mega1281 Timer0.
+    
+- Type 81: 8 bits.
+    tinyx5  Timer1.
+
+- Type 82: 8 bits.
+    mebaX8   Timer2.
+    mega640  Timer2.
+    mega1281 Timer2.
+    
+- Type 160: 16 bits.
+    tinyx4   Timer1.
+    mebaX8   Timer1.
+    mega640  Timer1,3,4,5.
+    mega1281 Timer1,3.
+    

@@ -5,8 +5,8 @@
         <interrupt name="PCINT0" />
     </port>
     
-    <timer name="TIMER0" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
-        <prescaler select="" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <timer name="TIMER0" type="80" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
+        <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTB2"/>
         
         <ocunit name="OC0A" pin="PORTB0" ocreg="OCR0A" configbits="COM0A0,COM0A1">

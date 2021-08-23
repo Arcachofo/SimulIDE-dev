@@ -25,7 +25,7 @@
 
 class eMcu;
 class McuPin;
-class AvrTimer0;
+class AvrTimer80;
 class AvrTimer16bit;
 class McuOcUnit;
 
@@ -37,7 +37,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         AvrAdc( eMcu* mcu, QString name );
         ~AvrAdc();
 
- static AvrAdc* CreateAdc( eMcu* mcu, QString name ,int type );
+ static AvrAdc* createAdc( eMcu* mcu, QString name ,int type );
 
         virtual void initialize() override;
 
@@ -73,7 +73,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         McuPin* m_aRefPin;
         McuPin* m_aVccPin;
 
-        AvrTimer0*      m_timer0;
+        AvrTimer80*      m_timer0;
         AvrTimer16bit*  m_timer1;
 
         McuOcUnit* m_t0OCA;

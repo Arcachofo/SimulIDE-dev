@@ -23,7 +23,7 @@
 #include "mcupin.h"
 #include "e_mcu.h"
 
-AvrAdc* AvrAdc::CreateAdc( eMcu* mcu, QString name ,int type )
+AvrAdc* AvrAdc::createAdc( eMcu* mcu, QString name ,int type )
 {
     switch ( type )
     {
@@ -53,7 +53,7 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
     m_aVccPin = mcu->getPin( "PORTV0" );
     m_aRefPin = mcu->getPin( "PORTV1" );
 
-    m_timer0 = (AvrTimer0*)mcu->getTimer( "TIMER0" );
+    m_timer0 = (AvrTimer80*)mcu->getTimer( "TIMER0" );
     m_timer1 = NULL;
 
     m_t0OCA = m_timer0->getOcUnit("OCA");

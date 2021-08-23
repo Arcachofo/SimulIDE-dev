@@ -21,7 +21,7 @@
 #include "e_mcu.h"
 #include "simulator.h"
 
-McuTimer* PicTimer::makeTimer( eMcu* mcu, QString name ) // Static
+McuTimer* PicTimer::createTimer( eMcu* mcu, QString name ) // Static
 {
     QString n = name.toLower();
     if     ( n == "timer0" ) return new PicTimer0( mcu, name );

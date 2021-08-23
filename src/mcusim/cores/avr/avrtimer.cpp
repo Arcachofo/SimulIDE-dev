@@ -22,12 +22,12 @@
 #include "e_mcu.h"
 #include "simulator.h"
 
-McuTimer* AvrTimer::makeTimer( eMcu* mcu, QString name ) // Static
+McuTimer* AvrTimer::createTimer( eMcu* mcu, QString name, int type ) // Static
 {
-    QString n = name.toLower();
-    if     ( n == "timer0" ) return new AvrTimer0( mcu, name );
-    else if( n == "timer2" ) return new AvrTimer2( mcu, name );
-    else                     return new AvrTimer16bit( mcu, name );
+    if     ( type == 80 )  return new AvrTimer80( mcu, name );
+    else if( type == 81 )  return new AvrTimer81( mcu, name );
+    else if( type == 82 )  return new AvrTimer82( mcu, name );
+    else if( type == 160 ) return new AvrTimer16bit( mcu, name );
 
     return NULL;
 }
@@ -45,7 +45,6 @@ void AvrTimer::initialize()
 {
     McuTimer::initialize();
 
-    m_mode = 0;
     m_ovfMatch  = m_maxCount;
     m_ovfPeriod = m_ovfMatch + 1;
 
@@ -81,34 +80,34 @@ void AvrTimer::configureA( uint8_t val ) // TCCRXA  // WGM00,WGM01
     updtWgm();
 }
 
-void AvrTimer::configureB( uint8_t val ) // TCCRXB
+void AvrTimer::configureB( uint8_t newTCCRXB ) // TCCRXB
 {
-    uint8_t mode = val & 0b00000111; // CSX0-3
+    uint8_t prIndex = getRegBitsVal( newTCCRXB, m_prSelBits ); // CSX0-n
 
     /// Not working after Rev 376
-    /*if( mode != m_mode )
+    /*if( prIndex != m_prIndex )
     {
-        m_mode = mode;
+        m_prIndex = prIndex;
 
         updtCount();    // write counter values to Ram
-        if( mode ) configureClock();
+        if( prIndex ) configureClock();
         updtCycles();  // This will shedule or cancel events
-        //enable( m_mode );
+        //enable( m_prIndex );
         m_running = ( val > 0 );
     }*/
-    if( mode != m_mode )
+    if( prIndex != m_prIndex )
     {
-        m_mode = mode;
-        if( mode ) configureClock();
-        enable( m_mode );
+        m_prIndex = prIndex;
+        if( prIndex ) configureClock();
+        enable( m_prIndex );
     }
-    m_WGM32 = (val & 0b00011000)>>1; // WGMX3,WGMX2
+    m_WGM32 = ( newTCCRXB & 0b00011000)>>1; // WGMX3,WGMX2
     updtWgm();
 }
 
 void AvrTimer::configureClock()
 {
-    m_prescaler = m_prescList.at( m_mode );
+    m_prescaler = m_prescList.at( m_prIndex );
     m_clkSrc = clkMCU;
 }
 
@@ -116,8 +115,8 @@ void AvrTimer::configureExtClock()
 {
     m_prescaler = 1;
     m_clkSrc = clkEXT;
-    /// if     ( m_mode == 6 ) m_clkEdge = Clock_Falling;
-    /// else if( m_mode == 7 ) m_clkEdge = Clock_Rising;
+    /// if     ( m_prIndex == 6 ) m_clkEdge = Clock_Falling;
+    /// else if( m_prIndex == 7 ) m_clkEdge = Clock_Rising;
 }
 
 void AvrTimer::configureOcUnits( bool disable )
@@ -143,20 +142,17 @@ void AvrTimer::configureOcUnits( bool disable )
     }
     else  if( m_wgmMode == wgmFAST )  // Fast PWM
     {
-        if( m_OCA )
-        {
+        if( m_OCA ) {
             if((comActA == ocTOGGLE) && disable ) comActA = ocNONE;
             if     ( comActA == ocCLEAR ) tovActA = ocSET;
             else if( comActA == ocSET )   tovActA = ocCLEAR;
         }
-        if( m_OCB )
-        {
+        if( m_OCB ) {
             if     ( comActB == ocTOGGLE ) comActB = ocNONE;
             else if( comActB == ocCLEAR )  tovActB = ocSET;
             else if( comActB == ocSET )    tovActB = ocCLEAR;
         }
-        if( m_OCC )
-        {
+        if( m_OCC ) {
             if     ( comActC == ocTOGGLE ) comActC = ocNONE;
             else if( comActC == ocCLEAR )  tovActC = ocSET;
             else if( comActC == ocSET )    tovActC = ocCLEAR;
@@ -209,28 +205,80 @@ void AvrTimer8bit::setOCRXA( QString reg )
 //--------------------------------------------------
 // TIMER 0 -----------------------------------------
 
-AvrTimer0::AvrTimer0( eMcu* mcu, QString name)
-         : AvrTimer8bit( mcu, name )
+AvrTimer80::AvrTimer80( eMcu* mcu, QString name)
+          : AvrTimer8bit( mcu, name )
 {
     setOCRXA( "OCR0A" );
 }
-AvrTimer0::~AvrTimer0(){}
+AvrTimer80::~AvrTimer80(){}
 
-void AvrTimer0::configureClock()
+void AvrTimer80::configureClock()
 {
-    if( m_mode > 5 ) AvrTimer::configureExtClock();
-    else             AvrTimer::configureClock();
+    if( m_prIndex > 5 ) AvrTimer::configureExtClock();
+    else                AvrTimer::configureClock();
 }
+
+//--------------------------------------------------
+// TIMER 1 (8 bits) --------------------------------
+
+AvrTimer81::AvrTimer81( eMcu* mcu, QString name)
+         : AvrTimer8bit( mcu, name )
+{
+    //setOCRXA( "OCR0A" );
+}
+AvrTimer81::~AvrTimer81(){}
+
+void AvrTimer81::configureA( uint8_t newGTCCR ) // GTCCR
+{
+    /// if( m_OCA ) m_OCA->configure( newGTCCR ); // Done in ocunits
+    //if( m_OCB ) m_OCB->configure( newGTCCR );
+    //if( m_OCC ) m_OCC->configure( newGTCCR );
+
+    //m_WGM10 = val & 0b00000011;  // WGMX1,WGMX0
+    //updtWgm();
+}
+
+void AvrTimer81::configureB( uint8_t newTCCR1 ) // TCCR1
+{
+    uint8_t prIndex = getRegBitsVal( newTCCR1, m_prSelBits ); // CSX0-n
+
+    /// Not working after Rev 376
+    /*if( prIndex != m_prIndex )
+    {
+        m_prIndex = prIndex;
+
+        updtCount();    // write counter values to Ram
+        if( prIndex ) configureClock();
+        updtCycles();  // This will shedule or cancel events
+        //enable( m_prIndex );
+        m_running = ( val > 0 );
+    }*/
+    if( prIndex != m_prIndex )
+    {
+        m_prIndex = prIndex;
+        if( prIndex ) configureClock();
+        enable( m_prIndex );
+    }
+    //m_WGM32 = ( newTCCR1 & 0b00011000)>>1; // WGMX3,WGMX2
+    //updtWgm();
+}
+
+void AvrTimer81::configureClock()
+{
+    //if( m_prIndex > 5 ) AvrTimer::configureExtClock();
+    //else                AvrTimer::configureClock();
+}
+
 
 //--------------------------------------------------
 // TIMER 2 -----------------------------------------
 
-AvrTimer2::AvrTimer2( eMcu* mcu, QString name)
-         : AvrTimer8bit( mcu, name )
+AvrTimer82::AvrTimer82( eMcu* mcu, QString name)
+          : AvrTimer8bit( mcu, name )
 {
     setOCRXA( "OCR2A" );
 }
-AvrTimer2::~AvrTimer2(){}
+AvrTimer82::~AvrTimer82(){}
 
 
 //--------------------------------------------------
@@ -352,6 +400,6 @@ void AvrTimer16bit::setICRX( QString reg )
 
 void AvrTimer16bit::configureClock()
 {
-    if( m_mode > 5 ) AvrTimer::configureExtClock();
+    if( m_prIndex > 5 ) AvrTimer::configureExtClock();
     else             AvrTimer::configureClock();
 }

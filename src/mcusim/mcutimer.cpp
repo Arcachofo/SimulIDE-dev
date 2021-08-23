@@ -52,6 +52,7 @@ void McuTimer::initialize()
     m_ovfCycle   = 0;
 
     m_prescaler = 1;
+    m_prIndex = 0;
 
     m_clkSrc  = clkMCU;
     /// m_clkEdge = Clock_Rising;

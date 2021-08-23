@@ -260,12 +260,9 @@ void McuCreator::createRegisters( QDomElement* e )
             QString  regName = el.attribute("name");
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
             uint8_t resetVal = el.attribute("reset").toUInt(0,0);
+            QString    wMask = el.attribute("mask");
 
-            if( el.hasAttribute("mask") )
-            {
-                uint8_t writeMask = el.attribute("mask").toUInt(0,0);
-                mcu->m_regMask[regAddr] = writeMask;
-            }
+            if( !wMask.isEmpty() ) mcu->m_regMask[regAddr] = wMask.toUInt(0,2);
 
             mcu->m_addrMap[regAddr] = regAddr;
 
@@ -276,29 +273,22 @@ void McuCreator::createRegisters( QDomElement* e )
             if( !bits.isEmpty() )                    // Create bitMasks
             {
                 QString bitName;
-                if( bits == "0-7"){
-                    for( int i=0; i<8; ++i )
-                    {
-                        bitName = regName+QString::number( i );
-                        mcu->m_bitMasks.insert( bitName, 1<<i );
-                        mcu->m_bitRegs.insert( bitName, regAddr );
-                    }
-                }else{
-                    QStringList bitList = bits.split(",");
-                    for( int i=0; i<bitList.size(); ++i )
-                    {
-                        bitName = bitList.at( i );
-                        if( bitName == "0" ) continue;
-                        for( QString alias : bitName.split("|") ) // Bit name variations: alias first used bit name
-                        {                                         // Example tiny WDTCR.WDTIE is 328 WDTCSR.WDIE
-                            mcu->m_bitMasks.insert( alias, 1<<i );
-                            mcu->m_bitRegs.insert( alias, regAddr );
-                    }   }
-                    if( !stReg.isEmpty() && ( regName == stReg ) )
-                    {
-                        mcu->m_sregAddr = regAddr;
-                        mcu->getRamTable()->setStatusBits( bitList );
-            }   }   }
+
+                QStringList bitList = bits.split(",");
+                for( int i=0; i<bitList.size(); ++i )
+                {
+                    bitName = bitList.at( i );
+                    if( bitName == "0" ) continue;
+                    for( QString alias : bitName.split("|") ) // Bit name variations: alias first used bit name
+                    {                                         // Example tiny WDTCR.WDTIE is 328 WDTCSR.WDIE
+                        mcu->m_bitMasks.insert( alias, 1<<i );
+                        mcu->m_bitRegs.insert( alias, regAddr );
+                }   }
+                if( !stReg.isEmpty() && ( regName == stReg ) )
+                {
+                    mcu->m_sregAddr = regAddr;
+                    mcu->getRamTable()->setStatusBits( bitList );
+            }   }
         }else if( el.tagName() == "mapped" )
         {
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
@@ -404,10 +394,11 @@ void McuCreator::createTimer( QDomElement* t )
 {
     McuTimer* timer = NULL;
     QString timerName = t->attribute("name");
+    int type = t->attribute("type").toInt();
 
-    if     ( m_core == "8051" ) timer = new I51Timer( mcu, timerName );
-    else if( m_core == "AVR" )  timer = AvrTimer::makeTimer( mcu, timerName );
-    else if( m_core == "Pic14" ) timer = PicTimer::makeTimer( mcu, timerName );
+    if     ( m_core == "8051" )  timer = new I51Timer( mcu, timerName );
+    else if( m_core == "AVR" )   timer = AvrTimer::createTimer( mcu, timerName, type );
+    else if( m_core == "Pic14" ) timer = PicTimer::createTimer( mcu, timerName );
     else return;
 
     mcu->m_timers.m_timerList.insert( timerName, timer );
@@ -454,6 +445,9 @@ void McuCreator::createTimer( QDomElement* t )
         if     ( el.tagName() == "interrupt" )  setInterrupt( &el, timer );
         else if( el.tagName() == "prescaler" )
         {
+            QString prSelBits = el.attribute("select");
+            if( !prSelBits.isEmpty() ) timer->m_prSelBits = mcu->getRegBits( prSelBits );
+
             QStringList prescalers = el.attribute("values").remove(" ").split(",");
             timer->m_prescList.resize( prescalers.size() );
 
@@ -580,7 +574,7 @@ void McuCreator::createAdc( QDomElement* e )
     McuAdc* adc;
 
     int type = e->attribute("type").toInt();
-    if( m_core == "AVR" ) adc = AvrAdc::CreateAdc( mcu, name, type );
+    if( m_core == "AVR" ) adc = AvrAdc::createAdc( mcu, name, type );
     else return;
 
     mcu->m_modules.emplace_back( adc );
@@ -965,6 +959,8 @@ void McuCreator::convert( QString fileName )
 
         doc.append( nameEntry );
         doc.append(" addr=\"0x"+ad+"\" ");
+        doc.append(" reset=\"\" ");
+        doc.append(" mask=\"\" ");
 
         QString bitsList;
         QVector<QString> bitVec = bitHash.value(regName);
@@ -977,8 +973,10 @@ void McuCreator::convert( QString fileName )
                 bitsList.append( bitName+",");
             }
             bitsList.remove(bitsList.size()-1,1);
+            doc.append("\n               ");
         }
         doc.append("bits=\""+bitsList+"\" />\n");
+        if(!bitsList.isEmpty() ) doc.append("\n");
     }
     doc.append("</parts>\n\n");
     fileName.replace(".dat","_regs-aut.xml");

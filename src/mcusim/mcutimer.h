@@ -61,9 +61,10 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
 
         int     m_number;
 
+        regBits_t m_prSelBits;
+        uint8_t  m_prIndex;
         uint16_t m_prescaler;
         uint64_t m_scale;
-
         std::vector<uint16_t> m_prescList; // Prescaler values
 
         bool m_running;  // is Timer running?

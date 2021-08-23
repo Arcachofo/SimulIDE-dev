@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT PicTimer : public McuTimer
         PicTimer( eMcu* mcu, QString name );
         ~PicTimer();
 
- static McuTimer* makeTimer( eMcu* mcu, QString name );
+ static McuTimer* createTimer( eMcu* mcu, QString name );
 
         virtual void initialize() override;
 
