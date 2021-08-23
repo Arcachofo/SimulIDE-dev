@@ -24,6 +24,8 @@
 #include "compiler.h"
 #include "utils.h"
 
+#include "mcucreator.h"
+
 EditorWindow*  EditorWindow::m_pSelf = 0l;
 
 EditorWindow::EditorWindow( QWidget* parent )
@@ -115,7 +117,11 @@ void EditorWindow::open()
     QString fileName = QFileDialog::getOpenFileName( this, tr("Load File"), dir,
                        tr("All files")+" (*);;Arduino (*.ino);;Asm (*.asm);;GcBasic (*.gcb)" );
 
-    if( !fileName.isEmpty() ) loadFile( fileName );
+    if( !fileName.isEmpty() )
+    {
+        loadFile( fileName );
+        if( fileName.endsWith(".dat") ) McuCreator::convert( fileName ); /// TODELETE
+    }
 }
 
 void EditorWindow::loadFile( const QString &fileName )
