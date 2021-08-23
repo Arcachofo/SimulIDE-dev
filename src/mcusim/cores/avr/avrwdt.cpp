@@ -21,6 +21,7 @@
 #include "e_mcu.h"
 #include "mcucore.h"
 #include "simulator.h"
+#include "datautils.h"
 
 AvrWdt::AvrWdt( eMcu* mcu, QString name )
       : McuWdt( mcu, name )
@@ -29,14 +30,14 @@ AvrWdt::AvrWdt( eMcu* mcu, QString name )
 
     m_WDTCSR = mcu->getReg( "WDTCSR" );
 
-    m_WDIF = mcu->getRegBits( "WDIF" );
-    m_WDIE = mcu->getRegBits( "WDIE" );
-    m_WDCE = mcu->getRegBits( "WDCE" );
-    m_WDE  = mcu->getRegBits( "WDE" );
-    m_WDP02 = mcu->getRegBits( "WDP0, WDP1, WDP2" );
-    m_WDP3  = mcu->getRegBits( "WDP3" );
+    m_WDIF = getRegBits( "WDIF", mcu );
+    m_WDIE = getRegBits( "WDIE", mcu );
+    m_WDCE = getRegBits( "WDCE", mcu );
+    m_WDE  = getRegBits( "WDE", mcu );
+    m_WDP02 = getRegBits( "WDP0, WDP1, WDP2", mcu );
+    m_WDP3  = getRegBits( "WDP3", mcu );
 
-    m_WDRF = mcu->getRegBits( "WDRF" );
+    m_WDRF = getRegBits( "WDRF", mcu );
 }
 AvrWdt::~AvrWdt(){}
 

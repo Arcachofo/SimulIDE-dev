@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "avreeprom.h"
+#include "datautils.h"
 #include "e_mcu.h"
 #include "simulator.h"
 
@@ -25,15 +26,12 @@ AvrEeprom::AvrEeprom( eMcu* mcu, QString name )
          : McuEeprom( mcu, name )
 {
     m_EECR  = mcu->getReg( "EECR" );
-    m_EEPM  = mcu->getRegBits( "EEPM0, EEPM1" );
-    m_EEMPE = mcu->getRegBits( "EEMPE" );
-    m_EEPE  = mcu->getRegBits( "EEPE" );
-    m_EERE  = mcu->getRegBits( "EERE" );
+    m_EEPM  = getRegBits( "EEPM0, EEPM1", mcu );
+    m_EEMPE = getRegBits( "EEMPE", mcu );
+    m_EEPE  = getRegBits( "EEPE", mcu );
+    m_EERE  = getRegBits( "EERE", mcu );
 }
-
-AvrEeprom::~AvrEeprom()
-{
-}
+AvrEeprom::~AvrEeprom(){}
 
 void AvrEeprom::initialize()
 {

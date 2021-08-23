@@ -23,6 +23,7 @@
 #include "mcutimer.h"
 #include "e_mcu.h"
 #include "i51interrupt.h"
+#include "datautils.h"
 
 #define SCON *m_scon
 
@@ -37,8 +38,8 @@ I51Usart::I51Usart( eMcu* mcu, QString name, int number )
     m_timer1 = mcu->getTimer( "TIMER1" );
 
     m_scon = mcu->getReg( "SCON" );
-    m_bit9Tx = mcu->getRegBits( "TB8" );
-    m_bit9Rx = mcu->getRegBits( "RB8" );
+    m_bit9Tx = getRegBits( "TB8", mcu );
+    m_bit9Rx = getRegBits( "RB8", mcu );
 }
 I51Usart::~I51Usart(){}
 

@@ -21,41 +21,22 @@
 #define MCUTYPES_H
 
 #include <inttypes.h>
+#include "mcusignal.h"
+
+struct regInfo_t{
+    uint16_t address;
+    uint8_t  resetVal;
+};
+
+struct regSignal_t{
+    McuSignal on_write;
+    McuSignal on_read;
+};
 
 struct regBits_t{
     uint8_t bit0;
     uint8_t mask;
     uint8_t* reg;
 };
-
-static inline uint8_t override( uint8_t val, regBits_t bits ) // Replace bits in val with current value in register bits.reg
-{
-    return (val & ~bits.mask) | (*(bits.reg) | bits.mask);
-}
-
-static inline uint8_t getRegBits( uint8_t val, regBits_t rb )
-{
-    return (val & rb.mask);
-}
-
-static inline uint8_t getRegBitsVal( uint8_t val, regBits_t rb )
-{
-    return (val & rb.mask)>>rb.bit0;
-}
-
-static inline uint8_t getRegBitsBool( uint8_t val, regBits_t rb )
-{
-    return (val & rb.mask) > 0;
-}
-
-static inline void setRegBits( regBits_t bits )
-{
-    *(bits.reg) |= bits.mask;
-}
-
-static inline void clearRegBits( regBits_t bits )
-{
-    *(bits.reg) &= ~bits.mask;
-}
 
 #endif

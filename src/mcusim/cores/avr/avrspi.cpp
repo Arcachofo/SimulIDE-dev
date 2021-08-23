@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "avrspi.h"
+#include "datautils.h"
 //#include "mcupin.h"
 #include "iopin.h"
 #include "e_mcu.h"
@@ -28,13 +29,13 @@ AvrSpi::AvrSpi( eMcu* mcu, QString name )
 {
     m_SPCR = mcu->getReg( "SPCR" );
 
-    m_SPIE = mcu->getRegBits( "SPIE" );
-    m_SPE  = mcu->getRegBits( "SPE" );
-    m_DODR = mcu->getRegBits( "DODR" );
-    m_MSTR = mcu->getRegBits( "MSTR" );
-    m_CPOL = mcu->getRegBits( "CPOL" );
-    m_CPHA = mcu->getRegBits( "CPHA" );
-    m_SPIF = mcu->getRegBits( "SPIF" );
+    m_SPIE = getRegBits( "SPIE", mcu );
+    m_SPE  = getRegBits( "SPE", mcu );
+    m_DODR = getRegBits( "DODR", mcu );
+    m_MSTR = getRegBits( "MSTR", mcu );
+    m_CPOL = getRegBits( "CPOL", mcu );
+    m_CPHA = getRegBits( "CPHA", mcu );
+    m_SPIF = getRegBits( "SPIF", mcu );
 }
 AvrSpi::~AvrSpi(){}
 

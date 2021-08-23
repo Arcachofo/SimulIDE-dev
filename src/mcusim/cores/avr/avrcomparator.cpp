@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "avrcomparator.h"
+#include "datautils.h"
 #include "e_mcu.h"
 #include "mcupin.h"
 
@@ -25,16 +26,16 @@ AvrComp::AvrComp( eMcu* mcu, QString name )
        : McuComp( mcu, name )
 {
     //m_ACSR = mcu->getReg( "ACSR" );
-    m_ACD  = mcu->getRegBits( "ACD" );
-    m_ACBG = mcu->getRegBits( "ACBG" );
-    m_ACO  = mcu->getRegBits( "ACO" );
-    m_ACI  = mcu->getRegBits( "ACI" );
-    m_ACIC = mcu->getRegBits( "ACIC" );
-    m_ACIS = mcu->getRegBits( "ACIS0,ACIS1" );
+    m_ACD  = getRegBits( "ACD", mcu );
+    m_ACBG = getRegBits( "ACBG", mcu );
+    m_ACO  = getRegBits( "ACO", mcu );
+    m_ACI  = getRegBits( "ACI", mcu );
+    m_ACIC = getRegBits( "ACIC", mcu );
+    m_ACIS = getRegBits( "ACIS0,ACIS1", mcu );
 
     //m_DIDR1 = mcu->getReg( "DIDR1" );
-    m_AIN0D = mcu->getRegBits( "AIN0D" );
-    m_AIN1D = mcu->getRegBits( "AIN1D" );
+    m_AIN0D = getRegBits( "AIN0D", mcu );
+    m_AIN1D = getRegBits( "AIN1D", mcu );
 
     //mcu->watchBitNames( "ACO", R_READ, this, &AvrComp::configureB );
 }

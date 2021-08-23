@@ -22,6 +22,7 @@
 #include "mcuocunit.h"
 #include "mcupin.h"
 #include "e_mcu.h"
+#include "datautils.h"
 
 AvrAdc* AvrAdc::createAdc( eMcu* mcu, QString name ,int type )
 {
@@ -39,16 +40,16 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
 {
     //m_ADCSRA = mcu->getReg( "ADCSRA" );
-    m_ADEN  = mcu->getRegBits( "ADEN" );
-    m_ADSC  = mcu->getRegBits( "ADSC" );
-    m_ADATE = mcu->getRegBits( "ADATE" );
-    m_ADIF  = mcu->getRegBits( "ADIF" );
-    m_ADPS  = mcu->getRegBits( "ADPS0,ADPS1.ADPS2" );
+    m_ADEN  = getRegBits( "ADEN", mcu );
+    m_ADSC  = getRegBits( "ADSC", mcu );
+    m_ADATE = getRegBits( "ADATE", mcu );
+    m_ADIF  = getRegBits( "ADIF", mcu );
+    m_ADPS  = getRegBits( "ADPS0,ADPS1.ADPS2", mcu );
 
-    m_ADTS  = mcu->getRegBits( "ADTS0,ADTS1.ADTS2" );
+    m_ADTS  = getRegBits( "ADTS0,ADTS1.ADTS2", mcu );
 
-    m_ADLAR = mcu->getRegBits( "ADLAR" );
-    m_REFS  = mcu->getRegBits( "REFS0,REFS1" );
+    m_ADLAR = getRegBits( "ADLAR", mcu );
+    m_REFS  = getRegBits( "REFS0,REFS1", mcu );
 
     m_aVccPin = mcu->getPin( "PORTV0" );
     m_aRefPin = mcu->getPin( "PORTV1" );

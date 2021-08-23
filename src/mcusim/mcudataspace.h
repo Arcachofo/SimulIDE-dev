@@ -22,27 +22,15 @@
 
 #include <QHash>
 #include <vector>
-#include <QDebug>
+//#include <QDebug>
 
-#include "mcusignal.h"
 #include "mcutypes.h"
-
 
 class MAINMODULE_EXPORT DataSpace
 {
     public:
         DataSpace();
         ~DataSpace();
-
-        struct regInfo_t{
-            uint16_t address;
-            uint8_t  resetVal;
-        };
-
-        struct regSignal_t{
-            McuSignal on_write;
-            McuSignal on_read;
-        };
 
         void initialize();
 
@@ -55,72 +43,10 @@ class MAINMODULE_EXPORT DataSpace
         uint8_t* getReg( QString reg )                // Get pointer to Reg data by name
         { return &m_dataMem[m_regInfo.value( reg ).address]; }
 
-        template <class T>                // Add callback for Register changes by names
-        void watchRegNames( QString regNames, int write
-                      , T* inst, void (T::*func)(uint8_t) )
-        {
-            if( regNames.isEmpty() ) return;
-
-            QStringList regs = regNames.split(",");
-            for( QString reg : regs )
-            {
-                uint16_t addr = m_regInfo.value( reg ).address;
-                watchRegister( addr, write, inst, func, 0xFF );
-            }
-        }
-        template <class T>                // Add callback for Register changes by address
-        void watchRegister( uint16_t addr, int write
-                          , T* inst, void (T::*func)(uint8_t), uint8_t mask=0xFF )
-        {
-            regSignal_t* regSignal = m_regSignals.value( addr );
-            if( !regSignal )
-            {
-                regSignal = new regSignal_t;
-                m_regSignals.insert( addr, regSignal );
-            }
-            if( write ) regSignal->on_write.connect( inst, func, mask );
-            else        regSignal->on_read.connect( inst, func, mask  );
-        }
-
-        template <class T>              // Add callback for Register bit changes by names
-        void watchBitNames( QString bitNames, int write
-                      , T* inst, void (T::*func)(uint8_t) )
-        {
-            if( bitNames.isEmpty() ) return;
-
-            uint16_t regAddr = 0;
-            QStringList bitList = bitNames.split(",");
-            uint8_t     bitMask = getBitMask( bitList );
-
-            regAddr = m_bitRegs.value( bitList.first() );
-
-            if( regAddr )
-                watchRegister( regAddr, write, inst, func, bitMask );
-        }
-        uint8_t getBitMask( QStringList bitList ) // Get mask for a group of bits in a Register
-        {
-            uint8_t bitMask = 0;
-            for( QString bitName : bitList ) bitMask |= m_bitMasks.value( bitName );
-            return bitMask;
-        }
-        regBits_t getRegBits( QString bitNames ) // Get a set of consecutive bits in a Register
-        {
-            regBits_t regBits;
-            QStringList bitList = bitNames.split(",");
-
-            uint8_t mask = getBitMask( bitList );
-            regBits.mask = mask;
-
-            for( regBits.bit0=0; regBits.bit0<8; ++regBits.bit0 ) // Rotate mask to get initial bit
-            {
-                if( mask & 1 ) break;
-                mask >>= 1;
-            }
-            uint16_t regAddr = m_bitRegs.value( bitList.first() );
-            regBits.reg = &m_dataMem[regAddr];
-
-            return regBits;
-        }
+        QHash<QString, uint8_t>* bitMasks() { return &m_bitMasks; }
+        QHash<QString, uint16_t>* bitRegs() { return &m_bitRegs; }
+        QHash<QString, regInfo_t>* regInfo()  { return &m_regInfo; }
+        QHash<uint16_t, regSignal_t*>* regSignals() { return &m_regSignals; }
 
         int m_regOverride;                         // Register value is overriden at write time
 

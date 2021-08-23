@@ -23,6 +23,8 @@
 #include "e_mcu.h"
 #include "iopin.h"
 #include "serialmon.h"
+#include "datautils.h"
+#include "regwatcher.h"
 
 PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
@@ -37,19 +39,19 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
     m_RCSTA = mcu->getReg( "RCSTA" );
     m_SPBRG = mcu->getReg( "SPBRG" );
 
-    m_SPEN =  mcu->getRegBits( "SPEN" );
-    m_BRGH = mcu->getRegBits( "BRGH" );
+    m_SPEN = getRegBits( "SPEN", mcu );
+    m_BRGH = getRegBits( "BRGH", mcu );
 
-    m_bit9Tx = mcu->getRegBits( "TX9D" );
-    m_bit9Rx = mcu->getRegBits( "RX9D" );
+    m_bit9Tx = getRegBits( "TX9D", mcu );
+    m_bit9Rx = getRegBits( "RX9D", mcu );
 
-    m_txEn = mcu->getRegBits( "TXEN" );
-    m_rxEn = mcu->getRegBits( "CREN:" );
-    m_TX9  = mcu->getRegBits( "TX9" );
-    m_RX9  = mcu->getRegBits( "RX9" );
-    m_TXIF = mcu->getRegBits( "TXIF" );
+    m_txEn = getRegBits( "TXEN", mcu );
+    m_rxEn = getRegBits( "CREN:", mcu );
+    m_TX9  = getRegBits( "TX9", mcu );
+    m_RX9  = getRegBits( "RX9", mcu );
+    m_TXIF = getRegBits( "TXIF", mcu );
 
-    m_mcu->watchRegNames( "SPBRG", R_WRITE, this, &PicUsart::setBaurrate );
+    watchRegNames( "SPBRG", R_WRITE, this, &PicUsart::setBaurrate, mcu );
 }
 PicUsart::~PicUsart(){}
 

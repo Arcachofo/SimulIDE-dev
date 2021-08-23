@@ -23,6 +23,8 @@
 #include "e_mcu.h"
 #include "iopin.h"
 #include "serialmon.h"
+#include "datautils.h"
+#include "regwatcher.h"
 
 #define UCSRNB *m_ucsrnb
 
@@ -36,29 +38,29 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
     QString n = m_name.right(1);
     m_ucsrna = mcu->getReg( "UCSR"+n+"A" );
     m_ucsrnb = mcu->getReg( "UCSR"+n+"B" );
-    m_u2xn   = mcu->getRegBits( "U2X"+n );
+    m_u2xn   = getRegBits( "U2X"+n, mcu );
 
-    m_bit9Tx = mcu->getRegBits( "TXB8"+n );
-    m_bit9Rx = mcu->getRegBits( "RXB8"+n );
+    m_bit9Tx = getRegBits( "TXB8"+n, mcu );
+    m_bit9Rx = getRegBits( "RXB8"+n, mcu );
 
-    m_txEn = mcu->getRegBits( "TXEN"+n );
-    m_rxEn = mcu->getRegBits( "RXEN"+n );
+    m_txEn = getRegBits( "TXEN"+n, mcu );
+    m_rxEn = getRegBits( "RXEN"+n, mcu );
 
-    m_modeRB = mcu->getRegBits( "UMSEL"+n+"0,UMSEL"+n+"1" );
-    m_pariRB = mcu->getRegBits( "UPM"+n+"0,UPM"+n+"1"  );
-    m_stopRB = mcu->getRegBits( "USBS"+n );
-    m_dataRB = mcu->getRegBits( "UCSZ"+n+"0,UCSZ"+n+"1" );
+    m_modeRB = getRegBits( "UMSEL"+n+"0,UMSEL"+n+"1", mcu );
+    m_pariRB = getRegBits( "UPM"+n+"0,UPM"+n+"1", mcu );
+    m_stopRB = getRegBits( "USBS"+n, mcu );
+    m_dataRB = getRegBits( "UCSZ"+n+"0,UCSZ"+n+"1", mcu );
 
     m_ubrrnL = mcu->getReg( "UBRR"+n+"L" );
     m_ubrrnH = mcu->getReg( "UBRR"+n+"H" );
-    m_mcu->watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setBaurrate );
-    m_mcu->watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setBaurrate );
+    watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setBaurrate, m_mcu );
+    watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setBaurrate, m_mcu );
 
-    m_UDRE = mcu->getRegBits( "UDRE"+n );
-    m_TXC  = mcu->getRegBits( "TXC"+n );
-    m_RXC  = mcu->getRegBits( "RXC"+n );
+    m_UDRE = getRegBits( "UDRE"+n, mcu );
+    m_TXC  = getRegBits( "TXC"+n, mcu );
+    m_RXC  = getRegBits( "RXC"+n, mcu );
 
-    mcu->watchRegNames( "UCSR"+n+"A", R_WRITE, this, &AvrUsart::setUCSRnA );
+    watchRegNames( "UCSR"+n+"A", R_WRITE, this, &AvrUsart::setUCSRnA, mcu );
 }
 AvrUsart::~AvrUsart(){}
 

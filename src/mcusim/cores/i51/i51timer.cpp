@@ -20,6 +20,7 @@
 #include "i51timer.h"
 #include "e_mcu.h"
 #include "simulator.h"
+#include "datautils.h"
 
 #define COUNT_L m_countL[0]
 #define COUNT_H m_countH[0]

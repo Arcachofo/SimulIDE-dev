@@ -20,6 +20,7 @@
 #include "pictimer.h"
 #include "e_mcu.h"
 #include "simulator.h"
+#include "datautils.h"
 
 McuTimer* PicTimer::createTimer( eMcu* mcu, QString name ) // Static
 {
@@ -99,10 +100,10 @@ PicTimer8bit::~PicTimer8bit(){}
 PicTimer0::PicTimer0( eMcu* mcu, QString name)
          : PicTimer8bit( mcu, name )
 {
-    m_T0CS = mcu->getRegBits( "T0CS" );
-    m_T0SE = mcu->getRegBits( "T0SE" );
-    m_PSA  = mcu->getRegBits( "PSA" );
-    m_PS   = mcu->getRegBits( "PS0,PS1,PS2" );
+    m_T0CS = getRegBits( "T0CS", mcu );
+    m_T0SE = getRegBits( "T0SE", mcu );
+    m_PSA  = getRegBits( "PSA", mcu );
+    m_PS   = getRegBits( "PS0,PS1,PS2", mcu );
 }
 PicTimer0::~PicTimer0(){}
 
@@ -147,8 +148,8 @@ PicTimer2::PicTimer2( eMcu* mcu, QString name)
 
     m_PR2 = mcu->getReg( "PR2" );
 
-    m_TMR2ON = mcu->getRegBits( "TMR2ON" );
-    m_T2CKPS = mcu->getRegBits( "T2CKPS0,T2CKPS1" );
+    m_TMR2ON = getRegBits( "TMR2ON", mcu );
+    m_T2CKPS = getRegBits( "T2CKPS0,T2CKPS1", mcu );
 }
 PicTimer2::~PicTimer2(){}
 
@@ -185,11 +186,11 @@ PicTimer16bit::~PicTimer16bit(){}
 PicTimer1::PicTimer1( eMcu* mcu, QString name)
          : PicTimer16bit( mcu, name )
 {
-    m_T1CKPS = mcu->getRegBits( "T1CKPS0,T1CKPS1" );
-    m_T1OSCEN = mcu->getRegBits( "T1OSCEN" );
+    m_T1CKPS = getRegBits( "T1CKPS0,T1CKPS1", mcu );
+    m_T1OSCEN = getRegBits( "T1OSCEN", mcu );
 
-    m_TMR1CS = mcu->getRegBits( "TMR1CS" );
-    m_TMR1ON = mcu->getRegBits( "TMR1ON" );
+    m_TMR1CS = getRegBits( "TMR1CS", mcu );
+    m_TMR1ON = getRegBits( "TMR1ON", mcu );
 }
 PicTimer1::~PicTimer1(){}
 

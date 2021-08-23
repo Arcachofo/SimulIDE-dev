@@ -21,6 +21,7 @@
 #include "mcupin.h"
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
+#include "datautils.h"
 
 AvrTwi::AvrTwi( eMcu* mcu, QString name )
       : McuTwi( mcu, name )
@@ -28,12 +29,12 @@ AvrTwi::AvrTwi( eMcu* mcu, QString name )
     m_TWCR = mcu->getReg( "TWCR" );
     //m_TWSR = mcu->getReg( "TWSR" );
 
-    m_TWEN  = mcu->getRegBits( "TWEN" );
-    m_TWWC  = mcu->getRegBits( "TWWC" );
-    m_TWSTO = mcu->getRegBits( "TWSTO" );
-    m_TWSTA = mcu->getRegBits( "TWSTA" );
-    m_TWEA  = mcu->getRegBits( "TWEA" );
-    m_TWINT = mcu->getRegBits( "TWINT" );
+    m_TWEN  = getRegBits( "TWEN", mcu );
+    m_TWWC  = getRegBits( "TWWC", mcu );
+    m_TWSTO = getRegBits( "TWSTO", mcu );
+    m_TWSTA = getRegBits( "TWSTA", mcu );
+    m_TWEA  = getRegBits( "TWEA", mcu );
+    m_TWINT = getRegBits( "TWINT", mcu );
 }
 AvrTwi::~AvrTwi(){}
 

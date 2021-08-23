@@ -46,14 +46,11 @@ void Highlighter::readSintaxFile( const QString &fileName )
         if( line.startsWith("rules:") )          // Find rule List
         {
             rules = line.split(" ");
-            rules.removeFirst();
-            rules.removeAll(" ");
-            rules.removeAll("");
+            rules.removeFirst(); rules.removeAll(" "); rules.removeAll("");
             continue;
         }
         QStringList allWords = line.split(" ");
-        allWords.removeAll(" ");
-        allWords.removeAll("");
+        allWords.removeAll(" "); allWords.removeAll("");
         if( allWords.isEmpty() ) continue;
 
         for( QString rule : rules )
@@ -81,7 +78,6 @@ void Highlighter::readSintaxFile( const QString &fileName )
                 }
                 first = words.takeFirst().toLower(); // Bold?
                 if( first == "true" ) format.setFontWeight( QFont::Bold );
-                else                  format.setFontWeight( QFont::Medium );
 
                 first = words.takeFirst().toLower(); // Italic?
                 if( first == "true" ) format.setFontItalic( true );
@@ -127,7 +123,6 @@ void Highlighter::addRegisters( QStringList patterns )
     format.setForeground( QColor( 55, 65, 20 ) );
     
     for( QString exp : patterns ) addRule( format, "\\b"+exp+"\\b" );
-    //addRuleSet( format, patterns );
     this->rehighlight();
 }
 
@@ -136,7 +131,7 @@ void Highlighter::highlightBlock( const QString &text )
     QString lcText = text;
     lcText = lcText.toLower(); // Do case insensitive
 
-    for( const HighlightingRule &rule : m_rules ) processRule( rule, lcText );
+    for( const HighlightRule &rule : m_rules ) processRule( rule, lcText );
 
     if( m_multiline )                              // Multiline comment:
     {
@@ -160,7 +155,7 @@ void Highlighter::highlightBlock( const QString &text )
             startIndex = m_multiStart.indexIn( text, startIndex + commentLength );
 }   }   }
 
-void Highlighter::processRule( HighlightingRule rule, QString lcText )
+void Highlighter::processRule( HighlightRule rule, QString lcText )
 {
     QRegExp expression( rule.pattern );
     int index = expression.indexIn( lcText );
@@ -171,14 +166,9 @@ void Highlighter::processRule( HighlightingRule rule, QString lcText )
         index = expression.indexIn( lcText, index + length );
 }   }
 
-/*void Highlighter::addRuleSet( QTextCharFormat format, QStringList regExps )
-{
-    for( QString exp : regExps ) addRule( format, exp );
-}*/
-
 void Highlighter::addRule( QTextCharFormat format, QString exp )
 {
-    HighlightingRule rule;
+    HighlightRule rule;
 
     rule.pattern = QRegExp( exp );
     rule.format = format;

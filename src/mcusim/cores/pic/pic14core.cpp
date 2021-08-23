@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include "pic14core.h"
+#include "datautils.h"
+#include "regwatcher.h"
 
 Pic14Core::Pic14Core( eMcu* mcu )
          : McuCore( mcu )
@@ -34,8 +36,8 @@ Pic14Core::Pic14Core( eMcu* mcu )
         m_outPortAddr.emplace_back( port->getOutAddr() );
         m_inPortAddr.emplace_back( port->getInAddr() );
     }
-    m_bankBits = mcu->getRegBits( "RP0,RP1" );
-    mcu->watchBitNames( "RP0,RP1", R_WRITE, this, &Pic14Core::setBank );
+    m_bankBits = getRegBits( "RP0,RP1", mcu );
+    watchBitNames( "RP0,RP1", R_WRITE, this, &Pic14Core::setBank, mcu );
 }
 Pic14Core::~Pic14Core() {}
 
@@ -44,6 +46,12 @@ void Pic14Core::reset()
     McuCore::reset();
 
     m_Wreg = 0;
+}
+
+void Pic14Core::setBank( uint8_t bank )
+{
+    m_bank = getRegBitsVal( bank, m_bankBits );
+    m_bank <<= 7;
 }
 
 inline void Pic14Core::setValue( uint8_t newV, uint8_t f, uint8_t d )

@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "avrocunit.h"
+#include "datautils.h"
 #include "mcupin.h"
 #include "e_mcu.h"
 

@@ -18,9 +18,11 @@
  ***************************************************************************/
 
 #include "avrtimer.h"
+#include "datautils.h"
 #include "avrocunit.h"
 #include "e_mcu.h"
 #include "simulator.h"
+#include "regwatcher.h"
 
 McuTimer* AvrTimer::createTimer( eMcu* mcu, QString name, int type ) // Static
 {
@@ -199,7 +201,7 @@ void AvrTimer8bit::OCRXAchanged( uint8_t val )
 void AvrTimer8bit::setOCRXA( QString reg )
 {
     m_ocrxaL = m_mcu->getReg( reg );
-    m_mcu->watchRegNames( reg, R_WRITE, this, &AvrTimer8bit::OCRXAchanged );
+    watchRegNames( reg, R_WRITE, this, &AvrTimer8bit::OCRXAchanged, m_mcu );
 }
 
 //--------------------------------------------------
@@ -378,11 +380,11 @@ void AvrTimer16bit::setOCRXA( QString reg )
 
     reg = list.takeFirst();
     m_ocrxaL = m_mcu->getReg( reg );
-    m_mcu->watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged );
+    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
 
     reg = list.takeFirst();
     m_ocrxaH = m_mcu->getReg( reg );
-    m_mcu->watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged );
+    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
 }
 
 void AvrTimer16bit::setICRX( QString reg )
@@ -391,15 +393,15 @@ void AvrTimer16bit::setICRX( QString reg )
 
     reg = list.takeFirst();
     m_icrxL = m_mcu->getReg( reg );
-    m_mcu->watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged );
+    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
 
     reg = list.takeFirst();
     m_icrxH = m_mcu->getReg( reg );
-    m_mcu->watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged );
+    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
 }
 
 void AvrTimer16bit::configureClock()
 {
     if( m_prIndex > 5 ) AvrTimer::configureExtClock();
-    else             AvrTimer::configureClock();
+    else                AvrTimer::configureClock();
 }

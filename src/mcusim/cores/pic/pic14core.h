@@ -51,11 +51,7 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
         std::vector<uint16_t> m_outPortAddr;
         std::vector<uint16_t> m_inPortAddr;
 
-        void setBank( uint8_t bank )
-        {
-            m_bank = getRegBitsVal( bank, m_bankBits );
-            m_bank <<= 7;
-        }
+        void setBank( uint8_t bank );
 
         virtual uint8_t GET_RAM( uint16_t addr ) override //
         {

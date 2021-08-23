@@ -23,16 +23,14 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
-QT_BEGIN_NAMESPACE
 class QTextDocument;
-QT_END_NAMESPACE
 
 class Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 
     public:
-        Highlighter(QTextDocument *parent = 0);
+        Highlighter( QTextDocument* parent = 0);
         ~Highlighter();
 
         void readSintaxFile( const QString &fileName );
@@ -43,22 +41,20 @@ class Highlighter : public QSyntaxHighlighter
         void highlightBlock(const QString &text);
 
     private:
-        struct HighlightingRule
+        struct HighlightRule
         {
             QRegExp pattern;
             QTextCharFormat format;
         };
-        //void addRuleSet( QTextCharFormat, QString );
         void addRule( QTextCharFormat, QString );
-        void processRule( HighlightingRule rule, QString lcText );
+        void processRule( HighlightRule rule, QString lcText );
 
         bool m_multiline;
         
-        QVector<HighlightingRule> m_rules;
+        QVector<HighlightRule> m_rules;
 
         QRegExp m_multiStart;
         QRegExp m_multiEnd;
-
         QTextCharFormat m_multiFormat;
 };
 

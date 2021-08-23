@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "mcudataspace.h"
+#include "datautils.h"
 
 DataSpace::DataSpace(){}
 
@@ -68,3 +69,6 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v )
     if( mask != 0xFF ) v = (m_dataMem[addr] & ~mask) | (v & mask);
     m_dataMem[addr] = v;
 }
+
+
+
