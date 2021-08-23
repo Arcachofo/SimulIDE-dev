@@ -38,7 +38,7 @@ class MAINMODULE_EXPORT DataSpace
         uint16_t getMapperAddr( uint16_t addr ) { return m_addrMap[addr]; } // Get mapped addresses in Data space
 
         uint8_t  readReg( uint16_t addr );            // Read Register (call watchers)
-        void     writeReg( uint16_t addr, uint8_t v );// Write Register (call watchers)
+        void     writeReg(uint16_t addr, uint8_t v , bool masked=true);// Write Register (call watchers)
 
         uint8_t* getReg( QString reg )                // Get pointer to Reg data by name
         { return &m_dataMem[m_regInfo.value( reg ).address]; }

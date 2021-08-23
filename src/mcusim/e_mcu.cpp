@@ -33,9 +33,6 @@ eMcu::eMcu( QString id )
     , m_timers( this )
     //, m_usarts( this )
 {
-    m_regStart = 0xFFFF;
-    m_regEnd   = 0;
-
     m_cPerInst = 1;
     setFreq( 16.0 );
 }

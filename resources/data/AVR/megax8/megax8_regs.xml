@@ -1,5 +1,6 @@
 <parts>
   <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
+      
     <register  name="PINB"    addr="0x0003"  reset=""  mask="00000000" 
                bits="PINB0,PINB1,PINB2,PINB3,PINB4,PINB5,PINB6,PINB7" />
 

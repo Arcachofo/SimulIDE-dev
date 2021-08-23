@@ -227,15 +227,15 @@ void McuCreator::createDataBlock( QDomElement* d )
     {
         mcu->m_addrMap[i] = mapTo;
         mapTo++;
-}   }
+    }
+    getRegisters( d );
+}
 
 void McuCreator::createRegisters( QDomElement* e )
 {
     uint16_t regStart = e->attribute("start").toUInt(0,0);
     uint16_t regEnd   = e->attribute("end").toUInt(0,0);
     uint16_t offset   = e->attribute("offset").toUInt(0,0);
-    QString stReg;
-    if( e->hasAttribute( "streg" ) ) stReg = e->attribute( "streg" );
 
     if( regEnd >= mcu->m_ramSize )
     {
@@ -244,13 +244,18 @@ void McuCreator::createRegisters( QDomElement* e )
         qDebug() << "RegistersEnd = " << regEnd;
         return;
     }
-
     if( regStart < mcu->m_regStart ) mcu->m_regStart = regStart;
     if( regEnd   > mcu->m_regEnd )
     {
         mcu->m_regEnd = regEnd;
         mcu->m_regMask.resize( regEnd, 0xFF );
     }
+    getRegisters( e, offset );
+}
+void McuCreator::getRegisters(  QDomElement* e, uint16_t offset )
+{
+    QString stReg;
+    if( e->hasAttribute( "streg" ) ) stReg = e->attribute( "streg" );
 
     QDomNode node = e->firstChild();
     while( !node.isNull() ) // Create Registers
@@ -265,7 +270,6 @@ void McuCreator::createRegisters( QDomElement* e )
             QString    wMask = el.attribute("mask");
 
             if( !wMask.isEmpty() ) mcu->m_regMask[regAddr] = wMask.toUInt(0,2);
-
             mcu->m_addrMap[regAddr] = regAddr;
 
             regInfo_t regInfo = { regAddr, resetVal/*, writeMask*/ };

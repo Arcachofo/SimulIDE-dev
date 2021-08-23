@@ -60,29 +60,10 @@ class MAINMODULE_EXPORT I51Core : public McuCore
         uint16_t m_opcode;
         uint8_t* m_acc;
 
-        /*uint8_t m_P;
-        uint8_t m_OV;
-        uint8_t m_RS0;
-        uint8_t m_RS1;
-        uint8_t m_F0;
-        uint8_t m_AC;
-        uint8_t m_CY;*/
-
         bool m_upperData;
 
         std::vector<uint16_t> m_outPortAddr;
         std::vector<uint16_t> m_inPortAddr;
-
-        /*typedef void (I51Core::*funcPtr)();
-        std::vector<funcPtr> m_instructions;
-
-        template <typename T>
-        void insertIntr( uint16_t opcode, T* core, funcPtr func)
-        {
-            m_instructions.at( opcode ) = func;
-        }
-
-        void createInstructions();*/
 
         inline uint8_t getValue( uint16_t addr ) // Read Fake Input instead
         {

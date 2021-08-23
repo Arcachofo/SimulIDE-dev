@@ -38,39 +38,13 @@ class MAINMODULE_EXPORT McuCore
         virtual void reset();
         virtual void runDecoder()=0;
 
-        virtual uint8_t GET_RAM( uint16_t addr ) //
-        {
-            if( addr > m_lowDataMemEnd && addr < m_regEnd ) // Read Register
-                return m_mcu->readReg( addr );              // and call Watchers
-
-            else if( addr <= m_dataMemEnd ) return m_dataMem[addr]; // Read Ram
-            return 0;
-        }
-        virtual void SET_RAM( uint16_t addr, uint8_t v )  //
-        {
-            if( (addr > m_lowDataMemEnd) && (addr < m_regEnd) ) // Write Register
-                m_mcu->writeReg( addr, v );                     // and call Watchers
-
-            else if( addr <= m_dataMemEnd) m_dataMem[addr] = v;     // Write Ram
-        }
-
         void CALL_ADDR( uint32_t addr )
         {
             PUSH_STACK( PC );// Push current PC to stack
             PC = addr;
             m_mcu->cyclesDone = m_retCycles;
         }
-        void RETI()
-        {
-            m_mcu->m_interrupts.retI();
-            RET();
-        }
-        void RET()
-        {
-            PC = POP_STACK();
-            m_mcu->cyclesDone = m_retCycles;
-        }
-        
+
         uint32_t PC;
 
     protected:
@@ -92,6 +66,33 @@ class MAINMODULE_EXPORT McuCore
         uint8_t* m_sph;     // STACK POINTER high byte
         bool     m_spPre;   // STACK pre-increment?
         int      m_spInc;   // STACK grows up or down? (+1 or -1)
+
+        void RETI()
+        {
+            m_mcu->m_interrupts.retI();
+            RET();
+        }
+        void RET()
+        {
+            PC = POP_STACK();
+            m_mcu->cyclesDone = m_retCycles;
+        }
+
+        virtual uint8_t GET_RAM( uint16_t addr ) //
+        {
+            if( addr > m_lowDataMemEnd && addr < m_regEnd ) // Read Register
+                return m_mcu->readReg( addr );              // and call Watchers
+
+            else if( addr <= m_dataMemEnd ) return m_dataMem[addr]; // Read Ram
+            return 0;
+        }
+        virtual void SET_RAM( uint16_t addr, uint8_t v )  //
+        {
+            if( (addr > m_lowDataMemEnd) && (addr < m_regEnd) ) // Write Register
+                m_mcu->writeReg( addr, v );                     // and call Watchers
+
+            else if( addr <= m_dataMemEnd) m_dataMem[addr] = v;     // Write Ram
+        }
 
         void clear_S_Bit( uint8_t bit) { *m_STATUS &= ~(1<<bit); }
         void set_S_Bit( uint8_t bit ) { *m_STATUS |= 1<<bit; }

@@ -20,7 +20,11 @@
 #include "mcudataspace.h"
 #include "datautils.h"
 
-DataSpace::DataSpace(){}
+DataSpace::DataSpace()
+{
+    m_regStart = 0xFFFF;
+    m_regEnd   = 0;
+}
 
 DataSpace::~DataSpace()
 {
@@ -58,17 +62,17 @@ uint8_t DataSpace::readReg( uint16_t addr )
 
 void DataSpace::writeReg( uint16_t addr, uint8_t v, bool masked )
 {
+    if( masked )
+    {
+        uint8_t mask = m_regMask[addr];
+        if( mask != 0xFF ) v = (m_dataMem[addr] & ~mask) | (v & mask);
+    }
     regSignal_t* regSignal = m_regSignals.value( addr );
     if( regSignal )
     {
         m_regOverride = -1;
         regSignal->on_write.emitValue( v );
         if( m_regOverride >= 0 ) v = (uint8_t)m_regOverride; // Value overriden in callback
-    }
-    if( masked)
-    {
-        uint8_t mask = m_regMask[addr];
-        if( mask != 0xFF ) v = (m_dataMem[addr] & ~mask) | (v & mask);
     }
     m_dataMem[addr] = v;
 }
