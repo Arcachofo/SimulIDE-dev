@@ -134,7 +134,6 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         QString m_fileName;
         QString m_fileExt;
         QString m_help;
-        
         QString m_tab;
 
         bebugState_t m_state;
@@ -155,6 +154,9 @@ class CodeEditor : public QPlainTextEdit, public Updatable
  
  static int   m_fontSize;
  static int   m_tabSize;
+
+// static QFontDatabase m_fontdb;
+// static QStringList m_fonts;
  static QFont m_font;
  
  static QStringList m_picInstr;

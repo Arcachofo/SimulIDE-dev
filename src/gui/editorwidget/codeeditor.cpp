@@ -55,7 +55,8 @@ bool  CodeEditor::m_spaceTabs  = false;
 bool  CodeEditor::m_driveCirc  = false;
 int   CodeEditor::m_fontSize = 13;
 int   CodeEditor::m_tabSize = 4;
-QFont CodeEditor::m_font = QFont(); //Database::systemFont(QFontDatabase::FixedFont);
+
+QFont CodeEditor::m_font = QFont();
 
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           : QPlainTextEdit( parent )
@@ -80,11 +81,11 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_help = "";
     m_state = DBG_STOPPED;
 
-    m_font.setFamily("Monospace");
+    m_font.setFamily("Ubuntu Mono");
     m_font.setFixedPitch( true );
     m_font.setPixelSize( m_fontSize );
     setFont( m_font );
-    
+
     QSettings* settings = MainWindow::self()->settings();
     
     if( settings->contains( "Editor_show_spaces" ) )
@@ -210,7 +211,9 @@ void CodeEditor::setFile( const QString filePath )
         else m_outPane->appendLine( "Unknown\n" );
     }
     else if( m_fileExt == "xml"
+         ||  m_fileExt == "html"
          ||  m_fileExt == "package"
+         ||  m_fileExt == "mcu"
          ||  m_fileExt == "simu" )
     {
         m_hlighter->readSintaxFile( sintaxPath + "xml.sintax" );

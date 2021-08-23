@@ -31,7 +31,7 @@ Highlighter::~Highlighter(){}
 
 void Highlighter::readSintaxFile( const QString &fileName )
 {
-    m_highlightingRules.clear();
+    m_rules.clear();
 
     QTextCharFormat format;
 
@@ -40,9 +40,9 @@ void Highlighter::readSintaxFile( const QString &fileName )
 
     while( !text.isEmpty() )                        // Iterate trough lines
     {
-        QString line = text.takeFirst().toLower();
-        if( line.isEmpty() ) continue;
+        QString line = text.takeFirst();
 
+        if( line.isEmpty() ) continue;
         if( line.startsWith("rules:") )          // Find rule List
         {
             rules = line.split(" ");
@@ -51,7 +51,6 @@ void Highlighter::readSintaxFile( const QString &fileName )
             rules.removeAll("");
             continue;
         }
-
         QStringList allWords = line.split(" ");
         allWords.removeAll(" ");
         allWords.removeAll("");
@@ -63,7 +62,6 @@ void Highlighter::readSintaxFile( const QString &fileName )
             QString first = words.takeFirst();
 
             if( !first.startsWith( rule ) ) continue; // Nothing found
-
             // Found rule
             if( first.endsWith("-style:") )     // Found Style definition
             {
@@ -81,44 +79,40 @@ void Highlighter::readSintaxFile( const QString &fileName )
                     uint color = first.remove("#").toUInt( &ok, 16 );
                     if( ok ) format.setBackground( QColor(color) );
                 }
-                first = words.takeFirst();          // Bold?
+                first = words.takeFirst().toLower(); // Bold?
                 if( first == "true" ) format.setFontWeight( QFont::Bold );
+                else                  format.setFontWeight( QFont::Medium );
 
-                first = words.takeFirst();          // Italic?
+                first = words.takeFirst().toLower(); // Italic?
                 if( first == "true" ) format.setFontItalic( true );
             }
-            else                                    // Is RegExp or word List
-            {
-                if( first.contains( "multilinecomment" ) )
+            else{                                   // Is RegExp or word List
+                if( first.contains( "multiLineComment" ) )
                 {
                     m_multiline = true;
                     m_multiFormat = format;
                     if( words.size() > 1 )
                     {
                         QString exp = words.takeFirst();
-                        exp = exp.remove(0, 1).remove( exp.lastIndexOf("\"")-1, 1);
+                        exp = exp.remove(0, 1).remove( exp.size()-1, 1);
                         m_multiStart.setPattern( exp.replace("\\\\","\\") );
                         exp = words.takeFirst();
-                        exp = exp.remove(0, 1).remove( exp.lastIndexOf("\"")-1, 1);
+                        exp = exp.remove(0, 1).remove( exp.size()-1, 1);
                         m_multiEnd.setPattern( exp.replace("\\\\","\\")  );
-                    }
-                }
-                else
-                {
+                }   }
+                else{
                     for( QString exp : words )
                     {
                         if( exp.startsWith("\"")) // RegExp
-                            exp = exp.remove(0, 1).remove( exp.lastIndexOf("\"")-1, 1);
+                            exp = exp.remove(0, 1).remove( exp.size()-1, 1);
                         else exp = "\\b"+exp+"\\b";
                         addRule( format, exp );
-                    }
-                }
+                }   }
                 format.setFontWeight( QFont::Normal );         // Reset to Defaults
                 format.setForeground( Qt::black );             // Reset to Defaults
             }
             break;
-        }
-    }
+    }   }
     format.setForeground( QColor(12303291) ); // Show Spaces color
     addRule( format, QString( " " ) );
     addRule( format, QString( "\t" ) );
@@ -142,10 +136,7 @@ void Highlighter::highlightBlock( const QString &text )
     QString lcText = text;
     lcText = lcText.toLower(); // Do case insensitive
 
-    for( const HighlightingRule &rule : m_highlightingRules )
-    {
-        processRule( rule, lcText );
-    }
+    for( const HighlightingRule &rule : m_rules ) processRule( rule, lcText );
 
     if( m_multiline )                              // Multiline comment:
     {
@@ -162,16 +153,12 @@ void Highlighter::highlightBlock( const QString &text )
             {
                 setCurrentBlockState( 1 );
                 commentLength = text.length()- startIndex;
-            }
-            else
-            {
+            }else{
                 commentLength = endIndex - startIndex + m_multiEnd.matchedLength();
             }
             setFormat( startIndex, commentLength, m_multiFormat );
             startIndex = m_multiStart.indexIn( text, startIndex + commentLength );
-        }
-    }
-}
+}   }   }
 
 void Highlighter::processRule( HighlightingRule rule, QString lcText )
 {
@@ -182,8 +169,7 @@ void Highlighter::processRule( HighlightingRule rule, QString lcText )
         int length = expression.matchedLength();
         setFormat( index, length, rule.format );
         index = expression.indexIn( lcText, index + length );
-    }
-}
+}   }
 
 /*void Highlighter::addRuleSet( QTextCharFormat format, QStringList regExps )
 {
@@ -196,23 +182,5 @@ void Highlighter::addRule( QTextCharFormat format, QString exp )
 
     rule.pattern = QRegExp( exp );
     rule.format = format;
-    m_highlightingRules.append(rule);
+    m_rules.append(rule);
 }
-
-/*classFormat.setFontWeight( QFont::Bold );
-classFormat.setForeground( Qt::darkMagenta );
-rule.pattern = QRegExp( "\\bQ[A-Za-z]+\\b" );
-rule.format = classFormat;
-m_highlightingRules.append( rule );*/
-
-//m_multiFormat.setForeground( Qt::red );
-
-
-/*functionFormat.setFontItalic( true );
-functionFormat.setForeground( Qt::blue );
-rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()"); //( "\\b[A-Za-z0-9_]+(?=\\()" );
-rule.format = functionFormat;
-m_highlightingRules.append( rule );*/
-
-//m_multiStart = QRegExp( "/\\*" );
-//m_multiEnd = QRegExp( "\\*/" );

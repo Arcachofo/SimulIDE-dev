@@ -222,6 +222,7 @@ win32 | linux {
         $(MKDIR)    $$TARGET_PREFIX/share/simulide/translations ; \
         $(COPY_DIR) ../resources/data              $$TARGET_PREFIX/share/simulide ; \
         $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX/share/simulide ; \
+        $(COPY_DIR) ../resources/fonts             $$TARGET_PREFIX/share/simulide ; \
         $(COPY_DIR) ../resources/icons             $$TARGET_PREFIX/share ; \
         $(MOVE)     ../resources/translations/*.qm $$TARGET_PREFIX/share/simulide/translations ;
 }
@@ -239,6 +240,7 @@ macx {
         $(MKDIR)    $$TARGET_PREFIX/simulide.app/Contents/share/simulide/translations ; \
         $(COPY_DIR) ../resources/data              $$TARGET_PREFIX/simulide.app/Contents/share/simulide ; \
         $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX/simulide.app/Contents/share/simulide ; \
+        $(COPY_DIR) ../resources/fonts             $$TARGET_PREFIX/simulide.app/Contents/share/simulide ; \
         $(COPY_DIR) ../resources/icons             $$TARGET_PREFIX/simulide.app/Contents/share ; \
         $(MOVE)     ../resources/translations/*.qm $$TARGET_PREFIX/simulide.app/Contents/share/simulide/translations ;
 }

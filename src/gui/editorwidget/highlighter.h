@@ -17,12 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #ifndef HIGHLIGHTER_H
 #define HIGHLIGHTER_H
 
 #include <QSyntaxHighlighter>
-//#include <QHash>
 #include <QTextCharFormat>
 
 QT_BEGIN_NAMESPACE
@@ -50,14 +48,13 @@ class Highlighter : public QSyntaxHighlighter
             QRegExp pattern;
             QTextCharFormat format;
         };
-        
         //void addRuleSet( QTextCharFormat, QString );
         void addRule( QTextCharFormat, QString );
         void processRule( HighlightingRule rule, QString lcText );
 
         bool m_multiline;
         
-        QVector<HighlightingRule> m_highlightingRules;
+        QVector<HighlightingRule> m_rules;
 
         QRegExp m_multiStart;
         QRegExp m_multiEnd;
