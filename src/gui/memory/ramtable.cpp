@@ -36,16 +36,17 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     m_loadingVars = false;
 
     int scale = MainWindow::self()->fontScale();
+    int row_heigh = 23*scale;
+    int numberColor = 0x202090;
+
     QFont font;
-    font.setPixelSize( 11*scale );
     font.setFamily("Ubuntu Mono");
     font.setBold(true);
-
-    int row_heigh = 23*scale;
+    font.setPixelSize( 13*scale );
 
     QTableWidgetItem* it;
 
-    m_pc.setVerticalHeaderLabels( QStringList()<<" PC     "  );
+    m_pc.setVerticalHeaderLabels( QStringList()<<" PC "  );
     m_pc.horizontalHeader()->hide();
     m_pc.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     m_pc.setRowHeight( 0, row_heigh );
@@ -54,16 +55,18 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     it = new QTableWidgetItem(0);
     it->setFlags( Qt::ItemIsEnabled );
     it->setFont( font );
+    it->setTextColor( QColor( numberColor ) );
     m_pc.setItem( 0, 0, it );
-    m_pc.setColumnWidth(0, 60*scale);
+    m_pc.setColumnWidth(0, 45*scale);
 
     it = new QTableWidgetItem(0);
     it->setFlags( Qt::ItemIsEnabled );
     it->setFont( font );
+    it->setTextColor( QColor( 0x3030B8 ) );
     m_pc.setItem( 0, 1, it );
-    m_pc.setColumnWidth(1, 75*scale);
+    m_pc.setColumnWidth(1, 60*scale);
 
-    m_status.setVerticalHeaderLabels( QStringList()<<" STATUS"  );
+    m_status.setVerticalHeaderLabels( QStringList()<<" STATUS" );
     m_status.horizontalHeader()->hide();
     m_status.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     m_status.setRowHeight( 0, row_heigh );
@@ -71,7 +74,7 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
 
     for( int i=0; i<8; i++ )
     {
-        m_status.setColumnWidth( i, 33*scale );
+        m_status.setColumnWidth( i, 28*scale );
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
         it->setFont( font );
@@ -79,10 +82,11 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     }
 
     table->verticalHeader()->setSectionsMovable( true );
-    table->setColumnWidth( 0, 60*scale );
-    table->setColumnWidth( 1, 55*scale );
-    table->setColumnWidth( 2, 35*scale );
-    table->setColumnWidth( 3, 80*scale );
+    table->setColumnWidth( 0, 55*scale );
+    table->setColumnWidth( 1, 60*scale );
+    table->setColumnWidth( 2, 40*scale );
+    table->setColumnWidth( 3, 40*scale );
+    table->setColumnWidth( 4, 75*scale );
 
     for( int row=0; row<m_numRegs; row++ )
     {
@@ -90,19 +94,21 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
         it->setFont( font );
         it->setText( "---" );
         table->setVerticalHeaderItem( row, it );
-        for( int col=0; col<4; col++ )
+        for( int col=0; col<5; col++ )
         {
             QTableWidgetItem *it = new QTableWidgetItem(0);
-            if( col>0 ){
+            if( col != 1 ){
                 it->setFlags( Qt::ItemIsEnabled );
                 it->setText("---");
+                if( col == 2 ) it->setTextColor( QColor( 0x904020 ) );
+                else           it->setTextColor( QColor( numberColor ) );
             }
             it->setFont( font );
             table->setItem( row, col, it );
         }
         table->setRowHeight(row, row_heigh);
     }
-    table->setHorizontalHeaderLabels( QStringList()<<tr("Reg.")<<tr("Type")<<tr("Dec")<<tr("Value")  );
+    table->setHorizontalHeaderLabels( QStringList()<<tr("Addr")<<tr("Name")<<tr("Type")<<tr("Dec")<<tr("Value")  );
 
     setContextMenuPolicy( Qt::CustomContextMenu );
 
@@ -127,7 +133,7 @@ void RamTable::RegDoubleClick(const QModelIndex& index)
     m_currentRow = table->currentRow();
     if( m_currentRow < 0 ) return;
 
-    setItemValue( 0, m_registerModel->item(index.row())->text() );
+    setItemValue( 1, m_registerModel->item(index.row())->text() );
 }
 
 void RamTable::setStatusBits( QStringList statusBits )
@@ -203,7 +209,7 @@ void RamTable::loadVarSet( QStringList varSet )
     if( !m_loadingVars )
     {
         m_loadingVars = true;
-        table->setCurrentCell( 0, 0 ); // Loading varset
+        table->setCurrentCell( 0, 1 ); // Loading varset
     }
 
     int row = table->currentRow()-1;
@@ -211,9 +217,9 @@ void RamTable::loadVarSet( QStringList varSet )
     {
         row++;
         if( row >= m_numRegs ) break;
-        table->item( row, 0 )->setText( var );
+        table->item( row, 1 )->setText( var );
     }
-    table->setCurrentCell( 0, 0 );
+    table->setCurrentCell( 0, 1 );
 
     m_loadingVars = false;
 }
@@ -223,7 +229,7 @@ QStringList RamTable::getVarSet()
     QStringList varset;
     for( int row=0; row<m_numRegs; row++ )
     {
-        QString name = table->item( row, 0 )->text();
+        QString name = table->item( row, 1 )->text();
         varset.append( name );
     }
     return varset;
@@ -255,7 +261,7 @@ void RamTable::saveVarSet()
 
         for( int row=0; row<m_numRegs; row++ )
         {
-            QString name = table->item( row, 0 )->text();
+            QString name = table->item( row, 1 )->text();
             out << name << "\n";
         }
         file.close();
@@ -279,16 +285,16 @@ void RamTable::updateValues()
         {
             uint8_t value = m_processor->getRamValue( addr );
 
-            table->item( _row, 1 )->setText("uint8");
-            table->item( _row, 2 )->setData( 0, value );
-            table->item( _row, 3 )->setData( 0, decToBase(value, 2, 8) );
+            table->item( _row, 2 )->setText("uint8");
+            table->item( _row, 3 )->setData( 0, value );
+            table->item( _row, 4 )->setData( 0, decToBase(value, 2, 8) );
 }   }   }
 
 void RamTable::addToWatch( QTableWidgetItem* it )
 {
-    if( table->column(it) != 0 ) return;
+    if( table->column(it) != 1 ) return;
     int _row = table->row(it);
-    table->setCurrentCell( _row, 0 );
+    table->setCurrentCell( _row, 1 );
 
     QString name = it->text().remove(" ").remove("\t").remove("*");//.toLower();
 
@@ -297,24 +303,25 @@ void RamTable::addToWatch( QTableWidgetItem* it )
         watchList.remove(_row);
         table->verticalHeaderItem( _row )->setText("---");
 
-        table->item( _row, 3 )->setText("---");
+        table->item( _row, 0 )->setText("---");
         table->item( _row, 2 )->setText("---");
-        table->item( _row, 1 )->setText("---");
+        table->item( _row, 3 )->setText("---");
+        table->item( _row, 4 )->setText("---");
     }
-    else
-    {
-        int value = m_processor->getRegAddress( name );
-        if( value < 0 )
+    else{
+        int addr = m_processor->getRegAddress( name );
+        if( addr < 0 )
         {
             bool ok;
-            value = name.toInt(&ok, 10);
-            if( !ok ) value = name.toInt(&ok, 16);
-            if( !ok ) value = -1;
+            addr = name.toInt(&ok, 10);
+            if( !ok ) addr = name.toInt(&ok, 16);
+            if( !ok ) addr = -1;
         }
-        if( value >= 0 )
+        if( addr >= 0 )
         {
             watchList[_row] = name;
-            table->verticalHeaderItem( _row )->setData( 0, value );
+            table->verticalHeaderItem( _row )->setData( 0, addr );
+            table->item( _row, 0 )->setText( "0x"+decToBase(addr, 16, 4).remove(0,1) );
         }
         if( !m_debugger ) return;
         QString varType = m_debugger->getVarType( name );
@@ -333,7 +340,7 @@ void RamTable::addToWatch( QTableWidgetItem* it )
                 if( index > listEnd ) break;
 
                 QString varName = variables.at( index );
-                if( varName.contains( name ) ) table->item( _row+i, 0 )->setText( varName );
+                if( varName.contains( name ) ) table->item( _row+i, 1 )->setText( varName );
 }   }   }   }
 
 void RamTable::setRegisters( QStringList regs )

@@ -16,12 +16,16 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     m_ramTable = m_processor->getRamTable();
     m_status = &m_ramTable->m_status;
     m_pc     = &m_ramTable->m_pc;
-    verticalLayout->insertWidget( 0, m_status);
-    verticalLayout->insertWidget( 0, m_pc);
+    m_pc->setMinimumWidth( 130 );
 
-    m_ramMonitor    = new MemTable( tabWidget, m_processor->ramSize() );
-    m_flashMonitor  = new MemTable( tabWidget, m_processor->flashSize(), m_processor->wordSize() );
-    m_romMonitor    = new MemTable( tabWidget, m_processor->romSize() );
+    horizontalLayout->insertWidget( 0, m_status);
+    horizontalLayout->insertWidget( 0, m_pc);
+    horizontalLayout->setStretchFactor( m_pc, 30 );
+    horizontalLayout->setStretchFactor( m_status, 65 );
+
+    m_ramMonitor   = new MemTable( tabWidget, m_processor->ramSize() );
+    m_flashMonitor = new MemTable( tabWidget, m_processor->flashSize(), m_processor->wordSize() );
+    m_romMonitor   = new MemTable( tabWidget, m_processor->romSize() );
 
     tabWidget->addTab( m_ramTable, "Variables" );
     tabWidget->addTab( m_ramMonitor, "RAM");
@@ -66,7 +70,7 @@ void MCUMonitor::updateTable( int index )
 
     int pc = m_processor->pc();
     m_pc->item( 0, 0 )->setData( 0, pc );
-    m_pc->item( 0, 1 )->setText("  0x"+decToBase(pc, 16, 4).remove(0,1) );
+    m_pc->item( 0, 1 )->setText(" 0x"+decToBase(pc, 16, 4).remove(0,1) );
 
     switch( index )
     {

@@ -83,7 +83,7 @@ void MemTable::resizeTable( int dataSize )
 
     int scale = MainWindow::self()->fontScale();
     QFont font;
-    font.setPixelSize( 12*scale );
+    font.setPixelSize( 13*scale );
     font.setFamily("Ubuntu Mono");
 
     QTableWidgetItem* it;
@@ -111,8 +111,8 @@ void MemTable::resizeTable( int dataSize )
     }
     for( int col=0; col<16; ++col )
     {
-        table->setColumnWidth( col, (1+m_wordBytes)*20*scale );
-        table->setColumnWidth( col+17, 15*scale );
+        table->setColumnWidth( col, (2+m_wordBytes)*15*scale+2 );
+        table->setColumnWidth( col+17, 15*m_wordBytes*scale );
     }
     font.setBold(true);
     table->horizontalHeader()->setFont( font );
@@ -167,7 +167,8 @@ QString MemTable::valToHex( int val, int bytes )
     QString sval = QString::number( val, 16 ).toUpper();
     sval = sval.right( bytes*2 );
     while( sval.length() < bytes*2) sval.prepend( "0" );
-    sval.prepend("0x");
+    sval.prepend(" 0x");
+    sval.append(" ");
 
     return sval;
 }
