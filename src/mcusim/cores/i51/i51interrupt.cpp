@@ -50,7 +50,7 @@ void I51ExtInt::reset()
 
 void I51ExtInt::raise( uint8_t v )
 {
-    if( !m_enable ) return;
+    if( !m_enabled ) return;
 
     if( m_mode == 0 )
     {
@@ -90,7 +90,7 @@ void I51T1Int::reset()
 
 void I51T1Int::raise( uint8_t v )
 {
-    if( !m_enable ) return;
+    if( !m_enabled ) return;
 
     if( m_usart ) m_usart->step();
     Interrupt::raise( v );

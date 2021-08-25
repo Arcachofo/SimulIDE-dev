@@ -120,3 +120,10 @@ void eMcu::wdr()
 {
     m_wdt->reset();
 }
+
+void eMcu::enableInterrupts( uint8_t en )
+{
+    if( en > 1 ) en = 1;
+    m_interrupts.enableGlobal( en );
+}
+

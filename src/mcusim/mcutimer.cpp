@@ -70,7 +70,7 @@ void McuTimer::runEvent()            // Overflow
     m_countVal = m_countStart;             // Reset count value
     if( m_bidirec ) m_reverse = !m_reverse;
 
-    if( !m_reverse ) m_interrupt->raise(); // interrupt.emitValue( 1 );
+    if( !m_reverse ) m_interrupt->raise();
 
     sheduleEvents();
 }
@@ -88,6 +88,8 @@ void McuTimer::sheduleEvents()
         uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
         m_ovfCycle = circTime + cycles;// In simulation time (ps)
 
+        if( m_name == "TIMER0") /// DELETEME
+            m_running = m_running;
         Simulator::self()->addEvent( cycles, this );
         for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfMatch, m_countVal );
     }

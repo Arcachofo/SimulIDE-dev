@@ -82,7 +82,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         void wdr();
 
-        void enableInterrupts( uint8_t en ) { m_interrupts.enableGlobal( en ); }
+        void enableInterrupts( uint8_t en );
 
         McuCore* cpu;
         int cyclesDone;

@@ -54,11 +54,10 @@ MainWindow::MainWindow()
     QDir fontDir = SIMUAPI_AppPath::self()->RODataFolder();
     fontDir.cd( "../fonts" );
 
-    //int fn =
-    qDebug() << QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-B.ttf") );
-    qDebug() << QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-BI.ttf") );
-    qDebug() << QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-R.ttf") );
-    qDebug() << QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-RI.ttf") );
+    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-B.ttf") );
+    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-BI.ttf") );
+    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-R.ttf") );
+    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-RI.ttf") );
 
     float scale = 1.0;
     if( m_settings.contains( "fontScale" ) ) 

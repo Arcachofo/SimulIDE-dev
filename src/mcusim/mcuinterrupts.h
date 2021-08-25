@@ -41,12 +41,16 @@ class MAINMODULE_EXPORT Interrupt
         virtual void execute();
         virtual void exitInt();
 
+        uint8_t enabled() { return m_enabled; }
+        uint8_t raised() { return m_raised; }
         void clearFlag();
-        void enableFlag( uint8_t en ) { m_enable = en; }
-        void setPriority( uint8_t p ) { m_priority = p; }
-        void setMode( uint8_t mod )   { m_mode = mod;}
+        void writeFlag( uint8_t v );
+        void enableFlag( uint8_t en );
 
         uint8_t priority() { return m_priority; }
+        void setPriority( uint8_t p ) { m_priority = p; }
+
+        void setMode( uint8_t mod )   { m_mode = mod;}
 
         void callBack( McuModule* mod, bool call );
         void exitCallBack( McuModule* mod, bool call );
@@ -62,7 +66,7 @@ class MAINMODULE_EXPORT Interrupt
         uint16_t m_vector;
         uint8_t  m_mode;
 
-        uint8_t m_enable;
+        uint8_t m_enabled;
 
         uint8_t  m_flagMask;
         uint16_t m_flagReg;
@@ -71,6 +75,7 @@ class MAINMODULE_EXPORT Interrupt
         uint8_t m_raised;
 
         bool m_autoClear;
+        bool m_remembrer;
 
         QList<McuModule*> m_callBacks;
         QList<McuModule*> m_exitCallBacks;
@@ -86,17 +91,18 @@ class MAINMODULE_EXPORT Interrupts
         Interrupts( eMcu* mcu );
         virtual ~Interrupts();
 
-       void enableGlobal( uint8_t en );
-       void runInterrupts();
-       void retI();
-       void remove();
-       void resetInts();
-       void addToPending( uint8_t pri, Interrupt* i );
+        void enableGlobal( uint8_t en ) { m_enabled = en; }
+        uint8_t enabled() { return m_enabled; }
+        void runInterrupts();
+        void retI();
+        void remove();
+        void resetInts();
+        void addToPending( uint8_t pri, Interrupt* i );
 
     protected:
         eMcu* m_mcu;
 
-        uint8_t    m_enGlobal;   // Global Interrupt Flag
+        uint8_t    m_enabled;   // Global Interrupt Flag
         Interrupt* m_active;     // Active interrupt
 
         std::multimap<uint8_t, Interrupt*> m_running; // Interrups that were interrupted

@@ -25,10 +25,7 @@
 
 #include "avrcore.h"
 #include "avr_defines.h"
-
 #include "simulator.h"
-
-/// #define SREG m_sreg
 
 AvrCore::AvrCore( eMcu* mcu )
        : McuCore( mcu )
@@ -46,11 +43,8 @@ AvrCore::~AvrCore() {}
 
 inline void AvrCore::flags_ns( uint8_t res )
 {
-    /// SREG[S_N] = (res >> 7) & 1;
     uint8_t sn = res & (1<<7);
     write_S_Bit( S_N, sn );
-
-    /// SREG[S_S] = SREG[S_N] ^ SREG[S_V];
     write_S_Bit( S_S, sn ^ STATUS(S_V) );
 }
 inline void AvrCore::flags_zns( uint8_t res )
@@ -68,10 +62,7 @@ inline void AvrCore::flags_sub( uint8_t res, uint8_t rd, uint8_t rr )
     /* carry & half carry */
     uint8_t sub_carry = (~rd & rr) | (rr & res) | (res & ~rd);
 
-    /// SREG[S_H] = (sub_carry >> 3) & 1;
     write_S_Bit( S_H, sub_carry & (1<<3) );
-
-    /// SREG[S_C] = (sub_carry >> 7) & 1;
     write_S_Bit( S_C, sub_carry & (1<<7) );
 
     /* overflow */
@@ -88,10 +79,7 @@ inline void AvrCore::flags_add_zns( uint8_t res, uint8_t rd, uint8_t rr )
     /* carry & half carry */
     uint8_t add_carry = (rd & rr) | (rr & ~res) | (~res & rd);
 
-    /// SREG[S_H] = (add_carry >> 3) & 1;
     write_S_Bit( S_H, add_carry & (1<<3) );
-
-    /// SREG[S_C] = (add_carry >> 7) & 1;
     write_S_Bit( S_C, add_carry & (1<<7) );
 
     /// SREG[S_V] = (((rd & rr & ~res) | (~rd & ~rr & res)) >> 7) & 1; //overflow
@@ -116,7 +104,6 @@ inline void AvrCore::flags_zcnvs( uint8_t res, uint8_t vr )
     uint8_t sc = vr & 1;
     write_S_Bit( S_C, sc );
 
-    /// SREG[S_N] = res >> 7;
     uint8_t sn = res & (1<<7);
     write_S_Bit( S_N, sn );
 
@@ -147,7 +134,6 @@ inline void AvrCore::flags_zns16( uint16_t res )
 {
     write_S_Bit( S_Z, (res == 0) );
 
-    /// SREG[S_N] = (res >> 15) & 1;
     uint8_t sn = res & (1<<15);
     write_S_Bit( S_N, sn );
 
@@ -202,7 +188,7 @@ void AvrCore::runDecoder()
                             m_dataMem[d] = res;
                             flags_sub_Rzns( res, vd, vr);
                         }    break;
-                        default:
+                        default: {
                             switch( instruction & 0xff00) {
                                 case 0x0100: {    // MOVW -- Copy Register Word -- 0000 0001 dddd rrrr
                                     uint8_t d =( (instruction >> 4) & 0xf) << 1;
@@ -254,6 +240,7 @@ void AvrCore::runDecoder()
                                 }    break;
                                 default: ;//_avr_invalid_instruction(avr);
                             }
+                        }
                     }
                 }
             }
@@ -381,32 +368,28 @@ void AvrCore::runDecoder()
         }    break;
 
         case 0x9000: {
-            /* this is an annoying special case, but at least these lines handle all the SREG set/clear instructions
-            if( (instruction & 0xff0f) == 0x9408)
+            // SREG set/clear instructions
+            // SEH,SEI,SEN,SES,SET,SEV,SEZ; CLH,CLI,CLN,CLS,CLT,CLV,CLZ
+            if( (instruction & 0xff0f) == 0x9408 )
             {
-                uint8_t b = (instruction >> 4) & 7;
-                SREG[b] = ( (instruction & 0x0080) == 0);
-            }*/
+                uint8_t bit = (instruction >> 4) & 7;
+                bool set = (instruction & 0x0080) == 0;
+                write_S_Bit( bit, set );
+                if( bit == S_I )
+                    m_mcu->enableInterrupts( set );
+            }
             switch( instruction )
             {
-                case 0x9478: // SEI -- 1001 0100 0111 1000
-                {
-                    set_S_Bit( S_I );
-                    m_mcu->enableInterrupts( 1 );
-                }break;
-                case 0x94F8: // CLI -- 1001 0100 1111 1000
-                {
-                    clear_S_Bit( S_I );
-                    m_mcu->enableInterrupts( 0 );
-                }break;
                 case 0x9588: { // SLEEP -- 1001 0101 1000 1000
                     /* Don't sleep if there are interrupts about to be serviced.
                      * Without this check, it was possible to incorrectly enter a state
                      * in which the cpu was sleeping and interrupts were disabled. For more
                      * details, see the commit message. */
+                    qDebug() <<"ERROR: AVR SLEEP instruction not implemented";
 ////////             if( !int_pending.empty() || !SREG[S_I]) state = cpu_Sleeping;
                 }    break;
                 case 0x9598: { // BREAK -- 1001 0101 1001 1000
+                    qDebug() <<"ERROR: AVR BREAK instruction not implemented";
                     /*if( gdb) {
                         // if gdb is on, we break here as in here
                         // and we do so until gdb restores the instruction
@@ -420,7 +403,7 @@ void AvrCore::runDecoder()
                     m_mcu->wdr();
                 }    break;
                 case 0x95e8: { // SPM -- Store Program Memory -- 1001 0101 1110 1000
-                    ////avr_ioctl(avr, AVR_IOCTL_FLASH_SPM, 0);
+                    qDebug() <<"ERROR: AVR SPM instruction not implemented"; ////avr_ioctl(avr, AVR_IOCTL_FLASH_SPM, 0);
                 }    break;
                 case 0x9409:   // IJMP   -- Indirect jump -- 1001 0100 0000 1001
                 case 0x9419:   // EIJMP  -- Indirect jump -- 1001 0100 0001 1001   bit 4 is "indirect"
@@ -439,10 +422,11 @@ void AvrCore::runDecoder()
                     cycle++;
                 }    break;
                 case 0x9518:     // RETI -- Return from Interrupt -- 1001 0101 0001 1000
-                    //SREG[S_I] = 1;
-                    set_S_Bit( S_I );
-                    McuCore::RETI();
-                    //FALLTHROUGH
+                    McuCore::RETI();// SREG flag managed in AvrInterrupt
+                    /// TODO simplify RETI call, new_pc, cycle
+                    new_pc = PC;
+                    cycle += 1 + m_progAddrSize;
+                    break;
                 case 0x9508: {    // RET -- Return -- 1001 0101 0000 1000
                     new_pc = POP_STACK();
                     cycle += 1 + m_progAddrSize;
@@ -455,7 +439,7 @@ void AvrCore::runDecoder()
                     m_dataMem[0] = prgData & 0xFF;
                 }    break;
                 case 0x95d8: {    // ELPM -- Load Program Memory R0 <-( Z) -- 1001 0101 1101 1000
-                    //if( !rampz) _avr_invalid_instruction(avr);
+                    if( !RAMPZ) qDebug() << "ERROR: AVR Invalid instruction: ELPM with no RAMPZ";//_avr_invalid_instruction(avr);
                     uint32_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8) | (*RAMPZ << 16);
                     uint16_t prgData = m_progMem[z/2];
                     if( z&1 ) prgData >>= 8;
@@ -823,7 +807,8 @@ void AvrCore::runDecoder()
         default: ;//_avr_invalid_instruction(avr);
     }
     if( new_pc > m_progSize )
-        qDebug() << "PC ERROR" << new_pc << m_progSize;
+        qDebug() << "AVR PC ERROR" << new_pc << m_progSize;
+
     PC = new_pc;
     m_mcu->cyclesDone += cycle;
 }

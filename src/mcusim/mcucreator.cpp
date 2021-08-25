@@ -307,7 +307,7 @@ void McuCreator::getRegisters(  QDomElement* e, uint16_t offset )
 void McuCreator::createInterrupts( QDomElement* i )
 {
     QString enable = i->attribute("enable");
-    watchBitNames( enable, R_WRITE, (eMcu*)mcu, &eMcu::enableInterrupts, mcu );
+    watchBitNames( enable, R_WRITE, mcu, &eMcu::enableInterrupts, mcu );
 
     QDomNode node = i->firstChild();
     while( !node.isNull() )
@@ -852,9 +852,9 @@ void McuCreator::createInterrupt( QDomElement* el )
     uint16_t intVector  = el->attribute("vector").toUInt(0,0);
 
     Interrupt* iv = NULL;
-    if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
-    else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, (eMcu*)mcu );
-    else if( m_core == "Pic14" ) iv = new Interrupt( intName, intVector, (eMcu*)mcu );
+    if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, mcu );
+    else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
+    else if( m_core == "Pic14" ) iv = new Interrupt( intName, intVector, mcu );
     if( !iv ) return;
 
     mcu->m_interrupts.m_intList.insert( intName, iv );
@@ -873,6 +873,11 @@ void McuCreator::createInterrupt( QDomElement* el )
     if( ok ) iv->setPriority( prio );
     else     watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority, mcu );
 
+    if( el->hasAttribute("clear") )
+    {
+        //uint8_t val = el->attribute("clear");
+        watchBitNames( intFlag, R_WRITE, iv, &Interrupt::writeFlag, mcu );
+    }
     if( el->hasAttribute("mode") )
     {
         QString mode = el->attribute("mode");

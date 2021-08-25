@@ -106,7 +106,7 @@ void McuInterface::updateRamValue( QString name )
     {
         float value = 0;
         memcpy(&value, ba, 4);
-        m_ramTable->setItemValue( 1, value  );
+        m_ramTable->setItemValue( 2, value  );
     }
     else{                             // char, int, long
         int32_t value = 0;
@@ -135,9 +135,9 @@ void McuInterface::updateRamValue( QString name )
                 memcpy(&val, ba, 1);
                 value = val;
         }   }
-        m_ramTable->setItemValue( 2, value  );
+        m_ramTable->setItemValue( 3, value  );
 
-        if     ( type.contains( "8" ) ) m_ramTable->setItemValue( 3, decToBase(value, 2, 8)  );
+        if     ( type.contains( "8" ) ) m_ramTable->setItemValue( 4, decToBase(value, 2, 8)  );
         else if( type.contains( "string" ) )
         {
             QString strVal = "";
@@ -149,9 +149,9 @@ void McuInterface::updateRamValue( QString name )
 
                 strVal += str; //QByteArray::fromHex( getRamValue( i ) );
             }
-            m_ramTable->setItemValue( 3, strVal  );
+            m_ramTable->setItemValue( 4, strVal  );
     }   }
-    m_ramTable->setItemValue( 1, type  );
+    m_ramTable->setItemValue( 2, type  );
 }
 
 void McuInterface::addWatchVar( QString name, int address, QString type )

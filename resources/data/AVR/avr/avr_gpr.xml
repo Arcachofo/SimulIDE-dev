@@ -1,5 +1,5 @@
 <parts>
-  <datablock  name="REGISTERS" start="0x0000" end="0x001F">
+  <datablock  name="GPR" start="0x0000" end="0x001F">
     <register name="R00"   addr="0"   bits=""/>
     <register name="R01"   addr="1"   bits=""/>
     <register name="R02"   addr="2"   bits=""/>
@@ -33,7 +33,7 @@
     <register name="R30"   addr="30"  bits=""/>
     <register name="R31"   addr="31"  bits=""/>
   </datablock>
-  <regblock  name="STATUS" start="0x003F" end="0x003F" offset="0" streg="SREG">
+  <regblock  name="STATUS" start="0x003F" end="0x003F" offset="32" streg="SREG">
     <register name="SREG"   addr="0x003F" bits="C,Z,N,V,S,H,T,I"/>
   </regblock>
 </parts>
