@@ -47,7 +47,14 @@ void MemTable::setValue( int address, int val )
     int colAscii = colRam +17;
     m_blocked = true;
     table->item( row, colRam )->setData( 0, valToHex( val, m_wordBytes ) );
-    table->item( row, colAscii )->setData( 0, QChar(val) );
+    QString valS = QChar( val&0x00FF );
+    for( int i=1; i<m_wordBytes; ++i )
+    {
+        val >>= 8;
+        valS += " "+QString( QChar( val&0x00FF ) );
+    }
+    table->item( row, colAscii )->setData( 0, valS );
+
     m_blocked = false;
 }
 
@@ -124,20 +131,21 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
 {
     if( m_blocked ) return;
     m_blocked = true;
-    int val;
+    int val=0;
     bool ok;
 
     int col = item->column();
     if( col > 16 )
     {
         col -= 17;
-        ok = !item->text().isEmpty();
+        ok = item->text().size() == m_wordBytes;
         if( ok )
         {
-            QChar cv = item->text().toUtf8().at(0);
-            val = cv.cell() | (cv.row()<<8);
-    }   }
-
+            for( int i=0; i<m_wordBytes; ++i )
+            {
+                QChar cv = item->text().at(i);
+                val += cv.cell() << (8*i);
+    }   }   }
     else val = item->text().toInt( &ok, 0 );
 
     int address = item->row()*16+col;
