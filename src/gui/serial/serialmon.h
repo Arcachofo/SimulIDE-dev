@@ -24,15 +24,18 @@
 
 #include "ui_serialmon.h"
 #include "outpaneltext.h"
+#include "updatable.h"
 
 class UsartModule;
 
-class SerialMonitor : public QDialog, private Ui::SerialMonitor
+class SerialMonitor : public QDialog, private Ui::SerialMonitor, public Updatable
 {
     Q_OBJECT
 
     public:
         SerialMonitor( QWidget* parent, UsartModule* usart );
+
+        virtual void updateStep() override;
 
         void printIn( int value );
         void printOut( int value );
@@ -54,6 +57,8 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor
 
         bool m_printASCII;
         bool m_addCR;
+
+        QByteArray m_outBuffer;
 };
 
 #endif

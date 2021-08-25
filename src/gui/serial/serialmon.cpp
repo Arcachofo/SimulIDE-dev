@@ -23,6 +23,7 @@
 
 SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
              : QDialog( parent )
+             , Updatable()
              , m_uartInPanel(this)
              , m_uartOutPanel(this)
 {
@@ -37,24 +38,32 @@ SerialMonitor::SerialMonitor( QWidget* parent, UsartModule* usart )
     m_printASCII = true;
     m_addCR = false;
 
-    Simulator::self()->addToUpdateList( &m_uartOutPanel );
-    Simulator::self()->addToUpdateList( &m_uartInPanel );
+    Simulator::self()->addToUpdateList( this );
+}
+
+void SerialMonitor::updateStep()
+{
+    m_uartInPanel.updateStep();
+    m_uartOutPanel.updateStep();
+
+    if( m_outBuffer.isEmpty() ) return;
+
+    for( int i=0; i<m_outBuffer.size(); i++ )
+        m_usart->uartIn( m_outBuffer.at(i) );
+
+    m_outBuffer.clear();
 }
 
 void SerialMonitor::on_text_returnPressed()
 {
-    QByteArray array = text->text().toUtf8();
+    m_outBuffer.append( text->text().toLocal8Bit() );
 
-    for( int i=0; i<array.size(); i++ )
-        m_usart->uartIn( array.at(i) );
-
-    if( m_addCR ) m_usart->uartIn( 13 );
+    if( m_addCR ) m_outBuffer.append( 13 );//    m_usart->uartIn( 13 );
 }
 
 void SerialMonitor::on_value_returnPressed()
 {
-    QString text = value->text();
-    m_usart->uartIn( text.toInt() );
+    m_outBuffer.append( value->text().toInt() );
 }
 
 void SerialMonitor::on_valueButton_clicked()
