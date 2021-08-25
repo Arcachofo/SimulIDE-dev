@@ -109,6 +109,12 @@ void MemTable::resizeTable( int dataSize )
             if( col == 16 ) it->setFlags( 0 );
             else
             {
+                if( col < 16 )
+                {
+                    font.setWeight( QFont::DemiBold );
+                    it->setTextColor( QColor( 0x202090 ) );
+                }
+                else font.setWeight( QFont::Medium );
                 it->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable );
                 it->setFont( font );
             }
@@ -121,7 +127,7 @@ void MemTable::resizeTable( int dataSize )
         table->setColumnWidth( col, (2+m_wordBytes)*15*scale+2 );
         table->setColumnWidth( col+17, 15*m_wordBytes*scale );
     }
-    font.setBold(true);
+    font.setWeight( QFont::Normal );
     table->horizontalHeader()->setFont( font );
     table->verticalHeader()->setFont( font );
     m_blocked = false;

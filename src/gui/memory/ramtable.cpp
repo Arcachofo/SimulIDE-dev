@@ -82,8 +82,8 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     }
 
     table->verticalHeader()->setSectionsMovable( true );
-    table->setColumnWidth( 0, 55*scale );
-    table->setColumnWidth( 1, 60*scale );
+    table->setColumnWidth( 0, 50*scale );
+    table->setColumnWidth( 1, 50*scale );
     table->setColumnWidth( 2, 40*scale );
     table->setColumnWidth( 3, 40*scale );
     table->setColumnWidth( 4, 75*scale );
@@ -113,7 +113,7 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     setContextMenuPolicy( Qt::CustomContextMenu );
 
     registers->setFont( font );
-    registers->setFixedWidth( 80*scale );
+    //registers->setFixedWidth( 80*scale );
     registers->setEditTriggers( QAbstractItemView::NoEditTriggers );
     m_registerModel = new QStandardItemModel(this);
     registers->setModel( m_registerModel );

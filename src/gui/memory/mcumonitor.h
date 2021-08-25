@@ -23,10 +23,9 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
         void ramDataChanged( int address, int val );
         void flashDataChanged( int address, int val );
         void eepromDataChanged( int address, int val );
-        void tabChanged( int index );
+        void tabChanged(int);
 
     private:
-        void updateTable( int index );
         McuInterface* m_processor;
 
         RamTable* m_ramTable;

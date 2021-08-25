@@ -27,8 +27,11 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     m_flashMonitor = new MemTable( tabWidget, m_processor->flashSize(), m_processor->wordSize() );
     m_romMonitor   = new MemTable( tabWidget, m_processor->romSize() );
 
-    tabWidget->addTab( m_ramTable, "Variables" );
-    tabWidget->addTab( m_ramMonitor, "RAM");
+    m_ramTable->getSplitter()->insertWidget( 2, m_ramMonitor );
+    m_ramTable->getSplitter()->setSizes( {50,320,50} );
+
+    tabWidget->addTab( m_ramTable, "RAM" );
+    //tabWidget->addTab( m_ramMonitor, "RAM");
     tabWidget->addTab( m_romMonitor, "EEPROM");
     tabWidget->addTab( m_flashMonitor, "Flash");
 
@@ -37,9 +40,6 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     connect( m_flashMonitor, SIGNAL(dataChanged(int, int)), this, SLOT(flashDataChanged(int, int)));
     connect( m_romMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(eepromDataChanged(int, int)));
 }
-
-void MCUMonitor::updateStep()
-{ updateTable( tabWidget->currentIndex() ); }
 
 void MCUMonitor::ramDataChanged( int address, int val )
 { m_processor->setRamValue( address, val ); }
@@ -50,14 +50,14 @@ void MCUMonitor::flashDataChanged( int address, int val )
 void MCUMonitor::eepromDataChanged(  int address, int val )
 { m_processor->setRomValue( address, val ); }
 
-void MCUMonitor::tabChanged( int index )
+void MCUMonitor::tabChanged( int )
 {
     if( Simulator::self()->isRunning() ) return;
-    if( tabWidget->count() < 4 ) return;
-    updateTable( index );
+    if( tabWidget->count() < 3 ) return;
+    updateStep();
 }
 
-void MCUMonitor::updateTable( int index )
+void MCUMonitor::updateStep()
 {
     int status = m_processor->status();
     for( int i=0; i<8; i++ )
@@ -72,20 +72,19 @@ void MCUMonitor::updateTable( int index )
     m_pc->item( 0, 0 )->setData( 0, pc );
     m_pc->item( 0, 1 )->setText(" 0x"+decToBase(pc, 16, 4).remove(0,1) );
 
-    switch( index )
+    if( m_ramTable->isVisible() )
     {
-    case 0:
-        m_ramTable->updateValues();
-        break;
-    case 1:
-        for( uint32_t i=0; i<m_processor->ramSize(); ++i )
-            m_ramMonitor->setValue( i, m_processor->getRamValue(i));
-        break;
-    case 2:
-        m_romMonitor->setData( m_processor->eeprom() );
-        break;
-    case 3:
+        if( m_ramTable->getSplitter()->sizes().at(1) > 150 ) // RAM MemTable visible
+            m_ramTable->updateValues();
+        if( m_ramTable->getSplitter()->sizes().at(2) > 100 ) // RAM MemTable visible
+        {
+            for( uint32_t i=0; i<m_processor->ramSize(); ++i )
+                m_ramMonitor->setValue( i, m_processor->getRamValue(i));
+    }   }
+    else if( m_romMonitor->isVisible() ) m_romMonitor->setData( m_processor->eeprom() );
+    else if( m_flashMonitor->isVisible() )
+    {
         for( uint32_t i=0; i<m_processor->flashSize(); ++i )
             m_flashMonitor->setValue( i, m_processor->getFlashValue(i));
-        break;
-}   }
+    }
+}

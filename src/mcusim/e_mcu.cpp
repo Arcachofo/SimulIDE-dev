@@ -42,6 +42,7 @@ eMcu::~eMcu()
     delete cpu;
     m_interrupts.remove();
     for( McuModule* module : m_modules ) delete module;
+    for( McuUsart*   usart : m_usarts )  delete usart;
 }
 
 void eMcu::initialize()
@@ -111,9 +112,9 @@ uint8_t eMcu::getRamValue( int address )
     return m_dataMem[getMapperAddr(address)];   //m_dataMem[address];
 }
 
-void eMcu::setRamValue( int address, uint8_t value )
+void eMcu::setRamValue( int address, uint8_t value ) // Setting RAM from external source (McuMonitor)
 {
-    m_dataMem[getMapperAddr(address)] = value;
+    writeReg( getMapperAddr(address), value );
 }
 
 void eMcu::wdr()

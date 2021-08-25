@@ -27,6 +27,7 @@
 class McuInterface;
 class BaseDebugger;
 class QStandardItemModel;
+class QSplitter;
 
 class RamTable : public QWidget, private Ui::RamTable
 {
@@ -50,6 +51,7 @@ class RamTable : public QWidget, private Ui::RamTable
         void loadVarSet( QStringList varSet );
         QStringList getVarSet();
 
+        QSplitter* getSplitter() { return splitter; }
         QTableWidget m_status;
         QTableWidget m_pc;
 

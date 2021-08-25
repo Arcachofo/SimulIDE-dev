@@ -89,20 +89,19 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
     protected:
         uint64_t m_cycle;
-        std::vector<uint16_t> m_progMem;           // Program memory
+        std::vector<uint16_t> m_progMem;  // Program memory
 
         Interrupts m_interrupts;
         McuPorts   m_ports;
         McuTimers  m_timers;
         std::vector<McuModule*> m_modules;
-        //McuUsarts  m_usarts;
         std::vector<McuUsart*> m_usarts;
 
         McuWdt* m_wdt;
 
-        double m_freq;                             // Clock Frequency in MegaHerzs
-        double m_cPerInst;                         // Clock ticks per Instruction Cycle
-        uint64_t m_simCycPI;                       // Simulation cycles per Instruction Cycle
+        double m_freq;           // Clock Frequency in MegaHerzs
+        double m_cPerInst;       // Clock ticks per Instruction Cycle
+        uint64_t m_simCycPI;     // Simulation cycles per Instruction Cycle
 };
 
 
