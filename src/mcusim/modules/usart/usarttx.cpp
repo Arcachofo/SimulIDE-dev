@@ -47,7 +47,6 @@ void UartTx::enable( uint8_t en )
 void UartTx::runEvent()
 {
     if( m_state == usartSTOPPED ) return;
-
     if( m_state == usartTRANSMIT )
     {
         sendBit();

@@ -266,7 +266,7 @@ void McuCreator::getRegisters(  QDomElement* e, uint16_t offset )
         {
             QString  regName = el.attribute("name");
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
-            uint8_t resetVal = el.attribute("reset").toUInt(0,0);
+            uint8_t resetVal = el.attribute("reset").toUInt(0,2);
             QString    wMask = el.attribute("mask");
 
             if( !wMask.isEmpty() ) mcu->m_regMask[regAddr] = wMask.toUInt(0,2);
@@ -543,8 +543,6 @@ void McuCreator::createUsart( QDomElement* u )
             if     ( type == "tx" ) trUnit = usartM->m_sender;
             else if( type == "rx" ) trUnit = usartM->m_receiver;
             else continue;
-
-            mcu->m_modules.emplace_back( trUnit );
 
             if( type == "tx" )
             {

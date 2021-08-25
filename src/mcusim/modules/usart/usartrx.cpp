@@ -35,7 +35,7 @@ void UartRx::enable( uint8_t en )
     bool enabled = en > 0;
     if( enabled == m_enabled ) return;
     m_enabled = enabled;
-    m_runHardware = false; //m_ioPin->connector();
+    m_runHardware = m_ioPin->connector();
     while( !m_inBuffer.empty() ) m_inBuffer.pop();
 
     if( enabled ) processData( 0 ); // Start reading
@@ -100,8 +100,7 @@ void UartRx::processData( uint8_t )
          if( m_runHardware )
             Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
          else Simulator::self()->addEvent( m_period*m_framesize, this ); // Shedule Byte received
-    }
-}
+}   }
 
 void UartRx::readBit()
 {

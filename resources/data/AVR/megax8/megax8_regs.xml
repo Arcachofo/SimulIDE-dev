@@ -231,7 +231,7 @@
                bits="TXB80,RXB80,UCSZ02,TXEN0,RXEN0,UDRIE0,TXCIE0,RXCIE0" />
 
     <register  name="UCSR0C"  addr="0x00C2"  reset="00000110"  mask="" 
-               bits="UCPOL0,UCPHA0,UDORD0,USBS0,UPM00,UPM01,UMSEL0,UMSEL1" />
+               bits="UCPOL0,UCSZ00,UCSZ01,USBS0,UPM00,UPM01,UMSEL00,UMSEL01" />
 
     <register  name="UBRR0L"  addr="0x00C4"  reset=""  mask="" 
                bits="_UBRR0,_UBRR1,UBRR2,UBRR3,UBRR4,UBRR5,UBRR6,UBRR7" />

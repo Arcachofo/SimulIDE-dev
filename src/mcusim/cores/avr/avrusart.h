@@ -41,7 +41,6 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         virtual void readByte( uint8_t ) override;
 
         void setBaurrate( uint8_t val=0 );
-        void setUCSRnA(uint8_t newUCSRnA );
 
     private:
         uint8_t m_speedx2;
