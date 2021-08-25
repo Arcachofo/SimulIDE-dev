@@ -70,8 +70,8 @@ void eMcu::runEvent()
     {
         stepCpu();//if( m_state == cpu_Running )
         Simulator::self()->addEvent( cyclesDone*m_simCycPI, this );
-    }
-}
+}   }
+
 void eMcu::stepCpu()
 {
     uint32_t pc = cpu->PC;

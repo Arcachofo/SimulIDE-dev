@@ -58,8 +58,7 @@ void UartRx::runEvent()
             }
             Simulator::self()->addEvent( m_period*(m_framesize ), this );
             return;
-        }
-    }
+    }   }
     else if( m_state == usartRXEND )
     {
         m_frame >>= 1;  // Start bit
@@ -106,15 +105,9 @@ void UartRx::readBit()
 {
     bool bit = m_ioPin->getInpState();
 
-    if( (m_currentBit == 0) && bit )
-    {
-        m_startHigh = true;
-        return; // Wait for start bit
-    }
-    if( !m_startHigh ) return;
-
+    if( (m_currentBit == 0) && bit ) { m_startHigh = true; return; } // Wait for start bit
+    if( !m_startHigh ) return; // Wait for Rx Pin to go up (line initialized)
     if( bit ) m_frame += 1<<m_currentBit;    // Get bit into frame
-
     if( ++m_currentBit == m_framesize ) m_state = usartRXEND;  // Data reception finished
 }
 
@@ -126,6 +119,7 @@ void UartRx::queueData( uint8_t data )
         m_runHardware = false;
         Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( m_period*(m_framesize+2), this );
+        m_state = usartRECEIVE;
     }
     if( m_inBuffer.size() > 1000 ) return;
 

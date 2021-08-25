@@ -64,7 +64,6 @@ Simulator::Simulator( QObject* parent )
 Simulator::~Simulator()
 {
     m_CircuitFuture.waitForFinished();
-
     delete m_matrix;
 }
 
@@ -99,9 +98,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_warning = -10;
     }
     else if( m_warning < 0 )
-    {
-        if( ++m_warning == 0 ) CircuitWidget::self()->setMsg( " Running ", 0 );
-    }
+    { if( ++m_warning == 0 ) CircuitWidget::self()->setMsg( " Running ", 0 ); }
 
     if( !m_CircuitFuture.isFinished() ) // Stop remaining parallel thread
     {
@@ -123,7 +120,6 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         Circuit::self()->updateConnectors();
         for( eNode* enode : m_eNodeList ) enode->setVoltChanged( false );
     }
-
     for( Updatable* el : m_updateList ) el->updateStep();
 
     if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
@@ -164,7 +160,6 @@ void Simulator::runCircuit()
         }
         solveCircuit();
         if( m_state < SIM_RUNNING ) break;
-
         event = m_eventList.first;
     }
     if( m_state > SIM_WAITING ) m_circTime = endRun;
@@ -176,14 +171,12 @@ void Simulator::solveCircuit()
     if( m_changedNode ) solveMatrix();
     while( m_nonLin )                  // Non Linear Components
     {
-        while( m_nonLin )
-        {
+        while( m_nonLin ){
             m_nonLin->added = false;
             m_nonLin->voltChanged();
             m_nonLin = m_nonLin->nextNonLin;
         }
-        if( m_changedNode )
-        {
+        if( m_changedNode ){
             solveMatrix();
             m_NLstep++;
         }
@@ -344,8 +337,7 @@ void Simulator::setStepsPerSec( uint64_t sps )
 {
     if( sps < 1 ) sps = 1;
 
-    m_timerTick  = 1000/m_fps; // 50 ms default
-
+    m_timerTick = 1000/m_fps; // 50 ms default
     m_stepsPS = sps;           // Steps per second
     m_stepsPF = sps/m_fps;     // Steps per frame
 
@@ -355,17 +347,6 @@ void Simulator::setStepsPerSec( uint64_t sps )
         m_timerTick = 1000/sps; // ms
 }   }
 
-/*void  Simulator::setNoLinAcc( int ac )
-{
-    bool running = isRunning();
-    if( running ) pauseSim();
-
-    if     ( ac < 1 )  ac = 1;
-    else if( ac > 14 ) ac = 14;
-    m_noLinAcc = ac;
-
-    if( running ) resumeSim();
-}*/
 double Simulator::NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
 
 void Simulator::clearEventList()

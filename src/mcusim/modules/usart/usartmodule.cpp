@@ -74,7 +74,7 @@ void UsartModule::openMonitor( QString id, int num )
     m_monitor->show();
 }
 
-void UsartModule::uartIn( uint8_t value )
+void UsartModule::uartIn( uint8_t value ) // Data sent from external source (Serial Monitor)
 {
     m_receiver->queueData( value );
 }
