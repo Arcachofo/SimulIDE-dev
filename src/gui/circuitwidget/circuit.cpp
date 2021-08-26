@@ -197,12 +197,12 @@ void Circuit::loadDomDoc( QDomDocument* doc )
         {
             QString objNam = element.attribute( "objectName"  ); // Data in simu file
             QString type   = element.attribute( "itemtype"  );
-            QString id     = element.attribute( "id"  );
+            QString label  = element.attribute( "id"  );
 
             if( m_pasting ) // Create a new Id: we are creating a new component
             {
-                id = objNam.split("-").first()+"-"+newSceneId(); // Create new id
-                element.setAttribute( "objectName", id  );
+                label = objNam.split("-").first()+"-"+newSceneId(); // Create new id
+                element.setAttribute( "objectName", label );
             }
 
             if( type == "Connector" )
@@ -244,7 +244,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
 
                 if( startpin && endpin )    // Create Connector
                 {
-                    Connector* con  = new Connector( this, type, id, startpin, endpin );
+                    Connector* con  = new Connector( this, type, objNam, startpin, endpin );
 
                     element.setAttribute( "startpinid", startpin->objectName() );
                     element.setAttribute(   "endpinid", endpin->objectName() );
@@ -296,8 +296,8 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                 Node* joint;
                 if( m_pasting )
                 {
-                    m_idMap[objNam] = id; // Map simu id to new id
-                    joint = new Node( this, type, id );
+                    m_idMap[objNam] = label; // Map simu id to new id
+                    joint = new Node( this, type, label );
                     joint->setSelected( true );
                 }
                 else joint = new Node( this, type, objNam );
@@ -306,19 +306,19 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                 compList.append( joint );
                 jointList.append( joint );
             }
-            else if( (type == "Plotter") && id.contains("Widget") ) ;// Old Plotter widget;
+            else if( type == "Plotter" ) ;// Old Plotter widget;
             else if(( type == "SerialPort")
                  && ( element.hasAttribute( "visible" ) )
                  && ( element.attribute( "visible" ) == "false" ) ) ;// Old Serial Port Widget
             else
             {
-                Component* item = NULL;
+                Component* comp = NULL;
                 bool oldArduino = false;
                 if( m_pasting )
                 {
-                    if( objNam == "" ) objNam = id;
-                    m_idMap[objNam] = id;              // Map simu id to new id
-                    item = createItem( type, id, objNam );
+                    if( objNam == "" ) objNam = label;
+                    m_idMap[objNam] = label;              // Map simu id to new id
+                    comp = createItem( type, objNam );
                 }
                 else
                 {
@@ -326,24 +326,22 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     {
                         oldArduino = true;
                         type = "Subcircuit";
-                        id = id.remove( "Arduino " );
+                        ///id = id.remove( "Arduino " );
                         objNam = objNam.remove( "Arduino " );
                     }
                     else if( type == "AVR" )
                     {
                         type = "MCU";
-                        objNam = objNam.replace( "atmega", "mega" )
-                                       .replace( "attiny", "tiny" );
+                        objNam = objNam.replace( "at", "" );
                     }
-                    item = createItem( type, objNam, objNam );
+                    comp = createItem( type, objNam );
                 }
-                if( item )
-                {
-                    loadCompProperties( &element, item );
+                if( comp ){
+                    loadCompProperties( &element, comp );
 
                     if( oldArduino ) // Load mcu properties & change subcircuit names
                     {
-                        SubCircuit* subci = static_cast<SubCircuit*>(item);
+                        SubCircuit* subci = static_cast<SubCircuit*>(comp);
                         Mcu* mcu = static_cast<Mcu*>( subci->getMainComp() );
                         if( mcu )
                         {
@@ -352,16 +350,14 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                             mcu->setFreq( element.attribute("Mhz").toDouble() );
                             mcu->setAutoLoad( element.attribute("Auto_Load").toInt() );
                         }
-                        subci->setObjectName( subci->objectName().remove( "Arduino " ) );
-                        subci->setId( subci->itemID().remove( "Arduino " ) );
                     }
-                    else if( item->itemType() == "Subcircuit")
+                    else if( comp->itemType() == "Subcircuit")
                     {
-                        SubCircuit* shield = static_cast<SubCircuit*>(item);
-                        if( shield->subcType() == Chip::Shield )shieldList.append( shield );
+                        SubCircuit* shield = static_cast<SubCircuit*>(comp);
+                        if( shield->subcType() == Chip::Shield ) shieldList.append( shield );
                     }
-                    compList.append( item );
-                    if( m_pasting ) item->setSelected( true );
+                    compList.append( comp );
+                    if( m_pasting ) comp->setSelected( true );
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << objNam;
         }   }
@@ -417,6 +413,7 @@ void Circuit::loadProperties( QDomElement* element, Component* comp )
     for( int i=0; i<atrs.length(); ++i )   // Get List of property names in Circuit file
     {
         QString propName = atrs.item(i).nodeName();
+        if( propName == "objectName" ) continue;
         QVariant value( element->attribute( propName ) );
         loadProperty( value, propName, comp );
     }
@@ -657,13 +654,14 @@ void Circuit::importCirc(  QPointF eventpoint  )
     m_pasting = false;
 }
 
-Component* Circuit::createItem( QString type, QString id, QString objNam )
+Component* Circuit::createItem( QString type, QString id )
 {
+    Component* comp = NULL;
     for( LibraryItem* libItem : ItemLibrary::self()->items() )
     {
         if( !(libItem->type()==type) ) continue;
 
-        Component* comp = libItem->createItemFnPtr()( this, type, id );
+        comp = libItem->createItemFnPtr()( this, type, id );
 
         if( comp )
         {
@@ -672,10 +670,8 @@ Component* Circuit::createItem( QString type, QString id, QString objNam )
             &&  ( category != "Sources" )
             &&  ( category != "Other" ) )
                 comp->setPrintable( true );
-        }
-        return comp;
-    }
-    return NULL;
+    }   }
+    return comp;
 }
 
 void Circuit::removeItems()                     // Remove Selected items

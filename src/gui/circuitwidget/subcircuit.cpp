@@ -243,7 +243,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 Component* comp = NULL;
                 if( objNam == "" ) objNam = id;
                 if( type == "Node" ) comp = new Node( this, type, id );
-                else                 comp = circ->createItem( type, id, objNam );
+                else                 comp = circ->createItem( type, id );
                 circ->m_idMap[objNam] = id; // Map simu id to new id
 
                 if( comp )

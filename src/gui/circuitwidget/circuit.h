@@ -70,7 +70,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void loadCircuit( QString fileName );
         bool saveCircuit( QString fileName );
 
-        Component* createItem( QString name, QString id , QString objNam="" );
+        Component* createItem( QString name, QString id );
 
         QString newSceneId() { return QString("%1").arg(++m_seqNumber) ; }
 
