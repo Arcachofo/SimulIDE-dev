@@ -61,8 +61,9 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void openRecentFile();
         void openCirc();
         void loadCirc( QString path );
+        void saveCirc( QString file );
         void saveCirc();
-        bool saveCircAs();
+        void saveCircAs();
         void powerCirc();
         void pauseSim();
         void settApp();

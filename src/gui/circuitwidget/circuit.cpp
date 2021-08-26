@@ -614,8 +614,6 @@ bool Circuit::saveCircuit( QString fileName )
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    if( !fileName.endsWith(".simu") ) fileName.append(".simu");
-
     QString oldFilePath = m_filePath;
     m_filePath = fileName;
 

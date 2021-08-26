@@ -303,37 +303,38 @@ void CircuitWidget::loadCirc( QString path )
 
 void CircuitWidget::saveCirc()
 {
-    bool saved = false;
-    emit saving();
+    if( m_curCirc.isEmpty() ) saveCircAs();
+    else                      saveCirc( m_curCirc );
+}
 
-    if( m_curCirc.isEmpty() ) saved =  saveCircAs();
-    else                      saved =  Circuit::self()->saveCircuit( m_curCirc );
-    
-    if( saved ) 
-    {
-        QString fileName = m_curCirc;
-        MainWindow::self()->setTitle(fileName.split("/").last());
-}   }
-
-bool CircuitWidget::saveCircAs()
+void CircuitWidget::saveCircAs()
 {
     const QString dir = m_lastCircDir;
     QString fileName = QFileDialog::getSaveFileName( this, tr("Save Circuit"), dir,
-                                                     tr("Circuits (*.simu);;All files (*.*)"));
-    if (fileName.isEmpty()) return false;
+                                                     tr("Circuits (*.sim*);;All files (*.*)"));
+    if( fileName.isEmpty() ) return;
 
-    m_curCirc = fileName;
-    m_lastCircDir = fileName;
-    
-    bool saved = Circuit::self()->saveCircuit(fileName);
-    if( saved ) 
-    {
-        QString fileName = m_curCirc;
-        MainWindow::self()->setTitle(fileName.split("/").last());
-        MainWindow::self()->settings()->setValue( "lastCircDir", m_lastCircDir );
-    }
-    return saved;
+    saveCirc( fileName );
 }
+
+void CircuitWidget::saveCirc( QString file )
+{
+    emit saving(); // Used by SubPackage
+
+    if( file.endsWith(".simu") )
+    {
+        file.remove( file.size()-4, 4 );
+        file.append("sim5");
+    }
+    else if( !file.endsWith(".sim5") ) file.append(".sim5");
+
+    if( Circuit::self()->saveCircuit( file ) )
+    {
+        m_curCirc = file;
+        m_lastCircDir = file;
+        MainWindow::self()->setTitle(file.split("/").last());
+        MainWindow::self()->settings()->setValue( "lastCircDir", m_lastCircDir );
+}   }
 
 void CircuitWidget::powerCirc()
 {
@@ -422,7 +423,7 @@ void CircuitWidget::settSim()
 }
 
 void CircuitWidget::openInfo()
-{ QDesktopServices::openUrl(QUrl("http://simulide.blogspot.com")); }
+{ QDesktopServices::openUrl(QUrl("http://simulide.com")); }
 
 void CircuitWidget::about()
 {

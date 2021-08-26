@@ -306,7 +306,6 @@ void SubPackage::setBoardMode()
     for( Component* comp : *compList )
     {
         if( comp->itemType() == "Package" ) continue;
-
         if( m_boardMode )
         {
             comp->setCircPos( comp->pos() );
