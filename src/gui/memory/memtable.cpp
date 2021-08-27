@@ -58,11 +58,16 @@ void MemTable::setValue( int address, int val )
     m_blocked = false;
 }
 
-void MemTable::setData( QVector<int>* data )
+void MemTable::setData( QVector<int>* data, int wordBytes )
 {
     m_data = data;
-    if( data->size() != m_dataSize ) resizeTable( data->size() );
 
+    if( (data->size() != m_dataSize)
+      ||(wordBytes != m_wordBytes) )
+    {
+        m_wordBytes = wordBytes;
+        resizeTable( data->size() );
+    }
     for( int i=0; i<data->size(); ++i ) setValue( i, data->at(i) );
 }
 

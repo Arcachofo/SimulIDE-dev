@@ -263,7 +263,7 @@ void Memory::setAddrBits( int bits )
 
     m_addrBits = bits;
 
-    if( m_memTable ) m_memTable->setData( &m_ram );
+    if( m_memTable ) m_memTable->setData( &m_ram, m_dataBytes );
 
     updatePins();
     Circuit::self()->update();
@@ -305,6 +305,9 @@ void Memory::setDataBits( int bits )
     else if( bits > m_dataBits ) createDataBits( bits-m_dataBits );
     
     m_dataBits = bits;
+    m_dataBytes = m_dataBits/8;
+    if( m_dataBits%8) m_dataBytes++;
+    if( m_memTable ) m_memTable->setData( &m_ram, m_dataBytes );
     updatePins();
     Circuit::self()->update();
 }
@@ -365,7 +368,7 @@ void Memory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 void Memory::loadData()
 {
     MemData::loadData( &m_ram, false, m_dataBits );
-    if( m_memTable ) m_memTable->setData( &m_ram );
+    if( m_memTable ) m_memTable->setData( &m_ram, m_dataBytes );
 }
 
 void Memory::saveData()
@@ -378,7 +381,7 @@ void Memory::showTable()
     MemData::showTable( m_ram.size(), m_dataBytes );
     if( m_persistent ) m_memTable->setWindowTitle( "ROM: "+m_idLabel->toPlainText() );
     else               m_memTable->setWindowTitle( "RAM: "+m_idLabel->toPlainText() );
-    m_memTable->setData( &m_ram );
+    m_memTable->setData( &m_ram, m_dataBytes );
 }
 
 void Memory::remove()

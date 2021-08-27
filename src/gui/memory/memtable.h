@@ -35,7 +35,7 @@ class MemTable : public QWidget, private Ui::MemTable
 
         void updateTable(QVector<int>* data );
         void resizeTable( int dataSize );
-        void setData(QVector<int>* data );
+        void setData(QVector<int>* data, int wordBytes=1 );
         void setValue( int address, int val );
 
     signals:
