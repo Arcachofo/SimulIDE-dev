@@ -63,7 +63,7 @@ Memory::Memory( QObject* parent, QString type, QString id )
     m_CsPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin-Cs", 0, this, input );
     m_CsPin->setLabelText( "CS " );
     m_CsPin->setLabelColor( QColor( 0, 0, 0 ) );
-    m_WePin->setInverted( true );
+    m_CsPin->setInverted( true );
     
     m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-outEnable" , 0, this, input );
     m_oePin->setLabelText( " OE" );
@@ -94,8 +94,8 @@ QList<propGroup_t> Memory::propGroups()
 
 void Memory::stamp()                   // Called at Simulation Start
 {
-    //for( int i=0; i<2+m_addrBits; ++i ) // Initialize control pins
-        ;///m_inPin[i]->changeCallBack( this );
+    for( uint i=0; i<m_inPin.size(); ++i )
+        m_inPin[i]->changeCallBack( this );
 
     m_WePin->changeCallBack( this );
     m_CsPin->changeCallBack( this );
@@ -106,6 +106,13 @@ void Memory::stamp()                   // Called at Simulation Start
 void Memory::updateStep()
 {
     if( m_memTable ) m_memTable->updateTable( &m_ram );
+
+    if( Circuit::self()->animate( ) )
+    {
+        m_WePin->updateStep();
+        m_CsPin->updateStep();
+        LogicComponent::updateStep();
+    }
 }
 
 void Memory::initialize()
@@ -125,11 +132,9 @@ void Memory::initialize()
 void Memory::voltChanged()        // Some Pin Changed State, Manage it
 {
     bool CS = m_CsPin->getInpState();
-    bool csTrig = false;
 
     if( CS != m_cs )
     {
-        if( CS && !m_cs ) csTrig = true;
         m_cs = CS;
 
         if( !CS && m_oe )
@@ -146,31 +151,26 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     if( oe != m_oe )
     {
         m_oe = oe;
-        for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !oe );
-        //enableOutputs( oe );
+        for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !oe ); //enableOutputs( oe );
     }
 
     m_address = 0;
     for( int i=0; i<m_addrBits; ++i )        // Get Address
     {
-        bool state = m_inPin[i]->getInpState();//getInputState(i+2);
+        bool state = m_inPin[i]->getInpState();
         if( state ) m_address += pow( 2, i );
     }
 
-    bool weTrig = WE && !m_we;
     m_we = WE;
     if( WE )                                // Write
     {
         for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( input );
         Simulator::self()->addEvent( 1, NULL );
 
-        if( csTrig || weTrig )  // Write action triggered
-        {
-            m_read = false;
-            Simulator::self()->addEvent( m_propDelay, this );
-        }
-    }else                                  // Read
-    {
+        m_read = false;
+        Simulator::self()->addEvent( m_propDelay, this );
+    }
+    else{                                 // Read
         for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( output );
         //Simulator::self()->addEvent( 1, NULL );
         m_read = true;
@@ -225,14 +225,12 @@ void Memory::updatePins()
         m_inPin[i]->setLabelPos();
         m_inPin[i]->isMoved();
     }
-    
     for( int i=0; i<m_dataBits; i++ )
     {
         m_outPin[i]->setPos( QPoint(24,origY+8+i*8 ) ); 
         m_outPin[i]->setLabelPos();
         m_outPin[i]->isMoved();
     }
-    
     m_WePin->setPos( QPoint(-24,origY+h*8 ) );          // WE
     m_WePin->isMoved();
     m_WePin->setLabelPos();
@@ -260,7 +258,6 @@ void Memory::setAddrBits( int bits )
     
     if     ( bits < m_addrBits ) deleteAddrBits( m_addrBits-bits );
     else if( bits > m_addrBits ) createAddrBits( bits-m_addrBits );
-
     m_addrBits = bits;
 
     if( m_memTable ) m_memTable->setData( &m_ram, m_dataBytes );

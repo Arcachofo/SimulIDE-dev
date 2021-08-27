@@ -61,6 +61,7 @@ LogicComponent::~LogicComponent(){}
 
 void LogicComponent::updateStep()
 {
+    if( !Circuit::self()->animate( ) ) return;
     IoComponent::updateStep();
     if( m_oePin ) m_oePin->updateStep();
     if( m_clkPin) m_clkPin->updateStep();
