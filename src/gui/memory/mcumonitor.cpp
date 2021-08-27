@@ -22,6 +22,7 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     horizontalLayout->insertWidget( 0, m_pc);
     horizontalLayout->setStretchFactor( m_pc, 30 );
     horizontalLayout->setStretchFactor( m_status, 65 );
+    horizontalLayout->setStretchFactor( byteButton, 20 );
 
     m_ramMonitor   = new MemTable( tabWidget, m_processor->ramSize() );
     m_flashMonitor = new MemTable( tabWidget, m_processor->flashSize(), m_processor->wordSize() );
@@ -57,6 +58,14 @@ void MCUMonitor::tabChanged( int )
     updateStep();
 }
 
+void MCUMonitor::on_byteButton_toggled( bool byte )
+{
+    int bytes = 1;
+    if( !byte ) bytes = m_processor->wordSize();
+    m_flashMonitor->setCellBytes( bytes );
+    updateStep();
+}
+
 void MCUMonitor::updateStep()
 {
     int status = m_processor->status();
@@ -69,8 +78,9 @@ void MCUMonitor::updateStep()
     }
 
     int pc = m_processor->pc();
+    if( byteButton->isChecked() ) pc *= m_processor->wordSize();
     m_pc->item( 0, 0 )->setData( 0, pc );
-    m_pc->item( 0, 1 )->setText(" 0x"+decToBase(pc, 16, 4).remove(0,1) );
+    m_pc->item( 0, 1 )->setText("0x"+val2hex(pc) );
 
     if( m_ramTable->isVisible() )
     {
@@ -81,10 +91,14 @@ void MCUMonitor::updateStep()
             for( uint32_t i=0; i<m_processor->ramSize(); ++i )
                 m_ramMonitor->setValue( i, m_processor->getRamValue(i));
     }   }
-    else if( m_romMonitor->isVisible() ) m_romMonitor->setData( m_processor->eeprom() );
+    else if( m_romMonitor->isVisible() )
+    {
+        m_romMonitor->setData( m_processor->eeprom() );
+    }
     else if( m_flashMonitor->isVisible() )
     {
         for( uint32_t i=0; i<m_processor->flashSize(); ++i )
             m_flashMonitor->setValue( i, m_processor->getFlashValue(i));
+        if( Simulator::self()->simState() == SIM_RUNNING ) m_flashMonitor->setAddrSelected( pc );
     }
 }

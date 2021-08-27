@@ -27,6 +27,8 @@ MemTable::MemTable( QWidget* parent, int dataSize, int wordBytes )
     setupUi(this);
 
     m_wordBytes = wordBytes;
+    m_cellBytes = wordBytes;
+    m_byteRatio = 1;
     m_updtCount = 0;
     m_data = NULL;
 
@@ -42,20 +44,33 @@ void MemTable::updateTable( QVector<int>* data )
 
 void MemTable::setValue( int address, int val )
 {
+    m_blocked = true;
+
+    if( m_byteRatio > 1 )
+    {
+        address *= m_byteRatio;
+        int mask = pow(2,8*m_cellBytes)-1;
+        for( int i=0; i<m_byteRatio; ++i ) setCellValue( address+i, (val>>(i*8)) & mask );
+    }
+    else setCellValue( address, val );
+
+    m_blocked = false;
+}
+
+void MemTable::setCellValue( int address, int val )
+{
     int row = address/16;
     int colRam = address%16;
     int colAscii = colRam +17;
-    m_blocked = true;
-    table->item( row, colRam )->setData( 0, valToHex( val, m_wordBytes ) );
+
+    table->item( row, colRam )->setData( 0, valToHex( val, m_cellBytes ) );
     QString valS = QChar( val&0x00FF );
-    for( int i=1; i<m_wordBytes; ++i )
+    for( int i=1; i<m_cellBytes; ++i )
     {
         val >>= 8;
-        valS += " "+QString( QChar( val&0x00FF ) );
+        valS.prepend( QString( QChar( val&0x00FF )) );
     }
     table->item( row, colAscii )->setData( 0, valS );
-
-    m_blocked = false;
 }
 
 void MemTable::setData( QVector<int>* data, int wordBytes )
@@ -66,9 +81,21 @@ void MemTable::setData( QVector<int>* data, int wordBytes )
       ||(wordBytes != m_wordBytes) )
     {
         m_wordBytes = wordBytes;
+        m_cellBytes = wordBytes;
+        m_byteRatio = 1;
         resizeTable( data->size() );
     }
     for( int i=0; i<data->size(); ++i ) setValue( i, data->at(i) );
+}
+
+void MemTable::setCellBytes( int bytes )
+{
+    if( m_cellBytes != bytes )
+    {
+        m_cellBytes = bytes;
+        m_byteRatio = m_wordBytes/m_cellBytes;
+        resizeTable( m_dataSize );
+    }
 }
 
 void MemTable::resizeTable( int dataSize )
@@ -76,6 +103,9 @@ void MemTable::resizeTable( int dataSize )
     m_blocked = true;
 
     m_dataSize = dataSize;
+
+    dataSize *= m_byteRatio;
+
     int addrBytes = ceil( ceil(log2(dataSize))/8 );
 
     int rows = dataSize/16;
@@ -129,8 +159,8 @@ void MemTable::resizeTable( int dataSize )
     }
     for( int col=0; col<16; ++col )
     {
-        table->setColumnWidth( col, (2+m_wordBytes)*15*scale+2 );
-        table->setColumnWidth( col+17, 15*m_wordBytes*scale );
+        table->setColumnWidth( col, (2+m_cellBytes)*15*scale+2 );
+        table->setColumnWidth( col+17, (8*m_cellBytes+4)*scale );
     }
     font.setWeight( QFont::Normal );
     table->horizontalHeader()->setFont( font );
@@ -138,35 +168,60 @@ void MemTable::resizeTable( int dataSize )
     m_blocked = false;
 }
 
+void MemTable::setAddrSelected( int addr )
+{
+    cellClicked( addr/16, addr%16 );
+}
+
 void MemTable::on_table_itemChanged( QTableWidgetItem* item )
 {
     if( m_blocked ) return;
     m_blocked = true;
+
+    int col = item->column();
+    int row = item->row();
     int val=0;
     bool ok;
 
-    int col = item->column();
     if( col > 16 )
     {
-        col -= 17;
-        ok = item->text().size() == m_wordBytes;
+        ok = item->text().size() == m_cellBytes;
         if( ok )
         {
-            for( int i=0; i<m_wordBytes; ++i )
+            for( int i=0; i<m_cellBytes; ++i )
             {
-                QChar cv = item->text().at(i);
+                QChar cv = item->text().at(m_cellBytes-i-1);
                 val += cv.cell() << (8*i);
-    }   }   }
+            }
+            col -= 17;
+        }
+    }
     else val = item->text().toInt( &ok, 0 );
 
-    int address = item->row()*16+col;
+    int tableAddr = row*16+col;
+    int dataAddr = tableAddr/m_byteRatio;
+
+    if( ok ) setCellValue( tableAddr, val );
+
+    if( ok && (m_byteRatio > 1) )
+    {
+        int start = dataAddr*m_byteRatio;
+        for( int i=0; i<m_byteRatio; ++i )
+        {
+            int addr = start+i;
+            int row = addr/16;
+            int colRam = addr%16;
+            int cellVal = table->item( row, colRam )->text().toInt( &ok, 0 );
+            val |= cellVal<<(i*8);
+        }
+    }
+
     if( ok )
     {
-        if( m_data) m_data->replace( address, val );
-        setValue( address, val );
-        emit dataChanged( address, val );
+        if( m_data) m_data->replace( dataAddr, val );
+        emit dataChanged( dataAddr, val );
     }
-    else if( m_data) setValue( address, m_data->at( address ) );
+    else if( m_data) setValue( dataAddr, m_data->at( dataAddr ) );
 
     m_blocked = false;
 }

@@ -24,6 +24,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
         void flashDataChanged( int address, int val );
         void eepromDataChanged( int address, int val );
         void tabChanged(int);
+        void on_byteButton_toggled( bool byte );
 
     private:
         McuInterface* m_processor;

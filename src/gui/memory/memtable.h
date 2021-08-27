@@ -37,6 +37,9 @@ class MemTable : public QWidget, private Ui::MemTable
         void resizeTable( int dataSize );
         void setData(QVector<int>* data, int wordBytes=1 );
         void setValue( int address, int val );
+        void setCellValue( int address, int val );
+        void setCellBytes( int bytes );
+        void setAddrSelected( int addr );
 
     signals:
         void dataChanged( int address, int val );
@@ -49,9 +52,11 @@ class MemTable : public QWidget, private Ui::MemTable
         void cellClicked( int row, int col );
         QString valToHex( int val, int bytes );
 
+        int m_updtCount;
         int m_dataSize;
         int m_wordBytes;
-        int m_updtCount;
+        int m_cellBytes;
+        int m_byteRatio; // m_wordBytes/m_cellBytes
 
         bool m_blocked;
 

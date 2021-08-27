@@ -4,7 +4,7 @@
         <register name="INDF"    addr="0x00" bits=""/>
         <register name="TMR0"    addr="0x01" bits=""/>
         <register name="PCL"     addr="0x02" bits="" reset="0x00"/>
-        <register name="STATUS"  addr="0x03" bits="C,DC,Z,PD,TO,RP0,RP1,IRP" reset="0x18"/>
+        <register name="STATUS"  addr="0x03" bits="C,DC,Z,PD,TO,R0,R1,IR" reset="0x18"/>
         <register name="FSR"     addr="0x04" bits=""/>
         <register name="PORTA"   addr="0x05" bits="RA0,RA1,RA2,RA3,RA4,RA5,RA6,RA7"/>
         <register name="PORTB"   addr="0x06" bits="RB0,RB1,RB2,RB3,RB4,RB5,RB6,RB7"/>

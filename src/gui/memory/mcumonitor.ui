@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>446</height>
+    <width>457</width>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,16 +15,16 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
-    <number>4</number>
+    <number>6</number>
    </property>
    <property name="topMargin">
-    <number>4</number>
+    <number>6</number>
    </property>
    <property name="rightMargin">
-    <number>4</number>
+    <number>6</number>
    </property>
    <property name="bottomMargin">
-    <number>4</number>
+    <number>6</number>
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -34,6 +34,28 @@
      <property name="leftMargin">
       <number>0</number>
      </property>
+     <item>
+      <widget class="QRadioButton" name="byteButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>1</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
+       </property>
+       <property name="text">
+        <string>Byte PC</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
