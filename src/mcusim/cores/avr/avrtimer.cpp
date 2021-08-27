@@ -121,7 +121,7 @@ void AvrTimer::configureExtClock()
     /// else if( m_prIndex == 7 ) m_clkEdge = Clock_Rising;
 }
 
-void AvrTimer::configureOcUnits( bool disable )
+void AvrTimer::configureOcUnits( bool wgm3 )
 {
     m_bidirec = false;
     m_reverse = false;
@@ -137,7 +137,7 @@ void AvrTimer::configureOcUnits( bool disable )
 
     if( m_wgmMode == wgmPHASE )  // Phase Correct PWM
     {
-        if( m_OCA ) { if((comActA == ocTOGGLE) && disable ) comActA = ocNONE; }
+        if( m_OCA ) { if((comActA == ocTOGGLE) && wgm3 ) comActA = ocNONE; }
         if( m_OCB ) { if( comActB == ocTOGGLE ) comActB = ocNONE; }
         if( m_OCC ) { if( comActC == ocTOGGLE ) comActC = ocNONE; }
         m_bidirec = true;
@@ -145,7 +145,7 @@ void AvrTimer::configureOcUnits( bool disable )
     else  if( m_wgmMode == wgmFAST )  // Fast PWM
     {
         if( m_OCA ) {
-            if((comActA == ocTOGGLE) && disable ) comActA = ocNONE;
+            if((comActA == ocTOGGLE) && wgm3 ) comActA = ocNONE;
             if     ( comActA == ocCLEAR ) tovActA = ocSET;
             else if( comActA == ocSET )   tovActA = ocCLEAR;
         }
@@ -192,7 +192,7 @@ void AvrTimer8bit::OCRXAchanged( uint8_t val )
     if( (m_wgmMode == wgmCTC)
       ||((m_WGM32) && (( m_wgmMode == wgmPHASE)
                       ||(m_wgmMode == wgmFAST)) ) )
-    { m_ovfMatch = val; }
+    { m_ovfMatch = val; } // Top = OCRA
 
     if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
     else            m_ovfPeriod = m_ovfMatch+1;
@@ -370,8 +370,8 @@ void AvrTimer16bit::updtWgm()
             m_ovfMatch = OCRXA16;
             break;
     }
-    bool disable = (m_WGM32 & 0b00001000)==0;
-    configureOcUnits( disable );
+    bool wgm3 = (m_WGM32 & 1<<3)==0;
+    configureOcUnits( wgm3 );
 }
 
 void AvrTimer16bit::setOCRXA( QString reg )
@@ -397,7 +397,8 @@ void AvrTimer16bit::setICRX( QString reg )
 
     reg = list.takeFirst();
     m_icrxH = m_mcu->getReg( reg );
-    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
+    /// Low byte triggers red/write operations
+    /// watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
 }
 
 void AvrTimer16bit::configureClock()

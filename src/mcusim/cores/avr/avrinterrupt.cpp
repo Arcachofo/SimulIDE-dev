@@ -32,7 +32,7 @@ AVRInterrupt::AVRInterrupt( QString name, uint16_t vector, eMcu* mcu )
     m_I = getRegBits( "I", mcu );
 
     m_autoClear = true;
-    m_remembrer = true;
+    m_remember  = true;
 }
 AVRInterrupt::~AVRInterrupt(){}
 

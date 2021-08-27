@@ -25,7 +25,7 @@
 #include "mcudataspace.h"
 //#include "mcutypes.h"
 
-static inline uint8_t override( uint8_t val, regBits_t bits ) // Replace bits in val with current value in register bits.reg
+static inline uint8_t overrideBits( uint8_t val, regBits_t bits ) // Replace bits in val with current value in register bits.reg
 {
     return (val & ~bits.mask) | (*(bits.reg) | bits.mask);
 }

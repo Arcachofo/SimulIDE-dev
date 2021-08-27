@@ -105,9 +105,9 @@ void AvrWdt::configureA( uint8_t newWDTCSR ) // WDTCSR Written
         return;
     }
     // WDP & WDE changes not allowed, keep old values
-    newWDTCSR = override( newWDTCSR, m_WDE ); // Keep old WDE
-    newWDTCSR = override( newWDTCSR, m_WDP02 ); // Keep old WDP
-    newWDTCSR = override( newWDTCSR, m_WDP3 ); // Keep old WDP
+    newWDTCSR = overrideBits( newWDTCSR, m_WDE );   // Keep old WDE
+    newWDTCSR = overrideBits( newWDTCSR, m_WDP02 ); // Keep old WDP
+    newWDTCSR = overrideBits( newWDTCSR, m_WDP3 );  // Keep old WDP
     m_mcu->m_regOverride = newWDTCSR;
 
     if( m_ovfInter && !m_allowChanges ) wdtEnable();

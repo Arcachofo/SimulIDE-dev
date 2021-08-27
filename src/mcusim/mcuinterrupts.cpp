@@ -27,7 +27,7 @@ Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
     m_name = name;
     m_vector = vector;
     m_autoClear = false;
-    m_remembrer = false;
+    m_remember = false;
 
     m_ram = mcu->getRam();
 }
@@ -43,7 +43,7 @@ void Interrupt::reset()
 void Interrupt::enableFlag( uint8_t en )
 {
     m_enabled = en;
-    if( m_raised && m_remembrer ) // If not enabled m_remember it until reenabled
+    if( en & m_raised && m_remember ) // If not enabled m_remember it until reenabled
         m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
 }
 
@@ -179,10 +179,9 @@ void Interrupts::remove()
 
 void Interrupts::addToPending( uint8_t pri, Interrupt* i )
 {
-    // Interrupt are stored in std::multimap
-    // by priority order, highest at end
-    //if( m_enGlobal )
-        m_pending.emplace( pri, i );
+    /// Interrupt are stored in std::multimap
+    /// by priority order, highest at end
+    m_pending.emplace( pri, i );
 }
 
 

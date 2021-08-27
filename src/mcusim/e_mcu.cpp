@@ -31,7 +31,6 @@ eMcu::eMcu( QString id )
     , m_interrupts( this )
     , m_ports( this )
     , m_timers( this )
-    //, m_usarts( this )
 {
     m_cPerInst = 1;
     setFreq( 16.0 );
@@ -42,7 +41,6 @@ eMcu::~eMcu()
     delete cpu;
     m_interrupts.remove();
     for( McuModule* module : m_modules ) delete module;
-    for( McuUsart*   usart : m_usarts )  delete usart;
 }
 
 void eMcu::initialize()

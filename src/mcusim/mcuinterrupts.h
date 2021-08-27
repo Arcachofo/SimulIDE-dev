@@ -75,7 +75,7 @@ class MAINMODULE_EXPORT Interrupt
         uint8_t m_raised;
 
         bool m_autoClear;
-        bool m_remembrer;
+        bool m_remember;
 
         QList<McuModule*> m_callBacks;
         QList<McuModule*> m_exitCallBacks;
@@ -103,7 +103,7 @@ class MAINMODULE_EXPORT Interrupts
         eMcu* m_mcu;
 
         uint8_t    m_enabled;   // Global Interrupt Flag
-        Interrupt* m_active;     // Active interrupt
+        Interrupt* m_active;    // Active interrupt
 
         std::multimap<uint8_t, Interrupt*> m_running; // Interrups that were interrupted
         std::multimap<uint8_t, Interrupt*> m_pending; // Interrupts pending to service

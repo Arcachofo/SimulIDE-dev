@@ -89,9 +89,7 @@ int McuCreator::processFile( QString fileName )
 {
     fileName = m_basePath+"/"+fileName;
     QDomDocument domDoc = fileToDomDoc( fileName, "McuCreator::processFile" );
-    if( domDoc.isNull() )
-    {
-        return 1; }
+    if( domDoc.isNull() ) return 1;
 
     QDomElement root = domDoc.documentElement();
 
@@ -127,11 +125,9 @@ int McuCreator::processFile( QString fileName )
             error = processFile( el.attribute("file") );
             if( error ) return error;
         }
-
         node = node.nextSibling();
     }
     if( root.hasAttribute("core") ) createCore( m_core );
-
     return 0;
 }
 
@@ -155,7 +151,6 @@ void McuCreator::createRomMem( uint32_t size )
     mcu->m_romSize = size;
     mcu->m_eeprom.resize( size );
     mcu->m_eeprom.fill( 0xFF );
-
 }
 
 void McuCreator::createEeprom(  QDomElement* e )
@@ -175,7 +170,6 @@ void McuCreator::createEeprom(  QDomElement* e )
         QString datareg = e->attribute("dataregs");
         eeprom->m_dataReg = mcu->getReg( datareg );
     }
-
     if( e->hasAttribute("addressreg") )
     {
         QString addrReg = e->attribute("addressreg");
@@ -294,8 +288,8 @@ void McuCreator::getRegisters(  QDomElement* e, uint16_t offset )
                 {
                     mcu->m_sregAddr = regAddr;
                     mcu->getRamTable()->setStatusBits( bitList );
-            }   }
-        }else if( el.tagName() == "mapped" )
+        }   }   }
+        else if( el.tagName() == "mapped" )
         {
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
             uint16_t mapTo   = el.attribute("mapto").toUInt(0,0);
@@ -379,7 +373,6 @@ void McuCreator::createPort( QDomElement* p )
         for( int i=0; i<port->m_numPins; ++i )
             if( opencol & 1<<i ) port->m_pins[i]->m_openColl = true;
     }
-    // Interrupts and...
     QDomNode node = p->firstChild();
     while( !node.isNull() )
     {
@@ -406,11 +399,8 @@ void McuCreator::createTimer( QDomElement* t )
     else if( m_core == "AVR" )   timer = AvrTimer::createTimer( mcu, timerName, type );
     else if( m_core == "Pic14" ) timer = PicTimer::createTimer( mcu, timerName );
 
-    if( !timer )
-    {
-        qDebug() << "Error creating Timer"<< timerName;
-        return;
-    }
+    if( !timer ) { qDebug() << "Error creating Timer"<< timerName; return; }
+
     mcu->m_timers.m_timerList.insert( timerName, timer );
     mcu->m_modules.emplace_back( timer );
 
@@ -423,7 +413,6 @@ void McuCreator::createTimer( QDomElement* t )
         if( counter.contains(",") )
         {
             QStringList regs = counter.split(",");
-
             lowByte = regs.takeFirst();
             highByte = regs.takeFirst();
         }
@@ -436,10 +425,9 @@ void McuCreator::createTimer( QDomElement* t )
         if( !highByte.isEmpty() )
         {
             timer->m_countH = mcu->getReg( highByte );
-            watchRegNames( highByte, R_WRITE, timer, &McuTimer::countWriteH, mcu );
+            //watchRegNames( highByte, R_WRITE, timer, &McuTimer::countWriteH, mcu );  // Low byte triggers read/write operations
             watchRegNames( highByte, R_READ,  timer, &McuTimer::updtCount, mcu );
-        }
-    }
+    }   }
     if( t->hasAttribute("enable") )
     {
         QString enable = t->attribute("enable");
@@ -527,7 +515,8 @@ void McuCreator::createUsart( QDomElement* u )
     else if( m_core == "Pic14" ) usartM = new PicUsart( mcu, name, number );
     else return;
 
-    mcu->m_usarts.emplace_back( usartM ); //  .m_usartList.insert( name, usartM );
+    mcu->m_usarts.emplace_back( usartM );
+    mcu->m_modules.emplace_back( usartM );
 
     setConfigRegs( u, usartM );
 
@@ -604,7 +593,6 @@ void McuCreator::createAdc( QDomElement* e )
         if( dataregs.contains(",") )
         {
             QStringList regs = dataregs.split(",");
-
             lowByte = regs.takeFirst();
             highByte = regs.takeFirst();
         }
@@ -871,7 +859,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     if( ok ) iv->setPriority( prio );
     else     watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority, mcu );
 
-    if( el->hasAttribute("clear") )
+    if( el->hasAttribute("clear") ) // Clear flag by writting 1 to it
     {
         //uint8_t val = el->attribute("clear");
         watchBitNames( intFlag, R_WRITE, iv, &Interrupt::writeFlag, mcu );

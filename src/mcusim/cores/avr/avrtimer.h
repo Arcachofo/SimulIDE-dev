@@ -50,7 +50,7 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         virtual void setOCRXA( QString reg )=0;
         virtual void configureClock();
         void configureExtClock();
-        void configureOcUnits( bool disable );
+        void configureOcUnits( bool wgm3 );
 
         wgmMode_t m_wgmMode;
         uint8_t m_WGM10;
