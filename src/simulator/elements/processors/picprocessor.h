@@ -52,6 +52,8 @@ class PicProcessor : public BaseProcessor
         virtual uint8_t getRomValue( int address ) override;
         virtual void    setRomValue( int address, uint8_t value ) override;
 
+        virtual QVector<int>* eeprom() override;
+
         virtual void uartIn( int uart, uint32_t value ) override;
 
         pic_processor* getCpu() { return m_pPicProcessor; }

@@ -232,10 +232,13 @@ void RamTable::loadVarSet( QStringList varSet )
 
 QStringList RamTable::getVarSet()
 {
+    bool empty = true;
     QStringList varset;
-    for( int row=0; row<m_numRegs; row++ )
+    for( int row=m_numRegs-1; row>=0; --row )
     {
         QString name = table->item( row, 1 )->text();
+        if( !name.isEmpty() ) empty = false;
+        if( empty ) continue;
         varset.append( name );
     }
     return varset;
@@ -357,7 +360,9 @@ void RamTable::setRegisters( QStringList regs )
 
 uint16_t RamTable::getCurrentAddr()
 {
-    return table->item( table->currentRow(), 0 )->text().toUInt(NULL,16);
+    QString text = table->item( table->currentRow(), 0 )->text();
+    if( text == "---" ) return -1;
+    return  text.toUInt(NULL,16);
 }
 
 //#include "moc_ramtable.cpp"

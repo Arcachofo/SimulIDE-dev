@@ -182,7 +182,20 @@ void Mcu::setEeprom( QVector<int> eep )
 
 QVector<int> Mcu::eeprom()
 {
-    return *(m_eMcu.eeprom());
+    QVector<int> eeprom;
+    int size = m_eMcu.romSize();
+    if( size > 0 )
+    {
+        bool empty = true;
+        for( int i=size-1; i>=0; --i )
+        {
+            uint8_t val = m_eMcu.getRomValue( i );
+            if( val < 0xFF ) empty = false;
+            if( empty ) continue;
+            eeprom[i] = val;
+        }
+    }
+    return eeprom;
 }
 
 void Mcu::initialize()

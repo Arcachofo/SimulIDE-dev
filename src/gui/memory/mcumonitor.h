@@ -25,6 +25,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
         void eepromDataChanged( int address, int val );
         void tabChanged(int);
         void on_byteButton_toggled( bool byte );
+        void on_jumpButton_toggled( bool jump );
 
     private:
         McuInterface* m_processor;
@@ -36,6 +37,8 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
 
         QTableWidget* m_status;
         QTableWidget* m_pc;
+
+        bool m_jumpToAddress;
 };
 
 

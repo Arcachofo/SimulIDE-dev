@@ -37,6 +37,37 @@
      <item>
       <widget class="QRadioButton" name="byteButton">
        <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
+       </property>
+       <property name="text">
+        <string>Byte PC</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="jumpButton">
+       <property name="sizePolicy">
         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
@@ -48,11 +79,11 @@
          <height>0</height>
         </size>
        </property>
-       <property name="locale">
-        <locale language="C" country="AnyCountry"/>
-       </property>
        <property name="text">
-        <string>Byte PC</string>
+        <string>Jump to active Address</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

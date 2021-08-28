@@ -168,9 +168,13 @@ void MemTable::resizeTable( int dataSize )
     m_blocked = false;
 }
 
-void MemTable::setAddrSelected( int addr )
+void MemTable::setAddrSelected( int addr, bool jump )
 {
-    cellClicked( addr/16, addr%16 );
+    if( addr > m_dataSize ) return;
+    int row = addr/16;
+    int col = addr%16;
+    cellClicked( row, col );
+    if( jump ) table->scrollToItem( table->item( row, col ) );
 }
 
 void MemTable::on_table_itemChanged( QTableWidgetItem* item )

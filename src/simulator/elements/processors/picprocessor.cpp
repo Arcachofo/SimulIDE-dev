@@ -191,6 +191,15 @@ void PicProcessor::setRomValue(int address, uint8_t value)
     m_pPicProcessor->eeprom->rom[address]->put_value( value );
 }
 
+QVector<int>* PicProcessor::eeprom()
+{
+    for( uint32_t i=0; i<m_romSize; ++i )
+    {
+        m_eeprom[i] = getRomValue( i );
+    }
+    return &m_eeprom;
+}
+
 void PicProcessor::uartIn( int uart, uint32_t value ) // Receive one byte on Uart
 {
      if( !m_pPicProcessor ) return;

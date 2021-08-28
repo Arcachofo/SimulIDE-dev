@@ -64,7 +64,8 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v, bool masked )
 {
     if( masked ) // Protect Read Only bits from being written
     {
-        uint8_t mask = m_regMask[addr];
+        uint8_t mask = 255;
+        if( addr < m_regMask.size() ) mask = m_regMask[addr];
         if( mask != 0xFF ) v = (m_dataMem[addr] & ~mask) | (v & mask);
     }
     regSignal_t* regSignal = m_regSignals.value( addr );

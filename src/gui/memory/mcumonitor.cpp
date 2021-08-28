@@ -13,6 +13,8 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     hide();
     m_processor = mcu;
 
+    m_jumpToAddress = false;
+
     m_ramTable = m_processor->getRamTable();
     m_status = &m_ramTable->m_status;
     m_pc     = &m_ramTable->m_pc;
@@ -66,6 +68,11 @@ void MCUMonitor::on_byteButton_toggled( bool byte )
     updateStep();
 }
 
+void  MCUMonitor::on_jumpButton_toggled( bool jump )
+{
+    m_jumpToAddress = jump;
+}
+
 void MCUMonitor::updateStep()
 {
     int status = m_processor->status();
@@ -90,7 +97,9 @@ void MCUMonitor::updateStep()
         {
             for( uint32_t i=0; i<m_processor->ramSize(); ++i )
                 m_ramMonitor->setValue( i, m_processor->getRamValue(i));
-            m_ramMonitor->setAddrSelected( m_ramTable->getCurrentAddr() );
+
+            if(  Simulator::self()->simState() == SIM_RUNNING )
+                m_ramMonitor->setAddrSelected( m_ramTable->getCurrentAddr(), m_jumpToAddress );
     }   }
     else if( m_romMonitor->isVisible() )
     {
@@ -100,6 +109,8 @@ void MCUMonitor::updateStep()
     {
         for( uint32_t i=0; i<m_processor->flashSize(); ++i )
             m_flashMonitor->setValue( i, m_processor->getFlashValue(i));
-        if( Simulator::self()->simState() == SIM_RUNNING ) m_flashMonitor->setAddrSelected( pc );
+
+        if( Simulator::self()->simState() == SIM_RUNNING )
+            m_flashMonitor->setAddrSelected( pc, m_jumpToAddress );
     }
 }
