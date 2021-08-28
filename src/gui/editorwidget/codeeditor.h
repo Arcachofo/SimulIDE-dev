@@ -97,6 +97,7 @@ class CodeEditor : public QPlainTextEdit, public Updatable
 
         void slotAddBreak() { m_brkAction = 1; }
         void slotRemBreak() { m_brkAction = 2; }
+        void slotClearBreak() { m_brkPoints.clear(); }
         void compile();
         void upload();
         void runToBreak();

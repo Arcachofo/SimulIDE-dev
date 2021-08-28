@@ -468,7 +468,6 @@ void CodeEditor::stopDebbuger()
 void CodeEditor::pause()
 {
     if( m_state < DBG_STEPING )  return;
-
     if( m_driveCirc ) Simulator::self()->pauseSim();
 
     m_resume = m_state;
@@ -566,8 +565,8 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
             int pos = m_lNumArea->lastPos;
             if( pos > top && pos < bottom)
             {
-                if      ( m_brkAction == 1 ) addBreakPoint( lineNumber );
-                else if ( m_brkAction == 2 ) remBreakPoint( lineNumber );
+                if     ( m_brkAction == 1 ) addBreakPoint( lineNumber );
+                else if( m_brkAction == 2 ) remBreakPoint( lineNumber );
                 m_brkAction = 0;
                 m_lNumArea->lastPos = 0;
             }
@@ -578,8 +577,7 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
                 painter.setPen( Qt::NoPen );
                 painter.drawRect( 0, top, fontSize, fontSize );
             }
-            // Draw debug line icon
-            if( lineNumber == m_debugLine )
+            if( lineNumber == m_debugLine ) // Draw debug line icon
                 painter.drawImage( QRectF(0, top, fontSize, fontSize), QImage(":/finish.png") );
             // Draw line number
             QString number = QString::number( lineNumber );
@@ -619,8 +617,7 @@ void CodeEditor::setShowSpaces( bool on )
     QTextOption option =  document()->defaultTextOption();
     
     if( on ) option.setFlags(option.flags() | QTextOption::ShowTabsAndSpaces);
-
-    else option.setFlags(option.flags() & ~QTextOption::ShowTabsAndSpaces);
+    else     option.setFlags(option.flags() & ~QTextOption::ShowTabsAndSpaces);
 
     document()->setDefaultTextOption(option);
     
@@ -698,10 +695,7 @@ void CodeEditor::contextMenuEvent(QContextMenuEvent* event)
 
 void CodeEditor::slotProperties()
 {
-    if( !m_propDialog )
-    {
-        m_propDialog = new EditorProp( this, m_debugger );
-    }
+    if( !m_propDialog ) m_propDialog = new EditorProp( this, m_debugger );
     m_propDialog->show();
 }
 
@@ -784,13 +778,19 @@ void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
     
     QMenu menu;
 
-    QAction *addm_brkAction = menu.addAction( QIcon(":/breakpoint.png"),tr( "Add BreakPoint" ) );
-    connect( addm_brkAction, SIGNAL( triggered()),
+    QAction *addBrkAction = menu.addAction( QIcon(":/breakpoint.png"),tr( "Add BreakPoint" ) );
+    connect( addBrkAction, SIGNAL( triggered()),
                m_codeEditor, SLOT(slotAddBreak()), Qt::UniqueConnection );
 
-    QAction *remm_brkAction = menu.addAction( QIcon(":/nobreakpoint.png"),tr( "Remove BreakPoint" ) );
-    connect( remm_brkAction, SIGNAL( triggered()),
+    QAction *remBrkAction = menu.addAction( QIcon(":/nobreakpoint.png"),tr( "Remove BreakPoint" ) );
+    connect( remBrkAction, SIGNAL( triggered()),
                m_codeEditor, SLOT(slotRemBreak()), Qt::UniqueConnection );
+
+    menu.addSeparator();
+
+    QAction *clrBrkAction = menu.addAction( QIcon(":/remove.png"),tr( "Clear All BreakPoints" ) );
+    connect( clrBrkAction, SIGNAL( triggered()),
+               m_codeEditor, SLOT(slotClearBreak()), Qt::UniqueConnection );
 
     if( menu.exec(event->globalPos()) != 0 ) lastPos = event->pos().y();
 }
