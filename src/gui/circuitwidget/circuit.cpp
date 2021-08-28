@@ -715,7 +715,7 @@ void Circuit::removeComp( Component* comp )
 
     if( m_compList.contains( comp ) )
     {
-        removeItem( comp );
+        if( comp->scene() ) removeItem( comp );
         m_compList.removeOne( comp );
     }
     delete comp; // crash in recent versions bcos already removed in removeItem( comp );

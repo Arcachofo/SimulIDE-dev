@@ -278,7 +278,8 @@ void CircuitWidget::openCirc()
 
 void CircuitWidget::loadCirc( QString path )
 {
-    if( !path.isEmpty() && path.endsWith(".simu") )
+    if( !path.isEmpty()
+      &&(path.endsWith(".simu") || path.endsWith(".sim5")) )
     {
         newCircuit();
         Circuit::self()->loadCircuit( path );

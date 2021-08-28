@@ -98,7 +98,7 @@ void Connector::remConLine( ConnectorLine* line  )
     int index = m_conLineList.indexOf( line );
 
     connectLines( index-1, index+1 );
-    Circuit::self()->removeItem( line );
+    if( line->scene() ) Circuit::self()->removeItem( line );
     m_conLineList.removeOne( line );
     if( m_actLine > 0 )  m_actLine -= 1;
 }
@@ -244,7 +244,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
     }   }
     if( (line->dx() == 0) && (line->dy() == 0) && (length > 1) ) // Null Line
     {
-        Circuit::self()->removeItem( line );
+        if( line->scene() ) Circuit::self()->removeItem( line );
         m_conLineList.removeOne( line );
 
         if( m_actLine > 0 )  m_actLine -= 1;
@@ -305,7 +305,7 @@ void Connector::remLines()
     while( !m_conLineList.isEmpty() )
     {
         ConnectorLine* line = m_conLineList.takeLast();
-        Circuit::self()->removeItem( line );
+        if( line->scene() ) Circuit::self()->removeItem( line );
         delete line;
 }   }
 
@@ -339,7 +339,7 @@ void Connector::remove()
     if( Circuit::self()->conList()->contains( this ))
     {
         Circuit::self()->conList()->removeOne( this );
-        Circuit::self()->removeItem( this );
+        if( this->scene() ) Circuit::self()->removeItem( this );
     }
     remLines();
 }

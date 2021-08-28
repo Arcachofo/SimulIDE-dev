@@ -26,8 +26,10 @@ class McuInterface;
 
 class MAINMODULE_EXPORT McuBase : public Chip
 {
+        Q_OBJECT
+
     public:
-        McuBase(  QObject* parent, QString type, QString id  );
+        McuBase( QObject* parent, QString type, QString id  );
         ~McuBase();
 
  static McuBase* self() { return m_pSelf; }

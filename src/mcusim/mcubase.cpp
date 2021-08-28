@@ -19,7 +19,7 @@
 
 #include "mcubase.h"
 
-McuBase* McuBase::m_pSelf = 0l;
+McuBase* McuBase::m_pSelf = NULL;
 
 McuBase::McuBase( QObject* parent, QString type, QString id )
        : Chip( parent, type, id )
@@ -29,3 +29,4 @@ McuBase::~McuBase()
 {
     if( m_pSelf == this ) m_pSelf= NULL;
 }
+#include "moc_mcubase.cpp"

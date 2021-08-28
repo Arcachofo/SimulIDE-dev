@@ -125,6 +125,8 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 
                 if( !subcFile.endsWith( ".simu" ) ) subcFile += ".simu" ;
 
+                if( !QFile::exists(subcFile) ) subcFile = subcFile.replace(".simu", ".sim5");
+
                 loadSubCircuit( subcFile );
 
                 if( m_mainComponent )  // Example MCU in subcircuit needs to know where subcircuit is.
@@ -144,7 +146,7 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
     {
         for( Component* comp : m_compList )
         {
-            comp->setParentItem( 0l );
+            comp->setParentItem( NULL );
             Circuit::self()->removeComp( comp );
     }   }
     else    initChip();
@@ -265,15 +267,21 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     if ( number > circ->m_seqNumber ) circ->m_seqNumber = number; // Adjust item counter: m_seqNumber
 
                     comp->setParentItem( this );
-                    QPointF pos = comp->boardPos();
-                    if( pos == QPointF( -1e6, -1e6 ) ) pos = QPointF( 0, 0 );
-                    comp->moveTo( pos );
-                    comp->setRotation( comp->boardRot() );
+
+                    if( comp->isGraphical() )
+                    {
+                        QPointF pos = comp->boardPos();
+                        if( pos == QPointF( -1e6, -1e6 ) ) pos = QPointF( 0, 0 );
+                        comp->moveTo( pos );
+                        comp->setRotation( comp->boardRot() );
+                    }
+                    else comp->moveTo( QPointF(20, 20) );
+
+                    if( comp->isMainComp() ) m_mainComponent = comp; // This component will add it's Context Menu
+
                     comp->setHidden( true, true );
                     circ->compList()->removeOne( comp );
                     m_compList.append( comp );
-
-                    if( comp->isMainComp() ) m_mainComponent = comp; // This component will add it's Context Menu
 
                     if( type == "Tunnel" ) // Make Tunnel names unique for this subcircuit
                     {
@@ -535,7 +543,7 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
             menu->addSection( "" );
         }
         if( m_board ) m_board->contextMenu( event, menu );
-        else         Component::contextMenu( event, menu );
+        else          Component::contextMenu( event, menu );
         menu->deleteLater();
 }   }
 
