@@ -19,7 +19,7 @@
 
 #include "memtable.h"
 #include "mainwindow.h"
-
+#include "simulator.h"
 
 MemTable::MemTable( QWidget* parent, int dataSize, int wordBytes )
         : QWidget( parent )
@@ -177,6 +177,8 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
 {
     if( m_blocked ) return;
     m_blocked = true;
+    bool running = Simulator::self()->simState() > SIM_PAUSED;
+    if( running ) Simulator::self()->pauseSim();
 
     int col = item->column();
     int row = item->row();
@@ -222,6 +224,8 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
         emit dataChanged( dataAddr, val );
     }
     else if( m_data) setValue( dataAddr, m_data->at( dataAddr ) );
+
+    if( running ) Simulator::self()->resumeSim();
 
     m_blocked = false;
 }

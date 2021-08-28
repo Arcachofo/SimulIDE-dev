@@ -37,9 +37,9 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     tabWidget->addTab( m_flashMonitor, "Flash");
 
     connect( tabWidget,      SIGNAL(currentChanged(int)),   this, SLOT(tabChanged(int)) );
-    connect( m_ramMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(ramDataChanged(int, int)));
-    connect( m_flashMonitor, SIGNAL(dataChanged(int, int)), this, SLOT(flashDataChanged(int, int)));
-    connect( m_romMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(eepromDataChanged(int, int)));
+    connect( m_ramMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(ramDataChanged(int, int)) );
+    connect( m_flashMonitor, SIGNAL(dataChanged(int, int)), this, SLOT(flashDataChanged(int, int)) );
+    connect( m_romMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(eepromDataChanged(int, int)) );
 }
 
 void MCUMonitor::ramDataChanged( int address, int val )
@@ -84,12 +84,13 @@ void MCUMonitor::updateStep()
 
     if( m_ramTable->isVisible() )
     {
-        if( m_ramTable->getSplitter()->sizes().at(1) > 150 ) // RAM MemTable visible
+        if( m_ramTable->getSplitter()->sizes().at(1) > 150 ) // RAM Watcher visible
             m_ramTable->updateValues();
         if( m_ramTable->getSplitter()->sizes().at(2) > 100 ) // RAM MemTable visible
         {
             for( uint32_t i=0; i<m_processor->ramSize(); ++i )
                 m_ramMonitor->setValue( i, m_processor->getRamValue(i));
+            m_ramMonitor->setAddrSelected( m_ramTable->getCurrentAddr() );
     }   }
     else if( m_romMonitor->isVisible() )
     {

@@ -100,9 +100,11 @@ void eMcu::setFreq( double freq )
 uint16_t eMcu::getRegAddress( QString reg )// Get Reg address by name
 {
     uint16_t addr = McuInterface::getRegAddress( reg );
-    if( addr < 65535 ) return (uint16_t)addr;
-
-    return m_regInfo.value( reg ).address;
+    if( addr == 65535 )
+    {
+        if( m_regInfo.contains( reg ) ) addr = m_regInfo.value( reg ).address;
+    }
+    return addr;
 }
 
 uint8_t eMcu::getRamValue( int address )

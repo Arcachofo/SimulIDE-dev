@@ -316,7 +316,7 @@ void RamTable::addToWatch( QTableWidgetItem* it )
     }
     else{
         int addr = m_processor->getRegAddress( name );
-        if( addr < 0 )
+        if( addr == 65535 )
         {
             bool ok;
             addr = name.toInt(&ok, 10);
@@ -353,6 +353,11 @@ void RamTable::setRegisters( QStringList regs )
 {
     regs.sort();
     for( QString reg : regs ) m_registerModel->appendRow( new QStandardItem(reg) );
+}
+
+uint16_t RamTable::getCurrentAddr()
+{
+    return table->item( table->currentRow(), 0 )->text().toUInt(NULL,16);
 }
 
 //#include "moc_ramtable.cpp"
