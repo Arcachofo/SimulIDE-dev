@@ -433,7 +433,7 @@ void CodeEditor::lineReached( int line ) // Processor reached PC related to sour
 {
     m_debugLine = line;
 
-    if( ( m_state == DBG_RUNNING )  // We are running to Breakpoint
+    if( ( m_state == DBG_RUNNING )             // We are running to Breakpoint
      && !m_brkPoints.contains( m_debugLine ) ) // Breakpoint not reached, Keep stepping
     {
         McuInterface::self()->stepOne( m_debugLine );
@@ -444,13 +444,14 @@ void CodeEditor::lineReached( int line ) // Processor reached PC related to sour
     int cycle = McuInterface::self()->cycle();
     m_outPane->appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
     m_lastCycle = cycle;
+    updateScreen();
 }
 
 void CodeEditor::stopDebbuger()
 {
     if( m_state > DBG_STOPPED )
     {
-        m_brkPoints.clear();
+        //m_brkPoints.clear();
         m_debugLine = 0;
         
         CircuitWidget::self()->powerCircOff();
@@ -570,7 +571,8 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
                 m_brkAction = 0;
                 m_lNumArea->lastPos = 0;
             }
-            if( m_brkPoints.contains(lineNumber) ) // Draw breakPoint icon
+            if(( m_state > DBG_STOPPED )
+              && m_brkPoints.contains( lineNumber )) // Draw breakPoint icon
             {
                 painter.setBrush( QColor(Qt::yellow) );
                 painter.setPen( Qt::NoPen );

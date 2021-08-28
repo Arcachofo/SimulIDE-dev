@@ -57,7 +57,7 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         CodeEditor( QWidget* parent, OutPanelText* outPane );
         ~CodeEditor();
         
-        virtual void updateStep() override { if( m_state == DBG_PAUSED ) updateScreen(); }
+        //virtual void updateStep() override { if( m_state == DBG_PAUSED ) updateScreen(); }
 
         int fontSize() { return m_fontSize; }
         void setFontSize( int size );
