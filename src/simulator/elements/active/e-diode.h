@@ -29,7 +29,7 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         ~eDiode();
 
         virtual double threshold() { return m_threshold; }
-        virtual void  setThreshold( double threshold );
+        virtual void  setThreshold( double threshold ) { m_threshold = threshold; }
         
         virtual double zenerV(){ return m_zenerV; }
         virtual void  setZenerV( double zenerV );
@@ -40,7 +40,7 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         virtual void voltChanged() override;
 
         virtual void   setRes( double resist );
-        virtual double res();
+        virtual double res() { return m_imped; }
 
     protected:
         void updateVI();
@@ -50,9 +50,9 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         double m_threshold;
         double m_imped;
         double m_zenerV;
-        double m_lastC;
+        double m_lastCurrent;
 
-        static constexpr double off_imp  = 1e9;
+        static constexpr double off_imp  = 1e14;
 };
 #endif
 

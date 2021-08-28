@@ -54,7 +54,7 @@ void McuPin::initialize()
 
 void McuPin::stamp()
 {
-    if( m_enode ) // Outputs are also called so they set Input register if needed
+    if( m_enode ) // NO: Outputs are also called so they set Input register if needed
        changeCallBack( this ); // Receive voltage change notifications
 
     IoPin::stamp();
@@ -84,7 +84,7 @@ void McuPin::setOutState( bool state, bool )
 
 void McuPin::setDirection( bool out )
 {
-    m_isOut = (out || m_outMask) && m_inpMask;
+    m_isOut = (out || m_outMask) && m_inpMask; // Take care about permanent Inputs/Outputs
 
     if( m_isOut )  // Set Pin to Output
     {

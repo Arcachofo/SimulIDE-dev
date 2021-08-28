@@ -46,24 +46,24 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         virtual QList<propGroup_t> propGroups() override;
 
         void setColor( LedBase::LedColor color );
-        LedBase::LedColor color();
+        LedBase::LedColor color() { return m_ledColor; }
         
-        int  rows();
+        int  rows() { return m_rows; }
         void setRows( int rows );
         
-        int  cols();
+        int  cols() { return m_cols; }
         void setCols( int cols );
         
-        bool verticalPins();
+        bool verticalPins() { return m_verticalPins; }
         void setVerticalPins( bool v );
         
-        double threshold();
+        double threshold() { return m_threshold; }
         void   setThreshold( double threshold );
 
-        double maxCurrent();
+        double maxCurrent() { return m_maxCurr; }
         void   setMaxCurrent( double current );
         
-        double res();
+        double res() { return m_resist; }
         void  setRes( double resist );
 
         virtual void attach() override;

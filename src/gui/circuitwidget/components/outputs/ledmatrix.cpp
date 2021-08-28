@@ -86,9 +86,7 @@ void LedMatrix::attach()
             LedSmd* lsmd = m_led[row][col];
             lsmd->getEpin(0)->setEnode( rowEnode );
             lsmd->getEpin(1)->setEnode( colEnode );
-        }
-    }
-}
+}   }   }
 
 void LedMatrix::setupMatrix( int rows, int cols )
 {
@@ -118,16 +116,8 @@ void LedMatrix::createMatrix()
         pinId.append( QString("-pinRow"+QString::number(row)));
         QPoint nodpos;
         int angle;
-        if( m_verticalPins ) 
-        {
-            nodpos = QPoint( row*8, -16 );
-            angle = 90;
-        }
-        else 
-        {
-            nodpos = QPoint(-16, row*8 );
-            angle = 180;
-        }
+        if( m_verticalPins ) { nodpos = QPoint( row*8, -16 ); angle = 90; }
+        else                 { nodpos = QPoint(-16, row*8 ); angle = 180; }
 
         m_rowPin[row] = new Pin( angle, nodpos, pinId, 0, this);
         m_pin[row] = m_rowPin[row];
@@ -140,20 +130,16 @@ void LedMatrix::createMatrix()
 
             lsmd->setParentItem(this);
             lsmd->setNumEpins(2);
-            lsmd->setMaxCurrent( 0.02 );
             lsmd->setPos( col*8, row*8 );
             lsmd->setRes( m_resist );
             lsmd->setMaxCurrent( m_maxCurr );
             lsmd->setThreshold( m_threshold );
             lsmd->setColor( m_ledColor );
-            //lsmd->setEnabled(false);
             lsmd->setFlag( QGraphicsItem::ItemIsSelectable, false );
             lsmd->setAcceptedMouseButtons(0);
-            Circuit::self()->compList()->removeOne( lsmd );
-
             m_led[row][col] = lsmd;
-        }
-    }
+            Circuit::self()->compList()->removeOne( lsmd );
+    }   }
     for( int col=0; col<m_cols; ++col )
     {
         QString pinId = m_id;
@@ -161,8 +147,7 @@ void LedMatrix::createMatrix()
         QPoint nodpos = QPoint( col*8, m_rows*8+8 );
         m_colPin[col] = new Pin( 270, nodpos, pinId, 1, this);
         m_pin[m_rows+col-1] = m_colPin[col];
-    }
-}
+}   }
 
 void LedMatrix::deleteMatrix()
 {
@@ -183,10 +168,10 @@ void LedMatrix::deleteMatrix()
         m_colPin[col]->removeConnector();
         delete m_colPin[col];
     }
-    m_led.resize(0);
-    m_rowPin.resize( 0 );
-    m_colPin.resize( 0 );
-    m_pin.resize( 0 );
+    m_led.clear();
+    m_rowPin.clear();
+    m_colPin.clear();
+    m_pin.clear();
 }
 
 void LedMatrix::setColor( LedBase::LedColor color ) 
@@ -196,32 +181,14 @@ void LedMatrix::setColor( LedBase::LedColor color )
     for( int row=0; row<m_rows; ++row )
     {
         for( int col=0; col<m_cols; ++col )
-        {
             m_led[row][col]->setColor( color ); 
-        }
-    }
-}
-
-LedBase::LedColor LedMatrix::color() 
-{ 
-    return m_ledColor; 
-}
-
-int LedMatrix::rows()
-{
-    return m_rows;
-}
+}   }
 
 void LedMatrix::setRows( int rows )
 {
     if( rows == m_rows ) return;
     if( rows < 1 ) rows = 1;
     setupMatrix( rows, m_cols );
-}
-
-int LedMatrix::cols()
-{
-    return m_cols;
 }
 
 void LedMatrix::setCols( int cols )
@@ -231,43 +198,29 @@ void LedMatrix::setCols( int cols )
     setupMatrix( m_rows, cols );
 }
 
-bool LedMatrix::verticalPins()
-{
-    return m_verticalPins;
-}
-
 void LedMatrix::setVerticalPins( bool v )
 {
     if( v == m_verticalPins ) return;
     m_verticalPins = v;
     
-    if( v )
-    {
+    if( v ){
         for( int i=0; i<m_rows; ++i )
         {
             m_rowPin[i]->setPos( i*8, -16 );
             m_rowPin[i]->setRotation( 90 );
-        }
-    }
-    else
-    {
+    }   }
+    else{
         for( int i=0; i<m_rows; ++i )
         {
             m_rowPin[i]->setPos( -16, i*8 );
             m_rowPin[i]->setRotation( 0 );
-        }
-    }
+    }   }
     for( int i=0; i<m_rows; ++i ) m_rowPin[i]->isMoved();
     
     if( m_verticalPins ) m_area = QRect( -4, -8, m_cols*8, m_rows*8+8 );
     else                 m_area = QRect( -8, -8, m_cols*8+8, m_rows*8+8 );
     
     update();
-}
-
-double LedMatrix::threshold()                     
-{ 
-    return m_threshold; 
 }
 
 void LedMatrix::setThreshold( double threshold ) 
@@ -278,16 +231,9 @@ void LedMatrix::setThreshold( double threshold )
     for( int row=0; row<m_rows; ++row )
     {
         for( int col=0; col<m_cols; ++col )
-        {
             m_led[row][col]->setThreshold( threshold ); 
-        }
-    }
-}
+}   }
 
-double LedMatrix::maxCurrent()                   
-{ 
-    return m_maxCurr; 
-}
 void LedMatrix::setMaxCurrent( double current ) 
 {
     if( current < 1e-6 ) current = 1e-6;
@@ -296,45 +242,30 @@ void LedMatrix::setMaxCurrent( double current )
     for( int row=0; row<m_rows; ++row )
     {
         for( int col=0; col<m_cols; ++col )
-        {
-            m_led[row][col]->setMaxCurrent( current ); 
-        }
-    }
-}
-
-double LedMatrix::res() 
-{ 
-    return m_resist; 
-}
+            m_led[row][col]->setMaxCurrent( current );
+}   }
 
 void LedMatrix::setRes( double resist )
 {
     if( resist == 0 ) resist = 1e-14;
-
     m_resist = resist;
     
     for( int row=0; row<m_rows; ++row )
     {
         for( int col=0; col<m_cols; ++col )
-        {
             m_led[row][col]->setRes( resist ); 
-        }
-    }
-}
+}   }
 
 void LedMatrix::remove()
 {
     deleteMatrix();
-    
     Component::remove();
 }
 
 void LedMatrix::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
-    
     p->drawRoundRect( m_area, 4, 4 );
 }
 
 #include "moc_ledmatrix.cpp"
-
