@@ -140,12 +140,13 @@ void Interrupts::runInterrupts()
     }
     if( m_pending.size() == 0 ) return; // No Interrupts to run
 
-    for( auto itt=m_pending.end(); itt!=m_pending.begin();  )
+    auto itt=m_pending.end();
+    for( uint i=0; i<m_pending.size(); ++i )
     {
         auto it=prev(itt);
         Interrupt* interrupt = it->second;
 
-        if( !interrupt->enabled() )
+        if( !interrupt->enabled() || !interrupt->raised() )
         {
             m_pending.erase( it ); // Remove Interrupt from pending list
         }
