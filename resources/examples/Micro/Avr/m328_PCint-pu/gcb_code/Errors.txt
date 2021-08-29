@@ -1,0 +1,2 @@
+Warning: Direction of pin PORTB.3 cannot be set automatically
+Warning: Direction of pin PORTB.0 cannot be set automatically

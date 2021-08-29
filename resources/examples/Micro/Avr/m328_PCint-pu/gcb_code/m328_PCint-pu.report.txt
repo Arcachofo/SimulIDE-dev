@@ -1,0 +1,57 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 0.98.<<>> 2021-<<>>-24 (Linux 64 bit) : Build 1005
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: MEGA328
+Program Memory: 108/16384 words (.66%)
+RAM: 4/2048 bytes (.2%)
+
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 13
+Compiled Size (words): 61
+Outgoing calls: PCINT2_VECT(1), Delay_MS(1), INITSYS(1)
+
+PCINT2_VECT
+Code Size (lines): 1
+Compiled Size (words): 8
+
+INITSYS
+Code Size (lines): 837
+Compiled Size (words): 7
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 12
+
+SysIntContextSave
+Code Size (lines): 0
+Compiled Size (words): 8
+
+SysIntContextRestore
+Code Size (lines): 0
+Compiled Size (words): 8
+
+IntPCINT2
+Code Size (lines): 0
+Compiled Size (words): 4
+
+;********************************************************************************
+

@@ -1,0 +1,47 @@
+<circuit stepsPS="1000000" animate="0" stepSize="1000000" NLsteps="100000" type="simulide_0.5">
+
+Unique  Id: Node-1: 
+Circuit Id: Node-18
+<item objectName="Node-1" Show_Val="false" x="-268" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" labelx="-16" id="Node-18" valLabRot="0" valLabely="0" itemtype="Node" vflip="1" y="-108" valLabelx="0" hflip="1" Unit="  "/>
+
+Unique  Id: mega328-2: 
+Circuit Id: atmega328
+<item objectName="mega328-2" Show_Val="false" Logic_Symbol="false" x="-340" mainComp="false" labelrot="0" rotation="0" labely="-17" Show_id="true" Mhz="16" eeprom="" labelx="-15" varList=",DDRB,PORTB,,TCCR2A,TCCR2B,TIFR2,TIMSK2,TCNT2" id="atmega328" valLabRot="0" Auto_Load="false" valLabely="0" itemtype="MCU" vflip="1" y="-188" Name="mega328" valLabelx="0" hflip="1" Unit="  " Program="gcb_code/m328_LED_PWM_Tim2_Interrupt.hex"/>
+
+Unique  Id: Led-3: 
+Circuit Id: Led-5
+<item objectName="Led-3" Show_Val="false" Grounded="false" x="-220" Color="0" Resistance="0.01" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" labelx="-16" id="Led-5" Threshold="2.4" valLabRot="0" valLabely="0" itemtype="Led" vflip="1" y="-108" valLabelx="0" hflip="1" Unit="  " MaxCurrent="0.03"/>
+
+Unique  Id: Ground (0 V)-4: 
+Circuit Id: Ground (0 V)-4
+<item objectName="Ground (0 V)-4" Show_Val="false" x="-124" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" labelx="-16" id="Ground (0 V)-4" valLabRot="0" valLabely="0" itemtype="Ground" vflip="1" y="-68" valLabelx="0" hflip="1" Unit="  "/>
+
+Unique  Id: Resistor-5: 
+Circuit Id: Resistor-3
+<item objectName="Resistor-5" Show_Val="true" x="-164" Resistance="50" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" labelx="-16" id="Resistor-3" valLabRot="0" valLabely="-20" itemtype="Resistor" vflip="1" y="-108" valLabelx="-15" hflip="1" Unit=" Ω"/>
+
+Unique  Id: Oscope-6: 
+Circuit Id: Oscope-2
+<item objectName="Oscope-6" Show_Val="false" Conds="" Tracks="1" AutoSC="0" VolDiv="1,1,1,1" TimeDiv="320000000000" Filter="0.3" x="-148" mainComp="false" labelrot="0" rotation="0" labely="-80" Show_id="false" Basic_Y="135" hTick="320000000" labelx="-80" Tunnels=",,," VolPos="0,0,0,0" Trigger="0" id="Oscope-2" valLabRot="0" HideCh="false,false,false,false" valLabely="0" itemtype="Oscope" Basic_X="135" vflip="1" y="-220" TimPos="0,0,0,0" valLabelx="0" hflip="1" Unit="  "/>
+
+Unique  Id: Connector-7: 
+Circuit Id: Connector-9
+<item objectName="Connector-7" Show_Val="false" x="-204" enodeid="Circ_eNode-8" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" pointList="-204,-108,-180,-108" labelx="-16" id="Connector-9" valLabRot="0" valLabely="0" itemtype="Connector" startpinid="Led-3-rPin" vflip="1" y="-108" valLabelx="0" hflip="1" Unit="  " endpinid="Resistor-5-lPin"/>
+
+Unique  Id: Connector-9: 
+Circuit Id: Connector-11
+<item objectName="Connector-9" Show_Val="false" x="-148" enodeid="Circ_eNode-10" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" pointList="-148,-108,-124,-108,-124,-84" labelx="-16" id="Connector-11" valLabRot="0" valLabely="0" itemtype="Connector" startpinid="Resistor-5-rPin" vflip="1" y="-108" valLabelx="0" hflip="1" Unit="  " endpinid="Ground (0 V)-4-Gnd"/>
+
+Unique  Id: Connector-11: 
+Circuit Id: Connector-7
+<item objectName="Connector-11" Show_Val="false" x="-300" enodeid="Circ_eNode-12" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" pointList="-300,-108,-268,-108" labelx="-16" id="Connector-7" valLabRot="0" valLabely="0" itemtype="Connector" startpinid="mega328-2-PORTB5" vflip="1" y="-108" valLabelx="0" hflip="1" Unit="  " endpinid="Node-1-0"/>
+
+Unique  Id: Connector-13: 
+Circuit Id: Connector-17
+<item objectName="Connector-13" Show_Val="false" x="-236" enodeid="Circ_eNode-12" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" pointList="-236,-268,-268,-268,-268,-108" labelx="-16" id="Connector-17" valLabRot="0" valLabely="0" itemtype="Connector" startpinid="Oscope-6-Pin0" vflip="1" y="-268" valLabelx="0" hflip="1" Unit="  " endpinid="Node-1-1"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-19
+<item objectName="Connector-14" Show_Val="false" x="-268" enodeid="Circ_eNode-12" mainComp="false" labelrot="0" rotation="0" labely="-24" Show_id="false" pointList="-268,-108,-236,-108" labelx="-16" id="Connector-19" valLabRot="0" valLabely="0" itemtype="Connector" startpinid="Node-1-2" vflip="1" y="-108" valLabelx="0" hflip="1" Unit="  " endpinid="Led-3-lPin"/>
+ 
+</circuit>
