@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2019 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
@@ -66,8 +66,7 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_boardModeAction->setCheckable(true);
     m_boardMode = false;
     
-    setAcceptHoverEvents(true);
-
+    setAcceptHoverEvents( true );
     setZValue( -1 );
     
     m_pkgeFile = SIMUAPI_AppPath::self()->RODataFolder().absolutePath();
@@ -151,18 +150,16 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
     if( m_fakePin )
     {
         event->accept();
-
-        Pin* pin = new Pin( m_angle, QPoint(m_p1X,m_p1Y ), "name", 0, this );
         m_fakePin = false;
 
-        pin->setLabelText( "Name" );
-        pin->setPinId( "Id" );
-        pin->setLabelColor( QColor( Qt::black ) );
-        pin->setLabelPos();
+        m_eventPin = new Pin( m_angle, QPoint(m_p1X,m_p1Y ), "name", 0, this );
+        m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+        m_eventPin->setLabelText( "Name" );
+        m_eventPin->setPinId( "Id" );
+        m_eventPin->setLabelColor( QColor( Qt::black ) );
+        m_eventPin->setLabelPos();
+        m_pins.append( m_eventPin );
 
-        m_pins.append( pin );
-
-        m_eventPin = pin;
         editPin();
         Circuit::self()->update();
     }
@@ -186,7 +183,6 @@ void SubPackage::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         event->accept();
 
         int pinLenth = m_eventPin->length();
-
         int Xmax = m_area.width();
         int Ymax = m_area.height();
         int pinX = m_eventPin->pos().x();
@@ -196,28 +192,33 @@ void SubPackage::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         int deltaX = delta.x();
         int deltaY = delta.y();
 
-        if(( m_angle == 0 )    // Right
-         ||( m_angle == 180 )) // Left
+        if( (m_angle == 0) || (m_angle == 180) )   // Right or Left
         {
             if( (pinY >= Ymax) && (deltaY>0) ) return;
             if( (pinY <= 0)    && (deltaY<0) ) return;
-            else
-            {
-                if( (pinX >= Xmax+pinLenth)&& (deltaX>0) ) return;
-                if( (pinX <= -pinLenth)&& (deltaX<0) ) return;
-            }
-        }
-        else if(( m_angle == 90 )   // Top
-              ||( m_angle == 270 )) // Bottom
+            else{
+                if( m_angle == 0 )    // Right
+                {
+                    if( (pinX >= Xmax+pinLenth) && (deltaX>0) ) return;
+                    if( (pinX <= 16+pinLenth) && (deltaX<0) ) return;
+                }else                  // Left
+                {
+                    if( (pinX >= Xmax-16-pinLenth) && (deltaX>0) ) return;
+                    if( (pinX <= -pinLenth) && (deltaX<0) ) return;
+        }   }   }
+        else if( (m_angle == 90) || (m_angle == 270) )  // Top or Bottom
         {
             if( (pinX >= Xmax) && (deltaX>0) ) return;
             if( (pinX <= 0)    && (deltaX<0) ) return;
-            else
-            {
-                if( (pinY >= Ymax) && (deltaY>0) ) return;
-                if( (pinY <= 0) && (deltaY<0) ) return;
-            }
-        }
+            else{
+                if( m_angle == 90 )   // Top
+                {
+                    if( (pinY >= Ymax-16-pinLenth) && (deltaY>0) ) return;
+                    if( (pinY <= -pinLenth) && (deltaY<0) ) return;
+                }else{                 // Bottom
+                    if( (pinY >= Ymax+pinLenth) && (deltaY>0) ) return;
+                    if( (pinY <= 16+pinLenth) && (deltaY<0) ) return;
+        }   }   }
         m_eventPin->moveBy( deltaX, deltaY );
     }
     else Component::mouseMoveEvent( event );
@@ -264,9 +265,7 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
         connect( deleteAction, SIGNAL( triggered()), this, SLOT( deleteEventPin() ), Qt::UniqueConnection );
 
         menu->exec( event->screenPos() );
-    }
-    else
-    {
+    }else{
         QAction* loadAction = menu->addAction( QIcon(":/open.png"),tr("Load Package") );
         connect( loadAction, SIGNAL( triggered()), this, SLOT( loadPackage() ), Qt::UniqueConnection );
 
@@ -314,9 +313,8 @@ void SubPackage::setBoardMode()
             {
                 comp->setPos( comp->boardPos()+ this->pos() );
                 comp->setRotation( comp->boardRot() );
-            }
-        }else
-        {
+        }   }
+        else{
             comp->setBoardPos( comp->pos()-this->pos() );
             comp->setBoardRot( comp->rotation() );
             comp->setPos( comp->circPos() );
@@ -330,11 +328,8 @@ void SubPackage::setBoardMode()
 void SubPackage::savingCirc()
 {
     if( m_subcType >= Board ) Circuit::self()->saveBoard();
-    if( m_boardMode )
-    {
-        m_boardMode = false;
-        setBoardMode();
-}   }
+    if( m_boardMode ) { m_boardMode = false; setBoardMode(); }
+}
 
 void SubPackage::remove()
 {
@@ -395,7 +390,6 @@ void SubPackage::editPin()
     m_angle = m_eventPin->pinAngle();
 
     EditDialog* editDialog = new EditDialog( this, m_eventPin, 0l );
-
     connect( editDialog, SIGNAL( finished(int) ),
                    this, SLOT( editFinished(int) ), Qt::UniqueConnection );
 
@@ -461,7 +455,7 @@ void SubPackage::pointPin( bool point )
     else if( m_angle == 90 )  m_eventPin->moveBy( 0,-deltaL );// Top
     else if( m_angle == 270 ) m_eventPin->moveBy( 0, deltaL );// Bottom
 
-    m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, !point );
+    m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
     Circuit::self()->update();
     m_changed = true;
 }
@@ -494,8 +488,7 @@ void SubPackage::setLogicSymbol( bool ls )
     QColor labelColor = QColor( 0, 0, 0 );
 
     if( ls ) m_color = m_lsColor;
-    else
-    {
+    else{
         m_color = m_icColor;
         labelColor = QColor( 250, 250, 200 );
     }
@@ -513,7 +506,6 @@ void SubPackage::slotSave()
     QString fileName = QFileDialog::getSaveFileName( 0l, tr("Save Package"), dir,
                                                      tr("Packages (*.package);;All files (*.*)"));
     if( fileName.isEmpty() ) return;
-
     savePackage( fileName );
 }
 
@@ -553,18 +545,14 @@ void SubPackage::loadPackage()
     {
         pkgDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
         dir = pkgDir.absoluteFilePath( m_pkgeFile );
-    }
-    else
-    {
+    }else{
         pkgDir = QFileInfo( m_lastPkg ).absoluteDir();
         dir = pkgDir.absolutePath();
     }
-
     QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Package File"), dir,
                        tr("Packages (*.package);;All files (*.*)"));
 
     if( fileName.isEmpty() ) return; // User cancels loading
-
     setPackage( fileName );
 
     QDir pdir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
@@ -588,7 +576,6 @@ void SubPackage::savePackage( QString fileName )
     out.setCodec("UTF-8");
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-
     int pins = m_pins.size();
 
     QMetaEnum metaEnum = QMetaEnum::fromType<Chip::subcType_t>();
@@ -605,11 +592,8 @@ void SubPackage::savePackage( QString fileName )
            +"\" >\n\n";
     
     int pP = 1;
-    for( Pin* pin : m_pins )
-    {
-        out << pinEntry( pin, pP);
-        pP++;
-    }
+    for( Pin* pin : m_pins ) { out << pinEntry( pin, pP); pP++; }
+
     out << "    \n";
     out << "</packageB>\n";
 
@@ -626,7 +610,7 @@ void SubPackage::savePackage( QString fileName )
 void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Chip::paint( p, option, widget );
-    
+
     if( m_fakePin )
     {
         QPen pen = p->pen();
@@ -634,8 +618,7 @@ void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
         pen.setColor( Qt::gray );
         p->setPen(pen);
         p->drawLine( m_p1X, m_p1Y, m_p2X, m_p2Y);
-    }
-}
+}   }
 
 //_____________________________________________________________
 //_____________________________________________________________
