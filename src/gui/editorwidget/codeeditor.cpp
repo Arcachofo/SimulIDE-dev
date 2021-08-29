@@ -262,7 +262,7 @@ void CodeEditor::setCompilerPath()
                        tr( "No Compiler available for: %1 files" ).arg(m_fileExt));
 }   }
 
-void CodeEditor::compile()
+void CodeEditor::compile( bool debug )
 {
     if( document()->isModified() ) EditorWindow::self()->save();
     m_debugLine  = -1;
@@ -299,7 +299,7 @@ void CodeEditor::compile()
             m_outPane->appendLine( "\n"+tr("File type not supported")+"\n" );
             return;
         }
-        error = m_debugger->compile();
+        error = m_debugger->compile( debug );
     }
 
     if( error == 0 )

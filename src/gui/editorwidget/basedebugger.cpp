@@ -54,9 +54,9 @@ BaseDebugger::~BaseDebugger( )
     if( McuInterface::self() ) McuInterface::self()->getRamTable()->remDebugger( this );
 }
 
-int BaseDebugger::compile( )
+int BaseDebugger::compile( bool debug )
 {
-    int error = Compiler::compile( m_file );
+    int error = Compiler::compile( m_file, debug );
     if( error == 0 ) m_firmware = m_fileDir+m_fileName+".hex";
     return error;
 }

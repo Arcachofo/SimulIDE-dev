@@ -36,7 +36,7 @@ class Compiler : public QObject
 
         void clearCompiler();
         void loadCompiler( QString file );
-        int compile( QString file );
+        int compile( QString file, bool debug );
 
     protected:
 
@@ -45,6 +45,7 @@ class Compiler : public QObject
         QString m_toolPath;
         QString m_command;
         QString m_arguments;
+        QString m_argsDebug;
         QString m_incDir;
 
         QProcess m_compilerProc;

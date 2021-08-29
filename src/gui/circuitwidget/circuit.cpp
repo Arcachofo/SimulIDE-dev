@@ -310,6 +310,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
             else if(( type == "SerialPort")
                  && ( element.hasAttribute( "visible" ) )
                  && ( element.attribute( "visible" ) == "false" ) ) ;// Old Serial Port Widget
+            else if( type == "SerialTerm") ; /// TODO
             else
             {
                 Component* comp = NULL;

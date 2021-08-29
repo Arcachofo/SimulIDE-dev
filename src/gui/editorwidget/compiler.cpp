@@ -41,6 +41,7 @@ void Compiler::clearCompiler()
     m_toolPath.clear();
     m_command.clear();
     m_arguments.clear();
+    m_argsDebug.clear();
 }
 
 void Compiler::loadCompiler( QString file )
@@ -60,6 +61,8 @@ void Compiler::loadCompiler( QString file )
     if( root.hasAttribute("toolPath") )  m_toolPath  = root.attribute( "toolPath" );
     if( root.hasAttribute("command") )   m_command   = root.attribute( "command" );
     if( root.hasAttribute("arguments") ) m_arguments = root.attribute( "arguments" );
+    if( root.hasAttribute("argsDebug") ) m_argsDebug = root.attribute( "argsDebug" );
+    else                                 m_argsDebug = m_arguments;
     if( root.hasAttribute("incDir") )    incDir      = root.attribute( "incDir" );
 
     if( !incDir.isEmpty() ) m_incDir = incDir;
@@ -75,7 +78,7 @@ void Compiler::loadCompiler( QString file )
     m_toolChain = true;
 }
 
-int Compiler::compile( QString file )
+int Compiler::compile( QString file, bool debug )
 {
     if( !m_toolChain ) return -1;
 
@@ -91,20 +94,22 @@ int Compiler::compile( QString file )
 
     QString command = m_toolPath+m_command;
 
-    #ifndef Q_OS_UNIX
+#ifndef Q_OS_UNIX
     command  = addQuotes( command );
     filePath = addQuotes( filePath );
     fileDir  = addQuotes( fileDir );
     fileExt  = addQuotes( fileExt );
     fileName = addQuotes( fileName );
     incDir   = addQuotes( incDir );
-    #endif
+#endif
 
-    QString arguments = m_arguments.replace( "$filePath", filePath )
-                                   .replace( "$fileDir",  fileDir )
-                                   .replace( "$fileName", fileName )
-                                   .replace( "$fileExt",  fileExt )
-                                   .replace( "$incDir",   incDir );
+    QString arguments = debug ? m_argsDebug : m_arguments;
+
+    arguments = arguments.replace( "$filePath", filePath )
+                         .replace( "$fileDir",  fileDir )
+                         .replace( "$fileName", fileName )
+                         .replace( "$fileExt",  fileExt )
+                         .replace( "$incDir",   incDir );
 
     m_outPane->appendLine( "\n Executing:\n"+command+arguments+"\n" );
     m_compilerProc.setWorkingDirectory( fileDir );

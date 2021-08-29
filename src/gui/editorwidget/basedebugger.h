@@ -47,7 +47,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         virtual bool upload();
 
-        virtual int  compile();
+        virtual int  compile( bool debug );
         virtual void mapFlashToSource()=0;
 
         virtual int getValidLine( int pc );

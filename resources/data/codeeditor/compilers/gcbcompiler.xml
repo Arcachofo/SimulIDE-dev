@@ -10,5 +10,6 @@
     name="GcBasic"
     toolPath="/home/user/GreatCowBasic/"
     command="gcbasic"
-    arguments=" -NP -K:L -A:GCASM -R:text $filePath"
+    arguments=" -NP -A:GCASM -R:text $filePath"
+    argsDebug=" -NP -K:L -A:GCASM -R:text $filePath"
 />
