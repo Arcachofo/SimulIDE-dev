@@ -40,10 +40,10 @@ class MAINMODULE_EXPORT WS2812 : public Component, public eClockedDevice
 
         virtual QList<propGroup_t> propGroups() override;
 
-        int  rows();
+        int  rows() { return m_rows; }
         void setRows( int rows );
 
-        int  cols();
+        int  cols() { return m_cols; }
         void setCols( int cols );
 
         virtual void initialize() override;
@@ -53,6 +53,7 @@ class MAINMODULE_EXPORT WS2812 : public Component, public eClockedDevice
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     private:
+        void setOut( bool state );
         void saveBit( bool bit );
         void updateLeds();
 
