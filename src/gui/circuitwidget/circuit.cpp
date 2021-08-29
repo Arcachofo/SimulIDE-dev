@@ -644,7 +644,7 @@ void Circuit::importCirc(  QPointF eventpoint  )
 
     const QString dir = m_filePath;
     QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Circuit"), dir,
-                                          tr("Circuits (*.simu);;All files (*.*)"));
+                                          tr("Circuits (*.sim*);;All files (*.*)"));
 
     if( !fileName.isEmpty() && fileName.endsWith(".simu") )
         loadCircuit( fileName );
