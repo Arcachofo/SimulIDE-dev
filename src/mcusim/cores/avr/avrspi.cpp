@@ -35,7 +35,7 @@ AvrSpi::AvrSpi( eMcu* mcu, QString name )
     m_MSTR = getRegBits( "MSTR", mcu );
     m_CPOL = getRegBits( "CPOL", mcu );
     m_CPHA = getRegBits( "CPHA", mcu );
-    m_SPIF = getRegBits( "SPIF", mcu );
+    //m_SPIF = getRegBits( "SPIF", mcu );
 }
 AvrSpi::~AvrSpi(){}
 
@@ -118,7 +118,7 @@ void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written
 
     /// SPIF is cleared by first reading the SPI Status Register with SPIF set,
     /// then accessing the SPI Data Register (SPDR).
-    clearRegBits( m_SPIF ); // Clear Iterrupt flag
+    m_interrupt->clearFlag(); //clearRegBits( m_SPIF ); // Clear Iterrupt flag
 
     if( m_mode == SPI_MASTER ) StartTransaction();
 }
@@ -126,5 +126,5 @@ void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written
 void AvrSpi::endTransaction()
 {
     SpiModule::endTransaction();
-    m_interrupt->raise(); // interrupt.emitValue(1);
+    m_interrupt->raise();
 }

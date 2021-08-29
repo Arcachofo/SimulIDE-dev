@@ -41,14 +41,13 @@ AvrTwi::~AvrTwi(){}
 void AvrTwi::initialize()
 {
     McuTwi::initialize();
-    //*m_TWSR= 0xF8; /// TODO: reset value is overriden
     m_bitRate = 0;
 }
 
 void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 {
-    bool oldEn  = getRegBitsVal( *m_TWCR, m_TWEN );
-    bool enable = getRegBitsVal( newTWCR, m_TWEN );
+    bool oldEn  = getRegBitsBool( *m_TWCR, m_TWEN );
+    bool enable = getRegBitsBool( newTWCR, m_TWEN );
 
     if( oldEn && !enable )                 /// Disable TWI
     {
@@ -62,20 +61,19 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
     {
         m_sda->setPinMode( open_col );
         m_sda->controlPin( true, true ); // Get control of MCU PIns
-
         m_scl->setPinMode( open_col );
         m_scl->controlPin( true, true );
     }
 
-    bool clearTwint = getRegBitsVal( newTWCR, m_TWINT );
+    bool clearTwint = getRegBitsBool( newTWCR, m_TWINT );
     if( clearTwint )                       /// Writting 1 to TWINT clears the flag
     {
+        m_interrupt->clearFlag();
         m_mcu->m_regOverride = newTWCR & ~m_TWINT.mask; // Clear TWINT flag
     }
 
-    bool oldStop = getRegBitsVal( *m_TWCR, m_TWSTO );
-    bool newStop = getRegBitsVal( newTWCR, m_TWSTO );
-
+    bool oldStop = getRegBitsBool( *m_TWCR, m_TWSTO );
+    bool newStop = getRegBitsBool( newTWCR, m_TWSTO );
     if( newStop && !oldStop )              /// Generate Stop Condition
     {
         if( m_mode == TWI_MASTER ) // Master: Stop if I2C was started
@@ -85,16 +83,16 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         else setMode( TWI_SLAVE ); // Slave: Stop Cond restarts Slave mode (can be used to recover from an error condition)
     }
 
-    bool oldStart = getRegBitsVal( *m_TWCR, m_TWSTA );
-    bool newStart = getRegBitsVal( newTWCR, m_TWSTA );
-
+    bool oldStart = getRegBitsBool( *m_TWCR, m_TWSTA );
+    bool newStart = getRegBitsBool( newTWCR, m_TWSTA );
     /// TODO if Stop and Start at same time, then Start Condition should be sheduled
     if( newStart && !oldStart )            /// Generate Start Condition
     {
         if( m_mode != TWI_MASTER ) setMode( TWI_MASTER );
         masterStart();
     }
-    bool ack = getRegBitsVal( newTWCR, m_TWEA );
+
+    bool ack = getRegBitsBool( newTWCR, m_TWEA );
     bool addrSet = ( m_address != 0b01111111);
     if( addrSet && ack && !clearTwint && !newStop && !newStart )
     {
@@ -110,17 +108,14 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 
         if( (m_twiState == TWI_MRX_ADR_ACK)    // We sent Slave Address + R and received ACK
          || (m_twiState == TWI_MRX_DATA_ACK) ) // We sent data and received ACK
-        {
-            masterRead( ack );  // Read a byte and send ACK/NACK
-        }
+            masterRead( ack );     // Read a byte and send ACK/NACK
     }
     else if( m_mode == TWI_SLAVE )
     {
         bool data = clearTwint && !newStop; // No stop and TWINT cleared, receive data
         if( !data ) return;
         m_sendACK = ack;
-    }
-}
+}   }
 
 void AvrTwi::configureB( uint8_t val ) // TWBR is being written
 {
@@ -139,19 +134,15 @@ void AvrTwi::writeStatus( uint8_t newTWSR ) // TWSR Status Register is being wri
 {
     newTWSR &= 0b00000011;
     uint8_t prescaler = m_prescList[newTWSR];
-    if( m_prescaler != prescaler )
-    {
-        m_prescaler = prescaler;
-        updateFreq();
-    }
-    m_mcu->m_regOverride = newTWSR | (*m_statReg & 0b11111100); // Preserve Status bits
+    if( m_prescaler != prescaler ) { m_prescaler = prescaler; updateFreq(); }
+    /// Done by masking //m_mcu->m_regOverride = newTWSR | (*m_statReg & 0b11111100); // Preserve Status bits
 }
 
 void AvrTwi::writeTwiReg(uint8_t newTWDR ) // TWDR is being written
 {
     if( m_mode != TWI_MASTER ) return;
 
-    bool twint = getRegBitsVal( *m_TWCR, m_TWINT ); // Check if TWINT is set
+    bool twint = getRegBitsBool( *m_TWCR, m_TWINT ); // Check if TWINT is set
     if( !twint )                  // If not, the access will be discarded
     {
         setRegBits( m_TWWC ); // set Write Collision bit TWWC

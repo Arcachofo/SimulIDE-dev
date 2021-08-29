@@ -239,7 +239,7 @@ QStringList RamTable::getVarSet()
         QString name = table->item( row, 1 )->text();
         if( !name.isEmpty() ) empty = false;
         if( empty ) continue;
-        varset.append( name );
+        varset.prepend( name );
     }
     return varset;
 }

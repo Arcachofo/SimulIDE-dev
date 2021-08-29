@@ -48,7 +48,7 @@ class MAINMODULE_EXPORT AvrSpi : public McuSpi
         regBits_t m_MSTR;
         regBits_t m_CPOL;
         regBits_t m_CPHA;
-        regBits_t m_SPIF;
+        //regBits_t m_SPIF;
 };
 
 #endif

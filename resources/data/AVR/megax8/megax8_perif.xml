@@ -2,15 +2,15 @@
 
 <parts>
     <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
-        <interrupt name="PCINT0" />
+        <interrupt name="PCINT0" mask="PCMSK0"/>
     </port>
     
     <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
-        <interrupt name="PCINT1" />
+        <interrupt name="PCINT1" mask="PCMSK1"/>
     </port>
     
     <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
-        <interrupt name="PCINT2" />
+        <interrupt name="PCINT2" mask="PCMSK2"/>
     </port>
     
     <timer name="TIMER0" type="80" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">

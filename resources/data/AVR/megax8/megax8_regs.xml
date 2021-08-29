@@ -148,7 +148,7 @@
                bits="TOIE1,OCIE1A,OCIE1B,0,0,ICIE1,0,0" />
 
     <register  name="TIMSK2"  addr="0x0070"  reset=""  mask="00000111" 
-               bits="TOIE2A,OCIE2A,OCIE2B,0,0,0,0,0" />
+               bits="TOIE2,OCIE2A,OCIE2B,0,0,0,0,0" />
 
     <register  name="ADCL"    addr="0x0078"  reset=""  mask="00000000" 
                bits="ADCL0,ADCL1,ADCL2,ADCL3,ADCL4,ADCL5,ADCL6,ADCL7" />
@@ -209,7 +209,7 @@
     <register  name="TWBR"    addr="0x00B8"  reset=""  mask="" 
                bits="TWBR0,TWBR1,TWBR2,TWBR3,TWBR4,TWBR5,TWBR6,TWBR7" />
 
-    <register  name="TWSR"    addr="0x00B9"  reset="1111100"  mask="00000011" 
+    <register  name="TWSR"    addr="0x00B9"  reset="11111000"  mask="00000011" 
                bits="TWPS0,TWPS1,0,TWS3,TWS4,TWS5,TWS6,TWS7" />
 
     <register  name="TWAR"    addr="0x00BA"  reset="11111110"  mask="" 

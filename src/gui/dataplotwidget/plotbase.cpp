@@ -46,12 +46,10 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
         m_condTo["ch"+n+"h"] = "(ch"+n+"==3)";
         m_condTo["ch"+n+"f"] = "(ch"+n+"==4)";
     }
-
     Simulator::self()->addToUpdateList( this );
 }
 PlotBase::~PlotBase()
 {
-    Simulator::self()->remFromUpdateList( this );
     for( int i=0; i<m_numChannels; i++ ) delete m_channel[i];
 }
 
