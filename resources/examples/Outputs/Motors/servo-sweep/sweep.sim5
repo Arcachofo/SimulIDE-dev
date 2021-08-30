@@ -1,0 +1,25 @@
+<circuit animate="0" type="simulide_0.5" stepSize="1000000" stepsPS="1000000" NLsteps="100000">
+
+Unique  Id: Servo-1: 
+Circuit Id: Servo-1
+<item Input_Imped="1e+9" id="Servo-1" objectName="Servo-1" hflip="1" Unit="  " Input_Low_V="2.5" labely="-24" valLabRot="0" itemtype="Servo" labelx="-16" Tpd_ps="10000" Speed="0.2" labelrot="0" mainComp="false" y="-244" rotation="-90" Show_Val="false" valLabelx="0" Tr_ps="3000" valLabely="0" Out_Low_V="0" Show_id="false" Out_High_V="5" Input_High_V="2.5" x="-356" vflip="1" Tf_ps="4000" Out_Imped="40"/>
+
+Unique  Id: Uno-2: 
+Circuit Id: Arduino Uno-2
+<item id="Arduino Uno-2" objectName="Uno-2" Name="Uno" hflip="1" Unit="  " labely="-20" valLabRot="0" itemtype="Subcircuit" labelx="0" BoardId="" labelrot="0" Logic_Symbol="false" mainComp="false" y="-284" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="true" x="-268" vflip="1">
+  <mainCompProps Program="Sweep.hex" Auto_Load="false" Logic_Symbol="false" Mhz="16" Name="mega328"/>
+ </item>
+
+Unique  Id: Connector-3: 
+Circuit Id: Connector-3
+<item id="Connector-3" objectName="Connector-3" hflip="1" endpinid="Uno-2-9" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-109" labelrot="0" mainComp="false" y="-196" rotation="0" startpinid="Servo-1-in2" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-340,-196,-340,-188,-260,-188" x="-340" vflip="1"/>
+
+Unique  Id: Connector-5: 
+Circuit Id: Connector-4
+<item id="Connector-4" objectName="Connector-5" hflip="1" endpinid="Uno-2-GND2" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-110" labelrot="0" mainComp="false" y="-196" rotation="0" startpinid="Servo-1-in1" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-356,-196,-356,-148,-260,-148" x="-356" vflip="1"/>
+
+Unique  Id: Connector-7: 
+Circuit Id: Connector-5
+<item id="Connector-5" objectName="Connector-7" hflip="1" endpinid="Uno-2-5V0" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-111" labelrot="0" mainComp="false" y="-196" rotation="0" startpinid="Servo-1-in0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-372,-196,-372,-52,-68,-52,-68,-188,-116,-188" x="-372" vflip="1"/>
+ 
+</circuit>

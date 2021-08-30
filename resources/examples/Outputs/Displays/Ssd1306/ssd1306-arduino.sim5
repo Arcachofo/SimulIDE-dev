@@ -1,49 +1,49 @@
-<circuit type="simulide_0.5" stepSize="1000000" animate="1" stepsPS="1000000" NLsteps="100000">
-
-Unique  Id: Ssd1306-2: 
-Circuit Id: Ssd1306-1
-<item x="-644" Show_id="true" rotation="0" hflip="1" itemtype="Ssd1306" Show_Val="false" mainComp="false" Color="2" vflip="1" valLabelx="0" Control_Code="60" labelx="-31" id="Ssd1306-1" valLabely="0" y="-584" Frequency="0" labelrot="0" objectName="Ssd1306-2" valLabRot="0" Unit="  " labely="-61"/>
-
-Unique  Id: Uno-1: 
-Circuit Id: Arduino Uno-4
-<item x="-860" Show_id="true" rotation="0" hflip="1" itemtype="Subcircuit" Name="Uno" Show_Val="false" mainComp="false" Logic_Symbol="false" vflip="1" valLabelx="0" labelx="50" id="Arduino Uno-4" valLabely="0" y="-532" labelrot="0" objectName="Uno-1" valLabRot="0" Unit="  " labely="-18" BoardId="">
-  <mainCompProps Logic_Symbol="false" Name="mega328" Program="ssd1306_128x64_i2c.hex" Mhz="16" Auto_Load="false"/>
- </item>
-
-Unique  Id: Oscope-21: 
-Circuit Id: Oscope-21
-<item x="-596" TimPos="0,0,0,0" Show_id="false" rotation="0" hflip="1" itemtype="Oscope" Conds="" hTick="10000000" Basic_Y="135" Show_Val="false" mainComp="false" VolPos="0,0,0,0" TimeDiv="10000000000" vflip="1" valLabelx="0" labelx="-80" id="Oscope-21" HideCh="false,false,false,false" valLabely="0" y="-444" Tracks="1" Trigger="2" labelrot="0" objectName="Oscope-21" Basic_X="135" VolDiv="1,1,1,1" Filter="0" AutoSC="2" valLabRot="0" Unit="  " labely="-130" Tunnels=",,,"/>
-
-Unique  Id: Node-23: 
-Circuit Id: Node-23
-<item x="-684" Show_id="false" rotation="0" hflip="1" itemtype="Node" Show_Val="false" mainComp="false" vflip="1" valLabelx="0" labelx="-16" id="Node-23" valLabely="0" y="-508" labelrot="0" objectName="Node-23" valLabRot="0" Unit="  " labely="-24"/>
+<circuit animate="1" type="simulide_0.5" stepsPS="1000000" NLsteps="100000" stepSize="1000000">
 
 Unique  Id: Node-25: 
 Circuit Id: Node-25
-<item x="-692" Show_id="false" rotation="0" hflip="1" itemtype="Node" Show_Val="false" mainComp="false" vflip="1" valLabelx="0" labelx="-16" id="Node-25" valLabely="0" y="-516" labelrot="0" objectName="Node-25" valLabRot="0" Unit="  " labely="-24"/>
+<item valLabelx="0" id="Node-25" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" vflip="1" objectName="Node-25" Unit="  " Show_Val="false" labelx="-16" y="-516" itemtype="Node" x="-692" labely="-24" rotation="0" Show_id="false"/>
+
+Unique  Id: Node-23: 
+Circuit Id: Node-23
+<item valLabelx="0" id="Node-23" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" vflip="1" objectName="Node-23" Unit="  " Show_Val="false" labelx="-16" y="-508" itemtype="Node" x="-684" labely="-24" rotation="0" Show_id="false"/>
+
+Unique  Id: Oscope-21: 
+Circuit Id: Oscope-21
+<item valLabelx="0" VolDiv="1,1,1,1" id="Oscope-21" TimeDiv="10000000000" VolPos="0,0,0,0" valLabely="0" labelrot="0" mainComp="false" Basic_X="135" Conds="" valLabRot="0" hflip="1" vflip="1" objectName="Oscope-21" Unit="  " Tunnels=",,," Filter="0" Show_Val="false" labelx="-80" y="-444" Trigger="1" Basic_Y="135" Tracks="2" TimPos="0,0,0,0" itemtype="Oscope" hTick="10000000" x="-596" AutoSC="4" labely="-130" rotation="0" Show_id="false" HideCh="false,false,false,false"/>
+
+Unique  Id: Uno-1: 
+Circuit Id: Arduino Uno-4
+<item valLabelx="0" Name="Uno" id="Arduino Uno-4" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" vflip="1" objectName="Uno-1" BoardId="" Unit="  " Show_Val="false" labelx="50" y="-532" Logic_Symbol="false" itemtype="Subcircuit" x="-860" labely="-18" rotation="0" Show_id="true">
+  <mainCompProps Program="ssd1306_128x64_i2c.hex" Mhz="16" Auto_Load="false" Logic_Symbol="false" Name="mega328"/>
+ </item>
+
+Unique  Id: Ssd1306-2: 
+Circuit Id: Ssd1306-1
+<item valLabelx="0" id="Ssd1306-1" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" Frequency="0" vflip="1" objectName="Ssd1306-2" Control_Code="60" Unit="  " Show_Val="false" labelx="-31" y="-584" itemtype="Ssd1306" Color="2" x="-644" labely="-61" rotation="0" Show_id="true"/>
 
 Unique  Id: Connector-9: 
 Circuit Id: Connector-10
-<item x="-708" Show_id="false" enodeid="enode-26" rotation="0" hflip="1" itemtype="Connector" Show_Val="false" mainComp="false" vflip="1" valLabelx="0" labelx="-16" id="Connector-10" startpinid="Uno-1-A5" valLabely="0" y="-516" endpinid="Node-25-0" labelrot="0" objectName="Connector-9" valLabRot="0" Unit="  " labely="-24" pointList="-708,-516,-692,-516"/>
+<item valLabelx="0" id="Connector-10" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-708,-516,-692,-516" startpinid="Uno-1-A5" vflip="1" objectName="Connector-9" Unit="  " Show_Val="false" labelx="-16" y="-516" enodeid="Circ_eNode-111" itemtype="Connector" x="-708" labely="-24" rotation="0" endpinid="Node-25-0" Show_id="false"/>
 
 Unique  Id: Connector-11: 
 Circuit Id: Connector-11
-<item x="-708" Show_id="false" enodeid="enode-24" rotation="0" hflip="1" itemtype="Connector" Show_Val="false" mainComp="false" vflip="1" valLabelx="0" labelx="-16" id="Connector-11" startpinid="Uno-1-A4" valLabely="0" y="-508" endpinid="Node-23-0" labelrot="0" objectName="Connector-11" valLabRot="0" Unit="  " labely="-24" pointList="-708,-508,-684,-508"/>
+<item valLabelx="0" id="Connector-11" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-708,-508,-684,-508" startpinid="Uno-1-A4" vflip="1" objectName="Connector-11" Unit="  " Show_Val="false" labelx="-16" y="-508" enodeid="Circ_eNode-112" itemtype="Connector" x="-708" labely="-24" rotation="0" endpinid="Node-23-0" Show_id="false"/>
 
 Unique  Id: Connector-22: 
 Circuit Id: Connector-22
-<item x="-684" Show_id="false" enodeid="enode-24" rotation="0" hflip="1" itemtype="Connector" Show_Val="false" mainComp="false" vflip="1" valLabelx="0" labelx="-16" id="Connector-22" startpinid="Oscope-21-Pin0" valLabely="0" y="-492" endpinid="Node-23-1" labelrot="0" objectName="Connector-22" valLabRot="0" Unit="  " labely="-24" pointList="-684,-492,-684,-508"/>
+<item valLabelx="0" id="Connector-22" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-684,-492,-684,-508" startpinid="Oscope-21-Pin0" vflip="1" objectName="Connector-22" Unit="  " Show_Val="false" labelx="-16" y="-492" enodeid="Circ_eNode-112" itemtype="Connector" x="-684" labely="-24" rotation="0" endpinid="Node-23-1" Show_id="false"/>
 
 Unique  Id: Connector-27: 
 Circuit Id: Connector-27
-<item x="-692" Show_id="false" enodeid="enode-26" rotation="0" hflip="1" itemtype="Connector" Show_Val="false" mainComp="false" vflip="1" valLabelx="0" labelx="-16" id="Connector-27" startpinid="Node-25-1" valLabely="0" y="-516" endpinid="Oscope-21-Pin1" labelrot="0" objectName="Connector-27" valLabRot="0" Unit="  " labely="-24" pointList="-692,-516,-692,-460,-684,-460"/>
+<item valLabelx="0" id="Connector-27" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-692,-516,-692,-460,-684,-460" startpinid="Node-25-1" vflip="1" objectName="Connector-27" Unit="  " Show_Val="false" labelx="-16" y="-516" enodeid="Circ_eNode-111" itemtype="Connector" x="-692" labely="-24" rotation="0" endpinid="Oscope-21-Pin1" Show_id="false"/>
 
 Unique  Id: Connector-26: 
 Circuit Id: Connector-26
-<item x="-692" Show_id="false" enodeid="enode-26" rotation="0" hflip="1" itemtype="Connector" Show_Val="false" mainComp="false" vflip="1" valLabelx="0" labelx="-16" id="Connector-26" startpinid="Node-25-2" valLabely="0" y="-516" endpinid="Ssd1306-2-PinSck" labelrot="0" objectName="Connector-26" valLabRot="0" Unit="  " labely="-24" pointList="-692,-516,-692,-536"/>
+<item valLabelx="0" id="Connector-26" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-692,-516,-692,-536" startpinid="Node-25-2" vflip="1" objectName="Connector-26" Unit="  " Show_Val="false" labelx="-16" y="-516" enodeid="Circ_eNode-111" itemtype="Connector" x="-692" labely="-24" rotation="0" endpinid="Ssd1306-2-PinSck" Show_id="false"/>
 
 Unique  Id: Connector-24: 
 Circuit Id: Connector-24
-<item x="-684" Show_id="false" enodeid="enode-24" rotation="0" hflip="1" itemtype="Connector" Show_Val="false" mainComp="false" vflip="1" valLabelx="0" labelx="-16" id="Connector-24" startpinid="Node-23-2" valLabely="0" y="-508" endpinid="Ssd1306-2-PinSda" labelrot="0" objectName="Connector-24" valLabRot="0" Unit="  " labely="-24" pointList="-684,-508,-684,-536"/>
+<item valLabelx="0" id="Connector-24" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-684,-508,-684,-536" startpinid="Node-23-2" vflip="1" objectName="Connector-24" Unit="  " Show_Val="false" labelx="-16" y="-508" enodeid="Circ_eNode-112" itemtype="Connector" x="-684" labely="-24" rotation="0" endpinid="Ssd1306-2-PinSda" Show_id="false"/>
  
 </circuit>

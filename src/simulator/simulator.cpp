@@ -398,8 +398,8 @@ void Simulator::addEvent( uint64_t time, eElement* comp )
 void Simulator::cancelEvents( eElement* comp )
 {
     simEvent_t* event = m_eventList.first;
-    simEvent_t* last  = 0l;
-    simEvent_t* next  = 0l;
+    simEvent_t* last  = NULL;
+    simEvent_t* next  = NULL;
 
     while( event )
     {

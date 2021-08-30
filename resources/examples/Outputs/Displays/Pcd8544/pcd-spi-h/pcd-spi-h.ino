@@ -77,7 +77,7 @@ void setup()   {
 
   display.display(); // show splashscreen
   delay(2000);
-return;
+
   display.clearDisplay();   // clears the screen and buffer
 
   // draw a single pixel

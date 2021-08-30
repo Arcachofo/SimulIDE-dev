@@ -1,0 +1,39 @@
+<circuit animate="0" type="simulide_0.5" stepSize="1000000" stepsPS="1000000" NLsteps="100000">
+
+Unique  Id: Node-11: 
+Circuit Id: Node-11
+<item id="Node-11" objectName="Node-11" hflip="1" Unit="  " labely="-24" valLabRot="0" itemtype="Node" labelx="-16" labelrot="0" mainComp="false" y="-404" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" x="-540" vflip="1"/>
+
+Unique  Id: Ground-3: 
+Circuit Id: Ground-7
+<item id="Ground-7" objectName="Ground-3" hflip="1" Unit="  " labely="8" valLabRot="0" itemtype="Ground" labelx="-16" labelrot="0" mainComp="false" y="-252" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" x="-540" vflip="1"/>
+
+Unique  Id: WaveGen-4: 
+Circuit Id: WaveGen-5
+<item Steps="200" id="WaveGen-5" objectName="WaveGen-4" hflip="1" Wave_Type="0" Unit=" V" Duty="50" labely="-24" valLabRot="0" itemtype="WaveGen" labelx="-64" Voltage="10" Running="true" Always_On="false" labelrot="0" mainComp="false" y="-404" rotation="0" Show_Val="true" valLabelx="-16" Freq="1000" valLabely="8" Volt_Base="-5" Show_id="false" x="-564" vflip="1" Out="true"/>
+
+Unique  Id: AudioOut-5: 
+Circuit Id: AudioOut-4
+<item id="AudioOut-4" objectName="AudioOut-5" hflip="1" Unit="  " Buzzer="false" labely="-36" valLabRot="0" itemtype="AudioOut" labelx="-20" labelrot="0" Impedance="8" mainComp="false" y="-300" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" x="-508" vflip="1"/>
+
+Unique  Id: Oscope-6: 
+Circuit Id: Oscope-10
+<item TimeDiv="200000000" id="Oscope-10" objectName="Oscope-6" hflip="1" Tunnels=",,," VolPos="0,0,0,0" Unit="  " Conds="" Basic_X="135" Tracks="1" Filter="0.3" labely="-80" valLabRot="0" itemtype="Oscope" labelx="-100" Basic_Y="135" hTick="200000" labelrot="0" HideCh="false,false,false,false" mainComp="false" y="-356" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" AutoSC="4" Show_id="false" Trigger="4" TimPos="0,0,0,0" x="-380" vflip="1" VolDiv="1,1,1,1"/>
+
+Unique  Id: Connector-7: 
+Circuit Id: Connector-8
+<item id="Connector-8" objectName="Connector-7" hflip="1" endpinid="AudioOut-5-rPin" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-8" labelrot="0" mainComp="false" y="-268" rotation="0" startpinid="Ground-3-Gnd" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-540,-268,-540,-300,-524,-300" x="-540" vflip="1"/>
+
+Unique  Id: Connector-9: 
+Circuit Id: Connector-9
+<item id="Connector-9" objectName="Connector-9" hflip="1" endpinid="Node-11-0" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="enode-10" labelrot="0" mainComp="false" y="-404" rotation="0" startpinid="WaveGen-4-outnod" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-548,-404,-540,-404" x="-548" vflip="1"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-10
+<item id="Connector-10" objectName="Connector-10" hflip="1" endpinid="Node-11-1" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="enode-10" labelrot="0" mainComp="false" y="-404" rotation="0" startpinid="Oscope-6-Pin0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-468,-404,-540,-404" x="-468" vflip="1"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item id="Connector-12" objectName="Connector-12" hflip="1" endpinid="AudioOut-5-lPin" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="enode-10" labelrot="0" mainComp="false" y="-404" rotation="0" startpinid="Node-11-2" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-540,-404,-540,-308,-524,-308" x="-540" vflip="1"/>
+ 
+</circuit>

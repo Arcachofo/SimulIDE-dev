@@ -1,0 +1,41 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 0.98.<<>> 2021-<<>>-24 (Linux 64 bit) : Build 1005
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: TINY85
+Program Memory: 59/4096 words (1.44%)
+RAM: 4/512 bytes (.78%)
+
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 12
+Compiled Size (words): 44
+Outgoing calls: Delay_MS(2), INITSYS(1)
+
+INITSYS
+Code Size (lines): 837
+Compiled Size (words): 3
+
+Delay_MS
+Code Size (lines): 0
+Compiled Size (words): 12
+
+;********************************************************************************
+

@@ -1,0 +1,15 @@
+<circuit stepSize="1000000" type="simulide_0.5" NLsteps="100000" animate="0" stepsPS="1000000">
+
+Unique  Id: Probe-2: 
+Circuit Id: Probe-2
+<item valLabelx="16" vflip="1" labelrot="45" rotation="-45" mainComp="false" hflip="1" Unit="  V" id="Probe-2" x="-380" Threshold="2.5" y="-324" objectName="Probe-2" labelx="16" labely="-16" itemtype="Probe" Show_Val="true" Show_id="false" valLabRot="45" Show_volt="true" valLabely="0"/>
+
+Unique  Id: tiny85-1: 
+Circuit Id: tiny85-1
+<item varList=",DDRB,PORTB,,MY_BYTE,,MY_WORD" valLabelx="0" vflip="1" labelrot="0" rotation="0" mainComp="false" Name="tiny85" hflip="1" Unit="  " id="tiny85-1" x="-444" Auto_Load="false" eeprom="" y="-340" objectName="tiny85-1" labelx="0" labely="-20" itemtype="MCU" Show_Val="false" Show_id="true" Logic_Symbol="false" valLabRot="0" Mhz="16" Program="gcb_code/tiny-test.hex" valLabely="0"/>
+
+Unique  Id: Connector-3: 
+Circuit Id: Connector-3
+<item valLabelx="0" vflip="1" labelrot="0" rotation="0" mainComp="false" hflip="1" enodeid="enode-3" Unit="  " id="Connector-3" x="-396" pointList="-396,-308,-404,-308" y="-308" objectName="Connector-3" labelx="-16" labely="-24" itemtype="Connector" Show_Val="false" Show_id="false" valLabRot="0" endpinid="tiny85-1-PORTB0" valLabely="0" startpinid="Probe-2-inpin"/>
+ 
+</circuit>
