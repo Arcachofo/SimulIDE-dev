@@ -859,10 +859,11 @@ void McuCreator::createInterrupt( QDomElement* el )
     if( ok ) iv->setPriority( prio );
     else     watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority, mcu );
 
-    if( el->hasAttribute("clear") ) // Clear flag by writting 1 to it
-    {
-        //uint8_t val = el->attribute("clear");
-        watchBitNames( intFlag, R_WRITE, iv, &Interrupt::writeFlag, mcu );
+    if( el->hasAttribute("clear") ) // If clear="1" Clear flag by writting 1 to it
+    {                               // If clear="0" deactivate autoclear
+        uint8_t val = el->attribute("clear").toUInt();
+        if( val ) watchBitNames( intFlag, R_WRITE, iv, &Interrupt::writeFlag, mcu );
+        else iv->m_autoClear = false;
     }
     if( el->hasAttribute("mode") )
     {

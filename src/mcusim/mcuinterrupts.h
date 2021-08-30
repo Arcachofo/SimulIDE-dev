@@ -55,6 +55,8 @@ class MAINMODULE_EXPORT Interrupt
         void callBack( McuModule* mod, bool call );
         void exitCallBack( McuModule* mod, bool call );
 
+        Interrupt* m_nextInt;
+
     protected:
         eMcu* m_mcu;
         uint8_t* m_ram;
@@ -72,8 +74,8 @@ class MAINMODULE_EXPORT Interrupt
         uint16_t m_flagReg;
 
         uint8_t m_priority;
-        uint8_t m_raised;
 
+        bool m_raised;
         bool m_autoClear;
         bool m_remember;
 
@@ -93,11 +95,13 @@ class MAINMODULE_EXPORT Interrupts
 
         void enableGlobal( uint8_t en ) { m_enabled = en; }
         uint8_t enabled() { return m_enabled; }
+
         void runInterrupts();
         void retI();
         void remove();
         void resetInts();
-        void addToPending( uint8_t pri, Interrupt* i );
+        void addToPending( Interrupt* newInt );
+        void remFromPending( Interrupt* remInt );
 
     protected:
         eMcu* m_mcu;
@@ -105,8 +109,9 @@ class MAINMODULE_EXPORT Interrupts
         uint8_t    m_enabled;   // Global Interrupt Flag
         Interrupt* m_active;    // Active interrupt
 
-        std::multimap<uint8_t, Interrupt*> m_running; // Interrups that were interrupted
-        std::multimap<uint8_t, Interrupt*> m_pending; // Interrupts pending to service
+        Interrupt* m_pending;  // First pending Interrupt (linked list)
+        Interrupt* m_running;  // First running Interrupt (linked list)
+
         QHash<QString, Interrupt*> m_intList;         // Access Interrupts by name
 };
 

@@ -42,7 +42,7 @@
     <stack  spreg="SP" increment="preinc" />
     
     <interrupts enable="EA">
-        <interrupt name="RESET"                                         vector="0x0000" />
+        <interrupt name="RESET"                                          vector="0x0000" />
         <interrupt name="EXT_0"   enable="EX0" flag="IE0" priority="PX0" vector="0x0003" mode="IT0"/>
         <interrupt name="T0_OVF"  enable="ET0" flag="TF0" priority="PT0" vector="0x000B" />
         <interrupt name="EXT_1"   enable="EX1" flag="IE1" priority="PX1" vector="0x0013" mode="IT1"/>

@@ -28,6 +28,7 @@ Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
     m_vector = vector;
     m_autoClear = false;
     m_remember = false;
+    m_nextInt = NULL;
 
     m_ram = mcu->getRam();
 }
@@ -36,24 +37,31 @@ Interrupt::~Interrupt(){}
 void Interrupt::reset()
 {
     m_mode   = 0;
-    m_raised = 0;
     m_enabled = 0;
+    m_raised = false;
 }
 
 void Interrupt::enableFlag( uint8_t en )
 {
+    if( m_enabled == en ) return;
     m_enabled = en;
+
     if( en & m_raised && m_remember ) // If not enabled m_remember it until reenabled
-        m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
+        m_interrupts->addToPending( this ); // Add to pending interrupts
+        //m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
 }
 
 void Interrupt::clearFlag()
 {
-    m_ram[m_flagReg] &= ~m_flagMask; // Clear Interrupt flag
+    if( !m_raised ) return;
     m_raised = false;
+
+    m_ram[m_flagReg] &= ~m_flagMask; // Clear Interrupt flag
+
+    m_interrupts->remFromPending( this );
 }
 
-void Interrupt::writeFlag( uint8_t v )
+void Interrupt::writeFlag( uint8_t v ) // Clear flag by writting 1 to it
 {
     if( v & m_flagMask ) clearFlag();
 }
@@ -67,7 +75,8 @@ void Interrupt::raise( uint8_t v )
 
     if( m_enabled )
     {
-        m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
+        m_interrupts->addToPending( this ); // Add to pending interrupts
+        //m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
 
         if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
     }
@@ -109,16 +118,24 @@ Interrupts::Interrupts( eMcu* mcu )
 }
 Interrupts::~Interrupts(){}
 
+void Interrupts::resetInts()
+{
+    m_active  = NULL;
+    m_pending = NULL;
+    m_running = NULL;
+
+    for( QString  inte : m_intList.keys() ) m_intList.value( inte )->reset();
+}
+
 void Interrupts::retI()
 {
     m_active->exitInt();
 
-    if( m_running.size() ) // Some interrupt was interrupted by this one
+    if( m_running ) // Some interrupt was interrupted by this one
     {
-        auto it = prev( m_running.end() );
-        //m_active = it->second;   // Set interrupted Interrupt as active
-        m_running.erase( it );   // Remove current Interrupt from running list
-        m_pending.emplace( m_active->priority(), m_active ); // Add to pending Interrupts
+        Interrupt* running = m_running;
+        m_running = m_running->m_nextInt;   // Remove from running list
+        addToPending( running );            // Add to pending Interrupts
     }
     //else
         m_active = NULL;
@@ -138,39 +155,18 @@ void Interrupts::runInterrupts()
         m_enabled -= 1;
         return;
     }
-    if( m_pending.size() == 0 ) return; // No Interrupts to run
-
-    auto itt=m_pending.end();
-    for( uint i=0; i<m_pending.size(); ++i )
+    if( !m_pending ) return; // No Interrupts pending to execute;
+    if( m_active ) // An interrupt is running,
     {
-        auto it=prev(itt);
-        Interrupt* interrupt = it->second;
-
-        if( !interrupt->enabled() || !interrupt->raised() )
+        if( m_pending->priority() > m_active->priority() )// Only interrupt other Interrupts with lower priority
         {
-            m_pending.erase( it ); // Remove Interrupt from pending list
+            m_active->m_nextInt = m_running;
+            m_running = m_active;            // An interrupt being interrupted, add to running list.
         }
-        else if( interrupt->raised() )
-        {
-            uint8_t priority = it->first;
-            if( m_active ) // Only interrupt other Interrupts with lower priority
-            {
-                if( priority <= m_active->priority() ) return;
-                m_running.emplace( m_active->priority(), m_active ); // An interrupt being interrupted, add to running list.
-            }
-            m_pending.erase( it ); // Remove Interrupt from pending list
-            interrupt->execute();
-            m_active = interrupt;
-            return;
-}   }   }
-
-void Interrupts::resetInts()
-{
-    m_active = NULL;
-    m_pending.clear();
-    m_running.clear();
-
-    for( QString  inte : m_intList.keys() ) m_intList.value( inte )->reset();
+        else return;
+    }
+    m_pending->execute();
+    m_active = m_pending;
 }
 
 void Interrupts::remove()
@@ -178,11 +174,41 @@ void Interrupts::remove()
     for( QString  inte : m_intList.keys() ) delete m_intList.value( inte );
 }
 
-void Interrupts::addToPending( uint8_t pri, Interrupt* i )
+void Interrupts::addToPending( Interrupt* newInt )
 {
-    /// Interrupt are stored in std::multimap
-    /// by priority order, highest at end
-    m_pending.emplace( pri, i );
+    Interrupt* preInt = NULL;
+    Interrupt* posInt = m_pending;
+    while( posInt )
+    {
+        if( posInt == newInt ) // Interrupt already in the list
+        {
+            return; // ERROR
+        }
+        if( newInt->priority() <= posInt->priority() )  // High priority first & last In, las Out
+        {                                               // Keep iterating
+            preInt = posInt;
+            posInt = posInt->m_nextInt;
+        }
+        else break;
+    }
+    newInt->m_nextInt = posInt;
+    if( preInt ) preInt->m_nextInt = newInt;
+    if( !posInt ) m_pending = newInt;
 }
 
-
+void Interrupts::remFromPending( Interrupt* remInt )
+{
+    Interrupt* preInt = NULL;
+    Interrupt* posInt = m_pending;
+    while( posInt )
+    {
+        if( posInt == remInt )
+        {
+            if( preInt ) preInt->m_nextInt = posInt->m_nextInt;
+            else         m_pending = posInt->m_nextInt;
+            break;
+        }
+        preInt = posInt;
+        posInt= posInt->m_nextInt;
+    }
+}
