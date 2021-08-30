@@ -29,7 +29,7 @@ class PicAsmDebugger : public BaseDebugger
         PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~PicAsmDebugger();
 
-        int  compile();
-        void mapFlashToSource();
+        virtual int compile( bool ) override;
+        virtual void mapFlashToSource() override;
 };
 #endif

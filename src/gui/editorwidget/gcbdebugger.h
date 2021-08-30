@@ -29,7 +29,7 @@ class GcbDebugger : public BaseDebugger
         GcbDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~GcbDebugger();
 
-        void mapFlashToSource();
+        virtual void mapFlashToSource() override;
         
     protected:
         virtual void getSubs();

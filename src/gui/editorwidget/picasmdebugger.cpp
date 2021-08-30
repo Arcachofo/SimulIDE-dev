@@ -36,7 +36,7 @@ PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QStri
 }
 PicAsmDebugger::~PicAsmDebugger() {}
 
-int PicAsmDebugger::compile()
+int PicAsmDebugger::compile( bool )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
     

@@ -34,7 +34,7 @@ class AvrAsmDebugger : public BaseDebugger
         QString avraIncPath()  { return m_avraIncPath; }
         void    setAvraIncPath( QString path );
 
-        void mapFlashToSource();
+        virtual void mapFlashToSource() override;
         
     private:
         QString m_avraIncPath;    // path to avra includes

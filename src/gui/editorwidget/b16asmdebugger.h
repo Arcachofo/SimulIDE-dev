@@ -30,8 +30,8 @@ class B16AsmDebugger : public BaseDebugger
         B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~B16AsmDebugger();
         
-        int  compile();
-        void mapFlashToSource();
+        virtual int compile( bool ) override;
+        virtual void mapFlashToSource() override;
         
     private:
         void loadCodes();

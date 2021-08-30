@@ -41,7 +41,7 @@ B16AsmDebugger::B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane, QStri
 }
 B16AsmDebugger::~B16AsmDebugger() {}
 
-int B16AsmDebugger::compile()
+int B16AsmDebugger::compile( bool )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
     
