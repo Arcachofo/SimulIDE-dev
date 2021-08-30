@@ -70,11 +70,10 @@ bool InoDebugger::upload()
         circuitDir.remove( m_fileName+".hex" );
         QFile::copy( firmPath, m_firmware );
     }
-    m_firmware = firmPath;
     return BaseDebugger::upload();
 }
 
-int InoDebugger::compile()
+int InoDebugger::compile( bool )
 {
     QString builder = "arduino-builder";
     #ifndef Q_OS_UNIX

@@ -48,11 +48,10 @@ class InoDebugger : public BaseDebugger
         board_t board() { return m_board; }
         void setBoard( board_t b ){ m_board = b; }
 
-        int compile();
-        void mapFlashToSource();
-        
-        virtual bool upload();
-        
+        virtual bool upload() override;
+        virtual int  compile( bool debug ) override;
+        virtual void mapFlashToSource() override;
+
     protected:
         void getVariables();
         
