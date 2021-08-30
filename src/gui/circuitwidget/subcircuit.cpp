@@ -107,25 +107,27 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
                 {
                     path = folder+"/"+m_name+"/"+m_name;
                     m_pkgeFile = dataDir.filePath( path+".package" );
-                    subcFile = dataDir.filePath( path+".simu" );
+                    subcFile = dataDir.filePath( path+".sim5" );
                 }
                 if( element.hasAttribute( "folder") )
                 {
                     path = element.attribute( "folder" )+"/"+m_name+"/"+m_name;
                     m_pkgeFile = dataDir.filePath( path+".package" );
-                    subcFile = dataDir.filePath( path+".simu" );
+                    subcFile = dataDir.filePath( path+".sim5" );
                 }
+
                 if( element.hasAttribute( "package") )
                     m_pkgeFile = dataDir.filePath( element.attribute( "package" ) );
 
                 if( !m_pkgeFile.endsWith( ".package" ) ) m_pkgeFile += ".package" ;
                 
                 if( element.hasAttribute( "subcircuit") )
+                {
                     subcFile = dataDir.filePath( element.attribute( "subcircuit" ) );
-
-                if( !subcFile.endsWith( ".simu" ) ) subcFile += ".simu" ;
-
-                if( !QFile::exists(subcFile) ) subcFile = subcFile.replace(".simu", ".sim5");
+                    if( subcFile.endsWith( ".simu" ) ) subcFile.replace(".simu", ".sim5");
+                    if( !subcFile.endsWith( ".sim5" )) subcFile += ".sim5" ;
+                }
+                if( !QFile::exists( subcFile) ) subcFile = subcFile.replace(".sim5", ".simu");
 
                 loadSubCircuit( subcFile );
 
