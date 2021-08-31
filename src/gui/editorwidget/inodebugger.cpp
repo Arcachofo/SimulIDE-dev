@@ -60,7 +60,7 @@ InoDebugger::~InoDebugger() {}
 
 bool InoDebugger::upload()
 {
-    QString circDir = Circuit::self()->getFileName();
+    QString circDir = Circuit::self()->getFilePath();
     QString firmPath =  m_firmware;
     
     if( circDir != "" ) // Copy hex file to Circuit folder

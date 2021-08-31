@@ -499,7 +499,7 @@ void SubPackage::setLogicSymbol( bool ls )
 
 void SubPackage::slotSave()
 {
-    QDir pdir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    QDir pdir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString pkgeFile = pdir.absoluteFilePath( m_pkgeFile );
 
     const QString dir = pkgeFile;
@@ -543,7 +543,7 @@ void SubPackage::loadPackage()
 
     if( m_lastPkg == "" )
     {
-        pkgDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+        pkgDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
         dir = pkgDir.absoluteFilePath( m_pkgeFile );
     }else{
         pkgDir = QFileInfo( m_lastPkg ).absoluteDir();
@@ -555,7 +555,7 @@ void SubPackage::loadPackage()
     if( fileName.isEmpty() ) return; // User cancels loading
     setPackage( fileName );
 
-    QDir pdir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    QDir pdir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     m_pkgeFile = pdir.relativeFilePath( fileName );
     m_lastPkg = fileName;
 }
@@ -600,7 +600,7 @@ void SubPackage::savePackage( QString fileName )
     file.close();
     QApplication::restoreOverrideCursor();
 
-    QDir dir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    QDir dir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
 
     m_pkgeFile = dir.relativeFilePath( fileName );
     m_lastPkg = fileName;

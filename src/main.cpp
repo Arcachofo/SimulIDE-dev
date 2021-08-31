@@ -108,7 +108,8 @@ int main(int argc, char *argv[])
     if( argc > 1 )
     {
         QString circ = QString::fromStdString( argv[1] );
-        if( circ.endsWith( ".simu" )) CircuitWidget::self()->loadCirc( circ );
+        if( circ.endsWith(".simu")
+         || circ.endsWith(".sim5") ) CircuitWidget::self()->loadCirc( circ );
         //qDebug() << "MAIN, circuit 0 "<< circ;
     }
     

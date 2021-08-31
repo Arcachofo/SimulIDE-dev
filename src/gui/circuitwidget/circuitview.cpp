@@ -296,8 +296,7 @@ void CircuitView::slotPaste()
 
 void CircuitView::saveImage()
 {
-    QString circPath = Circuit::self()->getFileName();
-    circPath.replace( ".simu", ".png" );
+    QString circPath = changeExt( Circuit::self()->getFilePath(), ".png" );
     
     QString fileName = QFileDialog::getSaveFileName( this
                             , tr( "Save as Image" )

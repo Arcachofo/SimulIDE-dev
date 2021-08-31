@@ -322,11 +322,7 @@ void CircuitWidget::saveCirc( QString file )
 {
     emit saving(); // Used by SubPackage
 
-    if( file.endsWith(".simu") )
-    {
-        file.remove( file.size()-4, 4 );
-        file.append("sim5");
-    }
+    if     (  file.endsWith(".simu") ) file = changeExt( file, ".sim5" );
     else if( !file.endsWith(".sim5") ) file.append(".sim5");
 
     if( Circuit::self()->saveCircuit( file ) )
@@ -475,7 +471,7 @@ void CircuitWidget::updateRecentFileActions()
 
     for( int i=0; i<numRecentFiles; i++ )
     {
-        QString text = tr("&%1 %2").arg(i + 1).arg( strippedName( files[i] ) );
+        QString text = tr("&%1 %2").arg(i + 1).arg( getFileName( files[i] ) );
         recentFileActs[i]->setText(text);
         recentFileActs[i]->setData( files[i] );
         recentFileActs[i]->setVisible( true );

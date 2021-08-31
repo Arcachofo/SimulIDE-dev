@@ -84,7 +84,7 @@ void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 void Image::slotLoad()
 {
     QString fil = m_BackGround;
-    if( fil.isEmpty() ) fil = Circuit::self()->getFileName();
+    if( fil.isEmpty() ) fil = Circuit::self()->getFilePath();
 
     const QString dir = fil;
 
@@ -106,7 +106,7 @@ void Image::setBackground( QString bck )
 {
     if( bck.isEmpty() ) return;
 
-    QDir circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString absPath = circuitDir.absoluteFilePath( bck );
 
     if( bck.endsWith(".gif") )
@@ -144,7 +144,7 @@ void Image::setBackground( QString bck )
 
 QString Image::background()
 {
-    QDir circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
 
     return circuitDir.relativeFilePath( m_BackGround );
 }

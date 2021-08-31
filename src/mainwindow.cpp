@@ -97,7 +97,6 @@ void MainWindow::closeEvent( QCloseEvent *event )
     if( !m_circuit->newCircuit()) { event->ignore(); return; }
     
     writeSettings();
-    
     event->accept();
 }
 

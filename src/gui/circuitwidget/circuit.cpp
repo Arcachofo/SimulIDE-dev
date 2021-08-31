@@ -645,7 +645,8 @@ void Circuit::importCirc(  QPointF eventpoint  )
     QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Circuit"), dir,
                                           tr("Circuits (*.sim*);;All files (*.*)"));
 
-    if( !fileName.isEmpty() && fileName.endsWith(".simu") )
+    if( !fileName.isEmpty()
+     && (fileName.endsWith(".simu") || fileName.endsWith(".sim5")) )
         loadCircuit( fileName );
 
     m_pasting = false;
@@ -659,7 +660,6 @@ Component* Circuit::createItem( QString type, QString id )
         if( !(libItem->type()==type) ) continue;
 
         comp = libItem->createItemFnPtr()( this, type, id );
-
         if( comp )
         {
             QString category = libItem->category();
@@ -927,8 +927,7 @@ void Circuit::bom()
 {
     if( m_conStarted ) return;
 
-    QString fileName = m_filePath;
-    fileName.replace( fileName.lastIndexOf( ".simu" ), 5, "-bom.txt" );
+    QString fileName = changeExt( m_filePath, "-bom.txt" );
 
     fileName = QFileDialog::getSaveFileName( MainWindow::self()
                             , tr( "Bill Of Materials" )

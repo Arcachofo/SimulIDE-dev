@@ -55,9 +55,7 @@ void MemData::loadData( QVector<int>* toData, bool resize, int bits )
 {
      Simulator::self()->pauseSim();
 
-    QString dir = Circuit::self()->getFileName();
-    dir.replace( ".simu", ".data" );
-
+    QString dir = changeExt( Circuit::self()->getFilePath(), ".data" );
     QString fileName = QFileDialog::getOpenFileName( 0l,
                                                     "MemData::loadData", dir,
                        QCoreApplication::translate( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
@@ -136,8 +134,7 @@ void MemData::saveData( QVector<int>* data, int bits )
 {
      Simulator::self()->pauseSim();
 
-    QString dir = Circuit::self()->getFileName();
-    dir.replace( ".simu", ".data" );
+    QString dir = changeExt( Circuit::self()->getFilePath(), ".data" );
 
     QString fileName = QFileDialog::getSaveFileName( 0l,
                        QCoreApplication::translate( "MemData", "Save Data" ), dir,
@@ -177,10 +174,8 @@ void MemData::saveData( QVector<int>* data, int bits )
         {
               QMessageBox::warning(0l, "MemData::saveData",
               QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
-        }
-        else{
-            for( int val : *data )
-            {
+        }else{
+            for( int val : *data ){
                 for( int by=0; by<bytes; by++ ) // Separate bytes little-endian
                 {
                     char byte = val & 0xFF;

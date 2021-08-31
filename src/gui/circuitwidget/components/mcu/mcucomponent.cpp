@@ -379,7 +379,7 @@ bool McuComponent::load( QString fileName )
     bool ok = false;
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
-    else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString fileNameAbs = circuitDir.absoluteFilePath( fileName );
     QString cleanPathAbs = circuitDir.cleanPath( fileNameAbs );
 
@@ -423,7 +423,7 @@ void McuComponent::setProgram( QString pro )
 
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
-    else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString fileNameAbs = circuitDir.absoluteFilePath( m_symbolFile );
 
     if( QFileInfo::exists( fileNameAbs ) ) load( m_symbolFile );// Load firmware at circuit load

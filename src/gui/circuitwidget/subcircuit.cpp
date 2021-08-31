@@ -124,10 +124,10 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
                 if( element.hasAttribute( "subcircuit") )
                 {
                     subcFile = dataDir.filePath( element.attribute( "subcircuit" ) );
-                    if( subcFile.endsWith( ".simu" ) ) subcFile.replace(".simu", ".sim5");
+                    if( subcFile.endsWith( ".simu" ) ) subcFile= changeExt( subcFile, ".sim5" );
                     if( !subcFile.endsWith( ".sim5" )) subcFile += ".sim5" ;
                 }
-                if( !QFile::exists( subcFile) ) subcFile = subcFile.replace(".sim5", ".simu");
+                if( !QFile::exists( subcFile) ) subcFile = changeExt( subcFile, ".simu" );
 
                 loadSubCircuit( subcFile );
 

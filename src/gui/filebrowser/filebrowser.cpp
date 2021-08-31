@@ -70,13 +70,9 @@ void FileBrowser::openInEditor()
 void FileBrowser::open()
 {
     QString path = m_fileSystemModel->filePath( currentIndex() );
-    
     if( path.isEmpty() ) return;
     
-    if( m_fileSystemModel->isDir( currentIndex() ) )
-    {
-        setPath( path );
-    }
+    if( m_fileSystemModel->isDir( currentIndex() ) ) setPath( path );
     else  
     {
         if( path.endsWith(".simu")
@@ -128,16 +124,13 @@ void FileBrowser::contextMenuEvent( QContextMenuEvent* event )
                      this,              SLOT(   addBookMark() ), Qt::UniqueConnection );
                      
             menu.addSeparator();
-        }
-        else
-        {
+        }else{
             QAction* openWithEditor = menu.addAction(QIcon(":/open.png"),tr("Open in editor"));
             connect( openWithEditor, SIGNAL( triggered()), 
                      this,           SLOT(   openInEditor()), Qt::UniqueConnection );
                      
             menu.addSeparator();
         }
-        
         QAction* showHidden = menu.addAction( tr("Show Hidden"));
         showHidden->setCheckable( true );
         showHidden->setChecked( m_showHidden );

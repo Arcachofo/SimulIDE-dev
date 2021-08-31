@@ -128,7 +128,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_lastFirmDir = settings->value("lastFirmDir").toString();
 
     QDir dir( m_lastFirmDir );
-    if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFileName();
+    if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFilePath();
 
     m_subcDir = "";
 
@@ -158,7 +158,7 @@ void Mcu::setProgram( QString pro )
 
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
-    else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString fileNameAbs = circuitDir.absoluteFilePath( m_eMcu.m_firmware );
 
     if( QFileInfo::exists( fileNameAbs ) )
@@ -239,7 +239,7 @@ void Mcu::reset()
 void Mcu::slotLoad()
 {
     QDir dir( m_lastFirmDir );
-    if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFileName();
+    if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFilePath();
 
     QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Firmware"), m_lastFirmDir,
                        tr("All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)"));
@@ -259,7 +259,7 @@ bool Mcu::load( QString fileName )
 {
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
-    else circuitDir = QFileInfo( Circuit::self()->getFileName() ).absoluteDir();
+    else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString fileNameAbs  = circuitDir.absoluteFilePath( fileName );
     QString cleanPathAbs = circuitDir.cleanPath( fileNameAbs );
 

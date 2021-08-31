@@ -48,7 +48,7 @@ Scripted::Scripted( QObject* parent, QString type, QString id )
 {
     Q_UNUSED( Scripted_properties );
 
-    m_lastDir = Circuit::self()->getFileName();
+    m_lastDir = Circuit::self()->getFilePath();
     
     m_width = 4;
     setNumInps( 2 );                           // Create Input Pins

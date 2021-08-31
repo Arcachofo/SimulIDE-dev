@@ -97,7 +97,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void updatePin( ePin* epin, QString newId );
         void removePin( QString pinId ) { m_pinMap.remove( pinId ); }
 
-        const QString getFileName() const { return m_filePath; }
+        const QString getFilePath() const { return m_filePath; }
 
         QString circType() { return m_circType; }
 

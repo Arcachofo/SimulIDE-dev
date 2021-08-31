@@ -45,9 +45,25 @@ QString addQuotes( const QString &string )
     return "\""+string+"\"";
 }
 
-QString strippedName( const QString &fullFileName )
+QString getBareName( const QString &filepath ) // File name without extension
 {
-    return QFileInfo(fullFileName).fileName();
+    return QFileInfo( filepath ).completeBaseName();
+}
+QString getFileName( const QString &filepath ) // Filename with extension
+{
+    return QFileInfo( filepath ).fileName();
+}
+QString getFileDir( const QString &filepath ) // File directory with end "/"
+{
+    return QFileInfo( filepath ).absolutePath()+"/";
+}
+QString getFileExt( const QString &filepath ) // File extension with "."
+{
+    return "."+QFileInfo( filepath ).suffix();
+}
+QString changeExt( const QString &filepath, const QString &ext )
+{
+    return getFileDir( filepath )+getBareName( filepath )+ext;
 }
 
 QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
