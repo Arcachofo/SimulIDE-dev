@@ -335,7 +335,9 @@ void CircuitWidget::saveCirc( QString file )
         m_lastCircDir = file;
         MainWindow::self()->setTitle(file.split("/").last());
         MainWindow::self()->settings()->setValue( "lastCircDir", m_lastCircDir );
-}   }
+    }
+    else qDebug() << "\nError Saving Circuit:\n" << file;
+}
 
 void CircuitWidget::powerCirc()
 {

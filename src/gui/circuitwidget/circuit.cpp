@@ -69,9 +69,10 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView*  p
     m_conStarted = false;
     m_saveBoard  = false;
 
-    new_connector = 0l;
+    new_connector = NULL;
     m_seqNumber   = 0;
-    
+    m_backupPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim5";
+
     m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
     m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
     m_filePath   = qApp->applicationDirPath()+"/new.simu";
@@ -92,12 +93,10 @@ Circuit::~Circuit()
     m_undoStack.clear();
     m_redoStack.clear();
 
-    if( !m_backupPath.isEmpty() )
-    {
-        QFile file( m_backupPath );
-        if( !file.exists() ) return;
-        QFile::remove( m_backupPath ); // Remove backup file
-}   }
+    QFile file( m_backupPath );
+    if( !file.exists() ) return;
+    QFile::remove( m_backupPath ); // Remove backup file
+}
 
 Component* Circuit::getComponent( QString name )
 {
@@ -623,11 +622,10 @@ bool Circuit::saveCircuit( QString fileName )
 
     if( saved )
     {
-        if( !m_backupPath.isEmpty() )
-        {
-            QFile::remove( m_backupPath ); // remove backup file
-            m_backupPath = "";
-    }   }
+        qDebug() << "\nCircuit Saved: \n" << fileName;
+        QFile file( m_backupPath );
+        if( file.exists() ) QFile::remove( m_backupPath ); // Remove backup file
+    }
     else m_filePath = oldFilePath;
 
     m_saveBoard  = false;
@@ -776,18 +774,8 @@ void Circuit::saveChanges()
     m_changed = false;
 
     circuitToDom();
-    m_backupPath = m_filePath;
 
-    QFileInfo bckDir( m_backupPath );
-
-    if( !bckDir.isWritable() )
-        m_backupPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/_backup.simu";
-
-    if( !m_backupPath.endsWith( "_backup.simu" ))
-        m_backupPath.replace( ".simu", "_backup.simu" );
-
-    if( saveDom( m_backupPath, &m_domDoc ) )
-        MainWindow::self()->settings()->setValue( "backupPath", m_backupPath );
+    saveDom( m_backupPath, &m_domDoc ); // Backup file
 }
 
 void Circuit::undo()

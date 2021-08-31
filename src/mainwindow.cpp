@@ -77,20 +77,16 @@ MainWindow::MainWindow()
     loadPlugins();
     applyStyle();
 
-    QString backPath = m_settings.value( "backupPath" ).toString();
-    if( !backPath.isEmpty() )
+    QString backPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim5";
+    if( QFile::exists( backPath ) )
     {
-        if( QFile::exists( backPath ) )
-        {
-            Circuit::self()->setBackupPath( backPath );
-            CircuitWidget::self()->loadCirc( backPath );
+        CircuitWidget::self()->loadCirc( backPath );
 
-           QMessageBox::warning( 0l, "Auto-saved File",
-                          tr("Looks like SimulIDE crashed...\n\n")
-                         +tr("This is the last auto-saved copy of the Circuit\n")
-                         +tr("You must save it with any other name if you want to keep it\n\n")
-                         +tr("This file will be auto-deleted!!" ));
-        }
+       QMessageBox::warning( 0l, "Auto-saved File",
+                      tr("Looks like SimulIDE crashed...\n\n")
+                     +tr("This is the last auto-saved copy of the Circuit\n")
+                     +tr("You must save it with any other name if you want to keep it\n\n")
+                     +tr("This file will be auto-deleted!!" ));
     }
 }
 MainWindow::~MainWindow(){ }
