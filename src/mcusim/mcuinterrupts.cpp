@@ -124,7 +124,7 @@ void Interrupts::resetInts()
     m_pending = NULL;
     m_running = NULL;
 
-    for( QString  inte : m_intList.keys() ) m_intList.value( inte )->reset();
+    for( QString inte : m_intList.keys() ) m_intList.value( inte )->reset();
 }
 
 void Interrupts::retI()
@@ -137,8 +137,7 @@ void Interrupts::retI()
         m_running = m_running->m_nextInt;   // Remove from running list
         addToPending( running );            // Add to pending Interrupts
     }
-    //else
-        m_active = NULL;
+    m_active = NULL;
 }
 
 /*void Interrupts::enableGlobal( uint8_t en )

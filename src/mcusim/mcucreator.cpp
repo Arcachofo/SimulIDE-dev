@@ -856,6 +856,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     QString intPrio = el->attribute("priority");
     bool ok = false;
     uint8_t prio = intPrio.toUInt(&ok,0);
+
     if( ok ) iv->setPriority( prio );
     else     watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority, mcu );
 

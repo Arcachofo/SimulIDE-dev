@@ -33,6 +33,8 @@ class CallBackBase
 
         virtual void call( uint8_t ){;}
 
+        CallBackBase* nextCallBack;
+
     private:
         uint8_t m_mask;
 };
@@ -48,6 +50,7 @@ class CallBack : public CallBackBase
         {
             m_object = object;
             m_func = func;
+            nextCallBack = NULL;
         }
         ~CallBack() {;}
 
@@ -62,40 +65,64 @@ class CallBack : public CallBackBase
 class McuSignal
 {
     public:
-        McuSignal(){;}
+        McuSignal()
+        {
+            m_slot = NULL;
+        }
         ~McuSignal()
         {
-            for( CallBackBase* slot : m_slots ) { delete slot; }
-        }
+            CallBackBase* slot = m_slot;
+            while( slot ) // delete slots
+            {
+                CallBackBase* slotDel = slot;
+                slot = slot->nextCallBack;
+                delete slotDel;
+        }   }
 
         template <class Obj>
         void connect( Obj* obj, void (Obj::*func)(uint8_t), uint8_t mask=0xFF )
         {
             CallBack<Obj>* slot = new CallBack<Obj>( obj, func );
             slot->m_mask = mask;
-            m_slots.emplace_back( slot );
+
+            // New slots are prepended (LIFO)
+            // This means Interrupt flag clearing after register write callback
+            // Because Interrupts are created first
+            slot->nextCallBack = m_slot;
+            m_slot = slot;
         }
 
         template <class Obj>
         void disconnect( Obj* obj, void (Obj::*func)(uint8_t) )
         {
-            for( unsigned i=0; i<m_slots.size(); ++i )
+            CallBackBase* preSlot = NULL;
+            CallBackBase* posSlot = m_slot;
+            while( posSlot )
             {
-                CallBack<Obj>* cb = dynamic_cast<CallBack<Obj>*>(m_slots[i]);
+                CallBack<Obj>* cb = dynamic_cast<CallBack<Obj>*>(posSlot);
+
                 if( (cb->m_object == obj) && (cb->m_func == func))
                 {
-                    delete m_slots[i];
-                    m_slots.erase( m_slots.begin()+i );
+                    if( preSlot ) preSlot->nextCallBack = posSlot->nextCallBack;
+                    else          m_slot = posSlot->nextCallBack;
+                    delete posSlot;
                     break;
-        }   }   }
+                }
+                preSlot = posSlot;
+                posSlot= posSlot->nextCallBack;
+        }   }
 
         void emitValue( uint8_t val ) // Calls all connected functions with masked val.
         {
-            for( unsigned i=0; i<m_slots.size(); ++i ) { m_slots[i]->call( val & m_slots[i]->m_mask ); }
-        }
+            CallBackBase* slot = m_slot;
+            while( slot )
+            {
+                slot->call( val & slot->m_mask );
+                slot = slot->nextCallBack;
+        }   }
 
     private:
-        std::vector<CallBackBase*> m_slots;
+        CallBackBase* m_slot;
 };
 
 #endif
