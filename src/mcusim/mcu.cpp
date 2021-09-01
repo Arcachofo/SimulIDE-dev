@@ -56,10 +56,10 @@ Component* Mcu::construct( QObject* parent, QString type, QString id )
 
     if( m_error > 0 )
     {
-        //Circuit::self()->removeComp( mcu );
+        Circuit::self()->removeComp( mcu );
         mcu = NULL;
+        m_pSelf = NULL;
         m_error = 0;
-        //m_pSelf = 0l;
     }
     return mcu;
 }

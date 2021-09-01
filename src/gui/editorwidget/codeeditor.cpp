@@ -367,7 +367,7 @@ bool CodeEditor::initDebbuger()
     }
     else
     {
-        compile();
+        compile( true );
         if( !m_isCompiled )                           // Error compiling
         {
             m_outPane->appendLine( "\n    "+tr("Error Compiling... ")+"\n" );

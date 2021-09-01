@@ -82,9 +82,9 @@ void Chip::initChip()
     }
 
     QDomDocument domDoc = fileToDomDoc( fileNameAbs, "Chip::initChip" );
-    if( domDoc.isNull() ) { m_error = 1; return; }
+    QDomElement   root  = domDoc.documentElement();
 
-    QDomElement root  = domDoc.documentElement();
+    if( !root.hasChildNodes() ) { m_error = 1; return; }
 
     if(( root.tagName() == "package" )
     || ( root.tagName() == "packageB" ))

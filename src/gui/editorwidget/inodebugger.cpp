@@ -115,22 +115,22 @@ int InoDebugger::compile( bool )
         QStringList wordList= line.split( " " );
         wordList.removeAll( "" );
 
-        if( !wordList.isEmpty())
-        {
-            QString type = wordList.takeFirst();
-            if( type == "unsigned" ) type = "u"+wordList.takeFirst();
+        if( wordList.isEmpty() ) continue;
 
-            if( m_typesList.contains( type ) )
-                for( QString word : wordList )
+        QString type = wordList.takeFirst();
+        if( type == "unsigned" ) type = "u"+wordList.takeFirst();
+
+        if( m_typesList.contains( type ) )
+            for( QString word : wordList )
+        {
+            for( QString varName : word.split(",") )
             {
-                for( QString varName : word.split(",") )
-                {
-                    if( varName.isEmpty() ) continue;
-                    varName.remove(" ");
-                    if( !m_varList.contains( varName ) )
-                        m_varList[ varName ] = m_typesList[ type ];
-                    //qDebug() << "InoDebugger::compile  variable "<<type<<varName<<m_typesList[ type ];
-    }   }   }   }
+                if( varName.isEmpty() ) continue;
+                varName.remove(" ");
+                if( !m_varList.contains( varName ) )
+                    m_varList[ varName ] = m_typesList[ type ];
+                //qDebug() << "InoDebugger::compile  variable "<<type<<varName<<m_typesList[ type ];
+    }   }   }
     QString command  = m_compilerPath+"arduino";
 
     if( m_sketchBook.isEmpty() )

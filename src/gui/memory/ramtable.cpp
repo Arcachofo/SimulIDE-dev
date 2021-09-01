@@ -145,10 +145,8 @@ void RamTable::RegDoubleClick(const QModelIndex& index)
 void RamTable::setStatusBits( QStringList statusBits )
 {
     for( int i=7; i>=0; --i )
-    {
-        //qDebug()<<"RamTable::setStatusBits"<<i<<statusBits.at( i );
         m_status.item( 0, i )->setText( statusBits.takeFirst() );
-}   }
+}
 
 void RamTable::slotContextMenu( const QPoint& point )
 {
@@ -217,7 +215,6 @@ void RamTable::loadVarSet( QStringList varSet )
         m_loadingVars = true;
         table->setCurrentCell( 0, 1 ); // Loading varset
     }
-
     int row = table->currentRow()-1;
     for( QString var : varSet )
     {
@@ -316,8 +313,7 @@ void RamTable::addToWatch( QTableWidgetItem* it )
         table->item( _row, 2 )->setText("---");
         table->item( _row, 3 )->setText("---");
         table->item( _row, 4 )->setText("---");
-    }
-    else{
+    }else{
         int addr = m_processor->getRegAddress( name );
         if( addr == 65535 )
         {

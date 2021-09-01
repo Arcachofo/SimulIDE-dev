@@ -80,20 +80,18 @@ QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
     if( !file.open( QFile::ReadOnly | QFile::Text) )
     {
         MessageBoxNB( caller, "Cannot read file:\n"+fileName+":\n"+file.errorString() );
-          return domDoc;
+        return domDoc;
     }
     QString error;
     int errorLine;
     if( !domDoc.setContent( &file, &error, &errorLine ) )
     {
-         MessageBoxNB( caller, "Cannot set file:\n"+fileName+"\nto DomDocument" );
-         qDebug() << "Circuit::loadCircuit Cannot set file to DomDocument"<<fileName<<"Line"<<errorLine;
+         MessageBoxNB( caller, "Cannot set file to DomDocument:\n\n"+fileName );
+         qDebug() << "Circuit::loadCircuit Cannot set file to DomDocument:\n"<<fileName<<":\nLine"<<errorLine+"\n";
          qDebug() << error;
-         file.close();
-         return domDoc;
+         domDoc.clear();
     }
     file.close();
-
     return domDoc;
 }
 

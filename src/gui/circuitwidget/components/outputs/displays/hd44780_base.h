@@ -34,10 +34,10 @@ class MAINMODULE_EXPORT Hd44780_Base : public Component
         Hd44780_Base( QObject* parent, QString type, QString id );
         ~Hd44780_Base();
 
-        int cols();
+        int cols() { return m_cols; }
         void setCols( int cols );
         
-        int rows();
+        int rows() { return m_rows; }
         void setRows( int rows );
 
         void init();

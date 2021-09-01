@@ -101,7 +101,6 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             
             QString wordUp = word;
             wordUp = wordUp.toUpper();
-            
             if( wordUp == "IF" ) break;
             
             if( m_subs.contains( wordUp ) ) { m_subLines.append( lineNum ); break; }

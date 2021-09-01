@@ -149,7 +149,7 @@ void Pin::connectPin()      // Auto-Connect
     QList<QGraphicsItem*> list = this->collidingItems();
     for( QGraphicsItem* it : list )
     {
-        if( it->type() == 65536+3 )                         // Pin found
+        if( it->type() == 65536+3 )        // Pin found
         {
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
 

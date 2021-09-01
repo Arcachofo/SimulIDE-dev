@@ -17,7 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #include "connector.h"
 #include "simulator.h"
 #include "hd44780_base.h"
@@ -27,7 +26,6 @@ static const char* Hd44780_Base_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Cols"),
     QT_TRANSLATE_NOOP("App::Property","Rows")
 };
-
 
 Hd44780_Base::Hd44780_Base( QObject* parent, QString type, QString id )
             : Component( parent, type, id )
@@ -47,7 +45,6 @@ Hd44780_Base::~Hd44780_Base(){}
 
 void Hd44780_Base::init()
 {
-    //qDebug() << "Hd44780_Base::initialize()" ;
     m_lastCircTime = Simulator::self()->circTime();
     m_lastClock = false;
     m_writeDDRAM = true;
@@ -79,7 +76,6 @@ void Hd44780_Base::writeData( int data )
 {
     if( m_writeDDRAM )                                 // Write to DDRAM
     {
-        //qDebug() << "Hd44780_Base::writeData: " << data << m_cursPos<<m_DDaddr;
         m_DDram[m_DDaddr] = data;
         m_DDaddr += m_direction;
         
@@ -89,21 +85,17 @@ void Hd44780_Base::writeData( int data )
         if( m_shiftDisp )
         {
             m_shiftPos += m_direction;
-            
             int lineEnd = m_lineLength-1;
 
             if( m_shiftPos>lineEnd ) m_shiftPos = 0;
             if( m_shiftPos<0 )       m_shiftPos = lineEnd;
-        }
-    }
-    else                                               // Write to CGRAM
-    {
+    }   }
+    else{                                             // Write to CGRAM
         m_CGram[m_CGaddr] = data;
         m_CGaddr += 1;
         
         if( m_CGaddr > 63 ) m_CGaddr = 0;
-    }
-}
+}   }
 
 void Hd44780_Base::proccessCommand( int command )
 {
@@ -159,7 +151,6 @@ void Hd44780_Base::dispControl( int data )
     
     if( data & 1 ) m_cursorBlink = 1;                    // Cursor Blink
     else           m_cursorBlink = 0;
-    //qDebug()<<m_cursorOn;
 }
 
 void Hd44780_Base::entryMode( int data )
@@ -192,15 +183,12 @@ void Hd44780_Base::setDDaddr( int addr )
     m_DDaddr = addr & 0b01111111;
     
     m_writeDDRAM = true;
-    //qDebug() << "Hd44780_Base::setDDaddr: "<< addr << m_DDaddr;
 }
 
 void Hd44780_Base::setCGaddr( int addr )
 {
     m_CGaddr = addr & 0b00111111;
-    
     m_writeDDRAM = false;
-    //qDebug() << "set_CGaddr: " << m_CGaddr;
 }
 
 void Hd44780_Base::clearDDRAM()
@@ -208,32 +196,19 @@ void Hd44780_Base::clearDDRAM()
     for(int i=0; i<80; i++) m_DDram[i] = 32;
 }
 
-int Hd44780_Base::cols()
-{
-    return m_cols;
-}
-
 void Hd44780_Base::setCols( int cols )
 {
     if( cols > 20 ) cols = 20;
     if( cols < 8 ) cols = 8;
-    
     m_cols = cols;
-    
     init();
 }
 
-int Hd44780_Base::rows()
-{
-    return m_rows;
-}
 void Hd44780_Base::setRows( int rows )
 {
     if( rows > 4 ) rows = 4;
     if( rows < 1 ) rows = 1;
-    
     m_rows = rows;
-    
     init();
 }
 
@@ -284,12 +259,10 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
                 if( mem_pos < 40 ) lineEnd   = 39;
                 else               lineStart = 40;
             }
-
             mem_pos += m_shiftPos;
             if( mem_pos>lineEnd )   mem_pos -= m_lineLength;
             if( mem_pos<lineStart ) mem_pos += m_lineLength;
 
-            //qDebug() << row << col << mem_pos;
             int char_num = m_DDram[mem_pos];
             QImage charact( 10, 16, QImage::Format_RGB32 );
 
@@ -313,9 +286,7 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
                         charact.setPixel(x-1, y+1, qRgb(0, 0, 0));
                     }
                     p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
-                }
-            }
-
+            }   }
             if( char_num < 8 )                        // CGRam Character
             {
                 charact = m_fontImg.copy( 0, 0, 10, 16 );
@@ -328,8 +299,7 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
 
                     for( int x=9; x>0; x-=2 )
                     {
-                        if( data & 1 )
-                        {
+                        if( data & 1 ) {
                             charact.setPixel(x,   y,   qRgb(0, 0, 0));
                             charact.setPixel(x-1, y,   qRgb(0, 0, 0));
                             charact.setPixel(x,   y+1, qRgb(0, 0, 0));
@@ -337,12 +307,9 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
                         }
                         data = data>>1;
             }   }   }
-            else
-                charact = m_fontImg.copy( char_num*10, 0, 10, 16 );
+            else charact = m_fontImg.copy( char_num*10, 0, 10, 16 );
 
             p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
-        }
-    }
-}
+}   }   }
 
 #include "moc_hd44780_base.cpp"
