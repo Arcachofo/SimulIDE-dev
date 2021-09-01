@@ -5,7 +5,7 @@
 
     <include file="avr/avr_gpr.xml" />
     <include file="tinyx5/tinyx5_regs.xml" />
-    <datablock name="RAM" start="0x0060" end="0x0DF"/>
+    <datablock name="RAM" start="0x0060" end="0x15F"/>
 
     <include file="tinyx5/tinyx5_int.xml" />
     <include file="tinyx5/tinyx5_perif.xml" />

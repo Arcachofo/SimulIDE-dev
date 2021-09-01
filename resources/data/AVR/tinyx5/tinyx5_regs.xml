@@ -50,6 +50,7 @@
     <register  name="GIFR"    addr="0x003A" bits="0,0,0,0,0,PCIF,INTF0,0" />
     <register  name="GIMSK"   addr="0x003B" bits="0,0,0,0,0,PCIE,INT0,0" />
     <register  name="SPL"     addr="0x003D" bits="SP0,SP1,SP2,SP3,SP4,SP5,SP6,SP7" />
+    <register  name="SPH"     addr="0x003E" bits="SP8,SP9" />
   </regblock>
-  <stack  spreg="SPL" increment="postdec" />
+  <stack  spreg="SPL,SPH" increment="postdec" />
 </parts>

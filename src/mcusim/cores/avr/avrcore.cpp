@@ -753,7 +753,7 @@ void AvrCore::runDecoder()
         case 0xd000: {    // RCALL -- 1101 kkkk kkkk kkkk
             const int16_t k = ((int16_t)((instruction << 4) & 0xFFFF)) >> 4;
             cycle += m_progAddrSize;
-                    PUSH_STACK( new_pc );
+            PUSH_STACK( new_pc );
             new_pc = (new_pc + k) % m_progSize;
         }    break;
 
