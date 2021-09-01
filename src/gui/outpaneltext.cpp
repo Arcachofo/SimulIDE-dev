@@ -37,9 +37,10 @@ OutPanelText::OutPanelText( QWidget* parent )
     
     QFont font;
     font.setFamily("Ubuntu Mono");
+    font.setWeight( 50 );
     font.setFixedPitch(true);
-    font.setPixelSize( 12*MainWindow::self()->fontScale() );
-    setFont(font);
+    font.setPixelSize( 13*MainWindow::self()->fontScale() );
+    setFont( font );
 
     setMaximumBlockCount( 1000 );
 

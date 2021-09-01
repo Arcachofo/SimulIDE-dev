@@ -69,8 +69,8 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         float fontScale() { return m_fontScale; }
         void setFontScale( float scale );
 
-        int autoBck();
-        void setAutoBck( int secs );
+        int autoBck() { return m_autoBck; }
+        void setAutoBck( int secs ) { m_autoBck = secs; }
 
         QString getHelpFile( QString name );
 

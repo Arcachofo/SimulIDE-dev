@@ -44,6 +44,12 @@ QString addQuotes( const QString &string )
 {
     return "\""+string+"\"";
 }
+QString remQuotes( QString string )
+{
+    string = string.remove( 0, 1 );
+    string = string.remove( string.size()-1, 1);
+    return string;
+}
 
 QString getBareName( const QString &filepath ) // File name without extension
 {

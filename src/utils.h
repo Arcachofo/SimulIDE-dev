@@ -58,6 +58,7 @@ class Pin;
 void MessageBoxNB( const QString &title, const QString &message );
 
 QString addQuotes( const QString &string );
+QString remQuotes( QString string );
 QString getBareName( const QString &filepath );
 QString getFileName( const QString &filepath );
 QString getFileDir( const QString &filepath );

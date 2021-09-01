@@ -90,18 +90,17 @@ void Highlighter::readSintaxFile( const QString &fileName )
                     if( words.size() > 1 )
                     {
                         QString exp = words.takeFirst();
-                        exp = exp.remove(0, 1).remove( exp.size()-1, 1);
+                        exp = remQuotes( exp );
                         m_multiStart.setPattern( exp.replace("\\\\","\\") );
                         exp = words.takeFirst();
-                        exp = exp.remove(0, 1).remove( exp.size()-1, 1);
+                        exp = remQuotes( exp );
                         m_multiEnd.setPattern( exp.replace("\\\\","\\")  );
                 }   }
                 else{
                     for( QString exp : words )
                     {
-                        if( exp.startsWith("\"")) // RegExp
-                            exp = exp.remove(0, 1).remove( exp.size()-1, 1);
-                        else exp = "\\b"+exp+"\\b";
+                        if( exp.startsWith("\"")) exp = remQuotes( exp ); // RegExp
+                        else                      exp = "\\b"+exp+"\\b";
                         addRule( format, exp );
                 }   }
                 format.setFontWeight( QFont::Normal );         // Reset to Defaults

@@ -82,6 +82,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_state = DBG_STOPPED;
 
     m_font.setFamily("Ubuntu Mono");
+    m_font.setWeight( 50 );
     m_font.setFixedPitch( true );
     m_font.setPixelSize( m_fontSize );
     setFont( m_font );
@@ -214,6 +215,7 @@ void CodeEditor::setFile( const QString filePath )
          ||  m_fileExt == "html"
          ||  m_fileExt == "package"
          ||  m_fileExt == "mcu"
+         ||  m_fileExt == "sim5"
          ||  m_fileExt == "simu" )
     {
         m_hlighter->readSintaxFile( sintaxPath + "xml.sintax" );

@@ -38,7 +38,7 @@
    <item>
     <widget class="QSplitter" name="splitter">
      <property name="locale">
-      <locale language="Cantonese" country="HongKong"/>
+      <locale language="C" country="AnyCountry"/>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

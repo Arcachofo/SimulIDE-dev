@@ -33,7 +33,7 @@ MainWindow* MainWindow::m_pSelf = 0l;
 MainWindow::MainWindow()
           : QMainWindow()
           , m_settings( QStandardPaths::writableLocation( QStandardPaths::DataLocation)
-                            +"/simulide.ini", QSettings::IniFormat, this )
+                        +"/simulide.ini", QSettings::IniFormat, this )
 {
     setWindowIcon( QIcon(":/simulide.png") );
     m_pSelf   = this;
@@ -44,13 +44,10 @@ MainWindow::MainWindow()
     this->setWindowTitle(m_version);
 
     QString userAddonPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("addons");
-
     QDir pluginsDir( userAddonPath );
-
     if( !pluginsDir.exists() ) pluginsDir.mkpath( userAddonPath );
 
     // Font --------------------------------------
-
     QDir fontDir = SIMUAPI_AppPath::self()->RODataFolder();
     fontDir.cd( "../fonts" );
 
@@ -172,16 +169,6 @@ void MainWindow::setLang( Langs lang )
 {
     m_lang = lang;
     settings()->setValue( "language", loc() );
-}
-
-int MainWindow::autoBck()
-{
-    return m_autoBck;
-}
-
-void MainWindow::setAutoBck( int secs )
-{
-    m_autoBck = secs;
 }
 
 void MainWindow::setTitle( QString title )
@@ -327,8 +314,7 @@ void MainWindow::loadPlugins()
             pluginsDir.cd( "../" );
         }
         pluginsDir.cd( "../" );
-    }
-}
+}   }
 
 void MainWindow::loadPluginsAt( QDir pluginsDir )
 {
@@ -366,15 +352,11 @@ void MainWindow::loadPluginsAt( QDir pluginsDir )
                 item->initialize();
                 m_plugins[pluginName] = pluginLoader;
                 qDebug()<< "        Plugin Loaded Successfully:\t" << pluginName;
-            }
-            else
-            {
+            }else{
                 pluginLoader->unload();
                 delete pluginLoader;
-            }
-        }
-        else
-        {
+        }   }
+        else{
             QString errorMsg = pluginLoader->errorString();
             qDebug()<< "        " << pluginName << "\tplugin FAILED: " << errorMsg;
 
@@ -382,8 +364,7 @@ void MainWindow::loadPluginsAt( QDir pluginsDir )
                 errorMsg = tr( " Qt5SerialPort is not installed in your system\n\n    Mcu SerialPort will not work\n    Just Install libQt5SerialPort package\n    To have Mcu Serial Port Working" );
 
             QMessageBox::warning( 0,tr( "Plugin Error:" ), errorMsg );
-        }
-    }
+    }   }
     qDebug() << "\n";
 }
 
@@ -398,8 +379,7 @@ void MainWindow::unLoadPugin( QString pluginName )
         pluginLoader->unload();
         m_plugins.remove( pluginName );
         delete pluginLoader;
-    }
-}
+}   }
 
 void MainWindow::applyStyle()
 {
@@ -415,11 +395,8 @@ void MainWindow::applyStyle()
     else
     {
         QApplication::setStyle(QStyleFactory::create("Fusion"));
-    }
-}
+}   }
 
 QSettings* MainWindow::settings() { return &m_settings; }
 
 #include  "moc_mainwindow.cpp"
-
-

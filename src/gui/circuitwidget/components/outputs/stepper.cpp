@@ -236,6 +236,7 @@ void Stepper::remove()
 
 void Stepper::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
+    p->setRenderHint( QPainter::Antialiasing );
     Component::paint( p, option, widget );
 
     //p->setBrush( QColor(250, 210, 230) );
@@ -249,8 +250,9 @@ void Stepper::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
     p->drawEllipse(-37,-37, 74, 74 );
 
     p->setPen ( QColor(255, 255, 255) );
+    QRectF rectangle( -42.0,-42.0, 84.0, 84.0 );
     for ( int i = 0; i< 360*16; i += m_stpang*2 )
-        p->drawPie(-42,-42, 84, 84, i+m_stpang*5/6, m_stpang/3 );
+        p->drawPie( rectangle, i+m_stpang*5/6, m_stpang/3 );
 
     p->setPen ( QColor(0, 0, 0) );
     p->setBrush( QColor(50, 70, 100) );

@@ -47,9 +47,7 @@ CircuitView::CircuitView( QWidget *parent )
     {
         setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
         setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
-    }
-    else
-    {
+    }else{
         setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
         setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     }
@@ -57,10 +55,9 @@ CircuitView::CircuitView( QWidget *parent )
     //setCacheMode( CacheBackground );
     //setRenderHint( QPainter::Antialiasing );
     setRenderHints( QPainter::HighQualityAntialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-    //setRenderHint( QPainter::SmoothPixmapTransform );
     setTransformationAnchor( AnchorUnderMouse );
     setResizeAnchor( AnchorUnderMouse );
-    setDragMode( QGraphicsView::RubberBandDrag );
+    setDragMode( RubberBandDrag );
 
     setAcceptDrops(true);
     
@@ -83,6 +80,7 @@ CircuitView::CircuitView( QWidget *parent )
     m_info->setFont( font );
     
     //m_info->setMaximumSize( 500*fontScale, 80*fontScale );
+    m_info->setMaximumHeight( 40*fontScale );
     m_info->setMinimumSize( 500*fontScale, 40*fontScale );
     m_info->show();
 }
@@ -150,7 +148,7 @@ void CircuitView::clear()
 }
 
 void CircuitView::wheelEvent( QWheelEvent* event )
-{ 
+{
     qreal scaleFactor = pow( 2.0, event->delta() / 700.0);
     scale( scaleFactor, scaleFactor );
     m_scale *= scaleFactor;
