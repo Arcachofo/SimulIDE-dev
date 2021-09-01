@@ -1077,7 +1077,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation>Circuitos (*.simu);;Todos (*.*)</translation>
+        <translation type="vanished">Circuitos (*.simu);;Todos (*.*)</translation>
     </message>
     <message>
         <source>Bill Of Materials</source>
@@ -1088,6 +1088,10 @@ p, li { white-space: pre-wrap; }
 %2.</source>
         <translation>No se pudo escribir el archivo %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim*);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1198,7 +1202,7 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation>Circuitos (*.simu);;Todos (*.*)</translation>
+        <translation type="vanished">Circuitos (*.simu);;Todos (*.*)</translation>
     </message>
     <message>
         <source>Save Circuit</source>
@@ -1266,6 +1270,10 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>    Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim*);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2574,6 +2582,22 @@ Quiere guardar los cambios?</translation>
         <source>AVR</source>
         <translation type="unfinished">AVR</translation>
     </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2936,6 +2960,10 @@ Quiere guardar los cambios?</translation>
         <source>Remove BreakPoint</source>
         <translation>Eliminar Punto Ruptura</translation>
     </message>
+    <message>
+        <source>Clear All BreakPoints</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Lm555</name>
@@ -3180,6 +3208,14 @@ Quiere guardar los cambios?</translation>
     <name>McuMonitor</name>
     <message>
         <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Byte PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jump to active Address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3634,10 +3670,6 @@ p, li { white-space: pre-wrap; }
 %2.</translation>
     </message>
     <message>
-        <source>Reg.</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Dec</source>
         <translation></translation>
     </message>
@@ -3664,6 +3696,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Form</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Addr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
     </message>
 </context>
 <context>
@@ -4723,6 +4763,22 @@ Quiere guardar los cambios?
     <message>
         <source>Logic</source>
         <translation type="vanished">Logica</translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

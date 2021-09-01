@@ -1113,7 +1113,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation>Devreler (*.simu);;Tüm dosyalar (*.*)</translation>
+        <translation type="vanished">Devreler (*.simu);;Tüm dosyalar (*.*)</translation>
     </message>
     <message>
         <source>Cannot write file %1:
@@ -1123,6 +1123,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Bill Of Materials</source>
         <translation>Malzeme Listesi</translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim*);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1234,7 +1238,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation>Devreler (*.simu);;Tüm dosyalar (*.*)</translation>
+        <translation type="vanished">Devreler (*.simu);;Tüm dosyalar (*.*)</translation>
     </message>
     <message>
         <source>Save Circuit</source>
@@ -1302,6 +1306,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>    Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim*);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2644,6 +2652,22 @@ Değişiklikler kaydedilsin mi?
         <source>AVR</source>
         <translation type="unfinished">AVR</translation>
     </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -3009,6 +3033,10 @@ Değişiklikler kaydedilsin mi?
         <source>Remove BreakPoint</source>
         <translation>BreakPoint kaldır</translation>
     </message>
+    <message>
+        <source>Clear All BreakPoints</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Lm555</name>
@@ -3305,6 +3333,14 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Dialog</source>
         <translation type="unfinished">Diyalog</translation>
+    </message>
+    <message>
+        <source>Byte PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jump to active Address</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3744,7 +3780,7 @@ p, li { white-space: pre-wrap; }
     <name>RamTable</name>
     <message>
         <source>Reg.</source>
-        <translation>Yazmaç.</translation>
+        <translation type="vanished">Yazmaç.</translation>
     </message>
     <message>
         <source>Dec</source>
@@ -3791,6 +3827,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Form</source>
         <translation type="unfinished">Form</translation>
+    </message>
+    <message>
+        <source>Addr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Ad</translation>
     </message>
 </context>
 <context>
@@ -4887,6 +4931,22 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Logic</source>
         <translation type="vanished">Mantık</translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -107,8 +107,11 @@ void ComponentSelector::loadXml( const QString &setFile )
         }
         while( reader.readNextStartElement() )
         {
-            if( reader.name() != "itemset" ) reader.skipCurrentElement();
-
+            if( reader.name() != "itemset" )
+            {
+                reader.skipCurrentElement();
+                continue;
+            }
             QString category = reader.attributes().value("category").toString();
             std::string stdCat = category.toStdString();
             const char* charCat = &(stdCat[0]);

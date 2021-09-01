@@ -1,12 +1,9 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
+  <tag>QT_TRANSLATE_NOOP("xmlfile","Other IC")</tag>
     
-    <itemset category="Logic" type="">
-        <item name="unsorted_IC"  package=""  subcircuit=""  icon="ic2.png" ></item>
-    </itemset>
-    
-    <itemset category="Logic/unsorted_IC" type="Subcircuit" folder="ICs" >
+  <itemset category="Other IC" type="Subcircuit" folder="ICs" >
     <item name="AD7224" info=" 8-Bit DAC with Output Amplifiers" />
     <item name="AD7520" info=" 10-Bit, Multiplying D/A Converter (DAC)" /> 
     <item name="AD7521" info=" 12-Bit, Multiplying D/A Converter (DAC)" /> 
@@ -18,5 +15,4 @@
     <item name="DAC8562" info=" +5 Volt, Parallel Input Complete 12-Bit DAC" />           
     <item name="DAC7621" info=" +5 Volt, Parallel Input 12-Bit DAC" /> 
  </itemset>
-
 </itemlib>

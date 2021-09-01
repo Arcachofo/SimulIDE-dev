@@ -1,13 +1,7 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-    
-    <itemset category="Logic" type="">
-        <item name="USSR_IC"  package=""  subcircuit=""  icon="ic2.png" ></item>
-    </itemset>
-    
-    <itemset category="Logic/USSR_IC" type="Subcircuit" folder="ICs" >
-
+  <itemset category="USSR IC" type="Subcircuit" folder="ICs" >
     <item name="K155ID11" info=" linear led scale driver" /> 
     <item name="K155ID13" info=" linear led scale driver" /> 
     <item name="K176IE3" info=" module 6 counter with output to a 7-segment indicator" /> 
@@ -17,6 +11,5 @@
     <item name="564IK2" info=" 5 bit 7 segment display controller" />
     <item name="K490IP1" folder="ICs" info=" BCD counter with 7-segment display" /> 
     <item name="K490IP2" folder="ICs" info=" binary code decoder with 7 segment display" /> 
-    </itemset>
-
+  </itemset>
 </itemlib>

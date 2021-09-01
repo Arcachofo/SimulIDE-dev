@@ -1079,7 +1079,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation>Obvod (*.simu);;Všechny soubory (*.*)</translation>
+        <translation type="vanished">Obvod (*.simu);;Všechny soubory (*.*)</translation>
     </message>
     <message>
         <source>Cannot write file %1:
@@ -1090,6 +1090,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Bill Of Materials</source>
         <translation>Seznam materiálu</translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim*);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1201,7 +1205,7 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation>Obvody (*.simu);;Všechny soubory (*.*)</translation>
+        <translation type="vanished">Obvody (*.simu);;Všechny soubory (*.*)</translation>
     </message>
     <message>
         <source>Save Circuit</source>
@@ -1269,6 +1273,10 @@ Chcete uložit změny?
     </message>
     <message>
         <source>    Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim*);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2578,6 +2586,22 @@ Chcete uložit změny?
         <source>AVR</source>
         <translation type="unfinished">AVR</translation>
     </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2940,6 +2964,10 @@ Chcete uložit změny?
         <source>Remove BreakPoint</source>
         <translation>Odstranit breakpoint</translation>
     </message>
+    <message>
+        <source>Clear All BreakPoints</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Lm555</name>
@@ -3184,6 +3212,14 @@ Chcete uložit změny?
     <name>McuMonitor</name>
     <message>
         <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Byte PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jump to active Address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3625,7 +3661,7 @@ p, li { white-space: pre-wrap; }
     <name>RamTable</name>
     <message>
         <source>Reg.</source>
-        <translation>Reg.</translation>
+        <translation type="vanished">Reg.</translation>
     </message>
     <message>
         <source>Dec</source>
@@ -3672,6 +3708,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Form</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Addr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Název</translation>
     </message>
 </context>
 <context>
@@ -4731,6 +4775,22 @@ Chcete uložit změny?
     <message>
         <source>Logic</source>
         <translation type="vanished">Logika</translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

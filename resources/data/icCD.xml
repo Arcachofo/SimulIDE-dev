@@ -1,13 +1,7 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-    
-    <itemset category="Logic" type="">
-        <item name="IC CD"  package=""  subcircuit=""  icon="ic2.png" ></item>
-    </itemset>
-    
-    <itemset category="Logic/IC CD" type="Subcircuit" folder="ICs">
-        
+  <itemset category="IC CD" type="Subcircuit" folder="ICs">
     <item name="CD4006"  info="  18-stage static shift register" ></item>
     <item name="CD4013"  info="  dual D positive edge triggered flip-flop, asynchronous preset and clear " ></item>
     <item name="CD4014"  info="  8-stage static shift register" ></item>
@@ -67,7 +61,6 @@
     <item name="TC4468"  info="  Logic-input CMOS quad drivers" ></item>
     <item name="TC4469"  info="  Logic-input CMOS quad drivers, one inverted input " ></item>
     <item name="tpic6a595"  info="  Power Logic 8-bit shift register, 350 mA output " ></item>
-    </itemset>
-
+  </itemset>
 </itemlib>
 
