@@ -40,14 +40,13 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
 
         virtual QList<propGroup_t> propGroups() override;
         
-        int numDisplays();
+        int numDisplays() { return m_numDisplays; }
         void setNumDisplays( int dispNumber );
 
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void updateStep() override;
-        virtual void remove() override;
         
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 

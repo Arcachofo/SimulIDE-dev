@@ -48,9 +48,7 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     Q_UNUSED( Max72xx_matrix_properties );
 
     m_graphical = true;
-
     m_numDisplays = 4;
-
     m_area = QRectF(-36, -44, 4+64*m_numDisplays+4, 88 );
 
     m_pinCS  = new Pin( 270, QPoint(-12, 52), id+"PinCS", 0, this );
@@ -94,8 +92,7 @@ void Max72xx_matrix::initialize()
 {
     for( int i = 0; i < 11; i++)
     {
-        for( int j = 0; j < 8; j++)
-            m_ram[i][j] = 0;
+        for( int j = 0; j < 8; j++) m_ram[i][j] = 0;
         m_intensity[i] = 0;
     }
     m_decodemode = 0;
@@ -132,24 +129,14 @@ void Max72xx_matrix::voltChanged()
         proccessCommand();
         m_inBit = 0;
         m_inDisplay++;
-    }
-    else
-    {
+    }else{
         m_rxReg <<= 1;
         m_inBit++;
-    }
-}
+}   }
 
 void Max72xx_matrix::updateStep()
 {
     update();
-}
-
-void Max72xx_matrix::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-
-    Component::remove();
 }
 
 void Max72xx_matrix::proccessCommand()
@@ -160,8 +147,7 @@ void Max72xx_matrix::proccessCommand()
 
     switch( addr )
     {
-        case 0:  // No-Op
-            break;
+        case 0: break; // No-Op
         case 1:
         case 2:
         case 3:
@@ -187,13 +173,7 @@ void Max72xx_matrix::proccessCommand()
         case 15: // Display test
             m_test = m_rxReg & 0x01;
             break;
-    }
-}
-
-int Max72xx_matrix::numDisplays()
-{
-    return m_numDisplays;
-}
+}   }
 
 void Max72xx_matrix::setNumDisplays( int displays )
 {
@@ -212,6 +192,7 @@ void Max72xx_matrix::paint( QPainter *p, const QStyleOptionGraphicsItem *option,
     Q_UNUSED(option); Q_UNUSED(widget);
 
     Component::paint( p, option, widget );
+    p->setRenderHint( QPainter::Antialiasing );
 
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
@@ -219,29 +200,36 @@ void Max72xx_matrix::paint( QPainter *p, const QStyleOptionGraphicsItem *option,
     p->setBrush( QColor(50, 70, 100) );
     p->drawRoundedRect( m_area, 2, 2 );
 
-    QBrush brush_off( Qt::black );
-    for( int row = 0; row < 8; row++ )
+
+    for( int display=0; display<m_numDisplays; display++ )
     {
-        int x = -32;
-        int y = -40+row*8;
-        for( int display = 0; display < m_numDisplays; display++)
+        pen.setColor( QColor(Qt::black) );
+        p->setPen( pen );
+        p->setBrush( QColor(Qt::black) );
+        p->drawRoundedRect( 64*display-32, -40, 64, 64, 2, 2 );
+
+        QColor color = QColor( QColor(255, 255, 100) ) ;//Qt::yellow;
+        int factor = 100 + (15-m_intensity[display])*3;
+        color = color.darker(factor);
+
+        for( int row=0; row<8; row++ )
         {
-            QColor color = Qt::yellow;
-            int factor = 100 + (15-m_intensity[display])*3;
-            QBrush brush_on( color.darker(factor) );
-            for( int col = 0; col < 8; col++)
+            int x = 64*display-32+1;
+            int y = -40+row*8+1;
+            for( int col=0; col<8; col++)
             {
                 int bit = m_ram[display][row] & (0x80>>col);
                 if( !m_shutdown && (m_test || ((m_decodemode == 0) && (row <= m_scanlimit) && bit)) )
-                    p->setBrush(brush_on);
-                else
-                    p->setBrush(brush_off);
-                p->drawEllipse(x+1, y+1, 6, 6);
+                {
+                    p->setBrush( color );
+                    pen.setColor( color );
+                }else{
+                    p->setBrush( QColor(50, 50, 50) );
+                    pen.setColor( QColor(50, 50, 50) );
+                }
+                p->setPen( pen );
+                p->drawEllipse( x, y, 6, 6 );
                 x += 8;
-            }
-        }
-    }
-}
+}   }   }   }
 
 #include "moc_max72xx_matrix.cpp"
-
