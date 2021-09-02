@@ -392,7 +392,7 @@ void Circuit::loadCompProperties( QDomElement* element, Component* comp )
             {
                 SubCircuit* subc = (SubCircuit*)comp;
                 Component* mainComp = subc->getMainComp();
-                if( mainComp ) loadObjectProperties( &el, mainComp );
+                if( mainComp ) loadProperties( &el, mainComp );
                 element->removeChild( nod );
     }   }   }
     loadObjectProperties( element, comp );
