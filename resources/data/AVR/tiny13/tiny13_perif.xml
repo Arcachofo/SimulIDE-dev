@@ -2,7 +2,7 @@
 
 <parts>
     <port name="PORTB" pins="6" outreg="PORTB" inreg="PINB" dirreg="DDRB">
-        <interrupt name="PCINT0" />
+        <interrupt name="PCINT0" mask="PCMSK0"/>
     </port>
     
     <timer name="TIMER0" type="80" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">

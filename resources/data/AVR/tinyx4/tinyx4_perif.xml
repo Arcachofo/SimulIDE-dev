@@ -2,11 +2,11 @@
 
 <parts>
     <port name="PORTA" pins="8" outreg="PORTA" inreg="PINA" dirreg="DDRA">
-        <interrupt name="PCINT0" />
+        <interrupt name="PCINT0" mask="PCMSK0"/>
     </port>
     
     <port name="PORTB" pins="4" outreg="PORTB" inreg="PINB" dirreg="DDRB">
-        <interrupt name="PCINT1" />
+        <interrupt name="PCINT1" mask="PCMSK1"/>
     </port>
     
     <timer name="TIMER0" type="80" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
