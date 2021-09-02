@@ -149,6 +149,7 @@ TRANSLATIONS +=  \
     ../resources/translations/simulide_en.ts \
     ../resources/translations/simulide_es.ts \
     ../resources/translations/simulide_fr.ts \
+    ../resources/translations/simulide_pt_PT.ts \
     ../resources/translations/simulide_pt_BR.ts \
     ../resources/translations/simulide_ru.ts \
     ../resources/translations/simulide_nl.ts \

@@ -136,15 +136,16 @@ void MainWindow::setFontScale(float scale )
 QString MainWindow::loc()
 {
     QString locale = "en";
-    if     ( m_lang == Czech )     locale = "cz";
-    if     ( m_lang == French )    locale = "fr";
-    else if( m_lang == German )    locale = "de";
-    else if( m_lang == Italian )   locale = "it";
-    else if( m_lang == Russian )   locale = "ru";
-    else if( m_lang == Spanish )   locale = "es";
-    else if( m_lang == Pt_Brasil ) locale = "pt_BR";
-    else if( m_lang == Dutch )     locale = "nl";
-    else if( m_lang == Turkish )   locale = "tr";
+    if     ( m_lang == Czech )      locale = "cz";
+    if     ( m_lang == French )     locale = "fr";
+    else if( m_lang == German )     locale = "de";
+    else if( m_lang == Italian )    locale = "it";
+    else if( m_lang == Russian )    locale = "ru";
+    else if( m_lang == Spanish )    locale = "es";
+    else if( m_lang == Portuguese ) locale = "pt_PT";
+    else if( m_lang == Pt_Brasil )  locale = "pt_BR";
+    else if( m_lang == Dutch )      locale = "nl";
+    else if( m_lang == Turkish )    locale = "tr";
 
     return locale;
 }
@@ -158,6 +159,7 @@ void MainWindow::setLoc( QString loc )
     else if( loc == "it" )    lang = Italian;
     else if( loc == "ru" )    lang = Russian;
     else if( loc == "es" )    lang = Spanish;
+    else if( loc == "pt_PT" ) lang = Pt_Brasil;
     else if( loc == "pt_BR" ) lang = Pt_Brasil;
     else if( loc == "nl" )    lang = Dutch;
     else if( loc == "tr" )    lang = Turkish;
