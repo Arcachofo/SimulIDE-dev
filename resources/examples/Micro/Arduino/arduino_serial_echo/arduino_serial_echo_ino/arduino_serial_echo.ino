@@ -16,4 +16,4 @@ void loop()
     
         Serial.write(byteRead);
     }
-}
+}file:///mnt/software/simulide/simulide_lauchpad/trunk/resources/examples/Micro/Arduino/Keypad/HelloKeypad/HelloKeypad.ino

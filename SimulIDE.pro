@@ -1,6 +1,6 @@
 
 VERSION = "0.5.16"
-RELEASE = "-RC7"
+RELEASE = "-RC8"
 
 TEMPLATE = app
 

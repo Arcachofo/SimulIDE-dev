@@ -10,7 +10,7 @@
         <interrupt name="T2COA"   enable="OCIE2A" flag="OCF2A" priority="19" vector="0x000E" clear="1"/>
         <interrupt name="T2COB"   enable="OCIE2B" flag="OCF2B" priority="18" vector="0x0010" clear="1"/>
         <interrupt name="T2_OVF"  enable="TOIE2"  flag="TOV2"  priority="17" vector="0x0012" clear="1"/>
-        <interrupt name="T1CAP"   enable=" "  flag=" " priority="16" vector="0x0014" clear="1"/>
+        <interrupt name="T1CAP"   enable=""  flag="" priority="16" vector="0x0014"/>
         <interrupt name="T1COA"   enable="OCIE1A" flag="OCF1A" priority="15" vector="0x0016" clear="1"/>
         <interrupt name="T1COB"   enable="OCIE1B" flag="OCF1B" priority="14" vector="0x0018" clear="1"/>
         <interrupt name="T1_OVF"  enable="TOIE1"  flag="TOV1"  priority="13" vector="0x001A" clear="1"/>

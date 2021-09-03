@@ -1,0 +1,41 @@
+<circuit NLsteps="100000" animate="0" stepsPS="1000000" type="simulide_0.5" stepSize="1000000">
+
+Unique  Id: Uno-2: 
+Circuit Id: Arduino Uno
+<item objectName="Uno-2" Logic_Symbol="false" vflip="1" Show_id="true" id="Arduino Uno" valLabely="0" Show_Val="false" valLabRot="0" rotation="0" Unit="  " itemtype="Subcircuit" BoardId="" labelx="47" Name="Uno" x="-524" labely="-16" labelrot="0" hflip="1" valLabelx="0" y="-348" mainComp="false">
+  <mainCompProps Auto_Load="false" Name="mega328" Program="HelloKeypad.hex" Mhz="16" Logic_Symbol="false"/>
+ </item>
+
+Unique  Id: Teclado-1: 
+Circuit Id: Teclado-2
+<item objectName="Teclado-1" vflip="1" Show_id="false" id="Teclado-2" valLabely="0" Show_Val="false" Rows="4" valLabRot="0" rotation="0" Unit="  " itemtype="KeyPad" Key_Labels="123456789*0#" labelx="-16" x="-604" labely="-24" labelrot="0" hflip="1" Cols="3" valLabelx="0" y="-348" mainComp="false"/>
+
+Unique  Id: Connector-4: 
+Circuit Id: Connector-3
+<item objectName="Connector-4" vflip="1" Show_id="false" id="Connector-3" valLabely="0" Show_Val="false" endpinid="Uno-2-4" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-556,-308,-548,-308,-548,-300,-516,-300" enodeid="Circ_eNode-110" labelx="-16" startpinid="Teclado-1-Pin2" x="-556" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-308" mainComp="false"/>
+
+Unique  Id: Connector-6: 
+Circuit Id: Connector-5
+<item objectName="Connector-6" vflip="1" Show_id="false" id="Connector-5" valLabely="0" Show_Val="false" endpinid="Teclado-1-Pin3" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-516,-292,-556,-292" enodeid="Circ_eNode-111" labelx="-16" startpinid="Uno-2-5" x="-516" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-292" mainComp="false"/>
+
+Unique  Id: Connector-8: 
+Circuit Id: Connector-7
+<item objectName="Connector-8" vflip="1" Show_id="false" id="Connector-7" valLabely="0" Show_Val="false" endpinid="Uno-2-3" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-556,-324,-540,-324,-540,-308,-516,-308" enodeid="Circ_eNode-112" labelx="-16" startpinid="Teclado-1-Pin1" x="-556" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-324" mainComp="false"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-9
+<item objectName="Connector-10" vflip="1" Show_id="false" id="Connector-9" valLabely="0" Show_Val="false" endpinid="Uno-2-2" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-556,-340,-532,-340,-532,-316,-516,-316" enodeid="Circ_eNode-113" labelx="-16" startpinid="Teclado-1-Pin0" x="-556" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-340" mainComp="false"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-11
+<item objectName="Connector-12" vflip="1" Show_id="false" id="Connector-11" valLabely="0" Show_Val="false" endpinid="Uno-2-6" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-572,-276,-572,-268,-548,-268,-548,-284,-516,-284" enodeid="Circ_eNode-114" labelx="-16" startpinid="Teclado-1-Pin6" x="-572" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-276" mainComp="false"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-13
+<item objectName="Connector-14" vflip="1" Show_id="false" id="Connector-13" valLabely="0" Show_Val="false" endpinid="Uno-2-7" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-588,-276,-588,-260,-540,-260,-540,-276,-516,-276" enodeid="Circ_eNode-115" labelx="-16" startpinid="Teclado-1-Pin5" x="-588" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-276" mainComp="false"/>
+
+Unique  Id: Connector-16: 
+Circuit Id: Connector-15
+<item objectName="Connector-16" vflip="1" Show_id="false" id="Connector-15" valLabely="0" Show_Val="false" endpinid="Uno-2-8" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-604,-276,-604,-252,-532,-252,-532,-260,-516,-260" enodeid="Circ_eNode-116" labelx="-16" startpinid="Teclado-1-Pin4" x="-604" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-276" mainComp="false"/>
+ 
+</circuit>

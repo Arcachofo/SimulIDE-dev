@@ -51,8 +51,6 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         double m_imped;
         double m_zenerV;
         double m_lastCurrent;
-
-        static constexpr double off_imp  = 1e14;
 };
 #endif
 

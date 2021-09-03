@@ -36,22 +36,21 @@ void eDiode::stamp()
     {
         eNode* node = m_ePin[0]->getEnode();
         node->addToNoLinList( this );
-        ///node->setSwitched( true );
+        node->setSwitched( true );
     }
     if( m_ePin[1]->isConnected() )
     {
         eNode* node = m_ePin[1]->getEnode();
         node->addToNoLinList( this );
-        ///node->setSwitched( true );
+        node->setSwitched( true );
     }
     eResistor::stamp();
 }
 
 void eDiode::initialize()
 {
-    m_resist = off_imp;
-    //m_admit = 0;
-    m_admit = 1/off_imp; /// changed to non-switched
+    m_resist = high_imp;
+    m_admit = 0;
     m_voltPN  = 0;
     m_deltaV  = 0;
     m_current = 0;
@@ -67,24 +66,23 @@ void eDiode::voltChanged()
 
     if( (m_threshold-m_voltPN) > 1e-6 )   // Not conducing
     {
-        if( (m_zenerV > 0)&&(m_voltPN <-m_zenerV) )
+        if( (m_zenerV > 0) && (m_voltPN <-m_zenerV) )
             deltaV =-m_zenerV;
-        else                        
+        else
         {
             deltaV = m_voltPN;
-            deltaR = off_imp;
-        }
-    }
+            deltaR = high_imp;
+    }   }
     if( deltaR != m_resist )
     {
         m_resist = deltaR;
-        ///if( deltaR == off_imp ) eResistor::setAdmit( 0 );
-        ///else
-            eResistor::setAdmit( 1/m_resist );
+        if( deltaR == high_imp ) eResistor::setAdmit( 0 );
+        else                     eResistor::setAdmit( 1/m_resist );
     }
     m_deltaV = deltaV;
 
     double current = deltaV/m_resist;
+    if( deltaR == high_imp ) current = 0;
     if( current == m_lastCurrent )return;
     m_lastCurrent = current;
 
@@ -114,7 +112,7 @@ void eDiode::updateVI()
 {
     m_current = 0;
     
-    if( m_resist == off_imp ) return;
+    if( m_resist == high_imp ) return;
 
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
     {

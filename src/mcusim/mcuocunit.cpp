@@ -86,7 +86,11 @@ void McuOcUnit::setOcActs( ocAct_t comAct, ocAct_t tovAct )
 }
 
 void McuOcUnit::ocrWriteL( uint8_t val )
-{ m_comMatch = (m_comMatch & 0xFF00) | val; }
+{
+    m_comMatch = (m_comMatch & 0xFF00) | val;
+}
 
 void McuOcUnit::ocrWriteH( uint8_t val )
-{ m_comMatch = (m_comMatch & 0x00FF) | (uint16_t)val<<8; }
+{
+    m_comMatch = (m_comMatch & 0x00FF) | (uint16_t)val<<8;
+}

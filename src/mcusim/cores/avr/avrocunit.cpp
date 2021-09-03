@@ -37,16 +37,15 @@ void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
 {
     uint8_t mode = getRegBitsVal( val, m_configBits );//((val & m_configMask)>>m_maskBit0);
 
-    if(  mode != m_mode )
-    {
-        m_mode =  mode;
+    if(  mode == m_mode ) return;
+    m_mode =  mode;
 
-        if( m_mode == 0 )           // OC Pin disconnected
-        {
-             m_ocPin->controlPin( false, false );
-        }
-        else                        // OC Pin connected
-        {
-             m_ocPin->controlPin( true, true );
-             m_ocPin->setOutState( false );
-}   }   }
+    if( m_mode == 0 )           // OC Pin disconnected
+    {
+         m_ocPin->controlPin( false, false );
+    }
+    else                        // OC Pin connected
+    {
+         m_ocPin->controlPin( true, true );
+         m_ocPin->setOutState( false );
+}   }

@@ -186,6 +186,7 @@ QVector<int> Mcu::eeprom()
     int size = m_eMcu.romSize();
     if( size > 0 )
     {
+        eeprom.resize( size );
         bool empty = true;
         for( int i=size-1; i>=0; --i )
         {
@@ -193,8 +194,8 @@ QVector<int> Mcu::eeprom()
             if( val < 0xFF ) empty = false;
             if( empty ) continue;
             eeprom[i] = val;
-        }
-    }
+    }   }
+
     return eeprom;
 }
 

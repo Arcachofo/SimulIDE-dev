@@ -1,0 +1,21 @@
+<circuit NLsteps="100000" animate="0" stepsPS="1000000" type="simulide_0.5" stepSize="1000000">
+
+Unique  Id: Uno-2: 
+Circuit Id: Arduino Uno-2
+<item objectName="Uno-2" Logic_Symbol="false" vflip="1" Show_id="true" id="Arduino Uno-2" valLabely="0" Show_Val="false" valLabRot="0" rotation="0" Unit="  " itemtype="Subcircuit" BoardId="" labelx="0" Name="Uno" x="-340" labely="-20" labelrot="0" hflip="1" valLabelx="0" y="-252" mainComp="false">
+  <mainCompProps Auto_Load="false" Name="mega328" Program="arduino_music.hex" Mhz="16" Logic_Symbol="false"/>
+ </item>
+
+Unique  Id: Audio Out-1: 
+Circuit Id: Audio Out-1
+<item objectName="Audio Out-1" vflip="1" Show_id="false" id="Audio Out-1" valLabely="0" Show_Val="false" Impedance="8" valLabRot="0" rotation="0" Unit="  " itemtype="AudioOut" labelx="-12" Buzzer="false" x="-404" labely="-24" labelrot="0" hflip="-1" valLabelx="0" y="-148" mainComp="false"/>
+
+Unique  Id: Connector-3: 
+Circuit Id: Connector-3
+<item objectName="Connector-3" vflip="1" Show_id="false" id="Connector-3" valLabely="0" Show_Val="false" endpinid="Uno-2-9" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-388,-156,-332,-156" enodeid="Circ_eNode-110" labelx="-16" startpinid="Audio Out-1-lPin" x="-388" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-156" mainComp="false"/>
+
+Unique  Id: Connector-5: 
+Circuit Id: Connector-5
+<item objectName="Connector-5" vflip="1" Show_id="false" id="Connector-5" valLabely="0" Show_Val="false" endpinid="Uno-2-GND2" valLabRot="0" rotation="0" Unit="  " itemtype="Connector" pointList="-388,-148,-364,-148,-364,-116,-332,-116" enodeid="Circ_eNode-111" labelx="-16" startpinid="Audio Out-1-rPin" x="-388" labely="-24" labelrot="0" hflip="1" valLabelx="0" y="-148" mainComp="false"/>
+ 
+</circuit>

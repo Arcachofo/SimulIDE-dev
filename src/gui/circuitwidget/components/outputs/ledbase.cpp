@@ -147,9 +147,7 @@ void LedBase::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
         p->setBrush( Qt::white );
         color = QColor( Qt::white );
         pen.setColor( color );
-    }
-    else
-    {
+    }else{
         int overBight = 100;
         
         if( m_bright > 25 )
@@ -160,9 +158,7 @@ void LedBase::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
             {
                 overBight += m_bright-255;
                 m_bright = 255;
-            }
-        }
-        
+        }   }
         color = QColor( m_bright, m_bright, overBight ); // Default = yellow
         
         if     ( m_ledColor == red )    color = QColor( m_bright,  m_bright/3, overBight );
@@ -171,7 +167,7 @@ void LedBase::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
         else if( m_ledColor == orange ) color = QColor( m_bright,  m_bright*2/3, overBight );
         else if( m_ledColor == purple ) color = QColor( m_bright,  overBight,  m_bright*2/3 );
     }
-    p->setPen(pen);
+    p->setPen( pen );
     drawBackground( p );
     
     pen.setColor( color );

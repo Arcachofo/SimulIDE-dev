@@ -66,14 +66,13 @@ class MAINMODULE_EXPORT Interrupt
         QString  m_name;
         uint8_t  m_number;
         uint16_t m_vector;
-        uint8_t  m_mode;
 
+        uint8_t m_mode;
         uint8_t m_enabled;
+        uint8_t m_priority;
 
         uint8_t  m_flagMask;
         uint16_t m_flagReg;
-
-        uint8_t m_priority;
 
         bool m_raised;
         bool m_autoClear;
