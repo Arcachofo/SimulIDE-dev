@@ -244,10 +244,6 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                 if( startpin && endpin )    // Create Connector
                 {
                     Connector* con  = new Connector( this, type, objNam, startpin, endpin );
-
-                    element.setAttribute( "startpinid", startpin->objectName() );
-                    element.setAttribute(   "endpinid", endpin->objectName() );
-
                     loadObjectProperties( &element, con );
 
                     QString enodeId = element.attribute( "enodeid" );
@@ -257,34 +253,10 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                         enode = new eNode( "Circ_eNode-"+newSceneId() );
                         nodMap[enodeId] = enode;
                     }
-                    con->setEnode( enode );
-
-                    QStringList plist = con->pointList();   // add lines to connector
-                    int count = plist.size();
-                    if( count < 2 ) qDebug() << "Error creating Connector: empty pointList ";
-                    else{
-                        int p1x = plist.first().toInt();
-                        int p1y = plist.at(1).toInt();
-                        int p2x = plist.at(plist.size()-2).toInt();
-                        int p2y = plist.last().toInt();
-
-                        con->addConLine( con->x(),con->y(), p1x, p1y, 0 );
-
-                        for (int i=2; i<count; i+=2)
-                        {
-                            p2x = plist.at(i).toInt();
-                            p2y = plist.at(i+1).toInt();
-                            con->addConLine( p1x, p1y, p2x, p2y, i/2 );
-                            p1x = p2x;
-                            p1y = p2y;
-                        }
-                        con->updateConRoute( startpin, startpin->scenePos() );
-                        con->updateConRoute( endpin, endpin->scenePos() );
-                        con->remNullLines();
-                        conList.append( con );
-                        startpin->registerPins( enode );
-                        endpin->registerPins( enode );
-                }  }
+                    startpin->registerPins( enode );
+                    endpin->registerPins( enode );
+                    conList.append( con );
+                }
                 else if( !m_pasting )// Start or End pin not found
                 {
                     if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null startpin in " << objNam << startpinid;
@@ -299,7 +271,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     joint = new Node( this, type, label );
                     joint->setSelected( true );
                 }
-                else joint = new Node( this, type, label );
+                else joint = new Node( this, type, objNam );
 
                 loadObjectProperties( &element, joint );
                 compList.append( joint );
@@ -326,7 +298,6 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     {
                         oldArduino = true;
                         type = "Subcircuit";
-                        ///id = id.remove( "Arduino " );
                         objNam = objNam.remove( "Arduino " );
                     }
                     else if( type == "AVR" )
@@ -349,8 +320,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                             mcu->setProgram( element.attribute("Program") );
                             mcu->setFreq( element.attribute("Mhz").toDouble() );
                             mcu->setAutoLoad( element.attribute("Auto_Load").toInt() );
-                        }
-                    }
+                    }   }
                     else if( comp->itemType() == "Subcircuit")
                     {
                         SubCircuit* shield = static_cast<SubCircuit*>(comp);

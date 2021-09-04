@@ -103,6 +103,26 @@ void Connector::remConLine( ConnectorLine* line  )
     if( m_actLine > 0 )  m_actLine -= 1;
 }
 
+void Connector::setPointList( QStringList plist )
+{
+    m_pointList = plist;
+
+    int p1x = plist.first().toInt();
+    int p1y = plist.at(1).toInt();
+    int p2x = plist.at(plist.size()-2).toInt();
+    int p2y = plist.last().toInt();
+
+    addConLine( x(), y(), p1x, p1y, 0 );
+
+    for (int i=2; i<plist.size(); i+=2)
+    {
+        p2x = plist.at(i).toInt();
+        p2y = plist.at(i+1).toInt();
+        addConLine( p1x, p1y, p2x, p2y, i/2 );
+        p1x = p2x;
+        p1y = p2y;
+}   }
+
 void Connector::refreshPointList()
 {
     if( m_conLineList.isEmpty() ) return;
@@ -123,7 +143,7 @@ void Connector::refreshPointList()
         list.append( data );
     }
     setPos( m_conLineList.first()->scenePos() );
-    setPointList( list );
+    m_pointList = list;
 }
 
 void Connector::addConLine( ConnectorLine* line, int index )
@@ -183,11 +203,8 @@ void Connector::disconnectLines( int index1, int index2 )
 void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
 {
     if( !this->isVisible() ) return;
-    if( Circuit::self()->pasting() ) 
-    {
-        remNullLines();
-        return;
-    }
+    if( Circuit::self()->pasting() )  { remNullLines(); return; }
+
     bool diagonal = false;
     int length = m_conLineList.length();
     ConnectorLine* line;
@@ -209,11 +226,8 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
         }
         else m_actLine = 0;
         
-        if( diagonal ) 
-        {
-            remNullLines();
-            return;
-    }   }
+        if( diagonal ) { remNullLines(); return; }
+    }
     else
     {
         line = m_conLineList.last();
@@ -234,9 +248,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
             if( m_lastindex == m_actLine )          // Add new corner
             {
                 QPoint point = line->p2();
-
                 ConnectorLine* newLine = addConLine( point.x(), point.y(), point.x()+4, point.y()+4, m_lastindex + 1 );
-
                 if( line->isSelected() ) newLine->setSelected( true );
             }
             remNullLines();

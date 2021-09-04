@@ -29,9 +29,9 @@ class MAINMODULE_EXPORT Connector : public Component
 {
     Q_OBJECT
     Q_PROPERTY( QStringList pointList  READ pointList  WRITE setPointList )
-    Q_PROPERTY( QString     startpinid READ startPinId WRITE setStartPinId )
-    Q_PROPERTY( QString     endpinid   READ endPinId   WRITE setEndPinId )
-    Q_PROPERTY( QString     enodeid    READ enodId     WRITE setEnodId )
+    Q_PROPERTY( QString     startpinid READ startPinId )
+    Q_PROPERTY( QString     endpinid   READ endPinId   )
+    Q_PROPERTY( QString     enodeid    READ enodId     )
 
     public:
 
@@ -42,19 +42,16 @@ class MAINMODULE_EXPORT Connector : public Component
 
         // PROPERTIES-----------------------------------
         QStringList pointList() { refreshPointList(); return m_pointList; }
-        void setPointList( QStringList pl ) { m_pointList = pl;}
+        void setPointList( QStringList pl );
 
         QString startPinId() { return m_startpinid;}
-        void setStartPinId( QString pinid) { m_startpinid = pinid; }
         QString endPinId() { return m_endpinid; }
-        void setEndPinId( QString pinid) { m_endpinid = pinid; }
-
         QString enodId();
-        void setEnodId( QString /*nodid*/ ){;}
         // END PROPERTIES-------------------------------
 
         virtual void remove() override;
 
+        void setPointListData( QStringList pl ) { m_pointList = pl; }
         void refreshPointList();
 
         Pin* startPin() { return m_startPin;}
@@ -72,14 +69,10 @@ class MAINMODULE_EXPORT Connector : public Component
         void incActLine() { if( m_actLine < m_conLineList.size()-1 ) m_actLine += 1; }
 
         ConnectorLine* addConLine( int x1, int y1, int x2, int y2, int index );
-
         void addConLine( ConnectorLine* line, int index );
-        void remConLine( ConnectorLine* line  );
         void remNullLines();
-        void remLines();
 
         void updateConRoute( Pin* nod, QPointF this_point );
-
         void closeCon( Pin* endpin, bool connect=false );
 
         /**
@@ -107,6 +100,8 @@ class MAINMODULE_EXPORT Connector : public Component
         virtual void setSelected( bool selected );
 
     private:
+        void remConLine( ConnectorLine* line  );
+        void remLines();
         void updateCon();
         void connectLines( int index1, int index2 );
         void disconnectLines( int index1, int index2 );

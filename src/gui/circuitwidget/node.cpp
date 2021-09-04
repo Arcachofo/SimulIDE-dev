@@ -117,7 +117,7 @@ void Node::joinConns( int c0, int c1 )
         }
     else while( !list1.isEmpty() ) plist.append(list1.takeFirst());
 
-    con->setPointList( plist );
+    con->setPointListData( plist );
     
     int p1x = plist.first().toInt();
     int p1y = plist.at(1).toInt();
