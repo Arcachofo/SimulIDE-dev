@@ -14,90 +14,16 @@ QT += concurrent
 QT += serialport
 QT += multimedia widgets
 
-SOURCES += ../src/*.cpp \
-    ../src/gui/*.cpp \
-    ../src/gui/circuitwidget/*.cpp \
-    ../src/gui/circuitwidget/components/*.cpp \
-    ../src/gui/circuitwidget/components/active/*.cpp \
-    ../src/gui/circuitwidget/components/logic/*.cpp \
-    ../src/gui/circuitwidget/components/mcu/*.cpp \
-    ../src/gui/circuitwidget/components/meters/*.cpp \
-    ../src/gui/circuitwidget/components/other/*.cpp \
-    ../src/gui/circuitwidget/components/outputs/*.cpp \
-    ../src/gui/circuitwidget/components/outputs/displays/*.cpp \
-    ../src/gui/circuitwidget/components/passive/*.cpp \
-    ../src/gui/circuitwidget/components/sources/*.cpp \
-    ../src/gui/circuitwidget/components/switches/*.cpp \
-    ../src/gui/dataplotwidget/*.cpp \
-    ../src/gui/serial/*.cpp \
-    ../src/gui/componentselector/*.cpp \
-    ../src/gui/filebrowser/*.cpp \
-    ../src/gui/editorwidget/*.cpp \
-    ../src/gui/editorwidget/findreplacedialog/*.cpp \
-    ../src/gui/dialogs/*.cpp \
-    ../src/gui/dialogs/properties/*.cpp \
-    ../src/gui/memory/*.cpp \
-    ../src/simulator/*.cpp \
-    ../src/simulator/elements/*.cpp \
-    ../src/simulator/elements/active/*.cpp \
-    ../src/simulator/elements/outputs/*.cpp \
-    ../src/simulator/elements/passive/*.cpp \
-    ../src/simulator/elements/processors/*.cpp \
-    ../src/gpsim/*.cc \
-    ../src/gpsim/devices/*.cc \
-    ../src/gpsim/modules/*.cc \
-    ../src/gpsim/registers/*.cc \
-    ../src/mcusim/*.cpp \
-    ../src/mcusim/cores/*.cpp \
-    ../src/mcusim/cores/avr/*.cpp \
-    ../src/mcusim/cores/i51/*.cpp \
-    ../src/mcusim/cores/pic/*.cpp \
-    ../src/mcusim/modules/usart/*.cpp \
-    ../src/mcusim/modules/twi/*.cpp \
-    ../src/mcusim/modules/spi/*.cpp
+SOURCES += $$files( $$PWD/src/*.cpp, true ) \
+           $$files( $$PWD/src/gpsim/*.cc, true ) \
 
-HEADERS += ../src/*.h \
-    ../src/gui/*.h \
-    ../src/gui/circuitwidget/*.h \
-    ../src/gui/circuitwidget/components/*.h \
-    ../src/gui/circuitwidget/components/active/*.h \
-    ../src/gui/circuitwidget/components/logic/*.h \
-    ../src/gui/circuitwidget/components/mcu/*.h \
-    ../src/gui/circuitwidget/components/meters/*.h \
-    ../src/gui/circuitwidget/components/other/*.h \
-    ../src/gui/circuitwidget/components/outputs/*.h \
-    ../src/gui/circuitwidget/components/outputs/displays/*.h \
-    ../src/gui/circuitwidget/components/passive/*.h \
-    ../src/gui/circuitwidget/components/sources/*.h \
-    ../src/gui/circuitwidget/components/switches/*.h \
-    ../src/gui/dataplotwidget/*.h \
-    ../src/gui/serial/*.h \
-    ../src/gui/componentselector/*.h \
-    ../src/gui/filebrowser/*.h \
-    ../src/gui/editorwidget/*.h \
-    ../src/gui/editorwidget/findreplacedialog/*.h \
-    ../src/gui/dialogs/*.h \
-    ../src/gui/dialogs/properties/*.h \
-    ../src/gui/memory/*.h \
-    ../src/simulator/*.h \
-    ../src/simulator/elements/*.h \
-    ../src/simulator/elements/active/*.h \
-    ../src/simulator/elements/outputs/*.h \
-    ../src/simulator/elements/passive/*.h \
-    ../src/simulator/elements/processors/*.h \
-    ../resources/data/*.xml \
-    ../src/gpsim/*.h \
-    ../src/gpsim/devices/*.h \
-    ../src/gpsim/modules/*.h \
-    ../src/gpsim/registers/*.h \
-    ../src/mcusim/*.h \
-    ../src/mcusim/cores/*.h \
-    ../src/mcusim/cores/avr/*.h \
-    ../src/mcusim/cores/i51/*.h \
-    ../src/mcusim/cores/pic/*.h \
-    ../src/mcusim/modules/usart/*.h \
-    ../src/mcusim/modules/twi/*.h \
-    ../src/mcusim/modules/spi/*.h
+HEADERS = $$files( $$PWD/src/*.h, true )
+
+TRANSLATIONS = $$files( $$PWD/resources/translations/*.ts )
+
+FORMS += $$files( $$PWD/src/*.ui, true )
+
+RESOURCES = ../src/application.qrc
 
 INCLUDEPATH += ../src \
     ../src/gui \
@@ -141,29 +67,6 @@ INCLUDEPATH += ../src \
     ../src/mcusim/modules/usart \
     ../src/mcusim/modules/twi \
     ../src/mcusim/modules/spi
-
-TRANSLATIONS +=  \
-    ../resources/translations/simulide.ts \
-    ../resources/translations/simulide_cz.ts \
-    ../resources/translations/simulide_de.ts \
-    ../resources/translations/simulide_en.ts \
-    ../resources/translations/simulide_es.ts \
-    ../resources/translations/simulide_fr.ts \
-    ../resources/translations/simulide_pt_PT.ts \
-    ../resources/translations/simulide_pt_BR.ts \
-    ../resources/translations/simulide_ru.ts \
-    ../resources/translations/simulide_nl.ts \
-    ../resources/translations/simulide_it.ts \
-    ../resources/translations/simulide_tr.ts
-
-FORMS +=   \
-    ../src/gui/dialogs/*.ui \
-    ../src/gui/dialogs/properties/*.ui \
-    ../src/gui/memory/*.ui \
-    ../src/gui/dataplotwidget/*.ui \
-    ../src/gui/serial/serialmon.ui
-
-RESOURCES = ../src/application.qrc
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers

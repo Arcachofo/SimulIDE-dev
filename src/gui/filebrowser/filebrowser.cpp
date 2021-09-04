@@ -76,7 +76,7 @@ void FileBrowser::open()
     else  
     {
         if( path.endsWith(".simu")
-         || path.endsWith(".sim5") ) CircuitWidget::self()->loadCirc( path );
+         || path.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( path );
         else                         EditorWindow::self()->loadFile( path );
     }
 }

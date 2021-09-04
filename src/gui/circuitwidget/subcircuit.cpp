@@ -107,13 +107,13 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
                 {
                     path = folder+"/"+m_name+"/"+m_name;
                     m_pkgeFile = dataDir.filePath( path+".package" );
-                    subcFile = dataDir.filePath( path+".sim5" );
+                    subcFile = dataDir.filePath( path+".sim1" );
                 }
                 if( element.hasAttribute( "folder") )
                 {
                     path = element.attribute( "folder" )+"/"+m_name+"/"+m_name;
                     m_pkgeFile = dataDir.filePath( path+".package" );
-                    subcFile = dataDir.filePath( path+".sim5" );
+                    subcFile = dataDir.filePath( path+".sim1" );
                 }
 
                 if( element.hasAttribute( "package") )
@@ -124,8 +124,8 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
                 if( element.hasAttribute( "subcircuit") )
                 {
                     subcFile = dataDir.filePath( element.attribute( "subcircuit" ) );
-                    if( subcFile.endsWith( ".simu" ) ) subcFile= changeExt( subcFile, ".sim5" );
-                    if( !subcFile.endsWith( ".sim5" )) subcFile += ".sim5" ;
+                    if( subcFile.endsWith( ".simu" ) ) subcFile= changeExt( subcFile, ".sim1" );
+                    if( !subcFile.endsWith( ".sim1" )) subcFile += ".sim1" ;
                 }
                 if( !QFile::exists( subcFile) ) subcFile = changeExt( subcFile, ".simu" );
 

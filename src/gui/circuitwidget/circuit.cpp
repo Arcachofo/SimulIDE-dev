@@ -71,7 +71,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView*  p
 
     new_connector = NULL;
     m_seqNumber   = 0;
-    m_backupPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim5";
+    m_backupPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim1";
 
     m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
     m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
@@ -646,7 +646,7 @@ void Circuit::importCirc(  QPointF eventpoint  )
                                           tr("Circuits (*.sim*);;All files (*.*)"));
 
     if( !fileName.isEmpty()
-     && (fileName.endsWith(".simu") || fileName.endsWith(".sim5")) )
+     && (fileName.endsWith(".simu") || fileName.endsWith(".sim1")) )
         loadCircuit( fileName );
 
     m_pasting = false;

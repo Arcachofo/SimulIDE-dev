@@ -34,6 +34,11 @@ Changes:
     - New MCUs: regSignal optimization.
     - Component: setValue does not change units.
     
+  RC8:
+    - Completely remove SimAvr (now only New AVRs available).
+    - Circuit ToolBar: Move settings menu to left side.
+    - Use new extension for circuit files ".sim5".
+    
 New Features:
   RC1:
     - Dutch translation by mvandorp.
@@ -82,7 +87,7 @@ New Features:
     - Logic Analizer: change Time Pos by mouse click+move.
     - Logic Analizer: Condition Trigger.
     
-RC6:
+  RC6:
     - Subcircuit: Name label editable.
     - AVR SPI: Basic case working.
     - New MCUs: Watchdog Timer basic implementation.
@@ -103,6 +108,19 @@ RC6:
     - Editor: GcBasic sintax updated to match GCB IDE.
     - Warning Message after crash: save backup file.
   
+  RC8:
+    - New MCUs: Integrate with Editor/Compiler/debugger.
+    - Meters: Switch Pins property.
+    - Portuguese translation added.
+    - Mono font embeded (keeps consistency across systems).
+    - McuMonitor: Change font size and color & PC-STATUS position.
+    - McuMonitor: Unify "Variables" & "RAM" tabs
+    - McuMonitor: PC & flash by PGM word size or byte.
+    - McuMonitor: Added "Jump to address" option.
+    - MemTable: show ASCII by byte (2 for 16 bits and so on).
+    - Editor/Debugger: "clear All Breakpoints" action added.
+    - Editor/Compiler: Added "compile for debug" option.
+    
 Bug Fixes:
   RC1:
     - Error in 8051 Component name in mcs-51_test.simu.
@@ -285,6 +303,45 @@ Bug Fixes:
     - Meters: Output pin not working.
     - Variable Resistors Properties: several issues.
     - Monospace font not working in MacOs version.
+    
+  RC8:
+    - New MCUs: Serial Monitor not closing at MCU delete.
+    - Arduinos & Shields: set Transforming origin to center.
+    - Potentiometer not loading value correctly.
+    - New MCUs: Usart not working.
+    - New MCUs: Modules not properly deleted.
+    - Arduino custom board: don't include default context.
+    - MCUs (old & new): McuMonitor not saving variable list.
+    - New MCUs: eeprom not saved to .simu file.
+    - HD44780 LCD: Error in cursor position, Blink color and speed.
+    - Arduino Compiler: add quotes to paths in Linux version as well.
+    - Decoder (4 to 10/16): Output0 keeps on.
+    - RAM/ROM not working.
+    - Function Component: Error using Analog Output.
+    - New MCUs: Serial Monitor several problems.
+    - New AVRs: Several errors in PWM.
+    - New MCUs: Mcu Monitor not finding variables.
+    - New AVRs: ADC left adjust not working.
+    - Logic Components not hidding Pins in Boards.
+    - New MCUs: device label not visible.
+    - SubPackage::remove() not removing Poperties Dialog.
+    - Crash deleting Subcircuits if selected in a group.
+    - Code Editor: Error in properties dialog.
+    - Arduino Compiler: override Board in file.
+    - Bus: startBit not Initialized.
+    - New MCUs: Solve permanent Input or Output issue.
+    - Arduino Compiler: missing data types & multiple declaration.
+    - New AVRs: Errors in WDT.
+    - New AVRs: Error in ADC autotrigger.
+    - New MCUs: Pins animation not updating.
+    - New MCUs: Port Input Register not updated if Pin is not connected.
+    - RAM/ROM: not reading/writting at address pins change.
+    - Editor/Debugger: Keep breakpoints, don't force bebug line visible.
+    - SubPackage: Errors moving Pins.
+    - WS2812 Led: chaining leds not working.
+    - Subcircuit categories not working in translations.
+    - Missing avra includes.
+    - Opening Circuits with Arduinos not centered in view.
     
 New Components:
   RC1:

@@ -215,7 +215,7 @@ void CodeEditor::setFile( const QString filePath )
          ||  m_fileExt == "html"
          ||  m_fileExt == "package"
          ||  m_fileExt == "mcu"
-         ||  m_fileExt == "sim5"
+         ||  m_fileExt == "sim1"
          ||  m_fileExt == "simu" )
     {
         m_hlighter->readSintaxFile( sintaxPath + "xml.sintax" );

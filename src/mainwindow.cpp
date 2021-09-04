@@ -74,7 +74,7 @@ MainWindow::MainWindow()
     loadPlugins();
     applyStyle();
 
-    QString backPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim5";
+    QString backPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim1";
     if( QFile::exists( backPath ) )
     {
         CircuitWidget::self()->loadCirc( backPath );

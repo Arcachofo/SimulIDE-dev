@@ -279,7 +279,7 @@ void CircuitWidget::openCirc()
 void CircuitWidget::loadCirc( QString path )
 {
     if( !path.isEmpty()
-      &&(path.endsWith(".simu") || path.endsWith(".sim5")) )
+      &&(path.endsWith(".simu") || path.endsWith(".sim1")) )
     {
         newCircuit();
         Circuit::self()->loadCircuit( path );
@@ -322,8 +322,8 @@ void CircuitWidget::saveCirc( QString file )
 {
     emit saving(); // Used by SubPackage
 
-    if     (  file.endsWith(".simu") ) file = changeExt( file, ".sim5" );
-    else if( !file.endsWith(".sim5") ) file.append(".sim5");
+    if     (  file.endsWith(".simu") ) file = changeExt( file, ".sim1" );
+    else if( !file.endsWith(".sim1") ) file.append(".sim1");
 
     if( Circuit::self()->saveCircuit( file ) )
     {
