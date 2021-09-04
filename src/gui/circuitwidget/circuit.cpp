@@ -299,7 +299,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                     joint = new Node( this, type, label );
                     joint->setSelected( true );
                 }
-                else joint = new Node( this, type, objNam );
+                else joint = new Node( this, type, label );
 
                 loadObjectProperties( &element, joint );
                 compList.append( joint );
@@ -318,7 +318,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                 {
                     if( objNam == "" ) objNam = label;
                     m_idMap[objNam] = label;              // Map simu id to new id
-                    comp = createItem( type, objNam );
+                    comp = createItem( type, label );
                 }
                 else
                 {
