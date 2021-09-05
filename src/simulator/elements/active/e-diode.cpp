@@ -64,7 +64,8 @@ void eDiode::voltChanged()
     double deltaR = m_imped;
     double deltaV = m_threshold;
 
-    if( (m_threshold-m_voltPN) > 1e-6 )   // Not conducing
+    double delta = m_threshold-m_voltPN;
+    if( delta > 1e-12 )   // Not conducing
     {
         if( (m_zenerV > 0) && (m_voltPN <-m_zenerV) )
             deltaV =-m_zenerV;
