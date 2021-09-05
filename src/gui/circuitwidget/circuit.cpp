@@ -253,6 +253,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                         enode = new eNode( "Circ_eNode-"+newSceneId() );
                         nodMap[enodeId] = enode;
                     }
+                    con->setEnode( enode );
                     startpin->registerPins( enode );
                     endpin->registerPins( enode );
                     conList.append( con );
