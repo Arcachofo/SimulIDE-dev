@@ -55,7 +55,7 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
     }
     else
     {
-        m_endPin   = 0l;
+        m_endPin   = NULL;
         m_endpinid = "";
     }
     m_idLabel->setVisible( false );
@@ -105,6 +105,8 @@ void Connector::remConLine( ConnectorLine* line  )
 
 void Connector::setPointList( QStringList plist )
 {
+    remLines();
+
     m_pointList = plist;
 
     int p1x = plist.first().toInt();
@@ -196,8 +198,8 @@ void Connector::disconnectLines( int index1, int index2 )
     ConnectorLine* line1 = m_conLineList.at( index1 );
     ConnectorLine* line2 = m_conLineList.at( index2 );
 
-    line1->setNextLine( 0l );
-    line2->setPrevLine( 0l );
+    line1->setNextLine( NULL );
+    line2->setPrevLine( NULL );
 }
 
 void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
@@ -208,7 +210,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
     bool diagonal = false;
     int length = m_conLineList.length();
     ConnectorLine* line;
-    ConnectorLine* preline = 0l;
+    ConnectorLine* preline = NULL;
 
     if( pin == m_startPin )
     {
@@ -240,7 +242,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
         if( length > 1 )
         {
             preline = m_conLineList.at( m_lastindex-1 );
-            if( pin != 0l ) m_actLine = m_lastindex-1;
+            if( pin != NULL ) m_actLine = m_lastindex-1;
         }
         if( diagonal || m_freeLine ) 
         {
@@ -372,8 +374,8 @@ void Connector::closeCon( Pin* endpin, bool connect  )
         if( m_isBus ) newEnode->setIsBus( true );
 
         // We will get all ePins from stratPin and endPin nets an add to new eNode
-        m_startPin->setConPin( 0l );
-        m_endPin->setConPin( 0l );
+        m_startPin->setConPin( NULL );
+        m_endPin->setConPin( NULL );
 
         m_startPin->registerPins( newEnode );
         m_endPin->registerPins( newEnode );

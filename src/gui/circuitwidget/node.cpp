@@ -21,29 +21,19 @@
 #include "connector.h"
 #include "circuit.h"
 
-
 Node::Node( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
 {
     setZValue(2);
     
     m_color = QColor( Qt::black );
-    
     m_isBus = false;
-    
-    QString nodid;
-    QPoint nodpos;
 
     for ( int i=0; i<3; i++ )
     {
-        nodid = id;
-        nodid.append(QString("-"));
-        nodid.append( uchar(48+i) );
-        nodpos = QPoint( 0,0);
-        m_pin[i] = new Pin( 90*i, nodpos, nodid, i, this);
+        m_pin[i] = new Pin( 90*i, QPoint( 0,0), id+"-"+uchar(48+i), i, this );
         m_pin[i]->setLength( 0 );
-    }
-}
+}   }
 Node::~Node(){}
 
 void Node::inStateChanged( int rem ) // Called by pin
@@ -53,8 +43,7 @@ void Node::inStateChanged( int rem ) // Called by pin
     {
         for( int i=0; i< 3; i++) m_pin[i]->setIsBus( true );
         m_isBus = true;
-    }
-}
+}   }
 
 void Node::registerPins( eNode* enode )
 {
@@ -117,40 +106,19 @@ void Node::joinConns( int c0, int c1 )
         }
     else while( !list1.isEmpty() ) plist.append(list1.takeFirst());
 
-    con->setPointListData( plist );
-    
-    int p1x = plist.first().toInt();
-    int p1y = plist.at(1).toInt();
-    int p2x = plist.at(plist.size()-2).toInt();
-    int p2y = plist.last().toInt();
+    con->setPointList( plist );
 
-    int p0x = con->startPin()->scenePos().x();
-    int p0y = con->startPin()->scenePos().y();
-
-    con->addConLine( p0x,p0y, p1x, p1y, 0 );
-
-    int count = plist.size();
-    for (int i=2; i<count; i+=2)
-    {
-        p2x = plist.at(i).toInt();
-        p2y = plist.at(i+1).toInt();
-        con->addConLine( p1x, p1y, p2x, p2y, i/2 );
-        p1x = p2x;
-        p1y = p2y;
-    }
-    
-    pin0->setEnode( 0l );
-    con0->setStartPin( 0l );
-    con0->setEndPin( 0l );
+    pin0->setEnode( NULL );
+    con0->setStartPin( NULL );
+    con0->setEndPin( NULL );
     con0->remove();
     
-    pin1->setEnode( 0l );
-    con1->setStartPin( 0l );
-    con1->setEndPin( 0l );
+    pin1->setEnode( NULL );
+    con1->setStartPin( NULL );
+    con1->setEndPin( NULL );
     con1->remove();
 
     con->closeCon( pin1->conPin(), true );
-    con->remNullLines();
     
     Circuit::self()->addItem( con );
     if( this->isSelected() ) con->setSelected( true );
@@ -171,5 +139,3 @@ void Node::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 }
 
 #include "moc_node.cpp"
-
-

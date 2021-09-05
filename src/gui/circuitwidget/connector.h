@@ -51,7 +51,6 @@ class MAINMODULE_EXPORT Connector : public Component
 
         virtual void remove() override;
 
-        void setPointListData( QStringList pl ) { m_pointList = pl; }
         void refreshPointList();
 
         Pin* startPin() { return m_startPin;}

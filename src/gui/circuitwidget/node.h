@@ -36,8 +36,6 @@ class MAINMODULE_EXPORT Node : public Component
 
         void registerPins( eNode* enode );
 
-        //virtual void setChanged( bool changed );
-
         virtual void remove() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
