@@ -67,7 +67,8 @@ void McuPin::voltChanged()
     if( state == m_inpState ) return;
     m_inpState = state;
 
-    m_port->pinChanged( m_pinMask, state );
+    uint8_t val = state ? m_pinMask : 0;
+    m_port->pinChanged( m_pinMask, val );
 }
 
 void McuPin::setPortState( bool state )

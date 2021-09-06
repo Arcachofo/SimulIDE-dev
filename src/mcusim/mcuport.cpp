@@ -48,12 +48,14 @@ void McuPort::initialize()
 
 void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMask
 {
-    if( val ) m_pinState |= pinMask;
-    else      m_pinState &= ~pinMask;
+    uint8_t pinState = (m_pinState & ~pinMask) | (val & pinMask);
+
+    if( pinState == m_pinState ) return;
+    m_pinState = pinState;
 
     if( m_intMask & pinMask ) m_interrupt->raise(); // Pin change interrupt
 
-    m_mcu->writeReg( m_inAddr, m_pinState, false );
+    m_mcu->writeReg( m_inAddr, m_pinState, false ); // Write to RAM
 }
 
 void McuPort::outChanged( uint8_t val )
@@ -63,12 +65,12 @@ void McuPort::outChanged( uint8_t val )
 
     if( m_inAddr )  // write to Pin input state Register
     {
-        uint8_t pinDirs;
-        if( m_dirInv ) pinDirs = ~(*m_dirReg); // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
-        else           pinDirs =   *m_dirReg;
+        uint8_t outputs;
+        if( m_dirInv ) outputs = ~(*m_dirReg); // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
+        else           outputs =   *m_dirReg;
 
-        uint8_t newInReg = (val & pinDirs) | (*m_inReg & ~pinDirs);
-        m_mcu->writeReg( m_inAddr, newInReg, false );
+        uint8_t pinCh = outputs & changed;
+        if( pinCh ) pinChanged( pinCh, val );
     }
     for( int i=0; i<m_numPins; ++i )
     {
