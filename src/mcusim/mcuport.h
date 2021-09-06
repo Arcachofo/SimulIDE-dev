@@ -68,6 +68,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
         bool m_dirInv;
 
         uint8_t* m_outReg; // Pointer to m_ram[m_outAddr]
+        uint8_t* m_inReg;  // Pointer to m_ram[m_inAddr]
         uint8_t* m_dirReg; // Pointer to m_ram[m_dirAddr]
 
         uint16_t m_outAddr;

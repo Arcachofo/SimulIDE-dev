@@ -335,6 +335,7 @@ void McuCreator::createPort( QDomElement* p )
     {
         addr = mcu->getRegAddress( p->attribute( "inreg" ) );
         port->m_inAddr = addr;
+        port->m_inReg  = mcu->m_dataMem.data()+addr;
     }
     if( p->hasAttribute( "dirreg" ) ) // Connect to PORT Dir Register
     {
