@@ -40,6 +40,8 @@ class MAINMODULE_EXPORT Buffer : public Gate
 
         virtual QList<propGroup_t> propGroups() override;
 
+        virtual void setTristate( bool t ) override;
+
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 };

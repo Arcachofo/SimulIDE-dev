@@ -53,6 +53,12 @@ QList<propGroup_t> Buffer::propGroups()
     return pg;
 }
 
+void Buffer::setTristate( bool t )  // Activate or deactivate OE Pin
+{
+    LogicComponent::setTristate( t );
+    m_oePin->setLabelText( "" );
+}
+
 QPainterPath Buffer::shape() const
 {
     QPainterPath path;
