@@ -232,6 +232,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     con->setHidden( true, true );
                     con->setParentItem( this );
                     con->setPos( 0, 0 );
+                    con->setPointList( {0,0,0,0});
                     circ->conList()->removeOne( con );
                     startpin->registerPins( enode );
                     endpin->registerPins( enode );
