@@ -24,9 +24,12 @@
 
 #include "e-element.h"
 #include "component.h"
+#include "e-resistor.h"
+#include "e-pin.h"
 
 class LibraryItem;
 class IoPin;
+class eNode;
 
 class MAINMODULE_EXPORT Lm555 : public Component, public eElement
 {
@@ -41,27 +44,38 @@ class MAINMODULE_EXPORT Lm555 : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        virtual void stamp() override;
         virtual void initialize() override;
+        virtual void attach() override;
+        virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
         
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     protected:
-
         IoPin* m_output;
-        IoPin* m_cv;
-        IoPin* m_dis;
+        Pin* m_discharge;
 
-        double m_volt;
-        double m_voltLast;
+        Pin* m_Gnd;
+        Pin* m_Vcc;
+        Pin* m_cv;
+        Pin* m_trigger;
+        Pin* m_threshold;
+        Pin* m_Reset;
+
+        ePin m_ePinA;
+        ePin m_ePinB;
+        ePin m_ePinC;
+        ePin m_ePinD;
+
+        eResistor m_resA;
+        eResistor m_resB;
+        eResistor m_resD;
+
+        eNode* m_thrEnode;
+
+        double m_voltPos;
         double m_voltNeg;
-        double m_voltNegLast;
-        double m_voltHight;
-        double m_voltHightLast;
-        double m_disImp;
-        double m_disImpLast;
 
         uint64_t m_propDelay;
 
