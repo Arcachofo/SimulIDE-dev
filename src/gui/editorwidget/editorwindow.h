@@ -24,6 +24,8 @@
 #include "findreplacedialog.h"
 #include "compiler.h"
 
+class EditorProp;
+
 class EditorWindow : public QWidget
 {
     Q_OBJECT
@@ -39,6 +41,8 @@ class EditorWindow : public QWidget
         void enableStepOver( bool en ) { stepOverAct->setVisible( en ); }
 
         CodeEditor* getCodeEditor() { return (CodeEditor*)m_docWidget->currentWidget(); }
+        QStringList compilers() { return m_compilers.keys(); }
+        void loadCompiler( QString compName, Compiler* compiler );
 
     public slots:
         void loadFile(const QString &fileName);
@@ -48,6 +52,8 @@ class EditorWindow : public QWidget
         bool save();
         
     private slots:
+        void confEditor();
+        void confCompiler();
         void openRecentFile();
         void newFile();
         void open();
@@ -56,7 +62,7 @@ class EditorWindow : public QWidget
         void documentWasModified();
         void tabContextMenu( const QPoint & eventpoint );
         void tabChanged( int tab );
-        void setCompiler();
+        //void setCompiler();
         void reload();
 
         void cut()   { getCodeEditor()->cut(); }
@@ -88,6 +94,7 @@ class EditorWindow : public QWidget
         void createToolBars();
         void readSettings();
         void writeSettings();
+        void loadCompilers();
         void enableFileActs( bool enable );
         void enableDebugActs( bool enable );
         void setStepActs();
@@ -97,22 +104,30 @@ class EditorWindow : public QWidget
         bool saveFile( const QString &fileName );
         
         QString strippedName( const QString &n ){ return QFileInfo( n ).fileName(); }
-        
-        QGridLayout* baseWidgetLayout;
+
+        QFont m_font;
+
         QTabWidget*  m_docWidget;
 
-        QMenu        m_fileMenu;
         OutPanelText m_outPane;
-        Compiler     m_compiler;
+        //Compiler     m_compiler;
         
+        EditorProp* m_editDialog;
         FindReplaceDialog* findRepDiaWidget;
         
         QString     m_lastDir;
         QStringList m_fileList;
 
+        QHash<QString, QString> m_compilers;
+
+        QMenu m_settingsMenu;
+        QMenu m_fileMenu;
+
         QToolBar* m_editorToolBar;
         QToolBar* m_debuggerToolBar;
 
+        QAction* confEditAct;
+        QAction* confCompAct;
         QAction* recentFileActs[MaxRecentFiles];
         QAction* newAct;
         QAction* openAct;

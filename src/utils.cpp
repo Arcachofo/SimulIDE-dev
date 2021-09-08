@@ -87,7 +87,7 @@ QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
     if( !domDoc.setContent( &file, &error, &errorLine ) )
     {
          MessageBoxNB( caller, "Cannot set file to DomDocument:\n\n"+fileName );
-         qDebug() << "Circuit::loadCircuit Cannot set file to DomDocument:\n"<<fileName<<":\nLine"<<errorLine+"\n";
+         qDebug() << caller << "Cannot set file to DomDocument:\n"<<fileName<<":\nLine"<<errorLine+"\n";
          qDebug() << error;
          domDoc.clear();
     }

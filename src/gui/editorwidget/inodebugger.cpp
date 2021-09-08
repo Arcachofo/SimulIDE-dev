@@ -34,11 +34,8 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString fil
     Q_UNUSED( InoDebugger_properties );
     
     setObjectName( "Arduino Compiler/Debugger" );
-    
-    m_compilerPath = "";
-    m_compSetting = "arduino_Path";
-    
-    readSettings();
+
+    m_compName = "Arduino";
     
     m_boardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo";
     m_board = Uno;
@@ -55,6 +52,8 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString fil
     m_typesList["ulong"]  = "uint32";
     m_typesList["float"]  = "float32";
     m_typesList["double"] = "float32";
+
+    readSettings();
 }
 InoDebugger::~InoDebugger() {}
 
@@ -80,7 +79,7 @@ int InoDebugger::compile( bool )
     builder += ".exe";
     #endif
 
-    if( !QFile::exists( m_compilerPath+builder) )
+    if( !QFile::exists( m_toolPath+builder) )
     {
         m_outPane->appendText( "\nArduino" );
         toolChainNotFound();
@@ -131,7 +130,7 @@ int InoDebugger::compile( bool )
                     m_varList[ varName ] = m_typesList[ type ];
                 //qDebug() << "InoDebugger::compile  variable "<<type<<varName<<m_typesList[ type ];
     }   }   }
-    QString command  = m_compilerPath+"arduino";
+    QString command  = m_toolPath+"arduino";
 
     if( m_sketchBook.isEmpty() )
     {
@@ -149,11 +148,11 @@ int InoDebugger::compile( bool )
         getSkBook.close();
     }
     filePath           = addQuotes( filePath );
-    command            = addQuotes( m_compilerPath+"arduino-builder" );
-    QString hardware   = addQuotes( m_compilerPath+"hardware" );
-    QString toolsBuild = addQuotes( m_compilerPath+"tools-builder" );
-    QString toolsAvr   = addQuotes( m_compilerPath+"hardware/tools/avr" );
-    QString libraries  = addQuotes( m_compilerPath+"libraries" );
+    command            = addQuotes( m_toolPath+"arduino-builder" );
+    QString hardware   = addQuotes( m_toolPath+"hardware" );
+    QString toolsBuild = addQuotes( m_toolPath+"tools-builder" );
+    QString toolsAvr   = addQuotes( m_toolPath+"hardware/tools/avr" );
+    QString libraries  = addQuotes( m_toolPath+"libraries" );
     QString userLibrar = addQuotes( m_sketchBook+"/libraries" );
     QString cBuildPath = addQuotes( buildPath+"/build" );
     QString cCachePath = addQuotes( buildPath+"/cache" );
@@ -182,18 +181,21 @@ int InoDebugger::compile( bool )
     command += " -build-cache "+cCachePath;
     command += " "+filePath;
     m_firmware = "";
-    
-    m_outPane->appendLine( "\n"+command+"\n" );
+
+    m_outPane->appendLine( "\nExecuting:\n"+command+"\n" );
     
     m_compProcess.start( command );
     m_compProcess.waitForFinished(-1);
 
-    m_outPane->appendLine( "" );
     m_outPane->appendLine( "Build folder: "+buildPath );
     m_outPane->appendLine( "SketchBook:   "+m_sketchBook );
     m_outPane->appendLine( boardSource+" Board "+addQuotes( boardName ) );
+    m_outPane->appendLine( "" );
     
     QString p_stderr = m_compProcess.readAllStandardError();
+    QString p_stdout = m_compProcess.readAllStandardOutput();
+
+    if( !p_stdout.isEmpty() ) m_outPane->appendLine( p_stdout );
 
     int error = -1;
     if( !p_stderr.isEmpty() )
@@ -221,7 +223,7 @@ void InoDebugger::getVariables()
 {
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
     
-    QString objdump = m_compilerPath+"hardware/tools/avr/bin/avr-objdump";
+    QString objdump = m_toolPath+"hardware/tools/avr/bin/avr-objdump";
     QString elfPath = buildPath+"/build/"+m_fileName+".ino.elf";
     
     objdump = addQuotes( objdump );
@@ -263,8 +265,8 @@ void InoDebugger::mapFlashToSource()
     
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
     QString elfPath = buildPath+"/build/"+m_fileName+".ino.elf";
-    QString avrSize = m_compilerPath+"hardware/tools/avr/bin/avr-size";
-    QString addr2li = m_compilerPath+"hardware/tools/avr/bin/avr-addr2line";
+    QString avrSize = m_toolPath+"hardware/tools/avr/bin/avr-size";
+    QString addr2li = m_toolPath+"hardware/tools/avr/bin/avr-addr2line";
 
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );

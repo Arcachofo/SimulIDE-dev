@@ -31,13 +31,12 @@ B16AsmDebugger::B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane, QStri
 {
     setObjectName( "B16 asm Compiler" );
 
-    m_compilerPath = "";
-    m_compSetting = "SAC_Path";
-
+    m_compName = "SAC";
     m_codeBits = 0;
-    
-    readSettings();
+
     loadCodes();
+
+    readSettings();
 }
 B16AsmDebugger::~B16AsmDebugger() {}
 
@@ -121,9 +120,9 @@ int B16AsmDebugger::compile( bool )
 
 void B16AsmDebugger::loadCodes()
 {
-    if( m_compilerPath.isEmpty() ) return;
+    if( m_toolPath.isEmpty() ) return;
 
-    QStringList lines = fileToStringList( m_compilerPath+"opcodes", "B16AsmDebugger::loadCodes" );
+    QStringList lines = fileToStringList( m_toolPath+"opcodes", "B16AsmDebugger::loadCodes" );
     QString li = "";
 
     while( li.isEmpty() )

@@ -34,7 +34,6 @@
 #include "simulator.h"
 #include "circuitwidget.h"
 #include "editorwindow.h"
-#include "editorprop.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
 
@@ -49,13 +48,14 @@ QStringList CodeEditor::m_picInstr = QString("addlw addwf andlw andwf bcf bov bs
                 .split(" ");
 QStringList CodeEditor::m_avrInstr = QString("add adc adiw sub subi sbc sbci sbiw andi ori eor com neg sbr cbr dec tst clr ser mul rjmp ijmp jmp rcall icall ret reti cpse cp cpc cpi sbrc sbrs sbic sbis brbs brbc breq brne brcs brcc brsh brlo brmi brpl brge brlt brhs brhc brts brtc brvs brvc brie brid mov movw ldi lds ld ldd sts st std lpm in out push pop lsl lsr rol ror asr swap bset bclr sbi cbi bst bld sec clc sen cln sez clz sei cli ses cls sev clv set clt seh clh wdr")
                 .split(" ");
- 
-bool  CodeEditor::m_showSpaces = false;
-bool  CodeEditor::m_spaceTabs  = false;
-bool  CodeEditor::m_driveCirc  = false;
-int   CodeEditor::m_fontSize = 13;
-int   CodeEditor::m_tabSize = 4;
 
+bool CodeEditor::m_showSpaces = false;
+bool CodeEditor::m_spaceTabs  = false;
+bool CodeEditor::m_driveCirc  = false;
+int  CodeEditor::m_fontSize = 13;
+int  CodeEditor::m_tabSize = 4;
+QString CodeEditor::m_tab;
+QList<CodeEditor*> CodeEditor::m_documents;
 QFont CodeEditor::m_font = QFont();
 
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
@@ -63,8 +63,15 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           , Updatable()
 {
     Q_UNUSED( CodeEditor_properties );
+
+    m_compDialog = NULL;
+    m_documents.append( this );
     
     setObjectName( "Editor" );
+    m_documents.append( this );
+
+    m_sintaxPath  = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/sintax/");
+    m_compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");
     
     m_outPane   = outPane;
     m_lNumArea  = new LineNumberArea( this );
@@ -76,7 +83,6 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 
     m_isCompiled= false;
     m_driveCirc = false;
-    m_propDialog = NULL;
 
     m_help = "";
     m_state = DBG_STOPPED;
@@ -88,10 +94,10 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     setFont( m_font );
 
     QSettings* settings = MainWindow::self()->settings();
-    
+
     if( settings->contains( "Editor_show_spaces" ) )
         setShowSpaces( settings->value( "Editor_show_spaces" ).toBool() );
-        
+
     if( settings->contains( "Editor_tab_size" ) )
         setTabSize( settings->value( "Editor_tab_size" ).toInt() );
     else setTabSize( 4 );
@@ -102,7 +108,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     bool spacesTab = false;
     if( settings->contains( "Editor_spaces_tabs" ) )
         spacesTab = settings->value( "Editor_spaces_tabs" ).toBool();
-        
+
     setSpaceTabs( spacesTab );
 
     QPalette p = palette();
@@ -125,13 +131,14 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 }
 CodeEditor::~CodeEditor()
 {
+    m_documents.removeAll( this );
     if( m_debugger ) delete m_debugger;
 
-    if( !m_propDialog ) return;
+    if( !m_compDialog ) return;
 
-    m_propDialog->setParent( NULL );
-    m_propDialog->close();
-    m_propDialog->deleteLater();
+    m_compDialog->setParent( NULL );
+    m_compDialog->close();
+    m_compDialog->deleteLater();
 }
 
 void CodeEditor::setFile( const QString filePath )
@@ -139,13 +146,6 @@ void CodeEditor::setFile( const QString filePath )
     m_isCompiled= false;
     if( m_file == filePath ) return;
 
-    if( m_propDialog )
-    {
-        m_propDialog->setParent( NULL );
-        m_propDialog->close();
-        m_propDialog->deleteLater();
-        m_propDialog = NULL;
-    }
     if( m_debugger )delete m_debugger;
     m_debugger = NULL;
 
@@ -161,23 +161,21 @@ void CodeEditor::setFile( const QString filePath )
 
     QDir::setCurrent( m_file );
 
-    QString sintaxPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/sintax/");
-    QString compilerPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");
-
     if( m_fileExt == "gcb" )
     {
-        m_hlighter->readSintaxFile( sintaxPath + "gcbasic.sintax" );
+        m_hlighter->readSintaxFile( m_sintaxPath + "gcbasic.sintax" );
 
         m_debugger = new GcbDebugger( this, m_outPane, filePath );
-        m_debugger->loadCompiler( compilerPath+"gcbcompiler.xml" );
+        m_debugger->loadCompiler( m_compilsPath+"gcbcompiler.xml" );
     }
     else if( m_fileExt == "cpp"
           || m_fileExt == "c"
           || m_fileExt == "ino"
           || m_fileExt == "h" )
     {
-        m_hlighter->readSintaxFile( sintaxPath + "cpp.sintax" );
+        m_hlighter->readSintaxFile( m_sintaxPath + "cpp.sintax" );
         if( m_fileExt == "ino" ) m_debugger = new InoDebugger( this, m_outPane, filePath );
+        else                     m_debugger = new BaseDebugger( this, m_outPane, filePath );
     }
     else if( m_fileExt == "asm" ) // We should identify if pic or avr asm
     {
@@ -194,7 +192,7 @@ void CodeEditor::setFile( const QString filePath )
         {
             m_outPane->appendLine( "Pic asm\n" );
 
-            QString path = sintaxPath + "pic14asm.sintax";
+            QString path = m_sintaxPath + "pic14asm.sintax";
             m_hlighter->readSintaxFile( path );
 
             m_debugger = new PicAsmDebugger( this, m_outPane, filePath );
@@ -203,11 +201,11 @@ void CodeEditor::setFile( const QString filePath )
         {
             m_outPane->appendLine( "Avr asm\n" );
 
-            QString path = sintaxPath + "avrasm.sintax";
+            QString path = m_sintaxPath + "avrasm.sintax";
             m_hlighter->readSintaxFile( path );
 
             m_debugger = new AvrAsmDebugger( this, m_outPane, filePath );
-            m_debugger->loadCompiler( compilerPath+"avracompiler.xml" );
+            m_debugger->loadCompiler( m_compilsPath+"avracompiler.xml" );
         }
         else m_outPane->appendLine( "Unknown\n" );
     }
@@ -218,16 +216,17 @@ void CodeEditor::setFile( const QString filePath )
          ||  m_fileExt == "sim1"
          ||  m_fileExt == "simu" )
     {
-        m_hlighter->readSintaxFile( sintaxPath + "xml.sintax" );
+        m_hlighter->readSintaxFile( m_sintaxPath + "xml.sintax" );
     }
     else if( m_fileName.toLower() == "makefile"  )
     {
-        m_hlighter->readSintaxFile( sintaxPath + "makef.sintax" );
+        m_hlighter->readSintaxFile( m_sintaxPath + "makef.sintax" );
     }
     else if( m_fileExt == "sac" )
     {
         m_debugger = new B16AsmDebugger( this, m_outPane, filePath );
-}   }
+    }
+}
 
 int CodeEditor::getSintaxCoincidences( QString& fileName, QStringList& instructions )
 {
@@ -253,7 +252,7 @@ int CodeEditor::getSintaxCoincidences( QString& fileName, QStringList& instructi
     return coincidences;
 }
 
-void CodeEditor::setCompilerPath()
+/*void CodeEditor::setCompilerPath()
 {
     if( m_debugger ) m_debugger->getCompilerPath();
     else
@@ -262,7 +261,7 @@ void CodeEditor::setCompilerPath()
                                         tr( "Please save the Document first" ) );
         else MessageBoxNB( "CodeEditor::setCompilerPath",
                        tr( "No Compiler available for: %1 files" ).arg(m_fileExt));
-}   }
+}   }*/
 
 void CodeEditor::compile( bool debug )
 {
@@ -274,7 +273,6 @@ void CodeEditor::compile( bool debug )
     m_isCompiled = false;
     
     m_outPane->appendLine( "-------------------------------------------------------" );
-    m_outPane->appendLine( "Exec: ");
 
     if( m_fileName.toLower() == "makefile" )          // Is a Makefile, make it
     {
@@ -595,34 +593,41 @@ void CodeEditor::setFontSize( int size )
 {
     m_fontSize = size;
     m_font.setPixelSize( size );
-    setFont( m_font );
-    
     MainWindow::self()->settings()->setValue( "Editor_font_size", QString::number(m_fontSize) );
-    
-    setTabSize( m_tabSize );
+
+    for( CodeEditor* doc : m_documents )
+    {
+        doc->setFont( m_font );
+        doc->setTabSize( m_tabSize );
+    }
 }
 
 void CodeEditor::setTabSize( int size )
 {
     m_tabSize = size;
-    setTabStopWidth( m_tabSize*m_fontSize*2/3 );
-    
     MainWindow::self()->settings()->setValue( "Editor_tab_size", QString::number(m_tabSize) );
-    
-    if( m_spaceTabs ) setSpaceTabs( true );
+
+    for( CodeEditor* doc : m_documents )
+    {
+        doc->setTabStopWidth( m_tabSize*m_fontSize*2/3 );
+        if( m_spaceTabs ) doc->setSpaceTabs( true );
+    }
 }
 
 void CodeEditor::setShowSpaces( bool on )
 {
     m_showSpaces = on;
-    
-    QTextOption option =  document()->defaultTextOption();
-    
-    if( on ) option.setFlags(option.flags() | QTextOption::ShowTabsAndSpaces);
-    else     option.setFlags(option.flags() & ~QTextOption::ShowTabsAndSpaces);
 
-    document()->setDefaultTextOption(option);
-    
+    for( CodeEditor* doc : m_documents )
+    {
+        QTextOption option = doc->document()->defaultTextOption();
+
+        if( on ) option.setFlags(option.flags() | QTextOption::ShowTabsAndSpaces);
+        else     option.setFlags(option.flags() & ~QTextOption::ShowTabsAndSpaces);
+
+        doc->document()->setDefaultTextOption(option);
+    }
+
     if( m_showSpaces )
          MainWindow::self()->settings()->setValue( "Editor_show_spaces", "true" );
     else MainWindow::self()->settings()->setValue( "Editor_show_spaces", "false" );
@@ -638,7 +643,7 @@ void CodeEditor::setSpaceTabs( bool on )
         for( int i=0; i<m_tabSize; i++) m_tab += " ";
     }
     else m_tab = "\t";
-    
+
     if( m_spaceTabs )
          MainWindow::self()->settings()->setValue( "Editor_spaces_tabs", "true" );
     else MainWindow::self()->settings()->setValue( "Editor_spaces_tabs", "false" );
@@ -689,16 +694,16 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
 void CodeEditor::contextMenuEvent(QContextMenuEvent* event)
 {
     QMenu *menu = createStandardContextMenu();
-    QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
+    /*QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
     connect( propertiesAction, SIGNAL( triggered()),
-                         this, SLOT( slotProperties() ), Qt::UniqueConnection );
+                         this, SLOT( slotProperties() ), Qt::UniqueConnection );*/
     menu->exec(event->globalPos());
 }
 
-void CodeEditor::slotProperties()
+void CodeEditor::compProps()
 {
-    if( !m_propDialog ) m_propDialog = new EditorProp( this, m_debugger );
-    m_propDialog->show();
+    if( !m_compDialog ) m_compDialog = new CompilerProp( this, m_debugger );
+    m_compDialog->show();
 }
 
 void CodeEditor::indentSelection( bool unIndent )

@@ -26,12 +26,8 @@ GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane, QString fil
            : BaseDebugger( parent,outPane, filePath )
 {
     setObjectName( "GcBasic Compiler/Debugger" );
-    
-    m_compilerPath = "";
-    m_compSetting = "gcbasic_Path";
+
     type = 1;
-    
-    readSettings();
 
     m_typesList["byte"]    = "uint8";
     m_typesList["integer"] = "int16";

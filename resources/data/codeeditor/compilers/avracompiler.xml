@@ -1,16 +1,8 @@
 <!DOCTYPE SimulIDE>
 
-<!-- Example: /home/user/myfile.gcb                                     -->
-<!-- $filePath - "/home/user/myfile.gcb" - file complete path           -->
-<!-- $fileDir  - "/home/user/"           - path to file folder          -->
-<!-- $fileName - "myfile"                - file name (without extension)-->
-<!-- $fileExt  - ".gcb"                  - file extension (with dot)    -->
-<!-- $incDir   -                         - include dir                  -->
-
-<compiler 
-    name="Avra"
-    toolPath=""
-    command="avra"
-    incDir=""
-    arguments=" -W NoRegDef -l $fileDir$fileName.lst -I $incDir $filePath"
-/>
+<compiler name="Avra" inclPath="">
+    <step 
+        command="avra"
+        arguments=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"
+    />
+</compiler>

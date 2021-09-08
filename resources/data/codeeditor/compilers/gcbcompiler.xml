@@ -1,15 +1,9 @@
 <!DOCTYPE SimulIDE>
 
-<!-- Example: /home/user/myfile.gcb                                     -->
-<!-- $filePath - "/home/user/myfile.gcb" - file complete path           -->
-<!-- $fileDir  - "/home/user/"           - path to file folder          -->
-<!-- $fileName - "myfile"                - file name (without extension)-->
-<!-- $fileExt  - ".gcb"                  - file extension (with dot)    -->
-
-<compiler 
-    name="GcBasic"
-    toolPath="/home/user/GreatCowBasic/"
-    command="gcbasic"
-    arguments=" -NP -A:GCASM -R:text $filePath"
-    argsDebug=" -NP -K:L -A:GCASM -R:text $filePath"
-/>
+<compiler name="GcBasic">
+    <step 
+        command="gcbasic"
+        arguments=" -NP -A:GCASM -R:text $filePath"
+        argsDebug=" -NP -K:L -A:GCASM -R:text $filePath"
+    />
+</compiler>

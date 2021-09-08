@@ -23,7 +23,6 @@
 #include <QString>
 #include <QProcess>
 
-//class EditorWindow;
 class OutPanelText;
 
 class Compiler : public QObject
@@ -31,26 +30,46 @@ class Compiler : public QObject
     Q_OBJECT
 
     public:
-        Compiler( QObject* parent, OutPanelText* outPane );
+        Compiler( QObject* parent, OutPanelText* outPane, QString filePath);
         ~Compiler();
 
         void clearCompiler();
         void loadCompiler( QString file );
-        int compile( QString file, bool debug );
+        virtual int compile( bool debug );
+
+        QString compName() { return m_compName; }
+
+        QString compilerPath() { return m_toolPath; }
+        void setCompilerPath( QString path );
+        void getCompilerPath();
+
+        QString includePath() { return m_inclPath; }
+        void setIncludePath( QString path );
+        void getIncludePath();
+
+        void readSettings();
 
     protected:
+        int runStep( QString fullCommand );
+        QString replaceData( QString str );
+        QString getPath( QString msg );
+        void toolChainNotFound();
 
-        bool m_toolChain;
-
+        QString m_compName;
         QString m_toolPath;
-        QString m_command;
-        QString m_arguments;
-        QString m_argsDebug;
-        QString m_incDir;
+        QString m_inclPath;
+        QStringList m_command;
+        QStringList m_arguments;
+        QStringList m_argsDebug;
 
-        QProcess m_compilerProc;
+        QString m_firmware;
+        QString m_file;
+        QString m_fileDir;
+        QString m_fileName;
+        QString m_fileExt;
 
-        //EditorWindow* m_editor;
+        QProcess m_compProcess;
+
         OutPanelText* m_outPane;
 };
 

@@ -20,46 +20,40 @@
 #include "basedebugger.h"
 #include "baseprocessor.h"
 #include "editorwindow.h"
-#include "mainwindow.h"
+//#include "mainwindow.h"
 #include "simulator.h"
 #include "mcubase.h"
 
-static const char* BaseDebugger_properties[] = {
+/*static const char* BaseDebugger_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Drive Circuit"),
     QT_TRANSLATE_NOOP("App::Property","Compiler Path")
-};
+};*/
 
 BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
-            : Compiler( parent, outPane )
+            : Compiler( parent, outPane, filePath )
 {
-    Q_UNUSED( BaseDebugger_properties );
+    //Q_UNUSED( BaseDebugger_properties );
 
     m_editor  = parent;
-    m_outPane = outPane;
+
     m_appPath = QCoreApplication::applicationDirPath();
-    
-    QFileInfo fi = QFileInfo( filePath );
-    m_file     = filePath;
-    m_fileDir  = fi.absolutePath()+"/";
-    m_fileExt  = "."+fi.suffix();
-    m_fileName = fi.completeBaseName();
 
     m_processorType = 0;
     type = 0;
     
-    connect( &m_compProcess, SIGNAL(readyRead()), SLOT(ProcRead()), Qt::UniqueConnection );
+    //connect( &m_compProcess, SIGNAL(readyRead()), SLOT(ProcRead()), Qt::UniqueConnection );
 }
 BaseDebugger::~BaseDebugger( )
 {
     if( McuInterface::self() ) McuInterface::self()->getRamTable()->remDebugger( this );
 }
 
-int BaseDebugger::compile( bool debug )
+/*int BaseDebugger::compile( bool debug )
 {
     int error = Compiler::compile( m_file, debug );
     if( error == 0 ) m_firmware = m_fileDir+m_fileName+".hex";
     return error;
-}
+}*/
 
 bool BaseDebugger::upload()
 {
@@ -95,59 +89,20 @@ QString BaseDebugger::getVarType( QString var )
     return m_varList[ var ];
 }
 
-void BaseDebugger::ProcRead()
+/*void BaseDebugger::ProcRead()
 {
     while( m_compProcess.canReadLine() ) 
         m_outPane->appendText( QString::fromLocal8Bit( m_compProcess.readLine()) );
-}
+}*/
 
-void BaseDebugger::readSettings()
+/*bool BaseDebugger::driveCirc()
 {
-    QSettings* settings = MainWindow::self()->settings();
-    
-    if( settings->contains( m_compSetting ) )
-        m_compilerPath = settings->value( m_compSetting ).toString();
-}
-
-void BaseDebugger::getCompilerPath()
-{
-    m_compilerPath = QFileDialog::getExistingDirectory( NULL
-                         , tr("Select Compiler toolchain directory")
-                         , m_compilerPath
-                         , QFileDialog::ShowDirsOnly
-                         | QFileDialog::DontResolveSymlinks);
-
-    if( m_compilerPath != "" ) m_compilerPath += "/";
-
-    MainWindow::self()->settings()->setValue( m_compSetting, m_compilerPath);
-
-    m_outPane->appendLine( "\n"+tr("Using Compiler Path: ") );
-    m_outPane->appendLine( m_compilerPath+"\n" );
-}
-
-bool BaseDebugger::driveCirc()
-{
-    CodeEditor* ce = EditorWindow::self()->getCodeEditor();
-    return ce->driveCirc();
+    return m_editor->driveCirc();
 }
 
 void BaseDebugger::setDriveCirc( bool drive )
 {
-    CodeEditor* ce = EditorWindow::self()->getCodeEditor();
-    ce->setDriveCirc( drive );
-}
-
-void BaseDebugger::setCompilerPath( QString path )
-{
-    m_compilerPath = path;
-    MainWindow::self()->settings()->setValue( m_compSetting, m_compilerPath );
-}
-
-void BaseDebugger::toolChainNotFound()
-{
-    m_outPane->appendLine( tr(": ToolChain not found") );
-    m_outPane->appendLine( "\n"+tr("Right-Click on Document Tab to set Path")+"\n" );
-    QApplication::restoreOverrideCursor();
-}
+    m_editor->setDriveCirc( drive );
+}*/
 
 #include "moc_basedebugger.cpp"

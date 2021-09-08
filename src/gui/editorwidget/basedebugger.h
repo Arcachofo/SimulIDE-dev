@@ -31,28 +31,24 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         friend class McuInterface;
 
     Q_OBJECT
-    Q_PROPERTY( bool    Drive_Circuit READ driveCirc    WRITE setDriveCirc    DESIGNABLE true USER true )
-    Q_PROPERTY( QString Compiler_Path READ compilerPath WRITE setCompilerPath DESIGNABLE true USER true )
+    //Q_PROPERTY( bool    Drive_Circuit READ driveCirc    WRITE setDriveCirc    DESIGNABLE true USER true )
+    //Q_PROPERTY( QString Compiler_Path READ compilerPath WRITE setCompilerPath DESIGNABLE true USER true )
     
     public:
-        BaseDebugger( CodeEditor* parent=0, OutPanelText* outPane=0, QString filePath=0 );
+        BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath );
         ~BaseDebugger();
         
-        bool driveCirc();
-        void setDriveCirc( bool drive );
-
-        QString compilerPath() { return m_compilerPath; }
-        virtual void getCompilerPath();
-        virtual void setCompilerPath( QString path );
+        //bool driveCirc();
+        //void setDriveCirc( bool drive );
 
         virtual bool upload();
 
-        virtual int  compile( bool debug );
-        virtual void mapFlashToSource()=0;
+        //virtual int  compile( bool debug );
+        virtual void mapFlashToSource(){;}
 
         virtual int getValidLine( int pc );
 
-        virtual void readSettings();
+        //virtual void readSettings();
         virtual QString getVarType( QString var );
         virtual QStringList getVarList() { return m_varNames; }
         virtual QList<int> getSubLines() { return m_subLines; }
@@ -60,10 +56,9 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         int type;
         
     public slots:
-        void ProcRead();
+        //void ProcRead();
 
     protected:
-        void toolChainNotFound();
         virtual void getSubs(){;}
 
         CodeEditor* m_editor;
@@ -72,13 +67,6 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         int m_lastLine;
 
         QString m_appPath;
-        QString m_firmware;
-        QString m_file;
-        QString m_fileDir;
-        QString m_fileName;
-        QString m_fileExt;
-        QString m_compilerPath;
-        QString m_compSetting;
         
         QStringList m_varNames;
         QStringList m_subs;
@@ -88,8 +76,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         QHash<QString, QString> m_varList;
         QHash<int, int> m_flashToSource;            // Map flash adress to Source code line
         QHash<int, int> m_sourceToFlash;            // Map .asm code line to flash adress
-        
-        QProcess m_compProcess;
+
 };
 
 #endif

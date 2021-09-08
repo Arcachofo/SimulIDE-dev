@@ -1,0 +1,12 @@
+<!DOCTYPE SimulIDE>
+
+<compiler name="Avr-gcc">
+    <step 
+        command="avr-gcc"
+        arguments=" -Wall -g -Os -o $fileDir$fileName.bin $filePath"
+    />
+    <step 
+        command="avr-objcopy"
+        arguments=" -j .text -j .data -O ihex $fileDir$fileName.bin $fileDir$fileName.hex"
+    />
+</compiler>

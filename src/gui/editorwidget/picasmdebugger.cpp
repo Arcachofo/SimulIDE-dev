@@ -26,13 +26,12 @@ PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QStri
               : BaseDebugger( parent,outPane, filePath )
 {
     setObjectName( "PIC asm Compiler/Debugger" );
-    
-    m_compilerPath = "";
-    m_compSetting = "gpasm_Path";
-    
-    readSettings();
+
+    m_compName = "GpAsm";
 
     m_typesList["byte"]    = "uint8";
+
+    readSettings();
 }
 PicAsmDebugger::~PicAsmDebugger() {}
 
@@ -44,7 +43,7 @@ int PicAsmDebugger::compile( bool )
     QString file = m_fileDir+m_fileName+m_fileExt;
     
     m_outPane->appendLine( "-------------------------------------------------------\n" );
-    QString command = m_compilerPath+"gpasm";
+    QString command = m_toolPath+"gpasm";
     
     QProcess checkComp( this );
     checkComp.start( command  );

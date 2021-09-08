@@ -1,0 +1,20 @@
+<!DOCTYPE SimulIDE>
+
+
+<!-- Substitutions:                                                     -->
+<!-- Example: /home/user/myfile.asm                                     -->
+
+<!-- $filePath - "/home/user/myfile.asm" - complete file path           -->
+<!-- $fileDir  - "/home/user/"           - path to file folder          -->
+<!-- $fileName - "myfile"                - file name (without extension)-->
+<!-- $fileExt  - ".asm"                  - file extension (with dot)    -->
+<!-- $inclPath  -                        - include path                 -->
+
+<compiler 
+    name="Avra"
+    toolPath=""
+    inclPath=""
+    command="avra"
+    arguments=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"
+    argsDebug=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"
+/>

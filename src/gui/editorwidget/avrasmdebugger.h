@@ -25,19 +25,19 @@
 class AvrAsmDebugger : public BaseDebugger
 {
     Q_OBJECT
-    Q_PROPERTY( QString Avra_Inc_Path   READ avraIncPath    WRITE setAvraIncPath   DESIGNABLE true USER true )
+    //Q_PROPERTY( QString Avra_Inc_Path   READ avraIncPath    WRITE setAvraIncPath   DESIGNABLE true USER true )
     
     public:
         AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~AvrAsmDebugger();
         
-        QString avraIncPath()  { return m_avraIncPath; }
-        void    setAvraIncPath( QString path );
+        //QString avraIncPath()  { return m_avraIncPath; }
+        //void    setAvraIncPath( QString path );
 
         virtual void mapFlashToSource() override;
         
     private:
-        QString m_avraIncPath;    // path to avra includes
+        //QString m_avraIncPath;    // path to avra includes
 };
 
 

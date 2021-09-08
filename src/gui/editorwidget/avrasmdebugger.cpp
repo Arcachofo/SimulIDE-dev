@@ -34,23 +34,10 @@ AvrAsmDebugger::AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QStri
     
     setObjectName( "AVR asm Compiler/Debugger" );
     
-    m_compilerPath = "";
-    m_avraIncPath  = "";
-    m_compSetting = "avra_Path";
-    
-    readSettings();
-    
-    QSettings* settings = MainWindow::self()->settings();
-    
-    if( settings->contains("avra_Inc_Path") )
-        m_avraIncPath = settings->value("avra_Inc_Path").toString();
-    
-    if( m_avraIncPath == "" )
-        m_avraIncPath = SIMUAPI_AppPath::self()->availableDataDirPath("codeeditor/tools/avra");
+    if( m_inclPath == "" )
+        m_inclPath = SIMUAPI_AppPath::self()->availableDataDirPath("codeeditor/tools/avra");
 
-    m_incDir = m_avraIncPath;
-
-    m_typesList["byte"]    = "uint8";
+    m_typesList["byte"] = "uint8";
 }
 AvrAsmDebugger::~AvrAsmDebugger() {}
 
@@ -106,10 +93,10 @@ void AvrAsmDebugger::mapFlashToSource()
         m_sourceToFlash[asmLineNumber] = address;
 }   }
 
-void AvrAsmDebugger::setAvraIncPath( QString path )
+/*void AvrAsmDebugger::setAvraIncPath( QString path )
 {
-    m_avraIncPath = path;
-    MainWindow::self()->settings()->setValue( "avra_Inc_Path", m_avraIncPath );
-}
+    m_inclPath = path;
+    MainWindow::self()->settings()->setValue( "avra_Inc_Path", m_inclPath );
+}*/
 
 #include "moc_avrasmdebugger.cpp"

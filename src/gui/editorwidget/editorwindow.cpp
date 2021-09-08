@@ -17,12 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDomDocument>
+
 #include "editorwindow.h"
 #include "mainwindow.h"
 #include "simulator.h"
 #include "filebrowser.h"
+#include "editorprop.h"
 #include "compiler.h"
 #include "utils.h"
+#include "simuapi_apppath.h"
 
 #include "mcucreator.h"
 
@@ -30,9 +34,10 @@ EditorWindow*  EditorWindow::m_pSelf = 0l;
 
 EditorWindow::EditorWindow( QWidget* parent )
             : QWidget( parent )
-            , m_fileMenu( this )
             , m_outPane( this )
-            , m_compiler( this, &m_outPane )
+            //, m_compiler( this, &m_outPane )
+            , m_settingsMenu( this )
+            , m_fileMenu( this )
 {
     m_pSelf = this;
 
@@ -43,6 +48,7 @@ EditorWindow::EditorWindow( QWidget* parent )
     updateRecentFileActions();
     createToolBars();
     readSettings();
+    loadCompilers();
 
     /// m_compiler.loadCompiler( "/home/user/gcbcompiler.xml");
 }
@@ -73,8 +79,8 @@ void EditorWindow::keyPressEvent( QKeyEvent* event )
     else if( event->key() == Qt::Key_O && (event->modifiers() & Qt::ControlModifier))
     {
         open();
-    }
-}
+}   }
+
 
 void EditorWindow::dragEnterEvent( QDragEnterEvent* event)
 {
@@ -286,8 +292,8 @@ void EditorWindow::tabContextMenu( const QPoint &eventpoint )
     if( !ce ) return;
     
     QMenu* menu = new QMenu();
-    QAction* setCompilerAction = menu->addAction(QIcon(":/copy.png"),tr("Set Compiler Path"));
-    connect( setCompilerAction, SIGNAL( triggered()), this, SLOT(setCompiler()), Qt::UniqueConnection );
+    /*QAction* setCompilerAction = menu->addAction(QIcon(":/copy.png"),tr("Set Compiler Path"));
+    connect( setCompilerAction, SIGNAL( triggered()), this, SLOT(setCompiler()), Qt::UniqueConnection );*/
 
     QAction* reloadAction = menu->addAction(QIcon(":/reload.png"),tr("Reload"));
     connect( reloadAction, SIGNAL( triggered()), this, SLOT(reload()), Qt::UniqueConnection );
@@ -301,15 +307,15 @@ void EditorWindow::tabChanged( int tab )
     //qDebug() << "EditorWindow::tabChanged" << m_docWidget->currentIndex() << tab;
 }
 
-void EditorWindow::setCompiler()
+/*void EditorWindow::setCompiler()
 {
     CodeEditor* ce = getCodeEditor();
     if( ce ) ce->setCompilerPath();
-}
+}*/
 
 void EditorWindow::createWidgets()
 {
-    baseWidgetLayout = new QGridLayout( this );
+    QGridLayout* baseWidgetLayout = new QGridLayout( this );
     baseWidgetLayout->setSpacing(0);
     baseWidgetLayout->setContentsMargins(0, 0, 0, 0);
     baseWidgetLayout->setObjectName("gridLayout");
@@ -353,115 +359,6 @@ void EditorWindow::createWidgets()
     
     findRepDiaWidget = new FindReplaceDialog(this);
     findRepDiaWidget->setModal(false);
-}
-
-void EditorWindow::createActions()
-{
-    for( int i=0; i<MaxRecentFiles; i++ )
-    {
-        recentFileActs[i] = new QAction( this );
-        recentFileActs[i]->setVisible( false );
-        connect( recentFileActs[i], SIGNAL( triggered() ),
-                 this,              SLOT( openRecentFile() ), Qt::UniqueConnection);
-    }
-
-    newAct = new QAction(QIcon(":/new.png"), tr("&New\tCtrl+N"), this);
-    newAct->setStatusTip(tr("Create a new file"));
-    connect( newAct, SIGNAL(triggered()), this, SLOT(newFile()), Qt::UniqueConnection);
-
-    openAct = new QAction(QIcon(":/open.png"), tr("&Open...\tCtrl+O"), this);
-    openAct->setStatusTip(tr("Open an existing file"));
-    connect(openAct, SIGNAL(triggered()), this, SLOT(open()), Qt::UniqueConnection);
-
-    saveAct = new QAction(QIcon(":/save.png"), tr("&Save\tCtrl+S"), this);
-    saveAct->setStatusTip(tr("Save the document to disk"));
-    saveAct->setEnabled(false);
-    connect(saveAct, SIGNAL(triggered()), this, SLOT(save()), Qt::UniqueConnection);
-
-    saveAsAct = new QAction(QIcon(":/saveas.png"),tr("Save &As...\tCtrl+Shift+S"), this);
-    saveAsAct->setStatusTip(tr("Save the document under a new name"));
-    saveAsAct->setEnabled(false);
-    connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()), Qt::UniqueConnection);
-
-    exitAct = new QAction(QIcon(":/exit.png"),tr("E&xit"), this);
-    exitAct->setStatusTip(tr("Exit the application"));
-    connect(exitAct, SIGNAL(triggered()), this, SLOT(close()), Qt::UniqueConnection);
-
-    cutAct = new QAction(QIcon(":/cut.png"), tr("Cu&t\tCtrl+X"), this);
-    cutAct->setStatusTip(tr("Cut the current selection's contents to the clipboard"));
-    cutAct->setEnabled(false);
-    connect(cutAct, SIGNAL(triggered()), this, SLOT(cut()), Qt::UniqueConnection);
-
-    copyAct = new QAction(QIcon(":/copy.png"), tr("&Copy\tCtrl+C"), this);
-    copyAct->setStatusTip(tr("Copy the current selection's contents to the clipboard"));
-    copyAct->setEnabled(false);
-    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()), Qt::UniqueConnection);
-
-    pasteAct = new QAction(QIcon(":/paste.png"), tr("&Paste\tCtrl+V"), this);
-    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current selection"));
-    pasteAct->setEnabled(false);
-    connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()), Qt::UniqueConnection);
-
-    undoAct = new QAction(QIcon(":/undo.png"), tr("Undo\tCtrl+Z"), this);
-    undoAct->setStatusTip(tr("Undo the last action"));
-    undoAct->setEnabled(false);
-    connect(undoAct, SIGNAL(triggered()), this, SLOT(undo()), Qt::UniqueConnection);
-
-    redoAct = new QAction(QIcon(":/redo.png"), tr("Redo\tCtrl+Shift+Z"), this);
-    redoAct->setStatusTip(tr("Redo the last action"));
-    redoAct->setEnabled(false);
-    connect(redoAct, SIGNAL(triggered()), this, SLOT(redo()));
-
-    runAct =  new QAction(QIcon(":/runtobk.png"),tr("Run To Breakpoint"), this);
-    runAct->setStatusTip(tr("Run to next breakpoint"));
-    runAct->setEnabled(false);
-    connect(runAct, SIGNAL(triggered()), this, SLOT(run()), Qt::UniqueConnection);
-
-    stepAct = new QAction(QIcon(":/step.png"),tr("Step"), this);
-    stepAct->setStatusTip(tr("Step debugger"));
-    stepAct->setEnabled(false);
-    connect( stepAct, SIGNAL(triggered()), this, SLOT(step()), Qt::UniqueConnection );
-
-    stepOverAct = new QAction(QIcon(":/rotateCW.png"),tr("StepOver"), this);
-    stepOverAct->setStatusTip(tr("Step Over"));
-    stepOverAct->setEnabled(false);
-    stepOverAct->setVisible(false);
-    connect( stepOverAct, SIGNAL(triggered()), this, SLOT(stepOver()), Qt::UniqueConnection );
-
-    pauseAct = new QAction(QIcon(":/pause.png"),tr("Pause"), this);
-    pauseAct->setStatusTip(tr("Pause debugger"));
-    pauseAct->setEnabled(false);
-    connect( pauseAct, SIGNAL(triggered()), this, SLOT(pause()), Qt::UniqueConnection );
-
-    resetAct = new QAction(QIcon(":/reset.png"),tr("Reset"), this);
-    resetAct->setStatusTip(tr("Reset debugger"));
-    resetAct->setEnabled(false);
-    connect( resetAct, SIGNAL(triggered()), this, SLOT(reset()), Qt::UniqueConnection );
-
-    stopAct = new QAction(QIcon(":/stop.png"),tr("Stop Debugger"), this);
-    stopAct->setStatusTip(tr("Stop debugger"));
-    stopAct->setEnabled(false);
-    connect( stopAct, SIGNAL(triggered()), this, SLOT(stop()), Qt::UniqueConnection );
-
-    compileAct = new QAction(QIcon(":/compile.png"),tr("Compile"), this);
-    compileAct->setStatusTip(tr("Compile Source"));
-    compileAct->setEnabled(false);
-    connect( compileAct, SIGNAL(triggered()), this, SLOT(compile()), Qt::UniqueConnection );
-    
-    loadAct = new QAction(QIcon(":/load.png"),tr("UpLoad"), this);
-    loadAct->setStatusTip(tr("Load Firmware"));
-    loadAct->setEnabled(false);
-    connect( loadAct, SIGNAL(triggered()), this, SLOT(upload()), Qt::UniqueConnection );
-
-    findQtAct = new QAction(QIcon(":/find.png"),tr("Find Replace"), this);
-    findQtAct->setStatusTip(tr("Find Replace"));
-    findQtAct->setEnabled(false);
-    connect(findQtAct, SIGNAL(triggered()), this, SLOT(findReplaceDialog()), Qt::UniqueConnection);
-    
-    debugAct =  new QAction(QIcon(":/play.png"),tr("Debug"), this);
-    debugAct->setStatusTip(tr("Start Debugger"));
-    debugAct->setEnabled(false);
-    connect(debugAct, SIGNAL(triggered()), this, SLOT(debug()), Qt::UniqueConnection);
 }
 
 void EditorWindow::closeTab( int index )
@@ -563,8 +460,137 @@ void EditorWindow::findReplaceDialog()
     findRepDiaWidget->show(); 
 }
 
+void EditorWindow::createActions()
+{
+    confEditAct = new QAction(QIcon(":/config.png"), tr("Configure Editor"), this);
+    confEditAct->setStatusTip(tr("Editor Settings"));
+    connect( confEditAct, SIGNAL(triggered()), this, SLOT(confEditor()), Qt::UniqueConnection);
+
+    confCompAct = new QAction(QIcon(":/config.png"), tr("Configure Compiler"), this);
+    confCompAct->setStatusTip(tr("Copmpiler Settings"));
+    connect( confCompAct, SIGNAL(triggered()), this, SLOT(confCompiler()), Qt::UniqueConnection);
+
+    for( int i=0; i<MaxRecentFiles; i++ )
+    {
+        recentFileActs[i] = new QAction( this );
+        recentFileActs[i]->setVisible( false );
+        connect( recentFileActs[i], SIGNAL( triggered() ),
+                 this,              SLOT( openRecentFile() ), Qt::UniqueConnection);
+    }
+
+    newAct = new QAction(QIcon(":/new.png"), tr("&New\tCtrl+N"), this);
+    newAct->setStatusTip(tr("Create a new file"));
+    connect( newAct, SIGNAL(triggered()), this, SLOT(newFile()), Qt::UniqueConnection);
+
+    openAct = new QAction(QIcon(":/open.png"), tr("&Open...\tCtrl+O"), this);
+    openAct->setStatusTip(tr("Open an existing file"));
+    connect(openAct, SIGNAL(triggered()), this, SLOT(open()), Qt::UniqueConnection);
+
+    saveAct = new QAction(QIcon(":/save.png"), tr("&Save\tCtrl+S"), this);
+    saveAct->setStatusTip(tr("Save the document to disk"));
+    saveAct->setEnabled(false);
+    connect(saveAct, SIGNAL(triggered()), this, SLOT(save()), Qt::UniqueConnection);
+
+    saveAsAct = new QAction(QIcon(":/saveas.png"),tr("Save &As...\tCtrl+Shift+S"), this);
+    saveAsAct->setStatusTip(tr("Save the document under a new name"));
+    saveAsAct->setEnabled(false);
+    connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()), Qt::UniqueConnection);
+
+    exitAct = new QAction(QIcon(":/exit.png"),tr("E&xit"), this);
+    exitAct->setStatusTip(tr("Exit the application"));
+    connect(exitAct, SIGNAL(triggered()), this, SLOT(close()), Qt::UniqueConnection);
+
+    cutAct = new QAction(QIcon(":/cut.png"), tr("Cu&t\tCtrl+X"), this);
+    cutAct->setStatusTip(tr("Cut the current selection's contents to the clipboard"));
+    cutAct->setEnabled(false);
+    connect(cutAct, SIGNAL(triggered()), this, SLOT(cut()), Qt::UniqueConnection);
+
+    copyAct = new QAction(QIcon(":/copy.png"), tr("&Copy\tCtrl+C"), this);
+    copyAct->setStatusTip(tr("Copy the current selection's contents to the clipboard"));
+    copyAct->setEnabled(false);
+    connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()), Qt::UniqueConnection);
+
+    pasteAct = new QAction(QIcon(":/paste.png"), tr("&Paste\tCtrl+V"), this);
+    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current selection"));
+    pasteAct->setEnabled(false);
+    connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()), Qt::UniqueConnection);
+
+    undoAct = new QAction(QIcon(":/undo.png"), tr("Undo\tCtrl+Z"), this);
+    undoAct->setStatusTip(tr("Undo the last action"));
+    undoAct->setEnabled(false);
+    connect(undoAct, SIGNAL(triggered()), this, SLOT(undo()), Qt::UniqueConnection);
+
+    redoAct = new QAction(QIcon(":/redo.png"), tr("Redo\tCtrl+Shift+Z"), this);
+    redoAct->setStatusTip(tr("Redo the last action"));
+    redoAct->setEnabled(false);
+    connect(redoAct, SIGNAL(triggered()), this, SLOT(redo()));
+
+    runAct =  new QAction(QIcon(":/runtobk.png"),tr("Run To Breakpoint"), this);
+    runAct->setStatusTip(tr("Run to next breakpoint"));
+    runAct->setEnabled(false);
+    connect(runAct, SIGNAL(triggered()), this, SLOT(run()), Qt::UniqueConnection);
+
+    stepAct = new QAction(QIcon(":/step.png"),tr("Step"), this);
+    stepAct->setStatusTip(tr("Step debugger"));
+    stepAct->setEnabled(false);
+    connect( stepAct, SIGNAL(triggered()), this, SLOT(step()), Qt::UniqueConnection );
+
+    stepOverAct = new QAction(QIcon(":/rotateCW.png"),tr("StepOver"), this);
+    stepOverAct->setStatusTip(tr("Step Over"));
+    stepOverAct->setEnabled(false);
+    stepOverAct->setVisible(false);
+    connect( stepOverAct, SIGNAL(triggered()), this, SLOT(stepOver()), Qt::UniqueConnection );
+
+    pauseAct = new QAction(QIcon(":/pause.png"),tr("Pause"), this);
+    pauseAct->setStatusTip(tr("Pause debugger"));
+    pauseAct->setEnabled(false);
+    connect( pauseAct, SIGNAL(triggered()), this, SLOT(pause()), Qt::UniqueConnection );
+
+    resetAct = new QAction(QIcon(":/reset.png"),tr("Reset"), this);
+    resetAct->setStatusTip(tr("Reset debugger"));
+    resetAct->setEnabled(false);
+    connect( resetAct, SIGNAL(triggered()), this, SLOT(reset()), Qt::UniqueConnection );
+
+    stopAct = new QAction(QIcon(":/stop.png"),tr("Stop Debugger"), this);
+    stopAct->setStatusTip(tr("Stop debugger"));
+    stopAct->setEnabled(false);
+    connect( stopAct, SIGNAL(triggered()), this, SLOT(stop()), Qt::UniqueConnection );
+
+    compileAct = new QAction(QIcon(":/compile.png"),tr("Compile"), this);
+    compileAct->setStatusTip(tr("Compile Source"));
+    compileAct->setEnabled(false);
+    connect( compileAct, SIGNAL(triggered()), this, SLOT(compile()), Qt::UniqueConnection );
+
+    loadAct = new QAction(QIcon(":/load.png"),tr("UpLoad"), this);
+    loadAct->setStatusTip(tr("Load Firmware"));
+    loadAct->setEnabled(false);
+    connect( loadAct, SIGNAL(triggered()), this, SLOT(upload()), Qt::UniqueConnection );
+
+    findQtAct = new QAction(QIcon(":/find.png"),tr("Find Replace"), this);
+    findQtAct->setStatusTip(tr("Find Replace"));
+    findQtAct->setEnabled(false);
+    connect(findQtAct, SIGNAL(triggered()), this, SLOT(findReplaceDialog()), Qt::UniqueConnection);
+
+    debugAct =  new QAction(QIcon(":/play.png"),tr("Debug"), this);
+    debugAct->setStatusTip(tr("Start Debugger"));
+    debugAct->setEnabled(false);
+    connect(debugAct, SIGNAL(triggered()), this, SLOT(debug()), Qt::UniqueConnection);
+}
+
 void EditorWindow::createToolBars()
 {
+    m_settingsMenu.addAction( confEditAct );
+    m_settingsMenu.addAction( confCompAct );
+
+    QToolButton* settingsButton = new QToolButton( this );
+    settingsButton->setToolTip( tr("Settings") );
+    settingsButton->setMenu( &m_settingsMenu );
+    settingsButton->setIcon( QIcon(":/config.png") );
+    settingsButton->setPopupMode( QToolButton::InstantPopup );
+    m_editorToolBar->addWidget( settingsButton );
+    m_editorToolBar->addSeparator();//..........................
+
+
     for( int i=0; i<MaxRecentFiles; i++ ) m_fileMenu.addAction( recentFileActs[i] );
     QToolButton* fileButton = new QToolButton( this );
     fileButton->setStatusTip( tr("Last Circuits") );
@@ -597,6 +623,18 @@ void EditorWindow::createToolBars()
     m_debuggerToolBar->addAction(stopAct);
 }
 
+void EditorWindow::confEditor()
+{
+    if( !m_editDialog ) m_editDialog = new EditorProp( this );
+    m_editDialog->show();
+}
+
+void EditorWindow::confCompiler()
+{
+    CodeEditor* ce = getCodeEditor();
+    if( ce ) ce->compProps();
+}
+
 void EditorWindow::openRecentFile()
 {
     QAction* action = qobject_cast<QAction*>( sender() );
@@ -623,6 +661,7 @@ void EditorWindow::updateRecentFileActions()
 void EditorWindow::readSettings()
 {
     QSettings* settings = MainWindow::self()->settings();
+
     restoreGeometry( settings->value("geometry").toByteArray() );
     m_docWidget->restoreGeometry( settings->value("docWidget/geometry").toByteArray() );
     m_lastDir = settings->value("lastDir").toString();
@@ -634,6 +673,45 @@ void EditorWindow::writeSettings()
     settings->setValue( "geometry", saveGeometry() );
     settings->setValue( "docWidget/geometry", m_docWidget->saveGeometry() );
     settings->setValue( "lastDir", m_lastDir );
+}
+
+void EditorWindow::loadCompiler( QString compName, Compiler* compiler )
+{
+    compiler->loadCompiler( m_compilers.value( compName ) );
+}
+
+void EditorWindow::loadCompilers()
+{
+    QString compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");
+    QDir compilsDir = QDir( compilsPath );
+
+    compilsDir.setNameFilters( QStringList( "*.xml" ) );
+
+    QStringList xmlList = compilsDir.entryList( QDir::Files );
+    if( xmlList.isEmpty() ) return;                  // No compilers to load
+
+    qDebug() << "\n" << tr("    Loading Compilers at:")<< "\n" << compilsPath<<"\n";
+
+    for( QString compilFile : xmlList )
+    {
+        QString compilFilePath = compilsDir.absoluteFilePath( compilFile );
+
+        if( !compilFilePath.isEmpty( ))  //loadXml( compilFilePath );
+        {
+            QDomDocument domDoc = fileToDomDoc( compilFilePath, "EditorWindow::loadCompilers");
+            if( domDoc.isNull() ) continue;
+
+            QDomElement el = domDoc.documentElement();
+            if( (el.tagName() == "compiler")
+              && el.hasAttribute( "name" ) )
+            {
+                QString compiler = el.attribute( "name" ) ;
+                m_compilers[compiler] = compilFilePath;
+                qDebug() << tr("Found Compiler: ") << compiler;
+            }
+            else qDebug() << tr("Error Loadind Compiler at:") <<"\n" << compilFilePath <<"\n";
+    }   }
+    qDebug() << "\n";
 }
 
 #include  "moc_editorwindow.cpp"

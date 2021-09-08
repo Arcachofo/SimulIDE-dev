@@ -25,6 +25,7 @@
 
 #include "highlighter.h"
 #include "outpaneltext.h"
+#include "compilerprop.h"
 #include "ramtable.h"
 #include "updatable.h"
 
@@ -40,36 +41,17 @@ class QResizeEvent;
 class QSize;
 class QWidget;
 
-class EditorProp;
 class BaseDebugger;
 class LineNumberArea;
+class CompilerProp;
 
 class CodeEditor : public QPlainTextEdit, public Updatable
 {
     Q_OBJECT
-    //Q_PROPERTY( bool   centerOnScroll   READ centerOnScroll    WRITE setCenterOnScroll  DESIGNABLE true USER true )
-    Q_PROPERTY( int  Font_Size     READ fontSize   WRITE setFontSize   DESIGNABLE true USER true )
-    Q_PROPERTY( int  Tab_Size      READ tabSize    WRITE setTabSize    DESIGNABLE true USER true )
-    Q_PROPERTY( bool Spaces_Tabs   READ spaceTabs  WRITE setSpaceTabs  DESIGNABLE true USER true )
-    Q_PROPERTY( bool Show_Spaces   READ showSpaces WRITE setShowSpaces DESIGNABLE true USER true )
 
     public:
         CodeEditor( QWidget* parent, OutPanelText* outPane );
         ~CodeEditor();
-        
-        //virtual void updateStep() override { if( m_state == DBG_PAUSED ) updateScreen(); }
-
-        int fontSize() { return m_fontSize; }
-        void setFontSize( int size );
-        
-        int tabSize() { return m_tabSize; }
-        void setTabSize( int size );
-        
-        bool showSpaces() { return m_showSpaces; }
-        void setShowSpaces( bool on );
-        
-        bool spaceTabs() { return m_spaceTabs; }
-        void setSpaceTabs( bool on );
         
         bool driveCirc() { return m_driveCirc; }
         void setDriveCirc( bool drive );
@@ -87,14 +69,26 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         void stopDebbuger();
         void lineReached( int line );
 
-        void setCompilerPath();
+        //void setCompilerPath();
+
+        void compProps();
+
+ static int fontSize() { return m_fontSize; }
+ static void setFontSize( int size );
+
+ static int tabSize() { return m_tabSize; }
+ static void setTabSize( int size );
+
+ static bool showSpaces() { return m_showSpaces; }
+ static void setShowSpaces( bool on );
+
+ static bool spaceTabs() { return m_spaceTabs; }
+ static void setSpaceTabs( bool on );
 
     signals:
         void msg( QString text );
 
     public slots:
-        void slotProperties();
-
         void slotAddBreak() { m_brkAction = 1; }
         void slotRemBreak() { m_brkAction = 2; }
         void slotClearBreak() { m_brkPoints.clear(); }
@@ -106,15 +100,15 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         void pause();
         void reset();
 
-    protected:
-        void resizeEvent(QResizeEvent *event);
-        void keyPressEvent( QKeyEvent* event );
-        void contextMenuEvent(QContextMenuEvent* event);
-
     private slots:
         void updateLineNumberAreaWidth(int) { setViewportMargins( lineNumberAreaWidth(), 0, 0, 0 ); }
         void updateLineNumberArea( const QRect &, int );
         void highlightCurrentLine();
+
+    protected:
+        void resizeEvent(QResizeEvent *event);
+        void keyPressEvent( QKeyEvent* event );
+        void contextMenuEvent(QContextMenuEvent* event);
 
     private:
         int  getSintaxCoincidences(QString& fileName, QStringList& instructions );
@@ -123,6 +117,8 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         void updateScreen();
         
         void indentSelection( bool unIndent );
+
+        CompilerProp* m_compDialog;
         
         BaseDebugger* m_debugger;
         OutPanelText* m_outPane;
@@ -130,12 +126,14 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         LineNumberArea *m_lNumArea;
         Highlighter    *m_hlighter;
 
+        QString m_sintaxPath;
+        QString m_compilsPath;
+
         QString m_file;
         QString m_fileDir;
         QString m_fileName;
         QString m_fileExt;
         QString m_help;
-        QString m_tab;
 
         bebugState_t m_state;
         bebugState_t m_resume;
@@ -146,22 +144,20 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         int m_lastCycle;
 
         bool m_isCompiled;
+ static bool m_showSpaces;
+ static bool m_spaceTabs;
+ static bool m_driveCirc;
 
-        EditorProp* m_propDialog;
-        
- static bool  m_showSpaces;
- static bool  m_spaceTabs;
- static bool  m_driveCirc;
- 
+ static QStringList m_picInstr;
+ static QStringList m_avrInstr;
+
  static int   m_fontSize;
  static int   m_tabSize;
 
-// static QFontDatabase m_fontdb;
-// static QStringList m_fonts;
+ static QString m_tab;
+
+ static QList<CodeEditor*> m_documents;
  static QFont m_font;
- 
- static QStringList m_picInstr;
- static QStringList m_avrInstr;
 };
 
 
