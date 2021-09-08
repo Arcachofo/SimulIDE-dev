@@ -1,0 +1,87 @@
+<circuit stepsPS="1000000" animate="0" type="simulide_0.5" stepSize="1000000" NLsteps="100000">
+
+Unique  Id: mega168-1: 
+Circuit Id: atmega168
+<item itemtype="MCU" labelx="-18" eeprom="" Unit="  " Show_Val="false" labelrot="0" varList="" labely="-19" id="atmega168" hflip="1" Show_id="true" mainComp="false" objectName="mega168-1" Logic_Symbol="false" Program="gcb_code/m168_glcd8544.hex" x="-356" valLabelx="0" rotation="0" Name="mega168" Mhz="16" y="-292" Auto_Load="false" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Pcd8544-2: 
+Circuit Id: Display-1
+<item itemtype="Pcd8544" labelx="-27" Unit="  " Show_Val="false" labelrot="0" labely="-69" id="Display-1" hflip="1" Show_id="true" mainComp="false" objectName="Pcd8544-2" x="-220" valLabelx="0" rotation="0" y="-276" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Pcd8544-3: 
+Circuit Id: Display-2
+<item itemtype="Pcd8544" labelx="-28" Unit="  " Show_Val="false" labelrot="0" labely="-68" id="Display-2" hflip="1" Show_id="true" mainComp="false" objectName="Pcd8544-3" x="-116" valLabelx="0" rotation="0" y="-276" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Node-4: 
+Circuit Id: Node-4
+<item itemtype="Node" labelx="-16" Unit="  " Show_Val="false" labelrot="0" labely="-24" id="Node-4" hflip="1" Show_id="false" mainComp="false" objectName="Node-4" x="-188" valLabelx="0" rotation="0" y="-204" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Node-5: 
+Circuit Id: Node-3
+<item itemtype="Node" labelx="-16" Unit="  " Show_Val="false" labelrot="0" labely="-24" id="Node-3" hflip="1" Show_id="false" mainComp="false" objectName="Node-5" x="-204" valLabelx="0" rotation="0" y="-212" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Node-6: 
+Circuit Id: Node-2
+<item itemtype="Node" labelx="-16" Unit="  " Show_Val="false" labelrot="0" labely="-24" id="Node-2" hflip="1" Show_id="false" mainComp="false" objectName="Node-6" x="-220" valLabelx="0" rotation="0" y="-220" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Node-7: 
+Circuit Id: Node-1
+<item itemtype="Node" labelx="-16" Unit="  " Show_Val="false" labelrot="0" labely="-24" id="Node-1" hflip="1" Show_id="false" mainComp="false" objectName="Node-7" x="-252" valLabelx="0" rotation="0" y="-228" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-8: 
+Circuit Id: Connector-8
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-9" Show_Val="false" endpinid="Node-6-0" labelrot="0" labely="-24" pointList="-364,-220,-380,-220,-380,-148,-292,-148,-292,-220,-220,-220" id="Connector-8" hflip="1" Show_id="false" mainComp="false" objectName="Connector-8" startpinid="mega168-1-PORTB6" x="-364" valLabelx="0" rotation="0" y="-220" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-10
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-11" Show_Val="false" endpinid="Node-5-0" labelrot="0" labely="-24" pointList="-316,-212,-204,-212" id="Connector-10" hflip="1" Show_id="false" mainComp="false" objectName="Connector-10" startpinid="mega168-1-PORTB5" x="-316" valLabelx="0" rotation="0" y="-212" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-13" Show_Val="false" endpinid="Node-4-0" labelrot="0" labely="-24" pointList="-316,-204,-188,-204" id="Connector-12" hflip="1" Show_id="false" mainComp="false" objectName="Connector-12" startpinid="mega168-1-PORTB4" x="-316" valLabelx="0" rotation="0" y="-204" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-14: 
+Circuit Id: Connector-14
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-13" Show_Val="false" endpinid="Pcd8544-2-PinScl" labelrot="0" labely="-24" pointList="-188,-204,-188,-236" id="Connector-14" hflip="1" Show_id="false" mainComp="false" objectName="Connector-14" startpinid="Node-4-2" x="-188" valLabelx="0" rotation="0" y="-204" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-15: 
+Circuit Id: Connector-15
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-13" Show_Val="false" endpinid="Pcd8544-3-PinScl" labelrot="0" labely="-24" pointList="-188,-204,-84,-204,-84,-236" id="Connector-15" hflip="1" Show_id="false" mainComp="false" objectName="Connector-15" startpinid="Node-4-1" x="-188" valLabelx="0" rotation="0" y="-204" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-16: 
+Circuit Id: Connector-16
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-11" Show_Val="false" endpinid="Pcd8544-2-PinSi" labelrot="0" labely="-24" pointList="-204,-212,-204,-236" id="Connector-16" hflip="1" Show_id="false" mainComp="false" objectName="Connector-16" startpinid="Node-5-2" x="-204" valLabelx="0" rotation="0" y="-212" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-17: 
+Circuit Id: Connector-17
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-11" Show_Val="false" endpinid="Pcd8544-3-PinSi" labelrot="0" labely="-24" pointList="-204,-212,-100,-212,-100,-236" id="Connector-17" hflip="1" Show_id="false" mainComp="false" objectName="Connector-17" startpinid="Node-5-1" x="-204" valLabelx="0" rotation="0" y="-212" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-18: 
+Circuit Id: Connector-18
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-9" Show_Val="false" endpinid="Pcd8544-2-PinDc" labelrot="0" labely="-24" pointList="-220,-220,-220,-236" id="Connector-18" hflip="1" Show_id="false" mainComp="false" objectName="Connector-18" startpinid="Node-6-2" x="-220" valLabelx="0" rotation="0" y="-220" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-19: 
+Circuit Id: Connector-19
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-9" Show_Val="false" endpinid="Pcd8544-3-PinDc" labelrot="0" labely="-24" pointList="-220,-220,-116,-220,-116,-236" id="Connector-19" hflip="1" Show_id="false" mainComp="false" objectName="Connector-19" startpinid="Node-6-1" x="-220" valLabelx="0" rotation="0" y="-220" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-20: 
+Circuit Id: Connector-20
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-21" Show_Val="false" endpinid="Pcd8544-2-PinCs" labelrot="0" labely="-24" pointList="-316,-196,-236,-196,-236,-236" id="Connector-20" hflip="1" Show_id="false" mainComp="false" objectName="Connector-20" startpinid="mega168-1-PORTB3" x="-316" valLabelx="0" rotation="0" y="-196" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-22: 
+Circuit Id: Connector-22
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-23" Show_Val="false" endpinid="Node-7-0" labelrot="0" labely="-24" pointList="-364,-212,-372,-212,-372,-156,-300,-156,-300,-228,-252,-228" id="Connector-22" hflip="1" Show_id="false" mainComp="false" objectName="Connector-22" startpinid="mega168-1-PORTB7" x="-364" valLabelx="0" rotation="0" y="-212" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-24: 
+Circuit Id: Connector-24
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-23" Show_Val="false" endpinid="Pcd8544-2-PinRst" labelrot="0" labely="-24" pointList="-252,-228,-252,-236" id="Connector-24" hflip="1" Show_id="false" mainComp="false" objectName="Connector-24" startpinid="Node-7-2" x="-252" valLabelx="0" rotation="0" y="-228" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-25: 
+Circuit Id: Connector-25
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-23" Show_Val="false" endpinid="Pcd8544-3-PinRst" labelrot="0" labely="-24" pointList="-252,-228,-148,-228,-148,-236" id="Connector-25" hflip="1" Show_id="false" mainComp="false" objectName="Connector-25" startpinid="Node-7-1" x="-252" valLabelx="0" rotation="0" y="-228" valLabRot="0" valLabely="0" vflip="1"/>
+
+Unique  Id: Connector-26: 
+Circuit Id: Connector-26
+<item itemtype="Connector" labelx="-16" Unit="  " enodeid="Circ_eNode-27" Show_Val="false" endpinid="Pcd8544-3-PinCs" labelrot="0" labely="-24" pointList="-316,-188,-132,-188,-132,-236" id="Connector-26" hflip="1" Show_id="false" mainComp="false" objectName="Connector-26" startpinid="mega168-1-PORTB2" x="-316" valLabelx="0" rotation="0" y="-188" valLabRot="0" valLabely="0" vflip="1"/>
+ 
+</circuit>

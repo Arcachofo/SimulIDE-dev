@@ -54,7 +54,7 @@ void McuPin::initialize()
 
 void McuPin::stamp()
 {
-    if( m_enode ) // NO: Outputs are also called so they set Input register if needed
+    if( m_enode )
        changeCallBack( this ); // Receive voltage change notifications
 
     IoPin::stamp();

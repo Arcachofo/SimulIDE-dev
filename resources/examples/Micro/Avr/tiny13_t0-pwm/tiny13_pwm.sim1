@@ -1,0 +1,15 @@
+<circuit stepSize="1000000" type="simulide_0.5" NLsteps="100000" animate="0" stepsPS="1000000">
+
+Unique  Id: tiny13-1: 
+Circuit Id: attiny13-1
+<item varList=",PORTB,DDRB,,,,TCNT0,,TCCR0A,TCCR0B" valLabelx="0" vflip="1" labelrot="0" rotation="0" mainComp="false" Name="tiny13" hflip="1" Unit="  " id="attiny13-1" x="-612" Auto_Load="false" eeprom="" y="-380" objectName="tiny13-1" labelx="0" labely="-20" itemtype="MCU" Show_Val="false" Show_id="true" Logic_Symbol="false" valLabRot="0" Mhz="1.2" Program="gcb_code/tiny13_pwm.hex" valLabely="0"/>
+
+Unique  Id: Oscope-2: 
+Circuit Id: Oscope-2
+<item Conds="" valLabelx="0" vflip="1" labelrot="0" VolDiv="1,1,1,1" rotation="0" mainComp="false" Tunnels=",,," hflip="1" Basic_Y="135" VolPos="0,0,0,0" Unit="  " Trigger="0" id="Oscope-2" TimPos="0,0,0,0" x="-420" TimeDiv="1000000000" Basic_X="135" HideCh="false,false,false,false" y="-364" objectName="Oscope-2" Filter="0.1" labelx="-80" labely="-80" itemtype="Oscope" Show_Val="false" Show_id="false" valLabRot="0" Tracks="1" hTick="1000000" valLabely="0" AutoSC="4"/>
+
+Unique  Id: Connector-3: 
+Circuit Id: Connector-3
+<item valLabelx="0" vflip="1" labelrot="0" rotation="0" mainComp="false" hflip="1" enodeid="Circ_eNode-4" Unit="  " id="Connector-3" x="-572" pointList="-572,-348,-548,-348,-548,-412,-508,-412" y="-348" objectName="Connector-3" labelx="-16" labely="-24" itemtype="Connector" Show_Val="false" Show_id="false" valLabRot="0" endpinid="Oscope-2-Pin0" valLabely="0" startpinid="tiny13-1-PORTB0"/>
+ 
+</circuit>

@@ -54,11 +54,6 @@ void eResistor::stampCurrent( double current )
     m_ePin[1]->stampCurrent( -current );
 }
 
-double eResistor::res() 
-{ 
-    return m_resist; 
-}
-
 void eResistor::setRes( double resist )
 {
     if( resist < 1e-12 ) resist = 1e-12;
@@ -67,11 +62,6 @@ void eResistor::setRes( double resist )
     m_resist = resist;
     
     stampAdmit();
-}
-
-double eResistor::admit()
-{
-    return m_admit;
 }
 
 void eResistor::setAdmit( double admit )               // Admit can be 0 

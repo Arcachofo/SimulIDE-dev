@@ -1,0 +1,127 @@
+<circuit type="simulide_0.5" NLsteps="100000" stepSize="1000000" animate="1" stepsPS="1000000">
+
+Unique  Id: Node-90: 
+Circuit Id: Node-90
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Node-90" Show_id="false" x="-548" Unit="  " id="Node-90" labelx="-16" valLabely="0" labely="-24" itemtype="Node" rotation="0" hflip="1" vflip="1" y="-356"/>
+
+Unique  Id: Node-88: 
+Circuit Id: Node-88
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Node-88" Show_id="false" x="-556" Unit="  " id="Node-88" labelx="-16" valLabely="0" labely="-24" itemtype="Node" rotation="0" hflip="1" vflip="1" y="-348"/>
+
+Unique  Id: LAnalizer-86: 
+Circuit Id: LAnalizer-86
+<item TimePos="0" Show_Val="false" mainComp="false" vTick="0.6" valLabRot="0" labelrot="0" valLabelx="0" Treshold="2.5" Tunnels=",,,,,,," objectName="LAnalizer-86" Basic_Y="135" Show_id="false" Conds="" x="-444" Unit="  " id="LAnalizer-86" hTick="121411" labelx="-90" valLabely="0" Trigger="0" Basic_X="135" labely="-100" itemtype="LAnalizer" rotation="0" hflip="1" vflip="1" y="-460" TimeDiv="121411418"/>
+
+Unique  Id: 7-16: 
+Circuit Id: 7-Seg BCD-6
+<item Out_Imped="40" Show_Val="false" mainComp="false" Out_Low_V="0" valLabRot="0" labelrot="0" valLabelx="0" Tpd_ps="10000" objectName="7-16" Show_id="false" x="-580" Unit="  " id="7-Seg BCD-6" Tf_ps="4000" labelx="-16" valLabely="0" Out_High_V="5" labely="-40" itemtype="7-Seg BCD" rotation="0" Input_Imped="1e+9" hflip="1" vflip="1" y="-316" Input_Low_V="2.5" Input_High_V="2.5" Tr_ps="3000"/>
+
+Unique  Id: 7-15: 
+Circuit Id: 7-Seg BCD-7
+<item Out_Imped="40" Show_Val="false" mainComp="false" Out_Low_V="0" valLabRot="0" labelrot="0" valLabelx="0" Tpd_ps="10000" objectName="7-15" Show_id="false" x="-612" Unit="  " id="7-Seg BCD-7" Tf_ps="4000" labelx="-16" valLabely="0" Out_High_V="5" labely="-40" itemtype="7-Seg BCD" rotation="0" Input_Imped="1e+9" hflip="1" vflip="1" y="-316" Input_Low_V="2.5" Input_High_V="2.5" Tr_ps="3000"/>
+
+Unique  Id: mega328-1: 
+Circuit Id: mega328-tx
+<item eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" Program="avr_usart-sender.hex" Show_Val="true" mainComp="false" Name="atmega328" valLabRot="-90" labelrot="0" valLabelx="13" objectName="mega328-1" Auto_Load="false" Logic_Symbol="false" Show_id="true" x="-532" Unit="  " id="mega328-tx" Mhz="16" labelx="-31" valLabely="72" labely="121" itemtype="MCU" rotation="0" varList="" hflip="1" vflip="1" y="-340"/>
+
+Unique  Id: 7-44: 
+Circuit Id: 7-Seg BCD-6
+<item Out_Imped="40" Show_Val="false" mainComp="false" Out_Low_V="0" valLabRot="0" labelrot="0" valLabelx="0" Tpd_ps="10000" objectName="7-44" Show_id="false" x="-396" Unit="  " id="7-Seg BCD-6" Tf_ps="4000" labelx="-16" valLabely="0" Out_High_V="5" labely="-40" itemtype="7-Seg BCD" rotation="0" Input_Imped="1e+9" hflip="1" vflip="1" y="-316" Input_Low_V="2.5" Input_High_V="2.5" Tr_ps="3000"/>
+
+Unique  Id: mega328-45: 
+Circuit Id: mega328-Rx
+<item eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" Program="avr_usart-receiver.hex" Show_Val="true" mainComp="false" Name="atmega328" valLabRot="-90" labelrot="0" valLabelx="13" objectName="mega328-45" Auto_Load="false" Logic_Symbol="false" Show_id="true" x="-348" Unit="  " id="mega328-Rx" Mhz="16" labelx="-31" valLabely="72" labely="121" itemtype="MCU" rotation="0" varList="" hflip="1" vflip="1" y="-340"/>
+
+Unique  Id: 7-46: 
+Circuit Id: 7-Seg BCD-7
+<item Out_Imped="40" Show_Val="false" mainComp="false" Out_Low_V="0" valLabRot="0" labelrot="0" valLabelx="0" Tpd_ps="10000" objectName="7-46" Show_id="false" x="-428" Unit="  " id="7-Seg BCD-7" Tf_ps="4000" labelx="-16" valLabely="0" Out_High_V="5" labely="-40" itemtype="7-Seg BCD" rotation="0" Input_Imped="1e+9" hflip="1" vflip="1" y="-316" Input_Low_V="2.5" Input_High_V="2.5" Tr_ps="3000"/>
+
+Unique  Id: Connector-17: 
+Circuit Id: Connector-17
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-17" Show_id="false" enodeid="Circ_eNode-91" x="-540" endpinid="7-16-in0" Unit="  " id="Connector-17" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-228" pointList="-540,-228,-564,-228,-564,-284" startpinid="mega328-1-PORTB0"/>
+
+Unique  Id: Connector-18: 
+Circuit Id: Connector-18
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-18" Show_id="false" enodeid="Circ_eNode-92" x="-572" endpinid="mega328-1-PORTB1" Unit="  " id="Connector-18" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-284" pointList="-572,-284,-572,-204,-484,-204,-484,-228,-492,-228" startpinid="7-16-in1"/>
+
+Unique  Id: Connector-19: 
+Circuit Id: Connector-19
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-19" Show_id="false" enodeid="Circ_eNode-93" x="-580" endpinid="mega328-1-PORTB2" Unit="  " id="Connector-19" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-284" pointList="-580,-284,-580,-196,-476,-196,-476,-236,-492,-236" startpinid="7-16-in2"/>
+
+Unique  Id: Connector-20: 
+Circuit Id: Connector-20
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-20" Show_id="false" enodeid="Circ_eNode-94" x="-588" endpinid="mega328-1-PORTB3" Unit="  " id="Connector-20" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-284" pointList="-588,-284,-588,-188,-468,-188,-468,-244,-492,-244" startpinid="7-16-in3"/>
+
+Unique  Id: Connector-21: 
+Circuit Id: Connector-21
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-21" Show_id="false" enodeid="Circ_eNode-95" x="-596" endpinid="mega328-1-PORTB4" Unit="  " id="Connector-21" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-284" pointList="-596,-284,-596,-180,-460,-180,-460,-252,-492,-252" startpinid="7-15-in0"/>
+
+Unique  Id: Connector-29: 
+Circuit Id: Connector-29
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-29" Show_id="false" enodeid="Circ_eNode-96" x="-492" endpinid="7-15-in1" Unit="  " id="Connector-29" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-260" pointList="-492,-260,-452,-260,-452,-172,-604,-172,-604,-284" startpinid="mega328-1-PORTB5"/>
+
+Unique  Id: Connector-30: 
+Circuit Id: Connector-30
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-30" Show_id="false" enodeid="Circ_eNode-97" x="-540" endpinid="7-15-in2" Unit="  " id="Connector-30" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-268" pointList="-540,-268,-612,-268,-612,-284" startpinid="mega328-1-PORTB6"/>
+
+Unique  Id: Connector-31: 
+Circuit Id: Connector-31
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-31" Show_id="false" enodeid="Circ_eNode-98" x="-540" endpinid="7-15-in3" Unit="  " id="Connector-31" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-260" pointList="-540,-260,-620,-260,-620,-284" startpinid="mega328-1-PORTB7"/>
+
+Unique  Id: Connector-47: 
+Circuit Id: Connector-21
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-47" Show_id="false" enodeid="Circ_eNode-99" x="-412" endpinid="mega328-45-PORTB4" Unit="  " id="Connector-21" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-284" pointList="-412,-284,-412,-180,-276,-180,-276,-252,-308,-252" startpinid="7-46-in0"/>
+
+Unique  Id: Connector-49: 
+Circuit Id: Connector-18
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-49" Show_id="false" enodeid="Circ_eNode-100" x="-388" endpinid="mega328-45-PORTB1" Unit="  " id="Connector-18" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-284" pointList="-388,-284,-388,-204,-300,-204,-300,-228,-308,-228" startpinid="7-44-in1"/>
+
+Unique  Id: Connector-51: 
+Circuit Id: Connector-30
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-51" Show_id="false" enodeid="Circ_eNode-101" x="-356" endpinid="7-46-in2" Unit="  " id="Connector-30" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-268" pointList="-356,-268,-428,-268,-428,-284" startpinid="mega328-45-PORTB6"/>
+
+Unique  Id: Connector-53: 
+Circuit Id: Connector-17
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-53" Show_id="false" enodeid="Circ_eNode-102" x="-356" endpinid="7-44-in0" Unit="  " id="Connector-17" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-228" pointList="-356,-228,-380,-228,-380,-284" startpinid="mega328-45-PORTB0"/>
+
+Unique  Id: Connector-55: 
+Circuit Id: Connector-20
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-55" Show_id="false" enodeid="Circ_eNode-103" x="-404" endpinid="mega328-45-PORTB3" Unit="  " id="Connector-20" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-284" pointList="-404,-284,-404,-188,-284,-188,-284,-244,-308,-244" startpinid="7-44-in3"/>
+
+Unique  Id: Connector-57: 
+Circuit Id: Connector-31
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-57" Show_id="false" enodeid="Circ_eNode-104" x="-356" endpinid="7-46-in3" Unit="  " id="Connector-31" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-260" pointList="-356,-260,-436,-260,-436,-284" startpinid="mega328-45-PORTB7"/>
+
+Unique  Id: Connector-60: 
+Circuit Id: Connector-19
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-60" Show_id="false" enodeid="Circ_eNode-105" x="-396" endpinid="mega328-45-PORTB2" Unit="  " id="Connector-19" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-284" pointList="-396,-284,-396,-196,-292,-196,-292,-236,-308,-236" startpinid="7-44-in2"/>
+
+Unique  Id: Connector-62: 
+Circuit Id: Connector-29
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-62" Show_id="false" enodeid="Circ_eNode-106" x="-308" endpinid="7-46-in1" Unit="  " id="Connector-29" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-260" pointList="-308,-260,-268,-260,-268,-172,-420,-172,-420,-284" startpinid="mega328-45-PORTB5"/>
+
+Unique  Id: Connector-69: 
+Circuit Id: Connector-69
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-69" Show_id="false" enodeid="Circ_eNode-107" x="-356" endpinid="Node-88-0" Unit="  " id="Connector-69" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-324" pointList="-356,-324,-372,-324,-372,-348,-556,-348" startpinid="mega328-45-PORTD0"/>
+
+Unique  Id: Connector-35: 
+Circuit Id: Connector-35
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-35" Show_id="false" enodeid="Circ_eNode-108" x="-540" endpinid="Node-90-0" Unit="  " id="Connector-35" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-324" pointList="-540,-324,-548,-324,-548,-356" startpinid="mega328-1-PORTD0"/>
+
+Unique  Id: Connector-87: 
+Circuit Id: Connector-87
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-87" Show_id="false" enodeid="Circ_eNode-107" x="-532" endpinid="Node-88-1" Unit="  " id="Connector-87" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-524" pointList="-532,-524,-556,-524,-556,-348" startpinid="LAnalizer-86-Pin0"/>
+
+Unique  Id: Connector-89: 
+Circuit Id: Connector-89
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-89" Show_id="false" enodeid="Circ_eNode-107" x="-556" endpinid="mega328-1-PORTD1" Unit="  " id="Connector-89" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-348" pointList="-556,-348,-556,-316,-540,-316" startpinid="Node-88-2"/>
+
+Unique  Id: Connector-91: 
+Circuit Id: Connector-91
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-91" Show_id="false" enodeid="Circ_eNode-108" x="-548" endpinid="mega328-45-PORTD1" Unit="  " id="Connector-91" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-356" pointList="-548,-356,-364,-356,-364,-316,-356,-316" startpinid="Node-90-2"/>
+
+Unique  Id: Connector-92: 
+Circuit Id: Connector-92
+<item Show_Val="false" mainComp="false" valLabRot="0" labelrot="0" valLabelx="0" objectName="Connector-92" Show_id="false" enodeid="Circ_eNode-108" x="-548" endpinid="LAnalizer-86-Pin1" Unit="  " id="Connector-92" labelx="-16" valLabely="0" labely="-24" itemtype="Connector" rotation="0" hflip="1" vflip="1" y="-356" pointList="-548,-356,-548,-508,-532,-508" startpinid="Node-90-1"/>
+ 
+</circuit>

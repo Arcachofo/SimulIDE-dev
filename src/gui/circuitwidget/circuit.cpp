@@ -162,6 +162,7 @@ void Circuit::loadCircuit( QString fileName )
             height()/2 + itemsBoundingRect().center().y() - m_graphicView->height()/2 ) );
         qDebug() << "Circuit Loaded: ";
         qDebug() << fileName;
+        //this->addRect( itemsBoundingRect() );
 }   }
 
 void Circuit::loadDomDoc( QDomDocument* doc )

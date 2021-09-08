@@ -113,7 +113,7 @@ QList<propGroup_t> Potentiometer::propGroups()
 
 void Potentiometer::stamp()
 {
-    eNode* enod = m_pinM.getEnode();        // Get eNode from middle Pin
+    eNode* enod = m_pinM.getEnode();  // Get eNode from middle Pin
 
     if( !enod )                       // Not connected: Create mid eNode
     {

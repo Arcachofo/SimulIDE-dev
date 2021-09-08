@@ -28,11 +28,11 @@ class MAINMODULE_EXPORT eResistor : public eElement
         eResistor( QString id );
         ~eResistor();
 
-        virtual double res();
+        virtual double res() { return m_resist; }
         virtual void setRes( double resist );
         virtual void setResSafe( double resist );
         
-        virtual double admit();
+        virtual double admit() { return m_admit; }
         virtual void setAdmit( double admit );
         void stampAdmit();
         void stampCurrent( double current );
