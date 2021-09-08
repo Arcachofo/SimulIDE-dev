@@ -25,8 +25,6 @@
 GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
            : BaseDebugger( parent,outPane, filePath )
 {
-    setObjectName( "GcBasic Compiler/Debugger" );
-
     type = 1;
 
     m_typesList["byte"]    = "uint8";
@@ -297,4 +295,3 @@ void GcbDebugger::getProcType()
             break;
 }   }   }
 
-#include "moc_gcbdebugger.cpp"

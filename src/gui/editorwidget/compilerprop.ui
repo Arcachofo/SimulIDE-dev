@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>297</width>
-    <height>328</height>
+    <width>300</width>
+    <height>352</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,7 +64,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>8</x>
-     <y>280</y>
+     <y>313</y>
      <width>134</width>
      <height>20</height>
     </rect>
@@ -77,7 +77,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>11</x>
-     <y>206</y>
+     <y>239</y>
      <width>123</width>
      <height>16</height>
     </rect>
@@ -90,7 +90,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>147</x>
-     <y>205</y>
+     <y>238</y>
      <width>140</width>
      <height>22</height>
     </rect>
@@ -179,7 +179,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>146</x>
-     <y>241</y>
+     <y>274</y>
      <width>142</width>
      <height>22</height>
     </rect>
@@ -189,7 +189,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>244</y>
+     <y>277</y>
      <width>103</width>
      <height>16</height>
     </rect>
@@ -260,6 +260,35 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="currentText">
     <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="device">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>198</y>
+     <width>142</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="locale">
+    <locale language="C" country="AnyCountry"/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deviceLabel">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>199</y>
+     <width>103</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Device</string>
    </property>
   </widget>
  </widget>

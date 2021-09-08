@@ -27,7 +27,7 @@ class InoDebugger : public BaseDebugger
     Q_OBJECT
     Q_PROPERTY( board_t Board        READ board       WRITE setBoard       DESIGNABLE true USER true )
     Q_PROPERTY( QString Custom_Board READ customBoard WRITE setCustomBoard DESIGNABLE true USER true )
-    
+
     public:
         InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~InoDebugger();
@@ -53,7 +53,7 @@ class InoDebugger : public BaseDebugger
         virtual void mapFlashToSource() override;
 
     protected:
-        void getVariables();
+        virtual void getData() override;
         
     private:
         QString getBoard( QString line );
@@ -63,7 +63,6 @@ class InoDebugger : public BaseDebugger
         int m_processorType;
         
         QStringList m_boardList;
-        QStringList m_fileList;
         
         QString m_customBoard;
         board_t m_board;

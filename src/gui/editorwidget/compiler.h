@@ -47,6 +47,10 @@ class Compiler : public QObject
         void setIncludePath( QString path );
         void getIncludePath();
 
+        QString device() { return m_device; }
+        void setDevice( QString d ) { m_device = d; }
+        bool useDevice() { return m_useDevice; }
+
         void readSettings();
 
     protected:
@@ -55,13 +59,18 @@ class Compiler : public QObject
         QString getPath( QString msg );
         void toolChainNotFound();
 
+        bool m_useDevice;
+
         QString m_compName;
         QString m_toolPath;
         QString m_inclPath;
         QStringList m_command;
         QStringList m_arguments;
         QStringList m_argsDebug;
+        QStringList m_fileList;
 
+        QString m_debugMode;
+        QString m_device;
         QString m_firmware;
         QString m_file;
         QString m_fileDir;

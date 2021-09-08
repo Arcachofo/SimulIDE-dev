@@ -31,35 +31,28 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         friend class McuInterface;
 
     Q_OBJECT
-    //Q_PROPERTY( bool    Drive_Circuit READ driveCirc    WRITE setDriveCirc    DESIGNABLE true USER true )
-    //Q_PROPERTY( QString Compiler_Path READ compilerPath WRITE setCompilerPath DESIGNABLE true USER true )
-    
     public:
         BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath );
         ~BaseDebugger();
-        
-        //bool driveCirc();
-        //void setDriveCirc( bool drive );
 
         virtual bool upload();
 
-        //virtual int  compile( bool debug );
-        virtual void mapFlashToSource(){;}
+        virtual void mapFlashToSource();
 
         virtual int getValidLine( int pc );
 
-        //virtual void readSettings();
         virtual QString getVarType( QString var );
         virtual QStringList getVarList() { return m_varNames; }
         virtual QList<int> getSubLines() { return m_subLines; }
         
         int type;
-        
-    public slots:
-        //void ProcRead();
 
     protected:
         virtual void getSubs(){;}
+        virtual void getData(){;}
+
+        void mapFlashToAvrGcc();
+        void getAvrGccData();
 
         CodeEditor* m_editor;
 

@@ -64,6 +64,9 @@ CompilerProp::CompilerProp( CodeEditor* parent, BaseDebugger* debugger )
         inclPath->setVisible( false );
         setInclButton->setVisible( false );
 
+        device->setVisible( false );
+        deviceLabel->setVisible( false );
+
         boardLabel->setVisible( false );
         ardBoard->setVisible( false );
         customLabel->setVisible( false );
@@ -92,14 +95,22 @@ void CompilerProp::on_setInclButton_clicked()
     updateDialog();
 }
 
-void CompilerProp::on_toolPath_textEdited( QString path )
+void CompilerProp::on_toolPath_editingFinished()
 {
+    QString path = toolPath->text();
     m_debugger->setCompilerPath( path );
 }
 
-void CompilerProp::on_inclPath_textEdited( QString path )
+void CompilerProp::on_inclPath_editingFinished()
 {
+    QString path = inclPath->text();
     m_debugger->setIncludePath( path );
+}
+
+void CompilerProp::on_device_editingFinished()
+{
+    QString dev = device->text();
+    m_debugger->setDevice( dev );
 }
 
 void CompilerProp::on_ardBoard_currentIndexChanged( int index )
@@ -126,6 +137,10 @@ void CompilerProp::updateDialog()
     inclPathLabel->setVisible( true );
     inclPath->setVisible( true );
     setInclButton->setVisible( true );
+
+    bool useDevice = m_debugger->useDevice();
+    device->setVisible( useDevice );
+    deviceLabel->setVisible( useDevice );
 
     toolPath->setText( m_debugger->compilerPath() );
     inclPath->setText( m_debugger->includePath() );

@@ -32,7 +32,7 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString fil
            : BaseDebugger( parent, outPane, filePath )
 {
     Q_UNUSED( InoDebugger_properties );
-    
+
     setObjectName( "Arduino Compiler/Debugger" );
 
     m_compName = "Arduino";
@@ -219,7 +219,7 @@ int InoDebugger::compile( bool )
     return error;
 }
 
-void InoDebugger::getVariables()
+void InoDebugger::getData()
 {
     QString buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
     
@@ -259,7 +259,7 @@ void InoDebugger::getVariables()
 
 void InoDebugger::mapFlashToSource()
 {
-    getVariables();
+    getData();
     m_flashToSource.clear();
     m_sourceToFlash.clear();
     

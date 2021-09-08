@@ -24,7 +24,6 @@
 
 class GcbDebugger : public BaseDebugger
 {
-    Q_OBJECT
     public:
         GcbDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~GcbDebugger();
@@ -32,7 +31,8 @@ class GcbDebugger : public BaseDebugger
         virtual void mapFlashToSource() override;
         
     protected:
-        virtual void getSubs();
+        virtual void getSubs() override;
+        //virtual void getData() override;
 
     private:
         void mapGcbToAsm();
@@ -45,6 +45,4 @@ class GcbDebugger : public BaseDebugger
         
         int m_processorType;
 };
-
-
 #endif

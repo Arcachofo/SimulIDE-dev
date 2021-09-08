@@ -25,8 +25,6 @@
 PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
               : BaseDebugger( parent,outPane, filePath )
 {
-    setObjectName( "PIC asm Compiler/Debugger" );
-
     m_compName = "GpAsm";
 
     m_typesList["byte"]    = "uint8";
@@ -45,7 +43,7 @@ int PicAsmDebugger::compile( bool )
     m_outPane->appendLine( "-------------------------------------------------------\n" );
     QString command = m_toolPath+"gpasm";
     
-    QProcess checkComp( this );
+    QProcess checkComp( NULL );
     checkComp.start( command  );
     checkComp.waitForFinished(-1);
     
@@ -67,7 +65,7 @@ int PicAsmDebugger::compile( bool )
     m_outPane->appendText( "Exec: ");
     m_outPane->appendLine( command );
     
-    QProcess compAsm( this );
+    QProcess compAsm( NULL );
     compAsm.start( command  );
     compAsm.waitForFinished(-1);
     
@@ -161,4 +159,3 @@ void PicAsmDebugger::mapFlashToSource()
     }
 }
 
-#include "moc_picasmdebugger.cpp"

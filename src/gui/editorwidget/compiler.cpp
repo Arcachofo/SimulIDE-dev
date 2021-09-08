@@ -48,6 +48,9 @@ void Compiler::clearCompiler()
     m_command.clear();
     m_arguments.clear();
     m_argsDebug.clear();
+    m_device.clear();
+    m_debugMode.clear();
+    m_useDevice = false;
 }
 
 QString Compiler::replaceData( QString str )
@@ -56,9 +59,9 @@ QString Compiler::replaceData( QString str )
     QString inclPath = addQuotes( m_inclPath );
 
     str = str.replace( "$filePath", filePath )
-             .replace( "$fileDir",  m_fileDir )
+             .replace( "$fileDir" , m_fileDir )
              .replace( "$fileName", m_fileName )
-             .replace( "$fileExt",  m_fileExt )
+             .replace( "$fileExt" , m_fileExt )
              .replace( "$inclPath", inclPath );
     return str;
 }
@@ -77,9 +80,12 @@ void Compiler::loadCompiler( QString file )
 
     QString incPath = "";
 
-    if( compiler.hasAttribute("name") )      m_compName  = compiler.attribute( "name" );
-    if( compiler.hasAttribute("incPath") )   incPath     = compiler.attribute( "incDir" );
+    if( compiler.hasAttribute("name") ) m_compName = compiler.attribute( "name" );
+    if( compiler.hasAttribute("incPath") ) incPath = compiler.attribute( "incDir" );
     if( !incPath.isEmpty() ) m_inclPath = incPath;
+    if( compiler.hasAttribute("useDevice")
+     && (compiler.attribute( "useDevice" ) == "true") ) m_useDevice = true;
+    if( compiler.hasAttribute("debugMode") ) m_debugMode = compiler.attribute( "debugMode" );
 
     QDomNode node = compiler.firstChild();
     while( !node.isNull() )
@@ -117,11 +123,27 @@ int Compiler::compile( bool debug )
             break;
         }
         command = addQuotes( command );
+
         QString arguments = debug ? m_argsDebug.at(i) : m_arguments.at(i);
+        if( m_useDevice && arguments.contains("$device") )
+        {
+            if( m_device.isEmpty() )
+            {
+                m_outPane->appendLine( tr("Error: device not defined") );
+                error = 1;
+                break;
+            }
+            else arguments = arguments.replace( "$device", m_device );
+        }
         error = runStep( command + arguments );
         if( error ) break;
     }
-    if( error == 0 ) m_firmware = m_fileDir+m_fileName+".hex";
+    if( error == 0 )
+    {
+        m_fileList.clear();
+        m_fileList.append( m_fileName+m_fileExt );
+        m_firmware = m_fileDir+m_fileName+".hex";
+    }
     QApplication::restoreOverrideCursor();
     return error;
 }
@@ -129,7 +151,7 @@ int Compiler::compile( bool debug )
 int Compiler::runStep( QString fullCommand )
 {
     int error = 0;
-    m_outPane->appendLine( "\nExecuting:\n"+fullCommand+"\n" );
+    m_outPane->appendLine( "Executing:\n"+fullCommand+"\n" );
     m_compProcess.setWorkingDirectory( m_fileDir );
     m_compProcess.start( fullCommand  );
     m_compProcess.waitForFinished(-1);

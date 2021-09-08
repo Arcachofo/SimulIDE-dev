@@ -23,17 +23,10 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
-static const char* AvrAsmDebugger_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Avra Inc Path")
-};
 
 AvrAsmDebugger::AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
               : BaseDebugger( parent, outPane, filePath )
 {
-    Q_UNUSED( AvrAsmDebugger_properties );
-    
-    setObjectName( "AVR asm Compiler/Debugger" );
-    
     if( m_inclPath == "" )
         m_inclPath = SIMUAPI_AppPath::self()->availableDataDirPath("codeeditor/tools/avra");
 
@@ -93,10 +86,3 @@ void AvrAsmDebugger::mapFlashToSource()
         m_sourceToFlash[asmLineNumber] = address;
 }   }
 
-/*void AvrAsmDebugger::setAvraIncPath( QString path )
-{
-    m_inclPath = path;
-    MainWindow::self()->settings()->setValue( "avra_Inc_Path", m_inclPath );
-}*/
-
-#include "moc_avrasmdebugger.cpp"

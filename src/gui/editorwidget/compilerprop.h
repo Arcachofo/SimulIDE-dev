@@ -39,8 +39,10 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
         void on_setPathButton_clicked();
         void on_setInclButton_clicked();
 
-        void on_toolPath_textEdited( QString path );
-        void on_inclPath_textEdited( QString path );
+        void on_toolPath_editingFinished();
+        void on_inclPath_editingFinished();
+
+        void on_device_editingFinished();
 
         void on_ardBoard_currentIndexChanged( int index );
         void on_customBoard_textEdited( QString board );

@@ -25,7 +25,7 @@
 class B16AsmDebugger : public BaseDebugger
 {
     Q_OBJECT
-    
+
     public:
         B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~B16AsmDebugger();
@@ -40,6 +40,5 @@ class B16AsmDebugger : public BaseDebugger
 
         QHash<QString, int> m_opcodes;
 };
-
 
 #endif

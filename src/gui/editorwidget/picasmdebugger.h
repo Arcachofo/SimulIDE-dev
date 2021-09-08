@@ -24,7 +24,6 @@
 
 class PicAsmDebugger : public BaseDebugger
 {
-    Q_OBJECT
     public:
         PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
         ~PicAsmDebugger();
