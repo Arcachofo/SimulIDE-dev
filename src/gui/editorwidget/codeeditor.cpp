@@ -669,13 +669,16 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
             for( int i=0; i<tabs; i++ ) insertPlainText( m_tab );
 }   }
 
-void CodeEditor::contextMenuEvent(QContextMenuEvent* event)
+void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
 {
     QMenu *menu = createStandardContextMenu();
-    /*QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
-    connect( propertiesAction, SIGNAL( triggered()),
-                         this, SLOT( slotProperties() ), Qt::UniqueConnection );*/
-    menu->exec(event->globalPos());
+    menu->addSeparator();
+
+    QAction* reloadAction = menu->addAction(QIcon(":/reload.png"), tr("Reload Document"));
+    connect( reloadAction, SIGNAL( triggered()),
+             EditorWindow::self(), SLOT(reload()), Qt::UniqueConnection );
+
+    menu->exec( event->globalPos() );
 }
 
 void CodeEditor::compProps()

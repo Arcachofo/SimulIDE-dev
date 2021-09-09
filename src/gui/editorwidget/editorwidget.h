@@ -59,7 +59,6 @@ class EditorWidget : public QWidget
         bool saveAs();
         void closeTab(int);
         void documentWasModified();
-        void tabContextMenu( const QPoint & eventpoint );
         void tabChanged( int tab );
         void reload();
 

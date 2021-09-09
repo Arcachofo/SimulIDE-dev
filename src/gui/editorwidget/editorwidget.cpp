@@ -258,22 +258,6 @@ void EditorWidget::documentWasModified()
     ce->setCompiled( false );
 }
 
-void EditorWidget::tabContextMenu( const QPoint &eventpoint )
-{
-    CodeEditor* ce = getCodeEditor();
-    if( !ce ) return;
-
-    QMenu* menu = new QMenu();
-    /*QAction* setCompilerAction = menu->addAction(QIcon(":/copy.png"),tr("Set Compiler Path"));
-    connect( setCompilerAction, SIGNAL( triggered()), this, SLOT(setCompiler()), Qt::UniqueConnection );*/
-
-    QAction* reloadAction = menu->addAction(QIcon(":/reload.png"),tr("Reload"));
-    connect( reloadAction, SIGNAL( triggered()), this, SLOT(reload()), Qt::UniqueConnection );
-
-    menu->exec( mapToGlobal(eventpoint) );
-    menu->deleteLater();
-}
-
 void EditorWidget::tabChanged( int tab )
 {
     //qDebug() << "EditorWindow::tabChanged" << m_docWidget->currentIndex() << tab;
@@ -444,11 +428,11 @@ void EditorWidget::createWidgets()
 
 void EditorWidget::createActions()
 {
-    confEditAct = new QAction(QIcon(":/config.png"), tr("Configure Editor"), this);
+    confEditAct = new QAction(QIcon(":/blank.png"), tr("Editor Settings"), this);
     confEditAct->setStatusTip(tr("Editor Settings"));
     connect( confEditAct, SIGNAL(triggered()), this, SLOT(confEditor()), Qt::UniqueConnection);
 
-    confCompAct = new QAction(QIcon(":/config.png"), tr("Configure Compiler"), this);
+    confCompAct = new QAction(QIcon(":/blank.png"), tr("Compiler Settings"), this);
     confCompAct->setStatusTip(tr("Copmpiler Settings"));
     connect( confCompAct, SIGNAL(triggered()), this, SLOT(confCompiler()), Qt::UniqueConnection);
 

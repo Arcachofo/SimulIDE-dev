@@ -17,19 +17,19 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVRGCCDEBUGGER_H
-#define AVRGCCDEBUGGER_H
+#ifndef CDEBUGGER_H
+#define CDEBUGGER_H
 
-#include "cdebugger.h"
+#include "basedebugger.h"
 
-class AvrGccDebugger : public cDebugger
+class cDebugger : public BaseDebugger
 {
     public:
-        AvrGccDebugger( CodeEditor* parent, OutPanelText* outPane );
-        ~AvrGccDebugger();
+        cDebugger( CodeEditor* parent, OutPanelText* outPane );
+        ~cDebugger();
 
     protected:
-        virtual void mapFlashToSource() override;
+        //virtual void mapFlashToSource() override;
         virtual void getData() override;
 };
 
