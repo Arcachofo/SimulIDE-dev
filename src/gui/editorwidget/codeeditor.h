@@ -59,17 +59,18 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         void setFile(const QString filePath);
         QString getFilePath() { return m_file ; }
 
+        void setDevice( QString device );
+
         void lineNumberAreaPaintEvent( QPaintEvent* event );
         int  lineNumberAreaWidth();
         
         void setCompiled( bool compiled ) { m_isCompiled = compiled; }
         
+        void setDebugger( BaseDebugger* debugger );
         bool debugStarted() { return (m_state > DBG_STOPPED); }
         bool initDebbuger();
         void stopDebbuger();
         void lineReached( int line );
-
-        //void setCompilerPath();
 
         void compProps();
 
@@ -130,9 +131,6 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         QString m_compilsPath;
 
         QString m_file;
-        QString m_fileDir;
-        QString m_fileName;
-        QString m_fileExt;
         QString m_help;
 
         bebugState_t m_state;

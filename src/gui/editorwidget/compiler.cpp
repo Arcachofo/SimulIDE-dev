@@ -25,17 +25,19 @@
 #include "mainwindow.h"
 #include "utils.h"
 
-Compiler::Compiler( QObject* parent, OutPanelText* outPane, QString filePath )
+Compiler::Compiler( CodeEditor* parent, OutPanelText* outPane )
         : QObject( parent )
         , m_compProcess( NULL )
 {
+    m_document = parent;
     m_outPane = outPane;
 
-    m_file     = filePath;
-    m_fileDir  = getFileDir( filePath );
-    m_fileExt  = getFileExt( filePath );
-    m_fileName = getBareName( filePath );
+    m_file     = parent->getFilePath();
+    m_fileDir  = getFileDir( m_file );
+    m_fileExt  = getFileExt( m_file );
+    m_fileName = getBareName( m_file );
     m_firmware = "";
+    m_buildPath = m_fileDir;
 
     clearCompiler();
 }
@@ -44,12 +46,11 @@ Compiler::~Compiler( ){}
 void Compiler::clearCompiler()
 {
     m_toolPath.clear();
-    m_inclPath.clear();
     m_command.clear();
     m_arguments.clear();
     m_argsDebug.clear();
     m_device.clear();
-    m_debugMode.clear();
+    m_type.clear();
     m_useDevice = false;
 }
 
@@ -78,14 +79,17 @@ void Compiler::loadCompiler( QString file )
     }
     QDomElement compiler = domDoc.documentElement();
 
-    QString incPath = "";
+    QString inclPath = "";
 
     if( compiler.hasAttribute("name") ) m_compName = compiler.attribute( "name" );
-    if( compiler.hasAttribute("incPath") ) incPath = compiler.attribute( "incDir" );
-    if( !incPath.isEmpty() ) m_inclPath = incPath;
+
+    if( compiler.hasAttribute("inclPath") ) inclPath = compiler.attribute( "inclPath" );
+    if( !inclPath.isEmpty() ) m_inclPath = inclPath;
+
     if( compiler.hasAttribute("useDevice")
      && (compiler.attribute( "useDevice" ) == "true") ) m_useDevice = true;
-    if( compiler.hasAttribute("debugMode") ) m_debugMode = compiler.attribute( "debugMode" );
+
+    if( compiler.hasAttribute("type") ) m_type = compiler.attribute( "type" );
 
     QDomNode node = compiler.firstChild();
     while( !node.isNull() )
@@ -113,6 +117,8 @@ int Compiler::compile( bool debug )
     int error = 0;
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
+    getData();
+
     for( int i=0; i<m_command.size(); ++i )
     {
         QString command = m_toolPath + m_command.at(i);
@@ -135,7 +141,7 @@ int Compiler::compile( bool debug )
             }
             else arguments = arguments.replace( "$device", m_device );
         }
-        error = runStep( command + arguments );
+        error = runBuildStep( command + arguments );
         if( error ) break;
     }
     if( error == 0 )
@@ -148,7 +154,7 @@ int Compiler::compile( bool debug )
     return error;
 }
 
-int Compiler::runStep( QString fullCommand )
+int Compiler::runBuildStep( QString fullCommand )
 {
     int error = 0;
     m_outPane->appendLine( "Executing:\n"+fullCommand+"\n" );
@@ -159,17 +165,42 @@ int Compiler::runStep( QString fullCommand )
     QString p_stderr = m_compProcess.readAllStandardError();
     QString p_stdout = m_compProcess.readAllStandardOutput();
 
-    if( !p_stdout.isEmpty() )m_outPane->appendLine( p_stdout+"\n" );
+    if( !p_stdout.isEmpty() )
+    {
+        m_outPane->appendLine( p_stdout+"\n" );
+        p_stdout = p_stdout.toLower();
+        if( p_stdout.contains( QRegExp("\\berror\\b") )) error = -1;
+    }
     if( !p_stderr.isEmpty() )
     {
-        m_outPane->appendLine( "ERROR OUTPUT:" );
-        m_outPane->appendLine( p_stderr+"\n" );
-        error = -1;
-    }
-    if     ( p_stdout.toLower().contains( QRegExp("\berror\b") )) error = -1;
-    else if( p_stderr.toLower().contains( QRegExp("\berror\b") )) error = -1;
+        QString stderr = p_stderr.toLower();
+        if( stderr.contains( QRegExp("\\berror\\b") ))
+        {
+            m_outPane->appendLine( "ERROR OUTPUT:" );
+            m_outPane->appendLine( p_stderr+"\n" );
+            error = -1;
+    }   }
     return error;
 }
+
+void Compiler::getDevice( QString line )
+{
+    line = line.toLower();
+    line.remove(" ").remove("/");
+    QStringList wordList= line.split( "=" );
+
+    QString word = "";
+    if( wordList.size() > 1 )
+    {
+        word = wordList.takeFirst();
+        if( word != "device" && word != "board" ) return;
+
+        word = wordList.takeFirst();
+        if( word.isEmpty() ) return;
+
+        m_device = word;
+        m_document->setDevice( m_device );
+}   }
 
 QString Compiler::getPath( QString msg )
 {
@@ -183,13 +214,13 @@ QString Compiler::getPath( QString msg )
     return path;
 }
 
-void Compiler::getCompilerPath()
+void Compiler::getToolPath()
 {
     QString path = getPath( tr("Select Compiler Toolchain directory") );
-    if( !path.isEmpty() ) setCompilerPath( path );
+    if( !path.isEmpty() ) setToolPath( path );
 }
 
-void Compiler::setCompilerPath( QString path )
+void Compiler::setToolPath( QString path )
 {
     m_toolPath = path;
     MainWindow::self()->settings()->setValue( m_compName+"_toolPath", m_toolPath );
@@ -218,7 +249,7 @@ void Compiler::readSettings()
     QSettings* settings = MainWindow::self()->settings();
 
     QString prop = m_compName+"_toolPath";
-    if( settings->contains( prop ) ) m_toolPath = settings->value( prop ).toString();
+    if( settings->contains( prop ) ) setToolPath( settings->value( prop ).toString() );
     prop = m_compName+"_inclPath";
     if( settings->contains( prop ) ) m_inclPath = settings->value( prop ).toString();
 }

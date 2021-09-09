@@ -18,14 +18,11 @@
  ***************************************************************************/
 
 #include "avrasmdebugger.h"
-#include "baseprocessor.h"
-#include "mainwindow.h"
 #include "utils.h"
 #include "simuapi_apppath.h"
 
-
-AvrAsmDebugger::AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
-              : BaseDebugger( parent, outPane, filePath )
+AvrAsmDebugger::AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane )
+              : BaseDebugger( parent, outPane )
 {
     if( m_inclPath == "" )
         m_inclPath = SIMUAPI_AppPath::self()->availableDataDirPath("codeeditor/tools/avra");

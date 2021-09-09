@@ -24,37 +24,27 @@
 
 #include "compiler.h"
 
-class CodeEditor;
-
 class BaseDebugger : public Compiler    // Base Class for all debuggers
 {
         friend class McuInterface;
 
     Q_OBJECT
     public:
-        BaseDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath );
+        BaseDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~BaseDebugger();
 
         virtual bool upload();
+        int getValidLine( int pc );
 
-        virtual void mapFlashToSource();
-
-        virtual int getValidLine( int pc );
-
-        virtual QString getVarType( QString var );
-        virtual QStringList getVarList() { return m_varNames; }
-        virtual QList<int> getSubLines() { return m_subLines; }
+        QString getVarType( QString var );
+        QStringList getVarList() { return m_varNames; }
+        QList<int> getSubLines() { return m_subLines; }
         
-        int type;
+        bool m_stepOver;
 
     protected:
+        virtual void mapFlashToSource();
         virtual void getSubs(){;}
-        virtual void getData(){;}
-
-        void mapFlashToAvrGcc();
-        void getAvrGccData();
-
-        CodeEditor* m_editor;
 
         int m_processorType;
         int m_lastLine;

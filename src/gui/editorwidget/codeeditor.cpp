@@ -24,11 +24,7 @@
 
 #include "codeeditor.h"
 #include "baseprocessor.h"
-#include "gcbdebugger.h"
-#include "inodebugger.h"
-#include "b16asmdebugger.h"
-#include "avrasmdebugger.h"
-#include "picasmdebugger.h"
+//#include "basedebugger.h"
 #include "mcucomponent.h"
 #include "mainwindow.h"
 #include "simulator.h"
@@ -36,6 +32,13 @@
 #include "editorwindow.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
+
+#include "gcbdebugger.h"
+#include "inodebugger.h"
+#include "b16asmdebugger.h"
+#include "avrgccdebugger.h"
+#include "avrasmdebugger.h"
+#include "picasmdebugger.h"
 
 static const char* CodeEditor_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Font Size"),
@@ -132,13 +135,13 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 CodeEditor::~CodeEditor()
 {
     m_documents.removeAll( this );
+    //if( m_debugger ) delete m_debugger;
+}
+
+void CodeEditor::setDebugger( BaseDebugger* debugger )
+{
     if( m_debugger ) delete m_debugger;
-
-    if( !m_compDialog ) return;
-
-    m_compDialog->setParent( NULL );
-    m_compDialog->close();
-    m_compDialog->deleteLater();
+    m_debugger = debugger;
 }
 
 void CodeEditor::setFile( const QString filePath )
@@ -146,86 +149,73 @@ void CodeEditor::setFile( const QString filePath )
     m_isCompiled= false;
     if( m_file == filePath ) return;
 
-    if( m_debugger )delete m_debugger;
+    if( m_debugger ) delete m_debugger;
     m_debugger = NULL;
 
     m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendLine( tr(" File: ")+filePath+"\n" );
 
     m_file = filePath;
-    QFileInfo fi = QFileInfo( m_file );
-
-    m_fileDir  = fi.absolutePath();
-    m_fileExt  = fi.suffix();
-    m_fileName = fi.completeBaseName();
-
     QDir::setCurrent( m_file );
 
-    if( m_fileExt == "gcb" )
+    QString extension = getFileExt( filePath );
+
+    if( extension == ".gcb" )
     {
         m_hlighter->readSintaxFile( m_sintaxPath + "gcbasic.sintax" );
-
-        m_debugger = new GcbDebugger( this, m_outPane, filePath );
-        m_debugger->loadCompiler( m_compilsPath+"gcbcompiler.xml" );
+        m_debugger = EditorWindow::self()->createDebugger( "GcBasic", this );
     }
-    else if( m_fileExt == "cpp"
-          || m_fileExt == "c"
-          || m_fileExt == "ino"
-          || m_fileExt == "h" )
+    else if( extension == ".cpp"
+          || extension == ".c"
+          || extension == ".ino"
+          || extension == ".h" )
     {
         m_hlighter->readSintaxFile( m_sintaxPath + "cpp.sintax" );
-        if( m_fileExt == "ino" ) m_debugger = new InoDebugger( this, m_outPane, filePath );
-        else                     m_debugger = new BaseDebugger( this, m_outPane, filePath );
+        if( extension == ".ino" )
+            m_debugger = EditorWindow::self()->createDebugger( "Arduino", this );
     }
-    else if( m_fileExt == "asm" ) // We should identify if pic or avr asm
+    else if( extension == ".asm" ) // We should identify if pic or avr asm
     {
         int isPic = 0;
         int isAvr = 0;
         
         isPic = getSintaxCoincidences( m_file, m_picInstr );
-        
         if( isPic < 50 ) isAvr = getSintaxCoincidences( m_file, m_avrInstr );
 
-        m_outPane->appendLine( tr("File recognized as: ") );
+        m_outPane->appendText( tr("File recognized as: ") );
 
         if( isPic > isAvr )   // Is Pic
         {
             m_outPane->appendLine( "Pic asm\n" );
-
-            QString path = m_sintaxPath + "pic14asm.sintax";
-            m_hlighter->readSintaxFile( path );
-
-            m_debugger = new PicAsmDebugger( this, m_outPane, filePath );
+            m_hlighter->readSintaxFile( m_sintaxPath + "pic14asm.sintax" );
+            m_debugger = EditorWindow::self()->createDebugger( "GpAsm", this );
         }
         else if( isAvr > isPic )  // Is Avr
         {
             m_outPane->appendLine( "Avr asm\n" );
-
-            QString path = m_sintaxPath + "avrasm.sintax";
-            m_hlighter->readSintaxFile( path );
-
-            m_debugger = new AvrAsmDebugger( this, m_outPane, filePath );
-            m_debugger->loadCompiler( m_compilsPath+"avracompiler.xml" );
+            m_hlighter->readSintaxFile( m_sintaxPath + "avrasm.sintax" );
+            m_debugger = EditorWindow::self()->createDebugger( "Avra", this );
         }
         else m_outPane->appendLine( "Unknown\n" );
     }
-    else if( m_fileExt == "xml"
-         ||  m_fileExt == "html"
-         ||  m_fileExt == "package"
-         ||  m_fileExt == "mcu"
-         ||  m_fileExt == "sim1"
-         ||  m_fileExt == "simu" )
+    else if( extension == ".xml"
+         ||  extension == ".html"
+         ||  extension == ".package"
+         ||  extension == ".mcu"
+         ||  extension == ".sim1"
+         ||  extension == ".simu" )
     {
         m_hlighter->readSintaxFile( m_sintaxPath + "xml.sintax" );
     }
-    else if( m_fileName.toLower() == "makefile"  )
+    else if( getFileName( m_file ).toLower() == "makefile"  )
     {
         m_hlighter->readSintaxFile( m_sintaxPath + "makef.sintax" );
     }
-    else if( m_fileExt == "sac" )
+    else if( extension == ".sac" )
     {
-        m_debugger = new B16AsmDebugger( this, m_outPane, filePath );
+        m_debugger = new B16AsmDebugger( this, m_outPane );
     }
+    if( !m_debugger ) m_debugger = EditorWindow::self()->createDebugger( "None", this );
 }
 
 int CodeEditor::getSintaxCoincidences( QString& fileName, QStringList& instructions )
@@ -263,7 +253,7 @@ void CodeEditor::compile( bool debug )
     
     m_outPane->appendLine( "-------------------------------------------------------" );
 
-    if( m_fileName.toLower() == "makefile" )          // Is a Makefile, make it
+    /*if( m_fileName.toLower() == "makefile" )          // Is a Makefile, make it
     {
         m_outPane->appendLine( "make "+m_file+"\n" );
 
@@ -282,7 +272,7 @@ void CodeEditor::compile( bool debug )
             error = -1;
         else error = 0;
     }
-    else{
+    else*/{
         if( !m_debugger )
         {
             m_outPane->appendLine( "\n"+tr("File type not supported")+"\n" );
@@ -370,8 +360,7 @@ bool CodeEditor::initDebbuger()
     if( error ) stopDebbuger();
     else                                          // OK: Start Debugging
     {
-        if( m_debugger->type==1 ) EditorWindow::self()->enableStepOver( true );
-        else                      EditorWindow::self()->enableStepOver( false );
+        EditorWindow::self()->enableStepOver( m_debugger->m_stepOver );
 
         Simulator::self()->addToUpdateList( this );
 
@@ -691,8 +680,17 @@ void CodeEditor::contextMenuEvent(QContextMenuEvent* event)
 
 void CodeEditor::compProps()
 {
-    if( !m_compDialog ) m_compDialog = new CompilerProp( this, m_debugger );
+    if( !m_compDialog )
+    {
+        m_compDialog = new CompilerProp( this );
+        m_compDialog->setDebugger( m_debugger );
+    }
     m_compDialog->show();
+}
+
+void CodeEditor::setDevice( QString device )
+{
+    if( m_compDialog ) m_compDialog->setDevice( device );
 }
 
 void CodeEditor::indentSelection( bool unIndent )

@@ -90,9 +90,9 @@ OutHighlighter::OutHighlighter( QTextDocument* parent )
     rule.format = format;
     highlightingRules.append( rule );
 
-    format.setForeground( QColor(255, 255, 200) );
+    format.setForeground( QColor(200, 255, 200) );
     format.setFontWeight( QFont::Bold );
-    rule.pattern = QRegExp("SUCCESS");
+    rule.pattern = QRegExp("\\bSUCCESS\\b");
     rule.format = format;
     highlightingRules.append(rule);
     
@@ -102,13 +102,13 @@ OutHighlighter::OutHighlighter( QTextDocument* parent )
     highlightingRules.append(rule);
 
     format.setForeground( QColor(255, 200, 100) );
-    rule.pattern = QRegExp("WARNING");
+    rule.pattern = QRegExp("\\bWARNING\\b");
     rule.format = format;
     highlightingRules.append(rule);
 
     format.setForeground( QColor(100, 50, 0) );
     format.setBackground( QColor(255, 255, 100) );
-    rule.pattern = QRegExp(" ERROR");
+    rule.pattern = QRegExp("\\bERROR\\b");
     rule.format = format;
     highlightingRules.append(rule);
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<compiler name="Avra" inclPath="">
+<compiler name="Avra" inclPath="" type="avrasm">
     <step 
         command="avra"
         arguments=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"

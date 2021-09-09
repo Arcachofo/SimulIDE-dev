@@ -20,140 +20,54 @@
 #ifndef EDITORWINDOW_H
 #define EDITORWINDOW_H
 
-#include <QtGui>
-#include "findreplacedialog.h"
-#include "compiler.h"
+#include "editorwidget.h"
 
-class EditorProp;
+class BaseDebugger;
+class Compiler;
 
-class EditorWindow : public QWidget
+class EditorWindow : public EditorWidget
 {
     Q_OBJECT
 
     public:
         EditorWindow( QWidget *parent );
         ~EditorWindow();
-        
+
  static EditorWindow* self() { return m_pSelf; }
 
-        bool close();
-        
+        struct compilData_t
+        {
+            QString file;
+            QString type;
+        };
+
         void enableStepOver( bool en ) { stepOverAct->setVisible( en ); }
 
-        CodeEditor* getCodeEditor() { return (CodeEditor*)m_docWidget->currentWidget(); }
         QStringList compilers() { return m_compilers.keys(); }
-        void loadCompiler( QString compName, Compiler* compiler );
+        //void loadCompiler( QString compName, Compiler* compiler );
+
+        BaseDebugger* createDebugger( QString name, CodeEditor* ce );
 
     public slots:
-        void loadFile(const QString &fileName);
-        void pause();
-        void stop();
-        void run();
-        bool save();
+        virtual void pause() override;
+        virtual void stop() override;
+        virtual void run() override;
         
-    private slots:
-        void confEditor();
-        void confCompiler();
-        void openRecentFile();
-        void newFile();
-        void open();
-        bool saveAs();
-        void closeTab(int);
-        void documentWasModified();
-        void tabContextMenu( const QPoint & eventpoint );
-        void tabChanged( int tab );
-        //void setCompiler();
-        void reload();
-
-        void cut()   { getCodeEditor()->cut(); }
-        void copy()  { getCodeEditor()->copy(); }
-        void paste() { getCodeEditor()->paste(); }
-        void undo()  { getCodeEditor()->undo(); }
-        void redo()  { getCodeEditor()->redo(); }
-        
-        void debug();
-        void step();
-        void stepOver();
-        void reset() { getCodeEditor()->reset(); }
-        void compile() { getCodeEditor()->compile(); } /// m_compiler.compile( getCodeEditor()->getFilePath() );
-
-        void upload() { getCodeEditor()->upload(); }
-        void findReplaceDialog();
-
-    protected:
-        void dropEvent( QDropEvent* event );
-        void dragEnterEvent( QDragEnterEvent* event);
+    protected slots:
+        virtual void debug() override;
+        virtual void step() override;
+        virtual void stepOver() override;
 
     private:
  static EditorWindow*  m_pSelf;
 
-        enum { MaxRecentFiles = 10 };
-        void updateRecentFileActions();
-        void createWidgets();
-        void createActions();
-        void createToolBars();
-        void readSettings();
-        void writeSettings();
-        void loadCompilers();
-        void enableFileActs( bool enable );
-        void enableDebugActs( bool enable );
-        void setStepActs();
-        void keyPressEvent( QKeyEvent* event );
+        //virtual void setDebugger( QString filepath ) override;
 
-        bool maybeSave();
-        bool saveFile( const QString &fileName );
-        
-        QString strippedName( const QString &n ){ return QFileInfo( n ).fileName(); }
+        void loadCompilers();
 
         QFont m_font;
 
-        QTabWidget*  m_docWidget;
-
-        OutPanelText m_outPane;
-        //Compiler     m_compiler;
-        
-        EditorProp* m_editDialog;
-        FindReplaceDialog* findRepDiaWidget;
-        
-        QString     m_lastDir;
-        QStringList m_fileList;
-
-        QHash<QString, QString> m_compilers;
-
-        QMenu m_settingsMenu;
-        QMenu m_fileMenu;
-
-        QToolBar* m_editorToolBar;
-        QToolBar* m_debuggerToolBar;
-
-        QAction* confEditAct;
-        QAction* confCompAct;
-        QAction* recentFileActs[MaxRecentFiles];
-        QAction* newAct;
-        QAction* openAct;
-        QAction* saveAct;
-        QAction* saveAsAct;
-        QAction* exitAct;
-        QAction* aboutAct;
-        QAction* aboutQtAct;
-        QAction* undoAct;
-        QAction* redoAct;
-
-        QAction* cutAct;
-        QAction* copyAct;
-        QAction* pasteAct;
-        
-        QAction* debugAct;
-        
-        QAction* stepAct;
-        QAction* stepOverAct;
-        QAction* runAct;
-        QAction* pauseAct;
-        QAction* resetAct;
-        QAction* stopAct;
-        QAction* compileAct;
-        QAction* loadAct;
-        QAction* findQtAct;
+        QMap<QString, compilData_t> m_compilers;
 };
 
 #endif

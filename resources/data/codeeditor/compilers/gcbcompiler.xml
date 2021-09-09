@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<compiler name="GcBasic">
+<compiler name="GcBasic" type="gcbasic">
     <step 
         command="gcbasic"
         arguments=" -NP -A:GCASM -R:text $filePath"

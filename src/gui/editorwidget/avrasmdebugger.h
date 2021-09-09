@@ -24,13 +24,11 @@
 
 class AvrAsmDebugger : public BaseDebugger
 {
-    
     public:
-        AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
+        AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~AvrAsmDebugger();
 
+    protected:
         virtual void mapFlashToSource() override;
-        
-    private:
 };
 #endif

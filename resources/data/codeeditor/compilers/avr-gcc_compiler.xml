@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<compiler name="Avr-gcc" useDevice="true" debugMode="avr-gcc">
+<compiler name="Avrgcc" useDevice="true" type="avrgcc">
     <step 
         command="avr-gcc"
         arguments=" -mmcu=$device -Wall -g -Os -o $fileDir$fileName.o $filePath"

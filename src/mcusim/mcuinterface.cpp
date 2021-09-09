@@ -188,5 +188,5 @@ void McuInterface::stepDebug()
         if( line != m_prevLine )
         {
             m_debugStep = false;
-            m_debugger->m_editor->lineReached( line );
+            m_debugger->m_document->lineReached( line );
 }   }   }

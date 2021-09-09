@@ -22,10 +22,10 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
-GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
-           : BaseDebugger( parent,outPane, filePath )
+GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane )
+           : BaseDebugger( parent, outPane )
 {
-    type = 1;
+    m_stepOver = true;
 
     m_typesList["byte"]    = "uint8";
     m_typesList["integer"] = "int16";

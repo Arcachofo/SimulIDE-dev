@@ -20,16 +20,16 @@
 #ifndef INODEBUGGER_H
 #define INODEBUGGER_H
 
-#include "basedebugger.h"
+#include "avrgccdebugger.h"
 
-class InoDebugger : public BaseDebugger
+class InoDebugger : public AvrGccDebugger
 {
     Q_OBJECT
     Q_PROPERTY( board_t Board        READ board       WRITE setBoard       DESIGNABLE true USER true )
     Q_PROPERTY( QString Custom_Board READ customBoard WRITE setCustomBoard DESIGNABLE true USER true )
 
     public:
-        InoDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath  );
+        InoDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~InoDebugger();
         
         enum board_t {
@@ -48,26 +48,28 @@ class InoDebugger : public BaseDebugger
         board_t board() { return m_board; }
         void setBoard( board_t b ){ m_board = b; }
 
+        virtual QString toolPath() { return m_arduinoPath; }
+        virtual void setToolPath( QString path ) override;
+
         virtual bool upload() override;
         virtual int  compile( bool debug ) override;
-        virtual void mapFlashToSource() override;
 
     protected:
+        virtual void mapFlashToSource() override;
         virtual void getData() override;
         
     private:
-        QString getBoard( QString line );
+        QString getBoard();
 
         int m_lastInoLine;
         int m_loopInoLine;
         int m_processorType;
         
-        QStringList m_boardList;
-        
+        QString m_arduinoPath;
+        QString m_sketchBook;
         QString m_customBoard;
         board_t m_board;
-
-        QString m_sketchBook;
+        QStringList m_boardList;
 };
 
 

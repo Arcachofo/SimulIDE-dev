@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,31 +17,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef GCBDEBUGGER_H
-#define GCBDEBUGGER_H
+#ifndef AVRGCCDEBUGGER_H
+#define AVRGCCDEBUGGER_H
 
 #include "basedebugger.h"
 
-class GcbDebugger : public BaseDebugger
+class AvrGccDebugger : public BaseDebugger
 {
     public:
-        GcbDebugger( CodeEditor* parent, OutPanelText* outPane );
-        ~GcbDebugger();
+        AvrGccDebugger( CodeEditor* parent, OutPanelText* outPane );
+        ~AvrGccDebugger();
 
     protected:
         virtual void mapFlashToSource() override;
-        virtual void getSubs() override;
-        //virtual void getData() override;
-
-    private:
-        void mapGcbToAsm();
-        void mapLstToAsm();
-        void getProcType();
-
-        QHash<int, int> m_gcbToAsm;
-        QHash<int, int> m_asmToFlash;               // Map .asm code line to flash adress
-        QHash<int, int> m_flashToAsm;               // Map flash adress to .asm code line
-        
-        int m_processorType;
+        virtual void getData() override;
 };
+
 #endif

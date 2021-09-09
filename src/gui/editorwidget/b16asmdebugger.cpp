@@ -26,17 +26,11 @@
 #include "b16asmdebugger.h"
 #include "utils.h"
 
-B16AsmDebugger::B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
-              : BaseDebugger( parent, outPane, filePath )
+B16AsmDebugger::B16AsmDebugger( CodeEditor* parent, OutPanelText* outPane )
+              : BaseDebugger( parent, outPane )
 {
-    setObjectName( "B16 asm Compiler" );
-
-    m_compName = "SAC";
     m_codeBits = 0;
-
     loadCodes();
-
-    readSettings();
 }
 B16AsmDebugger::~B16AsmDebugger() {}
 

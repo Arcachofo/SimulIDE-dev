@@ -22,18 +22,14 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
-PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane, QString filePath )
-              : BaseDebugger( parent,outPane, filePath )
+PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane )
+              : BaseDebugger( parent, outPane )
 {
-    m_compName = "GpAsm";
-
-    m_typesList["byte"]    = "uint8";
-
-    readSettings();
+    m_typesList["byte"] = "uint8";
 }
 PicAsmDebugger::~PicAsmDebugger() {}
 
-int PicAsmDebugger::compile( bool )
+/*int PicAsmDebugger::compile( bool )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
     
@@ -95,7 +91,7 @@ int PicAsmDebugger::compile( bool )
     
     QApplication::restoreOverrideCursor();
     return error;
-}
+}*/
 
 void PicAsmDebugger::mapFlashToSource()
 {

@@ -24,13 +24,14 @@
 #include <QProcess>
 
 class OutPanelText;
+class CodeEditor;
 
 class Compiler : public QObject
 {
     Q_OBJECT
 
     public:
-        Compiler( QObject* parent, OutPanelText* outPane, QString filePath);
+        Compiler( CodeEditor* parent, OutPanelText* outPane );
         ~Compiler();
 
         void clearCompiler();
@@ -39,9 +40,9 @@ class Compiler : public QObject
 
         QString compName() { return m_compName; }
 
-        QString compilerPath() { return m_toolPath; }
-        void setCompilerPath( QString path );
-        void getCompilerPath();
+        virtual QString toolPath() { return m_toolPath; }
+        virtual void setToolPath( QString path );
+        void getToolPath();
 
         QString includePath() { return m_inclPath; }
         void setIncludePath( QString path );
@@ -54,22 +55,28 @@ class Compiler : public QObject
         void readSettings();
 
     protected:
-        int runStep( QString fullCommand );
+        virtual void getDevice( QString line );
+        virtual void getData(){;}
+
+        int runBuildStep( QString fullCommand );
         QString replaceData( QString str );
         QString getPath( QString msg );
         void toolChainNotFound();
+
+        CodeEditor* m_document;
 
         bool m_useDevice;
 
         QString m_compName;
         QString m_toolPath;
         QString m_inclPath;
+        QString m_buildPath;
         QStringList m_command;
         QStringList m_arguments;
         QStringList m_argsDebug;
         QStringList m_fileList;
 
-        QString m_debugMode;
+        QString m_type;
         QString m_device;
         QString m_firmware;
         QString m_file;

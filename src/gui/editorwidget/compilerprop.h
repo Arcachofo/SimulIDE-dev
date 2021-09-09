@@ -31,7 +31,10 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
     Q_OBJECT
     
     public:
-        CompilerProp( CodeEditor* parent, BaseDebugger* debugger);
+        CompilerProp( CodeEditor* parent );
+
+        void setDebugger( BaseDebugger* debugger );
+        void setDevice( QString dev );
 
     public slots:
         void on_compilerBox_currentIndexChanged( int index );
@@ -52,7 +55,7 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
     private:
         void updateDialog();
 
-        CodeEditor* m_editor;
+        CodeEditor* m_document;
         BaseDebugger* m_debugger;
 
         bool m_blocked;

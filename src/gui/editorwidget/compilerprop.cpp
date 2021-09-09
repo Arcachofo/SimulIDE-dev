@@ -22,24 +22,108 @@
 #include "basedebugger.h"
 #include "editorwindow.h"
 
-CompilerProp::CompilerProp( CodeEditor* parent, BaseDebugger* debugger )
+CompilerProp::CompilerProp( CodeEditor* parent )
             : QDialog( parent )
 {
     setupUi(this);
+    m_document = parent;
     m_blocked = true;
+    compilerBox->insertItems( 0, EditorWindow::self()->compilers() );
+    m_blocked = false;
+}
 
-    m_editor   = parent;
+void CompilerProp::on_compilerBox_currentIndexChanged( int index )
+{
+    if( m_blocked ) return;
+
+    QString compName = compilerBox->itemText( index );
+    BaseDebugger* deb = EditorWindow::self()->createDebugger( compName, m_document );
+    setDebugger( deb );
+    m_document->setDebugger( deb );
+    if( compName != "None" )updateDialog();
+}
+
+void CompilerProp::on_setPathButton_clicked()
+{
+    m_debugger->getToolPath();
+    updateDialog();
+}
+
+void CompilerProp::on_setInclButton_clicked()
+{
+    m_debugger->getIncludePath();
+    updateDialog();
+}
+
+void CompilerProp::on_toolPath_editingFinished()
+{
+    QString path = toolPath->text();
+    m_debugger->setToolPath( path );
+}
+
+void CompilerProp::on_inclPath_editingFinished()
+{
+    QString path = inclPath->text();
+    m_debugger->setIncludePath( path );
+}
+
+void CompilerProp::on_device_editingFinished()
+{
+    QString dev = device->text();
+    m_debugger->setDevice( dev );
+}
+
+void CompilerProp::setDevice( QString dev )
+{
+    device->setText( dev );
+}
+
+void CompilerProp::on_ardBoard_currentIndexChanged( int index )
+{
+    m_debugger->setProperty( "Board", index );
+}
+
+void CompilerProp::on_customBoard_textEdited( QString board )
+{
+    m_debugger->setProperty( "Custom_Board", board );
+}
+
+void CompilerProp::on_driveCirc_toggled( bool drive )
+{
+    m_document->setDriveCirc( drive );
+}
+
+void CompilerProp::updateDialog()
+{
+    toolPathLabel->setVisible( true );
+    toolPath->setVisible( true );
+    setPathButton->setVisible( true );
+
+    inclPathLabel->setVisible( true );
+    inclPath->setVisible( true );
+    setInclButton->setVisible( true );
+
+    bool useDevice = m_debugger->useDevice();
+    device->setVisible( useDevice );
+    deviceLabel->setVisible( useDevice );
+
+    toolPath->setText( m_debugger->toolPath() );
+    inclPath->setText( m_debugger->includePath() );
+}
+
+void CompilerProp::setDebugger( BaseDebugger* debugger )
+{
+    m_blocked = true;
     m_debugger = debugger;
 
     QString compiler = debugger->compName();
+    compilerBox->setCurrentText( compiler );
 
-    if( !compiler.isEmpty() )
+    if( compiler != "None" )
     {
-        compilerBox->insertItem( 0, compiler );
-
         updateDialog();
 
-        driveCirc->setChecked( m_editor->driveCirc() );
+        driveCirc->setChecked( m_document->driveCirc() );
 
         QVariant value = debugger->property( "Board" );
         if( !value.isValid() )
@@ -49,13 +133,14 @@ CompilerProp::CompilerProp( CodeEditor* parent, BaseDebugger* debugger )
             customLabel->setVisible( false );
             customBoard->setVisible( false );
         }else{
+            boardLabel->setVisible( true );
+            ardBoard->setVisible( true );
             ardBoard->setCurrentIndex( value.toInt() );
+            customLabel->setVisible( true );
+            customBoard->setVisible( true );
             customBoard->setText( debugger->property( "Custom_Board" ).toString() );
     }   }
     else{
-        compilerBox->insertItem( 0, "None");
-        compilerBox->insertItems( 1, EditorWindow::self()->compilers() );
-
         toolPathLabel->setVisible( false );
         toolPath->setVisible( false );
         setPathButton->setVisible( false );
@@ -74,74 +159,4 @@ CompilerProp::CompilerProp( CodeEditor* parent, BaseDebugger* debugger )
         driveCirc->setVisible( false );
     }
     m_blocked = false;
-}
-
-void CompilerProp::on_compilerBox_currentIndexChanged( int index )
-{
-    if( m_blocked ) return;
-    EditorWindow::self()->loadCompiler( compilerBox->itemText( index), m_debugger );
-    updateDialog();
-}
-
-void CompilerProp::on_setPathButton_clicked()
-{
-    m_debugger->getCompilerPath();
-    updateDialog();
-}
-
-void CompilerProp::on_setInclButton_clicked()
-{
-    m_debugger->getIncludePath();
-    updateDialog();
-}
-
-void CompilerProp::on_toolPath_editingFinished()
-{
-    QString path = toolPath->text();
-    m_debugger->setCompilerPath( path );
-}
-
-void CompilerProp::on_inclPath_editingFinished()
-{
-    QString path = inclPath->text();
-    m_debugger->setIncludePath( path );
-}
-
-void CompilerProp::on_device_editingFinished()
-{
-    QString dev = device->text();
-    m_debugger->setDevice( dev );
-}
-
-void CompilerProp::on_ardBoard_currentIndexChanged( int index )
-{
-    m_debugger->setProperty( "Board", index );
-}
-
-void CompilerProp::on_customBoard_textEdited( QString board )
-{
-    m_debugger->setProperty( "Custom_Board", board );
-}
-
-void CompilerProp::on_driveCirc_toggled( bool drive )
-{
-    m_editor->setDriveCirc( drive );
-}
-
-void CompilerProp::updateDialog()
-{
-    toolPathLabel->setVisible( true );
-    toolPath->setVisible( true );
-    setPathButton->setVisible( true );
-
-    inclPathLabel->setVisible( true );
-    inclPath->setVisible( true );
-    setInclButton->setVisible( true );
-
-    bool useDevice = m_debugger->useDevice();
-    device->setVisible( useDevice );
-    deviceLabel->setVisible( useDevice );
-
-    toolPath->setText( m_debugger->compilerPath() );
-    inclPath->setText( m_debugger->includePath() );
 }
