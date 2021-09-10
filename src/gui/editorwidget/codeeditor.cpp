@@ -234,13 +234,6 @@ void CodeEditor::upload()
     m_debugger->upload();
 }
 
-void CodeEditor::addBreakPoint( int line )
-{
-    if( m_state == DBG_RUNNING ) return;
-    line = m_debugger->getValidLine( line );
-    if( !m_brkPoints.contains( line ) ) m_brkPoints.append( line );
-}
-
 bool CodeEditor::initDebbuger()
 {
     m_outPane->appendLine( "-------------------------------------------------------\n" );
@@ -352,6 +345,13 @@ void CodeEditor::reset()
     m_state = DBG_PAUSED;
 
     updateScreen();
+}
+
+void CodeEditor::addBreakPoint( int line )
+{
+    if( m_state == DBG_RUNNING ) return;
+    line = m_debugger->getValidLine( line );
+    if( !m_brkPoints.contains( line ) ) m_brkPoints.append( line );
 }
 
 void CodeEditor::setDriveCirc( bool drive )

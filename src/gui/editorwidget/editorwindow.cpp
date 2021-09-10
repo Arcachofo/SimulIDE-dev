@@ -118,7 +118,6 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce )
     return debugger;
 }
 
-
 void EditorWindow::loadCompilers()
 {
     QString compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");

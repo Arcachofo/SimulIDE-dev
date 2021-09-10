@@ -57,13 +57,14 @@ QString Compiler::replaceData( QString str )
 {
     QString filePath = addQuotes( m_file );
     QString inclPath = addQuotes( m_inclPath );
+    QString buildPath = addQuotes( m_buildPath );
 
     str = str.replace( "$filePath", filePath )
              .replace( "$fileDir" , m_fileDir )
              .replace( "$fileName", m_fileName )
              .replace( "$fileExt" , m_fileExt )
              .replace( "$inclPath", inclPath )
-             .replace( "$buildPath", m_buildPath );
+             .replace( "$buildPath", buildPath );
     return str;
 }
 void Compiler::loadCompiler( QString file )
