@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include <QFileInfo>
-#include <QDebug>
+//#include <QDebug>
 
 #include "sdccdebugger.h"
 #include "mcuinterface.h"
@@ -28,6 +28,7 @@
 SdccDebugger::SdccDebugger( CodeEditor* parent, OutPanelText* outPane )
               : cDebugger( parent, outPane )
 {
+    m_family = "pic14";
 }
 SdccDebugger::~SdccDebugger(){}
 
@@ -38,7 +39,7 @@ void SdccDebugger::getData()
     if( !McuInterface::self() ) return;
 
     QString gpvc = m_toolPath+"gpvc";
-    QString codPath = m_buildPath+m_fileName+".cod";
+    QString codPath = m_fileName+".cod";
 
 #ifndef Q_OS_UNIX
     gpvc += ".exe";
@@ -47,12 +48,13 @@ void SdccDebugger::getData()
     gpvc = addQuotes( gpvc );
     codPath = addQuotes( codPath );
 
-    QProcess getdata( NULL );      // Get var addresses from Symbol Table
+    QProcess getVars( NULL );      // Get var addresses from Symbol Table
+    getVars.setWorkingDirectory( m_buildPath );
     QString command  = gpvc+" -s "+codPath;
-    getdata.start( command );
-    getdata.waitForFinished(-1);
+    getVars.start( command );
+    getVars.waitForFinished(-1);
 
-    QString  p_stdout = getdata.readAllStandardOutput();
+    QString  p_stdout = getVars.readAllStandardOutput();
     QStringList varNames = m_varList.keys();
     m_varNames.clear();
     m_subs.clear();
@@ -112,9 +114,8 @@ void SdccDebugger::mapFlashToSource()
     QString command  = gpvc+" -l "+codPath;
     flashToLine.start( command );
     flashToLine.waitForFinished(-1);
-
     QString  p_stdout = flashToLine.readAllStandardOutput();
-qDebug() << p_stdout.split("\"");
+
     m_lastLine = 0;
     bool readAddr = false;
     QString lineNum;
@@ -159,8 +160,5 @@ qDebug() << p_stdout.split("\"");
                 if( words.size() < 2 ) continue;
                 lineNum = words.at(1);
                 readAddr = true;
-            }
-        }
-    }
-}
+}   }   }   }
 

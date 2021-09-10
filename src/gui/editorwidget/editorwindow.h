@@ -44,7 +44,6 @@ class EditorWindow : public EditorWidget
         void enableStepOver( bool en ) { stepOverAct->setVisible( en ); }
 
         QStringList compilers() { return m_compilers.keys(); }
-        //void loadCompiler( QString compName, Compiler* compiler );
 
         BaseDebugger* createDebugger( QString name, CodeEditor* ce );
 
@@ -60,8 +59,6 @@ class EditorWindow : public EditorWidget
 
     private:
  static EditorWindow*  m_pSelf;
-
-        //virtual void setDebugger( QString filepath ) override;
 
         void loadCompilers();
 

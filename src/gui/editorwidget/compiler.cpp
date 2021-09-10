@@ -49,8 +49,6 @@ void Compiler::clearCompiler()
     m_command.clear();
     m_arguments.clear();
     m_argsDebug.clear();
-    m_family.clear();
-    m_device.clear();
     m_type.clear();
     m_useDevice = false;
 }
@@ -64,7 +62,8 @@ QString Compiler::replaceData( QString str )
              .replace( "$fileDir" , m_fileDir )
              .replace( "$fileName", m_fileName )
              .replace( "$fileExt" , m_fileExt )
-             .replace( "$inclPath", inclPath );
+             .replace( "$inclPath", inclPath )
+             .replace( "$buildPath", m_buildPath );
     return str;
 }
 void Compiler::loadCompiler( QString file )
@@ -83,7 +82,18 @@ void Compiler::loadCompiler( QString file )
     QString inclPath = "";
 
     if( compiler.hasAttribute("name") ) m_compName = compiler.attribute( "name" );
-
+    if( compiler.hasAttribute("type") ) m_type = compiler.attribute( "type" );
+    if( compiler.hasAttribute("buildPath") )
+    {
+        QString path = compiler.attribute( "buildPath" );
+        QDir buildDir= QFileInfo( m_file ).absoluteDir();
+        if( !buildDir.cd( path ) )
+        {
+            buildDir.mkpath( m_fileDir+"/"+path); // Create build Dir
+            buildDir.cd( path );
+        }
+        m_buildPath = buildDir.absolutePath()+"/";
+    }
     if( compiler.hasAttribute("inclPath") ) inclPath = compiler.attribute( "inclPath" );
     if( !inclPath.isEmpty() ) m_inclPath = inclPath;
 
@@ -92,8 +102,6 @@ void Compiler::loadCompiler( QString file )
 
     if( compiler.hasAttribute("useDevice")
      && (compiler.attribute( "useDevice" ) == "true") ) m_useDevice = true;
-
-    if( compiler.hasAttribute("type") ) m_type = compiler.attribute( "type" );
 
     QDomNode node = compiler.firstChild();
     while( !node.isNull() )
@@ -174,7 +182,7 @@ int Compiler::compile( bool debug )
     {
         m_fileList.clear();
         m_fileList.append( m_fileName+m_fileExt );
-        m_firmware = m_fileDir+m_fileName+".hex";
+        m_firmware = m_buildPath+m_fileName+".hex";
     }
     QApplication::restoreOverrideCursor();
     return error;

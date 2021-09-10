@@ -17,15 +17,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QtGui>
-#include <QThread>
-#include <QtAlgorithms>
-#include <QRegExp>
-
 #include "codeeditor.h"
-#include "baseprocessor.h"
-//#include "basedebugger.h"
-#include "mcucomponent.h"
+#include "outpaneltext.h"
+#include "compilerprop.h"
+#include "highlighter.h"
+#include "mcuinterface.h"
+#include "basedebugger.h"
+#include "mcubase.h"
 #include "mainwindow.h"
 #include "simulator.h"
 #include "circuitwidget.h"
@@ -33,49 +31,28 @@
 #include "simuapi_apppath.h"
 #include "utils.h"
 
-#include "gcbdebugger.h"
-#include "inodebugger.h"
-#include "b16asmdebugger.h"
-#include "avrgccdebugger.h"
-#include "avrasmdebugger.h"
-#include "picasmdebugger.h"
+QStringList CodeEditor::m_picInstr = QString("addlw addwf andlw andwf bcf bov bsf btfsc btg btfss clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf reset retfie retlw return rlf rrfsublw subwf swapf xorlw xorwf").split(" ");
+QStringList CodeEditor::m_avrInstr = QString("add adc adiw sub subi sbc sbci sbiw andi ori eor com neg sbr cbr dec tst clr ser mul rjmp ijmp jmp rcall icall ret reti cpse cp cpc cpi sbrc sbrs sbic sbis brbs brbc breq brne brcs brcc brsh brlo brmi brpl brge brlt brhs brhc brts brtc brvs brvc brie brid mov movw ldi lds ld ldd sts st std lpm in out push pop lsl lsr rol ror asr swap bset bclr sbi cbi bst bld sec clc sen cln sez clz sei cli ses cls sev clv set clt seh clh wdr").split(" ");
 
-static const char* CodeEditor_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Font Size"),
-    QT_TRANSLATE_NOOP("App::Property","Tab Size"),
-    QT_TRANSLATE_NOOP("App::Property","Spaces Tabs"),
-    QT_TRANSLATE_NOOP("App::Property","Show Spaces")
-};
-
-QStringList CodeEditor::m_picInstr = QString("addlw addwf andlw andwf bcf bov bsf btfsc btg btfss clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf reset retfie retlw return rlf rrfsublw subwf swapf xorlw xorwf")
-                .split(" ");
-QStringList CodeEditor::m_avrInstr = QString("add adc adiw sub subi sbc sbci sbiw andi ori eor com neg sbr cbr dec tst clr ser mul rjmp ijmp jmp rcall icall ret reti cpse cp cpc cpi sbrc sbrs sbic sbis brbs brbc breq brne brcs brcc brsh brlo brmi brpl brge brlt brhs brhc brts brtc brvs brvc brie brid mov movw ldi lds ld ldd sts st std lpm in out push pop lsl lsr rol ror asr swap bset bclr sbi cbi bst bld sec clc sen cln sez clz sei cli ses cls sev clv set clt seh clh wdr")
-                .split(" ");
-
-bool CodeEditor::m_showSpaces = false;
-bool CodeEditor::m_spaceTabs  = false;
-bool CodeEditor::m_driveCirc  = false;
-int  CodeEditor::m_fontSize = 13;
-int  CodeEditor::m_tabSize = 4;
+bool    CodeEditor::m_showSpaces = false;
+bool    CodeEditor::m_spaceTabs  = false;
+bool    CodeEditor::m_driveCirc  = false;
+int     CodeEditor::m_fontSize = 13;
+int     CodeEditor::m_tabSize = 4;
+QString CodeEditor::m_sintaxPath;
+QString CodeEditor::m_compilsPath;
 QString CodeEditor::m_tab;
+QFont   CodeEditor::m_font = QFont();
+
 QList<CodeEditor*> CodeEditor::m_documents;
-QFont CodeEditor::m_font = QFont();
 
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           : QPlainTextEdit( parent )
           , Updatable()
 {
-    Q_UNUSED( CodeEditor_properties );
-
     m_compDialog = NULL;
     m_documents.append( this );
-    
-    setObjectName( "Editor" );
-    m_documents.append( this );
 
-    m_sintaxPath  = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/sintax/");
-    m_compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");
-    
     m_outPane   = outPane;
     m_lNumArea  = new LineNumberArea( this );
     m_hlighter  = new Highlighter( document() );
@@ -90,29 +67,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_help = "";
     m_state = DBG_STOPPED;
 
-    m_font.setFamily("Ubuntu Mono");
-    m_font.setWeight( 50 );
-    m_font.setFixedPitch( true );
-    m_font.setPixelSize( m_fontSize );
     setFont( m_font );
-
-    QSettings* settings = MainWindow::self()->settings();
-
-    if( settings->contains( "Editor_show_spaces" ) )
-        setShowSpaces( settings->value( "Editor_show_spaces" ).toBool() );
-
-    if( settings->contains( "Editor_tab_size" ) )
-        setTabSize( settings->value( "Editor_tab_size" ).toInt() );
-    else setTabSize( 4 );
-
-    if( settings->contains( "Editor_font_size" ) )
-        setFontSize( settings->value( "Editor_font_size" ).toInt() );
-
-    bool spacesTab = false;
-    if( settings->contains( "Editor_spaces_tabs" ) )
-        spacesTab = settings->value( "Editor_spaces_tabs" ).toBool();
-
-    setSpaceTabs( spacesTab );
 
     QPalette p = palette();
     p.setColor( QPalette::Base, QColor( 255, 255, 249) );
@@ -135,7 +90,6 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
 CodeEditor::~CodeEditor()
 {
     m_documents.removeAll( this );
-    //if( m_debugger ) delete m_debugger;
 }
 
 void CodeEditor::setDebugger( BaseDebugger* debugger )
@@ -213,7 +167,7 @@ void CodeEditor::setFile( const QString filePath )
     }
     else if( extension == ".sac" )
     {
-        m_debugger = new B16AsmDebugger( this, m_outPane );
+        //m_debugger = new B16AsmDebugger( this, m_outPane );
     }
     if( !m_debugger ) m_debugger = EditorWindow::self()->createDebugger( "None", this );
 }
@@ -247,74 +201,42 @@ void CodeEditor::compile( bool debug )
     if( document()->isModified() ) EditorWindow::self()->save();
     m_debugLine  = -1;
     update();
-    
-    int error=-2;
+
     m_isCompiled = false;
     
     m_outPane->appendLine( "-------------------------------------------------------" );
-
-    /*if( m_fileName.toLower() == "makefile" )          // Is a Makefile, make it
-    {
-        m_outPane->appendLine( "make "+m_file+"\n" );
-
-        QProcess makeproc( 0l );
-        makeproc.setWorkingDirectory( m_fileDir );
-        makeproc.start( "make" );
-        makeproc.waitForFinished(-1);
-
-        QString p_stdout = makeproc.readAllStandardOutput();
-        QString p_stderr = makeproc.readAllStandardError();
-        m_outPane->appendText( p_stderr );
-        m_outPane->appendText( "\n" );
-        m_outPane->appendLine( p_stdout );
-
-        if( p_stderr.toUpper().contains("ERROR") || p_stdout.toUpper().contains("ERROR") )
-            error = -1;
-        else error = 0;
-    }
-    else*/{
-        if( !m_debugger )
-        {
-            m_outPane->appendLine( "\n"+tr("File type not supported")+"\n" );
-            return;
-        }
-        error = m_debugger->compile( debug );
-    }
+    int error = m_debugger->compile( debug );
 
     if( error == 0 )
     {
         m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
         m_isCompiled = true;
+        return;
     }
-    else{
-        m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
-        
-        if( error > 0 ) // goto error line number
-        {
-            m_debugLine = error; // Show arrow in error line
-            updateScreen();
-}   }   }
+    m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
+
+    if( error > 0 ) // goto error line number
+    {
+        m_debugLine = error; // Show arrow in error line
+        updateScreen();
+}   }
 
 void CodeEditor::upload()
 {
-    if( m_file.endsWith(".hex") )     // is an .hex file, upload to proccessor
+    if( McuBase::self() && m_file.endsWith(".hex") )// is an .hex file, upload to proccessor
     {
-        //m_outPane->appendLine( "-------------------------------------------------------\n" );
-        m_outPane->appendLine( "\n"+tr("Uploading: ") );
-        m_outPane->appendLine( m_file );
-
-        if( McuBase::self() ) McuBase::self()->load( m_file );
+        m_outPane->appendLine( "\n"+tr("Uploading: ")+"\n"+m_file);
+        McuBase::self()->load( m_file );
         return;
     }
     if( !m_isCompiled ) compile();
     if( !m_isCompiled ) return;
-    if( m_debugger ) m_debugger->upload();
+    m_debugger->upload();
 }
 
 void CodeEditor::addBreakPoint( int line )
 {
     if( m_state == DBG_RUNNING ) return;
-    
     line = m_debugger->getValidLine( line );
     if( !m_brkPoints.contains( line ) ) m_brkPoints.append( line );
 }
@@ -327,39 +249,14 @@ bool CodeEditor::initDebbuger()
     bool error = false;
     m_state = DBG_STOPPED;
     
-    if( !McuBase::self() )             // Must be an Mcu in Circuit
-    {
-        m_outPane->appendLine( "\n    "+tr("Error: No Mcu in Simulator... ")+"\n" );
-        error = true;
-    }
-    else if( !m_debugger )             // No debugger for this file type
-    {
-        m_outPane->appendLine( "\n    "+tr("Error: No Debugger Suited for this File... ")+"\n" );
-        error = true;
-    }
-    else if( m_file == "" )                                   // No File
-    {
-        m_outPane->appendLine( "\n    "+tr("Error: No File... ")+"\n" );
-        error = true;
-    }
-    else
-    {
-        compile( true );
-        if( !m_isCompiled )                           // Error compiling
-        {
-            m_outPane->appendLine( "\n    "+tr("Error Compiling... ")+"\n" );
-            error = true;
-        }
-        else if( !m_debugger->upload() )      // Error Loading Firmware
-        {
-            m_outPane->appendLine( "\n    "+tr("Error Loading Firmware... ")+"\n" );
-            error = true;
-    }   }
+    compile( true );
+    if     ( !m_isCompiled )         error = true; // Error compiling
+    else if( !m_debugger->upload() ) error = true; // Error Loading Firmware
+
     m_outPane->appendLine( "\n" );
 
     if( error ) stopDebbuger();
-    else                                          // OK: Start Debugging
-    {
+    else{                                         // OK: Start Debugging
         EditorWindow::self()->enableStepOver( m_debugger->m_stepOver );
         Simulator::self()->addToUpdateList( this );
         McuInterface::self()->setDebugging( true );
@@ -376,7 +273,6 @@ bool CodeEditor::initDebbuger()
 void CodeEditor::runToBreak()
 {
     if( m_state == DBG_STOPPED ) return;
-
     m_state = DBG_RUNNING;
     if( m_driveCirc ) Simulator::self()->resumeSim();
     McuInterface::self()->stepOne( m_debugLine );
@@ -386,8 +282,7 @@ void CodeEditor::step( bool over )
 {
     if( m_state == DBG_RUNNING ) return;
 
-    if( over )
-    {
+    if( over ){
         addBreakPoint( m_debugLine+1 );
         EditorWindow::self()->run();
     }else {
@@ -399,9 +294,7 @@ void CodeEditor::step( bool over )
 void CodeEditor::stepOver()
 {
     QList<int> subLines = m_debugger->getSubLines();
-    bool over = false;
-    if( subLines.contains( m_debugLine ) ) over = true;
-
+    bool over = subLines.contains( m_debugLine ) ? true : false;
     step( over );
 }
 
@@ -427,7 +320,6 @@ void CodeEditor::stopDebbuger()
 {
     if( m_state > DBG_STOPPED )
     {
-        //m_brkPoints.clear();
         m_debugLine = 0;
         
         CircuitWidget::self()->powerCircOff();
@@ -478,92 +370,34 @@ void CodeEditor::updateScreen()
     update();
 }
 
-int CodeEditor::lineNumberAreaWidth()
+void CodeEditor::readSettings() // Static
 {
-    int digits = 1;
-    int max = qMax( 1, blockCount() );
-    while( max >= 10 ) { max /= 10; ++digits; }
-    return  fontMetrics().height() + fontMetrics().width( QLatin1Char( '9' ) ) * digits;
+    m_sintaxPath  = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/sintax/");
+    m_compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");
+
+    m_font.setFamily("Ubuntu Mono");
+    m_font.setWeight( 50 );
+    m_font.setFixedPitch( true );
+    m_font.setPixelSize( m_fontSize );
+
+    QSettings* settings = MainWindow::self()->settings();
+
+    if( settings->contains( "Editor_show_spaces" ) )
+        setShowSpaces( settings->value( "Editor_show_spaces" ).toBool() );
+
+    if( settings->contains( "Editor_tab_size" ) )
+        setTabSize( settings->value( "Editor_tab_size" ).toInt() );
+    else setTabSize( 4 );
+
+    if( settings->contains( "Editor_font_size" ) )
+        setFontSize( settings->value( "Editor_font_size" ).toInt() );
+
+    bool spacesTab = false;
+    if( settings->contains( "Editor_spaces_tabs" ) )
+        spacesTab = settings->value( "Editor_spaces_tabs" ).toBool();
+
+    setSpaceTabs( spacesTab );
 }
-
-void CodeEditor::updateLineNumberArea( const QRect &rect, int dy )
-{
-    if( dy ) m_lNumArea->scroll( 0, dy );
-    else     m_lNumArea->update( 0, rect.y(), m_lNumArea->width(), rect.height() );
-    if( rect.contains( viewport()->rect() ) ) updateLineNumberAreaWidth( 0 );
-}
-
-void CodeEditor::resizeEvent( QResizeEvent *e )
-{
-    QPlainTextEdit::resizeEvent( e );
-    QRect cr = contentsRect();
-    m_lNumArea->setGeometry( QRect( cr.left(), cr.top(), lineNumberAreaWidth(), cr.height() ) );
-}
-
-void CodeEditor::highlightCurrentLine()
-{
-    QList<QTextEdit::ExtraSelection> extraSelections;
-
-    if( !isReadOnly() )
-    {
-        QTextEdit::ExtraSelection selection;
-        QColor lineColor = QColor( 250, 240, 220 );
-
-        selection.format.setBackground( lineColor );
-        selection.format.setProperty( QTextFormat::FullWidthSelection, true );
-        selection.cursor = textCursor();
-        selection.cursor.clearSelection();
-        extraSelections.append( selection );
-    }
-    setExtraSelections( extraSelections );
-}
-
-void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
-{
-    QPainter painter( m_lNumArea );
-    painter.fillRect( event->rect(), Qt::lightGray );
-
-    QTextBlock block = firstVisibleBlock();
-
-    int blockNumber = block.blockNumber();
-    int top       = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
-    int fontSize  = fontMetrics().height();
-
-    while( block.isValid() && top <= event->rect().bottom() )
-    {
-        int blockSize = (int)blockBoundingRect( block ).height();
-        int bottom = top + blockSize;
-
-        if( block.isVisible() && bottom >= event->rect().top() )
-        {
-            int lineNumber = blockNumber + 1;
-            // Check if there is a new breakpoint request from context menu
-            int pos = m_lNumArea->lastPos;
-            if( pos > top && pos < bottom)
-            {
-                if     ( m_brkAction == 1 ) addBreakPoint( lineNumber );
-                else if( m_brkAction == 2 ) remBreakPoint( lineNumber );
-                m_brkAction = 0;
-                m_lNumArea->lastPos = 0;
-            }
-            if(( m_state > DBG_STOPPED )
-              && m_brkPoints.contains( lineNumber )) // Draw breakPoint icon
-            {
-                painter.setBrush( QColor(Qt::yellow) );
-                painter.setPen( Qt::NoPen );
-                painter.drawRect( 0, top, fontSize, fontSize );
-            }
-            if( lineNumber == m_debugLine ) // Draw debug line icon
-                painter.drawImage( QRectF(0, top, fontSize, fontSize), QImage(":/finish.png") );
-            // Draw line number
-            QString number = QString::number( lineNumber );
-            painter.setPen( Qt::black );
-            painter.drawText( 0, top, m_lNumArea->width(), fontSize, Qt::AlignRight, number );
-        }
-        block = block.next();
-        top = bottom;
-        ++blockNumber;
-}   }
 
 void CodeEditor::setFontSize( int size )
 {
@@ -685,6 +519,93 @@ void CodeEditor::setDevice( QString device )
     if( m_compDialog ) m_compDialog->setDevice( device );
 }
 
+int CodeEditor::lineNumberAreaWidth()
+{
+    int digits = 1;
+    int max = qMax( 1, blockCount() );
+    while( max >= 10 ) { max /= 10; ++digits; }
+    return  fontMetrics().height() + fontMetrics().width( QLatin1Char( '9' ) ) * digits;
+}
+
+void CodeEditor::updateLineNumberArea( const QRect &rect, int dy )
+{
+    if( dy ) m_lNumArea->scroll( 0, dy );
+    else     m_lNumArea->update( 0, rect.y(), m_lNumArea->width(), rect.height() );
+    if( rect.contains( viewport()->rect() ) ) updateLineNumberAreaWidth( 0 );
+}
+
+void CodeEditor::resizeEvent( QResizeEvent *e )
+{
+    QPlainTextEdit::resizeEvent( e );
+    QRect cr = contentsRect();
+    m_lNumArea->setGeometry( QRect( cr.left(), cr.top(), lineNumberAreaWidth(), cr.height() ) );
+}
+
+void CodeEditor::highlightCurrentLine()
+{
+    QList<QTextEdit::ExtraSelection> extraSelections;
+
+    if( !isReadOnly() )
+    {
+        QTextEdit::ExtraSelection selection;
+        QColor lineColor = QColor( 250, 240, 220 );
+
+        selection.format.setBackground( lineColor );
+        selection.format.setProperty( QTextFormat::FullWidthSelection, true );
+        selection.cursor = textCursor();
+        selection.cursor.clearSelection();
+        extraSelections.append( selection );
+    }
+    setExtraSelections( extraSelections );
+}
+
+void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
+{
+    QPainter painter( m_lNumArea );
+    painter.fillRect( event->rect(), Qt::lightGray );
+
+    QTextBlock block = firstVisibleBlock();
+
+    int blockNumber = block.blockNumber();
+    int top       = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
+    int fontSize  = fontMetrics().height();
+
+    while( block.isValid() && top <= event->rect().bottom() )
+    {
+        int blockSize = (int)blockBoundingRect( block ).height();
+        int bottom = top + blockSize;
+
+        if( block.isVisible() && bottom >= event->rect().top() )
+        {
+            int lineNumber = blockNumber + 1;
+            // Check if there is a new breakpoint request from context menu
+            int pos = m_lNumArea->lastPos;
+            if( pos > top && pos < bottom)
+            {
+                if     ( m_brkAction == 1 ) addBreakPoint( lineNumber );
+                else if( m_brkAction == 2 ) remBreakPoint( lineNumber );
+                m_brkAction = 0;
+                m_lNumArea->lastPos = 0;
+            }
+            if(( m_state > DBG_STOPPED )
+              && m_brkPoints.contains( lineNumber )) // Draw breakPoint icon
+            {
+                painter.setBrush( QColor(Qt::yellow) );
+                painter.setPen( Qt::NoPen );
+                painter.drawRect( 0, top, fontSize, fontSize );
+            }
+            if( lineNumber == m_debugLine ) // Draw debug line icon
+                painter.drawImage( QRectF(0, top, fontSize, fontSize), QImage(":/finish.png") );
+            // Draw line number
+            QString number = QString::number( lineNumber );
+            painter.setPen( Qt::black );
+            painter.drawText( 0, top, m_lNumArea->width(), fontSize, Qt::AlignRight, number );
+        }
+        block = block.next();
+        top = bottom;
+        ++blockNumber;
+}   }
+
 void CodeEditor::indentSelection( bool unIndent )
 {
     QTextCursor cur = textCursor();
@@ -739,8 +660,8 @@ void CodeEditor::indentSelection( bool unIndent )
 }
 
 
+// ********************* CLASS LineNumberArea **********************************
 
-// CLASS LineNumberArea ******************************************************
 LineNumberArea::LineNumberArea( CodeEditor *editor ) : QWidget(editor)
 {
     m_codeEditor = editor;
@@ -750,7 +671,6 @@ LineNumberArea::~LineNumberArea(){}
 void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
 {
     event->accept();
-    
     if( !m_codeEditor->debugStarted() ) return;
     
     QMenu menu;

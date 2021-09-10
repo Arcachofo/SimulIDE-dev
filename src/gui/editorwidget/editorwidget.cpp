@@ -47,6 +47,11 @@ EditorWidget::EditorWidget( QWidget* parent )
 }
 EditorWidget::~EditorWidget(){}
 
+CodeEditor* EditorWidget::getCodeEditor()
+{
+    return (CodeEditor*)m_docWidget->currentWidget();
+}
+
 bool EditorWidget::close()
 {
     writeSettings();

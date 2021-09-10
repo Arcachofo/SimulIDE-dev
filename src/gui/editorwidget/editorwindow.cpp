@@ -40,7 +40,7 @@ EditorWindow::EditorWindow( QWidget* parent )
             : EditorWidget( parent )
 {
     m_pSelf = this;
-
+    CodeEditor::readSettings();
     loadCompilers();
 }
 EditorWindow::~EditorWindow(){}
@@ -100,10 +100,6 @@ void EditorWindow::stop()
     Simulator::self()->remFromUpdateList( &m_outPane );
 }
 
-/*void EditorWindow::setDebugger( QString filepath )
-{
-}*/
-
 BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce )
 {
     BaseDebugger* debugger = NULL;
@@ -122,10 +118,6 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce )
     return debugger;
 }
 
-/*void EditorWindow::loadCompiler( QString compName, Compiler* compiler )
-{
-    compiler->loadCompiler( m_compilers.value( compName ).file );
-}*/
 
 void EditorWindow::loadCompilers()
 {

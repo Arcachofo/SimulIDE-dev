@@ -40,7 +40,7 @@ void CompilerProp::on_compilerBox_currentIndexChanged( int index )
     BaseDebugger* deb = EditorWindow::self()->createDebugger( compName, m_document );
     setDebugger( deb );
     m_document->setDebugger( deb );
-    if( compName != "None" )updateDialog();
+    if( compName != "None" ) updateDialog();
 }
 
 void CompilerProp::on_setPathButton_clicked()
@@ -119,10 +119,12 @@ void CompilerProp::updateDialog()
     bool useFamily = m_debugger->useFamily();
     familyText->setVisible( useFamily );
     familyLabel->setVisible( useFamily );
+    familyText->setText( m_debugger->family() );
 
     bool useDevice = m_debugger->useDevice();
     deviceText->setVisible( useDevice );
     deviceLabel->setVisible( useDevice );
+    deviceText->setText( m_debugger->device() );
 
     driveCirc->setVisible( true );
     driveCirc->setChecked( m_document->driveCirc() );
@@ -139,8 +141,6 @@ void CompilerProp::setDebugger( BaseDebugger* debugger )
     if( compiler != "None" )
     {
         updateDialog();
-
-        driveCirc->setChecked( m_document->driveCirc() );
 
         QVariant value = debugger->property( "Board" );
         if( !value.isValid() )

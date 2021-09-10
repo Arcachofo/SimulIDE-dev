@@ -24,6 +24,7 @@
 #include <QMenu>
 
 #include "codeeditor.h"
+#include "outpaneltext.h"
 
 class QTabWidget;
 class QToolBar;
@@ -41,7 +42,7 @@ class EditorWidget : public QWidget
 
         bool close();
 
-       CodeEditor* getCodeEditor() { return (CodeEditor*)m_docWidget->currentWidget(); }
+       CodeEditor* getCodeEditor();
 
     public slots:
        void loadFile( const QString &fileName );
@@ -78,7 +79,6 @@ class EditorWidget : public QWidget
         void findReplaceDialog();
 
     protected:
-        //virtual void setDebugger( QString ){;}
         void dropEvent( QDropEvent* event );
         void dragEnterEvent( QDragEnterEvent* event);
         void keyPressEvent( QKeyEvent* event );

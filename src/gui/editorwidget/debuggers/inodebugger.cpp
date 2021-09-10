@@ -92,9 +92,9 @@ int InoDebugger::compile( bool )
 
     if( m_sketchBook.isEmpty() ) // Find sketchBook
     {
-#ifndef Q_OS_UNIX
-    command += "_debug.exe";
-#endif
+    #ifndef Q_OS_UNIX
+        command += "_debug.exe";
+    #endif
         command = addQuotes( command );
         command += " --get-pref sketchbook.path";
 
@@ -120,8 +120,7 @@ int InoDebugger::compile( bool )
     if( boardName.isEmpty() )
     {
         if( m_board < Custom ) boardName = "arduino:avr:"+m_boardList.at( m_board );
-        else
-        {
+        else{
             boardName = m_customBoard;
             boardSource = "Custom ";
     }   }

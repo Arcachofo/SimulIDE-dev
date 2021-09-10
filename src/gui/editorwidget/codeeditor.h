@@ -23,10 +23,6 @@
 #include <QPlainTextEdit>
 #include <QObject>
 
-#include "highlighter.h"
-#include "outpaneltext.h"
-#include "compilerprop.h"
-#include "ramtable.h"
 #include "updatable.h"
 
 enum bebugState_t{
@@ -36,14 +32,11 @@ enum bebugState_t{
     DBG_RUNNING
 };
 
-class QPaintEvent;
-class QResizeEvent;
-class QSize;
-class QWidget;
-
 class BaseDebugger;
 class LineNumberArea;
 class CompilerProp;
+class Highlighter;
+class OutPanelText;
 
 class CodeEditor : public QPlainTextEdit, public Updatable
 {
@@ -74,6 +67,7 @@ class CodeEditor : public QPlainTextEdit, public Updatable
 
         void compProps();
 
+ static void readSettings();
  static int fontSize() { return m_fontSize; }
  static void setFontSize( int size );
 
@@ -124,11 +118,8 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         BaseDebugger* m_debugger;
         OutPanelText* m_outPane;
 
-        LineNumberArea *m_lNumArea;
-        Highlighter    *m_hlighter;
-
-        QString m_sintaxPath;
-        QString m_compilsPath;
+        LineNumberArea* m_lNumArea;
+        Highlighter*    m_hlighter;
 
         QString m_file;
         QString m_help;
@@ -142,6 +133,7 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         int m_lastCycle;
 
         bool m_isCompiled;
+
  static bool m_showSpaces;
  static bool m_spaceTabs;
  static bool m_driveCirc;
@@ -152,10 +144,14 @@ class CodeEditor : public QPlainTextEdit, public Updatable
  static int   m_fontSize;
  static int   m_tabSize;
 
+ static QString m_sintaxPath;
+ static QString m_compilsPath;
  static QString m_tab;
 
- static QList<CodeEditor*> m_documents;
  static QFont m_font;
+
+ static QList<CodeEditor*> m_documents;
+
 };
 
 
@@ -166,7 +162,7 @@ class LineNumberArea : public QWidget
     Q_OBJECT
     
     public:
-        LineNumberArea(CodeEditor *editor);
+        LineNumberArea( CodeEditor* editor );
         ~LineNumberArea();
 
         QSize sizeHint() const { return QSize(m_codeEditor->lineNumberAreaWidth(), 0); }
@@ -175,7 +171,7 @@ class LineNumberArea : public QWidget
 
     protected:
         void contextMenuEvent( QContextMenuEvent *event);
-        void paintEvent(QPaintEvent *event) { m_codeEditor->lineNumberAreaPaintEvent(event); }
+        void paintEvent( QPaintEvent* event ) { m_codeEditor->lineNumberAreaPaintEvent(event); }
 
     private:
         CodeEditor *m_codeEditor;
