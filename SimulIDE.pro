@@ -45,6 +45,8 @@ INCLUDEPATH += ../src \
     ../src/gui/filebrowser \
     ../src/gui/editorwidget \
     ../src/gui/editorwidget/findreplacedialog \
+    ../src/gui/editorwidget/dialogs \
+    ../src/gui/editorwidget/debuggers \
     ../src/gui/dialogs \
     ../src/gui/dialogs/properties \
     ../src/gui/memory \

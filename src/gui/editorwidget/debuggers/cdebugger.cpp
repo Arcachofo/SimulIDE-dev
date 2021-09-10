@@ -67,6 +67,6 @@ void cDebugger::getData()
                 varName.remove(" ");
                 if( !m_varList.contains( varName ) )
                     m_varList[ varName ] = m_typesList[ type ];
-                //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<varName<<m_typesList[ type ];
-    }   }   }
-}
+                //qDebug() << "cDebugger::getData  variable "<<type<<varName<<m_typesList[ type ];
+}   }   }   }
+

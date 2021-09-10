@@ -27,7 +27,7 @@
 
 Compiler::Compiler( CodeEditor* parent, OutPanelText* outPane )
         : QObject( parent )
-        , m_compProcess( NULL )
+        , m_compProcess( this )
 {
     m_document = parent;
     m_outPane = outPane;

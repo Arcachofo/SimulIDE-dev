@@ -63,9 +63,9 @@ bool InoDebugger::upload() // Copy hex file to Circuit folder, then upload
 int InoDebugger::compile( bool )
 {
     QString builder = "arduino-builder";
-    #ifndef Q_OS_UNIX
+#ifndef Q_OS_UNIX
     builder += ".exe";
-    #endif
+#endif
 
     if( !QFile::exists( m_arduinoPath+builder) )
     {
@@ -90,11 +90,11 @@ int InoDebugger::compile( bool )
     }
     QString command = m_arduinoPath+"arduino";
 
-    if( m_sketchBook.isEmpty() )
+    if( m_sketchBook.isEmpty() ) // Find sketchBook
     {
-        #ifndef Q_OS_UNIX
-        command += "_debug";
-        #endif
+#ifndef Q_OS_UNIX
+    command += "_debug.exe";
+#endif
         command = addQuotes( command );
         command += " --get-pref sketchbook.path";
 
@@ -106,7 +106,7 @@ int InoDebugger::compile( bool )
         getSkBook.close();
     }
     filePath           = addQuotes( filePath );
-    command            = addQuotes( m_arduinoPath+"arduino-builder" );
+    command            = addQuotes( m_arduinoPath+builder );
     QString hardware   = addQuotes( m_arduinoPath+"hardware" );
     QString toolsBuild = addQuotes( m_arduinoPath+"tools-builder" );
     QString toolsAvr   = addQuotes( m_arduinoPath+"hardware/tools/avr" );

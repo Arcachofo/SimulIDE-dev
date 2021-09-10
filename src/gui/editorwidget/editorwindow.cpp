@@ -30,6 +30,7 @@
 #include "inodebugger.h"
 #include "b16asmdebugger.h"
 #include "avrgccdebugger.h"
+#include "sdccdebugger.h"
 #include "avrasmdebugger.h"
 #include "picasmdebugger.h"
 
@@ -110,6 +111,7 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce )
 
     if     ( type == "arduino")  debugger = new InoDebugger( ce, &m_outPane );
     else if( type == "avrgcc" )  debugger = new AvrGccDebugger( ce, &m_outPane );
+    else if( type == "sdcc" )    debugger = new SdccDebugger( ce, &m_outPane );
     else if( type == "gcbasic" ) debugger = new GcbDebugger( ce, &m_outPane );
     else if( type == "picasm" )  debugger = new PicAsmDebugger( ce, &m_outPane );
     else if( type == "avrasm" )  debugger = new AvrAsmDebugger( ce, &m_outPane );

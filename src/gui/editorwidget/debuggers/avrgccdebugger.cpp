@@ -32,12 +32,16 @@ AvrGccDebugger::~AvrGccDebugger(){}
 
 void AvrGccDebugger::getData()
 {
-    if( !McuInterface::self() ) return;
-
     cDebugger::getData();
+
+    if( !McuInterface::self() ) return;
 
     QString objdump = m_toolPath+"avr-objdump";
     QString elfPath = m_buildPath+m_fileName+".elf";
+
+#ifndef Q_OS_UNIX
+    objdump += ".exe";
+#endif
 
     objdump = addQuotes( objdump );
     elfPath = addQuotes( elfPath );
@@ -89,6 +93,11 @@ void AvrGccDebugger::mapFlashToSource()
     QString elfPath = m_buildPath+m_fileName+".elf";
     QString avrSize = m_toolPath+"avr-size";
     QString addr2li = m_toolPath+"avr-addr2line";
+
+#ifndef Q_OS_UNIX
+    avrSize += ".exe";
+    addr2li += ".exe";
+#endif
 
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );
