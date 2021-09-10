@@ -109,10 +109,12 @@ void CompilerProp::updateDialog()
     toolPathLabel->setVisible( true );
     toolPath->setVisible( true );
     setPathButton->setVisible( true );
+    toolPath->setText( m_debugger->toolPath() );
 
     inclPathLabel->setVisible( true );
     inclPath->setVisible( true );
     setInclButton->setVisible( true );
+    inclPath->setText( m_debugger->includePath() );
 
     bool useFamily = m_debugger->useFamily();
     familyText->setVisible( useFamily );
@@ -122,8 +124,8 @@ void CompilerProp::updateDialog()
     deviceText->setVisible( useDevice );
     deviceLabel->setVisible( useDevice );
 
-    toolPath->setText( m_debugger->toolPath() );
-    inclPath->setText( m_debugger->includePath() );
+    driveCirc->setVisible( true );
+    driveCirc->setChecked( m_document->driveCirc() );
 }
 
 void CompilerProp::setDebugger( BaseDebugger* debugger )

@@ -55,14 +55,14 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     font.setPixelSize( 12*scale );
     for( int i=0; i<8; i++ )
     {
-        m_status.setColumnWidth( i, 20*scale );
+        m_status.setColumnWidth( i, 22*scale );
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
         it->setFont( font );
         m_status.setItem( 0, i, it );
     }
-    m_status.setMinimumWidth( (62+8*20)*scale );
-    m_status.setMaximumWidth( (62+8*20)*scale );
+    m_status.setMinimumWidth( (62+8*22)*scale );
+    m_status.setMaximumWidth( (62+8*22)*scale );
 
     m_pc.setVerticalHeaderLabels( QStringList()<<" PC "  );
     m_pc.horizontalHeader()->hide();

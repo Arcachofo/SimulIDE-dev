@@ -361,9 +361,7 @@ bool CodeEditor::initDebbuger()
     else                                          // OK: Start Debugging
     {
         EditorWindow::self()->enableStepOver( m_debugger->m_stepOver );
-
         Simulator::self()->addToUpdateList( this );
-
         McuInterface::self()->setDebugging( true );
         reset();
         setDriveCirc( m_driveCirc );
@@ -577,8 +575,7 @@ void CodeEditor::setFontSize( int size )
     {
         doc->setFont( m_font );
         doc->setTabSize( m_tabSize );
-    }
-}
+}   }
 
 void CodeEditor::setTabSize( int size )
 {
@@ -589,8 +586,7 @@ void CodeEditor::setTabSize( int size )
     {
         doc->setTabStopWidth( m_tabSize*m_fontSize*2/3 );
         if( m_spaceTabs ) doc->setSpaceTabs( true );
-    }
-}
+}   }
 
 void CodeEditor::setShowSpaces( bool on )
 {
@@ -605,7 +601,6 @@ void CodeEditor::setShowSpaces( bool on )
 
         doc->document()->setDefaultTextOption(option);
     }
-
     if( m_showSpaces )
          MainWindow::self()->settings()->setValue( "Editor_show_spaces", "true" );
     else MainWindow::self()->settings()->setValue( "Editor_show_spaces", "false" );
@@ -615,11 +610,7 @@ void CodeEditor::setSpaceTabs( bool on )
 {
     m_spaceTabs = on;
 
-    if( on )
-    {
-        m_tab = "";
-        for( int i=0; i<m_tabSize; i++) m_tab += " ";
-    }
+    if( on ) { m_tab = ""; for( int i=0; i<m_tabSize; i++) m_tab += " "; }
     else m_tab = "\t";
 
     if( m_spaceTabs )
@@ -645,10 +636,8 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
     else if( event->key() == Qt::Key_Backtab )
     {
         if( textCursor().hasSelection() ) indentSelection( true );
-        else
-        {
-            textCursor().movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor , m_tab.size() );
-    }   }
+        else textCursor().movePosition( QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor , m_tab.size() );
+    }
     else{
         int tabs = 0;
         if( event->key() == Qt::Key_Return )
@@ -712,7 +701,7 @@ void CodeEditor::indentSelection( bool unIndent )
     
     int lines = list.count();
  
-    for (int i = 0; i < lines; i++)
+    for( int i=0; i<lines; ++i )
     {
         QString line = list[i];
 
@@ -727,16 +716,8 @@ void CodeEditor::indentSelection( bool unIndent )
                 if( line.size() <= n2 ) break;
                 QString car = line.at(n2);
                 
-                if( car == " " ) 
-                {
-                    n1 -= 1;
-                    n2 += 1;
-                }
-                else if( car == "\t" )
-                {
-                    n1 -= n;
-                    if( n1 >= 0 ) n2 += 1;
-                }
+                if     ( car == " " ) { n1 -= 1; n2 += 1; }
+                else if( car == "\t" ) { n1 -= n; if( n1 >= 0 ) n2 += 1; }
                 else n1 = 0;
             }
             line.replace( 0, n2, "" );
@@ -744,7 +725,6 @@ void CodeEditor::indentSelection( bool unIndent )
         else line.insert( 0, m_tab );
         
         if( i < lines-1 ) line += "\n";
-
         str2 += line;
     }
     cur.removeSelectedText();

@@ -23,15 +23,14 @@
 #include "component.h"
 #include "e-element.h"
 
-
 class IoPin;
 class LibraryItem;
 
-class MAINMODULE_EXPORT LogicInput : public Component , public eElement
+class MAINMODULE_EXPORT LogicInput : public Component, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( double   Voltage   READ volt    WRITE setVolt    DESIGNABLE true USER true )
-    Q_PROPERTY( bool     Out       READ out     WRITE setOut     DESIGNABLE true)
+    Q_PROPERTY( double Voltage READ volt WRITE setVolt DESIGNABLE true USER true )
+    Q_PROPERTY( bool   Out     READ out  WRITE setOut  DESIGNABLE true)
 
     public:
         LogicInput( QObject* parent, QString type, QString id );
@@ -45,16 +44,15 @@ class MAINMODULE_EXPORT LogicInput : public Component , public eElement
         bool out() { return m_button->isChecked(); }
         virtual void setOut( bool out );
 
-        double volt();
+        double volt() { return m_value; }
         void setVolt( double v );
         
         virtual void setUnit( QString un ) override;
 
         virtual void stamp() override;
         virtual void updateStep() override;
-        virtual void remove() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:
         virtual void onbuttonclicked();
@@ -67,6 +65,5 @@ class MAINMODULE_EXPORT LogicInput : public Component , public eElement
         QToolButton* m_button;
         QGraphicsProxyWidget* m_proxy;
 };
-
 
 #endif

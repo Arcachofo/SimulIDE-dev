@@ -49,7 +49,7 @@ bool PicProcessor::setDevice( QString device )
 
     if( m_device.startsWith( "pic18" ) )
             statusBits <<" C "<<"DC "<<" Z "<<"OV "<<" N "<<" X "<<" X "<<" X ";
-    else    statusBits <<" C "<<"DC "<<" Z "<<"PD "<<"TO "<<"RP0"<<"RP1"<<"IRP";
+    else    statusBits <<" C "<<"DC "<<" Z "<<"PD "<<"TO "<<"R0"<<"R1"<<"IR";
 
     m_ramTable->setStatusBits( statusBits );
 

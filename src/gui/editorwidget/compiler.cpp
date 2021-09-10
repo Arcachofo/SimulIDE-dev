@@ -113,11 +113,22 @@ void Compiler::loadCompiler( QString file )
         node = node.nextSibling();
     }
     readSettings();
-    m_outPane->appendLine( m_compName+" Compiler successfully loaded.\n" );
+    m_outPane->appendLine( "-------------------------------------------------------" );
+    m_outPane->appendLine( m_compName+tr(" Compiler successfully loaded.\n") );
 }
 
 int Compiler::compile( bool debug )
 {
+    if( m_compName == "None" )
+    {
+        m_outPane->appendLine( tr("     Error: No Compiler Defined") );
+        return -1;
+    }
+    if( m_command.isEmpty() )
+    {
+        m_outPane->appendLine( tr("     Error: No command Defined") );
+        return -1;
+    }
     int error = 0;
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
@@ -129,7 +140,7 @@ int Compiler::compile( bool debug )
         if( !m_toolPath.isEmpty() && !QFile::exists( command ) )
         {
             toolChainNotFound();
-            error = 1;
+            error = -1;
             break;
         }
         command = addQuotes( command );
@@ -140,8 +151,8 @@ int Compiler::compile( bool debug )
         {
             if( m_family.isEmpty() )
             {
-                m_outPane->appendLine( tr("Error: Family not defined") );
-                error = 1;
+                m_outPane->appendLine( tr("     Error: Family not defined") );
+                error = -1;
                 break;
             }
             else arguments = arguments.replace( "$family", m_family );
@@ -150,8 +161,8 @@ int Compiler::compile( bool debug )
         {
             if( m_device.isEmpty() )
             {
-                m_outPane->appendLine( tr("Error: Device not defined") );
-                error = 1;
+                m_outPane->appendLine( tr("     Error: Device not defined") );
+                error = -1;
                 break;
             }
             else arguments = arguments.replace( "$device", m_device );

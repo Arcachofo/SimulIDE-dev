@@ -64,7 +64,7 @@ LogicInput::LogicInput( QObject* parent, QString type, QString id )
     m_unit = "V";
     setVolt(5.0);
     setValLabelPos(-16, 8 , 0 ); // x, y, rot 
-    setShowVal( true );
+    setShowVal( false );
 
     m_button = new QToolButton();
     m_button->setMaximumSize( 16,16 );
@@ -100,18 +100,12 @@ void LogicInput::updateStep()
     {
         m_changed = false;
         m_outpin->setOutState( m_button->isChecked(), true );
-    }
-}
+}   }
 
 void LogicInput::onbuttonclicked()
 {
     m_changed = true;
     update();
-}
-
-double LogicInput::volt()  
-{ 
-    return m_value; 
 }
 
 void LogicInput::setVolt( double v )
@@ -146,14 +140,7 @@ void LogicInput::setOut( bool out )
     onbuttonclicked();
 }
 
-void LogicInput::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-    Component::remove();
-}
-
-
-void LogicInput::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void LogicInput::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( m_hidden ) return;
 
@@ -166,4 +153,3 @@ void LogicInput::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWi
 }
 
 #include "moc_logicinput.cpp"
-
