@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>352</height>
+    <height>390</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,7 +64,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>8</x>
-     <y>313</y>
+     <y>350</y>
      <width>134</width>
      <height>20</height>
     </rect>
@@ -77,7 +77,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>11</x>
-     <y>239</y>
+     <y>276</y>
      <width>123</width>
      <height>16</height>
     </rect>
@@ -90,7 +90,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>147</x>
-     <y>238</y>
+     <y>275</y>
      <width>140</width>
      <height>22</height>
     </rect>
@@ -179,7 +179,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>146</x>
-     <y>274</y>
+     <y>311</y>
      <width>142</width>
      <height>22</height>
     </rect>
@@ -189,7 +189,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>277</y>
+     <y>314</y>
      <width>103</width>
      <height>16</height>
     </rect>
@@ -262,11 +262,11 @@ p, li { white-space: pre-wrap; }
     <string notr="true"/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="device">
+  <widget class="QLineEdit" name="deviceText">
    <property name="geometry">
     <rect>
-     <x>145</x>
-     <y>198</y>
+     <x>146</x>
+     <y>225</y>
      <width>142</width>
      <height>22</height>
     </rect>
@@ -281,14 +281,43 @@ p, li { white-space: pre-wrap; }
   <widget class="QLabel" name="deviceLabel">
    <property name="geometry">
     <rect>
-     <x>11</x>
-     <y>199</y>
+     <x>12</x>
+     <y>226</y>
      <width>103</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
     <string>Device</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="familyText">
+   <property name="geometry">
+    <rect>
+     <x>146</x>
+     <y>195</y>
+     <width>142</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="locale">
+    <locale language="C" country="AnyCountry"/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="familyLabel">
+   <property name="geometry">
+    <rect>
+     <x>12</x>
+     <y>196</y>
+     <width>103</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Family</string>
    </property>
   </widget>
  </widget>

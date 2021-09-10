@@ -34,6 +34,7 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
         CompilerProp( CodeEditor* parent );
 
         void setDebugger( BaseDebugger* debugger );
+        void setFamily( QString fam );
         void setDevice( QString dev );
 
     public slots:
@@ -45,7 +46,8 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
         void on_toolPath_editingFinished();
         void on_inclPath_editingFinished();
 
-        void on_device_editingFinished();
+        void on_familyText_editingFinished();
+        void on_deviceText_editingFinished();
 
         void on_ardBoard_currentIndexChanged( int index );
         void on_customBoard_textEdited( QString board );

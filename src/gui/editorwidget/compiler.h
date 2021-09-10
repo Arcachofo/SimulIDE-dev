@@ -48,6 +48,10 @@ class Compiler : public QObject
         void setIncludePath( QString path );
         void getIncludePath();
 
+        QString family() { return m_family; }
+        void setFamily( QString f ) { m_family = f; }
+        bool useFamily() { return m_useFamily; }
+
         QString device() { return m_device; }
         void setDevice( QString d ) { m_device = d; }
         bool useDevice() { return m_useDevice; }
@@ -65,6 +69,7 @@ class Compiler : public QObject
 
         CodeEditor* m_document;
 
+        bool m_useFamily;
         bool m_useDevice;
 
         QString m_compName;
@@ -77,6 +82,7 @@ class Compiler : public QObject
         QStringList m_fileList;
 
         QString m_type;
+        QString m_family;
         QString m_device;
         QString m_firmware;
         QString m_file;

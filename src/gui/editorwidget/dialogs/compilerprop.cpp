@@ -67,15 +67,26 @@ void CompilerProp::on_inclPath_editingFinished()
     m_debugger->setIncludePath( path );
 }
 
-void CompilerProp::on_device_editingFinished()
+void CompilerProp::on_deviceText_editingFinished()
 {
-    QString dev = device->text();
+    QString dev = deviceText->text();
     m_debugger->setDevice( dev );
 }
 
 void CompilerProp::setDevice( QString dev )
 {
-    device->setText( dev );
+    deviceText->setText( dev );
+}
+
+void CompilerProp::on_familyText_editingFinished()
+{
+    QString fam = familyText->text();
+    m_debugger->setFamily( fam );
+}
+
+void CompilerProp::setFamily( QString fam )
+{
+    familyText->setText( fam );
 }
 
 void CompilerProp::on_ardBoard_currentIndexChanged( int index )
@@ -103,8 +114,12 @@ void CompilerProp::updateDialog()
     inclPath->setVisible( true );
     setInclButton->setVisible( true );
 
+    bool useFamily = m_debugger->useFamily();
+    familyText->setVisible( useFamily );
+    familyLabel->setVisible( useFamily );
+
     bool useDevice = m_debugger->useDevice();
-    device->setVisible( useDevice );
+    deviceText->setVisible( useDevice );
     deviceLabel->setVisible( useDevice );
 
     toolPath->setText( m_debugger->toolPath() );
@@ -149,7 +164,10 @@ void CompilerProp::setDebugger( BaseDebugger* debugger )
         inclPath->setVisible( false );
         setInclButton->setVisible( false );
 
-        device->setVisible( false );
+        familyText->setVisible( false );
+        familyLabel->setVisible( false );
+
+        deviceText->setVisible( false );
         deviceLabel->setVisible( false );
 
         boardLabel->setVisible( false );

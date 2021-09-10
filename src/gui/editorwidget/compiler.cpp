@@ -49,6 +49,7 @@ void Compiler::clearCompiler()
     m_command.clear();
     m_arguments.clear();
     m_argsDebug.clear();
+    m_family.clear();
     m_device.clear();
     m_type.clear();
     m_useDevice = false;
@@ -85,6 +86,9 @@ void Compiler::loadCompiler( QString file )
 
     if( compiler.hasAttribute("inclPath") ) inclPath = compiler.attribute( "inclPath" );
     if( !inclPath.isEmpty() ) m_inclPath = inclPath;
+
+    if( compiler.hasAttribute("useFamily")
+     && (compiler.attribute( "useFamily" ) == "true") ) m_useFamily = true;
 
     if( compiler.hasAttribute("useDevice")
      && (compiler.attribute( "useDevice" ) == "true") ) m_useDevice = true;
@@ -131,11 +135,22 @@ int Compiler::compile( bool debug )
         command = addQuotes( command );
 
         QString arguments = debug ? m_argsDebug.at(i) : m_arguments.at(i);
+
+        if( m_useFamily && arguments.contains("$family") )
+        {
+            if( m_family.isEmpty() )
+            {
+                m_outPane->appendLine( tr("Error: Family not defined") );
+                error = 1;
+                break;
+            }
+            else arguments = arguments.replace( "$family", m_family );
+        }
         if( m_useDevice && arguments.contains("$device") )
         {
             if( m_device.isEmpty() )
             {
-                m_outPane->appendLine( tr("Error: device not defined") );
+                m_outPane->appendLine( tr("Error: Device not defined") );
                 error = 1;
                 break;
             }

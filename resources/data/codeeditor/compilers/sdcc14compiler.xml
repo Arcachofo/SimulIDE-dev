@@ -1,8 +1,0 @@
-<!DOCTYPE SimulIDE>
-
-<compiler name="SDCC14" type="sdcc" useDevice="true">
-    <step 
-        command="sdcc"
-        arguments=" --use-non-free -mpic14 -p$device $filePath"
-    />
-</compiler>
