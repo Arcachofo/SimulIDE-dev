@@ -1642,6 +1642,7 @@ void I51Core::runDecoder()
         case 0xfd:
         case 0xfe:
         case 0xff: mov_rx_a(); break;
+        default: incDefault();
        }
 }
 

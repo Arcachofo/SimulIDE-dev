@@ -65,22 +65,27 @@
     
     <port name="PORT3" pins="8" outreg="P3" inreg="PIN3" dirreg=""
                        outmask="11111111" pullups="11111111" opencol="11111111">
-        <interrupt intname="EXT_0" source="PIN32"/>
-        <interrupt intname="EXT_1" source="PIN33"/>
+        <interrupt name="EXT_0" source="PIN32"/>
+        <interrupt name="EXT_1" source="PIN33"/>
     </port>
     
     <timer name="TIMER0" enable="TR0" counter="TL0,TH0" configbitsA="T0M0,T0M1" configbitsB="C/T0,GATE0">
         <extclock type="PIN" source="PIN34"/>
-        <interrupt intname="T0_OVF" source="MAIN" />
+        <interrupt name="T0_OVF" />
     </timer>
     
     <timer name="TIMER1" enable="TR1" counter="TL1,TH1" configbitsA="T1M0,T1M1" configbitsB="C/T1,GATE1">
         <extclock type="PIN" source="PIN35"/>
-        <interrupt intname="T1_OVF" source="MAIN" />
+        <interrupt name="T1_OVF" />
     </timer>
     
     <usart name="USART0" number="1" configregsA="SCON" >
-        <trunit type="tx" pin="PORT31" register="SBUF"   raiseint="USART_T"/>
-        <trunit type="rx" pin="PORT30" register="SBUFRX" raiseint="USART_R" enable="REN"/>
+        <trunit type="tx" pin="PORT31" register="SBUF">
+            <interrupt name="USART_T" />
+        </trunit>
+        
+        <trunit type="rx" pin="PORT30" register="SBUFRX" enable="REN">
+            <interrupt name="USART_R" />
+        </trunit>
     </usart>
 </parts>
