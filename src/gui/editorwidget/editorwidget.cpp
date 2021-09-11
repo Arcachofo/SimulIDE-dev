@@ -259,8 +259,6 @@ void EditorWidget::documentWasModified()
     undoAct->setEnabled( false );
     if( doc->isRedoAvailable() ) redoAct->setEnabled( true );
     if( doc->isUndoAvailable() ) undoAct->setEnabled( true );
-
-    ce->setCompiled( false );
 }
 
 void EditorWidget::tabChanged( int tab )

@@ -37,40 +37,40 @@ void CompilerProp::on_compilerBox_currentIndexChanged( int index )
     if( m_blocked ) return;
 
     QString compName = compilerBox->itemText( index );
-    BaseDebugger* deb = EditorWindow::self()->createDebugger( compName, m_document );
-    setDebugger( deb );
-    m_document->setDebugger( deb );
+    BaseDebugger* comp = EditorWindow::self()->createDebugger( compName, m_document );
+    setCompiler( comp );
+    m_document->setCompiler( comp );
     if( compName != "None" ) updateDialog();
 }
 
 void CompilerProp::on_setPathButton_clicked()
 {
-    m_debugger->getToolPath();
+    m_compiler->getToolPath();
     updateDialog();
 }
 
 void CompilerProp::on_setInclButton_clicked()
 {
-    m_debugger->getIncludePath();
+    m_compiler->getIncludePath();
     updateDialog();
 }
 
 void CompilerProp::on_toolPath_editingFinished()
 {
     QString path = toolPath->text();
-    m_debugger->setToolPath( path );
+    m_compiler->setToolPath( path );
 }
 
 void CompilerProp::on_inclPath_editingFinished()
 {
     QString path = inclPath->text();
-    m_debugger->setIncludePath( path );
+    m_compiler->setIncludePath( path );
 }
 
 void CompilerProp::on_deviceText_editingFinished()
 {
     QString dev = deviceText->text();
-    m_debugger->setDevice( dev );
+    m_compiler->setDevice( dev );
 }
 
 void CompilerProp::setDevice( QString dev )
@@ -81,7 +81,7 @@ void CompilerProp::setDevice( QString dev )
 void CompilerProp::on_familyText_editingFinished()
 {
     QString fam = familyText->text();
-    m_debugger->setFamily( fam );
+    m_compiler->setFamily( fam );
 }
 
 void CompilerProp::setFamily( QString fam )
@@ -91,17 +91,17 @@ void CompilerProp::setFamily( QString fam )
 
 void CompilerProp::on_ardBoard_currentIndexChanged( int index )
 {
-    m_debugger->setProperty( "Board", index );
+    m_compiler->setProperty( "Board", index );
 }
 
 void CompilerProp::on_customBoard_textEdited( QString board )
 {
-    m_debugger->setProperty( "Custom_Board", board );
+    m_compiler->setProperty( "Custom_Board", board );
 }
 
 void CompilerProp::on_driveCirc_toggled( bool drive )
 {
-    m_document->setDriveCirc( drive );
+    /// m_document->setDriveCirc( drive );
 }
 
 void CompilerProp::updateDialog()
@@ -109,40 +109,40 @@ void CompilerProp::updateDialog()
     toolPathLabel->setVisible( true );
     toolPath->setVisible( true );
     setPathButton->setVisible( true );
-    toolPath->setText( m_debugger->toolPath() );
+    toolPath->setText( m_compiler->toolPath() );
 
     inclPathLabel->setVisible( true );
     inclPath->setVisible( true );
     setInclButton->setVisible( true );
-    inclPath->setText( m_debugger->includePath() );
+    inclPath->setText( m_compiler->includePath() );
 
-    bool useFamily = m_debugger->useFamily();
+    bool useFamily = m_compiler->useFamily();
     familyText->setVisible( useFamily );
     familyLabel->setVisible( useFamily );
-    familyText->setText( m_debugger->family() );
+    familyText->setText( m_compiler->family() );
 
-    bool useDevice = m_debugger->useDevice();
+    bool useDevice = m_compiler->useDevice();
     deviceText->setVisible( useDevice );
     deviceLabel->setVisible( useDevice );
-    deviceText->setText( m_debugger->device() );
+    deviceText->setText( m_compiler->device() );
 
-    driveCirc->setVisible( true );
-    driveCirc->setChecked( m_document->driveCirc() );
+    /// driveCirc->setVisible( true );
+    /// driveCirc->setChecked( m_document->driveCirc() );
 }
 
-void CompilerProp::setDebugger( BaseDebugger* debugger )
+void CompilerProp::setCompiler( Compiler* compiler )
 {
     m_blocked = true;
-    m_debugger = debugger;
+    m_compiler = compiler;
 
-    QString compiler = debugger->compName();
-    compilerBox->setCurrentText( compiler );
+    QString compName = compiler->compName();
+    compilerBox->setCurrentText( compName );
 
-    if( compiler != "None" )
+    if( compName != "None" )
     {
         updateDialog();
 
-        QVariant value = debugger->property( "Board" );
+        QVariant value = compiler->property( "Board" );
         if( !value.isValid() )
         {
             boardLabel->setVisible( false );
@@ -155,7 +155,7 @@ void CompilerProp::setDebugger( BaseDebugger* debugger )
             ardBoard->setCurrentIndex( value.toInt() );
             customLabel->setVisible( true );
             customBoard->setVisible( true );
-            customBoard->setText( debugger->property( "Custom_Board" ).toString() );
+            customBoard->setText( compiler->property( "Custom_Board" ).toString() );
     }   }
     else{
         toolPathLabel->setVisible( false );

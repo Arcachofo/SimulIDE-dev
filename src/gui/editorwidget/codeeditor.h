@@ -21,16 +21,6 @@
 #define CODEEDITOR_H
 
 #include <QPlainTextEdit>
-#include <QObject>
-
-#include "updatable.h"
-
-enum bebugState_t{
-    DBG_STOPPED = 0,
-    DBG_PAUSED,
-    DBG_STEPING,
-    DBG_RUNNING
-};
 
 class BaseDebugger;
 class LineNumberArea;
@@ -38,34 +28,32 @@ class CompilerProp;
 class Highlighter;
 class OutPanelText;
 
-class CodeEditor : public QPlainTextEdit, public Updatable
+class CodeEditor : public QPlainTextEdit
 {
     Q_OBJECT
 
     public:
         CodeEditor( QWidget* parent, OutPanelText* outPane );
         ~CodeEditor();
-        
-        bool driveCirc() { return m_driveCirc; }
-        void setDriveCirc( bool drive );
 
         void setFile(const QString filePath);
         QString getFilePath() { return m_file ; }
+
+        int debugLine() { return m_debugLine; }
+        void setDebugLine( int line ) { m_debugLine = line; }
+
+        bool hasBreakPoint( int line ) { return m_brkPoints.contains( line ); }
 
         void setDevice( QString device );
 
         void lineNumberAreaPaintEvent( QPaintEvent* event );
         int  lineNumberAreaWidth();
-        
-        void setCompiled( bool compiled ) { m_isCompiled = compiled; }
-        
-        void setDebugger( BaseDebugger* debugger );
-        bool debugStarted() { return (m_state > DBG_STOPPED); }
-        bool initDebbuger();
-        void stopDebbuger();
-        void lineReached( int line );
 
+        BaseDebugger* getCompiler() { return m_compiler; }
+        void setCompiler( BaseDebugger* comp );
         void compProps();
+
+        void updateScreen();
 
  static void readSettings();
  static int fontSize() { return m_fontSize; }
@@ -80,20 +68,11 @@ class CodeEditor : public QPlainTextEdit, public Updatable
  static bool spaceTabs() { return m_spaceTabs; }
  static void setSpaceTabs( bool on );
 
-    signals:
-        void msg( QString text );
-
     public slots:
         void slotAddBreak() { m_brkAction = 1; }
         void slotRemBreak() { m_brkAction = 2; }
         void slotClearBreak() { m_brkPoints.clear(); }
-        void compile( bool debug=false );
-        void upload();
-        void runToBreak();
-        void step( bool over=false );
-        void stepOver();
-        void pause();
-        void reset();
+        bool compile( bool debug=false );
 
     private slots:
         void updateLineNumberAreaWidth(int) { setViewportMargins( lineNumberAreaWidth(), 0, 0, 0 ); }
@@ -109,13 +88,12 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         int  getSintaxCoincidences(QString& fileName, QStringList& instructions );
         void addBreakPoint( int line );
         void remBreakPoint( int line ) { m_brkPoints.removeOne( line ); }
-        void updateScreen();
-        
+
         void indentSelection( bool unIndent );
 
         CompilerProp* m_compDialog;
         
-        BaseDebugger* m_debugger;
+        BaseDebugger* m_compiler;
         OutPanelText* m_outPane;
 
         LineNumberArea* m_lNumArea;
@@ -124,19 +102,13 @@ class CodeEditor : public QPlainTextEdit, public Updatable
         QString m_file;
         QString m_help;
 
-        bebugState_t m_state;
-        bebugState_t m_resume;
         QList<int> m_brkPoints;
 
         int m_brkAction;    // 0 = no action, 1 = add brkpoint, 2 = rem brkpoint
         int m_debugLine;
-        int m_lastCycle;
-
-        bool m_isCompiled;
 
  static bool m_showSpaces;
  static bool m_spaceTabs;
- static bool m_driveCirc;
 
  static QStringList m_picInstr;
  static QStringList m_avrInstr;
@@ -151,7 +123,6 @@ class CodeEditor : public QPlainTextEdit, public Updatable
  static QFont m_font;
 
  static QList<CodeEditor*> m_documents;
-
 };
 
 

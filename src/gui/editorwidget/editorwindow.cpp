@@ -20,7 +20,10 @@
 #include <QDomDocument>
 
 #include "editorwindow.h"
+#include "circuitwidget.h"
 #include "mainwindow.h"
+#include "mcuinterface.h"
+#include "mcubase.h"
 #include "simulator.h"
 #include "compiler.h"
 #include "utils.h"
@@ -40,16 +43,32 @@ EditorWindow::EditorWindow( QWidget* parent )
             : EditorWidget( parent )
 {
     m_pSelf = this;
+
+    m_debugDoc = NULL;
+    m_debugger = NULL;
+    m_state = DBG_STOPPED;
+    m_driveCirc = false;
+    m_stepOver = false;
+
     CodeEditor::readSettings();
     loadCompilers();
 }
 EditorWindow::~EditorWindow(){}
 
-void EditorWindow::debug()
-{ 
+bool EditorWindow::upload()
+{
     CodeEditor* ce = getCodeEditor();
+    if( !ce ) return false;
 
-    if( ce->initDebbuger() )
+    bool ok = ce->compile();
+    if( ok ) ce->getCompiler()->upload();
+
+    return ok;
+}
+
+void EditorWindow::debug()
+{
+    if( initDebbuger() )
     {
         m_editorToolBar->setVisible( false);
         m_debuggerToolBar->setVisible( true );
@@ -66,24 +85,31 @@ void EditorWindow::debug()
 void EditorWindow::run()
 { 
     setStepActs();
-    QTimer::singleShot( 10, getCodeEditor(), SLOT( runToBreak() ) );
+    runToBreak();
 }
 
 void EditorWindow::step()    
 { 
     setStepActs();
-    QTimer::singleShot( 10, getCodeEditor(), SLOT( step()) );
+    stepDebug();
 }
 
 void EditorWindow::stepOver()
 {
-    setStepActs();
-    QTimer::singleShot( 10, getCodeEditor(), SLOT( stepOver()) );
+    /*setStepActs();
+    QList<int> subLines = m_compiler->getSubLines();
+    bool over = subLines.contains( m_debugLine ) ? true : false;
+    stepDebug( over );*/
 }
 
 void EditorWindow::pause()   
 {
-    getCodeEditor()->pause();
+    if( m_state < DBG_STEPING )  return;
+    if( m_driveCirc ) Simulator::self()->pauseSim();
+
+    m_resume = m_state;
+    m_state  = DBG_PAUSED;
+
     runAct->setEnabled( true );
     stepAct->setEnabled( true );
     stepOverAct->setEnabled( true );
@@ -91,14 +117,118 @@ void EditorWindow::pause()
     pauseAct->setEnabled( false );
 }
 
-void EditorWindow::stop()    
+void EditorWindow::stop()
 { 
-    getCodeEditor()->stopDebbuger();
+    stopDebbuger();
     m_debuggerToolBar->setVisible( false );
     m_editorToolBar->setVisible( true);
 
     Simulator::self()->remFromUpdateList( &m_outPane );
 }
+
+bool EditorWindow::initDebbuger()
+{
+    m_outPane.appendLine( "-------------------------------------------------------\n" );
+    m_outPane.appendLine( tr("Starting Debbuger...")+"\n" );
+
+    m_debugDoc = NULL;
+    m_debugger = NULL;
+    m_state = DBG_STOPPED;
+    bool ok = upload();
+
+    if( ok )
+    {                                         // OK: Start Debugging
+        m_debugDoc = getCodeEditor();
+        m_debugDoc->setReadOnly( true );
+        m_debugger = m_debugDoc->getCompiler();
+
+        stepOverAct->setVisible( m_stepOver );
+        McuInterface::self()->setDebugging( true );
+        reset();
+        setDriveCirc( m_driveCirc );
+        CircuitWidget::self()->powerCircDebug( m_driveCirc );
+
+        m_outPane.appendLine( "\n"+tr("Debugger Started ")+"\n" );
+    }
+    else stopDebbuger();
+    return ok;
+}
+
+void EditorWindow::runToBreak()
+{
+    if( m_state == DBG_STOPPED ) return;
+    m_state = DBG_RUNNING;
+    if( m_driveCirc ) Simulator::self()->resumeSim();
+    McuInterface::self()->stepOne( m_debugDoc->debugLine() );
+}
+
+void EditorWindow::stepDebug( bool over )
+{
+    if( m_state == DBG_RUNNING ) return;
+
+    /*if( over ){
+        addBreakPoint( m_debugLine+1 );
+        run();
+    }else */
+    {
+        m_state = DBG_STEPING;
+        McuInterface::self()->stepOne( m_debugDoc->debugLine() );
+        if( m_driveCirc ) Simulator::self()->resumeSim();
+}   }
+
+void EditorWindow::lineReached( int line ) // Processor reached PC related to source line
+{
+    m_debugDoc->setDebugLine( line );
+
+    if( ( m_state == DBG_RUNNING )           // We are running to Breakpoint
+     && !m_debugDoc->hasBreakPoint( line ) ) // Breakpoint not reached, Keep stepping
+    {
+        McuInterface::self()->stepOne( line );
+        return;
+    }
+    EditorWindow::self()->pause(); // EditorWindow: calls this->pause as well
+
+    int cycle = McuInterface::self()->cycle();
+    m_outPane.appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
+    m_lastCycle = cycle;
+    m_debugDoc->updateScreen();
+}
+
+void EditorWindow::stopDebbuger()
+{
+    if( m_state > DBG_STOPPED )
+    {
+        CircuitWidget::self()->powerCircOff();
+        McuInterface::self()->setDebugging( false );
+
+        m_state = DBG_STOPPED;
+        m_debugDoc->setDebugLine( 0 );
+        m_debugDoc->setReadOnly( false );
+        m_debugDoc->updateScreen();
+    }
+    m_outPane.appendLine( "\n"+tr("Debugger Stopped ")+"\n" );
+}
+
+void EditorWindow::reset()
+{
+    if( m_state == DBG_RUNNING ) pause();
+
+    m_lastCycle = 0;
+    m_state = DBG_PAUSED;
+
+    McuBase::self()->reset();
+    m_debugDoc->setDebugLine( 1 );
+    m_debugDoc->updateScreen();
+}
+
+void EditorWindow::setDriveCirc( bool drive )
+{
+    m_driveCirc = drive;
+
+    if( m_state == DBG_PAUSED )
+    {
+        if( drive ) Simulator::self()->pauseSim();
+}   }
 
 BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce )
 {

@@ -19,6 +19,7 @@
 
 #include "mcuinterface.h"
 #include "basedebugger.h"
+#include "editorwindow.h"
 #include "codeeditor.h"
 #include "utils.h"
 
@@ -188,5 +189,5 @@ void McuInterface::stepDebug()
         if( line != m_prevLine )
         {
             m_debugStep = false;
-            m_debugger->m_document->lineReached( line );
+            EditorWindow::self()->lineReached( line );
 }   }   }

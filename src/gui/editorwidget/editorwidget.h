@@ -72,10 +72,10 @@ class EditorWidget : public QWidget
         virtual void debug(){;}
         virtual void step(){;}
         virtual void stepOver(){;}
-        void reset() { getCodeEditor()->reset(); }
+        virtual void reset() {;}
         void compile() { getCodeEditor()->compile(); } /// m_compiler.compile( getCodeEditor()->getFilePath() );
 
-        void upload() { getCodeEditor()->upload(); }
+        virtual bool upload() {return false;}
         void findReplaceDialog();
 
     protected:

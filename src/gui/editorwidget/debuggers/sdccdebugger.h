@@ -28,6 +28,8 @@ class SdccDebugger : public cDebugger
         SdccDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~SdccDebugger();
 
+        virtual int compile( bool debug ) override;
+
     protected:
         virtual void mapFlashToSource() override;
         virtual void getData() override;

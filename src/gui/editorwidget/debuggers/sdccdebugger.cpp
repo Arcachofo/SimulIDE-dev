@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include <QFileInfo>
-//#include <QDebug>
+#include <QDebug>
 
 #include "sdccdebugger.h"
 #include "mcuinterface.h"
@@ -31,6 +31,34 @@ SdccDebugger::SdccDebugger( CodeEditor* parent, OutPanelText* outPane )
     m_family = "pic14";
 }
 SdccDebugger::~SdccDebugger(){}
+
+int SdccDebugger::compile( bool debug )
+{
+    int error = Compiler::compile( debug );
+    if( error == 0 )
+    {
+        if( !QFileInfo::exists( m_firmware ) )
+        {
+            QString ihx = m_buildPath+m_fileName+".ihx";
+            if( QFileInfo::exists( ihx ) )   // Convert .ihx to .hex
+            {
+                QString packihx = "packihx";
+            #ifndef Q_OS_UNIX
+                packihx += ".exe";
+            #endif
+                m_compProcess.setWorkingDirectory( m_buildPath );
+                m_compProcess.start( packihx+" "+m_fileName+".ihx" );
+                m_compProcess.waitForFinished(-1);
+
+                QFile file( m_buildPath+m_fileName+".hex" );
+                if( file.open(QFile::WriteOnly | QFile::Text) )
+                {
+                    QTextStream out(&file);
+                    out << m_compProcess.readAllStandardOutput();
+                    file.close();
+    }   }   }   }
+    return error;
+}
 
 void SdccDebugger::getData()
 {

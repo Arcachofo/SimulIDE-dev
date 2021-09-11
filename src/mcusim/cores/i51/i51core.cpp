@@ -211,7 +211,7 @@ void I51Core::addc_a_imm()
 {
     uint8_t carry = STATUS(Cy) >> Cy;///  PSW[Cy];
 
-    add_solve_flags(ACC, OPERAND1, carry );
+    add_solve_flags( ACC, OPERAND1, carry );
 
     ACC += OPERAND1 + carry;
     PC += 2;
@@ -222,7 +222,7 @@ void I51Core::addc_a_mem()
 {
     uint8_t carry = STATUS(Cy) >> Cy;///  PSW[Cy];
     int value = GET_RAM( OPERAND1 );
-    add_solve_flags(ACC, value, carry );
+    add_solve_flags( ACC, value, carry );
     ACC += value + carry;
     PC += 2;
     m_mcu->cyclesDone = 1;
@@ -321,7 +321,7 @@ void I51Core::lcall_address()
     pushStack8(( PC+3 ) & 0xff );
     pushStack8(( PC+3 ) >> 8 );
 
-    PC =( m_progMem[(PC+1)] << 8 ) | ( m_progMem[(PC+2)] );
+    PC = (OPERAND1 << 8) | OPERAND2;
 
     m_mcu->cyclesDone = 2;
 }
@@ -405,7 +405,7 @@ void I51Core::jb_bitaddr_offset()
 
     address &= 0xf8;
 
-    if( (getValue( address ) & bitmask ) )
+    if( getValue( address ) & bitmask )
         PC += (int8_t)OPERAND2;
 
     PC += 3;
@@ -455,7 +455,7 @@ void I51Core::orl_mem_a()
 {
     int address = OPERAND1;
 
-    SET_RAM( address, m_dataMem[address] |= ACC );
+    SET_RAM( address, m_dataMem[address] | ACC );
 
     PC += 2;
     m_mcu->cyclesDone = 1;
@@ -465,7 +465,7 @@ void I51Core::orl_mem_imm()
 {
     int address = OPERAND1;
 
-    SET_RAM( address, m_dataMem[address] |= OPERAND2 );
+    SET_RAM( address, m_dataMem[address] | OPERAND2 );
 
     PC += 3;
     m_mcu->cyclesDone = 1;
@@ -494,7 +494,7 @@ void I51Core::orl_a_indir_rx()
 void I51Core::jnc_offset()
 {
     if( STATUS(Cy) ) PC += 2;
-    else            PC +=(signed char)OPERAND1 + 2;
+    else             PC +=(signed char)OPERAND1 + 2;
     m_mcu->cyclesDone = 1;
 }
 
@@ -508,7 +508,7 @@ void I51Core::jz_offset()
 void I51Core::xrl_mem_a()
 {
     int address = OPERAND1;
-    SET_RAM( address, m_dataMem[address] ^= ACC ); //if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] ^= ACC; //else m_dataMem[address] ^= ACC;
+    SET_RAM( address, m_dataMem[address] ^ ACC ); //if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] ^= ACC; //else m_dataMem[address] ^= ACC;
     PC += 2;
     m_mcu->cyclesDone = 1;
 }
@@ -516,7 +516,7 @@ void I51Core::xrl_mem_a()
 void I51Core::xrl_mem_imm()
 {
     int address = OPERAND1;
-    SET_RAM( address, m_dataMem[address] ^= OPERAND2 ); //if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] ^= OPERAND2; //else m_dataMem[address] ^= OPERAND2;
+    SET_RAM( address, m_dataMem[address] ^ OPERAND2 ); //if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] ^= OPERAND2; //else m_dataMem[address] ^= OPERAND2;
     PC += 3;
     m_mcu->cyclesDone = 1;
 }
@@ -570,7 +570,7 @@ void I51Core::orl_c_bitaddr()
 
 void I51Core::jmp_indir_a_dptr()
 {
-    PC =( (m_dataMem[REG_DPH] << 8 ) |( m_dataMem[REG_DPL] ) ) + ACC;
+    PC =( (m_dataMem[REG_DPH] << 8 ) | m_dataMem[REG_DPL] ) + ACC;
     m_mcu->cyclesDone = 2;
 }
 
@@ -635,7 +635,7 @@ void I51Core::anl_c_bitaddr()
 void I51Core::movc_a_indir_a_pc()
 {
     int address = PC+1 + ACC;
-    ACC = m_progMem[address &( m_progSize - 1 )];
+    ACC = m_progMem[address & (m_progSize - 1)];
     incDefault();
 }
 
@@ -690,8 +690,7 @@ void I51Core::mov_mem_indir_rx()
         }
         else m_dataMem[address1+m_regEnd] = m_dataMem[address2];
     }
-    else
-    {
+    else{
         if( address2 > m_lowDataMemEnd )
         {
             int value = BAD_VALUE;
@@ -700,7 +699,6 @@ void I51Core::mov_mem_indir_rx()
         }
         else m_dataMem[address1] = m_dataMem[address2];
     }
-
     PC += 2;
     m_mcu->cyclesDone = 1;
 }
@@ -722,15 +720,14 @@ void I51Core::mov_bitaddr_c()
         int bit = address & 7;
         int bitmask =( 1 << bit );
         address &= 0xf8;
-        SET_RAM( address, (m_dataMem[address] & ~bitmask ) |( carry << bit ) );
+        SET_RAM( address, (m_dataMem[address] & ~bitmask ) | ( carry << bit ) );
     }
-    else
-    {
+    else{
         int bit = address & 7;
         int bitmask =( 1 << bit );
         address >>= 3;
         address += 0x20;
-        m_dataMem[address] =( m_dataMem[address] & ~bitmask ) |( carry << bit );
+        m_dataMem[address] =( m_dataMem[address] & ~bitmask ) | ( carry << bit );
     }
     PC += 2;
     m_mcu->cyclesDone = 1;
@@ -739,7 +736,7 @@ void I51Core::mov_bitaddr_c()
 void I51Core::movc_a_indir_a_dptr()
 {
     int address = ( m_dataMem[REG_DPH] << 8 ) | (( m_dataMem[REG_DPL] << 0 )+ACC);
-    ACC = m_progMem[address &( m_progSize - 1 )];
+    ACC = m_progMem[address & (m_progSize - 1)];
     PC++;
     m_mcu->cyclesDone = 1;
 }
@@ -757,7 +754,7 @@ void I51Core::subb_a_mem()
 {
     int value = GET_RAM( OPERAND1 );
     if( STATUS(Cy) ) value++;
-    sub_solve_flags(ACC, value );
+    sub_solve_flags( ACC, value );
     ACC -= value;
 
     PC += 2;
@@ -814,7 +811,7 @@ void I51Core::inc_dptr()
 {
     SET_RAM( REG_DPL, m_dataMem[REG_DPL]+1); //aCPU->mSFR[REG_DPL]++;
 
-    if( !m_dataMem[REG_DPL] ) SET_RAM( REG_DPH, m_dataMem[REG_DPH]+1);//aCPU->mSFR[REG_DPH]++;
+    if( !m_dataMem[REG_DPL] ) SET_RAM( REG_DPH, m_dataMem[REG_DPH]+1 );//aCPU->mSFR[REG_DPH]++;
     incDefault();
 }
 
@@ -959,8 +956,7 @@ void I51Core::clr_bitaddr()
         address &= 0xf8;
         SET_RAM( address, m_dataMem[address] & ~bitmask);
     }
-    else
-    {
+    else{
         int bit = address & 7;
         int bitmask =( 1 << bit );
         address >>= 3;
@@ -1250,7 +1246,7 @@ void I51Core::dec_rx()
 void I51Core::add_a_rx()
 {
     int rx = RX_ADDRESS;
-    add_solve_flags(m_dataMem[rx], ACC, 0 );
+    add_solve_flags( m_dataMem[rx], ACC, 0 );
     ACC += m_dataMem[rx];
     incDefault();
 }

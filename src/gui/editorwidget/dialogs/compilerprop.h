@@ -24,7 +24,7 @@
 #define COMPILERDIALOG_H
 
 class CodeEditor;
-class BaseDebugger;
+class Compiler;
 
 class CompilerProp : public QDialog, private Ui::CompilerProp
 {
@@ -33,7 +33,7 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
     public:
         CompilerProp( CodeEditor* parent );
 
-        void setDebugger( BaseDebugger* debugger );
+        void setCompiler( Compiler* compiler );
         void setFamily( QString fam );
         void setDevice( QString dev );
 
@@ -58,7 +58,7 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
         void updateDialog();
 
         CodeEditor* m_document;
-        BaseDebugger* m_debugger;
+        Compiler* m_compiler;
 
         bool m_blocked;
 };

@@ -21,12 +21,8 @@
 #include "outpaneltext.h"
 #include "compilerprop.h"
 #include "highlighter.h"
-#include "mcuinterface.h"
 #include "basedebugger.h"
-#include "mcubase.h"
 #include "mainwindow.h"
-#include "simulator.h"
-#include "circuitwidget.h"
 #include "editorwindow.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
@@ -36,7 +32,6 @@ QStringList CodeEditor::m_avrInstr = QString("add adc adiw sub subi sbc sbci sbi
 
 bool    CodeEditor::m_showSpaces = false;
 bool    CodeEditor::m_spaceTabs  = false;
-bool    CodeEditor::m_driveCirc  = false;
 int     CodeEditor::m_fontSize = 13;
 int     CodeEditor::m_tabSize = 4;
 QString CodeEditor::m_sintaxPath;
@@ -48,7 +43,6 @@ QList<CodeEditor*> CodeEditor::m_documents;
 
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           : QPlainTextEdit( parent )
-          , Updatable()
 {
     m_compDialog = NULL;
     m_documents.append( this );
@@ -57,15 +51,10 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_lNumArea  = new LineNumberArea( this );
     m_hlighter  = new Highlighter( document() );
     
-    m_debugger = NULL;
+    m_compiler = NULL;
     m_debugLine = 0;
     m_brkAction = 0;
-
-    m_isCompiled= false;
-    m_driveCirc = false;
-
     m_help = "";
-    m_state = DBG_STOPPED;
 
     setFont( m_font );
 
@@ -92,19 +81,18 @@ CodeEditor::~CodeEditor()
     m_documents.removeAll( this );
 }
 
-void CodeEditor::setDebugger( BaseDebugger* debugger )
+void CodeEditor::setCompiler( BaseDebugger* compiler )
 {
-    if( m_debugger ) delete m_debugger;
-    m_debugger = debugger;
+    if( m_compiler ) delete m_compiler;
+    m_compiler = compiler;
 }
 
 void CodeEditor::setFile( const QString filePath )
 {
-    m_isCompiled= false;
     if( m_file == filePath ) return;
 
-    if( m_debugger ) delete m_debugger;
-    m_debugger = NULL;
+    if( m_compiler ) delete m_compiler;
+    m_compiler = NULL;
 
     m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendLine( tr(" File: ")+filePath+"\n" );
@@ -117,7 +105,7 @@ void CodeEditor::setFile( const QString filePath )
     if( extension == ".gcb" )
     {
         m_hlighter->readSintaxFile( m_sintaxPath + "gcbasic.sintax" );
-        m_debugger = EditorWindow::self()->createDebugger( "GcBasic", this );
+        m_compiler = EditorWindow::self()->createDebugger( "GcBasic", this );
     }
     else if( extension == ".cpp"
           || extension == ".c"
@@ -126,7 +114,7 @@ void CodeEditor::setFile( const QString filePath )
     {
         m_hlighter->readSintaxFile( m_sintaxPath + "cpp.sintax" );
         if( extension == ".ino" )
-            m_debugger = EditorWindow::self()->createDebugger( "Arduino", this );
+            m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );
     }
     else if( extension == ".asm" ) // We should identify if pic or avr asm
     {
@@ -142,13 +130,13 @@ void CodeEditor::setFile( const QString filePath )
         {
             m_outPane->appendLine( "Pic asm\n" );
             m_hlighter->readSintaxFile( m_sintaxPath + "pic14asm.sintax" );
-            m_debugger = EditorWindow::self()->createDebugger( "GpAsm", this );
+            m_compiler = EditorWindow::self()->createDebugger( "GpAsm", this );
         }
         else if( isAvr > isPic )  // Is Avr
         {
             m_outPane->appendLine( "Avr asm\n" );
             m_hlighter->readSintaxFile( m_sintaxPath + "avrasm.sintax" );
-            m_debugger = EditorWindow::self()->createDebugger( "Avra", this );
+            m_compiler = EditorWindow::self()->createDebugger( "Avra", this );
         }
         else m_outPane->appendLine( "Unknown\n" );
     }
@@ -167,9 +155,9 @@ void CodeEditor::setFile( const QString filePath )
     }
     else if( extension == ".sac" )
     {
-        //m_debugger = new B16AsmDebugger( this, m_outPane );
+        //m_compiler = new B16AsmDebugger( this, m_outPane );
     }
-    if( !m_debugger ) m_debugger = EditorWindow::self()->createDebugger( "None", this );
+    if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "None", this );
 }
 
 int CodeEditor::getSintaxCoincidences( QString& fileName, QStringList& instructions )
@@ -196,22 +184,19 @@ int CodeEditor::getSintaxCoincidences( QString& fileName, QStringList& instructi
     return coincidences;
 }
 
-void CodeEditor::compile( bool debug )
+bool CodeEditor::compile( bool debug )
 {
     if( document()->isModified() ) EditorWindow::self()->save();
     m_debugLine  = -1;
     update();
-
-    m_isCompiled = false;
     
     m_outPane->appendLine( "-------------------------------------------------------" );
-    int error = m_debugger->compile( debug );
+    int error = m_compiler->compile( debug );
 
     if( error == 0 )
     {
         m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
-        m_isCompiled = true;
-        return;
+        return true;
     }
     m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
 
@@ -219,149 +204,16 @@ void CodeEditor::compile( bool debug )
     {
         m_debugLine = error; // Show arrow in error line
         updateScreen();
-}   }
-
-void CodeEditor::upload()
-{
-    if( McuBase::self() && m_file.endsWith(".hex") )// is an .hex file, upload to proccessor
-    {
-        m_outPane->appendLine( "\n"+tr("Uploading: ")+"\n"+m_file);
-        McuBase::self()->load( m_file );
-        return;
     }
-    if( !m_isCompiled ) compile();
-    if( !m_isCompiled ) return;
-    m_debugger->upload();
-}
-
-bool CodeEditor::initDebbuger()
-{
-    m_outPane->appendLine( "-------------------------------------------------------\n" );
-    m_outPane->appendLine( tr("Starting Debbuger...")+"\n" );
-
-    bool error = false;
-    m_state = DBG_STOPPED;
-    
-    compile( true );
-    if     ( !m_isCompiled )         error = true; // Error compiling
-    else if( !m_debugger->upload() ) error = true; // Error Loading Firmware
-
-    m_outPane->appendLine( "\n" );
-
-    if( error ) stopDebbuger();
-    else{                                         // OK: Start Debugging
-        EditorWindow::self()->enableStepOver( m_debugger->m_stepOver );
-        Simulator::self()->addToUpdateList( this );
-        McuInterface::self()->setDebugging( true );
-        reset();
-        setDriveCirc( m_driveCirc );
-        CircuitWidget::self()->powerCircDebug( m_driveCirc );
-
-        m_outPane->appendLine( tr("Debugger Started ")+"\n" );
-        setReadOnly( true );
-    }
-    return ( m_state == DBG_PAUSED );
-}
-
-void CodeEditor::runToBreak()
-{
-    if( m_state == DBG_STOPPED ) return;
-    m_state = DBG_RUNNING;
-    if( m_driveCirc ) Simulator::self()->resumeSim();
-    McuInterface::self()->stepOne( m_debugLine );
-}
-
-void CodeEditor::step( bool over )
-{
-    if( m_state == DBG_RUNNING ) return;
-
-    if( over ){
-        addBreakPoint( m_debugLine+1 );
-        EditorWindow::self()->run();
-    }else {
-        m_state = DBG_STEPING;
-        McuInterface::self()->stepOne( m_debugLine );
-        if( m_driveCirc ) Simulator::self()->resumeSim();
-}   }
-
-void CodeEditor::stepOver()
-{
-    QList<int> subLines = m_debugger->getSubLines();
-    bool over = subLines.contains( m_debugLine ) ? true : false;
-    step( over );
-}
-
-void CodeEditor::lineReached( int line ) // Processor reached PC related to source line
-{
-    m_debugLine = line;
-
-    if( ( m_state == DBG_RUNNING )             // We are running to Breakpoint
-     && !m_brkPoints.contains( m_debugLine ) ) // Breakpoint not reached, Keep stepping
-    {
-        McuInterface::self()->stepOne( m_debugLine );
-        return;
-    }
-    EditorWindow::self()->pause(); // EditorWindow: calls this->pause as well
-
-    int cycle = McuInterface::self()->cycle();
-    m_outPane->appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
-    m_lastCycle = cycle;
-    updateScreen();
-}
-
-void CodeEditor::stopDebbuger()
-{
-    if( m_state > DBG_STOPPED )
-    {
-        m_debugLine = 0;
-        
-        CircuitWidget::self()->powerCircOff();
-        McuInterface::self()->setDebugging( false );
-        Simulator::self()->remFromUpdateList( this );
-        
-        m_state = DBG_STOPPED;
-        setReadOnly( false );
-        updateScreen();
-    }
-    m_outPane->appendLine( "\n"+tr("Debugger Stopped ")+"\n" );
-}
-
-void CodeEditor::pause()
-{
-    if( m_state < DBG_STEPING )  return;
-    if( m_driveCirc ) Simulator::self()->pauseSim();
-
-    m_resume = m_state;
-    m_state  = DBG_PAUSED;
-}
-
-void CodeEditor::reset()
-{
-    if( m_state == DBG_RUNNING ) pause();
-
-    McuBase::self()->reset();
-    m_debugLine = 1;
-    m_lastCycle = 0;
-    m_state = DBG_PAUSED;
-
-    updateScreen();
+    return false;
 }
 
 void CodeEditor::addBreakPoint( int line )
 {
-    if( m_state == DBG_RUNNING ) return;
-    line = m_debugger->getValidLine( line );
+    if( EditorWindow::self()->debugState() == DBG_RUNNING ) return;
+    line = EditorWindow::self()->debugger()->getValidLine( line );
     if( !m_brkPoints.contains( line ) ) m_brkPoints.append( line );
 }
-
-void CodeEditor::setDriveCirc( bool drive )
-{
-    m_driveCirc = drive;
-    
-    if( m_state == DBG_PAUSED )
-    {
-        if( drive ) Simulator::self()->pauseSim();
-}   }
 
 void CodeEditor::updateScreen()
 {
@@ -509,7 +361,7 @@ void CodeEditor::compProps()
     if( !m_compDialog )
     {
         m_compDialog = new CompilerProp( this );
-        m_compDialog->setDebugger( m_debugger );
+        m_compDialog->setCompiler( m_compiler );
     }
     m_compDialog->show();
 }
@@ -587,7 +439,7 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
                 m_brkAction = 0;
                 m_lNumArea->lastPos = 0;
             }
-            if(( m_state > DBG_STOPPED )
+            if(( EditorWindow::self()->debugState() > DBG_STOPPED )
               && m_brkPoints.contains( lineNumber )) // Draw breakPoint icon
             {
                 painter.setBrush( QColor(Qt::yellow) );
@@ -671,7 +523,7 @@ LineNumberArea::~LineNumberArea(){}
 void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
 {
     event->accept();
-    if( !m_codeEditor->debugStarted() ) return;
+    if( !EditorWindow::self()->debugStarted() ) return;
     
     QMenu menu;
 
