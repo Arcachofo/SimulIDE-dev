@@ -45,6 +45,7 @@ class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
         void setCcode( int code );
 
         virtual void initialize() override;
+        virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
         virtual void remove() override;
@@ -58,7 +59,7 @@ class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
         int m_phase;
 
         //Inputs
-        IoPin* m_pinSDA;
+        IoPin* m_pinSda;
 };
 
 #endif

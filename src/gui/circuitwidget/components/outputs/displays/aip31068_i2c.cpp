@@ -52,13 +52,15 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
 
     m_pin.resize( 2 );
 
-    m_pinSDA = new IoPin( 270, QPoint(16, 8), id+"PinSDA", 0, this, open_col );
-    m_pinSDA->setLabelText( " SDA" );
-    m_pin[0] = m_pinSDA;
+    m_pinSda = new IoPin( 270, QPoint(16, 8), id+"PinSDA", 0, this, open_col );
+    m_pinSda->setLabelText( " SDA" );
+    m_pin[0] = m_pinSda;
+    TwiModule::setSdaPin( m_pinSda );
 
     m_clkPin = new IoPin( 270, QPoint(24, 8), id+"PinSCL", 0, this, open_col );
     m_clkPin->setLabelText( " SCL" );
     m_pin[1] = m_clkPin;
+    TwiModule::setSclPin( m_clkPin );
 
     Simulator::self()->addToUpdateList( this );
     
@@ -87,6 +89,12 @@ void Aip31068_i2c::initialize()
     m_phase = 3;
 
     Hd44780_Base::init();
+}
+
+void Aip31068_i2c::stamp()
+{
+    //TwiModule::stamp();
+    setMode( TWI_SLAVE );
 }
 
 void Aip31068_i2c::voltChanged()             // Called when clock Pin changes
@@ -132,7 +140,7 @@ void Aip31068_i2c::setCcode( int code )
 
 void Aip31068_i2c::showPins( bool show )
 {
-    m_pinSDA->setVisible( show );
+    m_pinSda->setVisible( show );
     m_clkPin->setVisible( show );
 }
 
