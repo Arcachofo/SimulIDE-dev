@@ -40,17 +40,14 @@ class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
         
         virtual QList<propGroup_t> propGroups() override;
 
-        int cCode();
-        void setCcode( int code );
+        uint cCode() { return m_address; }
+        void setCcode( uint code ) { m_address = code; }
         
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void writeByte();
         virtual void readByte();
-        
-    private:
-        int m_cCode;
 };
 
 #endif

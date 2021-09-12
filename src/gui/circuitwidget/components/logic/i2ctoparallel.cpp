@@ -64,7 +64,7 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
 
     for( int i=0; i<8; ++i ) m_outPin[i]->setPinMode( open_col );
 
-    m_cCode = 0b01010000;
+    m_address = 0b01010000; // 0x50, 80
 }
 I2CToParallel::~I2CToParallel(){}
 
@@ -89,31 +89,25 @@ void I2CToParallel::initialize()
 void I2CToParallel::stamp()                     // Called at Simulation Start
 {
     TwiModule::stamp();
+    TwiModule::setMode( TWI_SLAVE );
     
-    for( int i=2; i<5; ++i )                  // Initialize address pins
+    for( int i=2; i<5; ++i )     // Initialize address pins
         m_inPin[i]->changeCallBack( this );
 }
 
 void I2CToParallel::voltChanged()             // Some Pin Changed State, Manage it
 {
-    bool A0 = m_inPin[1]->getInpState();
-    bool A1 = m_inPin[2]->getInpState();
-    bool A2 = m_inPin[3]->getInpState();
-    
-    int  address = m_cCode;
-    if( A0 ) address += 1;
-    if( A1 ) address += 2;
-    if( A2 ) address += 4;
-    
-    m_address = address;
+    if( m_inPin[2]->getInpState() ) m_address += 1;
+    if( m_inPin[3]->getInpState() ) m_address += 2;
+    if( m_inPin[4]->getInpState() ) m_address += 4;
     
     TwiModule::voltChanged();                               // Run I2C Engine
 }
 
-void I2CToParallel::readByte()           // Reading from I2C, Writting to Parallel
+void I2CToParallel::readByte()  // Reading from I2C, Writting to Parallel
 {
     int value = m_rxReg;
-                                      //qDebug() << "Reading " << value;
+                              //qDebug() << "Reading " << value;
     for( int i=0; i<8; ++i )
     {
         m_outPin[i]->setOutState( value & 1 );
@@ -122,26 +116,14 @@ void I2CToParallel::readByte()           // Reading from I2C, Writting to Parall
     TwiModule::readByte();
 }
 
-void I2CToParallel::writeByte()         // Writting to I2C from Parallel (master is reading)
+void I2CToParallel::writeByte()   // Writting to I2C from Parallel (master is reading)
 {
     int value = 0;
     for( int i=0; i<8; ++i )
-    {
-        if( m_outPin[i]->getInpState() ) value += pow( 2, i );
-    }
+    { if( m_outPin[i]->getInpState() ) value += pow( 2, i ); }
     m_txReg = value;
 
     TwiModule::writeByte();
-}
-
-int I2CToParallel::cCode()
-{
-    return m_cCode;
-}
-
-void I2CToParallel::setCcode( int code )
-{
-    m_cCode = code;
 }
 
 #include "moc_i2ctoparallel.cpp"
