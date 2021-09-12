@@ -56,10 +56,14 @@ EditorWindow::~EditorWindow(){}
 
 bool EditorWindow::upload()
 {
+    uploadFirmware( false );
+}
+bool EditorWindow::uploadFirmware( bool debug )
+{
     CodeEditor* ce = getCodeEditor();
     if( !ce ) return false;
 
-    bool ok = ce->compile();
+    bool ok = ce->compile( debug );
     if( ok ) ok = ce->getCompiler()->upload();
 
     return ok;
@@ -137,9 +141,9 @@ bool EditorWindow::initDebbuger()
     m_debugDoc = NULL;
     m_debugger = NULL;
     m_state = DBG_STOPPED;
-    bool ok = upload();
+    bool ok = uploadFirmware( true );
 
-    if( ok )                     // OK: Start Debugging
+    if( ok )  // OK: Start Debugging
     {
         m_debugDoc = getCodeEditor();
         m_debugDoc->setReadOnly( true );

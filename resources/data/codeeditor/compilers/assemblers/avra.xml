@@ -3,6 +3,6 @@
 <compiler name="Avra" type="avrasm1">
     <step 
         command="avra"
-        arguments=" -W NoRegDef -l $fileDir$fileName.lst -I $inclPath $filePath"
+        arguments=" -W NoRegDef -l $buildPath$fileName.lst -I $inclPath $filePath"
     />
 </compiler>

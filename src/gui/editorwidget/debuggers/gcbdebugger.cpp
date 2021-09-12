@@ -39,7 +39,7 @@ void GcbDebugger::getSubs()
 {
     m_subs.clear();
     
-    QStringList lines = fileToStringList( m_fileDir+m_fileName+".report.txt", "GcbDebugger::mapGcbToAsm" );
+    QStringList lines = fileToStringList( m_buildPath+m_fileName+".report.txt", "GcbDebugger::getSubs" );
 
     while( true )
     {
@@ -145,7 +145,7 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
     m_flashToSource.clear();
     m_sourceToFlash.clear();
     
-    QString  asmFileName = m_fileDir+m_fileName+".asm";
+    QString  asmFileName = m_buildPath+m_fileName+".asm";
     QStringList asmLines = fileToStringList( asmFileName, "GcbDebugger::mapGcbToAsm" );
 
     bool haveVariable = false;
@@ -219,8 +219,8 @@ void GcbDebugger::mapLstToAsm()
     m_flashToAsm.clear();
     m_asmToFlash.clear();
 
-    QString asmFileName = m_fileDir + m_fileName + ".asm";
-    QString lstFileName = m_fileDir + m_fileName + ".lst";
+    QString asmFileName = m_buildPath + m_fileName + ".asm";
+    QString lstFileName = m_buildPath + m_fileName + ".lst";
 
     QStringList asmLines = fileToStringList( asmFileName, "GcbDebugger::mapLstToAsm" );
     QStringList lstLines = fileToStringList( lstFileName, "GcbDebugger::mapLstToAsm" );
@@ -282,7 +282,7 @@ void GcbDebugger::mapLstToAsm()
 
 void GcbDebugger::getProcType()
 {
-    QStringList lines = fileToStringList( m_fileDir+m_fileName+".asm", "CodeEditor::getProcType" );
+    QStringList lines = fileToStringList( m_buildPath+m_fileName+".asm", "CodeEditor::getProcType" );
 
     for( QString line : lines )
     {

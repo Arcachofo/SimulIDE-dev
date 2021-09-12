@@ -56,8 +56,8 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         void setColor( dispColor color );
         dispColor color() { return m_dColor; }
 
-        int cCode();
-        void setCcode( int code );
+        int cCode() { return m_address; }
+        void setCcode( int code ) { m_address = code; }
 
         virtual void initialize() override;
         virtual void stamp() override;

@@ -60,14 +60,14 @@ QString Compiler::replaceData( QString str )
 {
     QString filePath = addQuotes( m_file );
     QString inclPath = addQuotes( m_inclPath );
-    QString buildPath = addQuotes( m_buildPath );
+    //QString buildPath = addQuotes( m_buildPath );
 
     str = str.replace( "$filePath", filePath )
              .replace( "$fileDir" , m_fileDir )
              .replace( "$fileName", m_fileName )
              .replace( "$fileExt" , m_fileExt )
              .replace( "$inclPath", inclPath )
-             .replace( "$buildPath", buildPath );
+             .replace( "$buildPath", m_buildPath );
     return str;
 }
 void Compiler::loadCompiler( QString file )
@@ -89,7 +89,7 @@ void Compiler::loadCompiler( QString file )
     if( compiler.hasAttribute("type") ) m_type = compiler.attribute( "type" );
     if( compiler.hasAttribute("buildPath") )
     {
-        QString path = compiler.attribute( "buildPath" );
+        QString path = replaceData( compiler.attribute( "buildPath" ) );
         QDir buildDir= QFileInfo( m_file ).absoluteDir();
         if( !buildDir.cd( path ) )
         {
@@ -113,9 +113,9 @@ void Compiler::loadCompiler( QString file )
         QDomElement step = node.toElement();
         if( step.tagName() == "step")
         {
-            QString command   = step.attribute( "command" );
-            QString arguments = replaceData( step.attribute( "arguments" ));
-            QString argsDebug = replaceData( step.attribute( "argsDebug" ));
+            QString command   = step.attribute("command");
+            QString arguments = step.attribute("arguments");
+            QString argsDebug = step.attribute("argsDebug");
             if( argsDebug.isEmpty() ) argsDebug = arguments ;
 
             m_command.append( command );
@@ -151,6 +151,7 @@ int Compiler::compile( bool debug )
         command = addQuotes( command );
 
         QString arguments = debug ? m_argsDebug.at(i) : m_arguments.at(i);
+        arguments = replaceData( arguments );
 
         if( m_useFamily && arguments.contains("$family") )
         {

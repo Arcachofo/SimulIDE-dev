@@ -99,12 +99,6 @@ void Ssd1306::stamp()
 {
     //TwiModule::stamp();
     setMode( TWI_SLAVE );
-
-    /*eNode* enode = m_pinCS.getEnode();// Register for CS changes callback
-    if( enode ) enode->voltChangedCallback( this ); 
-    
-    enode = m_pinRst.getEnode();       // Register for Rst changes callback
-    if( enode ) enode->voltChangedCallback( this ); */
 }
 
 void Ssd1306::initialize()
@@ -161,10 +155,8 @@ void Ssd1306::readByte()
             int cd = m_rxReg & 0b01111111;
             if( cd == 0 ) m_command = true;// 0 Command Byte
             else          m_data    = true;// 64 Data Byte
-        }
-    }
-    else                                // Data Byte
-    {
+    }   }
+    else{                               // Data Byte
         if     ( m_command ) proccessCommand();
         else if( m_data )    writeData();
 
@@ -172,16 +164,11 @@ void Ssd1306::readByte()
         {
             m_command = false;
             m_data    = false;
-        }
-    }
-}
+}   }   }
 
 void Ssd1306::writeData()
 {
-    //qDebug() << "Ssd1306::writeData"<<m_addrX1 <<m_addrY1<<data;
-
     m_aDispRam[m_addrX][m_addrY] = m_rxReg;
-
     incrementPointer();
 }
 
@@ -224,7 +211,6 @@ void Ssd1306::proccessCommand()
                 m_scrollV = true;
                 m_scrollR = false;
             }
-
             if     ( byte == 1 ) m_scrollStartPage =  value;
             else if( byte == 2 )
             {
@@ -248,7 +234,6 @@ void Ssd1306::proccessCommand()
         {
             ;
         }
-
         m_readBytes--;
         return;
     }
@@ -304,7 +289,6 @@ void Ssd1306::proccessCommand()
     {
         m_addrY = m_rxReg & 0x07; // 0b00000111
     }
-
     // C0-C8 192-200 Set COM Output Scan Direction
 
     else if( m_rxReg == 0xD3 ) m_readBytes = 1; // D3 211 Set Display Offset
@@ -314,9 +298,6 @@ void Ssd1306::proccessCommand()
     else if( m_rxReg == 0xD9 ) m_readBytes = 1; // D9 217 Set Precharge
     else if( m_rxReg == 0xDA ) m_readBytes = 1; // DA 218 Set COM Pins Hardware Configuration
     else if( m_rxReg == 0xDB ) m_readBytes = 1; // DB 219 SET VCOM DETECT
-
-
-    //qDebug() << "Ssd1306::proccessCommand: " << command;
 }
 
 void Ssd1306::clearLcd() 
@@ -341,13 +322,8 @@ void Ssd1306::incrementPointer()
             m_addrY = m_startY;
             m_addrX++;
         }
-        if( m_addrX > m_endX )
-        {
-            m_addrX = m_startX;
-        }
-    }
-    else
-    {
+        if( m_addrX > m_endX )m_addrX = m_startX;
+    }else{
         m_addrX++;
         if( m_addrX > m_endX )
         {
@@ -356,13 +332,8 @@ void Ssd1306::incrementPointer()
         }
         if( m_addrMode == HORI_ADDR_MODE )
         {
-            if( m_addrY > m_endY )
-            {
-                m_addrY = m_startY;
-            }
-        }
-    }
-}
+            if( m_addrY > m_endY ) m_addrY = m_startY;
+}   }   }
 
 void Ssd1306::reset() 
 {
@@ -411,8 +382,7 @@ void Ssd1306::updateStep()
 {
     if     ( !m_dispOn )  m_pdisplayImg->fill(0);  // Display Off
     else if( m_dispFull ) m_pdisplayImg->fill(255); // Display fully On
-    else
-    {
+    else{
         if( m_scroll )
         {
             m_scrollCount--;
@@ -427,23 +397,15 @@ void Ssd1306::updateStep()
 
                     for( int col=0; col<128; col++ )
                     {
-
                         if( m_scrollR )
                         {
                             int c = 127-col;
-
                             if( c < 127 ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
                             if( col == 0 )  m_aDispRam[0][row]   = end;
-                        }
-                        else
-                        {
+                        }else{
                             if( col < 127 )  m_aDispRam[col][row] = m_aDispRam[col+1][row];
                             if( col == 127 ) m_aDispRam[col][row] = start;
-                        }
-                    }
-                }
-            }
-        }
+        }   }   }   }   }
         for( int row=0; row<8; row++ )
         {
             for( int col=0; col<128; col++ )
@@ -456,21 +418,8 @@ void Ssd1306::updateStep()
                 {
                     m_pdisplayImg->setPixel(col,row*8+bit,(abyte & 1) );
                     abyte >>= 1;
-                }
-            }
-        }
-    }
+    }   }   }   }
     update();
-}
-
-int Ssd1306::cCode()
-{
-    return m_address;
-}
-
-void Ssd1306::setCcode( int code )
-{
-    m_address = code;
 }
 
 void Ssd1306::setColor( dispColor color )

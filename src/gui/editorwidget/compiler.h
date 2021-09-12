@@ -35,8 +35,6 @@ class Compiler : public QObject
         Compiler( CodeEditor* parent, OutPanelText* outPane );
         ~Compiler();
 
-        virtual bool upload(){return false;}
-
         void clearCompiler();
         void loadCompiler( QString file );
         virtual int compile( bool debug );

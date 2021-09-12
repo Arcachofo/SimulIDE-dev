@@ -37,7 +37,7 @@ SdccDebugger::~SdccDebugger(){}
 int SdccDebugger::compile( bool debug )
 {
     int error = Compiler::compile( debug );
-    if( error == 0 )
+    if( error == 0 && !m_family.startsWith("pic") )
     {
         if( !QFileInfo::exists( m_firmware ) )
         {

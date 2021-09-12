@@ -33,7 +33,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         BaseDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~BaseDebugger();
 
-        virtual bool upload() override;
+        virtual bool upload();
 
         void setLstType( int type ) { m_lstType = type; }
         void setLangLevel( int level ) { m_langLevel = level; }

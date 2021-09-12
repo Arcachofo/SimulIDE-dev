@@ -74,11 +74,11 @@ class EditorWindow : public EditorWidget
         virtual void stepOver() override;
         virtual void reset() override;
 
-        virtual bool upload() override;
+        virtual bool upload();
 
     private:
  static EditorWindow*  m_pSelf;
-
+        bool uploadFirmware( bool debug );
         bool initDebbuger();
         void stepDebug( bool over=false );
         void stopDebbuger();
