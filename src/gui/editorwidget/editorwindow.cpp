@@ -56,8 +56,9 @@ EditorWindow::~EditorWindow(){}
 
 bool EditorWindow::upload()
 {
-    uploadFirmware( false );
+    return uploadFirmware( false );
 }
+
 bool EditorWindow::uploadFirmware( bool debug )
 {
     CodeEditor* ce = getCodeEditor();

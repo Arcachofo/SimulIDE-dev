@@ -33,6 +33,8 @@ class SdccDebugger : public cDebugger
     protected:
         virtual void preProcess() override;
         virtual void postProcess() override;
+
+        void findCSEG();
 };
 
 #endif

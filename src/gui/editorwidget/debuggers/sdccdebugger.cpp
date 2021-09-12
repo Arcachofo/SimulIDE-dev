@@ -78,5 +78,28 @@ void SdccDebugger::postProcess()
         GputilsDebug::getVariables( this );
         GputilsDebug::mapFlashToSource( this );
     }
-}
+    else //if( m_family == "msc51" )
+    {
+        findCSEG();
+        BaseDebugger::postProcess();
+}   }
 
+void SdccDebugger::findCSEG()
+{
+    m_codeStart = 0;
+
+    QString mapFileName = m_buildPath + m_fileName + ".map";
+    if( !QFileInfo::exists( mapFileName ) ) return;
+    QStringList mapLines = fileToStringList( mapFileName, "SdccDebugger::findCSEG" );
+    for( QString mapLine : mapLines )
+    {
+        if( mapLine.startsWith("CSEG") )
+        {
+            QStringList words = mapLine.split(" ");
+            words.removeAll("");
+            if( words.size() < 2 ) break;
+            bool ok = false;
+            int codeStart = words.at(1).toInt( &ok, 16 );
+            if( ok ) m_codeStart = codeStart;
+            break;
+}   }   }

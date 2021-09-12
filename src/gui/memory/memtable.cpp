@@ -114,8 +114,8 @@ void MemTable::resizeTable( int dataSize )
     table->clear();
 
     table->setHorizontalHeaderLabels( QStringList()
-      <<"0x0"<<"0x1"<<"0x2"<<"0x3"<<"0x4"<<"0x5"<<"0x6"<<"0x7"
-      <<"0x8"<<"0x9"<<"0xA"<<"0xB"<<"0xC"<<"0xD"<<"0xE"<<"0xF"
+      <<"00"<<"01"<<"02"<<"03"<<"04"<<"05"<<"06"<<"07"
+      <<"08"<<"09"<<"0A"<<"0B"<<"0C"<<"0D"<<"0E"<<"0F"
       << " "
       <<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"
       <<"8"<<"9"<<"A"<<"B"<<"C"<<"D"<<"E"<<"F");
@@ -125,7 +125,7 @@ void MemTable::resizeTable( int dataSize )
 
     int scale = MainWindow::self()->fontScale();
     QFont font;
-    font.setPixelSize( 13*scale );
+    font.setPixelSize( 14*scale );
     font.setFamily("Ubuntu Mono");
 
     QTableWidgetItem* it;
@@ -135,7 +135,7 @@ void MemTable::resizeTable( int dataSize )
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
         it->setFont( font );
-        it->setText( valToHex( row*16, addrBytes ));
+        it->setText( " 0x"+valToHex( row*16, addrBytes )+" ");
         table->setVerticalHeaderItem( row, it );
 
         for( int col=0; col<33; ++col )
@@ -159,7 +159,7 @@ void MemTable::resizeTable( int dataSize )
     }
     for( int col=0; col<16; ++col )
     {
-        table->setColumnWidth( col, (2+m_cellBytes)*15*scale+2 );
+        table->setColumnWidth( col, (m_cellBytes)*18*scale+4 ); /// (2+m_cellBytes)*15*scale+2 );
         table->setColumnWidth( col+17, (8*m_cellBytes+4)*scale );
     }
     font.setWeight( QFont::Normal );
@@ -249,8 +249,8 @@ QString MemTable::valToHex( int val, int bytes )
     QString sval = QString::number( val, 16 ).toUpper();
     sval = sval.right( bytes*2 );
     while( sval.length() < bytes*2) sval.prepend( "0" );
-    sval.prepend(" 0x");
-    sval.append(" ");
+    //sval.prepend(" "); /// (2+m_cellBytes)*15*scale+2 );
+    //sval.append(" ");
 
     return sval;
 }

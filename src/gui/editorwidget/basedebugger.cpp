@@ -73,6 +73,7 @@ void BaseDebugger::preProcess()
 {
     QStringList lines = fileToStringList( m_file, "cDebugger::preProcess" );
     getInfoInFile( lines.first() );
+    m_codeStart = 0;
 }
 
 void BaseDebugger::postProcess()
@@ -84,37 +85,36 @@ void BaseDebugger::postProcess()
     QString lstFileName = m_buildPath + m_fileName + ".lst";
     if( !QFileInfo::exists( lstFileName ) ) return;
 
-    QString asmFileName = m_fileDir + m_fileName + m_fileExt;
-    QStringList asmLines = fileToStringList( asmFileName, "AsmDebugger::postProcess" );
+    QString srcFileName = m_fileDir + m_fileName + m_fileExt;
+    QStringList srcLines = fileToStringList( srcFileName, "AsmDebugger::postProcess" );
     QStringList lstLines = fileToStringList( lstFileName, "AsmDebugger::postProcess" );
 
     QString lstLine;
     int lstLineNumber = 0;
-    int asmLineNumber = 0;
+    int srcLineNumber = 0;
     int lastListLine = lstLines.size();
 
-    for( QString asmLine : asmLines )
+    for( QString srcLine : srcLines )
     {
-        asmLineNumber++;
-        asmLine = asmLine.replace("\t", " ").remove(" ");
-        if( isNoValid( asmLine ) ) continue;
+        srcLineNumber++;
+        srcLine = srcLine.replace("\t", " ").remove(" ");
+        if( isNoValid( srcLine ) ) continue;
 
         while( true )
         {
-            if( ++lstLineNumber >= lastListLine ) break;      // End of asm file
+            if( ++lstLineNumber >= lastListLine ) break;      // End of lst file
             lstLine = lstLines.at( lstLineNumber-1 );
             lstLine = lstLine.replace("\t", " ");
             if( isNoValid( lstLine ) ) continue;
 
             QString line = lstLine;
             line = line.remove(" ");
-            if( line.contains( asmLine ) )
+            if( line.contains( srcLine ) )
             {
                 if( m_langLevel )
                 { if( line.contains( m_fileName+m_fileExt ) ) break; }// Line found
                 else break;          // Line found
-            }
-        }
+        }   }
         if( lstLineNumber >= lastListLine ) lstLineNumber = 0;
         else{
             if( m_langLevel )
@@ -130,17 +130,15 @@ void BaseDebugger::postProcess()
 
             bool ok = false;
             int address = lstLine.toInt( &ok, 16 );
-            if( ok ) setLineToFlash( asmLineNumber, address );
-        }
-    }
-}
+            if( ok ) setLineToFlash( srcLineNumber, m_codeStart+address );
+}   }   }
 
 void BaseDebugger::getInfoInFile( QString line )
 {
     line = line.toLower();
     QStringList wordList = line.split(" ");
 
-    while( wordList.size() > 3 )
+    while( wordList.size() > 2 )
     {
         QString word = wordList.takeFirst();
         if( word == "device" || word == "board" || word == "family" )

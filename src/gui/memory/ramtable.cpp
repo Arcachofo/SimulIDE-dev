@@ -70,7 +70,7 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     m_pc.setRowHeight( 0, row_heigh );
     m_pc.setFixedHeight( row_heigh  );
 
-    font.setPixelSize( 13*scale );
+    font.setPixelSize( 14*scale );
     it = new QTableWidgetItem(0);
     it->setFlags( Qt::ItemIsEnabled );
     it->setFont( font );
@@ -356,9 +356,10 @@ void RamTable::setRegisters( QStringList regs )
 
 uint16_t RamTable::getCurrentAddr()
 {
-    QString text = table->item( table->currentRow(), 0 )->text();
+    int row = table->currentRow();
+    if( row < 0 ) return 0;
+    QString text = table->item( row, 0 )->text();
     if( text == "---" ) return -1;
     return  text.toUInt(NULL,16);
 }
 
-//#include "moc_ramtable.cpp"

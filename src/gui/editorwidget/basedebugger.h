@@ -64,6 +64,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         int m_lastLine;
         int m_lstType;
         int m_langLevel;
+        int m_codeStart;
 
         QString m_appPath;
         
