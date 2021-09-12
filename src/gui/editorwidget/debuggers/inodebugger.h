@@ -45,8 +45,8 @@ class InoDebugger : public AvrGccDebugger
         QString customBoard() { return m_customBoard; }
         void setCustomBoard( QString b ){ m_customBoard = b; }
         
-        board_t board() { return m_board; }
-        void setBoard( board_t b ){ m_board = b; }
+        board_t board() { return m_Ardboard; }
+        void setBoard( board_t b ){ m_Ardboard = b; }
 
         virtual QString toolPath() { return m_arduinoPath; }
         virtual void setToolPath( QString path ) override;
@@ -55,8 +55,7 @@ class InoDebugger : public AvrGccDebugger
         virtual int  compile( bool debug ) override;
 
     protected:
-        virtual void mapFlashToSource() override;
-        virtual void getData() override;
+        virtual void postProcess() override;
         
     private:
         QString getBoard();
@@ -68,8 +67,8 @@ class InoDebugger : public AvrGccDebugger
         QString m_arduinoPath;
         QString m_sketchBook;
         QString m_customBoard;
-        board_t m_board;
-        QStringList m_boardList;
+        board_t m_Ardboard;
+        QStringList m_ArdboardList;
 };
 
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,18 +17,21 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVRASMDEBUGGER_H
-#define AVRASMDEBUGGER_H
+#ifndef GPUTILSDEBUG_H
+#define GPUTILSDEBUG_H
 
-#include "basedebugger.h"
+class BaseDebugger;
 
-class AvrAsmDebugger : public BaseDebugger
+class GputilsDebug
 {
     public:
-        AvrAsmDebugger( CodeEditor* parent, OutPanelText* outPane );
-        ~AvrAsmDebugger();
+        GputilsDebug();
+        ~GputilsDebug();
 
-    protected:
-        virtual void mapFlashToSource() override;
+        //int compile( bool debug );
+
+        static void getVariables( BaseDebugger* debugger );
+        static void mapFlashToSource( BaseDebugger* debugger );
 };
+
 #endif

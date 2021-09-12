@@ -58,7 +58,6 @@ void BaseProcessor::setDataFile( QString datafile )
 { 
     m_dataFile = datafile;
     setRegisters();
-    m_ramTable->setRegisters( m_regList );
 }
 
 int BaseProcessor::status() { return getRamValue( m_statusReg ); }
@@ -115,7 +114,9 @@ void BaseProcessor::setRegisters() // get register addresses from data file
             {
                 address = validate( address );
                 addWatchVar( name, address, "u8" );        // type uint8 
-}   }   }   }
+    }   }   }
+    m_ramTable->setRegisters( m_regList );
+}
 
 void BaseProcessor::uartOut( int uart, uint32_t value ) // Send value to OutPanelText
 {

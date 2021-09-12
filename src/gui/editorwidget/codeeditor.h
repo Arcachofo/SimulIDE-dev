@@ -24,7 +24,6 @@
 
 class BaseDebugger;
 class LineNumberArea;
-class CompilerProp;
 class Highlighter;
 class OutPanelText;
 
@@ -44,14 +43,11 @@ class CodeEditor : public QPlainTextEdit
 
         bool hasBreakPoint( int line ) { return m_brkPoints.contains( line ); }
 
-        void setDevice( QString device );
-
         void lineNumberAreaPaintEvent( QPaintEvent* event );
         int  lineNumberAreaWidth();
 
         BaseDebugger* getCompiler() { return m_compiler; }
         void setCompiler( BaseDebugger* comp );
-        void compProps();
 
         void updateScreen();
 
@@ -85,14 +81,12 @@ class CodeEditor : public QPlainTextEdit
         void contextMenuEvent(QContextMenuEvent* event);
 
     private:
-        int  getSintaxCoincidences(QString& fileName, QStringList& instructions );
+        int  getSintaxCoincidences();
         void addBreakPoint( int line );
         void remBreakPoint( int line ) { m_brkPoints.removeOne( line ); }
 
         void indentSelection( bool unIndent );
 
-        CompilerProp* m_compDialog;
-        
         BaseDebugger* m_compiler;
         OutPanelText* m_outPane;
 
@@ -112,6 +106,7 @@ class CodeEditor : public QPlainTextEdit
 
  static QStringList m_picInstr;
  static QStringList m_avrInstr;
+ static QStringList m_i51Instr;
 
  static int   m_fontSize;
  static int   m_tabSize;

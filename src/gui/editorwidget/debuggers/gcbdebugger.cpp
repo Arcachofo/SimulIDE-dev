@@ -61,7 +61,7 @@ void GcbDebugger::getSubs()
             if( !line.startsWith( ";" ) && !line.isEmpty() ) m_subs.append( line.toUpper() );
 }   }   }
 
-void GcbDebugger::mapFlashToSource()
+void GcbDebugger::postProcess()
 {
     getProcType(); // Determine Pic or Avr
     getSubs();

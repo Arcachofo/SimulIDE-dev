@@ -18,9 +18,7 @@
  ***************************************************************************/
 
 #include "picasmdebugger.h"
-#include "baseprocessor.h"
-#include "utils.h"
-#include "simuapi_apppath.h"
+#include "gputilsdebug.h"
 
 PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane )
               : BaseDebugger( parent, outPane )
@@ -29,129 +27,11 @@ PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane )
 }
 PicAsmDebugger::~PicAsmDebugger() {}
 
-/*int PicAsmDebugger::compile( bool )
-{
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    
-    //getProcType();
-    QString file = m_fileDir+m_fileName+m_fileExt;
-    
-    m_outPane->appendLine( "-------------------------------------------------------\n" );
-    QString command = m_toolPath+"gpasm";
-    
-    QProcess checkComp( NULL );
-    checkComp.start( command  );
-    checkComp.waitForFinished(-1);
-    
-    QString p_stdo = checkComp.readAllStandardOutput();
-    if( !p_stdo.toUpper().contains("OPTIONS") )
-    {
-        m_outPane->appendText( "\ngpasm" );
-        toolChainNotFound();
-        return -1;
-    }
-    
-    #ifndef Q_OS_UNIX
-    command  = addQuotes( command );
-    file     = addQuotes( file );
-    #endif
-
-    command.append(" -L -w1  -i  -ainhx32 -I "+m_fileDir+" "+ file);
-
-    m_outPane->appendText( "Exec: ");
-    m_outPane->appendLine( command );
-    
-    QProcess compAsm( NULL );
-    compAsm.start( command  );
-    compAsm.waitForFinished(-1);
-    
-    QString p_stdout = compAsm.readAllStandardOutput();
-    QString p_stderr = compAsm.readAllStandardError();
-    m_outPane->appendLine( p_stdout );
-    m_outPane->appendLine( p_stderr );
-
-    int error = 0;
-    if( p_stdout.toUpper().contains("ERROR") ) 
-    {
-        QStringList lines = p_stdout.split("\n");
-        for( QString line : lines )
-        {
-            if( !(line.toUpper().contains( "ERROR" )) ) continue;
-            QStringList words = line.split(":");
-            if( words.size() > 1)
-            {
-                error = words.at(1).toInt();
-                qDebug() <<line;
-            }
-            else error = -1;
-            break;
-        }
-    }
-    m_firmware = m_fileDir+m_fileName+".hex";
-    
-    QApplication::restoreOverrideCursor();
-    return error;
-}*/
-
-void PicAsmDebugger::mapFlashToSource()
+void PicAsmDebugger::postProcess()
 {
     m_flashToSource.clear();
     m_sourceToFlash.clear();
 
-    QString asmFileName = m_fileDir + m_fileName + ".asm";
-    QString lstFileName = m_fileDir + m_fileName + ".lst";
-
-    QStringList asmLines = fileToStringList( asmFileName, "PicAsmDebugger::mapLstToAsm" );
-    QStringList lstLines = fileToStringList( lstFileName, "PicAsmDebugger::mapLstToAsm" );
-    
-    m_lastLine = 0;
-
-    QString asmLine;
-    int asmLineNumber = 0;
-    int lastAsmLine = asmLines.size();
-
-    for( QString line : lstLines )
-    {
-        if( line.isEmpty() )      continue;
-        line = line.toUpper().replace("\t", " ");
-        if( line.startsWith(" ") ) continue;
-        if( line.contains("ORG") ) continue;
-
-        while( true )
-        {
-            if( ++asmLineNumber >= lastAsmLine ) break; // End of asm file
-            asmLine = asmLines.at( asmLineNumber-1 ).toUpper();
-            asmLine = asmLine.replace("\t", " ").remove(" ");
-            if( asmLine.isEmpty() )      continue;
-            if( asmLine.startsWith("_")) continue;
-            if( asmLine.startsWith(";")) continue;
-            if( asmLine.startsWith("#")) continue;
-            if( asmLine.startsWith(".")) continue;
-
-            QString lstline = line;
-            if( lstline.remove(" ").contains(asmLine) ) break;
-        }
-        if( asmLineNumber >= lastAsmLine ) { asmLineNumber = 0; continue; } // End of asm file
-
-        QStringList words = line.split(' ');
-        QString numberText = words.at(0);
-        //QString numberText = line.left( 4 );
-        bool ok = false;
-        int address = numberText.toInt( &ok, 16 );  // original adress*2: instruc = 2 bytes
-        if( ok )
-        {
-            m_flashToSource[address] = asmLineNumber;
-            if( asmLineNumber > m_lastLine ) m_lastLine = asmLineNumber;
-            //qDebug() <<"asmLineNumber"<<asmLineNumber<<"address"<<address;
-        }
-    }
-    QHashIterator<int, int> i( m_flashToSource );
-    while( i.hasNext() )
-    {
-        i.next();
-        int address       = i.key();
-        int asmLineNumber = i.value();
-        m_sourceToFlash[asmLineNumber] = address;
-    }
+    GputilsDebug::mapFlashToSource( this );
 }
 

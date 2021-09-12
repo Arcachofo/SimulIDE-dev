@@ -183,11 +183,7 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
         setMcuId( mcuId );
     }
 }
-TerminalWidget::~TerminalWidget()
-{
-    Simulator::self()->remFromUpdateList( &m_uartOutPanel );
-    Simulator::self()->remFromUpdateList( &m_uartInPanel );
-}
+TerminalWidget::~TerminalWidget(){}
 
 void TerminalWidget::setMcuId( QString mcu )
 {

@@ -153,7 +153,7 @@ void B16AsmDebugger::loadCodes()
         m_opcodes.insert( codeName, code );
 }   }
 
-void B16AsmDebugger::mapFlashToSource()
+void B16AsmDebugger::postProcess()
 {
 }
 

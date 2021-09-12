@@ -25,6 +25,7 @@
 
 class OutPanelText;
 class CodeEditor;
+class CompilerProp;
 
 class Compiler : public QObject
 {
@@ -34,11 +35,15 @@ class Compiler : public QObject
         Compiler( CodeEditor* parent, OutPanelText* outPane );
         ~Compiler();
 
+        virtual bool upload(){return false;}
+
         void clearCompiler();
         void loadCompiler( QString file );
         virtual int compile( bool debug );
 
         QString compName() { return m_compName; }
+        QString fileName() { return m_fileName; }
+        QString buildPath() { return m_buildPath; }
 
         virtual QString toolPath() { return m_toolPath; }
         virtual void setToolPath( QString path );
@@ -56,17 +61,23 @@ class Compiler : public QObject
         void setDevice( QString d ) { m_device = d; }
         bool useDevice() { return m_useDevice; }
 
+        void compProps();
+
+        bool isProjectFile( QString file ) { return m_fileList.contains( file ); }
+
         void readSettings();
 
     protected:
-        virtual void getDevice( QString line );
-        virtual void getData(){;}
+        virtual void getInfoInFile( QString line ){;}
+        virtual void preProcess(){;}
+        virtual void postProcess(){;}
 
         int runBuildStep( QString fullCommand );
         QString replaceData( QString str );
         QString getPath( QString msg );
         void toolChainNotFound();
 
+        CompilerProp* m_compDialog;
         CodeEditor* m_document;
 
         bool m_useFamily;
@@ -84,6 +95,7 @@ class Compiler : public QObject
         QString m_type;
         QString m_family;
         QString m_device;
+        QString m_board;
         QString m_firmware;
         QString m_file;
         QString m_fileDir;

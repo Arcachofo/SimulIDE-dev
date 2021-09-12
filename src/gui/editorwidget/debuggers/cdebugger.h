@@ -29,8 +29,7 @@ class cDebugger : public BaseDebugger
         ~cDebugger();
 
     protected:
-        //virtual void mapFlashToSource() override;
-        virtual void getData() override;
+        virtual void preProcess() override;
 };
 
 #endif

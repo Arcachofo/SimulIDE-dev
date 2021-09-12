@@ -17,9 +17,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QFileInfo>
+
 #include "basedebugger.h"
 #include "mcuinterface.h"
 #include "editorwindow.h"
+#include "compilerprop.h"
 #include "simulator.h"
 #include "mcubase.h"
 #include "utils.h"
@@ -29,6 +32,8 @@ BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane )
 {
     m_compName = "None";
     m_processorType = 0;
+    m_langLevel = 0;
+    m_lstType = 0;
     m_stepOver = false;
 
     m_appPath = QCoreApplication::applicationDirPath();
@@ -40,6 +45,11 @@ BaseDebugger::~BaseDebugger( )
 
 bool BaseDebugger::upload()
 {
+    if( !QFileInfo::exists( m_firmware) )
+    {
+        m_outPane->appendLine( "\n"+tr("Error: Hex file doesn't exist:")+"\n"+m_firmware );
+        return false;
+    }
     if( !McuBase::self() )
     {
         m_outPane->appendLine( "\n"+tr("Error: No Mcu in Simulator... ") );
@@ -54,19 +64,124 @@ bool BaseDebugger::upload()
     if( ok )
     {
         McuInterface::self()->setDebugger( this );
-        mapFlashToSource();
+        postProcess();
     }
     return ok;
 }
 
-void BaseDebugger::mapFlashToSource()
+void BaseDebugger::preProcess()
 {
-    //getProcType(); // Determine Pic or Avr
-    //getData();
-    //getSubs();
+    QStringList lines = fileToStringList( m_file, "cDebugger::preProcess" );
+    getInfoInFile( lines.first() );
+}
 
+void BaseDebugger::postProcess()
+{
+    m_lastLine = 0;
     m_flashToSource.clear();
     m_sourceToFlash.clear();
+
+    QString lstFileName = m_buildPath + m_fileName + ".lst";
+    if( !QFileInfo::exists( lstFileName ) ) return;
+
+    QString asmFileName = m_fileDir + m_fileName + m_fileExt;
+    QStringList asmLines = fileToStringList( asmFileName, "AsmDebugger::postProcess" );
+    QStringList lstLines = fileToStringList( lstFileName, "AsmDebugger::postProcess" );
+
+    QString lstLine;
+    int lstLineNumber = 0;
+    int asmLineNumber = 0;
+    int lastListLine = lstLines.size();
+
+    for( QString asmLine : asmLines )
+    {
+        asmLineNumber++;
+        asmLine = asmLine.replace("\t", " ").remove(" ");
+        if( isNoValid( asmLine ) ) continue;
+
+        while( true )
+        {
+            if( ++lstLineNumber >= lastListLine ) break;      // End of asm file
+            lstLine = lstLines.at( lstLineNumber-1 );
+            lstLine = lstLine.replace("\t", " ");
+            if( isNoValid( lstLine ) ) continue;
+
+            QString line = lstLine;
+            line = line.remove(" ");
+            if( line.contains( asmLine ) )
+            {
+                if( m_langLevel )
+                { if( line.contains( m_fileName+m_fileExt ) ) break; }// Line found
+                else break;          // Line found
+            }
+        }
+        if( lstLineNumber >= lastListLine ) lstLineNumber = 0;
+        else{
+            if( m_langLevel )
+            {
+                lstLineNumber++;
+                lstLine = lstLines.at( lstLineNumber-1 );
+                lstLine = lstLine.replace("\t", " ");
+            }
+            if( m_lstType ) lstLine = lstLine.split(":").last();
+            QStringList words = lstLine.split(" ");
+            words.removeAll("");
+            lstLine = words.first();
+
+            bool ok = false;
+            int address = lstLine.toInt( &ok, 16 );
+            if( ok ) setLineToFlash( asmLineNumber, address );
+        }
+    }
+}
+
+void BaseDebugger::getInfoInFile( QString line )
+{
+    line = line.toLower();
+    QStringList wordList = line.split(" ");
+
+    while( wordList.size() > 3 )
+    {
+        QString word = wordList.takeFirst();
+        if( word == "device" || word == "board" || word == "family" )
+        {
+            if( word.contains("=") )
+            {
+                QString second = word;
+                second = second.split("=").last();
+                if( !second.isEmpty() ) wordList.prepend( second );
+            }
+            else if( wordList.takeFirst() != "=" ) continue;
+            if( word == "device" )
+            {
+                m_device = wordList.takeFirst();
+                if( m_compDialog ) m_compDialog->setDevice( m_device );
+            }
+            else if( word == "board" )  m_board  = wordList.takeFirst();
+            else if( word == "family" ) m_family = wordList.takeFirst();
+}   }   }
+
+bool BaseDebugger::isNoValid( QString line )
+{
+    return (  line.isEmpty()
+           || line.startsWith("void")
+           || line.startsWith("{")
+           || line.startsWith("}")
+           || line.startsWith("//")
+           || line.startsWith("/*")
+           || line.startsWith(";")
+           || line.startsWith("#")
+           || line.startsWith(".") );
+}
+
+void BaseDebugger::setLineToFlash( int line, int addr )
+{
+    if( !m_sourceToFlash.contains( line ) )
+    {
+        if( line > m_lastLine ) m_lastLine = line;
+        m_flashToSource[ addr ] = line;
+        m_sourceToFlash[ line ] = addr;
+    }
 }
 
 int BaseDebugger::getValidLine( int line )
@@ -77,8 +192,7 @@ int BaseDebugger::getValidLine( int line )
 
 QString BaseDebugger::getVarType( QString var )
 {
-    var = var.toUpper();
-    return m_varList[ var ];
+    return m_varList.value( var );
 }
 
 #include "moc_basedebugger.cpp"

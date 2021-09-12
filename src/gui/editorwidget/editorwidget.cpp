@@ -24,10 +24,12 @@
 #include "editorwidget.h"
 #include "findreplacedialog.h"
 #include "editorprop.h"
+#include "basedebugger.h"
 #include "mainwindow.h"
+#include "simulator.h"
 #include "utils.h"
 
-#include "mcucreator.h"
+#include "mcucreator.h" /// TODELETE
 
 EditorWidget::EditorWidget( QWidget* parent )
             : QWidget( parent )
@@ -43,6 +45,7 @@ EditorWidget::EditorWidget( QWidget* parent )
 
     updateRecentFileActions();
     readSettings();
+    Simulator::self()->addToUpdateList( &m_outPane );
 
 }
 EditorWidget::~EditorWidget(){}
@@ -298,7 +301,7 @@ void EditorWidget::confEditor()
 void EditorWidget::confCompiler()
 {
     CodeEditor* ce = getCodeEditor();
-    if( ce ) ce->compProps();
+    if( ce ) ce->getCompiler()->compProps();
 }
 
 void EditorWidget::updateRecentFileActions()

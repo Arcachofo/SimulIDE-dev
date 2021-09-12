@@ -22,6 +22,7 @@
 #include "compiler.h"
 #include "editorwindow.h"
 #include "outpaneltext.h"
+#include "compilerprop.h"
 #include "mainwindow.h"
 #include "utils.h"
 
@@ -31,6 +32,8 @@ Compiler::Compiler( CodeEditor* parent, OutPanelText* outPane )
 {
     m_document = parent;
     m_outPane = outPane;
+
+    m_compDialog = NULL;
 
     m_file     = parent->getFilePath();
     m_fileDir  = getFileDir( m_file );
@@ -128,20 +131,13 @@ void Compiler::loadCompiler( QString file )
 
 int Compiler::compile( bool debug )
 {
-    if( m_compName == "None" )
-    {
-        m_outPane->appendLine( tr("     Error: No Compiler Defined") );
-        return -1;
-    }
-    if( m_command.isEmpty() )
-    {
-        m_outPane->appendLine( tr("     Error: No command Defined") );
-        return -1;
-    }
+    if     ( m_compName == "None" ) m_outPane->appendLine( tr("     No Compiler Defined") );
+    else if( m_command.isEmpty() )  m_outPane->appendLine( tr("     No command Defined") );
+
     int error = 0;
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    getData();
+    preProcess();
 
     for( int i=0; i<m_command.size(); ++i )
     {
@@ -184,7 +180,11 @@ int Compiler::compile( bool debug )
         m_fileList.clear();
         m_fileList.append( m_fileName+m_fileExt );
         m_firmware = m_buildPath+m_fileName+".hex";
+
+        if( m_compName != "None" && !m_command.isEmpty()  )
+            m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
     }
+    else m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
     QApplication::restoreOverrideCursor();
     return error;
 }
@@ -217,25 +217,6 @@ int Compiler::runBuildStep( QString fullCommand )
     }   }
     return error;
 }
-
-void Compiler::getDevice( QString line )
-{
-    line = line.toLower();
-    line.remove(" ").remove("/");
-    QStringList wordList= line.split( "=" );
-
-    QString word = "";
-    if( wordList.size() > 1 )
-    {
-        word = wordList.takeFirst();
-        if( word != "device" && word != "board" ) return;
-
-        word = wordList.takeFirst();
-        if( word.isEmpty() ) return;
-
-        m_device = word;
-        m_document->setDevice( m_device );
-}   }
 
 QString Compiler::getPath( QString msg )
 {
@@ -287,5 +268,15 @@ void Compiler::readSettings()
     if( settings->contains( prop ) ) setToolPath( settings->value( prop ).toString() );
     prop = m_compName+"_inclPath";
     if( settings->contains( prop ) ) m_inclPath = settings->value( prop ).toString();
+}
+
+void Compiler::compProps()
+{
+    if( !m_compDialog )
+    {
+        m_compDialog = new CompilerProp( m_document );
+        m_compDialog->setCompiler( this );
+    }
+    m_compDialog->show();
 }
 #include "moc_compiler.cpp"

@@ -30,12 +30,18 @@ AvrGccDebugger::AvrGccDebugger( CodeEditor* parent, OutPanelText* outPane )
 }
 AvrGccDebugger::~AvrGccDebugger(){}
 
-void AvrGccDebugger::getData()
+
+void AvrGccDebugger::postProcess()
 {
-    cDebugger::getData();
+    getVariables();
 
-    if( !McuInterface::self() ) return;
+    m_flashToSource.clear();
+    m_sourceToFlash.clear();
+    mapFlashToSource();
+}
 
+void AvrGccDebugger::getVariables()
+{
     QString objdump = m_toolPath+"avr-objdump";
     QString elfPath = m_buildPath+m_fileName+".elf";
 
@@ -87,9 +93,6 @@ void AvrGccDebugger::getData()
 
 void AvrGccDebugger::mapFlashToSource()
 {
-    m_flashToSource.clear();
-    m_sourceToFlash.clear();
-
     QString elfPath = m_buildPath+m_fileName+".elf";
     QString avrSize = m_toolPath+"avr-size";
     QString addr2li = m_toolPath+"avr-addr2line";

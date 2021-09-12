@@ -58,9 +58,10 @@ class EditorWindow : public EditorWidget
 
         bebugState_t debugState() { return m_state; }
 
-        BaseDebugger* createDebugger( QString name, CodeEditor* ce );
+        BaseDebugger* createDebugger(QString name, CodeEditor* ce, QString code="" );
 
         QStringList compilers() { return m_compilers.keys(); }
+        QStringList assemblers() { return m_assemblers.keys(); }
 
     public slots:
         virtual void pause() override;
@@ -79,11 +80,11 @@ class EditorWindow : public EditorWidget
  static EditorWindow*  m_pSelf;
 
         bool initDebbuger();
-        void runToBreak();
         void stepDebug( bool over=false );
         void stopDebbuger();
 
         void loadCompilers();
+        void loadCompilerSet( QString compilsPath, QMap<QString, compilData_t>* compList );
 
         CodeEditor* m_debugDoc;
         BaseDebugger* m_debugger;
@@ -97,6 +98,7 @@ class EditorWindow : public EditorWidget
         QFont m_font;
 
         QMap<QString, compilData_t> m_compilers;
+        QMap<QString, compilData_t> m_assemblers;
 };
 
 #endif

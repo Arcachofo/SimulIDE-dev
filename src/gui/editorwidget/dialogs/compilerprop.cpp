@@ -28,7 +28,10 @@ CompilerProp::CompilerProp( CodeEditor* parent )
     setupUi(this);
     m_document = parent;
     m_blocked = true;
-    compilerBox->insertItems( 0, EditorWindow::self()->compilers() );
+    compilerBox->insertItem( 0, "None" );
+    compilerBox->insertItems( 1, EditorWindow::self()->compilers() );
+    compilerBox->insertSeparator( compilerBox->count() );
+    compilerBox->insertItems( compilerBox->count(), EditorWindow::self()->assemblers() );
     m_blocked = false;
 }
 

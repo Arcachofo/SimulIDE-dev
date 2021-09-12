@@ -18,13 +18,13 @@
  ***************************************************************************/
 
 #include "cdebugger.h"
-//#include "mcuinterface.h"
-//#include "codeeditor.h"
 #include "utils.h"
 
 cDebugger::cDebugger( CodeEditor* parent, OutPanelText* outPane )
          : BaseDebugger( parent, outPane )
 {
+    m_langLevel = 1;
+
     m_typesList["char"]   = "int8";
     m_typesList["uchar"]  = "uint8";
     m_typesList["byte"]   = "uint8";
@@ -40,10 +40,10 @@ cDebugger::cDebugger( CodeEditor* parent, OutPanelText* outPane )
 }
 cDebugger::~cDebugger(){}
 
-void cDebugger::getData()
+void cDebugger::preProcess()
 {
-    QStringList lines = fileToStringList( m_file, "AvrGccDebugger::getAvrGccData" );
-    getDevice( lines.first() );
+    QStringList lines = fileToStringList( m_file, "cDebugger::preProcess" );
+    getInfoInFile( lines.first() );
 
     m_varList.clear();
 

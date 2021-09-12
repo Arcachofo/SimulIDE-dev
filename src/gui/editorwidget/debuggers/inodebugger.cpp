@@ -34,8 +34,8 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
 {
     Q_UNUSED( InoDebugger_properties );
 
-    m_board = Uno;
-    m_boardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo";
+    m_Ardboard = Uno;
+    m_ArdboardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo";
     m_buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
 }
 InoDebugger::~InoDebugger() {}
@@ -119,7 +119,7 @@ int InoDebugger::compile( bool )
     QString boardSource = "Arduino";
     if( boardName.isEmpty() )
     {
-        if( m_board < Custom ) boardName = "arduino:avr:"+m_boardList.at( m_board );
+        if( m_Ardboard < Custom ) boardName = "arduino:avr:"+m_ArdboardList.at( m_Ardboard );
         else{
             boardName = m_customBoard;
             boardSource = "Custom ";
@@ -176,7 +176,7 @@ int InoDebugger::compile( bool )
     return error;
 }
 
-void InoDebugger::getData()
+void InoDebugger::postProcess()
 {
     QString oldBuildPath = m_buildPath;
     QString oldFileName  = m_fileName;
@@ -184,21 +184,7 @@ void InoDebugger::getData()
     m_buildPath = m_buildPath+"/build/";
     m_fileName  = m_fileName+".ino";
 
-    AvrGccDebugger::getData();
-
-    m_buildPath = oldBuildPath;
-    m_fileName  = oldFileName;
-}
-
-void InoDebugger::mapFlashToSource()
-{
-    QString oldBuildPath = m_buildPath;
-    QString oldFileName  = m_fileName;
-
-    m_buildPath = m_buildPath+"/build/";
-    m_fileName  = m_fileName+".ino";
-
-    AvrGccDebugger::mapFlashToSource();
+    AvrGccDebugger::postProcess();
 
     m_buildPath = oldBuildPath;
     m_fileName  = oldFileName;
@@ -206,10 +192,10 @@ void InoDebugger::mapFlashToSource()
 
 QString InoDebugger::getBoard()
 {
-    QString board = m_device;
+    QString board = m_board;
     if( board == "duemilanove" ) board = "diecimila";
     else if( board == "mega" )   board = "megaADK";
-    if( !m_boardList.contains( board ) ) return "";
+    if( !m_ArdboardList.contains( board ) ) return "";
 
     return board;
 }

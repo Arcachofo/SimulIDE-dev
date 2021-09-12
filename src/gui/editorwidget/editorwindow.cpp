@@ -34,7 +34,6 @@
 #include "b16asmdebugger.h"
 #include "avrgccdebugger.h"
 #include "sdccdebugger.h"
-#include "avrasmdebugger.h"
 #include "picasmdebugger.h"
 
 EditorWindow* EditorWindow::m_pSelf = NULL;
@@ -61,7 +60,7 @@ bool EditorWindow::upload()
     if( !ce ) return false;
 
     bool ok = ce->compile();
-    if( ok ) ce->getCompiler()->upload();
+    if( ok ) ok = ce->getCompiler()->upload();
 
     return ok;
 }
@@ -85,10 +84,14 @@ void EditorWindow::debug()
 void EditorWindow::run()
 { 
     setStepActs();
-    runToBreak();
+
+    if( m_state == DBG_STOPPED ) return;
+    m_state = DBG_RUNNING;
+    if( m_driveCirc ) Simulator::self()->resumeSim();
+    McuInterface::self()->stepOne( m_debugDoc->debugLine() );
 }
 
-void EditorWindow::step()    
+void EditorWindow::step()
 { 
     setStepActs();
     stepDebug();
@@ -136,8 +139,8 @@ bool EditorWindow::initDebbuger()
     m_state = DBG_STOPPED;
     bool ok = upload();
 
-    if( ok )
-    {                                         // OK: Start Debugging
+    if( ok )                     // OK: Start Debugging
+    {
         m_debugDoc = getCodeEditor();
         m_debugDoc->setReadOnly( true );
         m_debugger = m_debugDoc->getCompiler();
@@ -152,14 +155,6 @@ bool EditorWindow::initDebbuger()
     }
     else stopDebbuger();
     return ok;
-}
-
-void EditorWindow::runToBreak()
-{
-    if( m_state == DBG_STOPPED ) return;
-    m_state = DBG_RUNNING;
-    if( m_driveCirc ) Simulator::self()->resumeSim();
-    McuInterface::self()->stepOne( m_debugDoc->debugLine() );
 }
 
 void EditorWindow::stepDebug( bool over )
@@ -226,45 +221,59 @@ void EditorWindow::setDriveCirc( bool drive )
     m_driveCirc = drive;
 
     if( m_state == DBG_PAUSED )
-    {
-        if( drive ) Simulator::self()->pauseSim();
-}   }
+    { if( drive ) Simulator::self()->pauseSim(); }
+}
 
-BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce )
+BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce , QString code )
 {
     BaseDebugger* debugger = NULL;
     QString type = m_compilers.value( name ).type;
-
+    QString file = m_compilers.value( name ).file;
+    if( type.isEmpty() )
+    {
+        type = m_assemblers.value( name ).type;
+        file = m_assemblers.value( name ).file;
+    }
     if     ( type == "arduino")  debugger = new InoDebugger( ce, &m_outPane );
     else if( type == "avrgcc" )  debugger = new AvrGccDebugger( ce, &m_outPane );
     else if( type == "sdcc" )    debugger = new SdccDebugger( ce, &m_outPane );
     else if( type == "gcbasic" ) debugger = new GcbDebugger( ce, &m_outPane );
-    else if( type == "picasm" )  debugger = new PicAsmDebugger( ce, &m_outPane );
-    else if( type == "avrasm" )  debugger = new AvrAsmDebugger( ce, &m_outPane );
-    else if( type == "b16asm" )  debugger = new B16AsmDebugger( ce, &m_outPane );
-    else                         debugger = new BaseDebugger( ce, &m_outPane );
 
-    if( name != "None" ) debugger->loadCompiler( m_compilers.value( name ).file );
+    else if( type == "gputils" ) debugger = new PicAsmDebugger( ce, &m_outPane );
+    //else if( type == "b16asm" )  debugger = new B16AsmDebugger( ce, &m_outPane );
+    else
+    {
+        debugger = new BaseDebugger( ce, &m_outPane );
+        if( name != "None" ) code = type.right( 2 );
+        debugger->setLstType( code.right( 1 ).toInt() );
+        debugger->setLangLevel( code.left( 1 ).toInt() );
+    }
+    if( name != "None" ) debugger->loadCompiler( file );
     return debugger;
 }
 
 void EditorWindow::loadCompilers()
 {
-    QString compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");
+    QString compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/compilers");
+    loadCompilerSet( compilsPath, &m_compilers );
+    compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/assemblers");
+    loadCompilerSet( compilsPath, &m_assemblers );
+}
+
+void EditorWindow::loadCompilerSet( QString compilsPath, QMap<QString, compilData_t>* compList )
+{
     QDir compilsDir = QDir( compilsPath );
 
     compilsDir.setNameFilters( QStringList( "*.xml" ) );
 
-    QStringList xmlList = compilsDir.entryList( QDir::Files );
+    QStringList xmlList = compilsDir.entryList( QDir::Files, QDir::Name );
     if( xmlList.isEmpty() ) return;                  // No compilers to load
-
-    qDebug() << "\n" << tr("    Loading Compilers at:")<< "\n" << compilsPath<<"\n";
+    qDebug() <<"\n"<<tr("    Loading Compilers at:")<<"\n"<<compilsPath<<"\n";
 
     for( QString compilFile : xmlList )
     {
         QString compilFilePath = compilsDir.absoluteFilePath( compilFile );
-
-        if( !compilFilePath.isEmpty( ))  //loadXml( compilFilePath );
+        if( !compilFilePath.isEmpty( ))
         {
             QDomDocument domDoc = fileToDomDoc( compilFilePath, "EditorWindow::loadCompilers");
             if( domDoc.isNull() ) continue;
@@ -280,12 +289,10 @@ void EditorWindow::loadCompilers()
                 compilData.file = compilFilePath;
                 compilData.type = el.attribute( "type" ) ;
 
-                m_compilers[compiler] = compilData;
-                qDebug() << tr("Found Compiler: ") << compiler;
+                compList->insert( compiler, compilData );
+                qDebug() << tr("        Found Compiler: ") << compiler;
             }
             else qDebug() << tr("Error Loadind Compiler at:") <<"\n" << compilFilePath <<"\n";
-    }   }
-    qDebug() << "\n";
-}
+}   }   }
 
 #include  "moc_editorwindow.cpp"

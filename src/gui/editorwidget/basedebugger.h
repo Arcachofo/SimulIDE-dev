@@ -33,21 +33,37 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         BaseDebugger( CodeEditor* parent, OutPanelText* outPane );
         ~BaseDebugger();
 
-        virtual bool upload();
+        virtual bool upload() override;
+
+        void setLstType( int type ) { m_lstType = type; }
+        void setLangLevel( int level ) { m_langLevel = level; }
+
+        void setLineToFlash( int line, int addr );
+
         int getValidLine( int pc );
 
         QString getVarType( QString var );
+
         QStringList getVarList() { return m_varNames; }
+        void setVarList( QStringList varNames ) { m_varNames = varNames; }
+
         QList<int> getSubLines() { return m_subLines; }
         
         bool m_stepOver;
 
     protected:
-        virtual void mapFlashToSource();
+        virtual void getInfoInFile( QString line );
+        virtual void preProcess() override;
+        virtual void postProcess() override;
+
+        bool isNoValid( QString line );
+
         virtual void getSubs(){;}
 
         int m_processorType;
         int m_lastLine;
+        int m_lstType;
+        int m_langLevel;
 
         QString m_appPath;
         

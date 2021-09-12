@@ -27,8 +27,9 @@
 #include "simuapi_apppath.h"
 #include "utils.h"
 
-QStringList CodeEditor::m_picInstr = QString("addlw addwf andlw andwf bcf bov bsf btfsc btg btfss clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf reset retfie retlw return rlf rrfsublw subwf swapf xorlw xorwf").split(" ");
-QStringList CodeEditor::m_avrInstr = QString("add adc adiw sub subi sbc sbci sbiw andi ori eor com neg sbr cbr dec tst clr ser mul rjmp ijmp jmp rcall icall ret reti cpse cp cpc cpi sbrc sbrs sbic sbis brbs brbc breq brne brcs brcc brsh brlo brmi brpl brge brlt brhs brhc brts brtc brvs brvc brie brid mov movw ldi lds ld ldd sts st std lpm in out push pop lsl lsr rol ror asr swap bset bclr sbi cbi bst bld sec clc sen cln sez clz sei cli ses cls sev clv set clt seh clh wdr").split(" ");
+QStringList CodeEditor::m_picInstr = QString("addlw addwf andlw andwf banksel bcf bov bsf btfsc btg btfss clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf reset retfie retlw return rlf rrf sublw subwf swapf xorlw xorwf").split(" ");
+QStringList CodeEditor::m_avrInstr = QString("nop add adc adiw call inc sleep sub subi sbc sbci sbiw and andi or ori eor elpm fmul fmuls fmulsu mul muls smp com neg sbr cbr dec tst clr ser mul rjmp ijmp jmp rcall icall ret reti cpse cp cpc cpi sbrc sbrs sbic sbis brbs brbc breq brne brcs break brcc brsh brlo brmi brpl brge brlt brhs brhc brts brtc brvs brvc brie brid mov movw ldi lds ld ldd sts st std lpm in out push pop lsl lsr rol ror asr swap bset bclr sbi cbi bst bld sec clc sen cln sez clz sei cli ses cls sev clv set clt seh clh wdr des eicall eijmp lac las lat spm xch").split(" ");
+QStringList CodeEditor::m_i51Instr = QString("nop ajmp ljmp rr inc jbc acall lcall rrc dec jb ajmp ret rl add jnb reti rlc addc jc jnz orl jmp jnc anl jz xrl mov sjmp ajmp movc subb mul cpl cjne push clr swap xch pop setb da djnz xchd movx").split(" ");
 
 bool    CodeEditor::m_showSpaces = false;
 bool    CodeEditor::m_spaceTabs  = false;
@@ -44,7 +45,6 @@ QList<CodeEditor*> CodeEditor::m_documents;
 CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
           : QPlainTextEdit( parent )
 {
-    m_compDialog = NULL;
     m_documents.append( this );
 
     m_outPane   = outPane;
@@ -57,6 +57,10 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     m_help = "";
 
     setFont( m_font );
+    setFontSize( m_fontSize );
+    setTabSize( m_tabSize );
+    setShowSpaces( m_showSpaces );
+    setSpaceTabs( m_spaceTabs );
 
     QPalette p = palette();
     p.setColor( QPalette::Base, QColor( 255, 255, 249) );
@@ -115,30 +119,39 @@ void CodeEditor::setFile( const QString filePath )
         m_hlighter->readSintaxFile( m_sintaxPath + "cpp.sintax" );
         if( extension == ".ino" )
             m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );
+        else if( extension == ".cpp" || extension == ".c")
+            m_compiler = EditorWindow::self()->createDebugger( "None", this, "10" );
     }
-    else if( extension == ".asm" ) // We should identify if pic or avr asm
+    else if( extension == ".s" )
     {
-        int isPic = 0;
-        int isAvr = 0;
-        
-        isPic = getSintaxCoincidences( m_file, m_picInstr );
-        if( isPic < 50 ) isAvr = getSintaxCoincidences( m_file, m_avrInstr );
-
+        m_hlighter->readSintaxFile( m_sintaxPath + "avrasm.sintax" );
+        m_compiler = EditorWindow::self()->createDebugger( "Avrgcc-asm", this );
+    }
+    else if( extension == ".asm"  // We should identify if pic, avr or i51 asm
+          || extension == ".a51" )
+    {
         m_outPane->appendText( tr("File recognized as: ") );
 
-        if( isPic > isAvr )   // Is Pic
+        int type = getSintaxCoincidences();
+        if( type == 1 )   // Is Pic
         {
             m_outPane->appendLine( "Pic asm\n" );
             m_hlighter->readSintaxFile( m_sintaxPath + "pic14asm.sintax" );
             m_compiler = EditorWindow::self()->createDebugger( "GpAsm", this );
         }
-        else if( isAvr > isPic )  // Is Avr
+        else if( type == 2 )  // Is Avr
         {
-            m_outPane->appendLine( "Avr asm\n" );
-            m_hlighter->readSintaxFile( m_sintaxPath + "avrasm.sintax" );
-            m_compiler = EditorWindow::self()->createDebugger( "Avra", this );
+                m_outPane->appendLine( "Avr asm\n" );
+                m_hlighter->readSintaxFile( m_sintaxPath + "avrasm.sintax" );
+                m_compiler = EditorWindow::self()->createDebugger( "Avra", this );
         }
-        else m_outPane->appendLine( "Unknown\n" );
+        else if( type == 3 )  // Is 8051
+        {
+                m_outPane->appendLine( "I51 asm\n" );
+                m_hlighter->readSintaxFile( m_sintaxPath + "i51asm.sintax" );
+                m_compiler = EditorWindow::self()->createDebugger( "None", this );
+        }
+        else m_outPane->appendLine( "Unknown asm\n" );
     }
     else if( extension == ".xml"
          ||  extension == ".html"
@@ -160,28 +173,43 @@ void CodeEditor::setFile( const QString filePath )
     if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "None", this );
 }
 
-int CodeEditor::getSintaxCoincidences( QString& fileName, QStringList& instructions )
+int CodeEditor::getSintaxCoincidences()
 {
-    QStringList lines = fileToStringList( fileName, "CodeEditor::getSintaxCoincidences" );
+    QStringList lines = fileToStringList( m_file, "CodeEditor::getSintaxCoincidences" );
 
-    int coincidences = 0;
+    int avr=1, pic=1, i51=1; // Avoid divide by 0
+    int nlines = 0;
 
     for( QString line : lines )
     {
-        if( line.isEmpty()      ) continue;
-        if( line.startsWith("#")) continue;
-        if( line.startsWith(";")) continue;
-        if( line.startsWith(".")) continue;
-        line =line.toLower();
-        
-        for( QString instruction : instructions )
+        QStringList words = line.toLower().replace("\t", " ").split(" ");
+        words.removeAll("");
+        if( words.isEmpty() ) continue;
+        line = words.first();
+        if( line.isEmpty()
+         || line.startsWith(";")
+         || line.startsWith(".") ) continue;
+        if( line.contains(":") )
         {
-            if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) ))
-                coincidences++;
-            
-            if( coincidences > 50 ) break;
-    }   }
-    return coincidences;
+            if( words.size() > 1 ) line = words.at(1);
+            else continue;
+        }
+        for( QString instruction : m_avrInstr )
+        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) avr++; }
+        for( QString instruction : m_picInstr )
+        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) pic++; }
+        for( QString instruction : m_i51Instr )
+        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) i51++; }
+        if( ++nlines > 200 ) break;
+    }
+    int result = 0;
+    pic = nlines/pic; avr = nlines/avr; i51 = nlines/i51;
+
+    if     ( pic < 3 && pic < avr && pic < i51 ) result = 1;
+    else if( avr < 3 && avr < pic && avr < i51 ) result = 2;
+    else if( i51 < 3 && i51 < pic && i51 < avr ) result = 3;
+
+    return result;
 }
 
 bool CodeEditor::compile( bool debug )
@@ -193,13 +221,7 @@ bool CodeEditor::compile( bool debug )
     m_outPane->appendLine( "-------------------------------------------------------" );
     int error = m_compiler->compile( debug );
 
-    if( error == 0 )
-    {
-        m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
-        return true;
-    }
-    m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
-
+    if( error == 0 ) return true;
     if( error > 0 ) // goto error line number
     {
         m_debugLine = error; // Show arrow in error line
@@ -354,21 +376,6 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
              EditorWindow::self(), SLOT(reload()), Qt::UniqueConnection );
 
     menu->exec( event->globalPos() );
-}
-
-void CodeEditor::compProps()
-{
-    if( !m_compDialog )
-    {
-        m_compDialog = new CompilerProp( this );
-        m_compDialog->setCompiler( m_compiler );
-    }
-    m_compDialog->show();
-}
-
-void CodeEditor::setDevice( QString device )
-{
-    if( m_compDialog ) m_compDialog->setDevice( device );
 }
 
 int CodeEditor::lineNumberAreaWidth()

@@ -11,7 +11,7 @@ preprocessor-style: #414164 default true false
 preprocessor: "#+[^\n]*"
 
 number-style: #3030B8 default false false
-number: "\b[0-9]+\b"
+number: "\b[0-9]+\b" "0[bB][0-1]+" "0[xX][0-9a-fA-F]+"
 
 htmlTag-style: #303078 default false false
 htmlTag: "<.*>" 

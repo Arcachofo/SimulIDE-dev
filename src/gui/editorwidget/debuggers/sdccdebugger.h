@@ -31,8 +31,8 @@ class SdccDebugger : public cDebugger
         virtual int compile( bool debug ) override;
 
     protected:
-        virtual void mapFlashToSource() override;
-        virtual void getData() override;
+        virtual void preProcess() override;
+        virtual void postProcess() override;
 };
 
 #endif

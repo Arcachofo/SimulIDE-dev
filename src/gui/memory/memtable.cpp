@@ -170,7 +170,7 @@ void MemTable::resizeTable( int dataSize )
 
 void MemTable::setAddrSelected( int addr, bool jump )
 {
-    if( addr > m_dataSize ) return;
+    if( addr >= m_dataSize ) return;
     int row = addr/16;
     int col = addr%16;
     cellClicked( row, col );

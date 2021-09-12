@@ -30,7 +30,7 @@ OutPanelText::OutPanelText( QWidget* parent )
 
     m_highlighter = new OutHighlighter( document() );
 
-    QPalette p;// = palette();
+    QPalette p;
     p.setColor( QPalette::Base, QColor( 35, 30, 60 ) );
     p.setColor( QPalette::Text, QColor( 190, 190, 150) );
     setPalette(p);
@@ -44,7 +44,7 @@ OutPanelText::OutPanelText( QWidget* parent )
 
     setMaximumBlockCount( 1000 );
 
-    setReadOnly(true);
+    //setReadOnly(true);
 }
 OutPanelText::~OutPanelText(){}
 

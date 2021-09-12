@@ -29,7 +29,7 @@ class GcbDebugger : public BaseDebugger
         ~GcbDebugger();
 
     protected:
-        virtual void mapFlashToSource() override;
+        virtual void postProcess() override;
         virtual void getSubs() override;
         //virtual void getData() override;
 
