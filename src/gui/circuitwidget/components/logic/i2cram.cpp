@@ -58,9 +58,9 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
     pinList // Inputs:
             << "IL01 SDA"//type: Input, side: Left, pos: 01, label: "SDA"
             << "IL03 SCL"
-            << "IR01 A0"
-            << "IR02 A1"
-            << "IR03 A2"
+            << "IR01 A0 "
+            << "IR02 A1 "
+            << "IR03 A2 "
             // Outputs:
             ;
     init( pinList );                   // Create Pins Defined in pinList
@@ -71,7 +71,7 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
     m_inPin[1]->setPinMode( open_col );
     TwiModule::setSclPin( m_inPin[1] );
 
-    m_address = 0b01010000;
+    m_address = 0b01010000; // 0x50, 80
     m_size  = 65536;
     m_ram.resize( m_size );
 
@@ -96,15 +96,6 @@ QList<propGroup_t> I2CRam::propGroups()
     return pg;
 }
 
-void I2CRam::stamp()           // Called at Simulation Start
-{
-    TwiModule::stamp();
-    TwiModule::setMode( TWI_SLAVE );
-    
-    for( int i=2; i<5; i++ )     // Initialize address pins
-        m_inPin[i]->changeCallBack( this );
-}
-
 void I2CRam::initialize()
 {
     TwiModule::initialize();
@@ -112,6 +103,15 @@ void I2CRam::initialize()
     
     m_addrPtr = 0;
     m_phase = 3;
+}
+
+void I2CRam::stamp()           // Called at Simulation Start
+{
+    TwiModule::stamp();
+    TwiModule::setMode( TWI_SLAVE );
+
+    for( int i=2; i<5; i++ )     // Initialize address pins
+        m_inPin[i]->changeCallBack( this );
 }
 
 void I2CRam::updateStep()
@@ -143,9 +143,7 @@ void I2CRam::readByte() // Write to RAM
         m_phase++;
         if( m_size > 256 ) m_addrPtr += m_rxReg;
         else               m_addrPtr  = m_rxReg;
-    }
-    else
-    {
+    }else{
         while( m_addrPtr >= m_size ) m_addrPtr -= m_size;
         m_ram[ m_addrPtr ] = m_rxReg;
         m_addrPtr++;
@@ -166,7 +164,6 @@ void I2CRam::writeByte() // Read from RAM
     while( m_addrPtr >= m_size ) m_addrPtr -= m_size;
 
     m_txReg = m_ram[ m_addrPtr ];
-
     if( ++m_addrPtr >= m_size ) m_addrPtr = 0;
 
     TwiModule::writeByte();
@@ -180,17 +177,8 @@ void I2CRam::setMem( QVector<int> m )
 
 QVector<int> I2CRam::mem()
 {
-    if( !m_persistent )
-    {
-        QVector<int> null;
-        return null;
-    }
+    if( !m_persistent ) { QVector<int> vNull; return vNull; }
     return m_ram;
-}
-
-int I2CRam::rSize()
-{
-    return m_size;
 }
 
 void I2CRam::setRSize( int size )
@@ -203,16 +191,6 @@ void I2CRam::setRSize( int size )
     if( m_memTable ) m_memTable->setData( &m_ram );
 }
 
-bool I2CRam::persistent()
-{
-    return m_persistent;
-}
-
-void I2CRam::setPersistent( bool p )
-{
-    m_persistent = p;
-}
-
 void I2CRam::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();
@@ -223,8 +201,7 @@ void I2CRam::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         contextMenu( event, menu );
         Component::contextMenu( event, menu );
         menu->deleteLater();
-    }
-}
+}   }
 
 void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -241,16 +218,6 @@ void I2CRam::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
                       this, SLOT(showTable()), Qt::UniqueConnection );
 
     menu->addSeparator();
-}
-
-void I2CRam::loadData()
-{
-    MemData::loadData( &m_ram );
-}
-
-void I2CRam::saveData()
-{
-    MemData::saveData( &m_ram );
 }
 
 void I2CRam::showTable()

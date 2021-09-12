@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT MemData
         MemData();
         ~MemData();
 
-        static void loadData( QVector<int>* toData , bool resize=false, int bits=8 );
+        static void loadData( QVector<int>* toData, bool resize=false, int bits=8 );
         static void saveData( QVector<int>* data, int bits=8 );
 
     public slots:

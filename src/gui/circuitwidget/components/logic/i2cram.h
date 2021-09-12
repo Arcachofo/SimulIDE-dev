@@ -59,16 +59,15 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
         uint cCode() { return m_address; }
         void setCcode( uint code ) { m_address = code; }
         
-        int rSize();
+        int rSize() { return m_size; }
         void setRSize( int size );
 
-        bool persistent();
-        void setPersistent( bool p );
-
+        bool persistent() { return m_persistent; }
+        void setPersistent( bool p ) { m_persistent = p; }
 
     public slots:
-        void loadData();
-        void saveData();
+        void loadData() { MemData::loadData( &m_ram ); }
+        void saveData() { MemData::saveData( &m_ram ); }
         void showTable();
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
 
@@ -79,7 +78,6 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
         QVector<int> m_ram;
         int m_size;
         int m_addrPtr;
-        //int m_cCode;
         int m_phase;
 
         bool m_persistent;
