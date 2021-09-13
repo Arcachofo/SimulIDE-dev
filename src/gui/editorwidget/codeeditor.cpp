@@ -166,6 +166,13 @@ void CodeEditor::setFile( const QString filePath )
     {
         m_hlighter->readSintaxFile( m_sintaxPath + "makef.sintax" );
     }
+    else if( extension == ".hex"
+         ||  extension == ".ihx" )
+    {
+        m_font.setLetterSpacing( QFont::PercentageSpacing, 110 );
+        setFont( m_font );
+        m_hlighter->readSintaxFile( m_sintaxPath + "hex.sintax" );
+    }
     else if( extension == ".sac" )
     {
         //m_compiler = new B16AsmDebugger( this, m_outPane );
@@ -251,7 +258,7 @@ void CodeEditor::readSettings() // Static
 
     m_font.setFamily("Ubuntu Mono");
     m_font.setWeight( 50 );
-    m_font.setFixedPitch( true );
+    //m_font.setFixedPitch( true );
     m_font.setPixelSize( m_fontSize );
 
     QSettings* settings = MainWindow::self()->settings();
