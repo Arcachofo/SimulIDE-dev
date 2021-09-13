@@ -123,7 +123,7 @@ void eBJT::voltChanged()
     if( (fabs(voltBC-m_voltBC) < .01) && (fabs(voltBE-m_voltBE) < .01) )
     { m_steps = 0; return; }
 
-    double gmin = 0;//1e-15;
+    double gmin = 1e-15;
     if( ++m_steps > 100 )
     {
         gmin = exp(-9*log(10)*(1-m_steps/300.));
@@ -134,35 +134,29 @@ void eBJT::voltChanged()
     voltBE = pnp*limitStep( pnp*voltBE, pnp*m_voltBE );
     m_voltBE = voltBE;
 
-    double expBC = exp( pnp*voltBC/m_vt );
-    double expBE = exp( pnp*voltBE/m_vt );
+    double pcoef = pnp/m_vt;
+    double expBC = exp( voltBC*pcoef);
+    double expBE = exp( voltBE*pcoef );
 
-    double ie = pnp*m_rsCurr*(-(expBE-1) + m_rgain*(expBC-1) );
-    double ic = pnp*m_rsCurr*( m_fgain*(expBE-1) - (expBC-1) );
+    double ie = pnp*m_rsCurr*(-(expBE-1)/m_fgain + (expBC-1) );
+    double ic = pnp*m_rsCurr*( (expBE-1) - (expBC-1)/m_rgain );
     m_baseCurr = -(ie+ic);
 
-    double Gee = -m_rsCurr/m_vt*expBE;
-    double Gcc = -m_rsCurr/m_vt*expBC;
+    double Gee = -m_rsCurr/m_vt*expBE/m_fgain-gmin;
+    double Gec =  m_rsCurr/m_vt*expBC;
     double Gce = -Gee*m_fgain;
-    double Gec = -Gcc*m_rgain;
+    double Gcc = -Gec/m_rgain-gmin;
 
-    m_BC->stampAdmitance( -Gec-Gcc + gmin );
-    m_CB->stampAdmitance( -Gec-Gce + gmin );
-
-    m_BE->stampAdmitance( -Gee-Gce + gmin );
-    m_EB->stampAdmitance( -Gee-Gcc + gmin );
-
+    m_BC->stampAdmitance( -Gec-Gcc );
+    m_CB->stampAdmitance( -Gce-Gcc  );
+    m_BE->stampAdmitance( -Gee-Gce );
+    m_EB->stampAdmitance( -Gee-Gec );
     m_CE->stampAdmitance( Gce );
-    m_EC->stampAdmitance( Gcc );
+    m_EC->stampAdmitance( Gec );
 
-    double GcevBE = Gce*voltBE;
-    double GcevBC = Gec*voltBC;
-    double GeevBE = Gee*voltBE;
-    double GccvBC = Gcc*voltBC;
-
-    BASE->stampCurrent( ie + ic - GcevBE-GcevBC - GeevBE-GccvBC );
-    COLL->stampCurrent( -ic + GcevBE + GcevBC );
-    EMIT->stampCurrent( -ie + GeevBE + GccvBC );
+    BASE->stampCurrent( -m_baseCurr - (Gec+Gcc)*voltBC - (Gee+Gce)*voltBE );
+    COLL->stampCurrent( -ic + Gce*voltBE + Gcc*voltBC);
+    EMIT->stampCurrent( -ie + Gee*voltBE + Gec*voltBC );
 }
 
 double eBJT::limitStep( double vnew, double vold )
