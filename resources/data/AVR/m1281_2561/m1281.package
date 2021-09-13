@@ -23,12 +23,12 @@
     <pin side="bottom" pos="3" type="IO" id="PG3" label="G3"/>
     <pin side="bottom" pos="4" type="IO" id="PG4" label="G4"/>
     
-    <pin side="bottom" pos="5" type="reset"  id="RST"   label="Rst"/>
-    <pin side="bottom" pos="6" type="unused" id="VCC1"  label="Vcc"/>
-    <pin side="bottom" pos="6" type="unused" id="VCC1"  label="Vcc"/>
-    <pin side="bottom" pos="7" type="unused" id="GND1"  label="Gnd"/>
-    <pin side="bottom" pos="8" type="unused" id="XTAL2" label="XTAL2"/>
-    <pin side="bottom" pos="9" type="unused" id="XTAL1" label="XTAL1"/>
+    <pin side="bottom" pos="5" type="rst" id="RST"   label="Rst"/>
+    <pin side="bottom" pos="6" type="nc" id="VCC1"  label="Vcc"/>
+    <pin side="bottom" pos="6" type="nc" id="VCC1"  label="Vcc"/>
+    <pin side="bottom" pos="7" type="nc" id="GND1"  label="Gnd"/>
+    <pin side="bottom" pos="8" type="nc" id="XTAL2" label="XTAL2"/>
+    <pin side="bottom" pos="9" type="nc" id="XTAL1" label="XTAL1"/>
     
     <pin side="bottom" pos="10" type="IO" id="PD0" label="D0"/>
     <pin side="bottom" pos="11" type="IO" id="PD1" label="D1"/>
@@ -60,8 +60,8 @@
     <pin side="top" pos="16" type="IO" id="PA1"  label="A1"/>
     <pin side="top" pos="15" type="IO" id="PA0"  label="A0"/>
     
-    <pin side="top" pos="14" type="unused" id="VCC2" label="Vcc"/>
-    <pin side="top" pos="13" type="unused" id="GND2" label="Gnd"/>
+    <pin side="top" pos="14" type="nc" id="VCC2" label="Vcc"/>
+    <pin side="top" pos="13" type="nc" id="GND2" label="Gnd"/>
     
     <pin side="top" pos="12" type="IO"  id="PF7"  label="F7"/>
     <pin side="top" pos="11" type="IO"  id="PF6"  label="F6"/>
@@ -71,10 +71,10 @@
     <pin side="top" pos="7"  type="IO"  id="PF2"  label="F2"/>
     <pin side="top" pos="6"  type="IO"  id="PF1"  label="F1"/>
     <pin side="top" pos="5"  type="IO"  id="PF0"  label="F0"/>
-    <pin side="top" pos="4"  type="IO"  id="PV1" label="Aref"/>
+    <pin side="top" pos="4"  type="IO"  id="PV1"  label="Aref"/>
     
-    <pin side="top" pos="3"  type="unused" id="GND3"  label="Gnd"/>
+    <pin side="top" pos="3"  type="nc"  id="GND3" label="Gnd"/>
     
-    <pin side="top" pos="2"  type="IO"  id="PV0" label="Avcc"/>
+    <pin side="top" pos="2"  type="IO"  id="PV0"  label="Avcc"/>
     
 </package>

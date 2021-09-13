@@ -229,8 +229,8 @@ void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, i
 
     pin->setLabelText( label );
 
-    if     ( type == "inverted" ) pin->setInverted( true );
-    else if( type == "unused" )   pin->setUnused( true );
+    if     ( type == "inverted" || type == "inv" ) pin->setInverted( true );
+    else if( type == "unused" || type == "nc" )   pin->setUnused( true );
     else if( type == "null" )
     {
         pin->setVisible( false );

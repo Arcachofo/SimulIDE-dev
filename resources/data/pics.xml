@@ -2,20 +2,20 @@
 
 <itemlib>
     
-    <itemset category="PIC/10F" type="PIC">
+  <itemset category="PIC/10F" type="PIC">
     <item name="pic10f200"  package="pic/pic10f200"  data="pic/pic10f200"  device="pic10f200"  ></item>
     <item name="pic10f202"  package="pic/pic10f200"  data="pic/pic10f200"  device="pic10f202"  ></item>
     <item name="pic10f204"  package="pic/pic10f200"  data="pic/pic10f204"  device="pic10f204"  ></item>
     <item name="pic10f220"  package="pic/pic10f200"  data="pic/pic10f220"  device="pic10f220"  ></item>
     <item name="pic10f222"  package="pic/pic10f200"  data="pic/pic10f220"  device="pic10f222"  ></item>
-    </itemset>
-    <itemset category="PIC/12C" type="PIC">
+  </itemset>
+  <itemset category="PIC/12C" type="PIC">
     <item name="pic12c508"  package="pic/pic12f629"  data="pic/pic12c508"  device="pic12c508"  ></item>
     <item name="pic12c509"  package="pic/pic12f629"  data="pic/pic12c508"  device="pic12c509"  ></item>
     <item name="pic12ce518" package="pic/pic12f629"  data="pic/pic12c508"  device="pic12ce518" ></item>
     <item name="pic12ce519" package="pic/pic12f629"  data="pic/pic12c508"  device="pic12ce519" ></item>
-    </itemset>
-    <itemset category="PIC/12F" type="PIC">
+  </itemset>
+  <itemset category="PIC/12F" type="PIC">
     <item name="pic12f508"  package="pic/pic12f629"  data="pic/pic10f200"  device="pic12f508"  ></item>
     <item name="pic12f509"  package="pic/pic12f629"  data="pic/pic10f200"  device="pic12f509"  ></item>
     <item name="pic12f510"  package="pic/pic12f629"  data="pic/pic12f510"  device="pic12f510"  ></item>
@@ -24,7 +24,7 @@
     <item name="pic12f683"  package="pic/pic12f629"  data="pic/pic12f683"  device="pic12f683"  ></item>
     <item name="pic12f1822" package="pic/pic12f1822" data="pic/pic12f1822" device="pic12f1822" ></item>
     <item name="pic12f1840" package="pic/pic12f1822" data="pic/pic12f1840" device="pic12f1840" ></item>
-    </itemset>
+  </itemset>
     <itemset category="PIC/16C" type="PIC">
     <item name="pic16c54"   package="pic/pic16c54"   data="pic/pic16c54"   device="pic16c54"   ></item>
     <item name="pic16c56"   package="pic/pic16c54"   data="pic/pic16c54"   device="pic16c56"   ></item>
@@ -45,8 +45,8 @@
     <item name="pic16cr84"  package="pic/pic16f84"   data="pic/pic16cr83"  device="pic16cr84"  ></item>
     <item name="pic16c712"  package="pic/pic16f84"   data="pic/pic16c712"  device="pic16c712"  ></item>
     <item name="pic16c716"  package="pic/pic16f84"   data="pic/pic16c712"  device="pic16c716"  ></item>
-    </itemset>
-    <itemset category="PIC/16F" type="PIC">
+  </itemset>
+  <itemset category="PIC/16F" type="PIC">
     <item name="pic16f73"   package="pic/pic16f876"  data="pic/pic16f73"   device="pic16f73"   ></item>
     <item name="pic16f74"   package="pic/pic16f877"  data="pic/pic16f74"   device="pic16f74"   ></item>
     <item name="pic16f83"   package="pic/pic16f84"   data="pic/pic16f83"   device="pic16f83"   ></item>
@@ -94,14 +94,14 @@
     <item name="pic16f1788" package="pic/pic16f886"  data="pic/pic16f1788" device="pic16f1788" ></item>
     <item name="pic16f1823" package="pic/pic12f1822" data="pic/pic16f1823" device="pic16f1823" ></item>
     <item name="pic16f1825" package="pic/pic16f1503" data="pic/pic16f1825" device="pic16f1825" ></item>
-    </itemset>
-    <itemset category="PIC/18C" type="PIC">
+  </itemset>
+  <itemset category="PIC/18C" type="PIC">
     <item name="pic18c242"  package="pic/pic16f876"  data="pic/pic18c242"  device="pic18c242"  ></item>
     <item name="pic18c252"  package="pic/pic16f876"  data="pic/pic18c242"  device="pic18c252"  ></item>
     <item name="pic18c442"  package="pic/pic16f877"  data="pic/pic18c442"  device="pic18c442"  ></item>
     <item name="pic18c452"  package="pic/pic16f877"  data="pic/pic18c452"  device="pic18c452"  ></item>
-    </itemset>
-    <itemset category="PIC/18F" type="PIC">
+  </itemset>
+  <itemset category="PIC/18F" type="PIC">
     <item name="pic18f242"  package="pic/pic18f242"  data="pic/pic18f242"  device="pic18f242"  ></item>
     <item name="pic18f248"  package="pic/pic18f242"  data="pic/pic18f248"  device="pic18f248"  ></item>
     <item name="pic18f252"  package="pic/pic18f242"  data="pic/pic18f242"  device="pic18f252"  ></item>
@@ -124,7 +124,7 @@
     <item name="pic18f4550" package="pic/pic18f4550" data="pic/pic18f4550" device="pic18f4550" ></item>
     <item name="pic18f14k22" package="pic/pic16f690"    data="pic/pic18f14k22" device="pic18f14k22" ></item>
     <item name="pic18f26k22" package="pic/pic18f26k22"  data="pic/pic18f26k22" device="pic18f26k22" ></item>
-    </itemset>
+  </itemset>
     
 </itemlib>
 

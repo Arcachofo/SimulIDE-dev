@@ -13,8 +13,7 @@
         <register name="PCLATH"  addr="0x0A" bits="" reset="0x00"/>
         <register name="INTCON"  addr="0x0B" bits="RBIF,INTF,T0IF,RBIE,INTE,T0IE,PEIE,GIE" reset="0x00"/>
     </regblock>
-    <datablock name="GPR0" start="0x0C"  end="0x4F"/>
-    <datablock name="RAM0" start="0x50" end="0x7F"/>
+    <datablock name="GPR0" start="0x0C" end="0x2F"/>
     
     <!-- BANK 1 -->
     <regblock name="SFR1" start="0x80" end="0x8B">
@@ -30,7 +29,6 @@
         <mapped                  addr="0x8A" mapto="0x0A"/><!-- PCLATCH -->
         <mapped                  addr="0x8B" mapto="0x0B"/><!-- INTCON -->
     </regblock>
-    <datablock name="GPR1" start="0x8C" end="0xCF" mapto="0x0C"/>
-    <datablock name="RAM1" start="0xD0" end="0xFF" mapto="0x50"/>
+    <datablock name="GPR1" start="0x8C" end="0xAF" mapto="0x0C"/>
     
 </parts>

@@ -5,9 +5,9 @@
     <pin side="left"  pos="1"  type="IO"  id="PB5"  label="B5"/>
     <pin side="left"  pos="2"  type="IO"  id="PB3"  label="B3"/>
     <pin side="left"  pos="3"  type="IO"  id="PB4"  label="B4"/>
-    <pin side="left"  pos="4"  type="unused" id="GND"  label="Gnd" />
+    <pin side="left"  pos="4"  type="nc"  id="GND"  label="Gnd" />
 
-    <pin side="right" pos="1"  type="unused" id="VCC"  label="Vcc" />
+    <pin side="right" pos="1"  type="nc"  id="VCC"  label="Vcc" />
     <pin side="right" pos="2"  type="IO"  id="PB2"  label="B2"/>
     <pin side="right" pos="3"  type="IO"  id="PB1"  label="B1"/>
     <pin side="right" pos="4"  type="IO"  id="PB0"  label="B0"/>

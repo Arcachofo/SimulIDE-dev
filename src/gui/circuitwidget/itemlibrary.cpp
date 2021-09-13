@@ -219,18 +219,18 @@ void ItemLibrary::loadItems()
     addItem( OrGate::libraryItem() );
     addItem( XorGate::libraryItem() );
     addItem( new LibraryItem( tr("Arithmetic"),tr("Logic"), "2to2.png","", 0l ) );
+    addItem( BinCounter::libraryItem() );
+    addItem( FullAdder::libraryItem() );
+    addItem( ShiftReg::libraryItem() );
+    addItem( Function::libraryItem() );
+    addItem( Scripted::libraryItem() );
+    addItem( new LibraryItem( tr("Memory"),tr("Logic"), "subc.png","", 0l ) );
     addItem( FlipFlopD::libraryItem() );
     addItem( FlipFlopRS::libraryItem() );
     addItem( FlipFlopJK::libraryItem() );
     addItem( LatchD::libraryItem() );
     addItem( Memory::libraryItem() );
     addItem( I2CRam::libraryItem() );
-    addItem( new LibraryItem( tr("Memory"),tr("Logic"), "subc.png","", 0l ) );
-    addItem( BinCounter::libraryItem() );
-    addItem( FullAdder::libraryItem() );
-    addItem( ShiftReg::libraryItem() );
-    addItem( Function::libraryItem() );
-    addItem( Scripted::libraryItem() );
     addItem( new LibraryItem( tr("Converters"),tr("Logic"), "1to2.png","", 0l ) );
     addItem( Mux::libraryItem() );
     addItem( Demux::libraryItem() );
@@ -253,7 +253,6 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( tr("Ternary"),tr("Logic"), "ic2.png","", NULL ) );
     addItem( new LibraryItem( tr("Tools"),tr("Logic"), "ic2.png","", NULL ) );
     addItem( SubCircuit::libraryItem() );
-
     // Other
     addItem( Image::libraryItem() );
     addItem( TextComponent::libraryItem() );

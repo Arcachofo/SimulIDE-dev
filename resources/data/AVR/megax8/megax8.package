@@ -9,8 +9,8 @@
     <pin side="left" pos="5"  type="IO" id="PD3"  label="D3"/>
     <pin side="left" pos="6"  type="IO" id="PD4"  label="D4"/>
 
-    <pin side="left" pos="7"  type="unused" id="VCC"  label="Vcc"/>
-    <pin side="left" pos="8"  type="unused" id="GND1" label="Gnd"/>
+    <pin side="left" pos="7"  type="nc" id="VCC"  label="Vcc"/>
+    <pin side="left" pos="8"  type="nc" id="GND1" label="Gnd"/>
 
     <pin side="left" pos="9"  type="IO" id="PB6"  label="B6"/>
     <pin side="left" pos="10" type="IO" id="PB7"  label="B7"/>
@@ -31,7 +31,7 @@
     <pin side="right"   pos="0"  type="IOnull" id="PV2" label=""/><!-- ADC6 -->
     <pin side="right"   pos="0"  type="IOnull" id="PV3" label=""/><!-- ADC7 -->
     
-    <pin side="right"   pos="7"  type="unused" id="GND2"  label="Gnd"/>
+    <pin side="right"   pos="7"  type="nc" id="GND2"  label="Gnd"/>
 
     <pin side="right"   pos="6"  type="IO"  id="PC0"  label="C0"/>
     <pin side="right"   pos="5"  type="IO"  id="PC1"  label="C1"/>
