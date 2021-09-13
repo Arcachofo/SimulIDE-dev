@@ -28,7 +28,7 @@
 #include "gputilsdebug.h"
 
 SdccDebugger::SdccDebugger( CodeEditor* parent, OutPanelText* outPane )
-              : cDebugger( parent, outPane )
+            : cDebugger( parent, outPane )
 {
     m_family = "pic14";
 }

@@ -384,9 +384,14 @@ void McuCreator::createPort( QDomElement* p )
             setInterrupt( &el, port ); // Pin change interrupt
             if( el.hasAttribute("mask") )
             {
-                uint16_t maskReg = mcu->getRegAddress( el.attribute( "mask" ) );
-                watchRegister( maskReg, R_WRITE, port, &McuPort::intMaskChanged, mcu );
-        }   }
+                QString mask = el.attribute( "mask" );
+                bool ok = false;
+                int bits = mask.toInt( &ok,2 );
+                if( ok ) port->setIntMask( bits );
+                else{
+                    uint16_t maskReg = mcu->getRegAddress( mask );
+                    watchRegister( maskReg, R_WRITE, port, &McuPort::setIntMask, mcu );
+        }   }   }
         node = node.nextSibling();
 }   }
 

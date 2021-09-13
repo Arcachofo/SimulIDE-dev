@@ -315,7 +315,7 @@ bool CircMatrix::luSolve( int n, int group )
     }
 
     int bi = i++;
-    for( /*i = bi*/; i < n; ++i )
+    for( /*i = bi*/; i<n; ++i )
     {
         int    row = ipvt[i];
         double tot = b[row];

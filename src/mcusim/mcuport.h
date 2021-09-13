@@ -51,7 +51,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
 
         void outChanged( uint8_t val );
         void dirChanged( uint8_t val );
-        void intMaskChanged( uint8_t val ) { m_intMask = val; }
+        void setIntMask( uint8_t val ) { m_intMask = val; }
 
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }

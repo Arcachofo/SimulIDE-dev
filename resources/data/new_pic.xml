@@ -4,6 +4,8 @@
     
     <itemset category="PICs" type="MCU">
         
+        <item name="p16F84"  package="new_mcu/PIC/p16F84/p16F84"   data="new_mcu/PIC/p16F84" ></item>
+        
         <item name="p16F627" package="new_mcu/PIC/p16F627/p16F627" data="new_mcu/PIC/p16F627"></item>
         <item name="p16F628" package="new_mcu/PIC/p16F627/p16F627" data="new_mcu/PIC/p16F628"></item>
         <item name="p16F648" package="new_mcu/PIC/p16F627/p16F627" data="new_mcu/PIC/p16F648"></item>

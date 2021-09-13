@@ -452,7 +452,10 @@ QString Mcu::loadHex( QString file, int WordSize )
                 data += (hiByte<<8);
                 checksum += hiByte;
             }
-            if( addr >= progSize ) return "Error: Program Memory End reached";
+            if( addr >= progSize )
+            {
+                return "Error: PGM End reached at line "+QString::number(nLine)+"\nTODO: Config word";
+            }
             m_eMcu.m_progMem[addr] = data;
             addr++;
         }
