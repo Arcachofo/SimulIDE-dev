@@ -113,12 +113,12 @@ void eBJT::stamp()
 
 void eBJT::voltChanged()
 {
+    double pnp = m_PNP ? -1 : 1;
     double voltC = COLL->getVolt();
     double voltE = EMIT->getVolt();
     double voltB = BASE->getVolt();
     double voltBC = voltB-voltC;
     double voltBE = voltB-voltE;
-    if( m_PNP ) { voltBC = -voltBC; voltBE = -voltBE; }
 
     if( (fabs(voltBC-m_voltBC) < .01) && (fabs(voltBE-m_voltBE) < .01) )
     { m_steps = 0; return; }
@@ -129,17 +129,16 @@ void eBJT::voltChanged()
         gmin = exp(-9*log(10)*(1-m_steps/300.));
         if (gmin > .1) gmin = .1;
     }
-    voltBC = limitStep( voltBC, m_voltBC );
+    voltBC = pnp*limitStep( pnp*voltBC, pnp*m_voltBC );
     m_voltBC = voltBC;
-    voltBE = limitStep( voltBE, m_voltBE );
+    voltBE = pnp*limitStep( pnp*voltBE, pnp*m_voltBE );
     m_voltBE = voltBE;
 
-    double expBC = exp( voltBC/m_vt );
-    double expBE = exp( voltBE/m_vt );
+    double expBC = exp( pnp*voltBC/m_vt );
+    double expBE = exp( pnp*voltBE/m_vt );
 
-    double ie = m_rsCurr*(-(expBE-1)+m_rgain*(expBC-1));
-    double ic = m_rsCurr*(m_fgain*(expBE-1)-(expBC-1));
-    if( m_PNP ) { ie = -ie; ic = -ic; }
+    double ie = pnp*m_rsCurr*(-(expBE-1) + m_rgain*(expBC-1) );
+    double ic = pnp*m_rsCurr*( m_fgain*(expBE-1) - (expBC-1) );
     m_baseCurr = -(ie+ic);
 
     double Gee = -m_rsCurr/m_vt*expBE;
