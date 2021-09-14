@@ -65,10 +65,13 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         virtual void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
 
         virtual void initialize() override;
-        virtual void updateStep() override;
         virtual void attach() override;
+        virtual void stamp() override;
+        virtual void updateStep() override;
+        virtual void voltChanged() override;
         virtual void remove() override;
 
+        void setResetPin( IoPin* pin );
         virtual void reset() override;
 
         virtual bool load( QString fileName ) override;
@@ -98,6 +101,8 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         //QString m_device;       // Name of device
 
         eMcu m_eMcu;
+
+        IoPin* m_resetPin;
 
         QList<Pin*> m_pinList;
 

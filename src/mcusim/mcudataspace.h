@@ -22,7 +22,6 @@
 
 #include <QHash>
 #include <vector>
-//#include <QDebug>
 
 #include "mcutypes.h"
 

@@ -45,6 +45,7 @@ eMcu::~eMcu()
 
 void eMcu::initialize()
 {
+    m_resetState = false;
     m_debugStep = false;
     m_cycle = 0;
     cyclesDone = 0;
@@ -58,6 +59,7 @@ void eMcu::initialize()
 
 void eMcu::runEvent()
 {
+    if( m_resetState ) return;
     if( m_debugging )
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
@@ -73,8 +75,7 @@ void eMcu::runEvent()
 void eMcu::stepCpu()
 {
     uint32_t pc = cpu->PC;
-    //if( cyclesDone > 1 ) cyclesDone -= 1;
-    //else
+
     if( pc < m_flashSize )
     {
         cpu->runDecoder();              // Run Decoder
@@ -82,6 +83,12 @@ void eMcu::stepCpu()
         m_interrupts.runInterrupts();     // Run Interrupts
     }
     m_cycle += cyclesDone;
+}
+
+void eMcu::cpuReset( bool reset )
+{
+    if( reset ) initialize();
+    m_resetState = reset;
 }
 
 int eMcu::status() { return getRamValue( m_sregAddr ); }

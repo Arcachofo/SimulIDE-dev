@@ -70,6 +70,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         //-------------------------------------------------------------
         // End Overrides of McuInterface-------------------------------
 
+        void cpuReset( bool reset );
+
         double freqMHz() { return m_freq; }
         void setFreq( double freq );
         uint64_t simCycPI() { return m_simCycPI; }  // Simulation cycles per instruction cycle
@@ -98,6 +100,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         std::vector<McuUsart*> m_usarts;
 
         McuWdt* m_wdt;
+
+        bool m_resetState;
 
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle

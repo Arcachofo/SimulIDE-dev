@@ -1,10 +1,5 @@
 <parts>
-  <port name="PORTA" pins="5" outreg="PORTA" inreg="PINA" dirreg="!TRISA"
-                   opencol="00010000">
-  </port>
-
-  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="!TRISB">
-    <interrupt name="PB_INT" mask="11110000"/>
+  <port name="PORTP" pins="4" outreg="GPIO" inreg="" dirreg="!TRISGPIO" >
   </port>
 
   <timer name="TIMER0" counter="TMR0" configregsA="OPTION">

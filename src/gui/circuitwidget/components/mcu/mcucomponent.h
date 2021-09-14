@@ -43,8 +43,6 @@ class MAINMODULE_EXPORT McuComponent : public McuBase
 
         McuComponent( QObject* parent, QString type, QString id );
         ~McuComponent();
-        
-// static McuComponent* self() { return m_pSelf; }
 
         virtual QList<propGroup_t> propGroups() override;
 

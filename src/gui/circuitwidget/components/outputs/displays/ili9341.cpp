@@ -22,7 +22,6 @@
 #include "connector.h"
 #include "simulator.h"
 
-
 Component* Ili9341::construct( QObject* parent, QString type, QString id )
 {
     return new Ili9341( parent, type, id );

@@ -73,6 +73,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_device = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
     m_name = m_device;
 
+    m_resetPin = NULL;
     m_mcuMonitor = NULL;
     m_autoLoad  = false;
 
@@ -224,6 +225,16 @@ void Mcu::attach()
         if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );
 }   }
 
+void Mcu::stamp()
+{
+    if( m_resetPin ) m_resetPin->changeCallBack( this );
+}
+
+void Mcu::voltChanged() // Reset Pin callBack
+{
+    m_eMcu.cpuReset( !m_resetPin->getInpState() );
+}
+
 void Mcu::remove()
 {
     for( Pin* pin : m_pinList ) pin->removeConnector();
@@ -232,9 +243,14 @@ void Mcu::remove()
     Component::remove();
 }
 
+void Mcu::setResetPin( IoPin* pin )
+{
+    m_resetPin = pin;
+}
+
 void Mcu::reset()
 {
-    m_eMcu.initialize();
+    m_eMcu.cpuReset( true );
 }
 
 void Mcu::slotLoad()
@@ -395,9 +411,13 @@ void Mcu::addPin( QString id, QString type, QString label,
                     pin->setLength( length );
                     pin->setLabelText( label );
                     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
-                    m_pinList.append( pin );
     }   }   }   }
-    if( !pin ) Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
+    else if( type == "rst" )
+    {
+        m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
+    }
+    if( pin ) m_pinList.append( pin );
+    else Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
 }
 
 QString Mcu::loadHex( QString file, int WordSize )
