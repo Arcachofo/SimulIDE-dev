@@ -23,7 +23,8 @@
 #include "itemlibrary.h"
 #include "hd44780_base.h"
 #include "e-element.h"
-#include "pin.h"
+
+class IoPin;
 
 class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
 {
@@ -42,15 +43,14 @@ class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
-        virtual void remove() override;
 
         void showPins( bool show );
 
     private:
-        Pin* m_pinRS;
-        Pin* m_pinRW;
-        Pin* m_pinEn;
-        std::vector<Pin*> m_dataPin;
+        IoPin* m_pinRS;
+        IoPin* m_pinRW;
+        IoPin* m_pinEn;
+        std::vector<IoPin*> m_dataPin;
 };
 
 #endif

@@ -17,9 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "hd44780.h"
 #include "connector.h"
 #include "simulator.h"
-#include "hd44780.h"
+#include "iopin.h"
 #include "utils.h"
 
 Component* Hd44780::construct( QObject* parent, QString type, QString id )
@@ -45,12 +46,12 @@ Hd44780::Hd44780( QObject* parent, QString type, QString id )
     
     int pinY = 8;//8*((33+m_imgHeight)/8);
 
-    m_pinRS = new Pin( 270, QPoint(16, pinY), id+"-PinRS", 0, this );
-    m_pinRW = new Pin( 270, QPoint(24, pinY), id+"-PinRW", 0, this );
-    m_pinEn = new Pin( 270, QPoint(32, pinY), id+"-PinEn", 0, this );
-    m_pinRS->setLabelText( " RS" );
-    m_pinRW->setLabelText( " RW" );
-    m_pinEn->setLabelText( " En" );
+    m_pinRS = new IoPin( 270, QPoint( 16, pinY ), id+"-PinRS", 0, this, input );
+    m_pinRW = new IoPin( 270, QPoint( 24, pinY ), id+"-PinRW", 0, this, input );
+    m_pinEn = new IoPin( 270, QPoint( 32, pinY ), id+"-PinEn", 0, this, input );
+    m_pinRS->setLabelText(" RS");
+    m_pinRW->setLabelText(" RW");
+    m_pinEn->setLabelText(" En");
 
     m_pin[0] = m_pinRS;
     m_pin[1] = m_pinRW;
@@ -60,11 +61,10 @@ Hd44780::Hd44780( QObject* parent, QString type, QString id )
     
     for( int i=0; i<8; i++ )
     {
-        m_dataPin[i] = new Pin( 270, QPoint( 40+i*8, pinY), id+"-dataPin"+QString::number(i) , 0, this );
+        m_dataPin[i] = new IoPin( 270, QPoint( 40+i*8, pinY), id+"-dataPin"+QString::number(i), 0, this, input );
         m_dataPin[i]->setLabelText( " D"+QString::number(i) );
         m_pin[i+3] = m_dataPin[i];
     }
-    
     Simulator::self()->addToUpdateList( this );
     
     initialize();
@@ -79,8 +79,7 @@ QList<propGroup_t> Hd44780::propGroups()
     return {mainGroup};
 }
 
-void Hd44780::updateStep() {
-    update(); }
+void Hd44780::updateStep() { update(); }
 
 void Hd44780::initialize() { Hd44780_Base::init(); }
 
@@ -91,7 +90,7 @@ void Hd44780::stamp()
 
 void Hd44780::voltChanged()             // Called when clock Pin changes 
 {
-    if( m_pinEn->getVolt()>2.5 )                      // Clk Pin is High
+    if( m_pinEn->getInpState() )                      // Clk Pin is High
     {
         m_lastClock = true;
         return; 
@@ -107,7 +106,7 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
         m_input = 0;
         
         for( int pin=0; pin<8; pin++ )
-            if( m_dataPin[pin]->getVolt()>2.5 )
+            if( m_dataPin[pin]->getInpState() )
                 m_input += pow( 2, pin );
     }
     else                                                   // 4 bit mode
@@ -117,7 +116,7 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
             m_input = 0;
             
             for( int pin=4; pin<8; pin++ )
-                if( m_dataPin[pin]->getVolt()>2.5 )
+                if( m_dataPin[pin]->getInpState() )
                     m_input += pow( 2, pin );
                     
             m_nibble = 1;
@@ -126,14 +125,14 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
         else                                          // Read low nibble
         {
             for( int pin=4; pin<8; pin++ )
-                if( m_dataPin[pin]->getVolt()>2.5 )
+                if( m_dataPin[pin]->getInpState() )
                     m_input += pow( 2, (pin-4) );
                     
             m_nibble = 0;
         }
     }
     //Get RS state: data or command
-    if( m_pinRS->getVolt() > 2.5 ) writeData( m_input );
+    if( m_pinRS->getInpState() ) writeData( m_input );
     else                         proccessCommand( m_input );
 }
 
@@ -146,11 +145,5 @@ void Hd44780::showPins( bool show )
     for( int i=0; i<8; i++ ) m_dataPin[i]->setVisible( show );
 }
 
-void Hd44780::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-
-    Component::remove();
-}
 #include "moc_hd44780.cpp"
 
