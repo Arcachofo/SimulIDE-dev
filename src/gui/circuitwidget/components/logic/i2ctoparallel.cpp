@@ -62,8 +62,11 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     m_inPin[1]->setPinMode( open_col );
     TwiModule::setSclPin( m_inPin[1] );
 
-    for( int i=0; i<8; ++i ) m_outPin[i]->setPinMode( open_col );
-
+    for( int i=0; i<8; ++i )
+    {
+        m_outPin[i]->setPinMode( open_col );
+        m_outPin[i]->setPullup( true );
+    }
     m_address = 0b01010000; // 0x50, 80
 }
 I2CToParallel::~I2CToParallel(){}
