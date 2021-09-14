@@ -441,13 +441,10 @@ QVector<int> McuComponent::eeprom()
 
 void McuComponent::loadData()
 {
-    bool resize = false;
-   //if( !m_processor->getLoadStatus() ) resize = true; // No eeprom initialized yet
-
    QVector<int>* eeprom = m_processor->eeprom();
-   MemData::loadData( eeprom, resize );
+   MemData::loadData( eeprom, false );
    m_processor->setEeprom( eeprom );
-   if( m_mcuMonitor ) m_mcuMonitor->tabChanged( 2 );
+   if( m_mcuMonitor ) m_mcuMonitor->tabChanged( 1 );
 }
 
 void McuComponent::saveData()

@@ -17,7 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-
 #include <QTranslator>
 
 #include "memdata.h"
@@ -27,18 +26,17 @@
 #include "circuit.h"
 #include "utils.h"
 
-
 MemData::MemData()
 {
     m_memTable = NULL;
 }
 MemData::~MemData()
 {
-    if( m_memTable )
-    {
-        m_memTable->setParent( NULL );
-        m_memTable->deleteLater();
-    }   }
+    if( !m_memTable ) return;
+
+    m_memTable->setParent( NULL );
+    m_memTable->deleteLater();
+}
 
 void MemData::showTable( int dataSize, int wordBytes )
 {
@@ -51,83 +49,183 @@ void MemData::showTable( int dataSize, int wordBytes )
     m_memTable->show();
 }
 
-void MemData::loadData( QVector<int>* toData, bool resize, int bits )
+bool MemData::loadData( QVector<int>* toData, bool resize, int bits )
 {
-     Simulator::self()->pauseSim();
+    Simulator::self()->pauseSim();
 
     QString dir = changeExt( Circuit::self()->getFilePath(), ".data" );
-    QString fileName = QFileDialog::getOpenFileName( 0l,
+    QString fileName = QFileDialog::getOpenFileName( NULL,
                                                     "MemData::loadData", dir,
                        QCoreApplication::translate( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
 
-    if( fileName.isEmpty() ) return; // User cancels loading
+    if( fileName.isEmpty() ) return false; // User cancels loading
 
     if( resize ) toData->resize( 1 );
-    int addr = 0;
-    int ramEnd = toData->size()-1;
 
-    if( fileName.endsWith(".data") )
-    {
-        QStringList lines = fileToStringList( fileName, "MemData::loadData" );
+    QString ext = getFileExt( fileName );
 
-        for( QString line : lines )
-        {
-            line = line.replace("\t", "").replace(" ", "");
-            if( line.isEmpty() ) continue;
-
-            QStringList words = line.split( "," );
-            words.removeAll(QString(""));
-
-            while( !words.isEmpty() )
-            {
-                QString sdata = words.takeFirst();
-                bool ok = false;
-                int data = sdata.toInt( &ok, 10 );
-                if( !ok ) continue;
-
-                if( resize )
-                {
-                    ramEnd++;
-                    toData->resize( ramEnd+1 );
-                }
-                if( addr > ramEnd ) break;
-                toData->replace( addr, data );
-                addr++;
-            }
-            if( !words.isEmpty() && ( addr > ramEnd ) )
-            {
-                qDebug() << "\nMemData::loadData: Data doesn't fit in Memory"<<ramEnd<<"\n";
-                break;
-    }   }   }
-    else                                 // Binary Format
-    {
-        int bytes = (bits+7)/8;
-
-        QByteArray ba = fileToByteArray( fileName, "MemData::loadData" );
-        int memSize = ba.size()/bytes;
-
-        if( resize )
-        {
-            ramEnd = memSize-1;
-            toData->resize( memSize );
-        }
-        for( int i=0; i<memSize; i++ )
-        {
-            if( i > ramEnd )
-            {
-                qDebug() << "\nMemData::loadData:"<<memSize<<"Data doesn't fit in Memory"<<ramEnd<<"\n";
-                break;
-            }
-            int data = 0;
-            for( int by=0; by<bytes; by++ )  // Join bytes little-endian
-            {
-                int val = ba.at( i*bytes+by );
-                if( by>0 ) val <<= 8*by;
-                data += val;
-            }
-            toData->replace( i, data );
-    }   }
+    bool ok = false;
+    if     ( ext == ".data" ) ok = loadDat( toData, fileName, resize );
+    else if( ext == ".hex"
+          || ext == ".ihx" )  ok = loadHex( toData, fileName, resize, bits ); // Intel Hex Format
+    else                      ok = loadBin( toData, fileName, resize, bits ); // Binary Format
     Simulator::self()->resumeSim();
+
+    return ok;
+}
+
+bool MemData::loadDat( QVector<int>* toData, QString file, bool resize )
+{
+    QStringList lines = fileToStringList( file, "MemData::loadTxt" );
+
+    int addr = 0;
+    int dataEnd = toData->size()-1;
+
+    for( QString line : lines )
+    {
+        line = line.replace("\t", "").replace(" ", "");
+        if( line.isEmpty() ) continue;
+
+        QStringList words = line.split( "," );
+        words.removeAll(QString(""));
+
+        while( !words.isEmpty() )
+        {
+            QString sdata = words.takeFirst();
+            bool ok = false;
+            int data = sdata.toInt( &ok, 10 );
+            if( !ok ) continue;
+
+            if( resize ){
+                dataEnd++;
+                toData->resize( dataEnd+1 );
+            }
+            if( addr > dataEnd ) break;
+            toData->replace( addr, data );
+            addr++;
+        }
+        if( !words.isEmpty() && ( addr > dataEnd ) )
+        {
+            qDebug() << "\nMemData::loadDat: Data doesn't fit in Memory"<<dataEnd<<"\n";
+            return false;
+    }   }
+    return true;
+}
+
+bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits )
+{
+    QStringList lineList = fileToStringList( file, "MemData::loadHex" );
+
+    int nLine = 0;
+    int addr;
+    int nBytes;
+    int type;
+    int checksum;
+    int hiByte;
+    uint16_t data;
+    int dataEnd = toData->size()-1;
+    int WordSize = bits/8;
+
+    bool ok;
+
+    for( QString line : lineList )
+    {
+        checksum = 0;
+        line = line.remove( " " );
+        if( line.isEmpty() ) continue;
+
+        if( !(line.left(1) == ":") ){
+            qDebug() << "Error: Wrong Start code at line "+QString::number(nLine);
+            return false;
+        }
+        line = line.remove( 0, 1 );
+
+        nBytes = line.left( 2 ).toInt( &ok, 16 );
+        int lineSize = 2+4+2+nBytes*2+2;
+        if( line.size() != lineSize ){
+            qDebug() << "Error: Wrong line size at line "+QString::number(nLine);
+            return false;
+        }
+        checksum += nBytes;
+
+        addr = line.mid( 2, 4 ).toInt( &ok, 16 );
+        addr /= WordSize;
+        checksum += line.mid( 2, 2 ).toInt( &ok, 16 );
+        checksum += line.mid( 4, 2 ).toInt( &ok, 16 );
+
+        type = line.mid( 6, 2 ).toInt( &ok, 16 );
+        if     ( type == 1 ) return true; // Reached End Of File
+        else if( type != 0 )
+        {
+            qDebug() <<"Warning: Not supported Record type:"<<type<<"at line "+QString::number(nLine);
+            continue;
+        }
+        checksum += type;
+
+        int i;
+        for( i=8; i<8+nBytes*2; i+=2*WordSize )
+        {
+            data = line.mid( i, 2 ).toInt( &ok, 16 );
+            checksum += data;
+
+            if( WordSize == 2 ){
+                hiByte = line.mid( i+2, 2 ).toInt( &ok, 16 );
+                data += (hiByte<<8);
+                checksum += hiByte;
+            }
+            if( resize ){
+                dataEnd++;
+                toData->resize( dataEnd+1 );
+            }
+            if( addr > dataEnd ){
+                qDebug() << "Warning: PGM End reached at Line"+QString::number(nLine)
+                         <<"\nAddress:"<<addr<<"is > PMG End:"<<dataEnd
+                         <<"\nTODO: Config word ??";
+                return true;
+            }
+            toData->replace( addr, data );
+            addr++;
+        }
+        checksum += line.mid( i, 2 ).toInt( &ok, 16 );
+        if( checksum & 0xFF ){
+            qDebug() << "Error: CheckSum Error at line "+QString::number(nLine);
+            return false;
+        }
+        nLine++;
+    }
+    qDebug() << "Error: No End Of File reached";
+    return false;
+}
+
+bool MemData::loadBin( QVector<int>* toData, QString fileName, bool resize, int bits )
+{
+    int bytes = (bits+7)/8;
+    int dataEnd = toData->size()-1;
+
+    QByteArray ba = fileToByteArray( fileName, "MemData::loadData" );
+    int memSize = ba.size()/bytes;
+
+    if( resize )
+    {
+        dataEnd = memSize-1;
+        toData->resize( memSize );
+    }
+    for( int i=0; i<memSize; i++ )
+    {
+        if( i > dataEnd ){
+            qDebug() << "\nMemData::loadBin: Data doesn't fit in Memory"<<dataEnd<<"\n";
+            return false;
+        }
+        int data = 0;
+        for( int by=0; by<bytes; by++ )  // Join bytes little-endian
+        {
+            int val = ba.at( i*bytes+by );
+            if( by>0 ) val <<= 8*by;
+            data += val;
+        }
+        toData->replace( i, data );
+    }
+    return true;
 }
 
 void MemData::saveData( QVector<int>* data, int bits )
@@ -136,7 +234,7 @@ void MemData::saveData( QVector<int>* data, int bits )
 
     QString dir = changeExt( Circuit::self()->getFilePath(), ".data" );
 
-    QString fileName = QFileDialog::getSaveFileName( 0l,
+    QString fileName = QFileDialog::getSaveFileName( NULL,
                        QCoreApplication::translate( "MemData", "Save Data" ), dir,
                        QCoreApplication::translate( "MemData", "All files (*.*);;.data (*.data);;.bin (*.bin)"));
 
@@ -160,10 +258,9 @@ void MemData::saveData( QVector<int>* data, int bits )
         }
         if( !outFile.open( QFile::WriteOnly | QFile::Text ) )
         {
-              QMessageBox::warning(0l, "MemData::saveData",
-              QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
-        }
-        else{
+             QMessageBox::warning(NULL, "MemData::saveData",
+             QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
+        }else{
             QTextStream toFile( &outFile );
             toFile << output;
             outFile.close();
@@ -172,7 +269,7 @@ void MemData::saveData( QVector<int>* data, int bits )
     {
         if( !outFile.open( QFile::WriteOnly ) )
         {
-              QMessageBox::warning(0l, "MemData::saveData",
+              QMessageBox::warning(NULL, "MemData::saveData",
               QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
         }else{
             for( int val : *data ){
@@ -185,4 +282,19 @@ void MemData::saveData( QVector<int>* data, int bits )
             outFile.close();
     }   }
     Simulator::self()->resumeSim();
+}
+
+void MemData::saveDat( QVector<int>* data, int bits )
+{
+
+}
+
+void MemData::saveHex( QVector<int>* data, int bits ) /// TODO
+{
+
+}
+
+void MemData::saveBin( QVector<int>* data, int bits )
+{
+
 }

@@ -78,7 +78,7 @@ class MAINMODULE_EXPORT Mcu : public McuBase
 
         virtual void addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle , int length=8);
-        QString loadHex( QString file, int WordSize );
+        //QString loadHex( QString file, int WordSize );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -88,6 +88,9 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         void slotReload();
         void slotOpenTerm( int num );
         void slotOpenMcuMonitor();
+
+        void loadEEPROM();
+        void saveEEPROM();
 
     protected:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );

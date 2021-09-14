@@ -28,14 +28,22 @@ class MAINMODULE_EXPORT MemData
         MemData();
         ~MemData();
 
-        static void loadData( QVector<int>* toData, bool resize=false, int bits=8 );
+        static bool loadData( QVector<int>* toData, bool resize=false, int bits=8 );
         static void saveData( QVector<int>* data, int bits=8 );
+
+        static bool loadDat( QVector<int>* toData, QString file, bool resize );
+        static bool loadHex( QVector<int>* toData, QString file, bool resize, int bits );
+        static bool loadBin( QVector<int>* toData, QString fileName, bool resize, int bits );
 
     public slots:
         virtual void showTable( int dataSize=256, int wordBytes=1 );
 
     protected:
         MemTable* m_memTable;
+
+        static void saveDat( QVector<int>* data, int bits );
+        static void saveHex( QVector<int>* data, int bits ); /// TODO
+        static void saveBin( QVector<int>* data, int bits );
 };
 
 #endif

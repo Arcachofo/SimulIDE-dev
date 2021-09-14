@@ -33,10 +33,10 @@
 #include "mainwindow.h"
 #include "componentselector.h"
 #include "mcumonitor.h"
+#include "memdata.h"
 #include "mcuuart.h"
 #include "simuapi_apppath.h"
 #include "utils.h"
-
 
 LibraryItem* Mcu::libraryItem()
 {
@@ -150,56 +150,6 @@ QList<propGroup_t> Mcu::propGroups()
     return {mainGroup};
 }
 
-QString Mcu::program() { return m_eMcu.getFileName(); }
-
-void Mcu::setProgram( QString pro )
-{
-    if( pro == "" ) return;
-    m_eMcu.m_firmware = pro;
-
-    QDir circuitDir;
-    if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
-    else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-    QString fileNameAbs = circuitDir.absoluteFilePath( m_eMcu.m_firmware );
-
-    if( QFileInfo::exists( fileNameAbs ) )
-    { load( m_eMcu.m_firmware ); }
-}
-
-QStringList Mcu::varList()
-{
-    return m_eMcu.getRamTable()->getVarSet();
-}
-
-void Mcu::setVarList( QStringList vl )
-{
-    m_eMcu.getRamTable()->loadVarSet( vl );
-}
-
-void Mcu::setEeprom( QVector<int> eep )
-{
-    if( eep.size() > 1 ) m_eMcu.setEeprom( &eep );
-}
-
-QVector<int> Mcu::eeprom()
-{
-    QVector<int> eeprom;
-    int size = m_eMcu.romSize();
-    if( size > 0 )
-    {
-        eeprom.resize( size );
-        bool empty = true;
-        for( int i=size-1; i>=0; --i )
-        {
-            uint8_t val = m_eMcu.getRomValue( i );
-            if( val < 0xFF ) empty = false;
-            if( empty ) continue;
-            eeprom[i] = val;
-    }   }
-
-    return eeprom;
-}
-
 void Mcu::initialize()
 {
     m_crashed = false;
@@ -235,6 +185,68 @@ void Mcu::voltChanged() // Reset Pin callBack
     m_eMcu.cpuReset( !m_resetPin->getInpState() );
 }
 
+QString Mcu::program() { return m_eMcu.getFileName(); }
+
+void Mcu::setProgram( QString pro )
+{
+    if( pro == "" ) return;
+    m_eMcu.m_firmware = pro;
+
+    QDir circuitDir;
+    if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
+    else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+    QString fileNameAbs = circuitDir.absoluteFilePath( m_eMcu.m_firmware );
+
+    if( QFileInfo::exists( fileNameAbs ) )
+    { load( m_eMcu.m_firmware ); }
+}
+
+QStringList Mcu::varList()
+{
+    return m_eMcu.getRamTable()->getVarSet();
+}
+
+void Mcu::setVarList( QStringList vl )
+{
+    m_eMcu.getRamTable()->loadVarSet( vl );
+}
+
+void Mcu::setEeprom( QVector<int> eep )
+{
+    if( eep.size() > 1 ) m_eMcu.setEeprom( &eep );
+}
+
+QVector<int> Mcu::eeprom()  // Used by property, stripped to last written value.
+{
+    QVector<int> eeprom;
+    int size = m_eMcu.romSize();
+    if( size > 0 )
+    {
+        eeprom.resize( size );
+        bool empty = true;
+        for( int i=size-1; i>=0; --i )
+        {
+            uint8_t val = m_eMcu.getRomValue( i );
+            if( val < 0xFF ) empty = false;
+            if( empty ) continue;
+            eeprom[i] = val;
+    }   }
+    return eeprom;
+}
+
+void Mcu::loadEEPROM()
+{
+   QVector<int>* eeprom = m_eMcu.eeprom();
+   MemData::loadData( eeprom, false );
+   m_eMcu.setEeprom( eeprom );
+   if( m_mcuMonitor ) m_mcuMonitor->tabChanged( 1 );
+}
+
+void Mcu::saveEEPROM()
+{
+    MemData::saveData( m_eMcu.eeprom() );
+}
+
 void Mcu::remove()
 {
     for( Pin* pin : m_pinList ) pin->removeConnector();
@@ -258,7 +270,7 @@ void Mcu::slotLoad()
     QDir dir( m_lastFirmDir );
     if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFilePath();
 
-    QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Firmware"), m_lastFirmDir,
+    QString fileName = QFileDialog::getOpenFileName( NULL, tr("Load Firmware"), m_lastFirmDir,
                        tr("All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)"));
 
     if( fileName.isEmpty() ) return; // User cancels loading
@@ -280,24 +292,29 @@ bool Mcu::load( QString fileName )
     QString fileNameAbs  = circuitDir.absoluteFilePath( fileName );
     QString cleanPathAbs = circuitDir.cleanPath( fileNameAbs );
 
+    if( !QFileInfo::exists( cleanPathAbs ) )
+    {
+        qDebug() << "Error: file doesn't exist:\n"<<cleanPathAbs<<"\n";
+        return false;
+    }
     if( Simulator::self()->simState() > SIM_STARTING )  CircuitWidget::self()->powerCircOff();
 
-    bool ok = false;
+    int size = m_eMcu.flashSize();
+    QVector<int> pgm( size );
 
-    QString msg = loadHex( cleanPathAbs, m_eMcu.m_wordSize );
-    if( msg.isEmpty() )
-    {
-        ok = true;
-        msg ="hex file succesfully loaded";
+    if( !MemData::loadHex( &pgm, cleanPathAbs, false, m_eMcu.m_wordSize*8 ) )
+        return false;
 
-        m_eMcu.m_firmware = circuitDir.relativeFilePath( fileName );
-        m_lastFirmDir = cleanPathAbs;
+    for( int i=0; i<size; ++i ) m_eMcu.setFlashValue( i, pgm.at(i) );
+    qDebug() << "\nFirmware succesfully loaded\n"<<cleanPathAbs<<"\n";
 
-        QSettings* settings = MainWindow::self()->settings();
-        settings->setValue( "lastFirmDir", circuitDir.relativeFilePath( fileName ) );
-    }
-    qDebug() << msg << "\n";
-    return ok;
+    m_eMcu.m_firmware = circuitDir.relativeFilePath( cleanPathAbs );
+    m_lastFirmDir = cleanPathAbs;
+
+    QSettings* settings = MainWindow::self()->settings();
+    settings->setValue( "lastFirmDir", circuitDir.relativeFilePath( fileName ) );
+
+    return true;
 }
 
 void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
@@ -338,13 +355,13 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     }
     connect( sm, SIGNAL(mapped(int)), this, SLOT(slotOpenTerm(int)) );
 
-    /*QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load EEPROM data") );
+    QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load EEPROM data") );
     connect( loadDaAction, SIGNAL(triggered()),
-                     this, SLOT(loadData()), Qt::UniqueConnection );
+                     this, SLOT(loadEEPROM()), Qt::UniqueConnection );
 
     QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data") );
     connect( saveDaAction, SIGNAL(triggered()),
-                     this, SLOT(saveData()), Qt::UniqueConnection );*/
+                     this, SLOT(saveEEPROM()), Qt::UniqueConnection );
 
     /*QAction* openSerial = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Port.") );
     connect( openSerial, SIGNAL(triggered()),
@@ -420,71 +437,19 @@ void Mcu::addPin( QString id, QString type, QString label,
     else Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
 }
 
-QString Mcu::loadHex( QString file, int WordSize )
+/*QString Mcu::loadHex( QString file, int WordSize )
 {
     qDebug() << m_device << " Loading hex file: \n" << file;
 
-    QStringList lineList = fileToStringList( file, "Mcu::loadHex" );
+    int error = MemData::loadData( &m_eMcu.m_progMem, false, WordSize*8 );
+    switch( error ) {
+        case 0:
 
-    int nLine = 0;
-    int addr;
-    int nBytes;
-    int type;
-    int checksum;
-    int hiByte;
-    uint16_t data;
-    int progSize = m_eMcu.m_progMem.size();
-    bool ok;
-
-    for( QString line : lineList )
-    {
-        checksum = 0;
-        line = line.remove( " " );
-        if( line.isEmpty() ) continue;
-
-        if( !(line.left(1) == ":") ) return "Error: Wrong Start code at line "+QString::number(nLine);
-        line = line.remove( 0, 1 );
-
-        nBytes = line.left( 2 ).toInt( &ok, 16 );
-        int lineSize = 2+4+2+nBytes*2+2;
-        if( line.size() != lineSize ) return "Error: Wrong line size at line "+QString::number(nLine);
-        checksum += nBytes;
-
-        addr = line.mid( 2, 4 ).toInt( &ok, 16 );
-        addr /= WordSize;
-        checksum += line.mid( 2, 2 ).toInt( &ok, 16 );
-        checksum += line.mid( 4, 2 ).toInt( &ok, 16 );
-
-        type = line.mid( 6, 2 ).toInt( &ok, 16 );
-        if     ( type == 1 ) return ""; // Reached End Of File
-        else if( type != 0 ) continue;  //return "Error: Not valid Record type at line "+QString::number(nLine);
-        checksum += type;
-
-        int i;
-        for( i=8; i<8+nBytes*2; i+=2*WordSize )
-        {
-            data = line.mid( i, 2 ).toInt( &ok, 16 );
-            checksum += data;
-
-            if( WordSize == 2 )
-            {
-                hiByte = line.mid( i+2, 2 ).toInt( &ok, 16 );
-                data += (hiByte<<8);
-                checksum += hiByte;
-            }
-            if( addr >= progSize )
-            {
-                return "Error: PGM End reached at line "+QString::number(nLine)+"\nTODO: Config word";
-            }
-            m_eMcu.m_progMem[addr] = data;
-            addr++;
-        }
-        checksum += line.mid( i, 2 ).toInt( &ok, 16 );
-        if( checksum & 0xFF ) return "Error: CheckSum Error at line "+QString::number(nLine);
-        nLine++;
+            break;
+        default:
+            break;
     }
-    return "Error: No End Of File reached";
-}
+}*/
 
 void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
