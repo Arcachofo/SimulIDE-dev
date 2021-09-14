@@ -70,6 +70,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual void toggleOutState() { IoPin::setOutState( !m_outState ); }
 
         void setStateZ( bool z );
+        virtual void setPullup( bool up );
 
         virtual void setInverted( bool inverted ) override;
 

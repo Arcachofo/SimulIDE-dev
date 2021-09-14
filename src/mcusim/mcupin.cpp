@@ -100,15 +100,13 @@ void McuPin::setDirection( bool out )
     if( !m_dirCtrl ) setPinMode( m_oldPinMode ); // Is someone is controlling us, just save Pin Mode
 }
 
-void McuPin::setPullup( bool up )
+/*void McuPin::setPullup( bool up )
 {
-    m_pullup = up;
-
     if( up ) m_vddAdmEx = 1/1e5; // Activate pullup
     else     m_vddAdmEx = 0;     // Deactivate pullup
 
     if( !m_isOut ) updtState();
-}
+}*/
 
 void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example
 {

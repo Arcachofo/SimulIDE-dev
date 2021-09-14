@@ -153,6 +153,14 @@ void IoPin::setStateZ( bool z )
         setPinMode( pm );
 }   }
 
+void IoPin::setPullup( bool up )
+{
+    if( up ) m_vddAdmEx = 1/1e5; // Activate pullup
+    else     m_vddAdmEx = 0;     // Deactivate pullup
+
+    updtState();
+}
+
 void IoPin::setImp( double imp )
 {
     m_imp = imp;
