@@ -26,7 +26,6 @@
 #include "e-node.h"
 #include "utils.h"
 
-
 Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, Pin* endpin )
          : Component( parent, type, id )
 {
@@ -36,15 +35,13 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
     m_isBus = false;
     m_freeLine = false;
 
-    if( startpin )
-    {
+    if( startpin ){
         m_startPin   =  startpin;
         m_startpinid = startpin->objectName();
         setPos( startpin->scenePos() );
         if( m_startPin->isBus() ) setIsBus( true );
     }
-    if( endpin )
-    {
+    if( endpin ){
         m_endPin   = endpin;
         m_endpinid = endpin->objectName();
         m_startPin->setConnector( this );
@@ -52,9 +49,7 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
         m_startPin->setConPin( m_endPin );
         m_endPin->setConPin( m_startPin );
         if( m_isBus ) m_endPin->setIsBus( true );
-    }
-    else
-    {
+    }else{
         m_endPin   = NULL;
         m_endpinid = "";
     }
@@ -216,9 +211,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
     {
         line = m_conLineList.first();
         diagonal = line->isDiagonal();
-        
         line->sSetP1( thisPoint.toPoint() );
-
         m_lastindex = 0;
 
         if( length > 1 )
@@ -229,9 +222,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
         else m_actLine = 0;
         
         if( diagonal ) { remNullLines(); return; }
-    }
-    else
-    {
+    }else{
         line = m_conLineList.last();
         diagonal = line->isDiagonal();
         
@@ -295,8 +286,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
                     preline->sSetP1( line->p1() );
                     remConLine( line  );
         }   }   }
-        else                                       // Update last corner
-        {
+        else{                                      // Update last corner
             point = line->p1();
 
             if     ( preline->dx() == 0 ) point.setY( line->p2().y() );
@@ -365,8 +355,7 @@ void Connector::closeCon( Pin* endpin, bool connect  )
     m_endPin   = endpin;
     m_endpinid = endpin->objectName();
 
-    if( connect )
-    {
+    if( connect ){
         QString enodid = "enode";
         enodid.append( m_id );
         enodid.remove( "Connector" );
@@ -383,17 +372,14 @@ void Connector::closeCon( Pin* endpin, bool connect  )
     m_startPin->setConnector( this );
     m_endPin->setConnector( this );
     
-    if( m_isBus )
-    {
+    if( m_isBus ){
         m_startPin->setIsBus( true );
         m_endPin->setIsBus( true );
     }
     m_startPin->setConPin( m_endPin );
     m_endPin->setConPin( m_startPin );
-
     updateConRoute( m_endPin, m_endPin->scenePos() );
 
-    remNullLines();
     for( ConnectorLine* line : m_conLineList ) line->setCursor( Qt::CrossCursor );
 }
 

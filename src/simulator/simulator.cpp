@@ -24,13 +24,13 @@
 #include "circuit.h"
 #include "matrixsolver.h"
 #include "updatable.h"
-#include "e-element.h"
 #include "outpaneltext.h"
 #include "mcucomponent.h"
 #include "mainwindow.h"
 #include "circuitwidget.h"
 #include "baseprocessor.h"
 #include "circmatrix.h"
+#include "e-element.h"
 
 Simulator* Simulator::m_pSelf = NULL;
 
@@ -138,7 +138,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 
 void Simulator::runCircuit()
 {
-    if( m_changedNode ) solveCircuit();  // Solving matrix here save events in updateStep()
+    if( m_changedNode ) solveCircuit(); // Solving matrix here save events in updateStep()
 
     simEvent_t* event = m_eventList.first;
     uint64_t   endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
@@ -169,20 +169,23 @@ void Simulator::runCircuit()
 void Simulator::solveCircuit()
 {
     if( m_changedNode ) solveMatrix();
-    while( m_nonLin )                  // Non Linear Components
+
+    m_converged = m_nonLin==NULL;
+    while( !m_converged )                  // Non Linear Components
     {
+        m_converged = true;
         while( m_nonLin ){
             m_nonLin->added = false;
             m_nonLin->voltChanged();
-            m_nonLin = m_nonLin->nextNonLin;
+            m_nonLin = m_nonLin->nextChanged;
         }
-        if( m_changedNode ){
-            solveMatrix();
-            m_NLstep++;
-        }
-        if( m_state < SIM_RUNNING ) break;
-        if( m_maxNlstp ) { if( m_NLstep >= m_maxNlstp ) { m_warning = 1; break; } }
+        if( m_changedNode ){ solveMatrix(); m_NLstep++; }
+        if( m_maxNlstp && (m_NLstep >= m_maxNlstp) )
+        { m_warning = 1; m_converged = true; break; } // Max iterations reached
+        if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
     }
+    if( !m_converged ) return; // Don't run linear until nonliear converged
+
     m_NLstep = 0;
     while( m_voltChanged )
     {
@@ -462,6 +465,11 @@ void Simulator::addToChangedFast( eElement* el )
 { el->nextChanged = m_voltChanged; m_voltChanged = el; }
 
 void Simulator::addToNoLinList( eElement* el )
-{ el->nextNonLin = m_nonLin; m_nonLin = el; }
+{
+    if( el->added ) return;
+    el->added = true;
+    el->nextChanged = m_nonLin;
+    m_nonLin = el;
+}
 
 #include "moc_simulator.cpp"

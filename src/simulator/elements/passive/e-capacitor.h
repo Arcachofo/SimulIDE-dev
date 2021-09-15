@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT eCapacitor : public eResistor
         virtual void initialize() override;
         virtual void runEvent() override;
 
-        double cap();
+        double cap() { return m_cap; }
         void setCap( double c );
 
     protected:

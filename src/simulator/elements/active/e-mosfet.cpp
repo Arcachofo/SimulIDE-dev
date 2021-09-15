@@ -24,7 +24,6 @@
 #include "simulator.h"
 #include "e-node.h"
 
-
 eMosfet::eMosfet( QString id )
        : eResistor( id )
 {
@@ -43,18 +42,14 @@ eMosfet::~eMosfet(){}
 void eMosfet::initialize()
 {
     eResistor::setRes( m_RDSon );
-    
-    m_accuracy = Simulator::self()->NLaccuracy();
 
+    m_step = 0;
     m_gateV = 0;
     m_lastCurrent = 0;
-    m_Vs = 0;
-    m_Sfollow = false;
-    m_firtStage = true;
-    
+
     m_kRDSon = m_RDSon*(10-m_threshold);
     m_Gth    = m_threshold-m_threshold/4;
-    //if( m_depletion ) m_Gth = -m_Gth;
+    m_accuracy = Simulator::self()->NLaccuracy();
 }
 
 void eMosfet::stamp()
@@ -77,12 +72,7 @@ void eMosfet::voltChanged()
     double Vg = m_ePin[2]->getVolt();
     double Vgs = Vg-Vs;
     double Vds = Vd-Vs;
-    
-    if(( m_Sfollow == false)&( fabs(Vs) > 1e-3 ))
-    {
-        if(( fabs(m_Vs) > 1e-3 )&( m_Vs != Vs )) m_Sfollow = true;
-        m_Vs = Vs;
-    }
+
     if( m_Pchannel )
     {
         Vgs = -Vgs;
@@ -93,7 +83,6 @@ void eMosfet::voltChanged()
     double gateV = Vgs - m_Gth;
     
     if( gateV < 0 ) gateV = 0;
-    //if( m_Sfollow ) gateV = (m_gateV*4 + gateV)/5;
 
     double admit = cero_doub;
     double current = 0;
@@ -103,83 +92,34 @@ void eMosfet::voltChanged()
     if( gateV > 0 )
     {
         admit = 1/m_RDSon;
-        
-        /*if( m_firtStage )
-        {
-            m_firtStage = false;
+        double satK = 1+Vds/100;
+        if( Vds > gateV ) Vds =gateV;
 
-            if( (gateV-m_gateV) < 0 ) DScurrent = -DScurrent;
-            current = m_lastCurrent+DScurrent;
-        }
-        else*/
-        {
-            double satK = 1+Vds/100;
-            //double maxCurrDS = Vds/m_resist;
-
-            if( Vds > gateV ) Vds =gateV;
-
-            DScurrent = (gateV*Vds-pow(Vds,2)/2)*satK/m_kRDSon;
-
-            //if( m_Sfollow ) DScurrent /= 2;
-            if( DScurrent > maxCurrDS ) DScurrent = maxCurrDS;
-            current = maxCurrDS-DScurrent;
-        }
+        DScurrent = (gateV*Vds-pow(Vds,2)/2)*satK/m_kRDSon;
+        if( DScurrent > maxCurrDS ) DScurrent = maxCurrDS;
+        current = maxCurrDS-DScurrent;
     }
     if( m_Pchannel ) current = -current;
     
-    if( admit != m_admit )
-    {
+    if( admit != m_admit ){
         eResistor::setAdmit( admit );
         eResistor::stamp();
     }
     m_gateV = gateV;
 
-    if( fabs(current-m_lastCurrent)<m_accuracy )            // Converged
-    {
-        //m_converged = true;
-        m_firtStage = true;
-        return;
-    }
+    if( fabs(current-m_lastCurrent)<m_accuracy ) return; // Converged
+    Simulator::self()->notCorverged();
+
     m_lastCurrent = current;
     m_ePin[0]->stampCurrent( current );
     m_ePin[1]->stampCurrent(-current );
 }
 
-bool eMosfet::pChannel()
-{ 
-    return m_Pchannel; 
-}
-
-void eMosfet::setPchannel( bool pc )
-{
-    m_Pchannel = pc;
-}
-
-bool eMosfet::depletion()
-{
-    return m_depletion;
-}
-
-void eMosfet::setDepletion( bool dep )
-{
-    m_depletion = dep;
-}
-        
-double eMosfet::RDSon()
-{ 
-    return m_RDSon;
-}
-        
 void eMosfet::setRDSon( double rdson )
 {
     if( rdson < cero_doub ) rdson = cero_doub;
     if( rdson > 1000 ) rdson = 1000;
     m_RDSon = rdson;
-}
-
-double eMosfet::threshold()
-{ 
-    return m_threshold; 
 }
 
 void eMosfet::setThreshold( double th )

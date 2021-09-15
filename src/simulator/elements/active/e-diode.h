@@ -36,7 +36,6 @@ class MAINMODULE_EXPORT eDiode : public eResistor
 
         virtual void stamp() override;
         virtual void initialize() override;
-
         virtual void voltChanged() override;
 
         virtual void   setRes( double resist );

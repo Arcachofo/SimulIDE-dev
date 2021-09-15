@@ -32,15 +32,15 @@ eDiode::~eDiode(){}
 
 void eDiode::stamp()
 {
-    if( m_ePin[0]->isConnected() )
+    eNode* node = m_ePin[0]->getEnode();
+    if( node )
     {
-        eNode* node = m_ePin[0]->getEnode();
         node->addToNoLinList( this );
         node->setSwitched( true );
     }
-    if( m_ePin[1]->isConnected() )
+    node = m_ePin[1]->getEnode();
+    if( node )
     {
-        eNode* node = m_ePin[1]->getEnode();
         node->addToNoLinList( this );
         node->setSwitched( true );
     }
@@ -54,7 +54,7 @@ void eDiode::initialize()
     m_voltPN  = 0;
     m_deltaV  = 0;
     m_current = 0;
-    m_lastCurrent   = 0;
+    m_lastCurrent = 0;
 }
 
 void eDiode::voltChanged()
@@ -84,8 +84,11 @@ void eDiode::voltChanged()
 
     double current = deltaV/m_resist;
     if( deltaR == high_imp ) current = 0;
-    if( current == m_lastCurrent )return;
+
+    if( current == m_lastCurrent ) return;
     m_lastCurrent = current;
+
+    Simulator::self()->notCorverged();
 
     m_ePin[0]->stampCurrent( current );
     m_ePin[1]->stampCurrent(-current );

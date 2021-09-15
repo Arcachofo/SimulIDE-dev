@@ -33,16 +33,16 @@ class MAINMODULE_EXPORT eMosfet : public eResistor
         virtual void initialize() override;
         virtual void voltChanged() override;
         
-        virtual bool pChannel();
-        virtual void setPchannel( bool pc );
+        virtual bool pChannel() { return m_Pchannel; }
+        virtual void setPchannel( bool pc ) { m_Pchannel = pc; }
         
-        virtual bool depletion();
-        virtual void setDepletion( bool dep );
+        virtual bool depletion() { return m_depletion; }
+        virtual void setDepletion( bool dep ) { m_depletion = dep; }
         
-        virtual double RDSon();
+        virtual double RDSon() { return m_RDSon; }
         virtual void  setRDSon( double rdson );
         
-        virtual double threshold();
+        virtual double threshold() { return m_threshold; }
         virtual void  setThreshold( double th );
         
     protected:
@@ -53,13 +53,9 @@ class MAINMODULE_EXPORT eMosfet : public eResistor
         double m_RDSon;
         double m_gateV;
         double m_Gth;
-        double m_Vs;
 
         bool m_Pchannel;
         bool m_depletion;
-        bool m_Sfollow;
-        //bool m_converged;
-        bool m_firtStage;
 };
 
 #endif

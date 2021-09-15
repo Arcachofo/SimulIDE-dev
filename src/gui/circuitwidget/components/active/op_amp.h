@@ -22,8 +22,8 @@
 #ifndef OPAMP_H
 #define OPAMP_H
 
-#include "e-element.h"
 #include "component.h"
+#include "e-element.h"
 
 class LibraryItem;
 class IoPin;
@@ -48,7 +48,6 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
         
         virtual QList<propGroup_t> propGroups() override;
 
-
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
@@ -71,15 +70,12 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
         bool switchPins() { return m_switchPins; }
         void setSwitchPins( bool s );
 
-
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     protected:
-        bool m_firstStep;
         bool m_powerPins;
         bool m_switchPins;
-        bool m_converged;
 
         double m_accuracy;
         double m_gain;

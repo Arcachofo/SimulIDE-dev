@@ -32,9 +32,7 @@ static const char* OpAmp_properties[] = {
 };
 
 Component* OpAmp::construct( QObject* parent, QString type, QString id )
-{
-        return new OpAmp( parent, type, id );
-}
+{ return new OpAmp( parent, type, id ); }
 
 LibraryItem* OpAmp::libraryItem()
 {
@@ -105,10 +103,11 @@ void OpAmp::initialize()
 {
     m_accuracy = Simulator::self()->NLaccuracy();
 
+    added = false;
+    m_step = 0;
     m_lastOut = 0;
     m_lastIn  = 0;
     m_k = 1e-6/m_gain;
-    m_firstStep = true;
 }
 
 void OpAmp::stamp()
@@ -129,38 +128,33 @@ void OpAmp::voltChanged() // Called when any pin node change volt
         m_voltNeg = m_voltNegDef;
     }
     double vd = m_inputP->getVolt()-m_inputN->getVolt();
-    if( m_firstStep && fabs(m_lastIn-vd) < m_accuracy )
-    {
-        m_converged = true;
-        m_firstStep = true;
-        return;
-    }
+
+    if( (m_step==0) && fabs(m_lastIn-vd) < m_accuracy )
+    { m_step = 0; return; }         // Converged
+
     double out = vd * m_gain;
     if     ( out > m_voltPos ) out = m_voltPos;
     else if( out < m_voltNeg ) out = m_voltNeg;
 
-    if( fabs(out-m_lastOut) < m_accuracy )
-    {
-        m_converged = true;
-        m_firstStep = true;
-        return;
-    }
-    m_converged = false;
+    if( fabs(out-m_lastOut) < m_accuracy )         // Converged
+    { m_step = 0; return; }
 
-    if( m_firstStep )                  // First step after a convergence
+    Simulator::self()->notCorverged();
+
+    if( m_step==0 )                  // First step after a convergence
     {
-        double dOut = -1e-6;           // Do a tiny step to se what happens
+        double dOut = -1e-6;         // Do a tiny step to se what happens
         if( vd>0 ) dOut = 1e-6;
 
         out = m_lastOut + dOut;
-        m_firstStep = false;
+        m_step = 1;
     } else {
         if( m_lastIn != vd ) // We problably are in a close loop configuration
         {
             double dIn  = fabs(m_lastIn-vd); // Input diff with last step
             out = (m_lastOut*dIn + vd*1e-6)/(dIn + m_k); // Guess next converging output:
         }
-        m_firstStep = true;
+        m_step = 0;
     }
     if     ( out >= m_voltPos ) out = m_voltPos;
     else if( out <= m_voltNeg ) out = m_voltNeg;

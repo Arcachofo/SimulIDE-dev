@@ -25,7 +25,7 @@
 #include "e-pin.h"
 #include "e-element.h"
 
-class DataChannel;
+class eNonLinear;
 
 class MAINMODULE_EXPORT eNode
 {
@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT eNode
         eNode( QString id );
         ~eNode();
 
-        QString itemId();
+        QString itemId() { return m_id; }
 
         void addEpin( ePin* epin );
         void remEpin( ePin* epin );
@@ -49,12 +49,12 @@ class MAINMODULE_EXPORT eNode
 
         void pinChanged( ePin* epin, int enodeNum );
 
-        int  getNodeNumber();
-        void setNodeNumber( int n );
+        int  getNodeNumber() { return m_nodeNum; }
+        void setNodeNumber( int n ) { m_nodeNum = n; }
 
-        double getVolt();
-        void  setVolt( double volt );
-        bool  voltchanged() { return m_voltChanged; }
+        double getVolt() { return m_volt; }
+        void   setVolt( double volt );
+        bool voltchanged() { return m_voltChanged; }
         void setVoltChanged( bool changed ){ m_voltChanged = changed; }
 
         void solveSingle();
@@ -64,35 +64,30 @@ class MAINMODULE_EXPORT eNode
         void stampAdmit();
         void stampCurr();
 
-        void setSingle( bool single );// This eNode can calculate it's own Volt
-        bool isSingle();
+        void setSingle( bool single ) { m_single = single; } // This eNode can calculate it's own Volt
+        bool isSingle() { return m_single; }
 
-        void setSwitched( bool switched ); // This eNode has switches attached
-        bool isSwitched();
+        void setSwitched( bool switched ){ m_switched = switched; } // This eNode has switches attached
+        bool isSwitched() { return m_switched; }
 
         void setIsBus( bool bus );
         bool isBus() { return m_isBus; }
         void createBus();
         void addBusPinList( QList<ePin*> list, int line );
 
-        //void addToPlotterList( DataChannel* el );
-        //void remFromPlotterList( DataChannel* el );
-        //void saveData(); // Plotters will read data
-
-        QList<ePin*> getEpins();
+        QList<ePin*> getEpins() { return m_ePinList; }
         QList<int> getConnections();
 
         eNode* nextCH;
 
     private:
-        QList<ePin*>     m_ePinList;
+        QString m_id;
 
+        QList<ePin*> m_ePinList;
         QList<QList<ePin*>*> m_eBusPinList;
 
         QList<eElement*> m_changedFast;
         QList<eElement*> m_nonLinear;
-
-        QList<DataChannel*> m_plotterList;
 
         QHash<ePin*, double> m_admitList;
         QHash<ePin*, double> m_currList;
@@ -103,12 +98,10 @@ class MAINMODULE_EXPORT eNode
 
         double m_totalCurr;
         double m_totalAdmit;
-
         double m_volt;
-        int   m_nodeNum;
-        int   m_numCons;
 
-        QString m_id;
+        int m_nodeNum;
+        int m_numCons;
 
         bool m_currChanged;
         bool m_admitChanged;

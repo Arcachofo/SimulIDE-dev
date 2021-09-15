@@ -50,7 +50,6 @@ class MAINMODULE_EXPORT eElement
 
         // Simulator engine
         eElement* nextChanged;
-        eElement* nextNonLin;
         bool added;
 
     protected:
@@ -59,6 +58,7 @@ class MAINMODULE_EXPORT eElement
         QString m_elmId;
 
         bool m_changed;
+        double m_step;
 };
 
 #endif

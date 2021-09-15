@@ -42,7 +42,7 @@ class MAINMODULE_EXPORT eBJT : public eElement
     protected:
         double limitStep( double vnew, double vold );
 
-        double m_accuracy;
+        //double m_accuracy;
         double m_baseCurr;
         double m_voltE;
         double m_voltBE;
@@ -54,7 +54,6 @@ class MAINMODULE_EXPORT eBJT : public eElement
         double m_rgain;
         double m_fgain;
         bool m_PNP;
-        uint32_t m_steps;
 
         eElement* m_BEjunction;
         eElement* m_BCjunction;
@@ -65,7 +64,6 @@ class MAINMODULE_EXPORT eBJT : public eElement
         ePin* m_EB;
         ePin* m_CE;
         ePin* m_EC;
-
 
         double gBC;
         double gCB;

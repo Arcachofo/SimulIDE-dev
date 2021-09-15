@@ -37,7 +37,7 @@ eBJT::eBJT( QString id )
     m_fgain = m_gain/(m_gain+1);
     m_PNP = false;
 
-    m_vt = .025;
+    m_vt = .025865;
     m_rsCurr = 1e-13;
     m_thr = m_vt*log( m_vt/(sqrt(2)*m_rsCurr) );
 
@@ -59,11 +59,11 @@ eBJT::~eBJT()
 
 void eBJT::initialize()
 {
-    m_accuracy = Simulator::self()->NLaccuracy()/100;
-
-    m_steps = 0;
+    //m_accuracy = Simulator::self()->NLaccuracy()/100;
+    m_step = 0;
     m_voltBE = 0;
     m_voltBC = 0;
+    m_baseCurr = 0;
 
     m_EC = EMIT;
     m_CE = COLL;
@@ -102,9 +102,9 @@ void eBJT::stamp()
     m_CE->setEnodeComp( emitNod );
     m_EC->setEnodeComp( collNod );
 
-    double r = ((double)(std::rand() %5))*1e-2;
-    m_BE->stampAdmitance( cero_doub+r );
-    m_EB->stampAdmitance( cero_doub+r );
+    //double r = ((double)(std::rand() %5))*1e-2; // Random start diference
+    m_BE->stampAdmitance( cero_doub );
+    m_EB->stampAdmitance( cero_doub );
     m_BC->stampAdmitance( cero_doub );
     m_CB->stampAdmitance( cero_doub );
     m_CE->stampAdmitance( cero_doub );
@@ -121,21 +121,21 @@ void eBJT::voltChanged()
     double voltBE = voltB-voltE;
 
     if( (fabs(voltBC-m_voltBC) < .01) && (fabs(voltBE-m_voltBE) < .01) )
-    { m_steps = 0; return; }
+    { m_step = 0; return; }
 
-    double gmin = 1e-15;
-    if( ++m_steps > 100 )
-    {
-        gmin = exp(-9*log(10)*(1-m_steps/300.));
-        if (gmin > .1) gmin = .1;
-    }
+    Simulator::self()->notCorverged();
+
+    m_step += .1;
+    double gmin = 1e-15*exp(m_step);
+    if( gmin > .1 ) gmin = .1;
+
     voltBC = pnp*limitStep( pnp*voltBC, pnp*m_voltBC );
     m_voltBC = voltBC;
     voltBE = pnp*limitStep( pnp*voltBE, pnp*m_voltBE );
     m_voltBE = voltBE;
 
     double pcoef = pnp/m_vt;
-    double expBC = exp( voltBC*pcoef);
+    double expBC = exp( voltBC*pcoef );
     double expBE = exp( voltBE*pcoef );
 
     double ie = pnp*m_rsCurr*(-(expBE-1)/m_fgain + (expBC-1) );
@@ -143,28 +143,26 @@ void eBJT::voltChanged()
     m_baseCurr = -(ie+ic);
 
     double Gee = -m_rsCurr/m_vt*expBE/m_fgain-gmin;
-    double Gec =  m_rsCurr/m_vt*expBC;
+    double Gcc = -m_rsCurr/m_vt*expBC/m_rgain-gmin;
     double Gce = -Gee*m_fgain;
-    double Gcc = -Gec/m_rgain-gmin;
+    double Gec = -Gcc*m_rgain;
 
-    m_BC->stampAdmitance( -Gec-Gcc );
-    m_CB->stampAdmitance( -Gce-Gcc  );
-    m_BE->stampAdmitance( -Gee-Gce );
-    m_EB->stampAdmitance( -Gee-Gec );
+    m_BC->stampAdmitance(-Gec-Gcc );
+    m_CB->stampAdmitance(-Gce-Gcc  );
+    m_BE->stampAdmitance(-Gee-Gce );
+    m_EB->stampAdmitance(-Gee-Gec );
     m_CE->stampAdmitance( Gce );
     m_EC->stampAdmitance( Gec );
 
-    BASE->stampCurrent( -m_baseCurr - (Gec+Gcc)*voltBC - (Gee+Gce)*voltBE );
-    COLL->stampCurrent( -ic + Gce*voltBE + Gcc*voltBC);
-    EMIT->stampCurrent( -ie + Gee*voltBE + Gec*voltBC );
+    BASE->stampCurrent(-m_baseCurr - (Gec+Gcc)*voltBC - (Gee+Gce)*voltBE );
+    COLL->stampCurrent(-ic + Gce*voltBE + Gcc*voltBC );
+    EMIT->stampCurrent(-ie + Gee*voltBE + Gec*voltBC );
 }
 
 double eBJT::limitStep( double vnew, double vold )
 {
-    if( vnew > m_thr && fabs(vnew-vold) > (2*m_vt) )
-    {
-        if( vold > 0 )
-        {
+    if( vnew > m_thr && fabs(vnew-vold) > (2*m_vt) ){
+        if( vold > 0 ){
             double arg = 1+(vnew-vold)/m_vt;
             if( arg > 0 )  vnew = vold + m_vt*log( arg );
             else           vnew = m_thr;

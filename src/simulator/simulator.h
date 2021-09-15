@@ -103,6 +103,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         simState_t simState() { return m_state; }
 
+        void notCorverged() { m_converged = false; }
+
         void addToEnodeBusList( eNode* nod );
         void remFromEnodeBusList( eNode* nod, bool del );
 
@@ -153,6 +155,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         simState_t m_state;
         simState_t m_oldState;
+
+        bool m_converged;
 
         int m_numEvents;
 

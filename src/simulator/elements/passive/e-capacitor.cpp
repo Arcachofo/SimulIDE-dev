@@ -31,9 +31,7 @@ eCapacitor::eCapacitor( QString id )
 {
     m_cap = 0.00001; // Farads
 }
-eCapacitor::~eCapacitor()
-{ 
-}
+eCapacitor::~eCapacitor(){}
 
 void eCapacitor::initialize()
 {
@@ -44,11 +42,8 @@ void eCapacitor::initialize()
     
     eResistor::setRes( m_tStep/m_cap );
 
-    if( m_ePin[0]->isConnected()
-     && m_ePin[1]->isConnected())
-    {
+    if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected())
         Simulator::self()->addEvent( 1, this );
-    }
 }
 
 void eCapacitor::runEvent()
@@ -60,23 +55,14 @@ void eCapacitor::runEvent()
         m_volt = volt;
         m_curSource = volt/m_resist;
 
-        //qDebug() << "eCapacitor::setVChanged voltdiff " <<volt<<" m_resist "<<m_resist<< " m_curSource "<<m_curSource;
-
         m_ePin[0]->stampCurrent( m_curSource );
         m_ePin[1]->stampCurrent(-m_curSource );
     }
-
     Simulator::self()->addEvent( m_nextStep, this );
 }
 
-double eCapacitor::cap()             
-{ 
-    return m_cap; 
-}
 void  eCapacitor::setCap( double c ) 
 { 
     m_cap = c; 
     eResistor::setResSafe( m_tStep/m_cap );
-    
-    //qDebug() << "eCapacitor::setCap  m_tStep" << m_tStep << c <<" m_cap "<<m_cap<<" m_resist "<<m_resist;
 }

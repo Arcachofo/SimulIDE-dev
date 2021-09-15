@@ -31,9 +31,7 @@ static const char* VoltReg_properties[] = {
 };
 
 Component* VoltReg::construct( QObject* parent, QString type, QString id )
-{
-        return new VoltReg( parent, type, id );
-}
+{ return new VoltReg( parent, type, id ); }
 
 LibraryItem* VoltReg::libraryItem()
 {
@@ -61,6 +59,7 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
     m_voltNeg = 0;
     
     m_pin.resize( 3 );
+    m_ePin.resize( 3 );
 
     m_pin[0] = new Pin( 180, QPoint( -16, 0 ), id+"-input", 0, this );
     m_pin[0]->setLength(6);
@@ -72,11 +71,13 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
     m_pin[1]->setLength(6);
     m_pin[1]->setLabelText( "O" );
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_ePin[1] = m_pin[1];
 
     m_pin[2] = new Pin( 270, QPoint( 0, 16 ), id+"-ref", 2, this );
     m_pin[2]->setLength(6);
     m_pin[2]->setLabelText( "R" );
     m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_ePin[2] = m_pin[2];
 }
 VoltReg::~VoltReg(){}
 
@@ -117,9 +118,11 @@ void VoltReg::voltChanged()
     else if( outVolt < m_voltNeg ) outVolt = m_voltNeg;
 
     double current = (inVolt-outVolt)/m_resist;
-    if( fabs(current-m_lastOut)<m_accuracy ) return;
 
+    if( fabs(current-m_lastOut)<m_accuracy ) return;
     m_lastOut = current;
+
+    Simulator::self()->notCorverged();
 
     m_pin[0]->stampCurrent( current );
     m_pin[1]->stampCurrent(-current );

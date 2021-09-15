@@ -35,7 +35,7 @@ static const char* BJT_properties[] = {
 
 Component* BJT::construct( QObject* parent, QString type, QString id )
 {
-        return new BJT( parent, type, id );
+    return new BJT( parent, type, id );
 }
 
 LibraryItem* BJT::libraryItem()
@@ -100,8 +100,8 @@ void BJT::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *w
 {
     Component::paint( p, option, widget );
     
-    if( Circuit::self()->animate() && m_baseCurr > 1e-4 )  p->setBrush( Qt::yellow );
-    else                                                   p->setBrush( Qt::white );
+    if( Circuit::self()->animate() && m_baseCurr > 0 ) p->setBrush( Qt::yellow );
+    else                                               p->setBrush( Qt::white );
 
     p->drawEllipse( m_area );
     
