@@ -34,9 +34,7 @@ static const char* Oscope_properties[] = {
 };
 
 Component* Oscope::construct( QObject* parent, QString type, QString id )
-{
-    return new Oscope( parent, type, id );
-}
+{ return new Oscope( parent, type, id ); }
 
 LibraryItem* Oscope::libraryItem()
 {
@@ -93,6 +91,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
         setVoltDiv( i, 1 );
         setVoltPos( i, 0 );
     }
+    setFilter( 0.1 );
     setTimeDiv( 1e9 ); // 1 ms
     setLabelPos(-90,-100, 0);
     expand( false );
@@ -159,8 +158,7 @@ void Oscope::expand( bool e )
 {
     m_expand = e;
 
-    if( e )
-    {
+    if( e ){
         m_screenSizeY = m_baSizeY+2*10;
         m_display->setMaximumSize( 9999, 9999 );
         m_oscWidget->getLayout()->addWidget( m_display );
@@ -192,6 +190,7 @@ void Oscope::expand( bool e )
 void Oscope::setFilter( double filter )
 {
     m_filter = filter;
+    m_oscWidget->setFilter( filter );
     for( int i=0; i<2; i++ ) m_channel[i]->setFilter( filter );
 }
 
@@ -201,16 +200,14 @@ void Oscope::setTrigger( int ch )
     m_oscWidget->setTrigger( ch );
 
     if( ch > 3 ) return;
-    for( int i=0; i<4; ++i )
-    {
+    for( int i=0; i<4; ++i ){
         if( ch == i ) m_channel[i]->m_trigger = true;
         else          m_channel[i]->m_trigger = false;
 }   }
 
 void Oscope::setTunnels( QStringList tunnels )
 {
-    for( int i=0; i<tunnels.size(); i++ )
-    {
+    for( int i=0; i<tunnels.size(); i++ ){
         if( i >= m_numChannels ) break;
         m_channel[i]->m_chTunnel = tunnels.at(i);
         m_dataWidget->setTunnel( i, tunnels.at(i) );
@@ -226,8 +223,7 @@ QStringList Oscope::hideCh()
 {
     QStringList list;
     QString hide;
-    for( int i=0; i<4; ++i )
-    {
+    for( int i=0; i<4; ++i ){
         hide = m_hideCh[i]? "true":"false";
         list << hide;
     }
@@ -236,8 +232,7 @@ QStringList Oscope::hideCh()
 
 void Oscope::setHideCh( QStringList hc )
 {
-    for( int i=0; i<4; ++i )
-    {
+    for( int i=0; i<4; ++i ){
         if( i == hc.size() ) break;
         bool hide = (hc.at(i) == "true")? true:false;
         hideChannel( i, hide );
@@ -274,12 +269,10 @@ QStringList Oscope::timPos()
 
 void Oscope::setTimPos( QStringList tp )
 {
-    for( int i=0; i<4; ++i )
-    {
+    for( int i=0; i<4; ++i ){
         if( i == tp.size() ) break;
         setTimePos( i, tp.at(i).toLongLong() );
-    }
-}
+}   }
 
 QStringList Oscope::volDiv()
 {
@@ -290,12 +283,10 @@ QStringList Oscope::volDiv()
 
 void Oscope::setVolDiv( QStringList vd )
 {
-    for( int i=0; i<4; ++i )
-    {
+    for( int i=0; i<4; ++i ){
         if( i == vd.size() ) break;
         setVoltDiv( i, vd.at(i).toDouble() );
-    }
-}
+}   }
 
 QStringList Oscope::volPos()
 {
@@ -306,12 +297,10 @@ QStringList Oscope::volPos()
 
 void Oscope::setVolPos( QStringList vp )
 {
-    for( int i=0; i<4; ++i )
-    {
+    for( int i=0; i<4; ++i ){
         if( i == vp.size() ) break;
         setVoltPos( i, vp.at(i).toDouble() );
-    }
-}
+}   }
 
 void Oscope::setTimePos( int ch, int64_t tp )
 {

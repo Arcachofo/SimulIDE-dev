@@ -38,6 +38,7 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
         PlotDisplay* display() { return plotDisplay; }
         QHBoxLayout* getLayout() { return mainLayout; }
 
+        void setFilter( double filter );
         void setAuto( int ch );
         void setTrigger( int ch );
         void hideChannel( int ch, bool hide );
@@ -58,6 +59,8 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
         void on_voltDivBox_valueChanged( double voltDiv );
         void on_voltPosDial_valueChanged( int DialPos );
         void on_voltPosBox_valueChanged( double voltPos );
+
+        void on_filterBox_valueChanged( double filter );
 
         void on_channelGroup_buttonClicked( int ch );
         void on_autoGroup_buttonClicked( int ch );

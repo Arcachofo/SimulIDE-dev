@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>761</width>
+    <width>762</width>
     <height>433</height>
    </rect>
   </property>
@@ -65,7 +65,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
+           <width>36</width>
            <height>16777215</height>
           </size>
          </property>
@@ -103,7 +103,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
+           <width>36</width>
            <height>16777215</height>
           </size>
          </property>
@@ -141,7 +141,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
+           <width>36</width>
            <height>16777215</height>
           </size>
          </property>
@@ -176,7 +176,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
+           <width>36</width>
            <height>16777215</height>
           </size>
          </property>
@@ -211,7 +211,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
+           <width>36</width>
            <height>16777215</height>
           </size>
          </property>
@@ -244,14 +244,14 @@
      <item>
       <widget class="Line" name="line_2">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>182</width>
          <height>9</height>
         </size>
        </property>
@@ -303,6 +303,12 @@
              <height>0</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>75</weight>
@@ -317,10 +323,16 @@
          <item>
           <widget class="QDoubleSpinBox" name="timeDivBox">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>16777215</height>
+            </size>
            </property>
            <property name="font">
             <font>
@@ -390,6 +402,12 @@
              <height>0</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>75</weight>
@@ -404,10 +422,16 @@
          <item>
           <widget class="QDoubleSpinBox" name="timePosBox">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>16777215</height>
+            </size>
            </property>
            <property name="font">
             <font>
@@ -453,7 +477,7 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>182</width>
          <height>7</height>
         </size>
        </property>
@@ -499,6 +523,12 @@
              <height>0</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>75</weight>
@@ -513,10 +543,16 @@
          <item>
           <widget class="QDoubleSpinBox" name="voltDivBox">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>16777215</height>
+            </size>
            </property>
            <property name="font">
             <font>
@@ -586,6 +622,12 @@
              <height>0</height>
             </size>
            </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <weight>75</weight>
@@ -600,10 +642,16 @@
          <item>
           <widget class="QDoubleSpinBox" name="voltPosBox">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>78</width>
+             <height>16777215</height>
+            </size>
            </property>
            <property name="font">
             <font>
@@ -642,14 +690,14 @@
      <item>
       <widget class="Line" name="line_3">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>182</width>
          <height>10</height>
         </size>
        </property>
@@ -658,6 +706,104 @@
        </property>
        <property name="lineWidth">
         <number>3</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="filterLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string notr="true">Filter</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="filterBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>78</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>7</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="keyboardTracking">
+          <bool>false</bool>
+         </property>
+         <property name="prefix">
+          <string notr="true"/>
+         </property>
+         <property name="suffix">
+          <string notr="true"> V</string>
+         </property>
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="minimum">
+          <double>0.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>1000000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_7">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>182</width>
+         <height>9</height>
+        </size>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -799,6 +945,18 @@
      </item>
      <item>
       <widget class="Line" name="line_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>182</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -939,6 +1097,18 @@
      </item>
      <item>
       <widget class="Line" name="line_6">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>182</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -1088,9 +1258,15 @@
      </item>
      <item>
       <widget class="Line" name="line_5">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>182</width>
          <height>9</height>
         </size>
        </property>
@@ -1231,7 +1407,12 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="channelGroup">
+  <buttongroup name="autoGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="triggerGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
@@ -1241,16 +1422,11 @@
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="triggerGroup">
+  <buttongroup name="channelGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
   </buttongroup>
   <buttongroup name="trackGroup"/>
-  <buttongroup name="autoGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
  </buttongroups>
 </ui>

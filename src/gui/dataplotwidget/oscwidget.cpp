@@ -153,8 +153,7 @@ void OscWidget::on_timePosBox_valueChanged( double timePos )
     QString unit = timePosBox->suffix().remove("s");
     unitToVal( timePos, unit );
 
-    if( ch == 4 )
-    {
+    if( ch == 4 ){
         ch = 0;
         for( int i=1; i<4; ++i ) m_oscope->setTimePos( i, timePos );
     }
@@ -208,8 +207,7 @@ void OscWidget::on_voltDivBox_valueChanged( double voltDiv )
     QString unit = voltDivBox->suffix().remove("V");
     unitToVal( voltDiv, unit );
 
-    if( ch == 4 )
-    {
+    if( ch == 4 ){
         ch = 0;
         for( int i=1; i<4; ++i ) m_oscope->setVoltDiv( i, voltDiv/1e12 );
     }
@@ -262,8 +260,7 @@ void OscWidget::on_voltPosBox_valueChanged( double voltPos )
     QString unit = voltPosBox->suffix().remove("V");
     unitToVal( voltPos, unit );
 
-    if( ch == 4 )
-    {
+    if( ch == 4 ){
         ch = 0;
         for( int i=1; i<4; ++i ) m_oscope->setVoltPos( i, voltPos/1e12 );
     }
@@ -285,6 +282,19 @@ void OscWidget::updateVoltPosBox(int ch, double voltPos )
     m_blocked = false;
 }
 
+void OscWidget::on_filterBox_valueChanged( double filter )
+{
+    if( m_blocked ) return;
+    m_blocked = true;
+    m_oscope->setFilter( filter );
+    m_blocked = false;
+}
+
+void OscWidget::setFilter( double filter )
+{
+    filterBox->setValue( filter );
+}
+
 void OscWidget::on_channelGroup_buttonClicked( int ch )
 {
     m_channel = ch;
@@ -294,13 +304,11 @@ void OscWidget::on_channelGroup_buttonClicked( int ch )
     voltDivBox->setStyleSheet( "background-color:"+color );
     voltPosBox->setStyleSheet( "background-color:"+color );
 
-    if( ch < 4 )
-    {
+    if( ch < 4 ){
         updateTimePosBox( ch, m_oscope->timePos( ch ) );
         updateVoltDivBox( ch, m_oscope->voltDiv( ch ) );
         updateVoltPosBox( ch, m_oscope->voltPos( ch ) );
 }    }
-
 
 void OscWidget::on_autoGroup_buttonClicked( int ch )
 { m_oscope->setAutoSC( ch ); }

@@ -29,7 +29,7 @@ OscopeChannel::OscopeChannel( Oscope* oscope, QString id )
              : DataChannel( oscope, id )
 {
     m_oscope = oscope;
-    m_filter = 0.1;
+    m_filter = 0.0;
 }
 OscopeChannel::~OscopeChannel()  { }
 
