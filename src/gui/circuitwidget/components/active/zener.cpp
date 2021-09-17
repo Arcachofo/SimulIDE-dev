@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,31 +17,23 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef EPN_H
-#define EPN_H
+#include "zener.h"
+#include "itemlibrary.h"
 
-#include "e-resistor.h"
+Component* Zener::construct( QObject* parent, QString type, QString id )
+{ return new Zener( parent, type, id ); }
 
-class MAINMODULE_EXPORT ePN : public eResistor
+LibraryItem* Zener::libraryItem()
 {
-    public:
-        ePN(  QString id );
-        ~ePN();
+    return new LibraryItem(
+            tr( "Zener Diode" ),
+            tr( "Active" ),
+            "zener.png",
+            "Zener",
+            Zener::construct);
+}
 
-        virtual double threshold() { return m_threshold; }
-        virtual void  setThreshold( double threshold );
-
-        virtual void stamp() override;
-        virtual void initialize() override;
-        double step( double volt );
-
-    protected:
-        //virtual void updateVI();
-
-        double m_voltPN;
-        double m_deltaV;
-        double m_lastCurr;
-        double m_threshold;
-        double m_accuracy;
-};
-#endif
+Zener::Zener( QObject* parent, QString type, QString id )
+     : Diode( parent, type, id, true )
+{}
+Zener::~Zener(){}

@@ -48,7 +48,7 @@ class MAINMODULE_EXPORT LedBar : public Component
         void setColor( LedBase::LedColor color );
         LedBase::LedColor color();
         
-        int  size();
+        int  size() { return m_size; }
         void setSize( int size );
         
         double threshold();

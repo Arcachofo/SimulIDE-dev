@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "e-node.h"
+#include "e-pin.h"
 #include "e-element.h"
 #include "circmatrix.h"
 #include "simulator.h"

@@ -46,7 +46,6 @@ Meter::Meter( QObject* parent, QString type, QString id )
     m_outPin = new IoPin( 0, QPoint(32,-8), id+"-outnod", 0, this, source );
     m_outPin->setOutHighV( 0 );
     m_outPin->setOutState( true );
-    //m_outPin->setPinState( out_low );
     m_pin[2] = m_outPin;
 
     m_idLabel->setPos(-12,-24);
@@ -84,8 +83,7 @@ void Meter::updateStep()
     double value = fabs(m_dispValue);
 
     if( value < 1e-9 ) value = 0;
-    else
-    {
+    else{
         value *= 1e12;
         if( m_dispValue < 0 ) sign = "-";
         valToUnit( value, mult, decimals )

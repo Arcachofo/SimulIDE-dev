@@ -54,7 +54,6 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
 
         virtual void stamp() override;
         virtual void updateStep() override;
-        virtual void remove() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

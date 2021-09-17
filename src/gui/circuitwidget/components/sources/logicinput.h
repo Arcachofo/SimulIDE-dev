@@ -60,7 +60,7 @@ class MAINMODULE_EXPORT LogicInput : public Component, public eElement
     protected:
         void updateOutput();
 
-        IoPin*  m_outpin;
+        IoPin* m_outpin;
 
         QToolButton* m_button;
         QGraphicsProxyWidget* m_proxy;

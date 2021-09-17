@@ -20,6 +20,7 @@
 #include "mcucomponentpin.h"
 #include "baseprocessor.h"
 #include "simulator.h"
+#include "e-node.h"
 
 McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle )
                : IoPin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, mcuComponent, input )

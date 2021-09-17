@@ -71,7 +71,7 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     m_idLabel->setPos(-12,-24);
     setLabelPos(-20,-36, 0);
     
-    m_resist = 8;
+    m_admit = 1/8;
     m_buzzer = false;
     
     int refreshPeriod = 10; // mS

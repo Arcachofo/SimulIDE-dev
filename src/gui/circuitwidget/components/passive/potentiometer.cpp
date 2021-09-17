@@ -184,12 +184,6 @@ void Potentiometer::setUnit( QString un )
     setVal( m_res1 );
 }
 
-void Potentiometer::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-    Component::remove();
-}
-
 void Potentiometer::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     if( m_hidden ) return;

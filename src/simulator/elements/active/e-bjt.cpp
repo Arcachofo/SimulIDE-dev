@@ -16,10 +16,12 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
  *                                                                         *
  ***************************************************************************/
+// Based on Falstad Circuit Simulator Diode model: https://falstad.com
 
 #include <math.h>
 
 #include "e-bjt.h"
+#include "e-pin.h"
 #include "e-node.h"
 #include "simulator.h"
 
@@ -37,9 +39,9 @@ eBJT::eBJT( QString id )
     m_fgain = m_gain/(m_gain+1);
     m_PNP = false;
 
-    m_vt = .025865;
-    m_rsCurr = 1e-13;
-    m_thr = m_vt*log( m_vt/(sqrt(2)*m_rsCurr) );
+    m_vt = 0.025865;
+    m_satCur = 1e-13;
+    m_vCrit = m_vt*log( m_vt/(sqrt(2)*m_satCur) );
 
     m_BCjunction = new eElement( id+"BCjunct");
     m_BCjunction->setNumEpins( 2 );
@@ -121,12 +123,11 @@ void eBJT::voltChanged()
     double voltBE = voltB-voltE;
 
     if( (fabs(voltBC-m_voltBC) < .01) && (fabs(voltBE-m_voltBE) < .01) )
-    { m_step = 0; return; }
-
+        { m_step = 0; return; }
     Simulator::self()->notCorverged();
 
     m_step += .1;
-    double gmin = 1e-15*exp(m_step);
+    double gmin = m_satCur*1e-2*exp( m_step );
     if( gmin > .1 ) gmin = .1;
 
     voltBC = pnp*limitStep( pnp*voltBC, pnp*m_voltBC );
@@ -138,12 +139,12 @@ void eBJT::voltChanged()
     double expBC = exp( voltBC*pcoef );
     double expBE = exp( voltBE*pcoef );
 
-    double ie = pnp*m_rsCurr*(-(expBE-1)/m_fgain + (expBC-1) );
-    double ic = pnp*m_rsCurr*( (expBE-1) - (expBC-1)/m_rgain );
+    double ie = pnp*m_satCur*(-(expBE-1)/m_fgain + (expBC-1) );
+    double ic = pnp*m_satCur*( (expBE-1) - (expBC-1)/m_rgain );
     m_baseCurr = -(ie+ic);
 
-    double Gee = -m_rsCurr/m_vt*expBE/m_fgain-gmin;
-    double Gcc = -m_rsCurr/m_vt*expBC/m_rgain-gmin;
+    double Gee = -m_satCur/m_vt*expBE/m_fgain-gmin;
+    double Gcc = -m_satCur/m_vt*expBC/m_rgain-gmin;
     double Gce = -Gee*m_fgain;
     double Gec = -Gcc*m_rgain;
 
@@ -161,11 +162,11 @@ void eBJT::voltChanged()
 
 double eBJT::limitStep( double vnew, double vold )
 {
-    if( vnew > m_thr && fabs(vnew-vold) > (2*m_vt) ){
+    if( vnew > m_vCrit && fabs(vnew-vold) > (2*m_vt) ){
         if( vold > 0 ){
             double arg = 1+(vnew-vold)/m_vt;
             if( arg > 0 )  vnew = vold + m_vt*log( arg );
-            else           vnew = m_thr;
+            else           vnew = m_vCrit;
         }
         else vnew = m_vt *log( vnew/m_vt );
     }

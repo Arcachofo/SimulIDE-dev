@@ -76,8 +76,8 @@ void Strain::initialize()
 {
   //m_last_step =  Simulator::self()->step();
   //m_resist = sensorFunction (m_sense);
-  m_last_resist = m_resist;
-  m_new_resist = m_resist;
+  m_last_resist = 1/m_admit;
+  m_new_resist = m_last_resist;
   //setUnit (" ");
   //setResist ( m_resist);
   updateStep ();

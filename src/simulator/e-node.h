@@ -22,10 +22,8 @@
 
 #include<QHash>
 
-#include "e-pin.h"
-#include "e-element.h"
-
-class eNonLinear;
+class ePin;
+class eElement;
 
 class MAINMODULE_EXPORT eNode
 {

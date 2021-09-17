@@ -117,7 +117,7 @@ void VoltReg::voltChanged()
     if     ( outVolt > m_voltPos ) outVolt = m_voltPos;
     else if( outVolt < m_voltNeg ) outVolt = m_voltNeg;
 
-    double current = (inVolt-outVolt)/m_resist;
+    double current = (inVolt-outVolt)*m_admit;
 
     if( fabs(current-m_lastOut)<m_accuracy ) return;
     m_lastOut = current;

@@ -25,6 +25,7 @@
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
+#include "e-node.h"
 #include "iopin.h"
 
 static const char* OpAmp_properties[] = {

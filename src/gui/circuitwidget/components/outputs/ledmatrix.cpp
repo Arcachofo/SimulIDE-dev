@@ -129,7 +129,6 @@ void LedMatrix::createMatrix()
             LedSmd* lsmd = new LedSmd( this, "LEDSMD", ledid, QRectF(-2, -2, 4, 4) );
 
             lsmd->setParentItem(this);
-            lsmd->setNumEpins(2);
             lsmd->setPos( col*8, row*8 );
             lsmd->setRes( m_resist );
             lsmd->setMaxCurrent( m_maxCurr );

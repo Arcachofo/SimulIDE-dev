@@ -20,9 +20,9 @@
 #ifndef AMPERIMETER_H
 #define AMPERIMETER_H
 
-#include "itemlibrary.h"
 #include "meter.h"
 
+class LibraryItem;
 
 class MAINMODULE_EXPORT Amperimeter : public Meter
 {
@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT Amperimeter : public Meter
         ~Amperimeter();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         void updateStep() override;
 };

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>762</width>
-    <height>433</height>
+    <width>765</width>
+    <height>496</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -1412,6 +1412,12 @@
     <bool>true</bool>
    </property>
   </buttongroup>
+  <buttongroup name="channelGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="trackGroup"/>
   <buttongroup name="triggerGroup">
    <property name="exclusive">
     <bool>true</bool>
@@ -1422,11 +1428,5 @@
     <bool>false</bool>
    </property>
   </buttongroup>
-  <buttongroup name="channelGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
-  <buttongroup name="trackGroup"/>
  </buttongroups>
 </ui>

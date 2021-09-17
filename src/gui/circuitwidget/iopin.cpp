@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "iopin.h"
+#include "e-node.h"
 #include "simulator.h"
 
 IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* parent, pinMode_t mode )
@@ -45,8 +46,7 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
     m_inputImp = high_imp;
     m_openImp  = 1e28;
     m_outputImp = 40;
-    m_imp = cero_doub;
-    m_admit = 1/ m_imp;
+    m_admit = 1/cero_doub;
 
     m_pinMode = undef_mode;
     setPinMode( mode );
@@ -163,8 +163,7 @@ void IoPin::setPullup( bool up )
 
 void IoPin::setImp( double imp )
 {
-    m_imp = imp;
-    m_admit = 1/m_imp;
+    m_admit = 1/imp;
     stampAll();
 }
 
@@ -202,4 +201,16 @@ void IoPin::controlPin( bool outCtrl, bool dirCtrl )
         setPinMode( m_oldPinMode ); // Set Previous Pin MOde
     }
     m_dirCtrl = dirCtrl;
+}
+
+void IoPin::stampAll()
+{
+    ePin::stampAdmitance( m_admit );
+    stampOutput();
+}
+
+void IoPin::stampOutput()
+{
+    m_scrEnode->setVolt( m_outVolt );
+    ePin::stampCurrent( m_outVolt*m_admit );
 }

@@ -23,6 +23,7 @@
 #include <math.h>
 
 #include "e-inductor.h"
+#include "e-pin.h"
 #include "e-node.h"
 #include "simulator.h"
 
@@ -31,9 +32,7 @@ eInductor::eInductor( QString id )
 {
     m_ind = 1; // H
 }
-eInductor::~eInductor()
-{
-}
+eInductor::~eInductor(){}
 
 void eInductor::initialize()
 {
@@ -44,11 +43,8 @@ void eInductor::initialize()
     
     eResistor::setRes( m_ind/m_tStep );
 
-    if( m_ePin[0]->isConnected()
-     && m_ePin[1]->isConnected())
-    {
+    if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected())
         Simulator::self()->addEvent( 1, this );
-    }
 }
 
 void eInductor::runEvent()
@@ -58,26 +54,14 @@ void eInductor::runEvent()
     if( m_volt != volt)
     {
         m_volt = volt;
-        m_curSource += volt/m_resist;
-
-        //qDebug() << "eInductor::setVChanged voltdiff " <<volt<<" m_resist "<<m_resist<< " m_curSource "<<m_curSource;
+        m_curSource += volt*m_admit;
 
         m_ePin[0]->stampCurrent(-m_curSource );
         m_ePin[1]->stampCurrent( m_curSource );
     }
-
     Simulator::self()->addEvent( m_nextStep, this );
 }
 
-double eInductor::indCurrent()
-{
-    return m_curSource;
-}
-
-double eInductor::ind()
-{ 
-    return m_ind; 
-}
 void  eInductor::setInd( double h ) 
 { 
     m_ind = h; 

@@ -40,7 +40,7 @@ class MAINMODULE_EXPORT eElement
 
         virtual void setNumEpins( int n );
 
-        virtual ePin* getEpin( int pin );
+        virtual ePin* getEpin( int num );
         virtual void setEpin( int num, ePin* pin );
 
         QString getId(){ return m_elmId; }

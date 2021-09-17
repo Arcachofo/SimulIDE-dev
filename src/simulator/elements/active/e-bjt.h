@@ -49,8 +49,8 @@ class MAINMODULE_EXPORT eBJT : public eElement
         double m_voltBC;
         double m_gain;
         double m_vt;
-        double m_rsCurr;
-        double m_thr;
+        double m_satCur;
+        double m_vCrit;
         double m_rgain;
         double m_fgain;
         bool m_PNP;

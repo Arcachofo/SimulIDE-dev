@@ -28,23 +28,22 @@ class MAINMODULE_EXPORT eResistor : public eElement
         eResistor( QString id );
         ~eResistor();
 
-        virtual double res() { return m_resist; }
+        virtual void stamp() override;
+
+        virtual double res() { return 1/m_admit; }
         virtual void setRes( double resist );
         virtual void setResSafe( double resist );
         
-        virtual double admit() { return m_admit; }
-        virtual void setAdmit( double admit );
+        double admit() { return m_admit; }
+        void setAdmit( double admit );
         void stampAdmit();
         void stampCurrent( double current );
 
-        virtual double current();
-
-        virtual void stamp() override;
+        double current();
 
     protected:
         virtual void updateVI();
 
-        double m_resist;
         double m_admit;
         double m_current;
 };

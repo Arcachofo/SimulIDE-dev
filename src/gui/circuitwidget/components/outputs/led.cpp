@@ -37,20 +37,17 @@ Led::Led( QObject* parent, QString type, QString id )
    : LedBase( parent, type, id )
 {
     m_area = QRect( -8, -10, 20, 20 );
-    m_pin.resize( 2 );
-    
-    QString nodid = m_id;
-    nodid.append(QString("-lPin"));
-    Pin* pin = new Pin( 180, QPoint(-16, 0 ), nodid, 0, this);
-    pin->setLength( 10 );
-    m_ePin[0] = pin;
-    m_pin[0] = pin;
 
-    nodid = m_id;
-    nodid.append(QString("-rPin"));
-    pin = new Pin( 0, QPoint( 16, 0 ), nodid, 1, this);
-    m_ePin[1] = pin;
-    m_pin[1] = pin;
+    m_pin.resize( 2 );
+    m_pin[0] = new Pin( 180, QPoint(-16, 0 ), m_id+"-lPin", 0, this);
+    m_pin[0]->setLength( 10 );
+    setEpin( 0, m_pin[0] );
+
+    m_pin[1] = new Pin( 0, QPoint( 16, 0 ), m_id+"-rPin", 1, this);
+    setEpin( 1, m_pin[1] );
+
+    createSerRes();
+    SetParameters( 93.2e-12, 3.73, 0, 0.042 );
 }
 Led::~Led(){}
 
@@ -61,11 +58,16 @@ QList<propGroup_t> Led::propGroups()
     mainGroup.propList.append( {"Grounded", tr("Grounded"),""} );
 
     propGroup_t elecGroup { tr("Electric") };
-    elecGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
+    elecGroup.propList.append( {"Threshold", tr("Forward Voltage"),"V"} );
     elecGroup.propList.append( {"MaxCurrent", tr("Max Current"),"A"} );
     elecGroup.propList.append( {"Resistance", tr("Resistance"),"Ω"} );
 
-    return {mainGroup, elecGroup};
+    propGroup_t advanced { tr("Advanced") };
+    advanced.propList.append( {"BrkDownV", tr("Breakdown Voltage"),"V"} );
+    advanced.propList.append( {"SatCur_nA", tr("Saturation Current"),"nA"} );
+    advanced.propList.append( {"EmCoef", tr("Emission Coefficient"),""} );
+
+    return {mainGroup, elecGroup, advanced};
 }
 
 void Led::drawBackground( QPainter *p )

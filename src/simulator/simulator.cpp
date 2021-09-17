@@ -179,10 +179,11 @@ void Simulator::solveCircuit()
             m_nonLin->voltChanged();
             m_nonLin = m_nonLin->nextChanged;
         }
-        if( m_changedNode ){ solveMatrix(); m_NLstep++; }
-        if( m_maxNlstp && (m_NLstep >= m_maxNlstp) )
+        if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )
         { m_warning = 1; m_converged = true; break; } // Max iterations reached
         if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
+
+        if( m_changedNode ) solveMatrix();
     }
     if( !m_converged ) return; // Don't run linear until nonliear converged
 

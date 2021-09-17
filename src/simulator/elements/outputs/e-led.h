@@ -36,16 +36,16 @@ class MAINMODULE_EXPORT eLed : public eDiode
 
     protected:
         void updateBright();
-        virtual void updateVI();
+        virtual void updateVI() override;
 
         uint64_t m_prevStep;
-        uint32_t m_bright;
+        uint32_t m_intensity;
 
         double m_maxCurrent;
         double m_lastCurrent;
-        double m_lastUpdatePeriod;
-        double m_avg_brightness;
-        double m_disp_brightness;
+        double m_lastPeriod;
+        double m_avgBright;
+        double m_brightness;
 };
 
 #endif

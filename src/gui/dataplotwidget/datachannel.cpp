@@ -24,6 +24,7 @@
 #include "plotbase.h"
 #include "simulator.h"
 #include "e-node.h"
+#include "e-pin.h"
 
 DataChannel::DataChannel( PlotBase* plotBase, QString id )
            : eElement( id  )

@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 #include "amperimeter.h"
+#include "itemlibrary.h"
 #include "simulator.h"
-
 
 Component* Amperimeter::construct( QObject* parent, QString type, QString id )
 { return new Amperimeter( parent, type, id ); }

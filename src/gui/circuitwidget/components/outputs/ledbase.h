@@ -30,6 +30,9 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
     Q_OBJECT
     Q_PROPERTY( LedColor Color    READ color      WRITE setColor      DESIGNABLE true USER true )
     Q_PROPERTY( double Threshold  READ threshold  WRITE setThreshold  DESIGNABLE true USER true )
+    Q_PROPERTY( double BrkDownV   READ brkDownV   WRITE setBrkDownV   DESIGNABLE true USER true )
+    Q_PROPERTY( double SatCur_nA  READ satCur_nA  WRITE setSatCur_nA  DESIGNABLE true USER true )
+    Q_PROPERTY( double EmCoef     READ emCoef     WRITE setEmCoef     DESIGNABLE true USER true )
     Q_PROPERTY( double MaxCurrent READ maxCurrent WRITE setMaxCurrent DESIGNABLE true USER true )
     Q_PROPERTY( double Resistance READ res        WRITE setRes        DESIGNABLE true USER true )
     Q_PROPERTY( bool   Grounded   READ grounded   WRITE setGrounded   DESIGNABLE true USER true )
@@ -51,12 +54,11 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         void setColor( LedColor color ) { m_ledColor = color; }
         LedColor color() { return m_ledColor; } 
 
-        bool grounded();
+        bool grounded() { return m_grounded; }
         void setGrounded( bool grounded );
 
         virtual void initialize();
         virtual void updateStep() override;
-        virtual void remove() override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 

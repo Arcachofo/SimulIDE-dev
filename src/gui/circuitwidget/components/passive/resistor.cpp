@@ -54,7 +54,7 @@ Resistor::Resistor( QObject* parent, QString type, QString id )
     setLabelPos(-12,-20, 0);
     
     m_unit = "Ω";
-    setResist( m_resist );
+    setResist( 1/m_admit );
     
     setValLabelPos(-16, 6, 0);
     setShowVal( true );

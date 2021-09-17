@@ -33,9 +33,9 @@ class MAINMODULE_EXPORT eInductor : public eResistor
         virtual void initialize() override;
         virtual void runEvent() override;
 
-        double indCurrent();
+        double indCurrent() { return m_curSource; }
 
-        double ind();
+        double ind() { return m_ind;  }
         void   setInd( double h );
 
     protected:

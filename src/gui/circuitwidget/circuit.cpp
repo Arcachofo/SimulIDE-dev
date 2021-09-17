@@ -1092,13 +1092,11 @@ void Circuit::drawBackground ( QPainter*  painter, const QRectF & rect )
     int starty = int(m_scenerect.y());///2;
     int endy   = int(m_scenerect.height())/2;
 
-    for( int i = 4; i<endx; i+=8 )
-    {
+    for( int i = 4; i<endx; i+=8 ){
         painter->drawLine( i, starty, i, endy );
         painter->drawLine(-i, starty,-i, endy );
     }
-    for( int i = 4; i<endy; i+=8 )
-    {
+    for( int i = 4; i<endy; i+=8 ){
         painter->drawLine( startx, i, endx, i);
         painter->drawLine( startx,-i, endx,-i);
 }   }

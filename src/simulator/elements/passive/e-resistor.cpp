@@ -24,8 +24,7 @@
 eResistor::eResistor( QString id )
          : eElement( id )
 {
-    m_resist = 100;
-    m_admit  = 1/m_resist;
+    m_admit  = 1.0/100.0;
     m_current = 0;
     m_ePin.resize(2);
 }
@@ -57,14 +56,10 @@ void eResistor::stampCurrent( double current )
 void eResistor::setRes( double resist )
 {
     if( resist < 1e-12 ) resist = 1e-12;
-    
-    m_admit = 1/resist;
-    m_resist = resist;
-    
-    stampAdmit();
+    setAdmit( 1/resist );
 }
 
-void eResistor::setAdmit( double admit )               // Admit can be 0 
+void eResistor::setAdmit( double admit )   // Admit can be 0
 {
     m_admit = admit;
     stampAdmit();
@@ -73,7 +68,7 @@ void eResistor::setAdmit( double admit )               // Admit can be 0
 void eResistor::setResSafe( double resist )
 {
     Simulator::self()->pauseSim();
-    setRes( resist );
+    eResistor::setRes( resist );
     Simulator::self()->resumeSim();
 }
 
@@ -88,8 +83,7 @@ void eResistor::updateVI()
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
     {
         double volt = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
-
-        m_current = volt/m_resist;
+        m_current = volt*m_admit;
     }
     else m_current = 0;
 }

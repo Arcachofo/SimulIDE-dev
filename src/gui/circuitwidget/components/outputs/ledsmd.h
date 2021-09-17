@@ -22,19 +22,17 @@
 
 #include "ledbase.h"
 
-class LibraryItem;
-
 class MAINMODULE_EXPORT LedSmd : public LedBase
 {
     Q_OBJECT
 
     public:
-        LedSmd( QObject* parent, QString type, QString id, QRectF area );
+        LedSmd( QObject* parent, QString type, QString id, QRectF area, ePin* pin0=NULL, ePin* pin1=NULL );
         ~LedSmd();
 
     protected:
-        void drawBackground( QPainter *p );
-        void drawForeground( QPainter *p );
+        void drawBackground( QPainter* p );
+        void drawForeground( QPainter* p );
 };
 
 #endif

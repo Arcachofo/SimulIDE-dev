@@ -25,11 +25,10 @@
 #include "simulator.h"
 #include "itemlibrary.h"
 #include "iopin.h"
+#include "e-node.h"
 
 Component* Lm555::construct( QObject* parent, QString type, QString id )
-{
-        return new Lm555( parent, type, id );
-}
+{ return new Lm555( parent, type, id ); }
 
 LibraryItem* Lm555::libraryItem()
 {

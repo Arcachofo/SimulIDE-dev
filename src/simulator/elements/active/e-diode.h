@@ -22,34 +22,69 @@
 
 #include "e-resistor.h"
 
+class eNode;
+
 class MAINMODULE_EXPORT eDiode : public eResistor
 {
     public:
         eDiode( QString id );
         ~eDiode();
 
-        virtual double threshold() { return m_threshold; }
-        virtual void  setThreshold( double threshold ) { m_threshold = threshold; }
-        
-        virtual double zenerV(){ return m_zenerV; }
-        virtual void  setZenerV( double zenerV );
-
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
 
-        virtual void   setRes( double resist );
-        virtual double res() { return m_imped; }
+        virtual void   setRes( double resist )  override { m_resistor->setResSafe( resist ); }
+        virtual double res() override { return m_resistor->res(); }
+
+        virtual ePin* getEpin( int num ) override;
+        virtual void  setEpin( int num, ePin* pin ) override;
+
+        double threshold() { return m_fdDrop; }
+        void   setThreshold( double fdDrop );
+
+        double brkDownV(){ return m_bkDown; }
+        void   setBrkDownV( double bkDown );
+
+        double satCur_nA() { return m_satCur*1e9; }
+        void   setSatCur_nA( double sc_nA ) { setSatCur( sc_nA*1e-9 ); }
+
+        double satCur() { return m_satCur; }
+        void   setSatCur( double satCur );
+
+        double emCoef() { return m_emCoef; }
+        void   setEmCoef( double emCoef );
 
     protected:
-        void updateVI();
+        double limitStep( double vnew, double scale, double vc );
+        void SetParameters( double sc, double ec, double bv, double sr );
+        void updateValues();
+        void createSerRes();
+
+        bool m_converged;
+
+        double m_vt;
+        double m_satCur;
+        double m_emCoef;
+        double m_vScale;
+        double m_vdCoef;
+        double m_vzCoef;
+        double m_zOfset;
+        double m_vCriti;
+        double m_vzCrit;
+
+        double m_fdDrop;
+        double m_bkDown;
 
         double m_voltPN;
-        double m_deltaV;
-        double m_threshold;
-        double m_imped;
-        double m_zenerV;
-        double m_lastCurrent;
+        double m_bAdmit;
+
+        ePin* m_pinP;
+        ePin* m_pinN;
+        ePin* m_pinR0;
+        ePin* m_pinR1;
+        eNode* m_midEnode;
+        eResistor* m_resistor;
 };
 #endif
 

@@ -22,6 +22,7 @@
 #include "circuit.h"
 #include "itemlibrary.h"
 #include "iopin.h"
+#include "e-node.h"
 #include "utils.h"
 
 static const char* Scripted_properties[] = {
@@ -29,9 +30,7 @@ static const char* Scripted_properties[] = {
 };
 
 Component* Scripted::construct( QObject* parent, QString type, QString id )
-{
-    return new Scripted( parent, type, id );
-}
+{ return new Scripted( parent, type, id ); }
 
 LibraryItem* Scripted::libraryItem()
 {

@@ -24,7 +24,9 @@
 eElement::eElement( QString id )
 {
     m_elmId = id;
+    nextChanged = NULL;
     added = false;
+    m_step = 0;
 
     if( Simulator::self() ) Simulator::self()->addToElementList( this );
 }
@@ -39,19 +41,14 @@ eElement::~eElement()
 void eElement::setNumEpins( int n )
 {
     m_ePin.resize(n);
-    for( int i=0; i<n; i++ )
+    for( int i=0; i<n; ++i )
     {
-        if( m_ePin[i] == 0 )
+        if( m_ePin[i] == NULL )
             m_ePin[i] = new ePin( m_elmId+"-ePin"+QString::number(i), i );
-    }
-}
+}   }
 
-ePin* eElement::getEpin( int pin )
-{
-    return m_ePin[pin];
-}
+ePin* eElement::getEpin( int num )
+{ return m_ePin[num]; }
 
 void eElement::setEpin( int num, ePin* pin )
-{
-    m_ePin[num] = pin;
-}
+{ m_ePin[num] = pin; }

@@ -32,9 +32,7 @@ static const char* SevenSegment_properties[] = {
 };
 
 Component* SevenSegment::construct( QObject* parent, QString type, QString id )
-{
-    return new SevenSegment( parent, type, id );
-}
+{ return new SevenSegment( parent, type, id ); }
 
 LibraryItem* SevenSegment::libraryItem()
 {
@@ -99,6 +97,26 @@ QList<propGroup_t> SevenSegment::propGroups()
     return {mainGroup, elecGroup};
 }
 
+void SevenSegment::attach()
+{
+    for( int i=0; i<8; ++i ) m_enode[i] = m_ePin[i]->getEnode(); // Get eNode of pin i
+    for( int i=0; i<m_numDisplays; ++i )
+    {
+        eNode* commonEnode = m_commonPin[i]->getEnode();     // Get eNode of common
+
+        int pin;
+        for( int j=0; j<8; ++j )
+        {
+            pin = i*8+j;
+            if( m_commonCathode )
+            {
+                m_cathodePin[pin]->setEnode( commonEnode );
+                m_anodePin[pin]->setEnode( m_enode[j] );
+            }else{
+                m_anodePin[pin]->setEnode( commonEnode );
+                m_cathodePin[pin]->setEnode( m_enode[j] );
+}   }   }   }
+
 void SevenSegment::setColor( LedBase::LedColor color ) 
 { 
     m_ledColor = color;
@@ -150,19 +168,16 @@ void SevenSegment::setVerticalPins( bool v )
     m_verticalPins = v;
     
     if( v ) {
-        for( int i=0; i<5; ++i )
-        {
+        for( int i=0; i<5; ++i ){
             m_pin[i]->setPos(-16+8*i,-24-8 );
             m_pin[i]->setRotation( 90 );
         }
-        for( int i=5; i<8; ++i )
-        {
+        for( int i=5; i<8; ++i ){
             m_pin[i]->setPos(-16+8*(i-5), 24+8 );
             m_pin[i]->setRotation(-90 );
         }
     }else{
-        for( int i=0; i<7; ++i )
-        {
+        for( int i=0; i<7; ++i ){
             m_pin[i]->setPos(-16-8,-24+i*8 );
             m_pin[i]->setRotation( 0 );
         }
@@ -196,29 +211,6 @@ void SevenSegment::setMaxCurrent( double current )
     for( uint i=0; i<m_segment.size(); ++i ) m_segment[i]->setMaxCurrent( current );
 }
 
-void SevenSegment::attach()
-{
-    for( int i=0; i<8; ++i ) m_enode[i] = m_ePin[i]->getEnode(); // Get eNode of pin i
-    for( int i=0; i<m_numDisplays; ++i )
-    {
-        eNode* commonEnode = m_commonPin[i]->getEnode();     // Get eNode of common
-
-        int pin;
-        for( int j=0; j<8; ++j )
-        {
-            pin = i*8+j;
-            if( m_commonCathode )
-            {
-                m_cathodePin[pin]->setEnode( commonEnode );
-                m_anodePin[pin]->setEnode( m_enode[j] );
-            }else{
-                m_anodePin[pin]->setEnode( commonEnode );
-                m_cathodePin[pin]->setEnode( m_enode[j] );
-            }
-        }
-    }
-}
-
 void SevenSegment::deleteDisplay( int dispNumber )
 {
     Pin* pin = m_commonPin[dispNumber];
@@ -243,11 +235,10 @@ void SevenSegment::createDisplay( int dispNumber )
         LedSmd* lsmd;
         if( i<7 ) lsmd = new LedSmd( this, "LEDSMD", pinid, QRectF(0, 0, 13.5, 1.5) ); // Segment
         else      lsmd = new LedSmd( this, "LEDSMD", pinid, QRectF(0, 0, 1.5, 1.5) );  // Point
+
         lsmd->setParentItem(this);
-        //lsmd->setEnabled(false);
         lsmd->setFlag( QGraphicsItem::ItemIsSelectable, false );
         lsmd->setAcceptedMouseButtons(0);
-        lsmd->setNumEpins(2);
         lsmd->setMaxCurrent( 0.02 );
 
         m_anodePin  [dispNumber*8+i] = lsmd->getEpin(0);

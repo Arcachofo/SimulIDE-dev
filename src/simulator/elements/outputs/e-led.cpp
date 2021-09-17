@@ -25,7 +25,6 @@
 eLed::eLed( QString id ) 
     : eDiode( id )
 {
-    m_threshold  = 2.4;
     m_maxCurrent = 0.03;
     initialize();
 }
@@ -35,10 +34,10 @@ void eLed::initialize()
 {
     m_prevStep = 0;
     m_lastCurrent = 0.0;
-    m_bright = 25;
-    m_disp_brightness  = 0;
-    m_avg_brightness   = 0;
-    m_lastUpdatePeriod = 0;
+    m_intensity = 25;
+    m_brightness  = 0;
+    m_avgBright   = 0;
+    m_lastPeriod = 0;
 
     eDiode::initialize();
 }
@@ -46,21 +45,17 @@ void eLed::initialize()
 void eLed::voltChanged()
 {
     eDiode::voltChanged();
-    updateVI();
+    if( m_converged ) updateVI();
 }
 
 void eLed::updateVI()
 {
-    eDiode::updateVI();
-    
     const uint64_t step = Simulator::self()->circTime();
     uint64_t period = (step-m_prevStep);
-
     m_prevStep = step;
-    m_lastUpdatePeriod += period;
+    m_lastPeriod += period;
 
-    if( m_lastCurrent > 0) m_avg_brightness += m_lastCurrent*period/m_maxCurrent;
-    
+    if( m_lastCurrent > 0 ) m_avgBright += m_lastCurrent*period/m_maxCurrent;
     m_lastCurrent = m_current;
 }
 
@@ -68,9 +63,9 @@ void eLed::updateBright()
 {
     if( !Simulator::self()->isRunning() )
     {
-        m_avg_brightness = 0;
-        m_lastUpdatePeriod = 0;
-        m_bright = 25;
+        m_avgBright = 0;
+        m_lastPeriod = 0;
+        m_intensity = 25;
         return;
     }
     updateVI();
@@ -78,13 +73,11 @@ void eLed::updateBright()
     uint64_t sPF = Simulator::self()->stepsPerFrame();
     uint64_t sPS = Simulator::self()->stepSize();
 
-    if( m_lastUpdatePeriod > sPF*sPS )
+    if( m_lastPeriod > sPF*sPS/2 ) // Update 2 times per frame
     {
-        m_disp_brightness = m_avg_brightness/m_lastUpdatePeriod;
-        
-        m_disp_brightness = pow( m_disp_brightness, 1.0/2.0 );
+        m_brightness = pow( m_avgBright/m_lastPeriod, 1.0/2.0 );
 
-        m_avg_brightness   = 0;
-        m_lastUpdatePeriod = 0;
-        m_bright = uint32_t(m_disp_brightness*255)+25;
+        m_avgBright  = 0;
+        m_lastPeriod = 0;
+        m_intensity  = uint32_t(m_brightness*255)+25;
 }   }

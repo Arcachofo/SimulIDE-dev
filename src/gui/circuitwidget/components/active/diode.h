@@ -21,17 +21,23 @@
 #define DIODE_H
 
 #include "e-diode.h"
-#include "itemlibrary.h"
+#include "component.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT Diode : public Component, public eDiode
 {
     Q_OBJECT
     Q_PROPERTY( double Threshold  READ threshold WRITE setThreshold DESIGNABLE true USER true )
-    Q_PROPERTY( double Zener_Volt READ zenerV    WRITE setZenerV    DESIGNABLE true USER true )
-    
+    Q_PROPERTY( double BrkDownV   READ brkDownV  WRITE setBrkDownV  DESIGNABLE true USER true )
+    Q_PROPERTY( double SatCur_nA  READ satCur_nA WRITE setSatCur_nA DESIGNABLE true USER true )
+    Q_PROPERTY( double EmCoef     READ emCoef    WRITE setEmCoef    DESIGNABLE true USER true )
+    Q_PROPERTY( double Resistance READ res       WRITE setRes       DESIGNABLE true USER true )
+
+    Q_PROPERTY( double Zener_Volt READ zenerV    WRITE setZenerV    DESIGNABLE true USER true ) // Compatibility with old circuits.
 
     public:
-        Diode( QObject* parent, QString type, QString id );
+        Diode( QObject* parent, QString type, QString id, bool zener=false );
         ~Diode();
 
         static Component* construct( QObject* parent, QString type, QString id );
@@ -39,7 +45,13 @@ class MAINMODULE_EXPORT Diode : public Component, public eDiode
 
         virtual QList<propGroup_t> propGroups() override;
 
+        double zenerV(){ return m_bkDown; }
+        void   setZenerV( double zenerV );
+
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+
+    private:
+        bool m_isZener;
 };
 
 #endif

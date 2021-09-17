@@ -23,6 +23,7 @@
 #include "simulator.h"
 #include "circuit.h"
 #include "e-resistor.h"
+#include "e-node.h"
 #include "iopin.h"
 
 static const char* MuxAnalog_properties[] = {
@@ -30,9 +31,7 @@ static const char* MuxAnalog_properties[] = {
 };
 
 Component* MuxAnalog::construct( QObject* parent, QString type, QString id )
-{
-        return new MuxAnalog( parent, type, id );
-}
+{ return new MuxAnalog( parent, type, id ); }
 
 LibraryItem* MuxAnalog::libraryItem()
 {

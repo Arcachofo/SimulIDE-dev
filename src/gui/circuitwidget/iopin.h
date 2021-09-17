@@ -23,7 +23,6 @@
 #include <QColor>
 
 #include "pin.h"
-#include "e-node.h"
 #include "e-element.h"
 
 enum pinMode_t{
@@ -34,6 +33,8 @@ enum pinMode_t{
     source
 };
 
+class eNode;
+
 class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 {
     public:
@@ -43,8 +44,8 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual void initialize() override;
         virtual void stamp() override { stampAll(); }
 
-        void stampAll() { ePin::stampAdmitance( m_admit ); stampOutput(); }
-        void stampOutput() { m_scrEnode->setVolt( m_outVolt ); ePin::stampCurrent( m_outVolt/m_imp ); }
+        void stampAll();
+        void stampOutput();
 
         pinMode_t pinMode() { return m_pinMode; }
         void setPinMode( pinMode_t mode );
@@ -61,7 +62,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void  setOutputImp( double imp );
 
-        double imp() { return m_imp; }
+        //double imp() { return m_imp; }
         virtual void  setImp( double imp );
 
         virtual bool getInpState();
@@ -94,7 +95,6 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         double m_inputImp;
         double m_outputImp;
         double m_openImp;
-        double m_imp;
         double m_admit;
 
         bool m_inpState;

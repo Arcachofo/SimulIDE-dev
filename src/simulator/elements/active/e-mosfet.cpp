@@ -22,6 +22,7 @@
 
 #include "e-mosfet.h"
 #include "simulator.h"
+#include "e-pin.h"
 #include "e-node.h"
 
 eMosfet::eMosfet( QString id )
@@ -31,7 +32,6 @@ eMosfet::eMosfet( QString id )
     m_depletion = false;
     
     m_gateV     = 0;
-    m_resist    = 1;
     m_RDSon     = 1;
     m_threshold = 3;
 
@@ -86,7 +86,7 @@ void eMosfet::voltChanged()
 
     double admit = cero_doub;
     double current = 0;
-    double maxCurrDS = Vds/m_resist;
+    double maxCurrDS = Vds*m_admit;
     double DScurrent = m_accuracy*2;
     
     if( gateV > 0 )

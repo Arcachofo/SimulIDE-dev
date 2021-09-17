@@ -116,6 +116,7 @@
 #include "voltsource.h"
 #include "wavegen.h"
 #include "ws2812.h"
+#include "zener.h"
 //END Item includes
 
 ItemLibrary* ItemLibrary::m_pSelf = 0l;
@@ -174,6 +175,7 @@ void ItemLibrary::loadItems()
     addItem( Inductor::libraryItem() );
     // Active
     addItem( Diode::libraryItem() );
+    addItem( Zener::libraryItem() );
     addItem( VoltReg::libraryItem() );
     addItem( OpAmp::libraryItem() );
     addItem( Mosfet::libraryItem() );

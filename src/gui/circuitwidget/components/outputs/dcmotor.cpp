@@ -84,7 +84,7 @@ DcMotor::DcMotor( QObject* parent, QString type, QString id )
     setLabelPos(-22,-48, 0);
 
     m_unit = "Ω";
-    setResist( m_resist );
+    setResist( 1/m_admit );
 
     Simulator::self()->addToUpdateList( this );
 

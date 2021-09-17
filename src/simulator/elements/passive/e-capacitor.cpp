@@ -23,6 +23,7 @@
 #include <math.h>
 
 #include "e-capacitor.h"
+#include "e-pin.h"
 #include "e-node.h"
 #include "simulator.h"
 
@@ -53,7 +54,7 @@ void eCapacitor::runEvent()
     if( m_volt != volt )
     {
         m_volt = volt;
-        m_curSource = volt/m_resist;
+        m_curSource = volt*m_admit;
 
         m_ePin[0]->stampCurrent( m_curSource );
         m_ePin[1]->stampCurrent(-m_curSource );

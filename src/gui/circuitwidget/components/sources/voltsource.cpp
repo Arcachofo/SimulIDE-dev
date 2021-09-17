@@ -71,9 +71,7 @@ void VoltSource::updateStep()
     {
         m_outPin->setOutHighV( m_outValue );
         m_outPin->setOutState( m_button->isChecked(), true );
-
         m_changed = false;
-    }
-}
+}   }
 
 #include "moc_voltsource.cpp"
