@@ -54,12 +54,11 @@ void IntVal::setup( Component* comp, QString unit )
         unitBox->addItem( "M"+unit);
         unitBox->addItem( "G"+unit);
         unitBox->addItem( "T"+unit);
-    }
-    else
-    {
+    }else{
         //showVal->setVisible( false );
-        if( unit.isEmpty() ) unitBox->setVisible( false );
-        else                 unitBox->addItem(" "+unit+" ");
+        QString un = unit;
+        if( unit.size() < 3 ) un.prepend(" ");
+        unitBox->addItem( un );
         unitBox->setStyleSheet ("QComboBox::drop-down {border-width: 0px;} "
                  "QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
     }

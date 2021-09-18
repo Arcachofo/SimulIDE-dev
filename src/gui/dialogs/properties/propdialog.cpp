@@ -64,6 +64,7 @@ void PropDialog::setComponent( Component* comp )
             index++;
             QWidget* propWidget = new QWidget( tabList );
             propWidget->setLayout( new QVBoxLayout( propWidget ));
+            propWidget->layout()->setSpacing( 9 );
 
             for( property_t prop : propList )
             {
@@ -92,10 +93,10 @@ void PropDialog::setComponent( Component* comp )
                 else if( unit.contains("text"))        mp = new TextVal( this );
                 else if( type == QVariant::Double )    mp = new DoubleVal( this );
                 else if( type == QVariant::Int
-                      || type == QVariant::ULongLong  ) mp = new IntVal( this );
-                else if( type == QVariant::Bool )       mp = new BoolVal( this );
-                else if( type == QVariant::String )     mp = new StringVal( this );
-                else if( type == QVariant::Color )      mp = new ColorVal( this );
+                      || type == QVariant::ULongLong ) mp = new IntVal( this );
+                else if( type == QVariant::Bool )      mp = new BoolVal( this );
+                else if( type == QVariant::String )    mp = new StringVal( this );
+                else if( type == QVariant::Color )     mp = new ColorVal( this );
 
                 if( !mp ) continue;
                 m_propList.append( mp );
@@ -137,4 +138,4 @@ void PropDialog::on_helpButton_clicked()
 }
 
 void PropDialog::updtValues()
-{ for( PropVal* prop : m_propList )  prop->updtValues(); }
+{ for( PropVal* prop : m_propList ) prop->updtValues(); }

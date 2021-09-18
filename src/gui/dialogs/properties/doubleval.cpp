@@ -59,13 +59,15 @@ void DoubleVal::setup( Component* comp, QString unit )
         unitBox->addItem( "T"+unit);
     }else{
         showVal->setVisible( false );
-        if( unit.isEmpty() ) unitBox->setVisible( false );
-        else                 unitBox->addItem(" "+unit+" ");
+        QString un = unit;
+        if( unit.size() < 3 ) un.prepend(" ");
+        unitBox->addItem( un );
         unitBox->setStyleSheet ("QComboBox::drop-down {border-width: 0px;} "
                  "QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
     }
     updtValues();
     m_blocked = false;
+    this->adjustSize();
 }
 
 void DoubleVal::on_valueBox_valueChanged( double val )
@@ -73,7 +75,7 @@ void DoubleVal::on_valueBox_valueChanged( double val )
     if( m_blocked ) return;
     m_blocked = true;
     m_component->setProperty( m_propName.toUtf8(), val );
-    if( m_main ) setUnit();
+    //if( m_main ) setUnit();
     m_blocked = false;
 }
 
@@ -88,7 +90,7 @@ void DoubleVal::on_unitBox_currentTextChanged( QString unit )
     if( !m_main | m_blocked ) return;
     m_blocked = true;
     m_component->setUnit( unit );
-    updtValues();
+    //updtValues();
     m_blocked = false;
 }
 
