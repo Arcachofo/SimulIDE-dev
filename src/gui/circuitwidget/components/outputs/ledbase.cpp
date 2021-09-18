@@ -36,12 +36,11 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
     Q_UNUSED( LedBase_properties );
     
     m_graphical = true;
-    m_overCurrent = false;
     m_grounded = false;
     m_scrEnode = NULL;
-    m_counter = 0;
     m_intensity = 0;
-    
+    m_diodeType = "led";
+
     m_color = QColor( Qt::black );
     setColor( yellow );
     
@@ -58,6 +57,7 @@ LedBase::~LedBase()
 void LedBase::initialize()
 {
     m_crashed = false;
+    m_warning = false;
     eLed::initialize();
     update();
 }
@@ -66,26 +66,18 @@ void LedBase::updateStep()
 {
     uint32_t intensity = m_intensity;
     eLed::updateBright();
-    
-    if( m_intensity > 255+75 )
+
+    if( m_current > m_maxCur*1.2 )
     {
-        m_intensity = 255+75;
-        m_counter++;
-        
-        if( m_counter > 4 )
-        {
-            m_counter = 0;
-            m_overCurrent = !m_overCurrent;
-            update();
-    }   }
-    else if( m_overCurrent )
-    {
-        m_crashed = true;
-        m_overCurrent = false;
-        m_counter = 0;
+        m_warning = true;
+        m_crashed = m_current > m_maxCur*2;
         update();
+    }else{
+        if( m_warning ) update();
+        m_warning = false;
+        m_crashed = false;
     }
-    else if( intensity != m_intensity ) update();
+    if( intensity != m_intensity ) update();
 }
 
 void LedBase::setGrounded( bool grounded )
@@ -115,6 +107,7 @@ void LedBase::setGrounded( bool grounded )
         pin1->setEnabled( true );
         pin1->setVisible( true );
         pin1->setEnode( NULL );
+        m_scrEnode = NULL;
     }
     m_grounded = grounded;
 }
@@ -126,9 +119,8 @@ void LedBase::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
     QPen pen(Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     QColor color;
 
-    if( m_overCurrent )                               // Max Current
+    if( m_current > m_maxCur )    // Led very overloaded
     {
-        //m_intensity = 0;
         p->setBrush( Qt::white );
         color = QColor( Qt::white );
         pen.setColor( color );
@@ -137,16 +129,14 @@ void LedBase::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
         
         if( m_intensity > 25 )
         {
-            m_intensity += 15;                          // Set a Minimun Bright
-            
+            m_intensity += 15;       // Set a Minimun Bright
             if( m_intensity > 255 )
             {
                 overBight += m_intensity-255;
                 m_intensity = 255;
         }   }
-        color = QColor( m_intensity, m_intensity, overBight ); // Default = yellow
-        
-        if     ( m_ledColor == red )    color = QColor( m_intensity,  m_intensity/3, overBight );
+        if     ( m_ledColor == yellow ) color = QColor( m_intensity, m_intensity, overBight );
+        else if( m_ledColor == red )    color = QColor( m_intensity,  m_intensity/3, overBight );
         else if( m_ledColor == green )  color = QColor( overBight, m_intensity,   m_intensity*2/3 );
         else if( m_ledColor == blue )   color = QColor( overBight, m_intensity/2, m_intensity );
         else if( m_ledColor == orange ) color = QColor( m_intensity,  m_intensity*2/3, overBight );

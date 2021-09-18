@@ -28,9 +28,6 @@ class MAINMODULE_EXPORT eLed : public eDiode
         eLed( QString id );
         ~eLed();
 
-        virtual double maxCurrent() const             { return m_maxCurrent; }
-        virtual void  setMaxCurrent( double current ) { m_maxCurrent = current; }
-
         virtual void initialize() override;
         virtual void voltChanged() override;
 
@@ -41,7 +38,6 @@ class MAINMODULE_EXPORT eLed : public eDiode
         uint64_t m_prevStep;
         uint32_t m_intensity;
 
-        double m_maxCurrent;
         double m_lastCurrent;
         double m_lastPeriod;
         double m_avgBright;

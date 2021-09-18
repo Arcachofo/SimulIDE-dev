@@ -28,6 +28,7 @@ class eNode;
 class MAINMODULE_EXPORT LedBase : public Component, public eLed
 {
     Q_OBJECT
+    Q_PROPERTY( QString Model     READ model      WRITE setModel     DESIGNABLE true USER true )
     Q_PROPERTY( LedColor Color    READ color      WRITE setColor      DESIGNABLE true USER true )
     Q_PROPERTY( double Threshold  READ threshold  WRITE setThreshold  DESIGNABLE true USER true )
     Q_PROPERTY( double BrkDownV   READ brkDownV   WRITE setBrkDownV   DESIGNABLE true USER true )
@@ -57,22 +58,21 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         bool grounded() { return m_grounded; }
         void setGrounded( bool grounded );
 
-        virtual void initialize();
+        virtual void initialize() override;
         virtual void updateStep() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual QStringList getEnums() override { return m_leds.keys(); }
+
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
-        virtual void drawBackground( QPainter *p )=0;
-        virtual void drawForeground( QPainter *p )=0;
+        virtual void drawBackground( QPainter* p )=0;
+        virtual void drawForeground( QPainter* p )=0;
         
         bool   m_grounded;
         eNode* m_scrEnode;
         
         LedColor m_ledColor;
-        
-        bool m_overCurrent;
-        int  m_counter;
 };
 
 #endif

@@ -25,7 +25,7 @@
 eLed::eLed( QString id ) 
     : eDiode( id )
 {
-    m_maxCurrent = 0.03;
+    m_maxCur = 0.03;
     initialize();
 }
 eLed::~eLed() {}
@@ -55,7 +55,7 @@ void eLed::updateVI()
     m_prevStep = step;
     m_lastPeriod += period;
 
-    if( m_lastCurrent > 0 ) m_avgBright += m_lastCurrent*period/m_maxCurrent;
+    if( m_lastCurrent > 0 ) m_avgBright += m_lastCurrent*period/m_maxCur;
     m_lastCurrent = m_current;
 }
 

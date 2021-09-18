@@ -66,6 +66,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_graphical  = false;
     m_mainComp   = false;
     m_crashed    = false;
+    m_warning    = false;
     m_BackGround = "";
 
     m_propDialog = NULL;
@@ -506,12 +507,20 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     }
     else color = m_color;
 
-    if( m_crashed )
+    if( m_warning )
     {
-        m_opCount += 0.04;
-        if( m_opCount > 0.8 ) m_opCount = 0.2;
-        p->setOpacity( m_opCount );
-        p->fillRect( boundingRect(), Qt::yellow  );
+        double speed, opaci;
+        if( m_crashed ){
+            speed = 0.1; opaci = 0;
+            p->fillRect( boundingRect(), QColor(255, 100, 0, 150) );
+        }
+        else if( m_warning ){
+            speed = 0.05; opaci = 0.4;
+            p->fillRect( boundingRect(), QColor(200, 200, 0, 150) );
+        }
+        m_opCount += speed;
+        if( m_opCount > 0.6 ) m_opCount = 0.0;
+        p->setOpacity( m_opCount+opaci );
     }
     else if( m_mainComp )
     {

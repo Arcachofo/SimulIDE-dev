@@ -47,13 +47,14 @@ Led::Led( QObject* parent, QString type, QString id )
     setEpin( 1, m_pin[1] );
 
     createSerRes();
-    SetParameters( 93.2e-12, 3.73, 0, 0.042 );
+    setModel( "RGY Default" );
 }
 Led::~Led(){}
 
 QList<propGroup_t> Led::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
+    mainGroup.propList.append( {"Model", tr("Model"),"enum"} );
     mainGroup.propList.append( {"Color", tr("Color"),"enum"} );
     mainGroup.propList.append( {"Grounded", tr("Grounded"),""} );
 
@@ -73,7 +74,6 @@ QList<propGroup_t> Led::propGroups()
 void Led::drawBackground( QPainter *p )
 {
     p->drawEllipse( -6, -8, 16, 16 );
-    //p->drawLine( 11,-5, 11, 5 );
 }
 
 void Led::drawForeground( QPainter *p )

@@ -157,3 +157,5 @@ void RelayBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
 
     MechContact::paint( p, option, widget );
 }
+
+#include "moc_relay_base.cpp"

@@ -56,4 +56,4 @@ QList<propGroup_t> RelaySPST::propGroups()
     return {mainGroup, elecGroup};
 }
 
-#include "moc_relay-spst.cpp"
+//#include "moc_relay-spst.cpp"

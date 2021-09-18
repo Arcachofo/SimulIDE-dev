@@ -28,11 +28,13 @@ class LibraryItem;
 class MAINMODULE_EXPORT Diode : public Component, public eDiode
 {
     Q_OBJECT
-    Q_PROPERTY( double Threshold  READ threshold WRITE setThreshold DESIGNABLE true USER true )
-    Q_PROPERTY( double BrkDownV   READ brkDownV  WRITE setBrkDownV  DESIGNABLE true USER true )
-    Q_PROPERTY( double SatCur_nA  READ satCur_nA WRITE setSatCur_nA DESIGNABLE true USER true )
-    Q_PROPERTY( double EmCoef     READ emCoef    WRITE setEmCoef    DESIGNABLE true USER true )
-    Q_PROPERTY( double Resistance READ res       WRITE setRes       DESIGNABLE true USER true )
+    Q_PROPERTY( QString Model      READ model     WRITE setModel     DESIGNABLE true USER true )
+    Q_PROPERTY( double  Threshold  READ threshold WRITE setThreshold DESIGNABLE true USER true )
+    Q_PROPERTY( double  BrkDownV   READ brkDownV  WRITE setBrkDownV  DESIGNABLE true USER true )
+    Q_PROPERTY( double  SatCur_nA  READ satCur_nA WRITE setSatCur_nA DESIGNABLE true USER true )
+    Q_PROPERTY( double  EmCoef     READ emCoef    WRITE setEmCoef    DESIGNABLE true USER true )
+    Q_PROPERTY( double  MaxCurrent READ maxCurrent WRITE setMaxCurrent DESIGNABLE true USER true )
+    Q_PROPERTY( double  Resistance READ res       WRITE setRes       DESIGNABLE true USER true )
 
     Q_PROPERTY( double Zener_Volt READ zenerV    WRITE setZenerV    DESIGNABLE true USER true ) // Compatibility with old circuits.
 
@@ -45,10 +47,15 @@ class MAINMODULE_EXPORT Diode : public Component, public eDiode
 
         virtual QList<propGroup_t> propGroups() override;
 
+        virtual void initialize() override;
+        virtual void updateStep() override;
+
         double zenerV(){ return m_bkDown; }
         void   setZenerV( double zenerV );
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual QStringList getEnums() override { return m_diodes.keys(); }
+
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
         bool m_isZener;

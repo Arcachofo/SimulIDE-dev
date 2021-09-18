@@ -22,6 +22,14 @@
 
 #include "e-resistor.h"
 
+struct diodeData_t
+{
+    double satCur;
+    double emCoef;
+    double brkDow;
+    double resist;
+};
+
 class eNode;
 
 class MAINMODULE_EXPORT eDiode : public eResistor
@@ -55,6 +63,15 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         double emCoef() { return m_emCoef; }
         void   setEmCoef( double emCoef );
 
+        double maxCurrent() { return m_maxCur; }
+        void   setMaxCurrent( double cur ) { m_maxCur = cur; }
+
+        QString model() { return m_model; }
+        void setModel( QString model );
+        void setModelData( diodeData_t data );
+
+ static void getModels();
+
     protected:
         double limitStep( double vnew, double scale, double vc );
         void SetParameters( double sc, double ec, double bv, double sr );
@@ -75,6 +92,7 @@ class MAINMODULE_EXPORT eDiode : public eResistor
 
         double m_fdDrop;
         double m_bkDown;
+        double m_maxCur;
 
         double m_voltPN;
         double m_bAdmit;
@@ -85,6 +103,13 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         ePin* m_pinR1;
         eNode* m_midEnode;
         eResistor* m_resistor;
+
+        QString m_diodeType;
+        QString m_model;
+
+ static QHash<QString, diodeData_t> m_diodes;
+ static QHash<QString, diodeData_t> m_zeners;
+ static QHash<QString, diodeData_t> m_leds;
 };
 #endif
 

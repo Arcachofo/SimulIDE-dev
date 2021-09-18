@@ -19,17 +19,26 @@
 // Based on Falstad Circuit Simulator Diode model: https://falstad.com
 
 #include <math.h>
+#include <QDir>
+#include <QDomDocument>
 
 #include "e-diode.h"
 #include "e-pin.h"
 #include "e-node.h"
 #include "simulator.h"
+#include "simuapi_apppath.h"
+#include "utils.h"
+
+QHash<QString, diodeData_t> eDiode::m_diodes;
+QHash<QString, diodeData_t> eDiode::m_zeners;
+QHash<QString, diodeData_t> eDiode::m_leds;
 
 eDiode::eDiode( QString id )
       : eResistor( id )
 {
     m_vt = 0.025865;
     m_vzCoef = 1/m_vt;
+    m_maxCur = 1;
 
     m_resistor = new eResistor( m_elmId+"-resistor");
     m_midEnode = new eNode( m_elmId+"-mideNode");
@@ -86,14 +95,14 @@ void eDiode::voltChanged()
     double gmin = m_bAdmit*exp( m_step );
     if( gmin > .1 ) gmin = .1;
 
-    if( m_bkDown == 0 || voltPN >= 0 )  // Normal  Diode or Forward biased Zener
+    if( m_bkDown == 0 || voltPN >= 0 )  // No breakdown Diode or Forward biased Zener
     {
         voltPN = limitStep( voltPN, m_vScale, m_vCriti );
         double eval = exp( voltPN*m_vdCoef );
         m_admit = m_satCur*m_vdCoef*eval + gmin;
         m_current = m_satCur*(eval-1);
     }
-    else{                               // Reverse  biased Zener
+    else{                               // Reverse biased Zener or Diode with breakdown
         double volt = -voltPN-m_zOfset;
         voltPN = -( limitStep( volt, m_vt, m_vzCrit ) + m_zOfset );
         double eval = exp( voltPN*m_vdCoef );
@@ -181,3 +190,61 @@ void eDiode::setEpin( int num, ePin* pin )
     if     ( num == 0 ) m_ePin[0] = pin;
     else if( num == 1 ) m_pinR1 = pin;
 }
+
+void eDiode::getModels() // Static
+{
+    m_diodes.insert( "Custom", {0, 0, 0, 0} );
+    m_diodes.insert( "Diode Default", {171.4352819281, 2, 0, 0} );
+    m_zeners.insert( "Custom", {0, 0, 0, 0} );
+    m_zeners.insert( "Zener Default", {171.4352819281, 2, 5.6, 0} );
+    m_leds.insert( "Custom", {0, 0, 0, 0} );
+    m_leds.insert( "RGY Default", {0.0932, 3.73, 0, 0.042} );
+
+    QDir dataDir = SIMUAPI_AppPath::self()->RODataFolder();
+    QString modelsFile = dataDir.absoluteFilePath( "diodes.model" );
+
+    QDomDocument domDoc = fileToDomDoc( modelsFile, "Diode::getModels");
+    QDomNode node = domDoc.documentElement().firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement itemset = node.toElement();
+        const QString type = itemset.attribute("type").toLower();
+
+        if( itemset.tagName() == "itemset" )
+        {
+            QDomNode nodei = itemset.firstChild();
+            while( !nodei.isNull() )
+            {
+                QDomElement item = nodei.toElement();
+                if( item.tagName() == "item" )
+                {
+                    QString name = item.attribute("name");
+                    diodeData_t data;
+                    data.satCur = item.attribute("satCurr_nA").toDouble();
+                    data.emCoef = item.attribute("emCoef").toDouble();
+                    data.brkDow = item.attribute("brkDown").toDouble();
+                    data.resist = item.attribute("resist").toDouble();
+
+                    if     ( type == "diode") m_diodes.insert( name, data );
+                    else if( type == "zener") m_zeners.insert( name, data );
+                    else if( type == "led")   m_leds.insert( name, data );
+                }
+                nodei = nodei.nextSibling();
+        }   }
+        node = node.nextSibling();
+}   }
+
+void eDiode::setModel( QString model )
+{
+    m_model = model;
+    if( model == "Custom" ) return;
+    if     ( m_diodes.contains( model ) ) setModelData( m_diodes.value( model ) );
+    else if( m_zeners.contains( model ) ) setModelData( m_zeners.value( model ) );
+    else if( m_leds.contains( model ) )   setModelData( m_leds.value( model ) );
+}
+
+void eDiode::setModelData( diodeData_t data )
+{
+    SetParameters( data.satCur*1e-9, data.emCoef, data.brkDow, data.resist );
+}
+

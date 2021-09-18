@@ -28,7 +28,7 @@ class eNode;
 class MAINMODULE_EXPORT RelayBase : public MechContact
 {
     Q_OBJECT
-    Q_PROPERTY( bool DT         READ dt       WRITE setDt    DESIGNABLE true USER true )
+    Q_PROPERTY( bool   DT       READ dt       WRITE setDt    DESIGNABLE true USER true )
     Q_PROPERTY( double Rcoil    READ rCoil    WRITE setRCoil DESIGNABLE true USER true )
     Q_PROPERTY( double IOn      READ iTrig    WRITE setITrig DESIGNABLE true USER true )
     Q_PROPERTY( double IOff     READ iRel     WRITE setIRel  DESIGNABLE true USER true )

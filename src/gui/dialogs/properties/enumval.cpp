@@ -41,19 +41,22 @@ void EnumVal::setup( Component* comp, QString )
     m_blocked = true;
     m_component = comp;
 
+    QVariant   v = comp->property( m_propName.toUtf8() );
     const QMetaObject* meta = comp->metaObject();
     QMetaProperty prop = meta->property(meta->indexOfProperty(qPrintable(m_propName)));
     if( prop.isEnumType() )
     {
         QMetaEnum qenum = prop.enumerator();
         for( int i=0; i<qenum.keyCount(); ++i ) valueBox->addItem( qenum.key(i) );
+        valueBox->setCurrentIndex( v.toInt() );
     }
-
-    QByteArray b = m_propName.toUtf8();
-    QVariant v = m_component->property( b );
-    int val = v.toInt();
-    valueBox->setCurrentIndex( val );
-
+    else
+    {
+        QStringList enums = comp->getEnums();
+        enums.sort();
+        for( QString val : enums ) valueBox->addItem( val );
+        valueBox->setCurrentText( v.toString() );
+    }
     this->adjustSize();
     m_blocked = false;
 }

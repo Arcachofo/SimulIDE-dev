@@ -27,7 +27,6 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
-
 MainWindow* MainWindow::m_pSelf = 0l;
 
 MainWindow::MainWindow()

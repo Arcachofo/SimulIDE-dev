@@ -146,8 +146,6 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         void setValLabelPos() { m_valLabel->setLabelPos(); }
         
         void updateLabel( Label* label, QString txt );
-        
-        // double getmultValue() { return m_value*m_unitMult; }
 
         QString backGround() { return m_BackGround; }
         virtual void setBackground( QString bck ){ m_BackGround = bck; }
@@ -168,6 +166,8 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
 
         virtual void move( QPointF delta ) { setPos( pos() + delta ); emit moved(); }
         void moveTo( QPointF pos ){ setPos( pos ); emit moved(); }
+
+        virtual QStringList getEnums(){ QStringList nul;return nul;}
 
  static bool m_selMainCo;
         bool isMainComp() { return m_mainComp; }
@@ -244,6 +244,7 @@ class MAINMODULE_EXPORT Component : public QObject, public QGraphicsItem, public
         bool m_hidden;
         bool m_graphical;
         bool m_mainComp;
+        bool m_warning;
         bool m_crashed;
 
         Component* m_subcircuit;

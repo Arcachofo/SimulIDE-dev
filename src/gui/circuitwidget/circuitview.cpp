@@ -27,6 +27,7 @@
 #include "mcucomponent.h"
 #include "subcircuit.h"
 #include "utils.h"
+#include "e-diode.h"
 
 CircuitView*  CircuitView::m_pSelf = 0l;
 
@@ -40,6 +41,8 @@ CircuitView::CircuitView( QWidget *parent )
     m_help = "";
     m_circuit     = 0l;
     m_enterItem   = 0l;
+
+    eDiode::getModels();
 
     viewport()->setFixedSize( 3200, 2400 );
     bool scrollBars = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
