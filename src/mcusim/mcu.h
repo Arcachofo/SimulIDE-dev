@@ -32,11 +32,6 @@ class MCUMonitor;
 class MAINMODULE_EXPORT Mcu : public McuBase
 {
         Q_OBJECT
-        Q_PROPERTY( QStringList varList  READ varList  WRITE setVarList )
-        Q_PROPERTY( QVector<int> eeprom  READ eeprom   WRITE setEeprom )
-        Q_PROPERTY( double   Mhz         READ freq     WRITE setFreq     DESIGNABLE true  USER true )
-        Q_PROPERTY( QString  Program     READ program  WRITE setProgram  DESIGNABLE true  USER true )
-        Q_PROPERTY( bool     Auto_Load   READ autoLoad WRITE setAutoLoad DESIGNABLE true  USER true )
 
         friend class McuCreator;
 
@@ -47,13 +42,11 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
+        QString varList();
+        void setVarList( QString vl );
 
-        QStringList varList();
-        void setVarList( QStringList vl );
-
-        void setEeprom(QVector<int> eep );
-        QVector<int> eeprom();
+        void setEeprom( QString eep );
+        QString getEeprom();
 
         QString program();
         void setProgram( QString pro );

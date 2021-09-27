@@ -23,35 +23,12 @@
 #include "connector.h"
 #include "circuit.h"
 
-static const char* LogicComponent_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Propagation Delay ns"),
-    QT_TRANSLATE_NOOP("App::Property","Input High V"),
-    QT_TRANSLATE_NOOP("App::Property","Input Low V"),
-    QT_TRANSLATE_NOOP("App::Property","Input Imped"),
-    QT_TRANSLATE_NOOP("App::Property","Out High V"),
-    QT_TRANSLATE_NOOP("App::Property","Out Low V"),
-    QT_TRANSLATE_NOOP("App::Property","Out Imped"),
-    QT_TRANSLATE_NOOP("App::Property","Inverted"),
-    QT_TRANSLATE_NOOP("App::Property","Tristate"),
-    QT_TRANSLATE_NOOP("App::Property","Clock Inverted"),
-    QT_TRANSLATE_NOOP("App::Property","Reset Inverted"),
-    QT_TRANSLATE_NOOP("App::Property","Invert Inputs"),
-    QT_TRANSLATE_NOOP("App::Property","S R Inverted"),
-    QT_TRANSLATE_NOOP("App::Property","Num Inputs"),
-    QT_TRANSLATE_NOOP("App::Property","Num Outputs"),
-    QT_TRANSLATE_NOOP("App::Property","Num Bits"),
-    QT_TRANSLATE_NOOP("App::Property","Channels"),
-    QT_TRANSLATE_NOOP("App::Property","Open Collector"),
-    QT_TRANSLATE_NOOP("App::Property","Trigger"),
-    QT_TRANSLATE_NOOP("App::Property"," 16 Bits")
-};
+QStringList LogicComponent::m_triggers = {tr("None"),tr("Clock"),tr("Enable")};
 
 LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
               : IoComponent( parent, type, id )
               , eClockedDevice( id )
 {
-    Q_UNUSED( LogicComponent_properties );
-
     m_oePin   = NULL;
     m_tristate = false;
     m_openCol  = false;
@@ -84,21 +61,17 @@ void LogicComponent::remove()
 }
 
 void LogicComponent::setOePin( IoPin* pin )
-{
-    pin->setInverted( true ); m_oePin = pin;
-}
+{ pin->setInverted( true ); m_oePin = pin; }
 
 bool LogicComponent::outputEnabled()
 {
     if( !m_oePin ) return true;
 
     double volt = m_oePin->getVolt();
-
     if     ( volt > m_inHighV ) m_outEnable = false;   // Active Low
     else if( volt < m_inLowV )  m_outEnable = true;
 
     m_oePin->setPinState( m_outEnable? input_low:input_high ); // Low-High colors
-
     return m_outEnable;
 }
 
@@ -108,7 +81,6 @@ void LogicComponent::updateOutEnabled()
 
     bool outEnPrev = m_outEnable;
     bool outEn = outputEnabled();              // Refresh m_outEnable
-
     if( outEnPrev != outEn ) enableOutputs( outEn );
 }
 
@@ -124,8 +96,15 @@ void LogicComponent::setTristate( bool t )  // Activate or deactivate OE Pin
 
     m_oePin->setVisible( t );
     m_tristate = t;
-
     updateOutEnabled();
+}
+
+void LogicComponent::setTriggerStr( QString t )
+{
+    bool ok = false;
+    int index = t.toInt( &ok );
+    if( !ok ) index = m_triggers.indexOf( t );
+    setTrigger( (trigger_t)index );
 }
 
 void LogicComponent::enableOutputs( bool en )
@@ -137,31 +116,23 @@ void LogicComponent::enableOutputs( bool en )
 void LogicComponent::setInputHighV( double volt )
 {
     Simulator::self()->pauseSim();
-
     IoComponent::setInputHighV( volt );
     if( m_clkPin) m_clkPin->setInputHighV( volt );
-
     Simulator::self()->resumeSim();
 }
 
 void LogicComponent::setInputLowV( double volt )
 {
     Simulator::self()->pauseSim();
-
     IoComponent::setInputLowV( volt );
     if( m_clkPin) m_clkPin->setInputLowV( volt );
-
     Simulator::self()->resumeSim();
 }
 
 void LogicComponent::setInputImp( double imp )
 {
     Simulator::self()->pauseSim();
-
     IoComponent::setInputImp( imp );
     if( m_clkPin) m_clkPin->setInputImp( imp );
-
     Simulator::self()->resumeSim();
 }
-
-#include "moc_logiccomponent.cpp"

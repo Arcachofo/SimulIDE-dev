@@ -298,3 +298,33 @@ void MemData::saveBin( QVector<int>* data, int bits )
 {
 
 }
+
+QString MemData::getMem( QVector<int>* data )
+{
+    QString m;
+    int size = data->size();
+    if( size > 0 )
+    {
+        bool empty = true;
+        for( int i=size-1; i>=0; --i )
+        {
+            int val = data->at( i );
+            if( val > 0 ) empty = false;
+            if( empty ) continue;
+            m.prepend( QString::number( val )+"," );
+    }   }
+    return m;
+}
+
+void MemData::setMem( QVector<int>* data, QString m )
+{
+    if( m.isEmpty() ) return;
+
+    QStringList list = m.split(",");
+    int i = 0;
+    for( QString val : list )
+    {
+        if( i >= data->size() ) break;
+        data->replace( i, val.toUInt() );
+        i++;
+}   }

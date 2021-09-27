@@ -26,26 +26,16 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT BcdTo7S : public BcdBase
 {
-    Q_OBJECT
-    Q_PROPERTY( bool Inverted READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
-    Q_PROPERTY( bool Tristate READ tristate   USER true )
-
     public:
         BcdTo7S( QObject* parent, QString type, QString id );
         ~BcdTo7S();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
-
-        bool tristate() { return true; }
 
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
-
 };
 
 #endif
-

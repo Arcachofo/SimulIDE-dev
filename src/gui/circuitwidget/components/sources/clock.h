@@ -21,25 +21,21 @@
 #define CLOCK_H
 
 #include "clock-base.h"
-#include "itemlibrary.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT Clock : public ClockBase
 {
-    Q_OBJECT
-    
     public:
-
         Clock( QObject* parent, QString type, QString id );
         ~Clock();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void runEvent() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 };
 
 #endif

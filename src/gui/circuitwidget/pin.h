@@ -77,7 +77,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         QString getLabelText() { return m_labelText; }
         void setLabelPos();
-        void setLabelColor( QColor color ) { m_label.setBrush( color ); }
+        void setLabelColor( QColor color );
         void setFontSize( int size );
         int  labelSizeX();
 
@@ -105,12 +105,12 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setPinId( QString id ) { m_id = id; }
 
     protected:
-        void mousePressEvent(QGraphicsSceneMouseEvent* event);
+        void mousePressEvent( QGraphicsSceneMouseEvent* event );
 
         pinState_t m_pinState;
         bool m_changed;
 
-    private:
+    protected:
         int m_angle;
         int m_length;
 

@@ -21,18 +21,12 @@
 #define WAVEGEN_H
 
 #include "clock-base.h"
-#include "itemlibrary.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT WaveGen : public ClockBase
 {
-    Q_OBJECT
-    Q_PROPERTY( double    Volt_Base READ voltBase WRITE setVoltBase DESIGNABLE true USER true )
-    Q_PROPERTY( double    Duty      READ duty     WRITE setDuty     DESIGNABLE true USER true )
-    Q_PROPERTY( int       Steps     READ steps    WRITE setSteps    DESIGNABLE true USER true )
-    Q_PROPERTY( wave_type Wave_Type READ waveType WRITE setWaveType DESIGNABLE true USER true )
-
     public:
-
         WaveGen( QObject* parent, QString type, QString id );
         ~WaveGen();
         
@@ -43,32 +37,34 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
             Square,
             Random
         };
-        Q_ENUM( wave_type )
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-        
-        double voltBase()            { return m_voltBase; }
-        void setVoltBase( double v ) { m_voltBase = v; }
-        
-        double duty();
-        void setDuty( double duty );
-        
-        int steps();
-        void setSteps( int steps );
-        
-        wave_type waveType()              { return m_type; }
-        void setWaveType( wave_type typ ) { m_type = typ; }
-        
-        virtual void updateStep() override;
+        virtual bool setProperty( QString prop, QString val ) override;
+
         virtual void runEvent() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
-        
-    private slots:
-        void updateValues();
+        double duty() { return m_duty; }
+        void setDuty( double duty );
+
+        int steps() { return m_steps; }
+        void setSteps( int steps );
+
+        QString waveType() { return m_waves.at( (int)m_waveType ); }
+        void setWaveType( QString type );
+
+        double semiAmpli() { return m_voltage/2; }
+        void setSemiAmpli( double v ) { m_voltage = v*2; }
+
+        double midVolt() { return m_voltBase+m_voltage/2; }
+        void setMidVolt( double v ) { m_voltBase = v-m_voltage/2;}
+
+        virtual void setFreq( double freq ) override;
+
+        virtual QStringList getEnums( QString e) override;
+
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
     private:
         void genSine();
@@ -77,7 +73,7 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         void genSquare();
         void genRandom();
         
-        wave_type m_type;
+        wave_type m_waveType;
         double m_duty;
         double m_vOut;
         double m_voltBase;
@@ -88,6 +84,8 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         int      m_steps;
         uint64_t m_qSteps;
         uint64_t m_nextStep;
+
+ static QStringList m_waves;
 };
 
 #endif

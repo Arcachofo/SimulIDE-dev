@@ -25,12 +25,10 @@
 #include "simulator.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
+#include "label.h"
 #include "iopin.h"
 
-static const char* Probe_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Show volt"),
-    QT_TRANSLATE_NOOP("App::Property","Threshold")
-};
+#include "doubleprop.h"
 
 Component* Probe::construct( QObject* parent, QString type, QString id )
 { return new Probe( parent, type, id ); }
@@ -49,94 +47,59 @@ Probe::Probe( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
      , eElement( id )
 {
-    Q_UNUSED( Probe_properties );
-
     m_graphical = true;
     
     m_area = QRect( -8, -8, 16, 16 );
-    m_readPin = 0l;
-    m_readConn = 0l;
     m_voltTrig = 2.5;
-    m_plotterColor = QColor( 255, 255, 255 );
 
-    // Create Input Pin
-    m_ePin.resize(1);
-    m_pin.resize(1);
-
-    m_inputPin = new IoPin( 180, QPoint(-22,0), id+"-inpin", 0, this, input);
+    m_pin.resize(1); // Create Input Pin
+    m_pin[0] = m_inputPin = new IoPin( 180, QPoint(-22,0), id+"-inpin", 0, this, input);
     m_inputPin->setLength( 20 );
     m_inputPin->setBoundingRect( QRect(-2, -2, 6, 4) );
     m_inputPin->setImp( 1e9 );
-    m_pin[0] = m_inputPin;
 
-
-    setRotation( rotation() - 45 );
-    
-    m_unit = " V";
+    //m_unit = " V";
     m_valLabel->setDefaultTextColor( Qt::darkRed );
-    m_valLabel->setPlainText( "0" );
-    setValLabelPos( 16, 0 , 45 ); // x, y, rot 
-    setVolt( 0 );
-    setShowVal( true );
-    
-    setLabelPos( 16, -16 , 45 );
+    setValLabelPos( 16, 0, 45 ); // x, y, rot
+    //setShowVal( true );
+    setLabelPos( 16,-16, 45 );
+    setRotation( rotation() - 45 );
 
     Simulator::self()->addToUpdateList( this );
+
+    addPropGroup( { tr("Main"), {
+new DoubProp<Probe>( "Threshold", tr("Threshold"), "V", this, &Probe::threshold,  &Probe::setThreshold )
+    } } );
 }
 Probe::~Probe(){}
 
-QList<propGroup_t> Probe::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
-    return {mainGroup};
-}
-
 void Probe::updateStep()
 {
-    m_readPin = 0l;
-    m_readConn = 0l;
-    
-    if( !Simulator::self()->isRunning() )
-    {
-        setVolt( 0.0 );
-        return;
-    }
+    if( !Simulator::self()->isRunning() ) { setVolt( 0.0 ); return; }
+
     if( m_inputPin->isConnected() )// Voltage from connected pin
     {
          setVolt( m_inputPin->getVolt() );
          return;
     }
+    QList<QGraphicsItem*> list = m_inputPin->collidingItems(); // Voltage from connector or Pin behind inputPin
+    if( list.isEmpty() ) { setVolt( 0.0 ); return; }
 
-    // Voltage from connector or Pin behind inputPin
-    QList<QGraphicsItem*> list = m_inputPin->collidingItems();
-
-    if( list.isEmpty() )
-    {
-        setVolt( 0.0 );
-        return;
-    }
     for( QGraphicsItem* it : list )
     {
-        if( it->type() == 65536 )                           // Component
+        if( it->type() == 65536+3 )                    // Pin found
         {
+            Pin* pin =  qgraphicsitem_cast<Pin*>( it );
+            setVolt(pin->getVolt() );
+            break;
+        }else{
             ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( it );
-
             Connector* con = line->connector();
-
             if( con->objectName().startsWith("Connector") ) // Connector found
             {
                 setVolt( con->getVolt() );
-                m_readConn = con;
                 break;
-            }
-        }
-        else if( it->type() == 65536+3 )                    // Pin found
-        {
-            m_readPin =  qgraphicsitem_cast<Pin *>( it );
-            setVolt( m_readPin->getVolt() );
-            break;
-}   }   }
+}   }   }   }
 
 void Probe::setVolt( double volt )
 {
@@ -147,23 +110,7 @@ void Probe::setVolt( double volt )
     int dispVolt = int( volt*100+0.5 );
     
     m_valLabel->setPlainText( QString("%1 V").arg(double(dispVolt)/100) );
-
     update();       // Repaint
-}
-
-double Probe::getVolt()
-{
-    double volt = 0;
-    if     ( m_inputPin->isConnected() ) volt = m_inputPin->getVolt();
-    else if( m_readConn != 0l )          volt = m_readConn->getVolt();
-    else if( m_readPin != 0l )           volt = m_readPin->getVolt();
-    return volt;
-}
-
-void Probe::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-    Component::remove();
 }
 
 QPainterPath Probe::shape() const
@@ -172,7 +119,6 @@ QPainterPath Probe::shape() const
     path.addEllipse( m_area );
     return path;
 }
-
 void Probe::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
@@ -183,5 +129,3 @@ void Probe::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
 
     p->drawEllipse( m_area );
 }
-
-#include "moc_probe.cpp"

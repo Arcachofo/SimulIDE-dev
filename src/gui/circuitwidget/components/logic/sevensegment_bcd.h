@@ -26,8 +26,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
 {
-    Q_OBJECT
-
     public:
         SevenSegmentBCD( QObject* parent, QString type, QString id );
         ~SevenSegmentBCD();
@@ -35,12 +33,9 @@ class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         void updateStep() override;
         
         void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 };
 
 #endif
-

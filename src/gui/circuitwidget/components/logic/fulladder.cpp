@@ -21,9 +21,7 @@
 #include "itemlibrary.h"
 
 Component* FullAdder::construct(QObject *parent, QString type, QString id)
-{
-    return new FullAdder(parent, type, id);
-}
+{ return new FullAdder(parent, type, id); }
 
 LibraryItem* FullAdder::libraryItem()
 {
@@ -36,28 +34,28 @@ LibraryItem* FullAdder::libraryItem()
 }
 
 FullAdder::FullAdder(QObject *parent, QString type, QString id) 
-          : LogicComponent( parent, type, id )
+         : LogicComponent( parent, type, id )
 {
     m_width  = 3;
     m_height = 4;
 
-    QStringList pinList;
-    pinList
-        << "IL01 A"
-        << "IL03 B"
-        << "IR01Ci "
+    init({         // Inputs:
+            "IL01 A",
+            "IL03 B",
+            "IR01Ci ",
+                    // Outputs:
+            "OR02S ",
+            "OR03Co ",
+        });
 
-        // Outputs:
-        << "OR02S "
-        << "OR03Co "
-        ;
-    init( pinList );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 FullAdder::~FullAdder(){}
 
 void FullAdder::stamp()
 {
-    for( uint i=0; i<m_inPin.size(); ++i )m_inPin[i]->changeCallBack( this );
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
     LogicComponent::stamp();
 }
 
@@ -75,5 +73,3 @@ void FullAdder::voltChanged()
     if( co  ) m_nextOutVal += 2;
     sheduleOutPuts( this );
 }
-
-#include "moc_fulladder.cpp"

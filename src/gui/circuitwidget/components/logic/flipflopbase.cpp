@@ -22,24 +22,23 @@
 #include "circuit.h"
 #include "iopin.h"
 
+#include "boolprop.h"
+#include "stringprop.h"
+
 FlipFlopBase::FlipFlopBase( QObject* parent, QString type, QString id )
-         : LogicComponent( parent, type, id )
+            : LogicComponent( parent, type, id )
 {
     m_dataPins = 0;
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<FlipFlopBase>( "Clock_Inverted", tr("Clock Inverted")      ,"", this, &FlipFlopBase::clockInv, &FlipFlopBase::setClockInv ),
+new BoolProp<FlipFlopBase>( "Reset_Inverted", tr("Set / Reset Inverted"),"", this, &FlipFlopBase::srInv,    &FlipFlopBase::setSrInv ),
+new StringProp<FlipFlopBase>( "Trigger"     , tr("Trigger Type")        ,"", this, &FlipFlopBase::triggerStr, &FlipFlopBase::setTriggerStr, "enum" ),
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 FlipFlopBase::~FlipFlopBase(){}
-
-QList<propGroup_t> FlipFlopBase::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
-    mainGroup.propList.append( {"S_R_Inverted", tr("Set / Reset Inverted"),""} );
-    mainGroup.propList.append( {"Trigger", tr("Trigger Type"),"enum"} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void FlipFlopBase::stamp()
 {
@@ -48,9 +47,8 @@ void FlipFlopBase::stamp()
     m_resetPin->changeCallBack( this );
 
     if( m_trigger != Clock ) // J K or D
-    {
-        for( int i=0; i<m_dataPins; i++ ) m_inPin[i]->changeCallBack( this );
-    }
+    { for( int i=0; i<m_dataPins; i++ ) m_inPin[i]->changeCallBack( this ); }
+
     LogicComponent::stamp();
     m_outPin[0]->setOutState( true );
 }
@@ -58,10 +56,8 @@ void FlipFlopBase::stamp()
 void FlipFlopBase::setSrInv( bool inv )
 {
     m_srInv = inv;
-    m_setPin->setInverted( inv ); // Set
+    m_setPin->setInverted( inv );   // Set
     m_resetPin->setInverted( inv ); // Reset
 
     Circuit::self()->update();
 }
-
-#include "moc_flipflopbase.cpp"

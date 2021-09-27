@@ -21,10 +21,10 @@
 #include "itemlibrary.h"
 #include "iopin.h"
 
+#include "boolprop.h"
+
 Component* ShiftReg::construct( QObject* parent, QString type, QString id )
-{
-    return new ShiftReg( parent, type, id );
-}
+{ return new ShiftReg( parent, type, id ); }
 
 LibraryItem* ShiftReg::libraryItem()
 {
@@ -42,14 +42,11 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 9;
 
-    QStringList pinList;
-
-    pinList // Inputs:
-            << "IL03 DI"
-            << "IL05>"
-            << "IL07 Rst"
-            ;
-    init( pinList );
+    init({         // Inputs:
+            "IL03 DI",
+            "IL05>",
+            "IL07 Rst"
+        });
 
     setNumOuts( 8, "Q" );
     createOePin( "IU01OE ", id+"-in4");
@@ -57,19 +54,15 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
     m_clkPin = m_inPin[1];
 
     setResetInv( true );         // Invert Reset Pin
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<ShiftReg>( "Clock_Inverted", tr("Clock Inverted"),"", this, &ShiftReg::clockInv, &ShiftReg::setClockInv ),
+new BoolProp<ShiftReg>( "Reset_Inverted", tr("Reset Inverted"),"", this, &ShiftReg::resetInv, &ShiftReg::setResetInv ),
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 ShiftReg::~ShiftReg(){}
-
-QList<propGroup_t> ShiftReg::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
-    mainGroup.propList.append( {"Reset_Inverted", tr("Reset Inverted"),""} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void ShiftReg::stamp()
 {
@@ -102,5 +95,3 @@ void ShiftReg::setResetInv( bool inv )
     m_resetInv = inv;
     m_inPin[2]->setInverted( inv );
 }
-
-#include "moc_shiftreg.cpp"

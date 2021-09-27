@@ -17,22 +17,17 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "connector.h"
 #include "simulator.h"
 #include "hd44780_base.h"
 #include "utils.h"
 
-static const char* Hd44780_Base_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Cols"),
-    QT_TRANSLATE_NOOP("App::Property","Rows")
-};
-
 Hd44780_Base::Hd44780_Base( QObject* parent, QString type, QString id )
             : Component( parent, type, id )
             , m_fontImg( ":font2.png" )
 {
-    Q_UNUSED( Hd44780_Base_properties );
-
     m_graphical = true;
     
     m_rows = 2;
@@ -311,5 +306,3 @@ void Hd44780_Base::paint( QPainter* p, const QStyleOptionGraphicsItem* option, Q
 
             p->drawImage(10+col*12,-(m_imgHeight+22)+row*18,charact );
 }   }   }
-
-#include "moc_hd44780_base.cpp"

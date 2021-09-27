@@ -29,20 +29,12 @@ class LibraryItem;
 class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public MemData
 {
     Q_OBJECT
-    Q_PROPERTY( QVector<int> Mem  READ mem        WRITE setMem )
-    Q_PROPERTY( double Frequency  READ freqKHz    WRITE setFreqKHz    DESIGNABLE true USER true )
-    Q_PROPERTY( uint Control_Code READ cCode      WRITE setCcode      DESIGNABLE true USER true )
-    Q_PROPERTY( int  Size_bytes   READ rSize      WRITE setRSize      DESIGNABLE true USER true )
-    Q_PROPERTY( bool Persistent   READ persistent WRITE setPersistent DESIGNABLE true USER true )
-
     public:
         I2CRam( QObject* parent, QString type, QString id );
         ~I2CRam();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void stamp() override;
         virtual void initialize() override;
@@ -53,11 +45,11 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
         virtual void writeByte() override;
         virtual void readByte() override;
 
-        void setMem( QVector<int> m );
-        QVector<int> mem();
+        void setMem( QString m );
+        QString getMem();
 
-        uint cCode() { return m_address; }
-        void setCcode( uint code ) { m_address = code; }
+        int cCode() { return m_address; }
+        void setCcode( int code ) { m_address = code; }
         
         int rSize() { return m_size; }
         void setRSize( int size );
@@ -84,4 +76,3 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
 };
 
 #endif
-

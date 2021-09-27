@@ -26,8 +26,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT FullAdder : public LogicComponent
 {
-    Q_OBJECT
-
     public:
         FullAdder( QObject* parent, QString type, QString id );
         ~FullAdder();

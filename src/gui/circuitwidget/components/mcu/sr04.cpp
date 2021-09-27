@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "sr04.h"
 #include "iopin.h"
 #include "itemlibrary.h"
@@ -28,11 +30,11 @@ Component* SR04::construct( QObject* parent, QString type, QString id )
 LibraryItem* SR04::libraryItem()
 {
     return new LibraryItem(
-            tr( "HC-SR04" ),
-            tr( "Sensors" ),
-            "sr04.png",
-            "SR04",
-            SR04::construct);
+        tr( "HC-SR04" ),
+        tr( "Sensors" ),
+        "sr04.png",
+        "SR04",
+        SR04::construct);
 }
 
 SR04::SR04( QObject* parent, QString type, QString id )
@@ -41,7 +43,7 @@ SR04::SR04( QObject* parent, QString type, QString id )
 {
     m_area = QRect( -10*8, -4*8, 21*8, 9*8 );
     setLabelPos(-16,-48, 0);
-    m_BackGround = ":/sr04.png";
+    m_background = ":/sr04.png";
     
     m_pin.resize(5);
 
@@ -128,7 +130,5 @@ void SR04::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     int ox = m_area.x();
     int oy = m_area.y();
 
-    p->drawPixmap( ox, oy, QPixmap( m_BackGround ));
+    p->drawPixmap( ox, oy, QPixmap( m_background ));
 }
-
-#include "moc_sr04.cpp"

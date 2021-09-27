@@ -421,8 +421,8 @@ void EditorWidget::createWidgets()
     connect( m_docWidget, SIGNAL( tabCloseRequested(int)), 
              this,        SLOT(   closeTab(int)), Qt::UniqueConnection);
              
-    connect( m_docWidget, SIGNAL( customContextMenuRequested(const QPoint &)), 
-             this,        SLOT(   tabContextMenu(const QPoint &)), Qt::UniqueConnection);
+    /*connect( m_docWidget, SIGNAL( customContextMenuRequested(const QPoint &)),
+             this,        SLOT(   tabContextMenu(const QPoint &)), Qt::UniqueConnection);*/
                         
     connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)), Qt::UniqueConnection);
     

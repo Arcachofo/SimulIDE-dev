@@ -33,18 +33,10 @@ class MCUMonitor;
 class MAINMODULE_EXPORT McuComponent : public McuBase
 {
     Q_OBJECT
-    Q_PROPERTY( QStringList varList  READ varList  WRITE setVarList )
-    Q_PROPERTY( QVector<int> eeprom  READ eeprom   WRITE setEeprom )
-    Q_PROPERTY( double   Mhz         READ freq     WRITE setFreq     DESIGNABLE true  USER true )
-    Q_PROPERTY( QString  Program     READ program  WRITE setProgram  DESIGNABLE true  USER true )
-    Q_PROPERTY( bool     Auto_Load   READ autoLoad WRITE setAutoLoad DESIGNABLE true  USER true )
 
     public:
-
         McuComponent( QObject* parent, QString type, QString id );
         ~McuComponent();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void initialize() override;
         virtual void updateStep() override;
@@ -56,7 +48,7 @@ class MAINMODULE_EXPORT McuComponent : public McuBase
         QStringList varList();
         void setVarList( QStringList vl );
 
-        QString program()   const { return m_symbolFile; }
+        QString program() { return m_symbolFile; }
         void setProgram( QString pro );
 
         virtual double freq() override { return m_freq; }
@@ -86,7 +78,6 @@ class MAINMODULE_EXPORT McuComponent : public McuBase
         void closeSerials();
         void openSerials();
   
-
     public slots:
         void slotmain();
         void slotLoad();

@@ -24,8 +24,6 @@
 
 class MAINMODULE_EXPORT BcdBase : public LogicComponent
 {
-    Q_OBJECT
-
     public:
         BcdBase( QObject* parent, QString type, QString id );
         ~BcdBase();
@@ -41,4 +39,3 @@ class MAINMODULE_EXPORT BcdBase : public LogicComponent
 };
 
 #endif
-

@@ -27,6 +27,8 @@
 //
 // Copyright: See COPYING file that comes with this distribution
 
+#include <QPainter>
+
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
@@ -34,9 +36,7 @@
 
 
 Component* Pcd8544::construct( QObject* parent, QString type, QString id )
-{
-    return new Pcd8544( parent, type, id );
-}
+{ return new Pcd8544( parent, type, id ); }
 
 LibraryItem* Pcd8544::libraryItem()
 {
@@ -50,13 +50,12 @@ LibraryItem* Pcd8544::libraryItem()
 
 Pcd8544::Pcd8544( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
-       , eElement( (id+"-eElement") )
+       , eElement(  id+"-eElement"  )
        , m_pRst( 270, QPoint(-32, 40), id+"-PinRst", 0, this )
        , m_pCs ( 270, QPoint(-16, 40), id+"-PinCs" , 0, this )
        , m_pDc ( 270, QPoint(  0, 40), id+"-PinDc" , 0, this )
        , m_pSi ( 270, QPoint( 16, 40), id+"-PinSi" , 0, this )
        , m_pScl( 270, QPoint( 32, 40), id+"-PinScl", 0, this )
-       
 {
     m_graphical = true;
 
@@ -86,10 +85,7 @@ Pcd8544::Pcd8544( QObject* parent, QString type, QString id )
     
    initialize();
 }
-
-Pcd8544::~Pcd8544()
-{
-}
+Pcd8544::~Pcd8544(){}
 
 void Pcd8544::stamp()
 {
@@ -139,8 +135,7 @@ void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin chan
             m_aDispRam[m_addrY][m_addrX] = m_cinBuf;
             incrementPointer();
         } 
-        else                                            // Write Command
-        {
+        else{                                           // Write Command
             //qDebug() << "Pcd8544::setVChanged    Command:  "<< m_cinBuf;
             //if(m_cinBuf == 0) { //(NOP) } 
                 
@@ -149,9 +144,7 @@ void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin chan
                 m_bH  = ((m_cinBuf & 1) == 1);
                 m_bV  = ((m_cinBuf & 2) == 2);
                 m_bPD = ((m_cinBuf & 4) == 4);
-            }
-            else
-            {
+            }else{
                 if(m_bH) 
                 {
                     //(Extended instruction set)
@@ -175,18 +168,12 @@ void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin chan
                     {
                         int addrX = m_cinBuf & 0x7F;
                         if( addrX<84 ) m_addrX = addrX;
-                    } 
-                }
-            }
-        }
+        }   }   }   }
         m_inBit = 0;
-    } 
-    else 
-    {
+    }else{
         m_cinBuf <<= 1;
         m_inBit++;
-    }
-}
+}   }
 
 void Pcd8544::updateStep()
 {
@@ -195,8 +182,7 @@ void Pcd8544::updateStep()
     else if( !m_bD && m_bE )  m_pdisplayImg->fill(1); //All segments on
     else
     {
-        for(int row=0;row<6;row++) 
-        {
+        for(int row=0;row<6;row++){
             for( int col=0; col<84; col++ )
             {
                 char abyte = m_aDispRam[row][col];
@@ -207,25 +193,17 @@ void Pcd8544::updateStep()
                         (abyte & 1) ^ ((m_bD && m_bE) ? 1 : 0) );
 
                     abyte >>= 1;
-                }
-            }
-        }
-    }
+    }   }   }   }
     update();
 }
 
-void Pcd8544::clearLcd() 
-{
-    m_pdisplayImg->fill(0);
-}
+void Pcd8544::clearLcd() { m_pdisplayImg->fill(0); }
 
 void Pcd8544::clearDDRAM() 
 {
     for(int row=0; row<6; row++)
-    {
         for( int col=0; col<84; col++ )
-        { m_aDispRam[row][col] = 0; }
-    }
+            m_aDispRam[row][col] = 0;
 }
 
 void Pcd8544::incrementPointer() 
@@ -233,30 +211,13 @@ void Pcd8544::incrementPointer()
     if( m_bV )
     {
         m_addrY++;
-        if( m_addrY >= 6 )
-        {
-            m_addrY = 0;
-            m_addrX++;
-        }
-        if( m_addrX >= 84 ) 
-        {
-            m_addrX = 0;
-        }
-    }
-    else
-    {
+        if( m_addrY >= 6 ) { m_addrY = 0; m_addrX++; }
+        if( m_addrX >= 84 )  m_addrX = 0;
+    }else{
         m_addrX++;
-        if( m_addrX >= 84 ) 
-        {
-            m_addrX = 0;
-            m_addrY++;
-        }
-        if( m_addrY >= 6 )
-        {
-            m_addrY = 0;
-        }
-    }
-}
+        if( m_addrX >= 84 ) { m_addrX = 0; m_addrY++; }
+        if( m_addrY >= 6  )   m_addrY = 0;
+}   }
 
 void Pcd8544::reset() 
 {
@@ -274,7 +235,6 @@ void Pcd8544::reset()
 void Pcd8544::remove()
 {
     delete m_pdisplayImg;
-    Simulator::self()->remFromUpdateList( this );
     
     Component::remove();
 }
@@ -292,6 +252,3 @@ void Pcd8544::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawRoundedRect( -48, -48, 96, 60, 8, 8 );
     p->drawImage(-42,-42,*m_pdisplayImg );
 }
-
-
-#include "moc_pcd8544.cpp"

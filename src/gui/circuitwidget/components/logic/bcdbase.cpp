@@ -43,7 +43,6 @@ BcdBase::BcdBase( QObject* parent, QString type, QString id )
        : LogicComponent( parent, type, id )
 {
     m_nextOutVal = m_values[0];
-
 }
 BcdBase::~BcdBase(){}
 
@@ -59,7 +58,6 @@ void BcdBase::stamp()
     for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
 
     m_nextOutVal = m_values[0];
-    //m_outValue = m_nextOutVal;
     m_changed = true;
 }
 
@@ -75,5 +73,3 @@ void BcdBase::voltChanged()
     int digit = a*1+b*2+c*4+d*8;
     m_nextOutVal = m_values[digit];
 }
-
-//#include "moc_bcdbase.cpp"

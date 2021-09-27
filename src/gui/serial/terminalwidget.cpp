@@ -178,7 +178,7 @@ TerminalWidget::TerminalWidget( QWidget* parent, SerialTerm* ser )
 
         QString mcuId = mcu->objectName();
         if( mcu->isMainComp() )
-            mcuId = mcu->getSubcircuit()->objectName();
+            mcuId = mcu->m_subcircuit->objectName();
 
         setMcuId( mcuId );
     }

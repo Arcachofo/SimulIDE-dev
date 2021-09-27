@@ -27,16 +27,12 @@ class Pin;
 
 class MAINMODULE_EXPORT CurrSource : public VarSource
 {
-    Q_OBJECT
-    Q_PROPERTY( double Value READ value WRITE setValue DESIGNABLE true USER true )
     public:
         CurrSource( QObject* parent, QString type, QString id );
         ~CurrSource();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void updateStep() override;
 
@@ -45,4 +41,3 @@ class MAINMODULE_EXPORT CurrSource : public VarSource
 };
 
 #endif
-

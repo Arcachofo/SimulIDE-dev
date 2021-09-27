@@ -25,23 +25,13 @@
 
 class MAINMODULE_EXPORT IoComponent : public Component
 {
-        Q_OBJECT
-        Q_PROPERTY( quint64 Tpd_ps READ propDelay WRITE setPropDelay DESIGNABLE true USER true )
-        Q_PROPERTY( quint64  Tr_ps READ riseTime  WRITE setRiseTime DESIGNABLE true USER true )
-        Q_PROPERTY( quint64  Tf_ps READ fallTime  WRITE setFallTime DESIGNABLE true USER true )
-
-        Q_PROPERTY( double Input_High_V READ inputHighV WRITE setInputHighV DESIGNABLE true USER true )
-        Q_PROPERTY( double Input_Low_V  READ inputLowV  WRITE setInputLowV  DESIGNABLE true USER true )
-        Q_PROPERTY( double Input_Imped  READ inputImp   WRITE setInputImp   DESIGNABLE true USER true )
-        Q_PROPERTY( double Out_High_V   READ outHighV   WRITE setOutHighV   DESIGNABLE true USER true )
-        Q_PROPERTY( double Out_Low_V    READ outLowV    WRITE setOutLowV    DESIGNABLE true USER true )
-        Q_PROPERTY( double Out_Imped    READ outImp     WRITE setOutImp     DESIGNABLE true USER true )
-
     public:
         IoComponent( QObject* parent, QString type, QString id );
         ~IoComponent();
 
-        virtual QList<propGroup_t> propGroups() override;
+        QList<ComProperty*> inputProps();
+        QList<ComProperty*> outputProps();
+        QList<ComProperty*> edgeProps();
 
         virtual void updateStep() override;
 
@@ -49,43 +39,43 @@ class MAINMODULE_EXPORT IoComponent : public Component
         void runOutputs();
         void sheduleOutPuts( eElement* el );
 
-        double inputHighV() const          { return m_inHighV; }
+        double inputHighV() { return m_inHighV; }
         virtual void setInputHighV( double volt );
 
-        double inputLowV() const          { return m_inLowV; }
+        double inputLowV() { return m_inLowV; }
         virtual void setInputLowV( double volt );
 
-        double outHighV() const           { return m_ouHighV; }
+        double outHighV() { return m_ouHighV; }
         void  setOutHighV( double volt );
 
-        double outLowV() const            { return m_ouLowV; }
+        double outLowV() { return m_ouLowV; }
         void  setOutLowV( double volt );
 
-        double inputImp() const           { return m_inImp; }
+        double inputImp() { return m_inImp; }
         virtual void setInputImp( double imp );
 
-        double outImp() const            { return m_ouImp; }
+        double outImp() { return m_ouImp; }
         void  setOutImp( double imp );
 
         bool invertOuts() { return m_invOutputs; }
         void setInvertOuts( bool inverted );
 
         bool invertInps() { return m_invInputs; }
-        void setInvertInps( bool invert );
+        virtual void setInvertInps( bool invert );
 
-        virtual uint64_t propDelay() { return m_propDelay; }
-        virtual void     setPropDelay( uint64_t pd ) { m_propDelay = pd; }
+        double propDelay() { return m_propDelay*1e-12; }
+        void setPropDelay( double pd ) { m_propDelay = pd*1e12; }
 
-        uint64_t riseTime() { return m_timeLH; }
-        void setRiseTime( uint64_t time ) {m_timeLH = time; }
+        double riseTime() { return m_timeLH*1e-12; }
+        void setRiseTime( double time ) { m_timeLH = time*1e12; }
 
-        uint64_t fallTime() { return m_timeHL; }
-        void setFallTime( uint64_t time ) {m_timeHL = time; }
+        double fallTime() { return m_timeHL*1e-12; }
+        void setFallTime( double time ) { m_timeHL = time*1e12; }
 
-        int  numInps() const { return m_inPin.size(); }
+        int  numInps() { return m_inPin.size(); }
         virtual void setNumInps( uint pins, QString label="I", int bit0=0, bool number=true );
 
-        int  numOuts() const { return m_outPin.size(); }
+        int  numOuts() { return m_outPin.size(); }
         virtual void setNumOuts( uint pins, QString label="O", int bit0=0, bool number=true );
 
         bool openCol() { return m_openCol; }

@@ -27,25 +27,18 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT OrGate : public Gate
 {
-    Q_OBJECT
-    Q_PROPERTY( int Num_Inputs READ numInps WRITE setNumInps DESIGNABLE true USER true )
-
     public:
-
         OrGate( QObject* parent, QString type, QString id );
         ~OrGate();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
+        static LibraryItem* libraryItem();
 
         virtual QPainterPath shape() const;
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
     protected:
         virtual bool calcOutput( int inputs ) override;
 };
-
 
 #endif

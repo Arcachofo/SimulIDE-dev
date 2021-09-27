@@ -26,10 +26,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT ADC : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( double Vref        READ maxVolt    WRITE setMaxVolt    DESIGNABLE true USER true )
-    Q_PROPERTY( int    Num_Bits    READ numOuts    WRITE setNumOuts    DESIGNABLE true USER true )
-
     public:
         ADC( QObject* parent, QString type, QString id );
         ~ADC();
@@ -37,19 +33,14 @@ class MAINMODULE_EXPORT ADC : public LogicComponent
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        double maxVolt()               { return m_maxVolt; }
-        void setMaxVolt( double volt ) { m_maxVolt = volt; }
-
-        double maxValue()               { return m_maxValue; }
-        void setMaxValue( double volt ) { m_maxValue = volt; }
-
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
 
-        virtual void setNumOuts( uint pins, QString label="O", int start=0, bool number=true ) override;
+        double maxVolt() { return m_maxVolt; }
+        void setMaxVolt( double v ) { m_maxVolt = v; }
+
+        virtual void setNumOuts( int pins ) ;
         
     protected:
         double m_maxVolt;

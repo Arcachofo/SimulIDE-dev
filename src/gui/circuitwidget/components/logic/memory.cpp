@@ -26,15 +26,12 @@
 #include "memtable.h"
 #include "utils.h"
 
-static const char* Memory_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Data Bits"),
-    QT_TRANSLATE_NOOP("App::Property","Persistent")
-};
+#include "stringprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* Memory::construct( QObject* parent, QString type, QString id )
-{
-    return new Memory( parent, type, id );
-}
+{ return new Memory( parent, type, id ); }
 
 LibraryItem* Memory::libraryItem()
 {
@@ -50,8 +47,6 @@ Memory::Memory( QObject* parent, QString type, QString id )
       : LogicComponent( parent, type, id )
       , MemData()
 {
-    Q_UNUSED( Memory_properties );
-
     m_width  = 4;
     m_height = 11;
     
@@ -77,25 +72,24 @@ Memory::Memory( QObject* parent, QString type, QString id )
     setDataBits( 8 );
 
     Simulator::self()->addToUpdateList( this );
+
+    addPropGroup( { tr("Main"), {
+new IntProp<Memory>(  "Address_Bits", tr("Address Size"),"_Bits", this, &Memory::addrBits,   &Memory::setAddrBits, "uint" ),
+new IntProp<Memory>(  "Data_Bits"   , tr("Data Size")   ,"_Bits", this, &Memory::dataBits,   &Memory::setDataBits, "uint" ),
+new BoolProp<Memory>( "Persistent"  , tr("Persistent")  ,""     , this, &Memory::persistent,  &Memory::setPersistent ),
+new BoolProp<Memory>( "Inverted"    , tr("Invert Outputs"),""   , this, &Memory::invertOuts, &Memory::setInvertOuts )
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+    addPropGroup( { tr("Hidden"), {
+new StringProp<Memory>( "Mem","","", this, &Memory::getMem, &Memory::setMem)
+    }} );
 }
 Memory::~Memory(){}
 
-QList<propGroup_t> Memory::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Address_Bits", tr("Address Size"),"Bits"} );
-    mainGroup.propList.append( {"Data_Bits", tr("Data Size"),"Bits"} );
-    mainGroup.propList.append( {"Persistent", tr("Persistent"),""} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
-
 void Memory::stamp()                   // Called at Simulation Start
 {
-    for( uint i=0; i<m_inPin.size(); ++i )
-        m_inPin[i]->changeCallBack( this );
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
 
     m_WePin->changeCallBack( this );
     m_CsPin->changeCallBack( this );
@@ -112,8 +106,7 @@ void Memory::updateStep()
         m_WePin->updateStep();
         m_CsPin->updateStep();
         LogicComponent::updateStep();
-    }
-}
+}   }
 
 void Memory::initialize()
 {
@@ -176,14 +169,12 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
         m_read = true;
         m_nextOutVal = m_ram[m_address];
         IoComponent::sheduleOutPuts( this );
-    }
-}
+}   }
 
 void Memory::runEvent()
 {
     if( m_read ) IoComponent::runOutputs();
-    else
-    {
+    else{
         int value = 0;
         for( uint i=0; i<m_outPin.size(); ++i )
         {
@@ -192,10 +183,9 @@ void Memory::runEvent()
             m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
         }
         m_ram[m_address] = value;
-    }
-}
+}   }
 
-void Memory::setMem( QVector<int> m )
+/*void Memory::setMem( QVector<int> m )
 {
     if( m.size() == 1 ) return;       // Avoid loading data if not saved
     m_ram = m;
@@ -203,12 +193,21 @@ void Memory::setMem( QVector<int> m )
 
 QVector<int> Memory::mem()
 {
-    if( !m_persistent )
-    {
-        QVector<int> null;
-        return null;
-    }
+    if( !m_persistent ) { QVector<int> nul; return nul;  }
     return m_ram;
+}*/
+
+void Memory::setMem( QString m )
+{
+    if( m.isEmpty() ) return;
+    MemData::setMem( &m_ram, m );
+}
+
+QString Memory::getMem()
+{
+    QString m;
+    if( !m_persistent ) return m;
+    return MemData::getMem( &m_ram );
 }
 
 void Memory::updatePins()
@@ -269,7 +268,6 @@ void Memory::setAddrBits( int bits )
 void Memory::createAddrBits( int bits )
 {
     int chans = m_addrBits + bits;
-    
     int origY = -(m_height/2)*8;
     
     m_inPin.resize( chans );
@@ -282,13 +280,10 @@ void Memory::createAddrBits( int bits )
         m_inPin[i]->setLabelText( " A"+number );
         m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
         initPin( m_inPin[i] );
-    }
-}
+}   }
 
 void Memory::deleteAddrBits( int bits )
-{
-    LogicComponent::deletePins( &m_inPin, bits );
-}
+{ LogicComponent::deletePins( &m_inPin, bits ); }
 
 void Memory::setDataBits( int bits )
 {
@@ -324,26 +319,21 @@ void Memory::createDataBits( int bits )
         m_outPin[i]->setLabelText( "D"+number+" " );
         m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
         initPin( m_outPin[i] );
-    }
-}
+}   }
 
 void Memory::deleteDataBits( int bits )
-{
-    LogicComponent::deletePins( &m_outPin, bits );
-}
+{ LogicComponent::deletePins( &m_outPin, bits ); }
 
 void Memory::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();
-    else
-    {
+    else{
         event->accept();
         QMenu* menu = new QMenu();
         contextMenu( event, menu );
         Component::contextMenu( event, menu );
         menu->deleteLater();
-    }
-}
+}   }
 
 void Memory::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -368,16 +358,13 @@ void Memory::loadData()
     if( m_memTable ) m_memTable->setData( &m_ram, m_dataBytes );
 }
 
-void Memory::saveData()
-{
-    MemData::saveData( &m_ram, m_dataBits );
-}
+void Memory::saveData() { MemData::saveData( &m_ram, m_dataBits ); }
 
 void Memory::showTable()
 {
     MemData::showTable( m_ram.size(), m_dataBytes );
-    if( m_persistent ) m_memTable->setWindowTitle( "ROM: "+m_idLabel->toPlainText() );
-    else               m_memTable->setWindowTitle( "RAM: "+m_idLabel->toPlainText() );
+    if( m_persistent ) m_memTable->setWindowTitle( "ROM: "+idLabel() );
+    else               m_memTable->setWindowTitle( "RAM: "+idLabel() );
     m_memTable->setData( &m_ram, m_dataBytes );
 }
 

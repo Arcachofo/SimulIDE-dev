@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2012 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
@@ -19,19 +19,68 @@
 
 #include <QDomDocument>
 #include <QString>
+#include <QDebug>
 #include <QFile>
+#include <QFileInfo>
 #include <QMessageBox>
 #include <QTextStream>
 #include <qpoint.h>
 #include <QPointF>
 #include <cmath>
 
+#include "mainwindow.h"
 #include "utils.h"
 #include "pin.h"
 
+QHash<QString, double> multipliers = {{"p",1e-12},{"n",1e-9},{"µ",1e-6},{"m",1e-3},{"k",1e3},{"M",1e6},{"G",1e9}};
+
+double getMultiplier( QString mult )
+{
+    mult = mult.remove(" ");
+    mult = mult.left(1);
+    double multiplier = multipliers.value( mult );
+    if( multiplier == 0 ) multiplier = 1;
+    return multiplier;
+}
+
+QString multToValStr( double value, QString mult )
+{
+    return QString::number( value*getMultiplier( mult ) );
+}
+
+QString val2hex( int d )
+{
+    QString Hex="0123456789ABCDEF";
+    QString h = Hex.mid(d&15,1);
+    while(d>15)
+    {
+        d >>= 4;
+        h = Hex.mid( d&15,1 ) + h;
+    }
+    return h;
+}
+
+QString decToBase( int value, int base, int digits )
+{
+    QString converted = "";
+    for( int i=0; i<digits; i++ )
+    {
+        if( value >= base ) converted = val2hex( value%base ) + converted;
+        else                converted = val2hex( value ) + converted;
+
+        if( i+1 == 4 ) converted = " " + converted;
+        //if( (i+1)%8 == 0 ) converted = " " + converted;
+
+        value = floor( value/base );
+    }
+    return converted;
+}
+
+//---------------------------------------------------
+
 void MessageBoxNB( const QString &title, const QString &message )
 {
-    QMessageBox* msgBox = new QMessageBox( 0l );
+    QMessageBox* msgBox = new QMessageBox( MainWindow::self() );
     msgBox->setAttribute( Qt::WA_DeleteOnClose ); //makes sure the msgbox is deleted automatically when closed
     msgBox->setStandardButtons( QMessageBox::Ok );
     msgBox->setWindowTitle( title );
@@ -39,6 +88,8 @@ void MessageBoxNB( const QString &title, const QString &message )
     msgBox->setModal( false ); 
     msgBox->open();
 }
+
+//---------------------------------------------------
 
 QString addQuotes( const QString &string )
 {
@@ -71,6 +122,8 @@ QString changeExt( const QString &filepath, const QString &ext )
 {
     return getFileDir( filepath )+getBareName( filepath )+ext;
 }
+
+//---------------------------------------------------
 
 QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
 {
@@ -132,33 +185,7 @@ QByteArray fileToByteArray( const QString &fileName, const QString &caller )
     return ba;
 }
 
-QString val2hex( int d )
-{
-    QString Hex="0123456789ABCDEF";
-    QString h = Hex.mid(d&15,1);
-    while(d>15)
-    {
-        d >>= 4;
-        h = Hex.mid( d&15,1 ) + h;
-    }
-    return h;
-}
-
-QString decToBase( int value, int base, int digits )
-{
-    QString converted = "";
-    for( int i=0; i<digits; i++ )
-    {
-        if( value >= base ) converted = val2hex(value%base) + converted;
-        else                converted = val2hex(value) + converted;
-
-        if( i+1 == 4 ) converted = " " + converted;
-        //if( (i+1)%8 == 0 ) converted = " " + converted;
-
-        value = floor( value/base );
-    }
-    return converted;
-}
+//--------------------------------------------------------------
 
 int roundDown( int x, int roundness )
 {
@@ -166,26 +193,8 @@ int roundDown( int x, int roundness )
     else        return (x / roundness);
 }
 
-int roundDown( float x, int roundness ) { return roundDown( int(x), roundness ); }
-
-QPoint roundDown( const QPoint & p, int roundness )
-{
-    return QPoint( roundDown( p.x(), roundness ), roundDown( p.y(), roundness ) );
-}
-
-int snapToGrid( int x ) { return roundDown( x+2, 4 )*4; }
-
+int snapToGrid( int x )     { return roundDown( x+2, 4 )*4; }
 int snapToCompGrid( int x ) { return roundDown( x+4, 8 )*8; }
-
-QPointF togrid( QPointF point )
-{
-    int valor;
-    valor = snapToGrid( (int)point.x() );
-    point.rx() = (float)valor;
-    valor = snapToGrid( (int)point.y() );
-    point.ry() = (float)valor;
-    return point;
-}
 
 QPointF toCompGrid( QPointF point )
 {
@@ -196,7 +205,15 @@ QPointF toCompGrid( QPointF point )
     point.ry() = (float)valor;
     return point;
 }
-
+QPointF togrid( QPointF point )
+{
+    int valor;
+    valor = snapToGrid( (int)point.x() );
+    point.rx() = (float)valor;
+    valor = snapToGrid( (int)point.y() );
+    point.ry() = (float)valor;
+    return point;
+}
 QPoint togrid( QPoint point )
 {
     int valor;
@@ -207,16 +224,6 @@ QPoint togrid( QPoint point )
     return point;
 }
 
-int getAlignment( QPointF p1, QPointF p2 )
-{
-    int align = 0;
-    if( p1.x() == p2.x() ) align += 2;           // Aligned in Y axis
-    if( p1.y() == p2.y() ) align += 1;           // Aligned in X axis
-
-    return align;
-}
-
-#include "pin.h"
 bool lessPinX( Pin* pinA, Pin* pinB )
 {
     return pinA->x() < pinB->x();
@@ -227,3 +234,13 @@ bool lessPinY( Pin* pinA, Pin* pinB )
     return pinA->y() < pinB->y();
 }
 
+QPointF getPointF( QString p )
+{
+    QStringList plist = p.split(",");
+    QPointF point( plist.first().toDouble(), plist.last().toDouble() );
+    return point;
+}
+QString getStrPointF( QPointF p )
+{
+    return QString::number(p.x())+","+QString::number(p.y());
+}

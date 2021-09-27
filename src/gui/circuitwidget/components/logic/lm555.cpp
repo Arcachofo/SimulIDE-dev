@@ -20,6 +20,7 @@
  ***************************************************************************/
 
 #include <math.h>
+#include <QPainter>
 
 #include "lm555.h"
 #include "simulator.h"
@@ -202,5 +203,3 @@ void Lm555::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
     p->setPen( QColor( 170, 170, 150 ) );
     p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
 }
-
-#include "moc_lm555.cpp"

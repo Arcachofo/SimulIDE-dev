@@ -28,19 +28,10 @@
 #include "datachannel.h"
 
 class PlotDisplay;
+class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( int Basic_X READ baSizeX WRITE setBaSizeX DESIGNABLE true USER true )
-    Q_PROPERTY( int Basic_Y READ baSizeY WRITE setBaSizeY DESIGNABLE true USER true )
-
-    Q_PROPERTY( QStringList Tunnels READ tunnels WRITE setTunnels )
-    Q_PROPERTY( quint64     hTick   READ hTick   WRITE sethTick )
-
-    Q_PROPERTY( quint64 TimeDiv READ timeDiv WRITE setTimeDiv )
-    Q_PROPERTY( QString Conds   READ conds   WRITE setConds )
-
     public:
         PlotBase( QObject* parent, QString type, QString id );
         ~PlotBase();
@@ -54,16 +45,16 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         double dataSize() { return m_dataSize/1e6; }
         void setDataSize( double ds ) { m_dataSize = ds*1e6; }
 
-        uint64_t hTick() { return m_timeDiv/1e3; }
-        virtual void sethTick( uint64_t td ){ setTimeDiv( td*1e3 );}
+        int hTick() { return m_timeDiv/1e3; }
+        virtual void sethTick( int td ){ setTimeDiv( (uint64_t)td*1e3 );}
 
-        uint64_t timeDiv() { return m_timeDiv; }
-        virtual void setTimeDiv( uint64_t td );
+        int timeDiv() { return m_timeDiv; }
+        virtual void setTimeDiv( int td );
 
         int trigger() { return m_trigger; }
 
-        virtual QStringList tunnels();
-        virtual void setTunnels( QStringList tunnels )=0;
+        virtual QString tunnels();
+        virtual void setTunnels( QString tunnels )=0;
 
         virtual void expand( bool e ){;}
         void toggleExpand() { expand( !m_expand ); }
@@ -84,7 +75,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
     protected:
         int m_bufferSize;
-
         int m_trigger;
 
         bool m_expand;

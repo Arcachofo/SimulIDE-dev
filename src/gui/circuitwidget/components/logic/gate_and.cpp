@@ -17,13 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "gate_and.h"
 #include "itemlibrary.h"
 
+#include "intprop.h"
+#include "boolprop.h"
+
 Component* AndGate::construct( QObject* parent, QString type, QString id )
-{
-    return new AndGate( parent, type, id );
-}
+{ return new AndGate( parent, type, id ); }
 
 LibraryItem* AndGate::libraryItem()
 {
@@ -38,24 +41,21 @@ LibraryItem* AndGate::libraryItem()
 AndGate::AndGate( QObject* parent, QString type, QString id )
        : Gate( parent, type, id, 2 )
 {
+    addPropGroup( { tr("Main"), {
+new IntProp <AndGate>( "Num_Inputs"    , tr("Input Size")   ,"_Inputs", this, &AndGate::numInps,    &AndGate::setNumInps, "uint" ),
+new BoolProp<AndGate>( "Inverted"      , tr("Invert Output"),""   , this, &AndGate::invertOuts, &AndGate::setInvertOuts ),
+new BoolProp<AndGate>( "Open_Collector", tr("Open Drain")   ,""   , this, &AndGate::openCol,    &AndGate::setOpenCol )
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 AndGate::~AndGate(){}
 
-QList<propGroup_t> AndGate::propGroups()
-{
-    QList<propGroup_t> pg = Gate::propGroups();
-    pg.first().propList.append( {"Num_Inputs", tr("Input Size"),"Inputs"} );
-    return pg;
-}
-
 QPainterPath AndGate::shape() const
 {
-    QPainterPath path;
-    
-    QVector<QPointF> points;
-    
     int size = (int)m_inPin.size()*4;
-    
+    QPainterPath path;
+    QVector<QPointF> points;
     points << QPointF( -9,-size )
            << QPointF( -9, size )
            << QPointF(  0, size-2 )
@@ -71,8 +71,5 @@ QPainterPath AndGate::shape() const
 void AndGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-
     p->drawChord( -28, m_area.y(), 37, m_area.height(), -1440/*-16*90*/, 2880/*16*180*/ );
 }
-
-#include "moc_gate_and.cpp"

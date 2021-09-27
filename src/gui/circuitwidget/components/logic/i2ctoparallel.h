@@ -27,21 +27,15 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
 {
-    Q_OBJECT
-    Q_PROPERTY( double Frequency READ freqKHz WRITE setFreqKHz DESIGNABLE true USER true )
-    Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode   DESIGNABLE true USER true )
-
     public:
         I2CToParallel( QObject* parent, QString type, QString id );
         ~I2CToParallel();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
 
-        uint cCode() { return m_address; }
-        void setCcode( uint code ) { m_address = code; }
+        int cCode() { return m_address; }
+        void setCcode( int code ) { m_address = code; }
         
         virtual void stamp() override;
         virtual void initialize() override;
@@ -51,4 +45,3 @@ class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
 };
 
 #endif
-

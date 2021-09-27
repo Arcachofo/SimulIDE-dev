@@ -17,8 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rectangle.h"
+#include <QPainter>
 
+#include "rectangle.h"
 
 Component* Rectangle::construct( QObject* parent, QString type, QString id )
 { return new Rectangle( parent, type, id ); }
@@ -51,5 +52,3 @@ void Rectangle::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
     if( m_border > 0 ) p->drawRect( m_area );
     else               p->fillRect( m_area, p->brush() );
 }
-
-#include "moc_rectangle.cpp"

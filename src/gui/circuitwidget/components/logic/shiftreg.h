@@ -26,19 +26,12 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT ShiftReg : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Reset_Inverted READ resetInv  WRITE setResetInv  DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Tristate       READ tristate                                     USER true )
-
     public:
         ShiftReg( QObject* parent, QString type, QString id );
         ~ShiftReg();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void stamp() override;
         virtual void voltChanged() override;
@@ -47,11 +40,8 @@ class MAINMODULE_EXPORT ShiftReg : public LogicComponent
         bool resetInv() { return m_resetInv; }
         void setResetInv( bool inv );
 
-        bool tristate() { return true; }
-
     private:
         bool m_resetInv;
 };
 
 #endif
-

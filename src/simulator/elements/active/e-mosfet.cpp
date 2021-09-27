@@ -73,8 +73,7 @@ void eMosfet::voltChanged()
     double Vgs = Vg-Vs;
     double Vds = Vd-Vs;
 
-    if( m_Pchannel )
-    {
+    if( m_Pchannel ){
         Vgs = -Vgs;
         Vds = -Vds;
     }

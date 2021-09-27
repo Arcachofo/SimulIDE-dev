@@ -26,23 +26,12 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT BinCounter : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( bool   Pin_SET      READ pinSet     WRITE useSetPin     DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Reset_Inverted READ srInv     WRITE setSrInv     DESIGNABLE true USER true )
-    Q_PROPERTY( int    Max_Value      READ TopValue  WRITE setTopValue  DESIGNABLE true  USER true )
-
     public:
         BinCounter( QObject* parent, QString type, QString id );
         ~BinCounter();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-
-        int  TopValue() { return m_TopValue; }
-        void setTopValue( int tv ) { m_TopValue = tv; }
 
         bool srInv() { return m_resetInv; }
         void setSrInv( bool inv );
@@ -54,6 +43,9 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
+
+        int maxVal() { return m_TopValue; }
+        void setMaxVal( int v ) { m_TopValue = v; }
 
     protected:
         int m_Counter;

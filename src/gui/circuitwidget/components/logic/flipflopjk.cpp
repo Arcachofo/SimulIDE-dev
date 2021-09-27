@@ -21,11 +21,8 @@
 #include "itemlibrary.h"
 #include "simulator.h"
 
-
 Component* FlipFlopJK::construct( QObject* parent, QString type, QString id )
-{
-    return new FlipFlopJK( parent, type, id );
-}
+{ return new FlipFlopJK( parent, type, id ); }
 
 LibraryItem* FlipFlopJK::libraryItem()
 {
@@ -42,23 +39,18 @@ FlipFlopJK::FlipFlopJK( QObject* parent, QString type, QString id )
 {
     m_width  = 3;
     m_height = 4;
-    
-    QStringList pinList;
-
-    pinList // Inputs:
-            << "IL01 J"
-            << "IL03 K"
-            << "IU01S"
-            << "ID02R"
-            << "IL02>"
-            
-            // Outputs:
-            << "OR01Q"
-            << "OR03!Q"
-            ;
-    init( pinList );
-
     m_dataPins = 2;
+
+    init({          // Inputs:
+            "IL01 J",
+            "IL03 K",
+            "IU01S",
+            "ID02R",
+            "IL02>",
+                   // Outputs:
+            "OR01Q",
+            "OR03!Q",
+        });
 
     m_setPin = m_inPin[2];
     m_resetPin = m_inPin[3];
@@ -90,5 +82,3 @@ void FlipFlopJK::voltChanged()
     }
     sheduleOutPuts( this );
 }
-
-#include "moc_flipflopjk.cpp"

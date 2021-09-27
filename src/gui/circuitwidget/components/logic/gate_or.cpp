@@ -16,14 +16,17 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
  *                                                                         *
  ***************************************************************************/
+
+#include <QPainter>
+
 #include "gate_or.h"
 #include "itemlibrary.h"
 
+#include "intprop.h"
+#include "boolprop.h"
 
 Component* OrGate::construct( QObject* parent, QString type, QString id )
-{
-        return new OrGate( parent, type, id );
-}
+{ return new OrGate( parent, type, id ); }
 
 LibraryItem* OrGate::libraryItem()
 {
@@ -36,29 +39,23 @@ LibraryItem* OrGate::libraryItem()
 }
 
 OrGate::OrGate( QObject* parent, QString type, QString id )
-        : Gate( parent, type, id, 2 )
+      : Gate( parent, type, id, 2 )
 {
+    addPropGroup( { tr("Main"), {
+new IntProp <OrGate>( "Num_Inputs"    , tr("Input Size")   ,"_Inputs", this, &OrGate::numInps,    &OrGate::setNumInps, "uint" ),
+new BoolProp<OrGate>( "Inverted"      , tr("Invert Output"),""       , this, &OrGate::invertOuts, &OrGate::setInvertOuts ),
+new BoolProp<OrGate>( "Open_Collector", tr("Open Drain")   ,""       , this, &OrGate::openCol,    &OrGate::setOpenCol )
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 OrGate::~OrGate(){}
 
-QList<propGroup_t> OrGate::propGroups()
-{
-    QList<propGroup_t> pg = Gate::propGroups();
-    pg.first().propList.append( {"Num_Inputs", tr("Input Size"),"Inputs"} );
-    return pg;
-}
-
-bool OrGate::calcOutput( int inputs )
-{
-    if( inputs > 0 )  return true;
-
-    return false;
-}
+bool OrGate::calcOutput( int inputs ) { return (inputs > 0); }
 
 QPainterPath OrGate::shape() const
 {
     QPainterPath path;
-    
     QVector<QPointF> points;
     
     int size = (int)m_inPin.size()*4;
@@ -85,30 +82,20 @@ void OrGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     // Paint white background of gate
     Component::paint( p, option, widget );
     QPen pen = p->pen();
-    
     p->setPen( Qt::NoPen );
 
     QPainterPath path;
-    
     path.moveTo( -8, 0 );
     path.arcTo( -33, y_orig, 42, height, -90, 180 );
-    
     path.moveTo( -8, 0 );
     path.arcTo( -16, y_orig, 8, height, -90, 180 );
-
     p->drawPath( path );
 
     // Draw curves
     p->setPen( pen );
     p->setBrush( Qt::NoBrush );
-
     // Output side arc
     p->drawArc( -28, y_orig, 37, height, -1520/*-16*95*/, 3040/*16*190*/ );
-
     // Input side arc
     p->drawArc( -16, y_orig, 8, height, -1440/*-16*90*/, 2880/*16*180*/ );
 }
-
-#include "moc_gate_or.cpp"
-
-

@@ -20,47 +20,34 @@
 #include "shape.h"
 #include "circuit.h"
 
-static const char* Shape_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","H size"),
-    QT_TRANSLATE_NOOP("App::Property","V size"),
-    QT_TRANSLATE_NOOP("App::Property","Border"),
-    QT_TRANSLATE_NOOP("App::Property","Color"),
-    QT_TRANSLATE_NOOP("App::Property","Opacity"),
-    QT_TRANSLATE_NOOP("App::Property","Z Value")
-};
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "intprop.h"
 
 Shape::Shape( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
 {
-    Q_UNUSED( Shape_properties );
-
     m_graphical = true;
     
-    m_hSize = 50;
-    m_vSize = 30;
+    m_hSize  = 50;
+    m_vSize  = 30;
     m_border = 2;
     m_color  = QColor( Qt::gray );
-    
+    m_area   = QRectF( -m_hSize/2, -m_vSize/2, m_hSize, m_vSize );
     setZValue( -1 );
-    
-    m_area = QRectF( -m_hSize/2, -m_vSize/2, m_hSize, m_vSize );
+
+    addPropGroup( { tr("Main"), {
+new IntProp <Shape>( "H_size" , tr("Size X"),"_Pixels", this, &Shape::hSize,  &Shape::setHSize, "uint" ),
+new IntProp <Shape>( "V_size" , tr("Size Y"),"_Pixels", this, &Shape::vSize,  &Shape::setVSize, "uint" ),
+new IntProp <Shape>( "Border" , tr("Border"),"_Pixels", this, &Shape::border, &Shape::setBorder ),
+new DoubProp<Shape>( "Z_Value", tr("Z Value"),""      , this, &Shape::zVal  , &Shape::setZVal )
+    }} );
+    addPropGroup( { tr("Color"), {
+new StringProp<Shape>( "Color"  , tr("Color")  ,"", this, &Shape::colorStr, &Shape::setColorStr ),
+new DoubProp  <Shape>( "Opacity", tr("Opacity"),"", this, &Shape::opac    ,  &Shape::setOpac )
+    }} );
 }
 Shape::~Shape(){}
-
-QList<propGroup_t> Shape::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"H_size", tr("Size X"),"Pixels"} );
-    mainGroup.propList.append( {"V_size", tr("Size Y"),"Pixels"} );
-    mainGroup.propList.append( {"Border", tr("Border"),"Pixels"} );
-    mainGroup.propList.append( {"Z_Value", tr("Z Value"),""} );
-
-    propGroup_t colorGroup { tr("Color") };
-    colorGroup.propList.append( {"Color", tr("Color"),""} );
-    colorGroup.propList.append( {"Opacity", tr("Opacity"),""} );
-
-    return {mainGroup, colorGroup};
-}
 
 void Shape::setHSize( int size )
 {
@@ -88,5 +75,3 @@ void Shape::setColor( QColor color )
     m_color = color;
     update();
 }
-
-#include "moc_shape.cpp"

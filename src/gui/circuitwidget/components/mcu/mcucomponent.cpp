@@ -38,20 +38,13 @@
 #include "mcumonitor.h"
 #include "utils.h"
 
-static const char* McuComponent_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Program"),
-    QT_TRANSLATE_NOOP("App::Property","Mhz"),
-    QT_TRANSLATE_NOOP("App::Property","Auto Load"),
-    QT_TRANSLATE_NOOP("App::Property","Init gdb")
-};
-
-//McuComponent* McuComponent::m_pSelf = 0l;
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "boolprop.h"
 
 McuComponent::McuComponent( QObject* parent, QString type, QString id )
             : McuBase( parent, type, id )
 {
-    Q_UNUSED( McuComponent_properties );
-
     qDebug() << "        Initializing"<<m_id<<"...";
     m_pSelf = this;
     m_attached  = false;
@@ -79,20 +72,20 @@ McuComponent::McuComponent( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
     Circuit::self()->update();
+
+    addPropGroup( { tr("Main"), {
+new DoubProp  <McuComponent>( "Mhz"      , tr("Frequency"),"MHz" , this, &McuComponent::freq,    &McuComponent::setFreq ),
+new StringProp<McuComponent>( "Program"  , tr("Fimware")  ,""    , this, &McuComponent::program, &McuComponent::setProgram ),
+new BoolProp  <McuComponent>( "Auto_Load", tr("Auto Load Firmware at Start"),"", this, &McuComponent::autoLoad, &McuComponent::setAutoLoad ),
+    }} );
+    addPropGroup( { tr("Hidden"), {
+//new StringProp<McuComponent>( "varList", "","", this, &McuComponent::varList,   &McuComponent::setVarList),
+//new StringProp<McuComponent>( "eeprom" , "","", this, &McuComponent::getEeprom, &McuComponent::setEeprom )
+    }} );
 }
 McuComponent::~McuComponent()
 {
     if( m_mcuMonitor ) delete m_mcuMonitor;
-}
-
-QList<propGroup_t> McuComponent::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Logic_Symbol", tr("Logic Symbol"),""} );
-    mainGroup.propList.append( {"Mhz", tr("Frequency"),"MHz"} );
-    mainGroup.propList.append( {"Program", tr("Firmware"),""} );
-    mainGroup.propList.append( {"Auto_Load", tr("Auto Load Firmware at Start"),""} );
-    return {mainGroup};
 }
 
 void McuComponent::attach()
@@ -349,7 +342,7 @@ void McuComponent::slotOpenTerm()
     Circuit::self()->addItem( ser );
 
     Component* comp = this;
-    if( this->isMainComp() ) comp = m_subcircuit;
+    if( m_isMainComp ) comp = m_subcircuit;
 
     SerialTerm* serial = static_cast<SerialTerm*>(ser);
     serial->setMcuId( comp->objectName() );
@@ -362,7 +355,6 @@ void McuComponent::slotLoad()
                        tr("All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)"));
 
     if( fileName.isEmpty() ) return; // User cancels loading
-
     load( fileName );
 }
 
@@ -394,8 +386,6 @@ bool McuComponent::load( QString fileName )
         settings->setValue( "lastFirmDir", m_symbolFile );
         ok = true;
     }
-    //else QMessageBox::warning( 0, tr("Error:"), tr("Could not load: \n")+ fileName );
-
     Simulator::self()->resumeSim();
     return ok;
 }

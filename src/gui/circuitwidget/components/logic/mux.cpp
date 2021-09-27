@@ -25,10 +25,11 @@
 #include "connector.h"
 #include "iopin.h"
 
+#include "boolprop.h"
+#include "intprop.h"
+
 Component* Mux::construct( QObject* parent, QString type, QString id )
-{
-    return new Mux( parent, type, id );
-}
+{ return new Mux( parent, type, id ); }
 
 LibraryItem* Mux::libraryItem()
 {
@@ -45,41 +46,32 @@ Mux::Mux( QObject* parent, QString type, QString id )
 {
     m_width  = 4;
     m_height = 10;
-
     m_tristate = true;
 
     setNumInps( 8,"D" );
     
-    QStringList pinList;
-
-    pinList // Inputs:
-            << "ID03  S0"
-            << "ID02 S1 "
-            << "ID01S2 "
-            
-            // Outputs:
-            << "OR02Y "
-            << "OR03!Y "
-            ;
-    init( pinList );
+    init({          // Inputs:
+            "ID03  S0",
+            "ID02 S1 ",
+            "ID01S2 ",
+                   // Outputs:
+            "OR02Y ",
+            "OR03!Y "
+        });
 
     createOePin( "IU03OE ", id+"-in11");
 
     m_addrBits = 0;
     setAddrBits( 3 );
+
+    addPropGroup( { tr("Main"), {
+new IntProp<Mux>(  "Address_Bits" , tr("Address Size") ,"_bits", this, &Mux::addrBits,   &Mux::setAddrBits),
+new BoolProp<Mux>( "Invert_Inputs", tr("Invert Inputs"),""     , this, &Mux::invertInps, &Mux::setInvertInps)
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 Mux::~Mux(){}
-
-QList<propGroup_t> Mux::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Address_Bits", tr("Address Size"),"Bits"} );
-    mainGroup.propList.append( {"Invert_Inputs", tr("Invert Inputs"),""} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void Mux::stamp()
 {
@@ -138,8 +130,7 @@ void Mux::setAddrBits( int bits )
             pin->removeConnector();
             pin->setVisible( false );
         }
-        if( i < 2 ) // Outputs
-            m_outPin[i]->setY( -h+i*8+16 );
+        if( i < 2 ) m_outPin[i]->setY( -h+i*8+16 ); // Outputs
     }
     for( int i=0; i<8; ++i )
     {
@@ -148,22 +139,14 @@ void Mux::setAddrBits( int bits )
         {
             pin->setVisible( true );
             pin->setY( i*8-(bits+bits/3)*8 );
-        }
-        else{
+        }else{
             pin->removeConnector();
             pin->setVisible( false );
-        }
-    }
+    }   }
     m_oePin->setY( -h-8 ); // OE
 
-    m_area = QRect(-w-1,-h-8-1, w*2, h*2+16+2 );
+    m_area = QRect(-w-1,-h-8-1, w*2+2, h*2+16+2 );
     Circuit::self()->update();
-}
-
-void Mux::setInvertInps( bool invert )
-{
-    m_invInputs = invert;
-    for( int i=0; i<8; ++i ) m_inPin[i]->setInverted( invert );
 }
 
 QPainterPath Mux::shape() const
@@ -200,5 +183,3 @@ void Mux::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
 
     p->drawPolygon(points, 4);
 }
-
-#include "moc_mux.cpp"

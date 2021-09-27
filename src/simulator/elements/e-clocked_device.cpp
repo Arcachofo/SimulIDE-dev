@@ -26,9 +26,9 @@
 eClockedDevice::eClockedDevice( QString id )
               : eElement ( id )
 {
-    m_clock    = false;
-    m_clkPin = NULL;
-    m_trigger  = Component::Clock;
+    m_clock   = false;
+    m_clkPin  = NULL;
+    m_trigger = Clock;
 }
 eClockedDevice::~eClockedDevice(){}
 
@@ -71,11 +71,11 @@ void eClockedDevice::updateClock()
 
     bool clock = m_clkPin->getInpState(); // Clock pin volt.
 
-    if( m_trigger == Component::InEnable )
+    if( m_trigger == InEnable )
     {
         if( clock ) m_clkState = Clock_Allow;
     }
-    else if( m_trigger == Component::Clock )
+    else if( m_trigger == Clock )
     {
         if     (!m_clock &&  clock ) m_clkState = Clock_Rising;
         else if( m_clock &&  clock ) m_clkState = Clock_High;
@@ -85,26 +85,26 @@ void eClockedDevice::updateClock()
     m_clock = clock;
 }
 
-void eClockedDevice::setTrigger( Component::trigger_t trigger )
+void eClockedDevice::setTrigger( trigger_t trigger )
 {
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     m_trigger = trigger;
     m_clock = false;
 
-    if( trigger == Component::None )
+    if( m_trigger == None )
     {
         m_clkPin->removeConnector();
         m_clkPin->reset();
         m_clkPin->setLabelText( "" );
         m_clkPin->setVisible( false );
     }
-    else if( trigger == Component::Clock )
+    else if( m_trigger == Clock )
     {
         m_clkPin->setLabelText( ">" );
         m_clkPin->setVisible( true );
     }
-    else if( trigger == Component::InEnable )
+    else if( m_trigger == InEnable )
     {
         m_clkPin->setLabelText( " IE" );
         m_clkPin->setVisible( true );

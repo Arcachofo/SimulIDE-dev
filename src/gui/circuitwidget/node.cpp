@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QtWidgets>
+
 #include "node.h"
 #include "connector.h"
 #include "circuit.h"
@@ -70,7 +72,7 @@ void Node::remove() // Only remove if there are less than 3 connectors
         if( conectors == 2 ) joinConns( con[0], con[1] );  // 2 Conn
         else                 m_pin[con[0]]->removeConnector();
 
-        Circuit::self()->compList()->removeOne( this );
+        Circuit::self()->nodeList()->removeOne( this );
         if( this->scene() ) Circuit::self()->removeItem( this );
 }   }
 
@@ -81,8 +83,7 @@ void Node::joinConns( int c0, int c1 )
 
     Connector* con0 = pin0->connector();
     Connector* con1 = pin1->connector();
-    
-    Connector* con = new Connector( Circuit::self(), con0->itemType(), con0->itemID(), pin0->conPin() );
+    Connector* con = new Connector( Circuit::self(), "", con0->itemID(), pin0->conPin() );
 
     QStringList list0 = con0->pointList();
     QStringList list1 = con1->pointList();
@@ -120,7 +121,7 @@ void Node::joinConns( int c0, int c1 )
 
     con->closeCon( pin1->conPin(), true );
     
-    Circuit::self()->addItem( con );
+    /// Circuit::self()->addItem( con );
     if( this->isSelected() ) con->setSelected( true );
 }
 

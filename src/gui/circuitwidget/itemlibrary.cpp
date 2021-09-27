@@ -23,7 +23,7 @@
 #include "appiface.h"
 
 //BEGIN Item includes
-#include "amperimeter.h"
+#include "ampmeter.h"
 #include "adc.h"
 #include "aip31068_i2c.h"
 #include "audio_out.h"
@@ -44,10 +44,11 @@
 #include "diode.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
+#include "fixedvolt.h"
 #include "flipflopd.h"
 #include "flipflopjk.h"
 #include "flipfloprs.h"
-#include "frequencimeter.h"
+#include "freqmeter.h"
 #include "fulladder.h"
 #include "function.h"
 #include "gate_and.h"
@@ -72,7 +73,6 @@
 #include "line.h"
 #include "lm555.h"
 #include "logicanalizer.h"
-#include "logicinput.h"
 #include "max72xx_matrix.h"
 #include "mcu.h"
 #include "memory.h"
@@ -111,7 +111,7 @@
 #include "textcomponent.h"
 #include "tunnel.h"
 #include "varresistor.h"
-#include "voltimeter.h"
+#include "voltmeter.h"
 #include "volt_reg.h"
 #include "voltsource.h"
 #include "wavegen.h"
@@ -119,7 +119,7 @@
 #include "zener.h"
 //END Item includes
 
-ItemLibrary* ItemLibrary::m_pSelf = 0l;
+ItemLibrary* ItemLibrary::m_pSelf = NULL;
 
 ItemLibrary::ItemLibrary()
 {
@@ -140,11 +140,11 @@ void ItemLibrary::loadItems()
     addItem( Probe::libraryItem() );
     addItem( Voltimeter::libraryItem() );
     addItem( Amperimeter::libraryItem() );
-    addItem( Frequencimeter::libraryItem() );
+    addItem( FreqMeter::libraryItem() );
     addItem( Oscope::libraryItem() );
     addItem( LAnalizer::libraryItem() );
     // Sources
-    addItem( LogicInput::libraryItem() );
+    addItem( FixedVolt::libraryItem() );
     addItem( Clock::libraryItem() );
     addItem( WaveGen::libraryItem() );
     addItem( VoltSource::libraryItem() );
@@ -159,88 +159,88 @@ void ItemLibrary::loadItems()
     addItem( RelaySPST::libraryItem() );
     addItem( KeyPad::libraryItem() );
     // Passive
-    addItem( new LibraryItem( tr("Resistors"),tr("Passive"), "resistors.png","", 0l ) );
+    addItem( new LibraryItem( tr("Resistors"),tr("Passive"), "resistors.png","", NULL ) );
     addItem( Resistor::libraryItem() );
     addItem( ResistorDip::libraryItem() );
     addItem( Potentiometer::libraryItem() );
     addItem( VarResistor::libraryItem() );
-    addItem( new LibraryItem( tr("Resistive Sensors"),tr("Passive"), "resistorsensors.png","", 0l ) );
+    addItem( new LibraryItem( tr("Resistive Sensors"),tr("Passive"), "resistorsensors.png","", NULL ) );
     addItem( Ldr::libraryItem() );
     addItem( Thermistor::libraryItem() );
     addItem( RTD::libraryItem() );
     addItem( Strain::libraryItem() );
-
+    addItem( new LibraryItem( tr("Reactive"),tr("Passive"), "resistors.png","", NULL ) );
     addItem( Capacitor::libraryItem() );
     addItem( elCapacitor::libraryItem() );
     addItem( Inductor::libraryItem() );
     // Active
     addItem( Diode::libraryItem() );
     addItem( Zener::libraryItem() );
-    addItem( VoltReg::libraryItem() );
-    addItem( OpAmp::libraryItem() );
     addItem( Mosfet::libraryItem() );
     addItem( BJT::libraryItem() );
+    addItem( OpAmp::libraryItem() );
+    addItem( VoltReg::libraryItem() );
     addItem( MuxAnalog::libraryItem() );
     // Outputs
-    addItem( new LibraryItem( tr("Leds"),tr("Outputs"), "leds.png","", 0l ) );
+    addItem( new LibraryItem( tr("Leds"),tr("Outputs"), "leds.png","", NULL ) );
     addItem( Led::libraryItem() );
     addItem( LedBar::libraryItem() );
     addItem( SevenSegment::libraryItem() );
     addItem( LedMatrix::libraryItem() );
     addItem( Max72xx_matrix::libraryItem() );
     addItem( WS2812::libraryItem() );
-    addItem( new LibraryItem( tr("Displays"),tr("Outputs"), "displays.png","", 0l ) );
+    addItem( new LibraryItem( tr("Displays"),tr("Outputs"), "displays.png","", NULL ) );
     addItem( Hd44780::libraryItem() );
     addItem( Aip31068_i2c::libraryItem() );
     addItem( Pcd8544::libraryItem() );
     addItem( Ks0108::libraryItem() );
     addItem( Ssd1306::libraryItem() );
     addItem( Ili9341::libraryItem() );
-    addItem( new LibraryItem( tr("Motors"),tr("Outputs"), "motors.png","", 0l ) );
+    addItem( new LibraryItem( tr("Motors"),tr("Outputs"), "motors.png","", NULL ) );
     addItem( DcMotor::libraryItem() );
     addItem( Stepper::libraryItem() );
     addItem( Servo::libraryItem() );
     addItem( AudioOut::libraryItem() );
     // Micro
-    addItem( new LibraryItem( tr("AVR"),tr("Micro"), "ic2.png","", 0l ) );
+    addItem( new LibraryItem( tr("AVR"),tr("Micro"), "ic2.png","", NULL ) );
     addItem( PICComponent::libraryItem() );
-    addItem( new LibraryItem( tr("I51"),tr("Micro"), "ic2.png","", 0l ) );
-    addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "board.png","", 0l ) );
-    addItem( new LibraryItem( tr("Shields"),tr("Micro"), "shield.png","", 0l ) );
-    addItem( new LibraryItem( tr("Sensors"),tr("Micro"), "1to2.png","", 0l ) );
+    addItem( new LibraryItem( tr("I51"),tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "board.png","", NULL ) );
+    addItem( new LibraryItem( tr("Shields"),tr("Micro"), "shield.png","", NULL ) );
+    addItem( new LibraryItem( tr("Sensors"),tr("Micro"), "1to2.png","", NULL ) );
     addItem( SR04::libraryItem() );
-    addItem( new LibraryItem( tr("Perifericals"),tr("Micro"), "perif.png","", 0l ) );
+    addItem( new LibraryItem( tr("Perifericals"),tr("Micro"), "perif.png","", NULL ) );
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );
     addItem( SerialPort::libraryItem() );
     addItem( SerialTerm::libraryItem() );
     // Logic
-    addItem( new LibraryItem( tr("Gates"),tr("Logic"), "gates.png","", 0l ) );
+    addItem( new LibraryItem( tr("Gates"),tr("Logic"), "gates.png","", NULL ) );
     addItem( Buffer::libraryItem() );
     addItem( AndGate::libraryItem() );
     addItem( OrGate::libraryItem() );
     addItem( XorGate::libraryItem() );
-    addItem( new LibraryItem( tr("Arithmetic"),tr("Logic"), "2to2.png","", 0l ) );
+    addItem( new LibraryItem( tr("Arithmetic"),tr("Logic"), "2to2.png","", NULL ) );
     addItem( BinCounter::libraryItem() );
     addItem( FullAdder::libraryItem() );
     addItem( ShiftReg::libraryItem() );
     addItem( Function::libraryItem() );
     addItem( Scripted::libraryItem() );
-    addItem( new LibraryItem( tr("Memory"),tr("Logic"), "subc.png","", 0l ) );
+    addItem( new LibraryItem( tr("Memory"),tr("Logic"), "subc.png","", NULL ) );
     addItem( FlipFlopD::libraryItem() );
     addItem( FlipFlopRS::libraryItem() );
     addItem( FlipFlopJK::libraryItem() );
     addItem( LatchD::libraryItem() );
     addItem( Memory::libraryItem() );
     addItem( I2CRam::libraryItem() );
-    addItem( new LibraryItem( tr("Converters"),tr("Logic"), "1to2.png","", 0l ) );
+    addItem( new LibraryItem( tr("Converters"),tr("Logic"), "1to2.png","", NULL ) );
     addItem( Mux::libraryItem() );
     addItem( Demux::libraryItem() );
     addItem( BcdToDec::libraryItem() );
     addItem( DecToBcd::libraryItem() );
     addItem( BcdTo7S::libraryItem() );
     addItem( I2CToParallel::libraryItem() );
-    addItem( new LibraryItem( tr("Other Logic"),tr("Logic"), "2to3.png","", 0l ) );
+    addItem( new LibraryItem( tr("Other Logic"),tr("Logic"), "2to3.png","", NULL ) );
     addItem( ADC::libraryItem() );
     addItem( DAC::libraryItem() );
     addItem( Bus::libraryItem() );
@@ -264,7 +264,7 @@ void ItemLibrary::loadItems()
     addItem( Tunnel::libraryItem() );
     addItem( SubPackage::libraryItem() );
 
-    addItem( new LibraryItem( tr("PICs"),tr("NEW_MCU"), "ic2.png","", 0l ) );
+    addItem( new LibraryItem( tr("PICs"),tr("NEW_MCU"), "ic2.png","", NULL ) );
     addItem( Mcu::libraryItem() );
 }
 
@@ -330,7 +330,7 @@ LibraryItem *ItemLibrary::itemByName(const QString name) const
     {
         if( item->name() == name ) return item;
     }
-    return 0l;
+    return NULL;
 }
 
 LibraryItem* ItemLibrary::libraryItem(const QString type ) const
@@ -339,7 +339,7 @@ LibraryItem* ItemLibrary::libraryItem(const QString type ) const
     {
         if( item->type() == type ) return item;
     }
-    return 0l;
+    return NULL;
 }
 
 

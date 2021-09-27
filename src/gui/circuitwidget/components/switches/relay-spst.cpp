@@ -18,7 +18,13 @@
  ***************************************************************************/
 
 #include "relay-spst.h"
+#include "itemlibrary.h"
 #include "pin.h"
+
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* RelaySPST::construct( QObject* parent, QString type, QString id )
 { return new RelaySPST( parent, type, id ); }
@@ -26,34 +32,28 @@ Component* RelaySPST::construct( QObject* parent, QString type, QString id )
 LibraryItem* RelaySPST::libraryItem()
 {
     return new LibraryItem(
-            tr( "Relay (all)" ),
-            tr( "Switches" ),
-            "relay-spst.png",
-            "RelaySPST",
-            RelaySPST::construct);
+        tr( "Relay (all)" ),
+        tr( "Switches" ),
+        "relay-spst.png",
+        "RelaySPST",
+        RelaySPST::construct);
 }
 
 RelaySPST::RelaySPST( QObject* parent, QString type, QString id )
          : RelayBase( parent, type, id )
 {
+    addPropGroup( { tr("Main"), {
+new BoolProp  <RelaySPST>( "Norm_Close", tr("Normally Closed"),"", this, &RelaySPST::nClose, &RelaySPST::setNClose ),
+new BoolProp  <RelaySPST>( "DT"        , tr("Double Throw")   ,"", this, &RelaySPST::dt,     &RelaySPST::setDt ),
+new IntProp   <RelaySPST>( "Poles"     , tr("Poles")          ,"_Poles", this, &RelaySPST::poles,  &RelaySPST::setPoles, "uint" ),
+//new StringProp<RelaySPST>( "Key"       , tr("Key")            ,"", this, &RelaySPST::key,    &RelaySPST::setKey ),
+    }} );
+    addPropGroup( { tr("Electric"), {
+new DoubProp<RelaySPST>( "Rcoil"     , tr("Resistance"),"Ω", this, &RelaySPST::rCoil, &RelaySPST::setRCoil),
+new DoubProp<RelaySPST>( "Inductance", tr("Inductance"),"H", this, &RelaySPST::induc, &RelaySPST::setInduc ),
+new DoubProp<RelaySPST>( "IOn"       , tr("IOn")       ,"A", this, &RelaySPST::iTrig, &RelaySPST::setITrig),
+new DoubProp<RelaySPST>( "IOff"      , tr("IOff")      ,"A", this, &RelaySPST::iRel,  &RelaySPST::setIRel ),
+    }} );
 }
 RelaySPST::~RelaySPST(){}
 
-QList<propGroup_t> RelaySPST::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Norm_Close", tr("Normally Closed"),""} );
-    mainGroup.propList.append( {"DT", tr("Double Throw"),""} );
-    mainGroup.propList.append( {"Poles", tr("Poles"),""} );
-    mainGroup.propList.append( {"Key", tr("Key"),""} );
-
-    propGroup_t elecGroup { tr("Electric") };
-    elecGroup.propList.append( {"Rcoil", tr("Resistance"),"Ω"} );
-    elecGroup.propList.append( {"Inductance", tr("Inductance"),"H"} );
-    elecGroup.propList.append( {"IOn", tr("IOn"),"A"} );
-    elecGroup.propList.append( {"IOff", tr("IOff"),"A"} );
-
-    return {mainGroup, elecGroup};
-}
-
-//#include "moc_relay-spst.cpp"

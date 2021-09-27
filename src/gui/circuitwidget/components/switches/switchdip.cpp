@@ -57,19 +57,19 @@ SwitchDip::SwitchDip( QObject* parent, QString type, QString id )
     m_state = 0;
     setSize( 8 );
 
-    setShowVal( false );
+    //setShowVal( false );
     setLabelPos(-16,-44, 0);
     
     Simulator::self()->addToUpdateList( this );
 }
 SwitchDip::~SwitchDip(){}
 
-QList<propGroup_t> SwitchDip::propGroups()
+/*QList<propGroup_t> SwitchDip::propGroups()
 {
     propGroup_t mainGroup { tr("Main") };
     mainGroup.propList.append( {"Size", tr("Size"),"Switches"} );
     return {mainGroup};
-}
+}*/
 
 void SwitchDip::stamp()
 {

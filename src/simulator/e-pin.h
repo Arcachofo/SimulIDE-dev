@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT ePin
 
         double getVolt();
 
-        eNode* getEnode();
+        eNode* getEnode() { return m_enode; }
         void   setEnode( eNode* enode );
 
         eNode* getEnodeComp() { return m_enodeCon; }
@@ -44,14 +44,14 @@ class MAINMODULE_EXPORT ePin
         void changeCallBack( eElement* el , bool cb=true );
 
         bool inverted() { return m_inverted; }
-        virtual void setInverted( bool inverted );
+        virtual void setInverted( bool inverted ) { m_inverted = inverted; }
 
         void stampAdmitance( double data );
         void stampCurrent( double data );
 
         void reset();
         
-        QString getId();
+        QString getId()  { return m_id; }
         void setId( QString id );
 
     protected:

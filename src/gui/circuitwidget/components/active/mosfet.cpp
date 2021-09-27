@@ -17,17 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "mosfet.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"
 #include "iopin.h"
 
-static const char* Mosfet_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","RDSon"),
-    QT_TRANSLATE_NOOP("App::Property","P Channel"),
-    QT_TRANSLATE_NOOP("App::Property","Depletion")
-};
+#include "doubleprop.h"
+#include "boolprop.h"
 
 Component* Mosfet::construct( QObject* parent, QString type, QString id )
 { return new Mosfet( parent, type, id ); }
@@ -46,45 +45,26 @@ Mosfet::Mosfet( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
       , eMosfet( id )
 {
-    Q_UNUSED( Mosfet_properties );
-    
     m_area =  QRectF( -12, -14, 28, 28 );
     setLabelPos(18, 0, 0);
 
     m_pin.resize(3);
-
-    // D,S pins m_ePin[0] m_ePin[1] 
-    m_pin[0] = new Pin( 90, QPoint(8,-16), id+"-Dren", 0, this );
-    m_pin[0]->setLabelText( "" );
-    m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[0] = m_pin[0];
-
-    m_pin[1] = new Pin( 270, QPoint(8, 16), id+"-Sour", 1, this );
-    m_pin[1]->setLabelText( "" );
-    m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[1] = m_pin[1];
-
-    m_pin[2] = new IoPin( 180, QPoint(-16, 0), id+"-Gate", 0, this, input );
-    m_pin[2]->setLabelText( "" );
-    m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[2] = m_pin[2];
+    m_ePin[0] = m_pin[0] = new Pin( 90, QPoint(8,-16), id+"-Dren", 0, this );
+    m_ePin[1] = m_pin[1] = new Pin( 270, QPoint(8, 16), id+"-Sour", 1, this );
+    m_ePin[2] = m_pin[2] = new IoPin( 180, QPoint(-16, 0), id+"-Gate", 0, this, input );
     
     Simulator::self()->addToUpdateList( this );
-}
-Mosfet::~Mosfet()
-{
-    Simulator::self()->remFromUpdateList( this );
-}
 
-QList<propGroup_t> Mosfet::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"P_Channel", tr("P Channel"),""} );
-    mainGroup.propList.append( {"Depletion", tr("Depletion"),""} );
-    mainGroup.propList.append( {"RDSon", tr("RDSon"),"Ω"} );
-    mainGroup.propList.append( {"Threshold", tr("Threshold"),"V"} );
-    return {mainGroup};
+    addPropGroup( { tr("Main"), {
+new BoolProp<Mosfet>( "P_Channel", tr("P Channel"),"", this, &Mosfet::pChannel,  &Mosfet::setPchannel ),
+new BoolProp<Mosfet>( "Depletion", tr("Depletion"),"", this, &Mosfet::depletion, &Mosfet::setDepletion ),
+    }} );
+    addPropGroup( { tr("Electric"), {
+new DoubProp<Mosfet>( "RDSon"    , tr("RDSon")    ,"Ω", this, &Mosfet::rdson,     &Mosfet::setRDSon),
+new DoubProp<Mosfet>( "Threshold", tr("Threshold"),"V", this, &Mosfet::threshold, &Mosfet::setThreshold )
+    }} );
 }
+Mosfet::~Mosfet(){}
 
 void Mosfet::updateStep()
 {
@@ -135,6 +115,3 @@ void Mosfet::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
         p->drawLine( 0,-2, 0, 2 );
         p->drawLine( 0, 5, 0, 9 );
 }   }
-
-
-#include "moc_mosfet.cpp"

@@ -29,19 +29,7 @@ class DataWidget;
 
 class MAINMODULE_EXPORT Oscope : public PlotBase
 {
-    Q_OBJECT
-    Q_PROPERTY( double Filter   READ filter  WRITE setFilter DESIGNABLE true USER true )
-    Q_PROPERTY( int  Trigger READ trigger WRITE setTrigger )
-    Q_PROPERTY( int  AutoSC  READ autoSC  WRITE setAutoSC )
-    Q_PROPERTY( int  Tracks  READ tracks  WRITE setTracks )
-
-    Q_PROPERTY( QStringList HideCh  READ hideCh  WRITE setHideCh )
-    Q_PROPERTY( QStringList TimPos  READ timPos  WRITE setTimPos )
-    Q_PROPERTY( QStringList VolDiv  READ volDiv  WRITE setVolDiv )
-    Q_PROPERTY( QStringList VolPos  READ volPos  WRITE setVolPos )
-
     public:
-
         Oscope( QObject* parent, QString type, QString id );
         ~Oscope();
 
@@ -56,24 +44,24 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         int autoSC() { return m_auto; }
         void setAutoSC( int ch );
 
-        QStringList hideCh();
-        void setHideCh( QStringList hc );
+        QString hideCh();
+        void setHideCh( QString hc );
 
         int tracks();
         void setTracks( int tracks );
 
-        QStringList timPos();
-        void setTimPos( QStringList tp );
+        QString timPos();
+        void setTimPos( QString tp );
 
-        QStringList volDiv();
-        void setVolDiv( QStringList vd );
+        QString volDiv();
+        void setVolDiv( QString vd );
 
-        QStringList volPos();
-        void setVolPos( QStringList vp );
+        QString volPos();
+        void setVolPos( QString vp );
 
         virtual void updateStep() override;
 
-        virtual void setTimeDiv( uint64_t td ) override;
+        virtual void setTimeDiv( int td ) override;
 
         int64_t timePos( int ch ){ return m_timePos[ch]; }
         void setTimePos( int ch, int64_t tp );
@@ -86,7 +74,7 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         void hideChannel( int ch, bool hide );
 
-        virtual void setTunnels( QStringList tunnels ) override;
+        virtual void setTunnels( QString tunnels ) override;
 
         virtual void expand( bool e ) override;
 
@@ -107,4 +95,3 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 };
 
 #endif
-

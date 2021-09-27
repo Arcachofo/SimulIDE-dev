@@ -24,21 +24,18 @@
 #include "e-element.h"
 
 class LibraryItem;
+class QPushButton;
+class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT SwitchDip : public Component, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( int    Size   READ size   WRITE setSize   DESIGNABLE true USER true )
-    Q_PROPERTY( int    State  READ state  WRITE setState  )
-
     public:
         SwitchDip( QObject* parent, QString type, QString id );
         ~SwitchDip();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         int  size() { return m_size; }
         void setSize( int size );

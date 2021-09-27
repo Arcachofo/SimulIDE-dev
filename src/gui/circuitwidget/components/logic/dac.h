@@ -26,36 +26,27 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT DAC : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( double Vref         READ maxVolt    WRITE setMaxVolt    DESIGNABLE true USER true )
-    Q_PROPERTY( int    Num_Bits     READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
-
     public:
         DAC( QObject* parent, QString type, QString id );
         ~DAC();
 
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem *libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
-
-        double maxVolt()               { return m_maxVolt; }
-        void setMaxVolt( double volt ) { m_maxVolt = volt; }
-
-        double maxValue()               { return m_maxValue; }
-        void setMaxValue( double volt ) { m_maxValue = volt; }
 
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        virtual void setNumInps(uint pins, QString label="I", int start=0, bool number=true ) override;
+        double maxVolt() { return m_maxVolt; }
+        void setMaxVolt( double v ) { m_maxVolt = v; }
+
+        virtual void setNumInps( int pins );
         
     protected:
         double m_maxVolt;
         double m_maxValue;
 
-        int m_value;
+        int m_val;
 };
 
 #endif

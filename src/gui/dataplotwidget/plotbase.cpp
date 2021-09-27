@@ -23,6 +23,9 @@
 #include "circuit.h"
 #include "circuitwidget.h"
 
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "intprop.h"
 
 PlotBase::PlotBase( QObject* parent, QString type, QString id )
         : Component( parent, type, id )
@@ -47,6 +50,17 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
         m_condTo["ch"+n+"f"] = "(ch"+n+"==4)";
     }
     Simulator::self()->addToUpdateList( this );
+
+    addPropGroup( { tr("Main"), {
+new IntProp<PlotBase>( "Basic_X" ,tr("Screen Size X"),"_Pixels", this, &PlotBase::baSizeX, &PlotBase::setBaSizeX, "uint" ),
+new IntProp<PlotBase>( "Basic_Y" ,tr("Screen Size Y"),"_Pixels", this, &PlotBase::baSizeY, &PlotBase::setBaSizeY, "uint" ),
+    }} );
+    addPropGroup( { tr("Hidden"), {
+new IntProp   <PlotBase>( "hTick"   ,"","", this, &PlotBase::hTick,   &PlotBase::sethTick ),
+new IntProp   <PlotBase>( "TimeDiv" ,"","", this, &PlotBase::timeDiv, &PlotBase::setTimeDiv ),
+new StringProp<PlotBase>( "Conds"   ,"","", this, &PlotBase::conds,   &PlotBase::setConds ),
+new StringProp<PlotBase>( "Tunnels" ,"","", this, &PlotBase::tunnels, &PlotBase::setTunnels ),
+    } } );
 }
 PlotBase::~PlotBase()
 {
@@ -67,16 +81,16 @@ void PlotBase::setBaSizeY( int size )
     expand( m_expand );
 }
 
-void PlotBase::setTimeDiv( uint64_t td )
+void PlotBase::setTimeDiv( int td )
 {
     m_timeDiv = td;
     m_display->setTimeDiv( td );
 }
 
-QStringList PlotBase::tunnels()
+QString PlotBase::tunnels()
 {
-    QStringList list;
-    for( int i=0; i<m_numChannels; ++i ) list << m_channel[i]->m_chTunnel;
+    QString list;
+    for( int i=0; i<m_numChannels; ++i ) list.append( m_channel[i]->m_chTunnel ).append(",");
     return list;
 }
 
@@ -141,4 +155,3 @@ void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     p->setPen(pen);
 }
 
-#include "moc_plotbase.cpp"

@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QtWidgets>
+
 #include "label.h"
 #include "component.h"
 
@@ -38,13 +40,13 @@ void Label::setComponent( Component* parent )
     this->document()->setDocumentMargin(0);
 }
 
-void Label::focusOutEvent( QFocusEvent* event )
+/*void Label::focusOutEvent( QFocusEvent* event )
 {
     setTextInteractionFlags( Qt::NoTextInteraction );
     m_parentComp->updateLabel( this, document()->toPlainText() );
 
     QGraphicsTextItem::focusOutEvent(event);
-}
+}*/
 
 void Label::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
@@ -53,8 +55,7 @@ void Label::mousePressEvent( QGraphicsSceneMouseEvent* event )
         event->accept();
         setCursor( Qt::ClosedHandCursor );
         grabMouse();
-    }
-}
+}   }
 
 void Label::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 {
@@ -95,7 +96,13 @@ void Label::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     }
 }
 
-void Label::setLabelPos()
+void Label::setLabelPos( QPointF pos )
+{
+    m_labelx = pos.x();
+    m_labely = pos.y();
+}
+
+void Label::updtLabelPos()
 {
     setX( m_labelx );
     setY( m_labely );
@@ -135,5 +142,5 @@ void Label::V_flip( int vf )
     if( !isEnabled() ) return;
     setTransform( QTransform::fromScale(1, vf) );
 }
-
+void Label::updateGeometry(int, int, int) { document()->setTextWidth( -1 ); }
 //#include "moc_label.h"

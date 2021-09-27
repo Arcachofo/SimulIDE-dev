@@ -26,19 +26,14 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Push : public PushBase
 {
-    Q_OBJECT
-    
     public:
-    
         Push( QObject* parent, QString type, QString id );
         ~Push();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 };
 
 #endif

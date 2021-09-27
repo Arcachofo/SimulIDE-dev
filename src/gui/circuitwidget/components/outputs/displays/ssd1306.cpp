@@ -17,21 +17,22 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "ssd1306.h"
 #include "itemlibrary.h"
 #include "simulator.h"
 #include "iopin.h"
 
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "intprop.h"
 
-static const char* Ssd1306_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Color")
-};
+QStringList Ssd1306::m_colors = {tr("White"),tr("Blue"),tr("Yellow")};
 
 
 Component* Ssd1306::construct( QObject* parent, QString type, QString id )
-{
-    return new Ssd1306( parent, type, id );
-}
+{ return new Ssd1306( parent, type, id ); }
 
 LibraryItem* Ssd1306::libraryItem()
 {
@@ -50,11 +51,8 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
        //, m_pinDC ( 270, QPoint(-24, 48), id+"-PinDC"  , 0, this )
        //, m_pinCS ( 270, QPoint(-16, 48), id+"-PinCS"  , 0, this )
 {
-    Q_UNUSED( Ssd1306_properties );
-
     m_graphical = true;
     m_area = QRectF( -70, -48, 140, 88 );
-
     m_address = 0b00111100; // 0x3A - 60
 
     m_pin.resize( 2 );
@@ -83,17 +81,14 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     setShowId( true );
     
     initialize();
+
+    addPropGroup( { tr("Main"), {
+new StringProp<Ssd1306>( "Color"       , tr("Color")       ,""    ,this,&Ssd1306::color,  &Ssd1306::setColor,"enum" ),
+new IntProp   <Ssd1306>( "Control_Code",tr("I2C Address")  ,""    ,this,&Ssd1306::cCode,  &Ssd1306::setCcode,"uint" ),
+new DoubProp  <Ssd1306>( "Frequency"   ,tr("I2C Frequency"),"_KHz",this,&Ssd1306::freqKHz,&Ssd1306::setFreqKHz ),
+    }} );
 }
 Ssd1306::~Ssd1306(){}
-
-QList<propGroup_t> Ssd1306::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Color", tr("Color"),"enum"} );
-    mainGroup.propList.append( {"Control_Code", tr("I2C Address"),""} );
-    mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
-    return {mainGroup};
-}
 
 void Ssd1306::stamp()
 {
@@ -422,9 +417,12 @@ void Ssd1306::updateStep()
     update();
 }
 
-void Ssd1306::setColor( dispColor color )
+void Ssd1306::setColor( QString c )
 {
-    m_dColor = color;
+    bool ok = false;
+    int index = c.toInt( &ok );
+    if( !ok ) index = m_colors.indexOf( c );
+    m_dColor = (dispColor)index;
 
     if( m_dColor == White )  m_pdisplayImg->setColor( 1, qRgb(245, 245, 245) );
     if( m_dColor == Blue  )  m_pdisplayImg->setColor( 1, qRgb(200, 200, 255) );
@@ -440,5 +438,3 @@ void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawRoundedRect( m_area,2,2 );
     p->drawImage(-64,-42,*m_pdisplayImg );
 }
-
-#include "moc_ssd1306.cpp"

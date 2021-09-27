@@ -104,7 +104,7 @@ void CompilerProp::on_customBoard_textEdited( QString board )
 
 void CompilerProp::on_driveCirc_toggled( bool drive )
 {
-    /// m_document->setDriveCirc( drive );
+    EditorWindow::self()->setDriveCirc( drive );
 }
 
 void CompilerProp::updateDialog()
@@ -130,7 +130,7 @@ void CompilerProp::updateDialog()
     deviceText->setText( m_compiler->device() );
 
     /// driveCirc->setVisible( true );
-    /// driveCirc->setChecked( m_document->driveCirc() );
+    driveCirc->setChecked( EditorWindow::self()->driveCirc() );
 }
 
 void CompilerProp::setCompiler( Compiler* compiler )

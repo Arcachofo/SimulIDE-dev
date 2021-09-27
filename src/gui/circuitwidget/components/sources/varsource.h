@@ -27,20 +27,14 @@
 class MAINMODULE_EXPORT VarSource : public Component, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( QString Unit      READ unit    WRITE setUnit    DESIGNABLE true USER true )
-    Q_PROPERTY( bool    Show_Volt READ showVal WRITE setShowVal DESIGNABLE true USER true )
-
     public:
         VarSource( QObject* parent, QString type, QString id );
         ~VarSource();
 
-        double value() const      { return m_value; }
-        void setValue( double v );
-        
-        void setUnit( QString un );
+        double maxValue() { return m_maxValue; }
+        void setMaxValue( double v ) { m_maxValue = v;}
 
         virtual void initialize() override;
-        virtual void remove() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -54,6 +48,8 @@ class MAINMODULE_EXPORT VarSource : public Component, public eElement
         
         double m_maxValue;
         double m_outValue;
+
+        QString m_unit;
         
         VoltWidget m_voltw;
 

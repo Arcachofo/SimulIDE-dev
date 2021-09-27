@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "line.h"
 
 Component* Line::construct( QObject* parent, QString type, QString id )
@@ -25,11 +27,11 @@ Component* Line::construct( QObject* parent, QString type, QString id )
 LibraryItem* Line::libraryItem()
 {
     return new LibraryItem(
-            tr( "Line" ),
-            tr( "Graphical" ),
-            "line.png",
-            "Line",
-            Line::construct);
+        tr( "Line" ),
+        tr( "Graphical" ),
+        "line.png",
+        "Line",
+        Line::construct);
 }
 
 Line::Line( QObject* parent, QString type, QString id )
@@ -59,5 +61,3 @@ void Line::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *
     p->setPen( pen );
     p->drawLine( -m_hSize/2, m_vSize/2, m_hSize/2, -m_vSize/2 );
 }
-
-#include "moc_line.cpp"

@@ -33,7 +33,7 @@ eMcu::eMcu( QString id )
     , m_timers( this )
 {
     m_cPerInst = 1;
-    setFreq( 16.0 );
+    setFreq( 16*1e6 );
 }
 
 eMcu::~eMcu()
@@ -98,10 +98,10 @@ int eMcu::pc() { return cpu->PC; }
 void eMcu::setFreq( double freq )
 {
     if     ( freq < 0  )  freq = 0;
-    else if( freq > 100 ) freq = 100;
+    else if( freq > 100*1e6 ) freq = 100*1e6;
 
     m_freq = freq;
-    m_simCycPI = 1e6*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
+    m_simCycPI = 1e12*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }
 
 uint16_t eMcu::getRegAddress( QString reg )// Get Reg address by name

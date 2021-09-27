@@ -23,10 +23,10 @@
 #include "e-node.h"
 
 McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle )
-               : IoPin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, mcuComponent, input )
+               : IoPin( angle, QPoint( xpos, ypos ), mcuComponent->getUid()+"-"+id, pos, mcuComponent, input )
 {
     m_mcuComponent = mcuComponent;
-    m_processor = mcuComponent->processor();
+    m_processor    = mcuComponent->processor();
 
     m_id    = id;
     m_type  = type;
@@ -37,7 +37,6 @@ McuComponentPin::McuComponentPin( McuComponent* mcuComponent, QString id, QStrin
     m_attached = false;
     m_openColl = false;
 
-    //Pin* pin = new Pin( angle, QPoint( xpos, ypos ), mcuComponent->itemID()+"-"+id, pos, m_mcuComponent );
     setLabelText( label );
 
     setOutHighV( 5 );
@@ -129,18 +128,11 @@ void McuComponentPin::enableIO( bool en )
 
     if( en )
     {
-        setDirection( m_prevPinMode == output );
+        setDirection( m_oldPinMode == output );
     }
     else
     {
         m_enode->remFromChangedCallback( this );
     }
-    m_prevPinMode = m_pinMode;
+    m_oldPinMode = m_pinMode;
 }
-
-/*void McuComponentPin::move( int dx, int dy )
-{
-    this->moveBy( dx, dy );
-}*/
-
-#include "moc_mcucomponentpin.cpp"

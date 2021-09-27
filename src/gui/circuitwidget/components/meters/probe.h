@@ -24,15 +24,10 @@
 #include "e-element.h"
 
 class IoPin;
-class Connector;
 class LibraryItem;
 
 class MAINMODULE_EXPORT Probe : public Component, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( bool   Show_volt READ showVal  WRITE setShowVal  DESIGNABLE true USER true )
-    Q_PROPERTY( double Threshold READ trigVolt WRITE setTrigVolt DESIGNABLE true USER true )
-
     public:
         Probe( QObject* parent, QString type, QString id );
         ~Probe();
@@ -40,16 +35,12 @@ class MAINMODULE_EXPORT Probe : public Component, public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        double trigVolt() { return m_voltTrig; }
-        void setTrigVolt( double volt ) { m_voltTrig = volt; update();}
-        
         void setVolt( double volt );
-        double getVolt();
 
         virtual void updateStep() override;
-        virtual void remove() override;
+
+        double threshold() { return m_voltTrig; }
+        void setThreshold( double t ) { m_voltTrig = t; }
 
         virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
@@ -58,12 +49,7 @@ class MAINMODULE_EXPORT Probe : public Component, public eElement
         double m_voltIn;
         double m_voltTrig;
 
-        QColor m_plotterColor;
-
-        IoPin*     m_inputPin;
-        Pin*       m_readPin;
-        Connector* m_readConn;
+        IoPin* m_inputPin;
 };
-
 
 #endif

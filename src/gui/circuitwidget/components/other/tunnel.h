@@ -21,28 +21,21 @@
 #define TUNNEL_H
 
 #include "component.h"
-#include "itemlibrary.h"
 
+class LibraryItem;
 class eNode;
 class Pin;
 
 class MAINMODULE_EXPORT Tunnel : public Component
 {
-    Q_OBJECT
-    Q_PROPERTY( QString  Uid     READ uid     WRITE setUid )
-    Q_PROPERTY( QString  Name    READ name    WRITE setName    DESIGNABLE true USER true )
-    Q_PROPERTY( bool     Rotated READ rotated WRITE setRotated DESIGNABLE true USER true )
-
     public:
         Tunnel( QObject* parent, QString type, QString id );
         ~Tunnel();
 
  static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
+ static LibraryItem* libraryItem();
 
         QRectF boundingRect() const;
-
-        virtual QList<propGroup_t> propGroups() override;
 
         QString name() { return m_name; }
         void setName( QString name );
@@ -79,6 +72,5 @@ class MAINMODULE_EXPORT Tunnel : public Component
 
  static QHash<QString, QList<Tunnel*>*> m_tunnels;
 };
-
 
 #endif

@@ -17,20 +17,18 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+#include <QToolButton>
+#include <QGraphicsProxyWidget>
+
 #include "switch_base.h"
 #include "simulator.h"
 #include "circuit.h"
-
-static const char* SwitchBase_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Key")
-};
-
+#include "label.h"
 
 SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
           : MechContact( parent, type, id )
 {
-    Q_UNUSED( SwitchBase_properties );
-
     m_graphical = true;
     m_changed = true;
     m_key = "";
@@ -60,8 +58,7 @@ void SwitchBase::updateStep()
         setSwitch( m_closed );
         m_changed = false;
         update();
-    }
-}
+}   }
 
 void SwitchBase::setHidden( bool hide, bool hidLabel )
 {
@@ -81,24 +78,13 @@ void SwitchBase::onbuttonclicked()
     update();
 }
 
-QString SwitchBase::key()
-{
-    return m_key;
-}
+void SwitchBase::setButtonText( QString text ) { m_button->setText( text ); }
 
 void SwitchBase::setKey( QString key )
 {
     if( key.size()>1 ) key = key.left( 1 );
     m_key = key;
-    //m_shortcut->setKey( key );
     m_button->setText( key );
-}
-
-
-void SwitchBase::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-    MechContact::remove();
 }
 
 #include "moc_switch_base.cpp"

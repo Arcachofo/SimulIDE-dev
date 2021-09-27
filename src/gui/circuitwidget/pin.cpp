@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QtWidgets>
+
 #include "pin.h"
 #include "bus.h"
 #include "node.h"
@@ -254,6 +256,8 @@ void Pin::setLabelPos()
     }
     m_label.setPos(xlabelpos, ylabelpos );
 }
+
+void Pin::setLabelColor( QColor color ) { m_label.setBrush( QBrush(color) ); }
 
 int Pin::labelSizeX()
 {

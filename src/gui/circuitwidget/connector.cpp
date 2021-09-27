@@ -26,8 +26,10 @@
 #include "e-node.h"
 #include "utils.h"
 
+#include "stringprop.h"
+
 Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, Pin* endpin )
-         : Component( parent, type, id )
+         : CompBase( parent, type, id )
 {
     m_actLine   = 0;
     m_lastindex = 0;
@@ -35,10 +37,11 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
     m_isBus = false;
     m_freeLine = false;
 
+    ///Circuit::self()->conList()->append( this );
+
     if( startpin ){
-        m_startPin   =  startpin;
+        m_startPin   = startpin;
         m_startpinid = startpin->objectName();
-        setPos( startpin->scenePos() );
         if( m_startPin->isBus() ) setIsBus( true );
     }
     if( endpin ){
@@ -53,9 +56,17 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
         m_endPin   = NULL;
         m_endpinid = "";
     }
-    m_idLabel->setVisible( false );
+
+    addPropGroup( { tr("Main"), {
+new StringProp<Connector>( "itemtype"  ,"","", this, &Connector::itemType,   &Connector::dummySetter ),
+new StringProp<Connector>( "uid"       ,"","", this, &Connector::getUid,     &Connector::dummySetter ),
+new StringProp<Connector>( "startpinid","","", this, &Connector::startPinId, &Connector::dummySetter ),
+new StringProp<Connector>( "endpinid"  ,"","", this, &Connector::endPinId,   &Connector::dummySetter ),
+new StringProp<Connector>( "enodeid"   ,"","", this, &Connector::enodId,     &Connector::dummySetter ),
+new StringProp<Connector>( "pointList" ,"","", this, &Connector::pListStr,   &Connector::dummySetter ),
+    }} );
 }
-Connector::~Connector() { }
+Connector::~Connector(){}
 
 void Connector::remNullLines()      // Remove lines with leght = 0 or aligned
 {
@@ -109,7 +120,7 @@ void Connector::setPointList( QStringList plist )
     int p2x = plist.at(plist.size()-2).toInt();
     int p2y = plist.last().toInt();
 
-    addConLine( x(), y(), p1x, p1y, 0 );
+    addConLine( m_startPin->scenePos().x(), m_startPin->scenePos().y(), p1x, p1y, 0 );
 
     for (int i=2; i<plist.size(); i+=2)
     {
@@ -139,7 +150,6 @@ void Connector::refreshPointList()
         data.setNum( m_conLineList.at(i)->p2().y() );
         list.append( data );
     }
-    setPos( m_conLineList.first()->scenePos() );
     m_pointList = list;
 }
 
@@ -199,7 +209,8 @@ void Connector::disconnectLines( int index1, int index2 )
 
 void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
 {
-    if( !this->isVisible() ) return;
+    if( m_conLineList.isEmpty() ) return;
+    if( !m_conLineList.first()->isVisible() ) return;
     if( Circuit::self()->pasting() )  { remNullLines(); return; }
 
     bool diagonal = false;
@@ -324,13 +335,12 @@ void Connector::move( QPointF delta )
 void Connector::setSelected(  bool selected )
 {
     for( ConnectorLine* line : m_conLineList ) line->setSelected( selected );
-    Component::setSelected( selected );
+    //setSelected( selected );
 }
 
 void Connector::setVisib(  bool vis )
 {
     for( ConnectorLine* line : m_conLineList ) line->setVisible( vis );
-    this->setVisible( vis );
 }
 
 void Connector::remove()
@@ -340,11 +350,8 @@ void Connector::remove()
     if( m_startPin ) m_startPin->reset();
     if( m_endPin )   m_endPin->reset();
 
-    if( Circuit::self()->conList()->contains( this ))
-    {
-        Circuit::self()->conList()->removeOne( this );
-        if( this->scene() ) Circuit::self()->removeItem( this );
-    }
+    Circuit::self()->conList()->removeOne( this );
+
     remLines();
 }
 
@@ -398,7 +405,6 @@ void Connector::splitCon( int index, Pin* pin1, Pin* pin2 )
     id.append( Circuit::self()->newSceneId() );
 
     Connector* new_connector = new Connector( Circuit::self(), type, id, pin2 );
-    Circuit::self()->addItem(new_connector);
 
     int newindex = 0;
     int size = m_conLineList.size();
@@ -452,4 +458,4 @@ void Connector::setIsBus( bool bus )
 
 double Connector::getVolt() { return m_startPin->getVolt(); }
 
-#include "moc_connector.cpp"
+//#include "moc_connector.cpp"

@@ -24,16 +24,9 @@
 
 class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( bool   Clock_Inverted READ clockInv  WRITE setClockInv  DESIGNABLE true USER true )
-    Q_PROPERTY( bool   S_R_Inverted   READ srInv     WRITE setSrInv     DESIGNABLE true USER true )
-    Q_PROPERTY( trigger_t Trigger     READ trigger   WRITE setTrigger   DESIGNABLE true USER true )
-
     public:
         FlipFlopBase( QObject* parent, QString type, QString id );
         ~FlipFlopBase();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         bool srInv() { return m_srInv; }
         void setSrInv( bool inv );
@@ -51,4 +44,3 @@ class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent
 };
 
 #endif
-

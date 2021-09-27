@@ -26,10 +26,6 @@
 
 class MAINMODULE_EXPORT Hd44780_Base : public Component
 {
-    Q_OBJECT
-    Q_PROPERTY( int Cols   READ cols    WRITE setCols   DESIGNABLE true USER true )
-    Q_PROPERTY( int Rows   READ rows    WRITE setRows   DESIGNABLE true USER true )
-    
     public:
         Hd44780_Base( QObject* parent, QString type, QString id );
         ~Hd44780_Base();
@@ -98,4 +94,3 @@ class MAINMODULE_EXPORT Hd44780_Base : public Component
 };
 
 #endif
-

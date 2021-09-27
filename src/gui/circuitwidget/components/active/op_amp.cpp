@@ -19,6 +19,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include <math.h>
 
 #include "op_amp.h"
@@ -28,9 +30,8 @@
 #include "e-node.h"
 #include "iopin.h"
 
-static const char* OpAmp_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Power Pins")
-};
+#include "doubleprop.h"
+#include "boolprop.h"
 
 Component* OpAmp::construct( QObject* parent, QString type, QString id )
 { return new OpAmp( parent, type, id ); }
@@ -49,20 +50,15 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
      , eElement( id )
 {
-    Q_UNUSED( OpAmp_properties );
-    
     m_area = QRect( -18, -8*2, 36, 8*2*2 );
     setLabelPos(-16,-32, 0);
     
     m_pin.resize( 5 );
-
-    m_inputP = new IoPin( 180, QPoint(-16-8,-8), id+"-inputNinv", 0, this, input );
-    m_pin[0] = m_inputP;
+    m_pin[0] = m_inputP = new IoPin( 180, QPoint(-16-8,-8), id+"-inputNinv", 0, this, input );
     m_pin[0]->setLabelText( "+" );
     m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
 
-    m_inputN = new IoPin( 180, QPoint(-16-8, 8), id+"-inputInv", 1, this, input );
-    m_pin[1] = m_inputN;
+    m_pin[1] = m_inputN = new IoPin( 180, QPoint(-16-8, 8), id+"-inputInv", 1, this, input );
     m_pin[1]->setLabelText( " -" );
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
 
@@ -72,6 +68,7 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     m_pin[3] = new Pin( 90, QPoint(0,-16), id+"-powerPos", 3, this );
     m_pin[3]->setLabelText( "+" );
     m_pin[3]->setLabelColor( QColor( 0, 0, 0 ) );
+
     m_pin[4] = new Pin( 270, QPoint(0, 16), id+"-powerNeg", 4, this );
     m_pin[4]->setLabelText( "-" );
     m_pin[4]->setLabelColor( QColor( 0, 0, 0 ) );
@@ -83,22 +80,19 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     m_outImp = cero_doub;
     m_voltPosDef = 5;
     m_voltNegDef = 0;
+
+    addPropGroup( { tr("Main"), {
+new DoubProp<OpAmp>( "Gain"     , tr("Gain")            ,"" , this, &OpAmp::gain,   &OpAmp::setGain ),
+new DoubProp<OpAmp>( "Out_Imped", tr("Output Impedance"),"Ω", this, &OpAmp::outImp, &OpAmp::setOutImp ),
+    }} );
+    addPropGroup( { tr("Supply"), {
+new DoubProp<OpAmp>( "Volt_Pos"   , tr("V+")                ,"V", this, &OpAmp::voltPos,    &OpAmp::setVoltPos ),
+new DoubProp<OpAmp>( "Volt_Neg"   , tr("V-")                ,"V", this, &OpAmp::voltNeg,    &OpAmp::setVoltNeg ),
+new BoolProp<OpAmp>( "Power_Pins" , tr("Show Supply Pins")  ,"" , this, &OpAmp::powerPins,  &OpAmp::setPowerPins ),
+new BoolProp<OpAmp>( "Switch_Pins", tr("Switch Supply Pins"),"" , this, &OpAmp::switchPins, &OpAmp::setSwitchPins ),
+    }} );
 }
 OpAmp::~OpAmp(){}
-
-QList<propGroup_t> OpAmp::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Gain", tr("Gain"),""} );
-    mainGroup.propList.append( {"Out_Imped", tr("Output Impedance"),"Ω"} );
-
-    propGroup_t supGroup { tr("Supply") };
-    supGroup.propList.append( {"Volt_Pos", tr("V+"),"V"} );
-    supGroup.propList.append( {"Volt_Neg", tr("V-"),"V"} );
-    supGroup.propList.append( {"Power_Pins", tr("Supply Pins"),""} );
-    supGroup.propList.append( {"Switch_Pins", tr("Switch Supply Pins"),""} );
-    return {mainGroup, supGroup};
-}
 
 void OpAmp::initialize()
 {
@@ -228,5 +222,3 @@ void OpAmp::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
 
     p->drawPolygon(points, 4);
 }
-
-#include "moc_op_amp.cpp"

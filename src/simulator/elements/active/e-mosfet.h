@@ -25,25 +25,24 @@
 class MAINMODULE_EXPORT eMosfet : public eResistor
 {
     public:
-
         eMosfet( QString id );
         ~eMosfet();
 
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
-        
-        virtual bool pChannel() { return m_Pchannel; }
-        virtual void setPchannel( bool pc ) { m_Pchannel = pc; }
-        
-        virtual bool depletion() { return m_depletion; }
-        virtual void setDepletion( bool dep ) { m_depletion = dep; }
-        
-        virtual double RDSon() { return m_RDSon; }
-        virtual void  setRDSon( double rdson );
-        
-        virtual double threshold() { return m_threshold; }
-        virtual void  setThreshold( double th );
+
+        bool pChannel() { return m_Pchannel; }
+        void setPchannel( bool p ) { m_Pchannel = p; }
+
+        bool depletion() { return m_depletion; }
+        void setDepletion( bool d ) { m_depletion = d; }
+
+        double rdson() { return m_RDSon; }
+        void setRDSon( double rdson );
+
+        double threshold() { return m_threshold; }
+        void setThreshold( double th );
         
     protected:
         double m_accuracy;

@@ -18,35 +18,35 @@
  ***************************************************************************/
 
 #include <math.h>
+#include <QFont>
+#include <QPainter>
 
 #include "meter.h"
 #include "simulator.h"
 #include "iopin.h"
+#include "label.h"
 #include "utils.h"
+
+#include "boolprop.h"
 
 Meter::Meter( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
      , eResistor( id )
      , m_display( this )
 {
+    m_area = QRectF( -24, -24, 50, 32 );
     m_graphical = true;
     m_switchPins = false;
 
-    m_area = QRectF( -24, -24, 50, 32 );
-
     m_pin.resize( 3 );
-
-    m_pin[0] = new Pin( 270, QPoint(-8, 16), id+"-lPin", 0, this);
+    m_ePin[0] = m_pin[0] = new Pin( 270, QPoint(-8, 16), id+"-lPin", 0, this);
     m_pin[0]->setColor( Qt::red );
-    m_ePin[0] = m_pin[0];
 
-    m_pin[1] = new Pin( 270, QPoint(8, 16), id+"-rPin", 1, this);
-    m_ePin[1] = m_pin[1];
+    m_ePin[1] = m_pin[1] = new Pin( 270, QPoint(8, 16), id+"-rPin", 1, this);
 
-    m_outPin = new IoPin( 0, QPoint(32,-8), id+"-outnod", 0, this, source );
+    m_pin[2] = m_outPin = new IoPin( 0, QPoint(32,-8), id+"-outnod", 0, this, source );
     m_outPin->setOutHighV( 0 );
     m_outPin->setOutState( true );
-    m_pin[2] = m_outPin;
 
     m_idLabel->setPos(-12,-24);
     setLabelPos(-24,-40, 0);
@@ -58,22 +58,13 @@ Meter::Meter( QObject* parent, QString type, QString id )
     m_display.setPos( -22, -22 );
     m_display.setVisible( true );
 
-    setShowVal( false );
-
     Simulator::self()->addToUpdateList( this );
-}
-Meter::~Meter()
-{
-    Simulator::self()->remFromUpdateList( this );
-}
 
-QList<propGroup_t> Meter::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"SwitchPins", tr("Switch Pins"),""} );
-
-    return {mainGroup};
+    addPropGroup( { tr("Main"), {
+new BoolProp<Meter>( "SwitchPins", tr("Switch Pins"),"", this, &Meter::swithchPins, &Meter::setSwitchPins )
+    } } );
 }
+Meter::~Meter(){}
 
 void Meter::updateStep()
 {
@@ -118,7 +109,6 @@ void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
 {
     Component::paint( p, option, widget );
     p->setBrush( Qt::black);
-
     p->drawRect( QRectF( -24, -24, 48, 32 ) );
 
     if( m_hidden ) return;
@@ -129,5 +119,3 @@ void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     QPointF( 26, -5 )   };
     p->drawPolygon(points, 3);
 }
-
-#include "moc_meter.cpp"

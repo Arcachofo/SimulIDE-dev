@@ -56,15 +56,14 @@ KY040::KY040( QObject* parent, QString type, QString id )
 {
     m_changed = false;
     m_closed = false;
+    m_seqIndex = -1;
     
     m_dialW.setupWidget();
     m_dialW.setFixedSize( DIAL_SIZE, DIAL_SIZE );
-    
-    m_seqIndex = -1;
-    
+
     m_dial = m_dialW.dial;
-    m_dial->setWrapping(true);
-    setDetents(20);
+    m_dial->setWrapping( true );
+    setDetents( 20 );
     
     m_proxy = Circuit::self()->addWidget( &m_dialW );
     m_proxy->setParentItem( this );
@@ -83,21 +82,18 @@ KY040::KY040( QObject* parent, QString type, QString id )
     
     m_pin.resize(3);
 
-    m_dt = new IoPin( 270, QPoint(-4,36), id+"-dt", 0, this, output );
+    m_pin[0] = m_dt = new IoPin( 270, QPoint(-4,36), id+"-dt", 0, this, output );
     m_dt->setOutHighV( VIN );
     m_dt->setLabelText( " DT" );
-    m_pin[0] = m_dt;
 
-    m_clk = new IoPin( 270, QPoint(4,36), id+"-clk", 0, this, output );
+    m_pin[1] = m_clk = new IoPin( 270, QPoint(4,36), id+"-clk", 0, this, output );
     m_clk->setOutHighV( VIN );
     m_clk->setLabelText( " CLK" );
-    m_pin[1] = m_clk;
 
-    m_sw = new IoPin( 270, QPoint(-12,36), id+"-sw", 0, this, output );
+    m_pin[2] = m_sw = new IoPin( 270, QPoint(-12,36), id+"-sw", 0, this, output );
     m_sw->setOutHighV( VIN );
     m_sw->setOutState( !m_closed );
     m_sw->setLabelText( " SW" );
-    m_pin[2] = m_sw;
 
     Simulator::self()->addToUpdateList( this );
     
@@ -116,11 +112,10 @@ KY040::~KY040(){}
 
 void KY040::updateStep()
 {
-    if( m_changed )
-    {
-        m_sw->setOutState( !m_closed, true );
-        m_changed = false;
-    }
+    if( !m_changed ) return;
+
+    m_sw->setOutState( !m_closed, true );
+    m_changed = false;
 }
 
 void KY040::runEvent()
@@ -134,9 +129,7 @@ void KY040::runEvent()
         {
             dtOuput  = CWseq[0][m_seqIndex];
             clkOuput = CWseq[1][m_seqIndex];
-        }
-        else
-        {
+        }else{
             dtOuput  = CCWseq[0][m_seqIndex];
             clkOuput = CCWseq[1][m_seqIndex];
         }
@@ -153,7 +146,6 @@ void KY040::onbuttonpressed()
 {
     m_closed = true;
     m_changed = true;
-    
     update();
 }
 
@@ -161,12 +153,7 @@ void KY040::onbuttonreleased()
 {
     m_closed = false;
     m_changed = true;
-    
     update();
-}
-
-int KY040::detents () {
-    return m_detents;
 }
 
 void KY040::setDetents( int val ) 
@@ -174,10 +161,10 @@ void KY040::setDetents( int val )
     if( val < 10 ) val = 10;
 
     m_detents = val;
-    m_dial->setMinimum(1);
-    m_dial->setMaximum(val);
-    m_dial->setValue(1);
-    m_dial->setSingleStep(1);
+    m_dial->setMinimum( 1 );
+    m_dial->setMaximum( val );
+    m_dial->setValue( 1 );
+    m_dial->setSingleStep( 1 );
 }
 
 void KY040::initialize()

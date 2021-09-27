@@ -31,20 +31,12 @@ class IoPin;
 class MAINMODULE_EXPORT Scripted : public LogicComponent
 {
     Q_OBJECT
-    Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
-    Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
-    Q_PROPERTY( int    Num_Outputs  READ numOuts    WRITE setNumOuts    DESIGNABLE true USER true )
-    Q_PROPERTY( QString Script      READ getScript  WRITE setScript     DESIGNABLE true USER true )
-
     public:
-        
         Scripted( QObject* parent, QString type, QString id );
         ~Scripted();
         
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
 
          virtual void stamp() override;
          virtual void voltChanged() override;
@@ -56,7 +48,7 @@ class MAINMODULE_EXPORT Scripted : public LogicComponent
          QString evaluate( QString script );
 
     public slots:
-        void displayMsg( QString msg ) { qDebug() << msg; }
+        void displayMsg( QString msg );
         bool getInputState( int i ){ return m_inPin[i]->getInpState(); }
         bool getOutputState( int o ){ return m_outPin[o]->getOutState(); }
         void setOutputState( int i, bool s ){ if( (uint)i < m_outPin.size() ) m_outPin[i]->setOutState( s, true ); }

@@ -17,14 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "bcdtodec.h"
 #include "itemlibrary.h"
 #include "circuit.h"
 
+#include "boolprop.h"
+
 Component* BcdToDec::construct( QObject* parent, QString type, QString id )
-{
-    return new BcdToDec( parent, type, id );
-}
+{ return new BcdToDec( parent, type, id ); }
 
 LibraryItem* BcdToDec::libraryItem()
 {
@@ -43,24 +45,20 @@ BcdToDec::BcdToDec( QObject* parent, QString type, QString id )
     m_height = 11;
 
     m_tristate = true;
-    m_16Bits = false;
+    m_16Bits   = false;
 
     setNumInps( 4,"S" );
     setNumOuts( 10 );
     createOePin( "IU01OE ", id+"-in4"); // Output Enable
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<BcdToDec>( "_16_Bits", tr("16 Bits")       ,"", this, &BcdToDec::is16Bits,   &BcdToDec::set_16bits ),
+new BoolProp<BcdToDec>( "Inverted", tr("Invert Outputs"),"", this, &BcdToDec::invertOuts, &BcdToDec::setInvertOuts )
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 BcdToDec::~BcdToDec(){}
-
-QList<propGroup_t> BcdToDec::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Inverted", tr("Invert Outputs"),""} );
-    mainGroup.propList.append( {"_16_Bits", tr("16 Bits"),""} );
-
-    QList<propGroup_t> pg = IoComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void BcdToDec::stamp()
 {
@@ -89,5 +87,3 @@ void BcdToDec::set_16bits( bool set )
     setNumOuts( m_16Bits ? 16 : 10 );
     m_oePin->setY( m_area.y()-8 );
 }
-
-#include "moc_bcdtodec.cpp"

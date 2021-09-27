@@ -25,10 +25,7 @@
 
 class MAINMODULE_EXPORT Rectangle : public Shape
 {
-    Q_OBJECT
-
     public:
-
         Rectangle( QObject* parent, QString type, QString id );
         ~Rectangle();
 
@@ -36,7 +33,6 @@ class MAINMODULE_EXPORT Rectangle : public Shape
         static LibraryItem *libraryItem();
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
-
 };
 
 #endif

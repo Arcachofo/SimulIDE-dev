@@ -25,10 +25,7 @@
 
 class MAINMODULE_EXPORT Line : public Shape
 {
-    Q_OBJECT
-
     public:
-
         Line( QObject* parent, QString type, QString id );
         ~Line();
 

@@ -22,24 +22,23 @@
 
 #include "mech_contact.h"
 
+class QToolButton;
+class QGraphicsProxyWidget;
+
 class MAINMODULE_EXPORT SwitchBase : public MechContact
 {
     Q_OBJECT
-    Q_PROPERTY( QString Key READ key WRITE setKey DESIGNABLE true USER true )
-
     public:
-
         SwitchBase( QObject* parent, QString type, QString id );
         ~SwitchBase();
 
         virtual void updateStep() override;
-        virtual void remove() override;
 
         virtual void setHidden( bool hid , bool hidLabel=false ) override;
         
-        void setButtonText( QString text ) {  m_button->setText( text ); }
+        void setButtonText( QString text );
 
-        QString key();
+        QString key() { return m_key; }
         void setKey( QString key );
         
         QToolButton* button() { return m_button; }

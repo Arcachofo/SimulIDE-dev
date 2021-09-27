@@ -27,10 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT XorGate : public Gate
 {
-    Q_OBJECT
-    
     public:
-
         XorGate( QObject* parent, QString type, QString id );
         ~XorGate();
 
@@ -38,11 +35,10 @@ class MAINMODULE_EXPORT XorGate : public Gate
         static LibraryItem *libraryItem();
 
         virtual QPainterPath shape() const;
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
         virtual bool calcOutput( int inputs ) override;
 };
-
 
 #endif

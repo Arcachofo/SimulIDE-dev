@@ -28,6 +28,10 @@
 #include "pin.h"
 #include "simuapi_apppath.h"
 
+#include "stringprop.h"
+#include "boolprop.h"
+
+QStringList Chip::m_subcTypes = {tr("None"),tr("Logic"),tr("Board"),tr("Shield")};
 
 Chip::Chip( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
@@ -58,6 +62,11 @@ Chip::Chip( QObject* parent, QString type, QString id )
     
     setLabelPos( m_area.x(), m_area.y()-20, 0);
     setShowId( true );
+
+    addPropGroup( { tr("Hidden"), {
+new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
+new StringProp<Chip>( "Name"        ,"","", this, &Chip::name,        &Chip::setName ),
+    } } );
 }
 Chip::~Chip()
 {
@@ -116,8 +125,7 @@ void Chip::initChip()
         if( root.hasAttribute("background")) setBackground( root.attribute( "background") );
         if( root.hasAttribute("type"))
         {
-            QMetaEnum metaEnum = QMetaEnum::fromType<Chip::subcType_t>();
-            m_subcType = (subcType_t)metaEnum.keyToValue( root.attribute("type").toUtf8().data() );
+            setSubcTypeStr( root.attribute("type") );
 
             if( (m_subcType == Board) || (m_subcType == Shield) )
                 setTransformOriginPoint( togrid( boundingRect().center()) );
@@ -274,7 +282,7 @@ void Chip::setLogicSymbol( bool ls )
 
 void Chip::setBackground( QString bck )
 {
-    m_BackGround = bck;
+    m_background = bck;
     if( bck == "" )
     {
         if( m_BackPixmap )
@@ -299,8 +307,8 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 
     if( m_BackPixmap )
         p->drawPixmap( m_area.x(), m_area.y(), *m_BackPixmap );
-    else if( m_BackGround != "" )
-        p->drawPixmap( m_area.x(), m_area.y(), QPixmap( m_BackGround ));
+    else if( m_background != "" )
+        p->drawPixmap( m_area.x(), m_area.y(), QPixmap( m_background ));
     else
     {
         p->drawRoundedRect( m_area, 1, 1);
@@ -313,5 +321,3 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
             else
                 p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
 }   }   }
-
-#include "moc_chip.cpp"

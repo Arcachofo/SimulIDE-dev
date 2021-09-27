@@ -22,22 +22,17 @@
 
 #include "relay_base.h"
 #include "e-resistor.h"
-#include "itemlibrary.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT RelaySPST : public RelayBase
 {
-    Q_OBJECT
-    
     public:
-
         RelaySPST( QObject* parent, QString type, QString id );
         ~RelaySPST();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
-
+        static LibraryItem* libraryItem();
 };
 
 #endif

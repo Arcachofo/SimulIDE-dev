@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "bus.h"
 #include "connector.h"
 #include "simulator.h"
@@ -24,15 +26,10 @@
 #include "itemlibrary.h"
 #include "e-node.h"
 
-static const char* Bus_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Num Bits"),
-    QT_TRANSLATE_NOOP("App::Property","Start Bit")
-};
+#include "intprop.h"
 
 Component* Bus::construct( QObject* parent, QString type, QString id )
-{
-    return new Bus( parent, type, id );
-}
+{ return new Bus( parent, type, id ); }
 
 LibraryItem* Bus::libraryItem()
 {
@@ -48,34 +45,26 @@ Bus::Bus( QObject* parent, QString type, QString id )
    : Component( parent, type, id )
    , eElement( id )
 {
-    Q_UNUSED( Bus_properties );
-
     m_busPin1 = new Pin( 270, QPoint( 0, 0 ), m_id+"-busPinI", 1, this );
-    m_busPin1->setLength( 1 );
     m_busPin1->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+    m_busPin1->setLength( 1 );
+    m_busPin1->setIsBus( true );
 
     m_numLines = 0;
     m_startBit = 0;
     setNumLines( 8 );       // Create Input Pins
 
-    m_busPin0 = new Pin( 90, QPoint( 0, 0 ), m_id+"-ePin0", 1, this );
-    m_busPin0->setLength( 1 );
+    m_ePin[0] = m_pin[0] = m_busPin0 = new Pin( 90, QPoint( 0, 0 ), m_id+"-ePin0", 1, this );
     m_busPin0->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
-
-    m_busPin1->setIsBus( true );
+    m_busPin0->setLength( 1 );
     m_busPin0->setIsBus( true );
-    m_pin[0]  = m_busPin0;
-    m_ePin[0] = m_busPin0;
+
+    addPropGroup( { tr("Main"), {
+new IntProp<Bus>( "Num_Bits" , tr("Size")     ,"_Bits", this, &Bus::numLines, &Bus::setNumLines, "uint" ),
+new IntProp<Bus>( "Start_Bit", tr("Start Bit"),""     , this, &Bus::startBit, &Bus::setStartBit, "uint" )
+    }} );
 }
 Bus::~Bus(){}
-
-QList<propGroup_t> Bus::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Num_Bits", tr("Size"),"Bits"} );
-    mainGroup.propList.append( {"Start_Bit", tr("Start Bit"),""} );
-    return {mainGroup};
-}
 
 void Bus::initialize()
 {
@@ -91,18 +80,10 @@ void Bus::initialize()
 
         QList<ePin*> epins = enode->getEpins();
         busEnode->addBusPinList( epins, m_startBit+i-1 );
-    }
-}
+}   }
 
 void Bus::inStateChanged( int msg )
 {
-    /*if( m_busPin0->isConnected() || m_busPin1->isConnected() )
-    {
-        eNode* enode = new eNode( m_id+"busNode" );
-        enode->setIsBus( true );
-        registerPins( enode );
-        return;
-    }*/
     if( msg == 3 ) // Called by m_busPin When disconnected
     {
         for( int i=1; i<=m_numLines; i++ )
@@ -112,9 +93,7 @@ void Bus::inStateChanged( int msg )
             eNode* enode = new eNode( m_id+"eNode"+QString::number( i ) );
             Pin* pin = m_pin[i];
             pin->registerPinsW( enode );
-        }
-    }
-}
+}   }   }
 
 void Bus::registerPins( eNode* enode )
 {
@@ -182,5 +161,3 @@ void Bus::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *w
     p->drawRect( QRect( 0, -m_height*8, 0, m_height*8 ) );
               //QRect( -2, -m_height*8-4, 2, m_height*8+8 );
 }
-
-#include "moc_bus.cpp"

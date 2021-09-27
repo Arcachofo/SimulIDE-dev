@@ -20,6 +20,8 @@
 #ifndef EDIODE_H
 #define EDIODE_H
 
+#include <QHash>
+
 #include "e-resistor.h"
 
 struct diodeData_t
@@ -53,9 +55,6 @@ class MAINMODULE_EXPORT eDiode : public eResistor
 
         double brkDownV(){ return m_bkDown; }
         void   setBrkDownV( double bkDown );
-
-        double satCur_nA() { return m_satCur*1e9; }
-        void   setSatCur_nA( double sc_nA ) { setSatCur( sc_nA*1e-9 ); }
 
         double satCur() { return m_satCur; }
         void   setSatCur( double satCur );
@@ -111,6 +110,5 @@ class MAINMODULE_EXPORT eDiode : public eResistor
  static QHash<QString, diodeData_t> m_zeners;
  static QHash<QString, diodeData_t> m_leds;
 };
+
 #endif
-
-

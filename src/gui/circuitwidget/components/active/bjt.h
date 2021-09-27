@@ -27,25 +27,16 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT BJT : public Component, public eBJT
 {
-    Q_OBJECT
-    Q_PROPERTY( double Gain READ gain  WRITE setGain  DESIGNABLE true USER true )
-    Q_PROPERTY( bool   PNP  READ pnp   WRITE setPnp   DESIGNABLE true USER true )
-
     public:
-
         BJT( QObject* parent, QString type, QString id );
         ~BJT();
         
  static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
+ static LibraryItem* libraryItem();
 
         virtual void updateStep() override { update(); }
-        
-        void setPnp( bool pnp ) { m_PNP = pnp; update(); }
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 };
 
 #endif

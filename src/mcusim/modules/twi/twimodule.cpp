@@ -28,6 +28,8 @@ TwiModule::TwiModule( QString name )
     m_scl = NULL;
     m_addrBits = 7;
     m_address = 0;
+
+    setFreqKHz( 100 );
 }
 TwiModule::~TwiModule( ){}
 

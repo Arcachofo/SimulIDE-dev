@@ -28,10 +28,6 @@ class LibraryItem;
 class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
 {
     Q_OBJECT
-    Q_PROPERTY( QVector<int> Mem  READ mem        WRITE setMem )
-    Q_PROPERTY( int  Address_Bits READ addrBits   WRITE setAddrBits   DESIGNABLE true USER true )
-    Q_PROPERTY( int  Data_Bits    READ dataBits   WRITE setDataBits   DESIGNABLE true USER true )
-    Q_PROPERTY( bool Persistent   READ persistent WRITE setPersistent DESIGNABLE true USER true )
 
     public:
         Memory( QObject* parent, QString type, QString id );
@@ -40,29 +36,30 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         virtual void updateStep() override;
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        void setMem( QVector<int> m );
-        QVector<int> mem();
+        //void setMem( QVector<int> m );
+        //QVector<int> mem();
 
-        int addrBits(){ return m_addrBits; }
+        void setMem( QString m );
+        QString getMem();
+
+        int addrBits() { return m_addrBits; }
         void setAddrBits( int bits );
         void deleteAddrBits( int bits );
         void createAddrBits( int bits );
 
-        int dataBits(){ return m_dataBits; }
+        int dataBits() { return m_dataBits; }
         void setDataBits( int bits );
         void deleteDataBits( int bits );
         void createDataBits( int bits );
 
         bool persistent() { return m_persistent; }
-        void setPersistent( bool p ){ m_persistent = p; }
+        void setPersistent( bool p ) { m_persistent = p; }
 
         void updatePins();
 
@@ -96,4 +93,3 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
 };
 
 #endif
-

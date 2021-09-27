@@ -24,11 +24,12 @@
 #include "circuit.h"
 #include "iopin.h"
 
+#include "stringprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* LatchD::construct( QObject* parent, QString type, QString id )
-{
-    return new LatchD( parent, type, id );
-}
+{ return new LatchD( parent, type, id ); }
 
 LibraryItem* LatchD::libraryItem()
 {
@@ -48,40 +49,30 @@ LatchD::LatchD( QObject* parent, QString type, QString id )
     m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
     
     m_tristate = true;
-    
     createOePin( "IR13OE ", id+"-Pin-outEnable");
 
     m_clkPin = new IoPin( 180, QPoint( -24,0 ), m_id+"-Pin-clock", 0, this, input );
-    m_clkPin->setLabelText( ">" );
     m_clkPin->setLabelColor( QColor( 0, 0, 0 ) );
-
     setTrigger( InEnable );
 
     m_channels = 0;
     setChannels( 8 );
+
+    addPropGroup( { tr("Main"), {
+new IntProp   <LatchD>(  "Channels" , tr("Size")          ,"_Ch", this, &LatchD::channels,   &LatchD::setChannels, "uint" ),
+new StringProp<LatchD>( "Trigger", tr("Trigger Type")  ,""   , this, &LatchD::triggerStr, &LatchD::setTriggerStr, "enum" ),
+new BoolProp  <LatchD>( "Inverted" , tr("Invert Outputs"),""   , this, &LatchD::invertOuts, &LatchD::setInvertOuts ),
+new BoolProp  <LatchD>( "Tristate" , tr("Tristate")      ,""   , this, &LatchD::tristate,   &LatchD::setTristate ),
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 LatchD::~LatchD(){}
-
-QList<propGroup_t> LatchD::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-
-    mainGroup.propList.append( {"Tristate", tr("Tristate"),""} );
-    mainGroup.propList.append( {"InvertOuts", tr("Invert Outputs"),""} );
-    mainGroup.propList.append( {"Channels", tr("Size"),"Channels"} );
-    mainGroup.propList.append( {"Trigger", tr("Trigger Type"),"enum"} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void LatchD::stamp()
 {
     if( m_trigger != Clock )
-    {
-        for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
-    }
+    { for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this ); }
     LogicComponent::stamp();
 }
 
@@ -138,8 +129,6 @@ void LatchD::updateSize()
 {
     int height = m_height;
     if( !m_tristate && (m_trigger == None) ) height--;
-    m_area   = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
+    m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, height*8 );
     Circuit::self()->update();
 }
-
-#include "moc_latchd.cpp"

@@ -21,31 +21,20 @@
 #define DIODE_H
 
 #include "e-diode.h"
-#include "component.h"
+#include "comp2pin.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Diode : public Component, public eDiode
+class MAINMODULE_EXPORT Diode : public Comp2Pin, public eDiode
 {
-    Q_OBJECT
-    Q_PROPERTY( QString Model      READ model     WRITE setModel     DESIGNABLE true USER true )
-    Q_PROPERTY( double  Threshold  READ threshold WRITE setThreshold DESIGNABLE true USER true )
-    Q_PROPERTY( double  BrkDownV   READ brkDownV  WRITE setBrkDownV  DESIGNABLE true USER true )
-    Q_PROPERTY( double  SatCur_nA  READ satCur_nA WRITE setSatCur_nA DESIGNABLE true USER true )
-    Q_PROPERTY( double  EmCoef     READ emCoef    WRITE setEmCoef    DESIGNABLE true USER true )
-    Q_PROPERTY( double  MaxCurrent READ maxCurrent WRITE setMaxCurrent DESIGNABLE true USER true )
-    Q_PROPERTY( double  Resistance READ res       WRITE setRes       DESIGNABLE true USER true )
-
-    Q_PROPERTY( double Zener_Volt READ zenerV    WRITE setZenerV    DESIGNABLE true USER true ) // Compatibility with old circuits.
-
     public:
         Diode( QObject* parent, QString type, QString id, bool zener=false );
         ~Diode();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem *libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
+        virtual bool setProperty( QString prop, QString val ) override;
 
         virtual void initialize() override;
         virtual void updateStep() override;
@@ -53,7 +42,7 @@ class MAINMODULE_EXPORT Diode : public Component, public eDiode
         double zenerV(){ return m_bkDown; }
         void   setZenerV( double zenerV );
 
-        virtual QStringList getEnums() override { return m_diodes.keys(); }
+        virtual QStringList getEnums( QString ) override { return m_diodes.keys(); }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

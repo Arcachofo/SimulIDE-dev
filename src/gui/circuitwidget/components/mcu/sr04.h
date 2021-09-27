@@ -28,10 +28,7 @@ class IoPin;
 
 class MAINMODULE_EXPORT SR04 : public Component, public eElement
 {
-    Q_OBJECT
-    
     public:
-
         SR04( QObject* parent, QString type, QString id );
         ~SR04();
 
@@ -58,4 +55,3 @@ class MAINMODULE_EXPORT SR04 : public Component, public eElement
 };
 
 #endif
-

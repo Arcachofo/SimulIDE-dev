@@ -26,10 +26,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT DecToBcd : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( bool Invert_Inputs READ invertInps WRITE setInvertInps DESIGNABLE true USER true )
-    Q_PROPERTY( bool _16_Bits      READ _16bits    WRITE set_16bits    DESIGNABLE true USER true )
-
     public:
         DecToBcd( QObject* parent, QString type, QString id );
         ~DecToBcd();
@@ -37,15 +33,12 @@ class MAINMODULE_EXPORT DecToBcd : public LogicComponent
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
 
-
-        bool _16bits() { return m_16Bits; }
-        void set_16bits( bool set );
+        bool is16Bits() { return m_16Bits; }
+        void set16bits( bool set );
 
     private:
         bool m_16Bits;

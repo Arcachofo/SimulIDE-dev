@@ -27,26 +27,19 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
 {
-    Q_OBJECT
-    Q_PROPERTY( double Voltage READ vRef WRITE setVRef DESIGNABLE true USER true )
-    
     public:
-
         VoltReg( QObject* parent, QString type, QString id );
         ~VoltReg();
         
- static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem* libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
+        static Component* construct( QObject* parent, QString type, QString id );
+        static LibraryItem* libraryItem();
 
         virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
 
-        double vRef() { return m_value; }
-        void setVRef( double vref );
-        virtual void setUnit( QString un ) override;
+        double outVolt() { return m_vRef; }
+        void setOutVolt( double v ) { m_vRef = v; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -57,6 +50,5 @@ class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
         double m_voltNeg;
         double m_lastOut;
 };
-
 
 #endif

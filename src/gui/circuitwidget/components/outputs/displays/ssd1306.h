@@ -32,11 +32,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 {
-    Q_OBJECT
-    Q_PROPERTY( dispColor Color   READ color   WRITE setColor   DESIGNABLE true USER true )
-    Q_PROPERTY( double Frequency  READ freqKHz WRITE setFreqKHz DESIGNABLE true USER true )
-    Q_PROPERTY( int Control_Code  READ cCode   WRITE setCcode  DESIGNABLE true USER true )
-    
     public:
         Ssd1306( QObject* parent, QString type, QString id );
         ~Ssd1306();
@@ -44,17 +39,13 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         enum dispColor {
             White = 0,
             Blue,
             Yellow
         };
-        Q_ENUM( dispColor )
-
-        void setColor( dispColor color );
-        dispColor color() { return m_dColor; }
+        void setColor( QString c );
+        QString color()  { return m_colors.at( (int)m_dColor ); }
 
         int cCode() { return m_address; }
         void setCcode( int code ) { m_address = code; }
@@ -123,7 +114,8 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         //Pin m_pinRst;
         //Pin m_pinDC;
         //Pin m_pinCS;
+
+ static QStringList m_colors;
 };
 
 #endif
-

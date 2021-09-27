@@ -72,7 +72,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         void cpuReset( bool reset );
 
-        double freqMHz() { return m_freq; }
+        double freqMHz() { return m_freq*1e-6; }
         void setFreq( double freq );
         uint64_t simCycPI() { return m_simCycPI; }  // Simulation cycles per instruction cycle
         //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle

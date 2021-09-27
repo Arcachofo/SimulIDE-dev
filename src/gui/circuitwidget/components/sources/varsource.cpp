@@ -22,7 +22,6 @@
 #include "simulator.h"
 #include "circuit.h"
 
-
 #define WIDTH 40
 #define HEIGHT 56
 #define DIAL_SIZE 36
@@ -53,7 +52,6 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     setValLabelPos( -8, 30 , 0 ); // x, y, rot
     setLabelPos(-32,-48, 0);
-    setShowVal( true );
 
     Simulator::self()->addToUpdateList( this );
 
@@ -63,13 +61,9 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
     connect( m_dial,   SIGNAL( valueChanged(int) ),
              this,     SLOT  ( valueChanged(int)), Qt::UniqueConnection );
 }
-
 VarSource::~VarSource() { }
 
-void VarSource::initialize()
-{
-    m_changed = true;
-}
+void VarSource::initialize(){ m_changed = true; }
 
 void VarSource::updateButton()
 {
@@ -77,9 +71,8 @@ void VarSource::updateButton()
     bool checked = m_button->isChecked();
     
     if( checked )
-        msg = QString("%1 "+m_unit).arg(float(int(m_outValue*100))/100);
-    else
-        msg = QString("--"+m_unit);
+          msg = QString("%1 "+m_unit).arg(float(int(m_outValue*100))/100);
+    else  msg = QString("--"+m_unit);
         
     m_button->setText( msg );
 }
@@ -95,26 +88,6 @@ void VarSource::valueChanged( int val )
     m_outValue = double( m_maxValue*val/1000 );
     updateButton();
     m_changed = true;
-}
-
-void VarSource::setValue( double v ) // Sets the Maximum Value
-{
-    Component::setValue( v );       // Takes care about units multiplier
-    m_maxValue = m_value*m_unitMult;
-    valueChanged( m_dial->value() );
-}
-
-void VarSource::setUnit( QString un )
-{
-    Component::setUnit( un );
-    m_maxValue = m_value*m_unitMult;
-    valueChanged( m_dial->value() );
-}
-
-void VarSource::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-    Component::remove();
 }
 
 void VarSource::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )

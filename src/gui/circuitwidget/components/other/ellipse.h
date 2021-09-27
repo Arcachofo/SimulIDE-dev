@@ -25,10 +25,7 @@
 
 class MAINMODULE_EXPORT Ellipse : public Shape
 {
-    Q_OBJECT
-    
     public:
-
         Ellipse( QObject* parent, QString type, QString id );
         ~Ellipse();
         
@@ -37,7 +34,6 @@ class MAINMODULE_EXPORT Ellipse : public Shape
 
         virtual QPainterPath shape() const;
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
-
 };
 
 #endif

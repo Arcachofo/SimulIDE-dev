@@ -20,39 +20,31 @@
 #ifndef CONNECTOR_H
 #define CONNECTOR_H
 
-#include "component.h"
+#include "compbase.h"
 
 class ConnectorLine;
 class eNode;
+class Pin;
 
-class MAINMODULE_EXPORT Connector : public Component
+class MAINMODULE_EXPORT Connector : public CompBase
 {
     Q_OBJECT
-    Q_PROPERTY( QStringList pointList  READ pointList  WRITE setPointList )
-    Q_PROPERTY( QString     startpinid READ startPinId )
-    Q_PROPERTY( QString     endpinid   READ endPinId   )
-    Q_PROPERTY( QString     enodeid    READ enodId     )
 
     public:
-
-        QRectF boundingRect() const { return QRect( 0, 0, 1, 1 ); }
-
-        Connector( QObject* parent, QString type, QString id, Pin* startpin, Pin* endpin = 0l );
+        Connector( QObject* parent, QString type, QString id, Pin* startpin, Pin* endpin = NULL );
         ~Connector();
 
-        // PROPERTIES-----------------------------------
+        QString itemID() { return m_id; }
+
+        QString pListStr() { return m_pointList.join(","); }
         QStringList pointList() { refreshPointList(); return m_pointList; }
         void setPointList( QStringList pl );
 
-        QString startPinId() { return m_startpinid;}
-        QString endPinId() { return m_endpinid; }
+        void dummySetter( QString ) {;}
+
+        QString startPinId() { return m_startpinid; }
+        QString endPinId()   { return m_endpinid; }
         QString enodId();
-        // END PROPERTIES-------------------------------
-
-        virtual void remove() override;
-
-        void refreshPointList();
-
         Pin* startPin() { return m_startPin;}
         void setStartPin( Pin* pin) { m_startPin = pin; }
         Pin* endPin() { return m_endPin; }
@@ -70,33 +62,24 @@ class MAINMODULE_EXPORT Connector : public Component
         ConnectorLine* addConLine( int x1, int y1, int x2, int y2, int index );
         void addConLine( ConnectorLine* line, int index );
         void remNullLines();
-
+        void refreshPointList();
         void updateConRoute( Pin* nod, QPointF this_point );
         void closeCon( Pin* endpin, bool connect=false );
-
-        /**
-        * Split this connector in two, the line at index will be the first of new connector,
-        * pin1 will be endpin of this connector,
-        * pin2 will be se startpin of the new connector,
-        * and this connector endpin (previous) will be endpin of the new connector
-        */
         void splitCon( int index, Pin* pin1, Pin* pin2 );
 
         void updateLines();
 
         void setVisib(  bool vis );
+        void setSelected( bool selected );
         
         void setIsBus( bool bus );
         bool isBus() { return m_isBus; }
         
+        void move( QPointF delta );
+
+        void remove();
+
         bool m_freeLine;
-
-    signals:
-        void selected(bool yes);
-
-    public slots:
-        virtual void move( QPointF delta );
-        virtual void setSelected( bool selected );
 
     private:
         void remConLine( ConnectorLine* line  );

@@ -21,11 +21,10 @@
 #include "itemlibrary.h"
 #include "iopin.h"
 
+#include "boolprop.h"
 
 Component* BcdTo7S::construct( QObject* parent, QString type, QString id )
-{
-    return new BcdTo7S( parent, type, id );
-}
+{ return new BcdTo7S( parent, type, id ); }
 
 LibraryItem* BcdTo7S::libraryItem()
 {
@@ -43,38 +42,30 @@ BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 8;
 
-    QStringList pinList;
-
-    pinList // Inputs:
-            << "IL03 S0"
-            << "IL04 S1"
-            << "IL05 S2"
-            << "IL06 S3"
-            
-            // Outputs:
-            << "OR01a "
-            << "OR02b "
-            << "OR03c "
-            << "OR04d "
-            << "OR05e "
-            << "OR06f "
-            << "OR07g "
-            ;
-    init( pinList );
+    init({         // Inputs:
+            "IL03 S0",
+            "IL04 S1",
+            "IL05 S2",
+            "IL06 S3",
+                    // Outputs:
+            "OR01a ",
+            "OR02b ",
+            "OR03c ",
+            "OR04d ",
+            "OR05e ",
+            "OR06f ",
+            "OR07g "
+        });
 
     createOePin( "IU01OE ", id+"-in4");
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<BcdTo7S>( "Inverted", tr("Invert Outputs"),"", this, &BcdTo7S::invertOuts, &BcdTo7S::setInvertOuts )
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 BcdTo7S::~BcdTo7S(){}
-
-QList<propGroup_t> BcdTo7S::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Inverted", tr("Invert Outputs"),""} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void BcdTo7S::stamp()
 {
@@ -87,10 +78,6 @@ void BcdTo7S::stamp()
 void BcdTo7S::voltChanged()
 {
     LogicComponent::updateOutEnabled();
-
     BcdBase::voltChanged();
-
     sheduleOutPuts( this );
 }
-
-#include "moc_bcdto7s.cpp"

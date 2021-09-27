@@ -17,20 +17,19 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "adc.h"
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
 #include "iopin.h"
 
-static const char* ADC_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Vref")
-};
+#include "doubleprop.h"
+#include "intprop.h"
 
 Component* ADC::construct( QObject* parent, QString type, QString id )
-{
-    return new ADC( parent, type, id );
-}
+{ return new ADC( parent, type, id ); }
 
 LibraryItem* ADC::libraryItem()
 {
@@ -45,31 +44,22 @@ LibraryItem* ADC::libraryItem()
 ADC::ADC( QObject* parent, QString type, QString id )
    : LogicComponent( parent, type, id )
 {
-    Q_UNUSED( ADC_properties );
-    
     m_width  = 4;
     m_height = 9;
 
+    setLabelPos(-16,-80, 0);
     setNumOuts( 8 );    // Create Output Pins
     setNumInps( 1, "In" );
+    m_maxVolt = 5;
 
-    setMaxVolt( 5 );
-
-    setLabelPos(-16,-80, 0);
+    addPropGroup( { tr("Main"), {
+new IntProp<ADC>(  "Num_Bits", tr("Size")             ,"_Bits", this, &ADC::numOuts, &ADC::setNumOuts, "uint" ),
+new DoubProp<ADC>( "Vref"    , tr("Reference Voltage"),"V"    , this, &ADC::maxVolt, &ADC::setMaxVolt ),
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 ADC::~ADC(){}
-
-QList<propGroup_t> ADC::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Num_Bits", tr("Size"),"Bits"} );
-    mainGroup.propList.append( {"Vref", tr("Reference Voltage"),"V"} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    for( int i=0;i<4; ++i ) pg.first().propList.removeFirst(); //remove Inputs.
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void ADC::stamp()
 {
@@ -81,16 +71,12 @@ void ADC::voltChanged()
 {
     double volt = m_inPin[0]->getVolt();
     m_nextOutVal = (int)(volt*m_maxValue/m_maxVolt+0.1);
-    //m_outStep = 0;
-
     LogicComponent::sheduleOutPuts( this );
 }
 
-void ADC::setNumOuts( uint outs, QString, int, bool )
+void ADC::setNumOuts( int outs )
 {
     if( outs < 1 ) return;
     m_maxValue = pow( 2, outs )-1;
     LogicComponent::setNumOuts( outs, "D" );
 }
-
-#include "moc_adc.cpp"

@@ -38,8 +38,6 @@
 
 class MAINMODULE_EXPORT Pcd8544 : public Component, public eElement
 {
-    Q_OBJECT
-    
     public:
         Pcd8544( QObject* parent, QString type, QString id );
         ~Pcd8544();
@@ -57,13 +55,9 @@ class MAINMODULE_EXPORT Pcd8544 : public Component, public eElement
 
     protected:
         void initPins();
-
         virtual void clearLcd();
-
         void incrementPointer();
-
         void reset();
-        
         void clearDDRAM();
         
         QImage *m_pdisplayImg;        //Visual representation of the LCD
@@ -91,4 +85,3 @@ class MAINMODULE_EXPORT Pcd8544 : public Component, public eElement
 };
 
 #endif
-

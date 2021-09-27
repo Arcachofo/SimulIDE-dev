@@ -17,23 +17,21 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QCursor>
+#include <QPainter>
+#include <QTextDocument>
+
 #include "textcomponent.h"
+#include "itemlibrary.h"
 #include "circuit.h"
 
-static const char* TextComponent_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Text"),
-    QT_TRANSLATE_NOOP("App::Property","Font"),
-    QT_TRANSLATE_NOOP("App::Property","Font Size"),
-    QT_TRANSLATE_NOOP("App::Property","Fixed Width"),
-    QT_TRANSLATE_NOOP("App::Property","Margin"),
-    QT_TRANSLATE_NOOP("App::Property","Border"),
-    QT_TRANSLATE_NOOP("App::Property","Opacity")
-};
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* TextComponent::construct( QObject* parent, QString type, QString id )
-{
-    return new TextComponent( parent, type, id );
-}
+{ return new TextComponent( parent, type, id ); }
 
 LibraryItem* TextComponent::libraryItem()
 {
@@ -42,18 +40,14 @@ LibraryItem* TextComponent::libraryItem()
         tr( "Graphical" ),
         "text.png",
         "TextComponent",
-    TextComponent::construct );
+        TextComponent::construct );
 }
 
 TextComponent::TextComponent( QObject* parent, QString type, QString id )
              : Component( parent, type, id )
 {
-    Q_UNUSED( TextComponent_properties );
-
     m_graphical = true;
-
     m_opac = 1;
-    
     m_color = QColor( 255, 255, 220 );
     m_font  = "Helvetica [Cronyx]";
 
@@ -85,23 +79,22 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
 
     connect(m_text->document(), SIGNAL( contentsChange(int, int, int )),
                           this, SLOT( updateGeometry(int, int, int )), Qt::UniqueConnection );
+
+    addPropGroup( { tr("Main"), {
+new IntProp <TextComponent>( "Margin" , tr("Margin") ,"_Pixels", this, &TextComponent::margin, &TextComponent::setMargin, "uint" ),
+new IntProp <TextComponent>( "Border" , tr("Border") ,"_Pixels", this, &TextComponent::border, &TextComponent::setBorder ),
+new DoubProp<TextComponent>( "Opacity", tr("Opacity"),""       , this, &TextComponent::opac,   &TextComponent::setOpac )
+    }} );
+    addPropGroup( { tr("Font"), {
+new StringProp<TextComponent>( "Font"       , tr("Font")       ,""       , this, &TextComponent::getFont , &TextComponent::setFont ),
+new IntProp   <TextComponent>( "Font_Size"  , tr("Font Size")  ,"_Pixels", this, &TextComponent::fontSize, &TextComponent::setFontSize ),
+new BoolProp  <TextComponent>( "Fixed_Width", tr("Fixed_Width"),""       , this, &TextComponent::fixedW  , &TextComponent::setFixedW )
+    }} );
+    addPropGroup( { tr("Hidden"), {
+new StringProp<TextComponent>( "Text","","", this, &TextComponent::getText, &TextComponent::setText )
+    }} );
 }
 TextComponent::~TextComponent(){}
-
-QList<propGroup_t> TextComponent::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Margin", tr("Margin"),"Pixels"} );
-    mainGroup.propList.append( {"Border", tr("Border"),"Pixels"} );
-    mainGroup.propList.append( {"Opacity", tr("Opacity"),""} );
-
-    propGroup_t fontGroup { tr("Font") };
-    fontGroup.propList.append( {"Font", tr("Font"),""} );
-    fontGroup.propList.append( {"Font_Size", tr("Font Size"),"Pixels"} );
-    fontGroup.propList.append( {"Fixed_Width", tr("Fixed_Width"),""} );
-
-    return {mainGroup, fontGroup};
-}
 
 void TextComponent::updateGeometry(int, int, int)
 {
@@ -131,6 +124,9 @@ void TextComponent::setFixedW( bool fixedW )
     m_text->setFont( font );
     updateGeometry( 0, 0, 0 );
 }
+
+QString TextComponent::getText() { return m_text->toPlainText(); }
+void TextComponent::setText( QString text ) { m_text->document()->setPlainText( text ); }
 
 void TextComponent::setFont( QString font )
 {

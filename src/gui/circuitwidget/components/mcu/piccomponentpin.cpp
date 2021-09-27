@@ -91,5 +91,3 @@ void PICComponentPin::voltChanged()
         else            m_processor->hardReset( false );
     }
 }
-
-#include "moc_piccomponentpin.cpp"

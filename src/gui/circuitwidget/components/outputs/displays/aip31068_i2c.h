@@ -28,27 +28,21 @@ class IoPin;
 
 class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
 {
-    Q_OBJECT
-    Q_PROPERTY( int Control_Code READ cCode   WRITE setCcode   DESIGNABLE true USER true )
-    Q_PROPERTY( double Frequency READ freqKHz WRITE setFreqKHz DESIGNABLE true USER true )
-
     public:
         Aip31068_i2c( QObject* parent, QString type, QString id );
         ~Aip31068_i2c();
         
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
 
-        int cCode();
-        void setCcode( int code );
+        int cCode() { return m_address; }
+        void setCcode( int code ) { m_address = code; }
 
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
-        virtual void remove() override;
+
         virtual void startWrite() override;
         virtual void readByte() override;
 
@@ -58,9 +52,7 @@ class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
         int m_controlByte;
         int m_phase;
 
-        //Inputs
         IoPin* m_pinSda;
 };
 
 #endif
-

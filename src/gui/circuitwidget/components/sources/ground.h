@@ -26,7 +26,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Ground : public Component
 {
-    Q_OBJECT
     public:
         Ground( QObject* parent, QString type, QString id );
         ~Ground();

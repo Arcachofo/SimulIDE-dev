@@ -26,17 +26,14 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Zener : public Diode
 {
-    Q_OBJECT
-
     public:
         Zener( QObject* parent, QString type, QString id );
         ~Zener();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
-        virtual QStringList getEnums() override { return m_zeners.keys(); }
-
+        virtual QStringList getEnums( QString ) override { return m_zeners.keys(); }
 };
 
 #endif

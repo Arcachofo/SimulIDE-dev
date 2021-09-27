@@ -17,12 +17,17 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QMenu>
+#include <QMovie>
+#include <QFileDialog>
+#include <QPainter>
+#include <QDebug>
+
 #include "image.h"
 #include "circuit.h"
+#include "itemlibrary.h"
 
-static const char* Image_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Image File")
-};
+#include "stringprop.h"
 
 Component* Image::construct( QObject* parent, QString type, QString id )
 { return new Image( parent, type, id ); }
@@ -30,34 +35,29 @@ Component* Image::construct( QObject* parent, QString type, QString id )
 LibraryItem* Image::libraryItem()
 {
     return new LibraryItem(
-            tr( "Image" ),
-            tr( "Graphical" ),
-            "image.png",
-            "Image",
-            Image::construct);
+        tr( "Image" ),
+        tr( "Graphical" ),
+        "image.png",
+        "Image",
+        Image::construct);
 }
 
 Image::Image( QObject* parent, QString type, QString id )
      : Shape( parent, type, id )
 {
-    Q_UNUSED( Image_properties );
-
-    m_BackGround = "";
+    m_background = "";
     m_image = QPixmap( ":/saveimage.png" );
     m_hSize = 80;
     m_vSize = 80;
     m_area = QRectF( -40, -40, 80, 80 );
 
-    m_movie = 0l;
+    m_movie = NULL;
+
+     m_properties.first().propList.prepend(
+new StringProp<Image>( "Image_File", tr("Image File"),"", this, &Image::background, &Image::setBackground )
+     );
 }
 Image::~Image(){}
-
-QList<propGroup_t> Image::propGroups()
-{
-    QList<propGroup_t> pg = Shape::propGroups();
-    pg.first().propList.prepend( {"Image_File", tr("Image File"),""} );
-    return pg;
-}
 
 void Image::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
@@ -69,8 +69,7 @@ void Image::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         contextMenu( event, menu );
         Component::contextMenu( event, menu );
         menu->deleteLater();
-    }
-}
+}   }
 
 void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -83,7 +82,7 @@ void Image::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 
 void Image::slotLoad()
 {
-    QString fil = m_BackGround;
+    QString fil = m_background;
     if( fil.isEmpty() ) fil = Circuit::self()->getFilePath();
 
     const QString dir = fil;
@@ -128,25 +127,18 @@ void Image::setBackground( QString bck )
 
     if( m_image.load( absPath ) )
     {
-        m_BackGround = absPath;
+        m_background = absPath;
         Shape::setHSize( m_image.width() );
         Shape::setVSize( m_image.height() );
     }
-    else if( m_BackGround.isEmpty() )
-    {
-        m_image = QPixmap( ":/saveimage.png" );
-    }
-    else
-    {
-        m_image = QPixmap( m_BackGround );
-    }
+    else if( m_background.isEmpty() ) m_image = QPixmap( ":/saveimage.png" );
+    else                              m_image = QPixmap( m_background );
 }
 
 QString Image::background()
 {
     QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-
-    return circuitDir.relativeFilePath( m_BackGround );
+    return circuitDir.relativeFilePath( m_background );
 }
 
 void Image::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

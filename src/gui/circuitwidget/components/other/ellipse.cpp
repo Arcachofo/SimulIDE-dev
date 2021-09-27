@@ -17,8 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "ellipse.h"
+#include <QPainter>
 
+#include "ellipse.h"
 
 Component* Ellipse::construct( QObject* parent, QString type, QString id )
 { return new Ellipse( parent, type, id ); }
@@ -57,5 +58,3 @@ void Ellipse::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
     
     p->drawEllipse( m_area );
 }
-
-#include "moc_ellipse.cpp"

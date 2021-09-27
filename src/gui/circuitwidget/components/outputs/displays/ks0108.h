@@ -28,32 +28,25 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( bool CS_Active_Low   READ csActLow    WRITE setCsActLow   DESIGNABLE true USER true )
-    
     public:
         Ks0108( QObject* parent, QString type, QString id );
         ~Ks0108();
         
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
 
-        virtual void stamp() override;
         virtual void initialize() override;
-        virtual void voltChanged() override;
+        virtual void stamp() override;
         virtual void updateStep() override;
-        
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        virtual void voltChanged() override;
 
-    public slots:
         void setCsActLow( bool low ) { m_csActLow = low; }
         bool csActLow() { return m_csActLow; }
         
-    protected:
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+
+    private:
         void initPins();
-        
         void writeData( int data );
         void proccessCommand( int command );
         void ReadData();
@@ -61,19 +54,15 @@ class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
         void dispOn( int state );
         void setYaddr( int addr );
         void setXaddr( int addr );
-        void startLin( int line );
+        void startLin( int line ) { m_startLin = line; }
         void clearLcd();
-
-        void incrementPointer();
-
-        void reset();
-        
         void clearDDRAM();
-        
+        void incrementPointer();
+        void reset();
+
         QImage *m_pdisplayImg;        //Visual representation of the LCD
 
         unsigned char m_aDispRam[8][128];                 //128x64 DDRAM
-
         
         int m_input;
         int m_addrX1;                                   // X RAM address
@@ -102,4 +91,3 @@ class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
 };
 
 #endif
-

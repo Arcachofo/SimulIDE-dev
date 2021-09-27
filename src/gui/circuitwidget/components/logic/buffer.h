@@ -26,24 +26,17 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Buffer : public Gate
 {
-    Q_OBJECT
-    Q_PROPERTY( bool Tristate READ tristate WRITE setTristate DESIGNABLE true USER true )
-    
     public:
-        QRectF boundingRect() const { return m_area; }
-    
         Buffer( QObject* parent, QString type, QString id );
         ~Buffer();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         virtual void setTristate( bool t ) override;
 
         virtual QPainterPath shape() const;
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 };
 
 #endif

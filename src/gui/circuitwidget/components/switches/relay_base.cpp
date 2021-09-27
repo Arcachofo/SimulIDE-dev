@@ -17,6 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
 #include <math.h>
 
 #include "relay_base.h"
@@ -24,18 +25,9 @@
 #include "circuit.h"
 #include "e-node.h"
 
-static const char* RelayBase_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Rcoil"),
-    QT_TRANSLATE_NOOP("App::Property","IOn"),
-    QT_TRANSLATE_NOOP("App::Property","IOff"),
-    QT_TRANSLATE_NOOP("App::Property","Inductance")
-};
-
 RelayBase::RelayBase( QObject* parent, QString type, QString id )
          : MechContact( parent, type, id )
 {
-    Q_UNUSED( RelayBase_properties );
-    
     // This represents a coil, so is an Inductor in series with a Resistor: -Ind-Nod-Res-
     // We need to create the resistor, internal eNode and do the connections.
 
@@ -92,7 +84,7 @@ RelayBase::RelayBase( QObject* parent, QString type, QString id )
 
     setValLabelPos(-16, 6, 0);
     setLabelPos(-16, 8, 0);
-    setShowVal( true );
+    //setShowVal( true );
 
     SetupSwitches( 1, 1 );
 }
@@ -157,5 +149,3 @@ void RelayBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWid
 
     MechContact::paint( p, option, widget );
 }
-
-#include "moc_relay_base.cpp"

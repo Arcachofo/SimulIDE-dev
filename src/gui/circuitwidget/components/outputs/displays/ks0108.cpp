@@ -17,20 +17,18 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+#include <math.h>
+
 #include "ks0108.h"
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
 
-static const char* Ks0108_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","CS Active Low")
-};
-
+#include "boolprop.h"
 
 Component* Ks0108::construct( QObject* parent, QString type, QString id )
-{
-    return new Ks0108( parent, type, id );
-}
+{ return new Ks0108( parent, type, id ); }
 
 LibraryItem* Ks0108::libraryItem()
 {
@@ -52,11 +50,8 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
       , m_pinRW ( 270, QPoint( 40, 56), id+"-PinRW"  , 0, this )
       , m_pinDC ( 270, QPoint( 48, 56), id+"-PinDC"  , 0, this )
 {
-    Q_UNUSED( Ks0108_properties );
-
-    m_graphical = true;
-    
     m_area = QRectF( -74, -52, 148, 100 );
+    m_graphical = true;
     m_csActLow = false;
     
     m_pinRst.setLabelText( " RST" );
@@ -67,11 +62,9 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     m_pinEn.setLabelText(  " En" );
     
     m_dataPin.resize( 8 );
-    m_dataPin.resize( 8 );
     m_pin.resize( 14 );
     
     int pinY = 56;
-    
     for( int i=0; i<8; i++ )
     {
         QString pinId = id+"-dataPin"+QString::number(i);
@@ -97,24 +90,14 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     setShowId( true );
     
     initialize();
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<Ks0108>( "CS_Active_Low", tr("CS Active Low"),"", this, &Ks0108::csActLow, &Ks0108::setCsActLow )
+    }} );
 }
 Ks0108::~Ks0108()
 {
     delete m_pdisplayImg;
-    Simulator::self()->remFromUpdateList( this );
-}
-
-QList<propGroup_t> Ks0108::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"CS_Active_Low", tr("CS Active Low"),""} );
-    return {mainGroup};
-}
-
-void Ks0108::stamp()
-{
-    m_pinEn.changeCallBack( this ); // Register for Scl changes callback
-    m_pinRst.changeCallBack( this ); // Register for Rst changes callback
 }
 
 void Ks0108::initialize()
@@ -123,6 +106,28 @@ void Ks0108::initialize()
     clearLcd();
     reset() ;
     updateStep();
+}
+
+void Ks0108::stamp()
+{
+    m_pinEn.changeCallBack( this ); // Register for Scl changes callback
+    m_pinRst.changeCallBack( this ); // Register for Rst changes callback
+}
+
+void Ks0108::updateStep()
+{
+    if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
+    else{
+        for(int row=0;row<8;row++){
+            for( int col=0;col<128;col++ )
+            {
+                char abyte = m_aDispRam[row][col];
+                for( int bit=0; bit<8; bit++ )
+                {
+                    m_pdisplayImg->setPixel(col,row*8+bit,(abyte & 1) );
+                    abyte >>= 1;
+    }   }   }   }
+    update();
 }
 
 void Ks0108::voltChanged()                 // Called when En Pin changes 
@@ -134,45 +139,35 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
     if( m_Write != Write )               // Set Read or Write Impedances
     {
         m_Write = Write;
-        
         for( int i=0; i<8; i++ ) 
         {
             if( Write ) m_dataPin[i]->setPinMode( input );
             else        m_dataPin[i]->setPinMode( output );
-        }
-    }
+    }   }
     bool Scl = (m_pinEn.getVolt()>2.5);
     
-    if    ( Scl && !m_lastScl )            // This is a clock Rising Edge
-    {
+    if    ( Scl && !m_lastScl ){           // This is a clock Rising Edge
         m_lastScl = true;  
         if( Write ) return;                  // Only Read in Rising Edge
     }
-    else if( !Scl && m_lastScl )          // This is a clock Falling edge
-    {
+    else if( !Scl && m_lastScl ){         // This is a clock Falling edge
         m_lastScl = false;  
         if( !Write ) return;               // Only Write in Falling Edge
-    }
-    else
-    {
+    }else{
         m_lastScl = Scl;
         return;
     }
     m_input = 0;
-    if( Write )
-    {
+    if( Write ){
         for( int pin=0; pin<8; pin++ )                     // Read input
         {
             if( m_dataPin[pin]->getVolt()>2.5 )  m_input += pow( 2, pin );
-        }
-    }
-    
+    }   }
     m_Cs1 =  (m_pinCs1.getVolt()>2.5);               // Half 1 selected?
     m_Cs2 =  (m_pinCs2.getVolt()>2.5);               // Half 2 selected?
     if( !m_Cs1 & !m_Cs2 ) m_Cs2 = true;
     
-    if( m_csActLow )
-    {
+    if( m_csActLow ) {
         m_Cs1 = !m_Cs1;
         m_Cs2 = !m_Cs2;
     }
@@ -183,12 +178,10 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
         if( Write ) writeData( m_input );                  // Write Data
         else        ReadData();                             // Read Data
     }
-    else                                                      // Command
-    {
+    else{                                                     // Command
         if( Write ) proccessCommand( m_input );          // Write Command
         else        ReadStatus();                          // Read Status
-    }
-}
+}   }
 
 void Ks0108::ReadData()
 {
@@ -200,21 +193,17 @@ void Ks0108::ReadData()
     {
         m_dataPin[i]->setOutState( ((data & 1)==1), true );
         data >>= 1;
-    }
-}
+}   }
 
 void Ks0108::ReadStatus()
 {
     for( int i=0; i<8; i++ ) 
     {
         bool out = false;
-        
         if     ( i == 4 ) out = m_reset;
         else if( i == 5 ) out = !m_dispOn;
-        
         m_dataPin[i]->setOutState( out, true );
-    }
-}
+}   }
 
 void Ks0108::writeData( int data )
 {
@@ -233,10 +222,7 @@ void Ks0108::proccessCommand( int command )
     if( command<192 ) { setXaddr( command & 7 );  return; } //10111...  // Set X address     
     else              { startLin( command & 63 ); return; } //11......  // Set Display Start Line
 }
-void Ks0108::dispOn( int state )
-{
-    m_dispOn = (state > 0);
-}
+void Ks0108::dispOn( int state ) { m_dispOn = (state > 0); }
 
 void Ks0108::setYaddr( int addr )
 {
@@ -250,15 +236,7 @@ void Ks0108::setXaddr( int addr )
     if( m_Cs2 ) m_addrX2  = addr ;
 }
 
-void Ks0108::startLin( int line )
-{
-    m_startLin = line;
-}
-
-void Ks0108::clearLcd() 
-{
-    m_pdisplayImg->fill(0);
-}
+void Ks0108::clearLcd() { m_pdisplayImg->fill(0); }
 
 void Ks0108::clearDDRAM() 
 {
@@ -269,17 +247,14 @@ void Ks0108::clearDDRAM()
 
 void Ks0108::incrementPointer() 
 {
-    if( m_Cs1 )
-    {
+    if( m_Cs1 ){
         m_addrY1++;
         if( m_addrY1 > 63 )m_addrY1 = 0;
     }
-    if( m_Cs2 )
-    {
+    if( m_Cs2 ){
         m_addrY2++;
         if( m_addrY2 > 63 )m_addrY2 = 0;
-    }
-}
+}   }
 
 void Ks0108::reset() 
 {
@@ -290,27 +265,6 @@ void Ks0108::reset()
     m_startLin = 0;
     m_dispOn = false;
     m_reset = true;
-}
-
-void Ks0108::updateStep()
-{
-    if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
-    else
-    {
-        for(int row=0;row<8;row++) 
-        {
-            for( int col=0;col<128;col++ ) 
-            {
-                char abyte = m_aDispRam[row][col];
-                for( int bit=0; bit<8; bit++ ) 
-                {
-                    m_pdisplayImg->setPixel(col,row*8+bit,(abyte & 1) );
-                    abyte >>= 1;
-                }
-            }
-        }
-    }
-    update();
 }
 
 void Ks0108::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
@@ -326,5 +280,3 @@ void Ks0108::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     p->drawRoundedRect( -70, -48, 140, 76, 8, 8 );
     p->drawImage(-64,-42,*m_pdisplayImg );
 }
-
-#include "moc_ks0108.cpp"

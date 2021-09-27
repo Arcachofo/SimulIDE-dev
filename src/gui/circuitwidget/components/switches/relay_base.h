@@ -27,25 +27,17 @@ class eNode;
 
 class MAINMODULE_EXPORT RelayBase : public MechContact
 {
-    Q_OBJECT
-    Q_PROPERTY( bool   DT       READ dt       WRITE setDt    DESIGNABLE true USER true )
-    Q_PROPERTY( double Rcoil    READ rCoil    WRITE setRCoil DESIGNABLE true USER true )
-    Q_PROPERTY( double IOn      READ iTrig    WRITE setITrig DESIGNABLE true USER true )
-    Q_PROPERTY( double IOff     READ iRel     WRITE setIRel  DESIGNABLE true USER true )
-    Q_PROPERTY( double Inductance READ induc WRITE setInduc  DESIGNABLE true USER true )
-
     public:
-
         RelayBase( QObject* parent, QString type, QString id );
         ~RelayBase();
 
-        double rCoil() const { return m_resistor->res(); }
+        double rCoil() { return m_resistor->res(); }
         void setRCoil( double res ) { if( res > 0.0 ) m_resistor->setResSafe(res); }
 
-        double iTrig() const { return m_trigCurrent; }
+        double iTrig() { return m_trigCurrent; }
         void setITrig( double c ) { if( c > 0.0 ) m_trigCurrent = c; }
 
-        double iRel() const { return m_relCurrent; }
+        double iRel() { return m_relCurrent; }
         void setIRel( double current ) { m_relCurrent = current; }
 
         double induc() { return m_inductor->ind(); }

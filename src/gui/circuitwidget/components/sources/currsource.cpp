@@ -22,15 +22,10 @@
 #include "simulator.h"
 #include "pin.h"
 
-static const char* CurrSource_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Current"),
-    QT_TRANSLATE_NOOP("App::Property","Show Amp")
-};
+#include "doubleprop.h"
 
 Component* CurrSource::construct( QObject* parent, QString type, QString id )
-{
-    return new CurrSource( parent, type, id );
-}
+{ return new CurrSource( parent, type, id ); }
 
 LibraryItem* CurrSource::libraryItem()
 {
@@ -45,36 +40,27 @@ LibraryItem* CurrSource::libraryItem()
 CurrSource::CurrSource( QObject* parent, QString type, QString id )
           : VarSource( parent, type, id )
 {
-    Q_UNUSED( CurrSource_properties );
-
-    m_outPin = new Pin( 0, QPoint(28,16), id+"-outPin", 0, this );
     m_pin.resize(1);
-    m_pin[0] = m_outPin;
+    m_pin[0] = m_outPin = new Pin( 0, QPoint(28,16), id+"-outPin", 0, this );
 
     m_unit = "A";
-    m_button->setText( QString("-- A") );
-    setValue( 1 );
+    setShowProp("MaxValue");
+    setValLabelText( "1 A" );
+    m_maxValue =  1.0;
     valueChanged( 0 );
+
+    addPropGroup( { tr("Main"), {
+new DoubProp<CurrSource>( "MaxValue",tr("Max. Current"),"A",this,&CurrSource::maxValue, &CurrSource::setMaxValue )
+    }} );
 }
 CurrSource::~CurrSource(){}
-
-QList<propGroup_t> CurrSource::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Value", tr("Max. Current"),"main"} );
-    return {mainGroup};
-}
 
 void CurrSource::updateStep()
 {
     if( m_changed ) 
     {
-        double current = 0;
-        if( m_button->isChecked() ) current = m_outValue;
+        double current = m_button->isChecked() ? m_outValue : 0;
         m_outPin->stampCurrent( current );
-
         m_changed = false;
-    }
-}
+}   }
 
-#include "moc_currsource.cpp"

@@ -36,8 +36,8 @@ class MAINMODULE_EXPORT eBJT : public eElement
         virtual double gain()              { return m_gain; }
         virtual void setGain( double gain ){ m_gain = gain; }
 
-        virtual double pnp()              { return m_PNP; }
-        virtual void setPnp( double pnp ) { m_PNP = pnp; }
+        virtual bool pnp()              { return m_PNP; }
+        virtual void setPnp( bool pnp ) { m_PNP = pnp; }
 
     protected:
         double limitStep( double vnew, double vold );

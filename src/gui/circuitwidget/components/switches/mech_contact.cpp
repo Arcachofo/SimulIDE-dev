@@ -23,18 +23,10 @@
 #include "simulator.h"
 #include "e-node.h"
 
-static const char* MechContact_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Poles"),
-    QT_TRANSLATE_NOOP("App::Property","DT"),
-    QT_TRANSLATE_NOOP("App::Property","Norm Close")
-};
-
 MechContact::MechContact( QObject* parent, QString type, QString id )
            : Component( parent, type, id )
            , eElement(  id )
 {
-    Q_UNUSED( MechContact_properties );
-
     m_numthrows = 0;
     m_numPoles  = 0;
     m_pin0      = 0;

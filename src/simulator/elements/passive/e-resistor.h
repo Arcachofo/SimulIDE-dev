@@ -32,6 +32,7 @@ class MAINMODULE_EXPORT eResistor : public eElement
 
         virtual double res() { return 1/m_admit; }
         virtual void setRes( double resist );
+        double getRes() { return 1/m_admit; }
         virtual void setResSafe( double resist );
         
         double admit() { return m_admit; }

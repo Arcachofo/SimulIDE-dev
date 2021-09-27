@@ -28,7 +28,6 @@ class IOPIN;
 
 class PICComponentPin : public McuComponentPin
 {
-    Q_OBJECT
         public:
         PICComponentPin( McuComponent* mcu, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle );
         ~PICComponentPin();

@@ -26,19 +26,12 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Demux : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( int    Address_Bits READ addrBits   WRITE setAddrBits   DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
-    ///Q_PROPERTY( bool   Tristate     READ tristate   USER true )
-
     public:
         Demux( QObject* parent, QString type, QString id );
         ~Demux();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void stamp() override;
         virtual void voltChanged() override;
@@ -48,7 +41,7 @@ class MAINMODULE_EXPORT Demux : public LogicComponent
         void setAddrBits( int bits );
         
         virtual QPainterPath shape() const;
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
         int m_addrBits;

@@ -17,22 +17,24 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+#include <QtMath>
+//#include <math.h>
+
 #include "wavegen.h"
 #include "iopin.h"
 #include "simulator.h"
-//#include "e-source.h"
+#include "itemlibrary.h"
 
-static const char* WaveGen_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Volt Base"),
-    QT_TRANSLATE_NOOP("App::Property","Duty Square"),
-    QT_TRANSLATE_NOOP("App::Property","Quality"),
-    QT_TRANSLATE_NOOP("App::Property","Wave Type")
-};
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "boolprop.h"
+#include "intprop.h"
+
+QStringList WaveGen::m_waves = {tr("Sine"),tr("Saw"),tr("Triangle"),tr("Square"),tr("Random")};
 
 Component* WaveGen::construct( QObject* parent, QString type, QString id )
-{
-    return new WaveGen( parent, type, id );
-}
+{ return new WaveGen( parent, type, id ); }
 
 LibraryItem* WaveGen::libraryItem()
 {
@@ -47,58 +49,51 @@ LibraryItem* WaveGen::libraryItem()
 WaveGen::WaveGen( QObject* parent, QString type, QString id )
        : ClockBase( parent, type, id )
 {
-    Q_UNUSED( WaveGen_properties );
-    
     m_voltBase = 0;
     m_lastVout = 0;
-    m_type = Sine;
+    m_waveType = Sine;
     
     setSteps( 100 );
     setDuty( 50 );
-    
-    connect( this, SIGNAL( freqChanged() )
-           , this, SLOT( updateValues() ), Qt::UniqueConnection );
+
+    remPropGroup( "Main");
+    addPropGroup( { tr("Main"), {
+new StringProp<WaveGen>( "Wave_Type", tr("Wave Type"),""      , this, &WaveGen::waveType, &WaveGen::setWaveType, "enum" ),
+new DoubProp  <WaveGen>( "Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
+new IntProp   <WaveGen>( "Steps"    , tr("Quality")  ,"_Steps", this, &WaveGen::steps,    &WaveGen::setSteps ),
+new DoubProp  <WaveGen>( "Duty"     , tr("Duty")     ,"_\%"   , this, &WaveGen::duty,     &WaveGen::setDuty ),
+new BoolProp  <WaveGen>( "Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
+    }} );
+    addPropGroup( { tr("Electric"), {
+new DoubProp<WaveGen>( "Semi_Ampli", tr("Semi Amplitude"),"V", this, &WaveGen::semiAmpli, &WaveGen::setSemiAmpli ),
+new DoubProp<WaveGen>( "Mid_Volt"  , tr("Middle Voltage"),"V", this, &WaveGen::midVolt,   &WaveGen::setMidVolt )
+    }} );
 }
 WaveGen::~WaveGen(){}
 
-QList<propGroup_t> WaveGen::propGroups()
+bool WaveGen::setProperty( QString prop, QString val )
 {
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Wave_Type", tr("Wave Type"),"enum"} );
-    mainGroup.propList.append( {"Freq", tr("Frequency"),"Hz"} );
-    mainGroup.propList.append( {"Steps", tr("Quality"),"Steps"} );
-    mainGroup.propList.append( {"Duty", tr("Duty"),"\%"} );
-    mainGroup.propList.append( {"Always_On", tr("Always On"),""} );
-
-    propGroup_t elecGroup { tr("Electric") };
-    elecGroup.propList.append( {"Voltage", tr("Amplitude"),"main"} );
-    elecGroup.propList.append( {"Volt_Base", tr("Base Voltage"),"V"} );
-
-    propGroup_t timeGroup { tr("Edges") };
-    //timeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
-    //timeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
-
-    return {mainGroup, elecGroup, timeGroup};
+    if( prop =="Volt_Base" ) m_voltBase = val.toDouble(); //  Old: TODELETE
+    else return ClockBase::setProperty( prop, val );
+    return true;
 }
 
 void WaveGen::runEvent()
 {
     m_time = fmod( Simulator::self()->circTime(), m_fstepsPC );
     
-    if     ( m_type == Sine )     genSine();
-    else if( m_type == Saw )      genSaw();
-    else if( m_type == Triangle ) genTriangle();
-    else if( m_type == Square )   genSquare();
-    else if( m_type == Random )   genRandom();
+    if     ( m_waveType == Sine )     genSine();
+    else if( m_waveType == Saw )      genSaw();
+    else if( m_waveType == Triangle ) genTriangle();
+    else if( m_waveType == Square )   genSquare();
+    else if( m_waveType == Random )   genRandom();
 
     if( m_vOut != m_lastVout )
     {
         m_lastVout = m_vOut;
-
-        m_outpin->setOutHighV( m_value*m_unitMult*m_vOut+m_voltBase );
+        m_outpin->setOutHighV( m_voltage*m_vOut+m_voltBase );
         m_outpin->setOutState( true  );
     }
-
     m_remainder += m_fstepsPC-(double)m_stepsPC;
     uint64_t remainerInt = m_remainder;
     m_remainder -= remainerInt;
@@ -111,25 +106,19 @@ void WaveGen::genSine()
 {
     m_time = qDegreesToRadians( (double)m_time*360/m_fstepsPC );
     m_vOut = sin( m_time )/2+0.5;
-
     m_nextStep = m_qSteps;
 }
 
 void WaveGen::genSaw()
 {
     m_vOut = m_time/m_fstepsPC;
-
     m_nextStep = m_qSteps;
 }
 
 void WaveGen::genTriangle()
 {
-    if( m_time >= m_halfW )
-    {
-        m_vOut = 1-(m_time-m_halfW)/(m_fstepsPC-m_halfW);
-    }
-    else m_vOut = m_time/m_halfW;
-
+    if( m_time >= m_halfW ) m_vOut = 1-(m_time-m_halfW)/(m_fstepsPC-m_halfW);
+    else                    m_vOut = m_time/m_halfW;
     m_nextStep = m_qSteps;
 }
 
@@ -139,75 +128,58 @@ void WaveGen::genSquare()
     {
         m_vOut = 0;
         m_nextStep = m_fstepsPC-m_halfW;
-    }
-    else
-    {
+    }else{
         m_vOut = 1;
         m_nextStep = m_halfW;
-    }
-    //eNode* enode =  m_pin[0]->getEnode();
-    //if( enode ) enode->saveData();
-}
+}   }
 
 void WaveGen::genRandom()
 {
     m_vOut = (double)rand()/(double)RAND_MAX;
-
     m_nextStep = m_halfW;
-}
-
-void WaveGen::updateStep()
-{
-    /*if(( !m_outValue )&&( m_isRunning ))
-    {
-        m_out->setOut( true );
-    }*/
-    ClockBase::updateStep();
-}
-
-void WaveGen::updateValues()
-{
-    setDuty( m_duty );
-    setSteps( m_steps );
-}
-
-double WaveGen::duty()
-{
-    return m_duty;
 }
 
 void WaveGen::setDuty( double duty )
 {
     if( duty > 100 ) duty = 100;
     m_duty = duty;
-    
     m_halfW = m_fstepsPC*m_duty/100;
-}
-
-int WaveGen::steps()
-{
-    return m_steps;
 }
 
 void WaveGen::setSteps(int steps )
 {
     if( steps < 10 ) steps = 10;
     m_steps = steps;
-
     m_qSteps  = m_stepsPC/steps;
-    //qDebug()<<"WaveGen::setQuality"<<m_stepsPC<<q <<m_qSteps;
 }
 
-void WaveGen::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void WaveGen::setFreq( double freq )
+{
+    ClockBase::setFreq( freq );
+    setDuty( m_duty );
+    setSteps( m_steps );
+}
+
+void WaveGen::setWaveType( QString type )
+{
+    if( !m_waves.contains( type) ) return;
+    m_waveType = (wave_type)m_waves.indexOf( type );
+    //updateProperty(); // Update label
+}
+
+QStringList WaveGen::getEnums( QString e )
+{
+    if( e == "Wave_Type" ) return m_waves;
+    else return CompBase::getEnums( e );
+}
+
+void WaveGen::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( m_hidden ) return;
-
     Component::paint( p, option, widget );
 
-    if (  m_isRunning )
-        p->setBrush( QColor( 250, 200, 50 ) );
-    else
-        p->setBrush( QColor( 230, 230, 255 ) );
+    if (  m_isRunning ) p->setBrush( QColor( 250, 200, 50 ) );
+    else                p->setBrush( QColor( 230, 230, 255 ) );
 
     p->drawRoundedRect( m_area,2 ,2 );
 
@@ -221,6 +193,4 @@ void WaveGen::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidge
     p->drawLine(  1,-3, 1,  3 );
     p->drawLine(  1, 3, 4,  0 );
 }
-
-#include "moc_wavegen.cpp"
 

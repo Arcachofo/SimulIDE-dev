@@ -21,10 +21,10 @@
 #include "itemlibrary.h"
 #include "circuit.h"
 
+#include "boolprop.h"
+
 Component* DecToBcd::construct( QObject* parent, QString type, QString id )
-{
-    return new DecToBcd( parent, type, id );
-}
+{ return new DecToBcd( parent, type, id ); }
 
 LibraryItem* DecToBcd::libraryItem()
 {
@@ -59,19 +59,15 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
     setNumInps( 10,"D", 1 );
 
     createOePin( "IU03OE ", id+"-in15"); // Output Enable
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<DecToBcd>( "_16_Bits", tr("16 Bits")           ,"", this, &DecToBcd::is16Bits,   &DecToBcd::set16bits ),
+new BoolProp<DecToBcd>( "Invert_Inputs", tr("Invert Inputs"),"", this, &DecToBcd::invertInps, &DecToBcd::setInvertInps )
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 DecToBcd::~DecToBcd(){}
-
-QList<propGroup_t> DecToBcd::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Invert_Inputs", tr("Invert Inputs"),""} );
-    mainGroup.propList.append( {"_16_Bits", tr("16 Bits"),""} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void DecToBcd::stamp()
 {
@@ -84,20 +80,14 @@ void DecToBcd::voltChanged()
     LogicComponent::updateOutEnabled();
 
     int i;
-    for( i=m_bits-2; i>=0; --i )
-    {
-        if( m_inPin[i]->getInpState() ) break;
-    }
+    for( i=m_bits-2; i>=0; --i ) { if( m_inPin[i]->getInpState() ) break; }
     m_nextOutVal = i+1;
     sheduleOutPuts( this );
 }
 
-void DecToBcd::set_16bits( bool set )
+void DecToBcd::set16bits( bool set )
 {
     m_16Bits = set;
-
     setNumInps( m_16Bits ? 16 : 10 );
     m_oePin->setY( m_area.y()-8 );
 }
-
-#include "moc_dectobcd.cpp"

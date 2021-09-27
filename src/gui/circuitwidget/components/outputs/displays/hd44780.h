@@ -20,24 +20,20 @@
 #ifndef HD44780_H
 #define HD44780_H
 
-#include "itemlibrary.h"
 #include "hd44780_base.h"
 #include "e-element.h"
 
 class IoPin;
+class LibraryItem;
 
 class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
 {
-    Q_OBJECT
-
     public:
         Hd44780( QObject* parent, QString type, QString id );
         ~Hd44780();
         
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void initialize() override;
         virtual void stamp() override;
@@ -54,4 +50,3 @@ class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
 };
 
 #endif
-

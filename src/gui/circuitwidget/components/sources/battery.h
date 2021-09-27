@@ -21,15 +21,12 @@
 #define BATTERY_H
 
 #include "e-element.h"
-#include "component.h"
+#include "comp2pin.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Battery : public Component, public eElement
+class MAINMODULE_EXPORT Battery : public Comp2Pin, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( double Voltage READ volt WRITE setVolt DESIGNABLE true USER true )
-
     public:
         Battery( QObject* parent, QString type, QString id );
         ~Battery();
@@ -37,22 +34,15 @@ class MAINMODULE_EXPORT Battery : public Component, public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem *libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        virtual double volt();
-        virtual void setVolt( double volt );
+        double volt() { return m_volt; }
+        void setVolt( double volt );
 
         virtual void stamp() override;
-        virtual void initialize() override;
-
-        virtual void setUnit( QString un ) override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     private:
         double m_volt;
-        double m_accuracy;
-        double m_lastOut;
 };
 
 #endif

@@ -29,15 +29,14 @@ class LibraryItem;
 class MAINMODULE_EXPORT SerialTerm : public Component, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( int Mcu_Uart READ uart  WRITE setUart )
+    /*Q_PROPERTY( int Mcu_Uart READ uart  WRITE setUart )
     Q_PROPERTY( int posx     READ posX  WRITE setPosX )
     Q_PROPERTY( int posy     READ posY  WRITE setPosY )
     Q_PROPERTY( int sizex    READ sizeX WRITE resizeX )
     Q_PROPERTY( int sizey    READ sizeY WRITE resizeY )
-    Q_PROPERTY( QString Mcu_Id READ mcuId WRITE setMcuId )
+    Q_PROPERTY( QString Mcu_Id READ mcuId WRITE setMcuId )*/
 
     public:
-
         SerialTerm( QObject* parent, QString type, QString id );
         ~SerialTerm();
         
@@ -75,4 +74,3 @@ class MAINMODULE_EXPORT SerialTerm : public Component, public eElement
 };
 
 #endif
-

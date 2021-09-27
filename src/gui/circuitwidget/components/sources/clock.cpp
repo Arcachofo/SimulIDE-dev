@@ -17,14 +17,18 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "clock.h"
 #include "iopin.h"
 #include "simulator.h"
+#include "itemlibrary.h"
+
+#include "doubleprop.h"
+#include "boolprop.h"
 
 Component* Clock::construct( QObject* parent, QString type, QString id )
-{
-    return new Clock( parent, type, id );
-}
+{ return new Clock( parent, type, id ); }
 
 LibraryItem* Clock::libraryItem()
 {
@@ -39,22 +43,14 @@ LibraryItem* Clock::libraryItem()
 Clock::Clock( QObject* parent, QString type, QString id )
      : ClockBase( parent, type, id )
 {
+    remPropGroup( "Main");
+    addPropGroup( { tr("Main"), {
+new DoubProp<Clock>( "Voltage"  , tr("Voltage")  ,"V" , this, &Clock::volt,     &Clock::setVolt ),
+new DoubProp<Clock>( "Freq"     , tr("Frequency"),"Hz", this, &Clock::freq,     &Clock::setFreq ),
+new BoolProp<Clock>( "Always_On", tr("Always On"),""  , this, &Clock::alwaysOn, &Clock::setAlwaysOn ),
+    }} );
 }
 Clock::~Clock(){}
-
-QList<propGroup_t> Clock::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Voltage",   tr("Voltage"),  "main"} );
-    mainGroup.propList.append( {"Freq",      tr("Frequency"),"Hz"} );
-    mainGroup.propList.append( {"Always_On", tr("Always On"),""} );
-
-    propGroup_t timeGroup { tr("Edges") };
-    //timeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
-    //timeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
-
-    return {mainGroup, timeGroup};
-}
 
 void Clock::runEvent()
 {
@@ -67,7 +63,7 @@ void Clock::runEvent()
     if( m_isRunning ) Simulator::self()->addEvent( m_stepsPC/2+remainerInt, this );
 }
 
-void Clock::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Clock::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( m_hidden ) return;
 
@@ -89,6 +85,3 @@ void Clock::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
     p->drawLine(  1, 3, 1, -3 );
     p->drawLine(  1,-3, 4, -3 );
 }
-
-#include "moc_clock.cpp"
-

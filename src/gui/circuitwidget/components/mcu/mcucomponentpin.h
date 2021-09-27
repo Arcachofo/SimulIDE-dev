@@ -27,8 +27,6 @@ class BaseProcessor;
 
 class MAINMODULE_EXPORT McuComponentPin : public IoPin
 {
-    Q_OBJECT
-
     public:
         McuComponentPin( McuComponent *mcu, QString id, QString type, QString label, int pos, int xpos, int ypos, int angle );
         ~McuComponentPin();
@@ -42,9 +40,6 @@ class MAINMODULE_EXPORT McuComponentPin : public IoPin
         void setExtraSource( double vddAdmit, double gndAdmit );
 
         void enableIO( bool en );
-
-        //void move( int dx, int dy );
-        int angle() { return m_angle; }
         
         QString ptype() { return m_type; }
         QString id() { return m_id; }
@@ -52,24 +47,19 @@ class MAINMODULE_EXPORT McuComponentPin : public IoPin
         bool m_enableIO;
 
     protected:
-        McuComponent* m_mcuComponent;
+        McuComponent*  m_mcuComponent;
         BaseProcessor* m_processor;
-        
+
         bool m_attached;
-        //bool m_isInput;
         bool m_openColl;
 
-        pinMode_t m_prevPinMode;
-        
         char m_port;
         int  m_pinN;
         int  m_pos;
 
         int m_pinType;
-        int m_angle;
 
         QString m_type;
-        QString m_id;
 };
 
 #endif

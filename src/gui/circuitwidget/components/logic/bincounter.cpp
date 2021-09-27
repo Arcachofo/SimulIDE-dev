@@ -22,14 +22,11 @@
 #include "connector.h"
 #include "iopin.h"
 
-static const char* BinCounter_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Max Value")
-};
+#include "intprop.h"
+#include "boolprop.h"
 
 Component *BinCounter::construct(QObject *parent, QString type, QString id)
-{
-    return new BinCounter(parent, type, id);
-}
+{ return new BinCounter(parent, type, id); }
 
 LibraryItem* BinCounter::libraryItem()
 {
@@ -44,49 +41,40 @@ LibraryItem* BinCounter::libraryItem()
 BinCounter::BinCounter(QObject *parent, QString type, QString id) 
           : LogicComponent( parent, type, id )
 {
-    Q_UNUSED( BinCounter_properties );
-    
     m_TopValue = 1;
-
     m_width  = 3;
     m_height = 3;
 
-    QStringList pinList;
-    pinList
-      << "IL01>"
-      << "IL02 R"
-      << "IU01S"
-      << "OR01Q"
-    ;
-    init( pinList );
+    init({         // Inputs:
+            "IL01>",
+            "IL02 R",
+            "IU01S",
+                   // Outputs:
+            "OR01Q"
+        });
     
-    m_clkPin = m_inPin[0];     // eClockedDevice
+    m_clkPin   = m_inPin[0];     // eClockedDevice
     m_resetPin = m_inPin[1];
     m_setPin   = m_inPin[2];
 
     setSrInv( true );            // Invert Reset Pin
     useSetPin( false );          // Don't use Set Pin
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<BinCounter>( "Pin_SET",        tr("Use Set Pin")       ,"", this, &BinCounter::pinSet,   &BinCounter::useSetPin ),
+new BoolProp<BinCounter>( "Clock_Inverted", tr("Clock Inverted")    ,"", this, &BinCounter::clockInv, &BinCounter::setClockInv ),
+new BoolProp<BinCounter>( "Reset_Inverted", tr("Set/Reset Inverted"),"", this, &BinCounter::srInv,    &BinCounter::setSrInv ),
+new IntProp<BinCounter>(  "Max_Value",      tr("Count to")          ,"", this, &BinCounter::maxVal,   &BinCounter::setMaxVal, "uint" ),
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 BinCounter::~BinCounter(){}
-
-QList<propGroup_t> BinCounter::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Pin_SET", tr("Use Set Pin"),""} );
-    mainGroup.propList.append( {"Clock_Inverted", tr("Clock Inverted"),""} );
-    mainGroup.propList.append( {"Reset_Inverted", tr("Set / Reset Inverted"),""} );
-    mainGroup.propList.append( {"Max_Value", tr("Count to"),""} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void BinCounter::stamp()
 {
     m_resetPin->changeCallBack( this );
     m_setPin->changeCallBack( this );
-
     LogicComponent::stamp();
 }
 
@@ -120,8 +108,7 @@ void BinCounter::voltChanged()
         {
             m_Counter = 0;
             m_nextOutVal = 0;
-        }
-    }
+    }   }
     IoComponent::sheduleOutPuts( this );
 }
 
@@ -142,5 +129,3 @@ void BinCounter::useSetPin( bool set )
     m_setPin->setVisible( set );
     setSrInv( m_resetInv );
 }
-
-#include "moc_bincounter.cpp"

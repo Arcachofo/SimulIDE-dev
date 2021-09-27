@@ -31,6 +31,9 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
+#include "stringprop.h"
+#include "boolprop.h"
+
 Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 {
     SubCircuit* subcircuit = new SubCircuit( parent, type,  id );
@@ -69,8 +72,7 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 
     QString dataFile = ComponentSelector::self()->getXmlFile( m_name );
 
-    if( dataFile == "" )
-    {
+    if( dataFile == "" ){
           MessageBoxNB( "SubCircuit::SubCircuit", "                               \n"+
                     tr( "There are no data files for " )+m_name+"    ");
           m_error = 23;
@@ -136,7 +138,7 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
                     dataDir.setPath( subcFile );
                     dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
                     m_mainComponent->setSubcDir( dataDir.absolutePath() );
-                    m_mainComponent->setSubcircuit( this );
+                    m_mainComponent->m_subcircuit = this;
                 }
                 break;
             }
@@ -152,15 +154,15 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
             Circuit::self()->removeComp( comp );
     }   }
     else    initChip();
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", this, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
+    }} );
+    addPropGroup( { tr("Hidden"), {
+new StringProp<SubCircuit>( "BoardId" , "","", this, &SubCircuit::boardId, &SubCircuit::setBoardId )
+    }} );
 }
 SubCircuit::~SubCircuit(){}
-
-QList<propGroup_t> SubCircuit::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Logic_Symbol", tr("Logic Symbol"),""} );
-    return {mainGroup};
-}
 
 void SubCircuit::loadSubCircuit( QString fileName )
 {
@@ -185,6 +187,14 @@ void SubCircuit::loadSubCircuit( QString fileName )
     }
     file.close();
 
+    QStringList graphProps;
+    for( propGroup pg : m_properties ) // Create list of "Graphical" poperties (We don't need them)
+    {
+        if( (pg.name != "CompGraphic") ) continue;
+        for( ComProperty* prop : pg.propList ) graphProps.append( prop->name() );
+        break;
+    }
+
     Circuit* circ = Circuit::self();
     QHash<QString, eNode*> nodMap;
     QDomNode node = domDoc.documentElement().firstChild();
@@ -207,17 +217,17 @@ void SubCircuit::loadSubCircuit( QString fileName )
             {
                 QString startPinId = element.attribute( "startpinid" );
                 QString endPinId   = element.attribute( "endpinid" );
-                Pin* startpin  = getConPin( startPinId );
-                Pin* endpin    = getConPin( endPinId );
+                Pin* startPin  = getConPin( element.attribute( "startpinid" ) );
+                Pin* endPin    = getConPin( element.attribute( "endpinid" ) );
 
-                if( startpin && endpin )    // Create Connector
+                if( startPin && endPin )    // Create Connector
                 {
-                    Connector* con  = new Connector( this, type, id, startpin, endpin );
+                    /*Connector* con  = new Connector( this, type, id, startPin, endPin, false );
 
-                    element.setAttribute( "startpinid", startpin->objectName() );
-                    element.setAttribute(   "endpinid", endpin->objectName() );
+                    element.setAttribute( "startpinid", startPin->objectName() );
+                    element.setAttribute(   "endpinid", endPin->objectName() );
 
-                    circ->loadProperties( &element, con );
+                    circ->loadProperties( &element, con );*/
 
                     QString enodeId = element.attribute( "enodeid" );
                     eNode*  enode   = nodMap[enodeId];
@@ -227,24 +237,20 @@ void SubCircuit::loadSubCircuit( QString fileName )
                         enode = new eNode( "Circ_eNode-"+circ->newSceneId() );
                         nodMap[enodeId] = enode;
                     }
-                    con->setEnode( enode );
-                    con->setVisib( false );
-                    con->setHidden( true, true );
-                    con->setParentItem( this );
-                    con->setPos( 0, 0 );
-                    con->setPointList( {0,0,0,0});
-                    circ->conList()->removeOne( con );
-                    startpin->registerPins( enode );
-                    endpin->registerPins( enode );
+                    //con->setEnode( enode );
+                    if( startPin->isBus() ) enode->setIsBus( true );
+                    startPin->setConPin( endPin );
+                    endPin->setConPin( startPin );
+                    startPin->registerPins( enode );
+                    endPin->registerPins( enode );
                 }
                 else // Start or End pin not found
                 {
-                    if( !startpin ) qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null startpin in " << objNam<<startPinId;
-                    if( !endpin )   qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null endpin in "   << objNam<<endPinId;
+                    if( !startPin ) qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null startPin in " << objNam<<startPinId;
+                    if( !endPin )   qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null endPin in "   << objNam<<endPinId;
             }   }
             else if( type == "Package" ) { ; }
-            else
-            {
+            else{
                 Component* comp = NULL;
                 if( objNam == "" ) objNam = id;
                 if( type == "Node" ) comp = new Node( this, type, id );
@@ -253,21 +259,17 @@ void SubCircuit::loadSubCircuit( QString fileName )
 
                 if( comp )
                 {
-                    QStringList userProps = {"mainComp","boardPos","circPos","boardRot","circRot"};
-                    userProps.append( comp->userProperties() ); // Get list of User Properties, we only want to load these
-
                     QDomNamedNodeMap atrs = element.attributes();
-
-                    for( int i=0; i<atrs.length(); ++i ) // Get List of property names in Circuit file
+                    for( int i=0; i<atrs.length(); ++i )   // Load Properties
                     {
                         QString propName = atrs.item(i).nodeName();
-                        if( !userProps.contains( propName) ) continue; // Not an user Property
+                        if( graphProps.contains( propName )) continue; // Don't load "Component" properties.
 
-                        QVariant value( element.attribute( propName ) );
-                        circ->loadProperty( value, propName, comp );
+                        QString value = element.attribute( propName );
+                        if( !comp->setProperty( propName, value ) )
+                            qDebug() << "SubCircuit"<<m_id<<" Wrong Property: "<<comp->getUid()<<propName<<value;
                     }
-                    int number = comp->objectName().split("-").last().toInt();
-                    if ( number > circ->m_seqNumber ) circ->m_seqNumber = number; // Adjust item counter: m_seqNumber
+                    ///circ->loadProperties( &element, comp );
 
                     comp->setParentItem( this );
 
@@ -460,7 +462,7 @@ void SubCircuit::slotAttach()
                 Circuit::self()->saveState();
 
                 m_board = board;
-                m_boardId = m_board->itemID();
+                m_boardId = m_board->m_id;
                 m_board->setShield( this );
 
                 m_circPos = this->pos();
@@ -532,7 +534,7 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
             if( m_board && m_board->m_mainComponent )
             {
                 mainComp = m_board->m_mainComponent;
-                id = "Board "+m_board->itemID();
+                id = "Board "+m_board->m_id;
         }   }
         if( mainComp )
         {
@@ -549,5 +551,18 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         else          Component::contextMenu( event, menu );
         menu->deleteLater();
 }   }
+
+QString SubCircuit::toString()
+{
+    QString item = CompBase::toString();
+    if( !m_mainComponent ) return item;
+
+    item.remove( "/>\n" );
+    item += ">\n";
+    item += m_mainComponent->toString().replace( "<item ", "<mainCompProps ");
+    item += "</item>\n";
+
+    return item;
+}
 
 #include "moc_subcircuit.cpp"

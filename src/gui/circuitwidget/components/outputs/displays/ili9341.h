@@ -28,8 +28,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
 {
-    Q_OBJECT
-    
     public:
         Ili9341( QObject* parent, QString type, QString id );
         ~Ili9341();
@@ -100,4 +98,3 @@ class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
 };
 
 #endif
-

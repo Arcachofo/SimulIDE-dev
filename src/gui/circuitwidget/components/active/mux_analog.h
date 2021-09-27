@@ -27,32 +27,25 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT MuxAnalog : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( int    Address_Bits READ addrBits WRITE setAddrBits DESIGNABLE true USER true )
-    Q_PROPERTY( double Impedance    READ resist   WRITE setResist   DESIGNABLE true USER true )
-
     public:
         MuxAnalog( QObject* parent, QString type, QString id );
         ~MuxAnalog();
         
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
-
-        double resist() { return 1/m_admit; }
-        void setResist( double r ) { m_admit = 1/r; }
-
         virtual void remove() override;
-        
+
         int addrBits() { return m_addrBits; }
         void setAddrBits( int bits );
+
+        double impedance() { return 1/m_admit; }
+        void setImpedance( double i ) { m_admit = 1/i; }
         
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
     private:
         void createAddrBits( int c );

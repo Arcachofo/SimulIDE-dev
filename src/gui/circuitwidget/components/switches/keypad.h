@@ -20,32 +20,25 @@
 #ifndef KEYPAD_H
 #define KEYPAD_H
 
-#include "itemlibrary.h"
 #include "e-element.h"
 #include "push_base.h"
 
+class LibraryItem;
 
 class MAINMODULE_EXPORT KeyPad : public Component, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( int      Rows       READ rows WRITE setRows  DESIGNABLE true USER true )
-    Q_PROPERTY( int      Cols       READ cols WRITE setCols  DESIGNABLE true USER true )
-    Q_PROPERTY( QString  Key_Labels READ keyLabels WRITE setKeyLabels  DESIGNABLE true USER true )
-
     public:
         KeyPad( QObject* parent, QString type, QString id );
         ~KeyPad();
 
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        double rows() { return m_rows; }
-        void setRows( double rows );
+        int rows() { return m_rows; }
+        void setRows( int rows );
         
-        double cols() { return m_cols; }
-        void setCols( double cols );
+        int cols() { return m_cols; }
+        void setCols( int cols );
         
         QString keyLabels() { return m_keyLabels; }
         void setKeyLabels( QString keyLabels );

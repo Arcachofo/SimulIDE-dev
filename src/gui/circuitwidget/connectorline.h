@@ -29,7 +29,7 @@ class MAINMODULE_EXPORT ConnectorLine : public QGraphicsObject
     Q_OBJECT
 
     public:
-        ConnectorLine( int x1, int y1, int x2, int y2, Connector*  connector );
+        ConnectorLine( int x1, int y1, int x2, int y2, Connector* connector );
         ~ConnectorLine();
 
         virtual QRectF boundingRect() const;

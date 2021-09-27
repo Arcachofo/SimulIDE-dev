@@ -18,11 +18,15 @@
  ***************************************************************************/
 
 #include "tunnel.h"
+#include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "e-node.h"
 #include "pin.h"
+
+#include "stringprop.h"
+#include "boolprop.h"
 
 QHash<QString, eNode*> Tunnel::m_eNodes;
 QHash<QString, QList<Tunnel*>*> Tunnel::m_tunnels;
@@ -43,33 +47,28 @@ LibraryItem* Tunnel::libraryItem()
 Tunnel::Tunnel( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
 {
-    setLabelPos(-64,-24 );
-
+    m_area = QRect( -m_size-8-4, -4, m_size+4, 8 );
     m_rotated = false;
     m_blocked = false;
     m_packed  = false;
-
     m_name = "";
-
     m_size = 20;
-    m_area = QRect( -m_size-8-4, -4, m_size+4, 8 );
 
-    QPoint pinPos = QPoint(0,0);
     m_pin.resize( 1 );
-    m_pin[0] = new Pin( 0, pinPos, id+"-pin", 0, this);
+    m_pin[0] = new Pin( 0, QPoint(0,0), id+"-pin", 0, this);
     m_pin[0]->setLabelColor( Qt::black );
 
     setLabelPos(-16,-24, 0);
+
+    addPropGroup( { tr("Main"), {
+new StringProp<Tunnel>( "Name", tr("Id"),"", this, &Tunnel::name, &Tunnel::setName ),
+new BoolProp  <Tunnel>( "Rotated","","", this, &Tunnel::rotated, &Tunnel::setRotated )
+    }} );
+    addPropGroup( { tr("Hidden"), {
+new StringProp<Tunnel>( "Uid"    ,"","", this, &Tunnel::uid,     &Tunnel::setUid ),
+    }} );
 }
 Tunnel::~Tunnel() {}
-
-QList<propGroup_t> Tunnel::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Name", tr("Name"),""} );
-    mainGroup.propList.append( {"Rotated", tr("Rotated"),""} );
-    return {mainGroup};
-}
 
 void Tunnel::setEnode( eNode* node )
 {
@@ -134,6 +133,7 @@ void Tunnel::setName( QString name )
     }
     setEnode( node );
     registerPins( node );
+    Circuit::self()->update();
 }
 
 void Tunnel::setRotated( bool rot )
@@ -214,5 +214,3 @@ void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
 
         p->drawPolygon( points, 5 );
 }   }
-
-#include "moc_tunnel.cpp"

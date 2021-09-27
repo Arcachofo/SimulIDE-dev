@@ -29,9 +29,9 @@
 #include "tunnel.h"
 #include "e-node.h"
 
-static const char* Oscope_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Filter")
-};
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "intprop.h"
 
 Component* Oscope::construct( QObject* parent, QString type, QString id )
 { return new Oscope( parent, type, id ); }
@@ -49,15 +49,11 @@ LibraryItem* Oscope::libraryItem()
 Oscope::Oscope( QObject* parent, QString type, QString id )
       : PlotBase( parent, type, id )
 {
-    Q_UNUSED( Oscope_properties );
-
     m_graphical = true;
     m_trigger = 4;
     m_auto    = 4;
-    m_filter = 0.0;
     m_extraSize = 68;
     m_bufferSize = 600000;
-
     m_numChannels = 4;
 
     m_oscWidget  = new OscWidget( CircuitWidget::self(), this );
@@ -95,6 +91,17 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     setTimeDiv( 1e9 ); // 1 ms
     setLabelPos(-90,-100, 0);
     expand( false );
+
+    addPropGroup( { tr("Hidden1"), {
+new DoubProp  <Oscope>( "Filter", tr("Filter"), "V", this, &Oscope::filter, &Oscope::setFilter ),
+new IntProp   <Oscope>( "Trigger","", "", this, &Oscope::trigger, &Oscope::setTrigger ),
+new IntProp   <Oscope>( "AutoSC" ,"", "", this, &Oscope::autoSC,  &Oscope::setAutoSC ),
+new IntProp   <Oscope>( "Tracks" ,"", "", this, &Oscope::tracks,  &Oscope::setTracks ),
+new StringProp<Oscope>( "HideCh" ,"", "", this, &Oscope::hideCh,  &Oscope::setHideCh ),
+new StringProp<Oscope>( "TimPos" ,"", "", this, &Oscope::timPos,  &Oscope::setTimPos ),
+new StringProp<Oscope>( "VolDiv" ,"", "", this, &Oscope::volDiv,  &Oscope::setVolDiv ),
+new StringProp<Oscope>( "VolPos" ,"", "", this, &Oscope::volPos,  &Oscope::setVolPos )
+    } } );
 }
 Oscope::~Oscope()
 {
@@ -205,12 +212,13 @@ void Oscope::setTrigger( int ch )
         else          m_channel[i]->m_trigger = false;
 }   }
 
-void Oscope::setTunnels( QStringList tunnels )
+void Oscope::setTunnels( QString tunnels )
 {
-    for( int i=0; i<tunnels.size(); i++ ){
+    QStringList list = tunnels.split(",");
+    for( int i=0; i<list.size(); i++ ){
         if( i >= m_numChannels ) break;
-        m_channel[i]->m_chTunnel = tunnels.at(i);
-        m_dataWidget->setTunnel( i, tunnels.at(i) );
+        m_channel[i]->m_chTunnel = list.at(i);
+        m_dataWidget->setTunnel( i, list.at(i) );
 }   }
 
 void Oscope::setAutoSC( int ch )
@@ -219,22 +227,23 @@ void Oscope::setAutoSC( int ch )
     m_oscWidget->setAuto( ch );
 }
 
-QStringList Oscope::hideCh()
+QString Oscope::hideCh()
 {
-    QStringList list;
+    QString list;
     QString hide;
     for( int i=0; i<4; ++i ){
         hide = m_hideCh[i]? "true":"false";
-        list << hide;
+        list.append( hide ).append(",");
     }
     return list;
 }
 
-void Oscope::setHideCh( QStringList hc )
+void Oscope::setHideCh( QString hc )
 {
+    QStringList list = hc.split(",");
     for( int i=0; i<4; ++i ){
-        if( i == hc.size() ) break;
-        bool hide = (hc.at(i) == "true")? true:false;
+        if( i == list.size() ) break;
+        bool hide = (list.at(i) == "true")? true:false;
         hideChannel( i, hide );
 }   }
 
@@ -253,53 +262,56 @@ void Oscope::setTracks( int tracks )
     m_oscWidget->setTracks( tracks );
 }
 
-void Oscope::setTimeDiv( uint64_t td )
+void Oscope::setTimeDiv( int td )
 {
     if( td < 1 ) td = 1;
     PlotBase::setTimeDiv( td );
     m_oscWidget->updateTimeDivBox( td );
 }
 
-QStringList Oscope::timPos()
+QString Oscope::timPos()
 {
-    QStringList list;
-    for( int i=0; i<4; ++i ) list << QString::number( m_timePos[i] );
+    QString list;
+    for( int i=0; i<4; ++i ) list.append( QString::number( m_timePos[i] )).append(",");
     return list;
 }
 
-void Oscope::setTimPos( QStringList tp )
+void Oscope::setTimPos( QString tp )
 {
+    QStringList list = tp.split(",");
     for( int i=0; i<4; ++i ){
-        if( i == tp.size() ) break;
-        setTimePos( i, tp.at(i).toLongLong() );
+        if( i == list.size() ) break;
+        setTimePos( i, list.at(i).toLongLong() );
 }   }
 
-QStringList Oscope::volDiv()
+QString Oscope::volDiv()
 {
-    QStringList list;
-    for( int i=0; i<4; ++i ) list << QString::number( m_voltDiv[i] );
+    QString list;
+    for( int i=0; i<4; ++i ) list.append( QString::number( m_voltDiv[i] )).append(",");
     return list;
 }
 
-void Oscope::setVolDiv( QStringList vd )
+void Oscope::setVolDiv( QString vd )
 {
+    QStringList list = vd.split(",");
     for( int i=0; i<4; ++i ){
-        if( i == vd.size() ) break;
-        setVoltDiv( i, vd.at(i).toDouble() );
+        if( i == list.size() ) break;
+        setVoltDiv( i, list.at(i).toDouble() );
 }   }
 
-QStringList Oscope::volPos()
+QString Oscope::volPos()
 {
-    QStringList list;
-    for( int i=0; i<4; ++i ) list << QString::number( m_voltPos[i] );
+    QString list;
+    for( int i=0; i<4; ++i ) list.append( QString::number( m_voltPos[i] )).append(",");
     return list;
 }
 
-void Oscope::setVolPos( QStringList vp )
+void Oscope::setVolPos( QString vp )
 {
+    QStringList list = vp.split(",");
     for( int i=0; i<4; ++i ){
-        if( i == vp.size() ) break;
-        setVoltPos( i, vp.at(i).toDouble() );
+        if( i == list.size() ) break;
+        setVoltPos( i, list.at(i).toDouble() );
 }   }
 
 void Oscope::setTimePos( int ch, int64_t tp )
@@ -323,4 +335,3 @@ void Oscope::setVoltPos( int ch, double vp )
     m_oscWidget->updateVoltPosBox( ch, vp );
 }
 
-#include "moc_oscope.cpp"

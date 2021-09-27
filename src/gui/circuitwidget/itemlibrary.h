@@ -20,6 +20,8 @@
 #ifndef ITEMLIBRARY_H
 #define ITEMLIBRARY_H
 
+#include <QCoreApplication>
+
 #include "component.h"
 
 class LibraryItem;

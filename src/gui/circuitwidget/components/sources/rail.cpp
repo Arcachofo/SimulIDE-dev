@@ -17,11 +17,15 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "rail.h"
 #include "simulator.h"
 #include "iopin.h"
 #include "itemlibrary.h"
 #include "pin.h"
+
+#include "doubleprop.h"
 
 Component* Rail::construct( QObject* parent, QString type, QString id )
 { return new Rail( parent, type, id ); }
@@ -46,64 +50,38 @@ Rail::Rail( QObject* parent, QString type, QString id )
     m_changed = false;
 
     m_pin.resize(1);
-    m_out = new IoPin( 0, QPoint(16,0), id+"-outnod", 0, this, source );
-    m_pin[0] = m_out;
+    m_pin[0] = m_out = new IoPin( 0, QPoint(16,0), id+"-outnod", 0, this, source );
 
-    m_unit = "V";
+    //m_unit = "V";
     setVolt(5.0);
     setValLabelPos(-16, 8 , 0 ); // x, y, rot 
-    setShowVal( true );
+    //setShowVal( true );
     
     setLabelPos(-16,-24, 0);
+
+    addPropGroup( { tr("Main"), {
+new DoubProp<Rail>( "Voltage", tr("Voltage"),"V", this, &Rail::volt, &Rail::setVolt )
+    }} );
 }
 Rail::~Rail() { delete m_out; }
 
-QList<propGroup_t> Rail::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Voltage", tr("Voltage"),"main"} );
-    return {mainGroup};
-}
-
-double Rail::volt()
-{
-    return m_value;
-}
-
 void Rail::setVolt( double v )
 {
-     Simulator::self()->pauseSim();
-
-    Component::setValue( v );       // Takes care about units multiplier
+    Simulator::self()->pauseSim();
+    m_volt = v;
     updateOutput();
-
-    Simulator::self()->resumeSim();
-}
-
-void Rail::setUnit( QString un ) 
-{
-     Simulator::self()->pauseSim();
-
-    Component::setUnit( un );
-    updateOutput();
-
     Simulator::self()->resumeSim();
 }
 
 void Rail::updateOutput()
 {
-    m_out->setOutHighV( m_value*m_unitMult );
+    m_out->setOutHighV( m_volt );
     m_out->setOutState( true );
 }
 
-void Rail::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Rail::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-
     p->setBrush( QColor( 255, 166, 0 ) );
-
     p->drawRoundedRect( QRectF( -8, -8, 16, 16 ), 2, 2);
 }
-
-#include "moc_rail.cpp"
-

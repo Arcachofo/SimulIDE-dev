@@ -178,7 +178,7 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
         }
         m_enterItem->setPos( mapToScene( event->pos() ) );
         m_circuit->addItem( m_enterItem );
-        //qDebug()<<"CircuitView::dragEnterEvent"<<m_enterItem->itemID()<< type<< id;
+        m_circuit->compList()->append( m_enterItem );
         this->setFocus();
     }
     else Circuit::self()->unSaveState();

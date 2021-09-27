@@ -24,9 +24,8 @@
 #include "itemlibrary.h"
 #include "e-node.h"
 
-static const char* KeyPad_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Key Labels")
-};
+#include "stringprop.h"
+#include "intprop.h"
 
 Component* KeyPad::construct( QObject* parent, QString type, QString id )
 { return new KeyPad( parent, type, id ); }
@@ -34,38 +33,31 @@ Component* KeyPad::construct( QObject* parent, QString type, QString id )
 LibraryItem* KeyPad::libraryItem()
 {
     return new LibraryItem(
-            tr( "KeyPad" ),
-            tr( "Switches" ),
-            "keypad.png",
-            "KeyPad",
-            KeyPad::construct);
+        tr( "KeyPad" ),
+        tr( "Switches" ),
+        "keypad.png",
+        "KeyPad",
+        KeyPad::construct);
 }
 
 KeyPad::KeyPad( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
       , eElement( id )
 {
-    Q_UNUSED( KeyPad_properties );
-
     m_graphical = true;
-    
-    setLabelPos(-8,-16, 0);
-    
     m_keyLabels = "123456789*0#";
     m_rows = 4;
     m_cols = 3;
     setupButtons();
+    setLabelPos(-8,-16, 0);
+
+    addPropGroup( { tr("Main"), {
+new IntProp   <KeyPad>( "Rows"      , tr("Rows")      ,"_Buttons", this, &KeyPad::rows,      &KeyPad::setRows ,"uint" ),
+new IntProp   <KeyPad>( "Cols"      , tr("Columns")   ,"_Buttons", this, &KeyPad::cols,      &KeyPad::setCols ,"uint"  ),
+new StringProp<KeyPad>( "Key_Labels", tr("Key Labels"),""        , this, &KeyPad::keyLabels, &KeyPad::setKeyLabels)
+    }} );
 }
 KeyPad::~KeyPad(){}
-
-QList<propGroup_t> KeyPad::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Rows", tr("Rows"),""} );
-    mainGroup.propList.append( {"Cols", tr("Columns"),""} );
-    mainGroup.propList.append( {"Key_Labels", tr("Key Labels"),""} );
-    return {mainGroup};
-}
 
 void KeyPad::stamp()
 {
@@ -101,7 +93,6 @@ void KeyPad::setupButtons()
        m_buttons.removeOne( button );
        Circuit::self()->removeComp( button );
     }
-    
     for( Pin* pin : m_pin ) 
     {
         pin->removeConnector();
@@ -141,16 +132,18 @@ void KeyPad::setupButtons()
                 pinId.append( QString("-Pin")+QString::number(m_rows+col)) ;
                 QPoint pinPos = QPoint( col*16, m_rows*16+8);
                 m_pin[m_rows+col] = new Pin( 270, pinPos, pinId, 0, this);
-}   }   }   }
+            }
+            Circuit::self()->update();
+}   }   }
 
-void KeyPad::setRows( double rows )
+void KeyPad::setRows( int rows )
 {
     if( rows < 1 ) rows = 1;
     m_rows = rows;
     setupButtons();
 }
 
-void KeyPad::setCols( double cols )
+void KeyPad::setCols( int cols )
 {
     if( cols < 1 ) cols = 1;
     m_cols = cols;
@@ -160,11 +153,9 @@ void KeyPad::setCols( double cols )
 void KeyPad::setKeyLabels( QString keyLabels )
 {
     m_keyLabels = keyLabels;
-    
     int labelMax = m_keyLabels.size()-1;
     
-    for( int row=0; row<m_rows; row++ )
-    {
+    for( int row=0; row<m_rows; row++ ){
         for( int col=0; col<m_cols; col++ )
         {
             PushBase* button = m_buttons.at( row*m_cols+col );
@@ -188,5 +179,3 @@ void KeyPad::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
     Component::paint( p, option, widget );
     p->drawRoundedRect( m_area,2,2 );
 }
-
-#include "moc_keypad.cpp"

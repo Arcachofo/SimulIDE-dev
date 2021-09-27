@@ -28,10 +28,6 @@ class eNode;
 
 class MAINMODULE_EXPORT Bus : public Component, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( int Num_Bits  READ numLines    WRITE setNumLines    DESIGNABLE true USER true )
-    Q_PROPERTY( int Start_Bit READ startBit    WRITE setStartBit    DESIGNABLE true USER true )
-
     public:
         Bus( QObject* parent, QString type, QString id );
         ~Bus();
@@ -39,8 +35,6 @@ class MAINMODULE_EXPORT Bus : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
         
-        virtual QList<propGroup_t> propGroups() override;
-
         int numLines() { return m_numLines; }
         void setNumLines( int lines );
 

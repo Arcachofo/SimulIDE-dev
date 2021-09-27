@@ -22,13 +22,10 @@
 
 #include "switch_base.h"
 
-
 class MAINMODULE_EXPORT PushBase : public SwitchBase
 {
     Q_OBJECT
-    
     public:
-    
         PushBase( QObject* parent, QString type, QString id );
         ~PushBase();
 

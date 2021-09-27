@@ -17,21 +17,22 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QMenu>
+
 #include "i2cram.h"
 #include "memtable.h"
 #include "simulator.h"
 #include "itemlibrary.h"
 #include "iopin.h"
+#include "label.h"
 
-static const char* I2CRam_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Control Code"),
-    QT_TRANSLATE_NOOP("App::Property","Size bytes")
-};
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* I2CRam::construct( QObject* parent, QString type, QString id )
-{
-    return new I2CRam( parent, type, id );
-}
+{ return new I2CRam( parent, type, id ); }
 
 LibraryItem* I2CRam::libraryItem()
 {
@@ -48,22 +49,15 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
       , TwiModule( id )
       , MemData()
 {
-    Q_UNUSED( I2CRam_properties );
-    
     m_width  = 4;
     m_height = 4;
     
-    QStringList pinList;                              // Create Pin List
-
-    pinList // Inputs:
-            << "IL01 SDA"//type: Input, side: Left, pos: 01, label: "SDA"
-            << "IL03 SCL"
-            << "IR01 A0 "
-            << "IR02 A1 "
-            << "IR03 A2 "
-            // Outputs:
-            ;
-    init( pinList );                   // Create Pins Defined in pinList
+    init({         // Inputs:
+            "IL01 SDA", //type: Input, side: Left, pos: 01, label: "SDA"
+            "IL03 SCL",
+            "IR01 A0 ",
+            "IR02 A1 "
+        });
 
     m_inPin[0]->setPinMode( open_col );
     TwiModule::setSdaPin( m_inPin[0] );
@@ -71,30 +65,26 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
     m_inPin[1]->setPinMode( open_col );
     TwiModule::setSclPin( m_inPin[1] );
 
+    m_persistent = false;
     m_address = 0b01010000; // 0x50, 80
     m_size  = 65536;
     m_ram.resize( m_size );
 
-    m_persistent = false;
-    
     IoComponent::initState();
 
     Simulator::self()->addToUpdateList( this );
+
+    addPropGroup( { tr("Main"), {
+new IntProp <I2CRam>( "Size_bytes"  , tr("Size")         ,"_Bytes", this, &I2CRam::rSize,      &I2CRam::setRSize, "uint" ),
+new IntProp <I2CRam>( "Control_Code", tr("Control_Code") ,""      , this, &I2CRam::cCode,      &I2CRam::setCcode, "uint" ),
+new DoubProp<I2CRam>( "Frequency"   , tr("I2C Frequency"),"_KHz"  , this, &I2CRam::freqKHz,    &I2CRam::setFreqKHz ),
+new BoolProp<I2CRam>( "Persistent"  , tr("Persistent")   ,""      , this, &I2CRam::persistent, &I2CRam::setPersistent ),
+    }} );
+    addPropGroup( { tr("Hidden"), {
+new StringProp<I2CRam>( "Mem", "","", this, &I2CRam::getMem, &I2CRam::setMem )
+    }} );
 }
 I2CRam::~I2CRam(){}
-
-QList<propGroup_t> I2CRam::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Size_bytes", tr("Size"),"Bites"} );
-    mainGroup.propList.append( {"Control_Code", tr("Control_Code"),""} );
-    mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
-    mainGroup.propList.append( {"Persistent", tr("Persistent"),""} );
-
-    QList<propGroup_t> pg = IoComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void I2CRam::initialize()
 {
@@ -169,16 +159,18 @@ void I2CRam::writeByte() // Read from RAM
     TwiModule::writeByte();
 }
 
-void I2CRam::setMem( QVector<int> m )
+void I2CRam::setMem( QString m )
 {
-    if( m.size() == 1 ) return;       // Avoid loading data if not saved
-    m_ram = m;
+    if( m.isEmpty() ) return;
+    MemData::setMem( &m_ram, m );
 }
 
-QVector<int> I2CRam::mem()
+QString I2CRam::getMem()
 {
-    if( !m_persistent ) { QVector<int> vNull; return vNull; }
-    return m_ram;
+    QString m;
+    if( !m_persistent ) return m;
+
+    return MemData::getMem( &m_ram );
 }
 
 void I2CRam::setRSize( int size )

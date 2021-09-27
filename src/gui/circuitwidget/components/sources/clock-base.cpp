@@ -21,19 +21,14 @@
 #include "iopin.h"
 #include "simulator.h"
 
-static const char* ClockBase_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Freq")
-};
+#include "boolprop.h"
 
 ClockBase::ClockBase( QObject* parent, QString type, QString id )
-         : LogicInput( parent, type, id )
+         : FixedVolt( parent, type, id )
 {
-    Q_UNUSED( ClockBase_properties );
+    m_area = QRect( -14, -8, 22, 16 );
 
     m_graphical = true;
-    
-    m_area = QRect( -14, -8, 22, 16 );
-    
     m_isRunning = false;
     m_alwaysOn  = false;
 
@@ -41,6 +36,10 @@ ClockBase::ClockBase( QObject* parent, QString type, QString id )
     setFreq( 1000 );
 
     Simulator::self()->addToUpdateList( this );
+
+    addPropGroup( { tr("Hidden1"), {
+new BoolProp<ClockBase>( "Running", "","", this, &ClockBase::running, &ClockBase::setRunning ),
+    }} );
 }
 ClockBase::~ClockBase(){}
 
@@ -52,17 +51,14 @@ void ClockBase::stamp()
 
 void ClockBase::updateStep()
 {
-    if( m_changed )
+    if( !m_changed ) return;
+    if( m_isRunning )
     {
-        if( m_isRunning )
-        {
-            m_outpin->setOutState( true, true );
-            Simulator::self()->cancelEvents( this );
-            Simulator::self()->addEvent( 1, this );
-        }
-        else m_outpin->setOutState( false, true );
-        m_changed = false;
+        Simulator::self()->cancelEvents( this );
+        Simulator::self()->addEvent( 1, this );
     }
+    m_outpin->setOutState( m_isRunning, true );
+    m_changed = false;
 }
 
 void ClockBase::setAlwaysOn( bool on )
@@ -79,11 +75,7 @@ void ClockBase::setFreq( double freq )
     
     m_freq = freq;
     m_remainder = 0;
-    
-    emit freqChanged();
 }
-
-bool ClockBase::running() { return m_isRunning; }
 
 void ClockBase::setRunning( bool running )
 {
@@ -93,10 +85,6 @@ void ClockBase::setRunning( bool running )
     update();
 }
 
-void ClockBase::onbuttonclicked()
-{
-    setRunning( !m_isRunning );
-}
+void ClockBase::onbuttonclicked() { setRunning( !m_isRunning ); }
 
 #include "moc_clock-base.cpp"
-

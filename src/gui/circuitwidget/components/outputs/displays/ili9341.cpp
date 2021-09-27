@@ -17,15 +17,15 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "ili9341.h"
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
 
 Component* Ili9341::construct( QObject* parent, QString type, QString id )
-{
-    return new Ili9341( parent, type, id );
-}
+{ return new Ili9341( parent, type, id ); }
 
 LibraryItem* Ili9341::libraryItem()
 {
@@ -487,5 +487,3 @@ void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawRoundedRect( m_area,2,2 );
     p->drawImage(-120,-162,*m_pdisplayImg );
 }
-
-#include "moc_ili9341.cpp"

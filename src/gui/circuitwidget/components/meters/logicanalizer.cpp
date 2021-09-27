@@ -29,14 +29,11 @@
 #include "tunnel.h"
 #include "e-node.h"
 
-static const char* LAnalizer_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Threshold")
-};
+#include "doubleprop.h"
+#include "intprop.h"
 
 Component* LAnalizer::construct( QObject* parent, QString type, QString id )
-{
-    return new LAnalizer( parent, type, id );
-}
+{ return new LAnalizer( parent, type, id ); }
 
 LibraryItem* LAnalizer::libraryItem()
 {
@@ -51,8 +48,6 @@ LibraryItem* LAnalizer::libraryItem()
 LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
          : PlotBase( parent, type, id )
 {
-    Q_UNUSED( LAnalizer_properties );
-
     m_graphical = true;
     m_extraSize = 68-12;
     m_bufferSize = 600000;
@@ -97,6 +92,15 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
 
     setLabelPos(-90,-100, 0);
     expand( false );
+
+    addPropGroup( { tr("Electric"), {
+new DoubProp<LAnalizer>( "Treshold",tr("Logic Threshold"),"V", this, &LAnalizer::threshold, &LAnalizer::setThreshold )
+    } } );
+    addPropGroup( { tr("Hidden1"), {
+new DoubProp<LAnalizer>( "vTick"   ,"","", this, &LAnalizer::voltDiv, &LAnalizer::setVoltDiv ),
+new IntProp <LAnalizer>( "Trigger" ,"","", this, &LAnalizer::trigger, &LAnalizer::setTrigger ),
+new IntProp <LAnalizer>( "TimePos" ,"","", this, &LAnalizer::timePos, &LAnalizer::setTimePos ),
+    } } );
 }
 LAnalizer::~LAnalizer()
 {
@@ -106,13 +110,6 @@ LAnalizer::~LAnalizer()
     m_laWidget->setParent( NULL );
     m_laWidget->close();
     delete m_laWidget;
-}
-
-QList<propGroup_t> LAnalizer::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Treshold", tr("Treshold"),"V"} );
-    return {mainGroup};
 }
 
 void LAnalizer::updateStep()
@@ -164,9 +161,7 @@ void LAnalizer::updateStep()
 void LAnalizer::expand( bool e )
 {
     m_expand = e;
-
-    if( e )
-    {
+    if( e ){
         m_screenSizeY = m_baSizeY+2*10;
         m_display->setMaximumSize( 9999, 9999 );
         m_laWidget->getDispLayout()->insertWidget( 0, m_display );
@@ -190,21 +185,20 @@ void LAnalizer::expand( bool e )
     m_area = QRectF( -80, -centerY, widgetSizeX+4, widgetSizeY+4+2 );
 
     m_display->setExpand( e );
-
     Circuit::self()->update();
 }
 
-void LAnalizer::setTimeDiv( uint64_t td )
+void LAnalizer::setTimeDiv( int td )
 {
     if( td < 1 ) td = 1;
     PlotBase::setTimeDiv( td );
     m_laWidget->updateTimeDivBox( td );
 }
 
-void LAnalizer::setTimePos( int64_t tp )
+void LAnalizer::setTimePos( int tp )
 {
     m_timePos = tp;
-    for( int i=0; i<8; ++i ) m_display->setHPos( i, tp );
+    for( int i=0; i<8; ++i ) m_display->setHPos( i, m_timePos );
     m_laWidget->updateTimePosBox( tp );
 }
 
@@ -230,13 +224,12 @@ void LAnalizer::setConds( QString conds )
     updateConds( conds );
 }
 
-void LAnalizer::setTunnels( QStringList tunnels )
+void LAnalizer::setTunnels( QString tunnels )
 {
-    for( int i=0; i<tunnels.size(); i++ )
+    QStringList list = tunnels.split(",");
+    for( int i=0; i<list.size(); i++ )
     {
         if( i >= m_numChannels ) break;
-        m_channel[i]->m_chTunnel = tunnels.at(i);
-        m_dataWidget->setTunnel( i, tunnels.at(i) );
+        m_channel[i]->m_chTunnel = list.at(i);
+        m_dataWidget->setTunnel( i, list.at(i) );
 }   }
-
-#include "moc_logicanalizer.cpp"

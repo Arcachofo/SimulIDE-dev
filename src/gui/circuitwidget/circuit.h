@@ -20,13 +20,16 @@
 #ifndef CIRCUIT_H
 #define CIRCUIT_H
 
+#include <QGraphicsScene>
 #include <QDomDocument>
+#include <QTimer>
 
 #include "component.h"
 #include "connector.h"
 #include "pin.h"
 
 class Simulator;
+class Node;
 
 class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 {
@@ -81,9 +84,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         Connector* getNewConnector() { return new_connector; }
 
         QList<Component*>* compList() { return &m_compList; }
-        QList<Component*>* conList()  { return &m_conList; }
+        QList<Connector*>* conList()  { return &m_conList; }
+        QList<Node*>*      nodeList()  { return &m_nodeList; }
 
-        Component* getComponent( QString name );
         Component* getCompById( QString id );
         QString getCompId( QString name );
         QString origId( QString name ) { return m_idMap.value( name ); }
@@ -100,8 +103,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         const QString getFilePath() const { return m_filePath; }
 
         QString circType() { return m_circType; }
-
-        void saveBoard() {m_saveBoard = true; }
+        double circVersion() { return m_circVersion; }
 
     signals:
         void keyEvent( QString key, bool pressed );
@@ -125,21 +127,18 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
     private:
         void loadDomDoc( QDomDocument* doc );
-        void loadProperties( QDomElement* element, Component* comp );
+        void loadProperties( QDomElement* element, CompBase* comp );
         void loadCompProperties( QDomElement* element, Component* comp );
-        void loadObjectProperties( QDomElement* element, Component* comp );
-        void loadProperty( QVariant value, QString propName, Component* comp );
-        void circuitToDom();
-        void listToDom( QDomDocument* doc, QList<Component*>* complist );
-        void objectToDom( QDomElement* elm, Component* comp, bool onlyMain=false );
-        bool saveDom( QString &fileName, QDomDocument* doc );
+        void loadItemProperties( QDomElement* element, Component* comp );
+        QString circuitHeader();
+        QString circuitToString();
+        bool saveString(QString &fileName, QString doc );
 
         void updatePinName( QString* name );
 
  static Circuit*  m_pSelf;
 
         QDomDocument m_domDoc;
-        QDomDocument m_copyDoc;
 
         QString m_filePath;
         QString m_backupPath;
@@ -149,10 +148,11 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QGraphicsView* m_graphicView;
         Connector*     new_connector;
 
+        double m_circVersion;
+
         int m_seqNumber;
         int m_error;
-        
-        bool m_saveBoard;
+
         bool m_pasting;
         bool m_deleting;
         bool m_conStarted;
@@ -167,7 +167,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QPointF m_deltaMove;
 
         QList<Component*> m_compList;   // Component list
-        QList<Component*> m_conList;    // Connector list
+        QList<Connector*> m_conList;    // Connector list
+        QList<Node*> m_nodeList;    // Connector list
         
         QHash<QString, Pin*> m_pinMap;    // Pin list
         QHash<QString, QString> m_idMap;

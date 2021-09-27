@@ -31,8 +31,6 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
     public:
         BaseProcessor( McuComponent* parent );
         ~BaseProcessor();
-        
-// static BaseProcessor* self() { return m_pSelf; }
 
         virtual void stamp() override;
         virtual void runEvent() override;
@@ -68,8 +66,6 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
         void uartDataIn(  int uart, int value );
     
     protected:
-// static BaseProcessor* m_pSelf;
-        
         virtual int validate( int address ) { return address; }
 
         QString m_dataFile;
@@ -83,6 +79,4 @@ class MAINMODULE_EXPORT BaseProcessor : public QObject, public McuInterface
         McuComponent* m_mcu;
 };
 
-
 #endif
-

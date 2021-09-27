@@ -27,11 +27,13 @@
 class LibraryItem;
 class McuComponent;
 class BaseProcessor;
+class QPushButton;
+class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT SerialPort : public Component, public eElement
 {
     Q_OBJECT
-    Q_PROPERTY( QString  Mcu_Id    READ mcuId    WRITE setMcuId )
+    /*Q_PROPERTY( QString  Mcu_Id    READ mcuId    WRITE setMcuId )
     Q_PROPERTY( bool     Auto_Open READ autoOpen WRITE setAutoOpen DESIGNABLE true  USER true )
     Q_PROPERTY( int      Mcu_Uart  READ uart     WRITE setUart     DESIGNABLE true  USER true )
     Q_PROPERTY( QString  Port_Name READ port     WRITE setPort     DESIGNABLE true  USER true )
@@ -41,7 +43,7 @@ class MAINMODULE_EXPORT SerialPort : public Component, public eElement
     Q_PROPERTY( QSerialPort::Parity   Parity   READ parity   WRITE setParity    DESIGNABLE true  USER true )
     Q_PROPERTY( QSerialPort::StopBits StopBits READ stopBits WRITE setStopBits  DESIGNABLE true  USER true )
     Q_PROPERTY( QSerialPort::FlowControl FlowControl READ flowControl WRITE setFlowControl  DESIGNABLE true  USER true )
-
+*/
     public:
 
         SerialPort( QObject* parent, QString type, QString id );

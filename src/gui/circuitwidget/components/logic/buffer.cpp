@@ -17,14 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "buffer.h"
 #include "itemlibrary.h"
 #include "iopin.h"
 
+#include "boolprop.h"
+
 Component* Buffer::construct( QObject* parent, QString type, QString id )
-{
-    return new Buffer( parent, type, id );
-}
+{ return new Buffer( parent, type, id ); }
 
 LibraryItem* Buffer::libraryItem()
 {
@@ -43,15 +45,16 @@ Buffer::Buffer( QObject* parent, QString type, QString id )
     
     setOePin( new IoPin( 90, QPoint( 0,-12 ), m_id+"-ePin-outEnable", 0, this, input ) );
     setTristate( false );
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<Buffer>( "Tristate"      , tr("Tristate")     ,"", this, &Buffer::tristate,   &Buffer::setTristate ),
+new BoolProp<Buffer>( "Inverted"      , tr("Invert Output"),"", this, &Buffer::invertOuts, &Buffer::setInvertOuts ),
+new BoolProp<Buffer>( "Open_Collector", tr("Open Drain")   ,"", this, &Buffer::openCol,    &Buffer::setOpenCol )
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 Buffer::~Buffer(){}
-
-QList<propGroup_t> Buffer::propGroups()
-{
-    QList<propGroup_t> pg = Gate::propGroups();
-    pg.first().propList.append( {"Tristate", tr("Tristate"),""} );
-    return pg;
-}
 
 void Buffer::setTristate( bool t )  // Activate or deactivate OE Pin
 {
@@ -62,7 +65,6 @@ void Buffer::setTristate( bool t )  // Activate or deactivate OE Pin
 QPainterPath Buffer::shape() const
 {
     QPainterPath path;
-    
     QVector<QPointF> points;
     
     points << QPointF(-9,-9 )
@@ -87,6 +89,3 @@ void Buffer::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
 
     p->drawPolygon( points, 4 );
 }
-
-#include "moc_buffer.cpp"
-

@@ -25,18 +25,11 @@
 #include "circuit.h"
 #include "pin.h"
 
-static const char* BJT_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Gain"),
-    QT_TRANSLATE_NOOP("App::Property","Threshold"),
-    QT_TRANSLATE_NOOP("App::Property","PNP"),
-    QT_TRANSLATE_NOOP("App::Property","BC diode")
-};
-
+#include "doubleprop.h"
+#include "boolprop.h"
 
 Component* BJT::construct( QObject* parent, QString type, QString id )
-{
-    return new BJT( parent, type, id );
-}
+{ return new BJT( parent, type, id ); }
 
 LibraryItem* BJT::libraryItem()
 {
@@ -52,51 +45,25 @@ BJT::BJT( QObject* parent, QString type, QString id )
    : Component( parent, type, id )
    , eBJT( id )
 {
-    Q_UNUSED( BJT_properties );
-    
     m_area =  QRectF( -12, -14, 28, 28 );
     setLabelPos(18, 0, 0);
 
-    QString newId = id;
-    
     m_pin.resize( 3 );
-    newId.append(QString("-collector"));
-    m_pin[0] = new Pin( 90, QPoint(8,-16), newId, 0, this );
-    m_pin[0]->setLabelText( "" );
-    m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[0] = m_pin[0];
-    
-    newId = id;
-    newId.append(QString("-emiter"));
-    m_pin[1] = new Pin( 270, QPoint(8, 16), newId, 1, this );
-    m_pin[1]->setLabelText( "" );
-    m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[1] = m_pin[1];
-    
-    newId = id;
-    newId.append(QString("-base"));
-    m_pin[2] = new Pin( 180, QPoint(-16, 0), newId, 0, this );
-    m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[2] = m_pin[2];
+    m_ePin[0] = m_pin[0] = new Pin( 90,  QPoint( 8,-16), id+"-collector", 0, this );
+    m_ePin[1] = m_pin[1] = new Pin( 270, QPoint( 8, 16), id+"-emiter"   , 1, this );
+    m_ePin[2] = m_pin[2] = new Pin( 180, QPoint(-16, 0), id+"-base"     , 0, this );
 
     Simulator::self()->addToUpdateList( this );
-    
     initialize();
-}
-BJT::~BJT()
-{
-    Simulator::self()->remFromUpdateList( this );
-}
 
-QList<propGroup_t> BJT::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"PNP", tr("PNP"),""} );
-    mainGroup.propList.append( {"Gain", tr("Gain"),""} );
-    return {mainGroup};
+    addPropGroup( { tr("Main"), {
+new BoolProp<BJT>( "PNP" , tr("PNP") ,"", this, &BJT::pnp,  &BJT::setPnp ),
+new DoubProp<BJT>( "Gain", tr("Gain"),"", this, &BJT::gain, &BJT::setGain )
+    }} );
 }
+BJT::~BJT(){}
 
-void BJT::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     
@@ -104,30 +71,22 @@ void BJT::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *w
     else                                               p->setBrush( Qt::white );
 
     p->drawEllipse( m_area );
-    
     p->drawLine( -12, 0,-4, 0 );
     p->drawLine(  -4,-8,-4, 8 );
-    
     p->drawLine( -4,-4, 8,-12 );
     p->drawLine( -4, 4, 8, 12 );
     
     p->setBrush( Qt::black );
-    if( m_PNP )
-    {
+    if( m_PNP ){
         QPointF points[3] = {
         QPointF( 0.1, 6.8 ),
         QPointF( 2.4, 10 ),
         QPointF( 4, 7.5 ) };
         p->drawPolygon(points, 3);
-    }
-    else
-    {
+    }else{
         QPointF points[3] = {
         QPointF( 6, 10.7 ),
         QPointF( 2.4, 10 ),
         QPointF( 4, 7.5 ) };
         p->drawPolygon(points, 3);
 }   }
-
-#include "moc_bjt.cpp"
-

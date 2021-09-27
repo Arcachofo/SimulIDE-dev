@@ -88,7 +88,3 @@ void PICComponent::addPin( QString id, QString type, QString label,
         m_pinList.append( new PICComponentPin( this, id, type, label, pos, xpos, ypos, angle ) );
     }
 }
-
-#include "moc_piccomponent.cpp"
-
-

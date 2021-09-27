@@ -22,7 +22,6 @@
 
 #include "plotbase.h"
 
-
 class LibraryItem;
 class LaChannel;
 class LaWidget;
@@ -30,34 +29,22 @@ class DataLaWidget;
 
 class MAINMODULE_EXPORT LAnalizer : public PlotBase
 {
-    Q_OBJECT
-
-    //Q_PROPERTY( bool    Data_Log READ paOnCond WRITE setPaOnCond DESIGNABLE true USER true )
-    //Q_PROPERTY( double  Log_us   READ dataSize WRITE setDataSize DESIGNABLE true USER true )
-    Q_PROPERTY( double  vTick    READ voltDiv  WRITE setVoltDiv )
-    Q_PROPERTY( int     Trigger  READ trigger  WRITE setTrigger )
-    Q_PROPERTY( qint64  TimePos  READ timePos  WRITE setTimePos )
-    Q_PROPERTY( double  Treshold READ threshold  WRITE setThreshold )
-
     public:
-
         LAnalizer( QObject* parent, QString type, QString id );
         ~LAnalizer();
 
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         double dataSize() { return m_dataSize/1e6; }
         void setDataSize( double ds ) { m_dataSize = ds*1e6; }
 
         virtual void updateStep() override;
 
-        virtual void setTimeDiv( uint64_t td ) override;
+        virtual void setTimeDiv( int td ) override;
 
-        int64_t timePos(){ return m_timePos; }
-        void setTimePos( int64_t tp );
+        int timePos(){ return m_timePos; }
+        void setTimePos( int tp );
 
         double voltDiv(){ return m_voltDiv; }
         void setVoltDiv( double vd );
@@ -69,7 +56,7 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         virtual void setConds( QString conds ) override;
 
-        virtual void setTunnels( QStringList tunnels ) override;
+        virtual void setTunnels( QString tunnels ) override;
 
         virtual void expand( bool e ) override;
 
@@ -81,10 +68,8 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         int64_t m_timePos;
 
-        //DataChannel* m_channel[8];
         LaWidget*  m_laWidget;
         DataLaWidget* m_dataWidget;
 };
 
 #endif
-

@@ -17,6 +17,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QMenu>
+#include <QFileDialog>
+#include <QPushButton>
+#include <QInputDialog>
+#include <QGraphicsProxyWidget>
+
 #include "function.h"
 #include "connector.h"
 #include "circuit.h"
@@ -24,23 +30,21 @@
 #include "itemlibrary.h"
 #include "utils.h"
 
-static const char* Function_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Functions")
-};
+#include "stringprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* Function::construct( QObject* parent, QString type, QString id )
-{
-    return new Function( parent, type, id );
-}
+{ return new Function( parent, type, id ); }
 
 LibraryItem* Function::libraryItem()
 {
     return new LibraryItem(
-    tr( "Function" ),
-    tr( "Logic/Arithmetic" ),
-    "subc.png",
-    "Function",
-    Function::construct );
+        tr( "Function" ),
+        tr( "Logic/Arithmetic" ),
+        "subc.png",
+        "Function",
+        Function::construct );
 }
 
 Function::Function( QObject* parent, QString type, QString id )
@@ -48,8 +52,6 @@ Function::Function( QObject* parent, QString type, QString id )
         , m_engine()
         , m_functions()
 {
-    Q_UNUSED( Function_properties );
-
     m_lastDir = Circuit::self()->getFilePath();
     
     m_width = 4;
@@ -57,20 +59,15 @@ Function::Function( QObject* parent, QString type, QString id )
     setNumOuts( 1 );
     
     setFunctions( "i0 | i1" );
+
+    addPropGroup( { tr("Main"), {
+//new IntProp   <Function>( "Num_Inputs" , tr("Input Size")     ,"_Pins", this, &Function::numInps,    &Function::setNumInps, "uint" ),
+//new IntProp   <Function>( "Num_Outputs", tr("Output Size")    ,"_Pins", this, &Function::numOuts,    &Function::setNumOuts, "uint" ),
+new BoolProp  <Function>( "Inverted"   , tr("Invert Outputs") ,""     , this, &Function::invertOuts, &Function::setInvertOuts ),
+new StringProp<Function>( "Functions"  , tr("Functions")      ,""     , this, &Function::functions,  &Function::setFunctions ),
+    }} );
 }
 Function::~Function(){}
-
-QList<propGroup_t> Function::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Num_Inputs", tr("Input Size"),"Inputs"} );
-    mainGroup.propList.append( {"Num_Outputs", tr("Output Size"),"Outputs"} );
-    mainGroup.propList.append( {"Functions", tr("Functions"),""} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void Function::stamp()
 {
@@ -96,7 +93,6 @@ void Function::runEvent()
 
 void Function::voltChanged()
 {
-    //uint bits = 0;
     uint bit = 0;
     //uint msb = (m_inPin.size()+m_outPin.size())*2-1;
     for( uint i=0; i<m_inPin.size(); ++i )
@@ -140,11 +136,6 @@ void Function::voltChanged()
             if( out ) m_nextOutVal += 1<<i;
             sheduleOutPuts( this );
 }   }   }
-
-QString Function::functions()
-{
-    return m_functions;
-}
 
 void Function::setFunctions( QString f )
 {
@@ -207,8 +198,8 @@ void Function::saveData()
 
     if( !outFile.open( QFile::WriteOnly | QFile::Text ) )
     {
-          QMessageBox::warning( 0l, "MemData::saveData",
-          QCoreApplication::translate( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
+          MessageBoxNB( "MemData::saveData",
+                         tr( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
     }else {
         QTextStream toFile( &outFile );
         toFile << output;
@@ -287,9 +278,7 @@ void Function::setNumOuts( uint outs )
             {
                 m_outPin[i]->setY( -halfH+(int)i*16+8 );
                 m_proxys.at(i)->setPos( QPoint( 0, -halfH+i*16+1 ) );
-            }
-            else
-            {
+            }else{
                 QString num = QString::number(i);
                 m_outPin[i] = new IoPin( 0, QPoint(24, -halfH+i*16+8 ), m_id+"-out"+num, i, this, output );
 
@@ -321,10 +310,8 @@ void Function::setNumOuts( uint outs )
 void Function::onbuttonclicked()
 {
     int i = 0;
-    for( QPushButton* button : m_buttons ) 
-    {
-       if( button->isChecked()  )
-       {
+    for( QPushButton* button : m_buttons ){
+       if( button->isChecked()  ){
            button->setChecked( false );
            break;
        }
@@ -340,6 +327,5 @@ void Function::onbuttonclicked()
         m_funcList[i] = text;
         m_functions = m_funcList.join(",");
 }   }
-
 
 #include "moc_function.cpp"

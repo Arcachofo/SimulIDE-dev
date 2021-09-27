@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include <math.h>
+#include <QPainter>
 
 #include "volt_reg.h"
 #include "connector.h"
@@ -26,9 +27,7 @@
 #include "pin.h"
 #include "e-node.h"
 
-static const char* VoltReg_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Volts")
-};
+#include "doubleprop.h"
 
 Component* VoltReg::construct( QObject* parent, QString type, QString id )
 { return new VoltReg( parent, type, id ); }
@@ -47,46 +46,39 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
        , eResistor( id )
 {
-    Q_UNUSED( VoltReg_properties );
-    
     m_area = QRect( -11, -8, 22, 19 );
 
-    m_unit = "V";
+    setShowProp("Voltage");
+    setValLabelText( "1.2 V" );
     setValLabelPos( 15, 12, 0 );
     
-    setVRef( 1.2 );
+    m_vRef = 1.2;
     m_voltPos = 0;
     m_voltNeg = 0;
     
     m_pin.resize( 3 );
     m_ePin.resize( 3 );
 
-    m_pin[0] = new Pin( 180, QPoint( -16, 0 ), id+"-input", 0, this );
+    m_ePin[0] = m_pin[0] = new Pin( 180, QPoint( -16, 0 ), id+"-input", 0, this );
     m_pin[0]->setLength(6);
     m_pin[0]->setLabelText( "I" );
     m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[0] = m_pin[0];
 
-    m_pin[1] = new Pin( 0, QPoint( 16, 0 ), id+"-output", 1, this );
+    m_ePin[1] = m_pin[1] = new Pin( 0, QPoint( 16, 0 ), id+"-output", 1, this );
     m_pin[1]->setLength(6);
     m_pin[1]->setLabelText( "O" );
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[1] = m_pin[1];
 
-    m_pin[2] = new Pin( 270, QPoint( 0, 16 ), id+"-ref", 2, this );
+    m_ePin[2] = m_pin[2] = new Pin( 270, QPoint( 0, 16 ), id+"-ref", 2, this );
     m_pin[2]->setLength(6);
     m_pin[2]->setLabelText( "R" );
     m_pin[2]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[2] = m_pin[2];
+
+    addPropGroup( { tr("Main"), {
+new DoubProp<VoltReg>( "Voltage", tr("Output Voltage"),"V", this, &VoltReg::outVolt, &VoltReg::setOutVolt )
+    }} );
 }
 VoltReg::~VoltReg(){}
-
-QList<propGroup_t> VoltReg::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Voltage", tr("Output Voltage"),"main"} );
-    return {mainGroup};
-}
 
 void VoltReg::stamp()
 {
@@ -128,30 +120,9 @@ void VoltReg::voltChanged()
     m_pin[1]->stampCurrent(-current );
 }
 
-void VoltReg::setVRef( double vref )
-{
-    Simulator::self()->pauseSim();
-
-    Component::setValue( vref );       // Takes care about units multiplier
-    m_vRef = m_value*m_unitMult;
-    
-    Simulator::self()->resumeSim();
-}
-
-void VoltReg::setUnit( QString un )
-{
-    Simulator::self()->pauseSim();
-
-    Component::setUnit( un );
-    m_vRef = m_value*m_unitMult;
-
-    Simulator::self()->resumeSim();
-}
 
 void VoltReg::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     Component::paint( p, option, widget );
     p->drawRect( m_area );
 }
-
-#include "moc_volt_reg.cpp"

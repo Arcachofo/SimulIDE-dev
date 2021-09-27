@@ -23,27 +23,20 @@
 #include "chip.h"
 
 class LibraryItem;
+class QAction;
 
 class MAINMODULE_EXPORT SubPackage : public Chip
 {
     Q_OBJECT
-    Q_PROPERTY( QString  Package_File  READ package    WRITE setPackage  DESIGNABLE true  USER true )
-    Q_PROPERTY( int      Width         READ width      WRITE setWidth    DESIGNABLE true USER true )
-    Q_PROPERTY( int      Height        READ height     WRITE setHeight   DESIGNABLE true USER true )
-    Q_PROPERTY( QString  Background    READ backGround WRITE setBackground DESIGNABLE true USER true )
-    Q_PROPERTY( subcType_t SubcType    READ subcType   WRITE setSubcType   DESIGNABLE true USER true )
-    
-    public:
 
+    public:
         SubPackage( QObject* parent, QString type, QString id );
         ~SubPackage();
         
     static Component* construct( QObject* parent, QString type, QString id );
-    static LibraryItem *libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
+    static LibraryItem* libraryItem();
 
-        int width();
+        int width() { return m_width; }
         void setWidth( int width );
         
         int height() { return m_height; }
@@ -77,8 +70,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         void pointPin( bool point );
         void slotSave();
         void editFinished( int r );
-        
-        
+
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event );
         void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
@@ -109,6 +101,12 @@ class MAINMODULE_EXPORT SubPackage : public Chip
 
         Pin* m_eventPin;
 };
+
+#include <QDialog>
+
+class QLabel;
+class QLineEdit;
+class QCheckBox;
 
 class EditDialog : public QDialog
 {

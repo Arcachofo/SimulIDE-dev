@@ -20,7 +20,7 @@
 #ifndef COMPLABEL_H
 #define COMPLABEL_H
 
-#include <QtWidgets>
+#include <QGraphicsTextItem>
 
 class Component;
 
@@ -34,7 +34,15 @@ class Label : public QGraphicsTextItem
         ~Label();
 
         void setComponent( Component* parent );
-        void setLabelPos();
+
+        QPointF getLabelPos() { return pos(); }
+        void setLabelPos( QPointF pos );
+        void updtLabelPos();
+
+        int  getAngle()            { return m_labelrot; }
+        void setAngle( int angle ) { m_labelrot = angle;  }
+
+        QString itemType() { return "Label"; }
 
     public slots:
         void rotateCW();
@@ -42,14 +50,14 @@ class Label : public QGraphicsTextItem
         void rotate180();
         void H_flip( int hf );
         void V_flip( int vf );
-        void updateGeometry(int, int, int) { document()->setTextWidth( -1 ); }
+        void updateGeometry(int, int, int);
 
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event );
         void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
         void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
-        void focusOutEvent( QFocusEvent* event );
+        //void focusOutEvent( QFocusEvent* event );
 
     private:
         Component* m_parentComp;

@@ -22,9 +22,7 @@
 #include "simulator.h"
 
 Component* FlipFlopRS::construct( QObject* parent, QString type, QString id )
-{
-    return new FlipFlopRS( parent, type, id );
-}
+{ return new FlipFlopRS( parent, type, id ); }
 
 LibraryItem* FlipFlopRS::libraryItem()
 {
@@ -41,19 +39,15 @@ FlipFlopRS::FlipFlopRS( QObject* parent, QString type, QString id )
 {
     m_width  = 3;
     m_height = 4;
-    
-    QStringList pinList;
 
-    pinList // Inputs:
-            << "IL01 S"
-            << "IL03 R"
-            << "IL02>"
-            
-            // Outputs:
-            << "OR01Q"
-            << "OR03!Q"
-            ;
-    init( pinList );
+    init({         // Inputs:
+            "IL01 S",
+            "IL03 R",
+            "IL02>",
+                   // Outputs:
+            "OR01Q",
+            "OR03!Q",
+        });
 
     m_setPin = m_inPin[0];
     m_resetPin = m_inPin[1];
@@ -78,4 +72,3 @@ void FlipFlopRS::voltChanged()
 
     sheduleOutPuts( this );
 }
-#include "moc_flipfloprs.cpp"

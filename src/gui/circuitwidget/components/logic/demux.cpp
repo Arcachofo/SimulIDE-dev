@@ -25,10 +25,11 @@
 #include "connector.h"
 #include "iopin.h"
 
+#include "boolprop.h"
+#include "intprop.h"
+
 Component* Demux::construct( QObject* parent, QString type, QString id )
-{
-        return new Demux( parent, type, id );
-}
+{ return new Demux( parent, type, id ); }
 
 LibraryItem* Demux::libraryItem()
 {
@@ -45,38 +46,29 @@ Demux::Demux( QObject* parent, QString type, QString id )
 {
     m_width  = 4;
     m_height = 10;
-
     m_tristate = true;
 
-    QStringList pinList;
-
-    pinList // Inputs:
-            << "ID03S0"
-            << "ID02 S1"
-            << "ID01  S2"
-            
-            << "IL05 DI"
-            ;
-    init( pinList );
+    init({          // Inputs:
+            "ID03S0",
+            "ID02 S1",
+            "ID01  S2",
+            "IL05 DI"
+        });
 
     setNumOuts( 8 );
     createOePin( "IU01OE ", id+"-in4");
 
     m_addrBits = 0;
     setAddrBits( 3 );
+
+    addPropGroup( { tr("Main"), {
+new IntProp<Demux>(  "Address_Bits", tr("Address Size")  ,"_bits", this, &Demux::addrBits,   &Demux::setAddrBits, "uint" ),
+new BoolProp<Demux>( "Inverted"    , tr("Invert Outputs"),""     , this, &Demux::invertOuts, &Demux::setInvertOuts )
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 Demux::~Demux(){}
-
-QList<propGroup_t> Demux::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Address_Bits", tr("Address Size"),"Bits"} );
-    mainGroup.propList.append( {"Inverted", tr("Invert Outputs"),""} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void Demux::stamp()
 {
@@ -138,8 +130,7 @@ void Demux::setAddrBits( int bits )
         }else{
             pin->removeConnector();
             pin->setVisible( false );
-        }
-    }
+    }   }
     for( int i=0; i<8; ++i )
     {
         Pin* pin = m_outPin[i];
@@ -150,11 +141,10 @@ void Demux::setAddrBits( int bits )
         }else{
             pin->removeConnector();
             pin->setVisible( false );
-        }
-    }
+    }   }
     m_oePin->setY( -h-8 ); // OE
 
-    m_area = QRect(-w-1,-h-8-1, w*2, h*2+16+2 );
+    m_area = QRect(-w-1,-h-8-1, w*2+2, h*2+16+2 );
     Circuit::self()->update();
 }
 
@@ -166,7 +156,6 @@ QPainterPath Demux::shape() const
     int h = m_height*8/2;
     
     QVector<QPointF> points;
-    
     points << QPointF(-w,-h+2 )
            << QPointF(-w, h-2 )
            << QPointF( w, h+6 )
@@ -192,5 +181,3 @@ void Demux::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
 
     p->drawPolygon(points, 4);
 }
-
-#include "moc_demux.cpp"

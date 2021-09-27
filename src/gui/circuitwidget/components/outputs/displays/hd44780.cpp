@@ -17,16 +17,19 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "hd44780.h"
+#include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
 #include "iopin.h"
 #include "utils.h"
 
+#include "intprop.h"
+
 Component* Hd44780::construct( QObject* parent, QString type, QString id )
-{
-    return new Hd44780( parent, type, id );
-}
+{ return new Hd44780( parent, type, id ); }
 
 LibraryItem* Hd44780::libraryItem()
 {
@@ -68,16 +71,13 @@ Hd44780::Hd44780( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
     
     initialize();
+
+    addPropGroup( { tr("Main"), {
+new IntProp <Hd44780>( "Rows" ,tr("Rows")   ,"_Lines"  ,this,&Hd44780::rows, &Hd44780::setRows ,"uint" ),
+new IntProp <Hd44780>( "Cols" ,tr("Columns"),"_Chars." ,this,&Hd44780::cols, &Hd44780::setCols ,"uint"  ),
+    }} );
 }
 Hd44780::~Hd44780(){}
-
-QList<propGroup_t> Hd44780::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Rows", tr("Rows"),""} );
-    mainGroup.propList.append( {"Cols", tr("Columns"),""} );
-    return {mainGroup};
-}
 
 void Hd44780::updateStep() { update(); }
 
@@ -94,9 +94,7 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
     {
         m_lastClock = true;
         return; 
-    }
-    else                                               // Clk Pin is Low
-    {
+    }else{                                              // Clk Pin is Low
         if( m_lastClock == false ) return;         // Not a Falling edge
         m_lastClock = false;
     }
@@ -109,8 +107,7 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
             if( m_dataPin[pin]->getInpState() )
                 m_input += pow( 2, pin );
     }
-    else                                                   // 4 bit mode
-    {
+    else{                                                  // 4 bit mode
         if( m_nibble == 0 )                          // Read high nibble
         {
             m_input = 0;
@@ -121,16 +118,13 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
                     
             m_nibble = 1;
             return;
-        }
-        else                                          // Read low nibble
-        {
+        }else{                                         // Read low nibble
             for( int pin=4; pin<8; pin++ )
                 if( m_dataPin[pin]->getInpState() )
                     m_input += pow( 2, (pin-4) );
                     
             m_nibble = 0;
-        }
-    }
+    }   }
     //Get RS state: data or command
     if( m_pinRS->getInpState() ) writeData( m_input );
     else                         proccessCommand( m_input );
@@ -144,6 +138,3 @@ void Hd44780::showPins( bool show )
     
     for( int i=0; i<8; i++ ) m_dataPin[i]->setVisible( show );
 }
-
-#include "moc_hd44780.cpp"
-

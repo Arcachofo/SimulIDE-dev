@@ -29,7 +29,6 @@ class LibraryItem;
 class MAINMODULE_EXPORT SubCircuit : public Chip
 {
     Q_OBJECT
-    Q_PROPERTY( QString BoardId READ boardId WRITE setBoardId )
 
     public:
         SubCircuit( QObject* parent, QString type, QString id );
@@ -45,18 +44,13 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         void connectBoard();
         void setShield( SubCircuit* shield ) { m_shield = shield; }
 
-        virtual QList<propGroup_t> propGroups() override;
-
         virtual void remove() override;
 
         virtual void setLogicSymbol( bool ls );
 
- virtual void setValLabelX( int x ) override { ;/* Do Nothing*/ }
- virtual void setValLabelY( int y ) override {  ;/* Do Nothing*/ }
- virtual void setValLabRot( int rot ) override { ;/* Do Nothing*/ }
- virtual void setUnit( QString un ) override { ;/* Do Nothing*/ }
-
         Component* getMainComp(){ return m_mainComponent; }
+
+        QString toString();
 
     public slots:
         void slotAttach();
@@ -66,7 +60,6 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
 
         void loadSubCircuit( QString file );
-        //void loadDomDoc( QDomDocument* doc );
 
         Pin* getConPin( QString pinId );
 

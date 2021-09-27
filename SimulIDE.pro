@@ -36,9 +36,15 @@ INCLUDEPATH += ../src \
     ../src/gui/circuitwidget/components/other \
     ../src/gui/circuitwidget/components/outputs \
     ../src/gui/circuitwidget/components/outputs/displays \
+    ../src/gui/circuitwidget/components/outputs/leds \
+    ../src/gui/circuitwidget/components/outputs/motors \
     ../src/gui/circuitwidget/components/passive \
+    ../src/gui/circuitwidget/components/passive/reactive \
+    ../src/gui/circuitwidget/components/passive/resistors \
+    ../src/gui/circuitwidget/components/passive/resist_sensors \
     ../src/gui/circuitwidget/components/sources \
     ../src/gui/circuitwidget/components/switches \
+    ../src/gui/circuitwidget/properties \
     ../src/gui/dataplotwidget \
     ../src/gui/serial \
     ../src/gui/componentselector \
@@ -48,7 +54,6 @@ INCLUDEPATH += ../src \
     ../src/gui/editorwidget/dialogs \
     ../src/gui/editorwidget/debuggers \
     ../src/gui/dialogs \
-    ../src/gui/dialogs/properties \
     ../src/gui/memory \
     ../src/simulator \
     ../src/simulator/elements \

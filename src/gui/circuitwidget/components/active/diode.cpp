@@ -17,16 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "diode.h"
 #include "itemlibrary.h"
 #include "connector.h"
 #include "simulator.h"
 #include "pin.h"
 
-static const char* Diode_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Threshold"),
-    QT_TRANSLATE_NOOP("App::Property","Zener Volt")
-};
+#include "doubleprop.h"
+#include "stringprop.h"
 
 Component* Diode::construct( QObject* parent, QString type, QString id )
 { return new Diode( parent, type, id ); }
@@ -34,26 +34,20 @@ Component* Diode::construct( QObject* parent, QString type, QString id )
 LibraryItem* Diode::libraryItem()
 {
     return new LibraryItem(
-            tr( "Diode" ),
-            tr( "Active" ),
-            "diode.png",
-            "Diode",
-            Diode::construct);
+        tr( "Diode" ),
+        tr( "Active" ),
+        "diode.png",
+        "Diode",
+        Diode::construct);
 }
 
 Diode::Diode( QObject* parent, QString type, QString id, bool zener )
-     : Component( parent, type, id )
+     : Comp2Pin( parent, type, id )
      , eDiode( id )
 {
-    Q_UNUSED( Diode_properties );
+    m_area = QRect(-12, -8, 24, 16 );
 
-    m_area = QRect( -12, -8, 24, 16 );
-
-    m_pin.resize(2);
-    m_pin[0] = new Pin( 180, QPoint(-16, 0 ), m_id+"-lPin", 0, this ); // pPin
     setEpin( 0, m_pin[0] );
-
-    m_pin[1] = new Pin( 0, QPoint( 16, 0 ), m_id+"-rPin", 1, this ); // nPin
     setEpin( 1, m_pin[1] );
 
     createSerRes();
@@ -66,25 +60,28 @@ Diode::Diode( QObject* parent, QString type, QString id, bool zener )
         setModel( "Diode Default" );
     }
     Simulator::self()->addToUpdateList( this );
+
+    addPropGroup( { tr("Main"), {
+new StringProp<Diode>( "Model", tr("Model"),"", this, &Diode::model,  &Diode::setModel, "enum" ),
+    }} );
+    addPropGroup( { tr("Electric"), {
+new DoubProp<Diode>( "Threshold" , tr("Forward Voltage"),"V", this, &Diode::threshold,  &Diode::setThreshold ),
+new DoubProp<Diode>( "MaxCurrent", tr("Max Current")    ,"A", this, &Diode::maxCurrent, &Diode::setMaxCurrent ),
+new DoubProp<Diode>( "Resistance", tr("Resistance")     ,"Ω", this, &Diode::res,        &Diode::setRes ),
+    }} );
+    addPropGroup( { tr("Advanced"), {
+new DoubProp<Diode>( "BrkDownV"  , tr("Breakdown Voltage")   ,"V" , this, &Diode::brkDownV, &Diode::setBrkDownV ),
+new DoubProp<Diode>( "SatCurrent", tr("Saturation Current")  ,"nA", this, &Diode::satCur,   &Diode::setSatCur ),
+new DoubProp<Diode>( "EmCoef"    , tr("Emission Coefficient"),""  , this, &Diode::emCoef,   &Diode::setEmCoef ),
+    }} );
 }
 Diode::~Diode(){}
 
-QList<propGroup_t> Diode::propGroups()
+bool Diode::setProperty( QString prop, QString val )
 {
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Model", tr("Model"),"enum"} );
-
-    propGroup_t elecGroup { tr("Electric") };
-    elecGroup.propList.append( {"Threshold", tr("Forward Voltage"),"V"} );
-    elecGroup.propList.append( {"MaxCurrent", tr("Max Current"),"A"} );
-    elecGroup.propList.append( {"Resistance", tr("Resistance"),"Ω"} );
-
-    propGroup_t advanced { tr("Advanced") };
-    advanced.propList.append( {"BrkDownV", tr("Breakdown Voltage"),"V"} );
-    advanced.propList.append( {"SatCur_nA", tr("Saturation Current"),"nA"} );
-    advanced.propList.append( {"EmCoef", tr("Emission Coefficient"),""} );
-
-    return {mainGroup, elecGroup, advanced};
+    if( prop =="Zener_Volt" ) setZenerV( val.toDouble() ); //  Old: TODELETE
+    else return Component::setProperty( prop, val );
+    return true;
 }
 
 void Diode::initialize()
@@ -113,7 +110,7 @@ void Diode::setZenerV( double zenerV ) // Compatibility with old circuits.
     eDiode::setBrkDownV( zenerV );
 }
 
-void Diode::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
 
@@ -123,19 +120,14 @@ void Diode::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
         QPointF( 7, 0 ),
         QPointF(-8,-7 ),
         QPointF(-8, 7 )              };
-
    p->drawPolygon(points, 3);
 
    QPen pen = p->pen();
-   pen.setWidth(3);
-   p->setPen(pen);
-
+   pen.setWidth( 3 );
+   p->setPen( pen );
    p->drawLine( 7, -6, 7, 6 );
    
-   if( m_isZener )
-   {
+   if( m_isZener ){
        p->drawLine( 7,-6, 4,-6 );
        p->drawLine( 7, 6, 10, 6 );
 }  }
-
-#include "moc_diode.cpp"

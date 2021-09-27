@@ -20,25 +20,21 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include "itemlibrary.h"
 #include "shape.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT Image : public Shape
 {
     Q_OBJECT
-    Q_PROPERTY( QString Image_File READ background WRITE setBackground DESIGNABLE true USER true )
-
     public:
-
         Image( QObject* parent, QString type, QString id );
         ~Image();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        virtual void setBackground( QString bck );
+        virtual void setBackground( QString bck ) override;
         QString background();
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
@@ -54,7 +50,6 @@ class MAINMODULE_EXPORT Image : public Shape
     private:
         QPixmap m_image;
         QMovie* m_movie;
-
 };
 
 #endif

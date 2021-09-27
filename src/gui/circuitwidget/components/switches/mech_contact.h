@@ -25,22 +25,17 @@
 
 class MAINMODULE_EXPORT MechContact : public Component, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( bool Norm_Close READ nClose WRITE setNClose  DESIGNABLE true USER true )
-    Q_PROPERTY( int  Poles      READ poles    WRITE setPoles DESIGNABLE true USER true )
-
     public:
-
         MechContact( QObject* parent, QString type, QString id );
         ~MechContact();
 
-        virtual int poles() const { return m_numPoles; }
+        virtual int poles() { return m_numPoles; }
         virtual void setPoles( int poles );
 
-        virtual bool dt() const { return (m_numthrows>1); }
+        virtual bool dt() { return (m_numthrows>1); }
         virtual void setDt( bool dt );
         
-        virtual bool nClose() const { return m_nClose; }
+        virtual bool nClose() { return m_nClose; }
         virtual void setNClose( bool nc );
 
         virtual void attach() override;
@@ -51,7 +46,7 @@ class MAINMODULE_EXPORT MechContact : public Component, public eElement
         void  SetupSwitches( int poles, int throws );
         void  SetupButton();
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
         virtual void setSwitch( bool on );

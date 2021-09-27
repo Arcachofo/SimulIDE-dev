@@ -27,10 +27,7 @@
 
 class PICComponent : public McuComponent
 {
-    Q_OBJECT
-
     public:
-
         PICComponent( QObject* parent, QString type, QString id );
         ~PICComponent();
 
@@ -46,8 +43,6 @@ class PICComponent : public McuComponent
         void attachPins();
         virtual void addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle , int length=8);
-
 };
 
 #endif
-

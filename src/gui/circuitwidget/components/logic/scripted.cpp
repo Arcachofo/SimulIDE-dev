@@ -17,6 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDebug>
+#include <QMenu>
+#include <QFileDialog>
+
 #include "scripted.h"
 #include "connector.h"
 #include "circuit.h"
@@ -25,9 +29,9 @@
 #include "e-node.h"
 #include "utils.h"
 
-static const char* Scripted_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Functions")
-};
+#include "stringprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* Scripted::construct( QObject* parent, QString type, QString id )
 { return new Scripted( parent, type, id ); }
@@ -35,18 +39,16 @@ Component* Scripted::construct( QObject* parent, QString type, QString id )
 LibraryItem* Scripted::libraryItem()
 {
     return new LibraryItem(
-    tr( "Scripted" ),
-    tr( "Logic/Arithmetic" ),
-    "subc.png",
-    "Scripted",
-    Scripted::construct );
+        tr( "Scripted" ),
+        tr( "Logic/Arithmetic" ),
+        "subc.png",
+        "Scripted",
+        Scripted::construct );
 }
 
 Scripted::Scripted( QObject* parent, QString type, QString id )
         : LogicComponent( parent, type, id )
 {
-    Q_UNUSED( Scripted_properties );
-
     m_lastDir = Circuit::self()->getFilePath();
     
     m_width = 4;
@@ -56,25 +58,18 @@ Scripted::Scripted( QObject* parent, QString type, QString id )
     m_thisObject = m_engine.newQObject( this );
     m_engine.globalObject().setProperty( "component", m_thisObject );
 
-    //setScript( "" );
+    addPropGroup( { tr("Main"), {
+//new IntProp <Scripted>( "Num_Inputs" , tr("Input Size")  ,"_Pins", this, &Scripted::numInps,   &Scripted::setNumInps, "uint" ),
+//new IntProp <Scripted>( "Num_Outputs", tr("Output Size") ,"_Pins", this, &Scripted::numOuts,   &Scripted::setNumOuts, "uint" ),
+new BoolProp<Scripted>( "Inverted", tr("Invert Outputs") ,""     , this, &Scripted::invertOuts,&Scripted::setInvertOuts )
+    }} );
+    addPropGroup( { tr("Script"), {
+new StringProp<Scripted>(  "Script"  , tr("Script Editor")  ,"", this, &Scripted::getScript, &Scripted::setScript, "textSave" ),
+new ComProperty(           "Evaluate", tr("Evaluate Script"),"", "textEvaluate" ),
+    }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
 }
 Scripted::~Scripted(){}
-
-QList<propGroup_t> Scripted::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Num_Inputs", tr("Input Size"),"Inputs"} );
-    mainGroup.propList.append( {"Num_Outputs", tr("Output Size"),"Outputs"} );
-
-    propGroup_t scriptGroup { tr("Script") };
-    scriptGroup.propList.append( {"Script", tr("Script Editor"),"textSave"} );
-    scriptGroup.propList.append( {"Evaluate", tr("Evaluate Script"),"textEvaluate"} );
-
-    QList<propGroup_t> pg = LogicComponent::propGroups();
-    pg.prepend( scriptGroup );
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void Scripted::stamp()
 {
@@ -89,8 +84,7 @@ void Scripted::stamp()
     {
         eNode* enode = m_inPin[i]->getEnode();
         if( enode ) enode->voltChangedCallback( this );
-    }
-}
+}   }
 
 void Scripted::voltChanged()
 {
@@ -139,6 +133,8 @@ void Scripted::runEvent()
 {
 }
 
+void Scripted::displayMsg( QString msg ) { qDebug() << msg; }
+
 void Scripted::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();
@@ -149,8 +145,7 @@ void Scripted::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         contextMenu( event, menu );
         Component::contextMenu( event, menu );
         menu->deleteLater();
-    }
-}
+}   }
 
 void Scripted::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -184,12 +179,12 @@ void Scripted::saveScript()
 
     if( !outFile.open( QFile::WriteOnly | QFile::Text ) )
     {
-          QMessageBox::warning( 0l, "Scripted::saveData",
-           "Scripted", tr("Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
+          MessageBoxNB( "Scripted::saveData"
+                       , tr("Cannot write file %1:\n%2.").arg(fileName).arg( outFile.errorString() ));
     }else {
         QTextStream toFile( &outFile );
         toFile << m_script;
         outFile.close();
-    }
-}
+}   }
+
 #include "moc_scripted.cpp"

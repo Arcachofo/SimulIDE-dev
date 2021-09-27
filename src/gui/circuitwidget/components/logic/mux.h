@@ -26,11 +26,6 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Mux : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( int  Address_Bits  READ addrBits   WRITE setAddrBits   DESIGNABLE true USER true )
-    Q_PROPERTY( bool Invert_Inputs READ invertInps WRITE setInvertInps DESIGNABLE true USER true )
-    Q_PROPERTY( bool tristate      READ tristate   USER true )
-
     public:
         QRectF boundingRect() const { return m_area; }
     
@@ -40,18 +35,12 @@ class MAINMODULE_EXPORT Mux : public LogicComponent
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
         int addrBits() { return m_addrBits; }
         void setAddrBits( int bits );
-
-        void setInvertInps( bool invert );
-
-        bool tristate() { return true; }
         
         virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
@@ -62,4 +51,3 @@ class MAINMODULE_EXPORT Mux : public LogicComponent
 };
 
 #endif
-

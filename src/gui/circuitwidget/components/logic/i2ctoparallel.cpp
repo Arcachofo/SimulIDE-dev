@@ -17,14 +17,17 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "i2ctoparallel.h"
 #include "itemlibrary.h"
 #include "iopin.h"
 
+#include "doubleprop.h"
+#include "intprop.h"
+
 Component* I2CToParallel::construct( QObject* parent, QString type, QString id )
-{
-    return new I2CToParallel( parent, type, id );
-}
+{ return new I2CToParallel( parent, type, id ); }
 
 LibraryItem* I2CToParallel::libraryItem()
 {
@@ -43,16 +46,13 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 9;
     
-    QStringList pinList;                              // Create Pin List
-
-    pinList // Inputs:
-            << "IL02 SDA"//type: Input, side: Left, pos: 01, label: "SDA"
-            << "IL03 SCL"
-            << "IL05 A0"
-            << "IL06 A1"
-            << "IL07 A2"
-            ;
-    init( pinList );                   // Create Pins Defined in pinList
+    init({         // Inputs:
+            "IL02 SDA",//type: Input, side: Left, pos: 01, label: "SDA"
+            "IL03 SCL",
+            "IL05 A0",
+            "IL06 A1",
+            "IL07 A2",
+        });
 
     setNumOuts( 8, "D" );
 
@@ -68,19 +68,13 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
         m_outPin[i]->setPullup( true );
     }
     m_address = 0b01010000; // 0x50, 80
+
+    addPropGroup( { tr("Main"), {
+new IntProp <I2CToParallel>( "Control_Code", tr("Control_Code") ,""    , this, &I2CToParallel::cCode,   &I2CToParallel::setCcode, "uint" ),
+new DoubProp<I2CToParallel>( "Frequency"   , tr("I2C Frequency"),"_KHz", this, &I2CToParallel::freqKHz, &I2CToParallel::setFreqKHz ),
+    }} );
 }
 I2CToParallel::~I2CToParallel(){}
-
-QList<propGroup_t> I2CToParallel::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Control_Code", tr("Control_Code"),""} );
-    mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
-
-    QList<propGroup_t> pg = IoComponent::propGroups();
-    pg.prepend( mainGroup );
-    return pg;
-}
 
 void I2CToParallel::initialize()
 {
@@ -128,5 +122,3 @@ void I2CToParallel::writeByte()   // Writting to I2C from Parallel (master is re
 
     TwiModule::writeByte();
 }
-
-#include "moc_i2ctoparallel.cpp"

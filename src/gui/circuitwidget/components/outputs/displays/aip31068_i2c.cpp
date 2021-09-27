@@ -23,14 +23,11 @@
 #include "iopin.h"
 #include "utils.h"
 
-static const char* Aip31068_i2c_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Control Code")
-};
+#include "doubleprop.h"
+#include "intprop.h"
 
 Component* Aip31068_i2c::construct( QObject* parent, QString type, QString id )
-{
-    return new Aip31068_i2c( parent, type, id );
-}
+{ return new Aip31068_i2c( parent, type, id ); }
 
 LibraryItem* Aip31068_i2c::libraryItem()
 {
@@ -46,8 +43,6 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
             : Hd44780_Base( parent, type, id )
             , TwiModule( id )
 {
-    Q_UNUSED( Aip31068_i2c_properties );
-
     m_address = 0x3E;
 
     m_pin.resize( 2 );
@@ -65,24 +60,20 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
     
     initialize();
+
+    addPropGroup( { tr("Main"), {
+new IntProp <Aip31068_i2c>( "Rows"        ,tr("Rows")         ,"_Rows"   ,this,&Aip31068_i2c::rows,   &Aip31068_i2c::setRows  ,"uint" ),
+new IntProp <Aip31068_i2c>( "Cols"        ,tr("Columns")      ,"_Columns",this,&Aip31068_i2c::cols,   &Aip31068_i2c::setCols,"uint"  ),
+new IntProp <Aip31068_i2c>( "Control_Code",tr("I2C Address")  ,""        ,this,&Aip31068_i2c::cCode,  &Aip31068_i2c::setCcode,"uint" ),
+new DoubProp<Aip31068_i2c>( "Frequency"   ,tr("I2C Frequency"),"_KHz"    ,this,&Aip31068_i2c::freqKHz,&Aip31068_i2c::setFreqKHz ),
+    }} );
 }
 Aip31068_i2c::~Aip31068_i2c(){}
-
-QList<propGroup_t> Aip31068_i2c::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Rows", tr("Rows"),""} );
-    mainGroup.propList.append( {"Cols", tr("Columns"),""} );
-    mainGroup.propList.append( {"Control_Code", tr("I2C Address"),""} );
-    mainGroup.propList.append( {"Frequency", tr("I2C Frequency"),"KHz"} );
-    return {mainGroup};
-}
 
 void Aip31068_i2c::updateStep() { update(); }
 
 void Aip31068_i2c::initialize()
 {
-    /// m_enabled = true;
     TwiModule::initialize();
 
     m_controlByte = 0;
@@ -93,21 +84,16 @@ void Aip31068_i2c::initialize()
 
 void Aip31068_i2c::stamp()
 {
-    //TwiModule::stamp();
     setMode( TWI_SLAVE );
 }
 
 void Aip31068_i2c::voltChanged()             // Called when clock Pin changes
 {
     TwiModule::voltChanged();
-
     if( m_i2cState == I2C_STOP ) m_phase = 3;
 }
 
-void Aip31068_i2c::startWrite()
-{
-    m_phase = 0;
-}
+void Aip31068_i2c::startWrite() { m_phase = 0; }
 
 void Aip31068_i2c::readByte()
 {
@@ -128,27 +114,8 @@ void Aip31068_i2c::readByte()
     TwiModule::readByte();
 }
 
-int Aip31068_i2c::cCode()
-{
-    return m_address;
-}
-
-void Aip31068_i2c::setCcode( int code )
-{
-    m_address = code;
-}
-
 void Aip31068_i2c::showPins( bool show )
 {
     m_pinSda->setVisible( show );
     m_clkPin->setVisible( show );
 }
-
-void Aip31068_i2c::remove()
-{
-    Simulator::self()->remFromUpdateList( this );
-
-    Component::remove();
-}
-#include "moc_aip31068_i2c.cpp"
-

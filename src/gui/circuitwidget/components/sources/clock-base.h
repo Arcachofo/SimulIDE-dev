@@ -20,39 +20,32 @@
 #ifndef CLOCKBASE_H
 #define CLOCKBASE_H
 
-#include "logicinput.h"
+#include "fixedvolt.h"
 
-class MAINMODULE_EXPORT ClockBase : public LogicInput
+class MAINMODULE_EXPORT ClockBase : public FixedVolt
 {
-    Q_OBJECT
-    Q_PROPERTY( bool Always_On READ alwaysOn WRITE setAlwaysOn DESIGNABLE true USER true )
-    Q_PROPERTY( double    Freq READ freq     WRITE setFreq     DESIGNABLE true USER true )
-    //Q_PROPERTY( quint64  Tr_ps READ riseTime WRITE setRiseTime DESIGNABLE true USER true )
-    //Q_PROPERTY( quint64  Tf_ps READ fallTime WRITE setFallTime DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Running READ running  WRITE setRunning )
+        Q_OBJECT
 
     public:
         ClockBase( QObject* parent, QString type, QString id );
         ~ClockBase();
+
+        virtual void stamp() override;
+        virtual void updateStep() override;
 
         bool alwaysOn() { return m_alwaysOn; }
         void setAlwaysOn( bool on );
 
         double freq() { return m_freq; }
         virtual void setFreq( double freq );
-        
-        bool running();
+
+        bool running() { return m_isRunning; }
         virtual void setRunning( bool running );
+
         virtual void setOut( bool ){;}
 
-        virtual void stamp() override;
-        virtual void updateStep() override;
-        
-    signals:
-        void freqChanged();
-
     public slots:
-        virtual void onbuttonclicked();
+        virtual void onbuttonclicked() override;
 
     protected:
         bool m_isRunning;

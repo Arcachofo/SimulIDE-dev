@@ -22,9 +22,7 @@
 #include "simulator.h"
 
 Component* FlipFlopD::construct( QObject* parent, QString type, QString id )
-{
-    return new FlipFlopD( parent, type, id );
-}
+{ return new FlipFlopD( parent, type, id ); }
 
 LibraryItem* FlipFlopD::libraryItem()
 {
@@ -41,29 +39,24 @@ FlipFlopD::FlipFlopD( QObject* parent, QString type, QString id )
 {
     m_width  = 3;
     m_height = 3;
-    
-    QStringList pinList;
+    m_dataPins = 1;
 
-    pinList // Inputs:
-            << "IL01D"
-            << "IU01S"
-            << "ID02R"
-            << "IL02>"
-            
-            // Outputs:
-            << "OR01Q"
-            << "OR02!Q"
-            ;
-    init( pinList );
+    init({         // Inputs:
+            "IL01D",
+            "IU01S",
+            "ID02R",
+            "IL02>",
+                   // Outputs:
+            "OR01Q",
+            "OR02!Q"
+        });
 
     m_setPin   = m_inPin[1];
     m_resetPin = m_inPin[2];
-    m_dataPins = 1;
-    
-    m_clkPin = m_inPin[3];
+    m_clkPin   = m_inPin[3];
 
-    setSrInv( true );                           // Inver Set & Reset pins
-    setClockInv( false );                       // Don't Invert Clock pin
+    setSrInv( true );       // Inver Set & Reset pins
+    setClockInv( false );   // Don't Invert Clock pin
     setTrigger( Clock );
 }
 FlipFlopD::~FlipFlopD(){}
@@ -72,14 +65,11 @@ void FlipFlopD::voltChanged()
 {
     updateClock();
     bool clkAllow = (m_clkState == Clock_Allow); // Get Clk to don't miss any clock changes
-
-    bool set   = m_setPin->getInpState();
-    bool reset = m_resetPin->getInpState();
+    bool set      = m_setPin->getInpState();
+    bool reset    = m_resetPin->getInpState();
 
     if( set || reset)   m_nextOutVal = (set? 1:0) + (reset? 2:0);
     else if( clkAllow ) m_nextOutVal = m_inPin[0]->getInpState()? 1:2; // D state
 
     sheduleOutPuts( this );
 }
-
-#include "moc_flipflopd.cpp"

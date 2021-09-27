@@ -27,31 +27,24 @@ class IoPin;
 
 class MAINMODULE_EXPORT Meter : public Component, public eResistor
 {
-    Q_OBJECT
-    Q_PROPERTY( bool SwitchPins READ switchPins  WRITE setSwitchPins DESIGNABLE true USER true )
-
     public:
-
         Meter( QObject* parent, QString type, QString id );
         ~Meter();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        bool switchPins() { return m_switchPins; }
+        bool swithchPins() { return m_switchPins; }
         void setSwitchPins( bool s );
 
         virtual void initialize(){ m_crashed = false;}
         virtual void updateStep() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
+        QString m_unit;
         double m_dispValue;
-
         bool m_switchPins;
 
         IoPin* m_outPin;
-
         QGraphicsSimpleTextItem m_display;
 };
 

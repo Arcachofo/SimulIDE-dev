@@ -19,7 +19,9 @@
 
 #include <QDomDocument>
 #include <QFileInfo>
+#include <QDebug>
 #include <QObject>
+#include <math.h>
 
 #include "mcucreator.h"
 #include "datautils.h"
@@ -994,7 +996,7 @@ void McuCreator::convert( QString fileName )
     if( !file.open( QFile::WriteOnly | QFile::Text ))
     {
         QApplication::restoreOverrideCursor();
-        QMessageBox::warning(0l, "McuCreator::convert",
+        MessageBoxNB( "McuCreator::convert",
         "Cannot write file:\n+."+fileName+file.errorString() );
         return ;
     }

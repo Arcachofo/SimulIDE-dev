@@ -1,21 +1,13 @@
 #ifndef TEXTCOMPONENT_H
 #define TEXTCOMPONENT_H
 
-
 #include "component.h"
-#include "itemlibrary.h"
+
+class LibraryItem;
 
 class MAINMODULE_EXPORT TextComponent : public Component
 {
     Q_OBJECT
-    Q_PROPERTY( QString  Text  READ getText    WRITE setText )
-    Q_PROPERTY( QString  Font  READ getFont    WRITE setFont     DESIGNABLE true USER true )
-    Q_PROPERTY( int  Font_Size   READ fontSize WRITE setFontSize DESIGNABLE true USER true )
-    Q_PROPERTY( bool Fixed_Width READ fixedW   WRITE setFixedW   DESIGNABLE true USER true )
-    Q_PROPERTY( int  Margin      READ margin   WRITE setMargin   DESIGNABLE true USER true )
-    Q_PROPERTY( int  Border      READ border   WRITE setBorder   DESIGNABLE true USER true )
-    Q_PROPERTY( qreal Opacity    READ opac     WRITE setOpac     DESIGNABLE true USER true )
-    
     public:
         TextComponent( QObject* parent, QString type, QString id );
         ~TextComponent();
@@ -27,10 +19,8 @@ class MAINMODULE_EXPORT TextComponent : public Component
         }
 
  static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
+ static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
- 
         int  margin();
         void setMargin( int margin );
         
@@ -43,8 +33,8 @@ class MAINMODULE_EXPORT TextComponent : public Component
         bool fixedW() { return m_fixedW; }
         void setFixedW( bool fixedW );
 
-        QString getText() { return m_text->toPlainText(); }
-        void    setText( QString text ) { m_text->document()->setPlainText( text ); }
+        QString getText();
+        void    setText( QString text );
         
         QString getFont() { return m_font; }
         void    setFont( QString font );

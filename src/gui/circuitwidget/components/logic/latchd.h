@@ -26,20 +26,12 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT LatchD : public LogicComponent
 {
-    Q_OBJECT
-    Q_PROPERTY( int    Channels   READ channels   WRITE setChannels   DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Tristate   READ tristate   WRITE setTristate   DESIGNABLE true USER true )
-    Q_PROPERTY( bool   InvertOuts READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
-    Q_PROPERTY( trigger_t Trigger READ trigger    WRITE setTrigger    DESIGNABLE true USER true )
-
     public:
         LatchD( QObject* parent, QString type, QString id );
         ~LatchD();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void stamp() override;
         virtual void voltChanged() override;

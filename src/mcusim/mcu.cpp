@@ -38,6 +38,10 @@
 #include "simuapi_apppath.h"
 #include "utils.h"
 
+#include "stringprop.h"
+#include "doubleprop.h"
+#include "boolprop.h"
+
 LibraryItem* Mcu::libraryItem()
 {
     return new LibraryItem(
@@ -45,7 +49,7 @@ LibraryItem* Mcu::libraryItem()
         tr(""),
         "ic2.png",
         "MCU",
-    Mcu::construct );
+        Mcu::construct );
 }
 
 Component* Mcu::construct( QObject* parent, QString type, QString id )
@@ -68,6 +72,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
    : McuBase( parent, type, id )
    , m_eMcu( id )
 {
+    qDebug() << "        Initializing"<<id<<"...";
     m_pSelf = this;
     m_proc = &m_eMcu;
     m_device = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
@@ -134,20 +139,20 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_subcDir = "";
 
     Simulator::self()->addToUpdateList( this );
+
+    addPropGroup( { tr("Main"), {
+new DoubProp  <Mcu>( "Mhz"      , tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
+new StringProp<Mcu>( "Program"  , tr("Fimware")  ,""    , this, &Mcu::program, &Mcu::setProgram ),
+new BoolProp  <Mcu>( "Auto_Load", tr("Auto Load Firmware at Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
+    }} );
+    addPropGroup( { tr("Hidden"), {
+new StringProp<Mcu>( "varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
+new StringProp<Mcu>( "eeprom" , "","", this, &Mcu::getEeprom, &Mcu::setEeprom )
+    }} );
 }
 Mcu::~Mcu()
 {
     if( m_mcuMonitor ) delete m_mcuMonitor;
-}
-
-QList<propGroup_t> Mcu::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    //mainGroup.propList.append( {"Logic_Symbol", tr("Logic Symbol"),""} );
-    mainGroup.propList.append( {"Mhz", tr("Frequency"),"MHz"} );
-    mainGroup.propList.append( {"Program", tr("Fimware"),""} );
-    mainGroup.propList.append( {"Auto_Load", tr("Auto Load Firmware at Start"),""} );
-    return {mainGroup};
 }
 
 void Mcu::initialize()
@@ -201,35 +206,39 @@ void Mcu::setProgram( QString pro )
     { load( m_eMcu.m_firmware ); }
 }
 
-QStringList Mcu::varList()
+QString Mcu::varList()
 {
-    return m_eMcu.getRamTable()->getVarSet();
+    return m_eMcu.getRamTable()->getVarSet().join(",");
 }
 
-void Mcu::setVarList( QStringList vl )
+void Mcu::setVarList( QString vl )
 {
-    m_eMcu.getRamTable()->loadVarSet( vl );
+    m_eMcu.getRamTable()->loadVarSet( vl.split(",") );
 }
 
-void Mcu::setEeprom( QVector<int> eep )
+void Mcu::setEeprom( QString eep )
 {
-    if( eep.size() > 1 ) m_eMcu.setEeprom( &eep );
-}
-
-QVector<int> Mcu::eeprom()  // Used by property, stripped to last written value.
-{
+    if( eep.isEmpty() ) return;
     QVector<int> eeprom;
+    QStringList list = eep.split(",");
+    for( QString val : list ) eeprom.append( val.toUInt() );
+
+    if( eeprom.size() > 0 ) m_eMcu.setEeprom( &eeprom );
+}
+
+QString Mcu::getEeprom()  // Used by property, stripped to last written value.
+{
+    QString eeprom;
     int size = m_eMcu.romSize();
     if( size > 0 )
     {
-        eeprom.resize( size );
         bool empty = true;
         for( int i=size-1; i>=0; --i )
         {
             uint8_t val = m_eMcu.getRomValue( i );
             if( val < 0xFF ) empty = false;
             if( empty ) continue;
-            eeprom[i] = val;
+            eeprom.prepend( QString::number( val )+"," );
     }   }
     return eeprom;
 }

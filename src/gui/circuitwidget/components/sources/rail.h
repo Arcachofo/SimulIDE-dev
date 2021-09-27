@@ -28,9 +28,6 @@ class IoPin;
 
 class MAINMODULE_EXPORT Rail : public Component, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( double Voltage READ volt WRITE setVolt DESIGNABLE true USER true )
-
     public:
         Rail( QObject* parent, QString type, QString id );
         ~Rail();
@@ -38,20 +35,16 @@ class MAINMODULE_EXPORT Rail : public Component, public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
-        double volt();
+        double volt() { return m_volt; }
         void setVolt( double v );
-        virtual void setUnit( QString un ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
         void updateOutput();
-        double m_voltHight;
+        double m_volt;
 
         IoPin* m_out;
 };
-
 
 #endif

@@ -25,30 +25,24 @@
 #include "logiccomponent.h"
 
 class LibraryItem;
+class QPushButton;
+class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT Function : public LogicComponent
 {
     Q_OBJECT
-    Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
-    Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
-    Q_PROPERTY( int    Num_Outputs  READ numOuts    WRITE setNumOuts    DESIGNABLE true USER true )
-    Q_PROPERTY( QString Functions   READ functions  WRITE setFunctions  DESIGNABLE true USER true )
-    
     public:
-        
         Function( QObject* parent, QString type, QString id );
         ~Function();
         
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        QString functions();
+        QString functions() { return m_functions; }
         void setFunctions( QString f );
 
         virtual void remove() override;

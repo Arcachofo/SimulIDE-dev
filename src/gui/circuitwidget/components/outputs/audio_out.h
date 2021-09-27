@@ -20,35 +20,30 @@
 #ifndef AUDIOOUT_H
 #define AUDIOOUT_H
 
-#include "itemlibrary.h"
-#include "e-resistor.h"
+#include <QAudioOutput>
 
-#include <QIODevice>  
-#include <QAudioOutput>  
+#include "e-resistor.h"
+#include "component.h"
+
+class LibraryItem;
 
 class AudioOut : public Component, public eResistor
 {
-    Q_OBJECT
-    Q_PROPERTY( double Impedance READ res    WRITE setResSafe DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Buzzer    READ buzzer WRITE setBuzzer  DESIGNABLE true USER true )
-    
     public:
         AudioOut( QObject* parent, QString type, QString id );
         ~AudioOut();
     
-    static Component* construct( QObject* parent, QString type, QString id );
-    static LibraryItem *libraryItem();
-
-        virtual QList<propGroup_t> propGroups() override;
-
-        bool buzzer() { return m_buzzer; }
-        void setBuzzer( bool buz ) { m_buzzer = buz; }
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual void initialize() override;
         virtual void runEvent() override;
+
+        bool buzzer() { return m_buzzer; }
+        void setBuzzer( bool b ) { m_buzzer = b; }
         
         virtual QPainterPath shape() const;
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
     private:
         QAudioDeviceInfo m_deviceinfo;
@@ -58,8 +53,8 @@ class AudioOut : public Component, public eResistor
         QIODevice*    m_auIObuffer;
         QByteArray    m_dataBuffer;
 
-        int   m_dataSize;
-        int   m_dataCount;
+        int m_dataSize;
+        int m_dataCount;
 
         bool m_buzzer;
 };

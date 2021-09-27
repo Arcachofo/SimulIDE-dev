@@ -28,7 +28,6 @@ class IoPin;
 class MAINMODULE_EXPORT VoltSource : public VarSource
 {
     Q_OBJECT
-    Q_PROPERTY( double Value READ value WRITE setValue DESIGNABLE true USER true )
 
     public:
         VoltSource( QObject* parent, QString type, QString id );
@@ -37,8 +36,6 @@ class MAINMODULE_EXPORT VoltSource : public VarSource
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        virtual QList<propGroup_t> propGroups() override;
-
         virtual void updateStep() override;
 
     private:
@@ -46,4 +43,3 @@ class MAINMODULE_EXPORT VoltSource : public VarSource
 };
 
 #endif
-

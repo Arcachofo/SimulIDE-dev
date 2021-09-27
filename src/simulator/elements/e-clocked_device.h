@@ -31,6 +31,12 @@ enum clkState_t{
     Clock_Falling,
 };
 
+enum trigger_t {
+    None = 0,
+    Clock,
+    InEnable
+};
+
 class eElement;
 class IoPin;
 
@@ -43,8 +49,8 @@ class MAINMODULE_EXPORT eClockedDevice : public eElement
         virtual void initialize() override;
         virtual void stamp() override;
 
-        Component::trigger_t trigger() { return m_trigger; }
-        virtual void setTrigger( Component::trigger_t trigger );
+        trigger_t trigger() { return m_trigger; }
+        virtual void setTrigger( trigger_t trigger );
 
         void setClockPin( IoPin* clockPin ) { m_clkPin = clockPin; }
 
@@ -59,8 +65,7 @@ class MAINMODULE_EXPORT eClockedDevice : public eElement
         bool m_clock;
 
         clkState_t m_clkState;
-
-        Component::trigger_t m_trigger;
+        trigger_t  m_trigger;
 
         IoPin* m_clkPin;
 };

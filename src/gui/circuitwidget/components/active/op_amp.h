@@ -30,41 +30,30 @@ class IoPin;
 
 class MAINMODULE_EXPORT OpAmp : public Component, public eElement
 {
-    Q_OBJECT
-    Q_PROPERTY( double Gain       READ gain          WRITE setGain      DESIGNABLE true USER true )
-    Q_PROPERTY( double Out_Imped  READ outImp        WRITE setOutImp    DESIGNABLE true USER true )
-    Q_PROPERTY( double Volt_Pos   READ voltPos       WRITE setVoltPos   DESIGNABLE true USER true )
-    Q_PROPERTY( double Volt_Neg   READ voltNeg       WRITE setVoltNeg   DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Power_Pins READ hasPowerPins  WRITE setPowerPins DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Switch_Pins READ switchPins  WRITE setSwitchPins DESIGNABLE true USER true )
-    
     public:
-
         OpAmp( QObject* parent, QString type, QString id );
         ~OpAmp();
         
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
-        
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
 
-        double gain() {return m_gain;}
-        void setGain( double gain ) {m_gain = gain;}
+        double gain() { return m_gain; }
+        void setGain( double g ) { m_gain = g; }
 
-        double outImp() const { return m_outImp; }
-        void  setOutImp( double imp );
+        double outImp() { return m_outImp; }
+        void setOutImp( double imp );
 
-        double voltPos(){ return m_voltPosDef; }
-        void setVoltPos( double volt ){ m_voltPosDef = volt; }
+        double voltPos() { return m_voltPos; }
+        void setVoltPos( double v ) { m_voltPos = v; }
 
-        double voltNeg(){ return m_voltNegDef; }
-        void setVoltNeg( double volt ){ m_voltNegDef = volt; }
+        double voltNeg() { return m_voltNeg; }
+        void setVoltNeg( double v ) { m_voltNeg = v; }
 
-        bool hasPowerPins(){return m_powerPins;}
+        bool powerPins() {return m_powerPins; }
         void setPowerPins( bool set );
 
         bool switchPins() { return m_switchPins; }

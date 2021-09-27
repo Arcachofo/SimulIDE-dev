@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "ground.h"
 #include "itemlibrary.h"
 #include "iopin.h"
@@ -26,7 +28,7 @@ Component* Ground::construct( QObject* parent, QString type, QString id )
 
 LibraryItem* Ground::libraryItem()
 {
-        return new LibraryItem(
+    return new LibraryItem(
         tr( "Ground (0 V)" ),
         tr( "Sources" ),
         "ground.png",
@@ -58,5 +60,3 @@ void Ground::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
     p->drawLine( -5,-3, 5,-3 );
     p->drawLine( -2, 2, 2, 2 );
 }
-
-#include "moc_ground.cpp"

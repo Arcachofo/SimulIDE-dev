@@ -55,7 +55,17 @@ class Pin;
     else if( fabs( val ) < 100)  decimals = 2; \
     else if( fabs( val ) < 1000) decimals = 1;
 
+double getMultiplier( QString mult );
+QString multToValStr( double value, QString mult );
+
+QString val2hex( int d );
+QString decToBase( int value, int base, int digits );
+
+//---------------------------------------------------
+
 void MessageBoxNB( const QString &title, const QString &message );
+
+//---------------------------------------------------
 
 QString addQuotes( const QString &string );
 QString remQuotes( QString string );
@@ -65,27 +75,27 @@ QString getFileDir( const QString &filepath );
 QString getFileExt( const QString &filepath );
 QString changeExt( const QString &filepath, const QString &ext );
 
+//---------------------------------------------------
+
 QDomDocument fileToDomDoc( const QString &fileName, const QString &caller );
 QString      fileToString( const QString &fileName, const QString &caller );
 QStringList  fileToStringList( const QString &fileName, const QString &caller );
 QByteArray   fileToByteArray( const QString &fileName, const QString &caller );
 
-QString val2hex( int d );
-QString decToBase( int value, int base, int digits );
+//---------------------------------------------------
 
 int roundDown( int x, int roundness );
-int roundDown( float x, int roundness );
-QPoint roundDown( const QPoint &p, int roundness );
-
 int snapToGrid( int x );
 int snapToCompGrid( int x );
-
 QPointF togrid( QPointF point );
 QPoint  togrid( QPoint point );
 QPointF toCompGrid( QPointF point );
-int getAlignment( QPointF p1, QPointF p2 );
 
 bool lessPinX( Pin* pinA, Pin* pinB );
 bool lessPinY( Pin* pinA, Pin* pinB );
+
+QPointF getPointF( QString p );
+QString getStrPointF( QPointF p );
+
 #endif
 

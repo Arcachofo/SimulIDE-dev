@@ -17,17 +17,19 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QCoreApplication>
+#include <QPainter>
+#include <QtMath>
+
 #include "audio_out.h"
 #include "connector.h"
 #include "itemlibrary.h"
 #include "pin.h"
+#include "label.h"
 #include "simulator.h"
 
-static const char* AudioOut_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Impedance"),
-    QT_TRANSLATE_NOOP("App::Property","Buzzer")
-
-};
+#include "doubleprop.h"
+#include "boolprop.h"
 
 Component* AudioOut::construct( QObject* parent, QString type, QString id )
 { return new AudioOut( parent, type, id ); }
@@ -35,40 +37,28 @@ Component* AudioOut::construct( QObject* parent, QString type, QString id )
 LibraryItem* AudioOut::libraryItem()
 {
     return new LibraryItem(
-            tr( "Audio Out" ),
-            tr( "Outputs" ),
-            "audio_out.png",
-            "AudioOut",
-            AudioOut::construct);
+        tr( "Audio Out" ),
+        tr( "Outputs" ),
+        "audio_out.png",
+        "AudioOut",
+        AudioOut::construct);
 }
 
 AudioOut::AudioOut( QObject* parent, QString type, QString id )
         : Component( parent, type, id )
         , eResistor( id )
 {
-    Q_UNUSED( AudioOut_properties );
-    
     m_area = QRect( -12, -24, 24, 40 );
     
     m_pin.resize( 2 );
-    
-    QString pinId = m_id;
-    pinId.append(QString("-lPin"));
-    QPoint pinPos = QPoint(-8-8,-8);
-    m_pin[0] = new Pin( 180, pinPos, pinId, 0, this);
-    m_pin[0]->setLabelText( "+" );
+    m_ePin[0] = m_pin[0] = new Pin( 180, QPoint(-16,-8), id+"-lPin", 0, this);
     m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[0] = m_pin[0];
+    m_pin[0]->setLabelText( "+" );
 
-    pinId = m_id;
-    pinId.append(QString("-rPin"));
-    pinPos = QPoint(-8-8,0);
-    m_pin[1] = new Pin( 180, pinPos, pinId, 1, this);
-    m_pin[1]->setLabelText( " -" );
+    m_ePin[1] = m_pin[1] = new Pin( 180, QPoint(-16,0), id+"-rPin", 1, this);
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
-    m_ePin[1] = m_pin[1];
+    m_pin[1]->setLabelText( "-" );
 
-    m_idLabel->setPos(-12,-24);
     setLabelPos(-20,-36, 0);
     
     m_admit = 1/8;
@@ -80,7 +70,7 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     m_deviceinfo = QAudioDeviceInfo::defaultOutputDevice(); 
     if( m_deviceinfo.isNull() ) 
     {
-        qDebug() <<"No defaulf Audio Output Device Found" ;
+        qDebug() <<"Error: No defaulf Audio Output Device Found" ;
         return;
     }
     m_format.setSampleRate( sampleRate );  
@@ -92,9 +82,8 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     
     if( !m_deviceinfo.isFormatSupported( m_format )) 
     {  
-        qDebug() << "Default format not supported - trying to use nearest";  
+        qDebug() << "Warning: Default format not supported - trying to use nearest";
         m_format = m_deviceinfo.nearestFormat( m_format );  
-        
         qDebug() << m_format.sampleRate() << m_format.channelCount()<<m_format.sampleSize();
     }  
     m_audioOutput = new QAudioOutput( m_deviceinfo, m_format );   
@@ -103,22 +92,18 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     m_dataBuffer.resize( m_dataSize );
 
     initialize();
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<AudioOut>( "Buzzer"   , tr("Buzzer")   ,"" , this, &AudioOut::buzzer, &AudioOut::setBuzzer ),
+new DoubProp<AudioOut>( "Impedance", tr("Impedance"),"Ω", this, &AudioOut::res,    &AudioOut::setResSafe )
+    }} );
 }
 AudioOut::~AudioOut(){}
-
-QList<propGroup_t> AudioOut::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Buzzer", tr("Buzzer"),""} );
-    mainGroup.propList.append( {"Impedance", tr("Impedance"),"Ω"} );
-    return {mainGroup};
-}
 
 void AudioOut::initialize()
 {
     if( m_deviceinfo.isNull() ) return;
     m_dataCount = 0;
-    
     m_auIObuffer = m_audioOutput->start();
 
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
@@ -128,11 +113,9 @@ void AudioOut::initialize()
 void AudioOut::runEvent()
 {
     double voltPN = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
-
     int outVal = 128;
 
-    if( m_buzzer)
-    {
+    if( m_buzzer){
         if( voltPN > 2.5 )
         {
             double stepsPC = 1e12/1000;
@@ -141,8 +124,7 @@ void AudioOut::runEvent()
             time = qDegreesToRadians( time*360/stepsPC );
 
             outVal += sin( time )*128;
-        }
-    }
+    }   }
     else outVal += voltPN*51;
 
     if     ( outVal > 255 ) outVal = 255;
@@ -172,7 +154,6 @@ QPainterPath AudioOut::shape() const
     QPainterPath path;
     
     QVector<QPointF> points;
-    
     points << QPointF(-10,-12 )
            << QPointF(-10, 4 )
            << QPointF( 0, 4 )
@@ -203,11 +184,7 @@ void AudioOut::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidg
 
     p->drawPolygon(points, 7);
     
-    if( m_deviceinfo.isNull() )
-    {
+    if( m_deviceinfo.isNull() ){
         p->drawLine(0,-8, 7, 0 );
         p->drawLine( 7,-8,0, 0 );
-    }
-}
-
-#include "moc_audio_out.cpp"
+}   }

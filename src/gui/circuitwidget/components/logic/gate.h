@@ -26,29 +26,20 @@ class IoPin;
 
 class MAINMODULE_EXPORT Gate : public LogicComponent
 {
-    Q_OBJECT
-    //Q_PROPERTY( int    Num_Inputs   READ numInps    WRITE setNumInps    DESIGNABLE true USER true )
-    Q_PROPERTY( bool   Inverted     READ invertOuts WRITE setInvertOuts DESIGNABLE true USER true )
-    Q_PROPERTY( bool Open_Collector READ openCol  WRITE setOpenCol  DESIGNABLE true USER true )
-    
-
     public:
         Gate( QObject* parent, QString type, QString id, int inputs );
         ~Gate();
-
-        virtual QList<propGroup_t> propGroups() override;
 
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
-        virtual void setNumInps( uint pins );
+        virtual void setNumInps( int pins );
 
     protected:
         virtual bool calcOutput( int inputs );
 
         bool m_out;
-
 };
 
 #endif

@@ -22,6 +22,9 @@
 #include "simulator.h"
 #include "circuit.h"
 
+#include "doubleprop.h"
+#include "intprop.h"
+
 IoComponent::IoComponent( QObject* parent, QString type, QString id)
            : Component( parent, type, id )
 {
@@ -32,7 +35,7 @@ IoComponent::IoComponent( QObject* parent, QString type, QString id)
     m_outValue = 0;
 
     m_inImp = 1e9;
-    m_ouImp   = 40;
+    m_ouImp = 40;
 
     m_rndPD = false;
     m_invInputs = false;
@@ -44,24 +47,30 @@ IoComponent::IoComponent( QObject* parent, QString type, QString id)
 }
 IoComponent::~IoComponent(){}
 
-QList<propGroup_t> IoComponent::propGroups()
+QList<ComProperty*> IoComponent::inputProps()
 {
-    propGroup_t elecGroup { tr("Electric") };
-    elecGroup.propList.append( {"", tr("Inputs:"),""} );
-    elecGroup.propList.append( {"Input_High_V", tr("Low to High Threshold"),"V"} );
-    elecGroup.propList.append( {"Input_Low_V", tr("High to Low Threshold"),"V"} );
-    elecGroup.propList.append( {"Input_Imped", tr("Input Impedance"),"Ω"} );
-    elecGroup.propList.append( {"", tr("Outputs:"),""} );
-    elecGroup.propList.append( {"Out_High_V", tr("Output High Voltage"),"V"} );
-    elecGroup.propList.append( {"Out_Low_V", tr("Output Low Voltage"),"V"} );
-    elecGroup.propList.append( {"Out_Imped", tr("Output Impedance"),"Ω"} );
+    return {
+new ComProperty( "", tr("Inputs:"),"",""),
+new DoubProp<IoComponent>( "Input_High_V", tr("Low to High Threshold"),"V", this, &IoComponent::inputHighV, &IoComponent::setInputHighV ),
+new DoubProp<IoComponent>( "Input_Low_V" , tr("High to Low Threshold"),"V", this, &IoComponent::inputLowV,  &IoComponent::setInputLowV ),
+new DoubProp<IoComponent>( "Input_Imped" , tr("Input Impedance")      ,"Ω", this, &IoComponent::inputImp,   &IoComponent::setInputImp ) };
+}
 
-    propGroup_t edgeGroup { tr("Edges") };
-    edgeGroup.propList.append( {"Tpd_ps", tr("Propagation Delay"),"ps"} );
-    edgeGroup.propList.append( {"Tr_ps", tr("Rise Time"),"ps"} );
-    edgeGroup.propList.append( {"Tf_ps", tr("Fall Time"),"ps"} );
+QList<ComProperty*> IoComponent::outputProps()
+{
+    return {
+new ComProperty( "", tr("Outputs:"),"",""),
+new DoubProp<IoComponent>( "Out_High_V", tr("Output High Voltage"),"V", this, &IoComponent::outHighV, &IoComponent::setOutHighV ),
+new DoubProp<IoComponent>( "Out_Low_V" , tr("Output Low Voltage") ,"V", this, &IoComponent::outLowV,  &IoComponent::setOutLowV ),
+new DoubProp<IoComponent>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &IoComponent::outImp,  &IoComponent::setOutImp ) };
+}
 
-    return {elecGroup, edgeGroup};
+QList<ComProperty*> IoComponent::edgeProps()
+{
+    return {
+new DoubProp<IoComponent>( "Tpd_ps", tr("Propagation Delay "),"ps", this, &IoComponent::propDelay, &IoComponent::setPropDelay ),
+new DoubProp<IoComponent>( "Tr_ps" , tr("Rise Time")         ,"ps", this, &IoComponent::riseTime,  &IoComponent::setRiseTime ),
+new DoubProp<IoComponent>( "Tf_ps" , tr("Fall Time")         ,"ps", this, &IoComponent::fallTime,  &IoComponent::setFallTime ) };
 }
 
 void IoComponent::updateStep()
@@ -115,7 +124,6 @@ void IoComponent::runOutputs()
 void IoComponent::sheduleOutPuts(  eElement* el )
 {
     if( m_nextOutVal == m_outValue ) return;
-
     if( m_rndPD )Simulator::self()->addEvent( m_propDelay+(std::rand()%2), el );
     else         Simulator::self()->addEvent( m_propDelay, el );
 }
@@ -123,77 +131,63 @@ void IoComponent::sheduleOutPuts(  eElement* el )
 void IoComponent::setInputHighV( double volt )
 {
     if( m_inHighV == volt ) return;
-    Simulator::self()->pauseSim();
-
     m_inHighV = volt;
+    Simulator::self()->pauseSim();
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputHighV( volt );
-
     Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInputLowV( double volt )
 {
     if( m_inLowV == volt ) return;
-    Simulator::self()->pauseSim();
-
     m_inLowV = volt;
+    Simulator::self()->pauseSim();
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputLowV( volt );
-
     Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutHighV( double volt )
 {
     if( m_ouHighV == volt ) return;
-    Simulator::self()->pauseSim();
-
     m_ouHighV = volt;
+    Simulator::self()->pauseSim();
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutHighV( volt );
-
     Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutLowV( double volt )
 {
     if( m_ouLowV == volt ) return;
-    Simulator::self()->pauseSim();
-
     m_ouLowV = volt;
+    Simulator::self()->pauseSim();
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutLowV( volt );
-
     Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInputImp( double imp )
 {
     if( m_inImp == imp ) return;
-    Simulator::self()->pauseSim();
-
     m_inImp = imp;
+    Simulator::self()->pauseSim();
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputImp( imp );
-
     Simulator::self()->resumeSim();
 }
 
 void IoComponent::setOutImp( double imp )
 {
     if( m_ouImp == imp ) return;
-    Simulator::self()->pauseSim();
-
     m_ouImp = imp;
+    Simulator::self()->pauseSim();
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutputImp( imp );
-
     Simulator::self()->resumeSim();
 }
 
 void IoComponent::setInvertOuts( bool inverted )
 {
     if( m_invOutputs == inverted ) return;
-    Simulator::self()->pauseSim();
-
     m_invOutputs = inverted;
+    Simulator::self()->pauseSim();
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setInverted( inverted );
-
     Circuit::self()->update();
     Simulator::self()->resumeSim();
 }
@@ -201,11 +195,9 @@ void IoComponent::setInvertOuts( bool inverted )
 void IoComponent::setInvertInps( bool invert )
 {
     if( m_invInputs == invert ) return;
-    Simulator::self()->pauseSim();
-
     m_invInputs = invert;
+    Simulator::self()->pauseSim();
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInverted( invert );
-
     Circuit::self()->update();
     Simulator::self()->resumeSim();
 }
@@ -214,22 +206,18 @@ void IoComponent::setOpenCol( bool op )
 {
     if( m_openCol == op ) return;
     m_openCol = op;
-
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         if( op ) m_outPin[i]->setPinMode( open_col );
         else     m_outPin[i]->setPinMode( output );
-    }
-}
+}   }
 
-void IoComponent::init( QStringList pins )
+void IoComponent::init( QStringList pins ) // Example: pin = "IL02Name" => input, left, number 2, label = "Name"
 {
     m_area = QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, m_height*8 );
 
-    QStringList inputs;                                    // Input Pins
-    QStringList outputs;                                  // Output Pins
-
-    // Example: pin = "IL02Name" => input, left, number 2, label = "Name"
+    QStringList inputs;
+    QStringList outputs;
 
     for( QString pin : pins )
     {
@@ -250,13 +238,10 @@ void IoComponent::init( QStringList pins )
     {
         m_outPin[i] = createPin( out, m_id+"-out"+QString::number(i) );
         i++;
-    }
-}
+}   }
 
-IoPin* IoComponent::createPin( QString data, QString id )
+IoPin* IoComponent::createPin( QString data, QString id ) // Example data = "L02" => left side, number 2
 {
-    // Example data = "L02" => left side, number 2
-
     pinMode_t mode = (data.left(1) == "I") ? input : output ;
     data.remove(0,1);
     QString pos = data.left(1);
@@ -345,7 +330,6 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
         m_height += 1;
         halfH = (m_height/2)*8;
     }
-
     m_area = QRect(-halfW,-halfH, m_width*8, m_height*8 );
 
     int start = 8;
@@ -359,8 +343,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
         QString num = "";
         QString pinId = id;
         if( i < oldSize ) pinList->at(i)->setY( y );
-        else
-        {
+        else{
             if( number )
             {
                 pinId += QString::number(i);
@@ -371,8 +354,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
 
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( preLab+label+num+PostLab );
             pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );
-        }
-    }
+    }   }
     Circuit::self()->update();
 }
 
@@ -382,7 +364,6 @@ void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
     if( pins > oldSize ) pins = oldSize;
 
     uint newSize = oldSize-pins;
-
     for( uint i=oldSize-1; i>newSize-1; --i )
     {
         pinList->at(i)->removeConnector();
@@ -395,18 +376,14 @@ void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
 
 void IoComponent::remove()
 {
-    Simulator::self()->remFromUpdateList( this );
-
     for( uint i=0; i<m_inPin.size(); i++ )  m_inPin[i]->removeConnector();
     for( uint i=0; i<m_outPin.size(); i++ ) m_outPin[i]->removeConnector();
-
     Component::remove();
 }
 
 void IoComponent::setHidden( bool hid, bool hidLabel )
 {
-    if( m_graphical )
-    {
+    if( m_graphical ){
         for( IoPin* pin : m_inPin)  pin->setVisible( !hid );
         for( IoPin* pin : m_outPin) pin->setVisible( !hid );
     }
@@ -418,5 +395,3 @@ void IoComponent::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QW
     Component::paint( p, option, widget );
     p->drawRect( m_area );
 }
-
-#include "moc_iocomponent.cpp"

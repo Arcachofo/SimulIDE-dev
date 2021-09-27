@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDebug>
+
 #include "mcuinterrupts.h"
 #include "mcucore.h"
 #include "e_mcu.h"

@@ -17,10 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+#include <QGraphicsProxyWidget>
+
 #include "push.h"
 #include "pin.h"
 #include "itemlibrary.h"
 
+#include "stringprop.h"
+#include "boolprop.h"
+#include "intprop.h"
 
 Component* Push::construct( QObject* parent, QString type, QString id )
 { return new Push( parent, type, id ); }
@@ -28,32 +34,28 @@ Component* Push::construct( QObject* parent, QString type, QString id )
 LibraryItem* Push::libraryItem()
 {
     return new LibraryItem(
-            tr( "Push" ),
-            tr( "Switches" ),
-            "push.png",
-            "Push",
-            Push::construct);
+        tr( "Push" ),
+        tr( "Switches" ),
+        "push.png",
+        "Push",
+        Push::construct);
 }
 
 Push::Push( QObject* parent, QString type, QString id )
     : PushBase( parent, type, id )
 {
     m_area =  QRectF( -11, -9, 22, 11 );
-    
     m_proxy->setPos( QPoint(-8, 4) );
 
     SetupSwitches( 1, 1 );
+
+    addPropGroup( { tr("Main"), {
+new BoolProp  <Push>( "Norm_Close", tr("Normally Closed"),""      , this, &Push::nClose, &Push::setNClose ),
+new IntProp   <Push>( "Poles"     , tr("Poles")          ,"_Poles", this, &Push::poles,  &Push::setPoles, "uint" ),
+new StringProp<Push>( "Key"       , tr("Key")            ,""      , this, &Push::key,    &Push::setKey ),
+    }} );
 }
 Push::~Push(){}
-
-QList<propGroup_t> Push::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Norm_Close", tr("Normally Closed"),""} );
-    mainGroup.propList.append( {"Poles", tr("Poles"),""} );
-    mainGroup.propList.append( {"Key", tr("Key"),""} );
-    return {mainGroup};
-}
 
 void Push::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
@@ -68,7 +70,6 @@ void Push::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *
     for( int i=0; i<m_numPoles; i++ )                           // Draw Switches
     {
         int offset = 16*i;
-
         if( m_closed ) p->drawLine(-9, -2-offset, 9, -2-offset );
         else           p->drawLine(-9, -8-offset, 9, -8-offset );
     }
@@ -79,5 +80,3 @@ void Push::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *
         p->setPen(pen);
         p->drawLine(-0, 4-4*m_pin0, 0, -3*m_pin0-16*m_numPoles+4 );
 }   }
-
-#include "moc_push.cpp"

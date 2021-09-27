@@ -35,6 +35,9 @@ class MAINMODULE_EXPORT MemData
         static bool loadHex( QVector<int>* toData, QString file, bool resize, int bits );
         static bool loadBin( QVector<int>* toData, QString fileName, bool resize, int bits );
 
+        static QString getMem( QVector<int>* data );
+        static void setMem( QVector<int>* data, QString m );
+
     public slots:
         virtual void showTable( int dataSize=256, int wordBytes=1 );
 

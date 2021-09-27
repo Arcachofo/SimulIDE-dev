@@ -22,10 +22,10 @@
 #include "simulator.h"
 #include "iopin.h"
 
+#include "doubleprop.h"
+
 Component* VoltSource::construct( QObject* parent, QString type, QString id )
-{
-    return new VoltSource( parent, type, id );
-}
+{ return new VoltSource( parent, type, id ); }
 
 LibraryItem* VoltSource::libraryItem()
 {
@@ -40,30 +40,23 @@ LibraryItem* VoltSource::libraryItem()
 VoltSource::VoltSource( QObject* parent, QString type, QString id )
           : VarSource( parent, type, id )
 {
-    QString nodid = id;
-    nodid.append("-outPin");
-    nodid.append("-eSource");
-
-    m_outPin = new IoPin( 0, QPoint(28,16), id+"-outPin", 0, this, source );
     m_pin.resize(1);
-    m_pin[0] = m_outPin;
+    m_pin[0] = m_outPin = new IoPin( 0, QPoint(28,16), id+"-outPin", 0, this, source );
 
     m_outPin->setOutHighV( 0 );
     m_outPin->setOutLowV( 0 );
 
     m_unit = "V";
-    m_button->setText( QString("-- V") );
-    setValue(5.0);
+    setShowProp("MaxValue");
+    setValLabelText( "5 V" );
+    m_maxValue = 5.0;
     valueChanged( 0 );
+
+    addPropGroup( { tr("Main"), {
+new DoubProp<VoltSource>( "MaxValue" ,tr("Max. Voltage"),"V", this, &VoltSource::maxValue,  &VoltSource::setMaxValue )
+    }} );
 }
 VoltSource::~VoltSource() {}
-
-QList<propGroup_t> VoltSource::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Value", tr("Max. Voltage"),"main"} );
-    return {mainGroup};
-}
 
 void VoltSource::updateStep()
 {

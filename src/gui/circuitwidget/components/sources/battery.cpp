@@ -23,12 +23,14 @@
 #include "itemlibrary.h"
 #include "pin.h"
 
+#include "doubleprop.h"
+
 Component* Battery::construct( QObject* parent, QString type, QString id )
 { return new Battery( parent, type, id ); }
 
 LibraryItem* Battery::libraryItem()
 {
-        return new LibraryItem(
+    return new LibraryItem(
         tr( "Battery" ),
         tr( "Sources" ),
         "battery.png",
@@ -37,31 +39,23 @@ LibraryItem* Battery::libraryItem()
 }
 
 Battery::Battery( QObject* parent, QString type, QString id )
-      : Component( parent, type, id )
+      : Comp2Pin( parent, type, id )
       , eElement( id )
 {
     m_area = QRect( -10, -10, 20, 20 );
 
-    m_pin.resize( 2 );
-    m_pin[0] = new Pin( 180, QPoint(-16, 0 ), id+"-Pin0", 0, this);
-    m_pin[1] = new Pin(   0, QPoint( 16, 0 ), id+"-Pin1", 1, this);
+    //m_unit = "V";
+    m_volt = 5;
+    //setShowVal( true );
 
-    m_unit = "V";
-    setVolt( 5.0 );
+    setLabelPos(-18,-22, 0 );
+    setValLabelPos(-10, 10, 0 ); // x, y, rot
 
-    setLabelPos(-18,-22, 0);
-    setValLabelPos(-10, 10 , 0 ); // x, y, rot
-    setShowVal( true );
+    addPropGroup( { tr("Main"), {
+new DoubProp<Battery>( "Voltage", tr("Voltage"), "V", this, &Battery::volt, &Battery::setVolt )
+    } } );
 }
 Battery::~Battery() {}
-
-QList<propGroup_t> Battery::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Voltage", tr("Voltage"),"main"} );
-    return {mainGroup};
-}
-
 
 void Battery::stamp()
 {
@@ -73,33 +67,11 @@ void Battery::stamp()
     m_pin[1]->stampCurrent(-m_volt/cero_doub );
 }
 
-void Battery::initialize()
-{
-    m_accuracy = Simulator::self()->NLaccuracy();
-    m_lastOut = 0;
-}
-
-double Battery::volt()
-{
-    return m_value;
-}
-
 void Battery::setVolt( double volt )
 {
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-
     if( volt < 1e-12 ) volt = 1e-12;
-
-    Component::setValue( volt );       // Takes care about units multiplier
-    m_volt = m_value*m_unitMult;
-}
-
-void Battery::setUnit( QString un )
-{
-    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-
-    Component::setUnit( un );
-    m_volt = m_value*m_unitMult;
+    m_volt = volt;
 }
 
 void Battery::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
@@ -115,5 +87,3 @@ void Battery::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawLine( 3,-8, 3, 8 );
     p->drawLine( 8,-3, 8, 3 );
 }
-
-#include "moc_battery.cpp"

@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "sevensegment_bcd.h"
 #include "itemlibrary.h"
 #include "simulator.h"
@@ -61,12 +63,7 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
     
     initialize();
 }
-SevenSegmentBCD::~SevenSegmentBCD()
-{
-    Simulator::self()->remFromUpdateList( this );
-}
-
-QList<propGroup_t> SevenSegmentBCD::propGroups(){ QList<propGroup_t> pg; return pg;}
+SevenSegmentBCD::~SevenSegmentBCD(){}
 
 void SevenSegmentBCD::updateStep()
 {
@@ -74,8 +71,7 @@ void SevenSegmentBCD::updateStep()
     {
         update();
         m_changed = false;
-    }
-}
+}   }
 
 void SevenSegmentBCD::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
@@ -120,5 +116,3 @@ void SevenSegmentBCD::paint( QPainter *p, const QStyleOptionGraphicsItem *option
          // Decimal pointn  p->drawPie( x2+ds, y3-ds, 6, 6, 0, 16*360 );
      }*/
 }
-
-#include "moc_sevensegment_bcd.cpp"
