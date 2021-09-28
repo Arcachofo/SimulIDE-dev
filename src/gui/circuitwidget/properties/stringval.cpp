@@ -28,28 +28,21 @@ StringVal::StringVal( PropDialog* parent, Component* comp, ComProperty* prop )
 }
 StringVal::~StringVal() {}
 
-
 void StringVal::setup()
 {
     valLabel->setText( m_property->capt() );
-    updatValue();
+    updtValues();
     this->adjustSize();
 }
 
 void StringVal::on_value_editingFinished()
 {
     m_property->setValStr( value->text() );
-    //m_component->setProperty( m_propName.toUtf8(), value->text() );
-    //updatValue();
-}
-
-void StringVal::updatValue()
-{
-    //QString text = m_component->property( m_propName.toUtf8() ).toString();
-    //value->setText( text );
+    updtValues();
 }
 
 void StringVal::updtValues()
 {
-
+    QString text = m_property->getValStr();
+    value->setText( text );
 }

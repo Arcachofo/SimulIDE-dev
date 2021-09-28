@@ -39,9 +39,6 @@ class StringVal : public PropVal, private Ui::StringVal
 
     public slots:
         void on_value_editingFinished();
-
-    private:
-        void updatValue();
 };
 
 #endif
