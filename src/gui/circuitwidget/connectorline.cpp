@@ -31,11 +31,11 @@
 ConnectorLine::ConnectorLine( int x1, int y1, int x2, int y2, Connector* connector )
              : QGraphicsObject()
 {
-    setParent( connector );
+    //setParent( connector );
     m_pConnector = connector;
     
-    m_prevLine = 0l;
-    m_nextLine = 0l;
+    m_prevLine = NULL;
+    m_nextLine = NULL;
 
     m_p1X = x1;
     m_p1Y = y1;

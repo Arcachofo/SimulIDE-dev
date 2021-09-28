@@ -511,18 +511,18 @@ void Circuit::removeItems()                     // Remove Selected items
 
     for( QGraphicsItem* item : selectedItems() )
     {
-        Component* comp = qgraphicsitem_cast<Component* >( item );
-        if( comp )
+        if( item->type() == QGraphicsItem::UserType+1 ) // Component
         {
+            Component* comp = qgraphicsitem_cast<Component* >( item );
             if( m_compList.contains( comp ) && !components.contains( comp ) )
                 components.append( comp );
-        }else{
+        }
+        else if( item->type() == QGraphicsItem::UserType+2 ) // ConnectorLine
+        {
             ConnectorLine* line = qgraphicsitem_cast<ConnectorLine* >( item );
-            if( line->objectName() == "" )
-            {
-                Connector* con = line->connector();
-                if( !connectors.contains( con ) ) connectors.append( con );
-    }   }   }
+            Connector* con = line->connector();
+            if( !connectors.contains( con ) ) connectors.append( con );
+    }   }
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     for( Connector* con : connectors ) con->remove();
@@ -637,15 +637,17 @@ void Circuit::copy( QPointF eventpoint )
 
     for( QGraphicsItem* item : itemlist )
     {
-        Component* comp =  qgraphicsitem_cast<Component*>( item );
-        if( comp ) complist.append( comp );
-        else{
+        if( item->type() == QGraphicsItem::UserType+1 ) // Component
+        {
+            Component* comp =  qgraphicsitem_cast<Component*>( item );
+            if( comp ) complist.append( comp );
+        }
+        else if( item->type() == QGraphicsItem::UserType+2 ) // ConnectorLine
+        {
             ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( item );
-            if(  line->objectName() == "" )
-            {
-                Connector* con = line->connector();
-                if( !conlist.contains( con ) ) conlist.append( con );
-    }   }   }
+            Connector* con = line->connector();
+            if( !conlist.contains( con ) ) conlist.append( con );
+    }   }
     QString circuit;
     for( CompBase* comp : complist ) circuit += comp->toString();
     for( CompBase* con :  conlist )  circuit += con->toString();

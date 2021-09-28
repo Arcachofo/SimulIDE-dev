@@ -40,13 +40,13 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
     Q_INTERFACES(QGraphicsItem)
 
     public:
-        QRectF boundingRect() const { return m_area; }
-
         Pin( int angle, const QPoint pos, QString id, int index, Component* parent = 0 );
         ~Pin();
 
         enum { Type = UserType + 3 };
         int type() const { return Type; }
+
+        QRectF boundingRect() const { return m_area; }
 
         QString pinId() { return m_id; }
         

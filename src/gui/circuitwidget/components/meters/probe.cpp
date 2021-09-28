@@ -92,14 +92,13 @@ void Probe::updateStep()
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
             setVolt(pin->getVolt() );
             break;
-        }else{
+        }else if( it->type() != UserType+2 )        // ConnectorLine
+        {
             ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( it );
             Connector* con = line->connector();
-            if( con->objectName().startsWith("Connector") ) // Connector found
-            {
-                setVolt( con->getVolt() );
-                break;
-}   }   }   }
+            setVolt( con->getVolt() );
+            break;
+}   }   }
 
 void Probe::setVolt( double volt )
 {

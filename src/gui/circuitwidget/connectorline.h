@@ -27,10 +27,14 @@ class Connector;
 class MAINMODULE_EXPORT ConnectorLine : public QGraphicsObject
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 
     public:
         ConnectorLine( int x1, int y1, int x2, int y2, Connector* connector );
         ~ConnectorLine();
+
+        enum { Type = UserType + 2 };
+        int type() const { return Type; }
 
         virtual QRectF boundingRect() const;
 

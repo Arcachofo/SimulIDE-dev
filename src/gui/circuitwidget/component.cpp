@@ -215,22 +215,23 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     }
     if( itemlist.size() > 1 )
     {
+        QList<Connector*> conlist;
+
         for( QGraphicsItem* item : itemlist )
         {
-            ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine* >( item );
-            if( line->objectName() == "" ) 
-            {
-                //line->move( delta );
-                line->moveSimple( delta );
-        }   }
+            if( item->type() != UserType+2 ) continue; // ConnectorLine
+            ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( item );
+            line->moveSimple( delta );
+            Connector* con = line->connector();
+            if( !conlist.contains( con ) ) conlist.append( con );
+        }
         for( QGraphicsItem* item : itemlist )
         {
+            if( item->type() != UserType+1 ) continue; // Component
             Component* comp =  qgraphicsitem_cast<Component*>( item );
-            if(comp && (comp->objectName() != "") && (!comp->objectName().contains("Connector")) )
-            {
-                comp->move( delta );
-        }   }
-        for( Connector* con : *(Circuit::self()->conList()) )
+            comp->move( delta );
+        }
+        for( Connector* con : conlist )
         {
             con->startPin()->isMoved();
             con->endPin()->isMoved();
