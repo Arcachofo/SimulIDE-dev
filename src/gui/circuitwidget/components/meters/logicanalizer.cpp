@@ -188,7 +188,7 @@ void LAnalizer::expand( bool e )
     Circuit::self()->update();
 }
 
-void LAnalizer::setTimeDiv( int td )
+void LAnalizer::setTimeDiv( double td )
 {
     if( td < 1 ) td = 1;
     PlotBase::setTimeDiv( td );

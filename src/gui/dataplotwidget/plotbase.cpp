@@ -57,7 +57,7 @@ new IntProp<PlotBase>( "Basic_Y" ,tr("Screen Size Y"),"_Pixels", this, &PlotBase
     }} );
     addPropGroup( { tr("Hidden"), {
 new IntProp   <PlotBase>( "hTick"   ,"","", this, &PlotBase::hTick,   &PlotBase::sethTick ),
-new IntProp   <PlotBase>( "TimeDiv" ,"","", this, &PlotBase::timeDiv, &PlotBase::setTimeDiv ),
+new DoubProp  <PlotBase>( "TimeDiv" ,"","", this, &PlotBase::timeDiv, &PlotBase::setTimeDiv ),
 new StringProp<PlotBase>( "Conds"   ,"","", this, &PlotBase::conds,   &PlotBase::setConds ),
 new StringProp<PlotBase>( "Tunnels" ,"","", this, &PlotBase::tunnels, &PlotBase::setTunnels ),
     } } );
@@ -81,7 +81,7 @@ void PlotBase::setBaSizeY( int size )
     expand( m_expand );
 }
 
-void PlotBase::setTimeDiv( int td )
+void PlotBase::setTimeDiv( double td )
 {
     m_timeDiv = td;
     m_display->setTimeDiv( td );

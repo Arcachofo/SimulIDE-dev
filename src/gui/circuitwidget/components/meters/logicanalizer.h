@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         virtual void updateStep() override;
 
-        virtual void setTimeDiv( int td ) override;
+        virtual void setTimeDiv( double td ) override;
 
         int timePos(){ return m_timePos; }
         void setTimePos( int tp );

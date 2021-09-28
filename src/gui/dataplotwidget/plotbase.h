@@ -48,8 +48,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         int hTick() { return m_timeDiv/1e3; }
         virtual void sethTick( int td ){ setTimeDiv( (uint64_t)td*1e3 );}
 
-        int timeDiv() { return m_timeDiv; }
-        virtual void setTimeDiv( int td );
+        double timeDiv() { return m_timeDiv; }
+        virtual void setTimeDiv( double td );
 
         int trigger() { return m_trigger; }
 

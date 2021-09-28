@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         virtual void updateStep() override;
 
-        virtual void setTimeDiv( int td ) override;
+        virtual void setTimeDiv( double td ) override;
 
         int64_t timePos( int ch ){ return m_timePos[ch]; }
         void setTimePos( int ch, int64_t tp );

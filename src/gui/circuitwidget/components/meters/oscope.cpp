@@ -262,7 +262,7 @@ void Oscope::setTracks( int tracks )
     m_oscWidget->setTracks( tracks );
 }
 
-void Oscope::setTimeDiv( int td )
+void Oscope::setTimeDiv( double td )
 {
     if( td < 1 ) td = 1;
     PlotBase::setTimeDiv( td );
