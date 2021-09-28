@@ -715,6 +715,12 @@ void Circuit::updateConnectors()
     for( Connector* con : m_conList ) con->updateLines();
 }
 
+void Circuit::addNode( Node* node )
+{
+    addItem( node );
+    m_nodeList.append( node );
+}
+
 void Circuit::bom()
 {
     if( m_conStarted ) return;

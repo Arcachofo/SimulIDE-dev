@@ -117,6 +117,9 @@ void NumVal::updtValues()
 
 QString NumVal::getValWithUnit()
 {
-    return QString::number( valueBox->value() )+" "+unitBox->currentText();
+    QString valStr = QString::number( valueBox->value() );
+    QString unit = unitBox->currentText();
+    if( !unit.isEmpty() ) valStr.append(" "+unit );
+    return valStr;
 }
 

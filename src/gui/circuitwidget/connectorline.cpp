@@ -209,11 +209,10 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
             
             if     ( evPoint==p1() ) m_moveP1 = true;
             else if( evPoint==p2() ) m_moveP2 = true;
-            //m_moving = true;
         }
         else                                   // Connecting a wire here
         {   
-           if( Circuit::self()->is_constarted() )       
+           if( Circuit::self()->is_constarted() )
            {
                Connector* con = Circuit::self()->getNewConnector();
                
@@ -282,7 +281,7 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
            Node* node = new Node( 0, type, id );     // Now add the Node
            node->setPos( point1.x(), point1.y());
-           Circuit::self()->addItem( node );
+           Circuit::self()->addNode( node );
 
            if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 

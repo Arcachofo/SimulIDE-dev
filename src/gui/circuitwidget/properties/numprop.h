@@ -45,7 +45,10 @@ class MAINMODULE_EXPORT NumProp : public ComProperty
         {
             QString valStr;
             if( m_widget ) valStr = m_widget->getValWithUnit();
-            else valStr = QString::number( val )+" "+m_unit;
+            else{
+                valStr = QString::number( val );
+                if( !m_unit.isEmpty() ) valStr.append(" "+m_unit );
+            }
             return valStr;
         }
 };

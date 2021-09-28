@@ -83,6 +83,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void updateConnectors();
         Connector* getNewConnector() { return new_connector; }
 
+        void addNode( Node* node );
+
         QList<Component*>* compList() { return &m_compList; }
         QList<Connector*>* conList()  { return &m_conList; }
         QList<Node*>*      nodeList()  { return &m_nodeList; }

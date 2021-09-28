@@ -78,7 +78,7 @@ QString CompBase::toString() // Used to save circuit
         {
             QString val = prop->getValStr();
             if( val.isEmpty() ) continue;
-            item += prop->name() + "=\"" + val + "\" ";
+            item += prop->name() + "=\""+val+"\" ";
     }   }
     item += "/>\n";
 

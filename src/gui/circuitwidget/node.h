@@ -25,7 +25,6 @@
 
 class MAINMODULE_EXPORT Node : public Component
 {
-    Q_OBJECT
     public:
         QRectF boundingRect() const { return QRect( -4, -4, 8, 8 ); }
 
@@ -40,7 +39,6 @@ class MAINMODULE_EXPORT Node : public Component
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
-    public slots:
         void inStateChanged( int rem=1 );
         
     protected:
@@ -49,8 +47,6 @@ class MAINMODULE_EXPORT Node : public Component
     private:
         void joinConns( int co0, int c1);
 
-        Pin* m_pin[3];
-        
         bool m_isBus;
 };
 #endif

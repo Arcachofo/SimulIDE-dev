@@ -37,8 +37,6 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
     m_isBus = false;
     m_freeLine = false;
 
-    ///Circuit::self()->conList()->append( this );
-
     if( startpin ){
         m_startPin   = startpin;
         m_startpinid = startpin->objectName();

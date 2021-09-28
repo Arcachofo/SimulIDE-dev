@@ -17,11 +17,14 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QtWidgets>
+#include <QPainter>
 
 #include "node.h"
 #include "connector.h"
 #include "circuit.h"
+
+#include "doubleprop.h"
+#include "pointprop.h"
 
 Node::Node( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
@@ -31,11 +34,19 @@ Node::Node( QObject* parent, QString type, QString id )
     m_color = QColor( Qt::black );
     m_isBus = false;
 
+    m_pin.resize( 3 );
     for ( int i=0; i<3; i++ )
     {
-        m_pin[i] = new Pin( 90*i, QPoint( 0,0), id+"-"+uchar(48+i), i, this );
+        m_pin[i] = new Pin( 90*i, QPoint(0,0), id+"-"+uchar(48+i), i, this );
         m_pin[i]->setLength( 0 );
-}   }
+    }
+    remPropGroup( "CompGraphic" );
+    addPropGroup( { "CompGraphic", {
+new PointProp <Component>( "Pos"     ,"","",this, &Component::position,   &Component::setPosition ),
+new DoubProp  <Component>( "rotation","","",this, &Component::getAngle,   &Component::setAngle ),
+    }} );
+
+}
 Node::~Node(){}
 
 void Node::inStateChanged( int rem ) // Called by pin
@@ -68,7 +79,7 @@ void Node::remove() // Only remove if there are less than 3 connectors
             conectors++;
     }   }
     if( conectors < 3 ) 
-    { 
+    {
         if( conectors == 2 ) joinConns( con[0], con[1] );  // 2 Conn
         else                 m_pin[con[0]]->removeConnector();
 
@@ -83,7 +94,8 @@ void Node::joinConns( int c0, int c1 )
 
     Connector* con0 = pin0->connector();
     Connector* con1 = pin1->connector();
-    Connector* con = new Connector( Circuit::self(), "", con0->itemID(), pin0->conPin() );
+    Connector* con = new Connector( Circuit::self(), "Connector", con0->getUid(), pin0->conPin() );
+    Circuit::self()->conList()->append( con );
 
     QStringList list0 = con0->pointList();
     QStringList list1 = con1->pointList();
@@ -96,7 +108,7 @@ void Node::joinConns( int c0, int c1 )
             plist.append(list0.takeLast());
             plist.append(p2);
         }
-    else while( !list0.isEmpty() ) plist.append(list0.takeFirst());
+    else while( !list0.isEmpty() ) plist.append( list0.takeFirst() );
 
     if( pin1 == con1->endPin() )
         while( !list1.isEmpty() )
@@ -105,7 +117,7 @@ void Node::joinConns( int c0, int c1 )
             plist.append(list1.takeLast());
             plist.append(p2);
         }
-    else while( !list1.isEmpty() ) plist.append(list1.takeFirst());
+    else while( !list1.isEmpty() ) plist.append( list1.takeFirst() );
 
     con->setPointList( plist );
 
@@ -120,16 +132,11 @@ void Node::joinConns( int c0, int c1 )
     con1->remove();
 
     con->closeCon( pin1->conPin(), true );
-    
-    /// Circuit::self()->addItem( con );
     if( this->isSelected() ) con->setSelected( true );
 }
 
 void Node::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
-
     //p->setBrush( Qt::blue );
     //p->drawRect( boundingRect() );
 
@@ -138,5 +145,3 @@ void Node::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
     if( m_isBus ) p->drawEllipse( QPointF(0,0), 1.8, 1.8  );
     else          p->drawEllipse( QPointF(0,0), 1.4, 1.4 );
 }
-
-#include "moc_node.cpp"
