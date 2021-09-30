@@ -30,6 +30,6 @@ class PicAsmDebugger : public BaseDebugger
 
     protected:
         //virtual int compile( bool ) override;
-        virtual void postProcess() override;
+        virtual bool postProcess() override;
 };
 #endif

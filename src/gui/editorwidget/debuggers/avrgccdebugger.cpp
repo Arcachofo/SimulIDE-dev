@@ -21,6 +21,7 @@
 
 #include "avrgccdebugger.h"
 #include "mcuinterface.h"
+#include "outpaneltext.h"
 #include "codeeditor.h"
 #include "utils.h"
 
@@ -30,20 +31,25 @@ AvrGccDebugger::AvrGccDebugger( CodeEditor* parent, OutPanelText* outPane )
 }
 AvrGccDebugger::~AvrGccDebugger(){}
 
-
-void AvrGccDebugger::postProcess()
+bool AvrGccDebugger::postProcess()
 {
-    getVariables();
+    bool ok = getVariables();
+    if( !ok ) return false;
 
     m_flashToSource.clear();
     m_sourceToFlash.clear();
-    mapFlashToSource();
+    return mapFlashToSource();
 }
 
-void AvrGccDebugger::getVariables()
+bool AvrGccDebugger::getVariables()
 {
-    QString objdump = m_toolPath+"avr-objdump";
     QString elfPath = m_buildPath+m_fileName+".elf";
+    if( !QFileInfo::exists( elfPath ) )
+    {
+        m_outPane->appendLine( "\n"+tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
+        return false;
+    }
+    QString objdump = m_toolPath+"avr-objdump";
 
 #ifndef Q_OS_UNIX
     objdump += ".exe";
@@ -89,11 +95,17 @@ void AvrGccDebugger::getVariables()
         m_varNames.append( symbol );
         //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
     }
+    return true;
 }
 
-void AvrGccDebugger::mapFlashToSource()
+bool AvrGccDebugger::mapFlashToSource()
 {
     QString elfPath = m_buildPath+m_fileName+".elf";
+    if( !QFileInfo::exists( elfPath ) )
+    {
+        m_outPane->appendLine( "\n"+tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
+        return false;
+    }
     QString avrSize = m_toolPath+"avr-size";
     QString addr2li = m_toolPath+"avr-addr2line";
 
@@ -123,7 +135,7 @@ void AvrGccDebugger::mapFlashToSource()
     QProcess flashToLine( this );
     flashToLine.start( addr2li + " -e " + elfPath );
     bool started = flashToLine.waitForStarted( 1000 );
-    if( !started ) return;
+    if( !started ) return false;
 
     for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
     {
@@ -158,5 +170,6 @@ void AvrGccDebugger::mapFlashToSource()
             }
     }   }
     flashToLine.close();
+    return !m_flashToSource.isEmpty();
 }
 

@@ -156,9 +156,11 @@ bool EditorWindow::initDebbuger()
         setDriveCirc( m_driveCirc );
         CircuitWidget::self()->powerCircDebug( m_driveCirc );
 
-        m_outPane.appendLine( "\n"+tr("Debugger Started ")+"\n" );
+        m_outPane.appendLine("\n"+tr("Debugger Started")+"\n");
+    }else{
+        m_outPane.appendLine( "\n"+tr("Error Starting Debugger")+"\n" );
+        stopDebbuger();
     }
-    else stopDebbuger();
     return ok;
 }
 

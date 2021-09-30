@@ -55,7 +55,7 @@ class InoDebugger : public AvrGccDebugger
         virtual int  compile( bool debug ) override;
 
     protected:
-        virtual void postProcess() override;
+        virtual bool postProcess() override;
         
     private:
         QString getBoard();

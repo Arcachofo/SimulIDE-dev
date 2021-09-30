@@ -18,11 +18,12 @@
  ***************************************************************************/
 
 #include <QProcess>
+#include <QFileInfo>
 
 #include "gputilsdebug.h"
 #include "mcuinterface.h"
 #include "basedebugger.h"
-//#include "codeeditor.h"
+#include "outpaneltext.h"
 #include "utils.h"
 
 GputilsDebug::GputilsDebug()
@@ -34,10 +35,15 @@ GputilsDebug::~GputilsDebug(){}
 {
 }*/
 
-void GputilsDebug::getVariables( BaseDebugger* debugger )
+bool GputilsDebug::getVariables( BaseDebugger* debugger )
 {
     QString gpvc    = debugger->toolPath()+"gpvc";
     QString codPath = debugger->fileName()+".cod";
+    if( !QFileInfo::exists( codPath ) )
+    {
+        debugger->outPane()->appendLine( "\nWarning: cod file doesn't exist:\n"+codPath );
+        return false;
+    }
 
 #ifndef Q_OS_UNIX
     gpvc += ".exe";
@@ -90,12 +96,18 @@ void GputilsDebug::getVariables( BaseDebugger* debugger )
         //qDebug() << "GputilsDebug::getData  variable "<<type<<symbol<<address;
     }
     debugger->setVarList( varNames );
+    return true;
 }
 
-void GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
+bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
 {
     QString gpvc    = debugger->toolPath()+"gpvc";
     QString codPath = debugger->fileName()+".cod";
+    if( !QFileInfo::exists( codPath ) )
+    {
+        debugger->outPane()->appendLine( "\nWarning: cod file doesn't exist:\n"+codPath );
+        return false;
+    }
 
 #ifndef Q_OS_UNIX
     gpvc += ".exe";
@@ -149,4 +161,6 @@ void GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
                 if( words.size() < 2 ) continue;
                 lineNum = words.at(1);
                 readAddr = true;
-}   }   }   }
+    }   }   }
+    return true;
+}

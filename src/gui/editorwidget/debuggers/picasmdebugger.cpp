@@ -27,11 +27,11 @@ PicAsmDebugger::PicAsmDebugger( CodeEditor* parent, OutPanelText* outPane )
 }
 PicAsmDebugger::~PicAsmDebugger() {}
 
-void PicAsmDebugger::postProcess()
+bool PicAsmDebugger::postProcess()
 {
     m_flashToSource.clear();
     m_sourceToFlash.clear();
 
-    GputilsDebug::mapFlashToSource( this );
+    return GputilsDebug::mapFlashToSource( this );
 }
 

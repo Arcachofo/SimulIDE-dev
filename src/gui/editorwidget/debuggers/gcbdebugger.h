@@ -29,13 +29,13 @@ class GcbDebugger : public BaseDebugger
         ~GcbDebugger();
 
     protected:
-        virtual void postProcess() override;
+        virtual bool postProcess() override;
         virtual void getSubs() override;
         //virtual void getData() override;
 
     private:
-        void mapGcbToAsm();
-        void mapLstToAsm();
+        bool mapGcbToAsm();
+        bool mapLstToAsm();
         void getProcType();
 
         QHash<int, int> m_gcbToAsm;

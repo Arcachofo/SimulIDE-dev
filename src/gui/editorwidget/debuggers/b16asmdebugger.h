@@ -33,7 +33,7 @@ class B16AsmDebugger : public BaseDebugger
         virtual int compile( bool ) override;
 
     private:
-        virtual void postProcess() override;
+        virtual bool postProcess() override;
         void loadCodes();
 
         int m_codeBits;

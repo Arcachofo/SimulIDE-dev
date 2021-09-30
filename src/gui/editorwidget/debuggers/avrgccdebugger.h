@@ -29,10 +29,10 @@ class AvrGccDebugger : public cDebugger
         ~AvrGccDebugger();
 
     protected:
-        virtual void postProcess() override;
+        virtual bool postProcess() override;
 
-        void getVariables();
-        void mapFlashToSource();
+        bool getVariables();
+        bool mapFlashToSource();
 };
 
 #endif

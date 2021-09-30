@@ -67,7 +67,7 @@ void SdccDebugger::preProcess()
     cDebugger::preProcess();
 }
 
-void SdccDebugger::postProcess()
+bool SdccDebugger::postProcess()
 {
     m_flashToSource.clear();
     m_sourceToFlash.clear();
@@ -75,21 +75,23 @@ void SdccDebugger::postProcess()
 
     if( m_family.startsWith("pic") )
     {
-        GputilsDebug::getVariables( this );
-        GputilsDebug::mapFlashToSource( this );
+        bool ok = GputilsDebug::getVariables( this );
+        if( !ok ) return false;
+        return GputilsDebug::mapFlashToSource( this );
     }
     else //if( m_family == "msc51" )
     {
-        findCSEG();
-        BaseDebugger::postProcess();
+        bool ok = findCSEG();
+        if( !ok ) return false;
+        return BaseDebugger::postProcess();
 }   }
 
-void SdccDebugger::findCSEG()
+bool SdccDebugger::findCSEG()
 {
     m_codeStart = 0;
 
     QString mapFileName = m_buildPath + m_fileName + ".map";
-    if( !QFileInfo::exists( mapFileName ) ) return;
+    if( !QFileInfo::exists( mapFileName ) ) return false;
     QStringList mapLines = fileToStringList( mapFileName, "SdccDebugger::findCSEG" );
     for( QString mapLine : mapLines )
     {
@@ -101,5 +103,7 @@ void SdccDebugger::findCSEG()
             bool ok = false;
             int codeStart = words.at(1).toInt( &ok, 16 );
             if( ok ) m_codeStart = codeStart;
-            break;
-}   }   }
+            return ok;
+    }   }
+    return false;
+}

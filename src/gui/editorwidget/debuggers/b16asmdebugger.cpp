@@ -153,8 +153,9 @@ void B16AsmDebugger::loadCodes()
         m_opcodes.insert( codeName, code );
 }   }
 
-void B16AsmDebugger::postProcess()
+bool B16AsmDebugger::postProcess()
 {
+    return false;
 }
 
 #include "moc_b16asmdebugger.cpp"

@@ -176,7 +176,7 @@ int InoDebugger::compile( bool )
     return error;
 }
 
-void InoDebugger::postProcess()
+bool InoDebugger::postProcess()
 {
     QString oldBuildPath = m_buildPath;
     QString oldFileName  = m_fileName;
@@ -184,10 +184,11 @@ void InoDebugger::postProcess()
     m_buildPath = m_buildPath+"/build/";
     m_fileName  = m_fileName+".ino";
 
-    AvrGccDebugger::postProcess();
+    bool ok = AvrGccDebugger::postProcess();
 
     m_buildPath = oldBuildPath;
     m_fileName  = oldFileName;
+    return ok;
 }
 
 QString InoDebugger::getBoard()

@@ -61,15 +61,16 @@ void GcbDebugger::getSubs()
             if( !line.startsWith( ";" ) && !line.isEmpty() ) m_subs.append( line.toUpper() );
 }   }   }
 
-void GcbDebugger::postProcess()
+bool GcbDebugger::postProcess()
 {
     getProcType(); // Determine Pic or Avr
     getSubs();
-    mapLstToAsm();
-    mapGcbToAsm();
+    bool ok = mapLstToAsm();
+    if( !ok ) return false;
+    return mapGcbToAsm();
 }
 
-void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
+bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
 {
     m_varList.clear();
     m_varNames.clear();
@@ -212,18 +213,25 @@ void GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
         int address    = i.key();
         int gcbLineNum = i.value();
         m_sourceToFlash[ gcbLineNum ] = address;
-}   }
+    }
+    return !m_flashToSource.isEmpty();
+}
 
-void GcbDebugger::mapLstToAsm()
+bool GcbDebugger::mapLstToAsm()
 {
     m_flashToAsm.clear();
     m_asmToFlash.clear();
 
-    QString asmFileName = m_buildPath + m_fileName + ".asm";
-    QString lstFileName = m_buildPath + m_fileName + ".lst";
+    QString asmFile = m_buildPath+m_fileName+".asm";
+    QString lstFile = m_buildPath+m_fileName+".lst";
+    if( !QFileInfo::exists( m_firmware) )
+    {
+        m_outPane->appendLine( "\n"+tr("Error: lst file doesn't exist:")+"\n"+lstFile );
+        return false;
+    }
 
-    QStringList asmLines = fileToStringList( asmFileName, "GcbDebugger::mapLstToAsm" );
-    QStringList lstLines = fileToStringList( lstFileName, "GcbDebugger::mapLstToAsm" );
+    QStringList asmLines = fileToStringList( asmFile, "GcbDebugger::mapLstToAsm" );
+    QStringList lstLines = fileToStringList( lstFile, "GcbDebugger::mapLstToAsm" );
 
     QString asmLine;
     int asmLineNumber = 0;
@@ -278,7 +286,9 @@ void GcbDebugger::mapLstToAsm()
         int address       = i.key();
         int asmLineNumber = i.value();
         m_asmToFlash[asmLineNumber] = address;
-}   }
+    }
+    return !m_flashToAsm.isEmpty();
+}
 
 void GcbDebugger::getProcType()
 {
