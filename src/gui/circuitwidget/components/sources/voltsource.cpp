@@ -48,11 +48,11 @@ VoltSource::VoltSource( QObject* parent, QString type, QString id )
 
     m_unit = "V";
     addPropGroup( { tr("Main"), {
-new DoubProp<VoltSource>( "MaxValue" ,tr("Max. Voltage"),"V", this, &VoltSource::maxValue,  &VoltSource::setMaxValue )
+new DoubProp<VoltSource>( "MaxValue",tr("Max. Voltage"),"V", this, &VoltSource::maxValue,  &VoltSource::setMaxValue )
     }} );
 
     setShowProp("MaxValue");
-    setProperty( "MaxValue", "5" );
+    setPropStr( "MaxValue", "5 V" );
     valueChanged( 0 );
 }
 VoltSource::~VoltSource() {}

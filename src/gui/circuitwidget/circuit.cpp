@@ -313,7 +313,7 @@ void Circuit::loadStrDoc( QString doc )
                     QStringRef name = p.first(), val = p.last();
                     val = val.mid( 1, val.length()-2 ); // Remove quotes
 
-                    if( name == "Pos") joint->setProperty( "Pos", val.toString() );
+                    if( name == "Pos") joint->setPropStr( "Pos", val.toString() );
                 }
                 addItem( joint );
                 m_nodeList.append( joint );

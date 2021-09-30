@@ -48,7 +48,6 @@ class MAINMODULE_EXPORT DoubProp : public NumProp
         virtual double getValue()
         { return (m_comp->*m_getter)(); }
 
-
     private:
         Comp* m_comp;
         double (Comp::*m_getter)();

@@ -60,7 +60,7 @@ new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &Res
     } } );
 
     setShowProp("Resistance");
-    setProperty( "Resistance", "100" );
+    setPropStr( "Resistance", "100" );
 }
 ResistorDip::~ResistorDip(){}
 

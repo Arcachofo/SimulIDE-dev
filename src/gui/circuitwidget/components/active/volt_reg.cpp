@@ -76,7 +76,7 @@ new DoubProp<VoltReg>( "Voltage", tr("Output Voltage"),"V", this, &VoltReg::outV
     }} );
 
     setShowProp("Voltage");
-    setProperty( "Voltage", "1.2" );
+    setPropStr( "Voltage", "1.2" );
 }
 VoltReg::~VoltReg(){}
 

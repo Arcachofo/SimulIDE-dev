@@ -50,7 +50,7 @@ new DoubProp<Resistor>( "Resistance", tr("Resistance"), "Ω", this, &Resistor::g
     } } );
 
     setShowProp("Resistance");
-    setProperty( "Resistance", "100" );
+    setPropStr( "Resistance", "100" );
 }
 Resistor::~Resistor(){}
 

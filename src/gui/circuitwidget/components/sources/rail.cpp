@@ -60,7 +60,7 @@ new DoubProp<Rail>( "Voltage", tr("Voltage"),"V", this, &Rail::volt, &Rail::setV
     }} );
 
     setShowProp("Voltage");
-    setProperty( "Voltage", "5" );
+    setPropStr( "Voltage", "5" );
 }
 Rail::~Rail() { delete m_out; }
 

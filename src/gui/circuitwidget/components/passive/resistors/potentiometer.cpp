@@ -93,7 +93,7 @@ new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Pote
     } } );
 
     setShowProp("Resistance");
-    setProperty( "Resistance", "1 kΩ" );
+    setPropStr( "Resistance", "1 kΩ" );
     resChanged( 500 );
 }
 Potentiometer::~Potentiometer() {}
