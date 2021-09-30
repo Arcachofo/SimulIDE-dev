@@ -1090,6 +1090,12 @@ void Circuit::keyPressEvent( QKeyEvent* event )
             else CircuitWidget::self()->saveCirc();
         }
         else if( key == Qt::Key_O ) CircuitWidget::self()->openCirc();
+        else if( key == Qt::Key_A )
+        {
+            for( Component* comp : m_compList ) comp->setSelected( true );
+            for( Node* nod       : m_nodeList ) nod->setSelected( true );
+            for( Connector* con  : m_conList  ) con->setSelected( true );
+        }
         else QGraphicsScene::keyPressEvent( event );
     }
     else if( key == Qt::Key_Delete || key == Qt::Key_Backspace )
