@@ -42,12 +42,6 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        QString varList();
-        void setVarList( QString vl );
-
-        void setEeprom( QString eep );
-        QString getEeprom();
-
         QString program();
         void setProgram( QString pro );
 
@@ -55,7 +49,7 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         void setAutoLoad( bool al ) { m_autoLoad = al; }
 
         virtual double freq() override { return m_eMcu.m_freq; }
-        virtual void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
+        virtual void setFreq( double freq ) override { m_eMcu.setFreq( freq ); }
 
         virtual void initialize() override;
         virtual void attach() override;
@@ -71,7 +65,6 @@ class MAINMODULE_EXPORT Mcu : public McuBase
 
         virtual void addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle , int length=8);
-        //QString loadHex( QString file, int WordSize );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -94,7 +87,6 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         QString m_subcDir;      // Subcircuit Path
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_dataFile;
-        //QString m_device;       // Name of device
 
         eMcu m_eMcu;
 
@@ -104,6 +96,5 @@ class MAINMODULE_EXPORT Mcu : public McuBase
 
         MCUMonitor* m_mcuMonitor;
 };
-
 
 #endif

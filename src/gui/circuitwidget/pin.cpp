@@ -101,33 +101,19 @@ void Pin::registerPinsW( eNode* enode )     // Called by component, calls conPin
     m_blocked = true;
 
     ePin::setEnode( enode );
-    if( m_conPin ) m_conPin->registerPins( enode ); // Call pin at other side of Connector
+    if( m_conPin ) m_conPin->registerEnode( enode ); // Call pin at other side of Connector
 
     m_blocked = false;
 }
 
-void Pin::registerPins( eNode* enode )     // Called by connector closing or other pin
+void Pin::registerEnode( eNode* enode )     // Called by connector closing or other pin
 {
     if( m_blocked ) return;
     m_blocked = true;
 
     ePin::setEnode( enode );
+    m_component->registerEnode( enode );
 
-    if( m_component->itemType() == "Bus" )
-    {
-        Bus* bus = dynamic_cast<Bus*>(m_component);
-        bus->registerPins( enode );
-    }
-    else if( m_component->itemType() == "Node" )
-    {
-        Node* node = dynamic_cast<Node*>(m_component);
-        node->registerPins( enode );
-    }
-    else if( m_component->itemType() == "Tunnel" )
-    {
-        Tunnel* tunnel = dynamic_cast<Tunnel*>(m_component);
-        tunnel->registerPins( enode );
-    }
     m_blocked = false;
 }
 

@@ -76,7 +76,7 @@ void Bus::initialize()
     {
         if( !m_pin[i]->isConnected() ) continue;
         eNode* enode = new eNode( m_id+"eNode"+QString::number( i ) );
-        m_pin[i]->registerPinsW( enode );
+        m_pin[i]->conPin()->registerEnode( enode );
 
         QList<ePin*> epins = enode->getEpins();
         busEnode->addBusPinList( epins, m_startBit+i-1 );
@@ -92,10 +92,10 @@ void Bus::inStateChanged( int msg )
 
             eNode* enode = new eNode( m_id+"eNode"+QString::number( i ) );
             Pin* pin = m_pin[i];
-            pin->registerPinsW( enode );
+            pin->conPin()->registerEnode( enode );
 }   }   }
 
-void Bus::registerPins( eNode* enode )
+void Bus::registerEnode( eNode* enode )
 {
     if( !enode->isBus() ) return;
 
@@ -150,7 +150,7 @@ void Bus::setStartBit( int bit )
         m_pin[i]->setLabelText( " "+QString::number( m_startBit+i-1 ) );
 }
 
-void Bus::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Bus::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
 

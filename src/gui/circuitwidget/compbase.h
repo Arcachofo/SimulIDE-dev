@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT CompBase : public QObject
         virtual bool    setProperty( QString prop, QString val );
         virtual QString getProperty( QString prop );
 
-        QString toString();
+        virtual QString toString();
 
 
         QString getUid() { return m_id; }
@@ -84,6 +84,7 @@ class MAINMODULE_EXPORT CompBase : public QObject
 
         bool m_graphical;
         bool m_showId;
+        bool m_showVal;
         bool m_moving;
         bool m_warning;
         bool m_crashed;

@@ -371,8 +371,8 @@ void Connector::closeCon( Pin* endpin, bool connect  )
         m_startPin->setConPin( NULL );
         m_endPin->setConPin( NULL );
 
-        m_startPin->registerPins( newEnode );
-        m_endPin->registerPins( newEnode );
+        m_startPin->registerEnode( newEnode );
+        m_endPin->registerEnode( newEnode );
     }
     m_startPin->setConnector( this );
     m_endPin->setConnector( this );

@@ -44,8 +44,11 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         double getRes() { return m_resist; }
         void setRes( double v );
 
+        virtual void attach() override;
         virtual void stamp() override;
         virtual void updateStep() override;
+
+        virtual void registerEnode( eNode* enode ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

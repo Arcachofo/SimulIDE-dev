@@ -241,8 +241,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     if( startPin->isBus() ) enode->setIsBus( true );
                     startPin->setConPin( endPin );
                     endPin->setConPin( startPin );
-                    startPin->registerPins( enode );
-                    endPin->registerPins( enode );
+                    startPin->registerEnode( enode );
+                    endPin->registerEnode( enode );
                 }
                 else // Start or End pin not found
                 {
@@ -450,7 +450,7 @@ void SubCircuit::slotAttach()
     QList<QGraphicsItem*> list = this->collidingItems();
     for( QGraphicsItem* it : list )
     {
-        if( it->type() == 65536+1 )    // Component found
+        if( it->type() == UserType+1 )    // Component found
         {
             Component* comp =  qgraphicsitem_cast<Component*>( it );
             if( comp->itemType() == "Subcircuit" )
@@ -557,8 +557,8 @@ QString SubCircuit::toString()
     QString item = CompBase::toString();
     if( !m_mainComponent ) return item;
 
-    item.remove( "/>\n" );
-    item += ">\n";
+    item.remove( " />\n" );
+    item += ">";
     item += m_mainComponent->toString().replace( "<item ", "<mainCompProps ");
     item += "</item>\n";
 

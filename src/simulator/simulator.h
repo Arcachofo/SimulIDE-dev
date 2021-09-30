@@ -158,7 +158,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         bool m_converged;
 
-        int m_numEvents;
+        //int m_numEvents;
 
         int m_error;
         int m_warning;

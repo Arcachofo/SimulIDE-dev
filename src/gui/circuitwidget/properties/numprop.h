@@ -33,20 +33,21 @@ class MAINMODULE_EXPORT NumProp : public ComProperty
         ~NumProp(){;}
 
     protected:
-        double getVal( QString val )
+        /*double getVal( QString val )
         {
             QStringList l = val.split(" ");
             double  v = l.first().toDouble();
             if( l.size() > 1 ) m_unit = l.last();
             return v*getMultiplier( m_unit );
-        }
+        }*/
 
         QString getStr( double val )
         {
             QString valStr;
             if( m_widget ) valStr = m_widget->getValWithUnit();
             else{
-                valStr = QString::number( val );
+                double multiplier = getMultiplier( m_unit );
+                valStr = QString::number( val/multiplier );
                 if( !m_unit.isEmpty() ) valStr.append(" "+m_unit );
             }
             return valStr;

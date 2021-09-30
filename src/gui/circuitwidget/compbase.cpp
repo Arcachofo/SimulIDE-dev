@@ -73,7 +73,15 @@ QString CompBase::toString() // Used to save circuit
     QString item = "\n<item ";
     for( propGroup pg : m_properties )
     {
-        if( (pg.name == "Board") && !m_saveBoard ) continue;
+        if( !m_saveBoard )
+        {
+            if( pg.name == "Board") continue;
+            if( m_isMainComp )
+            {
+                if( pg.name != "Main"
+                 && pg.name != "Hidden" ) continue;
+            }
+        }
         for( ComProperty* prop : pg.propList )
         {
             QString val = prop->getValStr();

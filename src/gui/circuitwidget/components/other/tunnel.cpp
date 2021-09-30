@@ -47,12 +47,12 @@ LibraryItem* Tunnel::libraryItem()
 Tunnel::Tunnel( QObject* parent, QString type, QString id )
       : Component( parent, type, id )
 {
+    m_size = 20;
     m_area = QRect( -m_size-8-4, -4, m_size+4, 8 );
     m_rotated = false;
     m_blocked = false;
     m_packed  = false;
     m_name = "";
-    m_size = 20;
 
     m_pin.resize( 1 );
     m_pin[0] = new Pin( 0, QPoint(0,0), id+"-pin", 0, this);
@@ -61,11 +61,11 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
     setLabelPos(-16,-24, 0);
 
     addPropGroup( { tr("Main"), {
-new StringProp<Tunnel>( "Name", tr("Id"),"", this, &Tunnel::name, &Tunnel::setName ),
-new BoolProp  <Tunnel>( "Rotated","","", this, &Tunnel::rotated, &Tunnel::setRotated )
+new StringProp<Tunnel>( "Name"   , tr("Id")    ,"", this, &Tunnel::name,    &Tunnel::setName ),
+new BoolProp  <Tunnel>( "Rotated",tr("Rotated"),"", this, &Tunnel::rotated, &Tunnel::setRotated )
     }} );
     addPropGroup( { tr("Hidden"), {
-new StringProp<Tunnel>( "Uid"    ,"","", this, &Tunnel::uid,     &Tunnel::setUid ),
+new StringProp<Tunnel>( "Uid","","", this, &Tunnel::uid, &Tunnel::setUid ),
     }} );
 }
 Tunnel::~Tunnel() {}
@@ -82,7 +82,7 @@ void Tunnel::setEnode( eNode* node )
     m_blocked = false;
 }
 
-void Tunnel::registerPins( eNode* enode ) // called by m_pin[0]
+void Tunnel::registerEnode( eNode* enode ) // called by m_pin[0]
 {
     if( m_blocked ) return;
 
@@ -114,41 +114,40 @@ void Tunnel::setName( QString name )
 
     if( name.isEmpty() ) { setEnode( NULL ); return; }
 
-    eNode* node = m_pin[0]->getEnode();
+    ///eNode* node = m_pin[0]->getEnode();
 
     if( m_tunnels.contains( name ) ) // There is already tunnel with this name
     {
         QList<Tunnel*>* list = m_tunnels.value( name );
         if( !list->contains( this ) ) list->append( this );
-        if( !node ) node = m_eNodes.value( name );
+        ///if( !node ) node = m_eNodes.value( name );
     }
     else   // name doesn't exist: Create a new List for this name
     {
-        node = new eNode( name+"eNode" );
+        ///node = new eNode( name+"eNode" );
 
         QList<Tunnel*>* list = new QList<Tunnel*>();
         list->append( this );
         m_tunnels[name] = list;
-        m_eNodes[name] = node;
+        ///m_eNodes[name] = node;
     }
-    setEnode( node );
-    registerPins( node );
+    ///setEnode( node );
+    ///registerPins( node );
     Circuit::self()->update();
 }
 
 void Tunnel::setRotated( bool rot )
 {
     m_rotated  = rot;
-    if( rot )
-    {
+    if( rot ){
         m_area = QRect( 4, -4, m_size+4, 8 );
         m_pin[0]->setPinAngle( 180 );
-    }
-    else {
+    }else {
         m_area = QRect( -m_size-8, -4, m_size+4, 8 );
         m_pin[0]->setPinAngle( 0 );
     }
     m_pin[0]->setLabelPos();
+    Circuit::self()->update();
 }
 
 void Tunnel::removeTunnel()
@@ -194,8 +193,7 @@ void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
 
     Component::paint( p, option, widget );
 
-    if( m_rotated )
-    {
+    if( m_rotated ){
         QPointF points[5] =        {
             QPointF( m_size+8,-5 ),
             QPointF(  8,-5 ),

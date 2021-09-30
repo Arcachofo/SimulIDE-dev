@@ -58,7 +58,7 @@ void CpuClock::incrementCycle() // Increment the current cycle, check for breakp
         for( TriggerObject* f : values )
         {
             if( f ) f->callback();
-            else qDebug() << "Cycle_Counter::increment  No TRiggerObject" << '\n';
+            //else qDebug() << "Cycle_Counter::increment  No TRiggerObject" << '\n';
 
             m_activeCB.remove( m_cycle, f );
         }
@@ -78,19 +78,19 @@ bool CpuClock::setBreakAbs( uint64_t future_cycle, TriggerObject* f )
     if( future_cycle <= m_cycle )
     {
         if( future_cycle == 0 ) return 0;
-        qDebug() << "CpuClock::setBreakAbs";
-        qDebug() << "Cycle break point "<< future_cycle << "has already gone";
-        qDebug() << "current cycle is  " << m_cycle << '\n';
+        //qDebug() << "CpuClock::setBreakAbs";
+        //qDebug() << "Cycle break point "<< future_cycle << "has already gone";
+        //qDebug() << "current cycle is  " << m_cycle << '\n';
         return 0;
     }
     if( !f )
     {
-        qDebug() << "CpuClock::setBreakAbs  No TriggerObject" << '\n';
+        //qDebug() << "CpuClock::setBreakAbs  No TriggerObject" << '\n';
         return 0;
     }
     if( m_activeCB.contains( future_cycle, f ))
     {
-        qDebug() << "CpuClock::setBreakAbs  Break already exist" << future_cycle<<'\n';
+        //qDebug() << "CpuClock::setBreakAbs  Break already exist" << future_cycle<<'\n';
         return 0;
     }
     m_activeCB.insert( future_cycle, f );

@@ -85,7 +85,7 @@ void Processor::init_register_memory( uint memory_size ) // Allocate an array fo
     registers = new Register*[memory_size];
     nRegisters = memory_size;
 
-    if( registers == 0 ) qDebug() << "Out of memory - PIC register space";
+    ///if( registers == 0 ) qDebug() << "Out of memory - PIC register space";
 
     // For processors with banked memory, the register_bank corresponds to the
     // active bank. Let this point to the beginning of the register array for now.
@@ -235,7 +235,7 @@ void Processor::init_program_memory( uint memory_size )
     // pointers of type 'instruction'. This is where the simulated instructions
     // are stored.
     program_memory = new Instruction*[memory_size];
-    if( program_memory == 0 ) qDebug()<<"Out of memory for program space";
+    ///if( program_memory == 0 ) qDebug()<<"Out of memory for program space";
 
     m_ProgMemSize = memory_size;
 
@@ -253,7 +253,7 @@ void Processor::init_program_memory( uint address, uint value )
 {
     uint uIndex = map_pm_address2index(address);
 
-    if( !program_memory) qDebug()<< "ERROR: internal bug " << __FILE__ << ":" << __LINE__;
+    ///if( !program_memory) qDebug()<< "ERROR: internal bug " << __FILE__ << ":" << __LINE__;
 
     if(uIndex < program_memory_size())
     {

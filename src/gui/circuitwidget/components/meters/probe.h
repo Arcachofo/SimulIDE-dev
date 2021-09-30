@@ -35,9 +35,12 @@ class MAINMODULE_EXPORT Probe : public Component, public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        void setVolt( double volt );
-
         virtual void updateStep() override;
+
+        bool showVolt() { return m_showVolt; }
+        void setShowVolt( bool show );
+
+        void setVolt( double volt );
 
         double threshold() { return m_voltTrig; }
         void setThreshold( double t ) { m_voltTrig = t; }
@@ -48,6 +51,8 @@ class MAINMODULE_EXPORT Probe : public Component, public eElement
     private: 
         double m_voltIn;
         double m_voltTrig;
+
+        bool m_showVolt;
 
         IoPin* m_inputPin;
 };

@@ -45,17 +45,18 @@ class MAINMODULE_EXPORT Tunnel : public Component
 
         virtual void remove() override;
 
+        virtual void registerEnode( eNode* enode ) override;
+
         QString uid() { return m_uid; }
         void setUid( QString uid ) { m_uid = uid; }
 
         void setEnode( eNode* node );
         void setPacked( bool p ){ m_packed = p; }
-        void registerPins( eNode* enode );
         void removeTunnel();
 
         Pin* getPin() { return m_pin[0]; }
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
  static QHash<QString, eNode*> m_eNodes;
 

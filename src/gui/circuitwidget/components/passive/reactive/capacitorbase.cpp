@@ -34,10 +34,9 @@ CapacitorBase::CapacitorBase( QObject* parent, QString type, QString id )
     m_pin[1]->setLength( 12 );
     
     setShowProp("Capacitance");
-    setValLabelText( "10 µF" );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance"), "µF", this, &CapacitorBase::cap, &CapacitorBase::setCap )
+new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance"), "F", this, &CapacitorBase::cap, &CapacitorBase::setCap )
     } } );
 }
 CapacitorBase::~CapacitorBase(){}

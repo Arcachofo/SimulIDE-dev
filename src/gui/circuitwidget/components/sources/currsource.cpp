@@ -45,7 +45,6 @@ CurrSource::CurrSource( QObject* parent, QString type, QString id )
 
     m_unit = "A";
     setShowProp("MaxValue");
-    setValLabelText( "1 A" );
     m_maxValue =  1.0;
     valueChanged( 0 );
 

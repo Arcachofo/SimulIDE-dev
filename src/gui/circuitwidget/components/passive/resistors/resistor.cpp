@@ -46,7 +46,6 @@ Resistor::Resistor( QObject* parent, QString type, QString id )
     m_ePin[1] = m_pin[1];
 
     setShowProp("Resistance");
-    setValLabelText( "100 Ω" );
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Resistor>( "Resistance", tr("Resistance"), "Ω", this, &Resistor::getRes, &Resistor::setResSafe )

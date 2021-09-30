@@ -18,15 +18,66 @@
  ***************************************************************************/
 
 #include "mcubase.h"
+#include "mcuinterface.h"
+
+#include "stringprop.h"
 
 McuBase* McuBase::m_pSelf = NULL;
 
 McuBase::McuBase( QObject* parent, QString type, QString id )
        : Chip( parent, type, id )
 {
+    addPropGroup( { tr("Hidden"), {
+new StringProp<McuBase>( "varList", "","", this, &McuBase::varList,   &McuBase::setVarList),
+new StringProp<McuBase>( "eeprom" , "","", this, &McuBase::getEeprom, &McuBase::setEeprom )
+    }} );
 }
 McuBase::~McuBase()
 {
     if( m_pSelf == this ) m_pSelf= NULL;
 }
-#include "moc_mcubase.cpp"
+
+bool McuBase::setProperty( QString prop, QString val )
+{
+    if( prop =="Mhz" ) setFreq( val.toDouble()*1e6 ); //  Old: TODELETE
+    else return Component::setProperty( prop, val );
+    return true;
+}
+
+QString McuBase::varList()
+{
+    return m_proc->getRamTable()->getVarSet().join(",");
+}
+
+void McuBase::setVarList( QString vl )
+{
+    m_proc->getRamTable()->loadVarSet( vl.split(",") );
+}
+
+void McuBase::setEeprom( QString eep )
+{
+    if( eep.isEmpty() ) return;
+    QVector<int> eeprom;
+    QStringList list = eep.split(",");
+    for( QString val : list ) eeprom.append( val.toUInt() );
+
+    if( eeprom.size() > 0 ) m_proc->setEeprom( &eeprom );
+}
+
+QString McuBase::getEeprom()  // Used by property, stripped to last written value.
+{
+    QString eeprom;
+    int size = m_proc->romSize();
+    if( size > 0 )
+    {
+        bool empty = true;
+        for( int i=size-1; i>=0; --i )
+        {
+            uint8_t val = m_proc->getRomValue( i );
+            if( val < 0xFF ) empty = false;
+            if( empty ) continue;
+            eeprom.prepend( QString::number( val )+"," );
+    }   }
+    return eeprom;
+}
+

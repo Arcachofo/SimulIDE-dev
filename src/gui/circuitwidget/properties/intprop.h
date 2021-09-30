@@ -37,9 +37,22 @@ class MAINMODULE_EXPORT IntProp : public NumProp
         }
         ~IntProp(){;}
 
+        virtual void setUnit( QString u ) override  // Old: TODELETE
+        {
+            double multiplier = getMultiplier( u );
+            QString val = QString::number( (m_component->*m_getter)()/multiplier );
+            setValStr( val+" "+u );
+        }
+
         virtual void setValStr( QString val ) override
         {
-            (m_component->*m_setter)( (int)getVal( val ) );
+            QStringList l = val.split(" ");
+            double  v = l.first().toDouble();
+            val = QString::number( v );
+            if( l.size() > 1 ) m_unit = l.last();
+            v = v*getMultiplier( m_unit );
+
+            (m_component->*m_setter)( (int)v );
             if( m_component->itemType() == "Label" ) return;
             Component* comp = (Component*)m_component;
             if( comp->showProp() == m_name ) comp->setValLabelText( val );

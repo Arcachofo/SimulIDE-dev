@@ -52,12 +52,13 @@ PICComponent::PICComponent( QObject* parent, QString type, QString id )
             , m_pic( this )
 {
     m_processor = &m_pic;
+    m_proc = m_processor;
     m_cpi = 4;
 
     initChip();
     if( m_error == 0 )
     {
-        setFreq( 20 );
+        setFreq( 20*1e6 );
         qDebug() <<"     ..."<<m_id<<"OK\n";
     }
     else qDebug() <<"     ..."<<m_id<<"Error!!!\n";

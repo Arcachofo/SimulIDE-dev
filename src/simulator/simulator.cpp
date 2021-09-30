@@ -363,7 +363,7 @@ void Simulator::clearEventList()
     }
     m_eventList.free = &(m_eventList.events[0]);
     m_eventList.first = NULL;
-    m_numEvents = 0;
+    //m_numEvents = 0;
 }
 
 void Simulator::addEvent( uint64_t time, eElement* comp )
@@ -396,7 +396,7 @@ void Simulator::addEvent( uint64_t time, eElement* comp )
     else       m_eventList.first = new_event; // List was empty or insert First
 
     new_event->next = event;
-    if( ++m_numEvents >= LAST_SIM_EVENT ) { m_error = 3; return; }
+    //if( ++m_numEvents >= LAST_SIM_EVENT ) { m_error = 3; return; }
 }
 
 void Simulator::cancelEvents( eElement* comp )
@@ -415,7 +415,7 @@ void Simulator::cancelEvents( eElement* comp )
 
             event->next = m_eventList.free;
             m_eventList.free = event;
-            m_numEvents--;
+            //m_numEvents--;
         }
         else last = event;
         event = next;
@@ -426,7 +426,7 @@ inline void Simulator::freeEvent( simEvent_t* event )
     m_eventList.first = event->next;
     event->next = m_eventList.free;
     m_eventList.free = event;
-    m_numEvents--;
+    //m_numEvents--;
 }
 
 void Simulator::addToEnodeBusList( eNode* nod )

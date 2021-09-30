@@ -29,6 +29,7 @@
 #include "iopin.h"
 
 #include "doubleprop.h"
+#include "boolprop.h"
 
 Component* Probe::construct( QObject* parent, QString type, QString id )
 { return new Probe( parent, type, id ); }
@@ -58,17 +59,16 @@ Probe::Probe( QObject* parent, QString type, QString id )
     m_inputPin->setBoundingRect( QRect(-2, -2, 6, 4) );
     m_inputPin->setImp( 1e9 );
 
-    //m_unit = " V";
-    m_valLabel->setDefaultTextColor( Qt::darkRed );
     setValLabelPos( 16, 0, 45 ); // x, y, rot
-    //setShowVal( true );
+    setShowVolt( true );
     setLabelPos( 16,-16, 45 );
     setRotation( rotation() - 45 );
 
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Probe>( "Threshold", tr("Threshold"), "V", this, &Probe::threshold,  &Probe::setThreshold )
+new BoolProp<Probe>( "ShowVolt" , tr("Show Voltage"), "" , this, &Probe::showVolt,  &Probe::setShowVolt ),
+new DoubProp<Probe>( "Threshold", tr("Threshold")   , "V", this, &Probe::threshold, &Probe::setThreshold )
     } } );
 }
 Probe::~Probe(){}
@@ -87,12 +87,12 @@ void Probe::updateStep()
 
     for( QGraphicsItem* it : list )
     {
-        if( it->type() == 65536+3 )                    // Pin found
+        if( it->type() == UserType+3 )                    // Pin found
         {
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
             setVolt(pin->getVolt() );
             break;
-        }else if( it->type() != UserType+2 )        // ConnectorLine
+        }else if( it->type() == UserType+2 )        // ConnectorLine
         {
             ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( it );
             Connector* con = line->connector();
@@ -100,11 +100,18 @@ void Probe::updateStep()
             break;
 }   }   }
 
+void Probe::setShowVolt( bool show )
+{
+    m_showVolt = show;
+    m_valLabel->setVisible( show );
+}
+
 void Probe::setVolt( double volt )
 {
     if( m_voltIn == volt ) return;
     m_voltIn = volt;
 
+    if( !m_showVolt ) return;
     if( fabs(volt) < 0.01 ) volt = 0;
     int dispVolt = int( volt*100+0.5 );
     

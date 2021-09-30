@@ -54,7 +54,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
     protected:
         virtual void getInfoInFile( QString line );
         virtual void preProcess() override;
-        virtual void postProcess() override;
+        virtual bool postProcess() override;
 
         bool isNoValid( QString line );
 

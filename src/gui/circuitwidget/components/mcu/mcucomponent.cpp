@@ -74,13 +74,9 @@ McuComponent::McuComponent( QObject* parent, QString type, QString id )
     Circuit::self()->update();
 
     addPropGroup( { tr("Main"), {
-new DoubProp  <McuComponent>( "Mhz"      , tr("Frequency"),"MHz" , this, &McuComponent::freq,    &McuComponent::setFreq ),
+new DoubProp  <McuComponent>( "Frequency", tr("Frequency"),"MHz" , this, &McuComponent::freq,    &McuComponent::setFreq ),
 new StringProp<McuComponent>( "Program"  , tr("Fimware")  ,""    , this, &McuComponent::program, &McuComponent::setProgram ),
-new BoolProp  <McuComponent>( "Auto_Load", tr("Auto Load Firmware at Start"),"", this, &McuComponent::autoLoad, &McuComponent::setAutoLoad ),
-    }} );
-    addPropGroup( { tr("Hidden"), {
-//new StringProp<McuComponent>( "varList", "","", this, &McuComponent::varList,   &McuComponent::setVarList),
-//new StringProp<McuComponent>( "eeprom" , "","", this, &McuComponent::getEeprom, &McuComponent::setEeprom )
+new BoolProp  <McuComponent>( "Auto_Load", tr("Load Firmware at Start"),"", this, &McuComponent::autoLoad, &McuComponent::setAutoLoad ),
     }} );
 }
 McuComponent::~McuComponent()
@@ -92,7 +88,7 @@ void McuComponent::attach()
 {
     //if( m_processor->getLoadStatus() )
     {
-        m_processor->setFreq( m_freq/m_cpi );
+        m_processor->setFreq( m_freq*1e-6/m_cpi );
 
         if( m_autoLoad ) load( m_symbolFile );
         emit openSerials();
@@ -221,7 +217,7 @@ void McuComponent::updatePin( QString id, QString type, QString label, int pos, 
 void McuComponent::setFreq( double freq )
 {
     if     ( freq < 0  )  freq = 0;
-    else if( freq > 100 ) freq = 100;
+    else if( freq > 100*1e6 ) freq = 100*1e6;
 
     m_freq = freq;
 }

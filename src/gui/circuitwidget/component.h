@@ -28,6 +28,7 @@
 
 class Pin;
 class Label;
+class eNode;
 
 class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, public Updatable
 {
@@ -60,7 +61,10 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         bool showId() { return m_showId; }
         void setShowId( bool show );
 
-        QString showProp() { return m_showProperty; }
+        bool showVal() { return m_showVal; }
+        void setShowVal( bool show );
+
+        QString showProp();
         void setShowProp( QString prop );
 
         void setValLabelText( QString t );
@@ -77,6 +81,8 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void setBackground( QString bck ) { m_background = bck;}
         virtual void setSubcDir( QString dir ) {;}
+
+        virtual void registerEnode( eNode* ) {;}
 
         QString print();
 

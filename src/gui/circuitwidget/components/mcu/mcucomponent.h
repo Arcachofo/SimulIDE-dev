@@ -20,11 +20,7 @@
 #ifndef MCUCOMPONENT_H
 #define MCUCOMPONENT_H
 
-#include <QtWidgets>
-#include <QtSerialPort/QSerialPort>
-
 #include "mcubase.h"
-//#include "chip.h"
 
 class BaseProcessor;
 class McuComponentPin;
@@ -52,12 +48,10 @@ class MAINMODULE_EXPORT McuComponent : public McuBase
         void setProgram( QString pro );
 
         virtual double freq() override { return m_freq; }
-        virtual void setFreq( double freq );
+        virtual void setFreq( double freq ) override;
 
         bool autoLoad() { return m_autoLoad; }
         void setAutoLoad( bool al ) { m_autoLoad = al; }
-        
-        //QString device() { return m_device; }
 
         void setEeprom(QVector<int> eep );
         QVector<int> eeprom();
@@ -90,8 +84,6 @@ class MAINMODULE_EXPORT McuComponent : public McuBase
         void saveData();
 
     protected:
- //static McuComponent* m_pSelf;
-
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
 
@@ -110,11 +102,9 @@ class MAINMODULE_EXPORT McuComponent : public McuBase
         
         bool m_attached;
         bool m_autoLoad;
-        //bool m_crashed;
 
         int m_warning;
 
-        //QString m_device;       // Name of device
         QString m_symbolFile;   // firmware file loaded
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_subcDir;      // Subcircuit Path

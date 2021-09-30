@@ -248,8 +248,8 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                         nodMap[enodeId] = enode;
                     }
                     con->setEnode( enode );
-                    startpin->registerPins( enode );
-                    endpin->registerPins( enode );
+                    startpin->registerEnode( enode );
+                    endpin->registerEnode( enode );
                     m_conList.append( con );
                 }
                 else if( !m_pasting )// Start or End pin not found
@@ -311,7 +311,7 @@ void Circuit::loadDomDoc( QDomDocument* doc )
                         {
                             mcu->setSubcDir("");
                             mcu->setProgram( element.attribute("Program") );
-                            mcu->setFreq( element.attribute("Mhz").toDouble() );
+                            mcu->setFreq( element.attribute("Mhz").toDouble()*1e6 );
                             mcu->setAutoLoad( element.attribute("Auto_Load").toInt() );
                     }   }
                     else if( comp->itemType() == "Subcircuit")

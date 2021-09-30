@@ -64,7 +64,7 @@ bool BaseDebugger::upload()
     if( ok )
     {
         McuInterface::self()->setDebugger( this );
-        postProcess();
+        ok = postProcess();
     }
     return ok;
 }
@@ -76,18 +76,21 @@ void BaseDebugger::preProcess()
     m_codeStart = 0;
 }
 
-void BaseDebugger::postProcess()
+bool BaseDebugger::postProcess()
 {
     m_lastLine = 0;
     m_flashToSource.clear();
     m_sourceToFlash.clear();
 
-    QString lstFileName = m_buildPath + m_fileName + ".lst";
-    if( !QFileInfo::exists( lstFileName ) ) return;
-
-    QString srcFileName = m_fileDir + m_fileName + m_fileExt;
-    QStringList srcLines = fileToStringList( srcFileName, "AsmDebugger::postProcess" );
-    QStringList lstLines = fileToStringList( lstFileName, "AsmDebugger::postProcess" );
+    QString lstFile = m_buildPath+m_fileName+".lst";
+    if( !QFileInfo::exists( lstFile ) )
+    {
+        m_outPane->appendLine( "\n"+tr("Warning: lst file doesn't exist:")+"\n"+lstFile );
+        return false;
+    }
+    QString srcFile = m_fileDir + m_fileName + m_fileExt;
+    QStringList srcLines = fileToStringList( srcFile, "AsmDebugger::postProcess" );
+    QStringList lstLines = fileToStringList( lstFile, "AsmDebugger::postProcess" );
 
     QString lstLine;
     int lstLineNumber = 0;
@@ -131,7 +134,9 @@ void BaseDebugger::postProcess()
             bool ok = false;
             int address = lstLine.toInt( &ok, 16 );
             if( ok ) setLineToFlash( srcLineNumber, m_codeStart+address );
-}   }   }
+    }   }
+    return true;
+}
 
 void BaseDebugger::getInfoInFile( QString line )
 {

@@ -37,10 +37,19 @@ class MAINMODULE_EXPORT DoubProp : public NumProp
         }
         ~DoubProp(){;}
 
+        virtual void setUnit( QString u ) override  // Old: TODELETE
+        { setValStr( QString::number( (m_component->*m_getter)() )+" "+u ); }
+
         virtual void setValStr( QString val ) override
         {
-            (m_component->*m_setter)( getVal( val ) );
-            if( m_component->showProp() == m_name ) m_component->setValLabelText( val );
+            QStringList l = val.split(" ");
+            double  v = l.first().toDouble();
+            val = QString::number( v );
+            if( l.size() > 1 ) m_unit = l.last();
+            v = v*getMultiplier( m_unit );
+
+            (m_component->*m_setter)( v );
+            if( m_component->showProp() == m_name ) m_component->setValLabelText( val+" "+m_unit );
         }
 
         virtual QString getValStr() override

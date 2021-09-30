@@ -82,7 +82,6 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
 
     m_resist = 1000;
     setShowProp("Resistance");
-    setValLabelText( "1 kΩ" );
     setValLabelPos( 15,-20, 0 );
 
     resChanged( 500 );
@@ -94,13 +93,13 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
              this,   SLOT  (resChanged(int)), Qt::UniqueConnection );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Potentiometer>( "Resistance", tr("Resistance")   ,"kΩ", this, &Potentiometer::getRes, &Potentiometer::setRes ),
+new DoubProp<Potentiometer>( "Resistance", tr("Resistance")   ,"Ω", this, &Potentiometer::getRes, &Potentiometer::setRes ),
 new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Potentiometer::getVal, &Potentiometer::setVal )
     } } );
 }
 Potentiometer::~Potentiometer() {}
 
-void Potentiometer::stamp()
+void Potentiometer::attach()
 {
     eNode* enod = m_pinM.getEnode();  // Get eNode from middle Pin
 
@@ -109,15 +108,21 @@ void Potentiometer::stamp()
         m_midEnode = new eNode( m_id+"-mideNode" );
         enod = m_midEnode;
         m_pinM.setEnode( enod );
+        m_ePinA.setEnode( m_midEnode );  // Set eNode to internal eResistors ePins
+        m_ePinB.setEnode( m_midEnode );
     }
-    else if( enod != m_midEnode ) // Connected to external eNode: Delete mid eNode
-    {
-        m_midEnode = enod;
-    }
-    m_ePinA.setEnode( m_midEnode );  // Set eNode to internal eResistors ePins
-    m_ePinB.setEnode( m_midEnode );
+}
+
+void Potentiometer::stamp()
+{
     m_changed = true;
     updateStep();
+}
+
+void Potentiometer::registerEnode( eNode* enode ) // called by m_pin[0]
+{
+    m_ePinA.setEnode( enode );  // Set eNode to internal eResistors ePins
+    m_ePinB.setEnode( enode );
 }
 
 void Potentiometer::updateStep()

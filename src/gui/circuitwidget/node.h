@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT Node : public Component
 
         Pin* getPin( int pin ) const { return m_pin[pin]; }
 
-        void registerPins( eNode* enode );
+        virtual void registerEnode( eNode* enode ) override;
 
         virtual void remove() override;
 

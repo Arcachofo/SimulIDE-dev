@@ -52,7 +52,6 @@ ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
     
     m_resist = 100;
     setShowProp("Resistance");
-    setValLabelText( "100 Ω" );
 
     setLabelPos(-24,-40, 0);
     setValLabelPos( 5,-26, 90 );

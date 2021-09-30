@@ -52,10 +52,9 @@ Rail::Rail( QObject* parent, QString type, QString id )
     m_pin.resize(1);
     m_pin[0] = m_out = new IoPin( 0, QPoint(16,0), id+"-outnod", 0, this, source );
 
-    //m_unit = "V";
     setVolt(5.0);
     setValLabelPos(-16, 8 , 0 ); // x, y, rot 
-    //setShowVal( true );
+    setShowProp("Voltage");
     
     setLabelPos(-16,-24, 0);
 

@@ -141,13 +141,9 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp  <Mcu>( "Mhz"      , tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
-new StringProp<Mcu>( "Program"  , tr("Fimware")  ,""    , this, &Mcu::program, &Mcu::setProgram ),
-new BoolProp  <Mcu>( "Auto_Load", tr("Auto Load Firmware at Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
-    }} );
-    addPropGroup( { tr("Hidden"), {
-new StringProp<Mcu>( "varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
-new StringProp<Mcu>( "eeprom" , "","", this, &Mcu::getEeprom, &Mcu::setEeprom )
+new DoubProp  <Mcu>( "Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
+new StringProp<Mcu>( "Program"  , tr("Fimware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
+new BoolProp  <Mcu>( "Auto_Load", tr("Load Firmware at Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
     }} );
 }
 Mcu::~Mcu()
@@ -204,43 +200,6 @@ void Mcu::setProgram( QString pro )
 
     if( QFileInfo::exists( fileNameAbs ) )
     { load( m_eMcu.m_firmware ); }
-}
-
-QString Mcu::varList()
-{
-    return m_eMcu.getRamTable()->getVarSet().join(",");
-}
-
-void Mcu::setVarList( QString vl )
-{
-    m_eMcu.getRamTable()->loadVarSet( vl.split(",") );
-}
-
-void Mcu::setEeprom( QString eep )
-{
-    if( eep.isEmpty() ) return;
-    QVector<int> eeprom;
-    QStringList list = eep.split(",");
-    for( QString val : list ) eeprom.append( val.toUInt() );
-
-    if( eeprom.size() > 0 ) m_eMcu.setEeprom( &eeprom );
-}
-
-QString Mcu::getEeprom()  // Used by property, stripped to last written value.
-{
-    QString eeprom;
-    int size = m_eMcu.romSize();
-    if( size > 0 )
-    {
-        bool empty = true;
-        for( int i=size-1; i>=0; --i )
-        {
-            uint8_t val = m_eMcu.getRomValue( i );
-            if( val < 0xFF ) empty = false;
-            if( empty ) continue;
-            eeprom.prepend( QString::number( val )+"," );
-    }   }
-    return eeprom;
 }
 
 void Mcu::loadEEPROM()

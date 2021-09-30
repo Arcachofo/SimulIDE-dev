@@ -48,7 +48,6 @@ VoltSource::VoltSource( QObject* parent, QString type, QString id )
 
     m_unit = "V";
     setShowProp("MaxValue");
-    setValLabelText( "5 V" );
     m_maxValue = 5.0;
     valueChanged( 0 );
 

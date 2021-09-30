@@ -26,16 +26,23 @@ class McuInterface;
 
 class MAINMODULE_EXPORT McuBase : public Chip
 {
-        Q_OBJECT
-
     public:
         McuBase( QObject* parent, QString type, QString id  );
         ~McuBase();
 
  static McuBase* self() { return m_pSelf; }
 
+        virtual bool setProperty( QString prop, QString val );
+
+        QString varList();
+        void setVarList( QString vl );
+
+        void setEeprom( QString eep );
+        QString getEeprom();
+
         virtual bool load( QString fileName )=0;
         virtual double freq()=0;
+        virtual void setFreq( double f )=0;
 
         virtual void reset()=0;
 

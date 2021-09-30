@@ -50,7 +50,7 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
 
         Component* getMainComp(){ return m_mainComponent; }
 
-        QString toString();
+        virtual QString toString() override;
 
     public slots:
         void slotAttach();

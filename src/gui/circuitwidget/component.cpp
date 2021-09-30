@@ -51,6 +51,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_color  = QColor( Qt::white );
 
     m_showId     = false;
+    m_showVal     = false;
     m_moving     = false;
     m_printable  = false;
     m_isMainComp = false;
@@ -81,6 +82,7 @@ Component::Component( QObject* parent, QString type, QString id )
     setValLabelPos(-16, 20, 0 );
     f.setPixelSize( 9 );
     m_valLabel->setFont( f );
+    m_valLabel->setVisible( false );
     
     setObjectName( id );
     setIdLabel( id );
@@ -96,7 +98,7 @@ new BoolProp  <Component>( "mainComp","","",this, &Component::isMainComp, &Compo
     addPropGroup( { "CompGraphic", {
 new StringProp<Component>( "ShowProp","","",this, &Component::showProp,   &Component::setShowProp ),
 new BoolProp  <Component>( "Show_id" ,"","",this, &Component::showId,     &Component::setShowId ),
-//new BoolProp<Component>  ( "Show_Val","","",this, &Component::showVal,    &Component::setShowVal ),
+new BoolProp<Component>  ( "Show_Val","","",this, &Component::showVal,    &Component::setShowVal ),
 //new DoubProp<Component>  ( "Value"   ,"","",this, &Component::getValue,   &Component::setValue ),
 //new StringProp<Component>( "Unit"    ,"","",this, &Component::unit,       &Component::setUnit ),
 new PointProp <Component>( "Pos"     ,"","",this, &Component::position,   &Component::setPosition ),
@@ -134,10 +136,10 @@ bool Component::setProperty( QString prop, QString val )
     else if( prop =="valLabelx" ) m_valLabel->m_labelx = val.toInt();   // Old: TODELETE
     else if( prop =="valLabely" ) m_valLabel->m_labely = val.toInt();   // Old: TODELETE
 
-    else if( prop =="Show_Val" ) {if( val == "false" ) m_showProperty = "";} // Old: TODELETE
+    //else if( prop =="Show_Val" ) { setShowVal( val=="true" );}          // Old: TODELETE
     else if( prop =="Unit" )                                            // Old: TODELETE
     {
-        val = val.remove(" ");
+        val = val.remove(" ").replace("u","µ");
         if( !val.isEmpty() )
         {
             ComProperty* p =  m_propHash.value( m_showProperty );
@@ -409,6 +411,7 @@ void Component::setLabelPos( int x, int y, int rot )
 void Component::updtLabelPos() { m_idLabel->updtLabelPos(); }
 
 void Component::setShowId( bool show ) { m_idLabel->setVisible( show ); m_showId = show; }
+void Component::setShowVal( bool show ) { m_valLabel->setVisible( show ); m_showVal = show; }
 
 void Component::setValLabelPos( int x, int y, int rot )
 {
@@ -420,10 +423,17 @@ void Component::setValLabelPos( int x, int y, int rot )
 
 void Component::updtValLabelPos() { m_valLabel->updtLabelPos(); }
 
+QString Component::showProp()
+{
+    if( m_showVal ) return m_showProperty;
+    else            return "";
+}
+
 void Component::setShowProp( QString prop )
 {
     m_showProperty = prop;
-    m_valLabel->setVisible( !(prop.isEmpty()) );
+    setShowVal( !(prop.isEmpty()) );
+    //m_valLabel->setVisible( !(prop.isEmpty()) );
 }
 
 void Component::setValLabelText( QString t )

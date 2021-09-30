@@ -44,9 +44,9 @@ class MAINMODULE_EXPORT Bus : public Component, public eElement
         virtual void initialize() override;
         virtual void inStateChanged( int msg ) override;
 
-        void registerPins( eNode* enode );
+        virtual void registerEnode( eNode* enode ) override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
     protected:
         int m_height;

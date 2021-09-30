@@ -49,7 +49,6 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
     m_area = QRect( -11, -8, 22, 19 );
 
     setShowProp("Voltage");
-    setValLabelText( "1.2 V" );
     setValLabelPos( 15, 12, 0 );
     
     m_vRef = 1.2;
