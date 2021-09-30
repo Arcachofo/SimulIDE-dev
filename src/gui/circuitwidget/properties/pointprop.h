@@ -20,10 +20,8 @@
 #ifndef POINTPROP_H
 #define POINTPROP_H
 
-#include <QPointF>
-
 #include "comproperty.h"
-#include "utils.h"
+#include "proputils.h"
 
 template <class Comp>
 class MAINMODULE_EXPORT PointProp : public ComProperty
@@ -33,20 +31,20 @@ class MAINMODULE_EXPORT PointProp : public ComProperty
                   , QPointF (Comp::*getter)(), void (Comp::*setter)(QPointF), QString type="point" )
         : ComProperty( name, caption, unit, type )
         {
-            m_component = comp;
+            m_comp = comp;
             m_getter = getter;
             m_setter = setter;
         }
         ~PointProp(){;}
 
         virtual void setValStr( QString val ) override
-        { (m_component->*m_setter)( getPointF( val ) ); }
+        { (m_comp->*m_setter)( getPointF( val ) ); }
 
         virtual QString getValStr()  override
-        { return getStrPointF( (m_component->*m_getter)() ); }
+        { return getStrPointF( (m_comp->*m_getter)() ); }
 
     private:
-        Comp* m_component;
+        Comp* m_comp;
         QPointF (Comp::*m_getter)();
         void    (Comp::*m_setter)(QPointF);
 };

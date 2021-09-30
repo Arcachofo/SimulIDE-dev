@@ -42,6 +42,8 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
+#include "propdialog.h"
+
 LibraryItem* Mcu::libraryItem()
 {
     return new LibraryItem(

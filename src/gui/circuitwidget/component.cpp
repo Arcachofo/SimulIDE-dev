@@ -51,13 +51,14 @@ Component::Component( QObject* parent, QString type, QString id )
     m_color  = QColor( Qt::white );
 
     m_showId     = false;
-    m_showVal     = false;
+    m_showVal    = false;
     m_moving     = false;
     m_printable  = false;
     m_isMainComp = false;
     m_hidden     = false;
     m_crashed    = false;
     m_warning    = false;
+    m_graphical  = false;
     m_background = "";
     m_showProperty = "";
 
@@ -91,26 +92,25 @@ Component::Component( QObject* parent, QString type, QString id )
     setFlag( QGraphicsItem::ItemIsSelectable, true );
 
     addPropGroup( { "CompBase", {
-new StringProp<Component>( "itemtype","","",this, &Component::itemType,   &Component::setItemType ),
-new StringProp<Component>( "uid"     ,"","",this, &Component::getUid,     &Component::setUid ),
-new BoolProp  <Component>( "mainComp","","",this, &Component::isMainComp, &Component::setMainComp ),// Related to Subcircuit:
+new StringProp<Component>( "itemtype","","", this, &Component::itemType,  &Component::setItemType ),
+new StringProp<Component>( "uid"     ,"","", this, &Component::getUid,    &Component::setUid ),
+new BoolProp  <Component>( "mainComp","","", this, &Component::isMainComp,&Component::setMainComp ),// Related to Subcircuit:
     }} );
     addPropGroup( { "CompGraphic", {
-new StringProp<Component>( "ShowProp","","",this, &Component::showProp,   &Component::setShowProp ),
-new BoolProp  <Component>( "Show_id" ,"","",this, &Component::showId,     &Component::setShowId ),
-new BoolProp<Component>  ( "Show_Val","","",this, &Component::showVal,    &Component::setShowVal ),
-//new DoubProp<Component>  ( "Value"   ,"","",this, &Component::getValue,   &Component::setValue ),
-//new StringProp<Component>( "Unit"    ,"","",this, &Component::unit,       &Component::setUnit ),
-new PointProp <Component>( "Pos"     ,"","",this, &Component::position,   &Component::setPosition ),
-new DoubProp  <Component>( "rotation","","",this, &Component::getAngle,   &Component::setAngle ),
-new IntProp   <Component>( "hflip"   ,"","",this, &Component::hflip,      &Component::setHflip ),
-new IntProp   <Component>( "vflip"   ,"","",this, &Component::vflip,      &Component::setVflip ),
-new StringProp<Component>( "label"   ,"","",this, &Component::idLabel,    &Component::setIdLabel ),
-
-new PointProp<Label>( "idLabPos" ,"","", m_idLabel,  &Label::getLabelPos, &Label::setLabelPos ),
-new IntProp  <Label>( "labelrot" ,"","", m_idLabel,  &Label::getAngle,    &Label::setAngle ),
-new PointProp<Label>( "valLabPos","","", m_valLabel, &Label::getLabelPos, &Label::setLabelPos ),
-new IntProp  <Label>( "valLabRot","","", m_valLabel, &Label::getAngle,    &Label::setAngle ),
+new StringProp<Component>( "ShowProp","","", this, &Component::showProp,  &Component::setShowProp ),
+new BoolProp  <Component>( "Show_id" ,"","", this, &Component::showId,    &Component::setShowId ),
+new BoolProp<Component>  ( "Show_Val","","", this, &Component::showVal,   &Component::setShowVal ),
+//new DoubProp<Component>  ( "Value"   ,"","",this, &Component::getValue,  &Component::setValue ),
+//new StringProp<Component>( "Unit"    ,"","",this, &Component::unit,      &Component::setUnit ),
+new PointProp <Component>( "Pos"     ,"","", this, &Component::position,  &Component::setPosition ),
+new DoubProp  <Component>( "rotation","","", this, &Component::getAngle,  &Component::setAngle ),
+new IntProp   <Component>( "hflip"   ,"","", this, &Component::hflip,     &Component::setHflip ),
+new IntProp   <Component>( "vflip"   ,"","", this, &Component::vflip,     &Component::setVflip ),
+new StringProp<Component>( "label"   ,"","", this, &Component::idLabel,   &Component::setIdLabel ),
+new PointProp<Component>( "idLabPos" ,"","", this, &Component::getIdPos,  &Component::setIdPos ),
+new IntProp  <Component>( "labelrot" ,"","", this, &Component::getIdRot,  &Component::setIdRot ),
+new PointProp<Component>( "valLabPos","","", this, &Component::getValPos, &Component::setValPos ),
+new IntProp  <Component>( "valLabRot","","", this, &Component::getValRot, &Component::setValRot ),
     }} );
 
     addPropGroup( { "Board", {                   // Board properties
@@ -122,7 +122,7 @@ new DoubProp <Component>( "circRot" , "","", this, &Component::circRot,  &Compon
 }
 Component::~Component(){}
 
-bool Component::setProperty( QString prop, QString val )
+bool Component::setPropStr( QString prop, QString val )
 {
     if     ( prop =="id" )        m_idLabel->setPlainText( val );       // Old: TODELETE
     else if( prop =="objectName") return true;                          // Old: TODELETE
@@ -146,7 +146,7 @@ bool Component::setProperty( QString prop, QString val )
             if( p ) p->setUnit( val );
         }
     }
-    else return CompBase::setProperty( prop, val );
+    else return CompBase::setPropStr( prop, val );
     return true;
 }
 
@@ -401,6 +401,12 @@ void Component::rotateHalf()
 QString Component::idLabel() { return m_idLabel->toPlainText(); }
 void Component::setIdLabel( QString id ) { m_idLabel->setPlainText( id ); }
 
+QPointF Component::getIdPos() { return m_idLabel->getLabelPos(); }
+void Component::setIdPos( QPointF p ) { m_idLabel->setLabelPos( p ); }
+
+int Component::getIdRot() { return m_idLabel->getAngle(); }
+void Component::setIdRot( int r ) { m_idLabel->setAngle(r); }
+
 void Component::setLabelPos( int x, int y, int rot )
 {
     m_idLabel->m_labelx = x;
@@ -413,6 +419,12 @@ void Component::updtLabelPos() { m_idLabel->updtLabelPos(); }
 void Component::setShowId( bool show ) { m_idLabel->setVisible( show ); m_showId = show; }
 void Component::setShowVal( bool show ) { m_valLabel->setVisible( show ); m_showVal = show; }
 
+QPointF Component::getValPos() { return m_valLabel->getLabelPos(); }
+void Component::setValPos( QPointF p ) { m_valLabel->setLabelPos( p ); }
+
+int Component::getValRot() { return m_valLabel->getAngle(); }
+void Component::setValRot( int r ) { m_valLabel->setAngle(r); }
+
 void Component::setValLabelPos( int x, int y, int rot )
 {
     m_valLabel->m_labelx = x;
@@ -422,6 +434,8 @@ void Component::setValLabelPos( int x, int y, int rot )
 }
 
 void Component::updtValLabelPos() { m_valLabel->updtLabelPos(); }
+
+void Component::setValLabelText( QString t ) { m_valLabel->setPlainText( t ); }
 
 QString Component::showProp()
 {
@@ -434,11 +448,6 @@ void Component::setShowProp( QString prop )
     m_showProperty = prop;
     setShowVal( !(prop.isEmpty()) );
     //m_valLabel->setVisible( !(prop.isEmpty()) );
-}
-
-void Component::setValLabelText( QString t )
-{
-    m_valLabel->setPlainText( t );
 }
 
 void Component::setHflip( int hf )

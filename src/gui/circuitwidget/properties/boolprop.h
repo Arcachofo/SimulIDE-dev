@@ -21,36 +21,29 @@
 #define BOOLPROP_H
 
 #include "comproperty.h"
-#include "boolval.h"
 
 template <class Comp>
 class MAINMODULE_EXPORT BoolProp : public ComProperty
 {
     public:
         BoolProp( QString name, QString caption, QString unit, Comp* comp
-                    , bool (Comp::*getter)(), void (Comp::*setter)(bool), QString type="bool" )
+                , bool (Comp::*getter)(), void (Comp::*setter)(bool), QString type="bool" )
         : ComProperty( name, caption, unit, type )
         {
-            m_component = comp;
+            m_comp = comp;
             m_getter = getter;
             m_setter = setter;
         }
         ~BoolProp(){;}
 
         virtual void setValStr( QString val ) override
-        { (m_component->*m_setter)( val == "true" ); }
+        { (m_comp->*m_setter)( val == "true" ); }
 
         virtual QString getValStr() override
-        { return (m_component->*m_getter)() ? "true" : "false"; }
-
-        virtual PropVal* getWidget( PropDialog* dialog ) override
-        {
-            if( !m_widget ) m_widget = new BoolVal( dialog, m_component, this );
-            return m_widget;
-        }
+        { return (m_comp->*m_getter)() ? "true" : "false"; }
 
     private:
-        Comp* m_component;
+        Comp* m_comp;
         bool (Comp::*m_getter)();
         void (Comp::*m_setter)(bool);
 };

@@ -21,7 +21,6 @@
 #define DOUBPROP_H
 
 #include "numprop.h"
-#include "numval.h"
 
 template <class Comp>
 class MAINMODULE_EXPORT DoubProp : public NumProp
@@ -31,41 +30,27 @@ class MAINMODULE_EXPORT DoubProp : public NumProp
                 , double (Comp::*getter)(), void (Comp::*setter)(double), QString type="double" )
         : NumProp( name, caption, unit, type )
         {
-            m_component = comp;
+            m_comp = comp;
             m_getter = getter;
             m_setter = setter;
         }
         ~DoubProp(){;}
 
         virtual void setUnit( QString u ) override  // Old: TODELETE
-        { setValStr( QString::number( (m_component->*m_getter)() )+" "+u ); }
+        { setValStr( getValU( (m_comp->*m_getter)(), u ) ); }
 
         virtual void setValStr( QString val ) override
-        {
-            QStringList l = val.split(" ");
-            double  v = l.first().toDouble();
-            val = QString::number( v );
-            if( l.size() > 1 ) m_unit = l.last();
-            v = v*getMultiplier( m_unit );
-
-            (m_component->*m_setter)( v );
-            if( m_component->showProp() == m_name ) m_component->setValLabelText( val+" "+m_unit );
-        }
+        { (m_comp->*m_setter)( getVal( val, m_comp ) ); }
 
         virtual QString getValStr() override
-        { return getStr( (m_component->*m_getter)() ); }
+        { return getStr( (m_comp->*m_getter)() ); }
 
-        virtual QString getValue()
-        { return QString::number( (m_component->*m_getter)() ); }
+        virtual double getValue()
+        { return (m_comp->*m_getter)(); }
 
-        virtual PropVal* getWidget( PropDialog* dialog ) override
-        {
-            if( !m_widget ) m_widget = new NumVal( dialog, m_component, this );
-            return m_widget;
-        }
 
     private:
-        Comp* m_component;
+        Comp* m_comp;
         double (Comp::*m_getter)();
         void   (Comp::*m_setter)(double);
 };

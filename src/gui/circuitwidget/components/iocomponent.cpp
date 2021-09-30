@@ -21,9 +21,9 @@
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "iopin.h"
 
 #include "doubleprop.h"
-#include "intprop.h"
 
 IoComponent::IoComponent( QObject* parent, QString type, QString id)
            : Component( parent, type, id )

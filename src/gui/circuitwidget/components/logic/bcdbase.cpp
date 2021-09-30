@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "bcdbase.h"
+#include "iopin.h"
 
 const uint8_t BcdBase::m_values[]={
         0b00111111,

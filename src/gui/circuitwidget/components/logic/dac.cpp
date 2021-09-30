@@ -22,6 +22,7 @@
 #include "dac.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "iopin.h"
 
 #include "doubleprop.h"
 #include "intprop.h"

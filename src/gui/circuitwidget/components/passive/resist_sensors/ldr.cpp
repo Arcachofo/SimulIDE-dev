@@ -22,6 +22,7 @@
 
 #include "doubleprop.h"
 #include "intprop.h"
+#include "propdialog.h"
 
 Component* Ldr::construct( QObject* parent, QString type, QString id )
 { return new Ldr( parent, type, id ); }

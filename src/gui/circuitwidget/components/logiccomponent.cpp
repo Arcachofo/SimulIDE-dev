@@ -22,6 +22,7 @@
 #include "simulator.h"
 #include "connector.h"
 #include "circuit.h"
+#include "iopin.h"
 
 QStringList LogicComponent::m_triggers = {tr("None"),tr("Clock"),tr("Enable")};
 

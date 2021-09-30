@@ -20,6 +20,7 @@
 #include "dectobcd.h"
 #include "itemlibrary.h"
 #include "circuit.h"
+#include "iopin.h"
 
 #include "boolprop.h"
 

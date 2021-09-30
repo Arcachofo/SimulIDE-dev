@@ -45,12 +45,10 @@ class MAINMODULE_EXPORT CompBase : public QObject
         void remPropGroup( QString name );
         QList<propGroup> propeties() { return m_properties; }
 
-        bool isGraphical() { return m_graphical; }
-
         virtual QStringList getEnums( QString name ) { QStringList nul;return nul;}
 
-        virtual bool    setProperty( QString prop, QString val );
-        virtual QString getProperty( QString prop );
+        virtual bool    setPropStr( QString prop, QString val );
+        virtual QString getPropStr( QString prop );
 
         virtual QString toString();
 
@@ -61,20 +59,10 @@ class MAINMODULE_EXPORT CompBase : public QObject
         QString itemType()  { return m_type; }
         void setItemType( QString ) {;}
 
-        bool isMainComp() { return m_isMainComp; }
-        void setMainComp( bool m ) { m_isMainComp = m; }
+        virtual void setValLabelText( QString t ){;}
 
-        QPointF boardPos() { return m_boardPos; }
-        void setBoardPos( QPointF pos ) { m_boardPos = pos; }
-
-        QPointF circPos() { return m_circPos; }
-        void setCircPos( QPointF pos ) { m_circPos = pos; }
-
-        double boardRot() { return m_boardRot; }
-        void setBoardRot( double rot ) { m_boardRot = rot; }
-
-        double circRot() { return m_circRot; }
-        void setCircRot( double rot ) { m_circRot = rot; }
+        virtual QString showProp(){return "";}
+        virtual void setShowProp( QString prop ){;}
 
         static bool m_saveBoard;
 
@@ -82,21 +70,7 @@ class MAINMODULE_EXPORT CompBase : public QObject
         QString m_id;
         QString m_type;
 
-        bool m_graphical;
-        bool m_showId;
-        bool m_showVal;
-        bool m_moving;
-        bool m_warning;
-        bool m_crashed;
-        bool m_hidden;
         bool m_isMainComp;
-
-        QPointF m_boardPos;
-        QPointF m_circPos;
-        double  m_boardRot;
-        double  m_circRot;
-
-        QString m_showProperty; // Property shown in val Label
 
         PropDialog* m_propDialog;
         QList<propGroup> m_properties;

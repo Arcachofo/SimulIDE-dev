@@ -77,10 +77,10 @@ new DoubProp<Diode>( "EmCoef"    , tr("Emission Coefficient"),""  , this, &Diode
 }
 Diode::~Diode(){}
 
-bool Diode::setProperty( QString prop, QString val )
+bool Diode::setPropStr( QString prop, QString val )
 {
     if( prop =="Zener_Volt" ) setZenerV( val.toDouble() ); //  Old: TODELETE
-    else return Component::setProperty( prop, val );
+    else return Component::setPropStr( prop, val );
     return true;
 }
 

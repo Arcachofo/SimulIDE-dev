@@ -128,6 +128,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void dropEvent( QGraphicsSceneDragDropEvent* event );
 
     private:
+        void loadStrDoc( QString doc );
         void loadDomDoc( QDomDocument* doc );
         void loadProperties( QDomElement* element, CompBase* comp );
         void loadCompProperties( QDomElement* element, Component* comp );

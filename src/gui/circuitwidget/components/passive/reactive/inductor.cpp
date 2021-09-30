@@ -47,12 +47,13 @@ Inductor::Inductor( QObject* parent, QString type, QString id )
     m_ePin[1] = m_pin[1];
     m_pin[0]->setLength( 4.5 );
     m_pin[1]->setLength( 4.5 );
-    
-    setShowProp("Inductance");
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Inductor>( "Inductance", tr("Inductance"), "H", this, &Inductor::ind, &Inductor::setInd )
     } } );
+
+    setShowProp("Inductance");
+    setPropStr( "Inductance", "1" );
 }
 Inductor::~Inductor(){}
 

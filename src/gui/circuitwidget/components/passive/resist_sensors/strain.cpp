@@ -29,6 +29,7 @@
 #include "itemlibrary.h"
 
 #include "doubleprop.h"
+#include "propdialog.h"
 
 Component *Strain::construct (QObject* parent, QString type, QString id)
 { return new Strain (parent, type, id); }

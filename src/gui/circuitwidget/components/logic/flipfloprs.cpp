@@ -20,6 +20,7 @@
 #include "flipfloprs.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "iopin.h"
 
 Component* FlipFlopRS::construct( QObject* parent, QString type, QString id )
 { return new FlipFlopRS( parent, type, id ); }

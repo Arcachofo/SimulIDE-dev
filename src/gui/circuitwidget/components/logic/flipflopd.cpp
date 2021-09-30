@@ -20,6 +20,7 @@
 #include "flipflopd.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "iopin.h"
 
 Component* FlipFlopD::construct( QObject* parent, QString type, QString id )
 { return new FlipFlopD( parent, type, id ); }

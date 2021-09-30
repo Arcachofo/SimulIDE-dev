@@ -20,6 +20,7 @@
 #include "flipflopjk.h"
 #include "itemlibrary.h"
 #include "simulator.h"
+#include "iopin.h"
 
 Component* FlipFlopJK::construct( QObject* parent, QString type, QString id )
 { return new FlipFlopJK( parent, type, id ); }

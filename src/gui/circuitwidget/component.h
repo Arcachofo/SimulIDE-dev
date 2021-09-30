@@ -27,8 +27,8 @@
 #include "updatable.h"
 
 class Pin;
-class Label;
 class eNode;
+class Label;
 
 class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, public Updatable
 {
@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         Component( QObject* parent, QString type, QString id );
         ~Component();
 
-        virtual bool setProperty( QString prop, QString val ) override;
+        virtual bool setPropStr( QString prop, QString val ) override;
 
         enum { Type = UserType + 1 };
         int type() const { return Type; }
@@ -55,21 +55,51 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         QString idLabel();
         void setIdLabel( QString id );
 
-        void setLabelPos( int x, int y, int rot=0 );
-        void updtLabelPos();
-
         bool showId() { return m_showId; }
         void setShowId( bool show );
+
+        QPointF getIdPos();
+        void setIdPos( QPointF p );
+
+        int getIdRot();
+        void setIdRot( int r );
+
+        void setLabelPos( int x, int y, int rot=0 );
+        void updtLabelPos();
 
         bool showVal() { return m_showVal; }
         void setShowVal( bool show );
 
-        QString showProp();
-        void setShowProp( QString prop );
+        QPointF getValPos();
+        void setValPos( QPointF p );
 
-        void setValLabelText( QString t );
+        int getValRot();
+        void setValRot( int r );
+
         void setValLabelPos( int x, int y, int rot );
         void updtValLabelPos();
+
+        virtual void setValLabelText( QString t ) override;
+
+        virtual QString showProp() override;
+        virtual void setShowProp( QString prop )override;
+
+        bool isGraphical() { return m_graphical; }
+
+        bool isMainComp() { return m_isMainComp; }
+        void setMainComp( bool m ) { m_isMainComp = m; }
+
+        QPointF boardPos() { return m_boardPos; }
+        void setBoardPos( QPointF pos ) { m_boardPos = pos; }
+
+        QPointF circPos() { return m_circPos; }
+        void setCircPos( QPointF pos ) { m_circPos = pos; }
+
+        double boardRot() { return m_boardRot; }
+        void setBoardRot( double rot ) { m_boardRot = rot; }
+
+        double circRot() { return m_circRot; }
+        void setCircRot( double rot ) { m_circRot = rot; }
 
         int  hflip() { return m_Hflip; }
         virtual void setHflip( int hf );
@@ -125,6 +155,21 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         void setflip();
 
+        bool m_graphical;
+        bool m_showId;
+        bool m_showVal;
+        bool m_moving;
+        bool m_warning;
+        bool m_crashed;
+        bool m_hidden;
+
+        QPointF m_boardPos;
+        QPointF m_circPos;
+        double  m_boardRot;
+        double  m_circRot;
+
+        QString m_showProperty; // Property shown in val Label
+
         double  m_opCount;
         
         int m_Hflip;
@@ -132,15 +177,15 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
  static int m_error;
  static bool m_selMainCo;
 
-        Label* m_idLabel;
-        Label* m_valLabel;
-
         QString m_help;
         QString m_background;   // BackGround Image path
 
         QColor  m_color;
         QRectF  m_area;         // bounding rect
         QPointF m_eventpoint;
+
+        Label* m_idLabel;
+        Label* m_valLabel;
 
         std::vector<Pin*> m_pin;
 };

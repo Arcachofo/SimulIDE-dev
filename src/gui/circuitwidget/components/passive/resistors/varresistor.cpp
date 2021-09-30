@@ -22,6 +22,7 @@
 #include "simulator.h"
 
 #include "doubleprop.h"
+#include "propdialog.h"
 
 Component* VarResistor::construct( QObject* parent, QString type, QString id )
 { return new VarResistor( parent, type, id ); }

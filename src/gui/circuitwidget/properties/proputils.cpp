@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,28 +17,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "capacitorbase.h"
-#include "pin.h"
+#include <QStringList>
+#include <QPointF>
+#include "proputils.h"
+//#include "utils.h"
 
-#include "doubleprop.h"
-
-CapacitorBase::CapacitorBase( QObject* parent, QString type, QString id )
-             : Comp2Pin( parent, type, id )
-             , eCapacitor( id )
+QPointF getPointF( QString p )
 {
-    m_area = QRectF( -10, -10, 20, 20 );
-
-    m_ePin[0] = m_pin[0];
-    m_ePin[1] = m_pin[1];
-    m_pin[0]->setLength( 12 );
-    m_pin[1]->setLength( 12 );
-
-    addPropGroup( { tr("Main"), {
-new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance"), "F", this, &CapacitorBase::cap, &CapacitorBase::setCap )
-    } } );
-
-    setShowProp("Capacitance");
-    setPropStr( "Capacitance", "10 µF" );
+    QStringList plist = p.split(",");
+    QPointF point( plist.first().toDouble(), plist.last().toDouble() );
+    return point;
 }
-CapacitorBase::~CapacitorBase(){}
-
+QString getStrPointF( QPointF p )
+{
+    return QString::number( p.x())+","+QString::number(p.y() );
+}

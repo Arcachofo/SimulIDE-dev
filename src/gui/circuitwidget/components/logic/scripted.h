@@ -24,9 +24,10 @@
 #include <QScriptProgram>
 
 #include "logiccomponent.h"
+#include "iopin.h"
 
 class LibraryItem;
-class IoPin;
+//class IoPin;
 
 class MAINMODULE_EXPORT Scripted : public LogicComponent
 {

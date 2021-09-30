@@ -76,15 +76,10 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
     
     m_resA.setEpin( 0, &m_pinA );
     m_resA.setEpin( 1, &m_ePinA );
-    
     m_resB.setEpin( 1, &m_pinB );
     m_resB.setEpin( 0, &m_ePinB );
 
-    m_resist = 1000;
-    setShowProp("Resistance");
     setValLabelPos( 15,-20, 0 );
-
-    resChanged( 500 );
     setLabelPos(-16,-40, 0);
     
     Simulator::self()->addToUpdateList( this );
@@ -96,6 +91,10 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
 new DoubProp<Potentiometer>( "Resistance", tr("Resistance")   ,"Ω", this, &Potentiometer::getRes, &Potentiometer::setRes ),
 new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Potentiometer::getVal, &Potentiometer::setVal )
     } } );
+
+    setShowProp("Resistance");
+    setProperty( "Resistance", "1 kΩ" );
+    resChanged( 500 );
 }
 Potentiometer::~Potentiometer() {}
 

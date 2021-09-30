@@ -266,7 +266,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                         if( graphProps.contains( propName )) continue; // Don't load "Component" properties.
 
                         QString value = element.attribute( propName );
-                        if( !comp->setProperty( propName, value ) )
+                        if( !comp->setPropStr( propName, value ) )
                             qDebug() << "SubCircuit"<<m_id<<" Wrong Property: "<<comp->getUid()<<propName<<value;
                     }
                     ///circ->loadProperties( &element, comp );

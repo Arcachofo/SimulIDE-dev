@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT Diode : public Comp2Pin, public eDiode
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem *libraryItem();
 
-        virtual bool setProperty( QString prop, QString val ) override;
+        virtual bool setPropStr( QString prop, QString val ) override;
 
         virtual void initialize() override;
         virtual void updateStep() override;

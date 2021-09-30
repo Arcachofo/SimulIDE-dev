@@ -49,9 +49,6 @@ ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
 {
     m_size = 0;
     setSize( 8 );
-    
-    m_resist = 100;
-    setShowProp("Resistance");
 
     setLabelPos(-24,-40, 0);
     setValLabelPos( 5,-26, 90 );
@@ -61,6 +58,9 @@ ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
 new DoubProp<ResistorDip>( "Resistance", tr("Resistance"),"Ω"       , this, &ResistorDip::getRes, &ResistorDip::setRes ),
 new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &ResistorDip::size,   &ResistorDip::setSize, "uint" )
     } } );
+
+    setShowProp("Resistance");
+    setProperty( "Resistance", "100" );
 }
 ResistorDip::~ResistorDip(){}
 

@@ -20,7 +20,12 @@
 #include "propdialog.h"
 #include "component.h"
 #include "labelval.h"
-#include "propval.h"
+//#include "propval.h"
+
+#include "numval.h"
+#include "stringval.h"
+#include "enumval.h"
+#include "boolval.h"
 
 #include "comproperty.h"
 
@@ -74,7 +79,15 @@ void PropDialog::setComponent( Component* comp )
                     propWidget->layout()->addWidget( mp );
                     continue;
                 }
-                PropVal* mp = prop->getWidget( this );
+                QString type = prop->type();
+                PropVal* mp = NULL;
+
+                if     ( type == "double" ) mp = new NumVal( this, comp, prop );
+                else if( type == "int"    ) mp = new NumVal( this, comp, prop );
+                else if( type == "string" ) mp = new StringVal( this, comp, prop );
+                else if( type == "enum"   ) mp = new EnumVal( this, comp, prop );
+                else if( type == "bool"   ) mp = new BoolVal( this, comp, prop );
+
                 if( !mp ) continue;
 
                 mp->setup();

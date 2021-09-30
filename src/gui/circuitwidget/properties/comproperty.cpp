@@ -18,7 +18,8 @@
  ***************************************************************************/
 
 #include "comproperty.h"
-#include "component.h"
+//#include "component.h"
+#include "propval.h"
 
 ComProperty::ComProperty( QString name, QString caption, QString unit, QString type )
 {
@@ -28,5 +29,10 @@ ComProperty::ComProperty( QString name, QString caption, QString unit, QString t
     m_type = type;
 
     m_widget = NULL;
+}
+
+void ComProperty::setWidget( PropVal* w )
+{
+    m_widget = w;
 }
 

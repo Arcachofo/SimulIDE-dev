@@ -22,7 +22,9 @@
 
 #include <QString>
 
-#include "propdialog.h"
+class PropVal;
+class PropDialog;
+class Component;
 
 class MAINMODULE_EXPORT ComProperty
 {
@@ -40,9 +42,9 @@ class MAINMODULE_EXPORT ComProperty
 
         virtual void    setValStr( QString val ){;}
         virtual QString getValStr(){return "";}
-        virtual QString getValue(){return "";}
+        virtual double  getValue(){return 0;}
 
-        virtual PropVal* getWidget( PropDialog* dialog ){ return NULL; }
+        void setWidget( PropVal* w );
 
     protected:
         PropVal* m_widget;

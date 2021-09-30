@@ -234,7 +234,7 @@ bool lessPinY( Pin* pinA, Pin* pinB )
     return pinA->y() < pinB->y();
 }
 
-QPointF getPointF( QString p )
+/*QPointF getPointF( QString p )
 {
     QStringList plist = p.split(",");
     QPointF point( plist.first().toDouble(), plist.last().toDouble() );
@@ -243,4 +243,4 @@ QPointF getPointF( QString p )
 QString getStrPointF( QPointF p )
 {
     return QString::number(p.x())+","+QString::number(p.y());
-}
+}*/

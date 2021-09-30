@@ -21,6 +21,7 @@
 #include "itemlibrary.h"
 
 #include "intprop.h"
+#include "propdialog.h"
 
 Component* Thermistor::construct( QObject* parent, QString type, QString id )
 { return new Thermistor( parent, type, id ); }

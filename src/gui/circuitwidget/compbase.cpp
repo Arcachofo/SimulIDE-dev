@@ -31,7 +31,6 @@ CompBase::CompBase( QObject* parent, QString type, QString id )
     m_type = type;
 
     m_propDialog = NULL;
-    m_graphical  = false;
 }
 CompBase::~CompBase()
 {
@@ -54,14 +53,14 @@ void CompBase::addPropGroup( propGroup pg )
     m_properties.append( pg );
 }
 
-bool CompBase::setProperty( QString prop, QString val )
+bool CompBase::setPropStr( QString prop, QString val )
 {
     ComProperty* p = m_propHash.value( prop );
     if( p ) p->setValStr( val );
     else return false;
     return true;
 }
-QString CompBase::getProperty( QString prop )
+QString CompBase::getPropStr( QString prop )
 {
     ComProperty* p = m_propHash.value( prop );
     if( p ) return p->getValStr();
@@ -92,3 +91,4 @@ QString CompBase::toString() // Used to save circuit
 
     return item;
 }
+

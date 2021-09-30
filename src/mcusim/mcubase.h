@@ -32,7 +32,7 @@ class MAINMODULE_EXPORT McuBase : public Chip
 
  static McuBase* self() { return m_pSelf; }
 
-        virtual bool setProperty( QString prop, QString val );
+        virtual bool setPropStr( QString prop, QString val );
 
         QString varList();
         void setVarList( QString vl );

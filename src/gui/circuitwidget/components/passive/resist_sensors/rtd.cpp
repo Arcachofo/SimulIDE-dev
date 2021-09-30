@@ -26,6 +26,7 @@
 #include "itemlibrary.h"
 
 #include "doubleprop.h"
+#include "propdialog.h"
 
 Component* RTD::construct( QObject* parent, QString type, QString id )
 { return new RTD( parent, type, id ); }

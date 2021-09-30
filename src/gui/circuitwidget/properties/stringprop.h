@@ -21,18 +21,16 @@
 #define STRINGPROP_H
 
 #include "comproperty.h"
-#include "stringval.h"
-#include "enumval.h"
 
 template <class Comp>
 class MAINMODULE_EXPORT StringProp : public ComProperty
 {
     public:
         StringProp( QString name, QString caption, QString unit, Comp* comp
-                    , QString (Comp::*getter)(), void (Comp::*setter)(QString), QString type="string" )
+                  , QString (Comp::*getter)(), void (Comp::*setter)(QString), QString type="string" )
         : ComProperty( name, caption, unit, type )
         {
-            m_component = comp;
+            m_comp = comp;
             m_getter = getter;
             m_setter = setter;
         }
@@ -40,28 +38,15 @@ class MAINMODULE_EXPORT StringProp : public ComProperty
 
         virtual void setValStr( QString val ) override
         {
-            (m_component->*m_setter)( val );
-            if( (m_component->itemType() == "Connector")
-              || (m_component->itemType() == "Node")   ) return;
-            Component* comp = (Component*)m_component;
-            if( comp->showProp() == m_name ) comp->setValLabelText( val );
+            (m_comp->*m_setter)( val );
+            if( m_comp->showProp() == m_name ) m_comp->setValLabelText( val );
         }
 
         virtual QString getValStr() override
-        { return (m_component->*m_getter)(); }
-
-        virtual PropVal* getWidget( PropDialog* dialog ) override
-        {
-            if( !m_widget )
-            {
-                if( m_type == "enum") m_widget = new EnumVal( dialog, (Component*)m_component, this );
-                else                  m_widget = new StringVal( dialog, (Component*)m_component, this );
-            }
-            return m_widget;
-        }
+        { return (m_comp->*m_getter)(); }
 
     private:
-        Comp* m_component;
+        Comp* m_comp;
         QString (Comp::*m_getter)();
         void    (Comp::*m_setter)(QString);
 };

@@ -102,9 +102,8 @@ void NumVal::updtValues()
 
     showVal->setChecked( m_component->showProp() == m_propName );
 
-    double val = m_property->getValue().toDouble();
     double multiplier = getMultiplier( unitBox->currentText() );
-    val /= multiplier;
+    double val = m_property->getValue()/multiplier;
     valueBox->setValue( val );
 
     /*QString valStr = m_property->getValStr();

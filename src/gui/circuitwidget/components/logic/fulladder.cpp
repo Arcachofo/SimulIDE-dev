@@ -19,6 +19,7 @@
 
 #include "fulladder.h"
 #include "itemlibrary.h"
+#include "iopin.h"
 
 Component* FullAdder::construct(QObject *parent, QString type, QString id)
 { return new FullAdder(parent, type, id); }

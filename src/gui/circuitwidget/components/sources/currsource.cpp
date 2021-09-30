@@ -44,13 +44,14 @@ CurrSource::CurrSource( QObject* parent, QString type, QString id )
     m_pin[0] = m_outPin = new Pin( 0, QPoint(28,16), id+"-outPin", 0, this );
 
     m_unit = "A";
-    setShowProp("MaxValue");
-    m_maxValue =  1.0;
-    valueChanged( 0 );
 
     addPropGroup( { tr("Main"), {
 new DoubProp<CurrSource>( "MaxValue",tr("Max. Current"),"A",this,&CurrSource::maxValue, &CurrSource::setMaxValue )
     }} );
+
+    setShowProp("MaxValue");
+    setProperty( "MaxValue", "1" );
+    valueChanged( 0 );
 }
 CurrSource::~CurrSource(){}
 

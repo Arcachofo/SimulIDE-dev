@@ -52,15 +52,15 @@ Rail::Rail( QObject* parent, QString type, QString id )
     m_pin.resize(1);
     m_pin[0] = m_out = new IoPin( 0, QPoint(16,0), id+"-outnod", 0, this, source );
 
-    setVolt(5.0);
-    setValLabelPos(-16, 8 , 0 ); // x, y, rot 
-    setShowProp("Voltage");
-    
+    setValLabelPos(-16, 8 , 0 ); // x, y, rot
     setLabelPos(-16,-24, 0);
 
     addPropGroup( { tr("Main"), {
 new DoubProp<Rail>( "Voltage", tr("Voltage"),"V", this, &Rail::volt, &Rail::setVolt )
     }} );
+
+    setShowProp("Voltage");
+    setProperty( "Voltage", "5" );
 }
 Rail::~Rail() { delete m_out; }
 

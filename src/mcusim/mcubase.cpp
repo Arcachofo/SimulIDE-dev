@@ -37,10 +37,10 @@ McuBase::~McuBase()
     if( m_pSelf == this ) m_pSelf= NULL;
 }
 
-bool McuBase::setProperty( QString prop, QString val )
+bool McuBase::setPropStr( QString prop, QString val )
 {
     if( prop =="Mhz" ) setFreq( val.toDouble()*1e6 ); //  Old: TODELETE
-    else return Component::setProperty( prop, val );
+    else return Component::setPropStr( prop, val );
     return true;
 }
 

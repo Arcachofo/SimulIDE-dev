@@ -74,7 +74,7 @@ void ColorVal::on_valueBox_currentIndexChanged( int index )
     }
     else m_color = QColor( value );
 
-    m_component->setProperty( m_propName, "" /*m_color*/ ); /// FIXME
+    m_component->setPropStr( m_propName, m_color.name() ); /// FIXME
 
     QPalette pal = colorW->palette();
     pal.setColor( QPalette::Base, m_color );

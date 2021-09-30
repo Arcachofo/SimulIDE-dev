@@ -48,10 +48,8 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
 {
     m_area = QRect( -11, -8, 22, 19 );
 
-    setShowProp("Voltage");
     setValLabelPos( 15, 12, 0 );
-    
-    m_vRef = 1.2;
+
     m_voltPos = 0;
     m_voltNeg = 0;
     
@@ -76,6 +74,9 @@ VoltReg::VoltReg( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new DoubProp<VoltReg>( "Voltage", tr("Output Voltage"),"V", this, &VoltReg::outVolt, &VoltReg::setOutVolt )
     }} );
+
+    setShowProp("Voltage");
+    setProperty( "Voltage", "1.2" );
 }
 VoltReg::~VoltReg(){}
 

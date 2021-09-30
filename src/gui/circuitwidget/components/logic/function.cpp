@@ -29,10 +29,11 @@
 #include "simulator.h"
 #include "itemlibrary.h"
 #include "utils.h"
+#include "iopin.h"
 
 #include "stringprop.h"
 #include "boolprop.h"
-#include "intprop.h"
+//#include "intprop.h"
 
 Component* Function::construct( QObject* parent, QString type, QString id )
 { return new Function( parent, type, id ); }

@@ -71,10 +71,10 @@ new DoubProp<WaveGen>( "Mid_Volt"  , tr("Middle Voltage"),"V", this, &WaveGen::m
 }
 WaveGen::~WaveGen(){}
 
-bool WaveGen::setProperty( QString prop, QString val )
+bool WaveGen::setPropStr( QString prop, QString val )
 {
     if( prop =="Volt_Base" ) m_voltBase = val.toDouble(); //  Old: TODELETE
-    else return ClockBase::setProperty( prop, val );
+    else return ClockBase::setPropStr( prop, val );
     return true;
 }
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,28 +17,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "capacitorbase.h"
-#include "pin.h"
+#include "numprop.h"
+#include "numval.h"
+#include "utils.h"
+#include "compbase.h"
 
-#include "doubleprop.h"
-
-CapacitorBase::CapacitorBase( QObject* parent, QString type, QString id )
-             : Comp2Pin( parent, type, id )
-             , eCapacitor( id )
+QString NumProp::getValU( double val, QString u )
 {
-    m_area = QRectF( -10, -10, 20, 20 );
-
-    m_ePin[0] = m_pin[0];
-    m_ePin[1] = m_pin[1];
-    m_pin[0]->setLength( 12 );
-    m_pin[1]->setLength( 12 );
-
-    addPropGroup( { tr("Main"), {
-new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance"), "F", this, &CapacitorBase::cap, &CapacitorBase::setCap )
-    } } );
-
-    setShowProp("Capacitance");
-    setPropStr( "Capacitance", "10 µF" );
+    return QString::number( val )+" "+u;
 }
-CapacitorBase::~CapacitorBase(){}
 
+QString NumProp::getStr( double val )
+{
+    QString valStr;
+    if( m_widget ) valStr = m_widget->getValWithUnit();
+    else{
+        double multiplier = getMultiplier( m_unit );
+        valStr = QString::number( val/multiplier );
+        if( !m_unit.isEmpty() ) valStr.append(" "+m_unit );
+    }
+    return valStr;
+}
+
+double NumProp::getVal( QString val, CompBase* comp )
+{
+    QStringList l = val.split(" ");
+    double  v = l.first().toDouble();
+    val = QString::number( v );
+    if( l.size() > 1 ) m_unit = l.last();
+    if( comp->showProp() == m_name ) comp->setValLabelText( val+" "+m_unit );
+
+    return  v*getMultiplier( m_unit );
+
+}

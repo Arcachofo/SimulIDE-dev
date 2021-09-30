@@ -21,7 +21,9 @@
 #define IOCOMPONENT_H
 
 #include "component.h"
-#include "iopin.h"
+
+class eElement;
+class IoPin;
 
 class MAINMODULE_EXPORT IoComponent : public Component
 {
