@@ -209,8 +209,8 @@ int Compiler::runBuildStep( QString fullCommand )
     }
     if( !p_stderr.isEmpty() )
     {
-        QString stderr = p_stderr.toLower();
-        if( stderr.contains( QRegExp("\\berror\\b") ))
+        QString stde = p_stderr;
+        if( stde.toLower().contains( QRegExp("\\berror\\b") ))
         {
             m_outPane->appendLine( "ERROR OUTPUT:" );
             m_outPane->appendLine( p_stderr+"\n" );

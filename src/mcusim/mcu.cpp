@@ -72,7 +72,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
    : McuBase( parent, type, id )
    , m_eMcu( id )
 {
-    qDebug() << "        Initializing"<<id<<"...";
+    qDebug() << "        Initializing"<<id;
     m_pSelf = this;
     m_proc = &m_eMcu;
     m_device = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
@@ -129,6 +129,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
         qDebug() << m_device << "ERROR!! Mcu::Mcu Chip not Found: " << m_device;
         return;
     }*/
+    qDebug() << "        "<<id<< "Initialized:"<<freq()*1e-6<<"MHz\n";
 
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();
