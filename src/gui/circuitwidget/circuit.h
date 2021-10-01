@@ -176,8 +176,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QHash<QString, Pin*> m_pinMap;    // Pin list
         QHash<QString, QString> m_idMap;
 
-        QList<QDomDocument*> m_undoStack;
-        QList<QDomDocument*> m_redoStack;
+        QStringList m_undoStack;
+        QStringList m_redoStack;
 
         QTimer m_bckpTimer;
 

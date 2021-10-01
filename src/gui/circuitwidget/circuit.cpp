@@ -86,9 +86,6 @@ Circuit::~Circuit()
     delete m_simulator;
 
     m_bckpTimer.stop();
-
-    for( QDomDocument* doc : m_redoStack ) delete doc;
-    for( QDomDocument* doc : m_undoStack ) delete doc;
     m_undoStack.clear();
     m_redoStack.clear();
 
@@ -831,12 +828,8 @@ void Circuit::saveState()
     if( m_busy || m_deleting ) return;
     m_deleting = true;
 
-    for( QDomDocument* doc : m_redoStack ) delete doc;
-
     m_redoStack.clear();
-    QDomDocument* doc =  new QDomDocument();
-    doc->setContent( circuitToString() );
-    m_undoStack.append( doc );
+    m_undoStack.append(  circuitToString() );
 
     QString title = MainWindow::self()->windowTitle();
     if( !title.endsWith('*') ) MainWindow::self()->setWindowTitle(title+'*');
@@ -847,46 +840,44 @@ void Circuit::saveState()
 void Circuit::saveChanges()
 {
     if( m_simulator->isRunning() ) return;
-    if( !m_changed || m_conStarted || m_busy ) return;
+    if( !m_changed || m_conStarted || m_busy || m_deleting ) return;
     m_changed = false;
+    m_busy = true;
 
     saveString( m_backupPath, circuitToString() ); // Backup file
+    m_busy = false;
 }
 
 void Circuit::undo()
 {
     if( m_conStarted || m_undoStack.isEmpty() ) return;
+    m_busy = true;
 
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    QDomDocument* doc =  new QDomDocument();
-    doc->setContent( circuitToString() );
-    m_redoStack.prepend( doc );
-
+    m_redoStack.prepend( circuitToString() );
     remove();
-    doc = m_undoStack.takeLast();
-    m_domDoc.setContent( doc->toString());
+    m_domDoc.setContent( m_undoStack.takeLast() );
 
     m_seqNumber = 0;
     loadDomDoc( &m_domDoc );
+    m_busy = false;
 }
 
 void Circuit::redo()
 {
-    if( m_conStarted || m_redoStack.isEmpty()) return;
+    if( m_conStarted || m_redoStack.isEmpty() ) return;
+    m_busy = true;
 
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    QDomDocument* doc =  new QDomDocument();
-    doc->setContent( circuitToString() );
-    m_undoStack.append( doc );
-
+    m_undoStack.append( circuitToString() );
     remove();
-    doc = m_redoStack.takeFirst();
-    m_domDoc.setContent( doc->toString() );
+    m_domDoc.setContent( m_redoStack.takeFirst() );
 
     m_seqNumber = 0;
     loadDomDoc( &m_domDoc );
+    m_busy = false;
 }
 
 void Circuit::copy( QPointF eventpoint )
@@ -1080,7 +1071,11 @@ void Circuit::keyPressEvent( QKeyEvent* event )
             QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
             paste( m_graphicView->mapToScene( p ) );
         }
-        else if( key == Qt::Key_Z ) undo();
+        else if( key == Qt::Key_Z )
+        {
+            if( event->modifiers() & Qt::ShiftModifier) redo();
+            else undo();
+        }
         else if( key == Qt::Key_Y ) redo();
         else if( key == Qt::Key_N ) CircuitWidget::self()->newCircuit();
         else if( key == Qt::Key_S )
@@ -1092,9 +1087,9 @@ void Circuit::keyPressEvent( QKeyEvent* event )
         else if( key == Qt::Key_O ) CircuitWidget::self()->openCirc();
         else if( key == Qt::Key_A )
         {
-            for( Component* comp : m_compList ) comp->setSelected( true );
-            for( Node* nod       : m_nodeList ) nod->setSelected( true );
-            for( Connector* con  : m_conList  ) con->setSelected( true );
+            for( Component* com : m_compList ) com->setSelected( true );
+            for( Node*      nod : m_nodeList ) nod->setSelected( true );
+            for( Connector* con : m_conList  ) con->setSelected( true );
         }
         else QGraphicsScene::keyPressEvent( event );
     }
