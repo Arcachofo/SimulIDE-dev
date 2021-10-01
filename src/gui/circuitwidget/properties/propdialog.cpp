@@ -83,6 +83,7 @@ void PropDialog::setComponent( Component* comp )
                 PropVal* mp = NULL;
 
                 if     ( type == "double" ) mp = new NumVal( this, comp, prop );
+                else if( type == "uint"   ) mp = new NumVal( this, comp, prop );
                 else if( type == "int"    ) mp = new NumVal( this, comp, prop );
                 else if( type == "string" ) mp = new StringVal( this, comp, prop );
                 else if( type == "enum"   ) mp = new EnumVal( this, comp, prop );

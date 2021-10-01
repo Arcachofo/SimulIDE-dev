@@ -82,7 +82,7 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new IntProp <TextComponent>( "Margin" , tr("Margin") ,"_Pixels", this, &TextComponent::margin, &TextComponent::setMargin, "uint" ),
-new IntProp <TextComponent>( "Border" , tr("Border") ,"_Pixels", this, &TextComponent::border, &TextComponent::setBorder ),
+new IntProp <TextComponent>( "Border" , tr("Border") ,"_Pixels", this, &TextComponent::border, &TextComponent::setBorder, "uint" ),
 new DoubProp<TextComponent>( "Opacity", tr("Opacity"),""       , this, &TextComponent::opac,   &TextComponent::setOpac )
     }} );
     addPropGroup( { tr("Font"), {
@@ -125,8 +125,9 @@ void TextComponent::setFixedW( bool fixedW )
     updateGeometry( 0, 0, 0 );
 }
 
-QString TextComponent::getText() { return m_text->toPlainText(); }
-void TextComponent::setText( QString text ) { m_text->document()->setPlainText( text ); }
+QString TextComponent::getText() { return m_text->toPlainText().replace("\n","&#xa;"); }
+void TextComponent::setText( QString text )
+{ m_text->document()->setPlainText( text.replace("&#xa;","\n") ); }
 
 void TextComponent::setFont( QString font )
 {

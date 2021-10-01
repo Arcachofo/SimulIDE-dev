@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT TextComponent : public Component
 
         bool eventFilter( QObject* object, QEvent* event );
 
-        void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
 
     public slots:
