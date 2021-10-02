@@ -101,13 +101,13 @@ QString Circuit::getCompId( QString &pinName )
     return compId;
 }
 
-void Circuit::remCompType( QString &pinName )
+/*void Circuit::remCompType( QString &pinName )
 {
     QStringList list = pinName.split("-");
     if( list.size() < 3 ) return;
     pinName = list.takeLast();
     pinName.prepend( list.takeLast()+"-" );
-}
+}*/
 
 Pin* Circuit::findPin( int x, int y, QString id )
 {
@@ -156,9 +156,9 @@ void Circuit::loadStrDoc( QString &doc )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    Component* lastComp = NULL;
     QList<SubCircuit*> shieldList;
     QHash<QString, eNode*> nodMap;
-
     m_busy    = true;
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
@@ -174,7 +174,7 @@ void Circuit::loadStrDoc( QString &doc )
                 if( p.size() != 2 ) continue;
 
                 QStringRef name = p.first(), val = p.last();
-                val = val.mid( 1, val.length()-2 ); // Remove "
+                val = val.mid( 1, val.lastIndexOf("\"")-1 ); // Remove "
 
                 if     ( name == "stepsPS" ) m_simulator->setStepsPerSec( val.toDouble() );
                 else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( val.toUInt() );
@@ -182,9 +182,32 @@ void Circuit::loadStrDoc( QString &doc )
                 else if( name == "animate" ) setAnimate( val.toInt() );
             }
         }
+        else if( line.contains("<mainCompProps") )
+        {
+            if( !lastComp ) continue;
+            SubCircuit* subci = static_cast<SubCircuit*>(lastComp);
+            Component* mComp = subci->getMainComp();
+            if( !mComp ) continue;
+
+            QString propName = "";
+            QVector<QStringRef> props = line.split("\"");
+            for( QStringRef prop : props )
+            {
+                if( prop.endsWith("=") )
+                {
+                    prop = prop.split(" ").last();
+                    propName = prop.toString().mid( 0, prop.length()-1 );
+                    continue;
+                }
+                else if( prop.endsWith("/>") ) continue;
+                if( !mComp->setPropStr( propName, prop.toString() ) )
+                    qDebug() << "Circuit: Wrong Property: "<<mComp->itemType()<<propName;
+                propName = "";
+            }
+        }
         else if( line.startsWith("<item") )
         {
-            QString uid, newUid, subName, type, label;
+            QString uid, newUid, type, label;
 
             QStringRef name;
             QVector<QStringRef> props = line.split("\"");
@@ -204,23 +227,25 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "objectName" ) uid   = prop.toString();
                     else if( name == "label"      ) label = prop.toString();
                     else if( name == "id"         ) label = prop.toString();
-                    else if( name == "Name" &&
+                    /*else if( name == "Name" &&  // Old TODELTE
                            ( type == "Subcircuit"
                           || type == "MCU"
-                          || type == "PIC" )) subName = prop.toString()+"-"; // Chips
+                          || type == "PIC" )) subName = prop.toString()+"-"; // Chips*/
                     else properties << name << prop ;
             }   }
 
-            if( uid.contains("-") )
+            /*if( uid.contains("-") ) // Old TODELTE
             {
                 QStringList list = uid.split("-");
                 uid = list.takeLast();
                 if( ( type == "Subcircuit" )
                   ||( type == "MCU" )
-                  ||( type == "PIC" )) subName = list.takeLast()+"-";
-            }
-            /// New Uids are just the newSceneId() number without Component type
-            if( m_pasting ) newUid = newSceneId(); // Create new id
+                  ||( type == "AVR" )
+                  ||( type == "PIC" ))
+                    subName = list.takeLast()+"-";
+            }*/
+
+            if( m_pasting ) newUid = type+"-"+newSceneId(); // Create new id
             else            newUid = uid;
 
             if( type == "Connector" )
@@ -249,11 +274,11 @@ void Circuit::loadStrDoc( QString &doc )
                     startpinid.replace( startCompId, m_idMap[startCompId] );
                     endpinid.replace( endCompId, m_idMap[endCompId] );
                 }
-                else  // Old TODELETE
+                /*else  // Old TODELETE
                 {
                     remCompType( startpinid );
                     remCompType( endpinid );
-                }
+                }*/
                 startpin = m_pinMap.value( startpinid );
                 endpin   = m_pinMap.value( endpinid );
 
@@ -335,11 +360,13 @@ void Circuit::loadStrDoc( QString &doc )
                     type = "MCU";
                     newUid = newUid.replace( "at", "" );
                 }
-                Component* comp = createItem( type, subName+newUid );
+                lastComp = NULL;
+                Component* comp = createItem( type, newUid );
                 if( comp )
                 {
+                    lastComp = comp;
                     if( m_pasting ) m_idMap[uid] = newUid;
-                    //loadCompProperties( &element, comp );
+
                     comp->setIdLabel( label );
                     QString propName = "";
                     for( QStringRef prop : properties )
@@ -368,10 +395,9 @@ void Circuit::loadStrDoc( QString &doc )
                         Mcu* mcu = static_cast<Mcu*>( subci->getMainComp() );
                         if( mcu )
                         {
-                            /*mcu->setSubcDir("");
-                            mcu->setProgram( element.attribute("Program") );
-                            mcu->setFreq( element.attribute("Mhz").toDouble()*1e6 );
-                            mcu->setAutoLoad( element.attribute("Auto_Load").toInt() );*/
+                            mcu->setProgram( comp->getPropStr("Program") );
+                            mcu->setFreq( comp->getPropStr("Mhz").toDouble()*1e6 );
+                            mcu->setAutoLoad( comp->getPropStr("Auto_Load").toInt() );
                     }   }
                     else if( comp->itemType() == "Subcircuit")
                     {
@@ -485,7 +511,7 @@ Component* Circuit::createItem( QString type, QString id )
     Component* comp = NULL;
     for( LibraryItem* libItem : ItemLibrary::self()->items() )
     {
-        if( !(libItem->type()==type) ) continue;
+        if( libItem->type() != type ) continue;
 
         comp = libItem->createItemFnPtr()( this, type, id );
         if( comp )

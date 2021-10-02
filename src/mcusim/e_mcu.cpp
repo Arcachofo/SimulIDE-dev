@@ -32,13 +32,14 @@ eMcu::eMcu( QString id )
     , m_ports( this )
     , m_timers( this )
 {
+    cpu = NULL;
     m_cPerInst = 1;
     setFreq( 16*1e6 );
 }
 
 eMcu::~eMcu()
 {
-    delete cpu;
+    if( cpu ) delete cpu;
     m_interrupts.remove();
     for( McuModule* module : m_modules ) delete module;
 }

@@ -48,7 +48,7 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
         void search( QString filter );
 
     private slots:
-        void slotItemClicked( QTreeWidgetItem* item, int column );
+        void slotItemClicked( QTreeWidgetItem* item, int );
         void slotContextMenu(const QPoint&);
         void slotManageComponents();
 

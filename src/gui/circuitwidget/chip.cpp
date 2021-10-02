@@ -38,9 +38,9 @@ Chip::Chip( QObject* parent, QString type, QString id )
     , eElement( id )
     , m_label( this )
 {
+    m_id = id;
     QStringList list = id.split("-");
-    if( list.size() ) m_id   = list.takeLast();
-    if( list.size() ) m_name = list.takeLast(); // for example: "atmega328-1" to: "atmega328"
+    if( list.size() > 1 ) m_name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
 
     m_subcType = None;
     m_numpins = 0;
@@ -157,10 +157,8 @@ void Chip::initChip()
 
 void Chip::initPackage_old( QDomElement root )
 {
-    QDomNode node = root.firstChild();
-
     int chipPos = 0;
-
+    QDomNode node = root.firstChild();
     while( !node.isNull() )
     {
         QDomElement element = node.toElement();
@@ -169,7 +167,6 @@ void Chip::initPackage_old( QDomElement root )
             QString type  = element.attribute( "type" );
             QString label = element.attribute( "label" );
             QString id    = element.attribute( "id" ).remove(" ");
-
             QString side  = element.attribute( "side" );
             int     pos   = element.attribute( "pos" ).toInt();
 
@@ -177,26 +174,22 @@ void Chip::initPackage_old( QDomElement root )
             int ypos = 0;
             int angle = 0;
 
-            if( side=="left" )
-            {
+            if( side=="left" ){
                 xpos = -8;
                 ypos = 8*pos;
                 angle = 180;
             }
-            else if( side=="top")
-            {
+            else if( side=="top"){
                 xpos = 8*pos;
                 ypos = -8;
                 angle = 90;
             }
-            else if( side=="right" )
-            {
+            else if( side=="right" ){
                 xpos =  m_width*8+8;
                 ypos = 8*pos;
                 angle = 0;
             }
-            else if( side=="bottom" )
-            {
+            else if( side=="bottom" ){
                 xpos = 8*pos;
                 ypos =  m_height*8+8;
                 angle = 270;
@@ -209,10 +202,10 @@ void Chip::initPackage_old( QDomElement root )
 
 void Chip::initPackage( QDomElement root )
 {
-    QDomNode node = root.firstChild();
+    setSubcTypeStr( root.attribute("type") );
 
     int chipPos = 0;
-
+    QDomNode node = root.firstChild();
     while( !node.isNull() )
     {
         QDomElement element = node.toElement();
@@ -282,18 +275,24 @@ void Chip::setLogicSymbol( bool ls )
     else               Circuit::self()->unSaveState();
 }
 
+void Chip::setSubcTypeStr( QString s )
+{
+    bool ok = false;
+    int index = s.toInt(&ok); // OLd TODELETE
+    if( !ok ) index = m_subcTypes.indexOf( s );
+    m_subcType = (subcType_t)index;
+}
+
 void Chip::setBackground( QString bck )
 {
     m_background = bck;
-    if( bck == "" )
-    {
+    if( bck == "" ){
         if( m_BackPixmap )
         {
             delete m_BackPixmap;
             m_BackPixmap = 0l;
     }   }
-    else
-    {
+    else{
         m_BackPixmap = new QPixmap();
 
         QString pixmapPath = SIMUAPI_AppPath::self()->availableDataFilePath("images");
@@ -311,10 +310,8 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
         p->drawPixmap( m_area.x(), m_area.y(), *m_BackPixmap );
     else if( m_background != "" )
         p->drawPixmap( m_area.x(), m_area.y(), QPixmap( m_background ));
-    else
-    {
+    else{
         p->drawRoundedRect( m_area, 1, 1);
-
         if( !m_isLS )
         {
             p->setPen( QColor( 170, 170, 150 ) );

@@ -79,7 +79,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     qDebug() << "        Initializing"<<id;
     m_pSelf = this;
     m_proc  = &m_eMcu;
-    m_device = m_name; // for example: "atmega328-1" to: "atmega328"
+    m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
 
     m_resetPin   = NULL;
     m_mcuMonitor = NULL;
@@ -93,7 +93,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     if(( xmlFile == "" ) || ( !file.exists() ))
     {
         MessageBoxNB( "Mcu::Mcu", "                               \n"+
-                  tr("xml file not found: %1").arg(xmlFile) );
+                  tr("xml file not found for: %1").arg( m_device ) );
         m_error = 1;
         return;
     }
@@ -225,6 +225,12 @@ void Mcu::remove()
     m_pinList.clear();
 
     Component::remove();
+}
+
+void Mcu::setName( QString name )
+{
+    if( name.startsWith("at") ) name.remove("at"); // Old TODELETE
+    m_name = name;
 }
 
 void Mcu::setResetPin( IoPin* pin )

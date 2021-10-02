@@ -58,6 +58,8 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         virtual void voltChanged() override;
         virtual void remove() override;
 
+        virtual void setName( QString name ) override;
+
         void setResetPin( IoPin* pin );
         virtual void reset() override;
 

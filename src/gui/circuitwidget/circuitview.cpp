@@ -41,8 +41,8 @@ CircuitView::CircuitView( QWidget *parent )
     
     m_scale = 1;
     m_help = "";
-    m_circuit     = 0l;
-    m_enterItem   = 0l;
+    m_circuit   = NULL;
+    m_enterItem = NULL;
 
     eDiode::getModels();
 
@@ -162,17 +162,15 @@ void CircuitView::wheelEvent( QWheelEvent* event )
 void CircuitView::dragEnterEvent( QDragEnterEvent* event )
 {
     event->accept();
-    m_enterItem = 0l;
+    m_enterItem = NULL;
 
     QString type = event->mimeData()->html();
     QString name = event->mimeData()->text();
 
-    if( type.isEmpty() ) return;
+    if( type.isEmpty() || name.isEmpty() ) return;
     Circuit::self()->saveState();
 
-    name += m_circuit->newSceneId(); // Used by chips: uid = 74HCxx-num
-
-    m_enterItem = m_circuit->createItem( type, name );
+    m_enterItem = m_circuit->createItem( type, name+"-"+m_circuit->newSceneId() );
     if( m_enterItem )
     {
         if( type == "Subcircuit" )

@@ -263,9 +263,9 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
       ||( type == "MCU" )
       ||( type == "PIC" ))
     {
-         item->setData( 0, Qt::WhatsThisRole, name+"-" );
+         item->setData( 0, Qt::WhatsThisRole, name );
     }
-    else item->setData( 0, Qt::WhatsThisRole, ""/*type*/ );
+    else item->setData( 0, Qt::WhatsThisRole, type );
     
     catItem->addChild( item );
     item->setHidden( hidden );
@@ -275,26 +275,20 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
         item->setExpanded( expanded );
 }   }
 
-void ComponentSelector::slotItemClicked( QTreeWidgetItem* item, int column )
+void ComponentSelector::slotItemClicked( QTreeWidgetItem* item, int  )
 {
-    Q_UNUSED( column );
-    
     if( !item ) return;
     
-    QString type = item->data(0, Qt::UserRole).toString();
-    
+    QString type = item->data( 0, Qt::UserRole ).toString();
     if( type == "" ) return;
-    
-    QMimeData* mimeData = new QMimeData;
-    
-    QString name = item->data(0, Qt::WhatsThisRole).toString(); //item->text(0);
 
+    QString name = item->data (0, Qt::WhatsThisRole ).toString(); //item->text(0);
+    QMimeData* mimeData = new QMimeData;
     mimeData->setText( name );
     mimeData->setHtml( type );              // esto hay que revisarlo
     
-    QDrag *drag = new QDrag(this);
-    drag->setMimeData(mimeData);
-
+    QDrag* drag = new QDrag( this );
+    drag->setMimeData( mimeData );
     drag->exec( Qt::CopyAction | Qt::MoveAction, Qt::CopyAction );
 }
 

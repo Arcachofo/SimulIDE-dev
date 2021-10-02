@@ -173,6 +173,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
         break;
     }
 
+    QString numId = m_id;
+    numId = numId.split("-").last();
     Circuit* circ = Circuit::self();
     QHash<QString, eNode*> nodMap;
 
@@ -201,9 +203,21 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     else if( name == "objectName" ) uid   = prop.toString();
                     else if( name == "label"      ) label = prop.toString();
                     else if( name == "id"         ) label = prop.toString();
+                    /*else if( name == "Name" &&  // Old TODELTE
+                           ( type == "Subcircuit"
+                          || type == "MCU"
+                          || type == "PIC" )) subName = prop.toString()+"-"; // Chips*/
                     else properties << name << prop ;
             }   }
-            newUid = m_id+"_"+uid;
+            /*if( uid.contains("-") ) // Old TODELTE
+            {
+                QStringList list = uid.split("-");
+                uid = list.takeLast();
+                if( ( type == "Subcircuit" )
+                  ||( type == "MCU" )
+                  ||( type == "PIC" )) subName = list.takeLast()+"-";
+            }*/
+            newUid = numId+"_"+uid;
 
             if( type == "Connector" )
             {
@@ -215,8 +229,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 {
                     if( name.isEmpty() ) { name = prop.toString(); continue; }
 
-                    if     ( name == "startpinid") startPinId = m_id+"_"+prop.toString();
-                    else if( name == "endpinid"  ) endPinId   = m_id+"_"+prop.toString();
+                    if     ( name == "startpinid") startPinId = numId+"_"+prop.toString();
+                    else if( name == "endpinid"  ) endPinId   = numId+"_"+prop.toString();
                     else if( name == "enodeid"   ) enodeId    = prop.toString();
                     else if( name == "pointList" ) pointList  = prop.toString().split(",");
                     name = "";
@@ -262,8 +276,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                         if( propName.isEmpty() ) { propName = prop.toString(); continue; }
                         QString value = prop.toString();
 
-                        if( !graphProps.contains( propName ) )
-                        {
+                        if( !graphProps.contains( propName ) ){
                             if( !comp->setPropStr( propName, value ) ) // SUBSTITUTIONS
                             {
                                 if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); } // ns to ps
