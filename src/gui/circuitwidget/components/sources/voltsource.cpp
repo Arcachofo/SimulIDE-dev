@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPushButton>
+
 #include "voltsource.h"
 #include "itemlibrary.h"
 #include "simulator.h"

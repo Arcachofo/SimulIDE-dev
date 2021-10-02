@@ -20,6 +20,8 @@
 #include <qstringlist.h>
 #include <QDomDocument>
 #include <QFileInfo>
+#include <QFileDialog>
+#include <QMessageBox>
 
 #include "mainwindow.h"
 #include "mcucomponent.h"
@@ -45,15 +47,14 @@
 McuComponent::McuComponent( QObject* parent, QString type, QString id )
             : McuBase( parent, type, id )
 {
-    qDebug() << "        Initializing"<<m_id<<"...";
+    qDebug() << "        Initializing"<< m_name << m_id <<"...";
     m_pSelf = this;
     m_attached  = false;
     m_autoLoad  = false;
     m_crashed   = false;
 
     m_mcuMonitor = NULL;
-
-    m_processor  = 0l;
+    m_processor  = NULL;
     m_symbolFile = "";
     m_device     = "";
     m_subcDir    = "";
@@ -113,7 +114,7 @@ void McuComponent::updateStep()
 
 void McuComponent::initChip()
 {
-    QString compName = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
+    QString compName = m_name; // for example: "atmega328-1" to: "atmega328"
 
     QString xmlFile = ComponentSelector::self()->getXmlFile( compName );
 
@@ -323,7 +324,7 @@ void McuComponent::slotOpenMcuMonitor()
 
 void McuComponent::slotOpenSerial()
 {
-    Component* ser = Circuit::self()->createItem( "SerialPort", "SerialPort-"+Circuit::self()->newSceneId());
+    Component* ser = Circuit::self()->createItem( "SerialPort", Circuit::self()->newSceneId());
     ser->setPos( pos() );
     Circuit::self()->addItem( ser );
 
@@ -333,7 +334,7 @@ void McuComponent::slotOpenSerial()
 
 void McuComponent::slotOpenTerm()
 {
-    Component* ser = Circuit::self()->createItem( "SerialTerm", "SerialTerm-"+Circuit::self()->newSceneId());
+    Component* ser = Circuit::self()->createItem( "SerialTerm", Circuit::self()->newSceneId());
     ser->setPos( pos() );
     Circuit::self()->addItem( ser );
 

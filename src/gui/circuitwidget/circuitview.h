@@ -20,11 +20,12 @@
 #ifndef CIRCUITVIEW_H
 #define CIRCUITVIEW_H
 
-#include <QtWidgets>
+#include <QGraphicsView>
 
 class Component;
 class Circuit;
 class SimuProp;
+class QPlainTextEdit;
 
 class CircuitView : public QGraphicsView
 {

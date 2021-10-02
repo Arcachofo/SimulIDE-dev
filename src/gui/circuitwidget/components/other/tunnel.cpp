@@ -65,7 +65,7 @@ new StringProp<Tunnel>( "Name"   , tr("Id")    ,"", this, &Tunnel::name,    &Tun
 new BoolProp  <Tunnel>( "Rotated",tr("Rotated"),"", this, &Tunnel::rotated, &Tunnel::setRotated )
     }} );
     addPropGroup( { tr("Hidden"), {
-new StringProp<Tunnel>( "Uid","","", this, &Tunnel::uid, &Tunnel::setUid ),
+new StringProp<Tunnel>( "Uid","","", this, &Tunnel::tunnelUid, &Tunnel::setTunnelUid ),
     }} );
 }
 Tunnel::~Tunnel() {}

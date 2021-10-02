@@ -38,13 +38,16 @@ Chip::Chip( QObject* parent, QString type, QString id )
     , eElement( id )
     , m_label( this )
 {
+    QStringList list = id.split("-");
+    if( list.size() ) m_id   = list.takeLast();
+    if( list.size() ) m_name = list.takeLast(); // for example: "atmega328-1" to: "atmega328"
+
     m_subcType = None;
     m_numpins = 0;
     m_isLS = false;
     m_initialized = false;
-    
     m_pkgeFile = "";
-    m_BackPixmap = 0l;
+    m_BackPixmap = NULL;
     
     m_lsColor = QColor( 255, 255, 255 );
     m_icColor = QColor( 50, 50, 70 );
@@ -143,8 +146,7 @@ void Chip::initChip()
         m_label.setY( m_area.height()/2+m_label.textWidth()/2 );
         m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );
     }
-    else
-    {
+    else{
         MessageBoxNB( "Chip::initChip",
                   tr( "Error reading Chip file:\n%1\nNo valid Chip" ) .arg(m_pkgeFile));
         m_error = 3;

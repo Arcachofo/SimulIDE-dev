@@ -30,6 +30,7 @@
 
 class LibraryItem;
 class IoPin;
+class QToolButton;
 
 class MAINMODULE_EXPORT KY023 : public Component, public eElement
 {

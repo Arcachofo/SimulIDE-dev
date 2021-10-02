@@ -20,6 +20,12 @@
 #include <QWidget>
 #include <QTabWidget>
 #include <QToolBar>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QMimeData>
+#include <QGridLayout>
+#include <QSplitter>
+#include <QToolButton>
 
 #include "editorwidget.h"
 #include "findreplacedialog.h"

@@ -17,7 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QtWidgets>
+#include <QTextDocument>
+#include <QApplication>
+#include <QMenu>
 
 #include "label.h"
 #include "component.h"

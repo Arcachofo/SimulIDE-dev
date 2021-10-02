@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QGraphicsProxyWidget>
+
 #include "oscope.h"
 #include "connector.h"
 #include "circuitwidget.h"

@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+
 #include "varresistor.h"
 #include "itemlibrary.h"
 #include "simulator.h"

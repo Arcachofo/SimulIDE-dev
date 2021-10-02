@@ -17,6 +17,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QStandardItemModel>
+#include <QMenu>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QTextStream>
+
 #include "ramtable.h"
 #include "mcuinterface.h"
 #include "basedebugger.h"

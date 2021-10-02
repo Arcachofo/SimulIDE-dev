@@ -86,6 +86,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_valLabel->setVisible( false );
     
     setObjectName( id );
+    if( !id.contains("-") ) id.prepend( type+"-" );
     setIdLabel( id );
 
     setCursor( Qt::OpenHandCursor );
@@ -93,7 +94,7 @@ Component::Component( QObject* parent, QString type, QString id )
 
     addPropGroup( { "CompBase", {
 new StringProp<Component>( "itemtype","","", this, &Component::itemType,  &Component::setItemType ),
-new StringProp<Component>( "uid"     ,"","", this, &Component::getUid,    &Component::setUid ),
+new StringProp<Component>( "CircId"  ,"","", this, &Component::getUid,    &Component::setUid ),
 new BoolProp  <Component>( "mainComp","","", this, &Component::isMainComp,&Component::setMainComp ),// Related to Subcircuit:
     }} );
     addPropGroup( { "CompGraphic", {
@@ -148,6 +149,23 @@ bool Component::setPropStr( QString prop, QString val )
     }
     else return CompBase::setPropStr( prop, val );
     return true;
+}
+
+void Component::substitution( QString &propName ) // static
+{
+    if     ( propName == "Volts"       ) propName = "Voltage";
+    //else if( propName == "Current") propName = "Value";
+    else if( propName == "id"          ) propName = "label";
+    else if( propName == "Duty_Square" ) propName = "Duty";
+    else if( propName == "S_R_Inverted") propName = "Reset_Inverted";
+    else if( propName == "Show_res"
+          || propName == "Show_Volt"
+          || propName == "Show_volt"
+          || propName == "Show_Amp"
+          || propName == "Show_Ind"
+          || propName == "Show_Ind"
+          || propName == "Show_Cap" )    propName = "Show_Val";
+   /// else if( propName == "Inverted")    propName = "InvertOuts";
 }
 
 void Component::mousePressEvent( QGraphicsSceneMouseEvent* event )

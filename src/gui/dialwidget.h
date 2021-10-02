@@ -20,8 +20,10 @@
 #ifndef DIALWIDGET_H
 #define DIALWIDGET_H
 
-#include <QtWidgets>
+#include <QWidget>
 
+class QDial;
+class QVBoxLayout;
 
 class DialWidget : public QWidget
 {
@@ -33,8 +35,8 @@ class DialWidget : public QWidget
 
         void setupWidget();
 
-        QDial       *dial;
-        QVBoxLayout *verticalLayout;
+        QDial* dial;
+        QVBoxLayout* verticalLayout;
 };
 #endif
 

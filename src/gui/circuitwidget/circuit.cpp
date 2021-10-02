@@ -17,6 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QClipboard>
+#include <QMimeData>
+
 #include "circuit.h"
 #include "simulator.h"
 #include "itemlibrary.h"
@@ -31,25 +36,11 @@
 #include "simulator.h"
 #include "e-node.h"
 
-static const char* Circuit_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Speed"),
-    QT_TRANSLATE_NOOP("App::Property","ReactStep"),
-    QT_TRANSLATE_NOOP("App::Property","NoLinAcc"),
-    QT_TRANSLATE_NOOP("App::Property","Draw Grid"),
-    QT_TRANSLATE_NOOP("App::Property","Show ScrollBars"),
-    QT_TRANSLATE_NOOP("App::Property","Animate"),
-    QT_TRANSLATE_NOOP("App::Property","Font Scale"),
-    QT_TRANSLATE_NOOP("App::Property","Auto Backup Secs")
-    QT_TRANSLATE_NOOP("App::Property","Language")
-};
-
-Circuit*  Circuit::m_pSelf = 0l;
+Circuit* Circuit::m_pSelf = NULL;
 
 Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView*  parent )
        : QGraphicsScene( x, y, width, height, parent )
 {
-    Q_UNUSED( Circuit_properties );
-
     m_simulator = new Simulator();
     
     setObjectName( "Circuit" );
@@ -100,20 +91,27 @@ Component* Circuit::getCompById( QString id )
     return NULL;
 }
 
-QString Circuit::getCompId( QString name )
+QString Circuit::getCompId( QString &pinName )
 {
-    QStringList nameSplit = name.split("-");
-    if( nameSplit.isEmpty() ) return "";
+    QStringList list = pinName.split("-");
+    if( list.size() < 2 ) return "";
+    //QString pinId  = nameSplit.takeLast();
+    QString compId = list.at( list.size()-2 );
 
-    QString compId  = nameSplit.takeFirst();
-    if( nameSplit.isEmpty() ) return "";
+    return compId;
+}
 
-    return compId+"-"+nameSplit.takeFirst();
+void Circuit::remCompType( QString &pinName )
+{
+    QStringList list = pinName.split("-");
+    if( list.size() < 3 ) return;
+    pinName = list.takeLast();
+    pinName.prepend( list.takeLast()+"-" );
 }
 
 Pin* Circuit::findPin( int x, int y, QString id )
 {
-    qDebug() << "Circuit::findPin" << id;
+    /// qDebug() << "Circuit::findPin" << id;
     QRectF itemRect = QRectF ( x-4, y-4, 8, 8 );
 
     QList<QGraphicsItem*> list = items( itemRect ); // List of items in (x, y)
@@ -136,14 +134,10 @@ void Circuit::loadCircuit( QString fileName )
     saveState();
 
     m_filePath = fileName;
-    QDomDocument domDoc = fileToDomDoc( fileName, "Circuit::loadCircuit");
-    if( domDoc.isNull() ) return;
-
     m_error = 0;
-    loadDomDoc( &domDoc );
 
-    ///QString doc = fileToString( fileName, "Circuit::loadCircuit" );
-    ///loadStrDoc( doc );
+    QString doc = fileToString( fileName, "Circuit::loadCircuit" );
+    loadStrDoc( doc );
 
     if( m_error != 0 ) 
     {
@@ -158,14 +152,12 @@ void Circuit::loadCircuit( QString fileName )
         //this->addRect( itemsBoundingRect() );
 }   }
 
-void Circuit::loadStrDoc( QString doc )
+void Circuit::loadStrDoc( QString &doc )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     QList<SubCircuit*> shieldList;
     QHash<QString, eNode*> nodMap;
-
-    //double circVersion = 0;
 
     m_busy    = true;
 
@@ -174,6 +166,7 @@ void Circuit::loadStrDoc( QString doc )
     {
         if( line.startsWith( "<circuit") && !m_pasting )
         {
+            line = line.mid( 9, line.length()-11 );
             QVector<QStringRef> props = line.split(" ");
             for( QStringRef prop : props )
             {
@@ -187,71 +180,82 @@ void Circuit::loadStrDoc( QString doc )
                 else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( val.toUInt() );
                 else if( name == "stepSize") m_simulator->setStepSize( val.toULongLong() );
                 else if( name == "animate" ) setAnimate( val.toInt() );
-                /*else if( name == "type" )
-                {
-                    QString circVer = val.toString();
-                    circVersion = circVer.remove("simulide_" ).toDouble();
-                }*/
             }
         }
         else if( line.startsWith("<item") )
         {
-            QString uid, type, label;
+            QString uid, newUid, subName, type, label;
 
-            QVector<QStringRef> props = line.split(" ");
+            QStringRef name;
+            QVector<QStringRef> props = line.split("\"");
             QVector<QStringRef> properties;
             for( QStringRef prop : props )
             {
-                QVector<QStringRef> p = prop.split("=");
-                if( p.size() != 2 ) continue;
+                if( prop.endsWith("=") )
+                {
+                    prop = prop.split(" ").last();
+                    name = prop.mid( 0, prop.length()-1 );
+                    continue;
+                }
+                else if( prop.endsWith("/>") ) continue;
+                else{
+                    if     ( name == "itemtype"   ) type  = prop.toString();
+                    else if( name == "CircId"     ) uid   = prop.toString();
+                    else if( name == "objectName" ) uid   = prop.toString();
+                    else if( name == "label"      ) label = prop.toString();
+                    else if( name == "id"         ) label = prop.toString();
+                    else if( name == "Name" &&
+                           ( type == "Subcircuit"
+                          || type == "MCU"
+                          || type == "PIC" )) subName = prop.toString()+"-"; // Chips
+                    else properties << name << prop ;
+            }   }
 
-                QStringRef name = p.first(), val = p.last();
-                val = val.mid( 1, val.length()-2 ); // Remove "
-
-                if     ( name == "itemtype"   ) type  = val.toString();
-                else if( name == "uid"        ) uid   = val.toString();
-                else if( name == "objectName" ) uid   = val.toString();
-                else if( name == "label"      ) label = val.toString();
-                else if( name == "id"         ) label = val.toString();
-                else properties.append( prop );
-            }
-
-            if( m_pasting ) // Create a new Id: we are creating a new component
+            if( uid.contains("-") )
             {
-                uid = type+"-"+newSceneId(); // Create new id
-                /// element.setAttribute( "objectName", label );
+                QStringList list = uid.split("-");
+                uid = list.takeLast();
+                if( ( type == "Subcircuit" )
+                  ||( type == "MCU" )
+                  ||( type == "PIC" )) subName = list.takeLast()+"-";
             }
+            /// New Uids are just the newSceneId() number without Component type
+            if( m_pasting ) newUid = newSceneId(); // Create new id
+            else            newUid = uid;
+
             if( type == "Connector" )
             {
-                Pin* startpin  = NULL;
-                Pin* endpin    = NULL;
+                Pin* startpin = NULL;
+                Pin* endpin   = NULL;
                 QString startpinid, endpinid, enodeId;
                 QStringList pointList;
 
+                QString name = "";
                 for( QStringRef prop : properties )
                 {
-                    QVector<QStringRef> p = prop.split("=");
-                    if( p.size() != 2 ) continue;
+                    if( name.isEmpty() ) { name = prop.toString(); continue; }
 
-                    QStringRef name = p.first(), val = p.last();
-                    val = val.mid( 1, val.length()-2 ); // Remove "
-
-                    if     ( name == "startpinid") startpinid = val.toString();
-                    else if( name == "endpinid"  ) endpinid   = val.toString();
-                    else if( name == "enodeid"   ) enodeId    = val.toString();
-                    else if( name == "pointList" ) pointList  = val.toString().split(",");
+                    if     ( name == "startpinid") startpinid = prop.toString();
+                    else if( name == "endpinid"  ) endpinid   = prop.toString();
+                    else if( name == "enodeid"   ) enodeId    = prop.toString();
+                    else if( name == "pointList" ) pointList  = prop.toString().split(",");
+                    name = "";
                 }
-
                 if( m_pasting )
                 {
-                    QString startCompName = getCompId( startpinid );
-                    QString endCompName   = getCompId( endpinid );
+                    QString startCompId = getCompId( startpinid );
+                    QString endCompId   = getCompId( endpinid );
 
-                    startpinid.replace( startCompName, m_idMap[startCompName] );
-                    endpinid.replace( endCompName, m_idMap[endCompName] );
+                    startpinid.replace( startCompId, m_idMap[startCompId] );
+                    endpinid.replace( endCompId, m_idMap[endCompId] );
                 }
-                startpin = m_pinMap[startpinid];
-                endpin   = m_pinMap[endpinid];
+                else  // Old TODELETE
+                {
+                    remCompType( startpinid );
+                    remCompType( endpinid );
+                }
+                startpin = m_pinMap.value( startpinid );
+                endpin   = m_pinMap.value( endpinid );
 
                 if( !startpin ) // Pin not found by name... find it by pos
                 {
@@ -273,7 +277,7 @@ void Circuit::loadStrDoc( QString doc )
                     Connector* con  = new Connector( this, type, uid, startpin, endpin );
                     con->setPointList( pointList );
 
-                    eNode*  enode   = nodMap[enodeId];
+                    eNode*  enode = nodMap[enodeId];
                     if( !enode )                    // Create eNode and add to enodList
                     {
                         enode = new eNode( "Circ_eNode-"+newSceneId() );
@@ -286,31 +290,27 @@ void Circuit::loadStrDoc( QString doc )
                 }
                 else if( !m_pasting )// Start or End pin not found
                 {
-                    if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null startpin in " << uid << startpinid;
-                    if( !endpin )   qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null endpin in "   << uid << endpinid;
+                    if( !startpin )
+                        qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null startpin in Connector" << uid << startpinid;
+                    if( !endpin )
+                        qDebug() << "\n   ERROR!!  Circuit::loadStrDoc:  null endpin in Connector"   << uid << endpinid;
             }   }
             else if( type == "Node")
             {
-                Node* joint;
+                Node* joint = new Node( this, type, newUid );
                 if( m_pasting )
                 {
-                    m_idMap[uid] = label; // Map simu id to new id
-                    joint = new Node( this, type, label );
+                    m_idMap[uid] = newUid; // Map simu id to new id
                     joint->setSelected( true );
                 }
-                else joint = new Node( this, type, uid );
-
-                //loadItemProperties( &element, joint );
-
+                QString name = "";
                 for( QStringRef prop : properties )
                 {
-                    QVector<QStringRef> p = prop.split("=");
-                    if( p.size() != 2 ) continue;
-
-                    QStringRef name = p.first(), val = p.last();
-                    val = val.mid( 1, val.length()-2 ); // Remove quotes
-
-                    if( name == "Pos") joint->setPropStr( "Pos", val.toString() );
+                    if( name.isEmpty() ) { name = prop.toString(); continue; }
+                    if     ( name == "Pos") joint->setPropStr( "Pos", prop.toString() );
+                    else if( name == "x"  ) joint->setX( prop.toInt() );
+                    else if( name == "y"  ) joint->setY( prop.toInt() );
+                    name = "";
                 }
                 addItem( joint );
                 m_nodeList.append( joint );
@@ -322,59 +322,40 @@ void Circuit::loadStrDoc( QString doc )
             else if( type == "SerialTerm") ; /// TODO
             else
             {
-                Component* comp = NULL;
                 bool oldArduino = false;
-                if( m_pasting )
+
+                if( type == "Arduino" )
                 {
-                    if( uid == "" ) uid = label;
-                    m_idMap[uid] = label;              // Map simu id to new id
-                    comp = createItem( type, label );
+                    oldArduino = true;
+                    type = "Subcircuit";
+                    newUid = newUid.remove( "Arduino " );
                 }
-                else{
-                    if( type == "Arduino" )
-                    {
-                        oldArduino = true;
-                        type = "Subcircuit";
-                        uid = uid.remove( "Arduino " );
-                    }
-                    else if( type == "AVR" )
-                    {
-                        type = "MCU";
-                        uid = uid.replace( "at", "" );
-                    }
-                    comp = createItem( type, uid );
+                else if( type == "AVR" )
+                {
+                    type = "MCU";
+                    newUid = newUid.replace( "at", "" );
                 }
-                if( comp ){
+                Component* comp = createItem( type, subName+newUid );
+                if( comp )
+                {
+                    if( m_pasting ) m_idMap[uid] = newUid;
                     //loadCompProperties( &element, comp );
+                    comp->setIdLabel( label );
+                    QString propName = "";
                     for( QStringRef prop : properties )
                     {
-                        QVector<QStringRef> p = prop.split("=");
-                        if( p.size() != 2 ) continue;
-
-                        QString propName = p.first().toString(), value = p.last().toString();
-                        value = value.mid( 1, value.length()-2 ); // Remove quotes
-
-                        if( !comp->setPropStr( propName, value ) )
+                        if( propName.isEmpty() ) { propName = prop.toString(); continue; }
+                        QString value = prop.toString();
+                        if( !comp->setPropStr( propName, value ) ) // SUBSTITUTIONS
                         {
-                            // SUBSTITUTIONS ------------------------------------
-                            if     ( propName == "Volts")   propName = "Voltage";
-                            //else if( propName == "Current") propName = "Value";
-                            else if( propName == "id")  propName = "label";
-                            else if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); }
-                            else if( propName == "Show_res"
-                                  || propName == "Show_Volt"
-                                  || propName == "Show_volt"
-                                  || propName == "Show_Amp"
-                                  || propName == "Show_Ind"
-                                  || propName == "Show_Ind"
-                                  || propName == "Show_Cap" )    propName = "Show_Val";
-                            else if( propName == "Duty_Square")  propName = "Duty";
-                            else if( propName == "S_R_Inverted") propName = "Reset_Inverted";
-                           /// else if( propName == "Inverted")    propName = "InvertOuts";
+                            if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); }
+                            else                                    Component::substitution( propName );
 
                             if( !comp->setPropStr( propName, value ) )
-                                qDebug() << "Wrong Property: "<<comp->getUid()<<propName<<value;
-                    }   }
+                                qDebug() << "Circuit: Wrong Property: "<<type<<newUid<<propName<<value;
+                        }
+                        propName = "";
+                    }
                     int number = comp->objectName().split("-").last().toInt();
                     if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
                     addItem( comp );
@@ -415,253 +396,10 @@ void Circuit::loadStrDoc( QString doc )
     for( Node* joint : m_nodeList ) joint->remove(); // Only removed if some missing connector
     for( SubCircuit* shield : shieldList ) shield->connectBoard();
 
+    m_idMap.clear();
+    m_pinMap.clear();
     m_busy = false;
     QApplication::restoreOverrideCursor();
-}
-
-void Circuit::loadDomDoc( QDomDocument* doc )
-{
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-
-    QList<SubCircuit*> shieldList;
-    QHash<QString, eNode*> nodMap;
-    QDomElement circuit = doc->documentElement();
-    QString circVer = circuit.attribute("type");
-    double circVersion = circVer.remove("simulide_" ).toDouble();
-    m_busy    = true;
-
-    if( !m_pasting )
-    {
-        m_animate = false;
-        if( circuit.hasAttribute( "stepsPS" )) m_simulator->setStepsPerSec( circuit.attribute("stepsPS").toDouble() );
-        if( circuit.hasAttribute( "NLsteps" )) m_simulator->setMaxNlSteps( circuit.attribute("NLsteps").toUInt() );
-        if( circuit.hasAttribute( "stepSize" )) m_simulator->setStepSize( circuit.attribute("stepSize").toULongLong() );
-        if( circuit.hasAttribute( "animate" )) setAnimate( circuit.attribute("animate").toInt() );
-    }
-    QDomNode node = circuit.firstChild();
-
-    while( !node.isNull() )
-    {
-        QDomElement   element = node.toElement();
-        const QString tagName = element.tagName();
-
-        if( tagName == "item" )
-        {
-            QString uid   = element.attribute( "uid" ); // Data in simu file
-            QString type  = element.attribute( "itemtype" );
-            QString label = element.attribute( "label" );
-
-            if( circVersion < 1 )
-            {
-                uid   = element.attribute( "objectName" ); // Data in simu file
-                label = element.attribute( "id" );
-            }
-
-            if( m_pasting ) // Create a new Id: we are creating a new component
-            {
-                label = uid.split("-").first()+"-"+newSceneId(); // Create new id
-                element.setAttribute( "objectName", label );
-            }
-            if( type == "Connector" )
-            {
-                Pin* startpin  = NULL;
-                Pin* endpin    = NULL;
-                QString startpinid = element.attribute( "startpinid" );
-                QString endpinid   = element.attribute( "endpinid" );
-
-                if( m_pasting )
-                {
-                    QString startCompName = getCompId( startpinid );
-                    QString endCompName   = getCompId( endpinid );
-
-                    startpinid.replace( startCompName, m_idMap[startCompName] );
-                    endpinid.replace( endCompName, m_idMap[endCompName] );
-                }
-                startpin = m_pinMap[startpinid];
-                endpin   = m_pinMap[endpinid];
-                QStringList pointList = element.attribute( "pointList" ).split(",");
-
-                if( !startpin ) // Pin not found by name... find it by pos
-                {
-                    int itemX = pointList.first().toInt();
-                    int itemY = pointList.at(1).toInt();
-                    startpin = findPin( itemX, itemY, startpinid );
-                }
-                if( !endpin ) // Pin not found by name... find it by pos
-                {
-                    int itemX = pointList.at( pointList.size()-2 ).toInt();
-                    int itemY = pointList.last().toInt();
-                    endpin = findPin( itemX, itemY, endpinid );
-                }
-                if( startpin && startpin->isConnected() ) startpin = NULL;
-                if( endpin   && endpin->isConnected() )   endpin   = NULL;
-
-                if( startpin && endpin )    // Create Connector
-                {
-                    Connector* con  = new Connector( this, type, uid, startpin, endpin );
-                    con->setPointList( pointList );
-
-                    QString enodeId = element.attribute( "enodeid" );
-                    eNode*  enode   = nodMap[enodeId];
-                    if( !enode )                    // Create eNode and add to enodList
-                    {
-                        enode = new eNode( "Circ_eNode-"+newSceneId() );
-                        nodMap[enodeId] = enode;
-                    }
-                    con->setEnode( enode );
-                    startpin->registerEnode( enode );
-                    endpin->registerEnode( enode );
-                    m_conList.append( con );
-                }
-                else if( !m_pasting )// Start or End pin not found
-                {
-                    if( !startpin ) qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null startpin in " << uid << startpinid;
-                    if( !endpin )   qDebug() << "\n   ERROR!!  Circuit::loadDomDoc:  null endpin in "   << uid << endpinid;
-            }   }
-            else if( type == "Node")
-            {
-                Node* joint;
-                if( m_pasting )
-                {
-                    m_idMap[uid] = label; // Map simu id to new id
-                    joint = new Node( this, type, label );
-                    joint->setSelected( true );
-                }
-                else joint = new Node( this, type, uid );
-
-                loadItemProperties( &element, joint );
-                m_nodeList.append( joint );
-            }
-            else if( type == "Plotter" ) ;// Old Plotter widget;
-            else if(( type == "SerialPort")
-                 && ( element.hasAttribute( "visible" ) )
-                 && ( element.attribute( "visible" ) == "false" ) ) ;// Old Serial Port Widget
-            else if( type == "SerialTerm") ; /// TODO
-            else
-            {
-                Component* comp = NULL;
-                bool oldArduino = false;
-                if( m_pasting )
-                {
-                    if( uid == "" ) uid = label;
-                    m_idMap[uid] = label;              // Map simu id to new id
-                    comp = createItem( type, label );
-                }
-                else{
-                    if( type == "Arduino" )
-                    {
-                        oldArduino = true;
-                        type = "Subcircuit";
-                        uid = uid.remove( "Arduino " );
-                    }
-                    else if( type == "AVR" )
-                    {
-                        type = "MCU";
-                        uid = uid.replace( "at", "" );
-                    }
-                    comp = createItem( type, uid );
-                }
-                if( comp ){
-                    loadCompProperties( &element, comp );
-
-                    if( oldArduino ) // Load mcu properties & change subcircuit names
-                    {
-                        SubCircuit* subci = static_cast<SubCircuit*>(comp);
-                        Mcu* mcu = static_cast<Mcu*>( subci->getMainComp() );
-                        if( mcu )
-                        {
-                            mcu->setSubcDir("");
-                            mcu->setProgram( element.attribute("Program") );
-                            mcu->setFreq( element.attribute("Mhz").toDouble()*1e6 );
-                            mcu->setAutoLoad( element.attribute("Auto_Load").toInt() );
-                    }   }
-                    else if( comp->itemType() == "Subcircuit")
-                    {
-                        SubCircuit* shield = static_cast<SubCircuit*>(comp);
-                        if( shield->subcType() == Chip::Shield ) shieldList.append( shield );
-                    }
-                    m_compList.append( comp );
-                    if( m_pasting ) comp->setSelected( true );
-                }
-                else qDebug() << " ERROR Creating Component: "<< type << uid;
-        }   }
-        node = node.nextSibling();
-    }
-    if( m_pasting )
-    {
-        for( Component* item : m_compList ) item->move( m_deltaMove );
-        for( Component* item : m_nodeList ) item->move( m_deltaMove );
-        for( Connector* con : m_conList )
-        {
-            con->setSelected( true );
-            con->move( m_deltaMove );
-    }   }
-    // Take care about unconnected Joints
-    for( Node* joint : m_nodeList ) joint->remove(); // Only removed if some missing connector
-    for( SubCircuit* shield : shieldList ) shield->connectBoard();
-
-    m_busy = false;
-    QApplication::restoreOverrideCursor();
-}
-
-void Circuit::loadCompProperties( QDomElement* element, Component* comp )
-{
-    if( element->hasChildNodes() )
-    {
-        QDomNode nod = element->childNodes().at(0);
-        QDomElement el = nod.toElement();
-        if( el.tagName() == "mainCompProps") // Load Subcircuit Main Component properties
-        {
-            if( comp->itemType() == "Subcircuit" )
-            {
-                SubCircuit* subc = (SubCircuit*)comp;
-                Component* mainComp = subc->getMainComp();
-                if( mainComp ) loadProperties( &el, mainComp );
-                element->removeChild( nod );
-    }   }   }
-    loadItemProperties( element, comp );
-    comp->updtLabelPos();
-    comp->updtValLabelPos();
-}
-
-void Circuit::loadItemProperties( QDomElement* element, Component* comp )
-{
-    loadProperties( element, comp );
-    addItem( comp );
-}
-
-void Circuit::loadProperties( QDomElement* element, CompBase* comp )
-{
-    QDomNamedNodeMap atrs = element->attributes();
-
-    for( int i=0; i<atrs.length(); ++i )   // Get List of property names in Circuit file
-    {
-        QString propName = atrs.item(i).nodeName();
-        QString value    = element->attribute( propName );
-
-        if( !comp->setPropStr( propName, value ) )
-        {
-            // SUBSTITUTIONS ------------------------------------
-            if     ( propName == "Volts")   propName = "Voltage";
-            //else if( propName == "Current") propName = "Value";
-            else if( propName == "id")  propName = "label";
-            else if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); }
-            else if( propName == "Show_res"
-                  || propName == "Show_Volt"
-                  || propName == "Show_volt"
-                  || propName == "Show_Amp"
-                  || propName == "Show_Ind"
-                  || propName == "Show_Ind"
-                  || propName == "Show_Cap" )    propName = "Show_Val";
-            else if( propName == "Duty_Square")  propName = "Duty";
-            else if( propName == "S_R_Inverted") propName = "Reset_Inverted";
-           /// else if( propName == "Inverted")    propName = "InvertOuts";
-
-            if( !comp->setPropStr( propName, value ) )
-                qDebug() << "Wrong Property: "<<comp->getUid()<<propName<<value;
-    }   }
-    int number = comp->objectName().split("-").last().toInt();
-    if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
 }
 
 QString Circuit::circuitHeader()
@@ -816,9 +554,7 @@ void Circuit::remove() // Remove everything ( Clear Circuit )
 }
 
 void Circuit::deselectAll()
-{
-    for( QGraphicsItem* item : selectedItems() ) item->setSelected( false );
-}
+{ for( QGraphicsItem* item : selectedItems() ) item->setSelected( false ); }
 
 void Circuit::saveState()
 {
@@ -850,33 +586,33 @@ void Circuit::saveChanges()
 
 void Circuit::undo()
 {
-    if( m_conStarted || m_undoStack.isEmpty() ) return;
+    if( m_busy || m_deleting || m_conStarted || m_undoStack.isEmpty() ) return;
     m_busy = true;
 
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     m_redoStack.prepend( circuitToString() );
     remove();
-    m_domDoc.setContent( m_undoStack.takeLast() );
-
     m_seqNumber = 0;
-    loadDomDoc( &m_domDoc );
+
+    QString circuit = m_undoStack.takeLast();
+    loadStrDoc( circuit );
     m_busy = false;
 }
 
 void Circuit::redo()
 {
-    if( m_conStarted || m_redoStack.isEmpty() ) return;
+    if( m_busy || m_deleting || m_conStarted || m_redoStack.isEmpty() ) return;
     m_busy = true;
 
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     m_undoStack.append( circuitToString() );
     remove();
-    m_domDoc.setContent( m_redoStack.takeFirst() );
-
     m_seqNumber = 0;
-    loadDomDoc( &m_domDoc );
+
+    QString circuit = m_redoStack.takeFirst();
+    loadStrDoc( circuit );
     m_busy = false;
 }
 
@@ -917,6 +653,7 @@ void Circuit::paste( QPointF eventpoint )
     
     bool animate = m_animate;
     saveState();
+    m_busy = true;
     m_pasting = true;
     for( QGraphicsItem*item : selectedItems() ) item->setSelected( false );
 
@@ -926,12 +663,11 @@ void Circuit::paste( QPointF eventpoint )
     circuit += QApplication::clipboard()->text();
     circuit += "\n</circuit>";
 
-    QDomDocument* doc = new QDomDocument();
-    doc->setContent( circuit );
-    loadDomDoc( doc );
+    loadStrDoc( circuit );
 
-    m_pasting = false;
     setAnimate( animate );
+    m_pasting = false;
+    m_busy = false;
 }
 
 void Circuit::newconnector( Pin* startpin )
@@ -966,9 +702,7 @@ void Circuit::deleteNewConnector()
 }
 
 void Circuit::updateConnectors()
-{
-    for( Connector* con : m_conList ) con->updateLines();
-}
+{ for( Connector* con : m_conList ) con->updateLines(); }
 
 void Circuit::addNode( Node* node )
 {
@@ -1141,7 +875,7 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
         {
             file = id;
             id   = "Image";
-            Component* enterItem = createItem( "Image", id+"-"+newSceneId() );
+            Component* enterItem = createItem( "Image", newSceneId() );
             if( enterItem )
             {
                 saveState();

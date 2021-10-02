@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "mux_analog.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
@@ -136,7 +138,6 @@ void MuxAnalog::setAddrBits( int bits )
 
     m_enablePin->setPos( QPoint(-3*8,4*8+bits*8 ) );
     m_enablePin->isMoved();
-    m_enablePin->setLabelPos();
 
     Circuit::self()->update();
 }

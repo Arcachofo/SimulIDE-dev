@@ -17,7 +17,14 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QApplication>
 #include <QDomDocument>
+#include <QMessageBox>
+#include <QXmlStreamReader>
+#include <QMimeData>
+#include <QDebug>
+#include <QDrag>
+#include <QMenu>
 
 #include "componentselector.h"
 #include "mainwindow.h"
@@ -256,9 +263,9 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
       ||( type == "MCU" )
       ||( type == "PIC" ))
     {
-         item->setData( 0, Qt::WhatsThisRole, name );
+         item->setData( 0, Qt::WhatsThisRole, name+"-" );
     }
-    else item->setData( 0, Qt::WhatsThisRole, type );
+    else item->setData( 0, Qt::WhatsThisRole, ""/*type*/ );
     
     catItem->addChild( item );
     item->setHidden( hidden );

@@ -19,6 +19,7 @@
 
 #include <QApplication>
 #include <QTranslator>
+#include <QStandardPaths>
 
 #include "mainwindow.h"
 #include "circuitwidget.h"

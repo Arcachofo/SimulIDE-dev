@@ -21,7 +21,7 @@
 #define PLOTDISPLAY_H
 
 #include <QPixmap>
-#include <QtWidgets>
+#include <QWidget>
 
 class DataChannel;
 

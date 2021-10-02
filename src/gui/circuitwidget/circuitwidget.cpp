@@ -16,7 +16,13 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
  *                                                                         *
  ***************************************************************************/
- 
+
+#include <QSplitter>
+#include <QToolButton>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QDesktopServices>
+
 #include "circuitwidget.h"
 #include "mainwindow.h"
 #include "simulator.h"

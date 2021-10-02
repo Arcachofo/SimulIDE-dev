@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include <QVariant>
+#include <QDial>
+#include <QVBoxLayout>
 
 #include "dialwidget.h"
 

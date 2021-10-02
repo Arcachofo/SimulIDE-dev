@@ -20,7 +20,9 @@
 #ifndef FILEBROWSER_H
 #define FILEBROWSER_H
 
-#include <QtWidgets>
+#include <QTreeView>
+
+class QFileSystemModel;
 
 class MAINMODULE_EXPORT FileBrowser : public QTreeView
 {

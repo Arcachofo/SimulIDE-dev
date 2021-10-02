@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include <QDomDocument>
+#include <QFileDialog>
+#include <QDir>
 
 #include "compiler.h"
 #include "editorwindow.h"

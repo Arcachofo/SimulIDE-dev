@@ -17,6 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QApplication>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QLineEdit>
+#include <QTextStream>
+#include <QLabel>
+#include <QCheckBox>
+#include <QDialogButtonBox>
+#include <QPushButton>
+
 #include "subpackage.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"

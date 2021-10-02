@@ -43,7 +43,7 @@ Buffer::Buffer( QObject* parent, QString type, QString id )
 {
     m_area = QRect( -19, -17, 38, 34 ); 
     
-    setOePin( new IoPin( 90, QPoint( 0,-12 ), m_id+"-ePin-outEnable", 0, this, input ) );
+    setOePin( new IoPin( 90, QPoint( 0,-12 ), m_id+"-Pin_outEnable", 0, this, input ) );
     setTristate( false );
 
     addPropGroup( { tr("Main"), {

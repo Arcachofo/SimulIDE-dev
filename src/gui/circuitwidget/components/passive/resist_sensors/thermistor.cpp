@@ -17,6 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+#include <math.h>
+
 #include "thermistor.h"
 #include "itemlibrary.h"
 

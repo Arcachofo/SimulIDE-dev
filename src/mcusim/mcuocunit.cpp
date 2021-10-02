@@ -50,7 +50,7 @@ void McuOcUnit::runEvent()           // Compare match
 void McuOcUnit::drivePin( ocAct_t act )
 {
     if( !act ) return;
-    bool pinState;
+    bool pinState = false;
 
     if     ( act == ocTOGGLE ) pinState = !m_ocPin->getInpState();
     else if( act == ocCLEAR )  pinState = !m_pinSet;

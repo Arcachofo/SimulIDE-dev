@@ -17,6 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+#include <QPushButton>
+#include <QGraphicsProxyWidget>
+
 #include "switchdip.h"
 #include "circuitwidget.h"
 #include "itemlibrary.h"
@@ -26,9 +30,7 @@
 #include "e-node.h"
 #include "pin.h"
 
-static const char* SwitchDip_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Size")
-};
+#include "intprop.h"
 
 Component* SwitchDip::construct( QObject* parent, QString type, QString id )
 { return new SwitchDip( parent, type, id ); }
@@ -36,19 +38,17 @@ Component* SwitchDip::construct( QObject* parent, QString type, QString id )
 LibraryItem* SwitchDip::libraryItem()
 {
     return new LibraryItem(
-            tr( "Switch Dip" ),
-            tr( "Switches" ),
-            "switchdip.png",
-            "SwitchDip",
-            SwitchDip::construct);
+        tr( "Switch Dip" ),
+        tr( "Switches" ),
+        "switchdip.png",
+        "SwitchDip",
+        SwitchDip::construct);
 }
 
 SwitchDip::SwitchDip( QObject* parent, QString type, QString id )
          : Component( parent, type, id )
          , eElement( id )
 {
-    Q_UNUSED( SwitchDip_properties );
-
     m_graphical = true;
     m_changed = true;
 
@@ -56,11 +56,13 @@ SwitchDip::SwitchDip( QObject* parent, QString type, QString id )
     m_size = 0;
     m_state = 0;
     setSize( 8 );
-
-    //setShowVal( false );
     setLabelPos(-16,-44, 0);
     
     Simulator::self()->addToUpdateList( this );
+
+    addPropGroup( { tr("Main"), {
+new IntProp<SwitchDip>( "Size", tr("Size"),"_Switches", this, &SwitchDip::size, &SwitchDip::setSize, "uint" )
+    }} );
 }
 SwitchDip::~SwitchDip(){}
 

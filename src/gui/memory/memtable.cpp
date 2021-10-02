@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "memtable.h"
 #include "mainwindow.h"
 #include "simulator.h"

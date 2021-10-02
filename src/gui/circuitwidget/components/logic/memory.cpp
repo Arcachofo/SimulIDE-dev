@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "memory.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
@@ -50,17 +52,17 @@ Memory::Memory( QObject* parent, QString type, QString id )
     m_width  = 4;
     m_height = 11;
     
-    m_WePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-We", 0, this, input );
+    m_WePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_We", 0, this, input );
     m_WePin->setLabelText( " WE" );
     m_WePin->setLabelColor( QColor( 0, 0, 0 ) );
     m_WePin->setInverted( true );
     
-    m_CsPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin-Cs", 0, this, input );
+    m_CsPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin_Cs", 0, this, input );
     m_CsPin->setLabelText( "CS " );
     m_CsPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_CsPin->setInverted( true );
     
-    m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin-outEnable" , 0, this, input );
+    m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_outEnable" , 0, this, input );
     m_oePin->setLabelText( " OE" );
     m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
     m_oePin->setInverted( true );
@@ -221,26 +223,21 @@ void Memory::updatePins()
     for( int i=0; i<m_addrBits; i++ )
     {
         m_inPin[i]->setPos( QPoint(-24,origY+8+i*8 ) );
-        m_inPin[i]->setLabelPos();
         m_inPin[i]->isMoved();
     }
     for( int i=0; i<m_dataBits; i++ )
     {
         m_outPin[i]->setPos( QPoint(24,origY+8+i*8 ) ); 
-        m_outPin[i]->setLabelPos();
         m_outPin[i]->isMoved();
     }
     m_WePin->setPos( QPoint(-24,origY+h*8 ) );          // WE
     m_WePin->isMoved();
-    m_WePin->setLabelPos();
     
     m_CsPin->setPos( QPoint( 24,origY+8+h*8 ) );        // CS
     m_CsPin->isMoved();
-    m_CsPin->setLabelPos();
     
     m_oePin->setPos( QPoint(-24,origY+8+h*8 ) );        // OE
     m_oePin->isMoved();
-    m_oePin->setLabelPos();
     
     m_area   = QRect( -(m_width/2)*8, origY, m_width*8, m_height*8 );
 }

@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPushButton>
+
 #include "currsource.h"
 #include "itemlibrary.h"
 #include "simulator.h"

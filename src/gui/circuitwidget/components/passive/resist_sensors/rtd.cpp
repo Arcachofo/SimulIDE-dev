@@ -21,6 +21,9 @@
  *   santigoro@gmail.com                                                   *
  *                                                                         */
 
+#include <QPainter>
+#include <math.h>
+
 #include "rtd.h"
 #include "simulator.h"
 #include "itemlibrary.h"

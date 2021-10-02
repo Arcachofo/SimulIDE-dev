@@ -42,6 +42,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         ~Component();
 
         virtual bool setPropStr( QString prop, QString val ) override;
+ static void substitution( QString &propName );
 
         enum { Type = UserType + 1 };
         int type() const { return Type; }

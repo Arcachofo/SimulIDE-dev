@@ -20,7 +20,7 @@
 #ifndef COMPONENTSELECTOR_H
 #define COMPONENTSELECTOR_H
 
-#include <QtWidgets>
+#include <QDir>
 
 #include "compplugindialog.h"
 #include "itemlibrary.h"

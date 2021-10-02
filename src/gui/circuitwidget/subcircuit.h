@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
 
         void loadSubCircuit( QString file );
 
-        Pin* getConPin( QString pinId );
+        //Pin* getConPin( QString pinId );
 
         virtual void addPin( QString id, QString type, QString label,
                             int pos, int xpos, int ypos, int angle, int length=8 );

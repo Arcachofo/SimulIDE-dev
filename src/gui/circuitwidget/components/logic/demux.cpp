@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "demux.h"
 #include "circuitwidget.h"
 #include "itemlibrary.h"

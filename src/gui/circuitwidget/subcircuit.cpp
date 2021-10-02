@@ -36,12 +36,12 @@
 
 Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 {
-    SubCircuit* subcircuit = new SubCircuit( parent, type,  id );
+    SubCircuit* subcircuit = new SubCircuit( parent, type, id );
     if( m_error > 0 )
     {
         Circuit::self()->compList()->removeOne( subcircuit );
         subcircuit->deleteLater();
-        subcircuit = 0l;
+        subcircuit = NULL;
         m_error = 0;
     }
     return subcircuit;
@@ -51,7 +51,7 @@ LibraryItem* SubCircuit::libraryItem()
 {
     return new LibraryItem(
         tr("Subcircuit"),
-        tr(""),         // Not dispalyed
+        "",         // Category Not dispalyed
         "",
         "Subcircuit",
         SubCircuit::construct );
@@ -60,9 +60,6 @@ LibraryItem* SubCircuit::libraryItem()
 SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
           : Chip( parent, type, id )
 {
-    m_name = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
-    m_label.setPlainText( m_name );
-
     m_icColor = QColor( 20, 30, 60 );
     m_attached = false;
     m_boardId = "";
@@ -166,26 +163,7 @@ SubCircuit::~SubCircuit(){}
 
 void SubCircuit::loadSubCircuit( QString fileName )
 {
-    QFile file( fileName );
-
-    if( !file.open(QFile::ReadOnly | QFile::Text) )
-    {
-        MessageBoxNB( "SubCircuit::loadSubCircuit", "                               \n"+
-                  tr("Cannot read file %1:\n%2.").arg(fileName).arg(file.errorString()));
-        m_error = 32;
-        return;
-    }
-    QDomDocument domDoc;
-
-    if( !domDoc.setContent(&file) )
-    {
-        MessageBoxNB( "SubCircuit::loadSubCircuit", "                               \n"+
-                  tr("Cannot set file %1\nto DomDocument").arg(fileName) );
-        file.close();
-        m_error = 33;
-        return;
-    }
-    file.close();
+    QString doc = fileToString( fileName, "SubCircuit::loadSubCircuit" );
 
     QStringList graphProps;
     for( propGroup pg : m_properties ) // Create list of "Graphical" poperties (We don't need them)
@@ -197,47 +175,67 @@ void SubCircuit::loadSubCircuit( QString fileName )
 
     Circuit* circ = Circuit::self();
     QHash<QString, eNode*> nodMap;
-    QDomNode node = domDoc.documentElement().firstChild();
 
-    while( !node.isNull() )
+    QVector<QStringRef> docLines = doc.splitRef("\n");
+    for( QStringRef line : docLines )
     {
-        QDomElement   element = node.toElement();
-        const QString tagName = element.tagName();
-
-        if( tagName == "item" )
+        if( line.startsWith("<item") )
         {
-            QString objNam = element.attribute( "objectName"  ); // Data in simu file
-            QString type   = element.attribute( "itemtype"  );
-            QString id     = objNam;
-            id = id.remove( id.lastIndexOf("-"), 100 )+"-"+circ->newSceneId(); // Create new id
+            QString uid, newUid, type, label;
 
-            element.setAttribute( "objectName", id  );
+            QStringRef name;
+            QVector<QStringRef> props = line.split("\"");
+            QVector<QStringRef> properties;
+            for( QStringRef prop : props )
+            {
+                if( prop.endsWith("=") )
+                {
+                    prop = prop.split(" ").last();
+                    name = prop.mid( 0, prop.length()-1 );
+                    continue;
+                }
+                else if( prop.endsWith("/>") ) continue;
+                else{
+                    if     ( name == "itemtype"   ) type  = prop.toString();
+                    else if( name == "CircId"     ) uid   = prop.toString();
+                    else if( name == "objectName" ) uid   = prop.toString();
+                    else if( name == "label"      ) label = prop.toString();
+                    else if( name == "id"         ) label = prop.toString();
+                    else properties << name << prop ;
+            }   }
+            newUid = m_id+"_"+uid;
 
             if( type == "Connector" )
             {
-                QString startPinId = element.attribute( "startpinid" );
-                QString endPinId   = element.attribute( "endpinid" );
-                Pin* startPin  = getConPin( element.attribute( "startpinid" ) );
-                Pin* endPin    = getConPin( element.attribute( "endpinid" ) );
+                QString startPinId, endPinId, enodeId;
+                QStringList pointList;
+
+                QString name = "";
+                for( QStringRef prop : properties )
+                {
+                    if( name.isEmpty() ) { name = prop.toString(); continue; }
+
+                    if     ( name == "startpinid") startPinId = m_id+"_"+prop.toString();
+                    else if( name == "endpinid"  ) endPinId   = m_id+"_"+prop.toString();
+                    else if( name == "enodeid"   ) enodeId    = prop.toString();
+                    else if( name == "pointList" ) pointList  = prop.toString().split(",");
+                    name = "";
+                }
+                startPinId = startPinId.replace("Pin-", "Pin_"); // Old TODELETE
+                endPinId   =   endPinId.replace("Pin-", "Pin_"); // Old TODELETE
+
+                Pin* startPin = Circuit::self()->m_pinMap.value( startPinId ); //getConPin( startPinId );
+                Pin* endPin   = Circuit::self()->m_pinMap.value( endPinId ); //getConPin( endPinId );
 
                 if( startPin && endPin )    // Create Connector
                 {
-                    /*Connector* con  = new Connector( this, type, id, startPin, endPin, false );
-
-                    element.setAttribute( "startpinid", startPin->objectName() );
-                    element.setAttribute(   "endpinid", endPin->objectName() );
-
-                    circ->loadProperties( &element, con );*/
-
-                    QString enodeId = element.attribute( "enodeid" );
                     eNode*  enode   = nodMap[enodeId];
 
                     if( !enode )          // Create eNode and add to enodList
                     {
-                        enode = new eNode( "Circ_eNode-"+circ->newSceneId() );
+                        enode = new eNode( m_id+"_eNode-"+circ->newSceneId() );
                         nodMap[enodeId] = enode;
                     }
-                    //con->setEnode( enode );
                     if( startPin->isBus() ) enode->setIsBus( true );
                     startPin->setConPin( endPin );
                     endPin->setConPin( startPin );
@@ -246,31 +244,37 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 }
                 else // Start or End pin not found
                 {
-                    if( !startPin ) qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null startPin in " << objNam<<startPinId;
-                    if( !endPin )   qDebug() << "\n   ERROR!!  SubCircuit::loadDomDoc: "+m_id+" null endPin in "   << objNam<<endPinId;
+                    if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadDomDoc: "<<m_name<<m_id+" null startPin in "<<type<<uid<<startPinId;
+                    if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadDomDoc: "<<m_name<<m_id+" null endPin in "  <<type<<uid<<endPinId;
             }   }
             else if( type == "Package" ) { ; }
             else{
                 Component* comp = NULL;
-                if( objNam == "" ) objNam = id;
-                if( type == "Node" ) comp = new Node( this, type, id );
-                else                 comp = circ->createItem( type, id );
-                circ->m_idMap[objNam] = id; // Map simu id to new id
+
+                if( type == "Node" ) comp = new Node( this, type, newUid );
+                else                 comp = circ->createItem( type, newUid );
 
                 if( comp )
                 {
-                    QDomNamedNodeMap atrs = element.attributes();
-                    for( int i=0; i<atrs.length(); ++i )   // Load Properties
+                    QString propName = "";
+                    for( QStringRef prop : properties )
                     {
-                        QString propName = atrs.item(i).nodeName();
-                        if( graphProps.contains( propName )) continue; // Don't load "Component" properties.
+                        if( propName.isEmpty() ) { propName = prop.toString(); continue; }
+                        QString value = prop.toString();
 
-                        QString value = element.attribute( propName );
-                        if( !comp->setPropStr( propName, value ) )
-                            qDebug() << "SubCircuit"<<m_id<<" Wrong Property: "<<comp->getUid()<<propName<<value;
+                        if( !graphProps.contains( propName ) )
+                        {
+                            if( !comp->setPropStr( propName, value ) ) // SUBSTITUTIONS
+                            {
+                                if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); } // ns to ps
+                                else                                    Component::substitution( propName );
+
+                                if( !comp->setPropStr( propName, value ) )
+                                    qDebug() << "SubCircuit:"<<m_name<<m_id<<"Wrong Property: "<<type<<uid<<propName<<value;
+                            }
+                        }
+                        propName = "";
                     }
-                    ///circ->loadProperties( &element, comp );
-
                     comp->setParentItem( this );
 
                     if( comp->isGraphical() )
@@ -285,24 +289,21 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     if( comp->isMainComp() ) m_mainComponent = comp; // This component will add it's Context Menu
 
                     comp->setHidden( true, true );
-                    circ->compList()->removeOne( comp );
                     m_compList.append( comp );
 
                     if( type == "Tunnel" ) // Make Tunnel names unique for this subcircuit
                     {
                         Tunnel* tunnel = static_cast<Tunnel*>( comp );
-                        tunnel->setUid( tunnel->name() );
+                        tunnel->setTunnelUid( tunnel->name() );
                         tunnel->setName( m_id+"-"+tunnel->name() );
                         m_subcTunnels.append( tunnel );
                 }   }
-                else qDebug() << " ERROR Creating Component: "<< type << id;
-        }   }
-        node = node.nextSibling();
-}   }
+                else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
+}   }   }   }
 
-Pin* SubCircuit::getConPin( QString pinId )
+/*Pin* SubCircuit::getConPin( QString pinId )
 {
-    Pin* pin = 0l;
+    Pin* pin = NULL;
     QString compName;
     if( pinId.contains("Seg"))
     {
@@ -317,7 +318,7 @@ Pin* SubCircuit::getConPin( QString pinId )
     if( pin && pin->isConnected() ) pin = NULL;
 
     return pin;
-}
+}*/
 
 void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
 {
@@ -342,8 +343,8 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
         m_pinTunnels.insert( pId, tunnel );
 
         Pin* pin = tunnel->getPin();
-        pin->setObjectName( m_id+"-"+id );
-        pin->setId( m_id+"-"+id );
+        pin->setObjectName( pId );
+        pin->setId( pId );
         pin->setLabelColor( color );
         pin->setLabelText( label );
         connect( this, SIGNAL( moved() ), pin, SLOT( isMoved() ), Qt::UniqueConnection );
@@ -472,7 +473,7 @@ void SubCircuit::slotAttach()
                 this->moveTo( QPointF(origX, 0) );
                 this->setRotation(0);
 
-                for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->uid() );
+                for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->tunnelUid() );
                 m_attached = true;
                 break;
 }   }   }   }
@@ -487,7 +488,7 @@ void SubCircuit::slotDetach()
         m_board->setShield( NULL );
         this->moveTo( m_circPos );
         this->setParentItem( NULL );
-        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->uid() );
+        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
         m_board = NULL;
     }
     m_attached = false;
@@ -507,7 +508,7 @@ void SubCircuit::connectBoard()
 
         m_board->setShield( this );
         this->setParentItem( m_board );
-        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->uid() );
+        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->tunnelUid() );
         m_attached = true;
 }   }
 

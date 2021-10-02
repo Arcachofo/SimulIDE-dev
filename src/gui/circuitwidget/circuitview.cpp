@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include <QSvgGenerator>
+#include <QMimeData>
+#include <QFileDialog>
 
 #include "circuitview.h"
 #include "circuitwidget.h"
@@ -165,10 +167,12 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
     QString type = event->mimeData()->html();
     QString name = event->mimeData()->text();
 
-    if( type.isEmpty() || name.isEmpty() ) return;
+    if( type.isEmpty() ) return;
     Circuit::self()->saveState();
 
-    m_enterItem = m_circuit->createItem( type, name+"-"+m_circuit->newSceneId() );
+    name += m_circuit->newSceneId(); // Used by chips: uid = 74HCxx-num
+
+    m_enterItem = m_circuit->createItem( type, name );
     if( m_enterItem )
     {
         if( type == "Subcircuit" )

@@ -17,6 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+#include <QTextDocumentFragment>
+
 #include "codeeditor.h"
 #include "outpaneltext.h"
 #include "compilerprop.h"

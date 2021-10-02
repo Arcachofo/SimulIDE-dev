@@ -21,6 +21,7 @@
  *   santigoro@gmail.com                                                   *
  *                                                                         */
 
+#include <QPainter>
 #include <iostream>
 
 #include "strain.h"

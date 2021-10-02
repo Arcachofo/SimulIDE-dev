@@ -29,12 +29,12 @@
 #include "dialwidget.h"
 
 class LibraryItem;
+class QToolButton;
 class IoPin;
 
 class MAINMODULE_EXPORT KY040 : public Component, public eElement
 {
     Q_OBJECT
-    //Q_PROPERTY( int Detents READ detents WRITE setDetents DESIGNABLE true USER true )
     
     public:
         KY040( QObject* parent, QString type, QString id );

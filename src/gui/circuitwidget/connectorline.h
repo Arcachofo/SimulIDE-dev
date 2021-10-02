@@ -20,7 +20,7 @@
 #ifndef CONNECTORLINE_H
 #define CONNECTORLINE_H
 
-#include <QtWidgets>
+#include <QGraphicsObject>
 
 class Connector;
  

@@ -81,7 +81,7 @@ void LedBar::createLeds( int c )
         int index = i*2;
         
         QString ledid = m_id;
-        ledid.append("-led"+QString::number(i) );
+        ledid.append("_led"+QString::number(i) );
 
         Pin* pin0 = new Pin( 180, QPoint(-16,-32+8+i*8 ), ledid+"-pinP", 0, this );
         m_pin[index] = pin0;

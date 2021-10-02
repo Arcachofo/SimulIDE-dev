@@ -132,7 +132,6 @@ void Bus::setNumLines( int lines )
     }
     m_busPin1->setPos( QPoint( 0 ,-lines*8+8 ) );
     m_busPin1->isMoved();
-    m_busPin1->setLabelPos();
     m_pin[ lines+1 ]  = m_busPin1;
     m_ePin[ lines+1 ] = m_busPin1;
 

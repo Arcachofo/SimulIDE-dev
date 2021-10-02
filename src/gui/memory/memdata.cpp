@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include <QTranslator>
+#include <QFileDialog>
+#include <QMessageBox>
 
 #include "memdata.h"
 #include "memtable.h"

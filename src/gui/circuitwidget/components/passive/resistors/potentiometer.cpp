@@ -17,6 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDial>
+#include <QPainter>
+#include <QGraphicsProxyWidget>
+
 #include "potentiometer.h"
 #include "propdialog.h"
 #include "connector.h"
@@ -151,6 +155,8 @@ void Potentiometer::resChanged( int res ) // Called when dial is rotated
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();
 }
+
+double Potentiometer::getVal() { return m_resist*m_dial->value()/1000; }
 
 void Potentiometer::setVal( double val )
 {

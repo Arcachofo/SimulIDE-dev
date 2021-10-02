@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QLabel>
+
 #include "terminalwidget.h"
 #include "mcucomponent.h"
 #include "subcircuit.h"

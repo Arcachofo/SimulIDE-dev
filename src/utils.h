@@ -20,6 +20,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <math.h>
+
 class QDomDocument;
 class QByteArray;
 class QStringList;

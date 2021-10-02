@@ -20,7 +20,9 @@
 #ifndef CIRCUITWIDGET_H
 #define CIRCUITWIDGET_H
 
-#include <QtWidgets>
+#include <QMenu>
+#include <QToolBar>
+#include <QVBoxLayout>
 
 #include "circuitview.h"
 #include "outpaneltext.h"
@@ -28,6 +30,8 @@
 class AppProp;
 class CircProp;
 class SimuProp;
+class QSplitter;
+class QLabel;
 class AboutDialog;
 
 class MAINMODULE_EXPORT CircuitWidget : public QWidget

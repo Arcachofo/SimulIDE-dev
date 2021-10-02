@@ -21,7 +21,6 @@
 #define CIRCUIT_H
 
 #include <QGraphicsScene>
-#include <QDomDocument>
 #include <QTimer>
 
 #include "component.h"
@@ -90,7 +89,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QList<Node*>*      nodeList()  { return &m_nodeList; }
 
         Component* getCompById( QString id );
-        QString getCompId( QString name );
         QString origId( QString name ) { return m_idMap.value( name ); }
 
         bool is_constarted() { return m_conStarted ; }
@@ -100,7 +98,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         
         void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; }
         void updatePin( ePin* epin, QString newId );
-        void removePin( QString pinId ) { m_pinMap.remove( pinId ); }
 
         const QString getFilePath() const { return m_filePath; }
 
@@ -128,11 +125,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void dropEvent( QGraphicsSceneDragDropEvent* event );
 
     private:
-        void loadStrDoc( QString doc );
-        void loadDomDoc( QDomDocument* doc );
-        void loadProperties( QDomElement* element, CompBase* comp );
-        void loadCompProperties( QDomElement* element, Component* comp );
-        void loadItemProperties( QDomElement* element, Component* comp );
+        QString getCompId( QString &pinName );
+        void remCompType( QString &pinName );
+        void loadStrDoc( QString &doc );
         QString circuitHeader();
         QString circuitToString();
         bool saveString(QString &fileName, QString doc );
@@ -140,8 +135,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void updatePinName( QString* name );
 
  static Circuit*  m_pSelf;
-
-        QDomDocument m_domDoc;
 
         QString m_filePath;
         QString m_backupPath;

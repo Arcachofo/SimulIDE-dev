@@ -22,6 +22,10 @@
 
 #include "filebrowser.h"
 
+class QListWidget;
+class QPushButton;
+class QListWidgetItem;
+
 class MAINMODULE_EXPORT FileWidget : public QWidget
 {
     Q_OBJECT

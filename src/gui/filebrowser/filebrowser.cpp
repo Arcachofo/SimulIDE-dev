@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QFileSystemModel>
+
 #include "filebrowser.h"
 #include "circuitwidget.h"
 #include "mainwindow.h"

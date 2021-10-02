@@ -49,9 +49,9 @@ LatchD::LatchD( QObject* parent, QString type, QString id )
     m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
     
     m_tristate = true;
-    createOePin( "IR13OE ", id+"-Pin-outEnable");
+    createOePin( "IR13OE ", id+"-Pin_outEnable");
 
-    m_clkPin = new IoPin( 180, QPoint( -24,0 ), m_id+"-Pin-clock", 0, this, input );
+    m_clkPin = new IoPin( 180, QPoint( -24,0 ), m_id+"-Pin_clock", 0, this, input );
     m_clkPin->setLabelColor( QColor( 0, 0, 0 ) );
     setTrigger( InEnable );
 
@@ -59,8 +59,8 @@ LatchD::LatchD( QObject* parent, QString type, QString id )
     setChannels( 8 );
 
     addPropGroup( { tr("Main"), {
-new IntProp   <LatchD>(  "Channels" , tr("Size")          ,"_Ch", this, &LatchD::channels,   &LatchD::setChannels, "uint" ),
-new StringProp<LatchD>( "Trigger", tr("Trigger Type")  ,""   , this, &LatchD::triggerStr, &LatchD::setTriggerStr, "enum" ),
+new IntProp   <LatchD>(  "Channels" , tr("Size")         ,"_Channels", this, &LatchD::channels,   &LatchD::setChannels, "uint" ),
+new StringProp<LatchD>( "Trigger", tr("Trigger Type")    ,""   , this, &LatchD::triggerStr, &LatchD::setTriggerStr, "enum" ),
 new BoolProp  <LatchD>( "Inverted" , tr("Invert Outputs"),""   , this, &LatchD::invertOuts, &LatchD::setInvertOuts ),
 new BoolProp  <LatchD>( "Tristate" , tr("Tristate")      ,""   , this, &LatchD::tristate,   &LatchD::setTristate ),
     }} );

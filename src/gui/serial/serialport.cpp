@@ -17,6 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QGraphicsProxyWidget>
+#include <QPainter>
+
 #include "serialport.h"
 #include "mcucomponent.h"
 #include "baseprocessor.h"

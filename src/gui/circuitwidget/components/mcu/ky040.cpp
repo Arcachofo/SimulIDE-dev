@@ -21,6 +21,11 @@
  *   santigoro@gmail.com                                                   *
  *                                                                         */
 
+#include <QDial>
+#include <QToolButton>
+#include <QGraphicsProxyWidget>
+#include <QPainter>
+
 #include "ky040.h"
 #include "iopin.h"
 #include "simulator.h"

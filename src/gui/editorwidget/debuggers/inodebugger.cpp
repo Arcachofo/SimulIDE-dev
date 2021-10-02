@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QApplication>
+
 #include "inodebugger.h"
 #include "outpaneltext.h"
 #include "mainwindow.h"

@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QGraphicsProxyWidget>
+
 #include "logicanalizer.h"
 #include "itemlibrary.h"
 #include "connector.h"

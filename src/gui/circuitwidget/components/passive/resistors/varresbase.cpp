@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include <math.h>
+#include <QDial>
+#include <QGraphicsProxyWidget>
 
 #include "varresbase.h"
 #include "propdialog.h"

@@ -20,9 +20,9 @@
 #ifndef VOLTWIDGET_H
 #define VOLTWIDGET_H
 
-#include <QtWidgets>
 #include "dialwidget.h"
 
+class QPushButton;
 
 class VoltWidget : public DialWidget
 {
@@ -32,7 +32,7 @@ class VoltWidget : public DialWidget
 
         void setupWidget();
 
-        QPushButton *pushButton;
+        QPushButton* pushButton;
 
 };
 #endif

@@ -17,6 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDebug>
 
 #include "piccomponent.h"
 #include "piccomponentpin.h"

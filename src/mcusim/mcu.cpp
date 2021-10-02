@@ -21,6 +21,8 @@
 #include <QFileInfo>
 #include <QTranslator>
 #include <QSignalMapper>
+#include <QFileDialog>
+#include <QMessageBox>
 
 #include "mcu.h"
 #include "mcuport.h"
@@ -76,13 +78,12 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 {
     qDebug() << "        Initializing"<<id;
     m_pSelf = this;
-    m_proc = &m_eMcu;
-    m_device = m_id.split("-").first(); // for example: "atmega328-1" to: "atmega328"
-    m_name = m_device;
+    m_proc  = &m_eMcu;
+    m_device = m_name; // for example: "atmega328-1" to: "atmega328"
 
-    m_resetPin = NULL;
+    m_resetPin   = NULL;
     m_mcuMonitor = NULL;
-    m_autoLoad  = false;
+    m_autoLoad   = false;
 
     m_icColor = QColor( 20, 30, 60 );
 

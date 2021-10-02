@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "mux.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"

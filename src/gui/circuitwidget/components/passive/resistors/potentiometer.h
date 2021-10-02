@@ -38,7 +38,7 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        double getVal() { return m_resist*m_dial->value()/1000; }
+        double getVal();
         void setVal( double val );
 
         double getRes() { return m_resist; }

@@ -17,10 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QMouseEvent>
+
 #include "lawidget.h"
 #include "logicanalizer.h"
 #include "utils.h"
-
 
 LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
         : QDialog( parent )

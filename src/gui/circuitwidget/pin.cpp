@@ -17,7 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QPainter>
 
 #include "pin.h"
 #include "bus.h"
@@ -35,7 +36,6 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
 {
     m_component = parent;
     m_area = QRect(-3, -3, 11, 6);
-
     m_pinState = undef_state;
 
     m_blocked = false;

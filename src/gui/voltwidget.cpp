@@ -18,6 +18,9 @@
  ***************************************************************************/
 
 #include <QVariant>
+#include <QDial>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 #include "voltwidget.h"
 

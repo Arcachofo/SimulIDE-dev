@@ -20,8 +20,7 @@
 #ifndef JOYSTICKWIDGET_H
 #define JOYSTICKWIDGET_H
 
-#include <QtWidgets>
-
+#include <QWidget>
 
 class JoystickWidget : public QWidget
 {
@@ -34,12 +33,12 @@ class JoystickWidget : public QWidget
         void setupWidget();
         
         int getXValue() { return m_xValue; }
-        int getYValue()  { return m_yValue; }
+        int getYValue() { return m_yValue; }
         
-        void mousePressEvent(QMouseEvent *event);
-        void mouseMoveEvent(QMouseEvent *event);
-        void mouseReleaseEvent(QMouseEvent *event);
-        void paintEvent(QPaintEvent *event);
+        void mousePressEvent( QMouseEvent* event );
+        void mouseMoveEvent( QMouseEvent* event );
+        void mouseReleaseEvent( QMouseEvent* event );
+        void paintEvent( QPaintEvent* event );
         
     signals:
         void valueChanged(int newXValue, int newYValue);

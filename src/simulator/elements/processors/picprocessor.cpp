@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QtGui>
+#include <QMessageBox>
 
 #include "picprocessor.h"
 #include "mcucomponent.h"

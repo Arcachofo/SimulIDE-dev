@@ -17,6 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QPainter>
+#include<math.h>
+
 #include "ldr.h"
 #include "itemlibrary.h"
 

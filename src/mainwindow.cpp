@@ -17,6 +17,17 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QApplication>
+#include <QStandardPaths>
+#include <QDesktopWidget>
+#include <QMessageBox>
+#include <QSplitter>
+#include <QLineEdit>
+#include <QTextStream>
+#include <QDebug>
+#include <QPluginLoader>
+#include <QStyleFactory>
+
 #include "mainwindow.h"
 #include "appiface.h"
 #include "circuit.h"
@@ -27,7 +38,7 @@
 #include "utils.h"
 #include "simuapi_apppath.h"
 
-MainWindow* MainWindow::m_pSelf = 0l;
+MainWindow* MainWindow::m_pSelf = NULL;
 
 MainWindow::MainWindow()
           : QMainWindow()
@@ -40,7 +51,7 @@ MainWindow::MainWindow()
     m_autoBck = 15;
     m_version = "SimulIDE-"+QString( APP_VERSION );
     
-    this->setWindowTitle(m_version);
+    this->setWindowTitle( m_version );
 
     QString userAddonPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("addons");
     QDir pluginsDir( userAddonPath );
@@ -395,7 +406,7 @@ void MainWindow::applyStyle()
     }
     else
     {
-        QApplication::setStyle(QStyleFactory::create("Fusion"));
+        QApplication::setStyle( QStyleFactory::create("Fusion") );
 }   }
 
 QSettings* MainWindow::settings() { return &m_settings; }

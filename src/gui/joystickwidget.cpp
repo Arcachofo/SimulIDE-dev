@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include <QVariant>
+#include <QMouseEvent>
+#include <QPainter>
 
 #include "joystickwidget.h"
 

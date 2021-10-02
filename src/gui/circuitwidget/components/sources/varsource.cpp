@@ -17,6 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QGraphicsProxyWidget>
+#include <QPushButton>
+#include <QDial>
+#include <QPainter>
+
 #include "varsource.h"
 #include "connector.h"
 #include "simulator.h"

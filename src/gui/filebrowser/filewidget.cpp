@@ -17,6 +17,13 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QVBoxLayout>
+#include <QListWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QMenu>
+#include <QContextMenuEvent>
+
 #include "filewidget.h"
 #include "mainwindow.h"
 #include "simuapi_apppath.h"

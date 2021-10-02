@@ -25,8 +25,7 @@
 #ifndef FINDREPLACEDIALOG_H
 #define FINDREPLACEDIALOG_H
 
-//#include <QDialog>
-#include <QtWidgets>
+#include <QDialog>
 
 #include "findreplace_global.h"
 
@@ -37,54 +36,28 @@ namespace Ui {
 class QTextEdit;
 class QSettings;
 
-/**
-  * A find/replace dialog.
-  *
-  * It relies on a FindReplaceForm object (see that class for the functionalities provided).
-  */
-class FindReplaceDialog : public QDialog {
+class FindReplaceDialog : public QDialog
+{
     Q_OBJECT
-public:
-    FindReplaceDialog(QWidget *parent = 0);
-    virtual ~FindReplaceDialog();
+    public:
+        FindReplaceDialog(QWidget* parent=0);
+        virtual ~FindReplaceDialog();
 
-    /**
-      * Associates the text editor where to perform the search
-      * @param textEdit
-      */
-    void setTextEdit(CodeEditor *textEdit);
+        void setTextEdit(CodeEditor *textEdit);
 
-    /**
-      * Writes the state of the form to the passed settings.
-      * @param settings
-      * @param prefix the prefix to insert in the settings
-      */
-    virtual void writeSettings(QSettings &settings, const QString &prefix = "FindReplaceDialog");
+        virtual void writeSettings(QSettings &settings, const QString &prefix = "FindReplaceDialog");
+        virtual void readSettings(QSettings &settings, const QString &prefix = "FindReplaceDialog");
 
-    /**
-      * Reads the state of the form from the passed settings.
-      * @param settings
-      * @param prefix the prefix to look for in the settings
-      */
-    virtual void readSettings(QSettings &settings, const QString &prefix = "FindReplaceDialog");
-    
-    void setTextToFind( QString text);
+        void setTextToFind( QString text);
 
-public slots:
-    /**
-     * Finds the next occurrence
-     */
-    void findNext();
+    public slots:
+        void findNext();
+        void findPrev();
 
-    /**
-     * Finds the previous occurrence
-     */
-    void findPrev();
+    protected:
+        void changeEvent (QEvent* e );
 
-protected:
-    void changeEvent(QEvent *e);
-
-    Ui::FindReplaceDIALOG *ui;
+        Ui::FindReplaceDIALOG* ui;
 };
 
 #endif // FINDREPLACEDIALOG_H

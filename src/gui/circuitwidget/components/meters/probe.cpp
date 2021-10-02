@@ -48,10 +48,10 @@ Probe::Probe( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
      , eElement( id )
 {
+    m_area = QRect(-8,-8, 16, 16 );
     m_graphical = true;
-    
-    m_area = QRect( -8, -8, 16, 16 );
     m_voltTrig = 2.5;
+    m_voltIn = 0;
 
     m_pin.resize(1); // Create Input Pin
     m_pin[0] = m_inputPin = new IoPin( 180, QPoint(-22,0), id+"-inpin", 0, this, input);

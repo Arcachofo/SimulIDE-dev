@@ -20,7 +20,11 @@
 #ifndef TERMINALWIDGET_H
 #define TERMINALWIDGET_H
 
-#include <QtWidgets>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QSpinBox>
 
 #include "outpaneltext.h"
 

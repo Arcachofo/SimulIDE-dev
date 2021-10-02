@@ -20,12 +20,18 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtWidgets>
+#include <QMainWindow>
+#include <QSettings>
 
 class ComponentSelector;
 class CircuitWidget;
 class EditorWindow;
+class QPluginLoader;
 class FileWidget;
+class QVBoxLayout;
+class QLineEdit;
+class QSplitter;
+class QDir;
 
 enum Langs {
     English = 0,
@@ -44,7 +50,6 @@ enum Langs {
 class MAINMODULE_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
-    //Q_ENUMS( Langs )
 
     public:
         MainWindow();
@@ -74,8 +79,6 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         void setAutoBck( int secs ) { m_autoBck = secs; }
 
         QString getHelpFile( QString name );
-
-        //PropertiesWidget* createPropWidget( QObject* obj, QString* help );
         
         QTabWidget*  m_sidepanel;
 
@@ -86,7 +89,6 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         void searchChanged();
 
     private:
-
  static MainWindow* m_pSelf;
  
         void loadPluginsAt( QDir pluginsDir );

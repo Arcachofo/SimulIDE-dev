@@ -42,8 +42,7 @@ Node::Node( QObject* parent, QString type, QString id )
     }
     remPropGroup( "CompGraphic" );
     addPropGroup( { "CompGraphic", {
-new PointProp <Component>( "Pos"     ,"","",this, &Component::position,   &Component::setPosition ),
-new DoubProp  <Component>( "rotation","","",this, &Component::getAngle,   &Component::setAngle ),
+new PointProp <Component>( "Pos"     ,"","",this, &Component::position,   &Component::setPosition )
     }} );
 
 }
