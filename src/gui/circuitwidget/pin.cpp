@@ -74,10 +74,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     connect( parent, SIGNAL( moved() ),
                this, SLOT( isMoved() ), Qt::UniqueConnection );
 }
-Pin::~Pin()
-{ 
-    Circuit::self()->removePin( m_id );
-}
+Pin::~Pin(){}
 
 void Pin::reset()
 {
@@ -214,29 +211,30 @@ void Pin::setLabelPos()
 
     int xlabelpos = pos().x();
     int ylabelpos = pos().y();
+    int height = fm.height()/2;
 
     if( m_angle == 0 )   // Right side
     {
         m_label.setRotation( 0 );
         xlabelpos -= fm.width(m_label.text())+m_length+1;
-        ylabelpos -= fm.height()*2/3;
+        ylabelpos -= height;
     }
     else if( m_angle == 90 )   // Top
     {
         m_label.setRotation(m_angle);
-        xlabelpos += 5;
+        xlabelpos += height;
         ylabelpos += m_length+1;
     }
     else if( m_angle == 180 )   // Left
     {
         m_label.setRotation( 0 );
         xlabelpos += m_length+1;
-        ylabelpos -= fm.height()*2/3;
+        ylabelpos -= height;
     }
     else if( m_angle == 270 )   // Bottom
     {
         m_label.setRotation( m_angle );
-        xlabelpos -= 5;
+        xlabelpos -= height;
         ylabelpos -= m_length+1;
         
     }

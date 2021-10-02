@@ -68,9 +68,15 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     {
         pinid = m_id+"-pin_"+QString( 97+i ); // a..g
         m_ePin[i] = m_pin[i] = new Pin( 180, QPoint(-16-8,-24+i*8 ), pinid, 0, this );
+        m_pin[i]->setLength( 6 );
+        m_pin[i]->setFontSize( 4 );
+        m_pin[i]->setLabelText( QChar('a'+i) );
     }
     // Pin dot
     m_ePin[7] = m_pin[7] = new Pin( 270, QPoint( -8, 24+8 ), m_id+"-pin_dot", 0, this );
+    m_pin[7]->setLength( 4 );
+    m_pin[7]->setFontSize( 4 );
+    m_pin[7]->setLabelText( "." );
 
     setNumDisplays( 1 );
 
@@ -154,6 +160,9 @@ void SevenSegment::setComCathode( bool isCommonCathode )
 {
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
     m_commonCathode = isCommonCathode;
+    QString label = m_commonCathode ? " |" : "+";
+    for( int i=0; i<m_numDisplays; ++i )
+    m_commonPin[i]->setLabelText( label );
 }
 
 void SevenSegment::setVerticalPins( bool v )
@@ -164,23 +173,29 @@ void SevenSegment::setVerticalPins( bool v )
     if( v ) {
         for( int i=0; i<5; ++i ){
             m_pin[i]->setPos(-16+8*i,-24-8 );
-            m_pin[i]->setRotation( 90 );
+            m_pin[i]->setLength( 4 );
+            m_pin[i]->setPinAngle( 90 );
+            m_pin[i]->isMoved();
         }
         for( int i=5; i<8; ++i ){
             m_pin[i]->setPos(-16+8*(i-5), 24+8 );
-            m_pin[i]->setRotation(-90 );
+            m_pin[i]->setLength( 4 );
+            m_pin[i]->setPinAngle( 270 );
+            m_pin[i]->isMoved();
         }
     }else{
         for( int i=0; i<7; ++i ){
             m_pin[i]->setPos(-16-8,-24+i*8 );
-            m_pin[i]->setRotation( 0 );
+            m_pin[i]->setLength( 6 );
+            m_pin[i]->setPinAngle( 180 );
+            m_pin[i]->isMoved();
         }
         m_pin[7]->setPos(-8, 24+8 );
-        m_pin[7]->setRotation(-90 );
+        m_pin[7]->setRotation( 270 );
+        m_pin[7]->isMoved();
     }
     m_area = QRect(-18,-24-4, 32*m_numDisplays+4, 48+8 );
-    
-    for( int i=0; i<8; ++i ) m_pin[i]->isMoved();
+
     Circuit::self()->update();
 }
         
@@ -220,8 +235,12 @@ void SevenSegment::createDisplay( int dispNumber )
     int x = 32*dispNumber;
 
     // Pin common
+    QString label = m_commonCathode ? " |" : "+";
     QString pinid = m_id+"-pin_common"+QString( 97+dispNumber );
     m_commonPin[dispNumber] = new Pin( 270, QPoint( x+8, 24+8 ), pinid, 0, this );
+    m_commonPin[dispNumber]->setLength( 4 );
+    m_commonPin[dispNumber]->setFontSize( 4 );
+    m_commonPin[dispNumber]->setLabelText( label );
 
     for( int i=0; i<8; ++i ) // Create segments
     {

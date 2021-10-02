@@ -80,6 +80,9 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setLabelColor( QColor color );
         void setFontSize( int size );
         int  labelSizeX();
+        void setLabelText( QString label );
+
+        void setPinId( QString id ) { m_id = id; }
 
         void setVisible( bool visible );
 
@@ -101,8 +104,6 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
     public slots:
         void isMoved();
-        void setLabelText( QString label );
-        void setPinId( QString id ) { m_id = id; }
 
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event );
@@ -110,7 +111,6 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         pinState_t m_pinState;
         bool m_changed;
 
-    protected:
         int m_angle;
         int m_length;
 
