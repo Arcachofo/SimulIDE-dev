@@ -20,28 +20,46 @@
 #ifndef ELED_H
 #define ELED_H
 
-#include "e-diode.h"
+#include "e-resistor.h"
 
-class MAINMODULE_EXPORT eLed : public eDiode
+class MAINMODULE_EXPORT eLed : public eResistor
 {
     public:
         eLed( QString id );
         ~eLed();
 
+        virtual void stamp() override;
         virtual void initialize() override;
         virtual void voltChanged() override;
 
+        double threshold() { return m_threshold; }
+        void  setThreshold( double threshold ) { m_threshold = threshold; }
+
+        double maxCurrent()             { return m_maxCurrent; }
+        void  setMaxCurrent( double c ) { m_maxCurrent = c; }
+
+        virtual void   setRes( double resist );
+        virtual double res() { return m_imped; }
+
     protected:
         void updateBright();
+        void updateCurrent();
         virtual void updateVI() override;
 
         uint64_t m_prevStep;
         uint32_t m_intensity;
 
+        double m_maxCurrent;
         double m_lastCurrent;
         double m_lastPeriod;
         double m_avgBright;
         double m_brightness;
+
+        double m_voltPN;
+        double m_deltaV;
+        double m_threshold;
+        double m_imped;
+        double m_lastThCurrent;
 };
 
 #endif

@@ -34,8 +34,8 @@ LedSmd::LedSmd( QObject* parent, QString type, QString id, QRectF area, ePin* pi
     setEpin( 0, pin0 );
     setEpin( 1, pin1 );
 
-    createSerRes();
-    setModel( "RGY Default" );
+    //createSerRes();
+    //setModel( "RGY Default" );
 
 }
 LedSmd::~LedSmd(){}

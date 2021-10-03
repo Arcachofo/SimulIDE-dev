@@ -49,8 +49,8 @@ Led::Led( QObject* parent, QString type, QString id )
     setEpin( 0, m_pin[0] );
     setEpin( 1, m_pin[1] );
 
-    createSerRes();
-    setModel( "RGY Default" );
+    //createSerRes();
+    //setModel( "RGY Default" );
 }
 Led::~Led(){}
 

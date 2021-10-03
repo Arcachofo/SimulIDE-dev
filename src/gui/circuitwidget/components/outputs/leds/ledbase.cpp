@@ -38,7 +38,7 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
     m_grounded  = false;
     m_scrEnode  = NULL;
     m_intensity = 0;
-    m_diodeType = "led";
+    //m_diodeType = "led";
 
     m_color = QColor( Qt::black );
     setColorStr("Yellow");
@@ -46,7 +46,7 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new StringProp<LedBase>( "Model"   , tr("Model")   ,"", this, &LedBase::model,    &LedBase::setModel, "enum" ),
+//new StringProp<LedBase>( "Model"   , tr("Model")   ,"", this, &LedBase::model,    &LedBase::setModel, "enum" ),
 new StringProp<LedBase>( "Color"   , tr("Color")   ,"", this, &LedBase::colorStr, &LedBase::setColorStr, "enum" ),
 new BoolProp  <LedBase>( "Grounded", tr("Grounded"),"", this, &LedBase::grounded, &LedBase::setGrounded),
     }} );
@@ -55,11 +55,11 @@ new DoubProp<LedBase>( "Threshold" , tr("Forward Voltage"),"V", this, &LedBase::
 new DoubProp<LedBase>( "MaxCurrent", tr("Max Current")    ,"A", this, &LedBase::maxCurrent, &LedBase::setMaxCurrent ),
 new DoubProp<LedBase>( "Resistance", tr("Resistance")     ,"Ω", this, &LedBase::res,        &LedBase::setRes ),
     }} );
-    addPropGroup( { tr("Advanced"), {
+/*    addPropGroup( { tr("Advanced"), {
 new DoubProp<LedBase>( "BrkDownV"  , tr("Breakdown Voltage")   ,"V" , this, &LedBase::brkDownV, &LedBase::setBrkDownV ),
 new DoubProp<LedBase>( "SatCurrent", tr("Saturation Current")  ,"nA", this, &LedBase::satCur,   &LedBase::setSatCur ),
 new DoubProp<LedBase>( "EmCoef"    , tr("Emission Coefficient"),""  , this, &LedBase::emCoef,   &LedBase::setEmCoef ),
-    }} );
+    }} );*/
 }
 LedBase::~LedBase()
 {
@@ -79,10 +79,10 @@ void LedBase::updateStep()
     uint32_t intensity = m_intensity;
     eLed::updateBright();
 
-    if( m_current > m_maxCur*1.5 )
+    if( m_current > m_maxCurrent*1.5 )
     {
         m_warning = true;
-        m_crashed = m_current > m_maxCur*2;
+        m_crashed = m_current > m_maxCurrent*2;
         update();
     }else{
         if( m_warning ) update();
@@ -95,31 +95,25 @@ void LedBase::updateStep()
 void LedBase::setGrounded( bool grounded )
 {
     if( grounded == m_grounded ) return;
-    
+
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
     if( grounded )
     {
-        Pin* pin1 = static_cast<Pin*>(m_pinR1);
-        if( !pin1 ) return;
+        Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
         pin1->removeConnector();
         pin1->setEnabled( false );
         pin1->setVisible( false );
 
-        if( !m_scrEnode )
-        {
-            m_scrEnode = new eNode( m_id+"Gnod" );
-            m_scrEnode->setNodeNumber(0);
-            Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
-        }
-        pin1->setEnode( m_scrEnode );
+        m_scrEnode = new eNode( m_id+"Gnod" );
+        m_scrEnode->setNodeNumber( 0 );
+        Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
+        m_ePin[1]->setEnode( m_scrEnode );
     }else{
-        Pin* pin1 = static_cast<Pin*>(m_pinR1);
-        if( !pin1 ) return;
+        Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
         pin1->setEnabled( true );
         pin1->setVisible( true );
-        pin1->setEnode( NULL );
-        m_scrEnode = NULL;
+        m_ePin[1]->setEnode( NULL );
     }
     m_grounded = grounded;
 }
@@ -134,8 +128,9 @@ void LedBase::setColorStr( QString c )
 
 QStringList LedBase::getEnums( QString e )
 {
-    if     ( e == "Model" ) return m_leds.keys();
-    else if( e == "Color" ) return m_colors;
+    //if     ( e == "Model" ) return m_leds.keys();
+    //else
+        if( e == "Color" ) return m_colors;
     else return CompBase::getEnums( e );
 }
 
@@ -146,13 +141,13 @@ void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     QPen pen(Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     QColor color;
 
-    if( m_current > m_maxCur*1.2 ) // Led overcurrent
+    if( m_warning/*m_current > m_maxCurrent*1.2*/ ) // Led overcurrent
     {
         p->setBrush( QColor( 255, 150, 0 ) );
         color = QColor( Qt::red );
         pen.setColor( color );
     }
-    if( m_current > m_maxCur*2 )  // Led extreme overcurrent
+    if( m_crashed )  // Led extreme overcurrent
     {
         p->setBrush( Qt::white );
         color = QColor( Qt::white );
