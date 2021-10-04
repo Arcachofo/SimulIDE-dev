@@ -38,7 +38,7 @@ GputilsDebug::~GputilsDebug(){}
 bool GputilsDebug::getVariables( BaseDebugger* debugger )
 {
     QString gpvc    = debugger->toolPath()+"gpvc";
-    QString codPath = debugger->fileName()+".cod";
+    QString codPath = debugger->buildPath()+debugger->fileName()+".cod";
     if( !QFileInfo::exists( codPath ) )
     {
         debugger->outPane()->appendLine( "\nWarning: cod file doesn't exist:\n"+codPath );
@@ -102,7 +102,7 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
 bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
 {
     QString gpvc    = debugger->toolPath()+"gpvc";
-    QString codPath = debugger->fileName()+".cod";
+    QString codPath = debugger->buildPath()+debugger->fileName()+".cod";
     if( !QFileInfo::exists( codPath ) )
     {
         debugger->outPane()->appendLine( "\nWarning: cod file doesn't exist:\n"+codPath );
