@@ -126,7 +126,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
     private:
         QString getCompId( QString &pinName );
-        //void remCompType( QString &pinName );
         void loadStrDoc( QString &doc );
         QString circuitHeader();
         QString circuitToString();
@@ -164,7 +163,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         QList<Component*> m_compList;   // Component list
         QList<Connector*> m_conList;    // Connector list
-        QList<Node*> m_nodeList;    // Connector list
+        QList<Node*> m_nodeList;        // Node list
         
         QHash<QString, Pin*> m_pinMap;    // Pin list
         QHash<QString, QString> m_idMap;

@@ -101,14 +101,6 @@ QString Circuit::getCompId( QString &pinName )
     return compId;
 }
 
-/*void Circuit::remCompType( QString &pinName )
-{
-    QStringList list = pinName.split("-");
-    if( list.size() < 3 ) return;
-    pinName = list.takeLast();
-    pinName.prepend( list.takeLast()+"-" );
-}*/
-
 Pin* Circuit::findPin( int x, int y, QString id )
 {
     /// qDebug() << "Circuit::findPin" << id;
@@ -155,6 +147,10 @@ void Circuit::loadCircuit( QString fileName )
 void Circuit::loadStrDoc( QString &doc )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    QList<Component*> compList;   // Pasting Component list
+    QList<Connector*> conList;    // Pasting Connector list
+    QList<Node*> nodeList;        // Pasting node list
 
     Component* lastComp = NULL;
     QList<SubCircuit*> shieldList;
@@ -227,23 +223,8 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "objectName" ) uid   = prop.toString();
                     else if( name == "label"      ) label = prop.toString();
                     else if( name == "id"         ) label = prop.toString();
-                    /*else if( name == "Name" &&  // Old TODELTE
-                           ( type == "Subcircuit"
-                          || type == "MCU"
-                          || type == "PIC" )) subName = prop.toString()+"-"; // Chips*/
                     else properties << name << prop ;
             }   }
-
-            /*if( uid.contains("-") ) // Old TODELTE
-            {
-                QStringList list = uid.split("-");
-                uid = list.takeLast();
-                if( ( type == "Subcircuit" )
-                  ||( type == "MCU" )
-                  ||( type == "AVR" )
-                  ||( type == "PIC" ))
-                    subName = list.takeLast()+"-";
-            }*/
 
             if( m_pasting ) newUid = type+"-"+newSceneId(); // Create new id
             else            newUid = uid;
@@ -274,11 +255,6 @@ void Circuit::loadStrDoc( QString &doc )
                     startpinid.replace( startCompId, m_idMap[startCompId] );
                     endpinid.replace( endCompId, m_idMap[endCompId] );
                 }
-                /*else  // Old TODELETE
-                {
-                    remCompType( startpinid );
-                    remCompType( endpinid );
-                }*/
                 startpin = m_pinMap.value( startpinid );
                 endpin   = m_pinMap.value( endpinid );
 
@@ -311,7 +287,7 @@ void Circuit::loadStrDoc( QString &doc )
                     con->setEnode( enode );
                     startpin->registerEnode( enode );
                     endpin->registerEnode( enode );
-                    m_conList.append( con );
+                    conList.append( con );
                 }
                 else if( !m_pasting )// Start or End pin not found
                 {
@@ -338,7 +314,7 @@ void Circuit::loadStrDoc( QString &doc )
                     name = "";
                 }
                 addItem( joint );
-                m_nodeList.append( joint );
+                nodeList.append( joint );
             }
             else if( type == "Plotter" ) ;// Old Plotter widget;
             else if( type == "SerialPort");
@@ -401,22 +377,21 @@ void Circuit::loadStrDoc( QString &doc )
                         SubCircuit* shield = static_cast<SubCircuit*>(comp);
                         if( shield->subcType() == Chip::Shield ) shieldList.append( shield );
                     }
-                    m_compList.append( comp );
-                    if( m_pasting ) comp->setSelected( true );
+                    compList.append( comp );
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << uid;
     }   }   }
     if( m_pasting )
     {
-        for( Component* item : m_compList ) item->move( m_deltaMove );
-        for( Component* item : m_nodeList ) item->move( m_deltaMove );
-        for( Connector* con : m_conList )
-        {
-            con->setSelected( true );
-            con->move( m_deltaMove );
-    }   }
+        for( Component* item : compList ) { item->setSelected( true ); item->move( m_deltaMove ); }
+        for( Component* item : nodeList ) { item->setSelected( true ); item->move( m_deltaMove ); }
+        for( Connector* con : conList )   { con->setSelected( true );  con->move( m_deltaMove ); }
+    }
+    m_compList.append( compList );
+    m_nodeList.append( nodeList );
+    m_conList.append( conList );
     // Take care about unconnected Joints
-    for( Node* joint : m_nodeList ) joint->remove(); // Only removed if some missing connector
+    for( Node* joint : nodeList ) joint->remove(); // Only removed if some missing connector
     for( SubCircuit* shield : shieldList ) shield->connectBoard();
 
     m_idMap.clear();
