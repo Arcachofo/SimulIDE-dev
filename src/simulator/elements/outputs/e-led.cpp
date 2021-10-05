@@ -37,15 +37,15 @@ eLed::~eLed() {}
 void eLed::initialize()
 {
     m_prevStep = 0;
+    m_avgCurrent = 0.0;
     m_lastCurrent = 0.0;
     m_intensity = 25;
     m_brightness  = 0;
-    m_avgBright   = 0;
+    m_totalCurrent   = 0;
     m_lastPeriod = 0;
 
     m_admit = 1/high_imp;
     m_voltPN  = 0;
-    m_deltaV  = 0;
     m_current = 0;
     m_lastCurrent = 0;
 }
@@ -71,50 +71,35 @@ void eLed::voltChanged()
 {
     m_voltPN = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
 
-        double deltaR = m_imped;
-        double deltaV = m_threshold;
+    double ThCurrent = m_current = 0;
+    double admit = cero_doub;
 
-        double delta = m_threshold-m_voltPN;
-        if( delta > 1e-12 )   // Not conducing
-        {
-            deltaV = m_voltPN;
-            deltaR = high_imp;
-        }
-        if( deltaR != 1/m_admit )
-        {
-            m_admit = 1/deltaR;
-            //if( deltaR == high_imp ) eResistor::setAdmit( 0 );
-            //else
-                eResistor::setAdmit( m_admit );
-        }
-        m_deltaV = deltaV;
+    double deltaV = m_voltPN-m_threshold;
+    if( deltaV > -1e-12 )   // Conducing
+    {
+        admit = 1/m_imped;
+        ThCurrent = m_threshold*admit;
+        if( deltaV > 0 ) m_current = deltaV*admit;
+    }
+    if( admit != m_admit ) eResistor::setAdmit( admit );
 
-        double current = deltaV*m_admit;
-        if( deltaR == high_imp ) current = 0;
+    if( ThCurrent == m_lastThCurrent ) { updateVI(); return; }
+    m_lastThCurrent = ThCurrent;
 
-        if( current == m_lastThCurrent )
-        {
-            updateVI();
-            return;
-        }
-        m_lastThCurrent = current;
+    Simulator::self()->notCorverged();
 
-        Simulator::self()->notCorverged();
-
-        m_ePin[0]->stampCurrent( current );
-        m_ePin[1]->stampCurrent(-current );
+    m_ePin[0]->stampCurrent( ThCurrent );
+    m_ePin[1]->stampCurrent(-ThCurrent );
 }
 
 void eLed::updateVI()
 {
-    updateCurrent();
-
     const uint64_t step = Simulator::self()->circTime();
     uint64_t period = (step-m_prevStep);
     m_prevStep = step;
     m_lastPeriod += period;
 
-    if( m_lastCurrent > 0 ) m_avgBright += m_lastCurrent*period/m_maxCurrent;
+    if( m_lastCurrent > 0 ) m_totalCurrent += m_lastCurrent*period;
     m_lastCurrent = m_current;
 }
 
@@ -122,7 +107,7 @@ void eLed::updateBright()
 {
     if( !Simulator::self()->isRunning() )
     {
-        m_avgBright = 0;
+        m_totalCurrent = 0;
         m_lastPeriod = 0;
         m_intensity = 25;
         return;
@@ -134,9 +119,10 @@ void eLed::updateBright()
 
     if( m_lastPeriod > sPF*sPS/2 ) // Update 2 times per frame
     {
-        m_brightness = pow( m_avgBright/m_lastPeriod, 1.0/2.0 );
+        m_avgCurrent = m_totalCurrent/m_lastPeriod;
+        m_brightness = pow( m_avgCurrent/m_maxCurrent, 1.0/2.0 );
 
-        m_avgBright  = 0;
+        m_totalCurrent  = 0;
         m_lastPeriod = 0;
         m_intensity  = uint32_t(m_brightness*255)+25;
 }   }
@@ -151,15 +137,3 @@ void eLed::setRes( double resist )
 
     Simulator::self()->resumeSim();
 }
-
-void eLed::updateCurrent()
-{
-    m_current = 0;
-
-    if( m_admit == 1/high_imp ) return;
-
-    if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
-    {
-        double volt = m_voltPN - m_deltaV;
-        if( volt>0 ) m_current = volt*m_admit;
-}   }

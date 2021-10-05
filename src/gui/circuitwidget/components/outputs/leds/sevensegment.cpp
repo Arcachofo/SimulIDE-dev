@@ -64,7 +64,7 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     m_pin.resize(8);
 
     QString pinid;
-    for( int i=0; i<7; ++i ) // Create Pins & eNodes for 7 segments
+    for( int i=0; i<7; ++i ) // Create Pins for 7 segments
     {
         pinid = m_id+"-pin_"+QString( 97+i ); // a..g
         m_ePin[i] = m_pin[i] = new Pin( 180, QPoint(-16-8,-24+i*8 ), pinid, 0, this );
@@ -161,8 +161,7 @@ void SevenSegment::setComCathode( bool isCommonCathode )
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
     m_commonCathode = isCommonCathode;
     QString label = m_commonCathode ? " |" : "+";
-    for( int i=0; i<m_numDisplays; ++i )
-    m_commonPin[i]->setLabelText( label );
+    for( int i=0; i<m_numDisplays; ++i ) m_commonPin[i]->setLabelText( label );
 }
 
 void SevenSegment::setVerticalPins( bool v )

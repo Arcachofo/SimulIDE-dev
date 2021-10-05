@@ -43,20 +43,19 @@ class MAINMODULE_EXPORT eLed : public eResistor
 
     protected:
         void updateBright();
-        void updateCurrent();
         virtual void updateVI() override;
 
         uint64_t m_prevStep;
         uint32_t m_intensity;
 
         double m_maxCurrent;
+        double m_avgCurrent;
+        double m_totalCurrent;
         double m_lastCurrent;
         double m_lastPeriod;
-        double m_avgBright;
         double m_brightness;
 
         double m_voltPN;
-        double m_deltaV;
         double m_threshold;
         double m_imped;
         double m_lastThCurrent;
