@@ -125,16 +125,15 @@ P16F88x::P16F88x(const char *_name)
       adresh(this,"adresh" ),
       adresl(this,"adresl" )
 {
-
-    m_porta = new PicPortRegister(this,"porta", 8,0x1f);
+    m_porta = new PicPortRegister(this,"porta", 8, 0x1f);
     m_trisa = new PicTrisRegister(this,"trisa", m_porta, false);
     m_ioc = new IOC(this, "iocb" );
-    m_portb = new PicPortGRegister(this,"portb", &intcon_reg, m_ioc,8,0xff);
+    m_portb = new PicPortGRegister(this,"portb", &intcon_reg, m_ioc, 8, 0xff);
     m_trisb = new PicTrisRegister(this,"trisb", m_portb, false);
-    m_portc = new PicPortRegister(this,"portc", 8,0xff);
+    m_portc = new PicPortRegister(this,"portc", 8, 0xff);
     m_trisc = new PicTrisRegister(this,"trisc", m_portc, false);
-    m_porte = new PicPortRegister(this,"porte", 8,0x0f);
-    m_trise =  new PicPSP_TrisRegister(this,"trise", m_porte, false);
+    m_porte = new PicPortRegister(this,"porte", 8, 0x0f);
+    m_trise = new PicPSP_TrisRegister(this,"trise", m_porte, false);
 
     pir1_2_reg = new PIR1v2(this,"pir1", &intcon_reg,&pie1);
     pir2_2_reg = new PIR2v3(this,"pir2", &intcon_reg,&pie2);

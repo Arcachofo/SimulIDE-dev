@@ -178,6 +178,7 @@ P12F629::P12F629( const char *_name )
     m_ioc = new IOC( this, "ioc" );
     m_gpio = new PicPortGRegister(this,"gpio", &intcon_reg, m_ioc,8,0x3f);
     m_trisio = new PicTrisRegister(this,"trisio", m_gpio, false);
+    m_gpio->intf_bit = 2; // Was 2 by default, changed to deafult 0, so need to set it here
 
     m_wpu = new WPU( this, "wpu", m_gpio, 0x37);
 

@@ -411,8 +411,8 @@ void PicPortBRegister::setIntEdge(bool bNewIntEdge)
 PicPortGRegister::PicPortGRegister(Processor *pCpu, const char *pName  ,
                                    INTCON *pIntcon, IOC *pIoc,
                                    uint numIopins, uint enableMask)
-    : PicPortBRegister(pCpu, pName  , pIntcon, numIopins, enableMask),
-      m_pIntcon(pIntcon), m_pIoc(pIoc), intf_bit(2)
+    : PicPortBRegister(pCpu, pName, pIntcon, numIopins, enableMask),
+      m_pIntcon(pIntcon), m_pIoc(pIoc), intf_bit(0) // intf_bit was 2,
 {
     m_pIntcon->set_portGReg(this);
 }
