@@ -86,7 +86,7 @@ void KeyPad::setupButtons()
 {
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
     
-    m_area = QRectF( -12, -4, 16*m_cols+8, 16*m_rows+8 );
+    m_area = QRectF(-12,-4, 16*m_cols+8, 16*m_rows+8 );
     
     for( PushBase* button : m_buttons ) 
     {
@@ -105,15 +105,12 @@ void KeyPad::setupButtons()
     
     for( int row=0; row<m_rows; row++ )
     {
-        QString pinId = m_id;
-        pinId.append( QString("-Pin")+QString::number(row)) ;
         QPoint pinPos = QPoint(m_cols*16, 8+row*16);
-        m_pin[row] = new Pin( 0, pinPos, pinId, 0, this);
+        m_pin[row] = new Pin( 0, pinPos, m_id+"-Pin"+QString::number(row), 0, this);
         
         for( int col=0; col<m_cols; col++ )
         {
             QString butId = m_id+"button"+QString::number(row)+QString::number(col);
-            //qDebug()<<butId;
             PushBase* button = new PushBase( this, "PushBase", butId );
             button->SetupButton();
             button->setParentItem( this );

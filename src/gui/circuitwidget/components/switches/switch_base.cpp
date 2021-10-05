@@ -78,8 +78,6 @@ void SwitchBase::onbuttonclicked()
     update();
 }
 
-void SwitchBase::setButtonText( QString text ) { m_button->setText( text ); }
-
 void SwitchBase::setKey( QString key )
 {
     if( key.size()>1 ) key = key.left( 1 );

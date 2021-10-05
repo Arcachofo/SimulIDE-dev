@@ -20,6 +20,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QStandardPaths>
+#include <QtGui>
 
 #include "mainwindow.h"
 #include "circuitwidget.h"
@@ -75,7 +76,7 @@ int main(int argc, char *argv[])
     paths.append("plugins/printsupport");
     QCoreApplication::setLibraryPaths(paths);
     
-    if (AttachConsole(ATTACH_PARENT_PROCESS)) 
+    if (AttachConsole(ATTACH_PARENT_PROCESS))
     {
         freopen("CONOUT$", "w", stdout);
         freopen("CONOUT$", "w", stderr);

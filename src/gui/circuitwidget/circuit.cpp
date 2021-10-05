@@ -345,21 +345,18 @@ void Circuit::loadStrDoc( QString &doc )
                  //&& ( element.hasAttribute( "visible" ) )
                  //&& ( element.attribute( "visible" ) == "false" ) ) ;// Old Serial Port Widget
             else if( type == "SerialTerm") ; /// TODO
-            else
-            {
+            else{
                 bool oldArduino = false;
-
-                if( type == "Arduino" )
-                {
+                if( type == "Arduino" ){
                     oldArduino = true;
                     type = "Subcircuit";
                     newUid = newUid.remove( "Arduino " );
                 }
-                else if( type == "AVR" )
-                {
+                else if( type == "AVR" ){
                     type = "MCU";
                     newUid = newUid.replace( "at", "" );
                 }
+                else if( type == "Frequencimeter" ) type = "FreqMeter";
                 lastComp = NULL;
                 Component* comp = createItem( type, newUid );
                 if( comp )
