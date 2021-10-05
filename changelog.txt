@@ -39,6 +39,11 @@ Changes:
     - Circuit ToolBar: Move settings menu to left side.
     - Use new extension for circuit files ".sim5".
     
+  RC9:
+    - Debugger runs at Editor level (first step to multi-file debugging).
+    - Component properties from QProperty to custom Property system.
+    - Circuit & Subcircuit load: from QDomDoc to QString.
+    
 New Features:
   RC1:
     - Dutch translation by mvandorp.
@@ -120,6 +125,32 @@ New Features:
     - MemTable: show ASCII by byte (2 for 16 bits and so on).
     - Editor/Debugger: "clear All Breakpoints" action added.
     - Editor/Compiler: Added "compile for debug" option.
+    
+  RC9:
+    - LM555 Refactored.
+    - Custom Compilers, basic implementation finished.
+    - Editor: new menu button & dialogs for Editor and Compilers settings.
+    - Added Compilers/Debuggers: SDCC, avr-gcc, avr-gcc Makefile, avr-gcc asm, gavrasm.
+    - 8051 asm highlighting.
+    - Hex file highlighting.
+    - Diode: new accurate model (Leds keep the simple fast model).
+    - New PICs: Added some models (not fully working).
+    - I2C to Parallel: add internal pullups.
+    - Load hex working for all Memories.
+    - Improved Non Linear convergence.
+    - Oscope: Added "Filter" Box.
+    - Modified warning for component crashed, overcurrent, etc.
+    - Wavegen: standard Mid volt. and Semi amplitude.
+    - DC Motor: Red & Black connectors (more visible).
+    - Improved Component properties dialog:
+        More aligned arrangement.
+        Select Property to show (numeric & enum properties).
+        Unit Multipliers always available (if needed).
+        Values to simplest representation.
+    - Improved File load/save (faster, smaller files).
+    - More stable and faster Undo/Redo.
+    - Circuit: Ctrl+A selects all items.
+    - Seven Segment: add Pin labels.
     
 Bug Fixes:
   RC1:
@@ -342,6 +373,22 @@ Bug Fixes:
     - Subcircuit categories not working in translations.
     - Missing avra includes.
     - Opening Circuits with Arduinos not centered in view.
+    
+  RC9:
+    - Copy/Paste: Component Ids not reassigned.
+    - Diode "ghost Voltage" with switches.
+    - 74HC165 not working.
+    - New MCUs: error writting to Pin Input Register.
+    - McuPort::pinChanged: allow several Pins changed.
+    - Buffer: Don't show OE Pin label.
+    - New MCUs: Errors in 8051.
+    - I2C RAM not working.
+    - Aip31068 Not working.
+    - I2C to Parallel not working.
+    - Bjt not working in some cases.
+    - Hd44780: Animate Pins not showing state.
+    - New MCUs: Dedicated Reset Pin not working.
+    - AVR Compare unit: Compare match B not triggered if ORCXB = 0.
     
 New Components:
   RC1:
