@@ -21,9 +21,11 @@
 #define MCUPIN_H
 
 #include "iopin.h"
+#include "mcutypes.h"
 
 class McuPort;
 class eMcu;
+class Interrupt;
 
 class MAINMODULE_EXPORT McuPin : public IoPin
 {
@@ -33,6 +35,13 @@ class MAINMODULE_EXPORT McuPin : public IoPin
     public:
         McuPin( McuPort* port, int i, QString id , Component* mcu );
         ~McuPin();
+
+        enum extIntTrig_t{
+            pinLow=0,
+            pinChange,
+            pinFalling,
+            pinRising
+        };
 
         virtual void initialize() override;
         virtual void stamp() override;
@@ -45,10 +54,16 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
 
+        virtual void ConfExtInt( uint8_t bits );
+
     protected:
         QString m_id;
 
         McuPort* m_port;
+        Interrupt*  m_interrupt;
+
+        regBits_t    m_extIntBits;
+        extIntTrig_t m_extIntTrigger;
 
         int m_number;
 

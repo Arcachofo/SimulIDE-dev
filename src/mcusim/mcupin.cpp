@@ -19,6 +19,7 @@
 
 #include "mcupin.h"
 #include "mcuport.h"
+#include "datautils.h"
 #include "simulator.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
@@ -114,5 +115,10 @@ void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vr
     m_gndAdmEx = gndAdmit;
 
     updtState();
+}
+
+void McuPin::ConfExtInt( uint8_t bits )
+{
+    m_extIntTrigger = (extIntTrig_t)getRegBitsVal( bits, m_extIntBits );
 }
 

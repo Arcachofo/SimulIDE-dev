@@ -11,6 +11,8 @@
 
   <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
     <interrupt name="PCINT2" mask="PCMSK2"/>
+    <extint name="INT0" pin="PD2" configbits="ISC00,ISC01"/>
+    <extint name="INT1" pin="PD3" configbits="ISC10,ISC11"/>
   </port>
 
   <timer name="TIMER0" type="80" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">

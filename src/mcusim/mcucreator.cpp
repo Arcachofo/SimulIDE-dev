@@ -394,6 +394,20 @@ void McuCreator::createPort( QDomElement* p )
                     uint16_t maskReg = mcu->getRegAddress( mask );
                     watchRegister( maskReg, R_WRITE, port, &McuPort::setIntMask, mcu );
         }   }   }
+        else  if( el.tagName() == "extint" )
+        {
+            QString intName = el.attribute("name");
+            Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
+
+            McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );
+            pin->m_interrupt = inte;
+
+            if( el.hasAttribute("configbits") )
+            {
+                QString configBits = el.attribute("configbits");
+                watchBitNames( configBits, R_WRITE, pin, &McuPin::ConfExtInt, mcu );
+                pin->m_extIntBits = getRegBits( configBits, mcu );
+        }   }
         node = node.nextSibling();
 }   }
 
