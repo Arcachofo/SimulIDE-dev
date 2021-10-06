@@ -275,7 +275,7 @@ void Circuit::loadStrDoc( QString &doc )
 
                 if( startpin && endpin )    // Create Connector
                 {
-                    Connector* con  = new Connector( this, type, uid, startpin, endpin );
+                    Connector* con = new Connector( this, type, uid, startpin, endpin );
                     con->setPointList( pointList );
 
                     eNode*  enode = nodMap[enodeId];
@@ -413,8 +413,8 @@ QString Circuit::circuitToString()
 {
     QString circuit = circuitHeader();
     for( Component* comp : m_compList ) circuit += comp->toString();
-    for( Node* nod       : m_nodeList ) circuit += nod->toString();
-    for( Connector* con  : m_conList )  circuit += con->toString();
+    for( Node* node      : m_nodeList ) circuit += node->toString();
+    for( Connector* conn : m_conList )  circuit += conn->toString();
     circuit += "\n</circuit>";
     return circuit;
 }

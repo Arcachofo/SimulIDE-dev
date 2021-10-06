@@ -403,6 +403,7 @@ void Connector::splitCon( int index, Pin* pin1, Pin* pin2 )
     id.append( Circuit::self()->newSceneId() );
 
     Connector* new_connector = new Connector( Circuit::self(), type, id, pin2 );
+    Circuit::self()->conList()->append( new_connector );
 
     int newindex = 0;
     int size = m_conLineList.size();
