@@ -20,16 +20,18 @@
 #include "mcupin.h"
 #include "mcuport.h"
 #include "datautils.h"
+#include "mcuinterrupts.h"
 #include "simulator.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
-      : IoPin( 0, QPoint(0,0), mcu->objectName()+"-"+id, 0, mcu, source )
+      : IoPin( 0, QPoint(0,0), mcu->getUid()+"-"+id, 0, mcu, source )
 {
     m_port   = port;
     m_number = i;
     m_id     = id;
 
     m_pinMask = 1<<i;
+    m_extIntTrigger = pinLow;
 
     m_outState = false;
     m_openColl = false;
@@ -66,6 +68,19 @@ void McuPin::voltChanged()
     bool state = getVolt() > digital_thre;
 
     if( state == m_inpState ) return;
+
+    if( m_extInt && m_extInt->enabled() )
+    {
+        bool raise = false;
+        switch( m_extIntTrigger ) {
+            case pinLow:     raise = !state; break;
+            case pinChange:  raise = (state!= m_inpState); break;
+            case pinFalling: raise = (m_inpState && !state); break;
+            case pinRising:  raise = (state && !m_inpState); break;
+            default:  break;
+        }
+        if( raise ) m_extInt->raise();
+    }
     m_inpState = state;
 
     uint8_t val = state ? m_pinMask : 0;

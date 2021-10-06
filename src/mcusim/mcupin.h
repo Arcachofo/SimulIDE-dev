@@ -60,7 +60,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         QString m_id;
 
         McuPort* m_port;
-        Interrupt*  m_interrupt;
+        Interrupt* m_extInt;
 
         regBits_t    m_extIntBits;
         extIntTrig_t m_extIntTrigger;

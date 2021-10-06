@@ -400,7 +400,7 @@ void McuCreator::createPort( QDomElement* p )
             Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
 
             McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );
-            pin->m_interrupt = inte;
+            pin->m_extInt = inte;
 
             if( el.hasAttribute("configbits") )
             {

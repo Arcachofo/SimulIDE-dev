@@ -11,8 +11,16 @@
         <interrupt name="PCINT2" mask="PCMSK2"/>
     </port>
     <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
+        <extint name="INT0" pin="PD0" configbits="ISC00,ISC01"/>
+        <extint name="INT1" pin="PD1" configbits="ISC10,ISC11"/>
+        <extint name="INT2" pin="PD2" configbits="ISC20,ISC21"/>
+        <extint name="INT3" pin="PD3" configbits="ISC30,ISC31"/>
     </port>
     <port name="PORTE" pins="8" outreg="PORTE" inreg="PINE" dirreg="DDRE">
+        <extint name="INT4" pin="PE4" configbits="ISC40,ISC41"/>
+        <extint name="INT5" pin="PE5" configbits="ISC50,ISC51"/>
+        <extint name="INT6" pin="PE6" configbits="ISC60,ISC61"/>
+        <extint name="INT7" pin="PE7" configbits="ISC70,ISC71"/>
     </port>
     <port name="PORTF" pins="8" outreg="PORTF" inreg="PINF" dirreg="DDRF">
     </port>
