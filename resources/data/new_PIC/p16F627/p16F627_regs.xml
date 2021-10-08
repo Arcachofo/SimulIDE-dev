@@ -8,8 +8,7 @@
         <register name="FSR"     addr="0x04" bits=""/>
         <register name="PORTA"   addr="0x05" bits="RA0,RA1,RA2,RA3,RA4,RA5,RA6,RA7"/>
         <register name="PORTB"   addr="0x06" bits="RB0,RB1,RB2,RB3,RB4,RB5,RB6,RB7"/>
-        <register name="PINA"    addr="0x07" bits="0-7"/><!-- Fake PortA Input Register -->
-        <register name="PINB"    addr="0x08" bits="0-7"/><!-- Fake PortB Input Register -->
+
         <register name="PCLATH"  addr="0x0A" bits="" reset="0x00"/>
         <register name="INTCON"  addr="0x0B" bits="RBIF,INTF,T0IF,RBIE,INTE,T0IE,PEIE,GIE" reset="0x00"/>
         <register name="PIR1"    addr="0x0C" bits="TMR1IF,TMR2IF,CCP1IF,0,TXIF,RCIF,CMIF,EEIF" reset="0x00"/>

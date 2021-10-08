@@ -74,7 +74,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         bool m_puMask; // Pullup always on
         bool m_openColl;
 
-        double digital_thre;
+        //double digital_thre;
 
         uint8_t m_pinMask;
 };

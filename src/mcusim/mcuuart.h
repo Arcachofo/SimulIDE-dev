@@ -36,7 +36,7 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
         virtual void sendByte( uint8_t data ) override{;}
         virtual void bufferEmpty() override;
         virtual void frameSent( uint8_t data ) override;
-        virtual void readByte( uint8_t data ) override {;}
+        virtual void readByte( uint8_t data ) override;
         virtual void byteReceived( uint8_t data ) override;
 
     protected:

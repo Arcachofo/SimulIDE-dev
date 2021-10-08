@@ -68,17 +68,6 @@ class MAINMODULE_EXPORT I51Core : public McuCore
         inline uint8_t getValue( uint16_t addr ) // Read Fake Input instead
         {
             if( addr == REG_SBUF ) addr++;     // Fake Uart Input Register
-            else
-            {
-                for( uint i=0; i<m_outPortAddr.size(); ++i )
-                {
-                    if( addr == m_outPortAddr[i] )
-                    {
-                        addr = m_inPortAddr[i]; // Fake Port Input Register
-                        break;
-                    }
-                }
-            }
             return GET_RAM( addr );
         }
 

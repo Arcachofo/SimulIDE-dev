@@ -25,6 +25,7 @@ Pic14Core::Pic14Core( eMcu* mcu )
          : McuCore( mcu )
 {
     m_sp = 0;
+    m_bank = 0;
 
     m_PCLaddr = mcu->getRegAddress("PCL");
     m_PCHaddr = mcu->getRegAddress("PCLATCH");
@@ -36,8 +37,8 @@ Pic14Core::Pic14Core( eMcu* mcu )
         m_outPortAddr.emplace_back( port->getOutAddr() );
         m_inPortAddr.emplace_back( port->getInAddr() );
     }
-    m_bankBits = getRegBits( "RP0,RP1", mcu );
-    watchBitNames( "RP0,RP1", R_WRITE, this, &Pic14Core::setBank, mcu );
+    m_bankBits = getRegBits( "R0,R1", mcu );
+    watchBitNames( "R0,R1", R_WRITE, this, &Pic14Core::setBank, mcu );
 }
 Pic14Core::~Pic14Core() {}
 

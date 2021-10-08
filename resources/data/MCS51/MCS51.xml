@@ -1,11 +1,10 @@
 <!DOCTYPE SimulIDE>
 
 <parts>
-            
     <datablock name="GPR" start="0x0000" end="0x007F"/>
     <regblock  name="SFR" start="0x0080" end="0x00FF" offset="0x0080" streg="PSW">
         <register name="P0"     addr="0"   bits="0-7" reset="0xFF"/>
-        <register name="SP"     addr="1"   bits="" reset="7"/>
+        <register name="SP"     addr="1"   bits="" reset="0x07"/>
         <register name="DPL"    addr="2"   bits=""/>
         <register name="DPH"    addr="3"   bits=""/>
         <register name="PCON"   addr="7"   bits="IDL,PD,GF0,GF1,0,0,0,SMOD"/>
@@ -17,14 +16,8 @@
         <register name="TH1"    addr="13"  bits=""/>
         <register name="P1"     addr="16"  bits="0-7" reset="0xFF"/>
         
-        <register name="PIN0"   addr="17"  bits="0-7"/><!-- Fake Port Input Register -->
-        <register name="PIN1"   addr="18"  bits="0-7"/><!-- Fake Port Input Register -->
-        <register name="PIN2"   addr="19"  bits="0-7"/><!-- Fake Port Input Register -->
-        <register name="PIN3"   addr="20"  bits="0-7"/><!-- Fake Port Input Register -->
-        
         <register name="SCON"   addr="24"  bits="RI,TI,RB8,TB8,REN,SM2,SM1,SM0"/>
         <register name="SBUF"   addr="25"  bits=""/>
-        <register name="SBUFRX" addr="26"  bits=""/><!-- Fake Uart Input Register -->
         
         <register name="P2"     addr="32"  bits="0-7" reset="0xFF"/>
         <register name="IE"     addr="40"  bits="EX0,ET0,EX1,ET1,ES,ET2,0,EA"/>
@@ -51,22 +44,22 @@
         <interrupt name="USART_T" enable="ES"  flag="TI"  priority="PS"  vector="0x0023" />
     </interrupts>
     
-    <port name="PORT0" pins="8" outreg="P0" inreg="PIN0" dirreg=""
-                       outmask="11111111" opencol="11111111">
+    <port name="PORT0" pins="8" outreg="P0" outmask="11111111" 
+                                opencol="11111111">
     </port>
     
-    <port name="PORT1" pins="8" outreg="P1" inreg="PIN1" dirreg=""
-                       outmask="11111111" pullups="11111111" opencol="11111111">
+    <port name="PORT1" pins="8" outreg="P1" outmask="11111111" 
+                                pullups="11111111" opencol="11111111">
     </port>
     
-    <port name="PORT2" pins="8" outreg="P2" inreg="PIN2" dirreg=""
-                       outmask="11111111" pullups="11111111" opencol="11111111">
+    <port name="PORT2" pins="8" outreg="P2" outmask="11111111" 
+                                pullups="11111111" opencol="11111111">
     </port>
     
-    <port name="PORT3" pins="8" outreg="P3" inreg="PIN3" dirreg=""
-                       outmask="11111111" pullups="11111111" opencol="11111111">
-        <interrupt name="EXT_0" source="PIN32"/>
-        <interrupt name="EXT_1" source="PIN33"/>
+    <port name="PORT3" pins="8" outreg="P3" outmask="11111111" 
+                                pullups="11111111" opencol="11111111">
+        <extint name="EXT_0" pin="PORT32" />
+        <extint name="EXT_1" pin="PORT33" />
     </port>
     
     <timer name="TIMER0" enable="TR0" counter="TL0,TH0" configbitsA="T0M0,T0M1" configbitsB="C/T0,GATE0">
@@ -84,7 +77,7 @@
             <interrupt name="USART_T" />
         </trunit>
         
-        <trunit type="rx" pin="PORT30" register="SBUFRX" enable="REN">
+        <trunit type="rx" pin="PORT30" enable="REN">
             <interrupt name="USART_R" />
         </trunit>
     </usart>

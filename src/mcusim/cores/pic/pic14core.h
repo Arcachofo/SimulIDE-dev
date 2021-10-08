@@ -56,15 +56,6 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
         virtual uint8_t GET_RAM( uint16_t addr ) override //
         {
             addr = m_mcu->getMapperAddr( addr+m_bank );
-
-            for( uint i=0; i<m_outPortAddr.size(); ++i )
-            {
-                if( addr == m_outPortAddr[i] )
-                {
-                    addr = m_inPortAddr[i]; // Fake Port Input Register
-                    break;
-                }
-            }
             return McuCore::GET_RAM( addr );
         }
         virtual void SET_RAM( uint16_t addr, uint8_t v ) override //

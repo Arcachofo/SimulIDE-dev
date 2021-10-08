@@ -21,6 +21,7 @@
 #include "serialmon.h"
 #include "usartrx.h"
 #include "usarttx.h"
+#include "e_mcu.h"
 #include "mcuinterrupts.h"
 
 McuUsart::McuUsart( eMcu* mcu, QString name, int number )
@@ -46,6 +47,12 @@ void McuUsart::byteReceived( uint8_t data )
 {
     if( m_monitor ) m_monitor->printIn( data );
     m_receiver->raiseInt( data );
+}
+
+
+void McuUsart::readByte( uint8_t )
+{
+    m_mcu->m_regOverride = m_receiver->getData();
 }
 
 // ----------------------------------------

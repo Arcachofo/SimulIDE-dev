@@ -55,7 +55,7 @@ void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMas
 
     if( m_intMask & pinMask ) m_interrupt->raise(); // Pin change interrupt
 
-    m_mcu->writeReg( m_inAddr, m_pinState, false ); // Write to RAM
+    if( m_inAddr ) m_mcu->writeReg( m_inAddr, m_pinState, false ); // Write to RAM
 }
 
 void McuPort::outChanged( uint8_t val )
@@ -63,15 +63,13 @@ void McuPort::outChanged( uint8_t val )
     uint8_t changed = *m_outReg ^ val; // See which Pins have actually changed
     if( changed == 0 ) return;
 
-    if( m_inAddr )  // write to Pin input state Register
-    {
-        uint8_t outputs;
-        if( m_dirInv ) outputs = ~(*m_dirReg); // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
-        else           outputs =   *m_dirReg;
+    uint8_t outputs;
+    if( m_dirInv ) outputs = ~(*m_dirReg); // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
+    else           outputs =   *m_dirReg;
 
-        uint8_t pinCh = outputs & changed;
-        if( pinCh ) pinChanged( pinCh, val );
-    }
+    uint8_t pinCh = outputs & changed;
+    if( pinCh ) pinChanged( pinCh, val ); // Update Pin states
+
     for( int i=0; i<m_numPins; ++i )
     {
         if( ( changed & 1<<i )        // Pin changed
@@ -92,6 +90,11 @@ void McuPort::dirChanged( uint8_t val )
          && (!m_pins[i]->m_dirCtrl )) // Port is controlling Pin Direction
             m_pins[i]->setDirection( val & (1<<i));
 }   }
+
+void McuPort::readPort( uint8_t )
+{
+    m_mcu->m_regOverride = m_pinState;
+}
 
 void McuPort::setPullups( uint8_t puMask )
 {

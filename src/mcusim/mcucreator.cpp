@@ -262,7 +262,7 @@ void McuCreator::getRegisters(  QDomElement* e, uint16_t offset )
         {
             QString  regName = el.attribute("name");
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
-            uint8_t resetVal = el.attribute("reset").toUInt(0,2);
+            uint8_t resetVal = el.attribute("reset").toUInt(0,0);
             QString    wMask = el.attribute("mask");
 
             if( !wMask.isEmpty() ) mcu->m_regMask[regAddr] = wMask.toUInt(0,2);
@@ -325,20 +325,20 @@ void McuCreator::createPort( QDomElement* p )
     mcu->m_modules.emplace_back( port );
     port->createPins( m_mcuComp );
 
-    uint16_t addr = 0;
-    if( p->hasAttribute( "outreg" ) ) // Connect to PORT Out Register
-    {
-        addr = mcu->getRegAddress( p->attribute( "outreg" ) );
-        port->m_outAddr = addr;
-        port->m_outReg  = mcu->m_dataMem.data()+addr;
-        watchRegister( addr, R_WRITE, port, &McuPort::outChanged, mcu );
-    }
+    QString outReg = p->attribute( "outreg" );
+    uint16_t addr = mcu->getRegAddress( outReg );
+    port->m_outAddr = addr;
+    port->m_outReg  = mcu->m_dataMem.data()+addr;
+    watchRegister( addr, R_WRITE, port, &McuPort::outChanged, mcu );
+
     if( p->hasAttribute( "inreg" ) ) // Connect to PORT In Register
     {
         addr = mcu->getRegAddress( p->attribute( "inreg" ) );
         port->m_inAddr = addr;
         port->m_inReg  = mcu->m_dataMem.data()+addr;
     }
+    else watchRegNames( outReg, R_READ, port, &McuPort::readPort, mcu ); // No Input register, read pin states
+
     if( p->hasAttribute( "dirreg" ) ) // Connect to PORT Dir Register
     {
         QString dirreg = p->attribute( "dirreg" );

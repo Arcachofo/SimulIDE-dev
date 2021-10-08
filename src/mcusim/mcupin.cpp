@@ -31,6 +31,8 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_id     = id;
 
     m_pinMask = 1<<i;
+
+    m_extInt = NULL;
     m_extIntTrigger = pinLow;
 
     m_outState = false;
@@ -39,7 +41,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_outMask  = false;
     m_inpMask  = true;  // Inverted: true means inactive
 
-    digital_thre = 2.5;
+    //digital_thre = 2.5;
 
     setOutHighV( 5 );
     setPinMode( input );
@@ -65,7 +67,10 @@ void McuPin::stamp()
 
 void McuPin::voltChanged()
 {
-    bool state = getVolt() > digital_thre;
+    bool state = m_inpState;
+    double volt = getVolt();
+    if     ( volt > m_inpHighV ) state = true;
+    else if( volt < m_inpLowV  ) state = false;
 
     if( state == m_inpState ) return;
 
@@ -82,6 +87,7 @@ void McuPin::voltChanged()
         if( raise ) m_extInt->raise();
     }
     m_inpState = state;
+    setPinState( m_inpState? input_high:input_low ); // High : Low colors
 
     uint8_t val = state ? m_pinMask : 0;
     m_port->pinChanged( m_pinMask, val );
