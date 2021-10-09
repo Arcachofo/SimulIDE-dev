@@ -168,7 +168,7 @@ double AvrAdc0::getVref()
 //-- AVR ADC Type 1 ------------------------------------
 
 AvrAdc1::AvrAdc1( eMcu* mcu, QString name )
-      : AvrAdc( mcu, name )
+       : AvrAdc( mcu, name )
 {
     m_txOCB = m_timer0->getOcUnit("OCB");
 }

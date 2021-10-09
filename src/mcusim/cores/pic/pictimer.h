@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT PicTimer0 : public PicTimer8bit
         PicTimer0( eMcu* mcu, QString name );
         ~PicTimer0();
 
-        //virtual void initialize() override;
+        virtual void initialize() override;
         virtual void configureA( uint8_t NewOPTION ) override;
 
     protected:

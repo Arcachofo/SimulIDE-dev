@@ -882,6 +882,10 @@ void McuCreator::createInterrupt( QDomElement* el )
     if( ok ) iv->setPriority( prio );
     else     watchBitNames( intPrio, R_WRITE, iv, &Interrupt::setPriority, mcu );
 
+    if( m_core != "AVR" ) /// TODO find a generic way
+    {
+        watchBitNames( intFlag, R_WRITE, iv, &Interrupt::flagCleared, mcu );
+    }
     if( el->hasAttribute("clear") ) // If clear="1" Clear flag by writting 1 to it
     {                               // If clear="0" deactivate autoclear
         uint8_t val = el->attribute("clear").toUInt();

@@ -107,14 +107,14 @@ PicTimer0::PicTimer0( eMcu* mcu, QString name)
 }
 PicTimer0::~PicTimer0(){}
 
-/*void PicTimer0::initialize()
+void PicTimer0::initialize()
 {
     PicTimer::initialize();
 
     m_running = true;
-    //Simulator::self()->cancelEvents( this );
+    Simulator::self()->cancelEvents( this );
     sheduleEvents();
-}*/
+}
 
 void PicTimer0::configureA( uint8_t NewOPTION )
 {
@@ -136,6 +136,9 @@ void PicTimer0::configureA( uint8_t NewOPTION )
     /*uint8_t clkEdge = getRegBitsVal( NewOPTION, m_T0SE );
     if     ( clkEdge == 1 ) m_clkEdge = Clock_Falling;
     else if( clkEdge == 0 ) m_clkEdge = Clock_Rising;*/
+
+    Simulator::self()->cancelEvents( this );
+    sheduleEvents();
 }
 
 //--------------------------------------------------

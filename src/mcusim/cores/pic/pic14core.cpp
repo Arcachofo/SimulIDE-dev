@@ -338,7 +338,8 @@ void Pic14Core::runDecoder()
 {
     uint16_t instr = m_progMem[PC] & 0x3FFF;
 
-    if( (instr & 0x3F80) == 0 )  // Miscellaneous instrs
+    if( instr == 0 ) incDefault(); // NOP
+    else if( (instr & 0x3F80) == 0 )  // Miscellaneous instrs
     {
         switch( instr & 0x000C)
         {
