@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<compiler name="Gavrasm" type="asm1">
+<compiler name="Gavrasm" type="asm01">
     <step 
         command="gavrasm"
         arguments=" $filePath"

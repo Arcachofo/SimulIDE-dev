@@ -19,6 +19,7 @@
 
 #include <QWidget>
 #include <QTabWidget>
+#include <QTabBar>
 #include <QToolBar>
 #include <QFileDialog>
 #include <QMessageBox>

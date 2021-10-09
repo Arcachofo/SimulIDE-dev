@@ -32,6 +32,7 @@ class GputilsDebug
 
         static bool getVariables( BaseDebugger* debugger );
         static bool mapFlashToSource( BaseDebugger* debugger );
+        static bool mapFlashToAsm( BaseDebugger* debugger );
 };
 
 #endif

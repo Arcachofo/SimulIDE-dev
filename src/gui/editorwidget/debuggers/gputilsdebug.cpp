@@ -20,6 +20,8 @@
 #include <QProcess>
 #include <QFileInfo>
 
+#include <QDebug>
+
 #include "gputilsdebug.h"
 #include "mcuinterface.h"
 #include "basedebugger.h"
@@ -125,9 +127,75 @@ bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
 
     bool readAddr = false;
     QString lineNum;
-
     for( QString line : p_stdout.split("\n") )
     {
+        qDebug() << line;
+        if( line.isEmpty() ) continue;
+        if( readAddr )
+        {
+            readAddr = false;
+            line = line.replace("\t"," ");
+            QStringList words = line.split(" ");
+            words.removeAll("");
+            if( words.size() < 5 ) continue;
+
+            bool ok = false;
+            int lineN = lineNum.toInt( &ok );
+            if( !ok ) continue;
+
+            ok = false;
+            int addr = words.at(2).toInt( &ok, 16 );
+            if( !ok ) continue;
+
+            debugger->setLineToFlash( lineN, addr );
+            continue;
+        }
+        if( line.startsWith( ";") && line.contains(".line") )
+        {
+            QStringList words = line.split("\"");
+            QString file = getFileName( words.at(1) );
+            if( debugger->isProjectFile( file ) )
+            {
+                lineNum = words.at(0);
+                lineNum = lineNum.remove(";").replace("\t"," ");
+                words = lineNum.split(" ");
+                words.removeAll("");
+                if( words.size() < 2 ) continue;
+                lineNum = words.at(1);
+                readAddr = true;
+    }   }   }
+    return true;
+}
+
+bool GputilsDebug::mapFlashToAsm( BaseDebugger* debugger )
+{
+    QString gpvc    = debugger->toolPath()+"gpvc";
+    QString codPath = debugger->buildPath()+debugger->fileName()+".cod";
+    if( !QFileInfo::exists( codPath ) )
+    {
+        debugger->outPane()->appendLine( "\nWarning: cod file doesn't exist:\n"+codPath );
+        return false;
+    }
+
+#ifndef Q_OS_UNIX
+    gpvc += ".exe";
+#endif
+
+    gpvc    = addQuotes( gpvc );
+    codPath = addQuotes( codPath );
+
+    QProcess flashToLine( NULL );      // Get var addresses from Symbol Table
+    flashToLine.setWorkingDirectory( debugger->buildPath() );
+    QString command  = gpvc+" -l "+codPath;
+    flashToLine.start( command );
+    flashToLine.waitForFinished(-1);
+    QString  p_stdout = flashToLine.readAllStandardOutput();
+
+    bool readAddr = false;
+    QString lineNum;
+    for( QString line : p_stdout.split("\n") )
+    {
+        qDebug() << line;
         if( line.isEmpty() ) continue;
         if( readAddr )
         {

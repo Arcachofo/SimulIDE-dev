@@ -188,7 +188,7 @@ void EditorWindow::lineReached( int line ) // Processor reached PC related to so
         McuInterface::self()->stepOne( line );
         return;
     }
-    EditorWindow::self()->pause(); // EditorWindow: calls this->pause as well
+    pause();
 
     int cycle = McuInterface::self()->cycle();
     m_outPane.appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
@@ -246,7 +246,7 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce , QStri
     else if( type == "sdcc" )    debugger = new SdccDebugger( ce, &m_outPane );
     else if( type == "gcbasic" ) debugger = new GcbDebugger( ce, &m_outPane );
 
-    else if( type == "gputils" ) debugger = new PicAsmDebugger( ce, &m_outPane );
+    //else if( type == "gputils" ) debugger = new PicAsmDebugger( ce, &m_outPane );
     //else if( type == "b16asm" )  debugger = new B16AsmDebugger( ce, &m_outPane );
     else
     {

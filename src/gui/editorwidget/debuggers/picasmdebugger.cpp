@@ -29,9 +29,10 @@ PicAsmDebugger::~PicAsmDebugger() {}
 
 bool PicAsmDebugger::postProcess()
 {
-    m_flashToSource.clear();
-    m_sourceToFlash.clear();
+    return BaseDebugger::postProcess();
+    //m_flashToSource.clear();
+    //m_sourceToFlash.clear();
 
-    return GputilsDebug::mapFlashToSource( this );
+    //return GputilsDebug::mapFlashToAsm( this );
 }
 
