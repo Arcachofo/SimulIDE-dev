@@ -38,7 +38,8 @@ SIMUAPI_AppPath::SIMUAPI_AppPath()
 {
     m_ROExamFolder.cd( "../share/simulide/examples" );
     m_RODataFolder.cd( "../share/simulide/data" );
-   // m_RWDataFolder.cd( "data" );
+    // m_RWDataFolder.cd( "data" );
+    /// qDebug() << "AppImage" << getenv( "APPIMAGE" );
 }
 
 QDir SIMUAPI_AppPath::RWDataFolder() const
