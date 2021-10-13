@@ -6,8 +6,7 @@
         <interrupt name="PB_INT"   enable="RBIE"   flag="RBIF"   priority="1" vector="0x0004"/>
         <interrupt name="ACOMP"    enable="CMIE"   flag="CMIF"   priority="1" vector="0x0004"/>
         <interrupt name="USART_R"  enable="RCIE"   flag="RCIF"   priority="1" vector="0x0004"/>
-        <interrupt name="USART_T"  enable=""       flag="TRMT"   priority="1" vector="0x0004"/>
-        <interrupt name="USART_U"  enable="TXIE"   flag="TXIF"   priority="1" vector="0x0004"/>
+        <interrupt name="USART_T"  enable="TXIE"   flag="TXIF"   priority="1" vector="0x0004"/>
         <interrupt name="CCP1"     enable="CCP1IE" flag="CCP1IF" priority="1" vector="0x0004"/>
         <interrupt name="T1_OVF"   enable="TMR1IE" flag="TMR1IF" priority="1" vector="0x0004"/>
         <interrupt name="T2_MATCH" enable="TMR2IE" flag="TMR2IF" priority="1" vector="0x0004"/>

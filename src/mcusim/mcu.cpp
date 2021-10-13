@@ -80,6 +80,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_pSelf = this;
     m_proc  = &m_eMcu;
     m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
+    if( m_device.contains("~") ) m_device = m_device.split("~").last(); // MCU in Subcircuit
 
     m_resetPin   = NULL;
     m_mcuMonitor = NULL;
@@ -322,10 +323,25 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     connect( reloadAction, SIGNAL(triggered()),
                      this, SLOT(slotReload()), Qt::UniqueConnection );
 
+    menu->addSeparator();
+
+    QAction* loadDaAction = menu->addAction( QIcon(":/open.png"),tr("Load EEPROM data from file") );
+    connect( loadDaAction, SIGNAL(triggered()),
+                     this, SLOT(loadEEPROM()), Qt::UniqueConnection );
+
+    QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data to file") );
+    connect( saveDaAction, SIGNAL(triggered()),
+                     this, SLOT(saveEEPROM()), Qt::UniqueConnection );
+
+    menu->addSeparator();
+
+    QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open Mcu Monitor.") );
+    connect( openRamTab, SIGNAL(triggered()),
+                   this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
+
     QMenu* serMonMenu = menu->addMenu( tr("Open Serial Monitor.") );
 
     QSignalMapper* sm = new QSignalMapper(this);
-
     for( uint i=0; i<m_eMcu.m_usarts.size(); ++i )
     {
         QAction* openSerMonAct = serMonMenu->addAction( "USart"+QString::number(i+1) );
@@ -334,22 +350,9 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
     }
     connect( sm, SIGNAL(mapped(int)), this, SLOT(slotOpenTerm(int)) );
 
-    QAction* loadDaAction = menu->addAction( QIcon(":/load.png"),tr("Load EEPROM data") );
-    connect( loadDaAction, SIGNAL(triggered()),
-                     this, SLOT(loadEEPROM()), Qt::UniqueConnection );
-
-    QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data") );
-    connect( saveDaAction, SIGNAL(triggered()),
-                     this, SLOT(saveEEPROM()), Qt::UniqueConnection );
-
     /*QAction* openSerial = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Port.") );
     connect( openSerial, SIGNAL(triggered()),
                    this, SLOT(slotOpenSerial()), Qt::UniqueConnection );*/
-
-
-    QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open Mcu Monitor.") );
-    connect( openRamTab, SIGNAL(triggered()),
-                   this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
 
     menu->addSeparator();
 

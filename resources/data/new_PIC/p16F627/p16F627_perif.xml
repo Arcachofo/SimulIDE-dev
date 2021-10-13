@@ -28,14 +28,12 @@
     
     <usart name="USART0"  number="1" configregsA="TXSTA" configregsB="RCSTA">
         <trunit type="tx" pin="PORTB2" register="TXREG">
-            <interrupt name="USART_T" />
         </trunit>
         
         <trunit type="rx" pin="PORTB1" register="RCREG">
             <interrupt name="USART_R" />
         </trunit>
-        
-        <interrupt name="USART_U" />
+        <interrupt name="USART_T" />
     </usart>
     
 </parts>

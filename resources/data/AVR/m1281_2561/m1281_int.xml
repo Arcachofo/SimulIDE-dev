@@ -17,7 +17,7 @@
         <interrupt name="T2COA"    enable="OCIE2A" flag="OCF2A" priority="44" vector="0x001A" clear="1"/>
         <interrupt name="T2COB"    enable="OCIE2B" flag="OCF2B" priority="43" vector="0x001C" clear="1"/>
         <interrupt name="T2_OVF"   enable="TOIE2"  flag="TOV2"  priority="42" vector="0x001E" clear="1"/>
-        <interrupt name="T1CAP"    enable=""  flag="" priority="41" vector="0x0020"/ -->
+        <interrupt name="T1CAP"    enable=""  flag="" priority="41" vector="0x0020"/>
         <interrupt name="T1COA"    enable="OCIE1A" flag="OCF1A" priority="40" vector="0x0022" clear="1"/>
         <interrupt name="T1COB"    enable="OCIE1B" flag="OCF1B" priority="39" vector="0x0024" clear="1"/>
         <interrupt name="T1COC"    enable="OCIE1C" flag="OCF1C" priority="38" vector="0x0026" clear="1"/>
@@ -55,7 +55,7 @@
         
         <interrupt name="T5CAP"    enable=""  flag="" priority="11" vector="0x005C"/>
         <interrupt name="T5COA"    enable="OCIE5A" flag="OCF5A" priority="10" vector="0x005E" clear="1"/>
-        <interrupt name="T5COB"    enable="OCIE5B" flag="OCF5B" priority="9"  vector="0x0060"/ clear="1">
+        <interrupt name="T5COB"    enable="OCIE5B" flag="OCF5B" priority="9"  vector="0x0060" clear="1"/>
         <interrupt name="T5COC"    enable="OCIE5C" flag="OCF5C" priority="8"  vector="0x0062"/>
         <interrupt name="T5_OVF"   enable="TOIE5"  flag="TOV5"  priority="7"  vector="0x0064" clear="1"/>
         
