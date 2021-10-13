@@ -217,7 +217,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                   ||( type == "MCU" )
                   ||( type == "PIC" )) subName = list.takeLast()+"-";
             }*/
-            newUid = numId+"_"+uid;
+            newUid = numId+"~"+uid;
 
             if( type == "Connector" )
             {
