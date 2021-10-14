@@ -453,6 +453,7 @@ void P16F88x::create_sfr_map()
         pir1->set_pie(&pie1);
     }
     pie1.setPir(pir1);
+    tmr1l.setInterruptSource(new InterruptSource(pir1, PIR1v3::TMR1IF));
 
     comparator.cmxcon1[0]->set_OUTpin(&(*m_porta)[4], &(*m_porta)[5]);
     comparator.cmxcon1[0]->set_INpinNeg(&(*m_porta)[0], &(*m_porta)[1],
