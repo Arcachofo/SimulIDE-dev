@@ -96,7 +96,7 @@ QString Circuit::getCompId( QString &pinName )
     QStringList list = pinName.split("-");
     if( list.size() < 2 ) return "";
     //QString pinId  = nameSplit.takeLast();
-    QString compId = list.at( list.size()-2 );
+    QString compId = list.at( 0 )+"-"+list.at(1);
 
     return compId;
 }
@@ -340,6 +340,17 @@ void Circuit::loadStrDoc( QString &doc )
                     lastComp = comp;
                     if( m_pasting ) m_idMap[uid] = newUid;
 
+                    Mcu* mcu = NULL;
+                    if( oldArduino )
+                    {
+                        SubCircuit* subci = static_cast<SubCircuit*>(comp);
+                        mcu = static_cast<Mcu*>( subci->getMainComp() );
+                    }
+                    else if( comp->itemType() == "Subcircuit")
+                    {
+                        SubCircuit* shield = static_cast<SubCircuit*>(comp);
+                        if( shield->subcType() == Chip::Shield ) shieldList.append( shield );
+                    }
                     comp->setIdLabel( label );
                     QString propName = "";
                     for( QStringRef prop : properties )
@@ -352,7 +363,11 @@ void Circuit::loadStrDoc( QString &doc )
                             else                                    Component::substitution( propName );
 
                             if( !comp->setPropStr( propName, value ) )
-                                qDebug() << "Circuit: Wrong Property: "<<type<<newUid<<propName<<value;
+                            {
+                                bool ok = false;
+                                if( oldArduino && mcu ) ok = mcu->setPropStr( propName, value );
+                                if( !ok ) qDebug() << "Circuit: Wrong Property: "<<type<<newUid<<propName<<value;
+                            }
                         }
                         propName = "";
                     }
@@ -361,22 +376,6 @@ void Circuit::loadStrDoc( QString &doc )
                     addItem( comp );
                     comp->updtLabelPos();
                     comp->updtValLabelPos();
-
-                    if( oldArduino ) // Load mcu properties & change subcircuit names
-                    {
-                        SubCircuit* subci = static_cast<SubCircuit*>(comp);
-                        Mcu* mcu = static_cast<Mcu*>( subci->getMainComp() );
-                        if( mcu )
-                        {
-                            mcu->setProgram( comp->getPropStr("Program") );
-                            mcu->setFreq( comp->getPropStr("Mhz").toDouble()*1e6 );
-                            mcu->setAutoLoad( comp->getPropStr("Auto_Load").toInt() );
-                    }   }
-                    else if( comp->itemType() == "Subcircuit")
-                    {
-                        SubCircuit* shield = static_cast<SubCircuit*>(comp);
-                        if( shield->subcType() == Chip::Shield ) shieldList.append( shield );
-                    }
                     compList.append( comp );
                 }
                 else qDebug() << " ERROR Creating Component: "<< type << uid;

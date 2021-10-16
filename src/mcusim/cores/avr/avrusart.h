@@ -31,24 +31,28 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         AvrUsart( eMcu* mcu, QString name, int number );
         ~AvrUsart();
 
-        virtual void configureA( uint8_t newUCSRnC ) override;
+        virtual void configureA( uint8_t newUCSRnA ) override;
         virtual void configureB( uint8_t newUCSRnB ) override;
-        virtual uint8_t getBit9() override;
-        virtual void setBit9( uint8_t bit ) override;
+        virtual void configureC( uint8_t newUCSRnC ) override;
+        virtual uint8_t getBit9Tx() override;
+        virtual void setBit9Rx( uint8_t bit ) override;
 
         virtual void sendByte( uint8_t data ) override;
         virtual void frameSent( uint8_t data ) override;
-        virtual void readByte( uint8_t ) override;
 
-        void setBaurrate( uint8_t val=0 );
+        virtual void overrunError() override;
+        virtual void parityError() override;
+        virtual void frameError() override;
+
+        void setBaurrate( uint8_t ubrr=0 );
 
     private:
-        uint8_t m_speedx2;
-
-        uint8_t*  m_ucsrna;
-        uint8_t*  m_ucsrnb;
-        uint8_t*  m_ubrrnL;
-        uint8_t*  m_ubrrnH;
+        void setUBRRnL( uint8_t v );
+        void setUBRRnH( uint8_t v );
+        uint8_t*  m_UCSRnA;
+        uint8_t*  m_UCSRnB;
+        uint8_t*  m_UBRRnL;
+        uint8_t*  m_UBRRnH;
 
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;
@@ -65,6 +69,9 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
         regBits_t m_UDRE;
         regBits_t m_TXC;
         regBits_t m_RXC;
+        regBits_t m_FE;
+        regBits_t m_DOR;
+        regBits_t m_UPE;
 };
 
 #endif

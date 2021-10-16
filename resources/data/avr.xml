@@ -14,13 +14,13 @@
     <itemset category="AVR/atmega" type="MCU">
         
         <item name="mega48"    package="AVR/megax8/megax8"    data="AVR/mega48" />
-        <item name="m48_TQFP"  package="AVR/megax8/mx8_tqfp"  data="AVR/mega48" />
+        <item name="m48 TQFP"  package="AVR/megax8/mx8_tqfp"  data="AVR/mega48" />
         <item name="mega88"    package="AVR/megax8/megax8"    data="AVR/mega88" />
-        <item name="m88_TQFP"  package="AVR/megax8/mx8_tqfp"  data="AVR/mega88" />
+        <item name="m88 TQFP"  package="AVR/megax8/mx8_tqfp"  data="AVR/mega88" />
         <item name="mega168"   package="AVR/megax8/megax8"    data="AVR/mega168" />
-        <item name="m168_TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega168" />
+        <item name="m168 TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega168" />
         <item name="mega328"   package="AVR/megax8/megax8"    data="AVR/mega328" />
-        <item name="m328_TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega328" />
+        <item name="m328 TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega328" />
         
         <item name="mega640"  package="AVR/m640_1280_2560/m640" data="AVR/mega640" />
         <item name="mega1280" package="AVR/m640_1280_2560/m640" data="AVR/mega1280" />

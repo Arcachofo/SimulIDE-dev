@@ -3,8 +3,8 @@
 <parts>
     <datablock name="GPR" start="0x0000" end="0x007F"/>
     <regblock  name="SFR" start="0x0080" end="0x00FF" offset="0x0080" streg="PSW">
-        <register name="P0"     addr="0"   bits="0-7" reset="0xFF"/>
-        <register name="SP"     addr="1"   bits="" reset="0x07"/>
+        <register name="P0"     addr="0"   bits="0-7" reset="11111111"/>
+        <register name="SP"     addr="1"   bits="" reset="00000111"/>
         <register name="DPL"    addr="2"   bits=""/>
         <register name="DPH"    addr="3"   bits=""/>
         <register name="PCON"   addr="7"   bits="IDL,PD,GF0,GF1,0,0,0,SMOD"/>
@@ -14,14 +14,14 @@
         <register name="TL1"    addr="11"  bits=""/>
         <register name="TH0"    addr="12"  bits=""/>
         <register name="TH1"    addr="13"  bits=""/>
-        <register name="P1"     addr="16"  bits="0-7" reset="0xFF"/>
+        <register name="P1"     addr="16"  bits="0-7" reset="11111111"/>
         
         <register name="SCON"   addr="24"  bits="RI,TI,RB8,TB8,REN,SM2,SM1,SM0"/>
         <register name="SBUF"   addr="25"  bits=""/>
         
-        <register name="P2"     addr="32"  bits="0-7" reset="0xFF"/>
+        <register name="P2"     addr="32"  bits="0-7" reset="11111111"/>
         <register name="IE"     addr="40"  bits="EX0,ET0,EX1,ET1,ES,ET2,0,EA"/>
-        <register name="P3"     addr="48"  bits="0-7" reset="0xFF"/>
+        <register name="P3"     addr="48"  bits="0-7" reset="11111111"/>
         <register name="IP"     addr="56"  bits="PX0,PT0,PX1,PT1,PS"/>
         <register name="T2CON"  addr="72"  bits=""/>
         <register name="RCAP2L" addr="74"  bits=""/>

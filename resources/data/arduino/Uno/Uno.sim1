@@ -88,7 +88,7 @@
 
 <item itemtype="Connector" uid="Connector-95" startpinid="Tunnel-11-pin" endpinid="Rail-12-outnod" enodeid="Circ_eNode-111" pointList="-140,-356,-156,-356" />
 
-<item itemtype="Connector" uid="Connector-97" startpinid="LedBar-9_led0_pinP" endpinid="Buffer-10-out" enodeid="Circ_eNode-112" pointList="-308,-240,-300,-240" />
+<item itemtype="Connector" uid="Connector-97" startpinid="LedBar-9-led0-pinP" endpinid="Buffer-10-out" enodeid="Circ_eNode-112" pointList="-308,-240,-300,-240" />
 
 <item itemtype="Connector" uid="Connector-99" startpinid="Tunnel-8-pin" endpinid="Rail-7-outnod" enodeid="Circ_eNode-113" pointList="-140,-340,-156,-340" />
 

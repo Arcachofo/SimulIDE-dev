@@ -26,8 +26,6 @@
 #include "datautils.h"
 #include "regwatcher.h"
 
-#define UCSRNB *m_ucsrnb
-
 AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
 {
@@ -36,8 +34,8 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
     m_parity   = parNONE;
 
     QString n = m_name.right(1);
-    m_ucsrna = mcu->getReg( "UCSR"+n+"A" );
-    m_ucsrnb = mcu->getReg( "UCSR"+n+"B" );
+    m_UCSRnA = mcu->getReg( "UCSR"+n+"A" );
+    m_UCSRnB = mcu->getReg( "UCSR"+n+"B" );
     m_u2xn   = getRegBits( "U2X"+n, mcu );
 
     m_bit9Tx = getRegBits( "TXB8"+n, mcu );
@@ -51,21 +49,54 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
     m_stopRB = getRegBits( "USBS"+n, mcu );
     m_dataRB = getRegBits( "UCSZ"+n+"0,UCSZ"+n+"1", mcu );
 
-    m_ubrrnL = mcu->getReg( "UBRR"+n+"L" );
-    m_ubrrnH = mcu->getReg( "UBRR"+n+"H" );
-    watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setBaurrate, m_mcu );
-    watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setBaurrate, m_mcu );
+    m_UBRRnL = mcu->getReg( "UBRR"+n+"L" );
+    m_UBRRnH = mcu->getReg( "UBRR"+n+"H" );
+    watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setUBRRnL, m_mcu );
+    watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH, m_mcu );
 
     m_UDRE = getRegBits( "UDRE"+n, mcu );
     m_TXC  = getRegBits( "TXC"+n, mcu );
     m_RXC  = getRegBits( "RXC"+n, mcu );
+    m_FE   = getRegBits( "FE"+n, mcu );
+    m_DOR  = getRegBits( "DOR"+n, mcu );
+    m_UPE  = getRegBits( "UPE"+n, mcu );
 }
 AvrUsart::~AvrUsart(){}
 
-void AvrUsart::configureA( uint8_t newUCSRnC ) // UCSRnC changed
+void AvrUsart::configureA( uint8_t newUCSRnA )
 {
+    m_speedx2 = getRegBitsVal( newUCSRnA, m_u2xn ); // Double Speed?
+    setBaurrate();
+}
 
+void AvrUsart::configureB( uint8_t newUCSRnB ) // UCSRnB changed
+{
+    uint8_t txEn = getRegBitsVal( newUCSRnB, m_txEn );
+    if( txEn != m_sender->isEnabled() )
+    {
+        if( txEn )
+        {
+            m_sender->getPin()->controlPin( true, true );
+            m_sender->getPin()->setPinMode( output );
+        }
+        else m_sender->getPin()->controlPin( false, false );
+        m_sender->enable( txEn );
+    }
 
+    uint8_t rxEn = getRegBitsVal( newUCSRnB, m_rxEn );
+    if( rxEn != m_receiver->isEnabled() )
+    {
+        if( rxEn )
+        {
+            m_receiver->getPin()->controlPin( true, true );
+            m_receiver->getPin()->setPinMode( input );
+        }
+        else m_receiver->getPin()->controlPin( false, false );
+        m_receiver->enable( rxEn );
+}   }
+
+void AvrUsart::configureC( uint8_t newUCSRnC ) // UCSRnC changed
+{
     // clockPol = getRegBitsVal( val, UCPOLn );
 
     m_mode = getRegBitsVal( newUCSRnC, m_modeRB );        // UMSELn1, UMSELn0
@@ -76,9 +107,6 @@ void AvrUsart::configureA( uint8_t newUCSRnC ) // UCSRnC changed
     if( par > 0 ) m_parity = (parity_t)(par-1);
     else          m_parity = parNONE;
 
-    m_speedx2 = getRegBitsVal( newUCSRnC, m_u2xn ); // Double Speed?
-    setBaurrate();
-
     /*if( sm0 )  // modes 2 and 3
     {
         if( !sm0 ) // Mode 2
@@ -88,56 +116,44 @@ void AvrUsart::configureA( uint8_t newUCSRnC ) // UCSRnC changed
     }*/
 }
 
-void AvrUsart::configureB( uint8_t newUCSRnB ) // UCSRnB changed
+void AvrUsart::setUBRRnL( uint8_t v )
 {
-    uint8_t txEn = getRegBitsVal( newUCSRnB, m_txEn );
-    if( txEn != m_sender->isEnabled() )
-    {
-        m_sender->enable( txEn );
-        if( txEn )
-        {
-            m_sender->getPin()->controlPin( true, true );
-            m_sender->getPin()->setPinMode( output );
-        }
-        else m_sender->getPin()->controlPin( false, false );
-    }
+    *m_UBRRnL = v;
+    setBaurrate();
+}
 
-    uint8_t rxEn = getRegBitsVal( newUCSRnB, m_rxEn );
-    if( rxEn != m_receiver->isEnabled() )
-    {
-        m_receiver->enable( rxEn );
-        if( rxEn )
-        {
-            m_receiver->getPin()->controlPin( true, true );
-            m_receiver->getPin()->setPinMode( input );
-        }
-        else m_receiver->getPin()->controlPin( false, false );
-}   }
+void AvrUsart::setUBRRnH( uint8_t v )
+{
+    *m_UBRRnH = v;
+    setBaurrate();
+}
 
 void AvrUsart::setBaurrate( uint8_t )
 {
-    uint16_t ubrr = *m_ubrrnL | (*m_ubrrnH & 0x0F)<<8 ;
-    uint64_t mult = 16;
-    if( m_speedx2 ) mult = 8;
-    setPeriod( mult*(ubrr+1)*m_mcu->simCycPI() ); // period in picoseconds
+    uint16_t ubrr = *m_UBRRnL | (*m_UBRRnH & 0x0F)<<8 ;
+
+    uint64_t period = 16*(ubrr+1)*m_mcu->simCycPI();
+    if( m_speedx2 ) period /= 2;
+
+    setPeriod( period );
 }
 
-uint8_t AvrUsart::getBit9()
+uint8_t AvrUsart::getBit9Tx()
 {
-    return getRegBitsVal( UCSRNB, m_bit9Tx );
+    return getRegBitsVal( *m_UCSRnB, m_bit9Tx );
 }
 
-void AvrUsart::setBit9( uint8_t bit )
+void AvrUsart::setBit9Rx( uint8_t bit )
 {
-    UCSRNB &= ~m_bit9Rx.mask;
-    if( bit ) UCSRNB |= m_bit9Rx.mask;
+    *m_UCSRnB &= ~m_bit9Rx.mask;
+    if( bit ) *m_UCSRnB |= m_bit9Rx.mask;
 }
 
 void AvrUsart::sendByte(  uint8_t data ) // Buffer is being written
 {
     if( !m_sender->isEnabled() ) return;
 
-    if( getRegBitsVal( *m_ucsrna, m_UDRE ) )  // Buffer is empty?
+    if( getRegBitsBool( *m_UCSRnA, m_UDRE ) )  // Buffer is empty?
     {
         m_interrupt->clearFlag(); // Transmit buffer full: Clear UDREn bit
         m_sender->processData( data );
@@ -147,14 +163,23 @@ void AvrUsart::frameSent( uint8_t data )
 {
     if( m_monitor ) m_monitor->printOut( data );
 
-    if( getRegBitsVal( *m_ucsrna, m_UDRE ) ) // Frame sent & Buffer is empty
-        m_sender->raiseInt();                // Raise USART Transmit Complete
+    if( getRegBitsBool( *m_UCSRnA, m_UDRE ) ) // Frame sent & Buffer is empty
+        m_sender->raiseInt();                 // Raise USART Transmit Complete
     else
-        m_sender->startTransmission();       // Buffer contains data, send it
+        m_sender->startTransmission();        // Buffer contains data, send it
 }
 
-void AvrUsart::readByte( uint8_t )   // UDRn is being readed
+void AvrUsart::overrunError()
 {
-    m_mcu->m_regOverride = m_receiver->getData();
-    clearRegBits( m_RXC );                 // Clear RXCn flag
+    setRegBits( m_DOR );
+}
+
+void AvrUsart::parityError()
+{
+    setRegBits( m_UPE );
+}
+
+void AvrUsart::frameError()
+{
+    setRegBits( m_FE );
 }

@@ -217,7 +217,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                   ||( type == "MCU" )
                   ||( type == "PIC" )) subName = list.takeLast()+"-";
             }*/
-            newUid = numId+"~"+uid;
+            newUid = numId+"_"+uid;
 
             if( type == "Connector" )
             {
@@ -258,8 +258,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 }
                 else // Start or End pin not found
                 {
-                    if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadDomDoc: "<<m_name<<m_id+" null startPin in "<<type<<uid<<startPinId;
-                    if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadDomDoc: "<<m_name<<m_id+" null endPin in "  <<type<<uid<<endPinId;
+                    if( !startPin ) qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null startPin in "<<type<<uid<<startPinId;
+                    if( !endPin )   qDebug()<<"\n   ERROR!!  SubCircuit::loadSubCircuit: "<<m_name<<m_id+" null endPin in "  <<type<<uid<<endPinId;
             }   }
             else if( type == "Package" ) { ; }
             else{

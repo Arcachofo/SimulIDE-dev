@@ -39,10 +39,6 @@ UsartModule::~UsartModule( )
     if( m_monitor ) m_monitor->close();
 }
 
-void UsartModule::parityError()
-{
-}
-
 void UsartModule::setPeriod( uint64_t period )
 {
     m_sender->setPeriod( period );
@@ -98,7 +94,7 @@ void UartTR::initialize()
     m_runHardware = false;
 }
 
-bool UartTR::getParity( uint8_t data )
+bool UartTR::getParity( uint16_t data )
 {
     bool parity = false;
     for( int i=0; i<mDATABITS; ++i )

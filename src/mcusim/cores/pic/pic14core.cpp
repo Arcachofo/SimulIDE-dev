@@ -27,16 +27,11 @@ Pic14Core::Pic14Core( eMcu* mcu )
     m_sp = 0;
     m_bank = 0;
 
-    m_PCLaddr = mcu->getRegAddress("PCL");
-    m_PCHaddr = mcu->getRegAddress("PCLATCH");
+    m_FSR = m_mcu->getReg( "FSR" );
 
-    QHash<QString, McuPort*>  ports = m_mcu->getPorts();
-    for( QString portName : ports.keys() )
-    {
-        McuPort* port = ports.value( portName );
-        m_outPortAddr.emplace_back( port->getOutAddr() );
-        m_inPortAddr.emplace_back( port->getInAddr() );
-    }
+    m_PCLaddr = mcu->getRegAddress("PCL");
+    m_PCHaddr = mcu->getRegAddress("PCLATH");
+
     m_bankBits = getRegBits( "R0,R1", mcu );
     watchBitNames( "R0,R1", R_WRITE, this, &Pic14Core::setBank, mcu );
 }
@@ -57,10 +52,9 @@ void Pic14Core::setBank( uint8_t bank )
 
 inline void Pic14Core::setValue( uint8_t newV, uint8_t f, uint8_t d )
 {
+    incDefault();
     if( d ) SET_RAM( f, newV );
     else    m_Wreg = newV;
-
-    incDefault();
 }
 inline void Pic14Core::setValueZ( uint8_t newV, uint8_t f, uint8_t d )
 {
@@ -115,15 +109,15 @@ inline void Pic14Core::CLRWDT()
 
 inline void Pic14Core::MOVWF( uint8_t f )
 {
-    SET_RAM( f, m_Wreg);
     incDefault();
+    SET_RAM( f, m_Wreg);
 }
 
 inline void Pic14Core::CLRF( uint8_t f )
 {
+    incDefault();
     SET_RAM( f, 0 );
     write_S_Bit( Z, true );
-    incDefault();
 }
 
 inline void Pic14Core::SUBWF( uint8_t f, uint8_t d )
@@ -234,20 +228,20 @@ inline void Pic14Core::INCFSZ( uint8_t f, uint8_t d )
 
 inline void Pic14Core::BCF( uint8_t f, uint8_t b )
 {
+    incDefault();
     uint8_t newV = GET_RAM( f );
     newV &= ~(1<<b);
 
     SET_RAM( f, newV );
-    incDefault();
 }
 
 inline void Pic14Core::BSF( uint8_t f, uint8_t b )
 {
+    incDefault();
     uint8_t newV = GET_RAM( f );
     newV |= 1<<b;
 
     SET_RAM( f, newV );
-    incDefault();
 }
 
 inline void Pic14Core::BTFSC( uint8_t f, uint8_t b )
@@ -345,14 +339,14 @@ void Pic14Core::runDecoder()
         {
             case 0x0008: {
                 if     ( instr == 0x0008 ) RETURN(); // RETURN 00 0000 0000 1000
-                else if( instr == 0x0009 ) RETFIE();// RETFIE 00 0000 0000 1001
+                else if( instr == 0x0009 ) RETFIE(); // RETFIE 00 0000 0000 1001
             } break;
             case 0x0000: {
-                if     ( instr == 0x0062 ) OPTION();// OPTION 00 0000 0110 0010
-                else if( instr == 0x0063 ) SLEEP();// SLEEP 00 0000 0110 0011
+                if     ( instr == 0x0062 ) OPTION(); // OPTION 00 0000 0110 0010
+                else if( instr == 0x0063 ) SLEEP();  // SLEEP 00 0000 0110 0011
             } break;
             case 0x0004: {
-                if     ( instr == 0x0064 ) CLRWDT();// CLRWDT 00 0000 0110 0100
+                if     ( instr == 0x0064 ) CLRWDT(); // CLRWDT 00 0000 0110 0100
             } break;
         }
     }

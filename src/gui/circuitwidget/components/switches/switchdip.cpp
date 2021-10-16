@@ -123,9 +123,7 @@ void SwitchDip::onbuttonclicked()
         {
             button->setIcon(QIcon(":/switchbut.png"));
             m_state |= 1<<i;
-        }
-        else
-        {
+        }else{
             button->setIcon(QIcon(":/stop.png"));
             m_state &= ~(1<<i);
         }

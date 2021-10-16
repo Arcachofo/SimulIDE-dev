@@ -37,6 +37,7 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
 
     protected:
         uint8_t  m_Wreg;
+        uint8_t* m_FSR;
 
         regBits_t m_bankBits;
         uint16_t  m_bank;
@@ -47,22 +48,22 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
         uint32_t m_stack[8];
         uint8_t  m_sp;
 
-
-        std::vector<uint16_t> m_outPortAddr;
-        std::vector<uint16_t> m_inPortAddr;
-
         void setBank( uint8_t bank );
 
         virtual uint8_t GET_RAM( uint16_t addr ) override //
         {
             addr = m_mcu->getMapperAddr( addr+m_bank );
+            if( addr == 0 ) addr = *m_FSR;// INDF
             return McuCore::GET_RAM( addr );
         }
         virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
         {
             addr = m_mcu->getMapperAddr( addr+m_bank );
 
-            if( addr == m_PCLaddr ) PC = v + (m_dataMem[m_PCHaddr]<<8); // Writting to PCL
+            if( addr == m_PCLaddr )                  // Writting to PCL
+                PC = v + (m_dataMem[m_PCHaddr]<<8);
+
+            else if( addr == 0 ) addr = *m_FSR;      // INDF
 
             McuCore::SET_RAM( addr, v );
         }

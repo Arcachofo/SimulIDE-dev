@@ -61,10 +61,9 @@ void UartTx::runEvent()
 
 void UartTx::processData( uint8_t data )
 {
-    if( !m_enabled ) return;
-
     m_buffer = data;
-    if( m_state == usartIDLE ) startTransmission();
+
+    if( m_enabled && m_state == usartIDLE ) startTransmission();
 }
 
 void UartTx::startTransmission() // Data loaded to ShiftReg
@@ -79,7 +78,7 @@ void UartTx::startTransmission() // Data loaded to ShiftReg
 
     if( mDATABITS == 9 )
     {
-        m_bit9  = m_usart->getBit9();
+        m_bit9  = m_usart->getBit9Tx();
         m_frame |= m_bit9<<9;
     }
     m_framesize = mDATABITS+1;

@@ -262,7 +262,7 @@ void McuCreator::getRegisters(  QDomElement* e, uint16_t offset )
         {
             QString  regName = el.attribute("name");
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
-            uint8_t resetVal = el.attribute("reset").toUInt(0,0);
+            uint8_t resetVal = el.attribute("reset").toUInt(0,2);
             QString    wMask = el.attribute("mask");
 
             if( !wMask.isEmpty() ) mcu->m_regMask[regAddr] = wMask.toUInt(0,2);
@@ -533,8 +533,8 @@ void McuCreator::createUsart( QDomElement* u )
 
     McuUsart* usartM;
     if     ( m_core == "8051" ) usartM = new I51Usart( mcu, name, number );
-    else if( m_core == "AVR" )  usartM = new AvrUsart( mcu, name, number );
-    else if( m_core == "Pic14" ) usartM = new PicUsart( mcu, name, number );
+    else if( m_core == "AVR"  ) usartM = new AvrUsart( mcu, name, number );
+    else if( m_core == "Pic14") usartM = new PicUsart( mcu, name, number );
     else return;
 
     mcu->m_usarts.emplace_back( usartM );
@@ -551,20 +551,19 @@ void McuCreator::createUsart( QDomElement* u )
         {
             UartTR* trUnit;
             QString type = el.attribute( "type" );
-            if     ( type == "tx" ) trUnit = usartM->m_sender;
-            else if( type == "rx" ) trUnit = usartM->m_receiver;
-            else continue;
-
             if( type == "tx" )
             {
+                trUnit = usartM->m_sender;
                 m_txRegName = el.attribute( "register" );
                 watchRegNames( m_txRegName, R_WRITE, usartM, &McuUsart::sendByte, mcu );
             }
             else if( type == "rx" )
             {
+                UartRx* rcUnit = usartM->m_receiver;
+                trUnit = rcUnit;
                 QString regName = el.attribute( "register" );
                 if( regName.isEmpty() ) regName = m_txRegName; // Tx and rx using the same register
-                watchRegNames( regName, R_READ,  usartM, &McuUsart::readByte, mcu );
+                watchRegNames( regName, R_READ, usartM, &McuUsart::readByte, mcu );
             }
 
             QString pinName = el.attribute( "pin" );
@@ -916,6 +915,11 @@ void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )
     {
         QString regs = u->attribute("configregsB");
         watchRegNames( regs, R_WRITE, module, &McuModule::configureB, mcu );
+    }
+    if( u->hasAttribute("configregsC") )
+    {
+        QString regs = u->attribute("configregsC");
+        watchRegNames( regs, R_WRITE, module, &McuModule::configureC, mcu );
     }
     if( u->hasAttribute("configbitsA") )
     {

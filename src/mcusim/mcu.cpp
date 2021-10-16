@@ -80,7 +80,8 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_pSelf = this;
     m_proc  = &m_eMcu;
     m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
-    if( m_device.contains("~") ) m_device = m_device.split("~").last(); // MCU in Subcircuit
+    if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit
+    //m_id.replace("~","_");
 
     m_resetPin   = NULL;
     m_mcuMonitor = NULL;

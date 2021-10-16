@@ -35,6 +35,7 @@ void UartRx::enable( uint8_t en )
     bool enabled = en > 0;
     if( enabled == m_enabled ) return;
     m_enabled = enabled;
+
     m_runHardware = m_ioPin->connector();
     while( !m_inBuffer.empty() ) m_inBuffer.pop();
 
@@ -53,7 +54,7 @@ void UartRx::runEvent()
         else{
             if( !m_inBuffer.empty() )
             {
-                m_usart->byteReceived( m_inBuffer.front() );
+                byteReceived( m_inBuffer.front() );
                 m_inBuffer.pop();
             }
             Simulator::self()->addEvent( m_period*(m_framesize ), this );
@@ -62,26 +63,12 @@ void UartRx::runEvent()
     else if( m_state == usartRXEND )
     {
         m_frame >>= 1;  // Start bit
-        uint8_t data = m_frame & mDATAMASK;
-
-        if( mDATABITS == 9 ) m_bit9 = (m_frame>>8) & 1;
-
-        if( mPARITY > parNONE )        // Check Parity bit
-        {
-            bool parity = getParity( m_data );
-            bool parityBit = m_frame |= 1<<m_framesize;
-
-            if( parity != parityBit ) { m_usart->parityError(); return; }
-        }
-        if( mDATABITS == 9 ) m_usart->setBit9( m_bit9 ); // Save Bit 9
+        byteReceived( m_frame );
 
         m_state = usartRECEIVE;
         m_currentBit = 0;
         m_startHigh = false;
         m_frame = 0;
-
-        m_usart->byteReceived( data );
-        /// m_interrupt->raise( data ); implemented in bytereceived
     }
     if( m_period )
         Simulator::self()->addEvent( m_period, this ); // Shedule next sample
@@ -92,6 +79,7 @@ void UartRx::processData( uint8_t )
     m_state = usartRECEIVE;
     m_framesize = 1+mDATABITS+mPARITY+mSTOPBITS;
     m_currentBit = 0;
+    m_fifoP = 2;
     m_startHigh = false;
 
     if( m_period )
@@ -109,6 +97,44 @@ void UartRx::readBit()
     if( !m_startHigh ) return; // Wait for Rx Pin to go up (line initialized)
     if( bit ) m_frame += 1<<m_currentBit;    // Get bit into frame
     if( ++m_currentBit == m_framesize ) m_state = usartRXEND;  // Data reception finished
+}
+
+void UartRx::byteReceived( uint16_t frame )
+{
+    if( m_fifoP == 0 )             // Overrun error
+    {
+        m_usart->overrunError();
+        return;
+    }
+    if( mPARITY > parNONE )        // Check Parity bit
+    {
+        bool parity = getParity( frame );
+        bool parityBit = frame & 1<<mDATABITS;
+        if( parity != parityBit ) frame |= parityError;
+    }
+    if( (frame & 1<<(mDATABITS+mPARITY)) == 0 ) frame |= frameError; // Frame Error: wrong stop bit
+
+    m_fifoP--;
+    m_fifo[m_fifoP] = frame;
+    if( m_fifoP == 1 ) m_interrupt->raise();
+    m_usart->byteReceived( frame & mDATAMASK );
+}
+
+uint8_t UartRx::getData()
+{
+    if( m_fifoP == 2 ) return 0; // No data available
+
+    uint16_t frame = m_fifo[1];
+    uint8_t  data = frame & mDATAMASK;
+
+    if( mDATABITS == 9 )      m_usart->setBit9Rx( frame & (1<<8) );
+    if( frame & parityError ) m_usart->parityError();
+    if( frame & frameError )  m_usart->frameError();
+
+    if( ++m_fifoP == 2 ) m_interrupt->clearFlag(); // Fifo empty
+    else                 m_fifo[1] = m_fifo[0];    // Advance fifo
+
+    return data;
 }
 
 void UartRx::queueData( uint8_t data )

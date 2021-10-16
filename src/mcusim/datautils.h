@@ -23,7 +23,6 @@
 #include <QStringList>
 
 #include "mcudataspace.h"
-//#include "mcutypes.h"
 
 static inline uint8_t overrideBits( uint8_t val, regBits_t bits ) // Replace bits in val with current value in register bits.reg
 {

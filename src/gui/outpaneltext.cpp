@@ -26,7 +26,7 @@ OutPanelText::OutPanelText( QWidget* parent )
             , Updatable()
 {
     m_textBuffer = "";
-    this->setObjectName( "outPanel" );
+    //this->setObjectName( "outPanel" );
 
     m_highlighter = new OutHighlighter( document() );
 

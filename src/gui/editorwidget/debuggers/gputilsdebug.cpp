@@ -20,7 +20,7 @@
 #include <QProcess>
 #include <QFileInfo>
 
-#include <QDebug>
+//#include <QDebug>
 
 #include "gputilsdebug.h"
 #include "mcuinterface.h"
@@ -129,7 +129,7 @@ bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
     QString lineNum;
     for( QString line : p_stdout.split("\n") )
     {
-        qDebug() << line;
+        //qDebug() << line;
         if( line.isEmpty() ) continue;
         if( readAddr )
         {
@@ -195,7 +195,7 @@ bool GputilsDebug::mapFlashToAsm( BaseDebugger* debugger )
     QString lineNum;
     for( QString line : p_stdout.split("\n") )
     {
-        qDebug() << line;
+        //qDebug() << line;
         if( line.isEmpty() ) continue;
         if( readAddr )
         {

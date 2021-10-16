@@ -23,8 +23,6 @@
 #include "usartmodule.h"
 #include "mcumodule.h"
 
-
-
 class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
 {
         friend class McuCreator;
@@ -37,10 +35,11 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
         virtual void bufferEmpty() override;
         virtual void frameSent( uint8_t data ) override;
         virtual void readByte( uint8_t data ) override;
-        virtual void byteReceived( uint8_t data ) override;
 
     protected:
         int m_number;
+
+        bool m_speedx2;
 };
 
 // ----------------------------------------

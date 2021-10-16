@@ -80,17 +80,17 @@ void LedBar::createLeds( int c )
     {
         int index = i*2;
         
-        QString ledid = m_id+"_led"+QString::number(i);
+        QString ledid = m_id+"-led"+QString::number(i);
 
-        Pin* pin0 = new Pin( 180, QPoint(-16,-32+8+i*8 ), ledid+"_pinP", 0, this );
+        Pin* pin0 = new Pin( 180, QPoint(-16,-32+8+i*8 ), ledid+"-pinP", 0, this );
         m_pin[index] = pin0;
         
-        Pin* pin1 = new Pin( 0, QPoint( 16,-32+8+i*8 ), ledid+"_pinN", 0, this );
+        Pin* pin1 = new Pin( 0, QPoint( 16,-32+8+i*8 ), ledid+"-pinN", 0, this );
         m_pin[index+1] = pin1;
 
         m_led[i] = new LedSmd( this, "LEDSMD", ledid, QRectF(0, 0, 4, 4), pin0, pin1 );
         m_led[i]->setParentItem(this);
-        m_led[i]->setPos( 0, -28+2+i*8 );
+        m_led[i]->setPos( 0,-28+2+i*8 );
         m_led[i]->setFlag( QGraphicsItem::ItemIsSelectable, false );
         m_led[i]->setAcceptedMouseButtons(0);
         

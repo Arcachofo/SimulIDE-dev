@@ -48,8 +48,8 @@ class MAINMODULE_EXPORT UsartModule
         UsartModule( eMcu* mcu, QString name );
         ~UsartModule();
 
-        virtual uint8_t getBit9(){return 0;}
-        virtual void    setBit9( uint8_t bit ){;}
+        virtual uint8_t getBit9Tx(){return 0;}
+        virtual void setBit9Rx( uint8_t bit ){;}
 
         virtual void sendByte( uint8_t data );
         virtual void bufferEmpty(){;}
@@ -57,7 +57,9 @@ class MAINMODULE_EXPORT UsartModule
         virtual void readByte( uint8_t data ){;}
         virtual void byteReceived( uint8_t data );
 
-        void parityError();
+        virtual void overrunError(){;}
+        virtual void parityError(){;}
+        virtual void frameError(){;}
 
         void openMonitor(QString id, int num=0 );
         void uartIn( uint8_t value );
@@ -76,7 +78,7 @@ class MAINMODULE_EXPORT UsartModule
         UartTx* m_sender;
         UartRx* m_receiver;
 
-        bool m_running;   // is Uart running?
+        //bool m_running;   // is Uart running?
 };
 
 class Interrupt;
@@ -102,15 +104,14 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
 
         virtual void processData( uint8_t data )=0;
         virtual void enable( uint8_t en ){;}
+        virtual uint8_t getData() { return  m_data; }
 
         bool isEnabled() { return m_enabled; }
 
         void setPeriod( uint64_t period ) { m_period = period; }
-        bool getParity( uint8_t data );
+        bool getParity( uint16_t data );
 
         state_t state() { return m_state; }
-
-        uint8_t getData() { return  m_data; }
 
         void setPin( IoPin* pin ) { m_ioPin = pin; }
         IoPin* getPin() { return m_ioPin; }
