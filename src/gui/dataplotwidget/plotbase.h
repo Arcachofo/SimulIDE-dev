@@ -81,8 +81,6 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 
         int m_screenSizeX;
         int m_screenSizeY;
-        int m_extraSize;
-
         int m_baSizeX;
         int m_baSizeY;
 

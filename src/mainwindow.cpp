@@ -61,6 +61,7 @@ MainWindow::MainWindow()
     QDir fontDir = SIMUAPI_AppPath::self()->RODataFolder();
     fontDir.cd( "../fonts" );
 
+    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("Ubuntu-B.ttf") );
     QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-B.ttf") );
     QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-BI.ttf") );
     QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-R.ttf") );

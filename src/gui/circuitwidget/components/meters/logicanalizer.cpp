@@ -50,10 +50,6 @@ LibraryItem* LAnalizer::libraryItem()
 LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
          : PlotBase( parent, type, id )
 {
-    m_graphical = true;
-    m_extraSize = 68-12;
-    m_bufferSize = 600000;
-
     m_numChannels = 8;
 
     m_laWidget  = new LaWidget( CircuitWidget::self(), this );
@@ -164,22 +160,22 @@ void LAnalizer::expand( bool e )
 {
     m_expand = e;
     if( e ){
-        m_screenSizeY = m_baSizeY+2*10;
+        m_screenSizeY = m_baSizeY+2*4;
         m_display->setMaximumSize( 9999, 9999 );
         m_laWidget->getDispLayout()->insertWidget( 0, m_display );
         m_laWidget->setWindowTitle( idLabel() );
         m_laWidget->show();
-        m_screenSizeX = 8;
+        m_screenSizeX = -4-2;
     }else{
-        m_screenSizeX = m_baSizeX+2*10;
-        m_screenSizeY = m_baSizeY+2*10;
+        m_screenSizeX = m_baSizeX+2*4;
+        m_screenSizeY = m_baSizeY+2*4;
         m_laWidget->hide();
         m_dataWidget->getLayout()->addWidget( m_display );
         m_display->setMaximumSize( m_screenSizeX, m_screenSizeY );
     }
     m_display->setMinimumSize( m_screenSizeX, m_screenSizeY );
 
-    int widgetSizeX = m_screenSizeX+m_extraSize+4;
+    int widgetSizeX = m_screenSizeX+68+4;
     int widgetSizeY = m_screenSizeY+4;
     int centerY = widgetSizeY/2;
     m_dataWidget->setFixedSize( widgetSizeX, widgetSizeY );
@@ -187,6 +183,7 @@ void LAnalizer::expand( bool e )
     m_area = QRectF( -80, -centerY, widgetSizeX+4, widgetSizeY+4+2 );
 
     m_display->setExpand( e );
+    m_display->updateValues();
     Circuit::self()->update();
 }
 

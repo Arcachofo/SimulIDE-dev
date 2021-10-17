@@ -290,7 +290,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QLabel" name="autoLabel_2">
+          <widget class="QLabel" name="timeDivLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -389,7 +389,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QLabel" name="autoLabel_3">
+          <widget class="QLabel" name="timePosLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -510,7 +510,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
-          <widget class="QLabel" name="autoLabel_4">
+          <widget class="QLabel" name="voltDivLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -609,7 +609,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <widget class="QLabel" name="autoLabel_5">
+          <widget class="QLabel" name="voltPosLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -1407,18 +1407,18 @@
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="triggerGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
   <buttongroup name="autoGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
   </buttongroup>
-  <buttongroup name="channelGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
   <buttongroup name="trackGroup"/>
-  <buttongroup name="triggerGroup">
+  <buttongroup name="channelGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>

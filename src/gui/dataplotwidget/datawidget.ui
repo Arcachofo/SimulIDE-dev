@@ -55,6 +55,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>11</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>7</pointsize>
@@ -106,6 +112,12 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>11</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -159,6 +171,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>11</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>7</pointsize>
@@ -210,6 +228,12 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>11</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -276,10 +300,16 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>16</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>60</width>
-         <height>16777215</height>
+         <height>16</height>
         </size>
        </property>
        <property name="font">

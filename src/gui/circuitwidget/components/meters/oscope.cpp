@@ -51,12 +51,9 @@ LibraryItem* Oscope::libraryItem()
 Oscope::Oscope( QObject* parent, QString type, QString id )
       : PlotBase( parent, type, id )
 {
-    m_graphical = true;
+    m_numChannels = 4;
     m_trigger = 4;
     m_auto    = 4;
-    m_extraSize = 68;
-    m_bufferSize = 600000;
-    m_numChannels = 4;
 
     m_oscWidget  = new OscWidget( CircuitWidget::self(), this );
     m_dataWidget = new DataWidget( NULL, this );
@@ -166,14 +163,13 @@ void Oscope::updateStep()
 void Oscope::expand( bool e )
 {
     m_expand = e;
-
     if( e ){
-        m_screenSizeY = m_baSizeY+2*10;
+        m_screenSizeY = m_baSizeY+2*4;
         m_display->setMaximumSize( 9999, 9999 );
         m_oscWidget->getLayout()->addWidget( m_display );
         m_oscWidget->setWindowTitle( idLabel() );
         m_oscWidget->show();
-        m_screenSizeX = 8;
+        m_screenSizeX = -4-2;
     }else{
         m_screenSizeX = m_baSizeX+2*4;
         m_screenSizeY = m_baSizeY+2*4;
@@ -183,7 +179,7 @@ void Oscope::expand( bool e )
     }
     m_display->setMinimumSize( m_screenSizeX, m_screenSizeY );
 
-    int widgetSizeX = m_screenSizeX+m_extraSize+4;
+    int widgetSizeX = m_screenSizeX+68+4;
     int widgetSizeY = m_screenSizeY+4;
     int centerY = widgetSizeY/2;
     m_dataWidget->setFixedSize( widgetSizeX, widgetSizeY );
@@ -192,7 +188,6 @@ void Oscope::expand( bool e )
 
     m_display->setExpand( e );
     m_display->updateValues();
-
     Circuit::self()->update();
 }
 

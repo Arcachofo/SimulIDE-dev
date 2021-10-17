@@ -77,6 +77,37 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
         hideGroup->button( i )->setStyleSheet( "background-color:"+color );
     }
     mainLayout->setDirection( QBoxLayout::RightToLeft );
+
+    QFont font = timeDivLabel->font();
+    font.setFamily("Ubuntu");
+    font.setBold( true );
+    font.setPixelSize( 14 );
+    timeDivLabel->setFont( font );
+    timePosLabel->setFont( font );
+    voltDivLabel->setFont( font );
+    voltPosLabel->setFont( font );
+
+    filterLabel->setFont( font );
+    autoLabel->setFont( font );
+    trigLabel->setFont( font );
+    hideLabel->setFont( font );
+    trackLabel->setFont( font );
+
+    font.setPixelSize( 10 );
+    timeDivBox->setFont( font );
+    timePosBox->setFont( font );
+    voltDivBox->setFont( font );
+    voltPosBox->setFont( font );
+    filterBox->setFont( font );
+
+    trackCheck1->setFont( font );
+    trackCheck2->setFont( font );
+    trackCheck4->setFont( font );
+
+    chButton1->setFont( font );
+    chButton2->setFont( font );
+    chButton3->setFont( font );
+    chButton4->setFont( font );
 }
 OscWidget::~OscWidget(){}
 

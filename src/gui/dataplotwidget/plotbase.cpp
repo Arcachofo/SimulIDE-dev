@@ -31,6 +31,9 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
         : Component( parent, type, id )
         , eElement( id )
 {
+    m_graphical = true;
+    m_bufferSize = 600000;
+
     m_color[0] = QColor( 240, 240, 100 );
     m_color[1] = QColor( 220, 220, 255 );
     m_color[2] = QColor( 255, 210, 90  );

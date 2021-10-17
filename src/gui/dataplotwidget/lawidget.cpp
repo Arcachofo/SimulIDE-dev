@@ -31,9 +31,21 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
     m_analizer = la;
     m_blocked = false;
 
-    //QString color = m_analizer->getColor( 0 ).name();
-    //cond1->setStyleSheet( "background-color:"+color );
-    /// mainLayout->setDirection( QBoxLayout::RightToLeft );
+    QFont font = timeDivLabel->font();
+    font.setFamily("Ubuntu");
+    font.setBold( true );
+    font.setPixelSize( 14 );
+    timeDivLabel->setFont( font );
+    timePosLabel->setFont( font );
+    voltDivLabel->setFont( font );
+    trigLabel->setFont( font );
+
+    font.setPixelSize( 10 );
+    timeDivBox->setFont( font );
+    timePosBox->setFont( font );
+    voltDivBox->setFont( font );
+    triggerBox->setFont( font );
+    condEdit->setFont( font );
 }
 LaWidget::~LaWidget(){}
 
