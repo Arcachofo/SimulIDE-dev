@@ -42,6 +42,8 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        virtual bool setPropStr( QString prop, QString val ) override;
+
         QString program();
         void setProgram( QString pro );
 

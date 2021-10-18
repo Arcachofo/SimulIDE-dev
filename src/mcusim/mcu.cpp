@@ -148,13 +148,21 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new DoubProp  <Mcu>( "Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
-new StringProp<Mcu>( "Program"  , tr("Fimware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
+new StringProp<Mcu>( "Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
 new BoolProp  <Mcu>( "Auto_Load", tr("Load Firmware at Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
     }} );
 }
 Mcu::~Mcu()
 {
     if( m_mcuMonitor ) delete m_mcuMonitor;
+}
+
+bool Mcu::setPropStr( QString prop, QString val )
+{
+    if( prop =="program" ) setProgram( val ); //  Old: TODELETE
+    else if( prop =="Mhz" ) setFreq( val.toDouble() );
+    else return Component::setPropStr( prop, val );
+    return true;
 }
 
 void Mcu::initialize()
