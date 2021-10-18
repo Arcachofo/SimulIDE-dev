@@ -429,6 +429,12 @@ void Ssd1306::setColor( QString c )
     if( m_dColor == Yellow ) m_pdisplayImg->setColor( 1, qRgb(245, 245, 100) );
 }
 
+QStringList Ssd1306::getEnums( QString e )
+{
+    if( e == "Color" ) return m_colors;
+    else return CompBase::getEnums( e );
+}
+
 void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );

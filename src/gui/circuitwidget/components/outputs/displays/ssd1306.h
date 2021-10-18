@@ -57,6 +57,8 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 
         virtual void readByte() override;
         virtual void I2Cstop() override;
+
+        virtual QStringList getEnums( QString e ) override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
