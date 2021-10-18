@@ -60,14 +60,16 @@ Probe::Probe( QObject* parent, QString type, QString id )
     m_inputPin->setImp( 1e9 );
 
     setValLabelPos( 16, 0, 45 ); // x, y, rot
-    setShowVolt( true );
+    setShowVal( true );
     setLabelPos( 16,-16, 45 );
     setRotation( rotation() - 45 );
+    m_voltIn = -1; // Force update
+    setVolt( 0 );
 
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new BoolProp<Probe>( "ShowVolt" , tr("Show Voltage"), "" , this, &Probe::showVolt,  &Probe::setShowVolt ),
+new BoolProp<Probe>( "ShowVolt" , tr("Show Voltage"), "" , this, &Probe::showVal,   &Probe::setShowVal ),
 new DoubProp<Probe>( "Threshold", tr("Threshold")   , "V", this, &Probe::threshold, &Probe::setThreshold )
     } } );
 }
@@ -100,22 +102,16 @@ void Probe::updateStep()
             break;
 }   }   }
 
-void Probe::setShowVolt( bool show )
-{
-    m_showVolt = show;
-    m_valLabel->setVisible( show );
-}
-
 void Probe::setVolt( double volt )
 {
     if( m_voltIn == volt ) return;
     m_voltIn = volt;
 
-    if( !m_showVolt ) return;
+    if( !m_showVal ) return;
     if( fabs(volt) < 0.01 ) volt = 0;
     int dispVolt = int( volt*100+0.5 );
     
-    m_valLabel->setPlainText( QString("%1 V").arg(double(dispVolt)/100) );
+    setValLabelText( QString("%1 V").arg(double(dispVolt)/100) );
     update();       // Repaint
 }
 
