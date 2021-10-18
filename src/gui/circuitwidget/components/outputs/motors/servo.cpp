@@ -70,6 +70,8 @@ Servo::Servo( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new DoubProp<Servo>( "Speed", tr("Speed "),"_sec/60º", this, &Servo::speed, &Servo::setSpeed )
     }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges")   , IoComponent::edgeProps() } );
 }
 Servo::~Servo(){}
 
