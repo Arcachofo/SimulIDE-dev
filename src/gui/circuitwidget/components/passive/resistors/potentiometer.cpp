@@ -96,24 +96,24 @@ new DoubProp<Potentiometer>( "Resistance", tr("Resistance")   ,"Ω", this, &Pote
 new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Potentiometer::getVal, &Potentiometer::setVal )
     } } );
 
+    m_res1 = 0;
     setShowProp("Resistance");
-    setPropStr( "Resistance", "1 kΩ" );
+    setPropStr( "Resistance", "1000 Ω" );
     resChanged( 500 );
 }
 Potentiometer::~Potentiometer() {}
 
 void Potentiometer::attach()
 {
-    eNode* enod = m_pinM.getEnode();  // Get eNode from middle Pin
+    m_midEnode = m_pinM.getEnode();  // Get eNode from middle Pin
 
-    if( !enod )                       // Not connected: Create mid eNode
+    if( !m_midEnode )                       // Not connected: Create mid eNode
     {
         m_midEnode = new eNode( m_id+"-mideNode" );
-        enod = m_midEnode;
-        m_pinM.setEnode( enod );
-        m_ePinA.setEnode( m_midEnode );  // Set eNode to internal eResistors ePins
-        m_ePinB.setEnode( m_midEnode );
     }
+    m_pinM.setEnode( m_midEnode );
+    m_ePinA.setEnode( m_midEnode );  // Set eNode to internal eResistors ePins
+    m_ePinB.setEnode( m_midEnode );
 }
 
 void Potentiometer::stamp()
@@ -161,8 +161,10 @@ double Potentiometer::getVal() { return m_resist*m_dial->value()/1000; }
 void Potentiometer::setVal( double val )
 {
     if( val > m_resist ) val = m_resist;
+    else if( val < 1e-12 ) val = 1e-12;
     m_dial->setValue( val*1000/m_resist );
     m_res1 = val;
+    m_changed = true;
     updateStep();
 }
 
