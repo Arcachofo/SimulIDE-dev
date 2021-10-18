@@ -56,7 +56,8 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
             "IL01 SDA", //type: Input, side: Left, pos: 01, label: "SDA"
             "IL03 SCL",
             "IR01 A0 ",
-            "IR02 A1 "
+            "IR02 A1 ",
+            "IR03 A2 "
         });
 
     m_inPin[0]->setPinMode( open_col );
