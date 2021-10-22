@@ -252,17 +252,17 @@ void Ili9341::proccessCommand()
         case 0x30: m_readBytes = 4; break;   // Partial Area
         case 0x33: m_readBytes = 6; break;   // Vertical Scrolling Definition
         //case 0x34: // Tearing Effect Line Off
-        //case 0x35: // Tearing Effect Line On
+        case 0x35: m_readBytes = 1; break;   // Tearing Effect Line On
         case 0x36: m_readBytes = 1; break;   // Memory Access Control
-        case 0x37: m_readBytes = 1; break;   // Vertical Scrolling Start Address (2 params in datasheet??:
+        case 0x37: m_readBytes = 2; break;   // Vertical Scrolling Start Address (2 params in datasheet??:
         //case 0x38: // Idle Mode Off
         //case 0x39: // Idle Mode On
         case 0x3A: m_readBytes = 1; break;   // COLMOD: Pixel Formay Set
         //case 0x3C: // Write Memory Continue
         //case 0x3E: // Read Memory Continue
         case 0x44: m_readBytes = 2; break;   // Set Tear Scanline
-        case 0x45: m_readBytes = 2; break;   // Get Scanline
-        case 0x51: m_readBytes = 2; break;   // Write Display Brightness
+        case 0x45: m_readBytes = 3; break;   // Get Scanline
+        case 0x51: m_readBytes = 1; break;   // Write Display Brightness
         case 0x52: m_readBytes = 2; break;   // Read Display Brightness
         case 0x53: m_readBytes = 1; break;   // Write CTRL Display
         case 0x54: m_readBytes = 2; break;   // Write CTRL Display
@@ -277,7 +277,7 @@ void Ili9341::proccessCommand()
         case 0xB3: m_readBytes = 2; break;   // Frame Rate control (In Partial Mode/Full Colors:
         case 0xB4: m_readBytes = 1; break;   // Display Inversion Control
         case 0xB5: m_readBytes = 4; break;   // Blanking Porch Control
-        case 0xB6: m_readBytes = 3; break;   // Display Function Control
+        case 0xB6: m_readBytes = 4; break;   // Display Function Control
         case 0xB7: m_readBytes = 1; break;   // Entry Mode Set
         case 0xB8: m_readBytes = 1; break;   // Backlight Control 1
         case 0xB9: m_readBytes = 1; break;   // Backlight Control 2
