@@ -159,6 +159,8 @@ void AvrCore::runDecoder()
 
     uint32_t new_pc = PC + 1;    // future "default" pc
     int cycle = 1;
+    if( PC == 408 )
+        cycle = 1;
 
     switch( instruction & 0xf000)
     {
@@ -589,9 +591,9 @@ void AvrCore::runDecoder()
                             get_vd5( instruction );
                             uint8_t res = 0x00 - vd;
                             m_dataMem[d] = res;
-                            write_S_Bit( S_H, ((res >> 3) |( vd >> 3)) & 1 );
+                            write_S_Bit( S_H, ((res >> 3)|( vd >> 3)) & 1 );
                             write_S_Bit( S_V, res == 0x80 );
-                            write_S_Bit( S_V, res != 0 );
+                            write_S_Bit( S_C, res != 0 );
                             flags_zns( res );
                         }    break;
                         case 0x9402: {    // SWAP -- Swap Nibbles -- 1001 010d dddd 0010
