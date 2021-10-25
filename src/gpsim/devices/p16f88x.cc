@@ -767,9 +767,7 @@ P16F884::P16F884(const char *_name )
     : P16F88x(_name )
 {
     m_porta->setEnableMask(0xff);
-
-    // trisa5 is an input only pin
-    m_trisa->setEnableMask(0xdf);
+    m_trisa->setEnableMask(0xff);
 
     m_portd = new PicPSP_PortRegister(this,"portd", 8,0xff);
     m_trisd = new PicTrisRegister(this,"trisd", (PicPortRegister *)m_portd, false);
@@ -793,7 +791,7 @@ void P16F884::create_iopin_map(void)
     assign_pin( 3, m_porta->addPin(new IO_bi_directional("porta1"),1));
     assign_pin( 4, m_porta->addPin(new IO_bi_directional("porta2"),2));
     assign_pin( 5, m_porta->addPin(new IO_bi_directional("porta3"),3));
-    assign_pin( 6, m_porta->addPin( new IOPIN("porta4", OPEN_COLLECTOR),4) );
+    assign_pin( 6, m_porta->addPin(new IO_bi_directional("porta4"),4));
     assign_pin( 7, m_porta->addPin(new IO_bi_directional("porta5"),5));
     assign_pin( 8, m_porte->addPin(new IO_bi_directional("porte0"),0));
     assign_pin( 9, m_porte->addPin(new IO_bi_directional("porte1"),1));
