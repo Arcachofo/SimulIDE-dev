@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="hLauout">
+  <layout class="QHBoxLayout" name="mainLayout">
    <property name="spacing">
     <number>6</number>
    </property>

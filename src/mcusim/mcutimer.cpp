@@ -61,7 +61,7 @@ void McuTimer::initialize()
 
 void McuTimer::runEvent()            // Overflow
 {
-    //if( m_name == "TIMER2") /// DELETEME
+    //if( m_name == "TIMER1") /// DELETEME
     //    m_running = m_running;
     if( !m_running ) return;
 
@@ -87,13 +87,12 @@ void McuTimer::sheduleEvents()
         uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
         m_ovfCycle = circTime + cycles;// In simulation time (ps)
 
-        //if( m_name == "TIMER2") /// DELETEME
-        //    m_running = m_running;
+        if( m_name == "TIMER1") /// DELETEME
+            m_running = m_running;
+        Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( cycles, this );
         for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfMatch, m_countVal );
-    }
-    else
-    {
+    }else{
         Simulator::self()->cancelEvents( this );
         for( McuOcUnit* ocUnit : m_ocUnit ) Simulator::self()->cancelEvents( ocUnit );
 }   }
@@ -125,10 +124,10 @@ void McuTimer::updtCount( uint8_t )       // Write counter values to Ram
     if( m_running ) // If no running, values were already written at timer stop.
     {
         uint64_t timTime = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
-        uint16_t countVal = m_ovfMatch-timTime/m_mcu->simCycPI()/m_prescaler;
+        m_countVal = m_ovfMatch-timTime/m_scale;
 
-        if( m_countL ) *m_countL = countVal & 0xFF;
-        if( m_countH ) *m_countH = (countVal>>8) & 0xFF;
+        if( m_countL ) *m_countL = m_countVal & 0xFF;
+        if( m_countH ) *m_countH = (m_countVal>>8) & 0xFF;
 }   }
 
 void McuTimer::updtCycles() // Recalculate ovf, comps, etc
@@ -137,7 +136,6 @@ void McuTimer::updtCycles() // Recalculate ovf, comps, etc
     m_countVal |= *m_countL;
     m_countStart = 0;
 
-    Simulator::self()->cancelEvents( this );
     sheduleEvents();
 }
 

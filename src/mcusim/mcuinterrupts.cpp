@@ -186,7 +186,7 @@ void Interrupts::addToPending( Interrupt* newInt )
     }
     newInt->m_nextInt = posInt;
     if( preInt ) preInt->m_nextInt = newInt;
-    if( !posInt ) m_pending = newInt;
+    else         m_pending = newInt;
 }
 
 void Interrupts::remFromPending( Interrupt* remInt )

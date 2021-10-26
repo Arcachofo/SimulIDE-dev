@@ -447,7 +447,7 @@ void McuCreator::createTimer( QDomElement* t )
         if( !highByte.isEmpty() )
         {
             timer->m_countH = mcu->getReg( highByte );
-            //watchRegNames( highByte, R_WRITE, timer, &McuTimer::countWriteH, mcu );  // Low byte triggers read/write operations
+            watchRegNames( highByte, R_WRITE, timer, &McuTimer::countWriteH, mcu );  // Low byte triggers read/write operations
             watchRegNames( highByte, R_READ,  timer, &McuTimer::updtCount, mcu );
     }   }
     if( t->hasAttribute("enable") )

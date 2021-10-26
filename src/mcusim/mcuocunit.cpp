@@ -43,6 +43,8 @@ void McuOcUnit::initialize()
 
 void McuOcUnit::runEvent()           // Compare match
 {
+    if( m_name == "OC1A")
+        m_name = "OC1A";
     m_interrupt->raise();         // Trigger interrupt
     drivePin( m_comAct );
 }
@@ -59,7 +61,7 @@ void McuOcUnit::drivePin( ocAct_t act )
     m_ocPin->setOutState( pinState );
 }
 
-void McuOcUnit::sheduleEvents( uint32_t ovf, uint8_t countVal )
+void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal )
 {
     uint64_t cycles = 0;
     uint64_t match;
@@ -75,8 +77,8 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint8_t countVal )
     if( (match <= ovf )&&(match >= countVal) ) // be sure next comp match is still ahead
         cycles = (match-countVal)*m_timer->m_scale + m_mcu->simCycPI()/*run it 1 cycle after match*/; // cycles in ps
 
+    Simulator::self()->cancelEvents( this );
     if( cycles ) Simulator::self()->addEvent( cycles, this );
-    else         Simulator::self()->cancelEvents( this );
 }
 
 void McuOcUnit::setOcActs( ocAct_t comAct, ocAct_t tovAct )
@@ -88,9 +90,13 @@ void McuOcUnit::setOcActs( ocAct_t comAct, ocAct_t tovAct )
 void McuOcUnit::ocrWriteL( uint8_t val )
 {
     m_comMatch = (m_comMatch & 0xFF00) | val;
+    m_timer->updtCount();
+    sheduleEvents( m_timer->m_ovfMatch, m_timer->m_countVal );
 }
 
 void McuOcUnit::ocrWriteH( uint8_t val )
 {
     m_comMatch = (m_comMatch & 0x00FF) | (uint16_t)val<<8;
+    m_timer->updtCount();
+    sheduleEvents( m_timer->m_ovfMatch, m_timer->m_countVal );
 }

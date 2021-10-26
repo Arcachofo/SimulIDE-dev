@@ -112,7 +112,6 @@ void PicTimer0::initialize()
     PicTimer::initialize();
 
     m_running = true;
-    Simulator::self()->cancelEvents( this );
     sheduleEvents();
 }
 
@@ -137,7 +136,6 @@ void PicTimer0::configureA( uint8_t NewOPTION )
     if     ( clkEdge == 1 ) m_clkEdge = Clock_Falling;
     else if( clkEdge == 0 ) m_clkEdge = Clock_Rising;*/
 
-    Simulator::self()->cancelEvents( this );
     sheduleEvents();
 }
 
@@ -229,6 +227,7 @@ void PicTimer1::sheduleEvents()
         uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
         m_ovfCycle = circTime + cycles;// In simulation time (ps)
 
+        Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( cycles, this );
     }
     else McuTimer::sheduleEvents();

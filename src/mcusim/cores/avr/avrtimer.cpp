@@ -286,8 +286,8 @@ AvrTimer82::~AvrTimer82(){}
 //--------------------------------------------------
 // TIMER 16 Bit-------------------------------------
 
-#define OCRXA16 m_ocrxaL[0]+(m_ocrxaH[0]<<8)
-#define ICRX16  m_icrxL[0]+(m_icrxH[0]<<8)
+#define OCRXA16 *m_ocrxaL+(*m_ocrxaH<<8)
+#define ICRX16  *m_icrxL+(*m_icrxH<<8)
 
 AvrTimer16bit::AvrTimer16bit( eMcu* mcu, QString name )
              : AvrTimer( mcu, name )
