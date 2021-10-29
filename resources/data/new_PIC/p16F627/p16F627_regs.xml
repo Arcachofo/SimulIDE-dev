@@ -23,7 +23,7 @@
         <register name="RCSTA"   addr="0x18" bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN" mask="11111000"/>
         <register name="TXREG"   addr="0x19" bits=""/>
         <register name="RCREG"   addr="0x1A" bits=""/>
-        <register name="CMCON"   addr="0x1F" bits="CM0,CM1,CM2,CIS,C1INV,C2INV,C1OUT,C2OUT"/>
+        <register name="CMCON"   addr="0x1F" bits="CM0,CM1,CM2,CIS,C1INV,C2INV,C1OUT,C2OUT" mask="00111111"/>
     </regblock>
     <datablock name="GPR0" start="0x0020" end="0x006F"/>
     <datablock name="RAM0" start="0x0070" end="0x007F"/>

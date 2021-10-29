@@ -17,37 +17,24 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVRCOMPARATOR_H
-#define AVRCOMPARATOR_H
+#ifndef PICPORT_H
+#define PICPORT_H
 
-#include "mcucomparator.h"
-#include "mcutypes.h"
+#include "mcuport.h"
 
-class MAINMODULE_EXPORT AvrComp : public McuComp
+class Mcu;
+class eMcu;
+class McuPin;
+class Component;
+
+class MAINMODULE_EXPORT PicPort : public McuPort
 {
     public:
-        AvrComp( eMcu* mcu, QString name );
-        ~AvrComp();
-
-        //virtual void initialize() override;
-
-        virtual void configureA( uint8_t newACSR ) override;
-        virtual void configureB( uint8_t newDIDR1 ) override;
+        PicPort( eMcu* mcu, QString name, uint8_t numPins );
+        ~PicPort();
 
     protected:
-        void compare( uint8_t );
-
-        //uint8_t*  m_ACSR;
-        regBits_t m_ACD;
-        regBits_t m_ACBG;
-        regBits_t m_ACO;
-        regBits_t m_ACI;
-        regBits_t m_ACIC;
-        regBits_t m_ACIS;
-
-        //uint8_t*  m_DIDR1;
-        regBits_t m_AIN0D;
-        regBits_t m_AIN1D;
+        virtual void createPins( Mcu* mcuComp ) override;
 };
 
 #endif

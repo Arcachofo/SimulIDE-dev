@@ -33,10 +33,21 @@ class MAINMODULE_EXPORT McuComp : public McuModule, public eElement
         McuComp( eMcu* mcu, QString name );
         ~McuComp();
 
-    protected:
+        virtual void initialize() override;
 
+    protected:
+        virtual void setMode( uint8_t mode );
+
+        bool m_fixVref;
+        bool m_enabled;
+        bool m_compOut;
+
+        uint8_t m_mode;
+
+        std::vector<McuPin*> m_pins;
         McuPin* m_pinP;
         McuPin* m_pinN;
+        McuPin* m_pinOut;
 };
 
 #endif

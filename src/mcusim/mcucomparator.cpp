@@ -28,3 +28,15 @@ McuComp::McuComp( eMcu* mcu, QString name )
 }
 McuComp::~McuComp(){}
 
+void McuComp::initialize()
+{
+    m_fixVref = false;
+    m_enabled = true;
+    m_compOut = false;
+    setMode( 0 );
+}
+
+void McuComp::setMode( uint8_t mode )
+{
+    m_mode = mode;
+}

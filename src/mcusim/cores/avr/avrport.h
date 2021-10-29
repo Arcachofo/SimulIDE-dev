@@ -22,10 +22,6 @@
 
 #include "mcuport.h"
 
-class Mcu;
-class eMcu;
-class McuPin;
-class Component;
 
 class MAINMODULE_EXPORT AvrPort : public McuPort
 {

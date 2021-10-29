@@ -17,37 +17,23 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVRCOMPARATOR_H
-#define AVRCOMPARATOR_H
+#include "picport.h"
+#include "picpin.h"
+#include "mcu.h"
+#include "e_mcu.h"
 
-#include "mcucomparator.h"
-#include "mcutypes.h"
-
-class MAINMODULE_EXPORT AvrComp : public McuComp
+PicPort::PicPort( eMcu* mcu, QString name, uint8_t numPins )
+       : McuPort( mcu, name, numPins )
 {
-    public:
-        AvrComp( eMcu* mcu, QString name );
-        ~AvrComp();
+}
+PicPort::~PicPort(){}
 
-        //virtual void initialize() override;
+void PicPort::createPins( Mcu* mcuComp )
+{
+    m_pins.resize( m_numPins );
 
-        virtual void configureA( uint8_t newACSR ) override;
-        virtual void configureB( uint8_t newDIDR1 ) override;
-
-    protected:
-        void compare( uint8_t );
-
-        //uint8_t*  m_ACSR;
-        regBits_t m_ACD;
-        regBits_t m_ACBG;
-        regBits_t m_ACO;
-        regBits_t m_ACI;
-        regBits_t m_ACIC;
-        regBits_t m_ACIS;
-
-        //uint8_t*  m_DIDR1;
-        regBits_t m_AIN0D;
-        regBits_t m_AIN1D;
-};
-
-#endif
+    for( int i=0; i<m_numPins; ++i )
+    {
+        m_pins[i] = new PicPin( this, i, m_name+QString::number(i), mcuComp );
+    }
+}

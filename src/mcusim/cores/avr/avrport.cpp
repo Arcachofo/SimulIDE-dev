@@ -26,9 +26,7 @@ AvrPort::AvrPort( eMcu* mcu, QString name, uint8_t numPins )
        : McuPort( mcu, name, numPins )
 {
 }
-AvrPort::~AvrPort()
-{
-}
+AvrPort::~AvrPort(){}
 
 void AvrPort::createPins( Mcu* mcuComp )
 {

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2020 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,37 +17,33 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVRCOMPARATOR_H
-#define AVRCOMPARATOR_H
+#include "picpin.h"
+#include "iopin.h"
+#include "mcuport.h"
+#include "datautils.h"
 
-#include "mcucomparator.h"
-#include "mcutypes.h"
-
-class MAINMODULE_EXPORT AvrComp : public McuComp
+PicPin::PicPin( McuPort* port, int i, QString id, Component* mcu )
+      : McuPin( port, i, id, mcu )
 {
-    public:
-        AvrComp( eMcu* mcu, QString name );
-        ~AvrComp();
+    m_extIntTrigger = pinFalling;
+}
+PicPin::~PicPin() {}
 
-        //virtual void initialize() override;
+void PicPin::ConfExtInt( uint8_t bits )
+{
+   m_extIntTrigger = getRegBitsVal( bits, m_extIntBits ) ? pinRising : pinFalling;
+}
 
-        virtual void configureA( uint8_t newACSR ) override;
-        virtual void configureB( uint8_t newDIDR1 ) override;
-
-    protected:
-        void compare( uint8_t );
-
-        //uint8_t*  m_ACSR;
-        regBits_t m_ACD;
-        regBits_t m_ACBG;
-        regBits_t m_ACO;
-        regBits_t m_ACI;
-        regBits_t m_ACIC;
-        regBits_t m_ACIS;
-
-        //uint8_t*  m_DIDR1;
-        regBits_t m_AIN0D;
-        regBits_t m_AIN1D;
-};
-
-#endif
+void PicPin::setAnalog( bool an )
+{
+    if( an ) // Disable Digital input
+    {
+        changeCallBack( this, false );
+        m_port->pinChanged( m_pinMask, 0 );
+    }
+    else // Enable Digital input if is input
+    {
+        changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
+        if( !m_isOut ) voltChanged(); // Update input state
+    }
+}

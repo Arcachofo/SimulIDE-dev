@@ -118,7 +118,7 @@ void McuPin::setDirection( bool out )
     {
         m_oldPinMode = input;
     }
-    if( m_enode ) changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
+    changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
     if( !m_dirCtrl ) setPinMode( m_oldPinMode ); // Is someone is controlling us, just save Pin Mode
 }
 

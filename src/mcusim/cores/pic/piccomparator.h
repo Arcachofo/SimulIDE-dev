@@ -17,37 +17,59 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVRCOMPARATOR_H
-#define AVRCOMPARATOR_H
+#ifndef PICCOMPARATOR_H
+#define PICCOMPARATOR_H
 
 #include "mcucomparator.h"
-#include "mcutypes.h"
+//#include "mcutypes.h"
 
-class MAINMODULE_EXPORT AvrComp : public McuComp
+class MAINMODULE_EXPORT PicComp : public McuComp
 {
     public:
-        AvrComp( eMcu* mcu, QString name );
-        ~AvrComp();
+        PicComp( eMcu* mcu, QString name );
+        ~PicComp();
 
         //virtual void initialize() override;
+        virtual void voltChanged() override;
 
-        virtual void configureA( uint8_t newACSR ) override;
-        virtual void configureB( uint8_t newDIDR1 ) override;
+        virtual void configureA( uint8_t newCMCON ) override;
+
+ static PicComp* getComparator( eMcu* mcu, QString name );
 
     protected:
-        void compare( uint8_t );
+        //void compare( uint8_t );
+        void connect( McuPin* pinN, McuPin* pinP=NULL, McuPin* pinOut=NULL );
 
-        //uint8_t*  m_ACSR;
-        regBits_t m_ACD;
-        regBits_t m_ACBG;
-        regBits_t m_ACO;
-        regBits_t m_ACI;
-        regBits_t m_ACIC;
-        regBits_t m_ACIS;
+        double getVref();
 
-        //uint8_t*  m_DIDR1;
-        regBits_t m_AIN0D;
-        regBits_t m_AIN1D;
+        bool m_cis;
+        bool m_inv;
+
+        regBits_t m_CM;
+        regBits_t m_CIS;
+        regBits_t m_CINV;
+        regBits_t m_COUT;
 };
+
+class MAINMODULE_EXPORT PicComp01 : public PicComp
+{
+    public:
+        PicComp01( eMcu* mcu, QString name );
+        ~PicComp01();
+
+    protected:
+        virtual void setMode( uint8_t mode );
+};
+
+class MAINMODULE_EXPORT PicComp02 : public PicComp
+{
+    public:
+        PicComp02( eMcu* mcu, QString name );
+        ~PicComp02();
+
+    protected:
+        virtual void setMode( uint8_t mode );
+};
+
 
 #endif

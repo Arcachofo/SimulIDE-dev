@@ -53,6 +53,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         //virtual void setPullup( bool up ) override;
         void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
+        virtual void setAnalog( bool an ) {;}
 
         virtual void ConfExtInt( uint8_t bits );
 

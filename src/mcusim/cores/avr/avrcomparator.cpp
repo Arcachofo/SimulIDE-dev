@@ -37,17 +37,20 @@ AvrComp::AvrComp( eMcu* mcu, QString name )
     m_AIN0D = getRegBits( "AIN0D", mcu );
     m_AIN1D = getRegBits( "AIN1D", mcu );
 
+    m_pinP = m_pins[0];
+    m_pinN = m_pins[1];
+
     //mcu->watchBitNames( "ACO", R_READ, this, &AvrComp::configureB );
 }
 AvrComp::~AvrComp(){}
 
-void AvrComp::initialize()
+/*void AvrComp::initialize()
 {
     m_fixVref = false;
     m_enabled = true;
     m_compOut = false;
     m_mode = 0;
-}
+}*/
 
 void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
 {
@@ -70,7 +73,7 @@ void AvrComp::configureB( uint8_t newDIDR1 ) // AIN0D,AIN1D being written
     m_pinN->changeCallBack( m_pinN, getRegBitsVal( newDIDR1, m_AIN1D ) );
 
     //// ?????
-    m_mcu->m_regOverride = newDIDR1; // Keep rest of bits at 0
+    /// m_mcu->m_regOverride = newDIDR1; // Keep rest of bits at 0
 }
 
 void AvrComp::compare( uint8_t ) // Performed only when ACO is readed

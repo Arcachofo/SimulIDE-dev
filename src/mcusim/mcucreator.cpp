@@ -51,6 +51,7 @@
 #include "pic14core.h"
 #include "pictimer.h"
 #include "picusart.h"
+#include "piccomparator.h"
 
 #include "i51core.h"
 #include "i51timer.h"
@@ -74,7 +75,7 @@ McuCreator::~McuCreator(){}
 int McuCreator::createMcu( Mcu* mcuComp, QString name )
 {
     m_CompName = name;
-    m_mcuComp = mcuComp;
+    m_mcuComp  = mcuComp;
 
     mcu = &(mcuComp->m_eMcu);
     QString dataFile = mcuComp->m_dataFile;
@@ -657,30 +658,26 @@ void McuCreator::createAdc( QDomElement* e )
 void McuCreator::createAcomp( QDomElement* e )
 {
     QString name = e->attribute( "name" );
-    McuComp* comp;
+    McuComp* comp = NULL;
     if( m_core == "AVR" ) comp = new AvrComp( mcu, name );
-    else return;
+    if( m_core == "PIC" ) comp = PicComp::getComparator( mcu, name );
+    if( !comp ) return;
 
     mcu->m_modules.emplace_back( comp );
 
     setConfigRegs( e, comp );
 
+    QStringList pins = e->attribute( "pins" ).split(",");
+    for( QString pinName : pins )
+    {
+        McuPin* pin = mcu->m_ports.getPin( pinName );
+        comp->m_pins.emplace_back( pin );
+    }
     QDomNode node = e->firstChild();
     while( !node.isNull() )
     {
         QDomElement el = node.toElement();
-
-        if     ( el.tagName() == "interrupt" ) setInterrupt( &el, comp );
-        else if( el.tagName() == "inputpin" )
-        {
-            QString pinName = el.attribute("pin");
-            McuPin* pin = mcu->m_ports.getPin( pinName );
-            if( pin )
-            {
-                QString name = el.attribute("name");
-                if     ( name == "positive" ) comp->m_pinP = pin ;
-                else if( name == "negative" ) comp->m_pinN = pin ;
-        }   }
+        if( el.tagName() == "interrupt" ) setInterrupt( &el, comp );
         node = node.nextSibling();
 }   }
 

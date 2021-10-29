@@ -36,4 +36,11 @@
         <interrupt name="USART_T" />
     </usart>
     
+    <acomp name="Comp01" configregsA="CMCON" pins="PORTA0,PORTA3,PORTA2">
+        <interrupt name="ACOMP" />
+    </acomp>
+    
+    <acomp name="Comp02" configregsA="CMCON" pins="PORTA1,PORTA2,PORTA4">
+        <interrupt name="ACOMP" />
+    </acomp>
 </parts>

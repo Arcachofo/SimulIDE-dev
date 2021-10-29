@@ -52,9 +52,7 @@
         <interrupt name="EEPR" />
     </eeprom>
     
-    <acomp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D">
-        <inputpin name="positive" pin="PORTB0" />
-        <inputpin name="negative" pin="PORTB1" />
+    <acomp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D" pins="PORTB0,PORTB1">
         <interrupt name="ACOMP" />
     </acomp>
 </parts>

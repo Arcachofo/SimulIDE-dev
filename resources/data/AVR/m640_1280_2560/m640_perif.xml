@@ -227,9 +227,7 @@
         <interrupt name="EEPR" />
     </eeprom>
     
-    <acomp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D">
-        <inputpin name="positive" pin="PORTE2" />
-        <inputpin name="negative" pin="PORTE3" />
+    <acomp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D" pins="PORTE2,PORTE3">
         <interrupt name="ACOMP" />
     </acomp>
 </parts>
