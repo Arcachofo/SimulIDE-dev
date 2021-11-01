@@ -23,6 +23,7 @@
 #include "mcuwdt.h"
 #include "usartmodule.h"
 #include "usartrx.h"
+#include "mcuvref.h"
 #include "simulator.h"
 
 eMcu::eMcu( QString id )
@@ -33,6 +34,8 @@ eMcu::eMcu( QString id )
     , m_timers( this )
 {
     cpu = NULL;
+    m_vrefModule = NULL;
+
     m_cPerInst = 1;
     setFreq( 16*1e6 );
 }
@@ -134,5 +137,10 @@ void eMcu::enableInterrupts( uint8_t en )
 {
     if( en > 1 ) en = 1;
     m_interrupts.enableGlobal( en );
+}
+
+McuVref* eMcu::vrefModule()
+{
+    return m_vrefModule;
 }
 

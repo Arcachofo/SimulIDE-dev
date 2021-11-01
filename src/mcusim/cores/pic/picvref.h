@@ -17,41 +17,31 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUCOMPARATOR_H
-#define MCUCOMPARATOR_H
+#ifndef PICVREF_H
+#define PICVREF_H
 
-#include "mcumodule.h"
-#include "e-element.h"
+#include "mcuvref.h"
 
-class McuPin;
-
-class MAINMODULE_EXPORT McuComp : public McuModule, public eElement
+class MAINMODULE_EXPORT PicVref : public McuVref
 {
-        friend class McuCreator;
-
     public:
-        McuComp( eMcu* mcu, QString name );
-        ~McuComp();
+        PicVref( eMcu* mcu, QString name );
+        ~PicVref();
 
-        virtual void initialize() override;
+        //virtual void initialize() override;
 
-        virtual void callBackDoub( double vref ) override;
+        virtual void configureA( uint8_t newVRCON ) override;
 
     protected:
-        virtual void setMode( uint8_t mode );
+        //virtual void setMode( uint8_t mode ) override;
 
-        bool m_fixVref;
-        bool m_enabled;
-        bool m_compOut;
+        bool m_vrr;
+        bool m_vroe;
 
-        double m_vref;
-
-        uint8_t m_mode;
-
-        std::vector<McuPin*> m_pins;
-        McuPin* m_pinP;
-        McuPin* m_pinN;
-        McuPin* m_pinOut;
+        regBits_t m_VREN;
+        regBits_t m_VROE;
+        regBits_t m_VRR;
+        regBits_t m_VR;
 };
 
 #endif

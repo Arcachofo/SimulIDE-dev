@@ -48,7 +48,7 @@
         <register name="EEADR"  addr="0x9B" bits=""/>
         <register name="EECON1" addr="0x9C" bits="RD,WR,WREN,WRERR"/>
         <register name="EECON2" addr="0x9D" bits=""/>
-        <register name="VRCON"  addr="0x9F" bits="VR0,VR1,VR2,VR3,0,VRR,VROE,VREN"/>
+        <register name="VRCON"  addr="0x9F" bits="VR0,VR1,VR2,VR3,0,VRR,VROE,VREN" mask="11101111"/>
     </regblock>
     <datablock name="GPR1" start="0x00A0" end="0x00EF"/>
     <datablock name="RAM1" start="0x00F0" end="0x00FF" mapto="0x0070"/>

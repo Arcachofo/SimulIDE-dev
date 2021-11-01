@@ -38,6 +38,8 @@ enum{
     R_WRITE,
 };
 
+class McuVref;
+
 class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 {
         friend class McuCreator;
@@ -82,6 +84,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         McuTimer* getTimer( QString name ) { return m_timers.getTimer( name ); }
 
+        McuVref* vrefModule();
+
         void wdr();
 
         void enableInterrupts( uint8_t en );
@@ -98,6 +102,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         McuTimers  m_timers;
         std::vector<McuModule*> m_modules;
         std::vector<McuUsart*> m_usarts;
+
+        McuVref* m_vrefModule;
 
         McuWdt* m_wdt;
 

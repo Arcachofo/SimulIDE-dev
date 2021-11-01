@@ -17,41 +17,32 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUCOMPARATOR_H
-#define MCUCOMPARATOR_H
+#include "mcuvref.h"
 
-#include "mcumodule.h"
-#include "e-element.h"
-
-class McuPin;
-
-class MAINMODULE_EXPORT McuComp : public McuModule, public eElement
+McuVref::McuVref( eMcu* mcu, QString name )
+       : McuModule( mcu, name )
+       , eElement( name )
 {
-        friend class McuCreator;
+    m_pinOut = NULL;
+}
+McuVref::~McuVref(){}
 
-    public:
-        McuComp( eMcu* mcu, QString name );
-        ~McuComp();
+void McuVref::initialize()
+{
+    m_enabled = false;
+    m_mode = 0;
+    m_vref = 0;
+    //setMode( 0 );
+}
 
-        virtual void initialize() override;
+/*void McuVref::setMode( uint8_t mode )
+{
+    m_mode = mode;
+}*/
 
-        virtual void callBackDoub( double vref ) override;
-
-    protected:
-        virtual void setMode( uint8_t mode );
-
-        bool m_fixVref;
-        bool m_enabled;
-        bool m_compOut;
-
-        double m_vref;
-
-        uint8_t m_mode;
-
-        std::vector<McuPin*> m_pins;
-        McuPin* m_pinP;
-        McuPin* m_pinN;
-        McuPin* m_pinOut;
-};
-
-#endif
+void McuVref::callBack( McuModule* mod, bool call ) // Add Modules to be called at Interrupt raise
+{
+    if( call )
+    { if( !m_callBacks.contains( mod ) ) m_callBacks.append( mod ); }
+    else m_callBacks.removeAll( mod );
+}

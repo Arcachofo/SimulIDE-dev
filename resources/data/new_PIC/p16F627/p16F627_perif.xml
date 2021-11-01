@@ -36,6 +36,9 @@
         <interrupt name="USART_T" />
     </usart>
     
+    <vref name="Vref" configregsA="VRCON" pinout="PORTA2">
+    </vref>
+    
     <acomp name="Comp01" configregsA="CMCON" pins="PORTA0,PORTA3,PORTA2">
         <interrupt name="ACOMP" />
     </acomp>

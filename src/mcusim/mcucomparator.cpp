@@ -25,6 +25,8 @@ McuComp::McuComp( eMcu* mcu, QString name )
 {
     m_pinP = NULL;
     m_pinN = NULL;
+    m_pinOut = NULL;
+    m_enabled = false;
 }
 McuComp::~McuComp(){}
 
@@ -33,10 +35,17 @@ void McuComp::initialize()
     m_fixVref = false;
     m_enabled = true;
     m_compOut = false;
+    m_vref = 0;
     setMode( 0 );
 }
 
 void McuComp::setMode( uint8_t mode )
 {
     m_mode = mode;
+}
+
+void McuComp::callBackDoub( double vref )
+{
+    m_vref = vref;
+    if( m_enabled ) voltChanged();
 }

@@ -40,8 +40,6 @@ class MAINMODULE_EXPORT PicComp : public McuComp
         //void compare( uint8_t );
         void connect( McuPin* pinN, McuPin* pinP=NULL, McuPin* pinOut=NULL );
 
-        double getVref();
-
         bool m_cis;
         bool m_inv;
 

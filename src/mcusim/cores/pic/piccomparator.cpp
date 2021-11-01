@@ -21,6 +21,7 @@
 #include "datautils.h"
 #include "e_mcu.h"
 #include "mcupin.h"
+#include "mcuvref.h"
 
 PicComp* PicComp::getComparator( eMcu* mcu, QString name ) // Static
 {
@@ -34,6 +35,8 @@ PicComp::PicComp( eMcu* mcu, QString name )
 {
     m_CM  = getRegBits( "CM0,CM1,CM2", mcu );
     m_CIS = getRegBits( "CIS", mcu );
+
+    mcu->vrefModule()->callBack( this, true ); // Vref Module will update vref if changed.
 }
 PicComp::~PicComp(){}
 
@@ -46,7 +49,7 @@ PicComp::~PicComp(){}
 
 void PicComp::voltChanged()
 {
-    double vRef = m_fixVref ? getVref() : m_pinP->getVolt();
+    double vRef = m_fixVref ? m_vref : m_pinP->getVolt();
     bool compOut = vRef > m_pinN->getVolt() ;
     if( m_inv ) compOut = !compOut;
 
@@ -67,7 +70,7 @@ void PicComp::configureA( uint8_t newCMCON )
     m_inv = getRegBitsBool( newCMCON, m_CINV );
 
     uint8_t mode = getRegBitsVal( newCMCON, m_CM );
-    if( mode == m_mode ) setMode( mode );
+    if( mode != m_mode ) setMode( mode );
 }
 
 void PicComp::connect (McuPin* pinN, McuPin* pinP, McuPin* pinOut )
@@ -106,12 +109,7 @@ void PicComp::connect (McuPin* pinN, McuPin* pinP, McuPin* pinOut )
         }
         m_pinOut = pinOut;
     }
-    voltChanged(); // Update Comparator state
-}
-
-double PicComp::getVref()
-{
-    return 0;
+    if( m_pinN ) voltChanged(); // Update Comparator state
 }
 
 //-------------------------------------------------------------
@@ -134,28 +132,28 @@ void PicComp01::setMode( uint8_t mode )
     switch ( mode ) {
         case 0:{
             m_enabled = false;
-            connect( m_pins[1], m_pins[0] );
+            connect( m_pins[0], m_pins[1] );
             } break;
         case 1:{
             McuPin* pinN1 = m_cis ? m_pins[1] : m_pins[0];
-            connect( m_pins[2], pinN1 );
+            connect( pinN1,  m_pins[2] );
             } break;
         case 2:{
             m_fixVref = true;
             McuPin* pinN2 = m_cis ? m_pins[1] : m_pins[0];
-            connect( NULL, pinN2 );
+            connect( pinN2, NULL );
            } break;
         case 3:
-            connect( m_pins[2], m_pins[0] );
+            connect( m_pins[0], m_pins[2] );
             break;
         case 4:
-            connect( m_pins[1], m_pins[0] );
+            connect( m_pins[0], m_pins[1] );
             break;
         case 5:
             connect( NULL, NULL );
             break;
         case 6:
-            connect( m_pins[2], m_pins[0] );
+            connect( m_pins[0], m_pins[2] );
             break;
         case 7:{
             m_enabled = false;
@@ -181,6 +179,7 @@ void PicComp02::setMode( uint8_t mode )
 {
     m_mode = mode;
     m_fixVref = false;
+    m_enabled = true;
 
     switch ( mode ) {
         case 0:{
@@ -191,8 +190,9 @@ void PicComp02::setMode( uint8_t mode )
             connect( m_pins[1], m_pins[0] );
             break;
         case 2:{
+            m_fixVref = true;
             McuPin* pinN = m_cis ? m_pins[1] : m_pins[0];
-            connect( NULL, pinN );
+            connect( pinN, NULL );
             } break;
         case 3:
             connect( m_pins[1], m_pins[0] );

@@ -49,9 +49,11 @@
 #include "avrcomparator.h"
 
 #include "pic14core.h"
+#include "picport.h"
 #include "pictimer.h"
 #include "picusart.h"
 #include "piccomparator.h"
+#include "picvref.h"
 
 #include "i51core.h"
 #include "i51timer.h"
@@ -119,6 +121,7 @@ int McuCreator::processFile( QString fileName )
         else if( el.tagName() == "usart" )      createUsart( &el );
         else if( el.tagName() == "adc" )        createAdc( &el );
         else if( el.tagName() == "acomp" )      createAcomp( &el );
+        else if( el.tagName() == "vref" )       createVref( &el );
         else if( el.tagName() == "twi" )        createTwi( &el );
         else if( el.tagName() == "spi" )        createSpi( &el );
         else if( el.tagName() == "wdt" )        createWdt( &el );
@@ -321,7 +324,7 @@ void McuCreator::createPort( QDomElement* p )
 
     McuPort* port;;
     if( m_core == "AVR" ) port = new AvrPort( mcu, name, numPins );
-    else                  port = new McuPort( mcu, name, numPins );
+    else                  port = new PicPort( mcu, name, numPins );
     mcu->m_ports.m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );
     port->createPins( m_mcuComp );
@@ -660,7 +663,7 @@ void McuCreator::createAcomp( QDomElement* e )
     QString name = e->attribute( "name" );
     McuComp* comp = NULL;
     if( m_core == "AVR" ) comp = new AvrComp( mcu, name );
-    if( m_core == "PIC" ) comp = PicComp::getComparator( mcu, name );
+    if( m_core == "Pic14" ) comp = PicComp::getComparator( mcu, name );
     if( !comp ) return;
 
     mcu->m_modules.emplace_back( comp );
@@ -680,6 +683,24 @@ void McuCreator::createAcomp( QDomElement* e )
         if( el.tagName() == "interrupt" ) setInterrupt( &el, comp );
         node = node.nextSibling();
 }   }
+
+void McuCreator::createVref( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+    McuVref* vref = NULL;
+    if( m_core == "Pic14" ) vref = new PicVref( mcu, name );
+    if( !vref ) return;
+
+    mcu->m_modules.emplace_back( vref );
+    mcu->m_vrefModule = vref;
+
+    setConfigRegs( e, vref );
+
+    if( e->hasAttribute("pinout") )
+    {
+        vref->m_pinOut = mcu->m_ports.getPin( e->attribute("pinout") );
+    }
+}
 
 void McuCreator::createTwi( QDomElement* e )
 {
@@ -931,7 +952,7 @@ void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )
         module->m_configBitsB = getRegBits( configBits, mcu );
 }   }
 
-void McuCreator::convert( QString fileName )
+void McuCreator::convert( QString fileName ) // TODELETE convert dat files to xml reg files.
 {
     //const QString dir = "/home/user/GreatCowBasic/chipdata";
     //QString fileName = QFileDialog::getOpenFileName( NULL, "Convert", dir,"All files (*.*)");

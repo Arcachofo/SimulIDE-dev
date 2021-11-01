@@ -17,41 +17,41 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUCOMPARATOR_H
-#define MCUCOMPARATOR_H
+#ifndef MCUVREF_H
+#define MCUVREF_H
+
+#include <QList>
 
 #include "mcumodule.h"
 #include "e-element.h"
 
 class McuPin;
 
-class MAINMODULE_EXPORT McuComp : public McuModule, public eElement
+class MAINMODULE_EXPORT McuVref : public McuModule, public eElement
 {
         friend class McuCreator;
 
     public:
-        McuComp( eMcu* mcu, QString name );
-        ~McuComp();
+        McuVref( eMcu* mcu, QString name );
+        ~McuVref();
 
         virtual void initialize() override;
 
-        virtual void callBackDoub( double vref ) override;
+        double getVref() { return m_vref; }
+
+        void callBack( McuModule* mod, bool call );
 
     protected:
-        virtual void setMode( uint8_t mode );
+        //virtual void setMode( uint8_t mode );
 
-        bool m_fixVref;
         bool m_enabled;
-        bool m_compOut;
+        uint8_t m_mode;
 
         double m_vref;
 
-        uint8_t m_mode;
-
-        std::vector<McuPin*> m_pins;
-        McuPin* m_pinP;
-        McuPin* m_pinN;
         McuPin* m_pinOut;
+
+        QList<McuModule*> m_callBacks;
 };
 
 #endif

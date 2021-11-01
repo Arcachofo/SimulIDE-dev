@@ -33,6 +33,7 @@ McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
     m_dirReg = NULL;
     m_inReg  = NULL;
 
+    m_intMask = 0;
     m_outAddr = 0;
     m_inAddr  = 0;
     m_dirAddr = 0;
