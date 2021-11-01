@@ -44,9 +44,9 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
     m_ADSC  = getRegBits( "ADSC", mcu );
     m_ADATE = getRegBits( "ADATE", mcu );
     m_ADIF  = getRegBits( "ADIF", mcu );
-    m_ADPS  = getRegBits( "ADPS0,ADPS1.ADPS2", mcu );
+    m_ADPS  = getRegBits( "ADPS0,ADPS1,ADPS2", mcu );
 
-    m_ADTS  = getRegBits( "ADTS0,ADTS1.ADTS2", mcu );
+    m_ADTS  = getRegBits( "ADTS0,ADTS1,ADTS2", mcu );
 
     m_ADLAR = getRegBits( "ADLAR", mcu );
     m_REFS  = getRegBits( "REFS0,REFS1", mcu );
@@ -64,7 +64,6 @@ AvrAdc::~AvrAdc(){}
 
 void AvrAdc::initialize()
 {
-    m_leftAdjust  = false;
     m_autoTrigger = false;
     m_freeRunning = false;
 

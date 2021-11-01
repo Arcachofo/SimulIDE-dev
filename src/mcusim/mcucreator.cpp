@@ -957,7 +957,7 @@ void McuCreator::convert( QString fileName ) // TODELETE convert dat files to xm
     //const QString dir = "/home/user/GreatCowBasic/chipdata";
     //QString fileName = QFileDialog::getOpenFileName( NULL, "Convert", dir,"All files (*.*)");
 
-    QStringList lines = fileToStringList( fileName, "AvrAsmDebugger::mapLstToAsm" );
+    QStringList lines = fileToStringList( fileName, "McuCreator::convert" );
     bool regs = false;
     bool bits = false;
     int max = 0;
@@ -966,6 +966,7 @@ void McuCreator::convert( QString fileName ) // TODELETE convert dat files to xm
     QHash<QString,QVector<QString> > bitHash;
     for( QString line : lines )
     {
+        if( line.startsWith("'") ) continue;
         if( regs )
         {
             if( line.remove(" ").isEmpty() ) continue;
