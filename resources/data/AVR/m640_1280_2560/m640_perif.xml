@@ -189,7 +189,7 @@
     </usart>
     
     <port name="PORTV" pins="2"/> <!-- Fake Port for aVcc and aRef -->
-    <adc name="ADC" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" 
+    <adc name="ADC0" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" 
                     configregsB="ADCSRB" multiplex="ADMUX">
         <prescaler select="" values="2,2,4,8,16,32,64,128"/>
         <inputs type="PIN" source="PORTF0,PORTF1,PORTF2,PORTF3,PORTF4,PORTF5,PORTF6,PORTF7,PORTK0,PORTK1,PORTK2,PORTK3,PORTK4,PORTK5,PORTK6,PORTK7" />

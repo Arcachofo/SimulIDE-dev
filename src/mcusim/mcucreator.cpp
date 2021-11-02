@@ -52,6 +52,7 @@
 #include "picport.h"
 #include "pictimer.h"
 #include "picusart.h"
+#include "picadc.h"
 #include "piccomparator.h"
 #include "picvref.h"
 
@@ -252,7 +253,7 @@ void McuCreator::createRegisters( QDomElement* e )
     }
     getRegisters( e, offset );
 }
-void McuCreator::getRegisters(  QDomElement* e, uint16_t offset )
+void McuCreator::getRegisters( QDomElement* e, uint16_t offset )
 {
     QString stReg;
     if( e->hasAttribute( "streg" ) ) stReg = e->attribute( "streg" );
@@ -595,8 +596,9 @@ void McuCreator::createAdc( QDomElement* e )
     QString name = e->attribute( "name" );
     McuAdc* adc;
 
-    int type = e->attribute("type").toInt();
-    if( m_core == "AVR" ) adc = AvrAdc::createAdc( mcu, name, type );
+    //int type = e->attribute("type").toInt();
+    if     ( m_core == "AVR" )  adc = AvrAdc::createAdc( mcu, name );
+    else if( m_core == "Pic14") adc = PicAdc::createAdc( mcu, name );
     else return;
 
     mcu->m_modules.emplace_back( adc );

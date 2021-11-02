@@ -24,8 +24,9 @@
 #include "e_mcu.h"
 #include "datautils.h"
 
-AvrAdc* AvrAdc::createAdc( eMcu* mcu, QString name ,int type )
+AvrAdc* AvrAdc::createAdc( eMcu* mcu, QString name )
 {
+    int type = name.right(1).toInt();
     switch ( type )
     {
         case 0: return new AvrAdc0( mcu, name ); break;

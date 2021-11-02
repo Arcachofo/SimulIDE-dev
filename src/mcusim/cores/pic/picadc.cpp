@@ -79,42 +79,50 @@ void PicAdc::configureB( uint8_t newADCON1 ) // ADCON1
     if( mode != m_mode )
     {
         m_mode = mode;
+        uint8_t analog = 0;
 
         switch( mode ) {
             case 0:
+                analog = 0b11111111;
                 break;
             case 1:
+                analog = 0b11110111;
                 break;
             case 2:
+                analog = 0b00011111;
                 break;
             case 3:
+                analog = 0b00010111;
                 break;
             case 4:
+                analog = 0b00001011;
                 break;
             case 5:
-                break;
-            case 6:    // All Pins Digital
-            case 7:
+                analog = 0b00000011;
                 break;
             case 8:
+                analog = 0b11110011;
                 break;
             case 9:
+                analog = 0b00111111;
                 break;
             case 10:
+                analog = 0b00110111;
                 break;
             case 11:
+                analog = 0b00110011;
                 break;
             case 12:
+                analog = 0b00010011;
                 break;
             case 13:
+                analog = 0b00000011;
                 break;
             case 14:
-                break;
             case 15:
-                break;
-            default:
-                break;
+                analog = 0b00000001;
         }
+        for( uint i=0; i<m_adcPin.size(); ++i) m_adcPin[i]->setAnalog( analog & (1<<i) );
     }
 }
 
