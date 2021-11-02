@@ -38,10 +38,10 @@ void OscopeChannel::initialize()
     m_rising   = false;
     m_falling  = false;
 
-    m_dataTime = 0;
     m_dataZero = 0;
     m_subSample = 0;
     m_subRate = 0;
+    m_subStep = 0;
     m_period = 0;
     m_risEdge = 0;
     m_nCycles = 0;
@@ -67,6 +67,8 @@ void OscopeChannel::initialize()
 
 void OscopeChannel::updateValues()
 {
+    m_dataTime = 0;
+
     double val = m_freq*1e12;
     int decs;
     QString unit = " ";
