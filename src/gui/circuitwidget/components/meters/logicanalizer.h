@@ -41,15 +41,21 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         virtual void updateStep() override;
 
-        virtual void setTimeDiv( double td ) override;
+        virtual QString timPos() override;
+        virtual void setTimPos( QString tp ) override;
 
-        int timePos(){ return m_timePos; }
-        void setTimePos( int tp );
+        virtual QString volDiv() override;
+        virtual void setVolDiv( QString vd ) override;
+
+        virtual void setTimeDiv( uint64_t td ) override;
+
+        int64_t timePos(){ return m_timePos; }
+        void setTimePos( int64_t tp );
 
         double voltDiv(){ return m_voltDiv; }
         void setVoltDiv( double vd );
 
-        void setTrigger( int ch );
+        virtual void setTrigger( int ch ) override;
 
         double threshold() { return m_threshold; }
         void setThreshold( double thr ) { m_threshold = thr; }

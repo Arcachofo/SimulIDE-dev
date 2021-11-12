@@ -59,15 +59,26 @@ new IntProp<PlotBase>( "Basic_X" ,tr("Screen Size X"),"_Pixels", this, &PlotBase
 new IntProp<PlotBase>( "Basic_Y" ,tr("Screen Size Y"),"_Pixels", this, &PlotBase::baSizeY, &PlotBase::setBaSizeY, "uint" ),
     }} );
     addPropGroup( { tr("Hidden"), {
-new IntProp   <PlotBase>( "hTick"   ,"","", this, &PlotBase::hTick,   &PlotBase::sethTick ),
-new DoubProp  <PlotBase>( "TimeDiv" ,"","", this, &PlotBase::timeDiv, &PlotBase::setTimeDiv ),
+new StringProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
+new StringProp<PlotBase>( "TimPos"  ,"","", this, &PlotBase::timPos,  &PlotBase::setTimPos ),
+new StringProp<PlotBase>( "VolDiv" ,"", "", this, &PlotBase::volDiv,  &PlotBase::setVolDiv ),
 new StringProp<PlotBase>( "Conds"   ,"","", this, &PlotBase::conds,   &PlotBase::setConds ),
 new StringProp<PlotBase>( "Tunnels" ,"","", this, &PlotBase::tunnels, &PlotBase::setTunnels ),
+new IntProp   <PlotBase>( "Trigger" ,"","", this, &PlotBase::trigger, &PlotBase::setTrigger ),
     } } );
 }
 PlotBase::~PlotBase()
 {
     for( int i=0; i<m_numChannels; i++ ) delete m_channel[i];
+}
+
+bool PlotBase::setPropStr( QString prop, QString val )
+{
+    if     ( prop =="hTick" ) setTimeDiv( val.toLongLong()*1e3 ); // Old: TODELETE
+    else if( prop =="vTick" ) setVolDiv( val );
+    else if( prop =="TimePos" ) setTimPos( val+"000" );
+    else return Component::setPropStr( prop, val );
+    return true;
 }
 
 void PlotBase::setBaSizeX( int size )
@@ -84,7 +95,17 @@ void PlotBase::setBaSizeY( int size )
     expand( m_expand );
 }
 
-void PlotBase::setTimeDiv( double td )
+QString PlotBase::timDiv()
+{
+    return QString::number( m_timeDiv );
+}
+
+void PlotBase::setTimDiv( QString td )
+{
+    setTimeDiv( td.toLongLong() );
+}
+
+void PlotBase::setTimeDiv( uint64_t td )
 {
     m_timeDiv = td;
     m_display->setTimeDiv( td );

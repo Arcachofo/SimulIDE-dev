@@ -94,11 +94,6 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Electric"), {
 new DoubProp<LAnalizer>( "Treshold",tr("Logic Threshold"),"V", this, &LAnalizer::threshold, &LAnalizer::setThreshold )
     } } );
-    addPropGroup( { tr("Hidden1"), {
-new DoubProp<LAnalizer>( "vTick"   ,"","", this, &LAnalizer::voltDiv, &LAnalizer::setVoltDiv ),
-new IntProp <LAnalizer>( "Trigger" ,"","", this, &LAnalizer::trigger, &LAnalizer::setTrigger ),
-new IntProp <LAnalizer>( "TimePos" ,"","", this, &LAnalizer::timePos, &LAnalizer::setTimePos ),
-    } } );
 }
 LAnalizer::~LAnalizer()
 {
@@ -187,14 +182,34 @@ void LAnalizer::expand( bool e )
     Circuit::self()->update();
 }
 
-void LAnalizer::setTimeDiv( double td )
+QString LAnalizer::timPos()
+{
+    return QString::number( m_timePos );
+}
+
+void LAnalizer::setTimPos( QString tp )
+{
+    setTimePos( tp.toLongLong() );
+}
+
+QString LAnalizer::volDiv()
+{
+    return QString::number( m_voltDiv );
+}
+
+void LAnalizer::setVolDiv( QString vd )
+{
+    setVoltDiv( vd.toDouble() );
+}
+
+void LAnalizer::setTimeDiv( uint64_t td )
 {
     if( td < 1 ) td = 1;
     PlotBase::setTimeDiv( td );
     m_laWidget->updateTimeDivBox( td );
 }
 
-void LAnalizer::setTimePos( int tp )
+void LAnalizer::setTimePos( int64_t tp )
 {
     m_timePos = tp;
     for( int i=0; i<8; ++i ) m_display->setHPos( i, m_timePos );

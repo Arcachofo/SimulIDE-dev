@@ -97,8 +97,6 @@ new IntProp   <Oscope>( "Trigger","", "", this, &Oscope::trigger, &Oscope::setTr
 new IntProp   <Oscope>( "AutoSC" ,"", "", this, &Oscope::autoSC,  &Oscope::setAutoSC ),
 new IntProp   <Oscope>( "Tracks" ,"", "", this, &Oscope::tracks,  &Oscope::setTracks ),
 new StringProp<Oscope>( "HideCh" ,"", "", this, &Oscope::hideCh,  &Oscope::setHideCh ),
-new StringProp<Oscope>( "TimPos" ,"", "", this, &Oscope::timPos,  &Oscope::setTimPos ),
-new StringProp<Oscope>( "VolDiv" ,"", "", this, &Oscope::volDiv,  &Oscope::setVolDiv ),
 new StringProp<Oscope>( "VolPos" ,"", "", this, &Oscope::volPos,  &Oscope::setVolPos )
     } } );
 }
@@ -259,7 +257,7 @@ void Oscope::setTracks( int tracks )
     m_oscWidget->setTracks( tracks );
 }
 
-void Oscope::setTimeDiv( double td )
+void Oscope::setTimeDiv( uint64_t td )
 {
     if( td < 1 ) td = 1;
     PlotBase::setTimeDiv( td );

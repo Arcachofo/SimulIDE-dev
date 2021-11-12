@@ -39,8 +39,6 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         double filter() { return m_filter; }
         void setFilter( double filter );
 
-        void setTrigger( int ch );
-
         int autoSC() { return m_auto; }
         void setAutoSC( int ch );
 
@@ -50,18 +48,20 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
         int tracks();
         void setTracks( int tracks );
 
-        QString timPos();
-        void setTimPos( QString tp );
+        virtual QString timPos() override;
+        virtual void setTimPos( QString tp ) override;
 
-        QString volDiv();
-        void setVolDiv( QString vd );
+        virtual QString volDiv() override;
+        virtual void setVolDiv( QString vd ) override;
 
         QString volPos();
         void setVolPos( QString vp );
 
+        virtual void setTrigger( int ch ) override;
+
         virtual void updateStep() override;
 
-        virtual void setTimeDiv( double td ) override;
+        virtual void setTimeDiv( uint64_t td ) override;
 
         int64_t timePos( int ch ){ return m_timePos[ch]; }
         void setTimePos( int ch, int64_t tp );

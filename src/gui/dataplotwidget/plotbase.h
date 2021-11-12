@@ -36,6 +36,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         PlotBase( QObject* parent, QString type, QString id );
         ~PlotBase();
 
+        virtual bool setPropStr( QString prop, QString val ) override;
+
         int baSizeX() { return m_baSizeX; }
         void setBaSizeX( int size );
 
@@ -45,13 +47,20 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         double dataSize() { return m_dataSize/1e6; }
         void setDataSize( double ds ) { m_dataSize = ds*1e6; }
 
-        int hTick() { return m_timeDiv/1e3; }
-        virtual void sethTick( int td ){ setTimeDiv( (uint64_t)td*1e3 );}
+        QString timDiv();
+        void setTimDiv( QString td );
 
-        double timeDiv() { return m_timeDiv; }
-        virtual void setTimeDiv( double td );
+        virtual QString timPos()=0;
+        virtual void setTimPos( QString tp )=0;
+
+        virtual QString volDiv()=0;
+        virtual void setVolDiv( QString vd )=0;
+
+        uint64_t timeDiv() { return m_timeDiv; }
+        virtual void setTimeDiv( uint64_t td );
 
         int trigger() { return m_trigger; }
+        virtual void setTrigger( int ch )=0;
 
         virtual QString tunnels();
         virtual void setTunnels( QString tunnels )=0;
