@@ -44,6 +44,9 @@ Changes:
     - Component properties from QProperty to custom Property system.
     - Circuit & Subcircuit load: from QDomDoc to QString.
     
+  RC10:
+    - Leds: adjust "warning" & "Crash" to average current.
+    
 New Features:
   RC1:
     - Dutch translation by mvandorp.
@@ -151,6 +154,13 @@ New Features:
     - More stable and faster Undo/Redo.
     - Circuit: Ctrl+A selects all items.
     - Seven Segment: add Pin labels.
+    
+  RC10:
+    - New MCUs: Ext INT implemented.
+    - New PICs: Comparator implemented.
+    - New PICs: Vref Module implemented.
+    - New PICs: ADC Module implemented.
+    - New PICs: Added Pic16F87x group.
     
 Bug Fixes:
   RC1:
@@ -389,6 +399,32 @@ Bug Fixes:
     - Hd44780: Animate Pins not showing state.
     - New MCUs: Dedicated Reset Pin not working.
     - AVR Compare unit: Compare match B not triggered if ORCXB = 0.
+    
+  RC10:
+    - Pic16F887: ExtINT wrong Pin (must be PB0).
+    - Circuit: Errors in Copy/Paste.
+    - Circuit: Error saving Connectors.
+    - New MCus: Pin State error in MCUs with no input register (PIC, 8051).
+    - New MCUs: Interrupts not deactivated after clear flag (MCU!=AVR).
+    - Errors in debuggers.
+    - New MCUs: Errors creating Boards & some xml file errors.
+    - Pic16F88x: Timer1 Interrupt not working.
+    - New Pics: Usart not working (Usart refactoring).
+    - New Pics: Errors in intruction decoder.
+    - Errors in Pic asm debugger.
+    - Errors in Subcircuits.
+    - Oscope & LA: Fix widget sizes & Hardcode Fonts.
+    - I2cRam crash.
+    - Ssd1306: Color property not working.
+    - Probe not working properly.
+    - Potentiometer not working.
+    - Servo: Missing properties.
+    - Arduino: Error loading MCU properties from old circuits.
+    - ILI9341 wrong colors.
+    - AVR: instruction decoder Error (NEG).
+    - Pic16F887: PORTA4-5 Errors.
+    - New MCUs: Timer & Interrupt errors (servo not working).
+    - Oscope: Subsample Time counter not cleared.
     
 New Components:
   RC1:
