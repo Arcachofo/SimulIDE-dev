@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT Scripted : public LogicComponent
         void displayMsg( QString msg );
         bool getInputState( int i ){ return m_inPin[i]->getInpState(); }
         bool getOutputState( int o ){ return m_outPin[o]->getOutState(); }
-        void setOutputState( int i, bool s ){ if( (uint)i < m_outPin.size() ) m_outPin[i]->setOutState( s, true ); }
+        void setOutputState( int i, bool s ){ if( (uint)i < m_outPin.size() ) m_outPin[i]->setOutState( s ); }
         int  numInps(){ return m_inPin.size(); }
         int  numOuts(){ return m_outPin.size(); }
 

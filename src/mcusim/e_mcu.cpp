@@ -54,10 +54,13 @@ void eMcu::initialize()
     m_cycle = 0;
     cyclesDone = 0;
 
+    ///for( McuModule* module : m_modules ) Simulator::self()->cancelEvents( module );
+
     cpu->reset();
     DataSpace::initialize();
     m_interrupts.resetInts();
 
+    Simulator::self()->cancelEvents( this );
     Simulator::self()->addEvent( 1, this );
 }
 

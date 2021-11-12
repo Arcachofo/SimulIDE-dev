@@ -64,10 +64,12 @@ void McuPort::outChanged( uint8_t val )
     uint8_t changed = *m_outReg ^ val; // See which Pins have actually changed
     if( changed == 0 ) return;
 
-    uint8_t outputs;
-    if( m_dirInv ) outputs = ~(*m_dirReg); // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
-    else           outputs =   *m_dirReg;
-
+    uint8_t outputs = 0xFF;
+    if( m_dirReg )
+    {
+        if( m_dirInv ) outputs = ~(*m_dirReg); // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
+        else           outputs =   *m_dirReg;
+    }
     uint8_t pinCh = outputs & changed;
     if( pinCh ) pinChanged( pinCh, val ); // Update Pin states
 

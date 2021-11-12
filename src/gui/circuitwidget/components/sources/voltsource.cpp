@@ -64,7 +64,7 @@ void VoltSource::updateStep()
     if( m_changed ) 
     {
         m_outPin->setOutHighV( m_outValue );
-        m_outPin->setOutState( m_button->isChecked(), true );
+        m_outPin->setOutState( m_button->isChecked() );
         m_changed = false;
 }   }
 

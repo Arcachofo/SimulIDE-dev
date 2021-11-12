@@ -57,7 +57,7 @@ void ClockBase::updateStep()
         Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( 1, this );
     }
-    m_outpin->setOutState( m_isRunning, true );
+    m_outpin->setOutState( m_isRunning );
     m_changed = false;
 }
 

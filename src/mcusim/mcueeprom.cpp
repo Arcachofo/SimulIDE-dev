@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "mcueeprom.h"
+#include "simulator.h"
 #include "e_mcu.h"
 
 McuEeprom::McuEeprom( eMcu* mcu, QString name )

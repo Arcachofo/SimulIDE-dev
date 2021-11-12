@@ -398,7 +398,7 @@ void Mcu::slotOpenTerm( int num )
 void Mcu::addPin( QString id, QString type, QString label,
                   int pos, int xpos, int ypos, int angle, int length )
 {
-    McuPin* pin = NULL;
+    IoPin* pin = NULL;
 
     if( type.contains("IO") )
     {
@@ -417,14 +417,17 @@ void Mcu::addPin( QString id, QString type, QString label,
                     pin->setPos( QPoint( xpos, ypos ) );
                     pin->setPinAngle( angle );
                     pin->setLength( length );
-                    pin->setLabelText( label );
-                    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
     }   }   }   }
     else if( type == "rst" )
     {
-        m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
+        pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
     }
-    if( pin ) m_pinList.append( pin );
+    if( pin )
+    {
+        pin->setLabelText( label );
+        pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+        m_pinList.append( pin );
+    }
     else Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
 }
 

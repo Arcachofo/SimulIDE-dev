@@ -44,7 +44,6 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     
     my_connector = NULL;
     m_conPin     = NULL;
-    m_enode      = NULL;
     m_angle      = angle;
     
     m_color[0] = Qt::black;

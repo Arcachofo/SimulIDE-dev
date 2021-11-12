@@ -323,9 +323,10 @@ void McuCreator::createPort( QDomElement* p )
     QString name = p->attribute( "name" );
     uint8_t numPins = p->attribute( "pins" ).toUInt(0,0);
 
-    McuPort* port;;
-    if( m_core == "AVR" ) port = new AvrPort( mcu, name, numPins );
-    else                  port = new PicPort( mcu, name, numPins );
+    McuPort* port;
+    if     ( m_core == "AVR" )   port = new AvrPort( mcu, name, numPins );
+    else if( m_core == "Pic14" ) port = new PicPort( mcu, name, numPins );
+    else                         port = new McuPort( mcu, name, numPins );
     mcu->m_ports.m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );
     port->createPins( m_mcuComp );

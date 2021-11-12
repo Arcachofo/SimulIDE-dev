@@ -106,7 +106,7 @@ void IoComponent::runOutputs()
                 if( enode ) enode->saveData();
             }
             else */
-                m_outPin[i]->setOutState( state, true );
+                m_outPin[i]->setOutState( state );
         }
     }
     /*if( m_outStep == 0 )

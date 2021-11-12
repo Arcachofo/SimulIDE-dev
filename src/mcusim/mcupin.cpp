@@ -97,12 +97,12 @@ void McuPin::setPortState( bool state )
 {
     m_outState = state;
     if( !m_isOut ) return;
-    IoPin::setOutState( state, true );
+    IoPin::setOutState( state );
 }
 
-void McuPin::setOutState( bool state, bool )
+void McuPin::setOutState( bool state )
 {
-    if( m_outCtrl ) IoPin::setOutState( state, true );
+    if( m_outCtrl ) IoPin::setOutState( state );
 }
 
 void McuPin::setDirection( bool out )

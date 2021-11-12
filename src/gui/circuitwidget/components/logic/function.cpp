@@ -87,7 +87,7 @@ void Function::runEvent()
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         bool state = m_nextOutVal & (1<<i);
-        m_outPin[i]->setOutState( state, true );
+        m_outPin[i]->setOutState( state );
     }
     m_outValue = m_nextOutVal;
 }

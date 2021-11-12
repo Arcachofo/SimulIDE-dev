@@ -48,11 +48,11 @@ Component* KY040::construct( QObject* parent, QString type, QString id )
 LibraryItem* KY040::libraryItem()
 {
     return new LibraryItem(
-            tr( "KY-040" ),
-            tr( "Perifericals" ),
-            "ky-040.png",
-            "KY040",
-            KY040::construct);
+        tr( "KY-040" ),
+        tr( "Perifericals" ),
+        "ky-040.png",
+        "KY040",
+        KY040::construct);
 }
 
 KY040::KY040( QObject* parent, QString type, QString id )
@@ -119,7 +119,7 @@ void KY040::updateStep()
 {
     if( !m_changed ) return;
 
-    m_sw->setOutState( !m_closed, true );
+    m_sw->setOutState( !m_closed );
     m_changed = false;
 }
 
@@ -138,8 +138,8 @@ void KY040::runEvent()
             dtOuput  = CCWseq[0][m_seqIndex];
             clkOuput = CCWseq[1][m_seqIndex];
         }
-        m_dt->setOutState( dtOuput, true );
-        m_clk->setOutState( clkOuput, true );
+        m_dt->setOutState( dtOuput );
+        m_clk->setOutState( clkOuput );
 
         m_seqIndex++;
         if( m_seqIndex >= 4 ) m_seqIndex = -1;

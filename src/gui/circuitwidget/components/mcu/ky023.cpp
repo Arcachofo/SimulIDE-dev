@@ -44,11 +44,11 @@ Component* KY023::construct( QObject* parent, QString type, QString id )
 LibraryItem* KY023::libraryItem()
 {
     return new LibraryItem(
-            tr( "KY-023" ),
-            tr( "Perifericals" ),
-            "ky-023.png",
-            "KY023",
-            KY023::construct);
+        tr( "KY-023" ),
+        tr( "Perifericals" ),
+        "ky-023.png",
+        "KY023",
+        KY023::construct);
 }
 
 KY023::KY023( QObject* parent, QString type, QString id )

@@ -117,37 +117,32 @@ bool IoPin::getInpState()
     return m_inverted ? !m_inpState : m_inpState;
 }
 
-void IoPin::setOutState( bool out, bool st ) // Set Output to Hight or Low
+void IoPin::setOutState( bool out ) // Set Output to Hight or Low
 {
     m_outState = out;
-    if( m_inverted )  out = !out;
+    if( m_inverted ) out = !out;
 
     if( m_stateZ ) return;
 
     if( m_pinMode == open_col )
     {
         m_gndAdmit = out ? 1/m_openImp : 1/m_outputImp;
-
-        if( st ) updtState();
+        updtState();
         setPinState( out? out_open:out_low ); // Z-Low colors
-    }
-    else{
+    }else{
         m_outVolt = out ? m_outHighV : m_outLowV;
-
-        if( st ) stampOutput();
+        stampOutput();
         setPinState( out? out_high:out_low ); // High-Low colors
 }   }
 
 void IoPin::setStateZ( bool z )
 {
     m_stateZ = z;
-    if( z )
-    {
+    if( z ){
         m_outVolt = m_outLowV;
         setImp( m_openImp );
         setPinState( out_open );
-    }
-    else {
+    }else {
         pinMode_t pm = m_pinMode; // Force pinMode
         m_pinMode = undef_mode;
         setPinMode( pm );

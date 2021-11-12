@@ -11,7 +11,7 @@ Circuit Id: Pcd8544
 Unique  Id: Nano-3: 
 Circuit Id: Arduino Nano
 <item objectName="Nano-3" Logic_Symbol="false" vflip="1" Show_id="true" id="Arduino Nano" valLabely="0" Show_Val="false" valLabRot="0" rotation="90" Unit="  " itemtype="Subcircuit" BoardId="" labelx="67" Name="Nano" x="-284" labely="137" labelrot="-90" hflip="1" valLabelx="0" y="-204" mainComp="false">
-  <mainCompProps Auto_Load="false" Name="m328_TQFP" Program="marduino.ino.hex" Mhz="16" Logic_Symbol="false"/>
+  <mainCompProps Auto_Load="false" Name="m328 TQFP" Program="marduino.ino.hex" Mhz="16" Logic_Symbol="false"/>
  </item>
 
 Unique  Id: Push-4: 

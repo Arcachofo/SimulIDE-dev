@@ -91,7 +91,7 @@ void FixedVolt::updateStep()
 {
     if( !m_changed ) return;
     m_changed = false;
-    m_outpin->setOutState( m_button->isChecked(), true );
+    m_outpin->setOutState( m_button->isChecked() );
 }
 
 void FixedVolt::onbuttonclicked()
