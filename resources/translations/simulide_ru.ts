@@ -23,6 +23,14 @@
         <source>Reference Voltage</source>
         <translation>Опорное напряжение</translation>
     </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
 </context>
 <context>
     <name>AVRComponent</name>
@@ -110,272 +118,292 @@
         <source>Input Size</source>
         <translation>Число входов</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Invert Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Drain</source>
+        <translation type="unfinished">Открытый сток</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
 </context>
 <context>
     <name>App::Property</name>
     <message>
         <source>id</source>
-        <translation>Идентификатор</translation>
+        <translation type="vanished">Идентификатор</translation>
     </message>
     <message>
         <source>Show id</source>
-        <translation>Показать идентификатор</translation>
+        <translation type="vanished">Показать идентификатор</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation>Единица измерения</translation>
+        <translation type="vanished">Единица измерения</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation>Цвет</translation>
+        <translation type="vanished">Цвет</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation>Скорость</translation>
+        <translation type="vanished">Скорость</translation>
     </message>
     <message>
         <source>ReactStep</source>
-        <translation>Шаг отклика</translation>
+        <translation type="vanished">Шаг отклика</translation>
     </message>
     <message>
         <source>NoLinAcc</source>
-        <translation>Накопление NoLin</translation>
+        <translation type="vanished">Накопление NoLin</translation>
     </message>
     <message>
         <source>Draw Grid</source>
-        <translation>Показать сетку</translation>
+        <translation type="vanished">Показать сетку</translation>
     </message>
     <message>
         <source>Show ScrollBars</source>
-        <translation>Показать полосы прокрутки</translation>
+        <translation type="vanished">Показать полосы прокрутки</translation>
     </message>
     <message>
         <source>H size</source>
-        <translation>Размер по горизонтали</translation>
+        <translation type="vanished">Размер по горизонтали</translation>
     </message>
     <message>
         <source>V size</source>
-        <translation>Размер по вертикали</translation>
+        <translation type="vanished">Размер по вертикали</translation>
     </message>
     <message>
         <source>Border</source>
-        <translation>Граница</translation>
+        <translation type="vanished">Граница</translation>
     </message>
     <message>
         <source>Opacity</source>
-        <translation>Непрозрачность</translation>
+        <translation type="vanished">Непрозрачность</translation>
     </message>
     <message>
         <source>Z Value</source>
-        <translation>Положение Z</translation>
+        <translation type="vanished">Положение Z</translation>
     </message>
     <message>
         <source>Vref</source>
-        <translation>Опорное напряжение</translation>
+        <translation type="vanished">Опорное напряжение</translation>
     </message>
     <message>
         <source>Num Bits</source>
-        <translation>Разрядность, бит</translation>
+        <translation type="vanished">Разрядность, бит</translation>
     </message>
     <message>
         <source>Impedance</source>
-        <translation>Импеданс</translation>
+        <translation type="vanished">Импеданс</translation>
     </message>
     <message>
         <source>Max Value</source>
-        <translation>Максимальное значение</translation>
+        <translation type="vanished">Максимальное значение</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Усиление</translation>
+        <translation type="vanished">Усиление</translation>
     </message>
     <message>
         <source>PNP</source>
-        <translation>PNP</translation>
+        <translation type="vanished">PNP</translation>
     </message>
     <message>
         <source>Capacitance</source>
-        <translation>Ёмкость</translation>
+        <translation type="vanished">Ёмкость</translation>
     </message>
     <message>
         <source>Freq</source>
-        <translation>Частота</translation>
+        <translation type="vanished">Частота</translation>
     </message>
     <message>
         <source>Current</source>
-        <translation>Ток</translation>
+        <translation type="vanished">Ток</translation>
     </message>
     <message>
         <source>Show Amp</source>
-        <translation>Показать силу тока</translation>
+        <translation type="vanished">Показать силу тока</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Порог</translation>
+        <translation type="vanished">Порог</translation>
     </message>
     <message>
         <source>Zener Volt</source>
-        <translation>Напряжение стабилизации</translation>
+        <translation type="vanished">Напряжение стабилизации</translation>
     </message>
     <message>
         <source>Cols</source>
-        <translation>Столбцы</translation>
+        <translation type="vanished">Столбцы</translation>
     </message>
     <message>
         <source>Rows</source>
-        <translation>Строки</translation>
+        <translation type="vanished">Строки</translation>
     </message>
     <message>
         <source>Control Code</source>
-        <translation>Контрольный код</translation>
+        <translation type="vanished">Контрольный код</translation>
     </message>
     <message>
         <source>Size bytes</source>
-        <translation>Количество байт</translation>
+        <translation type="vanished">Количество байт</translation>
     </message>
     <message>
         <source>Inductance</source>
-        <translation>Индуктивность</translation>
+        <translation type="vanished">Индуктивность</translation>
     </message>
     <message>
         <source>Show Ind</source>
-        <translation>Показать индуктивность</translation>
+        <translation type="vanished">Показать индуктивность</translation>
     </message>
     <message>
         <source>Key Labels</source>
-        <translation>Надписи на кнопках</translation>
+        <translation type="vanished">Надписи на кнопках</translation>
     </message>
     <message>
         <source>CS Active Low</source>
-        <translation>CS активный низкий</translation>
+        <translation type="vanished">CS активный низкий</translation>
     </message>
     <message>
         <source>MaxCurrent</source>
-        <translation>Максимальный ток</translation>
+        <translation type="vanished">Максимальный ток</translation>
     </message>
     <message>
         <source>Grounded</source>
-        <translation>Заземленный</translation>
+        <translation type="vanished">Заземленный</translation>
     </message>
     <message>
         <source>Input High V</source>
-        <translation>Входное напряжение логической 1</translation>
+        <translation type="vanished">Входное напряжение логической 1</translation>
     </message>
     <message>
         <source>Input Low V</source>
-        <translation>Входное напряжение логического 0</translation>
+        <translation type="vanished">Входное напряжение логического 0</translation>
     </message>
     <message>
         <source>Input Imped</source>
-        <translation>Входящий импеданс</translation>
+        <translation type="vanished">Входящий импеданс</translation>
     </message>
     <message>
         <source>Out High V</source>
-        <translation>Выходное напряжение логической 1</translation>
+        <translation type="vanished">Выходное напряжение логической 1</translation>
     </message>
     <message>
         <source>Out Low V</source>
-        <translation>Выходное напряжение логического 0</translation>
+        <translation type="vanished">Выходное напряжение логического 0</translation>
     </message>
     <message>
         <source>Out Imped</source>
-        <translation>Выходящий импеданс</translation>
+        <translation type="vanished">Выходящий импеданс</translation>
     </message>
     <message>
         <source>Inverted</source>
-        <translation>Инвертированный</translation>
+        <translation type="vanished">Инвертированный</translation>
     </message>
     <message>
         <source>Tristate</source>
-        <translation>Третье состояние</translation>
+        <translation type="vanished">Третье состояние</translation>
     </message>
     <message>
         <source>Clock Inverted</source>
-        <translation>Инвертировать такты</translation>
+        <translation type="vanished">Инвертировать такты</translation>
     </message>
     <message>
         <source>Reset Inverted</source>
-        <translation>Инвертировать сброс</translation>
+        <translation type="vanished">Инвертировать сброс</translation>
     </message>
     <message>
         <source>Invert Inputs</source>
-        <translation>Инвертировать входы</translation>
+        <translation type="vanished">Инвертировать входы</translation>
     </message>
     <message>
         <source>S R Inverted</source>
-        <translation>Инвертировать SR</translation>
+        <translation type="vanished">Инвертировать SR</translation>
     </message>
     <message>
         <source>Num Inputs</source>
-        <translation>Количество входов</translation>
+        <translation type="vanished">Количество входов</translation>
     </message>
     <message>
         <source>Channels</source>
-        <translation>Каналы</translation>
+        <translation type="vanished">Каналы</translation>
     </message>
     <message>
         <source>Voltage</source>
-        <translation>Напряжение</translation>
+        <translation type="vanished">Напряжение</translation>
     </message>
     <message>
         <source>Show Volt</source>
-        <translation>Показать напряжение</translation>
+        <translation type="vanished">Показать напряжение</translation>
     </message>
     <message>
         <source>RDSon</source>
-        <translation>R DS (on) сопротивление открытого канала</translation>
+        <translation type="vanished">R DS (on) сопротивление открытого канала</translation>
     </message>
     <message>
         <source>P Channel</source>
-        <translation>Канал P</translation>
+        <translation type="vanished">Канал P</translation>
     </message>
     <message>
         <source>Depletion</source>
-        <translation>Встроенный канал</translation>
+        <translation type="vanished">Встроенный канал</translation>
     </message>
     <message>
         <source>Power Pins</source>
-        <translation>Контакты питания</translation>
+        <translation type="vanished">Контакты питания</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation>Фильтр</translation>
+        <translation type="vanished">Фильтр</translation>
     </message>
     <message>
         <source>Value Ohm</source>
-        <translation>Текущее значение, Ом</translation>
+        <translation type="vanished">Текущее значение, Ом</translation>
     </message>
     <message>
         <source>Rcoil</source>
-        <translation>Сопротивление обмотки</translation>
+        <translation type="vanished">Сопротивление обмотки</translation>
     </message>
     <message>
         <source>Poles</source>
-        <translation>Число контактных групп</translation>
+        <translation type="vanished">Число контактных групп</translation>
     </message>
     <message>
         <source>DT</source>
-        <translation>Переключающий контакт</translation>
+        <translation type="vanished">Переключающий контакт</translation>
     </message>
     <message>
         <source>Norm Close</source>
-        <translation>Нормально замкнутый</translation>
+        <translation type="vanished">Нормально замкнутый</translation>
     </message>
     <message>
         <source>Resistance</source>
-        <translation>Сопротивление</translation>
+        <translation type="vanished">Сопротивление</translation>
     </message>
     <message>
         <source>Show res</source>
-        <translation>Показать сопротивление</translation>
+        <translation type="vanished">Показать сопротивление</translation>
     </message>
     <message>
         <source>NumDisplays</source>
-        <translation>Количество разрядов</translation>
+        <translation type="vanished">Количество разрядов</translation>
     </message>
     <message>
         <source>CommonCathode</source>
-        <translation>Общий катод</translation>
+        <translation type="vanished">Общий катод</translation>
     </message>
     <message>
         <source>Steps</source>
@@ -383,59 +411,59 @@
     </message>
     <message>
         <source>Text</source>
-        <translation>Текст</translation>
+        <translation type="vanished">Текст</translation>
     </message>
     <message>
         <source>Fixed Width</source>
-        <translation>Фиксированная ширина</translation>
+        <translation type="vanished">Фиксированная ширина</translation>
     </message>
     <message>
         <source>Margin</source>
-        <translation>Допустимый предел</translation>
+        <translation type="vanished">Допустимый предел</translation>
     </message>
     <message>
         <source>Volts</source>
-        <translation>Выходное напряжение</translation>
+        <translation type="vanished">Выходное напряжение</translation>
     </message>
     <message>
         <source>Volt Base</source>
-        <translation>Базовое напряжение</translation>
+        <translation type="vanished">Базовое напряжение</translation>
     </message>
     <message>
         <source>Duty Square</source>
-        <translation>Коэффициент заполнения</translation>
+        <translation type="vanished">Коэффициент заполнения</translation>
     </message>
     <message>
         <source>Quality</source>
-        <translation>Качество</translation>
+        <translation type="vanished">Качество</translation>
     </message>
     <message>
         <source>Wave Type</source>
-        <translation>Тип волны</translation>
+        <translation type="vanished">Тип волны</translation>
     </message>
     <message>
         <source>Drive Circuit</source>
-        <translation>Управляющая схема</translation>
+        <translation type="vanished">Управляющая схема</translation>
     </message>
     <message>
         <source>Compiler Path</source>
-        <translation>Путь к компилятору</translation>
+        <translation type="vanished">Путь к компилятору</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation>Размер шрифта</translation>
+        <translation type="vanished">Размер шрифта</translation>
     </message>
     <message>
         <source>Tab Size</source>
-        <translation>Шаг табуляции</translation>
+        <translation type="vanished">Шаг табуляции</translation>
     </message>
     <message>
         <source>Spaces Tabs</source>
-        <translation>Табуляция пробелами</translation>
+        <translation type="vanished">Табуляция пробелами</translation>
     </message>
     <message>
         <source>Show Spaces</source>
-        <translation>Показать пробелы</translation>
+        <translation type="vanished">Показать пробелы</translation>
     </message>
     <message>
         <source>Board</source>
@@ -447,27 +475,27 @@
     </message>
     <message>
         <source>Program</source>
-        <translation>Прошивка</translation>
+        <translation type="vanished">Прошивка</translation>
     </message>
     <message>
         <source>Avra Inc Path</source>
-        <translation>Путь к компилятору AVRA</translation>
+        <translation type="vanished">Путь к компилятору AVRA</translation>
     </message>
     <message>
         <source>Num Outputs</source>
-        <translation>Количество Выходов</translation>
+        <translation type="vanished">Количество Выходов</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation>Функции</translation>
+        <translation type="vanished">Функции</translation>
     </message>
     <message>
         <source>Image File</source>
-        <translation>Файл рисунка</translation>
+        <translation type="vanished">Файл рисунка</translation>
     </message>
     <message>
         <source>Auto Load</source>
-        <translation>Автозагрузка</translation>
+        <translation type="vanished">Автозагрузка</translation>
     </message>
     <message>
         <source>Port Name</source>
@@ -499,119 +527,115 @@
     </message>
     <message>
         <source>Bipolar</source>
-        <translation>Биполярный</translation>
+        <translation type="vanished">Биполярный</translation>
     </message>
     <message>
         <source>Font</source>
-        <translation>Шрифт</translation>
+        <translation type="vanished">Шрифт</translation>
     </message>
     <message>
         <source>BC diode</source>
-        <translation>БК диод</translation>
+        <translation type="vanished">БК диод</translation>
     </message>
     <message>
         <source>Address Bits</source>
-        <translation>Разрядность адресной шины</translation>
+        <translation type="vanished">Разрядность адресной шины</translation>
     </message>
     <message>
         <source>Start Bit</source>
-        <translation>Стартовый бит</translation>
+        <translation type="vanished">Стартовый бит</translation>
     </message>
     <message>
         <source>Animate</source>
-        <translation>Анимация</translation>
+        <translation type="vanished">Анимация</translation>
     </message>
     <message>
         <source>Auto Backup Secs</source>
-        <translation>Время авторезервирования, сек</translation>
+        <translation type="vanished">Время авторезервирования, сек</translation>
     </message>
     <message>
         <source>Show volt</source>
-        <translation>Показать напряжение</translation>
+        <translation type="vanished">Показать напряжение</translation>
     </message>
     <message>
         <source>IOn</source>
-        <translation>Ток срабатывания</translation>
+        <translation type="vanished">Ток срабатывания</translation>
     </message>
     <message>
         <source>IOff</source>
-        <translation>Ток отпускания</translation>
+        <translation type="vanished">Ток отпускания</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Надпись</translation>
+        <translation type="vanished">Надпись</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Количество</translation>
+        <translation type="vanished">Количество</translation>
     </message>
     <message>
         <source>Font Scale</source>
-        <translation>Масштаб шрифта</translation>
+        <translation type="vanished">Масштаб шрифта</translation>
     </message>
     <message>
         <source>Data Bits</source>
-        <translation>Разрядность шыны данных</translation>
+        <translation type="vanished">Разрядность шыны данных</translation>
     </message>
     <message>
         <source>Persistent</source>
-        <translation>Сохранение данных</translation>
+        <translation type="vanished">Сохранение данных</translation>
     </message>
     <message>
         <source>Open Collector</source>
-        <translation>ОТкрытый коллектор</translation>
+        <translation type="vanished">ОТкрытый коллектор</translation>
     </message>
     <message>
         <source>Trigger</source>
-        <translation>Триггер</translation>
+        <translation type="vanished">Триггер</translation>
     </message>
     <message>
         <source> 16 Bits</source>
-        <translation> 16 бит</translation>
+        <translation type="vanished"> 16 бит</translation>
     </message>
     <message>
         <source>Mhz</source>
-        <translation>МГц</translation>
-    </message>
-    <message>
-        <source>Init gdb</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">МГц</translation>
     </message>
     <message>
         <source>Buzzer</source>
-        <translation>Зуммер</translation>
+        <translation type="vanished">Зуммер</translation>
     </message>
     <message>
         <source>Vertical Pins</source>
-        <translation>Выртикальные выводы</translation>
+        <translation type="vanished">Выртикальные выводы</translation>
     </message>
     <message>
         <source>Show Cap</source>
-        <translation>Показать емкость</translation>
+        <translation type="vanished">Показать емкость</translation>
     </message>
     <message>
         <source>RPM Nominal</source>
-        <translation>Об/мин, номинальные</translation>
+        <translation type="vanished">Об/мин, номинальные</translation>
     </message>
     <message>
         <source>Volt Nominal</source>
-        <translation>Напряжение номинальное</translation>
+        <translation type="vanished">Напряжение номинальное</translation>
     </message>
     <message>
         <source>Max Resistance</source>
-        <translation>Максимальное сопротивление</translation>
+        <translation type="vanished">Максимальное сопротивление</translation>
     </message>
     <message>
         <source>Min Resistance</source>
-        <translation>Минимальное сопротивление</translation>
+        <translation type="vanished">Минимальное сопротивление</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Язык</translation>
+        <translation type="vanished">Язык</translation>
     </message>
     <message>
         <source>Propagation Delay ns</source>
-        <translation>Задержка распространения, нс</translation>
+        <translation type="vanished">Задержка распространения, нс</translation>
     </message>
 </context>
 <context>
@@ -619,24 +643,6 @@
     <message>
         <source>Application</source>
         <translation type="unfinished">Приложение</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Property: (default value)&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Language: (English)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Application Language.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Needs Restart.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Font Scale: (1)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Scale Application Font, example 1,5=150%.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Minimum = 0.5&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Maximum = 2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show Help</source>
@@ -690,6 +696,28 @@ p, li { white-space: pre-wrap; }
         <source>Turkish</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Property: (default value)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;- Language: (English)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;   Application Language.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;   Needs Restart.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;- Font Scale: (1)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;   Scale Application Font, example 1,5=150%.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;   Minimum = 0.5&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;   Maximum = 2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AudioOut</name>
@@ -719,6 +747,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Init gdb server at restart</source>
         <translation type="obsolete">Инициализация GDB сервера при перезагрузке</translation>
+    </message>
+</context>
+<context>
+    <name>AvrGccDebugger</name>
+    <message>
+        <source>Warning: elf file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -826,19 +861,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select Compiler toolchain directory</source>
-        <translation>Выберите каталог с инструментами компилятора</translation>
+        <translation type="vanished">Выберите каталог с инструментами компилятора</translation>
     </message>
     <message>
         <source>Using Compiler Path: </source>
-        <translation>Используется путь компилятора: </translation>
+        <translation type="vanished">Используется путь компилятора: </translation>
     </message>
     <message>
         <source>: ToolChain not found</source>
-        <translation>: Инструменты не найдены</translation>
+        <translation type="vanished">: Инструменты не найдены</translation>
     </message>
     <message>
         <source>Right-Click on Document Tab to set Path</source>
-        <translation>Правый клик на вкладке документа, чтобы задать путь</translation>
+        <translation type="vanished">Правый клик на вкладке документа, чтобы задать путь</translation>
     </message>
     <message>
         <source>Error: No Mcu in Simulator... </source>
@@ -846,6 +881,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Error uploading firmware to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: Hex file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -886,6 +929,14 @@ p, li { white-space: pre-wrap; }
         <source>Invert Outputs</source>
         <translation>Инвертировать выходы</translation>
     </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
 </context>
 <context>
     <name>BcdToDec</name>
@@ -908,6 +959,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>16 Bits</source>
         <translation>16 выходов</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
     </message>
 </context>
 <context>
@@ -938,7 +997,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Set / Reset Inverted</source>
-        <translation type="unfinished">Инвертировать Set / Reset</translation>
+        <translation type="obsolete">Инвертировать Set / Reset</translation>
+    </message>
+    <message>
+        <source>Set/Reset Inverted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
+</context>
+<context>
+    <name>BoolVal</name>
+    <message>
+        <source>value</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -954,6 +1032,26 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Tristate</source>
         <translation>Третье состояние</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Invert Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Drain</source>
+        <translation type="unfinished">Открытый сток</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
     </message>
 </context>
 <context>
@@ -987,7 +1085,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Passive</source>
-        <translation>Пассивные элементы</translation>
+        <translation type="vanished">Пассивные элементы</translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1010,6 +1112,26 @@ No valid Chip</source>
         <translation>Ошибка чтения файла чип:
 %1
 чип не действительный</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic</source>
+        <translation type="unfinished">Логика</translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished">Плата</translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1321,7 +1443,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
-        <translation>Фронты</translation>
+        <translation type="vanished">Фронты</translation>
     </message>
     <message>
         <source>Rise Time</source>
@@ -1330,6 +1452,13 @@ Do you want to save your changes?
     <message>
         <source>Fall Time</source>
         <translation type="vanished">Время спада</translation>
+    </message>
+</context>
+<context>
+    <name>ClockBase</name>
+    <message>
+        <source>Hidden1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1344,105 +1473,253 @@ Do you want to save your changes?
     </message>
     <message>
         <source>File type not supported</source>
-        <translation>Тип файла не поддерживается</translation>
+        <translation type="vanished">Тип файла не поддерживается</translation>
     </message>
     <message>
         <source>     SUCCESS!!! Compilation Ok</source>
-        <translation>     УСПЕШНО!!! Компиляция завершена</translation>
+        <translation type="vanished">     УСПЕШНО!!! Компиляция завершена</translation>
     </message>
     <message>
         <source>Uploading: </source>
-        <translation>Загрузка: </translation>
+        <translation type="vanished">Загрузка: </translation>
     </message>
     <message>
         <source>Starting Debbuger...</source>
-        <translation>Запуск отладчика...</translation>
+        <translation type="vanished">Запуск отладчика...</translation>
     </message>
     <message>
         <source>Error: No Mcu in Simulator... </source>
-        <translation>Ошибка: нет микроконтроллера в симуляторе... </translation>
+        <translation type="vanished">Ошибка: нет микроконтроллера в симуляторе... </translation>
     </message>
     <message>
         <source>Error: No Debugger Suited for this File... </source>
-        <translation>Ошибка: нет подходящего отладчика для этого файла... </translation>
+        <translation type="vanished">Ошибка: нет подходящего отладчика для этого файла... </translation>
     </message>
     <message>
         <source>Error: No File... </source>
-        <translation>Ошибка: нет файла... </translation>
+        <translation type="vanished">Ошибка: нет файла... </translation>
     </message>
     <message>
         <source>Error Compiling... </source>
-        <translation>Ошибка компиляции... </translation>
+        <translation type="vanished">Ошибка компиляции... </translation>
     </message>
     <message>
         <source>Error Loading Firmware... </source>
-        <translation>Ошибка загрузки прошивки... </translation>
+        <translation type="vanished">Ошибка загрузки прошивки... </translation>
     </message>
     <message>
         <source>Clock Cycles: </source>
-        <translation>Число тактов: </translation>
+        <translation type="vanished">Число тактов: </translation>
     </message>
     <message>
         <source>     ERROR!!! Compilation Failed</source>
-        <translation>   Ошибка! Неудачная компиляция</translation>
+        <translation type="vanished">   Ошибка! Неудачная компиляция</translation>
     </message>
     <message>
         <source>Debugger Started </source>
-        <translation>Отладка запущена</translation>
+        <translation type="vanished">Отладка запущена</translation>
     </message>
     <message>
         <source>Debugger Stopped </source>
-        <translation>Отладка остановлена </translation>
+        <translation type="vanished">Отладка остановлена </translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Свойства</translation>
+        <translation type="vanished">Свойства</translation>
     </message>
     <message>
         <source>Please save the Document first</source>
-        <translation>Сохраните вначале текст</translation>
+        <translation type="vanished">Сохраните вначале текст</translation>
     </message>
     <message>
         <source>No Compiler available for: %1 files</source>
-        <translation>Компилятор недоступен для: %1 файла</translation>
+        <translation type="vanished">Компилятор недоступен для: %1 файла</translation>
+    </message>
+    <message>
+        <source>Reload Document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CompilDialog</name>
     <message>
         <source>Type: </source>
-        <translation>Тип: </translation>
+        <translation type="vanished">Тип: </translation>
     </message>
     <message>
         <source>Label: </source>
-        <translation>Метка: </translation>
+        <translation type="vanished">Метка: </translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Просмотр</translation>
+        <translation type="vanished">Просмотр</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Tab 2</source>
-        <translation>Табуляция 2</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Табуляция 2</translation>
     </message>
 </context>
 <context>
     <name>Compiler</name>
     <message>
         <source>Error: ToolChain not found</source>
-        <translation>Ошибка: Тулчейн не найден</translation>
+        <translation type="vanished">Ошибка: Тулчейн не найден</translation>
+    </message>
+    <message>
+        <source> Compiler successfully loaded.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     No Compiler Defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     No command Defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     Error: Family not defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     Error: Device not defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     SUCCESS!!! Compilation Ok</source>
+        <translation type="unfinished">     УСПЕШНО!!! Компиляция завершена</translation>
+    </message>
+    <message>
+        <source>     ERROR!!! Compilation Failed</source>
+        <translation type="unfinished">   Ошибка! Неудачная компиляция</translation>
+    </message>
+    <message>
+        <source>Select Compiler Toolchain directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Compiler Include directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>: ToolChain not found</source>
+        <translation type="unfinished">: Инструменты не найдены</translation>
+    </message>
+    <message>
+        <source>Set proper ToolChain Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CompilerProp</name>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set if Debugger should drive Circuit simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drive Circuit</source>
+        <translation type="unfinished">Управляющая схема</translation>
+    </message>
+    <message>
+        <source>Board</source>
+        <translation type="unfinished">Плата</translation>
+    </message>
+    <message>
+        <source>Select Arduino Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uno</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mega</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nano</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duemilanove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leonardo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Настройка</translation>
+    </message>
+    <message>
+        <source>Tool Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set custom Arduino Board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Board</source>
+        <translation type="unfinished">Заказная плата</translation>
+    </message>
+    <message>
+        <source>Select tool path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select include path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select MCU model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select MCU family/architecture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Family</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1520,6 +1797,13 @@ to DomDocument</source>
     </message>
 </context>
 <context>
+    <name>Connector</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+</context>
+<context>
     <name>ConnectorLine</name>
     <message>
         <source>Remove</source>
@@ -1566,6 +1850,14 @@ to DomDocument</source>
     <message>
         <source>Reference Voltage</source>
         <translation>Опорное напряжение</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
     </message>
 </context>
 <context>
@@ -1643,6 +1935,14 @@ to DomDocument</source>
         <source>16 Bits</source>
         <translation>16 бит</translation>
     </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
 </context>
 <context>
     <name>Demux</name>
@@ -1666,6 +1966,41 @@ to DomDocument</source>
         <source>Address Size</source>
         <translation type="unfinished">Разрядность адреса</translation>
     </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
+</context>
+<context>
+    <name>Dht22</name>
+    <message>
+        <source>Dht22</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">датчики</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature increment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Humidity increment</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Diode</name>
@@ -1683,18 +2018,54 @@ to DomDocument</source>
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Порог</translation>
+        <translation type="vanished">Порог</translation>
     </message>
     <message>
         <source>Zener Voltage</source>
-        <translation>Напряжение стабилизации</translation>
+        <translation type="vanished">Напряжение стабилизации</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max Current</source>
+        <translation type="unfinished">Макс. ток</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Сопротивление</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdown Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emission Coefficient</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DoubleVal</name>
     <message>
         <source>Show</source>
-        <translation>Показать</translation>
+        <translation type="vanished">Показать</translation>
     </message>
 </context>
 <context>
@@ -1736,15 +2107,7 @@ to DomDocument</source>
     </message>
     <message>
         <source>Compiler / Debugger</source>
-        <translation>Компилятор / Отладчик</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Компилятор / Отладчик</translation>
     </message>
     <message>
         <source>Show Help</source>
@@ -1776,63 +2139,55 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Drive Circuit</source>
-        <translation>Управляющая схема</translation>
+        <translation type="vanished">Управляющая схема</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation>Плата</translation>
-    </message>
-    <message>
-        <source>Uno</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Mega</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Nano</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Duemilanove</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Leonardo</source>
-        <translation></translation>
+        <translation type="vanished">Плата</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Настройка</translation>
+        <translation type="vanished">Настройка</translation>
     </message>
     <message>
         <source>Compiler Path</source>
-        <translation>Путь к компилятору</translation>
+        <translation type="vanished">Путь к компилятору</translation>
     </message>
     <message>
         <source>Avra Inc Path</source>
-        <translation>Путь к компилятору AVRA</translation>
+        <translation type="vanished">Путь к компилятору AVRA</translation>
     </message>
     <message>
         <source>Custom Board</source>
-        <translation>Заказная плата</translation>
+        <translation type="vanished">Заказная плата</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>EditorWindow</name>
+    <name>EditorWidget</name>
     <message>
         <source>Load File</source>
-        <translation>Загрузить файл</translation>
+        <translation type="unfinished">Загрузить файл</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation type="unfinished">Все файлы</translation>
     </message>
     <message>
         <source>Save Document As</source>
-        <translation>Сохранить документ как</translation>
+        <translation type="unfinished">Сохранить документ как</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Не удаётся записать файл %1:
+        <translation type="unfinished">Не удаётся записать файл %1:
 %2.</translation>
     </message>
     <message>
@@ -1840,186 +2195,421 @@ p, li { white-space: pre-wrap; }
 The Document has been modified.
 Do you want to save your changes?
 </source>
-        <translation>
+        <translation type="unfinished">
+Документ был изменен.
+Хотите сохранить изменения?
+</translation>
+    </message>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copmpiler Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;New	Ctrl+N</source>
+        <translation type="unfinished">&amp;Новый	Ctrl+N</translation>
+    </message>
+    <message>
+        <source>Create a new file</source>
+        <translation type="unfinished">Создать новый файл</translation>
+    </message>
+    <message>
+        <source>&amp;Open...	Ctrl+O</source>
+        <translation type="unfinished">&amp;Открыть...	Ctrl+O</translation>
+    </message>
+    <message>
+        <source>Open an existing file</source>
+        <translation type="unfinished">Открыть существующий файл</translation>
+    </message>
+    <message>
+        <source>&amp;Save	Ctrl+S</source>
+        <translation type="unfinished">&amp;Сохранить	Ctrl+S</translation>
+    </message>
+    <message>
+        <source>Save the document to disk</source>
+        <translation type="unfinished">Сохранить документ на диск</translation>
+    </message>
+    <message>
+        <source>Save &amp;As...	Ctrl+Shift+S</source>
+        <translation type="unfinished">Сохранить &amp;как...	Ctrl+Shift+S</translation>
+    </message>
+    <message>
+        <source>Save the document under a new name</source>
+        <translation type="unfinished">Сохранить документ под новым именем</translation>
+    </message>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="unfinished">В&amp;ыход</translation>
+    </message>
+    <message>
+        <source>Exit the application</source>
+        <translation type="unfinished">Выйти из приложения</translation>
+    </message>
+    <message>
+        <source>Cu&amp;t	Ctrl+X</source>
+        <translation type="unfinished">Вы&amp;резать	Ctrl+X</translation>
+    </message>
+    <message>
+        <source>Cut the current selection&apos;s contents to the clipboard</source>
+        <translation type="unfinished">Вырезать содержимое текущего выделения в буфер обмена</translation>
+    </message>
+    <message>
+        <source>&amp;Copy	Ctrl+C</source>
+        <translation type="unfinished">&amp;Копировать	Ctrl+C</translation>
+    </message>
+    <message>
+        <source>Copy the current selection&apos;s contents to the clipboard</source>
+        <translation type="unfinished">Копировать содержимое текущего выделения в буфер обмена</translation>
+    </message>
+    <message>
+        <source>&amp;Paste	Ctrl+V</source>
+        <translation type="unfinished">&amp;Вставить	Ctrl+V</translation>
+    </message>
+    <message>
+        <source>Paste the clipboard&apos;s contents into the current selection</source>
+        <translation type="unfinished">Вставить содержимое буфера обмена в текущее выделение</translation>
+    </message>
+    <message>
+        <source>Undo	Ctrl+Z</source>
+        <translation type="unfinished">Отменить	Ctrl+Z</translation>
+    </message>
+    <message>
+        <source>Undo the last action</source>
+        <translation type="unfinished">Отменить последнее действие</translation>
+    </message>
+    <message>
+        <source>Redo	Ctrl+Shift+Z</source>
+        <translation type="unfinished">Повторить	Ctrl+Shift+Z</translation>
+    </message>
+    <message>
+        <source>Redo the last action</source>
+        <translation type="unfinished">Повторить последнее действие</translation>
+    </message>
+    <message>
+        <source>Run To Breakpoint</source>
+        <translation type="unfinished">Перейти к точке останова</translation>
+    </message>
+    <message>
+        <source>Run to next breakpoint</source>
+        <translation type="unfinished">Перейти к следующей точке останова</translation>
+    </message>
+    <message>
+        <source>Step</source>
+        <translation type="unfinished">Шаг</translation>
+    </message>
+    <message>
+        <source>Step debugger</source>
+        <translation type="unfinished">Шаг отладчика</translation>
+    </message>
+    <message>
+        <source>StepOver</source>
+        <translation type="unfinished">Перешагнуть</translation>
+    </message>
+    <message>
+        <source>Step Over</source>
+        <translation type="unfinished">Шаг с обходом</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished">Пауза</translation>
+    </message>
+    <message>
+        <source>Pause debugger</source>
+        <translation type="unfinished">Приостановить отладчик</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished">Сброс</translation>
+    </message>
+    <message>
+        <source>Reset debugger</source>
+        <translation type="unfinished">Сбросить отладчик</translation>
+    </message>
+    <message>
+        <source>Stop Debugger</source>
+        <translation type="unfinished">Остановить отладчик</translation>
+    </message>
+    <message>
+        <source>Stop debugger</source>
+        <translation type="unfinished">Остановить отладчик</translation>
+    </message>
+    <message>
+        <source>Compile</source>
+        <translation type="unfinished">Компилировать</translation>
+    </message>
+    <message>
+        <source>Compile Source</source>
+        <translation type="unfinished">Компиляция исходного кода</translation>
+    </message>
+    <message>
+        <source>UpLoad</source>
+        <translation type="unfinished">Загрузить</translation>
+    </message>
+    <message>
+        <source>Load Firmware</source>
+        <translation type="unfinished">Загрузить прошивку</translation>
+    </message>
+    <message>
+        <source>Find Replace</source>
+        <translation type="unfinished">Найти и заменить</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished">Отладка</translation>
+    </message>
+    <message>
+        <source>Start Debugger</source>
+        <translation type="unfinished">Запустить отладчик</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Настройки</translation>
+    </message>
+    <message>
+        <source>Last Circuits</source>
+        <translation type="unfinished">Последняя схема</translation>
+    </message>
+</context>
+<context>
+    <name>EditorWindow</name>
+    <message>
+        <source>Load File</source>
+        <translation type="vanished">Загрузить файл</translation>
+    </message>
+    <message>
+        <source>Save Document As</source>
+        <translation type="vanished">Сохранить документ как</translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="vanished">Не удаётся записать файл %1:
+%2.</translation>
+    </message>
+    <message>
+        <source>
+The Document has been modified.
+Do you want to save your changes?
+</source>
+        <translation type="vanished">
 Документ был изменен.
 Хотите сохранить изменения?
 </translation>
     </message>
     <message>
         <source>&amp;New	Ctrl+N</source>
-        <translation>&amp;Новый	Ctrl+N</translation>
+        <translation type="vanished">&amp;Новый	Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new file</source>
-        <translation>Создать новый файл</translation>
+        <translation type="vanished">Создать новый файл</translation>
     </message>
     <message>
         <source>&amp;Open...	Ctrl+O</source>
-        <translation>&amp;Открыть...	Ctrl+O</translation>
+        <translation type="vanished">&amp;Открыть...	Ctrl+O</translation>
     </message>
     <message>
         <source>Open an existing file</source>
-        <translation>Открыть существующий файл</translation>
+        <translation type="vanished">Открыть существующий файл</translation>
     </message>
     <message>
         <source>&amp;Save	Ctrl+S</source>
-        <translation>&amp;Сохранить	Ctrl+S</translation>
+        <translation type="vanished">&amp;Сохранить	Ctrl+S</translation>
     </message>
     <message>
         <source>Save the document to disk</source>
-        <translation>Сохранить документ на диск</translation>
+        <translation type="vanished">Сохранить документ на диск</translation>
     </message>
     <message>
         <source>Save &amp;As...	Ctrl+Shift+S</source>
-        <translation>Сохранить &amp;как...	Ctrl+Shift+S</translation>
+        <translation type="vanished">Сохранить &amp;как...	Ctrl+Shift+S</translation>
     </message>
     <message>
         <source>Save the document under a new name</source>
-        <translation>Сохранить документ под новым именем</translation>
+        <translation type="vanished">Сохранить документ под новым именем</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>В&amp;ыход</translation>
+        <translation type="vanished">В&amp;ыход</translation>
     </message>
     <message>
         <source>Exit the application</source>
-        <translation>Выйти из приложения</translation>
+        <translation type="vanished">Выйти из приложения</translation>
     </message>
     <message>
         <source>Cu&amp;t	Ctrl+X</source>
-        <translation>Вы&amp;резать	Ctrl+X</translation>
+        <translation type="vanished">Вы&amp;резать	Ctrl+X</translation>
     </message>
     <message>
         <source>Cut the current selection&apos;s contents to the clipboard</source>
-        <translation>Вырезать содержимое текущего выделения в буфер обмена</translation>
+        <translation type="vanished">Вырезать содержимое текущего выделения в буфер обмена</translation>
     </message>
     <message>
         <source>&amp;Copy	Ctrl+C</source>
-        <translation>&amp;Копировать	Ctrl+C</translation>
+        <translation type="vanished">&amp;Копировать	Ctrl+C</translation>
     </message>
     <message>
         <source>Copy the current selection&apos;s contents to the clipboard</source>
-        <translation>Копировать содержимое текущего выделения в буфер обмена</translation>
+        <translation type="vanished">Копировать содержимое текущего выделения в буфер обмена</translation>
     </message>
     <message>
         <source>&amp;Paste	Ctrl+V</source>
-        <translation>&amp;Вставить	Ctrl+V</translation>
+        <translation type="vanished">&amp;Вставить	Ctrl+V</translation>
     </message>
     <message>
         <source>Paste the clipboard&apos;s contents into the current selection</source>
-        <translation>Вставить содержимое буфера обмена в текущее выделение</translation>
+        <translation type="vanished">Вставить содержимое буфера обмена в текущее выделение</translation>
     </message>
     <message>
         <source>Undo	Ctrl+Z</source>
-        <translation>Отменить	Ctrl+Z</translation>
+        <translation type="vanished">Отменить	Ctrl+Z</translation>
     </message>
     <message>
         <source>Undo the last action</source>
-        <translation>Отменить последнее действие</translation>
+        <translation type="vanished">Отменить последнее действие</translation>
     </message>
     <message>
         <source>Redo	Ctrl+Shift+Z</source>
-        <translation>Повторить	Ctrl+Shift+Z</translation>
+        <translation type="vanished">Повторить	Ctrl+Shift+Z</translation>
     </message>
     <message>
         <source>Redo the last action</source>
-        <translation>Повторить последнее действие</translation>
+        <translation type="vanished">Повторить последнее действие</translation>
     </message>
     <message>
         <source>Run To Breakpoint</source>
-        <translation>Перейти к точке останова</translation>
+        <translation type="vanished">Перейти к точке останова</translation>
     </message>
     <message>
         <source>Run to next breakpoint</source>
-        <translation>Перейти к следующей точке останова</translation>
+        <translation type="vanished">Перейти к следующей точке останова</translation>
     </message>
     <message>
         <source>Step</source>
-        <translation>Шаг</translation>
+        <translation type="vanished">Шаг</translation>
     </message>
     <message>
         <source>Step debugger</source>
-        <translation>Шаг отладчика</translation>
+        <translation type="vanished">Шаг отладчика</translation>
     </message>
     <message>
         <source>StepOver</source>
-        <translation>Перешагнуть</translation>
+        <translation type="vanished">Перешагнуть</translation>
     </message>
     <message>
         <source>Step Over</source>
-        <translation>Шаг с обходом</translation>
+        <translation type="vanished">Шаг с обходом</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Пауза</translation>
+        <translation type="vanished">Пауза</translation>
     </message>
     <message>
         <source>Pause debugger</source>
-        <translation>Приостановить отладчик</translation>
+        <translation type="vanished">Приостановить отладчик</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Сброс</translation>
+        <translation type="vanished">Сброс</translation>
     </message>
     <message>
         <source>Reset debugger</source>
-        <translation>Сбросить отладчик</translation>
+        <translation type="vanished">Сбросить отладчик</translation>
     </message>
     <message>
         <source>Stop Debugger</source>
-        <translation>Остановить отладчик</translation>
+        <translation type="vanished">Остановить отладчик</translation>
     </message>
     <message>
         <source>Stop debugger</source>
-        <translation>Остановить отладчик</translation>
+        <translation type="vanished">Остановить отладчик</translation>
     </message>
     <message>
         <source>Compile</source>
-        <translation>Компилировать</translation>
+        <translation type="vanished">Компилировать</translation>
     </message>
     <message>
         <source>Compile Source</source>
-        <translation>Компиляция исходного кода</translation>
+        <translation type="vanished">Компиляция исходного кода</translation>
     </message>
     <message>
         <source>UpLoad</source>
-        <translation>Загрузить</translation>
+        <translation type="vanished">Загрузить</translation>
     </message>
     <message>
         <source>Load Firmware</source>
-        <translation>Загрузить прошивку</translation>
+        <translation type="vanished">Загрузить прошивку</translation>
     </message>
     <message>
         <source>Find Replace</source>
-        <translation>Найти и заменить</translation>
+        <translation type="vanished">Найти и заменить</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Отладка</translation>
+        <translation type="vanished">Отладка</translation>
     </message>
     <message>
         <source>Start Debugger</source>
-        <translation>Запустить отладчик</translation>
+        <translation type="vanished">Запустить отладчик</translation>
     </message>
     <message>
         <source>Set Compiler Path</source>
-        <translation>Задать путь к  компилятору</translation>
+        <translation type="vanished">Задать путь к  компилятору</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation>Перезагрузить</translation>
+        <translation type="vanished">Перезагрузить</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Все файлы</translation>
+        <translation type="vanished">Все файлы</translation>
     </message>
     <message>
         <source>Last Circuits</source>
-        <translation>Последняя схема</translation>
+        <translation type="vanished">Последняя схема</translation>
     </message>
     <message>
-        <source>&amp;%1 %2</source>
-        <translation></translation>
+        <source>Starting Debbuger...</source>
+        <translation type="unfinished">Запуск отладчика...</translation>
+    </message>
+    <message>
+        <source>Debugger Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error Starting Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clock Cycles: </source>
+        <translation type="unfinished">Число тактов: </translation>
+    </message>
+    <message>
+        <source>Debugger Stopped </source>
+        <translation type="unfinished">Отладка остановлена </translation>
+    </message>
+    <message>
+        <source>    Loading Compilers at:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>        Found Compiler: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error Loadind Compiler at:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2138,6 +2728,29 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>FixedVolt</name>
+    <message>
+        <source>Fixed Volt.</source>
+        <translation type="unfinished">Постоянное напряжение.</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation type="unfinished">Источники</translation>
+    </message>
+    <message>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FlipFlopBase</name>
     <message>
         <source>Main</source>
@@ -2154,6 +2767,14 @@ Do you want to save your changes?
     <message>
         <source>Trigger Type</source>
         <translation type="unfinished">Тип триггера</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
     </message>
 </context>
 <context>
@@ -2190,22 +2811,41 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>Frequencimeter</name>
+    <name>FreqMeter</name>
     <message>
-        <source>Frequencimeter</source>
-        <translation>Частотомер</translation>
+        <source>FreqMeter</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Meters</source>
-        <translation>Измерение</translation>
+        <translation type="unfinished">Измерение</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="unfinished">Основные</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation>Фильтр</translation>
+        <translation type="unfinished">Фильтр</translation>
+    </message>
+</context>
+<context>
+    <name>Frequencimeter</name>
+    <message>
+        <source>Frequencimeter</source>
+        <translation type="vanished">Частотомер</translation>
+    </message>
+    <message>
+        <source>Meters</source>
+        <translation type="vanished">Измерение</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="vanished">Основные</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="vanished">Фильтр</translation>
     </message>
 </context>
 <context>
@@ -2217,6 +2857,14 @@ Do you want to save your changes?
     <message>
         <source>Logic/Arithmetic</source>
         <translation>Логика/арифметика</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
     </message>
 </context>
 <context>
@@ -2243,11 +2891,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Input Size</source>
-        <translation>Число входов</translation>
+        <translation type="vanished">Число входов</translation>
     </message>
     <message>
         <source>Output Size</source>
-        <translation>Число выходов</translation>
+        <translation type="vanished">Число выходов</translation>
     </message>
     <message>
         <source>Functions</source>
@@ -2261,64 +2909,81 @@ Do you want to save your changes?
         <source>Save Functions</source>
         <translation>Сохранить функции</translation>
     </message>
+    <message>
+        <source>Invert Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MemData</source>
+        <comment>Cannot write file %1:
+%2.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Gate</name>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Inverted</source>
-        <translation>Инверсный</translation>
+        <translation type="vanished">Инверсный</translation>
     </message>
     <message>
         <source>Open Drain</source>
-        <translation>Открытый сток</translation>
+        <translation type="vanished">Открытый сток</translation>
     </message>
     <message>
         <source>Electric</source>
-        <translation>Электрические</translation>
+        <translation type="vanished">Электрические</translation>
     </message>
     <message>
         <source>Low to High Threshold</source>
-        <translation>Порог 0 -&gt; 1</translation>
+        <translation type="vanished">Порог 0 -&gt; 1</translation>
     </message>
     <message>
         <source>High to Low Threshold</source>
-        <translation>Порог 1 -&gt; 0</translation>
+        <translation type="vanished">Порог 1 -&gt; 0</translation>
     </message>
     <message>
         <source>Input Impedance</source>
-        <translation>Входной импеданс</translation>
+        <translation type="vanished">Входной импеданс</translation>
     </message>
     <message>
         <source>Output High Voltage</source>
-        <translation>Выходное напряжение 1</translation>
+        <translation type="vanished">Выходное напряжение 1</translation>
     </message>
     <message>
         <source>Output Low Voltage</source>
-        <translation>Выходное напряжение 0</translation>
+        <translation type="vanished">Выходное напряжение 0</translation>
     </message>
     <message>
         <source>Output Impedance</source>
-        <translation>Выходной импеданс</translation>
+        <translation type="vanished">Выходной импеданс</translation>
     </message>
     <message>
         <source>Edges</source>
-        <translation>Фронты</translation>
+        <translation type="vanished">Фронты</translation>
     </message>
     <message>
         <source>Propagation Delay</source>
-        <translation>Задержка распространения</translation>
+        <translation type="vanished">Задержка распространения</translation>
     </message>
     <message>
         <source>Rise Time</source>
-        <translation>Время нарастания</translation>
+        <translation type="vanished">Время нарастания</translation>
     </message>
     <message>
         <source>Fall Time</source>
-        <translation>Время спада</translation>
+        <translation type="vanished">Время спада</translation>
+    </message>
+</context>
+<context>
+    <name>GcbDebugger</name>
+    <message>
+        <source>Error: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2397,6 +3062,10 @@ Do you want to save your changes?
         <source>Show Memory Table</source>
         <translation>Просмотр содержимого памяти</translation>
     </message>
+    <message>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>I2CToParallel</name>
@@ -2463,7 +3132,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Passive</source>
-        <translation>Пассивные элементы</translation>
+        <translation type="vanished">Пассивные элементы</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2473,12 +3142,16 @@ Do you want to save your changes?
         <source>Inductance</source>
         <translation>Индуктивность</translation>
     </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>IoComponent</name>
     <message>
         <source>Electric</source>
-        <translation type="unfinished">Электрические</translation>
+        <translation type="obsolete">Электрические</translation>
     </message>
     <message>
         <source>Inputs:</source>
@@ -2514,11 +3187,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
-        <translation type="unfinished">Фронты</translation>
+        <translation type="obsolete">Фронты</translation>
     </message>
     <message>
         <source>Propagation Delay</source>
-        <translation type="unfinished">Задержка распространения</translation>
+        <translation type="obsolete">Задержка распространения</translation>
     </message>
     <message>
         <source>Rise Time</source>
@@ -2527,6 +3200,10 @@ Do you want to save your changes?
     <message>
         <source>Fall Time</source>
         <translation type="unfinished">Время спада</translation>
+    </message>
+    <message>
+        <source>Propagation Delay </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2635,6 +3312,10 @@ Do you want to save your changes?
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KY023</name>
@@ -2716,10 +3397,14 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Основные</translation>
+        <translation type="obsolete">Основные</translation>
     </message>
     <message>
-        <source>Treshold</source>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Logic Threshold</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2807,6 +3492,14 @@ Do you want to save your changes?
         <source>Trigger Type</source>
         <translation>Тип триггера</translation>
     </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
 </context>
 <context>
     <name>Ldr</name>
@@ -2846,6 +3539,10 @@ Do you want to save your changes?
         <source>R1</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Led</name>
@@ -2859,31 +3556,31 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation>Цвет</translation>
+        <translation type="vanished">Цвет</translation>
     </message>
     <message>
         <source>Grounded</source>
-        <translation>Заземленный</translation>
+        <translation type="vanished">Заземленный</translation>
     </message>
     <message>
         <source>Electric</source>
-        <translation>Электрические</translation>
+        <translation type="vanished">Электрические</translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Порог</translation>
+        <translation type="vanished">Порог</translation>
     </message>
     <message>
         <source>Max Current</source>
-        <translation>Макс. ток</translation>
+        <translation type="vanished">Макс. ток</translation>
     </message>
     <message>
         <source>Resistance</source>
-        <translation>Сопротивление</translation>
+        <translation type="vanished">Сопротивление</translation>
     </message>
 </context>
 <context>
@@ -2918,7 +3615,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Порог</translation>
+        <translation type="vanished">Порог</translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -2927,6 +3624,65 @@ Do you want to save your changes?
     <message>
         <source>Resistance</source>
         <translation>Сопротивление</translation>
+    </message>
+    <message>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LedBase</name>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Oreange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished">Цвет</translation>
+    </message>
+    <message>
+        <source>Grounded</source>
+        <translation type="unfinished">Заземленный</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max Current</source>
+        <translation type="unfinished">Макс. ток</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Сопротивление</translation>
     </message>
 </context>
 <context>
@@ -2965,7 +3721,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Порог</translation>
+        <translation type="vanished">Порог</translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -2974,6 +3730,53 @@ Do you want to save your changes?
     <message>
         <source>Resistance</source>
         <translation>Сопротивление</translation>
+    </message>
+    <message>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LedRgb</name>
+    <message>
+        <source>LedRgb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leds</source>
+        <translation type="unfinished">Светодиоды</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Common Cathode</source>
+        <translation type="unfinished">Общий катод</translation>
+    </message>
+    <message>
+        <source>Red:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max Current</source>
+        <translation type="unfinished">Макс. ток</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Сопротивление</translation>
+    </message>
+    <message>
+        <source>Green:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3067,24 +3870,36 @@ Do you want to save your changes?
         <source>Fall Time</source>
         <translation type="vanished">Время спада</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clock</source>
+        <translation type="unfinished">Тактовый генератор</translation>
+    </message>
+    <message>
+        <source>Enable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogicInput</name>
     <message>
         <source>Fixed Volt.</source>
-        <translation>Постоянное напряжение.</translation>
+        <translation type="vanished">Постоянное напряжение.</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation>Источники</translation>
+        <translation type="vanished">Источники</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Voltage</source>
-        <translation>Напряжение</translation>
+        <translation type="vanished">Напряжение</translation>
     </message>
 </context>
 <context>
@@ -3173,10 +3988,6 @@ Do you want to save your changes?
         <translation>Загрузить прошивку</translation>
     </message>
     <message>
-        <source>xml file not found: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Основные</translation>
     </message>
@@ -3186,7 +3997,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Fimware</source>
-        <translation type="unfinished">Прошивка</translation>
+        <translation type="obsolete">Прошивка</translation>
     </message>
     <message>
         <source>Open Mcu Monitor.</source>
@@ -3194,7 +4005,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Auto Load Firmware at Start</source>
-        <translation type="unfinished">Автозагрузка прошивки</translation>
+        <translation type="obsolete">Автозагрузка прошивки</translation>
     </message>
     <message>
         <source>No File:</source>
@@ -3219,6 +4030,33 @@ Do you want to save your changes?
     <message>
         <source>Properties</source>
         <translation type="unfinished">Свойства</translation>
+    </message>
+    <message>
+        <source>xml file not found for: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Firmware</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Firmware at Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load EEPROM data from file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save EEPROM data to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>McuBase</name>
+    <message>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3273,7 +4111,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation>Логический символ</translation>
+        <translation type="vanished">Логический символ</translation>
     </message>
     <message>
         <source>Frequency</source>
@@ -3281,11 +4119,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Fimware</source>
-        <translation type="vanished">Прошивка</translation>
+        <translation>Прошивка</translation>
     </message>
     <message>
         <source>Auto Load Firmware at Start</source>
-        <translation>Автозагрузка прошивки</translation>
+        <translation type="vanished">Автозагрузка прошивки</translation>
     </message>
     <message>
         <source>Open Mcu Monitor.</source>
@@ -3296,7 +4134,7 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Firmware</source>
+        <source>Load Firmware at Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3377,6 +4215,22 @@ Do you want to save your changes?
         <source>Show Memory Table</source>
         <translation>Просмотр содержимого памяти</translation>
     </message>
+    <message>
+        <source>Invert Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
+    <message>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Meter</name>
@@ -3419,6 +4273,10 @@ Do you want to save your changes?
         <source>Threshold</source>
         <translation>Порог</translation>
     </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
 </context>
 <context>
     <name>Mux</name>
@@ -3441,6 +4299,14 @@ Do you want to save your changes?
     <message>
         <source>Address Size</source>
         <translation type="unfinished">Разрядность адреса</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
     </message>
 </context>
 <context>
@@ -3498,7 +4364,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Supply Pins</source>
-        <translation>Выводы питания</translation>
+        <translation type="vanished">Выводы питания</translation>
     </message>
     <message>
         <source>Output Impedance</source>
@@ -3506,6 +4372,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Switch Supply Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3522,6 +4392,26 @@ Do you want to save your changes?
     <message>
         <source>Input Size</source>
         <translation>Входов</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Invert Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Drain</source>
+        <translation type="unfinished">Открытый сток</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
     </message>
 </context>
 <context>
@@ -3540,6 +4430,14 @@ Do you want to save your changes?
     <message>
         <source>Meters</source>
         <translation>Измерение</translation>
+    </message>
+    <message>
+        <source>Hidden1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished">Фильтр</translation>
     </message>
 </context>
 <context>
@@ -3584,6 +4482,25 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>PlotBase</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Screen Size X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen Size Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Potentiometer</name>
     <message>
         <source>Potentiometer</source>
@@ -3624,6 +4541,10 @@ Do you want to save your changes?
         <source>Threshold</source>
         <translation>Порог</translation>
     </message>
+    <message>
+        <source>Show Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PropDialog</name>
@@ -3641,7 +4562,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Show</source>
-        <translation>Показать</translation>
+        <translation type="vanished">Показать</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3652,11 +4573,15 @@ Do you want to save your changes?
         <translation type="unfinished">Табуляция 2</translation>
     </message>
     <message>
+        <source>    Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3699,31 +4624,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Current Value</source>
-        <translation>Текущее значение</translation>
+        <translation type="vanished">Текущее значение</translation>
     </message>
     <message>
         <source>Minimum Value</source>
-        <translation>Минимальное значение</translation>
+        <translation type="vanished">Минимальное значение</translation>
     </message>
     <message>
         <source>Maximum Value</source>
-        <translation>Максимальное значение</translation>
+        <translation type="vanished">Максимальное значение</translation>
     </message>
     <message>
         <source>Dial Step</source>
-        <translation>Шаг приращения</translation>
+        <translation type="vanished">Шаг приращения</translation>
     </message>
     <message>
-        <source>B</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>R0</source>
-        <translation></translation>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3845,7 +4766,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Key</source>
-        <translation>Надпись</translation>
+        <translation type="vanished">Надпись</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3937,11 +4858,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Input Size</source>
-        <translation>Число входов</translation>
+        <translation type="vanished">Число входов</translation>
     </message>
     <message>
         <source>Output Size</source>
-        <translation>Число выходов</translation>
+        <translation type="vanished">Число выходов</translation>
     </message>
     <message>
         <source>Script</source>
@@ -3968,6 +4889,14 @@ p, li { white-space: pre-wrap; }
 %2.</source>
         <translation>Не удаётся записать файл %1:
 %2.</translation>
+    </message>
+    <message>
+        <source>Invert Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
     </message>
 </context>
 <context>
@@ -4024,6 +4953,14 @@ p, li { white-space: pre-wrap; }
         <source>Speed </source>
         <translation>Скорость </translation>
     </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
 </context>
 <context>
     <name>SevenSegment</name>
@@ -4061,7 +4998,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Threshold</source>
-        <translation>Порог</translation>
+        <translation type="vanished">Порог</translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -4070,6 +5007,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Resistance</source>
         <translation>Сопротивление</translation>
+    </message>
+    <message>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4135,6 +5076,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Reset Inverted</source>
         <translation>Инвертировать сброс</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
     </message>
 </context>
 <context>
@@ -4261,6 +5210,18 @@ p, li { white-space: pre-wrap; }
         <source>I2C Frequency</source>
         <translation>I2C частота</translation>
     </message>
+    <message>
+        <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stepper</name>
@@ -4286,7 +5247,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>teeth</source>
-        <translation>Зубцы</translation>
+        <translation type="vanished">Зубцы</translation>
     </message>
     <message>
         <source>Resistance</source>
@@ -4331,6 +5292,10 @@ p, li { white-space: pre-wrap; }
         <source>Temperature</source>
         <translation>Температура</translation>
     </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StringVal</name>
@@ -4348,13 +5313,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Не удаётся прочитать файл %1:
+        <translation type="vanished">Не удаётся прочитать файл %1:
 %2.</translation>
     </message>
     <message>
         <source>Cannot set file %1
 to DomDocument</source>
-        <translation>Не удаётся загрузить файл %1
+        <translation type="vanished">Не удаётся загрузить файл %1
 в DOMDocument</translation>
     </message>
     <message>
@@ -4375,6 +5340,10 @@ to DomDocument</source>
     </message>
     <message>
         <source>Attach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hidden</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4591,6 +5560,10 @@ Do you want to save your changes?
         <source>Fixed_Width</source>
         <translation>Постоянная ширина</translation>
     </message>
+    <message>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextVal</name>
@@ -4629,31 +5602,50 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Current Value</source>
-        <translation>Текущее значение</translation>
+        <translation type="vanished">Текущее значение</translation>
     </message>
     <message>
         <source>Minimum Value</source>
-        <translation>Мин. значение</translation>
+        <translation type="vanished">Мин. значение</translation>
     </message>
     <message>
         <source>Maximum Value</source>
-        <translation>Макс. значение</translation>
+        <translation type="vanished">Макс. значение</translation>
     </message>
     <message>
         <source>Dial Step</source>
-        <translation>Шаг приращения</translation>
+        <translation type="vanished">Шаг приращения</translation>
     </message>
     <message>
-        <source>B</source>
-        <translation></translation>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ThermistorBase</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
     </message>
     <message>
-        <source>R25</source>
-        <translation></translation>
+        <source>Current Value</source>
+        <translation type="unfinished">Текущее значение</translation>
+    </message>
+    <message>
+        <source>Minimum Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dial Step</source>
+        <translation type="unfinished">Шаг приращения</translation>
     </message>
 </context>
 <context>
@@ -4672,11 +5664,19 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation type="vanished">Имя</translation>
     </message>
     <message>
         <source>Rotated</source>
         <translation>Повернуть</translation>
+    </message>
+    <message>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4822,15 +5822,15 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Amplitude</source>
-        <translation>Амплитуда</translation>
+        <translation type="vanished">Амплитуда</translation>
     </message>
     <message>
         <source>Base Voltage</source>
-        <translation>Напряжение смещения</translation>
+        <translation type="vanished">Напряжение смещения</translation>
     </message>
     <message>
         <source>Edges</source>
-        <translation>Фронты</translation>
+        <translation type="vanished">Фронты</translation>
     </message>
     <message>
         <source>Rise Time</source>
@@ -4844,6 +5844,34 @@ Do you want to save your changes?
         <source>Quality</source>
         <translation type="unfinished">Качество</translation>
     </message>
+    <message>
+        <source>Sine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Semi Amplitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>XorGate</name>
@@ -4855,6 +5883,37 @@ Do you want to save your changes?
         <source>Logic/Gates</source>
         <translation>Логика/логические элементы</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Invert Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Drain</source>
+        <translation type="unfinished">Открытый сток</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
+</context>
+<context>
+    <name>Zener</name>
+    <message>
+        <source>Zener Diode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation type="unfinished">Активные элементы</translation>
+    </message>
 </context>
 <context>
     <name>elCapacitor</name>
@@ -4864,7 +5923,11 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Passive</source>
-        <translation>Пассивные элементы</translation>
+        <translation type="vanished">Пассивные элементы</translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4872,22 +5935,6 @@ Do you want to save your changes?
     <message>
         <source>Logic</source>
         <translation type="vanished">Логика</translation>
-    </message>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Other IC</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
