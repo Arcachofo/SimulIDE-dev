@@ -28,8 +28,8 @@
 #include "pin.h"
 #include "simuapi_apppath.h"
 
-#include "stringprop.h"
-#include "boolprop.h"
+//#include "stringprop.h"
+//#include "boolprop.h"
 
 QStringList Chip::m_subcTypes = {tr("None"),tr("Logic"),tr("Board"),tr("Shield")};
 
@@ -66,10 +66,10 @@ Chip::Chip( QObject* parent, QString type, QString id )
     setLabelPos( m_area.x(), m_area.y()-20, 0);
     setShowId( true );
 
-    addPropGroup( { tr("Hidden"), {
+/*    addPropGroup( { tr("Hidden"), {
 new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
 new StringProp<Chip>( "Name"        ,"","", this, &Chip::name,        &Chip::setName ),
-    } } );
+    } } );*/
 }
 Chip::~Chip()
 {
@@ -141,10 +141,7 @@ void Chip::initChip()
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );
 
-        m_label.setPlainText( m_name );
-        m_label.adjustSize();
-        m_label.setY( m_area.height()/2+m_label.textWidth()/2 );
-        m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );
+        setName( m_name );
     }
     else{
         MessageBoxNB( "Chip::initChip",
@@ -153,6 +150,15 @@ void Chip::initChip()
         return;
     }
     m_initialized = true;
+}
+
+void Chip::setName( QString name )
+{
+    m_name = name;
+    m_label.setPlainText( m_name );
+    m_label.adjustSize();
+    m_label.setY( m_area.height()/2+m_label.textWidth()/2 );
+    m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );
 }
 
 void Chip::initPackage_old( QDomElement root )

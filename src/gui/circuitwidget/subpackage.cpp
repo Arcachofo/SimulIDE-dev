@@ -35,6 +35,7 @@
 #include "utils.h"
 
 #include "stringprop.h"
+#include "boolprop.h"
 #include "intprop.h"
 
 QString SubPackage::m_lastPkg = "";
@@ -87,11 +88,13 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
              this, SLOT( savingCirc() ), Qt::UniqueConnection );
 
     addPropGroup( { tr("Main"), {
+new StringProp<SubPackage>( "SubcType"    ,tr("Type")        ,""      , this, &SubPackage::subcTypeStr,&SubPackage::setSubcTypeStr,"enum" ),
 new IntProp   <SubPackage>( "Width"       ,tr("Width")       ,"_Cells", this, &SubPackage::width,      &SubPackage::setWidth ,"uint" ),
 new IntProp   <SubPackage>( "Height"      ,tr("Height")      ,"_Cells", this, &SubPackage::height,     &SubPackage::setHeight,"uint"  ),
+new StringProp<SubPackage>( "Name"        ,tr("Name")        ,""      , this, &SubPackage::name,       &SubPackage::setName ),
 new StringProp<SubPackage>( "Package_File",tr("Package File"),""      , this, &SubPackage::package,    &SubPackage::setPackage),
 new StringProp<SubPackage>( "Background"  ,tr("Background")  ,""      , this, &SubPackage::background, &SubPackage::setBackground ),
-new StringProp<SubPackage>( "SubcType"    ,tr("Type")        ,""      , this, &SubPackage::subcTypeStr,&SubPackage::setSubcTypeStr,"enum" )
+new BoolProp  <SubPackage>( "Logic_Symbol",tr("Logic Symbol"),""      , this, &SubPackage::logicSymbol, &SubPackage::setLogicSymbol ),
     }} );
 }
 SubPackage::~SubPackage(){}

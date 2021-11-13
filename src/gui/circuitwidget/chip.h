@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         virtual void setBackground( QString bck ) override;
 
         QString name() { return m_name; }
-        virtual void setName( QString name ) { m_name = name; }
+        virtual void setName( QString name );
 
         subcType_t subcType() { return m_subcType; }
 
