@@ -79,10 +79,10 @@ void LedBase::updateStep()
     uint32_t intensity = m_intensity;
     eLed::updateBright();
 
-    if( m_avgCurrent > m_maxCurrent*1.5 )
+    if( overCurrent() > 1.5 )
     {
         m_warning = true;
-        m_crashed = m_avgCurrent > m_maxCurrent*2;
+        m_crashed = overCurrent() > 2;
         update();
     }else{
         if( m_warning ) update();

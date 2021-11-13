@@ -41,6 +41,7 @@
 #include "dcmotor.h"
 #include "dectobcd.h"
 #include "demux.h"
+#include "dht22.h"
 #include "diode.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
@@ -70,6 +71,7 @@
 #include "led.h"
 #include "ledbar.h"
 #include "ledmatrix.h"
+#include "ledrgb.h"
 #include "line.h"
 #include "lm555.h"
 #include "logicanalizer.h"
@@ -184,6 +186,7 @@ void ItemLibrary::loadItems()
     // Outputs
     addItem( new LibraryItem( tr("Leds"),tr("Outputs"), "leds.png","", NULL ) );
     addItem( Led::libraryItem() );
+    addItem( LedRgb::libraryItem() );
     addItem( LedBar::libraryItem() );
     addItem( SevenSegment::libraryItem() );
     addItem( LedMatrix::libraryItem() );
@@ -212,6 +215,7 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( tr("Perifericals"),tr("Micro"), "perif.png","", NULL ) );
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );
+    addItem( Dht22::libraryItem() );
     addItem( SerialPort::libraryItem() );
     addItem( SerialTerm::libraryItem() );
     // Logic

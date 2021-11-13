@@ -68,6 +68,7 @@
         <file alias="detach.png">../src/icons/mainwindow/detach.png</file>
     
         <file alias="led.png">../src/icons/components/led.png</file>
+        <file alias="ledrgb.png">../src/icons/components/ledrgb.png</file>
         <file alias="diode.png">../src/icons/components/diode.png</file>
         <file alias="zener.png">../src/icons/components/zener.png</file>
         <file alias="probe.png">../src/icons/components/probe.png</file>
@@ -168,6 +169,12 @@
         <file alias="sr04_ico.png">../src/icons/components/sr04_ico.png</file>
         <file alias="ky-023.png">../src/icons/components/ky-023.png</file>
         <file alias="ky-040.png">../src/icons/components/ky-040.png</file>
+        <file alias="dht22.png">../src/icons/components/dht22.png</file>
+        
+        <file alias="up.png">../src/icons/components/up.png</file>
+        <file alias="su.png">../src/icons/components/su.png</file>
+        <file alias="giu.png">../src/icons/components/giu.png</file>
+        <file alias="down.png">../src/icons/components/down.png</file>
         
         <file alias="blanc.png">../src/icons/components/blanc.png</file>
         <file alias="font2.png">../src/icons/font/font2.png</file>

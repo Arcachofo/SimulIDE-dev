@@ -41,8 +41,12 @@ class MAINMODULE_EXPORT eLed : public eResistor
         virtual void   setRes( double resist );
         virtual double res() { return m_imped; }
 
-    protected:
+        double brightness() { return m_brightness; }
+        double overCurrent() { return m_avgCurrent/m_maxCurrent; }
+
         void updateBright();
+
+    protected:
         virtual void updateVI() override;
 
         uint64_t m_prevStep;
