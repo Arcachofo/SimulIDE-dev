@@ -41,8 +41,6 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_outMask  = false;
     m_inpMask  = true;  // Inverted: true means inactive
 
-    //digital_thre = 2.5;
-
     setOutHighV( 5 );
     setPinMode( input );
     initialize();

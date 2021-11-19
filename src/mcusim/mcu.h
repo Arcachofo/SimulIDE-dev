@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT Mcu : public McuBase
 
         virtual bool setPropStr( QString prop, QString val ) override;
 
-        QString program();
+        QString program() { return m_eMcu.getFileName(); }
         void setProgram( QString pro );
 
         bool autoLoad() { return m_autoLoad; }
@@ -53,6 +53,15 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         virtual double freq() override { return m_eMcu.m_freq; }
         virtual void setFreq( double freq ) override { m_eMcu.setFreq( freq ); }
 
+        bool rstPinEnabled();
+        void enableRstPin( bool en );
+
+        bool extOscEnabled() { return m_extClock; }
+        void enableExtOsc( bool en );
+
+        bool wdtEnabled();
+        void enableWdt( bool en );
+
         virtual void initialize() override;
         virtual void attach() override;
         virtual void stamp() override;
@@ -60,15 +69,14 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         virtual void voltChanged() override;
         virtual void remove() override;
 
-        virtual void setName( QString name ) override;
-
-        void setResetPin( IoPin* pin );
-        virtual void reset() override;
+        virtual void reset() override { m_eMcu.cpuReset( true ); }
 
         virtual bool load( QString fileName ) override;
 
         virtual void addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle , int length=8);
+
+        //void createCfgWord( QString name, uint16_t addr, uint16_t v );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -87,6 +95,7 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
 
         bool m_autoLoad;
+        bool m_extClock;
 
         QString m_subcDir;      // Subcircuit Path
         QString m_lastFirmDir;  // Last firmware folder used
@@ -94,7 +103,9 @@ class MAINMODULE_EXPORT Mcu : public McuBase
 
         eMcu m_eMcu;
 
-        IoPin* m_resetPin;
+        IoPin*  m_resetPin;
+        McuPin* m_mcuRstPin;
+        McuPin* m_clkPin[2];
 
         QList<Pin*> m_pinList;
 

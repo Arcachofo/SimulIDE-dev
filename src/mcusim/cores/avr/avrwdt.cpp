@@ -43,15 +43,17 @@ AvrWdt::~AvrWdt(){}
 
 void AvrWdt::initialize()
 {
+    McuWdt::initialize();
+    m_disabled = true;
     m_allowChanges = false;
     m_prescaler = 0; // 2K cycles = 16 ms
     m_ovfPeriod = m_clkPeriod/m_prescList[ m_prescaler ];
-
-    McuWdt::initialize();
 }
 
 void AvrWdt::runEvent()
 {
+    if( !m_enabled || m_disabled ) return;
+
     if( m_allowChanges )
     {
         clearRegBits( m_WDCE );
@@ -71,7 +73,7 @@ void AvrWdt::runEvent()
 
 void AvrWdt::callBack() // WDT Overflow Interrupt just executed
 {
-    if( !m_enabled ) return;
+    if( !m_enabled || m_disabled ) return;
     qDebug() << "AvrWdt::callBack - Watchdog Reset\n";
     m_mcu->cpu->reset();
 }
@@ -115,9 +117,9 @@ void AvrWdt::configureA( uint8_t newWDTCSR ) // WDTCSR Written
 
 void AvrWdt::wdtEnable()
 {
-    m_enabled = m_ovfInter || m_ovfReset;
+    m_disabled = !(m_ovfInter || m_ovfReset);
     Simulator::self()->cancelEvents( this );
-    if( m_enabled )
+    if( m_enabled || !m_disabled )
     {
         Simulator::self()->addEvent( m_ovfPeriod, this );
         // In Iterrupt + reset, first execute Interrupt, then reset
@@ -129,7 +131,7 @@ void AvrWdt::reset()
 {
     setRegBits( m_WDRF ); // MCUSR.WDRF
     Simulator::self()->cancelEvents( this );
-    if( m_enabled ) Simulator::self()->addEvent( m_ovfPeriod, this );
+    if( m_enabled || !m_disabled ) Simulator::self()->addEvent( m_ovfPeriod, this );
 }
 
 

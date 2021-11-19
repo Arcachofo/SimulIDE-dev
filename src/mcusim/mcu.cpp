@@ -27,6 +27,7 @@
 #include "mcu.h"
 #include "mcuport.h"
 #include "mcupin.h"
+#include "mcuwdt.h"
 #include "mcucreator.h"
 #include "circuit.h"
 #include "simulator.h"
@@ -82,10 +83,20 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
     if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit
     //m_id.replace("~","_");
+    if( m_device.startsWith("p") ) // PICs TODELETE
+    {
+        if( m_device.endsWith("a") ) m_device.remove( m_device.size()-1, 1 );
+        m_device.replace("f", "F");
+    }
+    setName( m_device );
 
+    m_clkPin[0]  = NULL;
+    m_clkPin[1]  = NULL;
     m_resetPin   = NULL;
+    m_mcuRstPin  = NULL;
     m_mcuMonitor = NULL;
     m_autoLoad   = false;
+    m_extClock   = false;
 
     m_icColor = QColor( 20, 30, 60 );
 
@@ -128,14 +139,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
         }
         rNode = rNode.nextSibling();
     }
-    /*if( m_device == "" ) //return;//Chip::initChip();
-    {
-        m_error = 1;
-        qDebug() << m_device << "ERROR!! Mcu::Mcu Chip not Found: " << m_device;
-        return;
-    }*/
-    qDebug() << "        "<<id<< "Initialized:"<<freq()*1e-6<<"MHz\n";
-
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();
 
@@ -146,10 +149,17 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
+    qDebug() << "        "<<id<< "Initialized:"<<freq()*1e-6<<"MHz\n";
+
     addPropGroup( { tr("Main"), {
 new DoubProp  <Mcu>( "Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
 new StringProp<Mcu>( "Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
 new BoolProp  <Mcu>( "Auto_Load", tr("Load Firmware at Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
+    }} );
+    addPropGroup( { tr("Config"), {
+new BoolProp  <Mcu>( "Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ),
+new BoolProp  <Mcu>( "Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ),
+new BoolProp  <Mcu>( "Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled,    &Mcu::enableWdt )
     }} );
 }
 Mcu::~Mcu()
@@ -200,8 +210,6 @@ void Mcu::voltChanged() // Reset Pin callBack
     m_eMcu.cpuReset( !m_resetPin->getInpState() );
 }
 
-QString Mcu::program() { return m_eMcu.getFileName(); }
-
 void Mcu::setProgram( QString pro )
 {
     if( pro == "" ) return;
@@ -224,10 +232,7 @@ void Mcu::loadEEPROM()
    if( m_mcuMonitor ) m_mcuMonitor->tabChanged( 1 );
 }
 
-void Mcu::saveEEPROM()
-{
-    MemData::saveData( m_eMcu.eeprom() );
-}
+void Mcu::saveEEPROM() { MemData::saveData( m_eMcu.eeprom() ); }
 
 void Mcu::remove()
 {
@@ -235,22 +240,6 @@ void Mcu::remove()
     m_pinList.clear();
 
     Component::remove();
-}
-
-void Mcu::setName( QString name )
-{
-    if( name.startsWith("at") ) name.remove("at"); // Old TODELETE
-    m_name = name;
-}
-
-void Mcu::setResetPin( IoPin* pin )
-{
-    m_resetPin = pin;
-}
-
-void Mcu::reset()
-{
-    m_eMcu.cpuReset( true );
 }
 
 void Mcu::slotLoad()
@@ -290,11 +279,11 @@ bool Mcu::load( QString fileName )
     int size = m_eMcu.flashSize();
     QVector<int> pgm( size );
 
-    if( !MemData::loadHex( &pgm, cleanPathAbs, false, m_eMcu.m_wordSize*8 ) )
+    if( !MemData::loadHexMcu( &pgm, cleanPathAbs, m_eMcu.m_wordSize*8, &m_eMcu ) )
         return false;
 
     for( int i=0; i<size; ++i ) m_eMcu.setFlashValue( i, pgm.at(i) );
-    qDebug() << "\nFirmware succesfully loaded\n"<<cleanPathAbs<<"\n";
+    qDebug() << "Firmware succesfully loaded\n";
 
     m_eMcu.m_firmware = circuitDir.relativeFilePath( cleanPathAbs );
     m_lastFirmDir = cleanPathAbs;
@@ -431,18 +420,54 @@ void Mcu::addPin( QString id, QString type, QString label,
     else Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
 }
 
-/*QString Mcu::loadHex( QString file, int WordSize )
+bool Mcu::rstPinEnabled()
 {
-    qDebug() << m_device << " Loading hex file: \n" << file;
+    if( !m_mcuRstPin ) return true;
+    return (m_resetPin == m_mcuRstPin);
+}
 
-    int error = MemData::loadData( &m_eMcu.m_progMem, false, WordSize*8 );
-    switch( error ) {
-        case 0:
+void Mcu::enableRstPin( bool en )
+{
+    if( !m_mcuRstPin ) return;
 
-            break;
-        default:
-            break;
+    m_mcuRstPin->controlPin( en, en );
+
+    if( en ){
+        m_resetPin = m_mcuRstPin;
+        m_mcuRstPin->setPinMode( input );
     }
+    else m_resetPin = NULL;
+}
+
+void Mcu::enableExtOsc( bool en )
+{
+    m_extClock = en;
+    if( m_clkPin[0] == NULL ) return;
+
+    for( int i=0; i<2; ++i )
+        if( m_clkPin[i] ){
+            m_clkPin[i]->controlPin( en, en );
+            m_clkPin[i]->setUnused( en );
+        }
+
+    if( en ){
+        for( int i=0; i<2; ++i )
+            if( m_clkPin[i] ) m_clkPin[i]->setPinMode( input );
+    }
+}
+
+bool Mcu::wdtEnabled()
+{
+    if( !m_eMcu.m_wdt ) return false;
+    return m_eMcu.m_wdt->enabled();
+}
+
+void Mcu::enableWdt( bool en ) { if( m_eMcu.m_wdt ) m_eMcu.m_wdt->enable( en ); }
+
+/*void Mcu::createCfgWord( QString name, uint16_t addr, uint16_t v )
+{
+
+    m_eMcu.m_cfgWords.insert( addr, v );
 }*/
 
 void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

@@ -34,6 +34,7 @@ eMcu::eMcu( QString id )
     , m_timers( this )
 {
     cpu = NULL;
+    m_wdt = NULL;
     m_vrefModule = NULL;
 
     m_cPerInst = 1;
@@ -57,8 +58,8 @@ void eMcu::initialize()
     ///for( McuModule* module : m_modules ) Simulator::self()->cancelEvents( module );
 
     cpu->reset();
-    DataSpace::initialize();
     m_interrupts.resetInts();
+    DataSpace::initialize();
 
     Simulator::self()->cancelEvents( this );
     Simulator::self()->addEvent( 1, this );
@@ -72,9 +73,7 @@ void eMcu::runEvent()
         if( cyclesDone > 1 ) cyclesDone -= 1;
         else                 stepDebug();
         Simulator::self()->addEvent( m_simCycPI, this );
-    }
-    else
-    {
+    }else{
         stepCpu();//if( m_state == cpu_Running )
         Simulator::self()->addEvent( cyclesDone*m_simCycPI, this );
 }   }
@@ -129,6 +128,23 @@ uint8_t eMcu::getRamValue( int address )
 void eMcu::setRamValue( int address, uint8_t value ) // Setting RAM from external source (McuMonitor)
 {
     writeReg( getMapperAddr(address), value );
+}
+
+bool eMcu::setCfgWord( uint16_t addr, uint16_t data )
+{
+    if( m_cfgWords.contains( addr ) )
+    {
+        m_cfgWords[addr] = data;
+        qDebug() <<"    Loaded Config Word at:"<<addr<<data;
+        return true;
+    }
+    return false;
+}
+
+uint16_t eMcu::getCfgWord( uint16_t addr )
+{
+    if( addr ) return m_cfgWords.value( addr );
+    return m_cfgWords.values().first();
 }
 
 void eMcu::wdr()

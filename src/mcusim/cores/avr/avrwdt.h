@@ -45,6 +45,7 @@ class MAINMODULE_EXPORT AvrWdt : public McuWdt
         void wdtEnable();
 
         bool m_allowChanges;
+        bool m_disabled;
 
         uint8_t*  m_WDTCSR;
 

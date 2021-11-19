@@ -90,12 +90,16 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         void enableInterrupts( uint8_t en );
 
+        bool setCfgWord( uint16_t addr, uint16_t data );
+        uint16_t getCfgWord( uint16_t addr=0 );
+
         McuCore* cpu;
         int cyclesDone;
 
     protected:
         uint64_t m_cycle;
         std::vector<uint16_t> m_progMem;  // Program memory
+        QHash<uint16_t, uint16_t> m_cfgWords; // Config words
 
         Interrupts m_interrupts;
         McuPorts   m_ports;

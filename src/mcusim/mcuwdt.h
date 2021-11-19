@@ -38,6 +38,9 @@ class MAINMODULE_EXPORT McuWdt : public McuModule, public eElement
 
         virtual void reset(){;}
 
+        bool enabled() { return m_enabled; }
+        void enable( bool en ) { m_enabled = en; }
+
     protected:
 
         bool m_enabled;

@@ -55,6 +55,7 @@
 #include "picadc.h"
 #include "piccomparator.h"
 #include "picvref.h"
+#include "picwdt.h"
 
 #include "i51core.h"
 #include "i51timer.h"
@@ -99,35 +100,36 @@ int McuCreator::processFile( QString fileName )
 
     QDomElement root = domDoc.documentElement();
 
-    if( root.hasAttribute("core") )       m_core = root.attribute( "core" );
-    if( root.hasAttribute("data") )       createDataMem( root.attribute( "data" ).toUInt(0,0) );
-    if( root.hasAttribute("prog") )       createProgMem( root.attribute( "prog" ).toUInt(0,0) );
-    if( root.hasAttribute("eeprom") )     createRomMem( root.attribute( "eeprom" ).toUInt(0,0) );
-    if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute( "progword" ).toUInt(0,0);
-    if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute( "inst_cycle" ).toDouble();
+    if( root.hasAttribute("core") )       m_core = root.attribute("core");
+    if( root.hasAttribute("data") )       createDataMem( root.attribute("data").toUInt(0,0) );
+    if( root.hasAttribute("prog") )       createProgMem( root.attribute("prog").toUInt(0,0) );
+    if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute("progword").toUInt(0,0);
+    if( root.hasAttribute("eeprom") )     createRomMem( root.attribute("eeprom").toUInt(0,0) );
+    if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute("inst_cycle").toDouble();
 
     int error = 0;
     QDomNode node = root.firstChild();
     while( !node.isNull() )
     {
         QDomElement el = node.toElement();
+        QString   part = el.tagName();
 
-        if     ( el.tagName() == "regblock" )   createRegisters( &el );
-        else if( el.tagName() == "datablock" )  createDataBlock( &el );
-        else if( el.tagName() == "stack" )      m_stackEl = el;
-        //else if( el.tagName() == "status" )     createStatusReg( &el );
-        else if( el.tagName() == "interrupts" ) createInterrupts( &el );
-        else if( el.tagName() == "port" )       createPort( &el );
-        else if( el.tagName() == "timer" )      createTimer( &el );
-        else if( el.tagName() == "usart" )      createUsart( &el );
-        else if( el.tagName() == "adc" )        createAdc( &el );
-        else if( el.tagName() == "acomp" )      createAcomp( &el );
-        else if( el.tagName() == "vref" )       createVref( &el );
-        else if( el.tagName() == "twi" )        createTwi( &el );
-        else if( el.tagName() == "spi" )        createSpi( &el );
-        else if( el.tagName() == "wdt" )        createWdt( &el );
-        else if( el.tagName() == "eeprom" )     createEeprom( &el );
-        else if( el.tagName() == "include" )
+        if     ( part == "regblock" )   createRegisters( &el );
+        else if( part == "datablock" )  createDataBlock( &el );
+        else if( part == "stack" )      m_stackEl = el;
+        //else if( part == "status" )     createStatusReg( &el );
+        else if( part == "interrupts" ) createInterrupts( &el );
+        else if( part == "port" )       createPort( &el );
+        else if( part == "timer" )      createTimer( &el );
+        else if( part == "usart" )      createUsart( &el );
+        else if( part == "adc" )        createAdc( &el );
+        else if( part == "acomp" )      createAcomp( &el );
+        else if( part == "vref" )       createVref( &el );
+        else if( part == "twi" )        createTwi( &el );
+        else if( part == "spi" )        createSpi( &el );
+        else if( part == "wdt" )        createWdt( &el );
+        else if( part == "eeprom" )     createEeprom( &el );
+        else if( part == "include" )
         {
             error = processFile( el.attribute("file") );
             if( error ) return error;
@@ -137,6 +139,14 @@ int McuCreator::processFile( QString fileName )
     if( root.hasAttribute("core") ) createCore( m_core );
     return 0;
 }
+
+/*void McuCreator::createCfgWord( QDomElement* e )
+{
+    QString name = e->attribute("name");
+    uint16_t address = e->attribute("address").toUInt( NULL, 16 );
+    uint16_t value   = e->attribute("value").toUInt( NULL, 16 );
+    m_mcuComp->createCfgWord( name, address, value );
+}*/
 
 void McuCreator::createProgMem( uint32_t size )
 {
@@ -160,7 +170,7 @@ void McuCreator::createRomMem( uint32_t size )
     mcu->m_eeprom.fill( 0xFF );
 }
 
-void McuCreator::createEeprom(  QDomElement* e )
+void McuCreator::createEeprom( QDomElement* e )
 {
     McuEeprom* eeprom = NULL;
     QString eepromName = e->attribute("name");
@@ -330,6 +340,15 @@ void McuCreator::createPort( QDomElement* p )
     mcu->m_ports.m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );
     port->createPins( m_mcuComp );
+
+    if( p->hasAttribute("clockpins") )
+    {
+        QStringList pins = p->attribute("clockpins").split(",");
+        for( int i=0; i<pins.size(); ++i )
+            m_mcuComp->m_clkPin[i] = mcu->m_ports.getPin( pins.at(i) );
+    }
+    if( p->hasAttribute("resetpin") )
+        m_mcuComp->m_mcuRstPin = mcu->m_ports.getPin( p->attribute("resetpin") );
 
     QString outReg = p->attribute( "outreg" );
     uint16_t addr = mcu->getRegAddress( outReg );
@@ -821,7 +840,8 @@ void McuCreator::createWdt( QDomElement* e )
 {
     QString name = e->attribute( "name" );
     McuWdt* wdt;
-    if( m_core == "AVR" ) wdt = new AvrWdt( mcu, name );
+    if     ( m_core == "AVR" )   wdt = new AvrWdt( mcu, name );
+    else if( m_core == "Pic14" ) wdt = new PicWdt( mcu, name );
     else return;
 
     mcu->m_modules.emplace_back( wdt );

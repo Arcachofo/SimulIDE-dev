@@ -54,11 +54,6 @@ uint16_t McuInterface::getRegAddress( QString name )
     return -1;
 }
 
-QVector<int>* McuInterface::eeprom()
-{
-    return &m_eeprom;
-}
-
 void McuInterface::setEeprom( QVector<int>* eep )
 {
     int size = m_romSize;

@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT McuInterface : public eElement
 
         virtual QStringList getRegList() { return m_regList; }
 
-        virtual QVector<int>* eeprom();
+        virtual QVector<int>* eeprom() { return &m_eeprom; }
         virtual void setEeprom( QVector<int>* eep );
 
         uint32_t ramSize()  { return m_ramSize; }

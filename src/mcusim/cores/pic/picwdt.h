@@ -17,36 +17,27 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifndef PICWDT_H
+#define PICWDT_H
+
 #include "mcuwdt.h"
-#include "e_mcu.h"
-#include "mcucore.h"
-#include "mcuinterrupts.h"
-#include "simulator.h"
 
-McuWdt::McuWdt( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
-      , eElement( name )
+class MAINMODULE_EXPORT PicWdt : public McuWdt
 {
-    m_enabled  = false;
-}
-McuWdt::~McuWdt(){}
+    public:
+        PicWdt( eMcu* mcu, QString name );
+        ~PicWdt();
 
-void McuWdt::initialize()
-{
-    m_ovfInter = false;
-    m_ovfReset = false;
-}
+        virtual void initialize() override;
+        //virtual void runEvent() override;
 
-void McuWdt::runEvent()            // Overflow
-{
-    if( !m_enabled ) return;
+        virtual void configureA( uint8_t newOPTION ) override;
 
-    if( m_ovfInter ) m_interrupt->raise();
-    if( m_ovfReset )
-    {
-        qDebug() << "McuWdt::runEvent - Watchdog Reset\n";
-        m_mcu->cpu->reset();
-    }
-    Simulator::self()->addEvent( m_ovfPeriod, this );
-}
+        virtual void reset() override;
 
+    private:
+        regBits_t m_PS;
+        regBits_t m_PSA;
+
+};
+#endif
