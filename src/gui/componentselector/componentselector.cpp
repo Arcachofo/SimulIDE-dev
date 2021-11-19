@@ -30,7 +30,7 @@
 #include "mainwindow.h"
 #include "simuapi_apppath.h"
 
-ComponentSelector* ComponentSelector::m_pSelf = 0l;
+ComponentSelector* ComponentSelector::m_pSelf = NULL;
 
 ComponentSelector::ComponentSelector( QWidget* parent )
                  : QTreeWidget( parent )
@@ -48,7 +48,7 @@ ComponentSelector::ComponentSelector( QWidget* parent )
     setRootIsDecorated( true );
     setCursor( Qt::OpenHandCursor );
     headerItem()->setHidden( true );
-    setIconSize( QSize( 32, 24));
+    setIconSize( QSize( 36, 24 ));
 
     LoadLibraryItems();
     //LoadCompSet();
@@ -246,16 +246,17 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
         m_categories.append( name );
 
     QTreeWidgetItem* item =  new QTreeWidgetItem(0);
-    QFont font = item->font(0);
+    QFont font;
+    font.setFamily("Ubuntu");
+    font.setBold( true );
     
     double fontScale = MainWindow::self()->fontScale();
     if( type == "" ) font.setPixelSize( 12*fontScale );
     else             font.setPixelSize( 11*fontScale );
-    font.setWeight( QFont::Bold );
     
     item->setFont( 0, font );
     item->setFlags( QFlag(32) );
-    item->setIcon( 0, QIcon(icon) );
+    item->setIcon( 0, QIcon(QPixmap(icon)) );
     item->setText( 0, name+info );
     item->setData( 0, Qt::UserRole, type );
 

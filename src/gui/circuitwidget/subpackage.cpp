@@ -58,6 +58,7 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
 {
     m_width  = 4;
     m_height = 8;
+    m_area = QRect(0, 0, m_width*8, m_height*8);
 
     m_changed = false;
     m_fakePin = false;
@@ -65,14 +66,11 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_isLS    = true;
     m_graphical = true;
     m_boardMode = false;
-
     m_name = m_id.split("-").first();
     
     m_lsColor = QColor( 210, 210, 255 );
     m_icColor = QColor( 40, 40, 120 );
     m_color = m_lsColor;
-    
-    m_area  = QRect(0, 0, m_width*8, m_height*8);
 
     m_boardModeAction = new QAction( tr("Board Mode"), this );
     m_boardModeAction->setCheckable(true);

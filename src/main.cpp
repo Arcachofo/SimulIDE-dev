@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load( langF );
     app.installTranslator( &translator );
+    app.setApplicationVersion( APP_VERSION );
 
     MainWindow window;
     window.setLoc( locale );
@@ -114,11 +115,12 @@ int main(int argc, char *argv[])
          || circ.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( circ );
         //qDebug() << "MAIN, circuit 0 "<< circ;
     }
-    
-    window.scroll( 0, 50 );
 
     window.show();
-    app.setApplicationVersion( APP_VERSION );
+    QTimer::singleShot( 100, &window, &MainWindow::readSettings ); // Some DE forze window geometry, so restore geometry later
+    //window.scroll( 0, 50 );
+    //window.readSettings();
+
     return app.exec();
 }
 

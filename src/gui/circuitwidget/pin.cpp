@@ -89,6 +89,8 @@ void Pin::setUnused( bool unused )
 {
     m_unused = unused;
     if( unused ) setCursor( Qt::ArrowCursor );
+    else         setCursor( Qt::CrossCursor );
+    update();
 }
 
 void Pin::registerPinsW( eNode* enode )     // Called by component, calls conPin
@@ -331,7 +333,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         painter->drawEllipse(rect);
     }
 
-    if( Circuit::self()->animate() )
+    if( !m_unused && Circuit::self()->animate() )
     {
         pen.setWidth( 2 );
         painter->setPen(pen);
@@ -347,6 +349,5 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
             if( m_pinState >= out_low ) // Draw Full Output arrow
                 painter->drawLine( 0, 0, 2, 2);
 }   }   }
-
 
 #include "moc_pin.cpp"

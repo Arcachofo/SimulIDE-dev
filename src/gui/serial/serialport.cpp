@@ -18,14 +18,15 @@
  ***************************************************************************/
 
 #include <QGraphicsProxyWidget>
+#include <QPushButton>
 #include <QPainter>
 
 #include "serialport.h"
-#include "mcucomponent.h"
-#include "baseprocessor.h"
+#include "itemlibrary.h"
+//#include "mcuinterface.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "itemlibrary.h"
+#include "mcubase.h"
 #include "utils.h"
 
 static const char* SerialPort_properties[] = {
@@ -39,9 +40,7 @@ static const char* SerialPort_properties[] = {
 };
 
 Component* SerialPort::construct( QObject* parent, QString type, QString id )
-{
-    return new SerialPort( parent, type, id );
-}
+{ return new SerialPort( parent, type, id ); }
 
 LibraryItem* SerialPort::libraryItem()
 {
@@ -107,7 +106,7 @@ void SerialPort::setMcuId( QString mcu )
     m_mcuId =  name;
 
     Component* mcuComp = Circuit::self()->getCompById( m_mcuId );
-    if( mcuComp ) m_mcuComponent = static_cast<McuComponent*>(mcuComp);
+    if( mcuComp ) m_mcuComponent = static_cast<McuBase*>(mcuComp);
 }
 
 void SerialPort::initialize()
@@ -118,14 +117,14 @@ void SerialPort::initialize()
 
     if( circVersion < 5 )
     {
-        m_mcuComponent = static_cast<McuComponent*>(McuBase::self());
+        m_mcuComponent = static_cast<McuBase*>(McuBase::self());
         m_mcuId = m_mcuComponent->objectName();
     }
 
     Component* mcu = Circuit::self()->getCompById( m_mcuId );
-    if( mcu ) m_mcuComponent = static_cast<McuComponent*>(mcu);
+    if( mcu ) m_mcuComponent = static_cast<McuBase*>(mcu);
 
-    if( m_mcuComponent )
+    /*if( m_mcuComponent )
     {
         m_processor = m_mcuComponent->processor();
 
@@ -137,7 +136,7 @@ void SerialPort::initialize()
 
         connect( m_processor, SIGNAL( uartDataOut( int, int )),
                         this, SLOT(   slotWriteData( int, int )), Qt::UniqueConnection );
-}   }
+}*/   }
 
 void SerialPort::open()
 {
@@ -178,7 +177,7 @@ void SerialPort::readData()
     m_active = !m_active;
     update();
 
-    for( int i=0; i<data.size(); i++ ) m_processor->uartIn( m_uart, data.at(i) );
+    /// for( int i=0; i<data.size(); i++ ) m_processor->uartIn( m_uart, data.at(i) );
 }
 
 void SerialPort::slotWriteData( int uart, int value )

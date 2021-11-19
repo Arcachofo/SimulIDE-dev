@@ -71,9 +71,7 @@ MainWindow::MainWindow()
     if( m_settings.contains( "fontScale" ) ) 
     {
         scale = m_settings.value( "fontScale" ).toFloat();
-    }
-    else
-    {
+    }else{
         float dpiX = qApp->desktop()->logicalDpiX();
         scale = dpiX/96.0;
     }
@@ -81,8 +79,9 @@ MainWindow::MainWindow()
     //----------------------------------------------
 
     createWidgets();
-    readSettings();
     loadPlugins();
+    //readSettings();
+
     applyStyle();
 
     QString backPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim1";
@@ -90,7 +89,7 @@ MainWindow::MainWindow()
     {
         CircuitWidget::self()->loadCirc( backPath );
 
-       QMessageBox::warning( 0l, "Auto-saved File",
+       QMessageBox::warning( NULL, tr("Auto-saved File"),
                       tr("Looks like SimulIDE crashed...\n\n")
                      +tr("This is the last auto-saved copy of the Circuit\n")
                      +tr("You must save it with any other name if you want to keep it\n\n")

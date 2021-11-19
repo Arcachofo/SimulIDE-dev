@@ -46,4 +46,5 @@
     <acomp name="Comp02" configregsA="CMCON" pins="PORTA1,PORTA2,PORTA4">
         <interrupt name="ACOMP" />
     </acomp>
+  </wdt>
 </parts>

@@ -26,7 +26,7 @@
 #include "circuit.h"
 #include "mainwindow.h"
 #include "component.h"
-#include "mcucomponent.h"
+#include "mcubase.h"
 #include "subcircuit.h"
 #include "utils.h"
 #include "e-diode.h"

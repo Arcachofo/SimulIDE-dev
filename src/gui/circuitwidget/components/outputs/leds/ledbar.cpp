@@ -36,7 +36,7 @@ Component* LedBar::construct( QObject* parent, QString type, QString id )
 LibraryItem* LedBar::libraryItem()
 {
     return new LibraryItem(
-        tr( "LedBar" ),
+        tr( "Led Bar" ),
         tr( "Leds" ),
         "ledbar.png",
         "LedBar",

@@ -26,7 +26,10 @@
 #include "simulator.h"
 #include "circuitwidget.h"
 #include "circuit.h"
+#include "e_mcu.h"
 #include "utils.h"
+
+eMcu* MemData::m_eMcu = NULL;
 
 MemData::MemData()
 {
@@ -114,8 +117,17 @@ bool MemData::loadDat( QVector<int>* toData, QString file, bool resize )
     return true;
 }
 
+bool MemData::loadHexMcu( QVector<int>* toData, QString file, int bits, eMcu* eMcu )
+{
+    m_eMcu = eMcu;
+    bool ok = loadHex( toData, file,false, bits );
+    m_eMcu = NULL;
+    return ok;
+}
+
 bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits )
 {
+    qDebug() <<"Loading hex file:\n"<<file;
     QStringList lineList = fileToStringList( file, "MemData::loadHex" );
 
     int nLine = 0;
@@ -137,7 +149,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
         if( line.isEmpty() ) continue;
 
         if( !(line.left(1) == ":") ){
-            qDebug() << "Error: Wrong Start code at line "+QString::number(nLine);
+            qDebug() << "    Error: Wrong Start code at line "+QString::number(nLine);
             return false;
         }
         line = line.remove( 0, 1 );
@@ -145,7 +157,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
         nBytes = line.left( 2 ).toInt( &ok, 16 );
         int lineSize = 2+4+2+nBytes*2+2;
         if( line.size() != lineSize ){
-            qDebug() << "Error: Wrong line size at line "+QString::number(nLine);
+            qDebug() << "    Error: Wrong line size at line "+QString::number(nLine);
             return false;
         }
         checksum += nBytes;
@@ -159,7 +171,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
         if     ( type == 1 ) return true; // Reached End Of File
         else if( type != 0 )
         {
-            qDebug() <<"Warning: Not supported Record type:"<<type<<"at line "+QString::number(nLine);
+            qDebug() <<"    Warning: Not supported Record type:"<<type<<"at line"<<QString::number(nLine);
             continue;
         }
         checksum += type;
@@ -180,22 +192,27 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
                 toData->resize( dataEnd+1 );
             }
             if( addr > dataEnd ){
-                qDebug() << "Warning: PGM End reached at Line"+QString::number(nLine)
-                         <<"\nAddress:"<<addr<<"is > PMG End:"<<dataEnd
-                         <<"\nTODO: Config word ??";
-                return true;
+                bool ok = false;
+                if( m_eMcu ) ok = m_eMcu->setCfgWord( addr, data );
+                if( !ok )
+                {
+                    qDebug() << "    Warning: PGM End reached at Line"<<QString::number( nLine )
+                             <<"\n    Address:"<<addr<<"> PMG End:"<<dataEnd
+                             <<"\n    TODO: Config word ??"<<"\n";
+                    return true;
+                }
             }
-            toData->replace( addr, data );
+            else toData->replace( addr, data );
             addr++;
         }
         checksum += line.mid( i, 2 ).toInt( &ok, 16 );
         if( checksum & 0xFF ){
-            qDebug() << "Error: CheckSum Error at line "+QString::number(nLine);
+            qDebug() << "    Error: CheckSum Error at line "+QString::number(nLine);
             return false;
         }
         nLine++;
     }
-    qDebug() << "Error: No End Of File reached";
+    qDebug() << "    Error: No End Of File reached";
     return false;
 }
 

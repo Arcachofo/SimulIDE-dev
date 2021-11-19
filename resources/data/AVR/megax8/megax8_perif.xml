@@ -1,11 +1,13 @@
 <!DOCTYPE SimulIDE>
 
 <parts>
-  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
+  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB"
+        clockpins="PORTB6,PORTB7">
     <interrupt name="PCINT0" mask="PCMSK0"/>
   </port>
 
-  <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
+  <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC" 
+        resetpin="PORTC6">
     <interrupt name="PCINT1" mask="PCMSK1"/>
   </port>
 

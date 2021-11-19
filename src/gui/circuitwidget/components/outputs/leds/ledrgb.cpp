@@ -35,7 +35,7 @@ Component* LedRgb::construct( QObject* parent, QString type, QString id )
 LibraryItem* LedRgb::libraryItem()
 {
     return new LibraryItem(
-        tr( "LedRgb" ),
+        tr( "Led Rgb" ),
         tr( "Leds" ),
         "ledrgb.png",
         "LedRgb",

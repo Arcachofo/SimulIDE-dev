@@ -21,6 +21,7 @@
 #define MEMDATA_H
 
 class MemTable;
+class eMcu;
 
 class MAINMODULE_EXPORT MemData
 {
@@ -33,6 +34,7 @@ class MAINMODULE_EXPORT MemData
 
         static bool loadDat( QVector<int>* toData, QString file, bool resize );
         static bool loadHex( QVector<int>* toData, QString file, bool resize, int bits );
+        static bool loadHexMcu( QVector<int>* toData, QString file, int bits, eMcu* eMcu );
         static bool loadBin( QVector<int>* toData, QString fileName, bool resize, int bits );
 
         static QString getMem( QVector<int>* data );
@@ -43,6 +45,7 @@ class MAINMODULE_EXPORT MemData
 
     protected:
         MemTable* m_memTable;
+        static eMcu* m_eMcu;
 
         static void saveDat( QVector<int>* data, int bits );
         static void saveHex( QVector<int>* data, int bits ); /// TODO

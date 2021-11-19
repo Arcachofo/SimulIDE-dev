@@ -39,6 +39,7 @@ Chip::Chip( QObject* parent, QString type, QString id )
     , m_label( this )
 {
     m_id = id;
+    qDebug() << "Chip::Chip"<< id;
     QStringList list = id.split("-");
     if( list.size() > 1 ) m_name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
 
@@ -135,17 +136,16 @@ void Chip::initChip()
         }
         if( root.hasAttribute("name"))
         {
-            QString name = root.attribute( "name");
+            QString name = root.attribute("name");
             if( name.toLower() != "package" ) m_name = name;
         }
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );
-
         setName( m_name );
     }
     else{
-        MessageBoxNB( "Chip::initChip",
-                  tr( "Error reading Chip file:\n%1\nNo valid Chip" ) .arg(m_pkgeFile));
+        MessageBoxNB("Chip::initChip",
+                  tr("Error:\nNot valid Package file:\n%1").arg(m_pkgeFile));
         m_error = 3;
         return;
     }

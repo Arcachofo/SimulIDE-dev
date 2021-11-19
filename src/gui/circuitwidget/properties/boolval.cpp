@@ -19,6 +19,7 @@
 
 #include "boolval.h"
 #include "component.h"
+#include "propdialog.h"
 #include "comproperty.h"
 
 BoolVal::BoolVal( PropDialog* parent, Component* comp, ComProperty* prop )
@@ -44,9 +45,11 @@ void BoolVal::on_trueVal_toggled( bool checked )
 {
     if( m_blocked ) return;
     m_property->setValStr( checked ? "true" : "false" );
+    m_propDialog->updtValues();
 }
 
 void BoolVal::updtValues()
 {
-
+    bool checked = (m_property->getValStr() == "true");
+    trueVal->setChecked( checked );
 }

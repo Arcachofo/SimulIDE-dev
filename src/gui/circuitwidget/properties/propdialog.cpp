@@ -135,4 +135,5 @@ void PropDialog::on_helpButton_clicked()
 }
 
 void PropDialog::updtValues()
-{ for( PropVal* prop : m_propList ) prop->updtValues(); }
+{ for( PropVal* prop : m_propList )
+        prop->updtValues(); }

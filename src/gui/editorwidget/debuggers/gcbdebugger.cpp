@@ -18,7 +18,8 @@
  ***************************************************************************/
 
 #include "gcbdebugger.h"
-#include "baseprocessor.h"
+#include "mcuinterface.h"
+#include "outpaneltext.h"
 #include "utils.h"
 #include "simuapi_apppath.h"
 

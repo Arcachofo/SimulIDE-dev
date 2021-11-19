@@ -20,13 +20,14 @@
 #ifndef SERIALPORT_H
 #define SERIALPORT_H
 
+#include <QSerialPort>
+
 #include "component.h"
 #include "e-element.h"
-#include <QtSerialPort/QSerialPort>
 
 class LibraryItem;
-class McuComponent;
-class BaseProcessor;
+class McuBase;
+class McuInterface;
 class QPushButton;
 class QGraphicsProxyWidget;
 
@@ -99,8 +100,8 @@ class MAINMODULE_EXPORT SerialPort : public Component, public eElement
         void close();
 
         QString m_mcuId;
-        McuComponent* m_mcuComponent;
-        BaseProcessor* m_processor;
+        McuBase* m_mcuComponent;
+        McuInterface* m_processor;
 
         QPushButton* m_button;
         QGraphicsProxyWidget* m_proxy;

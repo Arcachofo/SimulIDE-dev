@@ -25,10 +25,8 @@
 #include "matrixsolver.h"
 #include "updatable.h"
 #include "outpaneltext.h"
-#include "mcucomponent.h"
 #include "mainwindow.h"
 #include "circuitwidget.h"
-#include "baseprocessor.h"
 #include "circmatrix.h"
 #include "e-element.h"
 
