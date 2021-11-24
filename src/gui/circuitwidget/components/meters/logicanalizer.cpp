@@ -80,7 +80,7 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
         m_dataWidget->setColor( i, m_color[i%4] );
     }
     m_updtCount = 0;
-    m_trigger = 0;
+    m_trigger = 9; // Trigger = None
 
     m_threshold = 2.5;
 
