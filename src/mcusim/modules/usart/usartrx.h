@@ -38,6 +38,7 @@ class MAINMODULE_EXPORT UartRx : public UartTR
         };
 
         virtual void enable( uint8_t en ) override;
+        virtual void voltChanged() override;
         virtual void runEvent() override;
         virtual void processData( uint8_t ) override;
         virtual uint8_t getData() override;

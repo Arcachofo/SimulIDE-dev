@@ -29,10 +29,6 @@
 AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
 {
-    m_stopBits = 1;
-    m_dataMask = 0xFF;
-    m_parity   = parNONE;
-
     QString n = m_name.right(1);
     m_UCSRnA = mcu->getReg( "UCSR"+n+"A" );
     m_UCSRnB = mcu->getReg( "UCSR"+n+"B" );

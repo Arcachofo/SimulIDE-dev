@@ -29,10 +29,6 @@
 PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
 {
-    m_stopBits = 1;
-    m_dataMask = 0xFF;
-    m_parity   = parNONE;
-
     m_PIR1  = mcu->getReg( "PIR1" );
     m_TXSTA = mcu->getReg( "TXSTA" );
     m_RCSTA = mcu->getReg( "RCSTA" );

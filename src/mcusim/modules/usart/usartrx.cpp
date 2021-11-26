@@ -44,13 +44,30 @@ void UartRx::enable( uint8_t en )
     m_frame = 0;
 }
 
+void UartRx::voltChanged()
+{
+    bool bit = m_ioPin->getInpState();
+    if     ( !m_startHigh && bit ) m_startHigh = true;
+    else if( m_startHigh && !bit )                     // Start bit detected
+    {
+        m_ioPin->changeCallBack( this, false );
+        Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
+    }
+}
+
 void UartRx::runEvent()
 {
     if( m_state == usartSTOPPED ) return;
 
     if( m_state == usartRECEIVE )
     {
-        if( m_runHardware ) readBit();
+        if( m_runHardware )
+        {
+            readBit();
+            //if( m_period )
+            if( m_state == usartRXEND ) Simulator::self()->addEvent( m_period/2, this ); // End of Byte
+            else                        Simulator::self()->addEvent( m_period, this ); // Shedule next sample
+        }
         else{
             if( !m_inBuffer.empty() )
             {
@@ -67,11 +84,10 @@ void UartRx::runEvent()
 
         m_state = usartRECEIVE;
         m_currentBit = 0;
-        m_startHigh = false;
+        //m_startHigh = false;
         m_frame = 0;
+        m_ioPin->changeCallBack( this, true ); // Wait for next start bit
     }
-    if( m_period )
-        Simulator::self()->addEvent( m_period, this ); // Shedule next sample
 }
 
 void UartRx::processData( uint8_t )
@@ -85,7 +101,11 @@ void UartRx::processData( uint8_t )
     if( m_period )
     {
          if( m_runHardware )
-            Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
+         {
+             if( m_ioPin->getInpState() ) m_startHigh = true;
+             m_ioPin->changeCallBack( this, true );             // Wait for start bit
+            // Simulator::self()->addEvent( m_period/2, this ); // Shedule reception
+         }
          else Simulator::self()->addEvent( m_period*m_framesize, this ); // Shedule Byte received
 }   }
 
@@ -93,8 +113,6 @@ void UartRx::readBit()
 {
     bool bit = m_ioPin->getInpState();
 
-    if( (m_currentBit == 0) && bit ) { m_startHigh = true; return; } // Wait for start bit
-    if( !m_startHigh ) return; // Wait for Rx Pin to go up (line initialized)
     if( bit ) m_frame += 1<<m_currentBit;    // Get bit into frame
     if( ++m_currentBit == m_framesize ) m_state = usartRXEND;  // Data reception finished
 }
@@ -116,7 +134,7 @@ void UartRx::byteReceived( uint16_t frame )
 
     m_fifoP--;
     m_fifo[m_fifoP] = frame;
-    if( m_fifoP == 1 ) m_interrupt->raise();
+    if( m_fifoP == 1 && m_interrupt ) m_interrupt->raise();
     m_usart->byteReceived( frame & mDATAMASK );
 }
 
@@ -131,8 +149,8 @@ uint8_t UartRx::getData()
     if( frame & parityError ) m_usart->parityError();
     if( frame & frameError )  m_usart->frameError();
 
-    if( ++m_fifoP == 2 ) m_interrupt->clearFlag(); // Fifo empty
-    else                 m_fifo[1] = m_fifo[0];    // Advance fifo
+    if( ++m_fifoP == 2 && m_interrupt ) m_interrupt->clearFlag(); // Fifo empty
+    else m_fifo[1] = m_fifo[0];    // Advance fifo
 
     return data;
 }

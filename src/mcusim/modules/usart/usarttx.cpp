@@ -34,7 +34,7 @@ void UartTx::enable( uint8_t en )
     bool enabled = en > 0;
     if( enabled == m_enabled ) return;
     m_enabled = enabled;
-    m_runHardware = m_ioPin->connector();
+    m_runHardware = m_ioPin->isConnected();//   ->connector();
 
     if( enabled )
     {
@@ -62,7 +62,6 @@ void UartTx::runEvent()
 void UartTx::processData( uint8_t data )
 {
     m_buffer = data;
-
     if( m_enabled && m_state == usartIDLE ) startTransmission();
 }
 

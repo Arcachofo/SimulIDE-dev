@@ -31,6 +31,11 @@ UsartModule::UsartModule( eMcu* mcu, QString name )
 
     m_mode = 0xFF; // Force first mode change.
     m_monitor = NULL;
+
+    m_stopBits = 1;
+    m_dataBits = 8;
+    m_dataMask = 0xFF;
+    m_parity   = parNONE;
 }
 UsartModule::~UsartModule( )
 {
