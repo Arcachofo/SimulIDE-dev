@@ -305,7 +305,7 @@ void CircuitView::saveImage()
                             , tr( "Save as Image" )
                             , circPath
                             , "PNG (*.png);;JPEG (*.jpeg);;BMP (*.bmp);;SVG (*.svg);;All (*.*)"  );
-    if (!fileName.isNull())
+    if( !fileName.isNull() )
     {
         if( fileName.endsWith( ".svg" ) )
         {

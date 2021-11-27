@@ -83,7 +83,6 @@
 #include "mux_analog.h"
 #include "op_amp.h"
 #include "oscope.h"
-#include "piccomponent.h"
 #include "pcd8544.h"
 #include "probe.h"
 #include "potentiometer.h"
@@ -96,7 +95,6 @@
 #include "rtd.h"
 #include "scripted.h"
 #include "serialport.h"
-#include "serialterm.h"
 #include "servo.h"
 #include "sevensegment.h"
 #include "sevensegment_bcd.h"
@@ -206,18 +204,19 @@ void ItemLibrary::loadItems()
     addItem( AudioOut::libraryItem() );
     // Micro
     addItem( new LibraryItem( tr("AVR"),tr("Micro"), "ic2.png","", NULL ) );
-    addItem( PICComponent::libraryItem() );
+    addItem( new LibraryItem( tr("PIC"),tr("Micro"), "ic2.png","", NULL ) );
     addItem( new LibraryItem( tr("I51"),tr("Micro"), "ic2.png","", NULL ) );
+    addItem( Mcu::libraryItem() );
     addItem( new LibraryItem( tr("Arduino"),tr("Micro"), "board.png","", NULL ) );
     addItem( new LibraryItem( tr("Shields"),tr("Micro"), "shield.png","", NULL ) );
     addItem( new LibraryItem( tr("Sensors"),tr("Micro"), "1to2.png","", NULL ) );
     addItem( SR04::libraryItem() );
+    addItem( Dht22::libraryItem() );
     addItem( new LibraryItem( tr("Perifericals"),tr("Micro"), "perif.png","", NULL ) );
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );
-    addItem( Dht22::libraryItem() );
     addItem( SerialPort::libraryItem() );
-    addItem( SerialTerm::libraryItem() );
+    /// addItem( SerialTerm::libraryItem() );
     // Logic
     addItem( new LibraryItem( tr("Gates"),tr("Logic"), "gates.png","", NULL ) );
     addItem( Buffer::libraryItem() );
@@ -267,9 +266,6 @@ void ItemLibrary::loadItems()
     addItem( Line::libraryItem() );
     addItem( Tunnel::libraryItem() );
     addItem( SubPackage::libraryItem() );
-
-    addItem( new LibraryItem( tr("PICs"),tr("NEW_MCU"), "ic2.png","", NULL ) );
-    addItem( Mcu::libraryItem() );
 }
 
 void ItemLibrary::addItem( LibraryItem* item )

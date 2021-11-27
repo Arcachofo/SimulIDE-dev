@@ -332,10 +332,10 @@ void Circuit::loadStrDoc( QString &doc )
                     type = "MCU";
                     newUid = newUid.replace( "at", "" );
                 }
-                /*else if( type == "PIC" ){
+                else if( type == "PIC" ){
                     type = "MCU";
                     newUid = newUid.replace( "pic", "p" );
-                }*/
+                }
                 else if( type == "Frequencimeter" ) type = "FreqMeter";
                 lastComp = NULL;
                 Component* comp = createItem( type, newUid );

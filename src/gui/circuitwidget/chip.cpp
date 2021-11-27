@@ -39,7 +39,6 @@ Chip::Chip( QObject* parent, QString type, QString id )
     , m_label( this )
 {
     m_id = id;
-    qDebug() << "Chip::Chip"<< id;
     QStringList list = id.split("-");
     if( list.size() > 1 ) m_name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
 

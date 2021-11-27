@@ -260,9 +260,7 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
     item->setText( 0, name+info );
     item->setData( 0, Qt::UserRole, type );
 
-    if( ( type == "Subcircuit" )
-      ||( type == "MCU" )
-      ||( type == "PIC" ))
+    if( ( type == "Subcircuit" )||( type == "MCU" ) )
     {
          item->setData( 0, Qt::WhatsThisRole, name );
     }

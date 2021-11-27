@@ -1,6 +1,6 @@
 
-VERSION = "0.5.16"
-RELEASE = "-RC10"
+VERSION = "1.0.0"
+RELEASE = "-RC1"
 
 TEMPLATE = app
 
@@ -14,9 +14,7 @@ QT += concurrent
 QT += serialport
 QT += multimedia widgets
 
-SOURCES += $$files( $$PWD/src/*.cpp, true ) \
-           $$files( $$PWD/src/gpsim/*.cc, true ) \
-
+SOURCES = $$files( $$PWD/src/*.cpp, true )
 HEADERS = $$files( $$PWD/src/*.h, true )
 
 TRANSLATIONS = $$files( $$PWD/resources/translations/*.ts )
@@ -61,10 +59,6 @@ INCLUDEPATH += ../src \
     ../src/simulator/elements/outputs \
     ../src/simulator/elements/passive \
     ../src/simulator/elements/processors \
-    ../src/gpsim \
-    ../src/gpsim/devices \
-    ../src/gpsim/modules \
-    ../src/gpsim/registers \
     ../src/mcusim \
     ../src/mcusim/cores \
     ../src/mcusim/cores/avr \
@@ -76,7 +70,6 @@ INCLUDEPATH += ../src \
     ../src/mcusim/modules/spi
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter
-QMAKE_CXXFLAGS += -Wno-missing-field-initializers
 QMAKE_CXXFLAGS += -Wno-implicit-fallthrough
 QMAKE_CXXFLAGS -= -fPIC
 QMAKE_CXXFLAGS += -fno-pic
