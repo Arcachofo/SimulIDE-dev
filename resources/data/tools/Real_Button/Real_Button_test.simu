@@ -1,0 +1,19 @@
+<circuit animate="0" Speed_per="100" noLinAcc="5" Simu_Step_nS="1000" type="simulide_0.4" Speed_sps="1000000" reactStep="50">
+
+Unique  Id: LAnalizer-76: 
+Circuit Id: LAnalizer-76
+<item y="72" valLabely="0" mainComp="false" valLabelx="0" circRot="-5.4861292803319049e+303" Tunnels=",,,,,,," circPos="0,0" TimePos="-72057589759737856" itemtype="LAnalizer" labelrot="0" valLabRot="0" vTick="0.59999999999999998" labely="-100" Trigger="0" objectName="LAnalizer-76" boardPos="-1e+06,-1e+06" labelx="-90" x="-344" boardRot="-1000000" vflip="1" id="LAnalizer-76" hTick="423747" Show_id="false" rotation="0" hflip="1" Basic_X="135" Basic_Y="135"/>
+
+Unique  Id: Real_Button-1: 
+Circuit Id: Real_Button-1
+<item y="8" valLabely="12" mainComp="false" valLabelx="13" circRot="nan" BoardId="" circPos="0,0" itemtype="Subcircuit" labelrot="0" valLabRot="-90" Name="Real_Button" labely="-20" objectName="Real_Button-1" boardPos="-1e+06,-1e+06" labelx="0" x="-544" boardRot="-1000000" vflip="1" id="Real_Button-1" Logic_Symbol="true" Show_id="true" rotation="0" hflip="1"/>
+
+Unique  Id: Connector-77: 
+Circuit Id: Connector-77
+<item y="16" pointList="-504,16,-432,16,-432,8" valLabely="0" mainComp="false" valLabelx="0" circRot="0" circPos="0,0" itemtype="Connector" labelrot="0" valLabRot="0" labely="-24" endpinid="LAnalizer-76-Pin0" startpinid="Real_Button-1-Q" enodeid="enode-77" objectName="Connector-77" boardPos="-1e+06,-1e+06" labelx="-16" x="-504" boardRot="-1000000" vflip="1" id="Connector-77" Show_id="false" rotation="0" hflip="1"/>
+
+Unique  Id: Connector-78: 
+Circuit Id: Connector-78
+<item y="24" pointList="-504,24,-432,24" valLabely="0" mainComp="false" valLabelx="0" circRot="0" circPos="0,0" itemtype="Connector" labelrot="0" valLabRot="0" labely="-24" endpinid="LAnalizer-76-Pin1" startpinid="Real_Button-1-!Q" enodeid="enode-78" objectName="Connector-78" boardPos="-1e+06,-1e+06" labelx="-16" x="-504" boardRot="-1000000" vflip="1" id="Connector-78" Show_id="false" rotation="0" hflip="1"/>
+ 
+</circuit>

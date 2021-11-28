@@ -1,0 +1,5 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Package" CircId="Package-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-436,-308" rotation="0" hflip="1" vflip="1" label="Package-1" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" SubcType="None" Width="21 Cells" Height="9 Cells" Name="kk" Package_File="kk.package" Background="sr04.png" Logic_Symbol="true" />
+
+</circuit>

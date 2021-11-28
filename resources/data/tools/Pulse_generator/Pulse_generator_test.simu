@@ -1,0 +1,21 @@
+<circuit noLinAcc="5" type="simulide_0.4" Speed_per="100" reactStep="50" Simu_Step_nS="1000" animate="0" Speed_sps="1000000">
+
+Unique  Id: Pulse_generator-1: 
+Circuit Id: Pulse_generator-1
+<item valLabRot="-90" valLabelx="41" itemtype="Subcircuit" rotation="0" Show_id="true" circRot="nan" Logic_Symbol="true" vflip="1" id="Pulse_generator-1" valLabely="44" hflip="1" mainComp="false" circPos="0,0" boardRot="-1e+6" labelx="0" Name="Pulse_generator" y="-212" objectName="Pulse_generator-1" x="-348" labely="-20" boardPos="-1e+6,-1e+6" labelrot="0" BoardId="">
+  <mainCompProps Freq="100" Always_On="true" Voltage="5" Show_Volt="false" Unit=" V"/>
+ </item>
+
+Unique  Id: LAnalizer-283: 
+Circuit Id: LAnalizer-283
+<item valLabRot="0" valLabelx="0" itemtype="LAnalizer" Basic_X="135" rotation="0" vTick="0.6" Tunnels=",,,,,,," Show_id="false" circRot="2.9277579e-316" vflip="1" Trigger="9" id="LAnalizer-283" valLabely="0" hflip="1" mainComp="false" circPos="0,0" Basic_Y="135" boardRot="-1e+6" labelx="-90" hTick="71850659" y="-172" TimePos="0" objectName="LAnalizer-283" x="-132" labely="-100" boardPos="-1e+6,-1e+6" labelrot="0"/>
+
+Unique  Id: Connector-284: 
+Circuit Id: Connector-284
+<item valLabRot="0" startpinid="LAnalizer-283-Pin0" valLabelx="0" itemtype="Connector" rotation="0" Show_id="false" circRot="0" pointList="-220,-236,-244,-236,-244,-148,-252,-148" vflip="1" id="Connector-284" enodeid="Circ_eNode-560" valLabely="0" hflip="1" mainComp="false" circPos="0,0" boardRot="-1e+6" labelx="-16" y="-236" objectName="Connector-284" x="-220" labely="-24" boardPos="-1e+6,-1e+6" labelrot="0" endpinid="Pulse_generator-1-Q"/>
+
+Unique  Id: Connector-285: 
+Circuit Id: Connector-285
+<item valLabRot="0" startpinid="LAnalizer-283-Pin1" valLabelx="0" itemtype="Connector" rotation="0" Show_id="false" circRot="0" pointList="-220,-220,-236,-220,-236,-132,-252,-132" vflip="1" id="Connector-285" enodeid="Circ_eNode-561" valLabely="0" hflip="1" mainComp="false" circPos="0,0" boardRot="-1e+6" labelx="-16" y="-220" objectName="Connector-285" x="-220" labely="-24" boardPos="-1e+6,-1e+6" labelrot="0" endpinid="Pulse_generator-1-!Q"/>
+ 
+</circuit>

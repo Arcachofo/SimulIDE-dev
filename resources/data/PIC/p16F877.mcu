@@ -1,0 +1,41 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="p16F876" core="Pic14" data="512" prog="8192" progword="2" eeprom="256"
+            inst_cycle="4">
+            
+    <include file="p16F87x/p16F87x_regs.xml" />
+    <parts>
+        <!-- BANK 0 -->
+        <regblock name="SFR0" start="0x0008" end="0x0009" >
+            <register name="PORTD"   addr="0x08" bits="RD0,RD1,RD2,RD3,RD4,RD5,RD6,RD7"/>
+            <register name="PORTE"   addr="0x09" bits="RE0,RE1,RE2,0,0,0,0,0"/>
+        </regblock>
+        <!-- BANK 1 -->
+        <regblock name="SFR0" start="0x0088" end="0x0089" >
+            <register name="TRISD"   addr="0x88" bits="RD0,RD1,RD2,RD3,RD4,RD5,RD6,RD7"/>
+            <register name="TRISE"   addr="0x89" bits="0,0,0,0,PSPMODE,IBOV,OBF,IBF"/>
+        </regblock>
+        <datablock name="GPR1" start="0x00A0" end="0x00EF"/>
+        <datablock name="RAM1" start="0x00F0" end="0x00FF" mapto="0x0070"/>
+        <!-- BANK 2 -->
+        <datablock name="GPR2" start="0x0110" end="0x016F"/>
+        <datablock name="RAM2" start="0x0170" end="0x017F" mapto="0x0070"/>
+        <!-- BANK 3 -->
+        <datablock name="GPR3" start="0x0190" end="0x01EF"/>
+        <datablock name="RAM3" start="0x01F0" end="0x01FF" mapto="0x0070"/>
+    </parts>
+    <include file="p16F87x/p16F87x_int.xml" />
+    <include file="p16F87x/p16F87x_perif.xml" />
+    <parts>
+        <port name="PORTD" pins="8" outreg="PORTD" dirreg="!TRISD">
+        </port>
+        <port name="PORTE" pins="3" outreg="PORTE" dirreg="!TRISE" inpmask="00000111" >
+        </port>
+        <adc name="ADC0" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1" >
+            <prescaler select="" values="2,8,32"/>
+            <inputs type="PIN" source="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2" />
+            <interrupt name="ADC" />
+        </adc>
+    </parts>
+
+</mcu>

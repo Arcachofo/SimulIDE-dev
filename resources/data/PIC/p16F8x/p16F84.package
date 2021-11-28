@@ -1,0 +1,28 @@
+<!DOCTYPE SimulIDE>
+
+<package name="Package" pins="18" width="4" height="10">
+    <pin side="left"  pos="1"  type="IO" id="RA2" label="A2"/>
+    <pin side="left"  pos="2"  type="IO" id="RA3" label="A3"/>
+    <pin side="left"  pos="3"  type="IO" id="RA4" label="A4"/>
+    
+    <pin side="left"  pos="4"  type="rst" id="MCLR" label="Mclr"/>
+    <pin side="left"  pos="5"  type="nc" id="VSS" label="Vss"/>
+    
+    <pin side="left"  pos="6"  type="IO" id="RB0" label="B0"/>
+    <pin side="left"  pos="7"  type="IO" id="RB1" label="B1"/>
+    <pin side="left"  pos="8"  type="IO" id="RB2" label="B2"/>
+    <pin side="left"  pos="9"  type="IO" id="RB3" label="B3"/>
+    
+    <pin side="right" pos="9"  type="IO" id="RB4" label="B4"/>
+    <pin side="right" pos="8"  type="IO" id="RB5" label="B5"/>
+    <pin side="right" pos="7"  type="IO" id="RB6" label="B6"/>
+    <pin side="right" pos="6"  type="IO" id="RB7" label="B7"/>
+    
+    <pin side="right" pos="5"  type="nc" id="VDD" label="Vdd"/>
+    <pin side="right" pos="4"  type="nc" id="OSC2" label="Osc"/>
+    <pin side="right" pos="3"  type="nc" id="OSC1" label="Osc"/>
+
+    <pin side="right" pos="2"  type="IO" id="RA0" label="A0"/>
+    <pin side="right" pos="1"  type="IO" id="RA1" label="A1"/>
+</package>
+
