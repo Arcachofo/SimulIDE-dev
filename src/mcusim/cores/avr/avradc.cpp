@@ -111,8 +111,6 @@ void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
 
 void AvrAdc::endConversion()
 {
-    if( m_leftAdjust ) m_adcValue <<= 6;
-
     clearRegBits( m_ADSC ); // Clear ADSC bit
     if( m_autoTrigger && m_freeRunning ) startConversion();
 }

@@ -41,13 +41,14 @@ void McuAdc::initialize()
 
 void McuAdc::runEvent()
 {
-    endConversion();
+    if( m_leftAdjust ) m_adcValue <<= 6;
 
     if( m_ADCL ) *m_ADCL = m_adcValue & 0x00FF;
     if( m_ADCH ) *m_ADCH = (m_adcValue & 0xFF00) >> 8;
 
     m_interrupt->raise();
     m_converting = false;
+    endConversion();
 }
 
 void McuAdc::startConversion()
