@@ -48,26 +48,26 @@ void AvrEeprom::configureA( uint8_t newEECR ) // EECR is being written
 {
     m_mode = getRegBitsVal( newEECR, m_EEPM );
 
-    bool eempe    = getRegBitsVal( newEECR, m_EEMPE );
+    bool eempe = getRegBitsVal( newEECR, m_EEMPE );
+    bool eepe  = getRegBitsVal( newEECR, m_EEPE );
 
     if( eempe )
     {
         bool oldEepe = getRegBitsVal( *m_EECR, m_EEPE );
-        bool eepe    = getRegBitsVal( newEECR, m_EEPE );
+
         if( !oldEepe && eepe ) // Write triggered
         {
             if( m_mcu->cycle() <= m_nextCycle ) writeEeprom();// write data
+            return;
             /// else clearRegBits( m_EEPE );
         }
-        return;
+        bool oldEempe = getRegBitsVal( *m_EECR, m_EEMPE );
+        if( !oldEempe ) // Set maximun cycle to procedd to write
+        {
+            m_nextCycle = m_mcu->cycle()+4;
+        }
     }
-    bool oldEempe = getRegBitsVal( *m_EECR, m_EEMPE );
-    if( !oldEempe && eempe ) // Set maximun cycle to procedd to write
-    {
-        m_nextCycle = m_mcu->cycle()+4;
-    }
-
-    if( getRegBitsVal( newEECR, m_EERE ) ) // Read enable
+    if( !eepe && getRegBitsVal( newEECR, m_EERE ) ) // Read enable
     {
         m_mcu->cyclesDone += 4;
         readEeprom();
@@ -82,13 +82,13 @@ void AvrEeprom::writeEeprom()
     switch( m_mode )
     {
         case 0:     // 3.4 ms - Erase and Write in one operation (Atomic Operation)
-            time = 3400*1e12; // picoseconds
+            time = 3400*1e6; // picoseconds
             break;
         case 1:     // 1.8 ms - Erase Only
             data = 0xFF;
             // fallthrough
         case 2:     // 1.8 ms - Write Only
-            time = 1800*1e12; // picoseconds
+            time = 1800*1e6; // picoseconds
             break;
     }
     m_mcu->setRomValue( m_address, data );
