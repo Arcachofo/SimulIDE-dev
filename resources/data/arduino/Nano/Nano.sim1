@@ -4,9 +4,9 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-299" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-332" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="276,52" circPos="-252,-328" boardRot="0" circRot="0" Name="A7" Rotated="true" />
 
-<item itemtype="MCU" CircId="m328 TQFP-269" mainComp="true" Show_id="true" Show_Val="false" Pos="-316,-364" rotation="0" hflip="1" vflip="1" label="m328_TQFP" idLabPos="8,-67" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="5.00668e-308" Logic_Symbol="false" Name="m328 TQFP" Frequency="16 MHz" Auto_Load="false" />
+<item itemtype="MCU" CircId="m328 TQFP-269" mainComp="true" Show_id="true" Show_Val="false" Pos="-316,-364" rotation="0" hflip="1" vflip="1" label="m328_TQFP" idLabPos="8,-67" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="5.00668e-308" Frequency="16 MHz" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
 
-<item itemtype="Package" CircId="Package-40" mainComp="false" Show_id="true" Show_Val="false" Pos="-436,-384" rotation="0" hflip="1" vflip="1" label="Arduino Nano Board" idLabPos="-2,-31" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="4.7283e-308" Logic_Symbol="false" Name="Nano" Width="8 _Cells" Height="19 _Cells" Package_File="Nano.package" Background="nano_board.png" SubcType="Board" />
+<item itemtype="Package" CircId="Package-40" mainComp="false" Show_id="true" Show_Val="false" Pos="-436,-384" rotation="0" hflip="1" vflip="1" label="Arduino Nano Board" idLabPos="-2,-31" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="4.7283e-308" SubcType="Board" Width="8 _Cells" Height="19 _Cells" Name="Nano" Package_File="Nano.package" Background="nano_board.png" Logic_Symbol="false" />
 
 <item itemtype="Rail" CircId="Rail-105" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-180,-388" rotation="0" hflip="1" vflip="1" label="Rail-57" idLabPos="-16,-24" labelrot="0" valLabPos="-32,-4" valLabRot="0" boardPos="356,96" circPos="-172,-284" boardRot="0" circRot="0" Voltage="12 V" />
 
@@ -46,15 +46,11 @@
 
 <item itemtype="Rail" CircId="Rail-123" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-180,-404" rotation="0" hflip="1" vflip="1" label="Rail-57" idLabPos="-16,-24" labelrot="0" valLabPos="-34,-5" valLabRot="0" boardPos="356,48" circPos="-172,-332" boardRot="0" circRot="0" Voltage="3.3 V" />
 
-<item itemtype="Tunnel" CircId="Tunnel-124" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-300" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,76" circPos="-316,-304" boardRot="0" circRot="0" Name="PB6" Rotated="false" />
-
 <item itemtype="Tunnel" CircId="Tunnel-127" mainComp="false" Show_id="false" Show_Val="false" Pos="-148,-404" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="388,48" circPos="-140,-332" boardRot="0" circRot="0" Name="3V3" Rotated="true" />
 
 <item itemtype="Tunnel" CircId="Tunnel-128" mainComp="false" Show_id="false" Show_Val="false" Pos="-244,-380" rotation="-90" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="276,36" circPos="-252,-344" boardRot="0" circRot="0" Name="A2" Rotated="true" />
 
 <item itemtype="Ground" CircId="Ground-129" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,-228" rotation="0" hflip="1" vflip="1" label="Ground-53" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="356,28" circPos="-172,-352" boardRot="0" circRot="0" />
-
-<item itemtype="Tunnel" CircId="Tunnel-131" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-292" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,84" circPos="-316,-296" boardRot="0" circRot="0" Name="PB7" Rotated="false" />
 
 <item itemtype="Tunnel" CircId="Tunnel-132" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-340" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,52" circPos="-316,-328" boardRot="0" circRot="0" Name="4" Rotated="false" />
 
@@ -133,10 +129,6 @@
 <item itemtype="Connector" startpinid="Tunnel-116-pin" endpinid="m328 TQFP-269-PORTD3" enodeid="Circ_eNode-319" pointList="-332,-348,-324,-348" />
 
 <item itemtype="Connector" startpinid="Tunnel-132-pin" endpinid="m328 TQFP-269-PORTD4" enodeid="Circ_eNode-320" pointList="-332,-340,-324,-340" />
-
-<item itemtype="Connector" startpinid="Tunnel-124-pin" endpinid="m328 TQFP-269-PORTB6" enodeid="Circ_eNode-321" pointList="-332,-300,-324,-300" />
-
-<item itemtype="Connector" startpinid="Tunnel-131-pin" endpinid="m328 TQFP-269-PORTB7" enodeid="Circ_eNode-322" pointList="-332,-292,-324,-292" />
 
 <item itemtype="Connector" startpinid="Tunnel-115-pin" endpinid="m328 TQFP-269-PORTD5" enodeid="Circ_eNode-323" pointList="-300,-260,-300,-268" />
 

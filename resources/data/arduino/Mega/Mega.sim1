@@ -126,9 +126,9 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-62" mainComp="false" Show_id="false" Show_Val="false" Pos="-100,-316" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="276,44" circPos="-100,-316" boardRot="0" circRot="0" Name="14" Rotated="true" />
 
-<item itemtype="MCU" CircId="mega2560-63" mainComp="true" Show_id="true" Show_Val="false" Pos="-340,-420" rotation="0" hflip="1" vflip="1" label="mega2560" idLabPos="81,74" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="240,-28" circPos="-340,-420" boardRot="0" circRot="0" Logic_Symbol="false" Frequency="16 MHz" Auto_Load="false" />
+<item itemtype="MCU" CircId="mega2560-63" mainComp="true" Show_id="true" Show_Val="false" Pos="-340,-420" rotation="0" hflip="1" vflip="1" label="mega2560" idLabPos="81,74" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="240,-28" circPos="-340,-420" boardRot="0" circRot="0" Frequency="16 MHz" Auto_Load="false" Rst_enabled="true" Ext_Osc="false" Wdt_enabled="false" />
 
-<item itemtype="Package" CircId="Package-64" mainComp="false" Show_id="true" Show_Val="false" Pos="-580,-392" rotation="0" hflip="1" vflip="1" label="Arduino Mega Board" idLabPos="9,-26" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="4.7283e-308" Logic_Symbol="false" Name="Mega" Width="20 _Cells" Height="41 _Cells" Package_File="Mega.package" Background="mega_board.png" SubcType="Board" />
+<item itemtype="Package" CircId="Package-64" mainComp="false" Show_id="true" Show_Val="false" Pos="-580,-392" rotation="0" hflip="1" vflip="1" label="Arduino Mega Board" idLabPos="9,-26" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="4.7283e-308" SubcType="Board" Width="20 _Cells" Height="41 _Cells" Name="Mega" Package_File="Mega.package" Background="mega_board.png" Logic_Symbol="false" />
 
 <item itemtype="Tunnel" CircId="Tunnel-65" mainComp="false" Show_id="false" Show_Val="false" Pos="-100,-276" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,12" circPos="-100,-276" boardRot="0" circRot="0" Name="PC6" Rotated="true" />
 
@@ -410,7 +410,7 @@
 
 <item itemtype="Connector" uid="Connector-286" startpinid="Tunnel-84-pin" endpinid="mega2560-63-PORTC7" enodeid="Circ_eNode-499" pointList="-100,-284,-108,-284" />
 
-<item itemtype="Connector" uid="Connector-288" startpinid="LedBar-97_led0_pinP" endpinid="Buffer-96-out" enodeid="Circ_eNode-500" pointList="8,-140,-4,-140" />
+<item itemtype="Connector" uid="Connector-288" startpinid="LedBar-97-led0-pinP" endpinid="Buffer-96-out" enodeid="Circ_eNode-500" pointList="8,-140,-4,-140" />
 
 <item itemtype="Connector" uid="Connector-290" startpinid="Node-100-2" endpinid="mega2560-63-PORTB7" enodeid="Circ_eNode-421" pointList="-324,-140,-324,-188" />
 
