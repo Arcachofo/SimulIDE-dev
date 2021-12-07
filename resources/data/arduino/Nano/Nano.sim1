@@ -4,7 +4,7 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-299" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,-332" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="276,52" circPos="-252,-328" boardRot="0" circRot="0" Name="A7" Rotated="true" />
 
-<item itemtype="MCU" CircId="m328 TQFP-269" mainComp="true" Show_id="true" Show_Val="false" Pos="-316,-364" rotation="0" hflip="1" vflip="1" label="m328_TQFP" idLabPos="8,-67" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="5.00668e-308" Frequency="16 MHz" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
+<item itemtype="MCU" CircId="m328 TQFP-269" mainComp="true" Show_id="true" Show_Val="false" Pos="-316,-364" rotation="0" hflip="1" vflip="1" label="m328_TQFP" idLabPos="-47.2045,91.9889" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="5.00668e-308" Frequency="16 MHz" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
 
 <item itemtype="Package" CircId="Package-40" mainComp="false" Show_id="true" Show_Val="false" Pos="-436,-384" rotation="0" hflip="1" vflip="1" label="Arduino Nano Board" idLabPos="-2,-31" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="4.7283e-308" SubcType="Board" Width="8 _Cells" Height="19 _Cells" Name="Nano" Package_File="Nano.package" Background="nano_board.png" Logic_Symbol="false" />
 
@@ -36,7 +36,7 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-118" mainComp="false" Show_id="false" Show_Val="false" Pos="-148,-372" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="276,76" circPos="-252,-304" boardRot="0" circRot="0" Name="5V0" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-119" mainComp="false" Show_id="false" Show_Val="false" Pos="-276,-380" rotation="90" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,12" circPos="-316,-368" boardRot="0" circRot="0" Name="RST" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-119" mainComp="false" Show_id="false" Show_Val="false" Pos="-276,-436" rotation="90" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,12" circPos="-316,-368" boardRot="0" circRot="0" Name="RST" Rotated="false" />
 
 <item itemtype="Tunnel" CircId="Tunnel-120" mainComp="false" Show_id="false" Show_Val="false" Pos="-268,-260" rotation="90" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="276,116" circPos="-252,-264" boardRot="0" circRot="0" Name="9" Rotated="true" />
 
@@ -74,11 +74,17 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-145" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-260" rotation="90" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="276,108" circPos="-252,-272" boardRot="0" circRot="0" Name="10" Rotated="true" />
 
+<item itemtype="Rail" CircId="Rail-331" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-180,-424" rotation="-180" hflip="1" vflip="1" label="Rail-331" idLabPos="-16,-24" labelrot="0" valLabPos="-11.5836,6.89591" valLabRot="-180" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Voltage="5 V" />
+
+<item itemtype="Resistor" CircId="Resistor-332" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-232,-424" rotation="0" hflip="1" vflip="1" label="Resistor-332" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Resistance="10 kΩ" />
+
 <item itemtype="Node" CircId="Node-281" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-156,-372" />
 
 <item itemtype="Node" CircId="Node-278" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-200,-292" />
 
 <item itemtype="Node" CircId="Node-144" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-172,-264" />
+
+<item itemtype="Node" CircId="Node-335" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-276,-424" />
 
 <item itemtype="Connector" startpinid="Tunnel-143-pin" endpinid="Rail-105-outnod" enodeid="Circ_eNode-302" pointList="-148,-388,-164,-388" />
 
@@ -92,7 +98,7 @@
 
 <item itemtype="Connector" startpinid="Ground-129-Gnd" endpinid="Node-144-0" enodeid="Circ_eNode-303" pointList="-172,-244,-172,-264" />
 
-<item itemtype="Connector" startpinid="Tunnel-119-pin" endpinid="m328 TQFP-269-PORTC6" enodeid="Circ_eNode-306" pointList="-276,-380,-276,-372" />
+<item itemtype="Connector" startpinid="Tunnel-119-pin" endpinid="Node-335-0" enodeid="enode-334" pointList="-276,-436,-276,-424" />
 
 <item itemtype="Connector" startpinid="Tunnel-133-pin" endpinid="m328 TQFP-269-PORTC5" enodeid="Circ_eNode-307" pointList="-268,-380,-268,-372" />
 
@@ -130,24 +136,30 @@
 
 <item itemtype="Connector" startpinid="Tunnel-132-pin" endpinid="m328 TQFP-269-PORTD4" enodeid="Circ_eNode-320" pointList="-332,-340,-324,-340" />
 
-<item itemtype="Connector" startpinid="Tunnel-115-pin" endpinid="m328 TQFP-269-PORTD5" enodeid="Circ_eNode-323" pointList="-300,-260,-300,-268" />
+<item itemtype="Connector" startpinid="Tunnel-115-pin" endpinid="m328 TQFP-269-PORTD5" enodeid="Circ_eNode-321" pointList="-300,-260,-300,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-142-pin" endpinid="m328 TQFP-269-PORTD6" enodeid="Circ_eNode-324" pointList="-292,-260,-292,-268" />
+<item itemtype="Connector" startpinid="Tunnel-142-pin" endpinid="m328 TQFP-269-PORTD6" enodeid="Circ_eNode-322" pointList="-292,-260,-292,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-122-pin" endpinid="m328 TQFP-269-PORTD7" enodeid="Circ_eNode-325" pointList="-284,-260,-284,-268" />
+<item itemtype="Connector" startpinid="Tunnel-122-pin" endpinid="m328 TQFP-269-PORTD7" enodeid="Circ_eNode-323" pointList="-284,-260,-284,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-110-pin" endpinid="m328 TQFP-269-PORTB0" enodeid="Circ_eNode-326" pointList="-276,-260,-276,-268" />
+<item itemtype="Connector" startpinid="Tunnel-110-pin" endpinid="m328 TQFP-269-PORTB0" enodeid="Circ_eNode-324" pointList="-276,-260,-276,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-120-pin" endpinid="m328 TQFP-269-PORTB1" enodeid="Circ_eNode-327" pointList="-268,-260,-268,-268" />
+<item itemtype="Connector" startpinid="Tunnel-120-pin" endpinid="m328 TQFP-269-PORTB1" enodeid="Circ_eNode-325" pointList="-268,-260,-268,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-145-pin" endpinid="m328 TQFP-269-PORTB2" enodeid="Circ_eNode-328" pointList="-260,-260,-260,-268" />
+<item itemtype="Connector" startpinid="Tunnel-145-pin" endpinid="m328 TQFP-269-PORTB2" enodeid="Circ_eNode-326" pointList="-260,-260,-260,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-109-pin" endpinid="m328 TQFP-269-PORTB3" enodeid="Circ_eNode-329" pointList="-252,-260,-252,-268" />
+<item itemtype="Connector" startpinid="Tunnel-109-pin" endpinid="m328 TQFP-269-PORTB3" enodeid="Circ_eNode-327" pointList="-252,-260,-252,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-108-pin" endpinid="m328 TQFP-269-PORTB4" enodeid="Circ_eNode-330" pointList="-244,-260,-244,-268" />
+<item itemtype="Connector" startpinid="Tunnel-108-pin" endpinid="m328 TQFP-269-PORTB4" enodeid="Circ_eNode-328" pointList="-244,-260,-244,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-299-pin" endpinid="m328 TQFP-269-PORTV3" enodeid="Circ_eNode-331" pointList="-212,-332,-220,-332" />
+<item itemtype="Connector" startpinid="Tunnel-299-pin" endpinid="m328 TQFP-269-PORTV3" enodeid="Circ_eNode-329" pointList="-212,-332,-220,-332" />
 
-<item itemtype="Connector" startpinid="Tunnel-301-pin" endpinid="m328 TQFP-269-PORTV2" enodeid="Circ_eNode-332" pointList="-212,-308,-220,-308" />
+<item itemtype="Connector" startpinid="Tunnel-301-pin" endpinid="m328 TQFP-269-PORTV2" enodeid="Circ_eNode-330" pointList="-212,-308,-220,-308" />
+
+<item itemtype="Connector" uid="Connector-333" startpinid="Rail-331-outnod" endpinid="Resistor-332-rPin" enodeid="enode-333" pointList="-196,-424,-216,-424" />
+
+<item itemtype="Connector" uid="Connector-334" startpinid="Resistor-332-lPin" endpinid="Node-335-1" enodeid="enode-334" pointList="-248,-424,-276,-424" />
+
+<item itemtype="Connector" uid="Connector-336" startpinid="Node-335-2" endpinid="m328 TQFP-269-PORTC6" enodeid="enode-334" pointList="-276,-424,-276,-372" />
 
 </circuit>

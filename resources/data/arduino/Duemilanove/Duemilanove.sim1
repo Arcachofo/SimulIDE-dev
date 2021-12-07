@@ -66,11 +66,15 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-39" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-360" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,20" circPos="-316,-360" boardRot="0" circRot="0" Name="0" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-40" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-368" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,12" circPos="-316,-368" boardRot="0" circRot="0" Name="RST" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-40" mainComp="false" Show_id="false" Show_Val="false" Pos="-324,-368" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,12" circPos="-316,-368" boardRot="0" circRot="0" Name="RST" Rotated="false" />
 
 <item itemtype="Package" CircId="Package-42" mainComp="false" Show_id="true" Show_Val="false" Pos="-528,-380" rotation="0" hflip="1" vflip="1" label="Arduino Uno Board" idLabPos="24,-18" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="4.7283e-308" SubcType="Board" Width="20 _Cells" Height="28 _Cells" Name="Duemilanove" Package_File="Duemilanove.package" Background="due_board.png" Logic_Symbol="false" />
 
 <item itemtype="MCU" CircId="mega168-109" mainComp="true" Show_id="true" Show_Val="false" Pos="-300,-376" rotation="0" hflip="1" vflip="1" label="mega168-109" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Frequency="16 MHz" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
+
+<item itemtype="Resistor" CircId="Resistor-137" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-284,-404" rotation="0" hflip="1" vflip="1" label="Resistor-137" idLabPos="-16,-24" labelrot="0" valLabPos="-12.1357,-14.9777" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Resistance="10 kΩ" />
+
+<item itemtype="Rail" CircId="Rail-141" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-220,-404" rotation="-180" hflip="1" vflip="1" label="Rail-141" idLabPos="-16,-24" labelrot="0" valLabPos="-14.3439,7.44796" valLabRot="-180" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Voltage="5 V" />
 
 <item itemtype="Node" CircId="Node-3" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-172,-252" />
 
@@ -79,6 +83,8 @@
 <item itemtype="Node" CircId="Node-134" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-148,-324" />
 
 <item itemtype="Node" CircId="Node-137" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-220,-296" />
+
+<item itemtype="Node" CircId="Node-138" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-316,-368" />
 
 <item itemtype="Connector" startpinid="Ground-15-Gnd" endpinid="Node-3-0" enodeid="Circ_eNode-110" pointList="-172,-244,-172,-252" />
 
@@ -102,45 +108,45 @@
 
 <item itemtype="Connector" startpinid="mega168-109-PORTB0" endpinid="Tunnel-29-pin" enodeid="Circ_eNode-116" pointList="-308,-264,-316,-264" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTC6" endpinid="Tunnel-40-pin" enodeid="Circ_eNode-119" pointList="-308,-368,-316,-368" />
+<item itemtype="Connector" startpinid="mega168-109-PORTC6" endpinid="Node-138-0" enodeid="enode-140" pointList="-308,-368,-316,-368" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTD0" endpinid="Tunnel-39-pin" enodeid="Circ_eNode-120" pointList="-308,-360,-316,-360" />
+<item itemtype="Connector" startpinid="mega168-109-PORTD0" endpinid="Tunnel-39-pin" enodeid="Circ_eNode-118" pointList="-308,-360,-316,-360" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTD1" endpinid="Tunnel-38-pin" enodeid="Circ_eNode-121" pointList="-308,-352,-316,-352" />
+<item itemtype="Connector" startpinid="mega168-109-PORTD1" endpinid="Tunnel-38-pin" enodeid="Circ_eNode-119" pointList="-308,-352,-316,-352" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTD2" endpinid="Tunnel-37-pin" enodeid="Circ_eNode-122" pointList="-308,-344,-316,-344" />
+<item itemtype="Connector" startpinid="mega168-109-PORTD2" endpinid="Tunnel-37-pin" enodeid="Circ_eNode-120" pointList="-308,-344,-316,-344" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTD3" endpinid="Tunnel-36-pin" enodeid="Circ_eNode-123" pointList="-308,-336,-316,-336" />
+<item itemtype="Connector" startpinid="mega168-109-PORTD3" endpinid="Tunnel-36-pin" enodeid="Circ_eNode-121" pointList="-308,-336,-316,-336" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTD4" endpinid="Tunnel-35-pin" enodeid="Circ_eNode-124" pointList="-308,-328,-316,-328" />
+<item itemtype="Connector" startpinid="mega168-109-PORTD4" endpinid="Tunnel-35-pin" enodeid="Circ_eNode-122" pointList="-308,-328,-316,-328" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTD5" endpinid="Tunnel-32-pin" enodeid="Circ_eNode-125" pointList="-308,-288,-316,-288" />
+<item itemtype="Connector" startpinid="mega168-109-PORTD5" endpinid="Tunnel-32-pin" enodeid="Circ_eNode-123" pointList="-308,-288,-316,-288" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTD6" endpinid="Tunnel-31-pin" enodeid="Circ_eNode-126" pointList="-308,-280,-316,-280" />
+<item itemtype="Connector" startpinid="mega168-109-PORTD6" endpinid="Tunnel-31-pin" enodeid="Circ_eNode-124" pointList="-308,-280,-316,-280" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTD7" endpinid="Tunnel-30-pin" enodeid="Circ_eNode-127" pointList="-308,-272,-316,-272" />
+<item itemtype="Connector" startpinid="mega168-109-PORTD7" endpinid="Tunnel-30-pin" enodeid="Circ_eNode-125" pointList="-308,-272,-316,-272" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTB1" endpinid="Tunnel-16-pin" enodeid="Circ_eNode-128" pointList="-260,-264,-252,-264" />
+<item itemtype="Connector" startpinid="mega168-109-PORTB1" endpinid="Tunnel-16-pin" enodeid="Circ_eNode-126" pointList="-260,-264,-252,-264" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTB2" endpinid="Tunnel-17-pin" enodeid="Circ_eNode-129" pointList="-260,-272,-252,-272" />
+<item itemtype="Connector" startpinid="mega168-109-PORTB2" endpinid="Tunnel-17-pin" enodeid="Circ_eNode-127" pointList="-260,-272,-252,-272" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTB3" endpinid="Tunnel-18-pin" enodeid="Circ_eNode-130" pointList="-260,-280,-252,-280" />
+<item itemtype="Connector" startpinid="mega168-109-PORTB3" endpinid="Tunnel-18-pin" enodeid="Circ_eNode-128" pointList="-260,-280,-252,-280" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTB4" endpinid="Tunnel-19-pin" enodeid="Circ_eNode-131" pointList="-260,-288,-252,-288" />
+<item itemtype="Connector" startpinid="mega168-109-PORTB4" endpinid="Tunnel-19-pin" enodeid="Circ_eNode-129" pointList="-260,-288,-252,-288" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTC0" endpinid="Tunnel-23-pin" enodeid="Circ_eNode-132" pointList="-260,-328,-252,-328" />
+<item itemtype="Connector" startpinid="mega168-109-PORTC0" endpinid="Tunnel-23-pin" enodeid="Circ_eNode-130" pointList="-260,-328,-252,-328" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTC1" endpinid="Tunnel-24-pin" enodeid="Circ_eNode-133" pointList="-260,-336,-252,-336" />
+<item itemtype="Connector" startpinid="mega168-109-PORTC1" endpinid="Tunnel-24-pin" enodeid="Circ_eNode-131" pointList="-260,-336,-252,-336" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTC2" endpinid="Tunnel-25-pin" enodeid="Circ_eNode-134" pointList="-260,-344,-252,-344" />
+<item itemtype="Connector" startpinid="mega168-109-PORTC2" endpinid="Tunnel-25-pin" enodeid="Circ_eNode-132" pointList="-260,-344,-252,-344" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTC3" endpinid="Tunnel-26-pin" enodeid="Circ_eNode-135" pointList="-260,-352,-252,-352" />
+<item itemtype="Connector" startpinid="mega168-109-PORTC3" endpinid="Tunnel-26-pin" enodeid="Circ_eNode-133" pointList="-260,-352,-252,-352" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTC4" endpinid="Tunnel-27-pin" enodeid="Circ_eNode-136" pointList="-260,-360,-252,-360" />
+<item itemtype="Connector" startpinid="mega168-109-PORTC4" endpinid="Tunnel-27-pin" enodeid="Circ_eNode-134" pointList="-260,-360,-252,-360" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTC5" endpinid="Tunnel-28-pin" enodeid="Circ_eNode-137" pointList="-260,-368,-252,-368" />
+<item itemtype="Connector" startpinid="mega168-109-PORTC5" endpinid="Tunnel-28-pin" enodeid="Circ_eNode-135" pointList="-260,-368,-252,-368" />
 
-<item itemtype="Connector" startpinid="mega168-109-PORTV1" endpinid="Tunnel-22-pin" enodeid="Circ_eNode-138" pointList="-260,-312,-252,-312" />
+<item itemtype="Connector" startpinid="mega168-109-PORTV1" endpinid="Tunnel-22-pin" enodeid="Circ_eNode-136" pointList="-260,-312,-252,-312" />
 
 <item itemtype="Connector" startpinid="mega168-109-PORTV0" endpinid="Node-134-1" enodeid="Circ_eNode-115" pointList="-260,-304,-148,-304,-148,-324" />
 
@@ -149,5 +155,11 @@
 <item itemtype="Connector" startpinid="mega168-109-PORTB5" endpinid="Node-137-1" enodeid="Circ_eNode-114" pointList="-260,-296,-220,-296" />
 
 <item itemtype="Connector" startpinid="Node-137-2" endpinid="Buffer-10-in0" enodeid="Circ_eNode-114" pointList="-220,-296,-220,-240,-268,-240" />
+
+<item itemtype="Connector" uid="Connector-139" startpinid="Node-138-2" endpinid="Tunnel-40-pin" enodeid="enode-140" pointList="-316,-368,-324,-368" />
+
+<item itemtype="Connector" uid="Connector-140" startpinid="Node-138-1" endpinid="Resistor-137-lPin" enodeid="enode-140" pointList="-316,-368,-316,-404,-300,-404" />
+
+<item itemtype="Connector" uid="Connector-142" startpinid="Resistor-137-rPin" endpinid="Rail-141-outnod" enodeid="enode-142" pointList="-268,-404,-236,-404" />
 
 </circuit>

@@ -2,7 +2,7 @@
 
 <item itemtype="Package" CircId="Package-42" mainComp="false" Show_id="true" Show_Val="false" Pos="-528,-380" rotation="0" hflip="1" vflip="1" label="Arduino Uno Board" idLabPos="24,-18" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="4.7283e-308" SubcType="Board" Width="20 _Cells" Height="28 _Cells" Name="Uno" Package_File="Uno.package" Background="uno_board.png" Logic_Symbol="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-40" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-368" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,12" circPos="-316,-368" boardRot="0" circRot="0" Name="RST" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-40" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-368" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,12" circPos="-316,-368" boardRot="0" circRot="0" Name="RST" Rotated="false" />
 
 <item itemtype="Tunnel" CircId="Tunnel-39" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-360" rotation="0" hflip="1" vflip="1" label="Tunnel-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="212,20" circPos="-316,-360" boardRot="0" circRot="0" Name="0" Rotated="false" />
 
@@ -72,6 +72,10 @@
 
 <item itemtype="MCU" CircId="mega328-109" mainComp="true" Show_id="true" Show_Val="false" Pos="-300,-376" rotation="0" hflip="1" vflip="1" label="mega328-109" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Frequency="16 MHz" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
 
+<item itemtype="Resistor" CircId="Resistor-137" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-292,-412" rotation="0" hflip="1" vflip="1" label="Resistor-137" idLabPos="-16,-24" labelrot="0" valLabPos="-13.7918,-17.7379" valLabRot="0" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Resistance="10 kΩ" />
+
+<item itemtype="Rail" CircId="Rail-141" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-244,-412" rotation="-180" hflip="1" vflip="1" label="Rail-141" idLabPos="-16,-24" labelrot="0" valLabPos="-14.3439,6.89591" valLabRot="-180" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Voltage="5 V" />
+
 <item itemtype="Node" CircId="Node-164" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-148,-324" />
 
 <item itemtype="Node" CircId="Node-4" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-172,-264" />
@@ -79,6 +83,8 @@
 <item itemtype="Node" CircId="Node-3" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-172,-252" />
 
 <item itemtype="Node" CircId="Node-133" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-220,-296" />
+
+<item itemtype="Node" CircId="Node-138" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-316,-368" />
 
 <item itemtype="Connector" startpinid="Ground-15-Gnd" endpinid="Node-3-0" enodeid="Circ_eNode-110" pointList="-172,-244,-172,-252" />
 
@@ -102,7 +108,7 @@
 
 <item itemtype="Connector" startpinid="mega328-109-PORTB0" endpinid="Tunnel-29-pin" enodeid="Circ_eNode-116" pointList="-308,-264,-316,-264" />
 
-<item itemtype="Connector" startpinid="mega328-109-PORTC6" endpinid="Tunnel-40-pin" enodeid="Circ_eNode-117" pointList="-308,-368,-316,-368" />
+<item itemtype="Connector" startpinid="mega328-109-PORTC6" endpinid="Node-138-0" enodeid="enode-140" pointList="-308,-368,-316,-368" />
 
 <item itemtype="Connector" startpinid="mega328-109-PORTD0" endpinid="Tunnel-39-pin" enodeid="Circ_eNode-118" pointList="-308,-360,-316,-360" />
 
@@ -149,5 +155,11 @@
 <item itemtype="Connector" startpinid="mega328-109-PORTV0" endpinid="Node-164-1" enodeid="Circ_eNode-115" pointList="-260,-304,-148,-304,-148,-324" />
 
 <item itemtype="Connector" startpinid="Node-164-2" endpinid="Rail-13-outnod" enodeid="Circ_eNode-115" pointList="-148,-324,-156,-324" />
+
+<item itemtype="Connector" uid="Connector-139" startpinid="Node-138-2" endpinid="Tunnel-40-pin" enodeid="enode-140" pointList="-316,-368,-332,-368" />
+
+<item itemtype="Connector" uid="Connector-140" startpinid="Node-138-1" endpinid="Resistor-137-lPin" enodeid="enode-140" pointList="-316,-368,-316,-412,-308,-412" />
+
+<item itemtype="Connector" uid="Connector-142" startpinid="Rail-141-outnod" endpinid="Resistor-137-rPin" enodeid="enode-142" pointList="-260,-412,-276,-412" />
 
 </circuit>
