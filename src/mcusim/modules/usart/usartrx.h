@@ -47,6 +47,7 @@ class MAINMODULE_EXPORT UartRx : public UartTR
 
     protected:
         void readBit();
+        void rxEnd();
         void byteReceived( uint16_t frame );
 
         bool m_startHigh;

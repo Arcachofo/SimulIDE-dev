@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT UsartModule
         virtual void parityError(){;}
         virtual void frameError(){;}
 
-        void openMonitor(QString id, int num=0 );
+        void openMonitor( QString id, int num=0 );
         void uartIn( uint8_t value );
 
         uint8_t m_mode;
