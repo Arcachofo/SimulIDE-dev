@@ -170,8 +170,6 @@
         <file alias="ky-023.png">../src/icons/components/ky-023.png</file>
         <file alias="ky-040.png">../src/icons/components/ky-040.png</file>
         <file alias="dht22.png">../src/icons/components/dht22.png</file>
-        <file alias="esp01.png">../src/icons/components/esp01.png</file>
-        <file alias="esp01_ico.png">../src/icons/components/esp01_ico.png</file>
         
         <file alias="up.png">../src/icons/components/up.png</file>
         <file alias="su.png">../src/icons/components/su.png</file>
