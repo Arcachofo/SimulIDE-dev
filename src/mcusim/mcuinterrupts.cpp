@@ -76,8 +76,8 @@ void Interrupt::writeFlag( uint8_t v ) // Clear flag by writting 1 to it
 
 void Interrupt::raise( uint8_t v )
 {
-    if( m_raised ) return;
-    m_raised = true;
+    //if( m_raised ) return; // If interrupt is raised whith m_enable = 0
+    m_raised = true;         // And enabled later, then it will not be added to pending.
 
     m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
 
