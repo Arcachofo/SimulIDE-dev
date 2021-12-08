@@ -124,7 +124,7 @@ void AvrTimer::configureExtClock()
 void AvrTimer::configureOcUnits( bool wgm3 )
 {
     m_bidirec = false;
-    m_reverse = false;
+    //m_reverse = false;
 
     ocAct_t comActA, comActB, comActC;
     ocAct_t tovActA = ocNONE;

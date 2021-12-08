@@ -43,14 +43,16 @@ void McuOcUnit::initialize()
 
 void McuOcUnit::runEvent()           // Compare match
 {
-    if( m_name == "OC1A")
-        m_name = "OC1A";
+    //if( m_name == "OC1A")
+    //    m_name = "OC1A";
     m_interrupt->raise();         // Trigger interrupt
     drivePin( m_comAct );
 }
 
 void McuOcUnit::drivePin( ocAct_t act )
 {
+    //if( m_name == "OC1A")
+    //    m_name = "OC1A";
     if( !act ) return;
     bool pinState = false;
 
@@ -65,6 +67,9 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal )
 {
     uint64_t cycles = 0;
     uint64_t match;
+
+    //if( m_name == "OC1A")
+    //    m_name = "OC1A";
 
     if( m_timer->m_reverse )
     {
