@@ -86,7 +86,6 @@ void TwiModule::runEvent()
 
     getSdaState();               // Update state of SDA pin
 
-    twiState_t twiState;
     switch( m_i2cState )
     {
         case I2C_IDLE: return;
@@ -146,7 +145,7 @@ void TwiModule::runEvent()
             {
                 setSDA( true ); //if( m_lastState == I2C_READ )
 
-                twiState = m_sendACK ? TWI_MRX_DATA_ACK : TWI_MRX_DATA_NACK ;
+                twiState_t twiState = m_sendACK ? TWI_MRX_DATA_ACK : TWI_MRX_DATA_NACK ;
                 setTwiState( twiState );
                 m_i2cState = I2C_IDLE;
             }

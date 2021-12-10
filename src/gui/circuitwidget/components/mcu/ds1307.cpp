@@ -1,0 +1,165 @@
+/***************************************************************************
+ *   Copyright (C) 2021 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         *
+ ***************************************************************************/
+
+#include <QPainter>
+
+#include "ds1307.h"
+#include "itemlibrary.h"
+#include "iopin.h"
+
+Component* DS1307::construct( QObject* parent, QString type, QString id )
+{ return new DS1307( parent, type, id ); }
+
+LibraryItem* DS1307::libraryItem()
+{
+    return new LibraryItem(
+        "DS1307",
+        tr( "Perifericals" ),
+        "dsxxx_ico.png",
+        "DS1307",
+        DS1307::construct );
+}
+
+DS1307::DS1307( QObject* parent, QString type, QString id )
+      : Component( parent, type, id )
+      , TwiModule( id )
+      , m_clock( id+"_clock" )
+{
+    m_area = QRect(-28,-20, 56, 40 );
+    m_background = ":/dsxxx.png";
+
+    m_pin.resize( 3 );
+    m_pin[0] = m_pinSda = new IoPin( 180, QPoint(-36,-12), id+"-PinSDA", 0, this, open_col );
+    m_pinSda->setLabelText( "SDA" );
+    TwiModule::setSdaPin( m_pinSda );
+
+    m_pin[1] = m_clkPin = new IoPin( 180, QPoint(-36, -4), id+"-PinSCL", 0, this, open_col );
+    m_clkPin->setLabelText( "SCL" );
+    TwiModule::setSclPin( m_clkPin );
+
+    m_pin[2] = m_outpin = new IoPin( 180, QPoint(-36, 12), id+"-PinSQW", 0, this, output );
+    m_outpin->setLabelText( "SQW" );
+    m_outpin->setOutHighV( 5 );
+    m_clock.setPin( m_outpin );
+
+    m_address = 0b01101000; // 0x68
+}
+DS1307::~DS1307(){}
+
+void DS1307::initialize()
+{
+    m_phase = 0;
+    for( int i=0; i<64; i++ ) m_data[i] = 0x00;
+    m_data[7] = 0x03;
+}
+
+void DS1307::stamp()
+{
+    TwiModule::stamp();
+    setMode( TWI_SLAVE );
+}
+
+void DS1307::readByte()               // Write to RAM
+{
+    if( m_phase == 0 ){
+        m_phase = 1;
+        m_addrPtr = m_rxReg;
+    }else{
+        if( m_addrPtr < 8 ){
+            if     ( m_addrPtr < 3 ) updtTime();
+            else if( m_addrPtr < 7 ) updtDate();
+            else                     updtCtrl();
+        }
+        m_data[m_addrPtr] = m_rxReg;
+        m_addrPtr++;
+    }
+    TwiModule::readByte();
+}
+
+void DS1307::writeByte()               // Read from RAM
+{
+    if( m_addrPtr < 7 ){
+        switch( m_addrPtr ){
+            case 0: m_txReg = decToBcd( m_clock.m_time.second() ); break;
+            case 1: m_txReg = decToBcd( m_clock.m_time.minute() ); break;  // Hz
+            case 2: {
+                int hour = m_clock.m_time.hour();
+                uint8_t ampm = m_data[2] & (1<<6); // 12/24 hour
+                if( ampm && hour > 12 ) hour -= 12; // 12 hour PM
+                m_txReg = ampm | decToBcd( hour );
+            }break;
+            case 3: m_txReg = decToBcd( m_clock.m_date.dayOfWeek() ); break;
+            case 4: m_txReg = decToBcd( m_clock.m_date.day() ); break;
+            case 5: m_txReg = decToBcd( m_clock.m_date.month() ); break;
+            case 6: m_txReg = decToBcd( m_clock.m_date.year() - 2000 ); break;
+        }
+    }
+    else m_txReg = m_data[m_addrPtr];
+    m_addrPtr++;
+
+    TwiModule::writeByte();
+}
+
+void DS1307::I2Cstop()
+{
+    m_phase = 0;
+    TwiModule::I2Cstop();
+}
+
+void DS1307::updtTime()
+{
+    int hour;
+    if( m_data[2] >= 0x40 ) // 12 hour
+    {
+        hour = bcdToDec( m_data[2] & 0b00011111 );
+        if( m_data[2] & (1<<5) ) hour += 12;       // PM
+    }
+    else hour = bcdToDec( m_data[2] & 0b00111111 ); // 24 hout
+
+    m_clock.m_time.setHMS( hour, bcdToDec(m_data[1]), bcdToDec(m_data[0]) );
+}
+
+void DS1307::updtDate()
+{ m_clock.m_date.setDate( bcdToDec(m_data[6]), bcdToDec(m_data[5]), bcdToDec(m_data[4]) ); }
+
+void DS1307::updtCtrl()
+{
+    char RS = m_data[7] & 0b00000011;
+    uint64_t freq = 0;  // Hz
+    switch( RS ){
+        case 0: freq = 1;     break;
+        case 1: freq = 4096;  break;
+        case 2: freq = 8192;  break;
+        case 3: freq = 32768; break;
+    }
+    m_clock.setFreq( freq );
+    m_clock.enable( m_data[7] & (1<<4) );
+    m_clock.setDisOut( m_data[7] & (1<<7) );
+}
+
+char DS1307::decToBcd(char val) { return( (val/10*16) + (val%10) ); }
+char DS1307::bcdToDec(char val) { return( (val/16*10) + (val%16) ); }
+
+void DS1307::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+{
+    Component::paint( p, option, widget );
+
+    p->drawRoundedRect( m_area, 2, 2 );
+    p->drawPixmap( QRect(-28,-20, 56, 40 ), QPixmap( m_background ));
+}

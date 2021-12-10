@@ -43,6 +43,7 @@
 #include "demux.h"
 #include "dht22.h"
 #include "diode.h"
+#include "ds1307.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
 #include "fixedvolt.h"
@@ -215,6 +216,8 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( tr("Perifericals"),tr("Micro"), "perif.png","", NULL ) );
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );
+    addItem( DS1307::libraryItem() );
+    addItem( SerialPort::libraryItem() );
     addItem( SerialPort::libraryItem() );
     /// addItem( SerialTerm::libraryItem() );
     // Logic
