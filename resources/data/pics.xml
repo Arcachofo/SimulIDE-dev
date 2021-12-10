@@ -20,6 +20,8 @@
         <item name="p16F874" package="PIC/p16F87x/p16F874" data="PIC/p16F874"></item>
         <item name="p16F876" package="PIC/p16F87x/p16F873" data="PIC/p16F876"></item>
         <item name="p16F877" package="PIC/p16F87x/p16F874" data="PIC/p16F877"></item>
+        
+        <item name="p16F887" package="PIC/p16F88x/p16F887" data="PIC/p16F887"></item>
     </itemset>
     
 </itemlib>
