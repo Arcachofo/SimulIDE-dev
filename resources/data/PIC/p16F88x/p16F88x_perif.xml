@@ -1,5 +1,6 @@
 <parts>
-    <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA">
+    <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
+                       clockpins="PORTA6,PORTA7" >
     </port>
     
     <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
@@ -10,7 +11,8 @@
     <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC">
     </port>
     
-    <port name="PORTE" pins="4" outreg="PORTE" dirreg="!TRISE" inpmask="00001111" >
+    <port name="PORTE" pins="4" outreg="PORTE" dirreg="!TRISE" 
+                       inpmask="00001111" resetpin="PORTE3">
     </port>
     
     <timer name="TIMER0" counter="TMR0" configregsA="OPTION">

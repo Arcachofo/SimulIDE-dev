@@ -1,17 +1,17 @@
 <!DOCTYPE SimulIDE>
 
-<mcu name="p16F876" core="Pic14" data="512" prog="8192" progword="2" eeprom="256"
+<mcu name="p16F887" core="Pic14" data="512" prog="8192" progword="2" eeprom="256"
             inst_cycle="4">
             
     <include file="p16F88x/p16F88x_regs.xml" />
-    <parts>
+
         <!-- BANK 0 -->
         <regblock name="SFR0" start="0x0008" end="0x0009" >
-            <register name="PORTD"   addr="0x08" bits="RD0,RD1,RD2,RD3,RD4,RD5,RD6,RD7"/>
+            <register name="PORTD" addr="0x08" bits="RD0,RD1,RD2,RD3,RD4,RD5,RD6,RD7"/>
         </regblock>
         <!-- BANK 1 -->
         <regblock name="SFR0" start="0x0088" end="0x0089" >
-            <register name="TRISD"   addr="0x88" />
+            <register name="TRISD"   addr="0x88" reset="11111111"/>
         </regblock>
         <datablock name="GPR1" start="0x00A0" end="0x00EF"/>
         <datablock name="RAM1" start="0x00F0" end="0x00FF" mapto="0x0070"/>
@@ -21,10 +21,10 @@
         <!-- BANK 3 -->
         <datablock name="GPR3" start="0x0190" end="0x01EF"/>
         <datablock name="RAM3" start="0x01F0" end="0x01FF" mapto="0x0070"/>
-    </parts>
+
     <include file="p16F88x/p16F88x_int.xml" />
     <include file="p16F88x/p16F88x_perif.xml" />
-    <parts>
+
         <port name="PORTD" pins="8" outreg="PORTD" dirreg="!TRISD">
         </port>
         
@@ -33,6 +33,5 @@
             <inputs type="PIN" source="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2" />
             <interrupt name="ADC" />
         </adc>
-    </parts>
 
 </mcu>

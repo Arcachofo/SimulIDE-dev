@@ -22,7 +22,7 @@
     <pin side="left"  pos="15" type="IO" id="RC0" label="C0"/>
     <pin side="left"  pos="16" type="IO" id="RC1" label="C1"/>
     <pin side="left"  pos="17" type="IO" id="RC2" label="C2"/>
-    <pin side="left"  pos="18" type="nc" id="RC3" label="C3"/>
+    <pin side="left"  pos="18" type="IO" id="RC3" label="C3"/>
 
     <pin side="left"  pos="19" type="IO" id="RD0" label="D0"/>
     <pin side="left"  pos="20" type="IO" id="RD1" label="D1"/>    
