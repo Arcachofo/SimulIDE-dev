@@ -195,6 +195,11 @@ void Mcu::updateStep()
 
 void Mcu::attach()
 {
+    if( m_resetPin && (m_resetPin == m_mcuRstPin) )
+    {
+        m_mcuRstPin->controlPin( true, true );
+        m_mcuRstPin->setPinMode( input );
+    }
     if( m_autoLoad )
     {
         if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );

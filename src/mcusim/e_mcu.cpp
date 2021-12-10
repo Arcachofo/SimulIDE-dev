@@ -94,6 +94,10 @@ void eMcu::stepCpu()
 void eMcu::cpuReset( bool reset )
 {
     if( reset ) initialize();
+    else{
+        Simulator::self()->cancelEvents( this );
+        Simulator::self()->addEvent( 1, this );
+    }
     m_resetState = reset;
 }
 
