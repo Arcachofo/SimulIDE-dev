@@ -58,12 +58,12 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
         }
         virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
         {
-            addr = m_mcu->getMapperAddr( addr+m_bank );
-
             if( addr == m_PCLaddr )                  // Writting to PCL
                 PC = v + (m_dataMem[m_PCHaddr]<<8);
 
             else if( addr == 0 ) addr = *m_FSR;      // INDF
+
+            addr = m_mcu->getMapperAddr( addr+m_bank );
 
             McuCore::SET_RAM( addr, v );
         }
@@ -120,8 +120,8 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
         inline void BTFSS( uint8_t f, uint8_t b );
 
         // Control transfers
-        inline void CALL( uint8_t k );
-        inline void GOTO( uint8_t k );
+        inline void CALL( uint16_t k );
+        inline void GOTO( uint16_t k );
 
         // Operations with W and 8-bit literal: W ← OP(k,W)
         inline void MOVLW( uint8_t k );

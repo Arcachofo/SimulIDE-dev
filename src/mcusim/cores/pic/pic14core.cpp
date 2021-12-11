@@ -265,15 +265,15 @@ inline void Pic14Core::BTFSS( uint8_t f, uint8_t b )
 
 // Control transfers
 
-inline void Pic14Core::CALL( uint8_t k )
+inline void Pic14Core::CALL( uint16_t k )
 {
     PC++;
-    CALL_ADDR( k );
+    CALL_ADDR( k + (m_dataMem[m_PCHaddr]<<8) );
 }
 
-inline void Pic14Core::GOTO( uint8_t k )
+inline void Pic14Core::GOTO( uint16_t k )
 {
-    PC = k;
+    PC = k + (m_dataMem[m_PCHaddr]<<8);
     m_mcu->cyclesDone = 2;
 }
 
