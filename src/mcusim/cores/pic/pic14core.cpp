@@ -268,12 +268,12 @@ inline void Pic14Core::BTFSS( uint8_t f, uint8_t b )
 inline void Pic14Core::CALL( uint16_t k )
 {
     PC++;
-    CALL_ADDR( k + (m_dataMem[m_PCHaddr]<<8) );
+    CALL_ADDR( k | ((m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
 }
 
 inline void Pic14Core::GOTO( uint16_t k )
 {
-    PC = k + (m_dataMem[m_PCHaddr]<<8);
+    PC = k | ((m_dataMem[m_PCHaddr] & 0b00011000)<<8);
     m_mcu->cyclesDone = 2;
 }
 
@@ -411,7 +411,7 @@ void Pic14Core::runDecoder()
                         case 0x3900: ANDLW( k ); break; // ANDLW k 11 1001 kkkk kkkk
                         case 0x3A00: XORLW( k ); break; // XORLW k 11 1010 kkkk kkkk
                     }
-                }
+                } break;
                 case 0x3C00: {
                     if((instr & 0x0200)==0 ) SUBLW( k ); // SUBLW k 11 110x kkkk kkkk
                     else                     ADDLW( k ); // ADDLW k 11 111x kkkk kkkk
