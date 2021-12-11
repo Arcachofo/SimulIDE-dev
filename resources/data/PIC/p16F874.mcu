@@ -4,7 +4,7 @@
             inst_cycle="4">
             
     <include file="p16F87x/p16F87x_regs.xml" />
-    <parts>
+
         <!-- BANK 0 -->
         <regblock name="SFR0" start="0x0008" end="0x0009" >
             <register name="PORTD"   addr="0x08" bits="RD0,RD1,RD2,RD3,RD4,RD5,RD6,RD7"/>
@@ -20,19 +20,18 @@
         <datablock name="RAM2" start="0x0120" end="0x017F" mapto="0x0020"/>
         <!-- BANK 3 -->
         <datablock name="RAM3" start="0x01A0" end="0x01FF" mapto="0x00A0"/>
-    </parts>
+
     <include file="p16F87x/p16F87x_int.xml" />
     <include file="p16F87x/p16F87x_perif.xml" />
-    <parts>
+
         <port name="PORTD" pins="8" outreg="PORTD" dirreg="!TRISD">
         </port>
         <port name="PORTE" pins="3" outreg="PORTE" dirreg="!TRISE" inpmask="00000111" >
         </port>
         <adc name="ADC0" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1" >
             <prescaler select="" values="2,8,32"/>
-            <inputs type="PIN" source="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2" />
+            <pins inputs="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2" vref="PORTA3,PORTA2"/>
             <interrupt name="ADC" />
         </adc>
-    </parts>
 
 </mcu>

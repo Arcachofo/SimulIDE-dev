@@ -33,7 +33,7 @@
         </port>
         <adc name="ADC0" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1" >
             <prescaler select="" values="2,8,32"/>
-            <inputs type="PIN" source="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2" />
+            <pins inputs="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2" vref="PORTA3,PORTA2"/>
             <interrupt name="ADC" />
         </adc>
 

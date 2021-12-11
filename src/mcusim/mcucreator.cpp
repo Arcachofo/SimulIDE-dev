@@ -151,7 +151,8 @@ int McuCreator::processFile( QString fileName )
 void McuCreator::createProgMem( uint32_t size )
 {
     mcu->m_flashSize = size;
-    mcu->m_progMem.resize( size, 0xFFFF );
+    if( m_core == "Pic14" ) mcu->m_progMem.resize( size, 0x3FFF );
+    else                    mcu->m_progMem.resize( size, 0xFFFF );
 }
 
 void McuCreator::createDataMem( uint32_t size )
@@ -175,7 +176,7 @@ void McuCreator::createEeprom( QDomElement* e )
     McuEeprom* eeprom = NULL;
     QString eepromName = e->attribute("name");
 
-    if( m_core == "AVR" )  eeprom = new AvrEeprom( mcu, eepromName );
+    if( m_core == "AVR" ) eeprom = new AvrEeprom( mcu, eepromName );
     else return;
 
     mcu->m_modules.emplace_back( eeprom );
@@ -330,7 +331,7 @@ void McuCreator::createInterrupts( QDomElement* i )
 
 void McuCreator::createPort( QDomElement* p )
 {
-    QString name = p->attribute( "name" );
+    QString name    = p->attribute( "name" );
     uint8_t numPins = p->attribute( "pins" ).toUInt(0,0);
 
     McuPort* port;
@@ -340,6 +341,8 @@ void McuCreator::createPort( QDomElement* p )
     mcu->m_ports.m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );
     port->createPins( m_mcuComp );
+
+    setConfigRegs( p, port );
 
     if( p->hasAttribute("clockpins") )
     {
@@ -666,16 +669,21 @@ void McuCreator::createAdc( QDomElement* e )
             for( int i=0; i<prescalers.size(); ++i )
                 adc->m_prescList[i] = prescalers.at(i).toUInt();
         }
-        else if( el.tagName() == "inputs" )
+        else if( el.tagName() == "pins" )
         {
-            QString type = el.attribute("type");
-            if( type == "PIN" )
+            QStringList pins = el.attribute("inputs").remove(" ").split(",");
+            for( QString pinName : pins )
             {
-                QStringList pins = el.attribute("source").remove(" ").split(",");
+                McuPin* pin = mcu->m_ports.getPin( pinName );
+                if( pin ) adc->m_adcPin.emplace_back( pin );
+            }
+            if( el.hasAttribute("vref") )
+            {
+                QStringList pins = el.attribute("vref").remove(" ").split(",");
                 for( QString pinName : pins )
                 {
                     McuPin* pin = mcu->m_ports.getPin( pinName );
-                    if( pin ) adc->m_adcPin.emplace_back( pin );
+                    if( pin ) adc->m_refPin.emplace_back( pin );
         }   }   }
         node = node.nextSibling();
 }   }

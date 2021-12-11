@@ -36,6 +36,9 @@ void PicPin::ConfExtInt( uint8_t bits )
 
 void PicPin::setAnalog( bool an )
 {
+    if( m_isAnalog == an ) return;
+    m_isAnalog = an;
+
     if( an ) // Disable Digital input
     {
         changeCallBack( this, false );

@@ -76,7 +76,7 @@
   <port name="PORTV" pins="4"/> <!-- Fake Port for aVcc, aRef, ADC6, ADC7 -->
   <adc name="ADC0" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" configregsB="ADCSRB" multiplex="ADMUX">
     <prescaler select="" values="2,2,4,8,16,32,64,128"/>
-    <inputs type="PIN" source="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5,PORTV2,PORTV3" />
+    <pins inputs="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5,PORTV2,PORTV3" />
     
     <interrupt name="ADC" />
   </adc>

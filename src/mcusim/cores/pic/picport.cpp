@@ -21,6 +21,7 @@
 #include "picpin.h"
 #include "mcu.h"
 #include "e_mcu.h"
+#include "datautils.h"
 
 PicPort::PicPort( eMcu* mcu, QString name, uint8_t numPins )
        : McuPort( mcu, name, numPins )
@@ -37,3 +38,4 @@ void PicPort::createPins( Mcu* mcuComp )
         m_pins[i] = new PicPin( this, i, m_name+QString::number(i), mcuComp );
     }
 }
+

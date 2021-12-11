@@ -49,6 +49,8 @@ McuPin::~McuPin() {}
 
 void McuPin::initialize()
 {
+    m_isAnalog = false;
+
     setDirection( m_outMask );
     setPullup( m_puMask );
 

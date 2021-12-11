@@ -21,19 +21,19 @@
 #include "mcupin.h"
 #include "e_mcu.h"
 #include "datautils.h"
+#include "regwatcher.h"
 
 PicAdc* PicAdc::createAdc( eMcu* mcu, QString name )
 {
-    /*switch ( type )
+    int type = name.right( 1 ).toInt();
+    switch( type )
     {
         case 0: return new PicAdc0( mcu, name ); break;
-        //case 1: return new PicAdc1( mcu, name ); break;
-        //case 2: return new PicAdc2( mcu, name ); break;
-        //case 3: return new PicAdc3( mcu, name ); break;
+        case 1: return new PicAdc1( mcu, name ); break;
+        case 2: return new PicAdc2( mcu, name ); break;
+        case 3: return new PicAdc3( mcu, name ); break;
         default: return NULL;
-    }*/
-    return new PicAdc0( mcu, name );
-    //return NULL;
+    }
 }
 
 PicAdc::PicAdc( eMcu* mcu, QString name )
@@ -41,10 +41,7 @@ PicAdc::PicAdc( eMcu* mcu, QString name )
 {
     m_ADON = getRegBits( "ADON", mcu );
     m_ADSC = getRegBits( "ADSC0,ADCS1", mcu );
-    m_CHS  = getRegBits( "CH0,CH1,CH2", mcu );
     m_GODO = getRegBits( "GODO", mcu );
-
-    m_PCFG = getRegBits( "PCFG0,PCFG1,PCFG2,PCFG3", mcu );
     m_ADFM = getRegBits( "ADFM", mcu );
 
     m_pRefPin = NULL;
@@ -55,6 +52,8 @@ PicAdc::~PicAdc(){}
 void PicAdc::initialize()
 {
     McuAdc::initialize();
+    m_pRefPin = m_refPin.at(0);
+    m_nRefPin = m_refPin.at(1);
 }
 
 void PicAdc::configureA(uint8_t newADCON0 ) // ADCON0
@@ -71,7 +70,24 @@ void PicAdc::configureA(uint8_t newADCON0 ) // ADCON0
     if( !m_converting && convert ) startConversion();
 }
 
-void PicAdc::configureB( uint8_t newADCON1 ) // ADCON1
+void PicAdc::endConversion()
+{
+    if( m_leftAdjust ) m_adcValue <<= 6;
+    clearRegBits( m_GODO ); // Clear GO/DONE bit
+}
+
+//------------------------------------------------------
+//-- PIC ADC Type 0 ------------------------------------
+
+PicAdc0::PicAdc0( eMcu* mcu, QString name )
+       : PicAdc( mcu, name )
+{
+    m_CHS  = getRegBits( "CHS0,CHS1,CHS2", mcu );
+    m_PCFG = getRegBits( "PCFG0,PCFG1,PCFG2,PCFG3", mcu );
+}
+PicAdc0::~PicAdc0(){}
+
+void PicAdc0::configureB( uint8_t newADCON1 ) // ADCON1
 {
     m_leftAdjust = !getRegBitsBool( newADCON1, m_ADFM );
 
@@ -122,26 +138,9 @@ void PicAdc::configureB( uint8_t newADCON1 ) // ADCON1
             case 15:
                 analog = 0b00000001;
         }
-        for( uint i=0; i<m_adcPin.size(); ++i) m_adcPin[i]->setAnalog( analog & (1<<i) );
+        for( uint i=0; i<m_adcPin.size(); ++i) if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
     }
 }
-
-void PicAdc::endConversion()
-{
-    if( m_leftAdjust ) m_adcValue <<= 6;
-    clearRegBits( m_GODO ); // Clear GO/DONE bit
-}
-
-//------------------------------------------------------
-//-- AVR ADC Type 0 ------------------------------------
-
-PicAdc0::PicAdc0( eMcu* mcu, QString name )
-       : PicAdc( mcu, name )
-{
-    m_pRefPin = mcu->getPin( "PORTA3" );
-    m_nRefPin = mcu->getPin( "PORTA2" );
-}
-PicAdc0::~PicAdc0(){}
 
 double PicAdc0::getVref()
 {
@@ -174,23 +173,62 @@ double PicAdc0::getVref()
 }
 
 //------------------------------------------------------
-//-- AVR ADC Type 1 ------------------------------------
+//-- PIC ADC Type 1 ------------------------------------
 
 PicAdc1::PicAdc1( eMcu* mcu, QString name )
        : PicAdc( mcu, name )
 {
+    m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3", mcu );
+    m_VCFG = getRegBits( "VCFG0,VCFG1", mcu );
+
+    m_ANSEL  = mcu->getReg( "ANSEL" );
+    m_ANSELH = mcu->getReg( "ANSELH" );
+    watchRegNames( "ANSEL" , R_WRITE, this, &PicAdc1::setANSEL , mcu );
+    watchRegNames( "ANSELH", R_WRITE, this, &PicAdc1::setANSELH, mcu );
 }
 PicAdc1::~PicAdc1(){}
+
+void PicAdc1::configureB( uint8_t newADCON1 ) // ADCON1
+{
+    m_leftAdjust = !getRegBitsBool( newADCON1, m_ADFM );
+
+    m_mode = getRegBitsVal( newADCON1, m_VCFG );
+}
+
+void PicAdc1::setANSEL( uint8_t newANSEL )
+{
+    *m_ANSEL = newANSEL;
+    updtANSEL();
+}
+
+void PicAdc1::setANSELH( uint8_t newANSELH )
+{
+    *m_ANSELH = newANSELH;
+    updtANSEL();
+}
+
+void PicAdc1::updtANSEL()
+{
+    uint16_t analog = *m_ANSEL | (*m_ANSELH << 8);
+    for( uint i=0; i<m_adcPin.size(); ++i)
+        if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
+}
 
 double PicAdc1::getVref()
 {
     double vRef = 0;
 
+    switch( m_mode ) {
+        case 0: vRef = 5; break;
+        case 1: vRef = m_pRefPin->getVolt(); break;
+        case 2: vRef = 5-m_nRefPin->getVolt(); break;
+        case 3: vRef = m_pRefPin->getVolt()-m_nRefPin->getVolt(); break;
+    }
     return vRef;
 }
 
 //------------------------------------------------------
-//-- AVR ADC Type 2 ------------------------------------
+//-- PIC ADC Type 2 ------------------------------------
 
 PicAdc2::PicAdc2( eMcu* mcu, QString name )
       : PicAdc0( mcu, name )
@@ -206,7 +244,7 @@ double PicAdc2::getVref()
 }
 
 //------------------------------------------------------
-//-- AVR ADC Type 3 ------------------------------------
+//-- PIC ADC Type 3 ------------------------------------
 
 PicAdc3::PicAdc3( eMcu* mcu, QString name )
        : PicAdc1( mcu, name )

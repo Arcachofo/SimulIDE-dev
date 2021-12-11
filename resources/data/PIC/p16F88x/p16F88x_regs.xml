@@ -33,7 +33,7 @@
         <register name="CCPR2H"  addr="0x1C" bits=""/>
         <register name="CCP2CON" addr="0x1D" bits="CCP2M0,CCP2M1,CCP2M2,CCP2M3,CCP2Y,CCP2X,0,0"/>
         <register name="ADRESH"  addr="0x1E" bits=""/>
-        <register name="ADCON0"  addr="0x1F" bits="ADON,0,GODO,CHS0,CHS1,CHS2,ADCS0,ADCS1"/>
+        <register name="ADCON0"  addr="0x1F" bits="ADON,GODO,CHS0,CHS1,CHS2,CHS3,ADCS0,ADCS1"/>
     </regblock>
     <datablock name="GPR0" start="0x0020" end="0x007F"/>
     <!-- BANK 1 -->
@@ -69,7 +69,7 @@
         <register name="ECCPAS"  addr="0x9C" bits=""/>
         <register name="PSTRCON" addr="0x9D" bits=""/>
         <register name="ADRESL"  addr="0x9E" bits=""/>
-        <register name="ADCON1"  addr="0x9F" bits="PCFG0,PCFG1,PCFG2,PCFG3,0,0,0,ADFM"/>
+        <register name="ADCON1"  addr="0x9F" bits="0,0,0,0,VCFG0,VCFG1,0,ADFM"/>
     </regblock>
     <!-- BANK 2 -->
     <regblock name="SFR2" start="0x0100" end="0x010F">
@@ -100,8 +100,8 @@
         <register name="SRCON"   addr="0x185" bits=""/>
         <mapped                  addr="0x186" mapto="0x86"/><!-- TRISB -->
         <register name="BAUDCTL" addr="0x187" bits=""/>
-        <register name="ANSEL"   addr="0x188" bits=""/>
-        <register name="ANSELH"  addr="0x189" bits=""/>
+        <register name="ANSEL"   addr="0x188" bits="ANSEL0,ANSEL1,ANSEL2,ANSEL3,ANSEL4,ANSEL5,ANSEL6,ANSEL7" reset="11111111"/>
+        <register name="ANSELH"  addr="0x189" bits="" reset="00111111"/>
         <mapped                  addr="0x18A" mapto="0x0A"/><!-- PCLATH -->
         <mapped                  addr="0x18B" mapto="0x0B"/><!-- INTCON -->
         <register name="EECON1"  addr="0x18C" bits="RD,WR,WREN,WRERR,0,0,0,EEPGD"/>

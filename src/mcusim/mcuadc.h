@@ -56,6 +56,7 @@ class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
         uint8_t* m_ADCH; // Actual ram for ADC Reg. High byte
 
         std::vector<McuPin*> m_adcPin; // ADC Pins
+        std::vector<McuPin*> m_refPin; // Vref Pins
 
         std::vector<uint16_t> m_prescList; // Prescaler values
 

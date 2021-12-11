@@ -68,6 +68,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
 
         int m_number;
 
+        bool m_isAnalog;
         bool m_isOut;
         bool m_outMask; // Pin always output
         bool m_inpMask; // Pin always input (inverted: 0 means always input)

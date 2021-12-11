@@ -42,7 +42,7 @@ class MAINMODULE_EXPORT PicAdc : public McuAdc
         virtual void initialize() override;
 
         virtual void configureA( uint8_t newADCON0 ) override;
-        virtual void configureB( uint8_t newADCON1 ) override;
+        //virtual void configureB( uint8_t newADCON1 ) override;
         //virtual void callBack() override { if( !m_converting ) startConversion(); }
 
     protected:
@@ -55,7 +55,6 @@ class MAINMODULE_EXPORT PicAdc : public McuAdc
         regBits_t m_CHS;
         regBits_t m_GODO;
 
-        regBits_t m_PCFG;
         regBits_t m_ADFM;
 
         McuPin* m_pRefPin;
@@ -71,10 +70,12 @@ class MAINMODULE_EXPORT PicAdc0 : public PicAdc
         //virtual void initialize() override;
 
         //virtual void configureA( uint8_t newADCSRA ) override;
-        //virtual void configureB( uint8_t newADCSRB ) override;
+        virtual void configureB( uint8_t newADCSRB ) override;
 
     protected:
         virtual double getVref() override;
+
+        regBits_t m_PCFG;
 };
 
 class MAINMODULE_EXPORT PicAdc1 : public PicAdc
@@ -83,8 +84,19 @@ class MAINMODULE_EXPORT PicAdc1 : public PicAdc
         PicAdc1( eMcu* mcu, QString name );
         ~PicAdc1();
 
+        virtual void configureB( uint8_t newADCSRB ) override;
+
+        void setANSEL( uint8_t newANSEL );
+        void setANSELH( uint8_t newANSELH );
+        void updtANSEL();
+
     protected:
         virtual double getVref() override;
+
+        uint8_t* m_ANSEL;
+        uint8_t* m_ANSELH;
+
+        regBits_t m_VCFG;
 };
 
 class MAINMODULE_EXPORT PicAdc2 : public PicAdc0
