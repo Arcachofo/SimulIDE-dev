@@ -97,11 +97,15 @@
     <name>Amperimeter</name>
     <message>
         <source>Amperimeter</source>
-        <translation>Амперметр</translation>
+        <translation type="vanished">Амперметр</translation>
     </message>
     <message>
         <source>Meters</source>
         <translation>Измерение</translation>
+    </message>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -520,10 +524,6 @@
     <message>
         <source>FlowControl</source>
         <translation>Управление потоком</translation>
-    </message>
-    <message>
-        <source>Mcu Uart</source>
-        <translation></translation>
     </message>
     <message>
         <source>Bipolar</source>
@@ -1109,7 +1109,7 @@ p, li { white-space: pre-wrap; }
         <source>Error reading Chip file:
 %1
 No valid Chip</source>
-        <translation>Ошибка чтения файла чип:
+        <translation type="vanished">Ошибка чтения файла чип:
 %1
 чип не действительный</translation>
     </message>
@@ -1130,7 +1130,9 @@ No valid Chip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Error:
+Not valid Package file:
+%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1861,6 +1863,13 @@ to DomDocument</source>
     </message>
 </context>
 <context>
+    <name>DS1307</name>
+    <message>
+        <source>Perifericals</source>
+        <translation type="unfinished">Периферия</translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Form</source>
@@ -1977,10 +1986,6 @@ to DomDocument</source>
 </context>
 <context>
     <name>Dht22</name>
-    <message>
-        <source>Dht22</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Sensors</source>
         <translation type="unfinished">датчики</translation>
@@ -3273,14 +3278,6 @@ Do you want to save your changes?
         <translation>Резтистивные сенсоры</translation>
     </message>
     <message>
-        <source>NEW_MCU</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>PICs</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>I51</source>
         <translation></translation>
     </message>
@@ -3314,6 +3311,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3587,7 +3588,7 @@ Do you want to save your changes?
     <name>LedBar</name>
     <message>
         <source>LedBar</source>
-        <translation>Светодиодная сборка</translation>
+        <translation type="vanished">Светодиодная сборка</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3627,6 +3628,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led Bar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3739,10 +3744,6 @@ Do you want to save your changes?
 <context>
     <name>LedRgb</name>
     <message>
-        <source>LedRgb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Leds</source>
         <translation type="unfinished">Светодиоды</translation>
     </message>
@@ -3776,6 +3777,10 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Blue:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led Rgb</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3933,24 +3938,24 @@ Do you want to save your changes?
         <translation>Поиск компонентов</translation>
     </message>
     <message>
-        <source>Looks like SimulIDE crashed...
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is the last auto-saved copy of the Circuit
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must save it with any other name if you want to keep it
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is an auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the auto-saved copy of the Circuit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Looks like SimulIDE crashed...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4051,6 +4056,22 @@ Do you want to save your changes?
         <source>Save EEPROM data to file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Reset Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External Oscillator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuBase</name>
@@ -4063,51 +4084,51 @@ Do you want to save your changes?
     <name>McuComponent</name>
     <message>
         <source>Load firmware</source>
-        <translation>Загрузить прошивку</translation>
+        <translation type="vanished">Загрузить прошивку</translation>
     </message>
     <message>
         <source>Reload firmware</source>
-        <translation>Перезагрузить прошивку</translation>
+        <translation type="vanished">Перезагрузить прошивку</translation>
     </message>
     <message>
         <source>Open Serial Monitor.</source>
-        <translation>Открыть Serial Monitor.</translation>
+        <translation type="vanished">Открыть Serial Monitor.</translation>
     </message>
     <message>
         <source>Open Serial Port.</source>
-        <translation>Открыть Serial Port.</translation>
+        <translation type="vanished">Открыть Serial Port.</translation>
     </message>
     <message>
         <source>Load Firmware</source>
-        <translation>Загрузить прошивку</translation>
+        <translation type="vanished">Загрузить прошивку</translation>
     </message>
     <message>
         <source>No File:</source>
-        <translation>Нет файла:</translation>
+        <translation type="vanished">Нет файла:</translation>
     </message>
     <message>
         <source>No File to reload </source>
-        <translation>Нет файла для перезагрузки </translation>
+        <translation type="vanished">Нет файла для перезагрузки </translation>
     </message>
     <message>
         <source>Load EEPROM data</source>
-        <translation>Загрузить данные в EEPROM</translation>
+        <translation type="vanished">Загрузить данные в EEPROM</translation>
     </message>
     <message>
         <source>Save EEPROM data</source>
-        <translation>Сохранить данные из EEPROM</translation>
+        <translation type="vanished">Сохранить данные из EEPROM</translation>
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation>Все файлы (*.*);;ELF файлы (*.elf);;Hex файлы (*.hex)</translation>
+        <translation type="vanished">Все файлы (*.*);;ELF файлы (*.elf);;Hex файлы (*.hex)</translation>
     </message>
     <message>
         <source>Main Mcu</source>
-        <translation>Основной МК</translation>
+        <translation type="vanished">Основной МК</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation>Основные</translation>
+        <translation type="vanished">Основные</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
@@ -4115,27 +4136,15 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Frequency</source>
-        <translation>Частота</translation>
+        <translation type="vanished">Частота</translation>
     </message>
     <message>
         <source>Fimware</source>
-        <translation>Прошивка</translation>
+        <translation type="vanished">Прошивка</translation>
     </message>
     <message>
         <source>Auto Load Firmware at Start</source>
         <translation type="vanished">Автозагрузка прошивки</translation>
-    </message>
-    <message>
-        <source>Open Mcu Monitor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chip not Found: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4444,7 +4453,7 @@ Do you want to save your changes?
     <name>PICComponent</name>
     <message>
         <source>Micro</source>
-        <translation>Микроконтроллеры</translation>
+        <translation type="vanished">Микроконтроллеры</translation>
     </message>
 </context>
 <context>
@@ -4462,23 +4471,23 @@ Do you want to save your changes?
     <name>PicProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>Файл не найден</translation>
+        <translation type="vanished">Файл не найден</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>Файл &quot;%1&quot; не найден.</translation>
+        <translation type="vanished">Файл &quot;%1&quot; не найден.</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Неизвестная ошибка:</translation>
+        <translation type="vanished">Неизвестная ошибка:</translation>
     </message>
     <message>
         <source>Could not Create Pic Processor: &quot;%1&quot;</source>
-        <translation>Не удалось создать PIC микроконтроллер: &quot;%1&quot;</translation>
+        <translation type="vanished">Не удалось создать PIC микроконтроллер: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Could not Load: &quot;%1&quot;</source>
-        <translation>Не удалось загрузить: &quot;%1&quot;</translation>
+        <translation type="vanished">Не удалось загрузить: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -5432,6 +5441,14 @@ Do you want to save your changes?
         <source>Type</source>
         <translation type="unfinished">Тип</translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Имя</translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Логический символ</translation>
+    </message>
 </context>
 <context>
     <name>Switch</name>
@@ -5487,39 +5504,35 @@ Do you want to save your changes?
     <name>TerminalWidget</name>
     <message>
         <source>Send Text:</source>
-        <translation>Текст:</translation>
+        <translation type="vanished">Текст:</translation>
     </message>
     <message>
         <source>    Send Value:</source>
-        <translation>    Данные:</translation>
+        <translation type="vanished">    Данные:</translation>
     </message>
     <message>
         <source>    Print:</source>
-        <translation>    Выводить:</translation>
+        <translation type="vanished">    Выводить:</translation>
     </message>
     <message>
         <source> Value </source>
-        <translation>Данные</translation>
+        <translation type="vanished">Данные</translation>
     </message>
     <message>
         <source>Received From Micro:</source>
-        <translation>Полученные от Микроконтроллеры:</translation>
+        <translation type="vanished">Полученные от Микроконтроллеры:</translation>
     </message>
     <message>
         <source>Sent to Micro:</source>
-        <translation>Отправлено в Микроконтроллеры:</translation>
-    </message>
-    <message>
-        <source>CR</source>
-        <translation></translation>
+        <translation type="vanished">Отправлено в Микроконтроллеры:</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Очистить</translation>
+        <translation type="vanished">Очистить</translation>
     </message>
     <message>
         <source>Unknown Mcu</source>
-        <translation>Неизвестный МК</translation>
+        <translation type="vanished">Неизвестный МК</translation>
     </message>
 </context>
 <context>

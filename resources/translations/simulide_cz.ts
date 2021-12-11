@@ -97,11 +97,15 @@
     <name>Amperimeter</name>
     <message>
         <source>Amperimeter</source>
-        <translation>Ampérmetr</translation>
+        <translation type="vanished">Ampérmetr</translation>
     </message>
     <message>
         <source>Meters</source>
         <translation>Měřidla</translation>
+    </message>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -523,7 +527,7 @@
     </message>
     <message>
         <source>Mcu Uart</source>
-        <translation>Číslo UARTu</translation>
+        <translation type="vanished">Číslo UARTu</translation>
     </message>
     <message>
         <source>Bipolar</source>
@@ -1092,7 +1096,7 @@ p, li { white-space: pre-wrap; }
         <source>Error reading Chip file:
 %1
 No valid Chip</source>
-        <translation>Chyba při čtení souboru integrovaného obvodu:
+        <translation type="vanished">Chyba při čtení souboru integrovaného obvodu:
 %1
 Chybný čip</translation>
     </message>
@@ -1113,7 +1117,9 @@ Chybný čip</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Error:
+Not valid Package file:
+%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1805,6 +1811,13 @@ na DomDocument</translation>
     </message>
 </context>
 <context>
+    <name>DS1307</name>
+    <message>
+        <source>Perifericals</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1909,10 +1922,6 @@ na DomDocument</translation>
 </context>
 <context>
     <name>Dht22</name>
-    <message>
-        <source>Dht22</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Sensors</source>
         <translation type="unfinished">Senzory</translation>
@@ -3118,14 +3127,6 @@ Chcete uložit změny?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NEW_MCU</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PICs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>I51</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3159,6 +3160,10 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3416,7 +3421,7 @@ Chcete uložit změny?
     <name>LedBar</name>
     <message>
         <source>LedBar</source>
-        <translation>Bargraf</translation>
+        <translation type="vanished">Bargraf</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3456,6 +3461,10 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led Bar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3568,10 +3577,6 @@ Chcete uložit změny?
 <context>
     <name>LedRgb</name>
     <message>
-        <source>LedRgb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Leds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3605,6 +3610,10 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Blue:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led Rgb</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3706,24 +3715,24 @@ Chcete uložit změny?
         <translation>Hledání komponent</translation>
     </message>
     <message>
-        <source>Looks like SimulIDE crashed...
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is the last auto-saved copy of the Circuit
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must save it with any other name if you want to keep it
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is an auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the auto-saved copy of the Circuit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Looks like SimulIDE crashed...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3816,6 +3825,22 @@ Chcete uložit změny?
         <source>Save EEPROM data to file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Reset Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External Oscillator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuBase</name>
@@ -3828,75 +3853,47 @@ Chcete uložit změny?
     <name>McuComponent</name>
     <message>
         <source>Load firmware</source>
-        <translation>Načíst firmware</translation>
+        <translation type="vanished">Načíst firmware</translation>
     </message>
     <message>
         <source>Reload firmware</source>
-        <translation>Aktualizovat firmware</translation>
+        <translation type="vanished">Aktualizovat firmware</translation>
     </message>
     <message>
         <source>Open Serial Monitor.</source>
-        <translation>Otevřít monitor sériového portu</translation>
+        <translation type="vanished">Otevřít monitor sériového portu</translation>
     </message>
     <message>
         <source>Open Serial Port.</source>
-        <translation>Otevřít sériový port</translation>
+        <translation type="vanished">Otevřít sériový port</translation>
     </message>
     <message>
         <source>Load Firmware</source>
-        <translation>Načíst firmware</translation>
+        <translation type="vanished">Načíst firmware</translation>
     </message>
     <message>
         <source>No File:</source>
-        <translation>Žádný soubor:</translation>
+        <translation type="vanished">Žádný soubor:</translation>
     </message>
     <message>
         <source>No File to reload </source>
-        <translation>Žádný soubor k aktualizaci </translation>
+        <translation type="vanished">Žádný soubor k aktualizaci </translation>
     </message>
     <message>
         <source>Load EEPROM data</source>
-        <translation>Načíst data do EEPROM</translation>
+        <translation type="vanished">Načíst data do EEPROM</translation>
     </message>
     <message>
         <source>Save EEPROM data</source>
-        <translation>Uložit data z EEPROM</translation>
+        <translation type="vanished">Uložit data z EEPROM</translation>
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation>Všechny soubory (*.*);;ELF soubory (*.elf);;Hex soubory (*.hex)</translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Všechny soubory (*.*);;ELF soubory (*.elf);;Hex soubory (*.hex)</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
         <translation type="obsolete">Logický symbol</translation>
-    </message>
-    <message>
-        <source>Frequency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main Mcu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Mcu Monitor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chip not Found: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fimware</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4205,7 +4202,7 @@ Chcete uložit změny?
     <name>PICComponent</name>
     <message>
         <source>Micro</source>
-        <translation>Mikroprocesory</translation>
+        <translation type="vanished">Mikroprocesory</translation>
     </message>
 </context>
 <context>
@@ -4223,23 +4220,23 @@ Chcete uložit změny?
     <name>PicProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>Soubor nenalezen</translation>
+        <translation type="vanished">Soubor nenalezen</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>Soubor &quot;%1&quot; nebyl nalezen.</translation>
+        <translation type="vanished">Soubor &quot;%1&quot; nebyl nalezen.</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Neznámá chyba:</translation>
+        <translation type="vanished">Neznámá chyba:</translation>
     </message>
     <message>
         <source>Could not Create Pic Processor: &quot;%1&quot;</source>
-        <translation>Nemohu vytvořit procesor PIC: &quot;%1&quot;</translation>
+        <translation type="vanished">Nemohu vytvořit procesor PIC: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Could not Load: &quot;%1&quot;</source>
-        <translation>Nemohu otevřít: &quot;%1&quot;</translation>
+        <translation type="vanished">Nemohu otevřít: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -5158,6 +5155,14 @@ Chcete uložit změny?
         <source>Type</source>
         <translation type="unfinished">Typ</translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Název</translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Logický symbol</translation>
+    </message>
 </context>
 <context>
     <name>Switch</name>
@@ -5213,39 +5218,35 @@ Chcete uložit změny?
     <name>TerminalWidget</name>
     <message>
         <source>Send Text:</source>
-        <translation>Text k odeslání:</translation>
+        <translation type="vanished">Text k odeslání:</translation>
     </message>
     <message>
         <source>    Send Value:</source>
-        <translation>    Hodnota k odeslání:</translation>
+        <translation type="vanished">    Hodnota k odeslání:</translation>
     </message>
     <message>
         <source>    Print:</source>
-        <translation>    Výpis:</translation>
+        <translation type="vanished">    Výpis:</translation>
     </message>
     <message>
         <source> Value </source>
-        <translation> Číslo </translation>
+        <translation type="vanished"> Číslo </translation>
     </message>
     <message>
         <source>Received From Micro:</source>
-        <translation>Přijato z mikroprocesoru:</translation>
+        <translation type="vanished">Přijato z mikroprocesoru:</translation>
     </message>
     <message>
         <source>Sent to Micro:</source>
-        <translation>Odesláno do mikroprocesoru:</translation>
+        <translation type="vanished">Odesláno do mikroprocesoru:</translation>
     </message>
     <message>
         <source>CR</source>
-        <translation>CR</translation>
+        <translation type="vanished">CR</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Smazat</translation>
-    </message>
-    <message>
-        <source>Unknown Mcu</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Smazat</translation>
     </message>
 </context>
 <context>

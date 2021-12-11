@@ -97,11 +97,15 @@
     <name>Amperimeter</name>
     <message>
         <source>Amperimeter</source>
-        <translation>Ampermetre</translation>
+        <translation type="vanished">Ampermetre</translation>
     </message>
     <message>
         <source>Meters</source>
         <translation>Ölçerler</translation>
+    </message>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -472,7 +476,7 @@
     </message>
     <message>
         <source>Mcu Uart</source>
-        <translation>MCU UART</translation>
+        <translation type="vanished">MCU UART</translation>
     </message>
     <message>
         <source>Bipolar</source>
@@ -1042,7 +1046,7 @@ p, li { white-space: pre-wrap; }
         <source>Error reading Chip file:
 %1
 No valid Chip</source>
-        <translation>Hata %1 çip dosyası okunurken hata oluştu.
+        <translation type="vanished">Hata %1 çip dosyası okunurken hata oluştu.
 Geçerli çip yok</translation>
     </message>
     <message>
@@ -1062,7 +1066,9 @@ Geçerli çip yok</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Error:
+Not valid Package file:
+%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1816,6 +1822,13 @@ to DomDocument</source>
     </message>
 </context>
 <context>
+    <name>DS1307</name>
+    <message>
+        <source>Perifericals</source>
+        <translation type="unfinished">Periferik</translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Form</source>
@@ -1932,10 +1945,6 @@ to DomDocument</source>
 </context>
 <context>
     <name>Dht22</name>
-    <message>
-        <source>Dht22</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Sensors</source>
         <translation type="unfinished">Sensörler</translation>
@@ -3254,11 +3263,11 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>NEW_MCU</source>
-        <translation>Yeni MCU</translation>
+        <translation type="vanished">Yeni MCU</translation>
     </message>
     <message>
         <source>PICs</source>
-        <translation>PIC</translation>
+        <translation type="vanished">PIC</translation>
     </message>
     <message>
         <source>I51</source>
@@ -3294,6 +3303,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3570,7 +3583,7 @@ Değişiklikler kaydedilsin mi?
     <name>LedBar</name>
     <message>
         <source>LedBar</source>
-        <translation>Led Çubuk</translation>
+        <translation type="vanished">Led Çubuk</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3610,6 +3623,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led Bar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3722,10 +3739,6 @@ Değişiklikler kaydedilsin mi?
 <context>
     <name>LedRgb</name>
     <message>
-        <source>LedRgb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Leds</source>
         <translation type="unfinished">Ledler</translation>
     </message>
@@ -3759,6 +3772,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Blue:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led Rgb</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3908,24 +3925,24 @@ Değişiklikler kaydedilsin mi?
         <translation>Eleman Ara</translation>
     </message>
     <message>
-        <source>Looks like SimulIDE crashed...
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is the last auto-saved copy of the Circuit
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must save it with any other name if you want to keep it
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is an auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the auto-saved copy of the Circuit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Looks like SimulIDE crashed...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4026,6 +4043,22 @@ Değişiklikler kaydedilsin mi?
         <source>Save EEPROM data to file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Reset Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External Oscillator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuBase</name>
@@ -4038,51 +4071,51 @@ Değişiklikler kaydedilsin mi?
     <name>McuComponent</name>
     <message>
         <source>Load firmware</source>
-        <translation>Firmware yükle</translation>
+        <translation type="vanished">Firmware yükle</translation>
     </message>
     <message>
         <source>Reload firmware</source>
-        <translation>Firmware verisini yeniden yükle</translation>
+        <translation type="vanished">Firmware verisini yeniden yükle</translation>
     </message>
     <message>
         <source>Open Serial Monitor.</source>
-        <translation>Seri Monitörü Aç.</translation>
+        <translation type="vanished">Seri Monitörü Aç.</translation>
     </message>
     <message>
         <source>Open Serial Port.</source>
-        <translation>Seri Portu Aç.</translation>
+        <translation type="vanished">Seri Portu Aç.</translation>
     </message>
     <message>
         <source>Load Firmware</source>
-        <translation>Firmware Yükle</translation>
+        <translation type="vanished">Firmware Yükle</translation>
     </message>
     <message>
         <source>No File:</source>
-        <translation>Dosya Yok:</translation>
+        <translation type="vanished">Dosya Yok:</translation>
     </message>
     <message>
         <source>No File to reload </source>
-        <translation>Yükleme için dosya yok </translation>
+        <translation type="vanished">Yükleme için dosya yok </translation>
     </message>
     <message>
         <source>Load EEPROM data</source>
-        <translation>EEPROM verisini yükle</translation>
+        <translation type="vanished">EEPROM verisini yükle</translation>
     </message>
     <message>
         <source>Save EEPROM data</source>
-        <translation>EEPROM Verisini Kaydet</translation>
+        <translation type="vanished">EEPROM Verisini Kaydet</translation>
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation>Tüm dosyalar (*.*);;ELF Dosyaları (*.elf);;Hex Dosyaları (*.hex)</translation>
+        <translation type="vanished">Tüm dosyalar (*.*);;ELF Dosyaları (*.elf);;Hex Dosyaları (*.hex)</translation>
     </message>
     <message>
         <source>Main Mcu</source>
-        <translation>Ana MCU</translation>
+        <translation type="vanished">Ana MCU</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation>Temel</translation>
+        <translation type="vanished">Temel</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
@@ -4090,27 +4123,15 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Frequency</source>
-        <translation>Frekans</translation>
+        <translation type="vanished">Frekans</translation>
     </message>
     <message>
         <source>Fimware</source>
-        <translation>Firmware</translation>
+        <translation type="vanished">Firmware</translation>
     </message>
     <message>
         <source>Auto Load Firmware at Start</source>
         <translation type="vanished">Başlarken otomatik firmware yükle</translation>
-    </message>
-    <message>
-        <source>Open Mcu Monitor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chip not Found: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4422,7 +4443,7 @@ Değişiklikler kaydedilsin mi?
     <name>PICComponent</name>
     <message>
         <source>Micro</source>
-        <translation>Mikro</translation>
+        <translation type="vanished">Mikro</translation>
     </message>
 </context>
 <context>
@@ -4440,23 +4461,23 @@ Değişiklikler kaydedilsin mi?
     <name>PicProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>Dosya Bulunamadı</translation>
+        <translation type="vanished">Dosya Bulunamadı</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>&quot;%1&quot; dosyası bulunamadı.</translation>
+        <translation type="vanished">&quot;%1&quot; dosyası bulunamadı.</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Bilinmeyen Hata:</translation>
+        <translation type="vanished">Bilinmeyen Hata:</translation>
     </message>
     <message>
         <source>Could not Create Pic Processor: &quot;%1&quot;</source>
-        <translation>PIC işlemcisi oluşturulamadı: &quot;%1&quot;</translation>
+        <translation type="vanished">PIC işlemcisi oluşturulamadı: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Could not Load: &quot;%1&quot;</source>
-        <translation>Yüklenemedi: &quot;%1&quot;</translation>
+        <translation type="vanished">Yüklenemedi: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -5441,6 +5462,14 @@ Değişiklikler kaydedilsin mi?
         <source>Type</source>
         <translation type="unfinished">Tür</translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Ad</translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Mantık Sembolü</translation>
+    </message>
 </context>
 <context>
     <name>Switch</name>
@@ -5496,39 +5525,39 @@ Değişiklikler kaydedilsin mi?
     <name>TerminalWidget</name>
     <message>
         <source>Send Text:</source>
-        <translation>Yazı gönder:</translation>
+        <translation type="vanished">Yazı gönder:</translation>
     </message>
     <message>
         <source>    Send Value:</source>
-        <translation>    Değer gönder:</translation>
+        <translation type="vanished">    Değer gönder:</translation>
     </message>
     <message>
         <source>    Print:</source>
-        <translation>    Yaz:</translation>
+        <translation type="vanished">    Yaz:</translation>
     </message>
     <message>
         <source> Value </source>
-        <translation> Değer </translation>
+        <translation type="vanished"> Değer </translation>
     </message>
     <message>
         <source>Received From Micro:</source>
-        <translation>Mikrodenetleyiciden alınan:</translation>
+        <translation type="vanished">Mikrodenetleyiciden alınan:</translation>
     </message>
     <message>
         <source>Sent to Micro:</source>
-        <translation>Mikrodenetleyiciye gönderilen:</translation>
+        <translation type="vanished">Mikrodenetleyiciye gönderilen:</translation>
     </message>
     <message>
         <source>CR</source>
-        <translation>CR</translation>
+        <translation type="vanished">CR</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Temizle</translation>
+        <translation type="vanished">Temizle</translation>
     </message>
     <message>
         <source>Unknown Mcu</source>
-        <translation>Bilinmeyen MCU</translation>
+        <translation type="vanished">Bilinmeyen MCU</translation>
     </message>
 </context>
 <context>

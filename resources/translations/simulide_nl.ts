@@ -93,11 +93,15 @@
     <name>Amperimeter</name>
     <message>
         <source>Amperimeter</source>
-        <translation>Ampèremeter</translation>
+        <translation type="vanished">Ampèremeter</translation>
     </message>
     <message>
         <source>Meters</source>
         <translation>Meters</translation>
+    </message>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -519,7 +523,7 @@
     </message>
     <message>
         <source>Mcu Uart</source>
-        <translation>MCU uart</translation>
+        <translation type="vanished">MCU uart</translation>
     </message>
     <message>
         <source>Bipolar</source>
@@ -1094,7 +1098,7 @@ p, li { white-space: pre-wrap; }
         <source>Error reading Chip file:
 %1
 No valid Chip</source>
-        <translation>Fout bij lezen Chip bestand:
+        <translation type="vanished">Fout bij lezen Chip bestand:
 %1
 Geen geldige Chip</translation>
     </message>
@@ -1115,7 +1119,9 @@ Geen geldige Chip</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Error:
+Not valid Package file:
+%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1807,6 +1813,13 @@ niet instellen als DomDucument</translation>
     </message>
 </context>
 <context>
+    <name>DS1307</name>
+    <message>
+        <source>Perifericals</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1911,10 +1924,6 @@ niet instellen als DomDucument</translation>
 </context>
 <context>
     <name>Dht22</name>
-    <message>
-        <source>Dht22</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Sensors</source>
         <translation type="unfinished">Sensoren</translation>
@@ -3112,14 +3121,6 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NEW_MCU</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PICs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>I51</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3153,6 +3154,10 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3410,7 +3415,7 @@ Wijzigingen opslaan?
     <name>LedBar</name>
     <message>
         <source>LedBar</source>
-        <translation>LEDbalk</translation>
+        <translation type="vanished">LEDbalk</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3450,6 +3455,10 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led Bar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3562,10 +3571,6 @@ Wijzigingen opslaan?
 <context>
     <name>LedRgb</name>
     <message>
-        <source>LedRgb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Leds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3599,6 +3604,10 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Blue:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led Rgb</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3700,24 +3709,24 @@ Wijzigingen opslaan?
         <translation>Zoek componenten</translation>
     </message>
     <message>
-        <source>Looks like SimulIDE crashed...
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is the last auto-saved copy of the Circuit
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must save it with any other name if you want to keep it
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is an auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the auto-saved copy of the Circuit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Looks like SimulIDE crashed...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3810,6 +3819,22 @@ Wijzigingen opslaan?
         <source>Save EEPROM data to file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Reset Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External Oscillator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>McuBase</name>
@@ -3822,75 +3847,47 @@ Wijzigingen opslaan?
     <name>McuComponent</name>
     <message>
         <source>Load firmware</source>
-        <translation>Firmware laden</translation>
+        <translation type="vanished">Firmware laden</translation>
     </message>
     <message>
         <source>Reload firmware</source>
-        <translation>Firmware herladen</translation>
+        <translation type="vanished">Firmware herladen</translation>
     </message>
     <message>
         <source>Open Serial Monitor.</source>
-        <translation>Open Seriële Monitor.</translation>
+        <translation type="vanished">Open Seriële Monitor.</translation>
     </message>
     <message>
         <source>Open Serial Port.</source>
-        <translation>Open Seriële poort.</translation>
+        <translation type="vanished">Open Seriële poort.</translation>
     </message>
     <message>
         <source>Load Firmware</source>
-        <translation>Laad firmware</translation>
+        <translation type="vanished">Laad firmware</translation>
     </message>
     <message>
         <source>No File:</source>
-        <translation>Geen bestand:</translation>
+        <translation type="vanished">Geen bestand:</translation>
     </message>
     <message>
         <source>No File to reload </source>
-        <translation>Geen bestand om te herladen </translation>
+        <translation type="vanished">Geen bestand om te herladen </translation>
     </message>
     <message>
         <source>Load EEPROM data</source>
-        <translation>Laad EEPROM data</translation>
+        <translation type="vanished">Laad EEPROM data</translation>
     </message>
     <message>
         <source>Save EEPROM data</source>
-        <translation>Sla EEPROM data op</translation>
+        <translation type="vanished">Sla EEPROM data op</translation>
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation>Alle bestanden (*.*);;ELF bestanden (*.elf);;HEX bestanden (*.hex)</translation>
-    </message>
-    <message>
-        <source>Main Mcu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Alle bestanden (*.*);;ELF bestanden (*.elf);;HEX bestanden (*.hex)</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
         <translation type="obsolete">Logisch symbool</translation>
-    </message>
-    <message>
-        <source>Frequency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Mcu Monitor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chip not Found: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fimware</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4199,7 +4196,7 @@ Wijzigingen opslaan?
     <name>PICComponent</name>
     <message>
         <source>Micro</source>
-        <translation>Micro</translation>
+        <translation type="vanished">Micro</translation>
     </message>
 </context>
 <context>
@@ -4217,23 +4214,23 @@ Wijzigingen opslaan?
     <name>PicProcessor</name>
     <message>
         <source>File Not Found</source>
-        <translation>Bestand niet gevonden</translation>
+        <translation type="vanished">Bestand niet gevonden</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; was not found.</source>
-        <translation>Het bestand &quot;%1&quot; is niet gevonden.</translation>
+        <translation type="vanished">Het bestand &quot;%1&quot; is niet gevonden.</translation>
     </message>
     <message>
         <source>Unkown Error:</source>
-        <translation>Onbekende fout:</translation>
+        <translation type="vanished">Onbekende fout:</translation>
     </message>
     <message>
         <source>Could not Create Pic Processor: &quot;%1&quot;</source>
-        <translation>Kon PIC Processor niet maken: &quot;%1&quot;</translation>
+        <translation type="vanished">Kon PIC Processor niet maken: &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Could not Load: &quot;%1&quot;</source>
-        <translation>Kon niet laden: &quot;%1&quot;</translation>
+        <translation type="vanished">Kon niet laden: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -5152,6 +5149,14 @@ Wijzigingen opslaan?
         <source>Type</source>
         <translation type="unfinished">Type</translation>
     </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Naam</translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Logisch symbool</translation>
+    </message>
 </context>
 <context>
     <name>Switch</name>
@@ -5207,39 +5212,35 @@ Wijzigingen opslaan?
     <name>TerminalWidget</name>
     <message>
         <source>Send Text:</source>
-        <translation>Verstuur tekst:</translation>
+        <translation type="vanished">Verstuur tekst:</translation>
     </message>
     <message>
         <source>    Send Value:</source>
-        <translation>    Verstuur waarde:</translation>
+        <translation type="vanished">    Verstuur waarde:</translation>
     </message>
     <message>
         <source>    Print:</source>
-        <translation>    Afdrukken:</translation>
+        <translation type="vanished">    Afdrukken:</translation>
     </message>
     <message>
         <source> Value </source>
-        <translation> Waarde </translation>
+        <translation type="vanished"> Waarde </translation>
     </message>
     <message>
         <source>Received From Micro:</source>
-        <translation>Ontvangen van Micro:</translation>
+        <translation type="vanished">Ontvangen van Micro:</translation>
     </message>
     <message>
         <source>Sent to Micro:</source>
-        <translation>Verstuurd naar Micro:</translation>
+        <translation type="vanished">Verstuurd naar Micro:</translation>
     </message>
     <message>
         <source>CR</source>
-        <translation>CR</translation>
+        <translation type="vanished">CR</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Wissen</translation>
-    </message>
-    <message>
-        <source>Unknown Mcu</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Wissen</translation>
     </message>
 </context>
 <context>
