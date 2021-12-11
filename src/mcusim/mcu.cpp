@@ -283,6 +283,7 @@ bool Mcu::load( QString fileName )
 
     int size = m_eMcu.flashSize();
     QVector<int> pgm( size );
+    for( int i=0; i<size; ++i ) pgm[i] = m_eMcu.getFlashValue( i );
 
     if( !MemData::loadHexMcu( &pgm, cleanPathAbs, m_eMcu.m_wordSize*8, &m_eMcu ) )
         return false;
