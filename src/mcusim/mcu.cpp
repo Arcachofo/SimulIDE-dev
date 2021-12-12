@@ -154,7 +154,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new DoubProp  <Mcu>( "Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
 new StringProp<Mcu>( "Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
-new BoolProp  <Mcu>( "Auto_Load", tr("Load Firmware at Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
+new BoolProp  <Mcu>( "Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
     }} );
     addPropGroup( { tr("Config"), {
 new BoolProp  <Mcu>( "Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ),

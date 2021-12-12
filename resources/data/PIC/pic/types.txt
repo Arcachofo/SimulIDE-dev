@@ -1,0 +1,16 @@
+
+ADC:
+- Type 0: p16F87x.
+- Type 1: p16F88x.
+- Type 2:
+- Type 3: 
+
+Timer:
+- Type 80: 8 bits.
+    
+- Type 81: 8 bits.
+
+- Type 82: 8 bits.
+    
+- Type 160: 16 bits.
+    

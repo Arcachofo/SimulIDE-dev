@@ -3,7 +3,6 @@ VERSION = "1.0.0"
 RELEASE = "-RC1"
 
 TEMPLATE = app
-
 TARGET = simulide
 
 QT += svg

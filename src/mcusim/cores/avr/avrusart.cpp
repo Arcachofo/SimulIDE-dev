@@ -47,8 +47,8 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
 
     m_UBRRnL = mcu->getReg( "UBRR"+n+"L" );
     m_UBRRnH = mcu->getReg( "UBRR"+n+"H" );
-    watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setUBRRnL, m_mcu );
-    watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH, m_mcu );
+    watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setUBRRnL, mcu );
+    watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH, mcu );
 
     m_UDRE = getRegBits( "UDRE"+n, mcu );
     m_TXC  = getRegBits( "TXC"+n, mcu );

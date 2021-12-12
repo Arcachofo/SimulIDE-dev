@@ -76,7 +76,6 @@ inline void Pic14Core::setSubFlags( uint8_t oldV, uint16_t newV, uint8_t src2 )
     write_S_Bit( DC, (newV^oldV^src2) & 0x10 );
 }
 
-
 // Miscellaneous instructions
 
 inline void Pic14Core::RETURN()
@@ -103,7 +102,6 @@ inline void Pic14Core::CLRWDT()
 {
 
 }
-
 
 // ALU operations: dest ← OP(f,W)
 
@@ -223,7 +221,6 @@ inline void Pic14Core::INCFSZ( uint8_t f, uint8_t d )
     if( newV == 0 ) incDefault();
 }
 
-
 // Bit operations
 
 inline void Pic14Core::BCF( uint8_t f, uint8_t b )
@@ -261,7 +258,6 @@ inline void Pic14Core::BTFSS( uint8_t f, uint8_t b )
     if( oldV & bitMask  ) incDefault();
     incDefault();
 }
-
 
 // Control transfers
 
@@ -343,7 +339,7 @@ void Pic14Core::runDecoder()
             } break;
             case 0x0000: {
                 if     ( instr == 0x0062 ) OPTION(); // OPTION 00 0000 0110 0010
-                else if( instr == 0x0063 ) SLEEP();  // SLEEP 00 0000 0110 0011
+                else if( instr == 0x0063 ) SLEEP();  // SLEEP  00 0000 0110 0011
             } break;
             case 0x0004: {
                 if     ( instr == 0x0064 ) CLRWDT(); // CLRWDT 00 0000 0110 0100
