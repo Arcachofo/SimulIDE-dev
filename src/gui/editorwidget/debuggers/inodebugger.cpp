@@ -155,23 +155,12 @@ int InoDebugger::compile( bool )
     QString p_stdout = m_compProcess.readAllStandardOutput();
     if( !p_stdout.isEmpty() ) m_outPane->appendLine( p_stdout );
 
-    int error = -1;
-    if( !p_stderr.isEmpty() )
-    {
-        m_outPane->appendLine( "\n"+p_stderr );
-        QStringList lines = p_stderr.split("\n");
-        for( QString line : lines )
-        {
-            if( !line.contains( "error:" ) ) continue;
-            QStringList words = line.split(":");
-            error = words.at(1).toInt();
-            break;
-    }   }
+    int error = 0;
+    if( !p_stderr.isEmpty() ) error = getError( p_stderr );
     else{
         m_fileList.clear();
         m_fileList.append( m_fileName+m_fileExt );
         m_firmware = m_buildPath+"/build/"+m_fileName+".ino.hex";
-        error = 0;
     }
     QApplication::restoreOverrideCursor();
 

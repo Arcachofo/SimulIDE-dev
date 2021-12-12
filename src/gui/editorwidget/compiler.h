@@ -72,6 +72,8 @@ class Compiler : public QObject
         virtual void preProcess(){;}
         virtual bool postProcess(){return false;}
 
+        int getError( QString txt );
+
         int runBuildStep( QString fullCommand );
         QString replaceData( QString str );
         QString getPath( QString msg );
