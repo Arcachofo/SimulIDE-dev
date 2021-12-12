@@ -62,7 +62,8 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         int m_processorType;
         int m_lastLine;
-        int m_lstType;   // 0 doesn't use ":" (gpasm ), 1 uses ":" (avra, gavrasm)
+        int m_lstType;   // Bit0: 0 doesn't use ":" (gpasm ), 1 uses ":" (avra, gavrasm)
+                         // Bit1: position of flash address (0 or 1)
         int m_langLevel; // 0 for asm, 1 for high level
         int m_codeStart;
 

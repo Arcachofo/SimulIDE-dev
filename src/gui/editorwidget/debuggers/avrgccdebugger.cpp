@@ -28,6 +28,7 @@
 AvrGccDebugger::AvrGccDebugger( CodeEditor* parent, OutPanelText* outPane )
               : cDebugger( parent, outPane )
 {
+    m_addrBytes = 1; // Default for avr-gcc
 }
 AvrGccDebugger::~AvrGccDebugger(){}
 
@@ -54,7 +55,18 @@ bool AvrGccDebugger::getVariables()
 #ifndef Q_OS_UNIX
     objdump += ".exe";
 #endif
-
+    if( !QFileInfo::exists( objdump ) )
+    {
+        objdump = m_toolPath+"avr/bin/avr-objdump";
+    #ifndef Q_OS_UNIX
+        objdump += ".exe";
+    #endif
+        if( !QFileInfo::exists( objdump ) )
+        {
+            outPane()->appendLine( "\nWarning: avr-objdump executable doesn't exist:\n"+objdump );
+            return false;
+        }
+    }
     objdump = addQuotes( objdump );
     elfPath = addQuotes( elfPath );
 
@@ -113,7 +125,30 @@ bool AvrGccDebugger::mapFlashToSource()
     avrSize += ".exe";
     addr2li += ".exe";
 #endif
-
+    if( !QFileInfo::exists( avrSize ) )
+    {
+        avrSize = m_toolPath+"avr/bin/avr-size";
+    #ifndef Q_OS_UNIX
+        avrSize += ".exe";
+    #endif
+        if( !QFileInfo::exists( avrSize ) )
+        {
+            outPane()->appendLine( "\nWarning: avr-size executable doesn't exist:\n"+avrSize );
+            return false;
+        }
+    }
+    if( !QFileInfo::exists( addr2li ) )
+    {
+        addr2li = m_toolPath+"avr/bin/avr-addr2line";
+    #ifndef Q_OS_UNIX
+        addr2li += ".exe";
+    #endif
+        if( !QFileInfo::exists( addr2li ) )
+        {
+            outPane()->appendLine( "\nWarning: avr-addr2line executable doesn't exist:\n"+addr2li );
+            return false;
+        }
+    }
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );
     elfPath = addQuotes( elfPath );
@@ -127,10 +162,11 @@ bool AvrGccDebugger::mapFlashToSource()
     int flashSize;
     if( !lines.isEmpty() )
     {
-        QString size = lines.split("\n").at(1).split("\t").takeFirst().remove(" ");
+        QString size = lines.split("\n").at(1);
+        size = size.split("\t").takeFirst().remove(" ");
         flashSize = size.toInt( &ok );
     }
-    if( !ok ) flashSize = 35000;
+    if( !ok || flashSize == 0 ) flashSize = 35000;
 
     QProcess flashToLine( this );
     flashToLine.start( addr2li + " -e " + elfPath );
@@ -152,6 +188,7 @@ bool AvrGccDebugger::mapFlashToSource()
         if( p_stdout.isEmpty() ) continue;
         if( p_stdout.startsWith("?") ) continue;
 
+        //m_outPane->appendLine(p_stdout);
         int idx = p_stdout.lastIndexOf( ":" );
         if( idx == -1 ) continue;
 
@@ -161,9 +198,9 @@ bool AvrGccDebugger::mapFlashToSource()
             bool ok = false;
             int line = p_stdout.mid( idx+1 ).toInt( &ok );
             if( !ok ) continue;
-            int addr = flashAddr/2;
+            int addr = flashAddr*m_addrBytes/2;
             if( !m_sourceToFlash.contains( line ) )
-            {
+            {//m_outPane->appendLine( "addr " + QString::number(addr) + " line " + QString::number(line) );
                 if( line > m_lastLine ) m_lastLine = line;
                 m_flashToSource[ addr ] = line;
                 m_sourceToFlash[ line ] = addr;

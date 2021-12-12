@@ -17,24 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVRGCCDEBUGGER_H
-#define AVRGCCDEBUGGER_H
+#include "xc8debugger.h"
 
-#include "cdebugger.h"
-
-class AvrGccDebugger : public cDebugger
+Xc8Debugger::Xc8Debugger( CodeEditor* parent, OutPanelText* outPane )
+              : AvrGccDebugger( parent, outPane )
 {
-    public:
-        AvrGccDebugger( CodeEditor* parent, OutPanelText* outPane );
-        ~AvrGccDebugger();
-
-    protected:
-        virtual bool postProcess() override;
-
-        bool getVariables();
-        bool mapFlashToSource();
-
-        int m_addrBytes;
-};
-
-#endif
+    m_addrBytes = 2;
+}
+Xc8Debugger::~Xc8Debugger(){}

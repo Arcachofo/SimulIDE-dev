@@ -26,7 +26,7 @@ Component* Amperimeter::construct( QObject* parent, QString type, QString id )
 LibraryItem* Amperimeter::libraryItem()
 {
     return new LibraryItem(
-        tr( "Amperimeter" ),
+        tr( "Ampmeter" ),
         tr( "Meters" ),
         "amperimeter.png",
         "Amperimeter",

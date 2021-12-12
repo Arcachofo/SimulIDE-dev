@@ -46,10 +46,14 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
         debugger->outPane()->appendLine( "\nWarning: cod file doesn't exist:\n"+codPath );
         return false;
     }
-
 #ifndef Q_OS_UNIX
     gpvc += ".exe";
 #endif
+    if( !QFileInfo::exists( gpvc ) )
+    {
+        debugger->outPane()->appendLine( "\nWarning: gpvc executable doesn't exist:\n"+gpvc );
+        return false;
+    }
 
     gpvc    = addQuotes( gpvc );
     codPath = addQuotes( codPath );

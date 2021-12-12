@@ -97,44 +97,79 @@ bool BaseDebugger::postProcess()
     int srcLineNumber = 0;
     int lastListLine = lstLines.size();
 
-    for( QString srcLine : srcLines )
+    if( m_langLevel ) // High level language
     {
-        srcLineNumber++;
-        srcLine = srcLine.replace("\t", " ").remove(" ");
-        if( isNoValid( srcLine ) ) continue;
-
-        while( true )
+        QString file = m_fileName+m_fileExt;
+        bool found = false;
+        for( QString lstLine : lstLines )
         {
-            if( ++lstLineNumber >= lastListLine ) break;      // End of lst file
-            lstLine = lstLines.at( lstLineNumber-1 );
-            lstLine = lstLine.replace("\t", " ");
-            if( isNoValid( lstLine ) ) continue;
+            if( lstLine.contains( file ) )
+            {
+                QString str = lstLine.split( file ).takeLast();
+                QStringList words = str.remove(":").split(" ");
+                words.removeAll("");
+                if( words.isEmpty() ) continue;
+                str = words.first();
+                bool ok = false;
+                srcLineNumber = str.toInt( &ok );
+                if( ok ) found = true;
+            }
+            if( found )
+            {
+                if( m_lstType & 1 ) lstLine = lstLine.split(":").last();
+                QStringList words = lstLine.split(" ");
+                words.removeAll("");
 
-            QString line = lstLine;
-            line = line.remove(" ");
-            if( line.contains( srcLine ) )
+                bool ok = false;
+                int addrIndex = (m_lstType & 2)>>1;
+                if( addrIndex )  // check if line valid: first item should be a number
+                {
+                    words.at( 0 ).toInt( &ok, 16 );
+                    if( !ok ) continue;
+                }
+                lstLine = words.at( addrIndex );
+                int address = lstLine.toInt( &ok, 16 );
+                if( ok )
+                {
+                    setLineToFlash( srcLineNumber, m_codeStart+address );
+                    found = false;
+                    continue;
+                }
+            }
+        }
+    }
+    else              // asm
+    {
+        for( QString srcLine : srcLines )
+        {
+            srcLineNumber++;
+            srcLine = srcLine.replace("\t", " ").remove(" ");
+            if( isNoValid( srcLine ) ) continue;
+
+            while( true )
             {
-                if( m_langLevel )
-                { if( line.contains( m_fileName+m_fileExt ) ) break; }// Line found
-                else break;          // Line found
-        }   }
-        if( lstLineNumber >= lastListLine ) lstLineNumber = 0;
-        else{
-            if( m_langLevel )
-            {
-                lstLineNumber++;
+                if( ++lstLineNumber >= lastListLine ) break;      // End of lst file
                 lstLine = lstLines.at( lstLineNumber-1 );
                 lstLine = lstLine.replace("\t", " ");
-            }
-            if( m_lstType ) lstLine = lstLine.split(":").last();
-            QStringList words = lstLine.split(" ");
-            words.removeAll("");
-            lstLine = words.first();
+                if( isNoValid( lstLine ) ) continue;
 
-            bool ok = false;
-            int address = lstLine.toInt( &ok, 16 );
-            if( ok ) setLineToFlash( srcLineNumber, m_codeStart+address );
-    }   }
+                QString line = lstLine;
+                line = line.remove(" ");
+                srcLine = srcLine.split("//").first();
+                if( line.contains( srcLine ) ) break;          // Line found
+            }
+            if( lstLineNumber >= lastListLine ) lstLineNumber = 0;
+            else{
+                if( m_lstType & 1 ) lstLine = lstLine.split(":").last();
+                QStringList words = lstLine.split(" ");
+                words.removeAll("");
+                lstLine = words.at( (m_lstType & 2)>>1 );
+
+                bool ok = false;
+                int address = lstLine.toInt( &ok, 16 );
+                if( ok ) setLineToFlash( srcLineNumber, m_codeStart+address );
+        }   }
+    }
     return true;
 }
 
@@ -161,7 +196,11 @@ void BaseDebugger::getInfoInFile( QString line )
                 if( m_compDialog ) m_compDialog->setDevice( m_device );
             }
             else if( word == "board" )  m_board  = wordList.takeFirst();
-            else if( word == "family" ) m_family = wordList.takeFirst();
+            else if( word == "family" )
+            {
+                m_family = wordList.takeFirst();
+                if( m_compDialog ) m_compDialog->setFamily( m_family );
+            }
 }   }   }
 
 bool BaseDebugger::isNoValid( QString line )
@@ -181,6 +220,7 @@ void BaseDebugger::setLineToFlash( int line, int addr )
 {
     if( !m_sourceToFlash.contains( line ) )
     {
+        //qDebug() << " line:" << line << "addr:" << addr;
         if( line > m_lastLine ) m_lastLine = line;
         m_flashToSource[ addr ] = line;
         m_sourceToFlash[ line ] = addr;

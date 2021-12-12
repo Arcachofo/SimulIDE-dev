@@ -176,7 +176,7 @@ int Compiler::compile( bool debug )
             else arguments = arguments.replace( "$device", m_device );
         }
         error = runBuildStep( command + arguments );
-        if( error ) break;
+        if( error == -1 ) break;
     }
     if( error == 0 )
     {
@@ -187,7 +187,8 @@ int Compiler::compile( bool debug )
         if( m_compName != "None" && !m_command.isEmpty()  )
             m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
     }
-    else m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
+    else if( error == 1 ) m_outPane->appendLine( "\n"+tr("     WARNING: Compilation Not Done")+"\n" );
+    else if( error ==-1 ) m_outPane->appendLine( "\n"+tr("     ERROR!!! Compilation Failed")+"\n" );
     QApplication::restoreOverrideCursor();
     return error;
 }
@@ -203,7 +204,8 @@ int Compiler::runBuildStep( QString fullCommand )
     QString p_stderr = m_compProcess.readAllStandardError();
     QString p_stdout = m_compProcess.readAllStandardOutput();
 
-    if( !p_stdout.isEmpty() )
+    if( p_stdout.isEmpty() && p_stderr.isEmpty() ) error = 1;
+    else if( !p_stdout.isEmpty() )
     {
         m_outPane->appendLine( p_stdout+"\n" );
         p_stdout = p_stdout.toLower();
@@ -211,6 +213,7 @@ int Compiler::runBuildStep( QString fullCommand )
     }
     if( !p_stderr.isEmpty() )
     {
+        m_outPane->appendLine( p_stderr+"\n" );
         QString stde = p_stderr;
         if( stde.toLower().contains( QRegExp("\\berror\\b") ))
         {
@@ -218,6 +221,7 @@ int Compiler::runBuildStep( QString fullCommand )
             m_outPane->appendLine( p_stderr+"\n" );
             error = -1;
     }   }
+
     return error;
 }
 

@@ -33,6 +33,7 @@
 #include "inodebugger.h"
 #include "b16asmdebugger.h"
 #include "avrgccdebugger.h"
+#include "xc8debugger.h"
 #include "sdccdebugger.h"
 #include "picasmdebugger.h"
 
@@ -243,6 +244,7 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce , QStri
     }
     if     ( type == "arduino")  debugger = new InoDebugger( ce, &m_outPane );
     else if( type == "avrgcc" )  debugger = new AvrGccDebugger( ce, &m_outPane );
+    else if( type == "xc8" )     debugger = new Xc8Debugger( ce, &m_outPane );
     else if( type == "sdcc" )    debugger = new SdccDebugger( ce, &m_outPane );
     else if( type == "gcbasic" ) debugger = new GcbDebugger( ce, &m_outPane );
 
