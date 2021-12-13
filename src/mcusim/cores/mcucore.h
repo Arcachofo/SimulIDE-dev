@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT McuCore
         void CALL_ADDR( uint32_t addr )
         {
             PUSH_STACK( PC );// Push current PC to stack
-            PC = addr;
+            setPC( addr );
             m_mcu->cyclesDone = m_retCycles;
         }
 
@@ -74,7 +74,7 @@ class MAINMODULE_EXPORT McuCore
         }
         void RET()
         {
-            PC = POP_STACK();
+            setPC( POP_STACK() );
             m_mcu->cyclesDone = m_retCycles;
         }
 
@@ -105,9 +105,11 @@ class MAINMODULE_EXPORT McuCore
 
         void incDefault()
         {
-            PC++;
+            setPC( PC+1 );
             m_mcu->cyclesDone = 1;
         }
+
+        virtual void setPC( uint32_t pc ) { PC = pc; }
 
         void SET_REG16_LH( uint16_t addr, uint16_t val )
         {

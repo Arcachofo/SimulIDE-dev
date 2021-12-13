@@ -59,7 +59,7 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
         virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
         {
             if( addr == m_PCLaddr )                  // Writting to PCL
-                PC = v + (m_dataMem[m_PCHaddr]<<8);
+                setPC( v + (m_dataMem[m_PCHaddr]<<8) );
 
             else if( addr == 0 ) addr = *m_FSR;      // INDF
 
@@ -79,6 +79,12 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
             if( m_sp == 0 ) m_sp = 7;
             else            m_sp--;
             return m_stack[m_sp];
+        }
+
+        virtual void setPC( uint32_t pc ) override
+        {
+            PC = pc;
+            m_dataMem[ m_PCLaddr] = PC & 0xFF;
         }
 
         inline void setValue( uint8_t newV, uint8_t f, uint8_t d );

@@ -256,13 +256,12 @@ inline void Pic14Core::BTFSS( uint8_t f, uint8_t b )
 
 inline void Pic14Core::CALL( uint16_t k )
 {
-    PC++;
     CALL_ADDR( k | ((m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
 }
 
 inline void Pic14Core::GOTO( uint16_t k )
 {
-    PC = k | ((m_dataMem[m_PCHaddr] & 0b00011000)<<8);
+    setPC( k | ((m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
     m_mcu->cyclesDone = 2;
 }
 
@@ -316,7 +315,6 @@ void Pic14Core::runDecoder()
     uint16_t instr = m_progMem[PC] & 0x3FFF;
 
     incDefault();
-    m_dataMem[ m_PCLaddr] = PC&0xFF;
 
     if( (instr & 0x3F80) == 0 )  // Miscellaneous instrs
     {
