@@ -192,6 +192,7 @@ inline void Pic14Core::RRF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV >> 1;
+    if( *m_STATUS & 1<<C ) newV |= 1<<7; // Carry
     setValue( newV, f, d );
     write_S_Bit( C, oldV & 1 );
 }
@@ -200,6 +201,7 @@ inline void Pic14Core::RLF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV << 1;
+    if( *m_STATUS & 1<<C ) newV |= 1; // Carry
     setValue( newV, f, d );
     write_S_Bit( C, oldV & 0x80 );
 }
