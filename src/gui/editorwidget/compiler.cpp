@@ -224,7 +224,7 @@ int Compiler::getError( QString txt )
         QStringList words = line.split(":");
         bool ok = false;
         int e = words.at(1).toInt( &ok );
-        if( ok ) error = e;
+        if( ok && e>0 ) error = e;
         break;
     }
     return error;
