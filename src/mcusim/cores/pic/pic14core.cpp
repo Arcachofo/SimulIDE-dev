@@ -52,7 +52,6 @@ void Pic14Core::setBank( uint8_t bank )
 
 inline void Pic14Core::setValue( uint8_t newV, uint8_t f, uint8_t d )
 {
-    incDefault();
     if( d ) SET_RAM( f, newV );
     else    m_Wreg = newV;
 }
@@ -107,13 +106,11 @@ inline void Pic14Core::CLRWDT()
 
 inline void Pic14Core::MOVWF( uint8_t f )
 {
-    incDefault();
     SET_RAM( f, m_Wreg);
 }
 
 inline void Pic14Core::CLRF( uint8_t f )
 {
-    incDefault();
     SET_RAM( f, 0 );
     write_S_Bit( Z, true );
 }
@@ -225,7 +222,6 @@ inline void Pic14Core::INCFSZ( uint8_t f, uint8_t d )
 
 inline void Pic14Core::BCF( uint8_t f, uint8_t b )
 {
-    incDefault();
     uint8_t newV = GET_RAM( f );
     newV &= ~(1<<b);
 
@@ -234,7 +230,6 @@ inline void Pic14Core::BCF( uint8_t f, uint8_t b )
 
 inline void Pic14Core::BSF( uint8_t f, uint8_t b )
 {
-    incDefault();
     uint8_t newV = GET_RAM( f );
     newV |= 1<<b;
 
@@ -247,7 +242,6 @@ inline void Pic14Core::BTFSC( uint8_t f, uint8_t b )
     uint8_t bitMask = 1<<b;
 
     if( (oldV & bitMask) == 0 ) incDefault();
-    incDefault();
 }
 
 inline void Pic14Core::BTFSS( uint8_t f, uint8_t b )
@@ -256,7 +250,6 @@ inline void Pic14Core::BTFSS( uint8_t f, uint8_t b )
     uint8_t bitMask = 1<<b;
 
     if( oldV & bitMask  ) incDefault();
-    incDefault();
 }
 
 // Control transfers
@@ -278,7 +271,6 @@ inline void Pic14Core::GOTO( uint16_t k )
 inline void Pic14Core::MOVLW( uint8_t k )
 {
     m_Wreg = k;
-    incDefault();
 }
 
 inline void Pic14Core::RETLW( uint8_t k )
@@ -291,21 +283,18 @@ inline void Pic14Core::IORLW( uint8_t k )
 {
     m_Wreg |= k;
     write_S_Bit( Z, m_Wreg==0 );
-    incDefault();
 }
 
 inline void Pic14Core::ANDLW( uint8_t k )
 {
     m_Wreg &= k;
     write_S_Bit( Z, m_Wreg==0 );
-    incDefault();
 }
 
 inline void Pic14Core::XORLW( uint8_t k )
 {
     m_Wreg ^= k;
     write_S_Bit( Z, m_Wreg==0 );
-    incDefault();
 }
 
 inline void Pic14Core::SUBLW( uint8_t k ) //// C,DC,Z
@@ -313,7 +302,6 @@ inline void Pic14Core::SUBLW( uint8_t k ) //// C,DC,Z
     uint8_t oldW = m_Wreg;
     m_Wreg -= k;
     setSubFlags( oldW, m_Wreg, k );
-    incDefault();
 }
 
 inline void Pic14Core::ADDLW( uint8_t k ) //// C,DC,Z
@@ -321,15 +309,16 @@ inline void Pic14Core::ADDLW( uint8_t k ) //// C,DC,Z
     uint8_t oldW = m_Wreg;
     m_Wreg += k;
     setAddFlags( oldW, m_Wreg, k );
-    incDefault();
 }
 
 void Pic14Core::runDecoder()
 {
     uint16_t instr = m_progMem[PC] & 0x3FFF;
 
-    if( instr == 0 ) incDefault(); // NOP
-    else if( (instr & 0x3F80) == 0 )  // Miscellaneous instrs
+    incDefault();
+    m_dataMem[ m_PCLaddr] = PC&0xFF;
+
+    if( (instr & 0x3F80) == 0 )  // Miscellaneous instrs
     {
         switch( instr & 0x000C)
         {
@@ -415,5 +404,4 @@ void Pic14Core::runDecoder()
             }
         }
     }
-    m_dataMem[ m_PCLaddr] = PC&0xFF;
 }
