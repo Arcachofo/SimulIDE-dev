@@ -243,8 +243,22 @@ bool CodeEditor::compile( bool debug )
 void CodeEditor::addBreakPoint( int line )
 {
     if( EditorWindow::self()->debugState() == DBG_RUNNING ) return;
-    line = EditorWindow::self()->debugger()->getValidLine( line );
+    if( EditorWindow::self()->debugState() > DBG_STOPPED )
+        line = m_compiler->getValidLine( line );
     if( !m_brkPoints.contains( line ) ) m_brkPoints.append( line );
+}
+
+void CodeEditor::startDebug()
+{
+    setReadOnly( true );
+    QList<int> brkPoints;
+    for( int line : m_brkPoints )
+    {
+        line = EditorWindow::self()->debugger()->getValidLine( line );
+        if( !brkPoints.contains( line ) ) brkPoints.append( line );
+    }
+    m_brkPoints = brkPoints;
+    update();
 }
 
 void CodeEditor::updateScreen()
@@ -456,8 +470,8 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
                 m_brkAction = 0;
                 m_lNumArea->lastPos = 0;
             }
-            if(( EditorWindow::self()->debugState() > DBG_STOPPED )
-              && m_brkPoints.contains( lineNumber )) // Draw breakPoint icon
+            if(/*( EditorWindow::self()->debugState() > DBG_STOPPED )&& */
+                    m_brkPoints.contains( lineNumber )) // Draw breakPoint icon
             {
                 painter.setBrush( QColor(Qt::yellow) );
                 painter.setPen( Qt::NoPen );
@@ -540,21 +554,21 @@ LineNumberArea::~LineNumberArea(){}
 void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
 {
     event->accept();
-    if( !EditorWindow::self()->debugStarted() ) return;
+    //if( !EditorWindow::self()->debugStarted() ) return;
     
     QMenu menu;
 
-    QAction *addBrkAction = menu.addAction( QIcon(":/breakpoint.png"),tr( "Add BreakPoint" ) );
+    QAction* addBrkAction = menu.addAction( QIcon(":/breakpoint.png"),tr( "Add BreakPoint" ) );
     connect( addBrkAction, SIGNAL( triggered()),
                m_codeEditor, SLOT(slotAddBreak()), Qt::UniqueConnection );
 
-    QAction *remBrkAction = menu.addAction( QIcon(":/nobreakpoint.png"),tr( "Remove BreakPoint" ) );
+    QAction* remBrkAction = menu.addAction( QIcon(":/nobreakpoint.png"),tr( "Remove BreakPoint" ) );
     connect( remBrkAction, SIGNAL( triggered()),
                m_codeEditor, SLOT(slotRemBreak()), Qt::UniqueConnection );
 
     menu.addSeparator();
 
-    QAction *clrBrkAction = menu.addAction( QIcon(":/remove.png"),tr( "Clear All BreakPoints" ) );
+    QAction* clrBrkAction = menu.addAction( QIcon(":/remove.png"),tr( "Clear All BreakPoints" ) );
     connect( clrBrkAction, SIGNAL( triggered()),
                m_codeEditor, SLOT(slotClearBreak()), Qt::UniqueConnection );
 

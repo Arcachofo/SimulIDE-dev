@@ -148,8 +148,8 @@ bool EditorWindow::initDebbuger()
     if( ok )  // OK: Start Debugging
     {
         m_debugDoc = getCodeEditor();
-        m_debugDoc->setReadOnly( true );
         m_debugger = m_debugDoc->getCompiler();
+        m_debugDoc->startDebug();
 
         stepOverAct->setVisible( m_stepOver );
         McuInterface::self()->setDebugging( true );
@@ -207,7 +207,7 @@ void EditorWindow::stopDebbuger()
         m_state = DBG_STOPPED;
         m_debugDoc->setDebugLine( 0 );
         m_debugDoc->setReadOnly( false );
-        m_debugDoc->updateScreen();
+        //m_debugDoc->updateScreen();
     }
     m_outPane.appendLine( "\n"+tr("Debugger Stopped ")+"\n" );
 }
