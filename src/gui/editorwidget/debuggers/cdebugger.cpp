@@ -42,7 +42,7 @@ cDebugger::~cDebugger(){}
 
 void cDebugger::preProcess()
 {
-    QStringList lines = fileToStringList( m_file, "cDebugger::preProcess" );
+    QStringList lines = fileToStringList( m_file, "BaseDebugger::preProcess" );
     getInfoInFile( lines.first() );
 
     m_varList.clear();

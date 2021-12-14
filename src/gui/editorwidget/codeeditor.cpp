@@ -109,6 +109,7 @@ void CodeEditor::setFile( const QString filePath )
 
     QString extension = getFileExt( filePath );
 
+    QString code = "00";
     if( extension == ".gcb" )
     {
         m_hlighter->readSintaxFile( m_sintaxPath + "gcbasic.sintax" );
@@ -123,7 +124,7 @@ void CodeEditor::setFile( const QString filePath )
         if( extension == ".ino" )
             m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );
         else if( extension == ".cpp" || extension == ".c")
-            m_compiler = EditorWindow::self()->createDebugger( "None", this, "10" );
+            code = "10";
     }
     else if( extension == ".s" )
     {
@@ -152,7 +153,6 @@ void CodeEditor::setFile( const QString filePath )
         {
                 m_outPane->appendLine( "I51 asm\n" );
                 m_hlighter->readSintaxFile( m_sintaxPath + "i51asm.sintax" );
-                m_compiler = EditorWindow::self()->createDebugger( "None", this );
         }
         else m_outPane->appendLine( "Unknown asm\n" );
     }
@@ -180,7 +180,15 @@ void CodeEditor::setFile( const QString filePath )
     {
         //m_compiler = new B16AsmDebugger( this, m_outPane );
     }
-    if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "None", this );
+    QStringList lines = fileToStringList( filePath, "CodeEditor::setFile" );
+    QString line = lines.first();
+    if( !m_compiler )
+    {
+        QString compiler = BaseDebugger::getValue( line, "compiler" );
+        if( compiler.isEmpty() ) compiler = "None";
+        m_compiler = EditorWindow::self()->createDebugger( compiler, this, code );
+    }
+    m_compiler->getInfoInFile( line );
 }
 
 int CodeEditor::getSintaxCoincidences()

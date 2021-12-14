@@ -48,11 +48,14 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         void setVarList( QStringList varNames ) { m_varNames = varNames; }
 
         QList<int> getSubLines() { return m_subLines; }
+
+        virtual void getInfoInFile( QString line );
+
+        static QString getValue( QString line, QString word );
         
         bool m_stepOver;
 
     protected:
-        virtual void getInfoInFile( QString line );
         virtual void preProcess() override;
         virtual bool postProcess() override;
 

@@ -62,11 +62,6 @@ int SdccDebugger::compile( bool debug )
     return error;
 }
 
-void SdccDebugger::preProcess()
-{
-    cDebugger::preProcess();
-}
-
 bool SdccDebugger::postProcess()
 {
     m_flashToSource.clear();

@@ -71,7 +71,7 @@ bool BaseDebugger::upload()
 
 void BaseDebugger::preProcess()
 {
-    QStringList lines = fileToStringList( m_file, "cDebugger::preProcess" );
+    QStringList lines = fileToStringList( m_file, "BaseDebugger::preProcess" );
     getInfoInFile( lines.first() );
     m_codeStart = 0;
 }
@@ -89,8 +89,8 @@ bool BaseDebugger::postProcess()
         return false;
     }
     QString srcFile = m_fileDir + m_fileName + m_fileExt;
-    QStringList srcLines = fileToStringList( srcFile, "AsmDebugger::postProcess" );
-    QStringList lstLines = fileToStringList( lstFile, "AsmDebugger::postProcess" );
+    QStringList srcLines = fileToStringList( srcFile, "BaseDebugger::postProcess" );
+    QStringList lstLines = fileToStringList( lstFile, "BaseDebugger::postProcess" );
 
     QString lstLine;
     int lstLineNumber = 0;
@@ -175,33 +175,51 @@ bool BaseDebugger::postProcess()
 
 void BaseDebugger::getInfoInFile( QString line )
 {
-    line = line.toLower();
+    QString device = getValue( line, "device" );
+    if( !device.isEmpty() )
+    {
+        m_device = device;
+        if( m_compDialog ) m_compDialog->setDevice( m_device );
+    }
+    QString board = getValue( line, "board" );
+    if( !board.isEmpty() ) m_board = board;
+
+    QString family = getValue( line, "family" );
+    if( !family.isEmpty() )
+    {
+        m_family = family;
+        if( m_compDialog ) m_compDialog->setFamily( m_family );
+    }
+}
+
+QString BaseDebugger::getValue( QString line, QString key ) // Static
+{
+    QString lineL = line.toLower();
+    if( !lineL.contains( key.toLower() ) ) return "";
+
+    QString value = "";
     QStringList wordList = line.split(" ");
 
-    while( wordList.size() > 2 )
+    while( wordList.size() > 1 )
     {
         QString word = wordList.takeFirst();
-        if( word == "device" || word == "board" || word == "family" )
+        if( word.isEmpty() ) continue;
+        if( word.toLower().contains( key ) )
         {
             if( word.contains("=") )
             {
-                QString second = word;
-                second = second.split("=").last();
-                if( !second.isEmpty() ) wordList.prepend( second );
+                value = word.split("=").last();
+                if( !value.isEmpty() ) break;
+                if( wordList.isEmpty() ) break;
             }
-            else if( wordList.takeFirst() != "=" ) continue;
-            if( word == "device" )
-            {
-                m_device = wordList.takeFirst();
-                if( m_compDialog ) m_compDialog->setDevice( m_device );
-            }
-            else if( word == "board" )  m_board  = wordList.takeFirst();
-            else if( word == "family" )
-            {
-                m_family = wordList.takeFirst();
-                if( m_compDialog ) m_compDialog->setFamily( m_family );
-            }
-}   }   }
+            word = wordList.takeFirst();
+            if( word.contains("=") ) value = word.split("=").last();
+            if( !value.isEmpty() ) break;
+            if( wordList.isEmpty() ) break;
+            value = wordList.takeFirst();
+    }   }
+    return value;
+}
 
 bool BaseDebugger::isNoValid( QString line )
 {

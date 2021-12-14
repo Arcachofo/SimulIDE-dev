@@ -65,10 +65,11 @@ class Compiler : public QObject
 
         void readSettings();
 
+        virtual void getInfoInFile( QString line ){;}
+
         OutPanelText* outPane() { return m_outPane; }
 
     protected:
-        virtual void getInfoInFile( QString line ){;}
         virtual void preProcess(){;}
         virtual bool postProcess(){return false;}
 

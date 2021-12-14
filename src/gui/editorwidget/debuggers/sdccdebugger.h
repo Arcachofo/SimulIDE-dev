@@ -31,7 +31,6 @@ class SdccDebugger : public cDebugger
         virtual int compile( bool debug ) override;
 
     protected:
-        virtual void preProcess() override;
         virtual bool postProcess() override;
 
         bool findCSEG();
