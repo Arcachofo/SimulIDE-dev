@@ -28,6 +28,7 @@ Pic14Core::Pic14Core( eMcu* mcu )
     m_bank = 0;
 
     m_FSR = m_mcu->getReg( "FSR" );
+    m_OPTION = m_mcu->getReg( "OPTION" );
 
     m_PCLaddr = mcu->getRegAddress("PCL");
     m_PCHaddr = mcu->getRegAddress("PCLATH");
@@ -61,45 +62,33 @@ inline void Pic14Core::setValueZ( uint8_t newV, uint8_t f, uint8_t d )
     write_S_Bit( Z, newV==0 );
 }
 
-inline void Pic14Core::setAddFlags( uint8_t oldV, uint16_t newV, uint8_t src2 )
+uint8_t Pic14Core::add( uint8_t val1, uint16_t val2 )
 {
-    write_S_Bit( Z, newV==0 );
-    write_S_Bit( C, !(newV & 0x100) );
-    write_S_Bit( DC, (newV^oldV^src2) & 0x10 );
-}
-
-inline void Pic14Core::setSubFlags( uint8_t oldV, uint16_t newV, uint8_t src2 )
-{
-    write_S_Bit( Z, newV==0 );
-    write_S_Bit( C, !(newV & 0x100) );
-    write_S_Bit( DC, (newV^oldV^src2) & 0x10 );
+    uint16_t newV = val1 + val2;
+    write_S_Bit( Z, (newV & 0xFF)==0 );
+    write_S_Bit( C, newV & 0x100 );
+    write_S_Bit( DC, (val1 & 0xF) + (val2 & 0xF) + (val2 & 0x100) > 0xF ); //
+    return newV;
 }
 
 // Miscellaneous instructions
 
-inline void Pic14Core::RETURN()
-{
-    RET();
-}
+inline void Pic14Core::RETURN() { RET(); }
 
-inline void Pic14Core::RETFIE()
-{
-    RETI();
-}
+inline void Pic14Core::RETFIE() { RETI(); }
 
-inline void Pic14Core::OPTION()
-{
-
-}
+inline void Pic14Core::OPTION() { *m_OPTION = m_Wreg; }
 
 inline void Pic14Core::SLEEP()
 {
-
+    write_S_Bit( PD, false );
+    write_S_Bit( TO, true );
 }
 
 inline void Pic14Core::CLRWDT()
 {
-
+    write_S_Bit( PD, true );
+    write_S_Bit( TO, true );
 }
 
 // ALU operations: dest ← OP(f,W)
@@ -117,11 +106,8 @@ inline void Pic14Core::CLRF( uint8_t f )
 
 inline void Pic14Core::SUBWF( uint8_t f, uint8_t d )
 {
-    uint8_t oldV = GET_RAM( f ) ;
-    int16_t newV = oldV - m_Wreg;
-
+    uint8_t newV = add( GET_RAM( f ), 256-m_Wreg );  // Substract by adding Two's complement
     setValue( newV, f, d );
-    setSubFlags( oldV, newV, m_Wreg );
 }
 
 inline void Pic14Core::DECF( uint8_t f, uint8_t d )
@@ -134,7 +120,6 @@ inline void Pic14Core::IORWF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV | m_Wreg;
-
     setValueZ( newV, f, d );
 }
 
@@ -142,7 +127,6 @@ inline void Pic14Core::ANDWF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV & m_Wreg;
-
     setValueZ( newV, f, d );
 }
 
@@ -150,17 +134,13 @@ inline void Pic14Core::XORWF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV ^ m_Wreg;
-
     setValueZ( newV, f, d );
 }
 
 inline void Pic14Core::ADDWF( uint8_t f, uint8_t d )
 {
-    uint8_t oldV = GET_RAM( f ) ;
-    uint16_t newV = oldV + m_Wreg;
-
+    uint8_t newV = add( GET_RAM( f ), m_Wreg );
     setValue( newV, f, d );
-    setAddFlags( oldV, newV, m_Wreg );
 }
 
 inline void Pic14Core::MOVF( uint8_t f, uint8_t d )
@@ -183,8 +163,8 @@ inline void Pic14Core::INCF( uint8_t f, uint8_t d )
 
 inline void Pic14Core::DECFSZ( uint8_t f, uint8_t d )
 {
-    uint8_t newV = GET_RAM( f );
-    setValue( --newV, f, d );
+    uint8_t newV = GET_RAM( f ) - 1;
+    setValue( newV, f, d );
     if( newV == 0 ) incDefault();
 }
 
@@ -192,18 +172,18 @@ inline void Pic14Core::RRF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV >> 1;
-    if( *m_STATUS & 1<<C ) newV |= 1<<7; // Carry
+    if( *m_STATUS & 1<<C ) newV |= 1<<7; // Carry In
+    write_S_Bit( C, oldV & 1 );          // Carry Out
     setValue( newV, f, d );
-    write_S_Bit( C, oldV & 1 );
 }
 
 inline void Pic14Core::RLF( uint8_t f, uint8_t d )
 {
     uint8_t oldV = GET_RAM( f ) ;
     uint8_t newV = oldV << 1;
-    if( *m_STATUS & 1<<C ) newV |= 1; // Carry
+    if( *m_STATUS & 1<<C ) newV |= 1; // Carry In
+    write_S_Bit( C, oldV & 1<<7 );    // Carry Out
     setValue( newV, f, d );
-    write_S_Bit( C, oldV & 0x80 );
 }
 
 inline void Pic14Core::SWAPF( uint8_t f, uint8_t d )
@@ -215,8 +195,8 @@ inline void Pic14Core::SWAPF( uint8_t f, uint8_t d )
 
 inline void Pic14Core::INCFSZ( uint8_t f, uint8_t d )
 {
-    uint8_t newV = GET_RAM( f );
-    setValue( newV++, f, d );
+    uint8_t newV = GET_RAM( f ) + 1;
+    setValue( newV, f, d );
     if( newV == 0 ) incDefault();
 }
 
@@ -226,7 +206,6 @@ inline void Pic14Core::BCF( uint8_t f, uint8_t b )
 {
     uint8_t newV = GET_RAM( f );
     newV &= ~(1<<b);
-
     SET_RAM( f, newV );
 }
 
@@ -234,7 +213,6 @@ inline void Pic14Core::BSF( uint8_t f, uint8_t b )
 {
     uint8_t newV = GET_RAM( f );
     newV |= 1<<b;
-
     SET_RAM( f, newV );
 }
 
@@ -242,28 +220,25 @@ inline void Pic14Core::BTFSC( uint8_t f, uint8_t b )
 {
     uint8_t oldV = GET_RAM( f );
     uint8_t bitMask = 1<<b;
-
     if( (oldV & bitMask) == 0 ) incDefault();
 }
 
 inline void Pic14Core::BTFSS( uint8_t f, uint8_t b )
 {
     uint8_t oldV = GET_RAM( f );
-    uint8_t bitMask = 1<<b;
-
-    if( oldV & bitMask  ) incDefault();
+    if( oldV & 1<<b  ) incDefault();
 }
 
 // Control transfers
 
 inline void Pic14Core::CALL( uint16_t k )
 {
-    CALL_ADDR( k | ((m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
+    CALL_ADDR( k | ((uint16_t)(m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
 }
 
 inline void Pic14Core::GOTO( uint16_t k )
 {
-    setPC( k | ((m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
+    setPC( k | ((uint16_t)(m_dataMem[m_PCHaddr] & 0b00011000)<<8) );
     m_mcu->cyclesDone = 2;
 }
 
@@ -300,22 +275,19 @@ inline void Pic14Core::XORLW( uint8_t k )
 
 inline void Pic14Core::SUBLW( uint8_t k ) //// C,DC,Z
 {
-    uint8_t oldW = m_Wreg;
-    m_Wreg -= k;
-    setSubFlags( oldW, m_Wreg, k );
+    m_Wreg = add( k, 256-m_Wreg );  // Substract by adding Two's complement
 }
 
 inline void Pic14Core::ADDLW( uint8_t k ) //// C,DC,Z
 {
-    uint8_t oldW = m_Wreg;
-    m_Wreg += k;
-    setAddFlags( oldW, m_Wreg, k );
+    m_Wreg = add( m_Wreg, k );
 }
 
 void Pic14Core::runDecoder()
 {
     uint16_t instr = m_progMem[PC] & 0x3FFF;
 
+    m_mcu->cyclesDone = 0;
     incDefault();
 
     if( (instr & 0x3F80) == 0 )  // Miscellaneous instrs

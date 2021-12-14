@@ -2,7 +2,7 @@ rules: data keyword1 keyword2 number preprocessor lineComment multiLineComment h
 
 
 data-style: #904020 default true false
-data: byte double float int uint long short signed char const enum static struct union unsigned  virtual void volatile bool boolean
+data: uint8_t uint16_t uint32_t byte double float int uint long short signed char const enum static struct union unsigned virtual void volatile bool boolean
 
 keyword1-style: #202060 default true false
 keyword1: class explicit friend inline namespace operator private protected public signals slots template typedef typename

@@ -67,7 +67,8 @@ void PicAdc::configureA(uint8_t newADCON0 ) // ADCON0
     m_channel = getRegBitsVal( newADCON0, m_CHS );
 
     bool convert = getRegBitsBool( newADCON0, m_GODO );
-    if( !m_converting && convert ) startConversion();
+    if( !m_converting && convert )
+        startConversion();
 }
 
 void PicAdc::endConversion()
@@ -98,45 +99,20 @@ void PicAdc0::configureB( uint8_t newADCON1 ) // ADCON1
         uint8_t analog = 0;
 
         switch( mode ) {
-            case 0:
-                analog = 0b11111111;
-                break;
-            case 1:
-                analog = 0b11110111;
-                break;
-            case 2:
-                analog = 0b00011111;
-                break;
-            case 3:
-                analog = 0b00010111;
-                break;
-            case 4:
-                analog = 0b00001011;
-                break;
-            case 5:
-                analog = 0b00000011;
-                break;
-            case 8:
-                analog = 0b11110011;
-                break;
-            case 9:
-                analog = 0b00111111;
-                break;
-            case 10:
-                analog = 0b00110111;
-                break;
-            case 11:
-                analog = 0b00110011;
-                break;
-            case 12:
-                analog = 0b00010011;
-                break;
-            case 13:
-                analog = 0b00000011;
-                break;
+            case 0:  analog = 0b11111111; break;
+            case 1:  analog = 0b11110111; break;
+            case 2:  analog = 0b00011111; break;
+            case 3:  analog = 0b00010111; break;
+            case 4:  analog = 0b00001011; break;
+            case 5:  analog = 0b00000011; break;
+            case 8:  analog = 0b11110011; break;
+            case 9:  analog = 0b00111111; break;
+            case 10: analog = 0b00110111; break;
+            case 11: analog = 0b00110011; break;
+            case 12: analog = 0b00010011; break;
+            case 13: analog = 0b00000011; break;
             case 14:
-            case 15:
-                analog = 0b00000001;
+            case 15: analog = 0b00000001;
         }
         for( uint i=0; i<m_adcPin.size(); ++i) if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
     }
@@ -231,7 +207,7 @@ double PicAdc1::getVref()
 //-- PIC ADC Type 2 ------------------------------------
 
 PicAdc2::PicAdc2( eMcu* mcu, QString name )
-      : PicAdc0( mcu, name )
+       : PicAdc0( mcu, name )
 {
 }
 PicAdc2::~PicAdc2(){}

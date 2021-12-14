@@ -38,6 +38,7 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
     protected:
         uint8_t  m_Wreg;
         uint8_t* m_FSR;
+        uint8_t* m_OPTION;
 
         regBits_t m_bankBits;
         uint16_t  m_bank;
@@ -90,8 +91,7 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
         inline void setValue( uint8_t newV, uint8_t f, uint8_t d );
         inline void setValueZ( uint8_t newV, uint8_t f, uint8_t d );
 
-        inline void setAddFlags( uint8_t oldV, uint16_t newV, uint8_t src2 );
-        inline void setSubFlags( uint8_t oldV, uint16_t newV, uint8_t src2 );
+        inline uint8_t add( uint8_t val1, uint16_t val2 );
 
         // Miscellaneous instructions
         inline void RETURN();

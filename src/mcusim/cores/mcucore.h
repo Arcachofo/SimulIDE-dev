@@ -106,7 +106,7 @@ class MAINMODULE_EXPORT McuCore
         void incDefault()
         {
             setPC( PC+1 );
-            m_mcu->cyclesDone = 1;
+            m_mcu->cyclesDone += 1;
         }
 
         virtual void setPC( uint32_t pc ) { PC = pc; }
