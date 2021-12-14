@@ -42,7 +42,7 @@ class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
         void startConversion();
 
     protected:
-        virtual double getVref()=0;
+        virtual void updtVref();
         virtual void endConversion(){;}
 
         bool m_enabled;
@@ -65,7 +65,8 @@ class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
         //int m_bits;                   // ADC resolution in bits
         uint m_channel;                // Channel number for current conversion
 
-        //double m_vRef;                // Reference Voltage
+        double m_vRefP;                // Positive Reference Voltage
+        double m_vRefN;                // Positive Reference Voltage
 };
 
 #endif

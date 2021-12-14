@@ -73,7 +73,7 @@ class MAINMODULE_EXPORT PicAdc0 : public PicAdc
         virtual void configureB( uint8_t newADCSRB ) override;
 
     protected:
-        virtual double getVref() override;
+        virtual void updtVref() override;
 
         regBits_t m_PCFG;
 };
@@ -91,7 +91,7 @@ class MAINMODULE_EXPORT PicAdc1 : public PicAdc
         void updtANSEL();
 
     protected:
-        virtual double getVref() override;
+        virtual void updtVref() override;
 
         uint8_t* m_ANSEL;
         uint8_t* m_ANSELH;
@@ -106,7 +106,6 @@ class MAINMODULE_EXPORT PicAdc2 : public PicAdc0
         ~PicAdc2();
 
     protected:
-        virtual double getVref() override;
 };
 
 class MAINMODULE_EXPORT PicAdc3 : public PicAdc1
@@ -116,6 +115,5 @@ class MAINMODULE_EXPORT PicAdc3 : public PicAdc1
         ~PicAdc3();
 
     protected:
-        virtual double getVref() override;
 };
 #endif

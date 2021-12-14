@@ -118,34 +118,27 @@ void PicAdc0::configureB( uint8_t newADCON1 ) // ADCON1
     }
 }
 
-double PicAdc0::getVref()
+void PicAdc0::updtVref()
 {
-    double vRef = 0;
+    m_vRefP = 5;
+    m_vRefN = 0;
 
-    switch( m_mode ) {
+    switch( m_mode ){
         case 1:
         case 3:
         case 5:
-            vRef = m_pRefPin->getVolt();
+        case 10:
+            m_vRefP = m_pRefPin->getVolt();
             break;
         case 8:
-            vRef = m_pRefPin->getVolt()-m_nRefPin->getVolt();
-            break;
-        case 10:
-            vRef = m_pRefPin->getVolt();
-            break;
         case 11:
         case 12:
         case 13:
-            vRef = m_pRefPin->getVolt()-m_nRefPin->getVolt();
-            break;
-        case 15:
-            vRef = m_pRefPin->getVolt();
-            break;
-        default: vRef = 5;
-            break;
+        case 15:{
+            m_vRefP = m_pRefPin->getVolt();
+            m_vRefN = m_nRefPin->getVolt();
+        } break;
     }
-    return vRef;
 }
 
 //------------------------------------------------------
@@ -190,17 +183,10 @@ void PicAdc1::updtANSEL()
         if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
 }
 
-double PicAdc1::getVref()
+void PicAdc1::updtVref()
 {
-    double vRef = 0;
-
-    switch( m_mode ) {
-        case 0: vRef = 5; break;
-        case 1: vRef = m_pRefPin->getVolt(); break;
-        case 2: vRef = 5-m_nRefPin->getVolt(); break;
-        case 3: vRef = m_pRefPin->getVolt()-m_nRefPin->getVolt(); break;
-    }
-    return vRef;
+    m_vRefP = (m_mode & 1) ? m_pRefPin->getVolt() : 5;
+    m_vRefN = (m_mode & 2) ? m_nRefPin->getVolt() : 0;
 }
 
 //------------------------------------------------------
@@ -212,12 +198,7 @@ PicAdc2::PicAdc2( eMcu* mcu, QString name )
 }
 PicAdc2::~PicAdc2(){}
 
-double PicAdc2::getVref()
-{
-    double vRef = 0;
 
-    return vRef;
-}
 
 //------------------------------------------------------
 //-- PIC ADC Type 3 ------------------------------------
@@ -228,9 +209,4 @@ PicAdc3::PicAdc3( eMcu* mcu, QString name )
 }
 PicAdc3::~PicAdc3(){}
 
-double PicAdc3::getVref()
-{
-    double vRef = 0;
 
-    return vRef;
-}

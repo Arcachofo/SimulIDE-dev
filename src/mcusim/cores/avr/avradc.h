@@ -93,7 +93,7 @@ class MAINMODULE_EXPORT AvrAdc0 : public AvrAdc
 
     protected:
         virtual void autotriggerConf() override;
-        virtual double getVref() override;
+        virtual void updtVref() override;;
 };
 
 class MAINMODULE_EXPORT AvrAdc1 : public AvrAdc
@@ -104,7 +104,7 @@ class MAINMODULE_EXPORT AvrAdc1 : public AvrAdc
 
     protected:
         virtual void autotriggerConf() override;
-        virtual double getVref() override;
+        virtual void updtVref() override;
 };
 
 class MAINMODULE_EXPORT AvrAdc2 : public AvrAdc0
@@ -114,7 +114,7 @@ class MAINMODULE_EXPORT AvrAdc2 : public AvrAdc0
         ~AvrAdc2();
 
     protected:
-        virtual double getVref() override;
+        virtual void updtVref() override;
 };
 
 class MAINMODULE_EXPORT AvrAdc3 : public AvrAdc1
@@ -124,6 +124,6 @@ class MAINMODULE_EXPORT AvrAdc3 : public AvrAdc1
         ~AvrAdc3();
 
     protected:
-        virtual double getVref() override;
+        virtual void updtVref() override;
 };
 #endif

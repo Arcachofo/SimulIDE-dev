@@ -141,25 +141,24 @@ void AvrAdc0::autotriggerConf()
     /// TODO                                     trigger == 7 // Timer/Counter1 Capture Event
 }
 
-double AvrAdc0::getVref()
+void AvrAdc0::updtVref()
 {
-    double vRef = 0;
+    m_vRefP = 5;
+    m_vRefN = 0;
 
     switch( m_refSelect )
     {
         case 0:     // AREF
-            vRef = m_aRefPin->getVolt();
+            m_vRefP = m_aRefPin->getVolt();
             break;
         case 1:     // AVcc
-            vRef = m_aVccPin->getVolt();
+            m_vRefP = m_aVccPin->getVolt();
             break;
         case 2:     // Reserved
             break;
         case 3:     // Internal 1.1 Volt
-            vRef = 1.1;
-            break;
+            m_vRefP = 1.1;
     }
-    return vRef;
 }
 
 //------------------------------------------------------
@@ -186,20 +185,20 @@ void AvrAdc1::autotriggerConf()
     /// TODO                                     trigger == 6 // Pin Change Interrupt Request
 }
 
-double AvrAdc1::getVref()
+void AvrAdc1::updtVref()
 {
-    double vRef = 0;
+    m_vRefP = 5;
+    m_vRefN = 0;
 
     switch( m_refSelect )
     {
         case 0:     // Vcc
-            vRef = 5;
+            m_vRefP = 5;
             break;
         case 1:     ///TODO // Internal Vref. = ??? 1.1 Volt
-            vRef = 1.1;
+            m_vRefP = 1.1;
             break;
     }
-    return vRef;
 }
 
 //------------------------------------------------------
@@ -211,23 +210,23 @@ AvrAdc2::AvrAdc2( eMcu* mcu, QString name )
 }
 AvrAdc2::~AvrAdc2(){}
 
-double AvrAdc2::getVref()
+void AvrAdc2::updtVref()
 {
-    double vRef = 0;
+    m_vRefP = 5;
+    m_vRefN = 0;
 
     switch( m_refSelect )
     {
         case 0:     // Vcc
-            vRef = 5;
+            m_vRefP = 5;
             break;
         case 1:    // External voltage reference at PA0 (AREF)
             /// TODO
             break;
         case 2:    // Internal Vref. 1.1 Volt
-            vRef = 1.1;
+            m_vRefP = 1.1;
             break;
     }
-    return vRef;
 }
 
 //------------------------------------------------------
@@ -239,28 +238,28 @@ AvrAdc3::AvrAdc3( eMcu* mcu, QString name )
 }
 AvrAdc3::~AvrAdc3(){}
 
-double AvrAdc3::getVref()
+void AvrAdc3::updtVref()
 {
-    double vRef = 0;
+    m_vRefP = 5;
+    m_vRefN = 0;
 
     switch( m_refSelect )
     {
         case 0:     // Vcc
-            vRef = 5;
+            m_vRefP = 5;
             break;
         case 1:    // External voltage reference at PB0 (AREF)
             /// TODO
             break;
         case 2:    // Internal Vref. 1.1 Volt
-            vRef = 1.1;
+            m_vRefP = 1.1;
             break;
         case 3:    // Reserved
             break;
         case 4:    // Internal 2.56V Voltage Reference without external capacitor
             // fallthrough
         case 5:    // Internal 2.56V Voltage Reference with external capacitor
-            vRef = 2.56;
+            m_vRefP = 2.56;
             break;
     }
-    return vRef;
 }
