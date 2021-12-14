@@ -91,7 +91,8 @@ class MAINMODULE_EXPORT Pic14Core : public McuCore
         inline void setValue( uint8_t newV, uint8_t f, uint8_t d );
         inline void setValueZ( uint8_t newV, uint8_t f, uint8_t d );
 
-        inline uint8_t add( uint8_t val1, uint16_t val2 );
+        inline uint8_t add( uint8_t val1, uint8_t val2 );
+        inline uint8_t sub( uint8_t val1, uint8_t val2 );
 
         // Miscellaneous instructions
         inline void RETURN();

@@ -62,12 +62,21 @@ inline void Pic14Core::setValueZ( uint8_t newV, uint8_t f, uint8_t d )
     write_S_Bit( Z, newV==0 );
 }
 
-uint8_t Pic14Core::add( uint8_t val1, uint16_t val2 )
+uint8_t Pic14Core::add( uint8_t val1, uint8_t val2 )
 {
     uint16_t newV = val1 + val2;
     write_S_Bit( Z, (newV & 0xFF)==0 );
     write_S_Bit( C, newV & 0x100 );
-    write_S_Bit( DC, (val1 & 0xF) + (val2 & 0xF) + (val2 & 0x100) > 0xF ); //
+    write_S_Bit( DC, ((val1&0xF)+(val2 & 0xF)) > 0xF );
+    return newV;
+}
+
+uint8_t Pic14Core::sub( uint8_t val1, uint8_t val2 )
+{
+    int16_t newV = val1 - val2;
+    write_S_Bit( Z, (newV & 0xFF)==0 );
+    write_S_Bit( C, newV >= 0 );
+    write_S_Bit( DC, ((int16_t)((val1&0xF)-(val2&0xF)) >= 0) ); // Carry and Half carry set when doing 0-0
     return newV;
 }
 
@@ -106,7 +115,7 @@ inline void Pic14Core::CLRF( uint8_t f )
 
 inline void Pic14Core::SUBWF( uint8_t f, uint8_t d )
 {
-    uint8_t newV = add( GET_RAM( f ), 256-m_Wreg );  // Substract by adding Two's complement
+    uint8_t newV = sub( GET_RAM( f ), m_Wreg );
     setValue( newV, f, d );
 }
 
@@ -275,12 +284,12 @@ inline void Pic14Core::XORLW( uint8_t k )
 
 inline void Pic14Core::SUBLW( uint8_t k ) //// C,DC,Z
 {
-    m_Wreg = add( k, 256-m_Wreg );  // Substract by adding Two's complement
+    m_Wreg = sub( k, m_Wreg );
 }
 
 inline void Pic14Core::ADDLW( uint8_t k ) //// C,DC,Z
 {
-    m_Wreg = add( m_Wreg, k );
+    m_Wreg = add( k, m_Wreg );
 }
 
 void Pic14Core::runDecoder()
