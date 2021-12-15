@@ -88,7 +88,7 @@
     <register  name="SPCR"    addr="0x002C"  reset=""  mask="" 
                bits="SPR0,SPR1,CPHA,CPOL,MSTR,DORD,SPE,SPIE" />
 
-    <register  name="SPSR"    addr="0x002D"  reset=""  mask="11000001" 
+    <register  name="SPSR"    addr="0x002D"  reset=""  mask="00000001" 
                bits="SPI2X,0,0,0,0,0,WCOL,SPIF" />
 
     <register  name="SPDR"    addr="0x002E"  reset=""  mask="" 
