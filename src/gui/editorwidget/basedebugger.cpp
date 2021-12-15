@@ -134,12 +134,8 @@ bool BaseDebugger::postProcess()
                     setLineToFlash( srcLineNumber, m_codeStart+address );
                     found = false;
                     continue;
-                }
-            }
-        }
-    }
-    else              // asm
-    {
+    }   }   }   }
+    else{             // asm
         for( QString srcLine : srcLines )
         {
             srcLineNumber++;
@@ -168,8 +164,7 @@ bool BaseDebugger::postProcess()
                 bool ok = false;
                 int address = lstLine.toInt( &ok, 16 );
                 if( ok ) setLineToFlash( srcLineNumber, m_codeStart+address );
-        }   }
-    }
+    }   }   }
     return true;
 }
 
@@ -198,7 +193,7 @@ QString BaseDebugger::getValue( QString line, QString key ) // Static
     if( !lineL.contains( key.toLower() ) ) return "";
 
     QString value = "";
-    QStringList wordList = line.split(" ");
+    QStringList wordList = line.replace(":", " ").replace("=", " ").split(" ");
 
     while( wordList.size() > 1 )
     {
@@ -206,17 +201,9 @@ QString BaseDebugger::getValue( QString line, QString key ) // Static
         if( word.isEmpty() ) continue;
         if( word.toLower().contains( key ) )
         {
-            if( word.contains("=") )
-            {
-                value = word.split("=").last();
-                if( !value.isEmpty() ) break;
-                if( wordList.isEmpty() ) break;
-            }
-            word = wordList.takeFirst();
-            if( word.contains("=") ) value = word.split("=").last();
-            if( !value.isEmpty() ) break;
-            if( wordList.isEmpty() ) break;
-            value = wordList.takeFirst();
+            while( !wordList.isEmpty() && value.isEmpty() )
+                value = wordList.takeFirst();
+            value = value.remove(",").remove(".").remove(";");
     }   }
     return value;
 }
