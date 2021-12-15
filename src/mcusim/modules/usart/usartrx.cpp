@@ -36,7 +36,7 @@ void UartRx::enable( uint8_t en )
     if( enabled == m_enabled ) return;
     m_enabled = enabled;
 
-    m_runHardware = m_ioPin->connector();
+    m_runHardware = m_ioPin->isConnected();
     while( !m_inBuffer.empty() ) m_inBuffer.pop();
 
     if( enabled ) processData( 0 ); // Start reading
