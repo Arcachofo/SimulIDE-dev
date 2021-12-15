@@ -140,7 +140,7 @@
         <interrupt name="T5_OVF" />
     </timer>
     
-    <usart name="USART0"  number="1" configregsA="UCSR0C" configregsB="UCSR0B">
+    <usart name="USART0"  number="1" configregsA="UCSR0A" configregsB="UCSR0B" configregsC="UCSR0C">
         <trunit type="tx" pin="PORTE1" register="UDR0">
             <interrupt name="USART0_T" />
         </trunit>
@@ -152,7 +152,7 @@
         <interrupt name="USART0_U" />
     </usart>
     
-    <usart name="USART1"  number="2" configregsA="UCSR1C" configregsB="UCSR1B">
+    <usart name="USART1"  number="2" configregsA="UCSR1A" configregsB="UCSR1B"  configregsC="UCSR0C"configregsC="UCSR1C">
         <trunit type="tx" pin="PORTD3" register="UDR1">
             <interrupt name="USART1_T" />
         </trunit>
@@ -164,7 +164,7 @@
         <interrupt name="USART1_U" />
     </usart>
     
-    <usart name="USART2"  number="3" configregsA="UCSR2C" configregsB="UCSR2B">
+    <usart name="USART2"  number="3" configregsA="UCSR2A" configregsB="UCSR2B" configregsC="UCSR2C">
         <trunit type="tx" pin="PORTH1" register="UDR2">
             <interrupt name="USART2_T" />
         </trunit>
@@ -176,7 +176,7 @@
         <interrupt name="USART2_U" />
     </usart>
     
-    <usart name="USART3"  number="4" configregsA="UCSR3C" configregsB="UCSR3B">
+    <usart name="USART3"  number="4" configregsA="UCSR3A" configregsB="UCSR3B" configregsC="UCSR3C">
         <trunit type="tx" pin="PORTJ1" register="UDR3">
             <interrupt name="USART3_T" />
         </trunit>
