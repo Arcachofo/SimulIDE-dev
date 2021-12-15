@@ -62,6 +62,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         bool isNoValid( QString line );
 
         virtual void getSubs(){;}
+        virtual void setBoardName( QString board ){ m_board = board; }
 
         int m_processorType;
         int m_lastLine;

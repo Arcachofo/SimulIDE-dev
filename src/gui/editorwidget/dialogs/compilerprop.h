@@ -36,6 +36,7 @@ class CompilerProp : public QDialog, private Ui::CompilerProp
         void setCompiler( Compiler* compiler );
         void setFamily( QString fam );
         void setDevice( QString dev );
+        //void setBoard( int index );
 
     public slots:
         void on_compilerBox_currentIndexChanged( int index );

@@ -81,6 +81,11 @@ void CompilerProp::setDevice( QString dev )
     deviceText->setText( dev );
 }
 
+/*void CompilerProp::setBoard( int index )
+{
+    ardBoard->setCurrentIndex( index );
+}*/
+
 void CompilerProp::on_familyText_editingFinished()
 {
     QString fam = familyText->text();

@@ -43,7 +43,7 @@ void FindReplace::on_nextButton_clicked() { find( true ); }
 
 void FindReplace::on_allButton_clicked()
 {
-    int pos = m_editor->textCursor().position();
+    //int pos = m_editor->textCursor().position();
     m_textCursor.setPosition( 0 );
     m_editor->setTextCursor( m_textCursor );
     QList<QTextEdit::ExtraSelection> extraSelections;

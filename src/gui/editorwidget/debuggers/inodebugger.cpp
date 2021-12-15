@@ -184,12 +184,21 @@ bool InoDebugger::postProcess()
 
 QString InoDebugger::getBoard()
 {
-    QString board = m_board;
+    QString board = m_board.toLower();
     if( board == "duemilanove" ) board = "diecimila";
     else if( board == "mega" )   board = "megaADK";
     if( !m_ArdboardList.contains( board ) ) return "";
 
+    m_Ardboard = (board_t) m_ArdboardList.indexOf( board) ;
+
     return board;
+}
+
+void InoDebugger::setBoardName( QString board )
+{
+    m_board = board;
+    getBoard();
+    if( m_Ardboard ) m_outPane->appendLine( tr("Found Board definition in file: ") + board );
 }
 
 #include "moc_inodebugger.cpp"

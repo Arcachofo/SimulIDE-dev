@@ -127,7 +127,7 @@ void Compiler::loadCompiler( QString file )
         node = node.nextSibling();
     }
     readSettings();
-    m_outPane->appendLine( "-------------------------------------------------------" );
+    //m_outPane->appendLine( "-------------------------------------------------------" );
     m_outPane->appendLine( m_compName+tr(" Compiler successfully loaded.\n") );
 }
 

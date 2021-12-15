@@ -59,6 +59,7 @@ class InoDebugger : public AvrGccDebugger
         
     private:
         QString getBoard();
+        virtual void setBoardName( QString board ) override;
 
         int m_lastInoLine;
         int m_loopInoLine;

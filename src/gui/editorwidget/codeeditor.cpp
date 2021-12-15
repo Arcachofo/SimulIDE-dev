@@ -186,9 +186,12 @@ void CodeEditor::setFile( const QString filePath )
     {
         QString compiler = BaseDebugger::getValue( line, "compiler" );
         if( compiler.isEmpty() ) compiler = "None";
+        else m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
+
         m_compiler = EditorWindow::self()->createDebugger( compiler, this, code );
     }
     m_compiler->getInfoInFile( line );
+    m_outPane->appendLine( "-------------------------------------------------------" );
 }
 
 int CodeEditor::getSintaxCoincidences()

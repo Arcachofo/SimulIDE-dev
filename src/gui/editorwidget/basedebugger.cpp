@@ -175,15 +175,17 @@ void BaseDebugger::getInfoInFile( QString line )
     {
         m_device = device;
         if( m_compDialog ) m_compDialog->setDevice( m_device );
+        m_outPane->appendLine( tr("Found Device definition in file: ") + device );
     }
     QString board = getValue( line, "board" );
-    if( !board.isEmpty() ) m_board = board;
+    if( !board.isEmpty() ) setBoardName( board );
 
     QString family = getValue( line, "family" );
     if( !family.isEmpty() )
     {
         m_family = family;
         if( m_compDialog ) m_compDialog->setFamily( m_family );
+        m_outPane->appendLine( tr("Found Family definition in file: ") + family );
     }
 }
 
