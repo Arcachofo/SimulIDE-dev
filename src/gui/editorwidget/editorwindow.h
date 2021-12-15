@@ -86,7 +86,7 @@ class EditorWindow : public EditorWidget
         void loadCompilers();
         void loadCompilerSet( QString compilsPath, QMap<QString, compilData_t>* compList );
 
-        CodeEditor* m_debugDoc;
+        CodeEditor*   m_debugDoc;
         BaseDebugger* m_debugger;
         bool m_stepOver;
         bool m_driveCirc;

@@ -30,7 +30,7 @@ class QTabWidget;
 class QToolBar;
 class CodeEditor;
 class EditorProp;
-class FindReplaceDialog;
+class FindReplace;
 
 class EditorWidget : public QWidget
 {
@@ -107,7 +107,7 @@ class EditorWidget : public QWidget
 
         QTabWidget*  m_docWidget;
 
-        FindReplaceDialog* findRepDiaWidget;
+        FindReplace* m_findRepDialog;
         EditorProp* m_editDialog;
         
         QMenu m_settingsMenu;

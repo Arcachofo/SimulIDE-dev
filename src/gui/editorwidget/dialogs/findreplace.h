@@ -1,10 +1,5 @@
-/*
- * Copyright (C) 2009  Lorenzo Bettini <http://www.lorenzobettini.it>
- * See COPYING file that comes with this distribution
- */
- 
 /***************************************************************************
- *   Modified 2012 by santiago González                                    *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -22,42 +17,49 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef FINDREPLACEDIALOG_H
-#define FINDREPLACEDIALOG_H
-
 #include <QDialog>
 
-#include "findreplace_global.h"
+#include "ui_findreplace.h"
 
-namespace Ui {
-    class FindReplaceDIALOG;
-}
+#ifndef FINDDIALOG_H
+#define FINDDIALOG_H
 
-class QTextEdit;
-class QSettings;
+class CodeEditor;
 
-class FindReplaceDialog : public QDialog
+class FindReplace : public QDialog, private Ui::FindReplace
 {
     Q_OBJECT
+
     public:
-        FindReplaceDialog(QWidget* parent=0);
-        virtual ~FindReplaceDialog();
+        FindReplace( QWidget* parent );
 
-        void setTextEdit(CodeEditor *textEdit);
-
-        virtual void writeSettings(QSettings &settings, const QString &prefix = "FindReplaceDialog");
-        virtual void readSettings(QSettings &settings, const QString &prefix = "FindReplaceDialog");
-
-        void setTextToFind( QString text);
+        void setEditor( CodeEditor* ce ) { m_editor = ce; }
+        void setTextToFind( QString text ) { findEdit->setText( text ); }
 
     public slots:
-        void findNext();
-        void findPrev();
 
-    protected:
-        void changeEvent (QEvent* e );
+        //void on_findEdit_textEdited( QString text );
+        //void on_replaceEdit_textEdited( QString text );
 
-        Ui::FindReplaceDIALOG* ui;
+        void on_prevButton_clicked();
+        void on_nextButton_clicked();
+        void on_allButton_clicked();
+        void on_replaceButton_clicked();
+        void on_replFindButton_clicked();
+        void on_replAllButton_clicked();
+        void on_closeButton_clicked();
+
+
+        void on_caseS_toggled( bool c );
+        void on_whole_toggled( bool w );
+        void on_regexp_toggled( bool w );
+
+    private:
+        bool find( bool next );
+        void showMsg( QString msg );
+
+        QTextCursor m_textCursor;
+        CodeEditor* m_editor;
 };
 
-#endif // FINDREPLACEDIALOG_H
+#endif

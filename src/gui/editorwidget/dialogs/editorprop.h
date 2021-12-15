@@ -23,9 +23,6 @@
 #ifndef EDITORDIALOG_H
 #define EDITORDIALOG_H
 
-class CodeEditor;
-class BaseDebugger;
-
 class EditorProp : public QDialog, private Ui::EditorProp
 {
     Q_OBJECT
@@ -39,10 +36,6 @@ class EditorProp : public QDialog, private Ui::EditorProp
         void on_tabSize_valueChanged( int size );
         void on_tabSpaces_toggled( bool spaces );
         void on_showSpaces_toggled( bool show );
-
-    private:
-
 };
-
 
 #endif

@@ -29,7 +29,7 @@
 #include <QToolButton>
 
 #include "editorwidget.h"
-#include "findreplacedialog.h"
+#include "findreplace.h"
 #include "editorprop.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
@@ -349,12 +349,12 @@ void EditorWidget::findReplaceDialog()
 {
     CodeEditor* ce = getCodeEditor();
 
-    findRepDiaWidget->setTextEdit( ce );
+    m_findRepDialog->setEditor( ce );
 
     QString text =ce->textCursor().selectedText();
-    if( text != "" ) findRepDiaWidget->setTextToFind( text );
+    if( text != "" ) m_findRepDialog->setTextToFind( text );
 
-    findRepDiaWidget->show();
+    m_findRepDialog->show();
 }
 
 void EditorWidget::enableFileActs( bool enable )
@@ -435,8 +435,8 @@ void EditorWidget::createWidgets()
     
     setLayout( baseWidgetLayout );
     
-    findRepDiaWidget = new FindReplaceDialog(this);
-    findRepDiaWidget->setModal(false);
+    m_findRepDialog = new FindReplace( this );
+    m_findRepDialog->setModal( false );
 }
 
 void EditorWidget::createActions()
