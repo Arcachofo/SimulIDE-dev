@@ -145,19 +145,17 @@ void PicTimer0::configureA( uint8_t NewOPTION )
 PicTimer2::PicTimer2( eMcu* mcu, QString name)
          : PicTimer8bit( mcu, name )
 {
-    m_ps = 0;
-
-    m_PR2 = mcu->getReg( "PR2" );
-
     m_TMR2ON = getRegBits( "TMR2ON", mcu );
     m_T2CKPS = getRegBits( "T2CKPS0,T2CKPS1", mcu );
+    m_TOUTPS = getRegBits( "TOUTPS0,TOUTPS1,TOUTPS2,TOUTPS3", mcu );
 }
 PicTimer2::~PicTimer2(){}
 
 void PicTimer2::configureA( uint8_t NewT2CON )
 {
-    m_ps = getRegBitsVal( NewT2CON, m_T2CKPS );
-    m_prescaler = m_prescList.at( m_ps ) * (*m_PR2+1);
+    uint8_t presc = getRegBitsVal( NewT2CON, m_T2CKPS );
+    uint8_t postc = getRegBitsVal( NewT2CON, m_TOUTPS );
+    m_prescaler = m_prescList.at( presc ) * (postc+1);
 
     bool en = getRegBitsBool( NewT2CON, m_TMR2ON );
     if( en != m_running ) enable( en );
@@ -165,7 +163,8 @@ void PicTimer2::configureA( uint8_t NewT2CON )
 
 void PicTimer2::configureB( uint8_t NewPR2 )
 {
-    m_prescaler = m_prescList.at( m_ps ) * ( NewPR2+1);
+    m_ovfMatch  = NewPR2;
+    m_ovfPeriod = m_ovfMatch + 1;
 }
 
 //--------------------------------------------------
