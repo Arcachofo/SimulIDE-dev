@@ -56,9 +56,6 @@ class MAINMODULE_EXPORT PicAdc : public McuAdc
         regBits_t m_GODO;
 
         regBits_t m_ADFM;
-
-        McuPin* m_pRefPin;
-        McuPin* m_nRefPin;
 };
 
 class MAINMODULE_EXPORT PicAdc0 : public PicAdc

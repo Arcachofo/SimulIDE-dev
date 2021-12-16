@@ -83,10 +83,11 @@ class MAINMODULE_EXPORT PicTimer2 : public PicTimer8bit
 
     protected:
         uint8_t m_ps;
-        uint8_t* m_PR2;
+        //uint8_t* m_PR2;
 
         regBits_t m_TMR2ON;
         regBits_t m_T2CKPS;
+        regBits_t m_TOUTPS;
 };
 
 

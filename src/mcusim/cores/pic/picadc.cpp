@@ -26,15 +26,13 @@
 PicAdc* PicAdc::createAdc( eMcu* mcu, QString name )
 {
     int type = name.right( 1 ).toInt();
-    switch( type )
-    {
+    switch( type ){
         case 0: return new PicAdc0( mcu, name ); break;
         case 1: return new PicAdc1( mcu, name ); break;
         case 2: return new PicAdc2( mcu, name ); break;
         case 3: return new PicAdc3( mcu, name ); break;
         default: return NULL;
-    }
-}
+}   }
 
 PicAdc::PicAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
@@ -115,8 +113,7 @@ void PicAdc0::configureB( uint8_t newADCON1 ) // ADCON1
             case 15: analog = 0b00000001;
         }
         for( uint i=0; i<m_adcPin.size(); ++i) if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
-    }
-}
+}   }
 
 void PicAdc0::updtVref()
 {
@@ -138,8 +135,7 @@ void PicAdc0::updtVref()
             m_vRefP = m_pRefPin->getVolt();
             m_vRefN = m_nRefPin->getVolt();
         } break;
-    }
-}
+}   }
 
 //------------------------------------------------------
 //-- PIC ADC Type 1 ------------------------------------
@@ -160,8 +156,7 @@ PicAdc1::~PicAdc1(){}
 void PicAdc1::configureB( uint8_t newADCON1 ) // ADCON1
 {
     m_leftAdjust = !getRegBitsBool( newADCON1, m_ADFM );
-
-    m_mode = getRegBitsVal( newADCON1, m_VCFG );
+    m_mode       =  getRegBitsVal(  newADCON1, m_VCFG );
 }
 
 void PicAdc1::setANSEL( uint8_t newANSEL )
@@ -197,8 +192,6 @@ PicAdc2::PicAdc2( eMcu* mcu, QString name )
 {
 }
 PicAdc2::~PicAdc2(){}
-
-
 
 //------------------------------------------------------
 //-- PIC ADC Type 3 ------------------------------------

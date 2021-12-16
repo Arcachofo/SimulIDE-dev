@@ -39,8 +39,9 @@
     <adc name="ADC1" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" 
                     configregsB="ADCSRB" multiplex="ADMUX">
         <prescaler select="" values="2,2,4,8,16,32,64,128"/>
-        <pins inputs="PORTB5,PORTB2,PORTB4,PORTB3" />
-        
+        <pins 
+              inputs="PORTB5,PORTB2,PORTB4,PORTB3" 
+              vref="PORTB0"/>
         <interrupt name="ADC" />
     </adc>
     

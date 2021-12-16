@@ -57,12 +57,14 @@ class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
 
         std::vector<McuPin*> m_adcPin; // ADC Pins
         std::vector<McuPin*> m_refPin; // Vref Pins
+        McuPin* m_pRefPin;             // Positive Vref Pin
+        McuPin* m_nRefPin;             // Negative Vref Pin
 
         std::vector<uint16_t> m_prescList; // Prescaler values
 
-        uint64_t m_convTime;          // Time to complete a conversion in ps
+        uint64_t m_convTime;           // Time to complete a conversion in ps
 
-        //int m_bits;                   // ADC resolution in bits
+        //int m_bits;                  // ADC resolution in bits
         uint m_channel;                // Channel number for current conversion
 
         double m_vRefP;                // Positive Reference Voltage

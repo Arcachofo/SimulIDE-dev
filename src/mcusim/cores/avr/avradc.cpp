@@ -27,20 +27,17 @@
 AvrAdc* AvrAdc::createAdc( eMcu* mcu, QString name )
 {
     int type = name.right(1).toInt();
-    switch ( type )
-    {
+    switch ( type ){
         case 0: return new AvrAdc0( mcu, name ); break;
         case 1: return new AvrAdc1( mcu, name ); break;
         case 2: return new AvrAdc2( mcu, name ); break;
         case 3: return new AvrAdc3( mcu, name ); break;
         default: return NULL;
-    }
-}
+}   }
 
 AvrAdc::AvrAdc( eMcu* mcu, QString name )
       : McuAdc( mcu, name )
 {
-    //m_ADCSRA = mcu->getReg( "ADCSRA" );
     m_ADEN  = getRegBits( "ADEN", mcu );
     m_ADSC  = getRegBits( "ADSC", mcu );
     m_ADATE = getRegBits( "ADATE", mcu );
@@ -60,6 +57,8 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
 
     m_t0OCA = m_timer0->getOcUnit("OCA");
     m_txOCB = NULL;
+
+    m_vRefN = 0;
 }
 AvrAdc::~AvrAdc(){}
 
@@ -84,12 +83,10 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     uint8_t prs = getRegBitsVal( newADCSRA, m_ADPS );
     m_convTime = m_mcu->simCycPI()*14.5*m_prescList[prs];
 
-    /// TODO Auto Trigger
     m_autoTrigger = getRegBitsBool( newADCSRA, m_ADATE );
     if( m_autoTrigger ) autotriggerConf();
 
     bool convert = getRegBitsBool( newADCSRA, m_ADSC );
-
     if( !m_converting && convert ) startConversion();
 }
 
@@ -105,8 +102,7 @@ void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
 {
     m_channel = newADMUX & 0x0F;
     m_leftAdjust = getRegBitsBool( newADMUX, m_ADLAR );
-
-    m_refSelect = getRegBitsVal( newADMUX, m_REFS );
+    m_refSelect  = getRegBitsVal(  newADMUX, m_REFS );
 }
 
 void AvrAdc::endConversion()
@@ -119,10 +115,10 @@ void AvrAdc::endConversion()
 //-- AVR ADC Type 0 ------------------------------------
 
 AvrAdc0::AvrAdc0( eMcu* mcu, QString name )
-      : AvrAdc( mcu, name )
+       : AvrAdc( mcu, name )
 {
     m_timer1 = (AvrTimer16bit*)mcu->getTimer("TIMER1");
-    m_txOCB = m_timer1->getOcUnit("OCB");
+    m_txOCB  = m_timer1->getOcUnit("OCB");
 }
 AvrAdc0::~AvrAdc0(){}
 
@@ -144,22 +140,11 @@ void AvrAdc0::autotriggerConf()
 void AvrAdc0::updtVref()
 {
     m_vRefP = 5;
-    m_vRefN = 0;
-
-    switch( m_refSelect )
-    {
-        case 0:     // AREF
-            m_vRefP = m_aRefPin->getVolt();
-            break;
-        case 1:     // AVcc
-            m_vRefP = m_aVccPin->getVolt();
-            break;
-        case 2:     // Reserved
-            break;
-        case 3:     // Internal 1.1 Volt
-            m_vRefP = 1.1;
-    }
-}
+    switch( m_refSelect ){
+        case 0: m_vRefP = m_aRefPin->getVolt(); break; // AREF
+        case 1: m_vRefP = m_aVccPin->getVolt(); break; // AVcc
+        case 3: m_vRefP = 1.1;                         // Internal 1.1 Volt
+}   }
 
 //------------------------------------------------------
 //-- AVR ADC Type 1 ------------------------------------
@@ -187,47 +172,27 @@ void AvrAdc1::autotriggerConf()
 
 void AvrAdc1::updtVref()
 {
-    m_vRefP = 5;
-    m_vRefN = 0;
-
-    switch( m_refSelect )
-    {
-        case 0:     // Vcc
-            m_vRefP = 5;
-            break;
-        case 1:     ///TODO // Internal Vref. = ??? 1.1 Volt
-            m_vRefP = 1.1;
-            break;
-    }
+    if( m_refSelect == 1 ) m_vRefP = 1.1;///TODO // Internal Vref. = ??? 1.1 Volt
+    else                   m_vRefP = 5;
 }
 
 //------------------------------------------------------
 //-- AVR ADC Type 2 ------------------------------------
 
 AvrAdc2::AvrAdc2( eMcu* mcu, QString name )
-      : AvrAdc0( mcu, name )
+       : AvrAdc0( mcu, name )
 {
+    m_pRefPin = m_refPin.at(0);
 }
 AvrAdc2::~AvrAdc2(){}
 
 void AvrAdc2::updtVref()
 {
     m_vRefP = 5;
-    m_vRefN = 0;
-
-    switch( m_refSelect )
-    {
-        case 0:     // Vcc
-            m_vRefP = 5;
-            break;
-        case 1:    // External voltage reference at PA0 (AREF)
-            /// TODO
-            break;
-        case 2:    // Internal Vref. 1.1 Volt
-            m_vRefP = 1.1;
-            break;
-    }
-}
+    switch( m_refSelect ){
+        case 1: m_vRefP = m_pRefPin->getVolt();break; // External voltage reference at PA0 (AREF)
+        case 2: m_vRefP = 1.1;                 break; // Internal Vref. 1.1 Volt
+}   }
 
 //------------------------------------------------------
 //-- AVR ADC Type 3 ------------------------------------
@@ -235,31 +200,16 @@ void AvrAdc2::updtVref()
 AvrAdc3::AvrAdc3( eMcu* mcu, QString name )
        : AvrAdc1( mcu, name )
 {
+    m_pRefPin = m_refPin.at(0);
 }
 AvrAdc3::~AvrAdc3(){}
 
 void AvrAdc3::updtVref()
 {
     m_vRefP = 5;
-    m_vRefN = 0;
-
-    switch( m_refSelect )
-    {
-        case 0:     // Vcc
-            m_vRefP = 5;
-            break;
-        case 1:    // External voltage reference at PB0 (AREF)
-            /// TODO
-            break;
-        case 2:    // Internal Vref. 1.1 Volt
-            m_vRefP = 1.1;
-            break;
-        case 3:    // Reserved
-            break;
-        case 4:    // Internal 2.56V Voltage Reference without external capacitor
-            // fallthrough
-        case 5:    // Internal 2.56V Voltage Reference with external capacitor
-            m_vRefP = 2.56;
-            break;
-    }
-}
+    switch( m_refSelect ){
+        case 1: m_vRefP = m_pRefPin->getVolt(); break; // External voltage reference at PB0 (AREF)
+        case 2: m_vRefP = 1.1;  break;  // Internal Vref. 1.1 Volt
+        case 4:                         // Internal 2.56V Voltage Reference without external capacitor
+        case 5: m_vRefP = 2.56; break;  // Internal 2.56V Voltage Reference with external capacitor
+}   }
