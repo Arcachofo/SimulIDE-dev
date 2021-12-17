@@ -14,7 +14,7 @@
         <interrupt name="USB_E"    enable=""  flag="" priority="32" vector="0x0016"/>
         <interrupt name="WDT"      enable="WDIE"   flag="WDIF"   priority="31" vector="0x0018"/>
         
-        <interrupt name="T1CAP"    enable=""  flag="" priority="27" vector="0x0020">
+        <interrupt name="T1CAP"    enable="ICIE1"  flag="ICF1"   priority="27" vector="0x0020" clear="1">
         <interrupt name="T1COA"    enable="OCIE1A" flag="OCF1A"  priority="26" vector="0x0022"/>
         <interrupt name="T1COB"    enable="OCIE1B" flag="OCF1B"  priority="25" vector="0x0024"/>
         <interrupt name="T1COC"    enable="OCIE1C" flag="OCF1C"  priority="24" vector="0x0026"/>
