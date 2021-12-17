@@ -21,32 +21,62 @@
 #include "datautils.h"
 #include "mcupin.h"
 #include "e_mcu.h"
+#include "simulator.h"
 
 PicOcUnit::PicOcUnit( eMcu* mcu, QString name )
          : McuOcUnit( mcu, name )
 {
+    m_enhanced = name.endsWith("E");
+    m_resetTimer = false;
+
+    m_GODO = getRegBits( "GO/DONE", mcu );
 }
 PicOcUnit::~PicOcUnit( ){}
+
+void PicOcUnit::runEvent()  // Compare match
+{
+    if( !m_enabled ) return;
+
+    if( m_resetTimer ) // 1 Timer cycle after last match
+    {
+        m_resetTimer = false;
+        m_timer->resetTimer();
+        return;
+    }
+    m_interrupt->raise();   // Trigger interrupt
+    drivePin( m_comAct );
+
+    if( m_specEvent )
+    {
+         m_resetTimer = true;
+         uint64_t cycles = m_timer->scale()*m_mcu->simCycPI();
+         Simulator::self()->addEvent( cycles, this ); // Reset Timer next Timer cycle
+
+         m_mcu->writeReg( m_GODO.regAddr, *m_GODO.reg | m_GODO.mask );  // Set ADC GO/DONE bit
+    }
+}
 
 void PicOcUnit::configure( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
 {
     uint8_t mode = getRegBitsVal( val, m_configBits );
+    if( mode == 0 ) m_enabled = false;
+    if( mode == 2 && m_enhanced ) setOcActs( ocTOGGLE, ocNONE );
+
     if( (mode & 0b1100) != 0b1000 ) return; // No Compare Mode
     mode = mode & 0b11;
+    m_enabled = true;
 
-    if(  mode == m_mode ) return;
+    if( mode == m_mode ) return;
     m_mode =  mode;
-    m_comAct = ocNONE;
+    m_specEvent = false;
+    setOcActs( ocNONE, ocNONE );
 
     switch( mode ) {
-        case 0: m_comAct = ocSET;      break; // Set OC Pin
-        case 1: m_comAct = ocCLEAR;    break; // Clear OC Pin
-        case 2: m_interrupt->raise();  break; // Software interrupt
-        case 3:                         /// TODO special event trigger ADC
-        {
-            m_timer->resetTimer();
-        }
+        case 0: setOcActs( ocSET, ocCLEAR ); break; // Set OC Pin
+        case 1: setOcActs( ocCLEAR, ocSET ); break; // Clear OC Pin
+        case 3: m_specEvent = true;                 // Special event
     }
-    m_ocPin->controlPin( m_comAct != ocNONE, false );
-    if( m_comAct != ocNONE ) m_ocPin->setOutState( false );
+    bool controlPin = m_comAct != ocNONE;
+    m_ocPin->controlPin( controlPin, false );
+    if( controlPin ) m_ocPin->setOutState( false );
 }

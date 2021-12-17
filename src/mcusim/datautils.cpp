@@ -7,7 +7,7 @@ uint8_t getBitMask( QStringList bitList, DataSpace* mcu ) // Get mask for a grou
     return bitMask;
 }
 
-regBits_t getRegBits( QString bitNames, DataSpace* mcu ) // Get a set of consecutive bits in a Register
+regBits_t getRegBits( QString bitNames, DataSpace* mcu ) // Get a set of bits in a Register
 {
     regBits_t regBits;
     QStringList bitList = bitNames.split(",");
@@ -20,9 +20,9 @@ regBits_t getRegBits( QString bitNames, DataSpace* mcu ) // Get a set of consecu
         if( mask & 1 ) break;
         mask >>= 1;
     }
-    uint16_t regAddr = mcu->bitRegs()->value( bitList.first() );
+    regBits.regAddr = mcu->bitRegs()->value( bitList.first() );
     uint8_t* ram = mcu->getRam();
-    regBits.reg = ram+regAddr;
+    regBits.reg = ram + regBits.regAddr;
 
     return regBits;
 }

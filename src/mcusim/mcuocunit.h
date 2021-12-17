@@ -65,6 +65,7 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
         ocAct_t  m_comAct;
         ocAct_t  m_tovAct;
 
+        bool m_enabled;
         uint8_t m_mode;
 
         uint16_t m_comMatch;  // counter vale to match a comparation

@@ -37,6 +37,7 @@ struct regBits_t{
     uint8_t bit0;
     uint8_t mask;
     uint8_t* reg;
+    uint16_t regAddr;
 };
 
 #endif

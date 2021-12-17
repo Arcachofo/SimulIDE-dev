@@ -33,9 +33,16 @@ class MAINMODULE_EXPORT PicOcUnit : public McuOcUnit
         ~PicOcUnit();
 
         //virtual void initialize() override;
+        virtual void runEvent();
+
         virtual void configure( uint8_t val ) override;
 
     protected:
+        bool m_enhanced;
+        bool m_specEvent;
+        bool m_resetTimer;
+
+        regBits_t m_GODO;
 };
 
 #endif

@@ -54,7 +54,7 @@ void PicAdc::initialize()
     m_nRefPin = m_refPin.at(1);
 }
 
-void PicAdc::configureA(uint8_t newADCON0 ) // ADCON0
+void PicAdc::configureA( uint8_t newADCON0 ) // ADCON0
 {
     m_enabled = getRegBitsBool( newADCON0, m_ADON );
 
@@ -65,8 +65,7 @@ void PicAdc::configureA(uint8_t newADCON0 ) // ADCON0
     m_channel = getRegBitsVal( newADCON0, m_CHS );
 
     bool convert = getRegBitsBool( newADCON0, m_GODO );
-    if( !m_converting && convert )
-        startConversion();
+    if( !m_converting && convert ) startConversion();
 }
 
 void PicAdc::endConversion()
