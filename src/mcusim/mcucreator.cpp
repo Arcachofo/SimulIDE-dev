@@ -51,6 +51,7 @@
 #include "pic14core.h"
 #include "picport.h"
 #include "pictimer.h"
+#include "picocunit.h"
 #include "picusart.h"
 #include "picadc.h"
 #include "piccomparator.h"
@@ -509,7 +510,8 @@ void McuCreator::createTimer( QDomElement* t )
         else if( el.tagName() == "ocunit" )
         {
             McuOcUnit* ocUnit = NULL;
-            if( m_core == "AVR" ) ocUnit = new AvrOcUnit( mcu, el.attribute("name") );
+            if     ( m_core == "AVR" )   ocUnit = new AvrOcUnit( mcu, el.attribute("name") );
+            else if( m_core == "Pic14" ) ocUnit = new PicOcUnit( mcu, el.attribute("name") );
             if( !ocUnit ) continue;
 
             McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );

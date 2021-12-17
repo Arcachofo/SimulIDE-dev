@@ -20,8 +20,6 @@
 #include "avrocunit.h"
 #include "datautils.h"
 #include "mcupin.h"
-#include "e_mcu.h"
-
 
 AvrOcUnit::AvrOcUnit( eMcu* mcu, QString name )
          : McuOcUnit( mcu, name )
@@ -29,23 +27,17 @@ AvrOcUnit::AvrOcUnit( eMcu* mcu, QString name )
 }
 AvrOcUnit::~AvrOcUnit( ){}
 
-/*void AvrOcUnit::initialize()
-{
-}*/
-
 void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
 {
-    uint8_t mode = getRegBitsVal( val, m_configBits );//((val & m_configMask)>>m_maskBit0);
+    uint8_t mode = getRegBitsVal( val, m_configBits );
 
     if(  mode == m_mode ) return;
     m_mode =  mode;
 
-    if( m_mode == 0 )           // OC Pin disconnected
-    {
+    if( m_mode == 0 ){          // OC Pin disconnected
          m_ocPin->controlPin( false, false );
     }
-    else                        // OC Pin connected
-    {
+    else{                       // OC Pin connected
          m_ocPin->controlPin( true, true );
          m_ocPin->setOutState( false );
 }   }

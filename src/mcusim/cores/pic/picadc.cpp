@@ -39,7 +39,7 @@ PicAdc::PicAdc( eMcu* mcu, QString name )
 {
     m_ADON = getRegBits( "ADON", mcu );
     m_ADSC = getRegBits( "ADSC0,ADCS1", mcu );
-    m_GODO = getRegBits( "GODO", mcu );
+    m_GODO = getRegBits( "GO/DONE", mcu );
     m_ADFM = getRegBits( "ADFM", mcu );
 
     m_pRefPin = NULL;

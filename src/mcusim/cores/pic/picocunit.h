@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,20 +17,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVROCUNIT_H
-#define AVROCUNIT_H
+#ifndef PICOCUNIT_H
+#define PICOCUNIT_H
 
 #include "mcuocunit.h"
+//#include "pictimer.h"
 
-class MAINMODULE_EXPORT AvrOcUnit : public McuOcUnit
+
+class MAINMODULE_EXPORT PicOcUnit : public McuOcUnit
 {
         friend class McuCreator;
 
     public:
-        AvrOcUnit( eMcu* mcu, QString name );
-        ~AvrOcUnit();
+        PicOcUnit( eMcu* mcu, QString name );
+        ~PicOcUnit();
 
+        //virtual void initialize() override;
         virtual void configure( uint8_t val ) override;
+
+    protected:
 };
 
 #endif

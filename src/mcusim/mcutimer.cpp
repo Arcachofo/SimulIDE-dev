@@ -74,6 +74,12 @@ void McuTimer::runEvent()            // Overflow
     sheduleEvents();
 }
 
+void McuTimer::resetTimer()
+{
+    m_countVal = m_countStart;             // Reset count value
+    sheduleEvents();
+}
+
 void McuTimer::sheduleEvents()
 {
     if( m_running )

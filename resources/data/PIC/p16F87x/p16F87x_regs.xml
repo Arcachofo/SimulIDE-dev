@@ -32,7 +32,8 @@
         <register name="CCPR2H"  addr="0x1C" bits=""/>
         <register name="CCP2CON" addr="0x1D" bits="CCP2M0,CCP2M1,CCP2M2,CCP2M3,CCP2Y,CCP2X,0,0"/>
         <register name="ADRESH"  addr="0x1E" bits=""/>
-        <register name="ADCON0"  addr="0x1F" bits="ADON,0,GODO,CHS0,CHS1,CHS2,ADCS0,ADCS1"/>
+        <register name="ADCON0"  addr="0x1F" 
+                  bits="ADON,0,GO/DONE,CHS0,CHS1,CHS2,ADCS0,ADCS1"/>
     </regblock>
     <datablock name="GPR0" start="0x0020" end="0x007F"/>
     <!-- BANK 1 -->

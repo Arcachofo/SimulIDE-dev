@@ -53,7 +53,7 @@
                   
         <register name="ADRESH"  addr="0x1E" bits=""/>
         <register name="ADCON0"  addr="0x1F" 
-                  bits="ADON,GODO,CHS0,CHS1,CHS2,CHS3,ADCS0,ADCS1"/>
+                  bits="ADON,GO/DONE,CHS0,CHS1,CHS2,CHS3,ADCS0,ADCS1"/>
     </regblock>
     <datablock name="GPR0" start="0x0020" end="0x007F"/>
     <!-- BANK 1 -->

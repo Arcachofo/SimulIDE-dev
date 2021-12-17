@@ -1,5 +1,5 @@
-/***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+﻿/***************************************************************************
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,20 +17,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef AVROCUNIT_H
-#define AVROCUNIT_H
+#include "picocunit.h"
+#include "datautils.h"
+#include "mcupin.h"
+#include "e_mcu.h"
 
-#include "mcuocunit.h"
-
-class MAINMODULE_EXPORT AvrOcUnit : public McuOcUnit
+PicOcUnit::PicOcUnit( eMcu* mcu, QString name )
+         : McuOcUnit( mcu, name )
 {
-        friend class McuCreator;
+}
+PicOcUnit::~PicOcUnit( ){}
 
-    public:
-        AvrOcUnit( eMcu* mcu, QString name );
-        ~AvrOcUnit();
+void PicOcUnit::configure( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
+{
+    uint8_t mode = getRegBitsVal( val, m_configBits );
+    if( (mode & 0b1100) != 0b1000 ) return; // No Compare Mode
+    mode = mode & 0b11;
 
-        virtual void configure( uint8_t val ) override;
-};
+    if(  mode == m_mode ) return;
+    m_mode =  mode;
+    m_comAct = ocNONE;
 
-#endif
+    switch( mode ) {
+        case 0: m_comAct = ocSET;      break; // Set OC Pin
+        case 1: m_comAct = ocCLEAR;    break; // Clear OC Pin
+        case 2: m_interrupt->raise();  break; // Software interrupt
+        case 3:                         /// TODO special event trigger ADC
+        {
+            m_timer->resetTimer();
+        }
+    }
+    m_ocPin->controlPin( m_comAct != ocNONE, false );
+    if( m_comAct != ocNONE ) m_ocPin->setOutState( false );
+}

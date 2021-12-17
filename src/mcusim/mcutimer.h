@@ -45,6 +45,8 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
+        virtual void resetTimer();
+
         virtual void enable( uint8_t en );
         virtual void countWriteL( uint8_t val );
         virtual void countWriteH( uint8_t val );
