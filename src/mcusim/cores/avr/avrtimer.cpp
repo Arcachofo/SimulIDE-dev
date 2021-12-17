@@ -72,13 +72,13 @@ McuOcUnit* AvrTimer::getOcUnit( QString name )
     return NULL;
 }
 
-void AvrTimer::configureA( uint8_t val ) // TCCRXA  // WGM00,WGM01
+void AvrTimer::configureA( uint8_t newTCCRXA ) // TCCRXA  // WGM00,WGM01
 {
-    if( m_OCA ) m_OCA->configure( val ); // Done in ocunits
-    if( m_OCB ) m_OCB->configure( val );
-    if( m_OCC ) m_OCC->configure( val );
+    if( m_OCA ) m_OCA->configure( newTCCRXA ); // Done in ocunits
+    if( m_OCB ) m_OCB->configure( newTCCRXA );
+    if( m_OCC ) m_OCC->configure( newTCCRXA );
 
-    m_WGM10 = val & 0b00000011;  // WGMX1,WGMX0
+    m_WGM10 = newTCCRXA & 0b00000011;  // WGMX1,WGMX0
     updtWgm();
 }
 
@@ -86,17 +86,6 @@ void AvrTimer::configureB( uint8_t newTCCRXB ) // TCCRXB
 {
     uint8_t prIndex = getRegBitsVal( newTCCRXB, m_prSelBits ); // CSX0-n
 
-    /// Not working after Rev 376
-    /*if( prIndex != m_prIndex )
-    {
-        m_prIndex = prIndex;
-
-        updtCount();    // write counter values to Ram
-        if( prIndex ) configureClock();
-        updtCycles();  // This will shedule or cancel events
-        //enable( m_prIndex );
-        m_running = ( val > 0 );
-    }*/
     if( prIndex != m_prIndex )
     {
         m_prIndex = prIndex;

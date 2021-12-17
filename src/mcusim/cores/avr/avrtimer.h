@@ -42,7 +42,7 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         virtual void addOcUnit( McuOcUnit* ocUnit ) override;
         virtual McuOcUnit* getOcUnit( QString name ) override;
 
-        virtual void configureA( uint8_t val ) override;
+        virtual void configureA( uint8_t newTCCRXA ) override;
         virtual void configureB( uint8_t newTCCRXB ) override;
 
     protected:

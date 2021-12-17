@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,57 +17,26 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUOCUNIT_H
-#define MCUOCUNIT_H
+#ifndef PICICUNIT_H
+#define PICICUNIT_H
 
-#include "mcumodule.h"
-#include "e-element.h"
+#include "mcuicunit.h"
 
-class McuPin;
-class McuTimer;
 
-enum ocAct_t{
-    ocNONE=0,
-    ocTOGGLE,
-    ocCLEAR,
-    ocSET,
-};
-
-class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
+class MAINMODULE_EXPORT PicIcUnit : public McuIcUnit
 {
-        friend class McuCreator;
-
     public:
-        McuOcUnit( eMcu* mcu, QString name );
-         ~McuOcUnit();
+        PicIcUnit( eMcu* mcu, QString name );
+        virtual ~PicIcUnit();
 
-        virtual void initialize();
-        virtual void runEvent();
-        virtual void configure( uint8_t ){;}
-        virtual void ocrWriteL( uint8_t val );
-        virtual void ocrWriteH( uint8_t val );
-        virtual void sheduleEvents( uint32_t ovf, uint32_t countVal );
-        virtual void tov() { drivePin( m_tovAct ); }
+        virtual void initialize() override;
+        virtual void voltChanged() override;
 
-        virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
+        virtual void configureA( uint8_t val ) override;
 
-        uint8_t getMode() { return m_mode; }
-
-    protected:
-        void drivePin( ocAct_t act );
-
-        McuTimer* m_timer;
-        McuPin*   m_ocPin;
-
-        ocAct_t  m_comAct;
-        ocAct_t  m_tovAct;
-
-        bool m_enabled;
-        uint8_t m_mode;
-
-        uint16_t m_comMatch;  // counter vale to match a comparation
-
-        bool m_pinSet;
+    private:
+        uint64_t m_prescaler;
+        uint64_t m_counter;
 };
 
 #endif

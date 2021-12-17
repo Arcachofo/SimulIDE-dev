@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,57 +17,41 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUOCUNIT_H
-#define MCUOCUNIT_H
+#include "mcuicunit.h"
+#include "mcutimer.h"
+#include "mcuinterrupts.h"
+#include "mcupin.h"
 
-#include "mcumodule.h"
-#include "e-element.h"
-
-class McuPin;
-class McuTimer;
-
-enum ocAct_t{
-    ocNONE=0,
-    ocTOGGLE,
-    ocCLEAR,
-    ocSET,
-};
-
-class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
+McuIcUnit::McuIcUnit( eMcu* mcu, QString name )
+         : McuModule( mcu, name )
+         , eElement( name )
 {
-        friend class McuCreator;
+    m_timer  = NULL;
+    m_icPin  = NULL;
+    m_icRegL = NULL;
+    m_icRegH = NULL;
+}
+McuIcUnit::~McuIcUnit( ){}
 
-    public:
-        McuOcUnit( eMcu* mcu, QString name );
-         ~McuOcUnit();
+void McuIcUnit::initialize()
+{
+    m_enabled = false;
+    m_inState = false;
+    m_fallingEdge = false;
+    m_mode = 0;
+}
 
-        virtual void initialize();
-        virtual void runEvent();
-        virtual void configure( uint8_t ){;}
-        virtual void ocrWriteL( uint8_t val );
-        virtual void ocrWriteH( uint8_t val );
-        virtual void sheduleEvents( uint32_t ovf, uint32_t countVal );
-        virtual void tov() { drivePin( m_tovAct ); }
+void McuIcUnit::voltChanged() // Pin change
+{
+    bool inState = m_icPin->getInpState();
 
-        virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
+    if( m_inState == inState ) return;  // No Edge
+    m_inState = inState;
+    if( inState == m_fallingEdge ) return; // Wrong Edge
 
-        uint8_t getMode() { return m_mode; }
+    uint16_t count = m_timer->getCount();
+    *m_icRegL = count & 0xFF;
+    *m_icRegH = (count >> 8) & 0xFF;
 
-    protected:
-        void drivePin( ocAct_t act );
-
-        McuTimer* m_timer;
-        McuPin*   m_ocPin;
-
-        ocAct_t  m_comAct;
-        ocAct_t  m_tovAct;
-
-        bool m_enabled;
-        uint8_t m_mode;
-
-        uint16_t m_comMatch;  // counter vale to match a comparation
-
-        bool m_pinSet;
-};
-
-#endif
+    m_interrupt->raise();
+}

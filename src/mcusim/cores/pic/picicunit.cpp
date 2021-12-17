@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,57 +17,54 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUOCUNIT_H
-#define MCUOCUNIT_H
+#include "picicunit.h"
+#include "datautils.h"
+#include "mcupin.h"
 
-#include "mcumodule.h"
-#include "e-element.h"
-
-class McuPin;
-class McuTimer;
-
-enum ocAct_t{
-    ocNONE=0,
-    ocTOGGLE,
-    ocCLEAR,
-    ocSET,
-};
-
-class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
+PicIcUnit::PicIcUnit( eMcu* mcu, QString name )
+         : McuIcUnit( mcu, name )
 {
-        friend class McuCreator;
+}
+PicIcUnit::~PicIcUnit( ){}
 
-    public:
-        McuOcUnit( eMcu* mcu, QString name );
-         ~McuOcUnit();
+void PicIcUnit::initialize()
+{
+    McuIcUnit::initialize();
+    m_prescaler = 1;
+    m_counter = 0;
+}
 
-        virtual void initialize();
-        virtual void runEvent();
-        virtual void configure( uint8_t ){;}
-        virtual void ocrWriteL( uint8_t val );
-        virtual void ocrWriteH( uint8_t val );
-        virtual void sheduleEvents( uint32_t ovf, uint32_t countVal );
-        virtual void tov() { drivePin( m_tovAct ); }
+void PicIcUnit::voltChanged() // Pin change
+{
+    m_counter++;
+    if( m_counter < m_prescaler ) return;
+    m_counter = 0;
 
-        virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
+    McuIcUnit::voltChanged();
+}
 
-        uint8_t getMode() { return m_mode; }
+void PicIcUnit::configureA( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
+{
+    uint8_t mode = getRegBitsVal( val, m_configBitsA );
+    if( mode == 0 )
+    {
+        m_enabled = false;
+        m_icPin->changeCallBack( this, false );
+    }
 
-    protected:
-        void drivePin( ocAct_t act );
+    if( (mode & 0b1100) != 0b0100 ) return; // No Capture Mode
+    mode = mode & 0b11;
+    m_enabled = true;
+    m_icPin->changeCallBack( this, true );
 
-        McuTimer* m_timer;
-        McuPin*   m_ocPin;
+    if( mode == m_mode ) return;
+    initialize();
+    m_mode =  mode;
 
-        ocAct_t  m_comAct;
-        ocAct_t  m_tovAct;
-
-        bool m_enabled;
-        uint8_t m_mode;
-
-        uint16_t m_comMatch;  // counter vale to match a comparation
-
-        bool m_pinSet;
-};
-
-#endif
+    switch( mode ) {
+        case 0: m_fallingEdge = true; break; // Falling Edge
+        case 1:                       break; // Rising Edge
+        case 2: m_prescaler = 4;      break; // Rising Edge, Presc = 4
+        case 3: m_prescaler = 16;            // Rising Edge, Presc = 16
+    }
+}

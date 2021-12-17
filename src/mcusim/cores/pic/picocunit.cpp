@@ -56,9 +56,9 @@ void PicOcUnit::runEvent()  // Compare match
     }
 }
 
-void PicOcUnit::configure( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
+void PicOcUnit::configureA( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
 {
-    uint8_t mode = getRegBitsVal( val, m_configBits );
+    uint8_t mode = getRegBitsVal( val, m_configBitsA );
     if( mode == 0 ) m_enabled = false;
     if( mode == 2 && m_enhanced ) setOcActs( ocTOGGLE, ocNONE );
 

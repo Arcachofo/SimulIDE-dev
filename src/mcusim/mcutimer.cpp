@@ -145,6 +145,12 @@ void McuTimer::updtCycles() // Recalculate ovf, comps, etc
     sheduleEvents();
 }
 
+uint32_t McuTimer::getCount()
+{
+    updtCount();
+    return m_countVal;
+}
+
 // ----------------------------------------
 
 McuTimers::McuTimers( eMcu* mcu  )

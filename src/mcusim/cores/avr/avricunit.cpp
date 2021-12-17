@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,57 +17,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUOCUNIT_H
-#define MCUOCUNIT_H
+#include "avricunit.h"
+#include "datautils.h"
+#include "mcupin.h"
+#include "mcutimer.h"
+#include "mcuinterrupts.h"
 
-#include "mcumodule.h"
-#include "e-element.h"
-
-class McuPin;
-class McuTimer;
-
-enum ocAct_t{
-    ocNONE=0,
-    ocTOGGLE,
-    ocCLEAR,
-    ocSET,
-};
-
-class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
+AvrIcUnit::AvrIcUnit( eMcu* mcu, QString name )
+         : McuIcUnit( mcu, name )
 {
-        friend class McuCreator;
+}
+AvrIcUnit::~AvrIcUnit( ){}
 
-    public:
-        McuOcUnit( eMcu* mcu, QString name );
-         ~McuOcUnit();
-
-        virtual void initialize();
-        virtual void runEvent();
-        virtual void configure( uint8_t ){;}
-        virtual void ocrWriteL( uint8_t val );
-        virtual void ocrWriteH( uint8_t val );
-        virtual void sheduleEvents( uint32_t ovf, uint32_t countVal );
-        virtual void tov() { drivePin( m_tovAct ); }
-
-        virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
-
-        uint8_t getMode() { return m_mode; }
-
-    protected:
-        void drivePin( ocAct_t act );
-
-        McuTimer* m_timer;
-        McuPin*   m_ocPin;
-
-        ocAct_t  m_comAct;
-        ocAct_t  m_tovAct;
-
-        bool m_enabled;
-        uint8_t m_mode;
-
-        uint16_t m_comMatch;  // counter vale to match a comparation
-
-        bool m_pinSet;
-};
-
-#endif
+void AvrIcUnit::configureA( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
+{
+}
