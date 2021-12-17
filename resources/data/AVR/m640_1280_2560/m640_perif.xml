@@ -152,7 +152,7 @@
         <interrupt name="USART0_U" />
     </usart>
     
-    <usart name="USART1"  number="2" configregsA="UCSR1A" configregsB="UCSR1B"  configregsC="UCSR0C"configregsC="UCSR1C">
+    <usart name="USART1"  number="2" configregsA="UCSR1A" configregsB="UCSR1B" configregsC="UCSR1C">
         <trunit type="tx" pin="PORTD3" register="UDR1">
             <interrupt name="USART1_T" />
         </trunit>
