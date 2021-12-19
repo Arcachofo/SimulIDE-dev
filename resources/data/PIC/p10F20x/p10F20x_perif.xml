@@ -5,7 +5,7 @@
 
   <timer name="TIMER0" counter="TMR0" configregsA="OPTION">
     <prescaler values="2,4,8,16,32,64,128,256"/>
-    <extclock type="PIN" source="PORTA4"/>
+    <extclock type="PIN" source="PORTP4"/>
     <interrupt name="T0_OVF" />
   </timer>
     

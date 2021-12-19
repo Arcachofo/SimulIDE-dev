@@ -1,0 +1,65 @@
+<parts>
+    <!-- BANK 0 -->
+    <regblock name="SFR0" start="0x0000" end="0x001F" streg="STATUS">
+        <register name="INDF"    addr="0x00" bits=""/>
+        <register name="TMR0"    addr="0x01" bits=""/>
+        <register name="PCL"     addr="0x02" bits=""/>
+        <register name="STATUS"  addr="0x03" reset="00011000" mask="11100111"
+                  bits="C,DC,Z,PD,TO,R0,R1,IR" />
+                  
+        <register name="FSR"     addr="0x04" bits=""/>
+        <register name="GPIO"    addr="0x05" mask="00111111"
+                  bits="GPIO0,GPIO1,GPIO2,GPI3,GPIO4,GPIO5"/>
+
+        <register name="PCLATH"  addr="0x0A" bits=""/>
+        <register name="INTCON"  addr="0x0B" 
+                  bits="RBIF,INTF,T0IF,RBIE,INTE,T0IE,PEIE,GIE"/>
+                  
+        <register name="PIR1"    addr="0x0C" 
+                  bits="TMR1IF,TMR2IF,CCP1IF,0,TXIF,RCIF,CMIF,EEIF"/>
+                  
+        <register name="TMR1L"   addr="0x0E" bits=""/>
+        <register name="TMR1H"   addr="0x0F" bits=""/>
+        <register name="T1CON"   addr="0x10" 
+                  bits="TMR1ON,TMR1CS,T1SYNC,T1OSCEN,T1CKPS0,T1CKPS1,TMR1GE"/>
+
+        <register name="CMCON"   addr="0x19" mask="01011111"
+                  bits="CM0,CM1,CM2,CIS,C1INV,0,COUT," />
+    </regblock>
+    <datablock name="GPR0" start="0x0020" end="0x005F"/>
+    
+    <!-- BANK 1 -->
+    <regblock name="SFR1" start="0x0080" end="0x009F">
+        <mapped                  addr="0x80" mapto="0x00"/><!-- INDF -->
+        
+        <register name="OPTION" addr="0x81" reset="11111111"
+                  bits="PS0,PS1,PS2,PSA,T0SE,T0CS,INTEDG,RBPU" />
+        
+        <mapped                  addr="0x82" mapto="0x02"/><!-- PCL -->
+        <mapped                  addr="0x83" mapto="0x03"/><!-- STATUS -->
+        <mapped                  addr="0x84" mapto="0x04"/><!-- FSR -->
+        
+        <register name="TRISIO"  addr="0x85" bits="0-5" reset="00111111" mask="00111111"/>
+
+        <mapped                  addr="0x8A" mapto="0x0A"/><!-- PCLATH -->
+        <mapped                  addr="0x8B" mapto="0x0B"/><!-- INTCON -->
+        <register name="PIE1"   addr="0x8C" 
+                  bits="TMR1IE,TMR2IE,CCP1IE,0,TXIE,RCIE,CMIE,EEIE"/>
+                  
+        <register name="PCON"   addr="0x8E" reset="00001000"
+                  bits="BOR,POR,0,OSCF" />
+                  
+        <register name="OSCCAL" addr="0x90" 
+                  bits="0,0,CAL0,CAL1,CAL2,CAL3,CAL4,CAL5"/>
+        
+        <register name="VRCON"  addr="0x99" mask="11101111"
+                  bits="VR0,VR1,VR2,VR3,0,VRR,VROE,VREN" />
+                  
+        <register name="EEDATA" addr="0x9A" bits=""/>
+        <register name="EEADR"  addr="0x9B" bits=""/>
+        <register name="EECON1" addr="0x9C" bits="RD,WR,WREN,WRERR"/>
+        <register name="EECON2" addr="0x9D" bits=""/>
+    </regblock>
+    <datablock name="GPR1" start="0x00A0" end="0x00DF" mapto="0x0020"/>
+
+</parts>

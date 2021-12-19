@@ -1,0 +1,15 @@
+<!DOCTYPE SimulIDE>
+
+<package name="Package" pins="8" width="4" height="5">
+
+    <pin side="left"  pos="1"  type="nc" id="VDD" label="Vdd"/>
+    <pin side="left"  pos="2"  type="IO" id="GP5" label="P5"/>
+    <pin side="left"  pos="3"  type="IO" id="GP4" label="P4"/>
+    <pin side="left"  pos="4"  type="IO" id="GP3" label="P3"/>
+    
+    <pin side="right" pos="4"  type="IO" id="GP2" label="P2"/>
+    <pin side="right" pos="3"  type="IO" id="GP1" label="P1"/>
+    <pin side="right" pos="2"  type="IO" id="GP0" label="P0"/>
+    <pin side="right" pos="1"  type="nc" id="VSS" label="Vss"/>
+</package>
+
