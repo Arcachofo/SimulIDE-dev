@@ -44,4 +44,17 @@
         </trunit>
         <interrupt name="USART_T" />
     </usart>
+    
+    <vref name="Vref" configregsA="VRCON" pinout="PORTA2">
+    </vref>
+    
+    <acomp name="COMP11" configregsA="CM1CON0"  configregsC="SRCON"
+           pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA3,PORTA4">
+        <interrupt name="ACOMP1" />
+    </acomp>
+    
+    <acomp name="COMP12" configregsA="CM2CON0" configregsB="CM2CON1" configregsC="SRCON"
+           pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA2,PORTA5">
+        <interrupt name="ACOMP2" />
+    </acomp>
 </parts>

@@ -43,11 +43,11 @@
     <vref name="Vref" configregsA="VRCON" pinout="PORTA2">
     </vref>
     
-    <acomp name="Comp01" configregsA="CMCON" pins="PORTA0,PORTA3,PORTA2">
+    <acomp name="COMP01" configregsA="CMCON" pins="PORTA0,PORTA3,PORTA2">
         <interrupt name="ACOMP" />
     </acomp>
     
-    <acomp name="Comp02" configregsA="CMCON" pins="PORTA1,PORTA2,PORTA4">
+    <acomp name="COMP02" configregsA="CMCON" pins="PORTA1,PORTA2,PORTA4">
         <interrupt name="ACOMP" />
     </acomp>
     

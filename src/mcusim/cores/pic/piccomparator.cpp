@@ -39,12 +39,16 @@ PicComp::PicComp( eMcu* mcu, QString name )
 }
 PicComp::~PicComp(){}
 
-/*void PicComp::initialize()
+void PicComp::initialize()
 {
-}*/
+    McuComp::initialize();
+    m_enabled = false;
+}
 
 void PicComp::voltChanged()
 {
+    if( !m_enabled ) return;
+
     double vRef = m_fixVref ? m_vref : m_pinP->getVolt();
     bool compOut = vRef > m_pinN->getVolt() ;
     if( m_inv ) compOut = !compOut;

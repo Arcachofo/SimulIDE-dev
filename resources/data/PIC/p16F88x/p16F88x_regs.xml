@@ -39,8 +39,8 @@
         <register name="CCP1CON" addr="0x17" 
                   bits="CCP1M0,CCP1M1,CCP1M2,CCP1M3,CCP1X"/>
                   
-        <register name="RCSTA"   addr="0x18" 
-                  bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN" mask="11111000"/>
+        <register name="RCSTA"   addr="0x18" mask="11111000"
+                  bits="RX9D,OERR,FERR,ADEN,CREN,SREN,RX9,SPEN"/>
                   
         <register name="TXREG"   addr="0x19" bits=""/>
         <register name="RCREG"   addr="0x1A" bits=""/>
@@ -58,18 +58,21 @@
     <!-- BANK 1 -->
     <regblock name="SFR1" start="0x0080" end="0x009F">
         <mapped                  addr="0x80" mapto="0x00"/><!-- INDF -->
+        
         <register name="OPTION"  addr="0x81" reset="11111111"
                   bits="PS0,PS1,PS2,PSA,T0SE,T0CS,INTEDG,RBPU"/>
                   
         <mapped                  addr="0x82" mapto="0x02"/><!-- PCL -->
         <mapped                  addr="0x83" mapto="0x03"/><!-- STATUS -->
         <mapped                  addr="0x84" mapto="0x04"/><!-- FSR -->
+        
         <register name="TRISA"   addr="0x85" bits="0-7" reset="00111111" mask="00111111"/>
         <register name="TRISB"   addr="0x86" bits="0-7" reset="11111111"/>
         <register name="TRISC"   addr="0x87" bits="0-7" reset="11111111"/>
               
         <mapped                  addr="0x8A" mapto="0x0A"/><!-- PCLATH -->
         <mapped                  addr="0x8B" mapto="0x0B"/><!-- INTCON -->
+        
         <register name="PIE1"    addr="0x8C" 
                   bits="TMR1IE,TMR2IE,CCP1IE,SSPIE,TXIE,RCIE,ADIE,PSPIE"/>
                   
@@ -91,7 +94,9 @@
                   
         <register name="WPUB"    addr="0x95" bits=""/>
         <register name="IOCB"    addr="0x96" bits=""/>
-        <register name="VRCON"   addr="0x97" bits=""/>
+        <register name="VRCON"   addr="0x97" 
+                  bits="Vr0,VR1,VR2,VR3,VRSS,VRR,VROE,VREN"/>
+                  
         <register name="TXSTA"   addr="0x98" reset="00000010" mask="11111101"
                   bits="TX9D,TRMT,BRGH,0,SYNC,TXEN,TX9,CSRC"/>
                   
@@ -101,7 +106,8 @@
         <register name="ECCPAS"  addr="0x9C" bits=""/>
         <register name="PSTRCON" addr="0x9D" bits=""/>
         <register name="ADRESL"  addr="0x9E" bits=""/>
-        <register name="ADCON1"  addr="0x9F" bits="0,0,0,0,VCFG0,VCFG1,0,ADFM"/>
+        <register name="ADCON1"  addr="0x9F" 
+                  bits="0,0,0,0,VCFG0,VCFG1,0,ADFM"/>
     </regblock>
     <datablock name="RAM1" start="0x00F0" end="0x00FF" mapto="0x0070"/>
     <!-- BANK 2 -->
@@ -113,9 +119,16 @@
         <mapped                  addr="0x104" mapto="0x04"/><!-- FSR -->
         <register name="WDTCON"  addr="0x105" bits=""/>
         <mapped                  addr="0x106" mapto="0x04"/><!-- PORTB -->
-        <register name="CM1CON0" addr="0x107" bits=""/>
-        <register name="CM2CON0" addr="0x108" bits=""/>
-        <register name="CM2CON1" addr="0x109" bits=""/>
+        
+        <register name="CM1CON0" addr="0x107" mask="11110111"
+                  bits="C1Ch0,C1CH1,C1R,0,C1POL,C1OE,C1OUT,C1ON"/>
+                  
+        <register name="CM2CON0" addr="0x108" mask="11110111"
+                  bits="C2Ch0,C2CH1,C2R,0,C2POL,C2OE,C2OUT,C2ON"/>
+                  
+        <register name="CM2CON1" addr="0x109" mask="11110011"
+                  bits="C2SYNC,T1GSS,C2RSEL,C1RSEL,MC2OUT,MC1OUT"/>
+                  
         <mapped                  addr="0x10A" mapto="0x0A"/><!-- PCLATH -->
         <mapped                  addr="0x10B" mapto="0x0B"/><!-- INTCON -->
         <register name="EEDAT"   addr="0x10C" bits=""/>
@@ -131,15 +144,20 @@
         <mapped                  addr="0x182" mapto="0x02"/><!-- PCL -->
         <mapped                  addr="0x183" mapto="0x03"/><!-- STATUS -->
         <mapped                  addr="0x184" mapto="0x04"/><!-- FSR -->
-        <register name="SRCON"   addr="0x185" bits=""/>
+        
+        <register name="SRCON"   addr="0x185" mask="11110001"
+                  bits="FVREN,0,PULSR,PULSS,C2REN,C1SEN,SR0,SR1"/>
+                  
         <mapped                  addr="0x186" mapto="0x86"/><!-- TRISB -->
         <register name="BAUDCTL" addr="0x187" bits=""/>
         <register name="ANSEL"   addr="0x188" reset="11111111" bits=""/>
         <register name="ANSELH"  addr="0x189" reset="00111111" bits=""/>
         <mapped                  addr="0x18A" mapto="0x0A"/><!-- PCLATH -->
         <mapped                  addr="0x18B" mapto="0x0B"/><!-- INTCON -->
+        
         <register name="EECON1"  addr="0x18C" 
                   bits="RD,WR,WREN,WRERR,0,0,0,EEPGD"/>
+                  
         <register name="EECON2"  addr="0x18D" bits=""/>
     </regblock>
     <datablock name="RAM3" start="0x01F0" end="0x01FF" mapto="0x0070"/>
