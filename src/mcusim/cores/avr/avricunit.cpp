@@ -29,6 +29,6 @@ AvrIcUnit::AvrIcUnit( eMcu* mcu, QString name )
 }
 AvrIcUnit::~AvrIcUnit( ){}
 
-void AvrIcUnit::configureA( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
+void AvrIcUnit::configureA( uint8_t val )
 {
 }

@@ -17,42 +17,55 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef COMPROPERTY_H
-#define COMPROPERTY_H
+#ifndef PICCCPUNIT_H
+#define PICCCPUNIT_H
 
-#include <QString>
+#include "mcumodule.h"
+#include "e-element.h"
 
-class PropVal;
-class PropDialog;
-class Component;
+class PicOcUnit;
+class PicIcUnit;
+class PicPwmUnit;
+class McuPin;
 
-class MAINMODULE_EXPORT ComProperty
+enum ccpMode_t{
+    ccpOFF=0,
+    ccpCAP,
+    ccpCOM,
+    ccpPWM,
+};
+
+class MAINMODULE_EXPORT PicCcpUnit : public McuModule, public eElement
 {
+    friend class McuCreator;
+
     public:
-        ComProperty( QString name, QString caption, QString unit, QString type );
-        virtual ~ComProperty(){;}
+        PicCcpUnit( eMcu* mcu, QString name );
+        ~PicCcpUnit();
 
-        QString name() { return m_name; }
-        QString capt() { return m_capt; }
-        QString type() { return m_type; }
-        QString unit() { return m_unit; }
+        virtual void initialize();
 
-        virtual void setUnit( QString u ) {;} // Old: TODELETE
+        virtual void ccprWriteL( uint8_t val );
+        virtual void ccprWriteH( uint8_t val );
 
-        virtual void    setValStr( QString val ){;}
-        virtual QString getValStr(){return "";}
-        virtual double  getValue(){return 0;}
+        virtual void configureA( uint8_t CCPxCON ) override;
 
-        void setWidget( PropVal* w );
+        virtual void setInterrupt( Interrupt* i ) override;
+
+        void setPin( McuPin* pin );
 
     protected:
-        PropVal* m_widget;
+        uint8_t m_mode;
+        ccpMode_t m_ccpMode;
 
-        QString m_name;
-        QString m_capt;
-        QString m_type;
-        QString m_unit;
-        uint8_t m_flags;
+        uint8_t* m_ccpRegL;
+        uint8_t* m_ccpRegH;
+
+        regBits_t m_CCPxM;
+
+        PicIcUnit*  m_capUnit;
+        PicOcUnit*  m_comUnit;
+        PicPwmUnit* m_pwmUnit;
 };
 
 #endif

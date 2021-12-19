@@ -116,9 +116,9 @@ void AvrTimer::configureOcUnits( bool wgm3 )
     //m_reverse = false;
 
     ocAct_t comActA, comActB, comActC;
-    ocAct_t tovActA = ocNONE;
-    ocAct_t tovActB = ocNONE;
-    ocAct_t tovActC = ocNONE;
+    ocAct_t tovActA = ocNON;
+    ocAct_t tovActB = ocNON;
+    ocAct_t tovActC = ocNON;
 
     if( m_OCA ) comActA = (ocAct_t)m_OCA->getMode(); // Default modes
     if( m_OCB ) comActB = (ocAct_t)m_OCB->getMode();
@@ -126,27 +126,27 @@ void AvrTimer::configureOcUnits( bool wgm3 )
 
     if( m_wgmMode == wgmPHASE )  // Phase Correct PWM
     {
-        if( m_OCA ) { if((comActA == ocTOGGLE) && wgm3 ) comActA = ocNONE; }
-        if( m_OCB ) { if( comActB == ocTOGGLE ) comActB = ocNONE; }
-        if( m_OCC ) { if( comActC == ocTOGGLE ) comActC = ocNONE; }
+        if( m_OCA ) { if((comActA == ocTOG) && wgm3 ) comActA = ocNON; }
+        if( m_OCB ) { if( comActB == ocTOG ) comActB = ocNON; }
+        if( m_OCC ) { if( comActC == ocTOG ) comActC = ocNON; }
         m_bidirec = true;
     }
     else  if( m_wgmMode == wgmFAST )  // Fast PWM
     {
         if( m_OCA ) {
-            if((comActA == ocTOGGLE) && wgm3 ) comActA = ocNONE;
-            if     ( comActA == ocCLEAR ) tovActA = ocSET;
-            else if( comActA == ocSET )   tovActA = ocCLEAR;
+            if((comActA == ocTOG) && wgm3 ) comActA = ocNON;
+            if     ( comActA == ocCLR ) tovActA = ocSET;
+            else if( comActA == ocSET ) tovActA = ocCLR;
         }
         if( m_OCB ) {
-            if     ( comActB == ocTOGGLE ) comActB = ocNONE;
-            else if( comActB == ocCLEAR )  tovActB = ocSET;
-            else if( comActB == ocSET )    tovActB = ocCLEAR;
+            if     ( comActB == ocTOG ) comActB = ocNON;
+            else if( comActB == ocCLR ) tovActB = ocSET;
+            else if( comActB == ocSET ) tovActB = ocCLR;
         }
         if( m_OCC ) {
-            if     ( comActC == ocTOGGLE ) comActC = ocNONE;
-            else if( comActC == ocCLEAR )  tovActC = ocSET;
-            else if( comActC == ocSET )    tovActC = ocCLEAR;
+            if     ( comActC == ocTOG ) comActC = ocNON;
+            else if( comActC == ocCLR ) tovActC = ocSET;
+            else if( comActC == ocSET ) tovActC = ocCLR;
     }   }
     if( m_OCA ) m_OCA->setOcActs( comActA, tovActA );
     if( m_OCB ) m_OCB->setOcActs( comActB, tovActB );
@@ -179,8 +179,8 @@ void AvrTimer8bit::OCRXAchanged( uint8_t val )
 {
     m_ovfMatch = 0xFF;
     if( (m_wgmMode == wgmCTC)
-      ||((m_WGM32) && (( m_wgmMode == wgmPHASE)
-                      ||(m_wgmMode == wgmFAST)) ) )
+      ||((m_WGM32) && ((m_wgmMode == wgmPHASE)
+                     ||(m_wgmMode == wgmFAST)) ) )
     { m_ovfMatch = val; } // Top = OCRA
 
     if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
@@ -213,7 +213,7 @@ void AvrTimer80::configureClock()
 // TIMER 1 (8 bits) --------------------------------
 
 AvrTimer81::AvrTimer81( eMcu* mcu, QString name)
-         : AvrTimer8bit( mcu, name )
+          : AvrTimer8bit( mcu, name )
 {
     //setOCRXA( "OCR0A" );
 }
@@ -233,17 +233,6 @@ void AvrTimer81::configureB( uint8_t newTCCR1 ) // TCCR1
 {
     uint8_t prIndex = getRegBitsVal( newTCCR1, m_prSelBits ); // CSX0-n
 
-    /// Not working after Rev 376
-    /*if( prIndex != m_prIndex )
-    {
-        m_prIndex = prIndex;
-
-        updtCount();    // write counter values to Ram
-        if( prIndex ) configureClock();
-        updtCycles();  // This will shedule or cancel events
-        //enable( m_prIndex );
-        m_running = ( val > 0 );
-    }*/
     if( prIndex != m_prIndex )
     {
         m_prIndex = prIndex;

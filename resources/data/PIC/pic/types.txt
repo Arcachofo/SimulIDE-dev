@@ -14,3 +14,5 @@ Timer:
     
 - Type 160: 16 bits.
     
+CCP:
+- Type 00: p16F88x.

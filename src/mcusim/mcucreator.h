@@ -51,6 +51,7 @@ class MAINMODULE_EXPORT McuCreator
         static void createInterrupts( QDomElement* i );
         static void createPort( QDomElement* p );
         static void createTimer( QDomElement* t );
+        static void createCcpUnit( QDomElement* c );
         static void createUsart( QDomElement* u );
         static void createAdc( QDomElement* e );
         static void createAcomp( QDomElement* e );

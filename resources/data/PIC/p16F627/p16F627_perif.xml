@@ -19,10 +19,11 @@
         <prescaler values="1,2,4,8"/>
         <extclock type="PIN" source="PORTB6"/>
         <interrupt name="T1_OVF" />
-        <ocunit name="OC1" pin="PORTB3" ocreg="CCPR1L,CCPR1H" configbitsA="CCP1M0,CCP1M1,CCP1M2,CCP1M3">
-            <interrupt name="CCP1" />
-        </ocunit>
     </timer>
+    
+    <ccpunit name="CCP1" pin="PORTB3" ccpreg="CCPR1L,CCPR1H" configregsA="CCP1CON">
+        <interrupt name="CCP1" />
+    </ccpunit>
     
     <timer name="TIMER2" counter="TMR2" configregsA="T2CON" configregsB="PR2">
         <prescaler values="1,4,16,16"/>

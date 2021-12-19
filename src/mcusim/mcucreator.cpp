@@ -39,7 +39,6 @@
 #include "avrport.h"
 #include "avrtimer.h"
 #include "avrocunit.h"
-#include "avricunit.h"
 #include "avrinterrupt.h"
 #include "avrusart.h"
 #include "avradc.h"
@@ -52,8 +51,7 @@
 #include "pic14core.h"
 #include "picport.h"
 #include "pictimer.h"
-#include "picocunit.h"
-#include "picicunit.h"
+#include "picccpunit.h"
 #include "picusart.h"
 #include "picadc.h"
 #include "piccomparator.h"
@@ -124,6 +122,7 @@ int McuCreator::processFile( QString fileName )
         else if( part == "interrupts" ) createInterrupts( &el );
         else if( part == "port" )       createPort( &el );
         else if( part == "timer" )      createTimer( &el );
+        else if( part == "ccpunit" )    createCcpUnit( &el );
         else if( part == "usart" )      createUsart( &el );
         else if( part == "adc" )        createAdc( &el );
         else if( part == "acomp" )      createAcomp( &el );
@@ -513,7 +512,7 @@ void McuCreator::createTimer( QDomElement* t )
         {
             McuOcUnit* ocUnit = NULL;
             if     ( m_core == "AVR" )   ocUnit = new AvrOcUnit( mcu, el.attribute("name") );
-            else if( m_core == "Pic14" ) ocUnit = new PicOcUnit( mcu, el.attribute("name") );
+            //else if( m_core == "Pic14" ) ocUnit = new PicOcUnit( mcu, el.attribute("name") );
             if( !ocUnit ) continue;
 
             McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );
@@ -528,12 +527,14 @@ void McuCreator::createTimer( QDomElement* t )
             lowByte = regs.takeFirst();
             if( !regs.isEmpty() ) highByte = regs.takeFirst();
 
-            if( !lowByte.isEmpty() )
+            if( !lowByte.isEmpty() ){
+                ocUnit->m_ocRegL = mcu->getReg( lowByte );
                 watchRegNames( lowByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteL, mcu );
-
-            if( !highByte.isEmpty() )
+            }
+            if( !highByte.isEmpty() ){
+                ocUnit->m_ocRegH = mcu->getReg( highByte );
                 watchRegNames( highByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteH, mcu );
-
+            }
             if( el.hasAttribute("configbits") ) // This doesn't watch register, configure must be called from Timer
             {
                 QString configBits = el.attribute("configbits");
@@ -547,51 +548,45 @@ void McuCreator::createTimer( QDomElement* t )
             {
                 QDomElement el1 = node1.toElement();
                 if( el1.tagName() == "interrupt" )  setInterrupt( &el1, ocUnit );
-
-                node1 = node1.nextSibling();
-            }
-        }
-        else if( el.tagName() == "icunit" )
-        {
-            McuIcUnit* icUnit = NULL;
-            if     ( m_core == "AVR" )   icUnit = new AvrIcUnit( mcu, el.attribute("name") );
-            else if( m_core == "Pic14" ) icUnit = new PicIcUnit( mcu, el.attribute("name") );
-            if( !icUnit ) continue;
-
-            McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );
-
-            //timer->addOcUnit( ocUnit );
-            icUnit->m_timer = timer;
-            icUnit->m_icPin = pin;
-
-            QString lowByte = "";
-            QString highByte ="";
-            QStringList regs = el.attribute("icreg").split(",");
-            lowByte = regs.takeFirst();
-            if( !regs.isEmpty() ) highByte = regs.takeFirst();
-
-            if( !lowByte.isEmpty() )  icUnit->m_icRegL = mcu->getReg( lowByte );
-            if( !highByte.isEmpty() ) icUnit->m_icRegH = mcu->getReg( highByte );
-
-            if( el.hasAttribute("configbits") ) // This doesn't watch register, configure must be called from Timer
-            {
-                QString configBits = el.attribute("configbits");
-                //watchBitNames( configBits, R_WRITE, ocUnit, &McuOcUnit::configure );
-                icUnit->m_configBitsA = getRegBits( configBits, mcu );
-            }
-            else setConfigRegs( &el, icUnit );
-
-            QDomNode node1 = el.firstChild();
-            while( !node1.isNull() )
-            {
-                QDomElement el1 = node1.toElement();
-                if( el1.tagName() == "interrupt" )  setInterrupt( &el1, icUnit );
-
                 node1 = node1.nextSibling();
             }
         }
         node = node.nextSibling();
 }   }
+
+void McuCreator::createCcpUnit( QDomElement* c )
+{
+    PicCcpUnit* ccpUnit = NULL;
+    if( m_core == "Pic14" ) ccpUnit = new PicCcpUnit( mcu, c->attribute("name") );
+    if( !ccpUnit ) return;
+
+    McuPin* pin = mcu->m_ports.getPin( c->attribute("pin") );
+    ccpUnit->setPin( pin );
+
+    QString lowByte = "";
+    QString highByte ="";
+    QStringList regs = c->attribute("ccpreg").split(",");
+    lowByte = regs.takeFirst();
+    if( !regs.isEmpty() ) highByte = regs.takeFirst();
+
+    if( !lowByte.isEmpty() ){
+        ccpUnit->m_ccpRegL = mcu->getReg( lowByte );
+        watchRegNames( lowByte, R_WRITE, ccpUnit, &PicCcpUnit::ccprWriteL, mcu );
+    }
+    if( !highByte.isEmpty() ){
+        ccpUnit->m_ccpRegH = mcu->getReg( highByte );
+        watchRegNames( highByte, R_WRITE, ccpUnit, &PicCcpUnit::ccprWriteH, mcu );
+    }
+    setConfigRegs( c, ccpUnit );
+
+    QDomNode node1 = c->firstChild();
+    while( !node1.isNull() )
+    {
+        QDomElement el1 = node1.toElement();
+        if( el1.tagName() == "interrupt" )  setInterrupt( &el1, ccpUnit );
+        node1 = node1.nextSibling();
+    }
+}
 
 void McuCreator::createUsart( QDomElement* u )
 {
@@ -646,7 +641,6 @@ void McuCreator::createUsart( QDomElement* u )
             {
                 QDomElement el1 = node1.toElement();
                 if( el1.tagName() == "interrupt" ) setInterrupt( &el1, trUnit );
-
                 node1 = node1.nextSibling();
         }   }
         else if( el.tagName() == "interrupt" ) setInterrupt( &el, usartM );
@@ -658,7 +652,6 @@ void McuCreator::createAdc( QDomElement* e )
     QString name = e->attribute( "name" );
     McuAdc* adc;
 
-    //int type = e->attribute("type").toInt();
     if     ( m_core == "AVR" )  adc = AvrAdc::createAdc( mcu, name );
     else if( m_core == "Pic14") adc = PicAdc::createAdc( mcu, name );
     else return;
@@ -766,9 +759,7 @@ void McuCreator::createVref( QDomElement* e )
     setConfigRegs( e, vref );
 
     if( e->hasAttribute("pinout") )
-    {
         vref->m_pinOut = mcu->m_ports.getPin( e->attribute("pinout") );
-    }
 }
 
 void McuCreator::createTwi( QDomElement* e )
@@ -989,7 +980,7 @@ void McuCreator::setInterrupt( QDomElement* el, McuModule* module )
 {
     QString intName = el->attribute("name");
     Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
-    module->m_interrupt = inte;
+    module->setInterrupt( inte );
 }
 
 void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )

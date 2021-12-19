@@ -32,19 +32,14 @@ class MAINMODULE_EXPORT PicTimer : public McuTimer
 
         virtual void initialize() override;
 
-        virtual void addOcUnit( McuOcUnit* ocUnit ) override;
-        virtual McuOcUnit* getOcUnit( QString name ) override;
-
         virtual void configureA( uint8_t val ) override;
         virtual void configureB( uint8_t val ) override;
 
     protected:
         virtual void configureClock();
         void configureExtClock();
-        void configureOcUnits( bool disable );
 };
 
-class AvrOcUnit;
 
 class MAINMODULE_EXPORT PicTimer8bit : public PicTimer
 {

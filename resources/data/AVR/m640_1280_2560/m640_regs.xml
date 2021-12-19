@@ -220,7 +220,6 @@
                
     <register  name="UCSR0A"  addr="0x00C0"  reset="00100000"  mask="01000011" 
                bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0" />
-               bits="MPCM0,U2X0,UPE0,DOR0,FE0,UDRE0,TXC0,RXC0" />
                
     <register  name="UCSR0B"  addr="0x00C1"  reset=""  mask="11111101"
                bits="TXB80,RXB80,UCSZ02,TXEN0,RXEN0,UDRIE0,TXCIE0,RXCIE0" />

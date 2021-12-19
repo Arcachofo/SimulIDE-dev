@@ -25,6 +25,8 @@
 
 class MAINMODULE_EXPORT PicIcUnit : public McuIcUnit
 {
+    friend class PicCcpUnit;
+
     public:
         PicIcUnit( eMcu* mcu, QString name );
         virtual ~PicIcUnit();
@@ -32,7 +34,7 @@ class MAINMODULE_EXPORT PicIcUnit : public McuIcUnit
         virtual void initialize() override;
         virtual void voltChanged() override;
 
-        virtual void configureA( uint8_t val ) override;
+        virtual void configure( uint8_t CCPxM ) override;
 
     private:
         uint64_t m_prescaler;

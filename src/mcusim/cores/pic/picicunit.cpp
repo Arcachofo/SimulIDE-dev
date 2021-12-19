@@ -43,25 +43,12 @@ void PicIcUnit::voltChanged() // Pin change
     McuIcUnit::voltChanged();
 }
 
-void PicIcUnit::configureA( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
+void PicIcUnit::configure( uint8_t CCPxM ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
 {
-    uint8_t mode = getRegBitsVal( val, m_configBitsA );
-    if( mode == 0 )
-    {
-        m_enabled = false;
-        m_icPin->changeCallBack( this, false );
-    }
-
-    if( (mode & 0b1100) != 0b0100 ) return; // No Capture Mode
-    mode = mode & 0b11;
     m_enabled = true;
     m_icPin->changeCallBack( this, true );
 
-    if( mode == m_mode ) return;
-    initialize();
-    m_mode =  mode;
-
-    switch( mode ) {
+    switch( CCPxM ) {
         case 0: m_fallingEdge = true; break; // Falling Edge
         case 1:                       break; // Rising Edge
         case 2: m_prescaler = 4;      break; // Rising Edge, Presc = 4

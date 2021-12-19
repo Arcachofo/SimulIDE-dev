@@ -22,10 +22,8 @@
 #include "utils.h"
 #include "compbase.h"
 
-QString NumProp::getValU( double val, QString u )
-{
-    return QString::number( val )+" "+u;
-}
+const QString NumProp::getValU( double val, QString &u )
+{ return QString::number( val )+" "+u; }
 
 QString NumProp::getStr( double val )
 {
@@ -39,14 +37,13 @@ QString NumProp::getStr( double val )
     return valStr;
 }
 
-double NumProp::getVal( QString val, CompBase* comp )
+double NumProp::getVal( const QString &val, CompBase* comp )
 {
     QStringList l = val.split(" ");
     double  v = l.first().toDouble();
-    val = QString::number( v );
+
     if( l.size() > 1 ) m_unit = l.last();
-    if( comp->showProp() == m_name ) comp->setValLabelText( val+" "+m_unit );
+    if( comp->showProp() == m_name ) comp->setValLabelText( QString::number( v )+" "+m_unit );
 
     return  v*getMultiplier( m_unit );
-
 }

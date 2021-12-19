@@ -31,7 +31,6 @@ class McuOcUnit;
 class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
 {
         friend class McuCreator;
-        friend class McuOcUnit;
 
     public:
         McuTimer( eMcu* mcu, QString name );
@@ -51,18 +50,20 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         virtual void countWriteL( uint8_t val );
         virtual void countWriteH( uint8_t val );
 
+        virtual void updtCount( uint8_t val=0 );
+
         virtual void addOcUnit( McuOcUnit* ocUnit ) { m_ocUnit.emplace_back( ocUnit ); }
         virtual McuOcUnit* getOcUnit( QString name ) {return NULL;}
 
         uint32_t getCount();
-        uint64_t scale() { return m_scale; }
-
-        QString name() { return m_name; }
+        QString  name()     { return m_name; }
+        uint64_t scale()    { return m_scale; }
+        uint16_t ovfMatch() { return m_ovfMatch; }
+        bool     reverse()  { return m_reverse; }
 
     protected:
         virtual void sheduleEvents();
         virtual void updtCycles();
-        virtual void updtCount( uint8_t val=0 );
 
         int     m_number;
 

@@ -37,8 +37,9 @@ void McuOcUnit::initialize()
     m_comMatch = 0;
     m_mode = 0;
 
-    m_comAct = ocNONE;
-    m_tovAct = ocNONE;
+    m_comAct = ocNON;
+    m_tovAct = ocNON;
+    m_ocPin->controlPin( false, false );
 }
 
 void McuOcUnit::runEvent()  // Compare match
@@ -52,9 +53,9 @@ void McuOcUnit::drivePin( ocAct_t act )
     if( !act ) return;
     bool pinState = false;
 
-    if     ( act == ocTOGGLE ) pinState = !m_ocPin->getInpState();
-    else if( act == ocCLEAR )  pinState = !m_pinSet;
-    else if( act == ocSET )    pinState =  m_pinSet;
+    if     ( act == ocTOG ) pinState = !m_ocPin->getInpState();
+    else if( act == ocCLR ) pinState = !m_pinSet;
+    else if( act == ocSET ) pinState =  m_pinSet;
 
     m_ocPin->setOutState( pinState );
 }
@@ -64,7 +65,7 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal )
     uint64_t cycles = 0;
     uint64_t match;
 
-    if( m_timer->m_reverse )
+    if( m_timer->reverse() )
     {
         match = ovf-m_comMatch;
         m_pinSet = false;
@@ -73,7 +74,7 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal )
         m_pinSet = true;
     }
     if( (match <= ovf )&&(match >= countVal) ) // be sure next comp match is still ahead
-        cycles = (match-countVal)*m_timer->m_scale + m_mcu->simCycPI()/*run it 1 cycle after match*/; // cycles in ps
+        cycles = (match-countVal)*m_timer->scale() + m_mcu->simCycPI()/*run it 1 cycle after match*/; // cycles in ps
 
     Simulator::self()->cancelEvents( this );
     if( cycles ) Simulator::self()->addEvent( cycles, this );
@@ -89,12 +90,12 @@ void McuOcUnit::ocrWriteL( uint8_t val )
 {
     m_comMatch = (m_comMatch & 0xFF00) | val;
     m_timer->updtCount();
-    sheduleEvents( m_timer->m_ovfMatch, m_timer->m_countVal );
+    sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
 }
 
 void McuOcUnit::ocrWriteH( uint8_t val )
 {
     m_comMatch = (m_comMatch & 0x00FF) | (uint16_t)val<<8;
     m_timer->updtCount();
-    sheduleEvents( m_timer->m_ovfMatch, m_timer->m_countVal );
+    sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
 }

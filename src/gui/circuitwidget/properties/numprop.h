@@ -33,9 +33,9 @@ class MAINMODULE_EXPORT NumProp : public ComProperty
         ~NumProp(){;}
 
     protected:
-        QString getValU( double val, QString u );
+        const QString getValU( double val, QString &u );
 
-        double getVal( QString val, CompBase* comp );
+        double getVal( const QString &val, CompBase* comp );
 
         QString getStr( double val );
 };

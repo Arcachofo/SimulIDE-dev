@@ -27,7 +27,7 @@ class eMcu;
 class McuPin;
 class PicTimer80;
 class PicTimer16bit;
-class McuOcUnit;
+//class McuOcUnit;
 
 class MAINMODULE_EXPORT PicAdc : public McuAdc
 {

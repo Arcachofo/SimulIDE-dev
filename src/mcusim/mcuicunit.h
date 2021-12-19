@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT McuIcUnit : public McuModule, public eElement
         virtual void initialize() override;
         virtual void voltChanged() override;
 
+        virtual void configure( uint8_t val ) {;}
+
     protected:
         McuTimer* m_timer;
         McuPin*   m_icPin;

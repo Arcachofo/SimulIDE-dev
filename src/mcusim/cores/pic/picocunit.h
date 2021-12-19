@@ -21,21 +21,22 @@
 #define PICOCUNIT_H
 
 #include "mcuocunit.h"
-//#include "pictimer.h"
-
 
 class MAINMODULE_EXPORT PicOcUnit : public McuOcUnit
 {
-        friend class McuCreator;
+        //friend class McuCreator;
+        friend class PicCcpUnit;
 
     public:
         PicOcUnit( eMcu* mcu, QString name );
         ~PicOcUnit();
 
+static McuOcUnit* createOcUnit( eMcu* mcu, QString name );
+
         //virtual void initialize() override;
         virtual void runEvent();
 
-        virtual void configureA( uint8_t val ) override;
+        virtual void configure( uint8_t CCPxM ) override;
 
     protected:
         bool m_enhanced;
@@ -43,6 +44,29 @@ class MAINMODULE_EXPORT PicOcUnit : public McuOcUnit
         bool m_resetTimer;
 
         regBits_t m_GODO;
+};
+
+class MAINMODULE_EXPORT PicPwmUnit : public McuOcUnit
+{
+        //friend class McuCreator;
+        friend class PicCcpUnit;
+
+    public:
+        PicPwmUnit( eMcu* mcu, QString name );
+        ~PicPwmUnit();
+
+        //virtual void initialize() override;
+        virtual void runEvent();
+
+        virtual void configure( uint8_t newCCPxCON ) override;
+
+    protected:
+        bool m_enhanced;
+
+        uint8_t m_cLow;
+
+        regBits_t m_PxM;
+        regBits_t m_DCxB;
 };
 
 #endif

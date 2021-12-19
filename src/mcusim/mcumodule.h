@@ -41,6 +41,7 @@ class MAINMODULE_EXPORT McuModule
         virtual void callBackDoub( double ) {;}
         virtual void callBack() {;}
 
+        virtual void setInterrupt( Interrupt* i ) { m_interrupt = i; }
         Interrupt* getInterrupt() { return m_interrupt; }
 
     protected:

@@ -23,10 +23,17 @@
 #include "e_mcu.h"
 #include "simulator.h"
 
+McuOcUnit* PicOcUnit::createOcUnit( eMcu* mcu, QString name ) // Static
+{
+    if( name.startsWith("PWM") ) return new PicPwmUnit( mcu, name );
+    else                         return new PicOcUnit( mcu, name );
+    return NULL;
+}
+
 PicOcUnit::PicOcUnit( eMcu* mcu, QString name )
          : McuOcUnit( mcu, name )
 {
-    m_enhanced = name.endsWith("E");
+    m_enhanced = name.contains("+");
     m_resetTimer = false;
 
     m_GODO = getRegBits( "GO/DONE", mcu );
@@ -43,9 +50,6 @@ void PicOcUnit::runEvent()  // Compare match
         m_timer->resetTimer();
         return;
     }
-    m_interrupt->raise();   // Trigger interrupt
-    drivePin( m_comAct );
-
     if( m_specEvent )
     {
          m_resetTimer = true;
@@ -54,29 +58,76 @@ void PicOcUnit::runEvent()  // Compare match
 
          m_mcu->writeReg( m_GODO.regAddr, *m_GODO.reg | m_GODO.mask );  // Set ADC GO/DONE bit
     }
+    m_interrupt->raise();   // Trigger interrupt
+    drivePin( m_comAct );
 }
 
-void PicOcUnit::configureA( uint8_t val ) // CCPxM0,CCPxM1,CCPxM2,CCPxM3
+void PicOcUnit::configure( uint8_t CCPxM )  // CCPxM0,CCPxM1,CCPxM2,CCPxM3
 {
-    uint8_t mode = getRegBitsVal( val, m_configBitsA );
-    if( mode == 0 ) m_enabled = false;
-    if( mode == 2 && m_enhanced ) setOcActs( ocTOGGLE, ocNONE );
-
-    if( (mode & 0b1100) != 0b1000 ) return; // No Compare Mode
-    mode = mode & 0b11;
-    m_enabled = true;
-
-    if( mode == m_mode ) return;
-    m_mode =  mode;
-    m_specEvent = false;
-    setOcActs( ocNONE, ocNONE );
-
-    switch( mode ) {
-        case 0: setOcActs( ocSET, ocCLEAR ); break; // Set OC Pin
-        case 1: setOcActs( ocCLEAR, ocSET ); break; // Clear OC Pin
-        case 3: m_specEvent = true;                 // Special event
+    if( m_enhanced && CCPxM == 2 ) setOcActs( ocTOG, ocNON ); // Toggle OC Pin
+    else{
+        switch( CCPxM ) {
+            case 8: setOcActs( ocSET, ocCLR ); break; // Set OC Pin
+            case 9: setOcActs( ocCLR, ocSET ); break; // Clear OC Pin
+            //case 10:                                  // Only interrupt
+            case 11: m_specEvent = true;                // Special event
+        }
     }
-    bool controlPin = m_comAct != ocNONE;
-    m_ocPin->controlPin( controlPin, false );
-    if( controlPin ) m_ocPin->setOutState( false );
+    m_ocPin->controlPin( true, false ); // Connect/Disconnect PORT
+    m_ocPin->setOutState( false );
+    m_enabled = true;
 }
+
+//------------------------------------------------------
+//-- PIC PWM Unit --------------------------------------
+
+PicPwmUnit::PicPwmUnit( eMcu* mcu, QString name )
+          : McuOcUnit( mcu, name )
+{
+    m_enhanced = name.contains("+");
+
+    QString n = name.right(1); // name="PWM+2" => n="2"
+
+    m_DCxB  = getRegBits( "DC"+n+"B0,DC"+n+"B1", mcu );
+    if( m_enhanced ) m_PxM = getRegBits( "P"+n+"M0,P"+n+"M1", mcu );
+}
+PicPwmUnit::~PicPwmUnit( ){}
+
+void PicPwmUnit::runEvent()  // Compare match
+{
+    if( !m_enabled ) return;
+
+    m_interrupt->raise();   // Trigger interrupt
+    drivePin( m_comAct );
+}
+
+void PicPwmUnit::configure( uint8_t newCCPxCON )
+{
+    m_cLow = getRegBitsVal( newCCPxCON, m_DCxB );
+
+    setOcActs( ocCLR, ocSET ); // Clear Out on match, set on TOV
+
+    if( m_enhanced ) // PWM Mode Enhanced
+    {
+        switch( newCCPxCON & 0x0F ) {
+            case 12: // All Pins Active High
+            {
+
+            } break;
+            case 13: // P1A,C Active High; P1B,D Active Low;
+            {
+
+            } break;
+            case 14: // P1A,C Active Low; P1B,D Active High;
+            {
+
+            } break;
+            case 15: // All Pins Active Low
+            {
+
+            } break;
+    }   }
+    m_ocPin->controlPin( true, false ); // Connect/Disconnect PORT
+    m_ocPin->setOutState( false );
+}
+

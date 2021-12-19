@@ -27,9 +27,9 @@ class McuPin;
 class McuTimer;
 
 enum ocAct_t{
-    ocNONE=0,
-    ocTOGGLE,
-    ocCLEAR,
+    ocNON=0,
+    ocTOG,
+    ocCLR,
     ocSET,
 };
 
@@ -58,6 +58,9 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
 
         McuTimer* m_timer;
         McuPin*   m_ocPin;
+
+        uint8_t* m_ocRegL;
+        uint8_t* m_ocRegH;
 
         ocAct_t  m_comAct;
         ocAct_t  m_tovAct;

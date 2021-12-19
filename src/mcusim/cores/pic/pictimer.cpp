@@ -47,14 +47,14 @@ void PicTimer::initialize()
     m_ovfPeriod = m_ovfMatch + 1;
 }
 
-void PicTimer::addOcUnit( McuOcUnit* ocUnit )
+/*void PicTimer::addOcUnit( McuOcUnit* ocUnit )
 {
 }
 
 McuOcUnit* PicTimer::getOcUnit( QString name )
 {
     return NULL;
-}
+}*/
 
 void PicTimer::configureA( uint8_t val )
 {
@@ -76,11 +76,6 @@ void PicTimer::configureExtClock()
     m_clkSrc = clkEXT;
     /// if     ( m_mode == 6 ) m_clkEdge = Clock_Falling;
     /// else if( m_mode == 7 ) m_clkEdge = Clock_Rising;
-}
-
-void PicTimer::configureOcUnits( bool disable )
-{
-
 }
 
 //--------------------------------------------------

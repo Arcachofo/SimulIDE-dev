@@ -64,7 +64,7 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         uint8_t* m_ocrxaH;
 };
 
-class AvrOcUnit;
+//class AvrOcUnit;
 
 class MAINMODULE_EXPORT AvrTimer8bit : public AvrTimer
 {
