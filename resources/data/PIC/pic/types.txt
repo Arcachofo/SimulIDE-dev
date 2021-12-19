@@ -6,13 +6,13 @@ ADC:
 - Type 3: 
 
 Timer:
-- Type 80: 8 bits.
-    
-- Type 81: 8 bits.
 
-- Type 82: 8 bits.
-    
-- Type 160: 16 bits.
     
 CCP:
-- Type 00: p16F88x.
+- Type : p16F88x.
+
+Comparators:
+- Type 01: C1 p16f627+
+- Type 02: C2 p16f627+
+- Type 11: C1 p16f88x
+- Type 12: C2 p16f88x 

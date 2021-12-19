@@ -43,10 +43,6 @@ AvrComp::~AvrComp(){}
 
 /*void AvrComp::initialize()
 {
-    m_fixVref = false;
-    m_enabled = true;
-    m_compOut = false;
-    m_mode = 0;
 }*/
 
 void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
@@ -79,25 +75,18 @@ void AvrComp::compare( uint8_t ) // Performed only when ACO is readed
 
     double vRef = m_fixVref ? 1.1 : m_pins[0]->getVolt();
     bool compOut = vRef > m_pins[1]->getVolt() ;
+    bool rising = !m_compOut && compOut;
 
     if( m_compOut != compOut )
     {
         if( compOut ) setRegBits( m_ACO );
         else          clearRegBits( m_ACO );
 
-        switch( m_mode )
-        {
-            case 0:     // Comparator Interrupt on Output Toggle.
-                m_interrupt->raise();
-                break;
-            case 1:     // Reserved
-                break;
-            case 2:     // Comparator Interrupt on Falling Output Edge.
-                if( m_compOut & !compOut ) m_interrupt->raise();
-                break;
-            case 3:     // Comparator Interrupt on Rising Output Edge.
-                if( !m_compOut & !compOut ) m_interrupt->raise();
-                break;
+        switch( m_mode ){
+            case 0: m_interrupt->raise();               break; // Comparator Interrupt on Output Toggle.
+            case 1:                                     break; // Reserved
+            case 2: if( !rising ) m_interrupt->raise(); break; // Comparator Interrupt on Falling Output Edge.
+            case 3: if(  rising ) m_interrupt->raise();        // Comparator Interrupt on Rising  Output Edge.
         }
         m_compOut = compOut;
     }

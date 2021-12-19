@@ -39,11 +39,6 @@ void McuComp::initialize()
     setMode( 0 );
 }
 
-void McuComp::setMode( uint8_t mode )
-{
-    m_mode = mode;
-}
-
 void McuComp::callBackDoub( double vref )
 {
     m_vref = vref;

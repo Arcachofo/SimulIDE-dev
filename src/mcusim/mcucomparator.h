@@ -38,7 +38,7 @@ class MAINMODULE_EXPORT McuComp : public McuModule, public eElement
         virtual void callBackDoub( double vref ) override;
 
     protected:
-        virtual void setMode( uint8_t mode );
+        virtual void setMode( uint8_t mode ) { m_mode = mode; }
 
         bool m_fixVref;
         bool m_enabled;
