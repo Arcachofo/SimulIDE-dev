@@ -107,7 +107,7 @@ void McuPort::setPullups( uint8_t puMask )
         m_pins[i]->setPullup( pinPu );
 }   }
 
-void McuPort::createPins( Mcu* mcuComp )
+void McuPort::createPins( Mcu* mcuComp, uint8_t pinMask )
 {
     m_pins.resize( m_numPins );
 

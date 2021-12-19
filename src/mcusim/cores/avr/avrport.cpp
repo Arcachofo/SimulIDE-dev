@@ -28,7 +28,7 @@ AvrPort::AvrPort( eMcu* mcu, QString name, uint8_t numPins )
 }
 AvrPort::~AvrPort(){}
 
-void AvrPort::createPins( Mcu* mcuComp )
+void AvrPort::createPins( Mcu* mcuComp, uint8_t pinMask )
 {
     m_pins.resize( m_numPins );
 

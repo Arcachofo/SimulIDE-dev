@@ -29,13 +29,20 @@ PicPort::PicPort( eMcu* mcu, QString name, uint8_t numPins )
 }
 PicPort::~PicPort(){}
 
-void PicPort::createPins( Mcu* mcuComp )
+void PicPort::createPins( Mcu* mcuComp, uint8_t pinMask )
 {
     m_pins.resize( m_numPins );
 
-    for( int i=0; i<m_numPins; ++i )
+    if( pinMask )
     {
-        m_pins[i] = new PicPin( this, i, m_name+QString::number(i), mcuComp );
+        for( int i=0; i<m_numPins; ++i )
+        {
+            if( pinMask & 1<<i )
+                m_pins[i] = new PicPin( this, i, m_name+QString::number(i), mcuComp );
+        }
+    }else{
+        for( int i=0; i<m_numPins; ++i )
+            m_pins[i] = new PicPin( this, i, m_name+QString::number(i), mcuComp );
     }
 }
 

@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT PicPort : public McuPort
         ~PicPort();
 
     protected:
-        virtual void createPins( Mcu* mcuComp ) override;
+        virtual void createPins( Mcu* mcuComp, uint8_t pinMask  ) override;
 };
 
 #endif

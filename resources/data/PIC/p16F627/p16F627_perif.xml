@@ -21,14 +21,14 @@
         <interrupt name="T1_OVF" />
     </timer>
     
-    <ccpunit name="CCP1" pin="PORTB3" ccpreg="CCPR1L,CCPR1H" configregsA="CCP1CON">
-        <interrupt name="CCP1" />
-    </ccpunit>
-    
     <timer name="TIMER2" counter="TMR2" configregsA="T2CON" configregsB="PR2">
         <prescaler values="1,4,16,16"/>
         <interrupt name="T2_MATCH" />
     </timer>
+    
+    <ccpunit name="CCP1" pin="PORTB3" ccpreg="CCPR1L,CCPR1H" configregsA="CCP1CON">
+        <interrupt name="CCP1" />
+    </ccpunit>
     
     <usart name="USART0"  number="1" configregsA="TXSTA" configregsB="RCSTA">
         <trunit type="tx" pin="PORTB2" register="TXREG">
