@@ -77,6 +77,16 @@ class MAINMODULE_EXPORT PicComp02 : public PicComp0
         virtual void setMode( uint8_t mode );
 };
 
+class MAINMODULE_EXPORT PicComp03 : public PicComp0
+{
+    public:
+        PicComp03( eMcu* mcu, QString name );
+        ~PicComp03();
+
+    protected:
+        virtual void setMode( uint8_t mode );
+};
+
 
 class MAINMODULE_EXPORT PicComp1 : public PicComp
 {

@@ -117,7 +117,13 @@ void PicComp0::configureA( uint8_t newCMCON )
     m_inv = getRegBitsBool( newCMCON, m_CINV );
 
     uint8_t mode = getRegBitsVal( newCMCON, m_CM );
-    if( mode != m_mode ) setMode( mode );
+    if( mode != m_mode )
+    {
+        m_mode = mode;
+        m_fixVref = false;
+        m_enabled = true;
+        setMode( mode );
+    }
 }
 
 //-------------------------------------------------------------
@@ -133,26 +139,17 @@ PicComp01::~PicComp01(){}
 
 void PicComp01::setMode( uint8_t mode )
 {
-    m_mode = mode;
-    m_fixVref = false;
-    m_enabled = true;
+    McuPin* pinN = m_cis ? m_pins[1] : m_pins[0];
 
     switch ( mode ) {
-        case 0: connect( m_pins[0], m_pins[1] ); m_enabled = false; break;
-        case 1:{
-            McuPin* pinN1 = m_cis ? m_pins[1] : m_pins[0];
-            connect( pinN1,  m_pins[2] );
-            } break;
-        case 2:{
-            m_fixVref = true;
-            McuPin* pinN2 = m_cis ? m_pins[1] : m_pins[0];
-            connect( pinN2, NULL );
-           } break;
-        case 3: connect( m_pins[0], m_pins[2] ); break;
-        case 4: connect( m_pins[0], m_pins[1] ); break;
-        case 5: connect( NULL, NULL ); break;
-        case 6: connect( m_pins[0], m_pins[2] ); break;
-        case 7: connect( NULL, NULL ); m_enabled = false; break;
+        case 0: connect( m_pins[0], m_pins[1], NULL      ); m_enabled = false; break;
+        case 1: connect( pinN     , m_pins[2], NULL      );                    break;
+        case 2: connect( pinN     , NULL     , NULL      ); m_fixVref = true;  break;
+        case 3: connect( m_pins[0], m_pins[2], NULL      );                    break;
+        case 4: connect( m_pins[0], m_pins[1], NULL      );                    break;
+        case 5: connect( NULL     , NULL     , NULL      ); m_enabled = false; break;
+        case 6: connect( m_pins[0], NULL     , m_pins[1] );                    break;
+        case 7: connect( NULL     , NULL     , NULL      ); m_enabled = false; break;
     }
 }
 
@@ -169,23 +166,45 @@ PicComp02::~PicComp02(){}
 
 void PicComp02::setMode( uint8_t mode )
 {
-    m_mode = mode;
-    m_fixVref = false;
-    m_enabled = true;
+    McuPin* pinN = m_cis ? m_pins[1] : m_pins[0];
 
     switch ( mode ) {
         case 0: m_enabled = false;
-        case 1: connect( m_pins[1], m_pins[0] ); break;
-        case 2:{
-            m_fixVref = true;
-            McuPin* pinN = m_cis ? m_pins[1] : m_pins[0];
-            connect( pinN, NULL );
-            } break;
-        case 3:
-        case 4:
-        case 5:
-        case 6: connect( m_pins[1], m_pins[0] ); break;
-        case 7: connect( NULL, NULL ); m_enabled = false; break;
+        case 1: connect( m_pins[1], m_pins[0], NULL      );                    break;
+        case 2: connect( pinN     , NULL     , NULL      ); m_fixVref = true;  break;
+        case 3:                                                                // Fallthrough
+        case 4:                                                                // Fallthrough
+        case 5: connect( m_pins[1], m_pins[0], m_pins[2] );                    break;
+        case 6: connect( m_pins[1], m_pins[0], NULL      );                    break;
+        case 7: connect( NULL     , NULL     , NULL      ); m_enabled = false; break;
+    }
+}
+
+//-------------------------------------------------------------
+// Type 01: 16f629 comparator ---------------------------------
+
+PicComp03::PicComp03( eMcu* mcu, QString name )
+         : PicComp0( mcu, name )
+{
+    m_CINV = getRegBits( "CINV", mcu );
+    m_COUT = getRegBits( "COUT", mcu );
+}
+PicComp03::~PicComp03(){}
+
+void PicComp03::setMode( uint8_t mode )
+{
+    McuPin* pinO = NULL;
+    McuPin* pinN = m_cis ? m_pins[1] : m_pins[0];
+
+    switch ( mode ) {
+        case 0: connect( m_pins[0], m_pins[1], NULL      ); m_enabled = false; break;
+        case 1: connect( m_pins[0], m_pins[1], m_pins[2] );                    break;
+        case 2: connect( m_pins[0], m_pins[1], NULL      );                    break;
+        case 3: connect( m_pins[0], NULL     , m_pins[2] ); m_fixVref = true;  break;
+        case 4: connect( m_pins[0], NULL     , NULL      ); m_fixVref = true;  break;
+        case 5:                                             pinO = m_pins[2];  // Fallthrough
+        case 6: connect( pinN     , NULL     , pinO      ); m_fixVref = true;  break;
+        case 7: connect( NULL     , NULL     , NULL      ); m_enabled = false; break;
     }
 }
 

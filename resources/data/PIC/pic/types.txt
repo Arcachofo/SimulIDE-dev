@@ -12,7 +12,8 @@ CCP:
 - Type : p16F88x.
 
 Comparators:
-- Type 01: C1 p16f627+
-- Type 02: C2 p16f627+
+- Type 01: C1 p16f627+ p16f87,88
+- Type 02: C2 p16f627+ p16f87,88
+- Type 03:    p12F629,675
 - Type 11: C1 p16f88x
 - Type 12: C2 p16f88x 
