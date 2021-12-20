@@ -18,7 +18,7 @@
     <include file="p16F87x/p16F87x_int.xml" />
     <include file="p16F87x/p16F87x_perif.xml" />
  
-        <adc name="ADC0" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1" >
+        <adc name="ADC00" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1" >
             <prescaler select="" values="2,8,32"/>
             <pinss inputs="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5" vref="PORTA3,PORTA2"/>
             <interrupt name="ADC" />

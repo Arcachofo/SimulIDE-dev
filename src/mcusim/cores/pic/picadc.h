@@ -79,10 +79,7 @@ class MAINMODULE_EXPORT PicAdc1 : public PicAdc
         PicAdc1( eMcu* mcu, QString name );
         ~PicAdc1();
 
-        virtual void configureB( uint8_t newADCSRB ) override;
-
-        void setANSEL( uint8_t newANSEL );
-        void setANSELH( uint8_t newANSELH );
+        virtual void setANSEL( uint8_t newANSEL );
         void updtANSEL();
 
     protected:
@@ -92,6 +89,28 @@ class MAINMODULE_EXPORT PicAdc1 : public PicAdc
         uint8_t* m_ANSELH;
 
         regBits_t m_VCFG;
+};
+
+class MAINMODULE_EXPORT PicAdc10 : public PicAdc1
+{
+    public:
+        PicAdc10( eMcu* mcu, QString name );
+        ~PicAdc10();
+
+        virtual void configureB( uint8_t newADCSRB ) override;
+
+        void setANSELH( uint8_t newANSELH );
+};
+
+class MAINMODULE_EXPORT PicAdc11 : public PicAdc1
+{
+    public:
+        PicAdc11( eMcu* mcu, QString name );
+        ~PicAdc11();
+
+        virtual void configureA( uint8_t newADCON0 ) override;
+        //virtual void configureB( uint8_t newADCSRB ) override;
+        virtual void setANSEL( uint8_t newANSEL ) override;
 };
 
 class MAINMODULE_EXPORT PicAdc2 : public PicAdc0

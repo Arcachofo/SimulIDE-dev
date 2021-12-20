@@ -108,7 +108,6 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         std::vector<McuUsart*> m_usarts;
 
         McuVref* m_vrefModule;
-
         McuWdt* m_wdt;
 
         bool m_resetState;
@@ -117,6 +116,5 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         double m_cPerInst;       // Clock ticks per Instruction Cycle
         uint64_t m_simCycPI;     // Simulation cycles per Instruction Cycle
 };
-
 
 #endif

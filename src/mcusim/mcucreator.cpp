@@ -117,6 +117,7 @@ int McuCreator::processFile( QString fileName )
 
         if     ( part == "regblock" )   createRegisters( &el );
         else if( part == "datablock" )  createDataBlock( &el );
+        else if( part == "progblock" )  createProgBlock( &el );
         else if( part == "stack" )      m_stackEl = el;
         //else if( part == "status" )     createStatusReg( &el );
         else if( part == "interrupts" ) createInterrupts( &el );
@@ -314,6 +315,27 @@ void McuCreator::getRegisters( QDomElement* e, uint16_t offset )
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
             uint16_t mapTo   = el.attribute("mapto").toUInt(0,0);
             mcu->m_addrMap[regAddr] = mapTo;
+        }
+        node = node.nextSibling();
+}   }
+
+void McuCreator::createProgBlock( QDomElement* p )
+{
+    QDomNode node = p->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+        if( el.tagName() == "progval" )
+        {
+            uint16_t addr  = el.attribute("addr").toUInt(0,0);
+            uint16_t value = el.attribute("value").toUInt(0,0);
+
+            if( addr >= mcu->m_flashSize )
+            {
+                qDebug() << "McuCreator::createProgBlock  ERROR writing Program Memory";
+                qDebug() << "Address:" << addr << "ProgMemSize:" << mcu->m_flashSize;
+            }
+            else mcu->setFlashValue( addr, value );
         }
         node = node.nextSibling();
 }   }
@@ -652,11 +674,11 @@ void McuCreator::createUsart( QDomElement* u )
 void McuCreator::createAdc( QDomElement* e )
 {
     QString name = e->attribute( "name" );
-    McuAdc* adc;
+    McuAdc* adc = NULL;
 
     if     ( m_core == "AVR" )  adc = AvrAdc::createAdc( mcu, name );
     else if( m_core == "Pic14") adc = PicAdc::createAdc( mcu, name );
-    else return;
+    if( !adc ) return;
 
     mcu->m_modules.emplace_back( adc );
 

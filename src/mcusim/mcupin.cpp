@@ -50,18 +50,14 @@ McuPin::~McuPin() {}
 void McuPin::initialize()
 {
     m_isAnalog = false;
-
     setDirection( m_outMask );
     setPullup( m_puMask );
-
     IoPin::initialize();
 }
 
 void McuPin::stamp()
 {
-    if( m_enode )
-       changeCallBack( this ); // Receive voltage change notifications
-
+    if( m_enode ) changeCallBack( this ); // Receive voltage change notifications
     IoPin::stamp();
 }
 
@@ -101,45 +97,26 @@ void McuPin::setPortState( bool state )
 }
 
 void McuPin::setOutState( bool state )
-{
-    if( m_outCtrl ) IoPin::setOutState( state );
-}
+{ if( m_outCtrl ) IoPin::setOutState( state ); }
 
 void McuPin::setDirection( bool out )
 {
     m_isOut = (out || m_outMask) && m_inpMask; // Take care about permanent Inputs/Outputs
 
-    if( m_isOut )  // Set Pin to Output
-    {
-        if( m_openColl ) m_oldPinMode =  open_col;
-        else             m_oldPinMode =  output;
-    }
-    else           // Set Pin to Input
-    {
-        m_oldPinMode = input;
-    }
+    if( m_isOut ) m_oldPinMode = m_openColl ? open_col : output; // Set Pin to Output
+    else          m_oldPinMode = input;                          // Set Pin to Input
+
     changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
     if( !m_dirCtrl ) setPinMode( m_oldPinMode ); // Is someone is controlling us, just save Pin Mode
 }
-
-/*void McuPin::setPullup( bool up )
-{
-    if( up ) m_vddAdmEx = 1/1e5; // Activate pullup
-    else     m_vddAdmEx = 0;     // Deactivate pullup
-
-    if( !m_isOut ) updtState();
-}*/
 
 void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example
 {
     m_vddAdmEx = vddAdmit;
     m_gndAdmEx = gndAdmit;
-
     updtState();
 }
 
 void McuPin::ConfExtInt( uint8_t bits )
-{
-    m_extIntTrigger = (extIntTrig_t)getRegBitsVal( bits, m_extIntBits );
-}
+{ m_extIntTrigger = (extIntTrig_t)getRegBitsVal( bits, m_extIntBits ); }
 

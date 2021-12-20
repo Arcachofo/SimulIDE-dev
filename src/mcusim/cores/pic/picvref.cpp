@@ -77,6 +77,5 @@ void PicVref::configureA( uint8_t newVRCON )
 
 /*void PicVref::setMode( uint8_t mode )
 {
-
     m_mode = mode;
 }*/

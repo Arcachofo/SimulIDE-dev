@@ -124,15 +124,10 @@ uint16_t eMcu::getRegAddress( QString reg )// Get Reg address by name
     return addr;
 }
 
-uint8_t eMcu::getRamValue( int address )
-{
-    return m_dataMem[getMapperAddr(address)];   //m_dataMem[address];
-}
+uint8_t eMcu::getRamValue( int address ) { return m_dataMem[getMapperAddr(address)]; }
 
 void eMcu::setRamValue( int address, uint8_t value ) // Setting RAM from external source (McuMonitor)
-{
-    writeReg( getMapperAddr(address), value );
-}
+{ writeReg( getMapperAddr(address), value ); }
 
 bool eMcu::setCfgWord( uint16_t addr, uint16_t data )
 {
@@ -151,10 +146,7 @@ uint16_t eMcu::getCfgWord( uint16_t addr )
     return m_cfgWords.values().first();
 }
 
-void eMcu::wdr()
-{
-    m_wdt->reset();
-}
+void eMcu::wdr() { m_wdt->reset(); }
 
 void eMcu::enableInterrupts( uint8_t en )
 {
@@ -162,8 +154,5 @@ void eMcu::enableInterrupts( uint8_t en )
     m_interrupts.enableGlobal( en );
 }
 
-McuVref* eMcu::vrefModule()
-{
-    return m_vrefModule;
-}
+McuVref* eMcu::vrefModule() { return m_vrefModule; }
 

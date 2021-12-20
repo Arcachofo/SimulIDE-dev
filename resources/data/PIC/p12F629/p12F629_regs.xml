@@ -23,8 +23,8 @@
         <register name="T1CON"   addr="0x10" 
                   bits="TMR1ON,TMR1CS,T1SYNC,T1OSCEN,T1CKPS0,T1CKPS1,TMR1GE"/>
 
-        <register name="CMCON"   addr="0x19" mask="01011111"
-                  bits="CM0,CM1,CM2,CIS,C1INV,0,COUT," />
+        <register name="CMCON"   addr="0x19" mask="00011111"
+                  bits="CM0,CM1,CM2,CIS,C1INV,0,COUT,0" />
     </regblock>
     <datablock name="GPR0" start="0x0020" end="0x005F"/>
     
@@ -39,7 +39,7 @@
         <mapped                  addr="0x83" mapto="0x03"/><!-- STATUS -->
         <mapped                  addr="0x84" mapto="0x04"/><!-- FSR -->
         
-        <register name="TRISIO"  addr="0x85" bits="0-5" reset="00111111" mask="00111111"/>
+        <register name="TRISIO"  addr="0x85" bits="" reset="00111111" mask="00111111"/>
 
         <mapped                  addr="0x8A" mapto="0x0A"/><!-- PCLATH -->
         <mapped                  addr="0x8B" mapto="0x0B"/><!-- INTCON -->

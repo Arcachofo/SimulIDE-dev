@@ -1,6 +1,5 @@
 <parts>
     <port name="PORTP" pins="6" outreg="GPIO" dirreg="!TRISIO"
-          inpmask="11011111" opencol="00010000"
           clockpins="PORTP4,PORTP5" resetpin="PORTP3">
           <extint    name="INT" pin="PORTP2" configbits="INTEDG"/>
     </port>

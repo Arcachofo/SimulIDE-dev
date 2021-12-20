@@ -1,7 +1,8 @@
 
 ADC:
 - Type 0: p16F87x.
-- Type 1: p16F88x.
+- Type 10: p16F88x.
+- Type 11: p12F675.
 - Type 2:
 - Type 3: 
 

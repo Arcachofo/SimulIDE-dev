@@ -49,18 +49,18 @@ class MAINMODULE_EXPORT McuPin : public IoPin
 
         virtual void setOutState( bool state ) override;
         virtual void setPortState( bool state );
+
         void setDirection( bool out );
-        //virtual void setPullup( bool up ) override;
         void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
-        virtual void setAnalog( bool an ) {;}
 
+        virtual void setAnalog( bool an ) {;}
         virtual void ConfExtInt( uint8_t bits );
 
     protected:
         QString m_id;
 
-        McuPort* m_port;
+        McuPort*   m_port;
         Interrupt* m_extInt;
 
         regBits_t    m_extIntBits;
@@ -72,11 +72,8 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         bool m_isOut;
         bool m_outMask; // Pin always output
         bool m_inpMask; // Pin always input (inverted: 0 means always input)
-        //bool m_pullup;
-        bool m_puMask; // Pullup always on
+        bool m_puMask;  // Pullup always on
         bool m_openColl;
-
-        //double digital_thre;
 
         uint8_t m_pinMask;
 };
