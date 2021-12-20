@@ -25,7 +25,7 @@
 #include "e_mcu.h"
 #include "simulator.h"
 
-PicCcpUnit::PicCcpUnit( eMcu* mcu, QString name )
+PicCcpUnit::PicCcpUnit( eMcu* mcu, QString name, int type )
           : McuModule( mcu, name )
           , eElement( name )
 {
@@ -42,11 +42,13 @@ PicCcpUnit::PicCcpUnit( eMcu* mcu, QString name )
     m_comUnit->m_timer = timer1;
     timer1->addOcUnit( m_comUnit );
 
-    m_pwmUnit = new PicPwmUnit( mcu, "PWM"+e+n );
+    m_pwmUnit = PicOcUnit::createPwmUnit( mcu, "PWM"+e+n, type  );
     m_pwmUnit->m_timer = timer2;
     timer2->addOcUnit( m_pwmUnit );
 
     m_CCPxM = getRegBits( "CCP"+n+"M0,CCP"+n+"M1,CCP"+n+"M2,CCP"+n+"M3", mcu );
+
+    m_mode = 0;
 }
 PicCcpUnit::~PicCcpUnit(){}
 
@@ -57,7 +59,8 @@ void PicCcpUnit::initialize()
 
 void PicCcpUnit::ccprWriteL( uint8_t val )
 {
-    if( m_ccpMode == ccpCOM ) m_comUnit->ocrWriteL( val );
+    if     ( m_ccpMode == ccpPWM ) m_pwmUnit->ocrWriteL( val );
+    else if( m_ccpMode == ccpCOM ) m_comUnit->ocrWriteL( val );
 }
 
 void PicCcpUnit::ccprWriteH( uint8_t val )

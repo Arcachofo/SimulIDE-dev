@@ -1,11 +1,6 @@
 <parts>
     <!-- BANK 0 -->
-    <regblock name="SFR0" start="0x00" end="0x0B" streg="STATUS">
-        <register name="INDF"     addr="0x00" bits=""/>
-        <register name="TMR0"     addr="0x01" bits="" reset="11111111"/>
-        <register name="PCL"      addr="0x02" bits="" reset="11111111"/>
-        <register name="STATUS"   addr="0x03" bits="C,DC,Z,PD,TO, ,CWUF,GPWUF" reset="00011000"/>
-        <register name="FSR"      addr="0x04" bits=""  reset="11100000"/>
+    <regblock name="SFR0" start="0x00" end="0x0B" >
         <register name="OSCCAL"   addr="0x05" bits="FOSC4,CAL0,CAL1,CAL2,CAL3,CAL4,CAL5,CAL6" reset="11111110"/>
         <register name="GPIO"     addr="0x06" bits="GP0,GP1,GP2,GP3"/>
         <register name="TRISGPIO" addr="0x07" bits="0-7" reset="00001111"/>

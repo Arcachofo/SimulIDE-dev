@@ -3,14 +3,7 @@
         <progval addr="0x03FF" value="0x3430"/> <!-- OSCCAL -->
     </progblock>
     <!-- BANK 0 -->
-    <regblock name="SFR0" start="0x0000" end="0x001F" streg="STATUS">
-        <register name="INDF"    addr="0x00" bits=""/>
-        <register name="TMR0"    addr="0x01" bits=""/>
-        <register name="PCL"     addr="0x02" bits=""/>
-        <register name="STATUS"  addr="0x03" reset="00011000" mask="11100111"
-                  bits="C,DC,Z,PD,TO,R0,R1,IR" />
-                  
-        <register name="FSR"     addr="0x04" bits=""/>
+    <regblock name="SFR0" start="0x0000" end="0x001F">
         <register name="GPIO"    addr="0x05" mask="00111111"
                   bits="GPIO0,GPIO1,GPIO2,GPI3,GPIO4,GPIO5"/>
 

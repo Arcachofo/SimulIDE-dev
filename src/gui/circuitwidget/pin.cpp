@@ -323,7 +323,6 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 
     if( m_inverted )
     {
-        //Component::paint( p, option, widget );
         painter->setBrush( Qt::white );
         QPen pen = painter->pen();
         pen.setWidthF( 1.8 );

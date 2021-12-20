@@ -23,10 +23,10 @@
 #include "e_mcu.h"
 #include "simulator.h"
 
-McuOcUnit* PicOcUnit::createOcUnit( eMcu* mcu, QString name ) // Static
+PicPwmUnit* PicOcUnit::createPwmUnit( eMcu* mcu, QString name, int type ) // Static
 {
-    if( name.startsWith("PWM") ) return new PicPwmUnit( mcu, name );
-    else                         return new PicOcUnit( mcu, name );
+    if( type == 00 ) return new PicPwmUnit00( mcu, name );
+    if( type == 01 ) return new PicPwmUnit01( mcu, name );
     return NULL;
 }
 
@@ -85,11 +85,6 @@ PicPwmUnit::PicPwmUnit( eMcu* mcu, QString name )
           : McuOcUnit( mcu, name )
 {
     m_enhanced = name.contains("+");
-
-    QString n = name.right(1); // name="PWM+2" => n="2"
-
-    m_DCxB  = getRegBits( "DC"+n+"B0,DC"+n+"B1", mcu );
-    if( m_enhanced ) m_PxM = getRegBits( "P"+n+"M0,P"+n+"M1", mcu );
 }
 PicPwmUnit::~PicPwmUnit( ){}
 
@@ -129,5 +124,46 @@ void PicPwmUnit::configure( uint8_t newCCPxCON )
     }   }
     m_ocPin->controlPin( true, false ); // Connect/Disconnect PORT
     m_ocPin->setOutState( false );
+    m_enabled = true;
 }
+
+void  PicPwmUnit::sheduleEvents( uint32_t ovf, uint32_t countVal, int ) // Use CCPRxL + 2 bits from CCPxCON
+{
+    m_comMatch = (m_CCPRxL<<2) | m_cLow;
+    McuOcUnit::sheduleEvents( ovf, countVal, 2 );
+}
+
+void PicPwmUnit::ocrWriteL( uint8_t val ) // CCPRxL
+{
+    m_CCPRxL = val;
+    m_comMatch = (m_comMatch & 0xFF00) | val;
+    m_timer->updtCount();
+    sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
+}
+
+//------------------------------------------------------
+//-- PIC 16f88x PWM Unit -------------------------------
+
+PicPwmUnit00::PicPwmUnit00( eMcu* mcu, QString name )
+            : PicPwmUnit( mcu, name )
+{
+    QString n = name.right(1); // name="PWM+2" => n="2"
+
+    m_DCxB  = getRegBits( "DC"+n+"B0,DC"+n+"B1", mcu );
+    if( m_enhanced ) m_PxM = getRegBits( "P"+n+"M0,P"+n+"M1", mcu );
+}
+PicPwmUnit00::~PicPwmUnit00( ){}
+
+//------------------------------------------------------
+//-- PIC 16f627 PWM Unit -------------------------------
+
+PicPwmUnit01::PicPwmUnit01( eMcu* mcu, QString name )
+            : PicPwmUnit( mcu, name )
+{
+    QString n = name.right(1); // name="PWM+2" => n="2"
+
+    m_DCxB  = getRegBits( "CCP"+n+"Y,CCP"+n+"X", mcu );
+    //if( m_enhanced ) m_PxM = getRegBits( "P"+n+"M0,P"+n+"M1", mcu );
+}
+PicPwmUnit01::~PicPwmUnit01( ){}
 

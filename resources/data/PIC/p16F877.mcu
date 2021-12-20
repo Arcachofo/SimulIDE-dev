@@ -3,6 +3,7 @@
 <mcu name="p16F876" core="Pic14" data="512" prog="8192" progword="2" eeprom="256"
             inst_cycle="4">
             
+    <include file="pic/pic14_regs.xml" />
     <include file="p16F87x/p16F87x_regs.xml" />
 
         <!-- BANK 0 -->

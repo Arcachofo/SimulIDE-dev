@@ -2,7 +2,8 @@
 
 <mcu name="p10F200" core="Pic14" data="32" prog="256" progword="2"
             inst_cycle="4">
-            
+
+    <include file="pic/pic14_regs.xml" />
     <include file="p10F20x/p10F20x_regs.xml" />
     <include file="p10F20x/p10F20x_perif.xml" />
     

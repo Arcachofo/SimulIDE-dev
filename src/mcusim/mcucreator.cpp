@@ -581,7 +581,7 @@ void McuCreator::createTimer( QDomElement* t )
 void McuCreator::createCcpUnit( QDomElement* c )
 {
     PicCcpUnit* ccpUnit = NULL;
-    if( m_core == "Pic14" ) ccpUnit = new PicCcpUnit( mcu, c->attribute("name") );
+    if( m_core == "Pic14" ) ccpUnit = new PicCcpUnit( mcu, c->attribute("name"), c->attribute("type").toInt() );
     if( !ccpUnit ) return;
 
     McuPin* pin = mcu->m_ports.getPin( c->attribute("pin") );

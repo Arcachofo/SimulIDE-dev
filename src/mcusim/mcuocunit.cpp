@@ -60,8 +60,10 @@ void McuOcUnit::drivePin( ocAct_t act )
     m_ocPin->setOutState( pinState );
 }
 
-void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal )
+void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal, int rot )
 {
+    ovf      <<= rot;  // Used by Pic CCP PWM mode: 8+2 bits (rot=2)
+    countVal <<= rot;
     uint64_t cycles = 0;
     uint64_t match;
 
@@ -77,7 +79,7 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal )
         cycles = (match-countVal)*m_timer->scale() + m_mcu->simCycPI()/*run it 1 cycle after match*/; // cycles in ps
 
     Simulator::self()->cancelEvents( this );
-    if( cycles ) Simulator::self()->addEvent( cycles, this );
+    if( cycles ) Simulator::self()->addEvent( cycles>>rot, this );
 }
 
 void McuOcUnit::setOcActs( ocAct_t comAct, ocAct_t tovAct )

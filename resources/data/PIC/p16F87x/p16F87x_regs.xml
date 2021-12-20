@@ -1,11 +1,6 @@
 <parts>
     <!-- BANK 0 -->
-    <regblock name="SFR0" start="0x0000" end="0x001F" streg="STATUS">
-        <register name="INDF"    addr="0x00" bits=""/>
-        <register name="TMR0"    addr="0x01" bits=""/>
-        <register name="PCL"     addr="0x02" bits=""/>
-        <register name="STATUS"  addr="0x03" bits="C,DC,Z,PD,TO,R0,R1,IR" reset="00011000"/>
-        <register name="FSR"     addr="0x04" bits=""/>
+    <regblock name="SFR0" start="0x0000" end="0x001F">
         <register name="PORTA"   addr="0x05" bits="RA0,RA1,RA2,RA3,RA4,RA5,RA6,RA7"/>
         <register name="PORTB"   addr="0x06" bits="RB0,RB1,RB2,RB3,RB4,RB5,RB6,RB7"/>
         <register name="PORTC"   addr="0x07" bits="RC0,RC1,RC2,RC3,RC4,RC5,RC6,RC7"/>
@@ -55,7 +50,9 @@
         <register name="PR2"    addr="0x92" bits="" reset="11111111"/>
         <register name="SSPADD"  addr="0x93" />
         <register name="SSPSTAT" addr="0x94" bits="BF,UA,READ_WRITE,I2C_START,I2C_STOP,DATA_ADDRESS,CKE,SMP" />
-        <register name="TXSTA"  addr="0x98" bits="TX9D,TRMT,BRGH,0,SYNC,TXEN,TX9,CSRC" reset="00000010" mask="11110101"/>
+        <register name="TXSTA"   addr="0x98" reset="00000010" mask="11110101"
+                  bits="TX9D,TRMT,BRGH,0,SYNC,TXEN,TX9,CSRC"/>
+                  
         <register name="SPBRG"  addr="0x99" bits=""/>
         
         <register name="ADRESL" addr="0x9E" bits=""/>

@@ -3,6 +3,7 @@
 <mcu name="p12F675" core="Pic14" data="256" prog="1024" progword="2" eeprom="128"
             inst_cycle="4" >
 
+    <include file="pic/pic14_regs.xml" />
     <include file="p12F629/p12F629_regs.xml" />
     
     <!-- BANK 0 -->

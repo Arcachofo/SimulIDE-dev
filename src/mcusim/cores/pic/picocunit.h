@@ -22,16 +22,17 @@
 
 #include "mcuocunit.h"
 
+class PicPwmUnit;
+
 class MAINMODULE_EXPORT PicOcUnit : public McuOcUnit
 {
-        //friend class McuCreator;
         friend class PicCcpUnit;
 
     public:
         PicOcUnit( eMcu* mcu, QString name );
         ~PicOcUnit();
 
-static McuOcUnit* createOcUnit( eMcu* mcu, QString name );
+static PicPwmUnit* createPwmUnit( eMcu* mcu, QString name, int type );
 
         //virtual void initialize() override;
         virtual void runEvent();
@@ -48,7 +49,6 @@ static McuOcUnit* createOcUnit( eMcu* mcu, QString name );
 
 class MAINMODULE_EXPORT PicPwmUnit : public McuOcUnit
 {
-        //friend class McuCreator;
         friend class PicCcpUnit;
 
     public:
@@ -60,13 +60,32 @@ class MAINMODULE_EXPORT PicPwmUnit : public McuOcUnit
 
         virtual void configure( uint8_t newCCPxCON ) override;
 
+        virtual void sheduleEvents( uint32_t ovf, uint32_t countVal, int rot=0 ) override;
+
+        virtual void ocrWriteL( uint8_t val ) override;
+
     protected:
         bool m_enhanced;
 
         uint8_t m_cLow;
+        uint8_t m_CCPRxL;
 
         regBits_t m_PxM;
         regBits_t m_DCxB;
+};
+
+class MAINMODULE_EXPORT PicPwmUnit00 : public PicPwmUnit
+{
+    public:
+        PicPwmUnit00( eMcu* mcu, QString name );
+        ~PicPwmUnit00();
+};
+
+class MAINMODULE_EXPORT PicPwmUnit01 : public PicPwmUnit
+{
+    public:
+        PicPwmUnit01( eMcu* mcu, QString name );
+        ~PicPwmUnit01();
 };
 
 #endif

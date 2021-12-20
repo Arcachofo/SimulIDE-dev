@@ -25,11 +25,11 @@
 
 PicComp* PicComp::getComparator( eMcu* mcu, QString name ) // Static
 {
-    if     ( name.endsWith("01") ) return new PicComp01( mcu, name );
-    else if( name.endsWith("02") ) return new PicComp02( mcu, name );
-    else if( name.endsWith("11") ) return new PicComp11( mcu, name );
-    else if( name.endsWith("12") ) return new PicComp12( mcu, name );
-    else return NULL;
+    if( name.endsWith("01") ) return new PicComp01( mcu, name );
+    if( name.endsWith("02") ) return new PicComp02( mcu, name );
+    if( name.endsWith("11") ) return new PicComp11( mcu, name );
+    if( name.endsWith("12") ) return new PicComp12( mcu, name );
+    return NULL;
 }
 
 PicComp::PicComp( eMcu* mcu, QString name )

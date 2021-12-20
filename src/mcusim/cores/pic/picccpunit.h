@@ -40,7 +40,7 @@ class MAINMODULE_EXPORT PicCcpUnit : public McuModule, public eElement
     friend class McuCreator;
 
     public:
-        PicCcpUnit( eMcu* mcu, QString name );
+        PicCcpUnit( eMcu* mcu, QString name, int type );
         ~PicCcpUnit();
 
         virtual void initialize();
