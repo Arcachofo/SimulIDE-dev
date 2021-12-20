@@ -333,7 +333,7 @@ void McuCreator::createProgBlock( QDomElement* p )
             if( addr >= mcu->m_flashSize )
             {
                 qDebug() << "McuCreator::createProgBlock  ERROR writing Program Memory";
-                qDebug() << "Address:" << addr << "ProgMemSize:" << mcu->m_flashSize;
+                qDebug() << "Address:" << addr << "> PMG End:" << mcu->m_flashSize;
             }
             else mcu->setFlashValue( addr, value );
         }

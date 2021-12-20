@@ -48,19 +48,17 @@ void PicVref::configureA( uint8_t newVRCON )
         m_mode = mode;
         m_vrr = vrr;
 
-        if( m_enabled )
-        {
-            if( vrr ) m_vref = 5.0*mode/24; /// TODO: get Vdd
+        if( m_enabled ){
+            if( vrr ) m_vref = 5.0*mode/24; /// TODO: get Vdd or use VrefP
             else      m_vref = 5.0/4+5.0*mode/32;
         }
         else m_vref = 0;
     }
     bool vroe = getRegBitsBool( newVRCON, m_VROE );
-    if( vroe != m_vroe )    // VDD-8R-R-..16 Stages..-R-8R-GND
-    {                       //                         -VRR-GND
-        m_vroe = vroe;
-        if( m_pinOut )
-        {
+    if( vroe != m_vroe )    // VDD-┬-8R-R-..16 Stages..-R-8R-┬-GND
+    {                       // VrP-┘                     -VRR┴-VrN
+        m_vroe = vroe;      /// TODO: Add VrefP/VrefN option to ladder
+        if( m_pinOut ){
             double vddAdmit = 0;
             double gndAdmit = 0;
             if( vroe && m_enabled )
@@ -72,7 +70,8 @@ void PicVref::configureA( uint8_t newVRCON )
             m_pinOut->setExtraSource( vddAdmit, gndAdmit );
         }
     }
-    if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBackDoub( m_vref ); }
+    if( !m_callBacks.isEmpty() )
+    { for( McuModule* mod : m_callBacks ) mod->callBackDoub( m_vref ); }
 }
 
 /*void PicVref::setMode( uint8_t mode )

@@ -3,10 +3,6 @@
 <mcu name="p12F675" core="Pic14" data="256" prog="1024" progword="2" eeprom="128"
             inst_cycle="4" >
 
-        <progblock>
-            <progval addr="0x03FF" value="0x3430"/> <!-- OSCCAL -->
-        </progblock>
-        
     <include file="p12F629/p12F629_regs.xml" />
     
     <!-- BANK 0 -->
@@ -15,11 +11,11 @@
             <register name="ADCON0" addr="0x1F"  mask="11001111"
                       bits="ADON,GO/DONE,CHS0,CHS1,0,0,VCFG,ADFM"/>/>
         </regblock>
-        <!-- BANK 1 -->
+    <!-- BANK 1 -->
         <regblock name="SFR0" start="0x009E" end="0x0009F" >
             <register name="ADRESL" addr="0x9E" bits="" />
             <register name="ANSEL"  addr="0x9F" reset="00001111" mask="01111111"
-                      bits="ANs0,ANS1,ANS2,ANS3,ADCS0,ADCS1,ADCS2" />
+                      bits="ANS0,ANS1,ANS2,ANS3,ADCS0,ADCS1,ADCS2" />
         </regblock>
         
     <include file="p12F629/p12F629_int.xml" />

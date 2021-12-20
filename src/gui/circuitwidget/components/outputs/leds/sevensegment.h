@@ -64,8 +64,8 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
     private:
-        void createDisplay( int dispNumber );
-        void deleteDisplay( int dispNumber );
+        void createDisplay( int n );
+        void deleteDisplay( int n );
         void resizeData( int displays );
 
         bool m_commonCathode;

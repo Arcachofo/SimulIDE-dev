@@ -100,6 +100,8 @@ KY040::KY040( QObject* parent, QString type, QString id )
     m_sw->setOutState( !m_closed );
     m_sw->setLabelText( " SW" );
 
+    setAngle( 90 );
+
     Simulator::self()->addToUpdateList( this );
     
     connect( m_dial, SIGNAL( valueChanged(int)),

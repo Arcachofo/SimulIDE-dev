@@ -1,4 +1,7 @@
 <parts>
+    <progblock>
+        <progval addr="0x03FF" value="0x3430"/> <!-- OSCCAL -->
+    </progblock>
     <!-- BANK 0 -->
     <regblock name="SFR0" start="0x0000" end="0x001F" streg="STATUS">
         <register name="INDF"    addr="0x00" bits=""/>

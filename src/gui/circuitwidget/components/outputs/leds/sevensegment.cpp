@@ -150,6 +150,7 @@ void SevenSegment::setNumDisplays( int displays )
 
 void SevenSegment::resizeData( int displays )
 {
+    m_pin.resize( 8+displays );
     m_commonPin.resize( displays );
     m_cathodePin.resize( displays*8 );
     m_anodePin.resize( displays*8 );
@@ -219,27 +220,27 @@ void SevenSegment::setMaxCurrent( double current )
     for( uint i=0; i<m_segment.size(); ++i ) m_segment[i]->setMaxCurrent( current );
 }
 
-void SevenSegment::deleteDisplay( int dispNumber )
+void SevenSegment::deleteDisplay(int n )
 {
-    Pin* pin = m_commonPin[dispNumber];
+    Pin* pin = m_commonPin[n];
     pin->removeConnector();
     pin->reset();
     delete pin;
 
-    for( int i=0; i<8; ++i ) Circuit::self()->removeComp( m_segment[dispNumber*8+i] );
+    for( int i=0; i<8; ++i ) Circuit::self()->removeComp( m_segment[n*8+i] );
 }
 
-void SevenSegment::createDisplay( int dispNumber )
+void SevenSegment::createDisplay(int n )
 {
-    int x = 32*dispNumber;
+    int x = 32*n;
 
     // Pin common
     QString label = m_commonCathode ? " |" : "+";
-    QString pinid = m_id+"-pin_common"+QString( 97+dispNumber );
-    m_commonPin[dispNumber] = new Pin( 270, QPoint( x+8, 24+8 ), pinid, 0, this );
-    m_commonPin[dispNumber]->setLength( 4 );
-    m_commonPin[dispNumber]->setFontSize( 4 );
-    m_commonPin[dispNumber]->setLabelText( label );
+    QString pinid = m_id+"-pin_common"+QString( 97+n );
+    m_commonPin[n] = m_pin[8+n]= new Pin( 270, QPoint( x+8, 24+8 ), pinid, 0, this );
+    m_commonPin[n]->setLength( 4 );
+    m_commonPin[n]->setFontSize( 4 );
+    m_commonPin[n]->setLabelText( label );
 
     for( int i=0; i<8; ++i ) // Create segments
     {
@@ -256,22 +257,22 @@ void SevenSegment::createDisplay( int dispNumber )
         lsmd->setThreshold( m_threshold );
         lsmd->setColorStr( m_ledColor );
 
-        m_anodePin  [dispNumber*8+i] = lsmd->getEpin(0);
-        m_cathodePin[dispNumber*8+i] = lsmd->getEpin(1);
-        m_segment   [dispNumber*8+i] = lsmd;
+        m_anodePin  [n*8+i] = lsmd->getEpin(0);
+        m_cathodePin[n*8+i] = lsmd->getEpin(1);
+        m_segment   [n*8+i] = lsmd;
     }
-    m_segment[dispNumber*8+0]->setPos( x-5, -20 );
-    m_segment[dispNumber*8+1]->setPos( x+11.5, -16 );
-    m_segment[dispNumber*8+1]->setRotation(96);
-    m_segment[dispNumber*8+2]->setPos( x+10, 3 );
-    m_segment[dispNumber*8+2]->setRotation(96);
-    m_segment[dispNumber*8+3]->setPos( x-8, 19 );
-    m_segment[dispNumber*8+4]->setPos( x-9, 3 );
-    m_segment[dispNumber*8+4]->setRotation(96);
-    m_segment[dispNumber*8+5]->setPos( x-7.5, -16 );
-    m_segment[dispNumber*8+5]->setRotation(96);
-    m_segment[dispNumber*8+6]->setPos( x-6.5, 0 );
-    m_segment[dispNumber*8+7]->setPos( x+12, 19 );
+    m_segment[n*8+0]->setPos( x-5, -20 );
+    m_segment[n*8+1]->setPos( x+11.5, -16 );
+    m_segment[n*8+1]->setRotation(96);
+    m_segment[n*8+2]->setPos( x+10, 3 );
+    m_segment[n*8+2]->setRotation(96);
+    m_segment[n*8+3]->setPos( x-8, 19 );
+    m_segment[n*8+4]->setPos( x-9, 3 );
+    m_segment[n*8+4]->setRotation(96);
+    m_segment[n*8+5]->setPos( x-7.5, -16 );
+    m_segment[n*8+5]->setRotation(96);
+    m_segment[n*8+6]->setPos( x-6.5, 0 );
+    m_segment[n*8+7]->setPos( x+12, 19 );
 }
 
 void SevenSegment::remove()

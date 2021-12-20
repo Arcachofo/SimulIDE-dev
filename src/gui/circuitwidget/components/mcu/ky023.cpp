@@ -90,6 +90,8 @@ KY023::KY023( QObject* parent, QString type, QString id )
     m_sw->setOutHighV( VIN );
     m_sw->setLabelText( " SW" );
     m_pin[2] = m_sw;
+
+    setAngle( 90 );
     
     Simulator::self()->addToUpdateList( this );
     

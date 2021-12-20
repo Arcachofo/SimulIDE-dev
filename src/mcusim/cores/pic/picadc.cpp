@@ -28,7 +28,6 @@ PicAdc* PicAdc::createAdc( eMcu* mcu, QString name )
     int type = name.right( 2 ).toInt();
     switch( type ){
         case 00: return new PicAdc0( mcu, name ); break;
-        //case 1: return new PicAdc1( mcu, name ); break;
         case 10: return new PicAdc10( mcu, name ); break;
         case 11: return new PicAdc11( mcu, name ); break;
         default: return NULL;
@@ -112,7 +111,8 @@ void PicAdc0::configureB( uint8_t newADCON1 ) // ADCON1
             case 14:
             case 15: analog = 0b00000001;
         }
-        for( uint i=0; i<m_adcPin.size(); ++i) if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
+        for( uint i=0; i<m_adcPin.size(); ++i)
+            if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
 }   }
 
 void PicAdc0::updtVref()
