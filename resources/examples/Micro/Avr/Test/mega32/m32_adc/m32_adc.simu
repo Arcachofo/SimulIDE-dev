@@ -1,0 +1,87 @@
+<circuit Simu_Step_nS="1000" animate="0" reactStep="50" noLinAcc="5" Speed_sps="1000000" type="simulide_0.4" Speed_per="100">
+
+Unique  Id: 7-Seg BCD-28: 
+Circuit Id: 7-Seg BCD-28
+<item rotation="0" itemtype="7-Seg BCD" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-316" valLabelx="0" id="7-Seg BCD-28" labelx="-16" labelrot="0" hflip="1" circRot="6.9533558069654488e-310" valLabRot="0" circPos="0,0" x="-660" objectName="7-Seg BCD-28" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: atmega32-1: 
+Circuit Id: atmega32-1
+<item rotation="0" itemtype="AVR" Mhz="16" Show_id="true" Logic_Symbol="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="172" y="-276" valLabelx="0" id="atmega32-1" varList=",ADCL,ADCH,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," labelx="-5" labelrot="0" hflip="1" eeprom="255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255" Init_gdb="false" circRot="6.9533558069654488e-310" valLabRot="0" Auto_Load="false" circPos="0,0" x="-556" Program="m32_adc.hex" objectName="atmega32-1" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Voltage Source-2: 
+Circuit Id: Voltage Source-2
+<item Voltage="5" rotation="0" itemtype="Voltage Source" Show_Volt="true" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-80" y="-308" valLabelx="-26" id="Voltage Source-2" labelx="-40" labelrot="0" hflip="1" Unit=" V" circRot="2.3715151000379834e-322" valLabRot="0" circPos="0,0" x="-508" objectName="Voltage Source-2" valLabely="10" mainComp="false" vflip="1"/>
+
+Unique  Id: 7-Seg BCD-4: 
+Circuit Id: 7-Seg BCD-4
+<item rotation="0" itemtype="7-Seg BCD" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-316" valLabelx="0" id="7-Seg BCD-4" labelx="-16" labelrot="0" hflip="1" circRot="6.9533558069654488e-310" valLabRot="0" circPos="0,0" x="-596" objectName="7-Seg BCD-4" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: 7-Seg BCD-5: 
+Circuit Id: 7-Seg BCD-5
+<item rotation="0" itemtype="7-Seg BCD" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-316" valLabelx="0" id="7-Seg BCD-5" labelx="-16" labelrot="0" hflip="1" circRot="6.9533558069654488e-310" valLabRot="0" circPos="0,0" x="-628" objectName="7-Seg BCD-5" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Rail-14: 
+Circuit Id: Rail-14
+<item Voltage="5" rotation="0" itemtype="Rail" Show_Volt="true" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-172" valLabelx="-16" id="Rail-14" labelx="-16" labelrot="0" hflip="1" Unit=" V" circRot="6.9533558069654488e-310" valLabRot="0" circPos="0,0" x="-468" objectName="Rail-14" valLabely="8" mainComp="false" vflip="1"/>
+
+Unique  Id: Node-17: 
+Circuit Id: Node-17
+<item rotation="0" itemtype="Node" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-188" valLabelx="0" id="Node-17" labelx="-16" labelrot="0" hflip="1" circRot="8.9599634903595074e-317" valLabRot="0" circPos="0,0" x="-452" objectName="Node-17" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-3: 
+Circuit Id: Connector-3
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PA0" enodeid="Circ_eNode-18" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-308" valLabelx="0" id="Connector-3" labelx="-16" startpinid="Voltage Source-2-outPin" labelrot="0" hflip="1" circRot="6.9531436082561054e-310" valLabRot="0" pointList="-492,-308,-492,-268,-500,-268" circPos="0,0" x="-492" objectName="Connector-3" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-6: 
+Circuit Id: Connector-6
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PB0" enodeid="Circ_eNode-19" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-6" labelx="-16" startpinid="7-Seg BCD-4-in0" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-580,-284,-580,-268,-564,-268" circPos="0,0" x="-580" objectName="Connector-6" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-7: 
+Circuit Id: Connector-7
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PB1" enodeid="Circ_eNode-20" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-7" labelx="-16" startpinid="7-Seg BCD-4-in1" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-588,-284,-588,-260,-564,-260" circPos="0,0" x="-588" objectName="Connector-7" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-8: 
+Circuit Id: Connector-8
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PB2" enodeid="Circ_eNode-21" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-8" labelx="-16" startpinid="7-Seg BCD-4-in2" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-596,-284,-596,-252,-564,-252" circPos="0,0" x="-596" objectName="Connector-8" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-9: 
+Circuit Id: Connector-9
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PB3" enodeid="Circ_eNode-22" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-9" labelx="-16" startpinid="7-Seg BCD-4-in3" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-604,-284,-604,-244,-564,-244" circPos="0,0" x="-604" objectName="Connector-9" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-10: 
+Circuit Id: Connector-10
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PB4" enodeid="Circ_eNode-23" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-10" labelx="-16" startpinid="7-Seg BCD-5-in0" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-612,-284,-612,-236,-564,-236" circPos="0,0" x="-612" objectName="Connector-10" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-11: 
+Circuit Id: Connector-11
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PB5" enodeid="Circ_eNode-24" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-11" labelx="-16" startpinid="7-Seg BCD-5-in1" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-620,-284,-620,-228,-564,-228" circPos="0,0" x="-620" objectName="Connector-11" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-12: 
+Circuit Id: Connector-12
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PB6" enodeid="Circ_eNode-25" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-12" labelx="-16" startpinid="7-Seg BCD-5-in2" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-628,-284,-628,-220,-564,-220" circPos="0,0" x="-628" objectName="Connector-12" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-13: 
+Circuit Id: Connector-13
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PB7" enodeid="Circ_eNode-26" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-13" labelx="-16" startpinid="7-Seg BCD-5-in3" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-636,-284,-636,-212,-564,-212" circPos="0,0" x="-636" objectName="Connector-13" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-15: 
+Circuit Id: Connector-15
+<item rotation="0" itemtype="Connector" endpinid="Node-17-0" enodeid="Circ_eNode-27" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-172" valLabelx="0" id="Connector-15" labelx="-16" startpinid="Rail-14-outnod" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-452,-172,-452,-188" circPos="0,0" x="-452" objectName="Connector-15" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-16: 
+Circuit Id: Connector-16
+<item rotation="0" itemtype="Connector" endpinid="Node-17-1" enodeid="Circ_eNode-27" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-188" valLabelx="0" id="Connector-16" labelx="-16" startpinid="atmega32-1-AVCC" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-500,-188,-452,-188" circPos="0,0" x="-500" objectName="Connector-16" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-18: 
+Circuit Id: Connector-18
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-AREF" enodeid="Circ_eNode-27" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-188" valLabelx="0" id="Connector-18" labelx="-16" startpinid="Node-17-2" labelrot="0" hflip="1" circRot="-8.1069441129502584e+307" valLabRot="0" pointList="-452,-188,-452,-204,-500,-204" circPos="0,0" x="-452" objectName="Connector-18" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-29: 
+Circuit Id: Connector-29
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PD0" enodeid="enode-29" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-29" labelx="-16" startpinid="7-Seg BCD-28-in0" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-644,-284,-644,-164,-564,-164" circPos="0,0" x="-644" objectName="Connector-29" valLabely="0" mainComp="false" vflip="1"/>
+
+Unique  Id: Connector-30: 
+Circuit Id: Connector-30
+<item rotation="0" itemtype="Connector" endpinid="atmega32-1-PD1" enodeid="enode-30" Show_id="false" boardPos="-1e+06,-1e+06" boardRot="-1000000" labely="-24" y="-284" valLabelx="0" id="Connector-30" labelx="-16" startpinid="7-Seg BCD-28-in1" labelrot="0" hflip="1" circRot="6.9533558071749326e-310" valLabRot="0" pointList="-652,-284,-652,-156,-564,-156" circPos="0,0" x="-652" objectName="Connector-30" valLabely="0" mainComp="false" vflip="1"/>
+ 
+</circuit>

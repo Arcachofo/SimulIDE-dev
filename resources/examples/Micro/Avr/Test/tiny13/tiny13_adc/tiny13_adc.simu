@@ -1,0 +1,23 @@
+<circuit type="simulide_0.5" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0">
+
+Unique  Id: tiny13-1: 
+Circuit Id: tiny13-1
+<item Name="tiny13" valLabRot="0" mainComp="false" labelrot="0" Auto_Load="false" valLabely="0" eeprom="255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255" labely="-20" itemtype="MCU" Logic_Symbol="false" Program="tiny13_forum/tiny13_forum-test.hex" hflip="1" valLabelx="0" rotation="0" x="-412" Show_Val="false" Unit="  " labelx="0" vflip="1" Show_id="true" id="tiny13-1" varList="LDR,,ADCL,ADCH,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,," y="-228" objectName="tiny13-1" Mhz="16"/>
+
+Unique  Id: Led-12: 
+Circuit Id: Led-12
+<item valLabRot="0" mainComp="false" labelrot="0" Threshold="2.4" Resistance="100" MaxCurrent="0.03" Grounded="true" valLabely="0" labely="-24" itemtype="Led" hflip="1" valLabelx="0" rotation="0" x="-332" Color="0" Show_Val="false" Unit="  " labelx="-16" vflip="1" Show_id="false" id="Led-12" y="-196" objectName="Led-12"/>
+
+Unique  Id: Voltage Source-17: 
+Circuit Id: Voltage Source-17
+<item valLabRot="0" mainComp="false" labelrot="0" Value="5" valLabely="10" labely="-80" itemtype="Voltage Source" Show_Volt="true" hflip="1" valLabelx="-26" rotation="0" x="-392" Show_Val="true" Unit=" V" labelx="-40" vflip="1" Show_id="false" id="Voltage Source-17" y="-284" objectName="Voltage Source-17"/>
+
+Unique  Id: Connector-13: 
+Circuit Id: Connector-13
+<item pointList="-348,-196,-372,-196" valLabRot="0" mainComp="false" labelrot="0" valLabely="0" labely="-24" itemtype="Connector" hflip="1" endpinid="tiny13-1-PORTB0" valLabelx="0" rotation="0" x="-348" Show_Val="false" Unit="  " labelx="-16" vflip="1" Show_id="false" id="Connector-13" y="-196" objectName="Connector-13" startpinid="Led-12-lPin" enodeid="Circ_eNode-18"/>
+
+Unique  Id: Connector-18: 
+Circuit Id: Connector-18
+<item pointList="-364,-268,-364,-284,-348,-284,-348,-212,-372,-212" valLabRot="0" mainComp="false" labelrot="0" valLabely="0" labely="-24" itemtype="Connector" hflip="1" endpinid="tiny13-1-PORTB2" valLabelx="0" rotation="0" x="-364" Show_Val="false" Unit="  " labelx="-16" vflip="1" Show_id="false" id="Connector-18" y="-268" objectName="Connector-18" startpinid="Voltage Source-17-outPin" enodeid="Circ_eNode-19"/>
+ 
+</circuit>

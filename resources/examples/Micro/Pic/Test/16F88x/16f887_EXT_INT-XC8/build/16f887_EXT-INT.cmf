@@ -1,0 +1,250 @@
+%CMF
+# %PSECTS Section
+# For each object file, details of its psects are enumerated here.
+# The begining of the section is indicated by %PSECTS.  The first
+# line indicates the name of the first object file, e.g.
+#    $foo.obj
+# Each line that follows describes a psect in that object file, until
+# the next object file.  The lines that describe a psect have the
+# format:
+#    <psect name> <class name> <space> <link address> <load addresses> <length> <delta>
+# All addresses and the length are given in unqualified hexadecimal
+# in delta units.  Any other numeric values are decimal.
+%PSECTS
+$build/16f887_EXT-INT.o
+cinit CODE 0 F F 4 2
+text1 CODE 0 30 30 13 2
+maintext CODE 0 13 13 1D 2
+cstackCOMMON COMMON 1 70 70 3 1
+intentry CODE 0 4 4 8 2
+$/tmp/xcXHadKgB.o
+reset_vec CODE 0 0 0 3 2
+end_init CODE 0 C C 3 2
+# %UNUSED Section
+# This section enumerates the unused ranges of each CLASS. Each entry
+# is described on a single line as follows:
+#    <class name> <range> <delta>
+# Addresses given in the range are in hexadecimal and units of delta.
+%UNUSED
+RAM 20-6F 1
+RAM A0-EF 1
+RAM 110-16F 1
+RAM 190-1EF 1
+BANK0 20-6F 1
+BANK1 A0-EF 1
+BANK2 110-16F 1
+BANK3 190-1EF 1
+CONST 3-3 2
+CONST 43-1FFF 2
+ENTRY 3-3 2
+ENTRY 43-1FFF 2
+IDLOC 2000-2003 2
+STACK 110-16F 1
+CODE 3-3 2
+CODE 43-1FFF 2
+SFR0 0-1F 1
+SFR1 80-9F 1
+SFR2 100-10F 1
+SFR3 180-18F 1
+COMMON 73-7D 1
+CONFIG 2007-2008 2
+EEDATA 2100-21FF 2
+STRCODE 3-3 2
+STRCODE 43-1FFF 2
+STRING 3-3 2
+STRING 43-1FFF 2
+# %LINETAB Section
+# This section enumerates the file/line to address mappings.
+# The beginning of the section is indicated by %LINETAB.
+# The first line indicates the name of the first object file, e.g.
+#   $foo.obj
+# Each line that follows describes a single mapping until the next
+# object file.  Mappings have the following format:
+#    <address> <psect name> <class name> ><line number>:<file name>
+# The address is absolute and given given in unqualified hex 
+# in delta units of the psect. All mappings within an object file
+# are in ascending order of addresses.
+# All other numeric values are in decimal.
+%LINETAB
+$build/16f887_EXT-INT.o
+F cinit CODE >435:/tmp/xcXMhGBDO.s
+F cinit CODE >438:/tmp/xcXMhGBDO.s
+F cinit CODE >444:/tmp/xcXMhGBDO.s
+F cinit CODE >446:/tmp/xcXMhGBDO.s
+10 cinit CODE >447:/tmp/xcXMhGBDO.s
+4 intentry CODE >38:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+30 text1 CODE >38:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+30 text1 CODE >40:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+34 text1 CODE >41:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+3A text1 CODE >42:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+3B text1 CODE >44:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+3C text1 CODE >45:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+13 maintext CODE >9:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+13 maintext CODE >11:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+16 maintext CODE >12:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+17 maintext CODE >13:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+1A maintext CODE >14:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+1B maintext CODE >17:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+1F maintext CODE >18:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+20 maintext CODE >19:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+24 maintext CODE >22:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+27 maintext CODE >25:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+28 maintext CODE >26:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+29 maintext CODE >27:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+2A maintext CODE >28:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+2B maintext CODE >29:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+2C maintext CODE >32:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+2C maintext CODE >34:/home/user/Escritorio/887/16f887_EXT-INT/16f887_EXT-INT.c
+# %SYMTAB Section
+# An enumeration of all symbols in the program.
+# The beginning of the section is indicated by %SYMTAB.
+# Each line describes a single symbol as follows:
+#    <label> <value> [-]<load-adj> <class> <space> <psect> <file-name>
+# The value and load-adj are both in unqualified hexadecimal.
+# All other numeric values are in decimal.  The load-adj is the
+# quantity one needs to add to the symbol value in order to obtain the load
+# address of the symbol.  This value may be signed. If the symbol
+# was defined in a psect then <psect> will be "-". File-name
+# is the name of the object file in which the symbol was defined.
+%SYMTAB
+___latbits 2 0 ABS 0 - build/16f887_EXT-INT.o
+__Hspace_0 43 0 ABS 0 - -
+__Hspace_1 73 0 ABS 0 - -
+__Hspace_2 0 0 ABS 0 - -
+__Hspace_3 0 0 ABS 0 - -
+__Heeprom_data 0 0 EEDATA 3 eeprom_data -
+__Hstrings 0 0 ABS 0 strings -
+_C1ON 83F 0 ABS 0 - build/16f887_EXT-INT.o
+_C2ON 847 0 ABS 0 - build/16f887_EXT-INT.o
+_INTF 59 0 ABS 0 - build/16f887_EXT-INT.o
+___sp 0 0 STACK 2 stack /tmp/xcXHadKgB.o
+_main 26 0 CODE 0 maintext build/16f887_EXT-INT.o
+btemp 7E 0 ABS 0 - build/16f887_EXT-INT.o
+start 18 0 CODE 0 init /tmp/xcXHadKgB.o
+__size_of_main 0 0 ABS 0 - build/16f887_EXT-INT.o
+_OPTION_REGbits 81 0 ABS 0 - build/16f887_EXT-INT.o
+__Hpowerup 0 0 CODE 0 powerup -
+intlevel0 0 0 ENTRY 0 functab /tmp/xcXHadKgB.o
+intlevel1 0 0 ENTRY 0 functab /tmp/xcXHadKgB.o
+intlevel2 0 0 ENTRY 0 functab /tmp/xcXHadKgB.o
+intlevel3 0 0 ENTRY 0 functab /tmp/xcXHadKgB.o
+intlevel4 0 0 ENTRY 0 functab /tmp/xcXHadKgB.o
+intlevel5 0 0 ENTRY 0 functab /tmp/xcXHadKgB.o
+wtemp0 7E 0 ABS 0 - build/16f887_EXT-INT.o
+__Hfunctab 0 0 ENTRY 0 functab -
+__Hclrtext 0 0 ABS 0 clrtext -
+_ANSELH 189 0 ABS 0 - build/16f887_EXT-INT.o
+__Lmaintext 0 0 ABS 0 maintext -
+___stackhi 0 0 ABS 0 - /tmp/xcXHadKgB.o
+___stacklo 0 0 ABS 0 - /tmp/xcXHadKgB.o
+__size_of_myisr 0 0 ABS 0 - build/16f887_EXT-INT.o
+start_initialization 1E 0 CODE 0 cinit build/16f887_EXT-INT.o
+___int_sp 0 0 STACK 2 stack /tmp/xcXHadKgB.o
+__Hbank0 0 0 ABS 0 bank0 -
+__Hbank1 0 0 ABS 0 bank1 -
+__Hbank2 0 0 ABS 0 bank2 -
+__Hbank3 0 0 ABS 0 bank3 -
+__Hcinit 26 0 CODE 0 cinit -
+__Hstack 0 0 STACK 2 stack -
+__Hmaintext 0 0 ABS 0 maintext -
+__Hcommon 0 0 ABS 0 common -
+__Lbank0 0 0 ABS 0 bank0 -
+__Lbank1 0 0 ABS 0 bank1 -
+__Lbank2 0 0 ABS 0 bank2 -
+__Lbank3 0 0 ABS 0 bank3 -
+__Lcinit 1E 0 CODE 0 cinit -
+__Lstack 0 0 STACK 2 stack -
+_INTCONbits B 0 ABS 0 - build/16f887_EXT-INT.o
+__Habs1 0 0 ABS 0 abs1 -
+__Hcode 0 0 ABS 0 code -
+__Hinit 18 0 CODE 0 init -
+__Hsfr0 0 0 ABS 0 sfr0 -
+__Hsfr1 0 0 ABS 0 sfr1 -
+__Hsfr2 0 0 ABS 0 sfr2 -
+__Hsfr3 0 0 ABS 0 sfr3 -
+__Htext 0 0 ABS 0 text -
+__Labs1 0 0 ABS 0 abs1 -
+__Lcode 0 0 ABS 0 code -
+__Linit 18 0 CODE 0 init -
+__Lsfr0 0 0 ABS 0 sfr0 -
+__Lsfr1 0 0 ABS 0 sfr1 -
+__Lsfr2 0 0 ABS 0 sfr2 -
+__Lsfr3 0 0 ABS 0 sfr3 -
+__Ltext 0 0 ABS 0 text -
+__HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+__S0 43 0 ABS 0 - -
+__S1 73 0 ABS 0 - -
+__S2 0 0 ABS 0 - -
+__S3 0 0 ABS 0 - -
+saved_w 7E 0 ABS 0 - build/16f887_EXT-INT.o
+__Lintentry 8 0 CODE 0 intentry -
+reset_vec 0 0 CODE 0 reset_vec /tmp/xcXHadKgB.o
+__pmaintext 26 0 CODE 0 maintext build/16f887_EXT-INT.o
+__Lcommon 0 0 ABS 0 common -
+__Lspace_0 0 0 ABS 0 - -
+__Lspace_1 0 0 ABS 0 - -
+__Lspace_2 0 0 ABS 0 - -
+__Lspace_3 0 0 ABS 0 - -
+__Lend_init 18 0 CODE 0 end_init -
+__LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+end_of_initialization 1E 0 CODE 0 cinit build/16f887_EXT-INT.o
+__Hintentry 18 0 CODE 0 intentry -
+__Lstrings 0 0 ABS 0 strings -
+__Hreset_vec 6 0 CODE 0 reset_vec -
+__ptext1 60 0 CODE 0 text1 build/16f887_EXT-INT.o
+__Lpowerup 0 0 CODE 0 powerup -
+__Leeprom_data 0 0 EEDATA 3 eeprom_data -
+__Lreset_vec 0 0 CODE 0 reset_vec -
+__end_of__initialization 1E 0 CODE 0 cinit build/16f887_EXT-INT.o
+__Lfunctab 0 0 ENTRY 0 functab -
+__Lclrtext 0 0 ABS 0 clrtext -
+__pcstackCOMMON 70 0 COMMON 1 cstackCOMMON build/16f887_EXT-INT.o
+__Hend_init 1E 0 CODE 0 end_init -
+__end_of_main 60 0 CODE 0 maintext build/16f887_EXT-INT.o
+_ANSEL 188 0 ABS 0 - build/16f887_EXT-INT.o
+_PORTC 7 0 ABS 0 - build/16f887_EXT-INT.o
+__end_of_myisr 86 0 CODE 0 text1 build/16f887_EXT-INT.o
+_TRISB 86 0 ABS 0 - build/16f887_EXT-INT.o
+_TRISC 87 0 ABS 0 - build/16f887_EXT-INT.o
+__Hram 0 0 ABS 0 ram -
+__Lram 0 0 ABS 0 ram -
+interrupt_function 8 0 CODE 0 intentry build/16f887_EXT-INT.o
+_myisr 60 0 CODE 0 text1 build/16f887_EXT-INT.o
+__pintentry 8 0 CODE 0 intentry build/16f887_EXT-INT.o
+__initialization 1E 0 CODE 0 cinit build/16f887_EXT-INT.o
+# %SPLITSTAB Section
+# This section enumerates all the psect splits performed by the assembler.
+# The beginning of the section is indicated by %SPLITSTAB.
+# Each line is a record a particular split, where the parent psect is on
+# the left and the child on the right.  Note that a child psect is always
+# split form the top of the parent psect. All splits from a given parent
+# are listed in the order in which they occurred.
+%SPLITSTAB
+# %DABS Section
+# This section contains a table of all usuage of the assember
+# directive DABS in the program. Each line has the following format:
+#   <name> <space> <address> <size>
+# If the DABS was originally labelled then that shall be <name>,
+# otherwise name will be "-".  The <space> number is in decimal.
+# <address> and <size> are in byte units as unqaulified hexadecimal
+%DABS
+- 1 7E 2
+# %SEGMENTS Section
+# This sections enumerates the segments of the program.  Each segment
+# is described on a single line as follows:
+#    <name> <space> <link address> <file address> <size> <delta>
+# Addresses and size are in unqualified hexadecimal.  The link address
+# and size are in units of delta. The file address is in units of bytes.
+# All other numeric quantities are in decimal.
+%SEGMENTS
+cstackCOMMON 1 70 70 3 1
+intentry 0 4 8 3F 2
+reset_vec 0 0 0 3 2
+# %NOTES Section
+# This section contains data of all the note-psects.  The beginning of the section
+# is indicated by %NOTES. The first line indicates the name and decimal
+# byte-length of the first note-psect, e.g.
+#   $codecov_info_hdr 16
+# Each line that follows contains the byte-data of the psect in hexadecimal as a
+# space-separated list. These lines are limited to 16 bytes of data.
+%NOTES

@@ -1,0 +1,45 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="MCU" CircId="p16f886-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-276,-228" rotation="0" hflip="1" vflip="1" label="pic16f886" idLabPos="-12,-17" labelrot="0" valLabPos="0,0" valLabRot="0" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," Frequency="16 MHz" Program="build_16F886_PWM/16F886_PWM.hex" Auto_Load="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" />
+
+<item itemtype="Led" CircId="Led-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-196,-180" rotation="0" hflip="1" vflip="1" label="Led-2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="0.6 Ω" />
+
+<item itemtype="Led" CircId="Led-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-196,-204" rotation="0" hflip="1" vflip="1" label="Led-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="0.6 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-4" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-156,-204" rotation="0" hflip="1" vflip="1" label="Resistor-4" idLabPos="-16,-24" labelrot="0" valLabPos="-13,-16" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-3" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-156,-180" rotation="0" hflip="1" vflip="1" label="Resistor-5" idLabPos="-16,-24" labelrot="0" valLabPos="-11,7" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-124" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Oscope" CircId="Oscope-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-116,-308" rotation="0" hflip="1" vflip="1" label="Oscope-13" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="1000000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="0" Filter="0.1 V" Trigger="0" AutoSC="4" Tracks="2" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-124,-180" />
+
+<item itemtype="Node" CircId="Node-14" mainComp="false" Pos="-228,-204" />
+
+<item itemtype="Node" CircId="Node-17" mainComp="false" Pos="-220,-180" />
+
+<item itemtype="Connector" startpinid="Led-5-rPin" endpinid="Resistor-4-lPin" enodeid="Circ_eNode-8" pointList="-180,-204,-172,-204" />
+
+<item itemtype="Connector" startpinid="Led-6-rPin" endpinid="Resistor-3-lPin" enodeid="Circ_eNode-9" pointList="-180,-180,-172,-180" />
+
+<item itemtype="Connector" startpinid="Resistor-4-rPin" endpinid="Node-1-0" enodeid="Circ_eNode-10" pointList="-140,-204,-124,-204,-124,-180" />
+
+<item itemtype="Connector" startpinid="Resistor-3-rPin" endpinid="Node-1-1" enodeid="Circ_eNode-10" pointList="-140,-180,-124,-180" />
+
+<item itemtype="Connector" startpinid="Node-1-2" endpinid="Ground (0 V)-2-Gnd" enodeid="Circ_eNode-10" pointList="-124,-180,-124,-140" />
+
+<item itemtype="Connector" startpinid="Led-5-lPin" endpinid="Node-14-0" enodeid="enode-16" pointList="-212,-204,-228,-204" />
+
+<item itemtype="Connector" startpinid="Led-6-lPin" endpinid="Node-17-0" enodeid="enode-19" pointList="-212,-180,-220,-180" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-14-2" endpinid="p16f886-7-PORTB5" enodeid="enode-16" pointList="-228,-204,-236,-204" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Node-14-1" endpinid="Oscope-13-Pin0" enodeid="enode-16" pointList="-228,-204,-228,-356,-204,-356" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-17-2" endpinid="p16f886-7-PORTB2" enodeid="enode-19" pointList="-220,-180,-236,-180" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="Node-17-1" endpinid="Oscope-13-Pin1" enodeid="enode-19" pointList="-220,-180,-220,-324,-204,-324" />
+
+</circuit>

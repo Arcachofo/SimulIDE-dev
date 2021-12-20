@@ -1,0 +1,37 @@
+Compilation Report
+
+Compiler Version (YYYY-MM-DD): 0.98.<<>> 2021-<<>>-24 (Linux 64 bit) : Build 1005
+
+;********************************************************************************
+
+Compilation time:
+ (Compile time: 0 seconds)
+ (Assembly time: 0 seconds)
+ (Download time: 0 seconds)
+ (Total time: 0 seconds)
+
+;********************************************************************************
+
+Chip resource usage:
+Chip Model: MEGA328
+Program Memory: 26/16384 words (.16%)
+RAM: 0/2048 bytes (0.%)
+
+
+;********************************************************************************
+
+RAM Allocation
+;********************************************************************************
+
+Subroutines
+Main
+Code Size (lines): 9
+Compiled Size (words): 19
+Outgoing calls: INITSYS(1)
+
+INITSYS
+Code Size (lines): 837
+Compiled Size (words): 7
+
+;********************************************************************************
+

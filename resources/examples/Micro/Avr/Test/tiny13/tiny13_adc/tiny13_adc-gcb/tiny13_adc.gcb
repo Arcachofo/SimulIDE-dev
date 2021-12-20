@@ -1,0 +1,12 @@
+#chip tiny13a, 4.8
+
+
+DIM LDR AS BYTE
+
+do
+
+
+  LDR = READAD(ADC1)
+  wait 100 ms
+
+loop
