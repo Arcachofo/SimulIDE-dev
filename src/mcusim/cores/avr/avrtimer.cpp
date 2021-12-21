@@ -50,7 +50,7 @@ void AvrTimer::initialize()
     m_ovfMatch  = m_maxCount;
     m_ovfPeriod = m_ovfMatch + 1;
 
-    m_wgmMode = wgmNORMAL;
+    m_wgmMode = wgmNORM;
     m_WGM10 = 0;
     m_WGM32 = 0;
 }
@@ -124,7 +124,7 @@ void AvrTimer::configureOcUnits( bool wgm3 )
     if( m_OCB ) comActB = (ocAct_t)m_OCB->getMode();
     if( m_OCC ) comActC = (ocAct_t)m_OCC->getMode();
 
-    if( m_wgmMode == wgmPHASE )  // Phase Correct PWM
+    if( m_wgmMode == wgmPHAS )  // Phase Correct PWM
     {
         if( m_OCA ) { if((comActA == ocTOG) && wgm3 ) comActA = ocNON; }
         if( m_OCB ) { if( comActB == ocTOG ) comActB = ocNON; }
@@ -177,14 +177,21 @@ void AvrTimer8bit::updtWgm()
 
 void AvrTimer8bit::OCRXAchanged( uint8_t val )
 {
-    m_ovfMatch = 0xFF;
+    if( *m_ocrxaL == val ) return;
+
+    uint16_t  ovf = 0xFF;
     if( (m_wgmMode == wgmCTC)
-      ||((m_WGM32) && ((m_wgmMode == wgmPHASE)
+      ||((m_WGM32) && ((m_wgmMode == wgmPHAS)
                      ||(m_wgmMode == wgmFAST)) ) )
-    { m_ovfMatch = val; } // Top = OCRA
+    { ovf = val; } // Top = OCRA
+
+    if( m_ovfMatch == ovf ) return;
+    m_ovfMatch = ovf;
 
     if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
     else            m_ovfPeriod = m_ovfMatch+1;
+
+    sheduleEvents();
 }
 
 void AvrTimer8bit::setOCRXA( QString reg )
@@ -281,75 +288,33 @@ AvrTimer16bit::~AvrTimer16bit(){}
 void AvrTimer16bit::updtWgm()
 {
     uint8_t WGM = m_WGM32 + m_WGM10;
-    switch( WGM )
-    {
-        case 0: // Normal
-            m_wgmMode = wgmNORMAL;
-            m_ovfMatch = 0xFFFF;
-            break;
-        case 1: // PWM, Phase Correct, 8-bit
-            m_wgmMode = wgmPHASE;
-            m_ovfMatch = 0x00FF;
-            break;
-        case 2: // PWM, Phase Correct, 9-bit
-            m_wgmMode = wgmPHASE;
-            m_ovfMatch = 0x01FF;
-            break;
-        case 3: // PWM, Phase Correct, 10-bit
-            m_wgmMode = wgmPHASE;
-            m_ovfMatch = 0x03FF;
-            break;
-        case 4: // CTC
-            m_wgmMode = wgmCTC;
-            m_ovfMatch = OCRXA16;
-            break;
-        case 5: // Fast PWM, 8-bit
-            m_wgmMode = wgmFAST;
-            m_ovfMatch = 0x00FF;
-            break;
-        case 6: // Fast PWM, 9-bit
-            m_wgmMode = wgmFAST;
-            m_ovfMatch = 0x01FF;
-            break;
-        case 7: // Fast PWM, 10-bit
-            m_wgmMode = wgmFAST;
-            m_ovfMatch = 0x03FF;
-            break;
-        case 8: // PWM, Phase and Frequency Correct
-            m_wgmMode = wgmPHASE;
-            m_ovfMatch = ICRX16;
-            break;
-        case 9: // PWM, Phase and Frequency Correct
-            m_wgmMode = wgmPHASE;
-            m_ovfMatch = OCRXA16;
-            break;
-        case 10: // PWM, Phase Correct
-            m_wgmMode = wgmPHASE;
-            m_ovfMatch = ICRX16;
-            break;
-        case 11: // PWM, Phase Correct
-            m_wgmMode = wgmPHASE;
-            m_ovfMatch = OCRXA16;
-            break;
-        case 12: // CTC
-            m_wgmMode = wgmCTC;
-            m_ovfMatch = ICRX16;
-            break;
-        case 13: // (Reserved)
-            m_wgmMode = wgmNORMAL;
-            m_ovfMatch = 0xFFFF;
-            break;
-        case 14: // Fast PWM ICRX
-            m_wgmMode = wgmFAST;
-            m_ovfMatch = ICRX16;
-            break;
-        case 15: // Fast PWM OCRXA
-            m_wgmMode = wgmFAST;
-            m_ovfMatch = OCRXA16;
-            break;
+
+    wgmMode_t mode = wgmNORM;
+    uint16_t  ovf  = 0xFFFF;
+
+    switch( WGM ){
+        case 1:  mode = wgmPHAS; ovf = 0x00FF;  break; // PWM, Phase Correct, 8-bit
+        case 2:  mode = wgmPHAS; ovf = 0x01FF;  break; // PWM, Phase Correct, 9-bit
+        case 3:  mode = wgmPHAS; ovf = 0x03FF;  break; // PWM, Phase Correct, 10-bit
+        case 4:  mode = wgmCTC;  ovf = OCRXA16; break; // CTC
+        case 5:  mode = wgmFAST; ovf = 0x00FF;  break; // Fast PWM, 8-bit
+        case 6:  mode = wgmFAST; ovf = 0x01FF;  break; // Fast PWM, 9-bit
+        case 7:  mode = wgmFAST; ovf = 0x03FF;  break; // Fast PWM, 10-bit
+        case 8:  mode = wgmPHAS; ovf = ICRX16;  break; // PWM, Phase and Frequency Correct
+        case 9:  mode = wgmPHAS; ovf = OCRXA16; break; // PWM, Phase and Frequency Correct
+        case 10: mode = wgmPHAS; ovf = ICRX16;  break; // PWM, Phase Correct
+        case 11: mode = wgmPHAS; ovf = OCRXA16; break; // PWM, Phase Correct
+        case 12: mode = wgmCTC;  ovf = ICRX16;  break; // CTC
+        case 13:                                break; // (Reserved)
+        case 14: mode = wgmFAST; ovf = ICRX16;  break; // Fast PWM ICRX
+        case 15: mode = wgmFAST; ovf = OCRXA16; break; // Fast PWM OCRXA
     }
+    m_wgmMode = mode;
+    bool shedule = m_ovfMatch != ovf;
+    m_ovfMatch = ovf;
     bool wgm3 = (m_WGM32 & 1<<3)==0;
     configureOcUnits( wgm3 );
+    if( shedule ) sheduleEvents();
 }
 
 void AvrTimer16bit::setOCRXA( QString reg )

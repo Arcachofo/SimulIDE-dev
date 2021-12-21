@@ -87,14 +87,14 @@ void McuTimer::sheduleEvents()
         uint64_t circTime = Simulator::self()->circTime();
         m_scale = m_prescaler*m_mcu->simCycPI();
 
-        uint32_t ovfPeriod = m_ovfPeriod;
+        uint64_t ovfPeriod = m_ovfPeriod;
         if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount;
 
         uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
         m_ovfCycle = circTime + cycles;// In simulation time (ps)
 
-        //if( m_name == "TIMER1") /// DELETEME
-        //    m_running = m_running;
+        if( m_name == "TIMER1") /// DELETEME
+            m_running = m_running;
         Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( cycles, this );
         for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfMatch, m_countVal );

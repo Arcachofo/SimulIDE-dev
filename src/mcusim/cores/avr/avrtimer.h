@@ -23,8 +23,8 @@
 #include "mcutimer.h"
 
 enum wgmMode_t{
-    wgmNORMAL = 0,
-    wgmPHASE,
+    wgmNORM = 0,
+    wgmPHAS,
     wgmCTC,
     wgmFAST,
 };
