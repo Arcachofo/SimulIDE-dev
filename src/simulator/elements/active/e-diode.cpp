@@ -26,7 +26,7 @@
 #include "e-pin.h"
 #include "e-node.h"
 #include "simulator.h"
-#include "simuapi_apppath.h"
+#include "mainwindow.h"
 #include "utils.h"
 
 QHash<QString, diodeData_t> eDiode::m_diodes;
@@ -200,8 +200,7 @@ void eDiode::getModels() // Static
     m_leds.insert( "Custom", {0, 0, 0, 0} );
     m_leds.insert( "RGY Default", {0.0932, 3.73, 0, 0.042} );
 
-    QDir dataDir = SIMUAPI_AppPath::self()->RODataFolder();
-    QString modelsFile = dataDir.absoluteFilePath( "diodes.model" );
+    QString modelsFile = MainWindow::self()->getFilePath( "data/diodes.model" );
 
     QDomDocument domDoc = fileToDomDoc( modelsFile, "Diode::getModels");
     QDomNode node = domDoc.documentElement().firstChild();

@@ -27,7 +27,6 @@
 #include "simulator.h"
 #include "compiler.h"
 #include "utils.h"
-#include "simuapi_apppath.h"
 
 #include "gcbdebugger.h"
 #include "inodebugger.h"
@@ -263,9 +262,9 @@ BaseDebugger* EditorWindow::createDebugger( QString name, CodeEditor* ce , QStri
 
 void EditorWindow::loadCompilers()
 {
-    QString compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/compilers");
+    QString compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/compilers");
     loadCompilerSet( compilsPath, &m_compilers );
-    compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/assemblers");
+    compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/assemblers");
     loadCompilerSet( compilsPath, &m_assemblers );
 }
 

@@ -27,6 +27,7 @@
 #include <QDebug>
 #include <QPluginLoader>
 #include <QStyleFactory>
+#include <QProcessEnvironment>
 
 #include "mainwindow.h"
 #include "appiface.h"
@@ -36,7 +37,6 @@
 #include "circuitwidget.h"
 #include "filewidget.h"
 #include "utils.h"
-#include "simuapi_apppath.h"
 
 MainWindow* MainWindow::m_pSelf = NULL;
 
@@ -53,7 +53,14 @@ MainWindow::MainWindow()
     
     this->setWindowTitle( m_version );
 
-    QString userAddonPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("addons");
+    QString appImg = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
+    if( !appImg.isEmpty() ) m_filesDir.setPath( appImg.remove("simulide") );
+    else                    m_filesDir.setPath( QApplication::applicationDirPath() );
+    m_filesDir.cd("../share/simulide");
+    m_configDir.setPath( QStandardPaths::writableLocation( QStandardPaths::DataLocation ) );
+
+
+    QString userAddonPath = getConfigPath("addons");
     QDir pluginsDir( userAddonPath );
     if( !pluginsDir.exists() ) pluginsDir.mkpath( userAddonPath );
 
@@ -83,7 +90,7 @@ MainWindow::MainWindow()
     //readSettings();
     applyStyle();
 
-    QString backPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim1";
+    QString backPath = getConfigPath( "/backup.sim1" );
     if( QFile::exists( backPath ) )
     {
         QMessageBox msgBox;
@@ -270,11 +277,9 @@ QString MainWindow::getHelpFile( QString name )
     else locale = "";
 
     name= name.toLower().replace( " ", "" );
-    QString dfPath = SIMUAPI_AppPath::self()->availableDataFilePath( "help/"+locale+name+locale+".txt" );
+    QString dfPath = getFilePath("help/"+locale+name+locale+".txt");
 
-    if( dfPath == "" )
-        dfPath = SIMUAPI_AppPath::self()->availableDataFilePath( "help/"+name+".txt" );
-
+    if( dfPath == "" ) dfPath = getFilePath( "help/"+name+".txt" );
     if( dfPath != "" )
     {
         QFile file( dfPath );
@@ -304,12 +309,12 @@ void MainWindow::loadPlugins()
     loadPluginsAt( pluginsDir );
 
     // Load main Component Sets
-    QDir compSetDir = SIMUAPI_AppPath::self()->RODataFolder();
+    QDir compSetDir = m_filesDir.absoluteFilePath("data");
 
     if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
 
     // Load Addons
-    QString userPluginsPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("addons");
+    QString userPluginsPath = getConfigPath("addons");
     
     pluginsDir.setPath( userPluginsPath );
 
@@ -413,5 +418,8 @@ void MainWindow::applyStyle()
 }   }
 
 QSettings* MainWindow::settings() { return &m_settings; }
+
+QString MainWindow::getFilePath( QString file )   { return m_filesDir.absoluteFilePath( file ); }
+QString MainWindow::getConfigPath( QString file ) { return m_configDir.absoluteFilePath( file ); }
 
 #include  "moc_mainwindow.cpp"

@@ -38,7 +38,6 @@
 #include "mcumonitor.h"
 #include "memdata.h"
 #include "mcuuart.h"
-#include "simuapi_apppath.h"
 #include "utils.h"
 
 #include "stringprop.h"

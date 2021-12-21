@@ -21,15 +21,12 @@
 
 #include "chip.h"
 #include "circuitwidget.h"
+#include "mainwindow.h"
 #include "simulator.h"
 #include "connector.h"
 #include "circuit.h"
 #include "utils.h"
 #include "pin.h"
-#include "simuapi_apppath.h"
-
-//#include "stringprop.h"
-//#include "boolprop.h"
 
 QStringList Chip::m_subcTypes = {tr("None"),tr("Logic"),tr("Board"),tr("Shield")};
 
@@ -299,7 +296,7 @@ void Chip::setBackground( QString bck )
     else{
         m_BackPixmap = new QPixmap();
 
-        QString pixmapPath = SIMUAPI_AppPath::self()->availableDataFilePath("images");
+        QString pixmapPath = MainWindow::self()->getFilePath("data/images");
         pixmapPath += "/"+bck;
         m_BackPixmap->load( pixmapPath );
     }

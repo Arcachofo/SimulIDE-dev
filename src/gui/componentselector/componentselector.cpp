@@ -28,7 +28,6 @@
 
 #include "componentselector.h"
 #include "mainwindow.h"
-#include "simuapi_apppath.h"
 
 ComponentSelector* ComponentSelector::m_pSelf = NULL;
 
@@ -136,7 +135,7 @@ void ComponentSelector::loadXml( const QString &setFile )
                 {
                     QString icon = "";
                     if( reader.attributes().hasAttribute("icon") )
-                        icon =  SIMUAPI_AppPath::self()->availableDataFilePath("images")
+                        icon =  MainWindow::self()->getFilePath("data/images")
                                 + "/"+reader.attributes().value("icon").toString();
 
                     QString name = reader.attributes().value("name").toString();

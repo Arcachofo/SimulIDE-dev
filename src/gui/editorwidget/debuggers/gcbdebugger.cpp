@@ -17,11 +17,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QFileInfo>
+
 #include "gcbdebugger.h"
 #include "mcuinterface.h"
 #include "outpaneltext.h"
 #include "utils.h"
-#include "simuapi_apppath.h"
 
 GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane )
            : BaseDebugger( parent, outPane )

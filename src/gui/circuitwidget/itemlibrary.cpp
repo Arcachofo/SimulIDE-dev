@@ -19,7 +19,6 @@
  
 #include "itemlibrary.h"
 #include "circuit.h"
-#include "simuapi_apppath.h"
 #include "appiface.h"
 
 //BEGIN Item includes

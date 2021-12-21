@@ -22,6 +22,7 @@
 
 #include <QMainWindow>
 #include <QSettings>
+#include <QDir>
 
 class ComponentSelector;
 class CircuitWidget;
@@ -78,6 +79,9 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         int autoBck() { return m_autoBck; }
         void setAutoBck( int secs ) { m_autoBck = secs; }
 
+        QString getFilePath( QString file );
+        QString getConfigPath( QString file );
+
         QString getHelpFile( QString name );
         
         QTabWidget*  m_sidepanel;
@@ -106,6 +110,9 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         float m_fontScale;
         int m_autoBck;
         
+        QDir m_filesDir;
+        QDir m_configDir;
+
         QSettings m_settings;
         
         QString m_version;

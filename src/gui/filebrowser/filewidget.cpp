@@ -26,7 +26,6 @@
 
 #include "filewidget.h"
 #include "mainwindow.h"
-#include "simuapi_apppath.h"
 
 FileWidget* FileWidget::m_pSelf = 0l;
 
@@ -64,8 +63,8 @@ FileWidget::FileWidget( QWidget* parent )
     
     addEntry( "FileSystem", QDir::rootPath() );
     addEntry( "Home",       QDir::homePath() );
-    addEntry( "Examples",   SIMUAPI_AppPath::self()->ROExamFolder().absolutePath() );
-    addEntry( "Data",       SIMUAPI_AppPath::self()->RODataFolder().absolutePath() );
+    addEntry( "Examples",   MainWindow::self()->getFilePath("examples") );
+    addEntry( "Data",       MainWindow::self()->getFilePath("data") );
     addEntry( "Settings",   settingsDir );
     
     

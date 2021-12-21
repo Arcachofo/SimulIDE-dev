@@ -28,7 +28,6 @@
 #include "mainwindow.h"
 #include "circuitwidget.h"
 #include "connectorline.h"
-#include "simuapi_apppath.h"
 #include "node.h"
 #include "utils.h"
 #include "subcircuit.h"
@@ -62,8 +61,8 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView*  p
 
     new_connector = NULL;
     m_seqNumber   = 0;
-    m_backupPath = SIMUAPI_AppPath::self()->RWDataFolder().absolutePath()+"/backup.sim1";
 
+    m_backupPath = MainWindow::self()->getConfigPath("/backup.sim1");
     m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
     m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
     m_filePath   = qApp->applicationDirPath()+"/new.simu";

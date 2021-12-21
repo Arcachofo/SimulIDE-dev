@@ -27,7 +27,6 @@
 #include "circuitwidget.h"
 #include "circuit.h"
 #include "utils.h"
-#include "simuapi_apppath.h"
 #include "propdialog.h"
 
 #include "doubleprop.h"

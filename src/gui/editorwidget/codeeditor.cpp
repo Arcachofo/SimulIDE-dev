@@ -27,7 +27,6 @@
 #include "basedebugger.h"
 #include "mainwindow.h"
 #include "editorwindow.h"
-#include "simuapi_apppath.h"
 #include "utils.h"
 
 QStringList CodeEditor::m_picInstr = QString("addlw addwf andlw andwf banksel bcf bov bsf btfsc btg btfss clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf reset retfie retlw return rlf rrf sublw subwf swapf xorlw xorwf").split(" ");
@@ -281,8 +280,8 @@ void CodeEditor::updateScreen()
 
 void CodeEditor::readSettings() // Static
 {
-    m_sintaxPath  = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/sintax/");
-    m_compilsPath = SIMUAPI_AppPath::self()->availableDataFilePath("codeeditor/compilers/");
+    m_sintaxPath  = MainWindow::self()->getFilePath("data/codeeditor/sintax/");
+    m_compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/");
 
     m_font.setFamily("Ubuntu Mono");
     m_font.setWeight( 50 );

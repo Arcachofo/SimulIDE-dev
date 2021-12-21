@@ -31,7 +31,6 @@
 #include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "circuit.h"
-#include "simuapi_apppath.h"
 #include "utils.h"
 
 #include "stringprop.h"
@@ -79,7 +78,7 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     setAcceptHoverEvents( true );
     setZValue( -1 );
     
-    m_pkgeFile = SIMUAPI_AppPath::self()->RODataFolder().absolutePath();
+    m_pkgeFile = "";
     //if( m_lastPkg == "" ) m_lastPkg = m_pkgeFile;
 
     connect( CircuitWidget::self(), SIGNAL( saving() ),

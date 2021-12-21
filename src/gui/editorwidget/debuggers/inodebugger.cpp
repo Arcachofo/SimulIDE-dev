@@ -24,7 +24,6 @@
 #include "mainwindow.h"
 #include "circuit.h"
 #include "utils.h"
-#include "simuapi_apppath.h"
 
 static const char* InoDebugger_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Board"),
@@ -38,7 +37,7 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
 
     m_Ardboard = Uno;
     m_ArdboardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo";
-    m_buildPath = SIMUAPI_AppPath::self()->RWDataFolder().absoluteFilePath("codeeditor/buildIno");
+    m_buildPath = MainWindow::self()->getFilePath("data/codeeditor/buildIno");
 }
 InoDebugger::~InoDebugger() {}
 
