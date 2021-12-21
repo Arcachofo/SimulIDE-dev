@@ -118,8 +118,6 @@ int main(int argc, char *argv[])
 
     window.show();
     QTimer::singleShot( 100, &window, &MainWindow::readSettings ); // Some DE forze window geometry, so restore geometry later
-    //window.scroll( 0, 50 );
-    //window.readSettings();
 
     return app.exec();
 }

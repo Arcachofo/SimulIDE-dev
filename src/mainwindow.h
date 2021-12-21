@@ -21,7 +21,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QSettings>
 #include <QDir>
 
 class ComponentSelector;
@@ -32,7 +31,7 @@ class FileWidget;
 class QVBoxLayout;
 class QLineEdit;
 class QSplitter;
-class QDir;
+class QSettings;
 
 enum Langs {
     English = 0,
@@ -113,7 +112,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         QDir m_filesDir;
         QDir m_configDir;
 
-        QSettings m_settings;
+        QSettings* m_settings;
         
         QString m_version;
         QString m_styleSheet;

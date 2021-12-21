@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include <QApplication>
+#include <QSettings>
 #include <QStandardPaths>
 #include <QDesktopWidget>
 #include <QMessageBox>
@@ -42,8 +43,6 @@ MainWindow* MainWindow::m_pSelf = NULL;
 
 MainWindow::MainWindow()
           : QMainWindow()
-          , m_settings( QStandardPaths::writableLocation( QStandardPaths::DataLocation)
-                        +"/simulide.ini", QSettings::IniFormat, this )
 {
     setWindowIcon( QIcon(":/simulide.png") );
     m_pSelf   = this;
@@ -53,12 +52,13 @@ MainWindow::MainWindow()
     
     this->setWindowTitle( m_version );
 
-    QString appImg = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
-    if( !appImg.isEmpty() ) m_filesDir.setPath( appImg.remove("simulide") );
+    QString appImg = QProcessEnvironment::systemEnvironment().value( QStringLiteral("APPIMAGE") );
+    if( !appImg.isEmpty() ) m_filesDir.setPath( appImg.left( appImg.lastIndexOf("/") ) );
     else                    m_filesDir.setPath( QApplication::applicationDirPath() );
     m_filesDir.cd("../share/simulide");
     m_configDir.setPath( QStandardPaths::writableLocation( QStandardPaths::DataLocation ) );
 
+    m_settings = new QSettings( getConfigPath("simulide.ini"), QSettings::IniFormat, this );
 
     QString userAddonPath = getConfigPath("addons");
     QDir pluginsDir( userAddonPath );
@@ -75,9 +75,9 @@ MainWindow::MainWindow()
     QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-RI.ttf") );
 
     float scale = 1.0;
-    if( m_settings.contains( "fontScale" ) ) 
+    if( m_settings->contains( "fontScale" ) )
     {
-        scale = m_settings.value( "fontScale" ).toFloat();
+        scale = m_settings->value( "fontScale" ).toFloat();
     }else{
         float dpiX = qApp->desktop()->logicalDpiX();
         scale = dpiX/96.0;
@@ -119,29 +119,29 @@ void MainWindow::closeEvent( QCloseEvent *event )
 
 void MainWindow::readSettings()
 {
-    restoreGeometry(                 m_settings.value( "geometry" ).toByteArray());
-    restoreState(                    m_settings.value( "windowState" ).toByteArray());
-    m_Centralsplitter->restoreState( m_settings.value( "Centralsplitter/geometry" ).toByteArray());
-    CircuitWidget::self()->splitter()->restoreState( m_settings.value( "Circsplitter/geometry" ).toByteArray());
+    restoreGeometry(                 m_settings->value( "geometry" ).toByteArray());
+    restoreState(                    m_settings->value( "windowState" ).toByteArray());
+    m_Centralsplitter->restoreState( m_settings->value( "Centralsplitter/geometry" ).toByteArray());
+    CircuitWidget::self()->splitter()->restoreState( m_settings->value( "Circsplitter/geometry" ).toByteArray());
 
     m_autoBck = 15;
-    if( m_settings.contains( "autoBck" )) m_autoBck = m_settings.value( "autoBck" ).toInt();
+    if( m_settings->contains( "autoBck" )) m_autoBck = m_settings->value( "autoBck" ).toInt();
     Circuit::self()->setAutoBck( m_autoBck );
 }
 
 void MainWindow::writeSettings()
 {
-    m_settings.setValue( "autoBck",   m_autoBck );
-    m_settings.setValue( "fontScale", m_fontScale );
-    m_settings.setValue( "geometry",  saveGeometry() );
-    m_settings.setValue( "windowState", saveState() );
-    m_settings.setValue( "Centralsplitter/geometry", m_Centralsplitter->saveState() );
-    m_settings.setValue( "Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
+    m_settings->setValue( "autoBck",   m_autoBck );
+    m_settings->setValue( "fontScale", m_fontScale );
+    m_settings->setValue( "geometry",  saveGeometry() );
+    m_settings->setValue( "windowState", saveState() );
+    m_settings->setValue( "Centralsplitter/geometry", m_Centralsplitter->saveState() );
+    m_settings->setValue( "Circsplitter/geometry", CircuitWidget::self()->splitter()->saveState() );
     
     QList<QTreeWidgetItem*> list = m_components->findItems( "", Qt::MatchStartsWith | Qt::MatchRecursive );
 
     for( QTreeWidgetItem* item : list  )
-        m_settings.setValue( item->text(0)+"/collapsed", !item->isExpanded() );
+        m_settings->setValue( item->text(0)+"/collapsed", !item->isExpanded() );
 
     FileWidget::self()->writeSettings();
 }
@@ -412,12 +412,10 @@ void MainWindow::applyStyle()
         m_styleSheet = QLatin1String(file.readAll());
         qApp->setStyleSheet( m_styleSheet );
     }
-    else
-    {
-        QApplication::setStyle( QStyleFactory::create("Fusion") );
-}   }
+    else QApplication::setStyle( QStyleFactory::create("Fusion") );
+}
 
-QSettings* MainWindow::settings() { return &m_settings; }
+QSettings* MainWindow::settings() { return m_settings; }
 
 QString MainWindow::getFilePath( QString file )   { return m_filesDir.absoluteFilePath( file ); }
 QString MainWindow::getConfigPath( QString file ) { return m_configDir.absoluteFilePath( file ); }

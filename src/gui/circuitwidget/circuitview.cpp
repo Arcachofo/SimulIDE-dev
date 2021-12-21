@@ -20,6 +20,7 @@
 #include <QSvgGenerator>
 #include <QMimeData>
 #include <QFileDialog>
+#include <QSettings>
 
 #include "circuitview.h"
 #include "circuitwidget.h"

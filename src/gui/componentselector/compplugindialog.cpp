@@ -19,6 +19,7 @@
  
 #include <QDir>
 #include <QDebug>
+#include <QSettings>
 #include <QCloseEvent>
 
 #include "compplugindialog.h"

@@ -29,10 +29,10 @@
         <interrupt name="T2_MATCH" />
     </timer>
     
-    <ccpunit name="CCP1_00" pin="PORTC2" ccpreg="CCPR1L,CCPR1H" configregsA="CCP1CON">
+    <ccpunit name="CCP1" type="00" pin="PORTC2" ccpreg="CCPR1L,CCPR1H" configregsA="CCP1CON">
         <interrupt name="CCP1" />
     </ccpunit>
-    <ccpunit name="CCP2_00"  pin="PORTC1" ccpreg="CCPR2L,CCPR2H" configregsA="CCP2CON">
+    <ccpunit name="CCP2" type="00" pin="PORTC1" ccpreg="CCPR2L,CCPR2H" configregsA="CCP2CON">
         <interrupt name="CCP2" />
     </ccpunit>
     

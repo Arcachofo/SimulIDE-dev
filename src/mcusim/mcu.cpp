@@ -23,6 +23,7 @@
 #include <QSignalMapper>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSettings>
 
 #include "mcu.h"
 #include "mcuport.h"

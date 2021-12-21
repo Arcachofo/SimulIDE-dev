@@ -1,1 +1,0 @@
-Warning: Direction of pin PORTB.0 cannot be set automatically

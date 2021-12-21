@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include <QApplication>
+#include <QSettings>
 
 #include "inodebugger.h"
 #include "outpaneltext.h"

@@ -22,6 +22,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QMenu>
+#include <QSettings>
 #include <QContextMenuEvent>
 
 #include "filewidget.h"

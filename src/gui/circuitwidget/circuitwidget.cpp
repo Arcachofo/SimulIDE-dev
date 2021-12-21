@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QDesktopServices>
+#include <QSettings>
 
 #include "circuitwidget.h"
 #include "mainwindow.h"

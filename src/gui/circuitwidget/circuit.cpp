@@ -21,6 +21,7 @@
 #include <QFileDialog>
 #include <QClipboard>
 #include <QMimeData>
+#include <QSettings>
 
 #include "circuit.h"
 #include "simulator.h"

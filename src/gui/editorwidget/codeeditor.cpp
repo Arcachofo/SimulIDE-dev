@@ -19,6 +19,7 @@
 
 #include <QPainter>
 #include <QTextDocumentFragment>
+#include <QSettings>
 
 #include "codeeditor.h"
 #include "outpaneltext.h"

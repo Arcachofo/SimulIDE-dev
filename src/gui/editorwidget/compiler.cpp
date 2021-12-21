@@ -19,6 +19,7 @@
 
 #include <QDomDocument>
 #include <QFileDialog>
+#include <QSettings>
 #include <QDir>
 
 #include "compiler.h"

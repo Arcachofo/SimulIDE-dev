@@ -27,6 +27,7 @@
 #include <QGridLayout>
 #include <QSplitter>
 #include <QToolButton>
+#include <QSettings>
 
 #include "editorwidget.h"
 #include "findreplace.h"

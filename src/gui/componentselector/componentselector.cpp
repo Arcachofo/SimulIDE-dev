@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QXmlStreamReader>
 #include <QMimeData>
+#include <QSettings>
 #include <QDebug>
 #include <QDrag>
 #include <QMenu>
