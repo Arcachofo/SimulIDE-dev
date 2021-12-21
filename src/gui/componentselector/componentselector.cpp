@@ -135,18 +135,13 @@ void ComponentSelector::loadXml( const QString &setFile )
                 if(reader.name() == "item")
                 {
                     QString icon = "";
-
                     if( reader.attributes().hasAttribute("icon") )
-                    {
-                        QDir compSetDir( qApp->applicationDirPath() );
-                        compSetDir.cd( "../share/simulide/data/images" );
-                        icon = compSetDir.absoluteFilePath(
-                                   reader.attributes().value("icon").toString() );
-                    }
+                        icon =  SIMUAPI_AppPath::self()->availableDataFilePath("images")
+                                + "/"+reader.attributes().value("icon").toString();
+
                     QString name = reader.attributes().value("name").toString();
 
                     m_xmlFileList[ name ] = setFile;   // Save xml File used to create this item
-                    //qDebug()<<"ComponentSelector::loadXml" <<name<< category<< icon<< type<<setFile;
                     if( reader.attributes().hasAttribute("info") )
                         name += "???"+reader.attributes().value("info").toString();
 

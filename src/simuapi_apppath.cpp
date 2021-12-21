@@ -19,79 +19,56 @@
 
 #include <qapplication.h>
 #include <QStandardPaths>
+#include <QProcessEnvironment>
+
 #include "simuapi_apppath.h"
 
 SIMUAPI_AppPath* SIMUAPI_AppPath::m_pSelf = 0l;
 
 SIMUAPI_AppPath *SIMUAPI_AppPath::self()
 {
-    if (!m_pSelf) {
-        m_pSelf = new SIMUAPI_AppPath();
-    }
+    if( !m_pSelf ) m_pSelf = new SIMUAPI_AppPath();
     return m_pSelf;
 }
 
 SIMUAPI_AppPath::SIMUAPI_AppPath()
-               : m_ROExamFolder( qApp->applicationDirPath() )
-               , m_RODataFolder( qApp->applicationDirPath() )
+               : m_ROExamFolder()
+               , m_RODataFolder()
                , m_RWDataFolder( QStandardPaths::writableLocation( QStandardPaths::DataLocation ))
 {
+    QString appImagePath = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
+    if( !appImagePath.isEmpty() )
+    {
+        appImagePath.remove("/simulide.AppImage");
+        m_ROExamFolder.setPath( appImagePath );
+        m_RODataFolder.setPath( appImagePath );
+    }else{
+        m_ROExamFolder.setPath( qApp->applicationDirPath() );
+        m_RODataFolder.setPath( qApp->applicationDirPath() );
+    }
     m_ROExamFolder.cd( "../share/simulide/examples" );
     m_RODataFolder.cd( "../share/simulide/data" );
-    // m_RWDataFolder.cd( "data" );
-    /// qDebug() << "AppImage" << getenv( "APPIMAGE" );
 }
 
-QDir SIMUAPI_AppPath::RWDataFolder() const
-{
-    return m_RWDataFolder;
-}
-
-void SIMUAPI_AppPath::setRWDataFolder( const QDir &RWDataFolder )
-{
-    m_RWDataFolder = RWDataFolder;
-}
-
-QDir SIMUAPI_AppPath::ROExamFolder() const
-{
-    return m_ROExamFolder;
-}
-
-void SIMUAPI_AppPath::setROExamFolder( const QDir &ROExamFolder )
-{
-    m_ROExamFolder = ROExamFolder;
-}
-
-QDir SIMUAPI_AppPath::RODataFolder() const
-{
-    return m_RODataFolder;
-}
-
-void SIMUAPI_AppPath::setRODataFolder( const QDir &RODataFolder )
-{
-    m_RODataFolder = RODataFolder;
-}
+QDir SIMUAPI_AppPath::RWDataFolder() const { return m_RWDataFolder; }
+QDir SIMUAPI_AppPath::ROExamFolder() const { return m_ROExamFolder; }
+QDir SIMUAPI_AppPath::RODataFolder() const { return m_RODataFolder; }
 
 QString SIMUAPI_AppPath::availableDataFilePath( QString fileRelPath )
 {
     QString filePath = m_RWDataFolder.absoluteFilePath( fileRelPath );
-    
     if( QFile::exists( filePath )) return filePath;
     
     filePath = m_RODataFolder.absoluteFilePath( fileRelPath );
-    
-    if( QFile::exists( filePath )) return filePath;
+    if( QFile::exists( filePath ) ) return filePath;
     
     return "";
 }
 
 QString SIMUAPI_AppPath::availableDataDirPath( QString dirRelPath )
 {
-    if( m_RWDataFolder.exists( dirRelPath ))
-        return m_RWDataFolder.absoluteFilePath(dirRelPath);
-        
-    if( m_RODataFolder.exists( dirRelPath ))
-        return m_RODataFolder.absoluteFilePath(dirRelPath);
+    if( m_RWDataFolder.exists( dirRelPath )) return m_RWDataFolder.absoluteFilePath(dirRelPath);
+    if( m_RODataFolder.exists( dirRelPath )) return m_RODataFolder.absoluteFilePath(dirRelPath);
         
     return "";
 }

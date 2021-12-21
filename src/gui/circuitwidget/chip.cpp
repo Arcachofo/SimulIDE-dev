@@ -292,10 +292,9 @@ void Chip::setBackground( QString bck )
 {
     m_background = bck;
     if( bck == "" ){
-        if( m_BackPixmap )
-        {
+        if( m_BackPixmap ){
             delete m_BackPixmap;
-            m_BackPixmap = 0l;
+            m_BackPixmap = NULL;
     }   }
     else{
         m_BackPixmap = new QPixmap();

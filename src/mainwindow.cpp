@@ -58,8 +58,8 @@ MainWindow::MainWindow()
     if( !pluginsDir.exists() ) pluginsDir.mkpath( userAddonPath );
 
     // Font --------------------------------------
-    QDir fontDir = SIMUAPI_AppPath::self()->RODataFolder();
-    fontDir.cd( "../fonts" );
+    QDir fontDir( qApp->applicationDirPath() );
+    fontDir.cd( "../share/simulide/fonts" );
 
     QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("Ubuntu-B.ttf") );
     QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-B.ttf") );

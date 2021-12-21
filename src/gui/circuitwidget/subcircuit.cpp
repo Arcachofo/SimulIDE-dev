@@ -203,20 +203,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     else if( name == "objectName" ) uid   = prop.toString();
                     else if( name == "label"      ) label = prop.toString();
                     else if( name == "id"         ) label = prop.toString();
-                    /*else if( name == "Name" &&  // Old TODELTE
-                           ( type == "Subcircuit"
-                          || type == "MCU"
-                          || type == "PIC" )) subName = prop.toString()+"-"; // Chips*/
                     else properties << name << prop ;
             }   }
-            /*if( uid.contains("-") ) // Old TODELTE
-            {
-                QStringList list = uid.split("-");
-                uid = list.takeLast();
-                if( ( type == "Subcircuit" )
-                  ||( type == "MCU" )
-                  ||( type == "PIC" )) subName = list.takeLast()+"-";
-            }*/
             newUid = numId+"_"+uid;
 
             if( type == "Connector" )
@@ -313,25 +301,6 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 }   }
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
 }   }   }   }
-
-/*Pin* SubCircuit::getConPin( QString pinId )
-{
-    Pin* pin = NULL;
-    QString compName;
-    if( pinId.contains("Seg"))
-    {
-        compName = pinId;
-        compName = compName.remove( compName.lastIndexOf("-"), 100 );
-    }
-    else                       compName = Circuit::self()->getCompId( pinId );
-    QString newName  = Circuit::self()->m_idMap.value( compName );
-
-    if( !newName.isEmpty() ) pinId.replace( compName, newName );
-    pin = Circuit::self()->m_pinMap[pinId];
-    if( pin && pin->isConnected() ) pin = NULL;
-
-    return pin;
-}*/
 
 void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
 {
