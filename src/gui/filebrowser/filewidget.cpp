@@ -31,31 +31,34 @@
 FileWidget* FileWidget::m_pSelf = 0l;
 
 FileWidget::FileWidget( QWidget* parent )
-          : QWidget( parent )
+          : QSplitter( parent )
 {
     m_pSelf = this;
-    
     m_blocked = false;
     
-    QVBoxLayout* vLayout = new QVBoxLayout( this );
+    this->setOrientation( Qt::Vertical );
     
     m_bookmarks = new QListWidget( this );
-    vLayout->addWidget( m_bookmarks );
+    this->addWidget( m_bookmarks );
     
-    QHBoxLayout* hLayout = new QHBoxLayout();
-    vLayout->addLayout( hLayout );
-    
+    QWidget* pathWidget = new QWidget( this );
+    QHBoxLayout* hLayout = new QHBoxLayout( pathWidget );
+    hLayout->setContentsMargins(0,0,0,0);
     m_cdUpButton = new QPushButton( this );
     m_cdUpButton->setIcon( QIcon(":/cdup.png") );
     m_cdUpButton->setToolTip( tr("cd Up") );
     hLayout->addWidget( m_cdUpButton );
-    
     m_path = new QLineEdit( this );
     hLayout->addWidget( m_path );
+    //vLayout->addLayout( hLayout );
+    pathWidget->setFixedHeight( 24 );
+    this->addWidget( pathWidget );
     
     m_fileBrowser = new FileBrowser( this );
     m_fileBrowser->setPath( QDir::rootPath() );
-    vLayout->addWidget( m_fileBrowser );
+    this->addWidget( m_fileBrowser );
+
+    this->setSizes( {120, 24, 500} );
     
     QSettings* settings = MainWindow::self()->settings();
     QDir setDir( settings->fileName() );
@@ -92,21 +95,16 @@ FileWidget::~FileWidget(){}
 void FileWidget::writeSettings()
 {
     QSettings* settings = MainWindow::self()->settings();
-    
     settings->beginWriteArray("bookmarks");
     
     for( int i=0; i<m_bookmarkList.size(); i++ ) 
     {
         settings->setArrayIndex(i);
-        settings->setValue("path", m_bookmarkList.at(i));
+        settings->setValue("path", m_bookmarkList.at(i) );
     }
     settings->endArray(); 
     
-    for( int i=0; i<m_bookmarks->count(); i++ )
-    {
-        QListWidgetItem* item =  m_bookmarks->takeItem( i );
-        delete item;
-    }
+    while( m_bookmarks->count() ) delete m_bookmarks->takeItem( 0 );
 }
 
 void FileWidget::addEntry( QString name, QString path )
@@ -119,19 +117,14 @@ void FileWidget::addEntry( QString name, QString path )
     font.setWeight(70);
     item->setFont( font );
     item->setIcon( QIcon(":/open.png") );
-    
-    resizeToItems();
 }
 
 void FileWidget::addBookMark( QString path )
 {
     QDir dir = QDir( path );
-    
     QString dirPath = dir.absolutePath();
-    QString name    = dir.dirName();
-    
-    name += " ("+dirPath+")";
-    
+    QString name    = dir.dirName()+" ("+dirPath+")";
+
     if( !m_bookmarkList.contains( dirPath ) )
     {
         m_bookmarkList.append( dirPath );
@@ -143,8 +136,6 @@ void FileWidget::remBookMark()
     QListWidgetItem* item =  m_bookmarks->takeItem( m_bookmarks->currentRow() );
     m_bookmarkList.removeOne( item->data( 4 ).toString() );
     delete item;
-    
-    resizeToItems();
 }
 
 void FileWidget::itemClicked( QListWidgetItem* item  )
@@ -168,12 +159,6 @@ void FileWidget::pathChanged()
     m_fileBrowser->setPath( path );
 }
 
-void FileWidget::resizeToItems()
-{
-    int size = m_bookmarks->count()*22+17;
-    m_bookmarks->setFixedHeight( size );
-}
-
 void FileWidget::contextMenuEvent( QContextMenuEvent* event )
 {
     QListWidgetItem* item =  m_bookmarks->currentItem();
@@ -181,7 +166,6 @@ void FileWidget::contextMenuEvent( QContextMenuEvent* event )
     if( m_bookmarkList.contains( item->data( 4 ).toString() ) )
     {
         QPoint eventPos = event->globalPos();
-
         QMenu menu;
 
         QAction* remBookMarkAction = menu.addAction(QIcon(":/remove.png"),tr("Remove Bookmark"));

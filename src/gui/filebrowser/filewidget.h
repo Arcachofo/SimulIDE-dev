@@ -20,13 +20,15 @@
 #ifndef FILEWIDGET_H
 #define FILEWIDGET_H
 
+#include <QSplitter>
+
 #include "filebrowser.h"
 
 class QListWidget;
 class QPushButton;
 class QListWidgetItem;
 
-class MAINMODULE_EXPORT FileWidget : public QWidget
+class MAINMODULE_EXPORT FileWidget : public QSplitter
 {
     Q_OBJECT
     
@@ -53,7 +55,6 @@ class MAINMODULE_EXPORT FileWidget : public QWidget
     private:
  static FileWidget* m_pSelf;
 
-        void resizeToItems();
         void addEntry( QString name, QString path );
 
         QStringList m_bookmarkList;
