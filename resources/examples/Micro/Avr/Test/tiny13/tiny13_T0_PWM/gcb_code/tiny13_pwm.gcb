@@ -1,0 +1,11 @@
+
+#chip tiny13, 1.2
+ 
+Dir PORTB.0 out
+
+TCCR0A = 0b10000011
+TCCR0B = 0b00000010
+OCR0A = 100
+
+Do
+Loop

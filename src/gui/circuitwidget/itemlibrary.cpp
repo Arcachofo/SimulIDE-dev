@@ -259,6 +259,7 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( tr("Keys"),tr("Logic"), "ic2.png","", NULL ) );
     addItem( new LibraryItem( tr("Ternary"),tr("Logic"), "ic2.png","", NULL ) );
     addItem( new LibraryItem( tr("Tools"),tr("Logic"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( tr("Led display"),tr("Logic"), "ic2.png","", NULL ) );
     addItem( SubCircuit::libraryItem() );
     // Other
     addItem( Image::libraryItem() );

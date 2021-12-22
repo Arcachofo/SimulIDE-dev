@@ -884,6 +884,14 @@ p, li { white-space: pre-wrap; }
         <source>Warning: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Device definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found Family definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Battery</name>
@@ -1518,6 +1526,10 @@ Wijzigingen opslaan?
         <source>Reload Document</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Compiler definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -1564,6 +1576,10 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Set proper ToolChain Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1937,11 +1953,11 @@ niet instellen als DomDucument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Temperature increment</source>
+        <source>Temp. increment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Humidity increment</source>
+        <source>Humid. increment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2578,81 +2594,144 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
+    <name>FindReplace</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regular Expression.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace + Find </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found %1 occurrence(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s)</source>
+        <translation type="unfinished">%1 vervangingen</translation>
+    </message>
+</context>
+<context>
     <name>FindReplaceDialog</name>
     <message>
         <source>Find/Replace</source>
-        <translation>Zoek/Vervang</translation>
+        <translation type="vanished">Zoek/Vervang</translation>
     </message>
 </context>
 <context>
     <name>FindReplaceForm</name>
     <message>
         <source>no match found</source>
-        <translation>Geen overeenkomst gevonden</translation>
+        <translation type="vanished">Geen overeenkomst gevonden</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s)</source>
-        <translation>%1 vervangingen</translation>
+        <translation type="vanished">%1 vervangingen</translation>
     </message>
     <message>
         <source>Find/Replace</source>
-        <translation>Zoek/Vervang</translation>
+        <translation type="vanished">Zoek/Vervang</translation>
     </message>
     <message>
         <source>&amp;Find:</source>
-        <translation>Vind (&amp;F):</translation>
+        <translation type="vanished">Vind (&amp;F):</translation>
     </message>
     <message>
         <source>R&amp;eplace with:</source>
-        <translation>Ve&amp;rvang met:</translation>
+        <translation type="vanished">Ve&amp;rvang met:</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation type="vanished">Fout</translation>
     </message>
     <message>
         <source>D&amp;irection</source>
-        <translation>R&amp;ichting</translation>
+        <translation type="vanished">R&amp;ichting</translation>
     </message>
     <message>
         <source>&amp;Down</source>
-        <translation>Omlaag (&amp;D)</translation>
+        <translation type="vanished">Omlaag (&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Up</source>
-        <translation>Omhoog (&amp;U)</translation>
+        <translation type="vanished">Omhoog (&amp;U)</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation>&amp;Opties</translation>
+        <translation type="vanished">&amp;Opties</translation>
     </message>
     <message>
         <source>&amp;Case sensitive</source>
-        <translation>Hoofdlettergevoelig (&amp;C)</translation>
+        <translation type="vanished">Hoofdlettergevoelig (&amp;C)</translation>
     </message>
     <message>
         <source>&amp;Whole words only</source>
-        <translation>Alleen hele &amp;woorden</translation>
+        <translation type="vanished">Alleen hele &amp;woorden</translation>
     </message>
     <message>
         <source>R&amp;egular Expression</source>
-        <translation>R&amp;eguliere expressie</translation>
+        <translation type="vanished">R&amp;eguliere expressie</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation>Vinden (&amp;F)</translation>
+        <translation type="vanished">Vinden (&amp;F)</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>Sluiten (&amp;C)</translation>
+        <translation type="vanished">Sluiten (&amp;C)</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation>Ve&amp;rvangen</translation>
+        <translation type="vanished">Ve&amp;rvangen</translation>
     </message>
     <message>
         <source>Replace &amp;All</source>
-        <translation>Vervang &amp;Alles</translation>
+        <translation type="vanished">Vervang &amp;Alles</translation>
     </message>
 </context>
 <context>
@@ -3004,6 +3083,13 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InoDebugger</name>
+    <message>
+        <source>Found Board definition in file: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3808,10 +3894,6 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load EEPROM data from file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3833,6 +3915,10 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload hex at Simulation Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -784,6 +784,14 @@ p, li { white-space: pre-wrap; }
         <source>Warning: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Device definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found Family definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Battery</name>
@@ -1393,6 +1401,10 @@ Quiere guardar los cambios?</translation>
         <source>Reload Document</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Compiler definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -1439,6 +1451,10 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>Set proper ToolChain Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1812,11 +1828,11 @@ a DomDocument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Temperature increment</source>
+        <source>Temp. increment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Humidity increment</source>
+        <source>Humid. increment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2439,81 +2455,140 @@ Quiere guardar los cambios?</translation>
     </message>
 </context>
 <context>
+    <name>FindReplace</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regular Expression.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace + Find </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found %1 occurrence(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s)</source>
+        <translation type="unfinished">Reeplazadas %1 coincidencia(s)</translation>
+    </message>
+</context>
+<context>
     <name>FindReplaceDialog</name>
     <message>
         <source>Find/Replace</source>
-        <translation>Encontrar/Reemplazar</translation>
+        <translation type="vanished">Encontrar/Reemplazar</translation>
     </message>
 </context>
 <context>
     <name>FindReplaceForm</name>
     <message>
         <source>no match found</source>
-        <translation>No encontrado</translation>
+        <translation type="vanished">No encontrado</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s)</source>
-        <translation>Reeplazadas %1 coincidencia(s)</translation>
+        <translation type="vanished">Reeplazadas %1 coincidencia(s)</translation>
     </message>
     <message>
         <source>&amp;Find:</source>
-        <translation>Encontar:</translation>
+        <translation type="vanished">Encontar:</translation>
     </message>
     <message>
         <source>R&amp;eplace with:</source>
-        <translation>Remplazar con:</translation>
+        <translation type="vanished">Remplazar con:</translation>
     </message>
     <message>
         <source>Find/Replace</source>
-        <translation>Encontrar/Reemplazar</translation>
+        <translation type="vanished">Encontrar/Reemplazar</translation>
     </message>
     <message>
         <source>D&amp;irection</source>
-        <translation>Direccion</translation>
+        <translation type="vanished">Direccion</translation>
     </message>
     <message>
         <source>&amp;Down</source>
-        <translation>Abajo</translation>
+        <translation type="vanished">Abajo</translation>
     </message>
     <message>
         <source>&amp;Up</source>
-        <translation>Arriba</translation>
+        <translation type="vanished">Arriba</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation>Opciones</translation>
+        <translation type="vanished">Opciones</translation>
     </message>
     <message>
         <source>&amp;Case sensitive</source>
-        <translation>Mayusculas/minusculas</translation>
+        <translation type="vanished">Mayusculas/minusculas</translation>
     </message>
     <message>
         <source>&amp;Whole words only</source>
-        <translation>Solo Palabras enteras</translation>
+        <translation type="vanished">Solo Palabras enteras</translation>
     </message>
     <message>
         <source>R&amp;egular Expression</source>
-        <translation>Expresion Regular</translation>
+        <translation type="vanished">Expresion Regular</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation>Encontar</translation>
+        <translation type="vanished">Encontar</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>Cerrar</translation>
+        <translation type="vanished">Cerrar</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation>Remplazar</translation>
+        <translation type="vanished">Remplazar</translation>
     </message>
     <message>
         <source>Replace &amp;All</source>
-        <translation>Reemplazar todos</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation></translation>
+        <translation type="vanished">Reemplazar todos</translation>
     </message>
 </context>
 <context>
@@ -2869,6 +2944,13 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InoDebugger</name>
+    <message>
+        <source>Found Board definition in file: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3673,10 +3755,6 @@ Quiere guardar los cambios?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load EEPROM data from file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3698,6 +3776,10 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload hex at Simulation Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

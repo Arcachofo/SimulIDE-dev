@@ -1,0 +1,17 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    <tag>QT_TRANSLATE_NOOP("xmlfile","led_display")</tag>
+    
+    <itemset category="Led display" type="Subcircuit" icon="subc.png" >
+        
+    <item name="2x4bit_led_ca" folder="led_display" info=" 2x4-Bit Led digital Tube module (74hc164, com. anode, dynamic)" />
+    <item name="2x4bit_led_cc" folder="led_display" info=" 2x4-Bit Led digital Tube module (74hc164, com. cathode, dynamic)" />
+    <item name="4bit_led_ca"   folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. anode, dynamic)" />
+    <item name="8bit_led_ca"   folder="led_display" info=" 8-Bit Led digital Tube module (74hc595, com. anode), dynamic" />
+    <item name="4bit_led_cc"   folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" />
+    <item name="8bit_led_cc"   folder="led_display" info=" 8-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" />
+    
+    </itemset>
+
+</itemlib>

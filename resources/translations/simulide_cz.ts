@@ -882,6 +882,14 @@ p, li { white-space: pre-wrap; }
         <source>Warning: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Device definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found Family definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Battery</name>
@@ -1516,6 +1524,10 @@ Chcete uložit změny?
         <source>Reload Document</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Compiler definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -1562,6 +1574,10 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Set proper ToolChain Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1935,11 +1951,11 @@ na DomDocument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Temperature increment</source>
+        <source>Temp. increment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Humidity increment</source>
+        <source>Humid. increment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2580,81 +2596,144 @@ Chcete uložit změny?
     </message>
 </context>
 <context>
+    <name>FindReplace</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regular Expression.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace + Find </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found %1 occurrence(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s)</source>
+        <translation type="unfinished">Nahrazeno %1 výskytů</translation>
+    </message>
+</context>
+<context>
     <name>FindReplaceDialog</name>
     <message>
         <source>Find/Replace</source>
-        <translation>Najít/Nahradit</translation>
+        <translation type="vanished">Najít/Nahradit</translation>
     </message>
 </context>
 <context>
     <name>FindReplaceForm</name>
     <message>
         <source>no match found</source>
-        <translation>Nenalezeno</translation>
+        <translation type="vanished">Nenalezeno</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s)</source>
-        <translation>Nahrazeno %1 výskytů</translation>
+        <translation type="vanished">Nahrazeno %1 výskytů</translation>
     </message>
     <message>
         <source>Find/Replace</source>
-        <translation>Najít/Nahradit</translation>
+        <translation type="vanished">Najít/Nahradit</translation>
     </message>
     <message>
         <source>&amp;Find:</source>
-        <translation>&amp;Najít:</translation>
+        <translation type="vanished">&amp;Najít:</translation>
     </message>
     <message>
         <source>R&amp;eplace with:</source>
-        <translation>N&amp;ahradit:</translation>
+        <translation type="vanished">N&amp;ahradit:</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Chyba</translation>
+        <translation type="vanished">Chyba</translation>
     </message>
     <message>
         <source>D&amp;irection</source>
-        <translation>&amp;Směr</translation>
+        <translation type="vanished">&amp;Směr</translation>
     </message>
     <message>
         <source>&amp;Down</source>
-        <translation>&amp;Dolů</translation>
+        <translation type="vanished">&amp;Dolů</translation>
     </message>
     <message>
         <source>&amp;Up</source>
-        <translation>&amp;Nahoru</translation>
+        <translation type="vanished">&amp;Nahoru</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation>&amp;Volby</translation>
+        <translation type="vanished">&amp;Volby</translation>
     </message>
     <message>
         <source>&amp;Case sensitive</source>
-        <translation>&amp;Rozlišovat velikost písmen</translation>
+        <translation type="vanished">&amp;Rozlišovat velikost písmen</translation>
     </message>
     <message>
         <source>&amp;Whole words only</source>
-        <translation>&amp;Pouze celá slova</translation>
+        <translation type="vanished">&amp;Pouze celá slova</translation>
     </message>
     <message>
         <source>R&amp;egular Expression</source>
-        <translation>R&amp;egulární výraz</translation>
+        <translation type="vanished">R&amp;egulární výraz</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation>&amp;Najít</translation>
+        <translation type="vanished">&amp;Najít</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Zavřít</translation>
+        <translation type="vanished">&amp;Zavřít</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation>&amp;Nahradit</translation>
+        <translation type="vanished">&amp;Nahradit</translation>
     </message>
     <message>
         <source>Replace &amp;All</source>
-        <translation>Nahradit &amp;vše</translation>
+        <translation type="vanished">Nahradit &amp;vše</translation>
     </message>
 </context>
 <context>
@@ -3010,6 +3089,13 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InoDebugger</name>
+    <message>
+        <source>Found Board definition in file: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3814,10 +3900,6 @@ Chcete uložit změny?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load EEPROM data from file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3839,6 +3921,10 @@ Chcete uložit změny?
     </message>
     <message>
         <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload hex at Simulation Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

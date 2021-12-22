@@ -828,6 +828,14 @@ p, li { white-space: pre-wrap; }
         <source>Warning: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Device definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found Family definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Battery</name>
@@ -1493,6 +1501,10 @@ Değişiklikler kaydedilsin mi?
         <source>Reload Document</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Compiler definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CompilDialog</name>
@@ -1574,6 +1586,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Set proper ToolChain Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1958,11 +1974,11 @@ to DomDocument</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Temperature increment</source>
+        <source>Temp. increment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Humidity increment</source>
+        <source>Humid. increment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2648,82 +2664,145 @@ Değişiklikler kaydedilsin mi?
     </message>
 </context>
 <context>
+    <name>FindReplace</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished">Diyalog</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regular Expression.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace + Find </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found %1 occurrence(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s)</source>
+        <translation type="unfinished">%1 eşleşme değiştirildi</translation>
+    </message>
+</context>
+<context>
     <name>FindReplaceDialog</name>
     <message>
         <source>Find/Replace</source>
-        <translation>Bul/Değiştir</translation>
+        <translation type="vanished">Bul/Değiştir</translation>
     </message>
 </context>
 <context>
     <name>FindReplaceForm</name>
     <message>
         <source>no match found</source>
-        <translation>Eşleşme bulunamadı</translation>
+        <translation type="vanished">Eşleşme bulunamadı</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s)</source>
-        <translation>%1 eşleşme değiştirildi</translation>
+        <translation type="vanished">%1 eşleşme değiştirildi</translation>
     </message>
     <message>
         <source>Find/Replace</source>
-        <translation>Bul/Değiştir</translation>
+        <translation type="vanished">Bul/Değiştir</translation>
     </message>
     <message>
         <source>&amp;Find:</source>
-        <translation>B&amp;ul:</translation>
+        <translation type="vanished">B&amp;ul:</translation>
     </message>
     <message>
         <source>R&amp;eplace with:</source>
-        <translation>Şununla değişt&amp;ir:</translation>
+        <translation type="vanished">Şununla değişt&amp;ir:</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation type="vanished">Hata</translation>
     </message>
     <message>
         <source>D&amp;irection</source>
-        <translation>Y&amp;ön</translation>
+        <translation type="vanished">Y&amp;ön</translation>
     </message>
     <message>
         <source>&amp;Down</source>
-        <translation>A&amp;şağı</translation>
+        <translation type="vanished">A&amp;şağı</translation>
     </message>
     <message>
         <source>&amp;Up</source>
-        <translation>Yukar&amp;ı</translation>
+        <translation type="vanished">Yukar&amp;ı</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation>Aya&amp;rlar</translation>
+        <translation type="vanished">Aya&amp;rlar</translation>
     </message>
     <message>
         <source>&amp;Case sensitive</source>
-        <translation>&amp;Büyük küçük harfe duyarlı</translation>
+        <translation type="vanished">&amp;Büyük küçük harfe duyarlı</translation>
     </message>
     <message>
         <source>&amp;Whole words only</source>
-        <translation>&amp;Sadece tam sözcükler</translation>
+        <translation type="vanished">&amp;Sadece tam sözcükler</translation>
     </message>
     <message>
         <source>R&amp;egular Expression</source>
         <translatorcomment>Regex</translatorcomment>
-        <translation>Kural&amp;lı ifade</translation>
+        <translation type="vanished">Kural&amp;lı ifade</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation>&amp;Bul</translation>
+        <translation type="vanished">&amp;Bul</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Kapat</translation>
+        <translation type="vanished">&amp;Kapat</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation>Deği&amp;ştir</translation>
+        <translation type="vanished">Deği&amp;ştir</translation>
     </message>
     <message>
         <source>Replace &amp;All</source>
-        <translation>&amp;Tümünü Değiştir</translation>
+        <translation type="vanished">&amp;Tümünü Değiştir</translation>
     </message>
 </context>
 <context>
@@ -3128,6 +3207,13 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InoDebugger</name>
+    <message>
+        <source>Found Board definition in file: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4032,10 +4118,6 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load EEPROM data from file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4057,6 +4139,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload hex at Simulation Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

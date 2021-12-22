@@ -764,6 +764,14 @@ p, li { white-space: pre-wrap; }
         <source>Warning: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Device definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found Family definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Battery</name>
@@ -1374,6 +1382,10 @@ Voulez-vous sauvegarder les changements ?
         <source>Reload Document</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Found Compiler definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Compiler</name>
@@ -1420,6 +1432,10 @@ Voulez-vous sauvegarder les changements ?
     </message>
     <message>
         <source>Set proper ToolChain Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1793,11 +1809,11 @@ vers DomDocument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Temperature increment</source>
+        <source>Temp. increment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Humidity increment</source>
+        <source>Humid. increment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2417,81 +2433,144 @@ Voulez-vous sauvegarder les changements?
     </message>
 </context>
 <context>
+    <name>FindReplace</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Regular Expression.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace + Find </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found %1 occurrence(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrence(s)</source>
+        <translation type="unfinished">%1 occurence(s) remplacée(s)</translation>
+    </message>
+</context>
+<context>
     <name>FindReplaceDialog</name>
     <message>
         <source>Find/Replace</source>
-        <translation>Chercher/Remplacer</translation>
+        <translation type="vanished">Chercher/Remplacer</translation>
     </message>
 </context>
 <context>
     <name>FindReplaceForm</name>
     <message>
         <source>no match found</source>
-        <translation>Introuvable</translation>
+        <translation type="vanished">Introuvable</translation>
     </message>
     <message>
         <source>Replaced %1 occurrence(s)</source>
-        <translation>%1 occurence(s) remplacée(s)</translation>
+        <translation type="vanished">%1 occurence(s) remplacée(s)</translation>
     </message>
     <message>
         <source>Find/Replace</source>
-        <translation>Chercher/Remplacer</translation>
+        <translation type="vanished">Chercher/Remplacer</translation>
     </message>
     <message>
         <source>&amp;Find:</source>
-        <translation>&amp;Chercher:</translation>
+        <translation type="vanished">&amp;Chercher:</translation>
     </message>
     <message>
         <source>R&amp;eplace with:</source>
-        <translation>R&amp;emplacer avec :</translation>
+        <translation type="vanished">R&amp;emplacer avec :</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation type="vanished">Erreur</translation>
     </message>
     <message>
         <source>D&amp;irection</source>
-        <translation>D&amp;irection</translation>
+        <translation type="vanished">D&amp;irection</translation>
     </message>
     <message>
         <source>&amp;Down</source>
-        <translation>&amp;Bas</translation>
+        <translation type="vanished">&amp;Bas</translation>
     </message>
     <message>
         <source>&amp;Up</source>
-        <translation>&amp;Haut</translation>
+        <translation type="vanished">&amp;Haut</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation>&amp;Options</translation>
+        <translation type="vanished">&amp;Options</translation>
     </message>
     <message>
         <source>&amp;Case sensitive</source>
-        <translation>&amp;Sensible à la casse</translation>
+        <translation type="vanished">&amp;Sensible à la casse</translation>
     </message>
     <message>
         <source>&amp;Whole words only</source>
-        <translation>&amp;Mots complets uniquement</translation>
+        <translation type="vanished">&amp;Mots complets uniquement</translation>
     </message>
     <message>
         <source>R&amp;egular Expression</source>
-        <translation>Expr&amp;ession régulière</translation>
+        <translation type="vanished">Expr&amp;ession régulière</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation>&amp;Chercher</translation>
+        <translation type="vanished">&amp;Chercher</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Fermer</translation>
+        <translation type="vanished">&amp;Fermer</translation>
     </message>
     <message>
         <source>&amp;Replace</source>
-        <translation>&amp;Remplacer</translation>
+        <translation type="vanished">&amp;Remplacer</translation>
     </message>
     <message>
         <source>Replace &amp;All</source>
-        <translation>Tout rempl&amp;acer</translation>
+        <translation type="vanished">Tout rempl&amp;acer</translation>
     </message>
 </context>
 <context>
@@ -2847,6 +2926,13 @@ Voulez-vous sauvegarder les changements?
     </message>
     <message>
         <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InoDebugger</name>
+    <message>
+        <source>Found Board definition in file: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3651,10 +3737,6 @@ Voulez-vous sauvegarder les changements?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load Firmware at Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load EEPROM data from file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3676,6 +3758,10 @@ Voulez-vous sauvegarder les changements?
     </message>
     <message>
         <source>Enable WatchDog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload hex at Simulation Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
