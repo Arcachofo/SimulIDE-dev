@@ -47,7 +47,6 @@ class MAINMODULE_EXPORT FileBrowser : public QTreeView
         void contextMenuEvent( QContextMenuEvent* event );
 
     private:
-    
  static FileBrowser*  m_pSelf;
  
         void mouseDoubleClickEvent( QMouseEvent* ) { open(); }

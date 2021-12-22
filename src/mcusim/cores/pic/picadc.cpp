@@ -162,7 +162,7 @@ void PicAdc1::updtANSEL()
 void PicAdc1::updtVref()
 {
     m_vRefP = (m_mode & 1) ? m_pRefPin->getVolt() : 5;
-    if( m_vRefN ) m_vRefN = (m_mode & 2) ? m_nRefPin->getVolt() : 0;
+    if( m_nRefPin ) m_vRefN = (m_mode & 0b00000010) ? m_nRefPin->getVolt() : 0;
 }
 
 //------------------------------------------------------
