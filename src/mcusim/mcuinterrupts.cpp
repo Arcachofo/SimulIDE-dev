@@ -62,14 +62,14 @@ void Interrupt::clearFlag()
     m_interrupts->remFromPending( this );
 }
 
-void Interrupt::flagCleared( uint8_t )
+void Interrupt::flagCleared( uint8_t )  // Interrupt flag was cleared by software
 {
     if( !m_raised ) return;
     m_raised = false;
     m_interrupts->remFromPending( this );
 }
 
-void Interrupt::writeFlag( uint8_t v ) // Clear flag by writting 1 to it
+void Interrupt::writeFlag( uint8_t v ) // Clear Interrupt flag by writting 1 to it
 {
     if( v & m_flagMask ) clearFlag();
 }

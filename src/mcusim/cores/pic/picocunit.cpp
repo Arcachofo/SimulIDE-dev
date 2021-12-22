@@ -64,6 +64,8 @@ void PicOcUnit::runEvent()  // Compare match
 
 void PicOcUnit::configure( uint8_t CCPxM )  // CCPxM0,CCPxM1,CCPxM2,CCPxM3
 {
+    m_specEvent = false;
+
     if( m_enhanced && CCPxM == 2 ) setOcActs( ocTOG, ocNON ); // Toggle OC Pin
     else{
         switch( CCPxM ) {

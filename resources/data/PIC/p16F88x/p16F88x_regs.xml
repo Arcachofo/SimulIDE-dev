@@ -10,9 +10,11 @@
                   bits="RBIF,INTF,T0IF,RBIE,INTE,T0IE,PEIE,GIE"/>
                   
         <register name="PIR1"    addr="0x0C" 
-                  bits="TMR1IF,TMR2IF,CCP1IF,SSPIF,TXIF,RCIF,ADIF,PSPIF"/>
+                  bits="TMR1IF,TMR2IF,CCP1IF,SSPIF,TXIF,RCIF,ADIF,0"/>
                   
-        <register name="PIR2"    addr="0x0D" bits=""/>
+        <register name="PIR2"    addr="0x0D" 
+                  bits="CCP2IF,0,ULPWUIF,BCLIF,EEIF,C1IF,C2IF,OSFIF"/>
+                  
         <register name="TMR1L"   addr="0x0E" bits=""/>
         <register name="TMR1H"   addr="0x0F" bits=""/>
         <register name="T1CON"   addr="0x10" 
@@ -66,10 +68,10 @@
         <mapped                  addr="0x8B" mapto="0x0B"/><!-- INTCON -->
         
         <register name="PIE1"    addr="0x8C" 
-                  bits="TMR1IE,TMR2IE,CCP1IE,SSPIE,TXIE,RCIE,ADIE,PSPIE"/>
+                  bits="TMR1IE,TMR2IE,CCP1IE,SSPIE,TXIE,RCIE,ADIE,0"/>
                   
         <register name="PIE2"    addr="0x8D" 
-                  bits="CCP2IE,0,0,BCLIE,EEIE,0,0,0"/>
+                  bits="CCP2IE,0,ULPWUIE,BCLIE,EEIE,C1IE,C2IE,OSFIE"/>
                   
         <register name="PCON"    addr="0x8E"  reset="00001000"
                   bits="BOR,POR,0,OSCF"/>
