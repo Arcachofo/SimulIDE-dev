@@ -17,33 +17,55 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "picspi.h"
 #include "datautils.h"
-#include "mcudataspace.h"
+//#include "mcupin.h"
+#include "iopin.h"
+#include "e_mcu.h"
+#include "mcuinterrupts.h"
 
-uint8_t getBitMask( QStringList bitList, DataSpace* mcu ) // Get mask for a group of bits in a Register
+PicSpi::PicSpi( eMcu* mcu, QString name )
+      : McuSpi( mcu, name )
 {
-    uint8_t bitMask = 0;
-    for( QString bitName : bitList ) bitMask |= mcu->bitMasks()->value( bitName );
-    return bitMask;
+    //m_SPCR = mcu->getReg( "SPCR" );
+    //m_SPIF = getRegBits( "SPIF", mcu );
+}
+PicSpi::~PicSpi(){}
+
+/*void PicSpi::initialize()
+{
+    McuSpi::initialize();
+}*/
+
+void PicSpi::setMode( spiMode_t mode )
+{
+    if( mode == m_mode ) return;
+    m_mode = mode;
+
+    bool ctrl = mode > SPI_OFF;
+
+    m_MOSI->controlPin( ctrl, false );
+    m_MISO->controlPin( ctrl, false );
+    m_clkPin->controlPin( ctrl, false );
+    m_SS->controlPin( mode == SPI_SLAVE, false );
+
+    SpiModule::setMode( mode );
 }
 
-regBits_t getRegBits( QString bitNames, DataSpace* mcu ) // Get a set of bits in a Register
+void PicSpi::configureA( uint8_t newSPCR ) // SPCR is being written
 {
-    regBits_t regBits;
-    QStringList bitList = bitNames.split(",");
-
-    uint8_t mask = getBitMask( bitList, mcu );
-    regBits.mask = mask;
-
-    for( regBits.bit0=0; regBits.bit0<8; ++regBits.bit0 ) // Rotate mask to get initial bit
-    {
-        if( mask & 1 ) break;
-        mask >>= 1;
-    }
-    regBits.regAddr = mcu->bitRegs()->value( bitList.first() );
-    uint8_t* ram = mcu->getRam();
-    regBits.reg = ram + regBits.regAddr;
-
-    return regBits;
 }
 
+void PicSpi::writeStatus( uint8_t newSPSR ) // SPSR is being written
+{
+}
+
+void PicSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written
+{
+}
+
+void PicSpi::endTransaction()
+{
+    SpiModule::endTransaction();
+    //m_interrupt->raise();
+}

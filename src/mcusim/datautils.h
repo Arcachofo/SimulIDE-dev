@@ -22,7 +22,13 @@
 
 #include <QStringList>
 
-#include "mcudataspace.h"
+#include "mcutypes.h"
+
+class DataSpace;
+
+uint8_t getBitMask( QStringList bitList, DataSpace* mcu ); // Get mask for a group of bits in a Register
+
+regBits_t getRegBits( QString bitNames, DataSpace* mcu ); // Get a set of consecutive bits in a Register
 
 static inline uint8_t overrideBits( uint8_t val, regBits_t bits ) // Replace bits in val with current value in register bits.reg
 {
@@ -53,9 +59,5 @@ static inline void clearRegBits( regBits_t bits ) // Clear bits in a Register
 {
     *(bits.reg) &= ~bits.mask;
 }
-
-uint8_t getBitMask( QStringList bitList, DataSpace* mcu ); // Get mask for a group of bits in a Register
-
-regBits_t getRegBits( QString bitNames, DataSpace* mcu ); // Get a set of consecutive bits in a Register
 
 #endif

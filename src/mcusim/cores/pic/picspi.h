@@ -17,33 +17,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "datautils.h"
-#include "mcudataspace.h"
+#ifndef PICSPI_H
+#define PICSPI_H
 
-uint8_t getBitMask( QStringList bitList, DataSpace* mcu ) // Get mask for a group of bits in a Register
+#include "mcuspi.h"
+
+class eMcu;
+
+class MAINMODULE_EXPORT PicSpi : public McuSpi
 {
-    uint8_t bitMask = 0;
-    for( QString bitName : bitList ) bitMask |= mcu->bitMasks()->value( bitName );
-    return bitMask;
-}
+    public:
+        PicSpi( eMcu* mcu, QString name );
+        ~PicSpi();
 
-regBits_t getRegBits( QString bitNames, DataSpace* mcu ) // Get a set of bits in a Register
-{
-    regBits_t regBits;
-    QStringList bitList = bitNames.split(",");
+        //virtual void initialize() override;
 
-    uint8_t mask = getBitMask( bitList, mcu );
-    regBits.mask = mask;
+        virtual void setMode( spiMode_t mode ) override;
+        virtual void configureA( uint8_t newSPCR ) override;
+        virtual void writeStatus( uint8_t newSPSR ) override;
+        virtual void writeSpiReg( uint8_t newSPDR ) override;
+        virtual void endTransaction() override;
 
-    for( regBits.bit0=0; regBits.bit0<8; ++regBits.bit0 ) // Rotate mask to get initial bit
-    {
-        if( mask & 1 ) break;
-        mask >>= 1;
-    }
-    regBits.regAddr = mcu->bitRegs()->value( bitList.first() );
-    uint8_t* ram = mcu->getRam();
-    regBits.reg = ram + regBits.regAddr;
+    protected:
 
-    return regBits;
-}
+        /*uint8_t*  m_SPCR;
 
+        regBits_t m_SPIE;
+        regBits_t m_SPE;
+        regBits_t m_DODR;
+        regBits_t m_MSTR;
+        regBits_t m_CPOL;
+        regBits_t m_CPHA;*/
+        //regBits_t m_SPIF;
+};
+
+#endif

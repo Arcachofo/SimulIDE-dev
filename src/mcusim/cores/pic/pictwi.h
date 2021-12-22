@@ -17,33 +17,47 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "datautils.h"
-#include "mcudataspace.h"
+#ifndef AVRTWI_H
+#define AVRTWI_H
 
-uint8_t getBitMask( QStringList bitList, DataSpace* mcu ) // Get mask for a group of bits in a Register
+#include "mcutwi.h"
+//#include "mcutypes.h"
+
+class eMcu;
+//class McuPin;
+
+class MAINMODULE_EXPORT PicTwi : public McuTwi
 {
-    uint8_t bitMask = 0;
-    for( QString bitName : bitList ) bitMask |= mcu->bitMasks()->value( bitName );
-    return bitMask;
-}
+    public:
+        PicTwi( eMcu* mcu, QString name );
+        ~PicTwi();
 
-regBits_t getRegBits( QString bitNames, DataSpace* mcu ) // Get a set of bits in a Register
-{
-    regBits_t regBits;
-    QStringList bitList = bitNames.split(",");
+        virtual void initialize() override;
 
-    uint8_t mask = getBitMask( bitList, mcu );
-    regBits.mask = mask;
+        virtual void configureA( uint8_t newTWCR ) override;
+        virtual void configureB( uint8_t val ) override;
 
-    for( regBits.bit0=0; regBits.bit0<8; ++regBits.bit0 ) // Rotate mask to get initial bit
-    {
-        if( mask & 1 ) break;
-        mask >>= 1;
-    }
-    regBits.regAddr = mcu->bitRegs()->value( bitList.first() );
-    uint8_t* ram = mcu->getRam();
-    regBits.reg = ram + regBits.regAddr;
+        virtual void writeAddrReg( uint8_t newTWAR ) override;
+        virtual void writeStatus( uint8_t newTWSR ) override;
+        virtual void writeTwiReg( uint8_t newTWDR ) override;
 
-    return regBits;
-}
+    protected:
+        virtual void setTwiState( twiState_t state ) override;
+        uint8_t getStaus() { return *m_statReg &= 0b11111000; }
+        virtual void updateFreq() override;
 
+        uint8_t m_bitRate;
+
+        uint8_t*  m_TWCR;
+        //uint8_t*  m_TWSR;
+
+        regBits_t m_TWEN;
+        regBits_t m_TWWC;
+        regBits_t m_TWSTO;
+        regBits_t m_TWSTA;
+        regBits_t m_TWEA;
+        regBits_t m_TWINT;
+
+};
+
+#endif

@@ -30,7 +30,7 @@ McuSpi::~McuSpi()
 {
 }
 
-void McuSpi::initialize()
+/*void McuSpi::initialize()
 {
     SpiModule::initialize();
 
@@ -39,22 +39,4 @@ void McuSpi::initialize()
 void McuSpi::setMode( spiMode_t mode )
 {
     SpiModule::setMode(  mode );
-    /*switch (mode) {
-    case SPI_OFF:
-        {
-            m_MOSI->controlPin( false );
-            m_MISO->controlPin( false );
-            m_clkPin->controlPin( false );
-            m_SS->controlPin( false );
-        }
-        break;
-    case SPI_MASTER:
-            m_MISO->overrideDir( false ); //MISO as input, rest as user set
-        break;
-    case SPI_SLAVE:
-            m_MOSI->overrideDir( false );     // MOSI input
-            m_clockPin->overrideDir( false ); // SCK input
-            m_SS->overrideDir( false );       // SS input
-        break;
-    }*/
-}
+}*/

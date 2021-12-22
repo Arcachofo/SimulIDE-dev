@@ -29,7 +29,7 @@ AvrSpi::AvrSpi( eMcu* mcu, QString name )
 {
     m_SPCR = mcu->getReg( "SPCR" );
 
-    m_SPIE = getRegBits( "SPIE", mcu );
+    //m_SPIE = getRegBits( "SPIE", mcu );
     m_SPE  = getRegBits( "SPE", mcu );
     m_DODR = getRegBits( "DODR", mcu );
     m_MSTR = getRegBits( "MSTR", mcu );
@@ -46,16 +46,17 @@ void AvrSpi::initialize()
 
 void AvrSpi::setMode( spiMode_t mode )
 {
-    if( mode == m_mode ) return;
+    if( m_mode == mode ) return;
+    m_mode = mode;
 
-    if( mode == SPI_OFF )
+    if     ( mode == SPI_OFF )
     {
         m_MOSI->controlPin( false, false );
         m_MISO->controlPin( false, false );
         m_clkPin->controlPin( false, false );
         m_SS->controlPin( false, false );
     }
-    else if     ( mode == SPI_MASTER )
+    else if( mode == SPI_MASTER )
     {
         m_MOSI->controlPin( true, false );
         m_MISO->setPinMode( input );

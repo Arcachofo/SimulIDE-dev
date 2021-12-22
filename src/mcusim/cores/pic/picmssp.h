@@ -17,33 +17,51 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "datautils.h"
-#include "mcudataspace.h"
+#ifndef PICMSSP_H
+#define PICMSSP_H
 
-uint8_t getBitMask( QStringList bitList, DataSpace* mcu ) // Get mask for a group of bits in a Register
+#include "mcumodule.h"
+#include "e-element.h"
+
+class PicSpi;
+class PicTwi;
+//class McuPin;
+
+enum sspMode_t{
+    sspOFF=0,
+    sspSPI_M,
+    sspSPI_S,
+    sspI2C_M,
+    sspI2C_S
+};
+
+class MAINMODULE_EXPORT PicMssp : public McuModule, public eElement
 {
-    uint8_t bitMask = 0;
-    for( QString bitName : bitList ) bitMask |= mcu->bitMasks()->value( bitName );
-    return bitMask;
-}
+    friend class McuCreator;
 
-regBits_t getRegBits( QString bitNames, DataSpace* mcu ) // Get a set of bits in a Register
-{
-    regBits_t regBits;
-    QStringList bitList = bitNames.split(",");
+    public:
+        PicMssp( eMcu* mcu, QString name, int type );
+        ~PicMssp();
 
-    uint8_t mask = getBitMask( bitList, mcu );
-    regBits.mask = mask;
+        virtual void initialize();
 
-    for( regBits.bit0=0; regBits.bit0<8; ++regBits.bit0 ) // Rotate mask to get initial bit
-    {
-        if( mask & 1 ) break;
-        mask >>= 1;
-    }
-    regBits.regAddr = mcu->bitRegs()->value( bitList.first() );
-    uint8_t* ram = mcu->getRam();
-    regBits.reg = ram + regBits.regAddr;
+        virtual void configureA( uint8_t SSPCON ) override;
 
-    return regBits;
-}
+        //virtual void setInterrupt( Interrupt* i ) override;
 
+        //void setPin( McuPin* pin );
+
+    protected:
+        uint8_t m_mode;
+        sspMode_t m_sspMode;
+
+        /*uint8_t* m_ccpRegL;
+        uint8_t* m_ccpRegH;*/
+
+        regBits_t m_SSPMx;
+
+        PicSpi*  m_spiUnit;
+        PicTwi*  m_twiUnit;
+};
+
+#endif

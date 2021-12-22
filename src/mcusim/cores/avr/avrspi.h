@@ -42,7 +42,7 @@ class MAINMODULE_EXPORT AvrSpi : public McuSpi
 
         uint8_t*  m_SPCR;
 
-        regBits_t m_SPIE;
+        //regBits_t m_SPIE;
         regBits_t m_SPE;
         regBits_t m_DODR;
         regBits_t m_MSTR;
