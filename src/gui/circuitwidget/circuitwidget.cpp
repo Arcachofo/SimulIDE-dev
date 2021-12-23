@@ -298,13 +298,7 @@ void CircuitWidget::loadCirc( QString path )
         QSettings* settings = MainWindow::self()->settings();
         settings->setValue( "lastCircDir", m_lastCircDir );
 
-        QStringList files = settings->value("recentCircList").toStringList();
-        files.removeAll( m_curCirc );
-        files.prepend( m_curCirc );
-        while( files.size() > MaxRecentFiles ) files.removeLast();
-
-        settings->setValue("recentCircList", files );
-        updateRecentFileActions();
+        updateRecentFiles();
 
         m_circView.setCircTime( 0 );
 }   }
@@ -338,6 +332,7 @@ void CircuitWidget::saveCirc( QString file )
         m_lastCircDir = file;
         MainWindow::self()->setTitle(file.split("/").last());
         MainWindow::self()->settings()->setValue( "lastCircDir", m_lastCircDir );
+        updateRecentFiles();
     }
     else qDebug() << "\nError Saving Circuit:\n" << file;
 }
@@ -467,6 +462,18 @@ void CircuitWidget::setMsg( QString msg, int type )
     else if( type == 1 ) m_msgLabel->setStyleSheet("QLabel { background-color: orange;     color: white;  font-weight: bold;}");
     else if( type == 2 ) m_msgLabel->setStyleSheet("QLabel { background-color: red;        color: yellow; font-weight: bold;}");
     m_msgLabel->setText( "   "+msg+"   " );
+}
+
+void CircuitWidget::updateRecentFiles()
+{
+    QSettings* settings = MainWindow::self()->settings();
+    QStringList files = settings->value("recentCircList").toStringList();
+    files.removeAll( m_curCirc );
+    files.prepend( m_curCirc );
+    while( files.size() > MaxRecentFiles ) files.removeLast();
+
+    settings->setValue("recentCircList", files );
+    updateRecentFileActions();
 }
 
 void CircuitWidget::updateRecentFileActions()

@@ -85,6 +85,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
  static CircuitWidget*  m_pSelf;
 
         enum { MaxRecentFiles = 10 };
+        void updateRecentFiles();
         void updateRecentFileActions();
 
         QVBoxLayout  m_verticalLayout;
