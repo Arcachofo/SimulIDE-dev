@@ -46,6 +46,13 @@ void AvrTwi::initialize()
 
 void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 {
+    bool clearTwint = getRegBitsBool( newTWCR, m_TWINT );
+    if( clearTwint )                       /// Writting 1 to TWINT clears the flag
+    {
+        m_interrupt->clearFlag();
+        m_mcu->m_regOverride = newTWCR & ~m_TWINT.mask; // Clear TWINT flag
+    }
+
     bool oldEn  = getRegBitsBool( *m_TWCR, m_TWEN );
     bool enable = getRegBitsBool( newTWCR, m_TWEN );
 
@@ -65,20 +72,13 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
         m_scl->controlPin( true, true );
     }
 
-    bool clearTwint = getRegBitsBool( newTWCR, m_TWINT );
-    if( clearTwint )                       /// Writting 1 to TWINT clears the flag
-    {
-        m_interrupt->clearFlag();
-        m_mcu->m_regOverride = newTWCR & ~m_TWINT.mask; // Clear TWINT flag
-    }
-
     bool oldStop = getRegBitsBool( *m_TWCR, m_TWSTO );
     bool newStop = getRegBitsBool( newTWCR, m_TWSTO );
     if( newStop && !oldStop )              /// Generate Stop Condition
     {
         if( m_mode == TWI_MASTER ) // Master: Stop if I2C was started
         {
-            if( getStaus() < TWI_NO_STATE ) I2Cstop();
+            if( getStaus() < TWI_NO_STATE ) masterStop();//I2Cstop();
         }
         else setMode( TWI_SLAVE ); // Slave: Stop Cond restarts Slave mode (can be used to recover from an error condition)
     }
@@ -163,22 +163,21 @@ void AvrTwi::setTwiState( twiState_t state )  // Set new AVR Status value
 
     *m_statReg &= 0b00000111;      // Clear old state
     *m_statReg |= state;           // Write new state
-    m_interrupt->raise(); //interrupt.emitValue(1);
 
     if( (state == TWI_NO_STATE) && (m_i2cState == I2C_STOP) ) // Stop Condition sent
     {
         clearRegBits( m_TWSTO ); // Clear TWSTO bit
     }
-    else
-    {
+    else{
+        m_interrupt->raise();
+
         if( m_mode == TWI_MASTER )
         {
             if( (state == TWI_MRX_DATA_ACK) || (state == TWI_MRX_DATA_NACK) ) // Data received
             {
                 *m_dataReg = m_rxReg; // Save data received into TWDR
         }   }
-        else // Slave
-        {
+        else{ // Slave
             if( (state == TWI_SRX_ADR_DATA_ACK) || (state == TWI_SRX_ADR_DATA_NACK)
              || (state == TWI_SRX_GEN_DATA_ACK) || (state == TWI_SRX_GEN_DATA_NACK) )
                 *m_dataReg = m_rxReg; // Save data received into TWDR

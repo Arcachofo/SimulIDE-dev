@@ -69,6 +69,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         void masterStart() { m_i2cState = I2C_START; }
         void masterWrite( uint8_t data, bool isAddr, bool write );
         void masterRead( bool ack );
+        void masterStop();
 
         virtual void I2Cstop() { m_i2cState = I2C_STOP; }
 
