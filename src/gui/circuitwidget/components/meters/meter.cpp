@@ -111,11 +111,11 @@ void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     p->setBrush( Qt::black);
     p->drawRect( QRectF( -24, -24, 48, 32 ) );
 
-    if( m_hidden ) return;
+    /*if( m_hidden ) return;
 
     QPointF points[3] = {
     QPointF( 26,-11 ),
     QPointF( 31, -8 ),
     QPointF( 26, -5 )   };
-    p->drawPolygon(points, 3);
+    p->drawPolygon(points, 3);*/
 }

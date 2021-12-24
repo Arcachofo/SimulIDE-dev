@@ -99,6 +99,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
 
         uint m_outValue;
         uint m_nextOutVal;
+        uint m_nextOutDir;
         //int m_outStep;
 
         uint64_t m_propDelay; // Propagation delay

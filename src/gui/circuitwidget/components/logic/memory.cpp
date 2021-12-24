@@ -166,7 +166,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
         Simulator::self()->addEvent( m_propDelay, this );
     }
     else{                                 // Read
-        for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( output );
+        //for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( output );
         //Simulator::self()->addEvent( 1, NULL );
         m_read = true;
         m_nextOutVal = m_ram[m_address];
@@ -175,7 +175,12 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
 
 void Memory::runEvent()
 {
-    if( m_read ) IoComponent::runOutputs();
+    if( m_read )
+    {
+        for( uint i=0; i<m_outPin.size(); ++i )
+            m_outPin[i]->setPinMode( output );
+        IoComponent::runOutputs();
+    }
     else{
         int value = 0;
         for( uint i=0; i<m_outPin.size(); ++i )

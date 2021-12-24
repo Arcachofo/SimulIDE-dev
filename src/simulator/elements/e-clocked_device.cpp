@@ -61,11 +61,7 @@ void eClockedDevice::setClockInv( bool inv )
 
 void eClockedDevice::updateClock()
 {
-    if( !m_clkPin )
-    {
-        m_clkState = Clock_Allow;
-        return;
-    }
+    if( !m_clkPin ) { m_clkState = Clock_Allow; return; }
 
     m_clkState = Clock_Low;
 

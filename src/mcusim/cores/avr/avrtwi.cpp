@@ -66,9 +66,9 @@ void AvrTwi::configureA( uint8_t newTWCR ) // TWCR is being written
 
     if( !oldEn )                           /// Enable TWI if it was disabled
     {
-        m_sda->setPinMode( open_col );
+        m_sda->setPinMode( openCo );
         m_sda->controlPin( true, true ); // Get control of MCU PIns
-        m_scl->setPinMode( open_col );
+        m_scl->setPinMode( openCo );
         m_scl->controlPin( true, true );
     }
 

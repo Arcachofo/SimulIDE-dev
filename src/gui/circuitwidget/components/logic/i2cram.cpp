@@ -60,10 +60,10 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
             "IR03 A2 "
         });
 
-    m_inPin[0]->setPinMode( open_col );
+    m_inPin[0]->setPinMode( openCo );
     TwiModule::setSdaPin( m_inPin[0] );
 
-    m_inPin[1]->setPinMode( open_col );
+    m_inPin[1]->setPinMode( openCo );
     TwiModule::setSclPin( m_inPin[1] );
 
     m_persistent = false;
@@ -90,15 +90,13 @@ I2CRam::~I2CRam(){}
 void I2CRam::initialize()
 {
     TwiModule::initialize();
-    IoComponent::initState();
-    
+
     m_addrPtr = 0;
     m_phase = 3;
 }
 
 void I2CRam::stamp()           // Called at Simulation Start
 {
-    TwiModule::stamp();
     TwiModule::setMode( TWI_SLAVE );
 
     for( int i=2; i<5; i++ )     // Initialize address pins

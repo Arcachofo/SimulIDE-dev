@@ -78,14 +78,14 @@ Max72xx_matrix::~Max72xx_matrix(){}
 void Max72xx_matrix::stamp()
 {
     m_pinSck->changeCallBack( this ); // Register for Sck changes callback
-    m_pinCS->changeCallBack( this ); // Register for CS changes callback
+    m_pinCS->changeCallBack( this );  // Register for CS changes callback
 }
 
 void Max72xx_matrix::initialize()
 {
-    for( int i = 0; i < 11; i++)
+    for( int i=0; i<11; i++)
     {
-        for( int j = 0; j < 8; j++) m_ram[i][j] = 0;
+        for( int j=0; j<8; j++ ) m_ram[i][j] = 0;
         m_intensity[i] = 0;
     }
     m_decodemode = 0;
@@ -126,17 +126,13 @@ void Max72xx_matrix::voltChanged()
         m_inBit++;
 }   }
 
-void Max72xx_matrix::updateStep()
-{
-    update();
-}
+void Max72xx_matrix::updateStep() { update(); }
 
 void Max72xx_matrix::proccessCommand()
 {
     if ( m_inDisplay >= 11 ) return;
 
     int addr = (m_rxReg>>8) & 0x0F;
-
     switch( addr )
     {
         case 0: break; // No-Op
@@ -191,7 +187,6 @@ void Max72xx_matrix::paint( QPainter *p, const QStyleOptionGraphicsItem *option,
 
     p->setBrush( QColor(50, 70, 100) );
     p->drawRoundedRect( m_area, 2, 2 );
-
 
     for( int display=0; display<m_numDisplays; display++ )
     {

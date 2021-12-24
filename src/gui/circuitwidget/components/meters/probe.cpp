@@ -92,7 +92,7 @@ void Probe::updateStep()
         if( it->type() == UserType+3 )                    // Pin found
         {
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
-            setVolt(pin->getVolt() );
+            setVolt( pin->getVolt() );
             break;
         }else if( it->type() == UserType+2 )        // ConnectorLine
         {

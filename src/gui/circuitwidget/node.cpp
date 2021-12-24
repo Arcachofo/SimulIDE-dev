@@ -59,7 +59,7 @@ void Node::inStateChanged( int rem ) // Called by pin
 
 void Node::registerEnode( eNode* enode )
 {
-    for( int i=0; i< 3; i++ )
+    for( int i=0; i<3; i++ )
         if( m_pin[i]->isConnected() ) m_pin[i]->registerPinsW( enode );
 }
 

@@ -134,7 +134,7 @@ void Dht22::voltChanged()                              // Called when Input Pin 
         uint64_t time = Simulator::self()->circTime()-m_lastTime; // in picosecondss
         if( time > m_start )                              // Minimum input pulse
         {
-            m_inpin->setPinMode( open_col );
+            m_inpin->setPinMode( openCo );
             m_inpin->setOutState( true );
             m_inpin->changeCallBack( this, false ); // Stop receiving voltChange() CallBacks
             Simulator::self()->addEvent( 30*1e6, this ); // Send ack after 30 us

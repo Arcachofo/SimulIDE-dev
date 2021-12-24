@@ -208,7 +208,7 @@ void IoComponent::setOpenCol( bool op )
     m_openCol = op;
     for( uint i=0; i<m_outPin.size(); ++i )
     {
-        if( op ) m_outPin[i]->setPinMode( open_col );
+        if( op ) m_outPin[i]->setPinMode( openCo );
         else     m_outPin[i]->setPinMode( output );
 }   }
 

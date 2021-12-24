@@ -56,15 +56,15 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
 
     setNumOuts( 8, "D" );
 
-    m_inPin[0]->setPinMode( open_col );
+    m_inPin[0]->setPinMode( openCo );
     TwiModule::setSdaPin( m_inPin[0] );
     
-    m_inPin[1]->setPinMode( open_col );
+    m_inPin[1]->setPinMode( openCo );
     TwiModule::setSclPin( m_inPin[1] );
 
     for( int i=0; i<8; ++i )
     {
-        m_outPin[i]->setPinMode( open_col );
+        m_outPin[i]->setPinMode( openCo );
         m_outPin[i]->setPullup( true );
     }
     m_address = 0b01010000; // 0x50, 80
@@ -85,7 +85,6 @@ void I2CToParallel::initialize()
 
 void I2CToParallel::stamp()                     // Called at Simulation Start
 {
-    TwiModule::stamp();
     TwiModule::setMode( TWI_SLAVE );
     
     for( int i=2; i<5; ++i )     // Initialize address pins

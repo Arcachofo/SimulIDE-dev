@@ -68,14 +68,15 @@ void Rail::setVolt( double v )
 {
     Simulator::self()->pauseSim();
     m_volt = v;
-    updateOutput();
+    stamp();
     Simulator::self()->resumeSim();
 }
 
-void Rail::updateOutput()
+void Rail::stamp()
 {
     m_out->setOutHighV( m_volt );
     m_out->setOutState( true );
+    update();
 }
 
 void Rail::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

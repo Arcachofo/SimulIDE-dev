@@ -47,12 +47,12 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
 
     m_pin.resize( 2 );
 
-    m_pinSda = new IoPin( 270, QPoint(16, 8), id+"PinSDA", 0, this, open_col );
+    m_pinSda = new IoPin( 270, QPoint(16, 8), id+"PinSDA", 0, this, openCo );
     m_pinSda->setLabelText( " SDA" );
     m_pin[0] = m_pinSda;
     TwiModule::setSdaPin( m_pinSda );
 
-    m_clkPin = new IoPin( 270, QPoint(24, 8), id+"PinSCL", 0, this, open_col );
+    m_clkPin = new IoPin( 270, QPoint(24, 8), id+"PinSCL", 0, this, openCo );
     m_clkPin->setLabelText( " SCL" );
     m_pin[1] = m_clkPin;
     TwiModule::setSclPin( m_clkPin );

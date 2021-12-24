@@ -25,7 +25,9 @@
 
 enum pinState_t{
     undef_state=0,
-    out_open,
+    driven_low,
+    open_low,
+    open_high,
     out_low,
     out_high,
     input_low,
@@ -120,7 +122,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         QString m_labelText;
         
-        QColor m_color[6];
+        QColor m_color[8];
         QRect      m_area;
         Connector* my_connector;
         Component* m_component;

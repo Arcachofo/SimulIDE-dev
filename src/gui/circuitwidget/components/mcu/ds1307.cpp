@@ -45,11 +45,11 @@ DS1307::DS1307( QObject* parent, QString type, QString id )
     m_background = ":/dsxxx.png";
 
     m_pin.resize( 3 );
-    m_pin[0] = m_pinSda = new IoPin( 180, QPoint(-36,-12), id+"-PinSDA", 0, this, open_col );
+    m_pin[0] = m_pinSda = new IoPin( 180, QPoint(-36,-12), id+"-PinSDA", 0, this, openCo );
     m_pinSda->setLabelText( "SDA" );
     TwiModule::setSdaPin( m_pinSda );
 
-    m_pin[1] = m_clkPin = new IoPin( 180, QPoint(-36, -4), id+"-PinSCL", 0, this, open_col );
+    m_pin[1] = m_clkPin = new IoPin( 180, QPoint(-36, -4), id+"-PinSCL", 0, this, openCo );
     m_clkPin->setLabelText( "SCL" );
     TwiModule::setSclPin( m_clkPin );
 

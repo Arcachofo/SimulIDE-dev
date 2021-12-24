@@ -103,7 +103,7 @@ void McuPin::setDirection( bool out )
 {
     m_isOut = (out || m_outMask) && m_inpMask; // Take care about permanent Inputs/Outputs
 
-    if( m_isOut ) m_oldPinMode = m_openColl ? open_col : output; // Set Pin to Output
+    if( m_isOut ) m_oldPinMode = m_openColl ? openCo : output; // Set Pin to Output
     else          m_oldPinMode = input;                          // Set Pin to Input
 
     changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input

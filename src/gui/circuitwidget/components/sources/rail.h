@@ -38,10 +38,11 @@ class MAINMODULE_EXPORT Rail : public Component, public eElement
         double volt() { return m_volt; }
         void setVolt( double v );
 
+        virtual void stamp() override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget ) override;
 
     private:
-        void updateOutput();
         double m_volt;
 
         IoPin* m_out;

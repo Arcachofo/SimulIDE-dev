@@ -29,7 +29,7 @@ enum pinMode_t{
     undef_mode=0,
     input,
     output,
-    open_col,
+    openCo,
     source
 };
 
