@@ -106,6 +106,8 @@ void NumVal::updtValues()
     double val = m_property->getValue()/multiplier;
     valueBox->setValue( val );
 
+    if( showVal->isChecked() ) m_component->setValLabelText( m_property->getValStr() );
+
     /*QString valStr = m_property->getValStr();
     QStringList l = valStr.split(" ");
     valueBox->setValue( l.first().toDouble() );
