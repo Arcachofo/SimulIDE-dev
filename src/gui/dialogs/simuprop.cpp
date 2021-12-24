@@ -68,8 +68,12 @@ void SimuProp::on_simSpeedPerSlider_valueChanged( int speed )
 void SimuProp::on_simSpeedPerBox_editingFinished()
 {
     m_blocked = true;
-    m_speedP = simSpeedPerBox->value();
-    m_sps    = m_speedP*1e12/(m_stepSize*100);
+    uint64_t speedP = simSpeedPerBox->value();
+    uint64_t sps = m_speedP*1e12/(m_stepSize*100);
+    if( sps > 0 && speedP > 0 ){
+        m_speedP = speedP;
+        m_sps    = sps;
+    }
     updateSpeed();
     m_blocked = false;
 }
@@ -77,7 +81,7 @@ void SimuProp::on_simSpeedPerBox_editingFinished()
 void SimuProp::on_simSpeedSpsBox_editingFinished()
 {
     uint64_t sps = simSpeedSpsBox->value();
-    double speedP = 100*(double)sps*m_stepSize/1e12;
+    double speedP = (double)(100*sps*m_stepSize)/1e12;
     if( speedP > 100 )
     {
         m_speedP = 100;
@@ -108,12 +112,29 @@ void SimuProp::on_simStepUnitBox_currentIndexChanged( int index )
 
 void SimuProp::updateSpeed()
 {
+    m_blocked = true;
+    /*while( m_sps == 0 && m_step > 1 )
+    {
+        m_step -= 1;
+
+        if( m_stepSize == 0 )
+        {
+            if( m_stepMult >= 1e3 )
+            {
+                m_step = 100;
+                m_stepMult /= 1e3;
+            }
+            else m_stepSize = 1;
+        }
+        m_sps = m_speedP*1e12/(m_stepSize*100);
+    }*/
     simSpeedPerSlider->setValue( m_speedP );
     simSpeedPerBox->setValue( m_speedP );
     simSpeedSpsBox->setValue( m_sps );
 
     Simulator::self()->setStepSize( m_stepSize );
     Simulator::self()->setStepsPerSec( m_sps );
+    m_blocked = false;
 }
 
 void SimuProp::on_nlStepsBox_editingFinished()
