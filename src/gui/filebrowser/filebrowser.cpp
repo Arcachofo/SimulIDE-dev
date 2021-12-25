@@ -26,7 +26,7 @@
 #include "filewidget.h"
 #include "editorwindow.h"
 
-FileBrowser*  FileBrowser::m_pSelf = 0l;
+FileBrowser*  FileBrowser::m_pSelf = NULL;
 
 FileBrowser::FileBrowser( QWidget *parent ) 
            : QTreeView( parent )
@@ -35,6 +35,7 @@ FileBrowser::FileBrowser( QWidget *parent )
     m_showHidden = false;
     
     m_fileSystemModel = new QFileSystemModel(this);
+     m_fileSystemModel->setNameFilterDisables( false );
     m_fileSystemModel->setRootPath( QDir::rootPath() );
     
     m_currentPath = QDir::rootPath();
@@ -59,7 +60,6 @@ FileBrowser::~FileBrowser() { }
 void FileBrowser::cdUp()
 {
     QModelIndex currentDir = m_fileSystemModel->index( m_currentPath );
-    
     setPath( m_fileSystemModel->filePath( currentDir.parent() ) );
 }
 
@@ -75,8 +75,7 @@ void FileBrowser::open()
     if( path.isEmpty() ) return;
     
     if( m_fileSystemModel->isDir( currentIndex() ) ) setPath( path );
-    else  
-    {
+    else{
         if( path.endsWith(".simu")
          || path.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( path );
         else                         EditorWindow::self()->loadFile( path );
@@ -86,13 +85,17 @@ void FileBrowser::open()
 void FileBrowser::setPath( QString path )
 {
     m_currentPath = path;
-    
+
     FileWidget::self()->setPath( path );
-    
     QModelIndex index = m_fileSystemModel->index( path );
     
     if( path == QDir::rootPath() ) index = index.parent();
     setRootIndex( index );
+
+    if( m_showHidden ) m_fileSystemModel->setFilter( QDir::AllEntries | QDir::NoDotAndDotDot | QDir::AllDirs | QDir::Hidden );
+    else               m_fileSystemModel->setFilter( QDir::AllEntries | QDir::NoDotAndDotDot | QDir::AllDirs );
+    m_fileSystemModel->setNameFilters({"*"});
+    this->collapseAll();
 }
 
 void FileBrowser::addBookMark()
@@ -108,6 +111,21 @@ void FileBrowser::showHidden()
     else               m_fileSystemModel->setFilter( QDir::AllEntries | QDir::NoDotAndDotDot | QDir::AllDirs );
 }
 
+void FileBrowser::searchFiles( QString filter )
+{
+    if( filter.isEmpty() )
+    {
+        if( m_showHidden ) m_fileSystemModel->setFilter( QDir::AllEntries | QDir::NoDotAndDotDot | QDir::AllDirs | QDir::Hidden );
+        else               m_fileSystemModel->setFilter( QDir::AllEntries | QDir::NoDotAndDotDot | QDir::AllDirs );
+        m_fileSystemModel->setNameFilters({"*"});
+        this->collapseAll();
+    }else{
+        this->expandAll();
+        m_fileSystemModel->setNameFilters({filter});
+        m_fileSystemModel->setFilter( QDir::NoDotAndDotDot | QDir::Files );
+    }
+}
+
 void FileBrowser::contextMenuEvent( QContextMenuEvent* event )
 {
     QTreeView::contextMenuEvent( event );
@@ -116,7 +134,6 @@ void FileBrowser::contextMenuEvent( QContextMenuEvent* event )
     {
         event->accept();
         QPoint eventPos = event->globalPos();
-
         QMenu menu;
         
         if( m_fileSystemModel->isDir( currentIndex()) )

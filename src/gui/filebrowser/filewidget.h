@@ -48,6 +48,7 @@ class MAINMODULE_EXPORT FileWidget : public QSplitter
         void itemClicked( QListWidgetItem* );
         void remBookMark();
         void pathChanged();
+        void searchChanged();
 
     protected:
         void contextMenuEvent( QContextMenuEvent* event );
@@ -61,9 +62,10 @@ class MAINMODULE_EXPORT FileWidget : public QSplitter
         
         FileBrowser* m_fileBrowser;
         QListWidget* m_bookmarks;
+        QLineEdit*   m_searchFiles;
         QPushButton* m_cdUpButton;
         QLineEdit*   m_path;
-        
+
         bool m_blocked;
 };
 

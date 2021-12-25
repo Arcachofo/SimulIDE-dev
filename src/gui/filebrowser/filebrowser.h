@@ -34,7 +34,8 @@ class MAINMODULE_EXPORT FileBrowser : public QTreeView
         
  static FileBrowser* self() { return m_pSelf; }
  
-        void setPath(QString path);
+        void setPath( QString path );
+        void searchFiles( QString filter );
         
     public slots:
         void cdUp();
@@ -47,7 +48,7 @@ class MAINMODULE_EXPORT FileBrowser : public QTreeView
         void contextMenuEvent( QContextMenuEvent* event );
 
     private:
- static FileBrowser*  m_pSelf;
+ static FileBrowser* m_pSelf;
  
         void mouseDoubleClickEvent( QMouseEvent* ) { open(); }
         void keyPressEvent( QKeyEvent *event );
@@ -55,7 +56,7 @@ class MAINMODULE_EXPORT FileBrowser : public QTreeView
         QFileSystemModel* m_fileSystemModel;
         
         QString m_currentPath;
-        
+
         bool m_showHidden;
 };
 

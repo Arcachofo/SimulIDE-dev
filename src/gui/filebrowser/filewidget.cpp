@@ -40,7 +40,7 @@ FileWidget::FileWidget( QWidget* parent )
     
     m_bookmarks = new QListWidget( this );
     this->addWidget( m_bookmarks );
-    
+
     QWidget* pathWidget = new QWidget( this );
     QHBoxLayout* hLayout = new QHBoxLayout( pathWidget );
     hLayout->setContentsMargins(0,0,0,0);
@@ -50,15 +50,19 @@ FileWidget::FileWidget( QWidget* parent )
     hLayout->addWidget( m_cdUpButton );
     m_path = new QLineEdit( this );
     hLayout->addWidget( m_path );
-    //vLayout->addLayout( hLayout );
     pathWidget->setFixedHeight( 24 );
     this->addWidget( pathWidget );
+
+    m_searchFiles = new QLineEdit( this );
+    m_searchFiles->setPlaceholderText( tr( "Search Files (Doesn't work)" ));
+    m_searchFiles->setFixedHeight( 24 );
+    this->addWidget( m_searchFiles );
     
     m_fileBrowser = new FileBrowser( this );
     m_fileBrowser->setPath( QDir::rootPath() );
     this->addWidget( m_fileBrowser );
 
-    this->setSizes( {120, 24, 500} );
+    this->setSizes( {120, 24, 24, 500} );
     
     QSettings* settings = MainWindow::self()->settings();
     QDir setDir( settings->fileName() );
@@ -70,13 +74,15 @@ FileWidget::FileWidget( QWidget* parent )
     addEntry( "Examples",   MainWindow::self()->getFilePath("examples") );
     addEntry( "Data",       MainWindow::self()->getFilePath("data") );
     addEntry( "Settings",   settingsDir );
-    
-    
+
     connect( m_bookmarks, SIGNAL( itemClicked( QListWidgetItem* )), 
              this,        SLOT(   itemClicked( QListWidgetItem* )), Qt::UniqueConnection);
              
-    connect( m_cdUpButton,        SIGNAL(released()),
-             FileBrowser::self(), SLOT(  cdUp()), Qt::UniqueConnection);
+    connect( m_searchFiles, SIGNAL( editingFinished() ),
+             this,          SLOT( searchChanged() ), Qt::UniqueConnection);
+
+    connect( m_cdUpButton,  SIGNAL(released()),
+             m_fileBrowser, SLOT(  cdUp()), Qt::UniqueConnection);
              
     connect( m_path, SIGNAL( editingFinished() ),
              this,   SLOT(  pathChanged()), Qt::UniqueConnection);
@@ -142,6 +148,12 @@ void FileWidget::itemClicked( QListWidgetItem* item  )
 {
     QString path = item->data( 4 ).toString();
     m_fileBrowser->setPath( path );
+}
+
+void FileWidget::searchChanged()
+{
+    QString filter = m_searchFiles->text();
+    m_fileBrowser->searchFiles( filter );
 }
 
 void FileWidget::setPath( QString path )
