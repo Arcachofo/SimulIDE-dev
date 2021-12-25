@@ -163,12 +163,12 @@ void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
                 overBight += m_intensity-255;
                 m_intensity = 255;
         }   }
-        if     ( m_ledColor == yellow ) color = QColor( m_intensity, m_intensity, overBight );
-        else if( m_ledColor == red    ) color = QColor( m_intensity, overBight, overBight );
-        else if( m_ledColor == green  ) color = QColor( overBight, m_intensity, m_intensity*2/3 );
-        else if( m_ledColor == blue   ) color = QColor( overBight, m_intensity*2/3, m_intensity );
+        if     ( m_ledColor == yellow ) color = QColor( m_intensity, m_intensity,     overBight*2/3 );
+        else if( m_ledColor == red    ) color = QColor( m_intensity, m_intensity/4+overBight/2, overBight/2 );
+        else if( m_ledColor == green  ) color = QColor( overBight,   m_intensity,     m_intensity*2/3 );
+        else if( m_ledColor == blue   ) color = QColor( overBight,   m_intensity*2/3, m_intensity );
         else if( m_ledColor == orange ) color = QColor( m_intensity, m_intensity*2/3, overBight );
-        else if( m_ledColor == purple ) color = QColor( m_intensity, overBight,  m_intensity );
+        else if( m_ledColor == purple ) color = QColor( m_intensity, m_intensity/4+overBight/2, m_intensity );
     }
     p->setPen( pen );
     drawBackground( p );
