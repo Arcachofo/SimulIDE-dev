@@ -39,7 +39,7 @@ void McuIcUnit::initialize()
     m_inState = false;
     m_fallingEdge = false;
     m_mode = 0;
-    m_icPin->changeCallBack( this, false );
+    if( m_icPin ) m_icPin->changeCallBack( this, false );
 }
 
 void McuIcUnit::voltChanged() // Pin change

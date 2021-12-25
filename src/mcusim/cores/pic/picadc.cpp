@@ -79,7 +79,6 @@ PicAdc0::PicAdc0( eMcu* mcu, QString name )
        : PicAdc( mcu, name )
 {
     m_ADSC = getRegBits( "ADSC0,ADCS1", mcu );
-
     m_CHS  = getRegBits( "CHS0,CHS1,CHS2", mcu );
     m_PCFG = getRegBits( "PCFG0,PCFG1,PCFG2,PCFG3", mcu );
 }
@@ -172,7 +171,6 @@ PicAdc10::PicAdc10( eMcu* mcu, QString name )
         : PicAdc1( mcu, name )
 {
     m_ADSC = getRegBits( "ADSC0,ADCS1", mcu );
-
     m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3", mcu );
     m_VCFG = getRegBits( "VCFG0,VCFG1", mcu );
 
@@ -200,8 +198,8 @@ PicAdc11::PicAdc11( eMcu* mcu, QString name )
         : PicAdc1( mcu, name )
 {
     m_ADSC = getRegBits( "ADSC0,ADCS1,ADCS2", mcu );
-    m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3", mcu );
-    m_VCFG = getRegBits( "VCFG0,VCFG1", mcu );
+    m_CHS  = getRegBits( "CHS0,CHS1", mcu );
+    m_VCFG = getRegBits( "VCFG", mcu );
 }
 PicAdc11::~PicAdc11(){}
 

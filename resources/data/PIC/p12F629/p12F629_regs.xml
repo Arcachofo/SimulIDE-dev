@@ -12,7 +12,7 @@
                   bits="RBIF,INTF,T0IF,RBIE,INTE,T0IE,PEIE,GIE"/>
                   
         <register name="PIR1"    addr="0x0C" 
-                  bits="TMR1IF,TMR2IF,CCP1IF,0,TXIF,RCIF,CMIF,EEIF"/>
+                  bits="TMR1IF,0,0,CMIF,0,0,ADIF,EEIF"/>
                   
         <register name="TMR1L"   addr="0x0E" bits=""/>
         <register name="TMR1H"   addr="0x0F" bits=""/>
@@ -40,7 +40,7 @@
         <mapped                  addr="0x8A" mapto="0x0A"/><!-- PCLATH -->
         <mapped                  addr="0x8B" mapto="0x0B"/><!-- INTCON -->
         <register name="PIE1"   addr="0x8C" 
-                  bits="TMR1IE,TMR2IE,CCP1IE,0,TXIE,RCIE,CMIE,EEIE"/>
+                  bits="TMR1IE,0,0,CMIE,0,0,ADIE,EEIE"/>
                   
         <register name="PCON"   addr="0x8E" reset="00001000"
                   bits="BOR,POR,0,OSCF" />

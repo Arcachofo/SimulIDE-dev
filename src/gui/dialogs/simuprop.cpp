@@ -87,7 +87,6 @@ void SimuProp::on_simSpeedSpsBox_editingFinished()
         m_speedP = 100;
         sps = 1e12/m_stepSize;
     }
-
     m_speedP = speedP;
     m_sps = sps;
     updateSpeed();
