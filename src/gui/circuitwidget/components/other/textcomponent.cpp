@@ -165,7 +165,12 @@ bool TextComponent::eventFilter( QObject* object, QEvent* event )
 {
     if( event->type() == QEvent::FocusIn )
     {
-        if( object == m_text) Circuit::self()->deselectAll();
+        if( object == m_text ) Circuit::self()->deselectAll();
+    }
+    else if( event->type() == QEvent::GraphicsSceneContextMenu ) //Added
+    {
+        event->setAccepted( false );
+        return true;
     }
     return false;
 }
