@@ -63,7 +63,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView*  p
     new_connector = NULL;
     m_seqNumber   = 0;
 
-    m_backupPath = MainWindow::self()->getConfigPath("/backup.sim1");
+    m_backupPath = MainWindow::self()->getConfigPath("backup.sim1");
     m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
     m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
     m_filePath   = qApp->applicationDirPath()+"/new.simu";
@@ -428,7 +428,7 @@ bool Circuit::saveString( QString &fileName, QString doc )
     if( !file.open( QFile::WriteOnly | QFile::Text ))
     {
         QApplication::restoreOverrideCursor();
-        QMessageBox::warning(0l, "Circuit::saveCircuit",
+        QMessageBox::warning( NULL, "Circuit::saveString",
         tr("Cannot write file %1:\n%2.").arg(fileName).arg(file.errorString()));
         return false;
     }

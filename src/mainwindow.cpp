@@ -90,7 +90,7 @@ MainWindow::MainWindow()
     //readSettings();
     applyStyle();
 
-    QString backPath = getConfigPath( "/backup.sim1" );
+    QString backPath = getConfigPath( "backup.sim1" );
     if( QFile::exists( backPath ) )
     {
         QMessageBox msgBox;
@@ -279,7 +279,7 @@ QString MainWindow::getHelpFile( QString name )
     name= name.toLower().replace( " ", "" );
     QString dfPath = getFilePath("help/"+locale+name+locale+".txt");
 
-    if( dfPath == "" ) dfPath = getFilePath( "help/"+name+".txt" );
+    if( dfPath == "" ) dfPath = getFilePath( "data/help/"+name+".txt" );
     if( dfPath != "" )
     {
         QFile file( dfPath );
