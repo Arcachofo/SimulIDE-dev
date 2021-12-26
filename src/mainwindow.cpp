@@ -55,7 +55,9 @@ MainWindow::MainWindow()
     QString appImg = QProcessEnvironment::systemEnvironment().value( QStringLiteral("APPIMAGE") );
     if( !appImg.isEmpty() ) m_filesDir.setPath( appImg.left( appImg.lastIndexOf("/") ) );
     else                    m_filesDir.setPath( QApplication::applicationDirPath() );
-    m_filesDir.cd("../share/simulide");
+
+    if( m_filesDir.exists("../share/simulide") ) m_filesDir.cd("../share/simulide");
+
     m_configDir.setPath( QStandardPaths::writableLocation( QStandardPaths::DataLocation ) );
 
     m_settings = new QSettings( getConfigPath("simulide.ini"), QSettings::IniFormat, this );
@@ -64,15 +66,12 @@ MainWindow::MainWindow()
     QDir pluginsDir( userAddonPath );
     if( !pluginsDir.exists() ) pluginsDir.mkpath( userAddonPath );
 
-    // Font --------------------------------------
-    QDir fontDir( qApp->applicationDirPath() );
-    fontDir.cd( "../share/simulide/fonts" );
-
-    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("Ubuntu-B.ttf") );
-    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-B.ttf") );
-    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-BI.ttf") );
-    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-R.ttf") );
-    QFontDatabase::addApplicationFont( fontDir.absoluteFilePath("UbuntuMono-RI.ttf") );
+    // Fonts --------------------------------------
+    QFontDatabase::addApplicationFont( ":/Ubuntu-B.ttf" );
+    QFontDatabase::addApplicationFont( ":/UbuntuMono-B.ttf" );
+    QFontDatabase::addApplicationFont( ":/UbuntuMono-BI.ttf" );
+    QFontDatabase::addApplicationFont( ":/UbuntuMono-R.ttf" );
+    QFontDatabase::addApplicationFont( ":/UbuntuMono-RI.ttf" );
 
     float scale = 1.0;
     if( m_settings->contains( "fontScale" ) )
@@ -85,10 +84,10 @@ MainWindow::MainWindow()
     setFontScale( scale );
     //----------------------------------------------
 
+    QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
     createWidgets();
     loadPlugins();
     //readSettings();
-    applyStyle();
 
     QString backPath = getConfigPath( "backup.sim1" );
     if( QFile::exists( backPath ) )
@@ -400,20 +399,6 @@ void MainWindow::unLoadPugin( QString pluginName )
         m_plugins.remove( pluginName );
         delete pluginLoader;
 }   }
-
-void MainWindow::applyStyle()
-{
-    QDir dataConfigDir(qApp->applicationDirPath());
-    dataConfigDir.cd("../share/simulide/data/config");
-
-    QFile file(dataConfigDir.absoluteFilePath("simulide.qss"));
-    if( file.open(QFile::ReadOnly) )
-    {
-        m_styleSheet = QLatin1String(file.readAll());
-        qApp->setStyleSheet( m_styleSheet );
-    }
-    else QApplication::setStyle( QStyleFactory::create("Fusion") );
-}
 
 QSettings* MainWindow::settings() { return m_settings; }
 

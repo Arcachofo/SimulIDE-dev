@@ -1,5 +1,24 @@
 <RCC>
     <qresource prefix="/">
+    
+        <file alias="Ubuntu-B.ttf">../resources/fonts/Ubuntu-B.ttf</file>
+        <file alias="UbuntuMono-B.ttf">../resources/fonts/UbuntuMono-B.ttf</file>
+        <file alias="UbuntuMono-BI.ttf">../resources/fonts/UbuntuMono-BI.ttf</file>
+        <file alias="UbuntuMono-R.ttf">../resources/fonts/UbuntuMono-R.ttf</file>
+        <file alias="UbuntuMono-RI.ttf">../resources/fonts/UbuntuMono-RI.ttf</file>
+        
+        <file alias="simulide_cz.qm">../resources/translations/simulide_cz.qm</file>
+        <file alias="simulide_de.qm">../resources/translations/simulide_de.qm</file>
+        <file alias="simulide_en.qm">../resources/translations/simulide_en.qm</file>
+        <file alias="simulide_es.qm">../resources/translations/simulide_es.qm</file>
+        <file alias="simulide_fr.qm">../resources/translations/simulide_fr.qm</file>
+        <file alias="simulide_it.qm">../resources/translations/simulide_it.qm</file>
+        <file alias="simulide_nl.qm">../resources/translations/simulide_nl.qm</file>
+        <file alias="simulide_pt_BR.qm">../resources/translations/simulide_pt_BR.qm</file>
+        <file alias="simulide_pt_PT.qm">../resources/translations/simulide_pt_PT.qm</file>
+        <file alias="simulide_ru.qm">../resources/translations/simulide_ru.qm</file>
+        <file alias="simulide_tr.qm">../resources/translations/simulide_tr.qm</file>
+    
         <file alias="null.png">../src/icons/components/null.png</file>
         
         <file alias="simulide.png">../src/icons/simulide.png</file>

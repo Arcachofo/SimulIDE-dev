@@ -56,7 +56,6 @@ INCLUDEPATH += ../src \
     ../src/simulator/elements/active \
     ../src/simulator/elements/outputs \
     ../src/simulator/elements/passive \
-    ../src/simulator/elements/processors \
     ../src/mcusim \
     ../src/mcusim/cores \
     ../src/mcusim/cores/avr \
@@ -111,43 +110,33 @@ OBJECTS_DIR *= $$OUT_PWD/build/objects
 MOC_DIR     *= $$OUT_PWD/build/moc
 INCLUDEPATH += $$MOC_DIR
 
-runLrelease.commands = lrelease ../resources/translations/*.ts; 
-QMAKE_EXTRA_TARGETS += runLrelease
-POST_TARGETDEPS     += runLrelease
-
 win32 | linux {
-    DESTDIR = $$TARGET_PREFIX/bin 
-    mkpath( $$TARGET_PREFIX/bin )
+    DESTDIR = $$TARGET_PREFIX
+#    mkpath( $$TARGET_PREFIX/bin )
     copy2dest.commands = \
-        $(MKDIR)    $$TARGET_PREFIX/share/simulide/data ; \
-        $(MKDIR)    $$TARGET_PREFIX/share/simulide/examples ; \
-        $(MKDIR)    $$TARGET_PREFIX/share/simulide/translations ; \
-        $(COPY_DIR) ../resources/data              $$TARGET_PREFIX/share/simulide ; \
-        $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX/share/simulide ; \
-        $(COPY_DIR) ../resources/fonts             $$TARGET_PREFIX/share/simulide ; \
-        $(COPY_DIR) ../resources/icons             $$TARGET_PREFIX/share ; \
-        $(MOVE)     ../resources/translations/*.qm $$TARGET_PREFIX/share/simulide/translations ;
+#        $(MKDIR)    $$TARGET_PREFIX/share/simulide/data ; \
+#        $(MKDIR)    $$TARGET_PREFIX/share/simulide/examples ; \
+        $(COPY_DIR) ../resources/data              $$TARGET_PREFIX; \
+        $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX; \
+#        $(COPY_DIR) ../resources/icons             $$TARGET_PREFIX/share ; \
 }
 macx {
-#    QMAKE_CC = gcc-10
-#    QMAKE_CXX = g++-10
-#    QMAKE_LINK = g++-10
     QMAKE_CXXFLAGS -= -stdlib=libc++
     QMAKE_LFLAGS -= -stdlib=libc++
     DESTDIR = $$TARGET_PREFIX 
     mkpath( $$TARGET_PREFIX/simulide.app )
     copy2dest.commands = \
-        $(MKDIR)    $$TARGET_PREFIX/simulide.app/Contents/share/simulide/data ; \
-        $(MKDIR)    $$TARGET_PREFIX/simulide.app/Contents/share/simulide/examples ; \
-        $(MKDIR)    $$TARGET_PREFIX/simulide.app/Contents/share/simulide/translations ; \
-        $(COPY_DIR) ../resources/data              $$TARGET_PREFIX/simulide.app/Contents/share/simulide ; \
-        $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX/simulide.app/Contents/share/simulide ; \
-        $(COPY_DIR) ../resources/fonts             $$TARGET_PREFIX/simulide.app/Contents/share/simulide ; \
-        $(COPY_DIR) ../resources/icons             $$TARGET_PREFIX/simulide.app/Contents/share ; \
-        $(MOVE)     ../resources/translations/*.qm $$TARGET_PREFIX/simulide.app/Contents/share/simulide/translations ;
+#        $(MKDIR)    $$TARGET_PREFIX/simulide.app/Contents/share/simulide/data ; \
+#        $(MKDIR)    $$TARGET_PREFIX/simulide.app/Contents/share/simulide/examples ; \
+        $(COPY_DIR) ../resources/data              $$TARGET_PREFIX/simulide.app/Contents; \
+        $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX/simulide.app/Contents; \
+#        $(COPY_DIR) ../resources/icons             $$TARGET_PREFIX/simulide.app/Contents/share ; \
 }
 
+runLrelease.commands = lrelease ../resources/translations/*.ts;
+QMAKE_EXTRA_TARGETS += runLrelease
 QMAKE_EXTRA_TARGETS += copy2dest
+POST_TARGETDEPS     += runLrelease
 POST_TARGETDEPS     += copy2dest
 
 

@@ -104,7 +104,6 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         void createMenus();
         void createToolBars();
         void writeSettings();
-        void applyStyle();
         
         float m_fontScale;
         int m_autoBck;
