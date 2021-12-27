@@ -28,7 +28,7 @@
 void myMessageOutput( QtMsgType type, const QMessageLogContext &context, const QString &msg )
 {
     QByteArray localMsg = msg.toLocal8Bit();
-    const char* file = context.file ? context.file : "";
+    const char* file     = context.file ? context.file : "";
     const char* function = context.function ? context.function : "";
     switch (type) {
     case QtDebugMsg:
@@ -60,28 +60,8 @@ QString langFile( QString locale )
     return langF;
 }
 
-int main(int argc, char *argv[])
+int main( int argc, char *argv[] )
 {
-
-#ifdef _WIN32
-    QStringList paths = QCoreApplication::libraryPaths();
-    paths.append("plugins");
-    paths.append("plugins/platforms");
-    paths.append("plugins/imageformats");
-    paths.append("plugins/sqldrivers");
-    paths.append("plugins/bearer");
-    paths.append("plugins/generic");
-    paths.append("plugins/iconengines");
-    paths.append("plugins/qmltooling");
-    paths.append("plugins/printsupport");
-    QCoreApplication::setLibraryPaths(paths);
-    
-    if (AttachConsole(ATTACH_PARENT_PROCESS))
-    {
-        freopen("CONOUT$", "w", stdout);
-        freopen("CONOUT$", "w", stderr);
-    }
-#endif
     qInstallMessageHandler( myMessageOutput );
 
     //QApplication::setGraphicsSystem( "raster" );//native, raster, opengl
@@ -113,9 +93,7 @@ int main(int argc, char *argv[])
         QString circ = QString::fromStdString( argv[1] );
         if( circ.endsWith(".simu")
          || circ.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( circ );
-        //qDebug() << "MAIN, circuit 0 "<< circ;
     }
-
     window.show();
     QTimer::singleShot( 100, &window, &MainWindow::readSettings ); // Some DE forze window geometry, so restore geometry later
 

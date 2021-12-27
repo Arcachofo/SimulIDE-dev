@@ -13,14 +13,11 @@ QT += concurrent
 QT += serialport
 QT += multimedia widgets
 
-SOURCES = $$files( $$PWD/src/*.cpp, true )
-HEADERS = $$files( $$PWD/src/*.h, true )
-
+SOURCES      = $$files( $$PWD/src/*.cpp, true )
+HEADERS      = $$files( $$PWD/src/*.h, true )
 TRANSLATIONS = $$files( $$PWD/resources/translations/*.ts )
-
-FORMS += $$files( $$PWD/src/*.ui, true )
-
-RESOURCES = ../src/application.qrc
+FORMS       += $$files( $$PWD/src/*.ui, true )
+RESOURCES    = ../src/application.qrc
 
 INCLUDEPATH += ../src \
     ../src/gui \
@@ -112,25 +109,18 @@ INCLUDEPATH += $$MOC_DIR
 
 win32 | linux {
     DESTDIR = $$TARGET_PREFIX
-#    mkpath( $$TARGET_PREFIX/bin )
     copy2dest.commands = \
-#        $(MKDIR)    $$TARGET_PREFIX/share/simulide/data ; \
-#        $(MKDIR)    $$TARGET_PREFIX/share/simulide/examples ; \
         $(COPY_DIR) ../resources/data              $$TARGET_PREFIX; \
         $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX; \
-#        $(COPY_DIR) ../resources/icons             $$TARGET_PREFIX/share ; \
 }
 macx {
     QMAKE_CXXFLAGS -= -stdlib=libc++
-    QMAKE_LFLAGS -= -stdlib=libc++
+    QMAKE_LFLAGS   -= -stdlib=libc++
     DESTDIR = $$TARGET_PREFIX 
     mkpath( $$TARGET_PREFIX/simulide.app )
     copy2dest.commands = \
-#        $(MKDIR)    $$TARGET_PREFIX/simulide.app/Contents/share/simulide/data ; \
-#        $(MKDIR)    $$TARGET_PREFIX/simulide.app/Contents/share/simulide/examples ; \
         $(COPY_DIR) ../resources/data              $$TARGET_PREFIX/simulide.app/Contents; \
-        $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX/simulide.app/Contents; \
-#        $(COPY_DIR) ../resources/icons             $$TARGET_PREFIX/simulide.app/Contents/share ; \
+        $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX/simulide.app/Contents;
 }
 
 runLrelease.commands = lrelease ../resources/translations/*.ts;
@@ -138,7 +128,6 @@ QMAKE_EXTRA_TARGETS += runLrelease
 QMAKE_EXTRA_TARGETS += copy2dest
 POST_TARGETDEPS     += runLrelease
 POST_TARGETDEPS     += copy2dest
-
 
 message( "-----------------------------------")
 message( "    "                               )

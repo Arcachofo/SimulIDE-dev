@@ -77,8 +77,8 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
     
     setFontSize( 10 );
 
-    connect(m_text->document(), SIGNAL( contentsChange(int, int, int )),
-                          this, SLOT( updateGeometry(int, int, int )), Qt::UniqueConnection );
+    connect( m_text->document(), SIGNAL( contentsChange(int, int, int )),
+                           this, SLOT( updateGeometry(int, int, int )), Qt::UniqueConnection );
 
     addPropGroup( { tr("Main"), {
 new IntProp <TextComponent>( "Margin" , tr("Margin") ,"_Pixels", this, &TextComponent::margin, &TextComponent::setMargin, "uint" ),
@@ -175,7 +175,7 @@ bool TextComponent::eventFilter( QObject* object, QEvent* event )
     return false;
 }
 
-void TextComponent::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( !m_text->hasFocus() )
     {
