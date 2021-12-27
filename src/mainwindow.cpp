@@ -276,7 +276,7 @@ QString MainWindow::getHelpFile( QString name )
     else locale = "";
 
     name= name.toLower().replace( " ", "" );
-    QString dfPath = getFilePath("help/"+locale+name+locale+".txt");
+    QString dfPath = getFilePath("data/help/"+locale+name+locale+".txt");
 
     if( dfPath == "" ) dfPath = getFilePath( "data/help/"+name+".txt" );
     if( dfPath != "" )
