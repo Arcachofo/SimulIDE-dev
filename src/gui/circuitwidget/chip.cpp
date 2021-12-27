@@ -281,7 +281,8 @@ void Chip::setSubcTypeStr( QString s )
 {
     bool ok = false;
     int index = s.toInt(&ok); // OLd TODELETE
-    if( !ok ) index = m_subcTypes.indexOf( s );
+    if( !ok ) index = m_subcTypes.indexOf( s.remove("subc") );
+    if( index < 0 ) index = 0;
     m_subcType = (subcType_t)index;
 }
 
