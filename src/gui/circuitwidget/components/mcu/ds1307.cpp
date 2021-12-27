@@ -83,12 +83,12 @@ void DS1307::readByte()               // Write to RAM
         m_phase = 1;
         m_addrPtr = m_rxReg;
     }else{
+        m_data[m_addrPtr] = m_rxReg;
         if( m_addrPtr < 8 ){
             if     ( m_addrPtr < 3 ) updtTime();
             else if( m_addrPtr < 7 ) updtDate();
             else                     updtCtrl();
         }
-        m_data[m_addrPtr] = m_rxReg;
         m_addrPtr++;
     }
     TwiModule::readByte();
