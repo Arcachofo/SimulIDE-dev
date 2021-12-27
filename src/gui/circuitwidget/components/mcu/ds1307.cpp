@@ -64,6 +64,8 @@ DS1307::~DS1307(){}
 
 void DS1307::initialize()
 {
+    TwiModule::initialize();
+
     m_phase = 0;
     for( int i=0; i<64; i++ ) m_data[i] = 0x00;
     m_data[7] = 0x03;
