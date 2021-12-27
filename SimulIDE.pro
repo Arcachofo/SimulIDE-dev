@@ -110,8 +110,8 @@ INCLUDEPATH += $$MOC_DIR
 win32 | linux {
     DESTDIR = $$TARGET_PREFIX
     copy2dest.commands = \
-        $(COPY_DIR) ../resources/data              $$TARGET_PREFIX; \
-        $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX; \
+        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/data; \
+        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/examples; \
 }
 macx {
     QMAKE_CXXFLAGS -= -stdlib=libc++
@@ -119,8 +119,8 @@ macx {
     DESTDIR = $$TARGET_PREFIX 
     mkpath( $$TARGET_PREFIX/simulide.app )
     copy2dest.commands = \
-        $(COPY_DIR) ../resources/data              $$TARGET_PREFIX/simulide.app/Contents; \
-        $(COPY_DIR) ../resources/examples          $$TARGET_PREFIX/simulide.app/Contents;
+        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/simulide.app/Contents/data; \
+        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/simulide.app/Contents/examples;
 }
 
 runLrelease.commands = lrelease ../resources/translations/*.ts;
