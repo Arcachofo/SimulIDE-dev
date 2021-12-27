@@ -49,7 +49,7 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
         });
 
     setNumOuts( 8, "Q" );
-    createOePin( "IU01OE ", id+"-in4");
+    createOePin( "IU01OE ", id+"-in3");
 
     m_clkPin = m_inPin[1];
 
