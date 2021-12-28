@@ -126,7 +126,7 @@ macx {
 runLrelease.commands = lrelease ../resources/translations/*.ts;
 QMAKE_EXTRA_TARGETS += runLrelease
 QMAKE_EXTRA_TARGETS += copy2dest
-POST_TARGETDEPS     += runLrelease
+PRE_TARGETDEPS      += runLrelease
 POST_TARGETDEPS     += copy2dest
 
 message( "-----------------------------------")
