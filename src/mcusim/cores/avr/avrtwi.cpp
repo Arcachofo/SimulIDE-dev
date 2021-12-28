@@ -143,9 +143,13 @@ void AvrTwi::writeTwiReg(uint8_t newTWDR ) // TWDR is being written
     if( m_mode != TWI_MASTER ) return;
 
     bool twint = getRegBitsBool( *m_TWCR, m_TWINT ); // Check if TWINT is set
-    if( !twint )                  // If not, the access will be discarded
+    if( twint )                  // If set clear TWWC
     {
-        setRegBits( m_TWWC ); // set Write Collision bit TWWC
+        clearRegBits( m_TWWC ); // Clear Write Collision bit TWWC
+    }
+    else                        // If not, the access will be discarded
+    {
+        setRegBits( m_TWWC );  // set Write Collision bit TWWC
         return;
     }
     bool write = false;

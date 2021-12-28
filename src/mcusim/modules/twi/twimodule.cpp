@@ -104,8 +104,9 @@ void TwiModule::runEvent()
 
         case I2C_START :         // Send Start Condition
         {
-            if( m_sdaState ) setSDA( false ); // Step 1: SDA is High, Lower it
-            else if( !clkLow )                // Step 2: SDA Already Low, Lower Clock
+            if     ( clkLow )     setSCL( true );  // Step 1: Clock Low, Raise Clock
+            else if( m_sdaState ) setSDA( false ); // Step 2: SDA is High, Lower it
+            else if( !clkLow )                     // Step 3: SDA Already Low, Lower Clock
             {
                 setSCL( false ); //keepClocking();
                 setTwiState( TWI_START );
