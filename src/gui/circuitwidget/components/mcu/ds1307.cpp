@@ -73,8 +73,7 @@ void DS1307::initialize()
 
 void DS1307::stamp()
 {
-    TwiModule::stamp();
-    setMode( TWI_SLAVE );
+    TwiModule::setMode( TWI_SLAVE );
 }
 
 void DS1307::readByte()               // Write to RAM

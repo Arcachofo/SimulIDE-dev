@@ -1,17 +1,25 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-    <tag>QT_TRANSLATE_NOOP("xmlfile","led_display")</tag>
+  <tag>QT_TRANSLATE_NOOP("xmlfile","Led display")</tag>
     
-    <itemset category="Led display" type="Subcircuit" icon="subc.png" >
-        
+  <itemset category="Led display" type="Subcircuit" icon="subc.png" >
+      
+    <item name="1bit_led_scc" folder="led_display" info=" 1-Bit Led digital Tube module (74hc595, com. cathode, static)" />
+    <item name="1bit_led_sca" folder="led_display" info=" 1-Bit Led digital Tube module (74hc595, com. anode, static)" />
+    <item name="2bit_led_scc" folder="led_display" info=" 2-Bit Led digital Tube module (74hc595, com. cathode, static)" />
+    <item name="2bit_led_sca" folder="led_display" info=" 2-Bit Led digital Tube module (74hc595, com. anode, static)" />
+    <item name="3bit_led_scc" folder="led_display" info=" 3-Bit Led digital Tube module (74hc595, com. cathode, static)" />
+    <item name="3bit_led_sca" folder="led_display" info=" 3-Bit Led digital Tube module (74hc595, com. anode, static)" />
+    <item name="4bit_led_scc" folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. cathode, static)" />
+    <item name="4bit_led_sca" folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. anode, static)" />
     <item name="2x4bit_led_ca" folder="led_display" info=" 2x4-Bit Led digital Tube module (74hc164, com. anode, dynamic)" />
     <item name="2x4bit_led_cc" folder="led_display" info=" 2x4-Bit Led digital Tube module (74hc164, com. cathode, dynamic)" />
-    <item name="4bit_led_ca"   folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. anode, dynamic)" />
-    <item name="8bit_led_ca"   folder="led_display" info=" 8-Bit Led digital Tube module (74hc595, com. anode), dynamic" />
-    <item name="4bit_led_cc"   folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" />
-    <item name="8bit_led_cc"   folder="led_display" info=" 8-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" />
-    
-    </itemset>
+    <item name="4bit_led_ca" folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. anode, dynamic)" />
+    <item name="8bit_led_ca" folder="led_display" info=" 8-Bit Led digital Tube module (74hc595, com. anode), dynamic" />
+    <item name="4bit_led_cc" folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" />
+    <item name="8bit_led_cc" folder="led_display" info=" 8-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" />
+
+  </itemset>
 
 </itemlib>
