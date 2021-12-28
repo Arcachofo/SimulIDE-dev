@@ -32,18 +32,18 @@ void RtClock::initialize()
     m_enabled = false;
     m_disOut  = false;
 
-    m_halfCycles = 32768*2;
-    m_period = 1e12/m_halfCycles;  // Period in ps
+    m_freqBase = 32768;
+    m_halfPeriod = 1e12/m_freqBase/2;  // Period in ps
     m_toggle = 1;
     m_tCount = 1;
-    m_sCount = m_halfCycles;
+    m_sCount = m_freqBase*2;
 
     m_date = QDate::currentDate();
     m_time = QTime::currentTime();
     //m_time.setHMS( 0, 0, 0 );
     //m_date.setDate( 0, 0, 0 );
 
-    Simulator::self()->addEvent( m_period, this );
+    Simulator::self()->addEvent( m_halfPeriod, this );
 }
 
 void RtClock::runEvent()
@@ -55,14 +55,18 @@ void RtClock::runEvent()
     }
     if( --m_sCount == 0 ) // Increment 1 second
     {
-        m_sCount = m_halfCycles;
+        m_sCount = m_freqBase*2;
         m_time = m_time.addSecs( 1 );
         if( m_time == QTime( 0, 0, 0 ) ) m_date = m_date.addDays( 1 );
     }
-    Simulator::self()->addEvent( m_period, this );
+    Simulator::self()->addEvent( m_halfPeriod, this );
 }
 
-void RtClock::setFreq( uint64_t freq ) { m_toggle = m_halfCycles/freq; }
+void RtClock::setFreq( uint64_t freq )
+{
+    m_toggle = m_freqBase/freq;
+    m_tCount = m_toggle;
+}
 
 void RtClock::enable( bool en )
 {

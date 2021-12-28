@@ -50,8 +50,8 @@ class MAINMODULE_EXPORT RtClock : public eElement
         uint64_t m_tCount;
         uint64_t m_sCount;
         uint64_t m_toggle;
-        uint64_t m_period;
-        uint64_t m_halfCycles;
+        uint64_t m_halfPeriod;
+        uint64_t m_freqBase;
 
         IoPin* m_outpin;
 };
