@@ -84,7 +84,7 @@ void Meter::updateStep()
         m_display.setText( " ----" );
         m_crashed = true;
     }
-    else m_display.setText( sign+QString::number( value,'f', decimals )+"\n"+mult+m_unit );
+    else m_display.setText( sign+QString::number( value,'f', decimals ).left(5)+"\n"+mult+m_unit );
 
     m_outPin->setOutHighV( m_dispValue );
     m_outPin->setOutState( true );
