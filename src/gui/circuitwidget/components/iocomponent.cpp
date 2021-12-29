@@ -351,6 +351,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
             }
             pinList->at(i) = new IoPin( angle, QPoint( x, y ), pinId, i, this, mode );
             initPin( pinList->at(i) );
+            if( mode == output && m_invOutputs ) pinList->at(i)->setInverted( true );
 
             if( !label.isEmpty() ) pinList->at(i)->setLabelText( preLab+label+num+PostLab );
             pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );
