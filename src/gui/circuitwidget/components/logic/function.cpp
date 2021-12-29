@@ -33,7 +33,7 @@
 
 #include "stringprop.h"
 #include "boolprop.h"
-//#include "intprop.h"
+#include "intprop.h"
 
 Component* Function::construct( QObject* parent, QString type, QString id )
 { return new Function( parent, type, id ); }
@@ -62,11 +62,13 @@ Function::Function( QObject* parent, QString type, QString id )
     setFunctions( "i0 | i1" );
 
     addPropGroup( { tr("Main"), {
-//new IntProp   <Function>( "Num_Inputs" , tr("Input Size")     ,"_Pins", this, &Function::numInps,    &Function::setNumInps, "uint" ),
-//new IntProp   <Function>( "Num_Outputs", tr("Output Size")    ,"_Pins", this, &Function::numOuts,    &Function::setNumOuts, "uint" ),
+new IntProp   <Function>( "Num_Inputs" , tr("Input Size")     ,"_Pins", this, &Function::numInps,    &Function::setNumInps, "uint" ),
+new IntProp   <Function>( "Num_Outputs", tr("Output Size")    ,"_Pins", this, &Function::numOuts,    &Function::setNumOuts, "uint" ),
 new BoolProp  <Function>( "Inverted"   , tr("Invert Outputs") ,""     , this, &Function::invertOuts, &Function::setInvertOuts ),
 new StringProp<Function>( "Functions"  , tr("Functions")      ,""     , this, &Function::functions,  &Function::setFunctions ),
     }} );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
+    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
 }
 Function::~Function(){}
 
@@ -226,29 +228,29 @@ void Function::updateArea( uint ins, uint outs )
     m_area = QRect(-16,-halfH, m_width*8, m_height*8 );
 }
 
-void Function::setNumInps( uint inputs )
+void Function::setNumInps( int inputs )
 {
-    if( inputs == m_inPin.size() ) return;
+    if( (uint)inputs == m_inPin.size() ) return;
     if( inputs < 1 ) return;
 
     m_height = m_outPin.size()*2-1;
-    if( inputs > m_height ) m_height = inputs;
+    if((uint) inputs > m_height ) m_height = inputs;
     
     IoComponent::setNumInps( inputs, "I" );
 
     updateArea( inputs, m_outPin.size() );
 }
 
-void Function::setNumOuts( uint outs )
+void Function::setNumOuts( int outs )
 {
-    if( outs == m_outPin.size() ) return;
+    if( (uint)outs == m_outPin.size() ) return;
     if( outs < 1 ) return;
     
     updateArea( m_inPin.size(), outs );
     int halfH = (m_height/2)*8;
 
     uint oldSize = m_outPin.size();
-    if( outs < oldSize )
+    if( (uint)outs < oldSize )
     {
         int dif = m_outPin.size()-outs;
 
@@ -256,7 +258,7 @@ void Function::setNumOuts( uint outs )
 
         for( uint i=0; i<oldSize; ++i )
         {
-            if( i < outs )
+            if( i < (uint)outs )
             {
                 m_outPin[i]->setY( -halfH+(int)i*16+8 );
                 m_proxys.at(i)->setPos( QPoint( 0, -halfH+(int)i*16+1 ) );
@@ -273,7 +275,7 @@ void Function::setNumOuts( uint outs )
     else{
         m_outPin.resize( outs );
 
-        for( uint i=0; i<outs; ++i )
+        for( uint i=0; i<(uint)outs; ++i )
         {
             if( i<oldSize )
             {

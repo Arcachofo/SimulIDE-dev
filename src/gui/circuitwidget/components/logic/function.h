@@ -47,8 +47,8 @@ class MAINMODULE_EXPORT Function : public LogicComponent
 
         virtual void remove() override;
         
-        void setNumInps( uint inputs );
-        void setNumOuts(uint outs );
+        void setNumInps( int inputs );
+        void setNumOuts( int outs );
         
     public slots:
         void onbuttonclicked();
