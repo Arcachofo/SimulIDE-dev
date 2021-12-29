@@ -27,6 +27,7 @@ class IoPin;
 
 class MAINMODULE_EXPORT Meter : public Component, public eResistor
 {
+        Q_OBJECT
     public:
         Meter( QObject* parent, QString type, QString id );
         ~Meter();

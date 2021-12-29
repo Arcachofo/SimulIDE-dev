@@ -154,7 +154,7 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", this, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
     }} );
-    addPropGroup( { tr("Hidden"), {
+    addPropGroup( {"Hidden", {
 new StringProp<SubCircuit>( "BoardId" , "","", this, &SubCircuit::boardId, &SubCircuit::setBoardId )
     }} );
 }

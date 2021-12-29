@@ -29,8 +29,8 @@ Component* Ground::construct( QObject* parent, QString type, QString id )
 LibraryItem* Ground::libraryItem()
 {
     return new LibraryItem(
-        tr( "Ground (0 V)" ),
-        tr( "Sources" ),
+        QObject::tr( "Ground (0 V)" ),
+        QObject::tr( "Sources" ),
         "ground.png",
         "Ground",
         Ground::construct );

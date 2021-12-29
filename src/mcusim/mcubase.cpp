@@ -27,7 +27,7 @@ McuBase* McuBase::m_pSelf = NULL;
 McuBase::McuBase( QObject* parent, QString type, QString id )
        : Chip( parent, type, id )
 {
-    addPropGroup( { tr("Hidden"), {
+    addPropGroup( {"Hidden", {
 new StringProp<McuBase>( "varList", "","", this, &McuBase::varList,   &McuBase::setVarList),
 new StringProp<McuBase>( "eeprom" , "","", this, &McuBase::getEeprom, &McuBase::setEeprom )
     }} );

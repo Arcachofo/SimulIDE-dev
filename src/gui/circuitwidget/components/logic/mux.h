@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Mux : public LogicComponent
 {
+        Q_OBJECT
     public:
         QRectF boundingRect() const { return m_area; }
     

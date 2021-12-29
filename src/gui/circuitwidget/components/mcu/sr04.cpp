@@ -30,8 +30,8 @@ Component* SR04::construct( QObject* parent, QString type, QString id )
 LibraryItem* SR04::libraryItem()
 {
     return new LibraryItem(
-        tr( "HC-SR04" ),
-        tr( "Sensors" ),
+        "HC-SR04",
+        QObject::tr( "Sensors" ),
         "sr04.png",
         "SR04",
         SR04::construct);

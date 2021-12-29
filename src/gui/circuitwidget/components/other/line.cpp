@@ -27,8 +27,8 @@ Component* Line::construct( QObject* parent, QString type, QString id )
 LibraryItem* Line::libraryItem()
 {
     return new LibraryItem(
-        tr( "Line" ),
-        tr( "Graphical" ),
+        QObject::tr( "Line" ),
+        QObject::tr( "Graphical" ),
         "line.png",
         "Line",
         Line::construct);

@@ -32,8 +32,8 @@ Component* Thermistor::construct( QObject* parent, QString type, QString id )
 LibraryItem* Thermistor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Thermistor" ),
-        tr( "Resistive Sensors" ),
+        QObject::tr( "Thermistor" ),
+        QObject::tr( "Resistive Sensors" ),
         "thermistor.png",
         "Thermistor",
         Thermistor::construct);
@@ -45,7 +45,7 @@ Thermistor::Thermistor( QObject* parent, QString type, QString id )
     m_bVal = 3455;
     m_r25  = 10000;
 
-    addPropGroup( { tr("Parameters"), {
+    addPropGroup( { QObject::tr("Parameters"), {
 new IntProp<Thermistor>( "B"  , "B"  ,""  , this, &Thermistor::bVal, &Thermistor::setBval, "uint" ),
 new IntProp<Thermistor>( "R25", "R25","Ω" , this, &Thermistor::r25,  &Thermistor::setR25,  "uint" )
     }} );

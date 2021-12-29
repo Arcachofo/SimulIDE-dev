@@ -27,8 +27,8 @@ Component* Voltimeter::construct( QObject* parent, QString type, QString id )
 LibraryItem* Voltimeter::libraryItem()
 {
     return new LibraryItem(
-        tr( "Voltimeter" ),
-        tr( "Meters" ),
+        QObject::tr( "Voltmeter" ),
+        QObject::tr( "Meters" ),
         "voltimeter.png",
         "Voltimeter",
         Voltimeter::construct);

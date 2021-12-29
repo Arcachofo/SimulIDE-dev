@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT OrGate : public Gate
 {
+        Q_OBJECT
     public:
         OrGate( QObject* parent, QString type, QString id );
         ~OrGate();

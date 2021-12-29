@@ -30,8 +30,8 @@ Component* Ili9341::construct( QObject* parent, QString type, QString id )
 LibraryItem* Ili9341::libraryItem()
 {
     return new LibraryItem(
-        tr( "Ili9341" ),
-        tr( "Displays" ),
+        "Ili9341" ,
+        QObject::tr( "Displays" ),
         "ili9341.png",
         "Ili9341",
         Ili9341::construct );

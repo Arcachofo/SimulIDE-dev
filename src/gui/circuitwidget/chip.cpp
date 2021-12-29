@@ -28,7 +28,7 @@
 #include "utils.h"
 #include "pin.h"
 
-QStringList Chip::m_subcTypes = {tr("None"),tr("Logic"),tr("Board"),tr("Shield")};
+QStringList Chip::m_subcTypes = {"None","Logic","Board","Shield"};
 
 Chip::Chip( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
@@ -63,7 +63,7 @@ Chip::Chip( QObject* parent, QString type, QString id )
     setLabelPos( m_area.x(), m_area.y()-20, 0);
     setShowId( true );
 
-/*    addPropGroup( { tr("Hidden"), {
+/*    addPropGroup( { "Hidden", {
 new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
 new StringProp<Chip>( "Name"        ,"","", this, &Chip::name,        &Chip::setName ),
     } } );*/
@@ -141,7 +141,7 @@ void Chip::initChip()
     }
     else{
         MessageBoxNB("Chip::initChip",
-                  tr("Error:\nNot valid Package file:\n%1").arg(m_pkgeFile));
+                  QObject::tr("Error:\nNot valid Package file:\n%1").arg(m_pkgeFile));
         m_error = 3;
         return;
     }

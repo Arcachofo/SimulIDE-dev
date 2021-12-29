@@ -1,7 +1,6 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-    <tag>QT_TRANSLATE_NOOP("xmlfile","Tools")</tag>
     
     <itemset category="Tools" type="Subcircuit" icon="subc.png" >
     

@@ -51,7 +51,7 @@ LibraryItem* Mcu::libraryItem()
 {
     return new LibraryItem(
         "NEW_MCU",
-        tr(""),
+        "",
         "ic2.png",
         "MCU",
         Mcu::construct );

@@ -32,6 +32,7 @@ class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT PlotBase : public Component, public eElement
 {
+        Q_OBJECT
     public:
         PlotBase( QObject* parent, QString type, QString id );
         ~PlotBase();

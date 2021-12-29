@@ -30,6 +30,7 @@ class IoPin;
 
 class MAINMODULE_EXPORT OpAmp : public Component, public eElement
 {
+        Q_OBJECT
     public:
         OpAmp( QObject* parent, QString type, QString id );
         ~OpAmp();

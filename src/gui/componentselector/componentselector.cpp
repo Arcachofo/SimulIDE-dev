@@ -88,7 +88,6 @@ void ComponentSelector::LoadCompSetAt( QDir compSetDir )
     for( QString compSetName : xmlList )
     {
         QString compSetFilePath = compSetDir.absoluteFilePath( compSetName );
-
         if( !compSetFilePath.isEmpty( ))  loadXml( compSetFilePath );
     }
     qDebug() << "\n";
@@ -120,6 +119,7 @@ void ComponentSelector::loadXml( const QString &setFile )
                 continue;
             }
             QString category = reader.attributes().value("category").toString();
+            category = QApplication::translate("xmlfile", category.toLocal8Bit() );
             std::string stdCat = category.toStdString();
             const char* charCat = &(stdCat[0]);
             category = QApplication::translate( "xmlfile", charCat );

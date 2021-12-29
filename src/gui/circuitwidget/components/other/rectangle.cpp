@@ -27,8 +27,8 @@ Component* Rectangle::construct( QObject* parent, QString type, QString id )
 LibraryItem* Rectangle::libraryItem()
 {
     return new LibraryItem(
-            tr( "Rectangle" ),
-            tr( "Graphical" ),
+            QObject::tr( "Rectangle" ),
+            QObject::tr( "Graphical" ),
             "rectangle.png",
             "Rectangle",
             Rectangle::construct);

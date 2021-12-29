@@ -29,6 +29,7 @@ class LibraryItem;
 
 class AudioOut : public Component, public eResistor
 {
+        Q_OBJECT
     public:
         AudioOut( QObject* parent, QString type, QString id );
         ~AudioOut();

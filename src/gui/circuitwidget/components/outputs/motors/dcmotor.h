@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT DcMotor : public Component, public eResistor
 {
+        Q_OBJECT
     public:
         DcMotor( QObject* parent, QString type, QString id );
         ~DcMotor();

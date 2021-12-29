@@ -41,8 +41,8 @@ Component* Pcd8544::construct( QObject* parent, QString type, QString id )
 LibraryItem* Pcd8544::libraryItem()
 {
     return new LibraryItem(
-        tr( "Pcd8544" ),
-        tr( "Displays" ),
+        "Pcd8544",
+        QObject::tr( "Displays" ),
         "pcd8544.png",
         "Pcd8544",
         Pcd8544::construct );

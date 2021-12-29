@@ -29,6 +29,7 @@ class DataLaWidget;
 
 class MAINMODULE_EXPORT LAnalizer : public PlotBase
 {
+        Q_OBJECT
     public:
         LAnalizer( QObject* parent, QString type, QString id );
         ~LAnalizer();

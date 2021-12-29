@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT VarResistor : public VarResBase
 {
+        Q_OBJECT
     public:
         VarResistor( QObject* parent, QString type, QString id );
         ~VarResistor();

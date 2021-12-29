@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Inductor : public Comp2Pin, public eInductor
 {
+        Q_OBJECT
     public:
         Inductor( QObject* parent, QString type, QString id );
         ~Inductor();

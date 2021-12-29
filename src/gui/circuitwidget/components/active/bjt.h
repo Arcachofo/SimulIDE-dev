@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT BJT : public Component, public eBJT
 {
+        Q_OBJECT
     public:
         BJT( QObject* parent, QString type, QString id );
         ~BJT();

@@ -25,6 +25,7 @@
 
 class MAINMODULE_EXPORT CapacitorBase : public Comp2Pin, public eCapacitor
 {
+        Q_OBJECT
     public:
         CapacitorBase( QObject* parent, QString type, QString id );
         ~CapacitorBase();

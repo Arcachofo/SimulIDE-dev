@@ -58,7 +58,7 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
 new IntProp<PlotBase>( "Basic_X" ,tr("Screen Size X"),"_Pixels", this, &PlotBase::baSizeX, &PlotBase::setBaSizeX, "uint" ),
 new IntProp<PlotBase>( "Basic_Y" ,tr("Screen Size Y"),"_Pixels", this, &PlotBase::baSizeY, &PlotBase::setBaSizeY, "uint" ),
     }} );
-    addPropGroup( { tr("Hidden"), {
+    addPropGroup( {"Hidden", {
 new StringProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
 new StringProp<PlotBase>( "TimPos"  ,"","", this, &PlotBase::timPos,  &PlotBase::setTimPos ),
 new StringProp<PlotBase>( "VolDiv" ,"", "", this, &PlotBase::volDiv,  &PlotBase::setVolDiv ),
@@ -178,4 +178,3 @@ void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidg
     pen.setColor( Qt::white );
     p->setPen(pen);
 }
-

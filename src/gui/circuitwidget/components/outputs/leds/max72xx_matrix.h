@@ -28,6 +28,7 @@ class Pin;
 
 class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
 {
+        Q_OBJECT
     public:
         Max72xx_matrix( QObject* parent, QString type, QString id );
         ~Max72xx_matrix();

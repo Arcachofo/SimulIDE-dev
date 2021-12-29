@@ -5,11 +5,11 @@
     <name>ADC</name>
     <message>
         <source>ADC</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logica/Overige logica</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -30,13 +30,6 @@
     <message>
         <source>Edges</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AVRComponent</name>
-    <message>
-        <source>AVR</source>
-        <translation type="vanished">AVR</translation>
     </message>
 </context>
 <context>
@@ -90,36 +83,21 @@
     </message>
 </context>
 <context>
-    <name>Amperimeter</name>
-    <message>
-        <source>Amperimeter</source>
-        <translation type="vanished">Ampèremeter</translation>
-    </message>
-    <message>
-        <source>Meters</source>
-        <translation>Meters</translation>
-    </message>
-    <message>
-        <source>Ampmeter</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AndGate</name>
     <message>
         <source>And Gate</source>
-        <translation>EN poort</translation>
+        <translation type="unfinished">EN poort</translation>
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Logica/Poorten</translation>
-    </message>
-    <message>
-        <source>Input Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logica/Poorten</translation>
     </message>
     <message>
         <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -142,336 +120,8 @@
 <context>
     <name>App::Property</name>
     <message>
-        <source>Speed</source>
-        <translation type="vanished">Snelheid</translation>
-    </message>
-    <message>
-        <source>ReactStep</source>
-        <translation type="vanished">ReactiefStap</translation>
-    </message>
-    <message>
-        <source>NoLinAcc</source>
-        <translation type="vanished">NietLinearePrecisie</translation>
-    </message>
-    <message>
-        <source>Draw Grid</source>
-        <translation type="vanished">Teken raster</translation>
-    </message>
-    <message>
-        <source>Show ScrollBars</source>
-        <translation type="vanished">Toon schuifbalken</translation>
-    </message>
-    <message>
-        <source>id</source>
-        <translation type="vanished">id</translation>
-    </message>
-    <message>
-        <source>Show id</source>
-        <translation type="vanished">Toon id</translation>
-    </message>
-    <message>
-        <source>Unit</source>
-        <translation type="vanished">Eenheid</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation type="vanished">Kleur</translation>
-    </message>
-    <message>
-        <source>H size</source>
-        <translation type="vanished">H grootte</translation>
-    </message>
-    <message>
-        <source>V size</source>
-        <translation type="vanished">V grootte</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation type="vanished">Rand</translation>
-    </message>
-    <message>
-        <source>Opacity</source>
-        <translation type="vanished">Doorschijnendheid</translation>
-    </message>
-    <message>
-        <source>Z Value</source>
-        <translation type="vanished">Z waarde</translation>
-    </message>
-    <message>
-        <source>Vref</source>
-        <translation type="vanished">Vref</translation>
-    </message>
-    <message>
-        <source>Impedance</source>
-        <translation type="vanished">Impedantie</translation>
-    </message>
-    <message>
-        <source>Max Value</source>
-        <translation type="vanished">Max waarde</translation>
-    </message>
-    <message>
-        <source>Gain</source>
-        <translation type="vanished">Versterking</translation>
-    </message>
-    <message>
-        <source>PNP</source>
-        <translation type="vanished">PNP</translation>
-    </message>
-    <message>
-        <source>Capacitance</source>
-        <translation type="vanished">Capaciteit</translation>
-    </message>
-    <message>
-        <source>Freq</source>
-        <translation type="vanished">Freq</translation>
-    </message>
-    <message>
-        <source>Current</source>
-        <translation type="vanished">Stroom</translation>
-    </message>
-    <message>
-        <source>Show Amp</source>
-        <translation type="vanished">Toon Amp</translation>
-    </message>
-    <message>
-        <source>Threshold</source>
-        <translation type="vanished">Drempel</translation>
-    </message>
-    <message>
-        <source>Zener Volt</source>
-        <translation type="vanished">Zener Volt</translation>
-    </message>
-    <message>
-        <source>Cols</source>
-        <translation type="vanished">Kolommen</translation>
-    </message>
-    <message>
-        <source>Rows</source>
-        <translation type="vanished">Rijen</translation>
-    </message>
-    <message>
-        <source>Control Code</source>
-        <translation type="vanished">Controle Code</translation>
-    </message>
-    <message>
-        <source>Size bytes</source>
-        <translation type="vanished">Grootte bytes</translation>
-    </message>
-    <message>
-        <source>Inductance</source>
-        <translation type="vanished">Inductie</translation>
-    </message>
-    <message>
-        <source>Show Ind</source>
-        <translation type="vanished">Toon Ind</translation>
-    </message>
-    <message>
-        <source>Key Labels</source>
-        <translation type="vanished">Toetslabels</translation>
-    </message>
-    <message>
-        <source>CS Active Low</source>
-        <translation type="vanished">CS Actief laag</translation>
-    </message>
-    <message>
-        <source>MaxCurrent</source>
-        <translation type="vanished">MaxStroom</translation>
-    </message>
-    <message>
-        <source>Grounded</source>
-        <translation type="vanished">Geaard</translation>
-    </message>
-    <message>
-        <source>Input High V</source>
-        <translation type="vanished">Invoer hoog V</translation>
-    </message>
-    <message>
-        <source>Input Low V</source>
-        <translation type="vanished">Invoer Laag V</translation>
-    </message>
-    <message>
-        <source>Input Imped</source>
-        <translation type="vanished">Invoer Imped</translation>
-    </message>
-    <message>
-        <source>Out High V</source>
-        <translation type="vanished">Uitvoer Hoog V</translation>
-    </message>
-    <message>
-        <source>Out Low V</source>
-        <translation type="vanished">Uitvoer Laag V</translation>
-    </message>
-    <message>
-        <source>Out Imped</source>
-        <translation type="vanished">Uitvoer Imped</translation>
-    </message>
-    <message>
-        <source>Inverted</source>
-        <translation type="vanished">Geïnverteerd</translation>
-    </message>
-    <message>
-        <source>Tristate</source>
-        <translation type="vanished">Tristate</translation>
-    </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="vanished">Klok geïnverteerd</translation>
-    </message>
-    <message>
-        <source>Reset Inverted</source>
-        <translation type="vanished">Reset geïnverteerd</translation>
-    </message>
-    <message>
-        <source>Invert Inputs</source>
-        <translation type="vanished">Inverteer invoeren</translation>
-    </message>
-    <message>
-        <source>S R Inverted</source>
-        <translation type="vanished">S R geïnverteerd</translation>
-    </message>
-    <message>
-        <source>Num Inputs</source>
-        <translation type="vanished">Aantal invoeren</translation>
-    </message>
-    <message>
-        <source>Num Bits</source>
-        <translation type="vanished">Aantal bits</translation>
-    </message>
-    <message>
-        <source>Channels</source>
-        <translation type="vanished">Kanalen</translation>
-    </message>
-    <message>
-        <source>Voltage</source>
-        <translation type="vanished">Spanning</translation>
-    </message>
-    <message>
-        <source>Show Volt</source>
-        <translation type="vanished">Toon spanning</translation>
-    </message>
-    <message>
-        <source>Program</source>
-        <translation type="vanished">Programma</translation>
-    </message>
-    <message>
-        <source>RDSon</source>
-        <translation type="vanished">RDSaan</translation>
-    </message>
-    <message>
-        <source>P Channel</source>
-        <translation type="vanished">Pkanaal</translation>
-    </message>
-    <message>
-        <source>Depletion</source>
-        <translation type="vanished">Uitputting</translation>
-    </message>
-    <message>
-        <source>Power Pins</source>
-        <translation type="vanished">Energie pins</translation>
-    </message>
-    <message>
-        <source>Filter</source>
-        <translation type="vanished">Filter</translation>
-    </message>
-    <message>
-        <source>Value Ohm</source>
-        <translation type="vanished">Waarde Ohm</translation>
-    </message>
-    <message>
-        <source>Rcoil</source>
-        <translation type="vanished">Rspoel</translation>
-    </message>
-    <message>
-        <source>Poles</source>
-        <translation type="vanished">Polen</translation>
-    </message>
-    <message>
-        <source>DT</source>
-        <translation type="vanished">DT</translation>
-    </message>
-    <message>
-        <source>Norm Close</source>
-        <translation type="vanished">Norm gesloten</translation>
-    </message>
-    <message>
-        <source>Resistance</source>
-        <translation type="vanished">Weestand</translation>
-    </message>
-    <message>
-        <source>Show res</source>
-        <translation type="vanished">Toon wrstnd</translation>
-    </message>
-    <message>
-        <source>NumDisplays</source>
-        <translation type="vanished">AantalDisplays</translation>
-    </message>
-    <message>
-        <source>CommonCathode</source>
-        <translation type="vanished">GedeeldeKathode</translation>
-    </message>
-    <message>
         <source>Steps</source>
         <translation>Stappen</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">Tekst</translation>
-    </message>
-    <message>
-        <source>Font Size</source>
-        <translation type="vanished">Lettergrootte</translation>
-    </message>
-    <message>
-        <source>Fixed Width</source>
-        <translation type="vanished">Vaste breedte</translation>
-    </message>
-    <message>
-        <source>Margin</source>
-        <translation type="vanished">Marge</translation>
-    </message>
-    <message>
-        <source>Volts</source>
-        <translation type="vanished">Volt</translation>
-    </message>
-    <message>
-        <source>Volt Base</source>
-        <translation type="vanished">Volt basis</translation>
-    </message>
-    <message>
-        <source>Duty Square</source>
-        <translation type="vanished">Duty Opp</translation>
-    </message>
-    <message>
-        <source>Quality</source>
-        <translation type="vanished">Kwaliteit</translation>
-    </message>
-    <message>
-        <source>Wave Type</source>
-        <translation type="vanished">Golftype</translation>
-    </message>
-    <message>
-        <source>Avra Inc Path</source>
-        <translation type="vanished">Avra Inc pad</translation>
-    </message>
-    <message>
-        <source>Drive Circuit</source>
-        <translation type="vanished">Schakeling aansturen</translation>
-    </message>
-    <message>
-        <source>Compiler Path</source>
-        <translation type="vanished">Compiler pad</translation>
-    </message>
-    <message>
-        <source>Tab Size</source>
-        <translation type="vanished">Tab grootte</translation>
-    </message>
-    <message>
-        <source>Spaces Tabs</source>
-        <translation type="vanished">Spaties Tabs</translation>
-    </message>
-    <message>
-        <source>Show Spaces</source>
-        <translation type="vanished">Toon spaties</translation>
     </message>
     <message>
         <source>Board</source>
@@ -480,22 +130,6 @@
     <message>
         <source>Custom Board</source>
         <translation>Maatwerk bord</translation>
-    </message>
-    <message>
-        <source>Num Outputs</source>
-        <translation type="vanished">Aantal uitgangen</translation>
-    </message>
-    <message>
-        <source>Functions</source>
-        <translation type="vanished">Functies</translation>
-    </message>
-    <message>
-        <source>Image File</source>
-        <translation type="vanished">Afbeeldingsbestand</translation>
-    </message>
-    <message>
-        <source>Auto Load</source>
-        <translation type="vanished">Autoladen</translation>
     </message>
     <message>
         <source>Port Name</source>
@@ -520,122 +154,6 @@
     <message>
         <source>FlowControl</source>
         <translation>FlowControl</translation>
-    </message>
-    <message>
-        <source>Mcu Uart</source>
-        <translation type="vanished">MCU uart</translation>
-    </message>
-    <message>
-        <source>Bipolar</source>
-        <translation type="vanished">Bipolair</translation>
-    </message>
-    <message>
-        <source>Font</source>
-        <translation type="vanished">Lettertype</translation>
-    </message>
-    <message>
-        <source>BC diode</source>
-        <translation type="vanished">BC Diode</translation>
-    </message>
-    <message>
-        <source>Address Bits</source>
-        <translation type="vanished">Adresbits</translation>
-    </message>
-    <message>
-        <source>Start Bit</source>
-        <translation type="vanished">Startbit</translation>
-    </message>
-    <message>
-        <source>Animate</source>
-        <translation type="vanished">Animatie</translation>
-    </message>
-    <message>
-        <source>Auto Backup Secs</source>
-        <translation type="vanished">Autobackup Secs</translation>
-    </message>
-    <message>
-        <source>Show volt</source>
-        <translation type="vanished">Toon Volt</translation>
-    </message>
-    <message>
-        <source>IOn</source>
-        <translation type="vanished">Iaan</translation>
-    </message>
-    <message>
-        <source>IOff</source>
-        <translation type="vanished">Iuit</translation>
-    </message>
-    <message>
-        <source>Key</source>
-        <translation type="vanished">Sleutel</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="vanished">Grootte</translation>
-    </message>
-    <message>
-        <source>Data Bits</source>
-        <translation type="vanished">Databits</translation>
-    </message>
-    <message>
-        <source>Persistent</source>
-        <translation type="vanished">Persistent</translation>
-    </message>
-    <message>
-        <source>Font Scale</source>
-        <translation type="vanished">Letterschaal</translation>
-    </message>
-    <message>
-        <source>Open Collector</source>
-        <translation type="vanished">Open collector</translation>
-    </message>
-    <message>
-        <source>Trigger</source>
-        <translation type="vanished">Trigger</translation>
-    </message>
-    <message>
-        <source> 16 Bits</source>
-        <translation type="vanished"> 16 Bits</translation>
-    </message>
-    <message>
-        <source>Mhz</source>
-        <translation type="vanished">MHz</translation>
-    </message>
-    <message>
-        <source>Init gdb</source>
-        <translation type="vanished">Init gdb</translation>
-    </message>
-    <message>
-        <source>Buzzer</source>
-        <translation type="vanished">Zoemer</translation>
-    </message>
-    <message>
-        <source>Vertical Pins</source>
-        <translation type="vanished">Verticale pins</translation>
-    </message>
-    <message>
-        <source>Show Cap</source>
-        <translation type="vanished">Toon Cap</translation>
-    </message>
-    <message>
-        <source>RPM Nominal</source>
-        <translation type="vanished">RPM nominaal</translation>
-    </message>
-    <message>
-        <source>Volt Nominal</source>
-        <translation type="vanished">Volt nominaal</translation>
-    </message>
-    <message>
-        <source>Max Resistance</source>
-        <translation type="vanished">Max weerstand</translation>
-    </message>
-    <message>
-        <source>Min Resistance</source>
-        <translation type="vanished">Min weerstand</translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation type="vanished">Taal</translation>
     </message>
 </context>
 <context>
@@ -723,11 +241,11 @@ p, li { white-space: pre-wrap; }
     <name>AudioOut</name>
     <message>
         <source>Audio Out</source>
-        <translation>Audio uit</translation>
+        <translation type="unfinished">Audio uit</translation>
     </message>
     <message>
         <source>Outputs</source>
-        <translation>Uitgangen</translation>
+        <translation type="unfinished">Uitgangen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -743,95 +261,14 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AvrGccDebugger</name>
-    <message>
-        <source>Warning: elf file doesn&apos;t exist:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AvrProcessor</name>
-    <message>
-        <source>File Not Found</source>
-        <translation type="vanished">Bestand niet gevonden</translation>
-    </message>
-    <message>
-        <source>The file &quot;%1&quot; was not found.</source>
-        <translation type="vanished">Het bestand &quot;%1&quot; is niet gevonden.</translation>
-    </message>
-    <message>
-        <source>Error:</source>
-        <translation type="vanished">Fout:</translation>
-    </message>
-    <message>
-        <source> Unable to load IHEX file %1
-</source>
-        <translation type="vanished"> Onmogelijk om IHEX bestand %1 te laden
-</translation>
-    </message>
-    <message>
-        <source>Failed to load firmware: </source>
-        <translation type="vanished">Niet gelukt om firmware te laden: </translation>
-    </message>
-    <message>
-        <source>%1 should be .hex or .elf
-</source>
-        <translation type="vanished">%1 moet .hex of .elf zijn
-</translation>
-    </message>
-    <message>
-        <source>Warning on load firmware: </source>
-        <translation type="vanished">Waarschuwing bij laden firmware: </translation>
-    </message>
-    <message>
-        <source>Incompatible firmware: compiled for %1 and your processor is %2
-</source>
-        <translation type="vanished">Incompatibele firmware: gecompileerd voor %1 en deze processor is %2
-</translation>
-    </message>
-    <message>
-        <source>The processor model is not specified.
-</source>
-        <translation type="vanished">Het processor model is niet opgegeven.
-</translation>
-    </message>
-    <message>
-        <source>Could not Create AVR Processor: &quot;%1&quot;</source>
-        <translation type="vanished">Kon niet aanmaken AVR Processor: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Wrong firmware!!</source>
-        <translation type="vanished">Verkeerde firmware!!</translation>
-    </message>
-    <message>
-        <source>Unkown Error:</source>
-        <translation type="vanished">Onbekende fout:</translation>
-    </message>
-    <message>
-        <source>File %1 is not in valid ELF format
-</source>
-        <translation type="vanished">Bestand %1 is niet in geldig ELF formaat
-</translation>
-    </message>
-</context>
-<context>
-    <name>B16AsmDebugger</name>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation>Kan niet schrijven naar bestand %1:
-%2.</translation>
-    </message>
-</context>
-<context>
     <name>BJT</name>
     <message>
         <source>BJT</source>
-        <translation>BJT</translation>
+        <translation type="unfinished">BJT</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Actief</translation>
+        <translation type="unfinished">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -849,35 +286,19 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BaseDebugger</name>
     <message>
-        <source>FirmWare Uploaded to </source>
-        <translation>Firmware geüploaded naar </translation>
-    </message>
-    <message>
-        <source>Select Compiler toolchain directory</source>
-        <translation type="vanished">Selecteer Compiler toolchain folder</translation>
-    </message>
-    <message>
-        <source>Using Compiler Path: </source>
-        <translation type="vanished">Gebruikt compiler pad: </translation>
-    </message>
-    <message>
-        <source>: ToolChain not found</source>
-        <translation type="vanished">:Toolchain niet gevonden</translation>
-    </message>
-    <message>
-        <source>Right-Click on Document Tab to set Path</source>
-        <translation type="vanished">Rechtsklik op document tab om het pad in te stellen</translation>
-    </message>
-    <message>
-        <source>Error: No Mcu in Simulator... </source>
-        <translation>Fout: geen MCU in de simulator... </translation>
-    </message>
-    <message>
-        <source>Error uploading firmware to </source>
+        <source>Error: Hex file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error: Hex file doesn&apos;t exist:</source>
+        <source>Error: No Mcu in Simulator... </source>
+        <translation type="unfinished">Fout: geen MCU in de simulator... </translation>
+    </message>
+    <message>
+        <source>FirmWare Uploaded to </source>
+        <translation type="unfinished">Firmware geüploaded naar </translation>
+    </message>
+    <message>
+        <source>Error uploading firmware to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -897,11 +318,11 @@ p, li { white-space: pre-wrap; }
     <name>Battery</name>
     <message>
         <source>Battery</source>
-        <translation>Batterij</translation>
+        <translation type="unfinished">Batterij</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation>Bronnen</translation>
+        <translation type="unfinished">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -916,11 +337,11 @@ p, li { white-space: pre-wrap; }
     <name>BcdTo7S</name>
     <message>
         <source>Bcd To 7S.</source>
-        <translation>BCD naar 7Segment</translation>
+        <translation type="unfinished">BCD naar 7Segment</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logica/Omzetters</translation>
+        <translation type="unfinished">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -942,23 +363,23 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BcdToDec</name>
     <message>
-        <source>Logic/Converters</source>
-        <translation>Logica/Omzetters</translation>
+        <source>Decoder(4 to 10/16)</source>
+        <translation type="unfinished">Decoder(4 naar 10/16)</translation>
     </message>
     <message>
-        <source>Decoder(4 to 10/16)</source>
-        <translation>Decoder(4 naar 10/16)</translation>
+        <source>Logic/Converters</source>
+        <translation type="unfinished">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Outputs</source>
+        <source>16 Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>16 Bits</source>
+        <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -974,22 +395,14 @@ p, li { white-space: pre-wrap; }
     <name>BinCounter</name>
     <message>
         <source>Counter</source>
-        <translation>Teller</translation>
+        <translation type="unfinished">Teller</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Logica/Rekenkundig</translation>
+        <translation type="unfinished">Logica/Rekenkundig</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clock Inverted</source>
-        <translation type="unfinished">Klok geïnverteerd</translation>
-    </message>
-    <message>
-        <source>Count to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -997,7 +410,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Clock Inverted</source>
+        <translation type="unfinished">Klok geïnverteerd</translation>
+    </message>
+    <message>
         <source>Set/Reset Inverted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1020,19 +441,19 @@ p, li { white-space: pre-wrap; }
     <name>Buffer</name>
     <message>
         <source>Buffer</source>
-        <translation>Buffer</translation>
+        <translation type="unfinished">Buffer</translation>
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Logica/Poorten</translation>
-    </message>
-    <message>
-        <source>Tristate</source>
-        <translation type="unfinished">Tristate</translation>
+        <translation type="unfinished">Logica/Poorten</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Tristate</translation>
     </message>
     <message>
         <source>Invert Output</source>
@@ -1055,11 +476,11 @@ p, li { white-space: pre-wrap; }
     <name>Bus</name>
     <message>
         <source>Bus</source>
-        <translation>Bus</translation>
+        <translation type="unfinished">Bus</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logica/Overigelogica</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -1075,21 +496,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Capacitor</name>
-    <message>
-        <source>Capacitor</source>
-        <translation>Condensator</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CapacitorBase</name>
     <message>
         <source>Main</source>
@@ -1098,39 +504,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Capacitance</source>
         <translation type="unfinished">Capaciteit</translation>
-    </message>
-</context>
-<context>
-    <name>Chip</name>
-    <message>
-        <source>Error reading Chip file:
-%1
-No valid Chip</source>
-        <translation type="vanished">Fout bij lezen Chip bestand:
-%1
-Geen geldige Chip</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic</source>
-        <translation type="unfinished">Logica</translation>
-    </message>
-    <message>
-        <source>Board</source>
-        <translation type="unfinished">Bord</translation>
-    </message>
-    <message>
-        <source>Shield</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error:
-Not valid Package file:
-%1</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1208,178 +581,112 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Circuit</name>
     <message>
-        <source>Load Circuit</source>
-        <translation>Laad schakeling</translation>
-    </message>
-    <message>
-        <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation type="vanished">Schakelingen (*.simu);;Alle bestanden (*.*)</translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Kan niet schrijven naar bestand %1:
+        <translation type="unfinished">Kan niet schrijven naar bestand %1:
 %2.</translation>
     </message>
     <message>
-        <source>Bill Of Materials</source>
-        <translation>Materiaallijst</translation>
+        <source>Load Circuit</source>
+        <translation type="unfinished">Laad schakeling</translation>
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Bill Of Materials</source>
+        <translation type="unfinished">Materiaallijst</translation>
+    </message>
 </context>
 <context>
     <name>CircuitView</name>
     <message>
+        <source>Time: </source>
+        <translation type="unfinished">Tijd: </translation>
+    </message>
+    <message>
         <source>Paste</source>
-        <translation>Plakken</translation>
+        <translation type="unfinished">Plakken</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Ongedaan maken</translation>
+        <translation type="unfinished">Ongedaan maken</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Opnieuw uitvoeren</translation>
+        <translation type="unfinished">Opnieuw uitvoeren</translation>
     </message>
     <message>
         <source>Import Circuit</source>
-        <translation>Schakeling importeren</translation>
+        <translation type="unfinished">Schakeling importeren</translation>
     </message>
     <message>
         <source>Save Circuit as Image</source>
-        <translation>Sla schakeling op als afbeelding</translation>
+        <translation type="unfinished">Sla schakeling op als afbeelding</translation>
     </message>
     <message>
         <source>Bill of Materials</source>
-        <translation>Materiaallijst</translation>
+        <translation type="unfinished">Materiaallijst</translation>
     </message>
     <message>
         <source>Save as Image</source>
-        <translation>Opslaan als afbeelding</translation>
+        <translation type="unfinished">Opslaan als afbeelding</translation>
     </message>
     <message>
         <source>Circuit Name</source>
-        <translation>Schakelingnaam</translation>
+        <translation type="unfinished">Schakelingnaam</translation>
     </message>
     <message>
         <source>Generated by SimulIDE</source>
-        <translation>Gegenereerd door SimulIDE</translation>
-    </message>
-    <message>
-        <source>Time: </source>
-        <translation>Tijd: </translation>
+        <translation type="unfinished">Gegenereerd door SimulIDE</translation>
     </message>
 </context>
 <context>
     <name>CircuitWidget</name>
     <message>
         <source>New C&amp;ircuit	Ctrl+N</source>
-        <translation>&amp;Nieuwe Schakeling	Ctrl+N</translation>
+        <translation type="unfinished">&amp;Nieuwe Schakeling	Ctrl+N</translation>
     </message>
     <message>
         <source>Create a new Circuit</source>
-        <translation>Nieuwe schakeling maken</translation>
+        <translation type="unfinished">Nieuwe schakeling maken</translation>
     </message>
     <message>
         <source>&amp;Open Circuit	Ctrl+O</source>
-        <translation>Schakeling &amp;Openen	Ctrl+O</translation>
+        <translation type="unfinished">Schakeling &amp;Openen	Ctrl+O</translation>
     </message>
     <message>
         <source>Open an existing Circuit</source>
-        <translation>Open een bestaande schakeling</translation>
+        <translation type="unfinished">Open een bestaande schakeling</translation>
     </message>
     <message>
         <source>&amp;Save Circuit	Ctrl+S</source>
-        <translation>Schakeling op&amp;Slaan	Ctrl+S</translation>
+        <translation type="unfinished">Schakeling op&amp;Slaan	Ctrl+S</translation>
     </message>
     <message>
         <source>Save the Circuit to disk</source>
-        <translation>Sla schakeling op schijf op</translation>
+        <translation type="unfinished">Sla schakeling op schijf op</translation>
     </message>
     <message>
         <source>Save Circuit &amp;As...	Ctrl+Shift+S</source>
-        <translation>Sla Schakeling op &amp;Als	Ctrl+Shift+S</translation>
+        <translation type="unfinished">Sla Schakeling op &amp;Als	Ctrl+Shift+S</translation>
     </message>
     <message>
         <source>Save the Circuit under a new name</source>
-        <translation>Sla schakeling op onder een nieuwe naam</translation>
+        <translation type="unfinished">Sla schakeling op onder een nieuwe naam</translation>
     </message>
     <message>
         <source>Power Circuit</source>
-        <translation>Simulatie starten</translation>
+        <translation type="unfinished">Simulatie starten</translation>
     </message>
     <message>
         <source>Power the Circuit</source>
-        <translation>Schakel de schakeling in</translation>
-    </message>
-    <message>
-        <source>Online Help</source>
-        <translation>Online hulp</translation>
-    </message>
-    <message>
-        <source>
-Circuit has been modified.
-Do you want to save your changes?
-</source>
-        <translation>
-Schakeling is gewijzigd.
-Wijzigingen opslaan?
-</translation>
-    </message>
-    <message>
-        <source>New Circuit</source>
-        <translation>Nieuwe schakeling</translation>
-    </message>
-    <message>
-        <source>Load Circuit</source>
-        <translation>Laad schakeling</translation>
-    </message>
-    <message>
-        <source>Circuits (*.simu);;All files (*.*)</source>
-        <translation type="vanished">Schakelingen (*.simu);;Alle bestanden (*.*)</translation>
-    </message>
-    <message>
-        <source>Save Circuit</source>
-        <translation>Schakeling opslaan</translation>
-    </message>
-    <message>
-        <source>Circuit ERROR!!!</source>
-        <translation>Schakeling FOUT!!!</translation>
-    </message>
-    <message>
-        <source>About SimulIDE</source>
-        <translation>Over SimulIDE</translation>
-    </message>
-    <message>
-        <source>About Qt</source>
-        <translation>Over Qt</translation>
-    </message>
-    <message>
-        <source>    Real Speed: Debugger</source>
-        <translation type="vanished">    Ware snelheid:  Debugger</translation>
-    </message>
-    <message>
-        <source>    Real Speed: </source>
-        <translation type="vanished">    Ware snelheid: </translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation>Info</translation>
+        <translation type="unfinished">Schakel de schakeling in</translation>
     </message>
     <message>
         <source>Pause Simulation</source>
-        <translation>Simulatie pauzeren</translation>
-    </message>
-    <message>
-        <source>Last Circuits</source>
-        <translation>Laatste schakelingen</translation>
-    </message>
-    <message>
-        <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="unfinished">Simulatie pauzeren</translation>
     </message>
     <message>
         <source>App Settings</source>
@@ -1394,7 +701,65 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Online Help</source>
+        <translation type="unfinished">Online hulp</translation>
+    </message>
+    <message>
+        <source>About SimulIDE</source>
+        <translation type="unfinished">Over SimulIDE</translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished">Over Qt</translation>
+    </message>
+    <message>
         <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last Circuits</source>
+        <translation type="unfinished">Laatste schakelingen</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Info</translation>
+    </message>
+    <message>
+        <source>
+Circuit has been modified.
+Do you want to save your changes?
+</source>
+        <translation type="unfinished">
+Schakeling is gewijzigd.
+Wijzigingen opslaan?
+</translation>
+    </message>
+    <message>
+        <source>New Circuit</source>
+        <translation type="unfinished">Nieuwe schakeling</translation>
+    </message>
+    <message>
+        <source>Load Circuit</source>
+        <translation type="unfinished">Laad schakeling</translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim*);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Circuit</source>
+        <translation type="unfinished">Schakeling opslaan</translation>
+    </message>
+    <message>
+        <source>    Speed: Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuit ERROR!!!</source>
+        <translation type="unfinished">Schakeling FOUT!!!</translation>
+    </message>
+    <message>
+        <source>    Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1402,27 +767,19 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>    Speed: Debugger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>    Speed: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circuits (*.sim*);;All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
     </message>
 </context>
 <context>
     <name>Clock</name>
     <message>
         <source>Clock</source>
-        <translation>Klok</translation>
+        <translation type="unfinished">Klok</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation>Bronnen</translation>
+        <translation type="unfinished">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1442,92 +799,21 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>ClockBase</name>
-    <message>
-        <source>Hidden1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CodeEditor</name>
     <message>
         <source> File: </source>
-        <translation> Bestand: </translation>
+        <translation type="unfinished"> Bestand: </translation>
     </message>
     <message>
         <source>File recognized as: </source>
-        <translation>Bestand herkend als: </translation>
-    </message>
-    <message>
-        <source>File type not supported</source>
-        <translation type="vanished">Bestandstype niet ondersteund</translation>
-    </message>
-    <message>
-        <source>     SUCCESS!!! Compilation Ok</source>
-        <translation type="vanished">     SUCCES!! Compilatie OK</translation>
-    </message>
-    <message>
-        <source>Uploading: </source>
-        <translation type="vanished">Uploaden: </translation>
-    </message>
-    <message>
-        <source>Starting Debbuger...</source>
-        <translation type="vanished">Start de debugger...</translation>
-    </message>
-    <message>
-        <source>Error: No Mcu in Simulator... </source>
-        <translation type="vanished">Fout: Geen MCU in de simulator... </translation>
-    </message>
-    <message>
-        <source>Error: No Debugger Suited for this File... </source>
-        <translation type="vanished">Fout: geen geschikte debugger voor dit bestand... </translation>
-    </message>
-    <message>
-        <source>Error: No File... </source>
-        <translation type="vanished">Fout: Geen bestand... </translation>
-    </message>
-    <message>
-        <source>Error Compiling... </source>
-        <translation type="vanished">Fout bij compileren... </translation>
-    </message>
-    <message>
-        <source>Error Loading Firmware... </source>
-        <translation type="vanished">Fout bij laden firmware... </translation>
-    </message>
-    <message>
-        <source>Clock Cycles: </source>
-        <translation type="vanished">Klok-cycli: </translation>
-    </message>
-    <message>
-        <source>     ERROR!!! Compilation Failed</source>
-        <translation type="vanished">     FOUT!!!! Compilatie mislukt</translation>
-    </message>
-    <message>
-        <source>Debugger Started </source>
-        <translation type="vanished">Debugger gestart </translation>
-    </message>
-    <message>
-        <source>Debugger Stopped </source>
-        <translation type="vanished">Debugger gestopt </translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="vanished">Eigenschappen</translation>
-    </message>
-    <message>
-        <source>Please save the Document first</source>
-        <translation type="vanished">Eerst het document opslaan</translation>
-    </message>
-    <message>
-        <source>No Compiler available for: %1 files</source>
-        <translation type="vanished">Geen compiler beschikbaar voor: %1 bestanden</translation>
-    </message>
-    <message>
-        <source>Reload Document</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bestand herkend als: </translation>
     </message>
     <message>
         <source>Found Compiler definition in file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Document</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1559,6 +845,10 @@ Wijzigingen opslaan?
         <translation type="unfinished">     SUCCES!! Compilatie OK</translation>
     </message>
     <message>
+        <source>     WARNING: Compilation Not Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>     ERROR!!! Compilation Failed</source>
         <translation type="unfinished">     FOUT!!!! Compilatie mislukt</translation>
     </message>
@@ -1576,10 +866,6 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Set proper ToolChain Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1694,35 +980,35 @@ p, li { white-space: pre-wrap; }
     <name>Component</name>
     <message>
         <source>Copy</source>
-        <translation>Kopiëren</translation>
+        <translation type="unfinished">Kopiëren</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation type="unfinished">Verwijderen</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschappen</translation>
+        <translation type="unfinished">Eigenschappen</translation>
     </message>
     <message>
         <source>Rotate CW</source>
-        <translation>Draai klokgewijs</translation>
+        <translation type="unfinished">Draai klokgewijs</translation>
     </message>
     <message>
         <source>Rotate CCW</source>
-        <translation>Draai tegen de klok in</translation>
+        <translation type="unfinished">Draai tegen de klok in</translation>
     </message>
     <message>
         <source>Rotate 180</source>
-        <translation>Draai 180</translation>
+        <translation type="unfinished">Draai 180</translation>
     </message>
     <message>
         <source>Horizontal Flip</source>
-        <translation>Horizontaal omklappen</translation>
+        <translation type="unfinished">Horizontaal omklappen</translation>
     </message>
     <message>
         <source>Vertical Flip</source>
-        <translation>Verticaal omklappen</translation>
+        <translation type="unfinished">Verticaal omklappen</translation>
     </message>
 </context>
 <context>
@@ -1736,57 +1022,37 @@ p, li { white-space: pre-wrap; }
     <name>ComponentSelector</name>
     <message>
         <source>    Loading Component sets at:</source>
-        <translation>    Laden van componenten-sets op:</translation>
+        <translation type="unfinished">    Laden van componenten-sets op:</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Kan bestand niet lezen: %1
+        <translation type="unfinished">Kan bestand niet lezen: %1
 %2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Kan bestand %1
-niet instellen als DomDucument</translation>
-    </message>
-    <message>
-        <source>        Loaded Component set:           </source>
-        <translation>        Geladen componenten-set:           </translation>
-    </message>
-    <message>
-        <source>Manage Components</source>
-        <translation>Componenten beheren</translation>
     </message>
     <message>
         <source>Error parsing file (itemlib):
 %1.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>Connector</name>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
+        <source>        Loaded Component set:           </source>
+        <translation type="unfinished">        Geladen componenten-set:           </translation>
     </message>
-</context>
-<context>
-    <name>ConnectorLine</name>
     <message>
-        <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <source>Manage Components</source>
+        <translation type="unfinished">Componenten beheren</translation>
     </message>
 </context>
 <context>
     <name>CurrSource</name>
     <message>
         <source>Current Source</source>
-        <translation>Stroombron</translation>
+        <translation type="unfinished">Stroombron</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation>Bronnen</translation>
+        <translation type="unfinished">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1801,11 +1067,11 @@ niet instellen als DomDucument</translation>
     <name>DAC</name>
     <message>
         <source>DAC</source>
-        <translation>DAC</translation>
+        <translation type="unfinished">DAC</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logica/Overige logica</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -1829,13 +1095,6 @@ niet instellen als DomDucument</translation>
     </message>
 </context>
 <context>
-    <name>DS1307</name>
-    <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1853,7 +1112,7 @@ niet instellen als DomDucument</translation>
     <name>DcMotor</name>
     <message>
         <source>Dc Motor</source>
-        <translation>DC Motor</translation>
+        <translation type="unfinished">DC Motor</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -1879,24 +1138,24 @@ niet instellen als DomDucument</translation>
 <context>
     <name>DecToBcd</name>
     <message>
-        <source>Logic/Converters</source>
-        <translation>Logica/Omzetters</translation>
+        <source>Encoder(10/16 to 4)</source>
+        <translation type="unfinished">Encoder(10/16 naar 4)</translation>
     </message>
     <message>
-        <source>Encoder(10/16 to 4)</source>
-        <translation>Encoder(10/16 naar 4)</translation>
+        <source>Logic/Converters</source>
+        <translation type="unfinished">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
-        <translation type="unfinished">Inverteer invoeren</translation>
-    </message>
-    <message>
         <source>16 Bits</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Inverteer invoeren</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -1911,22 +1170,22 @@ niet instellen als DomDucument</translation>
     <name>Demux</name>
     <message>
         <source>Demux</source>
-        <translation>Demux</translation>
+        <translation type="unfinished">Demux</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logica/Omzetters</translation>
+        <translation type="unfinished">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Outputs</source>
+        <source>Address Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Address Size</source>
+        <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1965,19 +1224,15 @@ niet instellen als DomDucument</translation>
     <name>Diode</name>
     <message>
         <source>Diode</source>
-        <translation>Diode</translation>
+        <translation type="unfinished">Diode</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Actief</translation>
+        <translation type="unfinished">Actief</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Threshold</source>
-        <translation type="obsolete">Drempel</translation>
     </message>
     <message>
         <source>Model</source>
@@ -2020,27 +1275,27 @@ niet instellen als DomDucument</translation>
     <name>EditDialog</name>
     <message>
         <source>Pin Name:</source>
-        <translation>Pin naam:</translation>
+        <translation type="unfinished">Pin naam:</translation>
     </message>
     <message>
         <source>Pin Id:</source>
-        <translation>Pin Id:</translation>
+        <translation type="unfinished">Pin Id:</translation>
     </message>
     <message>
         <source>Invert Pin</source>
-        <translation>geïnverteerde Pin</translation>
+        <translation type="unfinished">geïnverteerde Pin</translation>
     </message>
     <message>
         <source>Unused Pin</source>
-        <translation>Ongebruikte Pin</translation>
-    </message>
-    <message>
-        <source>Edit Pin </source>
-        <translation>Pin wijzigen </translation>
+        <translation type="unfinished">Ongebruikte Pin</translation>
     </message>
     <message>
         <source>Point Pin</source>
-        <translation>Punt Pin</translation>
+        <translation type="unfinished">Punt Pin</translation>
+    </message>
+    <message>
+        <source>Edit Pin </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2080,30 +1335,6 @@ niet instellen als DomDucument</translation>
     <message>
         <source>Spaces</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drive Circuit</source>
-        <translation type="obsolete">Schakeling aansturen</translation>
-    </message>
-    <message>
-        <source>Board</source>
-        <translation type="obsolete">Bord</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">Maatwerk</translation>
-    </message>
-    <message>
-        <source>Compiler Path</source>
-        <translation type="obsolete">Compiler pad</translation>
-    </message>
-    <message>
-        <source>Avra Inc Path</source>
-        <translation type="obsolete">Avra Inc pad</translation>
-    </message>
-    <message>
-        <source>Custom Board</source>
-        <translation type="obsolete">Maatwerk bord</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2328,202 +1559,6 @@ Wijzigingen opslaan?
 <context>
     <name>EditorWindow</name>
     <message>
-        <source>Load File</source>
-        <translation type="vanished">Bestand laden</translation>
-    </message>
-    <message>
-        <source>Save Document As</source>
-        <translation type="vanished">Document opslaan als</translation>
-    </message>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="vanished">Kan niet schrijven naar bestand %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>
-The Document has been modified.
-Do you want to save your changes?
-</source>
-        <translation type="vanished">
-Het document is gewijzigd.
-Wijzigingen opslaan?
-</translation>
-    </message>
-    <message>
-        <source>&amp;New	Ctrl+N</source>
-        <translation type="vanished">&amp;Nieuw	Ctrl_N</translation>
-    </message>
-    <message>
-        <source>Create a new file</source>
-        <translation type="vanished">Maak een nieuw bestand</translation>
-    </message>
-    <message>
-        <source>&amp;Open...	Ctrl+O</source>
-        <translation type="vanished">&amp;Open   	Ctrl+O</translation>
-    </message>
-    <message>
-        <source>Open an existing file</source>
-        <translation type="vanished">Open een bestaand bestand</translation>
-    </message>
-    <message>
-        <source>&amp;Save	Ctrl+S</source>
-        <translation type="vanished">Op&amp;Slaan	Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Save the document to disk</source>
-        <translation type="vanished">Document opslaan op schijf</translation>
-    </message>
-    <message>
-        <source>Save &amp;As...	Ctrl+Shift+S</source>
-        <translation type="vanished">Opslaan &amp;Als...	Ctrl+Shift+S</translation>
-    </message>
-    <message>
-        <source>Save the document under a new name</source>
-        <translation type="vanished">Sla Document op onder een nieuwe naam</translation>
-    </message>
-    <message>
-        <source>E&amp;xit</source>
-        <translation type="vanished">Afsluiten (&amp;X)</translation>
-    </message>
-    <message>
-        <source>Exit the application</source>
-        <translation type="vanished">Verlaat de applicatie</translation>
-    </message>
-    <message>
-        <source>Cu&amp;t	Ctrl+X</source>
-        <translation type="vanished">Knippen (&amp;t)	Ctrl+X</translation>
-    </message>
-    <message>
-        <source>Cut the current selection&apos;s contents to the clipboard</source>
-        <translation type="vanished">Knip de huidige selectie naar het klembord</translation>
-    </message>
-    <message>
-        <source>&amp;Copy	Ctrl+C</source>
-        <translation type="vanished">Kopieren	Ctrl+&amp;C</translation>
-    </message>
-    <message>
-        <source>Copy the current selection&apos;s contents to the clipboard</source>
-        <translation type="vanished">Kopieer de huidige selectie naar het klembord</translation>
-    </message>
-    <message>
-        <source>&amp;Paste	Ctrl+V</source>
-        <translation type="vanished">&amp;Plakken	Ctrl+V</translation>
-    </message>
-    <message>
-        <source>Paste the clipboard&apos;s contents into the current selection</source>
-        <translation type="vanished">Plak het klembord naar de huidige selectie</translation>
-    </message>
-    <message>
-        <source>Undo	Ctrl+Z</source>
-        <translation type="vanished">Ongedaan maken	Ctrl+Z</translation>
-    </message>
-    <message>
-        <source>Undo the last action</source>
-        <translation type="vanished">De laatste actie ongedaan maken</translation>
-    </message>
-    <message>
-        <source>Redo	Ctrl+Shift+Z</source>
-        <translation type="vanished">Opnieuw	Ctrl+Shift+Z</translation>
-    </message>
-    <message>
-        <source>Redo the last action</source>
-        <translation type="vanished">Laatste actie opnieuw</translation>
-    </message>
-    <message>
-        <source>Run To Breakpoint</source>
-        <translation type="vanished">Uitvoeren tot breekpunt</translation>
-    </message>
-    <message>
-        <source>Run to next breakpoint</source>
-        <translation type="vanished">Uitvoeren tot volgende breekpunt</translation>
-    </message>
-    <message>
-        <source>Step</source>
-        <translation type="vanished">Stap</translation>
-    </message>
-    <message>
-        <source>Step debugger</source>
-        <translation type="vanished">Stap debugger</translation>
-    </message>
-    <message>
-        <source>StepOver</source>
-        <translation type="vanished">StapOver</translation>
-    </message>
-    <message>
-        <source>Step Over</source>
-        <translation type="vanished">Stap Over</translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translation type="vanished">Pauzeer</translation>
-    </message>
-    <message>
-        <source>Pause debugger</source>
-        <translation type="vanished">Pauzeer debugger</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">Reset</translation>
-    </message>
-    <message>
-        <source>Reset debugger</source>
-        <translation type="vanished">Reset debugger</translation>
-    </message>
-    <message>
-        <source>Stop Debugger</source>
-        <translation type="vanished">Stop Debugger</translation>
-    </message>
-    <message>
-        <source>Stop debugger</source>
-        <translation type="vanished">Stop debugger</translation>
-    </message>
-    <message>
-        <source>Compile</source>
-        <translation type="vanished">Compileer</translation>
-    </message>
-    <message>
-        <source>Compile Source</source>
-        <translation type="vanished">Compileer bron</translation>
-    </message>
-    <message>
-        <source>UpLoad</source>
-        <translation type="vanished">Uploaden</translation>
-    </message>
-    <message>
-        <source>Load Firmware</source>
-        <translation type="vanished">Laad firmware</translation>
-    </message>
-    <message>
-        <source>Find Replace</source>
-        <translation type="vanished">Zoek vervang</translation>
-    </message>
-    <message>
-        <source>Debug</source>
-        <translation type="vanished">Debug</translation>
-    </message>
-    <message>
-        <source>Start Debugger</source>
-        <translation type="vanished">Start Debugger</translation>
-    </message>
-    <message>
-        <source>Set Compiler Path</source>
-        <translation type="vanished">Stel compiler pad in</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation type="vanished">Herladen</translation>
-    </message>
-    <message>
-        <source>All files</source>
-        <translation type="vanished">Alle bestanden</translation>
-    </message>
-    <message>
-        <source>Last Circuits</source>
-        <translation type="vanished">Laatste schakelingen</translation>
-    </message>
-    <message>
         <source>Starting Debbuger...</source>
         <translation type="unfinished">Start de debugger...</translation>
     </message>
@@ -2557,44 +1592,33 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>Ellipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation>Ellips</translation>
-    </message>
-    <message>
-        <source>Graphical</source>
-        <translation>Grafisch</translation>
-    </message>
-</context>
-<context>
     <name>FileBrowser</name>
     <message>
         <source>Add Bookmark</source>
-        <translation>Bladwijzer toevoegen</translation>
+        <translation type="unfinished">Bladwijzer toevoegen</translation>
     </message>
     <message>
         <source>Open in editor</source>
-        <translation>Open in editor</translation>
+        <translation type="unfinished">Open in editor</translation>
     </message>
     <message>
         <source>Show Hidden</source>
-        <translation>Toon verborgen</translation>
+        <translation type="unfinished">Toon verborgen</translation>
     </message>
 </context>
 <context>
     <name>FileWidget</name>
     <message>
         <source>cd Up</source>
-        <translation>map omhoog</translation>
-    </message>
-    <message>
-        <source>Remove Bookmark</source>
-        <translation>Verwijder bladwijzer</translation>
+        <translation type="unfinished">map omhoog</translation>
     </message>
     <message>
         <source>Search Files (Doesn&apos;t work)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Bookmark</source>
+        <translation type="unfinished">Verwijder bladwijzer</translation>
     </message>
 </context>
 <context>
@@ -2661,84 +1685,6 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>FindReplaceDialog</name>
-    <message>
-        <source>Find/Replace</source>
-        <translation type="vanished">Zoek/Vervang</translation>
-    </message>
-</context>
-<context>
-    <name>FindReplaceForm</name>
-    <message>
-        <source>no match found</source>
-        <translation type="vanished">Geen overeenkomst gevonden</translation>
-    </message>
-    <message>
-        <source>Replaced %1 occurrence(s)</source>
-        <translation type="vanished">%1 vervangingen</translation>
-    </message>
-    <message>
-        <source>Find/Replace</source>
-        <translation type="vanished">Zoek/Vervang</translation>
-    </message>
-    <message>
-        <source>&amp;Find:</source>
-        <translation type="vanished">Vind (&amp;F):</translation>
-    </message>
-    <message>
-        <source>R&amp;eplace with:</source>
-        <translation type="vanished">Ve&amp;rvang met:</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Fout</translation>
-    </message>
-    <message>
-        <source>D&amp;irection</source>
-        <translation type="vanished">R&amp;ichting</translation>
-    </message>
-    <message>
-        <source>&amp;Down</source>
-        <translation type="vanished">Omlaag (&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Up</source>
-        <translation type="vanished">Omhoog (&amp;U)</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Opties</translation>
-    </message>
-    <message>
-        <source>&amp;Case sensitive</source>
-        <translation type="vanished">Hoofdlettergevoelig (&amp;C)</translation>
-    </message>
-    <message>
-        <source>&amp;Whole words only</source>
-        <translation type="vanished">Alleen hele &amp;woorden</translation>
-    </message>
-    <message>
-        <source>R&amp;egular Expression</source>
-        <translation type="vanished">R&amp;eguliere expressie</translation>
-    </message>
-    <message>
-        <source>&amp;Find</source>
-        <translation type="vanished">Vinden (&amp;F)</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="vanished">Sluiten (&amp;C)</translation>
-    </message>
-    <message>
-        <source>&amp;Replace</source>
-        <translation type="vanished">Ve&amp;rvangen</translation>
-    </message>
-    <message>
-        <source>Replace &amp;All</source>
-        <translation type="vanished">Vervang &amp;Alles</translation>
-    </message>
-</context>
-<context>
     <name>FixedVolt</name>
     <message>
         <source>Fixed Volt.</source>
@@ -2747,10 +1693,6 @@ Wijzigingen opslaan?
     <message>
         <source>Sources</source>
         <translation type="unfinished">Bronnen</translation>
-    </message>
-    <message>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -2792,22 +1734,22 @@ Wijzigingen opslaan?
     <name>FlipFlopD</name>
     <message>
         <source>FlipFlop D</source>
-        <translation>D Flipflop</translation>
+        <translation type="unfinished">D Flipflop</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logica/Geheugen</translation>
+        <translation type="unfinished">Logica/Geheugen</translation>
     </message>
 </context>
 <context>
     <name>FlipFlopJK</name>
     <message>
         <source>FlipFlop JK</source>
-        <translation>JK Flipflop</translation>
+        <translation type="unfinished">JK Flipflop</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logica/Geheugen</translation>
+        <translation type="unfinished">Logica/Geheugen</translation>
     </message>
 </context>
 <context>
@@ -2841,25 +1783,14 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>Frequencimeter</name>
-    <message>
-        <source>Frequencimeter</source>
-        <translation type="vanished">Frequentiemeter</translation>
-    </message>
-    <message>
-        <source>Filter</source>
-        <translation type="obsolete">Filter</translation>
-    </message>
-</context>
-<context>
     <name>FullAdder</name>
     <message>
         <source>Full Adder</source>
-        <translation>Volledige opteller</translation>
+        <translation type="unfinished">Volledige opteller</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Logica/Rekenkundig</translation>
+        <translation type="unfinished">Logica/Rekenkundig</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2874,27 +1805,39 @@ Wijzigingen opslaan?
     <name>Function</name>
     <message>
         <source>Function</source>
-        <translation>Functie</translation>
+        <translation type="unfinished">Functie</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Logica/Rekenkundig</translation>
-    </message>
-    <message>
-        <source>Set Function</source>
-        <translation>Stel functie in</translation>
-    </message>
-    <message>
-        <source> Function:</source>
-        <translation> Functie:</translation>
+        <translation type="unfinished">Logica/Rekenkundig</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Input Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Functions</source>
         <translation type="unfinished">Functies</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Load Functions</source>
@@ -2905,46 +1848,25 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Outputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>MemData</source>
         <comment>Cannot write file %1:
 %2.</comment>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>Gate</name>
     <message>
-        <source>Inverted</source>
-        <translation type="obsolete">Geïnverteerd</translation>
-    </message>
-</context>
-<context>
-    <name>GcbDebugger</name>
-    <message>
-        <source>Error: lst file doesn&apos;t exist:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Ground</name>
-    <message>
-        <source>Ground (0 V)</source>
-        <translation>Massa (0V)</translation>
+        <source>Set Function</source>
+        <translation type="unfinished">Stel functie in</translation>
     </message>
     <message>
-        <source>Sources</source>
-        <translation>Bronnen</translation>
+        <source> Function:</source>
+        <translation type="unfinished"> Functie:</translation>
     </message>
 </context>
 <context>
     <name>Hd44780</name>
     <message>
         <source>Hd44780</source>
-        <translation>Hd44780</translation>
+        <translation type="unfinished">Hd44780</translation>
     </message>
     <message>
         <source>Displays</source>
@@ -2967,19 +1889,11 @@ Wijzigingen opslaan?
     <name>I2CRam</name>
     <message>
         <source>I2C Ram</source>
-        <translation>I2C RAM</translation>
+        <translation type="unfinished">I2C RAM</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logica/Geheugen</translation>
-    </message>
-    <message>
-        <source>Load data</source>
-        <translation>Gegevens laden</translation>
-    </message>
-    <message>
-        <source>Save data</source>
-        <translation>Gegevens opslaan</translation>
+        <translation type="unfinished">Logica/Geheugen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3002,11 +1916,15 @@ Wijzigingen opslaan?
         <translation type="unfinished">Persistent</translation>
     </message>
     <message>
-        <source>Show Memory Table</source>
+        <source>Load data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Save data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Memory Table</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3014,11 +1932,11 @@ Wijzigingen opslaan?
     <name>I2CToParallel</name>
     <message>
         <source>I2C to Parallel</source>
-        <translation>I2C naar parallel</translation>
+        <translation type="unfinished">I2C naar parallel</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logica/Omzetters</translation>
+        <translation type="unfinished">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3034,48 +1952,37 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>Ili9341</name>
-    <message>
-        <source>Ili9341</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Image</name>
     <message>
         <source>Image</source>
-        <translation>Afbeelding</translation>
-    </message>
-    <message>
-        <source>Load Image</source>
-        <translation>Afbeelding laden</translation>
-    </message>
-    <message>
-        <source>All files (*.*)</source>
-        <translation>Alle bestanden (*.*)</translation>
+        <translation type="unfinished">Afbeelding</translation>
     </message>
     <message>
         <source>Graphical</source>
-        <translation>Grafisch</translation>
+        <translation type="unfinished">Grafisch</translation>
     </message>
     <message>
         <source>Image File</source>
         <translation type="unfinished">Afbeeldingsbestand</translation>
+    </message>
+    <message>
+        <source>Load Image</source>
+        <translation type="unfinished">Afbeelding laden</translation>
+    </message>
+    <message>
+        <source>All files (*.*)</source>
+        <translation type="unfinished">Alle bestanden (*.*)</translation>
     </message>
 </context>
 <context>
     <name>Inductor</name>
     <message>
         <source>Inductor</source>
-        <translation>Spoel</translation>
+        <translation type="unfinished">Spoel</translation>
     </message>
     <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -3084,10 +1991,6 @@ Wijzigingen opslaan?
     <message>
         <source>Inductance</source>
         <translation type="unfinished">Inductie</translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3132,126 +2035,15 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Propagation Delay </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Rise Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fall Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Propagation Delay </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ItemLibrary</name>
-    <message>
-        <source>Gates</source>
-        <translation>Poorten</translation>
-    </message>
-    <message>
-        <source>Logic</source>
-        <translation>Logica</translation>
-    </message>
-    <message>
-        <source>Arithmetic</source>
-        <translation>Rekenkundig</translation>
-    </message>
-    <message>
-        <source>Memory</source>
-        <translation>Geheugen</translation>
-    </message>
-    <message>
-        <source>Converters</source>
-        <translation>Omzetters</translation>
-    </message>
-    <message>
-        <source>Other Logic</source>
-        <translation>Overige logica</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation>Sensoren</translation>
-    </message>
-    <message>
-        <source>Micro</source>
-        <translation>Micro</translation>
-    </message>
-    <message>
-        <source>Resistors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="unfinished">Passief</translation>
-    </message>
-    <message>
-        <source>Resistive Sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="unfinished">Uitgangen</translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Motors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I51</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arduino</source>
-        <translation type="unfinished">Arduino</translation>
-    </message>
-    <message>
-        <source>Shields</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AVR</source>
-        <translation type="unfinished">AVR</translation>
-    </message>
-    <message>
-        <source>Other IC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PIC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Led display</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3267,25 +2059,14 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>KY040</name>
-    <message>
-        <source>KY-040</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>KeyPad</name>
     <message>
         <source>KeyPad</source>
-        <translation>Toetsenvlak</translation>
+        <translation type="unfinished">Toetsenvlak</translation>
     </message>
     <message>
         <source>Switches</source>
-        <translation>Schakelaars</translation>
+        <translation type="unfinished">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3306,10 +2087,6 @@ Wijzigingen opslaan?
 </context>
 <context>
     <name>Ks0108</name>
-    <message>
-        <source>Ks0108</source>
-        <translation>KS0108</translation>
-    </message>
     <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
@@ -3400,22 +2177,14 @@ Wijzigingen opslaan?
     <name>LatchD</name>
     <message>
         <source>Latch</source>
-        <translation>Latch</translation>
+        <translation type="unfinished">Latch</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logica/Geheugen</translation>
+        <translation type="unfinished">Logica/Geheugen</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tristate</source>
-        <translation type="unfinished">Tristate</translation>
-    </message>
-    <message>
-        <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3425,6 +2194,14 @@ Wijzigingen opslaan?
     <message>
         <source>Trigger Type</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tristate</source>
+        <translation type="unfinished">Tristate</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3439,7 +2216,7 @@ Wijzigingen opslaan?
     <name>Ldr</name>
     <message>
         <source>LDR</source>
-        <translation>LDR</translation>
+        <translation type="unfinished">LDR</translation>
     </message>
     <message>
         <source>Resistive Sensors</source>
@@ -3466,6 +2243,10 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Gamma</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3473,43 +2254,12 @@ Wijzigingen opslaan?
         <source>R1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Led</name>
-    <message>
-        <source>Led</source>
-        <translation>LED</translation>
-    </message>
-    <message>
-        <source>Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation type="obsolete">Kleur</translation>
-    </message>
-    <message>
-        <source>Grounded</source>
-        <translation type="obsolete">Geaard</translation>
-    </message>
-    <message>
-        <source>Threshold</source>
-        <translation type="obsolete">Drempel</translation>
-    </message>
-    <message>
-        <source>Resistance</source>
-        <translation type="obsolete">Weestand</translation>
-    </message>
 </context>
 <context>
     <name>LedBar</name>
     <message>
-        <source>LedBar</source>
-        <translation type="vanished">LEDbalk</translation>
+        <source>Led Bar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3536,8 +2286,8 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Threshold</source>
-        <translation type="obsolete">Drempel</translation>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -3547,41 +2297,9 @@ Wijzigingen opslaan?
         <source>Resistance</source>
         <translation type="unfinished">Weestand</translation>
     </message>
-    <message>
-        <source>Forward Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Led Bar</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LedBase</name>
-    <message>
-        <source>Yellow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Oreange</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Purple</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
@@ -3615,7 +2333,7 @@ Wijzigingen opslaan?
     <name>LedMatrix</name>
     <message>
         <source>LedMatrix</source>
-        <translation>LEDmatrix</translation>
+        <translation type="unfinished">LEDmatrix</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -3624,10 +2342,6 @@ Wijzigingen opslaan?
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Pins</source>
-        <translation type="unfinished">Verticale pins</translation>
     </message>
     <message>
         <source>Rows</source>
@@ -3642,12 +2356,16 @@ Wijzigingen opslaan?
         <translation type="unfinished">Kleur</translation>
     </message>
     <message>
+        <source>Vertical Pins</source>
+        <translation type="unfinished">Verticale pins</translation>
+    </message>
+    <message>
         <source>Electric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Threshold</source>
-        <translation type="obsolete">Drempel</translation>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -3657,13 +2375,13 @@ Wijzigingen opslaan?
         <source>Resistance</source>
         <translation type="unfinished">Weestand</translation>
     </message>
-    <message>
-        <source>Forward Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LedRgb</name>
+    <message>
+        <source>Led Rgb</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Leds</source>
         <translation type="unfinished"></translation>
@@ -3700,31 +2418,16 @@ Wijzigingen opslaan?
         <source>Blue:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Led Rgb</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Line</name>
-    <message>
-        <source>Line</source>
-        <translation>Lijn</translation>
-    </message>
-    <message>
-        <source>Graphical</source>
-        <translation>Grafisch</translation>
-    </message>
 </context>
 <context>
     <name>LineNumberArea</name>
     <message>
         <source>Add BreakPoint</source>
-        <translation>Breekpunt toevoegen</translation>
+        <translation type="unfinished">Breekpunt toevoegen</translation>
     </message>
     <message>
         <source>Remove BreakPoint</source>
-        <translation>Breekpunt verwijderen</translation>
+        <translation type="unfinished">Breekpunt verwijderen</translation>
     </message>
     <message>
         <source>Clear All BreakPoints</source>
@@ -3735,75 +2438,17 @@ Wijzigingen opslaan?
     <name>Lm555</name>
     <message>
         <source>lm555</source>
-        <translation>LM555</translation>
+        <translation type="unfinished">LM555</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logica/Overige logica</translation>
-    </message>
-</context>
-<context>
-    <name>LogicComponent</name>
-    <message>
-        <source>None</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clock</source>
-        <translation type="unfinished">Klok</translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LogicInput</name>
-    <message>
-        <source>Fixed Volt.</source>
-        <translation type="vanished">Vaste spanning</translation>
-    </message>
-    <message>
-        <source>Sources</source>
-        <translation type="vanished">Bronnen</translation>
-    </message>
-    <message>
-        <source>Voltage</source>
-        <translation type="obsolete">Spanning</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Components</source>
-        <translation>Componenten</translation>
-    </message>
-    <message>
-        <source>File explorer</source>
-        <translation>Bestandsverkenner</translation>
-    </message>
-    <message>
-        <source> Qt5SerialPort is not installed in your system
-
-    Mcu SerialPort will not work
-    Just Install libQt5SerialPort package
-    To have Mcu Serial Port Working</source>
-        <translation> Qt5SerialPort is niet geïnstalleerd in het systeem
-
-    MCU SerialPort zal niet functioneren
-     Installeer pakketbestand libQr5SerialPort
-    om de MCUSerialPort functioneel te maken</translation>
-    </message>
-    <message>
-        <source>Plugin Error:</source>
-        <translation>Plugin Fout:</translation>
-    </message>
-    <message>
-        <source>Search Components</source>
-        <translation>Zoek componenten</translation>
-    </message>
-    <message>
-        <source>This file will be auto-deleted!!</source>
+        <source>Looks like SimulIDE crashed...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3812,16 +2457,44 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>You must save it with any other name if you want to keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Do you want to open the auto-saved copy of the Circuit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Looks like SimulIDE crashed...</source>
-        <translation type="unfinished"></translation>
+        <source>Search Components</source>
+        <translation type="unfinished">Zoek componenten</translation>
     </message>
     <message>
-        <source>You must save it with any other name if you want to keep it</source>
-        <translation type="unfinished"></translation>
+        <source>Components</source>
+        <translation type="unfinished">Componenten</translation>
+    </message>
+    <message>
+        <source>File explorer</source>
+        <translation type="unfinished">Bestandsverkenner</translation>
+    </message>
+    <message>
+        <source> Qt5SerialPort is not installed in your system
+
+    Mcu SerialPort will not work
+    Just Install libQt5SerialPort package
+    To have Mcu Serial Port Working</source>
+        <translation type="unfinished"> Qt5SerialPort is niet geïnstalleerd in het systeem
+
+    MCU SerialPort zal niet functioneren
+     Installeer pakketbestand libQr5SerialPort
+    om de MCUSerialPort functioneel te maken</translation>
+    </message>
+    <message>
+        <source>Plugin Error:</source>
+        <translation type="unfinished">Plugin Fout:</translation>
     </message>
 </context>
 <context>
@@ -3846,16 +2519,8 @@ Wijzigingen opslaan?
 <context>
     <name>Mcu</name>
     <message>
-        <source>Load Firmware</source>
-        <translation type="unfinished">Laad firmware</translation>
-    </message>
-    <message>
-        <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="unfinished">Alle bestanden (*.*);;ELF bestanden (*.elf);;HEX bestanden (*.hex)</translation>
-    </message>
-    <message>
-        <source>Load firmware</source>
-        <translation type="unfinished">Firmware laden</translation>
+        <source>xml file not found for: %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Main</source>
@@ -3866,47 +2531,11 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open Mcu Monitor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No File:</source>
-        <translation type="unfinished">Geen bestand:</translation>
-    </message>
-    <message>
-        <source>No File to reload </source>
-        <translation type="unfinished">Geen bestand om te herladen </translation>
-    </message>
-    <message>
-        <source>Main Mcu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reload firmware</source>
-        <translation type="unfinished">Firmware herladen</translation>
-    </message>
-    <message>
-        <source>Open Serial Monitor.</source>
-        <translation type="unfinished">Open Seriële Monitor.</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished">Eigenschappen</translation>
-    </message>
-    <message>
-        <source>xml file not found for: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load EEPROM data from file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save EEPROM data to file</source>
+        <source>Reload hex at Simulation Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3926,62 +2555,52 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reload hex at Simulation Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>McuBase</name>
-    <message>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>McuComponent</name>
-    <message>
-        <source>Load firmware</source>
-        <translation type="vanished">Firmware laden</translation>
-    </message>
-    <message>
-        <source>Reload firmware</source>
-        <translation type="vanished">Firmware herladen</translation>
-    </message>
-    <message>
-        <source>Open Serial Monitor.</source>
-        <translation type="vanished">Open Seriële Monitor.</translation>
-    </message>
-    <message>
-        <source>Open Serial Port.</source>
-        <translation type="vanished">Open Seriële poort.</translation>
-    </message>
-    <message>
         <source>Load Firmware</source>
-        <translation type="vanished">Laad firmware</translation>
-    </message>
-    <message>
-        <source>No File:</source>
-        <translation type="vanished">Geen bestand:</translation>
-    </message>
-    <message>
-        <source>No File to reload </source>
-        <translation type="vanished">Geen bestand om te herladen </translation>
-    </message>
-    <message>
-        <source>Load EEPROM data</source>
-        <translation type="vanished">Laad EEPROM data</translation>
-    </message>
-    <message>
-        <source>Save EEPROM data</source>
-        <translation type="vanished">Sla EEPROM data op</translation>
+        <translation type="unfinished">Laad firmware</translation>
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="vanished">Alle bestanden (*.*);;ELF bestanden (*.elf);;HEX bestanden (*.hex)</translation>
+        <translation type="unfinished">Alle bestanden (*.*);;ELF bestanden (*.elf);;HEX bestanden (*.hex)</translation>
     </message>
     <message>
-        <source>Logic Symbol</source>
-        <translation type="obsolete">Logisch symbool</translation>
+        <source>No File:</source>
+        <translation type="unfinished">Geen bestand:</translation>
+    </message>
+    <message>
+        <source>No File to reload </source>
+        <translation type="unfinished">Geen bestand om te herladen </translation>
+    </message>
+    <message>
+        <source>Main Mcu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load firmware</source>
+        <translation type="unfinished">Firmware laden</translation>
+    </message>
+    <message>
+        <source>Reload firmware</source>
+        <translation type="unfinished">Firmware herladen</translation>
+    </message>
+    <message>
+        <source>Load EEPROM data from file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save EEPROM data to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished">Open Seriële Monitor.</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Eigenschappen</translation>
     </message>
 </context>
 <context>
@@ -4012,10 +2631,6 @@ Wijzigingen opslaan?
 %2.</translation>
     </message>
     <message>
-        <source>.data (*.data);;.bin (*.bin);;All files (*.*)</source>
-        <translation type="vanished">.data (*.data);;.bin(*.bin);;Alle bestanden (*.*)</translation>
-    </message>
-    <message>
         <source>All files (*.*);;.data (*.data);;.bin (*.bin)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4031,19 +2646,11 @@ Wijzigingen opslaan?
     <name>Memory</name>
     <message>
         <source>Ram/Rom</source>
-        <translation>RAM/ROM</translation>
+        <translation type="unfinished">RAM/ROM</translation>
     </message>
     <message>
         <source>Logic/Memory</source>
-        <translation>Logica/Geheugen</translation>
-    </message>
-    <message>
-        <source>Load data</source>
-        <translation>Laad data</translation>
-    </message>
-    <message>
-        <source>Save data</source>
-        <translation>Sla data op</translation>
+        <translation type="unfinished">Logica/Geheugen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4062,10 +2669,6 @@ Wijzigingen opslaan?
         <translation type="unfinished">Persistent</translation>
     </message>
     <message>
-        <source>Show Memory Table</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4078,7 +2681,15 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Load data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Memory Table</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4097,11 +2708,11 @@ Wijzigingen opslaan?
     <name>Mosfet</name>
     <message>
         <source>Mosfet</source>
-        <translation>Mosfet</translation>
+        <translation type="unfinished">Mosfet</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Actief</translation>
+        <translation type="unfinished">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4116,6 +2727,10 @@ Wijzigingen opslaan?
         <translation type="unfinished">Uitputting</translation>
     </message>
     <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>RDSon</source>
         <translation type="unfinished">RDSaan</translation>
     </message>
@@ -4123,32 +2738,28 @@ Wijzigingen opslaan?
         <source>Threshold</source>
         <translation type="unfinished">Drempel</translation>
     </message>
-    <message>
-        <source>Electric</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Mux</name>
     <message>
         <source>Mux</source>
-        <translation>Mux</translation>
+        <translation type="unfinished">Mux</translation>
     </message>
     <message>
         <source>Logic/Converters</source>
-        <translation>Logica/Omzetters</translation>
+        <translation type="unfinished">Logica/Omzetters</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
-        <translation type="unfinished">Inverteer invoeren</translation>
-    </message>
-    <message>
         <source>Address Size</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert Inputs</source>
+        <translation type="unfinished">Inverteer invoeren</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -4163,11 +2774,11 @@ Wijzigingen opslaan?
     <name>MuxAnalog</name>
     <message>
         <source>Analog Mux</source>
-        <translation>Analoge MUX</translation>
+        <translation type="unfinished">Analoge MUX</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Actief</translation>
+        <translation type="unfinished">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4186,11 +2797,11 @@ Wijzigingen opslaan?
     <name>OpAmp</name>
     <message>
         <source>OpAmp</source>
-        <translation>OpAmp</translation>
+        <translation type="unfinished">OpAmp</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Actief</translation>
+        <translation type="unfinished">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4199,6 +2810,10 @@ Wijzigingen opslaan?
     <message>
         <source>Gain</source>
         <translation type="unfinished">Versterking</translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Supply</source>
@@ -4213,15 +2828,11 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Output Impedance</source>
+        <source>Show Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Switch Supply Pins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4229,18 +2840,18 @@ Wijzigingen opslaan?
     <name>OrGate</name>
     <message>
         <source>Or Gate</source>
-        <translation>OF poort</translation>
+        <translation type="unfinished">OF poort</translation>
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Logica/Poorten</translation>
-    </message>
-    <message>
-        <source>Input Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logica/Poorten</translation>
     </message>
     <message>
         <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4271,11 +2882,11 @@ Wijzigingen opslaan?
     <name>Oscope</name>
     <message>
         <source>Oscope</source>
-        <translation>Oscilloscoop</translation>
+        <translation type="unfinished">Oscilloscoop</translation>
     </message>
     <message>
         <source>Meters</source>
-        <translation>Meters</translation>
+        <translation type="unfinished">Meters</translation>
     </message>
     <message>
         <source>Hidden1</source>
@@ -4284,47 +2895,6 @@ Wijzigingen opslaan?
     <message>
         <source>Filter</source>
         <translation type="unfinished">Filter</translation>
-    </message>
-</context>
-<context>
-    <name>PICComponent</name>
-    <message>
-        <source>Micro</source>
-        <translation type="vanished">Micro</translation>
-    </message>
-</context>
-<context>
-    <name>Pcd8544</name>
-    <message>
-        <source>Pcd8544</source>
-        <translation>Pcd8544</translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PicProcessor</name>
-    <message>
-        <source>File Not Found</source>
-        <translation type="vanished">Bestand niet gevonden</translation>
-    </message>
-    <message>
-        <source>The file &quot;%1&quot; was not found.</source>
-        <translation type="vanished">Het bestand &quot;%1&quot; is niet gevonden.</translation>
-    </message>
-    <message>
-        <source>Unkown Error:</source>
-        <translation type="vanished">Onbekende fout:</translation>
-    </message>
-    <message>
-        <source>Could not Create Pic Processor: &quot;%1&quot;</source>
-        <translation type="vanished">Kon PIC Processor niet maken: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Could not Load: &quot;%1&quot;</source>
-        <translation type="vanished">Kon niet laden: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -4341,16 +2911,12 @@ Wijzigingen opslaan?
         <source>Screen Size Y</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Potentiometer</name>
     <message>
         <source>Potentiometer</source>
-        <translation>Potmeter</translation>
+        <translation type="unfinished">Potmeter</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -4373,23 +2939,23 @@ Wijzigingen opslaan?
     <name>Probe</name>
     <message>
         <source>Probe</source>
-        <translation>Probe</translation>
+        <translation type="unfinished">Probe</translation>
     </message>
     <message>
         <source>Meters</source>
-        <translation>Meters</translation>
+        <translation type="unfinished">Meters</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Threshold</source>
-        <translation type="unfinished">Drempel</translation>
-    </message>
-    <message>
         <source>Show Voltage</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished">Drempel</translation>
     </message>
 </context>
 <context>
@@ -4431,11 +2997,11 @@ p, li { white-space: pre-wrap; }
     <name>Push</name>
     <message>
         <source>Push</source>
-        <translation>Drukknop</translation>
+        <translation type="unfinished">Drukknop</translation>
     </message>
     <message>
         <source>Switches</source>
-        <translation>Schakelaars</translation>
+        <translation type="unfinished">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4452,6 +3018,197 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Key</source>
         <translation type="unfinished">Sleutel</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>Sources</source>
+        <translation type="unfinished">Bronnen</translation>
+    </message>
+    <message>
+        <source>Logic</source>
+        <translation type="unfinished">Logica</translation>
+    </message>
+    <message>
+        <source>Error:
+Not valid Package file:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="unfinished">Kan niet schrijven naar bestand %1:
+%2.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Verwijderen</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Sensoren</translation>
+    </message>
+    <message>
+        <source>Perifericals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meters</source>
+        <translation type="unfinished">Meters</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Ellips</translation>
+    </message>
+    <message>
+        <source>Graphical</source>
+        <translation type="unfinished">Grafisch</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Lijn</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">Rechthoek</translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="unfinished">Uitgangen</translation>
+    </message>
+    <message>
+        <source>Displays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led</source>
+        <translation type="unfinished">LED</translation>
+    </message>
+    <message>
+        <source>Leds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Motors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacitor</source>
+        <translation type="unfinished">Condensator</translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electrolytic Capacitor</source>
+        <translation type="unfinished">Electrolytische condensator (Elco)</translation>
+    </message>
+    <message>
+        <source>Resistive Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thermistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground (0 V)</source>
+        <translation type="unfinished">Massa (0V)</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="unfinished">Passief</translation>
+    </message>
+    <message>
+        <source>AVR</source>
+        <translation type="unfinished">AVR</translation>
+    </message>
+    <message>
+        <source>Micro</source>
+        <translation type="unfinished">Micro</translation>
+    </message>
+    <message>
+        <source>PIC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I51</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arduino</source>
+        <translation type="unfinished">Arduino</translation>
+    </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished">Poorten</translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished">Rekenkundig</translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished">Geheugen</translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished">Omzetters</translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished">Overige logica</translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: elf file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4473,11 +3230,11 @@ p, li { white-space: pre-wrap; }
     <name>Rail</name>
     <message>
         <source>Rail.</source>
-        <translation>Rail</translation>
+        <translation type="unfinished">Rail</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation>Bronnen</translation>
+        <translation type="unfinished">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4491,52 +3248,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>RamTable</name>
     <message>
-        <source>Reg.</source>
-        <translation type="vanished">Reg.</translation>
-    </message>
-    <message>
-        <source>Dec</source>
-        <translation>Dec</translation>
-    </message>
-    <message>
-        <source>Load VarSet</source>
-        <translation>Laad VarSet</translation>
-    </message>
-    <message>
-        <source>Save VarSet</source>
-        <translation>Bewaar VarSet</translation>
-    </message>
-    <message>
-        <source>VarSets (*.vst);;All files (*.*)</source>
-        <translation>VarSets(*.vst);;Alle bestanden(*.*)</translation>
-    </message>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation>Kan niet schrijven naar bestand %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Clear Selected</source>
-        <translation>Wis selectie</translation>
-    </message>
-    <message>
-        <source>Clear Table</source>
-        <translation>Wis tabel</translation>
-    </message>
-    <message>
-        <source>Load Variables</source>
-        <translation>Laad variabelen</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation>Waarde</translation>
-    </message>
-    <message>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4548,27 +3259,58 @@ p, li { white-space: pre-wrap; }
         <source>Name</source>
         <translation type="unfinished">Naam</translation>
     </message>
-</context>
-<context>
-    <name>Rectangle</name>
     <message>
-        <source>Rectangle</source>
-        <translation>Rechthoek</translation>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
     </message>
     <message>
-        <source>Graphical</source>
-        <translation>Grafisch</translation>
+        <source>Dec</source>
+        <translation type="unfinished">Dec</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Waarde</translation>
+    </message>
+    <message>
+        <source>Load Variables</source>
+        <translation type="unfinished">Laad variabelen</translation>
+    </message>
+    <message>
+        <source>Clear Selected</source>
+        <translation type="unfinished">Wis selectie</translation>
+    </message>
+    <message>
+        <source>Clear Table</source>
+        <translation type="unfinished">Wis tabel</translation>
+    </message>
+    <message>
+        <source>Load VarSet</source>
+        <translation type="unfinished">Laad VarSet</translation>
+    </message>
+    <message>
+        <source>Save VarSet</source>
+        <translation type="unfinished">Bewaar VarSet</translation>
+    </message>
+    <message>
+        <source>VarSets (*.vst);;All files (*.*)</source>
+        <translation type="unfinished">VarSets(*.vst);;Alle bestanden(*.*)</translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="unfinished">Kan niet schrijven naar bestand %1:
+%2.</translation>
     </message>
 </context>
 <context>
     <name>RelaySPST</name>
     <message>
         <source>Relay (all)</source>
-        <translation>Relais (alles)</translation>
+        <translation type="unfinished">Relais (alles)</translation>
     </message>
     <message>
         <source>Switches</source>
-        <translation>Schakelaars</translation>
+        <translation type="unfinished">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4585,10 +3327,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Poles</source>
         <translation type="unfinished">Polen</translation>
-    </message>
-    <message>
-        <source>Key</source>
-        <translation type="obsolete">Sleutel</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -4615,7 +3353,7 @@ p, li { white-space: pre-wrap; }
     <name>Resistor</name>
     <message>
         <source>Resistor</source>
-        <translation>Weerstand</translation>
+        <translation type="unfinished">Weerstand</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -4634,7 +3372,7 @@ p, li { white-space: pre-wrap; }
     <name>ResistorDip</name>
     <message>
         <source>ResistorDip</source>
-        <translation>WeerstandDip</translation>
+        <translation type="unfinished">WeerstandDip</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -4654,17 +3392,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>SR04</name>
-    <message>
-        <source>HC-SR04</source>
-        <translation>HC-SR04</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation>Sensoren</translation>
-    </message>
-</context>
-<context>
     <name>Scripted</name>
     <message>
         <source>Scripted</source>
@@ -4676,6 +3403,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4691,6 +3422,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Load script</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4703,14 +3438,6 @@ p, li { white-space: pre-wrap; }
 %2.</source>
         <translation type="unfinished">Kan niet schrijven naar bestand %1:
 %2.</translation>
-    </message>
-    <message>
-        <source>Invert Outputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electric</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4745,7 +3472,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot Open Port %1:
 %2.</source>
-        <translation>Kan poort niet openen: %1
+        <translation type="unfinished">Kan poort niet openen: %1
 %2.</translation>
     </message>
 </context>
@@ -4753,7 +3480,7 @@ p, li { white-space: pre-wrap; }
     <name>Servo</name>
     <message>
         <source>Servo</source>
-        <translation>Servo</translation>
+        <translation type="unfinished">Servo</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -4780,7 +3507,7 @@ p, li { white-space: pre-wrap; }
     <name>SevenSegment</name>
     <message>
         <source>7 Segment</source>
-        <translation>7 segment</translation>
+        <translation type="unfinished">7 segment</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -4791,16 +3518,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vertical Pins</source>
-        <translation type="unfinished">Verticale pins</translation>
-    </message>
-    <message>
         <source>Size</source>
         <translation type="unfinished">Grootte</translation>
     </message>
     <message>
         <source>Color</source>
         <translation type="unfinished">Kleur</translation>
+    </message>
+    <message>
+        <source>Vertical Pins</source>
+        <translation type="unfinished">Verticale pins</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -4811,8 +3538,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Threshold</source>
-        <translation type="obsolete">Drempel</translation>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max Current</source>
@@ -4822,20 +3549,16 @@ p, li { white-space: pre-wrap; }
         <source>Resistance</source>
         <translation type="unfinished">Weestand</translation>
     </message>
-    <message>
-        <source>Forward Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SevenSegmentBCD</name>
     <message>
         <source>7 Seg BCD</source>
-        <translation>7 Seg BCD</translation>
+        <translation type="unfinished">7 Seg BCD</translation>
     </message>
     <message>
         <source>Logic/Other Logic</source>
-        <translation>Logica/Overige logica</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4873,11 +3596,11 @@ p, li { white-space: pre-wrap; }
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
-        <translation>Schuif register</translation>
+        <translation type="unfinished">Schuif register</translation>
     </message>
     <message>
         <source>Logic/Arithmetic</source>
-        <translation>Logica/Rekenkundig</translation>
+        <translation type="unfinished">Logica/Rekenkundig</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5001,8 +3724,16 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Ssd1306</name>
     <message>
-        <source>Ssd1306</source>
-        <translation>SSD1306</translation>
+        <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Displays</source>
@@ -5024,24 +3755,12 @@ p, li { white-space: pre-wrap; }
         <source>I2C Frequency</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>White</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Yellow</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Stepper</name>
     <message>
         <source>Stepper</source>
-        <translation>Stepper</translation>
+        <translation type="unfinished">Stepper</translation>
     </message>
     <message>
         <source>Motors</source>
@@ -5095,15 +3814,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ref. Temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Temperature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5118,23 +3837,11 @@ p, li { white-space: pre-wrap; }
     <name>SubCircuit</name>
     <message>
         <source>Subcircuit</source>
-        <translation>Subschakeling</translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Kan bestand niet lezen: %1
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot set file %1
-to DomDocument</source>
-        <translation type="vanished">Kan bestand %1
-niet instellen als DomDocument</translation>
+        <translation type="unfinished">Subschakeling</translation>
     </message>
     <message>
         <source>There are no data files for </source>
-        <translation>Er zijn geen databestanden voor </translation>
+        <translation type="unfinished">Er zijn geen databestanden voor </translation>
     </message>
     <message>
         <source>Main</source>
@@ -5152,68 +3859,16 @@ niet instellen als DomDocument</translation>
         <source>Attach</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SubPackage</name>
     <message>
         <source>Package</source>
-        <translation>Pakket</translation>
-    </message>
-    <message>
-        <source>
-Package has been modified.
-Do you want to save your changes?
-</source>
-        <translation>
-Pakket is gewijzigd. 
-Wijzigingen opslaan?
-</translation>
-    </message>
-    <message>
-        <source>Move Pin </source>
-        <translation>Verplaats pin </translation>
-    </message>
-    <message>
-        <source>Delete Pin </source>
-        <translation>Verwijder pin </translation>
-    </message>
-    <message>
-        <source>Load Package</source>
-        <translation>Laad pakket</translation>
-    </message>
-    <message>
-        <source>Save Package</source>
-        <translation>Sla pakket op</translation>
-    </message>
-    <message>
-        <source>Load Package File</source>
-        <translation>laad pakketbestand</translation>
-    </message>
-    <message>
-        <source>Packages (*.package);;All files (*.*)</source>
-        <translation>Pakketten(*.package);;Alle bestanden(*.*)</translation>
-    </message>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation>Kan niet schrijven naar bestand %1:
-%2.</translation>
+        <translation type="unfinished">Pakket</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Overig</translation>
-    </message>
-    <message>
-        <source>Edit Pin </source>
-        <translation>Bewerk pin </translation>
-    </message>
-    <message>
-        <source>Select Main Component</source>
-        <translation>Selecteer hoofdcomponent</translation>
+        <translation type="unfinished">Overig</translation>
     </message>
     <message>
         <source>Board Mode</source>
@@ -5224,12 +3879,20 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
         <source>Width</source>
         <translation type="unfinished">Breedte</translation>
     </message>
     <message>
         <source>Height</source>
         <translation type="unfinished">Hoogte</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Naam</translation>
     </message>
     <message>
         <source>Package File</source>
@@ -5240,27 +3903,67 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation type="unfinished">Type</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">Naam</translation>
-    </message>
-    <message>
         <source>Logic Symbol</source>
         <translation type="unfinished">Logisch symbool</translation>
+    </message>
+    <message>
+        <source>Move Pin </source>
+        <translation type="unfinished">Verplaats pin </translation>
+    </message>
+    <message>
+        <source>Edit Pin </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Pin </source>
+        <translation type="unfinished">Verwijder pin </translation>
+    </message>
+    <message>
+        <source>Load Package</source>
+        <translation type="unfinished">Laad pakket</translation>
+    </message>
+    <message>
+        <source>Save Package</source>
+        <translation type="unfinished">Sla pakket op</translation>
+    </message>
+    <message>
+        <source>Select Main Component</source>
+        <translation type="unfinished">Selecteer hoofdcomponent</translation>
+    </message>
+    <message>
+        <source>
+Package has been modified.
+Do you want to save your changes?
+</source>
+        <translation type="unfinished">
+Pakket is gewijzigd. 
+Wijzigingen opslaan?
+</translation>
+    </message>
+    <message>
+        <source>Packages (*.package);;All files (*.*)</source>
+        <translation type="unfinished">Pakketten(*.package);;Alle bestanden(*.*)</translation>
+    </message>
+    <message>
+        <source>Load Package File</source>
+        <translation type="unfinished">laad pakketbestand</translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="unfinished">Kan niet schrijven naar bestand %1:
+%2.</translation>
     </message>
 </context>
 <context>
     <name>Switch</name>
     <message>
-        <source>Switches</source>
-        <translation>Schakelaars</translation>
+        <source>Switch (all)</source>
+        <translation type="unfinished">Schakelaar (alles)</translation>
     </message>
     <message>
-        <source>Switch (all)</source>
-        <translation>Schakelaar (alles)</translation>
+        <source>Switches</source>
+        <translation type="unfinished">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5286,12 +3989,12 @@ Wijzigingen opslaan?
 <context>
     <name>SwitchDip</name>
     <message>
-        <source>Switches</source>
-        <translation>Schakelaars</translation>
+        <source>Switch Dip</source>
+        <translation type="unfinished">Schakelaar DIP</translation>
     </message>
     <message>
-        <source>Switch Dip</source>
-        <translation>Schakelaar DIP</translation>
+        <source>Switches</source>
+        <translation type="unfinished">Schakelaars</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5303,49 +4006,14 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>TerminalWidget</name>
-    <message>
-        <source>Send Text:</source>
-        <translation type="vanished">Verstuur tekst:</translation>
-    </message>
-    <message>
-        <source>    Send Value:</source>
-        <translation type="vanished">    Verstuur waarde:</translation>
-    </message>
-    <message>
-        <source>    Print:</source>
-        <translation type="vanished">    Afdrukken:</translation>
-    </message>
-    <message>
-        <source> Value </source>
-        <translation type="vanished"> Waarde </translation>
-    </message>
-    <message>
-        <source>Received From Micro:</source>
-        <translation type="vanished">Ontvangen van Micro:</translation>
-    </message>
-    <message>
-        <source>Sent to Micro:</source>
-        <translation type="vanished">Verstuurd naar Micro:</translation>
-    </message>
-    <message>
-        <source>CR</source>
-        <translation type="vanished">CR</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="vanished">Wissen</translation>
-    </message>
-</context>
-<context>
     <name>TextComponent</name>
     <message>
         <source>Text</source>
-        <translation>Tekst</translation>
+        <translation type="unfinished">Tekst</translation>
     </message>
     <message>
         <source>Graphical</source>
-        <translation>Grafisch</translation>
+        <translation type="unfinished">Grafisch</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5375,10 +4043,6 @@ Wijzigingen opslaan?
         <source>Fixed_Width</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>TextVal</name>
@@ -5400,21 +4064,6 @@ Wijzigingen opslaan?
         <source>
 
     Script Not Saved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Thermistor</name>
-    <message>
-        <source>Thermistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistive Sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5445,22 +4094,14 @@ Wijzigingen opslaan?
     <name>Tunnel</name>
     <message>
         <source>Tunnel.</source>
-        <translation>Tunnel</translation>
+        <translation type="unfinished">Tunnel</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Overig</translation>
+        <translation type="unfinished">Overig</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="obsolete">Naam</translation>
-    </message>
-    <message>
-        <source>Rotated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5468,7 +4109,7 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Rotated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5476,7 +4117,7 @@ Wijzigingen opslaan?
     <name>VarResistor</name>
     <message>
         <source>Variable Resistor</source>
-        <translation>Variabele weerstand</translation>
+        <translation type="unfinished">Variabele weerstand</translation>
     </message>
     <message>
         <source>Resistors</source>
@@ -5507,11 +4148,11 @@ Wijzigingen opslaan?
     <name>VoltReg</name>
     <message>
         <source>Volt. Regulator</source>
-        <translation>Spanningsregelaar</translation>
+        <translation type="unfinished">Spanningsregelaar</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Actief</translation>
+        <translation type="unfinished">Actief</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5526,19 +4167,15 @@ Wijzigingen opslaan?
     <name>VoltSource</name>
     <message>
         <source>Volt. Source</source>
-        <translation>Spanningsbron</translation>
+        <translation type="unfinished">Spanningsbron</translation>
     </message>
     <message>
         <source>Sources</source>
-        <translation>Bronnen</translation>
+        <translation type="unfinished">Bronnen</translation>
     </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltage</source>
-        <translation type="obsolete">Spanning</translation>
     </message>
     <message>
         <source>Max. Voltage</source>
@@ -5546,21 +4183,10 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>Voltimeter</name>
-    <message>
-        <source>Voltimeter</source>
-        <translation>Voltmeter</translation>
-    </message>
-    <message>
-        <source>Meters</source>
-        <translation>Meters</translation>
-    </message>
-</context>
-<context>
     <name>WS2812</name>
     <message>
         <source>WS2812 Led</source>
-        <translation>WS2812 LED</translation>
+        <translation type="unfinished">WS2812 LED</translation>
     </message>
     <message>
         <source>Leds</source>
@@ -5582,42 +4208,6 @@ Wijzigingen opslaan?
 <context>
     <name>WaveGen</name>
     <message>
-        <source>Wave Gen.</source>
-        <translation>Golf generator</translation>
-    </message>
-    <message>
-        <source>Sources</source>
-        <translation>Bronnen</translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wave Type</source>
-        <translation type="unfinished">Golftype</translation>
-    </message>
-    <message>
-        <source>Frequency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Always On</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quality</source>
-        <translation type="unfinished">Kwaliteit</translation>
-    </message>
-    <message>
         <source>Sine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5638,6 +4228,42 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Wave Gen.</source>
+        <translation type="unfinished">Golf generator</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation type="unfinished">Bronnen</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wave Type</source>
+        <translation type="unfinished">Golftype</translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quality</source>
+        <translation type="unfinished">Kwaliteit</translation>
+    </message>
+    <message>
+        <source>Duty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Semi Amplitude</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5650,11 +4276,11 @@ Wijzigingen opslaan?
     <name>XorGate</name>
     <message>
         <source>Xor Gate</source>
-        <translation>XOF poort</translation>
+        <translation type="unfinished">XOF poort</translation>
     </message>
     <message>
         <source>Logic/Gates</source>
-        <translation>Logica/Poorten</translation>
+        <translation type="unfinished">Logica/Poorten</translation>
     </message>
     <message>
         <source>Main</source>
@@ -5689,25 +4315,26 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
-    <name>elCapacitor</name>
-    <message>
-        <source>Electrolytic Capacitor</source>
-        <translation>Electrolytische condensator (Elco)</translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="vanished">Passief</translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>xmlfile</name>
     <message>
-        <source>Logic</source>
-        <translation type="vanished">Logica</translation>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

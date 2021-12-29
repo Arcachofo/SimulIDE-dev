@@ -83,7 +83,7 @@ new BoolProp<Memory>( "Inverted"    , tr("Invert Outputs"),""   , this, &Memory:
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
-    addPropGroup( { tr("Hidden"), {
+    addPropGroup( { "Hidden", {
 new StringProp<Memory>( "Mem","","", this, &Memory::getMem, &Memory::setMem)
     }} );
 }

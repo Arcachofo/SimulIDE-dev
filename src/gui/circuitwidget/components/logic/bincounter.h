@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT BinCounter : public LogicComponent
 {
+        Q_OBJECT
     public:
         BinCounter( QObject* parent, QString type, QString id );
         ~BinCounter();

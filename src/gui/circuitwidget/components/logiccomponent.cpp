@@ -24,7 +24,7 @@
 #include "circuit.h"
 #include "iopin.h"
 
-QStringList LogicComponent::m_triggers = {tr("None"),tr("Clock"),tr("Enable")};
+QStringList LogicComponent::m_triggers = {"None","Clock","Enable"};
 
 LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
               : IoComponent( parent, type, id )

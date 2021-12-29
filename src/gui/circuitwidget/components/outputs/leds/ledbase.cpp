@@ -28,7 +28,7 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-QStringList LedBase::m_colors = {tr("Yellow"),tr("Red"),tr("Green"),tr("Blue"),tr("Oreange"),tr("Purple")};
+QStringList LedBase::m_colors = {"Yellow","Red","Green","Blue","Oreange","Purple"};
 
 LedBase::LedBase( QObject* parent, QString type, QString id )
        : Component( parent, type, id )

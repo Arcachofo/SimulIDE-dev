@@ -33,13 +33,6 @@
     </message>
 </context>
 <context>
-    <name>AVRComponent</name>
-    <message>
-        <source>AVR</source>
-        <translation type="obsolete">AVR</translation>
-    </message>
-</context>
-<context>
     <name>AboutDialog</name>
     <message>
         <source>Dialog</source>
@@ -90,17 +83,6 @@
     </message>
 </context>
 <context>
-    <name>Amperimeter</name>
-    <message>
-        <source>Meters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ampmeter</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AndGate</name>
     <message>
         <source>And Gate</source>
@@ -111,11 +93,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Input Size</source>
+        <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Main</source>
+        <source>Input Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -279,21 +261,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AvrGccDebugger</name>
-    <message>
-        <source>Warning: elf file doesn&apos;t exist:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>B16AsmDebugger</name>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>BJT</name>
     <message>
         <source>BJT</source>
@@ -319,7 +286,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BaseDebugger</name>
     <message>
-        <source>FirmWare Uploaded to </source>
+        <source>Error: Hex file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -327,11 +294,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error uploading firmware to </source>
+        <source>FirmWare Uploaded to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error: Hex file doesn&apos;t exist:</source>
+        <source>Error uploading firmware to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -396,11 +363,11 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>BcdToDec</name>
     <message>
-        <source>Logic/Converters</source>
+        <source>Decoder(4 to 10/16)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Decoder(4 to 10/16)</source>
+        <source>Logic/Converters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -408,11 +375,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Outputs</source>
+        <source>16 Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>16 Bits</source>
+        <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -439,19 +406,19 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clock Inverted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Count to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Use Set Pin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Clock Inverted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Set/Reset Inverted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Count to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -481,11 +448,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tristate</source>
+        <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Main</source>
+        <source>Tristate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -529,17 +496,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Capacitor</name>
-    <message>
-        <source>Capacitor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CapacitorBase</name>
     <message>
         <source>Main</source>
@@ -547,31 +503,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Chip</name>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Board</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shield</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error:
-Not valid Package file:
-%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -650,25 +581,29 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Circuit</name>
     <message>
-        <source>Load Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bill Of Materials</source>
+        <source>Load Circuit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Circuits (*.sim*);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Bill Of Materials</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CircuitView</name>
+    <message>
+        <source>Time: </source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Paste</source>
         <translation type="unfinished"></translation>
@@ -703,10 +638,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Generated by SimulIDE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -753,7 +684,43 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Pause Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>App Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuit Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Online Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About SimulIDE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last Circuits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -772,55 +739,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Circuits (*.sim*);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Save Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circuit ERROR!!!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About SimulIDE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pause Simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Last Circuits</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>    Load: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>App Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circuit Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulation Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -828,11 +751,19 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Circuit ERROR!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>    Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Circuits (*.sim*);;All files (*.*)</source>
+        <source>    Load: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -864,13 +795,6 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>ClockBase</name>
-    <message>
-        <source>Hidden1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CodeEditor</name>
     <message>
         <source> File: </source>
@@ -881,11 +805,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reload Document</source>
+        <source>Found Compiler definition in file: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Found Compiler definition in file: </source>
+        <source>Reload Document</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -917,6 +841,10 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>     WARNING: Compilation Not Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>     ERROR!!! Compilation Failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -934,10 +862,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Set proper ToolChain Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>     WARNING: Compilation Not Done</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1102,30 +1026,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Error parsing file (itemlib):
+%1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>        Loaded Component set:           </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Manage Components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error parsing file (itemlib):
-%1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Connector</name>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ConnectorLine</name>
-    <message>
-        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1180,13 +1090,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>DS1307</name>
-    <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1230,11 +1133,11 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>DecToBcd</name>
     <message>
-        <source>Logic/Converters</source>
+        <source>Encoder(10/16 to 4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Encoder(10/16 to 4)</source>
+        <source>Logic/Converters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1242,11 +1145,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>16 Bits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>16 Bits</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1273,11 +1176,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Outputs</source>
+        <source>Address Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Address Size</source>
+        <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1382,11 +1285,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Pin </source>
+        <source>Point Pin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Point Pin</source>
+        <source>Edit Pin </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1680,17 +1583,6 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>Ellipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Graphical</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FileBrowser</name>
     <message>
         <source>Add Bookmark</source>
@@ -1712,11 +1604,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove Bookmark</source>
+        <source>Search Files (Doesn&apos;t work)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Search Files (Doesn&apos;t work)</source>
+        <source>Remove Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1791,10 +1683,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Sources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1915,19 +1803,31 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set Function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> Function:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Input Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Functions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1939,31 +1839,17 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Outputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>MemData</source>
         <comment>Cannot write file %1:
 %2.</comment>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>GcbDebugger</name>
     <message>
-        <source>Error: lst file doesn&apos;t exist:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Ground</name>
-    <message>
-        <source>Ground (0 V)</source>
+        <source>Set Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sources</source>
+        <source> Function:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2001,14 +1887,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2029,11 +1907,15 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Memory Table</source>
+        <source>Load data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Save data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Memory Table</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2061,28 +1943,9 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>Ili9341</name>
-    <message>
-        <source>Ili9341</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Image</name>
     <message>
         <source>Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2093,6 +1956,14 @@ Do you want to save your changes?
         <source>Image File</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Load Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Inductor</name>
@@ -2101,15 +1972,15 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Inductance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2155,6 +2026,10 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Propagation Delay </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Rise Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2162,137 +2037,11 @@ Do you want to save your changes?
         <source>Fall Time</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Propagation Delay </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ItemLibrary</name>
-    <message>
-        <source>Gates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arithmetic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Memory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Converters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Other Logic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Micro</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Motors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistive Sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I51</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arduino</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shields</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AVR</source>
-        <translation type="unfinished">AVR</translation>
-    </message>
-    <message>
-        <source>Other IC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reactive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PIC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Led display</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>KY023</name>
     <message>
         <source>KY-023</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Perifericals</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>KY040</name>
-    <message>
-        <source>KY-040</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2329,10 +2078,6 @@ Do you want to save your changes?
 </context>
 <context>
     <name>Ks0108</name>
-    <message>
-        <source>Ks0108</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Displays</source>
         <translation type="unfinished"></translation>
@@ -2434,7 +2179,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tristate</source>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trigger Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2442,11 +2191,7 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trigger Type</source>
+        <source>Tristate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2489,6 +2234,10 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Gamma</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2496,24 +2245,13 @@ Do you want to save your changes?
         <source>R1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Led</name>
-    <message>
-        <source>Led</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LedBar</name>
+    <message>
+        <source>Led Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Leds</source>
         <translation type="unfinished"></translation>
@@ -2539,6 +2277,10 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Max Current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2546,41 +2288,9 @@ Do you want to save your changes?
         <source>Resistance</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Forward Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Led Bar</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LedBase</name>
-    <message>
-        <source>Yellow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Oreange</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Purple</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
@@ -2625,10 +2335,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vertical Pins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rows</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2641,7 +2347,15 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Vertical Pins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forward Voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2652,13 +2366,13 @@ Do you want to save your changes?
         <source>Resistance</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Forward Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LedRgb</name>
+    <message>
+        <source>Led Rgb</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Leds</source>
         <translation type="unfinished"></translation>
@@ -2695,21 +2409,6 @@ Do you want to save your changes?
         <source>Blue:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Led Rgb</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Line</name>
-    <message>
-        <source>Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Graphical</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LineNumberArea</name>
@@ -2738,22 +2437,32 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>LogicComponent</name>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
+    <message>
+        <source>Looks like SimulIDE crashed...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is an auto-saved copy of the Circuit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must save it with any other name if you want to keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file will be auto-deleted!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to open the auto-saved copy of the Circuit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Components</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Components</source>
         <translation type="unfinished"></translation>
@@ -2772,31 +2481,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Plugin Error:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search Components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This file will be auto-deleted!!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>There is an auto-saved copy of the Circuit
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to open the auto-saved copy of the Circuit?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Looks like SimulIDE crashed...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must save it with any other name if you want to keep it</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2822,15 +2506,7 @@ Do you want to save your changes?
 <context>
     <name>Mcu</name>
     <message>
-        <source>Load Firmware</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load firmware</source>
+        <source>xml file not found for: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2842,47 +2518,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open Mcu Monitor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No File:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No File to reload </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main Mcu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reload firmware</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Serial Monitor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>xml file not found for: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load EEPROM data from file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save EEPROM data to file</source>
+        <source>Reload hex at Simulation Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2902,14 +2542,51 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reload hex at Simulation Start</source>
+        <source>Load Firmware</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>McuBase</name>
     <message>
-        <source>Hidden</source>
+        <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No File to reload </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main Mcu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load firmware</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload firmware</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load EEPROM data from file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save EEPROM data to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Mcu Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Serial Monitor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2962,14 +2639,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2986,10 +2655,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Memory Table</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3002,7 +2667,15 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Load data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Memory Table</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3040,15 +2713,15 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>RDSon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electric</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3067,11 +2740,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invert Inputs</source>
+        <source>Address Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Address Size</source>
+        <source>Invert Inputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3125,6 +2798,10 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Supply</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3137,15 +2814,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Output Impedance</source>
+        <source>Show Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Switch Supply Pins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Supply Pins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3160,11 +2833,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Input Size</source>
+        <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Main</source>
+        <source>Input Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3211,17 +2884,6 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>Pcd8544</name>
-    <message>
-        <source>Pcd8544</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PlotBase</name>
     <message>
         <source>Main</source>
@@ -3233,10 +2895,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Screen Size Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hidden</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3278,11 +2936,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Threshold</source>
+        <source>Show Voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Voltage</source>
+        <source>Threshold</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3349,6 +3007,196 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <source>Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error:
+Not valid Package file:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perifericals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ampmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Meters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Graphical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Displays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Motors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electrolytic Capacitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistive Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thermistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground (0 V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AVR</source>
+        <translation type="unfinished">AVR</translation>
+    </message>
+    <message>
+        <source>Micro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I51</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arduino</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arithmetic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other Logic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Led display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: elf file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: lst file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RTD</name>
     <message>
         <source>RTD</source>
@@ -3385,7 +3233,39 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>RamTable</name>
     <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Addr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Dec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3403,49 +3283,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear Selected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear Table</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Variables</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Addr</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Rectangle</name>
-    <message>
-        <source>Rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Graphical</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3539,17 +3376,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>SR04</name>
-    <message>
-        <source>HC-SR04</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Scripted</name>
     <message>
         <source>Scripted</source>
@@ -3561,6 +3387,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert Outputs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3576,6 +3406,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Load script</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3586,14 +3420,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invert Outputs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electric</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3674,15 +3500,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vertical Pins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical Pins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3694,15 +3520,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Forward Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Max Current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forward Voltage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3880,7 +3706,15 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Ssd1306</name>
     <message>
-        <source>Ssd1306</source>
+        <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3901,18 +3735,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>I2C Frequency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>White</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Yellow</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3974,15 +3796,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ref. Temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Temperature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4019,10 +3841,6 @@ p, li { white-space: pre-wrap; }
         <source>Attach</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SubPackage</name>
@@ -4031,14 +3849,51 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-Package has been modified.
-Do you want to save your changes?
-</source>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Board Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Move Pin </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Pin </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4054,7 +3909,14 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load Package File</source>
+        <source>Select Main Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Package has been modified.
+Do you want to save your changes?
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4062,67 +3924,23 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Load Package File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Pin </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Main Component</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Board Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Package File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Background</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic Symbol</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Switch</name>
     <message>
-        <source>Switches</source>
+        <source>Switch (all)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch (all)</source>
+        <source>Switches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4149,11 +3967,11 @@ Do you want to save your changes?
 <context>
     <name>SwitchDip</name>
     <message>
-        <source>Switches</source>
+        <source>Switch Dip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Switch Dip</source>
+        <source>Switches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4203,10 +4021,6 @@ Do you want to save your changes?
         <source>Fixed_Width</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Hidden</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>TextVal</name>
@@ -4228,21 +4042,6 @@ Do you want to save your changes?
         <source>
 
     Script Not Saved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Thermistor</name>
-    <message>
-        <source>Thermistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistive Sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4284,15 +4083,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rotated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hidden</source>
+        <source>Rotated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4366,17 +4161,6 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>Voltimeter</name>
-    <message>
-        <source>Voltimeter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Meters</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>WS2812</name>
     <message>
         <source>WS2812 Led</source>
@@ -4402,6 +4186,26 @@ Do you want to save your changes?
 <context>
     <name>WaveGen</name>
     <message>
+        <source>Sine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Wave Gen.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4422,6 +4226,10 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Duty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4431,30 +4239,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Electric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Triangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4509,13 +4293,25 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>elCapacitor</name>
+    <name>xmlfile</name>
     <message>
-        <source>Electrolytic Capacitor</source>
+        <source>Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reactive</source>
+        <source>Other IC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ternary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

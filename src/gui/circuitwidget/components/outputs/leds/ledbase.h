@@ -27,6 +27,7 @@ class eNode;
 
 class MAINMODULE_EXPORT LedBase : public Component, public eLed
 {
+        Q_OBJECT
     public:
         LedBase( QObject* parent, QString type, QString id );
         ~LedBase();

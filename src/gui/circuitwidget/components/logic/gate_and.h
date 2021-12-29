@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT AndGate : public Gate
 {
+        Q_OBJECT
     public:
         AndGate( QObject* parent, QString type, QString id );
         ~AndGate();

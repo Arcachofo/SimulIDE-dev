@@ -101,7 +101,7 @@ int B16AsmDebugger::compile( bool )
     if( !outFile.open(QFile::WriteOnly | QFile::Text) )
     {
           QMessageBox::warning(0l, "B16AsmDebugger::compile",
-          tr("Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
+          QObject::tr("Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
     }
     QTextStream toFile( &outFile );
     toFile.setCodec("UTF-8");

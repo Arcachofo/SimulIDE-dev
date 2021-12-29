@@ -81,7 +81,7 @@ new IntProp <I2CRam>( "Control_Code", tr("Control_Code") ,""      , this, &I2CRa
 new DoubProp<I2CRam>( "Frequency"   , tr("I2C Frequency"),"_KHz"  , this, &I2CRam::freqKHz,    &I2CRam::setFreqKHz ),
 new BoolProp<I2CRam>( "Persistent"  , tr("Persistent")   ,""      , this, &I2CRam::persistent, &I2CRam::setPersistent ),
     }} );
-    addPropGroup( { tr("Hidden"), {
+    addPropGroup( {"Hidden", {
 new StringProp<I2CRam>( "Mem", "","", this, &I2CRam::getMem, &I2CRam::setMem )
     }} );
 }

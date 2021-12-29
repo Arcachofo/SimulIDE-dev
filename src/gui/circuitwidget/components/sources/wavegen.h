@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT WaveGen : public ClockBase
 {
+        Q_OBJECT
     public:
         WaveGen( QObject* parent, QString type, QString id );
         ~WaveGen();

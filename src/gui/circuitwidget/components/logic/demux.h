@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Demux : public LogicComponent
 {
+        Q_OBJECT
     public:
         Demux( QObject* parent, QString type, QString id );
         ~Demux();

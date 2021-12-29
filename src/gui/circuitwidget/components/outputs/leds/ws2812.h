@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT WS2812 : public Component, public eClockedDevice
 {
+        Q_OBJECT
     public:
         WS2812( QObject* parent, QString type, QString id );
         ~WS2812();

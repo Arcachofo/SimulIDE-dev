@@ -228,7 +228,7 @@ bool GcbDebugger::mapLstToAsm()
     QString lstFile = m_buildPath+m_fileName+".lst";
     if( !QFileInfo::exists( m_firmware) )
     {
-        m_outPane->appendLine( "\n"+tr("Error: lst file doesn't exist:")+"\n"+lstFile );
+        m_outPane->appendLine( "\n"+QObject::tr("Error: lst file doesn't exist:")+"\n"+lstFile );
         return false;
     }
 

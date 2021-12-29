@@ -1,7 +1,6 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-  <tag>QT_TRANSLATE_NOOP("xmlfile","Keys")</tag>
 
   <itemset category="Keys" type="Subcircuit" folder="ICs" >
     <item name="DG401" info=" High-Speed CMOS Analog Switches" /> 

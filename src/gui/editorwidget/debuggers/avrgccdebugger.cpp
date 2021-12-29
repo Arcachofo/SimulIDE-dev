@@ -47,7 +47,7 @@ bool AvrGccDebugger::getVariables()
     QString elfPath = m_buildPath+m_fileName+".elf";
     if( !QFileInfo::exists( elfPath ) )
     {
-        m_outPane->appendLine( "\n"+tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
+        m_outPane->appendLine( "\n"+QObject::tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
         return false;
     }
     QString objdump = m_toolPath+"avr-objdump";
@@ -115,7 +115,7 @@ bool AvrGccDebugger::mapFlashToSource()
     QString elfPath = m_buildPath+m_fileName+".elf";
     if( !QFileInfo::exists( elfPath ) )
     {
-        m_outPane->appendLine( "\n"+tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
+        m_outPane->appendLine( "\n"+QObject::tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
         return false;
     }
     QString avrSize = m_toolPath+"avr-size";

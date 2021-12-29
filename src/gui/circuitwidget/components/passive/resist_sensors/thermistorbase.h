@@ -24,6 +24,7 @@
 
 class MAINMODULE_EXPORT ThermistorBase : public VarResBase
 {
+        Q_OBJECT
     public:
         ThermistorBase( QObject* parent, QString type, QString id );
         ~ThermistorBase();

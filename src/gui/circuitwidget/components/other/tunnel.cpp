@@ -64,7 +64,7 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
 new StringProp<Tunnel>( "Name"   , tr("Id")    ,"", this, &Tunnel::name,    &Tunnel::setName ),
 new BoolProp  <Tunnel>( "Rotated",tr("Rotated"),"", this, &Tunnel::rotated, &Tunnel::setRotated )
     }} );
-    addPropGroup( { tr("Hidden"), {
+    addPropGroup( {"Hidden", {
 new StringProp<Tunnel>( "Uid","","", this, &Tunnel::tunnelUid, &Tunnel::setTunnelUid ),
     }} );
 }

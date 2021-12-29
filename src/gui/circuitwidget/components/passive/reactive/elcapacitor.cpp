@@ -30,8 +30,8 @@ Component* elCapacitor::construct( QObject* parent, QString type, QString id )
 LibraryItem* elCapacitor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Electrolytic Capacitor" ),
-        tr( "Reactive" ),
+        QObject::tr( "Electrolytic Capacitor" ),
+        QObject::tr( "Reactive" ),
         "elcapacitor.png",
         "elCapacitor",
         elCapacitor::construct);

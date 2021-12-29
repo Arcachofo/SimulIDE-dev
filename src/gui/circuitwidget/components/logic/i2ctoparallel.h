@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
 {
+        Q_OBJECT
     public:
         I2CToParallel( QObject* parent, QString type, QString id );
         ~I2CToParallel();

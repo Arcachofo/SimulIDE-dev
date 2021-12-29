@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Zener : public Diode
 {
+        Q_OBJECT
     public:
         Zener( QObject* parent, QString type, QString id );
         ~Zener();

@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT BcdTo7S : public BcdBase
 {
+        Q_OBJECT
     public:
         BcdTo7S( QObject* parent, QString type, QString id );
         ~BcdTo7S();

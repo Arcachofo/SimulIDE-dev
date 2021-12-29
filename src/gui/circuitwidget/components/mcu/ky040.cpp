@@ -48,8 +48,8 @@ Component* KY040::construct( QObject* parent, QString type, QString id )
 LibraryItem* KY040::libraryItem()
 {
     return new LibraryItem(
-        tr( "KY-040" ),
-        tr( "Perifericals" ),
+        "KY-040" ,
+        QObject::tr( "Perifericals" ),
         "ky-040.png",
         "KY040",
         KY040::construct);

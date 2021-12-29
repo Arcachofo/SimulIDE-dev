@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Clock : public ClockBase
 {
+        Q_OBJECT
     public:
         Clock( QObject* parent, QString type, QString id );
         ~Clock();

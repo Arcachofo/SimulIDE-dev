@@ -55,7 +55,7 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
         m_endpinid = "";
     }
 
-    addPropGroup( { tr("Main"), {
+    addPropGroup( {"Main", {
 new StringProp<Connector>( "itemtype"  ,"","", this, &Connector::itemType,   &Connector::dummySetter ),
 new StringProp<Connector>( "uid"       ,"","", this, &Connector::getUid,     &Connector::dummySetter ),
 new StringProp<Connector>( "startpinid","","", this, &Connector::startPinId, &Connector::dummySetter ),

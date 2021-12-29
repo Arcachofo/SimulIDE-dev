@@ -90,7 +90,7 @@ new StringProp<TextComponent>( "Font"       , tr("Font")       ,""       , this,
 new IntProp   <TextComponent>( "Font_Size"  , tr("Font Size")  ,"_Pixels", this, &TextComponent::fontSize, &TextComponent::setFontSize ),
 new BoolProp  <TextComponent>( "Fixed_Width", tr("Fixed_Width"),""       , this, &TextComponent::fixedW  , &TextComponent::setFixedW )
     }} );
-    addPropGroup( { tr("Hidden"), {
+    addPropGroup( { "Hidden", {
 new StringProp<TextComponent>( "Text","","", this, &TextComponent::getText, &TextComponent::setText )
     }} );
 }

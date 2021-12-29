@@ -37,7 +37,7 @@ Component* Ssd1306::construct( QObject* parent, QString type, QString id )
 LibraryItem* Ssd1306::libraryItem()
 {
     return new LibraryItem(
-        tr( "Ssd1306" ),
+        "Ssd1306",
         tr( "Displays" ),
         "ssd1306.png",
         "Ssd1306",

@@ -33,7 +33,7 @@ Component* Ks0108::construct( QObject* parent, QString type, QString id )
 LibraryItem* Ks0108::libraryItem()
 {
     return new LibraryItem(
-        tr( "Ks0108" ),
+        "Ks0108",
         tr( "Displays" ),
         "ks0108.png",
         "Ks0108",

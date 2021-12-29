@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT MuxAnalog : public LogicComponent
 {
+        Q_OBJECT
     public:
         MuxAnalog( QObject* parent, QString type, QString id );
         ~MuxAnalog();

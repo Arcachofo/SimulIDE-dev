@@ -28,6 +28,7 @@ class Pin;
 
 class MAINMODULE_EXPORT Tunnel : public Component
 {
+        Q_OBJECT
     public:
         Tunnel( QObject* parent, QString type, QString id );
         ~Tunnel();

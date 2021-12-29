@@ -73,7 +73,7 @@ FixedVolt::FixedVolt( QObject* parent, QString type, QString id )
     connect( m_button, SIGNAL( clicked() ),
              this,     SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
 
-    addPropGroup( { tr("Hidden"), {
+    addPropGroup( { "Hidden", {
 new BoolProp<FixedVolt>( "Out", "","", this, &FixedVolt::out, &FixedVolt::setOut ),
     }} );
     addPropGroup( { tr("Main"), {

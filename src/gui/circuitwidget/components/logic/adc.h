@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT ADC : public LogicComponent
 {
+        Q_OBJECT
     public:
         ADC( QObject* parent, QString type, QString id );
         ~ADC();

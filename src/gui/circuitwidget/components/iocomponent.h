@@ -27,6 +27,7 @@ class IoPin;
 
 class MAINMODULE_EXPORT IoComponent : public Component
 {
+        Q_OBJECT
     public:
         IoComponent( QObject* parent, QString type, QString id );
         ~IoComponent();

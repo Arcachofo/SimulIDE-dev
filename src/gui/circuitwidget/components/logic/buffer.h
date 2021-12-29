@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Buffer : public Gate
 {
+        Q_OBJECT
     public:
         Buffer( QObject* parent, QString type, QString id );
         ~Buffer();

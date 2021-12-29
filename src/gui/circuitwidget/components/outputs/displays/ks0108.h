@@ -28,6 +28,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Ks0108 : public Component, public eElement
 {
+        Q_OBJECT
     public:
         Ks0108( QObject* parent, QString type, QString id );
         ~Ks0108();

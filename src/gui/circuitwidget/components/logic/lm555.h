@@ -34,7 +34,7 @@ class eNode;
 class MAINMODULE_EXPORT Lm555 : public Component, public eElement
 {
     /// Q_PROPERTY( quint64 Tpd_ps  READ propDelay   WRITE setPropDelay   DESIGNABLE true USER true )
-
+        Q_OBJECT
     public:
 
         Lm555( QObject* parent, QString type, QString id );

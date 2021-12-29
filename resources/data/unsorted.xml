@@ -1,7 +1,6 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-    <tag>QT_TRANSLATE_NOOP("xmlfile","Other IC")</tag>
     
     <itemset category="Other IC" type="Subcircuit" folder="ICs" >
     <item name="AD7224" info=" 8-Bit DAC with Output Amplifiers" />

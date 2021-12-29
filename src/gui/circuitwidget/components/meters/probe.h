@@ -28,6 +28,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Probe : public Component, public eElement
 {
+        Q_OBJECT
     public:
         Probe( QObject* parent, QString type, QString id );
         ~Probe();

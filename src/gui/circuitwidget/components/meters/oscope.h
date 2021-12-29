@@ -29,6 +29,7 @@ class DataWidget;
 
 class MAINMODULE_EXPORT Oscope : public PlotBase
 {
+        Q_OBJECT
     public:
         Oscope( QObject* parent, QString type, QString id );
         ~Oscope();

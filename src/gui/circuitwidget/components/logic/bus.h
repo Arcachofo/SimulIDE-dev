@@ -28,6 +28,7 @@ class eNode;
 
 class MAINMODULE_EXPORT Bus : public Component, public eElement
 {
+        Q_OBJECT
     public:
         Bus( QObject* parent, QString type, QString id );
         ~Bus();

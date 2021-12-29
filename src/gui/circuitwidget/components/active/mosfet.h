@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Mosfet : public Component, public eMosfet
 {
+        Q_OBJECT
     public:
         Mosfet( QObject* parent, QString type, QString id );
         ~Mosfet();

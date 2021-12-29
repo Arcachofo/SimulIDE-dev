@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT FreqMeter : public Component, public eElement
 {
+        Q_OBJECT
     public:
         FreqMeter( QObject* parent, QString type, QString id );
         ~FreqMeter();

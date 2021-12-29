@@ -322,7 +322,7 @@ void Function::onbuttonclicked()
     }
     bool ok;
     QString text = QInputDialog::getText(0l, tr("Set Function"),
-                                             "Output "+QString::number(i)+tr(" Function:"), 
+                                             "Output "+QString::number(i)+tr(" Function:"),
                                              QLineEdit::Normal,
                                              m_funcList[i], &ok);
     if( ok && !text.isEmpty() )

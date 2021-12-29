@@ -27,6 +27,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT RelaySPST : public RelayBase
 {
+        Q_OBJECT
     public:
         RelaySPST( QObject* parent, QString type, QString id );
         ~RelaySPST();

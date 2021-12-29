@@ -28,6 +28,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
 {
+        Q_OBJECT
     public:
         SevenSegment( QObject* parent, QString type, QString id );
         ~SevenSegment();

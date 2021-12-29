@@ -28,8 +28,8 @@ Component* Capacitor::construct( QObject* parent, QString type, QString id )
 LibraryItem* Capacitor::libraryItem()
 {
     return new LibraryItem(
-        tr( "Capacitor" ),
-        tr( "Reactive" ),
+        QObject::tr( "Capacitor" ),
+        QObject::tr( "Reactive" ),
         "capacitor.png",
         "Capacitor",
         Capacitor::construct);

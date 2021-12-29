@@ -29,8 +29,8 @@ Component* Led::construct( QObject* parent, QString type, QString id )
 LibraryItem* Led::libraryItem()
 {
     return new LibraryItem(
-        tr( "Led" ),
-        tr( "Leds" ),
+        QObject::tr( "Led" ),
+        QObject::tr( "Leds" ),
         "led.png",
         "Led",
         Led::construct);
