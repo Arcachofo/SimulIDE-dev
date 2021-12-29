@@ -59,10 +59,10 @@ QPainterPath XorGate::shape() const
     
     int size = (int)m_inPin.size()*4;
     
-    points << QPointF(-15,-size+2 )
-           << QPointF( -9,-8  )
-           << QPointF( -9, 8  )
-           << QPointF(-15, size+2 )
+    points << QPointF(-14,-size-1 )
+           << QPointF(-10,-size+4  )
+           << QPointF(-10, size-4  )
+           << QPointF(-14, size+2 )
            << QPointF(  0, size )
            << QPointF( 10, 8  )
            << QPointF( 10,-8  )
@@ -99,4 +99,14 @@ void XorGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawArc( -12, y_orig, 8, height, -1440/*-16*90*/, 2880/*16*180*/ );
     // Input side arc close to pins
     p->drawArc( -16, y_orig, 8, height, -1440/*-16*90*/, 2880/*16*180*/ );
+
+    /*QPen pen2( Qt::red, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    p->setPen( pen2 );
+    p->drawPath( shape() );
+
+    QPen pen3( Qt::blue, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    p->setPen( pen3 );
+    p->drawRect( m_area );*/
 }
+
+#include "moc_gate_xor.cpp"

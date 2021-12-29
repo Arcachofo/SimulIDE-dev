@@ -27,6 +27,8 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT XorGate : public Gate
 {
+    Q_OBJECT
+
     public:
         XorGate( QObject* parent, QString type, QString id );
         ~XorGate();
@@ -34,7 +36,7 @@ class MAINMODULE_EXPORT XorGate : public Gate
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        virtual QPainterPath shape() const;
+        virtual QPainterPath shape() const override;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:

@@ -60,13 +60,14 @@ QPainterPath OrGate::shape() const
     
     int size = (int)m_inPin.size()*4;
     
-    points << QPointF(-14,-size+2 )
-           << QPointF(-9,-8  )
-           << QPointF(-9, 8  )
-           << QPointF(-14, size+2 )
+    points << QPointF(-14,-size-1 )
+           << QPointF(-10,-size+4 )
+           << QPointF( -9, 0 )
+           << QPointF(-10, size-4  )
+           << QPointF(-14, size+1 )
            << QPointF(  0, size )
-           << QPointF(  9, 8  )
-           << QPointF(  9,-8  )
+           << QPointF( 10, 8  )
+           << QPointF( 10,-8  )
            << QPointF(  0,-size );
         
     path.addPolygon( QPolygonF(points) );
@@ -98,4 +99,12 @@ void OrGate::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     p->drawArc( -28, y_orig, 37, height, -1520/*-16*95*/, 3040/*16*190*/ );
     // Input side arc
     p->drawArc( -16, y_orig, 8, height, -1440/*-16*90*/, 2880/*16*180*/ );
+
+    /*QPen pen2( Qt::red, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    p->setPen( pen2 );
+    p->drawPath( shape() );
+
+    QPen pen3( Qt::blue, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    p->setPen( pen3 );
+    p->drawRect( m_area );*/
 }
