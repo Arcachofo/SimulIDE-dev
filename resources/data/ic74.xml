@@ -1,7 +1,8 @@
 <!DOCTYPE SimulIDE>
 
 <itemlib>
-  <itemset category="IC 74/7400-7499" type="Subcircuit" folder="ICs">
+    
+    <itemset category="IC 74/7400-7499" type="Subcircuit" folder="ICs">
     <item name="74HC00"  info="  quad 2-input NAND gate" ></item>
     <item name="74XX01"  info="  quad 2-input NAND gate, open Drain Outputs" ></item>
     <item name="74HC02"  info="  quad 2-input NOR gate" ></item>
@@ -24,32 +25,47 @@
     <item name="74XX68"  info="  Dual 4 bit BCD counter" ></item>
     <item name="74XX69"  info="  Dual 4 bit binary counter" ></item>
     <item name="74XX70"  info="  AND gated J-K flip-flop, asynchronous clear/preset " ></item>
+    <item name="74XX71"  info="  AND-OR gated J-K flip-flop with preset " ></item>
     <item name="74XX72"  info="  AND gated J-K flip-flop, asynchronous clear/preset " ></item>
     <item name="74HC73"  info="  dual J-K flip-flop, asynchronous clear " ></item>
     <item name="74HC74"  info="  dual D positive edge triggered flip-flop, asynchronous preset and clear " ></item>
     <item name="74HC75"  info="  4-bit bistable latch, complementary outputs " ></item>
     <item name="74HC76"  info="  dual J-K flip-flop, asynchronous preset and clear" ></item>
     <item name="74HC77"  info="  4-bit bistable latch " ></item>
+    <item name="74HC78"  info="  Dual J-K Flip-Flops (with Preset, Common Clear and Common Clock) " ></item>
     <item name="74XX82"  info="  2-bit binary full adder" ></item>
     <item name="74XX83"  info="  4-bit binary full adder with fast carry" ></item>
     <item name="74HC85"  info="  4-bit magnitude comparator" ></item>
     <item name="74HC86"  info="  quad 2-input XOR gate" ></item>
+    <item name="74XX87"  info="  4-bit TRUE/COMPLEMENT, ZERO/ONE elements" ></item>
     <item name="74XX89"  info="  64-Bit Random Access Memory with Open Collector" ></item>
     <item name="74XX90"  info="  decade counter (separate divide-by-2 and divide-by-5 sections) " ></item>
     <item name="74XX91"  info="  serial-in, serial-out, 8-bit shift register " ></item>
     <item name="74XX92"  info="  divide-by-12 counter (separate divide-by-2 and divide-by-6 sections) " ></item>
     <item name="74XX93"  info="  4-bit binary counter (separate divide-by-2 and divide-by-8 sections) " ></item>
+    <item name="74XX94"  info="  4-bit parallel and serial input, serial out shift register " ></item>
     <item name="74XX95"  info="  4-bit parallel-access shift register " ></item>
     <item name="74XX96"  info="  5-bit parallel-load shift register " ></item>
     <item name="74XX97"  info="  synchronous 6-BIT binary rate multipliers " ></item>
-  </itemset>
+    <item name="74XX98"  info="  4-bit data selector/storage register " ></item>
+    <item name="74XX99"  info="  4-bit right/left shift register " ></item>
+    </itemset>
     
-  <itemset category="IC 74/74100-74199" type="Subcircuit" folder="ICs">
+    <itemset category="IC 74/74100-74199" type="Subcircuit" folder="ICs">
+    <item name="74XX100" info="  dual 4-bit bistable lathces " ></item>
+    <item name="74XX101" info="  AND-OR gated J-K negative edge triggered flip-flop with preset " ></item>
+    <item name="74XX102" info="  AND gated J-K negative edge triggered flip-flop with preset and clear " ></item>
+    <item name="74XX103" info="  dual J-K negative-edge-triggered flip-flop with clear " ></item>
+    <item name="74XX104" info="  gated J-K master-slave flip-flop " ></item>
+    <item name="74XX105" info="  gated J-K master-slave flip-flop " ></item>
     <item name="74HC107" info="  dual J-K flip-flop, clear " ></item>
     <item name="74HC109" info="  dual J-Not-K positive-edge-triggered flip-flop, clear and preset " ></item>
+    <item name="74XX110" info="  AND gated J-K master-slave flip-flop " ></item>
+    <item name="74XX111" info="  dual J-K flip-flop with clear and preset  " ></item>
     <item name="74HC112" info="  dual J-K negative-edge-triggered flip-flop, clear and preset " ></item>
     <item name="74HC113" info="  dual J-K negative-edge-triggered flip-flop, preset " ></item>
     <item name="74XX114" info="  dual J-K negative-edge-triggered flip-flop, preset, common clock, common reset " ></item>
+    <item name="74XX115" info="  dual J-K flip-flop with clear " ></item>
     <item name="74XX121" info="  monostable multivibrator " ></item>
     <item name="74HC137" info="  3-line to 8-line decoder/demultiplexer, address latch, inverting outputs " ></item>
     <item name="74HC138" info="  3-line to 8-line decoder/demultiplexer, inverting outputs " ></item>
@@ -101,9 +117,9 @@
     <item name="74XX197" package="ICs/74XX177/74XX177" subcircuit="ICs/74XX177/74XX177" info="  presettable binary counter/latch" ></item>
     <item name="74XX198" info="  8 bit bidirectional shift register" ></item>
     <item name="74XX199" info="  8 bit shift register, parallel load" ></item>
-  </itemset>
+    </itemset>
     
-  <itemset category="IC 74/74200-741999" type="Subcircuit" folder="ICs">
+    <itemset category="IC 74/74200-741999" type="Subcircuit" folder="ICs">
     <item name="74XX200" info="  256-Bit Random Access Memory with 3-STATE Outputs (256x1)" ></item>
     <item name="74XX219" info="  64-Bit Random Access Memory with 3-STATE Outputs (16x4)" ></item>
     <item name="74HC238" info="  3-of-8 decoder/demultiplexer, active high outputs " ></item>
@@ -175,9 +191,9 @@
     <item name="74C925"  info="  4-Digit Counters with Multiplexed 7-Segment Output Drivers" ></item>
     <item name="74C926"  info="  4-Digit Counters with Multiplexed 7-Segment Output Drivers" ></item>
     <item name="74C927"  info="  4-Digit Counters with Multiplexed 7-Segment Output Drivers" ></item>
-  </itemset>
+    </itemset>
     
-  <itemset category="IC 74/742000-up" type="Subcircuit" folder="ICs">
+    <itemset category="IC 74/742000-up" type="Subcircuit" folder="ICs">
     <item name="74HC4016" info="  Quad bilateral switches " ></item>
     <item name="74HC4017" info="  5-stage ÷10 Johnson counter " ></item>
     <item name="74HC4020" info="  14-stage binary counter " ></item>
@@ -199,6 +215,7 @@
     <item name="74HC4543" info="  BCD to 7-segment latch/decoder/driver for LCDs " ></item>
     <item name="74HC40102" info=" presettable synchronous 2-decade BCD down counter" ></item>
     <item name="74HC40103" info=" presettable 8-bit synchronous down counter " ></item>
-  </itemset>
+    </itemset>
+
 </itemlib>
 
