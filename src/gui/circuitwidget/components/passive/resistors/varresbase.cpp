@@ -72,7 +72,7 @@ void VarResBase::initialize()
 
 void VarResBase::setMinVal( double min )
 {
-    if( min < 0 ) min = 0;
+    if( min < 1e-12 ) min = 1e-12;
     if( min > m_maxVal ) min = m_maxVal;
     m_minVal = min;
 
@@ -81,7 +81,7 @@ void VarResBase::setMinVal( double min )
 
 void VarResBase::setMaxVal( double max )
 {
-    if( max < 0 ) max = 0;
+    if( max < 1e-12 ) max = 1e-12;
     if( max < m_minVal ) max = m_minVal;
     m_maxVal = max;
 
