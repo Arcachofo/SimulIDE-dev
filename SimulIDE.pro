@@ -109,9 +109,11 @@ INCLUDEPATH += $$MOC_DIR
 
 win32 | linux {
     DESTDIR = $$TARGET_PREFIX
+    mkpath( $$TARGET_PREFIX/data )
+    mkpath( $$TARGET_PREFIX/examples )
     copy2dest.commands = \
-        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/data; \
-        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/examples; \
+        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX; \
+        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX; \
 }
 macx {
     QMAKE_CXXFLAGS -= -stdlib=libc++
