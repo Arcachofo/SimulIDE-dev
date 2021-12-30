@@ -49,12 +49,12 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
 #ifndef Q_OS_UNIX
     gpvc += ".exe";
 #endif
-    if( !QFileInfo::exists( gpvc ) )
+    if( !debugger->checkCommand( gpvc ) )
     {
         debugger->outPane()->appendLine( "\nWarning: gpvc executable doesn't exist:\n"+gpvc );
         return false;
     }
-
+    debugger->outPane()->appendText( "\nSearching for variables... " );
     gpvc    = addQuotes( gpvc );
     codPath = addQuotes( codPath );
 
@@ -102,6 +102,7 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
         //qDebug() << "GputilsDebug::getData  variable "<<type<<symbol<<address;
     }
     debugger->setVarList( varNames );
+    debugger->outPane()->appendLine( QString::number( varNames.size() )+" variables found" );
     return true;
 }
 
@@ -114,7 +115,7 @@ bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
         debugger->outPane()->appendLine( "\nWarning: cod file doesn't exist:\n"+codPath );
         return false;
     }
-
+    debugger->outPane()->appendText( "\nMapping Flash to Source... " );
 #ifndef Q_OS_UNIX
     gpvc += ".exe";
 #endif
@@ -168,6 +169,7 @@ bool GputilsDebug::mapFlashToSource( BaseDebugger* debugger )
                 lineNum = words.at(1);
                 readAddr = true;
     }   }   }
+    debugger->outPane()->appendLine( QString::number( debugger->flashToSourceSize() )+" lines mapped" );
     return true;
 }
 

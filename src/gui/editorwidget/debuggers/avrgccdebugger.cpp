@@ -55,18 +55,20 @@ bool AvrGccDebugger::getVariables()
 #ifndef Q_OS_UNIX
     objdump += ".exe";
 #endif
-    if( !QFileInfo::exists( objdump ) )
+
+    if( !checkCommand( objdump ) )
     {
         objdump = m_toolPath+"avr/bin/avr-objdump";
     #ifndef Q_OS_UNIX
         objdump += ".exe";
     #endif
-        if( !QFileInfo::exists( objdump ) )
+        if( !checkCommand( objdump ) )
         {
             outPane()->appendLine( "\nWarning: avr-objdump executable doesn't exist:\n"+objdump );
             return false;
         }
     }
+    outPane()->appendText( "\nSearching for variables... " );
     objdump = addQuotes( objdump );
     elfPath = addQuotes( elfPath );
 
@@ -107,6 +109,7 @@ bool AvrGccDebugger::getVariables()
         m_varNames.append( symbol );
         //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
     }
+    outPane()->appendLine( QString::number( m_varNames.size() )+" variables found" );
     return true;
 }
 
@@ -125,30 +128,31 @@ bool AvrGccDebugger::mapFlashToSource()
     avrSize += ".exe";
     addr2li += ".exe";
 #endif
-    if( !QFileInfo::exists( avrSize ) )
+    if( !checkCommand( avrSize ) )
     {
         avrSize = m_toolPath+"avr/bin/avr-size";
     #ifndef Q_OS_UNIX
         avrSize += ".exe";
     #endif
-        if( !QFileInfo::exists( avrSize ) )
+        if( !checkCommand( avrSize ) )
         {
             outPane()->appendLine( "\nWarning: avr-size executable doesn't exist:\n"+avrSize );
             return false;
         }
     }
-    if( !QFileInfo::exists( addr2li ) )
+    if( !checkCommand( addr2li ) )
     {
         addr2li = m_toolPath+"avr/bin/avr-addr2line";
     #ifndef Q_OS_UNIX
         addr2li += ".exe";
     #endif
-        if( !QFileInfo::exists( addr2li ) )
+        if( !checkCommand( addr2li ) )
         {
             outPane()->appendLine( "\nWarning: avr-addr2line executable doesn't exist:\n"+addr2li );
             return false;
         }
     }
+    outPane()->appendText( "\nMapping Flash to Source... " );
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );
     elfPath = addQuotes( elfPath );
@@ -170,43 +174,41 @@ bool AvrGccDebugger::mapFlashToSource()
 
     QProcess flashToLine( this );
     flashToLine.start( addr2li + " -e " + elfPath );
-    bool started = flashToLine.waitForStarted( 1000 );
-    if( !started ) return false;
-
-    for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
+    ok = flashToLine.waitForStarted( 1000 );
+    if( ok )
     {
-        QString addr = val2hex( flashAddr )+"\n";
-        flashToLine.write( addr.toUtf8() );
-    }
-    flashToLine.closeWriteChannel();
-    flashToLine.waitForFinished();
-
-    m_lastLine = 0;
-    for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
-    {
-        QString p_stdout = flashToLine.readLine();
-        if( p_stdout.isEmpty() ) continue;
-        if( p_stdout.startsWith("?") ) continue;
-
-        //m_outPane->appendLine(p_stdout);
-        int idx = p_stdout.lastIndexOf( ":" );
-        if( idx == -1 ) continue;
-
-        QString fileName = QFileInfo( p_stdout.left( idx ) ).fileName();
-        if( m_fileList.contains( fileName ) )
+        for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
         {
-            bool ok = false;
-            int line = p_stdout.mid( idx+1 ).toInt( &ok );
-            if( !ok ) continue;
-            int addr = flashAddr*m_addrBytes/2;
-            if( !m_sourceToFlash.contains( line ) )
-            {//m_outPane->appendLine( "addr " + QString::number(addr) + " line " + QString::number(line) );
-                if( line > m_lastLine ) m_lastLine = line;
-                m_flashToSource[ addr ] = line;
-                m_sourceToFlash[ line ] = addr;
-            }
-    }   }
-    flashToLine.close();
-    return !m_flashToSource.isEmpty();
+            QString addr = val2hex( flashAddr )+"\n";
+            flashToLine.write( addr.toUtf8() );
+        }
+        flashToLine.closeWriteChannel();
+        flashToLine.waitForFinished();
+
+        m_lastLine = 0;
+        for( int flashAddr=0; flashAddr<flashSize; ++flashAddr ) // Map Flash Address to Source Line
+        {
+            QString p_stdout = flashToLine.readLine();
+            if( p_stdout.isEmpty() ) continue;
+            if( p_stdout.startsWith("?") ) continue;
+
+            //m_outPane->appendLine(p_stdout);
+            int idx = p_stdout.lastIndexOf( ":" );
+            if( idx == -1 ) continue;
+
+            QString fileName = QFileInfo( p_stdout.left( idx ) ).fileName();
+            if( m_fileList.contains( fileName ) )
+            {
+                bool ok = false;
+                int line = p_stdout.mid( idx+1 ).toInt( &ok );
+                if( !ok ) continue;
+                int addr = flashAddr*m_addrBytes/2;
+                setLineToFlash( line, addr );
+        }   }
+        flashToLine.close();
+    }
+    ok = !m_flashToSource.isEmpty();
+    outPane()->appendLine( QString::number( m_flashToSource.size() )+" lines mapped" );
+    return ok;
 }
 

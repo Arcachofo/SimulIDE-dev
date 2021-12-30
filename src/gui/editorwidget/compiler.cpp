@@ -293,4 +293,11 @@ void Compiler::compProps()
     }
     m_compDialog->show();
 }
+
+bool Compiler::checkCommand( QString c )
+{
+    QString test = c + " -v";
+    int exitCode = system( test.toLocal8Bit() );
+    return exitCode == 0;
+}
 #include "moc_compiler.cpp"

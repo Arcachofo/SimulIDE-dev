@@ -52,6 +52,8 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         virtual void getInfoInFile( QString line );
 
         static QString getValue( QString line, QString word );
+
+        int flashToSourceSize() { return m_flashToSource.size(); }
         
         bool m_stepOver;
 

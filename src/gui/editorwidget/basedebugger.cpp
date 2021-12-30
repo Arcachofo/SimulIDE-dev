@@ -88,6 +88,7 @@ bool BaseDebugger::postProcess()
         m_outPane->appendLine( "\n"+tr("Warning: lst file doesn't exist:")+"\n"+lstFile );
         return false;
     }
+    outPane()->appendText( "\nMapping Flash to Source... " );
     QString srcFile = m_fileDir + m_fileName + m_fileExt;
     QStringList srcLines = fileToStringList( srcFile, "BaseDebugger::postProcess" );
     QStringList lstLines = fileToStringList( lstFile, "BaseDebugger::postProcess" );
@@ -165,6 +166,7 @@ bool BaseDebugger::postProcess()
                 int address = lstLine.toInt( &ok, 16 );
                 if( ok ) setLineToFlash( srcLineNumber, m_codeStart+address );
     }   }   }
+    outPane()->appendLine( QString::number( m_flashToSource.size() )+" lines mapped" );
     return true;
 }
 

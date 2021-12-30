@@ -67,6 +67,8 @@ class Compiler : public QObject
 
         virtual void getInfoInFile( QString line ){;}
 
+        bool checkCommand( QString c );
+
         OutPanelText* outPane() { return m_outPane; }
 
     protected:
