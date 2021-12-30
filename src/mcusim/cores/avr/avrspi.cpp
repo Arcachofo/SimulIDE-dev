@@ -47,7 +47,6 @@ void AvrSpi::initialize()
 void AvrSpi::setMode( spiMode_t mode )
 {
     if( m_mode == mode ) return;
-    m_mode = mode;
 
     if     ( mode == SPI_OFF )
     {
