@@ -28,6 +28,8 @@ McuAdc::McuAdc( eMcu* mcu, QString name )
 {
     m_ADCL = NULL;
     m_ADCH = NULL;
+
+    m_fixedVref = 0;
 }
 McuAdc::~McuAdc(){}
 

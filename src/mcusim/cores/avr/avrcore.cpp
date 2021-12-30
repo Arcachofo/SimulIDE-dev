@@ -159,15 +159,11 @@ void AvrCore::runDecoder()
 
     uint32_t new_pc = PC + 1;    // future "default" pc
     int cycle = 1;
-    if( PC == 408 )
-        cycle = 1;
 
-    switch( instruction & 0xf000)
+    switch( instruction & 0xf000 )
     {
-        case 0x0000:
-        {
-            switch( instruction)
-            {
+        case 0x0000:{
+            switch( instruction){
                 case 0x0000: {    // NOP
                 }    break;
                 default:

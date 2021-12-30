@@ -25,7 +25,7 @@
 
 class eMcu;
 class McuPin;
-class AvrTimer80;
+class AvrTimer800;
 class AvrTimer16bit;
 class McuOcUnit;
 
@@ -73,18 +73,18 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         McuPin* m_aRefPin;
         McuPin* m_aVccPin;
 
-        AvrTimer80*      m_timer0;
+        AvrTimer800*     m_timer0;
         AvrTimer16bit*  m_timer1;
 
         McuOcUnit* m_t0OCA;
         McuOcUnit* m_txOCB;
 };
 
-class MAINMODULE_EXPORT AvrAdc0 : public AvrAdc
+class MAINMODULE_EXPORT AvrAdc00 : public AvrAdc
 {
     public:
-        AvrAdc0( eMcu* mcu, QString name );
-        ~AvrAdc0();
+        AvrAdc00( eMcu* mcu, QString name );
+        ~AvrAdc00();
 
         //virtual void initialize() override;
 
@@ -93,35 +93,45 @@ class MAINMODULE_EXPORT AvrAdc0 : public AvrAdc
 
     protected:
         virtual void autotriggerConf() override;
-        virtual void updtVref() override;;
+        virtual void updtVref() override;
 };
 
-class MAINMODULE_EXPORT AvrAdc1 : public AvrAdc
+class MAINMODULE_EXPORT AvrAdc01 : public AvrAdc00
 {
     public:
-        AvrAdc1( eMcu* mcu, QString name );
-        ~AvrAdc1();
+        AvrAdc01( eMcu* mcu, QString name );
+        ~AvrAdc01();
+
+    protected:
+        virtual void autotriggerConf() override;
+};
+
+class MAINMODULE_EXPORT AvrAdc02 : public AvrAdc00
+{
+    public:
+        AvrAdc02( eMcu* mcu, QString name );
+        ~AvrAdc02();
+
+    protected:
+        virtual void updtVref() override;
+};
+
+class MAINMODULE_EXPORT AvrAdc10 : public AvrAdc
+{
+    public:
+        AvrAdc10( eMcu* mcu, QString name );
+        ~AvrAdc10();
 
     protected:
         virtual void autotriggerConf() override;
         virtual void updtVref() override;
 };
 
-class MAINMODULE_EXPORT AvrAdc2 : public AvrAdc0
+class MAINMODULE_EXPORT AvrAdc11 : public AvrAdc10
 {
     public:
-        AvrAdc2( eMcu* mcu, QString name );
-        ~AvrAdc2();
-
-    protected:
-        virtual void updtVref() override;
-};
-
-class MAINMODULE_EXPORT AvrAdc3 : public AvrAdc1
-{
-    public:
-        AvrAdc3( eMcu* mcu, QString name );
-        ~AvrAdc3();
+        AvrAdc11( eMcu* mcu, QString name );
+        ~AvrAdc11();
 
     protected:
         virtual void updtVref() override;

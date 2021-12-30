@@ -339,7 +339,8 @@ void CircuitWidget::saveCirc( QString file )
 
 void CircuitWidget::powerCirc()
 {
-    if     ( powerCircAct->iconText() == "Off" ) powerCircOn();
+    if( Simulator::self()->isPaused() )          powerCircOff();
+    else if( powerCircAct->iconText() == "Off" ) powerCircOn();
     else if( powerCircAct->iconText() == "On" )  powerCircOff();
 }
 

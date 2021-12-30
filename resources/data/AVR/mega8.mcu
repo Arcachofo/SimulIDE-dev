@@ -8,6 +8,6 @@
     <datablock name="RAM" start="0x0060" end="0x045F"/>
 
     <include file="mega8/mega8_int.xml" />
-    <include file="megax8/megax8_perif.xml" />
+    <include file="mega8/mega8_perif.xml" />
     
 </mcu>

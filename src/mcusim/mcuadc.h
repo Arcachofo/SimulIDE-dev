@@ -67,6 +67,7 @@ class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
         //int m_bits;                  // ADC resolution in bits
         uint m_channel;                // Channel number for current conversion
 
+        double m_fixedVref;
         double m_vRefP;                // Positive Reference Voltage
         double m_vRefN;                // Positive Reference Voltage
 };

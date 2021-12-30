@@ -26,9 +26,11 @@
 
 McuTimer* AvrTimer::createTimer( eMcu* mcu, QString name, int type ) // Static
 {
-    if     ( type == 80 )  return new AvrTimer80( mcu, name );
-    else if( type == 81 )  return new AvrTimer81( mcu, name );
-    else if( type == 82 )  return new AvrTimer82( mcu, name );
+    if     ( type == 800 ) return new AvrTimer800( mcu, name );
+    else if( type == 801 ) return new AvrTimer801( mcu, name );
+    else if( type == 810 ) return new AvrTimer810( mcu, name );
+    else if( type == 820 ) return new AvrTimer820( mcu, name );
+    else if( type == 821 ) return new AvrTimer821( mcu, name );
     else if( type == 160 ) return new AvrTimer16bit( mcu, name );
 
     return NULL;
@@ -203,30 +205,76 @@ void AvrTimer8bit::setOCRXA( QString reg )
 //--------------------------------------------------
 // TIMER 0 -----------------------------------------
 
-AvrTimer80::AvrTimer80( eMcu* mcu, QString name)
+AvrTimer800::AvrTimer800( eMcu* mcu, QString name)
           : AvrTimer8bit( mcu, name )
 {
     setOCRXA( "OCR0A" );
 }
-AvrTimer80::~AvrTimer80(){}
+AvrTimer800::~AvrTimer800(){}
 
-void AvrTimer80::configureClock()
+void AvrTimer800::configureClock()
 {
     if( m_prIndex > 5 ) AvrTimer::configureExtClock();
     else                AvrTimer::configureClock();
 }
 
 //--------------------------------------------------
+// TIMER 0 -----------------------------------------
+
+AvrTimer801::AvrTimer801( eMcu* mcu, QString name)
+           : McuTimer( mcu, name )
+{
+    m_maxCount = 0xFF;
+}
+AvrTimer801::~AvrTimer801(){}
+
+void AvrTimer801::initialize()
+{
+    McuTimer::initialize();
+
+    m_ovfMatch  = m_maxCount;
+    m_ovfPeriod = m_ovfMatch + 1;
+}
+
+void AvrTimer801::configureA( uint8_t newTCCR0 )
+{
+    uint8_t prIndex = getRegBitsVal( newTCCR0, m_prSelBits ); // CSX0-n
+
+    if( prIndex != m_prIndex )
+    {
+        m_prIndex = prIndex;
+        if( prIndex ) configureClock();
+        enable( m_prIndex );
+    }
+}
+
+void AvrTimer801::configureClock()
+{
+    if( m_prIndex > 5 ) //AvrTimer::configureExtClock();
+    {
+        m_prescaler = 1;
+        m_clkSrc = clkEXT;
+        /// if     ( m_prIndex == 6 ) m_clkEdge = Clock_Falling;
+        /// else if( m_prIndex == 7 ) m_clkEdge = Clock_Rising;
+    }
+    else                //AvrTimer::configureClock();
+    {
+        m_prescaler = m_prescList.at( m_prIndex );
+        m_clkSrc = clkMCU;
+    }
+}
+
+//--------------------------------------------------
 // TIMER 1 (8 bits) --------------------------------
 
-AvrTimer81::AvrTimer81( eMcu* mcu, QString name)
+AvrTimer810::AvrTimer810( eMcu* mcu, QString name)
           : AvrTimer8bit( mcu, name )
 {
     //setOCRXA( "OCR0A" );
 }
-AvrTimer81::~AvrTimer81(){}
+AvrTimer810::~AvrTimer810(){}
 
-void AvrTimer81::configureA( uint8_t newGTCCR ) // GTCCR
+void AvrTimer810::configureA( uint8_t newGTCCR ) // GTCCR
 {
     /// if( m_OCA ) m_OCA->configure( newGTCCR ); // Done in ocunits
     //if( m_OCB ) m_OCB->configure( newGTCCR );
@@ -236,7 +284,7 @@ void AvrTimer81::configureA( uint8_t newGTCCR ) // GTCCR
     //updtWgm();
 }
 
-void AvrTimer81::configureB( uint8_t newTCCR1 ) // TCCR1
+void AvrTimer810::configureB( uint8_t newTCCR1 ) // TCCR1
 {
     uint8_t prIndex = getRegBitsVal( newTCCR1, m_prSelBits ); // CSX0-n
 
@@ -250,23 +298,50 @@ void AvrTimer81::configureB( uint8_t newTCCR1 ) // TCCR1
     //updtWgm();
 }
 
-void AvrTimer81::configureClock()
+void AvrTimer810::configureClock()
 {
     //if( m_prIndex > 5 ) AvrTimer::configureExtClock();
     //else                AvrTimer::configureClock();
 }
 
+//--------------------------------------------------
+// TIMER 2 -----------------------------------------
+
+AvrTimer820::AvrTimer820( eMcu* mcu, QString name)
+           : AvrTimer8bit( mcu, name )
+{
+    setOCRXA( "OCR2A" );
+}
+AvrTimer820::~AvrTimer820(){}
 
 //--------------------------------------------------
 // TIMER 2 -----------------------------------------
 
-AvrTimer82::AvrTimer82( eMcu* mcu, QString name)
-          : AvrTimer8bit( mcu, name )
+AvrTimer821::AvrTimer821( eMcu* mcu, QString name)
+           : AvrTimer8bit( mcu, name )
 {
-    setOCRXA( "OCR2A" );
+    setOCRXA( "OCR2" );
 }
-AvrTimer82::~AvrTimer82(){}
+AvrTimer821::~AvrTimer821(){}
 
+void AvrTimer821::configureA( uint8_t newTCCR2 )
+{
+    if( m_OCA ) m_OCA->configure( newTCCR2 ); // COM20 COM21 Done in ocunits
+
+    uint8_t prIndex = getRegBitsVal( newTCCR2, m_prSelBits ); // CSX0-n
+    if( prIndex != m_prIndex )
+    {
+        m_prIndex = prIndex;
+        if( prIndex ) configureClock();
+        enable( m_prIndex );
+    }
+    uint8_t WGM10 = ((( newTCCR2 & 1<<6) >> 6)
+                   | (( newTCCR2 & 1<<3) >> 2)); // WGM20 WGM21
+    if( m_WGM10 != WGM10 ){
+        m_WGM10 = WGM10;
+        updtWgm();
+    }
+}
 
 //--------------------------------------------------
 // TIMER 16 Bit-------------------------------------

@@ -1,5 +1,5 @@
 <parts>
-  <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
+  <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="0x0020">
       
     <register  name="TWBR"    addr="0x0000"  reset=""  mask="" 
                bits="TWBR0,TWBR1,TWBR2,TWBR3,TWBR4,TWBR5,TWBR6,TWBR7" />

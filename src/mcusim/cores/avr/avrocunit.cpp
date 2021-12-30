@@ -31,8 +31,8 @@ void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
 {
     uint8_t mode = getRegBitsVal( val, m_configBitsA );
 
-    if(  mode == m_mode ) return;
-    m_mode =  mode;
+    if( mode == m_mode ) return;
+    m_mode = mode;
 
     if( m_mode == 0 ){          // OC Pin disconnected
          m_ocPin->controlPin( false, false );
