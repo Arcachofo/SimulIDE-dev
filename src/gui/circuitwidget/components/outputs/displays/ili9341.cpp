@@ -176,37 +176,46 @@ void Ili9341::proccessCommand()
     {
         switch( m_lastCommand )
         {
-            case 0x2A:
+            case 0x0B:   // Read Display MADCTL
+                break;
+            case 0x2A:   // Column Address Set
+                        /// TODO: When SC or EC is greater than 00EFh (When MADCTL’s B5 = 0) (command 0x0B)
+                        /// or 013Fh (When MADCTL’s B5 = 1), data of out of range will be ignored
             {
-                if( m_readBytes == 4 ) m_startX  = m_rxReg<<8;
-                if( m_readBytes == 3 )
+                if     ( m_readBytes == 4 ) m_startX = m_rxReg<<8;
+                else if( m_readBytes == 3 )
                 {
                     m_startX += m_rxReg;
+                    if     ( m_startX < 0 )   m_startX = 0;
+                    else if( m_startX > 239 ) m_startX = 239;
                     m_addrX = m_startX;
                 }
-                if( m_readBytes == 2 ) m_endX  = m_rxReg<<8;
-                else                   m_endX += m_rxReg;
-
-                if     ( m_startX < 0 )  m_startX = 0;
-                else if( m_startX >239 ) m_startX = 239;
-                if     ( m_endX < 0 )    m_endX = 0;
-                else if( m_endX >239 )   m_endX = 239;
+                else if( m_readBytes == 2 ) m_endX = m_rxReg<<8;
+                else
+                {
+                    m_endX += m_rxReg;
+                    if     ( m_endX < 0 )        m_endX = 0;
+                    else if( m_endX > 239 )      m_endX = 239;
+                    else if( m_endX > m_startX ) m_endX = m_startX;
+                }
             }break;
-            case 0x2B:
+            case 0x2B:   // Page Address Set
             {
-                if( m_readBytes == 4 ) m_startY  = m_rxReg<<8;
+                if( m_readBytes == 4 ) m_startY = m_rxReg<<8;
                 if( m_readBytes == 3 )
                 {
                     m_startY += m_rxReg;
+                    if     ( m_startY < 0 )   m_startY = 0;
+                    else if( m_startY > 319 ) m_startY = 319;
                     m_addrY = m_startY;
                 }
-                if( m_readBytes == 2 ) m_endY  = m_rxReg<<8;
-                else                   m_endY += m_rxReg;
-
-                if     ( m_startY < 0 )  m_startY = 0;
-                else if( m_startY >319 ) m_startY = 319;
-                if     ( m_endY < 0 )  m_endY = 0;
-                else if( m_endY >319 ) m_endY = 319;
+                if( m_readBytes == 2 ) m_endY = m_rxReg<<8;
+                else
+                {
+                    m_endY += m_rxReg;
+                    if     ( m_endY < 0 )   m_endY = 0;
+                    else if( m_endY > 319 ) m_endY = 319;
+                }
             }break;
             case 0x3A:
             {
@@ -330,34 +339,14 @@ void Ili9341::clearDDRAM()
 
 void Ili9341::incrementPointer() 
 {
-    /*if( m_addrMode == VERT_ADDR_MODE )
+    m_addrX++;
+    if( m_addrX > m_endX )
     {
+        m_addrX = m_startX;
         m_addrY++;
         if( m_addrY > m_endY )
         {
             m_addrY = m_startY;
-            m_addrX++;
-        }
-        if( m_addrX > m_endX )
-        {
-            m_addrX = m_startX;
-        }
-    }
-    else*/
-    {
-        m_addrX++;
-        if( m_addrX > m_endX )
-        {
-            m_addrX = m_startX;
-            //if( m_addrMode == HORI_ADDR_MODE )
-                m_addrY++;
-        }
-        //if( m_addrMode == HORI_ADDR_MODE )
-        {
-            if( m_addrY > m_endY )
-            {
-                m_addrY = m_startY;
-            }
         }
     }
 }
@@ -456,11 +445,6 @@ void Ili9341::updateStep()
             }
         }
     }*/
-    update();
-}
-
-void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
-{
     if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
     else
     {
@@ -479,6 +463,29 @@ void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
             }
         }
     }
+    update();
+}
+
+void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+{
+    /*if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
+    else
+    {
+        for( int row=0; row<=319; row++ )
+        {
+            for( int col=0; col<=239; col++ )
+            {
+                unsigned int pixel;
+                //if( m_dispFull ) pixel = 0xFFFF;        // Display fully On
+                //else
+                    pixel = m_aDispRam[col][row];
+
+                //if( m_dispInv ) abyte = ~abyte;         // Display Inverted
+
+                m_pdisplayImg->setPixel(col,row, QColor(pixel).rgb() );
+            }
+        }
+    }*/
 
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
