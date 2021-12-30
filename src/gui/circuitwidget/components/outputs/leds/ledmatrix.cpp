@@ -255,6 +255,18 @@ void LedMatrix::setRes( double resist )
             m_led[row][col]->setRes( resist ); 
 }   }
 
+void LedMatrix::setHidden( bool hid, bool hidLabel )
+{
+    m_hidden = hid;
+
+    for( int row=0; row<m_rows; ++row ) m_rowPin[row]->setVisible( !hid );
+    for( int col=0; col<m_cols; ++col ) m_colPin[col]->setVisible( !hid );
+
+    if( hidLabel ){
+        setShowId( false );
+        m_showProperty = "";
+}   }
+
 void LedMatrix::remove()
 {
     deleteMatrix();

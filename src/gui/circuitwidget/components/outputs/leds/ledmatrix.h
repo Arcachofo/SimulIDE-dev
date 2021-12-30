@@ -60,6 +60,8 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         virtual void attach() override;
         virtual void remove() override;
 
+        virtual void setHidden( bool hid , bool hidLabel=false );
+
         virtual QStringList getEnums( QString e ) override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
