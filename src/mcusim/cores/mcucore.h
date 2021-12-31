@@ -80,7 +80,7 @@ class MAINMODULE_EXPORT McuCore
 
         virtual uint8_t GET_RAM( uint16_t addr ) //
         {
-            if( addr > m_lowDataMemEnd && addr < m_regEnd ) // Read Register
+            if( addr > m_lowDataMemEnd && addr <= m_regEnd ) // Read Register
                 return m_mcu->readReg( addr );              // and call Watchers
 
             else if( addr <= m_dataMemEnd ) return m_dataMem[addr]; // Read Ram
@@ -88,8 +88,8 @@ class MAINMODULE_EXPORT McuCore
         }
         virtual void SET_RAM( uint16_t addr, uint8_t v )  //
         {
-            if( (addr > m_lowDataMemEnd) && (addr < m_regEnd) ) // Write Register
-                m_mcu->writeReg( addr, v );                     // and call Watchers
+            if( (addr > m_lowDataMemEnd) && (addr <= m_regEnd) ) // Write Register
+                m_mcu->writeReg( addr, v );                      // and call Watchers
 
             else if( addr <= m_dataMemEnd) m_dataMem[addr] = v;     // Write Ram
         }
