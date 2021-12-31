@@ -176,8 +176,6 @@ void Ili9341::proccessCommand()
     {
         switch( m_lastCommand )
         {
-            case 0x0B:   // Read Display MADCTL
-                break;
             case 0x2A:   // Column Address Set
                         /// TODO: When SC or EC is greater than 00EFh (When MADCTL’s B5 = 0) (command 0x0B)
                         /// or 013Fh (When MADCTL’s B5 = 1), data of out of range will be ignored
@@ -196,7 +194,7 @@ void Ili9341::proccessCommand()
                     m_endX += m_rxReg;
                     if     ( m_endX < 0 )        m_endX = 0;
                     else if( m_endX > 239 )      m_endX = 239;
-                    else if( m_endX > m_startX ) m_endX = m_startX;
+                    else if( m_endX < m_startX ) m_endX = m_startX;
                 }
             }break;
             case 0x2B:   // Page Address Set
@@ -228,6 +226,7 @@ void Ili9341::proccessCommand()
         return;
     }
     m_lastCommand = m_rxReg;
+    m_readBytes = 0;
 
     switch( m_rxReg )
     {
@@ -236,14 +235,14 @@ void Ili9341::proccessCommand()
             clearLcd();
             //Clear variables
         }break;
-        case 0x04: m_readBytes = 4; break; // Read Display identification information
+        /*case 0x04: m_readBytes = 4; break; // Read Display identification information
         case 0x09: m_readBytes = 5; break; // Read Display Status
         case 0x0A: m_readBytes = 2; break; // Read Display Power Mode
         case 0x0B: m_readBytes = 2; break; // Read Display MADCTL
         case 0x0C: m_readBytes = 2; break; // Read Display Pixel Format
         case 0x0D: m_readBytes = 2; break; // Read Display Image Format
         case 0x0E: m_readBytes = 2; break; // Read Display Signal Mode
-        case 0x0F: m_readBytes = 2; break; // Read Display Sek-Diagnostic Result
+        case 0x0F: m_readBytes = 2; break; // Read Display Sek-Diagnostic Result*/
         //case 0x10: // Enter Sleep Mode
         //case 0x11: // Sleep Out
         //case 0x12: // Partial Mode On
@@ -378,6 +377,8 @@ void Ili9341::reset()
     m_scroll  = false;
     m_scrollR = false;
     m_scrollV = false;
+
+    m_lastCommand = 0;
 
     //m_reset = true;
 
