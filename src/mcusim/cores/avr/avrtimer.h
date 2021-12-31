@@ -64,8 +64,6 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         uint8_t* m_ocrxaH;
 };
 
-//class AvrOcUnit;
-
 class MAINMODULE_EXPORT AvrTimer8bit : public AvrTimer
 {
     public:
@@ -122,7 +120,6 @@ class MAINMODULE_EXPORT AvrTimer820 : public AvrTimer8bit
     public:
         AvrTimer820( eMcu* mcu, QString name );
         ~AvrTimer820();
-
 };
 
 class MAINMODULE_EXPORT AvrTimer821 : public AvrTimer8bit
@@ -132,8 +129,6 @@ class MAINMODULE_EXPORT AvrTimer821 : public AvrTimer8bit
         ~AvrTimer821();
 
         virtual void configureA( uint8_t newTCCR2 ) override;
-
-    protected:
 };
 
 

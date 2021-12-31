@@ -100,11 +100,11 @@ void Ili9341::stamp()
 void Ili9341::initialize()
 {
     clearDDRAM();
-    reset() ;
+    reset();
     updateStep();
 }
 
-void Ili9341::voltChanged()                 // Called when En Pin changes
+void Ili9341::voltChanged()
 {
     bool ret = false;
     if( !m_pinRst.getInpState() )            // Reset Pin is Low
@@ -153,7 +153,6 @@ void Ili9341::voltChanged()                 // Called when En Pin changes
                         green = (m_data & 0b000000001111110000000000);
                         red   = (m_data & 0b111111000000000000000000);
                     }
-
                     m_aDispRam[m_addrX][m_addrY] = red+green+blue;
                     incrementPointer();
                 }
@@ -162,9 +161,7 @@ void Ili9341::voltChanged()                 // Called when En Pin changes
         }
         else proccessCommand();           // Write Command
         m_inBit = 0;
-    }
-    else
-    {
+    }else{
         m_rxReg <<= 1;
         m_inBit++;
     }
@@ -177,8 +174,6 @@ void Ili9341::proccessCommand()
         switch( m_lastCommand )
         {
             case 0x2A:   // Column Address Set
-                        /// TODO: When SC or EC is greater than 00EFh (When MADCTL’s B5 = 0) (command 0x0B)
-                        /// or 013Fh (When MADCTL’s B5 = 1), data of out of range will be ignored
             {
                 if     ( m_readBytes == 4 ) m_startX = m_rxReg<<8;
                 else if( m_readBytes == 3 )
@@ -189,8 +184,7 @@ void Ili9341::proccessCommand()
                     m_addrX = m_startX;
                 }
                 else if( m_readBytes == 2 ) m_endX = m_rxReg<<8;
-                else
-                {
+                else{
                     m_endX += m_rxReg;
                     if     ( m_endX < 0 )        m_endX = 0;
                     else if( m_endX > 239 )      m_endX = 239;
@@ -199,20 +193,20 @@ void Ili9341::proccessCommand()
             }break;
             case 0x2B:   // Page Address Set
             {
-                if( m_readBytes == 4 ) m_startY = m_rxReg<<8;
-                if( m_readBytes == 3 )
+                if     ( m_readBytes == 4 ) m_startY = m_rxReg<<8;
+                else if( m_readBytes == 3 )
                 {
                     m_startY += m_rxReg;
                     if     ( m_startY < 0 )   m_startY = 0;
                     else if( m_startY > 319 ) m_startY = 319;
                     m_addrY = m_startY;
                 }
-                if( m_readBytes == 2 ) m_endY = m_rxReg<<8;
-                else
-                {
+                else if( m_readBytes == 2 ) m_endY = m_rxReg<<8;
+                else{
                     m_endY += m_rxReg;
                     if     ( m_endY < 0 )   m_endY = 0;
                     else if( m_endY > 319 ) m_endY = 319;
+                    else if( m_endY > m_startY ) m_endY = m_startY;
                 }
             }break;
             case 0x3A:
@@ -221,7 +215,6 @@ void Ili9341::proccessCommand()
                 m_dataBytes = mode ? 2 : 3;
             }
         }
-
         m_readBytes--;
         return;
     }
@@ -343,10 +336,7 @@ void Ili9341::incrementPointer()
     {
         m_addrX = m_startX;
         m_addrY++;
-        if( m_addrY > m_endY )
-        {
-            m_addrY = m_startY;
-        }
+        if( m_addrY > m_endY ) m_addrY = m_startY;
     }
 }
 
@@ -395,62 +385,9 @@ void Ili9341::remove()
 
 void Ili9341::updateStep()
 {
-    //if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
-    //else
-    //{
-        /*if( m_scroll )
-        {
-            m_scrollCount--;
-            if( m_scrollCount <= 0 )
-            {
-                m_scrollCount = m_scrollInterval;
-
-                for( int row=m_scrollStartPage; row<=m_scrollEndPage; row++ )
-                {
-                    unsigned char start = m_aDispRam[0][row];
-                    unsigned char end   = m_aDispRam[m_endX][row];
-
-                    for( int col=0; col<=m_endX; col++ )
-                    {
-
-                        if( m_scrollR )
-                        {
-                            int c = m_endX-col;
-
-                            if( c < m_endX ) m_aDispRam[c][row] = m_aDispRam[c-1][row];
-                            if( col == 0 )  m_aDispRam[0][row]   = end;
-                        }
-                        else
-                        {
-                            if( col < m_endX )  m_aDispRam[col][row] = m_aDispRam[col+1][row];
-                            if( col == m_endX ) m_aDispRam[col][row] = start;
-                        }
-                    }
-
-                }
-            }
-
-        }*/
-        /*for( int row=0; row<=319; row++ )
-        {
-            for( int col=0; col<=239; col++ )
-            {
-                unsigned int pixel;
-                //if( m_dispFull ) pixel = 0xFFFF;        // Display fully On
-                //else
-                    pixel = m_aDispRam[col][row];
-
-                //if( m_dispInv ) abyte = ~abyte;         // Display Inverted
-
-                m_pdisplayImg->setPixel(col,row, QColor(pixel).rgb() );
-            }
-        }
-    }*/
     if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
-    else
-    {
-        for( int row=0; row<=319; row++ )
-        {
+    else{
+        for( int row=0; row<=319; row++ ){
             for( int col=0; col<=239; col++ )
             {
                 unsigned int pixel;
@@ -461,33 +398,12 @@ void Ili9341::updateStep()
                 //if( m_dispInv ) abyte = ~abyte;         // Display Inverted
 
                 m_pdisplayImg->setPixel(col,row, QColor(pixel).rgb() );
-            }
-        }
-    }
+    }   }   }
     update();
 }
 
 void Ili9341::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    /*if( !m_dispOn ) m_pdisplayImg->fill(0);               // Display Off
-    else
-    {
-        for( int row=0; row<=319; row++ )
-        {
-            for( int col=0; col<=239; col++ )
-            {
-                unsigned int pixel;
-                //if( m_dispFull ) pixel = 0xFFFF;        // Display fully On
-                //else
-                    pixel = m_aDispRam[col][row];
-
-                //if( m_dispInv ) abyte = ~abyte;         // Display Inverted
-
-                m_pdisplayImg->setPixel(col,row, QColor(pixel).rgb() );
-            }
-        }
-    }*/
-
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
     

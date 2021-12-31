@@ -123,7 +123,7 @@ void AvrWdt::wdtEnable()
     {
         Simulator::self()->addEvent( m_ovfPeriod, this );
         // In Iterrupt + reset, first execute Interrupt, then reset
-        m_interrupt->exitCallBack( this, m_ovfInter && m_ovfReset );
+        if( m_interrupt ) m_interrupt->exitCallBack( this, m_ovfInter && m_ovfReset );
     }
 }
 

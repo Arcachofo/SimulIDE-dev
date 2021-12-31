@@ -45,9 +45,10 @@ EditorWindow::EditorWindow( QWidget* parent )
 
     m_debugDoc = NULL;
     m_debugger = NULL;
-    m_state = DBG_STOPPED;
-    m_driveCirc = false;
-    m_stepOver = false;
+
+    m_state     = DBG_STOPPED;
+    m_driveCirc = true;
+    m_stepOver  = false;
 
     CodeEditor::readSettings();
     loadCompilers();

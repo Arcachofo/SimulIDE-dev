@@ -268,7 +268,7 @@ void AvrTimer801::configureClock()
 // TIMER 1 (8 bits) --------------------------------
 
 AvrTimer810::AvrTimer810( eMcu* mcu, QString name)
-          : AvrTimer8bit( mcu, name )
+           : AvrTimer8bit( mcu, name )
 {
     //setOCRXA( "OCR0A" );
 }

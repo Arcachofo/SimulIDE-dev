@@ -1,0 +1,63 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Resistor" CircId="Reistencia-7" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-220,-100" rotation="90" hflip="1" vflip="1" label="Reistencia-4" idLabPos="-12,-24" labelrot="0" valLabPos="-8.55204,-17.8643" valLabRot="0" Resistance="5 kΩ" />
+
+<item itemtype="Resistor" CircId="Reistencia-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-100" rotation="90" hflip="1" vflip="1" label="Reistencia-5" idLabPos="-12,-24" labelrot="0" valLabPos="-9,-17" valLabRot="0" Resistance="5 kΩ" />
+
+<item itemtype="Push" CircId="Pulsador-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-196,-188" rotation="90" hflip="-1" vflip="1" label="Set" idLabPos="-6.59972,23.957" labelrot="-270" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+
+<item itemtype="Push" CircId="Pulsador-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-196,-148" rotation="270" hflip="1" vflip="1" label="Mode" idLabPos="6.55813,22.9384" labelrot="-270" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+
+<item itemtype="Hd44780" CircId="Hd44780-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-228" rotation="0" hflip="1" vflip="1" label="Hd44780-8" idLabPos="70,-82" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2 _Lines" Cols="16 _Chars." />
+
+<item itemtype="MCU" CircId="mega8-46" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,-180" rotation="0" hflip="1" vflip="1" label="mega8-46" idLabPos="-1.77593,-14.6722" labelrot="0" valLabPos="-16,20" valLabRot="0" varList=",mode,alarmOn" Frequency="16 MHz" Program="AlarmClock.hex" Auto_Load="false" Rst_enabled="false" Ext_Osc="false" Wdt_enabled="false" />
+
+<item itemtype="Ground" CircId="Ground-47" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-52" rotation="0" hflip="1" vflip="1" label="Ground-47" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-51" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-292,-204" rotation="0" hflip="1" vflip="1" label="Rail-51" idLabPos="-16,-24" labelrot="0" valLabPos="-25.1829,-3.4908" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Node" CircId="Node-10" mainComp="false" Pos="-228,-212" />
+
+<item itemtype="Node" CircId="Node-9" mainComp="false" Pos="-228,-76" />
+
+<item itemtype="Node" CircId="Node-8" mainComp="false" Pos="-196,-124" />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-196,-168" />
+
+<item itemtype="Connector" startpinid="Node-1-2" endpinid="Pulsador-5-switch0pinN" enodeid="enode" pointList="-196,-168,-196,-172" />
+
+<item itemtype="Connector" startpinid="Pulsador-5-pinP0" endpinid="Node-10-0" enodeid="Circ_eNode-53" pointList="-196,-204,-196,-212,-228,-212" />
+
+<item itemtype="Connector" startpinid="Pulsador-4-pinP0" endpinid="Node-8-0" enodeid="Circ_eNode-54" pointList="-196,-132,-196,-124" />
+
+<item itemtype="Connector" startpinid="Node-8-1" endpinid="Reistencia-7-lPin" enodeid="Circ_eNode-54" pointList="-196,-124,-220,-124,-220,-116" />
+
+<item itemtype="Connector" startpinid="Reistencia-7-rPin" endpinid="Node-9-0" enodeid="Circ_eNode-55" pointList="-220,-84,-220,-76,-228,-76" />
+
+<item itemtype="Connector" startpinid="Reistencia-6-rPin" endpinid="Node-9-1" enodeid="Circ_eNode-55" pointList="-228,-84,-228,-76" />
+
+<item itemtype="Connector" startpinid="Reistencia-6-lPin" endpinid="Node-10-1" enodeid="Circ_eNode-53" pointList="-228,-116,-228,-212" />
+
+<item itemtype="Connector" startpinid="Node-9-2" endpinid="Ground-47-Gnd" enodeid="Circ_eNode-55" pointList="-228,-76,-228,-68" />
+
+<item itemtype="Connector" startpinid="Node-1-1" endpinid="Rail-51-outnod" enodeid="enode" pointList="-196,-168,-252,-168,-252,-204,-276,-204" />
+
+<item itemtype="Connector" startpinid="mega8-46-PORTD2" endpinid="Hd44780-3-dataPin7" enodeid="Circ_eNode-56" pointList="-316,-148,-324,-148,-324,-220" />
+
+<item itemtype="Connector" startpinid="Hd44780-3-dataPin6" endpinid="mega8-46-PORTD3" enodeid="Circ_eNode-57" pointList="-332,-220,-332,-140,-316,-140" />
+
+<item itemtype="Connector" startpinid="Hd44780-3-dataPin5" endpinid="mega8-46-PORTD4" enodeid="Circ_eNode-58" pointList="-340,-220,-340,-132,-316,-132" />
+
+<item itemtype="Connector" startpinid="Hd44780-3-dataPin4" endpinid="mega8-46-PORTD5" enodeid="Circ_eNode-59" pointList="-348,-220,-348,-92,-316,-92" />
+
+<item itemtype="Connector" startpinid="Node-8-2" endpinid="mega8-46-PORTD6" enodeid="Circ_eNode-54" pointList="-196,-124,-196,-28,-340,-28,-340,-84,-316,-84" />
+
+<item itemtype="Connector" startpinid="Node-10-2" endpinid="mega8-46-PORTD7" enodeid="Circ_eNode-53" pointList="-228,-212,-244,-212,-244,-36,-332,-36,-332,-76,-316,-76" />
+
+<item itemtype="Connector" startpinid="mega8-46-PORTB3" endpinid="Hd44780-3-PinEn" enodeid="Circ_eNode-60" pointList="-268,-84,-260,-84,-260,-52,-388,-52,-388,-220" />
+
+<item itemtype="Connector" startpinid="mega8-46-PORTB4" endpinid="Hd44780-3-PinRS" enodeid="Circ_eNode-61" pointList="-268,-92,-252,-92,-252,-44,-404,-44,-404,-220" />
+
+<item itemtype="Connector" startpinid="Pulsador-4-switch0pinN" endpinid="Node-1-0" enodeid="enode" pointList="-196,-164,-196,-168" />
+
+</circuit>
