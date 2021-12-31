@@ -197,7 +197,7 @@ QString BaseDebugger::getValue( QString line, QString key ) // Static
     if( !lineL.contains( key.toLower() ) ) return "";
 
     QString value = "";
-    QStringList wordList = line.replace(":", " ").replace("=", " ").split(" ");
+    QStringList wordList = line.replace("=", " ").split(" ");
 
     while( wordList.size() > 1 )
     {

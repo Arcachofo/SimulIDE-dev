@@ -37,7 +37,7 @@ InoDebugger::InoDebugger( CodeEditor* parent, OutPanelText* outPane )
     Q_UNUSED( InoDebugger_properties );
 
     m_Ardboard = Uno;
-    m_ArdboardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo";
+    m_ArdboardList << "uno" << "megaADK" << "nano" << "diecimila" << "leonardo" << "custom";
     m_buildPath = MainWindow::self()->getFilePath("data/codeeditor/buildIno");
 }
 InoDebugger::~InoDebugger() {}
@@ -117,19 +117,17 @@ int InoDebugger::compile( bool )
     QString cBuildPath = addQuotes( m_buildPath+"/build" );
     QString cCachePath = addQuotes( m_buildPath+"/cache" );
 
+    QString boardSource;
     QString boardName = getBoard();
-    QString boardSource = "Arduino";
-    if( boardName.isEmpty() )
-    {
-        if( m_Ardboard < Custom ) boardName = "arduino:avr:"+m_ArdboardList.at( m_Ardboard );
-        else{
-            boardName = m_customBoard;
-            boardSource = "Custom ";
-    }   }
-    else{
-        boardName.prepend("arduino:avr:") ;
-        boardSource = "In File";
+    if( boardName.isEmpty() ){
+        if( m_Ardboard == Custom ) boardSource = "Custom ";
+        else                       boardSource = "Arduino";
     }
+    else                           boardSource = "In File";
+
+    if( m_Ardboard < Custom ) boardName = "arduino:avr:"+m_ArdboardList.at( m_Ardboard );
+    else                      boardName = m_customBoard;
+
     command += " -compile";
     command += " -hardware "+hardware;
     command += " -tools "+toolsBuild;
@@ -187,9 +185,13 @@ QString InoDebugger::getBoard()
     QString board = m_board.toLower();
     if( board == "duemilanove" ) board = "diecimila";
     else if( board == "mega" )   board = "megaADK";
-    if( !m_ArdboardList.contains( board ) ) return "";
 
-    m_Ardboard = (board_t) m_ArdboardList.indexOf( board) ;
+    if( !m_ArdboardList.contains( board ) )
+    {
+        m_customBoard = m_board;
+        m_Ardboard    = Custom;
+    }
+    else m_Ardboard = (board_t) m_ArdboardList.indexOf( board);
 
     return board;
 }
