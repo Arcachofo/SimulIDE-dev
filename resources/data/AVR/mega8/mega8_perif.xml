@@ -49,7 +49,7 @@
     <interrupt name="T2_OVF" />
   </timer>
 
-  <usart name="USART0"  number="1" configregsA="UCSR0A" configregsB="UCSR0B" configregsC="UCSR0C">
+  <usart name="USART0"  number="1" configregsA="UCSRA" configregsB="UCSRB" configregsC="UCSRC">
     <trunit type="tx" pin="PORTD1" register="UDR0">
         <interrupt name="USART_T" />
     </trunit>

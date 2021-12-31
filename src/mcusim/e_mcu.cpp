@@ -146,7 +146,7 @@ uint16_t eMcu::getCfgWord( uint16_t addr )
     return m_cfgWords.values().first();
 }
 
-void eMcu::wdr() { m_wdt->reset(); }
+void eMcu::wdr() { if( m_wdt ) m_wdt->reset(); }
 
 void eMcu::enableInterrupts( uint8_t en )
 {
