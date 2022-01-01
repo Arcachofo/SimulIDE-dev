@@ -102,7 +102,7 @@
     <interrupt name="SPI" />
   </spi>
 
-  <wdt name="WatchDog" configregsA="WDTCSR">
+  <wdt name="WatchDog00" configregsA="WDTCSR">
     <prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
     <interrupt name="WDT" />
   </wdt>

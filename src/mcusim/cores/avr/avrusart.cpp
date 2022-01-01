@@ -30,6 +30,9 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
 {
     QString n = m_name.right(1);
+    bool ok = false;
+    n.toInt( &ok );
+    if( !ok ) n = "";
     m_UCSRnA = mcu->getReg( "UCSR"+n+"A" );
     m_UCSRnB = mcu->getReg( "UCSR"+n+"B" );
     m_u2xn   = getRegBits( "U2X"+n, mcu );
@@ -40,28 +43,34 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
     m_txEn = getRegBits( "TXEN"+n, mcu );
     m_rxEn = getRegBits( "RXEN"+n, mcu );
 
-    m_modeRB = getRegBits( "UMSEL"+n+"0,UMSEL"+n+"1", mcu );
+    if( n == "" ) m_modeRB = getRegBits( "UMSEL", mcu ); // atmega8
+    else          m_modeRB = getRegBits( "UMSEL"+n+"0,UMSEL"+n+"1", mcu );
     m_pariRB = getRegBits( "UPM"+n+"0,UPM"+n+"1", mcu );
     m_stopRB = getRegBits( "USBS"+n, mcu );
     m_dataRB = getRegBits( "UCSZ"+n+"0,UCSZ"+n+"1", mcu );
 
     m_UBRRnL = mcu->getReg( "UBRR"+n+"L" );
-    m_UBRRnH = mcu->getReg( "UBRR"+n+"H" );
     watchRegNames( "UBRR"+n+"L", R_WRITE, this, &AvrUsart::setUBRRnL, mcu );
-    watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH, mcu );
 
+    if( n == "" ) m_UBRRnH = NULL; // atmega8
+    else{         m_UBRRnH = mcu->getReg( "UBRR"+n+"H" );
+        watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH, mcu );
+    }
     m_UDRE = getRegBits( "UDRE"+n, mcu );
     m_TXC  = getRegBits( "TXC"+n, mcu );
     m_RXC  = getRegBits( "RXC"+n, mcu );
     m_FE   = getRegBits( "FE"+n, mcu );
     m_DOR  = getRegBits( "DOR"+n, mcu );
-    m_UPE  = getRegBits( "UPE"+n, mcu );
+    if( n == "" ) m_UPE  = getRegBits( "PE", mcu );
+    else          m_UPE  = getRegBits( "UPE"+n, mcu );
 }
 AvrUsart::~AvrUsart(){}
 
 void AvrUsart::configureA( uint8_t newUCSRnA )
 {
-    m_speedx2 = getRegBitsVal( newUCSRnA, m_u2xn ); // Double Speed?
+    bool speedx2 = getRegBitsBool( newUCSRnA, m_u2xn ); // Double Speed?
+    if( speedx2 == m_speedx2 ) return;
+    m_speedx2 = speedx2;
     setBaurrate();
 }
 
@@ -93,9 +102,14 @@ void AvrUsart::configureB( uint8_t newUCSRnB ) // UCSRnB changed
 
 void AvrUsart::configureC( uint8_t newUCSRnC ) // UCSRnC changed
 {
+    if( !m_UBRRnH && (newUCSRnC & (1<<7)) ) // atmega8 Writting to UBBRH
+    {
+        setUBRRnH( newUCSRnC & 0x0F );
+        return;
+    }
     // clockPol = getRegBitsVal( val, UCPOLn );
 
-    m_mode = getRegBitsVal( newUCSRnC, m_modeRB );        // UMSELn1, UMSELn0
+    m_mode     = getRegBitsVal( newUCSRnC, m_modeRB );    // UMSELn1, UMSELn0
     m_stopBits = getRegBitsVal( newUCSRnC, m_stopRB )+1;  // UPMn1, UPMno
     m_dataBits = getRegBitsVal( newUCSRnC, m_dataRB )+5;
 
@@ -114,19 +128,21 @@ void AvrUsart::configureC( uint8_t newUCSRnC ) // UCSRnC changed
 
 void AvrUsart::setUBRRnL( uint8_t v )
 {
+    if( *m_UBRRnL == v ) return;
     *m_UBRRnL = v;
     setBaurrate();
 }
 
 void AvrUsart::setUBRRnH( uint8_t v )
 {
-    *m_UBRRnH = v;
+    if( m_UBRRHval == v ) return;
+    m_UBRRHval = v;
     setBaurrate();
 }
 
 void AvrUsart::setBaurrate( uint8_t )
 {
-    uint16_t ubrr = *m_UBRRnL | (*m_UBRRnH & 0x0F)<<8 ;
+    uint16_t ubrr = *m_UBRRnL | (m_UBRRHval & 0x0F)<<8 ;
 
     uint64_t period = 16*(ubrr+1)*m_mcu->simCycPI();
     if( m_speedx2 ) period /= 2;
@@ -151,7 +167,7 @@ void AvrUsart::sendByte(  uint8_t data ) // Buffer is being written
 
     if( getRegBitsBool( *m_UCSRnA, m_UDRE ) )  // Buffer is empty?
     {
-        m_interrupt->clearFlag(); // Transmit buffer full: Clear UDREn bit
+        clearRegBits( m_UDRE ); // Transmit buffer now full: Clear UDREn bit
         m_sender->processData( data );
 }   }
 

@@ -902,7 +902,7 @@ void McuCreator::createWdt( QDomElement* e )
 {
     QString name = e->attribute( "name" );
     McuWdt* wdt;
-    if     ( m_core == "AVR" )   wdt = new AvrWdt( mcu, name );
+    if     ( m_core == "AVR" )   wdt = AvrWdt::createWdt( mcu, name );
     else if( m_core == "Pic14" ) wdt = new PicWdt( mcu, name );
     else return;
 

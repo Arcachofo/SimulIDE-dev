@@ -49,10 +49,12 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
     private:
         void setUBRRnL( uint8_t v );
         void setUBRRnH( uint8_t v );
+
         uint8_t*  m_UCSRnA;
         uint8_t*  m_UCSRnB;
         uint8_t*  m_UBRRnL;
         uint8_t*  m_UBRRnH;
+        uint8_t  m_UBRRHval;
 
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;
@@ -75,4 +77,3 @@ class MAINMODULE_EXPORT AvrUsart : public McuUsart
 };
 
 #endif
-

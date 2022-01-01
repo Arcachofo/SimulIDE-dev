@@ -98,8 +98,7 @@ void UartTx::startTransmission() // Data loaded to ShiftReg
     if( m_period )
     {
         if( m_runHardware ) sendBit(); // Start transmission
-        else                           // Not running Hardwware
-        {
+        else{                          // Not running Hardwware
             m_state = usartTXEND;      // Shedule End of transmission
             Simulator::self()->addEvent( m_period*m_framesize, this );
 }   }   }

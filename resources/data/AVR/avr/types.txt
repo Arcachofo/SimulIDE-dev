@@ -31,7 +31,12 @@ Timer:
     
 - Type 160: 16 bits.
     tinyx4   Timer1.
+    mega8    Timer1.
     megaX8   Timer1.
     mega640  Timer1,3,4,5.
     mega1281 Timer1,3.
     
+WDT:
+- Type 00: megaX8,640,1281,tinyx4,tinyx5,tiny13.
+- Type 01: mega8.
+

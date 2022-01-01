@@ -166,7 +166,6 @@ void AvrAdc01::autotriggerConf()
     m_freeRunning = m_autoTrigger;
 }
 
-
 //------------------------------------------------------
 //-- AVR ADC Type 10 -----------------------------------
 

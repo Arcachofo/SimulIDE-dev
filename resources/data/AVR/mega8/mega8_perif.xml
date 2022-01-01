@@ -49,8 +49,8 @@
     <interrupt name="T2_OVF" />
   </timer>
 
-  <usart name="USART0"  number="1" configregsA="UCSRA" configregsB="UCSRB" configregsC="UCSRC">
-    <trunit type="tx" pin="PORTD1" register="UDR0">
+  <usart name="USART"  number="1" configregsA="UCSRA" configregsB="UCSRB" configregsC="UCSRC">
+    <trunit type="tx" pin="PORTD1" register="UDR">
         <interrupt name="USART_T" />
     </trunit>
     
@@ -88,6 +88,11 @@
     
     <interrupt name="SPI" />
   </spi>
+  
+  <wdt name="WatchDog01" configregsA="WDTCSR">
+    <prescaler select="" values="128,64,32,16,8,4,2,1"/>
+    <interrupt name="WDT" />
+  </wdt>
 
 
   <eeprom name="EEPROM" dataregs="EEDR" addressreg="EEARL,EEARH" configregsA="EECR">

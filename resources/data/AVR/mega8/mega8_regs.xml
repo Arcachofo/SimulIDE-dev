@@ -81,11 +81,10 @@
     <register  name="EEARH"   addr="0x001F"  reset=""  mask="00000001" 
                bits="EEAR8,0,0,0,0,0,0,0" />
     
-    <register  name="UCSRC"   addr="0x0040"  reset="00000110"  mask="" 
+    <register  name="UCSRC"   addr="0x0020"  reset="00000110"  mask="" 
                bits="UCPOL,UCSZ0,UCSZ1,USBS,UPM0,UPM1,UMSEL,URSEL" />
 
-    <register  name="UBRRH"   addr="0x0020"  reset=""  mask="00001111" 
-               bits="UBRR8,UBRR9,UBRR10,UBRR11,0,0,0,0" />
+    <!-- register  name="UBRRH"   addr="0x0020"  reset=""  mask="00001111" -->
     
     <register  name="WDTCR"   addr="0x0021"  reset=""  mask="00011111" 
                bits="WDP0,WDP1,WDP2,WDE,WDCE" />
