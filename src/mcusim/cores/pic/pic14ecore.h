@@ -34,18 +34,53 @@ class MAINMODULE_EXPORT Pic14eCore : public PicMrCore
         virtual void runDecoder( uint16_t instr ) override;
         virtual void setBank( uint8_t bank ) override { PicMrCore::setBank( bank ); }
 
+        uint8_t* m_FSR0L;
+        uint8_t* m_FSR0H;
+        uint8_t* m_FSR1L;
+        uint8_t* m_FSR1H;
+        uint8_t* m_BSR;
+
+        uint16_t getFSR0() { return *m_FSR0L+(*m_FSR0H<<8); }
+        void setFSR0( uint16_t fsr0 )
+        {
+            *m_FSR0L = fsr0 & 0x00FF;
+            *m_FSR0H = (fsr0 & 0xFF00)>>8;
+        }
+        uint16_t getFSR1() { return *m_FSR1L+(*m_FSR1H<<8); }
+        void setFSR1( uint16_t fsr1 )
+        {
+            *m_FSR1L = fsr1 & 0x00FF;
+            *m_FSR1H = (fsr1 & 0xFF00)>>8;
+        }
+
+        virtual uint8_t GET_RAM( uint16_t addr ) override //
+        {
+            addr = m_mcu->getMapperAddr( addr+m_bank );
+            if     ( addr == 0 ) addr = getFSR0(); // INDF0
+            else if( addr == 1 ) addr = getFSR1(); // INDF1
+            return McuCore::GET_RAM( addr );
+        }
+        virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
+        {
+            addr = m_mcu->getMapperAddr( addr+m_bank );
+            if( addr == m_PCLaddr ) setPC( v + (m_dataMem[m_PCHaddr]<<8) ); // Writting to PCL
+            else if( addr == 0 ) addr = getFSR0(); // INDF0
+            else if( addr == 1 ) addr = getFSR1(); // INDF1
+            McuCore::SET_RAM( addr, v );
+        }
+
         // Miscellaneous instructions
         //inline void RESET();
         inline void CALLW();
         inline void BRW();
-        inline void MOVIW_pF( uint8_t n );
-        inline void MOVIW_nF( uint8_t n );
-        inline void MOVIW_Fp( uint8_t n );
-        inline void MOVIW_Fn( uint8_t n );
-        inline void MOVWI_pF( uint8_t n );
-        inline void MOVWI_nF( uint8_t n );
-        inline void MOVWI_Fp( uint8_t n );
-        inline void MOVWI_Fn( uint8_t n );
+        inline void MOVIW_iF( uint8_t n );
+        inline void MOVIW_dF( uint8_t n );
+        inline void MOVIW_Fi( uint8_t n );
+        inline void MOVIW_Fd( uint8_t n );
+        inline void MOVWI_iF( uint8_t n );
+        inline void MOVWI_dF( uint8_t n );
+        inline void MOVWI_Fi( uint8_t n );
+        inline void MOVWI_Fd( uint8_t n );
         inline void MOVLB( uint8_t k );
 
         // ALU operations: dest ← OP(f,W)

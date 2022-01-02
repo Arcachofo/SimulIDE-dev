@@ -37,8 +37,7 @@ class MAINMODULE_EXPORT PicMrCore : public McuCore
 
     protected:
         virtual void runDecoder( uint16_t instr );
-        uint8_t  m_Wreg;
-        uint8_t* m_FSR;
+        uint8_t* m_Wreg;
         uint8_t* m_OPTION;
 
         regBits_t m_bankBits;
@@ -52,24 +51,6 @@ class MAINMODULE_EXPORT PicMrCore : public McuCore
         uint8_t  m_stackSize;
 
         virtual void setBank( uint8_t bank );
-
-        virtual uint8_t GET_RAM( uint16_t addr ) override //
-        {
-            addr = m_mcu->getMapperAddr( addr+m_bank );
-            if( addr == 0 ) addr = *m_FSR;// INDF
-            return McuCore::GET_RAM( addr );
-        }
-        virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
-        {
-            if( addr == m_PCLaddr )                  // Writting to PCL
-                setPC( v + (m_dataMem[m_PCHaddr]<<8) );
-
-            else if( addr == 0 ) addr = *m_FSR;      // INDF
-
-            addr = m_mcu->getMapperAddr( addr+m_bank );
-
-            McuCore::SET_RAM( addr, v );
-        }
 
         virtual void PUSH_STACK( uint32_t addr ) override // Harware circular Stack
         {
@@ -90,8 +71,16 @@ class MAINMODULE_EXPORT PicMrCore : public McuCore
             m_dataMem[ m_PCLaddr] = PC & 0xFF;
         }
 
-        inline void setValue( uint8_t newV, uint8_t f, uint8_t d );
-        inline void setValueZ( uint8_t newV, uint8_t f, uint8_t d );
+        void setValue( uint8_t newV, uint8_t f, uint8_t d )
+        {
+            if( d ) SET_RAM( f, newV );
+            else    *m_Wreg = newV;
+        }
+        void setValueZ( uint8_t newV, uint8_t f, uint8_t d )
+        {
+            setValue( newV, f, d );
+            write_S_Bit( Z, newV==0 );
+        }
 
         inline uint8_t add( uint8_t val1, uint8_t val2 );
         inline uint8_t sub( uint8_t val1, uint8_t val2 );

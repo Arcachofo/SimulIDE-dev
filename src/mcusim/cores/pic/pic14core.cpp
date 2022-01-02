@@ -26,7 +26,9 @@ Pic14Core::Pic14Core( eMcu* mcu )
 {
     m_stackSize = 8;
 
-    m_FSR = m_mcu->getReg( "FSR" );
+    m_Wreg = &m_WregHidden;
+
+    m_FSR    = m_mcu->getReg( "FSR" );
     m_OPTION = m_mcu->getReg( "OPTION" );
 
     m_bankBits = getRegBits( "R0,R1", mcu );
