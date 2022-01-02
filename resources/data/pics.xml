@@ -31,5 +31,8 @@
         <item name="p16F886" package="PIC/p16F88x/p16F886" data="PIC/p16F886"></item>
         <item name="p16F887" package="PIC/p16F88x/p16F887" data="PIC/p16F887"></item>
     </itemset>
+    <itemset category="PIC/p16F (Enhanced)" type="MCU">
+        <item name="p16F1826" package="PIC/p16F627/p16F627" data="PIC/p16F1826"></item>
+    </itemset>
     
 </itemlib>

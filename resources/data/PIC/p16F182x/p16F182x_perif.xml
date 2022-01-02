@@ -1,0 +1,9 @@
+<parts>
+    <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
+          inpmask="11011111">
+    </port>
+    
+    <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
+    </port>
+    
+</parts>
