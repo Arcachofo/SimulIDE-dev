@@ -49,6 +49,7 @@
 #include "avrcomparator.h"
 
 #include "pic14core.h"
+#include "pic14ecore.h"
 #include "picport.h"
 #include "pictimer.h"
 #include "picccpunit.h"
@@ -929,9 +930,10 @@ void McuCreator::createWdt( QDomElement* e )
 
 void McuCreator::createCore( QString core )
 {
-    if     ( core == "AVR" )   mcu->cpu = new AvrCore( mcu );
-    else if( core == "Pic14" ) mcu->cpu = new Pic14Core( mcu );
-    else if( core == "8051" )  mcu->cpu = new I51Core( mcu );
+    if     ( core == "AVR" )    mcu->cpu = new AvrCore( mcu );
+    else if( core == "Pic14" )  mcu->cpu = new Pic14Core( mcu );
+    else if( core == "Pic14e" ) mcu->cpu = new Pic14eCore( mcu );
+    else if( core == "8051" )   mcu->cpu = new I51Core( mcu );
 
     if( !m_stackEl.isNull() ) createStack( &m_stackEl );
 }

@@ -20,124 +20,16 @@
 #ifndef PIC14CORE_H
 #define PIC14CORE_H
 
-#include "mcucore.h"
+#include "picmrcore.h"
 
-enum {
-    C=0,DC,Z,PD,TO,RP0,RP1,IRP
-};
-
-class MAINMODULE_EXPORT Pic14Core : public McuCore
+class MAINMODULE_EXPORT Pic14Core : public PicMrCore
 {
     public:
         Pic14Core( eMcu* mcu );
         ~Pic14Core();
 
-        virtual void reset();
-        virtual void runDecoder();
-
-    protected:
-        uint8_t  m_Wreg;
-        uint8_t* m_FSR;
-        uint8_t* m_OPTION;
-
-        regBits_t m_bankBits;
-        uint16_t  m_bank;
-
-        uint16_t m_PCLaddr;
-        uint16_t m_PCHaddr;
-
-        uint32_t m_stack[8];
-        uint8_t  m_sp;
-
-        void setBank( uint8_t bank );
-
-        virtual uint8_t GET_RAM( uint16_t addr ) override //
-        {
-            addr = m_mcu->getMapperAddr( addr+m_bank );
-            if( addr == 0 ) addr = *m_FSR;// INDF
-            return McuCore::GET_RAM( addr );
-        }
-        virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
-        {
-            if( addr == m_PCLaddr )                  // Writting to PCL
-                setPC( v + (m_dataMem[m_PCHaddr]<<8) );
-
-            else if( addr == 0 ) addr = *m_FSR;      // INDF
-
-            addr = m_mcu->getMapperAddr( addr+m_bank );
-
-            McuCore::SET_RAM( addr, v );
-        }
-
-        virtual void PUSH_STACK( uint32_t addr ) override // Harware circular Stack
-        {
-            m_stack[m_sp] = addr;
-            m_sp++;
-            if( m_sp == 8 ) m_sp = 0;
-        }
-        virtual uint32_t POP_STACK() override // Harware circular Stack
-        {
-            if( m_sp == 0 ) m_sp = 7;
-            else            m_sp--;
-            return m_stack[m_sp];
-        }
-
-        virtual void setPC( uint32_t pc ) override
-        {
-            PC = pc;
-            m_dataMem[ m_PCLaddr] = PC & 0xFF;
-        }
-
-        inline void setValue( uint8_t newV, uint8_t f, uint8_t d );
-        inline void setValueZ( uint8_t newV, uint8_t f, uint8_t d );
-
-        inline uint8_t add( uint8_t val1, uint8_t val2 );
-        inline uint8_t sub( uint8_t val1, uint8_t val2 );
-
-        // Miscellaneous instructions
-        inline void RETURN();
-        inline void RETFIE();
-        inline void OPTION();
-        inline void SLEEP();
-        inline void CLRWDT();
-        //inline void TRIS( uint8_t f );
-
-        // ALU operations: dest ← OP(f,W)
-        inline void MOVWF( uint8_t f );
-        inline void CLRF( uint8_t f );
-        inline void SUBWF( uint8_t f, uint8_t d );
-        inline void DECF( uint8_t f, uint8_t d );
-        inline void IORWF( uint8_t f, uint8_t d );
-        inline void ANDWF( uint8_t f, uint8_t d );
-        inline void XORWF( uint8_t f, uint8_t d );
-        inline void ADDWF( uint8_t f, uint8_t d );
-        inline void MOVF( uint8_t f, uint8_t d );
-        inline void COMF( uint8_t f, uint8_t d );
-        inline void INCF( uint8_t f, uint8_t d );
-        inline void DECFSZ( uint8_t f, uint8_t d );
-        inline void RRF( uint8_t f, uint8_t d );
-        inline void RLF( uint8_t f, uint8_t d );
-        inline void SWAPF( uint8_t f, uint8_t d );
-        inline void INCFSZ( uint8_t f, uint8_t d );
-
-        // Bit operations
-        inline void BCF( uint8_t f, uint8_t b );
-        inline void BSF( uint8_t f, uint8_t b );
-        inline void BTFSC( uint8_t f, uint8_t b );
-        inline void BTFSS( uint8_t f, uint8_t b );
-
-        // Control transfers
-        inline void CALL( uint16_t k );
-        inline void GOTO( uint16_t k );
-
-        // Operations with W and 8-bit literal: W ← OP(k,W)
-        inline void MOVLW( uint8_t k );
-        inline void RETLW( uint8_t k );
-        inline void IORLW( uint8_t k );
-        inline void ANDLW( uint8_t k );
-        inline void XORLW( uint8_t k );
-        inline void SUBLW( uint8_t k );
-        inline void ADDLW( uint8_t k );
+protected:
+    virtual void setBank( uint8_t bank ) override { PicMrCore::setBank( bank ); }
 };
 
 #endif
