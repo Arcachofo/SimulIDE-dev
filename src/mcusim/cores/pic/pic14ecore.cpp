@@ -67,6 +67,7 @@ inline void Pic14eCore::MOVIW_iF( uint8_t n )
         setFSR1( getFSR1()+1 );
         *m_Wreg = GET_RAM( 1 );
     }
+    write_S_Bit( Z, *m_Wreg==0 );
 }
 
 inline void Pic14eCore::MOVIW_dF( uint8_t n )
@@ -78,6 +79,7 @@ inline void Pic14eCore::MOVIW_dF( uint8_t n )
         setFSR1( getFSR1()-1 );
         *m_Wreg = GET_RAM( 1 );
     }
+    write_S_Bit( Z, *m_Wreg==0 );
 }
 
 inline void Pic14eCore::MOVIW_Fi( uint8_t n )
@@ -89,6 +91,7 @@ inline void Pic14eCore::MOVIW_Fi( uint8_t n )
         *m_Wreg = GET_RAM( 1 );
         setFSR1( getFSR1()+1 );
     }
+    write_S_Bit( Z, *m_Wreg==0 );
 }
 
 inline void Pic14eCore::MOVIW_Fd( uint8_t n )
@@ -100,6 +103,7 @@ inline void Pic14eCore::MOVIW_Fd( uint8_t n )
         *m_Wreg = GET_RAM(1);
         setFSR1( getFSR1()-1 );
     }
+    write_S_Bit( Z, *m_Wreg==0 );
 }
 
 inline void Pic14eCore::MOVWI_iF( uint8_t n )
@@ -215,6 +219,7 @@ inline void Pic14eCore::MOVIW( uint8_t n, uint8_t k )
         setFSR1( getFSR1()+k );
         *m_Wreg = GET_RAM( 1 );
     }
+    write_S_Bit( Z, *m_Wreg==0 );
 }
 
 inline void Pic14eCore::MOVWI( uint8_t n, uint8_t k )

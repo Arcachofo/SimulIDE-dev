@@ -82,8 +82,8 @@ class MAINMODULE_EXPORT PicMrCore : public McuCore
             write_S_Bit( Z, newV==0 );
         }
 
-        inline uint8_t add( uint8_t val1, uint8_t val2 );
-        inline uint8_t sub( uint8_t val1, uint8_t val2 );
+        uint8_t add( uint8_t val1, uint8_t val2 );
+        uint8_t sub( uint8_t val1, uint8_t val2 );
 
         // Miscellaneous instructions
         inline void RETURN();
