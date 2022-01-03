@@ -45,8 +45,10 @@ class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
 
     protected:
         void proccessCommand();
+        void getParameter();
         void clearLcd();
         void incrementPointer();
+        void incrementY();
         void reset();
         void clearDDRAM();
         
@@ -66,6 +68,10 @@ class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
         int m_endX;
         int m_startY;
         int m_endY;
+        int m_maxX;
+        int m_maxY;
+        int m_dirX;
+        int m_dirY;
 
         int m_startLin;
         //int m_addrMode;
@@ -87,6 +93,7 @@ class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
         bool m_scroll;
         bool m_scrollR;
         bool m_scrollV;
+        bool m_RGB;
 
         //Inputs
         IoPin m_pinCS;

@@ -131,35 +131,38 @@ void Ili9341::voltChanged()
         {
             if( m_readBytes == 0 )        // Write DDRAM
             {
-                if( m_inByte == 0 ) m_data = m_rxReg; // Lower byte
-                else  m_data = (m_data<<8)+m_rxReg;   // High byte
-
+                m_data = (m_data<<8)+m_rxReg;
                 m_inByte++;
                 if( m_inByte >= m_dataBytes )       // 16/18 bits ready
                 {
                     m_inByte = 0;
                     //qDebug() << "Ili9341::setVChanged"<< m_addrX<<m_addrY<< m_rxReg;
 
-                    uint blue=0, green=0, red=0;
+                    uint blue,green,red,B1,B2,B3;
                     if( m_dataBytes == 2 ) // 16 bits format: RRRRRGGGGGGBBBBB
                     {
-                        blue  = (m_data & 0b0000000000011111)<<3;
-                        green = (m_data & 0b0000011111100000)<<5;
-                        red   = (m_data & 0b1111100000000000)<<8;
+                        B1 = (m_data & 0b1111100000000000)<<8;
+                        B2 = (m_data & 0b0000011111100000)<<5;
+                        B3 = (m_data & 0b0000000000011111)<<3;
+                        if( m_RGB ) { red  = B1; green = B2; blue = B3; }
+                        else        { blue = B3; green = B2; red  = B1; }
                     }
                     else // 18 bits format: RRRRRR00GGGGGG00BBBBBB00
                     {
-                        blue  = (m_data & 0b000000000000000011111100);
-                        green = (m_data & 0b000000001111110000000000);
-                        red   = (m_data & 0b111111000000000000000000);
+                        B1 = (m_data & 0b111111000000000000000000);
+                        B2 = (m_data & 0b000000001111110000000000);
+                        B3 = (m_data & 0b000000000000000011111100);
+                        if( m_RGB ) { red  = B1; green = B2; blue = B3; }
+                        else        { blue = B3; green = B2; red  = B1; }
                     }
                     m_aDispRam[m_addrX][m_addrY] = red+green+blue;
                     incrementPointer();
+                    m_data = 0;
                 }
             }
-            else proccessCommand();       // Write Command Parameter
+            else getParameter();       // Write Command Parameter
         }
-        else proccessCommand();           // Write Command
+        else proccessCommand();        // Write Command
         m_inBit = 0;
     }else{
         m_rxReg <<= 1;
@@ -167,7 +170,7 @@ void Ili9341::voltChanged()
     }
 }
 
-void Ili9341::proccessCommand()
+void Ili9341::getParameter()
 {
     if( m_readBytes > 0 )
     {
@@ -179,15 +182,15 @@ void Ili9341::proccessCommand()
                 else if( m_readBytes == 3 )
                 {
                     m_startX += m_rxReg;
-                    if     ( m_startX < 0 )   m_startX = 0;
-                    else if( m_startX > 239 ) m_startX = 239;
+                    if     ( m_startX < 0 )      m_startX = 0;
+                    else if( m_startX > m_maxX ) m_startX = m_maxX;
                     m_addrX = m_startX;
                 }
                 else if( m_readBytes == 2 ) m_endX = m_rxReg<<8;
                 else{
                     m_endX += m_rxReg;
                     if     ( m_endX < 0 )        m_endX = 0;
-                    else if( m_endX > 239 )      m_endX = 239;
+                    else if( m_endX > m_maxX   ) m_endX = m_maxX;
                     else if( m_endX < m_startX ) m_endX = m_startX;
                 }
             }break;
@@ -197,27 +200,42 @@ void Ili9341::proccessCommand()
                 else if( m_readBytes == 3 )
                 {
                     m_startY += m_rxReg;
-                    if     ( m_startY < 0 )   m_startY = 0;
-                    else if( m_startY > 319 ) m_startY = 319;
+                    if     ( m_startY < 0      ) m_startY = 0;
+                    else if( m_startY > m_maxY ) m_startY = m_maxY;
                     m_addrY = m_startY;
                 }
                 else if( m_readBytes == 2 ) m_endY = m_rxReg<<8;
                 else{
                     m_endY += m_rxReg;
-                    if     ( m_endY < 0 )   m_endY = 0;
-                    else if( m_endY > 319 ) m_endY = 319;
-                    else if( m_endY > m_startY ) m_endY = m_startY;
+                    if     ( m_endY < 0        ) m_endY = 0;
+                    else if( m_endY > m_maxY   ) m_endY = m_maxY;
+                    else if( m_endY < m_startY )
+                        m_endY = m_startY;
                 }
             }break;
             case 0x3A:
             {
                 int mode = (m_rxReg>>4) & 1;
                 m_dataBytes = mode ? 2 : 3;
-            }
+            }break;
+            case 0x36:   // Memory Access Control
+            {
+                m_dirY = (m_rxReg & (1<<7)) ? -1 : 1;
+                m_dirX = (m_rxReg & (1<<6)) ? -1 : 1;
+
+                //uint8_t MV = m_rxReg & (1<<5);
+                //m_maxX = MV ? 319 : 239;
+                //m_maxY = MV ? 239 : 319;
+
+                m_RGB = (m_rxReg & (1<<3)) ? false :true;
+            }break;
         }
         m_readBytes--;
-        return;
     }
+}
+
+void Ili9341::proccessCommand()
+{
     m_lastCommand = m_rxReg;
     m_readBytes = 0;
 
@@ -331,25 +349,47 @@ void Ili9341::clearDDRAM()
 
 void Ili9341::incrementPointer() 
 {
-    m_addrX++;
-    if( m_addrX > m_endX )
+    if( m_dirX > 0 )
     {
-        m_addrX = m_startX;
+        m_addrX++;
+        if( m_addrX > m_endX ){
+            m_addrX = m_startX;
+            incrementY();
+        }
+    }else{
+        m_addrX--;
+        if( m_addrX < m_startX ){
+            m_addrX = m_endX;
+            incrementY();
+}   }   }
+
+void Ili9341::incrementY()
+{
+    if( m_dirY > 0 ){
         m_addrY++;
         if( m_addrY > m_endY ) m_addrY = m_startY;
-    }
-}
+    }else{
+        m_addrY--;
+        if( m_addrY < m_startY ) m_addrY = m_endY;
+}   }
 
 void Ili9341::reset() 
 {
+    m_dirX = 1;
     m_addrX  = 0;
-    m_addrY  = 0;
     m_startX = 0;
     m_endX   = 239;
+    m_maxX   = 239;
+
+    m_dirY = 1;
+    m_addrY  = 0;
     m_startY = 0;
     m_endY   = 319;
+    m_maxY   = 319;
+
     m_inBit  = 0;
     m_inByte = 0;
+    m_data   = 0;
 
     m_scrollStartPage  = 0;
     m_scrollEndPage    = 7;
@@ -367,6 +407,7 @@ void Ili9341::reset()
     m_scroll  = false;
     m_scrollR = false;
     m_scrollV = false;
+    m_RGB = true;
 
     m_lastCommand = 0;
 
