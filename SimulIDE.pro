@@ -1,6 +1,6 @@
 
 VERSION = "1.0.0"
-RELEASE = "-RC1"
+RELEASE = "-R779"
 
 TEMPLATE = app
 TARGET = simulide
