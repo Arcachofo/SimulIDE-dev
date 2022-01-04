@@ -291,6 +291,14 @@ void Component::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
+    if( !event && m_isMainComp ) // Main Component in Subcircuit
+    {
+        QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
+        connect( propertiesAction, SIGNAL( triggered()),
+                             this, SLOT(slotProperties()), Qt::UniqueConnection );
+        menu->addSeparator();
+        return;
+    }
     m_eventpoint = mapToScene( togrid(event->pos()) );
 
     QAction* copyAction = menu->addAction(QIcon(":/copy.png"),tr("Copy")+"\tCtrl+C");
