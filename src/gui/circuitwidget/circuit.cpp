@@ -196,8 +196,10 @@ void Circuit::loadStrDoc( QString &doc )
                     continue;
                 }
                 else if( prop.endsWith("/>") ) continue;
-                if( !mComp->setPropStr( propName, prop.toString() ) )
-                    qDebug() << "Circuit: Wrong Property: "<<mComp->itemType()<<propName;
+                if( !mComp->setPropStr( propName, prop.toString() ) ){
+                    if( propName.toLower()  != "tristate" )               // TODELETE
+                        qDebug() << "Circuit: Wrong Property: "<<mComp->itemType()<<propName; }
+
                 propName = "";
             }
         }
@@ -370,7 +372,9 @@ void Circuit::loadStrDoc( QString &doc )
                             {
                                 bool ok = false;
                                 if( oldArduino && mcu ) ok = mcu->setPropStr( propName, value );
-                                if( !ok ) qDebug() << "Circuit: Wrong Property: "<<type<<newUid<<propName<<value;
+                                if( !ok ){
+                                    if( propName.toLower()  != "tristate" )   // TODELETE
+                                    qDebug() << "Circuit: Wrong Property: "<<type<<newUid<<propName<<value;}
                             }
                         }
                         propName = "";

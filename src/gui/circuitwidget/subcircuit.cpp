@@ -269,8 +269,9 @@ void SubCircuit::loadSubCircuit( QString fileName )
                                 if( propName == "Propagation_Delay_ns") { propName = "Tpd_ps"; value.append("000"); } // ns to ps
                                 else                                    Component::substitution( propName );
 
-                                if( !comp->setPropStr( propName, value ) )
-                                    qDebug() << "SubCircuit:"<<m_name<<m_id<<"Wrong Property: "<<type<<uid<<propName<<value;
+                                if( !comp->setPropStr( propName, value ) ){
+                                    if( propName.toLower()  != "tristate" )   // TODELETE
+                                        qDebug() << "SubCircuit:"<<m_name<<m_id<<"Wrong Property: "<<type<<uid<<propName<<value; }
                             }
                         }
                         propName = "";
