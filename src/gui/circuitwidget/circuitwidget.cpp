@@ -313,7 +313,7 @@ void CircuitWidget::saveCircAs()
 {
     const QString dir = m_lastCircDir;
     QString fileName = QFileDialog::getSaveFileName( this, tr("Save Circuit"), dir,
-                                                     tr("Circuits (*.sim*);;All files (*.*)"));
+                                                     tr("All files (*.*)") );
     if( fileName.isEmpty() ) return;
 
     saveCirc( fileName );
