@@ -283,7 +283,7 @@ QString MainWindow::getHelpFile( QString name )
     {
         QFile file( dfPath );
 
-        if( file.open(QFile::ReadOnly | QFile::Text) ) // Get Text from Help File
+        if( file.open( QFile::ReadOnly | QFile::Text) ) // Get Text from Help File
         {
             QTextStream s1( &file );
             s1.setCodec("UTF-8");
@@ -292,7 +292,7 @@ QString MainWindow::getHelpFile( QString name )
 
             file.close();
         }
-        else qDebug() << "MainWindow::getHelpFile ERROR"<<dfPath;
+        else qDebug() << "Warning: MainWindow::getHelpFile: File not found "<<dfPath;
     }
     m_help[name] = help;
     return help;
