@@ -45,19 +45,20 @@ LibraryItem* MuxAnalog::libraryItem()
 }
 
 MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
-         : LogicComponent( parent, type, id )
+         : Component( parent, type, id )
+         , eElement( id )
 {
     setLabelPos(-16,-16, 0 );
     setValLabelPos(-16,-16-10, 0 );
     
-    m_inputPin = new Pin( 180, QPoint( -24, 8 ), m_id+"-PinInput", 0, this );
-    m_inputPin->setLabelText( " Z" );
-    m_inputPin->setLabelColor( QColor( 0, 0, 0 ) );
+    m_zPin = new Pin( 180, QPoint( -24, 8 ), m_id+"-PinInput", 0, this );
+    m_zPin->setLabelText( " Z" );
+    m_zPin->setLabelColor( QColor( 0, 0, 0 ) );
     
-    m_enablePin = new Pin( 180, QPoint( -24, 16 ), m_id+"-PinEnable", 0, this );
-    m_enablePin->setLabelText( " En" );
-    m_enablePin->setLabelColor( QColor( 0, 0, 0 ) );
-    m_enablePin->setInverted( true );
+    m_enPin = new Pin( 180, QPoint( -24, 16 ), m_id+"-PinEnable", 0, this );
+    m_enPin->setLabelText( " En" );
+    m_enPin->setLabelColor( QColor( 0, 0, 0 ) );
+    m_enPin->setInverted( true );
     
     m_admit = 0.01;
     m_addrBits = 0;
@@ -71,19 +72,24 @@ new DoubProp<MuxAnalog>( "Impedance"  , tr("Impedance")   ,"Ω"    , this, &MuxA
 }
 MuxAnalog::~MuxAnalog(){}
 
-void MuxAnalog::stamp()
+void MuxAnalog::attach()
 {
-    eNode* enode = m_inputPin->getEnode();
-    if( enode ) enode->setSwitched( true );
+    eNode* enode = m_zPin->getEnode();
+    //if( enode ) enode->setSwitched( true );
 
     for( int i=0; i<m_channels; ++i )
     {
         m_ePin[i]->setEnode( enode );
 
-       eNode* node = m_chanPin[i]->getEnode();
-       if( node ) node->setSwitched( true );
+       //eNode* node = m_chanPin[i]->getEnode();
+       //if( node ) node->setSwitched( true );
     }
-    m_enablePin->changeCallBack( this );
+}
+
+void MuxAnalog::stamp()
+{
+    m_enPin->changeCallBack( this );
+    for( int i=0; i<m_channels; ++i ) m_resistor[i]->setAdmit( cero_doub );
     for( Pin* pin : m_addrPin ) pin->changeCallBack( this );
 
     m_enabled = false;
@@ -91,7 +97,7 @@ void MuxAnalog::stamp()
 
 void MuxAnalog::voltChanged()
 {
-    m_enabled = m_enablePin->getVolt() < 2.5;
+    m_enabled = m_enPin->getVolt() < 2.5;
 
     int address = 0;
     for( int i=0; i<m_addrBits; ++i )
@@ -101,16 +107,18 @@ void MuxAnalog::voltChanged()
     }
     m_address = address;
 
-    Simulator::self()->addEvent( m_propDelay, this );
+    if( m_enabled ) Simulator::self()->addEvent( 10000/*m_propDelay*/, this );
 }
 
 void MuxAnalog::runEvent()
 {
+    if( !m_enabled ) return;
+
     for( int i=0; i<m_channels; ++i )
     {
-        if( m_enabled && (i == m_address) )
-        {    if( m_resistor[i]->admit() == 0 ) m_resistor[i]->setAdmit( m_admit ); }
-        else if( m_resistor[i]->admit() != 0 ) m_resistor[i]->setAdmit( 0 );
+        if( i == m_address )
+        {    if( m_resistor[i]->admit() == cero_doub ) m_resistor[i]->setAdmit( m_admit ); }
+        else if( m_resistor[i]->admit() != cero_doub ) m_resistor[i]->setAdmit( cero_doub );
 }   }
 
 void MuxAnalog::setAddrBits( int bits )
@@ -136,8 +144,8 @@ void MuxAnalog::setAddrBits( int bits )
 
     m_area = QRect( -2*8, 0, 4*8, size );
 
-    m_enablePin->setPos( QPoint(-3*8,4*8+bits*8 ) );
-    m_enablePin->isMoved();
+    m_enPin->setPos( QPoint(-3*8,4*8+bits*8 ) );
+    m_enPin->isMoved();
 
     Circuit::self()->update();
 }
@@ -188,7 +196,7 @@ void MuxAnalog::createResistors( int c )
         m_chanPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
         m_resistor[i]->setEpin( 1, m_chanPin[i] );
 
-        m_resistor[i]->setAdmit( 0 );
+        m_resistor[i]->setAdmit( cero_doub );
 }   }
 
 void MuxAnalog::deleteResistors( int d )
@@ -209,8 +217,8 @@ void MuxAnalog::deleteResistors( int d )
 
 void MuxAnalog::remove()
 {
-    m_inputPin->removeConnector();
-    m_enablePin->removeConnector();
+    m_zPin->removeConnector();
+    m_enPin->removeConnector();
     for( Pin* pin :m_addrPin  ) pin->removeConnector();
 
     deleteResistors( m_channels );

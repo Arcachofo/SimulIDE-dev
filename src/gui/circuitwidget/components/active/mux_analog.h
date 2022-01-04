@@ -20,12 +20,13 @@
 #ifndef MUXANALOG_H
 #define MUXANALOG_H
 
-#include "logiccomponent.h"
+#include "component.h"
+#include "e-element.h"
 
 class eResistor;
 class LibraryItem;
 
-class MAINMODULE_EXPORT MuxAnalog : public LogicComponent
+class MAINMODULE_EXPORT MuxAnalog : public Component, public eElement
 {
         Q_OBJECT
     public:
@@ -35,6 +36,7 @@ class MAINMODULE_EXPORT MuxAnalog : public LogicComponent
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
+        virtual void attach() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
@@ -62,8 +64,8 @@ class MAINMODULE_EXPORT MuxAnalog : public LogicComponent
 
         bool m_enabled;
 
-        Pin* m_inputPin;
-        Pin* m_enablePin;
+        Pin* m_zPin;
+        Pin* m_enPin;
 
         std::vector<eResistor*> m_resistor;
         std::vector<Pin*> m_addrPin;
