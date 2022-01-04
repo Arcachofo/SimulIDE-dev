@@ -134,8 +134,18 @@ void Node::joinConns( int c0, int c1 )
     if( this->isSelected() ) con->setSelected( true );
 }
 
+void Node::setHidden( bool hid, bool )
+{
+    m_hidden = hid;
+
+    for( Pin* pin : m_pin ) pin->setVisible( !hid );
+    this->setVisible( !hid );
+}
+
 void Node::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
+    if( m_hidden ) return;
+
     //p->setBrush( Qt::blue );
     //p->drawRect( boundingRect() );
 

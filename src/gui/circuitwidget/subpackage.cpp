@@ -31,6 +31,7 @@
 #include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "circuit.h"
+#include "node.h"
 #include "utils.h"
 
 #include "stringprop.h"
@@ -303,13 +304,13 @@ void SubPackage::boardMode()
 
 void SubPackage::setBoardMode()
 {
-    QList<Connector*>* conList = Circuit::self()->conList();
-    for( Connector* con : *conList )
+    for( Connector* con : *Circuit::self()->conList() )
     {
         if( con ) con->setVisib( !m_boardMode );
     }
-    QList<Component*>* compList = Circuit::self()->compList();
-    for( Component* comp : *compList )
+    for( Node* nod : *Circuit::self()->nodeList() ) nod->setHidden( m_boardMode );
+
+    for( Component* comp : *Circuit::self()->compList() )
     {
         if( comp->itemType() == "Package" ) continue;
         if( m_boardMode )
