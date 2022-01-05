@@ -338,9 +338,10 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
             pin->setVisible( false );
             pin->setLabelText( "" );
         }
-        if     ( angle == 90 )  tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
-        else if( angle >= 180 ) tunnel->setRotated( true ); // Our Pins at left side
-        if( angle == 270 ) tunnel->setRotation( angle );
+        tunnel->setRotated( angle >= 180 );      // Our Pins at left side
+        if     ( angle == 180) tunnel->setRotation( 0 );
+        else if( angle == 90 ) tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
+        else                   tunnel->setRotation( angle );
 
         pin->setLength( length );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
@@ -353,10 +354,11 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int pos, in
     Pin* pin = NULL;
     Tunnel* tunnel = m_pinTunnels.value( m_id+"-"+id );
     tunnel->setPos( xpos, ypos );
-    tunnel->setRotated( false );
-    tunnel->setRotation( angle );
-    if( angle >= 180 ) tunnel->setRotated( true );
-    if( angle == 180)  tunnel->setRotation( 0 );
+    tunnel->setRotated( angle >= 180 );      // Our Pins at left side
+
+    if     ( angle == 180) tunnel->setRotation( 0 );
+    else if( angle == 90 ) tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
+    else                   tunnel->setRotation( angle );
 
     pin = tunnel->getPin();
     if( !pin )
