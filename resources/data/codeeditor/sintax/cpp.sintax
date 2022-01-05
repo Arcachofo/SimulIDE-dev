@@ -20,7 +20,7 @@ htmlTag-style: #303078 default false false
 htmlTag: "<.*>" 
 
 quotation-style: #206410 default false false
-quotation: "\"(\\.|[^\"])*\""
+quotation: "\"(\\.|[^\"])*\"" "\'(\\.|[^\'])*\'"
 
 lineComment-style: #646464 default false true
 lineComment: "//[^\n]*"
