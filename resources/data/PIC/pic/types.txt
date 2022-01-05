@@ -1,9 +1,9 @@
 
 ADC:
-- Type 0: p16F87x.
+- Type 0:  p16F87x.
 - Type 10: p16F88x.
 - Type 11: p12F675.
-- Type 2:
+- Type 2:  p16F1826
 - Type 3: 
 
 Timer:

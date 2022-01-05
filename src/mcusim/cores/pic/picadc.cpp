@@ -28,6 +28,7 @@ PicAdc* PicAdc::createAdc( eMcu* mcu, QString name )
     int type = name.right( 2 ).toInt();
     switch( type ){
         case 00: return new PicAdc0( mcu, name ); break;
+        case 02: return new PicAdc2( mcu, name ); break;
         case 10: return new PicAdc10( mcu, name ); break;
         case 11: return new PicAdc11( mcu, name ); break;
         default: return NULL;
@@ -223,19 +224,51 @@ void PicAdc11::setANSEL( uint8_t newANSEL )
 }
 
 //------------------------------------------------------
-//-- PIC ADC Type 2 ------------------------------------
+//-- PIC ADC Type 2 p16f1826 ---------------------------
 
 PicAdc2::PicAdc2( eMcu* mcu, QString name )
-       : PicAdc0( mcu, name )
+       : PicAdc( mcu, name )
 {
+    m_ADSC = getRegBits( "ADSC0,ADCS1,ADCS2", mcu );
+    m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3,CHS4", mcu );
+    m_ADXREF = getRegBits( "ADPREF0,ADPREF1,ADNREF", mcu );
 }
 PicAdc2::~PicAdc2(){}
+
+void PicAdc2::configureA (uint8_t newADCON0 )
+{
+    m_enabled    = getRegBitsBool( newADCON0, m_ADON );
+    m_channel    = getRegBitsVal(  newADCON0, m_CHS );
+    bool convert = getRegBitsBool( newADCON0, m_GODO );
+    if( !m_converting && convert ) startConversion();
+}
+
+void PicAdc2::configureB( uint8_t newADCON1 )
+{
+    m_leftAdjust = !getRegBitsBool( newADCON1, m_ADFM );
+
+    m_mode = getRegBitsVal( newADCON1, m_ADXREF );
+
+    uint8_t prs = getRegBitsVal( newADCON1, m_ADSC );
+    if( prs == 3 ) m_convTime = 4*12*1e6;
+    else           m_convTime = m_mcu->simCycPI()*12*m_prescList[prs];
+}
+
+void PicAdc2::updtVref()
+{
+    m_vRefP = 5;  // VREF+ is connected to VDD
+    switch ( m_mode ) {
+    case 2: m_vRefP = m_pRefPin->getVolt(); break; // VREF+ is connected to external VREF+ pin
+    case 3: m_vRefP = 1.024;                break; /// TODO // VREF+ is connected to internal Fixed Voltage Reference (FVR) module
+    }
+    m_vRefN = (m_mode & 0b00000100) ? m_nRefPin->getVolt() : 0;
+}
 
 //------------------------------------------------------
 //-- PIC ADC Type 3 ------------------------------------
 
 PicAdc3::PicAdc3( eMcu* mcu, QString name )
-       : PicAdc1( mcu, name )
+       : PicAdc( mcu, name )
 {
 }
 PicAdc3::~PicAdc3(){}
