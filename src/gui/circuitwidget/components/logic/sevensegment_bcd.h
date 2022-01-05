@@ -36,7 +36,7 @@ class MAINMODULE_EXPORT SevenSegmentBCD : public BcdBase
 
         void updateStep() override;
         
-        void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 };
 
 #endif

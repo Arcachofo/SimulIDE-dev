@@ -18,16 +18,15 @@
  ***************************************************************************/
 
 #include <QPainter>
+#include <math.h>
 
 #include "sevensegment_bcd.h"
 #include "itemlibrary.h"
 #include "simulator.h"
-#include "connector.h"
+#include "iopin.h"
 
 Component* SevenSegmentBCD::construct( QObject* parent, QString type, QString id )
-{
-    return new SevenSegmentBCD( parent, type, id );
-}
+{ return new SevenSegmentBCD( parent, type, id ); }
 
 LibraryItem* SevenSegmentBCD::libraryItem()
 {
@@ -46,6 +45,7 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
 
     m_width  = 4;
     m_height = 6;
+    m_color = Qt::black;
 
     QStringList pinList;
 
@@ -56,6 +56,13 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
             << "ID01  "
             ;
     init( pinList );
+    for( uint i=0; i<m_inPin.size(); ++i )
+    {
+        m_inPin[i]->setX( m_inPin[i]->x()-4);
+        m_inPin[i]->setFontSize( 4 );
+        m_inPin[i]->setLabelColor( QColor( 250, 250, 200 ) );
+        m_inPin[i]->setLabelText( QString::number( pow(2,i) ) );
+    }
 
     setLabelPos(-16,-40, 0);
         
@@ -73,16 +80,11 @@ void SevenSegmentBCD::updateStep()
         m_changed = false;
 }   }
 
-void SevenSegmentBCD::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    Q_UNUSED(option); Q_UNUSED(widget);
+    Component::paint( p, option, widget );
 
-    QPen pen;
-    pen.setWidth(3);
-    pen.setCapStyle(Qt::RoundCap);
 
-    p->setPen(pen);
-    p->setBrush( QColor( 30, 30, 30 ) );
     p->drawRect( m_area );
 
     const int mg =  6;// Margin around number
@@ -93,26 +95,27 @@ void SevenSegmentBCD::paint( QPainter *p, const QStyleOptionGraphicsItem *option
     const int y1 =  m_area.y()+mg;
     const int y2 = -m_area.y()-mg;
 
+    QPen pen;
+    pen.setWidth(tk);
+    pen.setColor( QColor( 250, 250, 100));
+    pen.setCapStyle(Qt::RoundCap);
+    p->setPen(pen);
 
-     pen.setWidth(tk);
-     pen.setColor( QColor( 250, 250, 100));
-     p->setPen(pen);
+    uint8_t value = m_nextOutVal;
 
-     uint8_t value = m_nextOutVal;
+    if( value & 1  ) p->drawLine( x1+tk+ds, y1,    x2-tk+ds, y1    );
+    if( value & 2  ) p->drawLine( x2+ds,    y1+tk, x2,      -tk    );
+    if( value & 4  ) p->drawLine( x2,       tk,    x2-ds,    y2-tk );
+    if( value & 8  ) p->drawLine( x2-tk-ds, y2,    x1+tk-ds, y2    );
+    if( value & 16 ) p->drawLine( x1-ds,    y2-tk, x1,       tk    );
+    if( value & 32 ) p->drawLine( x1,      -tk,    x1+ds,    y1+tk );
+    if( value & 64 ) p->drawLine( x1+tk,    0,     x2-tk,    0     );
 
-     if( value & 1  ) p->drawLine( x1+tk+ds, y1,    x2-tk+ds, y1    );
-     if( value & 2  ) p->drawLine( x2+ds,    y1+tk, x2,      -tk    );
-     if( value & 4  ) p->drawLine( x2,       tk,    x2-ds,    y2-tk );
-     if( value & 8  ) p->drawLine( x2-tk-ds, y2,    x1+tk-ds, y2    );
-     if( value & 16 ) p->drawLine( x1-ds,    y2-tk, x1,       tk    );
-     if( value & 32 ) p->drawLine( x1,      -tk,    x1+ds,    y1+tk );
-     if( value & 64 ) p->drawLine( x1+tk,    0,     x2-tk,    0     );
-
-     /*if( m_point )
-     {
-         p->setPen( Qt::NoPen );
-         p->setBrush( QColor( 250, 250, 100) );
-         p->drawPie( x2+ds, y2-ds, tk, tk, 0, 16*360 );
-         // Decimal pointn  p->drawPie( x2+ds, y3-ds, 6, 6, 0, 16*360 );
-     }*/
+    /*if( m_point )
+    {
+        p->setPen( Qt::NoPen );
+        p->setBrush( QColor( 250, 250, 100) );
+        p->drawPie( x2+ds, y2-ds, tk, tk, 0, 16*360 );
+        // Decimal pointn  p->drawPie( x2+ds, y3-ds, 6, 6, 0, 16*360 );
+    }*/
 }
