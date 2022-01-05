@@ -53,17 +53,16 @@ Image::Image( QObject* parent, QString type, QString id )
 
     m_movie = NULL;
 
-     m_properties.first().propList.prepend(
+    addPropGroup( { "Hidden", {
 new StringProp<Image>( "Image_File", tr("Image File"),"", this, &Image::background, &Image::setBackground )
-     );
+    }} );
 }
 Image::~Image(){}
 
 void Image::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();
-    else
-    {
+    else{
         event->accept();
         QMenu* menu = new QMenu();
         contextMenu( event, menu );
