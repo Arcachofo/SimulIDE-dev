@@ -262,7 +262,7 @@ void Pic14eCore::runDecoder( uint16_t instr )
                 }
             }
         }
-        else if( (instr & 0x0020) == 1 ) MOVLB( instr & 0x1F ); // MOVLB k 00 0000 001k kkkk
+        else if( (instr & 0x0020) > 0 ) MOVLB( instr & 0x1F ); // MOVLB k 00 0000 001k kkkk
     }
     else if( (instr & 0x3000) == 0x3000 ){
         uint8_t d = instr & 1<<7;

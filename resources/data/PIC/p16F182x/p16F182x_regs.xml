@@ -51,10 +51,10 @@
     <mapped                   addr="0x008A" mapto="0x0A"/><!-- PCLATH -->
     <mapped                   addr="0x008B" mapto="0x0B"/><!-- INTCON -->
     
-    <register  name="TRISA"   addr="0x008C"  reset=""  mask="" 
+    <register  name="TRISA"   addr="0x008C"  reset="11111111"  mask="" 
                bits="TRISA0,TRISA1,TRISA2,TRISA3,TRISA4,TRISA5,TRISA6,TRISA7" />
 
-    <register  name="TRISB"   addr="0x008D"  reset=""  mask="" 
+    <register  name="TRISB"   addr="0x008D"  reset="11111111"  mask="" 
                bits="TRISB0,TRISB1,TRISB2,TRISB3,TRISB4,TRISB5,TRISB6,TRISB7" />
 
     <register  name="PIE1"    addr="0x0091"  reset=""  mask="" 

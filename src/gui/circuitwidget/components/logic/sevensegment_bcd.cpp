@@ -83,8 +83,6 @@ void SevenSegmentBCD::updateStep()
 void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-
-
     p->drawRect( m_area );
 
     const int mg =  6;// Margin around number
