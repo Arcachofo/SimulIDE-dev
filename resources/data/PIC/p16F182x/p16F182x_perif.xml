@@ -5,7 +5,7 @@
     </port>
    
     <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" configregsA="ANSELB" configregsB="WPUB" >
-        <interrupt name="PB_INT" mask="11111111"/>
+        <interrupt name="IOC" mask="11111111"/>
         <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
     </port>
     
@@ -52,11 +52,11 @@
     </adc>
    
     <acomp name="COMP01" configregsA="CM1CON0" configregsB="CM1CON1" pins="PORTA0,PORTA3,PORTA2">
-        <interrupt name="ACOMP" />
+        <interrupt name="COMP1" />
     </acomp>
    
     <acomp name="COMP02" configregsA="CM2CON0" configregsB="CM2CON1" pins="PORTA1,PORTA2,PORTA4">
-        <interrupt name="ACOMP" />
+        <interrupt name="COMP2" />
     </acomp>
    
     <wdt name="WatchDog" configregsA="WDTCON">

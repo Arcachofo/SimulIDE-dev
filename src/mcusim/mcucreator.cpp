@@ -155,8 +155,9 @@ int McuCreator::processFile( QString fileName )
 void McuCreator::createProgMem( uint32_t size )
 {
     mcu->m_flashSize = size;
-    if( m_core == "Pic14" ) mcu->m_progMem.resize( size, 0x3FFF );
-    else                    mcu->m_progMem.resize( size, 0xFFFF );
+    if     ( m_core == "Pic14" )  mcu->m_progMem.resize( size, 0x3FFF );
+    else if( m_core == "Pic14e" ) mcu->m_progMem.resize( size, 0x3FFF );
+    else                          mcu->m_progMem.resize( size, 0xFFFF );
 }
 
 void McuCreator::createDataMem( uint32_t size )
@@ -360,9 +361,10 @@ void McuCreator::createPort( QDomElement* p )
     uint8_t numPins = p->attribute("pins").toUInt(0,0);
 
     McuPort* port;
-    if     ( m_core == "AVR" )   port = new AvrPort( mcu, name, numPins );
-    else if( m_core == "Pic14" ) port = new PicPort( mcu, name, numPins );
-    else                         port = new McuPort( mcu, name, numPins );
+    if     ( m_core == "AVR" )    port = new AvrPort( mcu, name, numPins );
+    else if( m_core == "Pic14" )  port = new PicPort( mcu, name, numPins );
+    else if( m_core == "Pic14e" ) port = new PicPort( mcu, name, numPins );
+    else                          port = new McuPort( mcu, name, numPins );
     mcu->m_ports.m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );
 
@@ -472,9 +474,10 @@ void McuCreator::createTimer( QDomElement* t )
     QString timerName = t->attribute("name");
     int type = t->attribute("type").toInt();
 
-    if     ( m_core == "8051" )  timer = new I51Timer( mcu, timerName );
-    else if( m_core == "AVR" )   timer = AvrTimer::createTimer( mcu, timerName, type );
-    else if( m_core == "Pic14" ) timer = PicTimer::createTimer( mcu, timerName );
+    if     ( m_core == "8051" )   timer = new I51Timer( mcu, timerName );
+    else if( m_core == "AVR" )    timer = AvrTimer::createTimer( mcu, timerName, type );
+    else if( m_core == "Pic14" )  timer = PicTimer::createTimer( mcu, timerName );
+    else if( m_core == "Pic14e" ) timer = PicTimer::createTimer( mcu, timerName );
 
     if( !timer ) { qDebug() << "Error creating Timer"<< timerName; return; }
 
@@ -582,7 +585,8 @@ void McuCreator::createTimer( QDomElement* t )
 void McuCreator::createCcpUnit( QDomElement* c )
 {
     PicCcpUnit* ccpUnit = NULL;
-    if( m_core == "Pic14" ) ccpUnit = new PicCcpUnit( mcu, c->attribute("name"), c->attribute("type").toInt() );
+    if     ( m_core == "Pic14" ) ccpUnit = new PicCcpUnit( mcu, c->attribute("name"), c->attribute("type").toInt() );
+    else if( m_core == "Pic14e") ccpUnit = new PicCcpUnit( mcu, c->attribute("name"), c->attribute("type").toInt() );
     if( !ccpUnit ) return;
 
     McuPin* pin = mcu->m_ports.getPin( c->attribute("pin") );
@@ -619,9 +623,10 @@ void McuCreator::createUsart( QDomElement* u )
     int   number = u->attribute( "number" ).toInt();
 
     McuUsart* usartM;
-    if     ( m_core == "8051" ) usartM = new I51Usart( mcu, name, number );
-    else if( m_core == "AVR"  ) usartM = new AvrUsart( mcu, name, number );
-    else if( m_core == "Pic14") usartM = new PicUsart( mcu, name, number );
+    if     ( m_core == "8051" )  usartM = new I51Usart( mcu, name, number );
+    else if( m_core == "AVR"  )  usartM = new AvrUsart( mcu, name, number );
+    else if( m_core == "Pic14")  usartM = new PicUsart( mcu, name, number );
+    else if( m_core == "Pic14e") usartM = new PicUsart( mcu, name, number );
     else return;
 
     mcu->m_usarts.emplace_back( usartM );
@@ -677,8 +682,9 @@ void McuCreator::createAdc( QDomElement* e )
     QString name = e->attribute( "name" );
     McuAdc* adc = NULL;
 
-    if     ( m_core == "AVR" )  adc = AvrAdc::createAdc( mcu, name );
-    else if( m_core == "Pic14") adc = PicAdc::createAdc( mcu, name );
+    if     ( m_core == "AVR" )   adc = AvrAdc::createAdc( mcu, name );
+    else if( m_core == "Pic14")  adc = PicAdc::createAdc( mcu, name );
+    else if( m_core == "Pic14e") adc = PicAdc::createAdc( mcu, name );
     if( !adc ) return;
 
     mcu->m_modules.emplace_back( adc );
@@ -749,8 +755,9 @@ void McuCreator::createAcomp( QDomElement* e )
 {
     QString name = e->attribute( "name" );
     McuComp* comp = NULL;
-    if( m_core == "AVR" ) comp = new AvrComp( mcu, name );
-    if( m_core == "Pic14" ) comp = PicComp::getComparator( mcu, name );
+    if( m_core == "AVR" )    comp = new AvrComp( mcu, name );
+    if( m_core == "Pic14" )  comp = PicComp::getComparator( mcu, name );
+    if( m_core == "Pic14e" ) comp = PicComp::getComparator( mcu, name );
     if( !comp ) return;
 
     mcu->m_modules.emplace_back( comp );
@@ -775,7 +782,8 @@ void McuCreator::createVref( QDomElement* e )
 {
     QString name = e->attribute( "name" );
     McuVref* vref = NULL;
-    if( m_core == "Pic14" ) vref = new PicVref( mcu, name );
+    if     ( m_core == "Pic14" )  vref = new PicVref( mcu, name );
+    else if( m_core == "Pic14e" ) vref = new PicVref( mcu, name );
     if( !vref ) return;
 
     mcu->m_modules.emplace_back( vref );
@@ -905,6 +913,7 @@ void McuCreator::createWdt( QDomElement* e )
     McuWdt* wdt;
     if     ( m_core == "AVR" )   wdt = AvrWdt::createWdt( mcu, name );
     else if( m_core == "Pic14" ) wdt = new PicWdt( mcu, name );
+    else if( m_core == "Pic14e") wdt = new PicWdt( mcu, name );
     else return;
 
     mcu->m_modules.emplace_back( wdt );
@@ -964,9 +973,10 @@ void McuCreator::createInterrupt( QDomElement* el )
     uint16_t intVector  = el->attribute("vector").toUInt(0,0);
 
     Interrupt* iv = NULL;
-    if     ( m_core == "8051" ) iv = I51Interrupt::getInterrupt( intName, intVector, mcu );
-    else if( m_core == "AVR" )  iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
+    if     ( m_core == "8051" )  iv = I51Interrupt::getInterrupt( intName, intVector, mcu );
+    else if( m_core == "AVR" )   iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
     else if( m_core == "Pic14" ) iv = new Interrupt( intName, intVector, mcu );
+    else if( m_core == "Pic14e") iv = new Interrupt( intName, intVector, mcu );
     if( !iv ) return;
 
     mcu->m_interrupts.m_intList.insert( intName, iv );
