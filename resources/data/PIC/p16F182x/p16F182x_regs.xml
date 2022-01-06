@@ -215,7 +215,7 @@
     <mapped                  addr="0x008A" mapto="0x0A"/><!-- PCLATH -->
     <mapped                  addr="0x008B" mapto="0x0B"/><!-- INTCON -->
 
-    <register  name="WPUA"    addr="0x020C"  reset="--1-----"  mask="" 
+    <register  name="WPUA"    addr="0x020C"  reset="00100000"  mask="00100000" 
                bits="0,0,0,0,0,WPUA5,0,0" />
                
     <register  name="WPUB"    addr="0x020D"  reset="11111111"  mask="" 

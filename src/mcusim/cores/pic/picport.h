@@ -33,6 +33,9 @@ class MAINMODULE_EXPORT PicPort : public McuPort
         PicPort( eMcu* mcu, QString name, uint8_t numPins );
         ~PicPort();
 
+        virtual void configureA( uint8_t newANSEL ) override;
+        virtual void configureB( uint8_t newWPU ) override;
+
     protected:
         virtual void createPins( Mcu* mcuComp, uint8_t pinMask  ) override;
 };
