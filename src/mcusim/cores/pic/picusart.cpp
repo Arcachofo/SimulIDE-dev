@@ -29,6 +29,8 @@
 PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
 {
+    m_enabled = false;
+
     m_PIR1  = mcu->getReg( "PIR1" );
     m_TXSTA = mcu->getReg( "TXSTA" );
     m_RCSTA = mcu->getReg( "RCSTA" );
@@ -65,7 +67,6 @@ void PicUsart::configureA( uint8_t newTXSTA ) // TXSTA changed
         setRegBits( m_TRMT );
         m_sender->enable( txEn );
     }
-
     m_dataBits = getRegBitsVal( newTXSTA, m_TX9 )+8;
 
     m_speedx2 = getRegBitsBool( newTXSTA, m_BRGH ); // Double Speed?
@@ -88,7 +89,6 @@ void PicUsart::configureB( uint8_t newRCSTA ) // RCSTA changed
             m_receiver->getPin()->controlPin( false, false );
         }
     }
-
     bool rxEn = getRegBitsVal( newRCSTA, m_rxEn );
     if( rxEn != m_receiver->isEnabled() )
     {

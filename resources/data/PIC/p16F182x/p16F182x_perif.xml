@@ -31,10 +31,10 @@
     </ccpunit>
    
     <usart name="EUSART"  number="1" configregsA="TXSTA" configregsB="RCSTA" configregsC="BAUDCON">
-        <trunit type="tx" pins="PORTB2,PORTB5" configbits="RXDTSEL" register="TXREG">
+        <trunit type="tx" pin="PORTB2,PORTB5" configbitsA="RXDTSEL" register="TXREG">
         </trunit>
       
-        <trunit type="rx" pins="PORTB1,PORTB2" configbits="TXCKSEL" register="RCREG">
+        <trunit type="rx" pin="PORTB1,PORTB2" configbitsA="TXCKSEL" register="RCREG">
             <interrupt name="USART_R" />
         </trunit>
         <interrupt name="USART_T" />

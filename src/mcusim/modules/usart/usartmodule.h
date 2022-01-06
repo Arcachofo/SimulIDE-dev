@@ -106,6 +106,8 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
         virtual void enable( uint8_t en ){;}
         virtual uint8_t getData() { return  m_data; }
 
+        virtual void configureA( uint8_t val ) override;
+
         bool isEnabled() { return m_enabled; }
 
         void setPeriod( uint64_t period ) { m_period = period; }
@@ -113,7 +115,7 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
 
         state_t state() { return m_state; }
 
-        void setPin( IoPin* pin ) { m_ioPin = pin; }
+        void setPins( QList<IoPin*> pinList );
         IoPin* getPin() { return m_ioPin; }
 
         void raiseInt( uint8_t data=0 );
@@ -121,6 +123,7 @@ class MAINMODULE_EXPORT UartTR : public McuModule, public eElement
     protected:
         UsartModule* m_usart;
         IoPin* m_ioPin;
+        QList<IoPin*> m_pinList;
 
         uint8_t m_buffer;
         uint8_t m_data;

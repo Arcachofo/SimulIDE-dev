@@ -451,7 +451,7 @@ void McuCreator::createPort( QDomElement* p )
                     uint16_t maskReg = mcu->getRegAddress( mask );
                     watchRegister( maskReg, R_WRITE, port, &McuPort::setIntMask, mcu );
         }   }   }
-        else  if( el.tagName() == "extint" )
+        else if( el.tagName() == "extint" )
         {
             QString intName = el.attribute("name");
             Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
@@ -657,9 +657,12 @@ void McuCreator::createUsart( QDomElement* u )
                 if( regName.isEmpty() ) regName = m_txRegName; // Tx and rx using the same register
                 watchRegNames( regName, R_READ, usartM, &McuUsart::readByte, mcu );
             }
+            setConfigRegs( &el, trUnit );
 
-            QString pinName = el.attribute( "pin" );
-            trUnit->setPin( mcu->m_ports.getPin( pinName ) );
+            QStringList pinNames = el.attribute( "pin" ).split(",");
+            QList<IoPin*> pinList;
+            for( QString pinName : pinNames ) pinList.append( mcu->m_ports.getPin( pinName ) );
+            trUnit->setPins( pinList );
 
             if( el.hasAttribute("enable") )
             {

@@ -23,6 +23,7 @@
 #include "mcuinterrupts.h"
 #include "circuitwidget.h"
 #include "serialmon.h"
+#include "datautils.h"
 
 UsartModule::UsartModule( eMcu* mcu, QString name )
 {
@@ -99,6 +100,12 @@ void UartTR::initialize()
     m_runHardware = false;
 }
 
+void UartTR::configureA( uint8_t val ) // Select Pin
+{
+    uint8_t pinNum = getRegBitsVal( val, m_configBitsA );
+    if( pinNum < m_pinList.size() ) m_ioPin = m_pinList.at( pinNum );
+}
+
 bool UartTR::getParity( uint16_t data )
 {
     bool parity = false;
@@ -116,4 +123,11 @@ void UartTR::raiseInt( uint8_t data )
     m_data = data;
     m_interrupt->raise( data );
 }
+
+void UartTR::setPins( QList<IoPin *> pinList )
+{
+    m_pinList = pinList;
+    m_ioPin = pinList.at(0);
+}
+
 
