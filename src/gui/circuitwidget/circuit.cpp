@@ -247,6 +247,7 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "endpinid"  ) endpinid   = prop.toString();
                     else if( name == "enodeid"   ) enodeId    = prop.toString();
                     else if( name == "pointList" ) pointList  = prop.toString().split(",");
+                    else if( name == "uid"       ) uid   = prop.toString();
                     name = "";
                 }
                 if( m_pasting )

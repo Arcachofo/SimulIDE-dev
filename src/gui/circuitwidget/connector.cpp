@@ -31,6 +31,8 @@
 Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, Pin* endpin )
          : CompBase( parent, type, id )
 {
+    if( id.isEmpty() )
+        qDebug() << "ERROR! Connector::Connector empty Id";
     m_actLine   = 0;
     m_lastindex = 0;
     
