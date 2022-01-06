@@ -98,7 +98,7 @@ void DS1307::writeByte()               // Read from RAM
     if( m_addrPtr < 7 ){
         switch( m_addrPtr ){
             case 0: m_txReg = decToBcd( m_clock.m_time.second() ); break;
-            case 1: m_txReg = decToBcd( m_clock.m_time.minute() ); break;  // Hz
+            case 1: m_txReg = decToBcd( m_clock.m_time.minute() ); break;
             case 2: {
                 int hour = m_clock.m_time.hour();
                 uint8_t ampm = m_data[2] & (1<<6); // 12/24 hour

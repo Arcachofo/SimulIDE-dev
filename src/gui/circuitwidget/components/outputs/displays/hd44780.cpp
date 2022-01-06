@@ -94,7 +94,7 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
     {
         m_lastClock = true;
         return; 
-    }else{                                              // Clk Pin is Low
+    }else{                                             // Clk Pin is Low
         if( m_lastClock == false ) return;         // Not a Falling edge
         m_lastClock = false;
     }

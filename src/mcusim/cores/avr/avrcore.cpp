@@ -594,7 +594,7 @@ void AvrCore::runDecoder()
                         }    break;
                         case 0x9402: {    // SWAP -- Swap Nibbles -- 1001 010d dddd 0010
                             get_vd5( instruction );
-                            uint8_t res =( vd >> 4) |( vd << 4) ;
+                            uint8_t res =( vd >> 4) | ( vd << 4) ;
                             m_dataMem[d] = res;
                         }    break;
                         case 0x9403: {    // INC -- Increment -- 1001 010d dddd 0011

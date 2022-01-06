@@ -127,7 +127,7 @@
     <register  name="MCUCR"   addr="0x0035"  reset=""  mask="" 
                bits="ISC00,ISC01,ISC10,ISC11,SM0,SM1,SM2,SE" />
                
-    <register  name="TWCR"    addr="0x0036"  reset=""  mask="10110101" 
+    <register  name="TWCR"    addr="0x0036"  reset=""  mask="11110101" 
                bits="TWIE,0,TWEN,TWWC,TWSTO,TWSTA,TWEA,TWINT" />
     
     <register  name="SPMCR"   addr="0x0037"  reset=""  mask="11011111" 

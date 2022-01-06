@@ -212,8 +212,7 @@ void TwiModule::voltChanged() // Used by slave
                         m_i2cState = I2C_READ;
                         writeByte();
                     }
-                    else                       // Master is Writting
-                    {
+                    else{                      // Master is Writting
                         m_nextState = m_addrMatch ? TWI_SRX_ADR_ACK : TWI_SRX_GEN_ACK;
                         m_i2cState = I2C_WRITE;
                         m_bitPtr = 0;
