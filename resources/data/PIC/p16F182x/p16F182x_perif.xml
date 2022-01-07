@@ -1,10 +1,10 @@
 <parts>
-    <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA" configregsA="ANSELA" configregsB="WPUA"
+    <port name="PORTA" pins="8" outreg="PORTA,LATA" dirreg="!TRISA" configregsA="ANSELA" configregsB="WPUA"
           inpmask="11011111"
           clockpins="PORTA6,PORTA7" resetpin="PORTA5">
     </port>
    
-    <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" configregsA="ANSELB" configregsB="WPUB" >
+    <port name="PORTB" pins="8" outreg="PORTB,LATB" dirreg="!TRISB" configregsA="ANSELB" configregsB="WPUB" >
         <interrupt name="IOC" mask="11111111"/>
         <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
     </port>

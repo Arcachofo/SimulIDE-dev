@@ -63,7 +63,7 @@
     <register  name="PIE2"    addr="0x0092"  reset="00000000"  mask="11111001" 
                bits="0,0,0,BCL1IE,EEIE,C1IE,C2IE,OSFIE" />
                
-    <register  name="OPTION_REG" addr="0x0095" reset="11111111" mask="" 
+    <register  name="OPTION" addr="0x0095" reset="11111111" mask="" 
                bits="PS0,PS1,PS2,PSA,T0SE,T0CS,INTEDG,WPUEN" />
                
     <register  name="PCON"    addr="0x0096"  reset="00--11qq"  mask="11001111" 

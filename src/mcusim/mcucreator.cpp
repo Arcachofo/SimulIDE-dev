@@ -382,11 +382,16 @@ void McuCreator::createPort( QDomElement* p )
     if( p->hasAttribute("resetpin") )
         m_mcuComp->m_mcuRstPin = mcu->m_ports.getPin( p->attribute("resetpin") );
 
-    QString outReg = p->attribute( "outreg" );
-    uint16_t addr = mcu->getRegAddress( outReg );
-    port->m_outAddr = addr;
-    port->m_outReg  = mcu->m_dataMem.data()+addr;
-    watchRegNames( outReg, R_WRITE, port, &McuPort::outChanged, mcu );
+    QStringList outRegList = p->attribute( "outreg" ).split(",");
+    QString outReg = outRegList.first();
+    uint16_t addr;
+    for( QString outReg : outRegList )
+    {
+        addr = mcu->getRegAddress( outReg );
+        port->m_outAddr = addr;
+        port->m_outReg  = mcu->m_dataMem.data()+addr;
+        watchRegNames( outReg, R_WRITE, port, &McuPort::outChanged, mcu );
+    }
 
     if( p->hasAttribute( "inreg" ) ) // Connect to PORT In Register
     {
