@@ -60,8 +60,10 @@ void Thermistor::updateStep()
     double t0 = 25+273.15;      // Temp in Kelvin
     double t = m_value+273.15;
     double e = 2.7182;
-    double k = t*t0/(t-t0);
-    double res = m_r25/pow( e, m_bVal/k );
+    //double k = t*t0/(t-t0);
+    //double res = m_r25/pow( e, m_bVal/k );
+    double k = (t0-t)/(t*t0);
+    double res = m_r25*pow( e, m_bVal*k );
     eResistor::setResSafe( res );
     if( m_propDialog ) m_propDialog->updtValues();
 }

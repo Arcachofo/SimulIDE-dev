@@ -170,8 +170,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
 
         type = line.mid( 6, 2 ).toInt( &ok, 16 );
         if     ( type == 1 ) return true; // Reached End Of File
-        else if( type == 4 )
-            qDebug()<< "MemData::loadHex TYPE 04"; // Extended Linear Address
+        else if( type == 4 );             // Extended Linear Address
         else if( type != 0 )
         {
             qDebug() <<"    Warning: Not supported Record type:"<<type<<"at line"<<QString::number(nLine);
@@ -192,6 +191,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
             if( type == 4 )
             {
                 addrBase = (line.mid( 8, 4 ).toInt( &ok, 16 ))<<16;
+                qDebug() <<"Extended Linear Address:"<< addrBase;
                 continue;
             }
             if( resize ){
