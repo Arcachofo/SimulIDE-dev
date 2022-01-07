@@ -50,7 +50,7 @@ void FlipFlopBase::stamp()
     { for( int i=0; i<m_dataPins; i++ ) m_inPin[i]->changeCallBack( this ); }
 
     LogicComponent::stamp();
-    m_outPin[0]->setOutState( true );
+    m_outPin[1]->setOutState( true );
 }
 
 void FlipFlopBase::setSrInv( bool inv )
