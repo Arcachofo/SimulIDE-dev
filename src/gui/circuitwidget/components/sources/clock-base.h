@@ -30,6 +30,8 @@ class MAINMODULE_EXPORT ClockBase : public FixedVolt
         ClockBase( QObject* parent, QString type, QString id );
         ~ClockBase();
 
+        virtual bool setPropStr( QString prop, QString val ) override;
+
         virtual void stamp() override;
         virtual void updateStep() override;
 

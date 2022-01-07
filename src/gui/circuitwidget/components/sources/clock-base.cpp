@@ -43,6 +43,13 @@ new BoolProp<ClockBase>( "Running", "","", this, &ClockBase::running, &ClockBase
 }
 ClockBase::~ClockBase(){}
 
+bool ClockBase::setPropStr( QString prop, QString val )
+{
+    if( prop =="Out" ) setRunning( val == "true" );   // Old: TODELETE
+    else return Component::setPropStr( prop, val );
+    return true;
+}
+
 void ClockBase::stamp()
 {
     setFreq( m_freq );
