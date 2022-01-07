@@ -63,15 +63,11 @@ SwitchDip::SwitchDip( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new IntProp<SwitchDip>( "Size", tr("Size"),"_Switches", this, &SwitchDip::size, &SwitchDip::setSize, "uint" )
     }} );
+    addPropGroup( {"Hidden", {
+new IntProp<SwitchDip>( "State", "","", this, &SwitchDip::state, &SwitchDip::setState, "uint" )
+    }} );
 }
 SwitchDip::~SwitchDip(){}
-
-/*QList<propGroup_t> SwitchDip::propGroups()
-{
-    propGroup_t mainGroup { tr("Main") };
-    mainGroup.propList.append( {"Size", tr("Size"),"Switches"} );
-    return {mainGroup};
-}*/
 
 void SwitchDip::stamp()
 {
