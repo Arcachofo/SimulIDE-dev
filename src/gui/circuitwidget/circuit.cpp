@@ -278,6 +278,7 @@ void Circuit::loadStrDoc( QString &doc )
 
                 if( startpin && endpin )    // Create Connector
                 {
+                    if( uid.isEmpty() ) uid = "connector"+newSceneId();
                     Connector* con = new Connector( this, type, uid, startpin, endpin );
                     con->setPointList( pointList );
 
