@@ -75,11 +75,12 @@ QString CompBase::toString() // Used to save circuit
         if( !m_saveBoard )
         {
             if( pg.name == "Board") continue;
-            if( m_isMainComp )
+            /// Error saving if package type is not set to board and have Main comp.
+            /*if( m_isMainComp )
             {
                 if( pg.name != "Main"
                  && pg.name != "Hidden" ) continue;
-            }
+            }*/
         }
         for( ComProperty* prop : pg.propList )
         {

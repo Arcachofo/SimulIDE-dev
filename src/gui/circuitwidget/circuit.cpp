@@ -227,6 +227,7 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "id"         ) label = prop.toString();
                     else properties << name << prop ;
             }   }
+            if( type.isEmpty() ) { qDebug() << "ERROR: Component with no type:"<<label<< uid; continue;}
 
             if( m_pasting ) newUid = type+"-"+newSceneId(); // Create new id
             else            newUid = uid;

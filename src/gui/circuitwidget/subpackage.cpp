@@ -283,15 +283,17 @@ void SubPackage::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
 
         menu->addSeparator();
 
-        m_boardModeAction->setChecked( m_boardMode );
-        menu->addAction( m_boardModeAction );
-        connect( m_boardModeAction, SIGNAL( triggered()),
-                              this, SLOT( boardMode() ), Qt::UniqueConnection );
+        if( m_subcType >= Board )
+        {
+            m_boardModeAction->setChecked( m_boardMode );
+            menu->addAction( m_boardModeAction );
+            connect( m_boardModeAction, SIGNAL( triggered()),
+                                  this, SLOT( boardMode() ), Qt::UniqueConnection );
 
-        QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
-        connect( mainCompAction, SIGNAL( triggered()),
-                           this, SLOT( mainComp() ), Qt::UniqueConnection );
-
+            QAction* mainCompAction = menu->addAction( QIcon(":/subcl.png"),tr("Select Main Component") );
+            connect( mainCompAction, SIGNAL( triggered()),
+                               this, SLOT( mainComp() ), Qt::UniqueConnection );
+        }
         Component::contextMenu( event, menu );
     }
 }
