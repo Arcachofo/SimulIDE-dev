@@ -132,6 +132,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
 
     int nLine = 0;
     int addr;
+    int addrBase = 0;
     int nBytes;
     int type;
     int checksum;
@@ -162,20 +163,21 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
         }
         checksum += nBytes;
 
-        addr = line.mid( 2, 4 ).toInt( &ok, 16 );
+        addr = addrBase+line.mid( 2, 4 ).toInt( &ok, 16 );
         addr /= WordSize;
         checksum += line.mid( 2, 2 ).toInt( &ok, 16 );
         checksum += line.mid( 4, 2 ).toInt( &ok, 16 );
 
         type = line.mid( 6, 2 ).toInt( &ok, 16 );
         if     ( type == 1 ) return true; // Reached End Of File
+        else if( type == 4 )
+            qDebug()<< "MemData::loadHex TYPE 04"; // Extended Linear Address
         else if( type != 0 )
         {
             qDebug() <<"    Warning: Not supported Record type:"<<type<<"at line"<<QString::number(nLine);
             continue;
         }
         checksum += type;
-
         int i;
         for( i=8; i<8+nBytes*2; i+=2*WordSize )
         {
@@ -187,10 +189,16 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
                 data += (hiByte<<8);
                 checksum += hiByte;
             }
+            if( type == 4 )
+            {
+                addrBase = (line.mid( 8, 4 ).toInt( &ok, 16 ))<<16;
+                continue;
+            }
             if( resize ){
                 dataEnd++;
                 toData->resize( dataEnd+1 );
             }
+            //qDebug()<< "MemData::loadHex"<<addrBase/WordSize<< addr <<data;
             if( addr > dataEnd ){
                 bool ok = false;
                 if( m_eMcu ) ok = m_eMcu->setCfgWord( addr, data );
@@ -207,7 +215,7 @@ bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits
         }
         checksum += line.mid( i, 2 ).toInt( &ok, 16 );
         if( checksum & 0xFF ){
-            qDebug() << "    Error: CheckSum Error at line "+QString::number(nLine);
+            qDebug() << "    Error: CheckSum Error at line "+QString::number(nLine)+1;
             return false;
         }
         nLine++;
