@@ -20,6 +20,8 @@
 #ifndef REGWATCHER_H
 #define REGWATCHER_H
 
+#include <QDebug>
+
 #include "mcudataspace.h"
 
 template <class T>                // Add callback for Register changes by address
@@ -27,6 +29,8 @@ void watchRegister( uint16_t addr, int write
                   , T* inst, void (T::*func)(uint8_t)
                   , DataSpace* mcu, uint8_t mask=0xFF )
 {
+    if( addr == 0 ) qDebug() << "Warning: watchRegister address 0 ";
+
     regSignal_t* regSignal = mcu->regSignals()->value( addr );
     if( !regSignal )
     {
@@ -47,6 +51,11 @@ void watchRegNames( QString regNames, int write
     QStringList regs = regNames.split(",");
     for( QString reg : regs )
     {
+        if( !mcu->regInfo()->contains( reg ) )
+        {
+            qDebug() << "ERROR: Register not found: " << reg;
+            continue;
+        }
         uint16_t addr = mcu->regInfo()->value( reg ).address;
         watchRegister( addr, write, inst, func, mcu );
     }

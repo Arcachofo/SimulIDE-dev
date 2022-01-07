@@ -386,7 +386,7 @@ void McuCreator::createPort( QDomElement* p )
     uint16_t addr = mcu->getRegAddress( outReg );
     port->m_outAddr = addr;
     port->m_outReg  = mcu->m_dataMem.data()+addr;
-    watchRegister( addr, R_WRITE, port, &McuPort::outChanged, mcu );
+    watchRegNames( outReg, R_WRITE, port, &McuPort::outChanged, mcu );
 
     if( p->hasAttribute( "inreg" ) ) // Connect to PORT In Register
     {
@@ -407,7 +407,7 @@ void McuCreator::createPort( QDomElement* p )
         addr = mcu->getRegAddress( dirreg );
         port->m_dirAddr = addr;
         port->m_dirReg  = mcu->m_dataMem.data()+addr;
-        watchRegister( addr, R_WRITE, port, &McuPort::dirChanged, mcu );
+        watchRegNames( dirreg, R_WRITE, port, &McuPort::dirChanged, mcu );
     }
     if( p->hasAttribute("outmask") ) // Permanent Outputs
     {
@@ -447,10 +447,8 @@ void McuCreator::createPort( QDomElement* p )
                 bool ok = false;
                 int bits = mask.toInt( &ok,2 );
                 if( ok ) port->setIntMask( bits );
-                else{
-                    uint16_t maskReg = mcu->getRegAddress( mask );
-                    watchRegister( maskReg, R_WRITE, port, &McuPort::setIntMask, mcu );
-        }   }   }
+                else watchRegNames( mask, R_WRITE, port, &McuPort::setIntMask, mcu );
+        }   }
         else if( el.tagName() == "extint" )
         {
             QString intName = el.attribute("name");
