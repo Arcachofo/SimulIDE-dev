@@ -47,3 +47,19 @@ void ThermistorBase::setPtc( bool ptc )
     m_changed = true;
 }
 
+void ThermistorBase::setMinVal( double min )
+{
+    if( min > m_maxVal ) min = m_maxVal;
+    m_minVal = min;
+
+    updtValue();
+}
+
+void ThermistorBase::setMaxVal( double max )
+{
+    if( max < m_minVal ) max = m_minVal;
+    m_maxVal = max;
+
+    updtValue();
+}
+

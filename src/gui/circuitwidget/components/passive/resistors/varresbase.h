@@ -32,10 +32,10 @@ class MAINMODULE_EXPORT VarResBase : public Comp2Pin, public eResistor
         ~VarResBase();
 
         double maxVal()  { return m_maxVal; }
-        void setMaxVal( double max );
+        virtual void setMaxVal( double max );
 
         double minVal() { return m_minVal; }
-        void setMinVal( double min );
+        virtual void setMinVal( double min );
 
         double getVal() { return m_value; }
         void setVal( double val );

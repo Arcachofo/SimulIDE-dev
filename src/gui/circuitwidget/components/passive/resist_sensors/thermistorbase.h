@@ -32,6 +32,9 @@ class MAINMODULE_EXPORT ThermistorBase : public VarResBase
         bool ptc()  { return m_ptc; }
         void setPtc( bool ptc );
 
+        virtual void setMaxVal( double max ) override;
+        virtual void setMinVal( double min ) override;
+
     protected:
         bool m_ptc;
 };
