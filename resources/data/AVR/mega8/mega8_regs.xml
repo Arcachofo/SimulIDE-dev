@@ -84,7 +84,7 @@
     <register  name="UCSRC"   addr="0x0020"  reset="00000110"  mask="" 
                bits="UCPOL,UCSZ0,UCSZ1,USBS,UPM0,UPM1,UMSEL,URSEL" />
 
-    <!-- register  name="UBRRH"   addr="0x0020"  reset=""  mask="00001111" -->
+    <!-- kkregister  name="UBRRH"   addr="0x0020"  reset=""  mask="00001111" -->
     
     <register  name="WDTCR"   addr="0x0021"  reset=""  mask="00011111" 
                bits="WDP0,WDP1,WDP2,WDE,WDCE" />
@@ -117,7 +117,7 @@
                bits="PSR10,PSR2,PUD,ACME" />
                
     <register  name="OSCCAL"  addr="0x0031"  reset=""  mask="" bits="" />
-    <register  name="TCNT0"   addr="0x0032"  reset=""  mask=""  bits="" />
+    <register  name="TCNT0"   addr="0x0032"  reset=""  mask="" bits="" />
     <register  name="TCCR0"   addr="0x0033"  reset=""  mask="00000111" 
                bits="CS00,CS01,CS02" />
 
@@ -148,6 +148,7 @@
     <register  name="SPL"     addr="0x003D"  reset=""  mask="" bits="" />
     <register  name="SPH"     addr="0x003E"  reset=""  mask="" bits="" />
   </regblock>
+  <datablock name="RAM" start="0x0060" end="0x045F"/>
 
   <stack  spreg="SPL,SPH" increment="postdec" />
 </parts>

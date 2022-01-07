@@ -5,7 +5,6 @@
 
     <include file="avr/avr_gpr.xml" />
     <include file="mega8/mega8_regs.xml" />
-    <datablock name="RAM" start="0x0060" end="0x045F"/>
 
     <include file="mega8/mega8_int.xml" />
     <include file="mega8/mega8_perif.xml" />

@@ -3,16 +3,13 @@
 <parts>
   <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB"
         clockpins="PORTB6,PORTB7">
-    <interrupt name="PCINT0" mask="PCMSK0"/>
   </port>
 
   <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC" 
         resetpin="PORTC6">
-    <interrupt name="PCINT1" mask="PCMSK1"/>
   </port>
 
   <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
-    <interrupt name="PCINT2" mask="PCMSK2"/>
     <extint    name="INT0" pin="PORTD2" configbits="ISC00,ISC01"/>
     <extint    name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
   </port>
@@ -89,7 +86,7 @@
     <interrupt name="SPI" />
   </spi>
   
-  <wdt name="WatchDog01" configregsA="WDTCSR">
+  <wdt name="WatchDog01" configregsA="WDTCR">
     <prescaler select="" values="128,64,32,16,8,4,2,1"/>
     <interrupt name="WDT" />
   </wdt>
