@@ -63,6 +63,7 @@ void McuPort::outChanged( uint8_t val )
 {
     uint8_t changed = *m_outReg ^ val; // See which Pins have actually changed
     if( changed == 0 ) return;
+    *m_outReg = val;
 
     uint8_t outputs = 0xFF;
     if( m_dirReg )
