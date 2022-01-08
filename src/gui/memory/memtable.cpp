@@ -161,8 +161,8 @@ void MemTable::resizeTable( int dataSize )
     }
     for( int col=0; col<16; ++col )
     {
-        table->setColumnWidth( col, (m_cellBytes)*18*scale+4 ); /// (2+m_cellBytes)*15*scale+2 );
-        table->setColumnWidth( col+17, (8*m_cellBytes+4)*scale+4 );
+        table->setColumnWidth( col, (18*m_cellBytes+5)*scale ); /// (2+m_cellBytes)*15*scale+2 );
+        table->setColumnWidth( col+17, (8*m_cellBytes+4+4)*scale );
     }
     font.setWeight( QFont::Normal );
     table->horizontalHeader()->setFont( font );
