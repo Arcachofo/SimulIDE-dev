@@ -45,7 +45,7 @@ new BoolProp<XorGate>( "Inverted"      , tr("Invert Output"),"", this, &XorGate:
 new BoolProp<XorGate>( "Open_Collector", tr("Open Drain")   ,"", this, &XorGate::openCol,    &XorGate::setOpenCol )
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+    addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 }
 XorGate::~XorGate(){}
 

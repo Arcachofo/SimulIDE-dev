@@ -47,7 +47,7 @@ new BoolProp<OrGate>( "Inverted"      , tr("Invert Output"),""       , this, &Or
 new BoolProp<OrGate>( "Open_Collector", tr("Open Drain")   ,""       , this, &OrGate::openCol,    &OrGate::setOpenCol )
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+    addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 }
 OrGate::~OrGate(){}
 

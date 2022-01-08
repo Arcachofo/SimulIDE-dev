@@ -84,6 +84,9 @@ class MAINMODULE_EXPORT IoComponent : public Component
         bool openCol() { return m_openCol; }
         void setOpenCol( bool op );
 
+        bool rndPD() { return m_rndPD; }
+        void setRndPD( bool r ) { m_rndPD = r; }
+
         void init( QStringList pins );
         void initPin( IoPin* pin );
 

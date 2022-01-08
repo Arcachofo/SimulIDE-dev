@@ -52,7 +52,7 @@ new BoolProp<Buffer>( "Inverted"      , tr("Invert Output"),"", this, &Buffer::i
 new BoolProp<Buffer>( "Open_Collector", tr("Open Drain")   ,"", this, &Buffer::openCol,    &Buffer::setOpenCol )
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+    addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 }
 Buffer::~Buffer(){}
 

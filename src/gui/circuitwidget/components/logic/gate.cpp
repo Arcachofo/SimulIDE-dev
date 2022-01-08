@@ -22,6 +22,8 @@
 #include "circuit.h"
 #include "iopin.h"
 
+#include "boolprop.h"
+
 Gate::Gate( QObject* parent, QString type, QString id, int inputs )
     : LogicComponent( parent, type, id )
 {
@@ -30,9 +32,18 @@ Gate::Gate( QObject* parent, QString type, QString id, int inputs )
     setNumOuts( 1, "", 0, false );
     setNumInps( inputs );  // Create Input Pins
 
-    m_rndPD = true; // Randomize Propagation Delay
+    /// m_rndPD = true; // Randomize Propagation Delay:
 }
 Gate::~Gate(){}
+
+QList<ComProperty*> Gate::edgeProps()
+{
+    QList<ComProperty*> edge = IoComponent::edgeProps();
+    edge.prepend(
+new BoolProp<Gate>( "rndPD", tr("Randomize PD"),"", this, &Gate::rndPD, &Gate::setRndPD )
+                );
+    return edge;
+}
 
 void Gate::stamp()
 {

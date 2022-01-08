@@ -47,7 +47,7 @@ new BoolProp<AndGate>( "Inverted"      , tr("Invert Output"),""   , this, &AndGa
 new BoolProp<AndGate>( "Open_Collector", tr("Open Drain")   ,""   , this, &AndGate::openCol,    &AndGate::setOpenCol )
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
-    addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
+    addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
 }
 AndGate::~AndGate(){}
 

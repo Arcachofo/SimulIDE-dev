@@ -30,6 +30,8 @@ class MAINMODULE_EXPORT Gate : public LogicComponent
         Gate( QObject* parent, QString type, QString id, int inputs );
         ~Gate();
 
+        QList<ComProperty*> edgeProps();
+
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
