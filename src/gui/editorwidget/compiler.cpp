@@ -145,8 +145,9 @@ int Compiler::compile( bool debug )
     for( int i=0; i<m_command.size(); ++i )
     {
         QString command = m_toolPath + m_command.at(i);
-        if( !m_toolPath.isEmpty() && !QFile::exists( command ) )
+        if( !m_toolPath.isEmpty() && !checkCommand( command ) )
         {
+            m_outPane->appendLine( "ERROR: "+command );
             toolChainNotFound();
             error = -1;
             break;
@@ -270,8 +271,8 @@ void Compiler::setIncludePath( QString path )
 
 void Compiler::toolChainNotFound()
 {
-    m_outPane->appendLine( tr(": ToolChain not found") );
-    m_outPane->appendLine( tr("Set proper ToolChain Path")+"\n" );
+    m_outPane->appendLine( "     : "+tr("Executable not found") );
+    m_outPane->appendLine( "     : "+tr("Check that Tool Path is correct")+"\n" );
 }
 
 void Compiler::readSettings()
