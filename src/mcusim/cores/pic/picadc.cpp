@@ -27,8 +27,8 @@ PicAdc* PicAdc::createAdc( eMcu* mcu, QString name )
 {
     int type = name.right( 2 ).toInt();
     switch( type ){
-        case 00: return new PicAdc0( mcu, name ); break;
-        case 02: return new PicAdc2( mcu, name ); break;
+        case 00: return new PicAdc00( mcu, name ); break;
+        case 20: return new PicAdc20( mcu, name ); break;
         case 10: return new PicAdc10( mcu, name ); break;
         case 11: return new PicAdc11( mcu, name ); break;
         default: return NULL;
@@ -76,16 +76,16 @@ void PicAdc::endConversion()
 //------------------------------------------------------
 //-- PIC ADC Type 0 ------------------------------------
 
-PicAdc0::PicAdc0( eMcu* mcu, QString name )
+PicAdc00::PicAdc00( eMcu* mcu, QString name )
        : PicAdc( mcu, name )
 {
     m_ADSC = getRegBits( "ADSC0,ADCS1", mcu );
     m_CHS  = getRegBits( "CHS0,CHS1,CHS2", mcu );
     m_PCFG = getRegBits( "PCFG0,PCFG1,PCFG2,PCFG3", mcu );
 }
-PicAdc0::~PicAdc0(){}
+PicAdc00::~PicAdc00(){}
 
-void PicAdc0::configureB( uint8_t newADCON1 ) // ADCON1
+void PicAdc00::configureB( uint8_t newADCON1 ) // ADCON1
 {
     m_leftAdjust = !getRegBitsBool( newADCON1, m_ADFM );
 
@@ -115,7 +115,7 @@ void PicAdc0::configureB( uint8_t newADCON1 ) // ADCON1
             if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
 }   }
 
-void PicAdc0::updtVref()
+void PicAdc00::updtVref()
 {
     m_vRefP = 5;
     m_vRefN = 0;
@@ -226,16 +226,16 @@ void PicAdc11::setANSEL( uint8_t newANSEL )
 //------------------------------------------------------
 //-- PIC ADC Type 2 p16f1826 ---------------------------
 
-PicAdc2::PicAdc2( eMcu* mcu, QString name )
+PicAdc20::PicAdc20( eMcu* mcu, QString name )
        : PicAdc( mcu, name )
 {
     m_ADSC = getRegBits( "ADCS0,ADCS1,ADCS2", mcu );
     m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3,CHS4", mcu );
     m_ADXREF = getRegBits( "ADPREF0,ADPREF1,ADNREF", mcu );
 }
-PicAdc2::~PicAdc2(){}
+PicAdc20::~PicAdc20(){}
 
-void PicAdc2::configureA (uint8_t newADCON0 )
+void PicAdc20::configureA (uint8_t newADCON0 )
 {
     m_enabled    = getRegBitsBool( newADCON0, m_ADON );
     m_channel    = getRegBitsVal(  newADCON0, m_CHS );
@@ -243,7 +243,7 @@ void PicAdc2::configureA (uint8_t newADCON0 )
     if( !m_converting && convert ) startConversion();
 }
 
-void PicAdc2::configureB( uint8_t newADCON1 )
+void PicAdc20::configureB( uint8_t newADCON1 )
 {
     m_leftAdjust = !getRegBitsBool( newADCON1, m_ADFM );
 
@@ -254,7 +254,7 @@ void PicAdc2::configureB( uint8_t newADCON1 )
     else           m_convTime = m_mcu->simCycPI()*12*m_prescList[prs];
 }
 
-void PicAdc2::updtVref()
+void PicAdc20::updtVref()
 {
     m_vRefP = 5;  // VREF+ is connected to VDD
     switch ( m_mode ) {
