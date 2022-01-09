@@ -44,6 +44,8 @@ class MAINMODULE_EXPORT PicUsart : public McuUsart
         virtual void parityError() override;
         virtual void frameError() override;
 
+        void setSPBRGL(  uint8_t val );
+        void setSPBRGH(  uint8_t val );
         void setBaurrate( uint8_t val=0 );
 
     private:
@@ -54,7 +56,8 @@ class MAINMODULE_EXPORT PicUsart : public McuUsart
         uint8_t*  m_PIR1;
         uint8_t*  m_TXSTA;
         uint8_t*  m_RCSTA;
-        uint8_t*  m_SPBRG;
+        uint8_t*  m_SPBRGL;
+        uint8_t*  m_SPBRGH;
 
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;

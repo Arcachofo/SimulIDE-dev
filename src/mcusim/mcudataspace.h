@@ -41,6 +41,8 @@ class MAINMODULE_EXPORT DataSpace
 
         uint8_t* getReg( QString reg )                // Get pointer to Reg data by name
         { return &m_dataMem[m_regInfo.value( reg ).address]; }
+        bool regExist( QString reg )                  // Does a register with this name exist?
+        { return m_regInfo.contains( reg ); }
 
         QHash<QString, uint8_t>*       bitMasks() { return &m_bitMasks; }
         QHash<QString, uint16_t>*      bitRegs() { return &m_bitRegs; }

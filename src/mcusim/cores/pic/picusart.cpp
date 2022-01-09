@@ -31,10 +31,14 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
 {
     m_enabled = false;
 
+    m_SPBRGH = NULL;
+
     m_PIR1  = mcu->getReg( "PIR1" );
     m_TXSTA = mcu->getReg( "TXSTA" );
     m_RCSTA = mcu->getReg( "RCSTA" );
-    m_SPBRG = mcu->getReg( "SPBRG" );
+    if( mcu->regExist( "SPBRG") )  m_SPBRGL = mcu->getReg( "SPBRG" );
+    else                           m_SPBRGL = mcu->getReg( "SPBRGL" );
+    if( mcu->regExist( "SPBRGH") ) m_SPBRGH = mcu->getReg( "SPBRGH" );
 
     m_SPEN = getRegBits( "SPEN", mcu );
     m_BRGH = getRegBits( "BRGH", mcu );
@@ -52,7 +56,8 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
     m_FERR = getRegBits( "FERR", mcu );
     m_OERR = getRegBits( "OERR", mcu );
 
-    watchRegNames( "SPBRG", R_WRITE, this, &PicUsart::setBaurrate, mcu );
+    watchRegNames( "SPBRGL", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
+    if( m_SPBRGH ) watchRegNames( "SPBRGH", R_WRITE, this, &PicUsart::setSPBRGH, mcu );
 }
 PicUsart::~PicUsart(){}
 
@@ -96,11 +101,25 @@ void PicUsart::configureB( uint8_t newRCSTA ) // RCSTA changed
     }
 }
 
+void PicUsart::setSPBRGL(  uint8_t val )
+{
+    *m_SPBRGL = val;
+    setBaurrate();
+}
+
+void PicUsart::setSPBRGH(  uint8_t val )
+{
+    *m_SPBRGH = val;
+    setBaurrate();
+}
+
 void PicUsart::setBaurrate( uint8_t )
 {
     uint64_t mult = 16;
     if( m_speedx2 ) mult = 4;
-    setPeriod( mult*(*m_SPBRG+1)*m_mcu->simCycPI() ); // period in picoseconds
+    uint16_t SPBRG = *m_SPBRGL;
+    if( m_SPBRGH ) SPBRG |= (uint16_t)*m_SPBRGH << 8;
+    setPeriod( mult*(SPBRG+1)*m_mcu->simCycPI() ); // period in picoseconds
 }
 
 uint8_t PicUsart::getBit9Tx()
