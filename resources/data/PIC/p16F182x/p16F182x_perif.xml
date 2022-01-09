@@ -43,8 +43,8 @@
     <vref name="Vref" configregsA="ADCON1" pinout="PORTA2,PORTA3">
     </vref>
     
-    <adc name="ADC2" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1">
-        <prescaler select="" values="2,8,32"/>
+    <adc name="ADC02" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1">
+        <prescaler select="" values="2,8,32,0,4,16,64,0"/>
         <pins 
          inputs="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTB6,PORTB7,PORTB5,PORTB4,PORTB3,PORTB2,PORTB1"
          vref="PORTA3,PORTA2"/>

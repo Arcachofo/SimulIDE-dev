@@ -229,7 +229,7 @@ void PicAdc11::setANSEL( uint8_t newANSEL )
 PicAdc2::PicAdc2( eMcu* mcu, QString name )
        : PicAdc( mcu, name )
 {
-    m_ADSC = getRegBits( "ADSC0,ADCS1,ADCS2", mcu );
+    m_ADSC = getRegBits( "ADCS0,ADCS1,ADCS2", mcu );
     m_CHS  = getRegBits( "CHS0,CHS1,CHS2,CHS3,CHS4", mcu );
     m_ADXREF = getRegBits( "ADPREF0,ADPREF1,ADNREF", mcu );
 }

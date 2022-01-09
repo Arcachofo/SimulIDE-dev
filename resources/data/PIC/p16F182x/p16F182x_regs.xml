@@ -84,7 +84,7 @@
     <register  name="ADRESL"  addr="0x009B"  reset="xxxxxxxx"  mask="" bits="" />
     <register  name="ADRESH"  addr="0x009C"  reset="xxxxxxxx"  mask="" bits="" />
     <register  name="ADCON0"  addr="0x009D"  reset="-0000000"  mask="01111111" 
-               bits="ADON,GO,CHS0,CHS1,CHS2,CHS3,CHS4,0" />
+               bits="ADON,GO/DONE,CHS0,CHS1,CHS2,CHS3,CHS4,0" />
                
     <register  name="ADCON1"  addr="0x009E"  reset="00000000"  mask="11110111" 
                bits="ADPREF0,ADPREF1,ADNREF,0,ADCS0,ADCS1,ADCS2,ADFM" />
