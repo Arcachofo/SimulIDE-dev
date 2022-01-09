@@ -26,10 +26,6 @@
         <interrupt name="T2_MATCH" />
     </timer> 
    
-    <ccpunit name="ECCP1" type="01" pin="PORTB3" ccpreg="CCPR1L,CCPR1H" configregsA="CCP1CON">
-        <interrupt name="CCP1" />
-    </ccpunit>
-   
     <usart name="EUSART"  number="1" configregsA="TXSTA" configregsB="RCSTA" configregsC="BAUDCON">
         <trunit type="tx" pin="PORTB2,PORTB5" configbitsA="RXDTSEL" register="TXREG">
         </trunit>
@@ -43,7 +39,7 @@
     <vref name="Vref" configregsA="ADCON1" pinout="PORTA2,PORTA3">
     </vref>
     
-    <adc name="ADC02" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1">
+    <adc name="ADC20" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1">
         <prescaler select="" values="2,8,32,0,4,16,64,0"/>
         <pins 
          inputs="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTB6,PORTB7,PORTB5,PORTB4,PORTB3,PORTB2,PORTB1"
