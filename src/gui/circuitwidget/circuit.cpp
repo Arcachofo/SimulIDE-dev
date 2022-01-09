@@ -282,6 +282,8 @@ void Circuit::loadStrDoc( QString &doc )
                     if( uid.isEmpty() ) uid = "connector"+newSceneId();
                     Connector* con = new Connector( this, type, uid, startpin, endpin );
                     con->setPointList( pointList );
+                    startpin->isMoved();
+                    endpin->isMoved();
 
                     eNode*  enode = nodMap[enodeId];
                     if( !enode )                    // Create eNode and add to enodList
