@@ -9,10 +9,11 @@
     <item name="AD7524" info=" 8-Bit Buffered Multiplying DAC" /> 
     <item name="AD7845" info=" Complete 12-Bit Multiplying DAC" /> 
     <item name="AM1404_ttl" info=" 1024-Bit Dynamic Shift Registers (TTL compatible)" /> 
-    <item name="AM1403_ttl" info=" dual 512-bit Dynamic Shift Registers (TTL compatible)" /> 
-    <item name="AM1402_ttl" info=" quad 256-bit Dynamic Shift Registers (TTL compatible)" />   
-    <item name="chip222" info=" PWM generator (virtual alternative LM555)" /> 	 
-    <item name="DAC8562" info=" +5 Volt, Parallel Input Complete 12-Bit DAC" />           
+    <item name="AM1403_ttl" info=" dual 512-bit Dynamic Shift Registers (TTL compatible)" />
+    <item name="AM1402_ttl" info=" quad 256-bit Dynamic Shift Registers (TTL compatible)" />
+    <item name="LM555"      info=" Single timer" />
+    <item name="chip222" info=" PWM generator (virtual alternative LM555)" />
+    <item name="DAC8562" info=" +5 Volt, Parallel Input Complete 12-Bit DAC" /> 
     <item name="DAC7621" info=" +5 Volt, Parallel Input 12-Bit DAC" /> 
  </itemset>
 

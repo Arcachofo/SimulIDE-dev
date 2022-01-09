@@ -14,7 +14,8 @@
         <item name="8R_Display" folder="tools" info=" 8-bit probe. (R)" /> 
         <item name="Pulse_generator" folder="tools" info=" Pulse generator (1-15 pulses)" /> 
         <item name="Pulse_probe" folder="tools" info=" Short pulse detector" /> 
-        <item name="Real_Button" folder="tools" info=" A button with a rattle of contacts" /> 
+        <item name="Real_Button" folder="tools" info=" A button with a rattle of contacts" />
+        <item name="Pattern_generator" folder="tools" info=" Pattern Generator: 8 bit, up to 256 byte" /> 
 
     </itemset>
 
