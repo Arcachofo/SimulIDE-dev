@@ -63,10 +63,7 @@ bool AvrGccDebugger::getVariables()
         objdump += ".exe";
     #endif
         if( !checkCommand( objdump ) )
-        {
-            outPane()->appendLine( "\nWarning: avr-objdump executable doesn't exist:\n"+objdump );
-            return false;
-        }
+            outPane()->appendLine( "\nWarning: avr-objdump executable not detected:\n"+objdump );
     }
     outPane()->appendText( "\nSearching for variables... " );
     objdump = addQuotes( objdump );
@@ -135,10 +132,7 @@ bool AvrGccDebugger::mapFlashToSource()
         avrSize += ".exe";
     #endif
         if( !checkCommand( avrSize ) )
-        {
-            outPane()->appendLine( "\nWarning: avr-size executable doesn't exist:\n"+avrSize );
-            return false;
-        }
+            outPane()->appendLine( "\nWarning: avr-size executable not detected:\n"+avrSize );
     }
     if( !checkCommand( addr2li ) )
     {
@@ -147,10 +141,7 @@ bool AvrGccDebugger::mapFlashToSource()
         addr2li += ".exe";
     #endif
         if( !checkCommand( addr2li ) )
-        {
-            outPane()->appendLine( "\nWarning: avr-addr2line executable doesn't exist:\n"+addr2li );
-            return false;
-        }
+            outPane()->appendLine( "\nWarning: avr-addr2line executable not detected:\n"+addr2li );
     }
     outPane()->appendText( "\nMapping Flash to Source... " );
     avrSize = addQuotes( avrSize );

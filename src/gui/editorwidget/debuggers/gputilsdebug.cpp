@@ -50,10 +50,8 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
     gpvc += ".exe";
 #endif
     if( !debugger->checkCommand( gpvc ) )
-    {
-        debugger->outPane()->appendLine( "\nWarning: gpvc executable doesn't exist:\n"+gpvc );
-        return false;
-    }
+        debugger->outPane()->appendLine( "\nWarning: gpvc executable not detected:\n"+gpvc );
+
     debugger->outPane()->appendText( "\nSearching for variables... " );
     gpvc    = addQuotes( gpvc );
     codPath = addQuotes( codPath );

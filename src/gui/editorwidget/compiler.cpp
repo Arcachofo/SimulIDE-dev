@@ -145,7 +145,7 @@ int Compiler::compile( bool debug )
     for( int i=0; i<m_command.size(); ++i )
     {
         QString command = m_toolPath + m_command.at(i);
-        if( !m_toolPath.isEmpty() && !checkCommand( command ) )
+        if( !checkCommand( command ) )
         {
             m_outPane->appendLine( "ERROR: "+command );
             toolChainNotFound();
@@ -297,8 +297,15 @@ void Compiler::compProps()
 
 bool Compiler::checkCommand( QString c )
 {
-    QString test = c + " -v";
+    QString executable = c.split(" ").first();
+
+    if( c.contains(":") || c.contains("/") ) // Full Path
+    {
+        return QFile::exists( executable );
+    }
+    QString test = executable + " -v";
     int exitCode = system( test.toLocal8Bit() );
     return exitCode == 0;
+
 }
 #include "moc_compiler.cpp"
