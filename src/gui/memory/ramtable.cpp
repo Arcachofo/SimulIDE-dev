@@ -130,7 +130,10 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     m_registerModel = new QStandardItemModel(this);
     registers->setModel( m_registerModel );
 
-    connect( registers, SIGNAL(doubleClicked(QModelIndex)),
+    /*connect( registers, SIGNAL(doubleClicked(QModelIndex)),
+             this,      SLOT(RegDoubleClick(QModelIndex)));*/
+
+    connect( registers, SIGNAL(activated(QModelIndex)),
              this,      SLOT(RegDoubleClick(QModelIndex)));
 
     connect( this, SIGNAL(customContextMenuRequested(const QPoint&)),
@@ -140,12 +143,13 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
              this, SLOT(addToWatch(QTableWidgetItem*)), Qt::UniqueConnection );
 }
 
-void RamTable::RegDoubleClick(const QModelIndex& index)
+void RamTable::RegDoubleClick( const QModelIndex& index )
 {
     m_currentRow = table->currentRow();
     if( m_currentRow < 0 ) return;
 
     setItemValue( 1, m_registerModel->item(index.row())->text() );
+    table->setCurrentCell( m_currentRow+1, 1 );
 }
 
 void RamTable::setStatusBits( QStringList statusBits )
