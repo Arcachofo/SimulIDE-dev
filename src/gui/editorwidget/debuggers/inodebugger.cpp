@@ -122,8 +122,7 @@ int InoDebugger::compile( bool )
     if( boardName.isEmpty() ){
         if( m_Ardboard == Custom ) boardSource = "Custom ";
         else                       boardSource = "Arduino";
-    }
-    else                           boardSource = "In File";
+    }else                          boardSource = "In File";
 
     if( m_Ardboard < Custom ) boardName = "arduino:avr:"+m_ArdboardList.at( m_Ardboard );
     else                      boardName = m_customBoard;
@@ -183,6 +182,8 @@ bool InoDebugger::postProcess()
 QString InoDebugger::getBoard()
 {
     QString board = m_board.toLower();
+    if( board.isEmpty() ) return board;
+
     if( board == "duemilanove" ) board = "diecimila";
     else if( board == "mega" )   board = "megaADK";
 
