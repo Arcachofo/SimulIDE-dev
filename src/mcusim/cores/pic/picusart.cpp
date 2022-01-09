@@ -31,13 +31,15 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
 {
     m_enabled = false;
 
+    m_SPBRG  = NULL;
+    m_SPBRGL = NULL;
     m_SPBRGH = NULL;
 
     m_PIR1  = mcu->getReg( "PIR1" );
     m_TXSTA = mcu->getReg( "TXSTA" );
     m_RCSTA = mcu->getReg( "RCSTA" );
-    if( mcu->regExist( "SPBRG") )  m_SPBRGL = mcu->getReg( "SPBRG" );
-    else                           m_SPBRGL = mcu->getReg( "SPBRGL" );
+    if( mcu->regExist( "SPBRG") )  m_SPBRG  = mcu->getReg( "SPBRG" );
+    if( mcu->regExist( "SPBRGL") ) m_SPBRGL = mcu->getReg( "SPBRGL" );
     if( mcu->regExist( "SPBRGH") ) m_SPBRGH = mcu->getReg( "SPBRGH" );
 
     m_SPEN = getRegBits( "SPEN", mcu );
@@ -56,7 +58,8 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
     m_FERR = getRegBits( "FERR", mcu );
     m_OERR = getRegBits( "OERR", mcu );
 
-    watchRegNames( "SPBRGL", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
+    if( m_SPBRG  ) watchRegNames( "SPBRG", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
+    if( m_SPBRGL ) watchRegNames( "SPBRGL", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
     if( m_SPBRGH ) watchRegNames( "SPBRGH", R_WRITE, this, &PicUsart::setSPBRGH, mcu );
 }
 PicUsart::~PicUsart(){}

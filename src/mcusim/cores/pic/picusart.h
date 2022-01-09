@@ -56,6 +56,7 @@ class MAINMODULE_EXPORT PicUsart : public McuUsart
         uint8_t*  m_PIR1;
         uint8_t*  m_TXSTA;
         uint8_t*  m_RCSTA;
+        uint8_t*  m_SPBRG;
         uint8_t*  m_SPBRGL;
         uint8_t*  m_SPBRGH;
 
