@@ -56,8 +56,25 @@ class MAINMODULE_EXPORT Pic14eCore : public PicMrCore
         virtual uint8_t GET_RAM( uint16_t addr ) override //
         {
             addr = m_mcu->getMapperAddr( addr+m_bank );
-            if     ( addr == 0 ) addr = getFSR0(); // INDF0
-            else if( addr == 1 ) addr = getFSR1(); // INDF1
+
+            if( addr == 0 )        // INDF0
+            {
+                addr = getFSR0();
+                if( addr & 1<<15 ) // Read Program Memory
+                {
+                    addr &= ~(1<<15);
+                    return m_progMem[addr];
+                }
+            }
+            else if( addr == 1 )   // INDF1
+            {
+                addr = getFSR1();
+                if( addr & 1<<15 ) // Read Program Memory
+                {
+                    addr &= ~(1<<15);
+                     return m_progMem[addr];
+                }
+            }
             return McuCore::GET_RAM( addr );
         }
         virtual void SET_RAM( uint16_t addr, uint8_t v ) override //
