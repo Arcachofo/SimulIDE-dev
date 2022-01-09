@@ -53,19 +53,22 @@ Lm555::Lm555( QObject* parent, QString type, QString id )
      , m_resD(  (id+"-resD") )
 {
     m_area = QRect( 0, 0, 8*4, 8*5 );
-    m_color = QColor( 50, 50, 70 );
+    //m_color = QColor( 50, 50, 70 );
     
     m_pin.resize( 8 );
     
     m_Gnd = new Pin( 180, QPoint(-8, 8*1), id+"-ePin0", 0, this );
+    m_Gnd->setLabelColor( QColor( 0, 0, 0 ) );
     m_Gnd->setLabelText( "Gnd" );
     m_pin[0] = m_Gnd;
 
     m_trigger = new Pin( 180, QPoint(-8, 8*2), id+"-ePin1", 1, this );
+    m_trigger->setLabelColor( QColor( 0, 0, 0 ) );
     m_trigger->setLabelText( "Trg" );
     m_pin[1] = m_trigger;
 
     m_output = new IoPin( 180, QPoint(-8, 8*3), id+"-ePin2", 2, this, output );
+    m_output->setLabelColor( QColor( 0, 0, 0 ) );
     m_output->setLabelText( "Out" );
     m_output->setOutputImp( 10 );
     m_output->setOutLowV( 0 );
@@ -74,22 +77,27 @@ Lm555::Lm555( QObject* parent, QString type, QString id )
     m_pin[2] = m_output;
 
     m_Reset = new Pin( 180, QPoint(-8, 8*4), id+"-ePin3", 3, this );
+    m_Reset->setLabelColor( QColor( 0, 0, 0 ) );
     m_Reset->setLabelText( "Rst" );
     m_pin[3] = m_Reset;
 
     m_cv = new Pin( 0, QPoint(4*8+8, 8*4), id+"-ePin4", 4, this );
+    m_cv->setLabelColor( QColor( 0, 0, 0 ) );
     m_cv->setLabelText( "CV" );
     m_pin[4] = m_cv;
 
     m_threshold = new Pin( 0, QPoint(4*8+8, 8*3), id+"-ePin5", 5, this );
+    m_threshold->setLabelColor( QColor( 0, 0, 0 ) );
     m_threshold->setLabelText( "Thr" );
     m_pin[5] = m_threshold;
 
     m_discharge = new Pin( 0, QPoint(4*8+8, 8*2), id+"-ePin6", 6, this );
+    m_discharge->setLabelColor( QColor( 0, 0, 0 ) );
     m_discharge->setLabelText( "Dis" );
     m_pin[6] = m_discharge;
 
     m_Vcc = new Pin( 0, QPoint(4*8+8, 8*1),id+"-ePin7", 7, this );
+    m_Vcc->setLabelColor( QColor( 0, 0, 0 ) );
     m_Vcc->setLabelText( "Vcc" );
     m_pin[7] = m_Vcc;
 
@@ -200,6 +208,6 @@ void Lm555::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
 
     p->drawRoundedRect( m_area, 1, 1);
     
-    p->setPen( QColor( 170, 170, 150 ) );
+    //p->setPen( QColor( 170, 170, 150 ) );
     p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
 }

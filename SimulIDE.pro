@@ -1,6 +1,6 @@
 
 VERSION = "1.0.0"
-RELEASE = "-R779"
+RELEASE = "-R815"
 
 TEMPLATE = app
 TARGET = simulide
@@ -120,6 +120,8 @@ macx {
     QMAKE_LFLAGS   -= -stdlib=libc++
     DESTDIR = $$TARGET_PREFIX 
     mkpath( $$TARGET_PREFIX/simulide.app )
+    mkpath( $$TARGET_PREFIX/simulide.app/Contents/data )
+    mkpath( $$TARGET_PREFIX/simulide.app/Contents/examples )
     copy2dest.commands = \
         $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/simulide.app/Contents/data; \
         $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/simulide.app/Contents/examples;
