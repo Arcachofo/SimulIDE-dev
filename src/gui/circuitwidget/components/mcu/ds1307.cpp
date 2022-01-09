@@ -137,7 +137,7 @@ void DS1307::updtTime()
 }
 
 void DS1307::updtDate()
-{ m_clock.m_date.setDate( bcdToDec(m_data[6]), bcdToDec(m_data[5]), bcdToDec(m_data[4]) ); }
+{ m_clock.m_date.setDate( 2000+bcdToDec(m_data[6]), bcdToDec(m_data[5]), bcdToDec(m_data[4]) ); }
 
 void DS1307::updtCtrl()
 {
