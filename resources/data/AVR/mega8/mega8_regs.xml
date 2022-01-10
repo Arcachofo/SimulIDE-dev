@@ -133,11 +133,11 @@
     <register  name="SPMCR"   addr="0x0037"  reset=""  mask="11011111" 
                bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,0,RWWSB,SPMIE" />
 
-    <register  name="TIFR"   addr="0x0038"  reset=""  mask="11111101" 
-               bits="TOV0,0,TOV1,OCF1B,OCF1A,ICF1,TOV2,OCF2" />
+    <register  name="TIFR"   addr="0x0038"  reset=""  mask="00111100" 
+               bits="0,0,TOV1,OCF1B,OCF1A,ICF1,0,0" />
 
-    <register  name="TIMSK"  addr="0x0039"  reset=""  mask="11111101" 
-               bits="TOIE0,0,TOIE1,OCIE1B,OCIE1A,TICIE1,TOIE2,OCIE2" />
+    <register  name="TIMSK"  addr="0x0039"  reset=""  mask="00111100" 
+               bits="0,0,TOIE1,OCIE1B,OCIE1A,TICIE1,00,0" />
 
     <register  name="GIFR"    addr="0x003A"  reset=""  mask="" 
                bits="0,0,0,0,0,0INTF0,INTF1" />

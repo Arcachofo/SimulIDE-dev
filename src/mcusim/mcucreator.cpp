@@ -541,8 +541,9 @@ void McuCreator::createTimer( QDomElement* t )
         }
         else if( el.tagName() == "ocunit" )
         {
+            QString ocName = el.attribute("name");
             McuOcUnit* ocUnit = NULL;
-            if     ( m_core == "AVR" )   ocUnit = new AvrOcUnit( mcu, el.attribute("name") );
+            if     ( m_core == "AVR" )   ocUnit = new AvrOcUnit( mcu, ocName );
             //else if( m_core == "Pic14" ) ocUnit = new PicOcUnit( mcu, el.attribute("name") );
             if( !ocUnit ) continue;
 
@@ -560,11 +561,13 @@ void McuCreator::createTimer( QDomElement* t )
 
             if( !lowByte.isEmpty() ){
                 ocUnit->m_ocRegL = mcu->getReg( lowByte );
-                watchRegNames( lowByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteL, mcu );
+                /// OCRA should be managed in Timer
+                if( !ocName.endsWith("A") ) watchRegNames( lowByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteL, mcu );
             }
             if( !highByte.isEmpty() ){
                 ocUnit->m_ocRegH = mcu->getReg( highByte );
-                watchRegNames( highByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteH, mcu );
+                /// Low byte triggers red/write operations
+                ///watchRegNames( highByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteH, mcu );
             }
             if( el.hasAttribute("configbits") ) // This doesn't watch register, configure must be called from Timer
             {

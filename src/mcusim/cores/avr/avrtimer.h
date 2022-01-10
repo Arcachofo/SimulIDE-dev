@@ -138,7 +138,10 @@ class MAINMODULE_EXPORT AvrTimer16bit : public AvrTimer
         AvrTimer16bit( eMcu* mcu, QString name );
         ~AvrTimer16bit();
 
-        virtual void OCRXAchanged( uint8_t val ) { updtWgm(); }
+        void OCRXALchanged( uint8_t val );
+        void OCRXAHchanged( uint8_t val );
+        void ICRXLchanged( uint8_t val );
+        void ICRXHchanged( uint8_t val );
 
     protected:
         virtual void updtWgm() override;

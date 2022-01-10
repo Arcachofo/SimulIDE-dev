@@ -299,13 +299,14 @@ bool Compiler::checkCommand( QString c )
 {
     QString executable = c.split(" ").first();
 
-    if( c.contains(":") || c.contains("/") ) // Full Path
+    /*if( c.contains(":") || c.contains("/") ) // Full Path
     {
         return QFile::exists( executable );
-    }
-    QString test = executable + " -v";
-    int exitCode = system( test.toLocal8Bit() );
-    return exitCode == 0;
+    }*/
+    m_compProcess.start( executable  );
+    bool started = m_compProcess.waitForStarted();
+    if( started && !m_compProcess.waitForFinished(300) ) m_compProcess.kill();
 
+    return started;
 }
 #include "moc_compiler.cpp"

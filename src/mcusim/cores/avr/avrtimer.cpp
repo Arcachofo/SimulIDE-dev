@@ -187,13 +187,16 @@ void AvrTimer8bit::OCRXAchanged( uint8_t val )
                      ||(m_wgmMode == wgmFAST)) ) )
     { ovf = val; } // Top = OCRA
 
-    if( m_ovfMatch == ovf ) return;
-    m_ovfMatch = ovf;
+    if( m_ovfMatch != ovf )
+    {
+        m_ovfMatch = ovf;
 
-    if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
-    else            m_ovfPeriod = m_ovfMatch+1;
+        if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
+        else            m_ovfPeriod = m_ovfMatch+1;
 
-    sheduleEvents();
+        sheduleEvents();
+    }
+    m_OCA->ocrWriteL( val );
 }
 
 void AvrTimer8bit::setOCRXA( QString reg )
@@ -392,17 +395,48 @@ void AvrTimer16bit::updtWgm()
     if( shedule ) sheduleEvents();
 }
 
+void AvrTimer16bit::OCRXALchanged( uint8_t val )
+{
+    if( *m_ocrxaL == val ) return;
+    *m_ocrxaL = val;
+    updtWgm();
+    m_OCA->ocrWriteL( val );
+}
+
+void AvrTimer16bit::OCRXAHchanged( uint8_t val )
+{
+    if( *m_ocrxaH == val ) return;
+    *m_ocrxaH = val;
+    updtWgm();
+    m_OCA->ocrWriteH( val );
+}
+
 void AvrTimer16bit::setOCRXA( QString reg )
 {
     QStringList list = reg.split(",");
 
     reg = list.takeFirst();
     m_ocrxaL = m_mcu->getReg( reg );
-    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
+    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXALchanged, m_mcu );
 
     reg = list.takeFirst();
     m_ocrxaH = m_mcu->getReg( reg );
-    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
+    /// Low byte triggers red/write operations
+    /// watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAHchanged, m_mcu );
+}
+
+void AvrTimer16bit::ICRXLchanged( uint8_t val )
+{
+    if( *m_icrxL == val ) return;
+    *m_icrxL = val;
+    updtWgm();
+}
+
+void AvrTimer16bit::ICRXHchanged( uint8_t val )
+{
+    if( *m_icrxH == val ) return;
+    *m_icrxH = val;
+    updtWgm();
 }
 
 void AvrTimer16bit::setICRX( QString reg )
@@ -411,12 +445,12 @@ void AvrTimer16bit::setICRX( QString reg )
 
     reg = list.takeFirst();
     m_icrxL = m_mcu->getReg( reg );
-    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
+    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::ICRXLchanged, m_mcu );
 
     reg = list.takeFirst();
     m_icrxH = m_mcu->getReg( reg );
     /// Low byte triggers red/write operations
-    /// watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAchanged, m_mcu );
+    /// watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::ICRXLchanged, m_mcu );
 }
 
 void AvrTimer16bit::configureClock()

@@ -139,7 +139,7 @@ void PicPwmUnit::ocrWriteL( uint8_t val ) // CCPRxL
 {
     m_CCPRxL = val;
     m_comMatch = (m_comMatch & 0xFF00) | val;
-    m_timer->updtCount();
+    //m_timer->updtCount();
     sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
 }
 
