@@ -58,9 +58,6 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
  static MainWindow* self() { return m_pSelf; }
 
         QSettings* settings();
-
-        void loadPlugins();
-        void unLoadPugin( QString pluginName );
         
         void readSettings();
         
@@ -83,7 +80,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
 
         QString getHelpFile( QString name );
         
-        QTabWidget*  m_sidepanel;
+        QTabWidget* m_sidepanel;
 
     protected:
         void closeEvent( QCloseEvent* event );
@@ -93,8 +90,6 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
 
     private:
  static MainWindow* m_pSelf;
- 
-        void loadPluginsAt( QDir pluginsDir );
 
         Langs m_lang;
 

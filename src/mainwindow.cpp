@@ -86,7 +86,9 @@ MainWindow::MainWindow()
 
     QApplication::setStyle( QStyleFactory::create("Fusion") ); //applyStyle();
     createWidgets();
-    loadPlugins();
+
+    QDir compSetDir = m_filesDir.absoluteFilePath("data");
+    if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
     //readSettings();
 
     QString backPath = getConfigPath( "backup.sim1" );
@@ -154,26 +156,25 @@ void MainWindow::setFontScale(float scale )
 
 QString MainWindow::loc()
 {
-    QString locale = "en";
-    if     ( m_lang == Czech )      locale = "cz";
-    if     ( m_lang == French )     locale = "fr";
-    else if( m_lang == German )     locale = "de";
-    else if( m_lang == Italian )    locale = "it";
-    else if( m_lang == Russian )    locale = "ru";
-    else if( m_lang == Spanish )    locale = "es";
-    else if( m_lang == Portuguese ) locale = "pt_PT";
-    else if( m_lang == Pt_Brasil )  locale = "pt_BR";
-    else if( m_lang == Dutch )      locale = "nl";
-    else if( m_lang == Turkish )    locale = "tr";
+    if( m_lang == Czech )      return "cz";
+    if( m_lang == French )     return "fr";
+    if( m_lang == German )     return "de";
+    if( m_lang == Italian )    return "it";
+    if( m_lang == Russian )    return "ru";
+    if( m_lang == Spanish )    return "es";
+    if( m_lang == Portuguese ) return "pt_PT";
+    if( m_lang == Pt_Brasil )  return "pt_BR";
+    if( m_lang == Dutch )      return "nl";
+    if( m_lang == Turkish )    return "tr";
 
-    return locale;
+    return "en";
 }
 
 void MainWindow::setLoc( QString loc )
 {
     Langs lang = English;
     if     ( loc == "cz" )    lang = Czech;
-    if     ( loc == "fr" )    lang = French;
+    else if( loc == "fr" )    lang = French;
     else if( loc == "de" )    lang = German;
     else if( loc == "it" )    lang = Italian;
     else if( loc == "ru" )    lang = Russian;
@@ -297,108 +298,6 @@ QString MainWindow::getHelpFile( QString name )
     m_help[name] = help;
     return help;
 }
-
-void MainWindow::loadPlugins()
-{
-    // Load main Plugins
-    QDir pluginsDir( qApp->applicationDirPath() );
-
-    pluginsDir.cd( "../lib/simulide/plugins" );
-    
-    loadPluginsAt( pluginsDir );
-
-    // Load main Component Sets
-    QDir compSetDir = m_filesDir.absoluteFilePath("data");
-
-    if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
-
-    // Load Addons
-    QString userPluginsPath = getConfigPath("addons");
-    
-    pluginsDir.setPath( userPluginsPath );
-
-    if( !pluginsDir.exists() ) return;
-
-    for( QString pluginFolder : pluginsDir.entryList( QDir::Dirs ) )
-    {
-        if( pluginFolder.contains( "." ) ) continue;
-        pluginsDir.cd( pluginFolder );
-
-        ComponentSelector::self()->LoadCompSetAt( pluginsDir );
-
-        if( pluginsDir.entryList( QDir::Dirs ).contains( "lib"))
-        {
-            pluginsDir.cd( "lib" );
-            loadPluginsAt( pluginsDir );
-            pluginsDir.cd( "../" );
-        }
-        pluginsDir.cd( "../" );
-}   }
-
-void MainWindow::loadPluginsAt( QDir pluginsDir )
-{
-    QString pluginName = "*plugin";
-
-#ifndef Q_OS_UNIX
-    pluginName += ".dll";
-#else
-    pluginName += ".so";
-#endif
-
-    pluginsDir.setNameFilters( QStringList(pluginName) );
-
-    QStringList fileList = pluginsDir.entryList( QDir::Files );
-
-    if( fileList.isEmpty() ) return;                                    // No plugins to load
-
-    qDebug() << "\n    Loading Plugins at:\n"<<pluginsDir.absolutePath()<<"\n";
-
-    for( QString libName : fileList )
-    {
-        pluginName = libName.split(".").first().remove("lib").remove("plugin").toUpper();
-            
-        if( m_plugins.contains(pluginName) ) continue;
-
-        QPluginLoader* pluginLoader = new QPluginLoader( pluginsDir.absoluteFilePath( libName ) );
-        QObject* plugin = pluginLoader->instance();
-
-        if( plugin )
-        {
-            AppIface* item = qobject_cast<AppIface*>( plugin );
-
-            if( item )
-            {
-                item->initialize();
-                m_plugins[pluginName] = pluginLoader;
-                qDebug()<< "        Plugin Loaded Successfully:\t" << pluginName;
-            }else{
-                pluginLoader->unload();
-                delete pluginLoader;
-        }   }
-        else{
-            QString errorMsg = pluginLoader->errorString();
-            qDebug()<< "        " << pluginName << "\tplugin FAILED: " << errorMsg;
-
-            if( errorMsg.contains( "libQt5SerialPort" ) )
-                errorMsg = tr( " Qt5SerialPort is not installed in your system\n\n    Mcu SerialPort will not work\n    Just Install libQt5SerialPort package\n    To have Mcu Serial Port Working" );
-
-            QMessageBox::warning( 0,tr( "Plugin Error:" ), errorMsg );
-    }   }
-    qDebug() << "\n";
-}
-
-void MainWindow::unLoadPugin( QString pluginName )
-{
-    if( m_plugins.contains( pluginName ) )
-    {
-        QPluginLoader* pluginLoader = m_plugins[pluginName];
-        QObject* plugin = pluginLoader->instance();
-        AppIface* item = qobject_cast<AppIface*>( plugin );
-        item->terminate();
-        pluginLoader->unload();
-        m_plugins.remove( pluginName );
-        delete pluginLoader;
-}   }
 
 QSettings* MainWindow::settings() { return m_settings; }
 

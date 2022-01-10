@@ -770,6 +770,10 @@ Do you want to save your changes?
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>All files (*.*)</source>
+        <translation type="unfinished">Все файлы (*.*)</translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -863,11 +867,19 @@ Do you want to save your changes?
     </message>
     <message>
         <source>: ToolChain not found</source>
-        <translation type="unfinished">: Инструменты не найдены</translation>
+        <translation type="obsolete">: Инструменты не найдены</translation>
     </message>
     <message>
         <source>Set proper ToolChain Path</source>
-        <translation type="unfinished">Установите правильный путь к каталогу тулчейна</translation>
+        <translation type="obsolete">Установите правильный путь к каталогу тулчейна</translation>
+    </message>
+    <message>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check that Tool Path is correct</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1862,6 +1874,13 @@ Do you want to save your changes?
     <message>
         <source> Function:</source>
         <translation type="unfinished"> Функция:</translation>
+    </message>
+</context>
+<context>
+    <name>Gate</name>
+    <message>
+        <source>Randomize PD</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3033,12 +3052,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Логика</translation>
     </message>
     <message>
-        <source>Error:
-Not valid Package file:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished">Не удаётся записать файл %1:
@@ -3210,6 +3223,12 @@ Not valid Package file:
     </message>
     <message>
         <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error:
+Not valid Package file:
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -770,6 +770,10 @@ Sollen die Änderungen gespeichert werden?
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>All files (*.*)</source>
+        <translation type="unfinished">Alle Dateien (*.*)</translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -862,10 +866,14 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>: ToolChain not found</source>
-        <translation type="unfinished">: ToolChain nicht gefunden</translation>
+        <translation type="obsolete">: ToolChain nicht gefunden</translation>
     </message>
     <message>
-        <source>Set proper ToolChain Path</source>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check that Tool Path is correct</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1860,6 +1868,13 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source> Function:</source>
         <translation type="unfinished"> Funktion:</translation>
+    </message>
+</context>
+<context>
+    <name>Gate</name>
+    <message>
+        <source>Randomize PD</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3031,12 +3046,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Logikkomponenten</translation>
     </message>
     <message>
-        <source>Error:
-Not valid Package file:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished">Datei &quot;%1&quot; kann nicht gespeichert werden:
@@ -3208,6 +3217,12 @@ Not valid Package file:
     </message>
     <message>
         <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error:
+Not valid Package file:
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

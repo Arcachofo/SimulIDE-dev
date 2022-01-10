@@ -770,6 +770,10 @@ Vuoi salvare le modifiche?
         <source>&amp;%1 %2</source>
         <translation type="unfinished">&amp;%1 %2</translation>
     </message>
+    <message>
+        <source>All files (*.*)</source>
+        <translation type="unfinished">Tutti i files (*.*)</translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -862,10 +866,14 @@ Vuoi salvare le modifiche?
     </message>
     <message>
         <source>: ToolChain not found</source>
-        <translation type="unfinished">: ToolChain non trovata</translation>
+        <translation type="obsolete">: ToolChain non trovata</translation>
     </message>
     <message>
-        <source>Set proper ToolChain Path</source>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check that Tool Path is correct</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1860,6 +1868,13 @@ Vuoi salvare le modifiche?
     <message>
         <source> Function:</source>
         <translation type="unfinished"> Funzione:</translation>
+    </message>
+</context>
+<context>
+    <name>Gate</name>
+    <message>
+        <source>Randomize PD</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3031,12 +3046,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Logica</translation>
     </message>
     <message>
-        <source>Error:
-Not valid Package file:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished">Non posso scrivere il file %1:
@@ -3208,6 +3217,12 @@ Not valid Package file:
     </message>
     <message>
         <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error:
+Not valid Package file:
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

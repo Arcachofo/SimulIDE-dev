@@ -790,6 +790,10 @@ Değişiklikler kaydedilsin mi?
         <source>&amp;%1 %2</source>
         <translation type="unfinished">&amp;%1 %2</translation>
     </message>
+    <message>
+        <source>All files (*.*)</source>
+        <translation type="unfinished">Tüm dosyalar (*.*)</translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -882,10 +886,14 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>: ToolChain not found</source>
-        <translation type="unfinished">: Toolchain bulunamadı</translation>
+        <translation type="obsolete">: Toolchain bulunamadı</translation>
     </message>
     <message>
-        <source>Set proper ToolChain Path</source>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check that Tool Path is correct</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1879,6 +1887,13 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source> Function:</source>
         <translation type="unfinished"> Fonksiyon:</translation>
+    </message>
+</context>
+<context>
+    <name>Gate</name>
+    <message>
+        <source>Randomize PD</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3049,12 +3064,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Mantık</translation>
     </message>
     <message>
-        <source>Error:
-Not valid Package file:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished">%1 dosyasına yazılamıyor: %2.</translation>
@@ -3225,6 +3234,12 @@ Not valid Package file:
     </message>
     <message>
         <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error:
+Not valid Package file:
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

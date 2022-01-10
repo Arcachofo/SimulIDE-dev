@@ -766,6 +766,10 @@ Do you want to save your changes?
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -857,11 +861,11 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>: ToolChain not found</source>
+        <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set proper ToolChain Path</source>
+        <source>Check that Tool Path is correct</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1850,6 +1854,13 @@ Do you want to save your changes?
     </message>
     <message>
         <source> Function:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Gate</name>
+    <message>
+        <source>Randomize PD</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3017,12 +3028,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error:
-Not valid Package file:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished"></translation>
@@ -3193,6 +3198,12 @@ Not valid Package file:
     </message>
     <message>
         <source>Voltmeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error:
+Not valid Package file:
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

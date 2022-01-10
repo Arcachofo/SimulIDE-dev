@@ -136,11 +136,12 @@ QDomDocument fileToDomDoc( const QString &fileName, const QString &caller )
         return domDoc;
     }
     QString error;
-    int errorLine;
-    if( !domDoc.setContent( &file, &error, &errorLine ) )
+    int errorLine=0;
+    int errorColumn=0;
+    if( !domDoc.setContent( &file, false, &error, &errorLine, &errorColumn ) )
     {
          MessageBoxNB( caller, "Cannot set file to DomDocument:\n\n"+fileName );
-         qDebug() << caller << "Cannot set file to DomDocument:\n"<<fileName<<":\nLine"<<errorLine+"\n";
+         qDebug() << caller << "Cannot set file to DomDocument:\n"<<fileName<<":\nLine"<<errorLine<<errorColumn+"\n";
          qDebug() << error;
          domDoc.clear();
     }
