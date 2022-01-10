@@ -31,6 +31,8 @@ enum wgmMode_t{
 
 class MAINMODULE_EXPORT AvrTimer : public McuTimer
 {
+    friend class McuCreator;
+
     public:
         AvrTimer( eMcu* mcu, QString name );
         ~AvrTimer();
@@ -45,9 +47,10 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         virtual void configureA( uint8_t newTCCRXA ) override;
         virtual void configureB( uint8_t newTCCRXB ) override;
 
+        virtual void OCRXAchanged( uint8_t val ){;}
+
     protected:
-        virtual void updtWgm()=0;
-        virtual void setOCRXA( QString reg )=0;
+        virtual void updtWgm(){;}
         virtual void configureClock();
         void configureExtClock();
         void configureOcUnits( bool wgm3 );
@@ -70,11 +73,11 @@ class MAINMODULE_EXPORT AvrTimer8bit : public AvrTimer
         AvrTimer8bit( eMcu* mcu, QString name );
         ~AvrTimer8bit();
 
-        virtual void OCRXAchanged( uint8_t val );
+        virtual void OCRXAchanged( uint8_t val ) override;
 
     protected:
         virtual void updtWgm() override;
-        virtual void setOCRXA( QString reg ) override;
+
 };
 
 class MAINMODULE_EXPORT AvrTimer800 : public AvrTimer8bit
@@ -138,14 +141,12 @@ class MAINMODULE_EXPORT AvrTimer16bit : public AvrTimer
         AvrTimer16bit( eMcu* mcu, QString name );
         ~AvrTimer16bit();
 
-        void OCRXALchanged( uint8_t val );
-        void OCRXAHchanged( uint8_t val );
+        virtual void OCRXAchanged( uint8_t val ) override;
         void ICRXLchanged( uint8_t val );
-        void ICRXHchanged( uint8_t val );
+        //void ICRXHchanged( uint8_t val );
 
     protected:
         virtual void updtWgm() override;
-        virtual void setOCRXA( QString reg ) override;
         virtual void configureClock() override;
         void setICRX( QString reg );
 

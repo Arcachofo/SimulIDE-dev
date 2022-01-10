@@ -161,8 +161,6 @@ void AvrTimer::configureOcUnits( bool wgm3 )
 //--------------------------------------------------
 // TIMER 8 Bit--------------------------------------
 
-#define OCRXA8 m_ocrxaL[0]
-
 AvrTimer8bit::AvrTimer8bit( eMcu* mcu, QString name )
             : AvrTimer( mcu, name )
 {
@@ -174,21 +172,21 @@ void AvrTimer8bit::updtWgm()
 {
     m_wgmMode = (wgmMode_t)m_WGM10;
     configureOcUnits( !m_WGM32 );
-    OCRXAchanged( OCRXA8 );
+    OCRXAchanged( *m_ocrxaL );
 }
 
 void AvrTimer8bit::OCRXAchanged( uint8_t val )
 {
     if( *m_ocrxaL == val ) return;
+    *m_ocrxaL = val;
 
     uint16_t  ovf = 0xFF;
     if( (m_wgmMode == wgmCTC)
-      ||((m_WGM32) && ((m_wgmMode == wgmPHAS)
-                     ||(m_wgmMode == wgmFAST)) ) )
+      ||((m_WGM32) && ( (m_wgmMode == wgmPHAS)
+                      ||(m_wgmMode == wgmFAST)) ) )
     { ovf = val; } // Top = OCRA
 
-    if( m_ovfMatch != ovf )
-    {
+    if( m_ovfMatch != ovf ){
         m_ovfMatch = ovf;
 
         if( m_bidirec ) m_ovfPeriod = m_ovfMatch;
@@ -199,19 +197,12 @@ void AvrTimer8bit::OCRXAchanged( uint8_t val )
     m_OCA->ocrWriteL( val );
 }
 
-void AvrTimer8bit::setOCRXA( QString reg )
-{
-    m_ocrxaL = m_mcu->getReg( reg );
-    watchRegNames( reg, R_WRITE, this, &AvrTimer8bit::OCRXAchanged, m_mcu );
-}
-
 //--------------------------------------------------
 // TIMER 0 -----------------------------------------
 
 AvrTimer800::AvrTimer800( eMcu* mcu, QString name)
           : AvrTimer8bit( mcu, name )
 {
-    setOCRXA( "OCR0A" );
 }
 AvrTimer800::~AvrTimer800(){}
 
@@ -260,8 +251,7 @@ void AvrTimer801::configureClock()
         /// if     ( m_prIndex == 6 ) m_clkEdge = Clock_Falling;
         /// else if( m_prIndex == 7 ) m_clkEdge = Clock_Rising;
     }
-    else                //AvrTimer::configureClock();
-    {
+    else{               //AvrTimer::configureClock();
         m_prescaler = m_prescList.at( m_prIndex );
         m_clkSrc = clkMCU;
     }
@@ -273,7 +263,6 @@ void AvrTimer801::configureClock()
 AvrTimer810::AvrTimer810( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
-    //setOCRXA( "OCR0A" );
 }
 AvrTimer810::~AvrTimer810(){}
 
@@ -313,7 +302,6 @@ void AvrTimer810::configureClock()
 AvrTimer820::AvrTimer820( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
-    setOCRXA( "OCR2A" );
 }
 AvrTimer820::~AvrTimer820(){}
 
@@ -323,7 +311,6 @@ AvrTimer820::~AvrTimer820(){}
 AvrTimer821::AvrTimer821( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
-    setOCRXA( "OCR2" );
 }
 AvrTimer821::~AvrTimer821(){}
 
@@ -358,7 +345,6 @@ AvrTimer16bit::AvrTimer16bit( eMcu* mcu, QString name )
     m_maxCount = 0xFFFF;
 
     QString num = name.right(1);
-    setOCRXA( "OCR"+num+"AL,OCR"+num+"AH" );
     setICRX( "ICR"+num+"L,ICR"+num+"H" );
 }
 AvrTimer16bit::~AvrTimer16bit(){}
@@ -395,34 +381,12 @@ void AvrTimer16bit::updtWgm()
     if( shedule ) sheduleEvents();
 }
 
-void AvrTimer16bit::OCRXALchanged( uint8_t val )
+void AvrTimer16bit::OCRXAchanged( uint8_t val )
 {
     if( *m_ocrxaL == val ) return;
     *m_ocrxaL = val;
     updtWgm();
     m_OCA->ocrWriteL( val );
-}
-
-void AvrTimer16bit::OCRXAHchanged( uint8_t val )
-{
-    if( *m_ocrxaH == val ) return;
-    *m_ocrxaH = val;
-    updtWgm();
-    m_OCA->ocrWriteH( val );
-}
-
-void AvrTimer16bit::setOCRXA( QString reg )
-{
-    QStringList list = reg.split(",");
-
-    reg = list.takeFirst();
-    m_ocrxaL = m_mcu->getReg( reg );
-    watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXALchanged, m_mcu );
-
-    reg = list.takeFirst();
-    m_ocrxaH = m_mcu->getReg( reg );
-    /// Low byte triggers red/write operations
-    /// watchRegNames( reg, R_WRITE, this, &AvrTimer16bit::OCRXAHchanged, m_mcu );
 }
 
 void AvrTimer16bit::ICRXLchanged( uint8_t val )
@@ -432,12 +396,12 @@ void AvrTimer16bit::ICRXLchanged( uint8_t val )
     updtWgm();
 }
 
-void AvrTimer16bit::ICRXHchanged( uint8_t val )
+/*void AvrTimer16bit::ICRXHchanged( uint8_t val )
 {
     if( *m_icrxH == val ) return;
     *m_icrxH = val;
     updtWgm();
-}
+}*/
 
 void AvrTimer16bit::setICRX( QString reg )
 {
