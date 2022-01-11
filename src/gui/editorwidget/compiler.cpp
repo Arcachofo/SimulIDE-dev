@@ -225,6 +225,7 @@ int Compiler::getError( QString txt )
         if( !line.contains( QRegExp("\\berror\\b") ) ) continue;
         error = 1;
         QStringList words = line.split(":");
+        if( words.size() < 2 ) break;
         bool ok = false;
         int e = words.at(1).toInt( &ok );
         if( ok && e>0 ) error = e;
@@ -303,9 +304,12 @@ bool Compiler::checkCommand( QString c )
     {
         return QFile::exists( executable );
     }*/
-    m_compProcess.start( executable  );
-    bool started = m_compProcess.waitForStarted();
-    if( started && !m_compProcess.waitForFinished(300) ) m_compProcess.kill();
+    QProcess check;
+    check.start( executable  );
+    bool started = check.waitForStarted();
+    if( started && !check.waitForFinished(1000) ) check.kill();
+    check.readAllStandardError();
+    check.readAllStandardOutput();
 
     return started;
 }
