@@ -229,8 +229,13 @@ void Circuit::loadStrDoc( QString &doc )
             }   }
             if( type.isEmpty() ) { qDebug() << "ERROR: Component with no type:"<<label<< uid; continue;}
 
-            if( m_pasting ) newUid = type+"-"+newSceneId(); // Create new id
-            else            newUid = uid;
+            if( m_pasting ) // Create new id
+            {
+                if( type == "Subcircuit" || type == "MCU" )
+                     newUid = uid.split("-").first()+"-"+newSceneId();
+                else newUid = type+"-"+newSceneId();
+            }
+            else     newUid = uid;
 
             if( type == "Connector" )
             {
