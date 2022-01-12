@@ -99,6 +99,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         bool m_inpState;
         bool m_outState;
+        bool m_oldState;
         bool m_stateZ;
         bool m_outCtrl;
         bool m_dirCtrl;

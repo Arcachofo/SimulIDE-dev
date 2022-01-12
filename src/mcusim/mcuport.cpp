@@ -76,9 +76,7 @@ void McuPort::outChanged( uint8_t val )
 
     for( int i=0; i<m_numPins; ++i )
     {
-        if( ( changed & 1<<i )        // Pin changed
-         && (!m_pins[i]->m_outCtrl )) // Port is controlling Pin State
-            m_pins[i]->setPortState( val & (1<<i) );
+        if( changed & (1<<i) ) m_pins[i]->setPortState( val & (1<<i) ); // Pin changed
 }   }
 
 void McuPort::dirChanged( uint8_t val )

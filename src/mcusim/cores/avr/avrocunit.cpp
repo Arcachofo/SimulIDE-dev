@@ -38,6 +38,6 @@ void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
          m_ocPin->controlPin( false, false );
     }
     else{                       // OC Pin connected
-         m_ocPin->controlPin( true, true );
+         m_ocPin->controlPin( true, false );
          m_ocPin->setOutState( false );
 }   }

@@ -186,17 +186,26 @@ void IoPin::setInverted( bool inverted )
 
 void IoPin::controlPin( bool outCtrl, bool dirCtrl )
 {
-    m_outCtrl = outCtrl;
-
-    if( dirCtrl && !dirCtrl )      // Someone is getting control
+    if( dirCtrl && !m_dirCtrl )      // Someone is getting control
     {
         m_oldPinMode = m_pinMode;  // Save old Pin Mode to restore later
     }
-    else if( !dirCtrl && dirCtrl ) // External control is being released
+    else if( !dirCtrl && m_dirCtrl ) // External control is being released
     {
-        setPinMode( m_oldPinMode ); // Set Previous Pin MOde
+        setPinMode( m_oldPinMode ); // Set Previous Pin Direction
     }
     m_dirCtrl = dirCtrl;
+
+    if( outCtrl && !m_outCtrl )      // Someone is getting control
+    {
+        m_oldState = m_outState;  // Save old Pin State to restore later
+    }
+    else if( !outCtrl && m_outCtrl ) // External control is being released
+    {
+        if( m_pinMode > input ) setOutState( m_oldState ); // Set Previous Pin State
+        else                    m_outState = m_oldState;
+    }
+    m_outCtrl = outCtrl;
 }
 
 void IoPin::stampAll()

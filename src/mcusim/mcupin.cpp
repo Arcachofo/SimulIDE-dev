@@ -91,6 +91,9 @@ void McuPin::voltChanged()
 
 void McuPin::setPortState( bool state )
 {
+    m_oldState = state;
+    if( m_outCtrl ) return; // Port is not controlling Pin State
+
     m_outState = state;
     if( !m_isOut ) return;
     IoPin::setOutState( state );
