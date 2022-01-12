@@ -34,7 +34,8 @@ eClockedDevice::~eClockedDevice(){}
 
 void eClockedDevice::initialize()
 {
-    m_clock = false;
+    if( m_clkPin ) m_clock = m_clkPin->inverted();
+    else           m_clock = false;
 }
 
 void eClockedDevice::stamp()
