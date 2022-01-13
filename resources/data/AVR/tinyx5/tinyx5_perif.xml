@@ -8,7 +8,7 @@
     </port>
     
     <timer name="TIMER0" type="800" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
-        <prescaler select="CS10,CS11,CS12" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+        <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
         <extclock type="PIN" source="PORTB2"/>
         
         <ocunit name="OC0A" pin="PORTB0" ocreg="OCR0A" configbits="COM0A0,COM0A1">
@@ -22,7 +22,7 @@
         <interrupt name="T0_OVF" />
     </timer>
     
-    <timer name="TIMER1" type="810" counter="TCNT1" configregsA="GTCCR" configregsB="TCCR1">
+    <timer name="TIMER1" type="810" counter="TCNT1" topreg0="OCR1C" configregsA="TCCR1" configregsB="GTCCR">
         <prescaler select="CS10,CS11,CS12,CS13" values="0,1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384"/>
         
         <ocunit name="OC1A" pin="PORTB1" ocreg="OCR1AL,OCR1AH" configbits="COM1A0,COM1A1">

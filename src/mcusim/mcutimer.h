@@ -55,6 +55,8 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         virtual void addOcUnit( McuOcUnit* ocUnit ) { m_ocUnit.emplace_back( ocUnit ); }
         virtual McuOcUnit* getOcUnit( QString name ) {return NULL;}
 
+        virtual void topReg0Changed( uint8_t val ){;}
+
         uint32_t getCount();
         QString  name()     { return m_name; }
         uint64_t scale()    { return m_scale; }
@@ -92,6 +94,9 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         uint64_t m_ovfCycle;  // absolute cycle of next overflow
 
         uint8_t m_mode;
+
+        uint8_t* m_topReg0L;
+        uint8_t* m_topReg0H;
 
         std::vector<McuOcUnit*> m_ocUnit; // Output Compare Units
 };

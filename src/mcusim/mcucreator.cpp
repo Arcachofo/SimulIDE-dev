@@ -516,17 +516,17 @@ void McuCreator::createTimer( QDomElement* t )
         QString enable = t->attribute("enable");
         watchBitNames( enable, R_WRITE, timer, &McuTimer::enable, mcu );
     }
-    /*if( t->hasAttribute("icreg") ) /// Still done in AvrTimer16bit
+    QString topReg0 = "";
+    if( t->hasAttribute("topreg0") ) /// Still done in AvrTimer16bit
     {
-        AvrTimer16bit* avrTimer = (AvrTimer16bit*)timer;
-        QString icreg = t->attribute("icreg");
-        QStringList list = icreg.split(",");
+        topReg0 = t->attribute("topreg0");
+        QStringList list = topReg0.split(",");
 
-        avrTimer->m_icrxL = mcu->getReg( list.takeFirst() );
-        watchRegNames( icreg, R_WRITE, avrTimer, &AvrTimer16bit::ICRXLchanged, mcu );
+        timer->m_topReg0L = mcu->getReg( list.takeFirst() );
+        watchRegNames( topReg0, R_WRITE, timer, &McuTimer::topReg0Changed, mcu );
 
-        if( !list.isEmpty() ) avrTimer->m_icrxH = mcu->getReg( list.takeFirst() );
-    }*/
+        if( !list.isEmpty() ) timer->m_topReg0H = mcu->getReg( list.takeFirst() );
+    }
     setConfigRegs( t, timer );
 
     QDomNode node = t->firstChild();
@@ -557,7 +557,6 @@ void McuCreator::createTimer( QDomElement* t )
             if     ( m_core == "AVR" )   ocUnit = new AvrOcUnit( mcu, ocName );
             //else if( m_core == "Pic14" ) ocUnit = new PicOcUnit( mcu, el.attribute("name") );
             if( !ocUnit ) { node = node.nextSibling(); continue; }
-            AvrTimer* avrTimer = (AvrTimer*)timer;
 
             McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );
 
@@ -574,17 +573,17 @@ void McuCreator::createTimer( QDomElement* t )
             if( !lowByte.isEmpty() ){
                 uint8_t* ocRegL = mcu->getReg( lowByte );
                 ocUnit->m_ocRegL = ocRegL;
-                if( ocName.endsWith("A") )
+                if( topReg0 == "" && ocName.endsWith("A") ) // OCRA managed in Timer
                 {
-                    avrTimer->m_ocrxaL = ocRegL;     // OCRA managed in Timer
-                    watchRegNames( lowByte, R_WRITE, avrTimer, &AvrTimer::OCRXAchanged, mcu );
+                    timer->m_topReg0L = ocRegL;
+                    watchRegNames( lowByte, R_WRITE, timer, &McuTimer::topReg0Changed, mcu );
                 }
                 else watchRegNames( lowByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteL, mcu );
             }
             if( !highByte.isEmpty() ){
                 uint8_t* ocRegH = mcu->getReg( highByte );
                 ocUnit->m_ocRegH = ocRegH;
-                if( ocName.endsWith("A") ) avrTimer->m_ocrxaH = ocRegH;
+                if( ocName.endsWith("A") ) timer->m_topReg0H = ocRegH;
                 /// Low byte triggers red/write operations
                 ///watchRegNames( highByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteH, mcu );
             }
