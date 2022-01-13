@@ -75,7 +75,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void setInverted( bool inverted ) override;
 
-        virtual void controlPin( bool outCtrl , bool dirCtrl );
+        virtual void controlPin( bool outCtrl , bool dirCtrl ){;}
 
     protected:
         void updtState();
@@ -99,13 +99,9 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         bool m_inpState;
         bool m_outState;
-        bool m_oldState;
         bool m_stateZ;
-        bool m_outCtrl;
-        bool m_dirCtrl;
 
         pinMode_t m_pinMode;
-        pinMode_t m_oldPinMode;
 
         eNode* m_scrEnode;
 };

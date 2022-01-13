@@ -26,9 +26,9 @@
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
       : IoPin( 0, QPoint(0,0), mcu->getUid()+"-"+id, 0, mcu, source )
 {
+    m_id     = id;
     m_port   = port;
     m_number = i;
-    m_id     = id;
 
     m_pinMask = 1<<i;
 
@@ -49,7 +49,11 @@ McuPin::~McuPin() {}
 
 void McuPin::initialize()
 {
+    m_outCtrl = false;
+    m_dirCtrl = false;
     m_isAnalog = false;
+    m_portState = false;
+
     setDirection( m_outMask );
     setPullup( m_puMask );
     IoPin::initialize();
@@ -78,7 +82,6 @@ void McuPin::voltChanged()
             case pinChange:  raise = (state!= m_inpState); break;
             case pinFalling: raise = (m_inpState && !state); break;
             case pinRising:  raise = (state && !m_inpState); break;
-            default:  break;
         }
         if( raise ) m_extInt->raise();
     }
@@ -89,9 +92,9 @@ void McuPin::voltChanged()
     m_port->pinChanged( m_pinMask, val );
 }
 
-void McuPin::setPortState( bool state )
+void McuPin::setPortState( bool state ) // Port Is being witten
 {
-    m_oldState = state;
+    m_portState = state;
     if( m_outCtrl ) return; // Port is not controlling Pin State
 
     m_outState = state;
@@ -99,7 +102,7 @@ void McuPin::setPortState( bool state )
     IoPin::setOutState( state );
 }
 
-void McuPin::setOutState( bool state )
+void McuPin::setOutState( bool state ) // Some periferical is controlling this Pin
 { if( m_outCtrl ) IoPin::setOutState( state ); }
 
 void McuPin::setDirection( bool out )
@@ -107,10 +110,29 @@ void McuPin::setDirection( bool out )
     m_isOut = (out || m_outMask) && m_inpMask; // Take care about permanent Inputs/Outputs
 
     if( m_isOut ) m_oldPinMode = m_openColl ? openCo : output; // Set Pin to Output
-    else          m_oldPinMode = input;                          // Set Pin to Input
+    else          m_oldPinMode = input;                        // Set Pin to Input
 
-    changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
-    if( !m_dirCtrl ) setPinMode( m_oldPinMode ); // Is someone is controlling us, just save Pin Mode
+    if( !m_dirCtrl ) // Is someone is controlling us, just save Pin Mode
+    {
+        changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
+        setPinMode( m_oldPinMode );
+    }
+}
+
+void McuPin::controlPin( bool outCtrl, bool dirCtrl )
+{
+    if( !dirCtrl && m_dirCtrl ) // External control is being released
+    {
+        setPinMode( m_oldPinMode ); // Set Previous Pin Direction
+    }
+    m_dirCtrl = dirCtrl;
+
+    if( !outCtrl && m_outCtrl ) // External control is being released
+    {
+        if( m_pinMode > input ) setOutState( m_portState ); // Set Previous Pin State
+        else                    m_outState = m_portState;
+    }
+    m_outCtrl = outCtrl;
 }
 
 void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example

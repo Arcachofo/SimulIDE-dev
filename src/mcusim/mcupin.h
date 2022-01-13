@@ -53,6 +53,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         void setDirection( bool out );
         void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
+        void controlPin( bool outCtrl , bool dirCtrl );
 
         virtual void setAnalog( bool an ) {;}
         virtual void ConfExtInt( uint8_t bits );
@@ -74,6 +75,11 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         bool m_inpMask; // Pin always input (inverted: 0 means always input)
         bool m_puMask;  // Pullup always on
         bool m_openColl;
+
+        bool m_portState;
+        bool m_outCtrl;
+        bool m_dirCtrl;
+        pinMode_t m_oldPinMode;
 
         uint8_t m_pinMask;
 };
