@@ -19,7 +19,6 @@
 
 #include "flipflopjk.h"
 #include "itemlibrary.h"
-#include "simulator.h"
 #include "iopin.h"
 
 Component* FlipFlopJK::construct( QObject* parent, QString type, QString id )
@@ -53,9 +52,9 @@ FlipFlopJK::FlipFlopJK( QObject* parent, QString type, QString id )
             "OR03!Q",
         });
 
-    m_setPin = m_inPin[2];
+    m_setPin   = m_inPin[2];
     m_resetPin = m_inPin[3];
-    m_clkPin = m_inPin[4];
+    m_clkPin   = m_inPin[4];
 
     setSrInv( true );           // Invert Set & Reset pins
     setClockInv( false );       //Don't Invert Clock pin
@@ -63,23 +62,12 @@ FlipFlopJK::FlipFlopJK( QObject* parent, QString type, QString id )
 }
 FlipFlopJK::~FlipFlopJK(){}
 
-void FlipFlopJK::voltChanged()
+void FlipFlopJK::calcOutput()
 {
-    updateClock();
-    bool clkAllow = (m_clkState == Clock_Allow); // Get Clk to don't miss any clock changes
+    bool J = m_inPin[0]->getInpState();
+    bool K = m_inPin[1]->getInpState();
+    bool Q = m_outPin[0]->getOutState();
 
-    bool set   = sPinState();
-    bool reset = rPinState();
-
-    if( set || reset) m_nextOutVal = (set? 1:0) + (reset? 2:0);
-    else if( clkAllow )              // Allow operation
-    {
-        bool J = m_inPin[0]->getInpState();
-        bool K = m_inPin[1]->getInpState();
-        bool Q = m_outPin[0]->getOutState();
-
-        m_Q0 = (J && !Q) || (!K && Q) ;
-        m_nextOutVal = m_Q0? 1:2;
-    }
-    sheduleOutPuts( this );
+    m_Q0 = (J && !Q) || (!K && Q) ;
+    m_nextOutVal = m_Q0? 1:2;
 }

@@ -36,11 +36,14 @@ class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent
         void usePinsRS( bool rs );
 
         virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override{ IoComponent::runOutputs(); }
 
         bool sPinState();
         bool rPinState();
 
     protected:
+        virtual void calcOutput(){;}
         bool m_useRS;
         bool m_srInv;
         bool m_Q0;

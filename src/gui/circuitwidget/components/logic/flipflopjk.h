@@ -34,8 +34,8 @@ class MAINMODULE_EXPORT FlipFlopJK : public FlipFlopBase
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        virtual void voltChanged() override;
-        virtual void runEvent() override{ IoComponent::runOutputs(); }
+    protected:
+        void calcOutput();
 };
 
 #endif

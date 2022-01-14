@@ -35,7 +35,6 @@ class MAINMODULE_EXPORT FlipFlopRS : public FlipFlopBase
         static LibraryItem *libraryItem();
 
         virtual void voltChanged() override;
-        virtual void runEvent() override{ IoComponent::runOutputs(); }
 };
 
 #endif

@@ -32,10 +32,10 @@ FlipFlopBase::FlipFlopBase( QObject* parent, QString type, QString id )
     m_useRS = true;
 
     addPropGroup( { tr("Main"), {
-new BoolProp<FlipFlopBase>( "UseRS",          tr("Use Set/Reset Pins")  ,"", this, &FlipFlopBase::pinsRS,   &FlipFlopBase::usePinsRS ),
-new BoolProp<FlipFlopBase>( "Reset_Inverted", tr("Set / Reset Inverted"),"", this, &FlipFlopBase::srInv,    &FlipFlopBase::setSrInv ),
-new BoolProp<FlipFlopBase>( "Clock_Inverted", tr("Clock Inverted")      ,"", this, &FlipFlopBase::clockInv, &FlipFlopBase::setClockInv ),
-new StringProp<FlipFlopBase>( "Trigger"     , tr("Trigger Type")        ,"", this, &FlipFlopBase::triggerStr, &FlipFlopBase::setTriggerStr, "enum" ),
+new BoolProp<FlipFlopBase>( "UseRS",          tr("Use Set/Reset Pins"),"", this, &FlipFlopBase::pinsRS,   &FlipFlopBase::usePinsRS ),
+new BoolProp<FlipFlopBase>( "Reset_Inverted", tr("Set/Reset Inverted"),"", this, &FlipFlopBase::srInv,    &FlipFlopBase::setSrInv ),
+new BoolProp<FlipFlopBase>( "Clock_Inverted", tr("Clock Inverted")    ,"", this, &FlipFlopBase::clockInv, &FlipFlopBase::setClockInv ),
+new StringProp<FlipFlopBase>( "Trigger"     , tr("Trigger Type")      ,"", this, &FlipFlopBase::triggerStr, &FlipFlopBase::setTriggerStr, "enum" ),
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
@@ -54,6 +54,19 @@ void FlipFlopBase::stamp()
     LogicComponent::stamp();
     m_outPin[0]->setOutState( m_Q0 );
     m_outPin[1]->setOutState( !m_Q0 );
+}
+
+void FlipFlopBase::voltChanged()
+{
+    updateClock();
+    bool clkAllow = (m_clkState == Clock_Allow); // Get Clk to don't miss any clock changes
+
+    bool set   = sPinState();
+    bool reset = rPinState();
+
+    if( set || reset)   m_nextOutVal = (set? 1:0) + (reset? 2:0);
+    else if( clkAllow ) calcOutput();
+    sheduleOutPuts( this );
 }
 
 void FlipFlopBase::setSrInv( bool inv )
