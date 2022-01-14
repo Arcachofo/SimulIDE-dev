@@ -32,9 +32,16 @@ class MAINMODULE_EXPORT FlipFlopBase : public LogicComponent
         bool srInv() { return m_srInv; }
         void setSrInv( bool inv );
 
+        bool pinsRS() { return m_useRS; }
+        void usePinsRS( bool rs );
+
         virtual void stamp() override;
 
+        bool sPinState();
+        bool rPinState();
+
     protected:
+        bool m_useRS;
         bool m_srInv;
         bool m_Q0;
 

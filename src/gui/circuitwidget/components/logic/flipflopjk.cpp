@@ -68,8 +68,8 @@ void FlipFlopJK::voltChanged()
     updateClock();
     bool clkAllow = (m_clkState == Clock_Allow); // Get Clk to don't miss any clock changes
 
-    bool set   = m_setPin->getInpState();
-    bool reset = m_resetPin->getInpState();
+    bool set   = sPinState();
+    bool reset = rPinState();
 
     if( set || reset) m_nextOutVal = (set? 1:0) + (reset? 2:0);
     else if( clkAllow )              // Allow operation

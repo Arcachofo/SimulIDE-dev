@@ -29,10 +29,12 @@ FlipFlopBase::FlipFlopBase( QObject* parent, QString type, QString id )
             : LogicComponent( parent, type, id )
 {
     m_dataPins = 0;
+    m_useRS = true;
 
     addPropGroup( { tr("Main"), {
-new BoolProp<FlipFlopBase>( "Clock_Inverted", tr("Clock Inverted")      ,"", this, &FlipFlopBase::clockInv, &FlipFlopBase::setClockInv ),
+new BoolProp<FlipFlopBase>( "UseRS",          tr("Use Set/Reset Pins")  ,"", this, &FlipFlopBase::pinsRS,   &FlipFlopBase::usePinsRS ),
 new BoolProp<FlipFlopBase>( "Reset_Inverted", tr("Set / Reset Inverted"),"", this, &FlipFlopBase::srInv,    &FlipFlopBase::setSrInv ),
+new BoolProp<FlipFlopBase>( "Clock_Inverted", tr("Clock Inverted")      ,"", this, &FlipFlopBase::clockInv, &FlipFlopBase::setClockInv ),
 new StringProp<FlipFlopBase>( "Trigger"     , tr("Trigger Type")        ,"", this, &FlipFlopBase::triggerStr, &FlipFlopBase::setTriggerStr, "enum" ),
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
@@ -42,7 +44,7 @@ FlipFlopBase::~FlipFlopBase(){}
 
 void FlipFlopBase::stamp()
 {
-    m_Q0 = 0;
+    m_Q0 = (std::rand()%2);
     m_setPin->changeCallBack( this );
     m_resetPin->changeCallBack( this );
 
@@ -50,7 +52,8 @@ void FlipFlopBase::stamp()
     { for( int i=0; i<m_dataPins; i++ ) m_inPin[i]->changeCallBack( this ); }
 
     LogicComponent::stamp();
-    m_outPin[1]->setOutState( true );
+    m_outPin[0]->setOutState( m_Q0 );
+    m_outPin[1]->setOutState( !m_Q0 );
 }
 
 void FlipFlopBase::setSrInv( bool inv )
@@ -60,4 +63,27 @@ void FlipFlopBase::setSrInv( bool inv )
     m_resetPin->setInverted( inv ); // Reset
 
     Circuit::self()->update();
+}
+
+void FlipFlopBase::usePinsRS( bool rs )
+{
+    m_useRS = rs;
+    if( !rs ){
+        m_setPin->removeConnector();
+        m_resetPin->removeConnector();
+    }
+    m_setPin->setVisible( rs );
+    m_resetPin->setVisible( rs );
+}
+
+bool FlipFlopBase::sPinState()
+{
+    if( m_useRS ) return m_setPin->getInpState();
+    return false;
+}
+
+bool FlipFlopBase::rPinState()
+{
+    if( m_useRS ) return m_resetPin->getInpState();
+    return false;
 }
