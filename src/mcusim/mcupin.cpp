@@ -109,21 +109,20 @@ void McuPin::setDirection( bool out )
 {
     m_isOut = (out || m_outMask) && m_inpMask; // Take care about permanent Inputs/Outputs
 
-    if( m_isOut ) m_oldPinMode = m_openColl ? openCo : output; // Set Pin to Output
-    else          m_oldPinMode = input;                        // Set Pin to Input
+    if( m_isOut ) m_portMode = m_openColl ? openCo : output; // Set Pin to Output
+    else          m_portMode = input;                        // Set Pin to Input
 
-    if( !m_dirCtrl ) // Is someone is controlling us, just save Pin Mode
-    {
-        changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
-        setPinMode( m_oldPinMode );
-    }
+    if( m_dirCtrl ) return; // Is someone is controlling us, just save Pin Mode
+
+    changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
+    setPinMode( m_portMode );
 }
 
 void McuPin::controlPin( bool outCtrl, bool dirCtrl )
 {
     if( !dirCtrl && m_dirCtrl ) // External control is being released
     {
-        setPinMode( m_oldPinMode ); // Set Previous Pin Direction
+        setPinMode( m_portMode ); // Set Previous Pin Direction
     }
     m_dirCtrl = dirCtrl;
 

@@ -57,6 +57,7 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
     m_RCIF = getRegBits( "RCIF", mcu );
     m_FERR = getRegBits( "FERR", mcu );
     m_OERR = getRegBits( "OERR", mcu );
+    m_SYNC = getRegBits( "SYNC", mcu );
 
     if( m_SPBRG  ) watchRegNames( "SPBRG", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
     if( m_SPBRGL ) watchRegNames( "SPBRGL", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
@@ -68,12 +69,23 @@ void PicUsart::configureA( uint8_t newTXSTA ) // TXSTA changed
 {
     // clockPol = getRegBitsVal( val, CSRC );
 
+    m_sync = getRegBitsBool( newTXSTA, m_SYNC );
+
     bool txEn = getRegBitsBool( newTXSTA, m_txEn );
-    if( txEn != m_sender->isEnabled() )
+    //if( m_sync );
+    //else
     {
-        setRegBits( m_TXIF );
-        setRegBits( m_TRMT );
-        m_sender->enable( txEn );
+        if( txEn != m_sender->isEnabled() )
+        {
+            setRegBits( m_TXIF );
+            setRegBits( m_TRMT );
+            if( txEn ){
+                m_sender->getPin()->controlPin( true, true );
+                m_sender->getPin()->setPinMode( output );
+            }
+            else m_sender->getPin()->controlPin( false, false );
+            m_sender->enable( txEn );
+        }
     }
     m_dataBits = getRegBitsVal( newTXSTA, m_TX9 )+8;
 
@@ -83,25 +95,10 @@ void PicUsart::configureA( uint8_t newTXSTA ) // TXSTA changed
 
 void PicUsart::configureB( uint8_t newRCSTA ) // RCSTA changed
 {
-    bool spEn = getRegBitsVal( newRCSTA, m_SPEN );
-    if( spEn != m_enabled )
-    {
-        m_enabled = spEn;
-        if( spEn ){
-            m_sender->getPin()->controlPin( true, true );
-            m_sender->getPin()->setPinMode( output );
-            m_receiver->getPin()->controlPin( true, true );
-            m_receiver->getPin()->setPinMode( input );
-        }else{
-            m_sender->getPin()->controlPin( false, false );
-            m_receiver->getPin()->controlPin( false, false );
-        }
-    }
+    m_enabled = getRegBitsVal( newRCSTA, m_SPEN );
+
     bool rxEn = getRegBitsVal( newRCSTA, m_rxEn );
-    if( rxEn != m_receiver->isEnabled() )
-    {
-        m_receiver->enable( rxEn );
-    }
+    if( rxEn != m_receiver->isEnabled() ) m_receiver->enable( rxEn );
 }
 
 void PicUsart::setSPBRGL(  uint8_t val )

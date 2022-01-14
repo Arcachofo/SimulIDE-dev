@@ -76,10 +76,10 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         bool m_puMask;  // Pullup always on
         bool m_openColl;
 
-        bool m_portState;
         bool m_outCtrl;
         bool m_dirCtrl;
-        pinMode_t m_oldPinMode;
+        bool m_portState;
+        pinMode_t m_portMode;
 
         uint8_t m_pinMask;
 };

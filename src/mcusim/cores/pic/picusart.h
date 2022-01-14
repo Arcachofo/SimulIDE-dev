@@ -75,6 +75,7 @@ class MAINMODULE_EXPORT PicUsart : public McuUsart
         regBits_t m_RX9;
         regBits_t m_FERR;
         regBits_t m_OERR;
+        regBits_t m_SYNC;
 };
 
 #endif

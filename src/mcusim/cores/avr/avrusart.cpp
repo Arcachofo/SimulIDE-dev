@@ -79,8 +79,7 @@ void AvrUsart::configureB( uint8_t newUCSRnB ) // UCSRnB changed
     uint8_t txEn = getRegBitsVal( newUCSRnB, m_txEn );
     if( txEn != m_sender->isEnabled() )
     {
-        if( txEn )
-        {
+        if( txEn ){
             m_sender->getPin()->controlPin( true, true );
             m_sender->getPin()->setPinMode( output );
         }

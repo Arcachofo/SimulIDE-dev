@@ -78,6 +78,8 @@ class MAINMODULE_EXPORT UsartModule
         UartTx* m_sender;
         UartRx* m_receiver;
 
+        bool m_sync;
+
         //bool m_running;   // is Uart running?
 };
 

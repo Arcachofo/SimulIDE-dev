@@ -36,8 +36,7 @@ void UartTx::enable( uint8_t en )
     m_enabled = enabled;
     m_runHardware = m_ioPin->isConnected();//   ->connector();
 
-    if( enabled )
-    {
+    if( enabled ){
         m_state = usartIDLE;
         m_ioPin->setOutState( 1 );
     }
