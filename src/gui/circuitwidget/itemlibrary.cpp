@@ -45,10 +45,12 @@
 #include "ds1307.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
+//#include "esp01.h"
 #include "fixedvolt.h"
 #include "flipflopd.h"
 #include "flipflopjk.h"
 #include "flipfloprs.h"
+#include "flipflopt.h"
 #include "freqmeter.h"
 #include "fulladder.h"
 #include "function.h"
@@ -225,8 +227,9 @@ void ItemLibrary::loadItems()
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );
     addItem( DS1307::libraryItem() );
-    addItem( SerialPort::libraryItem() );
-    addItem( SerialPort::libraryItem() );
+    //addItem( Esp01::libraryItem() );
+    //addItem( SerialPort::libraryItem() );
+    //addItem( SerialPort::libraryItem() );
     /// addItem( SerialTerm::libraryItem() );
     // Logic
     addItem( new LibraryItem( QObject::tr("Gates"),QObject::tr("Logic"), "gates.png","", NULL ) );
@@ -239,9 +242,10 @@ void ItemLibrary::loadItems()
     addItem( FullAdder::libraryItem() );
     addItem( ShiftReg::libraryItem() );
     addItem( Function::libraryItem() );
-    addItem( Scripted::libraryItem() );
+    //addItem( Scripted::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Memory"),QObject::tr("Logic"), "subc.png","", NULL ) );
     addItem( FlipFlopD::libraryItem() );
+    addItem( FlipFlopT::libraryItem() );
     addItem( FlipFlopRS::libraryItem() );
     addItem( FlipFlopJK::libraryItem() );
     addItem( LatchD::libraryItem() );
