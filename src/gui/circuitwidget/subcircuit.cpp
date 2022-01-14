@@ -165,7 +165,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
     QString doc = fileToString( fileName, "SubCircuit::loadSubCircuit" );
 
     QStringList graphProps;
-    for( propGroup pg : m_properties ) // Create list of "Graphical" poperties (We don't need them)
+    for( propGroup pg : m_propGroups ) // Create list of "Graphical" poperties (We don't need them)
     {
         if( (pg.name != "CompGraphic") ) continue;
         for( ComProperty* prop : pg.propList ) graphProps.append( prop->name() );

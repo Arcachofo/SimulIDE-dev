@@ -39,19 +39,35 @@ CompBase::~CompBase()
 
 void CompBase::remPropGroup( QString name )
 {
-    for( int i=0; i<m_properties.size(); ++i )
+    for( int i=0; i<m_propGroups.size(); ++i )
     {
-        if( m_properties.at(i).name == name )
+        if( m_propGroups.at(i).name == name )
         {
-            m_properties.removeAt(i);
+            for( ComProperty* p : m_propGroups.at(i).propList ) m_propHash.remove( p->name() );
+            m_propGroups.removeAt(i);
             break;
 }   }   }
 
 void CompBase::addPropGroup( propGroup pg )
 {
     for( ComProperty* p : pg.propList ) m_propHash[p->name()] = p;
-    m_properties.append( pg );
+    m_propGroups.append( pg );
 }
+
+void CompBase::removeProperty( QString group, QString prop )
+{
+    for( int i=0; i<m_propGroups.size(); ++i )
+    {
+        propGroup pg = m_propGroups.at(i);
+        if( pg.name != group ) continue;
+        for( ComProperty* p : pg.propList )
+        {
+            if( p->name() != prop ) continue;
+            pg.propList.removeAll( p );
+            m_propGroups.replace( i, pg );
+            m_propHash.remove( prop );
+            return;
+}   }   }
 
 bool CompBase::setPropStr( QString prop, QString val )
 {
@@ -70,7 +86,7 @@ QString CompBase::getPropStr( QString prop )
 QString CompBase::toString() // Used to save circuit
 {
     QString item = "\n<item ";
-    for( propGroup pg : m_properties )
+    for( propGroup pg : m_propGroups )
     {
         if( !m_saveBoard )
         {

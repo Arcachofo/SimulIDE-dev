@@ -43,7 +43,8 @@ class MAINMODULE_EXPORT CompBase : public QObject
 
         void addPropGroup( propGroup pg );
         void remPropGroup( QString name );
-        QList<propGroup> propeties() { return m_properties; }
+        void removeProperty( QString group, QString prop );
+        QList<propGroup> propeties() { return m_propGroups; }
 
         virtual QStringList getEnums( QString name ) { QStringList nul;return nul;}
 
@@ -73,7 +74,7 @@ class MAINMODULE_EXPORT CompBase : public QObject
         bool m_isMainComp;
 
         PropDialog* m_propDialog;
-        QList<propGroup> m_properties;
+        QList<propGroup> m_propGroups;
         QHash<QString, ComProperty*> m_propHash;
 };
 
