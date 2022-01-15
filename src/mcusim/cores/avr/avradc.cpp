@@ -71,6 +71,8 @@ void AvrAdc::initialize()
     m_trigger = 0;
     m_refSelect = 0;
 
+    if( m_refPin.size() > 0 ) m_pRefPin = m_refPin.at(0);
+
     McuAdc::initialize();
 }
 
@@ -202,7 +204,6 @@ void AvrAdc10::updtVref()
 AvrAdc02::AvrAdc02( eMcu* mcu, QString name )
         : AvrAdc00( mcu, name )
 {
-    m_pRefPin = m_refPin.at(0);
 }
 AvrAdc02::~AvrAdc02(){}
 
@@ -220,7 +221,6 @@ void AvrAdc02::updtVref()
 AvrAdc11::AvrAdc11( eMcu* mcu, QString name )
         : AvrAdc10( mcu, name )
 {
-    m_pRefPin = m_refPin.at(0);
 }
 AvrAdc11::~AvrAdc11(){}
 
