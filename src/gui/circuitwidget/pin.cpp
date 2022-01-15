@@ -25,6 +25,7 @@
 #include "node.h"
 #include "tunnel.h"
 #include "connector.h"
+#include "connectorline.h"
 #include "circuit.h"
 #include "simulator.h"
 
@@ -148,7 +149,17 @@ void Pin::connectPin()      // Auto-Connect
                 Circuit::self()->closeconnector( pin );
             }
             break;
-}   }   }
+        }
+        else if( it->type() == UserType+2 )        // ConnectorLine
+        {
+            ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( it );
+            Circuit::self()->newconnector( this );
+            line->connectToWire( QPoint( scenePos().x(), scenePos().y()) );
+            //Connector* con = line->connector();
+            //setVolt( con->getVolt() );
+            break;
+        }
+}   }
 
 void Pin::isMoved()
 {

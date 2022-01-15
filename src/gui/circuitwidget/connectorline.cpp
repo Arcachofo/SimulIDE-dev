@@ -31,7 +31,6 @@
 ConnectorLine::ConnectorLine( int x1, int y1, int x2, int y2, Connector* connector )
              : QGraphicsObject()
 {
-    //setParent( connector );
     m_pConnector = connector;
     
     m_prevLine = NULL;
@@ -158,12 +157,12 @@ void ConnectorLine::moveLine( QPoint delta )
 {
     prepareGeometryChange();
 
-    if( /*( dy() == 0 ) &&*/ ( dx() != 0 ) )
+    if( dx() != 0 )
     {
        m_p1Y = m_p1Y + delta.y();
        m_p2Y = m_p2Y + delta.y();
     }
-    if( /*( dx() == 0 ) &&*/ ( dy() != 0 ) )
+    if( dy() != 0 )
     {
        m_p1X = m_p1X + delta.x();
        m_p2X = m_p2X + delta.x();
@@ -210,92 +209,76 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
             if     ( evPoint==p1() ) m_moveP1 = true;
             else if( evPoint==p2() ) m_moveP2 = true;
         }
-        else                                   // Connecting a wire here
-        {   
+        else{                                  // Connecting a wire here
            if( Circuit::self()->is_constarted() )
            {
                Connector* con = Circuit::self()->getNewConnector();
                
-               if( con->isBus() != m_isBus ) // Avoid connect Bus with no-Bus
-               {
-                   event->ignore();
-                   return;
-               }
+               if( con->isBus() != m_isBus ) { event->ignore(); return; } // Avoid connect Bus with no-Bus
+
                eNode* eNode1 = con->enode();
                eNode* eNode2 = m_pConnector->enode();
                
-               if( eNode1 == eNode2 )     // Avoid connect to same eNode
-               {
-                   event->ignore();
-                   return;
-           }   }
-           int index;
-           int myindex = m_pConnector->lineList()->indexOf( this );
+               if( eNode1 == eNode2 ) { event->ignore(); return; } // Avoid connect to same eNode
+           }
            QPoint point1 = togrid(event->scenePos()).toPoint();
 
-           ConnectorLine* line;
-
-           if(( ( (dy() == 0) && ( abs( point1.x()-m_p2X ) < 8 ) ) // point near the p2 corner
-             || ( (dx() == 0) && ( abs( point1.y()-m_p2Y ) < 8 ) ) )
-             && ( myindex != m_pConnector->lineList()->size()-1 ) )
-           {
-               if( myindex == m_pConnector->lineList()->size()-1 )
-               {
-                   event->ignore();
-                   return;
-               }
-               event->accept();
-               point1 = p2();
-               index = myindex+1;
-               line = m_pConnector->lineList()->at( index );
-           }
-           else if(( ( (dy() == 0) && ( abs( point1.x()-m_p1X ) < 8 ) ) // point near the p1 corner
-                  || ( (dx() == 0) && ( abs( point1.y()-m_p1Y ) < 8 ) ) )
-                  && ( myindex != 0 ) )
-           {
-               if( myindex == 0 )
-               {
-                   event->ignore();
-                   return;
-               }
-               event->accept();
-               point1 = p1();
-               line = this;
-               index = myindex;
-           }
-           else                                // split this line in two
-           {
-               event->accept();
-
-               if( dy() == 0 ) point1.setY( m_p1Y );
-               else            point1.setX( m_p1X );
-
-               index = myindex+1;
-
-               line = new ConnectorLine( point1.x(), point1.y(), m_p2X, p2().y(), m_pConnector );
-               m_pConnector->addConLine( line, index );
-           }
-
-           QString type = QString("Node");
-           QString id = type +"-"+ Circuit::self()->newSceneId();
-
-           Node* node = new Node( 0, type, id );     // Now add the Node
-           node->setPos( point1.x(), point1.y());
-           Circuit::self()->addNode( node );
-
-           if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
-
-           //qDebug() << "line constarted" << Circuit::self()->is_constarted() << Circuit::self();
-
-           m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
-           eNode* enode = m_pConnector->enode();    // get the eNode from my connector
-           node->getPin(1)->setEnode( enode );
-
-           if( Circuit::self()->is_constarted() )   // A Connector wants to connect here (ends in a node)
-               Circuit::self()->closeconnector( node->getPin(1) );
-           else                                     // A new Connector created here (starts in a node)
-               Circuit::self()->newconnector( node->getPin(1) );      // start a new connector
+           if( connectToWire( point1 ) ) event->accept();
+           else                          event->ignore();
 }   }   }
+
+bool ConnectorLine::connectToWire( QPoint point1 )
+{
+    int index;
+    int myindex = m_pConnector->lineList()->indexOf( this );
+       ConnectorLine* line;
+
+    if(( ( (dy() == 0) && ( abs( point1.x()-m_p2X ) < 8 ) ) // point near the p2 corner
+     || ( (dx() == 0) && ( abs( point1.y()-m_p2Y ) < 8 ) ) )
+     && ( myindex != m_pConnector->lineList()->size()-1 ) )
+    {
+    if( myindex == m_pConnector->lineList()->size()-1 ) return false;
+    point1 = p2();
+    index = myindex+1;
+    line = m_pConnector->lineList()->at( index );
+    }
+    else if(( ( (dy() == 0) && ( abs( point1.x()-m_p1X ) < 8 ) ) // point near the p1 corner
+          || ( (dx() == 0) && ( abs( point1.y()-m_p1Y ) < 8 ) ) )
+          && ( myindex != 0 ) )
+    {
+        if( myindex == 0 ) return false;
+        point1 = p1();
+        line = this;
+        index = myindex;
+    }
+    else{                               // split this line in two
+        if( dy() == 0 ) point1.setY( m_p1Y );
+        else            point1.setX( m_p1X );
+        index = myindex+1;
+        line = new ConnectorLine( point1.x(), point1.y(), m_p2X, p2().y(), m_pConnector );
+        m_pConnector->addConLine( line, index );
+    }
+    QString type = QString("Node");
+    QString id = type +"-"+ Circuit::self()->newSceneId();
+
+    Node* node = new Node( 0, type, id );     // Now add the Node
+    node->setPos( point1.x(), point1.y());
+    Circuit::self()->addNode( node );
+
+    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
+
+    //qDebug() << "line constarted" << Circuit::self()->is_constarted() << Circuit::self();
+
+    m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
+    eNode* enode = m_pConnector->enode();    // get the eNode from my connector
+    node->getPin(1)->setEnode( enode );
+
+    if( Circuit::self()->is_constarted() )   // A Connector wants to connect here (ends in a node)
+       Circuit::self()->closeconnector( node->getPin(1) );
+    else                                     // A new Connector created here (starts in a node)
+       Circuit::self()->newconnector( node->getPin(1) );      // start a new connector
+    return true;
+}
 
 void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 {
@@ -315,9 +298,7 @@ void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         //qDebug() << "ConnectorLine::mousePressEvent corner"<<delta;
         if     ( m_moveP1 ) setP1( p1()+delta );
         else if( m_moveP2 ) setP2( p2()+delta );
-    }
-    else
-    {
+    }else{
         int myindex = m_pConnector->lineList()->indexOf( this );
 
         if( myindex == 0 )
@@ -374,7 +355,6 @@ QPainterPath ConnectorLine::shape() const
     }
 
     QPainterPath path;
-    
     QVector<QPointF> points;
     
     if( abs(m_p2X - m_p1X) > abs(m_p2Y - m_p1Y) )
@@ -383,9 +363,7 @@ QPainterPath ConnectorLine::shape() const
                << mapFromScene( QPointF( m_p1X  , m_p1Y+2 ) )
                << mapFromScene( QPointF( m_p2X+q, m_p2Y+2 ) )
                << mapFromScene( QPointF( m_p2X+q, m_p2Y-2 ) );
-    }
-    else
-    {
+    }else{
         points << mapFromScene( QPointF( m_p1X-2, m_p1Y   ) )
                << mapFromScene( QPointF( m_p1X+2, m_p1Y   ) )
                << mapFromScene( QPointF( m_p2X+2, m_p2Y+i ) )
@@ -430,10 +408,8 @@ void ConnectorLine::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
     //p->setBrush( Qt::blue );
     //p->drawPath( shape() );
     
-    if( m_isBus ) 
-    {
-        pen.setWidth( 3 );
-    }
+    if( m_isBus ) pen.setWidth( 3 );
+
     p->setPen( pen );
     p->drawLine( 0, 0, dx(), dy());
 }

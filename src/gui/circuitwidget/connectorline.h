@@ -63,6 +63,8 @@ class MAINMODULE_EXPORT ConnectorLine : public QGraphicsObject
         void updateLines() { updatePrev(); updateNext(); }
         void updatePrev() { if( m_prevLine ) m_prevLine->sSetP2( QPoint( m_p1X, m_p1Y) ); }
         void updateNext();
+
+        bool connectToWire( QPoint point1 );
         
         void setIsBus( bool bus ) { m_isBus = bus; }
 
