@@ -101,44 +101,45 @@ inline void AvrCore::flags_zcnvs( uint8_t res, uint8_t vr )
 {
     write_S_Bit( S_Z, (res == 0) );
 
-    uint8_t sc = vr & 1;
+    bool sc = (vr & 1)  != 0 ;
     write_S_Bit( S_C, sc );
 
-    uint8_t sn = res & (1<<7);
+    bool sn = (res & (1<<7)) != 0;
     write_S_Bit( S_N, sn );
 
     /// SREG[S_V] = SREG[S_N] ^ SREG[S_C];
-    uint8_t sv = sn ^ sc;
+    uint8_t sv = sn != sc;
     write_S_Bit( S_V, sv );
 
     /// SREG[S_S] = SREG[S_N] ^ SREG[S_V];
-    write_S_Bit( S_S, sn ^ sv );
+    write_S_Bit( S_S, sn != sv );
 }
 inline void AvrCore::flags_zcvs( uint8_t res, uint8_t vr )
 {
     write_S_Bit( S_Z, (res == 0) );
 
-    uint8_t sc = vr & 1;
+    bool sc = (vr & 1)  != 0 ;
     write_S_Bit( S_C, sc );
 
-    uint8_t sn = STATUS( S_N );
+    bool sn = STATUS( S_N ) != 0;
 
     /// SREG[S_V] = SREG[S_N] ^ SREG[S_C];
-    uint8_t sv = sn ^ sc;
+    bool sv = sn != sc;
     write_S_Bit( S_V, sv );
 
     /// SREG[S_S] = SREG[S_N] ^ SREG[S_V];
-    write_S_Bit( S_S, sn ^ sv );
+    write_S_Bit( S_S, sn != sv );
 }
 inline void AvrCore::flags_zns16( uint16_t res )
 {
     write_S_Bit( S_Z, (res == 0) );
 
-    uint8_t sn = res & (1<<15);
+    bool sn = (res & (1<<15)) != 0 ;
     write_S_Bit( S_N, sn );
 
+    bool sv = STATUS(S_V) != 0;
     /// SREG[S_S] = SREG[S_N] ^ SREG[S_V];
-    write_S_Bit( S_S, sn ^ STATUS(S_V) );
+    write_S_Bit( S_S, sn != sv );
 }
 inline int AvrCore::is_instr_32b( uint32_t pc )
 {
@@ -160,6 +161,8 @@ void AvrCore::runDecoder()
     uint32_t new_pc = PC + 1;    // future "default" pc
     int cycle = 1;
 
+    if( PC == 93 )
+        cycle = 1;
     switch( instruction & 0xf000 )
     {
         case 0x0000:{
@@ -373,8 +376,7 @@ void AvrCore::runDecoder()
                 uint8_t bit = (instruction >> 4) & 7;
                 bool set = (instruction & 0x0080) == 0;
                 write_S_Bit( bit, set );
-                if( bit == S_I )
-                    m_mcu->enableInterrupts( set );
+                if( bit == S_I ) m_mcu->enableInterrupts( set );
             }
             switch( instruction )
             {
@@ -796,8 +798,7 @@ void AvrCore::runDecoder()
                     {
                         if( is_instr_32b(new_pc) ) { new_pc += 2; cycle += 2;}
                         else                       { new_pc += 1; cycle++; }
-                    }
-                    break;
+                    }   break;
                 }
                 default: ;//_avr_invalid_instruction(avr);
             }
