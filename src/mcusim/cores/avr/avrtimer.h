@@ -47,8 +47,6 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         virtual void configureA( uint8_t newTCCRXA ) override;
         virtual void configureB( uint8_t newTCCRXB ) override;
 
-
-
     protected:
         virtual void updtWgm(){;}
         virtual void configureClock();

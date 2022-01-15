@@ -42,6 +42,11 @@ void McuOcUnit::initialize()
     m_ocPin->controlPin( false, false );
 }
 
+void McuOcUnit::clockStep( uint16_t count )
+{
+    if( count == m_extMatch ) runEvent();
+}
+
 void McuOcUnit::runEvent()  // Compare match
 {
     m_interrupt->raise();   // Trigger interrupt
@@ -75,11 +80,15 @@ void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal, int rot )
         match = m_comMatch;
         m_pinSet = true;
     }
-    if( (match <= ovf )&&(match >= countVal) ) // be sure next comp match is still ahead
-        cycles = (match-countVal)*m_timer->scale() + m_mcu->simCycPI()/*run it 1 cycle after match*/; // cycles in ps
-
     Simulator::self()->cancelEvents( this );
-    if( cycles ) Simulator::self()->addEvent( cycles>>rot, this );
+
+    if( m_timer->extClocked() ) m_extMatch = match; // Using external clock
+    else{
+        if( (match <= ovf )&&(match >= countVal) ) // be sure next comp match is still ahead
+            cycles = (match-countVal)*m_timer->scale() + m_mcu->simCycPI()/*run it 1 cycle after match*/; // cycles in ps
+
+        if( cycles ) Simulator::self()->addEvent( cycles>>rot, this );
+    }
 }
 
 void McuOcUnit::setOcActs( ocAct_t comAct, ocAct_t tovAct )

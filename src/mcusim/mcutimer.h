@@ -26,6 +26,7 @@
 #include "e-element.h"
 
 class eMcu;
+class McuPin;
 class McuOcUnit;
 
 class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
@@ -43,6 +44,7 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
 
         virtual void initialize() override;
         virtual void runEvent() override;
+        virtual void voltChanged() override;
 
         virtual void resetTimer();
 
@@ -57,6 +59,9 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
 
         virtual void topReg0Changed( uint8_t val ){;}
 
+        void enableExtClock( bool en );
+        bool extClocked() { return m_clkSrc == clkEXT; }
+
         uint32_t getCount();
         QString  name()     { return m_name; }
         uint64_t scale()    { return m_scale; }
@@ -66,21 +71,19 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
     protected:
         virtual void sheduleEvents();
         virtual void updtCycles();
+        void clockStep();
 
         int     m_number;
 
-        regBits_t m_prSelBits;
-        uint8_t  m_prIndex;
-        uint16_t m_prescaler;
-        uint64_t m_scale;
-        std::vector<uint16_t> m_prescList; // Prescaler values
+        regBits_t m_prSelBits;              // Bits configuring prescaler index
+        uint8_t  m_prIndex;                 // Prescaler index
+        uint16_t m_prescaler;               // Actual Prescaler value
+        uint64_t m_scale;                   // Picoseconds per timer Tick
+        std::vector<uint16_t> m_prescList;  // Prescaler values
 
         bool m_running;  // is Timer running?
         bool m_bidirec;  // is Timer bidirectional?
         bool m_reverse;  // is Timer counting backwards?
-
-        clkSource_t m_clkSrc;  // Source of Timer clock
-        uint8_t     m_clkEdge; // Clock edge in ext pin clock
 
         uint8_t* m_countL; // Actual ram for counter Low byte
         uint8_t* m_countH; // Actual ram for counter High byte
@@ -88,15 +91,20 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         uint32_t m_countVal;   // Value of counter
         uint32_t m_countStart; // Value of counter after ovf
 
-        uint16_t m_maxCount;  // Maximum value of the counter
-        uint16_t m_ovfMatch;  // counter vale to match an overflow
-        uint32_t m_ovfPeriod; // overflow period
-        uint64_t m_ovfCycle;  // absolute cycle of next overflow
+        uint16_t m_maxCount;   // Maximum value of the counter
+        uint16_t m_ovfMatch;   // counter vale to match an overflow
+        uint32_t m_ovfPeriod;  // overflow period
+        uint64_t m_ovfCycle;   // absolute cycle of next overflow
 
-        uint8_t m_mode;
+        uint8_t m_mode;        // Can be used by each Timer as they want
 
-        uint8_t* m_topReg0L;
-        uint8_t* m_topReg0H;
+        uint8_t* m_topReg0L;   // Register used as Top Low byte
+        uint8_t* m_topReg0H;   // Register used as Top High byte
+
+        clkSource_t m_clkSrc;   // Source of Timer clock
+        uint8_t     m_clkEdge;  // Clock edge in ext pin clock
+        bool        m_clkState; // Lask Clock state
+        McuPin*     m_clockPin; // External Clock pin
 
         std::vector<McuOcUnit*> m_ocUnit; // Output Compare Units
 };

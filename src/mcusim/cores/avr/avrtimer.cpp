@@ -101,15 +101,15 @@ void AvrTimer::configureB( uint8_t newTCCRXB ) // TCCRXB
 void AvrTimer::configureClock()
 {
     m_prescaler = m_prescList.at( m_prIndex );
-    m_clkSrc = clkMCU;
+    enableExtClock( false );
 }
 
 void AvrTimer::configureExtClock()
 {
     m_prescaler = 1;
-    m_clkSrc = clkEXT;
-    /// if     ( m_prIndex == 6 ) m_clkEdge = Clock_Falling;
-    /// else if( m_prIndex == 7 ) m_clkEdge = Clock_Rising;
+    enableExtClock( true );
+    /// if     ( m_prIndex == 6 ) m_clkEdge = 1;
+    /// else if( m_prIndex == 7 ) m_clkEdge = 0;
 }
 
 void AvrTimer::configureOcUnits( bool wgm3 )

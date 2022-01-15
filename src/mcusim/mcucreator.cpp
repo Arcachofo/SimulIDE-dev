@@ -516,6 +516,9 @@ void McuCreator::createTimer( QDomElement* t )
         QString enable = t->attribute("enable");
         watchBitNames( enable, R_WRITE, timer, &McuTimer::enable, mcu );
     }
+    if( t->hasAttribute("clockpin") )
+        timer->m_clockPin = mcu->m_ports.getPin( t->attribute("clockpin") );
+
     QString topReg0 = "";
     if( t->hasAttribute("topreg0") ) /// Still done in AvrTimer16bit
     {
@@ -545,10 +548,6 @@ void McuCreator::createTimer( QDomElement* t )
 
             for( int i=0; i<prescalers.size(); ++i )
                 timer->m_prescList[i] = prescalers.at(i).toUInt();
-        }
-        else if( el.tagName() == "extclock" )
-        {
-            /// TODO
         }
         else if( el.tagName() == "ocunit" )
         {

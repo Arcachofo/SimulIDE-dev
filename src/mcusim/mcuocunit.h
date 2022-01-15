@@ -51,6 +51,8 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
 
         virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
 
+        void clockStep( uint16_t count );
+
         uint8_t getMode() { return m_mode; }
 
     protected:
@@ -69,6 +71,7 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
         uint8_t m_mode;
 
         uint16_t m_comMatch;  // counter vale to match a comparation
+        uint16_t m_extMatch;  // counter vale to match a comparation
 
         bool m_pinSet;
 };

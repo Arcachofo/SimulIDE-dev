@@ -17,9 +17,9 @@
     <extint    name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
   </port>
 
-  <timer name="TIMER0" type="800" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
+  <timer name="TIMER0" type="800" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B"
+                                  clockpin="PORTD4">
     <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
-    <extclock type="PIN" source="PORTD4"/>
     
     <ocunit name="OC0A" pin="PORTD6" ocreg="OCR0A" configbits="COM0A0,COM0A1">
         <interrupt name="T0COA" />
@@ -32,9 +32,9 @@
     <interrupt name="T0_OVF" />
   </timer>
 
-  <timer name="TIMER1" type="160" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B">
+  <timer name="TIMER1" type="160" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B"
+                                  clockpin="PORTD5">
     <prescaler select="CS10,CS11,CS12" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
-    <extclock type="PIN" source="PORTD5"/>
     
     <ocunit name="OC1A" pin="PORTB1" ocreg="OCR1AL,OCR1AH" configbits="COM1A0,COM1A1">
         <interrupt name="T1COA" />

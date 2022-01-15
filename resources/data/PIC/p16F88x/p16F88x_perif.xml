@@ -11,15 +11,13 @@
     <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC">
     </port>
     
-    <timer name="TIMER0" counter="TMR0" configregsA="OPTION">
+    <timer name="TIMER0" counter="TMR0" configregsA="OPTION" clockpin="PORTA4">
         <prescaler values="2,4,8,16,32,64,128,256"/>
-        <extclock type="PIN" source="PORTA4"/>
         <interrupt name="T0_OVF" />
     </timer>
     
-    <timer name="TIMER1" counter="TMR1L,TMR1H" configregsA="T1CON">
+    <timer name="TIMER1" counter="TMR1L,TMR1H" configregsA="T1CON" clockpin="PORTC0">
         <prescaler values="1,2,4,8"/>
-        <extclock type="PIN" source="PORTC0"/>
         <interrupt name="T1_OVF" />
     </timer>
     

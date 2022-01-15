@@ -3,9 +3,8 @@
         inpmask="11110111" resetpin="PORTP3">
   </port>
 
-  <timer name="TIMER0" counter="TMR0" configregsA="OPTION">
+  <timer name="TIMER0" counter="TMR0" configregsA="OPTION" clockpin="PORTP4">
     <prescaler values="2,4,8,16,32,64,128,256"/>
-    <extclock type="PIN" source="PORTP4"/>
     <interrupt name="T0_OVF" />
   </timer>
     
