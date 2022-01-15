@@ -74,8 +74,7 @@ void McuPort::outChanged( uint8_t val )
     uint8_t pinCh = outputs & changed;
     if( pinCh ) pinChanged( pinCh, val ); // Update Pin states
 
-    for( int i=0; i<m_numPins; ++i )
-    {
+    for( int i=0; i<m_numPins; ++i ){
         if( changed & (1<<i) ) m_pins[i]->setPortState( val & (1<<i) ); // Pin changed
 }   }
 
@@ -86,11 +85,8 @@ void McuPort::dirChanged( uint8_t val )
 
     if( m_dirInv ) val = ~val;   // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
 
-    for( int i=0; i<m_numPins; ++i )
-    {
-        if( (changed & 1<<i)          // Pin changed
-         && (!m_pins[i]->m_dirCtrl )) // Port is controlling Pin Direction
-            m_pins[i]->setDirection( val & (1<<i));
+    for( int i=0; i<m_numPins; ++i ){
+        if( changed & 1<< i) m_pins[i]->setDirection( val & (1<<i) ); // Pin changed
 }   }
 
 void McuPort::readPort( uint8_t )

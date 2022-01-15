@@ -1,10 +1,9 @@
 <parts>
     <port name="PORTA" pins="6" outreg="PORTA" dirreg="!TRISA"
-          inpmask="00011111"  pullups="00000000" opencol="00010000">
+          inpmask="00011111" opencol="00010000">
     </port>
     
-    <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB"
-                       pullups="00000000" opencol="00000000">
+    <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
         <interrupt name="PB_INT" mask="11110000"/>
         <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
     </port>

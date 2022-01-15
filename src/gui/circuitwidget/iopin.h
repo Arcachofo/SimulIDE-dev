@@ -28,8 +28,8 @@
 enum pinMode_t{
     undef_mode=0,
     input,
-    output,
     openCo,
+    output,
     source
 };
 
@@ -47,7 +47,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         void stampAll();
         void stampOutput();
 
-        pinMode_t pinMode() { return m_pinMode; }
+        //pinMode_t pinMode() { return m_pinMode; }
         void setPinMode( pinMode_t mode );
 
         void  setInputHighV( double volt ) { m_inpHighV = volt; }

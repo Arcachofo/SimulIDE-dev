@@ -76,8 +76,10 @@ void IoPin::setPinMode( pinMode_t mode )
             setPinState( input_low );
             break;
         case output:
-            m_vddAdmit = 1/m_outputImp;
-            m_gndAdmit = cero_doub;
+            //m_vddAdmit = 1/m_outputImp;
+            //m_gndAdmit = cero_doub;
+            m_admit = 1/m_outputImp;
+            ePin::stampAdmitance( m_admit );
             break;
         case openCo:
             m_vddAdmit = cero_doub;
@@ -85,17 +87,19 @@ void IoPin::setPinMode( pinMode_t mode )
         case source:
             m_vddAdmit = 1/cero_doub;
             m_gndAdmit = cero_doub;
-            setPinState( out_high );
+            m_outState = true;
+            //setPinState( out_high );
             break;
     }
-    updtState();
-    if( m_pinMode >= output ) IoPin::setOutState( m_outState );
+    if( m_pinMode > input ) IoPin::setOutState( m_outState );
+    else                    updtState();
     update();
 }
 
 void IoPin::updtState()
 {
-    double vddAdmit = m_vddAdmit+m_vddAdmEx;
+    if( m_pinMode > openCo ) return;
+    double vddAdmit = m_vddAdmit + m_vddAdmEx;
     double gndAdmit = m_gndAdmit+m_gndAdmEx;
     double Rth  = 1/(vddAdmit+gndAdmit);
 
@@ -152,7 +156,7 @@ void IoPin::setPullup( bool up )
     if( up ) m_vddAdmEx = 1/1e5; // Activate pullup
     else     m_vddAdmEx = 0;     // Deactivate pullup
 
-    updtState();
+    if( m_pinMode < output ) updtState();
 }
 
 void IoPin::setImp( double imp )
@@ -178,7 +182,7 @@ void IoPin::setInverted( bool inverted )
     if( inverted == m_inverted ) return;
     m_inverted = inverted;
 
-    if( m_pinMode >= output ) setOutState( m_outState );
+    if( m_pinMode > input ) setOutState( m_outState );
     update();
 }
 

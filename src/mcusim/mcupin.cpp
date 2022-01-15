@@ -24,7 +24,7 @@
 #include "simulator.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
-      : IoPin( 0, QPoint(0,0), mcu->getUid()+"-"+id, 0, mcu, source )
+      : IoPin( 0, QPoint(0,0), mcu->getUid()+"-"+id, 0, mcu )
 {
     m_id     = id;
     m_port   = port;
@@ -42,7 +42,6 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_inpMask  = true;  // Inverted: true means inactive
 
     setOutHighV( 5 );
-    setPinMode( input );
     initialize();
 }
 McuPin::~McuPin() {}
