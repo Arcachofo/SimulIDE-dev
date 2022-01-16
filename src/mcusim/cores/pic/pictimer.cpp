@@ -118,20 +118,16 @@ void PicTimer0::configureA( uint8_t NewOPTION )
          m_prescaler = 1;                    // Prescaler asigned to Watchdog
     else m_prescaler = m_prescList.at( ps ); // Prescaler asigned to TIMER0
 
+    m_clkEdge = getRegBitsVal( NewOPTION, m_T0SE );
+
     uint8_t mode = getRegBitsVal( NewOPTION, m_T0CS );
     if( mode != m_mode )
     {
         m_mode = mode;
-        if( mode ) m_clkSrc = clkEXT;
-        else       m_clkSrc = clkMCU;
-        enable( mode==0 );
+        //enable( mode==0 );
+        enableExtClock( mode );
     }
-
-    /*uint8_t clkEdge = getRegBitsVal( NewOPTION, m_T0SE );
-    if     ( clkEdge == 1 ) m_clkEdge = Clock_Falling;
-    else if( clkEdge == 0 ) m_clkEdge = Clock_Rising;*/
-
-    sheduleEvents();
+    else sheduleEvents();
 }
 
 //--------------------------------------------------
