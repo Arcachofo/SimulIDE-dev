@@ -130,7 +130,6 @@ void McuTimer::sheduleEvents()
 void McuTimer::enable( uint8_t en )
 {
     updtCount();    // If disabling, write counter values to Ram
-
     m_running = en;
     updtCycles();  // This will shedule or cancel events
 }

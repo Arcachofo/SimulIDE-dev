@@ -196,8 +196,7 @@ void PicTimer1::configureA( uint8_t NewT1CON )
     if( mode != m_mode )
     {
         m_mode = mode;
-        if( mode ) m_clkSrc = clkEXT;
-        else       m_clkSrc = clkMCU;
+        enableExtClock( mode );
     }
 
     bool en = getRegBitsBool( NewT1CON, m_TMR1ON );
@@ -206,7 +205,7 @@ void PicTimer1::configureA( uint8_t NewT1CON )
 
 void PicTimer1::sheduleEvents()
 {
-    if( m_running && m_t1Osc )
+    if( m_running && m_t1Osc ) // 32.768 KHz Oscillator
     {
         uint64_t circTime = Simulator::self()->circTime();
         m_scale = 30517578; // Sim cycs per Timer tick for 32.768 KHz
