@@ -22,14 +22,13 @@
 #include "simulator.h"
 #include "datautils.h"
 
-McuTimer* PicTimer::createTimer( eMcu* mcu, QString name ) // Static
+McuTimer* PicTimer::createTimer( eMcu* mcu, QString name, int type  ) // Static
 {
-    QString n = name.toLower();
-    if     ( n == "timer0" ) return new PicTimer0( mcu, name );
-    else if( n == "timer1" ) return new PicTimer1( mcu, name );
-    else if( n == "timer2" ) return new PicTimer2( mcu, name );
-    //else                     return new PicTimer16bit( mcu, name );
-
+    if     ( type == 800 ) return new PicTimer0( mcu, name );
+    else if( type == 820 ) return new PicTimer2( mcu, name );
+    //else if( type == 821 ) return new AvrTimer821( mcu, name );
+    else if( type == 160 ) return new PicTimer160( mcu, name );
+    else if( type == 161 ) return new PicTimer161( mcu, name );
     return NULL;
 }
 
@@ -167,25 +166,16 @@ PicTimer16bit::PicTimer16bit( eMcu* mcu, QString name )
 {
     m_maxCount = 0xFFFF;
 
-    QString num = name.right(1);
-}
-PicTimer16bit::~PicTimer16bit(){}
-
-//--------------------------------------------------
-// TIMER 1 -----------------------------------------
-
-PicTimer1::PicTimer1( eMcu* mcu, QString name)
-         : PicTimer16bit( mcu, name )
-{
     m_T1CKPS = getRegBits( "T1CKPS0,T1CKPS1", mcu );
     m_T1OSCEN = getRegBits( "T1OSCEN", mcu );
 
-    m_TMR1CS = getRegBits( "TMR1CS", mcu );
     m_TMR1ON = getRegBits( "TMR1ON", mcu );
-}
-PicTimer1::~PicTimer1(){}
 
-void PicTimer1::configureA( uint8_t NewT1CON )
+    //QString num = name.right(1);
+}
+PicTimer16bit::~PicTimer16bit(){}
+
+void PicTimer16bit::configureA( uint8_t NewT1CON )
 {
     uint8_t ps = getRegBitsVal( NewT1CON, m_T1CKPS );
     m_prescaler = m_prescList.at( ps );
@@ -203,7 +193,7 @@ void PicTimer1::configureA( uint8_t NewT1CON )
     if( en != m_running ) enable( en && !mode );  /// TODO ext Clock
 }
 
-void PicTimer1::sheduleEvents()
+void PicTimer16bit::sheduleEvents()
 {
     if( m_running && m_t1Osc ) // 32.768 KHz Oscillator
     {
@@ -221,3 +211,23 @@ void PicTimer1::sheduleEvents()
     }
     else McuTimer::sheduleEvents();
 }
+
+//--------------------------------------------------
+// TIMER 1 -----------------------------------------
+
+PicTimer160::PicTimer160( eMcu* mcu, QString name)
+           : PicTimer16bit( mcu, name )
+{
+    m_TMR1CS = getRegBits( "TMR1CS", mcu );
+}
+PicTimer160::~PicTimer160(){}
+
+//--------------------------------------------------
+// TIMER 1 16f1826 ---------------------------------
+
+PicTimer161::PicTimer161( eMcu* mcu, QString name)
+           : PicTimer16bit( mcu, name )
+{
+    m_TMR1CS = getRegBits( "TMR1CS0,TMR1CS1", mcu );
+}
+PicTimer161::~PicTimer161(){}

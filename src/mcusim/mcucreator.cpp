@@ -479,8 +479,8 @@ void McuCreator::createTimer( QDomElement* t )
 
     if     ( m_core == "8051" )   timer = new I51Timer( mcu, timerName );
     else if( m_core == "AVR" )    timer = AvrTimer::createTimer( mcu, timerName, type );
-    else if( m_core == "Pic14" )  timer = PicTimer::createTimer( mcu, timerName );
-    else if( m_core == "Pic14e" ) timer = PicTimer::createTimer( mcu, timerName );
+    else if( m_core == "Pic14" )  timer = PicTimer::createTimer( mcu, timerName, type );
+    else if( m_core == "Pic14e" ) timer = PicTimer::createTimer( mcu, timerName, type );
 
     if( !timer ) { qDebug() << "Error creating Timer"<< timerName; return; }
 

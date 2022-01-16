@@ -28,7 +28,7 @@ class MAINMODULE_EXPORT PicTimer : public McuTimer
         PicTimer( eMcu* mcu, QString name );
         ~PicTimer();
 
- static McuTimer* createTimer( eMcu* mcu, QString name );
+ static McuTimer* createTimer( eMcu* mcu, QString name, int type  );
 
         virtual void initialize() override;
 
@@ -92,16 +92,6 @@ class MAINMODULE_EXPORT PicTimer16bit : public PicTimer
         PicTimer16bit( eMcu* mcu, QString name );
         ~PicTimer16bit();
 
-    protected:
-
-};
-
-class MAINMODULE_EXPORT PicTimer1 : public PicTimer16bit
-{
-    public:
-        PicTimer1( eMcu* mcu, QString name );
-        ~PicTimer1();
-
         virtual void configureA( uint8_t NewT1CON ) override;
 
     protected:
@@ -114,7 +104,25 @@ class MAINMODULE_EXPORT PicTimer1 : public PicTimer16bit
 
         regBits_t m_TMR1CS;
         regBits_t m_TMR1ON;
+};
+
+class MAINMODULE_EXPORT PicTimer160 : public PicTimer16bit
+{
+    public:
+        PicTimer160( eMcu* mcu, QString name );
+        ~PicTimer160();
 
 };
 
+class MAINMODULE_EXPORT PicTimer161 : public PicTimer16bit
+{
+    public:
+        PicTimer161( eMcu* mcu, QString name );
+        ~PicTimer161();
+
+        //virtual void configureA( uint8_t NewT1CON ) override;
+
+    protected:
+        //virtual void sheduleEvents() override;
+};
 #endif

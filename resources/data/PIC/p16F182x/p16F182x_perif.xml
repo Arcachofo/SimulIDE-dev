@@ -10,17 +10,17 @@
         <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
     </port>
     
-    <timer name="TIMER0" counter="TMR0" configregsA="OPTION" clockpin="PORTA4">
+    <timer name="TIMER0" type="800" counter="TMR0" configregsA="OPTION" clockpin="PORTA4">
         <prescaler values="2,4,8,16,32,64,128,256"/>
         <interrupt name="T0_OVF" />
     </timer>
    
-    <timer name="TIMER1" counter="TMR1L,TMR1H" configregsA="T1CON" clockpin="PORTB6">
+    <timer name="TIMER1" type="161" counter="TMR1L,TMR1H" configregsA="T1CON" clockpin="PORTB6">
         <prescaler values="1,2,4,8"/>
         <interrupt name="T1_OVF" />
     </timer>
    
-    <timer name="TIMER2" counter="TMR2" configregsA="T2CON" configregsB="PR2">
+    <timer name="TIMER2" type="820" counter="TMR2" configregsA="T2CON" configregsB="PR2">
         <prescaler values="1,4,16,64"/>
         <interrupt name="T2_MATCH" />
     </timer> 
