@@ -107,8 +107,6 @@ void McuTimer::sheduleEvents()
         if( m_clkSrc == clkMCU )
         {
             uint64_t circTime = Simulator::self()->circTime();
-            m_scale = m_prescaler*m_mcu->simCycPI();
-
             uint64_t ovfPeriod = m_ovfPeriod;
             if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount;
 

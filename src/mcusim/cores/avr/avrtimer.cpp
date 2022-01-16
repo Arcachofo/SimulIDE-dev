@@ -101,6 +101,7 @@ void AvrTimer::configureB( uint8_t newTCCRXB ) // TCCRXB
 void AvrTimer::configureClock()
 {
     m_prescaler = m_prescList.at( m_prIndex );
+    m_scale = m_prescaler*m_mcu->simCycPI();
     enableExtClock( false );
 }
 
@@ -249,13 +250,14 @@ void AvrTimer801::configureClock() // This Timer is not derived from AvrTimer
     if( m_prIndex > 5 ) //AvrTimer::configureExtClock();
     {
         m_prescaler = 1;
-        m_clkSrc = clkEXT;
+        enableExtClock( true );
         /// if     ( m_prIndex == 6 ) m_clkEdge = Clock_Falling;
         /// else if( m_prIndex == 7 ) m_clkEdge = Clock_Rising;
     }
     else{               //AvrTimer::configureClock();
         m_prescaler = m_prescList.at( m_prIndex );
-        m_clkSrc = clkMCU;
+        m_scale = m_prescaler*m_mcu->simCycPI();
+        enableExtClock( false );
     }
 }
 
@@ -286,9 +288,7 @@ void AvrTimer810::configureA( uint8_t newTCCR1 ) // TCCR1
     if( prIndex != m_prIndex )
     {
         m_prIndex = prIndex;
-        //AvrTimer::configureClock();
-        m_prescaler = m_prescList.at( m_prIndex );
-        m_clkSrc = clkMCU;
+        AvrTimer::configureClock();
         enable( m_prIndex );
     }
 }

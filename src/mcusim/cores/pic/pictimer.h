@@ -36,8 +36,8 @@ class MAINMODULE_EXPORT PicTimer : public McuTimer
         virtual void configureB( uint8_t val ) override;
 
     protected:
-        virtual void configureClock();
-        void configureExtClock();
+        //virtual void configureClock();
+        //void configureExtClock();
 };
 
 
@@ -95,6 +95,7 @@ class MAINMODULE_EXPORT PicTimer16bit : public PicTimer
         virtual void configureA( uint8_t NewT1CON ) override;
 
     protected:
+        virtual void configureClock(){;}
         virtual void sheduleEvents() override;
 
         bool m_t1Osc;
@@ -112,6 +113,8 @@ class MAINMODULE_EXPORT PicTimer160 : public PicTimer16bit
         PicTimer160( eMcu* mcu, QString name );
         ~PicTimer160();
 
+    protected:
+        virtual void configureClock() override;
 };
 
 class MAINMODULE_EXPORT PicTimer161 : public PicTimer16bit
@@ -123,6 +126,7 @@ class MAINMODULE_EXPORT PicTimer161 : public PicTimer16bit
         //virtual void configureA( uint8_t NewT1CON ) override;
 
     protected:
+        virtual void configureClock() override;
         //virtual void sheduleEvents() override;
 };
 #endif

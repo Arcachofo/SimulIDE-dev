@@ -63,7 +63,7 @@ void PicTimer::configureB( uint8_t val )
 {
 }
 
-void PicTimer::configureClock()
+/*void PicTimer::configureClock()
 {
     m_prescaler = m_prescList.at( m_mode );
     m_clkSrc = clkMCU;
@@ -75,7 +75,7 @@ void PicTimer::configureExtClock()
     m_clkSrc = clkEXT;
     /// if     ( m_mode == 6 ) m_clkEdge = Clock_Falling;
     /// else if( m_mode == 7 ) m_clkEdge = Clock_Rising;
-}
+}*/
 
 //--------------------------------------------------
 // TIMER 8 Bit--------------------------------------
@@ -117,6 +117,8 @@ void PicTimer0::configureA( uint8_t NewOPTION )
          m_prescaler = 1;                    // Prescaler asigned to Watchdog
     else m_prescaler = m_prescList.at( ps ); // Prescaler asigned to TIMER0
 
+    m_scale = m_prescaler*m_mcu->simCycPI();
+
     m_clkEdge = getRegBitsVal( NewOPTION, m_T0SE );
 
     uint8_t mode = getRegBitsVal( NewOPTION, m_T0CS );
@@ -146,6 +148,7 @@ void PicTimer2::configureA( uint8_t NewT2CON )
     uint8_t presc = getRegBitsVal( NewT2CON, m_T2CKPS );
     uint8_t postc = getRegBitsVal( NewT2CON, m_TOUTPS );
     m_prescaler = m_prescList.at( presc ) * (postc+1);
+    m_scale     = m_prescaler*m_mcu->simCycPI();
 
     bool en = getRegBitsBool( NewT2CON, m_TMR2ON );
     if( en != m_running ) enable( en );
@@ -182,15 +185,11 @@ void PicTimer16bit::configureA( uint8_t NewT1CON )
 
     m_t1Osc = getRegBitsBool( NewT1CON, m_T1OSCEN );
 
-    uint8_t mode = getRegBitsVal( NewT1CON, m_TMR1CS );
-    if( mode != m_mode )
-    {
-        m_mode = mode;
-        enableExtClock( mode );
-    }
+    m_mode = getRegBitsVal( NewT1CON, m_TMR1CS );
+    configureClock();
 
     bool en = getRegBitsBool( NewT1CON, m_TMR1ON );
-    if( en != m_running ) enable( en && !mode );  /// TODO ext Clock
+    if( en != m_running ) enable( en );
 }
 
 void PicTimer16bit::sheduleEvents()
@@ -222,6 +221,12 @@ PicTimer160::PicTimer160( eMcu* mcu, QString name)
 }
 PicTimer160::~PicTimer160(){}
 
+void PicTimer160::configureClock()
+{
+    m_scale = m_prescaler*m_mcu->simCycPI();
+    enableExtClock( m_mode == 1 );
+}
+
 //--------------------------------------------------
 // TIMER 1 16f1826 ---------------------------------
 
@@ -231,3 +236,26 @@ PicTimer161::PicTimer161( eMcu* mcu, QString name)
     m_TMR1CS = getRegBits( "TMR1CS0,TMR1CS1", mcu );
 }
 PicTimer161::~PicTimer161(){}
+
+void PicTimer161::configureClock()
+{
+    switch( m_mode ) {
+    case 0:
+        m_scale = m_prescaler*m_mcu->simCycPI();
+        enableExtClock( false );
+        break;
+    case 1:
+        m_scale = m_prescaler*m_mcu->simCycPI()/4;
+        enableExtClock( false );
+        break;
+    case 2:
+        if( m_t1Osc ) ; /// TODO: If T1OSCEN = 1: Crystal oscillator on T1OSI/T1OSO pins
+        else          enableExtClock( true );
+        break;
+    case 3: break;
+        /// TODO: Timer1 clock source is Capacitive Sensing Oscillator (CAPOSC)
+    }
+
+
+}
+
