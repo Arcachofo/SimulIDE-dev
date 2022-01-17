@@ -76,14 +76,15 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     connect( parent, SIGNAL( moved() ),
                this, SLOT( isMoved() ), Qt::UniqueConnection );
 }
-Pin::~Pin(){}
+Pin::~Pin()
+{
+    Circuit::self()->remPin( m_id );
+}
 
 void Pin::reset()
 {
     if( my_connector ) setConnector( NULL );
-    
     m_component->inStateChanged( 1 );          // Used by node to remove
-    if( m_isBus ) m_component->inStateChanged( 3 ); // Used by Bus to remove
 
     ePin::reset(); 
 }
@@ -96,24 +97,28 @@ void Pin::setUnused( bool unused )
     update();
 }
 
-void Pin::registerPinsW( eNode* enode )     // Called by component, calls conPin
+void Pin::registerPinsW( eNode* enode, int n )     // Called by component, calls conPin
 {
     if( m_blocked ) return;
     m_blocked = true;
 
-    ePin::setEnode( enode );
-    if( m_conPin ) m_conPin->registerEnode( enode ); // Call pin at other side of Connector
+    if( !m_isBus ) ePin::setEnode( enode );
+    if( m_conPin ) m_conPin->registerEnode( enode, n ); // Call pin at other side of Connector
 
     m_blocked = false;
 }
 
-void Pin::registerEnode( eNode* enode )     // Called by connector closing or other pin
+void Pin::registerEnode( eNode* enode, int n )     // Called by m_conPin
 {
     if( m_blocked ) return;
     m_blocked = true;
 
-    ePin::setEnode( enode );
-    m_component->registerEnode( enode );
+    if( !m_isBus )
+    {
+        ePin::setEnode( enode );
+        n = m_index;
+    }
+    m_component->registerEnode( enode, n );
 
     m_blocked = false;
 }
@@ -126,8 +131,10 @@ void  Pin::setConnector( Connector* connector )
     {
         setCursor( Qt::ArrowCursor );
         if( m_isBus ) my_connector->setIsBus( true );
+    }else{
+        m_conPin = NULL;
+        setCursor( Qt::CrossCursor );
     }
-    else setCursor( Qt::CrossCursor );
 }
 
 void Pin::removeConnector()
@@ -155,8 +162,6 @@ void Pin::connectPin()      // Auto-Connect
             ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( it );
             Circuit::self()->newconnector( this );
             line->connectToWire( QPoint( scenePos().x(), scenePos().y()) );
-            //Connector* con = line->connector();
-            //setVolt( con->getVolt() );
             break;
         }
 }   }
@@ -168,9 +173,8 @@ void Pin::isMoved()
     {                            // Auto-Connect
         if( m_isBus ) return;
         if( QApplication::queryKeyboardModifiers() & Qt::ControlModifier )
-        {
             connectPin();
-    }   }
+    }
     setLabelPos();
 }
 
@@ -181,8 +185,7 @@ void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
     if( event->button() == Qt::LeftButton ) // Start/Close Connector
     {
         if( my_connector ) event->ignore();
-        else
-        {
+        else{
             if( Circuit::self()->is_constarted() )
             {
                 Connector* con = Circuit::self()->getNewConnector();

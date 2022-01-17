@@ -213,6 +213,32 @@ void Simulator::resetSim()
     CircuitWidget::self()->setMsg( " Stopped ", 1 );
 }
 
+void Simulator::createNodes()
+{
+    //qDebug() <<"\ncreateNodes...\n";
+    int i = 0;
+    QStringList pinList;
+    QStringList pins = Circuit::self()->m_pinMap.keys();
+    for( QString pinName : pins )
+    {
+        Pin* pin = Circuit::self()->m_pinMap.value( pinName );
+        if( !pin->conPin() ) continue;
+        if( pin->isBus() ) continue;
+        if( pinList.contains( pinName ) ) continue;
+
+        eNode* node = new eNode( "eNodeSim-"+QString::number(i) );
+        i++;
+        pin->registerPinsW( node );
+        pin->registerEnode( node );
+        for( ePin* nodePin : node->getEpins() )
+        {
+            QString pinId = nodePin->getId();
+            if( !pinList.contains(pinId) ) pinList.append( pinId );
+        }
+    }
+    //qDebug() <<"  Created      "<< i+1 << "\teNodes";
+}
+
 void Simulator::startSim( bool paused )
 {
     resetSim();
@@ -222,7 +248,7 @@ void Simulator::startSim( bool paused )
 
     qDebug() <<"\nStarting Circuit Simulation...\n";
 
-    for( eNode* busNode : m_eNodeBusList ) busNode->initialize(); // Initialize Bus Nodes
+    createNodes();
 
     qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
     for( eElement* el : m_elementList )    // Initialize all Elements
@@ -232,12 +258,9 @@ void Simulator::startSim( bool paused )
         el->added = false;
     }
 
-    qDebug() <<"  Initializing "<< m_eNodeBusList.size() << "\tBuses";
-    for( eNode* busNode : m_eNodeBusList ) busNode->createBus(); // Create Buses
-
     m_changedNode = NULL;
     for( eElement* el : m_elementList ) el->attach(); // Connect Elements with internal circuits.
-
+                                                      // This can create new eNodes
     qDebug() <<"  Initializing "<< m_eNodeList.size()<< "\teNodes";
     for( int i=0; i<m_eNodeList.size(); i++ )         // Initialize eNodes
     {
@@ -265,10 +288,10 @@ void Simulator::startSim( bool paused )
 
     qDebug()  << "\nFPS:   " << fps        << "\t Frames per Sec"
               << "\nSpeed: " << sps100     << "%"
+              << "\nStep : " << m_stepSize << "\t picoseconds"
               << "\nSpeed: " << m_stepsPS  << "\t Steps per Sec"
               << "\nStp/F: " << m_stepsPF  << "\t Steps per Frame"
-              << "\nNonLi: " << m_maxNlstp << "\t Max Iterations"
-              << "\nStep : " << m_stepSize << "\t picoseconds";
+              << "\nNonLi: " << m_maxNlstp << "\t Max Iterations";
 
     qDebug() << "\n    Simulation Running... \n";
 
@@ -373,8 +396,7 @@ void Simulator::addEvent( uint64_t time, eElement* comp )
     simEvent_t* event = m_eventList.first;
     simEvent_t* new_event = m_eventList.free;
 
-    while( event )
-    {
+    while( event ){
         if( time <= event->time)
         {
             if( comp == NULL
@@ -403,8 +425,7 @@ void Simulator::cancelEvents( eElement* comp )
     simEvent_t* last  = NULL;
     simEvent_t* next  = NULL;
 
-    while( event )
-    {
+    while( event ){
         next = event->next;
         if( comp == event->comp )
         {
@@ -425,15 +446,6 @@ inline void Simulator::freeEvent( simEvent_t* event )
     event->next = m_eventList.free;
     m_eventList.free = event;
     //m_numEvents--;
-}
-
-void Simulator::addToEnodeBusList( eNode* nod )
-{ if( !m_eNodeBusList.contains(nod) ) m_eNodeBusList.append( nod ); }
-
-void Simulator::remFromEnodeBusList( eNode* nod, bool del )
-{
-    if( m_eNodeBusList.contains(nod) ) m_eNodeBusList.removeOne( nod );
-    if( del ) delete nod;
 }
 
 void Simulator::addToEnodeList( eNode* nod )

@@ -92,8 +92,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         void reset();
 
-        void registerEnode( eNode* enode );
-        void registerPinsW( eNode* enode );
+        void registerEnode( eNode* enode, int n=-1 );
+        void registerPinsW( eNode* enode, int n=-1 );
         
         void setIsBus( bool bus );
         bool isBus() { return m_isBus; }

@@ -175,7 +175,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
     QString numId = m_id;
     numId = numId.split("-").last();
     Circuit* circ = Circuit::self();
-    QHash<QString, eNode*> nodMap;
+    //QHash<QString, eNode*> nodMap;
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
@@ -230,18 +230,18 @@ void SubCircuit::loadSubCircuit( QString fileName )
 
                 if( startPin && endPin )    // Create Connector
                 {
-                    eNode*  enode   = nodMap[enodeId];
+                    /*eNode*  enode   = nodMap[enodeId];
 
                     if( !enode )          // Create eNode and add to enodList
                     {
                         enode = new eNode( m_id+"_eNode-"+circ->newSceneId() );
                         nodMap[enodeId] = enode;
-                    }
-                    if( startPin->isBus() ) enode->setIsBus( true );
+                    }*/
+                    //if( startPin->isBus() ) enode->setIsBus( true );
                     startPin->setConPin( endPin );
                     endPin->setConPin( startPin );
-                    startPin->registerEnode( enode );
-                    endPin->registerEnode( enode );
+                    //startPin->registerEnode( enode );
+                    //endPin->registerEnode( enode );
                 }
                 else // Start or End pin not found
                 {

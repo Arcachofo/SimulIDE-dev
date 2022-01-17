@@ -46,7 +46,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
 
         virtual void remove() override;
 
-        virtual void registerEnode( eNode* enode ) override;
+        virtual void registerEnode( eNode* enode, int n=-1 ) override;
 
         QString tunnelUid() { return m_tunUid; }
         void setTunnelUid( QString uid ) { m_tunUid = uid; }

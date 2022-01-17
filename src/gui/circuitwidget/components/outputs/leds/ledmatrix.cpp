@@ -79,11 +79,9 @@ void LedMatrix::attach()
     for( int row=0; row<m_rows; ++row )
     {
         eNode* rowEnode = m_rowPin[row]->getEnode();
-        
         for( int col=0; col<m_cols; ++col )
         {
             eNode* colEnode = m_colPin[col]->getEnode();
-            
             LedSmd* lsmd = m_led[row][col];
             lsmd->getEpin(0)->setEnode( rowEnode );
             lsmd->getEpin(1)->setEnode( colEnode );

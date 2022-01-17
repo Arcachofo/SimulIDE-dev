@@ -82,7 +82,7 @@ void Tunnel::setEnode( eNode* node )
     m_blocked = false;
 }
 
-void Tunnel::registerEnode( eNode* enode ) // called by m_pin[0]
+void Tunnel::registerEnode( eNode* enode, int ) // called by m_pin[0]
 {
     if( m_blocked ) return;
 
@@ -167,6 +167,8 @@ void Tunnel::removeTunnel()
 
 void Tunnel::remove()
 {
+    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
+
     removeTunnel();
     Component::remove();
     Circuit::self()->update();

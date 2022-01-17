@@ -51,7 +51,7 @@ Connector::Connector( QObject* parent, QString type, QString id, Pin* startpin, 
         m_endPin->setConnector( this );
         m_startPin->setConPin( m_endPin );
         m_endPin->setConPin( m_startPin );
-        if( m_isBus ) m_endPin->setIsBus( true );
+        m_endPin->setIsBus( m_isBus );
     }else{
         m_endPin   = NULL;
         m_endpinid = "";
@@ -62,7 +62,7 @@ new StringProp<Connector>( "itemtype"  ,"","", this, &Connector::itemType,   &Co
 new StringProp<Connector>( "uid"       ,"","", this, &Connector::getUid,     &Connector::dummySetter ),
 new StringProp<Connector>( "startpinid","","", this, &Connector::startPinId, &Connector::dummySetter ),
 new StringProp<Connector>( "endpinid"  ,"","", this, &Connector::endPinId,   &Connector::dummySetter ),
-new StringProp<Connector>( "enodeid"   ,"","", this, &Connector::enodId,     &Connector::dummySetter ),
+//new StringProp<Connector>( "enodeid"   ,"","", this, &Connector::enodId,     &Connector::dummySetter ),
 new StringProp<Connector>( "pointList" ,"","", this, &Connector::pListStr,   &Connector::dummySetter ),
     }} );
 }
@@ -112,7 +112,6 @@ void Connector::remConLine( ConnectorLine* line  )
 void Connector::setPointList( QStringList plist )
 {
     remLines();
-
     m_pointList = plist;
 
     int p1x = plist.first().toInt();
@@ -362,29 +361,14 @@ void Connector::closeCon( Pin* endpin, bool connect  )
     m_endPin   = endpin;
     m_endpinid = endpin->objectName();
 
-    if( connect ){
-        QString enodid = "enode";
-        enodid.append( m_id );
-        enodid.remove( "Connector" );
-        eNode* newEnode = new eNode( enodid );
-        if( m_isBus ) newEnode->setIsBus( true );
-
-        // We will get all ePins from stratPin and endPin nets an add to new eNode
-        m_startPin->setConPin( NULL );
-        m_endPin->setConPin( NULL );
-
-        m_startPin->registerEnode( newEnode );
-        m_endPin->registerEnode( newEnode );
-    }
     m_startPin->setConnector( this );
     m_endPin->setConnector( this );
-    
-    if( m_isBus ){
-        m_startPin->setIsBus( true );
-        m_endPin->setIsBus( true );
-    }
+
     m_startPin->setConPin( m_endPin );
     m_endPin->setConPin( m_startPin );
+    
+    m_startPin->setIsBus( m_isBus ); // StartPin will set conPin isBus
+
     updateConRoute( m_endPin, m_endPin->scenePos() );
 
     for( ConnectorLine* line : m_conLineList ) line->setCursor( Qt::CrossCursor );
@@ -393,10 +377,6 @@ void Connector::closeCon( Pin* endpin, bool connect  )
 void Connector::splitCon( int index, Pin* pin1, Pin* pin2 )
 {
     if( !m_endPin ) return;
-
-    pin2->setEnode( enode() );
-    pin1->setEnode( enode() );
-
     disconnectLines( index-1, index );
 
     QString type = QString("Connector");
@@ -434,21 +414,6 @@ void Connector::updateLines()
     {
         for( ConnectorLine*  line : m_conLineList ) line->update();
 }   }
-
-QString Connector::enodId() 
-{
-    eNode *node = m_startPin->getEnode();
-    if( node ) return node->itemId();
-    return "";
-}
-
-eNode* Connector::enode() { return m_startPin->getEnode(); }
-void   Connector::setEnode( eNode* enode )
-{ 
-    if( m_startPin ) m_startPin->setEnode( enode );
-    if( m_endPin )   m_endPin->setEnode( enode );
-    if( m_isBus )    enode->setIsBus( true );
-}
 
 void Connector::setIsBus( bool bus )
 {

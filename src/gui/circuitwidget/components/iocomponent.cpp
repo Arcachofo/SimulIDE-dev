@@ -369,7 +369,6 @@ void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
     {
         pinList->at(i)->removeConnector();
         if( pinList->at(i)->scene() ) Circuit::self()->removeItem( pinList->at(i) );
-        pinList->at(i)->reset();
         delete pinList->at(i);
     }
     pinList->resize( newSize );

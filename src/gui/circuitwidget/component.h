@@ -113,7 +113,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void setBackground( QString bck ) { m_background = bck;}
         virtual void setSubcDir( QString dir ) {;}
 
-        virtual void registerEnode( eNode* ) {;}
+        virtual void registerEnode( eNode*, int n=-1 ) {;}
 
         QString print();
 

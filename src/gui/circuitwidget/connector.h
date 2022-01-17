@@ -23,7 +23,6 @@
 #include "compbase.h"
 
 class ConnectorLine;
-class eNode;
 class Pin;
 
 class MAINMODULE_EXPORT Connector : public CompBase
@@ -44,14 +43,10 @@ class MAINMODULE_EXPORT Connector : public CompBase
 
         QString startPinId() { return m_startpinid; }
         QString endPinId()   { return m_endpinid; }
-        QString enodId();
         Pin* startPin() { return m_startPin;}
         void setStartPin( Pin* pin) { m_startPin = pin; }
         Pin* endPin() { return m_endPin; }
         void setEndPin( Pin* pin) { m_endPin = pin; }
-
-        eNode* enode();
-        void setEnode( eNode* enode );
 
         double getVolt();
 

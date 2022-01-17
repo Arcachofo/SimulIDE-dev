@@ -33,6 +33,7 @@ class Node;
 class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 {
     friend class SubCircuit;
+    friend class Simulator;
 
     Q_OBJECT
 
@@ -97,7 +98,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QPointF deltaMove() { return m_deltaMove; }
         
         void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; }
-        void updatePin( ePin* epin, QString newId );
+        void remPin( QString pinId ) { m_pinMap.remove( pinId ); }
+        void updatePin( ePin* epin, QString oldId, QString newId );
 
         const QString getFilePath() const { return m_filePath; }
 

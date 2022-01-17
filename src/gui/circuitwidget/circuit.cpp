@@ -154,7 +154,7 @@ void Circuit::loadStrDoc( QString &doc )
 
     Component* lastComp = NULL;
     QList<SubCircuit*> shieldList;
-    QHash<QString, eNode*> nodMap;
+    //QHash<QString, eNode*> nodMap;
     m_busy    = true;
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
@@ -241,7 +241,7 @@ void Circuit::loadStrDoc( QString &doc )
             {
                 Pin* startpin = NULL;
                 Pin* endpin   = NULL;
-                QString startpinid, endpinid, enodeId;
+                QString startpinid, endpinid;
                 QStringList pointList;
 
                 QString name = "";
@@ -251,7 +251,6 @@ void Circuit::loadStrDoc( QString &doc )
 
                     if     ( name == "startpinid") startpinid = prop.toString();
                     else if( name == "endpinid"  ) endpinid   = prop.toString();
-                    else if( name == "enodeid"   ) enodeId    = prop.toString();
                     else if( name == "pointList" ) pointList  = prop.toString().split(",");
                     else if( name == "uid"       ) uid   = prop.toString();
                     name = "";
@@ -287,19 +286,9 @@ void Circuit::loadStrDoc( QString &doc )
                     if( uid.isEmpty() ) uid = "connector"+newSceneId();
                     Connector* con = new Connector( this, type, uid, startpin, endpin );
                     con->setPointList( pointList );
+                    conList.append( con );
                     startpin->isMoved();
                     endpin->isMoved();
-
-                    eNode*  enode = nodMap[enodeId];
-                    if( !enode )                    // Create eNode and add to enodList
-                    {
-                        enode = new eNode( "Circ_eNode-"+newSceneId() );
-                        nodMap[enodeId] = enode;
-                    }
-                    con->setEnode( enode );
-                    startpin->registerEnode( enode );
-                    endpin->registerEnode( enode );
-                    conList.append( con );
                 }
                 else if( !m_pasting )// Start or End pin not found
                 {
@@ -412,7 +401,7 @@ void Circuit::loadStrDoc( QString &doc )
     for( SubCircuit* shield : shieldList ) shield->connectBoard();
 
     m_idMap.clear();
-    m_pinMap.clear();
+    /// m_pinMap.clear();
     m_busy = false;
     QApplication::restoreOverrideCursor();
 }
@@ -881,7 +870,7 @@ void Circuit::dropEvent( QGraphicsSceneDragDropEvent* event )
 
     if( id.startsWith( file ) )
     {
-        id.replace( file, "" ).replace("\r\n", "" );
+        id.replace( file, "" ).replace("\r\n", "" ).replace("%20", " ");
 #ifdef _WIN32
         if( id.startsWith( "/" )) id.remove( 0, 1 );
 #endif
@@ -930,11 +919,11 @@ void Circuit::drawBackground ( QPainter*  painter, const QRectF & rect )
         painter->drawLine( startx,-i, endx,-i);
 }   }
 
-void Circuit::updatePin( ePin* epin, QString newId )
+void Circuit::updatePin( ePin* epin, QString oldId, QString newId )
 {
-    QString pinId = newId;
+    remPin( oldId );
     Pin* pin = static_cast<Pin*>( epin );
-    addPin( pin, pinId );
+    addPin( pin, newId );
 }
 
 void Circuit::setDrawGrid( bool draw )

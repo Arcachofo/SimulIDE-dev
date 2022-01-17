@@ -120,7 +120,7 @@ void EditorWidget::dropEvent( QDropEvent* event )
     QString file = "file://";
     if( id.startsWith( file ) )
     {
-        id.replace( file, "" ).replace("\r\n", "" );
+        id.replace( file, "" ).replace("\r\n", "" ).replace("%20", " ");
 #ifdef _WIN32
         if( id.startsWith( "/" )) id.remove( 0, 1 );
 #endif

@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT eNode
         void stampCurrent( ePin* epin, double data );
         void stampAdmitance( ePin* epin, double data );
 
-        void pinChanged( ePin* epin, int enodeNum );
+        void addConnection( ePin* epin, int enodeNum );
 
         int  getNodeNumber() { return m_nodeNum; }
         void setNodeNumber( int n ) { m_nodeNum = n; }
@@ -68,11 +68,6 @@ class MAINMODULE_EXPORT eNode
         void setSwitched( bool switched ){ m_switched = switched; } // This eNode has switches attached
         bool isSwitched() { return m_switched; }
 
-        void setIsBus( bool bus );
-        bool isBus() { return m_isBus; }
-        void createBus();
-        void addBusPinList( QList<ePin*> list, int line );
-
         QList<ePin*> getEpins() { return m_ePinList; }
         QList<int> getConnections();
 
@@ -82,7 +77,6 @@ class MAINMODULE_EXPORT eNode
         QString m_id;
 
         QList<ePin*> m_ePinList;
-        QList<QList<ePin*>*> m_eBusPinList;
 
         QList<eElement*> m_changedFast;
         QList<eElement*> m_nonLinear;
@@ -107,7 +101,6 @@ class MAINMODULE_EXPORT eNode
         bool m_changed;
         bool m_single;
         bool m_switched;
-        bool m_isBus;
 };
 #endif
 

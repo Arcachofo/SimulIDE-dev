@@ -90,7 +90,6 @@ void LogicComponent::setTristate( bool t )  // Activate or deactivate OE Pin
     if( !t )
     {
         m_oePin->removeConnector();
-        m_oePin->reset();
         m_oePin->setLabelText( "" );
     }
     else m_oePin->setLabelText( "OE " );

@@ -122,7 +122,7 @@ void Potentiometer::stamp()
     updateStep();
 }
 
-void Potentiometer::registerEnode( eNode* enode ) // called by m_pin[0]
+void Potentiometer::registerEnode( eNode* enode, int ) // called by m_pin[0]
 {
     m_ePinA.setEnode( enode );  // Set eNode to internal eResistors ePins
     m_ePinB.setEnode( enode );

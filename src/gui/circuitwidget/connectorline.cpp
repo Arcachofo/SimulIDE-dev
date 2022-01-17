@@ -216,10 +216,10 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
                
                if( con->isBus() != m_isBus ) { event->ignore(); return; } // Avoid connect Bus with no-Bus
 
-               eNode* eNode1 = con->enode();
-               eNode* eNode2 = m_pConnector->enode();
+               /// eNode* eNode1 = con->enode();
+               /// eNode* eNode2 = m_pConnector->enode();
                
-               if( eNode1 == eNode2 ) { event->ignore(); return; } // Avoid connect to same eNode
+               /// if( eNode1 == eNode2 ) { event->ignore(); return; } // Avoid connect to same eNode
            }
            QPoint point1 = togrid(event->scenePos()).toPoint();
 
@@ -267,11 +267,7 @@ bool ConnectorLine::connectToWire( QPoint point1 )
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    //qDebug() << "line constarted" << Circuit::self()->is_constarted() << Circuit::self();
-
     m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
-    eNode* enode = m_pConnector->enode();    // get the eNode from my connector
-    node->getPin(1)->setEnode( enode );
 
     if( Circuit::self()->is_constarted() )   // A Connector wants to connect here (ends in a node)
        Circuit::self()->closeconnector( node->getPin(1) );
@@ -294,8 +290,6 @@ void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 
     if( event->modifiers() & Qt::ShiftModifier )          // Move Corner
     {
-        //qDebug() << "ConnectorLine::mousePressEvent"<<event->scenePos()<<evPoint<<p1()<<p2();
-        //qDebug() << "ConnectorLine::mousePressEvent corner"<<delta;
         if     ( m_moveP1 ) setP1( p1()+delta );
         else if( m_moveP2 ) setP2( p2()+delta );
     }else{
@@ -311,7 +305,6 @@ void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     }
     updatePos();
     updateLines();
-    //Circuit::self()->update();
 }
 
 void ConnectorLine::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )

@@ -51,7 +51,7 @@ void ePin::setEnodeComp( eNode* enode )
     m_enodeCon = enode;
     int enodeConNum = 0;
     if( enode ) enodeConNum = enode->getNodeNumber();
-    if( m_enode ) m_enode->pinChanged( this, enodeConNum );
+    if( m_enode ) m_enode->addConnection( this, enodeConNum );
 }
 
 void ePin::changeCallBack( eElement* el, bool cb )
@@ -82,6 +82,6 @@ double ePin::getVolt()
 
 void ePin::setId( QString id )
 {
-    Circuit::self()->updatePin( this, id );
+    Circuit::self()->updatePin( this, m_id, id );
     m_id = id;
 }

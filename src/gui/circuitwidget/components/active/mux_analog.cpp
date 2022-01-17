@@ -75,15 +75,7 @@ MuxAnalog::~MuxAnalog(){}
 void MuxAnalog::attach()
 {
     eNode* enode = m_zPin->getEnode();
-    //if( enode ) enode->setSwitched( true );
-
-    for( int i=0; i<m_channels; ++i )
-    {
-        m_ePin[i]->setEnode( enode );
-
-       //eNode* node = m_chanPin[i]->getEnode();
-       //if( node ) node->setSwitched( true );
-    }
+    for( int i=0; i<m_channels; ++i ) m_ePin[i]->setEnode( enode );
 }
 
 void MuxAnalog::stamp()

@@ -224,7 +224,6 @@ void SevenSegment::deleteDisplay(int n )
 {
     Pin* pin = m_commonPin[n];
     pin->removeConnector();
-    pin->reset();
     delete pin;
 
     for( int i=0; i<8; ++i ) Circuit::self()->removeComp( m_segment[n*8+i] );

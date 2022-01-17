@@ -83,8 +83,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t stepsPerSec() { return m_stepsPS; }
         void setStepsPerSec( uint64_t sps );
 
-        //int    noLinAcc() { return m_noLinAcc; }
-        //void   setNoLinAcc( int ac );
         double NLaccuracy();
 
         void  setMaxNlSteps( uint32_t steps ) { m_maxNlstp = steps; }
@@ -105,9 +103,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         void notCorverged() { m_converged = false; }
 
-        void addToEnodeBusList( eNode* nod );
-        void remFromEnodeBusList( eNode* nod, bool del );
-
         void addToEnodeList( eNode* nod );
         void remFromEnodeList( eNode* nod, bool del );
 
@@ -125,6 +120,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
     private:
  static Simulator* m_pSelf;
 
+        void createNodes();
         void resetSim();
         void runCircuit();
         void solveMatrix();
@@ -144,7 +140,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         QHash<int, QString> m_warnings;
 
         QList<eNode*> m_eNodeList;
-        QList<eNode*> m_eNodeBusList;
 
         eNode*    m_changedNode;
         eElement* m_voltChanged;

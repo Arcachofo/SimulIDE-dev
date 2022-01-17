@@ -54,6 +54,8 @@ class MAINMODULE_EXPORT ePin
         QString getId()  { return m_id; }
         void setId( QString id );
 
+        void setIndex( int i ) { m_index = i; }
+
     protected:
         eNode* m_enode;
         eNode* m_enodeCon;

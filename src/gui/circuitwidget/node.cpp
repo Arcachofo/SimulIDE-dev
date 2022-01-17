@@ -57,10 +57,10 @@ void Node::inStateChanged( int rem ) // Called by pin
         m_isBus = true;
 }   }
 
-void Node::registerEnode( eNode* enode )
+void Node::registerEnode( eNode* enode, int n )
 {
     for( int i=0; i<3; i++ )
-        if( m_pin[i]->isConnected() ) m_pin[i]->registerPinsW( enode );
+        if( m_pin[i]->conPin() ) m_pin[i]->registerPinsW( enode, n );
 }
 
 void Node::remove() // Only remove if there are less than 3 connectors
@@ -84,6 +84,7 @@ void Node::remove() // Only remove if there are less than 3 connectors
 
         Circuit::self()->nodeList()->removeOne( this );
         if( this->scene() ) Circuit::self()->removeItem( this );
+        this->deleteLater();
 }   }
 
 void Node::joinConns( int c0, int c1 )

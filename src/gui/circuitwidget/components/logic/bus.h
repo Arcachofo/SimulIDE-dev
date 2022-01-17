@@ -41,11 +41,8 @@ class MAINMODULE_EXPORT Bus : public Component, public eElement
 
         int startBit() { return m_startBit; }
         void setStartBit( int bit );
-        
-        virtual void initialize() override;
-        virtual void inStateChanged( int msg ) override;
 
-        virtual void registerEnode( eNode* enode ) override;
+        virtual void registerEnode( eNode* enode, int n=-1 ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         

@@ -23,6 +23,7 @@
 #include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "circuitwidget.h"
 #include "itemlibrary.h"
 #include "e-node.h"
 
@@ -66,45 +67,19 @@ new IntProp<Bus>( "Start_Bit", tr("Start Bit"),""     , this, &Bus::startBit, &B
 }
 Bus::~Bus(){}
 
-void Bus::initialize()
+void Bus::registerEnode( eNode* enode, int n )
 {
-    eNode* busEnode = m_busPin0->getEnode();
-    if( !busEnode ) busEnode = m_busPin1->getEnode();
-    if( !busEnode ) return;
-
-    for( int i=1; i<=m_numLines; i++ )
-    {
-        if( !m_pin[i]->isConnected() ) continue;
-        eNode* enode = new eNode( m_id+"eNode"+QString::number( i ) );
-        m_pin[i]->conPin()->registerEnode( enode );
-
-        QList<ePin*> epins = enode->getEpins();
-        busEnode->addBusPinList( epins, m_startBit+i-1 );
-}   }
-
-void Bus::inStateChanged( int msg )
-{
-    if( msg == 3 ) // Called by m_busPin When disconnected
-    {
-        for( int i=1; i<=m_numLines; i++ )
-        {
-            if( !m_pin[i]->isConnected() ) continue;
-
-            eNode* enode = new eNode( m_id+"eNode"+QString::number( i ) );
-            Pin* pin = m_pin[i];
-            pin->conPin()->registerEnode( enode );
-}   }   }
-
-void Bus::registerEnode( eNode* enode )
-{
-    if( !enode->isBus() ) return;
-
-    if( m_busPin0->isConnected() ) m_busPin0->registerPinsW( enode );
-    if( m_busPin1->isConnected() ) m_busPin1->registerPinsW( enode );
+    if( m_busPin0->conPin() ) m_busPin0->registerPinsW( enode, n );
+    if( m_busPin1->conPin() ) m_busPin1->registerPinsW( enode, n );
+    int i = n + 1 + m_startBit;
+    if( i > m_numLines ) return;
+    if( m_pin[i]->conPin() ) m_pin[i]->registerPinsW( enode, -1 );
 }
 
 void Bus::setNumLines( int lines )
 {
+    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
+
     if( lines == m_numLines ) return;
     if( lines < 1 ) return;
 
@@ -122,7 +97,7 @@ void Bus::setNumLines( int lines )
     for( int i=1; i<=lines; i++ )
     {
         QString pinId = m_id+"-ePin"+QString::number(i);
-        Pin* pin = new Pin( 180, QPoint(-8, -8*lines+i*8 ), pinId, i, this );
+        Pin* pin = new Pin( 180, QPoint(-8, -8*lines+i*8 ), pinId, m_startBit+i-1, this );
 
         pin->setFontSize( 4 );
         pin->setLabelColor( QColor( 0, 0, 0 ) );
@@ -146,7 +121,10 @@ void Bus::setStartBit( int bit )
     m_startBit = bit;
 
     for( int i=1; i<=m_numLines; i++ )
+    {
+        m_pin[i]->setIndex( m_startBit+i-1 );
         m_pin[i]->setLabelText( " "+QString::number( m_startBit+i-1 ) );
+    }
 }
 
 void Bus::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
