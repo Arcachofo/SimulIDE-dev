@@ -89,6 +89,6 @@ void DecToBcd::voltChanged()
 void DecToBcd::set16bits( bool set )
 {
     m_16Bits = set;
-    setNumInps( m_16Bits ? 16 : 10 );
+    setNumInps( m_16Bits ? 16 : 10, "D", 1 );
     m_oePin->setY( m_area.y()-8 );
 }
