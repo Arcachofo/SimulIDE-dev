@@ -81,7 +81,7 @@ void Function::stamp()
     m_program.clear();
     for( uint i=0; i<m_outPin.size(); ++i )
     {
-        m_program.append( QScriptProgram( m_funcList.at(i) ));
+        m_program.append( QScriptProgram( m_funcList.at(i).toLower() ));
 }   }
 
 void Function::runEvent()
