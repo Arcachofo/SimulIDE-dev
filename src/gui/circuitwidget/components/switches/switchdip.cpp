@@ -230,7 +230,6 @@ void SwitchDip::setSize( int size )
 
 void SwitchDip::remove()
 {
-    Simulator::self()->remFromUpdateList( this );
     deleteSwitches( m_size );
     Component::remove();
 }

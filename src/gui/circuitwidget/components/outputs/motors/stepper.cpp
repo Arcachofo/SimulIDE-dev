@@ -203,8 +203,6 @@ void Stepper::remove()
     m_pinB1.removeConnector();
     m_pinB2.removeConnector();
     
-    Simulator::self()->remFromUpdateList( this ); 
-    
     Component::remove();
 }
 

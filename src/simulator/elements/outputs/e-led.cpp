@@ -53,17 +53,11 @@ void eLed::initialize()
 void eLed::stamp()
 {
     eNode* node = m_ePin[0]->getEnode();
-    if( node )
-    {
-        node->addToNoLinList( this );
-        //node->setSwitched( true );
-    }
+    if( node ) node->addToNoLinList( this );
+
     node = m_ePin[1]->getEnode();
-    if( node )
-    {
-        node->addToNoLinList( this );
-        //node->setSwitched( true );
-    }
+    if( node ) node->addToNoLinList( this );
+
     eResistor::stamp();
 }
 

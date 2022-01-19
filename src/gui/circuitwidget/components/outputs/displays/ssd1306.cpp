@@ -368,8 +368,6 @@ void Ssd1306::reset()
 void Ssd1306::remove()
 {
     delete m_pdisplayImg;
-    Simulator::self()->remFromUpdateList( this );
-    
     Component::remove();
 }
 

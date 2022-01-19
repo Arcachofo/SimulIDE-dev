@@ -419,8 +419,6 @@ void Ili9341::reset()
 void Ili9341::remove()
 {
     delete m_pdisplayImg;
-    Simulator::self()->remFromUpdateList( this );
-    
     Component::remove();
 }
 

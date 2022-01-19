@@ -96,7 +96,6 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
 
 SerialPort::~SerialPort()
 {
-    Simulator::self()->remFromUpdateList( this );
 }
 
 void SerialPort::setMcuId( QString mcu )
