@@ -63,6 +63,11 @@ new DoubProp<BJT>( "Gain", tr("Gain"),"", this, &BJT::gain, &BJT::setGain )
 }
 BJT::~BJT(){}
 
+void BJT::updateStep()
+{
+    if( Circuit::self()->animate() ) update();
+}
+
 void BJT::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

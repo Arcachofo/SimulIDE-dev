@@ -88,6 +88,8 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void updateRecentFiles();
         void updateRecentFileActions();
 
+        bool m_blocked;
+
         QVBoxLayout  m_verticalLayout;
         CircuitView  m_circView;
         OutPanelText m_outPane;

@@ -61,6 +61,7 @@
         <file alias="poweron.png">../src/icons/mainwindow/poweron.png</file>
         <file alias="powerdeb.png">../src/icons/mainwindow/powerdeb.png</file>
         <file alias="pausesim.png">../src/icons/mainwindow/pausesim.png</file>
+        <file alias="simpaused.png">../src/icons/mainwindow/simpaused.png</file>
         
         <file alias="remove.png">../src/icons/mainwindow/remove.png</file>
         <file alias="properties.png">../src/icons/mainwindow/properties.png</file>
@@ -191,6 +192,8 @@
         <file alias="dht22.png">../src/icons/components/dht22.png</file>
         <file alias="dsxxx.png">../src/icons/components/dsxxx.png</file>
         <file alias="dsxxx_ico.png">../src/icons/components/dsxxx_ico.png</file>
+        <file alias="esp01.png">../src/icons/components/esp01.png</file>
+        <file alias="esp01_ico.png">../src/icons/components/esp01_ico.png</file>
         
         <file alias="up.png">../src/icons/components/up.png</file>
         <file alias="su.png">../src/icons/components/su.png</file>

@@ -50,6 +50,7 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
     setObjectName( "CircuitWidget" );
     m_pSelf = this;
 
+    m_blocked = false;
     m_cirPropW = NULL;
     m_simPropW = NULL;
     m_appPropW = NULL;
@@ -339,9 +340,12 @@ void CircuitWidget::saveCirc( QString file )
 
 void CircuitWidget::powerCirc()
 {
+    if( m_blocked ) return;
+    m_blocked = true;
     if( Simulator::self()->isPaused() )          powerCircOff();
     else if( powerCircAct->iconText() == "Off" ) powerCircOn();
     else if( powerCircAct->iconText() == "On" )  powerCircOff();
+    m_blocked = false;
 }
 
 void CircuitWidget::powerCircOn()
@@ -349,14 +353,15 @@ void CircuitWidget::powerCircOn()
     powerCircAct->setIcon(QIcon(":/poweron.png"));
     powerCircAct->setEnabled( true );
     powerCircAct->setIconText("On");
+    pauseSimAct->setIcon(QIcon(":/pausesim.png"));
     pauseSimAct->setEnabled( true );
     Simulator::self()->startSim();
 }
 
 void CircuitWidget::powerCircOff()
 {
-    if( Simulator::self()->isPaused() ) Simulator::self()->resumeSim();
-    if( Simulator::self()->isRunning() ) Simulator::self()->stopSim();
+    if( Simulator::self()->isPaused()
+     || Simulator::self()->isRunning() ) Simulator::self()->stopSim();
 
     powerCircAct->setIcon(QIcon(":/poweroff.png"));
     powerCircAct->setIconText("Off");
@@ -376,9 +381,12 @@ void CircuitWidget::powerCircDebug( bool paused )
 
 void CircuitWidget::pauseSim()
 {
+    if( m_blocked ) return;
+    m_blocked = true;
     if( Simulator::self()->simState() > SIM_PAUSED )
     {
         Simulator::self()->pauseSim();
+        pauseSimAct->setIcon(QIcon(":/simpaused.png"));
         powerCircAct->setIcon(QIcon(":/poweroff.png"));
         powerCircAct->setIconText("Off");
         //powerCircAct->setEnabled( false );
@@ -386,10 +394,13 @@ void CircuitWidget::pauseSim()
     else if( Simulator::self()->isPaused() )
     {
         Simulator::self()->resumeSim();
+        pauseSimAct->setIcon(QIcon(":/pausesim.png"));
         powerCircAct->setIcon(QIcon(":/poweron.png"));
         powerCircAct->setIconText("On");
         //powerCircAct->setEnabled( true );
-}   }
+    }
+    m_blocked = false;
+}
 
 void CircuitWidget::settApp()
 {

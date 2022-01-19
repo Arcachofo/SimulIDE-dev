@@ -40,8 +40,7 @@ void eCapacitor::initialize()
     m_tStep = (double)m_nextStep/1e12;
     m_curSource = 0;
     m_volt = 0;
-    
-    eResistor::setRes( m_tStep/m_cap );
+    m_admit = m_cap/m_tStep;
 
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected())
         Simulator::self()->addEvent( 1, this );

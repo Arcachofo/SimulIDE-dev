@@ -228,15 +228,18 @@ void Simulator::createNodes()
 
         eNode* node = new eNode( "eNodeSim-"+QString::number(i) );
         i++;
+        //qDebug() <<"--------------createNode "<<i<<node->itemId();
         pin->registerPinsW( node );
         pin->registerEnode( node );
         for( ePin* nodePin : node->getEpins() )
         {
             QString pinId = nodePin->getId();
+            //qDebug() <<pinId<<"\t\t\t"<<nodePin->getEnode()->itemId();
+
             if( !pinList.contains(pinId) ) pinList.append( pinId );
         }
     }
-    //qDebug() <<"  Created      "<< i+1 << "\teNodes";
+    qDebug() <<"  Created      "<< i << "\teNodes"<<pinList.size()<<"Pins";
 }
 
 void Simulator::startSim( bool paused )
@@ -248,7 +251,9 @@ void Simulator::startSim( bool paused )
 
     qDebug() <<"\nStarting Circuit Simulation...\n";
 
+    //qDebug() << m_eNodeList;
     createNodes();
+    //qDebug() << m_eNodeList;
 
     qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
     for( eElement* el : m_elementList )    // Initialize all Elements
@@ -302,7 +307,7 @@ void Simulator::startSim( bool paused )
 void Simulator::stopSim()
 {
     stopTimer();
-    m_CircuitFuture.waitForFinished();
+    if( !m_CircuitFuture.isFinished() ) m_CircuitFuture.waitForFinished();
 
     for( eNode* node  : m_eNodeList  )  node->setVolt( 0 );
     for( eElement* el : m_elementList ) el->initialize();
@@ -320,6 +325,9 @@ void Simulator::pauseSim()
 
     CircuitWidget::self()->setMsg( " Paused ", 1 );
     qDebug() << "\n    Simulation Paused ";
+
+    //if( !m_CircuitFuture.isFinished() )
+    //    m_CircuitFuture.waitForFinished();
 }
 
 void Simulator::resumeSim()

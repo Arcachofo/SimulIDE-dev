@@ -137,7 +137,7 @@ void eDiode::SetParameters( double sc, double ec, double bv, double sr )
     m_satCur = sc;
     m_emCoef = ec;
     m_bkDown = bv;
-    setRes( sr );
+    m_admit = 1/sr;
 
     updateValues();
 }

@@ -42,6 +42,8 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_blocked = false;
     m_isBus   = false;
     m_unused  = false;
+    m_changed = false;
+    m_updated = true;
     
     my_connector = NULL;
     m_conPin     = NULL;
@@ -323,6 +325,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 {
     if( !isVisible() ) return;
     m_changed = false;
+    m_updated = true;
 
     QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 

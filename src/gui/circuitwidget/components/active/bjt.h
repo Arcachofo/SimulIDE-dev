@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT BJT : public Component, public eBJT
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual void updateStep() override { update(); }
+        virtual void updateStep() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 };
