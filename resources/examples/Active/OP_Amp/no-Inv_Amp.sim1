@@ -1,0 +1,27 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Ground" CircId="Ground (0 V)-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-276,-76" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-22" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Probe" CircId="Probe-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-28,-164" rotation="-45" hflip="1" vflip="1" label="Probe-5" idLabPos="-32,-24" labelrot="45" valLabPos="16,-2" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-4" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-240,-172" rotation="0" hflip="1" vflip="1" label="Volt. Source-4" idLabPos="0,-24" labelrot="0" valLabPos="-7,-41" valLabRot="0" MaxValue="1 V" />
+
+<item itemtype="opAmp" CircId="OpAmp-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-148,-148" rotation="0" hflip="1" vflip="1" label="OpAmp-3" idLabPos="0,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Gain="1000" Out_Imped="1e-14 Ω" Volt_Pos="5 V" Volt_Neg="0 V" Power_Pins="false" Switch_Pins="false" />
+
+<item itemtype="Potentiometer" CircId="Potentiometer-2" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-196,-100" rotation="-180" hflip="1" vflip="1" label="Potentiometer-2" idLabPos="0,-24" labelrot="-180" valLabPos="45,-9" valLabRot="-180" Resistance="10 kΩ" Value_Ohm="8120 Ω" />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-92,-148" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Probe-5-inpin" endpinid="Node-1-0" pointList="-44,-148,-92,-148" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Potentiometer-2-PinA" endpinid="Node-1-1" pointList="-180,-100,-92,-100,-92,-148" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Node-1-2" endpinid="OpAmp-3-output" pointList="-92,-148,-124,-148" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Potentiometer-2-PinM" endpinid="OpAmp-3-inputInv" pointList="-196,-116,-196,-140,-172,-140" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Volt. Source-4-outPin" endpinid="OpAmp-3-inputNinv" pointList="-212,-156,-172,-156" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Ground (0 V)-6-Gnd" endpinid="Potentiometer-2-PinB" pointList="-276,-92,-276,-100,-212,-100" />
+
+</circuit>

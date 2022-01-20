@@ -1,0 +1,41 @@
+<circuit type="simulide_1.0" stepSize="50000000" stepsPS="20000" NLsteps="100000" animate="0" >
+
+<item itemtype="Capacitor" CircId="Capacitor-5" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-148,-108" rotation="0" hflip="1" vflip="1" label="Capacitor-5" idLabPos="0,-24" labelrot="0" valLabPos="-14,9" valLabRot="0" Capacitance="10 µF" />
+
+<item itemtype="Resistor" CircId="Resistor-4" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-236,-108" rotation="0" hflip="1" vflip="1" label="Resistor-4" idLabPos="0,-24" labelrot="0" valLabPos="-14,6" valLabRot="0" Resistance="25 kΩ" />
+
+<item itemtype="opAmp" CircId="OpAmp-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-156,-148" rotation="0" hflip="1" vflip="1" label="OpAmp Integrator" idLabPos="-28,-48" labelrot="0" valLabPos="0,0" valLabRot="0" Gain="1000" Out_Imped="1e-14 Ω" Volt_Pos="5 V" Volt_Neg="0 V" Power_Pins="false" Switch_Pins="false" />
+
+<item itemtype="Rail" CircId="Rail.-2" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-244,-156" rotation="0" hflip="1" vflip="1" label="Rail.-2" idLabPos="-64,-24" labelrot="0" valLabPos="-15,-24" valLabRot="0" Voltage="2.5 V" />
+
+<item itemtype="Clock" CircId="Clock-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-308,-108" rotation="0" hflip="1" vflip="1" label="Clock-1" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1 Hz" Always_On="false" />
+
+<item itemtype="Oscope" CircId="Oscope-8" mainComp="false" Show_id="false" Show_Val="false" Pos="20,-100" rotation="0" hflip="1" vflip="1" label="Oscope-8" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="226059287899" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="4" Filter="0.1 V" Trigger="4" AutoSC="4" Tracks="2" HideCh="false,false,false,false," VolPos="-0.16,-0.16,-0.16,-0.16," />
+
+<item itemtype="Node" CircId="Node-6" mainComp="false" Pos="-204,-108" />
+
+<item itemtype="Node" CircId="Node-9" mainComp="false" Pos="-108,-148" />
+
+<item itemtype="Node" CircId="Node-12" mainComp="false" Pos="-268,-108" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Resistor-4-rPin" endpinid="Node-6-0" pointList="-220,-108,-204,-108" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Node-6-2" endpinid="OpAmp-3-inputInv" pointList="-204,-108,-204,-140,-180,-140" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-6-1" endpinid="Capacitor-5-lPin" pointList="-204,-108,-164,-108" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Rail.-2-outnod" endpinid="OpAmp-3-inputNinv" pointList="-228,-156,-180,-156" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="Clock-1-outnod" endpinid="Node-12-0" pointList="-292,-108,-268,-108" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="OpAmp-3-output" endpinid="Node-9-0" pointList="-132,-148,-108,-148" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Node-9-2" endpinid="Capacitor-5-rPin" pointList="-108,-148,-108,-108,-132,-108" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Node-9-1" endpinid="Oscope-8-Pin0" pointList="-108,-148,-68,-148" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Node-12-2" endpinid="Resistor-4-lPin" pointList="-268,-108,-252,-108" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Node-12-1" endpinid="Oscope-8-Pin1" pointList="-268,-108,-268,-72,-88,-72,-88,-116,-68,-116" />
+
+</circuit>

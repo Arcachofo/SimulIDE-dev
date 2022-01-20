@@ -1,0 +1,27 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Rail" CircId="Rail.-6" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-236,-156" rotation="0" hflip="1" vflip="1" label="Rail.-17" idLabPos="-64,-24" labelrot="0" valLabPos="-12,-27" valLabRot="0" Voltage="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-36,-164" rotation="-45" hflip="1" vflip="1" label="Probe-5" idLabPos="-32,-24" labelrot="45" valLabPos="15,-1" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-4" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-300,-116" rotation="0" hflip="1" vflip="1" label="Volt. Source-4" idLabPos="0,-24" labelrot="0" valLabPos="-6,-43" valLabRot="0" MaxValue="5 V" />
+
+<item itemtype="opAmp" CircId="OpAmp-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-148,-148" rotation="0" hflip="1" vflip="1" label="OpAmp-3" idLabPos="0,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Gain="1000" Out_Imped="1e-14 Ω" Volt_Pos="5 V" Volt_Neg="0 V" Power_Pins="false" Switch_Pins="false" />
+
+<item itemtype="Potentiometer" CircId="Potentiometer-2" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-188,-100" rotation="-180" hflip="1" vflip="1" label="Potentiometer-2" idLabPos="0,-24" labelrot="-180" valLabPos="43,-8" valLabRot="-180" Resistance="10 kΩ" Value_Ohm="5440 Ω" />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-100,-148" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Probe-5-inpin" endpinid="Node-1-0" pointList="-52,-148,-100,-148" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Potentiometer-2-PinM" endpinid="OpAmp-3-inputInv" pointList="-188,-116,-188,-140,-172,-140" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Potentiometer-2-PinA" endpinid="Node-1-1" pointList="-172,-100,-100,-100,-100,-148" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-1-2" endpinid="OpAmp-3-output" pointList="-100,-148,-124,-148" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Volt. Source-4-outPin" endpinid="Potentiometer-2-PinB" pointList="-272,-100,-204,-100" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Rail.-6-outnod" endpinid="OpAmp-3-inputNinv" pointList="-220,-156,-172,-156" />
+
+</circuit>
