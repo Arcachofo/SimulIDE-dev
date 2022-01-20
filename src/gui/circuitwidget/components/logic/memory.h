@@ -42,9 +42,6 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        //void setMem( QVector<int> m );
-        //QVector<int> mem();
-
         void setMem( QString m );
         QString getMem();
 

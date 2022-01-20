@@ -79,6 +79,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t fps() { return m_fps; }
         void setFps( uint64_t fps );
         uint64_t stepsPerFrame() { return m_stepsPF; }
+        uint64_t realSPF() { return m_realStepsPF; }
 
         uint64_t stepsPerSec() { return m_stepsPS; }
         void setStepsPerSec( uint64_t sps );
@@ -168,6 +169,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t m_stepSize;
         uint64_t m_stepsPS;
         uint64_t m_stepsPF;
+        uint64_t m_realStepsPF;
         double   m_realSpeed;
 
         uint64_t m_circTime;
@@ -177,6 +179,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint64_t m_lastRefT;
         uint64_t m_loopTime;
         double   m_load;
+
+        uint64_t m_kkTime;
 
         QElapsedTimer m_RefTimer;
 };

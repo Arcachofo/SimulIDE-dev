@@ -22,6 +22,7 @@
 #include "datautils.h"
 #include "mcuinterrupts.h"
 #include "simulator.h"
+#include "circuit.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
       : IoPin( 0, QPoint(0,0), mcu->getUid()+"-"+id, 0, mcu )
@@ -85,7 +86,7 @@ void McuPin::voltChanged()
         if( raise ) m_extInt->raise();
     }
     m_inpState = state;
-    setPinState( m_inpState? input_high:input_low ); // High : Low colors
+    if( Circuit::self()->animate() ) setPinState( m_inpState? input_high:input_low ); // High : Low colors
 
     uint8_t val = state ? m_pinMask : 0;
     m_port->pinChanged( m_pinMask, val );

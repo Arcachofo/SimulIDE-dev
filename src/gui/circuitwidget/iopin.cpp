@@ -20,6 +20,7 @@
 #include "iopin.h"
 #include "e-node.h"
 #include "simulator.h"
+#include "circuit.h"
 
 IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* parent, pinMode_t mode )
      : Pin( angle, pos, id, index, parent )
@@ -73,7 +74,7 @@ void IoPin::setPinMode( pinMode_t mode )
         case input:
             m_vddAdmit = 0;
             m_gndAdmit = 1/m_inputImp;
-            setPinState( input_low );
+            if( Circuit::self()->animate() ) setPinState( input_low );
             break;
         case output:
             //m_vddAdmit = 1/m_outputImp;
@@ -93,7 +94,7 @@ void IoPin::setPinMode( pinMode_t mode )
     }
     if( m_pinMode > input ) IoPin::setOutState( m_outState );
     else                    updtState();
-    update();
+    /// update(); // Don't do this!!!
 }
 
 void IoPin::updtState()
@@ -114,9 +115,11 @@ bool IoPin::getInpState()
     if     ( volt > m_inpHighV ) m_inpState = true;
     else if( volt < m_inpLowV )  m_inpState = false;
 
-    if     ( m_pinMode == openCo ) setPinState( m_inpState? open_high:driven_low ); // High : Low colors
-    else if( m_pinMode == input )  setPinState( m_inpState? input_high:input_low ); // High : Low colors
-
+    if( Circuit::self()->animate() )
+    {
+        if     ( m_pinMode == openCo ) setPinState( m_inpState? open_high:driven_low ); // High : Low colors
+        else if( m_pinMode == input  ) setPinState( m_inpState? input_high:input_low ); // High : Low colors
+    }
     return m_inverted ? !m_inpState : m_inpState;
 }
 
@@ -131,11 +134,11 @@ void IoPin::setOutState( bool out ) // Set Output to Hight or Low
     {
         m_gndAdmit = out ? 1/m_openImp : 1/m_outputImp;
         updtState();
-        setPinState( out? open_high:open_low ); // Z-Low colors
+        if( Circuit::self()->animate() ) setPinState( out? open_high:open_low ); // Z-Low colors
     }else{
         m_outVolt = out ? m_outHighV : m_outLowV;
         stampOutput();
-        setPinState( out? out_high:out_low ); // High-Low colors
+        if( Circuit::self()->animate() ) setPinState( out? out_high:out_low ); // High-Low colors
 }   }
 
 void IoPin::setStateZ( bool z )
@@ -144,7 +147,7 @@ void IoPin::setStateZ( bool z )
     if( z ){
         m_outVolt = m_outLowV;
         setImp( m_openImp );
-        setPinState( open_high );
+        if( Circuit::self()->animate() ) setPinState( open_high );
     }else {
         pinMode_t pm = m_pinMode; // Force pinMode
         m_pinMode = undef_mode;

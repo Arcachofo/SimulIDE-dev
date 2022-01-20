@@ -72,7 +72,7 @@ bool LogicComponent::outputEnabled()
     if     ( volt > m_inHighV ) m_outEnable = false;   // Active Low
     else if( volt < m_inLowV )  m_outEnable = true;
 
-    m_oePin->setPinState( m_outEnable? input_low:input_high ); // Low-High colors
+    if( Circuit::self()->animate() ) m_oePin->setPinState( m_outEnable? input_low:input_high ); // Low-High colors
     return m_outEnable;
 }
 

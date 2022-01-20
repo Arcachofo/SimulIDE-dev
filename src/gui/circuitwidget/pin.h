@@ -100,7 +100,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         void setPinState( pinState_t st ) { m_pinState = st; m_changed = true; }
 
-        void updateStep() { if( m_changed && m_updated ) update(); }
+        void updateStep();
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -112,7 +112,6 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         pinState_t m_pinState;
         bool m_changed;
-        bool m_updated;
 
         int m_angle;
         int m_length;

@@ -39,7 +39,7 @@ CircuitView::CircuitView( QWidget *parent )
 {
     setObjectName( "CircuitView" );
     m_pSelf = this;
-    
+
     m_scale = 1;
     m_help = "";
     m_circuit   = NULL;
@@ -228,8 +228,7 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
                 Qt::LeftButton, Qt::LeftButton, Qt::NoModifier   );
             QGraphicsView::mousePressEvent( &eve );
     }   }
-    else
-    {
+    else{
         QGraphicsView::mousePressEvent( event );
 }   }
 
@@ -242,9 +241,7 @@ void CircuitView::mouseReleaseEvent( QMouseEvent* event )
             Qt::LeftButton, Qt::LeftButton, Qt::NoModifier   );
 
         QGraphicsView::mouseReleaseEvent( &eve );
-    }
-    else
-    {
+    }else{
         QGraphicsView::mouseReleaseEvent( event );
     }
     viewport()->setCursor( Qt::ArrowCursor );
@@ -320,9 +317,7 @@ void CircuitView::saveImage()
 
             QPainter painter( &svgGen );
             Circuit::self()->render( &painter );
-        }
-        else
-        {
+        }else{
             QPixmap pixMap = this->grab();
             pixMap.save( fileName );
 }   }    }

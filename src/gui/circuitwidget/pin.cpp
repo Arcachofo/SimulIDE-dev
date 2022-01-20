@@ -43,7 +43,6 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_isBus   = false;
     m_unused  = false;
     m_changed = false;
-    m_updated = true;
     
     my_connector = NULL;
     m_conPin     = NULL;
@@ -321,11 +320,16 @@ void Pin::setVisible( bool visible )
     QGraphicsItem::setVisible( visible );
 }
 
+void Pin::updateStep()
+{
+    if( !m_unused && Circuit::self()->animate() ) return;
+    if( m_changed ) update();
+}
+
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( !isVisible() ) return;
     m_changed = false;
-    m_updated = true;
 
     QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 

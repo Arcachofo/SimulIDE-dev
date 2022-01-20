@@ -449,7 +449,7 @@ void CircuitWidget::setRate( double rate, int load )
     if( rate < 0 ) m_rateLabel->setText( tr("Circuit ERROR!!!") );
     else
     {
-        if( (load > 150) || (load < 0) ) load = 0;
+        //if( (load > 150) || (load < 0) ) load = 0;
         double speed = (double)rate/100;
         QString Srate = QString::number( speed,'f', 2 );
         if( speed < 100 ) Srate = "0"+Srate;

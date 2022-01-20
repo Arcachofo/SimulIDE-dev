@@ -55,6 +55,7 @@ Simulator::Simulator( QObject* parent )
     m_warnings[1] = "NonLinear Not Converging";
     m_warnings[100] = "AVR crashed !!!";
 
+    ///m_running = false;
     resetSim();
 
     m_RefTimer.start();
@@ -75,6 +76,7 @@ inline void Simulator::solveMatrix()
     if( !m_matrix->solveMatrix() ) // Try to solve matrix, if not stop simulation
     {
         qDebug() << "Simulator::solveMatrix(), Failed to solve Matrix";
+        m_state = SIM_ERROR;
         m_error = 1;
 }   }                                // m_matrix sets the eNode voltages
 
@@ -82,11 +84,12 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 {
     e->accept();
 
+    if( m_state == SIM_WAITING ) return;
+
     if( m_error )
     {
         CircuitWidget::self()->powerCircOff();
         CircuitWidget::self()->setError( m_errors.value( m_error ) );
-        m_state = SIM_ERROR;
         return;
     }
     if( m_warning > 0 )
@@ -105,13 +108,6 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_CircuitFuture.waitForFinished();
         m_state = state;
     }
-    // Calculate Load
-    uint64_t loop = m_loopTime-m_refTime;
-    m_load = (m_load+100*loop/(m_timerTick*1e6))/2;
-
-    // Get Real Simulation Speed
-    m_refTime = m_RefTimer.nsecsElapsed();
-    m_tStep   = m_circTime;
 
     if( Circuit::self()->animate() )
     {
@@ -119,6 +115,15 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         for( eNode* enode : m_eNodeList ) enode->setVoltChanged( false );
     }
     for( Updatable* el : m_updateList ) el->updateStep();
+
+    // Calculate Load
+    uint64_t loop = m_loopTime-m_refTime;
+    m_load = (m_load+100*loop/((double)m_timerTick*1e6))/2;
+
+    // Get Real Simulation Speed
+    m_realStepsPF = m_circTime-m_tStep;
+    m_tStep   = m_circTime;
+    m_refTime = m_RefTimer.nsecsElapsed();
 
     if( m_state == SIM_RUNNING ) // Run Circuit in a parallel thread
         m_CircuitFuture = QtConcurrent::run( this, &Simulator::runCircuit );
@@ -167,6 +172,7 @@ void Simulator::runCircuit()
 void Simulator::solveCircuit()
 {
     if( m_changedNode ) solveMatrix();
+    if( m_state < SIM_RUNNING ) return;
 
     m_converged = m_nonLin==NULL;
     while( !m_converged )                  // Non Linear Components
@@ -180,8 +186,8 @@ void Simulator::solveCircuit()
         if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )
         { m_warning = 1; m_converged = true; break; } // Max iterations reached
         if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
-
         if( m_changedNode ) solveMatrix();
+        if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
     }
     if( !m_converged ) return; // Don't run linear until nonliear converged
 
@@ -203,6 +209,7 @@ void Simulator::resetSim()
     m_lastRefT = 0;
     m_circTime = 0;
     m_NLstep   = 0;
+    m_realStepsPF = 1;
 
     CircuitView::self()->setCircTime( 0 );
     clearEventList();
@@ -356,6 +363,8 @@ void Simulator::initTimer()
 {
     if( m_timerId != 0 ) return;
     CircuitWidget::self()->setMsg( " Running ", 0  );
+    m_refTime  = m_RefTimer.nsecsElapsed();
+    m_loopTime = m_refTime;
     m_timerId = this->startTimer( m_timerTick, Qt::PreciseTimer );
     m_state = SIM_RUNNING;
 }

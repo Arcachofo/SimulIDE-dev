@@ -187,22 +187,10 @@ void Memory::runEvent()
         {
             bool state = m_outPin[i]->getInpState();
             if( state ) value += pow( 2, i );
-            m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
+            if( Circuit::self()->animate() ) m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
         }
         m_ram[m_address] = value;
 }   }
-
-/*void Memory::setMem( QVector<int> m )
-{
-    if( m.size() == 1 ) return;       // Avoid loading data if not saved
-    m_ram = m;
-}
-
-QVector<int> Memory::mem()
-{
-    if( !m_persistent ) { QVector<int> nul; return nul;  }
-    return m_ram;
-}*/
 
 void Memory::setMem( QString m )
 {
