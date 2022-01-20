@@ -29,7 +29,7 @@ LaChannel::LaChannel( LAnalizer* la, QString id )
     m_analizer = la;
     m_lastCond = C_NONE;
 }
-LaChannel::~LaChannel()  { }
+LaChannel::~LaChannel(){ }
 
 void LaChannel::initialize()
 {
@@ -47,14 +47,25 @@ void LaChannel::stamp()    // Called at Simulation Start
 {
     DataChannel::stamp();
     m_analizer->conditonMet( m_channel, C_LOW );
+    addReading( 0 );
 }
 
 void LaChannel::updateStep()
 {
+    int counter = m_bufferCounter;
     voltChanged();
+    if( counter == m_bufferCounter ) addReading( m_buffer[m_bufferCounter] );
     double dispMax = m_analizer->voltDiv()*10;
     double dispMin = 0;
     m_analizer->display()->setLimits( m_channel, dispMax, dispMin );
+}
+
+void LaChannel::addReading( double v )
+{
+    uint64_t simTime = Simulator::self()->circTime();
+    if( ++m_bufferCounter >= m_buffer.size() ) m_bufferCounter = 0;
+    m_buffer[m_bufferCounter] = v;
+    m_time[m_bufferCounter] = simTime;
 }
 
 void LaChannel::voltChanged()
@@ -64,14 +75,11 @@ void LaChannel::voltChanged()
 
     double volt = m_ePin[0]->getVolt();
 
-    if( ++m_bufferCounter >= m_buffer.size() ) m_bufferCounter = 0;
-    m_buffer[m_bufferCounter] = volt;
-    m_time[m_bufferCounter] = simTime;
-
-    if( volt > m_analizer->threshold() )             // High
+    if( volt > m_analizer->threshold() ) // High
     {
         if( !m_rising )     // Rising Edge
         {
+            addReading( 5 );
             m_rising = true;
             m_risEdge = simTime;
 
@@ -87,6 +95,7 @@ void LaChannel::voltChanged()
     {
         if( m_rising  )    // Falling Edge
         {
+            addReading( 0 );
             m_rising = false;
 
             if( m_pauseOnCond )

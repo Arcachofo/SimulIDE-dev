@@ -233,9 +233,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                         subSample = true;
                         if     ( y1 > maxY ) { maxY = y1; maxX = x1; }
                         else if( y1 < minY ) { minY = y1; minX = x1; }
-                    }
-                    else
-                    {
+                    }else{
                         if( subSample )
                         {
                             if( maxX > minX )

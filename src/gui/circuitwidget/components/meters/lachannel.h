@@ -39,6 +39,7 @@ class MAINMODULE_EXPORT LaChannel : public DataChannel
         virtual void voltChanged() override;
 
     private:
+        void addReading( double v );
 
         LAnalizer* m_analizer;
 };
