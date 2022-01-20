@@ -23,6 +23,7 @@
         <item name="m168 TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega168" />
         <item name="mega328"   package="AVR/megax8/megax8"    data="AVR/mega328" />
         <item name="m328 TQFP" package="AVR/megax8/mx8_tqfp"  data="AVR/mega328" />
+        <item name="mega328PB" package="AVR/megax8/megax8pb"  data="AVR/mega328pb" />
         
         <item name="mega640"  package="AVR/m640_1280_2560/m640" data="AVR/mega640" />
         <item name="mega1280" package="AVR/m640_1280_2560/m640" data="AVR/mega1280" />

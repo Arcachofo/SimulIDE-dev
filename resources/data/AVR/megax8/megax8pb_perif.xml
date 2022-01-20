@@ -1,0 +1,183 @@
+<!DOCTYPE SimulIDE>
+
+<parts>
+  <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
+    <interrupt name="PCINT0" mask="PCMSK0"/>
+  </port>
+
+  <port name="PORTC" pins="7" outreg="PORTC" inreg="PINC" dirreg="DDRC">
+    <interrupt name="PCINT1" mask="PCMSK1"/>
+  </port>
+
+  <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
+    <interrupt name="PCINT2" mask="PCMSK2"/>
+    <extint    name="INT0" pin="PORTD2" configbits="ISC00,ISC01"/>
+    <extint    name="INT1" pin="PORTD3" configbits="ISC10,ISC11"/>
+  </port>
+
+ <port name="PORTE" pins="4" outreg="PORTE" inreg="PINE" dirreg="DDRE">
+    <interrupt name="PCINT3" mask="PCMSK3"/>
+  </port>
+
+  <timer name="TIMER0" type="800" counter="TCNT0" configregsA="TCCR0A" configregsB="TCCR0B">
+    <prescaler select="CS00,CS01,CS02" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <extclock type="PIN" source="PORTD4"/>
+    
+    <ocunit name="OC0A" pin="PORTD6" ocreg="OCR0A" configbits="COM0A0,COM0A1">
+        <interrupt name="T0COA" />
+    </ocunit>
+    
+    <ocunit name="OC0B" pin="PORTD5" ocreg="OCR0B" configbits="COM0B0,COM0B1">
+        <interrupt name="T0COB" />
+    </ocunit>
+    
+    <interrupt name="T0_OVF" />
+  </timer>
+
+  <timer name="TIMER1" type="160" counter="TCNT1L,TCNT1H" configregsA="TCCR1A" configregsB="TCCR1B">
+    <prescaler select="CS10,CS11,CS12" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <extclock type="PIN" source="PORTD5"/>
+    
+    <ocunit name="OC1A" pin="PORTB1" ocreg="OCR1AL,OCR1AH" configbits="COM1A0,COM1A1">
+        <interrupt name="T1COA" />
+    </ocunit>
+    
+    <ocunit name="OC1B" pin="PORTB2" ocreg="OCR1BL,OCR1BH" configbits="COM1B0,COM1B1">
+        <interrupt name="T1COB" />
+    </ocunit>
+    
+    <interrupt name="T1_OVF" />
+  </timer>
+
+  <timer name="TIMER2" type="820" counter="TCNT2" configregsA="TCCR2A" configregsB="TCCR2B">
+    <prescaler select="CS20,CS21,CS22" values="0,1,8,32,64,128,256,1024"/>
+    
+    <ocunit name="OC2A" pin="PORTB3" ocreg="OCR2A" configbits="COM2A0,COM2A1">
+        <interrupt name="T2COA" />
+    </ocunit>
+    
+    <ocunit name="OC2B" pin="PORTD3" ocreg="OCR2B" configbits="COM2B0,COM2B1">
+        <interrupt name="T2COB" />
+    </ocunit>
+    
+    <interrupt name="T2_OVF" />
+  </timer>
+
+<timer name="TIMER3" type="160" counter="TCNT3L,TCNT3H" configregsA="TCCR3A" configregsB="TCCR3B">
+    <prescaler select="CS30,CS31,CS32" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <extclock type="PIN" source="PORTD2"/>
+
+    <ocunit name="OC3A" pin="PORTD0" ocreg="OCR3AL,OCR3AH" configbits="COM3A0,COM3A1">
+        <interrupt name="T3COA" />
+    </ocunit>
+    
+    <ocunit name="OC3B" pin="PORTD2" ocreg="OCR3AL,OCR3AH" configbits="COM3B0,COM3B1">
+        <interrupt name="T3COB" />
+    </ocunit>
+    
+    <interrupt name="T3_OVF" />
+  </timer>
+
+  <timer name="TIMER4" type="160" counter="TCNT4L,TCNT4H" configregsA="TCCR4A" configregsB="TCCR4B">
+    <prescaler select="CS40,CS41,CS42" values="0,1,8,64,256,1024,EXT_F,EXT_R"/>
+    <extclock type="PIN" source="PORTD0"/>
+
+    <ocunit name="OC4A" pin="PORTD1" ocreg="OCR4AL,OCR4AH" configbits="COM4A0,COM4A1">
+        <interrupt name="T4COA" />
+    </ocunit>
+    
+    <ocunit name="OC4B" pin="PORTD0" ocreg="OCR4AL,OCR4AH" configbits="COM4B0,COM4B1">
+        <interrupt name="T4COB" />
+    </ocunit>
+    
+    <interrupt name="T4_OVF" />
+  </timer>
+
+  <usart name="USART0"  number="1" configregsA="UCSR0A" configregsB="UCSR0B" configregsC="UCSR0C">
+    <trunit type="tx" pin="PORTD1" register="UDR0">
+        <interrupt name="USART0_T" />
+    </trunit>
+    
+    <trunit type="rx" pin="PORTD0" >
+        <interrupt name="USART0_R" />
+    </trunit>
+    
+    <interrupt name="USART0_U" />
+  </usart>
+
+  <usart name="USART1"  number="2" configregsA="UCSR1A" configregsB="UCSR1B" configregsC="UCSR1C">
+    <trunit type="tx" pin="PORTB3" register="UDR1">
+        <interrupt name="USART1_T" />
+    </trunit>
+    
+    <trunit type="rx" pin="PORTB4" >
+        <interrupt name="USART1_R" />
+    </trunit>
+    
+    <interrupt name="USART1_U" />
+  </usart>
+
+  <adc name="ADC0" bits="10" dataregs="ADCL,ADCH" configregsA="ADCSRA" configregsB="ADCSRB" multiplex="ADMUX">
+    <prescaler select="" values="2,2,4,8,16,32,64,128"/>
+    <inputs type="PIN" source="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5,PORTE2,PORTE3" />
+    
+    <interrupt name="ADC" />
+  </adc>
+
+  <twi name="TWI0" dataregs="TWDR0" addressreg="TWAR0" statusreg="TWSR0" 
+                 configregsA="TWCR0" configregsB="TWBR0">
+    <prescaler select="" values="1,4,16,64"/>
+    
+    <inputpin name="sda" pin="PORTC4" />
+    <inputpin name="scl" pin="PORTC5" />
+    
+    <interrupt name="TWI0" />
+  </twi>
+
+  <twi name="TWI1" dataregs="TWDR1" addressreg="TWAR1" statusreg="TWSR1" 
+                 configregsA="TWCR1" configregsB="TWBR1">
+    <prescaler select="" values="1,4,16,64"/>
+    
+    <inputpin name="sda" pin="PORTE0" />
+    <inputpin name="scl" pin="PORTE1" />
+    
+    <interrupt name="TWI1" />
+  </twi>
+
+  <spi name="SPI0" dataregs="SPDR0" statusreg="SPSR0" configregsA="SPCR0">
+    <prescaler select="" values="4,16,64,128,2,8,32,64"/>
+    
+    <inputpin name="mosi" pin="PORTB3" />
+    <inputpin name="miso" pin="PORTB4" />
+    <inputpin name="sck"  pin="PORTB5" />
+    <inputpin name="ss"   pin="PORTB2" />
+    
+    <interrupt name="SPI" />
+  </spi>
+
+  <spi name="SPI1" dataregs="SPDR1" statusreg="SPSR1" configregsA="SPCR1">
+    <prescaler select="" values="4,16,64,128,2,8,32,64"/>
+    
+    <inputpin name="mosi" pin="PORTE2" />
+    <inputpin name="miso" pin="PORTC0" />
+    <inputpin name="sck"  pin="PORTC1" />
+    <inputpin name="ss"   pin="PORTE3" />
+    
+    <interrupt name="SPI1" />
+  </spi>
+
+  <wdt name="WatchDog" configregsA="WDTCSR">
+    <prescaler select="" values="512,256,128,64,32,16,8,4,2,1,1,1,1,1,1,1"/>
+    <interrupt name="WDT" />
+  </wdt>
+
+  <eeprom name="EEPROM" dataregs="EEDR" addressreg="EEARL,EEARH" configregsA="EECR">
+    <interrupt name="EEPR" />
+  </eeprom>
+
+  <acomp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D" pins="PORTD6,PORTD7">
+    <interrupt name="ACOMP" />
+  </acomp>
+
+
+</parts>

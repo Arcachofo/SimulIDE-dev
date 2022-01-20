@@ -1,0 +1,42 @@
+<!DOCTYPE SimulIDE>
+
+<package name="Package" pins="32" width="11" height="11">
+
+    <pin side="left" pos="2"  type="IO" id="PD3"  label="D3"/>
+    <pin side="left" pos="3"  type="IO" id="PD4"  label="D4"/>
+    <pin side="left" pos="4"  type="IO" id="PE0"  label="E0"/>
+    <pin side="left" pos="5"  type="nc" id="VCC0" label="Vcc"/>
+    <pin side="left" pos="6"  type="nc" id="GND1" label="Gnd"/>
+    <pin side="left" pos="7"  type="IO" id="PE1"  label="E1"/>
+    <pin side="left" pos="8"  type="IO" id="PB6"  label="B6"/>
+    <pin side="left" pos="9"  type="IO" id="PB7"  label="B7"/>
+    
+    <pin side="bottom" pos="2" type="IO" id="PD5"  label="D5"/>
+    <pin side="bottom" pos="3" type="IO" id="PD6"  label="D6"/>
+    <pin side="bottom" pos="4" type="IO" id="PD7"  label="D7"/>
+    <pin side="bottom" pos="5" type="IO" id="PB0"  label="B0"/>
+    <pin side="bottom" pos="6" type="IO" id="PB1"  label="B1"/>
+    <pin side="bottom" pos="7" type="IO" id="PB2"  label="B2"/>
+    <pin side="bottom" pos="8" type="IO" id="PB3"  label="B3"/>
+    <pin side="bottom" pos="9" type="IO" id="PB4"  label="B4"/>
+    
+    <pin side="right"  pos="9"  type="IO" id="PB5" label="B5"/>
+    <pin side="right"  pos="8"  type="IO" id="PV0" label="Avcc"/>
+    <pin side="right"  pos="7"  type="IO" id="PE2" label="E2"/>
+    <pin side="right"  pos="6"  type="IO" id="PV1" label="Aref"/>
+    <pin side="right"  pos="5"  type="nc" id="GND2" label="Gnd"/>
+    <pin side="right"  pos="4"  type="IO" id="PE3" label="E3"/>
+    <pin side="right"  pos="3"  type="IO" id="PC0" label="C0"/>
+    <pin side="right"  pos="2"  type="IO" id="PC1" label="C1"/>
+    
+    <pin side="top"    pos="9"  type="IO"  id="PC2"  label="C2"/>
+    <pin side="top"    pos="8"  type="IO"  id="PC3"  label="C3"/>
+    <pin side="top"    pos="7"  type="IO"  id="PC4"  label="C4"/>
+    <pin side="top"    pos="6"  type="IO"  id="PC5"  label="C5"/>
+    <pin side="top"    pos="5"  type="IO"  id="PC6"  label="C6"/>
+    <pin side="top"    pos="4"  type="IO"  id="PD0"  label="D0"/>
+    <pin side="top"    pos="3"  type="IO"  id="PD1"  label="D1"/>
+    <pin side="top"    pos="2"  type="IO"  id="PD2"  label="D2"/>
+    
+</package>
+
