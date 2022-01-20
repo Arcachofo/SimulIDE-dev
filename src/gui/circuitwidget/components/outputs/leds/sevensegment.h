@@ -58,7 +58,6 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         void   setResistance( double res );
 
         virtual void attach() override;
-        virtual void remove() override;
 
         virtual QStringList getEnums( QString e ) override;
 

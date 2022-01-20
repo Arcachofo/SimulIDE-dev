@@ -128,9 +128,7 @@ void LedBase::setColorStr( QString c )
 
 QStringList LedBase::getEnums( QString e )
 {
-    //if     ( e == "Model" ) return m_leds.keys();
-    //else
-        if( e == "Color" ) return m_colors;
+    if( e == "Color" ) return m_colors;
     else return CompBase::getEnums( e );
 }
 

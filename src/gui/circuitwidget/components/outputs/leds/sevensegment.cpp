@@ -274,12 +274,6 @@ void SevenSegment::createDisplay(int n )
     m_segment[n*8+7]->setPos( x+12, 19 );
 }
 
-void SevenSegment::remove()
-{
-    for( int i=0; i<m_numDisplays; ++i ) deleteDisplay( i );
-    Component::remove();
-}
-
 void SevenSegment::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
