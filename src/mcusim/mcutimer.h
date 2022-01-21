@@ -28,6 +28,7 @@
 class eMcu;
 class McuPin;
 class McuOcUnit;
+class McuIcUnit;
 
 class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
 {
@@ -106,6 +107,7 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
         bool        m_clkState; // Lask Clock state
         McuPin*     m_clockPin; // External Clock pin
 
+        McuIcUnit* m_ICunit;    // Input Capture unit;
         std::vector<McuOcUnit*> m_ocUnit; // Output Compare Units
 };
 

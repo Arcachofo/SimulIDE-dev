@@ -39,6 +39,7 @@
 #include "avrport.h"
 #include "avrtimer.h"
 #include "avrocunit.h"
+#include "avricunit.h"
 #include "avrinterrupt.h"
 #include "avrusart.h"
 #include "avradc.h"
@@ -599,6 +600,37 @@ void McuCreator::createTimer( QDomElement* t )
             {
                 QDomElement el1 = node1.toElement();
                 if( el1.tagName() == "interrupt" )  setInterrupt( &el1, ocUnit );
+                node1 = node1.nextSibling();
+            }
+        }
+        else if( el.tagName() == "icunit" )
+        {
+            QString icName = el.attribute("name");
+            McuIcUnit* icUnit = NULL;
+            if( m_core == "AVR" ) icUnit = new AvrIcUnit( mcu, icName );
+            if( !icUnit ) { node = node.nextSibling(); continue; }
+
+            McuPin* pin = mcu->m_ports.getPin( el.attribute("pin") );
+
+            timer->m_ICunit = icUnit;
+            icUnit->m_timer = timer;
+            icUnit->m_icPin = pin;
+
+            QStringList regs = el.attribute("icreg").split(",");
+            if( !regs.isEmpty() ) icUnit-> m_icRegL = mcu->getReg( regs.takeFirst() );
+            if( !regs.isEmpty() ) icUnit-> m_icRegH = mcu->getReg( regs.takeFirst() );
+
+            if( el.hasAttribute("configbits") )
+            {
+                QString configBits = el.attribute("configbits");
+                watchBitNames( configBits, R_WRITE, icUnit, &McuIcUnit::configure, mcu );
+            }
+
+            QDomNode node1 = el.firstChild();
+            while( !node1.isNull() )
+            {
+                QDomElement el1 = node1.toElement();
+                if( el1.tagName() == "interrupt" )  setInterrupt( &el1, icUnit );
                 node1 = node1.nextSibling();
             }
         }

@@ -20,6 +20,7 @@
 #include "avrtimer.h"
 #include "datautils.h"
 #include "avrocunit.h"
+#include "avricunit.h"
 #include "e_mcu.h"
 #include "simulator.h"
 #include "regwatcher.h"
@@ -384,6 +385,7 @@ void AvrTimer16bit::updtWgm()
 
     wgmMode_t mode = wgmNORM;
     uint16_t  ovf  = 0xFFFF;
+    bool useICR = false;
 
     switch( WGM ){
         case 1:  mode = wgmPHAS; ovf = 0x00FF;  break; // PWM, Phase Correct, 8-bit
@@ -393,15 +395,18 @@ void AvrTimer16bit::updtWgm()
         case 5:  mode = wgmFAST; ovf = 0x00FF;  break; // Fast PWM, 8-bit
         case 6:  mode = wgmFAST; ovf = 0x01FF;  break; // Fast PWM, 9-bit
         case 7:  mode = wgmFAST; ovf = 0x03FF;  break; // Fast PWM, 10-bit
-        case 8:  mode = wgmPHAS; ovf = ICRX16;  break; // PWM, Phase and Frequency Correct
+        case 8:  mode = wgmPHAS; useICR = true; break; // PWM, Phase and Frequency Correct
         case 9:  mode = wgmPHAS; ovf = OCRXA16; break; // PWM, Phase and Frequency Correct
-        case 10: mode = wgmPHAS; ovf = ICRX16;  break; // PWM, Phase Correct
+        case 10: mode = wgmPHAS; useICR = true; break; // PWM, Phase Correct
         case 11: mode = wgmPHAS; ovf = OCRXA16; break; // PWM, Phase Correct
-        case 12: mode = wgmCTC;  ovf = ICRX16;  break; // CTC
+        case 12: mode = wgmCTC;  useICR = true; break; // CTC
         case 13:                                break; // (Reserved)
-        case 14: mode = wgmFAST; ovf = ICRX16;  break; // Fast PWM ICRX
+        case 14: mode = wgmFAST; useICR = true; break; // Fast PWM ICRX
         case 15: mode = wgmFAST; ovf = OCRXA16; break; // Fast PWM OCRXA
     }
+    if( useICR ) ovf = ICRX16;
+    m_ICunit->enable( !useICR );
+
     m_wgmMode = mode;
     bool shedule = m_ovfMatch != ovf;
     m_ovfMatch = ovf;

@@ -21,6 +21,7 @@
 #include "e_mcu.h"
 #include "mcupin.h"
 #include "mcuocunit.h"
+#include "mcuicunit.h"
 #include "mcuinterrupts.h"
 #include "simulator.h"
 
@@ -33,12 +34,14 @@ McuTimer::McuTimer( eMcu* mcu, QString name )
     m_clockPin = NULL;
     m_countL = NULL;
     m_countH = NULL;
+    m_ICunit = NULL;
     initialize();
 }
 
 McuTimer::~McuTimer()
 {
     for( McuOcUnit* ocUnit : m_ocUnit ) delete ocUnit;
+    if( m_ICunit ) delete m_ICunit;
 }
 
 void McuTimer::initialize()

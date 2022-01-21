@@ -10,7 +10,7 @@
         <interrupt name="T2COA"    enable="OCIE2A" flag="OCF2A"  priority="38" vector="0x000E" clear="1"/>
         <interrupt name="T2COB"    enable="OCIE2B" flag="OCF2B"  priority="37" vector="0x0010" clear="1"/>
         <interrupt name="T2_OVF"   enable="TOIE2"  flag="TOV2"   priority="36" vector="0x0012" clear="1"/>
-        <interrupt name="T1CAP"    enable=" "      flag=" "      priority="35" vector="0x0014"/>
+        <interrupt name="T1CAP"    enable="ICIE1"  flag="ICF1"   priority="35" vector="0x0014"/>
         <interrupt name="T1COA"    enable="OCIE1A" flag="OCF1A"  priority="34" vector="0x0016" clear="1"/>
         <interrupt name="T1COB"    enable="OCIE1B" flag="OCF1B"  priority="33" vector="0x0018" clear="1"/>
         <interrupt name="T1_OVF"   enable="TOIE1"  flag="TOV1"   priority="32" vector="0x001A" clear="1"/>
@@ -34,7 +34,7 @@
         <interrupt name="USART1_U" enable="UDRIE1" flag="UDRE1"  priority="16" vector="0x003A"/>
         <interrupt name="USART1_T" enable="TXCIE1" flag="TXC1"   priority="15" vector="0x003C" clear="1"/>
         <interrupt name="USART1_S" enable=" "      flag=" "      priority="14" vector="0x003E"/>
-        <interrupt name="T3CAP"    enable=" "      flag=" "      priority="13" vector="0x0040"/>
+        <interrupt name="T3CAP"    enable="ICIE3"  flag="ICF3"   priority="13" vector="0x0040"/>
         <interrupt name="T3COA"    enable="OCIE3A" flag="OCF3A"  priority="12" vector="0x0042" clear="1"/>
         <interrupt name="T3COB"    enable="OCIE3B" flag="OCF3B"  priority="11" vector="0x0044" clear="1"/>
         <interrupt name="T3_OVF"   enable="TOIE3"  flag="TOV3"   priority="10" vector="0x0046" clear="1"/>
@@ -43,7 +43,7 @@
         <interrupt name="PTC_WC"   enable=" "      flag=" "      priority="7"  vector="0x004C"/>
         <interrupt name="SPI1"     enable="SPI1E"  flag="SPI1F"  priority="6"  vector="0x004E"/>
         <interrupt name="TWI1"     enable="TWI1E"  flag="TWI1NT" priority="5"  vector="0x0050" clear="0"/>
-        <interrupt name="T4CAP"    enable=" "      flag=" "      priority="4"  vector="0x0052"/>
+        <interrupt name="T4CAP"    enable="ICIE4"  flag="ICF4"   priority="4"  vector="0x0052"/>
         <interrupt name="T4COA"    enable="OCIE4A" flag="OCF4A"  priority="3"  vector="0x0054" clear="1"/>
         <interrupt name="T4COB"    enable="OCIE4B" flag="OCF4B"  priority="2"  vector="0x0056" clear="1"/>
         <interrupt name="T4_OVF"   enable="TOIE4"  flag="TOV4"   priority="1"  vector="0x0058" clear="1"/>

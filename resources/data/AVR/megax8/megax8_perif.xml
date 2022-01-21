@@ -44,6 +44,10 @@
         <interrupt name="T1COB" />
     </ocunit>
     
+    <icunit name="IC1" pin="PORTB0" icreg="ICR1L,ICR1H" configbits="ICES1,ICNC1">
+        <interrupt name="T1CAP" />
+    </icunit>
+    
     <interrupt name="T1_OVF" />
   </timer>
 

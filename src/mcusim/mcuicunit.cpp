@@ -56,3 +56,9 @@ void McuIcUnit::voltChanged() // Pin change
 
     m_interrupt->raise();
 }
+
+void McuIcUnit::enable( bool en )
+{
+    m_enabled = en;
+    m_icPin->changeCallBack( this, en );
+}

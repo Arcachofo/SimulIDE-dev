@@ -29,6 +29,8 @@ AvrIcUnit::AvrIcUnit( eMcu* mcu, QString name )
 }
 AvrIcUnit::~AvrIcUnit( ){}
 
-void AvrIcUnit::configureA( uint8_t val )
+void AvrIcUnit::configureA( uint8_t val ) // ICES,ICNC
 {
+    m_fallingEdge = (val & 1) == 0;
+    /// TODO INCN
 }

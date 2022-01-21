@@ -39,6 +39,8 @@ class MAINMODULE_EXPORT McuIcUnit : public McuModule, public eElement
 
         virtual void configure( uint8_t val ) {;}
 
+        void enable( bool en );
+
     protected:
         McuTimer* m_timer;
         McuPin*   m_icPin;
