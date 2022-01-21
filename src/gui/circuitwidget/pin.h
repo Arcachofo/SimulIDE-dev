@@ -98,7 +98,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setIsBus( bool bus );
         bool isBus() { return m_isBus; }
 
-        void setPinState( pinState_t st ) { m_pinState = st; m_changed = true; }
+        void setPinState( pinState_t st ) { m_pinState = st; m_PinChanged = true; }
 
         void updateStep();
 
@@ -111,7 +111,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void mousePressEvent( QGraphicsSceneMouseEvent* event );
 
         pinState_t m_pinState;
-        bool m_changed;
+        bool m_PinChanged;
 
         int m_angle;
         int m_length;

@@ -42,7 +42,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_blocked = false;
     m_isBus   = false;
     m_unused  = false;
-    m_changed = false;
+    m_PinChanged = false;
     
     my_connector = NULL;
     m_conPin     = NULL;
@@ -191,10 +191,8 @@ void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
             {
                 Connector* con = Circuit::self()->getNewConnector();
                 if( con->isBus() != m_isBus ) // Avoid connect Bus with no-Bus
-                {
-                    event->ignore();
-                    return;
-            }   }
+                { event->ignore(); return; }
+            }
             event->accept();
             if( Circuit::self()->is_constarted() ) Circuit::self()->closeconnector( this );
             else                                   Circuit::self()->newconnector( this );
@@ -322,14 +320,14 @@ void Pin::setVisible( bool visible )
 
 void Pin::updateStep()
 {
-    if( !m_unused && Circuit::self()->animate() ) return;
-    if( m_changed ) update();
+    if( m_unused ) return;
+    if( m_PinChanged ) update();
 }
 
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( !isVisible() ) return;
-    m_changed = false;
+    m_PinChanged = false;
 
     QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 

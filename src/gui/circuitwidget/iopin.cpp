@@ -94,7 +94,7 @@ void IoPin::setPinMode( pinMode_t mode )
     }
     if( m_pinMode > input ) IoPin::setOutState( m_outState );
     else                    updtState();
-    /// update(); // Don't do this!!!
+    m_PinChanged = true;
 }
 
 void IoPin::updtState()
