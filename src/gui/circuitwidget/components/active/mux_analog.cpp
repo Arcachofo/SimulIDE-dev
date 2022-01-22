@@ -83,6 +83,7 @@ void MuxAnalog::stamp()
     m_enPin->changeCallBack( this );
     for( int i=0; i<m_channels; ++i ) m_resistor[i]->setAdmit( cero_doub );
     for( Pin* pin : m_addrPin ) pin->changeCallBack( this );
+    m_enPin->changeCallBack( this );
 
     m_enabled = false;
 }
@@ -99,12 +100,16 @@ void MuxAnalog::voltChanged()
     }
     m_address = address;
 
-    if( m_enabled ) Simulator::self()->addEvent( 10000/*m_propDelay*/, this );
+    Simulator::self()->addEvent( 10000/*m_propDelay*/, this );
 }
 
 void MuxAnalog::runEvent()
 {
-    if( !m_enabled ) return;
+    if( !m_enabled )
+    {
+        for( int i=0; i<m_channels; ++i ) m_resistor[i]->setAdmit( cero_doub );
+        return;
+    }
 
     for( int i=0; i<m_channels; ++i )
     {
