@@ -117,7 +117,8 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
     for( Updatable* el : m_updateList ) el->updateStep();
 
     // Calculate Load
-    uint64_t loop = m_loopTime-m_refTime;
+    uint64_t loop = 0;
+    if( m_loopTime > m_refTime ) loop = m_loopTime-m_refTime;
     m_load = (m_load+100*loop/((double)m_timerTick*1e6))/2;
 
     // Get Real Simulation Speed
