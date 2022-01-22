@@ -308,6 +308,10 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
     connect( copyAction, SIGNAL( triggered()),
                    this, SLOT(slotCopy()), Qt::UniqueConnection );
 
+    QAction* cutAction = menu->addAction(QIcon(":/cut.png"),tr("Cut")+"\tCtrl+X");
+    connect( cutAction, SIGNAL( triggered()),
+                   this, SLOT(slotCut()), Qt::UniqueConnection );
+
     QAction* removeAction = menu->addAction( QIcon( ":/remove.png"),tr("Remove")+"\tDel" );
     connect( removeAction, SIGNAL( triggered()),
                      this, SLOT(slotRemove()), Qt::UniqueConnection );
@@ -345,6 +349,14 @@ void Component::slotCopy()
     if( !isSelected() ) Circuit::self()->clearSelection();
     setSelected( true );
     Circuit::self()->copy( m_eventpoint );
+}
+
+void Component::slotCut()
+{
+    if( !isSelected() ) Circuit::self()->clearSelection();
+    setSelected( true );
+    Circuit::self()->copy( m_eventpoint );
+    Circuit::self()->removeItems();
 }
 
 void Component::slotRemove()

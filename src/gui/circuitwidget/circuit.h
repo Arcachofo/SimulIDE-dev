@@ -97,7 +97,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool  pasting() { return m_pasting; }
         QPointF deltaMove() { return m_deltaMove; }
         
-        void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; }
+        void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; m_LdPinMap[ pinId ] = pin; }
         void remPin( QString pinId ) { m_pinMap.remove( pinId ); }
         void updatePin( ePin* epin, QString oldId, QString newId );
 
@@ -168,6 +168,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QList<Node*> m_nodeList;        // Node list
         
         QHash<QString, Pin*> m_pinMap;    // Pin list
+        QHash<QString, Pin*> m_LdPinMap;  // Pin list while loading/pasting/importing
         QHash<QString, QString> m_idMap;
 
         QStringList m_undoStack;

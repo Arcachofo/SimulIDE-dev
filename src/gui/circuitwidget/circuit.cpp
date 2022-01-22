@@ -156,6 +156,7 @@ void Circuit::loadStrDoc( QString &doc )
     QList<SubCircuit*> shieldList;
     //QHash<QString, eNode*> nodMap;
     m_busy    = true;
+    m_LdPinMap.clear();
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
@@ -260,23 +261,23 @@ void Circuit::loadStrDoc( QString &doc )
                     QString startCompId = getCompId( startpinid );
                     QString endCompId   = getCompId( endpinid );
 
-                    startpinid.replace( startCompId, m_idMap[startCompId] );
-                    endpinid.replace( endCompId, m_idMap[endCompId] );
+                    startpinid.replace( startCompId, m_idMap.value(startCompId) );
+                    endpinid.replace(   endCompId,   m_idMap.value(endCompId) );
                 }
-                startpin = m_pinMap.value( startpinid );
-                endpin   = m_pinMap.value( endpinid );
+                startpin = m_LdPinMap.value( startpinid );
+                endpin   = m_LdPinMap.value( endpinid );
 
                 if( !startpin ) // Pin not found by name... find it by pos
                 {
                     int itemX = pointList.first().toInt();
                     int itemY = pointList.at(1).toInt();
-                    startpin = findPin( itemX, itemY, startpinid );
+                    if( !m_pasting) startpin = findPin( itemX, itemY, startpinid );
                 }
                 if( !endpin ) // Pin not found by name... find it by pos
                 {
                     int itemX = pointList.at( pointList.size()-2 ).toInt();
                     int itemY = pointList.last().toInt();
-                    endpin = findPin( itemX, itemY, endpinid );
+                    if( !m_pasting) endpin = findPin( itemX, itemY, endpinid );
                 }
                 if( startpin && startpin->isConnected() ) startpin = NULL;
                 if( endpin   && endpin->isConnected() )   endpin   = NULL;
@@ -803,6 +804,12 @@ void Circuit::keyPressEvent( QKeyEvent* event )
             QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
             copy( m_graphicView->mapToScene( p ) );
             clearSelection();
+        }
+        if( key == Qt::Key_X )
+        {
+            QPoint p = CircuitWidget::self()->mapFromGlobal(QCursor::pos());
+            copy( m_graphicView->mapToScene( p ) );
+            removeItems();
         }
         else if( key == Qt::Key_V )
         {
