@@ -169,10 +169,8 @@ void Pin::connectPin()      // Auto-Connect
 
 void Pin::isMoved()
 {
-    if( this->isConnected() ) return;
-
     if( my_connector ) my_connector->updateConRoute( this, scenePos() );
-    else
+    else if( !isConnected() )
     {                            // Auto-Connect
         if( Circuit::self()->pasting() ) return;
         if( m_isBus ) return;
