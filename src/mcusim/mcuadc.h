@@ -20,13 +20,13 @@
 #ifndef MCUADC_H
 #define MCUADC_H
 
-#include "mcumodule.h"
+#include "mcuprescaled.h"
 #include "e-element.h"
 
 class eMcu;
 class McuPin;
 
-class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
+class MAINMODULE_EXPORT McuAdc : public McuPrescaled, public eElement
 {
         friend class McuCreator;
 
@@ -59,8 +59,6 @@ class MAINMODULE_EXPORT McuAdc : public McuModule, public eElement
         std::vector<McuPin*> m_refPin; // Vref Pins
         McuPin* m_pRefPin;             // Positive Vref Pin
         McuPin* m_nRefPin;             // Negative Vref Pin
-
-        std::vector<uint16_t> m_prescList; // Prescaler values
 
         uint64_t m_convTime;           // Time to complete a conversion in ps
 

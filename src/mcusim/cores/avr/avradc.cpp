@@ -50,8 +50,11 @@ AvrAdc::AvrAdc( eMcu* mcu, QString name )
     m_ADLAR = getRegBits( "ADLAR", mcu );
     m_REFS  = getRegBits( "REFS0,REFS1", mcu );
 
-    m_aVccPin = mcu->getPin( "PORTV0" );
-    m_aRefPin = mcu->getPin( "PORTV1" );
+    if( McuPort::getPort("PORTV") )
+    {
+        m_aVccPin = McuPort::getPin( "PORTV0" );
+        m_aRefPin = McuPort::getPin( "PORTV1" );
+    }
 
     m_timer0 = (AvrTimer800*)mcu->getTimer( "TIMER0" );
     m_timer1 = NULL;

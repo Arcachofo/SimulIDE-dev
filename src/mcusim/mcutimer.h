@@ -22,7 +22,7 @@
 
 #include<QHash>
 
-#include "mcumodule.h"
+#include "mcuprescaled.h"
 #include "e-element.h"
 
 class eMcu;
@@ -30,7 +30,7 @@ class McuPin;
 class McuOcUnit;
 class McuIcUnit;
 
-class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
+class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
 {
         friend class McuCreator;
 
@@ -76,11 +76,7 @@ class MAINMODULE_EXPORT McuTimer : public McuModule, public eElement
 
         int     m_number;
 
-        regBits_t m_prSelBits;              // Bits configuring prescaler index
-        uint8_t  m_prIndex;                 // Prescaler index
-        uint16_t m_prescaler;               // Actual Prescaler value
         uint64_t m_scale;                   // Picoseconds per timer Tick
-        std::vector<uint16_t> m_prescList;  // Prescaler values
 
         bool m_running;  // is Timer running?
         bool m_bidirec;  // is Timer bidirectional?

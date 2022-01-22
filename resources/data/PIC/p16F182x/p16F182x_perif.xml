@@ -1,61 +1,54 @@
 <parts>
-    <port name="PORTA" pins="8" outreg="PORTA,LATA" dirreg="!TRISA" 
-          configregsA="ANSELA" configregsB="WPUA"
-          inpmask="11011111" clockpins="PORTA6,PORTA7" resetpin="PORTA5">
-    </port>
-   
-    <port name="PORTB" pins="8" outreg="PORTB,LATB" dirreg="!TRISB" 
-          configregsA="ANSELB" configregsB="WPUB" >
-        <interrupt name="IOC" mask="11111111"/>
-        <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
-    </port>
-    
-    <timer name="TIMER0" type="800" counter="TMR0" configregsA="OPTION" clockpin="PORTA4">
-        <prescaler values="2,4,8,16,32,64,128,256"/>
-        <interrupt name="T0_OVF" />
-    </timer>
-   
-    <timer name="TIMER1" type="161" counter="TMR1L,TMR1H" configregsA="T1CON" clockpin="PORTB6">
-        <prescaler values="1,2,4,8"/>
-        <interrupt name="T1_OVF" />
-    </timer>
-   
-    <timer name="TIMER2" type="820" counter="TMR2" configregsA="T2CON" configregsB="PR2">
-        <prescaler values="1,4,16,64"/>
-        <interrupt name="T2_MATCH" />
-    </timer> 
-   
-    <usart name="EUSART"  number="1" configregsA="TXSTA" configregsB="RCSTA" configregsC="BAUDCON">
-        <trunit type="tx" pin="PORTB2,PORTB5" configbitsA="RXDTSEL" register="TXREG">
-        </trunit>
-      
-        <trunit type="rx" pin="PORTB1,PORTB2" configbitsA="TXCKSEL" register="RCREG">
-            <interrupt name="USART_R" />
-        </trunit>
-        <interrupt name="USART_T" />
-    </usart>
-   
-    <vref name="Vref" configregsA="ADCON1" pinout="PORTA2,PORTA3">
-    </vref>
-    
-    <adc name="ADC20" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1">
-        <prescaler select="" values="2,8,32,0,4,16,64,0"/>
-        <pins 
-         inputs="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTB6,PORTB7,PORTB5,PORTB4,PORTB3,PORTB2,PORTB1"
-         vref="PORTA3,PORTA2"/>
-        <interrupt name="ADC" />
-    </adc>
-   
-    <acomp name="COMP01" configregsA="CM1CON0" configregsB="CM1CON1" pins="PORTA0,PORTA3,PORTA2">
-        <interrupt name="COMP1" />
-    </acomp>
-   
-    <acomp name="COMP02" configregsA="CM2CON0" configregsB="CM2CON1" pins="PORTA1,PORTA2,PORTA4">
-        <interrupt name="COMP2" />
-    </acomp>
-   
-    <wdt name="WatchDog" configregsA="WDTCON">
-        <prescaler select="" values="1,2,4,8,16,32,64,128"/>
-    </wdt>
-    
+  <port name="PORTA" pins="8" outreg="PORTA,LATA" dirreg="!TRISA"
+        configregsA="ANSELA" configregsB="WPUA"
+        inpmask="11011111" clockpins="PORTA6,PORTA7" resetpin="PORTA5">
+  </port>
+
+  <port name="PORTB" pins="8" outreg="PORTB,LATB" dirreg="!TRISB"
+        configregsA="ANSELB" configregsB="WPUB" >
+      <interrupt name="IOC" mask="11111111"/>
+      <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
+  </port>
+
+  <timer name="TIMER0" type="800" configregsA="OPTION" clockpin="PORTA4"
+                       counter="TMR0"
+                       interrupt="T0_OVF"
+                       prescalers="2,4,8,16,32,64,128,256"/>
+
+  <timer name="TIMER1" type="161" configregsA="T1CON" clockpin="PORTB6"
+                       counter="TMR1L,TMR1H"
+                       interrupt="T1_OVF"
+                       prescalers="1,2,4,8"/>
+
+  <timer name="TIMER2" type="820" configregsA="T2CON" configregsB="PR2"
+                       counter="TMR2"
+                       interrupt="T2_MATCH"
+                       prescalers="1,4,16,64"/>
+
+  <usart name="EUSART"  number="1" configregsA="TXSTA" configregsB="RCSTA" configregsC="BAUDCON"
+                        interrupt="USART_T">
+      <trunit type="tx" pin="PORTB2,PORTB5" configbitsA="RXDTSEL" register="TXREG"/>
+      <trunit type="rx" pin="PORTB1,PORTB2" configbitsA="TXCKSEL" register="RCREG" interrupt="USART_R" />
+  </usart>
+
+  <!-- TODO vref name="Vref" configregsA="FVRCON" pinout=""-->
+
+  <adc name="ADC20" bits="10" configregsA="ADCON0" configregsB="ADCON1"
+                    dataregs="ADRESL,ADRESH"
+                    interrupt="ADC"
+                    prescalers="2,8,32,0,4,16,64,0"
+                    adcpins="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTB6,PORTB7,PORTB5,PORTB4,PORTB3,PORTB2,PORTB1"
+                    vrefpins="PORTA3,PORTA2"/>
+
+  <acomp name="COMP01" configregsA="CM1CON0" configregsB="CM1CON1"
+                       interrupt="COMP1"
+                       pins="PORTA0,PORTA3,PORTA2" />
+
+  <comp name="COMP02" configregsA="CM2CON0" configregsB="CM2CON1"
+                      interrupt="COMP2"
+                      pins="PORTA1,PORTA2,PORTA4" />
+
+  <wdt name="WDT" configregsA="WDTCON"
+                  prescalers="1,2,4,8,16,32,64,128"/>
+
 </parts>

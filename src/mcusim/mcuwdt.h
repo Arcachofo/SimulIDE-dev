@@ -20,12 +20,12 @@
 #ifndef MCUWDT_H
 #define MCUWDT_H
 
-#include "mcumodule.h"
+#include "mcuprescaled.h"
 #include "e-element.h"
 
 class eMcu;
 
-class MAINMODULE_EXPORT McuWdt : public McuModule, public eElement
+class MAINMODULE_EXPORT McuWdt : public McuPrescaled, public eElement
 {
         friend class McuCreator;
 
@@ -46,9 +46,6 @@ class MAINMODULE_EXPORT McuWdt : public McuModule, public eElement
         bool m_enabled;
         bool m_ovfInter;
         bool m_ovfReset;
-
-        uint8_t m_prescaler;
-        std::vector<uint16_t> m_prescList; // Prescaler values
 
         uint64_t m_ovfPeriod; // overflow period in ps
         uint64_t m_clkPeriod; // clock period in ps

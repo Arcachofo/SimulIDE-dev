@@ -27,6 +27,7 @@ class eMcu;
 class Component;
 class QString;
 class QDomElement;
+class McuPrescaled;
 class McuModule;
 class Interrupt;
 
@@ -63,8 +64,9 @@ class MAINMODULE_EXPORT McuCreator
         static void createCore( QString core );
         static void createStack( QDomElement* s );
         static void createInterrupt( QDomElement* el );
-        static void setInterrupt( QDomElement* el, McuModule* module );
+        static void setInterrupt( QString intName, McuModule* module );
         static void setConfigRegs( QDomElement* u, McuModule* module );
+        static void setPrescalers( QString pr, McuPrescaled* module );
 
         static QString m_CompName;
         static QString m_basePath;

@@ -2,7 +2,7 @@
     <interrupts enable="I">
         <interrupt name="RESET"                                priority="10"vector="0x000"/>
         <interrupt name="INT0"    enable="INT0"   flag="INTF0" priority="9" vector="0x001"/>
-        <interrupt name="PCINT0"  enable="PCIE0"  flag="PCIF0" priority="8" vector="0x002" clear="1"/>
+        <interrupt name="PCINT"   enable="PCIE"   flag="PCIF"  priority="8" vector="0x002" clear="1"/>
         <interrupt name="T0_OVF"  enable="TOIE0"  flag="TOV0"  priority="7" vector="0x003" clear="1"/>
         <interrupt name="EEPR"    enable="EERIE"  flag=""      priority="6" vector="0x004"/>
         <interrupt name="ACOMP"   enable="ACIE"   flag="ACI"   priority="5" vector="0x005"/>

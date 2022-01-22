@@ -22,12 +22,10 @@
     <include file="p12F629/p12F629_int.xml" />
     <include file="p12F629/p12F629_perif.xml" />
     
-        <adc name="ADC11" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" >
-            <prescaler select="" values="2,8,32,0,4,16,64"/>
-            <pins 
-                inputs="PORTP0,PORTP1,PORTP2,PORTP4"
-                vref="PORTP1"/>
-            <interrupt name="ADC" />
-        </adc>
-    
+        <adc name="ADC11" bits="10" configregsA="ADCON0"
+                          dataregs="ADRESL,ADRESH"
+                          interrupt="ADC"
+                          prescalers="2,8,32,0,4,16,64"
+                          adcpins="PORTP0,PORTP1,PORTP2,PORTP4"
+                          vrefpins="PORTP1"/>
 </mcu>

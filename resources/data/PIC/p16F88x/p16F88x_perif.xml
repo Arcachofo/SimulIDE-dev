@@ -1,58 +1,56 @@
 <parts>
-    <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
-                       clockpins="PORTA6,PORTA7" >
-    </port>
-    
-    <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
-        <interrupt name="PB_INT" mask="11111111"/>
-        <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
-    </port>
-    
-    <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC">
-    </port>
-    
-    <timer name="TIMER0" type="800" counter="TMR0" configregsA="OPTION" clockpin="PORTA4">
-        <prescaler values="2,4,8,16,32,64,128,256"/>
-        <interrupt name="T0_OVF" />
-    </timer>
-    
-    <timer name="TIMER1" type="160" counter="TMR1L,TMR1H" configregsA="T1CON" clockpin="PORTC0">
-        <prescaler values="1,2,4,8"/>
-        <interrupt name="T1_OVF" />
-    </timer>
-    
-    <timer name="TIMER2" type="820" counter="TMR2" configregsA="T2CON" configregsB="PR2">
-        <prescaler values="1,4,16,16"/>
-        <interrupt name="T2_MATCH" />
-    </timer>
-    
-    <ccpunit name="CCP+1" type="00" pin="PORTC2" ccpreg="CCPR1L,CCPR1H" configregsA="CCP1CON">
-        <interrupt name="CCP1" />
-    </ccpunit>
-    <ccpunit name="CCP2"  type="00" pin="PORTC1" ccpreg="CCPR2L,CCPR2H" configregsA="CCP2CON">
-        <interrupt name="CCP2" />
-    </ccpunit>
-    
-    <usart name="USART0"  number="1" configregsA="TXSTA" configregsB="RCSTA">
-        <trunit type="tx" pin="PORTC6" register="TXREG">
-        </trunit>
-        
-        <trunit type="rx" pin="PORTC7" register="RCREG">
-            <interrupt name="USART_R" />
-        </trunit>
-        <interrupt name="USART_T" />
-    </usart>
-    
-    <vref name="Vref" configregsA="VRCON" pinout="PORTA2">
-    </vref>
-    
-    <acomp name="COMP11" configregsA="CM1CON0"  configregsC="SRCON"
-           pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA3,PORTA4">
-        <interrupt name="ACOMP1" />
-    </acomp>
-    
-    <acomp name="COMP12" configregsA="CM2CON0" configregsB="CM2CON1" configregsC="SRCON"
-           pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA2,PORTA5">
-        <interrupt name="ACOMP2" />
-    </acomp>
+  <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
+                     clockpins="PORTA6,PORTA7" >
+  </port>
+
+  <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
+      <interrupt name="PB_INT" mask="11111111"/>
+      <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
+  </port>
+
+  <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC"/>
+
+  <timer name="TIMER0" type="800" configregsA="OPTION"
+                       counter="TMR0"
+                       clockpin="PORTA4"
+                       interrupt="T0_OVF"
+                       prescalers="2,4,8,16,32,64,128,256"/>
+
+  <timer name="TIMER1" type="160" configregsA="T1CON"
+                       counter="TMR1L,TMR1H"
+                       clockpin="PORTC0"
+                       interrupt="T1_OVF"
+                       prescalers="1,2,4,8"/>
+
+  <timer name="TIMER2" type="820" configregsA="T2CON" configregsB="PR2"
+                       counter="TMR2"
+                       interrupt="T2_MATCH"
+                       prescalers="1,4,16,16"/>
+
+  <ccpunit name="CCP+1" type="00" configregsA="CCP1CON"
+                        ccpreg="CCPR1L,CCPR1H"
+                        pin="PORTC2"
+                        interrupt="CCP1" />
+
+  <ccpunit name="CCP2"  type="00" configregsA="CCP2CON"
+                        ccpreg="CCPR2L,CCPR2H"
+                        pin="PORTC1"
+                        interrupt="CCP2" />
+
+  <usart name="USART0"  number="1" configregsA="TXSTA" configregsB="RCSTA"
+                        interrupt="USART_T">
+
+      <trunit type="tx" pin="PORTC6" register="TXREG"/>
+      <trunit type="rx" pin="PORTC7" register="RCREG" interrupt="USART_R" />
+  </usart>
+
+  <vref name="Vref" configregsA="VRCON" pinout="PORTA2"/>
+
+  <comp name="COMP11" configregsA="CM1CON0"  configregsC="SRCON"
+                      interrupt="ACOMP1"
+                      pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA3,PORTA4" />
+
+  <comp name="COMP12" configregsA="CM2CON0" configregsB="CM2CON1" configregsC="SRCON"
+                      interrupt="ACOMP2"
+                      pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA2,PORTA5" />
 </parts>

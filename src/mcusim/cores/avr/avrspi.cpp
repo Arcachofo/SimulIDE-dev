@@ -31,28 +31,18 @@ AvrSpi::AvrSpi( eMcu* mcu, QString name )
     n.toInt( &ok );
     if( !ok ) n = "";
 
-    m_SPCR = mcu->getReg( "SPCR"+n );
-
-    //m_SPIE = getRegBits( "SPIE", mcu );
     m_SPE  = getRegBits( "SPE"+n, mcu );
     m_DODR = getRegBits( "DODR"+n, mcu );
     m_MSTR = getRegBits( "MSTR"+n, mcu );
     m_CPOL = getRegBits( "CPOL"+n, mcu );
     m_CPHA = getRegBits( "CPHA"+n, mcu );
-    //m_SPIF = getRegBits( "SPIF", mcu );
 }
 AvrSpi::~AvrSpi(){}
 
-void AvrSpi::initialize()
-{
-    McuSpi::initialize();
-}
-
 void AvrSpi::setMode( spiMode_t mode )
 {
-    if( m_mode == mode ) return;
-
-    if     ( mode == SPI_OFF )
+    if     ( mode == m_mode ) return;
+    else if( mode == SPI_OFF )
     {
         m_MOSI->controlPin( false, false );
         m_MISO->controlPin( false, false );
@@ -82,21 +72,14 @@ void AvrSpi::setMode( spiMode_t mode )
 
 void AvrSpi::configureA( uint8_t newSPCR ) // SPCR is being written
 {
-    bool oldEn  = getRegBitsVal( *m_SPCR, m_SPE );
     bool enable = getRegBitsVal( newSPCR, m_SPE );
-    if( oldEn && !enable )                 /// Disable SPI
-    {
-        setMode( SPI_OFF );
-    }
-    if( !enable ) return;           // Not enabled, do nothing
+    if( !enable )                 /// Disable SPI
+    { setMode( SPI_OFF ); return; }
 
-    bool oldMst = getRegBitsVal( *m_SPCR, m_MSTR );
     bool master = getRegBitsVal( newSPCR, m_MSTR );
-    if( (master != oldMst) || !oldEn ) // Mode changed or enabled
-    {
-        spiMode_t mode = master ? SPI_MASTER : SPI_SLAVE;
-        setMode( mode );
-    }
+    spiMode_t mode = master ? SPI_MASTER : SPI_SLAVE;
+    setMode( mode );
+
     m_lsbFirst  = getRegBitsVal( newSPCR, m_DODR ); // Data order
 
     bool clkPol = getRegBitsVal( newSPCR, m_CPOL ); // Clock polarity
@@ -122,7 +105,7 @@ void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written
 
     /// SPIF is cleared by first reading the SPI Status Register with SPIF set,
     /// then accessing the SPI Data Register (SPDR).
-    m_interrupt->clearFlag(); //clearRegBits( m_SPIF ); // Clear Iterrupt flag
+    m_interrupt->clearFlag();          // Clear Iterrupt flag
 
     if( m_mode == SPI_MASTER ) StartTransaction();
 }

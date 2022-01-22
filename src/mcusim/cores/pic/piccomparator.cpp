@@ -35,7 +35,8 @@ PicComp* PicComp::getComparator( eMcu* mcu, QString name ) // Static
 PicComp::PicComp( eMcu* mcu, QString name )
        : McuComp( mcu, name )
 {
-    mcu->vrefModule()->callBack( this, true ); // Vref Module will update vref if changed.
+    McuVref* vref = mcu->vrefModule();
+    if( vref ) vref->callBack( this, true ); // Vref Module will update vref if changed.
 }
 PicComp::~PicComp(){}
 

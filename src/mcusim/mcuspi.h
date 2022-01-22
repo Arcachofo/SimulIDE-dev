@@ -20,13 +20,13 @@
 #ifndef MCUSPI_H
 #define MCUSPI_H
 
-#include "mcumodule.h"
+#include "mcuprescaled.h"
 #include "spimodule.h"
 
 class eMcu;
 class McuPin;
 
-class MAINMODULE_EXPORT McuSpi : public McuModule, public SpiModule
+class MAINMODULE_EXPORT McuSpi : public McuPrescaled, public SpiModule
 {
         friend class McuCreator;
 
@@ -41,10 +41,6 @@ class MAINMODULE_EXPORT McuSpi : public McuModule, public SpiModule
         virtual void writeSpiReg( uint8_t val ){;}
 
     protected:
-
-        uint8_t m_prescaler;
-        std::vector<uint16_t> m_prescList; // Prescaler values
-
         uint8_t* m_dataReg;
         uint8_t* m_statReg;
 };

@@ -20,13 +20,13 @@
 #ifndef MCUTWI_H
 #define MCUTWI_H
 
-#include "mcumodule.h"
+#include "mcuprescaled.h"
 #include "twimodule.h"
 
 class eMcu;
 class McuPin;
 
-class MAINMODULE_EXPORT McuTwi : public McuModule, public TwiModule
+class MAINMODULE_EXPORT McuTwi : public McuPrescaled, public TwiModule
 {
         friend class McuCreator;
 
@@ -44,10 +44,6 @@ class MAINMODULE_EXPORT McuTwi : public McuModule, public TwiModule
         virtual void updateFreq() {;}
 
         uint8_t* m_addrReg;
-
-        uint8_t m_prescaler;
-        std::vector<uint16_t> m_prescList; // Prescaler values
-
         uint8_t* m_dataReg;
         uint8_t* m_statReg;
 };

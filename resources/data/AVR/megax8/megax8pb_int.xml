@@ -26,8 +26,6 @@
         <interrupt name="ACOMP"    enable="ACIE"   flag="ACI"    priority="22" vector="0x002E"/>
         <interrupt name="TWI0"     enable="TWIE0"  flag="TWINT0" priority="21" vector="0x0030" clear="0"/>
         <interrupt name="SPM"      enable=" "      flag=" "      priority="20" vector="0x0032"/>
-
-
         <interrupt name="USART0_S" enable=" "      flag=" "      priority="19" vector="0x0034"/>
         <interrupt name="PCINT3"   enable=" "      flag=" "      priority="18" vector="0x0036"/>
         <interrupt name="USART1_R" enable="RXCIE1" flag="RXC1"   priority="17" vector="0x0038" clear="0"/>

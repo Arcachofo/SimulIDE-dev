@@ -20,7 +20,6 @@
 #include "mcumodule.h"
 #include "mcuinterrupts.h"
 
-
 McuModule::McuModule( eMcu* mcu, QString name )
 {
     m_mcu = mcu;

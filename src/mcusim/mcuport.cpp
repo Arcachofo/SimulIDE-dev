@@ -17,11 +17,15 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDebug>
+
 #include "mcuport.h"
 #include "mcupin.h"
 #include "mcu.h"
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
+
+QHash<QString, McuPort*> McuPort::m_portList;
 
 McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
        : McuModule( mcu, name )
@@ -110,25 +114,21 @@ void McuPort::createPins( Mcu* mcuComp, uint8_t pinMask )
         m_pins[i] = new McuPin( this, i, m_name+QString::number(i), mcuComp );
 }
 
-McuPin* McuPort::getPin( uint8_t i )
+McuPin* McuPort::getPinN( uint8_t i )
 {
     if( i >= m_pins.size() ) return NULL;
     return m_pins[i];
 }
 
-//  ------------------------------------------
-
-McuPorts::McuPorts( eMcu* mcu )
+McuPin* McuPort::getPin( QString pinName ) // Static
 {
-    m_mcu = mcu;
-}
-McuPorts::~McuPorts(){}
-
-McuPin* McuPorts::getPin( QString name )
-{
-    int pinNumber = name.right(1).toInt();
-    QString portName = name.remove( name.size()-1, 1 );
+    int pinNumber = pinName.right(1).toInt();
+    QString portName = pinName;
+    portName = portName.remove( portName.size()-1, 1 );
     McuPort* port = getPort( portName );
-    if( port ) return port->getPin( pinNumber );
-    return NULL;
+    McuPin* pin = NULL;
+    if( port ) pin = port->getPinN( pinNumber );
+    if( !pin )
+        qDebug() << "ERROR: NULL Pin:"<< pinName;
+    return pin;
 }

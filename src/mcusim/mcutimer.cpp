@@ -26,7 +26,7 @@
 #include "simulator.h"
 
 McuTimer::McuTimer( eMcu* mcu, QString name )
-        : McuModule( mcu, name )
+        : McuPrescaled( mcu, name )
         , eElement( name )
 {
     m_number = name.right(1).toInt();
@@ -93,7 +93,7 @@ void McuTimer::runEvent()            // Overflow
 
     m_countVal = m_countStart;             // Reset count value
     if( m_bidirec ) m_reverse = !m_reverse;
-    if( !m_reverse ) m_interrupt->raise();
+    if( !m_reverse && m_interrupt ) m_interrupt->raise();
 
     sheduleEvents();
 }

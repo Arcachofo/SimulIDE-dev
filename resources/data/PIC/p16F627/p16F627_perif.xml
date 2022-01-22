@@ -1,55 +1,51 @@
 <parts>
-    <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
-          inpmask="11011111" opencol="00010000"
-          clockpins="PORTA6,PORTA7" resetpin="PORTA5">
-    </port>
-    
-    <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
-        <interrupt name="PB_INT" mask="11110000"/>
-        <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
-    </port>
-    
-    <timer name="TIMER0" type="800" counter="TMR0" configregsA="OPTION" clockpin="PORTA4">
-        <prescaler values="2,4,8,16,32,64,128,256"/>
-        <interrupt name="T0_OVF" />
-    </timer>
-    
-    <timer name="TIMER1" type="160" counter="TMR1L,TMR1H" configregsA="T1CON" clockpin="PORTB6">
-        <prescaler values="1,2,4,8"/>
-        <interrupt name="T1_OVF" />
-    </timer>
-    
-    <timer name="TIMER2" type="820" counter="TMR2" configregsA="T2CON" configregsB="PR2">
-        <prescaler values="1,4,16,16"/>
-        <interrupt name="T2_MATCH" />
-    </timer>
-    
-    <ccpunit name="CCP1" type="01" pin="PORTB3" ccpreg="CCPR1L,CCPR1H" configregsA="CCP1CON">
-        <interrupt name="CCP1" />
-    </ccpunit>
-    
-    <usart name="USART0"  number="1" configregsA="TXSTA" configregsB="RCSTA">
-        <trunit type="tx" pin="PORTB2" register="TXREG">
-        </trunit>
-        
-        <trunit type="rx" pin="PORTB1" register="RCREG">
-            <interrupt name="USART_R" />
-        </trunit>
-        <interrupt name="USART_T" />
-    </usart>
-    
-    <vref name="Vref" configregsA="VRCON" pinout="PORTA2">
-    </vref>
-    
-    <acomp name="COMP01" configregsA="CMCON" pins="PORTA0,PORTA3,PORTA2">
-        <interrupt name="ACOMP" />
-    </acomp>
-    
-    <acomp name="COMP02" configregsA="CMCON" pins="PORTA1,PORTA2,PORTA4">
-        <interrupt name="ACOMP" />
-    </acomp>
-    
-    <wdt name="WatchDog" configregsA="OPTION">
-        <prescaler select="" values="1,2,4,8,16,32,64,128"/>
-    </wdt>
+  <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
+        inpmask="11011111" opencol="00010000"
+        clockpins="PORTA6,PORTA7" resetpin="PORTA5">
+  </port>
+
+  <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
+      <interrupt name="PB_INT" mask="11110000"/>
+      <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
+  </port>
+
+  <timer name="TIMER0" type="800" configregsA="OPTION" clockpin="PORTA4"
+                       counter="TMR0"
+                       interrupt="T0_OVF"
+                       prescalers="2,4,8,16,32,64,128,256"/>
+
+  <timer name="TIMER1" type="160" configregsA="T1CON" clockpin="PORTB6"
+                       counter="TMR1L,TMR1H"
+                       interrupt="T1_OVF"
+                       prescalers="1,2,4,8"/>
+
+  <timer name="TIMER2" type="820" configregsA="T2CON" configregsB="PR2"
+                       counter="TMR2"
+                       interrupt="T2_MATCH"
+                       prescalers="1,4,16,16"/>
+
+  <ccpunit name="CCP1" type="01" configregsA="CCP1CON"
+                       ccpreg="CCPR1L,CCPR1H"
+                       pin="PORTB3"
+                       interrupt="CCP1" />
+
+  <usart name="USART0"  number="1" configregsA="TXSTA" configregsB="RCSTA"
+                        interrupt="USART_T">
+
+      <trunit type="tx" pin="PORTB2" register="TXREG"/>
+      <trunit type="rx" pin="PORTB1" register="RCREG" interrupt="USART_R" />
+  </usart>
+
+  <vref name="Vref" configregsA="VRCON" pinout="PORTA2"/>
+
+  <acomp name="COMP01" configregsA="CMCON"
+                       interrupt="ACOMP"
+                       pins="PORTA0,PORTA3,PORTA2"/>
+
+  <acomp name="COMP02" configregsA="CMCON"
+                       interrupt="ACOMP"
+                       pins="PORTA1,PORTA2,PORTA4"/>
+
+  <wdt name="WatchDog" configregsA="OPTION"
+                       prescalers="1,2,4,8,16,32,64,128"/>
 </parts>

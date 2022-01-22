@@ -79,8 +79,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         uint64_t simCycPI() { return m_simCycPI; }  // Simulation cycles per instruction cycle
         //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle
 
-        McuPin* getPin( QString name ) { return m_ports.getPin( name ); }
-        QHash<QString, McuPort*> getPorts() { return m_ports.getPorts(); }
+        //McuPin* getPin( QString name ) { return m_ports.getPin( name ); }
+        //QHash<QString, McuPort*> getPorts() { return m_ports.getPorts(); }
 
         McuTimer* getTimer( QString name ) { return m_timers.getTimer( name ); }
 
@@ -102,7 +102,6 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         QHash<uint16_t, uint16_t> m_cfgWords; // Config words
 
         Interrupts m_interrupts;
-        McuPorts   m_ports;
         McuTimers  m_timers;
         std::vector<McuModule*> m_modules;
         std::vector<McuUsart*> m_usarts;

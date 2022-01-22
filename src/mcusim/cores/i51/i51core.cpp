@@ -67,7 +67,7 @@ I51Core::I51Core( eMcu* mcu  )
 
     m_upperData = (m_dataMemEnd > m_regEnd);
 
-    QHash<QString, McuPort*>  ports = m_mcu->getPorts();
+    QHash<QString, McuPort*>  ports = McuPort::getPorts();
     for( QString portName : ports.keys() )
     {
         McuPort* port = ports.value( portName );

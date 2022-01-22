@@ -45,7 +45,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
 
         void setPullups( uint8_t puMask );
 
-        McuPin* getPin( uint8_t i );
+        McuPin* getPinN( uint8_t i );
 
         QString name() { return m_name; }
 
@@ -57,6 +57,10 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
 
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }
+
+ static McuPort* getPort( QString name ) { return m_portList.value( name ); }
+ static McuPin*  getPin( QString pinName );
+ static QHash<QString, McuPort*> getPorts() { return m_portList; }
 
     protected:
         virtual void createPins( Mcu* mcuComp, uint8_t pinMask=0 );
@@ -76,24 +80,8 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
         uint16_t m_outAddr;
         uint16_t m_inAddr;
         uint16_t m_dirAddr;
-};
 
-class MAINMODULE_EXPORT McuPorts
-{
-        friend class McuCreator;
-
-    public:
-        McuPorts( eMcu* mcu );
-        ~McuPorts();
-
-       McuPort* getPort( QString name ) { return m_portList.value( name ); }
-       McuPin*  getPin( QString name );
-       QHash<QString, McuPort*> getPorts() { return m_portList; }
-
-    protected:
-       eMcu* m_mcu;
-
-       QHash<QString, McuPort*> m_portList; // Access PORTS by name
+ static QHash<QString, McuPort*> m_portList; // Access PORTS by name
 };
 
 #endif

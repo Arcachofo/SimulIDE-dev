@@ -21,7 +21,7 @@
 #include "iopin.h"
 
 McuSpi::McuSpi( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
+      : McuPrescaled( mcu, name )
       , SpiModule( name )
 {
 }

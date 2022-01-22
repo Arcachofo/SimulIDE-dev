@@ -57,7 +57,6 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
 
         uint64_t m_clockPeriod;   // SPI Clock half period in ps
 
-        //bool m_dataState;
         bool m_lsbFirst;
         bool m_toggleSck;
         bool m_enabled;
@@ -77,7 +76,7 @@ class MAINMODULE_EXPORT SpiModule : public eClockedDevice
 
         IoPin* m_MOSI;
         IoPin* m_MISO;
-        //IoPin* m_SCK;
+        //IoPin* m_SCK; // m_clkPin
         IoPin* m_SS;
 
         IoPin* m_dataOut;

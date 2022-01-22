@@ -1,29 +1,32 @@
 <parts>
-    <port name="PORTP" pins="6" outreg="GPIO" dirreg="!TRISIO" configregsB="WPU"
-          inpmask="00110111" clockpins="PORTP4,PORTP5" resetpin="PORTP3">
-          
-          <interrupt name="IOC" mask="IOC"/>
-          <extint    name="INT" pin="PORTP2" configbits="INTEDG"/>
-    </port>
-    
-    <timer name="TIMER0" type="800" counter="TMR0" configregsA="OPTION" clockpin="PORTP2">
-        <prescaler values="2,4,8,16,32,64,128,256"/>
-        <interrupt name="T0_OVF" />
-    </timer>
-    
-    <timer name="TIMER1" type="160" counter="TMR1L,TMR1H" configregsA="T1CON" clockpin="PORTP5">
-        <prescaler values="1,2,4,8"/>
-        <interrupt name="T1_OVF" />
-    </timer>
-    
-    <vref name="Vref" configregsA="VRCON" pinout="PORTA2">
-    </vref>
-    
-    <acomp name="COMP01" configregsA="CMCON" pins="PORTP1,PORTP0,PORTP2">
-        <interrupt name="ACOMP" />
-    </acomp>
-    
-    <wdt name="WatchDog" configregsA="OPTION">
-        <prescaler select="" values="1,2,4,8,16,32,64,128"/>
-    </wdt>
+  <port name="PORTP" pins="6" outreg="GPIO" dirreg="!TRISIO" configregsB="WPU"
+        inpmask="00110111" clockpins="PORTP4,PORTP5" resetpin="PORTP3">
+
+        <interrupt name="IOC" mask="IOC"/>
+        <extint    name="INT" pin="PORTP2" configbits="INTEDG"/>
+  </port>
+
+  <timer name="TIMER0" type="800" configregsA="OPTION"
+                       counter="TMR0"
+                       clockpin="PORTP2"
+                       interrupt="T0_OVF"
+                       prescalers="2,4,8,16,32,64,128,256">
+  </timer>
+
+  <timer name="TIMER1" type="160" configregsA="T1CON"
+                       counter="TMR1L,TMR1H"
+                       clockpin="PORTP5"
+                       interrupt="T1_OVF"
+                       prescalers="1,2,4,8">
+  </timer>
+
+  <vref name="Vref" configregsA="VRCON" />
+
+  <comp name="COMP01" configregsA="CMCON"
+                      interrupt="ACOMP"
+                      pins="PORTP1,PORTP0,PORTP2" />
+
+  <wdt name="WDT" configregsA="OPTION"
+                  prescalers="1,2,4,8,16,32,64,128"/>
+
 </parts>

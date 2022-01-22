@@ -50,7 +50,10 @@ PicCcpUnit::PicCcpUnit( eMcu* mcu, QString name, int type )
 
     m_mode = 0;
 }
-PicCcpUnit::~PicCcpUnit(){}
+PicCcpUnit::~PicCcpUnit()
+{
+    delete m_capUnit;
+}
 
 void PicCcpUnit::initialize()
 {

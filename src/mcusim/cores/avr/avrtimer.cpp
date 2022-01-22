@@ -405,7 +405,7 @@ void AvrTimer16bit::updtWgm()
         case 15: mode = wgmFAST; ovf = OCRXA16; break; // Fast PWM OCRXA
     }
     if( useICR ) ovf = ICRX16;
-    m_ICunit->enable( !useICR );
+    if( m_ICunit ) m_ICunit->enable( !useICR );
 
     m_wgmMode = mode;
     bool shedule = m_ovfMatch != ovf;

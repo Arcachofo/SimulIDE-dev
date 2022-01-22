@@ -77,3 +77,9 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v, bool masked )
     }
     m_dataMem[addr] = v;
 }
+
+uint8_t* DataSpace::getReg( QString reg )                // Get pointer to Reg data by name
+{
+    if( !m_regInfo.contains( reg ) ) return NULL;
+    return &m_dataMem[m_regInfo.value( reg ).address];
+}

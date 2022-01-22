@@ -24,7 +24,7 @@
 #include "simulator.h"
 
 McuWdt::McuWdt( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
+      : McuPrescaled( mcu, name )
       , eElement( name )
 {
     m_enabled  = false;

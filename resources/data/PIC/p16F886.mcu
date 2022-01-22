@@ -26,12 +26,10 @@
         <port name="PORTE" pins="4" outreg="PORTE" dirreg="!TRISE" 
               pinmask="00001000" resetpin="PORTE3"/>
                        
-        <adc name="ADC10" bits="10" dataregs="ADRESL,ADRESH" configregsA="ADCON0" configregsB="ADCON1">
-            <prescaler select="" values="2,8,32"/>
-            <pins 
-             inputs="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTB2,PORTB3,PORTB1,PORTB4,PORTB0,PORTB5"
-             vref="PORTA3,PORTA2"/>
-            <interrupt name="ADC" />
-        </adc>
-
+        <adc name="ADC10" bits="10" configregsA="ADCON0" configregsB="ADCON1"
+                          dataregs="ADRESL,ADRESH"
+                          interrupt="ADC"
+                          prescalers="2,8,32"
+                          adcpins="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTB2,PORTB3,PORTB1,PORTB4,PORTB0,PORTB5"
+                          vrefpins="PORTA3,PORTA2"/>
 </mcu>

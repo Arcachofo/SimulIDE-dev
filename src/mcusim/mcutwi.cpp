@@ -20,7 +20,7 @@
 #include "mcutwi.h"
 
 McuTwi::McuTwi( eMcu* mcu, QString name )
-      : McuModule( mcu, name )
+      : McuPrescaled( mcu, name )
       , TwiModule( name )
 {
     m_dataReg = NULL;

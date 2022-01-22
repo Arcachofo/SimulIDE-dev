@@ -30,7 +30,6 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
         : McuUsart( mcu, name, number )
 {
     m_enabled = false;
-
     m_SPBRG  = NULL;
     m_SPBRGL = NULL;
     m_SPBRGH = NULL;
@@ -38,9 +37,19 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
     m_PIR1  = mcu->getReg( "PIR1" );
     m_TXSTA = mcu->getReg( "TXSTA" );
     m_RCSTA = mcu->getReg( "RCSTA" );
-    if( mcu->regExist( "SPBRG") )  m_SPBRG  = mcu->getReg( "SPBRG" );
-    if( mcu->regExist( "SPBRGL") ) m_SPBRGL = mcu->getReg( "SPBRGL" );
-    if( mcu->regExist( "SPBRGH") ) m_SPBRGH = mcu->getReg( "SPBRGH" );
+
+    if( mcu->regExist( "SPBRG") ){
+        m_SPBRGL = mcu->getReg( "SPBRG" );
+        watchRegNames( "SPBRG",  R_WRITE, this, &PicUsart::setSPBRGL, mcu );
+    }
+    if( mcu->regExist( "SPBRGL") ){
+        m_SPBRGL = mcu->getReg( "SPBRGL" );
+        watchRegNames( "SPBRGL", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
+    }
+    if( mcu->regExist( "SPBRGH") ){
+        m_SPBRGH = mcu->getReg( "SPBRGH" );
+        watchRegNames( "SPBRGH", R_WRITE, this, &PicUsart::setSPBRGH, mcu );
+    }
 
     m_SPEN = getRegBits( "SPEN", mcu );
     m_BRGH = getRegBits( "BRGH", mcu );
@@ -59,9 +68,6 @@ PicUsart::PicUsart( eMcu* mcu,  QString name, int number )
     m_OERR = getRegBits( "OERR", mcu );
     m_SYNC = getRegBits( "SYNC", mcu );
 
-    if( m_SPBRG  ) watchRegNames( "SPBRG", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
-    if( m_SPBRGL ) watchRegNames( "SPBRGL", R_WRITE, this, &PicUsart::setSPBRGL, mcu );
-    if( m_SPBRGH ) watchRegNames( "SPBRGH", R_WRITE, this, &PicUsart::setSPBRGH, mcu );
 }
 PicUsart::~PicUsart(){}
 
@@ -135,8 +141,6 @@ void PicUsart::setBit9Rx( uint8_t bit )
 
 void PicUsart::sendByte(  uint8_t data )
 {
-    //if( !m_sender->isEnabled() ) return;
-
     if( getRegBitsBool( *m_PIR1, m_TXIF ) )  // TXREG is empty
     {
         m_interrupt->clearFlag();            // TXREG full: Clear TXIF bit

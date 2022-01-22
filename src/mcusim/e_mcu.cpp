@@ -30,7 +30,6 @@ eMcu::eMcu( QString id )
     : McuInterface( id )
     , DataSpace()
     , m_interrupts( this )
-    , m_ports( this )
     , m_timers( this )
 {
     cpu = NULL;

@@ -397,22 +397,15 @@ void Mcu::addPin( QString id, QString type, QString label,
 
     if( type.contains("IO") )
     {
-        bool portPin = false;
-        int pinNum = id.right(1).toInt( &portPin );
-        if( portPin )
-        {
-            QString portName = "PORT"+id.mid(1,1);
-            McuPort* port = m_eMcu.m_ports.getPort( portName );
-            if( port )
-            {
-                pin = port->getPin( pinNum );
-                if( pin )
-                {
-                    if( type.contains("null") ) { pin->setVisible( false ); pin->setLabelText( "" ); }
-                    pin->setPos( QPoint( xpos, ypos ) );
-                    pin->setPinAngle( angle );
-                    pin->setLength( length );
-    }   }   }   }
+        QString pinNum = id.right(1);
+        QString portName = "PORT"+id.mid(1,1);
+        pin = McuPort::getPin( portName+pinNum );
+        if( pin ){
+            if( type.contains("null") ) { pin->setVisible( false ); pin->setLabelText( "" ); }
+            pin->setPos( QPoint( xpos, ypos ) );
+            pin->setPinAngle( angle );
+            pin->setLength( length );
+    }   }
     else if( type == "rst" )
     {
         pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
