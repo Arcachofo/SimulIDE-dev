@@ -169,9 +169,12 @@ void Pin::connectPin()      // Auto-Connect
 
 void Pin::isMoved()
 {
+    if( this->isConnected() ) return;
+
     if( my_connector ) my_connector->updateConRoute( this, scenePos() );
     else
     {                            // Auto-Connect
+        if( Circuit::self()->pasting() ) return;
         if( m_isBus ) return;
         if( QApplication::queryKeyboardModifiers() & Qt::ControlModifier )
             connectPin();
