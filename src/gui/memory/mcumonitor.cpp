@@ -114,3 +114,8 @@ void MCUMonitor::updateStep()
             m_flashMonitor->setAddrSelected( pc, m_jumpToAddress );
     }
 }
+
+void MCUMonitor::updateRamTable()
+{
+    m_ramTable->updateItems();
+}

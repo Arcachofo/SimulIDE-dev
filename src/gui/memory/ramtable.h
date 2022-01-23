@@ -52,6 +52,8 @@ class RamTable : public QWidget, private Ui::RamTable
         QStringList getVarSet();
         uint16_t getCurrentAddr();
 
+        void updateItems();
+
         QSplitter* getSplitter() { return splitter; }
         QTableWidget m_status;
         QTableWidget m_pc;

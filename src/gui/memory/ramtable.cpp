@@ -373,3 +373,12 @@ uint16_t RamTable::getCurrentAddr()
     return  text.toUInt(NULL,16);
 }
 
+void RamTable::updateItems()
+{
+    for( int row=0; row<m_numRegs; row++ )
+    {
+        QTableWidgetItem* it = table->item( row, 1 );
+        if( it->text() != "" )
+            addToWatch( it );
+    }
+}

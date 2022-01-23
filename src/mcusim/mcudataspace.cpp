@@ -41,7 +41,7 @@ void DataSpace::initialize()
 
     for( QString regName : m_regInfo.keys() )  // Set Registers Reset Values
     {
-        regInfo_t regInfo = m_regInfo[regName];
+        regInfo_t regInfo = m_regInfo.value(regName);
         writeReg( regInfo.address, regInfo.resetVal );
         m_dataMem[regInfo.address] = regInfo.resetVal;
 }   }

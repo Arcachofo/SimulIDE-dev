@@ -133,7 +133,8 @@ void Interrupts::resetInts()
 
 void Interrupts::retI()
 {
-    if( !m_active ) { qDebug() << "Interrupts::retI Error: No active Interrupt"; return; }
+    if( !m_active ) {
+        qDebug() << "Interrupts::retI Error: No active Interrupt"; return; }
     m_active->exitInt();
 
     if( m_running ) // Some interrupt was interrupted by this one

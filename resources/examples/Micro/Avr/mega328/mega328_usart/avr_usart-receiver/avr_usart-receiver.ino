@@ -1,5 +1,5 @@
 
-byte data;
+volatile byte data;
 
 void setup() 
 {
@@ -14,6 +14,6 @@ void loop()
     if( Serial.available() ) 
     {
         data = Serial.read();
-        PORTB = UDR0;
+        PORTB = data;
     }
 }

@@ -298,6 +298,8 @@ bool Mcu::load( QString fileName )
     QSettings* settings = MainWindow::self()->settings();
     settings->setValue( "lastFirmDir", circuitDir.relativeFilePath( fileName ) );
 
+    if( m_mcuMonitor ) m_mcuMonitor->updateRamTable();
+
     return true;
 }
 

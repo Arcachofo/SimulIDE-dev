@@ -18,6 +18,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
         MCUMonitor( QWidget* parent=0, McuInterface* mcu=0 );
 
         void updateStep();
+        void updateRamTable();
 
     public slots:
         void ramDataChanged( int address, int val );
