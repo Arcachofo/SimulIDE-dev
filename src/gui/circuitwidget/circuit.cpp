@@ -315,6 +315,8 @@ void Circuit::loadStrDoc( QString &doc )
                     else if( name == "y"  ) joint->setY( prop.toInt() );
                     name = "";
                 }
+                int number = joint->objectName().split("-").last().toInt();
+                if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
                 addItem( joint );
                 nodeList.append( joint );
             }

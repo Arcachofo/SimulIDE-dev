@@ -258,7 +258,7 @@ bool ConnectorLine::connectToWire( QPoint point1 )
         line = new ConnectorLine( point1.x(), point1.y(), m_p2X, p2().y(), m_pConnector );
         m_pConnector->addConLine( line, index );
     }
-    QString type = QString("Node");
+    QString type = "Node";
     QString id = type +"-"+ Circuit::self()->newSceneId();
 
     Node* node = new Node( 0, type, id );     // Now add the Node
