@@ -279,8 +279,8 @@ void Circuit::loadStrDoc( QString &doc )
                     int itemY = pointList.last().toInt();
                     if( !m_pasting) endpin = findPin( itemX, itemY, endpinid );
                 }
-                if( startpin && startpin->isConnected() ) startpin = NULL;
-                if( endpin   && endpin->isConnected() )   endpin   = NULL;
+                if( startpin && startpin->connector() ) startpin = NULL;
+                if( endpin   && endpin->connector() )   endpin   = NULL;
 
                 if( startpin && endpin )    // Create Connector
                 {
