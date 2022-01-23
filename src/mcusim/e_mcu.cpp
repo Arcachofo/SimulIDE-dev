@@ -60,7 +60,7 @@ void eMcu::initialize()
     m_interrupts.resetInts();
     DataSpace::initialize();
 
-    Simulator::self()->cancelEvents( this );
+    //Simulator::self()->cancelEvents( this );
     Simulator::self()->addEvent( 1, this );
 }
 

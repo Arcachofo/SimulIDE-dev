@@ -25,6 +25,8 @@ eElement::eElement( QString id )
 {
     m_elmId = id;
     nextChanged = NULL;
+    nextEvent  = NULL;
+    eventTime = 0;
     added = false;
     m_step = 0;
 

@@ -52,6 +52,9 @@ class MAINMODULE_EXPORT eElement
         eElement* nextChanged;
         bool added;
 
+        eElement* nextEvent;
+        uint64_t eventTime;
+
     protected:
         std::vector<ePin*> m_ePin;
 

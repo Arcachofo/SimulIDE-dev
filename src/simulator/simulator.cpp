@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include <qtconcurrentrun.h>
+#include <QHash>
 #include <math.h>
 
 #include "simulator.h"
@@ -144,27 +145,27 @@ void Simulator::runCircuit()
 {
     if( m_changedNode ) solveCircuit(); // Solving matrix here save events in updateStep()
 
-    simEvent_t* event = m_eventList.first;
+    eElement* event = m_firstEvent;
     uint64_t   endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
     uint64_t nextTime;
 
-    while( event )                         // Simulator event loop
-    {
-        if( event->time > endRun ) break;  // All events for this Timer Tick are done
+    while( event ){                        // Simulator event loop
+        if( event->eventTime > endRun ) break;  // All events for this Timer Tick are done
 
         nextTime = m_circTime;
         while( m_circTime == nextTime )    // Run all event with same timeStamp
         {
-            m_circTime = event->time;
-            freeEvent( event );
-            if( event->comp ) event->comp->runEvent(); // Run event callback
-            event = m_eventList.first;
-            if( event ) nextTime = event->time;
+            m_circTime = event->eventTime;
+            m_firstEvent = event->nextEvent; // free Event
+            event->nextEvent = NULL;
+            event->runEvent(); // Run event callback
+            event = m_firstEvent;
+            if( event ) nextTime = event->eventTime;
             else break;
         }
         solveCircuit();
         if( m_state < SIM_RUNNING ) break;
-        event = m_eventList.first;
+        //event = m_firstEvent;
     }
     if( m_state > SIM_WAITING ) m_circTime = endRun;
     m_loopTime = m_RefTimer.nsecsElapsed();
@@ -241,9 +242,7 @@ void Simulator::createNodes()
         pin->registerEnode( node );
         for( ePin* nodePin : node->getEpins() )
         {
-            QString pinId = nodePin->getId();
-            //qDebug() <<pinId<<"\t\t\t"<<nodePin->getEnode()->itemId();
-
+            QString pinId = nodePin->getId();//qDebug() <<pinId<<"\t\t\t"<<nodePin->getEnode()->itemId();
             if( !pinList.contains(pinId) ) pinList.append( pinId );
         }
     }
@@ -255,13 +254,11 @@ void Simulator::startSim( bool paused )
     resetSim();
     setStepsPerSec( m_stepsPS );
     m_state = SIM_STARTING;
-    addEvent( 0, NULL );
+    //addEvent( 0, NULL );
 
     qDebug() <<"\nStarting Circuit Simulation...\n";
 
-    //qDebug() << m_eNodeList;
     createNodes();
-    //qDebug() << m_eNodeList;
 
     qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
     for( eElement* el : m_elementList )    // Initialize all Elements
@@ -333,9 +330,6 @@ void Simulator::pauseSim()
 
     CircuitWidget::self()->setMsg( " Paused ", 1 );
     qDebug() << "\n    Simulation Paused ";
-
-    //if( !m_CircuitFuture.isFinished() )
-    //    m_CircuitFuture.waitForFinished();
 }
 
 void Simulator::resumeSim()
@@ -394,77 +388,53 @@ double Simulator::NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
 
 void Simulator::clearEventList()
 {
-    for( int i=0; i<LAST_SIM_EVENT; i++ )
-    {
-        m_eventList.events[i].next = &(m_eventList.events[i+1]);
-        m_eventList.events[i].comp = 0l;
-        m_eventList.events[i].time = 0;
-    }
-    m_eventList.free = &(m_eventList.events[0]);
-    m_eventList.first = NULL;
-    //m_numEvents = 0;
+    m_firstEvent = NULL;
 }
-
-void Simulator::addEvent( uint64_t time, eElement* comp )
+void Simulator::addEvent( uint64_t time, eElement* el )
 {
     if( m_state < SIM_STARTING ) return;
+    if( !el )
+        return;
 
     time += m_circTime;
-    simEvent_t* last  = NULL;
-    simEvent_t* event = m_eventList.first;
-    simEvent_t* new_event = m_eventList.free;
+    eElement* last  = NULL;
+    eElement* event = m_firstEvent;
 
     while( event ){
-        if( time <= event->time)
-        {
-            if( comp == NULL
-            && event->comp == NULL
-            && time == event->time ) return;
+        if( time <= event->eventTime ){
+            if( el == event && time == event->eventTime ) return; // Same event at same time: Ignore
             break;
         }
         last  = event;
-        event = event->next;
+        event = event->nextEvent;
     }
-    m_eventList.free = new_event->next;
+    el->eventTime = time;
 
-    new_event->time = time;
-    new_event->comp = comp;
+    if( last ) last->nextEvent = el;
+    else       m_firstEvent = el; // List was empty or insert First
 
-    if( last ) last->next = new_event;
-    else       m_eventList.first = new_event; // List was empty or insert First
-
-    new_event->next = event;
-    //if( ++m_numEvents >= LAST_SIM_EVENT ) { m_error = 3; return; }
+    el->nextEvent = event;
 }
 
-void Simulator::cancelEvents( eElement* comp )
+void Simulator::cancelEvents( eElement* el )
 {
-    simEvent_t* event = m_eventList.first;
-    simEvent_t* last  = NULL;
-    simEvent_t* next  = NULL;
+    eElement* event = m_firstEvent;
+    eElement* last  = NULL;
+    eElement* next  = NULL;
 
     while( event ){
-        next = event->next;
-        if( comp == event->comp )
+        next = event->nextEvent;
+        if( el == event )
         {
-            if( last ) last->next  = next;
-            else       m_eventList.first = next;
+            if( last ) last->nextEvent = next;
+            else       m_firstEvent = next;
 
-            event->next = m_eventList.free;
-            m_eventList.free = event;
+            event->nextEvent = NULL;
             //m_numEvents--;
         }
         else last = event;
         event = next;
 }   }
-
-inline void Simulator::freeEvent( simEvent_t* event )
-{
-    m_eventList.first = event->next;
-    event->next = m_eventList.free;
-    m_eventList.free = event;
-    //m_numEvents--;
-}
 
 void Simulator::addToEnodeList( eNode* nod )
 { if( !m_eNodeList.contains(nod) ) m_eNodeList.append( nod ); }

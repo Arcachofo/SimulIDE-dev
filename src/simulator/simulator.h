@@ -20,8 +20,6 @@
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-#define LAST_SIM_EVENT 999
-
 enum simState_t{
     SIM_STOPPED=0,
     SIM_ERROR,
@@ -34,7 +32,6 @@ enum simState_t{
 
 #include <QElapsedTimer>
 #include <QFuture>
-#include <QHash>
 
 class BaseProcessor;
 class Updatable;
@@ -44,17 +41,6 @@ class CircMatrix;
 
 class MAINMODULE_EXPORT Simulator : public QObject
 {
-    struct simEvent_t{
-        simEvent_t* next;
-        uint64_t    time;
-        eElement*   comp;
-    };
-    struct simEventList_t {
-        simEvent_t  events[LAST_SIM_EVENT+1];
-        simEvent_t* free;
-        simEvent_t* first;
-    };
-
     Q_OBJECT
     public:
         Simulator( QObject* parent=0 );
@@ -62,8 +48,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
  static Simulator* self() { return m_pSelf; }
 
-         void addEvent( uint64_t time, eElement* comp );
-         void cancelEvents( eElement* comp );
+         void addEvent( uint64_t time, eElement* el );
+         void cancelEvents( eElement* el );
 
         void startSim( bool paused=false );
         void resumeSim();
@@ -127,11 +113,11 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void solveMatrix();
         void solveCircuit();
         void clearEventList();
-        inline void freeEvent( simEvent_t* event );
+        //inline void freeEvent( eElement* event );
         inline void stopTimer();
         inline void initTimer();
 
-        simEventList_t m_eventList;
+        eElement* m_firstEvent;
 
         QFuture<void> m_CircuitFuture;
 
