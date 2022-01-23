@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT PicAdc : public McuAdc
         PicAdc( eMcu* mcu, QString name );
         ~PicAdc();
 
- static PicAdc* createAdc( eMcu* mcu, QString name );
+ static PicAdc* createAdc( eMcu* mcu, QString name, int type );
 
         virtual void initialize() override;
 

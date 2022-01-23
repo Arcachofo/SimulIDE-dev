@@ -37,7 +37,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         AvrAdc( eMcu* mcu, QString name );
         ~AvrAdc();
 
- static AvrAdc* createAdc( eMcu* mcu, QString name );
+ static AvrAdc* createAdc(eMcu* mcu, QString name, int type );
 
         virtual void initialize() override;
 

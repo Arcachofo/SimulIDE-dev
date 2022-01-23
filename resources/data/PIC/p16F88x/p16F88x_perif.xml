@@ -46,11 +46,11 @@
 
   <vref name="Vref" configregsA="VRCON" pinout="PORTA2"/>
 
-  <comp name="COMP11" configregsA="CM1CON0"  configregsC="SRCON"
-                      interrupt="ACOMP1"
-                      pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA3,PORTA4" />
+  <comp name="COMP" type="11" configregsA="CM1CON0"  configregsC="SRCON"
+                    interrupt="ACOMP1"
+                    pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA3,PORTA4" />
 
-  <comp name="COMP12" configregsA="CM2CON0" configregsB="CM2CON1" configregsC="SRCON"
-                      interrupt="ACOMP2"
-                      pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA2,PORTA5" />
+  <comp name="COMP" type="12" configregsA="CM2CON0" configregsB="CM2CON1" configregsC="SRCON"
+                    interrupt="ACOMP2"
+                    pins="PORTA0,PORTA1,PORTB3,PORTB1,PORTA2,PORTA5" />
 </parts>

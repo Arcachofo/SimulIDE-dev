@@ -47,12 +47,12 @@
   </usart>
 
   <port name="PORTV" pins="4"/> <!-- Fake Port for aVcc, aRef, ADC6, ADC7 -->
-  <adc name="ADC01" bits="10" configregsA="ADCSRA"
-                    dataregs="ADCL,ADCH"
-                    multiplex="ADMUX"
-                    interrupt="ADC"
-                    prescalers="2,2,4,8,16,32,64,128"
-                    adcpins="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5,PORTV2,PORTV3" />
+  <adc name="ADC" type="01" bits="10" configregsA="ADCSRA"
+                  dataregs="ADCL,ADCH"
+                  multiplex="ADMUX"
+                  interrupt="ADC"
+                  prescalers="2,2,4,8,16,32,64,128"
+                  adcpins="PORTC0,PORTC1,PORTC2,PORTC3,PORTC4,PORTC5,PORTV2,PORTV3" />
 
   <twi name="TWI"   configregsA="TWCR" configregsB="TWBR"
                     dataregs="TWDR"

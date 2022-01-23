@@ -31,7 +31,7 @@ class MAINMODULE_EXPORT PicComp : public McuComp
         virtual void initialize() override;
         virtual void voltChanged() override;
 
- static PicComp* getComparator( eMcu* mcu, QString name );
+ static PicComp* createComparator( eMcu* mcu, QString name, int type );
 
     protected:
         void connect( McuPin* pinN, McuPin* pinP=NULL, McuPin* pinOut=NULL );

@@ -672,12 +672,13 @@ void McuCreator::createUsart( QDomElement* u )
 
 void McuCreator::createAdc( QDomElement* e )
 {
-    QString name = e->attribute( "name" );
     McuAdc* adc = NULL;
+    QString name = e->attribute( "name" );
+    int type = e->attribute("type").toInt();
 
-    if     ( m_core == "AVR" )   adc = AvrAdc::createAdc( mcu, name );
-    else if( m_core == "Pic14")  adc = PicAdc::createAdc( mcu, name );
-    else if( m_core == "Pic14e") adc = PicAdc::createAdc( mcu, name );
+    if     ( m_core == "AVR" )   adc = AvrAdc::createAdc( mcu, name, type );
+    else if( m_core == "Pic14")  adc = PicAdc::createAdc( mcu, name, type );
+    else if( m_core == "Pic14e") adc = PicAdc::createAdc( mcu, name, type );
     if( !adc ) return;
 
     mcu->m_modules.emplace_back( adc );
@@ -725,11 +726,13 @@ void McuCreator::createAdc( QDomElement* e )
 
 void McuCreator::createAcomp( QDomElement* e )
 {
-    QString name = e->attribute( "name" );
     McuComp* comp = NULL;
+    QString name = e->attribute( "name" );
+    int type = e->attribute("type").toInt();
+
     if( m_core == "AVR" )    comp = new AvrComp( mcu, name );
-    if( m_core == "Pic14" )  comp = PicComp::getComparator( mcu, name );
-    if( m_core == "Pic14e" ) comp = PicComp::getComparator( mcu, name );
+    if( m_core == "Pic14" )  comp = PicComp::createComparator( mcu, name, type );
+    if( m_core == "Pic14e" ) comp = PicComp::createComparator( mcu, name, type );
     if( !comp ) return;
 
     mcu->m_modules.emplace_back( comp );

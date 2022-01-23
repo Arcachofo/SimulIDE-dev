@@ -23,13 +23,16 @@
 #include "mcupin.h"
 #include "mcuvref.h"
 
-PicComp* PicComp::getComparator( eMcu* mcu, QString name ) // Static
+PicComp* PicComp::createComparator( eMcu* mcu, QString name, int type ) // Static
 {
-    if( name.endsWith("01") ) return new PicComp01( mcu, name );
-    if( name.endsWith("02") ) return new PicComp02( mcu, name );
-    if( name.endsWith("11") ) return new PicComp11( mcu, name );
-    if( name.endsWith("12") ) return new PicComp12( mcu, name );
-    return NULL;
+    switch( type ){
+        case 01: return new PicComp01( mcu, name );
+        case 02: return new PicComp02( mcu, name );
+        case 03: return new PicComp03( mcu, name );
+        case 11: return new PicComp11( mcu, name );
+        case 12: return new PicComp12( mcu, name );
+        default: return NULL;
+    }
 }
 
 PicComp::PicComp( eMcu* mcu, QString name )

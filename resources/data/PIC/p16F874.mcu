@@ -29,10 +29,10 @@
         </port>
         <port name="PORTE" pins="3" outreg="PORTE" dirreg="!TRISE" inpmask="00000111" >
         </port>
-        <adc name="ADC00" bits="10" configregsA="ADCON0" configregsB="ADCON1"
-                          dataregs="ADRESL,ADRESH" 
-                          interrupt="ADC"
-                          prescalers="2,8,32"
-                          adcpins="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2" 
-                          vrefpins="PORTA3,PORTA2"/>
+        <adc name="ADC" type="00" bits="10" configregsA="ADCON0" configregsB="ADCON1"
+                        dataregs="ADRESL,ADRESH"
+                        interrupt="ADC"
+                        prescalers="2,8,32"
+                        adcpins="PORTA0,PORTA1,PORTA2,PORTA3,PORTA5,PORTE0,PORTE1,PORTE2"
+                        vrefpins="PORTA3,PORTA2"/>
 </mcu>

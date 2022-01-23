@@ -22,9 +22,9 @@
 
   <vref name="Vref" configregsA="VRCON" />
 
-  <comp name="COMP01" configregsA="CMCON"
-                      interrupt="ACOMP"
-                      pins="PORTP1,PORTP0,PORTP2" />
+  <comp name="COMP" type="03" configregsA="CMCON"
+                    interrupt="ACOMP"
+                    pins="PORTP1,PORTP0,PORTP2" />
 
   <wdt name="WDT" configregsA="OPTION"
                   prescalers="1,2,4,8,16,32,64,128"/>

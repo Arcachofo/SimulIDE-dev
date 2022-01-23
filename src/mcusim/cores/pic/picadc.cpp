@@ -23,9 +23,8 @@
 #include "datautils.h"
 #include "regwatcher.h"
 
-PicAdc* PicAdc::createAdc( eMcu* mcu, QString name )
+PicAdc* PicAdc::createAdc( eMcu* mcu, QString name, int type )
 {
-    int type = name.right( 2 ).toInt();
     switch( type ){
         case 00: return new PicAdc00( mcu, name ); break;
         case 20: return new PicAdc20( mcu, name ); break;

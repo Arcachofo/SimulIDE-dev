@@ -17,12 +17,12 @@
     <ocunit name="OC0B" pin="PORTB1" ocreg="OCR0B" bits="COM0B0,COM0B1" interrupt="T0COB" />
   </timer>
 
-  <adc name="ADC10" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
-                    dataregs="ADCL,ADCH"
-                    multiplex="ADMUX"
-                    interrupt="ADC"
-                    prescalers="2,2,4,8,16,32,64,128"
-                    adcpins="PORTB5,PORTB2,PORTB4,PORTB3" />
+  <adc name="ADC" type="10" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
+                  dataregs="ADCL,ADCH"
+                  multiplex="ADMUX"
+                  interrupt="ADC"
+                  prescalers="2,2,4,8,16,32,64,128"
+                  adcpins="PORTB5,PORTB2,PORTB4,PORTB3" />
 
   <wdt name="WDT00" configregsA="WDTCR"
                     interrupt="WDT"

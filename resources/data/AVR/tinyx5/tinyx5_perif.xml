@@ -28,13 +28,13 @@
     <ocunit name="OC1B" pin="PORTB4" ocreg="OCR1B" bits="COM1B0,COM1B1" interrupt="T1COB" />
   </timer>
 
-  <adc name="ADC11" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
-                    dataregs="ADCL,ADCH"
-                    multiplex="ADMUX"
-                    interrupt="ADC"
-                    prescalers="2,2,4,8,16,32,64,128"
-                    adcpins="PORTB5,PORTB2,PORTB4,PORTB3"
-                    vrefpins="PORTB0"/>
+  <adc name="ADC" type="11" bits="10" configregsA="ADCSRA" configregsB="ADCSRB"
+                  dataregs="ADCL,ADCH"
+                  multiplex="ADMUX"
+                  interrupt="ADC"
+                  prescalers="2,2,4,8,16,32,64,128"
+                  adcpins="PORTB5,PORTB2,PORTB4,PORTB3"
+                  vrefpins="PORTB0"/>
 
   <wdt name="WDT00" configregsA="WDTCR"
                     interrupt="WDT"
