@@ -165,7 +165,7 @@ void Simulator::runCircuit()
         }
         solveCircuit();
         if( m_state < SIM_RUNNING ) break;
-        //event = m_firstEvent;
+        event = m_firstEvent;
     }
     if( m_state > SIM_WAITING ) m_circTime = endRun;
     m_loopTime = m_RefTimer.nsecsElapsed();
