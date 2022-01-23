@@ -10,13 +10,15 @@
       <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
   </port>
 
-  <timer name="TIMER0" type="800" configregsA="OPTION" clockpin="PORTA4"
+  <timer name="TIMER0" type="800" configregsA="OPTION" 
                        counter="TMR0"
+                       clockpin="PORTA4"
                        interrupt="T0_OVF"
                        prescalers="2,4,8,16,32,64,128,256"/>
 
-  <timer name="TIMER1" type="161" configregsA="T1CON" clockpin="PORTB6"
+  <timer name="TIMER1" type="161" configregsA="T1CON" 
                        counter="TMR1L,TMR1H"
+                       clockpin="PORTB6"
                        interrupt="T1_OVF"
                        prescalers="1,2,4,8"/>
 

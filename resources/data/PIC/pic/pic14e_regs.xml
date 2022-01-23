@@ -19,6 +19,6 @@
         
         <register name="PCLATH"  addr="0x0A" bits=""/>
         <register name="INTCON"  addr="0x0B" 
-                  bits="IOCIF,INTF,T0IF,IOCIE,INTE,T0IE,PEIE,GIE" />
+                  bits="IOCIF,INTF,TMR0IF,IOCIE,INTE,TMR0IE,PEIE,GIE" />
     </regblock>
 </parts>
