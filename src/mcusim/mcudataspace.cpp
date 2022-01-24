@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDebug>
+
 #include "mcudataspace.h"
 #include "datautils.h"
 
@@ -80,6 +82,10 @@ void DataSpace::writeReg( uint16_t addr, uint8_t v, bool masked )
 
 uint8_t* DataSpace::getReg( QString reg )                // Get pointer to Reg data by name
 {
-    if( !m_regInfo.contains( reg ) ) return NULL;
+    if( !m_regInfo.contains( reg ) )
+    {
+        qDebug() << "ERROR: Register not found:" << reg <<"\n";
+        return NULL;
+    }
     return &m_dataMem[m_regInfo.value( reg ).address];
 }

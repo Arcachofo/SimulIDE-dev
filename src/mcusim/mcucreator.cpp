@@ -59,6 +59,7 @@
 #include "piccomparator.h"
 #include "picvref.h"
 #include "picwdt.h"
+#include "piceeprom.h"
 
 #include "i51core.h"
 #include "i51timer.h"
@@ -107,7 +108,7 @@ int McuCreator::processFile( QString fileName )
     if( root.hasAttribute("data") )       createDataMem( root.attribute("data").toUInt(0,0) );
     if( root.hasAttribute("prog") )       createProgMem( root.attribute("prog").toUInt(0,0) );
     if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute("progword").toUInt(0,0);
-    if( root.hasAttribute("rom") )        createRomMem( root.attribute("eeprom").toUInt(0,0) );
+    if( root.hasAttribute("eeprom") )        createRomMem( root.attribute("eeprom").toUInt(0,0) );
     if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute("inst_cycle").toDouble();
 
     int error = 0;
@@ -132,7 +133,7 @@ int McuCreator::processFile( QString fileName )
         else if( part == "twi" )        createTwi( &el );
         else if( part == "spi" )        createSpi( &el );
         else if( part == "wdt" )        createWdt( &el );
-        else if( part == "eeprom" )     createEeprom( &el );
+        else if( part == "rom" )        createEeprom( &el );
         else if( part == "include" )
         {
             error = processFile( el.attribute("file") );
@@ -181,7 +182,9 @@ void McuCreator::createEeprom( QDomElement* e )
     McuEeprom* eeprom = NULL;
     QString eepromName = e->attribute("name");
 
-    if( m_core == "AVR" ) eeprom = new AvrEeprom( mcu, eepromName );
+    if     ( m_core == "AVR" )    eeprom = new AvrEeprom( mcu, eepromName );
+    else if( m_core == "Pic14" )  eeprom = new PicEeprom( mcu, eepromName );
+    else if( m_core == "Pic14e" ) eeprom = new PicEeprom( mcu, eepromName );
     else return;
 
     mcu->m_modules.emplace_back( eeprom );
@@ -189,14 +192,11 @@ void McuCreator::createEeprom( QDomElement* e )
     setConfigRegs( e, eeprom );
 
     if( e->hasAttribute("dataregs") )
-    {
-        QString datareg = e->attribute("dataregs");
-        eeprom->m_dataReg = mcu->getReg( datareg );
-    }
+        eeprom->m_dataReg = mcu->getReg( e->attribute("dataregs") );
+
     if( e->hasAttribute("addressreg") )
     {
-        QString addrReg = e->attribute("addressreg");
-        QStringList regs = addrReg.split(",");
+        QStringList regs = e->attribute("addressreg").split(",");
         QString lowByte  = regs.value(0);
         QString highByte = regs.value(1);
 

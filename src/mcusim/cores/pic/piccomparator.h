@@ -124,4 +124,16 @@ class MAINMODULE_EXPORT PicComp12 : public PicComp1
 
     protected:
 };
+
+class MAINMODULE_EXPORT PicComp20 : public PicComp
+{
+    public:
+        PicComp20( eMcu* mcu, QString name );
+        ~PicComp20();
+
+        virtual void configureA( uint8_t newCMxCON0 ) override;
+        virtual void configureB( uint8_t newCMxCON1 ) override;
+
+    protected:
+};
 #endif

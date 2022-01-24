@@ -284,3 +284,23 @@ void PicComp12::configureC( uint8_t newSRCON )
 {
 
 }
+
+//-------------------------------------------------------------
+// Type 20: 16f1826 comparators  ------------------------------
+
+PicComp20::PicComp20( eMcu* mcu, QString name )
+         : PicComp( mcu, name )
+{
+
+}
+PicComp20::~PicComp20(){}
+
+void PicComp20::configureA( uint8_t newCMxCON0 )
+{
+
+}
+
+void PicComp20::configureB( uint8_t newCMxCON1 )
+{
+
+}

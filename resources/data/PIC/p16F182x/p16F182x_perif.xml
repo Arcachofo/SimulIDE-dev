@@ -43,11 +43,11 @@
                   adcpins="PORTA0,PORTA1,PORTA2,PORTA3,PORTA4,PORTB6,PORTB7,PORTB5,PORTB4,PORTB3,PORTB2,PORTB1"
                   vrefpins="PORTA3,PORTA2"/>
 
-  <comp name="COMP1" type="00" configregsA="CM1CON0" configregsB="CM1CON1"
+  <comp name="COMP1" type="20" configregsA="CM1CON0" configregsB="CM1CON1"
                      interrupt="COMP1"
                      pins="PORTA0,PORTA3,PORTA2" />
 
-  <comp name="COMP2" type="00" configregsA="CM2CON0" configregsB="CM2CON1"
+  <comp name="COMP2" type="20" configregsA="CM2CON0" configregsB="CM2CON1"
                      interrupt="COMP2"
                      pins="PORTA1,PORTA2,PORTA4" />
 

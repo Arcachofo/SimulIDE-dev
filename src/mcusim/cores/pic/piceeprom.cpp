@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,64 +17,78 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "avreeprom.h"
+#include "piceeprom.h"
 #include "datautils.h"
 #include "e_mcu.h"
 #include "simulator.h"
 
-AvrEeprom::AvrEeprom( eMcu* mcu, QString name )
+PicEeprom::PicEeprom( eMcu* mcu, QString name )
          : McuEeprom( mcu, name )
 {
-    m_EECR  = mcu->getReg( "EECR" );
-    m_EEPM  = getRegBits( "EEPM0, EEPM1", mcu );
-    m_EEMPE = getRegBits( "EEMPE", mcu );
-    m_EEPE  = getRegBits( "EEPE", mcu );
-    m_EERE  = getRegBits( "EERE", mcu );
+    //m_EECR  = mcu->getReg( "EECR" );
+    m_WRERR = getRegBits( "WRERR", mcu );
+    m_WREN  = getRegBits( "WREN", mcu );
+    m_WR    = getRegBits( "WR", mcu );
+    m_RD    = getRegBits( "RD", mcu );
 }
-AvrEeprom::~AvrEeprom(){}
+PicEeprom::~PicEeprom(){}
 
-void AvrEeprom::initialize()
+void PicEeprom::initialize()
 {
-    m_mode = 0;
+    m_writeEnable = false;
+    m_nextCycle = 0;
+    m_wrMask = 0;
     McuEeprom::initialize();
 }
 
-void AvrEeprom::runEvent() // Write cycle end reached
+void PicEeprom::runEvent() // Write cycle end reached
 {
-    clearRegBits( m_EEPE );
+    writeEeprom();
+    clearRegBits( m_WR );
+    m_wrMask = 0;
 }
 
-void AvrEeprom::configureA( uint8_t newEECR ) // EECR is being written
+void PicEeprom::configureA( uint8_t newEECON1 ) // EECR is being written
 {
-    m_mode = getRegBitsVal( newEECR, m_EEPM );
-
-    bool eempe = getRegBitsBool( newEECR, m_EEMPE );
-    bool eepe  = getRegBitsBool( newEECR, m_EEPE );
-
-    if( eempe )
+    if( m_writeEnable ) // Write enabled
     {
-        bool oldEepe = getRegBitsBool( *m_EECR, m_EEPE );
+        m_writeEnable = false;
 
-        if( !oldEepe && eepe ) // Write triggered
+        if( m_mcu->cycle() == m_nextCycle ) // Must happen in next cycle
         {
-            if( m_mcu->cycle() <= m_nextCycle ) writeEeprom();// write data
-            return;
-            /// else clearRegBits( m_EEPE );
+            bool wren = getRegBitsBool( newEECON1, m_WREN );
+            bool write = wren && getRegBitsBool( newEECON1, m_WR );
+            if( write )
+            {
+                m_wrMask = m_WR.mask; // Don't clear WR until write finished
+                Simulator::self()->addEvent( 5e9, this ); // Write time = 5 ms
+            }
         }
-        bool oldEempe = getRegBitsBool( *m_EECR, m_EEMPE );
-        if( !oldEempe ) // Set maximun cycle to procedd to write
-        {
-            m_nextCycle = m_mcu->cycle()+4;
-        }
+        m_nextCycle = 0;
     }
-    if( !eepe && getRegBitsBool( newEECR, m_EERE ) ) // Read enable
+    else if( getRegBitsBool( newEECON1, m_RD ) ) // Read enable
     {
-        m_mcu->cyclesDone += 4;
         readEeprom();
     }
+    newEECON1 &= ~(m_WR.mask);                                    // Clear WR if not in write cycle
+    m_mcu->m_regOverride = (newEECON1 | m_wrMask) & ~(m_RD.mask); // Clear RD, set WR if in write cycle
 }
 
-void AvrEeprom::writeEeprom()
+void PicEeprom::configureB( uint8_t newEECON2 )
+{
+    if     ( newEECON2 == 0x55 ) m_nextCycle = m_mcu->cycle()+2;
+    else if( newEECON2 == 0xAA )
+    {
+        if( m_mcu->cycle() == m_nextCycle )
+        {
+            m_nextCycle = m_mcu->cycle()+1;
+            m_writeEnable = true;
+        }
+    }
+    m_mcu->m_regOverride = 0; // Don't write value (this is not a physical register).
+}
+
+/*void PicEeprom::writeEeprom()
 {
     uint8_t data = *m_dataReg;
     uint64_t time;
@@ -95,5 +109,5 @@ void AvrEeprom::writeEeprom()
     m_mcu->cyclesDone += 2;
 
     Simulator::self()->addEvent( time, this ); // Shedule Write cycle end
-}
+}*/
 

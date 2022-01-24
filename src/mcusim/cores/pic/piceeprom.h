@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,46 +17,35 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifndef PICEEPROM_H
+#define PICEEPROM_H
+
 #include "mcueeprom.h"
-#include "simulator.h"
-#include "e_mcu.h"
 
-McuEeprom::McuEeprom( eMcu* mcu, QString name )
-         : McuModule( mcu, name )
-         , eElement( name )
+class MAINMODULE_EXPORT PicEeprom : public McuEeprom
 {
-    m_addressL = NULL;
-    m_addressH = NULL;
-    m_dataReg  = NULL;
-}
+        friend class McuCreator;
 
-McuEeprom::~McuEeprom()
-{
-}
+    public:
+        PicEeprom( eMcu* mcu, QString name );
+        ~PicEeprom();
 
-void McuEeprom::initialize()
-{
-    m_address = 0;
-}
+        virtual void initialize() override;
+        virtual void runEvent() override;
 
-void McuEeprom::readEeprom()
-{
-    *m_dataReg = m_mcu->getRomValue( m_address );
-}
+        virtual void configureA( uint8_t newEECON1 ) override;
+        virtual void configureB( uint8_t newEECON2 ) override;
 
-void McuEeprom::writeEeprom()
-{
-    m_mcu->setRomValue( m_address, *m_dataReg );
-}
+    private:
+        uint64_t m_nextCycle;
+        bool m_writeEnable;
 
-void McuEeprom::addrWriteL( uint8_t val )
-{
-    m_address = val;
-    if( m_addressH ) m_address += *m_addressH << 8;
-}
+        uint8_t m_wrMask;
 
-void McuEeprom::addrWriteH( uint8_t val )
-{
-    m_address = (val << 8) + *m_addressL;
-}
+        regBits_t m_WRERR;
+        regBits_t m_WREN;
+        regBits_t m_WR;
+        regBits_t m_RD;
+};
 
+#endif
