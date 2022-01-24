@@ -46,6 +46,9 @@ PicComp::~PicComp(){}
 void PicComp::initialize()
 {
     McuComp::initialize();
+    m_pinP = NULL;
+    m_pinN = NULL;
+    m_pinOut = NULL;
     m_enabled = false;
 }
 
@@ -72,26 +75,14 @@ void PicComp::connect( McuPin* pinN, McuPin* pinP, McuPin* pinOut )
 {
     if( pinN != m_pinN )
     {
-        if( m_pinN ){
-            m_pinN->setAnalog( false );
-            m_pinN->changeCallBack( this, false );
-        }
-        if( pinN ){
-            pinN->setAnalog( true );
-            if( m_enabled ) pinN->changeCallBack( this, true );
-        }
+        if( m_pinN ) m_pinN->changeCallBack( this, false );
+        if( pinN )   pinN->changeCallBack( this, true );
         m_pinN = pinN;
     }
     if( pinP != m_pinP )
     {
-        if( m_pinP ){
-            m_pinP->setAnalog( false );
-            m_pinP->changeCallBack( this, false );
-        }
-        if( pinP ){
-            pinP->setAnalog( true );
-            if( m_enabled ) pinP->changeCallBack( this, true );
-        }
+        if( m_pinP ) m_pinP->changeCallBack( this, false );
+        if( pinP )   pinP->changeCallBack( this, true );
         m_pinP = pinP;
     }
     if( pinOut != m_pinOut )
@@ -128,6 +119,7 @@ void PicComp0::configureA( uint8_t newCMCON )
         m_enabled = true;
         setMode( mode );
     }
+    voltChanged();
 }
 
 //-------------------------------------------------------------

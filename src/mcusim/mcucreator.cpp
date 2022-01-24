@@ -104,12 +104,12 @@ int McuCreator::processFile( QString fileName )
 
     QDomElement root = domDoc.documentElement();
 
-    if( root.hasAttribute("core") )       m_core = root.attribute("core");
+    if( root.hasAttribute("core") )       m_core          = root.attribute("core");
+    if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute("progword").toUInt(0,0);
+    if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute("inst_cycle").toDouble();
     if( root.hasAttribute("data") )       createDataMem( root.attribute("data").toUInt(0,0) );
     if( root.hasAttribute("prog") )       createProgMem( root.attribute("prog").toUInt(0,0) );
-    if( root.hasAttribute("progword") )   mcu->m_wordSize = root.attribute("progword").toUInt(0,0);
-    if( root.hasAttribute("eeprom") )        createRomMem( root.attribute("eeprom").toUInt(0,0) );
-    if( root.hasAttribute("inst_cycle") ) mcu->m_cPerInst = root.attribute("inst_cycle").toDouble();
+    if( root.hasAttribute("eeprom") )     createRomMem( root.attribute("eeprom").toUInt(0,0) );
 
     int error = 0;
     QDomNode node = root.firstChild();

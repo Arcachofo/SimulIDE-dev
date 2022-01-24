@@ -20,7 +20,7 @@
                   bits="TMR1ON,TMR1CS,T1SYNC,T1OSCEN,T1CKPS0,T1CKPS1,TMR1GE"/>
 
         <register name="CMCON"   addr="0x19" mask="01011111"
-                  bits="CM0,CM1,CM2,CIS,C1INV,0,COUT,0" />
+                  bits="CM0,CM1,CM2,CIS,CINV,0,COUT,0" />
     </regblock>
     <datablock name="GPR0" start="0x0020" end="0x005F"/>
     
