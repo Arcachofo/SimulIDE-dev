@@ -61,6 +61,7 @@ class MAINMODULE_EXPORT McuCreator
         static void createTwi( QDomElement* e );
         static void createSpi( QDomElement* e );
         static void createWdt( QDomElement* e );
+        static void createSleep( QDomElement* e );
         static void createCore( QString core );
         static void createStack( QDomElement* s );
         static void createInterrupt( QDomElement* el );

@@ -48,6 +48,7 @@
 #include "avrwdt.h"
 #include "avreeprom.h"
 #include "avrcomparator.h"
+#include "avrsleep.h"
 
 #include "pic14core.h"
 #include "pic14ecore.h"
@@ -134,6 +135,7 @@ int McuCreator::processFile( QString fileName )
         else if( part == "spi" )        createSpi( &el );
         else if( part == "wdt" )        createWdt( &el );
         else if( part == "rom" )        createEeprom( &el );
+        else if( part == "sleep" )      createSleep( &el );
         else if( part == "include" )
         {
             error = processFile( el.attribute("file") );
@@ -841,6 +843,16 @@ void McuCreator::createWdt( QDomElement* e )
 
     if( e->hasAttribute("interrupt") ) setInterrupt( e->attribute("interrupt"), wdt );
     if( e->hasAttribute("prescalers") ) setPrescalers( e->attribute("prescalers"), wdt );
+}
+
+void McuCreator::createSleep( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+    McuSleep* sleep;
+    if     ( m_core == "AVR" ) sleep = new AvrSleep( mcu, name );
+    else return;
+
+    setConfigRegs( e, sleep );
 }
 
 void McuCreator::createCore( QString core )

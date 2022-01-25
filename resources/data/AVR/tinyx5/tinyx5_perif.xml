@@ -45,7 +45,9 @@
                   addressreg="EEARL"
                   interrupt="EEPR" />
 
-  <comp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
-                    interrupt="ACOMP"
-                    pins="PORTB0,PORTB1"/>
+  <comp name="COM" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
+                   interrupt="ACOMP"
+                   pins="PORTB0,PORTB1"/>
+                    
+  <sleep name="SLEEP" configregsA="MCUCR"/>
 </parts>
