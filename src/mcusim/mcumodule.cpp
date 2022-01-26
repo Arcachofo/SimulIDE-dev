@@ -24,9 +24,16 @@ McuModule::McuModule( eMcu* mcu, QString name )
 {
     m_mcu = mcu;
     m_name = name;
+    m_sleepMode = 0;
     m_interrupt = NULL;
 }
 McuModule::~McuModule( ){}
+
+void McuModule::sleep( int mode )
+{
+    if( mode < 0 ) m_sleeping = false;
+    else           m_sleeping = (m_sleepMode & 1<<mode) > 0;
+}
 
 /*void McuModule::reset()
 {

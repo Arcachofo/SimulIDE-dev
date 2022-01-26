@@ -110,7 +110,7 @@
   <spi name="SPI0" configregsA="SPCR0"
                    dataregs="SPDR0" 
                    statusreg="SPSR0" 
-                   interrupt="SPI"
+                   interrupt="SPI0"
                    prescalers="4,16,64,128,2,8,32,64"
                    pins="PORTB3,PORTB4,PORTB5,PORTB2" /><!-- "MOSI,MISO,SCK,SS" -->
 

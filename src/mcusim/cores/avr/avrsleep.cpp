@@ -17,8 +17,11 @@
  *                                                                         *
  ***************************************************************************/
 
+//#include <QDebug>
+
 #include "avrsleep.h"
 #include "e_mcu.h"
+#include "mcuwdt.h"
 #include "datautils.h"
 
 AvrSleep::AvrSleep( eMcu* mcu, QString name )
@@ -26,6 +29,10 @@ AvrSleep::AvrSleep( eMcu* mcu, QString name )
 {
     m_SM = getRegBits( "SM0,SM1,SM2", mcu );
     m_SE = getRegBits( "SE", mcu );
+
+    //Interrupt* inte = NULL;
+
+    //m_wakeUps.emplace_back( m_mcu->watchDog()->getInterrupt() );
 }
 AvrSleep::~AvrSleep(){}
 
@@ -40,13 +47,32 @@ void AvrSleep::configureA( uint8_t newVal )
     if( m_enabled != enabled )
     {
         m_enabled = enabled;
+        if( !enabled )
+        {
+            for( Interrupt* inte : m_wakeUps )
+            {
+                if( inte ) inte->callBack( this, false);
+            }
+        }
     }
     sleepMode_t mode = (sleepMode_t)getRegBitsVal( newVal, m_SM );
     if( m_sleepMode != mode )
     {
         m_sleepMode = mode;
+        switch( mode ) {
+            case sleepIdle: break;
+            case sleepAdcNR: break;
+            case sleepPowDo: break;
+            case sleepPowSa: break;
+            case sleepStand: break;
+            case sleepExtSt: break;
+        default:
+            break;
+        }
     }
 }
+
+
 /*
 //------------------------------------------------------
 //-- AVR ADC Type 0 ------------------------------------

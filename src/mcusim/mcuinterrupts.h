@@ -75,6 +75,8 @@ class MAINMODULE_EXPORT Interrupt
         uint8_t  m_flagMask;
         uint16_t m_flagReg;
 
+        uint8_t m_wakeup;
+
         bool m_raised;
         bool m_autoClear;
         bool m_remember;
@@ -100,6 +102,7 @@ class MAINMODULE_EXPORT Interrupts
         void retI();
         void remove();
         void resetInts();
+
         void addToPending( Interrupt* newInt );
         void remFromPending( Interrupt* remInt );
 

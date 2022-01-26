@@ -35,7 +35,6 @@ enum sleepMode_t{
     sleepNone
 };
 
-
 class MAINMODULE_EXPORT AvrSleep : public McuSleep
 {
     public:
@@ -45,11 +44,15 @@ class MAINMODULE_EXPORT AvrSleep : public McuSleep
         virtual void initialize() override;
         virtual void configureA( uint8_t newVal ) override;
 
+        //virtual void sleep() override;
+
     protected:
-        sleepMode_t m_sleepMode;
+        //sleepMode_t m_sleepMode;
 
         regBits_t m_SM;
         regBits_t m_SE;
+
+        std::vector<Interrupt*> m_wakeUps;
 };
 
 /*class MAINMODULE_EXPORT AvrSleep00 : public AvrSleep

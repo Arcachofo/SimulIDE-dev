@@ -32,10 +32,17 @@
 class McuCore;
 class McuTimer;
 class McuWdt;
+class McuSleep;
 
 enum{
     R_READ = 0,
     R_WRITE,
+};
+
+enum mcuState_t{
+    mcuStopped=0,
+    mcuRunning,
+    mcuSleeping
 };
 
 class McuVref;
@@ -73,6 +80,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         // End Overrides of McuInterface-------------------------------
 
         void cpuReset( bool reset );
+        void sleep( bool s );
 
         double freqMHz() { return m_freq*1e-6; }
         void setFreq( double freq );
@@ -84,7 +92,9 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
 
         McuTimer* getTimer( QString name ) { return m_timers.getTimer( name ); }
 
+        McuWdt* watchDog() { return m_wdt; }
         McuVref* vrefModule();
+        //McuSleep* sleepModule();
 
         void wdr();
 
@@ -97,6 +107,8 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         int cyclesDone;
 
     protected:
+        mcuState_t m_state;
+
         uint64_t m_cycle;
         std::vector<uint16_t> m_progMem;  // Program memory
         QHash<uint16_t, uint16_t> m_cfgWords; // Config words
@@ -106,6 +118,7 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         std::vector<McuModule*> m_modules;
         std::vector<McuUsart*> m_usarts;
 
+        McuSleep* m_sleepModule;
         McuVref* m_vrefModule;
         McuWdt* m_wdt;
 

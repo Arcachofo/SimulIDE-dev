@@ -1,6 +1,8 @@
 <!DOCTYPE SimulIDE>
 
 <parts>
+  <sleep name="SLEEP" configregsA="MCUCR"/>
+  
   <port name="PORTB" pins="6" outreg="PORTB" inreg="PINB" dirreg="DDRB"
                             clockpins="PORTB3" resetpin="PORTB5">
     <interrupt name="PCINT0" mask="PCMSK"/>
@@ -48,6 +50,4 @@
   <comp name="COM" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
                    interrupt="ACOMP"
                    pins="PORTB0,PORTB1"/>
-                    
-  <sleep name="SLEEP" configregsA="MCUCR"/>
 </parts>

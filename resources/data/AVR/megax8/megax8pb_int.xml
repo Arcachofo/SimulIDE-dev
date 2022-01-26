@@ -17,7 +17,7 @@
         <interrupt name="T0COA"    enable="OCIE0A" flag="OCF0A"  priority="31" vector="0x001C" clear="1"/>
         <interrupt name="T0COB"    enable="OCIE0B" flag="OCF0B"  priority="30" vector="0x001E" clear="1"/>
         <interrupt name="T0_OVF"   enable="TOIE0"  flag="TOV0"   priority="29" vector="0x0020" clear="1"/>
-        <interrupt name="SPI"      enable="SPIE"   flag="SPIF"   priority="28" vector="0x0022"/>
+        <interrupt name="SPI0"     enable="SPIE0"  flag="SPIF0"  priority="28" vector="0x0022"/>
         <interrupt name="USART0_R" enable="RXCIE0" flag="RXC0"   priority="27" vector="0x0024" clear="0"/>
         <interrupt name="USART0_U" enable="UDRIE0" flag="UDRE0"  priority="26" vector="0x0026"/>
         <interrupt name="USART0_T" enable="TXCIE0" flag="TXC0"   priority="25" vector="0x0028" clear="1"/>

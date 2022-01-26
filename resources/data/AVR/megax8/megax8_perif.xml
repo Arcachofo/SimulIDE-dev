@@ -1,6 +1,8 @@
 <!DOCTYPE SimulIDE>
 
 <parts>
+  <sleep name="SLEEP" configregsA="SMCR"/>
+  
   <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB" clockpins="PORTB6,PORTB7">
     <interrupt name="PCINT0" mask="PCMSK0"/>
   </port>

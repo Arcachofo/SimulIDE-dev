@@ -24,6 +24,7 @@
 #include "usartmodule.h"
 #include "usartrx.h"
 #include "mcuvref.h"
+#include "mcusleep.h"
 #include "simulator.h"
 
 eMcu::eMcu( QString id )
@@ -35,6 +36,7 @@ eMcu::eMcu( QString id )
     cpu = NULL;
     m_wdt = NULL;
     m_vrefModule = NULL;
+    m_sleepModule = NULL;
 
     m_cPerInst = 1;
     setFreq( 16*1e6 );
@@ -54,13 +56,11 @@ void eMcu::initialize()
     m_cycle = 0;
     cyclesDone = 0;
 
-    ///for( McuModule* module : m_modules ) Simulator::self()->cancelEvents( module );
-
     cpu->reset();
     m_interrupts.resetInts();
     DataSpace::initialize();
 
-    //Simulator::self()->cancelEvents( this );
+    m_state = mcuRunning;
     Simulator::self()->addEvent( 1, this );
 }
 
@@ -72,21 +72,23 @@ void eMcu::runEvent()
         if( cyclesDone > 1 ) cyclesDone -= 1;
         else                 stepDebug();
         Simulator::self()->addEvent( m_simCycPI, this );
-    }else{
-        stepCpu();//if( m_state == cpu_Running )
+    }
+    else if( m_state >= mcuRunning )
+    {
+        stepCpu();
         Simulator::self()->addEvent( cyclesDone*m_simCycPI, this );
 }   }
 
 void eMcu::stepCpu()
 {
-    uint32_t pc = cpu->PC;
-
-    if( pc < m_flashSize )
+    if( cpu->PC < m_flashSize )
     {
-        cpu->runDecoder();              // Run Decoder
+        if( m_state == mcuRunning ) cpu->runDecoder();
 
-        m_interrupts.runInterrupts();     // Run Interrupts
+        m_interrupts.runInterrupts();
     }
+    else m_state = mcuStopped; /// TODO: Crash
+
     m_cycle += cyclesDone;
 }
 
@@ -98,6 +100,19 @@ void eMcu::cpuReset( bool reset )
         Simulator::self()->addEvent( 1, this );
     }
     m_resetState = reset;
+}
+
+void eMcu::sleep( bool s )
+{
+    if( !m_sleepModule->enabled() ) return;
+
+    int mode = -1;
+    if( s )     // Go to Sleep
+    {
+        mode = m_sleepModule->mode();
+    }
+
+    for( McuModule* module : m_modules ) module->sleep( mode );
 }
 
 int eMcu::status() { return getRamValue( m_sregAddr ); }
@@ -154,4 +169,5 @@ void eMcu::enableInterrupts( uint8_t en )
 }
 
 McuVref* eMcu::vrefModule() { return m_vrefModule; }
+//McuSleep* eMcu::sleepModule() { return m_sleepModule; }
 

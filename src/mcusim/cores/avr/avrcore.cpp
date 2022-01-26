@@ -25,6 +25,7 @@
 
 #include "avrcore.h"
 #include "avr_defines.h"
+#include "avrsleep.h"
 #include "simulator.h"
 
 AvrCore::AvrCore( eMcu* mcu )
@@ -385,19 +386,13 @@ void AvrCore::runDecoder()
                      * Without this check, it was possible to incorrectly enter a state
                      * in which the cpu was sleeping and interrupts were disabled. For more
                      * details, see the commit message. */
-                    qDebug() <<"ERROR: AVR SLEEP instruction not implemented";
+                    qDebug() <<"Warning: AVR SLEEP instruction not Fully implemented";
 ////////             if( !int_pending.empty() || !SREG[S_I]) state = cpu_Sleeping;
+
+                    m_mcu->sleep( true );
                 }    break;
                 case 0x9598: { // BREAK -- 1001 0101 1001 1000
                     qDebug() <<"ERROR: AVR BREAK instruction not implemented";
-                    /*if( gdb) {
-                        // if gdb is on, we break here as in here
-                        // and we do so until gdb restores the instruction
-                        // that was here before
-                        state = cpu_StepDone;
-                        new_pc = pc;
-                        cycle = 0;
-                    }*/
                 }    break;
                 case 0x95a8: { // WDR -- Watchdog Reset -- 1001 0101 1010 1000
                     m_mcu->wdr();

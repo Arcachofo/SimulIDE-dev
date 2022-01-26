@@ -17,7 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDebug>
+
 #include "mcusleep.h"
+#include "e_mcu.h"
 
 McuSleep::McuSleep( eMcu* mcu, QString name )
        : McuModule( mcu, name )
@@ -26,3 +29,14 @@ McuSleep::McuSleep( eMcu* mcu, QString name )
 }
 McuSleep::~McuSleep(){}
 
+
+/*void McuSleep::sleep()
+{
+    qDebug() << "McuSleep Enter Sleep\n";
+}*/
+
+void McuSleep::callBack()
+{
+    qDebug() << "McuSleep Exit Sleep\n";
+    m_mcu->sleep( false );
+}

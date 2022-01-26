@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT McuModule
         virtual void configureC( uint8_t ){;}
         virtual void callBackDoub( double ) {;}
         virtual void callBack() {;}
+        virtual void sleep( int mode );
 
         virtual void setInterrupt( Interrupt* i ) { m_interrupt = i; }
         Interrupt* getInterrupt() { return m_interrupt; }
@@ -48,7 +49,10 @@ class MAINMODULE_EXPORT McuModule
         QString m_name;
         eMcu*   m_mcu;
 
-        Interrupt*  m_interrupt;
+        uint8_t m_sleepMode;
+        bool m_sleeping;
+
+        Interrupt* m_interrupt;
 
         regBits_t m_configBitsA;
         regBits_t m_configBitsB;
