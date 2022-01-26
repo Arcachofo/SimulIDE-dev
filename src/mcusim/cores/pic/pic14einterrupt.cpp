@@ -17,31 +17,37 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "picinterrupt.h"
+#include "pic14einterrupt.h"
 #include "e_mcu.h"
 #include "datautils.h"
 
-PicInterrupt::PicInterrupt( QString name, uint16_t vector, eMcu* mcu )
-            : Interrupt( name, vector, mcu )
+Pic14eInterrupt::Pic14eInterrupt( QString name, uint16_t vector, eMcu* mcu )
+               : PicInterrupt( name, vector, mcu )
 {
-    m_GIE = getRegBits( "GIE", mcu );
-
-    m_autoClear = false;
-    m_remember  = true;
+    m_wReg   = mcu->getReg("WREG");
+    m_status = mcu->getReg("STATUS");
+    m_bsr    = mcu->getReg("BSR");
+    m_pclath = mcu->getReg("PCLATH");
 }
-PicInterrupt::~PicInterrupt(){}
+Pic14eInterrupt::~Pic14eInterrupt(){}
 
-void PicInterrupt::execute()
+void Pic14eInterrupt::execute()
 {
-    clearRegBits( m_GIE );
-    m_interrupts->enableGlobal( 0 ); // Disable interrupts
-    Interrupt::execute();
+    m_wRegSaved   = *m_wReg;
+    m_statusSaved = *m_status;
+    m_bsrSaved    = *m_bsr;
+    m_pclathSaved = *m_pclath;
+
+    PicInterrupt::execute();
 }
 
-void PicInterrupt::exitInt() // Exit from this interrupt
+void Pic14eInterrupt::exitInt() // Exit from this interrupt
 {
-    setRegBits( m_GIE );
-    m_interrupts->enableGlobal( 1 );  // Enable interrupts (execute next cycle)
-    Interrupt::exitInt();
+    *m_wReg   = m_wRegSaved;
+    *m_status = m_statusSaved;
+    *m_bsr    = m_bsrSaved;
+    *m_pclath = m_pclathSaved;
+
+    PicInterrupt::exitInt();
 }
 

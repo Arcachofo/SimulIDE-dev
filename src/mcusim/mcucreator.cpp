@@ -56,6 +56,7 @@
 #include "pictimer.h"
 #include "picccpunit.h"
 #include "picinterrupt.h"
+#include "pic14einterrupt.h"
 #include "picusart.h"
 #include "picadc.h"
 #include "piccomparator.h"
@@ -893,7 +894,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     if     ( m_core == "8051" )  iv = I51Interrupt::getInterrupt( intName, intVector, mcu );
     else if( m_core == "AVR" )   iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
     else if( m_core == "Pic14" ) iv = new PicInterrupt( intName, intVector, mcu );
-    else if( m_core == "Pic14e") iv = new PicInterrupt( intName, intVector, mcu );
+    else if( m_core == "Pic14e") iv = new Pic14eInterrupt( intName, intVector, mcu );
     if( !iv ) return;
 
     mcu->m_interrupts.m_intList.insert( intName, iv );

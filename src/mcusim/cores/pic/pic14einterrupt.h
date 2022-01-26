@@ -17,31 +17,30 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifndef Pic14eInterrupt_H
+#define Pic14eInterrupt_H
+
 #include "picinterrupt.h"
-#include "e_mcu.h"
-#include "datautils.h"
 
-PicInterrupt::PicInterrupt( QString name, uint16_t vector, eMcu* mcu )
-            : Interrupt( name, vector, mcu )
+class MAINMODULE_EXPORT Pic14eInterrupt : public PicInterrupt
 {
-    m_GIE = getRegBits( "GIE", mcu );
+    public:
+        Pic14eInterrupt( QString name, uint16_t vector, eMcu* mcu );
+        ~Pic14eInterrupt();
 
-    m_autoClear = false;
-    m_remember  = true;
-}
-PicInterrupt::~PicInterrupt(){}
+        virtual void execute() override;
+        virtual void exitInt() override;
 
-void PicInterrupt::execute()
-{
-    clearRegBits( m_GIE );
-    m_interrupts->enableGlobal( 0 ); // Disable interrupts
-    Interrupt::execute();
-}
+    protected:
+        uint8_t* m_wReg;
+        uint8_t* m_status;
+        uint8_t* m_bsr;
+        uint8_t* m_pclath;
 
-void PicInterrupt::exitInt() // Exit from this interrupt
-{
-    setRegBits( m_GIE );
-    m_interrupts->enableGlobal( 1 );  // Enable interrupts (execute next cycle)
-    Interrupt::exitInt();
-}
+        uint8_t m_wRegSaved;
+        uint8_t m_statusSaved;
+        uint8_t m_bsrSaved;
+        uint8_t m_pclathSaved;
+};
 
+#endif
