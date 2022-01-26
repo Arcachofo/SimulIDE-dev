@@ -175,7 +175,6 @@ void SubCircuit::loadSubCircuit( QString fileName )
     QString numId = m_id;
     numId = numId.split("-").last();
     Circuit* circ = Circuit::self();
-    //QHash<QString, eNode*> nodMap;
 
     QVector<QStringRef> docLines = doc.splitRef("\n");
     for( QStringRef line : docLines )
@@ -225,23 +224,13 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 startPinId = startPinId.replace("Pin-", "Pin_"); // Old TODELETE
                 endPinId   =   endPinId.replace("Pin-", "Pin_"); // Old TODELETE
 
-                Pin* startPin = Circuit::self()->m_pinMap.value( startPinId ); //getConPin( startPinId );
-                Pin* endPin   = Circuit::self()->m_pinMap.value( endPinId ); //getConPin( endPinId );
+                Pin* startPin = Circuit::self()->m_LdPinMap.value( startPinId ); //getConPin( startPinId );
+                Pin* endPin   = Circuit::self()->m_LdPinMap.value( endPinId ); //getConPin( endPinId );
 
                 if( startPin && endPin )    // Create Connector
                 {
-                    /*eNode*  enode   = nodMap[enodeId];
-
-                    if( !enode )          // Create eNode and add to enodList
-                    {
-                        enode = new eNode( m_id+"_eNode-"+circ->newSceneId() );
-                        nodMap[enodeId] = enode;
-                    }*/
-                    //if( startPin->isBus() ) enode->setIsBus( true );
                     startPin->setConPin( endPin );
                     endPin->setConPin( startPin );
-                    //startPin->registerEnode( enode );
-                    //endPin->registerEnode( enode );
                 }
                 else // Start or End pin not found
                 {
@@ -255,8 +244,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 if( type == "Node" ) comp = new Node( this, type, newUid );
                 else                 comp = circ->createItem( type, newUid );
 
-                if( comp )
-                {
+                if( comp ){
                     QString propName = "";
                     for( QStringRef prop : properties )
                     {

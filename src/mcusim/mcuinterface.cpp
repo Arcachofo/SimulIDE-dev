@@ -90,8 +90,7 @@ void McuInterface::updateRamValue( QString name )
         ba[1] = getRamValue( address+1 );
         ba[2] = 0;
         ba[3] = 0;
-    }
-    else{                             // 1 byte
+    }else{                             // 1 byte
         ba[0] = getRamValue( address );
         ba[1] = 0;
         ba[2] = 0;
@@ -111,8 +110,7 @@ void McuInterface::updateRamValue( QString name )
             uint32_t val = 0;
             memcpy(&val, ba, 4);
             value = val;
-        }
-        else{
+        }else{
             if( bits == 32 )
             {
                 int32_t val = 0;
@@ -124,8 +122,7 @@ void McuInterface::updateRamValue( QString name )
                 int16_t val = 0;
                 memcpy(&val, ba, 2);
                 value = val;
-            }
-            else{
+            }else{
                 int8_t val = 0;
                 memcpy(&val, ba, 1);
                 value = val;

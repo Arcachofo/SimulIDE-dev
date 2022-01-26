@@ -84,7 +84,7 @@ uint8_t* DataSpace::getReg( QString reg )                // Get pointer to Reg d
 {
     if( !m_regInfo.contains( reg ) )
     {
-        qDebug() << "ERROR: Register not found:" << reg <<"\n";
+        qDebug() << "Warning: Register not found:" << reg <<"\n";
         return NULL;
     }
     return &m_dataMem[m_regInfo.value( reg ).address];
