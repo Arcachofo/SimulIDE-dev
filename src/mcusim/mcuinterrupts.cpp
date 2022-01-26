@@ -28,6 +28,7 @@ Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
     m_mcu = mcu;
     m_name = name;
     m_vector = vector;
+    m_wakeup = 0;
     m_autoClear = false;
     m_remember = false;
     m_nextInt = NULL;
@@ -48,8 +49,11 @@ void Interrupt::enableFlag( uint8_t en )
     if( m_enabled == en ) return;
     m_enabled = en;
 
-    if( en & m_raised && m_remember ) // If not enabled m_remember it until reenabled
-        m_interrupts->addToPending( this ); // Add to pending interrupts
+    if( en ) // If not enabled m_remember it until reenabled
+    {
+        if( m_raised && m_remember )m_interrupts->addToPending( this ); // Add to pending interrupts
+    }
+    else m_interrupts->remFromPending( this );
 }
 
 void Interrupt::clearFlag()

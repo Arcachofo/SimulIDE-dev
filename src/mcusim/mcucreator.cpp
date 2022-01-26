@@ -55,6 +55,7 @@
 #include "picport.h"
 #include "pictimer.h"
 #include "picccpunit.h"
+#include "picinterrupt.h"
 #include "picusart.h"
 #include "picadc.h"
 #include "piccomparator.h"
@@ -369,16 +370,18 @@ void McuCreator::createPort( QDomElement* p )
     if( p->hasAttribute("resetpin") )
         m_mcuComp->m_mcuRstPin = McuPort::getPin( p->attribute("resetpin") );
 
-    QStringList outRegList = p->attribute( "outreg" ).split(",");
-    QString Oreg = outRegList.first();
-    for( QString outReg : outRegList )
+    QString Oreg = "";
+    if( p->hasAttribute( "outreg" ) )
     {
-        uint16_t addr = mcu->getRegAddress( outReg );
-        port->m_outAddr = addr;
-        port->m_outReg  = mcu->getReg( outReg );
-        watchRegNames( outReg, R_WRITE, port, &McuPort::outChanged, mcu );
-    }
-
+        QStringList outRegList = p->attribute( "outreg" ).split(",");
+        Oreg = outRegList.first();
+        for( QString outReg : outRegList )
+        {
+            uint16_t addr = mcu->getRegAddress( outReg );
+            port->m_outAddr = addr;
+            port->m_outReg  = mcu->getReg( outReg );
+            watchRegNames( outReg, R_WRITE, port, &McuPort::outChanged, mcu );
+    }   }
     if( p->hasAttribute( "inreg" ) ) // Connect to PORT In Register
     {
         QString inReg = p->attribute( "inreg" );
@@ -386,7 +389,7 @@ void McuCreator::createPort( QDomElement* p )
         port->m_inAddr = addr;
         port->m_inReg  = mcu->getReg( inReg );
     }
-    else watchRegNames( Oreg, R_READ, port, &McuPort::readPort, mcu ); // No Input register, read pin states
+    else if( !Oreg.isEmpty() ) watchRegNames( Oreg, R_READ, port, &McuPort::readPort, mcu ); // No Input register, read pin states
 
     if( p->hasAttribute( "dirreg" ) ) // Connect to PORT Dir Register
     {
@@ -732,13 +735,12 @@ void McuCreator::createAcomp( QDomElement* e )
     QString name = e->attribute( "name" );
     int type = e->attribute("type").toInt();
 
-    if( m_core == "AVR" )    comp = new AvrComp( mcu, name );
-    if( m_core == "Pic14" )  comp = PicComp::createComparator( mcu, name, type );
-    if( m_core == "Pic14e" ) comp = PicComp::createComparator( mcu, name, type );
+    if     ( m_core == "AVR" )    comp = new AvrComp( mcu, name );
+    else if( m_core == "Pic14" )  comp = PicComp::createComparator( mcu, name, type );
+    else if( m_core == "Pic14e" ) comp = PicComp::createComparator( mcu, name, type );
     if( !comp ) return;
 
     mcu->m_modules.emplace_back( comp );
-
     setConfigRegs( e, comp );
 
     QStringList pins = e->attribute( "pins" ).split(",");
@@ -852,6 +854,9 @@ void McuCreator::createSleep( QDomElement* e )
     if     ( m_core == "AVR" ) sleep = new AvrSleep( mcu, name );
     else return;
 
+    mcu->m_modules.emplace_back( sleep );
+    mcu->m_sleepModule = sleep;
+
     setConfigRegs( e, sleep );
 }
 
@@ -887,8 +892,8 @@ void McuCreator::createInterrupt( QDomElement* el )
     Interrupt* iv = NULL;
     if     ( m_core == "8051" )  iv = I51Interrupt::getInterrupt( intName, intVector, mcu );
     else if( m_core == "AVR" )   iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
-    else if( m_core == "Pic14" ) iv = new Interrupt( intName, intVector, mcu );
-    else if( m_core == "Pic14e") iv = new Interrupt( intName, intVector, mcu );
+    else if( m_core == "Pic14" ) iv = new PicInterrupt( intName, intVector, mcu );
+    else if( m_core == "Pic14e") iv = new PicInterrupt( intName, intVector, mcu );
     if( !iv ) return;
 
     mcu->m_interrupts.m_intList.insert( intName, iv );
@@ -922,6 +927,10 @@ void McuCreator::createInterrupt( QDomElement* el )
     {
         QString mode = el->attribute("mode");
         watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode, mcu );
+    }
+    if( el->hasAttribute("wakeup") )
+    {
+        iv->m_wakeup = el->attribute("wakeup").toUInt( 0, 2 );
 }   }
 
 void McuCreator::setInterrupt( QString intName, McuModule* module )
