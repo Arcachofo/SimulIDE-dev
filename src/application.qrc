@@ -86,6 +86,8 @@
         
         <file alias="attach.png">../src/icons/mainwindow/attach.png</file>
         <file alias="detach.png">../src/icons/mainwindow/detach.png</file>
+        
+        <file alias="zoomfit.png">../src/icons/mainwindow/zoomfit.png</file>
     
         <file alias="led.png">../src/icons/components/led.png</file>
         <file alias="ledrgb.png">../src/icons/components/ledrgb.png</file>

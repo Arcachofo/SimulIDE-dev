@@ -27,6 +27,7 @@
 #include "connector.h"
 #include "pin.h"
 
+class CircuitView;
 class Simulator;
 class Node;
 
@@ -38,11 +39,11 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
     Q_OBJECT
 
     public:
-        Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView* parent );
+        Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView* parent );
         ~Circuit();
 
  static Circuit* self() { return m_pSelf; }
-        
+
         bool drawGrid() { return !m_hideGrid; }
         void setDrawGrid( bool draw );
         
@@ -141,9 +142,9 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QString m_backupPath;
         QString m_circType;
 
-        QRect          m_scenerect;
-        QGraphicsView* m_graphicView;
-        Connector*     new_connector;
+        QRect        m_scenerect;
+        CircuitView* m_graphicView;
+        Connector*   new_connector;
 
         double m_circVersion;
 

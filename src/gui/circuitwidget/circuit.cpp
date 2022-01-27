@@ -38,7 +38,7 @@
 
 Circuit* Circuit::m_pSelf = NULL;
 
-Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, QGraphicsView*  parent )
+Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  parent )
        : QGraphicsScene( x, y, width, height, parent )
 {
     m_simulator = new Simulator();
@@ -95,9 +95,8 @@ QString Circuit::getCompId( QString &pinName )
 {
     QStringList list = pinName.split("-");
     if( list.size() < 2 ) return "";
-    //QString pinId  = nameSplit.takeLast();
-    QString compId = list.at( 0 )+"-"+list.at(1);
 
+    QString compId = list.at( 0 )+"-"+list.at(1);
     return compId;
 }
 
@@ -136,12 +135,9 @@ void Circuit::loadCircuit( QString fileName )
         remove();
         for( Node* nod : m_nodeList ) removeComp( nod ); // Clean Nodes
     }else{
-        m_graphicView->centerOn( QPointF(
-            width()/2  + itemsBoundingRect().center().x() - m_graphicView->width()/2,
-            height()/2 + itemsBoundingRect().center().y() - m_graphicView->height()/2 ) );
+        m_graphicView->slotZoomAll();
         qDebug() << "Circuit Loaded: ";
         qDebug() << fileName;
-        //this->addRect( itemsBoundingRect() );
 }   }
 
 void Circuit::loadStrDoc( QString &doc )

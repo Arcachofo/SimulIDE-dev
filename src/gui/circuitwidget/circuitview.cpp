@@ -47,7 +47,7 @@ CircuitView::CircuitView( QWidget *parent )
 
     eDiode::getModels();
 
-    viewport()->setFixedSize( 3200, 2400 );
+    //viewport()->setFixedSize( 3200, 2400 );
     bool scrollBars = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
     if( scrollBars )
     {
@@ -199,19 +199,9 @@ void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )
     if ( m_enterItem )
     {
         m_circuit->removeComp( m_enterItem );
-        m_enterItem = 0l;
+        m_enterItem = NULL;
         Circuit::self()->unSaveState();
 }   }
-
-void CircuitView::resizeEvent( QResizeEvent *event )
-{
-    int width = event->size().width();
-    int height = event->size().height();
-
-    m_circuit->setSceneRect(-width/2+2, -height/2+2, width-4, height-4);
-
-    QGraphicsView::resizeEvent(event);
-}
 
 void CircuitView::mousePressEvent( QMouseEvent* event )
 {
@@ -221,16 +211,15 @@ void CircuitView::mousePressEvent( QMouseEvent* event )
         setDragMode( QGraphicsView::ScrollHandDrag );
 
         QGraphicsView::mousePressEvent( event );
-        //qDebug() << "CircuitView::mousePressEvent"<<event->isAccepted();
+
         if( !event->isAccepted() )
         {
             QMouseEvent eve( QEvent::MouseButtonPress, event->pos(),
                 Qt::LeftButton, Qt::LeftButton, Qt::NoModifier   );
             QGraphicsView::mousePressEvent( &eve );
     }   }
-    else{
-        QGraphicsView::mousePressEvent( event );
-}   }
+    else QGraphicsView::mousePressEvent( event );
+}
 
 void CircuitView::mouseReleaseEvent( QMouseEvent* event )
 {
@@ -241,9 +230,9 @@ void CircuitView::mouseReleaseEvent( QMouseEvent* event )
             Qt::LeftButton, Qt::LeftButton, Qt::NoModifier   );
 
         QGraphicsView::mouseReleaseEvent( &eve );
-    }else{
-        QGraphicsView::mouseReleaseEvent( event );
     }
+    else QGraphicsView::mouseReleaseEvent( event );
+
     viewport()->setCursor( Qt::ArrowCursor );
     setDragMode( QGraphicsView::RubberBandDrag );
 }
@@ -259,6 +248,12 @@ void CircuitView::contextMenuEvent(QContextMenuEvent* event)
         m_eventpoint = mapToScene( event->pos()  );
 
         QMenu menu;
+
+        QAction* ZoomAllAction = menu.addAction( QIcon(":/zoomfit.png"),tr("Zoom to Fit") );
+                connect( ZoomAllAction, SIGNAL( triggered()),
+                                  this, SLOT(slotZoomAll()), Qt::UniqueConnection  );
+
+        menu.addSeparator();
 
         QAction* pasteAction = menu.addAction(QIcon(":/paste.png"),tr("Paste")+"\tCtrl+V");
         connect( pasteAction, SIGNAL( triggered()),
@@ -288,6 +283,12 @@ void CircuitView::contextMenuEvent(QContextMenuEvent* event)
 
         menu.exec( mapFromScene( eventPos ) );
 }   }
+
+void CircuitView::slotZoomAll()
+{
+    QRectF r = m_circuit->itemsBoundingRect();
+    fitInView( r, Qt::KeepAspectRatio );
+}
 
 void CircuitView::importCirc()
 { Circuit::self()->importCirc( m_eventpoint ); }

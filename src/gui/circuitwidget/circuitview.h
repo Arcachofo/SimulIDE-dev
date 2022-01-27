@@ -46,8 +46,6 @@ class CircuitView : public QGraphicsView
 
         void mousePressEvent( QMouseEvent* event );
         void mouseReleaseEvent( QMouseEvent* event );
-
-        void resizeEvent( QResizeEvent* event );
         
         void setCircTime( uint64_t tStep );
 
@@ -57,6 +55,7 @@ class CircuitView : public QGraphicsView
         void saveImage();
         void slotPaste();
         void importCirc();
+        void slotZoomAll();
         
     protected:
         void contextMenuEvent( QContextMenuEvent* event );
