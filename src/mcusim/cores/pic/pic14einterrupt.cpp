@@ -31,7 +31,7 @@ Pic14eInterrupt::Pic14eInterrupt( QString name, uint16_t vector, eMcu* mcu )
 }
 Pic14eInterrupt::~Pic14eInterrupt(){}
 
-void Pic14eInterrupt::execute()
+void Pic14eInterrupt::execute() // Save context
 {
     m_wRegSaved   = *m_wReg;
     m_statusSaved = *m_status;
@@ -41,7 +41,7 @@ void Pic14eInterrupt::execute()
     PicInterrupt::execute();
 }
 
-void Pic14eInterrupt::exitInt() // Exit from this interrupt
+void Pic14eInterrupt::exitInt() // Restore context
 {
     *m_wReg   = m_wRegSaved;
     *m_status = m_statusSaved;

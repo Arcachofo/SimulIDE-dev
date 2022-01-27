@@ -38,10 +38,10 @@ void PicInterrupt::execute()
     Interrupt::execute();
 }
 
-void PicInterrupt::exitInt() // Exit from this interrupt
+void PicInterrupt::exitInt()
 {
     setRegBits( m_GIE );
-    m_interrupts->enableGlobal( 1 );  // Enable interrupts (execute next cycle)
+    m_interrupts->enableGlobal( 1 );  // Enable interrupts
     Interrupt::exitInt();
 }
 

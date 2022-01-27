@@ -152,7 +152,7 @@ bool CircMatrix::solveMatrix()
                 m_eNodeActive = &eNodeActive;
                 
                 if( !factorMatrix( ny, group ) ) return false;
-                if( !luSolve( ny, group ) ) return false;
+                if( !luSolve( ny, group ) )      return false;
 
                 group++;
             }

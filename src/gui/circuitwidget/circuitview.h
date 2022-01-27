@@ -55,7 +55,7 @@ class CircuitView : public QGraphicsView
         void saveImage();
         void slotPaste();
         void importCirc();
-        void slotZoomAll();
+        void zoomToFit();
         
     protected:
         void contextMenuEvent( QContextMenuEvent* event );

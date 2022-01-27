@@ -36,18 +36,18 @@ eLed::~eLed() {}
 
 void eLed::initialize()
 {
-    m_prevStep = 0;
-    m_avgCurrent = 0.0;
-    m_lastCurrent = 0.0;
-    m_intensity = 25;
+    m_prevStep    = 0;
+    m_avgCurrent  = 0.;
+    m_intensity   = 25;
     m_brightness  = 0;
-    m_totalCurrent   = 0;
-    m_lastPeriod = 0;
+    m_totalCurrent = 0;
+    m_lastPeriod   = 0;
 
     m_admit = 1/high_imp;
     m_voltPN  = 0;
     m_current = 0;
     m_lastCurrent = 0;
+    m_lastThCurrent = 0;
 }
 
 void eLed::stamp()

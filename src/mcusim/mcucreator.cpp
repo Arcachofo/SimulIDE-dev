@@ -880,7 +880,7 @@ void McuCreator::createStack( QDomElement* s )
     QString inc = s->attribute("increment");
 
     mcu->cpu->m_spPre = inc.contains("pre");
-    mcu->cpu->m_spInc = ((inc.contains("inc"))?  1:-1);
+    mcu->cpu->m_spInc = inc.contains("inc") ? 1:-1;
 }
 
 void McuCreator::createInterrupt( QDomElement* el )

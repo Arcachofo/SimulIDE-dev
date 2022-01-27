@@ -135,7 +135,7 @@ void Circuit::loadCircuit( QString fileName )
         remove();
         for( Node* nod : m_nodeList ) removeComp( nod ); // Clean Nodes
     }else{
-        m_graphicView->slotZoomAll();
+        m_graphicView->zoomToFit();
         qDebug() << "Circuit Loaded: ";
         qDebug() << fileName;
 }   }

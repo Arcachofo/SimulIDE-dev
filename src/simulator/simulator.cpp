@@ -76,7 +76,7 @@ inline void Simulator::solveMatrix()
     }
     if( !m_matrix->solveMatrix() ) // Try to solve matrix, if not stop simulation
     {
-        qDebug() << "Simulator::solveMatrix(), Failed to solve Matrix";
+        qDebug() << "ERROR: Simulator::solveMatrix(), Failed to solve Matrix";
         m_state = SIM_ERROR;
         m_error = 1;
 }   }                                // m_matrix sets the eNode voltages

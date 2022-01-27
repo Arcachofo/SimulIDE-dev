@@ -249,9 +249,9 @@ void CircuitView::contextMenuEvent(QContextMenuEvent* event)
 
         QMenu menu;
 
-        QAction* ZoomAllAction = menu.addAction( QIcon(":/zoomfit.png"),tr("Zoom to Fit") );
-                connect( ZoomAllAction, SIGNAL( triggered()),
-                                  this, SLOT(slotZoomAll()), Qt::UniqueConnection  );
+        QAction* zoomToFitAction = menu.addAction( QIcon(":/zoomfit.png"),tr("Zoom to Fit") );
+                connect( zoomToFitAction, SIGNAL( triggered()),
+                                    this, SLOT( zoomToFit() ), Qt::UniqueConnection  );
 
         menu.addSeparator();
 
@@ -284,7 +284,7 @@ void CircuitView::contextMenuEvent(QContextMenuEvent* event)
         menu.exec( mapFromScene( eventPos ) );
 }   }
 
-void CircuitView::slotZoomAll()
+void CircuitView::zoomToFit()
 {
     QRectF r = m_circuit->itemsBoundingRect();
     fitInView( r, Qt::KeepAspectRatio );
