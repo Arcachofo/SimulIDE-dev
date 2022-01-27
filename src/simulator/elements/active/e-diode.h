@@ -44,7 +44,8 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         virtual void initialize() override;
         virtual void voltChanged() override;
 
-        virtual void   setRes( double resist )  override { m_resistor->setResSafe( resist ); }
+        virtual void setRes( double r ) override { m_resistor->setRes( r ); }
+        virtual void setResSafe( double r )  override { m_resistor->setResSafe( r ); }
         virtual double res() override { return m_resistor->res(); }
 
         virtual ePin* getEpin( int num ) override;
@@ -65,9 +66,13 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         double maxCurrent() { return m_maxCur; }
         void   setMaxCurrent( double cur ) { m_maxCur = cur; }
 
+        double getCurrent() { return m_resistor->current(); }
+
         QString model() { return m_model; }
         void setModel( QString model );
         void setModelData( diodeData_t data );
+
+        void createSerRes();
 
  static void getModels();
 
@@ -75,7 +80,6 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         double limitStep( double vnew, double scale, double vc );
         void SetParameters( double sc, double ec, double bv, double sr );
         void updateValues();
-        void createSerRes();
 
         bool m_converged;
 

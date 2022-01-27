@@ -145,6 +145,7 @@
         <file alias="relay-spst.png">../src/icons/components/relay-spst.png</file>
         <file alias="voltreg.png">../src/icons/components/voltreg.png</file>
         <file alias="bjt.png">../src/icons/components/bjt.png</file>
+        <file alias="diac.png">../src/icons/components/diac.png</file>
         <file alias="wavegen.png">../src/icons/components/wavegen.png</file>
         <file alias="oscope.png">../src/icons/components/oscope.png</file>
         <file alias="lanalizer.png">../src/icons/components/lanalizer.png</file>

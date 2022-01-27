@@ -67,7 +67,7 @@ new StringProp<Diode>( "Model", tr("Model"),"", this, &Diode::model,  &Diode::se
     addPropGroup( { tr("Electric"), {
 new DoubProp<Diode>( "Threshold" , tr("Forward Voltage"),"V", this, &Diode::threshold,  &Diode::setThreshold ),
 new DoubProp<Diode>( "MaxCurrent", tr("Max Current")    ,"A", this, &Diode::maxCurrent, &Diode::setMaxCurrent ),
-new DoubProp<Diode>( "Resistance", tr("Resistance")     ,"Ω", this, &Diode::res,        &Diode::setRes ),
+new DoubProp<Diode>( "Resistance", tr("Resistance")     ,"Ω", this, &Diode::res,        &Diode::setResSafe ),
     }} );
     addPropGroup( { tr("Advanced"), {
 new DoubProp<Diode>( "BrkDownV"  , tr("Breakdown Voltage")   ,"V" , this, &Diode::brkDownV, &Diode::setBrkDownV ),
@@ -116,18 +116,18 @@ void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
 
     p->setBrush( Qt::black );
 
-    static const QPointF points[3] = {
+ static const QPointF points[3] = {
         QPointF( 7, 0 ),
         QPointF(-8,-7 ),
         QPointF(-8, 7 )              };
-   p->drawPolygon(points, 3);
+    p->drawPolygon(points, 3);
 
-   QPen pen = p->pen();
-   pen.setWidth( 3 );
-   p->setPen( pen );
-   p->drawLine( 7, -6, 7, 6 );
+    QPen pen = p->pen();
+    pen.setWidth( 3 );
+    p->setPen( pen );
+    p->drawLine( 7, -6, 7, 6 );
    
-   if( m_isZener ){
-       p->drawLine( 7,-6, 4,-6 );
-       p->drawLine( 7, 6, 10, 6 );
+    if( m_isZener ){
+        p->drawLine( 7,-6, 4,-6 );
+        p->drawLine( 7, 6, 10, 6 );
 }  }

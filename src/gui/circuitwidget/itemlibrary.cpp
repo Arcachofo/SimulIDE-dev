@@ -41,6 +41,7 @@
 #include "dectobcd.h"
 #include "demux.h"
 #include "dht22.h"
+#include "diac.h"
 #include "diode.h"
 #include "ds1307.h"
 #include "elcapacitor.h"
@@ -189,6 +190,7 @@ void ItemLibrary::loadItems()
     addItem( Zener::libraryItem() );
     addItem( Mosfet::libraryItem() );
     addItem( BJT::libraryItem() );
+    addItem( Diac::libraryItem() );
     addItem( OpAmp::libraryItem() );
     addItem( VoltReg::libraryItem() );
     addItem( MuxAnalog::libraryItem() );
