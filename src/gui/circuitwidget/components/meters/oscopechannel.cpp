@@ -159,7 +159,7 @@ void OscopeChannel::voltChanged()
     }
     double d0 = m_ePin[0]->getVolt();
     double d1 = m_ePin[1]->getVolt();
-    double data = d0+d1;
+    double data = d0-d1;
 
     if( data > m_maxVal ) m_maxVal = data;
     if( data < m_minVal ) m_minVal = data;
