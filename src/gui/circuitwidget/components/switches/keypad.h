@@ -44,7 +44,7 @@ class MAINMODULE_EXPORT KeyPad : public Component, public eElement
         QString keyLabels() { return m_keyLabels; }
         void setKeyLabels( QString keyLabels );
         
-        virtual void stamp() override;
+        virtual void attach() override;
         virtual void remove() override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
