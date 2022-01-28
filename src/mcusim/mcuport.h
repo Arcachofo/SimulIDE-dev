@@ -44,6 +44,8 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
         virtual void pinChanged( uint8_t pinMask, uint8_t val );
 
         void setPullups( uint8_t puMask );
+        void setAllPullups( uint8_t val );
+        void clearAllPullups( uint8_t val );
 
         McuPin* getPinN( uint8_t i );
 

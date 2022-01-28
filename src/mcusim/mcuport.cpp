@@ -101,10 +101,20 @@ void McuPort::readPort( uint8_t )
 void McuPort::setPullups( uint8_t puMask )
 {
     for( int i=0; i<m_numPins; ++i )
-    {
-        bool pinPu = (puMask & 1<<i);// && !m_pins[i]->m_isOut;
-        m_pins[i]->setPullup( pinPu );
-}   }
+        m_pins[i]->setPullup( puMask & 1<<i );
+}
+
+void McuPort::setAllPullups( uint8_t val )
+{
+    uint8_t puMask = val ? 255 : 0;
+    setPullups( puMask );
+}
+
+void McuPort::clearAllPullups( uint8_t val )
+{
+    uint8_t puMask = val ? 0 : 255;
+    setPullups( puMask );
+}
 
 void McuPort::createPins( Mcu* mcuComp, uint8_t pinMask )
 {

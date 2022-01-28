@@ -1,10 +1,14 @@
 <parts>
   <port name="PORTA" pins="8" outreg="PORTA" dirreg="!TRISA"
-        inpmask="11011111" opencol="00010000"
-        clockpins="PORTA6,PORTA7" resetpin="PORTA5">
+                     inpmask="11011111" 
+                     opencol="00010000"
+                     clockpins="PORTA6,PORTA7" 
+                     resetpin="PORTA5">
   </port>
 
-  <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
+  <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" 
+                     pullups="!RBPU" >
+                     
       <interrupt name="PB_INT" mask="11110000"/>
       <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
   </port>

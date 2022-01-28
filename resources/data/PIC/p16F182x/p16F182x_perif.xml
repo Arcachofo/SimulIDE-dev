@@ -5,7 +5,8 @@
   </port>
 
   <port name="PORTB" pins="8" outreg="PORTB,LATB" dirreg="!TRISB"
-        configregsA="ANSELB" configregsB="WPUB" >
+                     configregsA="ANSELB"
+                     pullups="WPUB" >
       <interrupt name="IOC" mask="11111111"/>
       <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
   </port>

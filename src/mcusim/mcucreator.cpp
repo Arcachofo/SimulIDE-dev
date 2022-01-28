@@ -419,9 +419,23 @@ void McuCreator::createPort( QDomElement* p )
     }
     if( p->hasAttribute("pullups") ) // Permanent Pullups
     {
-        uint8_t pullup = p->attribute("pullups").toUInt( 0, 2 );
-        for( int i=0; i<port->m_numPins; ++i )
-            port->m_pins[i]->m_puMask = pullup & 1<<i;
+        QString pullups = p->attribute( "pullups" );
+        bool ok = false;
+        uint8_t pullup = pullups.toUInt( &ok, 2 );
+        if( ok ){
+            for( int i=0; i<port->m_numPins; ++i )
+                port->m_pins[i]->m_puMask = pullup & 1<<i;
+        }else{
+            if( mcu->regExist( pullups ) )
+                watchRegNames( pullups, R_WRITE, port, &McuPort::setPullups, mcu );
+            else{
+                if( pullups.startsWith("!") ){
+                    pullups = pullups.remove( 0,1 );
+                    watchBitNames( pullups, R_WRITE, port, &McuPort::clearAllPullups, mcu );
+                }
+                else watchBitNames( pullups, R_WRITE, port, &McuPort::setAllPullups, mcu );
+            }
+        }
     }
     if( p->hasAttribute("opencol") ) // OPen Drain
     {

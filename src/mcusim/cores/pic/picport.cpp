@@ -35,12 +35,6 @@ void PicPort::configureA( uint8_t newANSEL ) // Analog pins
         m_pins[i]->setAnalog( newANSEL & 1<<i );
 }
 
-void PicPort::configureB( uint8_t newWPU ) // Pullups
-{
-    for( int i=0; i<m_numPins; ++i )
-        m_pins[i]->setPullup( newWPU & 1<<i );
-}
-
 void PicPort::createPins( Mcu* mcuComp, uint8_t pinMask )
 {
     m_pins.resize( m_numPins );
