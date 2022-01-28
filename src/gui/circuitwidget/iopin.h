@@ -43,6 +43,9 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void initialize() override;
         virtual void stamp() override { stampAll(); }
+        virtual void runEvent() override;
+
+        void sheduleState( bool state, uint64_t time );
 
         void stampAll();
         void stampOutput();
@@ -100,6 +103,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         bool m_inpState;
         bool m_outState;
         bool m_stateZ;
+        bool m_nextState;
 
         pinMode_t m_pinMode;
 

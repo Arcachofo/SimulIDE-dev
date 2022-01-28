@@ -254,7 +254,6 @@ void Simulator::startSim( bool paused )
     resetSim();
     setStepsPerSec( m_stepsPS );
     m_state = SIM_STARTING;
-    //addEvent( 0, NULL );
 
     qDebug() <<"\nStarting Circuit Simulation...\n";
 
@@ -393,18 +392,24 @@ void Simulator::clearEventList()
 void Simulator::addEvent( uint64_t time, eElement* el )
 {
     if( m_state < SIM_STARTING ) return;
-    if( !el )
+
+    if( !el ) /// TODELETE
+    {
+        qDebug() << "ERROR: Simulator::addEvent NULL event";
         return;
+    }
 
     time += m_circTime;
     eElement* last  = NULL;
     eElement* event = m_firstEvent;
 
     while( event ){
-        if( time <= event->eventTime ){
-            if( el == event && time == event->eventTime ) return; // Same event at same time: Ignore
-            break;
+        if( el->getId() == event->getId() ) // Same event ERROR
+        {
+            qDebug() << "FATAL ERROR: Simulator::addEvent Repeated event"; /// TODELETE
+            return;
         }
+        if( time <= event->eventTime ) break; // Insert event here
         last  = event;
         event = event->nextEvent;
     }

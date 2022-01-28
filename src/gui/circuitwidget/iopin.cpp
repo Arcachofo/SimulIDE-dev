@@ -62,6 +62,17 @@ void IoPin::initialize()
     setPinMode( m_pinMode );
 }
 
+void IoPin::runEvent()
+{
+    setOutState( m_nextState );
+}
+
+void IoPin::sheduleState( bool state, uint64_t time )
+{
+    m_nextState = state;
+    Simulator::self()->addEvent( time, this );
+}
+
 void IoPin::setPinMode( pinMode_t mode )
 {
     if( m_pinMode == mode ) return;

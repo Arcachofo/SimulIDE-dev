@@ -40,7 +40,6 @@ void TwiModule::initialize()
     m_i2cState  = I2C_IDLE;
     m_lastState = I2C_IDLE;
 
-    m_sheduleSDA = false;
     m_toggleScl  = false;
     m_genCall    = false;
 
@@ -50,26 +49,8 @@ void TwiModule::initialize()
 void TwiModule::stamp()      // Called at Simulation Start
 { /* We are just avoiding eClockedDevice::stamp() call*/ }
 
-void TwiModule::keepClocking()
-{
-    m_toggleScl = true;
-    Simulator::self()->addEvent( m_clockPeriod/2, this );
-}
-
 void TwiModule::runEvent()
 {
-    if( m_sheduleSDA) // Used by Slave to set SDA state at 1/2 Clock
-    {
-        setSDA( m_nextSDA );
-        m_sheduleSDA = false;
-        return;
-    }
-    if( m_sheduleSCL) // Used by Slave to set SDA state at 1/2 Clock
-    {
-        setSCL( m_nextSCL );
-        m_sheduleSCL = false;
-        return;
-    }
     if( m_mode != TWI_MASTER ) return;
 
     updateClock();
@@ -79,21 +60,19 @@ void TwiModule::runEvent()
     {
         setSCL( clkLow );     // High if is LOW, LOW if is HIGH
         m_toggleScl = false;
+        Simulator::self()->addEvent( m_clockPeriod/2, this );
         return;
     }
-    Simulator::self()->addEvent( m_clockPeriod, this );
-    if( m_i2cState == I2C_IDLE ) return;
-
     getSdaState();               // Update state of SDA pin
 
     switch( m_i2cState )
     {
-        case I2C_IDLE: return;
+        case I2C_IDLE: break;
 
         case I2C_STOP:           // Send Stop Condition
         {
             if     (  m_sdaState && clkLow )  setSDA( false ); // Step 1: Lower SDA
-            else if( !m_sdaState && clkLow )  setSCL( true );//keepClocking();  // Step 2: Raise Clock
+            else if( !m_sdaState && clkLow )  setSCL( true );//m_toggleScl = true;  // Step 2: Raise Clock
             else if( !m_sdaState && !clkLow ) setSDA( true );  // Step 3: Raise SDA
             else if(  m_sdaState && !clkLow )                  // Step 4: Operation Finished
             {
@@ -108,7 +87,7 @@ void TwiModule::runEvent()
             else if( m_sdaState ) setSDA( false ); // Step 2: SDA is High, Lower it
             else if( !clkLow )                     // Step 3: SDA Already Low, Lower Clock
             {
-                setSCL( false ); //keepClocking();
+                setSCL( false ); //m_toggleScl = true;
                 setTwiState( TWI_START );
                 m_i2cState = I2C_IDLE;
             }
@@ -121,13 +100,13 @@ void TwiModule::runEvent()
                 readBit();
                 if( m_bitPtr == 8 ) readByte();
             }
-            keepClocking();
+            m_toggleScl = true;
         }break;
 
         case I2C_WRITE :          // We are Writting data
         {
             if( clkLow ) writeBit(); // Set SDA while clk is Low
-            keepClocking();
+            m_toggleScl = true;
         }break;
 
         case I2C_ACK:             // Send ACK
@@ -137,7 +116,7 @@ void TwiModule::runEvent()
                 if( m_sendACK ) setSDA( false);
                 m_i2cState = I2C_ENDACK;
             }
-            keepClocking();
+            m_toggleScl = true;
         }break;
 
         case I2C_ENDACK:         // We sent ACK, release SDA
@@ -150,7 +129,7 @@ void TwiModule::runEvent()
                 setTwiState( twiState );
                 m_i2cState = I2C_IDLE;
             }
-            else keepClocking();
+            else m_toggleScl = true;
         }break;
 
         case I2C_READACK:         // Read ACK
@@ -168,10 +147,13 @@ void TwiModule::runEvent()
                 }
                 else           // ACK after sendind data
                     m_nextState = m_sdaState ? TWI_MTX_DATA_NACK : TWI_MTX_DATA_ACK;
-                keepClocking();
+                m_toggleScl = true;
             }
         }break;
-}   }
+    }
+    uint64_t time = m_toggleScl ? m_clockPeriod/2 : m_clockPeriod;
+    Simulator::self()->addEvent( time, this );
+}
 
 void TwiModule::voltChanged() // Used by slave
 {
@@ -278,7 +260,6 @@ void TwiModule::setMode( twiMode_t mode )
 
     m_mode = mode;
     m_i2cState = I2C_IDLE;
-    m_sheduleSDA = false;
     m_toggleScl  = false;
 }
 
@@ -288,16 +269,12 @@ void TwiModule::getSdaState() { m_sdaState = m_sda->getInpState(); }
 
 void TwiModule::sheduleSDA( bool state )
 {
-    m_sheduleSDA = true;
-    m_nextSDA = state;
-    Simulator::self()->addEvent( m_clockPeriod/4, this );
+    m_sda->sheduleState( state, m_clockPeriod/4 );
 }
 
 void TwiModule::sheduleSCL( bool state )
 {
-    m_sheduleSCL = true;
-    m_nextSCL = state;
-    Simulator::self()->addEvent( m_clockPeriod/4, this );
+    m_scl->sheduleState( state, m_clockPeriod/4 );
 }
 
 void TwiModule::readBit()
