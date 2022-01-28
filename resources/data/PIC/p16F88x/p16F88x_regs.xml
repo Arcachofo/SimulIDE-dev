@@ -144,8 +144,8 @@
                   
         <mapped                  addr="0x186" mapto="0x86"/><!-- TRISB -->
         <register name="BAUDCTL" addr="0x187" bits=""/>
-        <register name="ANSEL"   addr="0x188" reset="11111111" bits=""/>
-        <register name="ANSELH"  addr="0x189" reset="00111111" bits=""/>
+        <register name="ANSEL"   addr="0x188" reset="11111111" />
+        <register name="ANSELH"  addr="0x189" reset="00111111" mask="00111111"/>
         <mapped                  addr="0x18A" mapto="0x0A"/><!-- PCLATH -->
         <mapped                  addr="0x18B" mapto="0x0B"/><!-- INTCON -->
         

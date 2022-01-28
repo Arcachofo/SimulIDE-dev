@@ -1,6 +1,8 @@
 <parts>
-  <port name="PORTP" pins="4" outreg="GPIO" inreg="" dirreg="!TRISGPIO" 
-        inpmask="11110111" resetpin="PORTP3">
+  <port name="PORTP" pins="4" outreg="GPIO" dirreg="!TRISGPIO" 
+                     inpmask="11110111" 
+                     pullups="!GPPU" 
+                     resetpin="PORTP3">
   </port>
 
   <timer name="TIMER0" type="800" configregsA="OPTION"

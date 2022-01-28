@@ -3,9 +3,11 @@
                      clockpins="PORTA6,PORTA7" >
   </port>
 
-  <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB" >
-      <interrupt name="PB_INT" mask="11111111"/>
-      <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
+  <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB"
+                     pullups="WPUB" >
+                     
+    <interrupt name="PB_INT" mask="11111111"/>
+    <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
   </port>
 
   <port name="PORTC" pins="8" outreg="PORTC" dirreg="!TRISC"/>
@@ -40,8 +42,8 @@
   <usart name="USART0"  number="1" configregsA="TXSTA" configregsB="RCSTA"
                         interrupt="USART_T">
 
-      <trunit type="tx" pin="PORTC6" register="TXREG"/>
-      <trunit type="rx" pin="PORTC7" register="RCREG" interrupt="USART_R" />
+    <trunit type="tx" pin="PORTC6" register="TXREG"/>
+    <trunit type="rx" pin="PORTC7" register="RCREG" interrupt="USART_R" />
   </usart>
 
   <vref name="Vref" configregsA="VRCON" pinout="PORTA2"/>
