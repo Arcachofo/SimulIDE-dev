@@ -24,7 +24,7 @@
 #include "iopin.h"
 
 eClockedDevice::eClockedDevice( QString id )
-              : eElement ( id )
+              : eElement( id )
 {
     m_clock   = false;
     m_clkPin  = NULL;

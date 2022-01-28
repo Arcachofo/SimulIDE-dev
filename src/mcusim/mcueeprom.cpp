@@ -23,7 +23,7 @@
 
 McuEeprom::McuEeprom( eMcu* mcu, QString name )
          : McuModule( mcu, name )
-         , eElement( name )
+         , eElement( mcu->getId()+"-"+name )
 {
     m_addressL = NULL;
     m_addressH = NULL;

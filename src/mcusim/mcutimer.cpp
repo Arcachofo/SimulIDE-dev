@@ -27,7 +27,7 @@
 
 McuTimer::McuTimer( eMcu* mcu, QString name )
         : McuPrescaled( mcu, name )
-        , eElement( name )
+        , eElement( mcu->getId()+"-"+name )
 {
     m_number = name.right(1).toInt();
 

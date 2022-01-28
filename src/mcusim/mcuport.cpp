@@ -29,7 +29,7 @@ QHash<QString, McuPort*> McuPort::m_portList;
 
 McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
        : McuModule( mcu, name )
-       , eElement( name )
+       , eElement( mcu->getId()+"-"+name )
 {
     m_numPins = numPins;
 

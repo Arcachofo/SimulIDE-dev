@@ -18,10 +18,11 @@
  ***************************************************************************/
 
 #include "mcutwi.h"
+#include "e_mcu.h"
 
 McuTwi::McuTwi( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
-      , TwiModule( name )
+      , TwiModule( mcu->getId()+"-"+name )
 {
     m_dataReg = NULL;
     m_addrReg = NULL;

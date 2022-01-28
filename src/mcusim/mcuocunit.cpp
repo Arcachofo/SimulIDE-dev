@@ -24,7 +24,7 @@
 
 McuOcUnit::McuOcUnit( eMcu* mcu, QString name )
          : McuModule( mcu, name )
-         , eElement( name )
+         , eElement( mcu->getId()+"-"+name )
 {
     m_timer = NULL;
     m_ocPin = NULL;

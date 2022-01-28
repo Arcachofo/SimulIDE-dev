@@ -18,10 +18,11 @@
  ***************************************************************************/
 
 #include "mcuvref.h"
+#include "e_mcu.h"
 
 McuVref::McuVref( eMcu* mcu, QString name )
        : McuModule( mcu, name )
-       , eElement( name )
+       , eElement( mcu->getId()+"-"+name )
 {
     m_pinOut = NULL;
 }

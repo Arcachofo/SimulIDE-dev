@@ -24,7 +24,7 @@
 
 McuSleep::McuSleep( eMcu* mcu, QString name )
        : McuModule( mcu, name )
-       , eElement( name )
+       , eElement( mcu->getId()+"-"+name )
 {
 }
 McuSleep::~McuSleep(){}

@@ -20,6 +20,7 @@
 #include "usartmodule.h"
 #include "usarttx.h"
 #include "usartrx.h"
+#include "e_mcu.h"
 #include "mcuinterrupts.h"
 #include "circuitwidget.h"
 #include "serialmon.h"

@@ -19,12 +19,13 @@
 
 #include "mcuadc.h"
 #include "mcupin.h"
+#include "e_mcu.h"
 #include "mcuinterrupts.h"
 #include "simulator.h"
 
 McuAdc::McuAdc( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
-      , eElement( name )
+      , eElement( mcu->getId()+"-"+name )
 {
     m_ADCL = NULL;
     m_ADCH = NULL;

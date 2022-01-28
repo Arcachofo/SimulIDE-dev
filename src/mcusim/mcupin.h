@@ -51,7 +51,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         virtual void setPortState( bool state );
 
         void setDirection( bool out );
-        void setPullupMask( bool up ) { m_puMask = up;}
+        //void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
         void controlPin( bool outCtrl , bool dirCtrl );
 

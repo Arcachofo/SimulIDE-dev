@@ -19,10 +19,11 @@
 
 #include "mcuspi.h"
 #include "iopin.h"
+#include "e_mcu.h"
 
 McuSpi::McuSpi( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
-      , SpiModule( name )
+      , SpiModule( mcu->getId()+"-"+name )
 {
 }
 

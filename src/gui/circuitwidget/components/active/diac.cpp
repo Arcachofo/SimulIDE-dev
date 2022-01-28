@@ -113,9 +113,7 @@ void Diac::stamp()
 void Diac::voltChanged()
 {
     double voltage = m_pin[0]->getVolt()-m_pin[1]->getVolt();
-    double current1 = m_diode1->getCurrent();
-    double current2 = m_diode2->getCurrent();
-    double current = current1 - current2;
+    double current = m_diode1->getCurrent() - m_diode2->getCurrent();
     bool state = m_state;
 
     if( abs(current) < m_holdCurr ) state = false;

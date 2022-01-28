@@ -26,7 +26,7 @@
 
 McuUsart::McuUsart( eMcu* mcu, QString name, int number )
         : McuModule( mcu, name )
-        , UsartModule( mcu, name )
+        , UsartModule( mcu, mcu->getId()+"-"+name )
 {
     m_number = number;
 }

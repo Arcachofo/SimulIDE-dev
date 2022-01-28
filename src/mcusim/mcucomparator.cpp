@@ -18,10 +18,11 @@
  ***************************************************************************/
 
 #include "mcucomparator.h"
+#include "e_mcu.h"
 
 McuComp::McuComp( eMcu* mcu, QString name )
        : McuModule( mcu, name )
-       , eElement( name )
+       , eElement( mcu->getId()+"-"+name )
 {
     m_pinP = NULL;
     m_pinN = NULL;

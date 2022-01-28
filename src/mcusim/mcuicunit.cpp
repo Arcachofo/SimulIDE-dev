@@ -21,10 +21,11 @@
 #include "mcutimer.h"
 #include "mcuinterrupts.h"
 #include "mcupin.h"
+#include "e_mcu.h"
 
 McuIcUnit::McuIcUnit( eMcu* mcu, QString name )
          : McuModule( mcu, name )
-         , eElement( name )
+         , eElement( mcu->getId()+"-"+name )
 {
     m_timer  = NULL;
     m_icPin  = NULL;

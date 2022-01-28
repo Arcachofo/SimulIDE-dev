@@ -25,7 +25,7 @@
 
 McuWdt::McuWdt( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
-      , eElement( name )
+      , eElement( mcu->getId()+"-"+name )
 {
     m_enabled  = false;
 }
