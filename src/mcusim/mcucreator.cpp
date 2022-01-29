@@ -574,7 +574,7 @@ void McuCreator::createTimer( QDomElement* t )
             }
             if( el.hasAttribute("bits") ) // This doesn't watch register, configure must be called from Timer
             {
-                ocUnit->m_configBitsA = getRegBits( el.attribute("configbits"), mcu );
+                ocUnit->m_configBitsA = getRegBits( el.attribute("bits"), mcu );
             }
             else setConfigRegs( &el, ocUnit );
 
