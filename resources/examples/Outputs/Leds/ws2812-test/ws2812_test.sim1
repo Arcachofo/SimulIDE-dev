@@ -1,17 +1,11 @@
-<circuit animate="1" type="simulide_0.5" stepSize="1000000" stepsPS="1000000" NLsteps="100000">
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
 
-Unique  Id: WS2812-2: 
-Circuit Id: WS2812-7
-<item id="WS2812-7" objectName="WS2812-2" Rows="11" hflip="1" Unit="  " labely="-24" valLabRot="0" itemtype="WS2812" labelx="-16" labelrot="0" mainComp="false" Cols="40" y="16" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" x="-268" vflip="1"/>
+<item itemtype="WS2812" CircId="WS2812-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-268,16" rotation="0" hflip="1" vflip="1" label="WS2812-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="11 _Leds" Cols="40 _Leds" />
 
-Unique  Id: Uno-1: 
-Circuit Id: Arduino Uno-3
-<item id="Arduino Uno-3" objectName="Uno-1" Name="Uno" hflip="1" Unit="  " labely="-21" valLabRot="0" itemtype="Subcircuit" labelx="100" BoardId="" labelrot="0" Logic_Symbol="false" mainComp="false" y="-272" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="true" x="-92" vflip="1">
-  <mainCompProps Program="ws2812_test.hex" Auto_Load="false" Logic_Symbol="false" Mhz="16" Name="mega328"/>
- </item>
+<item itemtype="Subcircuit" CircId="Uno-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-92,-272" rotation="0" hflip="1" vflip="1" label="Arduino Uno-3" idLabPos="100,-21" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="1_mega328-109" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="1_mega328-109" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="ws2812_test.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
+</item>
 
-Unique  Id: Connector-4: 
-Circuit Id: Connector-8
-<item id="Connector-8" objectName="Connector-4" hflip="1" endpinid="Uno-1-6" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-109" labelrot="0" mainComp="false" y="16" rotation="0" startpinid="WS2812-2-InPin" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-280,16,-312,16,-312,-208,-84,-208" x="-280" vflip="1"/>
- 
+<item itemtype="Connector" uid="Connector-4" startpinid="WS2812-2-InPin" endpinid="Uno-1-6" pointList="-280,16,-312,16,-312,-208,-84,-208" />
+
 </circuit>

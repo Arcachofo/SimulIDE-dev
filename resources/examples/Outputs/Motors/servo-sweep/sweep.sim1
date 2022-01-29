@@ -1,25 +1,25 @@
-<circuit animate="0" type="simulide_0.5" stepSize="1000000" stepsPS="1000000" NLsteps="100000">
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
 
-Unique  Id: Servo-1: 
-Circuit Id: Servo-1
-<item Input_Imped="1e+9" id="Servo-1" objectName="Servo-1" hflip="1" Unit="  " Input_Low_V="2.5" labely="-24" valLabRot="0" itemtype="Servo" labelx="-16" Tpd_ps="10000" Speed="0.2" labelrot="0" mainComp="false" y="-244" rotation="-90" Show_Val="false" valLabelx="0" Tr_ps="3000" valLabely="0" Out_Low_V="0" Show_id="false" Out_High_V="5" Input_High_V="2.5" x="-356" vflip="1" Tf_ps="4000" Out_Imped="40"/>
+<item itemtype="Servo" CircId="Servo-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-244" rotation="-90" hflip="1" vflip="1" label="Servo-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Speed="0.2 _sec/60º" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+9 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-Unique  Id: Uno-2: 
-Circuit Id: Arduino Uno-2
-<item id="Arduino Uno-2" objectName="Uno-2" Name="Uno" hflip="1" Unit="  " labely="-20" valLabRot="0" itemtype="Subcircuit" labelx="0" BoardId="" labelrot="0" Logic_Symbol="false" mainComp="false" y="-284" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="true" x="-268" vflip="1">
-  <mainCompProps Program="Sweep.hex" Auto_Load="false" Logic_Symbol="false" Mhz="16" Name="mega328"/>
- </item>
+<item itemtype="Subcircuit" CircId="Uno-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-268,-284" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="75.3851,214.617" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="2_mega328-109" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="2_mega328-109" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="Sweep.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
+</item>
 
-Unique  Id: Connector-3: 
-Circuit Id: Connector-3
-<item id="Connector-3" objectName="Connector-3" hflip="1" endpinid="Uno-2-9" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-109" labelrot="0" mainComp="false" y="-196" rotation="0" startpinid="Servo-1-in2" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-340,-196,-340,-188,-260,-188" x="-340" vflip="1"/>
+<item itemtype="LAnalizer" CircId="LAnalizer-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-196,-372" rotation="0" hflip="1" vflip="1" label="LAnalizer-8" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="10000000000" TimPos="0" VolDiv="0.6" Tunnels=",,,,,,,," Trigger="9" Treshold="2.5 V" />
 
-Unique  Id: Connector-5: 
-Circuit Id: Connector-4
-<item id="Connector-4" objectName="Connector-5" hflip="1" endpinid="Uno-2-GND2" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-110" labelrot="0" mainComp="false" y="-196" rotation="0" startpinid="Servo-1-in1" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-356,-196,-356,-148,-260,-148" x="-356" vflip="1"/>
+<item itemtype="Node" CircId="Node-10" mainComp="false" Pos="-316,-188" />
 
-Unique  Id: Connector-7: 
-Circuit Id: Connector-5
-<item id="Connector-5" objectName="Connector-7" hflip="1" endpinid="Uno-2-5V0" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-111" labelrot="0" mainComp="false" y="-196" rotation="0" startpinid="Servo-1-in0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="-372,-196,-372,-52,-68,-52,-68,-188,-116,-188" x="-372" vflip="1"/>
- 
+<item itemtype="Connector" uid="Connector-5" startpinid="Servo-1-in1" endpinid="Uno-2-GND2" pointList="-356,-196,-356,-148,-260,-148" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Servo-1-in0" endpinid="Uno-2-5V0" pointList="-372,-196,-372,-44,-68,-44,-68,-188,-116,-188" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Servo-1-in2" endpinid="Node-10-0" pointList="-340,-196,-340,-188,-316,-188" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="LAnalizer-8-Pin0" endpinid="Node-10-1" pointList="-284,-436,-316,-436,-316,-188" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Node-10-2" endpinid="Uno-2-9" pointList="-316,-188,-260,-188" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Uno-2-13" endpinid="LAnalizer-8-Pin1" pointList="-260,-156,-308,-156,-308,-420,-284,-420" />
+
 </circuit>

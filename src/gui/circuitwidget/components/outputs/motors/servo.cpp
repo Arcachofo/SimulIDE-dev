@@ -70,8 +70,8 @@ Servo::Servo( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new DoubProp<Servo>( "Speed", tr("Speed "),"_sec/60º", this, &Servo::speed, &Servo::setSpeed )
     }} );
-    addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
-    addPropGroup( { tr("Edges")   , IoComponent::edgeProps() } );
+    addPropGroup( { tr("Electric"), IoComponent::inputProps() } );
+//    addPropGroup( { tr("Edges")   , IoComponent::edgeProps() } );
 }
 Servo::~Servo(){}
 
@@ -81,11 +81,8 @@ void Servo::stamp()
       & m_inPin[1]->isConnected()
       & m_inPin[2]->isConnected() )
     {
-        eNode* enode = m_inPin[0]->getEnode();  // Gnd pin
-        if( enode ) enode->voltChangedCallback( this );
-
-        enode = m_inPin[1]->getEnode();         // V+ pin
-        if( enode ) enode->voltChangedCallback( this );
+        m_inPin[0]->changeCallBack( this, true );
+        m_inPin[1]->changeCallBack( this, true );
 
         LogicComponent::stamp();
 }   }

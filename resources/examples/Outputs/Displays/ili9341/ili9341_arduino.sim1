@@ -1,33 +1,19 @@
-<circuit animate="1" type="simulide_0.5" stepsPS="1000000" NLsteps="100000" stepSize="1000000">
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
 
-Unique  Id: Uno-2: 
-Circuit Id: Arduino Uno-1
-<item valLabelx="0" Name="Uno" id="Arduino Uno-1" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" vflip="1" objectName="Uno-2" BoardId="" Unit="  " Show_Val="false" labelx="100" y="-244" Logic_Symbol="false" itemtype="Subcircuit" x="-300" labely="-21" rotation="0" Show_id="true">
-  <mainCompProps Program="graphicstest.hex" Mhz="16" Auto_Load="false" Logic_Symbol="false" Name="mega328"/>
- </item>
+<item itemtype="Subcircuit" CircId="Uno-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-300,-244" rotation="0" hflip="1" vflip="1" label="Arduino Uno-1" idLabPos="100,-21" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="2_mega328-109" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="2_mega328-109" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="graphicstest.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
+</item>
 
-Unique  Id: Ili9341-1: 
-Circuit Id: Ili9341-2
-<item valLabelx="0" id="Ili9341-2" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" vflip="1" objectName="Ili9341-1" Unit="  " Show_Val="false" labelx="-32" y="-452" itemtype="Ili9341" x="-376" labely="-180" rotation="0" Show_id="true"/>
+<item itemtype="Ili9341" CircId="Ili9341-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-376,-452" rotation="0" hflip="1" vflip="1" label="Ili9341-2" idLabPos="-32,-180" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-Unique  Id: Connector-5: 
-Circuit Id: Connector-14
-<item valLabelx="0" id="Connector-14" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-292,-132,-408,-132,-408,-268" startpinid="Uno-2-11" vflip="1" objectName="Connector-5" Unit="  " Show_Val="false" labelx="-16" y="-132" enodeid="Circ_eNode-110" itemtype="Connector" x="-292" labely="-24" rotation="0" endpinid="Ili9341-1-PinMosi" Show_id="false"/>
+<item itemtype="Connector" uid="Connector-5" startpinid="Uno-2-11" endpinid="Ili9341-1-PinMosi" pointList="-292,-132,-408,-132,-408,-268" />
 
-Unique  Id: Connector-7: 
-Circuit Id: Connector-15
-<item valLabelx="0" id="Connector-15" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-432,-268,-432,-156,-292,-156" startpinid="Ili9341-1-PinCS" vflip="1" objectName="Connector-7" Unit="  " Show_Val="false" labelx="-16" y="-268" enodeid="Circ_eNode-111" itemtype="Connector" x="-432" labely="-24" rotation="0" endpinid="Uno-2-8" Show_id="false"/>
+<item itemtype="Connector" uid="Connector-7" startpinid="Ili9341-1-PinCS" endpinid="Uno-2-8" pointList="-432,-268,-432,-156,-292,-156" />
 
-Unique  Id: Connector-9: 
-Circuit Id: Connector-20
-<item valLabelx="0" id="Connector-20" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-416,-268,-416,-140,-292,-140" startpinid="Ili9341-1-PinDC" vflip="1" objectName="Connector-9" Unit="  " Show_Val="false" labelx="-16" y="-268" enodeid="Circ_eNode-112" itemtype="Connector" x="-416" labely="-24" rotation="0" endpinid="Uno-2-10" Show_id="false"/>
+<item itemtype="Connector" uid="Connector-9" startpinid="Ili9341-1-PinDC" endpinid="Uno-2-10" pointList="-416,-268,-416,-140,-292,-140" />
 
-Unique  Id: Connector-11: 
-Circuit Id: Connector-16
-<item valLabelx="0" id="Connector-16" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-292,-148,-424,-148,-424,-268" startpinid="Uno-2-9" vflip="1" objectName="Connector-11" Unit="  " Show_Val="false" labelx="-16" y="-148" enodeid="Circ_eNode-113" itemtype="Connector" x="-292" labely="-24" rotation="0" endpinid="Ili9341-1-PinRst" Show_id="false"/>
+<item itemtype="Connector" uid="Connector-11" startpinid="Uno-2-9" endpinid="Ili9341-1-PinRst" pointList="-292,-148,-424,-148,-424,-268" />
 
-Unique  Id: Connector-13: 
-Circuit Id: Connector-13
-<item valLabelx="0" id="Connector-13" valLabely="0" labelrot="0" mainComp="false" valLabRot="0" hflip="1" pointList="-400,-268,-400,-116,-292,-116" startpinid="Ili9341-1-PinSck" vflip="1" objectName="Connector-13" Unit="  " Show_Val="false" labelx="-16" y="-268" enodeid="Circ_eNode-114" itemtype="Connector" x="-400" labely="-24" rotation="0" endpinid="Uno-2-13" Show_id="false"/>
- 
+<item itemtype="Connector" uid="Connector-13" startpinid="Ili9341-1-PinSck" endpinid="Uno-2-13" pointList="-400,-268,-400,-116,-292,-116" />
+
 </circuit>

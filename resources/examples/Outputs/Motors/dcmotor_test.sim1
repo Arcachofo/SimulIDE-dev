@@ -1,39 +1,21 @@
-<circuit animate="0" type="simulide_0.5" stepSize="1000000" NLsteps="100000" stepsPS="1000000">
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
 
-Unique  Id: DcMotor-1: 
-Circuit Id: DcMotor-1
-<item Unit=" Ω" labelx="-22" mainComp="false" Volt_Nominal="5" labely="-48" x="-316" id="DcMotor-1" objectName="DcMotor-1" hflip="1" rotation="0" valLabely="0" y="-292" RPM_Nominal="60" Resistance="100" itemtype="DcMotor" vflip="1" labelrot="0" Show_id="true" Show_Val="false" valLabRot="0" valLabelx="0"/>
+<item itemtype="DcMotor" CircId="DcMotor-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-292" rotation="0" hflip="1" vflip="1" label="DcMotor-1" idLabPos="-22,-48" labelrot="0" valLabPos="0,0" valLabRot="0" RPM_Nominal="60 _RPM" Volt_Nominal="5 V" Resistance="100 Ω" />
 
-Unique  Id: Ground-3: 
-Circuit Id: Ground-4
-<item Unit="  " labelx="-16" mainComp="false" labely="8" x="-244" id="Ground-4" objectName="Ground-3" hflip="1" rotation="0" valLabely="0" y="-252" itemtype="Ground" vflip="1" labelrot="0" Show_id="false" Show_Val="false" valLabRot="0" valLabelx="0"/>
+<item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-244,-252" rotation="0" hflip="1" vflip="1" label="Ground-4" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-Unique  Id: Rail-9: 
-Circuit Id: Rail-9
-<item Unit=" V" labelx="-16" mainComp="false" labely="-24" x="-468" id="Rail-9" objectName="Rail-9" hflip="1" rotation="0" valLabely="8" y="-360" itemtype="Rail" vflip="1" labelrot="0" Show_id="false" Show_Val="true" valLabRot="0" Voltage="5" valLabelx="-16"/>
+<item itemtype="Rail" CircId="Rail-9" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-468,-360" rotation="0" hflip="1" vflip="1" label="Rail-9" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
 
-Unique  Id: Rail-10: 
-Circuit Id: Rail-10
-<item Unit=" V" labelx="-16" mainComp="false" labely="-24" x="-468" id="Rail-10" objectName="Rail-10" hflip="1" rotation="0" valLabely="8" y="-220" itemtype="Rail" vflip="1" labelrot="0" Show_id="false" Show_Val="true" valLabRot="0" Voltage="-5" valLabelx="-16"/>
+<item itemtype="Rail" CircId="Rail-10" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-468,-220" rotation="0" hflip="1" vflip="1" label="Rail-10" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="-5 V" />
 
-Unique  Id: Switch-11: 
-Circuit Id: Switch-11
-<item Unit="  " labelx="-16" mainComp="false" labely="-24" DT="true" x="-400" id="Switch-11" objectName="Switch-11" hflip="1" rotation="-180" valLabely="0" y="-292" Key="" itemtype="Switch" vflip="1" labelrot="0" Show_id="false" Poles="1" Show_Val="false" valLabRot="0" valLabelx="0" Norm_Close="false"/>
+<item itemtype="Switch" CircId="Switch-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-292" rotation="-180" hflip="1" vflip="1" label="Switch-11" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Poles" />
 
-Unique  Id: Connector-6: 
-Circuit Id: Connector-5
-<item Unit="  " labelx="-16" mainComp="false" labely="-24" x="-276" id="Connector-5" objectName="Connector-6" hflip="1" rotation="0" valLabely="0" y="-292" enodeid="Circ_eNode-12" itemtype="Connector" vflip="1" labelrot="0" Show_id="false" endpinid="Ground-3-Gnd" startpinid="DcMotor-1-rPin" pointList="-276,-292,-244,-292,-244,-268" Show_Val="false" valLabRot="0" valLabelx="0"/>
+<item itemtype="Connector" uid="Connector-6" startpinid="DcMotor-1-rPin" endpinid="Ground-3-Gnd" pointList="-276,-292,-244,-292,-244,-268" />
 
-Unique  Id: Connector-12: 
-Circuit Id: Connector-12
-<item Unit="  " labelx="-16" mainComp="false" labely="-24" x="-384" id="Connector-12" objectName="Connector-12" hflip="1" rotation="0" valLabely="0" y="-292" enodeid="Circ_eNode-13" itemtype="Connector" vflip="1" labelrot="0" Show_id="false" endpinid="DcMotor-1-lPin" startpinid="Switch-11-pinP0" pointList="-384,-292,-356,-292" Show_Val="false" valLabRot="0" valLabelx="0"/>
+<item itemtype="Connector" uid="Connector-12" startpinid="Switch-11-pinP0" endpinid="DcMotor-1-lPin" pointList="-384,-292,-356,-292" />
 
-Unique  Id: Connector-13: 
-Circuit Id: Connector-13
-<item Unit="  " labelx="-16" mainComp="false" labely="-24" x="-452" id="Connector-13" objectName="Connector-13" hflip="1" rotation="0" valLabely="0" y="-360" enodeid="Circ_eNode-14" itemtype="Connector" vflip="1" labelrot="0" Show_id="false" endpinid="Switch-11-switch0pinN" startpinid="Rail-9-outnod" pointList="-452,-360,-452,-292,-416,-292" Show_Val="false" valLabRot="0" valLabelx="0"/>
+<item itemtype="Connector" uid="Connector-13" startpinid="Rail-9-outnod" endpinid="Switch-11-switch0pinN" pointList="-452,-360,-452,-292,-416,-292" />
 
-Unique  Id: Connector-14: 
-Circuit Id: Connector-14
-<item Unit="  " labelx="-16" mainComp="false" labely="-24" x="-416" id="Connector-14" objectName="Connector-14" hflip="1" rotation="0" valLabely="0" y="-284" enodeid="Circ_eNode-15" itemtype="Connector" vflip="1" labelrot="0" Show_id="false" endpinid="Rail-10-outnod" startpinid="Switch-11-switch1pinN" pointList="-416,-284,-452,-284,-452,-220" Show_Val="false" valLabRot="0" valLabelx="0"/>
- 
+<item itemtype="Connector" uid="Connector-14" startpinid="Switch-11-switch1pinN" endpinid="Rail-10-outnod" pointList="-416,-284,-452,-284,-452,-220" />
+
 </circuit>

@@ -43,7 +43,7 @@ void eLed::initialize()
     m_totalCurrent = 0;
     m_lastPeriod   = 0;
 
-    m_admit = 1/high_imp;
+    m_admit = 1e-9;
     m_voltPN  = 0;
     m_current = 0;
     m_lastCurrent = 0;
@@ -66,7 +66,7 @@ void eLed::voltChanged()
     m_voltPN = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
 
     double ThCurrent = m_current = 0;
-    double admit = cero_doub;
+    double admit = 1e-9;
 
     double deltaV = m_voltPN-m_threshold;
     if( deltaV > -1e-12 )   // Conducing

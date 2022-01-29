@@ -31,9 +31,14 @@
 AvrCore::AvrCore( eMcu* mcu )
        : McuCore( mcu )
 {
-    EIND  = m_mcu->getReg( "EIND" );
-    RAMPZ = m_mcu->getReg( "RAMPZ" );
-    m_rampzAddr = m_mcu->getRegAddress( "RAMPZ" );
+    if( mcu->regExist("EIND") ) EIND = m_mcu->getReg( "EIND" );
+    else EIND = NULL;
+    if( mcu->regExist("RAMPZ") )
+    {
+        RAMPZ = m_mcu->getReg( "RAMPZ" );
+        m_rampzAddr = m_mcu->getRegAddress( "RAMPZ" );
+    }
+    else RAMPZ = NULL;
 }
 AvrCore::~AvrCore() {}
 
@@ -407,9 +412,14 @@ void AvrCore::runDecoder()
                     int e = instruction & 0x10;
                     int p = instruction & 0x100;
                     uint32_t z = m_dataMem[R_ZL] | (m_dataMem[R_ZH] << 8);
-                    if( e ) z |= *EIND << 16;
-                    if( p )
-                    {
+                    if( e ){
+                        if( !EIND ){
+                            qDebug() << "ERROR: AVR Invalid instruction: EICALL with no EIND";
+                            break;
+                        }
+                        z |= *EIND << 16;
+                    }
+                    if( p ){
                         PUSH_STACK( new_pc );
                         cycle += m_progAddrSize-1;
                     }
@@ -434,7 +444,10 @@ void AvrCore::runDecoder()
                     m_dataMem[0] = prgData & 0xFF;
                 }    break;
                 case 0x95d8: {    // ELPM -- Load Program Memory R0 <-( Z) -- 1001 0101 1101 1000
-                    if( !RAMPZ) qDebug() << "ERROR: AVR Invalid instruction: ELPM with no RAMPZ";//_avr_invalid_instruction(avr);
+                    if( !RAMPZ){
+                        qDebug() << "ERROR: AVR Invalid instruction: ELPM with no RAMPZ";
+                        break;
+                    }
                     uint32_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8) | (*RAMPZ << 16);
                     uint16_t prgData = m_progMem[z/2];
                     if( z&1 ) prgData >>= 8;
@@ -463,7 +476,10 @@ void AvrCore::runDecoder()
                         }    break;
                         case 0x9006:
                         case 0x9007: {    // ELPM -- Extended Load Program Memory -- 1001 000d dddd 01oo
-                            //if( !rampz) _avr_invalid_instruction(avr);
+                            if( !RAMPZ){
+                                qDebug() << "ERROR: AVR Invalid instruction: ELPM with no RAMPZ";
+                                break;
+                            }
                             uint16_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8) | (*RAMPZ << 16);
                             get_d5( instruction );
                             int op = instruction & 1;

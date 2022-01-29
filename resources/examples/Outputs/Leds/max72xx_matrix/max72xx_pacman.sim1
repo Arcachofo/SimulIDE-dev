@@ -1,25 +1,15 @@
-<circuit type="simulide_0.5" NLsteps="100000" animate="0" stepsPS="1000000" stepSize="1000000">
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
 
-Unique  Id: Max72xx_matrix-2: 
-Circuit Id: Max72xx_matrix-2
-<item valLabely="0" Tr_ps="3000" Input_Low_V="2.5" id="Max72xx_matrix-2" Out_Imped="40" hflip="1" Input_Imped="1e+9" Show_Val="false" labely="-58" Out_High_V="5" itemtype="Max72xx_matrix" labelx="-32" x="-344" mainComp="false" labelrot="0" Show_id="true" Unit="  " Tpd_ps="10000" y="-64" valLabRot="0" NumDisplays="4" Tf_ps="4000" rotation="0" valLabelx="0" objectName="Max72xx_matrix-2" Input_High_V="2.5" vflip="1" Out_Low_V="0"/>
+<item itemtype="Max72xx_matrix" CircId="Max72xx_matrix-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-344,-64" rotation="0" hflip="1" vflip="1" label="Max72xx_matrix-2" idLabPos="-32,-58" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="4 _8x8 Led" />
 
-Unique  Id: Mega-1: 
-Circuit Id: Arduino Mega-1
-<item valLabely="0" Logic_Symbol="false" Name="Mega" id="Arduino Mega-1" hflip="1" Show_Val="false" labely="-14" itemtype="Subcircuit" labelx="46" x="-392" mainComp="false" labelrot="0" Show_id="true" Unit="  " y="-76" valLabRot="0" BoardId="" rotation="90" valLabelx="0" objectName="Mega-1" vflip="1">
-  <mainCompProps Mhz="16" Program="MD_MAX72xx_Pacman.hex" Auto_Load="false" Logic_Symbol="false" Name="mega2560"/>
- </item>
+<item itemtype="Subcircuit" CircId="Mega-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-392,-76" rotation="90" hflip="1" vflip="1" label="Arduino Mega-1" idLabPos="46,-14" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="1_mega2560-63" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="1_mega2560-63" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="MD_MAX72xx_Pacman.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="false" Wdt_enabled="false" />
+</item>
 
-Unique  Id: Connector-3: 
-Circuit Id: Connector-3
-<item pointList="-356,16,-356,-12" valLabely="0" id="Connector-3" hflip="1" Show_Val="false" labely="-24" itemtype="Connector" startpinid="Mega-1-10" labelx="-16" x="-356" mainComp="false" labelrot="0" Show_id="false" endpinid="Max72xx_matrix-2PinCS" Unit="  " y="16" valLabRot="0" rotation="0" valLabelx="0" objectName="Connector-3" vflip="1" enodeid="Circ_eNode-317"/>
+<item itemtype="Connector" uid="Connector-3" startpinid="Mega-1-10" endpinid="Max72xx_matrix-2PinCS" pointList="-356,16,-356,-12" />
 
-Unique  Id: Connector-4: 
-Circuit Id: Connector-4
-<item pointList="-364,-12,-364,16" valLabely="0" id="Connector-4" hflip="1" Show_Val="false" labely="-24" itemtype="Connector" startpinid="Max72xx_matrix-2PinDin" labelx="-16" x="-364" mainComp="false" labelrot="0" Show_id="false" endpinid="Mega-1-11" Unit="  " y="-12" valLabRot="0" rotation="0" valLabelx="0" objectName="Connector-4" vflip="1" enodeid="Circ_eNode-318"/>
+<item itemtype="Connector" uid="Connector-4" startpinid="Max72xx_matrix-2PinDin" endpinid="Mega-1-11" pointList="-364,-12,-364,16" />
 
-Unique  Id: Connector-5: 
-Circuit Id: Connector-5
-<item pointList="-380,16,-380,-4,-372,-4,-372,-12" valLabely="0" id="Connector-5" hflip="1" Show_Val="false" labely="-24" itemtype="Connector" startpinid="Mega-1-13" labelx="-16" x="-380" mainComp="false" labelrot="0" Show_id="false" endpinid="Max72xx_matrix-2PinSck" Unit="  " y="16" valLabRot="0" rotation="0" valLabelx="0" objectName="Connector-5" vflip="1" enodeid="Circ_eNode-319"/>
- 
+<item itemtype="Connector" uid="Connector-5" startpinid="Mega-1-13" endpinid="Max72xx_matrix-2PinSck" pointList="-380,16,-380,-4,-372,-4,-372,-12" />
+
 </circuit>

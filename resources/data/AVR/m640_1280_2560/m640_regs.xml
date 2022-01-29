@@ -89,6 +89,7 @@
                bits="IVCE,IVSEL,0,0,PUD,0,0,JTD" />
                
     <register  name="SPMCSR"  addr="0x0037" bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,SIGRD,RWWSB,SPMIE" />
+    <register  name="RAMPZ"   addr="0x003B" bits="RAMPZ0,RAMPZ1,0,0,0,0,0,0" />
     <register  name="EIND"    addr="0x003C" bits="EIND0,0,0,0,0,0,0,0" />
     <register  name="SPL"     addr="0x003D" bits="" />
     <register  name="SPH"     addr="0x003E" bits="" />

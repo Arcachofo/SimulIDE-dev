@@ -543,7 +543,7 @@ void McuCreator::createTimer( QDomElement* t )
         {
             QString ocName = el.attribute("name");
             McuOcUnit* ocUnit = NULL;
-            if     ( m_core == "AVR" )   ocUnit = new AvrOcUnit( mcu, ocName );
+            if     ( m_core == "AVR" ) ocUnit = new AvrOcUnit( mcu, ocName );
             //else if( m_core == "Pic14" ) ocUnit = new PicOcUnit( mcu, el.attribute("name") );
             if( !ocUnit ) { node = node.nextSibling(); continue; }
 

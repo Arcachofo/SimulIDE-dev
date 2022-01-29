@@ -28,7 +28,6 @@ eNode::eNode( QString id )
     m_id = id;
     m_nodeNum = 0;
     m_numCons = 0;
-    m_volt    = 0;
 
     initialize();
 
