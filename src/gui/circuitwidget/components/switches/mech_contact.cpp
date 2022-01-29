@@ -106,8 +106,8 @@ void MechContact::SetupSwitches( int poles, int throws )
 {
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    if( m_pin0  == 0 ) m_area = QRectF( -12,-16*poles, 24, 16*poles );            // Switches
-    else               m_area = QRectF( -12, -8-16*poles-4, 24, 8+16*poles+8+4 ); // Relays
+    if( m_pin0  == 0 ) m_area = QRectF( -12, 8-16*poles,  24,  16*poles-8 );            // Switches
+    else               m_area = QRectF( -12,-8-16*poles-4, 24, 8+16*poles+8+4 ); // Relays
     int start = m_pin0/2;
 
     for( uint i=0; i<m_switches.size(); i++ ) delete m_switches[i];
@@ -215,9 +215,9 @@ void MechContact::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QW
     }
     if( m_numPoles > 1 )
     {
-        pen.setStyle(Qt::DashLine);
-        pen.setWidth(1);
-        p->setPen(pen);
-        p->drawLine(-0, 4-4*m_pin0, 0, -3*m_pin0-16*m_numPoles+4 );
+        pen.setStyle( Qt::DashLine );
+        pen.setWidth( 1 );
+        p->setPen( pen );
+        p->drawLine( 0, 4-4*m_pin0, 0, -3*m_pin0-16*m_numPoles+8 );
 }   }
 
