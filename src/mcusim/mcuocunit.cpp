@@ -108,5 +108,5 @@ void McuOcUnit::ocrWriteH( uint8_t val )
 {
     m_comMatch = (m_comMatch & 0x00FF) | (uint16_t)val<<8;
     //m_timer->updtCount();
-    sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
+    //sheduleEvents( m_timer->ovfMatch(), m_timer->getCount() );
 }

@@ -570,7 +570,7 @@ void McuCreator::createTimer( QDomElement* t )
                 ocUnit->m_ocRegH = ocRegH;
                 if( ocName.endsWith("A") ) timer->m_topReg0H = ocRegH;
                 /// Low byte triggers red/write operations
-                ///watchRegNames( highByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteH, mcu );
+                watchRegNames( highByte, R_WRITE, ocUnit, &McuOcUnit::ocrWriteH, mcu );
             }
             if( el.hasAttribute("bits") ) // This doesn't watch register, configure must be called from Timer
             {
