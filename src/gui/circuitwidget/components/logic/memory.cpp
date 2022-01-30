@@ -146,7 +146,8 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     if( oe != m_oe )
     {
         m_oe = oe;
-        for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !oe ); //enableOutputs( oe );
+        /// for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !oe );
+        enableOutputs( oe );
     }
 
     m_address = 0;
@@ -160,7 +161,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     if( WE )                                // Write
     {
         for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( input );
-        Simulator::self()->addEvent( 1, NULL );
+        /// Simulator::self()->addEvent( 1, NULL );
 
         m_read = false;
         Simulator::self()->addEvent( m_propDelay, this );

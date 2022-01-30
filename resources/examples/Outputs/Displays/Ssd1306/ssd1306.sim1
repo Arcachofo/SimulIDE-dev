@@ -1,0 +1,27 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Subcircuit" CircId="Uno-1" mainComp="false" Show_id="true" Show_Val="false" Pos="148,-548" rotation="0" hflip="1" vflip="1" label="Uno-1" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="1_mega328-109" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="1_mega328-109" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="ssd1306_i2c.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
+</item>
+
+<item itemtype="Ssd1306" CircId="Ssd1306-2" mainComp="false" Show_id="true" Show_Val="false" Pos="372,-596" rotation="0" hflip="1" vflip="1" label="Ssd1306-2" idLabPos="-32,-60" labelrot="0" valLabPos="-16,20" valLabRot="0" Color="White" Control_Code="60" Frequency="100 _KHz" />
+
+<item itemtype="Oscope" CircId="Oscope-3" mainComp="false" Show_id="false" Show_Val="false" Pos="428,-460" rotation="0" hflip="1" vflip="1" label="Oscope-3" idLabPos="-90,-100" labelrot="0" valLabPos="-16,20" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="1000000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="4" Filter="0.1 V" Trigger="4" AutoSC="4" Tracks="2" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="Node" CircId="Node-5" mainComp="false" Pos="324,-532" />
+
+<item itemtype="Node" CircId="Node-9" mainComp="false" Pos="332,-524" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="Uno-1-A5" endpinid="Node-5-0" pointList="300,-532,324,-532" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="Node-5-2" endpinid="Ssd1306-2-PinSck" pointList="324,-532,324,-548" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Node-5-1" endpinid="Oscope-3-Pin1" pointList="324,-532,324,-476,340,-476" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Uno-1-A4" endpinid="Node-9-0" pointList="300,-524,332,-524" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Node-9-2" endpinid="Ssd1306-2-PinSda" pointList="332,-524,332,-548" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Node-9-1" endpinid="Oscope-3-Pin0" pointList="332,-524,332,-508,340,-508" />
+
+</circuit>

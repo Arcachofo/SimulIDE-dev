@@ -1,0 +1,21 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Probe" CircId="Probe-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-204,-164" rotation="-45" hflip="1" vflip="1" label="Probe-1" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-316,-164" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-92,-44" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Resistor" CircId="Resistor-4" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-148,-148" rotation="0" hflip="1" vflip="1" label="Resistor-4" idLabPos="-16,-24" labelrot="0" valLabPos="-18,8" valLabRot="0" Resistance="100 Ω" />
+
+<item itemtype="Led" CircId="Led-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-148" rotation="0" hflip="1" vflip="1" label="Led-5" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="false" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="0.6 Ω" />
+
+<item itemtype="Voltage Source" CircId="Volt. Source-6" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-376,-164" rotation="0" hflip="1" vflip="1" label="Volt. Source-6" idLabPos="-16,-24" labelrot="0" valLabPos="-5,30" valLabRot="0" MaxValue="5 V" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Volt. Source-6-outPin" endpinid="Led-5-lPin" pointList="-348,-148,-276,-148" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Led-5-rPin" endpinid="Resistor-4-lPin" pointList="-244,-148,-164,-148" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Resistor-4-rPin" endpinid="Ground (0 V)-3-Gnd" pointList="-132,-148,-92,-148,-92,-60" />
+
+</circuit>

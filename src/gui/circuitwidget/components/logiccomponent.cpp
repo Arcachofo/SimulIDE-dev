@@ -110,7 +110,7 @@ void LogicComponent::setTriggerStr( QString t )
 void LogicComponent::enableOutputs( bool en )
 {
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !en );
-    Simulator::self()->addEvent( 1, NULL );
+    /// Simulator::self()->addEvent( 1, NULL );
 }
 
 void LogicComponent::setInputHighV( double volt )

@@ -269,7 +269,7 @@ void TwiModule::getSdaState() { m_sdaState = m_sda->getInpState(); }
 
 void TwiModule::sheduleSDA( bool state )
 {
-    m_sda->sheduleState( state, 100000 );
+    m_sda->sheduleState( state, 10000 );
 }
 
 void TwiModule::readBit()

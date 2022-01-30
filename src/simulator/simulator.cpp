@@ -149,16 +149,16 @@ void Simulator::runCircuit()
     uint64_t   endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
     uint64_t nextTime;
 
-    while( event ){                        // Simulator event loop
+    while( event ){                             // Simulator event loop
         if( event->eventTime > endRun ) break;  // All events for this Timer Tick are done
 
         nextTime = m_circTime;
-        while( m_circTime == nextTime )    // Run all event with same timeStamp
+        while( m_circTime == nextTime )         // Run all event with same timeStamp
         {
             m_circTime = event->eventTime;
-            m_firstEvent = event->nextEvent; // free Event
+            m_firstEvent = event->nextEvent;    // free Event
             event->nextEvent = NULL;
-            event->runEvent(); // Run event callback
+            event->runEvent();                  // Run event callback
             event = m_firstEvent;
             if( event ) nextTime = event->eventTime;
             else break;
@@ -173,33 +173,38 @@ void Simulator::runCircuit()
 
 void Simulator::solveCircuit()
 {
-    if( m_changedNode ) solveMatrix();
-    if( m_state < SIM_RUNNING ) return;
-
-    m_converged = m_nonLin==NULL;
-    while( !m_converged )                  // Non Linear Components
+    while( m_changedNode )
     {
-        m_converged = true;
-        while( m_nonLin ){
-            m_nonLin->added = false;
-            m_nonLin->voltChanged();
-            m_nonLin = m_nonLin->nextChanged;
+        solveMatrix();
+        if( m_state < SIM_RUNNING ) return;
+
+        m_converged = m_nonLin==NULL;
+        while( !m_converged )                  // Non Linear Components
+        {
+            m_converged = true;
+            while( m_nonLin ){
+                m_nonLin->added = false;
+                m_nonLin->voltChanged();
+                m_nonLin = m_nonLin->nextChanged;
+            }
+            if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )  // Max iterations reached
+            { m_warning = 1; m_converged = true; break; }
+            if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
+
+            if( m_changedNode ) solveMatrix();
+            if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
         }
-        if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )
-        { m_warning = 1; m_converged = true; break; } // Max iterations reached
-        if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
-        if( m_changedNode ) solveMatrix();
-        if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
-    }
-    if( !m_converged ) return; // Don't run linear until nonliear converged
+        if( !m_converged ) return;                // Don't run linear until nonliear converged (Loop broken)
 
-    m_NLstep = 0;
-    while( m_voltChanged )
-    {
-        m_voltChanged->added = false;
-        m_voltChanged->voltChanged();
-        m_voltChanged = m_voltChanged->nextChanged;
-}   }
+        m_NLstep = 0;
+        while( m_voltChanged )
+        {
+            m_voltChanged->added = false;
+            m_voltChanged->voltChanged();
+            m_voltChanged = m_voltChanged->nextChanged;
+        }
+    }
+}
 
 void Simulator::resetSim()
 {
@@ -398,16 +403,22 @@ void Simulator::addEvent( uint64_t time, eElement* el )
         qDebug() << "ERROR: Simulator::addEvent NULL event";
         return;
     }
+    QString elId = el->getId();
 
     time += m_circTime;
     eElement* last  = NULL;
     eElement* event = m_firstEvent;
 
     while( event ){
-        if( el->getId() == event->getId() ) // Same event ERROR
+        if( elId == event->getId() ) // Same event ERROR
         {
-            qDebug() << "FATAL ERROR: Simulator::addEvent Repeated event"; /// TODELETE
-            return;
+            if( time == event->eventTime ) return; // Same Time
+            qDebug() << "ERROR: Simulator::addEvent Repeated event"<<elId; /// TODELETE
+            qDebug() << event->eventTime << time;
+            event = event->nextEvent;
+            if( !event ) break;
+            if( last ) last->nextEvent = event;
+            //return;
         }
         if( time <= event->eventTime ) break; // Insert event here
         last  = event;

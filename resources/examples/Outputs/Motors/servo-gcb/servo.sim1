@@ -1,49 +1,27 @@
-<circuit animate="0" type="simulide_0.5" stepSize="1000000" stepsPS="1000000" NLsteps="100000">
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
 
-Unique  Id: Potentiometer-4: 
-Circuit Id: Position
-<item Value_Ohm="2165" Resistance="5" id="Position" objectName="Potentiometer-4" hflip="1" Unit=" kΩ" labely="-44" valLabRot="-360" itemtype="Potentiometer" labelx="-21" labelrot="0" mainComp="false" y="-412" rotation="0" Show_Val="true" valLabelx="19" valLabely="-15" Show_id="true" x="764" vflip="1"/>
+<item itemtype="Potentiometer" CircId="Potentiometer-4" mainComp="false" ShowProp="Resistance" Show_id="true" Show_Val="true" Pos="764,-412" rotation="0" hflip="1" vflip="1" label="Position" idLabPos="-21,-44" labelrot="0" valLabPos="19,-15" valLabRot="-360" Resistance="5 kΩ" Value_Ohm="2305 Ω" />
 
-Unique  Id: Servo-3: 
-Circuit Id: Servo
-<item Input_Imped="1e+9" id="Servo" objectName="Servo-3" hflip="1" Unit="  " Input_Low_V="2.5" labely="-39" valLabRot="0" itemtype="Servo" labelx="-38" Tpd_ps="10000" Speed="0.2" labelrot="0" mainComp="false" y="-396" rotation="-90" Show_Val="false" valLabelx="0" Tr_ps="3000" valLabely="0" Out_Low_V="0" Show_id="true" Out_High_V="5" Input_High_V="2.5" x="484" vflip="1" Tf_ps="4000" Out_Imped="40"/>
+<item itemtype="Servo" CircId="Servo-3" mainComp="false" Show_id="true" Show_Val="false" Pos="484,-396" rotation="-90" hflip="1" vflip="1" label="Servo" idLabPos="-38,-39" labelrot="0" valLabPos="0,0" valLabRot="0" Speed="0.2 _sec/60º" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+9 Ω" />
 
-Unique  Id: Uno-2: 
-Circuit Id: Arduino Uno
-<item id="Arduino Uno" objectName="Uno-2" Name="Uno" hflip="1" Unit="  " labely="-17" valLabRot="0" itemtype="Subcircuit" labelx="51" BoardId="" labelrot="0" Logic_Symbol="false" mainComp="false" y="-396" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="true" x="564" vflip="1">
-  <mainCompProps Program="gcb_code/servo.hex" Auto_Load="false" Logic_Symbol="false" Mhz="16" Name="mega328"/>
- </item>
+<item itemtype="Subcircuit" CircId="Uno-2" mainComp="false" Show_id="true" Show_Val="false" Pos="564,-396" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="51,-17" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="2_mega328-109" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="2_mega328-109" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="gcb_code/servo.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
+</item>
 
-Unique  Id: Node-1: 
-Circuit Id: Node-1
-<item id="Node-1" objectName="Node-1" hflip="1" Unit="  " labely="-24" valLabRot="0" itemtype="Node" labelx="-16" labelrot="0" mainComp="false" y="-300" rotation="0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" x="836" vflip="1"/>
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="836,-300" />
 
-Unique  Id: Connector-5: 
-Circuit Id: Connector-5
-<item id="Connector-5" objectName="Connector-5" hflip="1" endpinid="Uno-2-GND2" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-110" labelrot="0" mainComp="false" y="-348" rotation="0" startpinid="Servo-3-in1" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="484,-348,484,-260,572,-260" x="484" vflip="1"/>
+<item itemtype="Connector" uid="Connector-5" startpinid="Servo-3-in1" endpinid="Uno-2-GND2" pointList="484,-348,484,-260,572,-260" />
 
-Unique  Id: Connector-7: 
-Circuit Id: Connector-7
-<item id="Connector-7" objectName="Connector-7" hflip="1" endpinid="Uno-2-8" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-111" labelrot="0" mainComp="false" y="-348" rotation="0" startpinid="Servo-3-in2" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="500,-348,500,-308,572,-308" x="500" vflip="1"/>
+<item itemtype="Connector" uid="Connector-7" startpinid="Servo-3-in2" endpinid="Uno-2-8" pointList="500,-348,500,-308,572,-308" />
 
-Unique  Id: Connector-9: 
-Circuit Id: Connector-9
-<item id="Connector-9" objectName="Connector-9" hflip="1" endpinid="Node-1-0" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-112" labelrot="0" mainComp="false" y="-348" rotation="0" startpinid="Servo-3-in0" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="468,-348,468,-156,836,-156,836,-300" x="468" vflip="1"/>
+<item itemtype="Connector" uid="Connector-9" startpinid="Servo-3-in0" endpinid="Node-1-0" pointList="468,-348,468,-156,836,-156,836,-300" />
 
-Unique  Id: Connector-11: 
-Circuit Id: Connector-11
-<item id="Connector-11" objectName="Connector-11" hflip="1" endpinid="Uno-2-5V0" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-112" labelrot="0" mainComp="false" y="-300" rotation="0" startpinid="Node-1-2" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="836,-300,716,-300" x="836" vflip="1"/>
+<item itemtype="Connector" uid="Connector-11" startpinid="Node-1-2" endpinid="Uno-2-5V0" pointList="836,-300,716,-300" />
 
-Unique  Id: Connector-12: 
-Circuit Id: Connector-12
-<item id="Connector-12" objectName="Connector-12" hflip="1" endpinid="Potentiometer-4-PinB" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-112" labelrot="0" mainComp="false" y="-300" rotation="0" startpinid="Node-1-1" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="836,-300,836,-412,780,-412" x="836" vflip="1"/>
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-1-1" endpinid="Potentiometer-4-PinB" pointList="836,-300,836,-412,780,-412" />
 
-Unique  Id: Connector-13: 
-Circuit Id: Connector-13
-<item id="Connector-13" objectName="Connector-13" hflip="1" endpinid="Uno-2-A0" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-113" labelrot="0" mainComp="false" y="-396" rotation="0" startpinid="Potentiometer-4-PinM" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="764,-396,764,-340,716,-340" x="764" vflip="1"/>
+<item itemtype="Connector" uid="Connector-13" startpinid="Potentiometer-4-PinM" endpinid="Uno-2-A0" pointList="764,-396,764,-340,716,-340" />
 
-Unique  Id: Connector-15: 
-Circuit Id: Connector-15
-<item id="Connector-15" objectName="Connector-15" hflip="1" endpinid="Potentiometer-4-PinA" Unit="  " labely="-24" valLabRot="0" itemtype="Connector" labelx="-16" enodeid="Circ_eNode-110" labelrot="0" mainComp="false" y="-308" rotation="0" startpinid="Uno-2-GND1" Show_Val="false" valLabelx="0" valLabely="0" Show_id="false" pointList="716,-308,740,-308,740,-412,748,-412" x="716" vflip="1"/>
- 
+<item itemtype="Connector" uid="Connector-15" startpinid="Uno-2-GND1" endpinid="Potentiometer-4-PinA" pointList="716,-308,740,-308,740,-412,748,-412" />
+
 </circuit>

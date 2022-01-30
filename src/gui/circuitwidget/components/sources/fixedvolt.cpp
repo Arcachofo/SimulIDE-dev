@@ -98,6 +98,7 @@ void FixedVolt::updateStep()
 void FixedVolt::onbuttonclicked()
 {
     m_changed = true;
+    update();
 }
 
 void FixedVolt::updateOutput()

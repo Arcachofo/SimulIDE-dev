@@ -1,0 +1,53 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Probe" CircId="Probe-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,44" rotation="-45" hflip="1" vflip="1" label="Probe-1" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,36" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,28" rotation="-45" hflip="1" vflip="1" label="Probe-3" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,20" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,12" rotation="-45" hflip="1" vflip="1" label="Probe-5" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-6" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,4" rotation="-45" hflip="1" vflip="1" label="Probe-6" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-7" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,-4" rotation="-45" hflip="1" vflip="1" label="Probe-7" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-8" mainComp="false" Show_id="false" Show_Val="true" Pos="-268,-12" rotation="-45" hflip="1" vflip="1" label="Probe-8" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,36" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-9" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,20" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-10" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,-28" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-11" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="ShiftReg" CircId="Shift Reg.-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,28" rotation="0" hflip="1" vflip="1" label="Shift Reg." idLabPos="-25,44" labelrot="0" valLabPos="0,0" valLabRot="0" Clock_Inverted="false" Reset_Inverted="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-13" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,52" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-13" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="Fixed Volt.-10-outnod" endpinid="Shift Reg.-12-in0" pointList="-412,20,-372,20" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Fixed Volt.-9-outnod" endpinid="Shift Reg.-12-in1" pointList="-412,36,-372,36" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Probe-8-inpin" endpinid="Shift Reg.-12-out0" pointList="-284,4,-324,4" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Probe-7-inpin" endpinid="Shift Reg.-12-out1" pointList="-284,12,-324,12" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Probe-6-inpin" endpinid="Shift Reg.-12-out2" pointList="-284,20,-324,20" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Probe-5-inpin" endpinid="Shift Reg.-12-out3" pointList="-284,28,-324,28" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Probe-4-inpin" endpinid="Shift Reg.-12-out4" pointList="-284,36,-324,36" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Probe-3-inpin" endpinid="Shift Reg.-12-out5" pointList="-284,44,-324,44" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="Probe-2-inpin" endpinid="Shift Reg.-12-out6" pointList="-284,52,-324,52" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Probe-1-inpin" endpinid="Shift Reg.-12-out7" pointList="-284,60,-324,60" />
+
+<item itemtype="Connector" uid="Connector-34" startpinid="Fixed Volt.-11-outnod" endpinid="Shift Reg.-12-in3" pointList="-412,-28,-356,-28,-356,-12" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="Fixed Volt.-13-outnod" endpinid="Shift Reg.-12-in2" pointList="-412,52,-372,52" />
+
+</circuit>

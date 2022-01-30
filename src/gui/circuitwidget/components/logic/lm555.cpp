@@ -152,7 +152,6 @@ void Lm555::stamp()
         if( (i == 2) || (i == 6) ) continue; // Output or Discharge
         if( m_pin[i]->connector() ) m_pin[i]->changeCallBack( this );//  ->getEnode()->addToNoLinList(this);
     }
-    Simulator::self()->addEvent( 1, NULL );
 }
 
 void Lm555::voltChanged()
