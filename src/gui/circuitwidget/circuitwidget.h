@@ -27,12 +27,10 @@
 #include "circuitview.h"
 #include "outpaneltext.h"
 
-class AppProp;
-class CircProp;
-class SimuProp;
 class QSplitter;
 class QLabel;
 class AboutDialog;
+class AppDialog;
 
 class MAINMODULE_EXPORT CircuitWidget : public QWidget
 {
@@ -71,8 +69,6 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void powerCirc();
         void pauseSim();
         void settApp();
-        void settCir();
-        void settSim();
         void openInfo();
         void about();
 
@@ -107,22 +103,17 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         QAction* powerCircAct;
         QAction* pauseSimAct;
         QAction* settAppAct;
-        QAction* settCirAct;
-        QAction* settSimAct;
         QAction* infoAct;
         QAction* aboutAct;
         QAction* aboutQtAct;
         
         QMenu m_fileMenu;
-        QMenu m_settingsMenu;
         QMenu m_infoMenu;
         
         QString m_curCirc;
         QString m_lastCircDir;
 
-        AppProp*  m_appPropW;
-        CircProp* m_cirPropW;
-        SimuProp* m_simPropW;
+        AppDialog*   m_appPropW;
         AboutDialog* m_about;
 };
 

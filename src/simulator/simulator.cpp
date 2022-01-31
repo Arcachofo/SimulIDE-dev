@@ -47,6 +47,7 @@ Simulator::Simulator( QObject* parent )
     m_stepSize  = 1e6;
     m_noLinAcc  = 5; // Non-Linear accuracy
     m_maxNlstp  = 100000;
+    m_slopeSteps = 0;
 
     m_errors[0] = "";
     m_errors[1] = "Could not solve Matrix";

@@ -28,9 +28,7 @@
 #include "mainwindow.h"
 #include "simulator.h"
 #include "circuit.h"
-#include "appprop.h"
-#include "circprop.h"
-#include "simuprop.h"
+#include "appdialog.h"
 #include "filebrowser.h"
 #include "about.h"
 #include "utils.h"
@@ -44,15 +42,12 @@ CircuitWidget::CircuitWidget( QWidget *parent  )
              , m_outPane( this )
              , m_circToolBar( this )
              , m_fileMenu( this )
-             , m_settingsMenu( this )
              , m_infoMenu( this )
 {
     setObjectName( "CircuitWidget" );
     m_pSelf = this;
 
     m_blocked = false;
-    m_cirPropW = NULL;
-    m_simPropW = NULL;
     m_appPropW = NULL;
     m_about = NULL;
 
@@ -97,19 +92,12 @@ CircuitWidget::~CircuitWidget() { }
 
 void CircuitWidget::clear()
 {
-    if( m_cirPropW )
+    if( m_appPropW )
     {
-        m_cirPropW->setParent( NULL );
-        m_cirPropW->close();
-        m_cirPropW->deleteLater();
-        m_cirPropW = NULL;
-    }
-    if( m_simPropW )
-    {
-        m_simPropW->setParent( NULL );
-        m_simPropW->close();
-        m_simPropW->deleteLater();
-        m_simPropW = NULL;
+        m_appPropW->setParent( NULL );
+        m_appPropW->close();
+        m_appPropW->deleteLater();
+        m_appPropW = NULL;
     }
     m_circView.clear();
     m_circView.setCircTime( 0 );
@@ -156,23 +144,13 @@ void CircuitWidget::createActions()
     connect( pauseSimAct, SIGNAL( triggered()),
              this, SLOT(pauseSim()), Qt::UniqueConnection );
 
-    settAppAct = new QAction( QIcon(""),tr("App Settings"), this);
-    settAppAct->setStatusTip(tr("App Settings"));
+    settAppAct = new QAction( QIcon(":/config.png"),tr("Settings"), this);
+    settAppAct->setStatusTip(tr("Settings"));
     connect( settAppAct, SIGNAL( triggered()),
                    this, SLOT(settApp()), Qt::UniqueConnection );
 
-    settCirAct = new QAction( QIcon(""),tr("Circuit Settings"), this);
-    settCirAct->setStatusTip(tr("Circuit Settings"));
-    connect( settCirAct, SIGNAL( triggered()),
-                   this, SLOT(settCir()), Qt::UniqueConnection );
-
-    settSimAct = new QAction( QIcon(""),tr("Simulation Settings"), this);
-    settSimAct->setStatusTip(tr("Simulation Settings"));
-    connect( settSimAct, SIGNAL(triggered()),
-                   this, SLOT(settSim()), Qt::UniqueConnection );
-    
-    infoAct = new QAction( QIcon(":/help.png"),tr("Online Help"), this);
-    infoAct->setStatusTip(tr("Online Help"));
+    infoAct = new QAction( QIcon(":/help.png"),tr("SimulIDE Website"), this);
+    infoAct->setStatusTip(tr("SimulIDE Website"));
     connect( infoAct, SIGNAL( triggered()),
                 this, SLOT(openInfo()), Qt::UniqueConnection );
     
@@ -189,16 +167,7 @@ void CircuitWidget::createActions()
 
 void CircuitWidget::createToolBars()
 {
-    m_settingsMenu.addAction( settAppAct );
-    m_settingsMenu.addAction( settCirAct );
-    m_settingsMenu.addAction( settSimAct );
-
-    QToolButton* settingsButton = new QToolButton( this );
-    settingsButton->setToolTip( tr("Settings") );
-    settingsButton->setMenu( &m_settingsMenu );
-    settingsButton->setIcon( QIcon(":/config.png") );
-    settingsButton->setPopupMode( QToolButton::InstantPopup );
-    m_circToolBar.addWidget( settingsButton );
+    m_circToolBar.addAction( settAppAct );
     m_circToolBar.addSeparator();//..........................
 
     for( int i=0; i<MaxRecentFiles; i++ ) m_fileMenu.addAction( recentFileActs[i] );
@@ -406,33 +375,11 @@ void CircuitWidget::settApp()
 {
     if( !m_appPropW )
     {
-        m_appPropW = new AppProp( this );
+        m_appPropW = new AppDialog( this );
         QPoint p = mapToGlobal( QPoint(50, 50) );
         m_appPropW->move( p.x(), p.y() );
     }
     m_appPropW->show();
-}
-
-void CircuitWidget::settCir()
-{
-    if( !m_cirPropW )
-    {
-        m_cirPropW = new CircProp( this );
-        QPoint p = mapToGlobal( QPoint(50, 50) );
-        m_cirPropW->move( p.x(), p.y() );
-    }
-    m_cirPropW->show();
-}
-
-void CircuitWidget::settSim()
-{
-    if( !m_simPropW )
-    {
-        m_simPropW = new SimuProp( this );
-        QPoint p = mapToGlobal( QPoint(50, 50) );
-        m_simPropW->move( p.x(), p.y() );
-    }
-    m_simPropW->show();
 }
 
 void CircuitWidget::openInfo()

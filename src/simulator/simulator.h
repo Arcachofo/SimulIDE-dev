@@ -72,6 +72,9 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         double NLaccuracy();
 
+        void  setSlopeSteps( int steps ) { m_slopeSteps = steps; }
+        int slopeSteps( ) { return m_slopeSteps; }
+
         void  setMaxNlSteps( uint32_t steps ) { m_maxNlstp = steps; }
         uint32_t maxNlSteps( ) { return m_maxNlstp; }
         
@@ -147,6 +150,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         int m_timerId;
         int m_timerTick;
         int m_noLinAcc;
+        int m_slopeSteps;
 
         uint64_t m_fps;
         uint32_t m_NLstep;

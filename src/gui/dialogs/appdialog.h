@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -14,36 +14,70 @@
  *                                                                         *
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
- *                                                                         */
+ *                                                                         *
+ ***************************************************************************/
 
 #include <QDialog>
 
-#include "ui_circprop.h"
+#include "ui_appdialog.h"
 
-#ifndef CIRDIALOG_H
-#define CIRDIALOG_H
+#ifndef APPDIALOG_H
+#define APPDIALOG_H
 
+class Component;
+class PropVal;
 
-class CircProp : public QDialog, private Ui::CircProp
+class AppDialog : public QDialog, private Ui::AppDialog
 {
     Q_OBJECT
     
     public:
-        CircProp( QWidget* parent=0 );
+        AppDialog( QWidget* parent=0 );
+
+        void updtValues();
 
     public slots:
+        void on_tabList_currentChanged( int );
+//        void on_helpButton_clicked();
 
-        void on_helpButton_toggled( bool show );
+        // App Settings
+        void on_language_currentIndexChanged( int index );
+        void on_fontScale_valueChanged( double scale );
+
+        // Circuit Settings
         void on_drawGrid_toggled( bool draw );
         void on_showScroll_toggled( bool show );
         void on_animate_toggled( bool ani );
         void on_fps_valueChanged( int fps );
         void on_backup_valueChanged( int secs );
 
+        // Simulation Settings
+        void on_simSpeedPerSlider_valueChanged( int speed );
+        void on_simSpeedPerBox_editingFinished();
+        void on_simSpeedSpsBox_editingFinished();
+
+        void on_simStepUnitBox_currentIndexChanged( int index );
+        void on_simStepBox_editingFinished();
+
+        void on_nlStepsBox_editingFinished();
+
+        void on_slopeStepsBox_editingFinished();
 
     private:
+        void updateSpeed();
+        void updateSpeedPer();
 
+        bool m_blocked;
+
+        double m_speedP;
+
+        int      m_stepUnit;
+        uint64_t m_step;
+        uint64_t m_sps;
+        uint64_t m_stepMult;
+        uint64_t m_stepSize;
+
+        bool m_helpExpanded;
 };
-
 
 #endif
