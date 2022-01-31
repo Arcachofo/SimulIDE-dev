@@ -146,7 +146,7 @@ void Simulator::runCircuit()
     if( m_changedNode ) solveCircuit(); // Solving matrix here save events in updateStep()
 
     eElement* event = m_firstEvent;
-    uint64_t   endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
+    uint64_t endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
     uint64_t nextTime;
 
     while( event ){                             // Simulator event loop

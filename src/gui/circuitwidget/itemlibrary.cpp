@@ -181,16 +181,16 @@ void ItemLibrary::loadItems()
     addItem( Thermistor::libraryItem() );
     addItem( RTD::libraryItem() );
     addItem( Strain::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Reactive"),QObject::tr("Passive"), "resistors.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Reactive"),QObject::tr("Passive"), "reactive.png","", NULL ) );
     addItem( Capacitor::libraryItem() );
     addItem( elCapacitor::libraryItem() );
     addItem( Inductor::libraryItem() );
     // Active
     addItem( Diode::libraryItem() );
     addItem( Zener::libraryItem() );
+    addItem( Diac::libraryItem() );
     addItem( Mosfet::libraryItem() );
     addItem( BJT::libraryItem() );
-    addItem( Diac::libraryItem() );
     addItem( OpAmp::libraryItem() );
     addItem( VoltReg::libraryItem() );
     addItem( MuxAnalog::libraryItem() );
