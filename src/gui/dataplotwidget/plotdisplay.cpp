@@ -213,70 +213,67 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
             x1 = m_ceroX + (time+m_hPos[i]-m_timeStart)*m_scaleX;
             y1 = m_posY[i] - p1Volt*m_scaleY[i];
 
-            if( (j > 0) && (time <= m_timeEnd) )
+            if( j== 0 ) // First Point
             {
-                if( time <= timeEnd )
-                {
-                    if( p1Volt > m_vMaxVal[i] ) m_vMaxVal[i] = p1Volt; // Maximum Voltage
-                    if( p1Volt < m_vMinVal[i] ) m_vMinVal[i] = p1Volt; // MiniMum Voltage
-                    if( drawCursor && cursorX>x1 && cursorX<x2 ) // Claculate Cursor Voltage betwen 2 points
-                    {
-                        double cVolt= p1Volt;
-                        ///if( x2 != x1 && p2Volt!=p1Volt) cVolt = p1Volt+(cursorX-x1)*(p2Volt-p1Volt)/(x2-x1);
-                        ///if( cVolt < 0 ) cVolt += 0;
-                        m_cursorVolt[i] = cVolt;
-                    }
+                x2 = m_endX;
+                y2 = y1;
+            }
 
-                    if( lastX-x1 < 0.5 ) // SubSample
-                    {
-                        if( !subSample ) P2 = P1;
-                        subSample = true;
-                        if     ( y1 > maxY ) { maxY = y1; maxX = x1; }
-                        else if( y1 < minY ) { minY = y1; minX = x1; }
-                    }else{
-                        if( subSample )
+            if( time <= timeEnd )
+            {
+                if( p1Volt > m_vMaxVal[i] ) m_vMaxVal[i] = p1Volt; // Maximum Voltage
+                if( p1Volt < m_vMinVal[i] ) m_vMinVal[i] = p1Volt; // MiniMum Voltage
+                if( drawCursor && cursorX>x1 && cursorX<x2 ) // Claculate Cursor Voltage betwen 2 points
+                {
+                    double cVolt= p1Volt;
+                    ///if( x2 != x1 && p2Volt!=p1Volt) cVolt = p1Volt+(cursorX-x1)*(p2Volt-p1Volt)/(x2-x1);
+                    ///if( cVolt < 0 ) cVolt += 0;
+                    m_cursorVolt[i] = cVolt;
+                }
+
+                if( lastX-x1 < 0.5 ) // SubSample
+                {
+                    if( !subSample ) P2 = P1;
+                    subSample = true;
+                    if     ( y1 > maxY ) { maxY = y1; maxX = x1; }
+                    else if( y1 < minY ) { minY = y1; minX = x1; }
+                }else{
+                    if( subSample ) {
+                        if( maxX > minX )
                         {
-                            if( maxX > minX )
-                            {
-                                P1 = QPointF( maxX, maxY );
-                                p.drawLine( P1, P2 );
-                                P2 = P1;
-                                if( minX > 0 )
-                                {
-                                    P1 = QPointF( minX, minY );
-                                    p.drawLine( P1, P2 );
-                                    P2 = P1;
-                                }
-                            }
-                            else if ( minX > maxX )
+                            P1 = QPointF( maxX, maxY );
+                            p.drawLine( P1, P2 );
+                            P2 = P1;
+                            if( minX > 0 )
                             {
                                 P1 = QPointF( minX, minY );
                                 p.drawLine( P1, P2 );
                                 P2 = P1;
-                                if( maxX > 0 )
-                                {
-                                    P1 = QPointF( maxX, maxY );
-                                    p.drawLine( P1, P2 );
-                                    P2 = P1;
-                                }
-                            }
-                            subSample = false;
-                            maxY = -1e12; minY = 1e12; maxX = 0; minX = 0;
-                            //P1 = QPointF( x1, y1 );
-                            //p.drawLine( P1, P2 );
-                        }
-                        //else
+                        }   }
+                        else if ( minX > maxX )
                         {
-                            P2 = QPointF( x2, y2 );
-                            P1 = QPointF( x1, y1 );
-                            Pm = QPointF( x2, y1 );
-                            p.drawLine( P1, Pm );
-                            p.drawLine( Pm, P2 );
-                        }
-                        lastX = x1;
-                }   }
-                if( time <= timeStart ) break;
-            }
+                            P1 = QPointF( minX, minY );
+                            p.drawLine( P1, P2 );
+                            P2 = P1;
+                            if( maxX > 0 )
+                            {
+                                P1 = QPointF( maxX, maxY );
+                                p.drawLine( P1, P2 );
+                                P2 = P1;
+                        }   }
+                        subSample = false;
+                        maxY = -1e12; minY = 1e12; maxX = 0; minX = 0;
+                    }
+                    P2 = QPointF( x2, y2 );
+                    P1 = QPointF( x1, y1 );
+                    Pm = QPointF( x2, y1 );
+                    p.drawLine( P1, Pm );
+                    p.drawLine( Pm, P2 );
+
+                    lastX = x1;
+            }   }
+            if( time <= timeStart ) break;
+
             x2 = x1; y2 = y1;
             //p2Volt = p1Volt;
             if( --pos < 0 ) pos += bufferSize;
