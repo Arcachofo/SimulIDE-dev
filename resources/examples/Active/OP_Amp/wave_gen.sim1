@@ -46,10 +46,6 @@
 
 <item itemtype="Node" CircId="Node-36" mainComp="false" Pos="-244,-188" />
 
-<item itemtype="Node" CircId="Node-35" mainComp="false" Pos="-308,-124" />
-
-<item itemtype="Node" CircId="Node-28" mainComp="false" Pos="-308,-196" />
-
 <item itemtype="Node" CircId="Node-21" mainComp="false" Pos="-60,-196" />
 
 <item itemtype="Node" CircId="Node-20" mainComp="false" Pos="-244,-212" />
@@ -72,11 +68,13 @@
 
 <item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-244,-124" />
 
-<item itemtype="Node" CircId="Node-35" mainComp="false" Pos="228,-196" />
+<item itemtype="Node" CircId="Node-40" mainComp="false" Pos="228,-196" />
+
+<item itemtype="Node" CircId="Node-42" mainComp="false" Pos="-308,-124" />
+
+<item itemtype="Node" CircId="Node-45" mainComp="false" Pos="-308,-196" />
 
 <item itemtype="Connector" uid="Connector-38" startpinid="Capacitor-32-rPin" endpinid="Node-37-0" pointList="-356,-140,-356,-124" />
-
-<item itemtype="Connector" uid="Connector-40" startpinid="Node-35-2" endpinid="Resistor-30-lPin" pointList="-308,-124,-300,-124" />
 
 <item itemtype="Connector" uid="Connector-42" startpinid="OpAmp-29-output" endpinid="Node-36-1" pointList="-252,-188,-244,-188" />
 
@@ -85,12 +83,6 @@
 <item itemtype="Connector" uid="Connector-45" startpinid="Resistor-31-lPin" endpinid="Node-37-1" pointList="-348,-124,-356,-124" />
 
 <item itemtype="Connector" uid="Connector-46" startpinid="Node-37-2" endpinid="Node-8-0" pointList="-356,-124,-388,-124" />
-
-<item itemtype="Connector" uid="Connector-47" startpinid="Node-35-1" endpinid="Node-28-0" pointList="-308,-124,-308,-196" />
-
-<item itemtype="Connector" uid="Connector-48" startpinid="Resistor-34-rPin" endpinid="Node-28-1" pointList="-404,-196,-308,-196" />
-
-<item itemtype="Connector" uid="Connector-49" startpinid="Node-28-2" endpinid="OpAmp-29-inputNinv" pointList="-308,-196,-300,-196" />
 
 <item itemtype="Connector" uid="Connector-50" startpinid="Resistor-23-rPin" endpinid="Node-21-0" pointList="-68,-196,-60,-196" />
 
@@ -142,13 +134,9 @@
 
 <item itemtype="Connector" uid="Connector-83" startpinid="OpAmp-18-inputInv" endpinid="Node-4-0" pointList="-164,-188,-172,-188,-172,-132,-108,-132" />
 
-<item itemtype="Connector" uid="Connector-84" startpinid="Inductor-6-rPin" endpinid="Node-35-0" pointList="204,-196,228,-196" />
-
 <item itemtype="Connector" uid="Connector-88" startpinid="Oscope-19-Pin0" endpinid="Node-2-1" pointList="-196,-52,-204,-52,-204,-92,4,-92,4,-164" />
 
 <item itemtype="Connector" uid="Connector-89" startpinid="Node-2-2" endpinid="Capacitor-22-rPin" pointList="4,-164,-12,-164" />
-
-<item itemtype="Connector" uid="Connector-90" startpinid="Resistor-31-rPin" endpinid="Node-35-0" pointList="-316,-124,-308,-124" />
 
 <item itemtype="Connector" uid="Connector-91" startpinid="OpAmp-18-inputNinv" endpinid="Node-20-1" pointList="-164,-204,-188,-204,-188,-212,-244,-212" />
 
@@ -158,8 +146,20 @@
 
 <item itemtype="Connector" uid="Connector-78" startpinid="OpAmp-15-inputInv" endpinid="Node-5-0" pointList="100,-188,92,-188,92,-164,156,-164,156,-196" />
 
-<item itemtype="Connector" uid="Connector-36" startpinid="Node-35-2" endpinid="Capacitor-14-lPin" pointList="228,-196,228,-180" />
+<item itemtype="Connector" uid="Connector-48" startpinid="Resistor-34-rPin" endpinid="Node-45-0" pointList="-404,-196,-308,-196" />
 
-<item itemtype="Connector" uid="Connector-37" startpinid="Node-35-1" endpinid="Oscope-12-Pin0" pointList="228,-196,284,-196,284,-92,52,-92,52,-52,60,-52" />
+<item itemtype="Connector" uid="Connector-38" startpinid="Inductor-6-rPin" endpinid="Node-40-0" pointList="204,-196,228,-196" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Oscope-12-Pin0" endpinid="Node-40-1" pointList="60,-52,52,-52,52,-92,260,-92,260,-196,228,-196" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Node-40-2" endpinid="Capacitor-14-lPin" pointList="228,-196,228,-180" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Resistor-31-rPin" endpinid="Node-42-0" pointList="-316,-124,-308,-124" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Node-42-2" endpinid="Resistor-30-lPin" pointList="-308,-124,-300,-124" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Node-42-1" endpinid="Node-45-1" pointList="-308,-124,-308,-196" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="Node-45-2" endpinid="OpAmp-29-inputNinv" pointList="-308,-196,-300,-196" />
 
 </circuit>

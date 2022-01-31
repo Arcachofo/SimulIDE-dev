@@ -12,7 +12,7 @@
 
 <item itemtype="Resistor" CircId="Resistor-75" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-396,-388" rotation="90" hflip="1" vflip="1" label="Resistor-75" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="110 kΩ" />
 
-<item itemtype="Oscope" CircId="Oscope-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,-356" rotation="0" hflip="1" vflip="1" label="Oscope-19" idLabPos="-80,-130" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="2000000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="1" Filter="0 V" Trigger="1" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+<item itemtype="Oscope" CircId="Oscope-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,-356" rotation="0" hflip="1" vflip="1" label="Oscope-19" idLabPos="-80,-130" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="2000000000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="1" Filter="0.1 V" Trigger="1" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="0,0,0,0," />
 
 <item itemtype="BJT" CircId="BJT-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-324" rotation="0" hflip="1" vflip="1" label="BJT-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" PNP="false" Gain="100" />
 

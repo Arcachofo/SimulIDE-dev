@@ -32,9 +32,9 @@
 
 <item itemtype="Probe" CircId="Probe-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-492,-300" rotation="-45" hflip="1" vflip="1" label="Probe-45" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 
-<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-360,-300" rotation="-45" hflip="1" vflip="1" label="Probe-46" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-360,-300" rotation="-45" hflip="1" vflip="1" label="Probe-46" idLabPos="16,-16" labelrot="45" valLabPos="7.90072,-18.8983" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 
-<item itemtype="Probe" CircId="Probe-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-356,-364" rotation="-45" hflip="1" vflip="1" label="Probe-47" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+<item itemtype="Probe" CircId="Probe-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-356,-364" rotation="-45" hflip="1" vflip="1" label="Probe-47" idLabPos="16,-16" labelrot="45" valLabPos="9.58807,-18.5609" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 
 <item itemtype="Node" CircId="Node-14" mainComp="false" Pos="-540,-348" />
 

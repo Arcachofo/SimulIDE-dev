@@ -1,0 +1,67 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-133" mainComp="false" Show_id="false" Show_Val="true" Pos="-468,-360" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-133" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="74HC04-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-356" rotation="0" hflip="1" vflip="1" label="74HC04" idLabPos="-2,-13" labelrot="0" valLabPos="13,38" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="LedBar" CircId="LedBar-46" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,-324" rotation="0" hflip="1" vflip="1" label="LedBar-46" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="6 _Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-53" mainComp="false" Show_id="false" Show_Val="false" Pos="-428,-324" rotation="0" hflip="1" vflip="1" label="SwitchDip-53" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="6 _Switches" State="255" />
+
+<item itemtype="Node" CircId="Node-135" mainComp="false" Pos="-444,-348" />
+
+<item itemtype="Node" CircId="Node-63" mainComp="false" Pos="-444,-316" />
+
+<item itemtype="Node" CircId="Node-66" mainComp="false" Pos="-444,-324" />
+
+<item itemtype="Node" CircId="Node-69" mainComp="false" Pos="-444,-332" />
+
+<item itemtype="Node" CircId="Node-72" mainComp="false" Pos="-444,-340" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="LedBar-46-led0-pinP" endpinid="74HC04-1-1Y" pointList="-348,-348,-356,-348" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="LedBar-46-led1-pinP" endpinid="74HC04-1-2Y" pointList="-348,-340,-356,-340" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="LedBar-46-led2-pinP" endpinid="74HC04-1-3Y" pointList="-348,-332,-356,-332" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedBar-46-led3-pinP" endpinid="74HC04-1-4Y" pointList="-348,-324,-356,-324" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="LedBar-46-led4-pinP" endpinid="74HC04-1-5Y" pointList="-348,-316,-356,-316" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="LedBar-46-led5-pinP" endpinid="74HC04-1-6Y" pointList="-348,-308,-356,-308" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="SwitchDip-53-switch0-pinN" endpinid="74HC04-1-1A" pointList="-412,-348,-404,-348" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="SwitchDip-53-switch1-pinN" endpinid="74HC04-1-2A" pointList="-412,-340,-404,-340" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="SwitchDip-53-switch2-pinN" endpinid="74HC04-1-3A" pointList="-412,-332,-404,-332" />
+
+<item itemtype="Connector" uid="Connector-57" startpinid="SwitchDip-53-switch3-pinN" endpinid="74HC04-1-4A" pointList="-412,-324,-404,-324" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="SwitchDip-53-switch4-pinN" endpinid="74HC04-1-5A" pointList="-412,-316,-404,-316" />
+
+<item itemtype="Connector" uid="Connector-59" startpinid="SwitchDip-53-switch5-pinN" endpinid="74HC04-1-6A" pointList="-412,-308,-404,-308" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="SwitchDip-53-switch4-pinP" endpinid="Node-63-1" pointList="-436,-316,-444,-316" />
+
+<item itemtype="Connector" uid="Connector-64" startpinid="Node-63-2" endpinid="SwitchDip-53-switch5-pinP" pointList="-444,-316,-444,-308,-436,-308" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="SwitchDip-53-switch3-pinP" endpinid="Node-66-1" pointList="-436,-324,-444,-324" />
+
+<item itemtype="Connector" uid="Connector-67" startpinid="Node-66-2" endpinid="Node-63-0" pointList="-444,-324,-444,-316" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="SwitchDip-53-switch2-pinP" endpinid="Node-69-1" pointList="-436,-332,-444,-332" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="Node-69-2" endpinid="Node-66-0" pointList="-444,-332,-444,-324" />
+
+<item itemtype="Connector" uid="Connector-71" startpinid="SwitchDip-53-switch1-pinP" endpinid="Node-72-1" pointList="-436,-340,-444,-340" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="Node-72-2" endpinid="Node-69-0" pointList="-444,-340,-444,-332" />
+
+<item itemtype="Connector" uid="Connector-74" startpinid="SwitchDip-53-switch0-pinP" endpinid="Node-135-0" pointList="-436,-348,-444,-348" />
+
+<item itemtype="Connector" uid="Connector-134" startpinid="Fixed Voltage-133-outnod" endpinid="Node-135-1" pointList="-452,-360,-444,-360,-444,-348" />
+
+<item itemtype="Connector" uid="Connector-136" startpinid="Node-135-2" endpinid="Node-72-0" pointList="-444,-348,-444,-340" />
+
+</circuit>
