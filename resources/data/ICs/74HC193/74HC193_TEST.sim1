@@ -14,21 +14,21 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-2054" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-260" rotation="0" hflip="1" vflip="1" label="D2" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2053" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-276" rotation="0" hflip="1" vflip="1" label="D1" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2053" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-276" rotation="0" hflip="1" vflip="1" label="D1" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-2052" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-292" rotation="0" hflip="1" vflip="1" label="D0" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-2043" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-324" rotation="0" hflip="1" vflip="1" label="R" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2042" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-348" rotation="0" hflip="1" vflip="1" label="!PL" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2042" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-348" rotation="0" hflip="1" vflip="1" label="!PL" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2039" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-372" rotation="0" hflip="1" vflip="1" label="CPu" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2039" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-372" rotation="0" hflip="1" vflip="1" label="CPu" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="7-Seg BCD" CircId="7-2034" mainComp="false" Show_id="false" Show_Val="false" Pos="-196,-328" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-2029" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-2034" mainComp="false" Show_id="false" Show_Val="false" Pos="-192,-332" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-2029" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="7-Seg BCD" CircId="7-Seg BCD-2029" mainComp="false" Show_id="false" Show_Val="false" Pos="-196,-492" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-2029" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7-Seg BCD-2029" mainComp="false" Show_id="false" Show_Val="false" Pos="-192,-492" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-2029" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-259" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-388" rotation="0" hflip="1" vflip="1" label="CPd" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-259" mainComp="false" Show_id="true" Show_Val="false" Pos="-420,-388" rotation="0" hflip="1" vflip="1" label="CPd" idLabPos="-50,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Subcircuit" CircId="74HC193-2737" mainComp="false" Show_id="true" Show_Val="false" Pos="-300,-292" rotation="0" hflip="1" vflip="1" label="74HC193-2737" idLabPos="0,-20" labelrot="0" valLabPos="13,52" valLabRot="-90" Logic_Symbol="true" />
 
@@ -52,13 +52,13 @@
 
 <item itemtype="Connector" uid="Connector-3040" startpinid="Probe-2071-inpin" endpinid="74HC193-2737-!TCd" pointList="-168,-236,-168,-220,-260,-220" />
 
-<item itemtype="Connector" uid="Connector-3041" startpinid="74HC193-2737-Q0" endpinid="7-2034-in0" pointList="-260,-284,-184,-284,-184,-296" />
+<item itemtype="Connector" uid="Connector-3041" startpinid="74HC193-2737-Q0" endpinid="7-2034-in0" pointList="-260,-284,-180,-284,-180,-300" />
 
-<item itemtype="Connector" uid="Connector-3042" startpinid="7-2034-in1" endpinid="74HC193-2737-Q1" pointList="-192,-296,-188,-296,-188,-276,-260,-276" />
+<item itemtype="Connector" uid="Connector-3042" startpinid="7-2034-in1" endpinid="74HC193-2737-Q1" pointList="-188,-300,-188,-276,-260,-276" />
 
-<item itemtype="Connector" uid="Connector-3043" startpinid="7-2034-in2" endpinid="74HC193-2737-Q2" pointList="-200,-296,-196,-296,-196,-268,-260,-268" />
+<item itemtype="Connector" uid="Connector-3043" startpinid="7-2034-in2" endpinid="74HC193-2737-Q2" pointList="-196,-300,-196,-268,-260,-268" />
 
-<item itemtype="Connector" uid="Connector-3044" startpinid="7-2034-in3" endpinid="74HC193-2737-Q3" pointList="-208,-296,-204,-296,-204,-260,-260,-260" />
+<item itemtype="Connector" uid="Connector-3044" startpinid="7-2034-in3" endpinid="74HC193-2737-Q3" pointList="-204,-300,-204,-260,-260,-260" />
 
 <item itemtype="Connector" uid="Connector-2057" startpinid="Fixed Volt.-2053-outnod" endpinid="Node-4021-0" pointList="-404,-276,-320,-276" />
 
@@ -108,13 +108,13 @@
 
 <item itemtype="Connector" uid="Connector-4031" startpinid="74HC193-3707-!TCu" endpinid="Probe-2068-inpin" pointList="-260,-380,-172,-380" />
 
-<item itemtype="Connector" uid="Connector-4032" startpinid="7-Seg BCD-2029-in0" endpinid="74HC193-3707-Q0" pointList="-184,-460,-180,-460,-180,-444,-324,-444,-324,-396,-308,-396" />
+<item itemtype="Connector" uid="Connector-4032" startpinid="7-Seg BCD-2029-in0" endpinid="74HC193-3707-Q0" pointList="-180,-460,-180,-444,-324,-444,-324,-396,-308,-396" />
 
-<item itemtype="Connector" uid="Connector-4033" startpinid="7-Seg BCD-2029-in1" endpinid="74HC193-3707-Q1" pointList="-192,-460,-188,-460,-188,-448,-328,-448,-328,-404,-308,-404" />
+<item itemtype="Connector" uid="Connector-4033" startpinid="7-Seg BCD-2029-in1" endpinid="74HC193-3707-Q1" pointList="-188,-460,-188,-448,-328,-448,-328,-404,-308,-404" />
 
-<item itemtype="Connector" uid="Connector-4034" startpinid="7-Seg BCD-2029-in2" endpinid="74HC193-3707-Q2" pointList="-200,-460,-196,-460,-196,-452,-332,-452,-332,-372,-308,-372" />
+<item itemtype="Connector" uid="Connector-4034" startpinid="7-Seg BCD-2029-in2" endpinid="74HC193-3707-Q2" pointList="-196,-460,-196,-452,-332,-452,-332,-372,-308,-372" />
 
-<item itemtype="Connector" uid="Connector-4035" startpinid="7-Seg BCD-2029-in3" endpinid="74HC193-3707-Q3" pointList="-208,-460,-204,-460,-204,-456,-336,-456,-336,-364,-308,-364" />
+<item itemtype="Connector" uid="Connector-4035" startpinid="7-Seg BCD-2029-in3" endpinid="74HC193-3707-Q3" pointList="-204,-460,-204,-456,-336,-456,-336,-364,-308,-364" />
 
 <item itemtype="Connector" uid="Connector-4037" startpinid="Node-4036-2" endpinid="74HC193-2737-R" pointList="-332,-324,-332,-220,-308,-220" />
 

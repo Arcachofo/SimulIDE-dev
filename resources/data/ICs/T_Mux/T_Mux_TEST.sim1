@@ -1,0 +1,53 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Rail" CircId="Rail-24" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-228,-316" rotation="0" hflip="1" vflip="1" label="Rail-18" idLabPos="-16,-24" labelrot="0" valLabPos="-29,-2" valLabRot="0" Voltage="-5 V" />
+
+<item itemtype="Ground" CircId="Ground-22" mainComp="false" Show_id="false" Show_Val="false" Pos="-268,-320" rotation="0" hflip="1" vflip="1" label="Ground-16" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-20" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-228,-356" rotation="0" hflip="1" vflip="1" label="Rail-14" idLabPos="-16,-24" labelrot="0" valLabPos="-24,-5" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail-18" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-360,-208" rotation="0" hflip="1" vflip="1" label="Rail-18" idLabPos="-16,-24" labelrot="0" valLabPos="-29,-2" valLabRot="0" Voltage="-5 V" />
+
+<item itemtype="Ground" CircId="Ground-16" mainComp="false" Show_id="false" Show_Val="false" Pos="-364,-224" rotation="0" hflip="1" vflip="1" label="Ground-16" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-14" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-360,-280" rotation="0" hflip="1" vflip="1" label="Rail-14" idLabPos="-16,-24" labelrot="0" valLabPos="-24,-5" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Push" CircId="Push-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-280" rotation="0" hflip="1" vflip="1" label="Push-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+
+<item itemtype="Push" CircId="Push-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-244" rotation="0" hflip="1" vflip="1" label="Push-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+
+<item itemtype="Push" CircId="Push-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-284,-208" rotation="0" hflip="1" vflip="1" label="Push-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1 _Poles" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-60,-348" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="T_Mux-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-172,-340" rotation="0" hflip="1" vflip="1" label="T_Mux-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-12" mainComp="false" Pos="-180,-280" />
+
+<item itemtype="Node" CircId="Node-9" mainComp="false" Pos="-180,-244" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Probe-2-inpin" endpinid="T_Mux-1-Q" pointList="-76,-332,-132,-332" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Push-4-switch0pinN" endpinid="Node-9-0" pointList="-268,-208,-180,-208,-180,-244" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Push-6-switch0pinN" endpinid="Node-9-1" pointList="-268,-244,-180,-244" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Node-9-2" endpinid="Node-12-0" pointList="-180,-244,-180,-280" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Push-7-switch0pinN" endpinid="Node-12-1" pointList="-268,-280,-180,-280" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Node-12-2" endpinid="T_Mux-1-S" pointList="-180,-280,-180,-300" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Rail-14-outnod" endpinid="Push-7-pinP0" pointList="-344,-280,-300,-280" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Ground-16-Gnd" endpinid="Push-6-pinP0" pointList="-364,-240,-364,-244,-300,-244" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="Rail-18-outnod" endpinid="Push-4-pinP0" pointList="-344,-208,-300,-208" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="Rail-20-outnod" endpinid="T_Mux-1-P" pointList="-212,-356,-180,-356,-180,-332" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="Ground-22-Gnd" endpinid="T_Mux-1-0" pointList="-268,-336,-208,-336,-208,-324,-180,-324" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Rail-24-outnod" endpinid="T_Mux-1-N" pointList="-212,-316,-180,-316" />
+
+</circuit>

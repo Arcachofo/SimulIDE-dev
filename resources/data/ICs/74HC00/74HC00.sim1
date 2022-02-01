@@ -4,13 +4,11 @@
 
 <item itemtype="Package" CircId="Package-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-292,-452" rotation="0" hflip="1" vflip="1" label="Package-2" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="9 _Cells" Name="74HC00" Package_File="74HC00_LS.package" Logic_Symbol="true" />
 
-<item itemtype="And Gate" CircId="And Gate-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-352,-340" rotation="0" hflip="1" vflip="1" label="And Gate-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="2 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
-
 <item itemtype="Tunnel" CircId="Tunnel-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-388,-348" rotation="0" hflip="1" vflip="1" label="Tunnel-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="1A" Rotated="false" />
 
 <item itemtype="Tunnel" CircId="Tunnel-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-388,-336" rotation="0" hflip="1" vflip="1" label="Tunnel-5" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="1B" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-324,-340" rotation="0" hflip="1" vflip="1" label="Tunnel-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="1Y" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-348" rotation="0" hflip="1" vflip="1" label="Tunnel-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="1Y" Rotated="true" />
 
 <item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-388,-312" rotation="0" hflip="1" vflip="1" label="Tunnel-5" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="2B" Rotated="false" />
 
@@ -36,11 +34,7 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-33" mainComp="false" Show_id="false" Show_Val="false" Pos="-388,-276" rotation="0" hflip="1" vflip="1" label="Tunnel-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="4A" Rotated="false" />
 
-<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-6-pin" endpinid="And Gate-3-out" pointList="-324,-340,-336,-340" />
-
-<item itemtype="Connector" uid="Connector-8" startpinid="Tunnel-4-pin" endpinid="And Gate-3-in0" pointList="-388,-348,-368,-348,-368,-344" />
-
-<item itemtype="Connector" uid="Connector-9" startpinid="Tunnel-5-pin" endpinid="And Gate-3-in1" pointList="-388,-336,-368,-336" />
+<item itemtype="Function" CircId="Function-84" mainComp="false" Show_id="false" Show_Val="false" Pos="-352,-348" rotation="0" hflip="1" vflip="1" label="Function-84" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Num_Inputs="2 _Pins" Num_Outputs="1 _Pins" Inverted="false" Functions="!(i0 & i1)" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
 <item itemtype="Connector" uid="Connector-14" startpinid="Tunnel-12-pin" endpinid="And Gate-11-out" pointList="-324,-316,-336,-316" />
 
@@ -59,5 +53,11 @@
 <item itemtype="Connector" uid="Connector-36" startpinid="Tunnel-30-pin" endpinid="And Gate-31-in1" pointList="-388,-264,-368,-264" />
 
 <item itemtype="Connector" uid="Connector-38" startpinid="Tunnel-33-pin" endpinid="And Gate-31-in0" pointList="-388,-276,-368,-276,-368,-272" />
+
+<item itemtype="Connector" uid="Connector-85" startpinid="Function-84-out0" endpinid="Tunnel-6-pin" pointList="-328,-348,-320,-348" />
+
+<item itemtype="Connector" uid="Connector-86" startpinid="Tunnel-4-pin" endpinid="Function-84-in0" pointList="-388,-348,-376,-348" />
+
+<item itemtype="Connector" uid="Connector-87" startpinid="Tunnel-5-pin" endpinid="Function-84-in1" pointList="-388,-336,-376,-336,-376,-340" />
 
 </circuit>

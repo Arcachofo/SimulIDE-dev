@@ -18,7 +18,7 @@
 
 <item itemtype="Probe" CircId="Probe-812" mainComp="false" Show_id="false" Show_Val="true" Pos="-340,-164" rotation="-45" hflip="1" vflip="1" label="Probe-83" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-811" mainComp="false" Show_id="false" Show_Val="true" Pos="-564,-216" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-5" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-811" mainComp="false" Show_id="false" Show_Val="true" Pos="-564,-216" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-5" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-810" mainComp="false" Show_id="false" Show_Val="true" Pos="-564,-232" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-5" valLabRot="0" Out="false" Voltage="5 V" />
 
@@ -30,7 +30,7 @@
 
 <item itemtype="Buffer" CircId="Buffer-806" mainComp="false" Show_id="false" Show_Val="false" Pos="-400,-176" rotation="0" hflip="1" vflip="1" label="Buffer-9" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="1 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-805" mainComp="false" Show_id="false" Show_Val="true" Pos="-564,-248" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-5" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-805" mainComp="false" Show_id="false" Show_Val="true" Pos="-564,-248" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-50,-5" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Clock" CircId="Clock-804" mainComp="false" Show_id="false" Show_Val="true" Pos="-564,-264" rotation="0" hflip="1" vflip="1" label="Clock-2" idLabPos="-64,-24" labelrot="0" valLabPos="-49,-6" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="15 Hz" Always_On="false" />
 

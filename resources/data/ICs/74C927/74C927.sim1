@@ -438,11 +438,11 @@
 
 <item itemtype="Connector" uid="Connector-693" startpinid="BcdTo7S-209-in0" endpinid="Mux-57-out0" pointList="308,-160,260,-160,260,-288,236,-288" />
 
-<item itemtype="Connector" uid="Connector-695" startpinid="Mux-55-out0" endpinid="BcdTo7S-209-in1" pointList="236,-168,236,-152,308,-152" />
+<item itemtype="Connector" uid="Connector-695" startpinid="Mux-55-out0" endpinid="BcdTo7S-209-in1" pointList="236,-168,248,-168,248,-152,308,-152" />
 
-<item itemtype="Connector" uid="Connector-697" startpinid="Mux-175-out0" endpinid="BcdTo7S-209-in2" pointList="236,-44,236,-28,260,-28,260,-144,308,-144" />
+<item itemtype="Connector" uid="Connector-697" startpinid="Mux-175-out0" endpinid="BcdTo7S-209-in2" pointList="236,-44,260,-44,260,-144,308,-144" />
 
-<item itemtype="Connector" uid="Connector-699" startpinid="Mux-180-out0" endpinid="BcdTo7S-209-in3" pointList="236,84,236,100,268,100,268,-136,308,-136" />
+<item itemtype="Connector" uid="Connector-699" startpinid="Mux-180-out0" endpinid="BcdTo7S-209-in3" pointList="236,84,268,84,268,-136,308,-136" />
 
 <item itemtype="Connector" uid="Connector-701" startpinid="Ground-210-Gnd" endpinid="BcdTo7S-209-in4" pointList="292,-196,324,-196,324,-192" />
 

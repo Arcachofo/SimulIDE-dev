@@ -2,11 +2,11 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-15" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-132" rotation="0" hflip="1" vflip="1" label="!2E" idLabPos="-46,-4" labelrot="0" valLabPos="-11,12" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-176" rotation="0" hflip="1" vflip="1" label="B" idLabPos="-46,-4" labelrot="0" valLabPos="-11,12" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-176" rotation="0" hflip="1" vflip="1" label="B" idLabPos="-46,-4" labelrot="0" valLabPos="-11,12" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-13" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-148" rotation="0" hflip="1" vflip="1" label="!1E" idLabPos="-46,-4" labelrot="0" valLabPos="-11,12" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-192" rotation="0" hflip="1" vflip="1" label="A" idLabPos="-46,-4" labelrot="0" valLabPos="-11,12" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-192" rotation="0" hflip="1" vflip="1" label="A" idLabPos="-46,-4" labelrot="0" valLabPos="-11,12" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-468,-244" rotation="0" hflip="1" vflip="1" label="23" idLabPos="-46,-4" labelrot="0" valLabPos="-11,12" valLabRot="0" Out="false" Voltage="5 V" />
 

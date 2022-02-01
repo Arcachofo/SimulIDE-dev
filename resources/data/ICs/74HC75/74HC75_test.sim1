@@ -4,13 +4,13 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-161" mainComp="false" Show_id="true" Show_Val="false" Pos="-916,12" rotation="0" hflip="1" vflip="1" label="D3" idLabPos="-48,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-160" mainComp="false" Show_id="true" Show_Val="false" Pos="-916,28" rotation="0" hflip="1" vflip="1" label="E2-3" idLabPos="-55,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-160" mainComp="false" Show_id="true" Show_Val="false" Pos="-916,28" rotation="0" hflip="1" vflip="1" label="E2-3" idLabPos="-55,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-159" mainComp="false" Show_id="true" Show_Val="false" Pos="-916,-28" rotation="0" hflip="1" vflip="1" label="D1" idLabPos="-47,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-159" mainComp="false" Show_id="true" Show_Val="false" Pos="-916,-28" rotation="0" hflip="1" vflip="1" label="D1" idLabPos="-47,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-158" mainComp="false" Show_id="true" Show_Val="false" Pos="-916,-60" rotation="0" hflip="1" vflip="1" label="E0-1" idLabPos="-55,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-157" mainComp="false" Show_id="true" Show_Val="false" Pos="-916,-44" rotation="0" hflip="1" vflip="1" label="D0" idLabPos="-47,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-157" mainComp="false" Show_id="true" Show_Val="false" Pos="-916,-44" rotation="0" hflip="1" vflip="1" label="D0" idLabPos="-47,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Subcircuit" CircId="74HC75-90" mainComp="false" Show_id="true" Show_Val="false" Pos="-836,-68" rotation="0" hflip="1" vflip="1" label="74HC75_LS" idLabPos="-14,-15" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
 

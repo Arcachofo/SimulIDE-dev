@@ -1,0 +1,83 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Package" CircId="Package-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-344,-268" rotation="0" hflip="1" vflip="1" label="Package-78" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="11 _Cells" Name="74XX240" Package_File="74XX240.package" Logic_Symbol="false" />
+
+<item itemtype="Package" CircId="Package-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-344,-156" rotation="0" hflip="1" vflip="1" label="Package-79" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="12 _Cells" Name="74XX240" Package_File="74XX240_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-83" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-124" rotation="0" hflip="1" vflip="1" label="2Y3" idLabPos="23,-7" labelrot="0" valLabPos="16,0" valLabRot="45" Name="2Y3" Rotated="true" />
+
+<item itemtype="LatchD" CircId="LatchD-84" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,-124" rotation="0" hflip="1" vflip="1" label="LatchD-83" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Channels="4 _Channels" Trigger="None" Inverted="true" Tristate="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-85" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-232" rotation="0" hflip="1" vflip="1" label="1Y1" idLabPos="23,-9" labelrot="0" valLabPos="16,0" valLabRot="45" Name="1Y1" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-86" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-208" rotation="0" hflip="1" vflip="1" label="1A3" idLabPos="-44,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="1A3" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-87" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-220" rotation="0" hflip="1" vflip="1" label="1Y2" idLabPos="23,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="1Y2" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-88" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-148" rotation="0" hflip="1" vflip="1" label="2A1" idLabPos="-44,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="2A1" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-89" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-112" rotation="0" hflip="1" vflip="1" label="2Y4" idLabPos="24,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="2Y4" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-90" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-220" rotation="0" hflip="1" vflip="1" label="1A2" idLabPos="-43,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="1A2" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-91" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-180" rotation="0" hflip="1" vflip="1" label="1G" idLabPos="-36,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="1G" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-92" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-196" rotation="0" hflip="1" vflip="1" label="1A4" idLabPos="-44,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="1A4" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-93" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-232" rotation="0" hflip="1" vflip="1" label="1A1" idLabPos="-44,-8" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="1A1" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-94" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-136" rotation="0" hflip="1" vflip="1" label="2A2" idLabPos="-44,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="2A2" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-95" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-96" rotation="0" hflip="1" vflip="1" label="2G" idLabPos="-38,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="2G" Rotated="false" />
+
+<item itemtype="LatchD" CircId="LatchD-96" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,-208" rotation="0" hflip="1" vflip="1" label="LatchD-83" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Channels="4 _Channels" Trigger="None" Inverted="true" Tristate="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Tunnel" CircId="Tunnel-97" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-148" rotation="0" hflip="1" vflip="1" label="2Y1" idLabPos="24,-8" labelrot="0" valLabPos="16,0" valLabRot="45" Name="2Y1" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-98" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-196" rotation="0" hflip="1" vflip="1" label="1Y4" idLabPos="23,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="1Y4" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-99" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-124" rotation="0" hflip="1" vflip="1" label="2A3" idLabPos="-44,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="2A3" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-100" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-208" rotation="0" hflip="1" vflip="1" label="1Y3" idLabPos="23,-5" labelrot="0" valLabPos="16,0" valLabRot="45" Name="1Y3" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-101" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-112" rotation="0" hflip="1" vflip="1" label="2A4" idLabPos="-44,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="2A4" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-102" mainComp="false" Show_id="true" Show_Val="false" Pos="-428,-136" rotation="0" hflip="1" vflip="1" label="2Y2" idLabPos="23,-7" labelrot="0" valLabPos="16,0" valLabRot="45" Name="2Y2" Rotated="true" />
+
+<item itemtype="Connector" uid="Connector-103" startpinid="Tunnel-94-pin" endpinid="LatchD-84-in1" pointList="-492,-136,-492,-132,-484,-132" />
+
+<item itemtype="Connector" uid="Connector-105" startpinid="Tunnel-85-pin" endpinid="LatchD-96-out0" pointList="-428,-232,-436,-232,-436,-224" />
+
+<item itemtype="Connector" uid="Connector-107" startpinid="LatchD-84-in2" endpinid="Tunnel-99-pin" pointList="-484,-124,-492,-124" />
+
+<item itemtype="Connector" uid="Connector-109" startpinid="Tunnel-102-pin" endpinid="LatchD-84-out1" pointList="-428,-136,-428,-132,-436,-132" />
+
+<item itemtype="Connector" uid="Connector-111" startpinid="LatchD-84-out0" endpinid="Tunnel-97-pin" pointList="-436,-140,-436,-148,-428,-148" />
+
+<item itemtype="Connector" uid="Connector-113" startpinid="Tunnel-89-pin" endpinid="LatchD-84-out3" pointList="-428,-112,-428,-116,-436,-116" />
+
+<item itemtype="Connector" uid="Connector-115" startpinid="LatchD-96-out2" endpinid="Tunnel-100-pin" pointList="-436,-208,-428,-208" />
+
+<item itemtype="Connector" uid="Connector-117" startpinid="LatchD-84-out2" endpinid="Tunnel-83-pin" pointList="-436,-124,-428,-124" />
+
+<item itemtype="Connector" uid="Connector-119" startpinid="Tunnel-92-pin" endpinid="LatchD-96-in3" pointList="-492,-196,-492,-200,-484,-200" />
+
+<item itemtype="Connector" uid="Connector-121" startpinid="LatchD-96-out3" endpinid="Tunnel-98-pin" pointList="-436,-200,-428,-200,-428,-196" />
+
+<item itemtype="Connector" uid="Connector-123" startpinid="Tunnel-86-pin" endpinid="LatchD-96-in2" pointList="-492,-208,-484,-208" />
+
+<item itemtype="Connector" uid="Connector-125" startpinid="Tunnel-90-pin" endpinid="LatchD-96-in1" pointList="-492,-220,-492,-216,-484,-216" />
+
+<item itemtype="Connector" uid="Connector-127" startpinid="Tunnel-101-pin" endpinid="LatchD-84-in3" pointList="-492,-112,-492,-116,-484,-116" />
+
+<item itemtype="Connector" uid="Connector-129" startpinid="Tunnel-91-pin" endpinid="LatchD-96-Pin_outEnable" pointList="-496,-180,-436,-180,-436,-192" />
+
+<item itemtype="Connector" uid="Connector-131" startpinid="Tunnel-87-pin" endpinid="LatchD-96-out1" pointList="-428,-220,-428,-216,-436,-216" />
+
+<item itemtype="Connector" uid="Connector-133" startpinid="Tunnel-93-pin" endpinid="LatchD-96-in0" pointList="-492,-232,-484,-232,-484,-224" />
+
+<item itemtype="Connector" uid="Connector-135" startpinid="LatchD-84-Pin_outEnable" endpinid="Tunnel-95-pin" pointList="-436,-108,-436,-96,-496,-96" />
+
+<item itemtype="Connector" uid="Connector-137" startpinid="Tunnel-88-pin" endpinid="LatchD-84-in0" pointList="-492,-148,-484,-148,-484,-140" />
+
+</circuit>

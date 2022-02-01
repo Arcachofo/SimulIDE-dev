@@ -26,9 +26,9 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-8" mainComp="false" Show_id="false" Show_Val="true" Pos="-372,-228" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-5" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-9" mainComp="false" Show_id="false" Show_Val="true" Pos="-372,-244" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-5" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-9" mainComp="false" Show_id="false" Show_Val="true" Pos="-372,-244" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-5" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-19" mainComp="false" Show_id="false" Show_Val="true" Pos="-368,-116" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-5" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-19" mainComp="false" Show_id="false" Show_Val="true" Pos="-368,-116" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-5" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-21" mainComp="false" Show_id="false" Show_Val="true" Pos="-364,-92" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-5" valLabRot="0" Out="false" Voltage="5 V" />
 
@@ -84,7 +84,7 @@
 
 <item itemtype="Connector" uid="Connector-30" startpinid="Probe-29-inpin" endpinid="74HC258-1-!Y3" pointList="-112,-156,-196,-156" />
 
-<item itemtype="Connector" uid="Connector-292" startpinid="Node-291-2" endpinid="74HC258-1-A0" pointList="-300,-260,-300,-204,-244,-204" />
+<item itemtype="Connector" uid="Connector-292" startpinid="Node-291-2" endpinid="74HC258-1-A0" pointList="-300,-260,-244,-260,-244,-204" />
 
 <item itemtype="Connector" uid="Connector-293" startpinid="Node-291-1" endpinid="74HC258-164-A0" pointList="-300,-260,-300,-352,-244,-352" />
 

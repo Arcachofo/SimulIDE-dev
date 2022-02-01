@@ -1,0 +1,249 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-285" mainComp="false" Show_id="false" Show_Val="false" Pos="80,-476" rotation="0" hflip="1" vflip="1" label="MuxAnalog-103" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="1 _Bits" Impedance="1 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-284" mainComp="false" Show_id="false" Show_Val="false" Pos="20,-476" rotation="0" hflip="1" vflip="1" label="Tunnel-32" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="g" Rotated="true" />
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-261" mainComp="false" Show_id="false" Show_Val="false" Pos="80,-424" rotation="0" hflip="1" vflip="1" label="MuxAnalog-103" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="1 _Bits" Impedance="1 Ω" />
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-241" mainComp="false" Show_id="false" Show_Val="false" Pos="80,-372" rotation="0" hflip="1" vflip="1" label="MuxAnalog-103" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="1 _Bits" Impedance="1 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-240" mainComp="false" Show_id="false" Show_Val="false" Pos="20,-372" rotation="0" hflip="1" vflip="1" label="Tunnel-32" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="e" Rotated="true" />
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-217" mainComp="false" Show_id="false" Show_Val="false" Pos="80,-320" rotation="0" hflip="1" vflip="1" label="MuxAnalog-103" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="1 _Bits" Impedance="1 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-216" mainComp="false" Show_id="false" Show_Val="false" Pos="20,-320" rotation="0" hflip="1" vflip="1" label="Tunnel-32" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="d" Rotated="true" />
+
+<item itemtype="Ground" CircId="Ground-208" mainComp="false" Show_id="false" Show_Val="false" Pos="48,-104" rotation="0" hflip="1" vflip="1" label="Ground-25" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Tunnel" CircId="Tunnel-193" mainComp="false" Show_id="false" Show_Val="false" Pos="20,-268" rotation="0" hflip="1" vflip="1" label="Tunnel-32" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="c" Rotated="true" />
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-191" mainComp="false" Show_id="false" Show_Val="false" Pos="80,-268" rotation="0" hflip="1" vflip="1" label="MuxAnalog-103" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="1 _Bits" Impedance="1 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-175" mainComp="false" Show_id="false" Show_Val="false" Pos="20,-216" rotation="0" hflip="1" vflip="1" label="Tunnel-32" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="b" Rotated="true" />
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-173" mainComp="false" Show_id="false" Show_Val="false" Pos="80,-216" rotation="0" hflip="1" vflip="1" label="MuxAnalog-103" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="1 _Bits" Impedance="1 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-151" mainComp="false" Show_id="false" Show_Val="false" Pos="20,-164" rotation="0" hflip="1" vflip="1" label="Tunnel-32" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="a" Rotated="true" />
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-148" mainComp="false" Show_id="false" Show_Val="false" Pos="80,-164" rotation="0" hflip="1" vflip="1" label="MuxAnalog-103" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="1 _Bits" Impedance="1 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-131" mainComp="false" Show_id="false" Show_Val="false" Pos="-40,-132" rotation="0" hflip="1" vflip="1" label="Tunnel-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VEE" Rotated="true" />
+
+<item itemtype="Tunnel" CircId="Tunnel-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-188,-252" rotation="0" hflip="1" vflip="1" label="Tunnel-8" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="A" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-188,-240" rotation="0" hflip="1" vflip="1" label="Tunnel-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="B" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-188,-228" rotation="0" hflip="1" vflip="1" label="Tunnel-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="C" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-14" mainComp="false" Show_id="false" Show_Val="false" Pos="-188,-216" rotation="0" hflip="1" vflip="1" label="Tunnel-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="D" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-16" mainComp="false" Show_id="false" Show_Val="false" Pos="-84,-144" rotation="0" hflip="1" vflip="1" label="Tunnel-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="DFO" Rotated="true" />
+
+<item itemtype="Memory" CircId="Memory-18" mainComp="false" Show_id="false" Show_Val="false" Pos="-120,-208" rotation="0" hflip="1" vflip="1" label="Memory-18" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="5 _Bits" Data_Bits="8 _Bits" Persistent="true" Inverted="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" Mem="252,96,218,242,102,182,190,224,254,246,28,110,206,238,2,0,3,159,37,13,153,73,65,31,1,9,227,145,49,17,253,255," />
+
+<item itemtype="Tunnel" CircId="Tunnel-23" mainComp="false" Show_id="false" Show_Val="false" Pos="-208,-184" rotation="0" hflip="1" vflip="1" label="Tunnel-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="DFI" Rotated="false" />
+
+<item itemtype="Ground" CircId="Ground-25" mainComp="false" Show_id="false" Show_Val="false" Pos="-144,-68" rotation="0" hflip="1" vflip="1" label="Ground-25" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-30" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-172,-168" rotation="0" hflip="1" vflip="1" label="Rail-30" idLabPos="-16,-24" labelrot="0" valLabPos="-7,-4" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Tunnel" CircId="Tunnel-44" mainComp="false" Show_id="false" Show_Val="false" Pos="24,-424" rotation="0" hflip="1" vflip="1" label="Tunnel-32" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="f" Rotated="true" />
+
+<item itemtype="Package" CircId="Package-62" mainComp="false" Show_id="true" Show_Val="false" Pos="-176,-348" rotation="0" hflip="1" vflip="1" label="Package-62" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="9 _Cells" Name="CD4055" Package_File="CD4055.package" Logic_Symbol="false" />
+
+<item itemtype="Package" CircId="Package-63" mainComp="false" Show_id="true" Show_Val="false" Pos="-76,-348" rotation="0" hflip="1" vflip="1" label="Package-63" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="9 _Cells" Name="CD4055" Package_File="CD4055_LS.package" Logic_Symbol="true" />
+
+<item itemtype="MuxAnalog" CircId="MuxAnalog-103" mainComp="false" Show_id="false" Show_Val="false" Pos="-108,-140" rotation="0" hflip="1" vflip="1" label="MuxAnalog-103" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="1 _Bits" Impedance="1 Ω" />
+
+<item itemtype="Rail" CircId="Rail-110" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-80,-88" rotation="0" hflip="1" vflip="1" label="Rail-110" idLabPos="-16,-24" labelrot="0" valLabPos="-7,-4" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Node" CircId="Node-297" mainComp="false" Pos="124,-416" />
+
+<item itemtype="Node" CircId="Node-294" mainComp="false" Pos="112,-408" />
+
+<item itemtype="Node" CircId="Node-291" mainComp="false" Pos="48,-384" />
+
+<item itemtype="Node" CircId="Node-279" mainComp="false" Pos="124,-364" />
+
+<item itemtype="Node" CircId="Node-276" mainComp="false" Pos="112,-356" />
+
+<item itemtype="Node" CircId="Node-273" mainComp="false" Pos="48,-332" />
+
+<item itemtype="Node" CircId="Node-257" mainComp="false" Pos="124,-312" />
+
+<item itemtype="Node" CircId="Node-254" mainComp="false" Pos="112,-304" />
+
+<item itemtype="Node" CircId="Node-252" mainComp="false" Pos="48,-280" />
+
+<item itemtype="Node" CircId="Node-236" mainComp="false" Pos="124,-260" />
+
+<item itemtype="Node" CircId="Node-233" mainComp="false" Pos="112,-252" />
+
+<item itemtype="Node" CircId="Node-223" mainComp="false" Pos="48,-228" />
+
+<item itemtype="Node" CircId="Node-213" mainComp="false" Pos="48,-176" />
+
+<item itemtype="Node" CircId="Node-210" mainComp="false" Pos="48,-124" />
+
+<item itemtype="Node" CircId="Node-205" mainComp="false" Pos="124,-208" />
+
+<item itemtype="Node" CircId="Node-202" mainComp="false" Pos="112,-200" />
+
+<item itemtype="Node" CircId="Node-185" mainComp="false" Pos="112,-148" />
+
+<item itemtype="Node" CircId="Node-27" mainComp="false" Pos="-144,-164" />
+
+<item itemtype="Node" CircId="Node-104" mainComp="false" Pos="-196,-184" />
+
+<item itemtype="Node" CircId="Node-113" mainComp="false" Pos="-144,-100" />
+
+<item itemtype="Node" CircId="Node-375" mainComp="false" Pos="-60,-88" />
+
+<item itemtype="Node" CircId="Node-380" mainComp="false" Pos="-44,-132" />
+
+<item itemtype="Node" CircId="Node-383" mainComp="false" Pos="124,-156" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Ground-25-Gnd" endpinid="Node-113-0" pointList="-144,-84,-144,-100" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-27-2" endpinid="Memory-18-Pin_outEnable" pointList="-144,-164,-144,-176" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Node-27-1" endpinid="Memory-18-Pin_Cs" pointList="-144,-164,-96,-164,-96,-176" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="Rail-30-outnod" endpinid="Memory-18-Pin_We" pointList="-156,-168,-156,-184,-144,-184" />
+
+<item itemtype="Connector" uid="Connector-83" startpinid="Tunnel-8-pin" endpinid="Memory-18-in0" pointList="-188,-252,-144,-252,-144,-240" />
+
+<item itemtype="Connector" uid="Connector-84" startpinid="Tunnel-10-pin" endpinid="Memory-18-in1" pointList="-188,-240,-148,-240,-148,-232,-144,-232" />
+
+<item itemtype="Connector" uid="Connector-85" startpinid="Tunnel-12-pin" endpinid="Memory-18-in2" pointList="-188,-228,-152,-228,-152,-224,-144,-224" />
+
+<item itemtype="Connector" uid="Connector-86" startpinid="Tunnel-14-pin" endpinid="Memory-18-in3" pointList="-188,-216,-144,-216" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Tunnel-23-pin" endpinid="Node-104-0" pointList="-208,-184,-196,-184" />
+
+<item itemtype="Connector" uid="Connector-105" startpinid="Node-104-2" endpinid="Memory-18-in4" pointList="-196,-184,-164,-184,-164,-208,-144,-208" />
+
+<item itemtype="Connector" uid="Connector-107" startpinid="MuxAnalog-103-PinInput" endpinid="Tunnel-16-pin" pointList="-132,-132,-132,-144,-84,-144" />
+
+<item itemtype="Connector" uid="Connector-112" startpinid="MuxAnalog-103-PinEnable" endpinid="Node-113-1" pointList="-132,-100,-144,-100" />
+
+<item itemtype="Connector" uid="Connector-152" startpinid="Tunnel-151-pin" endpinid="MuxAnalog-148-PinInput" pointList="20,-164,20,-156,56,-156" />
+
+<item itemtype="Connector" uid="Connector-114" startpinid="Node-113-2" endpinid="Node-27-0" pointList="-144,-100,-144,-164" />
+
+<item itemtype="Connector" uid="Connector-176" startpinid="Tunnel-175-pin" endpinid="MuxAnalog-173-PinInput" pointList="20,-216,20,-208,56,-208" />
+
+<item itemtype="Connector" uid="Connector-186" startpinid="Node-185-2" endpinid="MuxAnalog-148-pinY1" pointList="112,-148,104,-148" />
+
+<item itemtype="Connector" uid="Connector-187" startpinid="Node-185-1" endpinid="Node-202-0" pointList="112,-148,112,-200" />
+
+<item itemtype="Connector" uid="Connector-188" startpinid="MuxAnalog-173-pinY0" endpinid="Node-205-0" pointList="104,-208,124,-208" />
+
+<item itemtype="Connector" uid="Connector-194" startpinid="Tunnel-193-pin" endpinid="MuxAnalog-191-PinInput" pointList="20,-268,20,-260,56,-260" />
+
+<item itemtype="Connector" uid="Connector-203" startpinid="Node-202-2" endpinid="MuxAnalog-173-pinY1" pointList="112,-200,104,-200" />
+
+<item itemtype="Connector" uid="Connector-204" startpinid="Node-202-1" endpinid="Node-233-0" pointList="112,-200,112,-252" />
+
+<item itemtype="Connector" uid="Connector-207" startpinid="Node-205-1" endpinid="Node-236-0" pointList="124,-208,124,-260" />
+
+<item itemtype="Connector" uid="Connector-209" startpinid="Ground-208-Gnd" endpinid="Node-210-0" pointList="48,-120,48,-124" />
+
+<item itemtype="Connector" uid="Connector-211" startpinid="Node-210-2" endpinid="MuxAnalog-148-PinEnable" pointList="48,-124,56,-124" />
+
+<item itemtype="Connector" uid="Connector-212" startpinid="Node-210-1" endpinid="Node-213-0" pointList="48,-124,48,-176" />
+
+<item itemtype="Connector" uid="Connector-214" startpinid="Node-213-2" endpinid="MuxAnalog-173-PinEnable" pointList="48,-176,56,-176" />
+
+<item itemtype="Connector" uid="Connector-215" startpinid="Node-213-1" endpinid="Node-223-0" pointList="48,-176,48,-228" />
+
+<item itemtype="Connector" uid="Connector-221" startpinid="Tunnel-216-pin" endpinid="MuxAnalog-217-PinInput" pointList="20,-320,20,-312,56,-312" />
+
+<item itemtype="Connector" uid="Connector-224" startpinid="Node-223-2" endpinid="MuxAnalog-191-PinEnable" pointList="48,-228,56,-228" />
+
+<item itemtype="Connector" uid="Connector-225" startpinid="Node-223-1" endpinid="Node-252-0" pointList="48,-228,48,-280" />
+
+<item itemtype="Connector" uid="Connector-234" startpinid="Node-233-2" endpinid="MuxAnalog-191-pinY1" pointList="112,-252,104,-252" />
+
+<item itemtype="Connector" uid="Connector-235" startpinid="Node-233-1" endpinid="Node-254-0" pointList="112,-252,112,-304" />
+
+<item itemtype="Connector" uid="Connector-237" startpinid="Node-236-2" endpinid="MuxAnalog-191-pinY0" pointList="124,-260,104,-260" />
+
+<item itemtype="Connector" uid="Connector-238" startpinid="Node-236-1" endpinid="Node-257-0" pointList="124,-260,124,-312" />
+
+<item itemtype="Connector" uid="Connector-245" startpinid="Tunnel-240-pin" endpinid="MuxAnalog-241-PinInput" pointList="20,-372,20,-364,56,-364" />
+
+<item itemtype="Connector" uid="Connector-251" startpinid="MuxAnalog-241-PinEnable" endpinid="Node-273-0" pointList="56,-332,48,-332" />
+
+<item itemtype="Connector" uid="Connector-253" startpinid="Node-252-2" endpinid="MuxAnalog-217-PinEnable" pointList="48,-280,56,-280" />
+
+<item itemtype="Connector" uid="Connector-255" startpinid="Node-254-2" endpinid="MuxAnalog-217-pinY1" pointList="112,-304,104,-304" />
+
+<item itemtype="Connector" uid="Connector-256" startpinid="Node-254-1" endpinid="Node-276-0" pointList="112,-304,112,-356" />
+
+<item itemtype="Connector" uid="Connector-258" startpinid="Node-257-2" endpinid="MuxAnalog-217-pinY0" pointList="124,-312,104,-312" />
+
+<item itemtype="Connector" uid="Connector-259" startpinid="Node-257-1" endpinid="Node-279-0" pointList="124,-312,124,-364" />
+
+<item itemtype="Connector" uid="Connector-274" startpinid="Node-273-2" endpinid="Node-252-1" pointList="48,-332,48,-280" />
+
+<item itemtype="Connector" uid="Connector-275" startpinid="Node-273-1" endpinid="Node-291-0" pointList="48,-332,48,-384" />
+
+<item itemtype="Connector" uid="Connector-277" startpinid="Node-276-2" endpinid="MuxAnalog-241-pinY1" pointList="112,-356,104,-356" />
+
+<item itemtype="Connector" uid="Connector-278" startpinid="Node-276-1" endpinid="Node-294-0" pointList="112,-356,112,-408" />
+
+<item itemtype="Connector" uid="Connector-280" startpinid="Node-279-2" endpinid="MuxAnalog-241-pinY0" pointList="124,-364,104,-364" />
+
+<item itemtype="Connector" uid="Connector-281" startpinid="Node-279-1" endpinid="Node-297-0" pointList="124,-364,124,-416" />
+
+<item itemtype="Connector" uid="Connector-282" startpinid="Tunnel-44-pin" endpinid="MuxAnalog-261-PinInput" pointList="24,-424,24,-416,56,-416" />
+
+<item itemtype="Connector" uid="Connector-289" startpinid="Tunnel-284-pin" endpinid="MuxAnalog-285-PinInput" pointList="20,-476,20,-468,56,-468" />
+
+<item itemtype="Connector" uid="Connector-292" startpinid="Node-291-2" endpinid="MuxAnalog-261-PinEnable" pointList="48,-384,56,-384" />
+
+<item itemtype="Connector" uid="Connector-293" startpinid="Node-291-1" endpinid="MuxAnalog-285-PinEnable" pointList="48,-384,48,-436,56,-436" />
+
+<item itemtype="Connector" uid="Connector-295" startpinid="Node-294-2" endpinid="MuxAnalog-261-pinY1" pointList="112,-408,104,-408" />
+
+<item itemtype="Connector" uid="Connector-296" startpinid="Node-294-1" endpinid="MuxAnalog-285-pinY1" pointList="112,-408,112,-460,104,-460" />
+
+<item itemtype="Connector" uid="Connector-298" startpinid="Node-297-2" endpinid="MuxAnalog-261-pinY0" pointList="124,-416,104,-416" />
+
+<item itemtype="Connector" uid="Connector-299" startpinid="Node-297-1" endpinid="MuxAnalog-285-pinY0" pointList="124,-416,124,-468,104,-468" />
+
+<item itemtype="Connector" uid="Connector-333" startpinid="Memory-18-out7" endpinid="MuxAnalog-148-pinAddr0" pointList="-96,-184,-8,-184,-8,-140,56,-140" />
+
+<item itemtype="Connector" uid="Connector-334" startpinid="Memory-18-out6" endpinid="MuxAnalog-173-pinAddr0" pointList="-96,-192,56,-192" />
+
+<item itemtype="Connector" uid="Connector-335" startpinid="Memory-18-out5" endpinid="MuxAnalog-191-pinAddr0" pointList="-96,-200,0,-200,0,-244,56,-244" />
+
+<item itemtype="Connector" uid="Connector-336" startpinid="Memory-18-out4" endpinid="MuxAnalog-217-pinAddr0" pointList="-96,-208,-4,-208,-4,-296,56,-296" />
+
+<item itemtype="Connector" uid="Connector-337" startpinid="Memory-18-out3" endpinid="MuxAnalog-241-pinAddr0" pointList="-96,-216,-8,-216,-8,-348,56,-348" />
+
+<item itemtype="Connector" uid="Connector-338" startpinid="Memory-18-out2" endpinid="MuxAnalog-261-pinAddr0" pointList="-96,-224,-12,-224,-12,-400,56,-400" />
+
+<item itemtype="Connector" uid="Connector-106" startpinid="Node-104-1" endpinid="MuxAnalog-103-pinAddr0" pointList="-196,-184,-196,-116,-132,-116" />
+
+<item itemtype="Connector" uid="Connector-339" startpinid="Memory-18-out1" endpinid="MuxAnalog-285-pinAddr0" pointList="-96,-232,-16,-232,-16,-452,56,-452" />
+
+<item itemtype="Connector" uid="Connector-138" startpinid="Rail-110-outnod" endpinid="Node-375-0" pointList="-64,-88,-60,-88" />
+
+<item itemtype="Connector" uid="Connector-206" startpinid="Node-205-2" endpinid="Node-383-0" pointList="124,-208,124,-156" />
+
+<item itemtype="Connector" uid="Connector-376" startpinid="Node-375-2" endpinid="MuxAnalog-103-pinY1" pointList="-60,-88,-60,-124,-84,-124" />
+
+<item itemtype="Connector" uid="Connector-132" startpinid="Tunnel-131-pin" endpinid="Node-380-0" pointList="-40,-132,-44,-132" />
+
+<item itemtype="Connector" uid="Connector-377" startpinid="Node-375-1" endpinid="Node-185-0" pointList="-60,-88,112,-88,112,-148" />
+
+<item itemtype="Connector" uid="Connector-381" startpinid="Node-380-2" endpinid="MuxAnalog-103-pinY0" pointList="-44,-132,-84,-132" />
+
+<item itemtype="Connector" uid="Connector-382" startpinid="Node-380-1" endpinid="Node-383-1" pointList="-44,-132,-44,-92,124,-92,124,-156" />
+
+<item itemtype="Connector" uid="Connector-384" startpinid="Node-383-2" endpinid="MuxAnalog-148-pinY0" pointList="124,-156,104,-156" />
+
+</circuit>

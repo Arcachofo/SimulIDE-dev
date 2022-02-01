@@ -1,0 +1,95 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-127" mainComp="false" Show_id="false" Show_Val="true" Pos="-388,-264" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-125" idLabPos="-64,-24" labelrot="0" valLabPos="-51,-5" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-125" mainComp="false" Show_id="false" Show_Val="true" Pos="-388,-280" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-125" idLabPos="-64,-24" labelrot="0" valLabPos="-51,-5" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Rail" CircId="Rail-102" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-416,-352" rotation="0" hflip="1" vflip="1" label="Rail-102" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="SwitchDip" CircId="SwitchDip-93" mainComp="false" Show_id="false" Show_Val="false" Pos="-376,-328" rotation="0" hflip="1" vflip="1" label="SwitchDip-93" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="8 _Switches" State="239" />
+
+<item itemtype="Subcircuit" CircId="8L_Display-51" mainComp="false" Show_id="true" Show_Val="false" Pos="-240,-360" rotation="0" hflip="1" vflip="1" label="8L_Display-51" idLabPos="0,-20" labelrot="0" valLabPos="9,64" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Subcircuit" CircId="74XX100-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-340,-360" rotation="0" hflip="1" vflip="1" label="74XX100-1" idLabPos="0,-20" labelrot="0" valLabPos="13,52" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-123" mainComp="false" Pos="-392,-304" />
+
+<item itemtype="Node" CircId="Node-120" mainComp="false" Pos="-392,-312" />
+
+<item itemtype="Node" CircId="Node-117" mainComp="false" Pos="-392,-320" />
+
+<item itemtype="Node" CircId="Node-114" mainComp="false" Pos="-392,-328" />
+
+<item itemtype="Node" CircId="Node-111" mainComp="false" Pos="-392,-336" />
+
+<item itemtype="Node" CircId="Node-108" mainComp="false" Pos="-392,-344" />
+
+<item itemtype="Node" CircId="Node-105" mainComp="false" Pos="-392,-352" />
+
+<item itemtype="Connector" uid="Connector-85" startpinid="74XX100-1-1Q0" endpinid="8L_Display-51-0" pointList="-300,-352,-248,-352" />
+
+<item itemtype="Connector" uid="Connector-86" startpinid="74XX100-1-1Q1" endpinid="8L_Display-51-1" pointList="-300,-344,-248,-344,-248,-336" />
+
+<item itemtype="Connector" uid="Connector-87" startpinid="74XX100-1-1Q2" endpinid="8L_Display-51-2" pointList="-300,-336,-252,-336,-252,-320,-248,-320" />
+
+<item itemtype="Connector" uid="Connector-88" startpinid="74XX100-1-1Q3" endpinid="8L_Display-51-3" pointList="-300,-328,-256,-328,-256,-304,-248,-304" />
+
+<item itemtype="Connector" uid="Connector-89" startpinid="74XX100-1-2Q0" endpinid="8L_Display-51-4" pointList="-300,-320,-260,-320,-260,-288,-248,-288" />
+
+<item itemtype="Connector" uid="Connector-90" startpinid="74XX100-1-2Q1" endpinid="8L_Display-51-5" pointList="-300,-312,-264,-312,-264,-272,-248,-272" />
+
+<item itemtype="Connector" uid="Connector-91" startpinid="74XX100-1-2Q2" endpinid="8L_Display-51-6" pointList="-300,-304,-268,-304,-268,-256,-248,-256" />
+
+<item itemtype="Connector" uid="Connector-92" startpinid="74XX100-1-2Q3" endpinid="8L_Display-51-7" pointList="-300,-296,-272,-296,-272,-240,-248,-240" />
+
+<item itemtype="Connector" uid="Connector-94" startpinid="SwitchDip-93-switch0-pinN" endpinid="74XX100-1-1D0" pointList="-360,-352,-348,-352" />
+
+<item itemtype="Connector" uid="Connector-95" startpinid="SwitchDip-93-switch1-pinN" endpinid="74XX100-1-1D1" pointList="-360,-344,-348,-344" />
+
+<item itemtype="Connector" uid="Connector-96" startpinid="SwitchDip-93-switch2-pinN" endpinid="74XX100-1-1D2" pointList="-360,-336,-348,-336" />
+
+<item itemtype="Connector" uid="Connector-97" startpinid="SwitchDip-93-switch3-pinN" endpinid="74XX100-1-1D3" pointList="-360,-328,-348,-328" />
+
+<item itemtype="Connector" uid="Connector-98" startpinid="SwitchDip-93-switch4-pinN" endpinid="74XX100-1-2D0" pointList="-360,-320,-348,-320" />
+
+<item itemtype="Connector" uid="Connector-99" startpinid="SwitchDip-93-switch5-pinN" endpinid="74XX100-1-2D1" pointList="-360,-312,-348,-312" />
+
+<item itemtype="Connector" uid="Connector-100" startpinid="SwitchDip-93-switch6-pinN" endpinid="74XX100-1-2D2" pointList="-360,-304,-348,-304" />
+
+<item itemtype="Connector" uid="Connector-101" startpinid="SwitchDip-93-switch7-pinN" endpinid="74XX100-1-2D3" pointList="-360,-296,-348,-296" />
+
+<item itemtype="Connector" uid="Connector-103" startpinid="Rail-102-outnod" endpinid="Node-105-0" pointList="-400,-352,-392,-352" />
+
+<item itemtype="Connector" uid="Connector-104" startpinid="SwitchDip-93-switch1-pinP" endpinid="Node-108-0" pointList="-384,-344,-392,-344" />
+
+<item itemtype="Connector" uid="Connector-106" startpinid="Node-105-2" endpinid="SwitchDip-93-switch0-pinP" pointList="-392,-352,-384,-352" />
+
+<item itemtype="Connector" uid="Connector-107" startpinid="SwitchDip-93-switch2-pinP" endpinid="Node-111-0" pointList="-384,-336,-392,-336" />
+
+<item itemtype="Connector" uid="Connector-109" startpinid="Node-108-2" endpinid="Node-105-1" pointList="-392,-344,-392,-352" />
+
+<item itemtype="Connector" uid="Connector-110" startpinid="SwitchDip-93-switch3-pinP" endpinid="Node-114-0" pointList="-384,-328,-392,-328" />
+
+<item itemtype="Connector" uid="Connector-112" startpinid="Node-111-2" endpinid="Node-108-1" pointList="-392,-336,-392,-344" />
+
+<item itemtype="Connector" uid="Connector-113" startpinid="SwitchDip-93-switch4-pinP" endpinid="Node-117-0" pointList="-384,-320,-392,-320" />
+
+<item itemtype="Connector" uid="Connector-115" startpinid="Node-114-2" endpinid="Node-111-1" pointList="-392,-328,-392,-336" />
+
+<item itemtype="Connector" uid="Connector-116" startpinid="SwitchDip-93-switch5-pinP" endpinid="Node-120-0" pointList="-384,-312,-392,-312" />
+
+<item itemtype="Connector" uid="Connector-118" startpinid="Node-117-2" endpinid="Node-114-1" pointList="-392,-320,-392,-328" />
+
+<item itemtype="Connector" uid="Connector-119" startpinid="SwitchDip-93-switch6-pinP" endpinid="Node-123-0" pointList="-384,-304,-392,-304" />
+
+<item itemtype="Connector" uid="Connector-121" startpinid="Node-120-2" endpinid="Node-117-1" pointList="-392,-312,-392,-320" />
+
+<item itemtype="Connector" uid="Connector-122" startpinid="SwitchDip-93-switch7-pinP" endpinid="Node-123-1" pointList="-384,-296,-392,-296,-392,-304" />
+
+<item itemtype="Connector" uid="Connector-124" startpinid="Node-123-2" endpinid="Node-120-1" pointList="-392,-304,-392,-312" />
+
+<item itemtype="Connector" uid="Connector-126" startpinid="Fixed Voltage-125-outnod" endpinid="74XX100-1-E1" pointList="-372,-280,-348,-280" />
+
+<item itemtype="Connector" uid="Connector-128" startpinid="Fixed Voltage-127-outnod" endpinid="74XX100-1-E2" pointList="-372,-264,-348,-264,-348,-272" />
+
+</circuit>

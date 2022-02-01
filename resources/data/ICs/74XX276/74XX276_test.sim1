@@ -1,0 +1,197 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Probe" CircId="Probe-283" mainComp="false" Show_id="false" Show_Val="true" Pos="-232,-836" rotation="-45" hflip="1" vflip="1" label="Probe-44" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-282" mainComp="false" Show_id="false" Show_Val="true" Pos="-232,-900" rotation="-45" hflip="1" vflip="1" label="Probe-44" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-281" mainComp="false" Show_id="false" Show_Val="true" Pos="-232,-928" rotation="-45" hflip="1" vflip="1" label="Probe-44" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-280" mainComp="false" Show_id="false" Show_Val="true" Pos="-232,-868" rotation="-45" hflip="1" vflip="1" label="Probe-44" idLabPos="16,-16" labelrot="45" valLabPos="12,2" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="74XX276-150" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-812" rotation="0" hflip="1" vflip="1" label="74XX276-1" idLabPos="0,-20" labelrot="0" valLabPos="13,56" valLabRot="-90" Logic_Symbol="false" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-464,-628" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-46,-5" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-464,-644" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-46,-5" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-464,-660" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-46,-5" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-468,-688" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-46,-5" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="74XX276-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-352,-668" rotation="0" hflip="1" vflip="1" label="74XX276-1" idLabPos="0,-20" labelrot="0" valLabPos="13,84" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-42" mainComp="false" Show_id="false" Show_Val="true" Pos="-440,-516" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-46,-5" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-44" mainComp="false" Show_id="false" Show_Val="true" Pos="-292,-660" rotation="-45" hflip="1" vflip="1" label="Probe-44" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-46" mainComp="false" Show_id="false" Show_Val="true" Pos="-292,-628" rotation="-45" hflip="1" vflip="1" label="Probe-44" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-47" mainComp="false" Show_id="false" Show_Val="true" Pos="-292,-596" rotation="-45" hflip="1" vflip="1" label="Probe-44" idLabPos="16,-16" labelrot="45" valLabPos="12,2" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-50" mainComp="false" Show_id="false" Show_Val="true" Pos="-292,-564" rotation="-45" hflip="1" vflip="1" label="Probe-44" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Node" CircId="Node-284" mainComp="false" Pos="-388,-516" />
+
+<item itemtype="Node" CircId="Node-278" mainComp="false" Pos="-380,-636" />
+
+<item itemtype="Node" CircId="Node-275" mainComp="false" Pos="-380,-704" />
+
+<item itemtype="Node" CircId="Node-272" mainComp="false" Pos="-288,-756" />
+
+<item itemtype="Node" CircId="Node-269" mainComp="false" Pos="-380,-756" />
+
+<item itemtype="Node" CircId="Node-266" mainComp="false" Pos="-376,-644" />
+
+<item itemtype="Node" CircId="Node-263" mainComp="false" Pos="-376,-708" />
+
+<item itemtype="Node" CircId="Node-261" mainComp="false" Pos="-292,-748" />
+
+<item itemtype="Node" CircId="Node-257" mainComp="false" Pos="-376,-748" />
+
+<item itemtype="Node" CircId="Node-254" mainComp="false" Pos="-372,-652" />
+
+<item itemtype="Node" CircId="Node-251" mainComp="false" Pos="-372,-712" />
+
+<item itemtype="Node" CircId="Node-248" mainComp="false" Pos="-296,-740" />
+
+<item itemtype="Node" CircId="Node-246" mainComp="false" Pos="-372,-740" />
+
+<item itemtype="Node" CircId="Node-241" mainComp="false" Pos="-364,-660" />
+
+<item itemtype="Node" CircId="Node-15" mainComp="false" Pos="-368,-652" />
+
+<item itemtype="Node" CircId="Node-18" mainComp="false" Pos="-368,-620" />
+
+<item itemtype="Node" CircId="Node-21" mainComp="false" Pos="-368,-588" />
+
+<item itemtype="Node" CircId="Node-24" mainComp="false" Pos="-372,-644" />
+
+<item itemtype="Node" CircId="Node-27" mainComp="false" Pos="-372,-612" />
+
+<item itemtype="Node" CircId="Node-30" mainComp="false" Pos="-372,-580" />
+
+<item itemtype="Node" CircId="Node-33" mainComp="false" Pos="-376,-636" />
+
+<item itemtype="Node" CircId="Node-36" mainComp="false" Pos="-376,-572" />
+
+<item itemtype="Node" CircId="Node-39" mainComp="false" Pos="-376,-604" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="Fixed Voltage-4-outnod" endpinid="Node-241-0" pointList="-452,-688,-440,-688,-440,-660,-364,-660" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Fixed Voltage-3-outnod" endpinid="Node-254-0" pointList="-448,-660,-444,-660,-444,-652,-372,-652" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Fixed Voltage-2-outnod" endpinid="Node-266-0" pointList="-448,-644,-376,-644" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Fixed Voltage-1-outnod" endpinid="Node-278-0" pointList="-448,-628,-444,-628,-444,-636,-380,-636" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Node-15-2" endpinid="74XX276-5-1J" pointList="-368,-652,-360,-652" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Node-15-1" endpinid="Node-18-0" pointList="-368,-652,-368,-620" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="Node-18-2" endpinid="74XX276-5-2J" pointList="-368,-620,-360,-620" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="Node-18-1" endpinid="Node-21-0" pointList="-368,-620,-368,-588" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-21-2" endpinid="74XX276-5-3J" pointList="-368,-588,-360,-588" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="Node-21-1" endpinid="74XX276-5-4J" pointList="-368,-588,-368,-556,-360,-556" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-24-2" endpinid="74XX276-5-1CLK" pointList="-372,-644,-360,-644" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Node-24-1" endpinid="Node-27-0" pointList="-372,-644,-372,-612" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-27-2" endpinid="74XX276-5-2CLK" pointList="-372,-612,-360,-612" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Node-27-1" endpinid="Node-30-0" pointList="-372,-612,-372,-580" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="Node-30-2" endpinid="74XX276-5-3CLK" pointList="-372,-580,-360,-580" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-30-1" endpinid="74XX276-5-4CLK" pointList="-372,-580,-372,-548,-360,-548" />
+
+<item itemtype="Connector" uid="Connector-34" startpinid="Node-33-2" endpinid="74XX276-5-1!K" pointList="-376,-636,-360,-636" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-33-1" endpinid="Node-39-0" pointList="-376,-636,-376,-604" />
+
+<item itemtype="Connector" uid="Connector-37" startpinid="Node-36-2" endpinid="74XX276-5-4!K" pointList="-376,-572,-376,-540,-360,-540" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-36-1" endpinid="74XX276-5-3!K" pointList="-376,-572,-360,-572" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="Node-39-2" endpinid="Node-36-0" pointList="-376,-604,-376,-572" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Node-39-1" endpinid="74XX276-5-2!K" pointList="-376,-604,-360,-604" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Fixed Voltage-42-outnod" endpinid="Node-284-0" pointList="-424,-516,-388,-516" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Probe-44-inpin" endpinid="74XX276-5-1Q" pointList="-308,-644,-312,-644" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Probe-46-inpin" endpinid="74XX276-5-2Q" pointList="-308,-612,-312,-612" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="Probe-47-inpin" endpinid="74XX276-5-3Q" pointList="-308,-580,-312,-580" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Probe-50-inpin" endpinid="74XX276-5-4Q" pointList="-308,-548,-312,-548" />
+
+<item itemtype="Connector" uid="Connector-242" startpinid="Node-241-2" endpinid="74XX276-5-!S" pointList="-364,-660,-360,-660" />
+
+<item itemtype="Connector" uid="Connector-243" startpinid="Node-241-1" endpinid="74XX276-150-!S" pointList="-364,-660,-364,-716,-300,-716,-300,-732,-308,-732" />
+
+<item itemtype="Connector" uid="Connector-244" startpinid="74XX276-150-1J" endpinid="Node-246-0" pointList="-356,-796,-372,-796,-372,-740" />
+
+<item itemtype="Connector" uid="Connector-245" startpinid="74XX276-150-3J" endpinid="Node-248-0" pointList="-308,-740,-296,-740" />
+
+<item itemtype="Connector" uid="Connector-247" startpinid="Node-246-2" endpinid="74XX276-150-2J" pointList="-372,-740,-356,-740" />
+
+<item itemtype="Connector" uid="Connector-249" startpinid="Node-248-2" endpinid="Node-251-0" pointList="-296,-740,-296,-712,-372,-712" />
+
+<item itemtype="Connector" uid="Connector-250" startpinid="Node-248-1" endpinid="74XX276-150-4J" pointList="-296,-740,-296,-796,-308,-796" />
+
+<item itemtype="Connector" uid="Connector-252" startpinid="Node-251-2" endpinid="Node-246-1" pointList="-372,-712,-372,-740" />
+
+<item itemtype="Connector" uid="Connector-253" startpinid="Node-251-1" endpinid="Node-254-1" pointList="-372,-712,-372,-652" />
+
+<item itemtype="Connector" uid="Connector-255" startpinid="Node-254-2" endpinid="Node-15-0" pointList="-372,-652,-368,-652" />
+
+<item itemtype="Connector" uid="Connector-256" startpinid="74XX276-150-1CLK" endpinid="Node-257-0" pointList="-356,-788,-376,-788,-376,-748" />
+
+<item itemtype="Connector" uid="Connector-258" startpinid="Node-257-2" endpinid="74XX276-150-2CLK" pointList="-376,-748,-356,-748" />
+
+<item itemtype="Connector" uid="Connector-259" startpinid="Node-257-1" endpinid="Node-263-0" pointList="-376,-748,-376,-708" />
+
+<item itemtype="Connector" uid="Connector-260" startpinid="74XX276-150-4CLK" endpinid="Node-261-1" pointList="-308,-788,-292,-788,-292,-748" />
+
+<item itemtype="Connector" uid="Connector-262" startpinid="Node-261-2" endpinid="74XX276-150-3CLK" pointList="-292,-748,-308,-748" />
+
+<item itemtype="Connector" uid="Connector-264" startpinid="Node-263-2" endpinid="Node-261-0" pointList="-376,-708,-292,-708,-292,-748" />
+
+<item itemtype="Connector" uid="Connector-265" startpinid="Node-263-1" endpinid="Node-266-1" pointList="-376,-708,-376,-644" />
+
+<item itemtype="Connector" uid="Connector-267" startpinid="Node-266-2" endpinid="Node-24-0" pointList="-376,-644,-372,-644" />
+
+<item itemtype="Connector" uid="Connector-268" startpinid="74XX276-150-1!K" endpinid="Node-269-0" pointList="-356,-780,-380,-780,-380,-756" />
+
+<item itemtype="Connector" uid="Connector-270" startpinid="Node-269-2" endpinid="74XX276-150-2!K" pointList="-380,-756,-356,-756" />
+
+<item itemtype="Connector" uid="Connector-271" startpinid="Node-269-1" endpinid="Node-275-0" pointList="-380,-756,-380,-704" />
+
+<item itemtype="Connector" uid="Connector-273" startpinid="Node-272-2" endpinid="74XX276-150-3!K" pointList="-288,-756,-308,-756" />
+
+<item itemtype="Connector" uid="Connector-274" startpinid="Node-272-1" endpinid="74XX276-150-4!K" pointList="-288,-756,-288,-780,-308,-780" />
+
+<item itemtype="Connector" uid="Connector-276" startpinid="Node-275-2" endpinid="Node-272-0" pointList="-380,-704,-288,-704,-288,-756" />
+
+<item itemtype="Connector" uid="Connector-277" startpinid="Node-275-1" endpinid="Node-278-1" pointList="-380,-704,-380,-636" />
+
+<item itemtype="Connector" uid="Connector-279" startpinid="Node-278-2" endpinid="Node-33-0" pointList="-380,-636,-376,-636" />
+
+<item itemtype="Connector" uid="Connector-285" startpinid="Node-284-2" endpinid="74XX276-5-!R" pointList="-388,-516,-360,-516,-360,-532" />
+
+<item itemtype="Connector" uid="Connector-286" startpinid="Node-284-1" endpinid="74XX276-150-!R" pointList="-388,-516,-388,-804,-356,-804" />
+
+<item itemtype="Connector" uid="Connector-287" startpinid="Probe-281-inpin" endpinid="74XX276-150-1Q" pointList="-248,-912,-360,-912,-360,-772,-356,-772" />
+
+<item itemtype="Connector" uid="Connector-288" startpinid="Probe-282-inpin" endpinid="74XX276-150-2Q" pointList="-248,-884,-364,-884,-364,-764,-356,-764" />
+
+<item itemtype="Connector" uid="Connector-289" startpinid="Probe-280-inpin" endpinid="74XX276-150-3Q" pointList="-248,-852,-280,-852,-280,-764,-308,-764" />
+
+<item itemtype="Connector" uid="Connector-290" startpinid="Probe-283-inpin" endpinid="74XX276-150-4Q" pointList="-248,-820,-248,-772,-308,-772" />
+
+</circuit>

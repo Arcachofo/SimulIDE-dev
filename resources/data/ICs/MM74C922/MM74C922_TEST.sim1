@@ -1,0 +1,61 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="FreqMeter" CircId="Frequencimeter-43" mainComp="false" Show_id="false" Show_Val="false" Pos="44,-356" rotation="0" hflip="1" vflip="1" label="Frequencimeter-43" idLabPos="-32,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Filter="0.1 V" />
+
+<item itemtype="Clock" CircId="Clock-9" mainComp="false" Show_id="false" Show_Val="true" Pos="-52,-356" rotation="0" hflip="1" vflip="1" label="Clock-51" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1000 Hz" Always_On="false" />
+
+<item itemtype="Ground" CircId="Ground-8" mainComp="false" Show_id="false" Show_Val="false" Pos="56,-280" rotation="0" hflip="1" vflip="1" label="Ground-28" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Capacitor" CircId="Capacitor-7" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="36,-308" rotation="0" hflip="1" vflip="1" label="Capacitor-26" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="100 nF" />
+
+<item itemtype="7-Seg BCD" CircId="7-6" mainComp="false" Show_id="false" Show_Val="false" Pos="32,-236" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-21" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Probe" CircId="Probe-5" mainComp="false" Show_id="false" Show_Val="true" Pos="76,-284" rotation="-45" hflip="1" vflip="1" label="Probe-17" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Buffer" CircId="Buffer-4" mainComp="false" Show_id="false" Show_Val="false" Pos="0,-268" rotation="0" hflip="1" vflip="1" label="Buffer-14" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="KeyPad" CircId="KeyPad-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-220,-260" rotation="0" hflip="1" vflip="1" label="KeyPad-2" idLabPos="-8,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="4 _Buttons" Cols="4 _Buttons" Key_Labels="0123456789ABCDEF" />
+
+<item itemtype="Subcircuit" CircId="MM74C922-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-76,-300" rotation="0" hflip="1" vflip="1" label="MM74C922-1" idLabPos="-16,-15" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Probe" CircId="Probe-1" mainComp="false" Show_id="false" Show_Val="true" Pos="136,-340" rotation="-45" hflip="1" vflip="1" label="Probe-42" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Node" CircId="Node-52" mainComp="false" Pos="-8,-308" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Buffer-4-in0" endpinid="MM74C922-2-DA" pointList="-16,-268,-36,-268" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="7-6-in0" endpinid="MM74C922-2-A" pointList="44,-204,44,-192,-4,-192,-4,-244,-36,-244" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="7-6-in1" endpinid="MM74C922-2-B" pointList="36,-204,36,-184,-12,-184,-12,-236,-36,-236" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="7-6-in2" endpinid="MM74C922-2-C" pointList="28,-204,28,-176,-20,-176,-20,-228,-36,-228" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="7-6-in3" endpinid="MM74C922-2-D" pointList="20,-204,20,-168,-28,-168,-28,-220,-36,-220" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="KeyPad-3-Pin0" endpinid="MM74C922-2-Y1" pointList="-156,-252,-148,-252,-148,-244,-84,-244" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="KeyPad-3-Pin1" endpinid="MM74C922-2-Y2" pointList="-156,-236,-84,-236" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="KeyPad-3-Pin2" endpinid="MM74C922-2-Y3" pointList="-156,-220,-148,-220,-148,-228,-84,-228" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="KeyPad-3-Pin3" endpinid="MM74C922-2-Y4" pointList="-156,-204,-140,-204,-140,-220,-84,-220" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="KeyPad-3-Pin4" endpinid="MM74C922-2-X1" pointList="-220,-188,-220,-168,-124,-168,-124,-292,-84,-292" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="KeyPad-3-Pin5" endpinid="MM74C922-2-X2" pointList="-204,-188,-204,-164,-116,-164,-116,-284,-84,-284" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="KeyPad-3-Pin6" endpinid="MM74C922-2-X3" pointList="-188,-188,-188,-160,-108,-160,-108,-276,-84,-276" />
+
+<item itemtype="Connector" uid="Connector-34" startpinid="KeyPad-3-Pin7" endpinid="MM74C922-2-X4" pointList="-172,-188,-172,-156,-100,-156,-100,-268,-84,-268" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="Buffer-4-out" endpinid="Probe-5-inpin" pointList="16,-268,60,-268" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Ground-8-Gnd" endpinid="Capacitor-7-rPin" pointList="56,-296,56,-308,52,-308" />
+
+<item itemtype="Connector" uid="Connector-44" startpinid="Frequencimeter-43-lPin" endpinid="Node-52-0" pointList="4,-356,-8,-356,-8,-308" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Capacitor-7-lPin" endpinid="Node-52-1" pointList="20,-308,-8,-308" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Node-52-2" endpinid="MM74C922-2-OSC" pointList="-8,-308,-8,-284,-36,-284" />
+
+</circuit>

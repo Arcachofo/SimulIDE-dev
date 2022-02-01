@@ -72,7 +72,7 @@
 
 <item itemtype="And Gate" CircId="And Gate-36" mainComp="false" Show_id="false" Show_Val="false" Pos="-476,-612" rotation="0" hflip="1" vflip="1" label="And Gate-80" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="3 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Tunnel" CircId="Tunnel-35" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-288" rotation="0" hflip="1" vflip="1" label="PackagePin7" idLabPos="27,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="A&lt;B" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-35" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-288" rotation="0" hflip="1" vflip="1" label="PackagePin7" idLabPos="27,-6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="A<B" Rotated="true" />
 
 <item itemtype="Tunnel" CircId="Tunnel-34" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-420" rotation="0" hflip="1" vflip="1" label="PackagePin6" idLabPos="28,-8" labelrot="0" valLabPos="16,0" valLabRot="45" Name="A=B" Rotated="true" />
 

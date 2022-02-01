@@ -30,7 +30,7 @@
 
 <item itemtype="Package" CircId="Package-106" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-364" rotation="0" hflip="1" vflip="1" label="Package-106" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="8 _Cells" Name="Package" Package_File="74HC78.package" Logic_Symbol="false" />
 
-<item itemtype="Package" CircId="Package-107" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-260" rotation="0" hflip="1" vflip="1" label="Package-107" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="11 _Cells" Name="Package" Package_File="74HC78_LS.package" Logic_Symbol="true" />
+<item itemtype="Package" CircId="Package-107" mainComp="false" Show_id="true" Show_Val="false" Pos="-312,-272" rotation="0" hflip="1" vflip="1" label="Package-107" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="11 _Cells" Name="Package" Package_File="74HC78_LS.package" Logic_Symbol="true" />
 
 <item itemtype="Node" CircId="Node-92" mainComp="false" Pos="-160,-220" />
 

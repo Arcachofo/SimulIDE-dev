@@ -1,0 +1,85 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="LAnalizer" CircId="LAnalizer-332" mainComp="false" Show_id="false" Show_Val="false" Pos="40,48" rotation="0" hflip="1" vflip="1" label="LAnalizer-332" idLabPos="-90,-100" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="2624657000" TimPos="-1000" VolDiv="0.769901" Tunnels=",,,,,,,," Trigger="1" Treshold="2.5 V" />
+
+<item itemtype="Ground" CircId="Ground-324" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,124" rotation="0" hflip="1" vflip="1" label="Ground-324" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Capacitor" CircId="Capacitor-320" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-228,84" rotation="-90" hflip="1" vflip="1" label="Capacitor-320" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="10 nF" />
+
+<item itemtype="Resistor" CircId="Resistor-317" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-204,44" rotation="0" hflip="1" vflip="1" label="Resistor-317" idLabPos="-12,-20" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="100 kΩ" />
+
+<item itemtype="Ground" CircId="Ground-302" mainComp="false" Show_id="false" Show_Val="false" Pos="-92,-40" rotation="0" hflip="1" vflip="1" label="Ground-302" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-294" mainComp="false" Show_id="false" Show_Val="false" Pos="-100,-88" rotation="0" hflip="1" vflip="1" label="Seven Segment-294" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="1 _7seg" Color="0" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="100 Ω" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-292" mainComp="false" Show_id="false" Show_Val="true" Pos="-360,-60" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-292" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-290" mainComp="false" Show_id="false" Show_Val="true" Pos="-360,-88" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-290" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="74XX93-234" mainComp="false" Show_id="true" Show_Val="false" Pos="-296,-120" rotation="0" hflip="1" vflip="1" label="74XX93-234" idLabPos="0,-20" labelrot="0" valLabPos="13,34" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Subcircuit" CircId="564IK2-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-220,-120" rotation="0" hflip="1" vflip="1" label="564IK2-1" idLabPos="0,-20" labelrot="0" valLabPos="13,82" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-322" mainComp="false" Pos="-228,44" />
+
+<item itemtype="Node" CircId="Node-287" mainComp="false" Pos="-252,-112" />
+
+<item itemtype="Connector" uid="Connector-283" startpinid="74XX93-234-Q1" endpinid="564IK2-1-2" pointList="-256,-104,-228,-104" />
+
+<item itemtype="Connector" uid="Connector-284" startpinid="74XX93-234-Q0" endpinid="Node-287-0" pointList="-256,-112,-252,-112" />
+
+<item itemtype="Connector" uid="Connector-285" startpinid="74XX93-234-Q2" endpinid="564IK2-1-4" pointList="-256,-96,-228,-96" />
+
+<item itemtype="Connector" uid="Connector-286" startpinid="74XX93-234-Q3" endpinid="564IK2-1-8" pointList="-256,-88,-228,-88" />
+
+<item itemtype="Connector" uid="Connector-288" startpinid="Node-287-2" endpinid="564IK2-1-1" pointList="-252,-112,-228,-112" />
+
+<item itemtype="Connector" uid="Connector-289" startpinid="Node-287-1" endpinid="74XX93-234-CP1" pointList="-252,-112,-252,-148,-320,-148,-320,-80,-304,-80" />
+
+<item itemtype="Connector" uid="Connector-291" startpinid="Fixed Voltage-290-outnod" endpinid="74XX93-234-CP0" pointList="-344,-88,-304,-88" />
+
+<item itemtype="Connector" uid="Connector-293" startpinid="Fixed Voltage-292-outnod" endpinid="564IK2-1-DE" pointList="-344,-60,-228,-60,-228,-72" />
+
+<item itemtype="Connector" uid="Connector-295" startpinid="Seven Segment-294-pin_a" endpinid="564IK2-1-A" pointList="-124,-112,-180,-112" />
+
+<item itemtype="Connector" uid="Connector-296" startpinid="Seven Segment-294-pin_b" endpinid="564IK2-1-B" pointList="-124,-104,-180,-104" />
+
+<item itemtype="Connector" uid="Connector-297" startpinid="Seven Segment-294-pin_c" endpinid="564IK2-1-C" pointList="-124,-96,-180,-96" />
+
+<item itemtype="Connector" uid="Connector-298" startpinid="Seven Segment-294-pin_d" endpinid="564IK2-1-D" pointList="-124,-88,-180,-88" />
+
+<item itemtype="Connector" uid="Connector-299" startpinid="Seven Segment-294-pin_e" endpinid="564IK2-1-E" pointList="-124,-80,-180,-80" />
+
+<item itemtype="Connector" uid="Connector-300" startpinid="Seven Segment-294-pin_f" endpinid="564IK2-1-F" pointList="-124,-72,-180,-72" />
+
+<item itemtype="Connector" uid="Connector-301" startpinid="Seven Segment-294-pin_g" endpinid="564IK2-1-G" pointList="-124,-64,-180,-64" />
+
+<item itemtype="Connector" uid="Connector-303" startpinid="Ground-302-Gnd" endpinid="Seven Segment-294-pin_commona" pointList="-92,-56,-92,-56" />
+
+<item itemtype="Connector" uid="Connector-318" startpinid="Resistor-317-rPin" endpinid="564IK2-1-!G" pointList="-188,44,-180,44,-180,16" />
+
+<item itemtype="Connector" uid="Connector-319" startpinid="Resistor-317-lPin" endpinid="Node-322-0" pointList="-220,44,-228,44" />
+
+<item itemtype="Connector" uid="Connector-321" startpinid="Capacitor-320-rPin" endpinid="Node-322-1" pointList="-228,68,-228,44" />
+
+<item itemtype="Connector" uid="Connector-323" startpinid="Node-322-2" endpinid="564IK2-1-S" pointList="-228,44,-228,16" />
+
+<item itemtype="Connector" uid="Connector-325" startpinid="Ground-324-Gnd" endpinid="Capacitor-320-lPin" pointList="-228,108,-228,100" />
+
+<item itemtype="Connector" uid="Connector-333" startpinid="LAnalizer-332-Pin0" endpinid="564IK2-1-Y1" pointList="-48,-16,-104,-16,-104,-48,-180,-48" />
+
+<item itemtype="Connector" uid="Connector-334" startpinid="564IK2-1-Y2" endpinid="LAnalizer-332-Pin1" pointList="-180,-40,-108,-40,-108,0,-48,0" />
+
+<item itemtype="Connector" uid="Connector-335" startpinid="LAnalizer-332-Pin2" endpinid="564IK2-1-Y3" pointList="-48,16,-112,16,-112,-32,-180,-32" />
+
+<item itemtype="Connector" uid="Connector-336" startpinid="564IK2-1-Y4" endpinid="LAnalizer-332-Pin3" pointList="-180,-24,-116,-24,-116,32,-48,32" />
+
+<item itemtype="Connector" uid="Connector-337" startpinid="LAnalizer-332-Pin4" endpinid="564IK2-1-Y5" pointList="-48,48,-120,48,-120,-16,-180,-16" />
+
+<item itemtype="Connector" uid="Connector-338" startpinid="LAnalizer-332-Pin5" endpinid="564IK2-1-V1" pointList="-48,64,-124,64,-124,-8,-180,-8" />
+
+<item itemtype="Connector" uid="Connector-339" startpinid="LAnalizer-332-Pin6" endpinid="564IK2-1-V2" pointList="-48,80,-128,80,-128,0,-180,0" />
+
+<item itemtype="Connector" uid="Connector-340" startpinid="LAnalizer-332-Pin7" endpinid="564IK2-1-V3" pointList="-48,96,-136,96,-136,8,-180,8" />
+
+</circuit>

@@ -12,7 +12,7 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-596,-216" rotation="0" hflip="1" vflip="1" label="1K" idLabPos="-47,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-660,-228" rotation="0" hflip="1" vflip="1" label="1!CP" idLabPos="-54,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-660,-228" rotation="0" hflip="1" vflip="1" label="1!CP" idLabPos="-54,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Probe" CircId="Probe-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-356,-236" rotation="-45" hflip="1" vflip="1" label="1!Q" idLabPos="16,1" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="false" Threshold="2.5 V" />
 

@@ -14,7 +14,7 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-82" mainComp="false" Show_id="false" Show_Val="true" Pos="-556,-236" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-22" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-7" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-83" mainComp="false" Show_id="false" Show_Val="true" Pos="-556,-220" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-22" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-7" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-83" mainComp="false" Show_id="false" Show_Val="true" Pos="-556,-220" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-22" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-7" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-84" mainComp="false" Show_id="false" Show_Val="true" Pos="-556,-204" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-22" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-7" valLabRot="0" Out="false" Voltage="5 V" />
 
@@ -22,7 +22,7 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-86" mainComp="false" Show_id="false" Show_Val="true" Pos="-556,-164" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-22" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-7" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-87" mainComp="false" Show_id="false" Show_Val="true" Pos="-556,-148" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-22" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-7" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-87" mainComp="false" Show_id="false" Show_Val="true" Pos="-556,-148" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-22" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-7" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Node" CircId="Node-313" mainComp="false" Pos="-496,-188" />
 

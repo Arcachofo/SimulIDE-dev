@@ -1,0 +1,69 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="7-Seg BCD" CircId="7-147" mainComp="false" Show_id="false" Show_Val="false" Pos="-160,-212" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-142" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="7-Seg BCD" CircId="7-Seg BCD-142" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,-88" rotation="0" hflip="1" vflip="1" label="7-Seg BCD-142" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Subcircuit" CircId="74XX92-76" mainComp="false" Show_id="true" Show_Val="false" Pos="-248,-60" rotation="0" hflip="1" vflip="1" label="74XX92" idLabPos="-4,-17" labelrot="0" valLabPos="13,34" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-300,-212" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-5" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="74XX92-3" mainComp="false" Show_id="true" Show_Val="false" Pos="-252,-188" rotation="0" hflip="1" vflip="1" label="74XX92" idLabPos="-4,-17" labelrot="0" valLabPos="13,42" valLabRot="-90" Logic_Symbol="false" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-312,-148" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-8" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-312,-116" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-9" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Node" CircId="Node-164" mainComp="false" Pos="-284,-148" />
+
+<item itemtype="Node" CircId="Node-161" mainComp="false" Pos="-276,-116" />
+
+<item itemtype="Node" CircId="Node-159" mainComp="false" Pos="-272,-212" />
+
+<item itemtype="Node" CircId="Node-155" mainComp="false" Pos="-196,-52" />
+
+<item itemtype="Node" CircId="Node-152" mainComp="false" Pos="-204,-164" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Fixed Volt.-5-outnod" endpinid="Node-159-0" pointList="-284,-212,-272,-212" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Fixed Volt.-2-outnod" endpinid="Node-164-0" pointList="-296,-148,-284,-148" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Fixed Volt.-1-outnod" endpinid="Node-161-0" pointList="-296,-116,-276,-116" />
+
+<item itemtype="Connector" uid="Connector-143" startpinid="7-Seg BCD-142-in0" endpinid="Node-155-0" pointList="-156,-56,-152,-56,-152,-52,-196,-52" />
+
+<item itemtype="Connector" uid="Connector-144" startpinid="7-Seg BCD-142-in1" endpinid="74XX92-76-Q1" pointList="-164,-56,-160,-56,-160,-44,-208,-44" />
+
+<item itemtype="Connector" uid="Connector-145" startpinid="7-Seg BCD-142-in2" endpinid="74XX92-76-Q2" pointList="-172,-56,-168,-56,-168,-36,-208,-36" />
+
+<item itemtype="Connector" uid="Connector-146" startpinid="7-Seg BCD-142-in3" endpinid="74XX92-76-Q3" pointList="-180,-56,-176,-56,-176,-28,-208,-28" />
+
+<item itemtype="Connector" uid="Connector-148" startpinid="7-147-in0" endpinid="Node-152-0" pointList="-148,-180,-144,-180,-144,-164,-204,-164" />
+
+<item itemtype="Connector" uid="Connector-149" startpinid="7-147-in1" endpinid="74XX92-3-Q1" pointList="-156,-180,-152,-180,-152,-156,-212,-156" />
+
+<item itemtype="Connector" uid="Connector-150" startpinid="7-147-in2" endpinid="74XX92-3-Q2" pointList="-164,-180,-160,-180,-160,-140,-212,-140" />
+
+<item itemtype="Connector" uid="Connector-151" startpinid="7-147-in3" endpinid="74XX92-3-Q3" pointList="-172,-180,-168,-180,-168,-132,-212,-132" />
+
+<item itemtype="Connector" uid="Connector-153" startpinid="Node-152-2" endpinid="74XX92-3-Q0" pointList="-204,-164,-212,-164" />
+
+<item itemtype="Connector" uid="Connector-154" startpinid="Node-152-1" endpinid="74XX92-3-CP1" pointList="-204,-164,-204,-192,-268,-192,-268,-180,-260,-180" />
+
+<item itemtype="Connector" uid="Connector-156" startpinid="Node-155-2" endpinid="74XX92-76-Q0" pointList="-196,-52,-208,-52" />
+
+<item itemtype="Connector" uid="Connector-157" startpinid="Node-155-1" endpinid="74XX92-76-CP1" pointList="-196,-52,-196,-64,-264,-64,-264,-20,-256,-20" />
+
+<item itemtype="Connector" uid="Connector-158" startpinid="74XX92-76-CP0" endpinid="Node-159-1" pointList="-256,-28,-272,-28,-272,-212" />
+
+<item itemtype="Connector" uid="Connector-160" startpinid="Node-159-2" endpinid="74XX92-3-CP0" pointList="-272,-212,-196,-212,-196,-180,-212,-180" />
+
+<item itemtype="Connector" uid="Connector-162" startpinid="Node-161-2" endpinid="74XX92-3-MR2" pointList="-276,-116,-276,-132,-260,-132" />
+
+<item itemtype="Connector" uid="Connector-163" startpinid="Node-161-1" endpinid="74XX92-76-MR2" pointList="-276,-116,-276,-44,-256,-44" />
+
+<item itemtype="Connector" uid="Connector-165" startpinid="Node-164-2" endpinid="74XX92-3-MR1" pointList="-284,-148,-276,-148,-276,-140,-260,-140" />
+
+<item itemtype="Connector" uid="Connector-166" startpinid="Node-164-1" endpinid="74XX92-76-MR1" pointList="-284,-148,-284,-52,-256,-52" />
+
+</circuit>

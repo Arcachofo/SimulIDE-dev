@@ -34,7 +34,7 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-28" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-176" rotation="0" hflip="1" vflip="1" label="!OE" idLabPos="-49,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-29" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-240" rotation="0" hflip="1" vflip="1" label="A" idLabPos="-49,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-29" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-240" rotation="0" hflip="1" vflip="1" label="A" idLabPos="-49,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Node" CircId="Node-174" mainComp="false" Pos="-248,-236" />
 

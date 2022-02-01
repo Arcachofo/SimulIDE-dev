@@ -6,7 +6,7 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-89" mainComp="false" Show_id="false" Show_Val="true" Pos="-336,-224" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-89" idLabPos="-64,-24" labelrot="0" valLabPos="-47,-3" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-84" mainComp="false" Show_id="false" Show_Val="true" Pos="-336,-240" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-84" idLabPos="-64,-24" labelrot="0" valLabPos="-48,-4" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-84" mainComp="false" Show_id="false" Show_Val="true" Pos="-336,-240" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-84" idLabPos="-64,-24" labelrot="0" valLabPos="-48,-4" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-79" mainComp="false" Show_id="false" Show_Val="true" Pos="-336,-260" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-79" idLabPos="-64,-24" labelrot="0" valLabPos="-49,-5" valLabRot="0" Out="true" Voltage="5 V" />
 

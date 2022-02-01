@@ -16,7 +16,7 @@
 
 <item itemtype="Subcircuit" CircId="74HC107-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-444,-172" rotation="0" hflip="1" vflip="1" label="74HC107-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-540,-156" rotation="0" hflip="1" vflip="1" label="!CP" idLabPos="-49,-3" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-540,-156" rotation="0" hflip="1" vflip="1" label="!CP" idLabPos="-49,-3" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Probe" CircId="Probe-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-324,-188" rotation="-45" hflip="1" vflip="1" label="Probe-40" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 

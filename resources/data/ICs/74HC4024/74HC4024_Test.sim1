@@ -1,0 +1,35 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="74HC4024-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-156" rotation="0" hflip="1" vflip="1" label="74HC4024-6" idLabPos="-13,69" labelrot="0" valLabPos="13,46" valLabRot="-90" Logic_Symbol="false" />
+
+<item itemtype="Clock" CircId="Clock-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-476,-156" rotation="0" hflip="1" vflip="1" label="Clock-5" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="10 Hz" Always_On="false" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-484,-124" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-4" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="7-Seg BCD" CircId="7 Seg BCD-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-280,-240" rotation="0" hflip="1" vflip="1" label="7 Seg BCD-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="7-Seg BCD" CircId="7 Seg BCD-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-240" rotation="0" hflip="1" vflip="1" label="7 Seg BCD-2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground (0 V)-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-344,-188" rotation="0" hflip="1" vflip="1" label="Ground (0 V)-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Connector" uid="Connector-142" startpinid="Clock-5-outnod" endpinid="74HC4024-6-!CP" pointList="-460,-156,-372,-156,-372,-148" />
+
+<item itemtype="Connector" uid="Connector-144" startpinid="Fixed Volt.-4-outnod" endpinid="74HC4024-6-MR" pointList="-468,-124,-468,-140,-372,-140" />
+
+<item itemtype="Connector" uid="Connector-146" startpinid="7 Seg BCD-3-in0" endpinid="74HC4024-6-Q0" pointList="-268,-208,-268,-132,-324,-132" />
+
+<item itemtype="Connector" uid="Connector-148" startpinid="7 Seg BCD-3-in1" endpinid="74HC4024-6-Q1" pointList="-276,-208,-276,-124,-324,-124" />
+
+<item itemtype="Connector" uid="Connector-150" startpinid="7 Seg BCD-3-in2" endpinid="74HC4024-6-Q2" pointList="-284,-208,-284,-108,-324,-108" />
+
+<item itemtype="Connector" uid="Connector-152" startpinid="7 Seg BCD-3-in3" endpinid="74HC4024-6-Q3" pointList="-292,-208,-292,-68,-388,-68,-388,-108,-372,-108" />
+
+<item itemtype="Connector" uid="Connector-154" startpinid="7 Seg BCD-2-in0" endpinid="74HC4024-6-Q4" pointList="-304,-208,-304,-164,-404,-164,-404,-116,-372,-116" />
+
+<item itemtype="Connector" uid="Connector-156" startpinid="7 Seg BCD-2-in1" endpinid="74HC4024-6-Q5" pointList="-312,-208,-312,-172,-396,-172,-396,-124,-372,-124" />
+
+<item itemtype="Connector" uid="Connector-158" startpinid="7 Seg BCD-2-in2" endpinid="74HC4024-6-Q6" pointList="-320,-208,-320,-180,-388,-180,-388,-132,-372,-132" />
+
+<item itemtype="Connector" uid="Connector-160" startpinid="7 Seg BCD-2-in3" endpinid="Ground (0 V)-1-Gnd" pointList="-328,-208,-328,-204,-344,-204" />
+
+</circuit>

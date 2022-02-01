@@ -1,0 +1,79 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="74HC574-1124" mainComp="false" Show_id="true" Show_Val="false" Pos="-492,-396" rotation="0" hflip="1" vflip="1" label="74HC574-1124" idLabPos="0,-20" labelrot="0" valLabPos="13,44" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Oscope" CircId="Oscope-1121" mainComp="false" Show_id="false" Show_Val="false" Pos="-224,-348" rotation="0" hflip="1" vflip="1" label="Oscope-1121" idLabPos="-90,-100" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="15391918000" TimPos="0,0,0,0," VolDiv="1,1,1,1," Tunnels=",,,," Trigger="0" Filter="0 V" Trigger="0" AutoSC="4" Tracks="2" HideCh="false,false,false,false," VolPos="0,0,0,0," />
+
+<item itemtype="Ground" CircId="Ground-1116" mainComp="false" Show_id="false" Show_Val="false" Pos="-360,-300" rotation="0" hflip="1" vflip="1" label="Ground-1116" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-1111" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-412,-308" rotation="0" hflip="1" vflip="1" label="Rail-1111" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Clock" CircId="Clock-1109" mainComp="false" Show_id="false" Show_Val="true" Pos="-588,-380" rotation="0" hflip="1" vflip="1" label="Clock-1109" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1000 Hz" Always_On="false" />
+
+<item itemtype="Ground" CircId="Ground-1107" mainComp="false" Show_id="false" Show_Val="false" Pos="-564,-308" rotation="0" hflip="1" vflip="1" label="Ground-1107" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Subcircuit" CircId="74HC4024-965" mainComp="false" Show_id="true" Show_Val="false" Pos="-552,-396" rotation="0" hflip="1" vflip="1" label="74HC4024-965" idLabPos="-19,-20" labelrot="0" valLabPos="13,32" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Subcircuit" CircId="TPL8002_25-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-432,-396" rotation="0" hflip="1" vflip="1" label="TPL8002_25-1" idLabPos="19,-23" labelrot="0" valLabPos="13,36" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Node" CircId="Node-1198" mainComp="false" Pos="-568,-380" />
+
+<item itemtype="Node" CircId="Node-1189" mainComp="false" Pos="-360,-324" />
+
+<item itemtype="Node" CircId="Node-1119" mainComp="false" Pos="-388,-356" />
+
+<item itemtype="Node" CircId="Node-1113" mainComp="false" Pos="-380,-340" />
+
+<item itemtype="Connector" uid="Connector-1108" startpinid="Ground-1107-Gnd" endpinid="74HC4024-965-MR" pointList="-564,-324,-564,-348,-560,-348" />
+
+<item itemtype="Connector" uid="Connector-1110" startpinid="Clock-1109-outnod" endpinid="Node-1198-0" pointList="-572,-380,-568,-380" />
+
+<item itemtype="Connector" uid="Connector-1112" startpinid="Rail-1111-outnod" endpinid="Node-1113-0" pointList="-396,-308,-380,-308,-380,-340" />
+
+<item itemtype="Connector" uid="Connector-1114" startpinid="Node-1113-2" endpinid="TPL8002_25-1-RF2" pointList="-380,-340,-392,-340" />
+
+<item itemtype="Connector" uid="Connector-1115" startpinid="Node-1113-1" endpinid="TPL8002_25-1-RG1" pointList="-380,-340,-380,-388,-392,-388" />
+
+<item itemtype="Connector" uid="Connector-1117" startpinid="Ground-1116-Gnd" endpinid="Node-1189-0" pointList="-360,-316,-360,-324" />
+
+<item itemtype="Connector" uid="Connector-1118" startpinid="TPL8002_25-1-RF1" endpinid="Node-1119-1" pointList="-392,-372,-388,-372,-388,-356" />
+
+<item itemtype="Connector" uid="Connector-1120" startpinid="Node-1119-2" endpinid="TPL8002_25-1-RG2" pointList="-388,-356,-392,-356" />
+
+<item itemtype="Connector" uid="Connector-1122" startpinid="Oscope-1121-Pin0" endpinid="TPL8002_25-1-RSW1" pointList="-312,-396,-356,-396,-356,-380,-392,-380" />
+
+<item itemtype="Connector" uid="Connector-1123" startpinid="Oscope-1121-Pin1" endpinid="TPL8002_25-1-RSW2" pointList="-312,-364,-348,-364,-348,-348,-392,-348" />
+
+<item itemtype="Connector" uid="Connector-1182" startpinid="74HC574-1124-Q0" endpinid="TPL8002_25-1-A" pointList="-452,-388,-440,-388" />
+
+<item itemtype="Connector" uid="Connector-1183" startpinid="74HC574-1124-Q1" endpinid="TPL8002_25-1-B" pointList="-452,-380,-440,-380" />
+
+<item itemtype="Connector" uid="Connector-1184" startpinid="74HC574-1124-Q2" endpinid="TPL8002_25-1-C" pointList="-452,-372,-440,-372" />
+
+<item itemtype="Connector" uid="Connector-1185" startpinid="74HC574-1124-Q3" endpinid="TPL8002_25-1-D" pointList="-452,-364,-440,-364" />
+
+<item itemtype="Connector" uid="Connector-1186" startpinid="74HC574-1124-Q4" endpinid="TPL8002_25-1-E" pointList="-452,-356,-440,-356" />
+
+<item itemtype="Connector" uid="Connector-1187" startpinid="74HC574-1124-Q5" endpinid="TPL8002_25-1-F" pointList="-452,-348,-440,-348" />
+
+<item itemtype="Connector" uid="Connector-1188" startpinid="74HC574-1124-!OE" endpinid="Node-1189-1" pointList="-452,-316,-428,-316,-428,-324,-360,-324" />
+
+<item itemtype="Connector" uid="Connector-1190" startpinid="Node-1189-2" endpinid="Node-1119-0" pointList="-360,-324,-360,-356,-388,-356" />
+
+<item itemtype="Connector" uid="Connector-1191" startpinid="74HC4024-965-Q0" endpinid="74HC574-1124-D0" pointList="-512,-388,-500,-388" />
+
+<item itemtype="Connector" uid="Connector-1192" startpinid="74HC4024-965-Q1" endpinid="74HC574-1124-D1" pointList="-512,-380,-500,-380" />
+
+<item itemtype="Connector" uid="Connector-1193" startpinid="74HC4024-965-Q2" endpinid="74HC574-1124-D2" pointList="-512,-372,-500,-372" />
+
+<item itemtype="Connector" uid="Connector-1194" startpinid="74HC4024-965-Q3" endpinid="74HC574-1124-D3" pointList="-512,-364,-500,-364" />
+
+<item itemtype="Connector" uid="Connector-1195" startpinid="74HC4024-965-Q4" endpinid="74HC574-1124-D4" pointList="-512,-356,-500,-356" />
+
+<item itemtype="Connector" uid="Connector-1196" startpinid="74HC4024-965-Q5" endpinid="74HC574-1124-D5" pointList="-512,-348,-500,-348" />
+
+<item itemtype="Connector" uid="Connector-1197" startpinid="74HC574-1124-CP" endpinid="Node-1198-1" pointList="-500,-316,-500,-328,-568,-328,-568,-380" />
+
+<item itemtype="Connector" uid="Connector-1199" startpinid="Node-1198-2" endpinid="74HC4024-965-!CP" pointList="-568,-380,-560,-380" />
+
+</circuit>

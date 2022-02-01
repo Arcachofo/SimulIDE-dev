@@ -2,13 +2,13 @@
 
 <item itemtype="Clock" CircId="Clock-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-368,196" rotation="0" hflip="1" vflip="1" label="Clock-366" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="512 Hz" Always_On="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-2" mainComp="false" Show_id="true" Show_Val="false" Pos="172,156" rotation="0" hflip="1" vflip="1" label="DS2" idLabPos="14,-7" labelrot="0" valLabPos="16,0" valLabRot="45" Name="DS2" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-2" mainComp="false" Show_id="true" Show_Val="false" Pos="188,156" rotation="0" hflip="1" vflip="1" label="DS2" idLabPos="14,-7" labelrot="0" valLabPos="16,0" valLabRot="45" Name="DS2" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-3" mainComp="false" Show_id="true" Show_Val="false" Pos="188,164" rotation="0" hflip="1" vflip="1" label="DS3" idLabPos="12,-4" labelrot="0" valLabPos="16,0" valLabRot="45" Name="DS3" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-3" mainComp="false" Show_id="true" Show_Val="false" Pos="216,164" rotation="0" hflip="1" vflip="1" label="DS3" idLabPos="12,-4" labelrot="0" valLabPos="16,0" valLabRot="45" Name="DS3" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-4" mainComp="false" Show_id="true" Show_Val="false" Pos="156,148" rotation="0" hflip="1" vflip="1" label="DS1" idLabPos="13,-10" labelrot="0" valLabPos="16,0" valLabRot="45" Name="DS1" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-4" mainComp="false" Show_id="true" Show_Val="false" Pos="160,148" rotation="0" hflip="1" vflip="1" label="DS1" idLabPos="13,-10" labelrot="0" valLabPos="16,0" valLabRot="45" Name="DS1" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-5" mainComp="false" Show_id="true" Show_Val="false" Pos="140,140" rotation="0" hflip="1" vflip="1" label="DS0" idLabPos="12,-14" labelrot="0" valLabPos="16,0" valLabRot="45" Name="DS0" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-5" mainComp="false" Show_id="true" Show_Val="false" Pos="132,136" rotation="0" hflip="1" vflip="1" label="DS0" idLabPos="12,-14" labelrot="0" valLabPos="16,0" valLabRot="45" Name="DS0" Rotated="false" />
 
 <item itemtype="Tunnel" CircId="Tunnel-6" mainComp="false" Show_id="true" Show_Val="false" Pos="212,-68" rotation="0" hflip="1" vflip="1" label="e" idLabPos="16,-16" labelrot="0" valLabPos="16,0" valLabRot="45" Name="e" Rotated="false" />
 
@@ -278,11 +278,11 @@
 
 <item itemtype="Connector" uid="Connector-166" startpinid="BcdTo7S-90-in0" endpinid="Mux-110-out0" pointList="68,-68,52,-68,52,-260,12,-260" />
 
-<item itemtype="Connector" uid="Connector-168" startpinid="Mux-111-out0" endpinid="BcdTo7S-90-in1" pointList="12,-140,12,-124,44,-124,44,-60,68,-60" />
+<item itemtype="Connector" uid="Connector-168" startpinid="Mux-111-out0" endpinid="BcdTo7S-90-in1" pointList="12,-140,44,-140,44,-60,68,-60" />
 
-<item itemtype="Connector" uid="Connector-170" startpinid="Mux-100-out0" endpinid="BcdTo7S-90-in2" pointList="12,-20,12,-4,44,-4,44,-52,68,-52" />
+<item itemtype="Connector" uid="Connector-170" startpinid="Mux-100-out0" endpinid="BcdTo7S-90-in2" pointList="12,-20,44,-20,44,-52,68,-52" />
 
-<item itemtype="Connector" uid="Connector-172" startpinid="Mux-99-out0" endpinid="BcdTo7S-90-in3" pointList="12,100,12,116,52,116,52,-44,68,-44" />
+<item itemtype="Connector" uid="Connector-172" startpinid="Mux-99-out0" endpinid="BcdTo7S-90-in3" pointList="12,100,52,100,52,-44,68,-44" />
 
 <item itemtype="Connector" uid="Connector-174" startpinid="Buffer-89-out" endpinid="Counter-88-in0" pointList="-504,-236,-444,-236" />
 
@@ -480,13 +480,13 @@
 
 <item itemtype="Connector" uid="Connector-347" startpinid="BcdTo7S-90-out6" endpinid="Tunnel-9-pin" pointList="116,-36,244,-36,244,-52" />
 
-<item itemtype="Connector" uid="Connector-349" startpinid="BcdToDec-48-out0" endpinid="Tunnel-5-pin" pointList="108,156,140,156,140,140" />
+<item itemtype="Connector" uid="Connector-349" startpinid="BcdToDec-48-out0" endpinid="Tunnel-5-pin" pointList="108,156,132,156,132,136" />
 
-<item itemtype="Connector" uid="Connector-351" startpinid="BcdToDec-48-out1" endpinid="Tunnel-4-pin" pointList="108,164,156,164,156,148" />
+<item itemtype="Connector" uid="Connector-351" startpinid="BcdToDec-48-out1" endpinid="Tunnel-4-pin" pointList="108,164,160,164,160,148" />
 
-<item itemtype="Connector" uid="Connector-353" startpinid="BcdToDec-48-out2" endpinid="Tunnel-2-pin" pointList="108,172,172,172,172,156" />
+<item itemtype="Connector" uid="Connector-353" startpinid="BcdToDec-48-out2" endpinid="Tunnel-2-pin" pointList="108,172,188,172,188,156" />
 
-<item itemtype="Connector" uid="Connector-355" startpinid="BcdToDec-48-out3" endpinid="Tunnel-3-pin" pointList="108,180,188,180,188,164" />
+<item itemtype="Connector" uid="Connector-355" startpinid="BcdToDec-48-out3" endpinid="Tunnel-3-pin" pointList="108,180,216,180,216,164" />
 
 <item itemtype="Connector" uid="Connector-357" startpinid="Clock-1-outnod" endpinid="Counter-50-in0" pointList="-352,196,-332,196" />
 

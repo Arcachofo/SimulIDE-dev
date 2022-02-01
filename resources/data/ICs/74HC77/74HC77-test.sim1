@@ -18,13 +18,13 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-76" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-332" rotation="0" hflip="1" vflip="1" label="D3" idLabPos="-46,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-75" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-316" rotation="0" hflip="1" vflip="1" label="E2-3" idLabPos="-53,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-75" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-316" rotation="0" hflip="1" vflip="1" label="E2-3" idLabPos="-53,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-74" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-388" rotation="0" hflip="1" vflip="1" label="D0" idLabPos="-47,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-73" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-372" rotation="0" hflip="1" vflip="1" label="D1" idLabPos="-47,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-72" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-404" rotation="0" hflip="1" vflip="1" label="E0-1" idLabPos="-53,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-72" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-404" rotation="0" hflip="1" vflip="1" label="E0-1" idLabPos="-53,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-71" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-348" rotation="0" hflip="1" vflip="1" label="D2" idLabPos="-46,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 

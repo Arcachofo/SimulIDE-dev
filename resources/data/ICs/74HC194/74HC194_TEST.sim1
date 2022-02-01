@@ -8,7 +8,7 @@
 
 <item itemtype="Probe" CircId="Probe-631" mainComp="false" Show_id="false" Show_Val="true" Pos="-200,-292" rotation="-45" hflip="1" vflip="1" label="Probe-8" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-624" mainComp="false" Show_id="true" Show_Val="false" Pos="-520,-348" rotation="0" hflip="1" vflip="1" label="SR" idLabPos="-45,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-624" mainComp="false" Show_id="true" Show_Val="false" Pos="-520,-348" rotation="0" hflip="1" vflip="1" label="SR" idLabPos="-45,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-623" mainComp="false" Show_id="true" Show_Val="false" Pos="-520,-260" rotation="0" hflip="1" vflip="1" label="SL" idLabPos="-48,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
@@ -24,7 +24,7 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-588" mainComp="false" Show_id="true" Show_Val="false" Pos="-508,-188" rotation="0" hflip="1" vflip="1" label="S0" idLabPos="-45,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-587" mainComp="false" Show_id="true" Show_Val="false" Pos="-508,-228" rotation="0" hflip="1" vflip="1" label="C" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-587" mainComp="false" Show_id="true" Show_Val="false" Pos="-508,-228" rotation="0" hflip="1" vflip="1" label="C" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Subcircuit" CircId="74HC194-313" mainComp="false" Show_id="true" Show_Val="false" Pos="-408,-284" rotation="0" hflip="1" vflip="1" label="74HC194-1" idLabPos="-2,-15" labelrot="0" valLabPos="17,60" valLabRot="-90" Logic_Symbol="true" />
 
@@ -38,7 +38,7 @@
 
 <item itemtype="Probe" CircId="Probe-8" mainComp="false" Show_id="false" Show_Val="true" Pos="-196,-404" rotation="-45" hflip="1" vflip="1" label="Probe-8" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-16" mainComp="false" Show_id="true" Show_Val="false" Pos="-508,-212" rotation="0" hflip="1" vflip="1" label="!R" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-16" mainComp="false" Show_id="true" Show_Val="false" Pos="-508,-212" rotation="0" hflip="1" vflip="1" label="!R" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Node" CircId="Node-657" mainComp="false" Pos="-420,-236" />
 

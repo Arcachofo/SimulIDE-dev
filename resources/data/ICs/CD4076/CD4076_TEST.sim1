@@ -1,0 +1,61 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-30" mainComp="false" Show_id="true" Show_Val="false" Pos="-436,-84" rotation="0" hflip="1" vflip="1" label="CLR" idLabPos="-55,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-25" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-112" rotation="0" hflip="1" vflip="1" label="!OE2" idLabPos="-55,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-24" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-128" rotation="0" hflip="1" vflip="1" label="!OE1" idLabPos="-55,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-21" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-160" rotation="0" hflip="1" vflip="1" label="!E2" idLabPos="-49,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-20" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-176" rotation="0" hflip="1" vflip="1" label="!E1" idLabPos="-49,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-18" mainComp="false" Show_id="true" Show_Val="false" Pos="-460,-204" rotation="0" hflip="1" vflip="1" label="CLK" idLabPos="-55,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-16" mainComp="false" Show_id="true" Show_Val="false" Pos="-440,-236" rotation="0" hflip="1" vflip="1" label="D" idLabPos="-49,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-440,-252" rotation="0" hflip="1" vflip="1" label="C" idLabPos="-49,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-440,-268" rotation="0" hflip="1" vflip="1" label="B" idLabPos="-49,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-440,-284" rotation="0" hflip="1" vflip="1" label="A" idLabPos="-49,-4" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-8" mainComp="false" Show_id="false" Show_Val="true" Pos="-176,-268" rotation="-45" hflip="1" vflip="1" label="Probe-8" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-6" mainComp="false" Show_id="false" Show_Val="true" Pos="-200,-276" rotation="-45" hflip="1" vflip="1" label="Probe-6" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-220,-284" rotation="-45" hflip="1" vflip="1" label="Probe-4" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-244,-292" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="CD4076-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-340,-284" rotation="0" hflip="1" vflip="1" label="CD4076-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Probe-2-inpin" endpinid="CD4076-1-QA" pointList="-260,-276,-300,-276" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Probe-4-inpin" endpinid="CD4076-1-QB" pointList="-236,-268,-300,-268" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Probe-6-inpin" endpinid="CD4076-1-QC" pointList="-216,-260,-300,-260" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Probe-8-inpin" endpinid="CD4076-1-QD" pointList="-192,-252,-300,-252" />
+
+<item itemtype="Connector" uid="Connector-11" startpinid="Fixed Voltage-10-outnod" endpinid="CD4076-1-A" pointList="-424,-284,-348,-284,-348,-276" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="Fixed Voltage-12-outnod" endpinid="CD4076-1-B" pointList="-424,-268,-348,-268" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Fixed Voltage-14-outnod" endpinid="CD4076-1-C" pointList="-424,-252,-424,-260,-348,-260" />
+
+<item itemtype="Connector" uid="Connector-17" startpinid="Fixed Voltage-16-outnod" endpinid="CD4076-1-D" pointList="-424,-236,-416,-236,-416,-252,-348,-252" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="Fixed Voltage-18-outnod" endpinid="CD4076-1-CLK" pointList="-444,-204,-412,-204,-412,-236,-348,-236" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Fixed Voltage-20-outnod" endpinid="CD4076-1-!E1" pointList="-432,-176,-408,-176,-408,-228,-348,-228" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="Fixed Voltage-21-outnod" endpinid="CD4076-1-!E2" pointList="-432,-160,-404,-160,-404,-220,-348,-220" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Fixed Voltage-24-outnod" endpinid="CD4076-1-!OE1" pointList="-432,-128,-392,-128,-392,-212,-348,-212" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Fixed Voltage-25-outnod" endpinid="CD4076-1-!OE2" pointList="-432,-112,-384,-112,-384,-204,-348,-204" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="Fixed Voltage-30-outnod" endpinid="CD4076-1-CLR" pointList="-420,-84,-364,-84,-364,-196,-348,-196" />
+
+</circuit>

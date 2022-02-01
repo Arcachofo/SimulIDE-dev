@@ -1,0 +1,51 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Subcircuit" CircId="74XX121-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-1120,-336" rotation="0" hflip="1" vflip="1" label="74XX121-1" idLabPos="0,-20" labelrot="0" valLabPos="13,31" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Clock" CircId="Clock-91" mainComp="false" Show_id="false" Show_Val="true" Pos="-1200,-328" rotation="0" hflip="1" vflip="1" label="Clock-91" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="6 V" Freq="100 Hz" Always_On="false" />
+
+<item itemtype="Rail" CircId="Rail-95" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-1200,-356" rotation="0" hflip="1" vflip="1" label="Rail-95" idLabPos="-16,-24" labelrot="0" valLabPos="-7,-5" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Capacitor" CircId="Capacitor-97" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-1204,-296" rotation="0" hflip="1" vflip="1" label="Capacitor-97" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="1 µF" />
+
+<item itemtype="VarResistor" CircId="VarResistor-101" mainComp="false" Show_id="false" Show_Val="false" Pos="-1152,-372" rotation="-90" hflip="1" vflip="1" label="VarResistor-101" idLabPos="-16,-24" labelrot="0" valLabPos="-16,30" valLabRot="0" Value_Ohm="1724 Ω" Min_Resistance="1e-12 Ω" Max_Resistance="4000 Ω" Dial_Step="1 Ω" />
+
+<item itemtype="Oscope" CircId="Oscope-110" mainComp="false" Show_id="false" Show_Val="false" Pos="-940,-328" rotation="0" hflip="1" vflip="1" label="Oscope-110" idLabPos="-90,-100" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="2154211000" TimPos="-646260,-646260,-646260,-646260," VolDiv="0.92605,0.92605,0.92605,0.92605," Tunnels=",,,," Trigger="0" Filter="0 V" Trigger="0" AutoSC="4" Tracks="4" HideCh="false,false,false,false," VolPos="-2.5,0,0,0," />
+
+<item itemtype="Node" CircId="Node-210" mainComp="false" Pos="-1152,-296" />
+
+<item itemtype="Node" CircId="Node-93" mainComp="false" Pos="-1160,-328" />
+
+<item itemtype="Node" CircId="Node-106" mainComp="false" Pos="-1168,-356" />
+
+<item itemtype="Node" CircId="Node-113" mainComp="false" Pos="-1176,-328" />
+
+<item itemtype="Connector" uid="Connector-90" startpinid="74XX121-1-!A2" endpinid="Node-93-0" pointList="-1128,-320,-1160,-320,-1160,-328" />
+
+<item itemtype="Connector" uid="Connector-92" startpinid="Clock-91-outnod" endpinid="Node-113-0" pointList="-1184,-328,-1176,-328" />
+
+<item itemtype="Connector" uid="Connector-94" startpinid="Node-93-2" endpinid="74XX121-1-!A1" pointList="-1160,-328,-1128,-328" />
+
+<item itemtype="Connector" uid="Connector-96" startpinid="Rail-95-outnod" endpinid="Node-106-0" pointList="-1184,-356,-1168,-356" />
+
+<item itemtype="Connector" uid="Connector-99" startpinid="Capacitor-97-lPin" endpinid="74XX121-1-C" pointList="-1220,-296,-1224,-296,-1224,-264,-1164,-264,-1164,-288,-1128,-288" />
+
+<item itemtype="Connector" uid="Connector-105" startpinid="VarResistor-101-rPin" endpinid="Node-106-1" pointList="-1152,-388,-1152,-392,-1168,-392,-1168,-356" />
+
+<item itemtype="Connector" uid="Connector-107" startpinid="Node-106-2" endpinid="74XX121-1-B" pointList="-1168,-356,-1168,-312,-1128,-312" />
+
+<item itemtype="Connector" uid="Connector-98" startpinid="Capacitor-97-rPin" endpinid="Node-210-0" pointList="-1188,-296,-1152,-296" />
+
+<item itemtype="Connector" uid="Connector-112" startpinid="Oscope-110-Pin0" endpinid="Node-113-1" pointList="-1028,-376,-1096,-376,-1096,-404,-1176,-404,-1176,-328" />
+
+<item itemtype="Connector" uid="Connector-114" startpinid="Node-113-2" endpinid="Node-93-1" pointList="-1176,-328,-1160,-328" />
+
+<item itemtype="Connector" uid="Connector-115" startpinid="Oscope-110-Pin1" endpinid="74XX121-1-Q" pointList="-1028,-344,-1080,-344,-1080,-328" />
+
+<item itemtype="Connector" uid="Connector-116" startpinid="Oscope-110-Pin2" endpinid="74XX121-1-!Q" pointList="-1028,-312,-1080,-312" />
+
+<item itemtype="Connector" uid="Connector-209" startpinid="VarResistor-101-lPin" endpinid="Node-210-1" pointList="-1152,-356,-1152,-296" />
+
+<item itemtype="Connector" uid="Connector-211" startpinid="Node-210-2" endpinid="74XX121-1-RC" pointList="-1152,-296,-1128,-296" />
+
+</circuit>

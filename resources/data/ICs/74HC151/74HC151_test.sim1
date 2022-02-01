@@ -4,7 +4,7 @@
 
 <item itemtype="Subcircuit" CircId="74HC151-29" mainComp="false" Show_id="true" Show_Val="false" Pos="-444,-68" rotation="0" hflip="1" vflip="1" label="74HC151" idLabPos="-4,-13" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-28" mainComp="false" Show_id="true" Show_Val="false" Pos="-588,-252" rotation="0" hflip="1" vflip="1" label="I0" idLabPos="-41,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-28" mainComp="false" Show_id="true" Show_Val="false" Pos="-588,-252" rotation="0" hflip="1" vflip="1" label="I0" idLabPos="-41,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-27" mainComp="false" Show_id="true" Show_Val="false" Pos="-588,-236" rotation="0" hflip="1" vflip="1" label="I1" idLabPos="-41,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 

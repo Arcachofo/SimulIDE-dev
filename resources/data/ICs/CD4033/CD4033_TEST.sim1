@@ -1,0 +1,55 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-59" mainComp="false" Show_id="false" Show_Val="true" Pos="-220,-212" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-59" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-12" mainComp="false" Show_id="false" Show_Val="true" Pos="-324,-236" rotation="-45" hflip="1" vflip="1" label="Probe-12" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="CD4033-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-332,-148" rotation="0" hflip="1" vflip="1" label="CD4033-11" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false" />
+
+<item itemtype="Clock" CircId="Clock-10" mainComp="false" Show_id="false" Show_Val="true" Pos="-444,-140" rotation="0" hflip="1" vflip="1" label="Clock-10" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="2 Hz" Always_On="false" />
+
+<item itemtype="Seven Segment" CircId="Seven Segment-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-148,-92" rotation="0" hflip="1" vflip="1" label="Seven Segment-8" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" NumDisplays="1 _7seg" Color="0" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="100 Ω" />
+
+<item itemtype="Ground" CircId="Ground-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-140,-36" rotation="0" hflip="1" vflip="1" label="Ground-7" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-6" mainComp="false" Show_id="false" Show_Val="true" Pos="-308,-188" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-6" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-4" mainComp="false" Show_id="false" Show_Val="true" Pos="-404,-116" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-4" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-404,-84" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-3" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Probe" CircId="Probe-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-404,-52" rotation="-45" hflip="1" vflip="1" label="Probe-2" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1" mainComp="false" Show_id="false" Show_Val="true" Pos="-444,-172" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-1" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="Ground-7-Gnd" endpinid="Seven Segment-8-pin_commona" pointList="-140,-52,-140,-60" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Fixed Voltage-6-outnod" endpinid="CD4033-11-MR" pointList="-292,-188,-276,-188,-276,-132,-292,-132" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Fixed Voltage-4-outnod" endpinid="CD4033-11-INH" pointList="-388,-116,-388,-132,-340,-132" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="Fixed Voltage-3-outnod" endpinid="CD4033-11-RBI" pointList="-388,-84,-372,-84,-372,-124,-340,-124" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Probe-12-inpin" endpinid="CD4033-11-CO" pointList="-340,-220,-356,-220,-356,-108,-340,-108" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="Probe-2-inpin" endpinid="CD4033-11-RBO" pointList="-420,-36,-364,-36,-364,-116,-340,-116" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Fixed Voltage-1-outnod" endpinid="CD4033-11-CLK" pointList="-428,-172,-388,-172,-388,-140,-340,-140" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="Fixed Voltage-59-outnod" endpinid="CD4033-11-LT" pointList="-204,-212,-204,-148,-268,-148,-268,-124,-292,-124" />
+
+<item itemtype="Connector" uid="Connector-130" startpinid="Seven Segment-8-pin_a" endpinid="CD4033-11-A" pointList="-172,-116,-256,-116,-256,-92,-292,-92" />
+
+<item itemtype="Connector" uid="Connector-131" startpinid="Seven Segment-8-pin_b" endpinid="CD4033-11-B" pointList="-172,-108,-292,-108" />
+
+<item itemtype="Connector" uid="Connector-132" startpinid="Seven Segment-8-pin_c" endpinid="CD4033-11-C" pointList="-172,-100,-264,-100,-264,-116,-292,-116" />
+
+<item itemtype="Connector" uid="Connector-133" startpinid="Seven Segment-8-pin_d" endpinid="CD4033-11-D" pointList="-172,-92,-252,-92,-252,-84,-292,-84" />
+
+<item itemtype="Connector" uid="Connector-134" startpinid="Seven Segment-8-pin_e" endpinid="CD4033-11-E" pointList="-172,-84,-248,-84,-248,-76,-272,-76,-272,-100,-292,-100" />
+
+<item itemtype="Connector" uid="Connector-135" startpinid="Seven Segment-8-pin_f" endpinid="CD4033-11-F" pointList="-172,-76,-240,-76,-240,-72,-352,-72,-352,-100,-340,-100" />
+
+<item itemtype="Connector" uid="Connector-136" startpinid="Seven Segment-8-pin_g" endpinid="CD4033-11-G" pointList="-172,-68,-344,-68,-344,-92,-340,-92" />
+
+</circuit>

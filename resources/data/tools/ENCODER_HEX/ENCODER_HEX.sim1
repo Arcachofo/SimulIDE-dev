@@ -108,162 +108,162 @@
 
 <item itemtype="Node" CircId="Node-1857" mainComp="false" boardPos="-1e+6,-1e+6" circPos="0,0" boardRot="-1e+6" circRot="0" Pos="-132,-440" />
 
-<item itemtype="Connector" uid="Connector-102" startpinid="Or Gate-11-out" endpinid="FlipFlop JK-10-in4" enodeid="Circ_eNode-1812" pointList="-688,-432,-664,-432" />
+<item itemtype="Connector" uid="Connector-102" startpinid="Or Gate-11-out" endpinid="FlipFlop JK-10-in4" pointList="-688,-432,-664,-432" />
 
-<item itemtype="Connector" uid="Connector-104" startpinid="FlipFlop JK-10-in0" endpinid="Node-13-0" enodeid="Circ_eNode-1813" pointList="-664,-440,-672,-440,-672,-448" />
+<item itemtype="Connector" uid="Connector-104" startpinid="FlipFlop JK-10-in0" endpinid="Node-13-0" pointList="-664,-440,-672,-440,-672,-448" />
 
-<item itemtype="Connector" uid="Connector-106" startpinid="Rail.-12-outnod" endpinid="Node-13-1" enodeid="Circ_eNode-1813" pointList="-672,-464,-672,-448" />
+<item itemtype="Connector" uid="Connector-106" startpinid="Rail.-12-outnod" endpinid="Node-13-1" pointList="-672,-464,-672,-448" />
 
-<item itemtype="Connector" uid="Connector-107" startpinid="Node-13-2" endpinid="FlipFlop JK-10-in1" enodeid="Circ_eNode-1813" pointList="-672,-448,-672,-424,-664,-424" />
+<item itemtype="Connector" uid="Connector-107" startpinid="Node-13-2" endpinid="FlipFlop JK-10-in1" pointList="-672,-448,-672,-424,-664,-424" />
 
-<item itemtype="Connector" uid="Connector-116" startpinid="Rail.-27-outnod" endpinid="Node-23-1" enodeid="Circ_eNode-1814" pointList="-512,-464,-512,-448" />
+<item itemtype="Connector" uid="Connector-116" startpinid="Rail.-27-outnod" endpinid="Node-23-1" pointList="-512,-464,-512,-448" />
 
-<item itemtype="Connector" uid="Connector-121" startpinid="Or Gate-18-out" endpinid="FlipFlop JK-19-in4" enodeid="Circ_eNode-1815" pointList="-528,-432,-504,-432" />
+<item itemtype="Connector" uid="Connector-121" startpinid="Or Gate-18-out" endpinid="FlipFlop JK-19-in4" pointList="-528,-432,-504,-432" />
 
-<item itemtype="Connector" uid="Connector-125" startpinid="Node-23-2" endpinid="FlipFlop JK-19-in1" enodeid="Circ_eNode-1814" pointList="-512,-448,-512,-424,-504,-424" />
+<item itemtype="Connector" uid="Connector-125" startpinid="Node-23-2" endpinid="FlipFlop JK-19-in1" pointList="-512,-448,-512,-424,-504,-424" />
 
-<item itemtype="Connector" uid="Connector-133" startpinid="FlipFlop JK-19-in0" endpinid="Node-23-0" enodeid="Circ_eNode-1814" pointList="-504,-440,-512,-440,-512,-448" />
+<item itemtype="Connector" uid="Connector-133" startpinid="FlipFlop JK-19-in0" endpinid="Node-23-0" pointList="-504,-440,-512,-440,-512,-448" />
 
-<item itemtype="Connector" uid="Connector-134" startpinid="Rail.-37-outnod" endpinid="Node-33-1" enodeid="Circ_eNode-1816" pointList="-352,-468,-344,-468,-344,-440" />
+<item itemtype="Connector" uid="Connector-134" startpinid="Rail.-37-outnod" endpinid="Node-33-1" pointList="-352,-468,-344,-468,-344,-440" />
 
-<item itemtype="Connector" uid="Connector-139" startpinid="Or Gate-28-out" endpinid="FlipFlop JK-29-in4" enodeid="Circ_eNode-1817" pointList="-360,-432,-336,-432" />
+<item itemtype="Connector" uid="Connector-139" startpinid="Or Gate-28-out" endpinid="FlipFlop JK-29-in4" pointList="-360,-432,-336,-432" />
 
-<item itemtype="Connector" uid="Connector-141" startpinid="And Gate-30-out" endpinid="Or Gate-28-in0" enodeid="Circ_eNode-1818" pointList="-404,-444,-404,-436,-392,-436" />
+<item itemtype="Connector" uid="Connector-141" startpinid="And Gate-30-out" endpinid="Or Gate-28-in0" pointList="-404,-444,-404,-436,-392,-436" />
 
-<item itemtype="Connector" uid="Connector-143" startpinid="Node-33-2" endpinid="FlipFlop JK-29-in1" enodeid="Circ_eNode-1816" pointList="-344,-440,-344,-424,-336,-424" />
+<item itemtype="Connector" uid="Connector-143" startpinid="Node-33-2" endpinid="FlipFlop JK-29-in1" pointList="-344,-440,-344,-424,-336,-424" />
 
-<item itemtype="Connector" uid="Connector-151" startpinid="FlipFlop JK-29-in0" endpinid="Node-33-0" enodeid="Circ_eNode-1816" pointList="-336,-440,-344,-440" />
+<item itemtype="Connector" uid="Connector-151" startpinid="FlipFlop JK-29-in0" endpinid="Node-33-0" pointList="-336,-440,-344,-440" />
 
-<item itemtype="Connector" uid="Connector-152" startpinid="Rail.-47-outnod" endpinid="Node-43-1" enodeid="Circ_eNode-1819" pointList="-184,-464,-184,-448" />
+<item itemtype="Connector" uid="Connector-152" startpinid="Rail.-47-outnod" endpinid="Node-43-1" pointList="-184,-464,-184,-448" />
 
-<item itemtype="Connector" uid="Connector-157" startpinid="Or Gate-38-out" endpinid="FlipFlop JK-39-in4" enodeid="Circ_eNode-1820" pointList="-200,-432,-176,-432" />
+<item itemtype="Connector" uid="Connector-157" startpinid="Or Gate-38-out" endpinid="FlipFlop JK-39-in4" pointList="-200,-432,-176,-432" />
 
-<item itemtype="Connector" uid="Connector-159" startpinid="Node-43-2" endpinid="FlipFlop JK-39-in1" enodeid="Circ_eNode-1819" pointList="-184,-448,-184,-424,-176,-424" />
+<item itemtype="Connector" uid="Connector-159" startpinid="Node-43-2" endpinid="FlipFlop JK-39-in1" pointList="-184,-448,-184,-424,-176,-424" />
 
-<item itemtype="Connector" uid="Connector-165" startpinid="FlipFlop JK-39-in0" endpinid="Node-43-0" enodeid="Circ_eNode-1819" pointList="-176,-440,-184,-440,-184,-448" />
+<item itemtype="Connector" uid="Connector-165" startpinid="FlipFlop JK-39-in0" endpinid="Node-43-0" pointList="-176,-440,-184,-440,-184,-448" />
 
-<item itemtype="Connector" uid="Connector-166" startpinid="Buffer-49-out" endpinid="Or Gate-11-in0" enodeid="Circ_eNode-1821" pointList="-724,-464,-724,-436,-720,-436" />
+<item itemtype="Connector" uid="Connector-166" startpinid="Buffer-49-out" endpinid="Or Gate-11-in0" pointList="-724,-464,-724,-436,-720,-436" />
 
-<item itemtype="Connector" uid="Connector-168" startpinid="Buffer-48-out" endpinid="Or Gate-11-in1" enodeid="Circ_eNode-1822" pointList="-724,-424,-724,-428,-720,-428" />
+<item itemtype="Connector" uid="Connector-168" startpinid="Buffer-48-out" endpinid="Or Gate-11-in1" pointList="-724,-424,-724,-428,-720,-428" />
 
-<item itemtype="Connector" uid="Connector-179" startpinid="Node-59-1" endpinid="Node-60-0" enodeid="Circ_eNode-1823" pointList="-600,-500,-440,-500" />
+<item itemtype="Connector" uid="Connector-179" startpinid="Node-59-1" endpinid="Node-60-0" pointList="-600,-500,-440,-500" />
 
-<item itemtype="Connector" uid="Connector-180" startpinid="Node-60-2" endpinid="And Gate-30-in0" enodeid="Circ_eNode-1823" pointList="-440,-500,-440,-452,-436,-452" />
+<item itemtype="Connector" uid="Connector-180" startpinid="Node-60-2" endpinid="And Gate-30-in0" pointList="-440,-500,-440,-452,-436,-452" />
 
-<item itemtype="Connector" uid="Connector-183" startpinid="Node-65-2" endpinid="And Gate-30-in1" enodeid="Circ_eNode-1824" pointList="-444,-492,-444,-444,-436,-444" />
+<item itemtype="Connector" uid="Connector-183" startpinid="Node-65-2" endpinid="And Gate-30-in1" pointList="-444,-492,-444,-444,-436,-444" />
 
-<item itemtype="Connector" uid="Connector-185" startpinid="Node-65-1" endpinid="Node-66-0" enodeid="Circ_eNode-1824" pointList="-444,-492,-604,-492,-604,-440" />
+<item itemtype="Connector" uid="Connector-185" startpinid="Node-65-1" endpinid="Node-66-0" pointList="-444,-492,-604,-492,-604,-440" />
 
-<item itemtype="Connector" uid="Connector-186" startpinid="FlipFlop JK-10-out0" endpinid="Node-1848-0" enodeid="Circ_eNode-1824" pointList="-624,-440,-620,-440" />
+<item itemtype="Connector" uid="Connector-186" startpinid="FlipFlop JK-10-out0" endpinid="Node-1848-0" pointList="-624,-440,-620,-440" />
 
-<item itemtype="Connector" uid="Connector-188" startpinid="FlipFlop JK-29-out0" endpinid="Node-1854-0" enodeid="Circ_eNode-1825" pointList="-296,-440,-296,-448" />
+<item itemtype="Connector" uid="Connector-188" startpinid="FlipFlop JK-29-out0" endpinid="Node-1854-0" pointList="-296,-440,-296,-448" />
 
-<item itemtype="Connector" uid="Connector-190" startpinid="FlipFlop JK-19-out0" endpinid="Node-1851-0" enodeid="Circ_eNode-1826" pointList="-464,-440,-460,-440" />
+<item itemtype="Connector" uid="Connector-190" startpinid="FlipFlop JK-19-out0" endpinid="Node-1851-0" pointList="-464,-440,-460,-440" />
 
-<item itemtype="Connector" uid="Connector-205" startpinid="FlipFlop JK-10-out1" endpinid="Node-72-0" enodeid="Circ_eNode-1827" pointList="-624,-424,-604,-424" />
+<item itemtype="Connector" uid="Connector-205" startpinid="FlipFlop JK-10-out1" endpinid="Node-72-0" pointList="-624,-424,-604,-424" />
 
-<item itemtype="Connector" uid="Connector-211" startpinid="Node-74-1" endpinid="Node-9-0" enodeid="Circ_eNode-1828" pointList="-440,-352,-600,-352" />
+<item itemtype="Connector" uid="Connector-211" startpinid="Node-74-1" endpinid="Node-9-0" pointList="-440,-352,-600,-352" />
 
-<item itemtype="Connector" uid="Connector-222" startpinid="Tunnel-79-pin" endpinid="Node-80-1" enodeid="Circ_eNode-1825" pointList="-288,-380,-288,-448" />
+<item itemtype="Connector" uid="Connector-222" startpinid="Tunnel-79-pin" endpinid="Node-80-1" pointList="-288,-380,-288,-448" />
 
-<item itemtype="Connector" uid="Connector-224" startpinid="Node-81-2" endpinid="And Gate-30-in2" enodeid="Circ_eNode-1826" pointList="-448,-436,-436,-436" />
+<item itemtype="Connector" uid="Connector-224" startpinid="Node-81-2" endpinid="And Gate-30-in2" pointList="-448,-436,-436,-436" />
 
-<item itemtype="Connector" uid="Connector-254" startpinid="Tunnel-98-pin" endpinid="Node-99-1" enodeid="Circ_eNode-1824" pointList="-612,-380,-612,-440" />
+<item itemtype="Connector" uid="Connector-254" startpinid="Tunnel-98-pin" endpinid="Node-99-1" pointList="-612,-380,-612,-440" />
 
-<item itemtype="Connector" uid="Connector-255" startpinid="Node-99-2" endpinid="Node-66-1" enodeid="Circ_eNode-1824" pointList="-612,-440,-604,-440" />
+<item itemtype="Connector" uid="Connector-255" startpinid="Node-99-2" endpinid="Node-66-1" pointList="-612,-440,-604,-440" />
 
-<item itemtype="Connector" uid="Connector-258" startpinid="FlipFlop JK-19-out1" endpinid="Node-69-0" enodeid="Circ_eNode-1829" pointList="-464,-424,-436,-424" />
+<item itemtype="Connector" uid="Connector-258" startpinid="FlipFlop JK-19-out1" endpinid="Node-69-0" pointList="-464,-424,-436,-424" />
 
-<item itemtype="Connector" uid="Connector-259" startpinid="Tunnel-97-pin" endpinid="Node-101-1" enodeid="Circ_eNode-1826" pointList="-452,-380,-452,-440,-456,-440" />
+<item itemtype="Connector" uid="Connector-259" startpinid="Tunnel-97-pin" endpinid="Node-101-1" pointList="-452,-380,-452,-440,-456,-440" />
 
-<item itemtype="Connector" uid="Connector-260" startpinid="Node-101-2" endpinid="Node-81-0" enodeid="Circ_eNode-1826" pointList="-456,-440,-448,-440,-448,-436" />
+<item itemtype="Connector" uid="Connector-260" startpinid="Node-101-2" endpinid="Node-81-0" pointList="-456,-440,-448,-440,-448,-436" />
 
-<item itemtype="Connector" uid="Connector-262" startpinid="Node-71-1" endpinid="Node-72-1" enodeid="Circ_eNode-1827" pointList="-444,-364,-604,-364,-604,-424" />
+<item itemtype="Connector" uid="Connector-262" startpinid="Node-71-1" endpinid="Node-72-1" pointList="-444,-364,-604,-364,-604,-424" />
 
-<item itemtype="Connector" uid="Connector-278" startpinid="Or Gate-38-in0" endpinid="And Gate-40-out" enodeid="Circ_eNode-1830" pointList="-232,-436,-248,-436,-248,-488" />
+<item itemtype="Connector" uid="Connector-278" startpinid="Or Gate-38-in0" endpinid="And Gate-40-out" pointList="-232,-436,-248,-436,-248,-488" />
 
-<item itemtype="Connector" uid="Connector-280" startpinid="Or Gate-38-in1" endpinid="And Gate-41-out" enodeid="Circ_eNode-1831" pointList="-232,-428,-248,-428,-248,-368" />
+<item itemtype="Connector" uid="Connector-280" startpinid="Or Gate-38-in1" endpinid="And Gate-41-out" pointList="-232,-428,-248,-428,-248,-368" />
 
-<item itemtype="Connector" uid="Connector-190" startpinid="Node-60-1" endpinid="And Gate-40-in0" enodeid="Circ_eNode-1823" pointList="-440,-500,-280,-500" />
+<item itemtype="Connector" uid="Connector-190" startpinid="Node-60-1" endpinid="And Gate-40-in0" pointList="-440,-500,-280,-500" />
 
-<item itemtype="Connector" uid="Connector-219" startpinid="And Gate-40-in1" endpinid="Node-65-0" enodeid="Circ_eNode-1824" pointList="-280,-492,-444,-492" />
+<item itemtype="Connector" uid="Connector-219" startpinid="And Gate-40-in1" endpinid="Node-65-0" pointList="-280,-492,-444,-492" />
 
-<item itemtype="Connector" uid="Connector-292" startpinid="And Gate-40-in2" endpinid="Node-81-1" enodeid="Circ_eNode-1826" pointList="-280,-484,-448,-484,-448,-436" />
+<item itemtype="Connector" uid="Connector-292" startpinid="And Gate-40-in2" endpinid="Node-81-1" pointList="-280,-484,-448,-484,-448,-436" />
 
-<item itemtype="Connector" uid="Connector-270" startpinid="Node-80-2" endpinid="And Gate-40-in3" enodeid="Circ_eNode-1825" pointList="-288,-448,-280,-448,-280,-476" />
+<item itemtype="Connector" uid="Connector-270" startpinid="Node-80-2" endpinid="And Gate-40-in3" pointList="-288,-448,-280,-448,-280,-476" />
 
-<item itemtype="Connector" uid="Connector-200" startpinid="FlipFlop JK-39-out0" endpinid="Node-1857-0" enodeid="Circ_eNode-1832" pointList="-136,-440,-132,-440" />
+<item itemtype="Connector" uid="Connector-200" startpinid="FlipFlop JK-39-out0" endpinid="Node-1857-0" pointList="-136,-440,-132,-440" />
 
-<item itemtype="Connector" uid="Connector-223" startpinid="FlipFlop JK-29-out1" endpinid="And Gate-41-in0" enodeid="Circ_eNode-1833" pointList="-296,-424,-296,-416,-280,-416,-280,-380" />
+<item itemtype="Connector" uid="Connector-223" startpinid="FlipFlop JK-29-out1" endpinid="And Gate-41-in0" pointList="-296,-424,-296,-416,-280,-416,-280,-380" />
 
-<item itemtype="Connector" uid="Connector-238" startpinid="Node-69-1" endpinid="And Gate-41-in1" enodeid="Circ_eNode-1829" pointList="-436,-424,-436,-372,-280,-372" />
+<item itemtype="Connector" uid="Connector-238" startpinid="Node-69-1" endpinid="And Gate-41-in1" pointList="-436,-424,-436,-372,-280,-372" />
 
-<item itemtype="Connector" uid="Connector-251" startpinid="Node-71-0" endpinid="And Gate-41-in2" enodeid="Circ_eNode-1827" pointList="-444,-364,-280,-364" />
+<item itemtype="Connector" uid="Connector-251" startpinid="Node-71-0" endpinid="And Gate-41-in2" pointList="-444,-364,-280,-364" />
 
-<item itemtype="Connector" uid="Connector-256" startpinid="Node-74-0" endpinid="And Gate-41-in3" enodeid="Circ_eNode-1828" pointList="-440,-352,-280,-352,-280,-356" />
+<item itemtype="Connector" uid="Connector-256" startpinid="Node-74-0" endpinid="And Gate-41-in3" pointList="-440,-352,-280,-352,-280,-356" />
 
-<item itemtype="Connector" uid="Connector-245" startpinid="Node-69-2" endpinid="And Gate-1797-in0" enodeid="Circ_eNode-1829" pointList="-436,-424,-432,-424" />
+<item itemtype="Connector" uid="Connector-245" startpinid="Node-69-2" endpinid="And Gate-1797-in0" pointList="-436,-424,-432,-424" />
 
-<item itemtype="Connector" uid="Connector-253" startpinid="Node-71-2" endpinid="And Gate-1797-in1" enodeid="Circ_eNode-1827" pointList="-444,-364,-444,-416,-432,-416" />
+<item itemtype="Connector" uid="Connector-253" startpinid="Node-71-2" endpinid="And Gate-1797-in1" pointList="-444,-364,-444,-416,-432,-416" />
 
-<item itemtype="Connector" uid="Connector-257" startpinid="Node-74-2" endpinid="And Gate-1797-in2" enodeid="Circ_eNode-1828" pointList="-440,-352,-440,-408,-432,-408" />
+<item itemtype="Connector" uid="Connector-257" startpinid="Node-74-2" endpinid="And Gate-1797-in2" pointList="-440,-352,-440,-408,-432,-408" />
 
-<item itemtype="Connector" uid="Connector-1801" startpinid="And Gate-1797-out" endpinid="Or Gate-28-in1" enodeid="Circ_eNode-1834" pointList="-400,-416,-400,-428,-392,-428" />
+<item itemtype="Connector" uid="Connector-1801" startpinid="And Gate-1797-out" endpinid="Or Gate-28-in1" pointList="-400,-416,-400,-428,-392,-428" />
 
-<item itemtype="Connector" uid="Connector-501" startpinid="KeyPad-497-Pin3" endpinid="Rail-62-outnod" enodeid="Circ_eNode-1835" pointList="-820,-452,-820,-448,-844,-448,-844,-508,-856,-508" />
+<item itemtype="Connector" uid="Connector-501" startpinid="KeyPad-497-Pin3" endpinid="Rail-62-outnod" pointList="-820,-452,-820,-448,-844,-448,-844,-508,-856,-508" />
 
-<item itemtype="Connector" uid="Connector-254" startpinid="Node-72-2" endpinid="And Gate-1811-in0" enodeid="Circ_eNode-1827" pointList="-604,-424,-600,-424" />
+<item itemtype="Connector" uid="Connector-254" startpinid="Node-72-2" endpinid="And Gate-1811-in0" pointList="-604,-424,-600,-424" />
 
-<item itemtype="Connector" uid="Connector-312" startpinid="Node-9-2" endpinid="And Gate-1811-in1" enodeid="Circ_eNode-1828" pointList="-600,-352,-600,-416" />
+<item itemtype="Connector" uid="Connector-312" startpinid="Node-9-2" endpinid="And Gate-1811-in1" pointList="-600,-352,-600,-416" />
 
-<item itemtype="Connector" uid="Connector-1812" startpinid="And Gate-1811-out" endpinid="Or Gate-18-in1" enodeid="Circ_eNode-1836" pointList="-568,-420,-568,-428,-560,-428" />
+<item itemtype="Connector" uid="Connector-1812" startpinid="And Gate-1811-out" endpinid="Or Gate-18-in1" pointList="-568,-420,-568,-428,-560,-428" />
 
-<item itemtype="Connector" uid="Connector-187" startpinid="Node-59-2" endpinid="And Gate-1810-in0" enodeid="Circ_eNode-1823" pointList="-600,-500,-600,-448" />
+<item itemtype="Connector" uid="Connector-187" startpinid="Node-59-2" endpinid="And Gate-1810-in0" pointList="-600,-500,-600,-448" />
 
-<item itemtype="Connector" uid="Connector-212" startpinid="Node-66-2" endpinid="And Gate-1810-in1" enodeid="Circ_eNode-1824" pointList="-604,-440,-600,-440" />
+<item itemtype="Connector" uid="Connector-212" startpinid="Node-66-2" endpinid="And Gate-1810-in1" pointList="-604,-440,-600,-440" />
 
-<item itemtype="Connector" uid="Connector-1827" startpinid="And Gate-1810-out" endpinid="Or Gate-18-in0" enodeid="Circ_eNode-1837" pointList="-568,-444,-568,-436,-560,-436" />
+<item itemtype="Connector" uid="Connector-1827" startpinid="And Gate-1810-out" endpinid="Or Gate-18-in0" pointList="-568,-444,-568,-436,-560,-436" />
 
-<item itemtype="Connector" uid="Connector-1837" startpinid="KeyPad-497-Pin1" endpinid="Node-1838-0" enodeid="Circ_eNode-1838" pointList="-804,-484,-764,-484,-764,-388,-640,-388" />
+<item itemtype="Connector" uid="Connector-1837" startpinid="KeyPad-497-Pin1" endpinid="Node-1838-0" pointList="-804,-484,-764,-484,-764,-388,-640,-388" />
 
-<item itemtype="Connector" uid="Connector-1839" startpinid="Node-1838-2" endpinid="FlipFlop JK-10-in3" enodeid="Circ_eNode-1838" pointList="-640,-388,-640,-408" />
+<item itemtype="Connector" uid="Connector-1839" startpinid="Node-1838-2" endpinid="FlipFlop JK-10-in3" pointList="-640,-388,-640,-408" />
 
-<item itemtype="Connector" uid="Connector-1840" startpinid="Node-1838-1" endpinid="Node-1841-0" enodeid="Circ_eNode-1838" pointList="-640,-388,-480,-388" />
+<item itemtype="Connector" uid="Connector-1840" startpinid="Node-1838-1" endpinid="Node-1841-0" pointList="-640,-388,-480,-388" />
 
-<item itemtype="Connector" uid="Connector-1842" startpinid="Node-1841-2" endpinid="FlipFlop JK-19-in3" enodeid="Circ_eNode-1838" pointList="-480,-388,-480,-408" />
+<item itemtype="Connector" uid="Connector-1842" startpinid="Node-1841-2" endpinid="FlipFlop JK-19-in3" pointList="-480,-388,-480,-408" />
 
-<item itemtype="Connector" uid="Connector-1843" startpinid="Node-1841-1" endpinid="Node-1844-0" enodeid="Circ_eNode-1838" pointList="-480,-388,-312,-388" />
+<item itemtype="Connector" uid="Connector-1843" startpinid="Node-1841-1" endpinid="Node-1844-0" pointList="-480,-388,-312,-388" />
 
-<item itemtype="Connector" uid="Connector-1845" startpinid="Node-1844-2" endpinid="FlipFlop JK-29-in3" enodeid="Circ_eNode-1838" pointList="-312,-388,-312,-408" />
+<item itemtype="Connector" uid="Connector-1845" startpinid="Node-1844-2" endpinid="FlipFlop JK-29-in3" pointList="-312,-388,-312,-408" />
 
-<item itemtype="Connector" uid="Connector-1846" startpinid="Node-1844-1" endpinid="FlipFlop JK-39-in3" enodeid="Circ_eNode-1838" pointList="-312,-388,-152,-388,-152,-408" />
+<item itemtype="Connector" uid="Connector-1846" startpinid="Node-1844-1" endpinid="FlipFlop JK-39-in3" pointList="-312,-388,-152,-388,-152,-408" />
 
-<item itemtype="Connector" uid="Connector-1847" startpinid="7-Seg BCD-85-in0" endpinid="Node-1848-1" enodeid="Circ_eNode-1824" pointList="-760,-560,-760,-544,-620,-544,-620,-440" />
+<item itemtype="Connector" uid="Connector-1847" startpinid="7-Seg BCD-85-in0" endpinid="Node-1848-1" pointList="-760,-560,-760,-544,-620,-544,-620,-440" />
 
-<item itemtype="Connector" uid="Connector-1849" startpinid="Node-1848-2" endpinid="Node-99-0" enodeid="Circ_eNode-1824" pointList="-620,-440,-612,-440" />
+<item itemtype="Connector" uid="Connector-1849" startpinid="Node-1848-2" endpinid="Node-99-0" pointList="-620,-440,-612,-440" />
 
-<item itemtype="Connector" uid="Connector-1850" startpinid="7-Seg BCD-85-in1" endpinid="Node-1851-1" enodeid="Circ_eNode-1826" pointList="-768,-560,-768,-532,-460,-532,-460,-440" />
+<item itemtype="Connector" uid="Connector-1850" startpinid="7-Seg BCD-85-in1" endpinid="Node-1851-1" pointList="-768,-560,-768,-532,-460,-532,-460,-440" />
 
-<item itemtype="Connector" uid="Connector-1852" startpinid="Node-1851-2" endpinid="Node-101-0" enodeid="Circ_eNode-1826" pointList="-460,-440,-456,-440" />
+<item itemtype="Connector" uid="Connector-1852" startpinid="Node-1851-2" endpinid="Node-101-0" pointList="-460,-440,-456,-440" />
 
-<item itemtype="Connector" uid="Connector-1853" startpinid="7-Seg BCD-85-in2" endpinid="Node-1854-1" enodeid="Circ_eNode-1825" pointList="-776,-560,-776,-528,-296,-528,-296,-448" />
+<item itemtype="Connector" uid="Connector-1853" startpinid="7-Seg BCD-85-in2" endpinid="Node-1854-1" pointList="-776,-560,-776,-528,-296,-528,-296,-448" />
 
-<item itemtype="Connector" uid="Connector-1855" startpinid="Node-1854-2" endpinid="Node-80-0" enodeid="Circ_eNode-1825" pointList="-296,-448,-288,-448" />
+<item itemtype="Connector" uid="Connector-1855" startpinid="Node-1854-2" endpinid="Node-80-0" pointList="-296,-448,-288,-448" />
 
-<item itemtype="Connector" uid="Connector-1856" startpinid="7-Seg BCD-85-in3" endpinid="Node-1857-1" enodeid="Circ_eNode-1832" pointList="-784,-560,-784,-520,-132,-520,-132,-440" />
+<item itemtype="Connector" uid="Connector-1856" startpinid="7-Seg BCD-85-in3" endpinid="Node-1857-1" pointList="-784,-560,-784,-520,-132,-520,-132,-440" />
 
-<item itemtype="Connector" uid="Connector-1858" startpinid="Node-1857-2" endpinid="Tunnel-64-pin" enodeid="Circ_eNode-1832" pointList="-132,-440,-96,-440,-96,-416" />
+<item itemtype="Connector" uid="Connector-1858" startpinid="Node-1857-2" endpinid="Tunnel-64-pin" pointList="-132,-440,-96,-440,-96,-416" />
 
-<item itemtype="Connector" uid="Connector-185" startpinid="Buffer-49-in0" endpinid="Node-1895-0" enodeid="Circ_eNode-1823" pointList="-724,-496,-724,-500" />
+<item itemtype="Connector" uid="Connector-185" startpinid="Buffer-49-in0" endpinid="Node-1895-0" pointList="-724,-496,-724,-500" />
 
-<item itemtype="Connector" uid="Connector-314" startpinid="Node-9-1" endpinid="Node-1890-0" enodeid="Circ_eNode-1828" pointList="-600,-352,-724,-352" />
+<item itemtype="Connector" uid="Connector-314" startpinid="Node-9-1" endpinid="Node-1890-0" pointList="-600,-352,-724,-352" />
 
-<item itemtype="Connector" uid="Connector-1891" startpinid="Node-1890-2" endpinid="Buffer-48-in0" enodeid="Circ_eNode-1828" pointList="-724,-352,-724,-392" />
+<item itemtype="Connector" uid="Connector-1891" startpinid="Node-1890-2" endpinid="Buffer-48-in0" pointList="-724,-352,-724,-392" />
 
-<item itemtype="Connector" uid="Connector-1896" startpinid="Node-1895-2" endpinid="Node-59-0" enodeid="Circ_eNode-1823" pointList="-724,-500,-600,-500" />
+<item itemtype="Connector" uid="Connector-1896" startpinid="Node-1895-2" endpinid="Node-59-0" pointList="-724,-500,-600,-500" />
 
-<item itemtype="Connector" uid="Connector-1830" startpinid="KeyPad-497-Pin0" endpinid="Node-1895-1" enodeid="Circ_eNode-1823" pointList="-804,-500,-724,-500" />
+<item itemtype="Connector" uid="Connector-1830" startpinid="KeyPad-497-Pin0" endpinid="Node-1895-1" pointList="-804,-500,-724,-500" />
 
-<item itemtype="Connector" uid="Connector-1889" startpinid="Node-1890-1" endpinid="KeyPad-497-Pin2" enodeid="Circ_eNode-1828" pointList="-724,-352,-804,-352,-804,-468" />
+<item itemtype="Connector" uid="Connector-1889" startpinid="Node-1890-1" endpinid="KeyPad-497-Pin2" pointList="-724,-352,-804,-352,-804,-468" />
 
 </circuit>

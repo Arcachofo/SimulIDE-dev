@@ -22,20 +22,20 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-16" mainComp="false" Show_id="false" Show_Val="false" Pos="-412,-268" rotation="0" hflip="1" vflip="1" label="Tunnel-12" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="CV" Rotated="true" />
 
-<item itemtype="Connector" startpinid="Tunnel-4-pin" endpinid="Lm555-1-ePin0" enodeid="Circ_eNode-17" pointList="-476,-292,-468,-292" />
+<item itemtype="Connector" startpinid="Tunnel-4-pin" endpinid="Lm555-1-ePin0" pointList="-476,-292,-468,-292" />
 
-<item itemtype="Connector" startpinid="Tunnel-6-pin" endpinid="Lm555-1-ePin1" enodeid="Circ_eNode-17" pointList="-476,-284,-468,-284" />
+<item itemtype="Connector" startpinid="Tunnel-6-pin" endpinid="Lm555-1-ePin1" pointList="-476,-284,-468,-284" />
 
-<item itemtype="Connector" startpinid="Tunnel-7-pin" endpinid="Lm555-1-ePin2" enodeid="Circ_eNode-17" pointList="-476,-276,-468,-276" />
+<item itemtype="Connector" startpinid="Tunnel-7-pin" endpinid="Lm555-1-ePin2" pointList="-476,-276,-468,-276" />
 
-<item itemtype="Connector" startpinid="Tunnel-8-pin" endpinid="Lm555-1-ePin3" enodeid="Circ_eNode-17" pointList="-476,-268,-468,-268" />
+<item itemtype="Connector" startpinid="Tunnel-8-pin" endpinid="Lm555-1-ePin3" pointList="-476,-268,-468,-268" />
 
-<item itemtype="Connector" startpinid="Tunnel-12-pin" endpinid="Lm555-1-ePin7" enodeid="Circ_eNode-18" pointList="-412,-292,-420,-292" />
+<item itemtype="Connector" startpinid="Tunnel-12-pin" endpinid="Lm555-1-ePin7" pointList="-412,-292,-420,-292" />
 
-<item itemtype="Connector" startpinid="Tunnel-14-pin" endpinid="Lm555-1-ePin6" enodeid="Circ_eNode-19" pointList="-412,-284,-420,-284" />
+<item itemtype="Connector" startpinid="Tunnel-14-pin" endpinid="Lm555-1-ePin6" pointList="-412,-284,-420,-284" />
 
-<item itemtype="Connector" startpinid="Tunnel-15-pin" endpinid="Lm555-1-ePin5" enodeid="Circ_eNode-20" pointList="-412,-276,-420,-276" />
+<item itemtype="Connector" startpinid="Tunnel-15-pin" endpinid="Lm555-1-ePin5" pointList="-412,-276,-420,-276" />
 
-<item itemtype="Connector" startpinid="Tunnel-16-pin" endpinid="Lm555-1-ePin4" enodeid="Circ_eNode-21" pointList="-412,-268,-420,-268" />
+<item itemtype="Connector" startpinid="Tunnel-16-pin" endpinid="Lm555-1-ePin4" pointList="-412,-268,-420,-268" />
 
 </circuit>

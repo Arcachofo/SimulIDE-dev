@@ -22,7 +22,7 @@
 
 <item itemtype="Resistor" CircId="Resistor-373" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-208,-396" rotation="0" hflip="1" vflip="1" label="Resistor-5" idLabPos="-12,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="100 Ω" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-430" mainComp="false" Show_id="true" Show_Val="true" Pos="-428,-388" rotation="0" hflip="1" vflip="1" label="Enable" idLabPos="-68,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-430" mainComp="false" Show_id="true" Show_Val="true" Pos="-428,-388" rotation="0" hflip="1" vflip="1" label="Enable" idLabPos="-68.2008,-6.49651" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Subcircuit" CircId="ENCODER_HEX-474" mainComp="false" Show_id="true" Show_Val="false" Pos="-520,-492" rotation="0" hflip="1" vflip="1" label="ENCODER_HEX-474" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true" />
 

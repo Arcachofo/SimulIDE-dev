@@ -48,60 +48,60 @@
 
 <item itemtype="Node" CircId="Node-116" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-636,-332" />
 
-<item itemtype="Connector" startpinid="Buffer-6-out" endpinid="Xor Gate-1-in1" enodeid="Circ_eNode-120" pointList="-560,-332,-544,-332" />
+<item itemtype="Connector" startpinid="Buffer-6-out" endpinid="Xor Gate-1-in1" pointList="-560,-332,-544,-332" />
 
-<item itemtype="Connector" startpinid="Node-25-2" endpinid="Xor Gate-1-in0" enodeid="Circ_eNode-121" pointList="-552,-340,-544,-340" />
+<item itemtype="Connector" startpinid="Node-25-2" endpinid="Xor Gate-1-in0" pointList="-552,-340,-544,-340" />
 
-<item itemtype="Connector" startpinid="Buffer-2-in0" endpinid="Node-29-1" enodeid="Circ_eNode-121" pointList="-492,-336,-492,-352" />
+<item itemtype="Connector" startpinid="Buffer-2-in0" endpinid="Node-29-1" pointList="-492,-336,-492,-352" />
 
-<item itemtype="Connector" startpinid="Node-29-2" endpinid="Node-41-0" enodeid="Circ_eNode-121" pointList="-492,-352,-504,-352" />
+<item itemtype="Connector" startpinid="Node-29-2" endpinid="Node-41-0" pointList="-492,-352,-504,-352" />
 
-<item itemtype="Connector" startpinid="And Gate-5-in0" endpinid="Node-38-0" enodeid="Circ_eNode-122" pointList="-488,-304,-496,-304" />
+<item itemtype="Connector" startpinid="And Gate-5-in0" endpinid="Node-38-0" pointList="-488,-304,-496,-304" />
 
-<item itemtype="Connector" startpinid="And Gate-4-in0" endpinid="Buffer-2-out" enodeid="Circ_eNode-123" pointList="-452,-280,-452,-336,-460,-336" />
+<item itemtype="Connector" startpinid="And Gate-4-in0" endpinid="Buffer-2-out" pointList="-452,-280,-452,-336,-460,-336" />
 
-<item itemtype="Connector" startpinid="And Gate-4-out" endpinid="Or Gate-3-in1" enodeid="Circ_eNode-124" pointList="-420,-272,-420,-284" />
+<item itemtype="Connector" startpinid="And Gate-4-out" endpinid="Or Gate-3-in1" pointList="-420,-272,-420,-284" />
 
-<item itemtype="Connector" startpinid="And Gate-5-out" endpinid="Or Gate-3-in0" enodeid="Circ_eNode-125" pointList="-456,-296,-420,-296,-420,-292" />
+<item itemtype="Connector" startpinid="And Gate-5-out" endpinid="Or Gate-3-in0" pointList="-456,-296,-420,-296,-420,-292" />
 
-<item itemtype="Connector" startpinid="And Gate-4-in1" endpinid="Node-38-1" enodeid="Circ_eNode-122" pointList="-452,-272,-496,-272,-496,-304" />
+<item itemtype="Connector" startpinid="And Gate-4-in1" endpinid="Node-38-1" pointList="-452,-272,-496,-272,-496,-304" />
 
-<item itemtype="Connector" startpinid="And Gate-5-in1" endpinid="Node-41-1" enodeid="Circ_eNode-121" pointList="-488,-296,-504,-296,-504,-352" />
+<item itemtype="Connector" startpinid="And Gate-5-in1" endpinid="Node-41-1" pointList="-488,-296,-504,-296,-504,-352" />
 
-<item itemtype="Connector" startpinid="Node-41-2" endpinid="Node-25-1" enodeid="Circ_eNode-121" pointList="-504,-352,-552,-352,-552,-340" />
+<item itemtype="Connector" startpinid="Node-41-2" endpinid="Node-25-1" pointList="-504,-352,-552,-352,-552,-340" />
 
-<item itemtype="Connector" startpinid="And Gate-5-in2" endpinid="Node-46-0" enodeid="Circ_eNode-126" pointList="-488,-288,-512,-288" />
+<item itemtype="Connector" startpinid="And Gate-5-in2" endpinid="Node-46-0" pointList="-488,-288,-512,-288" />
 
-<item itemtype="Connector" startpinid="Clock-44-outnod" endpinid="Node-46-1" enodeid="Circ_eNode-126" pointList="-520,-288,-512,-288" />
+<item itemtype="Connector" startpinid="Clock-44-outnod" endpinid="Node-46-1" pointList="-520,-288,-512,-288" />
 
-<item itemtype="Connector" startpinid="Node-46-2" endpinid="And Gate-4-in2" enodeid="Circ_eNode-126" pointList="-512,-288,-512,-264,-452,-264" />
+<item itemtype="Connector" startpinid="Node-46-2" endpinid="And Gate-4-in2" pointList="-512,-288,-512,-264,-452,-264" />
 
-<item itemtype="Connector" startpinid="Or Gate-3-out" endpinid="Xor Gate-48-in1" enodeid="Circ_eNode-127" pointList="-388,-288,-388,-300" />
+<item itemtype="Connector" startpinid="Or Gate-3-out" endpinid="Xor Gate-48-in1" pointList="-388,-288,-388,-300" />
 
-<item itemtype="Connector" startpinid="Push-63-switch0pinN" endpinid="Node-69-0" enodeid="Circ_eNode-121" pointList="-656,-332,-652,-332" />
+<item itemtype="Connector" startpinid="Push-63-switch0pinN" endpinid="Node-69-0" pointList="-656,-332,-652,-332" />
 
-<item itemtype="Connector" startpinid="Resistor-67-rPin" endpinid="Node-69-1" enodeid="Circ_eNode-121" pointList="-652,-308,-652,-332" />
+<item itemtype="Connector" startpinid="Resistor-67-rPin" endpinid="Node-69-1" pointList="-652,-308,-652,-332" />
 
-<item itemtype="Connector" startpinid="Rail-74-outnod" endpinid="Push-63-pinP0" enodeid="Circ_eNode-128" pointList="-712,-332,-688,-332" />
+<item itemtype="Connector" startpinid="Rail-74-outnod" endpinid="Push-63-pinP0" pointList="-712,-332,-688,-332" />
 
-<item itemtype="Connector" startpinid="Node-38-2" endpinid="Xor Gate-1-out" enodeid="Circ_eNode-122" pointList="-496,-304,-496,-336,-512,-336" />
+<item itemtype="Connector" startpinid="Node-38-2" endpinid="Xor Gate-1-out" pointList="-496,-304,-496,-336,-512,-336" />
 
-<item itemtype="Connector" startpinid="Xor Gate-48-in0" endpinid="Node-29-0" enodeid="Circ_eNode-121" pointList="-388,-308,-388,-352,-492,-352" />
+<item itemtype="Connector" startpinid="Xor Gate-48-in0" endpinid="Node-29-0" pointList="-388,-308,-388,-352,-492,-352" />
 
-<item itemtype="Connector" startpinid="Buffer-83-in0" endpinid="Node-85-1" enodeid="enode" pointList="-352,-276,-352,-304" />
+<item itemtype="Connector" startpinid="Buffer-83-in0" endpinid="Node-85-1" pointList="-352,-276,-352,-304" />
 
-<item itemtype="Connector" startpinid="Node-85-2" endpinid="Xor Gate-48-out" enodeid="enode" pointList="-352,-304,-356,-304" />
+<item itemtype="Connector" startpinid="Node-85-2" endpinid="Xor Gate-48-out" pointList="-352,-304,-356,-304" />
 
-<item itemtype="Connector" startpinid="Tunnel-87-pin" endpinid="Buffer-83-out" enodeid="Circ_eNode-130" pointList="-312,-276,-320,-276" />
+<item itemtype="Connector" startpinid="Tunnel-87-pin" endpinid="Buffer-83-out" pointList="-312,-276,-320,-276" />
 
-<item itemtype="Connector" startpinid="Ground-16-Gnd" endpinid="Resistor-67-lPin" enodeid="Circ_eNode-131" pointList="-600,-252,-600,-268,-652,-268,-652,-276" />
+<item itemtype="Connector" startpinid="Ground-16-Gnd" endpinid="Resistor-67-lPin" pointList="-600,-252,-600,-268,-652,-268,-652,-276" />
 
-<item itemtype="Connector" startpinid="Node-69-2" endpinid="Node-116-0" enodeid="Circ_eNode-121" pointList="-652,-332,-636,-332" />
+<item itemtype="Connector" startpinid="Node-69-2" endpinid="Node-116-0" pointList="-652,-332,-636,-332" />
 
-<item itemtype="Connector" startpinid="Buffer-6-in0" endpinid="Node-116-1" enodeid="Circ_eNode-121" pointList="-592,-332,-636,-332" />
+<item itemtype="Connector" startpinid="Buffer-6-in0" endpinid="Node-116-1" pointList="-592,-332,-636,-332" />
 
-<item itemtype="Connector" startpinid="Node-116-2" endpinid="Node-25-0" enodeid="Circ_eNode-121" pointList="-636,-332,-636,-340,-552,-340" />
+<item itemtype="Connector" startpinid="Node-116-2" endpinid="Node-25-0" pointList="-636,-332,-636,-340,-552,-340" />
 
-<item itemtype="Connector" startpinid="Tunnel-81-pin" endpinid="Node-85-0" enodeid="enode" pointList="-312,-304,-352,-304" />
+<item itemtype="Connector" startpinid="Tunnel-81-pin" endpinid="Node-85-0" pointList="-312,-304,-352,-304" />
 
 </circuit>

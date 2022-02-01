@@ -18,13 +18,13 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-37" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,-292" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-37" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-38" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,-276" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-38" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-38" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,-276" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-38" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-39" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,-260" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-39" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="TextComponent" CircId="Text-46" mainComp="false" Show_id="false" Show_Val="false" Pos="-564,-300" rotation="0" hflip="1" vflip="1" label="Text-46" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="false" Text="1&#xa;2&#xa;4&#xa;&#xa;&#xa;E" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-47" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,-228" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-47" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-47" mainComp="false" Show_id="false" Show_Val="false" Pos="-500,-228" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-47" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Node" CircId="Node-358" mainComp="false" Pos="-260,12" />
 

@@ -1,0 +1,51 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-2" mainComp="false" Show_id="false" Show_Val="true" Pos="-332,-124" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="7-Seg BCD" CircId="7-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-224,-300" rotation="0" hflip="1" vflip="1" label="7-3" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="7-Seg BCD" CircId="7-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-408,-276" rotation="0" hflip="1" vflip="1" label="7-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Subcircuit" CircId="74HC4060-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-356,-260" rotation="0" hflip="1" vflip="1" label="74HC4060-5" idLabPos="-31,80" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false" />
+
+<item itemtype="Resistor" CircId="Resistor-28" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-284,-212" rotation="0" hflip="1" vflip="1" label="Resistor-28" idLabPos="-12,-24" labelrot="0" valLabPos="67,-6" valLabRot="0" Resistance="100 kΩ" />
+
+<item itemtype="Resistor" CircId="Resistor-30" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-284,-204" rotation="0" hflip="1" vflip="1" label="Resistor-30" idLabPos="-12,-24" labelrot="0" valLabPos="67,-6" valLabRot="0" Resistance="100 kΩ" />
+
+<item itemtype="Capacitor" CircId="Capacitor-35" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="-284,-180" rotation="0" hflip="1" vflip="1" label="Capacitor-35" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Capacitance="0.0001 nF" />
+
+<item itemtype="Clock" CircId="Clock-50" mainComp="false" Show_id="false" Show_Val="false" Pos="-352,-300" rotation="0" hflip="1" vflip="1" label="Clock-50" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="10 Hz" Always_On="false" />
+
+<item itemtype="Node" CircId="Node-53" mainComp="false" Pos="-244,-204" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="7-4-in0" endpinid="74HC4060-5-Q3" pointList="-396,-244,-392,-244,-392,-204,-364,-204" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="7-4-in1" endpinid="74HC4060-5-Q4" pointList="-404,-244,-400,-244,-400,-220,-364,-220" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="7-4-in2" endpinid="74HC4060-5-Q5" pointList="-412,-244,-408,-244,-408,-228,-364,-228" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="7-4-in3" endpinid="74HC4060-5-Q6" pointList="-420,-244,-416,-244,-416,-212,-364,-212" />
+
+<item itemtype="Connector" uid="Connector-14" startpinid="7-3-in0" endpinid="74HC4060-5-Q7" pointList="-212,-268,-212,-236,-316,-236" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="7-3-in1" endpinid="74HC4060-5-Q8" pointList="-220,-268,-220,-228,-316,-228" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="7-3-in2" endpinid="74HC4060-5-Q9" pointList="-228,-268,-228,-244,-316,-244" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="7-3-in3" endpinid="74HC4060-5-Q11" pointList="-236,-268,-364,-268,-364,-252" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Resistor-30-lPin" endpinid="74HC4060-5-RTC" pointList="-300,-204,-316,-204" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Fixed Voltage-2-outnod" endpinid="74HC4060-5-MR" pointList="-316,-124,-236,-124,-236,-220,-316,-220" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="Capacitor-35-lPin" endpinid="74HC4060-5-CTC" pointList="-300,-180,-300,-196,-316,-196" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="Resistor-28-rPin" endpinid="Node-53-0" pointList="-268,-212,-244,-212,-244,-204" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="Clock-50-outnod" endpinid="74HC4060-5-RS" pointList="-336,-300,-308,-300,-308,-212,-316,-212" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Capacitor-35-rPin" endpinid="Node-53-1" pointList="-268,-180,-244,-180,-244,-204" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="Node-53-2" endpinid="Resistor-30-rPin" pointList="-244,-204,-268,-204" />
+
+</circuit>

@@ -8,21 +8,21 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-59" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-316" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-59" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="7-Seg BCD" CircId="7 Seg BCD-24" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,-260" rotation="0" hflip="1" vflip="1" label="7 Seg BCD-24" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="7-Seg BCD" CircId="7 Seg BCD-24" mainComp="false" Show_id="false" Show_Val="false" Pos="-108,-260" rotation="0" hflip="1" vflip="1" label="7 Seg BCD-24" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
 <item itemtype="7-Seg BCD" CircId="7 Seg BCD-17" mainComp="false" Show_id="false" Show_Val="false" Pos="-440,-84" rotation="0" hflip="1" vflip="1" label="7 Seg BCD-17" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
 <item itemtype="7-Seg BCD" CircId="7 Seg BCD-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-440,-244" rotation="0" hflip="1" vflip="1" label="7 Seg BCD-12" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,4" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-11" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,4" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-11" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="TextComponent" CircId="Text-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-564,-52" rotation="0" hflip="1" vflip="1" label="Text-10" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="9 _Pixels" Fixed_Width="false" Text="B0&#xa;&#xa;B1&#xa;&#xa;B2&#xa;&#xa;B3" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-20" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-9" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-20" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-9" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-44" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-8" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-44" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-8" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,28" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-7" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-7" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,28" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-7" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="TextComponent" CircId="Text-6" mainComp="false" Show_id="false" Show_Val="false" Pos="-564,-196" rotation="0" hflip="1" vflip="1" label="Text-6" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="9 _Pixels" Fixed_Width="false" Text="A0&#xa;&#xa;A1&#xa;&#xa;A2&#xa;&#xa;A3" />
 
@@ -32,7 +32,7 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Volt.-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-164" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-3" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-188" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Volt.-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-492,-188" rotation="0" hflip="1" vflip="1" label="Fixed Volt.-2" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Subcircuit" CircId="74HC283-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-292,-188" rotation="0" hflip="1" vflip="1" label="74HC283-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false" />
 
@@ -66,13 +66,13 @@
 
 <item itemtype="Connector" uid="Connector-21" startpinid="7 Seg BCD-17-in3" endpinid="Node-56-0" pointList="-452,-52,-452,28" />
 
-<item itemtype="Connector" uid="Connector-25" startpinid="74HC283-1-S0" endpinid="7 Seg BCD-24-in0" pointList="-300,-156,-316,-156,-316,-212,-156,-212,-156,-228" />
+<item itemtype="Connector" uid="Connector-25" startpinid="74HC283-1-S0" endpinid="7 Seg BCD-24-in0" pointList="-300,-156,-316,-156,-316,-212,-96,-212,-96,-228" />
 
-<item itemtype="Connector" uid="Connector-26" startpinid="74HC283-1-S1" endpinid="7 Seg BCD-24-in1" pointList="-300,-180,-300,-220,-164,-220,-164,-228" />
+<item itemtype="Connector" uid="Connector-26" startpinid="74HC283-1-S1" endpinid="7 Seg BCD-24-in1" pointList="-300,-180,-300,-220,-104,-220,-104,-228" />
 
-<item itemtype="Connector" uid="Connector-27" startpinid="74HC283-1-S2" endpinid="7 Seg BCD-24-in2" pointList="-252,-156,-172,-156,-172,-228" />
+<item itemtype="Connector" uid="Connector-27" startpinid="74HC283-1-S2" endpinid="7 Seg BCD-24-in2" pointList="-252,-156,-112,-156,-112,-228" />
 
-<item itemtype="Connector" uid="Connector-28" startpinid="74HC283-1-S3" endpinid="7 Seg BCD-24-in3" pointList="-252,-132,-180,-132,-180,-228" />
+<item itemtype="Connector" uid="Connector-28" startpinid="74HC283-1-S3" endpinid="7 Seg BCD-24-in3" pointList="-252,-132,-120,-132,-120,-228" />
 
 <item itemtype="Connector" uid="Connector-30" startpinid="Node-29-2" endpinid="Fixed Volt.-2-outnod" pointList="-428,-188,-476,-188" />
 

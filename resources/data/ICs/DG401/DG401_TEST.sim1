@@ -1,0 +1,31 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-524,-24" rotation="0" hflip="1" vflip="1" label="IN1" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-11" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-524,-76" rotation="0" hflip="1" vflip="1" label="Voltage Source-7" idLabPos="-40,-80" labelrot="0" valLabPos="-26,10" valLabRot="0" MaxValue="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-9" mainComp="false" Show_id="true" Show_Val="false" Pos="-504,-168" rotation="0" hflip="1" vflip="1" label="IN1" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-7" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-504,-220" rotation="0" hflip="1" vflip="1" label="Voltage Source-7" idLabPos="-40,-80" labelrot="0" valLabPos="-26,10" valLabRot="0" MaxValue="5 V" />
+
+<item itemtype="Probe" CircId="Probe-5" mainComp="false" Show_id="false" Show_Val="true" Pos="-272,-152" rotation="-45" hflip="1" vflip="1" label="Probe-5" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Probe" CircId="Probe-3" mainComp="false" Show_id="false" Show_Val="true" Pos="-316,-168" rotation="-45" hflip="1" vflip="1" label="Probe-3" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="DG401-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-432,-324" rotation="0" hflip="1" vflip="1" label="DG401-2" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false" />
+
+<item itemtype="Subcircuit" CircId="DG401-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-392,-160" rotation="0" hflip="1" vflip="1" label="DG401-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="Probe-3-inpin" endpinid="DG401-1-S1" pointList="-332,-152,-352,-152" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="Probe-5-inpin" endpinid="DG401-1-S2" pointList="-288,-136,-288,-128,-352,-128" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Voltage Source-7-outPin" endpinid="DG401-1-D1" pointList="-476,-204,-400,-204,-400,-152" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Fixed Voltage-9-outnod" endpinid="DG401-1-IN1" pointList="-488,-168,-468,-168,-468,-144,-400,-144" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Voltage Source-11-outPin" endpinid="DG401-1-D2" pointList="-496,-60,-436,-60,-436,-128,-400,-128" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="Fixed Voltage-12-outnod" endpinid="DG401-1-IN2" pointList="-508,-24,-428,-24,-428,-120,-400,-120" />
+
+</circuit>

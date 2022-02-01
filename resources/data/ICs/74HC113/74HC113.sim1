@@ -32,9 +32,9 @@
 
 <item itemtype="FlipFlopJK" CircId="FlipFlopJK-8" mainComp="false" Show_id="false" Show_Val="false" Pos="-524,-356" rotation="0" hflip="1" vflip="1" label="FlipFlopJK-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="true" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Package" CircId="Package-17" mainComp="false" Show_id="true" Show_Val="false" Pos="-712,-388" rotation="0" hflip="1" vflip="1" label="Package-69" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="8 _Cells" Name="74HC113" Package_File="74HC113.package" Logic_Symbol="false" />
+<item itemtype="Package" CircId="Package-17" mainComp="false" Show_id="true" Show_Val="false" Pos="-556,-508" rotation="0" hflip="1" vflip="1" label="Package-69" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="8 _Cells" Name="74HC113" Package_File="74HC113.package" Logic_Symbol="false" />
 
-<item itemtype="Package" CircId="Package-18" mainComp="false" Show_id="true" Show_Val="false" Pos="-712,-288" rotation="0" hflip="1" vflip="1" label="Package-70" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="10 _Cells" Name="74HC113" Package_File="74HC113_LS.package" Logic_Symbol="true" />
+<item itemtype="Package" CircId="Package-18" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-508" rotation="0" hflip="1" vflip="1" label="Package-70" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="10 _Cells" Name="74HC113" Package_File="74HC113_LS.package" Logic_Symbol="true" />
 
 <item itemtype="Connector" uid="Connector-40" startpinid="Tunnel-39-pin" endpinid="FlipFlopJK-8-in2" pointList="-588,-392,-524,-392,-524,-380" />
 

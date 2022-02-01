@@ -12,11 +12,11 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-84" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-388" rotation="0" hflip="1" vflip="1" label="A1" idLabPos="-46,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-85" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-372" rotation="0" hflip="1" vflip="1" label="A2" idLabPos="-46,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-85" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-372" rotation="0" hflip="1" vflip="1" label="A2" idLabPos="-46,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Subcircuit" CircId="74HC137-86" mainComp="false" Show_id="true" Show_Val="false" Pos="-396,-412" rotation="0" hflip="1" vflip="1" label="74HC137_LS" idLabPos="-9,-14" labelrot="0" valLabPos="13,48" valLabRot="-90" Logic_Symbol="true" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-165" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-404" rotation="0" hflip="1" vflip="1" label="A0" idLabPos="-45,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-165" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-404" rotation="0" hflip="1" vflip="1" label="A0" idLabPos="-45,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="LedBar" CircId="LedBar-166" mainComp="false" Show_id="false" Show_Val="false" Pos="-324,-380" rotation="0" hflip="1" vflip="1" label="LedBar-44" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Size="8 _Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
 

@@ -18,6 +18,7 @@
     <pin type="" xpos="40" ypos="56" angle="0" length="8" id="DR6" label="DR6" /><!-- packagePin12 -->
     <pin type="" xpos="40" ypos="64" angle="0" length="8" id="DR7" label="DR7" /><!-- packagePin13 -->
     <pin type="" xpos="40" ypos="72" angle="0" length="8" id="Q7'" label="Q7'" /><!-- packagePin14 -->
+    
     <pin type="null" xpos="-8" ypos="40" angle="180" length="8" id="PGND1" label="PGn" /><!-- packagePin5 -->
     <pin type="null" xpos="-8" ypos="48" angle="180" length="8" id="PGND2" label="PGn" /><!-- packagePin6 -->
     <pin type="null" xpos="40" ypos="32" angle="0" length="8" id="Vcc" label="Vcc" /><!-- packagePin14 -->

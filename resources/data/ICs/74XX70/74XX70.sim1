@@ -1,0 +1,69 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Package" CircId="Package-18" mainComp="false" Show_id="true" Show_Val="false" Pos="-360,-204" rotation="0" hflip="1" vflip="1" label="Package-29" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="12 _Cells" Name="74XX70" Package_File="74XX70_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Package" CircId="Package-17" mainComp="false" Show_id="true" Show_Val="false" Pos="-440,-188" rotation="0" hflip="1" vflip="1" label="Package-28" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="8 _Cells" Name="74XX70" Package_File="74XX70.package" Logic_Symbol="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-16" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-304" rotation="0" hflip="1" vflip="1" label="!Q" idLabPos="16,-16" labelrot="0" valLabPos="16,0" valLabRot="45" Name="!Q" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-15" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-220" rotation="0" hflip="1" vflip="1" label="!R" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="!R" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-380" rotation="0" hflip="1" vflip="1" label="!S" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="!S" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-13" mainComp="false" Show_id="true" Show_Val="false" Pos="-500,-248" rotation="0" hflip="1" vflip="1" label="!K" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="!K" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-264" rotation="0" hflip="1" vflip="1" label="K2" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="K2" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-280" rotation="0" hflip="1" vflip="1" label="K1" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="K1" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-304" rotation="0" hflip="1" vflip="1" label="CLK" idLabPos="-53,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="CLK" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-9" mainComp="false" Show_id="true" Show_Val="false" Pos="-504,-324" rotation="0" hflip="1" vflip="1" label="!J" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="!J" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-8" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-340" rotation="0" hflip="1" vflip="1" label="J2" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="J2" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-448,-356" rotation="0" hflip="1" vflip="1" label="J1" idLabPos="-42,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="J1" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-336" rotation="0" hflip="1" vflip="1" label="Q" idLabPos="16,-16" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q" Rotated="false" />
+
+<item itemtype="And Gate" CircId="And Gate-5" mainComp="false" Show_id="false" Show_Val="false" Pos="-404,-264" rotation="0" hflip="1" vflip="1" label="And Gate-2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="And Gate" CircId="And Gate-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-404,-340" rotation="0" hflip="1" vflip="1" label="And Gate-2" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlopJK-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-356,-304" rotation="0" hflip="1" vflip="1" label="FlipFlopJK-1" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-2" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,-324" rotation="0" hflip="1" vflip="1" label="Buffer-44" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-460,-248" rotation="0" hflip="1" vflip="1" label="Buffer-44" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Connector" uid="Connector-19" startpinid="And Gate-4-out" endpinid="FlipFlopJK-3-in0" pointList="-388,-340,-372,-340,-372,-312" />
+
+<item itemtype="Connector" uid="Connector-21" startpinid="And Gate-5-out" endpinid="FlipFlopJK-3-in1" pointList="-388,-264,-372,-264,-372,-296" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="Tunnel-6-pin" endpinid="FlipFlopJK-3-out0" pointList="-308,-336,-308,-312,-332,-312" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Tunnel-7-pin" endpinid="And Gate-4-in0" pointList="-448,-356,-420,-356,-420,-348" />
+
+<item itemtype="Connector" uid="Connector-27" startpinid="Tunnel-8-pin" endpinid="And Gate-4-in1" pointList="-448,-340,-420,-340" />
+
+<item itemtype="Connector" uid="Connector-29" startpinid="Tunnel-10-pin" endpinid="FlipFlopJK-3-in4" pointList="-448,-304,-372,-304" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="Tunnel-11-pin" endpinid="And Gate-5-in0" pointList="-448,-280,-420,-280,-420,-272" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="Tunnel-12-pin" endpinid="And Gate-5-in1" pointList="-448,-264,-420,-264" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Tunnel-14-pin" endpinid="FlipFlopJK-3-in2" pointList="-448,-380,-356,-380,-356,-328" />
+
+<item itemtype="Connector" uid="Connector-37" startpinid="Tunnel-15-pin" endpinid="FlipFlopJK-3-in3" pointList="-448,-220,-348,-220,-348,-280" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Tunnel-16-pin" endpinid="FlipFlopJK-3-out1" pointList="-308,-304,-308,-296,-332,-296" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Tunnel-9-pin" endpinid="Buffer-2-in0" pointList="-504,-324,-476,-324" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Buffer-2-out" endpinid="And Gate-4-in2" pointList="-444,-324,-420,-324,-420,-332" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Tunnel-13-pin" endpinid="Buffer-1-in0" pointList="-500,-248,-476,-248" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Buffer-1-out" endpinid="And Gate-5-in2" pointList="-444,-248,-420,-248,-420,-256" />
+
+</circuit>

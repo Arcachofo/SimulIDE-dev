@@ -19,6 +19,7 @@
     <item name="8bit_led_ca" folder="led_display" info=" 8-Bit Led digital Tube module (74hc595, com. anode), dynamic" />
     <item name="4bit_led_cc" folder="led_display" info=" 4-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" />
     <item name="8bit_led_cc" folder="led_display" info=" 8-Bit Led digital Tube module (74hc595, com. cathode, dynamic)" />
+    <item name="8x8_led_595" folder="led_display" info=" 8x8 matrix (74hc595, dynamic)" />
 
   </itemset>
 

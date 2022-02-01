@@ -10,23 +10,23 @@
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-20" mainComp="false" Show_id="true" Show_Val="false" Pos="-460,-132" rotation="0" hflip="1" vflip="1" label="!CLK" idLabPos="-57,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-18" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-156" rotation="0" hflip="1" vflip="1" label="WORD SELECT" idLabPos="-106,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-18" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-156" rotation="0" hflip="1" vflip="1" label="WORD SELECT" idLabPos="-106,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-184" rotation="0" hflip="1" vflip="1" label="D2" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-184" rotation="0" hflip="1" vflip="1" label="D2" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-9" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-200" rotation="0" hflip="1" vflip="1" label="D1" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-8" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-220" rotation="0" hflip="1" vflip="1" label="C2" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-8" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-220" rotation="0" hflip="1" vflip="1" label="C2" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-7" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-236" rotation="0" hflip="1" vflip="1" label="C1" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-6" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-256" rotation="0" hflip="1" vflip="1" label="B2" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-272" rotation="0" hflip="1" vflip="1" label="B1" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-272" rotation="0" hflip="1" vflip="1" label="B1" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Fixed Voltage" CircId="Fixed Voltage-4" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-292" rotation="0" hflip="1" vflip="1" label="A2" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
 
-<item itemtype="Fixed Voltage" CircId="Fixed Voltage-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-308" rotation="0" hflip="1" vflip="1" label="A1" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-496,-308" rotation="0" hflip="1" vflip="1" label="A1" idLabPos="-51,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
 
 <item itemtype="Subcircuit" CircId="74HC298-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-392,-284" rotation="0" hflip="1" vflip="1" label="74HC298-1" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="true" />
 

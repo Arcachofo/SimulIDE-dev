@@ -152,7 +152,7 @@
 
 <item itemtype="Node" CircId="Node-42" mainComp="false" Pos="268,-364" />
 
-<item itemtype="Node" CircId="Node-40" mainComp="false" Pos="540,-92" />
+<item itemtype="Node" CircId="Node-40" mainComp="false" Pos="556,-88" />
 
 <item itemtype="Node" CircId="Node-39" mainComp="false" Pos="44,-92" />
 
@@ -364,17 +364,17 @@
 
 <item itemtype="Connector" uid="Connector-219" startpinid="FlipFlop JK-86-out1" endpinid="Node-38-0" pointList="196,-292,196,-284,252,-284,252,-268" />
 
-<item itemtype="Connector" uid="Connector-221" startpinid="FlipFlop JK-76-out1" endpinid="Node-40-0" pointList="444,-292,444,-284,540,-284,540,-92" />
+<item itemtype="Connector" uid="Connector-221" startpinid="FlipFlop JK-76-out1" endpinid="Node-40-0" pointList="444,-292,444,-284,556,-284,556,-88" />
 
-<item itemtype="Connector" uid="Connector-223" startpinid="Node-40-2" endpinid="And Gate-49-in0" pointList="540,-92,540,-76,556,-76" />
+<item itemtype="Connector" uid="Connector-223" startpinid="Node-40-2" endpinid="And Gate-49-in0" pointList="556,-88,556,-76" />
 
 <item itemtype="Connector" uid="Connector-224" startpinid="Node-39-2" endpinid="And Gate-41-in0" pointList="44,-92,44,-132,28,-132" />
 
 <item itemtype="Connector" uid="Connector-225" startpinid="Node-39-1" endpinid="And Gate-95-in1" pointList="44,-92,-244,-92,-244,-324,-220,-324" />
 
-<item itemtype="Connector" uid="Connector-226" startpinid="Node-40-1" endpinid="Node-39-0" pointList="540,-92,44,-92" />
+<item itemtype="Connector" uid="Connector-226" startpinid="Node-40-1" endpinid="Node-39-0" pointList="556,-88,44,-88,44,-92" />
 
-<item itemtype="Connector" uid="Connector-227" startpinid="And Gate-49-in1" endpinid="Node-37-0" pointList="556,-68,556,-76,252,-76" />
+<item itemtype="Connector" uid="Connector-227" startpinid="And Gate-49-in1" endpinid="Node-37-0" pointList="556,-68,548,-68,548,-76,252,-76" />
 
 <item itemtype="Connector" uid="Connector-228" startpinid="Node-38-2" endpinid="And Gate-74-in0" pointList="252,-268,300,-268,300,-256" />
 
@@ -400,7 +400,7 @@
 
 <item itemtype="Connector" uid="Connector-241" startpinid="Node-33-2" endpinid="And Gate-84-in0" pointList="-20,-284,44,-284,44,-272" />
 
-<item itemtype="Connector" uid="Connector-242" startpinid="And Gate-49-in3" endpinid="Node-32-0" pointList="556,-52,556,-44,268,-44" />
+<item itemtype="Connector" uid="Connector-242" startpinid="And Gate-49-in3" endpinid="Node-32-0" pointList="556,-52,548,-52,548,-44,268,-44" />
 
 <item itemtype="Connector" uid="Connector-244" startpinid="And Gate-49-in4" endpinid="Node-29-0" pointList="556,-44,556,-28,276,-28" />
 

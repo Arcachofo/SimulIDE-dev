@@ -1,0 +1,453 @@
+<circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Package" CircId="Package-255" mainComp="false" Show_id="true" Show_Val="false" Pos="-828,-176" rotation="0" hflip="1" vflip="1" label="Package-255" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="13 _Cells" Name="74HC4020" Package_File="74HC4020_LS.package" Logic_Symbol="true" />
+
+<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-912,-172" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="4 _Cells" Height="9 _Cells" Name="74HC4020" Package_File="74HC4020.package" Logic_Symbol="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-85" mainComp="false" Show_id="true" Show_Val="false" Pos="-1180,-212" rotation="0" hflip="1" vflip="1" label="PackagePin11" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="MR" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-84" mainComp="false" Show_id="true" Show_Val="false" Pos="-1180,-244" rotation="0" hflip="1" vflip="1" label="PackagePin10" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Name="!CP" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-83" mainComp="false" Show_id="true" Show_Val="false" Pos="-1052,-292" rotation="0" hflip="1" vflip="1" label="PackagePin9" idLabPos="-41,-20" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q0" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-82" mainComp="false" Show_id="true" Show_Val="false" Pos="-860,-296" rotation="0" hflip="1" vflip="1" label="PackagePin7" idLabPos="-54,-18" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q3" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-81" mainComp="false" Show_id="true" Show_Val="false" Pos="-796,-304" rotation="0" hflip="1" vflip="1" label="PackagePin5" idLabPos="-55,2" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q4" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-80" mainComp="false" Show_id="true" Show_Val="false" Pos="-732,-304" rotation="0" hflip="1" vflip="1" label="PackagePin4" idLabPos="-58,-19" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q5" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-79" mainComp="false" Show_id="true" Show_Val="false" Pos="-668,-304" rotation="0" hflip="1" vflip="1" label="PackagePin6" idLabPos="-56,6" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q6" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-78" mainComp="false" Show_id="true" Show_Val="false" Pos="-604,-312" rotation="0" hflip="1" vflip="1" label="PackagePin13" idLabPos="-64,-18" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q7" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-77" mainComp="false" Show_id="true" Show_Val="false" Pos="-540,-308" rotation="0" hflip="1" vflip="1" label="PackagePin12" idLabPos="-61,4" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q8" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-76" mainComp="false" Show_id="true" Show_Val="false" Pos="-476,-308" rotation="0" hflip="1" vflip="1" label="PackagePin14" idLabPos="-69,-21" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q9" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-75" mainComp="false" Show_id="true" Show_Val="false" Pos="-412,-304" rotation="0" hflip="1" vflip="1" label="PackagePin15" idLabPos="-64,2" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q10" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-74" mainComp="false" Show_id="true" Show_Val="false" Pos="-348,-308" rotation="0" hflip="1" vflip="1" label="PackagePin1" idLabPos="-56,-17" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q11" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-73" mainComp="false" Show_id="true" Show_Val="false" Pos="-284,-316" rotation="0" hflip="1" vflip="1" label="PackagePin2" idLabPos="-59,0" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q12" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-72" mainComp="false" Show_id="true" Show_Val="false" Pos="-220,-312" rotation="0" hflip="1" vflip="1" label="PackagePin3" idLabPos="-55,-18" labelrot="0" valLabPos="16,0" valLabRot="45" Name="Q13" Rotated="false" />
+
+<item itemtype="Buffer" CircId="Buffer-63" mainComp="false" Show_id="false" Show_Val="false" Pos="-1148,-212" rotation="0" hflip="1" vflip="1" label="Buffer-26" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Buffer" CircId="Buffer-62" mainComp="false" Show_id="false" Show_Val="false" Pos="-1148,-244" rotation="0" hflip="1" vflip="1" label="Buffer-27" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-60" mainComp="false" Show_id="false" Show_Val="false" Pos="-892,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-29" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Rail" CircId="Rail.-59" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-1140,-292" rotation="0" hflip="1" vflip="1" label="Rail.-30" idLabPos="-64,-24" labelrot="0" valLabPos="-33,-1" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-54" mainComp="false" Show_id="false" Show_Val="false" Pos="-764,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-35" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-53" mainComp="false" Show_id="false" Show_Val="false" Pos="-828,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-36" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-47" mainComp="false" Show_id="false" Show_Val="false" Pos="-1084,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-42" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-44" mainComp="false" Show_id="false" Show_Val="false" Pos="-380,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-45" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-38" mainComp="false" Show_id="false" Show_Val="false" Pos="-252,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-51" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-37" mainComp="false" Show_id="false" Show_Val="false" Pos="-316,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-52" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-31" mainComp="false" Show_id="false" Show_Val="false" Pos="-444,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-58" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-29" mainComp="false" Show_id="false" Show_Val="false" Pos="-508,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-60" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-24" mainComp="false" Show_id="false" Show_Val="false" Pos="-572,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-65" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-19" mainComp="false" Show_id="false" Show_Val="false" Pos="-636,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-70" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-14" mainComp="false" Show_id="false" Show_Val="false" Pos="-700,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-75" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-956,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-228" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-1020,-244" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-229" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="true" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Node" CircId="Node-319" mainComp="false" Pos="-1084,-276" />
+
+<item itemtype="Node" CircId="Node-316" mainComp="false" Pos="-1044,-276" />
+
+<item itemtype="Node" CircId="Node-314" mainComp="false" Pos="-1020,-276" />
+
+<item itemtype="Node" CircId="Node-311" mainComp="false" Pos="-980,-276" />
+
+<item itemtype="Node" CircId="Node-309" mainComp="false" Pos="-956,-276" />
+
+<item itemtype="Node" CircId="Node-306" mainComp="false" Pos="-916,-276" />
+
+<item itemtype="Node" CircId="Node-304" mainComp="false" Pos="-892,-276" />
+
+<item itemtype="Node" CircId="Node-301" mainComp="false" Pos="-852,-276" />
+
+<item itemtype="Node" CircId="Node-299" mainComp="false" Pos="-828,-276" />
+
+<item itemtype="Node" CircId="Node-296" mainComp="false" Pos="-788,-276" />
+
+<item itemtype="Node" CircId="Node-294" mainComp="false" Pos="-764,-276" />
+
+<item itemtype="Node" CircId="Node-291" mainComp="false" Pos="-724,-276" />
+
+<item itemtype="Node" CircId="Node-289" mainComp="false" Pos="-700,-276" />
+
+<item itemtype="Node" CircId="Node-286" mainComp="false" Pos="-660,-276" />
+
+<item itemtype="Node" CircId="Node-284" mainComp="false" Pos="-636,-276" />
+
+<item itemtype="Node" CircId="Node-281" mainComp="false" Pos="-596,-276" />
+
+<item itemtype="Node" CircId="Node-279" mainComp="false" Pos="-572,-276" />
+
+<item itemtype="Node" CircId="Node-276" mainComp="false" Pos="-532,-276" />
+
+<item itemtype="Node" CircId="Node-274" mainComp="false" Pos="-508,-276" />
+
+<item itemtype="Node" CircId="Node-271" mainComp="false" Pos="-468,-276" />
+
+<item itemtype="Node" CircId="Node-269" mainComp="false" Pos="-444,-276" />
+
+<item itemtype="Node" CircId="Node-266" mainComp="false" Pos="-404,-276" />
+
+<item itemtype="Node" CircId="Node-264" mainComp="false" Pos="-380,-276" />
+
+<item itemtype="Node" CircId="Node-261" mainComp="false" Pos="-340,-276" />
+
+<item itemtype="Node" CircId="Node-259" mainComp="false" Pos="-316,-276" />
+
+<item itemtype="Node" CircId="Node-256" mainComp="false" Pos="-276,-276" />
+
+<item itemtype="Node" CircId="Node-71" mainComp="false" Pos="-308,-212" />
+
+<item itemtype="Node" CircId="Node-70" mainComp="false" Pos="-372,-212" />
+
+<item itemtype="Node" CircId="Node-69" mainComp="false" Pos="-564,-212" />
+
+<item itemtype="Node" CircId="Node-68" mainComp="false" Pos="-500,-212" />
+
+<item itemtype="Node" CircId="Node-67" mainComp="false" Pos="-436,-212" />
+
+<item itemtype="Node" CircId="Node-66" mainComp="false" Pos="-636,-212" />
+
+<item itemtype="Node" CircId="Node-65" mainComp="false" Pos="-756,-212" />
+
+<item itemtype="Node" CircId="Node-64" mainComp="false" Pos="-692,-212" />
+
+<item itemtype="Node" CircId="Node-58" mainComp="false" Pos="-916,-252" />
+
+<item itemtype="Node" CircId="Node-57" mainComp="false" Pos="-1108,-276" />
+
+<item itemtype="Node" CircId="Node-49" mainComp="false" Pos="-852,-252" />
+
+<item itemtype="Node" CircId="Node-48" mainComp="false" Pos="-788,-252" />
+
+<item itemtype="Node" CircId="Node-46" mainComp="false" Pos="-1108,-252" />
+
+<item itemtype="Node" CircId="Node-42" mainComp="false" Pos="-404,-252" />
+
+<item itemtype="Node" CircId="Node-33" mainComp="false" Pos="-340,-252" />
+
+<item itemtype="Node" CircId="Node-32" mainComp="false" Pos="-276,-252" />
+
+<item itemtype="Node" CircId="Node-30" mainComp="false" Pos="-468,-252" />
+
+<item itemtype="Node" CircId="Node-27" mainComp="false" Pos="-532,-252" />
+
+<item itemtype="Node" CircId="Node-25" mainComp="false" Pos="-596,-252" />
+
+<item itemtype="Node" CircId="Node-21" mainComp="false" Pos="-660,-252" />
+
+<item itemtype="Node" CircId="Node-15" mainComp="false" Pos="-724,-252" />
+
+<item itemtype="Node" CircId="Node-12" mainComp="false" Pos="-1044,-252" />
+
+<item itemtype="Node" CircId="Node-6" mainComp="false" Pos="-1076,-212" />
+
+<item itemtype="Node" CircId="Node-5" mainComp="false" Pos="-820,-212" />
+
+<item itemtype="Node" CircId="Node-4" mainComp="false" Pos="-884,-212" />
+
+<item itemtype="Node" CircId="Node-3" mainComp="false" Pos="-948,-212" />
+
+<item itemtype="Node" CircId="Node-2" mainComp="false" Pos="-1012,-212" />
+
+<item itemtype="Node" CircId="Node-1" mainComp="false" Pos="-980,-252" />
+
+<item itemtype="Connector" uid="Connector-86" startpinid="FlipFlop JK-14-in0" endpinid="Node-15-0" pointList="-716,-252,-724,-252" />
+
+<item itemtype="Connector" uid="Connector-89" startpinid="Node-15-2" endpinid="FlipFlop JK-14-in1" pointList="-724,-252,-724,-236,-716,-236" />
+
+<item itemtype="Connector" uid="Connector-92" startpinid="Node-21-2" endpinid="FlipFlop JK-19-in1" pointList="-660,-252,-660,-236,-652,-236" />
+
+<item itemtype="Connector" uid="Connector-94" startpinid="FlipFlop JK-19-in0" endpinid="Node-21-0" pointList="-652,-252,-660,-252" />
+
+<item itemtype="Connector" uid="Connector-98" startpinid="FlipFlop JK-14-out1" endpinid="FlipFlop JK-19-in4" pointList="-676,-236,-668,-236,-668,-244,-652,-244" />
+
+<item itemtype="Connector" uid="Connector-107" startpinid="FlipFlop JK-24-in0" endpinid="Node-25-0" pointList="-588,-252,-596,-252" />
+
+<item itemtype="Connector" uid="Connector-109" startpinid="Node-27-2" endpinid="FlipFlop JK-29-in1" pointList="-532,-252,-532,-236,-524,-236" />
+
+<item itemtype="Connector" uid="Connector-110" startpinid="Node-25-2" endpinid="FlipFlop JK-24-in1" pointList="-596,-252,-596,-236,-588,-236" />
+
+<item itemtype="Connector" uid="Connector-111" startpinid="FlipFlop JK-24-out1" endpinid="FlipFlop JK-29-in4" pointList="-548,-236,-540,-236,-540,-244,-524,-244" />
+
+<item itemtype="Connector" uid="Connector-113" startpinid="FlipFlop JK-29-in0" endpinid="Node-27-0" pointList="-524,-252,-532,-252" />
+
+<item itemtype="Connector" uid="Connector-114" startpinid="FlipFlop JK-19-out1" endpinid="FlipFlop JK-24-in4" pointList="-612,-236,-604,-236,-604,-244,-588,-244" />
+
+<item itemtype="Connector" uid="Connector-118" startpinid="Node-32-2" endpinid="FlipFlop JK-38-in1" pointList="-276,-252,-276,-236,-268,-236" />
+
+<item itemtype="Connector" uid="Connector-127" startpinid="Node-33-2" endpinid="FlipFlop JK-37-in1" pointList="-340,-252,-340,-236,-332,-236" />
+
+<item itemtype="Connector" uid="Connector-128" startpinid="FlipFlop JK-38-in0" endpinid="Node-32-0" pointList="-268,-252,-276,-252" />
+
+<item itemtype="Connector" uid="Connector-130" startpinid="FlipFlop JK-44-in0" endpinid="Node-42-0" pointList="-396,-252,-404,-252" />
+
+<item itemtype="Connector" uid="Connector-135" startpinid="FlipFlop JK-31-in0" endpinid="Node-30-0" pointList="-460,-252,-468,-252" />
+
+<item itemtype="Connector" uid="Connector-136" startpinid="FlipFlop JK-37-in0" endpinid="Node-33-0" pointList="-332,-252,-340,-252" />
+
+<item itemtype="Connector" uid="Connector-137" startpinid="Node-30-2" endpinid="FlipFlop JK-31-in1" pointList="-468,-252,-468,-236,-460,-236" />
+
+<item itemtype="Connector" uid="Connector-138" startpinid="FlipFlop JK-31-out1" endpinid="FlipFlop JK-44-in4" pointList="-420,-236,-412,-236,-412,-244,-396,-244" />
+
+<item itemtype="Connector" uid="Connector-140" startpinid="FlipFlop JK-44-out1" endpinid="FlipFlop JK-37-in4" pointList="-356,-236,-348,-236,-348,-244,-332,-244" />
+
+<item itemtype="Connector" uid="Connector-142" startpinid="FlipFlop JK-37-out1" endpinid="FlipFlop JK-38-in4" pointList="-292,-236,-284,-236,-284,-244,-268,-244" />
+
+<item itemtype="Connector" uid="Connector-144" startpinid="Node-42-2" endpinid="FlipFlop JK-44-in1" pointList="-404,-252,-404,-236,-396,-236" />
+
+<item itemtype="Connector" uid="Connector-146" startpinid="FlipFlop JK-29-out1" endpinid="FlipFlop JK-31-in4" pointList="-484,-236,-476,-236,-476,-244,-460,-244" />
+
+<item itemtype="Connector" uid="Connector-150" startpinid="Node-48-2" endpinid="FlipFlop JK-54-in1" pointList="-788,-252,-788,-236,-780,-236" />
+
+<item itemtype="Connector" uid="Connector-152" startpinid="FlipFlop JK-47-in2" endpinid="Node-319-0" pointList="-1084,-268,-1084,-276" />
+
+<item itemtype="Connector" uid="Connector-155" startpinid="Node-57-2" endpinid="Node-46-1" pointList="-1108,-276,-1108,-252" />
+
+<item itemtype="Connector" uid="Connector-159" startpinid="Node-49-2" endpinid="FlipFlop JK-53-in1" pointList="-852,-252,-852,-236,-844,-236" />
+
+<item itemtype="Connector" uid="Connector-160" startpinid="FlipFlop JK-54-in0" endpinid="Node-48-0" pointList="-780,-252,-788,-252" />
+
+<item itemtype="Connector" uid="Connector-162" startpinid="FlipFlop JK-60-in0" endpinid="Node-58-0" pointList="-908,-252,-916,-252" />
+
+<item itemtype="Connector" uid="Connector-164" startpinid="Rail.-59-outnod" endpinid="Node-57-1" pointList="-1124,-292,-1124,-276,-1108,-276" />
+
+<item itemtype="Connector" uid="Connector-167" startpinid="FlipFlop JK-53-in0" endpinid="Node-49-0" pointList="-844,-252,-852,-252" />
+
+<item itemtype="Connector" uid="Connector-168" startpinid="FlipFlop JK-47-in0" endpinid="Node-46-0" pointList="-1100,-252,-1108,-252" />
+
+<item itemtype="Connector" uid="Connector-169" startpinid="Node-46-2" endpinid="FlipFlop JK-47-in1" pointList="-1108,-252,-1108,-236,-1100,-236" />
+
+<item itemtype="Connector" uid="Connector-170" startpinid="FlipFlop JK-60-out1" endpinid="FlipFlop JK-53-in4" pointList="-868,-236,-860,-236,-860,-244,-844,-244" />
+
+<item itemtype="Connector" uid="Connector-172" startpinid="FlipFlop JK-53-out1" endpinid="FlipFlop JK-54-in4" pointList="-804,-236,-796,-236,-796,-244,-780,-244" />
+
+<item itemtype="Connector" uid="Connector-174" startpinid="Node-58-2" endpinid="FlipFlop JK-60-in1" pointList="-916,-252,-916,-236,-908,-236" />
+
+<item itemtype="Connector" uid="Connector-176" startpinid="FlipFlop JK-54-out1" endpinid="FlipFlop JK-14-in4" pointList="-740,-236,-732,-236,-732,-244,-716,-244" />
+
+<item itemtype="Connector" uid="Connector-178" startpinid="Buffer-62-out" endpinid="FlipFlop JK-47-in4" pointList="-1132,-244,-1100,-244" />
+
+<item itemtype="Connector" uid="Connector-180" startpinid="Node-64-2" endpinid="Node-66-0" pointList="-692,-212,-636,-212" />
+
+<item itemtype="Connector" uid="Connector-182" startpinid="Node-64-1" endpinid="FlipFlop JK-14-in3" pointList="-692,-212,-692,-220" />
+
+<item itemtype="Connector" uid="Connector-183" startpinid="Node-65-2" endpinid="Node-64-0" pointList="-756,-212,-692,-212" />
+
+<item itemtype="Connector" uid="Connector-184" startpinid="Node-65-1" endpinid="FlipFlop JK-54-in3" pointList="-756,-212,-756,-220" />
+
+<item itemtype="Connector" uid="Connector-185" startpinid="Node-66-2" endpinid="FlipFlop JK-19-in3" pointList="-636,-212,-636,-220,-628,-220" />
+
+<item itemtype="Connector" uid="Connector-186" startpinid="FlipFlop JK-31-in3" endpinid="Node-67-1" pointList="-436,-220,-436,-212" />
+
+<item itemtype="Connector" uid="Connector-187" startpinid="Node-67-2" endpinid="Node-70-0" pointList="-436,-212,-372,-212" />
+
+<item itemtype="Connector" uid="Connector-188" startpinid="FlipFlop JK-29-in3" endpinid="Node-68-1" pointList="-500,-220,-500,-212" />
+
+<item itemtype="Connector" uid="Connector-189" startpinid="Node-68-2" endpinid="Node-67-0" pointList="-500,-212,-436,-212" />
+
+<item itemtype="Connector" uid="Connector-190" startpinid="Node-66-1" endpinid="Node-69-0" pointList="-636,-212,-564,-212" />
+
+<item itemtype="Connector" uid="Connector-191" startpinid="FlipFlop JK-24-in3" endpinid="Node-69-1" pointList="-564,-220,-564,-212" />
+
+<item itemtype="Connector" uid="Connector-192" startpinid="Node-69-2" endpinid="Node-68-0" pointList="-564,-212,-500,-212" />
+
+<item itemtype="Connector" uid="Connector-193" startpinid="Node-70-2" endpinid="FlipFlop JK-44-in3" pointList="-372,-212,-372,-220" />
+
+<item itemtype="Connector" uid="Connector-194" startpinid="Node-70-1" endpinid="Node-71-0" pointList="-372,-212,-308,-212" />
+
+<item itemtype="Connector" uid="Connector-195" startpinid="FlipFlop JK-37-in3" endpinid="Node-71-1" pointList="-308,-220,-308,-212" />
+
+<item itemtype="Connector" uid="Connector-196" startpinid="Node-71-2" endpinid="FlipFlop JK-38-in3" pointList="-308,-212,-244,-212,-244,-220" />
+
+<item itemtype="Connector" uid="Connector-197" startpinid="Tunnel-72-pin" endpinid="FlipFlop JK-38-out0" pointList="-220,-312,-220,-252,-228,-252" />
+
+<item itemtype="Connector" uid="Connector-199" startpinid="Tunnel-73-pin" endpinid="FlipFlop JK-37-out0" pointList="-284,-316,-284,-252,-292,-252" />
+
+<item itemtype="Connector" uid="Connector-201" startpinid="Tunnel-74-pin" endpinid="FlipFlop JK-44-out0" pointList="-348,-308,-348,-252,-356,-252" />
+
+<item itemtype="Connector" uid="Connector-203" startpinid="Tunnel-75-pin" endpinid="FlipFlop JK-31-out0" pointList="-412,-304,-412,-252,-420,-252" />
+
+<item itemtype="Connector" uid="Connector-205" startpinid="Tunnel-76-pin" endpinid="FlipFlop JK-29-out0" pointList="-476,-308,-476,-252,-484,-252" />
+
+<item itemtype="Connector" uid="Connector-207" startpinid="Tunnel-77-pin" endpinid="FlipFlop JK-24-out0" pointList="-540,-308,-540,-252,-548,-252" />
+
+<item itemtype="Connector" uid="Connector-209" startpinid="Tunnel-78-pin" endpinid="FlipFlop JK-19-out0" pointList="-604,-312,-604,-252,-612,-252" />
+
+<item itemtype="Connector" uid="Connector-211" startpinid="Tunnel-79-pin" endpinid="FlipFlop JK-14-out0" pointList="-668,-304,-668,-252,-676,-252" />
+
+<item itemtype="Connector" uid="Connector-213" startpinid="Tunnel-80-pin" endpinid="FlipFlop JK-54-out0" pointList="-732,-304,-732,-252,-740,-252" />
+
+<item itemtype="Connector" uid="Connector-215" startpinid="Tunnel-81-pin" endpinid="FlipFlop JK-53-out0" pointList="-796,-304,-796,-252,-804,-252" />
+
+<item itemtype="Connector" uid="Connector-217" startpinid="Tunnel-82-pin" endpinid="FlipFlop JK-60-out0" pointList="-860,-296,-860,-252,-868,-252" />
+
+<item itemtype="Connector" uid="Connector-219" startpinid="Tunnel-83-pin" endpinid="FlipFlop JK-47-out0" pointList="-1052,-292,-1052,-252,-1060,-252" />
+
+<item itemtype="Connector" uid="Connector-223" startpinid="FlipFlop JK-9-out1" endpinid="FlipFlop JK-10-in4" pointList="-996,-236,-972,-236,-972,-244" />
+
+<item itemtype="Connector" uid="Connector-230" startpinid="Node-12-2" endpinid="FlipFlop JK-9-in1" pointList="-1044,-252,-1044,-236,-1036,-236" />
+
+<item itemtype="Connector" uid="Connector-232" startpinid="FlipFlop JK-9-in0" endpinid="Node-12-0" pointList="-1036,-252,-1044,-252" />
+
+<item itemtype="Connector" uid="Connector-233" startpinid="FlipFlop JK-10-in0" endpinid="Node-1-0" pointList="-972,-252,-980,-252" />
+
+<item itemtype="Connector" uid="Connector-235" startpinid="FlipFlop JK-47-out1" endpinid="FlipFlop JK-9-in4" pointList="-1060,-236,-1036,-236,-1036,-244" />
+
+<item itemtype="Connector" uid="Connector-237" startpinid="FlipFlop JK-10-out1" endpinid="FlipFlop JK-60-in4" pointList="-932,-236,-908,-236,-908,-244" />
+
+<item itemtype="Connector" uid="Connector-239" startpinid="Buffer-63-out" endpinid="Node-6-0" pointList="-1132,-212,-1076,-212" />
+
+<item itemtype="Connector" uid="Connector-240" startpinid="Node-6-2" endpinid="FlipFlop JK-47-in3" pointList="-1076,-212,-1076,-220" />
+
+<item itemtype="Connector" uid="Connector-241" startpinid="Node-6-1" endpinid="Node-2-0" pointList="-1076,-212,-1012,-212" />
+
+<item itemtype="Connector" uid="Connector-242" startpinid="Node-5-2" endpinid="Node-65-0" pointList="-820,-212,-756,-212" />
+
+<item itemtype="Connector" uid="Connector-243" startpinid="Node-5-0" endpinid="FlipFlop JK-53-in3" pointList="-820,-212,-820,-220" />
+
+<item itemtype="Connector" uid="Connector-244" startpinid="FlipFlop JK-60-in3" endpinid="Node-4-1" pointList="-884,-220,-884,-212" />
+
+<item itemtype="Connector" uid="Connector-245" startpinid="Node-4-2" endpinid="Node-5-1" pointList="-884,-212,-820,-212" />
+
+<item itemtype="Connector" uid="Connector-246" startpinid="FlipFlop JK-10-in3" endpinid="Node-3-1" pointList="-948,-220,-948,-212" />
+
+<item itemtype="Connector" uid="Connector-247" startpinid="Node-3-2" endpinid="Node-4-0" pointList="-948,-212,-884,-212" />
+
+<item itemtype="Connector" uid="Connector-248" startpinid="FlipFlop JK-9-in3" endpinid="Node-2-1" pointList="-1012,-220,-1012,-212" />
+
+<item itemtype="Connector" uid="Connector-249" startpinid="Node-2-2" endpinid="Node-3-0" pointList="-1012,-212,-948,-212" />
+
+<item itemtype="Connector" uid="Connector-250" startpinid="FlipFlop JK-10-in2" endpinid="Node-309-0" pointList="-956,-268,-956,-276" />
+
+<item itemtype="Connector" uid="Connector-252" startpinid="Tunnel-84-pin" endpinid="Buffer-62-in0" pointList="-1180,-244,-1164,-244" />
+
+<item itemtype="Connector" uid="Connector-253" startpinid="Tunnel-85-pin" endpinid="Buffer-63-in0" pointList="-1180,-212,-1164,-212" />
+
+<item itemtype="Connector" uid="Connector-131" startpinid="FlipFlop JK-38-in2" endpinid="Node-256-0" pointList="-252,-268,-252,-276,-276,-276" />
+
+<item itemtype="Connector" uid="Connector-129" startpinid="FlipFlop JK-37-in2" endpinid="Node-259-0" pointList="-316,-268,-316,-276" />
+
+<item itemtype="Connector" uid="Connector-116" startpinid="FlipFlop JK-44-in2" endpinid="Node-264-0" pointList="-380,-268,-380,-276" />
+
+<item itemtype="Connector" uid="Connector-120" startpinid="FlipFlop JK-31-in2" endpinid="Node-269-0" pointList="-444,-268,-444,-276" />
+
+<item itemtype="Connector" uid="Connector-108" startpinid="FlipFlop JK-29-in2" endpinid="Node-274-0" pointList="-508,-268,-508,-276" />
+
+<item itemtype="Connector" uid="Connector-104" startpinid="FlipFlop JK-24-in2" endpinid="Node-279-0" pointList="-572,-268,-572,-276" />
+
+<item itemtype="Connector" uid="Connector-97" startpinid="FlipFlop JK-19-in2" endpinid="Node-284-0" pointList="-636,-268,-636,-276" />
+
+<item itemtype="Connector" uid="Connector-88" startpinid="FlipFlop JK-14-in2" endpinid="Node-289-0" pointList="-700,-268,-700,-276" />
+
+<item itemtype="Connector" uid="Connector-163" startpinid="FlipFlop JK-54-in2" endpinid="Node-294-0" pointList="-764,-268,-764,-276" />
+
+<item itemtype="Connector" uid="Connector-161" startpinid="FlipFlop JK-53-in2" endpinid="Node-299-0" pointList="-828,-268,-828,-276" />
+
+<item itemtype="Connector" uid="Connector-148" startpinid="FlipFlop JK-60-in2" endpinid="Node-304-0" pointList="-892,-268,-892,-276" />
+
+<item itemtype="Connector" uid="Connector-251" startpinid="Node-1-2" endpinid="FlipFlop JK-10-in1" pointList="-980,-252,-980,-236,-972,-236" />
+
+<item itemtype="Connector" uid="Connector-229" startpinid="FlipFlop JK-9-in2" endpinid="Node-314-0" pointList="-1020,-268,-1020,-276" />
+
+<item itemtype="Connector" uid="Connector-257" startpinid="Node-256-2" endpinid="Node-32-1" pointList="-276,-276,-276,-252" />
+
+<item itemtype="Connector" uid="Connector-258" startpinid="Node-256-1" endpinid="Node-259-1" pointList="-276,-276,-316,-276" />
+
+<item itemtype="Connector" uid="Connector-260" startpinid="Node-259-2" endpinid="Node-261-0" pointList="-316,-276,-340,-276" />
+
+<item itemtype="Connector" uid="Connector-262" startpinid="Node-261-2" endpinid="Node-33-1" pointList="-340,-276,-340,-252" />
+
+<item itemtype="Connector" uid="Connector-263" startpinid="Node-261-1" endpinid="Node-264-1" pointList="-340,-276,-380,-276" />
+
+<item itemtype="Connector" uid="Connector-265" startpinid="Node-264-2" endpinid="Node-266-0" pointList="-380,-276,-404,-276" />
+
+<item itemtype="Connector" uid="Connector-267" startpinid="Node-266-2" endpinid="Node-42-1" pointList="-404,-276,-404,-252" />
+
+<item itemtype="Connector" uid="Connector-268" startpinid="Node-266-1" endpinid="Node-269-1" pointList="-404,-276,-444,-276" />
+
+<item itemtype="Connector" uid="Connector-270" startpinid="Node-269-2" endpinid="Node-271-0" pointList="-444,-276,-468,-276" />
+
+<item itemtype="Connector" uid="Connector-272" startpinid="Node-271-2" endpinid="Node-30-1" pointList="-468,-276,-468,-252" />
+
+<item itemtype="Connector" uid="Connector-273" startpinid="Node-271-1" endpinid="Node-274-1" pointList="-468,-276,-508,-276" />
+
+<item itemtype="Connector" uid="Connector-275" startpinid="Node-274-2" endpinid="Node-276-0" pointList="-508,-276,-532,-276" />
+
+<item itemtype="Connector" uid="Connector-277" startpinid="Node-276-2" endpinid="Node-27-1" pointList="-532,-276,-532,-252" />
+
+<item itemtype="Connector" uid="Connector-278" startpinid="Node-276-1" endpinid="Node-279-1" pointList="-532,-276,-572,-276" />
+
+<item itemtype="Connector" uid="Connector-280" startpinid="Node-279-2" endpinid="Node-281-0" pointList="-572,-276,-596,-276" />
+
+<item itemtype="Connector" uid="Connector-282" startpinid="Node-281-2" endpinid="Node-25-1" pointList="-596,-276,-596,-252" />
+
+<item itemtype="Connector" uid="Connector-283" startpinid="Node-281-1" endpinid="Node-284-1" pointList="-596,-276,-636,-276" />
+
+<item itemtype="Connector" uid="Connector-285" startpinid="Node-284-2" endpinid="Node-286-0" pointList="-636,-276,-660,-276" />
+
+<item itemtype="Connector" uid="Connector-287" startpinid="Node-286-2" endpinid="Node-21-1" pointList="-660,-276,-660,-252" />
+
+<item itemtype="Connector" uid="Connector-288" startpinid="Node-286-1" endpinid="Node-289-1" pointList="-660,-276,-700,-276" />
+
+<item itemtype="Connector" uid="Connector-290" startpinid="Node-289-2" endpinid="Node-291-0" pointList="-700,-276,-724,-276" />
+
+<item itemtype="Connector" uid="Connector-292" startpinid="Node-291-2" endpinid="Node-15-1" pointList="-724,-276,-724,-252" />
+
+<item itemtype="Connector" uid="Connector-293" startpinid="Node-291-1" endpinid="Node-294-1" pointList="-724,-276,-764,-276" />
+
+<item itemtype="Connector" uid="Connector-295" startpinid="Node-294-2" endpinid="Node-296-0" pointList="-764,-276,-788,-276" />
+
+<item itemtype="Connector" uid="Connector-297" startpinid="Node-296-2" endpinid="Node-48-1" pointList="-788,-276,-788,-252" />
+
+<item itemtype="Connector" uid="Connector-298" startpinid="Node-296-1" endpinid="Node-299-1" pointList="-788,-276,-828,-276" />
+
+<item itemtype="Connector" uid="Connector-300" startpinid="Node-299-2" endpinid="Node-301-0" pointList="-828,-276,-852,-276" />
+
+<item itemtype="Connector" uid="Connector-302" startpinid="Node-301-2" endpinid="Node-49-1" pointList="-852,-276,-852,-252" />
+
+<item itemtype="Connector" uid="Connector-303" startpinid="Node-301-1" endpinid="Node-304-1" pointList="-852,-276,-892,-276" />
+
+<item itemtype="Connector" uid="Connector-305" startpinid="Node-304-2" endpinid="Node-306-0" pointList="-892,-276,-916,-276" />
+
+<item itemtype="Connector" uid="Connector-307" startpinid="Node-306-2" endpinid="Node-58-1" pointList="-916,-276,-916,-252" />
+
+<item itemtype="Connector" uid="Connector-308" startpinid="Node-306-1" endpinid="Node-309-1" pointList="-916,-276,-956,-276" />
+
+<item itemtype="Connector" uid="Connector-310" startpinid="Node-309-2" endpinid="Node-311-0" pointList="-956,-276,-980,-276" />
+
+<item itemtype="Connector" uid="Connector-312" startpinid="Node-311-2" endpinid="Node-1-1" pointList="-980,-276,-980,-252" />
+
+<item itemtype="Connector" uid="Connector-313" startpinid="Node-311-1" endpinid="Node-314-1" pointList="-980,-276,-1020,-276" />
+
+<item itemtype="Connector" uid="Connector-315" startpinid="Node-314-2" endpinid="Node-316-0" pointList="-1020,-276,-1044,-276" />
+
+<item itemtype="Connector" uid="Connector-317" startpinid="Node-316-2" endpinid="Node-12-1" pointList="-1044,-276,-1044,-252" />
+
+<item itemtype="Connector" uid="Connector-318" startpinid="Node-316-1" endpinid="Node-319-1" pointList="-1044,-276,-1084,-276" />
+
+<item itemtype="Connector" uid="Connector-320" startpinid="Node-319-2" endpinid="Node-57-0" pointList="-1084,-276,-1108,-276" />
+
+</circuit>
