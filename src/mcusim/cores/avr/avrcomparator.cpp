@@ -19,6 +19,7 @@
 
 #include "avrcomparator.h"
 #include "datautils.h"
+#include "regwatcher.h"
 #include "e_mcu.h"
 #include "mcupin.h"
 
@@ -37,7 +38,7 @@ AvrComp::AvrComp( eMcu* mcu, QString name )
     m_AIN0D = getRegBits( "AIN0D", mcu );
     m_AIN1D = getRegBits( "AIN1D", mcu );
 
-    //mcu->watchBitNames( "ACO", R_READ, this, &AvrComp::configureB );
+    watchBitNames( "ACO", R_READ, this, &AvrComp::compare, mcu );
 }
 AvrComp::~AvrComp(){}
 
@@ -50,7 +51,7 @@ void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
     if( newACSR & m_ACI.mask )
         m_mcu->m_regOverride = newACSR & ~(m_ACI.mask); // Clear ACI by writting it to 1
 
-    m_enabled = getRegBitsVal( newACSR, m_ACD );
+    m_enabled = !getRegBitsBool( newACSR, m_ACD );
     if( !m_enabled ) m_mcu->m_regOverride = newACSR & ~m_ACO.mask; // Clear ACO
 
     m_fixVref = getRegBitsVal( newACSR, m_ACBG );
@@ -62,8 +63,8 @@ void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
 
 void AvrComp::configureB( uint8_t newDIDR1 ) // AIN0D,AIN1D being written
 {
-    m_pins[0]->changeCallBack( m_pins[0], getRegBitsVal( newDIDR1, m_AIN0D ) );
-    m_pins[1]->changeCallBack( m_pins[1], getRegBitsVal( newDIDR1, m_AIN1D ) );
+    //m_pins[0]->changeCallBack( m_pins[0], getRegBitsBool( newDIDR1, m_AIN0D ) );
+    //m_pins[1]->changeCallBack( m_pins[1], getRegBitsBool( newDIDR1, m_AIN1D ) );
 
     //// ?????
     /// m_mcu->m_regOverride = newDIDR1; // Keep rest of bits at 0
