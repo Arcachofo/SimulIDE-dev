@@ -51,7 +51,7 @@ void RtClock::runEvent()
     if( --m_tCount == 0 ) // Toggle Pin if enabled
     {
         m_tCount = m_toggle;
-        if( m_enabled ) m_outpin->setOutState( !m_outpin->getOutState() );
+        if( m_enabled ) m_outpin->sheduleState( !m_outpin->getOutState(), 0 );
     }
     if( --m_sCount == 0 ) // Increment 1 second
     {

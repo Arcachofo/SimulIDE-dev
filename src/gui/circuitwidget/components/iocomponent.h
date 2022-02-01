@@ -20,6 +20,8 @@
 #ifndef IOCOMPONENT_H
 #define IOCOMPONENT_H
 
+#include <queue>
+
 #include "component.h"
 
 class eElement;
@@ -70,10 +72,10 @@ class MAINMODULE_EXPORT IoComponent : public Component
         void setPropDelay( double pd ) { m_propDelay = pd*1e12; }
 
         double riseTime() { return m_timeLH*1e-12; }
-        void setRiseTime( double time ) { m_timeLH = time*1e12; }
+        void setRiseTime( double time );
 
         double fallTime() { return m_timeHL*1e-12; }
-        void setFallTime( double time ) { m_timeHL = time*1e12; }
+        void setFallTime( double time );
 
         int  numInps() { return m_inPin.size(); }
         virtual void setNumInps( uint pins, QString label="I", int bit0=0, bool number=true );
@@ -103,8 +105,9 @@ class MAINMODULE_EXPORT IoComponent : public Component
 
         uint m_outValue;
         uint m_nextOutVal;
-        uint m_nextOutDir;
-        //int m_outStep;
+        std::queue<uint> m_outQueue;
+        std::queue<uint64_t> m_timeQueue;
+        //uint m_nextOutDir;
 
         uint64_t m_propDelay; // Propagation delay
         uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90%
@@ -125,6 +128,8 @@ class MAINMODULE_EXPORT IoComponent : public Component
 
         uint m_width;
         uint m_height;
+
+        eElement* m_eElement;
 
         std::vector<IoPin*> m_inPin;
         std::vector<IoPin*> m_outPin;

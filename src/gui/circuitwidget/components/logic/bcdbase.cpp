@@ -43,12 +43,13 @@ const uint8_t BcdBase::m_values[]={
 BcdBase::BcdBase( QObject* parent, QString type, QString id )
        : LogicComponent( parent, type, id )
 {
-    m_nextOutVal = m_values[0];
+    m_digit = m_values[0];
 }
 BcdBase::~BcdBase(){}
 
 void BcdBase::initialize()
 {
+    m_digit = m_values[0];
     LogicComponent::initialize();
     update();
 }
@@ -58,7 +59,7 @@ void BcdBase::stamp()
     LogicComponent::stamp();
     for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
 
-    m_nextOutVal = m_values[0];
+    m_digit = m_values[0];
     m_changed = true;
 }
 
@@ -71,6 +72,5 @@ void BcdBase::voltChanged()
     bool c = m_inPin[2]->getInpState();
     bool d = m_inPin[3]->getInpState();
 
-    int digit = a*1+b*2+c*4+d*8;
-    m_nextOutVal = m_values[digit];
+    m_digit = m_values[a*1+b*2+c*4+d*8];
 }

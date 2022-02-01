@@ -86,46 +86,54 @@ void IoComponent::initState()
 
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutState( false );
 
-    //m_outStep = 0;
     m_outValue = 0;
-    m_nextOutVal = 0;
+    while( !m_outQueue.empty() ) m_outQueue.pop();
+    while( !m_timeQueue.empty() ) m_timeQueue.pop();
 }
 
 void IoComponent::runOutputs()
 {
+    m_outValue = m_outQueue.front();
+    m_outQueue.pop();
+
+    if( !m_timeQueue.empty() )
+    {
+        uint64_t nextTime = m_timeQueue.front()-Simulator::self()->circTime();
+        m_timeQueue.pop();
+        Simulator::self()->addEvent( nextTime, m_eElement );
+    }
+
     for( uint i=0; i<m_outPin.size(); ++i )
     {
-        bool state = m_nextOutVal & (1<<i);
-        bool oldst = m_outPin[i]->getOutState();// m_outValue   & (1<<i);
+        bool state = m_outValue & (1<<i);
+        bool oldst = m_outPin[i]->getOutState();
 
-        if( state != oldst )
-        {
-            /*if( m_outStep == 0 )
-            {
-                eNode* enode =  m_output[i]->getPin()->getEnode();
-                if( enode ) enode->saveData();
-            }
-            else */
-                m_outPin[i]->setOutState( state );
-        }
-    }
-    /*if( m_outStep == 0 )
-    {
-        m_outStep = 1;
-        Simulator::self()->addEvent( m_timeLH*1.25, this );
-    }
-    else*/
-    {
-        //m_outStep = 0;
-        m_outValue = m_nextOutVal;
+        if( state != oldst ) m_outPin[i]->sheduleState( state, 0 );
     }
 }
 
-void IoComponent::sheduleOutPuts(  eElement* el )
+void IoComponent::sheduleOutPuts( eElement* el )
 {
-    if( m_nextOutVal == m_outValue ) return;
-    if( m_rndPD )Simulator::self()->addEvent( m_propDelay+(std::rand()%2), el );
-    else         Simulator::self()->addEvent( m_propDelay, el );
+    if(  m_outQueue.empty() )
+    {
+        if( m_nextOutVal == m_outValue ) return;
+
+        if( m_rndPD )Simulator::self()->addEvent( m_propDelay+(std::rand()%2), el );
+        else         Simulator::self()->addEvent( m_propDelay, el );
+    }
+    else          // New Event while previous Event not dispatched
+    {
+        if( m_nextOutVal == m_outQueue.back() ) return;
+
+        uint64_t delay = m_propDelay;
+        if( m_rndPD ) delay += std::rand()%2;
+
+        uint64_t nextTime = Simulator::self()->circTime()+delay;
+        m_timeQueue.push( nextTime );
+
+        m_eElement = el;
+    }
+    m_outQueue.push( m_nextOutVal );
 }
 
 void IoComponent::setInputHighV( double volt )
@@ -206,11 +214,24 @@ void IoComponent::setOpenCol( bool op )
 {
     if( m_openCol == op ) return;
     m_openCol = op;
+
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         if( op ) m_outPin[i]->setPinMode( openCo );
         else     m_outPin[i]->setPinMode( output );
 }   }
+
+void IoComponent::setRiseTime( double time )
+{
+    m_timeLH = time*1e12;
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setRiseTime( m_timeLH*1.25 );
+}
+
+void IoComponent::setFallTime( double time )
+{
+    m_timeHL = time*1e12;
+    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setFallTime( m_timeHL*1.25 );
+}
 
 void IoComponent::init( QStringList pins ) // Example: pin = "IL02Name" => input, left, number 2, label = "Name"
 {

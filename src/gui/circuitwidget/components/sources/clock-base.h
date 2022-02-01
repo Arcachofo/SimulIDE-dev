@@ -50,6 +50,7 @@ class MAINMODULE_EXPORT ClockBase : public FixedVolt
         virtual void onbuttonclicked() override;
 
     protected:
+        bool m_state;
         bool m_isRunning;
         bool m_alwaysOn;
 

@@ -38,7 +38,7 @@ void UartTx::enable( uint8_t en )
 
     if( enabled ){
         m_state = usartIDLE;
-        m_ioPin->setOutState( 1 );
+        m_ioPin->setOutState( true );
     }
     else m_state = usartSTOPPED;
 }
@@ -53,7 +53,7 @@ void UartTx::runEvent()
     else if( m_state == usartTXEND )
     {
         m_state = usartIDLE;
-        m_ioPin->setOutState( 1 );
+        m_ioPin->setOutState( true );
         m_usart->frameSent( m_data );
         /// m_interrupt->raise();
 }   }

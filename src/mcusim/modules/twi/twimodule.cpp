@@ -255,7 +255,7 @@ void TwiModule::setMode( twiMode_t mode )
     m_scl->changeCallBack( this, mode == TWI_SLAVE );
     m_sda->changeCallBack( this, mode == TWI_SLAVE );
 
-    m_scl->sheduleState( true, m_clockPeriod/4 ); // Avoid false stop condition
+    m_scl->sheduleState( true, 10000 /*m_clockPeriod/4*/ ); // Avoid false stop condition
     setSDA( true );
 
     m_mode = mode;
@@ -263,8 +263,8 @@ void TwiModule::setMode( twiMode_t mode )
     m_toggleScl  = false;
 }
 
-void TwiModule::setSCL( bool st ) { m_scl->setOutState( st ); }
-void TwiModule::setSDA( bool st ) { m_sda->setOutState( st ); }
+void TwiModule::setSCL( bool st ) { m_scl->sheduleState( st, 0 ); }
+void TwiModule::setSDA( bool st ) { m_sda->sheduleState( st, 0 ); }
 void TwiModule::getSdaState() { m_sdaState = m_sda->getInpState(); }
 
 void TwiModule::sheduleSDA( bool state )

@@ -79,5 +79,6 @@ void BcdTo7S::voltChanged()
 {
     LogicComponent::updateOutEnabled();
     BcdBase::voltChanged();
+    m_nextOutVal = m_digit;
     sheduleOutPuts( this );
 }

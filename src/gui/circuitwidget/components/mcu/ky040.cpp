@@ -121,7 +121,7 @@ void KY040::updateStep()
 {
     if( !m_changed ) return;
 
-    m_sw->setOutState( !m_closed );
+    m_sw->sheduleState( !m_closed, 0 );
     m_changed = false;
 }
 
@@ -140,8 +140,8 @@ void KY040::runEvent()
             dtOuput  = CCWseq[0][m_seqIndex];
             clkOuput = CCWseq[1][m_seqIndex];
         }
-        m_dt->setOutState( dtOuput );
-        m_clk->setOutState( clkOuput );
+        m_dt->sheduleState( dtOuput, 0 );
+        m_clk->sheduleState( clkOuput, 0 );
 
         m_seqIndex++;
         if( m_seqIndex >= 4 ) m_seqIndex = -1;

@@ -74,11 +74,11 @@ SevenSegmentBCD::~SevenSegmentBCD(){}
 
 void SevenSegmentBCD::updateStep()
 {
-    if( m_changed )
-    {
-        update();
-        m_changed = false;
-}   }
+    if( !m_changed ) return;
+
+    update();
+    m_changed = false;
+}
 
 void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
@@ -99,15 +99,13 @@ void SevenSegmentBCD::paint( QPainter* p, const QStyleOptionGraphicsItem* option
     pen.setCapStyle(Qt::RoundCap);
     p->setPen(pen);
 
-    uint8_t value = m_nextOutVal;
-
-    if( value & 1  ) p->drawLine( x1+tk+ds, y1,    x2-tk+ds, y1    );
-    if( value & 2  ) p->drawLine( x2+ds,    y1+tk, x2,      -tk    );
-    if( value & 4  ) p->drawLine( x2,       tk,    x2-ds,    y2-tk );
-    if( value & 8  ) p->drawLine( x2-tk-ds, y2,    x1+tk-ds, y2    );
-    if( value & 16 ) p->drawLine( x1-ds,    y2-tk, x1,       tk    );
-    if( value & 32 ) p->drawLine( x1,      -tk,    x1+ds,    y1+tk );
-    if( value & 64 ) p->drawLine( x1+tk,    0,     x2-tk,    0     );
+    if( m_digit & 1  ) p->drawLine( x1+tk+ds, y1,    x2-tk+ds, y1    );
+    if( m_digit & 2  ) p->drawLine( x2+ds,    y1+tk, x2,      -tk    );
+    if( m_digit & 4  ) p->drawLine( x2,       tk,    x2-ds,    y2-tk );
+    if( m_digit & 8  ) p->drawLine( x2-tk-ds, y2,    x1+tk-ds, y2    );
+    if( m_digit & 16 ) p->drawLine( x1-ds,    y2-tk, x1,       tk    );
+    if( m_digit & 32 ) p->drawLine( x1,      -tk,    x1+ds,    y1+tk );
+    if( m_digit & 64 ) p->drawLine( x1+tk,    0,     x2-tk,    0     );
 
     /*if( m_point )
     {

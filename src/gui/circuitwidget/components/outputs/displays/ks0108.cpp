@@ -191,7 +191,7 @@ void Ks0108::ReadData()
 
     for( int i=0; i<8; i++ )
     {
-        m_dataPin[i]->setOutState( (data & 1)==1 );
+        m_dataPin[i]->sheduleState( (data & 1)==1, 0 );
         data >>= 1;
 }   }
 
@@ -202,7 +202,7 @@ void Ks0108::ReadStatus()
         bool out = false;
         if     ( i == 4 ) out = m_reset;
         else if( i == 5 ) out = !m_dispOn;
-        m_dataPin[i]->setOutState( out );
+        m_dataPin[i]->sheduleState( out, 0 );
 }   }
 
 void Ks0108::writeData( int data )

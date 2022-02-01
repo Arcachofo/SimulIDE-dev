@@ -135,7 +135,7 @@ void Dht22::voltChanged()                              // Called when Input Pin 
         if( time > m_start )                              // Minimum input pulse
         {
             m_inpin->setPinMode( openCo );
-            m_inpin->setOutState( true );
+            m_inpin->sheduleState( true, 0 );
             m_inpin->changeCallBack( this, false ); // Stop receiving voltChange() CallBacks
             Simulator::self()->addEvent( 30*1e6, this ); // Send ack after 30 us
     }   }
@@ -150,25 +150,25 @@ void Dht22::runEvent()
         if( m_bitStep == 0 )   // Start ACK
         {
             m_bitStep = 1;
-            m_inpin->setOutState( false );
+            m_inpin->sheduleState( false, 0 );
             Simulator::self()->addEvent( 80*1e6, this );
         }
         else{                  // End ACK
             m_bitStep = 0;
             m_outStep++;
-            m_inpin->setOutState( true );
+            m_inpin->sheduleState( true, 0 );
             Simulator::self()->addEvent( 80*1e6, this );
     }   }
     else{                     // Send data
         if( m_bitStep == 0 )  // Start bit (low side)
         {
             m_bitStep = 1;
-            m_inpin->setOutState( false );
+            m_inpin->sheduleState( false, 0 );
             Simulator::self()->addEvent( 50*1e6, this );
         }
         else{                 // End bit (high side)
             m_bitStep = 0;
-            m_inpin->setOutState( true );
+            m_inpin->sheduleState( true, 0 );
             if( m_bit == 0 )             // Transmission finished
             {
                 m_outStep = 0;

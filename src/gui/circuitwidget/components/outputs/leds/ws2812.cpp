@@ -122,7 +122,7 @@ void WS2812::voltChanged()
 
 void WS2812::setOut( bool state )
 {
-    m_output->setOutState( state );
+    m_output->sheduleState( state, 0 );
     /// Simulator::self()->addEvent( 1, NULL );
 }
 

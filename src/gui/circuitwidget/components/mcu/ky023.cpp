@@ -137,12 +137,12 @@ void KY023::updateStep()
     if( !m_changed ) return;
 
     m_vrx->setOutHighV( m_vOutX );
-    m_vrx->setOutState( true );
+    m_vrx->sheduleState( true, 0 );
 
     m_vry->setOutHighV( m_vOutY );
-    m_vry->setOutState( true );
+    m_vry->sheduleState( true, 0 );
 
-    m_sw->setOutState( !m_closed );
+    m_sw->sheduleState( !m_closed, 0 );
 
     m_changed = false;
 }

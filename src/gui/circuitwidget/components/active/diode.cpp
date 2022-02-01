@@ -53,10 +53,10 @@ Diode::Diode( QObject* parent, QString type, QString id, bool zener )
     createSerRes();
     m_isZener = zener;
     if( zener ){
-        m_diodeType = "diode";
+        m_diodeType = "zener";
         setModel( "Zener Default" );
     }else{
-        m_diodeType = "zener";
+        m_diodeType = "diode";
         setModel( "Diode Default" );
     }
     Simulator::self()->addToUpdateList( this );

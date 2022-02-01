@@ -45,10 +45,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual void stamp() override { stampAll(); }
         virtual void runEvent() override;
 
-        void sheduleState( bool state, uint64_t time );
-
-        void stampAll();
-        void stampOutput();
+        virtual void sheduleState( bool state, uint64_t time );
 
         //pinMode_t pinMode() { return m_pinMode; }
         void setPinMode( pinMode_t mode );
@@ -63,13 +60,16 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         double outLowV() { return m_outLowV; }
         void  setOutLowV( double v ) { m_outLowV = v; }
 
+        void startLH();
+        void startHL();
+
         virtual void  setOutputImp( double imp );
 
         //double imp() { return m_imp; }
         virtual void  setImp( double imp );
 
         virtual bool getInpState();
-        virtual bool getOutState() { return m_outState; }
+        virtual bool getOutState() { if( m_step ) return m_nextState; return m_outState; }
         virtual void setOutState( bool out );
         virtual void toggleOutState() { IoPin::setOutState( !m_outState ); }
 
@@ -80,8 +80,14 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual void controlPin( bool outCtrl , bool dirCtrl ){;}
 
+        void setRiseTime( double time ) { m_timeRis = time; }
+        void setFallTime( double time ) { m_timeFal = time; }
+
     protected:
         void updtState();
+        void stampAll();
+        //inline void stampOutput();
+        inline void stampVolt( double volt );
 
         double m_inpHighV;  // currently in eClockedDevice
         double m_inpLowV;
@@ -104,6 +110,10 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         bool m_outState;
         bool m_stateZ;
         bool m_nextState;
+
+        int m_steps;
+        uint64_t m_timeRis;  // Time for Output voltage to switch from 0% to 100%
+        uint64_t m_timeFal;  // Time for Output voltage to switch from 100% to 0%
 
         pinMode_t m_pinMode;
 

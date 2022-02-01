@@ -114,11 +114,11 @@ void SR04::runEvent()
 {
     if( m_echouS )
     {
-        m_echo->setOutState( true );
+        m_echo->sheduleState( true, 0 );
         Simulator::self()->addEvent( m_echouS*1e6, this ); // Event to finish echo
         m_echouS = 0;
     }
-    else m_echo->setOutState( false );
+    else m_echo->sheduleState( false, 0 );
 }
 
 void SR04::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

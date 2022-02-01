@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "iopin.h"
 #include "e-node.h"
 #include "simulator.h"
@@ -30,7 +32,7 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
     m_scrEnode->setNodeNumber(0);
     Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
 
-    m_outState    = false;
+    m_outState = false;
     m_stateZ   = false;
 
     m_inpHighV = 2.5;
@@ -49,6 +51,10 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
     m_outputImp = 40;
     m_admit = 1/cero_doub;
 
+    m_steps = 0;
+    m_timeRis = 3750; // picoseconds
+    m_timeFal = 3750;
+
     m_pinMode = undef_mode;
     setPinMode( mode );
 }
@@ -56,21 +62,66 @@ IoPin::~IoPin(){ delete m_scrEnode; }
 
 void IoPin::initialize()
 {
+    m_step = 0;
+    m_steps = Simulator::self()->slopeSteps();
     m_inpState = false;
     m_outState = false;
+    m_nextState = false;
     ePin::setEnodeComp( m_scrEnode );
     setPinMode( m_pinMode );
 }
 
 void IoPin::runEvent()
 {
-    setOutState( m_nextState );
+    if( m_step == m_steps )
+    {
+        m_step = 0;
+        IoPin::setOutState( m_nextState );
+    }else{
+        if( m_pinMode == openCo )
+        {
+            double step = m_nextState ? m_step : m_steps-m_step;
+            double delta =  pow( 1e4*step/m_steps, 2 );
+            m_gndAdmit = 1/(m_outputImp+delta);
+            updtState();
+        }else{
+            double delta = m_step;
+            if( m_step == 0 ) delta = 1e-5;
+            if( m_nextState ) stampVolt( m_outLowV+delta*(m_outHighV-m_outLowV)/m_steps ); // L to H
+            else              stampVolt( m_outHighV-delta*(m_outHighV-m_outLowV)/m_steps );// H to L
+        }
+        int time = m_nextState ? m_timeRis : m_timeFal;
+        Simulator::self()->addEvent( time/m_steps, this );
+        m_step++;
+    }
 }
 
 void IoPin::sheduleState( bool state, uint64_t time )
 {
+    if( m_nextState == state ) return;
     m_nextState = state;
-    Simulator::self()->addEvent( time, this );
+
+    if( m_step )
+    {
+        Simulator::self()->cancelEvents( this );
+        m_step = m_steps-m_step;
+    }
+    //m_step = 0;
+
+    if( time ) Simulator::self()->addEvent( time, this );
+    else runEvent();
+}
+
+void IoPin::startLH()
+{
+    m_step = 0;
+    stampVolt( m_outLowV+(m_outLowV+m_outHighV)/100 );
+
+}
+void IoPin::startHL()
+{
+    m_step = 0;
+    stampVolt( m_outHighV-(m_outLowV+m_outHighV)/100 );
 }
 
 void IoPin::setPinMode( pinMode_t mode )
@@ -94,6 +145,7 @@ void IoPin::setPinMode( pinMode_t mode )
             ePin::stampAdmitance( m_admit );
             break;
         case openCo:
+            //m_outVolt  = m_outLowV;
             m_vddAdmit = cero_doub;
             break;
         case source:
@@ -111,9 +163,10 @@ void IoPin::setPinMode( pinMode_t mode )
 void IoPin::updtState()
 {
     if( m_pinMode > openCo ) return;
+
     double vddAdmit = m_vddAdmit + m_vddAdmEx;
-    double gndAdmit = m_gndAdmit+m_gndAdmEx;
-    double Rth  = 1/(vddAdmit+gndAdmit);
+    double gndAdmit = m_gndAdmit + m_gndAdmEx;
+    double Rth      = 1/(vddAdmit+gndAdmit);
 
     m_outVolt = m_outHighV*vddAdmit*Rth;
     IoPin::setImp( Rth );
@@ -136,19 +189,19 @@ bool IoPin::getInpState()
 
 void IoPin::setOutState( bool out ) // Set Output to Hight or Low
 {
-    m_outState = out;
+    m_outState = m_nextState = out;
     if( m_inverted ) out = !out;
 
     if( m_stateZ ) return;
 
     if( m_pinMode == openCo )
     {
-        m_gndAdmit = out ? 1/m_openImp : 1/m_outputImp;
+        m_gndAdmit = out ? 1/1e8 : 1/m_outputImp;
         updtState();
         if( Circuit::self()->animate() ) setPinState( out? open_high:open_low ); // Z-Low colors
     }else{
         m_outVolt = out ? m_outHighV : m_outLowV;
-        stampOutput();
+        stampVolt( m_outVolt );
         if( Circuit::self()->animate() ) setPinState( out? out_high:out_low ); // High-Low colors
 }   }
 
@@ -203,11 +256,16 @@ void IoPin::setInverted( bool inverted )
 void IoPin::stampAll()
 {
     ePin::stampAdmitance( m_admit );
-    stampOutput();
+    stampVolt( m_outVolt );
 }
 
-void IoPin::stampOutput()
+/*void IoPin::stampOutput()
 {
-    m_scrEnode->setVolt( m_outVolt );
-    ePin::stampCurrent( m_outVolt*m_admit );
+    stampVolt( m_outVolt );
+}*/
+
+void IoPin::stampVolt( double volt )
+{
+    m_scrEnode->setVolt( volt );
+    ePin::stampCurrent( volt*m_admit );
 }

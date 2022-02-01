@@ -99,11 +99,11 @@ void McuPin::setPortState( bool state ) // Port Is being witten
 
     m_outState = state;
     if( !m_isOut ) return;
-    IoPin::setOutState( state );
+    IoPin::sheduleState( state, 0 );
 }
 
 void McuPin::setOutState( bool state ) // Some periferical is controlling this Pin
-{ if( m_outCtrl ) IoPin::setOutState( state ); }
+{ if( m_outCtrl ) IoPin::sheduleState( state, 0 ); }
 
 void McuPin::setDirection( bool out )
 {
@@ -128,10 +128,15 @@ void McuPin::controlPin( bool outCtrl, bool dirCtrl )
 
     if( !outCtrl && m_outCtrl ) // External control is being released
     {
-        if( m_pinMode > input ) setOutState( m_portState ); // Set Previous Pin State
+        if( m_pinMode > input ) sheduleState( m_portState, 0 ); // Set Previous Pin State
         else                    m_outState = m_portState;
     }
     m_outCtrl = outCtrl;
+}
+
+void McuPin::sheduleState( bool state, uint64_t time )
+{
+    if( m_outCtrl ) IoPin::sheduleState( state, time );
 }
 
 void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example

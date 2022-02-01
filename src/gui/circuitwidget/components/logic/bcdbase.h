@@ -36,6 +36,8 @@ class MAINMODULE_EXPORT BcdBase : public LogicComponent
 
     protected:
  static const uint8_t m_values[];
+
+    uint8_t m_digit;
 };
 
 #endif

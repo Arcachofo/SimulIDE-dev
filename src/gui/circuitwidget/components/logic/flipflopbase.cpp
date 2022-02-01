@@ -54,6 +54,7 @@ void FlipFlopBase::stamp()
     LogicComponent::stamp();
     m_outPin[0]->setOutState( m_Q0 );
     m_outPin[1]->setOutState( !m_Q0 );
+    m_nextOutVal = m_outValue = m_Q0? 1:2;
 }
 
 void FlipFlopBase::voltChanged()
