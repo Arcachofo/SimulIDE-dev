@@ -173,3 +173,8 @@ double eBJT::limitStep( double vnew, double vold )
     return vnew;
 }
 
+void eBJT::setGain( double gain )
+{
+    m_gain = gain;
+    m_fgain = m_gain/(m_gain+1);
+}

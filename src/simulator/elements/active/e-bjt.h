@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT eBJT : public eElement
         virtual void voltChanged() override;
 
         virtual double gain()              { return m_gain; }
-        virtual void setGain( double gain ){ m_gain = gain; }
+        virtual void setGain( double gain );
 
         virtual bool pnp()              { return m_PNP; }
         virtual void setPnp( bool pnp ) { m_PNP = pnp; }
@@ -42,9 +42,7 @@ class MAINMODULE_EXPORT eBJT : public eElement
     protected:
         double limitStep( double vnew, double vold );
 
-        //double m_accuracy;
         double m_baseCurr;
-        double m_voltE;
         double m_voltBE;
         double m_voltBC;
         double m_gain;
@@ -64,15 +62,6 @@ class MAINMODULE_EXPORT eBJT : public eElement
         ePin* m_EB;
         ePin* m_CE;
         ePin* m_EC;
-
-        double gBC;
-        double gCB;
-        double gBE;
-        double gEB;
-
-        double curB;
-        double curC;
-        double curE;
 };
 
 #endif
