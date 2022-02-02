@@ -78,7 +78,7 @@
                     addressreg="EEARL,EEARH"
                     interrupt="EEPR" />
 
-  <comp name="COMP" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
+  <comp name="COMP" configregsA="ACSR" 
                     interrupt="ACOMP"
                     pins="PORTD6,PORTD7"/>
 </parts>
