@@ -65,6 +65,7 @@ void SpiModule::runEvent()
         m_toggleSck = false;
 
         m_clkState = m_clkPin->getOutState() ? Clock_Rising : Clock_Falling;
+
         step();
     }
 }
@@ -136,7 +137,7 @@ void SpiModule::step()
         if( m_dataIn->getInpState() ) m_rxReg |= m_bitPtr;
     }
     else if( m_dataOut )                     // Write one bit (Only if dataOut Pin exist)
-        m_dataOut->setOutState( m_txReg & m_bitPtr );
+        m_dataOut->sheduleState( m_txReg & m_bitPtr, 0 );
 
     if( m_mode == SPI_MASTER ) keepClocking();
 }
@@ -160,22 +161,14 @@ void SpiModule::setMode( spiMode_t mode )
         break;
     case SPI_MASTER:
         {
-            if( !m_MOSI || !m_MISO || !m_clkPin )
-            {
-                m_mode = SPI_OFF;
-                return;
-            }
+            if( !m_MOSI || !m_MISO || !m_clkPin ) { m_mode = SPI_OFF; return; }
             m_dataOut = m_MOSI;
             m_dataIn  = m_MISO;
         }
         break;
     case SPI_SLAVE:
         {
-            if( !m_MOSI || !m_clkPin )
-            {
-                m_mode = SPI_OFF;
-                return;
-            }
+            if( !m_MOSI || !m_clkPin ) { m_mode = SPI_OFF; return; }
             m_dataOut = m_MISO;
             m_dataIn  = m_MOSI;
 

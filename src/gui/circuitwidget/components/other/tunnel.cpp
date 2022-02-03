@@ -111,25 +111,17 @@ void Tunnel::setName( QString name )
 
     if( name.isEmpty() ) { setEnode( NULL ); return; }
 
-    ///eNode* node = m_pin[0]->getEnode();
-
     if( m_tunnels.contains( name ) ) // There is already tunnel with this name
     {
         QList<Tunnel*>* list = m_tunnels.value( name );
         if( !list->contains( this ) ) list->append( this );
-        ///if( !node ) node = m_eNodes.value( name );
     }
     else   // name doesn't exist: Create a new List for this name
     {
-        ///node = new eNode( name+"eNode" );
-
         QList<Tunnel*>* list = new QList<Tunnel*>();
         list->append( this );
         m_tunnels[name] = list;
-        ///m_eNodes[name] = node;
     }
-    ///setEnode( node );
-    ///registerPins( node );
     Circuit::self()->update();
 }
 

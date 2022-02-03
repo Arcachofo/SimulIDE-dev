@@ -255,9 +255,11 @@ void TwiModule::setMode( twiMode_t mode )
     m_scl->changeCallBack( this, mode == TWI_SLAVE );
     m_sda->changeCallBack( this, mode == TWI_SLAVE );
 
-    m_scl->sheduleState( true, 10000 /*m_clockPeriod/4*/ ); // Avoid false stop condition
-    setSDA( true );
-
+    if( mode > TWI_OFF )
+    {
+        m_scl->sheduleState( true, 10000 /*m_clockPeriod/4*/ ); // Avoid false stop condition
+        setSDA( true );
+    }
     m_mode = mode;
     m_i2cState = I2C_IDLE;
     m_toggleScl  = false;
