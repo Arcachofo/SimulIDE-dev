@@ -43,6 +43,7 @@ class MAINMODULE_EXPORT RelayBase : public MechContact
         double induc() { return m_inductor->ind(); }
         void  setInduc( double i ) { m_inductor->setInd( i ); }
 
+        virtual void attach() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void remove() override;

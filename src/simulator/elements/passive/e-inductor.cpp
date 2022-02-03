@@ -41,7 +41,10 @@ void eInductor::initialize()
     m_curSource = 0;
     m_volt = 0;
     m_admit = m_tStep/m_ind;
+}
 
+void eInductor::stamp()
+{
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected())
         Simulator::self()->addEvent( 1, this );
 }

@@ -78,9 +78,9 @@ RelayBase::RelayBase( QObject* parent, QString type, QString id )
     m_trigCurrent = 0.02;
     m_relCurrent  = 0.01;
 
-    m_internalEnode = new eNode( m_id+"-internaleNode" );
-    m_ePin[1]->setEnode( m_internalEnode );
-    m_ePin[2]->setEnode( m_internalEnode );
+    //m_internalEnode = new eNode( m_id+"-internaleNode" );
+    //m_ePin[1]->setEnode( m_internalEnode );
+    //m_ePin[2]->setEnode( m_internalEnode );
 
     setValLabelPos(-16, 6, 0);
     setLabelPos(-16, 8, 0);
@@ -90,12 +90,20 @@ RelayBase::RelayBase( QObject* parent, QString type, QString id )
 }
 RelayBase::~RelayBase(){}
 
+void RelayBase::attach()
+{
+    m_internalEnode = new eNode( m_id+"-internaleNode" );
+    m_ePin[1]->setEnode( m_internalEnode );
+    m_ePin[2]->setEnode( m_internalEnode );
+}
+
 void RelayBase::stamp()
 {
-    m_relayOn = false;
-    if( m_ePin[0]->isConnected() ) m_ePin[0]->getEnode()->voltChangedCallback( this );
-    if( m_ePin[1]->isConnected() ) m_ePin[1]->getEnode()->voltChangedCallback( this );
     MechContact::stamp();
+    m_relayOn = false;
+    m_ePin[0]->changeCallBack( this );
+    m_ePin[1]->changeCallBack( this );
+
 }
 
 void RelayBase::voltChanged()

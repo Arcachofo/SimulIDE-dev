@@ -31,6 +31,7 @@ class MAINMODULE_EXPORT eInductor : public eResistor
         ~eInductor();
 
         virtual void initialize() override;
+        virtual void stamp() override;
         virtual void runEvent() override;
 
         double indCurrent() { return m_curSource; }

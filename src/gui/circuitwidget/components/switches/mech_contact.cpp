@@ -39,8 +39,7 @@ MechContact::MechContact( QObject* parent, QString type, QString id )
 }
 MechContact::~MechContact(){}
 
-
-void MechContact::attach()
+void MechContact::stamp()
 {
     if( m_ButHidden ) return;
     for( int i=0; i<m_numPoles; ++i )
@@ -51,11 +50,7 @@ void MechContact::attach()
         m_ePin[ epinN ]->setEnode( enode );
 
         if( m_numthrows > 1 ) m_ePin[ epinN+2 ]->setEnode( enode );
-}   }
-
-void MechContact::stamp()
-{
-    if( m_ButHidden ) return;
+    }
     for( uint i=m_pin0; i<m_ePin.size(); ++i )
     {
         eNode* enode = m_ePin[i]->getEnode();
@@ -145,11 +140,10 @@ void MechContact::SetupSwitches( int poles, int throws )
 
         for( int j=0; j<throws; j++ )
         {
-            reid = m_id;
-
             cont++;
             int tN = i*throws+j;
 
+            reid = m_id;
             reid.append( QString( "-switch"+QString::number(tN)) );
             m_switches[ tN ] = new eResistor( reid );
 
