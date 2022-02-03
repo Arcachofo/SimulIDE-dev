@@ -6,7 +6,7 @@
 
 <item itemtype="Ground" CircId="Ground-259" mainComp="false" Show_id="false" Show_Val="false" Pos="-432,196" rotation="0" hflip="1" vflip="1" label="Ground-259" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="236,-12" circPos="-432,196" boardRot="0" circRot="0" />
 
-<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-584,228" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="5.00668e-308" SubcType="Board" Width="21 _Cells" Height="15 _Cells" Name="4bit_led" Package_File="2x4bit_led_cc_LS.package" Logic_Symbol="true" />
+<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-584,228" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="5.00668e-308" SubcType="Board" Width="21 _Cells" Height="15 _Cells" Package_File="2x4bit_led_cc_LS.package" Logic_Symbol="true" />
 
 <item itemtype="Seven Segment" CircId="Seven Segment-237" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,4" rotation="0" hflip="1" vflip="1" label="Seven Segment-237" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="36,32" circPos="-308,4" boardRot="0" circRot="0" NumDisplays="4 _7seg" Color="0" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="50 Ω" />
 

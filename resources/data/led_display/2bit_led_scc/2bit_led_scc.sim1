@@ -2,7 +2,7 @@
 
 <item itemtype="Ground" CircId="Ground-259" mainComp="false" Show_id="false" Show_Val="false" Pos="-332,72" rotation="0" hflip="1" vflip="1" label="Ground-259" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="236,-12" circPos="-332,72" boardRot="0" circRot="0" />
 
-<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-664,104" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="5.00668e-308" SubcType="Board" Width="10 _Cells" Height="10 _Cells" Name="4bit_led_cc" Package_File="2bit_led_scc_LS.package" Logic_Symbol="true" />
+<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-664,104" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="5.00668e-308" SubcType="Board" Width="10 _Cells" Height="10 _Cells" Package_File="2bit_led_scc_LS.package" Logic_Symbol="true" />
 
 <item itemtype="Seven Segment" CircId="Seven Segment-237" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,4" rotation="0" hflip="1" vflip="1" label="Seven Segment-237" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="20,32" circPos="-308,4" boardRot="0" circRot="0" NumDisplays="1 _7seg" Color="0" Vertical_Pins="false" CommonCathode="true" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="100 Ω" />
 
@@ -10,7 +10,7 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-556,48" rotation="0" hflip="1" vflip="1" label="STC" idLabPos="-56,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-8,-280" circPos="-556,48" boardRot="0" circRot="0" Name="LOAD" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-504,148" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-556,-4" boardRot="0" circRot="0" Name="SDI" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-504,148" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-504,148" boardRot="0" circRot="0" Name="SDI" Rotated="false" />
 
 <item itemtype="Tunnel" CircId="Tunnel-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-556,12" rotation="0" hflip="1" vflip="1" label="SCLK" idLabPos="-54,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-220" circPos="-556,12" boardRot="0" circRot="0" Name="SCLK" Rotated="false" />
 
@@ -28,7 +28,7 @@
 
 <item itemtype="Rail" CircId="Rail-578" mainComp="false" Show_id="false" Show_Val="false" Pos="-516,180" rotation="0" hflip="1" vflip="1" label="Rail-189" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="56,-204" circPos="-516,180" boardRot="0" circRot="0" Voltage="5 V" />
 
-<item itemtype="Tunnel" CircId="Tunnel-579" mainComp="false" Show_id="false" Show_Val="false" Pos="-412,76" rotation="0" hflip="1" vflip="1" label="Tunnel-468" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="164,-284" circPos="-404,220" boardRot="0" circRot="0" Name="SDO" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-579" mainComp="false" Show_id="false" Show_Val="false" Pos="-412,76" rotation="0" hflip="1" vflip="1" label="Tunnel-468" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="164,-284" circPos="-412,76" boardRot="0" circRot="0" Name="SDO" Rotated="true" />
 
 <item itemtype="Node" CircId="Node-671" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-440,188" />
 

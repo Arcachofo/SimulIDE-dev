@@ -2,7 +2,7 @@
 
 <item itemtype="Package" CircId="Package-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-556,-444" rotation="0" hflip="1" vflip="1" label="Lcd_Shield" idLabPos="31,-16" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e-06" circRot="0" SubcType="Shield" Width="17 _Cells" Height="26 _Cells" Name="LcdShield" Package_File="LcdShield.package" Background="shield_uno.png" Logic_Symbol="false" />
 
-<item itemtype="Hd44780" CircId="Hd44780-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-492" rotation="0" hflip="1" vflip="1" label="Hd44780-4" idLabPos="70,-82" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-60,136" circPos="-364,-492" boardRot="-90" circRot="0" Rows="2 _Lines" Cols="16 _Chars." />
+<item itemtype="Hd44780" CircId="Hd44780-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-364,-492" rotation="0" hflip="1" vflip="1" label="Hd44780-4" idLabPos="70.5849,-78.4905" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-60,136" circPos="-364,-492" boardRot="-90" circRot="0" Rows="2 _Lines" Cols="16 _Chars." />
 
 <item itemtype="Ground" CircId="Ground-3" mainComp="false" Show_id="false" Show_Val="false" Pos="-340,-100" rotation="0" hflip="1" vflip="1" label="Ground-6" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="224,-8" circPos="-340,-100" boardRot="0" circRot="0" />
 
@@ -18,15 +18,15 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-9" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,-412" rotation="0" hflip="1" vflip="1" label="Tunnel-24" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="384,32" circPos="-172,-412" boardRot="0" circRot="0" Name="11" Rotated="true" />
 
-<item itemtype="Push" CircId="Push-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-276" rotation="0" hflip="1" vflip="1" label="Up" idLabPos="-6,-22" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="80,136" circPos="-308,-276" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="u" />
+<item itemtype="Push" CircId="Push-10" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-276" rotation="0" hflip="1" vflip="1" label="Up" idLabPos="-6,-7.08456" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="80,136" circPos="-308,-276" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="u" />
 
-<item itemtype="Push" CircId="Push-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-228" rotation="0" hflip="1" vflip="1" label="Down" idLabPos="-13,-22" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="104,136" circPos="-308,-228" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="d" />
+<item itemtype="Push" CircId="Push-11" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-228" rotation="0" hflip="1" vflip="1" label="Down" idLabPos="-13.2925,18.6519" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="104,136" circPos="-308,-228" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="d" />
 
-<item itemtype="Push" CircId="Push-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-180" rotation="0" hflip="1" vflip="1" label="Left" idLabPos="-9,-22" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="92,160" circPos="-308,-180" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="l" />
+<item itemtype="Push" CircId="Push-12" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-180" rotation="0" hflip="1" vflip="1" label="Left" idLabPos="-8.70754,-10.3016" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="92,160" circPos="-308,-180" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="l" />
 
-<item itemtype="Push" CircId="Push-13" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-132" rotation="0" hflip="1" vflip="1" label="Select" idLabPos="-16,-22" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="92,184" circPos="-308,-132" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="s" />
+<item itemtype="Push" CircId="Push-13" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-132" rotation="0" hflip="1" vflip="1" label="Select" idLabPos="-16.8774,-10.0092" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="92,184" circPos="-308,-132" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="s" />
 
-<item itemtype="Push" CircId="Push-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-324" rotation="0" hflip="1" vflip="1" label="Right" idLabPos="-12,-22" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="92,112" circPos="-308,-324" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="r" />
+<item itemtype="Push" CircId="Push-14" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-324" rotation="0" hflip="1" vflip="1" label="Right" idLabPos="-13.1698,-11.7639" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="92,112" circPos="-308,-324" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="r" />
 
 <item itemtype="Resistor" CircId="Resistor-18" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-276,-300" rotation="-90" hflip="1" vflip="1" label="Resistor-40" idLabPos="-12,-20" labelrot="0" valLabPos="-13,6" valLabRot="0" boardPos="280,144" circPos="-276,-300" boardRot="-90" circRot="-90" Resistance="330 Ω" />
 
@@ -40,13 +40,13 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-27" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,-356" rotation="0" hflip="1" vflip="1" label="Tunnel-24" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="384,88" circPos="-172,-356" boardRot="0" circRot="0" Name="A0" Rotated="true" />
 
-<item itemtype="Push" CircId="Push-30" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-372" rotation="0" hflip="1" vflip="1" label="Reset" idLabPos="-12,-22" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="92,88" circPos="-308,-372" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="t" />
+<item itemtype="Push" CircId="Push-30" mainComp="false" Show_id="true" Show_Val="false" Pos="-308,-372" rotation="0" hflip="1" vflip="1" label="Reset" idLabPos="-10.2452,-11.179" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="92,88" circPos="-308,-372" boardRot="-90" circRot="0" Norm_Close="false" Poles="1 _Poles" Key="t" />
 
 <item itemtype="Tunnel" CircId="Tunnel-32" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,-372" rotation="0" hflip="1" vflip="1" label="Tunnel-24" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="384,72" circPos="-172,-372" boardRot="0" circRot="0" Name="RST" Rotated="true" />
 
 <item itemtype="Rail" CircId="Rail-33" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-156,-324" rotation="-180" hflip="1" vflip="1" label="Rail-86" idLabPos="-16,-24" labelrot="0" valLabPos="7,-13" valLabRot="-180" boardPos="368,104" circPos="-156,-324" boardRot="-180" circRot="-180" Voltage="5 V" />
 
-<item itemtype="Resistor" CircId="Resistor-85" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-228,-372" rotation="0" hflip="1" vflip="1" label="Resistor-40" idLabPos="-12,-20" labelrot="0" valLabPos="-12,-17" valLabRot="0" boardPos="280,240" circPos="-276,-204" boardRot="-90" circRot="-90" Resistance="2 kΩ" />
+<item itemtype="Resistor" CircId="Resistor-85" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-228,-372" rotation="0" hflip="1" vflip="1" label="Resistor-40" idLabPos="-12,-20" labelrot="0" valLabPos="-12,-17" valLabRot="0" boardPos="280,240" circPos="-228,-372" boardRot="-90" circRot="0" Resistance="2 kΩ" />
 
 <item itemtype="Node" CircId="Node-15" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-340,-180" />
 

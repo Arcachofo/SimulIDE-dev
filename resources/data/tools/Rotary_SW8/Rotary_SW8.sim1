@@ -1,98 +1,98 @@
 <circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
 
-<item itemtype="LedBar" CircId="LedBar-1960" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-556" rotation="0" hflip="1" vflip="1" label="LedBar-1960" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="8 _Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+<item itemtype="LedBar" CircId="LedBar-1960" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-556" rotation="0" hflip="1" vflip="1" label="LedBar-1960" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="8,32" circPos="-228,-556" boardRot="0" circRot="0" Size="8 _Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
 
-<item itemtype="MuxAnalog" CircId="MuxAnalog-1959" mainComp="false" Show_id="false" Show_Val="false" Pos="-272,-588" rotation="0" hflip="1" vflip="1" label="MuxAnalog-1932" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="3 _Bits" Impedance="0.001 Ω" />
+<item itemtype="MuxAnalog" CircId="MuxAnalog-1959" mainComp="false" Show_id="false" Show_Val="false" Pos="-272,-588" rotation="0" hflip="1" vflip="1" label="MuxAnalog-1932" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="672,-128" circPos="-272,-588" boardRot="0" circRot="0" Address_Bits="3 _Bits" Impedance="0.001 Ω" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1950" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-296" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="7" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-1950" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-296" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="716,164" circPos="-228,-296" boardRot="0" circRot="0" Name="7" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1948" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-304" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="6" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-1948" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-304" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="728,156" circPos="-216,-304" boardRot="0" circRot="0" Name="6" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1946" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-312" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="5" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-1946" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-312" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="716,148" circPos="-228,-312" boardRot="0" circRot="0" Name="5" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1944" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-320" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="4" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-1944" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-320" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="728,140" circPos="-216,-320" boardRot="0" circRot="0" Name="4" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1941" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-328" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="3" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-1941" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-328" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="716,132" circPos="-228,-328" boardRot="0" circRot="0" Name="3" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1939" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-336" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="2" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-1939" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-336" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="728,124" circPos="-216,-336" boardRot="0" circRot="0" Name="2" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1937" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-344" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="1" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-1937" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,-344" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="716,116" circPos="-228,-344" boardRot="0" circRot="0" Name="1" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1935" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-352" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="0" Rotated="true" />
+<item itemtype="Tunnel" CircId="Tunnel-1935" mainComp="false" Show_id="false" Show_Val="false" Pos="-216,-352" rotation="0" hflip="1" vflip="1" label="Tunnel-1935" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="728,108" circPos="-216,-352" boardRot="0" circRot="0" Name="0" Rotated="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1933" mainComp="false" Show_id="false" Show_Val="false" Pos="-300,-356" rotation="0" hflip="1" vflip="1" label="Tunnel-1933" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="out" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1933" mainComp="false" Show_id="false" Show_Val="false" Pos="-300,-356" rotation="0" hflip="1" vflip="1" label="Tunnel-1933" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="644,104" circPos="-300,-356" boardRot="0" circRot="0" Name="out" Rotated="false" />
 
-<item itemtype="MuxAnalog" CircId="MuxAnalog-1932" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-360" rotation="0" hflip="1" vflip="1" label="MuxAnalog-1932" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="3 _Bits" Impedance="0.001 Ω" />
+<item itemtype="MuxAnalog" CircId="MuxAnalog-1932" mainComp="false" Show_id="false" Show_Val="false" Pos="-260,-360" rotation="0" hflip="1" vflip="1" label="MuxAnalog-1932" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="684,100" circPos="-260,-360" boardRot="0" circRot="0" Address_Bits="3 _Bits" Impedance="0.001 Ω" />
 
-<item itemtype="And Gate" CircId="And Gate-1811" mainComp="false" Show_id="false" Show_Val="false" Pos="-584,-420" rotation="0" hflip="1" vflip="1" label="And Gate-95" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="2 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="And Gate" CircId="And Gate-1811" mainComp="false" Show_id="false" Show_Val="false" Pos="-584,-420" rotation="0" hflip="1" vflip="1" label="And Gate-95" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="360,40" circPos="-584,-420" boardRot="0" circRot="0" Num_Inputs="2 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="And Gate" CircId="And Gate-1810" mainComp="false" Show_id="false" Show_Val="false" Pos="-584,-444" rotation="0" hflip="1" vflip="1" label="And Gate-95" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="2 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="And Gate" CircId="And Gate-1810" mainComp="false" Show_id="false" Show_Val="false" Pos="-584,-444" rotation="0" hflip="1" vflip="1" label="And Gate-95" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="360,16" circPos="-584,-444" boardRot="0" circRot="0" Num_Inputs="2 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="And Gate" CircId="And Gate-1797" mainComp="false" Show_id="false" Show_Val="false" Pos="-416,-416" rotation="0" hflip="1" vflip="1" label="And Gate-85" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="And Gate" CircId="And Gate-1797" mainComp="false" Show_id="false" Show_Val="false" Pos="-416,-416" rotation="0" hflip="1" vflip="1" label="And Gate-85" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="528,44" circPos="-416,-416" boardRot="0" circRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="FlipFlopJK" CircId="FlipFlop JK-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-648,-432" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-105" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-648,-432" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-105" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="296,28" circPos="-648,-432" boardRot="0" circRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Or Gate" CircId="Or Gate-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-704,-432" rotation="0" hflip="1" vflip="1" label="Or Gate-104" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="2 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Or Gate" CircId="Or Gate-11" mainComp="false" Show_id="false" Show_Val="false" Pos="-704,-432" rotation="0" hflip="1" vflip="1" label="Or Gate-104" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="240,28" circPos="-704,-432" boardRot="0" circRot="0" Num_Inputs="2 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Rail" CircId="Rail.-12" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-688,-464" rotation="0" hflip="1" vflip="1" label="Rail.-103" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail.-12" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-688,-464" rotation="0" hflip="1" vflip="1" label="Rail.-103" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="256,-4" circPos="-688,-464" boardRot="0" circRot="0" Voltage="5 V" />
 
-<item itemtype="Or Gate" CircId="Or Gate-18" mainComp="false" Show_id="false" Show_Val="false" Pos="-544,-432" rotation="0" hflip="1" vflip="1" label="Or Gate-97" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="2 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Or Gate" CircId="Or Gate-18" mainComp="false" Show_id="false" Show_Val="false" Pos="-544,-432" rotation="0" hflip="1" vflip="1" label="Or Gate-97" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="400,28" circPos="-544,-432" boardRot="0" circRot="0" Num_Inputs="2 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="FlipFlopJK" CircId="FlipFlop JK-19" mainComp="false" Show_id="false" Show_Val="false" Pos="-488,-432" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-96" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-19" mainComp="false" Show_id="false" Show_Val="false" Pos="-488,-432" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-96" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="456,28" circPos="-488,-432" boardRot="0" circRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Rail" CircId="Rail.-27" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-528,-464" rotation="0" hflip="1" vflip="1" label="Rail.-88" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail.-27" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-528,-464" rotation="0" hflip="1" vflip="1" label="Rail.-88" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="416,-4" circPos="-528,-464" boardRot="0" circRot="0" Voltage="5 V" />
 
-<item itemtype="Or Gate" CircId="Or Gate-28" mainComp="false" Show_id="false" Show_Val="false" Pos="-376,-432" rotation="0" hflip="1" vflip="1" label="Or Gate-87" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="2 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Or Gate" CircId="Or Gate-28" mainComp="false" Show_id="false" Show_Val="false" Pos="-376,-432" rotation="0" hflip="1" vflip="1" label="Or Gate-87" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="568,28" circPos="-376,-432" boardRot="0" circRot="0" Num_Inputs="2 _Inputs" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="FlipFlopJK" CircId="FlipFlop JK-29" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-432" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-86" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="FlipFlopJK" CircId="FlipFlop JK-29" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-432" rotation="0" hflip="1" vflip="1" label="FlipFlop JK-86" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="624,28" circPos="-320,-432" boardRot="0" circRot="0" UseRS="true" Reset_Inverted="false" Clock_Inverted="false" Trigger="Clock" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="And Gate" CircId="And Gate-30" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,-444" rotation="0" hflip="1" vflip="1" label="And Gate-85" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="And Gate" CircId="And Gate-30" mainComp="false" Show_id="false" Show_Val="false" Pos="-420,-444" rotation="0" hflip="1" vflip="1" label="And Gate-85" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="524,16" circPos="-420,-444" boardRot="0" circRot="0" Num_Inputs="3 _Inputs" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Rail" CircId="Rail.-37" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-368,-468" rotation="0" hflip="1" vflip="1" label="Rail.-78" idLabPos="-64,-24" labelrot="0" valLabPos="-11,-4" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail.-37" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-368,-468" rotation="0" hflip="1" vflip="1" label="Rail.-78" idLabPos="-64,-24" labelrot="0" valLabPos="-11,-4" valLabRot="0" boardPos="576,-8" circPos="-368,-468" boardRot="0" circRot="0" Voltage="5 V" />
 
-<item itemtype="Buffer" CircId="Buffer-48" mainComp="false" Show_id="false" Show_Val="false" Pos="-724,-408" rotation="-90" hflip="1" vflip="1" label="Buffer-67" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Buffer" CircId="Buffer-48" mainComp="false" Show_id="false" Show_Val="false" Pos="-724,-408" rotation="-90" hflip="1" vflip="1" label="Buffer-67" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="220,52" circPos="-724,-408" boardRot="-90" circRot="-90" Tristate="false" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Buffer" CircId="Buffer-49" mainComp="false" Show_id="false" Show_Val="false" Pos="-724,-480" rotation="90" hflip="1" vflip="1" label="Buffer-66" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+<item itemtype="Buffer" CircId="Buffer-49" mainComp="false" Show_id="false" Show_Val="false" Pos="-724,-480" rotation="90" hflip="1" vflip="1" label="Buffer-66" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="220,-20" circPos="-724,-480" boardRot="90" circRot="90" Tristate="false" Inverted="false" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Rail" CircId="Rail-62" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-872,-508" rotation="0" hflip="1" vflip="1" label="Rail-62" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail-62" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-872,-508" rotation="0" hflip="1" vflip="1" label="Rail-62" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="72,-48" circPos="-872,-508" boardRot="0" circRot="0" Voltage="5 V" />
 
-<item itemtype="Package" CircId="Package-496" mainComp="false" Show_id="true" Show_Val="false" Pos="-944,-460" rotation="0" hflip="1" vflip="1" label="Package-496" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" SubcType="None" Width="5 _Cells" Height="9 _Cells" Package_File="Rotary_SW8_LS.package" Logic_Symbol="true" />
+<item itemtype="Package" CircId="Package-496" mainComp="false" Show_id="true" Show_Val="false" Pos="-944,-460" rotation="0" hflip="1" vflip="1" label="Package-496" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" SubcType="Board" Width="5 _Cells" Height="9 _Cells" Package_File="Rotary_SW8_LS.package" Logic_Symbol="true" />
 
-<item itemtype="KeyPad" CircId="KeyPad-497" mainComp="false" Show_id="false" Show_Val="false" Pos="-820,-508" rotation="0" hflip="1" vflip="1" label="KeyPad-497" idLabPos="-8,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="3 _Buttons" Cols="1 _Buttons" Key_Labels="URD" />
+<item itemtype="KeyPad" CircId="KeyPad-497" mainComp="false" Show_id="false" Show_Val="false" Pos="-820,-508" rotation="0" hflip="1" vflip="1" label="KeyPad-497" idLabPos="-8,-16" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="28,4" circPos="-820,-508" boardRot="0" circRot="0" Rows="3 _Buttons" Cols="1 _Buttons" Key_Labels="URD" />
 
-<item itemtype="Node" CircId="Node-1980" mainComp="false" Pos="-620,-440" />
+<item itemtype="Node" CircId="Node-1980" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-620,-440" />
 
-<item itemtype="Node" CircId="Node-1977" mainComp="false" Pos="-460,-440" />
+<item itemtype="Node" CircId="Node-1977" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-460,-440" />
 
-<item itemtype="Node" CircId="Node-1974" mainComp="false" Pos="-280,-440" />
+<item itemtype="Node" CircId="Node-1974" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-280,-440" />
 
-<item itemtype="Node" CircId="Node-1970" mainComp="false" Pos="-344,-468" />
+<item itemtype="Node" CircId="Node-1970" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-344,-468" />
 
-<item itemtype="Node" CircId="Node-1956" mainComp="false" Pos="-456,-440" />
+<item itemtype="Node" CircId="Node-1956" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-456,-440" />
 
-<item itemtype="Node" CircId="Node-1953" mainComp="false" Pos="-612,-440" />
+<item itemtype="Node" CircId="Node-1953" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-612,-440" />
 
-<item itemtype="Node" CircId="Node-1930" mainComp="false" Pos="-724,-500" />
+<item itemtype="Node" CircId="Node-1930" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-724,-500" />
 
-<item itemtype="Node" CircId="Node-1841" mainComp="false" Pos="-480,-388" />
+<item itemtype="Node" CircId="Node-1841" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-480,-388" />
 
-<item itemtype="Node" CircId="Node-1838" mainComp="false" Pos="-640,-388" />
+<item itemtype="Node" CircId="Node-1838" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-640,-388" />
 
-<item itemtype="Node" CircId="Node-9" mainComp="false" Pos="-600,-352" />
+<item itemtype="Node" CircId="Node-9" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-600,-352" />
 
-<item itemtype="Node" CircId="Node-13" mainComp="false" Pos="-672,-448" />
+<item itemtype="Node" CircId="Node-13" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-672,-448" />
 
-<item itemtype="Node" CircId="Node-23" mainComp="false" Pos="-512,-448" />
+<item itemtype="Node" CircId="Node-23" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-512,-448" />
 
-<item itemtype="Node" CircId="Node-33" mainComp="false" Pos="-344,-440" />
+<item itemtype="Node" CircId="Node-33" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-344,-440" />
 
-<item itemtype="Node" CircId="Node-59" mainComp="false" Pos="-600,-500" />
+<item itemtype="Node" CircId="Node-59" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-600,-500" />
 
-<item itemtype="Node" CircId="Node-66" mainComp="false" Pos="-604,-440" />
+<item itemtype="Node" CircId="Node-66" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-604,-440" />
 
-<item itemtype="Node" CircId="Node-72" mainComp="false" Pos="-604,-424" />
+<item itemtype="Node" CircId="Node-72" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-604,-424" />
 
-<item itemtype="Node" CircId="Node-1890" mainComp="false" Pos="-724,-352" />
+<item itemtype="Node" CircId="Node-1890" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-724,-352" />
 
 <item itemtype="Connector" uid="Connector-102" startpinid="Or Gate-11-out" endpinid="FlipFlop JK-10-in4" pointList="-688,-432,-664,-432" />
 

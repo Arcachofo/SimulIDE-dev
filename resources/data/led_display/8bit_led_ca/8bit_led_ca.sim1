@@ -1,6 +1,6 @@
 <circuit type="simulide_1.0" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
 
-<item itemtype="Tunnel" CircId="Tunnel-530" mainComp="false" Show_id="false" Show_Val="false" Pos="-608,-64" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-596,-4" boardRot="0" circRot="0" Name="DO" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-530" mainComp="false" Show_id="false" Show_Val="false" Pos="-608,-64" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-608,-64" boardRot="0" circRot="0" Name="DO" Rotated="false" />
 
 <item itemtype="ShiftReg" CircId="ShiftReg-159" mainComp="false" Show_id="false" Show_Val="false" Pos="-476,4" rotation="0" hflip="1" vflip="1" label="ShiftReg-159" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="108,-228" circPos="-476,4" boardRot="0" circRot="0" Clock_Inverted="false" Reset_Inverted="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
@@ -8,9 +8,9 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-12" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,12" rotation="0" hflip="1" vflip="1" label="SCLK" idLabPos="-54,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-220" circPos="-600,12" boardRot="0" circRot="0" Name="SCLK" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,132" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-596,-4" boardRot="0" circRot="0" Name="DI" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-10" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,132" rotation="0" hflip="1" vflip="1" label="DS" idLabPos="-36,-6" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-236" circPos="-600,132" boardRot="0" circRot="0" Name="DI" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,48" rotation="0" hflip="1" vflip="1" label="STC" idLabPos="-56,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-8,-280" circPos="-592,-48" boardRot="0" circRot="0" Name="RCLK" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,48" rotation="0" hflip="1" vflip="1" label="STC" idLabPos="-56,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-8,-280" circPos="-600,48" boardRot="0" circRot="0" Name="RCLK" Rotated="false" />
 
 <item itemtype="Rail" CircId="Rail-189" mainComp="false" Show_id="false" Show_Val="false" Pos="-520,28" rotation="0" hflip="1" vflip="1" label="Rail-189" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="56,-204" circPos="-520,28" boardRot="0" circRot="0" Voltage="5 V" />
 
@@ -22,13 +22,13 @@
 
 <item itemtype="Seven Segment" CircId="Seven Segment-237" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,4" rotation="0" hflip="1" vflip="1" label="Seven Segment-237" idLabPos="20,-44" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="36,32" circPos="-308,4" boardRot="0" circRot="0" NumDisplays="8 _7seg" Color="0" Vertical_Pins="false" CommonCathode="false" Threshold="2.4 V" MaxCurrent="0.02 A" Resistance="50 Ω" />
 
-<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-584,232" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="5.00668e-308" SubcType="Board" Width="37 _Cells" Height="8 _Cells" Name="4bit_led" Package_File="8bit_led_ca_LS.package" Logic_Symbol="true" />
+<item itemtype="Package" CircId="Package-254" mainComp="false" Show_id="true" Show_Val="false" Pos="-584,232" rotation="0" hflip="1" vflip="1" label="Package-254" idLabPos="0,-20" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="5.00668e-308" SubcType="Board" Width="37 _Cells" Height="8 _Cells" Package_File="8bit_led_ca_LS.package" Logic_Symbol="true" />
 
 <item itemtype="Ground" CircId="Ground-259" mainComp="false" Show_id="false" Show_Val="false" Pos="-348,220" rotation="0" hflip="1" vflip="1" label="Ground-259" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" boardPos="236,-12" circPos="-348,220" boardRot="0" circRot="0" />
 
-<item itemtype="Tunnel" CircId="Tunnel-485" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,-20" rotation="0" hflip="1" vflip="1" label="SCLK" idLabPos="-54,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-220" circPos="-600,12" boardRot="0" circRot="0" Name="SCLK1" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-485" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,-20" rotation="0" hflip="1" vflip="1" label="SCLK" idLabPos="-54,-7" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-12,-220" circPos="-600,-20" boardRot="0" circRot="0" Name="SCLK1" Rotated="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-486" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,68" rotation="0" hflip="1" vflip="1" label="STC" idLabPos="-56,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-8,-280" circPos="-592,-48" boardRot="0" circRot="0" Name="RCLK1" Rotated="false" />
+<item itemtype="Tunnel" CircId="Tunnel-486" mainComp="false" Show_id="false" Show_Val="false" Pos="-600,68" rotation="0" hflip="1" vflip="1" label="STC" idLabPos="-56,-5" labelrot="0" valLabPos="-16,8" valLabRot="0" boardPos="-8,-280" circPos="-600,68" boardRot="0" circRot="0" Name="RCLK1" Rotated="false" />
 
 <item itemtype="Node" CircId="Node-532" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="-444,36" />
 
