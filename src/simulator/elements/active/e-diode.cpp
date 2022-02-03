@@ -41,12 +41,9 @@ eDiode::eDiode( QString id )
     m_maxCur = 1;
 
     m_resistor = new eResistor( m_elmId+"-resistor");
-    m_midEnode = new eNode( m_elmId+"-mideNode");
 }
 eDiode::~eDiode()
 {
-    m_pinN->setEnode( NULL );
-    m_pinR0->setEnode( NULL );
     delete m_resistor;
 }
 
@@ -60,9 +57,6 @@ void eDiode::createSerRes() // --P[diode]N--(midEnode)--R0[resistor]R1--
 
     m_resistor->setEpin( 0, m_pinR0 );
     m_resistor->setEpin( 1, m_pinR1 );
-
-    m_pinN->setEnode( m_midEnode );
-    m_pinR0->setEnode( m_midEnode );
 }
 
 void eDiode::initialize()
@@ -71,10 +65,15 @@ void eDiode::initialize()
     m_admit = m_bAdmit;
     m_voltPN = 0;
     m_current = 0;
+
+    m_midEnode = new eNode( m_elmId+"-mideNode");
 }
 
 void eDiode::stamp()
 {
+    m_pinN->setEnode( m_midEnode );
+    m_pinR0->setEnode( m_midEnode );
+
     eNode* node = m_pinP->getEnode();
     if( node ) node->addToNoLinList( this );
 

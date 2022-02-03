@@ -87,7 +87,7 @@ void Diac::updateStep()
     if( Circuit::self()->animate() ) update();
 }
 
-void Diac::attach()
+void Diac::stamp()
 {
     m_state = false;
 
@@ -96,14 +96,8 @@ void Diac::attach()
 
     m_diode1->getEpin(0)->setEnode( node0 );
     m_diode2->getEpin(0)->setEnode( node1 );
-}
 
-void Diac::stamp()
-{
-    eNode* node0 = m_pin[0]->getEnode();
     if( node0 ) node0->addToNoLinList( this );
-
-    eNode* node1 = m_pin[1]->getEnode();
     if( node1 ) node1->addToNoLinList( this );
 
     m_diode1->setRes( m_resOff );
