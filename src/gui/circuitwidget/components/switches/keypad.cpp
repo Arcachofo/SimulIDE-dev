@@ -59,7 +59,7 @@ new StringProp<KeyPad>( "Key_Labels", tr("Key Labels"),""        , this, &KeyPad
 }
 KeyPad::~KeyPad(){}
 
-void KeyPad::attach()
+void KeyPad::stamp()
 {
     for( int row=0; row<m_rows; row++ )
     {

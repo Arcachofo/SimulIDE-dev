@@ -231,6 +231,13 @@ void Simulator::resetSim()
 void Simulator::createNodes()
 {
     //qDebug() <<"\ncreateNodes...\n";
+    for( eNode* enode : m_eNodeList )
+    {
+        enode->clear();
+        delete enode;
+    }
+    m_eNodeList.clear();
+
     int i = 0;
     QStringList pinList;
     QStringList pins = Circuit::self()->m_pinMap.keys();

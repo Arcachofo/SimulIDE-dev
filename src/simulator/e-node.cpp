@@ -193,8 +193,17 @@ void eNode::remEpin( ePin* epin )
 {
     if( m_ePinList.contains(epin) ) m_ePinList.removeOne( epin );
     if( m_nodeList.contains(epin) ) m_nodeList.remove( epin );
-    if( m_ePinList.isEmpty() ) // If No epins then remove this enode
-        Simulator::self()->remFromEnodeList( this, true );
+    //if( m_ePinList.isEmpty() ) // If No epins then remove this enode
+    //    Simulator::self()->remFromEnodeList( this, true );
+}
+
+void eNode::clear()
+{
+    for( ePin* epin : m_ePinList )
+    {
+        epin->setEnode( NULL );
+        epin->setEnodeComp( NULL );
+    }
 }
 
 void eNode::voltChangedCallback( eElement* el )

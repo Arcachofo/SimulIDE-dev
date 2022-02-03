@@ -35,6 +35,7 @@ class MAINMODULE_EXPORT eNode
 
         void addEpin( ePin* epin );
         void remEpin( ePin* epin );
+        void clear();
 
         void voltChangedCallback( eElement* el );
         void remFromChangedCallback( eElement* el );
