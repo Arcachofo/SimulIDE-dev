@@ -51,7 +51,7 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
          : PlotBase( parent, type, id )
 {
     m_numChannels = 8;
-    m_bufferSize = 10000;
+    m_bufferSize = 100000;
 
     m_laWidget  = new LaWidget( CircuitWidget::self(), this );
     m_dataWidget = new DataLaWidget( NULL, this );
