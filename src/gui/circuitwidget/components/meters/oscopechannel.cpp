@@ -51,6 +51,7 @@ void OscopeChannel::initialize()
     m_ampli = 0;
     m_maxVal = -1e12;
     m_minVal = 1e12;
+    m_midVal = 0;
     m_dispMax = 5;
     m_dispMin =-5;
 
@@ -107,7 +108,7 @@ void OscopeChannel::updateStep()
         {
             m_oscope->setTimeDiv( m_period/5 );
             m_oscope->setVoltDiv( m_channel, m_ampli/10 );
-            m_oscope->setVoltPos( m_channel, -m_ampli/2 );
+            m_oscope->setVoltPos( m_channel, -m_midVal );
             m_oscope->display()->setLimits( m_channel, m_dispMax, m_dispMin );
     }   }
     else{
@@ -185,10 +186,10 @@ void OscopeChannel::voltChanged()
         }
         if( m_nCycles > 1 )     // Wait for a full wave
         {
-            m_ampli = m_maxVal-m_minVal;
-            double mid = m_minVal + m_ampli/2;
+            m_ampli  = m_maxVal-m_minVal;
+            m_midVal = m_minVal + m_ampli/2;
 
-            if( data >= mid )            // Rising edge
+            if( data >= m_midVal )            // Rising edge
             {
                 if( m_numMax > 1 )
                 {

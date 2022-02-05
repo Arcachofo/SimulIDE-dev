@@ -59,6 +59,7 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
 
         double m_maxVal;
         double m_minVal;
+        double m_midVal;
         double m_dispMax;
         double m_dispMin;
         double m_ampli;
