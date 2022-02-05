@@ -38,7 +38,7 @@ class MAINMODULE_EXPORT ePin
         eNode* getEnode() { return m_enode; }
         void   setEnode( eNode* enode );
 
-        eNode* getEnodeComp() { return m_enodeCon; }
+        //eNode* getEnodeComp() { return m_enodeComp; }
         void   setEnodeComp( eNode* enode ); // The enode at other side of component
 
         void changeCallBack( eElement* el , bool cb=true );
@@ -57,8 +57,8 @@ class MAINMODULE_EXPORT ePin
         void setIndex( int i ) { m_index = i; }
 
     protected:
-        eNode* m_enode;
-        eNode* m_enodeCon;
+        eNode* m_enode;     // My eNode
+        eNode* m_enodeComp; // eNode at other side of my component
 
         QString m_id;
         int m_index;

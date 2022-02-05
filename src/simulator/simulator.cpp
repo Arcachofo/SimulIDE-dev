@@ -274,15 +274,13 @@ void Simulator::startSim( bool paused )
 
     qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
     for( eElement* el : m_elementList )    // Initialize all Elements
-    {
+    {                                      // This can create new eNodes
         //qDebug() << "initializing  "<< el->getId();
         el->initialize();
         el->added = false;
     }
-
     m_changedNode = NULL;
-    for( eElement* el : m_elementList ) el->attach(); // Connect Elements with internal circuits.
-                                                      // This can create new eNodes
+
     qDebug() <<"  Initializing "<< m_eNodeList.size()<< "\teNodes";
     for( int i=0; i<m_eNodeList.size(); i++ )         // Initialize eNodes
     {

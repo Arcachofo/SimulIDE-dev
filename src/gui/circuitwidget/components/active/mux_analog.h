@@ -36,7 +36,6 @@ class MAINMODULE_EXPORT MuxAnalog : public Component, public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual void attach() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;

@@ -50,7 +50,7 @@ void eCapacitor::runEvent()
 {
     double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
     
-    if( m_volt != volt )
+    if( fabs(volt) > 1e-12 )
     {
         m_volt = volt;
         m_curSource = volt*m_admit;

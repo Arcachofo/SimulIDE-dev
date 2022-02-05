@@ -57,7 +57,7 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         double res() { return m_resist; }
         void  setRes( double resist );
 
-        virtual void attach() override;
+        virtual void stamp() override;
         virtual void remove() override;
 
         virtual void setHidden( bool hid , bool hidLabel=false );

@@ -90,6 +90,22 @@ new DoubProp<LedRgb>( "Resistance_B", tr("Resistance")     ,"Ω", this, &LedRgb:
 }
 LedRgb::~LedRgb(){}
 
+void LedRgb::stamp()
+{
+    eNode* comEnode = m_pin[3]->getEnode();
+    for( int i=0; i<3; ++i )
+    {
+        eNode* node = m_pin[i]->getEnode();
+        eLed* led   = m_led[i];
+
+        if( m_commonCathode ){
+            led->getEpin(0)->setEnode( node );
+            led->getEpin(1)->setEnode( comEnode );
+        }else{
+            led->getEpin(1)->setEnode( node );
+            led->getEpin(0)->setEnode( comEnode );
+}   }   }
+
 void LedRgb::updateStep()
 {
     m_warning = false;
@@ -108,22 +124,6 @@ void LedRgb::updateStep()
     }
     if( updt ) update();
 }
-
-void LedRgb::attach()
-{
-    eNode* comEnode = m_pin[3]->getEnode();
-    for( int i=0; i<3; ++i )
-    {
-        eNode* node = m_pin[i]->getEnode();
-        eLed* led   = m_led[i];
-
-        if( m_commonCathode ){
-            led->getEpin(0)->setEnode( node );
-            led->getEpin(1)->setEnode( comEnode );
-        }else{
-            led->getEpin(1)->setEnode( node );
-            led->getEpin(0)->setEnode( comEnode );
-}   }   }
 
 void LedRgb::setComCathode( bool cat )
 {

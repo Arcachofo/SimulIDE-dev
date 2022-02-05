@@ -63,7 +63,6 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         void enableWdt( bool en );
 
         virtual void initialize() override;
-        virtual void attach() override;
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;

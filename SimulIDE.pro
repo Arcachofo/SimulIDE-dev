@@ -1,6 +1,6 @@
 
 VERSION = "1.0.0"
-RELEASE = "-R926"
+RELEASE = "-R927"
 
 TEMPLATE = app
 TARGET = simulide
@@ -120,11 +120,11 @@ macx {
     QMAKE_LFLAGS   -= -stdlib=libc++
     DESTDIR = $$TARGET_PREFIX 
     mkpath( $$TARGET_PREFIX/simulide.app )
-    mkpath( $$TARGET_PREFIX/simulide.app/Contents/data )
-    mkpath( $$TARGET_PREFIX/simulide.app/Contents/examples )
+    #mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/data )
+    #mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/examples )
     copy2dest.commands = \
-        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/simulide.app/Contents/data; \
-        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/simulide.app/Contents/examples;
+        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/simulide.app/Contents/MacOs/data; \
+        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/simulide.app/Contents/MacOs/examples;
 }
 
 runLrelease.commands = lrelease ../resources/translations/*.ts;

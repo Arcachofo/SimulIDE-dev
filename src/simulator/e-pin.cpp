@@ -26,12 +26,12 @@ ePin::ePin( QString id, int index )
     m_id    = id;
     m_index = index;
     m_enode    = NULL;
-    m_enodeCon = NULL;
+    m_enodeComp = NULL;
     m_inverted = false;
 }
 ePin::~ePin()
 {
-    if( m_enode ) m_enode->remEpin( this );
+    //if( m_enode ) m_enode->remEpin( this );
 }
 
 void ePin::reset() { setEnode( NULL ); }
@@ -48,7 +48,7 @@ void ePin::setEnode( eNode* enode )
 
 void ePin::setEnodeComp( eNode* enode )
 {
-    m_enodeCon = enode;
+    m_enodeComp = enode;
     int enodeConNum = 0;
     if( enode ) enodeConNum = enode->getNodeNumber();
     if( m_enode ) m_enode->addConnection( this, enodeConNum );
@@ -69,14 +69,14 @@ void ePin::stampCurrent( double data )
 void ePin::stampAdmitance( double data )
 {
     if( !m_enode ) return;
-    if( !m_enodeCon ) data = 1e-12;
+    /// if( !m_enodeComp ) data = 1e-12;
     m_enode->stampAdmitance( this, data );
 }
 
 double ePin::getVolt()
 {
     if( m_enode )    return m_enode->getVolt();
-    if( m_enodeCon ) return m_enodeCon->getVolt();
+    if( m_enodeComp ) return m_enodeComp->getVolt();
     return 0;
 }
 

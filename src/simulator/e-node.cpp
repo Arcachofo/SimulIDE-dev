@@ -35,11 +35,6 @@ eNode::eNode( QString id )
 }
 eNode::~eNode(){}
 
-void eNode::addConnection( ePin* epin, int enodeComp ) // Add node at other side of pin
-{
-    m_nodeList[epin] = enodeComp;
-}
-
 void eNode::initialize()
 {
     m_switched     = false;
@@ -122,7 +117,7 @@ void eNode::stampMatrix()
 
 void eNode::stampAdmit()
 {
-    int nonCero = 0;
+    //int nonCero = 0;
     QHashIterator<int, double> ai(m_admit); // iterate admitance hash: eNode-Admit
     while( ai.hasNext() )
     {
@@ -133,7 +128,7 @@ void eNode::stampAdmit()
 
         if( m_switched )                       // Find Open/Close events
         {
-            if( admit > 0 ) nonCero++;
+            //if( admit > 0 ) nonCero++;
             double admitP = m_admitPrev[enode];
 
             if(( admit != admitP )             // Open/Close event found
@@ -142,7 +137,7 @@ void eNode::stampAdmit()
     if( m_switched )
     {
         m_admitPrev = m_admit;
-        if( nonCero < 2 ) m_totalAdmit += 1e-12; //pnpBias example error
+        //if( nonCero < 2 ) m_totalAdmit += 1e-12; //pnpBias example error
     }
     CircMatrix::self()->stampMatrix( m_nodeNum, m_nodeNum, m_totalAdmit );
 }
@@ -158,6 +153,11 @@ void eNode::solveSingle()
 
     if( m_totalAdmit > 0 ) volt = m_totalCurr/m_totalAdmit;
     setVolt( volt );
+}
+
+void eNode::addConnection( ePin* epin, int enodeComp ) // Add node at other side of pin
+{
+    m_nodeList[epin] = enodeComp;
 }
 
 QList<int> eNode::getConnections()

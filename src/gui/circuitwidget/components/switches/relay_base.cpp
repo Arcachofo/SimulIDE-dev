@@ -90,20 +90,23 @@ RelayBase::RelayBase( QObject* parent, QString type, QString id )
 }
 RelayBase::~RelayBase(){}
 
-void RelayBase::attach()
+void RelayBase::initialize()
 {
-    m_internalEnode = new eNode( m_id+"-internaleNode" );
-    m_ePin[1]->setEnode( m_internalEnode );
-    m_ePin[2]->setEnode( m_internalEnode );
+    m_relayOn = false;
+
+    if( Simulator::self()->isRunning() )
+        m_internalEnode = new eNode( m_id+"-internaleNode" );
 }
 
 void RelayBase::stamp()
 {
+    m_ePin[1]->setEnode( m_internalEnode );
+    m_ePin[2]->setEnode( m_internalEnode );
+
     MechContact::stamp();
-    m_relayOn = false;
+
     m_ePin[0]->changeCallBack( this );
     m_ePin[1]->changeCallBack( this );
-
 }
 
 void RelayBase::voltChanged()
@@ -121,8 +124,6 @@ void RelayBase::voltChanged()
 
 void RelayBase::remove()
 {
-    Simulator::self()->remFromEnodeList( m_internalEnode, true );
-
     delete m_resistor;
     delete m_inductor;
 

@@ -126,19 +126,19 @@ void Function::voltChanged()
         if( i >= m_outPin.size() ) break;
         QString text = m_funcList.at(i).toLower();
 
-        if( text.startsWith( "vo" ) )
+        if( text.startsWith( "vo" ) || text.startsWith( "{" ))
         {
             float out = m_engine.evaluate( m_program.at(i) ).toNumber();
             m_outPin[i]->setOutHighV( out );
             m_nextOutVal += 1<<i;
-            Simulator::self()->addEvent( m_propDelay, this );
-        }
-        else {
+        }else {
             bool out = m_engine.evaluate( m_program.at(i) ).toBool();
             m_outPin[i]->setOutHighV( m_ouHighV );
             if( out ) m_nextOutVal += 1<<i;
-            sheduleOutPuts( this );
-}   }   }
+        }
+    }
+    Simulator::self()->addEvent( m_propDelay, this );
+}
 
 void Function::setFunctions( QString f )
 {

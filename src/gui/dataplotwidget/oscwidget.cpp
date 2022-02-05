@@ -133,8 +133,7 @@ void OscWidget::on_timeDivBox_valueChanged( double timeDiv ) // User entered val
     if( m_oscope->autoSC() < 4 ) return;
 
     QString unit = timeDivBox->suffix().remove("s");
-    unitToVal( timeDiv, unit );
-
+    timeDiv /= getMultiplier( unit );
     m_oscope->setTimeDiv( timeDiv );
 }
 
@@ -182,7 +181,7 @@ void OscWidget::on_timePosBox_valueChanged( double timePos )
     if( ch < 4 && m_oscope->autoSC() == ch ) return;
 
     QString unit = timePosBox->suffix().remove("s");
-    unitToVal( timePos, unit );
+    timePos /= getMultiplier( unit );
 
     if( ch == 4 ){
         ch = 0;
@@ -236,7 +235,7 @@ void OscWidget::on_voltDivBox_valueChanged( double voltDiv )
     if( aut < 4 && aut == ch ) return;
 
     QString unit = voltDivBox->suffix().remove("V");
-    unitToVal( voltDiv, unit );
+    voltDiv /= getMultiplier( unit );
 
     if( ch == 4 ){
         ch = 0;
@@ -289,7 +288,7 @@ void OscWidget::on_voltPosBox_valueChanged( double voltPos )
     int ch = m_channel;
 
     QString unit = voltPosBox->suffix().remove("V");
-    unitToVal( voltPos, unit );
+    voltPos /= getMultiplier( unit );
 
     if( ch == 4 ){
         ch = 0;

@@ -56,7 +56,7 @@ void MechContact::stamp()
         eNode* enode = m_ePin[i]->getEnode();
         if( enode ) enode->setSwitched( true );
     }
-    setSwitch( m_nClose );
+    //setSwitch( m_nClose );
 }
 
 void MechContact::setSwitch( bool closed )
@@ -101,7 +101,7 @@ void MechContact::SetupSwitches( int poles, int throws )
 {
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    if( m_pin0  == 0 ) m_area = QRectF( -12, 8-16*poles,  24,  16*poles-8 );            // Switches
+    if( m_pin0  == 0 ) m_area = QRectF( -12, 8-16*poles,   24, 16*poles-8 );     // Switches
     else               m_area = QRectF( -12,-8-16*poles-4, 24, 8+16*poles+8+4 ); // Relays
     int start = m_pin0/2;
 
@@ -131,10 +131,9 @@ void MechContact::SetupSwitches( int poles, int throws )
         Pin* pin;
         int pinN = start+cont;
         int ePinN = m_pin0+cont;
-        QString reid = m_id;
 
         QPoint pinpos = QPoint(-16,-4*m_pin0-16*i );
-        pin = new Pin( 180, pinpos, reid+"-pinP"+QString::number(pinN), 0, this);
+        pin = new Pin( 180, pinpos, m_id+"-pinP"+QString::number(pinN), 0, this);
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false ); // draw Pins on top
         m_pin[pinN] = pin;
 
@@ -143,20 +142,18 @@ void MechContact::SetupSwitches( int poles, int throws )
             cont++;
             int tN = i*throws+j;
 
-            reid = m_id;
-            reid.append( QString( "-switch"+QString::number(tN)) );
+            QString reid = m_id+"-switch"+QString::number(tN);
             m_switches[ tN ] = new eResistor( reid );
 
             ePinN = m_pin0+tN*2;
-            QString pinp = reid+"pinP";
-            m_ePin[ ePinN ] = new ePin( pinp, 1 );
+            m_ePin[ ePinN ] = new ePin( reid+"pinP", 1 );
 
             pinpos = QPoint( 16,-4*m_pin0-16*i-8*j);
             pin = new Pin( 0, pinpos, reid+"pinN", 1, this);
             pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false ); // draw Pins on top
 
             m_pin[ start+cont ] = pin;
-            m_ePin[ ePinN+1 ] = pin;
+            m_ePin[ ePinN+1 ]   = pin;
 
             m_switches[ tN ]->setEpin( 0, m_ePin[ePinN] );
             m_switches[ tN ]->setEpin( 1, pin );

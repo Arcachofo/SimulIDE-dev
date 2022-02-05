@@ -103,21 +103,20 @@ new DoubProp<Potentiometer>( "Value_Ohm" , tr("Current Value"),"Ω", this, &Pote
 }
 Potentiometer::~Potentiometer() {}
 
-void Potentiometer::attach()
+void Potentiometer::initialize()
 {
-    m_midEnode = m_pinM.getEnode();  // Get eNode from middle Pin
+    if( !Simulator::self()->isRunning() ) return;
 
-    if( !m_midEnode )                       // Not connected: Create mid eNode
-    {
-        m_midEnode = new eNode( m_id+"-mideNode" );
-    }
-    m_pinM.setEnode( m_midEnode );
-    m_ePinA.setEnode( m_midEnode );  // Set eNode to internal eResistors ePins
-    m_ePinB.setEnode( m_midEnode );
+    m_midEnode = m_pinM.getEnode();  // Get eNode from middle Pin
+    if( !m_midEnode ) m_midEnode = new eNode( m_id+"-mideNode" ); // Not connected: Create mid eNode
 }
 
 void Potentiometer::stamp()
 {
+    m_pinM.setEnode( m_midEnode );
+    m_ePinA.setEnode( m_midEnode );  // Set eNode to internal eResistors ePins
+    m_ePinB.setEnode( m_midEnode );
+
     m_changed = true;
     updateStep();
 }

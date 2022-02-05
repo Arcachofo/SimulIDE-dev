@@ -94,7 +94,7 @@ new DoubProp<SevenSegment>( "Resistance", tr("Resistance")       ,"Ω", this, &S
 }
 SevenSegment::~SevenSegment() { }
 
-void SevenSegment::attach()
+void SevenSegment::stamp()
 {
     for( int i=0; i<8; ++i ) m_enode[i] = m_ePin[i]->getEnode(); // Get eNode of pin i
     for( int i=0; i<m_numDisplays; ++i )

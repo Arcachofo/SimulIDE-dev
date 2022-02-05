@@ -44,7 +44,6 @@ class MAINMODULE_EXPORT Lm555 : public Component, public eElement
         static LibraryItem *libraryItem();
 
         virtual void initialize() override;
-        virtual void attach() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;

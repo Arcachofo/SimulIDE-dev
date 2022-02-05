@@ -70,11 +70,10 @@ void SwitchBase::setHidden( bool hide, bool hidLabel )
 
 void SwitchBase::onbuttonclicked()
 {
-    m_closed = false;
-    if( m_button->isChecked() ) m_closed = true;
-    if( m_nClose )              m_closed = !m_closed;
+    m_closed = m_button->isChecked();
+
+    if( m_nClose ) m_closed = !m_closed;
     m_changed = true;
-    
     update();
 }
 

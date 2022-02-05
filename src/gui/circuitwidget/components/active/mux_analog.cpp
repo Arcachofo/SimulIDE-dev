@@ -72,16 +72,13 @@ new DoubProp<MuxAnalog>( "Impedance"  , tr("Impedance")   ,"Ω"    , this, &MuxA
 }
 MuxAnalog::~MuxAnalog(){}
 
-void MuxAnalog::attach()
+void MuxAnalog::stamp()
 {
     eNode* enode = m_zPin->getEnode();
     for( int i=0; i<m_channels; ++i ) m_ePin[i]->setEnode( enode );
-}
 
-void MuxAnalog::stamp()
-{
-    m_enPin->changeCallBack( this );
     for( int i=0; i<m_channels; ++i ) m_resistor[i]->setAdmit( cero_doub );
+
     for( Pin* pin : m_addrPin ) pin->changeCallBack( this );
     m_enPin->changeCallBack( this );
 

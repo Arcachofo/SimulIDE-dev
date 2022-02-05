@@ -180,6 +180,24 @@ void Mcu::initialize()
     m_crashed = false;
 }
 
+void Mcu::stamp()
+{
+    if( m_resetPin )
+    {
+        m_resetPin->changeCallBack( this );
+
+        if(m_resetPin == m_mcuRstPin)
+        {
+            m_mcuRstPin->controlPin( true, true );
+            m_mcuRstPin->setPinMode( input );
+        }
+    }
+    if( m_autoLoad )
+    {
+        if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );
+    }
+}
+
 void Mcu::updateStep()
 {
     if( m_crashed )
@@ -191,23 +209,6 @@ void Mcu::updateStep()
      && m_mcuMonitor->isVisible() ) m_mcuMonitor->updateStep();
 
     if( Circuit::self()->animate( ) ) for( Pin* pin : m_pinList ) pin->updateStep();
-}
-
-void Mcu::attach()
-{
-    if( m_resetPin && (m_resetPin == m_mcuRstPin) )
-    {
-        m_mcuRstPin->controlPin( true, true );
-        m_mcuRstPin->setPinMode( input );
-    }
-    if( m_autoLoad )
-    {
-        if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );
-}   }
-
-void Mcu::stamp()
-{
-    if( m_resetPin ) m_resetPin->changeCallBack( this );
 }
 
 void Mcu::voltChanged() // Reset Pin callBack

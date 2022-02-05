@@ -120,29 +120,23 @@ void Lm555::initialize()
     m_outState = false;
     m_voltNeg = 0;
     m_voltPos = 0;
-}
 
-void Lm555::attach()
-{
+    if( !Simulator::self()->isRunning() ) return;
     eNode* enod = m_cv->getEnode();   // Control Voltage Pin
     if( !enod )                       // Not connected: Create threshold eNode
-    {
         m_thrEnode = new eNode( m_id+"-threNode" );
-        enod = m_thrEnode;
-        m_cv->setEnode( enod );
-    }
-    else if( enod != m_thrEnode ) m_thrEnode = enod;// Connected to external eNode
-
-    m_ePinA.setEnode( m_thrEnode );  // Set eNode to internal eResistors ePins
-    m_ePinB.setEnode( m_thrEnode );
-
-    enod = m_Gnd->getEnode();       // Gnd Pin
-    m_ePinC.setEnode( enod );  // Set eNode to internal eResistors ePins
-    m_ePinD.setEnode( enod );
 }
 
 void Lm555::stamp()
 {
+    m_cv->setEnode( m_thrEnode );
+    m_ePinA.setEnode( m_thrEnode );  // Set eNode to internal eResistors ePins
+    m_ePinB.setEnode( m_thrEnode );
+
+    eNode* enod = m_Gnd->getEnode();       // Gnd Pin
+    m_ePinC.setEnode( enod );  // Set eNode to internal eResistors ePins
+    m_ePinD.setEnode( enod );
+
     m_resA.setRes( 5000 );
     m_resB.setRes( 10000 );
     m_resD.setRes( 1 );

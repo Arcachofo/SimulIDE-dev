@@ -67,8 +67,7 @@ void LaWidget::on_timeDivBox_valueChanged( double timeDiv ) // User entered valu
     if( m_blocked ) return;
 
     QString unit = timeDivBox->suffix().remove("s");
-    unitToVal( timeDiv, unit );
-
+    timeDiv /= getMultiplier( unit );
     m_analizer->setTimeDiv( timeDiv );
 }
 
@@ -104,8 +103,7 @@ void LaWidget::on_timePosBox_valueChanged( double timePos )
     if( m_blocked ) return;
 
     QString unit = timePosBox->suffix().remove("s");
-    unitToVal( timePos, unit );
-
+    timePos /= getMultiplier( unit );
     m_analizer->setTimePos( timePos );
 }
 
@@ -140,8 +138,7 @@ void LaWidget::on_voltDivBox_valueChanged( double voltDiv )
     if( m_blocked ) return;
 
     QString unit = voltDivBox->suffix().remove("V");
-    unitToVal( voltDiv, unit );
-
+    voltDiv /= getMultiplier( unit );
     m_analizer->setVoltDiv( voltDiv/1e12 );
 }
 

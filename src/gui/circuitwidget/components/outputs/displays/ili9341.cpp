@@ -43,7 +43,7 @@ Ili9341::Ili9341( QObject* parent, QString type, QString id )
        , m_pinCS (  270, QPoint(-56, 184), id+"-PinCS"  , 0, this, input )
        , m_pinRst(  270, QPoint(-48, 184), id+"-PinRst" , 0, this, input )
        , m_pinDC (  270, QPoint(-40, 184), id+"-PinDC"  , 0, this, input )
-       , m_pinMosi( 270, QPoint(-32, 184), id+"-PinMosi" , 0, this, input )
+       , m_pinMosi( 270, QPoint(-32, 184), id+"-PinMosi", 0, this, input )
        , m_pinSck(  270, QPoint(-24, 184), id+"-PinSck" , 0, this, input )
        //, m_pinMiso( 270, QPoint(-16, 184), id+"-PinMiso" , 0, this )
 {
@@ -51,19 +51,19 @@ Ili9341::Ili9341( QObject* parent, QString type, QString id )
     
     m_area = QRectF( -126, -168, 252, 344 );
 
-    m_pinCS.setLabelText(   " CS" );
+    m_pinCS.setLabelText( " CS" );
     m_pinCS.setInputHighV( 2.31 );
     m_pinCS.setInputLowV( 0.99 );
-    m_pinRst.setLabelText(  " Rst" );
+    m_pinRst.setLabelText( " Rst" );
     m_pinRst.setInputHighV( 2.31 );
     m_pinRst.setInputLowV( 0.99 );
-    m_pinDC.setLabelText(   " D/C" );
+    m_pinDC.setLabelText( " D/C" );
     m_pinDC.setInputHighV( 2.31 );
     m_pinDC.setInputLowV( 0.99 );
     m_pinMosi.setLabelText( " Mosi" );
     m_pinMosi.setInputHighV( 2.31 );
     m_pinMosi.setInputLowV( 0.99 );
-    m_pinSck.setLabelText(  " SCK" );
+    m_pinSck.setLabelText( " SCK" );
     m_pinSck.setInputHighV( 2.31 );
     m_pinSck.setInputLowV( 0.99 );
     //m_pinMiso.setLabelText( " Miso" );
@@ -106,6 +106,10 @@ void Ili9341::initialize()
 
 void Ili9341::voltChanged()
 {
+    if( (m_data0 > 0)  )
+    {
+        qDebug() << "................Ili9341::setVChanged";
+    }
     bool ret = false;
     if( !m_pinRst.getInpState() )            // Reset Pin is Low
     {
@@ -118,7 +122,13 @@ void Ili9341::voltChanged()
         m_inBit  = 0;
         ret = true;
     }
+    clkState_t clkState = m_clkState;
     updateClock();
+
+    if( (m_data0 > 0) && ( m_clkState  != Clock_Falling) && ( m_clkState  != Clock_Rising) )
+    {
+        qDebug() << "................Ili9341::setVChanged"<<clkState<< m_clkState<<m_clkPin->getInpState()<<m_clkPin->getVolt();
+    }else qDebug() << "................Ili9341::setVChanged"<<clkState<< m_clkState;
     if( m_clkState != Clock_Rising ) ret = true;
     if( ret ) return;
 
@@ -128,7 +138,7 @@ void Ili9341::voltChanged()
     if( m_inBit >= 7 )
     {
         if( m_pinDC.getInpState() )       // Write Data
-        {
+        {qDebug() << "Ili9341::setVChanged"<< m_data;
             if( m_readBytes == 0 )        // Write DDRAM
             {
                 m_data = (m_data<<8)+m_rxReg;
@@ -136,7 +146,13 @@ void Ili9341::voltChanged()
                 if( m_inByte >= m_dataBytes )       // 16/18 bits ready
                 {
                     m_inByte = 0;
-                    //qDebug() << "Ili9341::setVChanged"<< m_addrX<<m_addrY<< m_rxReg;
+                    m_da++;
+                    if( m_data != m_data0 )
+                    {
+                        qDebug() << "Ili9341::setVChanged"<< m_data<<m_da;
+                        m_da = 0;
+                    }
+                    m_data0 = m_data;
 
                     uint blue,green,red,B1,B2,B3;
                     if( m_dataBytes == 2 ) // 16 bits format: RRRRRGGGGGGBBBBB
@@ -144,17 +160,16 @@ void Ili9341::voltChanged()
                         B1 = (m_data & 0b1111100000000000)<<8;
                         B2 = (m_data & 0b0000011111100000)<<5;
                         B3 = (m_data & 0b0000000000011111)<<3;
-                        if( m_RGB ) { red  = B1; green = B2; blue = B3; }
-                        else        { blue = B3; green = B2; red  = B1; }
                     }
                     else // 18 bits format: RRRRRR00GGGGGG00BBBBBB00
                     {
                         B1 = (m_data & 0b111111000000000000000000);
                         B2 = (m_data & 0b000000001111110000000000);
                         B3 = (m_data & 0b000000000000000011111100);
-                        if( m_RGB ) { red  = B1; green = B2; blue = B3; }
-                        else        { blue = B3; green = B2; red  = B1; }
                     }
+                    //if( m_RGB ) { red  = B1; green = B2; blue = B3; }
+                    //else        { blue = B1; green = B2; red  = B3; }
+                    red  = B1; green = B2; blue = B3;
                     m_aDispRam[m_addrX][m_addrY] = red+green+blue;
                     incrementPointer();
                     m_data = 0;
@@ -219,15 +234,15 @@ void Ili9341::getParameter()
                 m_dataBytes = mode ? 2 : 3;
             }break;
             case 0x36:   // Memory Access Control
-            {
-                m_dirY = (m_rxReg & (1<<7)) ? -1 : 1;
-                m_dirX = (m_rxReg & (1<<6)) ? -1 : 1;
+            {                                    /// TODO: this doesn't work this way
+                //m_dirY = (m_rxReg & (1<<7)) ? -1 : 1;
+                //m_dirX = (m_rxReg & (1<<6)) ? -1 : 1;
 
                 //uint8_t MV = m_rxReg & (1<<5);
                 //m_maxX = MV ? 319 : 239;
                 //m_maxY = MV ? 239 : 319;
 
-                m_RGB = (m_rxReg & (1<<3)) ? false :true;
+                //m_RGB = (m_rxReg & (1<<3)) ? false :true;
             }break;
         }
         m_readBytes--;
@@ -374,7 +389,7 @@ void Ili9341::incrementY()
 }   }
 
 void Ili9341::reset() 
-{
+{m_data0=m_da=0;
     m_dirX = 1;
     m_addrX  = 0;
     m_startX = 0;

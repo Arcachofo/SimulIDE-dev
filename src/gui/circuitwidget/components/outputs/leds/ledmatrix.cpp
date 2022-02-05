@@ -74,7 +74,7 @@ new DoubProp<LedMatrix>( "Resistance", tr("Resistance")     ,"Ω", this, &LedMat
 }
 LedMatrix::~LedMatrix(){}
 
-void LedMatrix::attach()
+void LedMatrix::stamp()
 {
     for( int row=0; row<m_rows; ++row )
     {

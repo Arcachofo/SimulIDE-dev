@@ -46,8 +46,6 @@ class MAINMODULE_EXPORT eNode
         void stampCurrent( ePin* epin, double data );
         void stampAdmitance( ePin* epin, double data );
 
-        void addConnection( ePin* epin, int enodeNum );
-
         int  getNodeNumber() { return m_nodeNum; }
         void setNodeNumber( int n ) { m_nodeNum = n; }
 
@@ -70,6 +68,8 @@ class MAINMODULE_EXPORT eNode
         bool isSwitched() { return m_switched; }
 
         QList<ePin*> getEpins() { return m_ePinList; }
+
+        void addConnection( ePin* epin, int enodeNum );
         QList<int> getConnections();
 
         eNode* nextCH;

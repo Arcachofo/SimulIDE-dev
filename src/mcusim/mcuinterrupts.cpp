@@ -86,10 +86,10 @@ void Interrupt::raise( uint8_t v )
     m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
 
     if( m_enabled )
-    {
         m_interrupts->addToPending( this ); // Add to pending interrupts
-        if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
-}   }
+
+    if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
+}
 
 void Interrupt::execute()
 {

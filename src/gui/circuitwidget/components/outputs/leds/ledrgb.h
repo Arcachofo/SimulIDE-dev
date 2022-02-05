@@ -60,7 +60,7 @@ class MAINMODULE_EXPORT LedRgb : public Component, public eElement
         bool isComCathode() { return m_commonCathode; }
         void setComCathode( bool ct );
 
-        virtual void attach();
+        virtual void stamp();
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

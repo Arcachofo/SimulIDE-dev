@@ -76,11 +76,6 @@ void OscopeChannel::updateValues()
     if( val >= 1 ) {valToUnit( val, unit, decs );}
     QString f = " "+QString::number( val, 'f', decs )+unit+"Hz";
 
-    /*unit = " ";
-    val = m_ampli*1e12;
-    if( val >= 1 ) {valToUnit( val, unit, decs );}
-    QString a = " "+QString::number( val,'f', decs )+unit+"V";*/
-
     m_oscope->dataW()->setData( m_channel, f );
 }
 
