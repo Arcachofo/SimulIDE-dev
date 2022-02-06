@@ -30,6 +30,12 @@ class QPointF;
 class QPoint;
 class Pin;
 
+#define unitToVal( val, mult ) \
+    if     ( mult == " n" ) val *= 1e3; \
+    else if( mult == " u")  val *= 1e6; \
+    else if( mult == " m" ) val *= 1e9; \
+    else if( mult == " ")   val *= 1e12;
+
 #define valToUnit( val, mult, decimals ) \
     mult = " p";\
     if( fabs( val ) > 999 ) { \

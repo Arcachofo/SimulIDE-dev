@@ -1,0 +1,107 @@
+<circuit type="simulide_1.0" stepSize="50000000" stepsPS="20000" NLsteps="100000" animate="0" >
+
+<item itemtype="Resistor" CircId="Resistor-6" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="132,-124" rotation="90" hflip="1" vflip="1" label="Resistor-17" idLabPos="-14,-25" labelrot="-90" valLabPos="-12,-19" valLabRot="0" Resistance="1 kΩ" />
+
+<item itemtype="Resistor" CircId="Resistor-7" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="68,-124" rotation="90" hflip="1" vflip="1" label="Resistor-16" idLabPos="-15,-25" labelrot="-90" valLabPos="-13,-20" valLabRot="0" Resistance="1 kΩ" />
+
+<item itemtype="Capacitor" CircId="Capacitor-9" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="164,-156" rotation="0" hflip="1" vflip="1" label="Capacitor-14" idLabPos="-13,-26" labelrot="0" valLabPos="-13,-20" valLabRot="0" Capacitance="1 µF" />
+
+<item itemtype="Capacitor" CircId="Capacitor-10" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="100,-156" rotation="0" hflip="1" vflip="1" label="Capacitor-13" idLabPos="-16,-28" labelrot="0" valLabPos="-14,-23" valLabRot="0" Capacitance="1 µF" />
+
+<item itemtype="Capacitor" CircId="Capacitor-11" mainComp="false" ShowProp="Capacitance" Show_id="false" Show_Val="true" Pos="36,-156" rotation="0" hflip="1" vflip="1" label="Capacitor-12" idLabPos="-12,7" labelrot="0" valLabPos="-13,9" valLabRot="0" Capacitance="1 µF" />
+
+<item itemtype="Potentiometer" CircId="Potentiometer-12" mainComp="false" ShowProp="Resistance" Show_id="true" Show_Val="true" Pos="68,-284" rotation="0" hflip="1" vflip="1" label="Sine Wave" idLabPos="-26,-44" labelrot="0" valLabPos="-24,-9" valLabRot="90" Resistance="100 kΩ" Value_Ohm="68200 Ω" />
+
+<item itemtype="Resistor" CircId="Resistor-13" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="36,-196" rotation="0" hflip="1" vflip="1" label="Resistor-10" idLabPos="0,-24" labelrot="0" valLabPos="-11,7" valLabRot="0" Resistance="1 kΩ" />
+
+<item itemtype="opAmp" CircId="OpAmp-14" mainComp="false" Show_id="false" Show_Val="false" Pos="132,-204" rotation="0" hflip="1" vflip="1" label="OpAmp-9" idLabPos="0,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Gain="1000" Out_Imped="1e-14 Ω" Volt_Pos="5 V" Volt_Neg="0 V" Power_Pins="false" Switch_Pins="false" />
+
+<item itemtype="Subcircuit" CircId="Uno-15" mainComp="false" Show_id="true" Show_Val="false" Pos="-316,-252" rotation="0" hflip="1" vflip="1" label="Arduino Uno" idLabPos="49,-18" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="15_mega328-109" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="15_mega328-109" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="oscope8544.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="true" Wdt_enabled="false" />
+</item>
+
+<item itemtype="Pcd8544" CircId="Pcd8544-16" mainComp="false" Show_id="true" Show_Val="false" Pos="-404,-268" rotation="0" hflip="1" vflip="1" label="Pcd8544-7" idLabPos="-25,-71" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Potentiometer" CircId="Potentiometer-18" mainComp="false" ShowProp="Resistance" Show_id="true" Show_Val="true" Pos="-84,-244" rotation="0" hflip="1" vflip="1" label="Sample Rate" idLabPos="-31,-43" labelrot="0" valLabPos="37,-12" valLabRot="90" Resistance="10 kΩ" Value_Ohm="2970 Ω" />
+
+<item itemtype="Rail" CircId="Rail.-19" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-12,-260" rotation="90" hflip="1" vflip="1" label="Rail.-4" idLabPos="-64,-24" labelrot="0" valLabPos="-27,6" valLabRot="-90" Voltage="2.5 V" />
+
+<item itemtype="Oscope" CircId="Oscope-21" mainComp="false" Show_id="false" Show_Val="false" Pos="-96,-400" rotation="0" hflip="1" vflip="1" label="Oscope-2" idLabPos="-80,-80" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="3110600000" TimPos="0,0,0,0," VolDiv="0.288785,1,1,1," Tunnels=",,,," Trigger="0" Filter="0.3 V" Trigger="0" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="-3.55608,0,0,0," />
+
+<item itemtype="Node" CircId="Node-2" mainComp="false" Pos="68,-196" />
+
+<item itemtype="Node" CircId="Node-3" mainComp="false" Pos="68,-92" />
+
+<item itemtype="Node" CircId="Node-4" mainComp="false" Pos="132,-156" />
+
+<item itemtype="Node" CircId="Node-5" mainComp="false" Pos="68,-156" />
+
+<item itemtype="Node" CircId="Node-8" mainComp="false" Pos="188,-204" />
+
+<item itemtype="Node" CircId="Node-20" mainComp="false" Pos="-12,-212" />
+
+<item itemtype="Node" CircId="Node-192" mainComp="false" Pos="-132,-196" />
+
+<item itemtype="Node" CircId="Node-195" mainComp="false" Pos="188,-156" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="OpAmp-14-output" endpinid="Node-8-0" pointList="156,-204,188,-204" />
+
+<item itemtype="Connector" uid="Connector-24" startpinid="Resistor-13-rPin" endpinid="Node-2-0" pointList="52,-196,68,-196" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="Capacitor-11-rPin" endpinid="Node-5-0" pointList="52,-156,68,-156" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Capacitor-10-rPin" endpinid="Node-4-0" pointList="116,-156,132,-156" />
+
+<item itemtype="Connector" uid="Connector-31" startpinid="Node-8-2" endpinid="Potentiometer-12-PinB" pointList="188,-204,188,-284,84,-284" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Resistor-7-lPin" endpinid="Node-5-1" pointList="68,-140,68,-156" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="Node-5-2" endpinid="Capacitor-10-lPin" pointList="68,-156,84,-156" />
+
+<item itemtype="Connector" uid="Connector-34" startpinid="Resistor-6-lPin" endpinid="Node-4-1" pointList="132,-140,132,-156" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-4-2" endpinid="Capacitor-9-lPin" pointList="132,-156,148,-156" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="Resistor-7-rPin" endpinid="Node-3-1" pointList="68,-108,68,-92" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-3-2" endpinid="Resistor-6-rPin" pointList="68,-92,132,-92,132,-108" />
+
+<item itemtype="Connector" uid="Connector-39" startpinid="Node-2-2" endpinid="OpAmp-14-inputInv" pointList="68,-196,108,-196" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="Node-2-1" endpinid="Potentiometer-12-PinM" pointList="68,-196,68,-268" />
+
+<item itemtype="Connector" uid="Connector-41" startpinid="Pcd8544-16-PinScl" endpinid="Uno-15-7" pointList="-372,-228,-372,-180,-308,-180" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="Pcd8544-16-PinSi" endpinid="Uno-15-6" pointList="-388,-228,-388,-188,-308,-188" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Pcd8544-16-PinDc" endpinid="Uno-15-5" pointList="-404,-228,-404,-196,-308,-196" />
+
+<item itemtype="Connector" uid="Connector-47" startpinid="Pcd8544-16-PinCs" endpinid="Uno-15-4" pointList="-420,-228,-420,-204,-308,-204" />
+
+<item itemtype="Connector" uid="Connector-49" startpinid="Pcd8544-16-PinRst" endpinid="Uno-15-3" pointList="-436,-228,-436,-212,-308,-212" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Resistor-13-lPin" endpinid="Capacitor-11-lPin" pointList="20,-196,4,-196,4,-156,20,-156" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="Potentiometer-18-PinB" endpinid="Uno-15-5V0" pointList="-68,-244,-68,-156,-164,-156" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="Potentiometer-18-PinA" endpinid="Uno-15-GND0" pointList="-100,-244,-100,-172,-164,-172" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Uno-15-A1" endpinid="Potentiometer-18-PinM" pointList="-164,-204,-84,-204,-84,-228" />
+
+<item itemtype="Connector" uid="Connector-61" startpinid="Rail.-19-outnod" endpinid="Node-20-1" pointList="-12,-244,-12,-212" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-20-2" endpinid="OpAmp-14-inputNinv" pointList="-12,-212,108,-212" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="Capacitor-9-rPin" endpinid="Node-195-0" pointList="180,-156,188,-156" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Oscope-21-Pin0" endpinid="Node-192-0" pointList="-184,-448,-232,-448,-232,-288,-132,-288,-132,-196" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="Node-3-0" endpinid="Node-20-0" pointList="68,-92,-12,-92,-12,-212" />
+
+<item itemtype="Connector" uid="Connector-193" startpinid="Node-192-2" endpinid="Uno-15-A0" pointList="-132,-196,-164,-196" />
+
+<item itemtype="Connector" uid="Connector-194" startpinid="Node-192-1" endpinid="Node-195-1" pointList="-132,-196,-132,-76,188,-76,188,-156" />
+
+<item itemtype="Connector" uid="Connector-196" startpinid="Node-195-2" endpinid="Node-8-1" pointList="188,-156,188,-204" />
+
+</circuit>
