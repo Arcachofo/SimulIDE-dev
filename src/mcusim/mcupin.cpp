@@ -68,28 +68,37 @@ void McuPin::stamp()
 void McuPin::voltChanged()
 {
     bool state = m_inpState;
+
     double volt = getVolt();
     if     ( volt > m_inpHighV ) state = true;
     else if( volt < m_inpLowV  ) state = false;
 
-    if( state == m_inpState ) return;
-
-    if( m_extInt && m_extInt->enabled() )
+    if( state != m_inpState )
     {
-        bool raise = false;
-        switch( m_extIntTrigger ) {
-            case pinLow:     raise = !state; break;
-            case pinChange:  raise = (state!= m_inpState); break;
-            case pinFalling: raise = (m_inpState && !state); break;
-            case pinRising:  raise = (state && !m_inpState); break;
+        if( m_extInt && m_extInt->enabled() )
+        {
+            bool raise = false;
+            switch( m_extIntTrigger ) {
+                case pinLow:     raise = !state; break;
+                case pinChange:  raise = (state != m_inpState); break;
+                case pinFalling: raise = (m_inpState && !state); break;
+                case pinRising:  raise = (state && !m_inpState); break;
+            }
+            if( raise ) m_extInt->raise();
         }
-        if( raise ) m_extInt->raise();
-    }
-    m_inpState = state;
-    if( Circuit::self()->animate() ) setPinState( m_inpState? input_high:input_low ); // High : Low colors
+        m_inpState = state;
+        if( Circuit::self()->animate() )
+            setPinState( m_inpState? input_high:input_low ); // High : Low colors
 
-    uint8_t val = state ? m_pinMask : 0;
-    m_port->pinChanged( m_pinMask, val );
+        uint8_t val = state ? m_pinMask : 0;
+        m_port->pinChanged( m_pinMask, val );
+    }
+}
+
+bool McuPin::getInpState()
+{
+    voltChanged();
+    return m_inpState;
 }
 
 void McuPin::setPortState( bool state ) // Port Is being witten
@@ -98,8 +107,7 @@ void McuPin::setPortState( bool state ) // Port Is being witten
     if( m_outCtrl ) return; // Port is not controlling Pin State
 
     m_outState = state; /// ??? Should this be controlled by IoPin?
-    if( !m_isOut ) return;
-    IoPin::sheduleState( state, 0 );
+    if( m_isOut ) IoPin::sheduleState( state, 0 );
 }
 
 void McuPin::setOutState( bool state ) // Some periferical is controlling this Pin

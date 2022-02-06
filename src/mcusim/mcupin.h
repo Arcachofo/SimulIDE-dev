@@ -46,6 +46,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
+        virtual bool getInpState() override;
 
         virtual void setOutState( bool state ) override;
         virtual void setPortState( bool state );

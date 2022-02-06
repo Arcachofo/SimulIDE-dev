@@ -108,7 +108,8 @@ void IoPin::sheduleState( bool state, uint64_t time )
     }
     //m_step = 0;
 
-    if( time ) Simulator::self()->addEvent( time, this );
+    if( time )
+        Simulator::self()->addEvent( time, this );
     else runEvent();
 }
 
