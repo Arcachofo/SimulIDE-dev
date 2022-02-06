@@ -48,11 +48,11 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
         double outImp() { return m_outImp; }
         void setOutImp( double imp );
 
-        double voltPos() { return m_voltPos; }
-        void setVoltPos( double v ) { m_voltPos = v; }
+        double voltPos() { return m_voltPosDef; }
+        void setVoltPos( double v ) { m_voltPosDef = v; }
 
-        double voltNeg() { return m_voltNeg; }
-        void setVoltNeg( double v ) { m_voltNeg = v; }
+        double voltNeg() { return m_voltNegDef; }
+        void setVoltNeg( double v ) { m_voltNegDef = v; }
 
         bool powerPins() {return m_powerPins; }
         void setPowerPins( bool set );
