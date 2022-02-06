@@ -63,9 +63,7 @@ void SpiModule::runEvent()
     {
         m_clkPin->toggleOutState();
         m_toggleSck = false;
-
         m_clkState = m_clkPin->getOutState() ? Clock_Rising : Clock_Falling;
-
         step();
     }
 }

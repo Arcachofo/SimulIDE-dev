@@ -106,10 +106,6 @@ void Ili9341::initialize()
 
 void Ili9341::voltChanged()
 {
-    if( (m_data0 > 0)  )
-    {
-        qDebug() << "................Ili9341::setVChanged";
-    }
     bool ret = false;
     if( !m_pinRst.getInpState() )            // Reset Pin is Low
     {
@@ -122,13 +118,8 @@ void Ili9341::voltChanged()
         m_inBit  = 0;
         ret = true;
     }
-    clkState_t clkState = m_clkState;
     updateClock();
 
-    if( (m_data0 > 0) && ( m_clkState  != Clock_Falling) && ( m_clkState  != Clock_Rising) )
-    {
-        qDebug() << "................Ili9341::setVChanged"<<clkState<< m_clkState<<m_clkPin->getInpState()<<m_clkPin->getVolt();
-    }else qDebug() << "................Ili9341::setVChanged"<<clkState<< m_clkState;
     if( m_clkState != Clock_Rising ) ret = true;
     if( ret ) return;
 
@@ -138,7 +129,7 @@ void Ili9341::voltChanged()
     if( m_inBit >= 7 )
     {
         if( m_pinDC.getInpState() )       // Write Data
-        {qDebug() << "Ili9341::setVChanged"<< m_data;
+        {
             if( m_readBytes == 0 )        // Write DDRAM
             {
                 m_data = (m_data<<8)+m_rxReg;
@@ -146,13 +137,6 @@ void Ili9341::voltChanged()
                 if( m_inByte >= m_dataBytes )       // 16/18 bits ready
                 {
                     m_inByte = 0;
-                    m_da++;
-                    if( m_data != m_data0 )
-                    {
-                        qDebug() << "Ili9341::setVChanged"<< m_data<<m_da;
-                        m_da = 0;
-                    }
-                    m_data0 = m_data;
 
                     uint blue,green,red,B1,B2,B3;
                     if( m_dataBytes == 2 ) // 16 bits format: RRRRRGGGGGGBBBBB
@@ -389,7 +373,7 @@ void Ili9341::incrementY()
 }   }
 
 void Ili9341::reset() 
-{m_data0=m_da=0;
+{
     m_dirX = 1;
     m_addrX  = 0;
     m_startX = 0;

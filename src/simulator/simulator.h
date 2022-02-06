@@ -115,8 +115,9 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void runCircuit();
         void solveMatrix();
         void solveCircuit();
-        void clearEventList();
-        //inline void freeEvent( eElement* event );
+
+        inline void clearEventList();
+
         inline void stopTimer();
         inline void initTimer();
 

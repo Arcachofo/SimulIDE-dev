@@ -176,9 +176,10 @@ void Simulator::solveCircuit()
 {
     while( m_changedNode || m_nonLin )
     {
-        solveMatrix();
-        if( m_state < SIM_RUNNING ) return;
-
+        if( m_changedNode ){
+            solveMatrix();
+            if( m_error ) return;
+        }
         m_converged = m_nonLin==NULL;
         while( !m_converged )                  // Non Linear Components
         {
@@ -190,7 +191,6 @@ void Simulator::solveCircuit()
             }
             if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )  // Max iterations reached
             { m_warning = 1; m_converged = true; break; }
-            if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
 
             if( m_changedNode ) solveMatrix();
             if( m_state < SIM_RUNNING ) break;    // Loop broken without converging

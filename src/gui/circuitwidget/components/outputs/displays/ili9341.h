@@ -60,8 +60,6 @@ class MAINMODULE_EXPORT Ili9341 : public Component, public eClockedDevice
         int m_inBit;        //How many bits have we read since last byte
         int m_inByte;
         uint m_data;
-        uint m_data0;
-        uint m_da;
         int m_dataBytes;
 
         int m_addrX;              // X RAM address
