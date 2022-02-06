@@ -124,15 +124,14 @@ void OpAmp::voltChanged() // Called when any pin node change volt
     }
     double vd = m_inputP->getVolt()-m_inputN->getVolt();
 
-    if( (m_step==0) && fabs(m_lastIn-vd) < m_accuracy )
-    { m_step = 0; return; }         // Converged
-
     double out = vd * m_gain;
     if     ( out > m_voltPos ) out = m_voltPos;
     else if( out < m_voltNeg ) out = m_voltNeg;
 
-    if( fabs(out-m_lastOut) < m_accuracy )         // Converged
-    { m_step = 0; return; }
+    if( (m_step==0)
+     && (fabs(m_lastIn-vd) < m_accuracy )
+     && (fabs(out-m_lastOut) < m_accuracy) )
+    { m_step = 0; return; }         // Converged
 
     Simulator::self()->notCorverged();
 

@@ -144,7 +144,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 
 void Simulator::runCircuit()
 {
-    if( m_changedNode ) solveCircuit(); // Solving matrix here save events in updateStep()
+    solveCircuit(); // Solving matrix here save events in updateStep()
 
     eElement* event = m_firstEvent;
     uint64_t endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
@@ -174,10 +174,10 @@ void Simulator::runCircuit()
 
 void Simulator::solveCircuit()
 {
-    while( m_changedNode )
+    while( m_changedNode || m_nonLin )
     {
         solveMatrix();
-        if( m_state < SIM_RUNNING ) return;
+        //if( m_state < SIM_RUNNING ) return;
 
         m_converged = m_nonLin==NULL;
         while( !m_converged )                  // Non Linear Components
@@ -190,10 +190,10 @@ void Simulator::solveCircuit()
             }
             if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )  // Max iterations reached
             { m_warning = 1; m_converged = true; break; }
-            if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
+            //if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
 
             if( m_changedNode ) solveMatrix();
-            if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
+            //if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
         }
         if( !m_converged ) return;                // Don't run linear until nonliear converged (Loop broken)
 
