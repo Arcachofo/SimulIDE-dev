@@ -114,6 +114,7 @@ void PropDialog::on_showLabel_toggled( bool checked )
 void PropDialog::on_tabList_currentChanged( int )
 {
     if( !m_component ) return;
+    updtValues();
 
     if( !helpText->isVisible() )
     {
