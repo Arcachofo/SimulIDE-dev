@@ -62,6 +62,11 @@ void McuOcUnit::drivePin( ocAct_t act )
     else if( act == ocCLR ) pinState = !m_pinSet;
     else if( act == ocSET ) pinState =  m_pinSet;
 
+    setPinSate( pinState );
+}
+
+void McuOcUnit::setPinSate( bool state )
+{
     m_ocPin->setOutState( pinState );
 }
 

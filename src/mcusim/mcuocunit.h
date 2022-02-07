@@ -57,6 +57,7 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
 
     protected:
         void drivePin( ocAct_t act );
+        virtual void setPinSate( bool state );
 
         McuTimer* m_timer;
         McuPin*   m_ocPin;
