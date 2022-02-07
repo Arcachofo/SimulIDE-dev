@@ -8,11 +8,11 @@
 
 <item itemtype="MuxAnalog" CircId="MuxAnalog-26" mainComp="false" Show_id="false" Show_Val="false" Pos="-8,-36" rotation="0" hflip="1" vflip="1" label="MuxAnalog-99" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="2 _Bits" Impedance="1 Ω" />
 
-<item itemtype="Diode" CircId="Diode-24" mainComp="false" Show_id="false" Show_Val="false" Pos="-108,-4" rotation="0" hflip="-1" vflip="1" label="Diode-88" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="6 V" MaxCurrent="1 A" Resistance="1e-12 Ω" BrkDownV="0 V" SatCurrent="4.24179e-42 nA" EmCoef="2" />
+<item itemtype="Diode" CircId="Diode-24" mainComp="false" Show_id="false" Show_Val="false" Pos="-108,-4" rotation="0" hflip="-1" vflip="1" label="Diode-88" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.805905 V" MaxCurrent="1 A" Resistance="0.05 Ω" BrkDownV="20 V" SatCurrent="171.435 nA" EmCoef="2" />
 
 <item itemtype="Buffer" CircId="Buffer-23" mainComp="false" Show_id="false" Show_Val="false" Pos="-64,-4" rotation="0" hflip="1" vflip="1" label="Buffer-62" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
-<item itemtype="Diode" CircId="Diode-22" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-24" rotation="0" hflip="1" vflip="1" label="Diode-68" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.7 V" MaxCurrent="1 A" Resistance="1e-12 Ω" BrkDownV="0 V" SatCurrent="1328.05 nA" EmCoef="2" />
+<item itemtype="Diode" CircId="Diode-22" mainComp="false" Show_id="false" Show_Val="false" Pos="-124,-24" rotation="0" hflip="1" vflip="1" label="Diode-68" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.805905 V" MaxCurrent="1 A" Resistance="0.05 Ω" BrkDownV="20 V" SatCurrent="171.435 nA" EmCoef="2" />
 
 <item itemtype="Buffer" CircId="Buffer-21" mainComp="false" Show_id="false" Show_Val="false" Pos="-64,-24" rotation="0" hflip="1" vflip="1" label="Buffer-62" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
 
@@ -32,11 +32,11 @@
 
 <item itemtype="Rail" CircId="Rail-13" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="36,72" rotation="0" hflip="1" vflip="1" label="Rail-7" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
 
-<item itemtype="Diode" CircId="Diode-11" mainComp="false" Show_id="false" Show_Val="false" Pos="40,132" rotation="0" hflip="-1" vflip="1" label="Diode-88" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="6 V" MaxCurrent="1 A" Resistance="1e-12 Ω" BrkDownV="0 V" SatCurrent="4.24179e-42 nA" EmCoef="2" />
+<item itemtype="Diode" CircId="Diode-11" mainComp="false" Show_id="false" Show_Val="false" Pos="40,132" rotation="0" hflip="-1" vflip="1" label="Diode-88" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.805905 V" MaxCurrent="1 A" Resistance="0.05 Ω" BrkDownV="20 V" SatCurrent="171.435 nA" EmCoef="2" />
 
 <item itemtype="Resistor" CircId="Resistor-10" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="60,88" rotation="90" hflip="1" vflip="1" label="Resistor-5" idLabPos="-12,-20" labelrot="0" valLabPos="-7,5" valLabRot="0" Resistance="1 kΩ" />
 
-<item itemtype="Diode" CircId="Diode-8" mainComp="false" Show_id="false" Show_Val="false" Pos="24,112" rotation="0" hflip="1" vflip="1" label="Diode-68" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.7 V" MaxCurrent="1 A" Resistance="1e-12 Ω" BrkDownV="0 V" SatCurrent="1328.05 nA" EmCoef="2" />
+<item itemtype="Diode" CircId="Diode-8" mainComp="false" Show_id="false" Show_Val="false" Pos="24,112" rotation="0" hflip="1" vflip="1" label="Diode-68" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Model="Diode Default" Threshold="0.805905 V" MaxCurrent="1 A" Resistance="0.05 Ω" BrkDownV="20 V" SatCurrent="171.435 nA" EmCoef="2" />
 
 <item itemtype="MuxAnalog" CircId="MuxAnalog-7" mainComp="false" Show_id="false" Show_Val="false" Pos="140,100" rotation="0" hflip="1" vflip="1" label="MuxAnalog-99" idLabPos="-16,-16" labelrot="0" valLabPos="0,0" valLabRot="0" Address_Bits="2 _Bits" Impedance="1 Ω" />
 
