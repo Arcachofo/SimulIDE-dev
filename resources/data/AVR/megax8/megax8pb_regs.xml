@@ -203,13 +203,13 @@
     <register  name="OCR1BH"  addr="0x008B"  reset=""  mask="" bits="" />
 
     <register  name="TCCR3A"  addr="0x0090"  reset=""  mask="11110011" 
-               bits="WGM10,WGM11,0,0,COM1B0,COM1B1,COM1A0,COM1A1" />
+               bits="WGM30,WGM31,0,0,COM3B0,COM3B1,COM3A0,COM3A1" />
 
     <register  name="TCCR3B"  addr="0x0091"  reset=""  mask="11011111" 
-               bits="CS10,CS11,CS12,WGM12,WGM13,0,ICES1,ICNC1" />
+               bits="CS30,CS31,CS32,WGM32,WGM33,0,ICES3,ICNC3" />
 
     <register  name="TCCR3C"  addr="0x0092"  reset=""  mask="11000000" 
-               bits="0,0,0,0,0,0,FOC1B,FOC1A" />
+               bits="0,0,0,0,0,0,FOC3B,FOC3A" />
 
     <register  name="TCNT3L"  addr="0x0094"  reset=""  mask="" bits="" />
     <register  name="TCNT3H"  addr="0x0095"  reset=""  mask="" bits="" />
@@ -221,13 +221,13 @@
     <register  name="OCR3BH"  addr="0x009B"  reset=""  mask="" bits="" />
 
     <register  name="TCCR4A"  addr="0x00A0"  reset=""  mask="11110011" 
-               bits="WGM10,WGM11,0,0,COM1B0,COM1B1,COM1A0,COM1A1" />
+               bits="WGM40,WGM41,0,0,COM4B0,COM4B1,COM4A0,COM4A1" />
 
     <register  name="TCCR4B"  addr="0x00A1"  reset=""  mask="11011111" 
-               bits="CS10,CS11,CS12,WGM12,WGM13,0,ICES1,ICNC1" />
+               bits="CS40,CS41,CS42,WGM42,WGM43,0,ICES4,ICNC4" />
 
     <register  name="TCCR4C"  addr="0x00A2"  reset=""  mask="11000000" 
-               bits="0,0,0,0,0,0,FOC1B,FOC1A" />
+               bits="0,0,0,0,0,0,FOC4B,FOC4A" />
 
     <register  name="TCNT4L"  addr="0x00A4"  reset=""  mask="" bits="" />
     <register  name="TCNT4H"  addr="0x00A5"  reset=""  mask="" bits="" />

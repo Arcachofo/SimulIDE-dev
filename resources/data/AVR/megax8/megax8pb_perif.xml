@@ -57,6 +57,7 @@
 
     <ocunit name="OC3A" pin="PORTD0" ocreg="OCR3AL,OCR3AH" bits="COM3A0,COM3A1" interrupt="T3COA" />
     <ocunit name="OC3B" pin="PORTD2" ocreg="OCR3AL,OCR3AH" bits="COM3B0,COM3B1" interrupt="T3COB" />
+    <icunit name="IC3"  pin="PORTB0" icreg="ICR3L,ICR3H"   bits="ICES3,ICNC3"   interrupt="T3CAP" />
   </timer>
 
   <timer name="TIMER4" type="160" configregsA="TCCR4A" configregsB="TCCR4B"
@@ -66,7 +67,8 @@
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS40,CS41,CS42" >
 
     <ocunit name="OC4A" pin="PORTD1" ocreg="OCR4AL,OCR4AH" bits="COM4A0,COM4A1" interrupt="T4COA" />
-    <ocunit name="OC4B" pin="PORTD0" ocreg="OCR4AL,OCR4AH" bits="COM4B0,COM4B1" interrupt="T4COB" />
+    <ocunit name="OC4B" pin="PORTD2" ocreg="OCR4AL,OCR4AH" bits="COM4B0,COM4B1" interrupt="T4COB" />
+    <icunit name="IC4"  pin="PORTB0" icreg="ICR4L,ICR4H"   bits="ICES4,ICNC4"   interrupt="T4CAP" />
   </timer>
 
   <usart name="USART0"  number="1" configregsA="UCSR0A" configregsB="UCSR0B" configregsC="UCSR0C"
