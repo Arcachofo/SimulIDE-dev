@@ -136,7 +136,8 @@ void eDiode::SetParameters( double sc, double ec, double bv, double sr )
     m_satCur = sc;
     m_emCoef = ec;
     m_bkDown = bv;
-    m_admit = 1/sr;
+    setResSafe( sr );
+    //m_admit = 1/sr;
 
     updateValues();
 }
@@ -193,9 +194,9 @@ void eDiode::setEpin( int num, ePin* pin )
 void eDiode::getModels() // Static
 {
     m_diodes.insert( "Custom", {0, 0, 0, 0} );
-    m_diodes.insert( "Diode Default", {171.4352819281, 2, 0, 0} );
+    m_diodes.insert( "Diode Default", {171.4352819281, 2, 20, 0.05} );
     m_zeners.insert( "Custom", {0, 0, 0, 0} );
-    m_zeners.insert( "Zener Default", {171.4352819281, 2, 5.6, 0} );
+    m_zeners.insert( "Zener Default", {171.4352819281, 2, 5.6, 0.05} );
     m_leds.insert( "Custom", {0, 0, 0, 0} );
     m_leds.insert( "RGY Default", {0.0932, 3.73, 0, 0.042} );
 

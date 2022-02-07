@@ -192,10 +192,13 @@ void Simulator::solveCircuit()
             if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )  // Max iterations reached
             { m_warning = 1; m_converged = true; break; }
 
-            if( m_changedNode ) solveMatrix();
-            if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
+            if( m_changedNode ){
+                solveMatrix();
+                if( m_error ) return;
+            }
+            //if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
         }
-        if( !m_converged ) return;                // Don't run linear until nonliear converged (Loop broken)
+        //if( !m_converged ) return;                // Don't run linear until nonliear converged (Loop broken)
 
         m_NLstep = 0;
         while( m_voltChanged )
@@ -279,7 +282,6 @@ void Simulator::startSim( bool paused )
         el->initialize();
         el->added = false;
     }
-    m_changedNode = NULL;
 
     qDebug() <<"  Initializing "<< m_eNodeList.size()<< "\teNodes";
     for( int i=0; i<m_eNodeList.size(); i++ )         // Initialize eNodes

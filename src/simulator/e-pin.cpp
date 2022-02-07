@@ -40,8 +40,8 @@ void ePin::setEnode( eNode* enode )
 {
     if( enode == m_enode ) return;
 
-    if( m_enode ) m_enode->remEpin( this );
-    if( enode )   enode->addEpin( this );
+    //if( m_enode ) m_enode->remEpin( this );
+    if( enode ) enode->addEpin( this );
 
     m_enode = enode;
 }
@@ -69,7 +69,6 @@ void ePin::stampCurrent( double data )
 void ePin::stampAdmitance( double data )
 {
     if( !m_enode ) return;
-    /// if( !m_enodeComp ) data = 1e-12;
     m_enode->stampAdmitance( this, data );
 }
 

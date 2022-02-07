@@ -236,7 +236,11 @@ void IoPin::setImp( double imp )
 void IoPin::setInputImp( double imp )
 {
     m_inputImp = imp;
-    if( m_pinMode == input ) m_gndAdmit = 1/m_inputImp;
+    if( m_pinMode == input )
+    {
+        m_gndAdmit = 1/m_inputImp;
+        updtState();
+    }
 }
 
 void IoPin::setOutputImp( double imp )
