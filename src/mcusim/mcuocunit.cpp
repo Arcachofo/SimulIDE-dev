@@ -67,7 +67,7 @@ void McuOcUnit::drivePin( ocAct_t act )
 
 void McuOcUnit::setPinSate( bool state )
 {
-    m_ocPin->setOutState( pinState );
+    m_ocPin->setOutState( state );
 }
 
 void McuOcUnit::sheduleEvents( uint32_t ovf, uint32_t countVal, int rot )
