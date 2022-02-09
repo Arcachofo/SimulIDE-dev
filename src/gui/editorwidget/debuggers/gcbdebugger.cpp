@@ -168,7 +168,7 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             int asmLineNum = asmLineNumber+1;
             while( m_asmToFlash.value( asmLineNum ) == 0 ) asmLineNum++; // Avoid banksels and so
             
-            int flashAddr = m_asmToFlash[asmLineNum];
+            int flashAddr = m_asmToFlash.value( asmLineNum );
             m_flashToSource[ flashAddr ]  = gcbLineNum;
         }
         else if( asmLine.contains("locations for variables")) haveVariable = true;
@@ -187,7 +187,7 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             QString name = text.first().toLower();
             int  address = text.last().toInt();
             QString type = "uint8";
-            if( m_varList.contains( name ) ) type = m_varList[ name ];
+            if( m_varList.contains( name ) ) type = m_varList.value( name );
             McuInterface::self()->addWatchVar( name, address ,type  );
             
             if( type.contains( "array" ) )
@@ -203,7 +203,7 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
                     McuInterface::self()->addWatchVar( elmName, address+i ,"uint8"  );
                     if( !m_varList.contains( elmName ) ) 
                     {
-                        m_varList[ elmName ] = m_typesList[ "uint8" ];
+                        m_varList[ elmName ] = m_typesList.value("uint8");
                         m_varNames.append( elmName );
         }   }   }   }
         asmLineNumber++;
@@ -256,7 +256,7 @@ bool GcbDebugger::mapLstToAsm()
         while( true )
         {
             if( ++asmLineNumber >= lastAsmLine ) break; // End of asm file
-            asmLine = asmLines.at( asmLineNumber ).toUpper();
+            asmLine = asmLines.at( asmLineNumber-1 ).toUpper();
             asmLine = asmLine.replace("\t", " ").remove(" ");
             if( asmLine.isEmpty() ) continue;
             if( asmLine.startsWith("_")) continue;
@@ -271,7 +271,7 @@ bool GcbDebugger::mapLstToAsm()
 
         QString numberText = line.left( 6 ); // first 6 digits in lst file is address
         bool ok = false;
-        int address = numberText.toInt( &ok, 16 )*m_processorType;  // AVR: adress*2: instruc = 2 bytes
+        int address = numberText.toInt( &ok, 16 );  // AVR: adress*2: instruc = 2 bytes
         if( ok )
         {
             if( address==0 )                 // Deal with Banksel addr =0
