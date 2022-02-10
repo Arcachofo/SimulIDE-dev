@@ -23,7 +23,6 @@
 #include <QPainter>
 
 #include "varsource.h"
-#include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
 
@@ -95,7 +94,18 @@ void VarSource::valueChanged( int val )
     m_changed = true;
 }
 
-void VarSource::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void VarSource::setVal( double val )
+{
+    if( val > m_maxValue ) val = m_maxValue;
+    else if( val < 0 ) val = 0;
+    m_dial->setValue( val*1000/m_maxValue );
+    m_outValue = val;
+    m_changed = true;
+    updateButton();
+    if( !Simulator::self()->isRunning() ) updateStep();
+}
+
+void VarSource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
 

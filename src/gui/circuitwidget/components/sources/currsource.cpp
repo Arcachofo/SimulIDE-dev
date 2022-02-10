@@ -21,6 +21,7 @@
 
 #include "currsource.h"
 #include "itemlibrary.h"
+#include "propdialog.h"
 #include "simulator.h"
 #include "pin.h"
 
@@ -48,7 +49,8 @@ CurrSource::CurrSource( QObject* parent, QString type, QString id )
     m_unit = "A";
 
     addPropGroup( { tr("Main"), {
-new DoubProp<CurrSource>( "MaxValue",tr("Max. Current"),"A",this,&CurrSource::maxValue, &CurrSource::setMaxValue )
+new DoubProp<CurrSource>( "Value_Amp",tr("Current Value"),"A", this, &CurrSource::getVal,   &CurrSource::setVal ),
+new DoubProp<CurrSource>( "MaxValue" ,tr("Max. Current") ,"A", this, &CurrSource::maxValue, &CurrSource::setMaxValue )
     }} );
 
     setShowProp("MaxValue");
@@ -63,6 +65,7 @@ void CurrSource::updateStep()
     {
         double current = m_button->isChecked() ? m_outValue : 0;
         m_outPin->stampCurrent( current );
+        if( m_propDialog ) m_propDialog->updtValues();
         m_changed = false;
 }   }
 

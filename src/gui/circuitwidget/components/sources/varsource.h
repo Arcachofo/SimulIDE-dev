@@ -31,6 +31,9 @@ class MAINMODULE_EXPORT VarSource : public Component, public eElement
         VarSource( QObject* parent, QString type, QString id );
         ~VarSource();
 
+        double getVal() { return m_outValue; }
+        void setVal( double val );
+
         double maxValue() { return m_maxValue; }
         void setMaxValue( double v ) { m_maxValue = v;}
 

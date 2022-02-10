@@ -21,6 +21,7 @@
 
 #include "voltsource.h"
 #include "itemlibrary.h"
+#include "propdialog.h"
 #include "simulator.h"
 #include "iopin.h"
 
@@ -50,7 +51,8 @@ VoltSource::VoltSource( QObject* parent, QString type, QString id )
 
     m_unit = "V";
     addPropGroup( { tr("Main"), {
-new DoubProp<VoltSource>( "MaxValue",tr("Max. Voltage"),"V", this, &VoltSource::maxValue,  &VoltSource::setMaxValue )
+new DoubProp<VoltSource>( "Value_Volt", tr("Current Value"),"V", this, &VoltSource::getVal,    &VoltSource::setVal ),
+new DoubProp<VoltSource>( "MaxValue"  ,tr("Max. Voltage")  ,"V", this, &VoltSource::maxValue,  &VoltSource::setMaxValue )
     }} );
 
     setShowProp("MaxValue");
@@ -65,6 +67,7 @@ void VoltSource::updateStep()
     {
         m_outPin->setOutHighV( m_outValue );
         m_outPin->setOutState( m_button->isChecked() );
+        if( m_propDialog ) m_propDialog->updtValues();
         m_changed = false;
 }   }
 
