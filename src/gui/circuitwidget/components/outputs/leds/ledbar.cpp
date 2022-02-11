@@ -161,6 +161,13 @@ bool LedBar::grounded() { return m_led[0]->grounded(); }
 void LedBar::setGrounded( bool grounded )
 { for( int i=0; i<m_size; i++ ) m_led[i]->setGrounded( grounded ); }
 
+void LedBar::setHidden( bool hid, bool hidLabel )
+{
+    Component::setHidden( hid, hidLabel );
+    if( !hid && m_led[0]->grounded() )
+    { for( int i=0; i<m_size; i++ ) m_pin[i*2+1]->setVisible( false ); }
+}
+
 void LedBar::remove()
 {
     deleteLeds( m_size );
