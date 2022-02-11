@@ -40,6 +40,7 @@ void eResistor::stamp()
 void eResistor::stampAdmit()
 {
     if( !m_ePin[0] ) return;
+    if( !m_ePin[0]->isConnected() || !m_ePin[1]->isConnected() ) return;
 
     m_ePin[0]->stampAdmitance( m_admit );
     m_ePin[1]->stampAdmitance( m_admit );

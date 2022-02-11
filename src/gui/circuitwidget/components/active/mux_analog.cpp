@@ -60,7 +60,7 @@ MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
     m_enPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_enPin->setInverted( true );
     
-    m_admit = 0.01;
+    m_admit = 1000;
     m_addrBits = 0;
     m_channels = 0;
     setAddrBits( 3 );
@@ -74,15 +74,19 @@ MuxAnalog::~MuxAnalog(){}
 
 void MuxAnalog::stamp()
 {
-    eNode* enode = m_zPin->getEnode();
-    for( int i=0; i<m_channels; ++i ) m_ePin[i]->setEnode( enode );
+    m_address = 0;
+    m_enabled = true;
 
-    for( int i=0; i<m_channels; ++i ) m_resistor[i]->setAdmit( cero_doub );
+    eNode* enode = m_zPin->getEnode();
+    for( int i=0; i<m_channels; ++i )
+    {
+        m_ePin[i]->setEnode( enode );
+        double admit = (i == 0) ? m_admit : cero_doub;
+        m_resistor[i]->setAdmit( admit );
+    }
 
     for( Pin* pin : m_addrPin ) pin->changeCallBack( this );
     m_enPin->changeCallBack( this );
-
-    m_enabled = false;
 }
 
 void MuxAnalog::voltChanged()
