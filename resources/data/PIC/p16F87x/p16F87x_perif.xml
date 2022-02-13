@@ -1,6 +1,5 @@
 <parts>
   <port name="PORTA" pins="6" outreg="PORTA" dirreg="!TRISA"
-                     inpmask="00011111" 
                      opencol="00010000">
   </port>
 

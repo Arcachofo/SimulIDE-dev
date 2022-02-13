@@ -8,13 +8,13 @@
 
         <!-- BANK 0 -->
         <regblock name="SFR0" start="0x0008" end="0x0009" >
-            <register name="PORTD"   addr="0x08" bits="RD0,RD1,RD2,RD3,RD4,RD5,RD6,RD7"/>
-            <register name="PORTE"   addr="0x09" bits="RE0,RE1,RE2,0,0,0,0,0"/>
+            <register name="PORTD"   addr="0x08" />
+            <register name="PORTE"   addr="0x09" mask="00000111"/>
         </regblock>
         <!-- BANK 1 -->
         <regblock name="SFR0" start="0x0088" end="0x0089" >
-            <register name="TRISD"   addr="0x88" bits="RD0,RD1,RD2,RD3,RD4,RD5,RD6,RD7"/>
-            <register name="TRISE"   addr="0x89" bits="0,0,0,0,PSPMODE,IBOV,OBF,IBF"/>
+            <register name="TRISD"   addr="0x88" reset="11111111"/>
+            <register name="TRISE"   addr="0x89" reset="00000111" mask="00000111"/>
         </regblock>
         <datablock name="GPR1" start="0x00A0" end="0x00FF"/>
         <!-- BANK 2 -->
@@ -27,7 +27,7 @@
 
         <port name="PORTD" pins="8" outreg="PORTD" dirreg="!TRISD">
         </port>
-        <port name="PORTE" pins="3" outreg="PORTE" dirreg="!TRISE" inpmask="00000111" >
+        <port name="PORTE" pins="3" outreg="PORTE" dirreg="!TRISE">
         </port>
         <adc name="ADC" type="00" bits="10" configregsA="ADCON0" configregsB="ADCON1"
                         dataregs="ADRESL,ADRESH"

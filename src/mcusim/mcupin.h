@@ -78,6 +78,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         bool m_inpMask; // Pin always input (inverted: 0 means always input)
         bool m_puMask;  // Pullup always on
         bool m_openColl;
+        bool m_changeCB;
 
         bool m_outCtrl;
         bool m_dirCtrl;

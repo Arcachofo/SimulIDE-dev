@@ -41,6 +41,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_puMask   = false;
     m_outMask  = false;
     m_inpMask  = true;  // Inverted: true means inactive
+    m_changeCB = false;
 
     setOutHighV( 5 );
     initialize();
@@ -125,7 +126,7 @@ void McuPin::setDirection( bool out )
 
     if( m_dirCtrl ) return; // Is someone is controlling us, just save Pin Mode
 
-    changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
+    changeCallBack( this, m_changeCB || !m_isOut ); // Receive voltage change notifications only if input or always (m_changeCB)
     setPinMode( m_portMode );
 }
 
