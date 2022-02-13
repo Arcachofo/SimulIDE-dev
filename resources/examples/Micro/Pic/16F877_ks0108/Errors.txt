@@ -1,1 +1,0 @@
-/media/user/software/GreatCowBasic/include//glcd.h (168): Warning: Cannot find /media/user/software/GreatCowBasic/include//GLCD_ST7789.h

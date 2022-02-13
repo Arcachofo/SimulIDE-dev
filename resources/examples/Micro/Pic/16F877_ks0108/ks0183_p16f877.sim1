@@ -2,38 +2,38 @@
 
 <item itemtype="Rail" CircId="Rail.-3" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-236,-348" rotation="0" hflip="-1" vflip="1" label="Rail.-38" idLabPos="-64,-24" labelrot="0" valLabPos="8,-22" valLabRot="0" Voltage="5 V" />
 
-<item itemtype="MCU" CircId="p16f877a-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-252,-300" rotation="0" hflip="1" vflip="1" label="pic16f877" idLabPos="1,-17" labelrot="0" valLabPos="0,0" valLabRot="0" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," Frequency="16 MHz" Program="build_KS0108_16f877/KS0108_16f877.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="false" Wdt_enabled="false" />
+<item itemtype="MCU" CircId="p16f877a-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-252,-300" rotation="0" hflip="1" vflip="1" label="pic16f877" idLabPos="1,-17" labelrot="0" valLabPos="0,0" valLabRot="0" varList=",,TRISE,PORTE" eeprom="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," Frequency="16 MHz" Program="KS0108_16f877a.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="false" Wdt_enabled="false" />
 
 <item itemtype="Ks0108" CircId="Ks0108-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-372,-300" rotation="0" hflip="1" vflip="1" label="Ks0108" idLabPos="-29,-72" labelrot="0" valLabPos="0,0" valLabRot="0" CS_Active_Low="true" />
 
-<item itemtype="Connector" startpinid="p16f877a-2-PORTC2" endpinid="Ks0108-1-PinRst" enodeid="Circ_eNode-4" pointList="-260,-164,-428,-164,-428,-244" />
+<item itemtype="Connector" uid="connector4" startpinid="p16f877a-2-PORTC2" endpinid="Ks0108-1-PinRst" pointList="-260,-164,-428,-164,-428,-244" />
 
-<item itemtype="Connector" startpinid="p16f877a-2-PORTD0" endpinid="Ks0108-1-dataPin0" enodeid="Circ_eNode-5" pointList="-260,-148,-348,-148,-348,-244" />
+<item itemtype="Connector" uid="connector5" startpinid="p16f877a-2-PORTD0" endpinid="Ks0108-1-dataPin0" pointList="-260,-148,-348,-148,-348,-244" />
 
-<item itemtype="Connector" startpinid="p16f877a-2-PORTD1" endpinid="Ks0108-1-dataPin1" enodeid="Circ_eNode-6" pointList="-260,-140,-356,-140,-356,-244" />
+<item itemtype="Connector" uid="connector6" startpinid="p16f877a-2-PORTD1" endpinid="Ks0108-1-dataPin1" pointList="-260,-140,-356,-140,-356,-244" />
 
-<item itemtype="Connector" startpinid="p16f877a-2-PORTD2" endpinid="Ks0108-1-dataPin2" enodeid="Circ_eNode-7" pointList="-196,-140,-196,-124,-364,-124,-364,-244" />
+<item itemtype="Connector" uid="connector7" startpinid="p16f877a-2-PORTD2" endpinid="Ks0108-1-dataPin2" pointList="-196,-140,-196,-124,-364,-124,-364,-244" />
 
-<item itemtype="Connector" startpinid="Ks0108-1-dataPin3" endpinid="p16f877a-2-PORTD3" enodeid="Circ_eNode-8" pointList="-372,-244,-372,-116,-188,-116,-188,-148,-196,-148" />
+<item itemtype="Connector" uid="connector8" startpinid="Ks0108-1-dataPin3" endpinid="p16f877a-2-PORTD3" pointList="-372,-244,-372,-116,-188,-116,-188,-148,-196,-148" />
 
-<item itemtype="Connector" startpinid="p16f877a-2-PORTD6" endpinid="Ks0108-1-dataPin6" enodeid="Circ_eNode-9" pointList="-196,-204,-164,-204,-164,-92,-396,-92,-396,-244" />
+<item itemtype="Connector" uid="connector9" startpinid="p16f877a-2-PORTD6" endpinid="Ks0108-1-dataPin6" pointList="-196,-204,-164,-204,-164,-92,-396,-92,-396,-244" />
 
-<item itemtype="Connector" startpinid="p16f877a-2-PORTD4" endpinid="Ks0108-1-dataPin4" enodeid="Circ_eNode-10" pointList="-196,-188,-180,-188,-180,-108,-380,-108,-380,-244" />
+<item itemtype="Connector" uid="connector10" startpinid="p16f877a-2-PORTD4" endpinid="Ks0108-1-dataPin4" pointList="-196,-188,-180,-188,-180,-108,-380,-108,-380,-244" />
 
-<item itemtype="Connector" startpinid="Ks0108-1-dataPin5" endpinid="p16f877a-2-PORTD5" enodeid="Circ_eNode-11" pointList="-388,-244,-388,-100,-172,-100,-172,-196,-196,-196" />
+<item itemtype="Connector" uid="connector11" startpinid="Ks0108-1-dataPin5" endpinid="p16f877a-2-PORTD5" pointList="-388,-244,-388,-100,-172,-100,-172,-196,-196,-196" />
 
-<item itemtype="Connector" startpinid="Ks0108-1-PinDC" endpinid="p16f877a-2-PORTE0" enodeid="Circ_eNode-12" pointList="-324,-244,-324,-236,-260,-236" />
+<item itemtype="Connector" uid="connector12" startpinid="Ks0108-1-PinDC" endpinid="p16f877a-2-PORTE0" pointList="-324,-244,-324,-236,-260,-236" />
 
-<item itemtype="Connector" startpinid="Ks0108-1-PinRW" endpinid="p16f877a-2-PORTE1" enodeid="Circ_eNode-13" pointList="-332,-244,-332,-228,-260,-228" />
+<item itemtype="Connector" uid="connector13" startpinid="Ks0108-1-PinRW" endpinid="p16f877a-2-PORTE1" pointList="-332,-244,-332,-228,-260,-228" />
 
-<item itemtype="Connector" startpinid="Ks0108-1-PinEn" endpinid="p16f877a-2-PORTE2" enodeid="Circ_eNode-14" pointList="-340,-244,-340,-220,-260,-220" />
+<item itemtype="Connector" uid="connector14" startpinid="Ks0108-1-PinEn" endpinid="p16f877a-2-PORTE2" pointList="-340,-244,-340,-220,-260,-220" />
 
-<item itemtype="Connector" startpinid="Ks0108-1-dataPin7" endpinid="p16f877a-2-PORTD7" enodeid="Circ_eNode-15" pointList="-404,-244,-404,-84,-156,-84,-156,-212,-196,-212" />
+<item itemtype="Connector" uid="connector15" startpinid="Ks0108-1-dataPin7" endpinid="p16f877a-2-PORTD7" pointList="-404,-244,-404,-84,-156,-84,-156,-212,-196,-212" />
 
-<item itemtype="Connector" startpinid="Ks0108-1-PinCs2" endpinid="p16f877a-2-PORTC1" enodeid="Circ_eNode-16" pointList="-420,-244,-420,-172,-260,-172" />
+<item itemtype="Connector" uid="connector16" startpinid="Ks0108-1-PinCs2" endpinid="p16f877a-2-PORTC1" pointList="-420,-244,-420,-172,-260,-172" />
 
-<item itemtype="Connector" startpinid="p16f877a-2-PORTC0" endpinid="Ks0108-1-PinCs1" enodeid="Circ_eNode-17" pointList="-260,-180,-412,-180,-412,-244" />
+<item itemtype="Connector" uid="connector17" startpinid="p16f877a-2-PORTC0" endpinid="Ks0108-1-PinCs1" pointList="-260,-180,-412,-180,-412,-244" />
 
-<item itemtype="Connector" startpinid="Rail.-3-outnod" endpinid="p16f877a-2-MCLR" enodeid="Circ_eNode-18" pointList="-252,-348,-276,-348,-276,-292,-260,-292" />
+<item itemtype="Connector" uid="connector18" startpinid="Rail.-3-outnod" endpinid="p16f877a-2-MCLR" pointList="-252,-348,-276,-348,-276,-292,-260,-292" />
 
 </circuit>
