@@ -46,6 +46,7 @@
 #include "ds1307.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
+//#include "ertp080.h"
 //#include "esp01.h"
 #include "fixedvolt.h"
 #include "flipflopd.h"
@@ -229,10 +230,9 @@ void ItemLibrary::loadItems()
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );
     addItem( DS1307::libraryItem() );
+    //addItem( ErTP080::libraryItem() );
     //addItem( Esp01::libraryItem() );
-    //addItem( SerialPort::libraryItem() );
-    //addItem( SerialPort::libraryItem() );
-    /// addItem( SerialTerm::libraryItem() );
+    addItem( SerialPort::libraryItem() );
     // Logic
     addItem( new LibraryItem( QObject::tr("Gates"),QObject::tr("Logic"), "gates.png","", NULL ) );
     addItem( Buffer::libraryItem() );

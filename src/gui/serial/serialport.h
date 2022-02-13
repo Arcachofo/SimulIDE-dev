@@ -24,19 +24,16 @@
 
 #include "component.h"
 #include "e-element.h"
+#include "usartmodule.h"
 
 class LibraryItem;
-class McuBase;
-class McuInterface;
 class QPushButton;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT SerialPort : public Component, public eElement
+class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, public eElement
 {
     Q_OBJECT
-    /*Q_PROPERTY( QString  Mcu_Id    READ mcuId    WRITE setMcuId )
-    Q_PROPERTY( bool     Auto_Open READ autoOpen WRITE setAutoOpen DESIGNABLE true  USER true )
-    Q_PROPERTY( int      Mcu_Uart  READ uart     WRITE setUart     DESIGNABLE true  USER true )
+    /*
     Q_PROPERTY( QString  Port_Name READ port     WRITE setPort     DESIGNABLE true  USER true )
 
     Q_PROPERTY( QSerialPort::BaudRate BaudRate READ baudRate WRITE setBaudRate  DESIGNABLE true  USER true )
@@ -56,16 +53,6 @@ class MAINMODULE_EXPORT SerialPort : public Component, public eElement
         virtual void initialize() override;
         virtual void updateStep() override { update(); }
 
-
-        QString mcuId() { return m_mcuId; }
-        void setMcuId( QString mcu );
-
-        bool autoOpen() { return m_autoOpen; }
-        void setAutoOpen( bool ao ) { m_autoOpen = ao; }
-
-        int uart() { return m_uart+1; }
-        void setUart( int uart );
-
         QString port(){return m_portName;}
         void setPort( QString name ){ m_portName = name; update();}
 
@@ -84,13 +71,14 @@ class MAINMODULE_EXPORT SerialPort : public Component, public eElement
         QSerialPort::FlowControl flowControl() { return m_flowControl; }
         void setFlowControl( QSerialPort::FlowControl fc ) { m_flowControl = fc; }
 
+        virtual void byteReceived( uint8_t byte ) override;
+        virtual void frameSent( uint8_t data ) override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:
         void onbuttonclicked();
-        void slotWriteData( int uart, int value );
         void slotClose();
-        void slotAutoOpen() { if( m_autoOpen ) open(); }
 
     private slots:
         void readData();
@@ -99,18 +87,15 @@ class MAINMODULE_EXPORT SerialPort : public Component, public eElement
         void open();
         void close();
 
-        QString m_mcuId;
-        McuBase* m_mcuComponent;
-        McuInterface* m_processor;
-
         QPushButton* m_button;
         QGraphicsProxyWidget* m_proxy;
 
         QSerialPort* m_serial;
 
-        int m_uart;
         bool m_active;
-        bool m_autoOpen;
+
+        QByteArray m_uartData;
+        int m_dataIndex;
 
         QString m_portName;
         QSerialPort::BaudRate    m_BaudRate;
