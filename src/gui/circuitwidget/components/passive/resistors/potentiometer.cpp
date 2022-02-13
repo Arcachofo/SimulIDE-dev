@@ -23,7 +23,6 @@
 
 #include "potentiometer.h"
 #include "propdialog.h"
-#include "connector.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"

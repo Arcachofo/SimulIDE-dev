@@ -553,6 +553,7 @@ void Circuit::remove() // Remove everything ( Clear Circuit )
     if( m_conStarted ) return;
     m_busy = true;
     while( !m_compList.isEmpty() ) removeComp( m_compList.takeFirst() );
+    m_pinMap.clear();
     m_busy = false;
 }
 
