@@ -138,7 +138,7 @@ uint16_t eMcu::getRegAddress( QString reg )// Get Reg address by name
     return addr;
 }
 
-uint8_t eMcu::getRamValue( int address ) { return m_dataMem[getMapperAddr(address)]; }
+uint8_t eMcu::getRamValue( int address ) { return readReg( getMapperAddr(address) ); }
 
 void eMcu::setRamValue( int address, uint8_t value ) // Setting RAM from external source (McuMonitor)
 { writeReg( getMapperAddr(address), value ); }
