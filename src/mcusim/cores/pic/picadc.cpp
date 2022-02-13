@@ -155,7 +155,7 @@ void PicAdc1::updtANSEL()
     uint16_t analog = *m_ANSEL;
     if( m_ANSELH ) analog |= (*m_ANSELH << 8);
     for( uint i=0; i<m_adcPin.size(); ++i)
-        if( m_adcPin[i] ) m_adcPin[i]->setAnalog( analog & (1<<i) );
+        if( m_adcPin[i] ) m_adcPin[i]->setAnalog( (analog>>i) & 1 );
 }
 
 void PicAdc1::updtVref()

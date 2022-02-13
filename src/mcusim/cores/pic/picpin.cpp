@@ -47,7 +47,8 @@ void PicPin::setAnalog( bool an )
     }
     else     // Enable Digital input if is input
     {
-        changeCallBack( this, !m_isOut ); // Receive voltage change notifications only if input
-        if( !m_isOut ) voltChanged(); // Update input state
+        changeCallBack( this, true ); // Receive voltage change notifications
+        voltChanged(); // Update input state
+        m_port->pinChanged( m_pinMask, m_inpState );
     }
 }
