@@ -56,13 +56,15 @@ AvrUsart::AvrUsart( eMcu* mcu,  QString name, int number )
     else{         m_UBRRnH = mcu->getReg( "UBRR"+n+"H" );
         watchRegNames( "UBRR"+n+"H", R_WRITE, this, &AvrUsart::setUBRRnH, mcu );
     }
-    m_UDRE = getRegBits( "UDRE"+n, mcu );
-    m_TXC  = getRegBits( "TXC"+n, mcu );
-    m_RXC  = getRegBits( "RXC"+n, mcu );
-    m_FE   = getRegBits( "FE"+n, mcu );
-    m_DOR  = getRegBits( "DOR"+n, mcu );
-    if( n == "" ) m_UPE  = getRegBits( "PE", mcu );
-    else          m_UPE  = getRegBits( "UPE"+n, mcu );
+    m_UDRIE = getRegBits( "UDRIE"+n, mcu );
+    m_UDRE  = getRegBits( "UDRE"+n, mcu );
+    m_TXC   = getRegBits( "TXC"+n, mcu );
+    m_RXC   = getRegBits( "RXC"+n, mcu );
+    m_FE    = getRegBits( "FE"+n, mcu );
+    m_DOR   = getRegBits( "DOR"+n, mcu );
+
+    if( n == "" ) m_UPE = getRegBits( "PE", mcu );
+    else          m_UPE = getRegBits( "UPE"+n, mcu );
 }
 AvrUsart::~AvrUsart(){}
 
@@ -97,7 +99,13 @@ void AvrUsart::configureB( uint8_t newUCSRnB ) // UCSRnB changed
         }
         else m_receiver->getPin()->controlPin( false, false );
         m_receiver->enable( rxEn );
-}   }
+    }
+    if( getRegBitsBool( newUCSRnB, m_UDRIE ) ) // Buffer empty Interrupt enabled?
+    {
+        if( getRegBitsBool( *m_UCSRnA, m_UDRE ) )  // Buffer is empty?
+            bufferEmpty();                         // Trigger Buffer empty Interrupt
+    }
+}
 
 void AvrUsart::configureC( uint8_t newUCSRnC ) // UCSRnC changed
 {
