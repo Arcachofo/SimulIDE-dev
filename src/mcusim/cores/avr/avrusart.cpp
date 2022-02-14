@@ -174,7 +174,7 @@ void AvrUsart::sendByte(  uint8_t data ) // Buffer is being written
 
     if( getRegBitsBool( *m_UCSRnA, m_UDRE ) )  // Buffer is empty?
     {
-        clearRegBits( m_UDRE ); // Transmit buffer now full: Clear UDREn bit
+        m_interrupt->clearFlag();//clearRegBits( m_UDRE ); // Transmit buffer now full: Clear UDREn bit
         m_sender->processData( data );
 }   }
 

@@ -19,7 +19,7 @@
         <interrupt name="T0_OVF"   enable="TOIE0"  flag="TOV0"   priority="29" vector="0x0020" clear="1"/>
         <interrupt name="SPI0"     enable="SPIE0"  flag="SPIF0"  priority="28" vector="0x0022"/>
         <interrupt name="USART0_R" enable="RXCIE0" flag="RXC0"   priority="27" vector="0x0024" clear="0"/>
-        <interrupt name="USART0_U" enable="UDRIE0" flag="UDRE0"  priority="26" vector="0x0026"/>
+        <interrupt name="USART0_U" enable="UDRIE0" flag="UDRE0"  priority="26" vector="0x0026" clear="0"/>
         <interrupt name="USART0_T" enable="TXCIE0" flag="TXC0"   priority="25" vector="0x0028" clear="1"/>
         <interrupt name="ADC"      enable="ADIE"   flag="ADIF"   priority="24" vector="0x002A"/>
         <interrupt name="EEPR"     enable="EERIE"  flag=""       priority="23" vector="0x002C"/>
@@ -29,7 +29,7 @@
         <interrupt name="USART0_S" enable=" "      flag=" "      priority="19" vector="0x0034"/>
         <interrupt name="PCINT3"   enable=" "      flag=" "      priority="18" vector="0x0036"/>
         <interrupt name="USART1_R" enable="RXCIE1" flag="RXC1"   priority="17" vector="0x0038" clear="0"/>
-        <interrupt name="USART1_U" enable="UDRIE1" flag="UDRE1"  priority="16" vector="0x003A"/>
+        <interrupt name="USART1_U" enable="UDRIE1" flag="UDRE1"  priority="16" vector="0x003A" clear="0"/>
         <interrupt name="USART1_T" enable="TXCIE1" flag="TXC1"   priority="15" vector="0x003C" clear="1"/>
         <interrupt name="USART1_S" enable=" "      flag=" "      priority="14" vector="0x003E"/>
         <interrupt name="T3CAP"    enable="ICIE3"  flag="ICF3"   priority="13" vector="0x0040"/>
