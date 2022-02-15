@@ -51,7 +51,7 @@ Node::~Node(){}
 
 void Node::inStateChanged( int rem ) // Called by pin
 {
-    if     ( rem == 1 ) remove();
+    if     ( rem == 1 ) checkRemove();
     else if( rem == 2 ) // Propagate Is Bus
     {
         for( int i=0; i< 3; i++) m_pin[i]->setIsBus( true );
@@ -64,7 +64,7 @@ void Node::registerEnode( eNode* enode, int n )
         if( m_pin[i]->conPin() ) m_pin[i]->registerPinsW( enode, n );
 }
 
-void Node::remove() // Only remove if there are less than 3 connectors
+void Node::checkRemove() // Only remove if there are less than 3 connectors
 {
     int con[2] = { 0, 0 };
     int conectors = 0;
@@ -83,9 +83,12 @@ void Node::remove() // Only remove if there are less than 3 connectors
         if( conectors == 2 ) joinConns( con[0], con[1] );  // 2 Conn
         else                 m_pin[con[0]]->removeConnector();
 
-        Circuit::self()->nodeList()->removeOne( this );
-        if( this->scene() ) Circuit::self()->removeItem( this );
-        this->deleteLater();
+        if( !Circuit::self()->deleting() )
+        {
+            Circuit::self()->nodeList()->removeOne( this );
+            if( this->scene() ) Circuit::self()->removeItem( this );
+            this->deleteLater();
+        }
 }   }
 
 void Node::joinConns( int c0, int c1 )
@@ -95,6 +98,8 @@ void Node::joinConns( int c0, int c1 )
 
     Connector* con0 = pin0->connector();
     Connector* con1 = pin1->connector();
+    if( !con0 || !con1 ) return;
+
     Connector* con = new Connector( Circuit::self(), "Connector", con0->getUid(), pin0->conPin() );
     Circuit::self()->conList()->append( con );
 

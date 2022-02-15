@@ -219,7 +219,7 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     {
         Component* parentComp = static_cast<Component*>( this->parentItem() );
         parentComp->mouseMoveEvent( event );
-        emit moved();
+        if( !m_hidden ) emit moved();
         return;
     }
     event->accept();
@@ -419,6 +419,7 @@ void Component::V_flip()
 
 void Component::rotateCW()
 {
+    if( m_hidden ) return;
     Circuit::self()->saveState();
     setRotation( rotation() + 90 );
     emit moved();
@@ -426,6 +427,7 @@ void Component::rotateCW()
 
 void Component::rotateCCW()
 {
+    if( m_hidden ) return;
     Circuit::self()->saveState();
     setRotation( rotation() - 90 );
     emit moved();
@@ -433,6 +435,7 @@ void Component::rotateCCW()
 
 void Component::rotateHalf()
 {
+    if( m_hidden ) return;
     Circuit::self()->saveState();
     setRotation( rotation() - 180);
     emit moved();
@@ -506,6 +509,7 @@ void Component::setVflip( int vf )
 
 void Component::setflip()
 {
+    if( m_hidden ) return;
     setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_idLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_valLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );

@@ -130,11 +130,8 @@ void Circuit::loadCircuit( QString fileName )
     QString doc = fileToString( fileName, "Circuit::loadCircuit" );
     loadStrDoc( doc );
 
-    if( m_error != 0 ) 
-    {
-        remove();
-        for( Node* nod : m_nodeList ) removeComp( nod ); // Clean Nodes
-    }else{
+    if( m_error != 0 ) remove();
+    else{
         m_graphicView->zoomToFit();
         qDebug() << "Circuit Loaded: ";
         qDebug() << fileName;
@@ -396,7 +393,7 @@ void Circuit::loadStrDoc( QString &doc )
     m_nodeList.append( nodeList );
     m_conList.append( conList );
     // Take care about unconnected Joints
-    for( Node* joint : nodeList ) joint->remove(); // Only removed if some missing connector
+    for( Node* joint : nodeList ) joint->checkRemove(); // Only removed if some missing connector
     for( SubCircuit* shield : shieldList ) shield->connectBoard();
 
     m_idMap.clear();
@@ -540,21 +537,25 @@ void Circuit::removeComp( Component* comp )
     comp->remove();
     if( !m_compRemoved ) return;
 
-    if( m_compList.contains( comp ) )
-    {
-        if( comp->scene() ) removeItem( comp );
-        m_compList.removeOne( comp );
-    }
+    if( m_compList.contains( comp ) ) m_compList.removeOne( comp );
+    if( comp->scene() ) removeItem( comp );
     delete comp; // crash in recent versions bcos already removed in removeItem( comp );
 }
 
 void Circuit::remove() // Remove everything ( Clear Circuit )
 {
     if( m_conStarted ) return;
-    m_busy = true;
+    m_deleting = true;
     while( !m_compList.isEmpty() ) removeComp( m_compList.takeFirst() );
+    while( !m_nodeList.isEmpty() )
+    {
+        Node* nod = m_nodeList.takeFirst();
+        if( nod->scene() )
+            removeItem( nod );
+        delete nod;
+    }
     m_pinMap.clear();
-    m_busy = false;
+    m_deleting = false;
 }
 
 void Circuit::deselectAll()
@@ -566,7 +567,7 @@ void Circuit::saveState()
     m_changed = true;
 
     if( m_busy || m_deleting ) return;
-    m_deleting = true;
+    m_busy = true;
 
     m_redoStack.clear();
     m_undoStack.append(  circuitToString() );
@@ -574,7 +575,7 @@ void Circuit::saveState()
     QString title = MainWindow::self()->windowTitle();
     if( !title.endsWith('*') ) MainWindow::self()->setWindowTitle(title+'*');
 
-    m_deleting = false;
+    m_busy = false;
 }
 
 void Circuit::saveChanges()

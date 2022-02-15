@@ -144,12 +144,11 @@ void CircuitView::clear()
         m_circuit->remove();
         m_circuit->deleteLater();
     }
-    resetMatrix();
-    m_scale = 1;
-    m_enterItem = 0l;
-    
     m_circuit = new Circuit( -1600, -1200, 3200, 2400, this );
     setScene( m_circuit );
+    resetMatrix();
+    m_scale = 1;
+    m_enterItem = NULL;
     centerOn( 900, 600 );
 }
 

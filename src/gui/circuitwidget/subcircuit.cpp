@@ -405,7 +405,7 @@ void SubCircuit::remove()
 
     for( Component* comp : m_compList )
     {
-        if( comp->itemType()=="Node" ) continue;
+        //if( comp->itemType()=="Node" ) continue;
         comp->setParentItem( NULL );
         Circuit::self()->removeComp( comp );
     }
