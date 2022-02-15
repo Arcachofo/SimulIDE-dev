@@ -91,4 +91,5 @@ void DAC::setNumInps( int inputs )
     if( inputs < 1 ) return;
     m_maxValue = pow( 2, inputs )-1;
     IoComponent::setNumInps( inputs, "D" );
+    IoComponent::setNumOuts( 1, "Out" );
 }

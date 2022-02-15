@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT ADC : public LogicComponent
         double maxVolt() { return m_maxVolt; }
         void setMaxVolt( double v ) { m_maxVolt = v; }
 
-        virtual void setNumOuts( int pins ) ;
+        void setNumOuts( int pins ) ;
         
     protected:
         double m_maxVolt;

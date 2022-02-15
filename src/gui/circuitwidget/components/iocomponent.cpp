@@ -325,7 +325,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
                               , QString label, int bit0, bool out, bool number )
 {
     uint oldSize = pinList->size();
-    if( pins == oldSize ) return;
+    //if( pins == oldSize ) return;
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
     int halfW = (m_width/2)*8;//m_width*8/2;

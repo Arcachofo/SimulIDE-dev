@@ -78,5 +78,6 @@ void ADC::setNumOuts( int outs )
 {
     if( outs < 1 ) return;
     m_maxValue = pow( 2, outs )-1;
-    LogicComponent::setNumOuts( outs, "D" );
+    IoComponent::setNumOuts( outs, "D" );
+    IoComponent::setNumInps( 1, "In" );
 }

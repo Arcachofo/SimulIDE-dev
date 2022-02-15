@@ -41,7 +41,7 @@ class MAINMODULE_EXPORT DAC : public LogicComponent
         double maxVolt() { return m_maxVolt; }
         void setMaxVolt( double v ) { m_maxVolt = v; }
 
-        virtual void setNumInps( int pins );
+        void setNumInps( int pins );
         
     protected:
         double m_maxVolt;
