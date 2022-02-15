@@ -20,6 +20,7 @@
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
 #include <QPainter>
+#include <QMenu>
 
 #include "serialport.h"
 #include "itemlibrary.h"
@@ -29,6 +30,8 @@
 #include "usartrx.h"
 #include "iopin.h"
 #include "utils.h"
+
+#include "stringprop.h"
 
 static const char* SerialPort_properties[] = {
     QT_TRANSLATE_NOOP("App::Property","Steps"),
@@ -101,6 +104,11 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
                  this, SLOT(   readData()), Qt::UniqueConnection );
 
     Simulator::self()->addToUpdateList( this );
+
+addPropGroup( { "Main", {
+//new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
+new StringProp<SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port,  &SerialPort::setPort ),
+    } } );
 
     initialize();
 }
@@ -185,6 +193,31 @@ void SerialPort::onbuttonclicked()
     else                        close();
 }
 
+void SerialPort::slotOpenTerm()
+{
+    openMonitor( m_id, 0 );
+}
+
+void SerialPort::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+{
+    if( !acceptedMouseButtons() ) event->ignore();
+    else{
+        event->accept();
+        QMenu* menu = new QMenu();
+        contextMenu( event, menu );
+        Component::contextMenu( event, menu );
+        menu->deleteLater();
+}   }
+
+void SerialPort::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    QAction* openSerMon = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
+    connect( openSerMon, SIGNAL(triggered()),
+                   this, SLOT(slotOpenTerm()), Qt::UniqueConnection );
+
+    menu->addSeparator();
+}
+
 void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
@@ -206,7 +239,7 @@ void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
     pen.setWidth( 0 );
     pen.setColor( QColor( 250, 210, 150 ) );
     p->setPen(pen);
-    p->drawText( 40, 5, "PORT1" );
+    p->drawText( 40, 5, m_portName );
 }
 
 #include "moc_serialport.cpp"

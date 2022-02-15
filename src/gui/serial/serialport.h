@@ -79,9 +79,14 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
     public slots:
         void onbuttonclicked();
         void slotClose();
+        void slotOpenTerm();
 
     private slots:
         void readData();
+
+    protected:
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+        virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
 
     private:
         void open();
