@@ -198,6 +198,7 @@
         <file alias="dsxxx_ico.png">../src/icons/components/dsxxx_ico.png</file>
         <file alias="esp01.png">../src/icons/components/esp01.png</file>
         <file alias="esp01_ico.png">../src/icons/components/esp01_ico.png</file>
+        <file alias="touch.png">../src/icons/components/touch.png</file>
         
         <file alias="up.png">../src/icons/components/up.png</file>
         <file alias="su.png">../src/icons/components/su.png</file>

@@ -22,6 +22,7 @@
 
 #include "mcumodule.h"
 #include "e-element.h"
+#include "mcutypes.h"
 
 class PicSpi;
 class PicTwi;

@@ -70,7 +70,7 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     m_deviceinfo = QAudioDeviceInfo::defaultOutputDevice(); 
     if( m_deviceinfo.isNull() ) 
     {
-        qDebug() <<"Error: No defaulf Audio Output Device Found" ;
+        qDebug() <<"   Error: No defaulf Audio Output Device Found" ;
         return;
     }
     m_format.setSampleRate( sampleRate );  

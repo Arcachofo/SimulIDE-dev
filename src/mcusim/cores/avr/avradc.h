@@ -29,8 +29,6 @@ class AvrTimer800;
 class AvrTimer16bit;
 class McuOcUnit;
 
-
-
 class MAINMODULE_EXPORT AvrAdc : public McuAdc
 {
     public:

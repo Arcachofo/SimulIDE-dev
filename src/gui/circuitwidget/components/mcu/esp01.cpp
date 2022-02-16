@@ -54,7 +54,7 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
 
     m_pin.resize(2);
 
-    IoPin* pinTx = new IoPin( 180, QPoint(-40,-8), id+"-pin0", 0, this,output );
+    IoPin* pinTx = new IoPin( 180, QPoint(-40,-8), id+"-pin0", 0, this, output );
     pinTx->setLabelText( "Tx" );
     m_pin[0] = pinTx;
     m_sender->setPins( {pinTx} );

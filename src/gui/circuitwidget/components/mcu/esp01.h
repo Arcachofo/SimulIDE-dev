@@ -27,7 +27,7 @@
 class LibraryItem;
 class QTcpSocket;
 
-class MAINMODULE_EXPORT Esp01 : public Component , public UsartModule, public eElement
+class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eElement
 {
     Q_OBJECT
 

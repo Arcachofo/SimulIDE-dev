@@ -26,6 +26,8 @@ class eMcu;
 
 class MAINMODULE_EXPORT PicSpi : public McuSpi
 {
+    friend class PicMssp;
+
     public:
         PicSpi( eMcu* mcu, QString name );
         ~PicSpi();

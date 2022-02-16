@@ -307,8 +307,7 @@ bool Mcu::load( QString fileName )
 void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( !acceptedMouseButtons() ) event->ignore();
-    else
-    {
+    else{
         event->accept();
         QMenu* menu = new QMenu();
         contextMenu( event, menu );
