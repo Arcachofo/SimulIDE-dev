@@ -194,7 +194,7 @@ void eDiode::setEpin( int num, ePin* pin )
 void eDiode::getModels() // Static
 {
     m_diodes.insert( "Custom", {0, 0, 0, 0} );
-    m_diodes.insert( "Diode Default", {171.4352819281, 2, 20, 0.05} );
+    m_diodes.insert( "Diode Default", {171.4352819281, 2, 0, 0.05} );
     m_zeners.insert( "Custom", {0, 0, 0, 0} );
     m_zeners.insert( "Zener Default", {171.4352819281, 2, 5.6, 0.05} );
     m_leds.insert( "Custom", {0, 0, 0, 0} );
