@@ -122,8 +122,8 @@ void Lm555::initialize()
     m_voltPos = 0;
 
     if( !Simulator::self()->isRunning() ) return;
-    eNode* enod = m_cv->getEnode();   // Control Voltage Pin
-    if( !enod )                       // Not connected: Create threshold eNode
+    m_thrEnode = m_cv->getEnode();   // Control Voltage Pin
+    if( !m_thrEnode )                // Not connected: Create threshold eNode
         m_thrEnode = new eNode( m_id+"-threNode" );
 }
 
