@@ -110,8 +110,8 @@ void Diac::voltChanged()
     double current = m_diode1->getCurrent() - m_diode2->getCurrent();
     bool state = m_state;
 
-    if( abs(current) < m_holdCurr ) state = false;
-    if( abs(voltage) > m_brkVolt  ) state = true;
+    if( fabs(current) < m_holdCurr ) state = false; /// Mingw needs fabs
+    if( fabs(voltage) > m_brkVolt  ) state = true;
 
     if( m_state != state )
     {

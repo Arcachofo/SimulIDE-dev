@@ -61,7 +61,6 @@ void eDiode::createSerRes() // --P[diode]N--(midEnode)--R0[resistor]R1--
 
 void eDiode::initialize()
 {
-    m_converged = true;
     m_admit = m_bAdmit;
     m_voltPN = 0;
     m_current = 0;
@@ -86,8 +85,7 @@ void eDiode::stamp()
 void eDiode::voltChanged()
 {
     double voltPN = m_pinP->getVolt() - m_pinN->getVolt();
-    if( abs( voltPN - m_voltPN ) < .01 ) { m_step = 0; m_converged = true; return; } // Converged
-    m_converged = false;
+    if( fabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged  /// Mingw needs fabs
     Simulator::self()->notCorverged();
 
     m_step += .01;
@@ -137,14 +135,13 @@ void eDiode::SetParameters( double sc, double ec, double bv, double sr )
     m_emCoef = ec;
     m_bkDown = bv;
     setResSafe( sr );
-    //m_admit = 1/sr;
 
     updateValues();
 }
 
 void eDiode::setThreshold( double fdDrop )
 {
-    m_satCur = 1/( exp( fdDrop*m_vdCoef) - 1 );
+    m_satCur = 1/( exp( fdDrop*m_vdCoef ) - 1 );
     updateValues();
 }
 
