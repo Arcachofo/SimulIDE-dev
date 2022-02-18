@@ -247,6 +247,7 @@ void Simulator::createNodes()
     for( QString pinName : pins )
     {
         Pin* pin = Circuit::self()->m_pinMap.value( pinName );
+        if( !pin ) continue;
         if( !pin->conPin() ) continue;
         if( pin->isBus() ) continue;
         if( pinList.contains( pinName ) ) continue;

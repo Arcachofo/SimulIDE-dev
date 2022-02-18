@@ -68,7 +68,7 @@ void RTD::updateStep()
 
     //double res = m_resist + dr*(1.0 -exp(-dt/m_tau));
     double res = sensorFunction( m_value );
-    eResistor::setResSafe( res );
+    eResistor::setRes( res );
    if( m_propDialog ) m_propDialog->updtValues();
    else if( m_showProperty == "Temp" ) setValLabelText( getPropStr( "Temp" ) );
     //m_lastTime = time;

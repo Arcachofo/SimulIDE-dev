@@ -124,7 +124,7 @@ void KY023::onbuttonreleased()
     update();
 }
 
-void KY023::onvaluechanged(int xValue, int yValue)
+void KY023::onvaluechanged( int xValue, int yValue )
 {
     m_vOutX = double(VIN * xValue) / 1000;
     m_vOutY = double(VIN * (1000 - yValue)) / 1000;

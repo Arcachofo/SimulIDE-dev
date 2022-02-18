@@ -58,7 +58,7 @@ void VarResistor::updateStep()
     if( !m_changed ) return;
     m_changed = false;
 
-    eResistor::setResSafe( m_value );
+    eResistor::setRes( m_value );
     if( m_propDialog ) m_propDialog->updtValues();
     else if( m_showProperty == "Value_Ohm" ) setValLabelText( getPropStr( "Value_Ohm" ) );
 }

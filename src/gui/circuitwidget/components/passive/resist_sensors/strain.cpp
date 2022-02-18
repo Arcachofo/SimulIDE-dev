@@ -97,7 +97,7 @@ void Strain::updateStep()
     //m_last_step = m_step;
 
     double res = sensorFunction( m_value );
-    eResistor::setResSafe( res );
+    eResistor::setRes( res );
     if( m_propDialog ) m_propDialog->updtValues();
     else if( m_showProperty == "Force_N" ) setValLabelText( getPropStr( "Force_N" ) );
 }
