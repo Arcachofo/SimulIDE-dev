@@ -48,8 +48,6 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         virtual void stamp() override;
         virtual void updateStep() override;
 
-        virtual void registerEnode( eNode* enode, int n=-1 ) override;
-
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:

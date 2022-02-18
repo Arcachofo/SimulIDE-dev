@@ -60,6 +60,7 @@ void VarResistor::updateStep()
 
     eResistor::setResSafe( m_value );
     if( m_propDialog ) m_propDialog->updtValues();
+    else if( m_showProperty == "Value_Ohm" ) setValLabelText( getPropStr( "Value_Ohm" ) );
 }
 
 void VarResistor::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

@@ -120,12 +120,6 @@ void Potentiometer::stamp()
     updateStep();
 }
 
-void Potentiometer::registerEnode( eNode* enode, int ) // called by m_pin[0]
-{
-    m_ePinA.setEnode( enode );  // Set eNode to internal eResistors ePins
-    m_ePinB.setEnode( enode );
-}
-
 void Potentiometer::updateStep()
 {
     if( !m_changed ) return;
@@ -146,6 +140,7 @@ void Potentiometer::updateStep()
     m_resB.setRes( res2 );
 
     if( m_propDialog ) m_propDialog->updtValues();
+    else if( m_showProperty == "Value_Ohm" ) setValLabelText( getPropStr( "Value_Ohm" ) );
 }
 
 void Potentiometer::resChanged( int res ) // Called when dial is rotated

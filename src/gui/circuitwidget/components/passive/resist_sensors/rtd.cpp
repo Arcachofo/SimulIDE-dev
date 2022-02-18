@@ -52,10 +52,7 @@ RTD::RTD( QObject* parent, QString type, QString id )
 new DoubProp<RTD>( "R0", "R0","Ω" , this, &RTD::getR0,   &RTD::setR0 )
     }} );
 }
-
 RTD::~RTD() {}
-
-
 
 void RTD::updateStep()
 {
@@ -73,6 +70,7 @@ void RTD::updateStep()
     double res = sensorFunction( m_value );
     eResistor::setResSafe( res );
    if( m_propDialog ) m_propDialog->updtValues();
+   else if( m_showProperty == "Temp" ) setValLabelText( getPropStr( "Temp" ) );
     //m_lastTime = time;
 }
 

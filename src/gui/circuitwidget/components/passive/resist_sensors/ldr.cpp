@@ -69,6 +69,7 @@ void Ldr::updateStep()
     double res = double(m_r1)*pow( m_value, -m_gamma );
     eResistor::setResSafe( res );
     if( m_propDialog ) m_propDialog->updtValues();
+    else if( m_showProperty == "Lux" ) setValLabelText( getPropStr( "Lux" ) );
 }
 
 void Ldr::setR1( int r1 )
