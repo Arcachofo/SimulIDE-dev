@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2020 by Jan K. S.                                       *
- *                                                      *
+ *   Copyright (C) 2022 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,10 +16,6 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
  *                                                                         *
  ***************************************************************************/
-/*
- *   Modified 2020 by santiago González                                    *
- *   santigoro@gmail.com                                                   *
- *                                                                         */
 
 #include <QDial>
 #include <QToolButton>
@@ -30,17 +26,19 @@
 #include "iopin.h"
 #include "simulator.h"
 #include "circuit.h"
+#include "circuitwidget.h"
 #include "itemlibrary.h"
+
+#include "intprop.h"
 
 #define WIDTH 40
 #define HEIGHT 56
 #define GAP 0
 #define DIAL_SIZE 36
 
-#define VIN 5
+#define RESOLUTION 10
 
-const bool CWseq[2][4] = { {true, false, false, true}, {false, false, true, true} };
-const bool CCWseq[2][4] = { {true, true, false, false}, {false, true, true, false} };
+#define VIN 5
 
 Component* KY040::construct( QObject* parent, QString type, QString id )
 { return new KY040( parent, type, id ); }
@@ -48,8 +46,8 @@ Component* KY040::construct( QObject* parent, QString type, QString id )
 LibraryItem* KY040::libraryItem()
 {
     return new LibraryItem(
-        "KY-040" ,
-        QObject::tr( "Perifericals" ),
+        tr("Rotary Encoder (relative)"),
+        tr( "Perifericals" ),
         "ky-040.png",
         "KY040",
         KY040::construct);
@@ -60,15 +58,17 @@ KY040::KY040( QObject* parent, QString type, QString id )
     , eElement( id )
 {
     m_changed = false;
-    m_closed = false;
-    m_seqIndex = -1;
     
     m_dialW.setupWidget();
     m_dialW.setFixedSize( DIAL_SIZE, DIAL_SIZE );
 
     m_dial = m_dialW.dial;
     m_dial->setWrapping( true );
-    setDetents( 20 );
+    m_dial->setMinimum( 1 );
+    m_dial->setValue( 1 );
+    m_dial->setSingleStep( 1 );
+    m_dial->setNotchTarget( 10 );
+    setSteps( 20 );
     
     m_proxy = Circuit::self()->addWidget( &m_dialW );
     m_proxy->setParentItem( this );
@@ -87,110 +87,120 @@ KY040::KY040( QObject* parent, QString type, QString id )
     
     m_pin.resize(3);
 
-    m_pin[0] = m_dt = new IoPin( 270, QPoint(-4,36), id+"-dt", 0, this, output );
-    m_dt->setOutHighV( VIN );
-    m_dt->setLabelText( " DT" );
+    m_pin[0] = m_pinA = new IoPin( 270, QPoint(4,36), id+"-clk", 0, this, output );
+    m_pinA->setOutHighV( VIN );
+    m_pinA->setLabelText( " CLK" );
 
-    m_pin[1] = m_clk = new IoPin( 270, QPoint(4,36), id+"-clk", 0, this, output );
-    m_clk->setOutHighV( VIN );
-    m_clk->setLabelText( " CLK" );
+    m_pin[1] = m_pinB = new IoPin( 270, QPoint(-4,36), id+"-dt", 0, this, output );
+    m_pinB->setOutHighV( VIN );
+    m_pinB->setLabelText( " DT" );
 
     m_pin[2] = m_sw = new IoPin( 270, QPoint(-12,36), id+"-sw", 0, this, output );
     m_sw->setOutHighV( VIN );
-    m_sw->setOutState( !m_closed );
     m_sw->setLabelText( " SW" );
 
     setAngle( 90 );
 
     Simulator::self()->addToUpdateList( this );
-    
-    connect( m_dial, SIGNAL( valueChanged(int)),
-             this,   SLOT  ( posChanged(int)) );
-    
+
     connect( m_button, SIGNAL( pressed() ),
-             this,     SLOT  ( onbuttonpressed() ));
+             this,     SLOT  ( onbuttonchanged() ));
     
     connect( m_button, SIGNAL( released() ),
-             this,     SLOT  ( onbuttonreleased() ));
-    
-    initialize();
+             this,     SLOT  ( onbuttonchanged() ));
+
+    addPropGroup( { tr("Main"), {
+new IntProp<KY040>( "Steps", tr("Steps"),"_Steps", this, &KY040::steps, &KY040::setSteps, "uint" )
+    }} );
 }
 KY040::~KY040(){}
 
+
+void KY040::stamp()
+{
+    m_dial->setValue(1);
+    m_prevDialVal = 1;
+
+    m_posA = 5;
+    m_posB = 0;
+
+    m_stateA = false;
+    m_stateB = false;
+
+    m_pinA->setOutState( false );
+    m_pinB->setOutState( false );
+    m_sw->setOutState( true );
+}
+
 void KY040::updateStep()
 {
-    if( !m_changed ) return;
+    Simulator::self()->cancelEvents( this );
 
-    m_sw->sheduleState( !m_closed, 0 );
+    int val = m_dial->value();
+    if( m_prevDialVal != val )
+    {
+        int max = m_dial->maximum() ;
+        int bot = max/4;
+        int top = max-bot;
+
+        if     ( m_prevDialVal > top && val < bot ) m_prevDialVal -= max;
+        else if( m_prevDialVal < bot && val > top ) m_prevDialVal += max;
+        int dialDelta = val - m_prevDialVal;
+        m_prevDialVal = val;
+
+        if( dialDelta > 0 ) m_delta = 1;// Clockwise
+        else                m_delta = -1;
+
+        uint64_t spf = Simulator::self()->stepsPerFrame()*Simulator::self()->stepSize();
+        m_stepDelta = spf/abs(dialDelta)/2;
+
+        //qDebug()<<"\n" << dialDelta << m_stepDelta/1e6;
+
+        Simulator::self()->addEvent( m_stepDelta, this );
+    }
+
+    if( !m_changed ) return;
+    m_sw->setOutState( !m_button->isDown() );
     m_changed = false;
 }
 
 void KY040::runEvent()
 {
-    if( m_seqIndex >= 0 )
+    m_posA += m_delta;
+    if     ( m_posA > 19 ) m_posA = 0;
+    else if( m_posA < 0  ) m_posA = 19;
+    m_posB += m_delta;
+    if     ( m_posB > 19 ) m_posB = 0;
+    else if( m_posB < 0  ) m_posB = 19;
+
+    bool stateA = m_posA > 9;
+    bool stateB = m_posB > 9;
+
+    if( m_stateA != stateA )
     {
-        bool dtOuput;
-        bool clkOuput;
-
-        if( m_clockwise )
-        {
-            dtOuput  = CWseq[0][m_seqIndex];
-            clkOuput = CWseq[1][m_seqIndex];
-        }else{
-            dtOuput  = CCWseq[0][m_seqIndex];
-            clkOuput = CCWseq[1][m_seqIndex];
-        }
-        m_dt->sheduleState( dtOuput, 0 );
-        m_clk->sheduleState( clkOuput, 0 );
-
-        m_seqIndex++;
-        if( m_seqIndex >= 4 ) m_seqIndex = -1;
+        m_stateA = stateA;
+        m_pinA->setOutState( stateA );
     }
-    Simulator::self()->addEvent( 100*1e6, this );
+    if( m_stateB != stateB )
+    {
+        m_stateB = stateB;
+        m_pinB->setOutState( stateB );
+    }
+    Simulator::self()->addEvent( m_stepDelta, this );
 }
 
-void KY040::onbuttonpressed()
+void KY040::onbuttonchanged()
 {
-    m_closed = true;
     m_changed = true;
     update();
 }
 
-void KY040::onbuttonreleased()
+void KY040::setSteps( int s )
 {
-    m_closed = false;
-    m_changed = true;
-    update();
-}
-
-void KY040::setDetents( int val ) 
-{
-    if( val < 10 ) val = 10;
-
-    m_detents = val;
-    m_dial->setMinimum( 1 );
-    m_dial->setMaximum( val );
-    m_dial->setValue( 1 );
-    m_dial->setSingleStep( 1 );
-}
-
-void KY040::initialize()
-{
-    m_prevDialVal = 0;
-    Simulator::self()->addEvent( 1, this );
-}
-
-void KY040::posChanged( int value )
-{
-    if( m_prevDialVal == value ) return;
-
-    m_seqIndex = 0;
-    
-    m_clockwise = ( m_prevDialVal < value
-                 || (m_prevDialVal > m_detents-3
-                    && value < m_detents-3 ));
-    
-    m_prevDialVal = value;
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+    m_steps = s;
+    //m_deltaS = 5;
+    m_dial->setMaximum( s*2*RESOLUTION );
 }
 
 void KY040::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

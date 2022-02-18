@@ -31,7 +31,7 @@ DialWidget::~DialWidget() {}
 void DialWidget::setupWidget()
 {
     dial = new QDial(this);
-    dial->setObjectName(QString::fromUtf8("dial"));
+    dial->setObjectName("dial");
     dial->setNotchesVisible(true);
 
     verticalLayout = new QVBoxLayout(this);
