@@ -84,16 +84,6 @@ void Function::stamp()
         m_program.append( QScriptProgram( m_funcList.at(i).toLower() ));
 }   }
 
-void Function::runEvent()
-{
-    for( uint i=0; i<m_outPin.size(); ++i )
-    {
-        bool state = m_nextOutVal & (1<<i);
-        m_outPin[i]->sheduleState( state, 0 );
-    }
-    m_outValue = m_nextOutVal;
-}
-
 void Function::voltChanged()
 {
     uint bit = 0;
@@ -137,7 +127,7 @@ void Function::voltChanged()
             if( out ) m_nextOutVal += 1<<i;
         }
     }
-    Simulator::self()->addEvent( m_propDelay, this );
+    sheduleOutPuts( this );
 }
 
 void Function::setFunctions( QString f )

@@ -40,7 +40,7 @@ class MAINMODULE_EXPORT Function : public LogicComponent
 
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void runEvent() override;
+        virtual void runEvent() override { IoComponent::runOutputs(); }
 
         QString functions() { return m_functions; }
         void setFunctions( QString f );
