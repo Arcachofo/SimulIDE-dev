@@ -60,7 +60,7 @@ VarResBase::VarResBase( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_dial, SIGNAL(sliderMoved(int)),
+    connect( m_dial, SIGNAL(valueChanged(int)),
              this,   SLOT  (dialChanged(int)), Qt::UniqueConnection );
 }
 VarResBase::~VarResBase(){}
