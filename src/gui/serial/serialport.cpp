@@ -23,6 +23,7 @@
 #include <QMenu>
 
 #include "serialport.h"
+#include "serialmon.h"
 #include "itemlibrary.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -32,16 +33,7 @@
 #include "utils.h"
 
 #include "stringprop.h"
-
-static const char* SerialPort_properties[] = {
-    QT_TRANSLATE_NOOP("App::Property","Steps"),
-    QT_TRANSLATE_NOOP("App::Property","Port Name"),
-    QT_TRANSLATE_NOOP("App::Property","BaudRate"),
-    QT_TRANSLATE_NOOP("App::Property","DataBits"),
-    QT_TRANSLATE_NOOP("App::Property","Parity"),
-    QT_TRANSLATE_NOOP("App::Property","StopBits"),
-    QT_TRANSLATE_NOOP("App::Property","FlowControl")
-};
+#include "intprop.h"
 
 Component* SerialPort::construct( QObject* parent, QString type, QString id )
 { return new SerialPort( parent, type, id ); }
@@ -61,8 +53,6 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
           , UsartModule( NULL, id+"-Uart" )
           , eElement( (id+"-eElement") )
 {
-    Q_UNUSED( SerialPort_properties );
-
     m_area = QRect( -34, -16, 160, 32 );
     setLabelPos(-34,-20 );
 
@@ -70,6 +60,7 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
 
     IoPin* pinTx = new IoPin( 180, QPoint(-40,-8), id+"-pin0", 0, this, output );
     pinTx->setLabelText( "Tx" );
+    pinTx->setOutHighV( 5 );
     m_pin[0] = pinTx;
     m_sender->setPins( {pinTx} );
 
@@ -79,13 +70,13 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
     m_receiver->setPins( {pinRx} );
 
     m_serial = new QSerialPort( this );
-    m_active = false;
+    m_receiving = false;
 
-    m_BaudRate    = QSerialPort::Baud9600;
-    m_dataBits    = QSerialPort::Data8;
-    m_parity      = QSerialPort::NoParity;
-    m_stopBits    = QSerialPort::OneStop;
+    m_stopBits = 1;
+    m_dataBits = 8;
+    m_parity   = parNONE;
     m_flowControl = QSerialPort::NoFlowControl;
+    setBaudRate( 9600 );
 
     m_button = new QPushButton( );
     m_button->setMaximumSize( 36, 20 );
@@ -95,7 +86,7 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
 
     m_proxy = Circuit::self()->addWidget( m_button );
     m_proxy->setParentItem( this );
-    m_proxy->setPos( QPoint(-18,-10) );
+    m_proxy->setPos( QPoint(-4,-10) );
 
     connect( m_button, SIGNAL( clicked() ),
                  this, SLOT(   onbuttonclicked() ), Qt::UniqueConnection);
@@ -110,12 +101,46 @@ addPropGroup( { "Main", {
 new StringProp<SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port,  &SerialPort::setPort ),
     } } );
 
+addPropGroup( { "Config", {
+new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bauds", this, &SerialPort::baudRate, &SerialPort::setBaudRate, "uint" ),
+new IntProp<SerialPort>("DataBits", tr("Data Bits"),"_Bits", this, &SerialPort::dataBits, &SerialPort::setDataBits, "uint" ),
+new IntProp<SerialPort>("StopBits", tr("Stop Bits"),"_Bits", this, &SerialPort::stopBits, &SerialPort::setStopBits, "uint" ),
+    } } );
+
     initialize();
 }
 SerialPort::~SerialPort(){}
 
-void SerialPort::initialize()
+void SerialPort::stamp()
 {
+    m_serData.clear();
+    m_uartData.clear();
+    m_sender->enable( true );
+    m_receiver->enable( true );
+    m_sending = false;
+    m_receiving = false;
+}
+
+void SerialPort::updateStep()
+{
+    if( m_serData.size() )
+    {
+        if( m_serial->isOpen() ) m_serial->write( m_serData );
+        m_serData.clear();
+    }
+    else m_receiving = false;
+
+    if( m_uartData.size() && !m_sending ) Simulator::self()->addEvent( 1, this );
+
+    update();
+}
+
+void SerialPort::runEvent()
+{
+    if( m_uartData.isEmpty() ) return;
+    sendByte( m_uartData.at( 0 ) ); // Start transaction
+    m_uartData = m_uartData.right( m_uartData.size()-1 );
+    m_sending = true;
 }
 
 void SerialPort::open()
@@ -123,11 +148,11 @@ void SerialPort::open()
     if( m_serial->isOpen() ) close();
 
     m_serial->setPortName( m_portName );
-    m_serial->setBaudRate( m_BaudRate );
-    m_serial->setDataBits( m_dataBits );
-    m_serial->setParity(   m_parity );
-    m_serial->setStopBits( m_stopBits );
-    m_serial->setFlowControl( m_flowControl );
+    m_serial->setBaudRate( m_baudRate );
+    m_serial->setDataBits( (QSerialPort::DataBits)m_dataBits );
+    m_serial->setParity( (QSerialPort::Parity)m_parity );
+    m_serial->setStopBits( (QSerialPort::StopBits)m_stopBits );
+    m_serial->setFlowControl( QSerialPort::NoFlowControl/*m_flowControl*/ );
 
     if( m_serial->open( QIODevice::ReadWrite ) )
     {
@@ -137,7 +162,7 @@ void SerialPort::open()
         m_button->setChecked( false );
         MessageBoxNB( "Error", tr("Cannot Open Port %1:\n%2.").arg(m_portName).arg(m_serial->errorString()) );
     }
-    m_active = false;
+    m_receiving = false;
     update();
 }
 
@@ -145,40 +170,34 @@ void SerialPort::close()
 {
     if( m_serial->isOpen() ) m_serial->close();
     m_button->setText( "Open" );
-    m_active = false;
+    m_receiving = false;
+    m_sending = false;
     update();
 }
 
 void SerialPort::readData()
 {
-    m_uartData = m_serial->readAll();
-    m_active = !m_active;
-    m_dataIndex = 0;
-    frameSent( 0 );
-    update();
-
-    /// for( int i=0; i<data.size(); i++ ) m_processor->uartIn( m_uart, data.at(i) );
+    m_uartData += m_serial->readAll();
 }
 
 void SerialPort::byteReceived( uint8_t byte )
 {
-    if( m_serial->isOpen() )
-    {
-        QByteArray ba;
-        ba.resize(1);
-        ba[0] = byte;
-        m_serial->write( ba );
-        m_active = !m_active;
-        update();
-}   }
+    m_receiver->getData();
+    m_monitor->printIn( byte );
+    m_serData.append( byte );
+    m_receiving = true;
+}
 
-void SerialPort::frameSent( uint8_t )
+void SerialPort::frameSent( uint8_t data )
 {
-    if( m_dataIndex < m_uartData.size() )
+    m_monitor->printOut( data );
+    if( m_uartData.size() )
     {
-        sendByte( m_uartData.at( m_dataIndex ) );
-        m_dataIndex++;
+        uint8_t byte = m_uartData.at( 0 );
+        m_uartData = m_uartData.right( m_uartData.size()-1 );
+        sendByte( byte );
     }
+    else m_sending = false;
 }
 
 void SerialPort::slotClose()
@@ -227,12 +246,20 @@ void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
 
     if( m_serial->isOpen() )
     {
-        if( m_active ) p->setBrush( Qt::yellow );
-        else           p->setBrush( Qt::red );
-        m_active = false;
+        if( m_sending ) p->setBrush( Qt::yellow );
+        else            p->setBrush( Qt::red );
     }
     else p->setBrush( Qt::black );
-    p->drawEllipse( 22,-6, 12, 12);
+    p->drawRoundedRect( -21,-11, 8, 6, 2, 2 ); // Tx led
+
+    if( m_serial->isOpen() )
+    {
+        if( m_receiving ) p->setBrush( Qt::yellow );
+        else              p->setBrush( Qt::red );
+    }
+    else p->setBrush( Qt::black );
+    p->drawRoundedRect( -21,  5, 8, 6, 2, 2 ); // Rx led
+    //p->drawEllipse( 32,-6, 12, 12);
     
     p->setBrush( Qt::white );
     QPen pen = p->pen();

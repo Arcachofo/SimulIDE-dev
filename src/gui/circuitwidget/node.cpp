@@ -36,16 +36,15 @@ Node::Node( QObject* parent, QString type, QString id )
     m_isBus = false;
 
     m_pin.resize( 3 );
-    for ( int i=0; i<3; i++ )
+    for( int i=0; i<3; i++ )
     {
         m_pin[i] = new Pin( 90*i, QPoint(0,0), id+"-"+uchar(48+i), i, this );
         m_pin[i]->setLength( 0 );
     }
     remPropGroup( "CompGraphic" );
     addPropGroup( { "CompGraphic", {
-new PointProp <Component>( "Pos"     ,"","",this, &Component::position,   &Component::setPosition )
+new PointProp <Component>( "Pos","","",this, &Component::position, &Component::setPosition )
     }} );
-
 }
 Node::~Node(){}
 
@@ -54,7 +53,7 @@ void Node::inStateChanged( int rem ) // Called by pin
     if     ( rem == 1 ) checkRemove();
     else if( rem == 2 ) // Propagate Is Bus
     {
-        for( int i=0; i< 3; i++) m_pin[i]->setIsBus( true );
+        for( int i=0; i<3; i++) m_pin[i]->setIsBus( true );
         m_isBus = true;
 }   }
 

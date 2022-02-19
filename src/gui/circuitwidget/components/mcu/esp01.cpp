@@ -56,6 +56,7 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
 
     IoPin* pinTx = new IoPin( 180, QPoint(-40,-8), id+"-pin0", 0, this, output );
     pinTx->setLabelText( "Tx" );
+    pinTx->setOutHighV( 5 );
     m_pin[0] = pinTx;
     m_sender->setPins( {pinTx} );
 
@@ -104,6 +105,7 @@ void Esp01::runEvent()
 
 void Esp01::byteReceived( uint8_t data )
 {
+    m_receiver->getData();
     if( m_dataLenght )
     {
         m_tcpData.append( data );

@@ -314,7 +314,7 @@ void Circuit::loadStrDoc( QString &doc )
                 nodeList.append( joint );
             }
             else if( type == "Plotter" ) ;// Old Plotter widget;
-            else if( type == "SerialPort");
+            //else if( type == "SerialPort");
                  //&& ( element.hasAttribute( "visible" ) )
                  //&& ( element.attribute( "visible" ) == "false" ) ) ;// Old Serial Port Widget
             else if( type == "SerialTerm") ; /// TODO

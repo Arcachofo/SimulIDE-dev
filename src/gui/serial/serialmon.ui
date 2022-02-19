@@ -267,7 +267,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>MCU Input</string>
+          <string> Input</string>
          </property>
         </widget>
        </item>
@@ -312,7 +312,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>MCU Output</string>
+          <string> Output</string>
          </property>
         </widget>
        </item>

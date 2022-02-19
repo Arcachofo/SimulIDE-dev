@@ -34,12 +34,8 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
 {
     Q_OBJECT
     /*
-    Q_PROPERTY( QString  Port_Name READ port     WRITE setPort     DESIGNABLE true  USER true )
 
-    Q_PROPERTY( QSerialPort::BaudRate BaudRate READ baudRate WRITE setBaudRate  DESIGNABLE true  USER true )
-    Q_PROPERTY( QSerialPort::DataBits DataBits READ dataBits WRITE setDataBits  DESIGNABLE true  USER true )
     Q_PROPERTY( QSerialPort::Parity   Parity   READ parity   WRITE setParity    DESIGNABLE true  USER true )
-    Q_PROPERTY( QSerialPort::StopBits StopBits READ stopBits WRITE setStopBits  DESIGNABLE true  USER true )
     Q_PROPERTY( QSerialPort::FlowControl FlowControl READ flowControl WRITE setFlowControl  DESIGNABLE true  USER true )
 */
     public:
@@ -50,23 +46,23 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        virtual void initialize() override;
-        virtual void updateStep() override { update(); }
+        virtual void stamp() override;
+        virtual void updateStep() override;
+        virtual void runEvent() override;
 
         QString port(){return m_portName;}
         void setPort( QString name ){ m_portName = name; update();}
 
-        QSerialPort::BaudRate baudRate() { return m_BaudRate; }
-        void setBaudRate( QSerialPort::BaudRate br ) { m_BaudRate = br; }
+        int baudRate() { return m_baudRate; }
 
-        QSerialPort::DataBits dataBits(){ return m_dataBits; }
-        void setDataBits( QSerialPort::DataBits db ){ m_dataBits = db; }
+        int dataBits(){ return m_dataBits; }
+        void setDataBits( int db ){ m_dataBits = db; }
 
-        QSerialPort::Parity parity() { return m_parity; }
-        void setParity( QSerialPort::Parity par ) { m_parity = par; }
+        int parity() { return (int)m_parity; }
+        void setParity( int par ) { m_parity = (parity_t)par; }
 
-        QSerialPort::StopBits stopBits() { return m_stopBits; }
-        void setStopBits( QSerialPort::StopBits sb ) { m_stopBits = sb; }
+        int stopBits() { return m_stopBits; }
+        void setStopBits( int sb ) { m_stopBits = sb; }
 
         QSerialPort::FlowControl flowControl() { return m_flowControl; }
         void setFlowControl( QSerialPort::FlowControl fc ) { m_flowControl = fc; }
@@ -97,16 +93,17 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
 
         QSerialPort* m_serial;
 
-        bool m_active;
+        bool m_receiving;
+        bool m_sending;
 
+        QByteArray m_serData;
         QByteArray m_uartData;
-        int m_dataIndex;
 
         QString m_portName;
-        QSerialPort::BaudRate    m_BaudRate;
-        QSerialPort::DataBits    m_dataBits;
+
+        /*QSerialPort::DataBits    m_dataBits;
         QSerialPort::Parity      m_parity;
-        QSerialPort::StopBits    m_stopBits;
+        QSerialPort::StopBits    m_stopBits;*/
         QSerialPort::FlowControl m_flowControl;
 };
 

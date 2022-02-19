@@ -46,6 +46,12 @@ UsartModule::~UsartModule( )
     if( m_monitor ) m_monitor->close();
 }
 
+void UsartModule::setBaudRate( int br )
+{
+    m_baudRate = br;
+    setPeriod( 1e12/br );
+}
+
 void UsartModule::setPeriod( uint64_t period )
 {
     m_sender->setPeriod( period );

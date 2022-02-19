@@ -32,8 +32,8 @@
 
 enum parity_t{
     parNONE=0,
-    parEVEN,
-    parODD,
+    parEVEN=2,
+    parODD=3,
 };
 
 class IoPin;
@@ -47,6 +47,8 @@ class MAINMODULE_EXPORT UsartModule
     public:
         UsartModule( eMcu* mcu, QString name );
         ~UsartModule();
+
+        void setBaudRate( int br );
 
         virtual uint8_t getBit9Tx(){return 0;}
         virtual void setBit9Rx( uint8_t bit ){;}
@@ -79,6 +81,8 @@ class MAINMODULE_EXPORT UsartModule
         UartRx* m_receiver;
 
         bool m_sync;
+
+        int m_baudRate;
 
         //bool m_running;   // is Uart running?
 };
