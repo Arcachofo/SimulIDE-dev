@@ -57,7 +57,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         void controlPin( bool outCtrl, bool dirCtrl );
 
         virtual void sheduleState( bool state, uint64_t time ) override;
-
+        virtual void setPullup( bool up ) override;
         virtual void setAnalog( bool an ) {;}
         virtual void ConfExtInt( uint8_t bits );
 

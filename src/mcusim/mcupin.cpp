@@ -146,6 +146,12 @@ void McuPin::controlPin( bool outCtrl, bool dirCtrl )
     m_outCtrl = outCtrl;
 }
 
+void McuPin::setPullup( bool up )
+{
+    IoPin::setPullup( up );
+    m_puMask = up;
+}
+
 void McuPin::setExtraSource( double vddAdmit, double gndAdmit ) // Comparator Vref out to Pin for example
 {
     m_vddAdmEx = vddAdmit;

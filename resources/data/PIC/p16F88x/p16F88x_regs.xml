@@ -86,7 +86,7 @@
         <register name="SSPSTAT" addr="0x94" 
                   bits="BF,UA,READ_WRITE,I2C_START,I2C_STOP,DATA_ADDRESS,CKE,SMP" />
                   
-        <register name="WPUB"    addr="0x95" bits=""/>
+        <register name="WPUB"    addr="0x95" reset="11111111" bits=""/>
         <register name="IOCB"    addr="0x96" bits=""/>
         <register name="VRCON"   addr="0x97" 
                   bits="Vr0,VR1,VR2,VR3,VRSS,VRR,VROE,VREN"/>
