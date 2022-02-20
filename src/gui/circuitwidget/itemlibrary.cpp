@@ -47,7 +47,7 @@
 #include "elcapacitor.h"
 #include "ellipse.h"
 //#include "ertp080.h"
-//#include "esp01.h"
+#include "esp01.h"
 #include "fixedvolt.h"
 #include "flipflopd.h"
 #include "flipflopjk.h"
@@ -227,12 +227,12 @@ void ItemLibrary::loadItems()
     addItem( SR04::libraryItem() );
     addItem( Dht22::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Perifericals"),QObject::tr("Micro"), "perif.png","", NULL ) );
+    addItem( SerialPort::libraryItem() );
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );
     addItem( DS1307::libraryItem() );
     //addItem( ErTP080::libraryItem() );
-    //addItem( Esp01::libraryItem() );
-    addItem( SerialPort::libraryItem() );
+    addItem( Esp01::libraryItem() );
     // Logic
     addItem( new LibraryItem( QObject::tr("Gates"),QObject::tr("Logic"), "gates.png","", NULL ) );
     addItem( Buffer::libraryItem() );

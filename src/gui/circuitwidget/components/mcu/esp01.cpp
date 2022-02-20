@@ -46,7 +46,7 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
      , UsartModule( NULL, id+"-Uart" )
      , eElement( id )
 {
-    m_area = QRect(-34,-20, 67, 40 );
+    m_area = QRect(-28,-20, 56, 40 );
     m_background = ":/esp01.png";
 
     m_OK = "\r\nOK\r\n";
@@ -54,13 +54,13 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
 
     m_pin.resize(2);
 
-    IoPin* pinTx = new IoPin( 180, QPoint(-40,-8), id+"-pin0", 0, this, output );
+    IoPin* pinTx = new IoPin( 180, QPoint(-36,-8), id+"-pin0", 0, this, output );
     pinTx->setLabelText( "Tx" );
     pinTx->setOutHighV( 5 );
     m_pin[0] = pinTx;
     m_sender->setPins( {pinTx} );
 
-    IoPin* pinRx = new IoPin( 180, QPoint(-40, 8), id+"-pin1", 0, this, input );
+    IoPin* pinRx = new IoPin( 180, QPoint(-36, 8), id+"-pin1", 0, this, input );
     pinRx->setLabelText( "Rx" );
     m_pin[1] = pinRx;
     m_receiver->setPins( {pinRx} );
@@ -86,13 +86,13 @@ void Esp01::updateStep()
     case espNone:
         break;
     case tcpConnect:
-        m_tcpSocket->connectToHost( m_host, m_port );
+        qDebug() << "m_tcpSocket->connectToHost( m_host, m_port )";
         break;
     case tcpSend:
-        m_tcpSocket->write( m_tcpData );
+        qDebug() << "m_tcpSocket->write( m_tcpData )";
         break;
     case tcpClose:
-        m_tcpSocket->disconnectFromHost();
+        qDebug() << "m_tcpSocket->disconnectFromHost()";
         break;
     }
     m_action = espNone;
@@ -302,7 +302,9 @@ void Esp01::connectReply( QByteArray OP )
 void Esp01::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-    p->drawPixmap( QRect(-34,-20, 67, 40 ), QPixmap( m_background ) );
+
+    p->drawRoundedRect( m_area, 2, 2 );
+    p->drawPixmap( QRect(-28,-20, 56, 40 ), QPixmap( m_background ) );
 }
 
 #include "moc_esp01.cpp"
