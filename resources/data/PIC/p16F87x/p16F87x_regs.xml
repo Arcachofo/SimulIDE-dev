@@ -34,7 +34,9 @@
     <!-- BANK 1 -->
     <regblock name="SFR1" start="0x0080" end="0x009F">
         <mapped                  addr="0x80" mapto="0x00"/><!-- INDF -->
-        <register name="OPTION" addr="0x81" bits="PS0,PS1,PS2,PSA,T0SE,T0CS,INTEDG,RBPU" reset="11111111"/>
+        <register name="OPTION" addr="0x81" reset="11111111"
+                  bits="PS0,PS1,PS2,PSA,T0SE,T0CS,INTEDG,RBPU"/>
+                  
         <mapped                  addr="0x82" mapto="0x02"/><!-- PCL -->
         <mapped                  addr="0x83" mapto="0x03"/><!-- STATUS -->
         <mapped                  addr="0x84" mapto="0x04"/><!-- FSR -->

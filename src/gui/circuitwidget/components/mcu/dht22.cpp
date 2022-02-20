@@ -54,13 +54,13 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
     m_set = true;
 
     m_pin.resize(4);
-    m_pin[0] = m_inpin = new IoPin( 270, QPoint(-4, 28), id+"-inPin", 0, this );
+    m_pin[0] = m_inpin = new IoPin( 180, QPoint(-36,-4), id+"-inPin", 0, this );
     m_inpin->setOutHighV( 5 );
-    m_pin[1] = new Pin( 270, QPoint(-12, 28), id+"-vccPin", 0, this );
+    m_pin[1] = new Pin( 180, QPoint(-36,-12), id+"-vccPin", 0, this );
     m_pin[1]->setUnused( true );
-    m_pin[2] = new Pin( 270, QPoint( 12, 28), id+"-gdnPin", 0, this );
+    m_pin[2] = new Pin( 180, QPoint(-36, 4), id+"-gdnPin", 0, this );
     m_pin[2]->setUnused( true );
-    m_pin[3] = new Pin( 270, QPoint( 4, 28), id+"-ncPin", 0, this );
+    m_pin[3] = new Pin( 180, QPoint(-36, 12), id+"-ncPin", 0, this );
     m_pin[3]->setUnused( true );
 
     m_font.setFamily("Ubuntu");
@@ -264,7 +264,7 @@ void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     Component::paint( p, option, widget );
     QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
-    p->setBrush( QColor(50, 70, 100) );
+    p->setBrush(QColor( 50, 50, 70 ));
     p->drawRoundedRect( m_area, 2, 2 );
 
     p->setBrush( QColor(200, 220, 180) );
