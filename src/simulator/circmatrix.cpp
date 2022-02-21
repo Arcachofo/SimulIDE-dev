@@ -158,8 +158,8 @@ bool CircMatrix::solveMatrix()
             }
         }
         m_circChanged  = false;
-        //qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
-        //qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes";
+        qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
+        qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes";
     }else{
         for( int i=0; i<m_bList.size(); ++i )
         {

@@ -94,7 +94,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void notCorverged() { m_converged = false; }
 
         void addToEnodeList( eNode* nod );
-        void remFromEnodeList( eNode* nod, bool del );
+        void remFromEnodeList( eNode* nod );
 
         void addToChangedNodes( eNode* nod );
         
@@ -104,7 +104,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void addToUpdateList( Updatable* el );
         void remFromUpdateList( Updatable* el );
 
-        void addToChangedFast( eElement* el );
+        void addToChangedList( eElement* el );
         void addToNoLinList( eElement* el );
         
     private:

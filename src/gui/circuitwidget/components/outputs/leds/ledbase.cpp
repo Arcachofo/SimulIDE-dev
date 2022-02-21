@@ -107,7 +107,7 @@ void LedBase::setGrounded( bool grounded )
 
         m_scrEnode = new eNode( m_id+"Gnod" );
         m_scrEnode->setNodeNumber( 0 );
-        Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
+        Simulator::self()->remFromEnodeList( m_scrEnode );
         m_ePin[1]->setEnode( m_scrEnode );
     }else{
         Pin* pin1 = static_cast<Pin*>(m_ePin[1]);

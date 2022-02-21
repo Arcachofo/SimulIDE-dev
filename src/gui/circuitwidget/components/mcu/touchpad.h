@@ -45,25 +45,25 @@ class MAINMODULE_EXPORT TouchPad : public Component, public eElement
         virtual void updateStep() override;
 
         int width() { return m_width; }
-        void setWidth( int w ) { m_width = w; updateSize(); }
+        void setWidth( int w );
 
         int height() { return m_height; }
-        void setHeight( int h ) { m_height = h; updateSize(); }
+        void setHeight( int h );
 
         bool transparent() { return m_transparent; }
         void setTransparent( bool t );
 
         double RxMin() { return m_RxMin; }
-        void setRxMin( double min ) { m_RxMin = min; }
+        void setRxMin( double min );
 
         double RxMax() { return m_RxMax; }
-        void setRxMax( double max ) { m_RxMax = max; }
+        void setRxMax( double max );
 
         double RyMin() { return m_RyMin; }
-        void setRyMin( double min ) { m_RyMin = min; }
+        void setRyMin( double min );
 
         double RyMax() { return m_RyMax; }
-        void setRyMax( double max ) { m_RyMax = max; }
+        void setRyMax( double max );
 
         virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );

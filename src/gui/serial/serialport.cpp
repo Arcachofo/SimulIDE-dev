@@ -72,9 +72,6 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
     m_serial = new QSerialPort( this );
     m_receiving = false;
 
-    m_stopBits = 1;
-    m_dataBits = 8;
-    m_parity   = parNONE;
     m_flowControl = QSerialPort::NoFlowControl;
     setBaudRate( 9600 );
 
@@ -106,8 +103,6 @@ new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bauds", this, &SerialPort::
 new IntProp<SerialPort>("DataBits", tr("Data Bits"),"_Bits", this, &SerialPort::dataBits, &SerialPort::setDataBits, "uint" ),
 new IntProp<SerialPort>("StopBits", tr("Stop Bits"),"_Bits", this, &SerialPort::stopBits, &SerialPort::setStopBits, "uint" ),
     } } );
-
-    initialize();
 }
 SerialPort::~SerialPort(){}
 

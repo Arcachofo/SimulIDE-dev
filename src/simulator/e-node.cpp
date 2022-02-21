@@ -27,7 +27,6 @@ eNode::eNode( QString id )
 {
     m_id = id;
     m_nodeNum = 0;
-    m_numCons = 0;
 
     initialize();
 
@@ -101,7 +100,18 @@ void eNode::stampMatrix()
             m_admit[enode] += adm;
             m_totalAdmit   += adm;
         }
-        if( !m_single || m_switched ) stampAdmit();
+        if( !m_single )
+        {
+            QHashIterator<int, double> ai(m_admit); // iterate admitance hash: eNode-Admit
+            while( ai.hasNext() )
+            {
+                ai.next();
+                int enode = ai.key();
+                double admit = ai.value();
+                if( enode>0 ) CircMatrix::self()->stampMatrix( m_nodeNum, enode, -admit );
+            }
+            CircMatrix::self()->stampMatrix( m_nodeNum, m_nodeNum, m_totalAdmit );
+        }
         m_admitChanged = false;
     }
     if( m_currChanged )
@@ -109,68 +119,22 @@ void eNode::stampMatrix()
         m_totalCurr  = 0;
         for( double current : m_currList ) m_totalCurr += current;
 
-        if( !m_single || m_switched ) stampCurr();
+        if( !m_single ) CircMatrix::self()->stampCoef( m_nodeNum, m_totalCurr );
         m_currChanged  = false;
     }
     if( m_single ) solveSingle();
 }
 
-void eNode::stampAdmit()
-{
-    //int nonCero = 0;
-    QHashIterator<int, double> ai(m_admit); // iterate admitance hash: eNode-Admit
-    while( ai.hasNext() )
-    {
-        ai.next();
-        int enode = ai.key();
-        double admit = ai.value();
-        if( enode>0 ) CircMatrix::self()->stampMatrix( m_nodeNum, enode, -admit );
-
-        if( m_switched )                       // Find Open/Close events
-        {
-            //if( admit > 0 ) nonCero++;
-            double admitP = m_admitPrev[enode];
-
-            if(( admit != admitP )             // Open/Close event found
-              &&((admit==0)||(admitP==0))) CircMatrix::self()->setCircChanged();
-    }   }
-    if( m_switched )
-    {
-        m_admitPrev = m_admit;
-        //if( nonCero < 2 ) m_totalAdmit += 1e-12; //pnpBias example error
-    }
-    CircMatrix::self()->stampMatrix( m_nodeNum, m_nodeNum, m_totalAdmit );
-}
-
-void eNode::stampCurr()
-{
-    CircMatrix::self()->stampCoef( m_nodeNum, m_totalCurr );
-}
-
 void eNode::solveSingle()
 {
     double volt = 0;
-
     if( m_totalAdmit > 0 ) volt = m_totalCurr/m_totalAdmit;
     setVolt( volt );
 }
 
-void eNode::addConnection( ePin* epin, int enodeComp ) // Add node at other side of pin
-{
-    m_nodeList[epin] = enodeComp;
-}
-
-QList<int> eNode::getConnections()
-{
-    QList<int> cons;
-    for( int nodeNum : m_nodeList )
-    { if( m_admit.value( nodeNum ) > 0 ) cons.append( nodeNum ); }
-    return cons;
-}
-
 void  eNode::setVolt( double v )
 {
-    if( m_volt != v ) //( fabs(m_volt-v) > 1e-9 ) //
+    if( m_volt != v )
     {
         m_voltChanged = true; // Used for wire animation
         m_volt = v;
@@ -178,24 +142,19 @@ void  eNode::setVolt( double v )
         for( eElement* el : m_changedFast )
         {
             if( el->added ) continue;
-            Simulator::self()->addToChangedFast( el );
+            Simulator::self()->addToChangedList( el );
             el->added = true;
         }
         for( eElement* el : m_nonLinear )
         {
+            if( el->added ) continue;
             Simulator::self()->addToNoLinList( el );
-}   }   }
+            el->added = true;
+        }
+}   }
 
 void eNode::addEpin( ePin* epin )
 { if( !m_ePinList.contains(epin)) m_ePinList.append(epin); }
-
-void eNode::remEpin( ePin* epin )
-{
-    if( m_ePinList.contains(epin) ) m_ePinList.removeOne( epin );
-    if( m_nodeList.contains(epin) ) m_nodeList.remove( epin );
-    //if( m_ePinList.isEmpty() ) // If No epins then remove this enode
-    //    Simulator::self()->remFromEnodeList( this, true );
-}
 
 void eNode::clear()
 {
@@ -205,6 +164,12 @@ void eNode::clear()
         epin->setEnodeComp( NULL );
     }
 }
+
+void eNode::addConnection( ePin* epin, int enodeComp ) // Add node at other side of pin
+{ m_nodeList[epin] = enodeComp; }
+
+QList<int> eNode::getConnections()
+{ return m_nodeList.values(); }
 
 void eNode::voltChangedCallback( eElement* el )
 { if( !m_changedFast.contains(el) ) m_changedFast.append(el); }

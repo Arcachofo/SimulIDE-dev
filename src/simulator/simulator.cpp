@@ -144,13 +144,14 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 
 void Simulator::runCircuit()
 {
-    solveCircuit(); // Solving matrix here save events in updateStep()
+    solveCircuit(); // Solve any pending changes
 
     eElement* event = m_firstEvent;
     uint64_t endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
     uint64_t nextTime;
 
-    while( event ){                             // Simulator event loop
+    while( event )                              // Simulator event loop
+    {
         if( event->eventTime > endRun ) break;  // All events for this Timer Tick are done
 
         nextTime = m_circTime;
@@ -159,6 +160,7 @@ void Simulator::runCircuit()
             m_circTime = event->eventTime;
             m_firstEvent = event->nextEvent;    // free Event
             event->nextEvent = NULL;
+            event->eventTime = 0;
             event->runEvent();                  // Run event callback
             event = m_firstEvent;
             if( event ) nextTime = event->eventTime;
@@ -280,6 +282,7 @@ void Simulator::startSim( bool paused )
     for( eElement* el : m_elementList )    // Initialize all Elements
     {                                      // This can create new eNodes
         //qDebug() << "initializing  "<< el->getId();
+        el->eventTime = 0;
         el->initialize();
         el->added = false;
     }
@@ -407,28 +410,14 @@ void Simulator::addEvent( uint64_t time, eElement* el )
 {
     if( m_state < SIM_STARTING ) return;
 
-    if( !el ) /// TODELETE
-    {
-        qDebug() << "ERROR: Simulator::addEvent NULL event";
-        return;
-    }
-    QString elId = el->getId();
+    if( el->eventTime )
+    { qDebug() << "ERROR: Simulator::addEvent Repeated event"; return; }
 
     time += m_circTime;
     eElement* last  = NULL;
     eElement* event = m_firstEvent;
 
     while( event ){
-        if( elId == event->getId() ) // Same event ERROR
-        {
-            if( time == event->eventTime ) return; // Same Time
-            qDebug() << "ERROR: Simulator::addEvent Repeated event"<<elId; /// TODELETE
-            qDebug() << event->eventTime << time;
-            event = event->nextEvent;
-            if( !event ) break;
-            if( last ) last->nextEvent = event;
-            //return;
-        }
         if( time <= event->eventTime ) break; // Insert event here
         last  = event;
         event = event->nextEvent;
@@ -453,9 +442,7 @@ void Simulator::cancelEvents( eElement* el )
         {
             if( last ) last->nextEvent = next;
             else       m_firstEvent = next;
-
             event->nextEvent = NULL;
-            //m_numEvents--;
         }
         else last = event;
         event = next;
@@ -464,11 +451,8 @@ void Simulator::cancelEvents( eElement* el )
 void Simulator::addToEnodeList( eNode* nod )
 { if( !m_eNodeList.contains(nod) ) m_eNodeList.append( nod ); }
 
-void Simulator::remFromEnodeList( eNode* nod, bool del )
-{
-    if( m_eNodeList.contains( nod ) ) m_eNodeList.removeOne( nod );
-    if( del ) delete nod;
-}
+void Simulator::remFromEnodeList( eNode* nod )
+{ m_eNodeList.removeOne( nod );}
 
 void Simulator::addToChangedNodes( eNode* nod )
 { nod->nextCH = m_changedNode; m_changedNode = nod; }
@@ -477,7 +461,7 @@ void Simulator::addToElementList( eElement* el )
 { if( !m_elementList.contains(el) ) m_elementList.append(el); }
 
 void Simulator::remFromElementList( eElement* el )
-{ if( m_elementList.contains(el) ) m_elementList.removeOne(el); }
+{ m_elementList.removeOne(el); }
 
 void Simulator::addToUpdateList( Updatable* el )
 { if( !m_updateList.contains(el) ) m_updateList.append(el); }
@@ -485,15 +469,10 @@ void Simulator::addToUpdateList( Updatable* el )
 void Simulator::remFromUpdateList( Updatable* el )
 { m_updateList.removeOne(el); }
 
-void Simulator::addToChangedFast( eElement* el )
+void Simulator::addToChangedList( eElement* el )
 { el->nextChanged = m_voltChanged; m_voltChanged = el; }
 
 void Simulator::addToNoLinList( eElement* el )
-{
-    if( el->added ) return;
-    el->added = true;
-    el->nextChanged = m_nonLin;
-    m_nonLin = el;
-}
+{ el->nextChanged = m_nonLin;  m_nonLin = el; }
 
 #include "moc_simulator.cpp"

@@ -53,8 +53,6 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
         QString port(){return m_portName;}
         void setPort( QString name ){ m_portName = name; update();}
 
-        int baudRate() { return m_baudRate; }
-
         int dataBits(){ return m_dataBits; }
         void setDataBits( int db ){ m_dataBits = db; }
 

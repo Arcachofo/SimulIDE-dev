@@ -49,10 +49,10 @@ Potentiometer::Potentiometer( QObject* parent, QString type, QString id )
              , m_pinA( 180, QPoint(-16,0 ), id+"-PinA", 0, this )
              , m_pinM( 270, QPoint( 0,16 ), id+"-PinM", 0, this )
              , m_pinB(   0, QPoint( 16,0 ), id+"-PinB", 0, this )
-             , m_ePinA( (id+"-ePinA"), 1 )
-             , m_ePinB( (id+"-ePinB"), 1 )
-             , m_resA(  (id+"-resA") )
-             , m_resB(  (id+"-resB") )
+             , m_ePinA( id+"-ePinA", 1 )
+             , m_ePinB( id+"-ePinB", 1 )
+             , m_resA(  id+"-resA" )
+             , m_resB(  id+"-resB" )
 {
     m_graphical = true;
     m_midEnode = NULL;

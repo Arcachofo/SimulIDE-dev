@@ -30,7 +30,7 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
 {
     m_scrEnode = new eNode( id+"scr" );
     m_scrEnode->setNodeNumber(0);
-    Simulator::self()->remFromEnodeList( m_scrEnode, /*delete=*/ false );
+    Simulator::self()->remFromEnodeList( m_scrEnode );
 
     m_outState = false;
     m_stateZ   = false;

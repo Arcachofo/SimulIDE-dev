@@ -28,6 +28,8 @@
 #include "usarttx.h"
 #include "usartrx.h"
 
+#include "intprop.h"
+
 Component* Esp01::construct( QObject* parent, QString type, QString id )
 { return new Esp01( parent, type, id ); }
 
@@ -65,12 +67,22 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
     m_pin[1] = pinRx;
     m_receiver->setPins( {pinRx} );
 
+    setBaudRate( 115200 );
+
     m_tcpSocket = new QTcpSocket(this);
+
+    Simulator::self()->addToUpdateList( this );
 
     connect( m_tcpSocket, SIGNAL( connected() )         ,this, SLOT( tcpConnected() ));
     connect( m_tcpSocket, SIGNAL( disconnected() )      ,this, SLOT( tcpDisconnected() ));
     connect( m_tcpSocket, SIGNAL( bytesWritten(qint64) ),this, SLOT( tcpBytesWritten(qint64) ));
     connect( m_tcpSocket, SIGNAL( readyRead() )         ,this, SLOT( tcpReadyRead() ));
+
+    addPropGroup( { "Main", {
+new IntProp<Esp01>("Baudrate", tr("Baudrate"),"_Bauds", this, &Esp01::baudRate, &Esp01::setBaudRate, "uint" ),
+//new IntProp<Esp01>("DataBits", tr("Data Bits"),"_Bits", this, &Esp01::dataBits, &Esp01::setDataBits, "uint" ),
+//new IntProp<Esp01>("StopBits", tr("Stop Bits"),"_Bits", this, &Esp01::stopBits, &Esp01::setStopBits, "uint" ),
+        } } );
 }
 Esp01::~Esp01(){}
 
@@ -78,6 +90,8 @@ void Esp01::stamp()
 {
     m_action = espNone;
     m_buffer.clear();
+    m_sender->enable( true );
+    m_receiver->enable( true );
 }
 
 void Esp01::updateStep()
@@ -86,10 +100,10 @@ void Esp01::updateStep()
     case espNone:
         break;
     case tcpConnect:
-        qDebug() << "m_tcpSocket->connectToHost( m_host, m_port )";
+        qDebug() << "m_tcpSocket->connectToHost( m_host, m_port )"<<m_host<< m_port;
         break;
     case tcpSend:
-        qDebug() << "m_tcpSocket->write( m_tcpData )";
+        qDebug() << "m_tcpSocket->write( m_tcpData )"<<m_tcpData;
         break;
     case tcpClose:
         qDebug() << "m_tcpSocket->disconnectFromHost()";
@@ -129,7 +143,7 @@ void Esp01::proccessInput()
 
     QString command = m_buffer.remove("\r\n");
     m_buffer.clear();
-
+qDebug() << "Command:"<< command;
     if( command == "AT-RST" )
     {
         /// Reset

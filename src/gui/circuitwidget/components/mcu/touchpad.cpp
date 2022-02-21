@@ -161,6 +161,46 @@ void TouchPad::updateStep()
     }
 }
 
+void TouchPad::setWidth( int w )
+{
+    if( w < 40 ) w = 40;
+    m_width = w;
+    updateSize();
+}
+
+void TouchPad::setHeight( int h )
+{
+    if( h < 20 ) h = 20;
+    m_height = h;
+    updateSize();
+}
+
+void TouchPad::setRxMin( double min )
+{
+    if( min > m_RxMax ) return;
+    if( min < 1e-3 ) min = 1e-3;
+    m_RxMin = min;
+}
+
+void TouchPad::setRxMax( double max )
+{
+    if( max < m_RxMin ) return;
+    m_RxMax = max;
+}
+
+void TouchPad::setRyMin( double min )
+{
+    if( min > m_RyMax ) return;
+    if( min < 1e-3 ) min = 1e-3;
+    m_RyMin = min;
+}
+
+void TouchPad::setRyMax( double max )
+{
+    if( max < m_RyMin ) return;
+    TouchPad::m_RyMax = max;
+}
+
 void TouchPad::updateSize()
 {
     m_touchpadW.setFixedSize( m_width, m_height );

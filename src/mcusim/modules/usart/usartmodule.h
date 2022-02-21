@@ -48,6 +48,7 @@ class MAINMODULE_EXPORT UsartModule
         UsartModule( eMcu* mcu, QString name );
         ~UsartModule();
 
+        int baudRate() { return m_baudRate; }
         void setBaudRate( int br );
 
         virtual uint8_t getBit9Tx(){return 0;}

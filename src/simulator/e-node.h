@@ -34,7 +34,6 @@ class MAINMODULE_EXPORT eNode
         QString itemId() { return m_id; }
 
         void addEpin( ePin* epin );
-        void remEpin( ePin* epin );
         void clear();
 
         void voltChangedCallback( eElement* el );
@@ -58,14 +57,9 @@ class MAINMODULE_EXPORT eNode
 
         void initialize();
         void stampMatrix();
-        void stampAdmit();
-        void stampCurr();
 
         void setSingle( bool single ) { m_single = single; } // This eNode can calculate it's own Volt
-        bool isSingle() { return m_single; }
-
         void setSwitched( bool switched ){ m_switched = switched; } // This eNode has switches attached
-        bool isSwitched() { return m_switched; }
 
         QList<ePin*> getEpins() { return m_ePinList; }
 
@@ -87,14 +81,12 @@ class MAINMODULE_EXPORT eNode
         QHash<ePin*, int>    m_nodeList;
 
         QHash<int, double>   m_admit;
-        QHash<int, double>   m_admitPrev;
 
         double m_totalCurr;
         double m_totalAdmit;
         double m_volt;
 
         int m_nodeNum;
-        int m_numCons;
 
         bool m_currChanged;
         bool m_admitChanged;
