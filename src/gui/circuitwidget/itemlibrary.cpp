@@ -46,7 +46,7 @@
 #include "ds1307.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
-//#include "ertp080.h"
+#include "touchpad.h"
 #include "esp01.h"
 #include "fixedvolt.h"
 #include "flipflopd.h"
@@ -228,10 +228,10 @@ void ItemLibrary::loadItems()
     addItem( Dht22::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Perifericals"),QObject::tr("Micro"), "perif.png","", NULL ) );
     addItem( SerialPort::libraryItem() );
+    addItem( TouchPad::libraryItem() );
     addItem( KY023::libraryItem() );
     addItem( KY040::libraryItem() );
     addItem( DS1307::libraryItem() );
-    //addItem( ErTP080::libraryItem() );
     addItem( Esp01::libraryItem() );
     // Logic
     addItem( new LibraryItem( QObject::tr("Gates"),QObject::tr("Logic"), "gates.png","", NULL ) );

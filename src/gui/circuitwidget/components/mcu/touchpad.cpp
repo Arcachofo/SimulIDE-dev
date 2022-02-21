@@ -1,0 +1,209 @@
+/***************************************************************************
+ *   Copyright (C) 2022 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         *
+ ***************************************************************************/
+
+#include <QPainter>
+#include <QGraphicsProxyWidget>
+#include <QToolButton>
+
+#include "touchpad.h"
+#include "simulator.h"
+#include "circuit.h"
+#include "itemlibrary.h"
+#include "e-node.h"
+
+#include "doubleprop.h"
+#include "boolprop.h"
+#include "intprop.h"
+
+Component* TouchPad::construct( QObject* parent, QString type, QString id )
+{ return new TouchPad( parent, type, id ); }
+
+LibraryItem* TouchPad::libraryItem()
+{
+    return new LibraryItem(
+        tr( "Resistive TouchPad" ),
+        tr( "Perifericals" ),
+        "touch.png",
+        "TouchPadR",
+        TouchPad::construct);
+}
+
+TouchPad::TouchPad( QObject* parent, QString type, QString id )
+     : Component( parent, type, id )
+     , eElement( id )
+     , m_resXA( id+"-resXA" )
+     , m_resXB( id+"-resXB" )
+     , m_resYA( id+"-resYA" )
+     , m_resYB( id+"-resYB" )
+     , m_ePinXA( id+"-ePinA", 1 )
+     , m_ePinXB( id+"-ePinB", 1 )
+     , m_ePinYA( id+"-ePinA", 1 )
+     , m_ePinYB( id+"-ePinB", 1 )
+{
+    m_midEnode = NULL;
+
+    m_RxMin = 10;
+    m_RxMax = 500;
+    m_RyMin = 10;
+    m_RyMax = 500;
+
+    m_transparent = false;
+
+    m_pin.resize(4);
+    m_vrx_p = new Pin( 270, QPoint(-12, 16+8 ), id+"-vrx_p", 0, this );
+    m_vrx_p->setLabelText( " XP" );
+    m_pin[0] = m_vrx_p;
+
+    m_vrx_m = new Pin( 270, QPoint(-4, 16+8 ), id+"-vrx_m", 0, this );
+    m_vrx_m->setLabelText( " XM" );
+    m_pin[1] = m_vrx_m;
+
+    m_vry_p = new Pin( 270, QPoint( 4, 16+8 ), id+"-vry_p", 0, this );
+    m_vry_p->setLabelText( " Yp" );
+    m_pin[2] = m_vry_p;
+
+    m_vry_m = new Pin( 270, QPoint( 12, 16+8 ), id+"-vry_m", 0, this );
+    m_vry_m->setLabelText( " YM" );
+    m_pin[3] = m_vry_m;
+
+    m_resXA.setEpin( 0, m_vrx_p );
+    m_resXA.setEpin( 1, &m_ePinXA );
+    m_resXB.setEpin( 1, m_vrx_m );
+    m_resXB.setEpin( 0, &m_ePinXB );
+    m_resYA.setEpin( 0, m_vry_p );
+    m_resYA.setEpin( 1, &m_ePinYA );
+    m_resYB.setEpin( 0, m_vry_m );
+    m_resYB.setEpin( 1, &m_ePinYB );
+
+    m_width  = 240;
+    m_height = 320;
+
+    m_proxy = Circuit::self()->addWidget( &m_touchpadW );
+    m_proxy->setParentItem( this );
+    updateSize();
+
+    setZValue( 2 );
+    setShowId( true );
+
+    Simulator::self()->addToUpdateList( this );
+
+    connect( &m_touchpadW, SIGNAL( valueChanged(int, int) ),
+             this,         SLOT  ( onvaluechanged(int, int) ));
+
+    addPropGroup( { tr("Main"), {
+new IntProp<TouchPad>(  "Width", tr("Width"),"_Pixels" , this, &TouchPad::width, &TouchPad::setWidth ,"uint" ),
+new IntProp<TouchPad>(  "Height",tr("Height"),"_Pixels", this, &TouchPad::height, &TouchPad::setHeight ,"uint" ),
+new BoolProp<TouchPad>( "Transparent",tr("Transparent"),"", this, &TouchPad::transparent, &TouchPad::setTransparent )
+    }} );
+    addPropGroup( { tr("Electric"), {
+new DoubProp<TouchPad>( "RxMin", tr("RxMin"),"Ω", this, &TouchPad::RxMin, &TouchPad::setRxMin ,"uint" ),
+new DoubProp<TouchPad>( "RxMax", tr("RxMax"),"Ω", this, &TouchPad::RxMax, &TouchPad::setRxMax ,"uint" ),
+new DoubProp<TouchPad>( "RyMin", tr("RyMin"),"Ω", this, &TouchPad::RyMin, &TouchPad::setRyMin ,"uint" ),
+new DoubProp<TouchPad>( "RyMax", tr("RyMax"),"Ω", this, &TouchPad::RyMax, &TouchPad::setRyMax ,"uint" ),
+    }} );
+}
+TouchPad::~TouchPad(){}
+
+void TouchPad::initialize()
+{
+    m_midEnode = new eNode( m_id+"-mideNode" );
+}
+
+void TouchPad::stamp()
+{
+    m_ePinXA.setEnode( m_midEnode );  // Set eNode to internal eResistors ePins
+    m_ePinXB.setEnode( m_midEnode );
+    m_ePinYA.setEnode( m_midEnode );
+    m_ePinYB.setEnode( m_midEnode );
+
+    m_xPos = 0;
+    m_yPos = 0;
+    m_touchpadW.resetValues();
+    updateStep();
+}
+
+void TouchPad::updateStep()
+{
+    int xPos = m_touchpadW.getXValue();
+    int yPos = m_touchpadW.getYValue();
+
+    if( m_xPos != xPos )
+    {
+        m_xPos = xPos;
+        double xResA = m_RxMin + (m_RxMax-m_RxMin)*xPos/m_width;
+        double xResB = m_RxMax - xResA;
+        m_resXA.setRes( xResA );
+        m_resXB.setRes( xResB );
+    }
+    if( m_yPos != yPos )
+    {
+        m_yPos = yPos;
+        double yResA = m_RyMin + (m_RyMax-m_RyMin)*yPos/m_height;
+        double yResB = m_RyMax - yResA;
+        m_resYA.setRes( yResA );
+        m_resYB.setRes( yResB );
+    }
+}
+
+void TouchPad::updateSize()
+{
+    m_touchpadW.setFixedSize( m_width, m_height );
+    m_proxy->setPos( QPoint(-m_width/2, -m_height-2) );
+
+    m_area = QRect(-m_width/2,-m_height, m_width, m_height+18 );
+    setLabelPos(-35, -m_height-15, 0);
+}
+
+void TouchPad::setTransparent( bool t )
+{
+    m_transparent = t;
+    m_touchpadW.setAttribute( Qt::WA_NoSystemBackground, t );
+    update();
+}
+
+QPainterPath TouchPad::shape() const
+{
+    QPainterPath path;
+    QVector<QPointF> points;
+
+    points << QPointF(-m_width/2,-m_height )
+           << QPointF( m_width/2,-m_height )
+           << QPointF( m_width/2, 0 )
+           << QPointF( 42, 0  )
+           << QPointF( 42, 18 )
+           << QPointF(-10, 18 )
+           << QPointF(-10, 0 )
+           << QPointF(-m_width/2, 0  );
+
+    path.addPolygon( QPolygonF(points) );
+    path.closeSubpath();
+    return path;
+}
+
+void TouchPad::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+{
+    Component::paint( p, option, widget );
+
+    p->setBrush( Qt::transparent );
+    p->drawRoundedRect( QRect(-m_width/2,-m_height-2, m_width, m_height ), 2, 2 );
+
+    p->setBrush( QColor(50, 70, 100) );
+    p->drawRoundedRect( QRect(-20,-2, 40, 18 ), 2, 2 );
+}
+
