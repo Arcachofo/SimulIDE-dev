@@ -37,7 +37,7 @@ Component* TouchPad::construct( QObject* parent, QString type, QString id )
 LibraryItem* TouchPad::libraryItem()
 {
     return new LibraryItem(
-        tr( "Resistive TouchPad" ),
+        tr( "TouchPad (Resistive)" ),
         tr( "Perifericals" ),
         "touch.png",
         "TouchPadR",
@@ -51,16 +51,20 @@ TouchPad::TouchPad( QObject* parent, QString type, QString id )
      , m_resXB( id+"-resXB" )
      , m_resYA( id+"-resYA" )
      , m_resYB( id+"-resYB" )
-     , m_ePinXA( id+"-ePinA", 1 )
-     , m_ePinXB( id+"-ePinB", 1 )
-     , m_ePinYA( id+"-ePinA", 1 )
-     , m_ePinYB( id+"-ePinB", 1 )
+     , m_resTouch( id+"-resTouch" )
+     , m_ePinXA( id+"-ePinXA", 1 )
+     , m_ePinXB( id+"-ePinXB", 1 )
+     , m_ePinYA( id+"-ePinYA", 1 )
+     , m_ePinYB( id+"-ePinYB", 1 )
+     , m_ePinTA( id+"-ePinTA", 1 )
+     , m_ePinTB( id+"-ePinTB", 1 )
 {
-    m_midEnode = NULL;
+    m_eNodeX = NULL;
+    m_eNodeY = NULL;
 
-    m_RxMin = 10;
+    m_RxMin = 100;
     m_RxMax = 500;
-    m_RyMin = 10;
+    m_RyMin = 100;
     m_RyMax = 500;
 
     m_transparent = false;
@@ -90,6 +94,8 @@ TouchPad::TouchPad( QObject* parent, QString type, QString id )
     m_resYA.setEpin( 1, &m_ePinYA );
     m_resYB.setEpin( 0, m_vry_m );
     m_resYB.setEpin( 1, &m_ePinYB );
+    m_resTouch.setEpin( 0, &m_ePinTA );
+    m_resTouch.setEpin( 1, &m_ePinTB );
 
     m_width  = 240;
     m_height = 320;
@@ -122,15 +128,18 @@ TouchPad::~TouchPad(){}
 
 void TouchPad::initialize()
 {
-    m_midEnode = new eNode( m_id+"-mideNode" );
+    m_eNodeX = new eNode( m_id+"-eNodeX" );
+    m_eNodeY = new eNode( m_id+"-eNodeY" );
 }
 
 void TouchPad::stamp()
 {
-    m_ePinXA.setEnode( m_midEnode );  // Set eNode to internal eResistors ePins
-    m_ePinXB.setEnode( m_midEnode );
-    m_ePinYA.setEnode( m_midEnode );
-    m_ePinYB.setEnode( m_midEnode );
+    m_ePinXA.setEnode( m_eNodeX );  // Set eNode to internal eResistors ePins
+    m_ePinXB.setEnode( m_eNodeX );
+    m_ePinYA.setEnode( m_eNodeY );
+    m_ePinYB.setEnode( m_eNodeY );
+    m_ePinTA.setEnode( m_eNodeX );
+    m_ePinTB.setEnode( m_eNodeY );
 
     m_xPos = 0;
     m_yPos = 0;
@@ -146,18 +155,40 @@ void TouchPad::updateStep()
     if( m_xPos != xPos )
     {
         m_xPos = xPos;
-        double xResA = m_RxMin + (m_RxMax-m_RxMin)*xPos/m_width;
-        double xResB = m_RxMax - xResA;
+        double xResA, xResB, tAdmit;
+
+        if( xPos < 0 )       // Not touching
+        {
+            xResA = xResB = (m_RxMax-m_RxMin)/2;
+            tAdmit = 0;
+        }else{
+            xResA = m_RxMin + (m_RxMax-m_RxMin)*xPos/m_width;
+            xResB = m_RxMin + m_RxMax - xResA;
+            tAdmit = 1;
+        }
         m_resXA.setRes( xResA );
         m_resXB.setRes( xResB );
+        m_resTouch.setAdmit( tAdmit );
+        //qDebug()<<"X" << xResA<< xResB<< tAdmit;
     }
     if( m_yPos != yPos )
     {
         m_yPos = yPos;
-        double yResA = m_RyMin + (m_RyMax-m_RyMin)*yPos/m_height;
-        double yResB = m_RyMax - yResA;
+        double yResA, yResB, tAdmit;
+
+        if( xPos < 0 )       // Not touching
+        {
+            yResA = yResB = (m_RyMax-m_RyMin)/2;
+            tAdmit = 0;
+        }else{
+            yResA = m_RyMin + (m_RyMax-m_RyMin)*yPos/m_height;
+            yResB = m_RyMin + m_RyMax - yResA;
+            tAdmit = 1;
+        }
         m_resYA.setRes( yResA );
         m_resYB.setRes( yResB );
+        m_resTouch.setAdmit( tAdmit );
+        //qDebug()<<"y" << yResA<< yResB<< tAdmit;
     }
 }
 
@@ -198,7 +229,7 @@ void TouchPad::setRyMin( double min )
 void TouchPad::setRyMax( double max )
 {
     if( max < m_RyMin ) return;
-    TouchPad::m_RyMax = max;
+    m_RyMax = max;
 }
 
 void TouchPad::updateSize()

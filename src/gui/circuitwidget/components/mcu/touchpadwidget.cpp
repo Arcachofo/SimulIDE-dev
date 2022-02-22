@@ -59,8 +59,8 @@ void TouchPadWidget::checkValues()
 
 void TouchPadWidget::resetValues()
 {
-    m_xMousePos = width()/2;
-    m_yMousePos = height()/2;
+    m_xMousePos = -1;
+    m_yMousePos = -1;
 }
 
 #include "moc_touchpadwidget.cpp"

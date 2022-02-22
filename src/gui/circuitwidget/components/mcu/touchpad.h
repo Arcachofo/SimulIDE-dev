@@ -83,12 +83,14 @@ class MAINMODULE_EXPORT TouchPad : public Component, public eElement
         double m_RyMin;
         double m_RyMax;
 
-        eNode* m_midEnode;
+        eNode* m_eNodeX;
+        eNode* m_eNodeY;
 
         eResistor m_resXA;
         eResistor m_resXB;
         eResistor m_resYA;
         eResistor m_resYB;
+        eResistor m_resTouch;
 
         Pin* m_vrx_p;
         Pin* m_vry_p;
@@ -99,6 +101,8 @@ class MAINMODULE_EXPORT TouchPad : public Component, public eElement
         ePin m_ePinXB;
         ePin m_ePinYA;
         ePin m_ePinYB;
+        ePin m_ePinTA;
+        ePin m_ePinTB;
 
         TouchPadWidget m_touchpadW;
         QGraphicsProxyWidget* m_proxy;
