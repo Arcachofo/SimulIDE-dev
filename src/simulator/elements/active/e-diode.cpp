@@ -39,44 +39,22 @@ eDiode::eDiode( QString id )
     m_vt = 0.025865;
     m_vzCoef = 1/m_vt;
     m_maxCur = 1;
-
-    m_resistor = new eResistor( m_elmId+"-resistor");
 }
-eDiode::~eDiode()
-{
-    delete m_resistor;
-}
-
-void eDiode::createSerRes() // --P[diode]N--(midEnode)--R0[resistor]R1--
-{
-    setNumEpins( 3 ); // This creates ePin1=pinN & ePin2=pinR0
-    m_pinP  = m_ePin[0]; // m_ePin[0] created in upper class: Diode, Led, etc.
-    m_pinN  = m_ePin[1];
-    m_pinR0 = m_ePin[2];
-//  m_pinR1 created and defined in upper class: Diode, Led, etc.
-
-    m_resistor->setEpin( 0, m_pinR0 );
-    m_resistor->setEpin( 1, m_pinR1 );
-}
+eDiode::~eDiode(){}
 
 void eDiode::initialize()
 {
     m_admit = m_bAdmit;
     m_voltPN = 0;
     m_current = 0;
-
-    m_midEnode = new eNode( m_elmId+"-mideNode");
 }
 
 void eDiode::stamp()
 {
-    m_pinN->setEnode( m_midEnode );
-    m_pinR0->setEnode( m_midEnode );
-
-    eNode* node = m_pinP->getEnode();
+    eNode* node = m_ePin[0]->getEnode();
     if( node ) node->addToNoLinList( this );
 
-    node = m_pinN->getEnode();
+    node = m_ePin[1]->getEnode();
     if( node ) node->addToNoLinList( this );
 
     eResistor::stamp();
@@ -84,7 +62,7 @@ void eDiode::stamp()
 
 void eDiode::voltChanged()
 {
-    double voltPN = m_pinP->getVolt() - m_pinN->getVolt();
+    double voltPN = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
     if( fabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged  /// Mingw needs fabs
     Simulator::self()->notCorverged();
 
@@ -112,8 +90,8 @@ void eDiode::voltChanged()
     eResistor::stampAdmit();
 
     double stCurr = m_current - m_admit*voltPN;
-    m_pinP->stampCurrent(-stCurr );
-    m_pinN->stampCurrent( stCurr );
+    m_ePin[0]->stampCurrent(-stCurr );
+    m_ePin[1]->stampCurrent( stCurr );
 }
 
 inline double eDiode::limitStep( double vnew, double scale, double vc )
@@ -173,19 +151,6 @@ void eDiode::updateValues()
     m_zOfset = m_bkDown - m_vt*log(-(1-0.005/m_satCur) );
     m_vzCrit = m_vt*log( m_vt/(sqrt(2)*m_satCur) );
     m_bAdmit = m_satCur*1e-2;
-}
-
-ePin* eDiode::getEpin( int num )
-{
-    if     ( num == 0 ) return m_ePin[0];
-    else if( num == 1 ) return m_pinR1;
-    return NULL;
-}
-
-void eDiode::setEpin( int num, ePin* pin )
-{
-    if     ( num == 0 ) m_ePin[0] = pin;
-    else if( num == 1 ) m_pinR1 = pin;
 }
 
 void eDiode::getModels() // Static

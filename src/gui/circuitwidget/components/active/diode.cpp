@@ -21,8 +21,8 @@
 
 #include "diode.h"
 #include "itemlibrary.h"
-#include "connector.h"
 #include "simulator.h"
+#include "e-node.h"
 #include "pin.h"
 
 #include "doubleprop.h"
@@ -47,10 +47,14 @@ Diode::Diode( QObject* parent, QString type, QString id, bool zener )
 {
     m_area = QRect(-12, -8, 24, 16 );
 
-    setEpin( 0, m_pin[0] );
-    setEpin( 1, m_pin[1] );
+    // Pin0--eDiode--ePin1--midEnode--ePin2--eResistor--Pin1
+    m_ePin[0] = m_pin[0];
+    setNumEpins( 3 );
 
-    createSerRes();
+    m_resistor = new eResistor( m_elmId+"-resistor");
+    m_resistor->setEpin( 0, m_ePin[2] );
+    m_resistor->setEpin( 1, m_pin[1] );
+
     m_isZener = zener;
     if( zener ){
         m_diodeType = "zener";
@@ -79,7 +83,12 @@ Diode::~Diode(){}
 
 bool Diode::setPropStr( QString prop, QString val )
 {
-    if( prop =="Zener_Volt" ) setZenerV( val.toDouble() ); //  Old: TODELETE
+    if( prop =="Zener_Volt" ) //  Old: TODELETE
+    {
+        double zenerV = val.toDouble();
+        m_isZener = zenerV > 0;
+        eDiode::setBrkDownV( zenerV );
+    }
     else return Component::setPropStr( prop, val );
     return true;
 }
@@ -88,8 +97,19 @@ void Diode::initialize()
 {
     m_crashed = false;
     m_warning = false;
+
+    m_midEnode = new eNode( m_elmId+"-mideNode");
     eDiode::initialize();
+
     update();
+}
+
+void Diode::stamp()
+{
+    m_ePin[1]->setEnode( m_midEnode );
+    m_ePin[2]->setEnode( m_midEnode );
+
+    eDiode::stamp();
 }
 
 void Diode::updateStep()
@@ -104,11 +124,6 @@ void Diode::updateStep()
         m_crashed = false;
 }   }
 
-void Diode::setZenerV( double zenerV ) // Compatibility with old circuits.
-{
-    m_isZener = zenerV > 0;
-    eDiode::setBrkDownV( zenerV );
-}
 
 void Diode::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,39 +17,56 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef DIODE_H
-#define DIODE_H
+#ifndef TRIAC_H
+#define TRIAC_H
 
-#include "e-diode.h"
-#include "comp2pin.h"
+#include "component.h"
+#include "e-element.h"
 
 class LibraryItem;
+class eDiode;
+class eResistor;
 
-class MAINMODULE_EXPORT Diode : public Comp2Pin, public eDiode
+class MAINMODULE_EXPORT Triac : public Component, public eElement
 {
         Q_OBJECT
     public:
-        Diode( QObject* parent, QString type, QString id, bool zener=false );
-        ~Diode();
+        Triac( QObject* parent, QString type, QString id );
+        ~Triac();
 
  static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
-
-        virtual bool setPropStr( QString prop, QString val ) override;
+ static LibraryItem* libraryItem();
 
         virtual void initialize() override;
         virtual void stamp() override;
+        virtual void voltChanged() override;
         virtual void updateStep() override;
 
-        virtual QStringList getEnums( QString ) override { return m_diodes.keys(); }
+        double gateRes() { return m_gateRes; }
+        void setGateRes( double r ) { m_gateRes = r; }
+
+        double trigCurr() { return m_trigCurr; }
+        void setTrigCurr( double c ) { m_trigCurr = c; }
+
+        double holdCurr() { return m_holdCurr; }
+        void setHoldCurr( double v ) { m_holdCurr = v; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
-        bool m_isZener;
+        double m_gateRes;
+        double m_trigCurr;
+        double m_holdCurr;
+
+        bool m_state;
 
         eNode* m_midEnode;
         eResistor* m_resistor;
+        eResistor* m_resistGa;
+
+        eDiode* m_diode1;
+        eDiode* m_diode2;
 };
 
 #endif
+

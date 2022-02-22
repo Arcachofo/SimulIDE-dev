@@ -113,6 +113,7 @@
 #include "switchdip.h"
 #include "thermistor.h"
 #include "textcomponent.h"
+#include "triac.h"
 #include "tunnel.h"
 #include "varresistor.h"
 #include "voltmeter.h"
@@ -190,6 +191,7 @@ void ItemLibrary::loadItems()
     addItem( Diode::libraryItem() );
     addItem( Zener::libraryItem() );
     addItem( Diac::libraryItem() );
+    addItem( Triac::libraryItem() );
     addItem( Mosfet::libraryItem() );
     addItem( BJT::libraryItem() );
     addItem( OpAmp::libraryItem() );

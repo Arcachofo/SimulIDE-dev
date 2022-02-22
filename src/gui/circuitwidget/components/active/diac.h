@@ -37,6 +37,7 @@ class MAINMODULE_EXPORT Diac : public Component, public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
+        virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
         virtual void updateStep() override;
@@ -63,6 +64,9 @@ class MAINMODULE_EXPORT Diac : public Component, public eElement
         double m_holdCurr;
 
         bool m_state;
+
+        eNode* m_midEnode;
+        eResistor* m_resistor;
 
         eDiode* m_diode1;
         eDiode* m_diode2;
