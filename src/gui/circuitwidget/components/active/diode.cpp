@@ -79,7 +79,10 @@ new DoubProp<Diode>( "SatCurrent", tr("Saturation Current")  ,"nA", this, &Diode
 new DoubProp<Diode>( "EmCoef"    , tr("Emission Coefficient"),""  , this, &Diode::emCoef,   &Diode::setEmCoef ),
     }} );
 }
-Diode::~Diode(){}
+Diode::~Diode()
+{
+    delete m_resistor;
+}
 
 bool Diode::setPropStr( QString prop, QString val )
 {

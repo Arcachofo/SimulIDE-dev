@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include <QPainter>
-#include <QDebug>
+//#include <QDebug>
 #include <math.h>
 
 #include "triac.h"
@@ -128,11 +128,6 @@ void Triac::stamp()
     m_resistGa->setRes( m_gateRes );
 }
 
-void Triac::updateStep()
-{
-    if( Circuit::self()->animate() ) update();
-}
-
 void Triac::voltChanged()
 {
     double current1 = m_resistor->current();
@@ -145,7 +140,7 @@ void Triac::voltChanged()
     if( m_state != state )
     {
         m_state = state;
-        double res = state ? .01 : 10e5;
+        double res = state ? 0.01 : 10e5;
         m_resistor->setRes( res );
     }
 }

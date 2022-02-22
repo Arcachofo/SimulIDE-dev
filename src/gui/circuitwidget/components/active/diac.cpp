@@ -117,11 +117,6 @@ void Diac::stamp()
     m_resistor->setRes( m_resOff );
 }
 
-void Diac::updateStep()
-{
-    if( Circuit::self()->animate() ) update();
-}
-
 void Diac::voltChanged()
 {
     double voltage = m_pin[0]->getVolt()-m_pin[1]->getVolt();

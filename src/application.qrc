@@ -93,6 +93,7 @@
         <file alias="ledrgb.png">../src/icons/components/ledrgb.png</file>
         <file alias="diode.png">../src/icons/components/diode.png</file>
         <file alias="zener.png">../src/icons/components/zener.png</file>
+        <file alias="scr.png">../src/icons/components/scr.png</file>
         <file alias="probe.png">../src/icons/components/probe.png</file>
         <file alias="resistor.png">../src/icons/components/resistor.png</file>
         <file alias="varresistor.png">../src/icons/components/varresistor.png</file>

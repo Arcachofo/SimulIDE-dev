@@ -40,7 +40,6 @@ class MAINMODULE_EXPORT Diac : public Component, public eElement
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void updateStep() override;
 
         double resOn() { return m_resOn; }
         void setResOn( double r ) { m_resOn = r; }

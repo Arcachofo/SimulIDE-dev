@@ -104,6 +104,7 @@
 #include "sevensegment_bcd.h"
 #include "shiftreg.h"
 #include "sr04.h"
+#include "scr.h"
 #include "ssd1306.h"
 #include "stepper.h"
 #include "strain.h"
@@ -190,6 +191,7 @@ void ItemLibrary::loadItems()
     // Active
     addItem( Diode::libraryItem() );
     addItem( Zener::libraryItem() );
+    addItem( SCR::libraryItem() );
     addItem( Diac::libraryItem() );
     addItem( Triac::libraryItem() );
     addItem( Mosfet::libraryItem() );
