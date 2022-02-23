@@ -982,6 +982,12 @@ void McuCreator::setConfigRegs( QDomElement* u, McuModule* module )
         QString configBits = u->attribute("configbitsB");
         watchBitNames( configBits, R_WRITE, module, &McuModule::configureB, mcu );
         module->m_configBitsB = getRegBits( configBits, mcu );
+    }
+    if( u->hasAttribute("configbitsC") )
+    {
+        QString configBits = u->attribute("configbitsC");
+        watchBitNames( configBits, R_WRITE, module, &McuModule::configureC, mcu );
+        module->m_configBitsC = getRegBits( configBits, mcu );
 }   }
 
 void McuCreator::setPrescalers( QString pr, McuPrescaled* module )

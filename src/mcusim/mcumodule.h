@@ -56,5 +56,6 @@ class MAINMODULE_EXPORT McuModule
 
         regBits_t m_configBitsA;
         regBits_t m_configBitsB;
+        regBits_t m_configBitsC;
 };
 #endif

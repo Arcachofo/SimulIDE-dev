@@ -29,15 +29,16 @@ class MAINMODULE_EXPORT AvrComp : public McuComp
         AvrComp( eMcu* mcu, QString name );
         ~AvrComp();
 
-        //virtual void initialize() override;
+        virtual void initialize() override;
+        virtual void voltChanged() override;
 
         virtual void configureA( uint8_t newACSR ) override;
-        virtual void configureB( uint8_t newDIDR1 ) override;
+        virtual void configureB( uint8_t newAIND ) override;
+        virtual void configureC( uint8_t newACOE ) override;
 
     protected:
         void compare( uint8_t );
 
-        //uint8_t*  m_ACSR;
         regBits_t m_ACD;
         regBits_t m_ACBG;
         regBits_t m_ACO;
@@ -45,7 +46,6 @@ class MAINMODULE_EXPORT AvrComp : public McuComp
         regBits_t m_ACIC;
         regBits_t m_ACIS;
 
-        //uint8_t*  m_DIDR1;
         regBits_t m_AIN0D;
         regBits_t m_AIN1D;
 };

@@ -26,7 +26,6 @@
 AvrComp::AvrComp( eMcu* mcu, QString name )
        : McuComp( mcu, name )
 {
-    //m_ACSR = mcu->getReg( "ACSR" );
     m_ACD  = getRegBits( "ACD", mcu );
     m_ACBG = getRegBits( "ACBG", mcu );
     m_ACO  = getRegBits( "ACO", mcu );
@@ -34,7 +33,6 @@ AvrComp::AvrComp( eMcu* mcu, QString name )
     m_ACIC = getRegBits( "ACIC", mcu );
     m_ACIS = getRegBits( "ACIS0,ACIS1", mcu );
 
-    //m_DIDR1 = mcu->getReg( "DIDR1" );
     m_AIN0D = getRegBits( "AIN0D", mcu );
     m_AIN1D = getRegBits( "AIN1D", mcu );
 
@@ -42,9 +40,16 @@ AvrComp::AvrComp( eMcu* mcu, QString name )
 }
 AvrComp::~AvrComp(){}
 
-/*void AvrComp::initialize()
+void AvrComp::initialize()
 {
-}*/
+    m_pinP = m_pins[0];
+    m_pinN = m_pins[1];
+}
+
+void AvrComp::voltChanged()
+{
+    compare(0);
+}
 
 void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
 {
@@ -61,21 +66,28 @@ void AvrComp::configureA( uint8_t newACSR ) // ACSR is being written
     m_mode = getRegBitsVal( newACSR, m_ACIS );
 }
 
-void AvrComp::configureB( uint8_t newDIDR1 ) // AIN0D,AIN1D being written
+void AvrComp::configureB( uint8_t newAIND ) // AIN0D,AIN1D being written
 {
-    //m_pins[0]->changeCallBack( m_pins[0], getRegBitsBool( newDIDR1, m_AIN0D ) );
-    //m_pins[1]->changeCallBack( m_pins[1], getRegBitsBool( newDIDR1, m_AIN1D ) );
+    /// TODO: Disable Digital Input buffer.
+    /// The corresponding PIN Register bit will always read as zero when this bit is set
+}
 
-    //// ?????
-    /// m_mcu->m_regOverride = newDIDR1; // Keep rest of bits at 0
+void AvrComp::configureC( uint8_t newACOE )
+{
+    if( newACOE ) m_pinOut = m_pins[2];
+    else          m_pinOut = NULL;
+    m_pins[2]->controlPin( newACOE, newACOE );
+
+    m_pins[0]->changeCallBack( m_pins[0], newACOE );
+    m_pins[1]->changeCallBack( m_pins[1], newACOE );
 }
 
 void AvrComp::compare( uint8_t ) // Performed only when ACO is readed
 {
     if( !m_enabled ) return;
 
-    double vRef = m_fixVref ? 1.1 : m_pins[0]->getVolt();
-    bool compOut = vRef > m_pins[1]->getVolt() ;
+    double vRef = m_fixVref ? 1.1 : m_pinP->getVolt();
+    bool compOut = vRef > m_pinN->getVolt() ;
     bool rising = !m_compOut && compOut;
 
     if( m_compOut != compOut )
@@ -90,5 +102,6 @@ void AvrComp::compare( uint8_t ) // Performed only when ACO is readed
             case 3: if(  rising ) m_interrupt->raise();        // Comparator Interrupt on Rising  Output Edge.
         }
         m_compOut = compOut;
+        if( m_pinOut ) m_pinOut->sheduleState( compOut, 0 );
     }
 }

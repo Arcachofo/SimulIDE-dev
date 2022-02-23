@@ -135,5 +135,5 @@
           
   <comp name="Comp" configregsA="ACSR" configbitsB="AIN0D,AIN1D"
                     interrupt="ACOMP" 
-                    pins="PORTD6,PORTD7"/>
+                    pins="PORTD6,PORTD7,PORTE0"/>
 </parts>
