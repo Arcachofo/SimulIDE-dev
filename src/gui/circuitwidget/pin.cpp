@@ -19,6 +19,7 @@
 
 #include <QApplication>
 #include <QPainter>
+#include <math.h>
 
 #include "pin.h"
 #include "bus.h"
@@ -151,6 +152,10 @@ void Pin::connectPin()      // Auto-Connect
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
 
             if( m_isBus != pin->isBus() ) continue; // Only connect Bus to Bus
+            if( pin->parentItem() == this->parentItem() ) continue;
+            if( abs(scenePos().x()-pin->scenePos().x()) > 3 ) continue;
+            if( abs(scenePos().y()-pin->scenePos().y()) > 3 ) continue;
+
             if( !pin->connector() )
             {
                 Circuit::self()->newconnector( this );
@@ -172,9 +177,9 @@ void Pin::isMoved()
     if( my_connector ) my_connector->updateConRoute( this, scenePos() );
     else if( !isConnected() )
     {                            // Auto-Connect
-        if( Circuit::self()->pasting() ) return;
-        if( m_isBus ) return;
-        if( QApplication::queryKeyboardModifiers() & Qt::ControlModifier )
+        if( Circuit::self()->isBusy() ) return;
+        //if( m_isBus ) return;
+        if( QApplication::queryKeyboardModifiers() & Qt::ShiftModifier )
             connectPin();
     }
     setLabelPos();

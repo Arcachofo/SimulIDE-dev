@@ -124,11 +124,14 @@ void Circuit::loadCircuit( QString fileName )
     if( m_conStarted ) return;
     saveState();
 
+    m_busy = true;
     m_filePath = fileName;
     m_error = 0;
 
     QString doc = fileToString( fileName, "Circuit::loadCircuit" );
     loadStrDoc( doc );
+
+    m_busy = false;
 
     if( m_error != 0 ) remove();
     else{
