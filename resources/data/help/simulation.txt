@@ -1,0 +1,22 @@
+Property: (default value)
+
+- Speed % Real: (100)
+   Simulation speed (target) in percentage %. 
+
+- Simualtion Step (1 us)
+   Simulation step duration (affects Reactive Components).
+
+- Steps per Second: (1e6)
+   Number of Simulation Steps per second.
+
+- Nl. Max. Steps: (1e5)
+   Number of maximum iteations for Non Linear simulation.
+
+- Slope Steps: (0)
+   Number of steps for Output Pins rising/falling edges slope.
+   0 for disabled.
+
+
+
+More Info:
+http://simulide.blogspot.com/p/blog-page_15.html

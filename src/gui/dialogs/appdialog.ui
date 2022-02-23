@@ -73,7 +73,7 @@
         <locale language="C" country="AnyCountry"/>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <property name="usesScrollButtons">
         <bool>false</bool>
@@ -180,7 +180,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="helpButton_3">
+            <widget class="QPushButton" name="helpButton0">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -423,7 +423,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="helpButton_2">
+            <widget class="QPushButton" name="helpButton1">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -747,7 +747,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="helpButton">
+            <widget class="QPushButton" name="helpButton2">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>

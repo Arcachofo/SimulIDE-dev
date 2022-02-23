@@ -266,7 +266,7 @@ void MainWindow::searchChanged()
     m_components->search( filter );
 }
 
-QString MainWindow::getHelpFile( QString name )
+QString MainWindow::getHelp( QString name )
 {
     QString help = "No help available";
 

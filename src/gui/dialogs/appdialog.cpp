@@ -70,7 +70,7 @@ AppDialog::AppDialog( QWidget* parent )
     m_blocked = false;
     updateSpeedPer();
 
-    m_helpExpanded = false;
+    m_showHelp = false;
     helpText->setVisible( false );
     mainLayout->removeWidget( helpText );
     //helpText->setText( help );
@@ -84,19 +84,30 @@ void AppDialog::on_tabList_currentChanged( int )
         QWidget* widget = tabList->currentWidget();
         this->setMaximumHeight( widget->minimumSizeHint().height()+150 );
     }
-    this->adjustSize();
-    this->setMaximumHeight( 800 );
+    else updtHelp();
+    adjustSize();
+    setMaximumHeight( 800 );
 }
-
-/*void AppDialog::on_helpButton_clicked()
+void AppDialog::updtHelp()
 {
-    m_helpExpanded = !m_helpExpanded;
-    if( m_helpExpanded ) mainLayout->addWidget( helpText );
-    else                 mainLayout->removeWidget( helpText );
-    helpText->setVisible( m_helpExpanded );
+    if( m_showHelp )
+    {
+        if( !helpText->isVisible() ) mainLayout->addWidget( helpText );
+    }
+    else mainLayout->removeWidget( helpText );
 
-    this->adjustSize();
-}*/
+    helpText->setVisible( m_showHelp );
+
+    QString tabStr;
+    int tab = tabList->currentIndex();
+    if      ( tab == 0 ) tabStr = "app";
+    else if ( tab == 1 ) tabStr = "circuit";
+    else if ( tab == 2 ) tabStr = "simulation";
+
+    helpText->setText( MainWindow::self()->getHelp( tabStr) );
+
+    adjustSize();
+}
 
 void AppDialog::updtValues()
 {

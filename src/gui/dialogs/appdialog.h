@@ -38,7 +38,9 @@ class AppDialog : public QDialog, private Ui::AppDialog
 
     public slots:
         void on_tabList_currentChanged( int );
-//        void on_helpButton_clicked();
+        void on_helpButton0_clicked() { m_showHelp = !m_showHelp;updtHelp(); }
+        void on_helpButton1_clicked() { m_showHelp = !m_showHelp;updtHelp(); }
+        void on_helpButton2_clicked() { m_showHelp = !m_showHelp;updtHelp(); }
 
         // App Settings
         void on_language_currentIndexChanged( int index );
@@ -64,10 +66,12 @@ class AppDialog : public QDialog, private Ui::AppDialog
         void on_slopeStepsBox_editingFinished();
 
     private:
+        void updtHelp();
         void updateSpeed();
         void updateSpeedPer();
 
         bool m_blocked;
+        bool m_showHelp;
 
         double m_speedP;
 
@@ -76,8 +80,6 @@ class AppDialog : public QDialog, private Ui::AppDialog
         uint64_t m_sps;
         uint64_t m_stepMult;
         uint64_t m_stepSize;
-
-        bool m_helpExpanded;
 };
 
 #endif

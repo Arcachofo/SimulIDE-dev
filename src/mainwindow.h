@@ -78,7 +78,7 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         QString getFilePath( QString file );
         QString getConfigPath( QString file );
 
-        QString getHelpFile( QString name );
+        QString getHelp( QString name );
         
         QTabWidget* m_sidepanel;
 

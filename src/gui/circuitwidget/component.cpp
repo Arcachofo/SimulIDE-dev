@@ -395,7 +395,7 @@ void Component::slotProperties()
               ||( m_type == "PIC" ))
             { name = m_id.split("-").first(); }
 
-            m_help = MainWindow::self()->getHelpFile( name );
+            m_help = MainWindow::self()->getHelp( name );
         }
         m_propDialog = new PropDialog( CircuitWidget::self(), m_help );
         m_propDialog->setComponent( this );
