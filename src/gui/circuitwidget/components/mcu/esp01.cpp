@@ -20,13 +20,15 @@
 #include <QPainter>
 #include <QtNetwork>
 #include <QTcpSocket>
+#include <QMenu>
 
 #include "esp01.h"
-#include "iopin.h"
 #include "itemlibrary.h"
+#include "serialmon.h"
 #include "simulator.h"
 #include "usarttx.h"
 #include "usartrx.h"
+#include "iopin.h"
 
 #include "intprop.h"
 
@@ -88,6 +90,9 @@ Esp01::~Esp01(){}
 
 void Esp01::stamp()
 {
+    m_conWIFI = false;
+    m_conTCP = false;
+    m_dataLenght = 0;
     m_action = espNone;
     m_buffer.clear();
     m_sender->enable( true );
@@ -100,13 +105,16 @@ void Esp01::updateStep()
     case espNone:
         break;
     case tcpConnect:
-        qDebug() << "m_tcpSocket->connectToHost( m_host, m_port )"<<m_host<< m_port;
+        //qDebug() << "m_tcpSocket->connectToHost( m_host, m_port )"<<m_host<< m_port;
+        m_tcpSocket->connectToHost( m_host, m_port );
         break;
     case tcpSend:
-        qDebug() << "m_tcpSocket->write( m_tcpData )"<<m_tcpData;
+        //qDebug() << "m_tcpSocket->write( m_tcpData )"<<m_tcpData;
+        if( m_conTCP ) m_tcpSocket->write( m_tcpData );
         break;
     case tcpClose:
-        qDebug() << "m_tcpSocket->disconnectFromHost()";
+        //qDebug() << "m_tcpSocket->disconnectFromHost()";
+        if( m_conTCP ) m_tcpSocket->disconnectFromHost();
         break;
     }
     m_action = espNone;
@@ -114,37 +122,45 @@ void Esp01::updateStep()
 
 void Esp01::runEvent()
 {
-    sendReply();
+    if( m_uartReply.isEmpty() ) return;
+    qDebug() << "Reply:"<< m_uartReply;
+    sendByte( m_uartReply.at( 0 ) ); // Start transaction
+    m_uartReply = m_uartReply.right( m_uartReply.size()-1 );
 }
 
-void Esp01::byteReceived( uint8_t data )
+void Esp01::byteReceived( uint8_t byte )
 {
     m_receiver->getData();
+    if( m_monitor ) m_monitor->printIn( byte );
     if( m_dataLenght )
     {
-        m_tcpData.append( data );
-        if( m_tcpData.size() == m_dataLenght )
+        if( m_tcpData.size() <= m_dataLenght-2 ) m_tcpData.append( byte );
+        else if( byte == 10 ) // received \r\n
         {
-            m_action = tcpSend;
+            if( m_conTCP ) m_action = tcpSend;
             m_dataLenght = 0;
     }   }
     else{
-        m_buffer.append( data ); //qDebug() << m_buffer;
+        m_buffer.append( byte ); //qDebug() << m_buffer;
         if( m_buffer.right(2)  == "\r\n")
-        { proccessInput(); sendReply(); }
+        { proccessInput(); runEvent(); }
     }
 }
 
 void Esp01::proccessInput()
 {
+    QString command = m_buffer.remove("\r\n");
+    m_buffer.clear();
+    m_uartReply = "";
+qDebug() << "Command:"<< command;
+    if( command.isEmpty() )
+        return;
+
     m_link = 0;
     m_dataLenght = 0;
     m_uartReply = m_ERROR; // Default reply: Error
 
-    QString command = m_buffer.remove("\r\n");
-    m_buffer.clear();
-qDebug() << "Command:"<< command;
-    if( command == "AT-RST" )
+    if( command == "AT+RST" )
     {
         /// Reset
         m_uartReply = m_OK;
@@ -161,10 +177,18 @@ qDebug() << "Command:"<< command;
         if( m_mode == 1 || m_mode == 0 ) m_uartReply = m_OK;
         else m_mode = 0;
     }
-    else if( command.startsWith("AT+CWJAP=") ) // Connect to an AP
+    else if( command.startsWith("AT+CWJAP=")
+          || command.startsWith("AT+CWJEAP=") ) // Connect to an AP
     {
         /// Save parameters for Query
+        m_conWIFI = true;
         m_uartReply = "\r\nWIFI CONNECTED\r\nWIFI GOT IP\r\n"+m_OK;
+    }
+    else if( command == "AT+CWQAP" )
+    {
+        if( m_conTCP ) m_action = tcpClose;
+        m_conWIFI = false;
+        m_uartReply = m_OK;
     }
     else if( command == "AT+CIPMUX?" )
     {
@@ -180,7 +204,9 @@ qDebug() << "Command:"<< command;
     }
     else if( command.startsWith("AT+CIPSTART=") ) // Start TCP Connection
     {
-        command = command.remove( 0, 12 );
+        if( !m_conWIFI ) return; // WIFI is not connected
+
+        command = command.remove( 0, 12 ).remove("\"");
         QStringList param = command.split(",");
         if( m_multCon )
         {
@@ -195,8 +221,7 @@ qDebug() << "Command:"<< command;
             m_host = param.takeFirst();
             if( param.isEmpty() ) return;
             m_port = param.takeFirst().toInt();
-            if( param.isEmpty() ) return;
-            m_action = tcpConnect;
+            if( !m_conTCP ) m_action = tcpConnect;
             m_uartReply = "";
         }
     }
@@ -210,11 +235,14 @@ qDebug() << "Command:"<< command;
             m_link = param.takeFirst().toInt();
         }
         if( param.isEmpty() ) return;
-        m_dataLenght = param.takeFirst().toInt();
-        m_uartReply = m_uartReply = m_OK+"\r\n\r\n>\r\n";
+        m_dataLenght = param.takeFirst().toInt()+2; // +2 due to last \r\n
+        m_tcpData.clear();
+        if( m_conTCP ) m_uartReply = m_OK+"\r\n>\r\n";
     }
     else if( command.startsWith("AT+CIPCLOSE") ) // Stop TCP Connection
     {
+        if( !m_conWIFI ) return; // WIFI is not connected
+
         if( command.contains("=") )
         {
             command = command.remove( 0, 12 );
@@ -270,37 +298,36 @@ qDebug() << "Command:"<< command;
     }
 }
 
-void Esp01::sendReply()
+void Esp01::frameSent( uint8_t data )
 {
-    m_replyIndex = 0;
-    frameSent( 0 );
-}
-
-void Esp01::frameSent( uint8_t )
-{
-    if( m_replyIndex < m_uartReply.size() )
+    if( m_monitor ) m_monitor->printOut( data );
+    if( m_uartReply.size() )
     {
-        sendByte( m_uartReply.at( m_replyIndex ) );
-        m_replyIndex++;
+        uint8_t byte = m_uartReply.at( 0 );
+        m_uartReply = m_uartReply.right( m_uartReply.size()-1 );
+        sendByte( byte );
     }
 }
 
 void Esp01::tcpConnected()
 {
     connectReply( "CONNECT" );
+    m_conTCP = true;
 }
 void Esp01::tcpDisconnected()
 {
     connectReply( "CLOSED" );
+    m_conTCP = false;
 }
 void Esp01::tcpBytesWritten( qint64 )
 {
     m_uartReply = "\r\nSEND OK\r\n";
-    Simulator::self()->addEvent( 0, this ); // Send Reply
+    Simulator::self()->addEvent( 1, this ); // Send Reply
 }
 void Esp01::tcpReadyRead()
 {
-
+    m_uartReply = m_tcpSocket->readAll();
+    Simulator::self()->addEvent( 1, this ); // Send Reply
 }
 
 void Esp01::connectReply( QByteArray OP )
@@ -310,7 +337,22 @@ void Esp01::connectReply( QByteArray OP )
     m_uartReply = "\r\n";
     if( m_multCon ) m_uartReply += "<"+link+">,";
     m_uartReply += OP+"\r\n"+m_OK;
-    Simulator::self()->addEvent( 0, this ); // Send Reply
+    Simulator::self()->addEvent( 1, this ); // Send Reply
+}
+
+void Esp01::slotOpenTerm()
+{
+    openMonitor( m_id, 0 );
+}
+
+void Esp01::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    QAction* openSerMon = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
+    connect( openSerMon, SIGNAL(triggered()),
+                   this, SLOT(slotOpenTerm()), Qt::UniqueConnection );
+
+    menu->addSeparator();
+    Component::contextMenu( event, menu );
 }
 
 void Esp01::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
@@ -322,4 +364,3 @@ void Esp01::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
 }
 
 #include "moc_esp01.cpp"
-

@@ -435,6 +435,7 @@ void Simulator::cancelEvents( eElement* el )
     eElement* event = m_firstEvent;
     eElement* last  = NULL;
     eElement* next  = NULL;
+    el->eventTime = 0;
 
     while( event ){
         next = event->nextEvent;

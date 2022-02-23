@@ -80,7 +80,6 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
 
     protected:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
-        virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
 
     private:
         void open();

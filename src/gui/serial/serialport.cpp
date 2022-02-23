@@ -178,14 +178,14 @@ void SerialPort::readData()
 void SerialPort::byteReceived( uint8_t byte )
 {
     m_receiver->getData();
-    m_monitor->printIn( byte );
+    if( m_monitor ) m_monitor->printIn( byte );
     m_serData.append( byte );
     m_receiving = true;
 }
 
 void SerialPort::frameSent( uint8_t data )
 {
-    m_monitor->printOut( data );
+    if( m_monitor ) m_monitor->printOut( data );
     if( m_uartData.size() )
     {
         uint8_t byte = m_uartData.at( 0 );
@@ -212,17 +212,6 @@ void SerialPort::slotOpenTerm()
     openMonitor( m_id, 0 );
 }
 
-void SerialPort::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) event->ignore();
-    else{
-        event->accept();
-        QMenu* menu = new QMenu();
-        contextMenu( event, menu );
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
-
 void SerialPort::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
     QAction* openSerMon = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Monitor.") );
@@ -230,6 +219,7 @@ void SerialPort::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu
                    this, SLOT(slotOpenTerm()), Qt::UniqueConnection );
 
     menu->addSeparator();
+    Component::contextMenu( event, menu );
 }
 
 void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

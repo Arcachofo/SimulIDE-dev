@@ -52,23 +52,29 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
         virtual void updateStep() override;
         virtual void runEvent() override;
 
-        virtual void byteReceived( uint8_t data ) override;
+        virtual void byteReceived( uint8_t byte ) override;
         virtual void frameSent( uint8_t data ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:
+        void slotOpenTerm();
         void tcpConnected();
         void tcpDisconnected();
         void tcpBytesWritten( qint64 );
         void tcpReadyRead();
 
+    protected:
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+
     private:
         void proccessInput();
-        void sendReply();
         void connectReply( QByteArray OP );
 
         QTcpSocket* m_tcpSocket;
+
+        bool m_conWIFI;
+        bool m_conTCP;
 
         int m_baudrate;
         int m_mode;
@@ -80,7 +86,6 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
         int m_dataLenght;
 
         QByteArray m_uartReply;
-        int m_replyIndex;
 
         QString m_host;
         int     m_port;

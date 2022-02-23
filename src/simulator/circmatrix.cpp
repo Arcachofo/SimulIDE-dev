@@ -159,7 +159,7 @@ bool CircMatrix::solveMatrix()
         }
         m_circChanged  = false;
         qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
-        qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes";
+        qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes\n";
     }else{
         for( int i=0; i<m_bList.size(); ++i )
         {
