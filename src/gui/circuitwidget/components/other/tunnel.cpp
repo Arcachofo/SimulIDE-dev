@@ -175,7 +175,7 @@ void Tunnel::mousePressEvent( QGraphicsSceneMouseEvent* event )
         Component::mousePressEvent( event );
 }
 
-void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {
     if( m_hidden || m_packed ) return;
 
@@ -186,20 +186,20 @@ void Tunnel::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget
 
     if( m_rotated ){
         QPointF points[5] =        {
-            QPointF( m_size+8,-5 ),
-            QPointF(  8,-5 ),
+            QPointF( m_size+8,-4 ),
+            QPointF(  8,-4 ),
             QPointF(  4, 0 ),
-            QPointF(  8, 5 ),
-            QPointF( m_size+8, 5 ) };
+            QPointF(  8, 4 ),
+            QPointF( m_size+8, 4 ) };
 
         p->drawPolygon( points, 5 );
     } else {
         QPointF points[5] =        {
-            QPointF(-m_size-8,-5 ),
-            QPointF(  -8,-5 ),
+            QPointF(-m_size-8,-4 ),
+            QPointF(  -8,-4 ),
             QPointF(  -4, 0 ),
-            QPointF(  -8, 5 ),
-            QPointF(-m_size-8, 5 ) };
+            QPointF(  -8, 4 ),
+            QPointF(-m_size-8, 4 ) };
 
         p->drawPolygon( points, 5 );
 }   }

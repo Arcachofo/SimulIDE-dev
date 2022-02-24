@@ -67,9 +67,9 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     setFlag( QGraphicsItem::ItemStacksBehindParent, true );
     setFlag( QGraphicsItem::ItemIsSelectable, false );
 
-    QFont sansFont( "Helvetica [Cronyx]", 5 );
-    sansFont.setPixelSize(6);
-    m_label.setFont( sansFont );
+    QFont font( "Ubuntu", 5 );
+    font.setPixelSize(6);
+    m_label.setFont( font );
     m_label.setText("");
     m_label.setBrush( QColor( 250, 250, 200 ) );
 
