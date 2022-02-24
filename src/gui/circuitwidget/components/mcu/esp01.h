@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
             tcpConnect,
             tcpSend,
             tcpClose,
+            uartReply
         };
 
         static Component* construct( QObject* parent, QString type, QString id );
@@ -47,6 +48,9 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
 
         int baudrate() { return m_baudrate; }
         void setBaudrate( int br ) { m_baudrate = br;}
+
+        bool debug() { return m_debug; }
+        void setDebug( bool d) { m_debug = d; }
 
         virtual void stamp() override;
         virtual void updateStep() override;
@@ -61,20 +65,22 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
         void slotOpenTerm();
         void tcpConnected();
         void tcpDisconnected();
-        void tcpBytesWritten( qint64 );
+        void tcpBytesWritten( qint64 bytes );
         void tcpReadyRead();
 
     protected:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
 
     private:
-        void proccessInput();
+        void reset();
+        void command();
         void connectReply( QByteArray OP );
 
         QTcpSocket* m_tcpSocket;
 
         bool m_conWIFI;
         bool m_conTCP;
+        bool m_debug;
 
         int m_baudrate;
         int m_mode;

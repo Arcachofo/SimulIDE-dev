@@ -31,6 +31,7 @@
 #include "iopin.h"
 
 #include "intprop.h"
+#include "boolprop.h"
 
 Component* Esp01::construct( QObject* parent, QString type, QString id )
 { return new Esp01( parent, type, id ); }
@@ -53,8 +54,9 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
     m_area = QRect(-28,-20, 56, 40 );
     m_background = ":/esp01.png";
 
+    m_debug = true;
     m_OK = "\r\nOK\r\n";
-    m_ERROR = "\r\n+CWJAP:<5>\r\nERROR\r\n"; // Default reply: Error
+    m_ERROR = "\r\nERROR\r\n"; // Default reply: Error //+CWJAP:<5>
 
     m_pin.resize(2);
 
@@ -75,28 +77,33 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( m_tcpSocket, SIGNAL( connected() )         ,this, SLOT( tcpConnected() ));
-    connect( m_tcpSocket, SIGNAL( disconnected() )      ,this, SLOT( tcpDisconnected() ));
-    connect( m_tcpSocket, SIGNAL( bytesWritten(qint64) ),this, SLOT( tcpBytesWritten(qint64) ));
-    connect( m_tcpSocket, SIGNAL( readyRead() )         ,this, SLOT( tcpReadyRead() ));
-
     addPropGroup( { "Main", {
 new IntProp<Esp01>("Baudrate", tr("Baudrate"),"_Bauds", this, &Esp01::baudRate, &Esp01::setBaudRate, "uint" ),
 //new IntProp<Esp01>("DataBits", tr("Data Bits"),"_Bits", this, &Esp01::dataBits, &Esp01::setDataBits, "uint" ),
 //new IntProp<Esp01>("StopBits", tr("Stop Bits"),"_Bits", this, &Esp01::stopBits, &Esp01::setStopBits, "uint" ),
+new BoolProp<Esp01>( "Debug", tr("Show Debug messages"),"", this, &Esp01::debug,   &Esp01::setDebug ),
         } } );
 }
 Esp01::~Esp01(){}
 
 void Esp01::stamp()
 {
-    m_conWIFI = false;
-    m_conTCP = false;
-    m_dataLenght = 0;
-    m_action = espNone;
-    m_buffer.clear();
+    reset();
+
     m_sender->enable( true );
     m_receiver->enable( true );
+
+    connect( m_tcpSocket, SIGNAL( connected() )
+                   ,this, SLOT( tcpConnected() ), Qt::UniqueConnection);
+
+    connect( m_tcpSocket, SIGNAL( bytesWritten(qint64) )
+                   ,this, SLOT( tcpBytesWritten(qint64) ), Qt::UniqueConnection);
+
+    connect( m_tcpSocket, SIGNAL( disconnected() )
+                   ,this, SLOT( tcpDisconnected() ), Qt::UniqueConnection);
+
+    connect( m_tcpSocket, SIGNAL( readyRead() )
+                   ,this, SLOT( tcpReadyRead() ), Qt::UniqueConnection);
 }
 
 void Esp01::updateStep()
@@ -105,25 +112,41 @@ void Esp01::updateStep()
     case espNone:
         break;
     case tcpConnect:
-        //qDebug() << "m_tcpSocket->connectToHost( m_host, m_port )"<<m_host<< m_port;
+        if( m_debug ) qDebug() << "Esp01 - Connecting to"<<m_host<< m_port;
         m_tcpSocket->connectToHost( m_host, m_port );
         break;
     case tcpSend:
-        //qDebug() << "m_tcpSocket->write( m_tcpData )"<<m_tcpData;
+        if( m_debug ) qDebug() << "Esp01 - Sending:\n"<<m_tcpData;
         if( m_conTCP ) m_tcpSocket->write( m_tcpData );
         break;
     case tcpClose:
-        //qDebug() << "m_tcpSocket->disconnectFromHost()";
+        if( m_debug ) qDebug() << "Esp01 - Disconnecting from"<<m_host<< m_port;
         if( m_conTCP ) m_tcpSocket->disconnectFromHost();
+        break;
+    case uartReply:
+        Simulator::self()->addEvent( 1, this ); // Send Reply
         break;
     }
     m_action = espNone;
 }
 
+void Esp01::reset()
+{
+    m_conWIFI = false;
+    m_conTCP = false;
+    m_dataLenght = 0;
+    m_action = espNone;
+    m_buffer.clear();
+    m_tcpData.clear();
+    m_uartReply.clear();
+    Simulator::self()->cancelEvents( this );
+    m_tcpSocket->disconnectFromHost();
+}
+
 void Esp01::runEvent()
 {
     if( m_uartReply.isEmpty() ) return;
-    qDebug() << "Reply:"<< m_uartReply;
+    if( m_debug ) qDebug() << "Esp01 - Reply:"<< m_uartReply;
     sendByte( m_uartReply.at( 0 ) ); // Start transaction
     m_uartReply = m_uartReply.right( m_uartReply.size()-1 );
 }
@@ -134,7 +157,7 @@ void Esp01::byteReceived( uint8_t byte )
     if( m_monitor ) m_monitor->printIn( byte );
     if( m_dataLenght )
     {
-        if( m_tcpData.size() <= m_dataLenght-2 ) m_tcpData.append( byte );
+        if( m_tcpData.size() < m_dataLenght-2 ) m_tcpData.append( byte );
         else if( byte == 10 ) // received \r\n
         {
             if( m_conTCP ) m_action = tcpSend;
@@ -143,26 +166,30 @@ void Esp01::byteReceived( uint8_t byte )
     else{
         m_buffer.append( byte ); //qDebug() << m_buffer;
         if( m_buffer.right(2)  == "\r\n")
-        { proccessInput(); runEvent(); }
+        { command(); runEvent(); }
     }
 }
 
-void Esp01::proccessInput()
+void Esp01::command()
 {
     QString command = m_buffer.remove("\r\n");
     m_buffer.clear();
     m_uartReply = "";
-qDebug() << "Command:"<< command;
-    if( command.isEmpty() )
-        return;
+
+    if( m_debug ) qDebug() << "\nEsp01 - Command:"<< command;
+    if( command.isEmpty() ) return;
 
     m_link = 0;
     m_dataLenght = 0;
     m_uartReply = m_ERROR; // Default reply: Error
 
-    if( command == "AT+RST" )
+    if( command == "AT" )
     {
-        /// Reset
+        m_uartReply = m_OK;
+    }
+    else if( command == "AT+RST" )
+    {
+        reset();
         m_uartReply = m_OK;
     }
     else if( command == "AT+CWMODE?" )
@@ -311,23 +338,28 @@ void Esp01::frameSent( uint8_t data )
 
 void Esp01::tcpConnected()
 {
+    if( m_debug ) qDebug() << "Esp01 - Connected to"<<m_host<<m_port;
     connectReply( "CONNECT" );
     m_conTCP = true;
 }
 void Esp01::tcpDisconnected()
 {
+    if( m_debug ) qDebug() << "Esp01 - Disconnected from"<<m_host<<m_port;
     connectReply( "CLOSED" );
     m_conTCP = false;
 }
-void Esp01::tcpBytesWritten( qint64 )
+void Esp01::tcpBytesWritten( qint64 bytes )
 {
+    if( m_debug ) qDebug() << "Esp01 - Bytes Written"<<bytes;
     m_uartReply = "\r\nSEND OK\r\n";
-    Simulator::self()->addEvent( 1, this ); // Send Reply
+    m_action = uartReply;
 }
 void Esp01::tcpReadyRead()
 {
     m_uartReply = m_tcpSocket->readAll();
-    Simulator::self()->addEvent( 1, this ); // Send Reply
+
+    m_action = uartReply;
+    if( m_debug ) qDebug() << "Esp01 - Received from Host:"<<m_host<<m_port<<"\n"<<m_uartReply;
 }
 
 void Esp01::connectReply( QByteArray OP )
@@ -337,7 +369,7 @@ void Esp01::connectReply( QByteArray OP )
     m_uartReply = "\r\n";
     if( m_multCon ) m_uartReply += "<"+link+">,";
     m_uartReply += OP+"\r\n"+m_OK;
-    Simulator::self()->addEvent( 1, this ); // Send Reply
+    m_action = uartReply;
 }
 
 void Esp01::slotOpenTerm()

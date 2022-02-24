@@ -411,7 +411,7 @@ void Simulator::addEvent( uint64_t time, eElement* el )
     if( m_state < SIM_STARTING ) return;
 
     if( el->eventTime )
-    { qDebug() << "ERROR: Simulator::addEvent Repeated event"; return; }
+    { qDebug() << "ERROR: Simulator::addEvent Repeated event"<<el->getId(); return; }
 
     time += m_circTime;
     eElement* last  = NULL;
