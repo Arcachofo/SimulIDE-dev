@@ -56,7 +56,7 @@ void MechContact::stamp()
         eNode* enode = m_ePin[i]->getEnode();
         if( enode ) enode->setSwitched( true );
     }*/
-    //setSwitch( m_nClose );
+    setSwitch( m_nClose );
 }
 
 void MechContact::setSwitch( bool closed )
@@ -74,7 +74,6 @@ void MechContact::setSwitch( bool closed )
         if( m_numthrows == 2 )
         {
             switchN++;
-
             if( closed ) m_switches[ switchN ]->setAdmit( 0 );
             else         m_switches[ switchN ]->setAdmit( 1e3 );
 }   }   }

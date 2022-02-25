@@ -36,51 +36,31 @@ RelayBase::RelayBase( QObject* parent, QString type, QString id )
 
     m_pin0 = 4;
 
-    QString nodid = m_id;            // External Left pin to inductor
-    nodid.append(QString("-lPin"));
-    QPoint nodpos = QPoint(-16-8,0);
-    m_pin[0] = new Pin( 180, nodpos, nodid, 0, this);
+    m_pin[0] = new Pin( 180, QPoint(-16-8,0), m_id+"-lPin", 0, this); // External Left pin to inductor
     m_pin[0]->setLength(4.5);
     m_pin[0]->setPos(-16, 0 );
     m_ePin[0] = m_pin[0];
 
-    nodid = m_id;                    // External Right pin to resistor
-    nodid.append(QString("-rPin"));
-    nodpos = QPoint(16+8,0);
-    m_pin[1] = new Pin( 0, nodpos, nodid, 1, this);
+    m_pin[1] = new Pin( 0, QPoint(16+8,0), m_id+"-rPin", 1, this); // External Right pin to resistor;
     m_pin[1]->setLength(4.5);
     m_pin[1]->setPos( 16, 0 );
     m_ePin[3] = m_pin[1];
 
-    QString reid = m_id;
-    nodid = reid;                  // Internal Left pin to inductor
-    nodid.append(QString("-lIntPin"));
-    m_ePin[1] = new ePin( reid, 1 );
+    m_ePin[1] = new ePin( m_id+"-lePin", 1 ); // Internal Left pin to inductor
+    m_ePin[2] = new ePin( m_id+"-rePin", 2 ); // Internal right pin to resistor
 
-    nodid = reid;                 // Internal right pin to resistor
-    nodid.append(QString("-rIntPin"));
-    m_ePin[2] = new ePin( reid, 2 );
-
-    reid = m_id;
-    reid.append(QString("-resistor"));
-    m_resistor = new eResistor( reid );
+    m_resistor = new eResistor( m_id+"-resistor" );
     m_resistor->setRes( 100 );
     m_resistor->setEpin( 0, m_ePin[2] );
     m_resistor->setEpin( 1, m_ePin[3] );
 
-    reid = m_id;
-    reid.append(QString("-inductor"));
-    m_inductor = new eInductor( reid );
+    m_inductor = new eInductor( m_id+"-inductor" );
     m_inductor->setInd( 0.1 );  // 100 mH
     m_inductor->setEpin( 0, m_ePin[0] );
     m_inductor->setEpin( 1, m_ePin[1] );
 
     m_trigCurrent = 0.02;
     m_relCurrent  = 0.01;
-
-    //m_internalEnode = new eNode( m_id+"-internaleNode" );
-    //m_ePin[1]->setEnode( m_internalEnode );
-    //m_ePin[2]->setEnode( m_internalEnode );
 
     setValLabelPos(-16, 6, 0);
     setLabelPos(-16, 8, 0);
@@ -105,7 +85,7 @@ void RelayBase::stamp()
 
     MechContact::stamp();
 
-    m_ePin[0]->changeCallBack( this );
+    m_pin[0]->changeCallBack( this );
     m_ePin[1]->changeCallBack( this );
 }
 
