@@ -26,6 +26,7 @@
 
 class LibraryItem;
 class QTcpSocket;
+class QSignalMapper;
 
 class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eElement
 {
@@ -63,10 +64,9 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
 
     public slots:
         void slotOpenTerm();
-        void tcpConnected();
-        void tcpDisconnected();
-        void tcpBytesWritten( qint64 bytes );
-        void tcpReadyRead();
+        void tcpConnected( int link );
+        void tcpDisconnected( int link );
+        void tcpReadyRead( int link );
 
     protected:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
@@ -74,12 +74,11 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
     private:
         void reset();
         void command();
-        void connectReply( QByteArray OP );
-
-        QTcpSocket* m_tcpSocket;
+        void connectTcp( int link );
+        void connectReply( QByteArray OP, int link );
 
         bool m_conWIFI;
-        bool m_conTCP;
+        //bool m_conTCP;
         bool m_debug;
 
         int m_baudrate;
@@ -100,6 +99,12 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
         QByteArray m_ERROR;
 
         espAction_t m_action;
+
+        QHash<int, QTcpSocket*> m_tcpSockets;
+
+        QSignalMapper* m_connectSM;
+        QSignalMapper* m_discontSM;
+        QSignalMapper* m_readyReSM;
 };
 
 #endif

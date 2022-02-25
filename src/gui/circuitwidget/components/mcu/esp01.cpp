@@ -73,7 +73,14 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
 
     setBaudRate( 115200 );
 
-    m_tcpSocket = new QTcpSocket(this);
+    m_connectSM = new QSignalMapper( this );
+    connect( m_connectSM, SIGNAL(mapped(int)), this, SLOT(tcpConnected(int)) );
+
+    m_discontSM = new QSignalMapper( this );
+    connect( m_discontSM, SIGNAL(mapped(int)), this, SLOT(tcpDisconnected(int)) );
+
+    m_readyReSM = new QSignalMapper( this );
+    connect( m_readyReSM, SIGNAL(mapped(int)), this, SLOT(tcpReadyRead(int)) );
 
     Simulator::self()->addToUpdateList( this );
 
@@ -92,18 +99,6 @@ void Esp01::stamp()
 
     m_sender->enable( true );
     m_receiver->enable( true );
-
-    connect( m_tcpSocket, SIGNAL( connected() )
-                   ,this, SLOT( tcpConnected() ), Qt::UniqueConnection);
-
-    connect( m_tcpSocket, SIGNAL( bytesWritten(qint64) )
-                   ,this, SLOT( tcpBytesWritten(qint64) ), Qt::UniqueConnection);
-
-    connect( m_tcpSocket, SIGNAL( disconnected() )
-                   ,this, SLOT( tcpDisconnected() ), Qt::UniqueConnection);
-
-    connect( m_tcpSocket, SIGNAL( readyRead() )
-                   ,this, SLOT( tcpReadyRead() ), Qt::UniqueConnection);
 }
 
 void Esp01::updateStep()
@@ -112,17 +107,32 @@ void Esp01::updateStep()
     case espNone:
         break;
     case tcpConnect:
-        if( m_debug ) qDebug() << "Esp01 - Connecting to"<<m_host<< m_port;
-        m_tcpSocket->connectToHost( m_host, m_port );
+        connectTcp( m_link );
         break;
-    case tcpSend:
-        if( m_debug ) qDebug() << "Esp01 - Sending:\n"<<m_tcpData;
-        if( m_conTCP ) m_tcpSocket->write( m_tcpData );
-        break;
-    case tcpClose:
-        if( m_debug ) qDebug() << "Esp01 - Disconnecting from"<<m_host<< m_port;
-        if( m_conTCP ) m_tcpSocket->disconnectFromHost();
-        break;
+    case tcpSend:{
+        QTcpSocket* tcpSocket = m_tcpSockets.value( m_link );
+        if( tcpSocket ){
+            if( tcpSocket->state() == QAbstractSocket::ConnectedState )
+            {
+                if( m_debug ) qDebug() << "Esp01 - Sending data to link:"<<m_link<<"\n"<<m_tcpData;
+                int bytes = tcpSocket->write( m_tcpData );
+                if( m_debug ) qDebug() << "Esp01 - link"<<bytes<<"Bytes Written to link"<<m_link;
+                m_uartReply = "\r\nSEND OK\r\n";
+                Simulator::self()->addEvent( 1, this ); // Send Reply
+            }
+            else qDebug() << "Esp01 - Error Sending data: link"<<m_link<<"not connected\n";
+        }
+        }break;
+    case tcpClose:{
+        QTcpSocket* tcpSocket = m_tcpSockets.value( m_link );
+        if( tcpSocket && tcpSocket->state() == QAbstractSocket::ConnectedState )
+        {
+            if( m_debug ) qDebug() << "Esp01 - Disconnecting link"<<m_link<<"from"<<m_host<< m_port;
+            tcpSocket->disconnectFromHost();
+        }
+        else if( m_debug ) qDebug() << "Esp01 - Error Disconnecting link"<<m_link<<"from"<<m_host<< m_port
+                                    <<"\n              State = "<<tcpSocket->state();
+        }break;
     case uartReply:
         Simulator::self()->addEvent( 1, this ); // Send Reply
         break;
@@ -133,14 +143,13 @@ void Esp01::updateStep()
 void Esp01::reset()
 {
     m_conWIFI = false;
-    m_conTCP = false;
     m_dataLenght = 0;
     m_action = espNone;
     m_buffer.clear();
     m_tcpData.clear();
     m_uartReply.clear();
     Simulator::self()->cancelEvents( this );
-    m_tcpSocket->disconnectFromHost();
+    for( QTcpSocket* tcpSocket : m_tcpSockets) tcpSocket->disconnectFromHost();;
 }
 
 void Esp01::runEvent()
@@ -160,7 +169,7 @@ void Esp01::byteReceived( uint8_t byte )
         if( m_tcpData.size() < m_dataLenght-2 ) m_tcpData.append( byte );
         else if( byte == 10 ) // received \r\n
         {
-            if( m_conTCP ) m_action = tcpSend;
+            m_action = tcpSend;
             m_dataLenght = 0;
     }   }
     else{
@@ -213,7 +222,7 @@ void Esp01::command()
     }
     else if( command == "AT+CWQAP" )
     {
-        if( m_conTCP ) m_action = tcpClose;
+        m_action = tcpClose;
         m_conWIFI = false;
         m_uartReply = m_OK;
     }
@@ -248,7 +257,7 @@ void Esp01::command()
             m_host = param.takeFirst();
             if( param.isEmpty() ) return;
             m_port = param.takeFirst().toInt();
-            if( !m_conTCP ) m_action = tcpConnect;
+            m_action = tcpConnect;
             m_uartReply = "";
         }
     }
@@ -264,7 +273,7 @@ void Esp01::command()
         if( param.isEmpty() ) return;
         m_dataLenght = param.takeFirst().toInt()+2; // +2 due to last \r\n
         m_tcpData.clear();
-        if( m_conTCP ) m_uartReply = m_OK+"\r\n>\r\n";
+        m_uartReply = m_OK+"\r\n>\r\n";
     }
     else if( command.startsWith("AT+CIPCLOSE") ) // Stop TCP Connection
     {
@@ -336,40 +345,70 @@ void Esp01::frameSent( uint8_t data )
     }
 }
 
-void Esp01::tcpConnected()
+void Esp01::connectTcp( int link )
 {
-    if( m_debug ) qDebug() << "Esp01 - Connected to"<<m_host<<m_port;
-    connectReply( "CONNECT" );
-    m_conTCP = true;
-}
-void Esp01::tcpDisconnected()
-{
-    if( m_debug ) qDebug() << "Esp01 - Disconnected from"<<m_host<<m_port;
-    connectReply( "CLOSED" );
-    m_conTCP = false;
-}
-void Esp01::tcpBytesWritten( qint64 bytes )
-{
-    if( m_debug ) qDebug() << "Esp01 - Bytes Written"<<bytes;
-    m_uartReply = "\r\nSEND OK\r\n";
-    m_action = uartReply;
-}
-void Esp01::tcpReadyRead()
-{
-    m_uartReply = m_tcpSocket->readAll();
+    QTcpSocket* tcpSocket = m_tcpSockets.value( link );
+    if( !tcpSocket )
+    {
+        tcpSocket = new QTcpSocket();
+        m_tcpSockets[link] = tcpSocket;
 
-    m_action = uartReply;
-    if( m_debug ) qDebug() << "Esp01 - Received from Host:"<<m_host<<m_port<<"\n"<<m_uartReply;
+        connect( tcpSocket, SIGNAL( connected() ),
+                 m_connectSM, SLOT( map() ), Qt::UniqueConnection );
+        m_connectSM->setMapping( tcpSocket, link );
+
+        connect( tcpSocket, SIGNAL( disconnected() ),
+                 m_discontSM, SLOT( map() ), Qt::UniqueConnection );
+        m_discontSM->setMapping( tcpSocket, link );
+
+        connect( tcpSocket, SIGNAL( readyRead() ),
+                 m_readyReSM, SLOT( map() ), Qt::UniqueConnection );
+        m_readyReSM->setMapping( tcpSocket, link );
+    }
+    if( tcpSocket->state() == QAbstractSocket::ConnectedState )
+    {
+        tcpSocket->disconnectFromHost();
+        tcpSocket->waitForDisconnected( 1000 );
+    }
+    if( tcpSocket->state() == QAbstractSocket::UnconnectedState )
+    {
+        if( m_debug ) qDebug() << "Esp01 - Connecting link"<<link<<"to"<<m_host<< m_port;
+        tcpSocket->connectToHost( m_host, m_port );
+    }
+    else if( m_debug ) qDebug() << "Esp01 - Error Connecting link"<<link<<"to"<<m_host<< m_port
+                                <<"\n              State = "<<tcpSocket->state();
 }
 
-void Esp01::connectReply( QByteArray OP )
+void Esp01::tcpConnected( int link )
 {
-    QByteArray link;
-    link.setNum( m_link );
+    if( m_debug ) qDebug() << "Esp01 - link"<<link<<"Connected to"<<m_host<<m_port;
+    connectReply( "CONNECT", link );
+}
+void Esp01::tcpDisconnected( int link )
+{
+    if( m_debug ) qDebug() << "Esp01 - link"<<link<<"Disconnected from"<<m_host<<m_port;
+    connectReply( "CLOSED", link );
+}
+
+void Esp01::tcpReadyRead( int link )
+{
+    QTcpSocket* tcpSocket = m_tcpSockets.value( link );
+    m_uartReply = tcpSocket->readAll();
+
+    if( m_debug ) qDebug() << "Esp01 - link"<<link<<"Received from Host:"
+                           << tcpSocket->peerName() <<tcpSocket->peerPort()
+                           << "\n"<<m_uartReply;
+    m_action = uartReply; // Send Reply
+}
+
+void Esp01::connectReply( QByteArray OP, int link )
+{
+    QByteArray l;
+    l.setNum( link );
     m_uartReply = "\r\n";
-    if( m_multCon ) m_uartReply += "<"+link+">,";
+    if( m_multCon ) m_uartReply += "<"+l+">,";
     m_uartReply += OP+"\r\n"+m_OK;
-    m_action = uartReply;
+    m_action = uartReply; // Send Reply
 }
 
 void Esp01::slotOpenTerm()
