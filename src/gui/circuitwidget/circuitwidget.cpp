@@ -192,8 +192,8 @@ void CircuitWidget::createToolBars()
     //m_circToolBar.addSeparator();
     m_circToolBar.addWidget( m_msgLabel );
 
-    QWidget *spacerWidget = new QWidget( this );
-    spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    QWidget* spacerWidget = new QWidget( this );
+    spacerWidget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
     spacerWidget->setVisible( true );
     m_circToolBar.addWidget( spacerWidget );
 

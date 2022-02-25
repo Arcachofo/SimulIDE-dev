@@ -116,7 +116,7 @@ void Esp01::updateStep()
             {
                 if( m_debug ) qDebug() << "Esp01 - Sending data to link:"<<m_link<<"\n"<<m_tcpData;
                 int bytes = tcpSocket->write( m_tcpData );
-                if( m_debug ) qDebug() << "Esp01 - link"<<bytes<<"Bytes Written to link"<<m_link;
+                if( m_debug ) qDebug() << "Esp01 -"<<bytes<<"Bytes Written to link"<<m_link;
                 m_uartReply = "\r\nSEND OK\r\n";
                 Simulator::self()->addEvent( 1, this ); // Send Reply
             }

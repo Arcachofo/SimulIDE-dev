@@ -68,6 +68,7 @@ CircuitView::CircuitView( QWidget *parent )
     setAcceptDrops(true);
     
     m_info = new QPlainTextEdit( this );
+    m_info->setReadOnly( true );
     m_info->setObjectName( "m_info" );
     m_info->setLineWrapMode( QPlainTextEdit::NoWrap );
     m_info->setPlainText( "Time: 00:00:00.000000" );
