@@ -151,21 +151,20 @@ void Pin::connectPin()      // Auto-Connect
         {
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
 
-            if( m_isBus != pin->isBus() ) continue; // Only connect Bus to Bus
             if( pin->parentItem() == this->parentItem() ) continue;
             if( abs(scenePos().x()-pin->scenePos().x()) > 3 ) continue;
             if( abs(scenePos().y()-pin->scenePos().y()) > 3 ) continue;
-
-            if( !pin->connector() )
-            {
-                Circuit::self()->newconnector( this );
-                Circuit::self()->closeconnector( pin );
-            }
+            if( m_isBus != pin->isBus() ) continue; // Only connect Bus to Bus
+            if( pin->connector() ) continue;
+            if( pin->unused() ) continue;
+            Circuit::self()->newconnector( this );
+            Circuit::self()->closeconnector( pin );
             break;
         }
         else if( it->type() == UserType+2 )        // ConnectorLine
         {
             ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( it );
+            if( m_isBus != line->connector()->isBus() ) continue;
             Circuit::self()->newconnector( this );
             line->connectToWire( QPoint( scenePos().x(), scenePos().y()) );
             break;
