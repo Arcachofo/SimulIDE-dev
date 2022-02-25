@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,22 +17,21 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SWITCHDIP_H
-#define SWITCHDIP_H
+#ifndef SOCKET_H
+#define SOCKET_H
 
 #include "component.h"
 #include "e-element.h"
 
 class LibraryItem;
-class QPushButton;
-class QGraphicsProxyWidget;
+class Pin;
 
-class MAINMODULE_EXPORT SwitchDip : public Component, public eElement
+class MAINMODULE_EXPORT Socket : public Component, public eElement
 {
     Q_OBJECT
     public:
-        SwitchDip( QObject* parent, QString type, QString id );
-        ~SwitchDip();
+        Socket( QObject* parent, QString type, QString id );
+        ~Socket();
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
@@ -40,27 +39,19 @@ class MAINMODULE_EXPORT SwitchDip : public Component, public eElement
         int  size() { return m_size; }
         void setSize( int size );
 
-        int  state() { return m_state; }
-        void setState( int state );
-
         virtual void stamp() override;
         virtual void updateStep() override;
-        virtual void remove() override;
 
         void createSwitches( int c );
         void deleteSwitches( int d );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
-    public slots:
-        void onbuttonclicked();
-
     private:
-        QList<QPushButton*> m_buttons;
-        QList<QGraphicsProxyWidget*> m_proxys;
-
+        void updatePins( bool connect );
         int m_size;
-        int m_state;
+
+        std::vector<Pin*> m_connPins;
 };
 
 #endif

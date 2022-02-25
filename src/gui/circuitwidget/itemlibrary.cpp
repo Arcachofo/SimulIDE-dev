@@ -103,6 +103,7 @@
 #include "sevensegment.h"
 #include "sevensegment_bcd.h"
 #include "shiftreg.h"
+#include "socket.h"
 #include "sr04.h"
 #include "scr.h"
 #include "ssd1306.h"
@@ -287,6 +288,7 @@ void ItemLibrary::loadItems()
     addItem( Ellipse::libraryItem() );
     addItem( Line::libraryItem() );
     addItem( Tunnel::libraryItem() );
+    addItem( Socket::libraryItem() );
     addItem( SubPackage::libraryItem() );
 }
 

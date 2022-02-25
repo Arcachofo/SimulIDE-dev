@@ -163,8 +163,8 @@
         <file alias="joystick.png">../src/icons/components/joystick.png</file>
         <file alias="rotencod.png">../src/icons/components/rotencod.png</file>
         
-        <file alias="inbus.png">../src/icons/components/inbus.png</file>
-        <file alias="outbus.png">../src/icons/components/outbus.png</file>
+        <file alias="bus.png">../src/icons/components/bus.png</file>
+        <file alias="socket.png">../src/icons/components/socket.png</file>
         <file alias="1to2.png">../src/icons/components/1to2.png</file>
         <file alias="1to3.png">../src/icons/components/1to3.png</file>
         <file alias="1to3-c.png">../src/icons/components/1to3-c.png</file>

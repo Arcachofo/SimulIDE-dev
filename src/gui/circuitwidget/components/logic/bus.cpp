@@ -37,7 +37,7 @@ LibraryItem* Bus::libraryItem()
     return new LibraryItem(
         tr( "Bus" ),
         tr( "Logic/Other Logic" ),
-        "outbus.png",
+        "bus.png",
         "Bus",
         Bus::construct );
 }
