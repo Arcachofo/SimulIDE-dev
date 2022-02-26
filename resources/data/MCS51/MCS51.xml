@@ -62,23 +62,20 @@
         <extint name="EXT_1" pin="PORT33" />
     </port>
     
-    <timer name="TIMER0" enable="TR0" counter="TL0,TH0" configbitsA="T0M0,T0M1" configbitsB="C/T0,GATE0">
-        <extclock type="PIN" source="PIN34"/>
-        <interrupt name="T0_OVF" />
+    <timer name="TIMER0" enable="TR0" configregsA="TMOD"
+                         counter="TL0,TH0" 
+                         clockpin="PORT34"
+                         interrupt="T0_OVF" >
     </timer>
     
-    <timer name="TIMER1" enable="TR1" counter="TL1,TH1" configbitsA="T1M0,T1M1" configbitsB="C/T1,GATE1">
-        <extclock type="PIN" source="PIN35"/>
-        <interrupt name="T1_OVF" />
+    <timer name="TIMER1" enable="TR1" configregsA="TMOD"
+                         counter="TL1,TH1"
+                         clockpin="PORT35"
+                         interrupt="T1_OVF" >
     </timer>
     
     <usart name="USART0" number="1" configregsA="SCON" >
-        <trunit type="tx" pin="PORT31" register="SBUF">
-            <interrupt name="USART_T" />
-        </trunit>
-        
-        <trunit type="rx" pin="PORT30" enable="REN">
-            <interrupt name="USART_R" />
-        </trunit>
+        <trunit type="tx" pin="PORT31" register="SBUF" interrupt="USART_T" />
+        <trunit type="rx" pin="PORT30" enable="REN"    interrupt="USART_R" />
     </usart>
 </parts>

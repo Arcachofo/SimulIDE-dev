@@ -28,6 +28,10 @@
 I51Timer::I51Timer( eMcu* mcu, QString name)
         : McuTimer( mcu, name )
 {
+    QString n = m_name.right(1);
+    m_TxM  = getRegBits( "T"+n+"M0,T"+n+"M1", mcu );
+    m_CTx  = getRegBits( "C/T"+n, mcu );
+    m_GATE = getRegBits( "GATE"+n, mcu );
 }
 I51Timer::~I51Timer(){}
 
@@ -40,44 +44,41 @@ void I51Timer::initialize()
     m_gate = 0;
 }
 
-void I51Timer::configureA( uint8_t val ) // TxM0,TxM1
+void I51Timer::configureA( uint8_t newTMOD ) // TxM0,TxM1
 {
-    uint8_t mode = getRegBitsVal( val, m_configBitsA );//val & 0b00000011;
+    uint8_t mode = getRegBitsVal( newTMOD, m_TxM );
 
-    if( mode == m_mode ) return;
-    m_mode = mode;
-
-    switch( mode )
+    if( mode != m_mode )
     {
-        case 0: m_ovfMatch = 0x1FFF; break; // 13 bits
-        case 1: m_ovfMatch = 0xFFFF; break; // 16 bits
-        case 2: m_ovfMatch = 0x00FF; break; // 8 bits
-        case 3:                             // 8+8 bits
-        {
-            m_ovfMatch = 0x00FF;
+        m_mode = mode;
 
-            if( m_number == 0 )
+        switch( mode )
+        {
+            case 0: m_ovfMatch = 0x1FFF; break; // 13 bits
+            case 1: m_ovfMatch = 0xFFFF; break; // 16 bits
+            case 2: m_ovfMatch = 0x00FF; break; // 8 bits
+            case 3:                             // 8+8 bits
             {
-            }
-            else if( m_number == 1 )
-            {
+                m_ovfMatch = 0x00FF;
+
+                if( m_number == 0 )
+                {
+                }
+                else if( m_number == 1 )
+                {
+                }
             }
         }
+        m_ovfPeriod = m_ovfMatch+1;
     }
-    m_ovfPeriod = m_ovfMatch+1;
-}
 
-void I51Timer::configureB( uint8_t val ) // C/Tx,GATEx
-{
-    val = getRegBitsVal( val, m_configBitsB );
-    bool  clkSrc = val & 1;
-    bool    gate = val & 2;
-
+    bool clkSrc = getRegBitsVal( newTMOD, m_CTx );
     if( clkSrc != m_clkSrc )
     {
         if( clkSrc ) m_clkSrc = clkEXT;
         else         m_clkSrc = clkMCU;
     }
+    bool gate = getRegBitsVal( newTMOD, m_GATE );
     if( gate != m_gate )
     {
         m_gate = gate;
