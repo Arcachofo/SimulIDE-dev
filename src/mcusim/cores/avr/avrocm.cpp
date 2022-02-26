@@ -1,5 +1,5 @@
-﻿/***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+/***************************************************************************
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,37 +17,26 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "avrocunit.h"
-#include "datautils.h"
+#include "avrocm.h"
+#include "avrtimer.h"
+#include "mcuocunit.h"
 #include "mcupin.h"
-#include "mcuocm.h"
+#include "e_mcu.h"
+#include "datautils.h"
 
-AvrOcUnit::AvrOcUnit( eMcu* mcu, QString name )
-         : McuOcUnit( mcu, name )
+AvrOcm::AvrOcm( eMcu* mcu, QString name )
+      : McuOcm( mcu, name )
 {
 }
-AvrOcUnit::~AvrOcUnit( ){}
+AvrOcm::~AvrOcm(){}
 
-void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
+void AvrOcm::configureA( uint8_t newVal )
 {
-    uint8_t mode = getRegBitsVal( val, m_configBitsA );
-
-    if( mode == m_mode ) return;
-    m_mode = mode;
-
-    if( m_mode == 0 ){          // OC Pin disconnected
-         m_ocPin->controlPin( false, false );
-    }
-    else{                       // OC Pin connected
-         m_ocPin->controlPin( true, false );
-         m_ocPin->setOutState( false );
-    }
-    if( m_ocm ) m_ocm->setOcActive( this, mode > 0 );
-    else        m_ctrlPin = mode > 0;
+    m_mode = newVal;
 }
 
-void AvrOcUnit::setPinSate( bool state )
+void AvrOcm::OutputOcm() //Set Ocm output from OCnB1 & OCnB2
 {
-    if( m_ctrlPin )  m_ocPin->setOutState( state );
-    else if( m_ocm ) m_ocm->setState( this, state );
+    if( m_mode ) m_oPin->sheduleState( m_state1 || m_state2, 0 );
+    else         m_oPin->sheduleState( m_state1 && m_state2, 0 );
 }

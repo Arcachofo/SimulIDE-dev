@@ -1,5 +1,5 @@
-﻿/***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+/***************************************************************************
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,37 +17,46 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "avrocunit.h"
-#include "datautils.h"
-#include "mcupin.h"
-#include "mcuocm.h"
+#ifndef MCUOCM_H
+#define MCUOCM_H
 
-AvrOcUnit::AvrOcUnit( eMcu* mcu, QString name )
-         : McuOcUnit( mcu, name )
+#include "mcuprescaled.h"
+#include "e-element.h"
+#include "mcuocunit.h"
+
+class eMcu;
+class McuPin;
+class McuOcUnit;
+class McuTimer;
+
+class MAINMODULE_EXPORT McuOcm : public McuPrescaled, public eElement
 {
-}
-AvrOcUnit::~AvrOcUnit( ){}
+        friend class McuCreator;
 
-void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
-{
-    uint8_t mode = getRegBitsVal( val, m_configBitsA );
+    public:
+        McuOcm( eMcu* mcu, QString name );
+        ~McuOcm();
 
-    if( mode == m_mode ) return;
-    m_mode = mode;
+        virtual void initialize() override;
 
-    if( m_mode == 0 ){          // OC Pin disconnected
-         m_ocPin->controlPin( false, false );
-    }
-    else{                       // OC Pin connected
-         m_ocPin->controlPin( true, false );
-         m_ocPin->setOutState( false );
-    }
-    if( m_ocm ) m_ocm->setOcActive( this, mode > 0 );
-    else        m_ctrlPin = mode > 0;
-}
+        void setOcActive( McuOcUnit* oc, bool a );
+        void setState( McuOcUnit* oc, bool s );
 
-void AvrOcUnit::setPinSate( bool state )
-{
-    if( m_ctrlPin )  m_ocPin->setOutState( state );
-    else if( m_ocm ) m_ocm->setState( this, state );
-}
+    protected:
+        virtual void OutputOcm()=0;
+
+        bool m_state1;
+        bool m_state2;
+
+        bool m_oc1Active;
+        bool m_oc2Active;
+
+        bool m_mode;
+
+        McuPin* m_oPin;
+
+        McuOcUnit* m_OC1;
+        McuOcUnit* m_OC2;
+};
+
+#endif

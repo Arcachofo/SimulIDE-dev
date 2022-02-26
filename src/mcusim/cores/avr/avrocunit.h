@@ -31,6 +31,9 @@ class MAINMODULE_EXPORT AvrOcUnit : public McuOcUnit
         ~AvrOcUnit();
 
         virtual void configure( uint8_t val ) override;
+
+    protected:
+        virtual void setPinSate( bool state );
 };
 
 #endif

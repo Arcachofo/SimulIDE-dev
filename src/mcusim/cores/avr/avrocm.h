@@ -1,5 +1,5 @@
-﻿/***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+/***************************************************************************
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,37 +17,29 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "avrocunit.h"
-#include "datautils.h"
-#include "mcupin.h"
+#ifndef AVROCM_H
+#define AVROCM_H
+
 #include "mcuocm.h"
+#include "mcutypes.h"
 
-AvrOcUnit::AvrOcUnit( eMcu* mcu, QString name )
-         : McuOcUnit( mcu, name )
+class eMcu;
+class McuPin;
+
+
+
+class MAINMODULE_EXPORT AvrOcm : public McuOcm
 {
-}
-AvrOcUnit::~AvrOcUnit( ){}
+    friend class McuCreator;
 
-void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
-{
-    uint8_t mode = getRegBitsVal( val, m_configBitsA );
+    public:
+        AvrOcm( eMcu* mcu, QString name);
+        ~AvrOcm();
 
-    if( mode == m_mode ) return;
-    m_mode = mode;
+        virtual void configureA( uint8_t newVal ) override;
 
-    if( m_mode == 0 ){          // OC Pin disconnected
-         m_ocPin->controlPin( false, false );
-    }
-    else{                       // OC Pin connected
-         m_ocPin->controlPin( true, false );
-         m_ocPin->setOutState( false );
-    }
-    if( m_ocm ) m_ocm->setOcActive( this, mode > 0 );
-    else        m_ctrlPin = mode > 0;
-}
+    protected:
+        virtual void OutputOcm() override;
+};
 
-void AvrOcUnit::setPinSate( bool state )
-{
-    if( m_ctrlPin )  m_ocPin->setOutState( state );
-    else if( m_ocm ) m_ocm->setState( this, state );
-}
+#endif

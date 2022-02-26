@@ -28,12 +28,14 @@ McuOcUnit::McuOcUnit( eMcu* mcu, QString name )
 {
     m_timer = NULL;
     m_ocPin = NULL;
+    m_ocm = NULL;
 }
 McuOcUnit::~McuOcUnit( ){}
 
 void McuOcUnit::initialize()
 {
     m_enabled = false;
+    m_ctrlPin = false;
     m_comMatch = 0;
     m_mode = 0;
 

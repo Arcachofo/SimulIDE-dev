@@ -25,6 +25,7 @@
 
 class McuPin;
 class McuTimer;
+class McuOcm;
 
 enum ocAct_t{
     ocNON=0,
@@ -51,14 +52,18 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
 
         virtual void setOcActs( ocAct_t comAct, ocAct_t tovAct );
 
+        void setCtrlPin( bool c ) { m_ctrlPin = c; }
+
         void clockStep( uint16_t count );
 
         uint8_t getMode() { return m_mode; }
+        McuPin* getPin() { return m_ocPin; }
 
     protected:
-        void drivePin( ocAct_t act );
+        virtual void drivePin( ocAct_t act );
         virtual void setPinSate( bool state );
 
+        McuOcm*   m_ocm;
         McuTimer* m_timer;
         McuPin*   m_ocPin;
 
@@ -69,6 +74,7 @@ class MAINMODULE_EXPORT McuOcUnit : public McuModule, public eElement
         ocAct_t  m_tovAct;
 
         bool m_enabled;
+        bool m_ctrlPin;
         uint8_t m_mode;
 
         uint16_t m_comMatch;  // counter vale to match a comparation

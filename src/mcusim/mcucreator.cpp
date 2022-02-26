@@ -39,6 +39,7 @@
 #include "avrport.h"
 #include "avrtimer.h"
 #include "avrocunit.h"
+#include "avrocm.h"
 #include "avricunit.h"
 #include "avrinterrupt.h"
 #include "avrusart.h"
@@ -128,6 +129,7 @@ int McuCreator::processFile( QString fileName )
         else if( part == "interrupts" ) createInterrupts( &el );
         else if( part == "port" )       createPort( &el );
         else if( part == "timer" )      createTimer( &el );
+        else if( part == "ocm" )        createOcm( &el );
         else if( part == "ccpunit" )    createCcpUnit( &el );
         else if( part == "usart" )      createUsart( &el );
         else if( part == "adc" )        createAdc( &el );
@@ -604,6 +606,30 @@ void McuCreator::createTimer( QDomElement* t )
         }
         node = node.nextSibling();
 }   }
+
+void McuCreator::createOcm( QDomElement* e )
+{
+    McuOcm* ocm = NULL;
+    QString name = e->attribute("name");
+
+    if( m_core == "AVR" ) ocm = new AvrOcm( mcu, name );
+    if( !ocm ) return;
+
+    mcu->m_modules.emplace_back( ocm );
+    setConfigRegs( e, ocm );
+
+    QStringList ocunits = e->attribute("ocunits").split(",");
+    for( int i=0; i<2; i++ )
+    {
+        QString ocunit = ocunits.takeFirst();
+        McuTimer* timer = mcu->getTimer("TIMER"+ocunit.mid( 2, 1) );
+
+        McuOcUnit* ocUnit = timer->getOcUnit( ocunit );
+        ocUnit->m_ocm = ocm;
+        if( i == 0 ) ocm->m_OC1 = ocUnit;
+        else         ocm->m_OC2 = ocUnit;
+    }
+}
 
 void McuCreator::createCcpUnit( QDomElement* c )
 {
