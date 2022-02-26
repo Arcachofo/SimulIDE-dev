@@ -44,7 +44,6 @@ LibraryItem* Servo::libraryItem()
 Servo::Servo( QObject* parent, QString type, QString id )
      : LogicComponent( parent, type, id )
 {
-    m_area = QRect( -40, -40, 96, 80 );
     m_graphical = true;
     m_width  = 10;
     m_height = 6;
@@ -64,6 +63,7 @@ Servo::Servo( QObject* parent, QString type, QString id )
     setLabelPos(-16,-40, 0);
     setShowId( true );
     initialize();
+    m_area = QRect( -40, -40, 96, 80 );
 
     Simulator::self()->addToUpdateList( this );
 
@@ -152,14 +152,14 @@ QPainterPath Servo::shape() const
     QVector<QPointF> points;
     points << QPointF(-40,-24 )
            << QPointF(-40, 24 )
-           << QPointF(-16, 24 )
-           << QPointF(  0, 40 )
-           << QPointF( 32, 40 )
-           << QPointF( 56, 8  )
-           << QPointF( 56,-8  )
-           << QPointF( 32,-40 )
-           << QPointF(  0,-40 )
-           << QPointF(-16,-24 )
+           << QPointF(  6, 24 )
+           << QPointF(  6, 40 )
+           << QPointF( 33, 40 )
+           << QPointF( 57, 16 )
+           << QPointF( 57,-16 )
+           << QPointF( 33,-40 )
+           << QPointF(  6,-40 )
+           << QPointF(  6,-24 )
            << QPointF(-40,-24 );
         
     path.addPolygon( QPolygonF(points) );
@@ -172,7 +172,7 @@ void Servo::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     Component::paint( p, option, widget );
     //p->drawPath( shape() );
     p->setBrush( QColor(50, 70, 100) );
-    p->drawRoundedRect( QRect( -(m_width/2)*8, -(m_height/2)*8, m_width*8, m_height*8 ), 4, 4 );
+    p->drawRoundedRect( QRect( -(m_width/2)*8,-(m_height/2)*8, m_width*8, m_height*8 ), 4, 4 );
 
     QPen pen = p->pen();
     pen.setColor( Qt::white);;

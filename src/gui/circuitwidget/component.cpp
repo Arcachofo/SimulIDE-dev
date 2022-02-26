@@ -571,6 +571,7 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         p->fillRect( boundingRect(), Qt::yellow  );
         p->setOpacity( 0.5 );
     }
+    //p->drawPath( shape() );
     p->setBrush( color );
     p->setPen( pen );
 }
