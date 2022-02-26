@@ -17,24 +17,42 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef DSPINBOX_H
-#define DSPINBOX_H
+#include <QScriptEngine>
+#include <math.h>
 
-#include <QDoubleSpinBox>
+#include "dspinbox.h"
 
-class MAINMODULE_EXPORT DSpinBox : public QDoubleSpinBox
+DSpinBox::DSpinBox( QWidget* parent )
+        : QDoubleSpinBox( parent )
+{}
+DSpinBox::~DSpinBox(){;}
+
+double DSpinBox::valueFromText( const QString& text ) const
 {
-    public:
-        DSpinBox( QWidget* parent );
-        ~DSpinBox();
+    QString exp = text;
+    if( exp.indexOf("e") == exp.size()-1 ) exp.append("0");
+    if( exp.indexOf("+") == exp.size()-1 ) exp.append("0");
+    if( exp.indexOf("-") == exp.size()-1 ) exp.append("0");
+    if( exp.indexOf("*") == exp.size()-1 ) exp.append("1");
+    if( exp.indexOf("/") == exp.size()-1 ) exp.append("1");
 
-        double valueFromText(const QString& text) const;
-        QString textFromValue( double value ) const;
+    return evaluate( exp );
+}
 
-        QValidator::State validate( QString& text, int& ) const;
+QString DSpinBox::textFromValue( double value ) const
+{
+    return QString::number( value );
+}
 
-    private:
- static double evaluate( QString exp );
-};
+QValidator::State DSpinBox::validate( QString& text, int& ) const
+{
+    return std::isnan( valueFromText( text ) ) ? QValidator::Invalid : QValidator::Acceptable;
+}
 
-#endif
+double DSpinBox::evaluate( QString exp )
+{
+ static QScriptEngine expression;
+
+    return expression.evaluate( exp ).toNumber();
+}
+
