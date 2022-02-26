@@ -41,7 +41,7 @@ McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
     m_puMask   = false;
     m_outMask  = false;
     m_inpMask  = true;  // Inverted: true means inactive
-    m_changeCB = false;
+    m_changeCB = true;  // Always call VoltChanged()
 
     setOutHighV( 5 );
     initialize();
@@ -55,43 +55,34 @@ void McuPin::initialize()
     m_isAnalog = false;
     m_portState = false;
 
-    setDirection( m_outMask );
-    setPullup( m_puMask );
     IoPin::initialize();
 }
 
 void McuPin::stamp()
 {
-    if( m_enode ) changeCallBack( this ); // Receive voltage change notifications
     IoPin::stamp();
+    setDirection( m_outMask );
+    setPullup( m_puMask );
+    if( m_outMask ) IoPin::setOutState( true );
 }
 
 void McuPin::voltChanged()
 {
-    bool state = m_inpState;
-
-    double volt = getVolt();
-    if     ( volt > m_inpHighV ) state = true;
-    else if( volt < m_inpLowV  ) state = false;
-
-    if( state != m_inpState )
+    bool oldState = m_inpState;
+    if( oldState != IoPin::getInpState() )
     {
         if( m_extInt && m_extInt->enabled() )
         {
             bool raise = false;
             switch( m_extIntTrigger ) {
-                case pinLow:     raise = !state; break;
-                case pinChange:  raise = (state != m_inpState); break;
-                case pinFalling: raise = (m_inpState && !state); break;
-                case pinRising:  raise = (state && !m_inpState); break;
+                case pinLow:     raise = !m_inpState; break;
+                case pinChange:  raise = (oldState != m_inpState); break;
+                case pinFalling: raise = (oldState && !m_inpState); break;
+                case pinRising:  raise = (!oldState && m_inpState); break;
             }
             if( raise ) m_extInt->raise();
         }
-        m_inpState = state;
-        if( Circuit::self()->animate() )
-            setPinState( m_inpState? input_high:input_low ); // High : Low colors
-
-        uint8_t val = state ? m_pinMask : 0;
+        uint8_t val = m_inpState ? m_pinMask : 0;
         m_port->pinChanged( m_pinMask, val );
     }
 }

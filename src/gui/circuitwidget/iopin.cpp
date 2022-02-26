@@ -67,8 +67,13 @@ void IoPin::initialize()
     m_inpState = false;
     m_outState = false;
     m_nextState = false;
+}
+
+void IoPin::stamp()
+{
     ePin::setEnodeComp( m_scrEnode );
     setPinMode( m_pinMode );
+    stampAll();
 }
 
 void IoPin::runEvent()

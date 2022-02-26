@@ -23,6 +23,7 @@
 AvrPin::AvrPin( McuPort* port, int i, QString id, Component* mcu )
       : McuPin( port, i, id, mcu )
 {
+    m_changeCB = false; // Call VoltChanged() only for Inputs
 }
 AvrPin::~AvrPin() {}
 

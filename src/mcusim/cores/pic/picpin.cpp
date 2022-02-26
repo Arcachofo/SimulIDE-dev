@@ -26,7 +26,6 @@ PicPin::PicPin( McuPort* port, int i, QString id, Component* mcu )
       : McuPin( port, i, id, mcu )
 {
     m_extIntTrigger = pinFalling;
-    m_changeCB = true; // Always call VoltChanged()
 }
 PicPin::~PicPin() {}
 
