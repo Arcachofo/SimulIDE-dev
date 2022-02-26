@@ -22,12 +22,10 @@
 
 #include "mcuprescaled.h"
 #include "e-element.h"
-#include "mcuocunit.h"
 
 class eMcu;
 class McuPin;
 class McuOcUnit;
-class McuTimer;
 
 class MAINMODULE_EXPORT McuOcm : public McuPrescaled, public eElement
 {

@@ -21,12 +21,6 @@
 #define AVROCM_H
 
 #include "mcuocm.h"
-#include "mcutypes.h"
-
-class eMcu;
-class McuPin;
-
-
 
 class MAINMODULE_EXPORT AvrOcm : public McuOcm
 {

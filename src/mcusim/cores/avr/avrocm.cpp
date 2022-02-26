@@ -18,11 +18,8 @@
  ***************************************************************************/
 
 #include "avrocm.h"
-#include "avrtimer.h"
-#include "mcuocunit.h"
 #include "mcupin.h"
 #include "e_mcu.h"
-#include "datautils.h"
 
 AvrOcm::AvrOcm( eMcu* mcu, QString name )
       : McuOcm( mcu, name )

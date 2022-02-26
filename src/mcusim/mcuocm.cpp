@@ -18,12 +18,9 @@
  ***************************************************************************/
 
 #include "mcuocm.h"
+#include "mcuocunit.h"
 #include "mcupin.h"
 #include "e_mcu.h"
-#include "mcuinterrupts.h"
-#include "simulator.h"
-#include "datautils.h"
-#include "regwatcher.h"
 
 McuOcm::McuOcm( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
