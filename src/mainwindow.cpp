@@ -48,7 +48,7 @@ MainWindow::MainWindow()
     m_pSelf   = this;
     m_circuit = NULL;
     m_autoBck = 15;
-    m_version = "SimulIDE-"+QString( APP_VERSION );
+    m_version = "SimulIDE-"+QString( APP_VERSION )+" R"+QString( REVNO );
     
     this->setWindowTitle( m_version );
 

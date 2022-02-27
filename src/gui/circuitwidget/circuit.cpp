@@ -407,7 +407,7 @@ void Circuit::loadStrDoc( QString &doc )
 
 QString Circuit::circuitHeader()
 {
-    QString header = "<circuit type=\""+m_circType+"\" ";
+    QString header = "<circuit type=\""+m_circType+"\" rev=\""+QString( REVNO )+"\" ";
     header += "stepSize=\""+QString::number( m_simulator->stepSize() )+"\" ";
     header += "stepsPS=\""+QString::number( m_simulator->stepsPerSec() )+"\" ";
     header += "NLsteps=\""+QString::number( m_simulator->maxNlSteps() )+"\" ";

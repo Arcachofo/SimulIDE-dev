@@ -24,7 +24,7 @@ AboutDialog::AboutDialog( QWidget* parent )
 {
     setupUi(this);
 
-    version->setText( QString( APP_VERSION ) );
+    version->setText( QString( APP_VERSION )+" at Rev "+QString( REVNO ) );
     compiled->setText( QString( BUILDDATE )+" (dd-MM-yy)" );
     icon->setPixmap( QPixmap(":/simulide.png") );
 }

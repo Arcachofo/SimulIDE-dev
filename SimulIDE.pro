@@ -1,6 +1,6 @@
 
 VERSION = "1.0.0"
-RELEASE = "-R979"
+RELEASE = ""
 
 TEMPLATE = app
 TARGET = simulide
@@ -94,11 +94,15 @@ CONFIG += warn_on
 CONFIG += no_qml_debug
 CONFIG *= c++11
 
-BUILD_DATE = $$system(date +\"\\\"%d-%m-%y\\\"\")
+REV_NO = $$system( bzr revno )
+DEFINES += REVNO=\\\"$$REV_NO\\\"
 
 DEFINES += MAINMODULE_EXPORT=
 DEFINES += APP_VERSION=\\\"$$VERSION$$RELEASE\\\"
+
+BUILD_DATE = $$system(date +\"\\\"%d-%m-%y\\\"\")
 DEFINES += BUILDDATE=\\\"$$BUILD_DATE\\\"
+
 
 TARGET_NAME   = SimulIDE_$$VERSION$$RELEASE
 TARGET_PREFIX = $$BUILD_DIR/executables/$$TARGET_NAME
