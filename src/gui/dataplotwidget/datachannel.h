@@ -51,6 +51,8 @@ class MAINMODULE_EXPORT DataChannel : public eElement, public Updatable
 
         virtual void setFilter( double f ) {;}
 
+        QString getChName() { return m_chTunnel; }
+
     protected:
         QVector<double> m_buffer;
         QVector<uint64_t> m_time;

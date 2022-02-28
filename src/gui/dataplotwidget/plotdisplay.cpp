@@ -284,8 +284,20 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
     if( !m_expand ) { p.end(); return; }
 
-    if( m_channels < 8 )
+    if( m_channels == 8 )
     {
+        QPen pen( m_color[0], 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+        p.setPen( pen );
+        p.setFont( m_fontB );
+        for( int i=0; i<m_channels; ++i )
+        {
+            double ceroY = m_ceroY+m_sizeY/16+i*m_sizeY/8;
+            pen.setColor( m_color[i] );
+            p.setPen( pen );
+            p.drawText( 3, ceroY-13, 60, 12, Qt::AlignLeft, "Ch"+QString::number(i+1) );
+            p.drawText( 3, ceroY+2, 60, 12, Qt::AlignLeft, m_channel[i]->getChName() );
+        }
+    }else{
         for( int i=0; i<m_channels; ++i ) // SCALES, MAX-MIN
         {
             if( m_hideCh[i] || m_ncCh[i] ) continue;
@@ -330,8 +342,8 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
             if( drawCursor )              // Draw Cursor Voltages
             {
-                pen3.setColor( m_color[i] );
-                p.setPen( pen3 );
+                //pen3.setColor( m_color[i] );
+                //p.setPen( pen3 );
                 double val = m_cursorVolt[i]*1e12; // Volt in pV
                 QString unit;
                 int decs = 0;
