@@ -123,7 +123,7 @@ void SCR::stamp()
 void SCR::voltChanged()
 {
     double currentA = m_resistorA->current();
-    double currentC = m_resistorC->current();
+    double currentC = -m_resistorC->current();
     bool state = m_state;
 //qDebug() << "SCR::voltChanged"<<currentA <<currentC;
 
