@@ -81,7 +81,6 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
         m_dataWidget->setColor( i, m_color[i%4] );
     }
     m_updtCount = 0;
-    m_trigger = 9; // Trigger = None
 
     m_threshold = 2.5;
 
@@ -91,6 +90,7 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
 
     setLabelPos(-90,-100, 0);
     expand( false );
+    setTrigger( 9 ); // Trigger = None
 
     addPropGroup( { tr("Electric"), {
 new DoubProp<LAnalizer>( "Treshold",tr("Logic Threshold"),"V", this, &LAnalizer::threshold, &LAnalizer::setThreshold )
@@ -108,48 +108,50 @@ LAnalizer::~LAnalizer()
 
 void LAnalizer::updateStep()
 {
-    uint64_t simTime = Simulator::self()->circTime(); // free running
-
-    if( m_trigger < 9 )
+    if( !Simulator::self()->isPaused() )
     {
-        uint64_t risEdge;
-        if( m_trigger == 8 ) risEdge = m_risEdge;
-        else                 risEdge = m_channel[m_trigger]->m_risEdge;
-
-        if( risEdge > 0 ) // We have a Trigger
+        uint64_t simTime = Simulator::self()->circTime(); // free running
+        if( m_trigger < 9 )
         {
-            m_channel[m_trigger]->m_risEdge = 0;
-            simTime = risEdge;
-            m_updtCount = 0;
-        }
-        else if( ++m_updtCount < 20 ) return;
-    }
+            uint64_t risEdge;
+            if( m_trigger == 8 ) risEdge = m_risEdge;
+            else                 risEdge = m_channel[m_trigger]->m_risEdge;
 
-    m_display->setTimeEnd( simTime );
-
-    for( int i=0; i<8; i++ )
-    {
-        bool connected = m_pin[i]->connector();
-        if( !connected )
-        {
-            QString chTunnel = m_channel[i]->m_chTunnel;
-
-            eNode* enode = Tunnel::m_eNodes.value(  chTunnel, NULL );
-            m_pin[i]->setEnode( enode );
-            if( enode )
+            if( risEdge > 0 ) // We have a Trigger
             {
-                enode->voltChangedCallback( m_channel[i] );
-                connected = true;
+                m_channel[m_trigger]->m_risEdge = 0;
+                simTime = risEdge;
+                m_updtCount = 0;
             }
-            display()->connectChannel( i, connected );
+            else if( ++m_updtCount < 20 ) return;
         }
-        m_channel[i]->m_connected = connected;
-        if( connected ) m_channel[i]->updateStep();
-        else            m_channel[i]->initialize();
-        m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
+
+        m_display->setTimeEnd( simTime );
+
+        for( int i=0; i<8; i++ )
+        {
+            bool connected = m_pin[i]->connector();
+            if( !connected )
+            {
+                QString chTunnel = m_channel[i]->m_chTunnel;
+
+                eNode* enode = Tunnel::m_eNodes.value(  chTunnel, NULL );
+                m_pin[i]->setEnode( enode );
+                if( enode )
+                {
+                    enode->voltChangedCallback( m_channel[i] );
+                    connected = true;
+                }
+                display()->connectChannel( i, connected );
+            }
+            m_channel[i]->m_connected = connected;
+            if( connected ) m_channel[i]->updateStep();
+            else            m_channel[i]->initialize();
+            m_channel[i]->m_trigIndex = m_channel[i]->m_bufferCounter;
+        }
+        m_risEdge = 0;
     }
     m_display->update(); //redrawScreen();
-    m_risEdge = 0;
 }
 
 void LAnalizer::expand( bool e )
