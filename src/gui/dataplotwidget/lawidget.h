@@ -36,6 +36,12 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         LaWidget( QWidget* parent, LAnalizer* la );
         ~LaWidget();
 
+        enum action_t{
+            actNone=0,
+            actMove,
+            actTime
+        };
+
         PlotDisplay* display() { return plotDisplay; }
         QVBoxLayout* getDispLayout() { return dispLayout; }
 
@@ -62,7 +68,7 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
     protected:
         void mousePressEvent( QMouseEvent* event );
         void mouseMoveEvent( QMouseEvent* event );
-        void mouseReleaseEvent( QMouseEvent* event ) { setCursor( Qt::ArrowCursor ); }
+        void mouseReleaseEvent( QMouseEvent* event ) { m_action = actNone; setCursor( Qt::ArrowCursor ); }
         void closeEvent( QCloseEvent* event );
         void resizeEvent( QResizeEvent* ) { plotDisplay->updateValues(); }
 
@@ -73,6 +79,8 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         int m_mousePos;
 
         bool m_blocked;
+
+        action_t m_action;
 
         LAnalizer* m_analizer;
 };

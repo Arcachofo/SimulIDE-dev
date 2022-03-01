@@ -30,6 +30,7 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
 
     m_analizer = la;
     m_blocked = false;
+    m_action = actNone;
 
     QFont font = timeDivLabel->font();
     font.setFamily("Ubuntu");
@@ -174,7 +175,16 @@ void LaWidget::closeEvent( QCloseEvent* event )
 void LaWidget::mousePressEvent( QMouseEvent* event )
 {
     m_mousePos = event->globalX();
-    setCursor( Qt::ClosedHandCursor );
+    if( event->button() == Qt::LeftButton )
+    {
+        m_action = actMove;
+        setCursor( Qt::ClosedHandCursor );
+    }
+    else if( event->button() == Qt::MidButton )
+    {
+        m_action = actTime;
+        m_analizer->display()->setTimeZero( m_mousePos );
+    }
 }
 
 void LaWidget::mouseMoveEvent( QMouseEvent* event )
@@ -186,6 +196,6 @@ void LaWidget::mouseMoveEvent( QMouseEvent* event )
     double sizeX = plotDisplay->sizeX();
     double deltaT = (m_mousePos - pos)*timeX/sizeX;
 
-    m_analizer->setTimePos( timePos+deltaT );
+    if( m_action == actMove ) m_analizer->setTimePos( timePos+deltaT );
     m_mousePos = pos;
 }

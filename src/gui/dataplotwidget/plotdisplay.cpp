@@ -49,6 +49,7 @@ PlotDisplay::PlotDisplay( QWidget* parent )
     m_marginY = 10;
     m_tracks = 1;
     m_timeEnd = 0;
+    m_timeZero = 50;
     m_expand = false;
 
     double fontScale = MainWindow::self()->fontScale();
@@ -78,6 +79,14 @@ void PlotDisplay::setTimeEnd( double timeEnd )
     m_timeEnd = timeEnd;
     m_timeStart = timeEnd - timeFrame;
     m_scaleX = (double)m_sizeX/timeFrame;
+}
+
+void PlotDisplay::setTimeZero( double t )
+{
+    QPoint tPos = mapFromGlobal( QPoint(t, 0) );
+    m_timeZero = tPos.x();
+    if( abs( m_timeZero-m_hCenter ) < 5 ) m_timeZero = m_hCenter;
+    m_timeZero = m_timeZero*100/(double)width();
 }
 
 void PlotDisplay::updateValues()
@@ -284,12 +293,15 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
     if( !m_expand ) { p.end(); return; }
 
+    double t0 = m_timeZero*width()/100;
     if( m_channels == 8 )
     {
-        QPen pen( m_color[0], 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+        QPen pen( m_scaleColor[2], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
         p.setPen( pen );
+        p.drawLine( t0, 0, t0, height() );   //Vertical Time 0 line
+
         p.setFont( m_fontB );
-        for( int i=0; i<m_channels; ++i )
+        for( int i=0; i<m_channels; ++i ) // Draw Channel labels
         {
             double ceroY = m_ceroY+m_sizeY/16+i*m_sizeY/8;
             pen.setColor( m_color[i] );
@@ -363,12 +375,12 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
         pen1.setColor( Qt::white );
         p.setPen( pen1 );
-        double val = (double)(cursorX-m_hCenter)/m_scaleX; // Time in ps *1e3 bcos sim time is in ns
+        double time = ((double)cursorX-t0)/m_scaleX; //
         QString unit;
         int decs = 0;
-        valToUnit( val, unit, decs );
+        valToUnit( time, unit, decs );
 
-        p.drawText( cursorX-62, cursorY-12, 60, 12, Qt::AlignRight, QString::number( val,'f', decs) );
+        p.drawText( cursorX-62, cursorY-12, 60, 12, Qt::AlignRight, QString::number( time,'f', decs) );
         p.drawText( cursorX-1,  cursorY-12, 20, 12, Qt::AlignLeft, unit+"s" );
     }
     p.end();

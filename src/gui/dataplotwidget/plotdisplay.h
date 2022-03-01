@@ -49,6 +49,7 @@ class PlotDisplay : public QWidget
         void setVPos( int ch, double vPos ) { m_vPos[ch] = -vPos; }
         void setHPos( int ch, int64_t hPos ) { m_hPos[ch] = -hPos; }
         void setLimits( int ch, double max, double min ) { m_vMin[ch]  = min; }
+        void setTimeZero( double t );
 
         double sizeX() { return m_sizeX; }
 
@@ -69,6 +70,7 @@ class PlotDisplay : public QWidget
         double m_timeStart;
         double m_timeEnd;
         double m_timeDiv;
+        double m_timeZero;
 
         bool m_expand;
 
