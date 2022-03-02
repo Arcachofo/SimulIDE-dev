@@ -51,18 +51,18 @@
 
   <timer name="TIMER3" type="160" configregsA="TCCR3A" configregsB="TCCR3B"
                        counter="TCNT3L,TCNT3H" 
-                       clockpin="PORTD2"
+                       clockpin="PORTE3"
                        interrupt="T3_OVF"
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS30,CS31,CS32" >
 
     <ocunit name="OC3A" pin="PORTD0" ocreg="OCR3AL,OCR3AH" bits="COM3A0,COM3A1" interrupt="T3COA" />
-    <ocunit name="OC3B" pin="PORTD2" ocreg="OCR3AL,OCR3AH" bits="COM3B0,COM3B1" interrupt="T3COB" />
+    <ocunit name="OC3B" pin="PORTD2" ocreg="OCR3BL,OCR3BH" bits="COM3B0,COM3B1" interrupt="T3COB" />
     <icunit name="IC3"  pin="PORTB0" icreg="ICR3L,ICR3H"   bits="ICES3,ICNC3"   interrupt="T3CAP" />
   </timer>
 
   <timer name="TIMER4" type="160" configregsA="TCCR4A" configregsB="TCCR4B"
                        counter="TCNT4L,TCNT4H" 
-                       clockpin="PORTD0"
+                       clockpin="PORTE1"
                        interrupt="T4_OVF"
                        prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS40,CS41,CS42" >
 

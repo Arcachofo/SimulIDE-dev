@@ -203,10 +203,11 @@ void AvrTimer8bit::topReg0Changed( uint8_t val )
 // TIMER 0 -----------------------------------------
 
 AvrTimer800::AvrTimer800( eMcu* mcu, QString name)
-          : AvrTimer8bit( mcu, name )
+           : AvrTimer8bit( mcu, name )
 {
-    m_WGM10 = getRegBits( "WGM00,WGM01", mcu );
-    m_WGM32 = getRegBits( "WGM02", mcu );
+    QString n = m_name.right(1);
+    m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
+    m_WGM32 = getRegBits( "WGM"+n+"2", mcu );
 }
 AvrTimer800::~AvrTimer800(){}
 
@@ -328,8 +329,9 @@ void AvrTimer810::topReg0Changed( uint8_t val )
 AvrTimer820::AvrTimer820( eMcu* mcu, QString name)
            : AvrTimer8bit( mcu, name )
 {
-    m_WGM10 = getRegBits( "WGM20,WGM21", mcu );
-    m_WGM32 = getRegBits( "WGM22", mcu );
+    QString n = m_name.right(1);
+    m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
+    m_WGM32 = getRegBits( "WGM"+n+"2", mcu );
 }
 AvrTimer820::~AvrTimer820(){}
 
@@ -371,8 +373,9 @@ AvrTimer16bit::AvrTimer16bit( eMcu* mcu, QString name )
 {
     m_maxCount = 0xFFFF;
 
-    m_WGM10 = getRegBits( "WGM10,WGM11", mcu );
-    m_WGM32 = getRegBits( "WGM12,WGM13", mcu );
+    QString n = m_name.right(1);
+    m_WGM10 = getRegBits( "WGM"+n+"0,WGM"+n+"1", mcu );
+    m_WGM32 = getRegBits( "WGM"+n+"2,WGM"+n+"3", mcu );
 
     QString num = name.right(1);
     setICRX( "ICR"+num+"L,ICR"+num+"H" );
