@@ -48,6 +48,7 @@ MainWindow::MainWindow()
     m_pSelf   = this;
     m_circuit = NULL;
     m_autoBck = 15;
+    m_state = "■";
     m_version = "SimulIDE-"+QString( APP_VERSION )+" R"+QString( REVNO );
     
     this->setWindowTitle( m_version );
@@ -193,9 +194,16 @@ void MainWindow::setLang( Langs lang )
     settings()->setValue( "language", loc() );
 }
 
-void MainWindow::setTitle( QString title )
+void MainWindow::setFile( QString file )
 {
-    setWindowTitle( m_version+"  -  "+title );
+    m_file = file;
+    setWindowTitle( m_state+" "+m_version+" - "+file );
+}
+
+void MainWindow::setState( QString state )
+{
+    m_state = state;
+    setWindowTitle( state+" "+m_version+" - "+m_file );
 }
 
 void MainWindow::createWidgets()

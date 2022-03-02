@@ -233,7 +233,7 @@ bool CircuitWidget::newCircuit()
     m_curCirc = "";
     Simulator::self()->addToUpdateList( &m_outPane );
 
-    MainWindow::self()->setTitle( tr("New Circuit"));
+    MainWindow::self()->setFile( tr("New Circuit"));
     MainWindow::self()->settings()->setValue( "lastCircDir", m_lastCircDir );
     
     return true;
@@ -263,7 +263,7 @@ void CircuitWidget::loadCirc( QString path )
    
         m_curCirc = path;
         m_lastCircDir = path;
-        MainWindow::self()->setTitle(path.split("/").last());
+        MainWindow::self()->setFile(path.split("/").last());
 
         QSettings* settings = MainWindow::self()->settings();
         settings->setValue( "lastCircDir", m_lastCircDir );
@@ -300,7 +300,7 @@ void CircuitWidget::saveCirc( QString file )
     {
         m_curCirc = file;
         m_lastCircDir = file;
-        MainWindow::self()->setTitle(file.split("/").last());
+        MainWindow::self()->setFile( file.split("/").last() );
         MainWindow::self()->settings()->setValue( "lastCircDir", m_lastCircDir );
         updateRecentFiles();
     }
@@ -319,11 +319,12 @@ void CircuitWidget::powerCirc()
 
 void CircuitWidget::powerCircOn()
 {
-    powerCircAct->setIcon(QIcon(":/poweron.png"));
+    powerCircAct->setIcon( QIcon(":/poweron.png") );
     powerCircAct->setEnabled( true );
     powerCircAct->setIconText("On");
-    pauseSimAct->setIcon(QIcon(":/pausesim.png"));
+    pauseSimAct->setIcon( QIcon(":/pausesim.png") );
     pauseSimAct->setEnabled( true );
+    MainWindow::self()->setState("▶");
     Simulator::self()->startSim();
 }
 
@@ -332,17 +333,19 @@ void CircuitWidget::powerCircOff()
     if( Simulator::self()->isPaused()
      || Simulator::self()->isRunning() ) Simulator::self()->stopSim();
 
-    powerCircAct->setIcon(QIcon(":/poweroff.png"));
+    powerCircAct->setIcon( QIcon(":/poweroff.png") );
     powerCircAct->setIconText("Off");
     powerCircAct->setEnabled( true );
     pauseSimAct->setEnabled( false );
+    MainWindow::self()->setState("■");
 }
 
 void CircuitWidget::powerCircDebug( bool paused )
 {
-    powerCircAct->setIcon(QIcon(":/powerdeb.png"));
+    powerCircAct->setIcon( QIcon(":/powerdeb.png") );
     powerCircAct->setIconText("Debug");
     powerCircAct->setEnabled( true );
+    MainWindow::self()->setState("▶");
 
     Simulator::self()->startSim( paused );
     if( paused ) m_rateLabel->setText( tr("    Speed: Debugger") );
@@ -355,17 +358,19 @@ void CircuitWidget::pauseSim()
     if( Simulator::self()->simState() > SIM_PAUSED )
     {
         Simulator::self()->pauseSim();
-        pauseSimAct->setIcon(QIcon(":/simpaused.png"));
-        powerCircAct->setIcon(QIcon(":/poweroff.png"));
+        pauseSimAct->setIcon( QIcon(":/simpaused.png") );
+        powerCircAct->setIcon( QIcon(":/poweroff.png") );
         powerCircAct->setIconText("Off");
         //powerCircAct->setEnabled( false );
+        MainWindow::self()->setState("❚❚");
     }
     else if( Simulator::self()->isPaused() )
     {
         Simulator::self()->resumeSim();
-        pauseSimAct->setIcon(QIcon(":/pausesim.png"));
-        powerCircAct->setIcon(QIcon(":/poweron.png"));
+        pauseSimAct->setIcon( QIcon(":/pausesim.png") );
+        powerCircAct->setIcon( QIcon(":/poweron.png") );
         powerCircAct->setIconText("On");
+        MainWindow::self()->setState("▶");
         //powerCircAct->setEnabled( true );
     }
     m_blocked = false;

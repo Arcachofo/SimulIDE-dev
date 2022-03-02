@@ -61,7 +61,8 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         
         void readSettings();
         
-        void setTitle( QString title );
+        void setFile( QString file );
+        void setState( QString state );
 
         QString loc();
         void setLoc( QString loc );
@@ -110,6 +111,8 @@ class MAINMODULE_EXPORT MainWindow : public QMainWindow
         
         QString m_version;
         QString m_styleSheet;
+        QString m_state;
+        QString m_file;
 
         QHash<QString, QPluginLoader*>  m_plugins;
         QHash<QString, QString>  m_help;
