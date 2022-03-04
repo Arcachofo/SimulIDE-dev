@@ -3,6 +3,6 @@
 <compiler name="AvrDisas" type="avrdisas" >
     <step 
         command="avr-objdump"
-        arguments=" --no-show-raw-insn -m avr -D file.hex $fileName$fileExt"
+        arguments=" -j .text -S --no-show-raw-insn -m avr -D file.hex $fileName$fileExt"
     />
 </compiler>

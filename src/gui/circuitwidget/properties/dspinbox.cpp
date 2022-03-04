@@ -46,7 +46,7 @@ QString DSpinBox::textFromValue( double value ) const
 
 QValidator::State DSpinBox::validate( QString& text, int& ) const
 {
-    return std::isnan( valueFromText( text ) ) ? QValidator::Invalid : QValidator::Acceptable;
+    return isnan( valueFromText( text ) ) ? QValidator::Invalid : QValidator::Acceptable;
 }
 
 double DSpinBox::evaluate( QString exp )
