@@ -120,7 +120,7 @@ void Function::voltChanged()
         {
             float out = m_engine.evaluate( m_program.at(i) ).toNumber();
             m_outPin[i]->setOutHighV( out );
-            m_nextOutVal += 1<<i;
+            m_outPin[i]->setOutState( true );
         }else {
             bool out = m_engine.evaluate( m_program.at(i) ).toBool();
             m_outPin[i]->setOutHighV( m_ouHighV );
