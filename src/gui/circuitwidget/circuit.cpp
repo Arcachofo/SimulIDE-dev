@@ -42,7 +42,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
        : QGraphicsScene( x, y, width, height, parent )
 {
     m_simulator = new Simulator();
-    
+
     setObjectName( "Circuit" );
     setParent( parent );
     m_graphicView = parent;
@@ -280,12 +280,14 @@ void Circuit::loadStrDoc( QString &doc )
 
                 if( startpin && endpin )    // Create Connector
                 {
-                    if( uid.isEmpty() ) uid = "connector"+newSceneId();
-                    Connector* con = new Connector( this, type, uid, startpin, endpin );
+                    if( newUid.isEmpty() ) newUid = "connector-"+newSceneId();
+                    Connector* con = new Connector( this, type, newUid, startpin, endpin );
                     con->setPointList( pointList );
                     conList.append( con );
                     startpin->isMoved();
                     endpin->isMoved();
+                    int number = newUid.split("-").last().toInt();
+                    if( number > m_seqNumber ) m_seqNumber = number; // Adjust item counter: m_seqNumber
                 }
                 else if( !m_pasting )// Start or End pin not found
                 {
@@ -312,15 +314,12 @@ void Circuit::loadStrDoc( QString &doc )
                     name = "";
                 }
                 int number = joint->objectName().split("-").last().toInt();
-                if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
+                if( number > m_seqNumber ) m_seqNumber = number; // Adjust item counter: m_seqNumber
                 addItem( joint );
                 nodeList.append( joint );
             }
-            else if( type == "Plotter" ) ;// Old Plotter widget;
-            //else if( type == "SerialPort");
-                 //&& ( element.hasAttribute( "visible" ) )
-                 //&& ( element.attribute( "visible" ) == "false" ) ) ;// Old Serial Port Widget
-            else if( type == "SerialTerm") ; /// TODO
+            else if( type == "Plotter" ) ;   // Old Plotter widget
+            else if( type == "SerialTerm") ; // Old SerialTerm
             else{
                 bool oldArduino = false;
                 if( type == "Arduino" ){
@@ -658,7 +657,7 @@ void Circuit::paste( QPointF eventpoint )
 {
     if( m_conStarted ) return;
     if( m_simulator->isRunning() ) CircuitWidget::self()->powerCircOff();
-    
+
     bool animate = m_animate;
     saveState();
     m_busy = true;
