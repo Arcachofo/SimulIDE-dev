@@ -79,10 +79,11 @@ void eDiode::voltChanged()
     }
     else{                               // Reverse biased Zener or Diode with breakdown
         double volt = -voltPN-m_zOfset;
+        m_voltPN = -m_voltPN-m_zOfset;
         voltPN = -( limitStep( volt, m_vt, m_vzCrit ) + m_zOfset );
         double eval = exp( voltPN*m_vdCoef );
         double expCoef = exp( volt*m_vzCoef );
-        m_admit = m_satCur*( m_vdCoef*eval - m_vzCoef*m_vzCoef*expCoef ) + gmin;
+        m_admit = m_satCur*( m_vdCoef*eval + m_vzCoef*expCoef ) + gmin;
         m_current = m_satCur*( eval - expCoef - 1 );
     }
     m_voltPN = voltPN;
