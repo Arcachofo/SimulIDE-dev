@@ -106,7 +106,8 @@ void Connector::remConLine( ConnectorLine* line  )
     connectLines( index-1, index+1 );
     if( line->scene() ) Circuit::self()->removeItem( line );
     m_conLineList.removeOne( line );
-    if( m_actLine > 0 )  m_actLine -= 1;
+    delete line;
+    if( m_actLine > 0 ) m_actLine -= 1;
 }
 
 void Connector::setPointList( QStringList plist )
@@ -261,6 +262,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
     {
         if( line->scene() ) Circuit::self()->removeItem( line );
         m_conLineList.removeOne( line );
+        delete line;
 
         if( m_actLine > 0 )  m_actLine -= 1;
     }
