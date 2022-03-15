@@ -156,6 +156,13 @@ void  eNode::setVolt( double v )
 void eNode::addEpin( ePin* epin )
 { if( !m_ePinList.contains(epin)) m_ePinList.append(epin); }
 
+void eNode::remEpin( ePin* epin )
+{
+    if( m_ePinList.contains(epin) ) m_ePinList.removeOne( epin );
+    if( m_nodeList.contains(epin) ) m_nodeList.remove( epin );
+    if( m_admitList.contains(epin) ) m_admitList.remove( epin );
+}
+
 void eNode::clear()
 {
     for( ePin* epin : m_ePinList )

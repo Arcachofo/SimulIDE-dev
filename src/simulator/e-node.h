@@ -34,6 +34,7 @@ class MAINMODULE_EXPORT eNode
         QString itemId() { return m_id; }
 
         void addEpin( ePin* epin );
+        void remEpin( ePin* epin );
         void clear();
 
         void voltChangedCallback( eElement* el );

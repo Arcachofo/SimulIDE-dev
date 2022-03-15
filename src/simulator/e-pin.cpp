@@ -31,7 +31,7 @@ ePin::ePin( QString id, int index )
 }
 ePin::~ePin()
 {
-    //if( m_enode ) m_enode->remEpin( this );
+    if( m_enode ) m_enode->remEpin( this );
 }
 
 void ePin::reset() { setEnode( NULL ); }
@@ -40,7 +40,7 @@ void ePin::setEnode( eNode* enode )
 {
     if( enode == m_enode ) return;
 
-    //if( m_enode ) m_enode->remEpin( this );
+    if( m_enode ) m_enode->remEpin( this );
     if( enode ) enode->addEpin( this );
 
     m_enode = enode;
