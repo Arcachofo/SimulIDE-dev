@@ -268,7 +268,6 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( QObject::tr("Other Logic"),QObject::tr("Logic"), "2to3.png","", NULL ) );
     addItem( ADC::libraryItem() );
     addItem( DAC::libraryItem() );
-    addItem( Bus::libraryItem() );
     addItem( SevenSegmentBCD::libraryItem() );
     addItem( Lm555::libraryItem() );
     // Subcircuits
@@ -281,14 +280,17 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( QObject::tr("Tools"),QObject::tr("Logic"), "ic2.png","", NULL ) );
     addItem( new LibraryItem( QObject::tr("Led display"),QObject::tr("Logic"), "ic2.png","", NULL ) );
     addItem( SubCircuit::libraryItem() );
-    // Other
+    // Connectors
+    addItem( Bus::libraryItem() );
+    addItem( Tunnel::libraryItem() );
+    addItem( Socket::libraryItem() );
+    // Graphic
     addItem( Image::libraryItem() );
     addItem( TextComponent::libraryItem() );
     addItem( Rectangle::libraryItem() );
     addItem( Ellipse::libraryItem() );
     addItem( Line::libraryItem() );
-    addItem( Tunnel::libraryItem() );
-    addItem( Socket::libraryItem() );
+    // Other
     addItem( SubPackage::libraryItem() );
 }
 

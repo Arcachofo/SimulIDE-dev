@@ -38,7 +38,7 @@ LibraryItem* Socket::libraryItem()
 {
     return new LibraryItem(
         tr( "Socket" ),
-        tr( "Other" ),
+        tr( "Connectors" ),
         "socket.png",
         "Socket",
         Socket::construct);

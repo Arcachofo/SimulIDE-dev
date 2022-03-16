@@ -38,7 +38,7 @@ LibraryItem* Tunnel::libraryItem()
 {
     return new LibraryItem(
         tr( "Tunnel." ),
-        tr( "Other" ),
+        tr( "Connectors" ),
         "tunnel.png",
         "Tunnel",
         Tunnel::construct );
