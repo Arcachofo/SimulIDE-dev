@@ -1,0 +1,178 @@
+/***************************************************************************
+ *   Copyright (C) 2012 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         *
+ ***************************************************************************/
+
+#include <QPainter>
+
+#include <math.h>
+
+#include "lamp.h"
+#include "itemlibrary.h"
+#include "simulator.h"
+#include "pin.h"
+
+#include "doubleprop.h"
+
+Component* Lamp::construct( QObject* parent, QString type, QString id )
+{ return new Lamp( parent, type, id ); }
+
+LibraryItem* Lamp::libraryItem()
+{
+    return new LibraryItem(
+        tr( "Incandescent lamp" ),
+        tr( "Outputs" ),
+        "lamp.png",
+        "Lamp",
+        Lamp::construct);
+}
+
+Lamp::Lamp( QObject* parent, QString type, QString id )
+    : Comp2Pin( parent, type, id )
+    , eResistor( id )
+{
+    m_area = QRect(-10,-10, 20, 20 );
+
+    m_maxCurrent = 0.2;
+    setRes( 5 );
+
+    m_ePin[0] = m_pin[0];
+    m_ePin[1] = m_pin[1];
+
+    Simulator::self()->addToUpdateList( this );
+    initialize();
+
+    addPropGroup( { tr("Main"), {
+new DoubProp<Lamp>( "Resistance", tr("Resistance"), "Ω", this, &Lamp::getRes, &Lamp::setResSafe ),
+new DoubProp<Lamp>( "MaxCurrent", tr("Max Current"),"A", this, &Lamp::maxCurrent, &Lamp::setMaxCurrent ),
+    } } );
+}
+Lamp::~Lamp(){}
+
+void Lamp::initialize()
+{
+    m_crashed = false;
+    m_warning = false;
+    m_prevStep    = 0;
+    m_avgCurrent  = 0.;
+    m_intensity   = 25;
+    m_brightness  = 0;
+    m_totalCurrent = 0;
+    m_lastPeriod   = 0;
+
+    m_current = 0;
+    m_lastCurrent = 0;
+    update();
+}
+
+void Lamp::stamp()
+{
+    m_ePin[0]->changeCallBack( this );
+    m_ePin[1]->changeCallBack( this );
+
+    eResistor::stamp();
+}
+
+void Lamp::updateStep()
+{
+    uint32_t intensity = m_intensity;
+    updateBright();
+
+    if( overCurrent() > 1.5 )
+    {
+        m_warning = true;
+        m_crashed = overCurrent() > 2;
+        update();
+    }else{
+        if( m_warning ) update();
+        m_warning = false;
+        m_crashed = false;
+    }
+    if( intensity != m_intensity ) update();
+}
+
+void Lamp::voltChanged()
+{
+    m_current = fabs( m_ePin[0]->getVolt()-m_ePin[1]->getVolt() )*m_admit;
+    updateVI();
+}
+
+void Lamp::updateVI()
+{
+    const uint64_t step = Simulator::self()->circTime();
+    uint64_t period = (step-m_prevStep);
+    m_prevStep = step;
+    m_lastPeriod += period;
+
+    if( m_lastCurrent > 0 ) m_totalCurrent += m_lastCurrent*period;
+    m_lastCurrent = m_current;
+}
+
+void Lamp::updateBright()
+{
+    if( !Simulator::self()->isRunning() )
+    {
+        m_totalCurrent = 0;
+        m_lastPeriod = 0;
+        m_intensity = 25;
+        return;
+    }
+    updateVI();
+
+    uint64_t sPF = Simulator::self()->realSPF();//stepsPerFrame();
+    //uint64_t sPS = Simulator::self()->stepSize();
+
+    if( m_lastPeriod > sPF/2 ) // Update 2 times per frame
+    {
+        m_avgCurrent = m_totalCurrent/m_lastPeriod;
+        m_brightness = pow( m_avgCurrent/m_maxCurrent, 1.0/2.0 );
+
+        m_totalCurrent  = 0;
+        m_lastPeriod = 0;
+        m_intensity  = uint32_t(m_brightness*255)+25;
+}   }
+
+void Lamp::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+{
+    Component::paint( p, option, widget );
+
+    QColor color;
+
+    if( m_warning/*m_current > m_maxCurrent*1.2*/ ) // Led overcurrent
+    {
+        p->setBrush( QColor( 255, 150, 0 ) );
+        color = QColor( Qt::red );
+    }
+    if( m_crashed )  // Led extreme overcurrent
+    {
+        p->setBrush( Qt::white );
+        color = QColor( Qt::white );
+    }else{
+        if( m_intensity > 25 )
+        {
+            m_intensity += 15;       // Set a Minimun Bright
+            if( m_intensity > 255 ) m_intensity = 255;
+            color = QColor( m_intensity, m_intensity, m_intensity*0.85 );
+        }
+        else color = QColor( 25, 25, 100 );
+    }
+    p->setBrush( color );
+    p->drawEllipse(-8,-8, 16, 16 );
+
+    p->drawLine(-5,-5, 5, 5 );
+    p->drawLine(-5, 5, 5,-5 );
+}

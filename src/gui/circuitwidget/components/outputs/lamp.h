@@ -17,56 +17,49 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QPainter>
+#ifndef LAMP_H
+#define LAMP_H
 
-#include "led.h"
-#include "pin.h"
-#include "itemlibrary.h"
+#include "e-resistor.h"
+#include "comp2pin.h"
 
-Component* Led::construct( QObject* parent, QString type, QString id )
-{ return new Led( parent, type, id ); }
+class LibraryItem;
 
-LibraryItem* Led::libraryItem()
+class MAINMODULE_EXPORT Lamp : public Comp2Pin, public eResistor
 {
-    return new LibraryItem(
-        QObject::tr( "Led" ),
-        QObject::tr( "Leds" ),
-        "led.png",
-        "Led",
-        Led::construct);
-}
+        Q_OBJECT
+    public:
+        Lamp( QObject* parent, QString type, QString id );
+        ~Lamp();
 
-Led::Led( QObject* parent, QString type, QString id )
-   : LedBase( parent, type, id )
-{
-    m_area = QRect(-8, -10, 20, 20 );
+        virtual void initialize() override;
+        virtual void stamp() override;
+        virtual void updateStep() override;
+        virtual void voltChanged() override;
 
-    m_pin.resize( 2 );
-    m_pin[0] = new Pin( 180, QPoint(-16, 0 ), m_id+"-lPin", 0, this);
-    m_pin[1] = new Pin(   0, QPoint( 16, 0 ), m_id+"-rPin", 1, this);
-    m_pin[0]->setLength( 10 );
+        double maxCurrent()             { return m_maxCurrent; }
+        void  setMaxCurrent( double c ) { m_maxCurrent = c; }
 
-    setEpin( 0, m_pin[0] );
-    setEpin( 1, m_pin[1] );
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
-    //createSerRes();
-    //setModel( "RGY Default" );
-}
-Led::~Led(){}
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
-void Led::drawBackground( QPainter* p )
-{
-    p->drawEllipse(-6,-8, 16, 16 );
-}
+    private:
+        void updateVI();
+        void updateBright();
+        double overCurrent() { return m_avgCurrent/m_maxCurrent; }
 
-void Led::drawForeground( QPainter* p )
-{
-    static const QPointF points[3] = {
-        QPointF( 8, 0 ),
-        QPointF(-3,-6 ),
-        QPointF(-3, 6 ) };
+        uint64_t m_prevStep;
+        uint32_t m_intensity;
 
-    p->drawPolygon( points, 3 );
-    p->drawLine( 8,-4, 8, 4 );
-    p->drawLine(-6, 0, 10, 0 );
-}
+        double m_maxCurrent;
+        double m_avgCurrent;
+        double m_totalCurrent;
+        double m_lastCurrent;
+        double m_lastPeriod;
+        double m_brightness;
+};
+
+#endif
+

@@ -136,7 +136,7 @@ void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 {
     Component::paint( p, option, widget );
 
-    QPen pen(Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen( Qt::black, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     QColor color;
 
     if( m_warning/*m_current > m_maxCurrent*1.2*/ ) // Led overcurrent

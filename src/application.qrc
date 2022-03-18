@@ -153,6 +153,7 @@
         <file alias="lanalizer.png">../src/icons/components/lanalizer.png</file>
         <file alias="toggleswitch.png">../src/icons/components/toggleswitch.png</file>
         <file alias="audio_out.png">../src/icons/components/audio_out.png</file>
+        <file alias="lamp.png">../src/icons/components/lamp.png</file>
         <file alias="keypad.png">../src/icons/components/keypad.png</file>
         <file alias="ellipse.png">../src/icons/components/ellipse.png</file>
         <file alias="line.png">../src/icons/components/line.png</file>

@@ -46,7 +46,6 @@
 #include "ds1307.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
-#include "touchpad.h"
 #include "esp01.h"
 #include "fixedvolt.h"
 #include "flipflopd.h"
@@ -70,6 +69,7 @@
 #include "ky023.h"
 #include "ky040.h"
 #include "ks0108.h"
+#include "lamp.h"
 #include "latchd.h"
 #include "ldr.h"
 #include "led.h"
@@ -115,6 +115,7 @@
 #include "switchdip.h"
 #include "thermistor.h"
 #include "textcomponent.h"
+#include "touchpad.h"
 #include "triac.h"
 #include "tunnel.h"
 #include "varresistor.h"
@@ -222,6 +223,7 @@ void ItemLibrary::loadItems()
     addItem( Stepper::libraryItem() );
     addItem( Servo::libraryItem() );
     addItem( AudioOut::libraryItem() );
+    addItem( Lamp::libraryItem() );
     // Micro
     addItem( new LibraryItem( QObject::tr("AVR"),QObject::tr("Micro"), "ic2.png","", NULL ) );
     addItem( new LibraryItem( QObject::tr("PIC"),QObject::tr("Micro"), "ic2.png","", NULL ) );
