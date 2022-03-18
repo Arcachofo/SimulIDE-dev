@@ -55,6 +55,8 @@ KY023::KY023( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
      , eElement( id )
 {
+    m_area = QRect( -WIDTH/2, -HEIGHT/2 + GAP, WIDTH, HEIGHT );
+
     m_joystickW.setupWidget();
     m_joystickW.setFixedSize( JOYSTICK_SIZE, JOYSTICK_SIZE );
     onvaluechanged(500, 500);
@@ -70,10 +72,7 @@ KY023::KY023( QObject* parent, QString type, QString id )
     m_proxy_button = Circuit::self()->addWidget( m_button );
     m_proxy_button->setParentItem( this );
     m_proxy_button->setPos( QPoint(8, HEIGHT/2-13) );
-    
-    m_area = QRect( -WIDTH/2, -HEIGHT/2 + GAP, WIDTH, HEIGHT );
-    setLabelPos(-WIDTH/2, -HEIGHT/2 - GAP, 0);
-    
+
     m_pin.resize(3);
 
     m_vrx = new IoPin( 270, QPoint(-12,36), id+"-vrx", 0, this, output );
@@ -92,6 +91,7 @@ KY023::KY023( QObject* parent, QString type, QString id )
     m_pin[2] = m_sw;
 
     setAngle( 90 );
+    setLabelPos(-34, 20,-90 );
     
     Simulator::self()->addToUpdateList( this );
     

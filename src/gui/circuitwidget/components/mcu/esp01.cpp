@@ -53,6 +53,7 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
 {
     m_area = QRect(-28,-20, 56, 40 );
     m_background = ":/esp01.png";
+    setLabelPos(-20,-34, 0 );
 
     m_debug = true;
     m_OK = "\r\nOK\r\n";

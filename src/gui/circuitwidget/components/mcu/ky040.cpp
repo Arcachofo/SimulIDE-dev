@@ -58,6 +58,7 @@ KY040::KY040( QObject* parent, QString type, QString id )
     , eElement( id )
 {
     m_changed = false;
+    m_area = QRect( -WIDTH/2, -HEIGHT/2 + GAP, WIDTH, HEIGHT );
     
     m_dialW.setupWidget();
     m_dialW.setFixedSize( DIAL_SIZE, DIAL_SIZE );
@@ -81,10 +82,7 @@ KY040::KY040( QObject* parent, QString type, QString id )
     m_proxy_button = Circuit::self()->addWidget( m_button );
     m_proxy_button->setParentItem( this );
     m_proxy_button->setPos( QPoint(8, HEIGHT/2-13) );
-    
-    m_area = QRect( -WIDTH/2, -HEIGHT/2 + GAP, WIDTH, HEIGHT );
-    setLabelPos(-WIDTH/2, -HEIGHT/2 - GAP, 0);
-    
+
     m_pin.resize(3);
 
     m_pin[0] = m_pinA = new IoPin( 270, QPoint(4,36), id+"-clk", 0, this, output );
@@ -100,6 +98,7 @@ KY040::KY040( QObject* parent, QString type, QString id )
     m_sw->setLabelText( " SW" );
 
     setAngle( 90 );
+    setLabelPos(-34, 20,-90 );
 
     Simulator::self()->addToUpdateList( this );
 

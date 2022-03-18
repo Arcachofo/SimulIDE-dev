@@ -43,6 +43,7 @@ DS1307::DS1307( QObject* parent, QString type, QString id )
 {
     m_area = QRect(-28,-20, 56, 40 );
     m_background = ":/dsxxx.png";
+    setLabelPos(-20,-34, 0 );
 
     m_pin.resize( 3 );
     m_pin[0] = m_pinSda = new IoPin( 180, QPoint(-36,-12), id+"-PinSDA", 0, this, openCo );
