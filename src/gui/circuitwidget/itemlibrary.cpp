@@ -190,6 +190,7 @@ void ItemLibrary::loadItems()
     addItem( elCapacitor::libraryItem() );
     addItem( Inductor::libraryItem() );
     // Active
+    addItem( new LibraryItem( QObject::tr("Rectifiers"),QObject::tr("Active"), "rectifiers.png","", NULL ) );
     addItem( Diode::libraryItem() );
     addItem( Zener::libraryItem() );
     addItem( SCR::libraryItem() );

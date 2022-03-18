@@ -183,8 +183,10 @@
         <file alias="displays.png">../src/icons/components/displays.png</file>
         <file alias="motors.png">../src/icons/components/motors.png</file>
         <file alias="reactive.png">../src/icons/components/reactive.png</file>
+        
         <file alias="resistors.png">../src/icons/components/resistors.png</file>
         <file alias="resistorsensors.png">../src/icons/components/resistorsensors.png</file>
+        <file alias="rectifiers.png">../src/icons/components/rectifiers.png</file>
         
         <file alias="switchbut.png">../src/icons/mainwindow/switchbut.png</file>
         

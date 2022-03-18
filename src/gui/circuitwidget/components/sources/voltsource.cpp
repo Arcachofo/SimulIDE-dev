@@ -33,7 +33,7 @@ Component* VoltSource::construct( QObject* parent, QString type, QString id )
 LibraryItem* VoltSource::libraryItem()
 {
     return new LibraryItem(
-        tr( "Volt. Source" ),
+        tr( "Voltage Source" ),
         tr( "Sources" ),
         "voltsource.png",
         "Voltage Source",

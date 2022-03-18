@@ -37,7 +37,7 @@ LibraryItem* Triac::libraryItem()
 {
     return new LibraryItem(
         tr( "Triac" ),
-        tr( "Active" ),
+        tr( "Rectifiers" ),
         "triac.png",
         "Triac",
         Triac::construct );

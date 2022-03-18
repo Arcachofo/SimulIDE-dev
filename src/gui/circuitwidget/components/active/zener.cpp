@@ -27,7 +27,7 @@ LibraryItem* Zener::libraryItem()
 {
     return new LibraryItem(
             tr( "Zener Diode" ),
-            tr( "Active" ),
+            tr( "Rectifiers" ),
             "zener.png",
             "Zener",
             Zener::construct);
