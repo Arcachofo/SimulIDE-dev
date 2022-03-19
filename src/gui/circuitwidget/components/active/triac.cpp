@@ -55,8 +55,8 @@ Triac::Triac( QObject* parent, QString type, QString id )
     m_gateRes  = 100;
 
     // Pin0--|--ePin0--diode1--ePin1--midEnode--ePin4--resistor--Pin1
-    //       |--ePin2--diode2--ePin3--|
-    // Pin2----------resistGa--ePin5--|
+    //       |--ePin3--diode2--ePin2--|                         |
+    // Pin2-----------------------------------resistGa--ePin5---|
     m_pin.resize( 3 );
     m_pin[0] = new Pin( 180, QPoint(-16, 0 ), id+"-lPin", 0, this);
     m_pin[1] = new Pin( 0,   QPoint( 16, 0 ), id+"-rPin", 1, this);
@@ -107,22 +107,22 @@ void Triac::stamp()
 {
     m_state = false;
 
-    eNode* node0 = m_pin[0]->getEnode();
-    eNode* node1 = m_pin[1]->getEnode();
-    eNode* node2 = m_pin[2]->getEnode();
+    eNode* nodeT2 = m_pin[0]->getEnode();
+    eNode* nodeT1 = m_pin[1]->getEnode();
+    eNode* nodeG = m_pin[2]->getEnode();
 
-    m_diode1->getEpin(0)->setEnode( node0 );
+    m_diode1->getEpin(0)->setEnode( nodeT2 );
     m_diode1->getEpin(1)->setEnode( m_midEnode );
 
     m_diode2->getEpin(0)->setEnode( m_midEnode );
-    m_diode2->getEpin(1)->setEnode( node0 );
+    m_diode2->getEpin(1)->setEnode( nodeT2 );
 
     m_resistor->getEpin(0)->setEnode( m_midEnode );
-    m_resistGa->getEpin(1)->setEnode( m_midEnode );
+    m_resistGa->getEpin(1)->setEnode( nodeT1 );
 
-    if( node0 ) node0->addToNoLinList( this );
-    if( node1 ) node1->addToNoLinList( this );
-    if( node2 ) node2->addToNoLinList( this );
+    if( nodeT2 ) nodeT2->addToNoLinList( this );
+    if( nodeT1 ) nodeT1->addToNoLinList( this );
+    if( nodeG ) nodeG->addToNoLinList( this );
 
     m_resistor->setRes( 10e5 );
     m_resistGa->setRes( m_gateRes );
