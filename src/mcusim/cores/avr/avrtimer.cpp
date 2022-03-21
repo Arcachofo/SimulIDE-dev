@@ -81,13 +81,21 @@ void AvrTimer::configureA( uint8_t newTCCRXA ) // TCCRXA  // WGM00,WGM01
     if( m_OCB ) m_OCB->configure( newTCCRXA );
     if( m_OCC ) m_OCC->configure( newTCCRXA );
 
-    m_wgm10Val = getRegBitsVal( newTCCRXA, m_WGM10 );//newTCCRXA & 0b00000011;  // WGMX1,WGMX0
+    m_wgm10Val = getRegBitsVal( newTCCRXA, m_WGM10 ); // WGMX1,WGMX0
     updtWgm();
 }
 
 void AvrTimer::configureB( uint8_t newTCCRXB ) // TCCRXB
 {
-    uint8_t prIndex = getRegBitsVal( newTCCRXB, m_prSelBits ); // CSX0-n
+    getPrescaler( newTCCRXB );
+
+    m_wgm32Val = (getRegBitsVal( newTCCRXB, m_WGM32 ))<<2; // WGMX3,WGMX2
+    updtWgm();
+}
+
+void AvrTimer::getPrescaler( uint8_t val )
+{
+    uint8_t prIndex = getRegBitsVal( val, m_prSelBits ); // CSX0-n
 
     if( prIndex != m_prIndex )
     {
@@ -95,8 +103,6 @@ void AvrTimer::configureB( uint8_t newTCCRXB ) // TCCRXB
         if( prIndex ) configureClock();
         enable( m_prIndex );
     }
-    m_wgm32Val = (getRegBitsVal( newTCCRXB, m_WGM32 ))<<2;//( newTCCRXB & 0b00011000)>>1; // WGMX3,WGMX2
-    updtWgm();
 }
 
 void AvrTimer::configureClock()
@@ -286,13 +292,7 @@ void AvrTimer810::configureA( uint8_t newTCCR1 ) // TCCR1
     if( getRegBitsBool( newTCCR1, m_PWM1A ) ) mode |= 1;
     if( mode != m_mode ) updateMode();
 
-    uint8_t prIndex = getRegBitsVal( newTCCR1, m_prSelBits ); // CSX0-n
-    if( prIndex != m_prIndex )
-    {
-        m_prIndex = prIndex;
-        AvrTimer::configureClock();
-        enable( m_prIndex );
-    }
+    getPrescaler( newTCCR1 );
 }
 
 void AvrTimer810::configureB( uint8_t newGTCCR ) // GTCCR
@@ -345,19 +345,14 @@ AvrTimer821::AvrTimer821( eMcu* mcu, QString name)
 }
 AvrTimer821::~AvrTimer821(){}
 
-void AvrTimer821::configureA( uint8_t newTCCR2 )
+void AvrTimer821::configureA(uint8_t newTCCRx )
 {
-    if( m_OCA ) m_OCA->configure( newTCCR2 ); // COM20 COM21 Done in ocunits
+    if( m_OCA ) m_OCA->configure( newTCCRx ); // COM20 COM21 Done in ocunits
 
-    uint8_t prIndex = getRegBitsVal( newTCCR2, m_prSelBits ); // CSX0-n
-    if( prIndex != m_prIndex )
-    {
-        m_prIndex = prIndex;
-        if( prIndex ) configureClock();
-        enable( m_prIndex );
-    }
-    uint8_t WGM10 = ((( newTCCR2 & 1<<6) >> 6)
-                   | (( newTCCR2 & 1<<3) >> 2)); // WGM20 WGM21
+    getPrescaler( newTCCRx );
+
+    uint8_t WGM10 = ((( newTCCRx & 1<<6) >> 6)
+                   | (( newTCCRx & 1<<3) >> 2)); // WGM20 WGM21
 
     if( m_wgm10Val != WGM10 ){ m_wgm10Val = WGM10; updtWgm(); }
 }

@@ -52,6 +52,7 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         virtual void configureClock();
         void configureExtClock();
         void configureOcUnits( bool wgm3 );
+        void getPrescaler( uint8_t val );
 
         regBits_t m_WGM10;
         regBits_t m_WGM32;
@@ -135,7 +136,7 @@ class MAINMODULE_EXPORT AvrTimer821 : public AvrTimer8bit
         AvrTimer821( eMcu* mcu, QString name );
         ~AvrTimer821();
 
-        virtual void configureA( uint8_t newTCCR2 ) override;
+        virtual void configureA( uint8_t newTCCRx ) override;
 };
 
 
