@@ -90,7 +90,7 @@
     <register  name="MCUCR"   addr="0x0035" 
                bits="ISC00,ISC01,BODSE,SM0,SM1,SE,PUD,BODS" />
                
-    <register  name="OCR0A"   addr="0x0036" b/>
+    <register  name="OCR0A"   addr="0x0036" />
     <register  name="SPMCSR"  addr="0x0037" mask="00011111" 
                bits="SPMEN,PGERS,PGWRT,RFLB,CTPB,0,0,0" />
                
