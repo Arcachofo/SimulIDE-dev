@@ -178,3 +178,9 @@ void eBJT::setGain( double gain )
     m_gain = gain;
     m_fgain = m_gain/(m_gain+1);
 }
+
+void eBJT::setThreshold( double vCrit )
+{
+    m_vCrit = vCrit;
+    m_satCur = m_vt/(exp( vCrit/m_vt )*sqrt(2));
+}

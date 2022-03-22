@@ -33,11 +33,14 @@ class MAINMODULE_EXPORT eBJT : public eElement
         virtual void stamp() override;
         virtual void voltChanged() override;
 
-        virtual double gain()              { return m_gain; }
-        virtual void setGain( double gain );
+        double gain()              { return m_gain; }
+        void setGain( double gain );
 
         virtual bool pnp()              { return m_PNP; }
         virtual void setPnp( bool pnp ) { m_PNP = pnp; }
+
+        double threshold() { return m_vCrit; }
+        void   setThreshold( double vCrit );
 
     protected:
         double limitStep( double vnew, double vold );
