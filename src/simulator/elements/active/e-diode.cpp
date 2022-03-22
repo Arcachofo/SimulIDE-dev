@@ -118,9 +118,15 @@ void eDiode::SetParameters( double sc, double ec, double bv, double sr )
     updateValues();
 }
 
-void eDiode::setThreshold( double fdDrop )
+/*void eDiode::setFdDrop( double fdDrop )
 {
     m_satCur = 1/( exp( fdDrop*m_vdCoef ) - 1 );
+    updateValues();
+}*/
+
+void eDiode::setThreshold( double vCrit )
+{
+    m_satCur = m_vScale/(exp(vCrit/m_vScale)*sqrt(2));
     updateValues();
 }
 
@@ -147,7 +153,7 @@ void eDiode::updateValues()
 {
     m_vScale = m_emCoef*m_vt;
     m_vdCoef = 1/m_vScale;
-    m_fdDrop = m_vScale*log( 1/m_satCur + 1 );
+    //m_fdDrop = m_vScale*log( 1/m_satCur + 1 );
     m_vCriti = m_vScale*log( m_vScale/(sqrt(2)*m_satCur) );
     m_zOfset = m_bkDown - m_vt*log(-(1-0.005/m_satCur) );
     m_vzCrit = m_vt*log( m_vt/(sqrt(2)*m_satCur) );
