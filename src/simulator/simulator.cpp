@@ -192,7 +192,7 @@ void Simulator::solveCircuit()
                 m_nonLin = m_nonLin->nextChanged;
             }
             if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )  // Max iterations reached
-            { m_warning = 1; m_converged = true; break; }
+            { m_warning = 1; m_converged = true; return; }
 
             if( m_changedNode ){
                 solveMatrix();
@@ -209,6 +209,7 @@ void Simulator::solveCircuit()
             m_voltChanged->voltChanged();
             m_voltChanged = m_voltChanged->nextChanged;
         }
+        if( m_state < SIM_RUNNING ) break;    // Loop broken without converging
     }
 }
 
