@@ -38,7 +38,7 @@ class MAINMODULE_EXPORT eCapacitor : public eResistor
         double m_cap;
         double m_curSource;
         double m_tStep;
-        double m_volt;
+        //double m_volt;
 
         uint64_t m_nextStep;
 };
