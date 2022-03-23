@@ -54,6 +54,7 @@ class MAINMODULE_EXPORT ClockBase : public FixedVolt
         bool m_isRunning;
         bool m_alwaysOn;
 
+        uint64_t m_lastTime;
         uint64_t m_stepsPC;
         double m_fstepsPC;
 

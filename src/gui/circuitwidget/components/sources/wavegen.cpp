@@ -80,7 +80,7 @@ bool WaveGen::setPropStr( QString prop, QString val )
 
 void WaveGen::runEvent()
 {
-    m_time = fmod( Simulator::self()->circTime(), m_fstepsPC );
+    m_time = fmod( (Simulator::self()->circTime()-m_lastTime), m_fstepsPC );
     
     if     ( m_waveType == Sine )     genSine();
     else if( m_waveType == Saw )      genSaw();
