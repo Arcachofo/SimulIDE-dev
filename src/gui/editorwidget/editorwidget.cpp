@@ -447,7 +447,7 @@ void EditorWidget::createActions()
     connect( confEditAct, SIGNAL(triggered()), this, SLOT(confEditor()), Qt::UniqueConnection);
 
     confCompAct = new QAction(QIcon(":/blank.png"), tr("Compiler Settings"), this);
-    confCompAct->setStatusTip(tr("Copmpiler Settings"));
+    confCompAct->setStatusTip(tr("Compiler Settings"));
     connect( confCompAct, SIGNAL(triggered()), this, SLOT(confCompiler()), Qt::UniqueConnection);
 
     for( int i=0; i<MaxRecentFiles; i++ )

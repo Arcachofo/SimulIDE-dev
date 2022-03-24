@@ -301,7 +301,7 @@ void EditorWindow::loadCompilerSet( QString compilsPath, QMap<QString, compilDat
                 compList->insert( compiler, compilData );
                 qDebug() << tr("        Found Compiler: ") << compiler;
             }
-            else qDebug() << tr("Error Loadind Compiler at:") <<"\n" << compilFilePath <<"\n";
+            else qDebug() << tr("Error Loading Compiler at:") <<"\n" << compilFilePath <<"\n";
 }   }   }
 
 #include  "moc_editorwindow.cpp"
