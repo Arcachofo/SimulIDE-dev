@@ -1316,8 +1316,9 @@ void I51Core::cjne_rx_imm_offset()
     /// else                        PSW[Cy] = 1;
     write_S_Bit( Cy, m_dataMem[rx] < value );
 
+    int8_t offset = OPERAND2;
     PC += 3;
-    if( m_dataMem[rx] != value ) PC += (int8_t)OPERAND2;
+    if( m_dataMem[rx] != value ) PC += offset; //(int8_t)OPERAND2;
 
     m_mcu->cyclesDone = 2;
 }
