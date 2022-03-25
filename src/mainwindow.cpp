@@ -281,11 +281,11 @@ QString MainWindow::getHelp( QString name )
     if( m_help.contains( name )) return m_help.value( name );
 
     QString locale = loc();
-    if( loc() != "en" ) locale.prepend("_").append("/");
+    if( loc() != "en" ) locale.prepend("_");
     else locale = "";
 
     name= name.toLower().replace( " ", "" );
-    QString dfPath = getFilePath("data/help/"+locale+name+locale+".txt");
+    QString dfPath = getFilePath("data/help/"+locale+"/"+name+locale+".txt");
 
     if( dfPath == "" ) dfPath = getFilePath( "data/help/"+name+".txt" );
     if( dfPath != "" )
@@ -301,7 +301,7 @@ QString MainWindow::getHelp( QString name )
 
             file.close();
         }
-        else qDebug() << "Warning: MainWindow::getHelpFile: File not found "<<dfPath;
+        else qDebug() << "Warning: MainWindow::getHelp: File not found "<<dfPath;
     }
     m_help[name] = help;
     return help;
