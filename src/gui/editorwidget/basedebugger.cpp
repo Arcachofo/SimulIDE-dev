@@ -160,6 +160,7 @@ bool BaseDebugger::postProcess()
                 if( m_lstType & 1 ) lstLine = lstLine.split(":").last();
                 QStringList words = lstLine.split(" ");
                 words.removeAll("");
+                if( words.size() < 3 ) continue;
                 lstLine = words.at( (m_lstType & 2)>>1 );
 
                 bool ok = false;
