@@ -153,7 +153,7 @@ int InoDebugger::compile( bool )
     if( !p_stdout.isEmpty() ) m_outPane->appendLine( p_stdout );
 
     int error = 0;
-    if( !p_stderr.isEmpty() ) error = getError( p_stderr );
+    if( !p_stderr.isEmpty() ) error = getError( p_stderr )+1;
     else{
         m_fileList.clear();
         m_fileList.append( m_fileName+m_fileExt );
