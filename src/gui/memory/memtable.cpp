@@ -125,7 +125,7 @@ void MemTable::resizeTable( int dataSize )
     table->setColumnWidth( 16, 5 );
     table->setRowCount( rows );
 
-    int scale = MainWindow::self()->fontScale();
+    float scale = MainWindow::self()->fontScale();
     QFont font;
     font.setPixelSize( 14*scale );
     font.setFamily("Ubuntu Mono");

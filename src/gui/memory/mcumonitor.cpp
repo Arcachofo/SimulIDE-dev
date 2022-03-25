@@ -18,7 +18,6 @@ MCUMonitor::MCUMonitor( QWidget* parent, McuInterface* mcu )
     m_ramTable = m_processor->getRamTable();
     m_status = &m_ramTable->m_status;
     m_pc     = &m_ramTable->m_pc;
-    m_pc->setMinimumWidth( 130 );
 
     horizontalLayout->insertWidget( 0, m_status);
     horizontalLayout->insertWidget( 0, m_pc);

@@ -41,7 +41,7 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     m_numRegs = 60;
     m_loadingVars = false;
 
-    int scale = MainWindow::self()->fontScale();
+    float scale = MainWindow::self()->fontScale();
     int row_heigh = 23*scale;
     int numberColor = 0x202090;
 
@@ -67,8 +67,8 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
         it->setFont( font );
         m_status.setItem( 0, i, it );
     }
-    m_status.setMinimumWidth( (62+8*22)*scale );
-    m_status.setMaximumWidth( (62+8*22)*scale );
+    m_status.setMinimumWidth( (56+8*22)*scale );
+    m_status.setMaximumWidth( (56+8*22)*scale );
 
     m_pc.setVerticalHeaderLabels( QStringList()<<" PC "  );
     m_pc.horizontalHeader()->hide();
@@ -89,9 +89,9 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
     it->setFont( font );
     it->setTextColor( QColor( 0x3030B8 ) );
     m_pc.setItem( 0, 1, it );
-    m_pc.setColumnWidth(1, 60*scale);
-    m_pc.setMinimumWidth( 130*scale );
-    m_pc.setMaximumWidth( 130*scale );
+    m_pc.setColumnWidth( 1, 60*scale);
+    m_pc.setMinimumWidth( 135*scale );
+    m_pc.setMaximumWidth( 135*scale );
 
     table->verticalHeader()->setSectionsMovable( true );
     table->setColumnWidth( 0, 50*scale );
