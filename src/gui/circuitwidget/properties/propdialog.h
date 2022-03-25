@@ -43,6 +43,7 @@ class PropDialog : public QDialog, private Ui::PropDialog
         void on_showLabel_toggled( bool checked );
         void on_tabList_currentChanged( int );
         void on_helpButton_clicked();
+        void adjustWidgets();
 
     private:
         Component* m_component;

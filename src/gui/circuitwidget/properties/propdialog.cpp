@@ -52,7 +52,7 @@ void PropDialog::setComponent( Component* comp )
     m_component = comp;
     showLabel->setChecked( comp->showId() );
 
-    int index = 0;
+    int w, index = 0;
     QList<propGroup> groups = comp->propeties();
 
     for( propGroup group : groups )
@@ -92,9 +92,13 @@ void PropDialog::setComponent( Component* comp )
                 if( !mp ) continue;
 
                 mp->setup();
+                w = mp->width();
+                mp->setMinimumWidth( w );
                 m_propList.append( mp );
                 propWidget->layout()->addWidget( mp );
             }
+            propWidget->setMinimumHeight( propList.size()*30);
+            propWidget->setMinimumWidth( w+40 );
             tabList->addTab( propWidget, group.name );
     }   }
     if( tabList->count() == 0 ) tabList->setVisible( false ); // Hide tab widget if empty
@@ -115,14 +119,7 @@ void PropDialog::on_tabList_currentChanged( int )
 {
     if( !m_component ) return;
     updtValues();
-
-    if( !helpText->isVisible() )
-    {
-        QWidget* widget = tabList->currentWidget();
-        this->setMaximumHeight( widget->minimumSizeHint().height()+150 );
-    }
-    this->adjustSize();
-    this->setMaximumHeight( 800 );
+    adjustWidgets();
 }
 
 void PropDialog::on_helpButton_clicked()
@@ -132,9 +129,30 @@ void PropDialog::on_helpButton_clicked()
     else                 mainLayout->removeWidget( helpText );
     helpText->setVisible( m_helpExpanded );
 
+    adjustWidgets();
+    this->adjustSize();
+}
+
+void PropDialog::adjustWidgets()
+{
+    int h = tabList->currentWidget()->minimumHeight()+150;
+    int w = tabList->currentWidget()->minimumWidth()+25;
+
+    if( helpText->isVisible() )
+    {
+        helpText-> setFixedWidth( helpText->width() );
+        w += helpText->width();
+    }
+    this->setMinimumHeight( h );
+    this->setMaximumHeight( h+100 );
+
+    this->setMinimumWidth( w );
+    this->setMaximumWidth( w+50 );
+
     this->adjustSize();
 }
 
 void PropDialog::updtValues()
-{ for( PropVal* prop : m_propList )
-        prop->updtValues(); }
+{
+    for( PropVal* prop : m_propList ) prop->updtValues();
+}

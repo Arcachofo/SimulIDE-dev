@@ -47,6 +47,12 @@
    </item>
    <item>
     <widget class="QComboBox" name="valueBox">
+     <property name="minimumSize">
+      <size>
+       <width>206</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="sizeAdjustPolicy">
       <enum>QComboBox::AdjustToContents</enum>
      </property>
