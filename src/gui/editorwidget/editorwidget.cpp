@@ -45,6 +45,8 @@ EditorWidget::EditorWidget( QWidget* parent )
             , m_settingsMenu( this )
             , m_fileMenu( this )
 {
+    m_editDialog = NULL;
+
     setAcceptDrops( true );
     
     createWidgets();
@@ -309,7 +311,9 @@ void EditorWidget::confEditor()
 void EditorWidget::confCompiler()
 {
     CodeEditor* ce = getCodeEditor();
-    if( ce ) ce->getCompiler()->compProps();
+    if( !ce ) return;
+    BaseDebugger* comp = ce->getCompiler();
+    if( comp ) comp->compProps();
 }
 
 void EditorWidget::updateRecentFileActions()
