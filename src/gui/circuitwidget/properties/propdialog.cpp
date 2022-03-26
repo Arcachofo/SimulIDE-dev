@@ -26,6 +26,7 @@
 #include "stringval.h"
 #include "enumval.h"
 #include "boolval.h"
+#include "mainwindow.h"
 
 #include "comproperty.h"
 
@@ -36,6 +37,10 @@ PropDialog::PropDialog( QWidget* parent, QString help )
     //this->setWindowFlags( Qt::Dialog | Qt::WindowTitleHint );
 
     m_component = NULL;
+
+    m_scale = MainWindow::self()->fontScale();
+    m_minW = 350*m_scale;
+    m_minH = 100*m_scale;
 
     m_helpExpanded = false;
     helpText->setVisible( false );
@@ -102,7 +107,7 @@ void PropDialog::setComponent( Component* comp )
             tabList->addTab( propWidget, group.name );
     }   }
     if( tabList->count() == 0 ) tabList->setVisible( false ); // Hide tab widget if empty
-    this->adjustSize();
+    adjustWidgets();
 }
 
 void PropDialog::on_labelBox_editingFinished()
@@ -130,18 +135,25 @@ void PropDialog::on_helpButton_clicked()
     helpText->setVisible( m_helpExpanded );
 
     adjustWidgets();
-    this->adjustSize();
 }
 
 void PropDialog::adjustWidgets()
 {
-    int h = tabList->currentWidget()->minimumHeight()+150;
-    int w = tabList->currentWidget()->minimumWidth()+25;
+    int h = 0;
+    int w = 0;
+    QWidget* widget = tabList->currentWidget();
+    if( widget )
+    {
+        h = widget->minimumHeight()+150*m_scale;
+        w = widget->minimumWidth()+25*m_scale;
+    }
+    if( h < m_minH ) h = m_minH;
+    if( w < m_minW ) w = m_minW;
 
     if( helpText->isVisible() )
     {
         helpText-> setFixedWidth( helpText->width() );
-        w += helpText->width();
+        w += helpText->width()+6;
     }
     this->setMinimumHeight( h );
     this->setMaximumHeight( h+100 );

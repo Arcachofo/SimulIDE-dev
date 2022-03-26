@@ -50,6 +50,10 @@ class PropDialog : public QDialog, private Ui::PropDialog
 
         bool m_helpExpanded;
 
+        float m_scale;
+        int m_minW;
+        int m_minH;
+
         QList<PropVal*> m_propList;
 };
 
