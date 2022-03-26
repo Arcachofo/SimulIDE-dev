@@ -149,10 +149,12 @@ bool BaseDebugger::postProcess()
                 lstLine = lstLines.at( lstLineNumber-1 );
                 lstLine = lstLine.replace("\t", " ");
                 if( isNoValid( lstLine ) ) continue;
+                if( lstLine.startsWith(" ") ) continue;
+                lstLine = lstLine.split(";").first();
 
                 QString line = lstLine;
                 line = line.remove(" ");
-                srcLine = srcLine.split("//").first();
+                srcLine = srcLine.split(";").first();
                 if( line.contains( srcLine ) ) break;          // Line found
             }
             if( lstLineNumber >= lastListLine ) lstLineNumber = 0;
