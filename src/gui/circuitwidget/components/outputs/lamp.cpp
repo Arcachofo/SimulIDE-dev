@@ -133,8 +133,7 @@ void Lamp::updateBright()
     }
     updateVI();
 
-    uint64_t sPF = Simulator::self()->realSPF();//stepsPerFrame();
-    //uint64_t sPS = Simulator::self()->stepSize();
+    uint64_t sPF = Simulator::self()->realSPF();
 
     if( m_lastPeriod > sPF/2 ) // Update 2 times per frame
     {
