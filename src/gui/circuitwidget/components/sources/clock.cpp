@@ -43,7 +43,7 @@ LibraryItem* Clock::libraryItem()
 Clock::Clock( QObject* parent, QString type, QString id )
      : ClockBase( parent, type, id )
 {
-    remPropGroup( "Main");
+    remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {
 new DoubProp<Clock>( "Voltage"  , tr("Voltage")  ,"V" , this, &Clock::volt,     &Clock::setVolt ),
 new DoubProp<Clock>( "Freq"     , tr("Frequency"),"Hz", this, &Clock::freq,     &Clock::setFreq ),

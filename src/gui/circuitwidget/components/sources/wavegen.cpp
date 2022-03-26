@@ -56,7 +56,7 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
     setSteps( 100 );
     setDuty( 50 );
 
-    remPropGroup( "Main");
+    remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {
 new StringProp<WaveGen>( "Wave_Type", tr("Wave Type"),""      , this, &WaveGen::waveType, &WaveGen::setWaveType, "enum" ),
 new DoubProp  <WaveGen>( "Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
