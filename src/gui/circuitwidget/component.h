@@ -144,6 +144,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void H_flip();
         void V_flip();
         void slotRemove();
+        void slotGroup();
         void slotCopy();
         void slotCut();
 

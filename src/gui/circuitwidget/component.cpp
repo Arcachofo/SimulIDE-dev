@@ -315,6 +315,10 @@ void Component::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu 
     QAction* removeAction = menu->addAction( QIcon( ":/remove.png"),tr("Remove")+"\tDel" );
     connect( removeAction, SIGNAL( triggered()),
                      this, SLOT(slotRemove()), Qt::UniqueConnection );
+
+    QAction* groupAction = menu->addAction( QIcon( ":/group.png"),tr("Group") );
+    connect( groupAction, SIGNAL( triggered()),
+                     this, SLOT(slotGroup()), Qt::UniqueConnection );
     
     QAction* propertiesAction = menu->addAction( QIcon( ":/properties.png"),tr("Properties") );
     connect( propertiesAction, SIGNAL( triggered()),
@@ -366,6 +370,14 @@ void Component::slotRemove()
         setSelected( true );
     }
     Circuit::self()->removeItems();
+}
+
+void Component::slotGroup()
+{
+    /*if( !m_group )
+    {
+        m_group = Circuit::self()->createItemGroup(Circuit::self()->selectedItems());
+    }*/
 }
 
 void Component::remove()

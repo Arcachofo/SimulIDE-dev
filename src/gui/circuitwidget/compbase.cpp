@@ -30,6 +30,7 @@ CompBase::CompBase( QObject* parent, QString type, QString id )
     m_id   = id;
     m_type = type;
 
+    m_group = NULL;
     m_propDialog = NULL;
 }
 CompBase::~CompBase()

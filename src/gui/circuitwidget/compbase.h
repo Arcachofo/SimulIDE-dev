@@ -34,6 +34,7 @@ struct propGroup{
 
 class PropDialog;
 class QDomElement;
+class QGraphicsItemGroup;
 
 class MAINMODULE_EXPORT CompBase : public QObject
 {
@@ -72,6 +73,8 @@ class MAINMODULE_EXPORT CompBase : public QObject
         QString m_type;
 
         bool m_isMainComp;
+
+        QGraphicsItemGroup* m_group;
 
         PropDialog* m_propDialog;
         QList<propGroup> m_propGroups;
