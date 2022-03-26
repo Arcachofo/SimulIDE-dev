@@ -61,6 +61,7 @@ void eMcu::initialize()
     DataSpace::initialize();
 
     m_state = mcuRunning;
+    Simulator::self()->cancelEvents( this );
     Simulator::self()->addEvent( 1, this );
 }
 
@@ -84,7 +85,6 @@ void eMcu::stepCpu()
     if( cpu->PC < m_flashSize )
     {
         if( m_state == mcuRunning ) cpu->runDecoder();
-
         m_interrupts.runInterrupts();
     }
     else m_state = mcuStopped; /// TODO: Crash
