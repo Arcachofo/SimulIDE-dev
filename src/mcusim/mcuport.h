@@ -53,7 +53,8 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
 
         void outChanged( uint8_t val );
         void dirChanged( uint8_t val );
-        void setIntMask( uint8_t val ) { m_intMask = val; }
+        void setIntMask( uint8_t val) { m_intMask = val; }
+        void rstIntMask( bool rst) { m_rstIntMask = rst; }
 
         void readPort( uint8_t );
 
@@ -74,6 +75,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
         uint8_t m_intMask;
 
         bool m_dirInv;
+        bool m_rstIntMask;
 
         uint8_t* m_outReg; // Pointer to m_ram[m_outAddr]
         uint8_t* m_inReg;  // Pointer to m_ram[m_inAddr]
