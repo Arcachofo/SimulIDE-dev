@@ -113,8 +113,8 @@ TouchPad::TouchPad( QObject* parent, QString type, QString id )
              this,         SLOT  ( onvaluechanged(int, int) ));
 
     addPropGroup( { tr("Main"), {
-new IntProp<TouchPad>(  "Width", tr("Width"),"_Pixels" , this, &TouchPad::width, &TouchPad::setWidth ,"uint" ),
-new IntProp<TouchPad>(  "Height",tr("Height"),"_Pixels", this, &TouchPad::height, &TouchPad::setHeight ,"uint" ),
+new IntProp<TouchPad>(  "Width", tr("Width"),tr("_Pixels") , this, &TouchPad::width, &TouchPad::setWidth ,"uint" ),
+new IntProp<TouchPad>(  "Height",tr("Height"),tr("_Pixels"), this, &TouchPad::height, &TouchPad::setHeight ,"uint" ),
 new BoolProp<TouchPad>( "Transparent",tr("Transparent"),"", this, &TouchPad::transparent, &TouchPad::setTransparent )
     }} );
     addPropGroup( { tr("Electric"), {

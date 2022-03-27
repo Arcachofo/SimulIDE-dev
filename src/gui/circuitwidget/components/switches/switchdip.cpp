@@ -61,7 +61,7 @@ SwitchDip::SwitchDip( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<SwitchDip>( "Size", tr("Size"),"_Switches", this, &SwitchDip::size, &SwitchDip::setSize, "uint" )
+new IntProp<SwitchDip>( "Size", tr("Size"),tr("_Switches"), this, &SwitchDip::size, &SwitchDip::setSize, "uint" )
     }} );
     addPropGroup( {"Hidden", {
 new IntProp<SwitchDip>( "State", "","", this, &SwitchDip::state, &SwitchDip::setState, "uint" )

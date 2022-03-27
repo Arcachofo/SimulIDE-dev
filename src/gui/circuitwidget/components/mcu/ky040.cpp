@@ -109,7 +109,7 @@ KY040::KY040( QObject* parent, QString type, QString id )
              this,     SLOT  ( onbuttonchanged() ));
 
     addPropGroup( { tr("Main"), {
-new IntProp<KY040>( "Steps", tr("Steps per Rotation"),"_Steps", this, &KY040::steps, &KY040::setSteps, "uint" )
+new IntProp<KY040>( "Steps", tr("Steps per Rotation"),tr("_Steps"), this, &KY040::steps, &KY040::setSteps, "uint" )
     }} );
 }
 KY040::~KY040(){}

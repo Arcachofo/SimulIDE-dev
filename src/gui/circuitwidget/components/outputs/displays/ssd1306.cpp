@@ -28,9 +28,6 @@
 #include "doubleprop.h"
 #include "intprop.h"
 
-QStringList Ssd1306::m_colors = {tr("White"),tr("Blue"),tr("Yellow")};
-
-
 Component* Ssd1306::construct( QObject* parent, QString type, QString id )
 { return new Ssd1306( parent, type, id ); }
 
@@ -54,6 +51,7 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     m_graphical = true;
     m_area = QRectF( -70, -48, 140, 88 );
     m_address = 0b00111100; // 0x3A - 60
+    m_colors.append({ tr("White"), tr("Blue"), tr("Yellow") });
 
     m_pin.resize( 2 );
     m_clkPin = new IoPin( 270, QPoint(-48, 48), id+"-PinSck" , 0, this, openCo );

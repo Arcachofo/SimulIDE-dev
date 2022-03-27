@@ -55,8 +55,8 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<PlotBase>( "Basic_X" ,tr("Screen Size X"),"_Pixels", this, &PlotBase::baSizeX, &PlotBase::setBaSizeX, "uint" ),
-new IntProp<PlotBase>( "Basic_Y" ,tr("Screen Size Y"),"_Pixels", this, &PlotBase::baSizeY, &PlotBase::setBaSizeY, "uint" ),
+new IntProp<PlotBase>( "Basic_X" ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX, &PlotBase::setBaSizeX, "uint" ),
+new IntProp<PlotBase>( "Basic_Y" ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY, &PlotBase::setBaSizeY, "uint" ),
     }} );
     addPropGroup( {"Hidden", {
 new StringProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),

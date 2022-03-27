@@ -61,8 +61,8 @@ LedMatrix::LedMatrix( QObject* parent, QString type, QString id )
     createMatrix();
 
     addPropGroup( { tr("Main"), {
-new IntProp   <LedMatrix>( "Rows"         , tr("Rows")         ,"_Leds", this, &LedMatrix::rows,     &LedMatrix::setRows, "uint" ),
-new IntProp   <LedMatrix>( "Cols"         , tr("Columns")      ,"_Leds", this, &LedMatrix::cols,     &LedMatrix::setCols, "uint" ),
+new IntProp   <LedMatrix>( "Rows"         , tr("Rows")         ,tr("_Leds"), this, &LedMatrix::rows,     &LedMatrix::setRows, "uint" ),
+new IntProp   <LedMatrix>( "Cols"         , tr("Columns")      ,tr("_Leds"), this, &LedMatrix::cols,     &LedMatrix::setCols, "uint" ),
 new StringProp<LedMatrix>( "Color"        , tr("Color")        ,""     , this, &LedMatrix::colorStr, &LedMatrix::setColorStr, "enum" ),
 new BoolProp  <LedMatrix>( "Vertical_Pins", tr("Vertical Pins"),""     , this, &LedMatrix::verticalPins, &LedMatrix::setVerticalPins ),
     }} );

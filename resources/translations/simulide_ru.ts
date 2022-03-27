@@ -81,6 +81,14 @@
         <source>I2C Frequency</source>
         <translation type="unfinished">I2C частота</translation>
     </message>
+    <message>
+        <source>_Rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AndGate</name>
@@ -120,40 +128,12 @@
 <context>
     <name>App::Property</name>
     <message>
-        <source>Steps</source>
-        <translation type="vanished">Шаги</translation>
-    </message>
-    <message>
         <source>Board</source>
         <translation>Плата</translation>
     </message>
     <message>
         <source>Custom Board</source>
         <translation>Заказная плата</translation>
-    </message>
-    <message>
-        <source>Port Name</source>
-        <translation type="vanished">Имя порта</translation>
-    </message>
-    <message>
-        <source>BaudRate</source>
-        <translation type="vanished">Бит в секунду</translation>
-    </message>
-    <message>
-        <source>DataBits</source>
-        <translation type="vanished">Биты данных</translation>
-    </message>
-    <message>
-        <source>Parity</source>
-        <translation type="vanished">Четность</translation>
-    </message>
-    <message>
-        <source>StopBits</source>
-        <translation type="vanished">Стоповые биты</translation>
-    </message>
-    <message>
-        <source>FlowControl</source>
-        <translation type="vanished">Управление потоком</translation>
     </message>
 </context>
 <context>
@@ -344,29 +324,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AppProp</name>
-    <message>
-        <source>Application</source>
-        <translation type="vanished">Приложение</translation>
-    </message>
-    <message>
-        <source>Show Help</source>
-        <translation type="vanished">Помощь</translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="vanished">Русский</translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation type="obsolete">Язык</translation>
-    </message>
-    <message>
-        <source>Font Scale</source>
-        <translation type="obsolete">Масштаб шрифта</translation>
-    </message>
-</context>
-<context>
     <name>AudioOut</name>
     <message>
         <source>Audio Out</source>
@@ -410,6 +367,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Gain</source>
         <translation type="unfinished">Усиление</translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished">Порог</translation>
     </message>
 </context>
 <context>
@@ -608,10 +569,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Шина</translation>
     </message>
     <message>
-        <source>Logic/Other Logic</source>
-        <translation type="obsolete">Логика/Другое (Логика)</translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Основные</translation>
     </message>
@@ -637,53 +594,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Capacitance</source>
         <translation type="unfinished">Ёмкость</translation>
-    </message>
-</context>
-<context>
-    <name>CircProp</name>
-    <message>
-        <source>Circuit</source>
-        <translation type="vanished">Схема</translation>
-    </message>
-    <message>
-        <source>Auto Backup</source>
-        <translation type="vanished">Авто бэкап</translation>
-    </message>
-    <message>
-        <source>Circuit Canvas</source>
-        <translation type="vanished">Основа схемы</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Другое</translation>
-    </message>
-    <message>
-        <source>Show Help</source>
-        <translation type="vanished">Помощь</translation>
-    </message>
-    <message>
-        <source>Seconds</source>
-        <translation type="vanished">Секунд(ы)</translation>
-    </message>
-    <message>
-        <source>Draw Grid</source>
-        <translation type="vanished">Показать сетку</translation>
-    </message>
-    <message>
-        <source>Show ScrollBars</source>
-        <translation type="vanished">Полосы прокрутки</translation>
-    </message>
-    <message>
-        <source>Animate</source>
-        <translation type="vanished">Анимация</translation>
-    </message>
-    <message>
-        <source>Canvas Refresh</source>
-        <translation type="vanished">Обновление схемы</translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation type="vanished">Кадров в сек.</translation>
     </message>
 </context>
 <context>
@@ -799,22 +709,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Pause Simulation</source>
         <translation type="unfinished">Пауза симуляции</translation>
-    </message>
-    <message>
-        <source>App Settings</source>
-        <translation type="obsolete">Настройки приложения</translation>
-    </message>
-    <message>
-        <source>Circuit Settings</source>
-        <translation type="obsolete">Настройки схемы</translation>
-    </message>
-    <message>
-        <source>Simulation Settings</source>
-        <translation type="obsolete">Настройки симуляции</translation>
-    </message>
-    <message>
-        <source>Online Help</source>
-        <translation type="obsolete">Online помощь</translation>
     </message>
     <message>
         <source>About SimulIDE</source>
@@ -982,14 +876,6 @@ Do you want to save your changes?
         <translation type="unfinished">Выберите каталог с  компилятором</translation>
     </message>
     <message>
-        <source>: ToolChain not found</source>
-        <translation type="obsolete">: Инструменты не найдены</translation>
-    </message>
-    <message>
-        <source>Set proper ToolChain Path</source>
-        <translation type="obsolete">Установите правильный путь к каталогу тулчейна</translation>
-    </message>
-    <message>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1143,6 +1029,10 @@ p, li { white-space: pre-wrap; }
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ComponentPlugins</name>
@@ -1272,6 +1162,10 @@ p, li { white-space: pre-wrap; }
         <source>Resistance</source>
         <translation type="unfinished">Сопротивление</translation>
     </message>
+    <message>
+        <source>_RPM</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DecToBcd</name>
@@ -1365,10 +1259,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Active</source>
-        <translation type="unfinished">Активные элементы</translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Основные</translation>
     </message>
@@ -1388,16 +1278,16 @@ p, li { white-space: pre-wrap; }
         <source>Hold Current</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Diode</name>
     <message>
         <source>Diode</source>
         <translation type="unfinished">Диод</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="unfinished">Активные элементы</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1438,6 +1328,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Emission Coefficient</source>
         <translation type="unfinished">Коэффициент инжекции</translation>
+    </message>
+    <message>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1554,10 +1448,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Compiler Settings</source>
-        <translation type="unfinished">Установки компилятора</translation>
-    </message>
-    <message>
-        <source>Copmpiler Settings</source>
         <translation type="unfinished">Установки компилятора</translation>
     </message>
     <message>
@@ -1756,8 +1646,8 @@ Do you want to save your changes?
         <translation type="unfinished">  Найден компилятор: </translation>
     </message>
     <message>
-        <source>Error Loadind Compiler at:</source>
-        <translation type="unfinished">Ошибка загрузки компилятора при:</translation>
+        <source>Error Loading Compiler at:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1900,10 +1790,6 @@ Do you want to save your changes?
     <message>
         <source>Clock Inverted</source>
         <translation type="unfinished">Инвертировать такты</translation>
-    </message>
-    <message>
-        <source>Set / Reset Inverted</source>
-        <translation type="obsolete">Инвертировать Set / Reset</translation>
     </message>
     <message>
         <source>Trigger Type</source>
@@ -2098,6 +1984,14 @@ Do you want to save your changes?
         <source>Columns</source>
         <translation type="unfinished">Столбцы</translation>
     </message>
+    <message>
+        <source>_Rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>I2CRam</name>
@@ -2290,6 +2184,10 @@ Do you want to save your changes?
         <source>Steps per Rotation</source>
         <translation type="unfinished">Шагов на оборот</translation>
     </message>
+    <message>
+        <source>_Steps</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyPad</name>
@@ -2316,6 +2214,10 @@ Do you want to save your changes?
     <message>
         <source>Key Labels</source>
         <translation type="unfinished">Надписи на кнопках</translation>
+    </message>
+    <message>
+        <source>_Buttons</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2404,6 +2306,29 @@ Do you want to save your changes?
     <message>
         <source>TextLabel</source>
         <translation>Метка</translation>
+    </message>
+</context>
+<context>
+    <name>Lamp</name>
+    <message>
+        <source>Incandescent lamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="unfinished">Выходы</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Сопротивление</translation>
+    </message>
+    <message>
+        <source>Max Current</source>
+        <translation type="unfinished">Макс. ток</translation>
     </message>
 </context>
 <context>
@@ -2530,6 +2455,10 @@ Do you want to save your changes?
         <source>Resistance</source>
         <translation type="unfinished">Сопротивление</translation>
     </message>
+    <message>
+        <source>_Leds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LedBase</name>
@@ -2560,6 +2489,30 @@ Do you want to save your changes?
     <message>
         <source>Resistance</source>
         <translation type="unfinished">Сопротивление</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished">Желтый</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished">Синий</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2607,6 +2560,10 @@ Do you want to save your changes?
     <message>
         <source>Resistance</source>
         <translation type="unfinished">Сопротивление</translation>
+    </message>
+    <message>
+        <source>_Leds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2712,22 +2669,6 @@ Do you want to save your changes?
     <message>
         <source>File explorer</source>
         <translation type="unfinished">Файловый проводник</translation>
-    </message>
-    <message>
-        <source> Qt5SerialPort is not installed in your system
-
-    Mcu SerialPort will not work
-    Just Install libQt5SerialPort package
-    To have Mcu Serial Port Working</source>
-        <translation type="obsolete"> Qt5SerialPort не установлен в этой системе
-
-    Микроконтроллерный SerialPort не будет работать
-    Просто установите пакет библиотек Qt5SerialPort
-    чтобы SerialPort микроконтроллера заработал</translation>
-    </message>
-    <message>
-        <source>Plugin Error:</source>
-        <translation type="obsolete">Ошибка плагина:</translation>
     </message>
 </context>
 <context>
@@ -3025,6 +2966,10 @@ Do you want to save your changes?
         <source>Impedance</source>
         <translation type="unfinished">Импеданс</translation>
     </message>
+    <message>
+        <source>_Bits</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpAmp</name>
@@ -3143,6 +3088,10 @@ Do you want to save your changes?
     <message>
         <source>Screen Size Y</source>
         <translation type="unfinished">Размер окна по Y</translation>
+    </message>
+    <message>
+        <source>_Pixels</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3443,6 +3392,14 @@ Not valid Package file:
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation type="unfinished">Активные элементы</translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -3581,6 +3538,10 @@ Not valid Package file:
         <source>IOff</source>
         <translation type="unfinished">Ток отпускания</translation>
     </message>
+    <message>
+        <source>_Poles</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Resistor</name>
@@ -3623,16 +3584,16 @@ Not valid Package file:
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>_Resist.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SCR</name>
     <message>
         <source>SCR</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="unfinished">Активные элементы</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3648,6 +3609,10 @@ Not valid Package file:
     </message>
     <message>
         <source>Holding Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3719,14 +3684,6 @@ Not valid Package file:
         <translation>Печать:</translation>
     </message>
     <message>
-        <source>MCU Input</source>
-        <translation type="vanished">Вход МК</translation>
-    </message>
-    <message>
-        <source>MCU Output</source>
-        <translation type="vanished">Выход МК</translation>
-    </message>
-    <message>
         <source> Input</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3791,8 +3748,8 @@ Not valid Package file:
         <translation type="unfinished">Электрические</translation>
     </message>
     <message>
-        <source>Edges</source>
-        <translation type="obsolete">Фронты</translation>
+        <source>_sec/60º</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3840,6 +3797,10 @@ Not valid Package file:
     <message>
         <source>Resistance</source>
         <translation type="unfinished">Сопротивление</translation>
+    </message>
+    <message>
+        <source>_7seg</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3913,41 +3874,6 @@ Not valid Package file:
     <message>
         <source>Edges</source>
         <translation type="unfinished">Фронты</translation>
-    </message>
-</context>
-<context>
-    <name>SimuProp</name>
-    <message>
-        <source>Simulation</source>
-        <translation type="vanished">Симуляция</translation>
-    </message>
-    <message>
-        <source>Simulation Speed</source>
-        <translation type="vanished">Скорость симуляции</translation>
-    </message>
-    <message>
-        <source>Show Help</source>
-        <translation type="vanished">Помощь</translation>
-    </message>
-    <message>
-        <source>Speed % Real</source>
-        <translation type="vanished">Скорость % от реальной</translation>
-    </message>
-    <message>
-        <source>Simulation Step</source>
-        <translation type="vanished">Шагов симуляции</translation>
-    </message>
-    <message>
-        <source>Steps per Second</source>
-        <translation type="vanished">Шагов в сек.</translation>
-    </message>
-    <message>
-        <source>NonLinear</source>
-        <translation type="vanished">Нелинейный</translation>
-    </message>
-    <message>
-        <source>NL. Max. Steps</source>
-        <translation type="vanished">Ннелин.макс. шагов</translation>
     </message>
 </context>
 <context>
@@ -4030,6 +3956,10 @@ Not valid Package file:
         <source>Resistance</source>
         <translation type="unfinished">Сопротивление</translation>
     </message>
+    <message>
+        <source>_Teeth</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Strain</name>
@@ -4106,6 +4036,42 @@ Not valid Package file:
     <message>
         <source>Attach</source>
         <translation type="unfinished">Прикрепить</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished">Входов:</translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished">Порог 0-&gt;1</translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished">Порог 1 -&gt; 0</translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished">Входной импеданс</translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished">Выходов:</translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished">Выходное напряжение 1</translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished">Выходное напряжение 0</translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished">Выходной импеданс</translation>
     </message>
 </context>
 <context>
@@ -4251,6 +4217,10 @@ Do you want to save your changes?
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>_Switches</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextComponent</name>
@@ -4385,16 +4355,16 @@ Do you want to save your changes?
         <source>RyMax</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Triac</name>
     <message>
         <source>Triac</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="unfinished">Активные элементы</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4412,16 +4382,16 @@ Do you want to save your changes?
         <source>Holding Current</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Tunnel</name>
     <message>
         <source>Tunnel.</source>
         <translation type="unfinished">Туннель.</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="obsolete">Другое</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4493,10 +4463,6 @@ Do you want to save your changes?
 <context>
     <name>VoltSource</name>
     <message>
-        <source>Volt. Source</source>
-        <translation type="unfinished">Источник напряжения</translation>
-    </message>
-    <message>
         <source>Sources</source>
         <translation type="unfinished">Источники</translation>
     </message>
@@ -4511,6 +4477,10 @@ Do you want to save your changes?
     <message>
         <source>Current Value</source>
         <translation type="unfinished">Текущее значение</translation>
+    </message>
+    <message>
+        <source>Voltage Source</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4534,6 +4504,10 @@ Do you want to save your changes?
     <message>
         <source>Columns</source>
         <translation type="unfinished">Столбцы</translation>
+    </message>
+    <message>
+        <source>_Leds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4641,8 +4615,8 @@ Do you want to save your changes?
         <translation type="unfinished">Стабилитрон</translation>
     </message>
     <message>
-        <source>Active</source>
-        <translation type="unfinished">Активные элементы</translation>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

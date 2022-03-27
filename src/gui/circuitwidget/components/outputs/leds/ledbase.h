@@ -63,7 +63,7 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         
         LedColor m_ledColor;
 
- static QStringList m_colors;
+        QStringList m_colors;
 };
 
 #endif

@@ -90,7 +90,7 @@ Stepper::Stepper( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new BoolProp<Stepper>( "Bipolar"   , tr("Bipolar")           ,""      , this, &Stepper::bipolar, &Stepper::setBipolar ),
-new IntProp <Stepper>( "Steps"     , tr("Steps per Rotation"),"_Teeth", this, &Stepper::steps,   &Stepper::setSteps ),
+new IntProp <Stepper>( "Steps"     , tr("Steps per Rotation"),tr("_Teeth"), this, &Stepper::steps,   &Stepper::setSteps ),
 new DoubProp<Stepper>( "Resistance", tr("Resistance")        ,"Ω"     , this, &Stepper::res,     &Stepper::setRes )
     }} );
 }

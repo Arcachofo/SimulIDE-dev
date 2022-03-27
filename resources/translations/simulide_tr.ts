@@ -81,6 +81,14 @@
         <source>I2C Frequency</source>
         <translation type="unfinished">I2C Frekansı</translation>
     </message>
+    <message>
+        <source>_Rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AndGate</name>
@@ -120,32 +128,12 @@
 <context>
     <name>App::Property</name>
     <message>
-        <source>Steps</source>
-        <translation type="vanished">Adımlar</translation>
-    </message>
-    <message>
         <source>Board</source>
         <translation>Kart</translation>
     </message>
     <message>
         <source>Custom Board</source>
         <translation>Özel kart</translation>
-    </message>
-    <message>
-        <source>Port Name</source>
-        <translation type="vanished">Port Adı</translation>
-    </message>
-    <message>
-        <source>BaudRate</source>
-        <translation type="vanished">Baud Rate</translation>
-    </message>
-    <message>
-        <source>Parity</source>
-        <translation type="vanished">Parite</translation>
-    </message>
-    <message>
-        <source>FlowControl</source>
-        <translation type="vanished">Akış Kontrolü</translation>
     </message>
 </context>
 <context>
@@ -336,57 +324,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AppProp</name>
-    <message>
-        <source>Application</source>
-        <translation type="vanished">Uygulama</translation>
-    </message>
-    <message>
-        <source>Show Help</source>
-        <translation type="vanished">Yardımı görüntüle</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="vanished">İngilizce</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation type="vanished">Fransızca</translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="vanished">Almanca</translation>
-    </message>
-    <message>
-        <source>Italian</source>
-        <translation type="vanished">İtalyanca</translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="vanished">Rusça</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="vanished">İspanyolca</translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation type="vanished">Dil</translation>
-    </message>
-    <message>
-        <source>Font Scale</source>
-        <translation type="vanished">Font büyüklüğü</translation>
-    </message>
-    <message>
-        <source>Dutch</source>
-        <translation type="vanished">Flemenkçe</translation>
-    </message>
-    <message>
-        <source>Pt_Brasil</source>
-        <translation type="vanished">Brezilya dili</translation>
-    </message>
-</context>
-<context>
     <name>AudioOut</name>
     <message>
         <source>Audio Out</source>
@@ -430,6 +367,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Gain</source>
         <translation type="unfinished">Gain</translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished">Eşik</translation>
     </message>
 </context>
 <context>
@@ -656,99 +597,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>CircProp</name>
-    <message>
-        <source>Circuit</source>
-        <translation type="vanished">Devre</translation>
-    </message>
-    <message>
-        <source>Auto Backup</source>
-        <translation type="vanished">Otomatik Yedekleme</translation>
-    </message>
-    <message>
-        <source>Circuit Canvas</source>
-        <translation type="vanished">Devre Kanvas</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Diğer</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Property: (default value)&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Show Grid: (true)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Global Property, applies to all circuits.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Show Scrollbar: (false)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Global Property, applies to all circuits.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Animate: (false)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Wires will get Red if Volts&amp;gt;2.5, Blue if not.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Canvas Refresh: (20)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Graphical refresh in frames per second.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Auto Backup Secs: (15)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Time interval in seconds for Circuit to check for changes.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Save Circuit backup if there are changes.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Setting time to 0 disables Auto Backup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Özellik: (varsayılan değer)&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Izgarayı göster: (true)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Global özellik : Tüm devrelere uygulanır.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Scrollu göster (false)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Global özellik : Tüm devrelere uygulanır.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Animasyon: (false)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  Gerilim 2.5 volttan büyükse bağlantılar kırmızı olur.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Kanvas Yenile: (20)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Saniyedeki grafik yenilemesi&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Otomatik yedekleme: (15)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Otomatik değişiklik kontrolü arasındaki süre (saniye)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  -Değişiklik varsa otomatik kaydeder.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;   Süreyi sıfıra ayarlamak otomatik kayıt özelliğini kapatır&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Show Help</source>
-        <translation type="vanished">Yardımı Göster</translation>
-    </message>
-    <message>
-        <source>Seconds</source>
-        <translation type="vanished">Saniye</translation>
-    </message>
-    <message>
-        <source>Draw Grid</source>
-        <translation type="vanished">Izgarayı Çiz</translation>
-    </message>
-    <message>
-        <source>Show ScrollBars</source>
-        <translation type="vanished">Scrolları Göster</translation>
-    </message>
-    <message>
-        <source>Animate</source>
-        <translation type="vanished">Animasyon</translation>
-    </message>
-    <message>
-        <source>Canvas Refresh</source>
-        <translation type="vanished">Kanvas Yenileme</translation>
-    </message>
-    <message>
-        <source>FPS</source>
-        <translation type="vanished">FPS</translation>
-    </message>
-</context>
-<context>
     <name>Circuit</name>
     <message>
         <source>Cannot write file %1:
@@ -860,22 +708,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Pause Simulation</source>
         <translation type="unfinished">Simülasyonu durdur</translation>
-    </message>
-    <message>
-        <source>App Settings</source>
-        <translation type="obsolete">Uygulama Ayarları</translation>
-    </message>
-    <message>
-        <source>Circuit Settings</source>
-        <translation type="obsolete">Devre Ayarları</translation>
-    </message>
-    <message>
-        <source>Simulation Settings</source>
-        <translation type="obsolete">Simülasyon Ayarları</translation>
-    </message>
-    <message>
-        <source>Online Help</source>
-        <translation type="obsolete">Online Yardım</translation>
     </message>
     <message>
         <source>About SimulIDE</source>
@@ -1042,10 +874,6 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>: ToolChain not found</source>
-        <translation type="obsolete">: Toolchain bulunamadı</translation>
-    </message>
-    <message>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1199,6 +1027,10 @@ p, li { white-space: pre-wrap; }
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ComponentPlugins</name>
@@ -1327,6 +1159,10 @@ p, li { white-space: pre-wrap; }
         <source>Resistance</source>
         <translation type="unfinished">Direnç</translation>
     </message>
+    <message>
+        <source>_RPM</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DecToBcd</name>
@@ -1420,10 +1256,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished">Temel</translation>
     </message>
@@ -1443,16 +1275,16 @@ p, li { white-space: pre-wrap; }
         <source>Hold Current</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Diode</name>
     <message>
         <source>Diode</source>
         <translation type="unfinished">Diyot</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1492,6 +1324,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Emission Coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1608,10 +1444,6 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Compiler Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copmpiler Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1810,7 +1642,7 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error Loadind Compiler at:</source>
+        <source>Error Loading Compiler at:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1954,10 +1786,6 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Clock Inverted</source>
         <translation type="unfinished">Ters Çevrilmiş Saat</translation>
-    </message>
-    <message>
-        <source>Set / Reset Inverted</source>
-        <translation type="obsolete">Ters Çevrilmesi S/R</translation>
     </message>
     <message>
         <source>Trigger Type</source>
@@ -2152,6 +1980,14 @@ Değişiklikler kaydedilsin mi?
         <source>Columns</source>
         <translation type="unfinished">Sütunlar</translation>
     </message>
+    <message>
+        <source>_Rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>I2CRam</name>
@@ -2344,6 +2180,10 @@ Değişiklikler kaydedilsin mi?
         <source>Steps per Rotation</source>
         <translation type="unfinished">Step/dönme</translation>
     </message>
+    <message>
+        <source>_Steps</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyPad</name>
@@ -2370,6 +2210,10 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Key Labels</source>
         <translation type="unfinished">Etiketler</translation>
+    </message>
+    <message>
+        <source>_Buttons</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2458,6 +2302,29 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>TextLabel</source>
         <translation>Etiket</translation>
+    </message>
+</context>
+<context>
+    <name>Lamp</name>
+    <message>
+        <source>Incandescent lamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs</source>
+        <translation type="unfinished">Çıktılar</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Direnç</translation>
+    </message>
+    <message>
+        <source>Max Current</source>
+        <translation type="unfinished">Max. Akım</translation>
     </message>
 </context>
 <context>
@@ -2584,6 +2451,10 @@ Değişiklikler kaydedilsin mi?
         <source>Resistance</source>
         <translation type="unfinished">Direnç</translation>
     </message>
+    <message>
+        <source>_Leds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LedBase</name>
@@ -2614,6 +2485,30 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Resistance</source>
         <translation type="unfinished">Direnç</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2661,6 +2556,10 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Resistance</source>
         <translation type="unfinished">Direnç</translation>
+    </message>
+    <message>
+        <source>_Leds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2766,22 +2665,6 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>File explorer</source>
         <translation type="unfinished">Dosyalar</translation>
-    </message>
-    <message>
-        <source> Qt5SerialPort is not installed in your system
-
-    Mcu SerialPort will not work
-    Just Install libQt5SerialPort package
-    To have Mcu Serial Port Working</source>
-        <translation type="obsolete"> Sisteminizde Qt5SerialPort yüklü değil
-
-    MCU Seri portu çalışamayacak. 
-    MCU seri portunu çalıştırmak için
-    libQt5SerialPort paketini yükleyin</translation>
-    </message>
-    <message>
-        <source>Plugin Error:</source>
-        <translation type="obsolete">Eklenti hatası:</translation>
     </message>
 </context>
 <context>
@@ -3078,6 +2961,10 @@ Değişiklikler kaydedilsin mi?
         <source>Impedance</source>
         <translation type="unfinished">Empedans</translation>
     </message>
+    <message>
+        <source>_Bits</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OpAmp</name>
@@ -3195,6 +3082,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Screen Size Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Pixels</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3495,6 +3386,14 @@ Not valid Package file:
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation type="unfinished">Aktif</translation>
+    </message>
 </context>
 <context>
     <name>RTD</name>
@@ -3632,6 +3531,10 @@ Not valid Package file:
         <source>IOff</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>_Poles</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Resistor</name>
@@ -3674,16 +3577,16 @@ Not valid Package file:
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>_Resist.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SCR</name>
     <message>
         <source>SCR</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3699,6 +3602,10 @@ Not valid Package file:
     </message>
     <message>
         <source>Holding Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectifiers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3833,8 +3740,8 @@ Not valid Package file:
         <translation type="unfinished">Elektrik</translation>
     </message>
     <message>
-        <source>Edges</source>
-        <translation type="obsolete">Edges</translation>
+        <source>_sec/60º</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3882,6 +3789,10 @@ Not valid Package file:
     <message>
         <source>Resistance</source>
         <translation type="unfinished">Direnç</translation>
+    </message>
+    <message>
+        <source>_7seg</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3958,37 +3869,6 @@ Not valid Package file:
     </message>
 </context>
 <context>
-    <name>SimuProp</name>
-    <message>
-        <source>Simulation</source>
-        <translation type="vanished">Simülasyon</translation>
-    </message>
-    <message>
-        <source>Simulation Speed</source>
-        <translation type="vanished">Simülasyon hızı</translation>
-    </message>
-    <message>
-        <source>Show Help</source>
-        <translation type="vanished">Yardımı göster</translation>
-    </message>
-    <message>
-        <source>Speed % Real</source>
-        <translation type="vanished">Hız % Gerçek</translation>
-    </message>
-    <message>
-        <source>Simulation Step</source>
-        <translation type="vanished">Simülasyon adımı</translation>
-    </message>
-    <message>
-        <source>Steps per Second</source>
-        <translation type="vanished">Saniyedeki adım sayısı</translation>
-    </message>
-    <message>
-        <source>NonLinear</source>
-        <translation type="vanished">Lineer olmayan</translation>
-    </message>
-</context>
-<context>
     <name>Socket</name>
     <message>
         <source>Socket</source>
@@ -4010,15 +3890,7 @@ Not valid Package file:
 <context>
     <name>Ssd1306</name>
     <message>
-        <source>White</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Yellow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4040,6 +3912,14 @@ Not valid Package file:
     <message>
         <source>I2C Frequency</source>
         <translation type="unfinished">I2C Frekansı</translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4067,6 +3947,10 @@ Not valid Package file:
     <message>
         <source>Resistance</source>
         <translation type="unfinished">Direnç</translation>
+    </message>
+    <message>
+        <source>_Teeth</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4143,6 +4027,42 @@ Not valid Package file:
     </message>
     <message>
         <source>Attach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Elektrik</translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished">Girişler:</translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished">Giriş Empedansı</translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished">Çıkışlar:</translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4289,6 +4209,10 @@ Değişiklikler kaydedilsin mi?
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>_Switches</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextComponent</name>
@@ -4424,16 +4348,16 @@ Değişiklikler kaydedilsin mi?
         <source>RyMax</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Triac</name>
     <message>
         <source>Triac</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4451,16 +4375,16 @@ Değişiklikler kaydedilsin mi?
         <source>Holding Current</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Tunnel</name>
     <message>
         <source>Tunnel.</source>
         <translation type="unfinished">Tünel.</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="obsolete">Diğer</translation>
     </message>
     <message>
         <source>Main</source>
@@ -4532,10 +4456,6 @@ Değişiklikler kaydedilsin mi?
 <context>
     <name>VoltSource</name>
     <message>
-        <source>Volt. Source</source>
-        <translation type="unfinished">Gerilim Kaynağı</translation>
-    </message>
-    <message>
         <source>Sources</source>
         <translation type="unfinished">Kaynaklar</translation>
     </message>
@@ -4549,6 +4469,10 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>Current Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Source</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4573,6 +4497,10 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Columns</source>
         <translation type="unfinished">Sütunlar</translation>
+    </message>
+    <message>
+        <source>_Leds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4680,8 +4608,8 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Active</source>
-        <translation type="unfinished">Aktif</translation>
+        <source>Rectifiers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

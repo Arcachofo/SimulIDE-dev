@@ -81,7 +81,7 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     setNumDisplays( 1 );
 
     addPropGroup( { tr("Main"), {
-new IntProp   <SevenSegment>( "NumDisplays"  , tr("Size")         ,"_7seg", this, &SevenSegment::numDisplays,  &SevenSegment::setNumDisplays ),
+new IntProp   <SevenSegment>( "NumDisplays"  , tr("Size")         ,tr("_7seg"), this, &SevenSegment::numDisplays,  &SevenSegment::setNumDisplays ),
 new StringProp<SevenSegment>( "Color"        , tr("Color")        ,""     , this, &SevenSegment::colorStr,     &SevenSegment::setColorStr, "enum" ),
 new BoolProp  <SevenSegment>( "Vertical_Pins", tr("Vertical Pins"),""     , this, &SevenSegment::verticalPins, &SevenSegment::setVerticalPins )
     }} );

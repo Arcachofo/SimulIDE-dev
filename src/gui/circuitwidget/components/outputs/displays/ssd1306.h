@@ -118,7 +118,7 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         //Pin m_pinDC;
         //Pin m_pinCS;
 
- static QStringList m_colors;
+        QStringList m_colors;
 };
 
 #endif

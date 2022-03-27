@@ -45,7 +45,7 @@ RelaySPST::RelaySPST( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new BoolProp  <RelaySPST>( "Norm_Close", tr("Normally Closed"),"", this, &RelaySPST::nClose, &RelaySPST::setNClose ),
 new BoolProp  <RelaySPST>( "DT"        , tr("Double Throw")   ,"", this, &RelaySPST::dt,     &RelaySPST::setDt ),
-new IntProp   <RelaySPST>( "Poles"     , tr("Poles")          ,"_Poles", this, &RelaySPST::poles,  &RelaySPST::setPoles, "uint" ),
+new IntProp   <RelaySPST>( "Poles"     , tr("Poles")          ,tr("_Poles"), this, &RelaySPST::poles,  &RelaySPST::setPoles, "uint" ),
 //new StringProp<RelaySPST>( "Key"       , tr("Key")            ,"", this, &RelaySPST::key,    &RelaySPST::setKey ),
     }} );
     addPropGroup( { tr("Electric"), {

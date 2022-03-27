@@ -52,8 +52,8 @@ KeyPad::KeyPad( QObject* parent, QString type, QString id )
     setLabelPos(-8,-16, 0);
 
     addPropGroup( { tr("Main"), {
-new IntProp   <KeyPad>( "Rows"      , tr("Rows")      ,"_Buttons", this, &KeyPad::rows,      &KeyPad::setRows ,"uint" ),
-new IntProp   <KeyPad>( "Cols"      , tr("Columns")   ,"_Buttons", this, &KeyPad::cols,      &KeyPad::setCols ,"uint"  ),
+new IntProp   <KeyPad>( "Rows"      , tr("Rows")      ,tr("_Buttons"), this, &KeyPad::rows,      &KeyPad::setRows ,"uint" ),
+new IntProp   <KeyPad>( "Cols"      , tr("Columns")   ,tr("_Buttons"), this, &KeyPad::cols,      &KeyPad::setCols ,"uint"  ),
 new StringProp<KeyPad>( "Key_Labels", tr("Key Labels"),""        , this, &KeyPad::keyLabels, &KeyPad::setKeyLabels)
     }} );
 }

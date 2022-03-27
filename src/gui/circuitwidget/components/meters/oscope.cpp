@@ -91,7 +91,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     setLabelPos(-90,-100, 0);
     expand( false );
 
-    addPropGroup( { tr("Hidden1"), {
+    addPropGroup( { "Hidden1", {
 new DoubProp  <Oscope>( "Filter", tr("Filter"), "V", this, &Oscope::filter, &Oscope::setFilter ),
 new IntProp   <Oscope>( "Trigger","", "", this, &Oscope::trigger, &Oscope::setTrigger ),
 new IntProp   <Oscope>( "AutoSC" ,"", "", this, &Oscope::autoSC,  &Oscope::setAutoSC ),

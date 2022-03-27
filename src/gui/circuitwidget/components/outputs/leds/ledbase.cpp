@@ -28,8 +28,6 @@
 #include "doubleprop.h"
 #include "boolprop.h"
 
-QStringList LedBase::m_colors = {"Yellow","Red","Green","Blue","Oreange","Purple"};
-
 LedBase::LedBase( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
        , eLed( id )
@@ -38,7 +36,7 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
     m_grounded  = false;
     m_scrEnode  = NULL;
     m_intensity = 0;
-    //m_diodeType = "led";
+    m_colors.append({ tr("Yellow"),tr("Red"),tr("Green"),tr("Blue"),tr("Orange"),tr("Purple") });
 
     m_color = QColor( Qt::black );
     setColorStr("Yellow");

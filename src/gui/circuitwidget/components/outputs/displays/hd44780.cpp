@@ -73,8 +73,8 @@ Hd44780::Hd44780( QObject* parent, QString type, QString id )
     initialize();
 
     addPropGroup( { tr("Main"), {
-new IntProp <Hd44780>( "Rows" ,tr("Rows")   ,"_Lines"  ,this,&Hd44780::rows, &Hd44780::setRows ,"uint" ),
-new IntProp <Hd44780>( "Cols" ,tr("Columns"),"_Chars." ,this,&Hd44780::cols, &Hd44780::setCols ,"uint"  ),
+new IntProp <Hd44780>( "Rows" ,tr("Rows")   ,tr("_Rows")  ,this,&Hd44780::rows, &Hd44780::setRows ,"uint" ),
+new IntProp <Hd44780>( "Cols" ,tr("Columns"),tr("_Columns") ,this,&Hd44780::cols, &Hd44780::setCols ,"uint"  ),
     }} );
 }
 Hd44780::~Hd44780(){}

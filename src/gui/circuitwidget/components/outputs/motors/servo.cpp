@@ -68,7 +68,7 @@ Servo::Servo( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Servo>( "Speed", tr("Speed "),"_sec/60º", this, &Servo::speed, &Servo::setSpeed )
+new DoubProp<Servo>( "Speed", tr("Speed "),tr("_sec/60º"), this, &Servo::speed, &Servo::setSpeed )
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps() } );
 //    addPropGroup( { tr("Edges")   , IoComponent::edgeProps() } );
