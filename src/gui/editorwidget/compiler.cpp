@@ -224,7 +224,7 @@ int Compiler::getError( QString txt )
         line = line.toLower();
         if( !line.contains( QRegExp("\\berror\\b") ) ) continue;
         error = 1;
-        QStringList words = line.split(":");
+        QStringList words = line.remove(":\\").split(":");
         if( words.size() < 2 ) break;
         bool ok = false;
         int e = words.at(1).toInt( &ok );
