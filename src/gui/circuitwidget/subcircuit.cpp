@@ -32,6 +32,7 @@
 
 #include "stringprop.h"
 #include "boolprop.h"
+#include "doubleprop.h"
 
 Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 {
@@ -154,6 +155,34 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", this, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
     }} );
+    if( m_subcType == Logic )
+    {
+        m_inHighV = 2.5;
+        m_inLowV  = 2.5;
+        m_ouHighV = 5;
+        m_ouLowV  = 0;
+        m_inImp = 1e9;
+        m_ouImp = 40;
+        //m_propDelay = 10*1000; // 10 ns
+        //m_timeLH = 3000;
+        //m_timeHL = 4000;
+
+        addPropGroup( { tr("Electric"), {
+        new ComProperty( "", tr("Inputs:"),"",""),
+        new DoubProp<SubCircuit>( "Input_High_V", tr("Low to High Threshold"),"V", this, &SubCircuit::inputHighV, &SubCircuit::setInputHighV ),
+        new DoubProp<SubCircuit>( "Input_Low_V" , tr("High to Low Threshold"),"V", this, &SubCircuit::inputLowV,  &SubCircuit::setInputLowV ),
+        new DoubProp<SubCircuit>( "Input_Imped" , tr("Input Impedance")      ,"Ω", this, &SubCircuit::inputImp,   &SubCircuit::setInputImp ),
+        new ComProperty( "", tr("Outputs:"),"",""),
+        new DoubProp<SubCircuit>( "Out_High_V", tr("Output High Voltage"),"V", this, &SubCircuit::outHighV, &SubCircuit::setOutHighV ),
+        new DoubProp<SubCircuit>( "Out_Low_V" , tr("Output Low Voltage") ,"V", this, &SubCircuit::outLowV,  &SubCircuit::setOutLowV ),
+        new DoubProp<SubCircuit>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &SubCircuit::outImp,  &SubCircuit::setOutImp )
+        } } );
+        /*addPropGroup( { tr("Edges")   , {
+        new DoubProp<SubCircuit>( "Tpd_ps", tr("Propagation Delay "),"ps", this, &SubCircuit::propDelay, &SubCircuit::setPropDelay ),
+        new DoubProp<SubCircuit>( "Tr_ps" , tr("Rise Time")         ,"ps", this, &SubCircuit::riseTime,  &SubCircuit::setRiseTime ),
+        new DoubProp<SubCircuit>( "Tf_ps" , tr("Fall Time")         ,"ps", this, &SubCircuit::fallTime,  &SubCircuit::setFallTime )
+        } } );*/
+    }
     addPropGroup( {"Hidden", {
 new StringProp<SubCircuit>( "BoardId" , "","", this, &SubCircuit::boardId, &SubCircuit::setBoardId )
     }} );

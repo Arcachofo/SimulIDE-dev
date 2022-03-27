@@ -46,11 +46,61 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
 
         virtual void remove() override;
 
-        virtual void setLogicSymbol( bool ls );
+        virtual void setLogicSymbol( bool ls ) override;
 
         Component* getMainComp(){ return m_mainComponent; }
 
         virtual QString toString() override;
+
+        // Logic:
+        double inputHighV() { return m_inHighV; }
+        void setInputHighV( double volt )
+        {
+            m_inHighV = volt;
+            for( Component* c : m_compList)
+                c->setPropStr("Input_High_V", QString::number(volt)+" V");
+        }
+        double inputLowV() { return m_inLowV; }
+        void setInputLowV( double volt )
+        {
+            m_inLowV = volt;
+            for( Component* c : m_compList)
+                c->setPropStr("Input_Low_V", QString::number(volt)+" V");
+        }
+        double outHighV() { return m_ouHighV; }
+        void  setOutHighV( double volt )
+        {
+            m_ouHighV = volt;
+            for( Component* c : m_compList)
+                c->setPropStr("Out_High_V", QString::number(volt)+" V");
+        }
+        double outLowV() { return m_ouLowV; }
+        void  setOutLowV( double volt )
+        {
+            m_ouLowV = volt;
+            for( Component* c : m_compList)
+                c->setPropStr("Out_Low_V", QString::number(volt)+" V");
+        }
+        double inputImp() { return m_inImp; }
+        void setInputImp( double imp )
+        {
+            m_inImp = imp;
+            for( Component* c : m_compList)
+                c->setPropStr("Input_Imped", QString::number(imp)+" Ω");
+        }
+        double outImp() { return m_ouImp; }
+        void  setOutImp( double imp )
+        {
+            m_ouImp = imp;
+            for( Component* c : m_compList)
+                c->setPropStr("Out_Imped", QString::number(imp)+" Ω");
+        }
+        /*double propDelay() { return m_propDelay*1e-12; }
+        void setPropDelay( double pd ) { m_propDelay = pd*1e12; }
+        double riseTime() { return m_timeLH*1e-12; }
+        void setRiseTime( double time );
+        double fallTime() { return m_timeHL*1e-12; }
+        void setFallTime( double time );*/
 
     public slots:
         void slotAttach();
@@ -60,8 +110,6 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
 
         void loadSubCircuit( QString file );
-
-        //Pin* getConPin( QString pinId );
 
         virtual void addPin( QString id, QString type, QString label,
                             int pos, int xpos, int ypos, int angle, int length=8 );
@@ -79,6 +127,18 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         QList<Component*> m_compList;
         QHash<QString, Tunnel*> m_pinTunnels;
         QList<Tunnel*> m_subcTunnels;
+
+        double m_inHighV;
+        double m_inLowV;
+        double m_ouHighV;
+        double m_ouLowV;
+
+        double m_inImp;
+        double m_ouImp;
+
+        //uint64_t m_propDelay; // Propagation delay
+        //uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90%
+        //uint64_t m_timeHL;    // Time for Output voltage to switch from 90% to 10%
 };
 #endif
 

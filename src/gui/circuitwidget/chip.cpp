@@ -122,18 +122,21 @@ void Chip::initChip()
         m_ePin.resize( m_numpins );
         m_pin.resize( m_numpins );
 
-        if( root.hasAttribute("background")) setBackground( root.attribute( "background") );
-        if( root.hasAttribute("type"))
+        if( !m_initialized )
         {
-            setSubcTypeStr( root.attribute("type") );
+            if( root.hasAttribute("background")) setBackground( root.attribute( "background") );
+            if( root.hasAttribute("type") )
+            {
+                setSubcTypeStr( root.attribute("type") );
 
-            if( (m_subcType == Board) || (m_subcType == Shield) )
-                setTransformOriginPoint( togrid( boundingRect().center()) );
-        }
-        if( root.hasAttribute("name"))
-        {
-            QString name = root.attribute("name");
-            if( name.toLower() != "package" ) m_name = name;
+                if( (m_subcType == Board) || (m_subcType == Shield) )
+                    setTransformOriginPoint( togrid( boundingRect().center()) );
+            }
+            if( root.hasAttribute("name"))
+            {
+                QString name = root.attribute("name");
+                if( name.toLower() != "package" ) m_name = name;
+            }
         }
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );
@@ -203,7 +206,7 @@ void Chip::initPackage_old( QDomElement root )
 
 void Chip::initPackage( QDomElement root )
 {
-    setSubcTypeStr( root.attribute("type") );
+    //setSubcTypeStr( root.attribute("type") );
 
     int chipPos = 0;
     QDomNode node = root.firstChild();
