@@ -6,7 +6,7 @@
   <port name="PORTB" pins="8" outreg="PORTB" dirreg="!TRISB"
                      pullups="WPUB" >
                      
-    <interrupt name="PB_INT" mask="11111111"/>
+    <interrupt name="PB_INT" mask="IOCB"/>
     <extint    name="INT" pin="PORTB0" configbits="INTEDG"/>
   </port>
 

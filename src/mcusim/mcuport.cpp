@@ -42,13 +42,14 @@ McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
     m_inAddr  = 0;
     m_dirAddr = 0;
     m_dirInv  = false;
+    m_rstIntMask = true;
 }
 McuPort::~McuPort(){}
 
 void McuPort::initialize()
 {
     m_pinState = 0;
-    m_intMask = 0;
+    if( m_rstIntMask ) m_intMask = 0;
 }
 
 void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMask

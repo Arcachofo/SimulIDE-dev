@@ -459,6 +459,7 @@ void McuCreator::createPort( QDomElement* p )
                 QString mask = el.attribute( "mask" );
                 bool ok = false;
                 int bits = mask.toInt( &ok,2 );
+                port->rstIntMask( !ok );
                 if( ok ) port->setIntMask( bits );
                 else watchRegNames( mask, R_WRITE, port, &McuPort::setIntMask, mcu );
         }   }
