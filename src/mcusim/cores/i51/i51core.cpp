@@ -1348,6 +1348,7 @@ void I51Core::mov_rx_a()
 
 void I51Core::runDecoder()
 {
+    m_mcu->cyclesDone = 0;
     m_opcode = m_progMem[PC];
 
     switch( m_opcode )
