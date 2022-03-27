@@ -80,7 +80,7 @@ void McuPin::voltChanged()
                 case pinFalling: raise = (oldState && !m_inpState); break;
                 case pinRising:  raise = (!oldState && m_inpState); break;
             }
-            if( raise ) m_extInt->raise();
+            if( raise ) m_extInt->raise( m_inpState );
         }
         uint8_t val = m_inpState ? m_pinMask : 0;
         m_port->pinChanged( m_pinMask, val );
