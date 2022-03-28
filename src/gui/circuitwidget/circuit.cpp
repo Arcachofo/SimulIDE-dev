@@ -35,6 +35,7 @@
 #include "mcu.h"
 #include "simulator.h"
 #include "e-node.h"
+#include "shield.h"
 
 Circuit* Circuit::m_pSelf = NULL;
 
@@ -149,7 +150,7 @@ void Circuit::loadStrDoc( QString &doc )
     QList<Node*> nodeList;        // Pasting node list
 
     Component* lastComp = NULL;
-    QList<SubCircuit*> shieldList;
+    QList<ShieldSubc*> shieldList;
     //QHash<QString, eNode*> nodMap;
     m_busy    = true;
     m_LdPinMap.clear();
@@ -351,7 +352,7 @@ void Circuit::loadStrDoc( QString &doc )
                     }
                     else if( comp->itemType() == "Subcircuit")
                     {
-                        SubCircuit* shield = static_cast<SubCircuit*>(comp);
+                        ShieldSubc* shield = static_cast<ShieldSubc*>(comp);
                         if( shield->subcType() == Chip::Shield ) shieldList.append( shield );
                     }
                     comp->setIdLabel( label );
@@ -396,7 +397,7 @@ void Circuit::loadStrDoc( QString &doc )
     m_conList.append( conList );
     // Take care about unconnected Joints
     for( Node* joint : nodeList ) joint->checkRemove(); // Only removed if some missing connector
-    for( SubCircuit* shield : shieldList ) shield->connectBoard();
+    for( ShieldSubc* shield : shieldList ) shield->connectBoard();
 
     m_idMap.clear();
     /// m_pinMap.clear();

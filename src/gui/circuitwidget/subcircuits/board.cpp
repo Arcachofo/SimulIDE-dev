@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,21 +17,31 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "comproperty.h"
-#include "propval.h"
+#include "board.h"
+#include "circuit.h"
 
-ComProperty::ComProperty( QString name, QString caption, QString unit, QString type )
+BoardSubc::BoardSubc( QObject* parent, QString type, QString id )
+         : SubCircuit( parent, type, id )
 {
-    m_name = name;
-    m_capt = caption;
-    m_unit = unit;
-    m_type = type;
+    m_subcType = Chip::Board;
+    //m_shield = NULL;
+}
+BoardSubc::~BoardSubc(){}
 
-    m_widget = NULL;
+void BoardSubc::attachShield( SubCircuit* shield )
+{
+    if( !m_shields.contains( shield ) ) m_shields.append( shield );
 }
 
-void ComProperty::setWidget( PropVal* w )
+void BoardSubc::remove()
 {
-    m_widget = w;
+    for( SubCircuit* shield : m_shields ) // there is a shield attached to this
+    {
+        shield->setParentItem( NULL );
+        /// m_shield->setBoard( NULL );
+        Circuit::self()->removeComp( shield );
+    }
+    SubCircuit::remove();
 }
 
+#include "moc_board.cpp"

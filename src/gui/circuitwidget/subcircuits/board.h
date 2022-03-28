@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,21 +17,27 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "comproperty.h"
-#include "propval.h"
+#ifndef BOARD_H
+#define BOARD_H
 
-ComProperty::ComProperty( QString name, QString caption, QString unit, QString type )
+#include "subcircuit.h"
+
+
+class MAINMODULE_EXPORT BoardSubc : public SubCircuit
 {
-    m_name = name;
-    m_capt = caption;
-    m_unit = unit;
-    m_type = type;
+    Q_OBJECT
 
-    m_widget = NULL;
-}
+    public:
+        BoardSubc( QObject* parent, QString type, QString id );
+        ~BoardSubc();
 
-void ComProperty::setWidget( PropVal* w )
-{
-    m_widget = w;
-}
+        void attachShield( SubCircuit* shield );
+        void detachShield( SubCircuit* shield ) { m_shields.removeAll( shield); }
 
+        virtual void remove() override;
+
+    protected:
+        QList<SubCircuit*> m_shields; // A shield attached to this
+
+};
+#endif

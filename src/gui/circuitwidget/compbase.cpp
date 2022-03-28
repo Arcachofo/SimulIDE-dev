@@ -55,6 +55,19 @@ void CompBase::addPropGroup( propGroup pg )
     m_propGroups.append( pg );
 }
 
+void CompBase::addProperty( QString group, ComProperty* p )
+{
+    for( int i=0; i<m_propGroups.size(); ++i )
+    {
+        propGroup pg = m_propGroups.at(i);
+        if( pg.name != group ) continue;
+
+        pg.propList.append( p );
+        m_propGroups.replace( i, pg );
+        m_propHash[p->name()] = p;
+        return;
+}   }
+
 void CompBase::removeProperty( QString group, QString prop )
 {
     for( int i=0; i<m_propGroups.size(); ++i )

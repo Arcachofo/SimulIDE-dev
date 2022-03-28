@@ -111,7 +111,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void setHidden( bool hid, bool hidLabel=false );
 
         virtual void setBackground( QString bck ) { m_background = bck;}
-        virtual void setSubcDir( QString dir ) {;}
+        //virtual void setSubcDir( QString dir ) {;}
 
         virtual void registerEnode( eNode*, int n=-1 ) {;}
 
@@ -126,7 +126,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem*, QWidget* );
 
-        Component* m_subcircuit;
+        //Component* m_subcircuit;
 
         bool m_printable;
 

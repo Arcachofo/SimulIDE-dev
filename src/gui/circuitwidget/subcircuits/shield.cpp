@@ -1,0 +1,170 @@
+/***************************************************************************
+ *   Copyright (C) 2022 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         *
+ ***************************************************************************/
+
+#include "shield.h"
+//#include "itemlibrary.h"
+//#include "componentselector.h"
+#include "circuitwidget.h"
+#include "simulator.h"
+#include "circuit.h"
+#include "tunnel.h"
+#include "node.h"
+#include "e-node.h"
+//#include "utils.h"
+
+#include "stringprop.h"
+#include "boolprop.h"
+#include "doubleprop.h"
+
+ShieldSubc::ShieldSubc( QObject* parent, QString type, QString id )
+          : SubCircuit( parent, type, id )
+{
+    m_subcType = Chip::Shield;
+    m_attached = false;
+    m_boardId = "";
+    m_board = NULL;
+    setZValue( 1 );
+
+    addPropGroup( { tr("Main"), {
+new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", this, &ShieldSubc::logicSymbol, &ShieldSubc::setLogicSymbol ),
+    }} );
+
+    /*if( m_subcType == Module )
+    {
+        addProperty( tr("Main"),
+        new DoubProp<SubCircuit>( "Z_Value", tr("Z Value"),"", this, &ShieldSubc::zVal, &ShieldSubc::setZVal ) );
+    }*/
+    addPropGroup( {"Hidden", {
+new StringProp<ShieldSubc>( "BoardId" , "","", this, &ShieldSubc::boardId, &ShieldSubc::setBoardId )
+    }} );
+}
+ShieldSubc::~ShieldSubc(){}
+
+void ShieldSubc::remove()
+{
+    if( m_board ) return;
+    SubCircuit::remove();
+}
+
+void ShieldSubc::connectBoard()
+{
+    QString name = Circuit::self()->origId( m_boardId );
+    if( name != "" ) m_boardId = name;
+
+    Component* comp = Circuit::self()->getCompById( m_boardId );
+    if( comp && comp->itemType() == "Subcircuit" )
+    {
+        Circuit::self()->compList()->removeOne( this );
+
+        m_board = static_cast<BoardSubc*>(comp);
+
+        m_board->attachShield( this );
+        this->setParentItem( m_board );
+        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->tunnelUid() );
+        m_attached = true;
+}   }
+
+void ShieldSubc::slotAttach()
+{
+    QList<QGraphicsItem*> list = this->collidingItems();
+    for( QGraphicsItem* it : list )
+    {
+        if( it->type() == UserType+1 )    // Component found
+        {
+            Component* comp =  qgraphicsitem_cast<Component*>( it );
+            if( comp->itemType() == "Subcircuit" )
+            {
+                BoardSubc* board =  (BoardSubc*)comp;
+                if( !(board->subcType() == Board) ) continue;
+
+                if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+                Circuit::self()->saveState();
+
+                m_board = board;
+                m_boardId = m_board->getUid();
+                m_board->attachShield( this );
+
+                m_circPos = this->pos();
+
+                int origX = 8*(m_board->pkgWidth()-m_width)/2;
+                this->setParentItem( m_board );
+                this->moveTo( QPointF(origX, 0) );
+                this->setRotation(0);
+
+                for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->tunnelUid() );
+                m_attached = true;
+                break;
+}   }   }   }
+
+void ShieldSubc::slotDetach()
+{
+    if( m_board )
+    {
+        if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+        Circuit::self()->saveState();
+
+        m_board->detachShield( this );
+        this->moveTo( m_circPos );
+        this->setParentItem( NULL );
+        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
+        m_board = NULL;
+    }
+    m_attached = false;
+}
+
+void ShieldSubc::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+{
+    if( !acceptedMouseButtons() ) event->ignore();
+    else{
+        event->accept();
+        QMenu* menu = new QMenu();
+        Component* mainComp = m_mainComponent;
+        QString id = m_id;
+
+        if( m_attached )
+        {
+            QAction* detachAction = menu->addAction(QIcon(":/detach.png"),tr("Detach") );
+            connect( detachAction, SIGNAL( triggered()), this, SLOT(slotDetach()) );
+        }else{
+            QAction* attachAction = menu->addAction(QIcon(":/attach.png"),tr("Attach") );
+            connect( attachAction, SIGNAL( triggered()), this, SLOT(slotAttach()) );
+        }
+        menu->addSection( "" );
+        if( m_board && m_board->getMainComp() )
+        {
+            mainComp = m_board->getMainComp();
+            id = "Board "+m_board->getUid();
+        }
+        if( mainComp )
+        {
+            menu->addSection( "                            " );
+            menu->addSection( mainComp->itemType()+" at "+id );
+            menu->addSection( "" );
+            mainComp->contextMenu( NULL, menu );
+
+            menu->addSection( "                            " );
+            menu->addSection( id );
+            menu->addSection( "" );
+        }
+        if( m_board ) m_board->contextMenu( event, menu );
+        else          Component::contextMenu( event, menu );
+        menu->deleteLater();
+}   }
+
+#include "moc_shield.cpp"

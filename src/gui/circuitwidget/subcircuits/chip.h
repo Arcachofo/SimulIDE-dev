@@ -36,6 +36,7 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
             Logic,
             Board,
             Shield,
+            Module
         };
         
         bool logicSymbol() { return m_isLS; }
@@ -51,6 +52,7 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         QString subcTypeStr() { return m_subcTypes.at( (int)m_subcType ); }
         virtual void setSubcTypeStr( QString s );
+
 
         int pkgWidth() { return m_width; }
 
@@ -84,7 +86,6 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         QColor m_icColor;
 
         QString m_name;
-
         QString m_pkgeFile;     // file containig package defs
         
         QList<Pin*> m_pins;

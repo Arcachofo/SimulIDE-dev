@@ -53,6 +53,8 @@ new BoolProp<Buffer>( "Open_Collector", tr("Open Drain")   ,"", this, &Buffer::o
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
     addPropGroup( { tr("Edges")   , Gate::edgeProps() } );
+
+    removeProperty(tr("Edges"),"pd_n");
 }
 Buffer::~Buffer(){}
 

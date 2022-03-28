@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,21 +17,39 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "comproperty.h"
-#include "propval.h"
+#ifndef SHIELD_H
+#define SHIELD_H
 
-ComProperty::ComProperty( QString name, QString caption, QString unit, QString type )
+#include "board.h"
+//#include "subcircuit.h"
+
+class MAINMODULE_EXPORT ShieldSubc : public SubCircuit
 {
-    m_name = name;
-    m_capt = caption;
-    m_unit = unit;
-    m_type = type;
+    Q_OBJECT
 
-    m_widget = NULL;
-}
+    public:
+        ShieldSubc( QObject* parent, QString type, QString id );
+        ~ShieldSubc();
 
-void ComProperty::setWidget( PropVal* w )
-{
-    m_widget = w;
-}
+        QString boardId() { return m_boardId; }
+        void setBoardId( QString id ) { m_boardId = id; }
+        void setBoard( BoardSubc* board ) { m_board = board;  }
+
+        void connectBoard();
+
+        virtual void remove() override;
+
+    public slots:
+        virtual void slotAttach();
+        virtual void slotDetach();
+
+    protected:
+        void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+
+        bool m_attached; // This is a shield which is attached to a board
+
+        BoardSubc* m_board;  // A board this is attached to (this is a shield)
+        QString m_boardId;
+};
+#endif
 

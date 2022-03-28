@@ -104,7 +104,7 @@ TouchPad::TouchPad( QObject* parent, QString type, QString id )
     m_proxy->setParentItem( this );
     updateSize();
 
-    setZValue( 2 );
+    setZValue( 10 );
     setShowId( true );
 
     Simulator::self()->addToUpdateList( this );

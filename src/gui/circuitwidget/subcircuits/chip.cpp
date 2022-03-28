@@ -28,7 +28,7 @@
 #include "utils.h"
 #include "pin.h"
 
-QStringList Chip::m_subcTypes = {"None","Logic","Board","Shield"};
+QStringList Chip::m_subcTypes = {"None","Logic","Board","Shield","Module"};
 
 Chip::Chip( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
@@ -62,11 +62,6 @@ Chip::Chip( QObject* parent, QString type, QString id )
     
     setLabelPos( m_area.x(), m_area.y()-20, 0);
     setShowId( true );
-
-/*    addPropGroup( { "Hidden", {
-new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
-new StringProp<Chip>( "Name"        ,"","", this, &Chip::name,        &Chip::setName ),
-    } } );*/
 }
 Chip::~Chip()
 {
@@ -86,7 +81,10 @@ void Chip::initChip()
         if( m_initialized ) return;
         if     ( m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );
         else if( m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
-        else qDebug() << "Chip::initChip: No package files found.\nTODO: create dummy package\n";
+        else{
+            m_error = 1;
+            qDebug() << "Chip::initChip: No package files found.\n";
+        }
         fileNameAbs = circuitDir.absoluteFilePath( m_pkgeFile );
     }
 
@@ -127,7 +125,7 @@ void Chip::initChip()
             if( root.hasAttribute("background")) setBackground( root.attribute( "background") );
             if( root.hasAttribute("type") )
             {
-                setSubcTypeStr( root.attribute("type") );
+                /// setSubcTypeStr( root.attribute("type") );
 
                 if( (m_subcType == Board) || (m_subcType == Shield) )
                     setTransformOriginPoint( togrid( boundingRect().center()) );

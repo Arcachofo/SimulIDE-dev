@@ -68,6 +68,9 @@ class MAINMODULE_EXPORT IoComponent : public Component
         bool invertInps() { return m_invInputs; }
         virtual void setInvertInps( bool invert );
 
+        double propSize() { return m_propSize; }
+        void setPropSize( double ps ) { m_propSize = ps; }
+
         double propDelay() { return m_propDelay*1e-12; }
         void setPropDelay( double pd ) { m_propDelay = pd*1e12; }
 
@@ -110,8 +113,9 @@ class MAINMODULE_EXPORT IoComponent : public Component
         //uint m_nextOutDir;
 
         uint64_t m_propDelay; // Propagation delay
-        uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90%
-        uint64_t m_timeHL;    // Time for Output voltage to switch from 90% to 10%
+        uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90% (1 gate)
+        uint64_t m_timeHL;    // Time for Output voltage to switch from 90% to 10% (1 gate)
+        double m_propSize;    // Nunmber of gates for total Propagation delay
         bool m_rndPD;         // Randomize Propagation Delay
 
         double m_inHighV;  // currently in eClockedDevice

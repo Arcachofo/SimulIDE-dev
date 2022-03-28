@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,21 +17,27 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "comproperty.h"
-#include "propval.h"
+#ifndef MODULE_H
+#define MODULE_H
 
-ComProperty::ComProperty( QString name, QString caption, QString unit, QString type )
+#include "shield.h"
+class LibraryItem;
+
+class MAINMODULE_EXPORT ModuleSubc : public ShieldSubc
 {
-    m_name = name;
-    m_capt = caption;
-    m_unit = unit;
-    m_type = type;
+    Q_OBJECT
 
-    m_widget = NULL;
-}
+    public:
+        ModuleSubc( QObject* parent, QString type, QString id );
+        ~ModuleSubc();
+        
+        double zVal() { return zValue(); }
+        void setZVal( double v);
 
-void ComProperty::setWidget( PropVal* w )
-{
-    m_widget = w;
-}
+        virtual void stamp() override;
 
+    public slots:
+        virtual void slotAttach() override;
+        virtual void slotDetach() override;
+};
+#endif

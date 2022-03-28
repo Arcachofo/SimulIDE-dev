@@ -41,6 +41,7 @@ IoComponent::IoComponent( QObject* parent, QString type, QString id)
     m_invInputs = false;
     m_invOutputs  = false;
 
+    m_propSize = 1;
     m_propDelay = 10*1000; // 10 ns
     m_timeLH = 3000;
     m_timeHL = 4000;
@@ -68,9 +69,10 @@ new DoubProp<IoComponent>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &
 QList<ComProperty*> IoComponent::edgeProps()
 {
     return {
-new DoubProp<IoComponent>( "Tpd_ps", tr("Propagation Delay "),"ps", this, &IoComponent::propDelay, &IoComponent::setPropDelay ),
-new DoubProp<IoComponent>( "Tr_ps" , tr("Rise Time")         ,"ps", this, &IoComponent::riseTime,  &IoComponent::setRiseTime ),
-new DoubProp<IoComponent>( "Tf_ps" , tr("Fall Time")         ,"ps", this, &IoComponent::fallTime,  &IoComponent::setFallTime ) };
+new DoubProp<IoComponent>( "pd_n"  , tr("Propagation delay"),tr("_Gates"), this, &IoComponent::propSize, &IoComponent::setPropSize ),
+new DoubProp<IoComponent>( "Tpd_ps", tr("Gate Delay"),"ps", this, &IoComponent::propDelay, &IoComponent::setPropDelay ),
+new DoubProp<IoComponent>( "Tr_ps" , tr("Rise Time") ,"ps", this, &IoComponent::riseTime,  &IoComponent::setRiseTime ),
+new DoubProp<IoComponent>( "Tf_ps" , tr("Fall Time") ,"ps", this, &IoComponent::fallTime,  &IoComponent::setFallTime ) };
 }
 
 void IoComponent::updateStep()
@@ -118,14 +120,14 @@ void IoComponent::sheduleOutPuts( eElement* el )
     {
         if( m_nextOutVal == m_outValue ) return;
 
-        if( m_rndPD )Simulator::self()->addEvent( m_propDelay+(std::rand()%2), el );
-        else         Simulator::self()->addEvent( m_propDelay, el );
+        if( m_rndPD )Simulator::self()->addEvent( m_propDelay*m_propSize+(std::rand()%2), el );
+        else         Simulator::self()->addEvent( m_propDelay*m_propSize, el );
     }
     else          // New Event while previous Event not dispatched
     {
         if( m_nextOutVal == m_outQueue.back() ) return;
 
-        uint64_t delay = m_propDelay;
+        uint64_t delay = m_propDelay*m_propSize;
         if( m_rndPD ) delay += std::rand()%2;
 
         uint64_t nextTime = Simulator::self()->circTime()+delay;

@@ -45,7 +45,7 @@ void NumVal::setup()
     {
         unitBox->setStyleSheet( "QComboBox::drop-down {border-width: 0px;} \
                                  QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
-        if( unit.startsWith("_") )unitBox->addItem( unit.remove("_") );
+        if( unit.startsWith("_") ) unitBox->addItem( unit.remove("_") );
     }else{
         QString un = unit;
         QRegExp r = QRegExp("^([pnµumkMGT])");
@@ -102,7 +102,8 @@ void NumVal::updtValues()
 
     showVal->setChecked( m_component->showProp() == m_propName );
 
-    double multiplier = getMultiplier( unitBox->currentText() );
+    double multiplier = 1;
+    if( unitBox->count() > 1 ) multiplier = getMultiplier( unitBox->currentText() );
     double val = m_property->getValue()/multiplier;
     valueBox->setValue( val );
 

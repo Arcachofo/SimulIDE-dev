@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2020 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,21 +17,51 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "comproperty.h"
-#include "propval.h"
+#ifndef SUBCIRCUIT_H
+#define SUBCIRCUIT_H
 
-ComProperty::ComProperty( QString name, QString caption, QString unit, QString type )
+#include "chip.h"
+
+class Tunnel;
+class LibraryItem;
+
+class MAINMODULE_EXPORT SubCircuit : public Chip
 {
-    m_name = name;
-    m_capt = caption;
-    m_unit = unit;
-    m_type = type;
+    Q_OBJECT
 
-    m_widget = NULL;
-}
+    public:
+        SubCircuit( QObject* parent, QString type, QString id );
+        ~SubCircuit();
 
-void ComProperty::setWidget( PropVal* w )
-{
-    m_widget = w;
-}
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
+
+        virtual void remove() override;
+
+        virtual void setLogicSymbol( bool ls ) override;
+
+        Component* getMainComp(){ return m_mainComponent; }
+
+        virtual QString toString() override;
+
+    protected:
+        void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+
+        void loadSubCircuit( QString file );
+
+        virtual void addPin( QString id, QString type, QString label,
+                            int pos, int xpos, int ypos, int angle, int length=8 );
+
+        virtual void updatePin( QString id, QString type, QString label,
+                                int pos, int xpos, int ypos, int angle, int length=8  );
+
+        Component*  m_mainComponent;
+
+        QList<Component*> m_compList;
+        QHash<QString, Tunnel*> m_pinTunnels;
+        QList<Tunnel*> m_subcTunnels;
+
+
+};
+#endif
 

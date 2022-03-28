@@ -164,7 +164,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
         /// Simulator::self()->addEvent( 1, NULL );
 
         m_read = false;
-        Simulator::self()->addEvent( m_propDelay, this );
+        Simulator::self()->addEvent( m_propDelay*m_propSize, this );
     }
     else{                                 // Read
         //for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( output );

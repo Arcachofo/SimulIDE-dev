@@ -39,6 +39,7 @@ INCLUDEPATH += ../src \
     ../src/gui/circuitwidget/components/sources \
     ../src/gui/circuitwidget/components/switches \
     ../src/gui/circuitwidget/properties \
+    ../src/gui/circuitwidget/subcircuits \
     ../src/gui/dataplotwidget \
     ../src/gui/serial \
     ../src/gui/componentselector \

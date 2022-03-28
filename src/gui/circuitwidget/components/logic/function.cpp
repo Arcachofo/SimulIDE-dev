@@ -192,7 +192,7 @@ void Function::saveData()
     if( !outFile.open( QFile::WriteOnly | QFile::Text ) )
     {
           MessageBoxNB( "MemData::saveData",
-                         tr( "MemData", "Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
+                        tr("Cannot write file %1:\n%2.").arg(fileName).arg(outFile.errorString()));
     }else {
         QTextStream toFile( &outFile );
         toFile << output;
