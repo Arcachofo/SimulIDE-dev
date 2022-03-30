@@ -104,6 +104,7 @@ void Socket::updatePins( bool connect )
             if( (x < 1) && (y%8 < 2) )
             {
                 int i = y/8;
+                if( (i >= m_size) || (i < 0) ) continue;
                 if( connect ){
                     eNode* node = m_pin[i]->getEnode();
                     pin->setEnode( node );
@@ -120,18 +121,17 @@ void Socket::updatePins( bool connect )
     }
 }
 
-
-void Socket::createSwitches( int c )
+void Socket::createPins( int c )
 {
     int start = m_size;
     m_size = m_size+c;
-    m_pin.resize( m_size*2 );
+    m_pin.resize( m_size );
 
     for( int i=start; i<m_size; i++ )
         m_pin[i] = new Pin( 180, QPoint(-8,-32+8+i*8 ), m_id+"-pin"+QString::number(i), 0, this );
 }
 
-void Socket::deleteSwitches( int d )
+void Socket::deletePins( int d )
 {
     if( d > m_size ) d = m_size;
     int start = m_size-d;
@@ -142,7 +142,7 @@ void Socket::deleteSwitches( int d )
         delete m_pin[i];
     }
     m_size = m_size-d;
-    m_pin.resize( m_size*2, NULL );
+    m_pin.resize( m_size, NULL );
     
     Circuit::self()->update();
 }
@@ -153,8 +153,8 @@ void Socket::setSize( int size )
     
     if( size == 0 ) size = 8;
     
-    if     ( size < m_size ) deleteSwitches( m_size-size );
-    else if( size > m_size ) createSwitches( size-m_size );
+    if     ( size < m_size ) deletePins( m_size-size );
+    else if( size > m_size ) createPins( size-m_size );
 
     m_connPins.resize( size );
     

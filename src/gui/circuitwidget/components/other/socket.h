@@ -42,8 +42,8 @@ class MAINMODULE_EXPORT Socket : public Component, public eElement
         virtual void stamp() override;
         virtual void updateStep() override;
 
-        void createSwitches( int c );
-        void deleteSwitches( int d );
+        void createPins( int c );
+        void deletePins( int d );
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
