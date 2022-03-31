@@ -1067,6 +1067,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ConnBase</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CurrSource</name>
     <message>
         <source>Current Source</source>
@@ -1842,6 +1853,10 @@ Voulez-vous sauvegarder les changements?
         <source>Logic/Memory</source>
         <translation type="unfinished">Logique/Mémoire</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopT</name>
@@ -1939,18 +1954,18 @@ Voulez-vous sauvegarder les changements?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MemData</source>
-        <comment>Cannot write file %1:
-%2.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Set Function</source>
         <translation type="unfinished">Modifier fonction</translation>
     </message>
     <message>
         <source> Function:</source>
         <translation type="unfinished"> Fonction :</translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="unfinished">Impossible d&apos;écrire le fichier %1 :
+%2.</translation>
     </message>
 </context>
 <context>
@@ -1988,6 +2003,25 @@ Voulez-vous sauvegarder les changements?
     </message>
     <message>
         <source>_Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Header</name>
+    <message>
+        <source>Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downwards</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2141,15 +2175,23 @@ Voulez-vous sauvegarder les changements?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Propagation Delay </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rise Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fall Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Propagation delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Gates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gate Delay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2634,6 +2676,69 @@ Voulez-vous sauvegarder les changements?
     </message>
 </context>
 <context>
+    <name>LogicSubc</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gate Delay </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fall Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -2731,10 +2836,6 @@ Voulez-vous sauvegarder les changements?
         <translation type="unfinished">Charger le firmware</translation>
     </message>
     <message>
-        <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No File:</source>
         <translation type="unfinished">Pas de fichier :</translation>
     </message>
@@ -2773,6 +2874,10 @@ Voulez-vous sauvegarder les changements?
     <message>
         <source>Properties</source>
         <translation type="unfinished">Propriétés</translation>
+    </message>
+    <message>
+        <source>All files (*.*);;Hex Files (*.hex)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2874,6 +2979,17 @@ Voulez-vous sauvegarder les changements?
     <message>
         <source>Switch Pins</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ModuleSubc</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Z Value</source>
+        <translation type="unfinished">Valeur Z</translation>
     </message>
 </context>
 <context>
@@ -3063,10 +3179,6 @@ Voulez-vous sauvegarder les changements?
     <message>
         <source>Meters</source>
         <translation type="unfinished">Mesures</translation>
-    </message>
-    <message>
-        <source>Hidden1</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Filter</source>
@@ -3843,6 +3955,17 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>ShieldSubc</name>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
@@ -3881,14 +4004,6 @@ Not valid Package file:
     </message>
     <message>
         <source>Connectors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4017,58 +4132,6 @@ Not valid Package file:
     <message>
         <source>There are no data files for </source>
         <translation type="unfinished">Il n&apos;y a pas de fichier de données pour </translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic Symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Detach</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attach</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inputs:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Low to High Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High to Low Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input Impedance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outputs:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output High Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Low Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Impedance</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

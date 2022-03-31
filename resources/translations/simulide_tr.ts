@@ -1066,6 +1066,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ConnBase</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CurrSource</name>
     <message>
         <source>Current Source</source>
@@ -1840,6 +1851,10 @@ Değişiklikler kaydedilsin mi?
         <source>Logic/Memory</source>
         <translation type="unfinished">Mantık/Bellek</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopT</name>
@@ -1937,18 +1952,17 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished">Fonksiyonları Kaydet</translation>
     </message>
     <message>
-        <source>MemData</source>
-        <comment>Cannot write file %1:
-%2.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Set Function</source>
         <translation type="unfinished">Fonksiyonu Ayarla</translation>
     </message>
     <message>
         <source> Function:</source>
         <translation type="unfinished"> Fonksiyon:</translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="unfinished">%1 dosyasına yazılamıyor: %2.</translation>
     </message>
 </context>
 <context>
@@ -1986,6 +2000,25 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>_Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Header</name>
+    <message>
+        <source>Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
+    <message>
+        <source>Downwards</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2139,16 +2172,24 @@ Değişiklikler kaydedilsin mi?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Propagation Delay </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rise Time</source>
         <translation type="unfinished">Yükselme Süresi</translation>
     </message>
     <message>
         <source>Fall Time</source>
         <translation type="unfinished">Düşme Süresi</translation>
+    </message>
+    <message>
+        <source>Propagation delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Gates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gate Delay</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2632,6 +2673,69 @@ Değişiklikler kaydedilsin mi?
     </message>
 </context>
 <context>
+    <name>LogicSubc</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Mantık Sembolü</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Elektrik</translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished">Girişler:</translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished">Giriş Empedansı</translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished">Çıkışlar:</translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Edges</translation>
+    </message>
+    <message>
+        <source>Gate Delay </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Time</source>
+        <translation type="unfinished">Yükselme Süresi</translation>
+    </message>
+    <message>
+        <source>Fall Time</source>
+        <translation type="unfinished">Düşme Süresi</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -2730,7 +2834,7 @@ Değişiklikler kaydedilsin mi?
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="unfinished">Tüm dosyalar (*.*);;ELF Dosyaları (*.elf);;Hex Dosyaları (*.hex)</translation>
+        <translation type="obsolete">Tüm dosyalar (*.*);;ELF Dosyaları (*.elf);;Hex Dosyaları (*.hex)</translation>
     </message>
     <message>
         <source>No File:</source>
@@ -2771,6 +2875,10 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Properties</source>
         <translation type="unfinished">Özellikler</translation>
+    </message>
+    <message>
+        <source>All files (*.*);;Hex Files (*.hex)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2871,6 +2979,17 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Switch Pins</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ModuleSubc</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Temel</translation>
+    </message>
+    <message>
+        <source>Z Value</source>
+        <translation type="unfinished">Z Değeri</translation>
     </message>
 </context>
 <context>
@@ -3060,10 +3179,6 @@ Değişiklikler kaydedilsin mi?
     <message>
         <source>Meters</source>
         <translation type="unfinished">Ölçerler</translation>
-    </message>
-    <message>
-        <source>Hidden1</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Filter</source>
@@ -3838,6 +3953,17 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>ShieldSubc</name>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
@@ -3880,11 +4006,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Temel</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Temel</translation>
     </message>
 </context>
 <context>
@@ -4015,55 +4137,27 @@ Not valid Package file:
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Temel</translation>
+        <translation type="obsolete">Temel</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Mantık Sembolü</translation>
-    </message>
-    <message>
-        <source>Detach</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attach</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Mantık Sembolü</translation>
     </message>
     <message>
         <source>Electric</source>
-        <translation type="unfinished">Elektrik</translation>
+        <translation type="obsolete">Elektrik</translation>
     </message>
     <message>
         <source>Inputs:</source>
-        <translation type="unfinished">Girişler:</translation>
-    </message>
-    <message>
-        <source>Low to High Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High to Low Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Girişler:</translation>
     </message>
     <message>
         <source>Input Impedance</source>
-        <translation type="unfinished">Giriş Empedansı</translation>
+        <translation type="obsolete">Giriş Empedansı</translation>
     </message>
     <message>
         <source>Outputs:</source>
-        <translation type="unfinished">Çıkışlar:</translation>
-    </message>
-    <message>
-        <source>Output High Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Low Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Çıkışlar:</translation>
     </message>
 </context>
 <context>

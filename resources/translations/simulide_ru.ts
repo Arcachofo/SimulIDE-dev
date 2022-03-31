@@ -1069,6 +1069,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ConnBase</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CurrSource</name>
     <message>
         <source>Current Source</source>
@@ -1844,6 +1855,10 @@ Do you want to save your changes?
         <source>Logic/Memory</source>
         <translation type="unfinished">Логика/память</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopT</name>
@@ -1941,18 +1956,18 @@ Do you want to save your changes?
         <translation type="unfinished">Сохранить функции</translation>
     </message>
     <message>
-        <source>MemData</source>
-        <comment>Cannot write file %1:
-%2.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Set Function</source>
         <translation type="unfinished">Hастроить функцию</translation>
     </message>
     <message>
         <source> Function:</source>
         <translation type="unfinished"> Функция:</translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="unfinished">Не удаётся записать файл %1:
+%2.</translation>
     </message>
 </context>
 <context>
@@ -1990,6 +2005,25 @@ Do you want to save your changes?
     </message>
     <message>
         <source>_Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Header</name>
+    <message>
+        <source>Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Downwards</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2144,7 +2178,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Propagation Delay </source>
-        <translation type="unfinished">Задержка распространения </translation>
+        <translation type="obsolete">Задержка распространения </translation>
     </message>
     <message>
         <source>Rise Time</source>
@@ -2153,6 +2187,18 @@ Do you want to save your changes?
     <message>
         <source>Fall Time</source>
         <translation type="unfinished">Время спада</translation>
+    </message>
+    <message>
+        <source>Propagation delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Gates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gate Delay</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2636,6 +2682,69 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
+    <name>LogicSubc</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Логический символ</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Электрические</translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished">Входов:</translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished">Порог 0-&gt;1</translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished">Порог 1 -&gt; 0</translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished">Входной импеданс</translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished">Выходов:</translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished">Выходное напряжение 1</translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished">Выходное напряжение 0</translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished">Выходной импеданс</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Фронты</translation>
+    </message>
+    <message>
+        <source>Gate Delay </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Time</source>
+        <translation type="unfinished">Время нарастания</translation>
+    </message>
+    <message>
+        <source>Fall Time</source>
+        <translation type="unfinished">Время спада</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -2734,7 +2843,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="unfinished">Все файлы (*.*);;ELF файлы (*.elf);;Hex файлы (*.hex)</translation>
+        <translation type="obsolete">Все файлы (*.*);;ELF файлы (*.elf);;Hex файлы (*.hex)</translation>
     </message>
     <message>
         <source>No File:</source>
@@ -2775,6 +2884,10 @@ Do you want to save your changes?
     <message>
         <source>Properties</source>
         <translation type="unfinished">Свойства</translation>
+    </message>
+    <message>
+        <source>All files (*.*);;Hex Files (*.hex)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2876,6 +2989,17 @@ Do you want to save your changes?
     <message>
         <source>Switch Pins</source>
         <translation type="unfinished">Поменять контакты</translation>
+    </message>
+</context>
+<context>
+    <name>ModuleSubc</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Z Value</source>
+        <translation type="unfinished">Положение Z</translation>
     </message>
 </context>
 <context>
@@ -3068,7 +3192,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Hidden1</source>
-        <translation type="unfinished">Скрытые1</translation>
+        <translation type="obsolete">Скрытые1</translation>
     </message>
     <message>
         <source>Filter</source>
@@ -3846,6 +3970,17 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>ShieldSubc</name>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished">Открепить</translation>
+    </message>
+    <message>
+        <source>Attach</source>
+        <translation type="unfinished">Прикрепить</translation>
+    </message>
+</context>
+<context>
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
@@ -3888,11 +4023,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Основные</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Основные</translation>
     </message>
 </context>
 <context>
@@ -4023,55 +4154,55 @@ Not valid Package file:
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Основные</translation>
+        <translation type="obsolete">Основные</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Логический символ</translation>
+        <translation type="obsolete">Логический символ</translation>
     </message>
     <message>
         <source>Detach</source>
-        <translation type="unfinished">Открепить</translation>
+        <translation type="obsolete">Открепить</translation>
     </message>
     <message>
         <source>Attach</source>
-        <translation type="unfinished">Прикрепить</translation>
+        <translation type="obsolete">Прикрепить</translation>
     </message>
     <message>
         <source>Electric</source>
-        <translation type="unfinished">Электрические</translation>
+        <translation type="obsolete">Электрические</translation>
     </message>
     <message>
         <source>Inputs:</source>
-        <translation type="unfinished">Входов:</translation>
+        <translation type="obsolete">Входов:</translation>
     </message>
     <message>
         <source>Low to High Threshold</source>
-        <translation type="unfinished">Порог 0-&gt;1</translation>
+        <translation type="obsolete">Порог 0-&gt;1</translation>
     </message>
     <message>
         <source>High to Low Threshold</source>
-        <translation type="unfinished">Порог 1 -&gt; 0</translation>
+        <translation type="obsolete">Порог 1 -&gt; 0</translation>
     </message>
     <message>
         <source>Input Impedance</source>
-        <translation type="unfinished">Входной импеданс</translation>
+        <translation type="obsolete">Входной импеданс</translation>
     </message>
     <message>
         <source>Outputs:</source>
-        <translation type="unfinished">Выходов:</translation>
+        <translation type="obsolete">Выходов:</translation>
     </message>
     <message>
         <source>Output High Voltage</source>
-        <translation type="unfinished">Выходное напряжение 1</translation>
+        <translation type="obsolete">Выходное напряжение 1</translation>
     </message>
     <message>
         <source>Output Low Voltage</source>
-        <translation type="unfinished">Выходное напряжение 0</translation>
+        <translation type="obsolete">Выходное напряжение 0</translation>
     </message>
     <message>
         <source>Output Impedance</source>
-        <translation type="unfinished">Выходной импеданс</translation>
+        <translation type="obsolete">Выходной импеданс</translation>
     </message>
 </context>
 <context>

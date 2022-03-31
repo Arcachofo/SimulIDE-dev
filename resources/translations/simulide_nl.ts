@@ -1067,6 +1067,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ConnBase</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished">Grootte</translation>
+    </message>
+</context>
+<context>
     <name>CurrSource</name>
     <message>
         <source>Current Source</source>
@@ -1842,6 +1853,10 @@ Wijzigingen opslaan?
         <source>Logic/Memory</source>
         <translation type="unfinished">Logica/Geheugen</translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FlipFlopT</name>
@@ -1939,18 +1954,18 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MemData</source>
-        <comment>Cannot write file %1:
-%2.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Set Function</source>
         <translation type="unfinished">Stel functie in</translation>
     </message>
     <message>
         <source> Function:</source>
         <translation type="unfinished"> Functie:</translation>
+    </message>
+    <message>
+        <source>Cannot write file %1:
+%2.</source>
+        <translation type="unfinished">Kan niet schrijven naar bestand %1:
+%2.</translation>
     </message>
 </context>
 <context>
@@ -1988,6 +2003,25 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>_Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Header</name>
+    <message>
+        <source>Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downwards</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2141,15 +2175,23 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Propagation Delay </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rise Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fall Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Propagation delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_Gates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gate Delay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2634,6 +2676,69 @@ Wijzigingen opslaan?
     </message>
 </context>
 <context>
+    <name>LogicSubc</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Logisch symbool</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inputs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low to High Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High to Low Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outputs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output High Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Low Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gate Delay </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rise Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fall Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Looks like SimulIDE crashed...</source>
@@ -2732,7 +2837,7 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)</source>
-        <translation type="unfinished">Alle bestanden (*.*);;ELF bestanden (*.elf);;HEX bestanden (*.hex)</translation>
+        <translation type="obsolete">Alle bestanden (*.*);;ELF bestanden (*.elf);;HEX bestanden (*.hex)</translation>
     </message>
     <message>
         <source>No File:</source>
@@ -2773,6 +2878,10 @@ Wijzigingen opslaan?
     <message>
         <source>Properties</source>
         <translation type="unfinished">Eigenschappen</translation>
+    </message>
+    <message>
+        <source>All files (*.*);;Hex Files (*.hex)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2874,6 +2983,17 @@ Wijzigingen opslaan?
     <message>
         <source>Switch Pins</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ModuleSubc</name>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Z Value</source>
+        <translation type="unfinished">Z waarde</translation>
     </message>
 </context>
 <context>
@@ -3063,10 +3183,6 @@ Wijzigingen opslaan?
     <message>
         <source>Meters</source>
         <translation type="unfinished">Meters</translation>
-    </message>
-    <message>
-        <source>Hidden1</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Filter</source>
@@ -3844,6 +3960,17 @@ Not valid Package file:
     </message>
 </context>
 <context>
+    <name>ShieldSubc</name>
+    <message>
+        <source>Detach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ShiftReg</name>
     <message>
         <source>Shift Reg.</source>
@@ -3885,12 +4012,8 @@ Not valid Package file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Size</source>
-        <translation type="unfinished">Grootte</translation>
+        <translation type="obsolete">Grootte</translation>
     </message>
 </context>
 <context>
@@ -4020,56 +4143,8 @@ Not valid Package file:
         <translation type="unfinished">Er zijn geen databestanden voor </translation>
     </message>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Logisch symbool</translation>
-    </message>
-    <message>
-        <source>Detach</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attach</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inputs:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Low to High Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High to Low Threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input Impedance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outputs:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output High Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Low Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Logisch symbool</translation>
     </message>
 </context>
 <context>
