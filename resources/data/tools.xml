@@ -19,7 +19,7 @@
         <item name="Real_Button" folder="tools" info=" A button with a rattle of contacts" /> 
         <item name="Rotary_SW4" folder="tools" info=" Rotary switch for 4 positions" /> 
         <item name="Rotary_SW8" folder="tools" info=" Rotary switch for 8 positions" /> 
-        <item name="Rotary_SW16" folder="tools" info=" Rotary switch for 16 positions" /> 
+        <item name="Rotary_SW16" folder="tools" info=" Rotary switch for 16 positions" />
 
     </itemset>
 
