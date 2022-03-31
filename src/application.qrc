@@ -166,6 +166,11 @@
         
         <file alias="bus.png">../src/icons/components/bus.png</file>
         <file alias="socket.png">../src/icons/components/socket.png</file>
+        <file alias="socket_H.png">../src/icons/components/socket_H.png</file>
+        <file alias="socket_V.png">../src/icons/components/socket_V.png</file>
+        <file alias="header_U.png">../src/icons/components/header_U.png</file>
+        <file alias="header_D.png">../src/icons/components/header_D.png</file>
+        <file alias="header.png">../src/icons/components/header.png</file>
         <file alias="1to2.png">../src/icons/components/1to2.png</file>
         <file alias="1to3.png">../src/icons/components/1to3.png</file>
         <file alias="1to3-c.png">../src/icons/components/1to3-c.png</file>
