@@ -323,7 +323,7 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
 }   }   }   }
 
-void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
+void SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
 {
     if( m_initialized && m_pinTunnels.contains( m_id+"-"+id ) )
     {
@@ -340,6 +340,7 @@ void SubCircuit::addPin(QString id, QString type, QString label, int pos, int xp
         tunnel->setParentItem( this );
         tunnel->setAcceptedMouseButtons( Qt::NoButton );
         tunnel->setShowId( false );
+        tunnel->setTunnelUid( id );
         tunnel->setName( pId ); // Make tunel name unique for this component
         tunnel->setPos( xpos, ypos );
         tunnel->setPacked( true );
@@ -470,9 +471,15 @@ void SubCircuit::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 QString SubCircuit::toString()
 {
     QString item = CompBase::toString();
+    QString end = " />\n";
+    /*if( m_subcType >= Shield )
+    {
+        QString cp = " circPos=\""+getPropStr( "circPos" )+"\"";
+        item.replace( end, cp+end );
+    }*/
     if( !m_mainComponent ) return item;
 
-    item.remove( " />\n" );
+    item.remove( end );
     item += ">";
     item += m_mainComponent->toString().replace( "<item ", "<mainCompProps ");
     item += "</item>\n";

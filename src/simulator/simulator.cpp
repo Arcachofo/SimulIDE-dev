@@ -30,6 +30,7 @@
 #include "circuitwidget.h"
 #include "circmatrix.h"
 #include "e-element.h"
+#include "socket.h"
 
 Simulator* Simulator::m_pSelf = NULL;
 
@@ -277,6 +278,11 @@ void Simulator::startSim( bool paused )
 
     qDebug() <<"\nStarting Circuit Simulation...\n";
 
+    for( Socket* sock : m_socketList )
+    {
+        sock->updatePins( true );
+    }
+
     createNodes();
 
     qDebug() <<"  Initializing "<< m_elementList.size() << "\teElements";
@@ -470,6 +476,12 @@ void Simulator::addToUpdateList( Updatable* el )
 
 void Simulator::remFromUpdateList( Updatable* el )
 { m_updateList.removeOne(el); }
+
+void Simulator::addToSocketList( Socket* el )
+{ if( !m_socketList.contains(el) ) m_socketList.append(el); }
+
+void Simulator::remFromSocketList( Socket* el )
+{ m_socketList.removeOne(el); }
 
 void Simulator::addToChangedList( eElement* el )
 { el->nextChanged = m_voltChanged; m_voltChanged = el; }

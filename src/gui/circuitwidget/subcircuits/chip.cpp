@@ -127,7 +127,7 @@ void Chip::initChip()
             {
                 /// setSubcTypeStr( root.attribute("type") );
 
-                if( (m_subcType == Board) || (m_subcType == Shield) )
+                if( m_subcType > Board )
                     setTransformOriginPoint( togrid( boundingRect().center()) );
             }
             if( root.hasAttribute("name"))
@@ -295,11 +295,11 @@ void Chip::setBackground( QString bck )
             m_BackPixmap = NULL;
     }   }
     else{
-        m_BackPixmap = new QPixmap();
-
+        if( m_BackPixmap ) delete m_BackPixmap;
         QString pixmapPath = MainWindow::self()->getFilePath("data/images");
         pixmapPath += "/"+bck;
-        m_BackPixmap->load( pixmapPath );
+        m_BackPixmap = new QPixmap( pixmapPath );
+        //m_BackPixmap->load( pixmapPath );
     }
     update();
 }
@@ -307,18 +307,18 @@ void Chip::setBackground( QString bck )
 void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-
-    if( m_BackPixmap )
-        p->drawPixmap( m_area.x(), m_area.y(), *m_BackPixmap );
-    else if( m_background != "" )
-        p->drawPixmap( m_area.x(), m_area.y(), QPixmap( m_background ));
-    else{
+    if( (m_background == "") || (m_subcType == Package) )
+    {
         p->drawRoundedRect( m_area, 1, 1);
         if( !m_isLS )
         {
             p->setPen( QColor( 170, 170, 150 ) );
-            if( m_width == m_height )
-                p->drawEllipse( 4, 4, 4, 4);
-            else
-                p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
-}   }   }
+            if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);
+            else p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
+        }
+    }
+    if( m_BackPixmap )
+        p->drawPixmap( m_area.x(), m_area.y(), m_width*8, m_height*8, *m_BackPixmap );
+    else if( m_background != "" )
+        p->drawPixmap( m_area.x(), m_area.y(), m_width*8, m_height*8, QPixmap( m_background ));
+}

@@ -20,38 +20,26 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
-#include "component.h"
-#include "e-element.h"
+#include "connbase.h"
 
 class LibraryItem;
-class Pin;
 
-class MAINMODULE_EXPORT Socket : public Component, public eElement
+class MAINMODULE_EXPORT Socket : public ConnBase
 {
     Q_OBJECT
     public:
         Socket( QObject* parent, QString type, QString id );
         ~Socket();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem *libraryItem();
 
-        int  size() { return m_size; }
-        void setSize( int size );
-
-        virtual void stamp() override;
         virtual void updateStep() override;
 
-        void createPins( int c );
-        void deletePins( int d );
-
-        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+        void updatePins( bool connect );
 
     private:
-        void updatePins( bool connect );
-        int m_size;
-
-        std::vector<Pin*> m_connPins;
+        virtual void updatePixmap() override;
 };
 
 #endif

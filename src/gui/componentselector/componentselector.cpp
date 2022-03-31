@@ -128,7 +128,7 @@ void ComponentSelector::loadXml( const QString &setFile )
             QString type = reader.attributes().value("type").toString();
             LibraryItem* parent = m_itemLibrary.libraryItem( type );
 
-            if( !parent ) continue;
+            if( !parent ) { addCategory( category ); continue; }
 
             while( reader.readNextStartElement() )
             {
@@ -178,12 +178,50 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
     //qDebug()<<name<<info;
     bool hidden = MainWindow::self()->settings()->value( name+"/hidden" ).toBool();
 
-    QTreeWidgetItem* catItem = 0l;
+    QTreeWidgetItem* catItem = addCategory( _category );
     
+    if( !catItem ) return;
+
+    if( !m_categories.contains( name, Qt::CaseSensitive ) )
+        m_categories.append( name );
+
+    QTreeWidgetItem* item =  new QTreeWidgetItem(0);
+    QFont font;
+    font.setFamily("Ubuntu");
+    font.setBold( true );
+    
+    double fontScale = MainWindow::self()->fontScale();
+    if( type == "" ) font.setPixelSize( 12*fontScale );
+    else             font.setPixelSize( 11*fontScale );
+    
+    item->setFont( 0, font );
+    item->setFlags( QFlag(32) );
+    item->setIcon( 0, QIcon(QPixmap(icon)) );
+    item->setText( 0, name+info );
+    item->setData( 0, Qt::UserRole, type );
+
+    if( ( type == "Subcircuit" )||( type == "MCU" ) )
+    {
+         item->setData( 0, Qt::WhatsThisRole, name );
+    }
+    else item->setData( 0, Qt::WhatsThisRole, type );
+    
+    catItem->addChild( item );
+    item->setHidden( hidden );
+    if( MainWindow::self()->settings()->contains( name+"/collapsed" ) )
+    {
+        bool expanded = !MainWindow::self()->settings()->value( name+"/collapsed" ).toBool();
+        item->setExpanded( expanded );
+}   }
+
+QTreeWidgetItem* ComponentSelector::addCategory( QString _category )
+{
+    QTreeWidgetItem* catItem = NULL;
+
     QStringList catPath = _category.split( "/" );
     bool      isRootCat = (catPath.size() == 1);
     QString    category = catPath.takeLast();
-    if( category.isEmpty() ) return;
+    if( category.isEmpty() ) return NULL;
 
     if( !m_categories.contains( category, Qt::CaseSensitive ))  // Create new Category
     {
@@ -219,7 +257,7 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
                 QTreeWidgetItem* topItem = list.first();
                 topItem->addChild( catItem );
         }   }
-        else if( name != "" ) addTopLevelItem( catItem );
+        else addTopLevelItem( catItem );
 
         if( MainWindow::self()->settings()->contains( category+"/hidden" ) )
             c_hidden =  MainWindow::self()->settings()->value( category+"/hidden" ).toBool();
@@ -235,39 +273,8 @@ void ComponentSelector::addItem( const QString &caption, const QString &_categor
         QList<QTreeWidgetItem*> list = findItems( category, Qt::MatchExactly | Qt::MatchRecursive );
         if( !list.isEmpty() ) catItem = list.first();
     }
-    if( !catItem ) return;
-
-    if( !m_categories.contains( name, Qt::CaseSensitive ) )
-        m_categories.append( name );
-
-    QTreeWidgetItem* item =  new QTreeWidgetItem(0);
-    QFont font;
-    font.setFamily("Ubuntu");
-    font.setBold( true );
-    
-    double fontScale = MainWindow::self()->fontScale();
-    if( type == "" ) font.setPixelSize( 12*fontScale );
-    else             font.setPixelSize( 11*fontScale );
-    
-    item->setFont( 0, font );
-    item->setFlags( QFlag(32) );
-    item->setIcon( 0, QIcon(QPixmap(icon)) );
-    item->setText( 0, name+info );
-    item->setData( 0, Qt::UserRole, type );
-
-    if( ( type == "Subcircuit" )||( type == "MCU" ) )
-    {
-         item->setData( 0, Qt::WhatsThisRole, name );
-    }
-    else item->setData( 0, Qt::WhatsThisRole, type );
-    
-    catItem->addChild( item );
-    item->setHidden( hidden );
-    if( MainWindow::self()->settings()->contains( name+"/collapsed" ) )
-    {
-        bool expanded = !MainWindow::self()->settings()->value( name+"/collapsed" ).toBool();
-        item->setExpanded( expanded );
-}   }
+    return catItem;
+}
 
 void ComponentSelector::slotItemClicked( QTreeWidgetItem* item, int  )
 {

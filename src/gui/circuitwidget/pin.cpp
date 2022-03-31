@@ -39,6 +39,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_component = parent;
     m_area = QRect(-3, -3, 11, 6);
     m_pinState = undef_state;
+    m_pinType = pinNormal;
 
     m_blocked = false;
     m_isBus   = false;
@@ -142,12 +143,16 @@ void  Pin::setConnector( Connector* connector )
 void Pin::removeConnector()
 { if( my_connector ) my_connector->remove(); }
 
-void Pin::connectPin()      // Auto-Connect
+Pin* Pin::connectPin( bool connect )      // Auto-Connect
 {
+    //if( !connect && m_pinType != pinSocket ) return NULL; // Dont connect Socket to Socket
+
+    Pin* _pin = NULL;
     QList<QGraphicsItem*> list = this->collidingItems();
-    for( QGraphicsItem* it : list )
+    while( !list.isEmpty() )
     {
-        if( it->type() == 65536+3 )        // Pin found
+        QGraphicsItem* it = list.takeLast();
+        if( it->type() == 65536+3 )          // Pin found
         {
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
 
@@ -157,11 +162,16 @@ void Pin::connectPin()      // Auto-Connect
             if( m_isBus != pin->isBus() ) continue; // Only connect Bus to Bus
             if( pin->connector() ) continue;
             if( pin->unused() ) continue;
-            Circuit::self()->newconnector( this );
-            Circuit::self()->closeconnector( pin );
+            if( !connect && pin->pinType() < pinSocket
+              && pin->isVisible() && !pin->isObscuredBy( m_component ) ) _pin = pin;
+            if( connect )
+            {
+                Circuit::self()->newconnector( this );
+                Circuit::self()->closeconnector( pin );
+            }
             break;
         }
-        else if( it->type() == UserType+2 )        // ConnectorLine
+        else if( connect && (it->type() == UserType+2) ) // ConnectorLine
         {
             ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( it );
             if( m_isBus != line->connector()->isBus() ) continue;
@@ -169,7 +179,9 @@ void Pin::connectPin()      // Auto-Connect
             line->connectToWire( QPoint( scenePos().x(), scenePos().y()) );
             break;
         }
-}   }
+    }
+    return _pin;
+}
 
 void Pin::isMoved()
 {
@@ -179,7 +191,7 @@ void Pin::isMoved()
         if( Circuit::self()->isBusy() ) return;
         //if( m_isBus ) return;
         if( QApplication::queryKeyboardModifiers() & Qt::ShiftModifier )
-            connectPin();
+            connectPin( true );
     }
     setLabelPos();
 }

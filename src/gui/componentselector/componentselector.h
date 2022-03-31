@@ -66,6 +66,8 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 
         //void reLoadItems();
 
+        QTreeWidgetItem* addCategory( QString _category );
+
         QStringList m_compSetUnique;
         QStringList m_categories;
         //QString m_lastItemClicked;

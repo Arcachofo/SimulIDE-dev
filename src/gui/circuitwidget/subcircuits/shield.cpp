@@ -33,7 +33,7 @@
 #include "doubleprop.h"
 
 ShieldSubc::ShieldSubc( QObject* parent, QString type, QString id )
-          : SubCircuit( parent, type, id )
+          : BoardSubc( parent, type, id )
 {
     m_subcType = Chip::Shield;
     m_attached = false;
@@ -41,15 +41,6 @@ ShieldSubc::ShieldSubc( QObject* parent, QString type, QString id )
     m_board = NULL;
     setZValue( 1 );
 
-    addPropGroup( { tr("Main"), {
-new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", this, &ShieldSubc::logicSymbol, &ShieldSubc::setLogicSymbol ),
-    }} );
-
-    /*if( m_subcType == Module )
-    {
-        addProperty( tr("Main"),
-        new DoubProp<SubCircuit>( "Z_Value", tr("Z Value"),"", this, &ShieldSubc::zVal, &ShieldSubc::setZVal ) );
-    }*/
     addPropGroup( {"Hidden", {
 new StringProp<ShieldSubc>( "BoardId" , "","", this, &ShieldSubc::boardId, &ShieldSubc::setBoardId )
     }} );
@@ -62,22 +53,37 @@ void ShieldSubc::remove()
     SubCircuit::remove();
 }
 
+void ShieldSubc::setBoard( BoardSubc* board )
+{
+    if( board )
+    {
+        m_boardId = board->getUid();
+        board->attachShield( this );
+    }else{
+        m_boardId = "";
+        m_board->detachShield( this );
+    }
+    setParentItem( board );
+    m_attached = board  ? true : false;
+    m_board = board;
+}
+
 void ShieldSubc::connectBoard()
 {
+    //slotAttach();return;
+    m_board = NULL;
+    if( m_boardId == "" ) return;
+
     QString name = Circuit::self()->origId( m_boardId );
     if( name != "" ) m_boardId = name;
 
     Component* comp = Circuit::self()->getCompById( m_boardId );
     if( comp && comp->itemType() == "Subcircuit" )
     {
-        Circuit::self()->compList()->removeOne( this );
-
+        //Circuit::self()->compList()->removeOne( this );
         m_board = static_cast<BoardSubc*>(comp);
-
-        m_board->attachShield( this );
-        this->setParentItem( m_board );
-        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->tunnelUid() );
-        m_attached = true;
+        attachToBoard();
+        setBoard( m_board );
 }   }
 
 void ShieldSubc::slotAttach()
@@ -91,26 +97,26 @@ void ShieldSubc::slotAttach()
             if( comp->itemType() == "Subcircuit" )
             {
                 BoardSubc* board =  (BoardSubc*)comp;
-                if( !(board->subcType() == Board) ) continue;
+                if( board->subcType() < Board ) continue;
 
                 if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
                 Circuit::self()->saveState();
 
-                m_board = board;
-                m_boardId = m_board->getUid();
-                m_board->attachShield( this );
-
                 m_circPos = this->pos();
-
-                int origX = 8*(m_board->pkgWidth()-m_width)/2;
-                this->setParentItem( m_board );
-                this->moveTo( QPointF(origX, 0) );
-                this->setRotation(0);
-
-                for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->tunnelUid() );
-                m_attached = true;
+                m_board = board;
+                attachToBoard();
+                setBoard( board );
+                this->moveTo( m_boardPos );
                 break;
 }   }   }   }
+
+void ShieldSubc::attachToBoard()
+{
+    int origX = 8*(m_board->pkgWidth()-m_width)/2;
+    m_boardPos = QPointF(origX, 0);
+    this->setRotation(0);
+    for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_boardId+"-"+tunnel->tunnelUid() );
+}
 
 void ShieldSubc::slotDetach()
 {
@@ -119,13 +125,16 @@ void ShieldSubc::slotDetach()
         if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
         Circuit::self()->saveState();
 
-        m_board->detachShield( this );
-        this->moveTo( m_circPos );
-        this->setParentItem( NULL );
-        for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
-        m_board = NULL;
+        this->moveTo( this->scenePos()+QPointF( 8,-8 ) );
+        setBoard( NULL );
+        renameTunnels();
     }
     m_attached = false;
+}
+
+void ShieldSubc::renameTunnels()
+{
+    for( Tunnel* tunnel : m_subcTunnels ) tunnel->setName( m_id+"-"+tunnel->tunnelUid() );
 }
 
 void ShieldSubc::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )

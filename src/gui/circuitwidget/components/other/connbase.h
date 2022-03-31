@@ -17,31 +17,45 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "board.h"
-#include "circuit.h"
-#include "shield.h"
+#ifndef CONNBASE_H
+#define CONNBASE_H
 
-BoardSubc::BoardSubc( QObject* parent, QString type, QString id )
-         : SubCircuit( parent, type, id )
+#include "component.h"
+#include "e-element.h"
+#include "pin.h"
+
+
+class MAINMODULE_EXPORT ConnBase : public Component, public eElement
 {
-    m_subcType = Chip::Board;
-    //m_shield = NULL;
-}
-BoardSubc::~BoardSubc(){}
+    Q_OBJECT
+    public:
+        ConnBase( QObject* parent, QString type, QString id );
+        ~ConnBase();
 
-void BoardSubc::attachShield( ShieldSubc* shield )
-{
-    if( !m_shields.contains( shield ) ) m_shields.append( shield );
-}
 
-void BoardSubc::remove()
-{
-    for( ShieldSubc* shield : m_shields ) // there is a shield attached to this
-    {
-        shield->setBoard( NULL );
-        Circuit::self()->removeComp( shield );
-    }
-    SubCircuit::remove();
-}
+        int  size() { return m_size; }
+        void setSize( int size );
 
-#include "moc_board.cpp"
+        virtual void remove() override;
+
+        virtual void registerEnode( eNode*, int n=-1 ) override;
+
+        void createPins( int c );
+        void deletePins( int d );
+
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+
+    protected:
+        virtual void updatePixmap(){;}
+
+        int m_size;
+
+        std::vector<Pin*> m_connPins;
+        std::vector<Pin*> m_sockPins;
+
+        Pin::pinType_t m_pinType;
+
+        QPixmap m_pinPixmap;
+};
+
+#endif

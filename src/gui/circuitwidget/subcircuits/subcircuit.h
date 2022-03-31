@@ -40,6 +40,7 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
 
         virtual void setLogicSymbol( bool ls ) override;
 
+        QList<Tunnel*> getPinTunnels() { return m_pinTunnels.values(); }
         Component* getMainComp(){ return m_mainComponent; }
 
         virtual QString toString() override;

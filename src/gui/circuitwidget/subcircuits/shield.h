@@ -23,7 +23,7 @@
 #include "board.h"
 //#include "subcircuit.h"
 
-class MAINMODULE_EXPORT ShieldSubc : public SubCircuit
+class MAINMODULE_EXPORT ShieldSubc : public BoardSubc
 {
     Q_OBJECT
 
@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT ShieldSubc : public SubCircuit
 
         QString boardId() { return m_boardId; }
         void setBoardId( QString id ) { m_boardId = id; }
-        void setBoard( BoardSubc* board ) { m_board = board;  }
+        void setBoard( BoardSubc* board );
 
         void connectBoard();
 
@@ -45,11 +45,14 @@ class MAINMODULE_EXPORT ShieldSubc : public SubCircuit
 
     protected:
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
+        virtual void attachToBoard();
+        virtual void renameTunnels();
 
         bool m_attached; // This is a shield which is attached to a board
 
         BoardSubc* m_board;  // A board this is attached to (this is a shield)
         QString m_boardId;
+        QPointF m_boardPos;
 };
 #endif
 

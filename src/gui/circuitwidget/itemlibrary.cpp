@@ -59,6 +59,7 @@
 #include "gate_or.h"
 #include "gate_xor.h"
 #include "ground.h"
+#include "header.h"
 #include "hd44780.h"
 #include "ili9341.h"
 #include "image.h"
@@ -287,6 +288,7 @@ void ItemLibrary::loadItems()
     addItem( Bus::libraryItem() );
     addItem( Tunnel::libraryItem() );
     addItem( Socket::libraryItem() );
+    addItem( Header::libraryItem() );
     // Graphic
     addItem( Image::libraryItem() );
     addItem( TextComponent::libraryItem() );

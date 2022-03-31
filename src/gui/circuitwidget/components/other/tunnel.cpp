@@ -104,7 +104,7 @@ void Tunnel::setName( QString name )
     removeTunnel(); // Remove old name before setting new one
 
     m_name = name;
-    m_pin[0]->setLabelText( name );
+    if( !m_packed ) m_pin[0]->setLabelText( name );
     if( name == "" ) m_size = 20;
     else  m_size = m_pin[0]->labelSizeX()+4;
     setRotated( m_rotated );

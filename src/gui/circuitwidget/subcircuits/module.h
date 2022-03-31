@@ -21,7 +21,6 @@
 #define MODULE_H
 
 #include "shield.h"
-class LibraryItem;
 
 class MAINMODULE_EXPORT ModuleSubc : public ShieldSubc
 {
@@ -34,10 +33,8 @@ class MAINMODULE_EXPORT ModuleSubc : public ShieldSubc
         double zVal() { return zValue(); }
         void setZVal( double v);
 
-        virtual void stamp() override;
-
-    public slots:
-        virtual void slotAttach() override;
-        virtual void slotDetach() override;
+    protected:
+        virtual void attachToBoard() override;
+        virtual void renameTunnels() override;
 };
 #endif

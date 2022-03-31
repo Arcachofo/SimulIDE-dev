@@ -56,6 +56,7 @@ LibraryItem* SubPackage::libraryItem()
 SubPackage::SubPackage( QObject* parent, QString type, QString id )
           : Chip( parent, type, id )
 {
+    m_subcType = Chip::Package;
     m_width  = 4;
     m_height = 8;
     m_area = QRect(0, 0, m_width*8, m_height*8);
@@ -138,8 +139,13 @@ void SubPackage::hoverMoveEvent( QGraphicsSceneHoverEvent* event )
             m_p2X = xPos;
             m_p2Y = m_height*8;
         }
-        else m_fakePin = false;
-
+        else //m_fakePin = false;
+        {
+            m_angle = 180;
+            m_p1X = xPos;
+            m_p2X = xPos+1;
+            m_p1Y = m_p2Y = yPos;
+        }
         Circuit::self()->update();
     }
     else QGraphicsItem::hoverMoveEvent(event);
@@ -163,10 +169,11 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
         m_eventPin = new Pin( m_angle, QPoint(m_p1X,m_p1Y ), "name", 0, this );
         m_eventPin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
-        m_eventPin->setLabelText( "Name" );
         m_eventPin->setPinId( "Id" );
         m_eventPin->setLabelColor( QColor( Qt::black ) );
         m_eventPin->setLabelPos();
+        if( m_p2X == m_p1X+1) m_eventPin->setLength( 1 );
+        else                  m_eventPin->setLabelText( "Name" );
         m_pins.append( m_eventPin );
 
         editPin();
@@ -180,7 +187,7 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
         
         m_changed = true;
         m_movePin = false;
-        m_eventPin = 0l;
+        m_eventPin = NULL;
     }
     else Component::mousePressEvent( event );
 }
@@ -238,18 +245,19 @@ void SubPackage::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
     int xPos = snapToCompGrid( (int)event->pos().x() );
     int yPos = snapToCompGrid( (int)event->pos().y() );
 
-    m_eventPin = 0l;
+    m_eventPin = NULL;
 
     for( Pin* pin : m_pins )
     {
         int xPin = pin->x();
         int yPin = pin->y();
         int angle = pin->pinAngle();
+        int length = pin->length();
 
-        if     ( angle == 0 )   xPin -= 8; // Right
-        else if( angle == 180 ) xPin += 8; // Left
-        else if( angle == 90 )  yPin += 8; // Top
-        else if( angle == 270 ) yPin -= 8; // Bottom
+        if     ( angle == 0 )   xPin -= length; // Right
+        else if( angle == 180 ) xPin += length; // Left
+        else if( angle == 90 )  yPin += length; // Top
+        else if( angle == 270 ) yPin -= length; // Bottom
 
         if(( abs(yPin-yPos)<4 ) && ( abs(xPin-xPos)<4 ) )
         { m_eventPin = pin; break; }

@@ -36,6 +36,7 @@ enum simState_t{
 class BaseProcessor;
 class Updatable;
 class eElement;
+class Socket;
 class eNode;
 class CircMatrix;
 
@@ -104,6 +105,9 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void addToUpdateList( Updatable* el );
         void remFromUpdateList( Updatable* el );
 
+        void addToSocketList( Socket* el );
+        void remFromSocketList( Socket* el );
+
         void addToChangedList( eElement* el );
         void addToNoLinList( eElement* el );
         
@@ -138,6 +142,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         QList<eElement*> m_elementList;
         QList<Updatable*> m_updateList;
+        QList<Socket*> m_socketList;
 
         simState_t m_state;
         simState_t m_oldState;

@@ -22,6 +22,7 @@
 
 #include "subcircuit.h"
 
+class ShieldSubc;
 
 class MAINMODULE_EXPORT BoardSubc : public SubCircuit
 {
@@ -31,13 +32,13 @@ class MAINMODULE_EXPORT BoardSubc : public SubCircuit
         BoardSubc( QObject* parent, QString type, QString id );
         ~BoardSubc();
 
-        void attachShield( SubCircuit* shield );
-        void detachShield( SubCircuit* shield ) { m_shields.removeAll( shield); }
+        void attachShield( ShieldSubc* shield );
+        void detachShield( ShieldSubc* shield ) { m_shields.removeAll( shield); }
 
         virtual void remove() override;
 
     protected:
-        QList<SubCircuit*> m_shields; // A shield attached to this
+        QList<ShieldSubc*> m_shields; // A shield attached to this
 
 };
 #endif

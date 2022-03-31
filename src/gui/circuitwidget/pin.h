@@ -45,6 +45,12 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         Pin( int angle, const QPoint pos, QString id, int index, Component* parent = 0 );
         ~Pin();
 
+        enum pinType_t{
+            pinNormal=0,
+            pinSocket,
+            pinHeader
+        };
+
         enum { Type = UserType + 3 };
         int type() const { return Type; }
 
@@ -75,7 +81,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setConPin( Pin* pin ) { m_conPin = pin; }
         Pin* conPin(){ return m_conPin; }
 
-        void connectPin();
+        Pin *connectPin( bool connect );
 
         QString getLabelText() { return m_labelText; }
         void setLabelPos();
@@ -85,7 +91,6 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         void setLabelText( QString label );
 
         void setPinId( QString id ) { m_id = id; }
-
         void setVisible( bool visible );
 
         void moveBy( int dx, int dy );
@@ -97,6 +102,9 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         
         void setIsBus( bool bus );
         bool isBus() { return m_isBus; }
+
+        void setPinType( pinType_t ty ) { m_pinType = ty; }
+        pinType_t pinType() { return m_pinType; }
 
         void setPinState( pinState_t st ) { m_pinState = st; m_PinChanged = true; }
 
@@ -110,6 +118,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event );
 
+        pinType_t m_pinType;
         pinState_t m_pinState;
         bool m_PinChanged;
 

@@ -17,19 +17,12 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QPainter>
-#include <QPushButton>
-#include <QGraphicsProxyWidget>
-
 #include "socket.h"
 #include "itemlibrary.h"
 #include "circuitwidget.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "e-node.h"
-#include "pin.h"
-
-#include "intprop.h"
 
 Component* Socket::construct( QObject* parent, QString type, QString id )
 { return new Socket( parent, type, id ); }
@@ -45,138 +38,72 @@ LibraryItem* Socket::libraryItem()
 }
 
 Socket::Socket( QObject* parent, QString type, QString id )
-       : Component( parent, type, id )
-       , eElement( id )
+       : ConnBase( parent, type, id )
 {
-    m_graphical = true;
+    this->setZValue(-2 );
 
-    this->setZValue(-1 );
+    m_pinType = Pin::pinSocket;
 
     m_color = QColor( 50, 50, 70 );
-    m_size = 0;
-    setSize( 8 );
-    setLabelPos(-16,-44, 0);
-    
-    Simulator::self()->addToUpdateList( this );
 
-    addPropGroup( { tr("Main"), {
-new IntProp<Socket>( "Size", tr("Size"),"_Pins", this, &Socket::size, &Socket::setSize, "uint" )
-    }} );
+    Simulator::self()->addToSocketList( this );
+    Simulator::self()->addToUpdateList( this );
 }
 Socket::~Socket()
 {
-    m_connPins.clear();
-}
-
-void Socket::stamp()
-{
-    updatePins( true );
-    update();
+    Simulator::self()->remFromSocketList( this );
 }
 
 void Socket::updateStep()
 {
-    m_changed = false;
     updatePins( false );
-    if( m_changed ) CircuitWidget::self()->powerCircOff();
 }
 
 void Socket::updatePins( bool connect )
 {
-    QList<QGraphicsItem*> list = this->collidingItems();
-    std::vector<Pin*> connPins = m_connPins;
-    m_connPins.clear();
-    m_connPins.resize( m_size, NULL );
-    for( QGraphicsItem* it : list )
+    for( int i=0; i<m_size; i++ )
     {
-        if( it->type() == 65536+3 )        // Pin found
+        if( !m_sockPins[i]->connector() )
         {
-            Pin* pin =  qgraphicsitem_cast<Pin*>( it );
-            if( pin->parentItem() == this ) continue;
-            if( pin->connector() ) continue; // Pin is already connected
-            if( pin->isBus() )     continue; // Don't connect to Bus
-
-            QPointF pinPos = this->mapFromScene( pin->scenePos() );
-            int y = pinPos.y()+24;
-            int x = abs( pinPos.x() );
-            //qDebug() <<pin->pinId()<<pinPos<<y;
-
-            if( (x < 1) && (y%8 < 2) )
-            {
-                int i = y/8;
-                if( (i >= m_size) || (i < 0) ) continue;
-                if( connect ){
-                    eNode* node = m_pin[i]->getEnode();
-                    pin->setEnode( node );
+            Pin* pin = m_sockPins[i]->connectPin( false );
+            if( pin ){
+                if( connect )
+                {
+                    qDebug()<<"Connecting"<< m_sockPins[i]->pinId()<<"To"<<pin->pinId();
+                    m_connPins[i] = pin;
+                    m_sockPins[i]->setConPin( pin );
+                    pin->setConPin( m_sockPins[i] );
                 }
-                m_connPins[i] = pin;
+            }
+            else{
+                if( m_connPins[i] )
+                {
+                    m_sockPins[i]->setConPin( NULL );
+                    m_connPins[i]->setConPin( NULL );
+                    m_connPins[i] = NULL;
+                    CircuitWidget::self()->powerCircOff();
+                }
             }
         }
     }
-    if( !connect )
-    {
-        for( int i=0; i<m_size; i++ ){
-            if( connPins[i] != m_connPins[i] ) m_changed = true;
-        }
-    }
 }
 
-void Socket::createPins( int c )
+void Socket::updatePixmap()
 {
-    int start = m_size;
-    m_size = m_size+c;
-    m_pin.resize( m_size );
-
-    for( int i=start; i<m_size; i++ )
-        m_pin[i] = new Pin( 180, QPoint(-8,-32+8+i*8 ), m_id+"-pin"+QString::number(i), 0, this );
-}
-
-void Socket::deletePins( int d )
-{
-    if( d > m_size ) d = m_size;
-    int start = m_size-d;
-
-    for( int i=start; i<m_size; i++ )
-    {
-        m_pin[i]->removeConnector();
-        delete m_pin[i];
-    }
-    m_size = m_size-d;
-    m_pin.resize( m_size, NULL );
-    
-    Circuit::self()->update();
-}
-
-void Socket::setSize( int size )
-{
-    if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
-    
-    if( size == 0 ) size = 8;
-    
-    if     ( size < m_size ) deletePins( m_size-size );
-    else if( size > m_size ) createPins( size-m_size );
-
-    m_connPins.resize( size );
-    
-    m_area = QRectF(-4, -28, 7, m_size*8 );
-
-    Circuit::self()->update();
-}
-
-
-void Socket::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
-{
-    Component::paint( p, option, widget );
-    p->drawRoundRect( m_area, 4, 4 );
-
-    QPen pen( Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
-    p->setPen( pen );
-
-    for( int i=0; i<m_size; i++ )
-    {
-        if( m_connPins[i] ) p->setBrush( QColor( 170, 170, 200 ) );
-        else                p->setBrush( Qt::black );
-        p->drawRoundRect(-2,-28+2+i*8, 3, 4, 1, 1 );
+    int angle = this->rotation();
+    switch( angle ) {
+        case 0:
+        case 180:
+        case -180:
+            m_pinPixmap.load( ":/socket_V.png" );
+            m_pinPixmap = m_pinPixmap.transformed( QTransform().rotate(angle) );
+            break;
+        case 90:
+        case -90:
+            m_pinPixmap.load( ":/socket_H.png" );
+            m_pinPixmap = m_pinPixmap.transformed( QTransform().rotate(angle-180) );
+            break;
+        default: break;
     }
 }
 

@@ -254,7 +254,7 @@ void Mcu::slotLoad()
     if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFilePath();
 
     QString fileName = QFileDialog::getOpenFileName( NULL, tr("Load Firmware"), m_lastFirmDir,
-                       tr("All files (*.*);;ELF Files (*.elf);;Hex Files (*.hex)"));
+                       tr("All files (*.*);;Hex Files (*.hex)"));
 
     if( fileName.isEmpty() ) return; // User cancels loading
 
