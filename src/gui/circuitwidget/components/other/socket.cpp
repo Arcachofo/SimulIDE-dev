@@ -40,7 +40,7 @@ LibraryItem* Socket::libraryItem()
 Socket::Socket( QObject* parent, QString type, QString id )
        : ConnBase( parent, type, id )
 {
-    this->setZValue(-2 );
+    setZValue(-2 );
 
     m_pinType = Pin::pinSocket;
 

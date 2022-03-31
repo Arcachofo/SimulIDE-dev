@@ -49,7 +49,7 @@ ConnectorLine::ConnectorLine( int x1, int y1, int x2, int y2, Connector* connect
     this->setFlag( QGraphicsItem::ItemIsSelectable, true );
 
     setCursor( Qt::CrossCursor );
-    setZValue( 1 );
+    setZValue( 100 );
     updatePos();
 }
 ConnectorLine::~ConnectorLine(){}

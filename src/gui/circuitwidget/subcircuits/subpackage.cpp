@@ -78,7 +78,7 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_boardMode = false;
     
     setAcceptHoverEvents( true );
-    setZValue( -1 );
+    setZValue(-3 );
     
     m_pkgeFile = "";
     //if( m_lastPkg == "" ) m_lastPkg = m_pkgeFile;
