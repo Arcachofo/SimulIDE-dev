@@ -69,7 +69,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
         virtual void setInvertInps( bool invert );
 
         double propSize() { return m_propSize; }
-        void setPropSize( double ps ) { m_propSize = ps; }
+        void setPropSize( double g ) { m_propSize = g; }
 
         double propDelay() { return m_propDelay*1e-12; }
         void setPropDelay( double pd ) { m_propDelay = pd*1e12; }

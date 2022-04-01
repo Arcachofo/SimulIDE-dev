@@ -58,7 +58,7 @@ void ConnBase::createPins( int c )
 {
     int start = m_size;
     m_size = m_size+c;
-    m_pin.resize( m_size );
+    m_pin.resize( m_size*2 );
     m_sockPins.resize( m_size );
 
     for( int i=start; i<m_size; i++ )
@@ -85,7 +85,7 @@ void ConnBase::deletePins( int d )
         delete m_sockPins[i];
     }
     m_size = m_size-d;
-    m_pin.resize( m_size );
+    m_pin.resize( m_size*2 );
     m_sockPins.resize( m_size );
     
     Circuit::self()->update();
@@ -100,6 +100,11 @@ void ConnBase::setSize( int size )
     if     ( size < m_size ) deletePins( m_size-size );
     else if( size > m_size ) createPins( size-m_size );
 
+    for( int i=m_size; i<m_size*2; i++ )
+    {
+        m_pin[i] = m_sockPins[i-m_size];
+    }
+
     m_connPins.resize( size );
     
     m_area = QRectF(-4, -28, 8, m_size*8 );
@@ -107,11 +112,24 @@ void ConnBase::setSize( int size )
     Circuit::self()->update();
 }
 
-void ConnBase::remove()
+void ConnBase::setHidden( bool hid, bool hidLabel )
+{
+    Component::setHidden( hid, hidLabel );
+
+    for( int i=0; i<m_size; i++ )
+    {
+        m_sockPins[i]->setVisible( true );
+        Component* parentComp = static_cast<Component*>( parentItem() );
+        if( hid ) connect( parentComp, SIGNAL( moved() ), m_sockPins[i], SLOT( isMoved() ), Qt::UniqueConnection );
+        else      disconnect( parentComp, SIGNAL( moved() ), m_sockPins[i], SLOT( isMoved() ) );
+    }
+}
+
+/*void ConnBase::remove()
 {
     for( int i=0; i<m_size; i++ ) m_sockPins[i]->removeConnector();
     Component::remove();
-}
+}*/
 
 void ConnBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

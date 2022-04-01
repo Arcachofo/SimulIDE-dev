@@ -41,14 +41,14 @@ LibraryItem* Header::libraryItem()
 }
 
 Header::Header( QObject* parent, QString type, QString id )
-       : ConnBase( parent, type, id )
+      : ConnBase( parent, type, id )
 {
     this->setZValue(-1 );
 
     m_pinType = Pin::pinHeader;
     setPointDown( false );
 
-    m_color = QColor( 110, 110, 110 );
+    m_color = QColor( 65, 65, 65 );
 
     this->addProperty( tr("Main"),
 new BoolProp<Header>( "Down", tr("Downwards"),"", this, &Header::pointDown, &Header::setPointDown ));

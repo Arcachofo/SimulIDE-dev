@@ -38,7 +38,7 @@ LibraryItem* Socket::libraryItem()
 }
 
 Socket::Socket( QObject* parent, QString type, QString id )
-       : ConnBase( parent, type, id )
+      : ConnBase( parent, type, id )
 {
     setZValue(-2 );
 
