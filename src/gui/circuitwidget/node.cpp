@@ -30,7 +30,7 @@
 Node::Node( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
 {
-    setZValue(2);
+    setZValue( 101 );
 
     m_color = QColor( Qt::black );
     m_isBus = false;
