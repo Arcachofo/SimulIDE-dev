@@ -21,7 +21,6 @@
 #include "circuit.h"
 
 #include "doubleprop.h"
-#include "boolprop.h"
 
 LogicSubc::LogicSubc( QObject* parent, QString type, QString id )
          : SubCircuit( parent, type, id )
@@ -37,10 +36,6 @@ LogicSubc::LogicSubc( QObject* parent, QString type, QString id )
     m_propDelay = 10*1000; // 10 ns
     m_timeLH = 3000;
     m_timeHL = 4000;
-
-    addPropGroup( { tr("Main"), {
-    new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", this, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
-    }} );
 
     addPropGroup( { tr("Electric"), {
     new ComProperty( "", tr("Inputs:"),"",""),

@@ -35,7 +35,7 @@
 #include "shield.h"
 #include "module.h"
 
-#include "comproperty.h"
+#include "boolprop.h"
 
 Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 {
@@ -190,6 +190,10 @@ SubCircuit::SubCircuit( QObject* parent, QString type, QString id )
 {
     m_icColor = QColor( 20, 30, 60 );
     m_mainComponent = NULL;
+
+    addPropGroup( { tr("Main"), {
+    new BoolProp<SubCircuit>( "Logic_Symbol", tr("Logic Symbol"),"", this, &SubCircuit::logicSymbol, &SubCircuit::setLogicSymbol ),
+    }} );
 }
 SubCircuit::~SubCircuit(){}
 
