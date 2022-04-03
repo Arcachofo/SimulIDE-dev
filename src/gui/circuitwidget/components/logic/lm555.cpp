@@ -144,13 +144,13 @@ void Lm555::stamp()
     for( int i=0; i<8; ++i )
     {
         if( (i == 2) || (i == 6) ) continue; // Output or Discharge
-        if( m_pin[i]->connector() ) m_pin[i]->changeCallBack( this );//  ->getEnode()->addToNoLinList(this);
+        if( m_pin[i]->isConnected() ) m_pin[i]->changeCallBack( this );//  ->getEnode()->addToNoLinList(this);
     }
 }
 
 void Lm555::voltChanged()
 {
-    if( !m_Gnd->connector() || !m_Vcc->connector() ) return;
+    if( !m_Gnd->isConnected() || !m_Vcc->isConnected() ) return;
 
     bool changed = false;
     double voltPos = m_Vcc->getVolt();
