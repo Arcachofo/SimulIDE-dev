@@ -121,6 +121,7 @@ void LedBase::setColorStr( QString c )
     bool ok = false;
     int index = c.toInt( &ok );
     if( !ok ) index = m_colors.indexOf( c );
+    if( index < 0 ) index = 0;
     m_ledColor = (LedColor)index;
 }
 
