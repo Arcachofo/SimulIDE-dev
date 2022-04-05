@@ -74,6 +74,7 @@ void Socket::updatePins( bool connect )
                     m_sockPins[i]->setConPin( pin );
                     pin->setConPin( m_sockPins[i] );
                 }
+                else if( !m_connPins[i] ) CircuitWidget::self()->powerCircOff();
             }
             else{
                 if( m_connPins[i] )

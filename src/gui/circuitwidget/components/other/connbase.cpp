@@ -47,10 +47,12 @@ ConnBase::~ConnBase()
 
 void ConnBase::registerEnode( eNode* enode, int n )
 {
-    for( int i=0; i<m_size; i++ )
+    if( n < m_size )
     {
-        if( m_pin[i]->conPin() ) m_pin[i]->registerPinsW( enode, n );
-        if( m_sockPins[i]->conPin() ) m_sockPins[i]->registerPinsW( enode, n );
+        if( m_sockPins[n]->conPin() ) m_sockPins[n]->registerPinsW( enode, n );
+    }else{
+        int nS = n- m_size;
+        if( m_pin[nS]->conPin() ) m_pin[nS]->registerPinsW( enode, nS );
     }
 }
 
@@ -63,8 +65,8 @@ void ConnBase::createPins( int c )
 
     for( int i=start; i<m_size; i++ )
     {
-        m_pin[i] = new Pin( 180, QPoint(-8,-32+8+i*8 ), m_id+"-pin"+QString::number(i), 0, this );
-        m_sockPins[i] = new Pin( 90, QPoint( 0,-32+8+i*8 ), m_id+"-pin"+QString::number(i+m_size), 0, this );
+        m_pin[i] = new Pin( 180, QPoint(-8,-32+8+i*8 ), m_id+"-pin"+QString::number(i), i, this );
+        m_sockPins[i] = new Pin( 90, QPoint( 0,-32+8+i*8 ), m_id+"-pin"+QString::number(i+m_size), i+m_size, this );
         m_sockPins[i]->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
         m_sockPins[i]->setLength( 1 );
         m_sockPins[i]->setPinType( m_pinType );
