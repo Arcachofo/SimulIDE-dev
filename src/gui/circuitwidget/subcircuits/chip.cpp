@@ -106,7 +106,7 @@ void Chip::initChip()
         m_height  = root.attribute( "height" ).toInt();
         m_area = QRect( 0, 0, 8*m_width, 8*m_height );
 
-        m_numpins = root.attribute( "pins" ).toInt();
+        m_numpins = 0;//root.attribute( "pins" ).toInt();
 
         for( Pin* pin : m_pin )
         {
@@ -117,8 +117,8 @@ void Chip::initChip()
         m_pins.clear();
         m_ePin.clear();
         m_pin.clear();
-        m_ePin.resize( m_numpins );
-        m_pin.resize( m_numpins );
+        //m_ePin.resize( m_numpins );
+        //m_pin.resize( m_numpins );
 
         if( !m_initialized )
         {
@@ -196,7 +196,10 @@ void Chip::initPackage_old( QDomElement root )
                 ypos =  m_height*8+8;
                 angle = 270;
             }
-            chipPos++;              
+            chipPos++;
+            m_numpins++;
+            m_ePin.resize( m_numpins );
+            m_pin.resize( m_numpins );
             addPin( id, type, label, chipPos, xpos, ypos, angle, 8 );
         }
         node = node.nextSibling();
@@ -223,6 +226,9 @@ void Chip::initPackage( QDomElement root )
             int length = element.attribute( "length" ).toInt();
 
             chipPos++;
+            m_numpins++;
+            m_ePin.resize( m_numpins );
+            m_pin.resize( m_numpins );
             addPin( id, type, label, chipPos, xpos, ypos, angle, length );
         }
         node = node.nextSibling();
