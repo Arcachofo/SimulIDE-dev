@@ -36,8 +36,7 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
             Logic,
             Board,
             Shield,
-            Module,
-            Package
+            Module
         };
         
         bool logicSymbol() { return m_isLS; }

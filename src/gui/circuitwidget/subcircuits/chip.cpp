@@ -307,16 +307,16 @@ void Chip::setBackground( QString bck )
 void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
-    if( (m_background == "") || (m_subcType == Package) )
+
+    p->drawRoundedRect( m_area, 1, 1);
+
+    if( !m_isLS &&  m_background == "" )
     {
-        p->drawRoundedRect( m_area, 1, 1);
-        if( !m_isLS )
-        {
-            p->setPen( QColor( 170, 170, 150 ) );
-            if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);
-            else p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
-        }
+        p->setPen( QColor( 170, 170, 150 ) );
+        if( m_width == m_height ) p->drawEllipse( 4, 4, 4, 4);
+        else p->drawArc( boundingRect().width()/2-6, -4, 8, 8, 0, -2880 /* -16*180 */ );
     }
+
     if( m_BackPixmap )
         p->drawPixmap( m_area.x(), m_area.y(), m_width*8, m_height*8, *m_BackPixmap );
     else if( m_background != "" )

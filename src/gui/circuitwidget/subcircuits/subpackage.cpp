@@ -56,7 +56,7 @@ LibraryItem* SubPackage::libraryItem()
 SubPackage::SubPackage( QObject* parent, QString type, QString id )
           : Chip( parent, type, id )
 {
-    m_subcType = Chip::Package;
+    m_subcType = Chip::None;
     m_width  = 4;
     m_height = 8;
     m_area = QRect(0, 0, m_width*8, m_height*8);
