@@ -42,7 +42,11 @@ double NumProp::getVal( const QString &val, CompBase* comp )
     QStringList l = val.split(" ");
     double  v = l.first().toDouble();
 
-    /// if( l.size() > 1 ) m_unit = l.last();
+    if( l.size() > 1 )
+    {
+        QString unit = l.last();
+        if( !unit.startsWith("_") ) m_unit = unit;
+    }
     if( comp->showProp() == m_name ) comp->setValLabelText( QString::number( v )+" "+m_unit );
 
     return  v*getMultiplier( m_unit );
