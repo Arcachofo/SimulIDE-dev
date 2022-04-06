@@ -314,8 +314,6 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 {
     Component::paint( p, option, widget );
 
-    p->drawRoundedRect( m_area, 1, 1);
-
     if( !m_isLS &&  m_background == "" )
     {
         p->setPen( QColor( 170, 170, 150 ) );

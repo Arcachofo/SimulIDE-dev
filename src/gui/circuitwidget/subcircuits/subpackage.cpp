@@ -626,6 +626,9 @@ void SubPackage::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
 {
     Chip::paint( p, option, widget );
 
+    if( m_background != "" ) p->setBrush( Qt::transparent );
+    p->drawRoundedRect( m_area, 1, 1);
+
     if( m_fakePin )
     {
         QPen pen = p->pen();
