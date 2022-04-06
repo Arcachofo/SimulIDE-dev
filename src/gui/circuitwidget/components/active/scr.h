@@ -60,8 +60,8 @@ class MAINMODULE_EXPORT SCR : public Component, public eElement
         bool m_state;
 
         eNode*     m_midEnode;
-        eResistor* m_resistorA;
-        eResistor* m_resistorC;
+        eResistor* m_resistor;
+        eResistor* m_resistGa;
         eDiode*    m_diode;
 };
 

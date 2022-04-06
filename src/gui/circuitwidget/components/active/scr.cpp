@@ -23,6 +23,7 @@
 
 #include "scr.h"
 #include "itemlibrary.h"
+#include "simulator.h"
 #include "circuit.h"
 #include "e-diode.h"
 #include "e-node.h"
@@ -63,20 +64,20 @@ SCR::SCR( QObject* parent, QString type, QString id )
 
     setNumEpins( 4 );
 
-    // Pin0--resistorA--ePin0--midEnode--ePin1--diode--ePin2--|--ePin3--resistorC--Pin1
-    // Pin2---------------------------------------------------|
+    // Pin0--diode1--ePin0--midEnode--ePin1--resistor--Pin1
+    // Pin2-------------------------resistGa--ePin2---|
     m_diode = new eDiode( id+"-dio1" );
-    m_diode->setEpin( 0, m_ePin[1] );
-    m_diode->setEpin( 1, m_ePin[2] );
+    m_diode->setEpin( 0, m_pin[0] );
+    m_diode->setEpin( 1, m_ePin[0] );
     m_diode->setModel( "Diode Default" );
 
-    m_resistorA = new eResistor( m_elmId+"-resistorA");
-    m_resistorA->setEpin( 0, m_pin[0] );
-    m_resistorA->setEpin( 1, m_ePin[0] );
+    m_resistor = new eResistor( m_elmId+"-resistorA");
+    m_resistor->setEpin( 0, m_ePin[1] );
+    m_resistor->setEpin( 1, m_pin[1] );
 
-    m_resistorC = new eResistor( m_elmId+"-resistorC");
-    m_resistorC->setEpin( 0, m_ePin[3] );
-    m_resistorC->setEpin( 1, m_pin[1] );
+    m_resistGa = new eResistor( m_elmId+"-resistorC");
+    m_resistGa->setEpin( 0, m_pin[2] );
+    m_resistGa->setEpin( 1, m_ePin[2] );
 
     addPropGroup( { tr("Main"), {
 new DoubProp<SCR>( "GateRes" , tr("Gate Resistance"),"Ω", this, &SCR::gateRes , &SCR::setGateRes ),
@@ -87,8 +88,8 @@ new DoubProp<SCR>( "HoldCurr", tr("Holding Current"),"A", this, &SCR::holdCurr, 
 SCR::~SCR()
 {
     delete m_diode;
-    delete m_resistorA;
-    delete m_resistorC;
+    delete m_resistor;
+    delete m_resistGa;
 }
 
 void SCR::initialize()
@@ -98,45 +99,47 @@ void SCR::initialize()
 
 void SCR::stamp()
 {
-    // Pin0--resistorA--ePin0--midEnode--ePin1--diode--ePin2--|--ePin3--resistorC--Pin1
-    // Pin2---------------------------------------------------|
+    // Pin0--diode1--ePin0--midEnode--ePin1--resistor--Pin1
+    // Pin2-------------------------resistGa--ePin2---|
     m_state = false;
 
-    eNode* node0 = m_pin[0]->getEnode();
-    eNode* node1 = m_pin[1]->getEnode();
-    eNode* node2 = m_pin[2]->getEnode();
+    eNode* nodeA = m_pin[0]->getEnode();
+    eNode* nodeC = m_pin[1]->getEnode();
+    eNode* nodeG = m_pin[2]->getEnode();
 
-    m_diode->getEpin(0)->setEnode( m_midEnode );
-    m_diode->getEpin(1)->setEnode( node2 );
+    //m_diode->getEpin(0)->setEnode( nodeA );
+    m_diode->getEpin(1)->setEnode( m_midEnode );
 
-    m_resistorA->getEpin(1)->setEnode( m_midEnode );
-    m_resistorC->getEpin(0)->setEnode( node2 );
+    m_resistor->getEpin(0)->setEnode( m_midEnode );
+    m_resistGa->getEpin(1)->setEnode( nodeC );
 
-    if( node0 ) node0->addToNoLinList( this );
-    if( node1 ) node1->addToNoLinList( this );
-    if( node2 ) node2->addToNoLinList( this );
+    if( nodeA ) nodeA->addToNoLinList( this );
+    if( nodeC ) nodeC->addToNoLinList( this );
+    if( nodeG ) nodeG->addToNoLinList( this );
 
-    m_resistorA->setRes( 10e5 );
-    m_resistorC->setRes( m_gateRes );
+    m_resistor->setRes( 10e5 );
+    m_resistGa->setRes( m_gateRes );
 }
 
 void SCR::voltChanged()
 {
-    double currentA = m_resistorA->current();
-    double currentC = -m_resistorC->current();
-    bool state = m_state;
-//qDebug() << "SCR::voltChanged"<<currentA <<currentC;
+    double voltAC = m_pin[0]->getVolt() - m_pin[1]->getVolt();
+    double voltGC = m_pin[2]->getVolt() - m_pin[1]->getVolt();
+    if( fabs( voltAC ) < .01 && fabs( voltGC ) < .01 ) return;  // Converged
+    Simulator::self()->notCorverged();
 
-    double icmult = 1/m_trigCurr;
-    double iamult = 1/m_holdCurr - icmult;
+    double anodCurr =  m_resistor->current();
+    double cathCurr = -m_resistGa->current() - anodCurr;
+    double cmult = 1/m_trigCurr;
+    double amult = 1/m_holdCurr - cmult;
 
-    state = -icmult*currentC + iamult*currentA > 1;
+    bool state = -cathCurr*cmult + anodCurr*amult > 1;
 
     if( m_state != state )
     {
         m_state = state;
         double res = state ? 0.0105 : 10e5;
-        m_resistorA->setRes( res );
+        m_resistor->setRes( res );
     }
 }
 
