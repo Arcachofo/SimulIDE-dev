@@ -198,7 +198,7 @@ int CodeEditor::getSintaxCoincidences()
 {
     QStringList lines = fileToStringList( m_file, "CodeEditor::getSintaxCoincidences" );
 
-    int avr=1, pic=1, i51=1; // Avoid divide by 0
+    double avr=1, pic=1, i51=1; // Avoid divide by 0
     int nlines = 0;
 
     for( QString line : lines )
