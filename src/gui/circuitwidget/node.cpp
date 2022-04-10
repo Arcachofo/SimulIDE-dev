@@ -99,33 +99,37 @@ void Node::joinConns( int c0, int c1 )
     Connector* con1 = pin1->connector();
     if( !con0 || !con1 ) return;
 
-    Connector* con = new Connector( Circuit::self(), "Connector", con0->getUid(), pin0->conPin() );
-    Circuit::self()->conList()->append( con );
+    if( pin1->conPin() != pin0 )
+    {
+        Connector* con = new Connector( Circuit::self(), "Connector", con0->getUid(), pin0->conPin() );
+        Circuit::self()->conList()->append( con );
 
-    QStringList list0 = con0->pointList();
-    QStringList list1 = con1->pointList();
-    QStringList plist;
+        QStringList list0 = con0->pointList();
+        QStringList list1 = con1->pointList();
+        QStringList plist;
 
-    if( pin0 == con0->startPin() )
-        while( !list0.isEmpty() )
-        {
-            QString p2 = list0.takeLast();
-            plist.append(list0.takeLast());
-            plist.append(p2);
-        }
-    else while( !list0.isEmpty() ) plist.append( list0.takeFirst() );
+        if( pin0 == con0->startPin() ){
+            while( !list0.isEmpty() )
+            {
+                QString p2 = list0.takeLast();
+                plist.append(list0.takeLast());
+                plist.append(p2);
+        }   }
+        else while( !list0.isEmpty() ) plist.append( list0.takeFirst() );
 
-    if( pin1 == con1->endPin() )
-        while( !list1.isEmpty() )
-        {
-            QString p2 = list1.takeLast();
-            plist.append(list1.takeLast());
-            plist.append(p2);
-        }
-    else while( !list1.isEmpty() ) plist.append( list1.takeFirst() );
+        if( pin1 == con1->endPin() ){
+            while( !list1.isEmpty() )
+            {
+                QString p2 = list1.takeLast();
+                plist.append(list1.takeLast());
+                plist.append(p2);
+        }   }
+        else while( !list1.isEmpty() ) plist.append( list1.takeFirst() );
 
-    con->setPointList( plist );
-
+        con->setPointList( plist );
+        con->closeCon( pin1->conPin(), true );
+        if( this->isSelected() ) con->setSelected( true );
+    }
     pin0->setEnode( NULL );
     con0->setStartPin( NULL );
     con0->setEndPin( NULL );
@@ -135,9 +139,6 @@ void Node::joinConns( int c0, int c1 )
     con1->setStartPin( NULL );
     con1->setEndPin( NULL );
     con1->remove();
-
-    con->closeCon( pin1->conPin(), true );
-    if( this->isSelected() ) con->setSelected( true );
 }
 
 void Node::setHidden( bool hid, bool )
