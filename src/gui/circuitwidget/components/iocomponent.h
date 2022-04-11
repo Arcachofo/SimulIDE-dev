@@ -137,6 +137,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
 
         std::vector<IoPin*> m_inPin;
         std::vector<IoPin*> m_outPin;
+        std::vector<IoPin*> m_otherPin;
 };
 
 #endif

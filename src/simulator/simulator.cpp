@@ -439,6 +439,7 @@ void Simulator::addEvent( uint64_t time, eElement* el )
 
 void Simulator::cancelEvents( eElement* el )
 {
+    if( el->eventTime == 0 ) return;
     eElement* event = m_firstEvent;
     eElement* last  = NULL;
     eElement* next  = NULL;

@@ -60,8 +60,6 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
 
         void updatePins();
 
-        virtual void remove() override;
-
     public slots:
         void loadData();
         void saveData();
@@ -72,6 +70,8 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
         
     private:
+        void write( bool w );
+
         int m_addrBits;
         int m_dataBits;
         int m_dataBytes;
@@ -82,7 +82,7 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         bool m_we;
         bool m_cs;
         bool m_oe;
-        bool m_read;
+        bool m_write;
         bool m_persistent;
 
         IoPin* m_CsPin;

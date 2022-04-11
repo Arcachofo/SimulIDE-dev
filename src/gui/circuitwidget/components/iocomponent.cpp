@@ -143,7 +143,9 @@ void IoComponent::setInputHighV( double volt )
     if( m_inHighV == volt ) return;
     m_inHighV = volt;
     Simulator::self()->pauseSim();
-    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputHighV( volt );
+    for( IoPin* pin : m_inPin )    pin->setInputHighV( volt );
+    for( IoPin* pin : m_outPin )   pin->setInputHighV( volt );
+    for( IoPin* pin : m_otherPin ) pin->setInputHighV( volt );
     Simulator::self()->resumeSim();
 }
 
@@ -152,7 +154,9 @@ void IoComponent::setInputLowV( double volt )
     if( m_inLowV == volt ) return;
     m_inLowV = volt;
     Simulator::self()->pauseSim();
-    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputLowV( volt );
+    for( IoPin* pin : m_inPin )    pin->setInputLowV( volt );
+    for( IoPin* pin : m_outPin )   pin->setInputLowV( volt );
+    for( IoPin* pin : m_otherPin ) pin->setInputLowV( volt );
     Simulator::self()->resumeSim();
 }
 
@@ -161,7 +165,9 @@ void IoComponent::setOutHighV( double volt )
     if( m_ouHighV == volt ) return;
     m_ouHighV = volt;
     Simulator::self()->pauseSim();
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutHighV( volt );
+    for( IoPin* pin : m_inPin )    pin->setOutHighV( volt );
+    for( IoPin* pin : m_outPin )   pin->setOutHighV( volt );
+    for( IoPin* pin : m_otherPin ) pin->setOutHighV( volt );
     Simulator::self()->resumeSim();
 }
 
@@ -170,7 +176,9 @@ void IoComponent::setOutLowV( double volt )
     if( m_ouLowV == volt ) return;
     m_ouLowV = volt;
     Simulator::self()->pauseSim();
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutLowV( volt );
+    for( IoPin* pin : m_inPin )    pin->setOutLowV( volt );
+    for( IoPin* pin : m_outPin )   pin->setOutLowV( volt );
+    for( IoPin* pin : m_otherPin ) pin->setOutLowV( volt );
     Simulator::self()->resumeSim();
 }
 
@@ -179,7 +187,9 @@ void IoComponent::setInputImp( double imp )
     if( m_inImp == imp ) return;
     m_inImp = imp;
     Simulator::self()->pauseSim();
-    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInputImp( imp );
+    for( IoPin* pin : m_inPin )    pin->setInputImp( imp );
+    for( IoPin* pin : m_outPin )   pin->setInputImp( imp );
+    for( IoPin* pin : m_otherPin ) pin->setInputImp( imp );
     Simulator::self()->resumeSim();
 }
 
@@ -188,7 +198,9 @@ void IoComponent::setOutImp( double imp )
     if( m_ouImp == imp ) return;
     m_ouImp = imp;
     Simulator::self()->pauseSim();
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutputImp( imp );
+    for( IoPin* pin : m_inPin )    pin->setOutputImp( imp );
+    for( IoPin* pin : m_outPin )   pin->setOutputImp( imp );
+    for( IoPin* pin : m_otherPin ) pin->setOutputImp( imp );
     Simulator::self()->resumeSim();
 }
 
@@ -207,7 +219,7 @@ void IoComponent::setInvertInps( bool invert )
     if( m_invInputs == invert ) return;
     m_invInputs = invert;
     Simulator::self()->pauseSim();
-    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->setInverted( invert );
+    for( IoPin* pin : m_inPin ) pin->setInverted( invert );
     Circuit::self()->update();
     Simulator::self()->resumeSim();
 }
@@ -217,22 +229,22 @@ void IoComponent::setOpenCol( bool op )
     if( m_openCol == op ) return;
     m_openCol = op;
 
-    for( uint i=0; i<m_outPin.size(); ++i )
+    for( IoPin* pin : m_outPin )
     {
-        if( op ) m_outPin[i]->setPinMode( openCo );
-        else     m_outPin[i]->setPinMode( output );
+        if( op ) pin->setPinMode( openCo );
+        else     pin->setPinMode( output );
 }   }
 
 void IoComponent::setRiseTime( double time )
 {
     m_timeLH = time*1e12;
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setRiseTime( m_timeLH*1.25 );
+    for( IoPin* pin : m_outPin ) pin->setRiseTime( m_timeLH*1.25 );
 }
 
 void IoComponent::setFallTime( double time )
 {
     m_timeHL = time*1e12;
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setFallTime( m_timeHL*1.25 );
+    for( IoPin* pin : m_outPin ) pin->setFallTime( m_timeHL*1.25 );
 }
 
 void IoComponent::init( QStringList pins ) // Example: pin = "IL02Name" => input, left, number 2, label = "Name"
@@ -399,16 +411,18 @@ void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
 
 void IoComponent::remove()
 {
-    for( uint i=0; i<m_inPin.size(); i++ )  m_inPin[i]->removeConnector();
-    for( uint i=0; i<m_outPin.size(); i++ ) m_outPin[i]->removeConnector();
+    for( IoPin* pin : m_inPin )    pin->removeConnector();
+    for( IoPin* pin : m_outPin )   pin->removeConnector();
+    for( IoPin* pin : m_otherPin ) pin->removeConnector();
     Component::remove();
 }
 
 void IoComponent::setHidden( bool hid, bool hidLabel )
 {
     if( m_graphical ){
-        for( IoPin* pin : m_inPin)  pin->setVisible( !hid );
-        for( IoPin* pin : m_outPin) pin->setVisible( !hid );
+        for( IoPin* pin : m_inPin )    pin->setVisible( !hid );
+        for( IoPin* pin : m_outPin )   pin->setVisible( !hid );
+        for( IoPin* pin : m_otherPin ) pin->setVisible( !hid );
     }
     Component::setHidden( hid, hidLabel );
 }

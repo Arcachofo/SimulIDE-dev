@@ -51,21 +51,25 @@ Memory::Memory( QObject* parent, QString type, QString id )
 {
     m_width  = 4;
     m_height = 11;
-    
+
+    m_otherPin.resize( 3 );
     m_WePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_We", 0, this, input );
     m_WePin->setLabelText( " WE" );
     m_WePin->setLabelColor( QColor( 0, 0, 0 ) );
     m_WePin->setInverted( true );
+    m_otherPin[0] = m_WePin;
     
     m_CsPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin_Cs", 0, this, input );
     m_CsPin->setLabelText( "CS " );
     m_CsPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_CsPin->setInverted( true );
+    m_otherPin[1] = m_CsPin;
     
     m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_outEnable" , 0, this, input );
     m_oePin->setLabelText( " OE" );
     m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
     m_oePin->setInverted( true );
+    m_otherPin[2] = m_oePin;
 
     m_dataBytes = 1;
     m_addrBits = 0;
@@ -115,9 +119,7 @@ void Memory::initialize()
     m_we = true;
     m_cs = true;
     m_oe = true;
-    m_read = false;
-
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( input );
+    write( true );
 
     if( !m_persistent ) m_ram.fill( 0 );
 
@@ -146,7 +148,6 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     if( oe != m_oe )
     {
         m_oe = oe;
-        /// for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !oe );
         enableOutputs( oe );
     }
 
@@ -160,29 +161,20 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     m_we = WE;
     if( WE )                                // Write
     {
-        for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( input );
-        /// Simulator::self()->addEvent( 1, NULL );
-
-        m_read = false;
+        write( true );
+        Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( m_propDelay*m_propSize, this );
     }
     else{                                 // Read
-        //for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setPinMode( output );
-        //Simulator::self()->addEvent( 1, NULL );
-        m_read = true;
+        write( false );
         m_nextOutVal = m_ram[m_address];
         IoComponent::sheduleOutPuts( this );
 }   }
 
 void Memory::runEvent()
 {
-    if( m_read )
+    if( m_write )
     {
-        for( uint i=0; i<m_outPin.size(); ++i )
-            m_outPin[i]->setPinMode( output );
-        IoComponent::runOutputs();
-    }
-    else{
         int value = 0;
         for( uint i=0; i<m_outPin.size(); ++i )
         {
@@ -191,7 +183,19 @@ void Memory::runEvent()
             if( Circuit::self()->animate() ) m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
         }
         m_ram[m_address] = value;
-}   }
+    }
+    else IoComponent::runOutputs();
+}
+
+void Memory::write( bool w )
+{
+    m_write = w;
+    for( IoPin* pin : m_outPin )
+    {
+        pin->setPinMode( w ? input : output );
+        pin->changeCallBack( this, w );
+    }
+}
 
 void Memory::setMem( QString m )
 {
@@ -357,15 +361,6 @@ void Memory::showTable()
     if( m_persistent ) m_memTable->setWindowTitle( "ROM: "+idLabel() );
     else               m_memTable->setWindowTitle( "RAM: "+idLabel() );
     m_memTable->setData( &m_ram, m_dataBytes );
-}
-
-void Memory::remove()
-{
-    m_CsPin->removeConnector();
-    m_WePin->removeConnector();
-    m_oePin->removeConnector();
-    
-    LogicComponent::remove();
 }
 
 #include "moc_memory.cpp"
