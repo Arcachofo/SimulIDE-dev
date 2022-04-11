@@ -69,6 +69,7 @@
 #include "i51timer.h"
 #include "i51interrupt.h"
 #include "i51usart.h"
+#include "i51port.h"
 
 #include "utils.h"
 
@@ -355,6 +356,7 @@ void McuCreator::createPort( QDomElement* p )
     if     ( m_core == "AVR" )    port = new AvrPort( mcu, name, numPins );
     else if( m_core == "Pic14" )  port = new PicPort( mcu, name, numPins );
     else if( m_core == "Pic14e" ) port = new PicPort( mcu, name, numPins );
+    else if( m_core == "8051" )   port = new I51Port( mcu, name, numPins );
     else                          port = new McuPort( mcu, name, numPins );
     McuPort::m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );

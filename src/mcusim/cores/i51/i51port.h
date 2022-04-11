@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,48 +17,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUUART_H
-#define MCUUART_H
+#ifndef I51PORT_H
+#define I51PORT_H
 
-#include "usartmodule.h"
-#include "mcumodule.h"
+#include "mcuport.h"
 
-class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
+
+class MAINMODULE_EXPORT I51Port : public McuPort
 {
-        friend class McuCreator;
-
     public:
-        McuUsart( eMcu* mcu, QString name, int number );
-        virtual ~McuUsart();
-
-        virtual void sendByte( uint8_t data ) override{ UsartModule::sendByte( data ); }
-        virtual void bufferEmpty() override;
-        virtual void frameSent( uint8_t data ) override;
-        virtual void readByte( uint8_t data ) override;
+        I51Port( eMcu* mcu, QString name, uint8_t numPins );
+        ~I51Port();
 
     protected:
-        int m_number;
-
-        bool m_speedx2;
+        virtual void createPins( Mcu* mcuComp, uint8_t pinMask=0 ) override;
 };
-
-// ----------------------------------------
-
-/*class MAINMODULE_EXPORT McuUsarts
-{
-        friend class McuCreator;
-
-    public:
-        McuUsarts( eMcu* mcu );
-        ~McuUsarts();
-
-       void remove();
-       McuUsart* getUsart( int number ) { return m_usartList.at(number); }
-
-    protected:
-       eMcu* m_mcu;
-
-       std::vector<McuUsart*> m_usartList;// Access Usarts by name
-};*/
 
 #endif

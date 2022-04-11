@@ -17,48 +17,27 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUUART_H
-#define MCUUART_H
+#ifndef I51PIN_H
+#define I51PIN_H
 
-#include "usartmodule.h"
-#include "mcumodule.h"
+#include "mcupin.h"
 
-class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
+class Component;
+class McuPort;
+class eMcu;
+
+class MAINMODULE_EXPORT I51Pin : public McuPin
 {
-        friend class McuCreator;
+    friend class McuPort;
 
     public:
-        McuUsart( eMcu* mcu, QString name, int number );
-        virtual ~McuUsart();
+        I51Pin( McuPort* port, int i, QString id , Component* mcu );
+        ~I51Pin();
 
-        virtual void sendByte( uint8_t data ) override{ UsartModule::sendByte( data ); }
-        virtual void bufferEmpty() override;
-        virtual void frameSent( uint8_t data ) override;
-        virtual void readByte( uint8_t data ) override;
+        virtual void setOutState( bool state ) override;
 
     protected:
-        int m_number;
 
-        bool m_speedx2;
 };
-
-// ----------------------------------------
-
-/*class MAINMODULE_EXPORT McuUsarts
-{
-        friend class McuCreator;
-
-    public:
-        McuUsarts( eMcu* mcu );
-        ~McuUsarts();
-
-       void remove();
-       McuUsart* getUsart( int number ) { return m_usartList.at(number); }
-
-    protected:
-       eMcu* m_mcu;
-
-       std::vector<McuUsart*> m_usartList;// Access Usarts by name
-};*/
 
 #endif

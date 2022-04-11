@@ -34,7 +34,7 @@ I51Usart::I51Usart( eMcu* mcu, QString name, int number )
     m_dataMask = 0xFF;
     m_parity   = parNONE;
 
-    m_timerConnected = false;
+    //m_timerConnected = false;
     m_timer1 = mcu->getTimer( "TIMER1" );
 
     m_scon = mcu->getReg( "SCON" );
@@ -76,9 +76,9 @@ void I51Usart::configureA( uint8_t val ) //SCON
     I51T1Int* t1Int = static_cast<I51T1Int*>( m_timer1->getInterrupt() ); //  .connect( this, &I51Usart::step );
     if( m_useTimer )
     {
-        if( !m_timerConnected )
+        //if( !m_timerConnected )
         {
-            m_timerConnected = true;
+            //m_timerConnected = true;
             t1Int->setUsart( this );
         }
         setPeriod( 0 );

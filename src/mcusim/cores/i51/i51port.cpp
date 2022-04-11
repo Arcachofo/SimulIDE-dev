@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by santiago González                               *
+ *   Copyright (C) 2021 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,48 +17,23 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MCUUART_H
-#define MCUUART_H
+#include "i51port.h"
+#include "i51pin.h"
+#include "mcu.h"
+#include "e_mcu.h"
 
-#include "usartmodule.h"
-#include "mcumodule.h"
-
-class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
+I51Port::I51Port( eMcu* mcu, QString name, uint8_t numPins )
+       : McuPort( mcu, name, numPins )
 {
-        friend class McuCreator;
+}
+I51Port::~I51Port(){}
 
-    public:
-        McuUsart( eMcu* mcu, QString name, int number );
-        virtual ~McuUsart();
-
-        virtual void sendByte( uint8_t data ) override{ UsartModule::sendByte( data ); }
-        virtual void bufferEmpty() override;
-        virtual void frameSent( uint8_t data ) override;
-        virtual void readByte( uint8_t data ) override;
-
-    protected:
-        int m_number;
-
-        bool m_speedx2;
-};
-
-// ----------------------------------------
-
-/*class MAINMODULE_EXPORT McuUsarts
+void I51Port::createPins( Mcu* mcuComp, uint8_t pinMask )
 {
-        friend class McuCreator;
+    m_pins.resize( m_numPins );
 
-    public:
-        McuUsarts( eMcu* mcu );
-        ~McuUsarts();
-
-       void remove();
-       McuUsart* getUsart( int number ) { return m_usartList.at(number); }
-
-    protected:
-       eMcu* m_mcu;
-
-       std::vector<McuUsart*> m_usartList;// Access Usarts by name
-};*/
-
-#endif
+    for( int i=0; i<m_numPins; ++i )
+    {
+        m_pins[i] = new I51Pin( this, i, m_name+QString::number(i), mcuComp );
+    }
+}

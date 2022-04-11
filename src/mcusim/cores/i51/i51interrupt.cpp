@@ -29,7 +29,8 @@ I51Interrupt::~I51Interrupt(){}
 // Static --------------------------
 Interrupt* I51Interrupt::getInterrupt( QString name, uint16_t vector, eMcu* mcu )
 {
-    if( name.startsWith( "EXT") ) return new I51ExtInt( name, vector, mcu );
+    if     ( name.startsWith( "EXT") ) return new I51ExtInt( name, vector, mcu );
+    else if( name == "T1_OVF"        ) return new I51T1Int( name, vector, mcu );
 
     return new Interrupt( name, vector, mcu );
 }
@@ -91,7 +92,7 @@ void I51T1Int::reset()
 
 void I51T1Int::raise( uint8_t v )
 {
-    if( !m_enabled ) return;
+    //if( !m_enabled ) return;
 
     if( m_usart ) m_usart->step();
     Interrupt::raise( v );

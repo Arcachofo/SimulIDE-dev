@@ -43,7 +43,7 @@ class MAINMODULE_EXPORT I51Usart : public McuUsart
         regBits_t m_bit9Tx;
         regBits_t m_bit9Rx;
 
-        bool m_timerConnected;
+        //bool m_timerConnected;
         bool m_useTimer;
 };
 

@@ -58,7 +58,7 @@ void UsartModule::setPeriod( uint64_t period )
     m_receiver->setPeriod( period );
 }
 
-void UsartModule::sendByte(  uint8_t data )  // Buffer is being written
+void UsartModule::sendByte( uint8_t data )  // Buffer is being written
 {
     m_sender->processData( data );
 }
