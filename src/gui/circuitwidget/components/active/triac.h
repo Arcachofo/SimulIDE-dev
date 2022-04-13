@@ -59,7 +59,7 @@ class MAINMODULE_EXPORT Triac : public Component, public eElement
 
         bool m_state;
 
-        eNode* m_midEnode;
+        eNode*     m_midEnode;
         eResistor* m_resistor;
         eResistor* m_resistGa;
 

@@ -1,5 +1,5 @@
 
-VERSION = "trunk"
+VERSION = "1.0.1"
 RELEASE = ""
 
 TEMPLATE = app
