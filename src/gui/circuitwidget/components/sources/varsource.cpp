@@ -75,7 +75,7 @@ void VarSource::updateButton()
     bool checked = m_button->isChecked();
     
     if( checked )
-          msg = QString("%1 "+m_unit).arg(float(int(m_outValue*100))/100);
+          msg = QString("%1 "+m_unit).arg(float(int(m_outValue*100+0.5))/100);
     else  msg = QString("--"+m_unit);
         
     m_button->setText( msg );

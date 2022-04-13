@@ -110,9 +110,8 @@ void Probe::setVolt( double volt )
 
     if( !m_showVal ) return;
     if( fabs(volt) < 0.01 ) volt = 0;
-    int dispVolt = int( volt*100+0.5 );
     
-    setValLabelText( QString("%1 V").arg(double(dispVolt)/100) );
+    setValLabelText( QString("%1 V").arg(float(int( volt*100+0.5 ))/100) );
 }
 
 QPainterPath Probe::shape() const
