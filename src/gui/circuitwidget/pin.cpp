@@ -187,10 +187,9 @@ void Pin::isMoved()
 {
     if( my_connector ) my_connector->updateConRoute( this, scenePos() );
     else if( !isConnected() )
-    {                            // Auto-Connect
-        if( Circuit::self()->isBusy() ) return;
-        //if( m_isBus ) return;
-        if( QApplication::queryKeyboardModifiers() & Qt::ShiftModifier )
+    {                                       // Auto-Connect
+        if( !Circuit::self()->isBusy()
+         && (QApplication::queryKeyboardModifiers() & Qt::ShiftModifier) )
             connectPin( true );
     }
     setLabelPos();
