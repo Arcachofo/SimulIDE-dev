@@ -13,7 +13,8 @@
                        counter="TCNT0"
                        clockpin="PORTB2"
                        interrupt="T0_OVF"
-                       prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" prselect="CS00,CS01,CS02" >
+                       prescalers="0,1,8,64,256,1024,EXT_F,EXT_R" 
+                       prselect="CS00,CS01,CS02" >
 
     <ocunit name="OC0A" pin="PORTB0" ocreg="OCR0A" bits="COM0A0,COM0A1" interrupt="T0COA" />
     <ocunit name="OC0B" pin="PORTB1" ocreg="OCR0B" bits="COM0B0,COM0B1" interrupt="T0COB" />

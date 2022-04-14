@@ -86,7 +86,7 @@
     <register  name="TIFR"    addr="0x0038" mask="01111110" 
                bits="0,TOV0,TOV1,OCF0B,OCF0A,OCF1B,OCF1A,0" />
                
-    <register  name="TIMSK"   addr="0x0039" mask="01100000"
+    <register  name="TIMSK"   addr="0x0039" mask="01111110"
                bits="0,TOIE0,TOIE1,OCIE0B,OCIE0A,OCIE1B,OCIE1A,0" />
                
     <register  name="GIFR"    addr="0x003A" mask="01111110"
