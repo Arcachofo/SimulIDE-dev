@@ -23,6 +23,8 @@
 #include <QMessageBox>
 #include <QTextStream>
 
+#include <math.h>
+
 #include "ramtable.h"
 #include "mcuinterface.h"
 #include "basedebugger.h"
@@ -38,67 +40,72 @@ RamTable::RamTable( QWidget* parent, McuInterface* processor )
 
     m_processor = processor;
     m_debugger  = NULL;
-    m_numRegs = 60;
+    m_numRegs   = 60;
     m_loadingVars = false;
 
     float scale = MainWindow::self()->fontScale();
-    int row_heigh = 23*scale;
+    int row_heigh = round( 22*scale );
+    int font_size = round(14*scale);
     int numberColor = 0x202090;
 
     QTableWidgetItem* it;
     QFont font;
     font.setFamily("Ubuntu Mono");
-    font.setBold(true);
-    font.setPixelSize( 14*scale );
-    m_status.setFont(font);
-    m_pc.setFont(font);
+    font.setBold( true );
+    font.setPixelSize( font_size );
+    m_status.setFont( font );
+    m_pc.setFont( font );
 
     m_status.setVerticalHeaderLabels( QStringList()<<" STATUS " );
+    m_status.verticalHeader()->setFixedWidth( round(60*scale) );
     m_status.horizontalHeader()->hide();
     m_status.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     m_status.setRowHeight( 0, row_heigh );
     m_status.setFixedHeight( row_heigh );
-    font.setPixelSize( 12*scale );
+    font.setPixelSize( round(12*scale) );
     for( int i=0; i<8; i++ )
     {
-        m_status.setColumnWidth( i, 22*scale );
+        m_status.setColumnWidth( i, row_heigh );
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
         it->setFont( font );
         m_status.setItem( 0, i, it );
     }
-    m_status.setMinimumWidth( (56+8*22)*scale );
-    m_status.setMaximumWidth( (56+8*22)*scale );
+    int wi = row_heigh*8 + round(60*scale);
+    m_status.setMinimumWidth( wi );
+    m_status.setMaximumWidth( wi );
 
     m_pc.setVerticalHeaderLabels( QStringList()<<" PC "  );
+    m_pc.verticalHeader()->setFixedWidth( round(31*scale) );
     m_pc.horizontalHeader()->hide();
     m_pc.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     m_pc.setRowHeight( 0, row_heigh );
     m_pc.setFixedHeight( row_heigh  );
 
-    font.setPixelSize( 14*scale );
+    font.setPixelSize( font_size );
     it = new QTableWidgetItem(0);
     it->setFlags( Qt::ItemIsEnabled );
     it->setFont( font );
     it->setTextColor( QColor( numberColor ) );
     m_pc.setItem( 0, 0, it );
-    m_pc.setColumnWidth(0, 45*scale);
+    m_pc.setColumnWidth( 0, round(45*scale) );
 
     it = new QTableWidgetItem(0);
     it->setFlags( Qt::ItemIsEnabled );
     it->setFont( font );
     it->setTextColor( QColor( 0x3030B8 ) );
     m_pc.setItem( 0, 1, it );
-    m_pc.setColumnWidth( 1, 60*scale);
-    m_pc.setMinimumWidth( 135*scale );
-    m_pc.setMaximumWidth( 135*scale );
+    m_pc.setColumnWidth( 1, round(60*scale) );
+    wi = round(135*scale);
+    m_pc.setMinimumWidth( wi );
+    m_pc.setMaximumWidth( wi );
 
     table->verticalHeader()->setSectionsMovable( true );
-    table->setColumnWidth( 0, 50*scale );
-    table->setColumnWidth( 1, 55*scale );
-    table->setColumnWidth( 2, 40*scale );
-    table->setColumnWidth( 3, 40*scale );
-    table->setColumnWidth( 4, 75*scale );
+    table->setColumnWidth( 0, round(50*scale) );
+    table->setColumnWidth( 1, round(55*scale) );
+    table->setColumnWidth( 2, round(40*scale) );
+    table->setColumnWidth( 3, round(40*scale) );
+    table->setColumnWidth( 4, round(75*scale) );
 
     for( int row=0; row<m_numRegs; row++ )
     {
