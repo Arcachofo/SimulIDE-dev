@@ -125,9 +125,15 @@ void TextComponent::setFixedW( bool fixedW )
     updateGeometry( 0, 0, 0 );
 }
 
-QString TextComponent::getText() { return m_text->toPlainText().replace("\n","&#xa;"); }
+QString TextComponent::getText()
+{
+    return m_text->toPlainText().replace("\n","&#xa;").replace("\"","&#x22;");
+}
+
 void TextComponent::setText( QString text )
-{ m_text->document()->setPlainText( text.replace("&#xa;","\n") ); }
+{
+    m_text->document()->setPlainText( text.replace("&#xa;","\n").replace("&#x22;","\"") );
+}
 
 void TextComponent::setFont( QString font )
 {
