@@ -82,7 +82,7 @@ Memory::Memory( QObject* parent, QString type, QString id )
     addPropGroup( { tr("Main"), {
 new IntProp<Memory>(  "Address_Bits", tr("Address Size"),"_Bits", this, &Memory::addrBits,   &Memory::setAddrBits, "uint" ),
 new IntProp<Memory>(  "Data_Bits"   , tr("Data Size")   ,"_Bits", this, &Memory::dataBits,   &Memory::setDataBits, "uint" ),
-new BoolProp<Memory>( "Persistent"  , tr("Persistent")  ,""     , this, &Memory::persistent,  &Memory::setPersistent ),
+new BoolProp<Memory>( "Persistent"  , tr("Persistent")  ,""     , this, &Memory::persistent, &Memory::setPersistent ),
 new BoolProp<Memory>( "Inverted"    , tr("Invert Outputs"),""   , this, &Memory::invertOuts, &Memory::setInvertOuts )
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );

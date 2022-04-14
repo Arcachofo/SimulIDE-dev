@@ -533,7 +533,7 @@ void McuCreator::createTimer( QDomElement* t )
         timer->m_topReg0L = mcu->getReg( list.value(0) );
         watchRegNames( topReg0, R_WRITE, timer, &McuTimer::topReg0Changed, mcu );
 
-        if( !list.isEmpty() ) timer->m_topReg0H = mcu->getReg( list.value(1) );
+        if( list.size() > 1 ) timer->m_topReg0H = mcu->getReg( list.value(1) );
     }
     if( t->hasAttribute("interrupt") ) setInterrupt( t->attribute("interrupt"), timer );
     if( t->hasAttribute("prescalers") ) setPrescalers( t->attribute("prescalers"), timer );
