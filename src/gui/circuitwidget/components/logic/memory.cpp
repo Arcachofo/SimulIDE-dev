@@ -244,7 +244,7 @@ void Memory::setAddrBits( int bits )
 {
     if( bits == m_addrBits ) return;
     if( bits == 0 ) bits = 8;
-    if( bits > 18 ) bits = 18;
+    if( bits > 24 ) bits = 24;
 
     m_ram.resize( pow( 2, bits ) );
     
