@@ -203,7 +203,8 @@ void MainWindow::setFile( QString file )
 void MainWindow::setState( QString state )
 {
     m_state = state;
-    setWindowTitle( state+" "+m_version+" - "+m_file );
+    QString changed = windowTitle().endsWith("*") ? "*" : "";
+    setWindowTitle( state+" "+m_version+" - "+m_file+changed );
 }
 
 void MainWindow::createWidgets()

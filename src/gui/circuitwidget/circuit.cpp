@@ -588,7 +588,7 @@ void Circuit::saveChanges()
     m_changed = false;
     m_busy = true;
 
-    saveString( m_backupPath, circuitToString() ); // Backup file
+    saveString( m_backupPath, m_undoStack.last() ); // Backup file
     m_busy = false;
 }
 
