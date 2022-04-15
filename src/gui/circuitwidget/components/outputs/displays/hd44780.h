@@ -44,6 +44,7 @@ class MAINMODULE_EXPORT Hd44780 : public Hd44780_Base, public eElement
         void showPins( bool show );
 
     private:
+        void initPuPin( int n, QString l, IoPin* pin );
         IoPin* m_pinRS;
         IoPin* m_pinRW;
         IoPin* m_pinEn;

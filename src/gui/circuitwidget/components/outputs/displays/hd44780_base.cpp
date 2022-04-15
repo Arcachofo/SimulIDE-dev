@@ -96,14 +96,14 @@ void Hd44780_Base::proccessCommand( int command )
 {
     //qDebug() << "Hd44780_Base::proccessCommand: " << command;
     if( command == 0 )  return;
-    if( command<2 )   { clearLcd();               return; } //00000001 //Clear display           //Clears display and returns cursor to the home position (address 0).//1.52 ms
-    if( command<4 )   { cursorHome();             return; } //0000001. //Cursor home             //Returns cursor to home position. Also returns display being shifted to the original position. DDRAM content remains unchanged.//1.52 ms
-    if( command<8 )   { entryMode( command );     return; } //000001.. //Entry mode set          //Sets cursor move direction (I/D); specifies to shift the display (S). These operations are performed during data read/write.//37 μs
-    if( command<16 )  { dispControl( command );   return; } //00001... //Display on/off          //Sets on/off of all display (D), cursor on/off (C), and blink of cursor position character (B).//37 μs
-    if( command<32 )  { C_D_Shift( command );     return; } //0001.... //Cursor/display shift    //Sets cursor-move or display-shift (S/C), shift direction (R/L). DDRAM content remains unchanged//37 μs
-    if( command<64 )  { functionSet( command );   return; } //001..... //Function set            //Sets interface data length (DL), number of display line (N), and character font (F)//37 μs
-    if( command<128 ) { setCGaddr( command-64 );  return; } //01...... //Set CGRAM address       //Sets the CGRAM address. CGRAM data are sent and received after this setting//37 μs
-    else              { setDDaddr( command-128 ); return; } //1....... //Set DDRAM address       //Sets the DDRAM address. DDRAM data are sent and received after this setting.//37 μs
+    if( command & 128){ setDDaddr( command-128 );return; } //1....... Set DDRAM address    Sets the DDRAM address. DDRAM data are sent and received after this setting 37 μs
+    if( command & 64) { setCGaddr( command-64 ); return; } //01...... Set CGRAM address    Sets the CGRAM address. CGRAM data are sent and received after this setting 37 μs
+    if( command & 32) { functionSet( command );  return; } //001..... Function set         Sets interface data length(DL), nº of display line(N), and character font(F) 37 μs
+    if( command & 16) { C_D_Shift( command );    return; } //0001.... Cursor/display shift Sets cursor-move or display-shift(S/C), shift direction(R/L). DDRAM unchanged 37 μs
+    if( command & 8 ) { dispControl( command );  return; } //00001... Display on/off       Sets on/off of all display(D), cursor on/off(C), blink of cursor position character(B) 37 μs
+    if( command & 4 ) { entryMode( command );    return; } //000001.. Entry mode set       Sets cursor move direction(I/D); Shift the display(S). Performed during data read/write. 37 μs
+    if( command & 2 ) { cursorHome();            return; } //0000001. Cursor home          Cursor to home position. Returns display being shifted to original position. DDRAM unchanged. 1.52 ms
+    if( command & 1 ) { clearLcd();              return; } //00000001 Clear display        Clears display and returns cursor to the home position (address 0). 1.52 ms
 }
 
 void Hd44780_Base::functionSet( int data )

@@ -46,27 +46,23 @@ Hd44780::Hd44780( QObject* parent, QString type, QString id )
        , eElement( id+"-eElement" )
 {
     m_pin.resize( 11 );
-    
-    int pinY = 8;//8*((33+m_imgHeight)/8);
 
-    m_pinRS = new IoPin( 270, QPoint( 16, pinY ), id+"-PinRS", 0, this, input );
-    m_pinRW = new IoPin( 270, QPoint( 24, pinY ), id+"-PinRW", 0, this, input );
-    m_pinEn = new IoPin( 270, QPoint( 32, pinY ), id+"-PinEn", 0, this, input );
-    m_pinRS->setLabelText(" RS");
-    m_pinRW->setLabelText(" RW");
+    m_pinRS = new IoPin( 270, QPoint( 16, 8 ), id+"-PinRS", 0, this, input );
+    initPuPin( 0, " RS", m_pinRS );
+
+    m_pinRW = new IoPin( 270, QPoint( 24, 8 ), id+"-PinRW", 0, this, input );
+    initPuPin( 1, " RW", m_pinRW );
+
+    m_pinEn = new IoPin( 270, QPoint( 32, 8 ), id+"-PinEn", 0, this, input );
     m_pinEn->setLabelText(" En");
-
-    m_pin[0] = m_pinRS;
-    m_pin[1] = m_pinRW;
     m_pin[2] = m_pinEn;
     
     m_dataPin.resize( 8 );
     
     for( int i=0; i<8; i++ )
     {
-        m_dataPin[i] = new IoPin( 270, QPoint( 40+i*8, pinY), id+"-dataPin"+QString::number(i), 0, this, input );
-        m_dataPin[i]->setLabelText( " D"+QString::number(i) );
-        m_pin[i+3] = m_dataPin[i];
+        m_dataPin[i] = new IoPin( 270, QPoint( 40+i*8, 8), id+"-dataPin"+QString::number(i), 0, this, input );
+        initPuPin( i+3, " D"+QString::number(i), m_dataPin[i] );
     }
     Simulator::self()->addToUpdateList( this );
     
@@ -125,9 +121,25 @@ void Hd44780::voltChanged()             // Called when clock Pin changes
                     
             m_nibble = 0;
     }   }
-    //Get RS state: data or command
-    if( m_pinRS->getInpState() ) writeData( m_input );
-    else                         proccessCommand( m_input );
+
+    if( m_pinRW->getInpState() ) // Read
+    {
+        if( m_pinRS->getInpState() ) readData();
+        else                         readBusy();
+    }
+    else // Write: Get RS state: data or command
+    {
+        if( m_pinRS->getInpState() ) writeData( m_input );
+        else                         proccessCommand( m_input );
+    }
+}
+
+void Hd44780::initPuPin( int n, QString l, IoPin* pin )
+{
+    pin->setLabelText( l );
+    pin->setOutHighV( 5 );
+    pin->setPullup( true );
+    m_pin[n] = pin;
 }
 
 void Hd44780::showPins( bool show )
