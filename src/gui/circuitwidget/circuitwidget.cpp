@@ -218,7 +218,7 @@ bool CircuitWidget::newCircuit()
     if( MainWindow::self()->windowTitle().endsWith('*') )
     {
         const QMessageBox::StandardButton ret
-        = QMessageBox::warning(this, "MainWindow::closeEvent",
+        = QMessageBox::warning(this, "CircuitWidget::newCircuit",
                                tr("\nCircuit has been modified.\n"
                                   "Do you want to save your changes?\n"),
           QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
@@ -242,7 +242,29 @@ bool CircuitWidget::newCircuit()
 void CircuitWidget::openRecentFile()
 {
     QAction* action = qobject_cast<QAction*>( sender() );
-    if( action ) loadCirc( action->data().toString() );
+    if( action )
+    {
+        QString file = action->data().toString();
+        QFile pfile( file );
+        if( pfile.exists() ) loadCirc( file );
+        else{
+            const QMessageBox::StandardButton ret
+            = QMessageBox::warning( this, "CircuitWidget::openRecentFile",
+                                   tr("\nCan't find file:\n")+
+                                   file+"\n\n"+
+                                   tr("Do you want to remove it from Recent Circuits?\n"),
+              QMessageBox::Yes | QMessageBox::No );
+
+            if( ret == QMessageBox::Yes )
+            {
+                QSettings* settings = MainWindow::self()->settings();
+                QStringList files = settings->value("recentCircList").toStringList();
+                files.removeAll( file );
+                settings->setValue("recentCircList", files );
+                updateRecentFileActions();
+            }
+        }
+    }
 }
 
 void CircuitWidget::openCirc()
