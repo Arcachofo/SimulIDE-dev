@@ -81,6 +81,11 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
     m_button->setCheckable( true );
     m_button->setText( "Open" );
 
+    QFont font = m_button->font();
+    font.setFamily("Ubuntu");
+    font.setPixelSize(12);
+    m_button->setFont( font );
+
     m_proxy = Circuit::self()->addWidget( m_button );
     m_proxy->setParentItem( this );
     m_proxy->setPos( QPoint(-4,-10) );
@@ -251,6 +256,9 @@ void SerialPort::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWi
     pen.setWidth( 0 );
     pen.setColor( QColor( 250, 210, 150 ) );
     p->setPen(pen);
+    QFont font = p->font();
+    font.setPixelSize(11);
+    p->setFont( font );
     p->drawText( 40, 5, m_portName );
 }
 

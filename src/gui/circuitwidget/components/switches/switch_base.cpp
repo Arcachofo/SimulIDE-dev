@@ -42,6 +42,11 @@ SwitchBase::SwitchBase( QObject* parent, QString type, QString id )
     m_button->setGeometry(-20,-16,16,16);
     m_button->setCheckable( true );
 
+    QFont font = m_button->font();
+    font.setFamily("Ubuntu");
+    font.setPixelSize(11);
+    m_button->setFont( font );
+
     m_proxy = Circuit::self()->addWidget( m_button );
     m_proxy->setParentItem( this );
 
