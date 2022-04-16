@@ -71,6 +71,7 @@ Memory::Memory( QObject* parent, QString type, QString id )
     m_oePin->setInverted( true );
     m_otherPin[2] = m_oePin;
 
+    m_asynchro = false;
     m_dataBytes = 1;
     m_addrBits = 0;
     m_dataBits = 0;
@@ -83,7 +84,8 @@ Memory::Memory( QObject* parent, QString type, QString id )
 new IntProp<Memory>(  "Address_Bits", tr("Address Size"),"_Bits", this, &Memory::addrBits,   &Memory::setAddrBits, "uint" ),
 new IntProp<Memory>(  "Data_Bits"   , tr("Data Size")   ,"_Bits", this, &Memory::dataBits,   &Memory::setDataBits, "uint" ),
 new BoolProp<Memory>( "Persistent"  , tr("Persistent")  ,""     , this, &Memory::persistent, &Memory::setPersistent ),
-new BoolProp<Memory>( "Inverted"    , tr("Invert Outputs"),""   , this, &Memory::invertOuts, &Memory::setInvertOuts )
+new BoolProp<Memory>( "Inverted"    , tr("Invert Outputs"),""   , this, &Memory::invertOuts, &Memory::setInvertOuts ),
+new BoolProp<Memory>( "Asynch"      , tr("Asynchronous")  ,""   , this, &Memory::asynchro,   &Memory::setAsynchro )
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );
     addPropGroup( { tr("Edges"), IoComponent::edgeProps() } );
@@ -93,18 +95,39 @@ new StringProp<Memory>( "Mem","","", this, &Memory::getMem, &Memory::setMem)
 }
 Memory::~Memory(){}
 
+void Memory::initialize()
+{
+    m_we = true;
+    m_cs = true;
+    m_oe = true;
+
+    if( !m_persistent ) m_ram.fill( 0 );
+
+    LogicComponent::initialize();
+}
+
 void Memory::stamp()                   // Called at Simulation Start
 {
-    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
+    for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this, m_asynchro );
 
     m_WePin->changeCallBack( this );
     m_CsPin->changeCallBack( this );
+    m_oePin->changeCallBack( this );
+
+    write( true );
 
     LogicComponent::stamp();
 }
 
 void Memory::updateStep()
 {
+    if( m_changed )
+    {
+        for( IoPin* pin : m_inPin  ) pin->changeCallBack( this, m_asynchro );
+        for( IoPin* pin : m_outPin ) pin->changeCallBack( this, m_asynchro && m_we );
+        m_changed = false;
+    }
+
     if( m_memTable ) m_memTable->updateTable( &m_ram );
 
     if( Circuit::self()->animate( ) )
@@ -113,18 +136,6 @@ void Memory::updateStep()
         m_CsPin->updateStep();
         LogicComponent::updateStep();
 }   }
-
-void Memory::initialize()
-{
-    m_we = true;
-    m_cs = true;
-    m_oe = true;
-    write( true );
-
-    if( !m_persistent ) m_ram.fill( 0 );
-
-    LogicComponent::initialize();
-}
 
 void Memory::voltChanged()        // Some Pin Changed State, Manage it
 {
@@ -193,8 +204,14 @@ void Memory::write( bool w )
     for( IoPin* pin : m_outPin )
     {
         pin->setPinMode( w ? input : output );
-        pin->changeCallBack( this, w );
+        if( m_asynchro ) pin->changeCallBack( this, w );
     }
+}
+
+void Memory::setAsynchro( bool a )
+{
+    m_asynchro = a;
+    m_changed = true;
 }
 
 void Memory::setMem( QString m )

@@ -58,6 +58,9 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         bool persistent() { return m_persistent; }
         void setPersistent( bool p ) { m_persistent = p; }
 
+        bool asynchro() { return m_asynchro; }
+        void setAsynchro( bool a );
+
         void updatePins();
 
     public slots:
@@ -84,6 +87,7 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         bool m_oe;
         bool m_write;
         bool m_persistent;
+        bool m_asynchro;
 
         IoPin* m_CsPin;
         IoPin* m_WePin;
