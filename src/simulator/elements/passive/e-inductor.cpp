@@ -39,7 +39,7 @@ void eInductor::initialize()
     m_nextStep = Simulator::self()->stepSize();
     m_tStep = (double)m_nextStep/1e12;
     m_curSource = 0;
-    //m_volt = 0;
+    m_volt = 0;
     m_admit = m_tStep/m_ind;
 }
 
@@ -55,11 +55,10 @@ void eInductor::runEvent()
 {
     double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
 
-    //m_volt = volt;
-    double curSource = volt*m_admit;
-    if( fabs(m_curSource-curSource) > 1e-12 )
+    if( m_volt != volt)
     {
-        m_curSource = curSource;
+        m_volt = volt;
+        m_curSource += volt*m_admit;
 
         m_ePin[0]->stampCurrent(-m_curSource );
         m_ePin[1]->stampCurrent( m_curSource );

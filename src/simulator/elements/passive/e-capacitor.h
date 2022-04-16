@@ -29,6 +29,7 @@ class MAINMODULE_EXPORT eCapacitor : public eResistor
         ~eCapacitor();
 
         virtual void initialize() override;
+        virtual void stamp() override;
         virtual void runEvent() override;
 
         double cap() { return m_cap; }
@@ -38,7 +39,7 @@ class MAINMODULE_EXPORT eCapacitor : public eResistor
         double m_cap;
         double m_curSource;
         double m_tStep;
-        //double m_volt;
+        double m_volt;
 
         uint64_t m_nextStep;
 };
