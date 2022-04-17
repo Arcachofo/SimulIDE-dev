@@ -101,7 +101,8 @@ void TextComponent::updateGeometry(int, int, int)
     m_text->document()->setTextWidth(-1);
     
     int margin = m_margin;
-    m_area = QRect( -margin, -margin, m_text->boundingRect().width()+margin*2, m_text->boundingRect().height()+margin*2 );
+    if( m_hidden ) m_area = QRect( 0, 0, 0, 0 );
+    else m_area = QRect( -margin, -margin, m_text->boundingRect().width()+margin*2, m_text->boundingRect().height()+margin*2 );
     
     Circuit::self()->update();
 }
@@ -155,6 +156,13 @@ void TextComponent::setFontSize( int size )
     font.setPixelSize( size );
     m_text->setFont( font );
     updateGeometry( 0, 0, 0 );
+}
+
+void TextComponent::setHidden( bool hid, bool hidLabel )
+{
+    Component::setHidden( hid, hidLabel );
+    updateGeometry( 0, 0, 0 );
+    this->setEnabled( false );
 }
 
 void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )

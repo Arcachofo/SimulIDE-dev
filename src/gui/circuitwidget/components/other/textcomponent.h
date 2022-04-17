@@ -42,6 +42,8 @@ class MAINMODULE_EXPORT TextComponent : public Component
         qreal opac() { return m_opac; }
         void setOpac( qreal op ) { m_opac = op; update(); }
 
+        virtual void setHidden( bool hid, bool hidLabel=false ) override;
+
         bool eventFilter( QObject* object, QEvent* event );
 
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
