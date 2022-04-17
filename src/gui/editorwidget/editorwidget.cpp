@@ -107,7 +107,29 @@ void EditorWidget::open()
 void EditorWidget::openRecentFile()
 {
     QAction* action = qobject_cast<QAction*>( sender() );
-    if( action ) loadFile( action->data().toString() );
+    if( action )
+    {
+        QString file = action->data().toString();
+        QFile pfile( file );
+        if( pfile.exists() ) loadFile( file );
+        else{
+            const QMessageBox::StandardButton ret
+            = QMessageBox::warning( this, "EditorWidget::openRecentFile",
+                                   tr("\nCan't find file:\n")+
+                                   file+"\n\n"+
+                                   tr("Do you want to remove it from Recent Files?\n"),
+              QMessageBox::Yes | QMessageBox::No );
+
+            if( ret == QMessageBox::Yes )
+            {
+                QSettings* settings = MainWindow::self()->settings();
+                QStringList files = settings->value("recentFileList").toStringList();
+                files.removeAll( file );
+                settings->setValue("recentFileList", files );
+                updateRecentFileActions();
+            }
+        }
+    }
 }
 
 void EditorWidget::dragEnterEvent( QDragEnterEvent* event)
