@@ -50,7 +50,7 @@ bool AvrGccDebugger::getVariables()
         m_outPane->appendLine( "\n"+QObject::tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
         return false;
     }
-    QString objdump = m_toolPath+"avr-objdump";
+    QString objdump = m_toolPath+"avr/bin/avr-objdump";
 
 #ifndef Q_OS_UNIX
     objdump += ".exe";
@@ -58,7 +58,7 @@ bool AvrGccDebugger::getVariables()
 
     if( !checkCommand( objdump ) )
     {
-        objdump = m_toolPath+"avr/bin/avr-objdump";
+        objdump = m_toolPath+"avr-objdump";
     #ifndef Q_OS_UNIX
         objdump += ".exe";
     #endif
@@ -118,8 +118,8 @@ bool AvrGccDebugger::mapFlashToSource()
         m_outPane->appendLine( "\n"+QObject::tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
         return false;
     }
-    QString avrSize = m_toolPath+"avr-size";
-    QString addr2li = m_toolPath+"avr-addr2line";
+    QString avrSize = m_toolPath+"avr/bin/avr-size";
+    QString addr2li = m_toolPath+"avr/bin/avr-addr2line";
 
 #ifndef Q_OS_UNIX
     avrSize += ".exe";
@@ -127,7 +127,7 @@ bool AvrGccDebugger::mapFlashToSource()
 #endif
     if( !checkCommand( avrSize ) )
     {
-        avrSize = m_toolPath+"avr/bin/avr-size";
+        avrSize = m_toolPath+"avr-size";
     #ifndef Q_OS_UNIX
         avrSize += ".exe";
     #endif
@@ -136,7 +136,7 @@ bool AvrGccDebugger::mapFlashToSource()
     }
     if( !checkCommand( addr2li ) )
     {
-        addr2li = m_toolPath+"avr/bin/avr-addr2line";
+        addr2li = m_toolPath+"avr-addr2line";
     #ifndef Q_OS_UNIX
         addr2li += ".exe";
     #endif
