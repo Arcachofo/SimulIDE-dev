@@ -68,8 +68,10 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     setFlag( QGraphicsItem::ItemStacksBehindParent, true );
     setFlag( QGraphicsItem::ItemIsSelectable, false );
 
-    QFont font( "Ubuntu", 5 );
-    font.setPixelSize(6);
+    QFont font( "Ubuntu Mono", 5 );
+    font.setPixelSize(7);
+    //font.setStretch( 110 );
+    //font.setLetterSpacing( QFont::PercentageSpacing, 105 );
     m_label.setFont( font );
     m_label.setText("");
     m_label.setBrush( QColor( 250, 250, 200 ) );
