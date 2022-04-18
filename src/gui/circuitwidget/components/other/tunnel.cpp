@@ -24,6 +24,7 @@
 #include "circuit.h"
 #include "e-node.h"
 #include "pin.h"
+#include "utils.h"
 
 #include "stringprop.h"
 #include "boolprop.h"
@@ -106,7 +107,7 @@ void Tunnel::setName( QString name )
     m_name = name;
     if( !m_packed ) m_pin[0]->setLabelText( name );
     if( name == "" ) m_size = 20;
-    else  m_size = m_pin[0]->labelSizeX()+4;
+    else  m_size = snapToGrid( m_pin[0]->labelSizeX()+4 );
     setRotated( m_rotated );
 
     if( name.isEmpty() ) { setEnode( NULL ); return; }
