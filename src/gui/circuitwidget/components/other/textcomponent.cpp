@@ -21,6 +21,8 @@
 #include <QPainter>
 #include <QTextDocument>
 
+#include <QDebug>
+
 #include "textcomponent.h"
 #include "itemlibrary.h"
 #include "circuit.h"
@@ -61,6 +63,7 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
 
     m_text = new QGraphicsTextItem( this );
     //m_text->setTextInteractionFlags( Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard | Qt::TextEditable);
+    //m_text->setTextInteractionFlags( Qt::TextEditorInteraction | Qt::TextBrowserInteraction );
     m_text->setTextInteractionFlags( 0 );
     m_text->setTextWidth( 90 );
     m_text->setFont( sansFont );
@@ -71,6 +74,7 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
     m_text->setCursor( Qt::OpenHandCursor );
     m_text->installEventFilter( this );
 
+    m_context = false;
     m_margin = 5;
     m_border = 1;
     updateGeometry( 0, 0, 0 );
@@ -94,7 +98,10 @@ new BoolProp  <TextComponent>( "Fixed_Width", tr("Fixed_Width"),""       , this,
 new StringProp<TextComponent>( "Text","","", this, &TextComponent::getText, &TextComponent::setText )
     }} );
 }
-TextComponent::~TextComponent(){}
+TextComponent::~TextComponent()
+{
+    delete m_text;
+}
 
 void TextComponent::updateGeometry(int, int, int)
 {
@@ -162,7 +169,7 @@ void TextComponent::setHidden( bool hid, bool hidLabel )
 {
     Component::setHidden( hid, hidLabel );
     updateGeometry( 0, 0, 0 );
-    this->setEnabled( false );
+    this->setEnabled( !hid );
 }
 
 void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
@@ -172,30 +179,32 @@ void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
         m_text->setTextInteractionFlags( Qt::TextEditorInteraction | Qt::TextBrowserInteraction ); //( Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard | Qt::TextEditable);
         m_text->setCursor( Qt::IBeamCursor );
         m_text->setFocus();
-        setSelected( false );
+        Circuit::self()->deselectAll();
+        Circuit::self()->accepKeys( false );
+        //setSelected( false );
 }   }
 
 bool TextComponent::eventFilter( QObject* object, QEvent* event )
 {
-    if( event->type() == QEvent::FocusIn )
+    if( event->type() == QEvent::GraphicsSceneContextMenu ) //Added
     {
-        if( object == m_text ) Circuit::self()->deselectAll();
+        m_context = true;
     }
-    else if( event->type() == QEvent::GraphicsSceneContextMenu ) //Added
+    else if( event->type() == QEvent::FocusOut )
     {
-        event->setAccepted( false );
-        return true;
+        if( m_context ) m_context = false;
+        else
+        {
+            m_text->setTextInteractionFlags( Qt::NoTextInteraction );
+            m_text->setCursor( Qt::OpenHandCursor );
+            Circuit::self()->accepKeys( true );
+        }
     }
-    return false;
+    return QObject::eventFilter( object, event );
 }
 
 void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    if( !m_text->hasFocus() )
-    {
-        m_text->setTextInteractionFlags( 0 );
-        m_text->setCursor( Qt::OpenHandCursor );
-    }
     p->setOpacity( m_opac );
 
     Component::paint( p, option, widget );
@@ -203,8 +212,8 @@ void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
     QPen pen( QColor( 0, 0, 0 ), m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
 
-    if( m_border >0 ) p->drawRect( m_area );
-    else              p->fillRect( m_area, p->brush() );
+    if( m_border > 0 ) p->drawRect( m_area );
+    else               p->fillRect( m_area, p->brush() );
 
     p->setOpacity( 1 );
 }

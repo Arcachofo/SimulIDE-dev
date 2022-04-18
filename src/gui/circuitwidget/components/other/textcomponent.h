@@ -65,6 +65,7 @@ class MAINMODULE_EXPORT TextComponent : public Component
         int  m_border;
 
         bool m_fixedW;
+        bool m_context;
         
         QString m_font;
 };

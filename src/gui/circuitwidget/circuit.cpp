@@ -60,6 +60,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_pasting    = false;
     m_deleting   = false;
     m_conStarted = false;
+    m_acceptKeys = true;
 
     new_connector = NULL;
     m_seqNumber   = 0;
@@ -792,6 +793,12 @@ void Circuit::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 
 void Circuit::keyPressEvent( QKeyEvent* event )
 {
+    if( !m_acceptKeys )  // Text Component
+    {
+        QGraphicsScene::keyPressEvent( event );
+        return;
+    }
+
     int key = event->key();
 
     if( m_conStarted )

@@ -66,6 +66,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void setChanged() { m_changed = true; }
 
         void deselectAll();
+        void accepKeys( bool a ) { m_acceptKeys = a; }
 
         void drawBackground( QPainter* painter, const QRectF &rect );
 
@@ -124,7 +125,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void mousePressEvent( QGraphicsSceneMouseEvent* event );
         void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
         void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
-        void keyPressEvent ( QKeyEvent* event );
+        void keyPressEvent( QKeyEvent* event );
         void keyReleaseEvent( QKeyEvent* event );
         void dropEvent( QGraphicsSceneDragDropEvent* event );
 
@@ -161,6 +162,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool m_animate;
         bool m_changed;
         bool m_busy;
+        bool m_acceptKeys;
 
         QPointF m_eventpoint;
         QPointF m_deltaMove;
