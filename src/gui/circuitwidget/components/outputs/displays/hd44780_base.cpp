@@ -122,8 +122,8 @@ void Hd44780_Base::functionSet( int data )
   
 void Hd44780_Base::C_D_Shift( int data )
 {
-    int dir = -1;    // Move Right/Left
-    if( data & 4 ) dir = 1;
+    int dir = 1;    // Move Right/Left
+    if( data & 4 ) dir = -1;
 
     if( data & 8 )     // Shift Cursor/Display
     {
