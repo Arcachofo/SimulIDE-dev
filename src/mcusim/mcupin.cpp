@@ -53,15 +53,9 @@ void McuPin::initialize()
     m_outCtrl = false;
     m_dirCtrl = false;
     m_isAnalog = false;
-
-    m_step = 0;
-    m_steps = Simulator::self()->slopeSteps();
-    //IoPin::initialize();
-
-    /*m_nextState = false;
-    m_outState  = false;
     m_portState = false;
-    m_isOut     = false;*/
+
+    IoPin::initialize();
 }
 
 void McuPin::stamp()
