@@ -23,13 +23,12 @@
 #include <QHash>
 
 #include "e_mcu.h"
-#include "mcubase.h"
-//#include "chip.h"
+#include "chip.h"
 
 class LibraryItem;
 class MCUMonitor;
 
-class MAINMODULE_EXPORT Mcu : public McuBase
+class MAINMODULE_EXPORT Mcu : public Chip
 {
         Q_OBJECT
 
@@ -39,8 +38,9 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         Mcu( QObject* parent, QString type, QString id );
         ~Mcu();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Mcu* self() { return m_pSelf; }
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
 
         virtual bool setPropStr( QString prop, QString val ) override;
 
@@ -50,8 +50,8 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         bool autoLoad() { return m_autoLoad; }
         void setAutoLoad( bool al ) { m_autoLoad = al; }
 
-        virtual double freq() override { return m_eMcu.m_freq; }
-        virtual void setFreq( double freq ) override { m_eMcu.setFreq( freq ); }
+        double freq() { return m_eMcu.m_freq; }
+        void setFreq( double freq ) { m_eMcu.setFreq( freq ); }
 
         bool rstPinEnabled();
         void enableRstPin( bool en );
@@ -62,15 +62,23 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         bool wdtEnabled();
         void enableWdt( bool en );
 
+        QString varList();
+        void setVarList( QString vl );
+
+        void setEeprom( QString eep );
+        QString getEeprom();
+
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
         virtual void remove() override;
 
-        virtual void reset() override { m_eMcu.cpuReset( true ); }
+        QString device() { return m_device; }
 
-        virtual bool load( QString fileName ) override;
+        void reset() { m_eMcu.cpuReset( true ); }
+
+        bool load( QString fileName );
 
         virtual void addPin( QString id, QString type, QString label,
                              int pos, int xpos, int ypos, int angle , int length=8);
@@ -90,6 +98,8 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         void saveEEPROM();
 
     protected:
+ static Mcu* m_pSelf;
+
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
 
@@ -99,6 +109,7 @@ class MAINMODULE_EXPORT Mcu : public McuBase
         QString m_subcDir;      // Subcircuit Path
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_dataFile;
+        QString m_device;       // Name of device
 
         eMcu m_eMcu;
 

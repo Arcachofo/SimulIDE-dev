@@ -5,7 +5,7 @@
 
 #include "ui_mcumonitor.h"
 
-class McuInterface;
+class eMcu;
 class MemTable;
 class RamTable;
 class QTableWidget;
@@ -15,7 +15,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
     Q_OBJECT
     
     public:
-        MCUMonitor( QWidget* parent=0, McuInterface* mcu=0 );
+        MCUMonitor( QWidget* parent=0, eMcu* mcu=0 );
 
         void updateStep();
         void updateRamTable();
@@ -29,7 +29,7 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
         void on_jumpButton_toggled( bool jump );
 
     private:
-        McuInterface* m_processor;
+        eMcu* m_processor;
 
         RamTable* m_ramTable;
         MemTable* m_ramMonitor;

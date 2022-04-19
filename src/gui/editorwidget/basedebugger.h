@@ -26,7 +26,7 @@
 
 class BaseDebugger : public Compiler    // Base Class for all debuggers
 {
-        friend class McuInterface;
+        friend class eMcu;
 
     Q_OBJECT
     public:

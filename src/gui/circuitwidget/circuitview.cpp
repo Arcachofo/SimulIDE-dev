@@ -27,7 +27,7 @@
 #include "circuit.h"
 #include "mainwindow.h"
 #include "component.h"
-#include "mcubase.h"
+#include "mcu.h"
 #include "subcircuit.h"
 #include "utils.h"
 #include "e-diode.h"
@@ -128,10 +128,10 @@ void CircuitView::setCircTime( uint64_t tStep )
     
     QString strMcu = " ";
     
-    if( McuBase::self() )
+    if( Mcu::self() )
     {
-        QString device = McuBase::self()->device();
-        QString freq = QString::number( McuBase::self()->freq()*1e-6 );
+        QString device = Mcu::self()->device();
+        QString freq = QString::number( Mcu::self()->freq()*1e-6 );
         strMcu = "      Mcu: "+device+" at "+freq+" MHz";
     }
     m_info->setPlainText( tr("Time: ")+strH+":"+strM+":"+strS+" s  "

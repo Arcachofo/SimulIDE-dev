@@ -20,6 +20,7 @@
         <item name="Rotary_SW4" folder="tools" info=" Rotary switch for 4 positions" /> 
         <item name="Rotary_SW8" folder="tools" info=" Rotary switch for 8 positions" /> 
         <item name="Rotary_SW16" folder="tools" info=" Rotary switch for 16 positions" />
+        <item name="5bit_count" folder="tools" info=" 5 Bit Counter" /> 
 
     </itemset>
 

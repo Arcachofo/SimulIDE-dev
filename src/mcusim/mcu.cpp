@@ -47,6 +47,8 @@
 
 #include "propdialog.h"
 
+Mcu* Mcu::m_pSelf = NULL;
+
 LibraryItem* Mcu::libraryItem()
 {
     return new LibraryItem(
@@ -74,12 +76,12 @@ Component* Mcu::construct( QObject* parent, QString type, QString id )
 }
 
 Mcu::Mcu( QObject* parent, QString type, QString id )
-   : McuBase( parent, type, id )
+   : Chip( parent, type, id )
    , m_eMcu( id )
 {
     qDebug() << "        Initializing"<<id;
     m_pSelf = this;
-    m_proc  = &m_eMcu;
+    //m_proc  = &m_eMcu;
     m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
     if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit
     //m_id.replace("~","_");
@@ -161,10 +163,15 @@ new BoolProp  <Mcu>( "Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rs
 new BoolProp  <Mcu>( "Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::extOscEnabled, &Mcu::enableExtOsc ),
 new BoolProp  <Mcu>( "Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled,    &Mcu::enableWdt )
     }} );
+    addPropGroup( {"Hidden", {
+new StringProp<Mcu>( "varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
+new StringProp<Mcu>( "eeprom" , "","", this, &Mcu::getEeprom, &Mcu::setEeprom )
+    }} );
 }
 Mcu::~Mcu()
 {
     if( m_mcuMonitor ) delete m_mcuMonitor;
+    if( m_pSelf == this ) m_pSelf= NULL;
 }
 
 bool Mcu::setPropStr( QString prop, QString val )
@@ -230,6 +237,43 @@ void Mcu::setProgram( QString pro )
     { load( m_eMcu.m_firmware ); }
 }
 
+QString Mcu::varList()
+{
+    return m_eMcu.getRamTable()->getVarSet().join(",");
+}
+
+void Mcu::setVarList( QString vl )
+{
+    m_eMcu.getRamTable()->loadVarSet( vl.split(",") );
+}
+
+void Mcu::setEeprom( QString eep )
+{
+    if( eep.isEmpty() ) return;
+    QVector<int> eeprom;
+    QStringList list = eep.split(",");
+    for( QString val : list ) eeprom.append( val.toUInt() );
+
+    if( eeprom.size() > 0 ) m_eMcu.setEeprom( &eeprom );
+}
+
+QString Mcu::getEeprom()  // Used by property, stripped to last written value.
+{
+    QString eeprom;
+    int size = m_eMcu.romSize();
+    if( size > 0 )
+    {
+        bool empty = true;
+        for( int i=size-1; i>=0; --i )
+        {
+            uint8_t val = m_eMcu.getRomValue( i );
+            if( val < 0xFF ) empty = false;
+            if( empty ) continue;
+            eeprom.prepend( QString::number( val )+"," );
+    }   }
+    return eeprom;
+}
+
 void Mcu::loadEEPROM()
 {
    QVector<int>* eeprom = m_eMcu.eeprom();
@@ -264,7 +308,7 @@ void Mcu::slotLoad()
 void Mcu::slotReload()
 {
     if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );
-    else QMessageBox::warning( 0, tr("No File:"), tr("No File to reload ") );
+    else QMessageBox::warning( 0, "Mcu::slotReload", tr("No File to reload ") );
 }
 
 bool Mcu::load( QString fileName )
@@ -373,7 +417,7 @@ void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 void Mcu::slotmain()
 {
     m_pSelf = this;
-    /// m_proc->setMain();
+    m_eMcu.setMain();
     Circuit::self()->update();
 }
 

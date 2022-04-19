@@ -20,7 +20,7 @@
 #include <QFileInfo>
 
 #include "gcbdebugger.h"
-#include "mcuinterface.h"
+#include "e_mcu.h"
 #include "outpaneltext.h"
 #include "utils.h"
 
@@ -188,7 +188,7 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             int  address = text.last().toInt();
             QString type = "uint8";
             if( m_varList.contains( name ) ) type = m_varList.value( name );
-            McuInterface::self()->addWatchVar( name, address ,type  );
+            eMcu::self()->addWatchVar( name, address ,type  );
             
             if( type.contains( "array" ) )
             {
@@ -200,7 +200,7 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
                 for( int i=1; i<size; i++ )
                 {
                     QString elmName = name+"("+QString::number( i )+")";
-                    McuInterface::self()->addWatchVar( elmName, address+i ,"uint8"  );
+                    eMcu::self()->addWatchVar( elmName, address+i ,"uint8"  );
                     if( !m_varList.contains( elmName ) ) 
                     {
                         m_varList[ elmName ] = m_typesList.value("uint8");

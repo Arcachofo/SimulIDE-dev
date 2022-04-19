@@ -22,8 +22,7 @@
 #include "editorwindow.h"
 #include "circuitwidget.h"
 #include "mainwindow.h"
-#include "mcuinterface.h"
-#include "mcubase.h"
+#include "mcu.h"
 #include "simulator.h"
 #include "compiler.h"
 #include "utils.h"
@@ -94,7 +93,7 @@ void EditorWindow::run()
     if( m_state == DBG_STOPPED ) return;
     m_state = DBG_RUNNING;
     if( m_driveCirc ) Simulator::self()->resumeSim();
-    McuInterface::self()->stepOne( m_debugDoc->debugLine() );
+    eMcu::self()->stepOne( m_debugDoc->debugLine() );
 }
 
 void EditorWindow::step()
@@ -152,7 +151,7 @@ bool EditorWindow::initDebbuger()
         m_debugDoc->startDebug();
 
         stepOverAct->setVisible( m_stepOver );
-        McuInterface::self()->setDebugging( true );
+        eMcu::self()->setDebugging( true );
         reset();
         setDriveCirc( m_driveCirc );
         CircuitWidget::self()->powerCircDebug( m_driveCirc );
@@ -175,7 +174,7 @@ void EditorWindow::stepDebug( bool over )
     }else */
     {
         m_state = DBG_STEPING;
-        McuInterface::self()->stepOne( m_debugDoc->debugLine() );
+        eMcu::self()->stepOne( m_debugDoc->debugLine() );
         if( m_driveCirc ) Simulator::self()->resumeSim();
 }   }
 
@@ -186,12 +185,12 @@ void EditorWindow::lineReached( int line ) // Processor reached PC related to so
     if( ( m_state == DBG_RUNNING )           // We are running to Breakpoint
      && !m_debugDoc->hasBreakPoint( line ) ) // Breakpoint not reached, Keep stepping
     {
-        McuInterface::self()->stepOne( line );
+        eMcu::self()->stepOne( line );
         return;
     }
     pause();
 
-    int cycle = McuInterface::self()->cycle();
+    int cycle = eMcu::self()->cycle();
     m_outPane.appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
     m_lastCycle = cycle;
     m_debugDoc->updateScreen();
@@ -202,7 +201,7 @@ void EditorWindow::stopDebbuger()
     if( m_state > DBG_STOPPED )
     {
         CircuitWidget::self()->powerCircOff();
-        McuInterface::self()->setDebugging( false );
+        eMcu::self()->setDebugging( false );
 
         m_state = DBG_STOPPED;
         m_debugDoc->setDebugLine( 0 );
@@ -219,7 +218,7 @@ void EditorWindow::reset()
     m_lastCycle = 0;
     m_state = DBG_PAUSED;
 
-    McuBase::self()->reset();
+    if( Mcu::self() ) Mcu::self()->reset();
     m_debugDoc->setDebugLine( 1 );
     m_debugDoc->updateScreen();
 }

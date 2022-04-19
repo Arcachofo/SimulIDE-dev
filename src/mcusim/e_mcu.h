@@ -27,7 +27,7 @@
 #include "mcuuart.h"
 #include "mcuinterrupts.h"
 #include "mcudataspace.h"
-#include "mcuinterface.h"
+#include "e-element.h"
 
 class McuCore;
 class McuTimer;
@@ -47,7 +47,7 @@ enum mcuState_t{
 
 class McuVref;
 
-class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
+class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 {
         friend class McuCreator;
         friend class McuCore;
@@ -57,30 +57,40 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         eMcu( QString id );
         ~eMcu();
 
+ static eMcu* self() { return m_pSelf; }
+
         virtual void initialize() override;
         virtual void runEvent() override;
 
-        // Overrides of McuInterface-----------------------------------
-        //-------------------------------------------------------------
-        virtual void stepCpu() override;
+        void stepCpu();
+        void stepDebug();
+        void stepOne( int line );
 
-        virtual uint8_t  getRamValue( int address ) override;
-        virtual void     setRamValue( int address, uint8_t value ) override;
-        virtual uint16_t getFlashValue( int address ) override { return m_progMem[address]; }
-        virtual void     setFlashValue( int address, uint16_t value ) override { m_progMem[address] = value; }
-        virtual uint8_t  getRomValue( int address ) override { return m_eeprom[address]; }
-        virtual void     setRomValue( int address, uint8_t value ) override { m_eeprom[address] = value; }
+        void setDebugger( BaseDebugger* deb );
+        void setDebugging( bool d ) { m_debugging = d; }
 
-        virtual uint16_t getRegAddress( QString reg ) override;  // Get Reg address by name
+        uint16_t getFlashValue( int address ) { return m_progMem[address]; }
+        void     setFlashValue( int address, uint16_t value ) { m_progMem[address] = value; }
+        uint32_t flashSize(){ return m_flashSize; }
+        uint32_t wordSize() { return m_wordSize; }
 
-        virtual int status() override;
-        virtual int pc() override;
-        virtual uint64_t cycle() override { return m_cycle; }
-        //-------------------------------------------------------------
-        // End Overrides of McuInterface-------------------------------
+        virtual QVector<int>* eeprom() { return &m_eeprom; }
+        virtual void setEeprom( QVector<int>* eep );
+        uint32_t romSize()  { return m_romSize; }
+        uint8_t  getRomValue( int address ) { return m_eeprom[address]; }
+        void     setRomValue( int address, uint8_t value ) { m_eeprom[address] = value; }
 
-        void cpuReset( bool reset );
+
+
+        int status();
+        int pc();
+        uint64_t cycle(){ return m_cycle; }
+
+
+        void cpuReset( bool r );
         void sleep( bool s );
+
+        QString getFileName() { return m_firmware; }
 
         double freqMHz() { return m_freq*1e-6; }
         void setFreq( double freq );
@@ -106,11 +116,28 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         McuCore* cpu;
         int cyclesDone;
 
+        void setMain() { m_pSelf = this; }
+
     protected:
+ static eMcu* m_pSelf;
+
+        void reset();
+
+        QString m_firmware;     // firmware file loaded
+        QString m_device;
+
         mcuState_t m_state;
 
         uint64_t m_cycle;
         std::vector<uint16_t> m_progMem;  // Program memory
+        uint32_t m_flashSize;
+        uint8_t  m_wordSize; // Size of Program memory word in bytes
+
+        QHash<QString, int>   m_regsTable;   // int max 32 bits
+
+        uint32_t m_romSize;
+        QVector<int> m_eeprom;
+
         QHash<uint16_t, uint16_t> m_cfgWords; // Config words
 
         Interrupts m_interrupts;
@@ -122,11 +149,18 @@ class MAINMODULE_EXPORT eMcu : public McuInterface, public DataSpace
         McuVref* m_vrefModule;
         McuWdt* m_wdt;
 
-        bool m_resetState;
+        //bool m_resetState;
 
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle
         uint64_t m_simCycPI;     // Simulation cycles per Instruction Cycle
+
+        // Debugger:
+        BaseDebugger* m_debugger;
+
+        bool m_debugging;
+        bool m_debugStep;
+        int  m_prevLine;
 };
 
 #endif

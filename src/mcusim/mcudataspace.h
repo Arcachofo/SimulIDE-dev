@@ -24,6 +24,9 @@
 #include <vector>
 
 #include "mcutypes.h"
+#include "ramtable.h"
+
+class RamTable;
 
 class MAINMODULE_EXPORT DataSpace
 {
@@ -33,13 +36,21 @@ class MAINMODULE_EXPORT DataSpace
 
         void initialize();
 
+        uint32_t ramSize()  { return m_ramSize; }
+        uint8_t  getRamValue( int address );
+        void     setRamValue( int address, uint8_t value );
         uint8_t* getRam() { return m_dataMem.data(); }  // Get pointer to Ram data
         uint16_t getMapperAddr( uint16_t addr ) { return m_addrMap[addr]; } // Get mapped addresses in Data space
 
+        uint16_t getRegAddress( QString reg );  // Get Reg address by name
         uint8_t* getReg( QString reg );            // Get pointer to Reg data by name
-        bool regExist( QString reg ) { return m_regInfo.contains( reg ); }
+        bool     regExist( QString reg ) { return m_regInfo.contains( reg ); }
         uint8_t  readReg( uint16_t addr );         // Read Register (call watchers)
         void     writeReg(uint16_t addr, uint8_t v, bool masked=true);// Write Register (call watchers)
+
+        void updateRamValue( QString name );
+        void addWatchVar( QString name, int address, QString type );
+        RamTable* getRamTable() { return m_ramTable; }
 
         QHash<QString, uint8_t>*       bitMasks() { return &m_bitMasks; }
         QHash<QString, uint16_t>*      bitRegs() { return &m_bitRegs; }
@@ -52,8 +63,9 @@ class MAINMODULE_EXPORT DataSpace
         uint16_t m_regStart;                       // First address of SFR section
         uint16_t m_regEnd;                         // Last  address of SFR Section
 
-        std::vector<uint16_t> m_addrMap;           // Maps addresses in Data space
+        uint32_t m_ramSize;
         std::vector<uint8_t>  m_dataMem;           // Whole Ram space including Registers
+        std::vector<uint16_t> m_addrMap;           // Maps addresses in Data space
         std::vector<uint8_t>  m_regMask;           // Registers Write mask
 
         QHash<QString, regInfo_t>     m_regInfo;   // Access Reg Info by  Reg name
@@ -62,6 +74,9 @@ class MAINMODULE_EXPORT DataSpace
         QHash<QString, uint16_t>      m_bitRegs;   // Access Reg. address by bit name
 
         uint16_t m_sregAddr;                       // STATUS Reg Address
+
+        RamTable* m_ramTable;
+        QHash<QString, QString> m_typeTable;
 };
 
 #endif

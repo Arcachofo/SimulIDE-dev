@@ -24,7 +24,7 @@
 #ifndef RAMTABLE_H
 #define RAMTABLE_H
 
-class McuInterface;
+class eMcu;
 class BaseDebugger;
 class QStandardItemModel;
 class QSplitter;
@@ -34,7 +34,7 @@ class RamTable : public QWidget, private Ui::RamTable
     Q_OBJECT
 
     public:
-        RamTable( QWidget* parent=0, McuInterface* processor=0 );
+        RamTable( QWidget* parent=0, eMcu* processor=0 );
 
         void updateValues();
 
@@ -71,7 +71,7 @@ class RamTable : public QWidget, private Ui::RamTable
         void slotContextMenu( const QPoint& );
 
     private:
-        McuInterface* m_processor;
+        eMcu* m_processor;
         BaseDebugger*  m_debugger;
 
         QStandardItemModel* m_registerModel;

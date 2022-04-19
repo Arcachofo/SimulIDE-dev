@@ -21,7 +21,6 @@
 #include <QDebug>
 
 #include "sdccdebugger.h"
-#include "mcuinterface.h"
 #include "codeeditor.h"
 #include "utils.h"
 

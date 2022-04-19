@@ -26,12 +26,12 @@
 #include <math.h>
 
 #include "ramtable.h"
-#include "mcuinterface.h"
+#include "e_mcu.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
 #include "utils.h"
 
-RamTable::RamTable( QWidget* parent, McuInterface* processor )
+RamTable::RamTable( QWidget* parent, eMcu* processor )
         : QWidget( parent )
         , m_status( 1, 8 )
         , m_pc( 1, 2 )

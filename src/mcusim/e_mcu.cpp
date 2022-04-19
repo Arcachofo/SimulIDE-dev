@@ -26,13 +26,19 @@
 #include "mcuvref.h"
 #include "mcusleep.h"
 #include "simulator.h"
+#include "basedebugger.h"
+#include "editorwindow.h"
+
+eMcu* eMcu::m_pSelf = NULL;
 
 eMcu::eMcu( QString id )
-    : McuInterface( id )
-    , DataSpace()
+    : DataSpace()
+    , eElement( id )
     , m_interrupts( this )
     , m_timers( this )
 {
+    m_pSelf = this;
+
     cpu = NULL;
     m_wdt = NULL;
     m_vrefModule = NULL;
@@ -40,6 +46,20 @@ eMcu::eMcu( QString id )
 
     m_cPerInst = 1;
     setFreq( 16*1e6 );
+
+    m_flashSize = 0;
+    m_wordSize  = 2;
+
+    m_romSize   = 0;
+
+
+    m_firmware = "";
+    m_device   = "";
+    m_debugger = NULL;
+    m_debugging   = false;
+
+    m_ramTable = new RamTable( NULL, this );
+    m_ramTable->hide();
 }
 
 eMcu::~eMcu()
@@ -47,27 +67,21 @@ eMcu::~eMcu()
     if( cpu ) delete cpu;
     m_interrupts.remove();
     for( McuModule* module : m_modules ) delete module;
+    if( m_pSelf == this ) m_pSelf= NULL;
 }
 
 void eMcu::initialize()
 {
-    m_resetState = false;
-    m_debugStep = false;
-    m_cycle = 0;
-    cyclesDone = 0;
-
-    cpu->reset();
-    m_interrupts.resetInts();
-    DataSpace::initialize();
-
+    reset();
     m_state = mcuRunning;
+
     Simulator::self()->cancelEvents( this );
     Simulator::self()->addEvent( 1, this );
 }
 
 void eMcu::runEvent()
 {
-    if( m_resetState ) return;
+    if( m_state == mcuStopped ) return;
     if( m_debugging )
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
@@ -79,6 +93,17 @@ void eMcu::runEvent()
         stepCpu();
         Simulator::self()->addEvent( cyclesDone*m_simCycPI, this );
 }   }
+
+void eMcu::reset()
+{
+    m_debugStep = false;
+    m_cycle = 0;
+    cyclesDone = 0;
+
+    cpu->reset();
+    m_interrupts.resetInts();
+    DataSpace::initialize();
+}
 
 void eMcu::stepCpu()
 {
@@ -92,14 +117,48 @@ void eMcu::stepCpu()
     m_cycle += cyclesDone;
 }
 
-void eMcu::cpuReset( bool reset )
+void eMcu::stepDebug()
 {
-    if( reset ) initialize();
+    if( !m_debugStep ) return;
+
+    int lastPC = pc();
+    stepCpu();
+    int PC = pc();
+
+    if( ( lastPC != PC )
+    && ( m_debugger->m_flashToSource.contains( PC ) ) )
+    {
+        int line = m_debugger->m_flashToSource[ PC ];
+        if( line != m_prevLine )
+        {
+            m_debugStep = false;
+            EditorWindow::self()->lineReached( line );
+}   }   }
+
+void eMcu::stepOne( int line )
+{
+    m_prevLine = line;
+    m_debugStep = true;
+}
+
+void eMcu::setDebugger( BaseDebugger* deb )
+{
+    m_debugger = deb;
+    m_ramTable->setDebugger( deb );
+}
+
+void eMcu::cpuReset( bool r )
+{
+    if( r )
+    {
+        reset();
+        m_state = mcuStopped;
+    }
     else{
+        m_state = mcuRunning;
         Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( 1, this );
     }
-    m_resetState = reset;
 }
 
 void eMcu::sleep( bool s )
@@ -128,20 +187,17 @@ void eMcu::setFreq( double freq )
     m_simCycPI = 1e12*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }
 
-uint16_t eMcu::getRegAddress( QString reg )// Get Reg address by name
+
+
+
+
+void eMcu::setEeprom( QVector<int>* eep )
 {
-    uint16_t addr = McuInterface::getRegAddress( reg );
-    if( addr == 65535 )
-    {
-        if( m_regInfo.contains( reg ) ) addr = m_regInfo.value( reg ).address;
-    }
-    return addr;
+    int size = m_romSize;
+    if( eep->size() < size ) size = eep->size();
+
+    for( int i=0; i<size; ++i ) setRomValue( i, eep->at(i) );
 }
-
-uint8_t eMcu::getRamValue( int address ) { return readReg( getMapperAddr(address) ); }
-
-void eMcu::setRamValue( int address, uint8_t value ) // Setting RAM from external source (McuMonitor)
-{ writeReg( getMapperAddr(address), value ); }
 
 bool eMcu::setCfgWord( uint16_t addr, uint16_t data )
 {

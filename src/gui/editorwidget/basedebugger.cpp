@@ -20,11 +20,10 @@
 #include <QFileInfo>
 
 #include "basedebugger.h"
-#include "mcuinterface.h"
 #include "editorwindow.h"
 #include "compilerprop.h"
 #include "simulator.h"
-#include "mcubase.h"
+#include "mcu.h"
 #include "utils.h"
 
 BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane )
@@ -40,7 +39,7 @@ BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane )
 }
 BaseDebugger::~BaseDebugger( )
 {
-    if( McuInterface::self() ) McuInterface::self()->getRamTable()->remDebugger( this );
+    if( eMcu::self() ) eMcu::self()->getRamTable()->remDebugger( this );
 }
 
 bool BaseDebugger::upload()
@@ -50,20 +49,20 @@ bool BaseDebugger::upload()
         m_outPane->appendLine( "\n"+tr("Error: Hex file doesn't exist:")+"\n"+m_firmware );
         return false;
     }
-    if( !McuBase::self() )
+    if( !Mcu::self() )
     {
         m_outPane->appendLine( "\n"+tr("Error: No Mcu in Simulator... ") );
         return false;
     }
-    bool ok = McuBase::self()->load( m_firmware );
+    bool ok = Mcu::self()->load( m_firmware );
     if( ok ) m_outPane->appendText( "\n"+tr("FirmWare Uploaded to ") );
     else     m_outPane->appendText( "\n"+tr("Error uploading firmware to ") );
-    m_outPane->appendLine( McuBase::self()->device() );
+    m_outPane->appendLine( Mcu::self()->device() );
     m_outPane->appendLine( m_firmware+"\n" );
 
     if( ok )
     {
-        McuInterface::self()->setDebugger( this );
+        eMcu::self()->setDebugger( this );
         ok = postProcess();
     }
     return ok;

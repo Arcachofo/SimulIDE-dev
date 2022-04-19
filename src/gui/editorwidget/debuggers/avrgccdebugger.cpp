@@ -20,7 +20,7 @@
 #include <QFileInfo>
 
 #include "avrgccdebugger.h"
-#include "mcuinterface.h"
+#include "e_mcu.h"
 #include "outpaneltext.h"
 #include "codeeditor.h"
 #include "utils.h"
@@ -102,7 +102,7 @@ bool AvrGccDebugger::getVariables()
         }
         address -= 0x800000;          // 0x800000 offset
 
-        McuInterface::self()->addWatchVar( symbol, address, type );
+        eMcu::self()->addWatchVar( symbol, address, type );
         m_varNames.append( symbol );
         //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
     }

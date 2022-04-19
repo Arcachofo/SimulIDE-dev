@@ -23,7 +23,7 @@
 //#include <QDebug>
 
 #include "gputilsdebug.h"
-#include "mcuinterface.h"
+#include "e_mcu.h"
 #include "basedebugger.h"
 #include "outpaneltext.h"
 #include "utils.h"
@@ -95,7 +95,7 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
             if( m_typesList.contains(size) ) type = m_typesList.value( size );
         }*/
         if( type.isEmpty() ) continue;
-        McuInterface::self()->addWatchVar( symbol, address, type );
+        eMcu::self()->addWatchVar( symbol, address, type );
         varNames.append( symbol );
         //qDebug() << "GputilsDebug::getData  variable "<<type<<symbol<<address;
     }

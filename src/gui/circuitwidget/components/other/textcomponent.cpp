@@ -21,8 +21,6 @@
 #include <QPainter>
 #include <QTextDocument>
 
-#include <QDebug>
-
 #include "textcomponent.h"
 #include "itemlibrary.h"
 #include "circuit.h"
