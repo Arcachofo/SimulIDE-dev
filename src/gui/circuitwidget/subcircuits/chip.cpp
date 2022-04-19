@@ -127,7 +127,7 @@ void Chip::initChip()
             {
                 /// setSubcTypeStr( root.attribute("type") );
 
-                if( m_subcType > Board )
+                if( m_subcType >= Board )
                     setTransformOriginPoint( togrid( boundingRect().center()) );
             }
             if( root.hasAttribute("name"))
