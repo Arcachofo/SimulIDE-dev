@@ -53,9 +53,7 @@ class MAINMODULE_EXPORT KY040 : public Component, public eElement
 
     private:
         int m_steps;
-        //uint m_deltaS;         // Dial steps per half rotary step (pin change)
         int m_prevDialVal;
-        //int m_dialDelta;
         int m_delta;
         uint64_t m_stepDelta;
         int m_posA;
