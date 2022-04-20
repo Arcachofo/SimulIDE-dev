@@ -127,7 +127,7 @@ void Node::joinConns( int c0, int c1 )
         else while( !list1.isEmpty() ) plist.append( list1.takeFirst() );
 
         con->setPointList( plist );
-        con->closeCon( pin1->conPin(), true );
+        con->closeCon( pin1->conPin() );
         if( this->isSelected() ) con->setSelected( true );
     }
     pin0->setEnode( NULL );

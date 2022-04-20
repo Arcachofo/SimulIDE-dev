@@ -47,9 +47,7 @@ void CompPluginDialog::addItem( QTreeWidgetItem* item )
     QString itemName = item->text( 0 );
 
     QListWidgetItem* listItem = new QListWidgetItem( itemName );
-
-    if( item->isHidden() ) listItem->setCheckState( Qt::Unchecked );
-    else                   listItem->setCheckState( Qt::Checked );
+    listItem->setCheckState( item->isHidden() ? Qt::Unchecked : Qt::Checked );
 
     m_compList->addItem( listItem );
     m_qtwItem[ listItem ] = item;
@@ -60,15 +58,10 @@ void CompPluginDialog::addItem( QTreeWidgetItem* item )
         listItem->setBackgroundColor( QColor(240, 235, 245));
         listItem->setForeground( QBrush( QColor( 110, 95, 50 )));
 
-        for( int i=0; i<childCount; i++ )
-        {
-            addItem( item->child( i ) );
-        }
+        for( int i=0; i<childCount; i++ ) addItem( item->child( i ) );
     }
-    else
-    {
-        listItem->setIcon( QIcon(":/blanc.png") );
-}   }
+    else listItem->setIcon( QIcon(":/blanc.png") );
+}
 
 void CompPluginDialog::setPluginList()
 {

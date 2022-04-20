@@ -52,11 +52,10 @@ eMcu::eMcu( QString id )
 
     m_romSize   = 0;
 
-
     m_firmware = "";
     m_device   = "";
     m_debugger = NULL;
-    m_debugging   = false;
+    m_debugging = false;
 
     m_ramTable = new RamTable( NULL, this );
     m_ramTable->hide();

@@ -700,7 +700,7 @@ void Circuit::newconnector( Pin* startpin )
 void Circuit::closeconnector( Pin* endpin )
 {
     m_conStarted = false;
-    new_connector->closeCon( endpin, /*connect=*/true );
+    new_connector->closeCon( endpin );
 }
 
 void Circuit::deleteNewConnector()

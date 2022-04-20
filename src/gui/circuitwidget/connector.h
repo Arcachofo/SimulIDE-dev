@@ -41,8 +41,8 @@ class MAINMODULE_EXPORT Connector : public CompBase
 
         void dummySetter( QString ) {;}
 
-        QString startPinId() { return m_startpinid; }
-        QString endPinId()   { return m_endpinid; }
+        QString startPinId();
+        QString endPinId();
         Pin* startPin() { return m_startPin;}
         void setStartPin( Pin* pin) { m_startPin = pin; }
         Pin* endPin() { return m_endPin; }
@@ -59,7 +59,7 @@ class MAINMODULE_EXPORT Connector : public CompBase
         void remNullLines();
         void refreshPointList();
         void updateConRoute( Pin* nod, QPointF this_point );
-        void closeCon( Pin* endpin, bool connect=false );
+        void closeCon( Pin* endpin );
         void splitCon( int index, Pin* pin1, Pin* pin2 );
 
         void updateLines();
@@ -87,9 +87,6 @@ class MAINMODULE_EXPORT Connector : public CompBase
         int m_lastindex;
         
         bool m_isBus;
-        
-        QString m_startpinid;
-        QString m_endpinid;
 
         Pin*    m_startPin;
         Pin*    m_endPin;
