@@ -57,6 +57,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         void invertPin( bool invert );
         void setPinId( QString id );
         void setPinName( QString name );
+        void setPinAngle( int i);
         void boardMode();
         void savingCirc();
         void mainComp() { Component::m_selMainCo = true; }
@@ -107,6 +108,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip
 class QLabel;
 class QLineEdit;
 class QCheckBox;
+class QComboBox;
 
 class EditDialog : public QDialog
 {
@@ -126,6 +128,9 @@ private:
 
     QLabel*    m_idLabel;
     QLineEdit* m_idLineEdit;
+
+    QLabel*    m_angleLabel;
+    QComboBox* m_angleBox;
 
     QCheckBox* m_invertCheckBox;
     QCheckBox* m_unuseCheckBox;

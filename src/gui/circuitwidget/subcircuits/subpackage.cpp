@@ -26,6 +26,7 @@
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <QComboBox>
 
 #include "subpackage.h"
 #include "itemlibrary.h"
@@ -199,42 +200,27 @@ void SubPackage::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
         event->accept();
 
         int pinLenth = m_eventPin->length();
+
         int Xmax = m_area.width();
         int Ymax = m_area.height();
-        int pinX = m_eventPin->pos().x();
-        int pinY = m_eventPin->pos().y();
+        int Xmin = 0;
+        int Ymin = 0;
+        if     ( m_angle == 180 ) { Xmin -= pinLenth; Xmax -= pinLenth; } // Left
+        else if( m_angle == 0 )   { Xmin += pinLenth; Xmax += pinLenth; } // Right
+        else if( m_angle == 90 )  { Ymin -= pinLenth; Ymax -= pinLenth; } // Top
+        else if( m_angle == 270 ) { Ymin += pinLenth; Ymax += pinLenth; } // Bottom
+
         QPointF delta = toCompGrid(event->scenePos()) - toCompGrid(event->lastScenePos());
-        
         int deltaX = delta.x();
         int deltaY = delta.y();
+        int pinX = m_eventPin->pos().x() + deltaX;
+        int pinY = m_eventPin->pos().y() + deltaY;
 
-        if( (m_angle == 0) || (m_angle == 180) )   // Right or Left
-        {
-            if( (pinY >= Ymax) && (deltaY>0) ) return;
-            if( (pinY <= 0)    && (deltaY<0) ) return;
-            else{
-                if( m_angle == 0 )    // Right
-                {
-                    if( (pinX >= Xmax+pinLenth) && (deltaX>0) ) return;
-                    if( (pinX <= 16+pinLenth) && (deltaX<0) ) return;
-                }else                  // Left
-                {
-                    if( (pinX >= Xmax-16-pinLenth) && (deltaX>0) ) return;
-                    if( (pinX <= -pinLenth) && (deltaX<0) ) return;
-        }   }   }
-        else if( (m_angle == 90) || (m_angle == 270) )  // Top or Bottom
-        {
-            if( (pinX >= Xmax) && (deltaX>0) ) return;
-            if( (pinX <= 0)    && (deltaX<0) ) return;
-            else{
-                if( m_angle == 90 )   // Top
-                {
-                    if( (pinY >= Ymax-16-pinLenth) && (deltaY>0) ) return;
-                    if( (pinY <= -pinLenth) && (deltaY<0) ) return;
-                }else{                 // Bottom
-                    if( (pinY >= Ymax+pinLenth) && (deltaY>0) ) return;
-                    if( (pinY <= 16+pinLenth) && (deltaY<0) ) return;
-        }   }   }
+        if     ( pinX > Xmax ) deltaX -= pinX-Xmax;
+        else if( pinX < Xmin ) deltaX -= pinX-Xmin;
+        if     ( pinY > Ymax ) deltaY -= pinY-Ymax;
+        else if( pinY < Ymin ) deltaY -= pinY-Ymin;
+
         m_eventPin->moveBy( deltaX, deltaY );
     }
     else Component::mouseMoveEvent( event );
@@ -438,6 +424,17 @@ void SubPackage::setPinName( QString name )
 {
     m_eventPin->setLabelText( name );
     m_changed = true;
+}
+
+void SubPackage::setPinAngle( int i )
+{
+    int angle = 0;
+    if     ( i == 1 ) angle = 180;
+    else if( i == 2 ) angle = 90;
+    else if( i == 3 ) angle = 270;
+    m_eventPin->setPinAngle( angle );
+    m_eventPin->setLabelPos();
+    update();
 }
 
 void SubPackage::invertPin( bool invert )
@@ -663,6 +660,19 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     idLayout->addWidget( m_idLabel );
     idLayout->addWidget( m_idLineEdit );
 
+    int angle = eventPin->pinAngle();
+    int i = 0;
+    if     ( angle == 180 ) i = 1;
+    else if( angle == 90  ) i = 2;
+    else if( angle == 270 ) i = 3;
+    m_angleLabel = new QLabel( tr("Pin Angle:") );
+    m_angleBox = new QComboBox();
+    m_angleBox->addItems( {tr("Right"), tr("Left"), tr("Top"), tr("Bottom")} );
+    m_angleBox->setCurrentIndex( i );
+    QHBoxLayout* angleLayout = new QHBoxLayout;
+    angleLayout->addWidget( m_angleLabel );
+    angleLayout->addWidget( m_angleBox );
+
     m_invertCheckBox = new QCheckBox(tr("Invert Pin"));
     m_invertCheckBox->setChecked( eventPin->inverted() );
     m_unuseCheckBox  = new QCheckBox(tr("Unused Pin"));
@@ -679,6 +689,7 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addLayout( nameLayout );
     layout->addLayout( idLayout );
+    layout->addLayout( angleLayout );
     layout->addWidget( m_invertCheckBox );
     layout->addWidget( m_unuseCheckBox );
     layout->addWidget( m_pointCheckBox );
@@ -696,8 +707,8 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
     connect( m_idLineEdit, SIGNAL( textEdited( QString ) ),
                      pack, SLOT( setPinId( QString ) ), Qt::UniqueConnection );
 
-    connect( m_idLineEdit, SIGNAL( textEdited( QString ) ),
-                     pack, SLOT( setPinId( QString ) ), Qt::UniqueConnection );
+    connect( m_angleBox, SIGNAL( currentIndexChanged(int) ),
+                     pack, SLOT( setPinAngle( int ) ), Qt::UniqueConnection );
 
     connect( m_invertCheckBox, SIGNAL( toggled( bool ) ),
                          this, SLOT( invertPin( bool ) ), Qt::UniqueConnection );
