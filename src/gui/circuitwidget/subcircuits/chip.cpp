@@ -250,7 +250,7 @@ void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, i
     pin->setLength( length );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
-    if( m_isLS ) pin->setLabelColor( QColor( 0, 0, 0 ) );
+    if( m_isLS ) pin->setLabelColor( Qt::black );
 
     m_ePin[pos-1] = pin;
     m_pin[pos-1]  = pin;

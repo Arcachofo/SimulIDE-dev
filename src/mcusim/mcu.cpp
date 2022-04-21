@@ -157,6 +157,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 new DoubProp  <Mcu>( "Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
 new StringProp<Mcu>( "Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
 new BoolProp  <Mcu>( "Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
+new BoolProp  <Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol )
     }} );
     addPropGroup( { tr("Config"), {
 new BoolProp  <Mcu>( "Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ),
@@ -441,6 +442,9 @@ void Mcu::addPin( QString id, QString type, QString label,
 {
     IoPin* pin = NULL;
 
+    QColor color = Qt::black;
+    if( !m_isLS ) color = QColor( 250, 250, 200 );
+
     if( type.contains("IO") )
     {
         QString pinNum = id.right(1);
@@ -459,6 +463,7 @@ void Mcu::addPin( QString id, QString type, QString label,
     if( pin )
     {
         pin->setLabelText( label );
+        pin->setLabelColor( color );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
         m_pinList.append( pin );
     }
