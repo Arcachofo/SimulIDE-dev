@@ -71,8 +71,17 @@ void Node::checkRemove() // Only remove if there are less than 3 connectors
 
     for( int i=0; i< 3; i++)
     {
-        if( m_pin[i]->connector() )
+        Connector* co = m_pin[i]->connector();
+        if( co )
         {
+            Pin* coPin = m_pin[i]->conPin();
+            if( coPin->component() == this ) // Connector betwen 2 Pins of this node
+            {
+                co->setStartPin( NULL );
+                co->setEndPin( NULL );
+                co->remove();
+                continue;
+            }
             if( conecteds == 0 ) { conecteds++; con[0] = i; }
             else con[1] = i;
             conectors++;
@@ -130,12 +139,10 @@ void Node::joinConns( int c0, int c1 )
         con->closeCon( pin1->conPin() );
         if( this->isSelected() ) con->setSelected( true );
     }
-    pin0->setEnode( NULL );
     con0->setStartPin( NULL );
     con0->setEndPin( NULL );
     con0->remove();
-    
-    pin1->setEnode( NULL );
+
     con1->setStartPin( NULL );
     con1->setEndPin( NULL );
     con1->remove();

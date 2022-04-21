@@ -209,19 +209,14 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
             if     ( evPoint==p1() ) m_moveP1 = true;
             else if( evPoint==p2() ) m_moveP2 = true;
         }
-        else{                                  // Connecting a wire here
+        else{                                         // Connecting a wire here
            if( Circuit::self()->is_constarted() )
            {
                Connector* con = Circuit::self()->getNewConnector();
-               
+               if( con == this->connector() ) return;
                if( con->isBus() != m_isBus ) { event->ignore(); return; } // Avoid connect Bus with no-Bus
-
-               /// eNode* eNode1 = con->enode();
-               /// eNode* eNode2 = m_pConnector->enode();
-               
-               /// if( eNode1 == eNode2 ) { event->ignore(); return; } // Avoid connect to same eNode
            }
-           QPoint point1 = togrid(event->scenePos()).toPoint();
+           QPoint point1 = togrid( event->scenePos() ).toPoint();
 
            if( connectToWire( point1 ) ) event->accept();
            else                          event->ignore();
