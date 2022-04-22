@@ -296,9 +296,9 @@ void Compiler::compProps()
     m_compDialog->show();
 }
 
-bool Compiler::checkCommand( QString c )
+bool Compiler::checkCommand( QString executable )
 {
-    QString executable = c.split(" ").first();
+    //QString executable = c.split(" ").first();
 
     /*if( c.contains(":") || c.contains("/") ) // Full Path
     {
