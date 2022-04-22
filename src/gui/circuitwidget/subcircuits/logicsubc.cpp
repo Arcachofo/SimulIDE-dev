@@ -58,63 +58,63 @@ LogicSubc::~LogicSubc(){}
 void LogicSubc::setInputHighV( double volt )
 {
     m_inHighV = volt;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Input_High_V", QString::number(volt)+" V");
 }
 
 void LogicSubc::setInputLowV( double volt )
 {
     m_inLowV = volt;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Input_Low_V", QString::number(volt)+" V");
 }
 
 void LogicSubc::setOutHighV( double volt )
 {
     m_ouHighV = volt;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Out_High_V", QString::number(volt)+" V");
 }
 
 void LogicSubc::setOutLowV( double volt )
 {
     m_ouLowV = volt;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Out_Low_V", QString::number(volt)+" V");
 }
 
 void LogicSubc::setInputImp( double imp )
 {
     m_inImp = imp;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Input_Imped", QString::number(imp)+" Ω");
 }
 
 void LogicSubc::setOutImp( double imp )
 {
     m_ouImp = imp;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Out_Imped", QString::number(imp)+" Ω");
 }
 
 void LogicSubc::setPropDelay( double pd )
 {
     m_propDelay = pd*1e12;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Tpd_ps", QString::number(m_propDelay)+" ps");
 }
 
 void LogicSubc::setRiseTime( double time )
 {
     m_timeLH = time*1e12;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Tr_ps", QString::number(m_timeLH)+" ps");
 }
 
 void LogicSubc::setFallTime( double time )
 {
     m_timeHL = time*1e12;
-    for( Component* c : m_compList)
+    for( Component* c : m_compList )
         c->setPropStr("Tf_ps", QString::number(m_timeHL)+" ps");
 }
 

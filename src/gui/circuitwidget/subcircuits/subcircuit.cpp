@@ -50,12 +50,12 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     QString dataFile = ComponentSelector::self()->getXmlFile( name );
 
     if( dataFile == "" ){
-          MessageBoxNB( "SubCircuit::SubCircuit", "                               \n"+
+          MessageBoxNB( "SubCircuit::construct", "                               \n"+
                     tr( "There are no data files for " )+name+"    ");
           //m_error = 23;
           return NULL;
     }
-    QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::SubCircuit" );
+    QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct" );
     if( domDoc.isNull() ) return NULL; // m_error = 1;
 
     QDomElement root  = domDoc.documentElement();
@@ -132,13 +132,13 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
         else if( pkgeFile.endsWith(".package"))    pkgeFile.replace( ".package", "_LS.package" );
         else{
             //m_error = 1;
-            qDebug() << "Chip::initChip: No package files found.\n";
+            qDebug() << "SubCircuit::construct: No package files found.\n";
             return NULL;
         }
         fileNameAbs = circuitDir.absoluteFilePath( pkgeFile );
     }
 
-    QDomDocument domDoc1 = fileToDomDoc( fileNameAbs, "Chip::initChip" );
+    QDomDocument domDoc1 = fileToDomDoc( fileNameAbs, "SubCircuit::construct" );
     QDomElement   root1  = domDoc1.documentElement();
 
     QString subcTyp = "None";
@@ -158,8 +158,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     {
         subcircuit->remove();
         return NULL;
-    }
-    else{
+    }else{
         subcircuit->m_pkgeFile = pkgeFile;
         subcircuit->loadSubCircuit( subcFile );
         subcircuit->initChip();
@@ -312,8 +311,12 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     }
                     else comp->moveTo( QPointF(20, 20) );
 
-                    if( comp->isMainComp() ) m_mainComponent = comp; // This component will add it's Context Menu
-
+                    if( comp->isMainComp() )
+                    {
+                        m_mainComponent = comp; // This component will add it's Context Menu
+                        qDebug() <<comp->itemType();
+                        if( comp->itemType() == "MCU" ) comp->removeProperty( "Main", "Logic_Symbol" );
+                    }
                     comp->setHidden( true, true );
                     m_compList.append( comp );
 
@@ -435,7 +438,12 @@ void SubCircuit::setLogicSymbol( bool ls )
             {
                 pin->setVisible( false );
                 pin->setLabelText( "" );
-}   }   }   }
+    }   }   }
+    if( m_subcType >= Board ){
+        for( Component* c : m_compList )
+            if( c->isGraphical() ) c->setVisible( !m_isLS );
+    }
+}
 
 void SubCircuit::remove()
 {

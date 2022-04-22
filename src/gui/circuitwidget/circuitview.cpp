@@ -177,7 +177,7 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
         if( type == "Subcircuit" )
         {
             SubCircuit* subC = static_cast<SubCircuit*>( m_enterItem );
-            subC->setLogicSymbol( true );
+            if( subC->subcType() < Chip::Board ) subC->setLogicSymbol( true );
         }
         m_enterItem->setPos( mapToScene( event->pos() ) );
         m_circuit->addItem( m_enterItem );

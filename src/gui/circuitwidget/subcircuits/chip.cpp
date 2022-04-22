@@ -120,9 +120,10 @@ void Chip::initChip()
         //m_ePin.resize( m_numpins );
         //m_pin.resize( m_numpins );
 
+        if( root.hasAttribute("background")) setBackground( root.attribute( "background") );
+
         if( !m_initialized )
         {
-            if( root.hasAttribute("background")) setBackground( root.attribute( "background") );
             if( root.hasAttribute("type") )
             {
                 /// setSubcTypeStr( root.attribute("type") );
