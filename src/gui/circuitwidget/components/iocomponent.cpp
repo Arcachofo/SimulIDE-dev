@@ -278,11 +278,11 @@ void IoComponent::init( QStringList pins ) // Example: pin = "IL02Name" => input
 IoPin* IoComponent::createPin( QString data, QString id ) // Example data = "L02" => left side, number 2
 {
     pinMode_t mode = (data.left(1) == "I") ? input : output ;
-    data.remove(0,1);
+    data.remove( 0, 1 );
     QString pos = data.left(1);
-    data.remove(0,1);
+    data.remove( 0, 1 );
     int num = data.left(2).toInt();
-    data.remove(0,2);
+    data.remove( 0, 2 );
     QString label = data;
 
     int angle = 0;
@@ -311,6 +311,10 @@ IoPin* IoComponent::createPin( QString data, QString id ) // Example data = "L02
     {
         x = m_area.x() + m_width*8+8;
         y = m_area.y() + num*8;
+        if( label.length() == 1
+         || (label.length() == 2
+          && label.startsWith("!")) )
+            label.prepend(" ");
     }
     IoPin* pin = new IoPin( angle, QPoint( x, y ), id, 0, this, mode );
     pin->setLabelColor( QColor( 0, 0, 0 ) );
@@ -345,8 +349,6 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
     int halfW = (m_width/2)*8;//m_width*8/2;
     int x           = out ? halfW+8 : -(halfW)-8;
     int angle       = out ?  0  : 180;
-    QString preLab  = out ? ""  : " ";
-    QString PostLab = out ? " " : "";
     QString id      = out ? "-out" : "-in";
     pinMode_t mode  = out ? output : input;
 
@@ -388,7 +390,7 @@ void IoComponent::setNumPins( std::vector<IoPin*>* pinList, uint pins
             initPin( pinList->at(i) );
             if( mode == output && m_invOutputs ) pinList->at(i)->setInverted( true );
 
-            if( !label.isEmpty() ) pinList->at(i)->setLabelText( preLab+label+num+PostLab );
+            if( !label.isEmpty() ) pinList->at(i)->setLabelText( label+num );
             pinList->at(i)->setLabelColor( QColor( 0, 0, 0 ) );
     }   }
     Circuit::self()->update();

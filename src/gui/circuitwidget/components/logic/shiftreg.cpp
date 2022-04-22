@@ -43,9 +43,9 @@ ShiftReg::ShiftReg( QObject* parent, QString type, QString id )
     m_height = 9;
 
     init({         // Inputs:
-            "IL03 DI",
+            "IL03DI",
             "IL05>",
-            "IL07 Rst"
+            "IL07Rst"
         });
 
     setNumOuts( 8, "Q" );

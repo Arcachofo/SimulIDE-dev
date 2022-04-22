@@ -51,22 +51,22 @@ Ili9341::Ili9341( QObject* parent, QString type, QString id )
     
     m_area = QRectF( -126, -168, 252, 344 );
 
-    m_pinCS.setLabelText( " CS" );
+    m_pinCS.setLabelText( "CS" );
     m_pinCS.setInputHighV( 2.31 );
     m_pinCS.setInputLowV( 0.99 );
-    m_pinRst.setLabelText( " Rst" );
+    m_pinRst.setLabelText( "Rst" );
     m_pinRst.setInputHighV( 2.31 );
     m_pinRst.setInputLowV( 0.99 );
-    m_pinDC.setLabelText( " D/C" );
+    m_pinDC.setLabelText( "D/C" );
     m_pinDC.setInputHighV( 2.31 );
     m_pinDC.setInputLowV( 0.99 );
-    m_pinMosi.setLabelText( " Mosi" );
+    m_pinMosi.setLabelText( "Mosi" );
     m_pinMosi.setInputHighV( 2.31 );
     m_pinMosi.setInputLowV( 0.99 );
-    m_pinSck.setLabelText( " SCK" );
+    m_pinSck.setLabelText( "SCK" );
     m_pinSck.setInputHighV( 2.31 );
     m_pinSck.setInputLowV( 0.99 );
-    //m_pinMiso.setLabelText( " Miso" );
+    //m_pinMiso.setLabelText( "Miso" );
 
     m_pin.resize( 5 );
     m_pin[0] = &m_pinCS;

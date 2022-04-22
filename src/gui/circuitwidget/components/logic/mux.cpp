@@ -53,13 +53,16 @@ Mux::Mux( QObject* parent, QString type, QString id )
     setNumInps( 8,"D" );
     
     init({          // Inputs:
-            "ID03  S0",
-            "ID02 S1 ",
-            "ID01S2 ",
+            "ID03S0",
+            "ID02S1",
+            "ID01S2",
                    // Outputs:
-            "OR02Y ",
-            "OR03!Y "
+            "OR02Y",
+            "OR03!Y"
         });
+
+    m_inPin[9]->setLength( 6 );
+    m_inPin[10]->setLength( 4 );
 
     createOePin( "IU03OE ", id+"-in11");
 
@@ -119,15 +122,6 @@ void Mux::setAddrBits( int bits )
         {
             pin->setVisible( true );
             pin->setY( h+8 );
-            if( i != 0 ) continue;
-            if( bits == 1 )
-            {
-                pin->setX( 0 );
-                pin->setLabelText(" S0");
-            }else{
-                pin->setX( 8 );
-                pin->setLabelText("  S0");
-            }
         }else{
             pin->removeConnector();
             pin->setVisible( false );

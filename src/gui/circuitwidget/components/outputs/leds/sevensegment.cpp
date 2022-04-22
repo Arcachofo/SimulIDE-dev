@@ -161,7 +161,7 @@ void SevenSegment::setComCathode( bool isCommonCathode )
 {
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
     m_commonCathode = isCommonCathode;
-    QString label = m_commonCathode ? " |" : "+";
+    QString label = m_commonCathode ? "|" : "+";
     for( int i=0; i<m_numDisplays; ++i ) m_commonPin[i]->setLabelText( label );
 }
 
@@ -234,7 +234,7 @@ void SevenSegment::createDisplay(int n )
     int x = 32*n;
 
     // Pin common
-    QString label = m_commonCathode ? " |" : "+";
+    QString label = m_commonCathode ? "|" : "+";
     QString pinid = m_id+"-pin_common"+QString( 97+n );
     m_commonPin[n] = m_pin[8+n]= new Pin( 270, QPoint( x+8, 24+8 ), pinid, 0, this );
     m_commonPin[n]->setLength( 4 );

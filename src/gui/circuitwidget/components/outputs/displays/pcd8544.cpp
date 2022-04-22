@@ -68,11 +68,11 @@ Pcd8544::Pcd8544( QObject* parent, QString type, QString id )
     m_pin[3] = &m_pSi;
     m_pin[4] = &m_pScl;
     
-    m_pRst.setLabelText( " RST" );
-    m_pCs.setLabelText(  " CS" );
-    m_pDc.setLabelText(  " D/C" );
-    m_pSi.setLabelText(  " DIN" );
-    m_pScl.setLabelText( " CLK" );
+    m_pRst.setLabelText( "RST" );
+    m_pCs.setLabelText(  "CS" );
+    m_pDc.setLabelText(  "D/C" );
+    m_pSi.setLabelText(  "DIN" );
+    m_pScl.setLabelText( "CLK" );
     
     m_pdisplayImg = new QImage( 84, 48, QImage::Format_MonoLSB );
     m_pdisplayImg->setColor( 1, qRgb(0,0,0));

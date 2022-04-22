@@ -59,7 +59,7 @@ OpAmp::OpAmp( QObject* parent, QString type, QString id )
     m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
 
     m_pin[1] = m_inputN = new IoPin( 180, QPoint(-16-8, 8), id+"-inputInv", 1, this, input );
-    m_pin[1]->setLabelText( " -" );
+    m_pin[1]->setLabelText( "-" );
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
 
     m_output = new IoPin(   0, QPoint( 16+8, 0), id+"-output",   2, this, source );
@@ -205,7 +205,7 @@ QPainterPath OpAmp::shape() const
     return path;
 }
 
-void OpAmp::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void OpAmp::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
 

@@ -49,7 +49,7 @@ LatchD::LatchD( QObject* parent, QString type, QString id )
     m_area = QRect(-(m_width*8/2),-(m_height*8/2), m_width*8, m_height*8 );
     
     m_tristate = true;
-    createOePin( "IR13OE ", id+"-Pin_outEnable");
+    createOePin( "IR13OE", id+"-Pin_outEnable");
 
     m_clkPin = new IoPin( 180, QPoint( -24,0 ), m_id+"-Pin_clock", 0, this, input );
     m_clkPin->setLabelColor( QColor( 0, 0, 0 ) );

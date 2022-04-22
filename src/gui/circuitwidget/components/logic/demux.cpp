@@ -52,10 +52,13 @@ Demux::Demux( QObject* parent, QString type, QString id )
 
     init({          // Inputs:
             "ID03S0",
-            "ID02 S1",
-            "ID01  S2",
-            "IL05 DI"
+            "ID02S1",
+            "ID01S2",
+            "IL05DI"
         });
+
+    m_inPin[1]->setLength( 6 );
+    m_inPin[0]->setLength( 4 );
 
     setNumOuts( 8 );
     createOePin( "IU01OE ", id+"-in4");
@@ -120,15 +123,6 @@ void Demux::setAddrBits( int bits )
         {
             pin->setVisible( true );
             pin->setY( h+8 );
-            if( i != 0 ) continue;
-            if( bits == 1 )
-            {
-                pin->setX( 0 );
-                pin->setLabelText(" S0");
-            }else{
-                pin->setX( 8 );
-                pin->setLabelText("S0");
-            }
         }else{
             pin->removeConnector();
             pin->setVisible( false );

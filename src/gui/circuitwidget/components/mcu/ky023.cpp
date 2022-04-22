@@ -77,17 +77,17 @@ KY023::KY023( QObject* parent, QString type, QString id )
 
     m_vrx = new IoPin( 270, QPoint(-12,36), id+"-vrx", 0, this, output );
     m_vrx->setOutHighV( VIN );
-    m_vrx->setLabelText( " VRX" );
+    m_vrx->setLabelText( "VRX" );
     m_pin[0] = m_vrx;
 
     m_vry = new IoPin( 270, QPoint(-4,36), id+"-vry", 0, this, output );
     m_vry->setOutHighV( VIN );
-    m_vry->setLabelText( " VRY" );
+    m_vry->setLabelText( "VRY" );
     m_pin[1] = m_vry;
 
     m_sw = new IoPin( 270, QPoint(4,36), id+"-sw", 0, this, output );
     m_sw->setOutHighV( VIN );
-    m_sw->setLabelText( " SW" );
+    m_sw->setLabelText( "SW" );
     m_pin[2] = m_sw;
 
     setAngle( 90 );

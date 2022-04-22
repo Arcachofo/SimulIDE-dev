@@ -42,8 +42,8 @@ FlipFlopJK::FlipFlopJK( QObject* parent, QString type, QString id )
     m_dataPins = 2;
 
     init({          // Inputs:
-            "IL01 J",
-            "IL03 K",
+            "IL01J",
+            "IL03K",
             "IU01S",
             "ID02R",
             "IL02>",

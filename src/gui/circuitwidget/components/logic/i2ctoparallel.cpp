@@ -47,11 +47,11 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     m_height = 9;
     
     init({         // Inputs:
-            "IL02 SDA",//type: Input, side: Left, pos: 01, label: "SDA"
-            "IL03 SCL",
-            "IL05 A0",
-            "IL06 A1",
-            "IL07 A2",
+            "IL02SDA",//type: Input, side: Left, pos: 01, label: "SDA"
+            "IL03SCL",
+            "IL05A0",
+            "IL06A1",
+            "IL07A2",
         });
 
     setNumOuts( 8, "D" );

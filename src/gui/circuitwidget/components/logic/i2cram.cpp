@@ -53,11 +53,11 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
     m_height = 4;
     
     init({         // Inputs:
-            "IL01 SDA", //type: Input, side: Left, pos: 01, label: "SDA"
-            "IL03 SCL",
-            "IR01 A0 ",
-            "IR02 A1 ",
-            "IR03 A2 "
+            "IL01SDA", //type: Input, side: Left, pos: 01, label: "SDA"
+            "IL03SCL",
+            "IR01A0",
+            "IR02A1",
+            "IR03A2"
         });
 
     m_inPin[0]->setPinMode( openCo );

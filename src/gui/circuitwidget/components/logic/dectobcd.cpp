@@ -50,10 +50,10 @@ DecToBcd::DecToBcd( QObject* parent, QString type, QString id )
     QStringList pinList;
 
     pinList// Outputs:
-            << "OR03A "
-            << "OR04B "
-            << "OR05C "
-            << "OR06D "
+            << "OR03 A"
+            << "OR04 B"
+            << "OR05 C"
+            << "OR06 D"
             ;
     init( pinList );
 

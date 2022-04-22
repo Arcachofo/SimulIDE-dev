@@ -41,12 +41,12 @@ FullAdder::FullAdder(QObject *parent, QString type, QString id)
     m_height = 4;
 
     init({         // Inputs:
-            "IL01 A",
-            "IL03 B",
-            "IR01Ci ",
+            "IL01A",
+            "IL03B",
+            "IR01Ci",
                     // Outputs:
-            "OR02S ",
-            "OR03Co ",
+            "OR02S",
+            "OR03Co",
         });
 
     addPropGroup( { tr("Electric"), IoComponent::inputProps()+IoComponent::outputProps() } );

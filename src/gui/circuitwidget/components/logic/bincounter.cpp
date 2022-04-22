@@ -47,7 +47,7 @@ BinCounter::BinCounter(QObject *parent, QString type, QString id)
 
     init({         // Inputs:
             "IL01>",
-            "IL02 R",
+            "IL02R",
             "IU01S",
                    // Outputs:
             "OR01Q"

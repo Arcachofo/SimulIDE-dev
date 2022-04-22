@@ -43,18 +43,18 @@ BcdTo7S::BcdTo7S( QObject* parent, QString type, QString id )
     m_height = 8;
 
     init({         // Inputs:
-            "IL03 S0",
-            "IL04 S1",
-            "IL05 S2",
-            "IL06 S3",
+            "IL03S0",
+            "IL04S1",
+            "IL05S2",
+            "IL06S3",
                     // Outputs:
-            "OR01a ",
-            "OR02b ",
-            "OR03c ",
-            "OR04d ",
-            "OR05e ",
-            "OR06f ",
-            "OR07g "
+            "OR01a",
+            "OR02b",
+            "OR03c",
+            "OR04d",
+            "OR05e",
+            "OR06f",
+            "OR07g"
         });
 
     createOePin( "IU01OE ", id+"-in4");

@@ -42,8 +42,8 @@ FlipFlopRS::FlipFlopRS( QObject* parent, QString type, QString id )
     m_height = 4;
 
     init({         // Inputs:
-            "IL01 S",
-            "IL03 R",
+            "IL01S",
+            "IL03R",
             "IL02>",
                    // Outputs:
             "OR01Q",

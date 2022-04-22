@@ -84,11 +84,11 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         Pin *connectPin( bool connect );
 
         QString getLabelText() { return m_labelText; }
+        void setLabelText( QString label );
         void setLabelPos();
         void setLabelColor( QColor color );
         void setFontSize( int size );
         int  labelSizeX();
-        void setLabelText( QString label );
 
         void setPinId( QString id ) { m_id = id; }
         void setVisible( bool visible );

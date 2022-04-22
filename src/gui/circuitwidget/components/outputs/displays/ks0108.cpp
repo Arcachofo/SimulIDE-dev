@@ -54,12 +54,12 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     m_graphical = true;
     m_csActLow = false;
     
-    m_pinRst.setLabelText( " RST" );
-    m_pinCs1.setLabelText( " CS1" );
-    m_pinCs2.setLabelText( " CS2" );
-    m_pinDC.setLabelText(  " RS" );
-    m_pinRW.setLabelText(  " RW" );
-    m_pinEn.setLabelText(  " En" );
+    m_pinRst.setLabelText( "RST" );
+    m_pinCs1.setLabelText( "CS1" );
+    m_pinCs2.setLabelText( "CS2" );
+    m_pinDC.setLabelText(  "RS" );
+    m_pinRW.setLabelText(  "RW" );
+    m_pinEn.setLabelText(  "En" );
     
     m_dataPin.resize( 8 );
     m_pin.resize( 14 );
@@ -69,7 +69,7 @@ Ks0108::Ks0108( QObject* parent, QString type, QString id )
     {
         QString pinId = id+"-dataPin"+QString::number(i);
         m_dataPin[i] = new IoPin( 270, QPoint(-32+(7-i)*8, pinY), pinId , 0, this, input );
-        m_dataPin[i]->setLabelText( " D"+QString::number(i) );
+        m_dataPin[i]->setLabelText( "D"+QString::number(i) );
         m_dataPin[i]->setOutHighV( 5 );
         m_pin[i] = m_dataPin[i];
     }

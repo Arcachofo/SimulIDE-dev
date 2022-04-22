@@ -87,15 +87,15 @@ KY040::KY040( QObject* parent, QString type, QString id )
 
     m_pin[0] = m_pinA = new IoPin( 270, QPoint(4,36), id+"-clk", 0, this, output );
     m_pinA->setOutHighV( VIN );
-    m_pinA->setLabelText( " CLK" );
+    m_pinA->setLabelText( "CLK" );
 
     m_pin[1] = m_pinB = new IoPin( 270, QPoint(-4,36), id+"-dt", 0, this, output );
     m_pinB->setOutHighV( VIN );
-    m_pinB->setLabelText( " DT" );
+    m_pinB->setLabelText( "DT" );
 
     m_pin[2] = m_sw = new IoPin( 270, QPoint(-12,36), id+"-sw", 0, this, output );
     m_sw->setOutHighV( VIN );
-    m_sw->setLabelText( " SW" );
+    m_sw->setLabelText( "SW" );
 
     setAngle( 90 );
     setLabelPos(-34, 20,-90 );

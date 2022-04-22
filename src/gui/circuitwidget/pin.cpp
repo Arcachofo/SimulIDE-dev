@@ -223,15 +223,12 @@ void Pin::setLabelText( QString label )
     if( label.contains("!"))
     {
         QString text;
-        bool inv = false;
         for( int i=0; i<label.size(); i++ )
         {
             QString e = "!";
             QChar ch = label[i];
-            if( ch == e[0] ) { inv = true; continue; }
-            e = " ";
-            text.append( ch );
-            if( inv && (ch != e[0]) ) text.append("\u0305");
+            if( ch == e[0] ) text.append("\u0305");
+            else             text.append( ch );
         }
         label = text;
     }

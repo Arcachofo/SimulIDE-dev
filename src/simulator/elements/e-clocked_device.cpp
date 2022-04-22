@@ -103,7 +103,7 @@ void eClockedDevice::setTrigger( trigger_t trigger )
     }
     else if( m_trigger == InEnable )
     {
-        m_clkPin->setLabelText( " IE" );
+        m_clkPin->setLabelText( "IE" );
         m_clkPin->setVisible( true );
     }
     Circuit::self()->update();

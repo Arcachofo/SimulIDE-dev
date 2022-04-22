@@ -36,7 +36,7 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
         ~OpAmp();
         
         static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem *libraryItem();
+        static LibraryItem* libraryItem();
 
         virtual void initialize() override;
         virtual void stamp() override;
@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
         void setSwitchPins( bool s );
 
         virtual QPainterPath shape() const;
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
         bool m_powerPins;

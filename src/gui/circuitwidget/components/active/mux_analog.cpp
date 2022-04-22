@@ -52,11 +52,11 @@ MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
     setValLabelPos(-16,-16-10, 0 );
     
     m_zPin = new Pin( 180, QPoint( -24, 8 ), m_id+"-PinInput", 0, this );
-    m_zPin->setLabelText( " Z" );
+    m_zPin->setLabelText( "Z" );
     m_zPin->setLabelColor( QColor( 0, 0, 0 ) );
     
     m_enPin = new Pin( 180, QPoint( -24, 16 ), m_id+"-PinEnable", 0, this );
-    m_enPin->setLabelText( " En" );
+    m_enPin->setLabelText( "En" );
     m_enPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_enPin->setInverted( true );
     
@@ -157,7 +157,7 @@ void MuxAnalog::createAddrBits( int c )
     for( int i=start; i<m_addrBits; i++ )
     {
         m_addrPin[i] = new Pin( 180, QPoint(-3*8,3*8+i*8 ), m_id+"-pinAddr"+QString::number(i), 0, this);
-        m_addrPin[i]->setLabelText( " A"+QString::number(i) );
+        m_addrPin[i]->setLabelText( "A"+QString::number(i) );
         m_addrPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
 }   }
 
@@ -190,7 +190,7 @@ void MuxAnalog::createResistors( int c )
         m_resistor[i]->setEpin( 0, m_ePin[i] );
         
         m_chanPin[i] = new Pin( 0, QPoint( 3*8, 8+i*8 ), m_id+"-pinY"+QString::number(i), 0, this);
-        m_chanPin[i]->setLabelText( "Y"+QString::number(i)+" " );
+        m_chanPin[i]->setLabelText( "Y"+QString::number(i) );
         m_chanPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
         m_resistor[i]->setEpin( 1, m_chanPin[i] );
 

@@ -54,19 +54,19 @@ Memory::Memory( QObject* parent, QString type, QString id )
 
     m_otherPin.resize( 3 );
     m_WePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_We", 0, this, input );
-    m_WePin->setLabelText( " WE" );
+    m_WePin->setLabelText( "WE" );
     m_WePin->setLabelColor( QColor( 0, 0, 0 ) );
     m_WePin->setInverted( true );
     m_otherPin[0] = m_WePin;
     
     m_CsPin = new IoPin(  0, QPoint( 0,0 ), m_id+"-Pin_Cs", 0, this, input );
-    m_CsPin->setLabelText( "CS " );
+    m_CsPin->setLabelText( "CS" );
     m_CsPin->setLabelColor( QColor( 0, 0, 0 ) );
     m_CsPin->setInverted( true );
     m_otherPin[1] = m_CsPin;
     
     m_oePin = new IoPin( 180, QPoint( 0,0 ), m_id+"-Pin_outEnable" , 0, this, input );
-    m_oePin->setLabelText( " OE" );
+    m_oePin->setLabelText( "OE" );
     m_oePin->setLabelColor( QColor( 0, 0, 0 ) );
     m_oePin->setInverted( true );
     m_otherPin[2] = m_oePin;
@@ -289,7 +289,7 @@ void Memory::createAddrBits( int bits )
         QString number = QString::number(i);
 
         m_inPin[i] = new IoPin( 180, QPoint(-24,origY+8+i*8 ), m_id+"-in"+number, i, this, input );
-        m_inPin[i]->setLabelText( " A"+number );
+        m_inPin[i]->setLabelText( "A"+number );
         m_inPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
         initPin( m_inPin[i] );
 }   }
@@ -328,7 +328,7 @@ void Memory::createDataBits( int bits )
         QString number = QString::number(i);
         
         m_outPin[i] = new IoPin( 0, QPoint(24,origY+8+i*8 ), m_id+"-out"+number, i, this, output );
-        m_outPin[i]->setLabelText( "D"+number+" " );
+        m_outPin[i]->setLabelText( "D"+number);
         m_outPin[i]->setLabelColor( QColor( 0, 0, 0 ) );
         initPin( m_outPin[i] );
 }   }

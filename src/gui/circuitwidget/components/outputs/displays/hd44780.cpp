@@ -48,13 +48,13 @@ Hd44780::Hd44780( QObject* parent, QString type, QString id )
     m_pin.resize( 11 );
 
     m_pinRS = new IoPin( 270, QPoint( 16, 8 ), id+"-PinRS", 0, this, input );
-    initPuPin( 0, " RS", m_pinRS );
+    initPuPin( 0, "RS", m_pinRS );
 
     m_pinRW = new IoPin( 270, QPoint( 24, 8 ), id+"-PinRW", 0, this, input );
-    initPuPin( 1, " RW", m_pinRW );
+    initPuPin( 1, "RW", m_pinRW );
 
     m_pinEn = new IoPin( 270, QPoint( 32, 8 ), id+"-PinEn", 0, this, input );
-    m_pinEn->setLabelText(" En");
+    m_pinEn->setLabelText("En");
     m_pin[2] = m_pinEn;
     
     m_dataPin.resize( 8 );
@@ -62,7 +62,7 @@ Hd44780::Hd44780( QObject* parent, QString type, QString id )
     for( int i=0; i<8; i++ )
     {
         m_dataPin[i] = new IoPin( 270, QPoint( 40+i*8, 8), id+"-dataPin"+QString::number(i), 0, this, input );
-        initPuPin( i+3, " D"+QString::number(i), m_dataPin[i] );
+        initPuPin( i+3, "D"+QString::number(i), m_dataPin[i] );
     }
     Simulator::self()->addToUpdateList( this );
     

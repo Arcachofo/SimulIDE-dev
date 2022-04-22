@@ -53,10 +53,12 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     m_pin.resize( 2 );
     m_ePin[0] = m_pin[0] = new Pin( 180, QPoint(-16,-8), id+"-lPin", 0, this);
     m_pin[0]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_pin[0]->setLength( 6 );
     m_pin[0]->setLabelText( "+" );
 
     m_ePin[1] = m_pin[1] = new Pin( 180, QPoint(-16,0), id+"-rPin", 1, this);
     m_pin[1]->setLabelColor( QColor( 0, 0, 0 ) );
+    m_pin[1]->setLength( 6 );
     m_pin[1]->setLabelText( "-" );
 
     setLabelPos(-20,-36, 0);

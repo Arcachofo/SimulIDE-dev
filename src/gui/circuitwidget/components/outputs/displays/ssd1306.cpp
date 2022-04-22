@@ -55,18 +55,18 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
 
     m_pin.resize( 2 );
     m_clkPin = new IoPin( 270, QPoint(-48, 48), id+"-PinSck" , 0, this, openCo );
-    m_clkPin->setLabelText( " SCK" );
+    m_clkPin->setLabelText( "SCK" );
     m_pin[0] = m_clkPin;
     TwiModule::setSclPin( m_clkPin );
 
     m_pinSda = new IoPin( 270, QPoint(-40, 48), id+"-PinSda" , 0, this, openCo );
     m_pin[1] = m_pinSda;
-    m_pinSda->setLabelText( " SDA" );
+    m_pinSda->setLabelText( "SDA" );
     TwiModule::setSdaPin( m_pinSda );
 
-    //m_pinRst.setLabelText( " Res" );
-    //m_pinDC.setLabelText(  " DC" );
-    //m_pinCS.setLabelText(  " CS" );
+    //m_pinRst.setLabelText( "Res" );
+    //m_pinDC.setLabelText(  "DC" );
+    //m_pinCS.setLabelText(  "CS" );
 
     m_pdisplayImg = new QImage( 128, 64, QImage::Format_MonoLSB );
     m_pdisplayImg->setColor( 0, qRgb(0, 0, 0));
