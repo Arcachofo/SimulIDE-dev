@@ -296,17 +296,15 @@ void Chip::setSubcTypeStr( QString s )
 void Chip::setBackground( QString bck )
 {
     m_background = bck;
-    if( bck == "" ){
-        if( m_BackPixmap ){
-            delete m_BackPixmap;
-            m_BackPixmap = NULL;
-    }   }
-    else{
-        if( m_BackPixmap ) delete m_BackPixmap;
+    if( m_BackPixmap )
+    {
+        delete m_BackPixmap;
+        m_BackPixmap = NULL;
+    }
+    if( bck != "" ){
         QString pixmapPath = MainWindow::self()->getFilePath("data/images");
         pixmapPath += "/"+bck;
-        m_BackPixmap = new QPixmap( pixmapPath );
-        //m_BackPixmap->load( pixmapPath );
+        if( QFile::exists( pixmapPath ) ) m_BackPixmap = new QPixmap( pixmapPath );
     }
     update();
 }
@@ -317,8 +315,8 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 
     if( m_BackPixmap )
         p->drawPixmap( m_area.x(), m_area.y(), *m_BackPixmap );
-    else if( m_background != "" )
-        p->drawPixmap( m_area.x(), m_area.y(), QPixmap( m_background ));
+    //else if( m_background != "" )
+    //   p->drawPixmap( m_area.x(), m_area.y(), QPixmap( m_background ));
     else{
         p->drawRoundedRect( m_area, 1, 1);
         if( !m_isLS )
