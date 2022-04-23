@@ -40,7 +40,7 @@ LibraryItem *DS1621::libraryItem()
     return new LibraryItem(
         tr("DS1621"),
         tr("Sensors"),
-        "2to3.png",
+        "ic_comp.png",
         "DS1621",
         DS1621::construct);
 }
@@ -232,7 +232,6 @@ void DS1621::doConvert()
     m_changed = false;
 
     float temp_abs = fabs( m_temp ); // make comptutations with absolute value
-
     m_tempReg[1] = temp_abs;
     float temp_frac = temp_abs - m_tempReg[1];
     if( temp_frac >= 0.75) m_tempReg[1] += 1;
@@ -245,20 +244,14 @@ void DS1621::doConvert()
 
     if( m_temp < 0.0) m_tempReg[1] = -m_tempReg[1]; // take sign into account
 
-    if( m_temp > m_Th )
-    {
-        m_config |= 1<<6;
+    if( m_temp > m_Th ){
+        m_config |= 1<<6;  // Set THF bit
         m_outPin[0]->setOutState( m_outPol );
     }
-    else if( m_temp < m_Tl )
-    {
-        m_config |= 1<<5;
+    else if( m_temp < m_Tl ){
+        m_config |= 1<<5;  // Set TLF bit
         m_outPin[0]->setOutState( !m_outPol );
     }
-
-    //qDebug() << "DS1621::temp_to_registers" << m_temp
-    //         << m_tempH << m_tempL
-    //         << m_tempCount << m_tempSlope;
 }
 
 void DS1621::upbuttonclicked()

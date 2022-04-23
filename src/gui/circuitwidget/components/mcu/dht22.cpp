@@ -65,7 +65,7 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
 
     m_font.setFamily("Ubuntu");
     m_font.setBold( true );
-    setLabelPos(-40,-40, 0);
+    setLabelPos(-28,-32, 0);
     setModel( "DHT22" );
 
     m_button = new QPushButton( );
