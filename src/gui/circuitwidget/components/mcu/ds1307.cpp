@@ -59,7 +59,7 @@ DS1307::DS1307( QObject* parent, QString type, QString id )
     m_outpin->setOutHighV( 5 );
     m_clock.setPin( m_outpin );
 
-    m_address = 0b01101000; // 0x68
+    m_address = m_cCode = 0b01101000; // 0x68
 }
 DS1307::~DS1307(){}
 

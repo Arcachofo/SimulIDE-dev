@@ -53,6 +53,9 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
         virtual void runEvent() override;
         virtual void voltChanged() override;
 
+        int cCode() { return m_cCode; }
+        void setCcode( int code ) { m_cCode = code; }
+
         virtual double freqKHz() { return m_freq/1e3; }
         virtual void setFreqKHz( double f );
 
@@ -85,6 +88,7 @@ class MAINMODULE_EXPORT TwiModule : public eClockedDevice
 
         virtual void setTwiState( twiState_t state ) { m_twiState = state; }
 
+        uint m_cCode;
         uint m_address;           // Device Address
         int  m_addrBits;
 

@@ -47,9 +47,6 @@ class MAINMODULE_EXPORT I2CRam : public IoComponent, public TwiModule, public Me
 
         void setMem( QString m );
         QString getMem();
-
-        int cCode() { return m_address; }
-        void setCcode( int code ) { m_address = code; }
         
         int rSize() { return m_size; }
         void setRSize( int size );

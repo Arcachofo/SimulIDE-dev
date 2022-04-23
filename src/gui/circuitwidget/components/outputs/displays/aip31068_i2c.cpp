@@ -43,7 +43,7 @@ Aip31068_i2c::Aip31068_i2c( QObject* parent, QString type, QString id )
             : Hd44780_Base( parent, type, id )
             , TwiModule( id )
 {
-    m_address = 0x3E;
+    m_address = m_cCode = 0x3E;
 
     m_pin.resize( 2 );
 

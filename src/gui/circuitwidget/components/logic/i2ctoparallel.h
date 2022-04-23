@@ -34,9 +34,6 @@ class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
 
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
-
-        int cCode() { return m_address; }
-        void setCcode( int code ) { m_address = code; }
         
         virtual void stamp() override;
         virtual void initialize() override;

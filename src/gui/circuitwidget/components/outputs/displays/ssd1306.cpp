@@ -50,7 +50,7 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
 {
     m_graphical = true;
     m_area = QRectF( -70, -48, 140, 88 );
-    m_address = 0b00111100; // 0x3A - 60
+    m_address = m_cCode = 0b00111100; // 0x3A - 60
     m_colors.append({ tr("White"), tr("Blue"), tr("Yellow") });
 
     m_pin.resize( 2 );

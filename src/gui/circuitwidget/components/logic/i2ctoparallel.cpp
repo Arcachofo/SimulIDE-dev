@@ -67,7 +67,7 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
         m_outPin[i]->setPinMode( openCo );
         m_outPin[i]->setPullup( true );
     }
-    m_address = 0b01010000; // 0x50, 80
+    m_cCode = 0b01010000; // 0x50, 80
 
     addPropGroup( { tr("Main"), {
 new IntProp <I2CToParallel>( "Control_Code", tr("Control_Code") ,""    , this, &I2CToParallel::cCode,   &I2CToParallel::setCcode, "uint" ),
@@ -93,6 +93,8 @@ void I2CToParallel::stamp()                     // Called at Simulation Start
 
 void I2CToParallel::voltChanged()             // Some Pin Changed State, Manage it
 {
+    m_address = m_cCode;
+
     if( m_inPin[2]->getInpState() ) m_address += 1;
     if( m_inPin[3]->getInpState() ) m_address += 2;
     if( m_inPin[4]->getInpState() ) m_address += 4;

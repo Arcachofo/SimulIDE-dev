@@ -48,9 +48,6 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         void setColor( QString c );
         QString color()  { return m_colors.at( (int)m_dColor ); }
 
-        int cCode() { return m_address; }
-        void setCcode( int code ) { m_address = code; }
-
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;

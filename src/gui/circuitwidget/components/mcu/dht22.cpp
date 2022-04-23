@@ -75,13 +75,13 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
     m_button->setIconSize( QSize( 6, 23) );
     m_button->setIcon(QIcon(":/up.png"));
 
-    QPushButton* u_button = new QPushButton( );
+    QPushButton* u_button = new QPushButton();
     u_button->setMaximumSize( 9, 9 );
     u_button->setGeometry(-5,-5, 9, 9);
     u_button->setCheckable( false );
     u_button->setIcon(QIcon(":/su.png"));
 
-    QPushButton* d_button = new QPushButton( );
+    QPushButton* d_button = new QPushButton();
     d_button->setMaximumSize( 9, 9 );
     d_button->setGeometry(-5,-5, 9, 9);
     d_button->setCheckable( false );

@@ -36,9 +36,6 @@ class MAINMODULE_EXPORT Aip31068_i2c : public Hd44780_Base, public TwiModule
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        int cCode() { return m_address; }
-        void setCcode( int code ) { m_address = code; }
-
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;

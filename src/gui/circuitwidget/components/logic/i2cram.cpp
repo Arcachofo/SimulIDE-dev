@@ -67,7 +67,7 @@ I2CRam::I2CRam( QObject* parent, QString type, QString id )
     TwiModule::setSclPin( m_inPin[1] );
 
     m_persistent = false;
-    m_address = 0b01010000; // 0x50, 80
+    m_cCode = 0b01010000; // 0x50, 80
     m_size  = 65536;
     m_ram.resize( m_size );
 
@@ -111,6 +111,8 @@ void I2CRam::updateStep()
 
 void I2CRam::voltChanged()             // Some Pin Changed State, Manage it
 {
+    m_address = m_cCode;
+
     if( m_inPin[2]->getInpState() ) m_address += 1;
     if( m_inPin[3]->getInpState() ) m_address += 2;
     if( m_inPin[4]->getInpState() ) m_address += 4;
