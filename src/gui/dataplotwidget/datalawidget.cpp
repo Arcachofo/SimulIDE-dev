@@ -37,8 +37,13 @@ DataLaWidget::DataLaWidget( QWidget* parent, PlotBase* pb )
     m_chNames.append( channel6 );
     m_chNames.append( channel7 );
 
+    QFont font;
+    font.setFamily("Ubuntu");
+    font.setPixelSize( 9 );
+    font.setBold( true );
+    for( int i=0; i<8; ++i ) m_chNames.at( i )->setFont( font );
+
     this->adjustSize();
-    //fontScale->setValue( MainWindow::self()->fontScale() );
 }
 
 void DataLaWidget::on_expandButton_clicked()

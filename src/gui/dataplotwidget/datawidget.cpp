@@ -32,16 +32,21 @@ DataWidget::DataWidget( QWidget* parent, Oscope* oscope )
     m_chNames.append( channel2 );
     m_chNames.append( channel3 );
 
-    QFont font = freq0->font();
+    QFont font;
     font.setFamily("Ubuntu");
     font.setPixelSize( 9 );
+    font.setBold( true );
     freq0->setFont( font );
     freq1->setFont( font );
     freq2->setFont( font );
     freq3->setFont( font );
     expandButton->setFont( font );
 
-    for( int i=0; i<4; ++i ) setData( i, "0.000 Hz" );
+    for( int i=0; i<4; ++i )
+    {
+        m_chNames.at( i )->setFont( font );
+        setData( i, "0.000 Hz" );
+    }
 
     this->adjustSize();
 }
