@@ -44,6 +44,7 @@
 #include "diac.h"
 #include "diode.h"
 #include "ds1307.h"
+#include "ds1621.h"
 #include "elcapacitor.h"
 #include "ellipse.h"
 #include "esp01.h"
@@ -235,6 +236,7 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem( QObject::tr("Sensors"),QObject::tr("Micro"), "1to2.png","", NULL ) );
     addItem( SR04::libraryItem() );
     addItem( Dht22::libraryItem() );
+    addItem( DS1621::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Perifericals"),QObject::tr("Micro"), "perif.png","", NULL ) );
     addItem( SerialPort::libraryItem() );
     addItem( TouchPad::libraryItem() );
