@@ -48,9 +48,9 @@ LogicSubc::LogicSubc( QObject* parent, QString type, QString id )
     new DoubProp<LogicSubc>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &LogicSubc::outImp,  &LogicSubc::setOutImp )
     } } );
     addPropGroup( { tr("Edges"), {
-    new DoubProp<LogicSubc>( "Tpd_ps", tr("Gate Delay "),"_ps", this, &LogicSubc::propDelay, &LogicSubc::setPropDelay ),
-    new DoubProp<LogicSubc>( "Tr_ps" , tr("Rise Time")  ,"_ps", this, &LogicSubc::riseTime,  &LogicSubc::setRiseTime ),
-    new DoubProp<LogicSubc>( "Tf_ps" , tr("Fall Time")  ,"_ps", this, &LogicSubc::fallTime,  &LogicSubc::setFallTime )
+    new DoubProp<LogicSubc>( "Tpd_ps", tr("Gate Delay "),"ps", this, &LogicSubc::propDelay, &LogicSubc::setPropDelay ),
+    new DoubProp<LogicSubc>( "Tr_ps" , tr("Rise Time")  ,"ps", this, &LogicSubc::riseTime,  &LogicSubc::setRiseTime ),
+    new DoubProp<LogicSubc>( "Tf_ps" , tr("Fall Time")  ,"ps", this, &LogicSubc::fallTime,  &LogicSubc::setFallTime )
     } } );
 }
 LogicSubc::~LogicSubc(){}
