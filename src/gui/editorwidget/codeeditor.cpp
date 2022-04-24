@@ -235,7 +235,12 @@ int CodeEditor::getSintaxCoincidences()
 
 bool CodeEditor::compile( bool debug )
 {
-    if( document()->isModified() ) EditorWindow::self()->save();
+    if( document()->isModified() ){
+        if( !EditorWindow::self()->save() )
+        {
+            m_outPane->appendLine( "Error: File not saved" );
+            return false;
+    }   }
     m_debugLine  = -1;
     update();
     
