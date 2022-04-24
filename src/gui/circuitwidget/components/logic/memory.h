@@ -84,7 +84,6 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
 
         bool m_we;
         bool m_cs;
-        bool m_oe;
         bool m_write;
         bool m_persistent;
         bool m_asynchro;

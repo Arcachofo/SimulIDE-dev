@@ -99,7 +99,6 @@ void Memory::initialize()
 {
     m_we = true;
     m_cs = true;
-    m_oe = true;
 
     if( !m_persistent ) m_ram.fill( 0 );
 
@@ -140,43 +139,27 @@ void Memory::updateStep()
 void Memory::voltChanged()        // Some Pin Changed State, Manage it
 {
     bool CS = m_CsPin->getInpState();
-
-    if( CS != m_cs )
-    {
+    if( CS != m_cs ){
         m_cs = CS;
-
-        if( !CS && m_oe )
-        {
-            m_oe = false;
-            LogicComponent::enableOutputs( false ); // Deactivate
-        }
+        LogicComponent::enableOutputs( CS && m_outEnable );
     }
     if( !CS ) return;
 
-    bool WE = m_WePin->getInpState();
-    bool oe = LogicComponent::outputEnabled();// && !WE;
+    updateOutEnabled();
 
-    if( oe != m_oe )
-    {
-        m_oe = oe;
-        enableOutputs( oe );
-    }
-
+    m_we = m_WePin->getInpState();;
     m_address = 0;
     for( int i=0; i<m_addrBits; ++i )        // Get Address
     {
         bool state = m_inPin[i]->getInpState();
         if( state ) m_address += pow( 2, i );
     }
-
-    m_we = WE;
-    if( WE )                                // Write
-    {
+    if( m_we ){                             // Write
         write( true );
         Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( m_propDelay*m_propSize, this );
     }
-    else{                                 // Read
+    else{                                  // Read
         write( false );
         m_nextOutVal = m_ram[m_address];
         IoComponent::sheduleOutPuts( this );
@@ -203,7 +186,9 @@ void Memory::write( bool w )
     m_write = w;
     for( IoPin* pin : m_outPin )
     {
-        pin->setPinMode( w ? input : output );
+        if( m_outEnable ) pin->setPinMode( w ? input : output );
+        else              LogicComponent::enableOutputs( false );
+
         if( m_asynchro ) pin->changeCallBack( this, w );
     }
 }
