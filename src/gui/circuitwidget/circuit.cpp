@@ -217,7 +217,7 @@ void Circuit::loadStrDoc( QString &doc )
                     name = prop.mid( 0, prop.length()-1 );
                     continue;
                 }
-                else if( prop.endsWith("/>") ) continue;
+                else if( prop.endsWith(">") ) continue;
                 else{
                     if     ( name == "itemtype"   ) type  = prop.toString();
                     else if( name == "CircId"     ) uid   = prop.toString();
