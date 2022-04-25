@@ -211,7 +211,7 @@ void Circuit::loadStrDoc( QString &doc )
             QVector<QStringRef> properties;
             for( QStringRef prop : props )
             {
-                if( prop.endsWith("=") )
+                if( prop.size() > 1 && prop.endsWith("=") )
                 {
                     prop = prop.split(" ").last();
                     name = prop.mid( 0, prop.length()-1 );
