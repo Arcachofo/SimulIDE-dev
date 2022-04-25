@@ -35,9 +35,14 @@ void EnumVal::setup()
     m_blocked = true;
 
     QStringList enums = m_component->getEnums( m_propName );
-    enums.sort();
+    /// enums.sort();
     for( QString val : enums ) valueBox->addItem( val );
-    valueBox->setCurrentText( m_property->getValStr() );
+
+    QString valStr = m_property->getValStr();
+
+    if( m_property->type() == "string" ) valueBox->setCurrentText( valStr );
+    else                                 valueBox->setCurrentIndex( valStr.toInt() );
+
 
     m_blocked = false;
     updtValues();
@@ -61,8 +66,8 @@ void EnumVal::on_showVal_toggled( bool checked )
 void EnumVal::on_valueBox_currentIndexChanged( QString val )
 {
     if( m_blocked ) return;
-    m_property->setValStr( val );
-
+    if( m_property->type() == "string" ) m_property->setValStr( val );
+    else m_property->setValStr( QString::number(valueBox->currentIndex()) );
 }
 
 void EnumVal::updtValues()

@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2012 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
@@ -36,6 +36,9 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
+        int color() { return m_ledColor; }
+        void setColor( int c ){ m_ledColor = c; }
+
         int numDisplays() { return m_numDisplays; }
         void setNumDisplays( int dispNumber );
 
@@ -43,8 +46,10 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
         virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void updateStep() override;
+
+        virtual QStringList getEnums( QString e ) override;
         
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
         void proccessCommand();
@@ -61,6 +66,9 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
         int m_rxReg;        // Received value
         int m_inBit;        // How many bits have we read since last value
         int m_inDisplay;    // Current display
+
+        int m_ledColor;
+        QColor m_colors[6];
 
         //Inputs
         Pin* m_pinCS;

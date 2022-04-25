@@ -47,6 +47,14 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     m_numDisplays = 4;
     m_area = QRectF(-36, -44, 4+64*m_numDisplays+4, 88 );
 
+    m_colors[0] = QColor( 255, 255,  75 ); // Yellow
+    m_colors[1] = QColor( 255, 170,  75 ); // Red
+    m_colors[2] = QColor(  75, 255, 170 ); // Green
+    m_colors[3] = QColor(  75, 200, 255 ); // Blue
+    m_colors[4] = QColor( 255, 200,  25 ); // Orange
+    m_colors[5] = QColor( 255,  75, 255 ); // Purple
+    m_ledColor = 0;
+
     m_pinCS  = new Pin( 270, QPoint(-12, 52), id+"PinCS", 0, this );
     m_pinDin = new Pin( 270, QPoint(-20, 52), id+"PinDin", 0, this );
     m_pinSck = new IoPin( 270, QPoint(-28, 52), id+"PinSck", 0, this, input );
@@ -70,7 +78,8 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     initialize();
 
     addPropGroup( { tr("Main"), {
-new IntProp<Max72xx_matrix>( "NumDisplays", tr("Size"),"_8x8 Led", this, &Max72xx_matrix::numDisplays, &Max72xx_matrix::setNumDisplays, "uint" )
+new IntProp<Max72xx_matrix>( "Color"      , tr("Color"),"", this, &Max72xx_matrix::color, &Max72xx_matrix::setColor, "enum" ),
+new IntProp<Max72xx_matrix>( "NumDisplays", tr("Size"),"_8x8 Led", this, &Max72xx_matrix::numDisplays, &Max72xx_matrix::setNumDisplays, "uint" ),
     }} );
 }
 Max72xx_matrix::~Max72xx_matrix(){}
@@ -175,10 +184,14 @@ void Max72xx_matrix::setNumDisplays( int displays )
     show();
 }
 
-void Max72xx_matrix::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+QStringList Max72xx_matrix::getEnums( QString e )
 {
-    Q_UNUSED(option); Q_UNUSED(widget);
+    if( e == "Color" ) return { tr("Yellow"),tr("Red"),tr("Green"),tr("Blue"),tr("Orange"),tr("Purple") };
+    else return CompBase::getEnums( e );
+}
 
+void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
+{
     Component::paint( p, option, widget );
     p->setRenderHint( QPainter::Antialiasing );
 
@@ -195,7 +208,7 @@ void Max72xx_matrix::paint( QPainter *p, const QStyleOptionGraphicsItem *option,
         p->setBrush( QColor(Qt::black) );
         p->drawRoundedRect( 64*display-32, -40, 64, 64, 2, 2 );
 
-        QColor color = QColor( QColor(255, 255, 100) ) ;//Qt::yellow;
+        QColor color = m_colors[m_ledColor];
         int factor = 100 + (15-m_intensity[display])*3;
         color = color.darker(factor);
 
