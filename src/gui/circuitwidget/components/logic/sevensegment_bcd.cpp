@@ -62,8 +62,8 @@ SevenSegmentBCD::SevenSegmentBCD( QObject* parent, QString type, QString id )
         m_inPin[i]->setFontSize( 4 );
         m_inPin[i]->setLabelColor( QColor( 250, 250, 200 ) );
         m_inPin[i]->setLabelText( QString::number( pow(2,i) ) );
+        m_inPin[i]->setLabelPos();
     }
-
     setLabelPos(-16,-40, 0);
         
     Simulator::self()->addToUpdateList( this );

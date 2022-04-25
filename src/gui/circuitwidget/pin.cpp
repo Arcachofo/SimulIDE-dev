@@ -59,6 +59,14 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_color[6] = QColor( 100, 100, 250 );
     m_color[7] = QColor( 250, 120, 0 );
 
+    QFont font( "Ubuntu Mono", 5 );
+    font.setPixelSize(7);
+    //font.setStretch( 110 );
+    //font.setLetterSpacing( QFont::PercentageSpacing, 105 );
+    m_label.setFont( font );
+    m_label.setText("");
+    m_label.setBrush( QColor( 250, 250, 200 ) );
+
     setObjectName( id );
     setConnector( NULL );
     setPos( pos );
@@ -67,14 +75,6 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     setCursor( Qt::CrossCursor );
     setFlag( QGraphicsItem::ItemStacksBehindParent, true );
     setFlag( QGraphicsItem::ItemIsSelectable, false );
-
-    QFont font( "Ubuntu Mono", 5 );
-    font.setPixelSize(7);
-    //font.setStretch( 110 );
-    //font.setLetterSpacing( QFont::PercentageSpacing, 105 );
-    m_label.setFont( font );
-    m_label.setText("");
-    m_label.setBrush( QColor( 250, 250, 200 ) );
 
     Circuit::self()->addPin( this, id );
 
@@ -242,34 +242,34 @@ void Pin::setLabelPos()
 
     int xlabelpos = pos().x();
     int ylabelpos = pos().y();
-    int height = fm.height()/2;
+    int height = (fm.height()+1)/2;
+    int offset = height/2;
 
-    if( m_angle == 0 )   // Right side
+    if( m_angle == 0 )         // Right side
     {
         m_label.setRotation( 0 );
-        xlabelpos -= fm.width(m_label.text())+m_length+1;
+        xlabelpos -= fm.width(m_label.text())+m_length+offset;
         ylabelpos -= height;
     }
     else if( m_angle == 90 )   // Top
     {
         m_label.setRotation(m_angle);
         xlabelpos += height;
-        ylabelpos += m_length+1;
+        ylabelpos += m_length+offset;
     }
-    else if( m_angle == 180 )   // Left
+    else if( m_angle == 180 )  // Left
     {
         m_label.setRotation( 0 );
-        xlabelpos += m_length+1;
+        xlabelpos += m_length+offset;
         ylabelpos -= height;
     }
-    else if( m_angle == 270 )   // Bottom
+    else if( m_angle == 270 )  // Bottom
     {
         m_label.setRotation( m_angle );
         xlabelpos -= height;
-        ylabelpos -= m_length+1;
-        
+        ylabelpos -= m_length+offset;
     }
-    m_label.setPos(xlabelpos, ylabelpos );
+    m_label.setPos( xlabelpos, ylabelpos );
 }
 
 void Pin::setLabelColor( QColor color ) { m_label.setBrush( QBrush(color) ); }
