@@ -440,26 +440,36 @@ void Mcu::slotOpenTerm( int num )
 void Mcu::addPin( QString id, QString type, QString label,
                   int pos, int xpos, int ypos, int angle, int length )
 {
+    if( type == "nc" )
+    {
+        Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
+        return;
+    }
     IoPin* pin = NULL;
 
     QColor color = Qt::black;
     if( !m_isLS ) color = QColor( 250, 250, 200 );
 
-    if( type.contains("IO") )
+    if( type == "rst" )
     {
+        pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
+        pin->setPinType( Pin::pinReset );
+    }else{
         QString pinNum = id.right(1);
         QString portName = "PORT"+id.mid(1,1);
         pin = McuPort::getPin( portName+pinNum );
         if( pin ){
-            if( type.contains("null") ) { pin->setVisible( false ); pin->setLabelText( "" ); }
+            if( type.contains("nul") )
+            {
+                pin->setVisible( false );
+                pin->setLabelText( "" );
+                pin->setPinType( Pin::pinNull );
+            }
             pin->setPos( QPoint( xpos, ypos ) );
             pin->setPinAngle( angle );
             pin->setLength( length );
     }   }
-    else if( type == "rst" )
-    {
-        pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
-    }
+
     if( pin )
     {
         pin->setLabelText( label );
@@ -467,7 +477,6 @@ void Mcu::addPin( QString id, QString type, QString label,
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
         m_pinList.append( pin );
     }
-    else Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
 }
 
 bool Mcu::rstPinEnabled()

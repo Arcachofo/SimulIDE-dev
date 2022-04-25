@@ -117,25 +117,14 @@ void Chip::initChip()
         m_pins.clear();
         m_ePin.clear();
         m_pin.clear();
-        //m_ePin.resize( m_numpins );
-        //m_pin.resize( m_numpins );
 
-        if( root.hasAttribute("background")) setBackground( root.attribute( "background") );
-
-        if( !m_initialized )
+        if( root.hasAttribute("type") ) setSubcTypeStr( root.attribute( "type") );
+        if( root.hasAttribute("background") ) setBackground( root.attribute( "background") );
+        if( m_subcType >= Board ) setTransformOriginPoint( togrid( boundingRect().center()) );
+        if( root.hasAttribute("name"))
         {
-            if( root.hasAttribute("type") )
-            {
-                /// setSubcTypeStr( root.attribute("type") );
-
-                if( m_subcType >= Board )
-                    setTransformOriginPoint( togrid( boundingRect().center()) );
-            }
-            if( root.hasAttribute("name"))
-            {
-                QString name = root.attribute("name");
-                if( name.toLower() != "package" ) m_name = name;
-            }
+            QString name = root.attribute("name");
+            if( name.toLower() != "package" ) m_name = name;
         }
         if     ( root.tagName() == "package" )  initPackage_old( root );
         else if( root.tagName() == "packageB" ) initPackage( root );
@@ -208,8 +197,6 @@ void Chip::initPackage_old( QDomElement root )
 
 void Chip::initPackage( QDomElement root )
 {
-    //setSubcTypeStr( root.attribute("type") );
-
     int chipPos = 0;
     QDomNode node = root.firstChild();
     while( !node.isNull() )
@@ -241,13 +228,11 @@ void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, i
 
     pin->setLabelText( label );
 
-    if     ( type == "inverted" || type == "inv" ) pin->setInverted( true );
-    else if( type == "unused" || type == "nc" )   pin->setUnused( true );
-    else if( type == "null" )
-    {
-        pin->setVisible( false );
-        pin->setLabelText( "" );
-    }
+    if     ( type == "inverted" || type == "in" ) pin->setInverted( true );
+    else if( type == "unused"   || type == "nc" ) pin->setUnused( true );
+    if     ( type == "rst" )                      pin->setPinType( Pin::pinReset );
+    else if( type.contains("nul") )               pin->setPinType( Pin::pinNull );
+
     pin->setLength( length );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
@@ -284,15 +269,6 @@ void Chip::setLogicSymbol( bool ls )
     else               Circuit::self()->unSaveState();
 }
 
-void Chip::setSubcTypeStr( QString s )
-{
-    bool ok = false;
-    int index = s.toInt(&ok); // OLd TODELETE
-    if( !ok ) index = m_subcTypes.indexOf( s.remove("subc") );
-    if( index < 0 ) index = 0;
-    m_subcType = (subcType_t)index;
-}
-
 void Chip::setBackground( QString bck )
 {
     m_background = bck;
@@ -313,10 +289,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 {
     Component::paint( p, option, widget );
 
-    if( m_BackPixmap )
-        p->drawPixmap( m_area.x(), m_area.y(), *m_BackPixmap );
-    //else if( m_background != "" )
-    //   p->drawPixmap( m_area.x(), m_area.y(), QPixmap( m_background ));
+    if( m_BackPixmap ) p->drawPixmap( m_area.x(), m_area.y(), *m_BackPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
         if( !m_isLS )

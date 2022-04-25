@@ -47,9 +47,10 @@ class MAINMODULE_EXPORT SubPackage : public Chip
 
         void savePackage( QString fileName );
 
-        virtual void setLogicSymbol( bool ls );
+        virtual void setSubcTypeStr( QString s ) override;
+        virtual void setLogicSymbol( bool ls ) override;
         virtual void remove() override;
-        
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:
@@ -57,6 +58,7 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         void invertPin( bool invert );
         void setPinId( QString id );
         void setPinName( QString name );
+        void setPinType( QString type );
         void setPinAngle( int i);
         void boardMode();
         void savingCirc();
@@ -81,7 +83,8 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
 
     private:
-        QString pinEntry( Pin* pin, int pP );
+        QString pinEntry( Pin* pin );
+        QString adjustSize( QString str, int size );
 
         void setBoardMode();
 
@@ -128,6 +131,9 @@ private:
 
     QLabel*    m_idLabel;
     QLineEdit* m_idLineEdit;
+
+    QLabel*    m_typeLabel;
+    QLineEdit* m_typeLineEdit;
 
     QLabel*    m_angleLabel;
     QComboBox* m_angleBox;

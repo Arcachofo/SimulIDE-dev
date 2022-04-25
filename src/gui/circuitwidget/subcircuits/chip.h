@@ -51,7 +51,7 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         subcType_t subcType() { return m_subcType; }
 
         QString subcTypeStr() { return m_subcTypes.at( (int)m_subcType ); }
-        virtual void setSubcTypeStr( QString s );
+        virtual void setSubcTypeStr( QString s ){;}
 
 
         int pkgWidth() { return m_width; }

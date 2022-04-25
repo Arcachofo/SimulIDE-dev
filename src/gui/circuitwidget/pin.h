@@ -47,8 +47,10 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         enum pinType_t{
             pinNormal=0,
+            pinReset,
             pinSocket,
-            pinHeader
+            pinHeader,
+            pinNull
         };
 
         enum { Type = UserType + 3 };

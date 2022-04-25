@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<package name="Package" pins="30" width="5" height="17" >
+<package name="Package" width="5" height="17" >
 
     <pin side="left" pos="1"   type="IO" id="PD0"  label="D0" />
     <pin side="left" pos="2"   type="IO" id="PD1"  label="D1" />
@@ -33,7 +33,4 @@
     <pin side="right" pos="0"  type="IOnull" id="PV2" label=""/><!-- ADC6 -->
     <pin side="right" pos="0"  type="IOnull" id="PV3" label=""/><!-- ADC7 -->
     
-    <pin side="left"  pos="7"  type="null" id="VCC"   label="Vcc"/>
-    <pin side="left"  pos="8"  type="null" id="GND1"  label="Gnd"/>
-    <pin side="right" pos="7"  type="null" id="GND2"  label="Gnd"/>
 </package>

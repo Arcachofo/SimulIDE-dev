@@ -364,9 +364,6 @@ QPainterPath ConnectorLine::shape() const
 
 void ConnectorLine::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
-
     //pen.setColor( Qt::darkGray);
     //p->setPen( pen );
 

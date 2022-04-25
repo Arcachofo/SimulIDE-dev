@@ -54,15 +54,13 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
                             int pos, int xpos, int ypos, int angle, int length=8 );
 
         virtual void updatePin( QString id, QString type, QString label,
-                                int pos, int xpos, int ypos, int angle, int length=8  );
+                                int xpos, int ypos, int angle, int length=8  );
 
-        Component*  m_mainComponent;
+        Component* m_mainComponent;
 
-        QList<Component*> m_compList;
+        QList<Component*>       m_compList;
+        QList<Tunnel*>          m_subcTunnels;
         QHash<QString, Tunnel*> m_pinTunnels;
-        QList<Tunnel*> m_subcTunnels;
-
-
 };
 #endif
 
