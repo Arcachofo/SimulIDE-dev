@@ -289,7 +289,7 @@ void Chip::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* 
 {
     Component::paint( p, option, widget );
 
-    if( m_BackPixmap ) p->drawPixmap( m_area.x(), m_area.y(), *m_BackPixmap );
+    if( m_BackPixmap ) p->drawPixmap( m_area.x(), m_area.y(),m_width*8, m_height*8, *m_BackPixmap );
     else{
         p->drawRoundedRect( m_area, 1, 1);
         if( !m_isLS )
