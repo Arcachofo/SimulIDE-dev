@@ -116,6 +116,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
     public slots:
         void isMoved();
+        void flip( int h, int v );
 
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event );
@@ -126,6 +127,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         int m_angle;
         int m_length;
+        int m_Hflip;
+        int m_Vflip;
 
         bool m_blocked;
         bool m_isBus;

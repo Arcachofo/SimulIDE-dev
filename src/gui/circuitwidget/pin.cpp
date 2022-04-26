@@ -80,6 +80,9 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
 
     connect( parent, SIGNAL( moved() ),
                this, SLOT( isMoved() ), Qt::UniqueConnection );
+
+    connect( parent, SIGNAL( flip( int, int ) ),
+               this, SLOT( flip( int, int ) ), Qt::UniqueConnection );
 }
 Pin::~Pin()
 {
@@ -197,6 +200,13 @@ void Pin::isMoved()
     setLabelPos();
 }
 
+void Pin::flip( int h, int v )
+{
+    m_Hflip = h;
+    m_Vflip = v;
+    m_label.setTransform( QTransform::fromScale( h, v ) );
+}
+
 void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
     if( m_unused ) return;
@@ -243,31 +253,39 @@ void Pin::setLabelPos()
     int xlabelpos = pos().x();
     int ylabelpos = pos().y();
     int height = (fm.height()+1)/2;
-    int offset = height/2;
+    int offset = m_length + height/2;
 
     if( m_angle == 0 )         // Right side
     {
         m_label.setRotation( 0 );
-        xlabelpos -= fm.width(m_label.text())+m_length+offset;
-        ylabelpos -= height;
+        if( m_Hflip == -1 ) xlabelpos -= offset;
+        else                xlabelpos -= fm.width(m_label.text())+offset;
+        if( m_Vflip == -1 ) ylabelpos += height;
+        else                ylabelpos -= height;
     }
     else if( m_angle == 90 )   // Top
     {
         m_label.setRotation(m_angle);
-        xlabelpos += height;
-        ylabelpos += m_length+offset;
+        if( m_Hflip == -1 ) xlabelpos -= height;
+        else                xlabelpos += height;
+        if( m_Vflip == -1 ) ylabelpos += fm.width(m_label.text())+offset;
+        else                ylabelpos += offset;
     }
     else if( m_angle == 180 )  // Left
     {
         m_label.setRotation( 0 );
-        xlabelpos += m_length+offset;
-        ylabelpos -= height;
+        if( m_Hflip == -1 ) xlabelpos += fm.width(m_label.text())+offset;
+        else                xlabelpos += offset;
+        if( m_Vflip == -1 ) ylabelpos += height;
+        else                ylabelpos -= height;
     }
     else if( m_angle == 270 )  // Bottom
     {
         m_label.setRotation( m_angle );
-        xlabelpos -= height;
-        ylabelpos -= m_length+offset;
+        if( m_Hflip == -1 ) xlabelpos += height;
+        else                xlabelpos -= height;
+        if( m_Vflip == -1 ) ylabelpos -= fm.width(m_label.text())+offset;
+        else                ylabelpos -= offset;
     }
     m_label.setPos( xlabelpos, ylabelpos );
 }

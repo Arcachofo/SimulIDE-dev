@@ -525,6 +525,7 @@ void Component::setflip()
     setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_idLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
     m_valLabel->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+    emit flip( m_Hflip, m_Vflip );
     emit moved();
 }
 

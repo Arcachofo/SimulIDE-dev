@@ -132,6 +132,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
     signals:
         void moved();
+        void flip( int h, int v );
 
     public slots:
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
