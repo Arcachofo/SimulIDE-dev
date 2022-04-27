@@ -81,19 +81,20 @@ void AvrTimer::configureA( uint8_t newTCCRXA ) // TCCRXA  // WGM00,WGM01
     if( m_OCB ) m_OCB->configure( newTCCRXA );
     if( m_OCC ) m_OCC->configure( newTCCRXA );
 
-    m_wgm10Val = getRegBitsVal( newTCCRXA, m_WGM10 ); // WGMX1,WGMX0
-    updtWgm();
+    uint8_t WGM10 = getRegBitsVal( newTCCRXA, m_WGM10 ); // WGMX1,WGMX0
+    //if( m_wgm10Val != WGM10 )
+    { m_wgm10Val = WGM10; updtWgm(); }
 }
 
 void AvrTimer::configureB( uint8_t newTCCRXB ) // TCCRXB
 {
-    getPrescaler( newTCCRXB );
+    updtPrescaler( newTCCRXB );
 
-    m_wgm32Val = (getRegBitsVal( newTCCRXB, m_WGM32 ))<<2; // WGMX3,WGMX2
-    updtWgm();
+    uint8_t WGM32 = (getRegBitsVal( newTCCRXB, m_WGM32 ))<<2; // WGMX3,WGMX2
+    if( m_wgm32Val != WGM32 ){ m_wgm32Val = WGM32; updtWgm(); }
 }
 
-void AvrTimer::getPrescaler( uint8_t val )
+void AvrTimer::updtPrescaler( uint8_t val )
 {
     uint8_t prIndex = getRegBitsVal( val, m_prSelBits ); // CSX0-n
 
@@ -123,7 +124,6 @@ void AvrTimer::configureExtClock()
 void AvrTimer::configureOcUnits( bool wgm3 )
 {
     m_bidirec = false;
-    //m_reverse = false;
 
     ocAct_t comActA, comActB, comActC;
     ocAct_t tovActA = ocNON;
@@ -292,7 +292,7 @@ void AvrTimer810::configureA( uint8_t newTCCR1 ) // TCCR1
     if( getRegBitsBool( newTCCR1, m_PWM1A ) ) mode |= 1;
     if( mode != m_mode ) updateMode();
 
-    getPrescaler( newTCCR1 );
+    updtPrescaler( newTCCR1 );
 }
 
 void AvrTimer810::configureB( uint8_t newGTCCR ) // GTCCR
@@ -349,7 +349,7 @@ void AvrTimer821::configureA(uint8_t newTCCRx )
 {
     if( m_OCA ) m_OCA->configure( newTCCRx ); // COM20 COM21 Done in ocunits
 
-    getPrescaler( newTCCRx );
+    updtPrescaler( newTCCRx );
 
     uint8_t WGM10 = ((( newTCCRx & 1<<6) >> 6)
                    | (( newTCCRx & 1<<3) >> 2)); // WGM20 WGM21

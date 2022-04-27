@@ -49,6 +49,7 @@ void McuTimer::initialize()
     m_running = false;
     m_bidirec = false;
     m_reverse = false;
+    m_extClock = false;
 
     m_countVal   = 0;
     m_countStart = 0;
@@ -60,7 +61,7 @@ void McuTimer::initialize()
     m_prescaler = 1;
     m_prIndex = 0;
 
-    m_clkSrc  = clkMCU;
+    //m_clkSrc  = clkMCU;
     m_clkEdge = 1;
 
     m_scale = m_prescaler*m_mcu->simCycPI();
@@ -108,32 +109,39 @@ void McuTimer::resetTimer()
 
 void McuTimer::sheduleEvents()
 {
-    if( m_running ){
-        if( m_clkSrc == clkMCU )
+    if( !m_running ) return;
+    if( m_extClock )
+    {
+        Simulator::self()->cancelEvents( this );
+        for( McuOcUnit* ocUnit : m_ocUnit ) Simulator::self()->cancelEvents( ocUnit );
+    }else{
+        uint64_t circTime = Simulator::self()->circTime();
+        uint64_t ovfPeriod = m_ovfPeriod;
+        if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount;
+
+        uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
+        uint64_t ovfCycle = circTime + cycles;// In simulation time (ps)
+
+        //if( m_name == "TIMER0") /// DELETEME
+        //    m_running = m_running;
+
+        if( m_ovfCycle != ovfCycle )
         {
-            uint64_t circTime = Simulator::self()->circTime();
-            uint64_t ovfPeriod = m_ovfPeriod;
-            if( m_countVal > m_ovfPeriod ) ovfPeriod += m_maxCount;
-
-            uint64_t cycles = (ovfPeriod-m_countVal)*m_scale; // cycles in ps
-            m_ovfCycle = circTime + cycles;// In simulation time (ps)
-
-            //if( m_name == "TIMER0") /// DELETEME
-            //    m_running = m_running;
-
+            m_ovfCycle = ovfCycle;
             Simulator::self()->cancelEvents( this );
             Simulator::self()->addEvent( cycles, this );
         }
-        for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfMatch, m_countVal );
-    }else{
-        Simulator::self()->cancelEvents( this );
-        for( McuOcUnit* ocUnit : m_ocUnit ) Simulator::self()->cancelEvents( ocUnit );
-}   }
+    }
+    for( McuOcUnit* ocUnit : m_ocUnit ) ocUnit->sheduleEvents( m_ovfMatch, m_countVal );
+}
 
 void McuTimer::enable( uint8_t en )
 {
+    bool e = en > 0;
+    if( m_running == e )
+        return;
     updtCount();    // If disabling, write counter values to Ram
-    m_running = en;
+    m_running = e;
     updtCycles();  // This will shedule or cancel events
 }
 
@@ -153,22 +161,23 @@ void McuTimer::countWriteH( uint8_t val ) // Someone wrote to counter high byte
 
 void McuTimer::updtCount( uint8_t )       // Write counter values to Ram
 {
-    if( m_running ) // If no running, values were already written at timer stop.
+    if( !m_running ) return;// If no running, values were already written at timer stop.
+
+    if( !m_extClock )
     {
-        if( m_clkSrc == clkMCU )
-        {
-            uint64_t timTime = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
-            m_countVal = m_ovfMatch-timTime/m_scale;
-        }
-        if( m_countL ) *m_countL = m_countVal & 0xFF;
-        if( m_countH ) *m_countH = (m_countVal>>8) & 0xFF;
-}   }
+        uint64_t time2Ovf = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
+        uint64_t cycles2Ovf = time2Ovf/m_scale;
+        if( m_ovfMatch > cycles2Ovf ) m_countVal = m_ovfMatch-cycles2Ovf;
+    }
+    if( m_countL ) *m_countL = m_countVal & 0xFF;
+    if( m_countH ) *m_countH = (m_countVal>>8) & 0xFF;
+}
 
 void McuTimer::updtCycles() // Recalculate ovf, comps, etc
 {
     m_countVal = *m_countL;
     if( m_countH ) m_countVal |= *m_countH << 8;
-    m_countStart = 0;
+    /// m_countStart = 0;
     sheduleEvents();
 }
 
@@ -180,8 +189,9 @@ uint32_t McuTimer::getCount()
 
 void McuTimer::enableExtClock( bool en )
 {
+    if( m_extClock == en ) return;
     updtCount();
-    m_clkSrc = en? clkEXT : clkMCU;
+    m_extClock = en; //m_clkSrc = en? clkEXT : clkMCU;
     updtCycles();      // update & Reshedule
 
     if( m_clockPin )

@@ -72,11 +72,10 @@ void I51Timer::configureA( uint8_t newTMOD ) // TxM0,TxM1
         m_ovfPeriod = m_ovfMatch+1;
     }
 
-    bool clkSrc = getRegBitsVal( newTMOD, m_CTx );
-    if( clkSrc != m_clkSrc )
+    bool extClock = getRegBitsVal( newTMOD, m_CTx );
+    if( extClock != m_extClock )
     {
-        if( clkSrc ) m_clkSrc = clkEXT;
-        else         m_clkSrc = clkMCU;
+        m_extClock = extClock;
     }
     bool gate = getRegBitsVal( newTMOD, m_GATE );
     if( gate != m_gate )

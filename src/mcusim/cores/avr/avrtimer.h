@@ -52,7 +52,7 @@ class MAINMODULE_EXPORT AvrTimer : public McuTimer
         virtual void configureClock();
         void configureExtClock();
         void configureOcUnits( bool wgm3 );
-        void getPrescaler( uint8_t val );
+        void updtPrescaler( uint8_t val );
 
         regBits_t m_WGM10;
         regBits_t m_WGM32;

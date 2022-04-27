@@ -30,20 +30,20 @@ AvrOcUnit::~AvrOcUnit( ){}
 
 void AvrOcUnit::configure( uint8_t val ) // COMNX0,COMNX1
 {
-    uint8_t mode = getRegBitsVal( val, m_configBitsA );
+    m_mode = getRegBitsVal( val, m_configBitsA );
 
-    if( mode == m_mode ) return;
-    m_mode = mode;
+    bool enabled = m_mode > 0;
+    if( m_enabled == enabled ) return;
+    m_enabled = enabled;
 
-    if( m_mode == 0 ){          // OC Pin disconnected
-         m_ocPin->controlPin( false, false );
-    }
-    else{                       // OC Pin connected
-         m_ocPin->controlPin( true, false );
-         m_ocPin->setOutState( false );
-    }
-    if( m_ocm ) m_ocm->setOcActive( this, mode > 0 );
-    else        m_ctrlPin = mode > 0;
+    if( enabled ){                       // OC Pin connected
+        m_ocPin->controlPin( true, false );
+        m_ocPin->setOutState( false );
+   }else{                               // OC Pin disconnected
+        m_ocPin->controlPin( false, false );
+   }
+    if( m_ocm ) m_ocm->setOcActive( this, enabled );
+    else        m_ctrlPin = enabled;
 }
 
 void AvrOcUnit::setPinSate( bool state )

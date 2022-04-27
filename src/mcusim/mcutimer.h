@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
         virtual void topReg0Changed( uint8_t val ){;}
 
         void enableExtClock( bool en );
-        bool extClocked() { return m_clkSrc == clkEXT; }
+        bool extClocked() { return m_extClock; }
 
         uint32_t getCount();
         QString  name()     { return m_name; }
@@ -81,6 +81,7 @@ class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
         bool m_running;  // is Timer running?
         bool m_bidirec;  // is Timer bidirectional?
         bool m_reverse;  // is Timer counting backwards?
+        bool m_extClock;
 
         uint8_t* m_countL; // Actual ram for counter Low byte
         uint8_t* m_countH; // Actual ram for counter High byte
@@ -98,7 +99,7 @@ class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
         uint8_t* m_topReg0L;   // Register used as Top Low byte
         uint8_t* m_topReg0H;   // Register used as Top High byte
 
-        clkSource_t m_clkSrc;   // Source of Timer clock
+        //clkSource_t m_clkSrc;   // Source of Timer clock
         uint8_t     m_clkEdge;  // Clock edge in ext pin clock
         bool        m_clkState; // Lask Clock state
         McuPin*     m_clockPin; // External Clock pin
