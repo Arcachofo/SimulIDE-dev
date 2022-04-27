@@ -55,7 +55,7 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
 
     m_pin.resize( 2 );
     m_clkPin = new IoPin( 270, QPoint(-48, 48), id+"-PinSck" , 0, this, openCo );
-    m_clkPin->setLabelText( "SCK" );
+    m_clkPin->setLabelText( "SCL" );
     m_pin[0] = m_clkPin;
     TwiModule::setSclPin( m_clkPin );
 
