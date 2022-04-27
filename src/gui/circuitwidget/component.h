@@ -157,7 +157,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
             { if( event->button() == Qt::LeftButton ) slotProperties(); }
 
-        void setflip();
+        virtual void setflip();
 
         bool m_graphical;
         bool m_showId;

@@ -44,8 +44,7 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
     
     m_proxy = Circuit::self()->addWidget( &m_voltw );
     m_proxy->setParentItem( this );
-    m_proxy->setPos( QPoint(-WIDTH/2 + (WIDTH - DIAL_SIZE)/2
-                          , -HEIGHT/2 + (WIDTH - DIAL_SIZE)/2) );
+    m_proxy->setPos( QPoint(-WIDTH/2+2, -HEIGHT/2+2 ) );
     //m_proxy->setFlag(QGraphicsItem::ItemNegativeZStacksBehindParent, true );
 
     m_button = m_voltw.pushButton;
@@ -103,6 +102,13 @@ void VarSource::setVal( double val )
     m_changed = true;
     updateButton();
     if( !Simulator::self()->isRunning() ) updateStep();
+}
+
+void VarSource::setflip()
+{
+    Component::setflip();
+    m_proxy->setPos( QPoint( (-WIDTH/2+2)*m_Hflip, (-HEIGHT/2+2)*m_Vflip ) );
+    m_proxy->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
 }
 
 void VarSource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

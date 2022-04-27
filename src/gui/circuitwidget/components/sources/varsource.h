@@ -48,6 +48,8 @@ class MAINMODULE_EXPORT VarSource : public Component, public eElement
     protected:
         void updateButton();
         void updtValue( double v );
+
+        virtual void setflip() override;
         
         double m_maxValue;
         double m_outValue;
