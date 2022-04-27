@@ -17,6 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QDebug>
 #include <QFileInfo>
 
 #include "avrgccdebugger.h"
@@ -75,8 +76,8 @@ bool AvrGccDebugger::getVariables()
     getBss.waitForFinished(-1);
 
     QString  p_stdout = getBss.readAllStandardOutput();
-    QStringList varNames = m_varList.keys();
-    m_varNames.clear();
+    QStringList varNames = m_varTypes.keys();
+    QStringList varList;
     m_subs.clear();
 
     for( QString line : p_stdout.split("\n") )
@@ -94,7 +95,7 @@ bool AvrGccDebugger::getVariables()
         QString symbol = words.at(8);
         QString type;
 
-        if( varNames.contains( symbol ) ) type = m_varList.value( symbol );
+        if( varNames.contains( symbol ) ) type = m_varTypes.value( symbol );
         else{
             QString size = words.at(7);
             size = size.split("\t").last();
@@ -102,11 +103,12 @@ bool AvrGccDebugger::getVariables()
         }
         address -= 0x800000;          // 0x800000 offset
 
-        eMcu::self()->addWatchVar( symbol, address, type );
-        m_varNames.append( symbol );
-        //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
+        eMcu::self()->getRamTable()->addVariable( symbol, address, type );
+        varList.append( symbol );
+        qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
     }
-    outPane()->appendLine( QString::number( m_varNames.size() )+" variables found" );
+    eMcu::self()->getRamTable()->setVariables( varList );
+    outPane()->appendLine( QString::number( varList.size() )+" variables found" );
     return true;
 }
 

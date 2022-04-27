@@ -95,11 +95,11 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
             if( m_typesList.contains(size) ) type = m_typesList.value( size );
         }*/
         if( type.isEmpty() ) continue;
-        eMcu::self()->addWatchVar( symbol, address, type );
+        eMcu::self()->getRamTable()->addVariable( symbol, address, type );
         varNames.append( symbol );
         //qDebug() << "GputilsDebug::getData  variable "<<type<<symbol<<address;
     }
-    debugger->setVarList( varNames );
+    eMcu::self()->getRamTable()->setVariables( varNames );
     debugger->outPane()->appendLine( QString::number( varNames.size() )+" variables found" );
     return true;
 }

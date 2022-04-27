@@ -48,6 +48,9 @@ class RamTable : public QWidget, private Ui::RamTable
         void setDebugger( BaseDebugger*  deb ) { m_debugger = deb; }
         void remDebugger( BaseDebugger*  deb ) { if( m_debugger == deb ) m_debugger = NULL; }
 
+        void setVariables( QStringList vars );
+        void addVariable( QString name, int address, QString type );
+
         void loadVarSet( QStringList varSet );
         QStringList getVarSet();
         uint16_t getCurrentAddr();
@@ -60,23 +63,30 @@ class RamTable : public QWidget, private Ui::RamTable
 
     public slots:
         void RegDoubleClick( const QModelIndex& index );
+        void VarDoubleClick( const QModelIndex& index );
         void clearSelected();
         void clearTable();
         void loadVarSet();
         void saveVarSet();
-        void loadVariables();
 
     private slots:
         void addToWatch( QTableWidgetItem* );
         void slotContextMenu( const QPoint& );
 
     private:
+        void updateRamValue( QString name );
+
         eMcu* m_processor;
         BaseDebugger*  m_debugger;
 
         QStandardItemModel* m_registerModel;
+        QStandardItemModel* m_variableModel;
 
         QHash<int, QString> watchList;
+
+        QHash<QString, QString> m_typeTable;
+        QHash<QString, uint16_t> m_varsTable;
+        QStringList m_varNames;
 
         bool m_loadingVars;
 

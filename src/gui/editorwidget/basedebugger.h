@@ -44,9 +44,6 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         QString getVarType( QString var );
 
-        QStringList getVarList() { return m_varNames; }
-        void setVarList( QStringList varNames ) { m_varNames = varNames; }
-
         QList<int> getSubLines() { return m_subLines; }
 
         virtual void getInfoInFile( QString line );
@@ -74,13 +71,12 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         int m_codeStart;
 
         QString m_appPath;
-        
-        QStringList m_varNames;
+
         QStringList m_subs;
         QList<int>  m_subLines;
         
         QHash<QString, QString> m_typesList;
-        QHash<QString, QString> m_varList;
+        QHash<QString, QString> m_varTypes; // Variable name-Type got from source file
         QHash<int, int> m_flashToSource;    // Map flash adress to Source code line
         QHash<int, int> m_sourceToFlash;    // Map .asm code line to flash adress
 

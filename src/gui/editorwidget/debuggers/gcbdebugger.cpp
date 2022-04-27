@@ -74,8 +74,8 @@ bool GcbDebugger::postProcess()
 
 bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
 {
-    m_varList.clear();
-    m_varNames.clear();
+    QStringList varList;
+    m_varTypes.clear();
     m_subLines.clear();
 
     QStringList gcbLines = fileToStringList( m_fileDir+m_fileName+".gcb", "GcbDebugger::mapGcbToAsm" );
@@ -127,10 +127,10 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             varSize  = QString::number( size+1 );
             
             QString type = "array"+varSize;
-            if( !m_varList.contains( varName ) )
+            if( !m_varTypes.contains( varName ) )
             {
-                m_varList[ varName ] = type;
-                m_varNames.append( varName );
+                m_varTypes[ varName ] = type;
+                varList.append( varName );
         }   }
         else{
             if( wordList.first().toUpper() != "DIM" ) continue;
@@ -140,10 +140,10 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             if( m_typesList.contains( type ) )
             {
                 QString varName = wordList.at(1).toLower();
-                if( !m_varList.contains( varName ) )
+                if( !m_varTypes.contains( varName ) )
                 {
-                    m_varList[ varName ] = m_typesList[ type ];
-                    m_varNames.append( varName );
+                    m_varTypes[ varName ] = m_typesList[ type ];
+                    varList.append( varName );
     }   }   }   }
     m_flashToSource.clear();
     m_sourceToFlash.clear();
@@ -187,27 +187,28 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             QString name = text.first().toLower();
             int  address = text.last().toInt();
             QString type = "uint8";
-            if( m_varList.contains( name ) ) type = m_varList.value( name );
-            eMcu::self()->addWatchVar( name, address ,type  );
+            if( m_varTypes.contains( name ) ) type = m_varTypes.value( name );
+            eMcu::self()->getRamTable()->addVariable( name, address ,type  );
             
             if( type.contains( "array" ) )
             {
-                m_varNames.removeOne( name );
-                m_varNames.append( name );
+                varList.removeOne( name );
+                varList.append( name );
                 
                 QString ty = type;
                 int size = ty.replace( "array", "" ).toInt();
                 for( int i=1; i<size; i++ )
                 {
                     QString elmName = name+"("+QString::number( i )+")";
-                    eMcu::self()->addWatchVar( elmName, address+i ,"uint8"  );
-                    if( !m_varList.contains( elmName ) ) 
+                    eMcu::self()->getRamTable()->addVariable( elmName, address+i ,"uint8"  );
+                    if( !m_varTypes.contains( elmName ) )
                     {
-                        m_varList[ elmName ] = m_typesList.value("uint8");
-                        m_varNames.append( elmName );
+                        m_varTypes[ elmName ] = m_typesList.value("uint8");
+                        varList.append( elmName );
         }   }   }   }
         asmLineNumber++;
     }
+    eMcu::self()->getRamTable()->setVariables( varList );
     QHashIterator<int, int> i(m_flashToSource);
     while( i.hasNext() )
     {

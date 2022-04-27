@@ -246,7 +246,7 @@ int BaseDebugger::getValidLine( int line )
 
 QString BaseDebugger::getVarType( QString var )
 {
-    return m_varList.value( var );
+    return m_varTypes.value( var );
 }
 
 #include "moc_basedebugger.cpp"

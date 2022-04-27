@@ -45,7 +45,7 @@ void cDebugger::preProcess()
     QStringList lines = fileToStringList( m_file, "BaseDebugger::preProcess" );
     getInfoInFile( lines.first() );
 
-    m_varList.clear();
+    m_varTypes.clear();
 
     for( QString line : lines )          // Get Variables from file
     {
@@ -65,8 +65,8 @@ void cDebugger::preProcess()
             {
                 if( varName.isEmpty() ) continue;
                 varName.remove(" ");
-                if( !m_varList.contains( varName ) )
-                    m_varList[ varName ] = m_typesList[ type ];
+                if( !m_varTypes.contains( varName ) )
+                    m_varTypes[ varName ] = m_typesList[ type ];
                 //qDebug() << "cDebugger::getData  variable "<<type<<varName<<m_typesList[ type ];
 }   }   }   }
 

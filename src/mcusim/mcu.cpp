@@ -186,6 +186,7 @@ bool Mcu::setPropStr( QString prop, QString val )
 void Mcu::initialize()
 {
     m_crashed = false;
+    if( m_mcuMonitor ) m_mcuMonitor->updateRamTable();
 }
 
 void Mcu::stamp()
@@ -343,8 +344,6 @@ bool Mcu::load( QString fileName )
 
     QSettings* settings = MainWindow::self()->settings();
     settings->setValue( "lastFirmDir", circuitDir.relativeFilePath( fileName ) );
-
-    if( m_mcuMonitor ) m_mcuMonitor->updateRamTable();
 
     return true;
 }
