@@ -169,7 +169,6 @@ void Ds18b20::sendByte( uint8_t data )
     m_bit = 1;
     m_write = true;
     m_pulse = 15*1e6;  // Keep line low for 15 us
-    //m_inpin->changeCallBack( this, false ); // Stop receiving voltChange() CallBacks
 }
 
 void Ds18b20::writeBit()

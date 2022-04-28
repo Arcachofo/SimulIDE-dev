@@ -24,7 +24,6 @@
 #include "iocomponent.h"
 
 class LibraryItem;
-class QGraphicsProxyWidget;
 
 class MAINMODULE_EXPORT DS1621 : public IoComponent, public TwiModule
 {

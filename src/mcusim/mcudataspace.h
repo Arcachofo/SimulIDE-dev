@@ -48,8 +48,6 @@ class MAINMODULE_EXPORT DataSpace
         uint8_t  readReg( uint16_t addr );         // Read Register (call watchers)
         void     writeReg(uint16_t addr, uint8_t v, bool masked=true);// Write Register (call watchers)
 
-        //void updateRamValue( QString name );
-        //void addWatchVar( QString name, int address, QString type );
         RamTable* getRamTable() { return m_ramTable; }
 
         QHash<QString, uint8_t>*       bitMasks() { return &m_bitMasks; }
@@ -76,8 +74,6 @@ class MAINMODULE_EXPORT DataSpace
         uint16_t m_sregAddr;                       // STATUS Reg Address
 
         RamTable* m_ramTable;
-        //QHash<QString, QString> m_typeTable;
-        //QHash<QString, uint16_t> m_varsTable;
 };
 
 #endif

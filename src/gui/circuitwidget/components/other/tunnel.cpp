@@ -63,13 +63,23 @@ Tunnel::Tunnel( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new StringProp<Tunnel>( "Name"   , tr("Id")    ,"", this, &Tunnel::name,    &Tunnel::setName ),
-new BoolProp  <Tunnel>( "Rotated",tr("Rotated"),"", this, &Tunnel::rotated, &Tunnel::setRotated )
+//new BoolProp  <Tunnel>( "Rotated",tr("Rotated"),"", this, &Tunnel::rotated, &Tunnel::setRotated )
     }} );
     addPropGroup( {"Hidden", {
 new StringProp<Tunnel>( "Uid","","", this, &Tunnel::tunnelUid, &Tunnel::setTunnelUid ),
     }} );
 }
 Tunnel::~Tunnel() {}
+
+bool Tunnel::setPropStr( QString prop, QString val )
+{
+    if( prop =="Rotated" )       // Old: TODELETE
+    {
+        if( val == "true" ) { m_Hflip = -1; setflip(); }
+    }
+    else return Component::setPropStr( prop, val );
+    return true;
+}
 
 void Tunnel::setEnode( eNode* node )
 {

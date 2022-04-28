@@ -369,7 +369,8 @@ void ConnectorLine::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
 
     QColor color;
     if( isSelected() ) color = QColor( Qt::darkGray );
-    else if( !m_isBus  && Circuit::self()->animate() )               //color = QColor( 40, 40, 60 /*Qt::black*/ );
+    else if( m_isBus ) color =  Qt::darkGreen;
+    else if( Circuit::self()->animate() )
     {
         if( m_pConnector->getVolt() > 2.5 ) color = QColor( 200, 50, 50 );
         else                                color = QColor( 50, 50, 200 );
@@ -384,10 +385,9 @@ void ConnectorLine::paint( QPainter* p, const QStyleOptionGraphicsItem* option, 
 
         //color = QColor( volt, 50, 250-volt);
     }
-    else if( m_isBus ) color =  Qt::darkGreen;
     else color = QColor( 40, 40, 60 /*Qt::black*/ );
 
-    QPen pen( color, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    QPen pen( color, 1.6, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     //p->setBrush( Qt::green );
     //p->drawRect( boundingRect() );
     //p->setBrush( Qt::blue );

@@ -105,7 +105,7 @@ bool AvrGccDebugger::getVariables()
 
         eMcu::self()->getRamTable()->addVariable( symbol, address, type );
         varList.append( symbol );
-        qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
+        //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
     }
     eMcu::self()->getRamTable()->setVariables( varList );
     outPane()->appendLine( QString::number( varList.size() )+" variables found" );
