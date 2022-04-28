@@ -71,7 +71,8 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         bool m_pullDown;
 
         uint64_t m_lastTime;
-        uint8_t  m_data;
+        uint8_t  m_rxReg;
+        uint8_t  m_txReg;
         uint8_t  m_bit;
 
         int m_pulse;

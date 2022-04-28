@@ -147,28 +147,14 @@ void Ds18b20::runEvent()
     else              // Release
     {
         m_inpin->sheduleState( true, 0 );
-
-        if( !m_reset )
-        {
-            m_reset = true;
-            m_inpin->changeCallBack( this, true ); // Receive voltChange() CallBacks again
-        }
-        if( m_write )
-        {
-            if( m_bit == 1<<7 ) // Byte sent
-            {
-                m_write = false;
-                m_inpin->changeCallBack( this, true ); // Receive voltChange() CallBacks again
-                byteSent();
-            }
-            m_bit <<= 1;
-        }
+        if( !m_reset ) m_reset = true;
+        m_inpin->changeCallBack( this, true ); // Receive voltChange() CallBacks again
     }
 }
 
-void Ds18b20::byteReceived() // a byte has been received (it's in m_data)
+void Ds18b20::byteReceived() // a byte has been received (it's in m_rxReg)
 {
-    qDebug() <<"Ds18b20::byteReceived"<< m_data; // Print received byte in bottom panel
+    qDebug() <<"Ds18b20::byteReceived"<< m_rxReg; // Print received byte in bottom panel
     // Do whatever
 }
 
@@ -179,35 +165,45 @@ void Ds18b20::byteSent() // Last byte has been sent
 
 void Ds18b20::sendByte( uint8_t data )
 {
-    m_data = data;
+    m_txReg = data;
     m_bit = 1;
     m_write = true;
     m_pulse = 15*1e6;  // Keep line low for 15 us
-    m_inpin->changeCallBack( this, false ); // Stop receiving voltChange() CallBacks
+    //m_inpin->changeCallBack( this, false ); // Stop receiving voltChange() CallBacks
 }
 
 void Ds18b20::writeBit()
 {
-    if( (m_data & m_bit) == 0 ) Simulator::self()->addEvent( 1*1e6, this ); // Pull down in 1 us
-    m_pullDown = true;
+    if( (m_txReg & m_bit) == 0 )
+    {
+        Simulator::self()->addEvent( 1*1e6, this ); // Pull down in 1 us
+        m_pullDown = true;
+        m_inpin->changeCallBack( this, false ); // Stop receiving voltChange() CallBacks
+    }
+    if( m_bit == 1<<7 ) // Byte sent
+    {
+        m_write = false;
+        byteSent();
+    }
+    else m_bit <<= 1;
 }
 
 void Ds18b20::readBit( uint8_t bit )
 {
-    if( bit ) m_data |= m_bit;
+    if( bit ) m_rxReg |= m_bit;
 
     if( m_bit == 1<<7 )          // Complete byte received
     {
         m_bit = 1;
         byteReceived();
-        m_data = 0;
+        m_rxReg = 0;
     }
     else m_bit <<= 1;
 }
 
 void Ds18b20::reset()
 {
-    m_data = 0;
+    m_rxReg = 0;
     m_bit = 1;
     m_reset = false;
     m_write = false;
