@@ -60,8 +60,7 @@ bool BaseDebugger::upload()
     m_outPane->appendLine( Mcu::self()->device() );
     m_outPane->appendLine( m_firmware+"\n" );
 
-    if( ok )
-    {
+    if( ok ){
         eMcu::self()->setDebugger( this );
         ok = postProcess();
     }
@@ -170,6 +169,46 @@ bool BaseDebugger::postProcess()
     }   }   }
     outPane()->appendLine( QString::number( m_flashToSource.size() )+" lines mapped" );
     return true;
+}
+
+void BaseDebugger::stepDebug()
+{
+    if( !m_debugStep ) return;  // This should never happen
+
+    int lastPC = eMcu::self()->pc();
+    eMcu::self()->stepCpu();
+    int PC = eMcu::self()->pc();
+
+    if( lastPC != PC )
+    {
+        if( m_over ){       // Step Over entry
+            if( m_funtions.contains( PC ) )
+            {
+                m_exitPC = eMcu::self()->getStack();
+                m_over = false;
+            }
+            return;
+        }
+        if( m_exitPC )     // Step Over exit
+        {
+            if( PC == m_exitPC ) m_exitPC = 0;
+            else return;
+        }
+        if( m_flashToSource.contains( PC ) )
+        {
+            int line = m_flashToSource.value( PC );
+            if( line != m_prevLine )
+            {
+                m_debugStep = false;
+                EditorWindow::self()->lineReached( line );
+}   }   }   }
+
+void BaseDebugger::stepFromLine( int line, bool over )
+{
+    m_over = over;
+    m_exitPC = 0;
+    m_prevLine = line;
+    m_debugStep = true;
 }
 
 void BaseDebugger::getInfoInFile( QString line )

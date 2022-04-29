@@ -37,50 +37,51 @@ GcbDebugger::GcbDebugger( CodeEditor* parent, OutPanelText* outPane )
 }
 GcbDebugger::~GcbDebugger(){}
 
-void GcbDebugger::getSubs()
-{
-    m_subs.clear();
-    
-    QStringList lines = fileToStringList( m_buildPath+m_fileName+".report.txt", "GcbDebugger::getSubs" );
-
-    while( true )
-    {
-        if( lines.isEmpty() ) break;
-        QString line = lines.takeFirst();
-        if( line.startsWith( "Subroutines" ) ) 
-        {
-            m_subs.append( lines.takeFirst() );
-            break;
-    }   }
-    while( true )
-    {
-        if( lines.isEmpty() ) break;
-        QString line = lines.takeFirst();
-        if( line.isEmpty() ) 
-        {
-            if( lines.isEmpty() ) break;
-            line = lines.takeFirst();
-            if( !line.startsWith( ";" ) && !line.isEmpty() ) m_subs.append( line.toUpper() );
-}   }   }
-
 bool GcbDebugger::postProcess()
 {
     getProcType(); // Determine Pic or Avr
     getSubs();
-    bool ok = mapLstToAsm();
-    if( !ok ) return false;
-    return mapGcbToAsm();
+    bool ok = mapFlashToSource();
+    return ok;
 }
 
-bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
+void GcbDebugger::getSubs()
+{
+    QStringList lines = fileToStringList( m_buildPath+m_fileName+".report.txt", "GcbDebugger::getSubs" );
+
+    bool read = false;
+    QString funcName;
+    QString line;
+    while( !lines.isEmpty() )
+    {
+        line = lines.takeFirst();
+        if( line.startsWith( "Subroutines" ) ) read = true;
+        if( !read ) continue;
+        funcName = "";
+        while( !lines.isEmpty() )
+        {
+            line = lines.takeFirst();
+            if( line.startsWith(";") ) break;
+            if     ( line.isEmpty()     ) funcName = "";
+            else if( funcName.isEmpty() ) funcName = line.toUpper();
+            else if( line.startsWith("Compiled Size (words):") )
+            {
+                int size = line.remove("Compiled Size (words):").remove(" ").toInt();
+                m_funcSizes[funcName] = size;
+            }
+        }
+    }
+}
+
+bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
 {
     QStringList varList;
     m_varTypes.clear();
-    m_subLines.clear();
+    //m_subLines.clear();
 
-    QStringList gcbLines = fileToStringList( m_fileDir+m_fileName+".gcb", "GcbDebugger::mapGcbToAsm" );
+    QStringList gcbLines = fileToStringList( m_fileDir+m_fileName+".gcb", "GcbDebugger::mapFlashToSource" );
     
-    bool isFunc = false;
+    //bool isFunc = false;
     int lineNum = 0;
     for( QString gcbLine : gcbLines )              // Get Declared Variables
     {
@@ -89,8 +90,11 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
         
         QString line = gcbLine;
         line = line.toUpper();
-        if     ( line.startsWith( "FUNCTION" ) )     isFunc = true;
-        else if( line.startsWith( "END FUNCTION" ) ) isFunc = false;
+
+        /*if( line.startsWith( "FUNCTION" )
+         || line.startsWith( "SUB" )    ) isFunc = true;
+        else if( line.startsWith( "END FUNCTION" )
+              || line.startsWith( "END SUB" ) ) isFunc = false;
         
         for( QString word : wordList )             // Find Subs Calls
         {
@@ -100,8 +104,8 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             wordUp = wordUp.toUpper();
             if( wordUp == "IF" ) break;
             
-            if( m_subs.contains( wordUp ) ) { m_subLines.append( lineNum ); break; }
-        }
+            /// if( m_subs.contains( wordUp ) ) { m_subLines.append( lineNum ); break; }
+        }*/
         lineNum++;
         
         if( !line.contains( "DIM" )) continue; // Search lines containing "Dim"
@@ -145,35 +149,37 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
                     m_varTypes[ varName ] = m_typesList[ type ];
                     varList.append( varName );
     }   }   }   }
+
     m_flashToSource.clear();
     m_sourceToFlash.clear();
+
+    QString lstFile = m_buildPath+m_fileName+".lst";
+    if( !QFileInfo::exists( lstFile ) )
+    {
+        m_outPane->appendLine( "\n"+QObject::tr("Error: list file doesn't exist:")+"\n"+lstFile );
+        return false;
+    }
+    QStringList lstLines = fileToStringList( lstFile, "GcbDebugger::mapFlashToSource" );
+    QString lstLine;
+    while( lstLine != "BASPROGRAMSTART" ) // Go to the program start in lst file
+    {
+        lstLine = lstLines.takeFirst();
+        lstLine.remove("\t");
+    }
     
     QString  asmFileName = m_buildPath+m_fileName+".asm";
-    QStringList asmLines = fileToStringList( asmFileName, "GcbDebugger::mapGcbToAsm" );
+    QStringList asmLines = fileToStringList( asmFileName, "GcbDebugger::mapFlashToSource" );
 
     bool haveVariable = false;
-    int asmLineNumber = 0;
-    m_lastLine = 0;
-    QString srcm = ";Source:F1L";           // Gcbasic parses source lines to asm file
-
-    for( QString asmLine : asmLines ) 
+    QString asmLine;
+    while( !asmLine.contains("BASPROGRAMSTART:") )
     {
-        if( asmLine.contains(srcm))
-        {
-            asmLine.remove( srcm );
-            int gcbLineNum = asmLine.split("S").first().toInt();
-            
-            if( gcbLineNum > m_lastLine ) m_lastLine = gcbLineNum;
-            
-            int asmLineNum = asmLineNumber+1;
-            while( m_asmToFlash.value( asmLineNum ) == 0 ) asmLineNum++; // Avoid banksels and so
-            
-            int flashAddr = m_asmToFlash.value( asmLineNum );
-            m_flashToSource[ flashAddr ]  = gcbLineNum;
-        }
-        else if( asmLine.contains("locations for variables")) haveVariable = true;
-        else if( asmLine.contains(";*"))                      haveVariable = false;
-        else if( haveVariable & (asmLine != "") )
+        asmLine = asmLines.takeFirst();
+        if     ( asmLine.isEmpty() ) continue;
+        else if( asmLine.contains("locations for variables") ) haveVariable = true;
+        else if( asmLine.startsWith(";*"))                    haveVariable = false;
+        else if( asmLine.startsWith(";") ) continue;
+        else if( haveVariable )                                // Find Variable Addresses
         {
             QStringList text;
             if( m_processorType == 1 )
@@ -189,12 +195,12 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
             QString type = "uint8";
             if( m_varTypes.contains( name ) ) type = m_varTypes.value( name );
             eMcu::self()->getRamTable()->addVariable( name, address ,type  );
-            
+
             if( type.contains( "array" ) )
             {
                 varList.removeOne( name );
                 varList.append( name );
-                
+
                 QString ty = type;
                 int size = ty.replace( "array", "" ).toInt();
                 for( int i=1; i<size; i++ )
@@ -205,92 +211,61 @@ bool GcbDebugger::mapGcbToAsm()  // Map asm_source_line <=> gcb_source_line
                     {
                         m_varTypes[ elmName ] = m_typesList.value("uint8");
                         varList.append( elmName );
-        }   }   }   }
-        asmLineNumber++;
+    }   }   }   }   }
+
+    int gcbLineNum = 0;
+    bool hasCeroAddr = false; // Deal with Banksel addr=0
+    m_lastLine = 0;
+    QString srcm = ";SOURCE:F1L";  // Gcbasic parses source lines to asm file
+    QString funcName;
+
+    for( QString asmLine : asmLines ) 
+    {
+        if( asmLine.isEmpty() ) continue;
+        asmLine = asmLine.toUpper().replace("\t"," ");
+
+        if( asmLine.contains( srcm ) )
+        {
+            gcbLineNum = asmLine.remove( srcm ).split("S").first().toInt();
+        }
+        else if( asmLine.startsWith(";") ) continue;
+        else if( asmLine.contains( ":" ) )                      // Find Subroutines
+        {
+            funcName = asmLine.left( asmLine.indexOf(":") ).toUpper();
+            if( !m_funcSizes.contains( funcName ) ) funcName = "";
+        }
+        else{
+            asmLine = asmLine.remove(0,1);
+            lstLine = "";
+            while( !lstLines.isEmpty() && !lstLine.contains( asmLine ) )
+                lstLine = lstLines.takeFirst();
+
+            if( gcbLineNum )
+            {
+                QString numberText = lstLine.left( 6 ); // first 6 digits in lst file is address
+                bool ok = false;
+                int flashAddr = numberText.toInt( &ok, 16 );
+                if( ok ){
+                    if( flashAddr == 0 )                 // Deal with Banksel addr = 0
+                    {
+                        if( hasCeroAddr ) continue;
+                        hasCeroAddr = true;
+                    }
+                    setLineToFlash( gcbLineNum, flashAddr );
+
+                    if( !funcName.isEmpty() ) // Subroutine starting here
+                    {
+                        m_funtions[flashAddr] = flashAddr + m_funcSizes.value( funcName );
+                        funcName = "";
+                    }
+                }
+                gcbLineNum = 0;
+            }
+        }
     }
     eMcu::self()->getRamTable()->setVariables( varList );
-    QHashIterator<int, int> i(m_flashToSource);
-    while( i.hasNext() )
-    {
-        i.next();
-        int address    = i.key();
-        int gcbLineNum = i.value();
-        m_sourceToFlash[ gcbLineNum ] = address;
-    }
+
     return !m_flashToSource.isEmpty();
-}
-
-bool GcbDebugger::mapLstToAsm()
-{
-    m_flashToAsm.clear();
-    m_asmToFlash.clear();
-
-    QString asmFile = m_buildPath+m_fileName+".asm";
-    QString lstFile = m_buildPath+m_fileName+".lst";
-    if( !QFileInfo::exists( m_firmware) )
-    {
-        m_outPane->appendLine( "\n"+QObject::tr("Error: lst file doesn't exist:")+"\n"+lstFile );
-        return false;
-    }
-
-    QStringList asmLines = fileToStringList( asmFile, "GcbDebugger::mapLstToAsm" );
-    QStringList lstLines = fileToStringList( lstFile, "GcbDebugger::mapLstToAsm" );
-
-    QString asmLine;
-    int asmLineNumber = 0;
-    int lastAsmLine = asmLines.size();
-
-    for( QString asmLine : asmLines ) // Go to the program start in asm file
-    {
-        if( asmLine.contains( "BASPROGRAMSTART" )) break;
-        asmLineNumber++;
-    }
-    bool hasCeroAddr = false; // Deal with Banksel addr =0
-    for( QString line : lstLines )
-    {
-        if( !line.startsWith("0") ) continue; // Code lines start with address
-
-        line = line.replace("\t", " ").toUpper();
-        line = line.remove(" ");
-        line = line.split(";").first();
-
-        while( true )
-        {
-            if( ++asmLineNumber >= lastAsmLine ) break; // End of asm file
-            asmLine = asmLines.at( asmLineNumber-1 ).toUpper();
-            asmLine = asmLine.replace("\t", " ").remove(" ");
-            if( asmLine.isEmpty() ) continue;
-            if( asmLine.startsWith("_")) continue;
-            if( asmLine.startsWith(";")) continue;
-            if( asmLine.startsWith("#")) continue;
-            if( asmLine.startsWith(".")) continue;
-
-            asmLine = asmLine.split(";").first();
-            if( line.contains(asmLine) ) break;
-        }
-        if( asmLineNumber >= lastAsmLine ) { asmLineNumber = 0; continue; } // End of asm file
-
-        QString numberText = line.left( 6 ); // first 6 digits in lst file is address
-        bool ok = false;
-        int address = numberText.toInt( &ok, 16 );  // AVR: adress*2: instruc = 2 bytes
-        if( ok )
-        {
-            if( address==0 )                 // Deal with Banksel addr =0
-            {
-                if( hasCeroAddr ) continue;
-                hasCeroAddr = true;
-            }
-            m_flashToAsm[address] = asmLineNumber;
-    }   }
-    QHashIterator<int, int> i(m_flashToAsm);
-    while( i.hasNext() )
-    {
-        i.next();
-        int address       = i.key();
-        int asmLineNumber = i.value();
-        m_asmToFlash[asmLineNumber] = address;
-    }
-    return !m_flashToAsm.isEmpty();
 }
 
 void GcbDebugger::getProcType()

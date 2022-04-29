@@ -35,6 +35,11 @@ class MAINMODULE_EXPORT PicMrCore : public McuCore
         virtual void reset();
         virtual void runDecoder() override;
 
+        virtual uint32_t GET_STACK() override
+        {
+           return m_stack[m_sp];
+        }
+
     protected:
         virtual void runDecoder( uint16_t instr );
         uint8_t* m_Wreg;
@@ -58,7 +63,7 @@ class MAINMODULE_EXPORT PicMrCore : public McuCore
             m_sp++;
             if( m_sp == m_stackSize ) m_sp = 0;
         }
-        virtual uint32_t POP_STACK() override // Harware circular Stack
+        virtual uint32_t POP_STACK() override // Hardware circular Stack
         {
             if( m_sp == 0 ) m_sp = m_stackSize-1;
             else            m_sp--;

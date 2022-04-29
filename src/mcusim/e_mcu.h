@@ -63,8 +63,8 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         virtual void runEvent() override;
 
         void stepCpu();
-        void stepDebug();
-        void stepOne( int line );
+        //void stepDebug();
+        //void stepFromLine( int line );
 
         void setDebugger( BaseDebugger* deb );
         void setDebugging( bool d ) { m_debugging = d; }
@@ -81,7 +81,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         void     setRomValue( int address, uint8_t value ) { m_eeprom[address] = value; }
 
 
-
+        uint32_t getStack();
         int status();
         int pc();
         uint64_t cycle(){ return m_cycle; }
@@ -159,8 +159,8 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         BaseDebugger* m_debugger;
 
         bool m_debugging;
-        bool m_debugStep;
-        int  m_prevLine;
+        //bool m_debugStep;
+        //int  m_prevLine;
 };
 
 #endif

@@ -31,17 +31,12 @@ class GcbDebugger : public BaseDebugger
     protected:
         virtual bool postProcess() override;
         virtual void getSubs() override;
-        //virtual void getData() override;
 
     private:
-        bool mapGcbToAsm();
-        bool mapLstToAsm();
+        bool mapFlashToSource();
         void getProcType();
 
-        QHash<int, int> m_gcbToAsm;
-        QHash<int, int> m_asmToFlash;               // Map .asm code line to flash adress
-        QHash<int, int> m_flashToAsm;               // Map flash adress to .asm code line
-        
+        QHash<QString, int> m_funcSizes;
         int m_processorType;
 };
 #endif

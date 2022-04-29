@@ -35,6 +35,9 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         virtual bool upload();
 
+        void stepDebug();
+        void stepFromLine( int line, bool over=false );
+
         void setLstType( int type ) { m_lstType = type; }
         void setLangLevel( int level ) { m_langLevel = level; }
 
@@ -44,7 +47,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         QString getVarType( QString var );
 
-        QList<int> getSubLines() { return m_subLines; }
+        //QList<int> getSubLines() { return m_subLines; }
 
         virtual void getInfoInFile( QString line );
 
@@ -63,6 +66,11 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         virtual void getSubs(){;}
         virtual void setBoardName( QString board ){ m_board = board; }
 
+        bool m_debugStep;
+        bool m_over;
+        int  m_prevLine;
+        int  m_exitPC;
+
         int m_processorType;
         int m_lastLine;
         int m_lstType;   // Bit0: 0 doesn't use ":" (gpasm ), 1 uses ":" (avra, gavrasm)
@@ -72,14 +80,14 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
 
         QString m_appPath;
 
-        QStringList m_subs;
-        QList<int>  m_subLines;
+        //QStringList m_subs;
+        //QList<int>  m_subLines;
         
         QHash<QString, QString> m_typesList;
         QHash<QString, QString> m_varTypes; // Variable name-Type got from source file
         QHash<int, int> m_flashToSource;    // Map flash adress to Source code line
         QHash<int, int> m_sourceToFlash;    // Map .asm code line to flash adress
-
+        QHash<int, int> m_funtions;         // Function start & end Addresses
 };
 
 #endif

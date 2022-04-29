@@ -32,9 +32,12 @@ class AvrGccDebugger : public cDebugger
         virtual bool postProcess() override;
 
         bool getVariables();
+        bool getFunctions();
         bool mapFlashToSource();
 
         int m_addrBytes;
+
+        QString m_elfPath;
 };
 
 #endif

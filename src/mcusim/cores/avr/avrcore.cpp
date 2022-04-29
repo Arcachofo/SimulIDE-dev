@@ -426,13 +426,15 @@ void AvrCore::runDecoder()
                 }    break;
                 case 0x9518:     // RETI -- Return from Interrupt -- 1001 0101 0001 1000
                     McuCore::RETI();// SREG flag managed in AvrInterrupt
-                    /// TODO simplify RETI call, new_pc, cycle
-                    new_pc = PC;
-                    cycle += 1 + m_progAddrSize;
+                    return;
+                    //new_pc = PC;
+                    //cycle += 1 + m_progAddrSize;
                     break;
                 case 0x9508: {    // RET -- Return -- 1001 0101 0000 1000
-                    new_pc = POP_STACK();
-                    cycle += 1 + m_progAddrSize;
+                    //new_pc = POP_STACK();
+                    //cycle += 1 + m_progAddrSize;
+                    McuCore::RET();
+                    return;
                 }    break;
                 case 0x95c8: {    // LPM -- Load Program Memory R0 <-( Z) -- 1001 0101 1100 1000
                     uint16_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8);
@@ -818,5 +820,5 @@ void AvrCore::runDecoder()
         qDebug() << "AVR PC ERROR" << new_pc << m_progSize;
 
     PC = new_pc;
-    m_mcu->cyclesDone += cycle;
+    m_mcu->cyclesDone = cycle;
 }

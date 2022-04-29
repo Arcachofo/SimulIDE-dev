@@ -92,8 +92,8 @@ void EditorWindow::run()
 
     if( m_state == DBG_STOPPED ) return;
     m_state = DBG_RUNNING;
+    m_debugger->stepFromLine( m_debugDoc->debugLine() );
     if( m_driveCirc ) Simulator::self()->resumeSim();
-    eMcu::self()->stepOne( m_debugDoc->debugLine() );
 }
 
 void EditorWindow::step()
@@ -104,13 +104,15 @@ void EditorWindow::step()
 
 void EditorWindow::stepOver()
 {
+    setStepActs();
+    stepDebug( true );
     /*setStepActs();
     QList<int> subLines = m_compiler->getSubLines();
     bool over = subLines.contains( m_debugLine ) ? true : false;
     stepDebug( over );*/
 }
 
-void EditorWindow::pause()   
+void EditorWindow::pause()
 {
     if( m_state < DBG_STEPING )  return;
     if( m_driveCirc ) Simulator::self()->pauseSim();
@@ -150,7 +152,7 @@ bool EditorWindow::initDebbuger()
         m_debugger = m_debugDoc->getCompiler();
         m_debugDoc->startDebug();
 
-        stepOverAct->setVisible( m_stepOver );
+        stepOverAct->setVisible( true /*m_stepOver*/ );
         eMcu::self()->setDebugging( true );
         reset();
         setDriveCirc( m_driveCirc );
@@ -168,15 +170,11 @@ void EditorWindow::stepDebug( bool over )
 {
     if( m_state == DBG_RUNNING ) return;
 
-    /*if( over ){
-        addBreakPoint( m_debugLine+1 );
-        run();
-    }else */
-    {
-        m_state = DBG_STEPING;
-        eMcu::self()->stepOne( m_debugDoc->debugLine() );
-        if( m_driveCirc ) Simulator::self()->resumeSim();
-}   }
+    m_state = DBG_STEPING;
+    m_debugger->stepFromLine( m_debugDoc->debugLine(), over );
+    if( m_driveCirc ) Simulator::self()->resumeSim();
+
+}
 
 void EditorWindow::lineReached( int line ) // Processor reached PC related to source line
 {
@@ -185,7 +183,7 @@ void EditorWindow::lineReached( int line ) // Processor reached PC related to so
     if( ( m_state == DBG_RUNNING )           // We are running to Breakpoint
      && !m_debugDoc->hasBreakPoint( line ) ) // Breakpoint not reached, Keep stepping
     {
-        eMcu::self()->stepOne( line );
+        m_debugger->stepFromLine( line );
         return;
     }
     pause();

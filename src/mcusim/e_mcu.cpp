@@ -84,7 +84,7 @@ void eMcu::runEvent()
     if( m_debugging )
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
-        else                 stepDebug();
+        else                 m_debugger->stepDebug();
         Simulator::self()->addEvent( m_simCycPI, this );
     }
     else if( m_state >= mcuRunning )
@@ -95,7 +95,7 @@ void eMcu::runEvent()
 
 void eMcu::reset()
 {
-    m_debugStep = false;
+    //m_debugStep = false;
     m_cycle = 0;
     cyclesDone = 0;
 
@@ -116,7 +116,7 @@ void eMcu::stepCpu()
     m_cycle += cyclesDone;
 }
 
-void eMcu::stepDebug()
+/*void eMcu::stepDebug()
 {
     if( !m_debugStep ) return;
 
@@ -127,18 +127,20 @@ void eMcu::stepDebug()
     if( ( lastPC != PC )
     && ( m_debugger->m_flashToSource.contains( PC ) ) )
     {
-        int line = m_debugger->m_flashToSource[ PC ];
+        int line = m_debugger->m_flashToSource.value( PC );
         if( line != m_prevLine )
         {
             m_debugStep = false;
             EditorWindow::self()->lineReached( line );
-}   }   }
+        }
+    }
+}
 
-void eMcu::stepOne( int line )
+void eMcu::stepFromLine( int line )
 {
     m_prevLine = line;
     m_debugStep = true;
-}
+}*/
 
 void eMcu::setDebugger( BaseDebugger* deb )
 {
@@ -148,12 +150,10 @@ void eMcu::setDebugger( BaseDebugger* deb )
 
 void eMcu::cpuReset( bool r )
 {
-    if( r )
-    {
+    if( r ){
         reset();
         m_state = mcuStopped;
-    }
-    else{
+    }else{
         m_state = mcuRunning;
         Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( 1, this );
@@ -173,6 +173,8 @@ void eMcu::sleep( bool s )
     for( McuModule* module : m_modules ) module->sleep( mode );
 }
 
+uint32_t eMcu::getStack() { return cpu->GET_STACK(); }
+
 int eMcu::status() { return getRamValue( m_sregAddr ); }
 
 int eMcu::pc() { return cpu->PC; }
@@ -185,10 +187,6 @@ void eMcu::setFreq( double freq )
     m_freq = freq;
     m_simCycPI = 1e12*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }
-
-
-
-
 
 void eMcu::setEeprom( QVector<int>* eep )
 {

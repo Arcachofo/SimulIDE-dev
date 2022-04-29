@@ -44,6 +44,17 @@ class MAINMODULE_EXPORT McuCore
             setPC( addr );
             m_mcu->cyclesDone = m_retCycles;
         }
+        virtual uint32_t GET_STACK()
+        {
+            uint32_t res = 0;
+            uint16_t sp = GET_SP();
+            if( !m_spPre ) sp -= m_spInc;
+
+            for( int i=0; i<m_progAddrSize; i++, sp -= m_spInc )
+                res = (res<<8) | GET_RAM( sp );
+
+            return res;
+        }
 
         uint32_t PC;
 

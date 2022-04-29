@@ -35,7 +35,17 @@ AvrGccDebugger::~AvrGccDebugger(){}
 
 bool AvrGccDebugger::postProcess()
 {
+    m_elfPath = m_buildPath+m_fileName+".elf";
+    if( !QFileInfo::exists( m_elfPath ) )
+    {
+        m_outPane->appendLine( "\n"+QObject::tr("Warning: elf file doesn't exist:")+"\n"+m_elfPath );
+        return false;
+    }
+    m_elfPath = addQuotes( m_elfPath );
+
     bool ok = getVariables();
+    if( !ok ) return false;
+    ok = getFunctions();
     if( !ok ) return false;
 
     m_flashToSource.clear();
@@ -45,12 +55,6 @@ bool AvrGccDebugger::postProcess()
 
 bool AvrGccDebugger::getVariables()
 {
-    QString elfPath = m_buildPath+m_fileName+".elf";
-    if( !QFileInfo::exists( elfPath ) )
-    {
-        m_outPane->appendLine( "\n"+QObject::tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
-        return false;
-    }
     QString objdump = m_toolPath+"avr/bin/avr-objdump";
 
 #ifndef Q_OS_UNIX
@@ -68,17 +72,16 @@ bool AvrGccDebugger::getVariables()
     }
     outPane()->appendText( "\nSearching for variables... " );
     objdump = addQuotes( objdump );
-    elfPath = addQuotes( elfPath );
 
     QProcess getBss( NULL );      // Get var addresses from .bss section
-    QString command  = objdump+" -t -j.bss "+elfPath;
+    QString command  = objdump+" -t -j.bss "+m_elfPath;
     getBss.start( command );
     getBss.waitForFinished(-1);
 
     QString  p_stdout = getBss.readAllStandardOutput();
     QStringList varNames = m_varTypes.keys();
     QStringList varList;
-    m_subs.clear();
+    //m_subs.clear();
 
     for( QString line : p_stdout.split("\n") )
     {
@@ -112,14 +115,66 @@ bool AvrGccDebugger::getVariables()
     return true;
 }
 
+bool AvrGccDebugger::getFunctions()
+{
+    // avr-readelf -s file.elf
+    //   Num:    Valor  Tam  Tipo    Unión  Vis      Nombre Ind
+    //    34: 00000090    22 FUNC    GLOBAL DEFAULT    2 function_name
+    //    27: 00800100     1 OBJECT  GLOBAL DEFAULT    3 variable_name
+
+    QString readelf = m_toolPath+"avr/bin/avr-readelf";
+
+#ifndef Q_OS_UNIX
+    readelf += ".exe";
+#endif
+
+    if( !checkCommand( readelf ) )
+    {
+        readelf = m_toolPath+"avr-readelf";
+    #ifndef Q_OS_UNIX
+        readelf += ".exe";
+    #endif
+        if( !checkCommand( readelf ) )
+            outPane()->appendLine( "\nWarning: avr-readelf executable not detected:\n"+readelf );
+    }
+    outPane()->appendText( "\nSearching for Functions... " );
+    readelf = addQuotes( readelf );
+
+    QProcess getFunctions( NULL );      //
+    QString command  = readelf+" -s "+m_elfPath;
+    getFunctions.start( command );
+    getFunctions.waitForFinished(-1);
+
+    QString  p_stdout = getFunctions.readAllStandardOutput();
+    //QStringList varNames = m_varTypes.keys();
+    //QStringList varList;
+    //m_subs.clear();
+
+    for( QString line : p_stdout.split("\n") )
+    {
+        if( line.isEmpty() ) continue;
+        QStringList words = line.split(" ");
+        words.removeAll("");
+        if( words.size() < 8 ) continue;
+        if( words.at(3) != "FUNC" ) continue;
+
+        QString addr   = words.at(1);
+        bool ok = false;
+        int address = addr.toInt( &ok, 16 )/2;
+        if( !ok ) continue;
+
+        int size = words.at(2).toInt( &ok, 10 )/2-1;
+        if( !ok ) continue;
+
+        m_funtions[address] = address+size;
+        qDebug() << "AvrGccDebugger::getFunctions "<< words.at(7) <<address<<size<<address+size;
+    }
+    outPane()->appendLine( QString::number( m_funtions.size() )+" functions found" );
+    return true;
+}
+
 bool AvrGccDebugger::mapFlashToSource()
 {
-    QString elfPath = m_buildPath+m_fileName+".elf";
-    if( !QFileInfo::exists( elfPath ) )
-    {
-        m_outPane->appendLine( "\n"+QObject::tr("Warning: elf file doesn't exist:")+"\n"+elfPath );
-        return false;
-    }
     QString avrSize = m_toolPath+"avr/bin/avr-size";
     QString addr2li = m_toolPath+"avr/bin/avr-addr2line";
 
@@ -148,10 +203,9 @@ bool AvrGccDebugger::mapFlashToSource()
     outPane()->appendText( "\nMapping Flash to Source... " );
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );
-    elfPath = addQuotes( elfPath );
 
     QProcess getSize( this );  // Get Firmware size
-    getSize.start( avrSize + " " + elfPath );
+    getSize.start( avrSize + " " + m_elfPath );
     getSize.waitForFinished();
     QString lines = getSize.readAllStandardOutput();
     getSize.close();
@@ -166,7 +220,7 @@ bool AvrGccDebugger::mapFlashToSource()
     if( !ok || flashSize == 0 ) flashSize = 35000;
 
     QProcess flashToLine( this );
-    flashToLine.start( addr2li + " -e " + elfPath );
+    flashToLine.start( addr2li + " -e " + m_elfPath );
     ok = flashToLine.waitForStarted( 1000 );
     if( ok )
     {
