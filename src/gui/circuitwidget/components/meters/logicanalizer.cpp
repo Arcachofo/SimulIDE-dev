@@ -119,7 +119,7 @@ void LAnalizer::updateStep()
 
             if( risEdge > 0 ) // We have a Trigger
             {
-                m_channel[m_trigger]->m_risEdge = 0;
+                if( m_trigger < 8 ) m_channel[m_trigger]->m_risEdge = 0;
                 simTime = risEdge;
                 m_updtCount = 0;
             }
