@@ -87,7 +87,8 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         QHash<QString, QString> m_varTypes; // Variable name-Type got from source file
         QHash<int, int> m_flashToSource;    // Map flash adress to Source code line
         QHash<int, int> m_sourceToFlash;    // Map .asm code line to flash adress
-        QHash<int, int> m_funtions;         // Function start & end Addresses
+        QHash<QString, int> m_functions;    // Function name list->start Address
+        QList<int>          m_funcAddr;     // Function start Address list
 };
 
 #endif

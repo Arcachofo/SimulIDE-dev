@@ -65,10 +65,7 @@ void GcbDebugger::getSubs()
             if     ( line.isEmpty()     ) funcName = "";
             else if( funcName.isEmpty() ) funcName = line.toUpper();
             else if( line.startsWith("Compiled Size (words):") )
-            {
-                int size = line.remove("Compiled Size (words):").remove(" ").toInt();
-                m_funcSizes[funcName] = size;
-            }
+                m_functions[funcName] = 0;
         }
     }
 }
@@ -77,11 +74,9 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
 {
     QStringList varList;
     m_varTypes.clear();
-    //m_subLines.clear();
 
     QStringList gcbLines = fileToStringList( m_fileDir+m_fileName+".gcb", "GcbDebugger::mapFlashToSource" );
-    
-    //bool isFunc = false;
+
     int lineNum = 0;
     for( QString gcbLine : gcbLines )              // Get Declared Variables
     {
@@ -90,30 +85,14 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
         
         QString line = gcbLine;
         line = line.toUpper();
-
-        /*if( line.startsWith( "FUNCTION" )
-         || line.startsWith( "SUB" )    ) isFunc = true;
-        else if( line.startsWith( "END FUNCTION" )
-              || line.startsWith( "END SUB" ) ) isFunc = false;
-        
-        for( QString word : wordList )             // Find Subs Calls
-        {
-            if( isFunc ) break;
-            
-            QString wordUp = word;
-            wordUp = wordUp.toUpper();
-            if( wordUp == "IF" ) break;
-            
-            /// if( m_subs.contains( wordUp ) ) { m_subLines.append( lineNum ); break; }
-        }*/
         lineNum++;
         
-        if( !line.contains( "DIM" )) continue; // Search lines containing "Dim"
+        if( !line.contains("DIM") ) continue; // Search lines containing "Dim"
         
         line    = line.replace( "'", ";" ).split( ";" ).first(); // Remove comments
         gcbLine = gcbLine.replace( "\t", " " );
         
-        if( !line.contains( "AS" ))  // Should be an array
+        if( !line.contains("AS") )  // Should be an array
         {
             if( !line.contains( "(" )) continue;
             QStringList wordList = gcbLine.split( "(" );
@@ -232,7 +211,7 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
         else if( asmLine.contains( ":" ) )                      // Find Subroutines
         {
             funcName = asmLine.left( asmLine.indexOf(":") ).toUpper();
-            if( !m_funcSizes.contains( funcName ) ) funcName = "";
+            if( !m_functions.contains( funcName ) ) funcName = "";
         }
         else{
             asmLine = asmLine.remove(0,1);
@@ -255,7 +234,7 @@ bool GcbDebugger::mapFlashToSource()  // Map asm_source_line <=> gcb_source_line
 
                     if( !funcName.isEmpty() ) // Subroutine starting here
                     {
-                        m_funtions[flashAddr] = flashAddr + m_funcSizes.value( funcName );
+                        m_functions[funcName] = flashAddr;
                         funcName = "";
                     }
                 }

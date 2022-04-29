@@ -36,7 +36,6 @@ class GcbDebugger : public BaseDebugger
         bool mapFlashToSource();
         void getProcType();
 
-        QHash<QString, int> m_funcSizes;
         int m_processorType;
 };
 #endif

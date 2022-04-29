@@ -96,7 +96,7 @@ bool BaseDebugger::postProcess()
     int srcLineNumber = 0;
     int lastListLine = lstLines.size();
 
-    if( m_langLevel ) // High level language
+    if( m_langLevel )                     // High level language
     {
         QString file = m_fileName+m_fileExt;
         bool found = false;
@@ -134,12 +134,26 @@ bool BaseDebugger::postProcess()
                     found = false;
                     continue;
     }   }   }   }
-    else{             // asm
+    else{                        // asm
+        QString funcName;
+        for( QString srcLine : srcLines ) // Get Functions
+        {
+            if( isNoValid( srcLine ) ) continue;
+            srcLine = srcLine.split(";").first();
+            if( !srcLine.toUpper().contains("CALL") ) continue;
+            srcLine = srcLine.replace("\t", " ");
+            QStringList l = srcLine.split(" ");
+            l.removeAll("");
+            funcName = l.last();
+            if( !funcName.isEmpty() ) m_functions[funcName.toUpper()] = -1;
+        }
+
         for( QString srcLine : srcLines )
         {
             srcLineNumber++;
             srcLine = srcLine.replace("\t", " ").remove(" ");
             if( isNoValid( srcLine ) ) continue;
+            srcLine = srcLine.split(";").first();
 
             while( true )
             {
@@ -147,12 +161,10 @@ bool BaseDebugger::postProcess()
                 lstLine = lstLines.at( lstLineNumber-1 );
                 lstLine = lstLine.replace("\t", " ");
                 if( isNoValid( lstLine ) ) continue;
-                //if( lstLine.startsWith(" ") ) continue;
-                lstLine = lstLine.split(";").first();
 
+                lstLine = lstLine.split(";").first();
                 QString line = lstLine;
                 line = line.remove(" ");
-                srcLine = srcLine.split(";").first();
                 if( line.contains( srcLine ) ) break;          // Line found
             }
             if( lstLineNumber >= lastListLine ) lstLineNumber = 0;
@@ -160,13 +172,32 @@ bool BaseDebugger::postProcess()
                 if( m_lstType & 1 ) lstLine = lstLine.split(":").last();
                 QStringList words = lstLine.split(" ");
                 words.removeAll("");
-                if( words.size() < 3 ) continue;
-                lstLine = words.at( (m_lstType & 2)>>1 );
+
+                if( words.size() < 3 )
+                {
+                    if( srcLine.contains( ":" ) )                 // Find Subroutines
+                    {
+                        funcName = srcLine.left( srcLine.indexOf(":") ).toUpper();
+                        if( !m_functions.contains( funcName ) ) funcName = "";
+                    }
+                    continue;
+                }
+                int index = (m_lstType & 2)>>1 ;
 
                 bool ok = false;
-                int address = lstLine.toInt( &ok, 16 );
-                if( ok ) setLineToFlash( srcLineNumber, m_codeStart+address );
-    }   }   }
+                int address = m_codeStart+words.at( index ).toInt( &ok, 16 );
+                if( ok )
+                {
+                    setLineToFlash( srcLineNumber, address );
+                    if( !funcName.isEmpty() )                  // Subroutine starting here
+                    {
+                        m_functions[funcName] = address;
+                        funcName = "";
+                    }
+                }
+            }
+        }
+    }
     outPane()->appendLine( QString::number( m_flashToSource.size() )+" lines mapped" );
     return true;
 }
@@ -182,12 +213,12 @@ void BaseDebugger::stepDebug()
     if( lastPC != PC )
     {
         if( m_over ){       // Step Over entry
-            if( m_funtions.contains( PC ) )
+            if( m_functions.values().contains( PC ) )
             {
                 m_exitPC = eMcu::self()->getStack();
                 m_over = false;
+                return;
             }
-            return;
         }
         if( m_exitPC )     // Step Over exit
         {

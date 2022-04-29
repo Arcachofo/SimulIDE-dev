@@ -146,9 +146,6 @@ bool AvrGccDebugger::getFunctions()
     getFunctions.waitForFinished(-1);
 
     QString  p_stdout = getFunctions.readAllStandardOutput();
-    //QStringList varNames = m_varTypes.keys();
-    //QStringList varList;
-    //m_subs.clear();
 
     for( QString line : p_stdout.split("\n") )
     {
@@ -162,14 +159,12 @@ bool AvrGccDebugger::getFunctions()
         bool ok = false;
         int address = addr.toInt( &ok, 16 )/2;
         if( !ok ) continue;
+        QString funcName = words.last();
 
-        int size = words.at(2).toInt( &ok, 10 )/2-1;
-        if( !ok ) continue;
-
-        m_funtions[address] = address+size;
-        qDebug() << "AvrGccDebugger::getFunctions "<< words.at(7) <<address<<size<<address+size;
+        m_functions[funcName] = address;
+        //qDebug() << "AvrGccDebugger::getFunctions "<< funcName <<address;
     }
-    outPane()->appendLine( QString::number( m_funtions.size() )+" functions found" );
+    outPane()->appendLine( QString::number( m_functions.size() )+" functions found" );
     return true;
 }
 
