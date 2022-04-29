@@ -206,11 +206,10 @@ int Compiler::runBuildStep( QString fullCommand )
     QString p_stderr = m_compProcess.readAllStandardError();
     QString p_stdout = m_compProcess.readAllStandardOutput();
 
-    //if( p_stdout.isEmpty() && p_stderr.isEmpty() ) error = 1;
-    //else
-    if     ( !p_stdout.isEmpty() ) error = getError( p_stdout );
-    else if( !p_stderr.isEmpty() ) error = getError( p_stderr );
+    if( !p_stdout.isEmpty() ) error = getError( p_stdout );
+    if( error ) return error;
 
+    if( !p_stderr.isEmpty() ) error = getError( p_stderr );
     return error;
 }
 
@@ -300,6 +299,7 @@ bool Compiler::checkCommand( QString executable )
 {
     //QString executable = c.split(" ").first();
 
+    if( QFile::exists( executable ) ) return true;
     /*if( c.contains(":") || c.contains("/") ) // Full Path
     {
         return QFile::exists( executable );
