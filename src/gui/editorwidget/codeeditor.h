@@ -65,6 +65,8 @@ class CodeEditor : public QPlainTextEdit
  static bool spaceTabs() { return m_spaceTabs; }
  static void setSpaceTabs( bool on );
 
+        void toggleBreak() { m_brkAction = 3; }
+
     public slots:
         void slotAddBreak() { m_brkAction = 1; }
         void slotRemBreak() { m_brkAction = 2; }
@@ -77,7 +79,7 @@ class CodeEditor : public QPlainTextEdit
         void highlightCurrentLine();
 
     protected:
-        void resizeEvent(QResizeEvent *event);
+        void resizeEvent( QResizeEvent* event );
         void keyPressEvent( QKeyEvent* event );
         void contextMenuEvent(QContextMenuEvent* event);
 
@@ -132,16 +134,17 @@ class LineNumberArea : public QWidget
         LineNumberArea( CodeEditor* editor );
         ~LineNumberArea();
 
-        QSize sizeHint() const { return QSize(m_codeEditor->lineNumberAreaWidth(), 0); }
+        QSize sizeHint() const { return QSize( m_codeEditor->lineNumberAreaWidth(), 0 ); }
 
         int lastPos;
 
     protected:
-        void contextMenuEvent( QContextMenuEvent *event);
-        void paintEvent( QPaintEvent* event ) { m_codeEditor->lineNumberAreaPaintEvent(event); }
+        void contextMenuEvent( QContextMenuEvent* event);
+        void mousePressEvent( QMouseEvent* event );
+        void paintEvent( QPaintEvent* event ) { m_codeEditor->lineNumberAreaPaintEvent( event ); }
 
     private:
-        CodeEditor *m_codeEditor;
+        CodeEditor* m_codeEditor;
 };
 
 #endif

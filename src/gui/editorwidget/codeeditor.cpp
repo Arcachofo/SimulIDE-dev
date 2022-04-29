@@ -411,7 +411,7 @@ void CodeEditor::contextMenuEvent( QContextMenuEvent* event )
     QMenu *menu = createStandardContextMenu();
     menu->addSeparator();
 
-    QAction* reloadAction = menu->addAction(QIcon(":/reload.png"), tr("Reload Document"));
+    QAction* reloadAction = menu->addAction( QIcon(":/reload.png"), tr("Reload Document") );
     connect( reloadAction, SIGNAL( triggered()),
              EditorWindow::self(), SLOT(reload()), Qt::UniqueConnection );
 
@@ -433,7 +433,7 @@ void CodeEditor::updateLineNumberArea( const QRect &rect, int dy )
     if( rect.contains( viewport()->rect() ) ) updateLineNumberAreaWidth( 0 );
 }
 
-void CodeEditor::resizeEvent( QResizeEvent *e )
+void CodeEditor::resizeEvent( QResizeEvent* e )
 {
     QPlainTextEdit::resizeEvent( e );
     QRect cr = contentsRect();
@@ -458,7 +458,7 @@ void CodeEditor::highlightCurrentLine()
     setExtraSelections( extraSelections );
 }
 
-void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
+void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
 {
     QPainter painter( m_lNumArea );
     painter.fillRect( event->rect(), Qt::lightGray );
@@ -466,7 +466,7 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
     QTextBlock block = firstVisibleBlock();
 
     int blockNumber = block.blockNumber();
-    int top       = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
+    int top       = (int)blockBoundingGeometry( block ).translated( contentOffset() ).top();
     int fontSize  = fontMetrics().height();
 
     while( block.isValid() && top <= event->rect().bottom() )
@@ -483,11 +483,14 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent *event )
             {
                 if     ( m_brkAction == 1 ) addBreakPoint( lineNumber );
                 else if( m_brkAction == 2 ) remBreakPoint( lineNumber );
+                else if( m_brkAction == 3 ){
+                    if( m_brkPoints.contains( lineNumber ) ) remBreakPoint( lineNumber );
+                    else                                     addBreakPoint( lineNumber );
+                }
                 m_brkAction = 0;
                 m_lNumArea->lastPos = 0;
             }
-            if(/*( EditorWindow::self()->debugState() > DBG_STOPPED )&& */
-                    m_brkPoints.contains( lineNumber )) // Draw breakPoint icon
+            if( m_brkPoints.contains( lineNumber ) ) // Draw breakPoint icon
             {
                 painter.setBrush( QColor(Qt::yellow) );
                 painter.setPen( Qt::NoPen );
@@ -561,16 +564,17 @@ void CodeEditor::indentSelection( bool unIndent )
 
 // ********************* CLASS LineNumberArea **********************************
 
-LineNumberArea::LineNumberArea( CodeEditor *editor ) : QWidget(editor)
+LineNumberArea::LineNumberArea( CodeEditor *editor )
+              : QWidget(editor)
 {
     m_codeEditor = editor;
+    lastPos = 0;
 }
 LineNumberArea::~LineNumberArea(){}
 
 void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
 {
     event->accept();
-    //if( !EditorWindow::self()->debugStarted() ) return;
     
     QMenu menu;
 
@@ -589,6 +593,16 @@ void LineNumberArea::contextMenuEvent( QContextMenuEvent *event)
                m_codeEditor, SLOT(slotClearBreak()), Qt::UniqueConnection );
 
     if( menu.exec(event->globalPos()) != 0 ) lastPos = event->pos().y();
+}
+
+void LineNumberArea::mousePressEvent( QMouseEvent* event )
+{
+    if( event->button() == Qt::LeftButton )
+    {
+        lastPos = event->pos().y();
+        m_codeEditor->toggleBreak();
+        this->repaint();
+    }
 }
 
 #include "moc_codeeditor.cpp"
