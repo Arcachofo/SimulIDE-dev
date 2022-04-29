@@ -156,7 +156,6 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
     }
     if( m_we ){                             // Write
         write( true );
-        Simulator::self()->cancelEvents( this );
         Simulator::self()->addEvent( m_propDelay*m_propSize, this );
     }
     else{                                  // Read
@@ -191,6 +190,7 @@ void Memory::write( bool w )
 
         if( m_asynchro ) pin->changeCallBack( this, w );
     }
+    Simulator::self()->cancelEvents( this );
 }
 
 void Memory::setAsynchro( bool a )
