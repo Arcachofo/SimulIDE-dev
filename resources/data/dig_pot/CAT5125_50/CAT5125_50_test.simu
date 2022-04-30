@@ -1,0 +1,55 @@
+<circuit type="simulide_0.4" reactStep="50" Speed_per="100" Speed_sps="1000000" Simu_Step_nS="1000" noLinAcc="5" animate="0">
+
+Unique  Id: CAT5125_50-2293: 
+Circuit Id: CAT5125_50-2293
+<item BoardId="" labelx="-57" boardRot="-1e+06" y="-408" rotation="0" valLabRot="-90" hflip="1" valLabely="16" itemtype="Subcircuit" mainComp="false" circRot="4.19886048991304e+34" x="-476" Name="" Logic_Symbol="true" valLabelx="13" boardPos="-1e+06,-1e+06" circPos="0,0" vflip="1" Show_id="true" objectName="CAT5125_50-2293" labely="-23" labelrot="0" id="CAT5125_50-2293"/>
+
+Unique  Id: Probe-325: 
+Circuit Id: Probe-325
+<item labelx="16" Threshold="2.5" boardRot="-1e+06" y="-408" rotation="-45" valLabRot="45" hflip="1" valLabely="0" itemtype="Probe" mainComp="false" circRot="0" x="-344" valLabelx="16" boardPos="-1e+06,-1e+06" circPos="0,0" vflip="1" Show_id="false" Show_volt="true" objectName="Probe-325" labely="-16" labelrot="45" id="Probe-325"/>
+
+Unique  Id: Ground-323: 
+Circuit Id: Ground-323
+<item labelx="-16" boardRot="-1e+06" y="-340" rotation="0" valLabRot="0" hflip="1" valLabely="0" itemtype="Ground" mainComp="false" circRot="-5.486129280331905e+303" x="-416" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" vflip="1" Show_id="false" objectName="Ground-323" labely="8" labelrot="0" id="Ground-323"/>
+
+Unique  Id: Rail-321: 
+Circuit Id: Rail-321
+<item Unit=" V" labelx="-16" boardRot="-1e+06" y="-472" rotation="0" valLabRot="0" hflip="1" valLabely="8" itemtype="Rail" mainComp="false" circRot="-2.304173777696812e+305" x="-436" valLabelx="-16" Show_Volt="true" boardPos="-1e+06,-1e+06" circPos="0,0" vflip="1" Show_id="false" objectName="Rail-321" labely="-24" labelrot="0" Voltage="5" id="Rail-321"/>
+
+Unique  Id: Fixed Voltage-1306: 
+Circuit Id: Up/!Down
+<item Unit=" V" labelx="-91" boardRot="-1e+06" y="-400" rotation="0" valLabRot="0" hflip="1" valLabely="-5" itemtype="Fixed Voltage" mainComp="false" circRot="0" x="-536" valLabelx="-55" Show_Volt="false" boardPos="-1e+06,-1e+06" circPos="0,0" vflip="1" Show_id="true" objectName="Fixed Voltage-1306" labely="-14" labelrot="0" Voltage="5" Out="true" id="Up/!Down"/>
+
+Unique  Id: Fixed Voltage-1308: 
+Circuit Id: !CS
+<item Unit=" V" labelx="-63" boardRot="-1e+06" y="-364" rotation="0" valLabRot="0" hflip="1" valLabely="-5" itemtype="Fixed Voltage" mainComp="false" circRot="0" x="-536" valLabelx="-55" Show_Volt="false" boardPos="-1e+06,-1e+06" circPos="0,0" vflip="1" Show_id="true" objectName="Fixed Voltage-1308" labely="-6" labelrot="0" Voltage="5" Out="false" id="!CS"/>
+
+Unique  Id: Amperimeter-2634: 
+Circuit Id: Amperimeter-2634
+<item labelx="-24" boardRot="-1e+06" y="-492" rotation="0" valLabRot="0" hflip="1" valLabely="0" itemtype="Amperimeter" mainComp="false" circRot="nan" x="-408" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" vflip="1" Show_id="false" SwitchPins="false" objectName="Amperimeter-2634" labely="-40" labelrot="0" id="Amperimeter-2634"/>
+
+Unique  Id: Connector-2629: 
+Circuit Id: Connector-2629
+<item labelx="-16" boardRot="-1e+06" y="-392" rotation="0" valLabRot="0" pointList="-436,-392,-360,-392" hflip="1" valLabely="0" itemtype="Connector" mainComp="false" enodeid="Circ_eNode-2925" circRot="0" x="-436" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" endpinid="Probe-325-inpin" vflip="1" Show_id="false" startpinid="CAT5125_50-2293-RW" objectName="Connector-2629" labely="-24" labelrot="0" id="Connector-2629"/>
+
+Unique  Id: Connector-2630: 
+Circuit Id: Connector-2630
+<item labelx="-16" boardRot="-1e+06" y="-384" rotation="0" valLabRot="0" pointList="-436,-384,-436,-356,-416,-356" hflip="1" valLabely="0" itemtype="Connector" mainComp="false" enodeid="Circ_eNode-2926" circRot="0" x="-436" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" endpinid="Ground-323-Gnd" vflip="1" Show_id="false" startpinid="CAT5125_50-2293-Gnd" objectName="Connector-2630" labely="-24" labelrot="0" id="Connector-2630"/>
+
+Unique  Id: Connector-2631: 
+Circuit Id: Connector-2631
+<item labelx="-16" boardRot="-1e+06" y="-364" rotation="0" valLabRot="0" pointList="-520,-364,-484,-364,-484,-384" hflip="1" valLabely="0" itemtype="Connector" mainComp="false" enodeid="Circ_eNode-2927" circRot="0" x="-520" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" endpinid="CAT5125_50-2293-!CS" vflip="1" Show_id="false" startpinid="Fixed Voltage-1308-outnod" objectName="Connector-2631" labely="-24" labelrot="0" id="Connector-2631"/>
+
+Unique  Id: Connector-2632: 
+Circuit Id: Connector-2632
+<item labelx="-16" boardRot="-1e+06" y="-400" rotation="0" valLabRot="0" pointList="-520,-400,-484,-400" hflip="1" valLabely="0" itemtype="Connector" mainComp="false" enodeid="Circ_eNode-2928" circRot="1.3796130175881221e-306" x="-520" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" endpinid="CAT5125_50-2293-U/!D" vflip="1" Show_id="false" startpinid="Fixed Voltage-1306-outnod" objectName="Connector-2632" labely="-24" labelrot="0" id="Connector-2632"/>
+
+Unique  Id: Connector-2635: 
+Circuit Id: Connector-2635
+<item labelx="-16" boardRot="-1e+06" y="-472" rotation="0" valLabRot="0" pointList="-420,-472,-416,-472,-416,-476" hflip="1" valLabely="0" itemtype="Connector" mainComp="false" enodeid="Circ_eNode-2929" circRot="-5.486129280331905e+303" x="-420" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" endpinid="Amperimeter-2634-lPin" vflip="1" Show_id="false" startpinid="Rail-321-outnod" objectName="Connector-2635" labely="-24" labelrot="0" id="Connector-2635"/>
+
+Unique  Id: Connector-2636: 
+Circuit Id: Connector-2636
+<item labelx="-16" boardRot="-1e+06" y="-476" rotation="0" valLabRot="0" pointList="-400,-476,-400,-400,-436,-400" hflip="1" valLabely="0" itemtype="Connector" mainComp="false" enodeid="Circ_eNode-2930" circRot="1.1174684739197934e+219" x="-400" valLabelx="0" boardPos="-1e+06,-1e+06" circPos="0,0" endpinid="CAT5125_50-2293-RH" vflip="1" Show_id="false" startpinid="Amperimeter-2634-rPin" objectName="Connector-2636" labely="-24" labelrot="0" id="Connector-2636"/>
+ 
+</circuit>

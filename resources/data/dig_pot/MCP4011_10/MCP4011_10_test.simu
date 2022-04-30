@@ -1,0 +1,55 @@
+<circuit Speed_per="100" reactStep="50" noLinAcc="5" animate="0" type="simulide_0.4" Speed_sps="1000000" Simu_Step_nS="1000">
+
+Unique  Id: Amperimeter-3734: 
+Circuit Id: Amperimeter-3734
+<item valLabelx="0" objectName="Amperimeter-3734" mainComp="false" id="Amperimeter-3734" x="-408" labelx="-24" circPos="0,0" SwitchPins="false" valLabRot="0" valLabely="0" Show_id="false" circRot="nan" hflip="1" rotation="0" labelrot="0" itemtype="Amperimeter" boardPos="-1e+06,-1e+06" labely="-40" boardRot="-1e+06" vflip="1" y="-480"/>
+
+Unique  Id: Probe-325: 
+Circuit Id: Probe-325
+<item valLabelx="16" objectName="Probe-325" mainComp="false" id="Probe-325" x="-384" labelx="16" circPos="0,0" valLabRot="45" valLabely="0" Show_id="false" circRot="0" hflip="1" rotation="-45" labelrot="45" Show_volt="true" Threshold="2.5" itemtype="Probe" boardPos="-1e+06,-1e+06" labely="-16" boardRot="-1e+06" vflip="1" y="-408"/>
+
+Unique  Id: Ground-323: 
+Circuit Id: Ground-323
+<item valLabelx="0" objectName="Ground-323" mainComp="false" id="Ground-323" x="-400" labelx="-16" circPos="0,0" valLabRot="0" valLabely="0" Show_id="false" circRot="-5.486129280331905e+303" hflip="1" rotation="0" labelrot="0" itemtype="Ground" boardPos="-1e+06,-1e+06" labely="8" boardRot="-1e+06" vflip="1" y="-336"/>
+
+Unique  Id: Rail-321: 
+Circuit Id: Rail-321
+<item valLabelx="-16" objectName="Rail-321" mainComp="false" id="Rail-321" Show_Volt="true" x="-456" labelx="-16" circPos="0,0" valLabRot="0" valLabely="8" Show_id="false" circRot="-2.304173777696812e+305" hflip="1" rotation="0" Voltage="5" labelrot="0" itemtype="Rail" Unit=" V" boardPos="-1e+06,-1e+06" labely="-24" boardRot="-1e+06" vflip="1" y="-464"/>
+
+Unique  Id: Fixed Voltage-1306: 
+Circuit Id: Up/!Down
+<item valLabelx="-55" objectName="Fixed Voltage-1306" mainComp="false" id="Up/!Down" Show_Volt="false" x="-536" labelx="-91" circPos="0,0" valLabRot="0" valLabely="-5" Show_id="true" circRot="0" hflip="1" rotation="0" Voltage="5" labelrot="0" Out="true" itemtype="Fixed Voltage" Unit=" V" boardPos="-1e+06,-1e+06" labely="-14" boardRot="-1e+06" vflip="1" y="-400"/>
+
+Unique  Id: Fixed Voltage-1308: 
+Circuit Id: !CS
+<item valLabelx="-55" objectName="Fixed Voltage-1308" mainComp="false" id="!CS" Show_Volt="false" x="-536" labelx="-63" circPos="0,0" valLabRot="0" valLabely="-5" Show_id="true" circRot="0" hflip="1" rotation="0" Voltage="5" labelrot="0" Out="true" itemtype="Fixed Voltage" Unit=" V" boardPos="-1e+06,-1e+06" labely="-6" boardRot="-1e+06" vflip="1" y="-372"/>
+
+Unique  Id: MCP4011_10-3184: 
+Circuit Id: MCP4011_10-3184
+<item valLabelx="13" objectName="MCP4011_10-3184" mainComp="false" id="MCP4011_10-3184" x="-464" labelx="-43" circPos="0,0" valLabRot="-90" valLabely="20" Show_id="true" circRot="1.655200624e-315" hflip="1" rotation="0" labelrot="0" itemtype="Subcircuit" boardPos="-1e+06,-1e+06" labely="-23" Name="" boardRot="-1e+06" vflip="1" BoardId="" y="-408" Logic_Symbol="true"/>
+
+Unique  Id: Connector-3729: 
+Circuit Id: Connector-3729
+<item valLabelx="0" objectName="Connector-3729" mainComp="false" id="Connector-3729" x="-424" labelx="-16" circPos="0,0" valLabRot="0" valLabely="0" Show_id="false" endpinid="Probe-325-inpin" circRot="0" hflip="1" rotation="0" labelrot="0" startpinid="MCP4011_10-3184-RW" pointList="-424,-392,-400,-392" itemtype="Connector" boardPos="-1e+06,-1e+06" labely="-24" boardRot="-1e+06" vflip="1" enodeid="Circ_eNode-3730" y="-392"/>
+
+Unique  Id: Connector-3730: 
+Circuit Id: Connector-3730
+<item valLabelx="0" objectName="Connector-3730" mainComp="false" id="Connector-3730" x="-424" labelx="-16" circPos="0,0" valLabRot="0" valLabely="0" Show_id="false" endpinid="Ground-323-Gnd" circRot="0" hflip="1" rotation="0" labelrot="0" startpinid="MCP4011_10-3184-RL" pointList="-424,-384,-400,-384,-400,-352" itemtype="Connector" boardPos="-1e+06,-1e+06" labely="-24" boardRot="-1e+06" vflip="1" enodeid="Circ_eNode-3731" y="-384"/>
+
+Unique  Id: Connector-3731: 
+Circuit Id: Connector-3731
+<item valLabelx="0" objectName="Connector-3731" mainComp="false" id="Connector-3731" x="-520" labelx="-16" circPos="0,0" valLabRot="0" valLabely="0" Show_id="false" endpinid="MCP4011_10-3184-!CS" circRot="0" hflip="1" rotation="0" labelrot="0" startpinid="Fixed Voltage-1308-outnod" pointList="-520,-372,-472,-372,-472,-384" itemtype="Connector" boardPos="-1e+06,-1e+06" labely="-24" boardRot="-1e+06" vflip="1" enodeid="Circ_eNode-3732" y="-372"/>
+
+Unique  Id: Connector-3732: 
+Circuit Id: Connector-3732
+<item valLabelx="0" objectName="Connector-3732" mainComp="false" id="Connector-3732" x="-520" labelx="-16" circPos="0,0" valLabRot="0" valLabely="0" Show_id="false" endpinid="MCP4011_10-3184-U/!D" circRot="0" hflip="1" rotation="0" labelrot="0" startpinid="Fixed Voltage-1306-outnod" pointList="-520,-400,-472,-400" itemtype="Connector" boardPos="-1e+06,-1e+06" labely="-24" boardRot="-1e+06" vflip="1" enodeid="Circ_eNode-3733" y="-400"/>
+
+Unique  Id: Connector-3735: 
+Circuit Id: Connector-3735
+<item valLabelx="0" objectName="Connector-3735" mainComp="false" id="Connector-3735" x="-440" labelx="-16" circPos="0,0" valLabRot="0" valLabely="0" Show_id="false" endpinid="Amperimeter-3734-lPin" circRot="-5.486129280331905e+303" hflip="1" rotation="0" labelrot="0" startpinid="Rail-321-outnod" pointList="-440,-464,-416,-464" itemtype="Connector" boardPos="-1e+06,-1e+06" labely="-24" boardRot="-1e+06" vflip="1" enodeid="enode-3735" y="-464"/>
+
+Unique  Id: Connector-3736: 
+Circuit Id: Connector-3736
+<item valLabelx="0" objectName="Connector-3736" mainComp="false" id="Connector-3736" x="-400" labelx="-16" circPos="0,0" valLabRot="0" valLabely="0" Show_id="false" endpinid="MCP4011_10-3184-RH" circRot="0" hflip="1" rotation="0" labelrot="0" startpinid="Amperimeter-3734-rPin" pointList="-400,-464,-400,-400,-424,-400" itemtype="Connector" boardPos="-1e+06,-1e+06" labely="-24" boardRot="-1e+06" vflip="1" enodeid="enode-3736" y="-464"/>
+ 
+</circuit>

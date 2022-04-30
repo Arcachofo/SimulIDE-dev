@@ -65,8 +65,6 @@ bool GputilsDebug::getVariables( BaseDebugger* debugger )
     QString  p_stdout = getVars.readAllStandardOutput();
     QStringList varNames;
 
-    /// m_subs.clear();
-
     for( QString line : p_stdout.split("\n") )
     {
         if( line.isEmpty() ) continue;

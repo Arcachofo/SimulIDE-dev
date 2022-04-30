@@ -54,7 +54,7 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
     m_tempInc = 0.5;
 
     m_pin.resize(1);
-    m_pin[0] = m_inpin = new IoPin( 180, QPoint(-36, 0), id+"-inPin", 0, this, openCo );
+    m_pin[0] = m_inpin = new IoPin( 180, QPoint(-36, 8), id+"-inPin", 0, this, openCo );
     m_inpin->setOutHighV( 5 );
     m_inpin->setLabelColor( QColor( 250, 250, 200 ) );
     m_inpin->setLabelText("DQ");
@@ -237,12 +237,12 @@ void Ds18b20::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawRoundedRect( m_area, 2, 2 );
 
     p->setBrush( QColor(200, 220, 180) );
-    p->drawRoundedRect( QRect(-11,-14, 33, 15 ),2,2 );
+    p->drawRoundedRect( QRect(-24,-14, 48, 15 ),2,2 );
 
     m_font.setPixelSize(9);
     p->setFont( m_font );
     p->setPen( QColor(0, 0, 0) );
-    p->drawText( -9, -3, "C° "+QString::number( m_temp ) );
+    p->drawText( -22, -3, "C° "+QString::number( m_temp ) );
 }
 
 //#include "moc_ds18b20.cpp"

@@ -89,12 +89,18 @@ void IoComponent::initState()
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setOutState( false );
 
     m_outValue = 0;
-    while( !m_outQueue.empty() ) m_outQueue.pop();
+    while( !m_outQueue.empty() )
+        m_outQueue.pop();
     while( !m_timeQueue.empty() ) m_timeQueue.pop();
 }
 
 void IoComponent::runOutputs()
 {
+    if( m_outQueue.empty() )
+    {
+        qDebug() << "Error: IoComponent::runOutputs out Queue empty"<<m_id;
+        return;
+    }
     m_outValue = m_outQueue.front();
     m_outQueue.pop();
 
@@ -116,12 +122,12 @@ void IoComponent::runOutputs()
 
 void IoComponent::sheduleOutPuts( eElement* el )
 {
-    if(  m_outQueue.empty() )
+    if( m_outQueue.empty() )
     {
         if( m_nextOutVal == m_outValue ) return;
 
-        if( m_rndPD )Simulator::self()->addEvent( m_propDelay*m_propSize+(std::rand()%2), el );
-        else         Simulator::self()->addEvent( m_propDelay*m_propSize, el );
+        if( m_rndPD ) Simulator::self()->addEvent( m_propDelay*m_propSize+(std::rand()%2), el );
+        else          Simulator::self()->addEvent( m_propDelay*m_propSize, el );
     }
     else          // New Event while previous Event not dispatched
     {
