@@ -56,9 +56,9 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         void downbuttonclicked();
 
     private:
-        void byteReceived();
-        void byteSent();
-        void sendByte( uint8_t data );
+        void dataReceived();
+        void dataSent();
+        void sendData( uint8_t data, uint8_t size );
         void writeBit();
         void readBit( uint8_t bit );
         void reset();
@@ -74,6 +74,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         uint8_t  m_rxReg;
         uint8_t  m_txReg;
         uint8_t  m_bit;
+        uint8_t  m_lastBit;
 
         int m_pulse;
 

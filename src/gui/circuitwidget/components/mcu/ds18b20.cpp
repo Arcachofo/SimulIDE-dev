@@ -99,6 +99,8 @@ Ds18b20::~Ds18b20(){}
 void Ds18b20::stamp()   // Called at Simulation Start
 {
     m_lastTime = 0;
+    m_rxReg = 0;
+    m_lastBit = 7;
     m_reset = false;
     m_write = false;
     m_lastIn = false;
@@ -152,20 +154,21 @@ void Ds18b20::runEvent()
     }
 }
 
-void Ds18b20::byteReceived() // a byte has been received (it's in m_rxReg)
+void Ds18b20::dataReceived() // a byte has been received (it's in m_rxReg)
 {
-    qDebug() <<"Ds18b20::byteReceived"<< m_rxReg; // Print received byte in bottom panel
+    qDebug() <<"Ds18b20::dataReceived"<< m_lastBit+1<< "bits :"<< m_rxReg; // Print received byte in bottom panel
     // Do whatever
 }
 
-void Ds18b20::byteSent() // Last byte has been sent
+void Ds18b20::dataSent() // Last data has been sent
 {
     // Do whatever
 }
 
-void Ds18b20::sendByte( uint8_t data )
+void Ds18b20::sendData( uint8_t data, uint8_t size )
 {
     m_txReg = data;
+    m_lastBit = size-1;
     m_bit = 1;
     m_write = true;
     m_pulse = 15*1e6;  // Keep line low for 15 us
@@ -179,10 +182,10 @@ void Ds18b20::writeBit()
         m_pullDown = true;
         m_inpin->changeCallBack( this, false ); // Stop receiving voltChange() CallBacks
     }
-    if( m_bit == 1<<7 ) // Byte sent
+    if( m_bit == 1<<m_lastBit ) // Byte sent
     {
         m_write = false;
-        byteSent();
+        dataSent();
     }
     else m_bit <<= 1;
 }
@@ -191,10 +194,10 @@ void Ds18b20::readBit( uint8_t bit )
 {
     if( bit ) m_rxReg |= m_bit;
 
-    if( m_bit == 1<<7 )          // Complete byte received
+    if( m_bit == 1<<m_lastBit )          // Complete data received
     {
         m_bit = 1;
-        byteReceived();
+        dataReceived();
         m_rxReg = 0;
     }
     else m_bit <<= 1;
