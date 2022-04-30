@@ -130,19 +130,11 @@
 #include "zener.h"
 //END Item includes
 
-static const char* categories[] = {
-    QT_TRANSLATE_NOOP("xmlfile","Tools"),
-    QT_TRANSLATE_NOOP("xmlfile","Shields"),
-    QT_TRANSLATE_NOOP("xmlfile","Ternary"),
-    QT_TRANSLATE_NOOP("xmlfile", "Keys"),
-    QT_TRANSLATE_NOOP("xmlfile", "Other IC")
-};
-
 ItemLibrary* ItemLibrary::m_pSelf = NULL;
 
 ItemLibrary::ItemLibrary()
 {
-    Q_UNUSED( categories );
+    //Q_UNUSED( categories );
     m_pSelf = this;
 
     loadItems();
@@ -179,22 +171,22 @@ void ItemLibrary::loadItems()
     addItem( RelaySPST::libraryItem() );
     addItem( KeyPad::libraryItem() );
     // Passive
-    addItem( new LibraryItem( QObject::tr("Resistors"),QObject::tr("Passive"), "resistors.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Resistors"), QObject::tr("Passive"), "resistors.png","", NULL ) );
     addItem( Resistor::libraryItem() );
     addItem( ResistorDip::libraryItem() );
     addItem( Potentiometer::libraryItem() );
     addItem( VarResistor::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Resistive Sensors"),QObject::tr("Passive"), "resistorsensors.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Resistive Sensors"), QObject::tr("Passive"), "resistorsensors.png","", NULL ) );
     addItem( Ldr::libraryItem() );
     addItem( Thermistor::libraryItem() );
     addItem( RTD::libraryItem() );
     addItem( Strain::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Reactive"),QObject::tr("Passive"), "reactive.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Reactive"), QObject::tr("Passive"), "reactive.png","", NULL ) );
     addItem( Capacitor::libraryItem() );
     addItem( elCapacitor::libraryItem() );
     addItem( Inductor::libraryItem() );
     // Active
-    addItem( new LibraryItem( QObject::tr("Rectifiers"),QObject::tr("Active"), "rectifiers.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Rectifiers"), QObject::tr("Active"), "rectifiers.png","", NULL ) );
     addItem( Diode::libraryItem() );
     addItem( Zener::libraryItem() );
     addItem( SCR::libraryItem() );
@@ -206,7 +198,7 @@ void ItemLibrary::loadItems()
     addItem( VoltReg::libraryItem() );
     addItem( MuxAnalog::libraryItem() );
     // Outputs
-    addItem( new LibraryItem( QObject::tr("Leds"),QObject::tr("Outputs"), "leds.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Leds"), QObject::tr("Outputs"), "leds.png","", NULL ) );
     addItem( Led::libraryItem() );
     addItem( LedRgb::libraryItem() );
     addItem( LedBar::libraryItem() );
@@ -214,32 +206,32 @@ void ItemLibrary::loadItems()
     addItem( LedMatrix::libraryItem() );
     addItem( Max72xx_matrix::libraryItem() );
     addItem( WS2812::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Displays"),QObject::tr("Outputs"), "displays.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Displays"), QObject::tr("Outputs"), "displays.png","", NULL ) );
     addItem( Hd44780::libraryItem() );
     addItem( Aip31068_i2c::libraryItem() );
     addItem( Pcd8544::libraryItem() );
     addItem( Ks0108::libraryItem() );
     addItem( Ssd1306::libraryItem() );
     addItem( Ili9341::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Motors"),QObject::tr("Outputs"), "motors.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Motors"), QObject::tr("Outputs"), "motors.png","", NULL ) );
     addItem( DcMotor::libraryItem() );
     addItem( Stepper::libraryItem() );
     addItem( Servo::libraryItem() );
     addItem( AudioOut::libraryItem() );
     addItem( Lamp::libraryItem() );
     // Micro
-    addItem( new LibraryItem( QObject::tr("AVR"),QObject::tr("Micro"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("PIC"),QObject::tr("Micro"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("I51"),QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("AVR"), QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("PIC"), QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("I51"), QObject::tr("Micro"), "ic2.png","", NULL ) );
     addItem( Mcu::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Arduino"),QObject::tr("Micro"), "board.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("Shields"),QObject::tr("Micro"), "shield.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("Sensors"),QObject::tr("Micro"), "1to2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Arduino"), QObject::tr("Micro"), "board.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Shields"), QObject::tr("Micro"), "shield.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Sensors"), QObject::tr("Micro"), "1to2.png","", NULL ) );
     addItem( SR04::libraryItem() );
     addItem( Dht22::libraryItem() );
     addItem( DS1621::libraryItem() );
     addItem( Ds18b20::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Perifericals"),QObject::tr("Micro"), "perif.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Perifericals"), QObject::tr("Micro"), "perif.png","", NULL ) );
     addItem( SerialPort::libraryItem() );
     addItem( TouchPad::libraryItem() );
     addItem( KY023::libraryItem() );
@@ -247,18 +239,18 @@ void ItemLibrary::loadItems()
     addItem( DS1307::libraryItem() );
     addItem( Esp01::libraryItem() );
     // Logic
-    addItem( new LibraryItem( QObject::tr("Gates"),QObject::tr("Logic"), "gates.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Gates"), QObject::tr("Logic"), "gates.png","", NULL ) );
     addItem( Buffer::libraryItem() );
     addItem( AndGate::libraryItem() );
     addItem( OrGate::libraryItem() );
     addItem( XorGate::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Arithmetic"),QObject::tr("Logic"), "2to2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Arithmetic"), QObject::tr("Logic"), "2to2.png","", NULL ) );
     addItem( BinCounter::libraryItem() );
     addItem( FullAdder::libraryItem() );
     addItem( ShiftReg::libraryItem() );
     addItem( Function::libraryItem() );
     //addItem( Scripted::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Memory"),QObject::tr("Logic"), "subc.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Memory"), QObject::tr("Logic"), "subc.png","", NULL ) );
     addItem( FlipFlopD::libraryItem() );
     addItem( FlipFlopT::libraryItem() );
     addItem( FlipFlopRS::libraryItem() );
@@ -266,27 +258,27 @@ void ItemLibrary::loadItems()
     addItem( LatchD::libraryItem() );
     addItem( Memory::libraryItem() );
     addItem( I2CRam::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Converters"),QObject::tr("Logic"), "1to2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Converters"), QObject::tr("Logic"), "1to2.png","", NULL ) );
     addItem( Mux::libraryItem() );
     addItem( Demux::libraryItem() );
     addItem( BcdToDec::libraryItem() );
     addItem( DecToBcd::libraryItem() );
     addItem( BcdTo7S::libraryItem() );
     addItem( I2CToParallel::libraryItem() );
-    addItem( new LibraryItem( QObject::tr("Other Logic"),QObject::tr("Logic"), "2to3.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Other Logic"), QObject::tr("Logic"), "2to3.png","", NULL ) );
     addItem( ADC::libraryItem() );
     addItem( DAC::libraryItem() );
     addItem( SevenSegmentBCD::libraryItem() );
     addItem( Lm555::libraryItem() );
     // Subcircuits
-    addItem( new LibraryItem( "IC 74",QObject::tr("Logic"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( "IC CD",QObject::tr("Logic"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( "USSR IC",QObject::tr("Logic"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("Other IC"),QObject::tr("Logic"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("Keys"),QObject::tr("Logic"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("Ternary"),QObject::tr("Logic"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("Tools"),QObject::tr("Logic"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("Led display"),QObject::tr("Logic"), "ic2.png","", NULL ) );
+    /*addItem( new LibraryItem( "IC 74", QObject::tr("Logic"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( "IC CD", QObject::tr("Logic"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( "USSR IC", QObject::tr("Logic"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Other IC"), QObject::tr("Logic"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Keys"), QObject::tr("Logic"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Ternary"), QObject::tr("Logic"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Tools"), QObject::tr("Logic"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( QObject::tr("Led display"), QObject::tr("Logic"), "ic2.png","", NULL ) );*/
     addItem( SubCircuit::libraryItem() );
     // Connectors
     addItem( Bus::libraryItem() );

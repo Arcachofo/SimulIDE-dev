@@ -3,7 +3,7 @@
 <itemlib>
   <tag>QT_TRANSLATE_NOOP("xmlfile","Led display")</tag>
     
-  <itemset category="Led display" type="Subcircuit" icon="subc.png" >
+  <itemset category="Logic/Led display" type="Subcircuit" icon=":/7segbcd.png" >
       
     <item name="1bit_led_scc" folder="led_display" info=" 1-Bit Led digital Tube module (74hc595, com. cathode, static)" />
     <item name="1bit_led_sca" folder="led_display" info=" 1-Bit Led digital Tube module (74hc595, com. anode, static)" />

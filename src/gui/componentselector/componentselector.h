@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 
  static ComponentSelector* self() { return m_pSelf; }
 
-        void addLibraryItem( LibraryItem* libItem );
+        //void addLibraryItem( LibraryItem* libItem );
         //void removeLibItem( LibraryItem* libItem );
 
         void LoadCompSetAt( QDir compSetDir );
@@ -54,10 +54,10 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
  static ComponentSelector* m_pSelf;
 
         void addItem( LibraryItem* libItem );
-        void addItem( const QString &caption,
-                      const QString &category,
-                      const QString &icon,
-                      const QString &type );
+        void addItem( QString caption,
+                      QTreeWidgetItem* catItem,
+                      QString icon,
+                      QString type );
 
         void LoadLibraryItems();
         //void LoadCompSet();
@@ -66,7 +66,7 @@ class MAINMODULE_EXPORT ComponentSelector : public QTreeWidget
 
         //void reLoadItems();
 
-        QTreeWidgetItem* addCategory( QString _category );
+        QTreeWidgetItem* getCategory( QString _category, QString icon="" );
 
         QStringList m_compSetUnique;
         QStringList m_categories;
