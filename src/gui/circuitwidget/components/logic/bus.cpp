@@ -101,7 +101,7 @@ void Bus::setNumLines( int lines )
 
         pin->setFontSize( 4 );
         pin->setLabelColor( QColor( 0, 0, 0 ) );
-        pin->setLabelText( " "+QString::number( m_startBit+i-1 ) );
+        pin->setLabelText( " "+QString::number( m_startBit+i-1 )+" " );
         m_pin[i]  = pin;
         m_ePin[i] = pin;
     }

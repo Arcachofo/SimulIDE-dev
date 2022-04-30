@@ -49,6 +49,8 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     my_connector = NULL;
     m_conPin     = NULL;
     m_angle      = angle;
+    m_Hflip = 1;
+    m_Vflip = 1;
     
     m_color[0] = Qt::black;
     m_color[1] = QColor( 100, 100, 250 );
@@ -204,7 +206,7 @@ void Pin::flip( int h, int v )
 {
     m_Hflip = h;
     m_Vflip = v;
-    m_label.setTransform( QTransform::fromScale( h, v ) );
+    setLabelPos();
 }
 
 void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
@@ -288,6 +290,7 @@ void Pin::setLabelPos()
         else                ylabelpos -= offset;
     }
     m_label.setPos( xlabelpos, ylabelpos );
+    m_label.setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
 }
 
 void Pin::setLabelColor( QColor color ) { m_label.setBrush( QBrush(color) ); }
