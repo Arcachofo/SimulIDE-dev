@@ -784,6 +784,17 @@ Voulez-vous sauvegarder les changements ?
         <source>SimulIDE Website</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Circuits?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -1132,6 +1143,29 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>DS1621</name>
+    <message>
+        <source>DS1621</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Capteurs</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1344,13 +1378,28 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>EditDialog</name>
+    <name>Ds18b20</name>
     <message>
-        <source>Pin Name:</source>
+        <source>Sensors</source>
+        <translation type="unfinished">Capteurs</translation>
+    </message>
+    <message>
+        <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pin Id:</source>
+        <source>Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditDialog</name>
+    <message>
+        <source>Pin Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1367,6 +1416,34 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edit Pin </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Id:   </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1621,6 +1698,17 @@ Voulez-vous sauvegarder les changements?
     </message>
     <message>
         <source>Last Circuits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Files?
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2678,14 +2766,6 @@ Voulez-vous sauvegarder les changements?
 <context>
     <name>LogicSubc</name>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logic Symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Electric</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2792,6 +2872,34 @@ Voulez-vous sauvegarder les changements?
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished">Couleur</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Mcu</name>
@@ -2837,7 +2945,7 @@ Voulez-vous sauvegarder les changements?
     </message>
     <message>
         <source>No File:</source>
-        <translation type="unfinished">Pas de fichier :</translation>
+        <translation type="obsolete">Pas de fichier :</translation>
     </message>
     <message>
         <source>No File to reload </source>
@@ -2877,6 +2985,10 @@ Voulez-vous sauvegarder les changements?
     </message>
     <message>
         <source>All files (*.*);;Hex Files (*.hex)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2967,6 +3079,10 @@ Voulez-vous sauvegarder les changements?
     </message>
     <message>
         <source>Show Memory Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Asynchronous</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3465,31 +3581,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Autre logique</translation>
     </message>
     <message>
-        <source>Other IC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Led display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3509,6 +3601,10 @@ Not valid Package file:
     <message>
         <source>Active</source>
         <translation type="unfinished">Actif</translation>
+    </message>
+    <message>
+        <source>Error: list file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3573,7 +3669,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Load Variables</source>
-        <translation type="unfinished">Charger les variables</translation>
+        <translation type="obsolete">Charger les variables</translation>
     </message>
     <message>
         <source>Clear Selected</source>
@@ -4133,6 +4229,14 @@ Not valid Package file:
         <source>There are no data files for </source>
         <translation type="unfinished">Il n&apos;y a pas de fichier de données pour </translation>
     </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SubPackage</name>
@@ -4461,10 +4565,6 @@ Voulez-vous sauvegarder les changements ?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rotated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Connectors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4675,29 +4775,6 @@ Voulez-vous sauvegarder les changements ?
     </message>
     <message>
         <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>xmlfile</name>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Other IC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shields</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

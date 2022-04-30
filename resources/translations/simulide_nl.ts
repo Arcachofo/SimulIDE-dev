@@ -784,6 +784,17 @@ Wijzigingen opslaan?
         <source>SimulIDE Website</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Circuits?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -1132,6 +1143,29 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>DS1621</name>
+    <message>
+        <source>DS1621</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Sensoren</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1344,6 +1378,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Ds18b20</name>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Sensoren</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditDialog</name>
     <message>
         <source>Pin Name:</source>
@@ -1351,7 +1404,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Pin Id:</source>
-        <translation type="unfinished">Pin Id:</translation>
+        <translation type="obsolete">Pin Id:</translation>
     </message>
     <message>
         <source>Invert Pin</source>
@@ -1367,6 +1420,34 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edit Pin </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Id:   </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1622,6 +1703,17 @@ Wijzigingen opslaan?
     <message>
         <source>Last Circuits</source>
         <translation type="unfinished">Laatste schakelingen</translation>
+    </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Files?
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2678,12 +2770,8 @@ Wijzigingen opslaan?
 <context>
     <name>LogicSubc</name>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Logisch symbool</translation>
+        <translation type="obsolete">Logisch symbool</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2792,6 +2880,34 @@ Wijzigingen opslaan?
         <source>Size</source>
         <translation type="unfinished">Grootte</translation>
     </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished">Kleur</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Mcu</name>
@@ -2841,7 +2957,7 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>No File:</source>
-        <translation type="unfinished">Geen bestand:</translation>
+        <translation type="obsolete">Geen bestand:</translation>
     </message>
     <message>
         <source>No File to reload </source>
@@ -2882,6 +2998,10 @@ Wijzigingen opslaan?
     <message>
         <source>All files (*.*);;Hex Files (*.hex)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Logisch symbool</translation>
     </message>
 </context>
 <context>
@@ -2971,6 +3091,10 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Show Memory Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Asynchronous</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3469,31 +3593,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Overige logica</translation>
     </message>
     <message>
-        <source>Other IC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Led display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error: lst file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3513,6 +3613,10 @@ Not valid Package file:
     <message>
         <source>Active</source>
         <translation type="unfinished">Actief</translation>
+    </message>
+    <message>
+        <source>Error: list file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3577,7 +3681,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Load Variables</source>
-        <translation type="unfinished">Laad variabelen</translation>
+        <translation type="obsolete">Laad variabelen</translation>
     </message>
     <message>
         <source>Clear Selected</source>
@@ -4144,7 +4248,11 @@ Not valid Package file:
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="obsolete">Logisch symbool</translation>
+        <translation type="unfinished">Logisch symbool</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4474,10 +4582,6 @@ Wijzigingen opslaan?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rotated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Connectors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4688,29 +4792,6 @@ Wijzigingen opslaan?
     </message>
     <message>
         <source>Rectifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>xmlfile</name>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Other IC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shields</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

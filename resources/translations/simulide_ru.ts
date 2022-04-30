@@ -784,6 +784,17 @@ Do you want to save your changes?
         <source>SimulIDE Website</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Circuits?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -1134,6 +1145,29 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>DS1621</name>
+    <message>
+        <source>DS1621</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">датчики</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation type="unfinished">Температура</translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1346,6 +1380,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Ds18b20</name>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">датчики</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Основные</translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation type="unfinished">Температура</translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditDialog</name>
     <message>
         <source>Pin Name:</source>
@@ -1353,7 +1406,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Pin Id:</source>
-        <translation type="unfinished">Идентификатор вывода:</translation>
+        <translation type="obsolete">Идентификатор вывода:</translation>
     </message>
     <message>
         <source>Invert Pin</source>
@@ -1370,6 +1423,34 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edit Pin </source>
         <translation type="unfinished">Изменить вывод </translation>
+    </message>
+    <message>
+        <source>Pin Id:   </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1624,6 +1705,17 @@ Do you want to save your changes?
     <message>
         <source>Last Circuits</source>
         <translation type="unfinished">Последняя схема</translation>
+    </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Files?
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2685,11 +2777,11 @@ Do you want to save your changes?
     <name>LogicSubc</name>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Основные</translation>
+        <translation type="obsolete">Основные</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Логический символ</translation>
+        <translation type="obsolete">Логический символ</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2798,6 +2890,34 @@ Do you want to save your changes?
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished">Цвет</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished">Желтый</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished">Синий</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Mcu</name>
@@ -2847,7 +2967,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>No File:</source>
-        <translation type="unfinished">Нет файла:</translation>
+        <translation type="obsolete">Нет файла:</translation>
     </message>
     <message>
         <source>No File to reload </source>
@@ -2888,6 +3008,10 @@ Do you want to save your changes?
     <message>
         <source>All files (*.*);;Hex Files (*.hex)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Логический символ</translation>
     </message>
 </context>
 <context>
@@ -2978,6 +3102,10 @@ Do you want to save your changes?
     <message>
         <source>Show Memory Table</source>
         <translation type="unfinished">Просмотр содержимого памяти</translation>
+    </message>
+    <message>
+        <source>Asynchronous</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3480,23 +3608,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other IC</source>
-        <translation type="unfinished">Другие ИС</translation>
+        <translation type="obsolete">Другие ИС</translation>
     </message>
     <message>
         <source>Keys</source>
-        <translation type="unfinished">Ключи</translation>
+        <translation type="obsolete">Ключи</translation>
     </message>
     <message>
         <source>Ternary</source>
-        <translation type="unfinished">Троичная логика</translation>
+        <translation type="obsolete">Троичная логика</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished">Инструменты</translation>
-    </message>
-    <message>
-        <source>Led display</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Инструменты</translation>
     </message>
     <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
@@ -3504,7 +3628,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Error: lst file doesn&apos;t exist:</source>
-        <translation type="unfinished">Внимание: lst файл не найден:</translation>
+        <translation type="obsolete">Внимание: lst файл не найден:</translation>
     </message>
     <message>
         <source>Voltmeter</source>
@@ -3523,6 +3647,10 @@ Not valid Package file:
     <message>
         <source>Active</source>
         <translation type="unfinished">Активные элементы</translation>
+    </message>
+    <message>
+        <source>Error: list file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3587,7 +3715,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Load Variables</source>
-        <translation type="unfinished">Загрузить переменные</translation>
+        <translation type="obsolete">Загрузить переменные</translation>
     </message>
     <message>
         <source>Clear Selected</source>
@@ -4154,11 +4282,11 @@ Not valid Package file:
     </message>
     <message>
         <source>Main</source>
-        <translation type="obsolete">Основные</translation>
+        <translation type="unfinished">Основные</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="obsolete">Логический символ</translation>
+        <translation type="unfinished">Логический символ</translation>
     </message>
     <message>
         <source>Detach</source>
@@ -4534,7 +4662,7 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Rotated</source>
-        <translation type="unfinished">Повернуть</translation>
+        <translation type="obsolete">Повернуть</translation>
     </message>
     <message>
         <source>Connectors</source>
@@ -4754,23 +4882,23 @@ Do you want to save your changes?
     <name>xmlfile</name>
     <message>
         <source>Keys</source>
-        <translation type="unfinished">Ключи</translation>
+        <translation type="obsolete">Ключи</translation>
     </message>
     <message>
         <source>Other IC</source>
-        <translation type="unfinished">Другие ИС</translation>
+        <translation type="obsolete">Другие ИС</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished">Инструменты</translation>
+        <translation type="obsolete">Инструменты</translation>
     </message>
     <message>
         <source>Shields</source>
-        <translation type="unfinished">Шилды</translation>
+        <translation type="obsolete">Шилды</translation>
     </message>
     <message>
         <source>Ternary</source>
-        <translation type="unfinished">Троичная логика</translation>
+        <translation type="obsolete">Троичная логика</translation>
     </message>
 </context>
 </TS>

@@ -784,6 +784,17 @@ Quiere guardar los cambios?</translation>
         <source>SimulIDE Website</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Circuits?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -1134,6 +1145,29 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>DS1621</name>
+    <message>
+        <source>DS1621</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation>Sensores</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation>Basico</translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation type="unfinished">Temperatura</translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation>Incremento Temp.</translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1346,14 +1380,29 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Ds18b20</name>
+    <message>
+        <source>Sensors</source>
+        <translation>Sensores</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation>Basico</translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation>Temperatura</translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation>Incremento Temp.</translation>
+    </message>
+</context>
+<context>
     <name>EditDialog</name>
     <message>
         <source>Pin Name:</source>
         <translation>Nombre de Pin</translation>
-    </message>
-    <message>
-        <source>Pin Id:</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Invert Pin</source>
@@ -1370,6 +1419,34 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edit Pin </source>
         <translation>Editar Pin </translation>
+    </message>
+    <message>
+        <source>Pin Id:   </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation>Derecha</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Izquierda</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation>Arriba</translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation>Abajo</translation>
     </message>
 </context>
 <context>
@@ -1623,6 +1700,17 @@ Quiere guardar los cambios?</translation>
     <message>
         <source>Last Circuits</source>
         <translation>Ultimos Circuitos</translation>
+    </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Files?
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2684,11 +2772,11 @@ Quiere guardar los cambios?</translation>
     <name>LogicSubc</name>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Basico</translation>
+        <translation type="obsolete">Basico</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Símbolo Lógico</translation>
+        <translation type="obsolete">Símbolo Lógico</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -2798,6 +2886,34 @@ Quiere guardar los cambios?</translation>
         <source>Size</source>
         <translation>Tamaño</translation>
     </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished">Color</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished">Amarillo</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished">Rojo</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished">Verde</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished">Azul</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished">Naranja</translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished">Púrpura</translation>
+    </message>
 </context>
 <context>
     <name>Mcu</name>
@@ -2847,7 +2963,7 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>No File:</source>
-        <translation>No hay Archivo:</translation>
+        <translation type="vanished">No hay Archivo:</translation>
     </message>
     <message>
         <source>No File to reload </source>
@@ -2888,6 +3004,10 @@ Quiere guardar los cambios?</translation>
     <message>
         <source>All files (*.*);;Hex Files (*.hex)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Símbolo Lógico</translation>
     </message>
 </context>
 <context>
@@ -2978,6 +3098,10 @@ Quiere guardar los cambios?</translation>
     <message>
         <source>Show Memory Table</source>
         <translation>Mostrar Tabla de Memoria</translation>
+    </message>
+    <message>
+        <source>Asynchronous</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3476,23 +3600,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Other IC</source>
-        <translation>Otros IC</translation>
-    </message>
-    <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Otros IC</translation>
     </message>
     <message>
         <source>Ternary</source>
-        <translation>Ternario</translation>
+        <translation type="vanished">Ternario</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation>Herramientas</translation>
-    </message>
-    <message>
-        <source>Led display</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Herramientas</translation>
     </message>
     <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
@@ -3500,7 +3616,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Error: lst file doesn&apos;t exist:</source>
-        <translation>Error: no existe el archivo lst:</translation>
+        <translation type="vanished">Error: no existe el archivo lst:</translation>
     </message>
     <message>
         <source>Voltmeter</source>
@@ -3519,6 +3635,10 @@ Not valid Package file:
     <message>
         <source>Active</source>
         <translation>Activos</translation>
+    </message>
+    <message>
+        <source>Error: list file doesn&apos;t exist:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3583,7 +3703,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Load Variables</source>
-        <translation>Cargar Variables</translation>
+        <translation type="vanished">Cargar Variables</translation>
     </message>
     <message>
         <source>Clear Selected</source>
@@ -4154,11 +4274,11 @@ Not valid Package file:
     </message>
     <message>
         <source>Main</source>
-        <translation type="vanished">Basico</translation>
+        <translation>Basico</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="vanished">Símbolo Lógico</translation>
+        <translation>Símbolo Lógico</translation>
     </message>
     <message>
         <source>Detach</source>
@@ -4533,7 +4653,7 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>Rotated</source>
-        <translation>Rotado</translation>
+        <translation type="vanished">Rotado</translation>
     </message>
     <message>
         <source>Connectors</source>
@@ -4752,24 +4872,16 @@ Quiere guardar los cambios?
 <context>
     <name>xmlfile</name>
     <message>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Other IC</source>
-        <translation>Otros IC</translation>
+        <translation type="vanished">Otros IC</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation>Herramientas</translation>
-    </message>
-    <message>
-        <source>Shields</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Herramientas</translation>
     </message>
     <message>
         <source>Ternary</source>
-        <translation>Ternario</translation>
+        <translation type="vanished">Ternario</translation>
     </message>
 </context>
 </TS>

@@ -1016,6 +1016,17 @@ Sollen die Änderungen gespeichert werden?
         <source>All files (*.*)</source>
         <translation type="unfinished">Alle Dateien (*.*)</translation>
     </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Circuits?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Clock</name>
@@ -1374,6 +1385,29 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>DS1621</name>
+    <message>
+        <source>DS1621</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Sensoren</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Hauptparameter</translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation type="unfinished">Temperatur</translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation type="unfinished">Schrittweite Temperatur</translation>
+    </message>
+</context>
+<context>
     <name>DataLaWidget</name>
     <message>
         <source>Expand</source>
@@ -1590,6 +1624,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>Ds18b20</name>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Sensoren</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Hauptparameter</translation>
+    </message>
+    <message>
+        <source>Temperature</source>
+        <translation type="unfinished">Temperatur</translation>
+    </message>
+    <message>
+        <source>Temp. increment</source>
+        <translation type="unfinished">Schrittweite Temperatur</translation>
+    </message>
+</context>
+<context>
     <name>EditDialog</name>
     <message>
         <source>Pin Name:</source>
@@ -1597,7 +1650,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Pin Id:</source>
-        <translation>Pinbezeichner:</translation>
+        <translation type="vanished">Pinbezeichner:</translation>
     </message>
     <message>
         <source>Invert Pin</source>
@@ -1614,6 +1667,34 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edit Pin </source>
         <translation>Pin editieren </translation>
+    </message>
+    <message>
+        <source>Pin Id:   </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1872,6 +1953,17 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>Last Circuits</source>
         <translation>Letzte Schaltungen</translation>
+    </message>
+    <message>
+        <source>
+Can&apos;t find file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove it from Recent Files?
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2941,11 +3033,11 @@ Sollen die Änderungen gespeichert werden?
     <name>LogicSubc</name>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Hauptparameter</translation>
+        <translation type="obsolete">Hauptparameter</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="unfinished">Logiksymbol</translation>
+        <translation type="obsolete">Logiksymbol</translation>
     </message>
     <message>
         <source>Electric</source>
@@ -3071,6 +3163,34 @@ Sollen die Änderungen gespeichert werden?
         <source>Size</source>
         <translation>Größe</translation>
     </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished">Farbe</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <translation type="unfinished">gelb</translation>
+    </message>
+    <message>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation type="unfinished">blau</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Mcu</name>
@@ -3120,7 +3240,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>No File:</source>
-        <translation>keine Datei:</translation>
+        <translation type="vanished">keine Datei:</translation>
     </message>
     <message>
         <source>No File to reload </source>
@@ -3161,6 +3281,10 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>All files (*.*);;Hex Files (*.hex)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic Symbol</source>
+        <translation type="unfinished">Logiksymbol</translation>
     </message>
 </context>
 <context>
@@ -3251,6 +3375,10 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>Show Memory Table</source>
         <translation>Speicher Tabelle anzeigen</translation>
+    </message>
+    <message>
+        <source>Asynchronous</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3761,23 +3889,11 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Other IC</source>
-        <translation>weitere ICs</translation>
-    </message>
-    <message>
-        <source>Keys</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation></translation>
+        <translation type="vanished">weitere ICs</translation>
     </message>
     <message>
         <source>Led display</source>
-        <translation>LED Display</translation>
+        <translation type="vanished">LED Display</translation>
     </message>
     <message>
         <source>Warning: elf file doesn&apos;t exist:</source>
@@ -3785,7 +3901,7 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>Error: lst file doesn&apos;t exist:</source>
-        <translation>Fehler: lst Datei existiert nicht:</translation>
+        <translation type="vanished">Fehler: lst Datei existiert nicht:</translation>
     </message>
     <message>
         <source>Voltmeter</source>
@@ -3803,6 +3919,10 @@ Keine valide Package Datei:
         <source>Error:
 Not valid Package file:
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: list file doesn&apos;t exist:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3868,7 +3988,7 @@ Not valid Package file:
     </message>
     <message>
         <source>Load Variables</source>
-        <translation>Variablen laden</translation>
+        <translation type="vanished">Variablen laden</translation>
     </message>
     <message>
         <source>Clear Selected</source>
@@ -4532,11 +4652,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Main</source>
-        <translation type="vanished">Hauptparameter</translation>
+        <translation>Hauptparameter</translation>
     </message>
     <message>
         <source>Logic Symbol</source>
-        <translation type="vanished">Logiksymbol</translation>
+        <translation>Logiksymbol</translation>
     </message>
     <message>
         <source>Detach</source>
@@ -4883,7 +5003,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>Rotated</source>
-        <translation>gedreht</translation>
+        <translation type="vanished">gedreht</translation>
     </message>
     <message>
         <source>Connectors</source>
@@ -5110,24 +5230,8 @@ Sollen die Änderungen gespeichert werden?
 <context>
     <name>xmlfile</name>
     <message>
-        <source>Keys</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Other IC</source>
-        <translation>weitere ICs</translation>
-    </message>
-    <message>
-        <source>Tools</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Shields</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Ternary</source>
-        <translation></translation>
+        <translation type="vanished">weitere ICs</translation>
     </message>
 </context>
 </TS>
