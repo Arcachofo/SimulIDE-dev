@@ -356,8 +356,6 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         Pin* pin = tunnel->getPin();
         pin->setObjectName( pId );
         pin->setId( pId );
-        pin->setLabelColor( color );
-        pin->setLabelText( label );
         connect( this, SIGNAL( moved() ), pin, SLOT( isMoved() ), Qt::UniqueConnection );
 
         if     ( type == "inverted" || type == "in" ) pin->setInverted( true );
@@ -366,6 +364,7 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
             pin->setUnused( true );
             if( m_isLS )
             {
+                label.remove("!");
                 pin->setVisible( false );
                 pin->setLabelText( "" );
             }
@@ -376,6 +375,8 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         else                   tunnel->setRotation( angle );
 
         pin->setLength( length );
+        pin->setLabelColor( color );
+        pin->setLabelText( label.remove(" ") );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
 
         m_ePin[pos-1] = pin;
@@ -398,20 +399,30 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     else                   tunnel->setRotation( angle );
 
     pin = tunnel->getPin();
-    pin->setLabelText( label );
-    pin->setLabelPos();
-    pin->setLength( length );
-    pin->setVisible( true );
-    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
-
     type = type.toLower();
 
-    if( m_isLS ) pin->setLabelColor( QColor( 0, 0, 0 ) );
-    else         pin->setLabelColor( QColor( 250, 250, 200 ) );
+    if( m_isLS )
+    {
+        label.remove("!");
+        pin->setLabelColor( QColor( 0, 0, 0 ) );
+    }
+    else pin->setLabelColor( QColor( 250, 250, 200 ) );
 
-    pin->setUnused( type == "unused" || type == "nc" );
+    if( type == "unused"   || type == "nc" )
+    {
+        pin->setUnused( true );
+        if( m_isLS )
+        {
+            label.remove("!");
+            pin->setVisible( false );
+            pin->setLabelText( "" );
+        }
+    }
     pin->setInverted( type == "inverted" || type == "in" );
-
+    pin->setLength( length );
+    pin->setLabelText( label.remove(" ") );
+    pin->setVisible( true );
+    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
     pin->isMoved();
 }
 
