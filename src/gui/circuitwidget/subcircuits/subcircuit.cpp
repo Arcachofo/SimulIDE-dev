@@ -142,7 +142,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     QDomElement   root1  = domDoc1.documentElement();
 
     QString subcTyp = "None";
-    if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type");
+    if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
 
 
 
