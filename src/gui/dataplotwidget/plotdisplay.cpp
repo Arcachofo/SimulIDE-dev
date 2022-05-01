@@ -294,12 +294,12 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     if( !m_expand ) { p.end(); return; }
 
     double t0 = m_timeZero*width()/100;
+    QPen pen( m_scaleColor[2], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
+    p.setPen( pen );
+    p.drawLine( t0, 0, t0, height() );   //Vertical Time 0 line
+
     if( m_channels == 8 )
     {
-        QPen pen( m_scaleColor[2], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
-        p.setPen( pen );
-        p.drawLine( t0, 0, t0, height() );   //Vertical Time 0 line
-
         p.setFont( m_fontB );
         for( int i=0; i<m_channels; ++i ) // Draw Channel labels
         {

@@ -78,10 +78,9 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         int m_voltDivDialPos;
 
         int m_mousePos;
+        action_t m_action;
 
         bool m_blocked;
-
-        action_t m_action;
 
         LAnalizer* m_analizer;
 };

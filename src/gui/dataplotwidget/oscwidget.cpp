@@ -31,6 +31,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
 
     m_oscope = oscope;
     m_blocked = false;
+    m_action = actNone;
     m_channel = 4;
     QString color = m_oscope->getColor( m_channel ).name();
 
@@ -390,6 +391,35 @@ void OscWidget::closeEvent( QCloseEvent* event )
     QWidget::closeEvent( event );
 }
 
+void OscWidget::mousePressEvent( QMouseEvent* event )
+{
+    m_mousePos = event->globalX();
+    if( event->button() == Qt::LeftButton )
+    {
+        m_action = actMove;
+        setCursor( Qt::ClosedHandCursor );
+    }
+    else if( event->button() == Qt::MidButton )
+    {
+        m_action = actTime;
+        plotDisplay->setTimeZero( m_mousePos );
+    }
+}
+
+void OscWidget::mouseMoveEvent( QMouseEvent* event )
+{
+    int pos = event->globalX();
+    if( m_action == actMove )
+    {
+        double timeX = m_oscope->timeDiv()*10;
+        double sizeX = plotDisplay->sizeX();
+        double deltaT = (m_mousePos - pos)*timeX/sizeX;
+
+        for( int i=0; i<4; ++i )
+            m_oscope->setTimePos( i, m_oscope->timePos( i )+deltaT );
+    }
+    m_mousePos = pos;
+}
 void OscWidget::wheelEvent( QWheelEvent* event )
 {
     uint64_t timeDiv = m_oscope->timeDiv();

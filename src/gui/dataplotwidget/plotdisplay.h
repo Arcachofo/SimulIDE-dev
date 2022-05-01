@@ -56,10 +56,10 @@ class PlotDisplay : public QWidget
         void updateValues();
 
     protected:
-        virtual void paintEvent( QPaintEvent *event );
+        virtual void paintEvent( QPaintEvent* event );
 
     private:
-        inline void drawBackground( QPainter *p );
+        inline void drawBackground( QPainter* p );
 
         DataChannel* m_channel[8];
 

@@ -183,7 +183,7 @@ void LaWidget::mousePressEvent( QMouseEvent* event )
     else if( event->button() == Qt::MidButton )
     {
         m_action = actTime;
-        m_analizer->display()->setTimeZero( m_mousePos );
+        plotDisplay->setTimeZero( m_mousePos );
     }
 }
 
@@ -191,12 +191,14 @@ void LaWidget::mouseMoveEvent( QMouseEvent* event )
 {
     int pos = event->globalX();
 
-    double timePos = m_analizer->timePos();
-    double timeX = m_analizer->timeDiv()*10;
-    double sizeX = plotDisplay->sizeX();
-    double deltaT = (m_mousePos - pos)*timeX/sizeX;
-
-    if( m_action == actMove ) m_analizer->setTimePos( timePos+deltaT );
+    if( m_action == actMove )
+    {
+        double timePos = m_analizer->timePos();
+        double timeX = m_analizer->timeDiv()*10;
+        double sizeX = plotDisplay->sizeX();
+        double deltaT = (m_mousePos - pos)*timeX/sizeX;
+        m_analizer->setTimePos( timePos+deltaT );
+    }
     m_mousePos = pos;
 }
 

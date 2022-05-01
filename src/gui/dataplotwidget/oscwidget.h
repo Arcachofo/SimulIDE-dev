@@ -35,6 +35,12 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
         OscWidget( QWidget* parent , Oscope* oscope );
         ~OscWidget();
 
+        enum action_t{
+            actNone=0,
+            actMove,
+            actTime
+        };
+
         PlotDisplay* display() { return plotDisplay; }
         QHBoxLayout* getLayout() { return mainLayout; }
 
@@ -71,6 +77,9 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
     protected:
         void closeEvent( QCloseEvent* event );
         void resizeEvent( QResizeEvent* ) { plotDisplay->updateValues(); }
+        void mousePressEvent( QMouseEvent* event );
+        void mouseMoveEvent( QMouseEvent* event );
+        void mouseReleaseEvent( QMouseEvent* event ) { m_action = actNone; setCursor( Qt::ArrowCursor ); }
         void wheelEvent( QWheelEvent* event );
 
         int m_timeDivDialPos;
@@ -79,6 +88,8 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
         int m_voltPosDialPos;
 
         int m_channel;
+        int m_mousePos;
+        action_t m_action;
 
         bool m_blocked;
 

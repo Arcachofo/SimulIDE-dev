@@ -39,7 +39,7 @@ class CircuitView : public QGraphicsView
  
         void clear();
         
-        void wheelEvent( QWheelEvent *event );
+        void wheelEvent( QWheelEvent* event );
         void dragMoveEvent( QDragMoveEvent* event );
         void dragEnterEvent( QDragEnterEvent* event );
         void dragLeaveEvent( QDragLeaveEvent* event );
