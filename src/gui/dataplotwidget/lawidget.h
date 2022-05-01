@@ -69,6 +69,7 @@ class MAINMODULE_EXPORT LaWidget : public QDialog, private Ui::LaWidget
         void mousePressEvent( QMouseEvent* event );
         void mouseMoveEvent( QMouseEvent* event );
         void mouseReleaseEvent( QMouseEvent* event ) { m_action = actNone; setCursor( Qt::ArrowCursor ); }
+        void wheelEvent( QWheelEvent* event );
         void closeEvent( QCloseEvent* event );
         void resizeEvent( QResizeEvent* ) { plotDisplay->updateValues(); }
 

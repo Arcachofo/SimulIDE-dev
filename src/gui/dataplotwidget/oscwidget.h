@@ -71,6 +71,7 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
     protected:
         void closeEvent( QCloseEvent* event );
         void resizeEvent( QResizeEvent* ) { plotDisplay->updateValues(); }
+        void wheelEvent( QWheelEvent* event );
 
         int m_timeDivDialPos;
         int m_timePosDialPos;

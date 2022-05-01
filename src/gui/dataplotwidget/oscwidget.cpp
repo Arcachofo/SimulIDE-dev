@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QWheelEvent>
+
 #include "oscwidget.h"
 #include "oscope.h"
 #include "utils.h"
@@ -386,4 +388,18 @@ void OscWidget::closeEvent( QCloseEvent* event )
     if( !parent() ) return;
     m_oscope->expand( false );
     QWidget::closeEvent( event );
+}
+
+void OscWidget::wheelEvent( QWheelEvent* event )
+{
+    uint64_t timeDiv = m_oscope->timeDiv();
+    uint64_t   delta = timeDiv/5;
+    if( delta < 1 ) delta = 1;
+
+    if( event->delta() > 0 ) timeDiv -= delta;
+    else                     timeDiv += delta;
+
+    m_oscope->setTimeDiv( timeDiv );
+
+    event->ignore();
 }
