@@ -38,7 +38,7 @@ void UartTx::enable( uint8_t en )
 
     if( enabled ){
         m_state = usartIDLE;
-        m_ioPin->sheduleState( true );
+        m_ioPin->setOutState( true );
     }
     else m_state = usartSTOPPED;
 }
@@ -53,7 +53,7 @@ void UartTx::runEvent()
     else if( m_state == usartTXEND )
     {
         m_state = usartIDLE;
-        m_ioPin->sheduleState( true );
+        m_ioPin->setOutState( true );
         m_usart->frameSent( m_data );
         /// m_interrupt->raise();
 }   }
@@ -104,7 +104,7 @@ void UartTx::startTransmission() // Data loaded to ShiftReg
 
 void UartTx::sendBit()
 {
-    m_ioPin->sheduleState( m_frame & 1 );
+    m_ioPin->setOutState( m_frame & 1 );
     m_frame >>= 1;
 
     m_currentBit++;

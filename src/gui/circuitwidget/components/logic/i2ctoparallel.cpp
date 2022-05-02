@@ -108,7 +108,7 @@ void I2CToParallel::readByte()  // Reading from I2C, Writting to Parallel
                               //qDebug() << "Reading " << value;
     for( int i=0; i<8; ++i )
     {
-        m_outPin[i]->sheduleState( value & 1 );
+        m_outPin[i]->setOutState( value & 1 );
         value >>= 1;
     }
     TwiModule::readByte();

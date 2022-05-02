@@ -73,7 +73,6 @@ class PlotDisplay : public QWidget
         double m_timeZero;
 
         bool m_expand;
-        bool m_smooth;
 
         int m_channels;
         int m_tracks;
