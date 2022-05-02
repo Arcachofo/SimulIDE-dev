@@ -159,7 +159,7 @@ void KY040::updateStep()
     }
 
     if( !m_changed ) return;
-    m_sw->setOutState( !m_button->isDown() );
+    m_sw->sheduleState( !m_button->isDown() );
     m_changed = false;
 }
 
@@ -178,12 +178,12 @@ void KY040::runEvent()
     if( m_stateA != stateA )
     {
         m_stateA = stateA;
-        m_pinA->setOutState( stateA );
+        m_pinA->sheduleState( stateA );
     }
     if( m_stateB != stateB )
     {
         m_stateB = stateB;
-        m_pinB->setOutState( stateB );
+        m_pinB->sheduleState( stateB );
     }
     Simulator::self()->addEvent( m_stepDelta, this );
 }

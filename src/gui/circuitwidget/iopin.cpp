@@ -103,7 +103,7 @@ void IoPin::runEvent()
 
 void IoPin::sheduleState( bool state, uint64_t time )
 {
-    if( m_nextState == state ) return;
+    //if( m_nextState == state ) return; // Wavegen s
     m_nextState = state;
 
     if( m_step )

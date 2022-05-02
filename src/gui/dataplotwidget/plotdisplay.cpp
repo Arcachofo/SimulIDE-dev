@@ -115,6 +115,7 @@ void PlotDisplay::updateValues()
         m_posY[i] = m_ceroY+m_vPos[i]*m_scaleY[i];
         m_posY[i] += (i%m_tracks+0.5)*m_sizeY/m_tracks;
     }
+    m_smooth = Simulator::self()->slopeSteps() > 0;
 }
 
 void PlotDisplay::drawBackground( QPainter* p )
@@ -204,7 +205,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
         if( timeStart < 0 ) timeStart = 0;
         double timeEnd   = m_timeEnd-m_hPos[i];
         double time, x1, x2, y1, y2;
-        double p1Volt=0;//, p2Volt=0;
+        double p1Volt=0, p2Volt=0;
         QPointF P1, P2, Pm;
 
         // Subsample
@@ -235,11 +236,9 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                 if( drawCursor && cursorX>x1 && cursorX<x2 ) // Claculate Cursor Voltage betwen 2 points
                 {
                     double cVolt= p1Volt;
-                    ///if( x2 != x1 && p2Volt!=p1Volt) cVolt = p1Volt+(cursorX-x1)*(p2Volt-p1Volt)/(x2-x1);
-                    ///if( cVolt < 0 ) cVolt += 0;
+                    if( m_smooth && x2 != x1 && p2Volt!=p1Volt) cVolt += (cursorX-x1)*(p2Volt-p1Volt)/(x2-x1);
                     m_cursorVolt[i] = cVolt;
                 }
-
                 if( lastX-x1 < 0.5 ) // SubSample
                 {
                     if( !subSample ) P2 = P1;
@@ -275,16 +274,18 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                     }
                     P2 = QPointF( x2, y2 );
                     P1 = QPointF( x1, y1 );
-                    Pm = QPointF( x2, y1 );
-                    p.drawLine( P1, Pm );
-                    p.drawLine( Pm, P2 );
-
+                    if( m_smooth ) p.drawLine( P1, P2 );
+                    else{
+                        Pm = QPointF( x2, y1 );
+                        p.drawLine( P1, Pm );
+                        p.drawLine( Pm, P2 );
+                    }
                     lastX = x1;
             }   }
             if( time <= timeStart ) break;
 
             x2 = x1; y2 = y1;
-            //p2Volt = p1Volt;
+            p2Volt = p1Volt;
             if( --pos < 0 ) pos += bufferSize;
     }   }
     // Draw Rects to crop data plots

@@ -72,12 +72,12 @@ void RtClock::enable( bool en )
 {
     if( m_enabled == en ) return;
     m_enabled = en;
-    if( !en ) m_outpin->setOutState( m_disOut );
+    if( !en ) m_outpin->sheduleState( m_disOut );
 }
 
 void RtClock::setDisOut( bool d )
 {
     if( m_disOut == d ) return;
     m_disOut = d;
-    if( !m_enabled ) m_outpin->setOutState( m_disOut );
+    if( !m_enabled ) m_outpin->sheduleState( m_disOut );
 }

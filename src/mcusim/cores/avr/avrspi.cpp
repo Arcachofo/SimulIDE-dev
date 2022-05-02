@@ -85,7 +85,7 @@ void AvrSpi::configureA( uint8_t newSPCR ) // SPCR is being written
     bool clkPol = getRegBitsVal( newSPCR, m_CPOL ); // Clock polarity
     m_leadEdge = clkPol ? Clock_Falling : Clock_Rising;
     m_tailEdge = clkPol ? Clock_Rising : Clock_Falling;
-    m_clkPin->setOutState( clkPol );
+    m_clkPin->sheduleState( clkPol );
 
     bool clkPha = getRegBitsVal( newSPCR, m_CPHA ); // Clock phase
     m_sampleEdge = ( clkPol == clkPha ) ? Clock_Rising : Clock_Falling; // This shows up in the truth table

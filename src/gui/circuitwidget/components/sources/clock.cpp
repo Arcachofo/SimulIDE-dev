@@ -55,7 +55,7 @@ Clock::~Clock(){}
 void Clock::runEvent()
 {
     m_state = !m_state;
-    m_outpin->setOutState( m_state );
+    m_outpin->sheduleState( m_state );
 
     m_remainder += m_fstepsPC-(double)m_stepsPC;
     uint64_t remainerInt = m_remainder;

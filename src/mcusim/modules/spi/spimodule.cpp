@@ -96,7 +96,7 @@ void SpiModule::voltChanged() // Called in Slave mode on SCK or SS changes
 
 void SpiModule::endTransaction()
 {
-    m_dataOut->setOutState( true );
+    m_dataOut->sheduleState( true );
 }
 
 void SpiModule::StartTransaction()
@@ -175,6 +175,6 @@ void SpiModule::setMode( spiMode_t mode )
         }
         break;
     }
-    if( m_dataOut ) m_dataOut->setOutState( true );
+    if( m_dataOut ) m_dataOut->sheduleState( true );
 }
 

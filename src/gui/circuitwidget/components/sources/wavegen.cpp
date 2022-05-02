@@ -26,7 +26,6 @@
 #include "simulator.h"
 #include "itemlibrary.h"
 
-#include "stringprop.h"
 #include "doubleprop.h"
 #include "boolprop.h"
 #include "intprop.h"
@@ -58,11 +57,11 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
 
     remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {
-new StringProp<WaveGen>( "Wave_Type", tr("Wave Type"),""      , this, &WaveGen::waveType, &WaveGen::setWaveType, "enum" ),
-new DoubProp  <WaveGen>( "Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
-new IntProp   <WaveGen>( "Steps"    , tr("Quality")  ,"_Steps", this, &WaveGen::steps,    &WaveGen::setSteps ),
-new DoubProp  <WaveGen>( "Duty"     , tr("Duty")     ,"_\%"   , this, &WaveGen::duty,     &WaveGen::setDuty ),
-new BoolProp  <WaveGen>( "Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
+new IntProp <WaveGen>( "Wave_Type", tr("Wave Type"),""      , this, &WaveGen::waveType, &WaveGen::setWaveType, "enum" ),
+new DoubProp<WaveGen>( "Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
+new IntProp <WaveGen>( "Steps"    , tr("Quality")  ,"_Steps", this, &WaveGen::steps,    &WaveGen::setSteps ),
+new DoubProp<WaveGen>( "Duty"     , tr("Duty")     ,"_\%"   , this, &WaveGen::duty,     &WaveGen::setDuty ),
+new BoolProp<WaveGen>( "Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
     }} );
     addPropGroup( { tr("Electric"), {
 new DoubProp<WaveGen>( "Semi_Ampli", tr("Semi Amplitude"),"V", this, &WaveGen::semiAmpli, &WaveGen::setSemiAmpli ),
@@ -91,8 +90,16 @@ void WaveGen::runEvent()
     if( m_vOut != m_lastVout )
     {
         m_lastVout = m_vOut;
-        m_outpin->setOutHighV( m_voltage*m_vOut+m_voltBase );
-        m_outpin->setOutState( true  );
+
+        if( m_waveType == Square )
+        {
+            m_outpin->setOutHighV( m_voltage );
+            m_outpin->setOutLowV( m_voltBase );
+            m_outpin->sheduleState( m_vOut );
+        }else{
+            m_outpin->setOutHighV( m_voltage*m_vOut+m_voltBase );
+            m_outpin->setOutState( true );
+        }
     }
     m_remainder += m_fstepsPC-(double)m_stepsPC;
     uint64_t remainerInt = m_remainder;
@@ -146,7 +153,7 @@ void WaveGen::setDuty( double duty )
     m_halfW = m_fstepsPC*m_duty/100;
 }
 
-void WaveGen::setSteps(int steps )
+void WaveGen::setSteps( int steps )
 {
     if( steps < 10 ) steps = 10;
     m_steps = steps;
@@ -160,10 +167,10 @@ void WaveGen::setFreq( double freq )
     setSteps( m_steps );
 }
 
-void WaveGen::setWaveType( QString type )
+void WaveGen::setWaveType( int type )
 {
-    if( !m_waves.contains( type) ) return;
-    m_waveType = (wave_type)m_waves.indexOf( type );
+    if( type < 0 || type > m_waves.size() ) type = 0;
+    m_waveType = (wave_type)type;
     //updateProperty(); // Update label
 }
 

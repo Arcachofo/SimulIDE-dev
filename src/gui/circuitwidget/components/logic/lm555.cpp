@@ -191,7 +191,7 @@ void Lm555::voltChanged()
 
 void Lm555::runEvent()
 {
-    m_output->setOutState( m_outState );
+    m_output->sheduleState( m_outState );
     m_resD.setRes( m_outState ? high_imp : 1 );
 }
 
