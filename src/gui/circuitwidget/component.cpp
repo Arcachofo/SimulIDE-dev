@@ -579,7 +579,7 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
         if( m_opCount > 0.6 ) m_opCount = 0.0;
         p->setOpacity( m_opCount+opaci );
     }
-    else if( m_isMainComp )
+    else if( m_isMainComp & !m_hidden )
     {
         p->fillRect( boundingRect(), Qt::yellow  );
         p->setOpacity( 0.5 );
