@@ -55,7 +55,7 @@ PlotDisplay::PlotDisplay( QWidget* parent )
     m_expand = false;
 
     double fontScale = MainWindow::self()->fontScale();
-    m_fontB.setPixelSize( 9*fontScale );
+    m_fontB.setPixelSize( 9.2*fontScale );
     m_fontB.setBold( true );
     m_fontS.setPixelSize( 8*fontScale );
 
@@ -329,6 +329,8 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     p.setPen( pen );
     p.drawLine( t0, 0, t0, height() );   //Vertical Time 0 line
 
+    double fontScale = MainWindow::self()->fontScale();
+    double yH = 9*fontScale;
     if( m_channels == 8 )
     {
         p.setFont( m_fontB );
@@ -380,8 +382,8 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
             // Draw Max & Min Values
             p.setFont( m_fontB );
-            p.drawText( xPos, vMaxPos-5, width(), 10, Qt::AlignVCenter, QString::number(m_vMaxVal[i],'f', 2) );
-            p.drawText( xPos, vMinPos-5, width(), 10, Qt::AlignVCenter, QString::number(m_vMinVal[i],'f', 2) );
+            p.drawText( xPos, vMaxPos-5, width(), yH+2, Qt::AlignVCenter, QString::number(m_vMaxVal[i],'f', 2) );
+            p.drawText( xPos, vMinPos-5, width(), yH+2, Qt::AlignVCenter, QString::number(m_vMinVal[i],'f', 2) );
 
             if( drawCursor )              // Draw Cursor Voltages
             {
@@ -392,9 +394,9 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
                 int decs = 0;
                 valToUnit( val, unit, decs );
 
-                int y = cursorY-22-10*(3-i);
-                p.drawText( cursorX-62, y, 60, 12, Qt::AlignRight, QString::number( val,'f', decs) );
-                p.drawText( cursorX-1,  y, 60, 12, Qt::AlignLeft, unit+"V" );
+                double y = cursorY-yH*(5-i);
+                p.drawText( cursorX-62, y-4, 60, yH+3, Qt::AlignRight, QString::number( val,'f', decs) );
+                p.drawText( cursorX-1,  y-4, 60, yH+3, Qt::AlignLeft, unit+"V" );
     }   }   }
     if( drawCursor )  // CURSOR and cursor Time
     {
@@ -411,8 +413,8 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
         int decs = 0;
         valToUnit( time, unit, decs );
 
-        p.drawText( cursorX-62, cursorY-12, 60, 12, Qt::AlignRight, QString::number( time,'f', decs) );
-        p.drawText( cursorX-1,  cursorY-12, 20, 12, Qt::AlignLeft, unit+"s" );
+        p.drawText( cursorX-62, cursorY-yH-4, 60, yH+3, Qt::AlignRight, QString::number( time,'f', decs) );
+        p.drawText( cursorX-1,  cursorY-yH-4, 40, yH+3, Qt::AlignLeft, unit+"s" );
     }
     p.end();
 }
