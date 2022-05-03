@@ -122,7 +122,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         uint8_t m_TL_reg;  // TL register, alarm trigger register, can be stored in internal EEPROM
         uint8_t m_CFG_reg; // Config register, can be stored in internal EEPROM
 
-        std::vector<uint8_t> tx_BUFF;
+        std::vector<uint8_t> m_txBuff;
         //std::vector<uint8_t> rx_BUFF;
 
         ////////////////////////////////////

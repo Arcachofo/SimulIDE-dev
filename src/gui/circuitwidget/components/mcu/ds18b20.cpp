@@ -179,7 +179,7 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
     {
         uint64_t time = Simulator::self()->circTime()-m_lastTime; // in picoseconds
 
-        if( time > 8*TSLOT )             // > 480 us : Reset
+        if( time > 475*1e6 )             // > 480 us : Reset
         {
             qDebug() << "\nDs18b20::voltChanged -------------- RESET";
             m_rxReg = 0;
@@ -249,10 +249,10 @@ void Ds18b20::dataSent() // Last data has been sent
     {
         m_lastBit = 0; // Read 1 bit
     }
-    else if( !tx_BUFF.empty() )   // Send next byte in Tx Buffer
+    else if( !m_txBuff.empty() )   // Send next byte in Tx Buffer
     {
-        tx_BUFF.pop_back(); // Remove last sent byte
-        if( !tx_BUFF.empty() ) sendData( tx_BUFF.back() ); // Send last byte in list, if list is not empty
+        m_txBuff.pop_back(); // Remove last sent byte
+        if( !m_txBuff.empty() ) sendData( m_txBuff.back() ); // Send last byte in list, if list is not empty
     }
 }
 
@@ -341,12 +341,12 @@ void Ds18b20::readROM() // Code: 33h : send ROM to Master
 {
     QDeb_HEX("Ds18b20::readROM", m_ROM,8);
 
-    tx_BUFF.clear();
-    for( int i=7; i>=0; i-- ) tx_BUFF.push_back( m_ROM[i] );
+    m_txBuff.clear();
+    for( int i=7; i>=0; i-- ) m_txBuff.push_back( m_ROM[i] );
 
-    QDeb_HEX("Ds18b20::readROM tx Buffer:", tx_BUFF);
+    QDeb_HEX("Ds18b20::readROM tx Buffer:", m_txBuff);
 
-    sendData( tx_BUFF.back() );
+    sendData( m_txBuff.back() );
 }
 
 void Ds18b20::convertTemp() // Code 44h, temperature already in the Scratchpad, nothing to do
@@ -372,12 +372,12 @@ void Ds18b20::readPowerSupply() // Code B4h : using parasite power? pull down ti
 
 void Ds18b20::readScratchpad() // Code BEh send Scratchpad LSB
 {
-    tx_BUFF.clear();
-    for( int i=8; i>=0; i-- ) tx_BUFF.push_back( m_scratchpad[i] );
+    m_txBuff.clear();
+    for( int i=8; i>=0; i-- ) m_txBuff.push_back( m_scratchpad[i] );
 
-    QDeb_HEX("Ds18b20::readScratchpad :", tx_BUFF);
+    QDeb_HEX("Ds18b20::readScratchpad :", m_txBuff);
 
-    sendData( tx_BUFF.back() );
+    sendData( m_txBuff.back() );
 }
 
 void Ds18b20::skipROM() // Code: CCh : This device is selected, Wait command
