@@ -319,6 +319,11 @@ void Oscope::setTimePos( int ch, int64_t tp )
 
 void Oscope::moveTimePos( int64_t delta )
 {
+    if( m_trigger < 4  )
+    {
+        uint64_t period = m_channel[m_trigger]->m_period; // check wave period
+        if( period > 10 ) return;                // We have a Trigger: Don't Zoom at mouse pos.
+    }
     for( int i=0; i<4; ++i )
     {
         m_timePos[i] = m_timePos[i]+delta;
