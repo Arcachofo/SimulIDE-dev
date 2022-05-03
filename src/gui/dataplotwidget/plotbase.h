@@ -60,6 +60,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         uint64_t timeDiv() { return m_timeDiv; }
         virtual void setTimeDiv( uint64_t td );
 
+        virtual void moveTimePos( int64_t delta )=0;
+
         int trigger() { return m_trigger; }
         virtual void setTrigger( int ch )=0;
 

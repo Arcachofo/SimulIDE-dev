@@ -80,7 +80,6 @@ class MAINMODULE_EXPORT OscWidget : public QDialog, private Ui::OscWidget
         void mousePressEvent( QMouseEvent* event );
         void mouseMoveEvent( QMouseEvent* event );
         void mouseReleaseEvent( QMouseEvent* event ) { m_action = actNone; setCursor( Qt::ArrowCursor ); }
-        void wheelEvent( QWheelEvent* event );
 
         int m_timeDivDialPos;
         int m_timePosDialPos;

@@ -52,6 +52,7 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
 
         int64_t timePos(){ return m_timePos; }
         void setTimePos( int64_t tp );
+        virtual void moveTimePos( int64_t delta ) override;
 
         double voltDiv(){ return m_voltDiv; }
         void setVoltDiv( double vd );

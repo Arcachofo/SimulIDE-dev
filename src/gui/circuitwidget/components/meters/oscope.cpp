@@ -61,6 +61,7 @@ Oscope::Oscope( QObject* parent, QString type, QString id )
     m_proxy->setParentItem( this );
     m_dataWidget->show();
     m_display = m_oscWidget->display();
+    m_display->setPlotBase( this );
     m_display->setFixedSize( m_baSizeX+6*8, m_baSizeY+2*8 );
 
     m_pin.resize(5);
@@ -314,6 +315,16 @@ void Oscope::setTimePos( int ch, int64_t tp )
     m_timePos[ch] = tp;
     m_display->setHPos( ch, tp );
     m_oscWidget->updateTimePosBox( ch, tp );
+}
+
+void Oscope::moveTimePos( int64_t delta )
+{
+    for( int i=0; i<4; ++i )
+    {
+        m_timePos[i] = m_timePos[i]+delta;
+        m_display->setHPos( i, m_timePos[i] );
+        m_oscWidget->updateTimePosBox( i, m_timePos[i] );
+    }
 }
 
 void Oscope::setVoltDiv( int ch, double vd )

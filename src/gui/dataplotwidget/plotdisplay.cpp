@@ -17,11 +17,13 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <QMouseEvent>
 #include <QBrush>
 #include <QPen>
 
 #include "plotdisplay.h"
 #include "datachannel.h"
+#include "plotbase.h"
 #include "mainwindow.h"
 #include "circuitview.h"
 #include "simulator.h"
@@ -115,6 +117,35 @@ void PlotDisplay::updateValues()
         m_posY[i] = m_ceroY+m_vPos[i]*m_scaleY[i];
         m_posY[i] += (i%m_tracks+0.5)*m_sizeY/m_tracks;
     }
+    setTimeEnd( m_timeEnd );
+}
+
+void PlotDisplay::wheelEvent( QWheelEvent* event )
+{
+    int dir = 1;
+    if( event->delta() > 0 ) dir = -1;
+
+    uint64_t timeDiv = m_timeDiv;
+    uint64_t   delta = timeDiv/5;
+    if( delta < 1 ) delta = 1;
+
+    timeDiv += delta*dir;
+    double deltaX = m_timeDiv/timeDiv;
+
+    m_component->setTimeDiv( timeDiv );
+
+    QPoint cPos = QCursor::pos();
+    cPos -= mapToGlobal( QPoint(0, 0) );
+    int cursorX = cPos.x();
+    int cursorY = cPos.y();
+    if( (cursorX > m_ceroX) && (cursorX < m_endX )
+    && (cursorY > 0) && (cursorY < height()) )
+    {
+        double timeFrame = timeDiv*10;
+        double fractX = timeFrame*(m_endX-cursorX)/m_sizeX;
+        m_component->moveTimePos( -(deltaX*fractX - fractX) );
+    }
+    event->ignore();
 }
 
 void PlotDisplay::drawBackground( QPainter* p )
@@ -177,8 +208,8 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     p.setRenderHint( QPainter::Antialiasing, true );
 
     QPoint cPos = QCursor::pos()-mapToGlobal( QPoint(0, 0) );
-    int cursorX = cPos.x(); // /scale;
-    int cursorY = cPos.y(); // /scale;
+    int cursorX = cPos.x();
+    int cursorY = cPos.y();
 
     bool drawCursor = false;
     if( (cursorX > m_ceroX) && (cursorX < m_endX ) // Draw Cursor?

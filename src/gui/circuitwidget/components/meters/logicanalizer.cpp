@@ -53,12 +53,13 @@ LAnalizer::LAnalizer( QObject* parent, QString type, QString id )
     m_numChannels = 8;
     m_bufferSize = 100000;
 
-    m_laWidget  = new LaWidget( CircuitWidget::self(), this );
+    m_laWidget   = new LaWidget( CircuitWidget::self(), this );
     m_dataWidget = new DataLaWidget( NULL, this );
     m_proxy = Circuit::self()->addWidget( m_dataWidget );
     m_proxy->setParentItem( this );
     m_dataWidget->show();
     m_display = m_laWidget->display();
+    m_display->setPlotBase( this );
     m_display->setFixedSize( m_baSizeX+6*8, m_baSizeY+2*8 );
     m_display->setChannels( 8 );
     m_display->setTracks( 8 );
@@ -217,6 +218,13 @@ void LAnalizer::setTimePos( int64_t tp )
     m_timePos = tp;
     for( int i=0; i<8; ++i ) m_display->setHPos( i, m_timePos );
     m_laWidget->updateTimePosBox( tp );
+}
+
+void LAnalizer::moveTimePos( int64_t delta )
+{
+    m_timePos = m_timePos+delta;
+    for( int i=0; i<8; ++i ) m_display->setHPos( i, m_timePos );
+    m_laWidget->updateTimePosBox( m_timePos );
 }
 
 void LAnalizer::setVoltDiv( double vd )

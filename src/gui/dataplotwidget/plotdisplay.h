@@ -24,6 +24,7 @@
 #include <QWidget>
 
 class DataChannel;
+class PlotBase;
 
 class PlotDisplay : public QWidget
 {
@@ -35,6 +36,7 @@ class PlotDisplay : public QWidget
     public:
         PlotDisplay( QWidget* parent = 0 );
 
+        void setPlotBase( PlotBase* pb ) { m_component = pb; }
         void setExpand( bool expand ) { m_expand = expand; }
         void hideChannel( int ch, bool hide ) { m_hideCh[ch] = hide; }
         void connectChannel( int ch, bool con ) { m_ncCh[ch] = !con; }
@@ -56,11 +58,13 @@ class PlotDisplay : public QWidget
         void updateValues();
 
     protected:
-        virtual void paintEvent( QPaintEvent* event );
+        virtual void paintEvent( QPaintEvent* event ) override;
+        virtual void wheelEvent( QWheelEvent* event ) override;
 
     private:
         inline void drawBackground( QPainter* p );
 
+        PlotBase*    m_component;
         DataChannel* m_channel[8];
 
         QVector<double>* m_buffer[8];

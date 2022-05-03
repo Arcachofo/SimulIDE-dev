@@ -420,16 +420,4 @@ void OscWidget::mouseMoveEvent( QMouseEvent* event )
     }
     m_mousePos = pos;
 }
-void OscWidget::wheelEvent( QWheelEvent* event )
-{
-    uint64_t timeDiv = m_oscope->timeDiv();
-    uint64_t   delta = timeDiv/5;
-    if( delta < 1 ) delta = 1;
 
-    if( event->delta() > 0 ) timeDiv -= delta;
-    else                     timeDiv += delta;
-
-    m_oscope->setTimeDiv( timeDiv );
-
-    event->ignore();
-}

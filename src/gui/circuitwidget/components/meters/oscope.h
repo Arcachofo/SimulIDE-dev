@@ -66,6 +66,7 @@ class MAINMODULE_EXPORT Oscope : public PlotBase
 
         int64_t timePos( int ch ){ return m_timePos[ch]; }
         void setTimePos( int ch, int64_t tp );
+        virtual void moveTimePos( int64_t delta ) override;
 
         double voltDiv( int ch ){ return m_voltDiv[ch]; }
         void setVoltDiv( int ch, double vd );
