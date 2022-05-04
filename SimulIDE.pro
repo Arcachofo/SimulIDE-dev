@@ -121,15 +121,19 @@ win32 | linux {
         $(COPY_DIR) ../resources/examples $$TARGET_PREFIX; \
 }
 macx {
+QMAKE_CC = /usr/local/Cellar/gcc@7/7.5.0_4/bin/gcc-7
+QMAKE_CXX = /usr/local/Cellar/gcc@7/7.5.0_4/bin/g++-7
+QMAKE_LINK = /usr/local/Cellar/gcc@7/7.5.0_4/bin/g++-7
+
     QMAKE_CXXFLAGS -= -stdlib=libc++
     QMAKE_LFLAGS   -= -stdlib=libc++
-    DESTDIR = $$TARGET_PREFIX 
+    DESTDIR = $$TARGET_PREFIX
     mkpath( $$TARGET_PREFIX/simulide.app )
-    #mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/data )
-    #mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/examples )
+    mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/data )
+    mkpath( $$TARGET_PREFIX/simulide.app/Contents/MacOs/examples )
     copy2dest.commands = \
-        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/simulide.app/Contents/MacOs/data; \
-        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/simulide.app/Contents/MacOs/examples;
+        $(COPY_DIR) ../resources/data     $$TARGET_PREFIX/simulide.app/Contents/MacOs; \
+        $(COPY_DIR) ../resources/examples $$TARGET_PREFIX/simulide.app/Contents/MacOs;
 }
 
 runLrelease.commands = lrelease ../resources/translations/*.ts;
