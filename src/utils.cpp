@@ -51,12 +51,13 @@ QString multToValStr( double value, QString mult )
 QString val2hex( int d )
 {
     QString Hex="0123456789ABCDEF";
-    QString h = Hex.mid(d&15,1);
-    while(d>15)
+    QString h = Hex.mid( d&0x0F, 1 );
+    while( d > 0x0F )
     {
         d >>= 4;
-        h = Hex.mid( d&15,1 ) + h;
+        h.prepend( Hex.mid( d&0x0F, 1 ) );
     }
+    if( h.size()%2 ) h.prepend("0");
     return h;
 }
 
