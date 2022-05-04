@@ -54,7 +54,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void powerCircOff();
         void powerCircDebug( bool paused );
 
-        void simDebug( QString msg ) { m_outPane.appendLine( msg ); }
+        void simDebug( QString msg ) { m_outPane.appendLine( msg.remove("\"") ); }
 
         QSplitter* splitter() { return m_splitter; }
         
