@@ -273,7 +273,7 @@ void AvrCore::runDecoder()
                     uint8_t res = vd - vr;
                     flags_sub_zns( res, vd, vr);
                 }    break;
-                case 0x1c00: {    // ADD -- Add with carry -- 0001 11rd dddd rrrr
+                case 0x1c00: {    // ADC -- Add with carry -- 0001 11rd dddd rrrr
                     get_vd5_vr5( instruction );
                     uint8_t res = vd + vr + STATUS( S_C );
                     m_dataMem[d] = res;
@@ -358,11 +358,11 @@ void AvrCore::runDecoder()
             {
                 case 0xa000:
                 case 0x8000: {    // LD( LDD) -- Load Indirect using Z -- 10q0 qqsd dddd yqqq
-                    v = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8);
+                    v = m_dataMem[R_ZL] | ( m_dataMem[R_ZH] << 8);
                 }    break;
                 case 0xa008:
                 case 0x8008: {    // LD( LDD) -- Load Indirect using Y -- 10q0 qqsd dddd yqqq
-                    v = m_dataMem[R_YL] |( m_dataMem[R_YH] << 8);
+                    v = m_dataMem[R_YL] | ( m_dataMem[R_YH] << 8);
                 }    break;
                 //default: ;//_avr_invalid_instruction(avr);
             }
@@ -404,20 +404,20 @@ void AvrCore::runDecoder()
                     qDebug() <<"ERROR: AVR SPM instruction not implemented"; ////avr_ioctl(avr, AVR_IOCTL_FLASH_SPM, 0);
                 }    break;
                 case 0x9409:   // IJMP   -- Indirect jump -- 1001 0100 0000 1001
-                case 0x9419:   // EIJMP  -- Indirect jump -- 1001 0100 0001 1001   bit 4 is "indirect"
+                case 0x9419:   // EIJMP  -- Indirect jump -- 1001 0100 0001 1001   bit 4 is "Extended"
                 case 0x9509:   // ICALL  -- Indirect Call to Subroutine -- 1001 0101 0000 1001
-                case 0x9519: { // EICALL -- Indirect Call to Subroutine -- 1001 0101 0001 1001   bit 8 is "push pc"
-                    int e = instruction & 0x10;
-                    int p = instruction & 0x100;
+                case 0x9519: { // EICALL -- Indirect Call to Subroutine -- 1001 0101 0001 1001   bit 8 is "Call: push pc"
+                    int exte = instruction & 0x10;  // Extended
+                    int call = instruction & 0x100; // Call: push pc
                     uint32_t z = m_dataMem[R_ZL] | (m_dataMem[R_ZH] << 8);
-                    if( e ){
+                    if( exte ){
                         if( !EIND ){
                             qDebug() << "ERROR: AVR Invalid instruction: EICALL with no EIND";
                             break;
                         }
                         z |= *EIND << 16;
                     }
-                    if( p ){
+                    if( call ){
                         PUSH_STACK( new_pc );
                         cycle += m_progAddrSize-1;
                     }
@@ -425,16 +425,10 @@ void AvrCore::runDecoder()
                     cycle++;
                 }    break;
                 case 0x9518:     // RETI -- Return from Interrupt -- 1001 0101 0001 1000
-                    McuCore::RETI();// SREG flag managed in AvrInterrupt
-                    return;
-                    //new_pc = PC;
-                    //cycle += 1 + m_progAddrSize;
-                    break;
-                case 0x9508: {    // RET -- Return -- 1001 0101 0000 1000
-                    //new_pc = POP_STACK();
-                    //cycle += 1 + m_progAddrSize;
-                    McuCore::RET();
-                    return;
+                    m_mcu->m_interrupts.retI();// SREG flag managed in AvrInterrupt
+                case 0x9508: {   // RET -- Return -- 1001 0101 0000 1000
+                    new_pc = POP_STACK();
+                    cycle += 1 + m_progAddrSize;
                 }    break;
                 case 0x95c8: {    // LPM -- Load Program Memory R0 <-( Z) -- 1001 0101 1100 1000
                     uint16_t z = m_dataMem[R_ZL] |( m_dataMem[R_ZH] << 8);

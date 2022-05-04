@@ -118,6 +118,8 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         void setMain() { m_pSelf = this; }
 
+        Interrupts m_interrupts;
+
     protected:
  static eMcu* m_pSelf;
 
@@ -140,7 +142,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         QHash<uint16_t, uint16_t> m_cfgWords; // Config words
 
-        Interrupts m_interrupts;
         McuTimers  m_timers;
         std::vector<McuModule*> m_modules;
         std::vector<McuUsart*> m_usarts;
