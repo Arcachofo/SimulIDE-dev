@@ -29,11 +29,9 @@
 #include "circuit.h"
 #include "itemlibrary.h"
 
-#include "doubleprop.h"
+#include "utils.h"
 
-// Internal submethods/functions to actually process the job
-uint8_t crc8( uint8_t *addr, uint8_t len);
-void generateROM(uint8_t familyCode, uint8_t *ROM);
+#include "doubleprop.h"
 
 Component* Ds18b20::construct( QObject* parent, QString type, QString id )
 { return new Ds18b20( parent, type, id ); }
@@ -48,41 +46,18 @@ LibraryItem* Ds18b20::libraryItem()
         Ds18b20::construct );
 }
 
-char chex[]={
-    '0','1','2','3','4','5','6','7','8','9',
-    'A','B','C','D','E','F'
-};
-
-void QDeb_HEX( std::string str, uint8_t* data, int len )
+QString QDeb_HEX( uint8_t* data, uint len )
 {
-  QDebug q = qDebug().nospace().noquote();
-
-  q << str.c_str() << ' ';
-
-  for(int i=0; i<len; i++)
-  {
-    uint8_t d = data[i];
-
-    q << chex[d>>4];
-    q << chex[d & 0x0F];
-    q << ' ';
-  }
+    QString hexValue;
+    for( uint i=0; i<len; i++) hexValue.append( val2hex( data[i] ) ).append(" ");
+    return hexValue;
 }
 
-void QDeb_HEX( std::string str, std::vector<u_int8_t> data )
+QString QDeb_HEX( std::vector<uint8_t> data )
 {
-  QDebug q = qDebug().nospace().noquote();
-
-  q << str.c_str() << ' ';
-
-  for( uint i=0; i<data.size(); i++)
-  {
-    uint8_t d = data[i];
-
-    q << chex[d>>4];
-    q << chex[d & 0x0F];
-    q << ' ';
-  }
+    QString hexValue;
+    for( uint i=0; i<data.size(); i++) hexValue.append( val2hex( data[i] ) ).append(" ");
+    return hexValue;
 }
 
 Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
@@ -99,7 +74,7 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
 
     // This actually should be generated and saved with sim file
     // once component is dropped. It is unique ID to keep
-    generateROM( 0x28, m_ROM );
+    generateROM( 0x28 );
 
     m_TH_reg  = 0x4B; /// TODO, check default value
     m_TL_reg  = 0x46; /// TODO, check default value
@@ -181,7 +156,7 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
 
         if( time > 475*1e6 )             // > 480 us : Reset
         {
-            qDebug() << "\nDs18b20::voltChanged -------------- RESET";
+            qDebug() <<"\n"<< idLabel() << "Ds18b20::voltChanged -------------- RESET"<<time/1e3<<"ns";
             m_rxReg = 0;
             m_bitIndex = 0;
             m_state = W1_COMMAND;
@@ -192,7 +167,7 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
         {
             if( time > 60*1e6 )         // > 60 us : 0 received
             {
-                if( m_write ) {;} // ERROR Master is reading data, Read pulse should be < 15 us
+                if( m_write ) qDebug()<< idLabel() << "ERROR: Master is reading data, Read pulse should be < 15 us";
                 else          readBit( 0 );
             }
             else    ///// if( time < 15*1e6 )     // < 15 us : 1 received Or Read pulse
@@ -243,12 +218,9 @@ void Ds18b20::writeBit()
 
 void Ds18b20::dataSent() // Last data has been sent
 {
-    if( m_state != W1_SEARCH ) QDeb_HEX( "Ds18b20::dataSent", &m_txReg, 1 );
+    if( m_state != W1_SEARCH ) qDebug() << idLabel() << "Ds18b20::dataSent"<< val2hex( m_txReg );
 
-    if( m_state == W1_SEARCH )
-    {
-        m_lastBit = 0; // Read 1 bit
-    }
+    if( m_state == W1_SEARCH ) m_lastBit = 0; // Read 1 bit
     else if( !m_txBuff.empty() )   // Send next byte in Tx Buffer
     {
         m_txBuff.pop_back(); // Remove last sent byte
@@ -263,7 +235,7 @@ void Ds18b20::readBit( uint8_t bit )
         if( (bit>0) != bitROM( m_bitIndex ) )
         {
             m_state = W1_IDLE; // No ROM match, we are out
-            qDebug() <<"Ds18b20::readBit -------- Error -------- NO ROM match"<<m_bitIndex;
+            qDebug() <<idLabel()<<"Ds18b20::readBit       NO ROM match";
         }
     }
     else if( bit ) m_rxReg |= 1<<m_bitIndex;
@@ -280,7 +252,7 @@ void Ds18b20::readBit( uint8_t bit )
 
 void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg)
 {
-    if( m_state != W1_MATCH && m_state != W1_SEARCH ) QDeb_HEX( "Ds18b20::dataReceived", &m_rxReg, 1 );
+    if( m_state != W1_MATCH && m_state != W1_SEARCH ) qDebug() << idLabel()<< "Ds18b20::dataReceived" << val2hex( m_rxReg );
 
     switch( m_state )
     {
@@ -290,7 +262,7 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
         case W1_MATCH:                            // ROM Match: we are online, wait for commands
         {
             m_state = W1_COMMAND;
-            qDebug() <<"Ds18b20::dataReceived  :  ROM match!!";
+            qDebug() <<idLabel()<<"Ds18b20::dataReceived     ROM match";
         }break;
         case W1_SEARCH:
         {
@@ -299,10 +271,13 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
             {
                 m_state = W1_IDLE;
                 m_lastBit = 7; // Return to normal byte reception
-                qDebug() << "Ds18b20::dataReceived  :  Search ROM OK";
+                qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OK ";
             }
             else if((m_rxReg > 0) == m_bitROM ) sendSearchBit();   // Bit Match,  keep sending
-            else                                m_state = W1_IDLE; // We are out, Wait for next Reset signal
+            else{
+                m_state = W1_IDLE; // We are out, Wait for next Reset signal
+                qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OUT";
+            }
         }
     }
 }
@@ -324,49 +299,51 @@ void Ds18b20::command( uint8_t cmd )
     {
         case 0x33: readROM();         break;
         case 0x44: convertTemp();     break;
-        case 0x48: qDebug() << "Warning:  COPY SCRATCHPAD Not implemented"; break;
-        case 0x4E: qDebug() << "Warning:  WRITE SCRATCHPAD Not implemented"; break;
+        //case 0x48: qDebug() <<idLabel()<< "Ds18b20::command : Warning:  COPY SCRATCHPAD Not implemented"; break;
+        //case 0x4E: qDebug() <<idLabel()<< "Ds18b20::command : Warning:  WRITE SCRATCHPAD Not implemented"; break;
         case 0x55: matchROM();        break;
         case 0xB4: readPowerSupply(); break;
         case 0xBE: readScratchpad();  break;
         case 0xCC: skipROM();         break;
         case 0xF0: searchROM();       break;
-
-        default:   qDebug() << "command Not implemented";
+        default:
+        {
+            m_state = W1_IDLE;
+            qDebug()<<idLabel() << "Ds18b20::command : Warning:  command Not implemented";
+        }
     }
     m_lastCommand = cmd;
 }
 
 void Ds18b20::readROM() // Code: 33h : send ROM to Master
 {
-    QDeb_HEX("Ds18b20::readROM", m_ROM,8);
+    qDebug() << idLabel() <<"Ds18b20::readROM"<< QDeb_HEX( m_ROM, 8 );
 
     m_txBuff.clear();
     for( int i=7; i>=0; i-- ) m_txBuff.push_back( m_ROM[i] );
 
-    QDeb_HEX("Ds18b20::readROM tx Buffer:", m_txBuff);
+    qDebug() << idLabel()<< "Tx Buffer:" << QDeb_HEX( m_txBuff );
 
     sendData( m_txBuff.back() );
 }
 
 void Ds18b20::convertTemp() // Code 44h, temperature already in the Scratchpad, nothing to do
 {
-    qDebug() << "Ds18b20::convertTemp";
+    qDebug() <<idLabel()<< "Ds18b20::convertTemp";
     m_state = W1_IDLE;
-
     if( !m_parPower ) pulse( 1, 749 ); // Send a 749 us pulse after 1 us
 }
 
 void Ds18b20::matchROM() // Code 55h : read 64 bits and compare with ROM
 {
-    qDebug() << "Ds18b20::matchROM";
+    qDebug() <<idLabel()<< "Ds18b20::matchROM";
     m_lastBit = 63;
     m_state = W1_MATCH;
 }
 
 void Ds18b20::readPowerSupply() // Code B4h : using parasite power? pull down time???
 {
-    qDebug() << "Ds18b20::readPowerSupply"; // By now we don't use parasite power
+    qDebug() <<idLabel()<< "Ds18b20::readPowerSupply"; // By now we don't use parasite power
     /// TODO add property
 }
 
@@ -375,20 +352,20 @@ void Ds18b20::readScratchpad() // Code BEh send Scratchpad LSB
     m_txBuff.clear();
     for( int i=8; i>=0; i-- ) m_txBuff.push_back( m_scratchpad[i] );
 
-    QDeb_HEX("Ds18b20::readScratchpad :", m_txBuff);
+    qDebug() << idLabel() <<"Ds18b20::readScratchpad :"<<QDeb_HEX( m_txBuff );
 
     sendData( m_txBuff.back() );
 }
 
 void Ds18b20::skipROM() // Code: CCh : This device is selected, Wait command
 {
-    qDebug() << "Ds18b20::skipROM";
+    qDebug() <<idLabel()<< "Ds18b20::skipROM";
     m_state = W1_COMMAND;
 }
 
 void Ds18b20::searchROM() // Code F0h
 {
-    qDebug() << "Ds18b20::searchROM";
+    qDebug() <<idLabel()<< "Ds18b20::searchROM";
     m_state = W1_SEARCH;
     m_bitSearch = 0;
     sendSearchBit();
@@ -434,24 +411,22 @@ void Ds18b20::setTemp( double t ) // This should convert temp wrote in UI
     m_scratchpad[7] = 0x10; // Reserved. Default?
     m_scratchpad[8] = crc8( m_scratchpad, 8 );
 
-    QDeb_HEX("Ds18b20::setTemp", m_scratchpad, 9 );
+    qDebug() << idLabel() <<"Ds18b20::setTemp"<<QDeb_HEX( m_scratchpad, 9 );
 
     update();
 }
 
-uint8_t crc8( uint8_t* addr, uint8_t len ) // DS18B20 crc8 calc
+uint8_t Ds18b20::crc8( uint8_t* addr, uint8_t len ) // DS18B20 crc8 calc
 {
     uint8_t crc = 0;
 
     while( len--)
     {
         uint8_t inbyte = *addr++;
-
-        for( uint8_t i=8; i; i--)
+        for( uint8_t i=8; i; i-- )
         {
             uint8_t mix = (crc ^ inbyte) & 0x01;
             crc >>= 1;
-
             if( mix) crc ^= 0x8C;
             inbyte >>= 1;
         }
@@ -459,34 +434,31 @@ uint8_t crc8( uint8_t* addr, uint8_t len ) // DS18B20 crc8 calc
     return crc;
 }
 
-void generateROM( uint8_t familyCode, uint8_t* ROM ) // DS18B20 - Generate unique ROM address
+void Ds18b20::generateROM( uint8_t familyCode ) // Generate unique ROM address
 {
   // 8-bit CRC | 48 bit S/N | 8-BIT FAMILY CODE
   // MSB - LSB
   // FAMILY CODE = 28h for DS18B20
 
-  ROM[0] = familyCode;
-  ROM[1] = rand();
-  ROM[2] = rand();
-  ROM[3] = rand();
-  ROM[4] = rand();
-  ROM[5] = 0x00;
-  ROM[6] = 0x00;
-  /*
-  // For test : 28 CA CB E2 03 00 00 B6
+  m_ROM[0] = familyCode;
+  m_ROM[1] = rand();
+  m_ROM[2] = rand();
+  m_ROM[3] = rand();
+  m_ROM[4] = rand();
+  m_ROM[5] = 0x00;
+  m_ROM[6] = 0x00;
 
-  ROM[0] = 0x28;
-  ROM[1] = 0xCA;
-  ROM[2] = 0xCB;
-  ROM[3] = 0xE2;
-  ROM[4] = 0x03;
-  ROM[5] = 0x00;
-  ROM[6] = 0x00;
-  */
+  /*// For test : 28 CA CB E2 03 00 00 B6
+  m_ROM[0] = 0x28;
+  m_ROM[1] = 0xCA;
+  m_ROM[2] = 0xCB;
+  m_ROM[3] = 0xE2;
+  m_ROM[4] = 0x03;
+  m_ROM[5] = 0x00;
+  m_ROM[6] = 0x00; */
 
-  ROM[7] = crc8(ROM, 7);
-
-  QDeb_HEX("Ds18b20::generateROM",ROM,8);
+  m_ROM[7] = crc8( m_ROM, 7 );
+  qDebug() << idLabel() <<"Ds18b20::generateROM"<<QDeb_HEX( m_ROM, 8 );
 }
 
 void Ds18b20::upbuttonclicked()

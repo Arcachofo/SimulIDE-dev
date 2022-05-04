@@ -84,6 +84,8 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
 
         void sendSearchBit();
         bool bitROM( uint bitIndex );
+        void generateROM( uint8_t familyCode );
+        uint8_t crc8( uint8_t* addr, uint8_t len );
 
         w1State_t m_state;
         uint8_t m_lastCommand;
