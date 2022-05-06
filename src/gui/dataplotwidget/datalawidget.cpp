@@ -41,6 +41,7 @@ DataLaWidget::DataLaWidget( QWidget* parent, PlotBase* pb )
     font.setFamily("Ubuntu");
     font.setPixelSize( 9 );
     font.setBold( true );
+    expandButton->setFont( font );
     for( int i=0; i<8; ++i ) m_chNames.at( i )->setFont( font );
 
     this->adjustSize();

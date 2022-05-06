@@ -319,6 +319,9 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="locale">
+        <locale language="C" country="AnyCountry"/>
+       </property>
        <property name="text">
         <string>Expand</string>
        </property>
