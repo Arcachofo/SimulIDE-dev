@@ -52,8 +52,9 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         int steps() { return m_steps; }
         void setSteps( int steps );
 
-        QString waveType() { return m_waves.at( (int)m_waveType ); }
-        void setWaveType( QString type );
+        //QString waveType() { return m_waves.at( (int)m_waveType ); }
+        int waveType() { return (int)m_waveType; }
+        void setWaveType( int type );
 
         double semiAmpli() { return m_voltage/2; }
         void setSemiAmpli( double v ) { m_voltage = v*2; }
@@ -63,7 +64,7 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
 
         virtual void setFreq( double freq ) override;
 
-        virtual QStringList getEnums( QString e) override;
+        virtual QStringList getEnums( QString e ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
@@ -86,7 +87,7 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         uint64_t m_qSteps;
         uint64_t m_nextStep;
 
- static QStringList m_waves;
+        QStringList m_waves;
 };
 
 #endif
