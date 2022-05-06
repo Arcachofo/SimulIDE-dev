@@ -37,21 +37,22 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
 }
 LogicComponent::~LogicComponent(){}
 
+/*void LogicComponent::initialize()
+{ IoComponent::initState(); eClockedDevice::initialize(); }*/
+
+void LogicComponent::stamp()
+{
+    IoComponent::initState();
+    eClockedDevice::stamp();
+    if( m_oePin ) m_oePin->changeCallBack( this );
+}
+
 void LogicComponent::updateStep()
 {
     if( !Circuit::self()->animate( ) ) return;
     IoComponent::updateStep();
     if( m_oePin ) m_oePin->updateStep();
     if( m_clkPin) m_clkPin->updateStep();
-}
-
-void LogicComponent::initialize()
-{ IoComponent::initState(); eClockedDevice::initialize(); }
-
-void LogicComponent::stamp()
-{
-    if( m_oePin ) m_oePin->changeCallBack( this );
-    eClockedDevice::stamp();
 }
 
 void LogicComponent::remove()
@@ -110,7 +111,6 @@ void LogicComponent::setTriggerStr( QString t )
 void LogicComponent::enableOutputs( bool en )
 {
     for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->setStateZ( !en );
-    /// Simulator::self()->addEvent( 1, NULL );
 }
 
 void LogicComponent::setInputHighV( double volt )

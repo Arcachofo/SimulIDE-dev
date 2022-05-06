@@ -95,7 +95,7 @@ new StringProp<Memory>( "Mem","","", this, &Memory::getMem, &Memory::setMem)
 }
 Memory::~Memory(){}
 
-void Memory::initialize()
+/*void Memory::initialize()
 {
     m_we = true;
     m_cs = true;
@@ -103,10 +103,14 @@ void Memory::initialize()
     if( !m_persistent ) m_ram.fill( 0 );
 
     LogicComponent::initialize();
-}
+}*/
 
 void Memory::stamp()                   // Called at Simulation Start
 {
+    m_we = true;
+    m_cs = true;
+    if( !m_persistent ) m_ram.fill( 0 );
+
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this, m_asynchro );
 
     m_WePin->changeCallBack( this );
@@ -147,7 +151,7 @@ void Memory::voltChanged()        // Some Pin Changed State, Manage it
 
     updateOutEnabled();
 
-    m_we = m_WePin->getInpState();;
+    m_we = m_WePin->getInpState();
     m_address = 0;
     for( int i=0; i<m_addrBits; ++i )        // Get Address
     {

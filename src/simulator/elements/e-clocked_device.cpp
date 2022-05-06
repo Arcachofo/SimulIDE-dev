@@ -32,15 +32,19 @@ eClockedDevice::eClockedDevice( QString id )
 }
 eClockedDevice::~eClockedDevice(){}
 
-void eClockedDevice::initialize()
+/*void eClockedDevice::initialize()
 {
     if( m_clkPin ) m_clock = m_clkPin->inverted();
     else           m_clock = false;
-}
+}*/
 
 void eClockedDevice::stamp()
 {
-    if( m_clkPin ) m_clkPin->changeCallBack( this );
+    if( m_clkPin ){
+        m_clock = m_clkPin->inverted();
+        m_clkPin->changeCallBack( this );
+    }
+    else           m_clock = false;
 }
 
 bool eClockedDevice::clockInv()

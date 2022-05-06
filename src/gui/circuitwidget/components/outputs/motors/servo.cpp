@@ -75,25 +75,29 @@ new DoubProp<Servo>( "Speed", tr("Speed "),tr("_sec/60º"), this, &Servo::speed,
 }
 Servo::~Servo(){}
 
-void Servo::stamp()
-{
-    if( m_inPin[0]->isConnected()
-      & m_inPin[1]->isConnected()
-      & m_inPin[2]->isConnected() )
-    {
-        m_inPin[0]->changeCallBack( this, true );
-        m_inPin[1]->changeCallBack( this, true );
-
-        LogicComponent::stamp();
-}   }
-
-void Servo::initialize()
+/*void Servo::initialize()
 {
     m_targetPos = 90;
     m_pulseStart = 0;
     m_lastUpdate = Simulator::self()->circTime()/1e6;
-    
+
     LogicComponent::initialize();
+}*/
+
+void Servo::stamp()
+{
+    m_targetPos = 90;
+    m_pulseStart = 0;
+    m_lastUpdate = Simulator::self()->circTime()/1e6;
+
+    if( m_inPin[0]->isConnected()
+     && m_inPin[1]->isConnected()
+     && m_inPin[2]->isConnected() )
+    {
+        m_inPin[0]->changeCallBack( this, true );
+        m_inPin[1]->changeCallBack( this, true );
+    }
+    LogicComponent::stamp();
 }
 
 void Servo::updateStep()

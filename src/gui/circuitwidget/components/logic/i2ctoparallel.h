@@ -32,11 +32,11 @@ class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
         I2CToParallel( QObject* parent, QString type, QString id );
         ~I2CToParallel();
 
-        static Component* construct( QObject* parent, QString type, QString id );
-        static LibraryItem* libraryItem();
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
         
+        //virtual void initialize() override;
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void writeByte();
         virtual void readByte();

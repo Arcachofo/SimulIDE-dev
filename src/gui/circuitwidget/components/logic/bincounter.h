@@ -40,8 +40,8 @@ class MAINMODULE_EXPORT BinCounter : public LogicComponent
         bool pinSet() { return m_pinSet; }
         void useSetPin( bool set );
 
+        //virtual void initialize() override;
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
 

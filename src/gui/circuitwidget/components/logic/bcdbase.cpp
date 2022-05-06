@@ -50,7 +50,6 @@ BcdBase::~BcdBase(){}
 void BcdBase::initialize()
 {
     m_digit = m_values[0];
-    LogicComponent::initialize();
     update();
 }
 
@@ -59,7 +58,6 @@ void BcdBase::stamp()
     LogicComponent::stamp();
     for( int i=0; i<4; ++i ) m_inPin[i]->changeCallBack( this );
 
-    m_digit = m_values[0];
     m_changed = true;
 }
 

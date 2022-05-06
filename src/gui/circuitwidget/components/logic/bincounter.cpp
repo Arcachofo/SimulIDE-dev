@@ -71,17 +71,18 @@ new IntProp<BinCounter>(  "Max_Value",      tr("Count to")          ,"", this, &
 }
 BinCounter::~BinCounter(){}
 
-void BinCounter::stamp()
-{
-    m_resetPin->changeCallBack( this );
-    m_setPin->changeCallBack( this );
-    LogicComponent::stamp();
-}
-
-void BinCounter::initialize()
+/*void BinCounter::initialize()
 {
     m_Counter = 0;
     LogicComponent::initialize();
+}*/
+
+void BinCounter::stamp()
+{
+    m_Counter = 0;
+    m_resetPin->changeCallBack( this );
+    m_setPin->changeCallBack( this );
+    LogicComponent::stamp();
 }
 
 void BinCounter::voltChanged()
@@ -104,7 +105,7 @@ void BinCounter::voltChanged()
         m_Counter++;
 
         if(      m_Counter == m_TopValue ) m_nextOutVal = 1;
-        else if( m_Counter > m_TopValue )
+        else if( m_Counter >  m_TopValue )
         {
             m_Counter = 0;
             m_nextOutVal = 0;

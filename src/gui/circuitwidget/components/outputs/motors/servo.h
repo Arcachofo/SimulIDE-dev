@@ -37,11 +37,11 @@ class MAINMODULE_EXPORT Servo : public LogicComponent
         double speed() { return m_speed; }
         void setSpeed( double speed ) { m_speed = speed; }
 
-        virtual void initialize() override;
+        //virtual void initialize() override;
         virtual void stamp() override;
-        virtual void voltChanged() override;
         virtual void updateStep() override;
-        
+        virtual void voltChanged() override;
+
         virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

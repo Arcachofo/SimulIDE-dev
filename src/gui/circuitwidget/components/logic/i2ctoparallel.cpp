@@ -76,19 +76,22 @@ new DoubProp<I2CToParallel>( "Frequency"   , tr("I2C Frequency"),"_KHz", this, &
 }
 I2CToParallel::~I2CToParallel(){}
 
-void I2CToParallel::initialize()
+/*void I2CToParallel::initialize()
 {
     TwiModule::initialize();
     IoComponent::initState();
     for( int i=0; i<8; ++i ) m_outPin[i]->setOutState( true );
-}
+}*/
 
 void I2CToParallel::stamp()                     // Called at Simulation Start
 {
+    TwiModule::initialize();
+    IoComponent::initState();
+    for( int i=0; i<8; ++i ) m_outPin[i]->setOutState( true );
+
     TwiModule::setMode( TWI_SLAVE );
     
-    for( int i=2; i<5; ++i )     // Initialize address pins
-        m_inPin[i]->changeCallBack( this );
+    for( int i=2; i<5; ++i ) m_inPin[i]->changeCallBack( this ); // Callbacks address pins
 }
 
 void I2CToParallel::voltChanged()             // Some Pin Changed State, Manage it
