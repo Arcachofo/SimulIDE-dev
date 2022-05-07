@@ -439,7 +439,7 @@ void Mcu::slotOpenTerm( int num )
 void Mcu::addPin( QString id, QString type, QString label,
                   int pos, int xpos, int ypos, int angle, int length )
 {
-    if( type == "nc" )
+    if( (type == "nc") | (type == "unused") )
     {
         Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
         return;
@@ -454,20 +454,24 @@ void Mcu::addPin( QString id, QString type, QString label,
         pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
         pin->setPinType( Pin::pinReset );
     }else{
-        QString pinNum = id.right(1);
         QString portName = "PORT"+id.mid(1,1);
-        pin = McuPort::getPin( portName+pinNum );
-        if( pin ){
-            if( type.contains("nul") )
-            {
-                pin->setVisible( false );
-                pin->setLabelText( "" );
-                pin->setPinType( Pin::pinNull );
-            }
-            pin->setPos( QPoint( xpos, ypos ) );
-            pin->setPinAngle( angle );
-            pin->setLength( length );
-    }   }
+        int pinNum = id.remove( 0, 2 ).toInt();
+        McuPort* port = McuPort::getPort( portName );
+        if( !port ) return;
+
+        pin = port->getPinN( pinNum );
+        if( !pin ) return;
+
+        if( type.contains("nul") )
+        {
+            pin->setVisible( false );
+            pin->setLabelText( "" );
+            pin->setPinType( Pin::pinNull );
+        }
+        pin->setPos( QPoint( xpos, ypos ) );
+        pin->setPinAngle( angle );
+        pin->setLength( length );
+    }
 
     if( pin )
     {

@@ -137,9 +137,16 @@ McuPin* McuPort::getPin( QString pinName ) // Static
     QString portName = pinName;
     portName = portName.remove( portName.size()-1, 1 );
     McuPort* port = getPort( portName );
-    McuPin* pin = NULL;
-    if( port ) pin = port->getPinN( pinNumber );
-    if( !pin )
-        qDebug() << "ERROR: NULL Pin:"<< pinName;
+    if( !port ) return NULL;
+
+    McuPin* pin = port->getPinN( pinNumber );
+    if( !pin ) qDebug() << "ERROR: NULL Pin:"<< pinName;
     return pin;
+}
+
+McuPort* McuPort::getPort( QString name )
+{
+    McuPort* port = m_portList.value( name );
+    if( !port ) qDebug() << "ERROR: NULL Port:"<< name;
+    return port;
 }

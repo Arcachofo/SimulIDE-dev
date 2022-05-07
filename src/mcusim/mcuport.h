@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }
 
- static McuPort* getPort( QString name ) { return m_portList.value( name ); }
+ static McuPort* getPort( QString name );
  static McuPin*  getPin( QString pinName );
  static QHash<QString, McuPort*> getPorts() { return m_portList; }
 
