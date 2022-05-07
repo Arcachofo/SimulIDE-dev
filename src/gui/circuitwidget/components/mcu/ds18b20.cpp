@@ -427,8 +427,8 @@ void Ds18b20::setROM( QString ROMstr )
     bool ok;
     QStringList lstROM = ROMstr.split(" ");
     lstROM.removeAll("");
-    for( int i=0; i<7; ++i ) m_ROM[i] = lstROM.at( i ).toInt( &ok, 16 );
-    qDebug() << idLabel() <<"Ds18b20::setROM"<<arrayToHex( m_ROM, 7 );
+    for( int i=0; i<8; ++i ) m_ROM[i] = lstROM.at( i ).toInt( &ok, 16 );
+    qDebug() << idLabel() <<"Ds18b20::setROM"<<arrayToHex( m_ROM, 8 );
 }
 
 void Ds18b20::generateROM( uint8_t familyCode ) // Generate unique ROM address
@@ -444,18 +444,9 @@ void Ds18b20::generateROM( uint8_t familyCode ) // Generate unique ROM address
   m_ROM[4] = rand();
   m_ROM[5] = 0x00;
   m_ROM[6] = 0x00;
-
-  /*// For test : 28 CA CB E2 03 00 00 B6
-  m_ROM[0] = 0x28;
-  m_ROM[1] = 0xCA;
-  m_ROM[2] = 0xCB;
-  m_ROM[3] = 0xE2;
-  m_ROM[4] = 0x03;
-  m_ROM[5] = 0x00;
-  m_ROM[6] = 0x00; */
-
   m_ROM[7] = crc8( m_ROM, 7 );
-  qDebug() << idLabel() <<"Ds18b20::generateROM"<<arrayToHex( m_ROM, 7 );
+
+  qDebug() << idLabel() <<"Ds18b20::generateROM"<<arrayToHex( m_ROM, 8 );
 }
 
 QString Ds18b20::arrayToHex( uint8_t* data, uint len ) // Static
@@ -464,7 +455,6 @@ QString Ds18b20::arrayToHex( uint8_t* data, uint len ) // Static
     for( uint i=0; i<len; i++) hexValue.append( val2hex( data[i] ) ).append(" ");
     return hexValue;
 }
-
 
 void Ds18b20::upbuttonclicked()
 {

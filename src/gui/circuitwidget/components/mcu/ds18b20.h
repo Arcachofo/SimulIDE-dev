@@ -47,7 +47,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        QString getROM() { return arrayToHex( m_ROM, 7 ); }
+        QString getROM() { return arrayToHex( m_ROM, 8 ); }
         void setROM( QString ROMstr );
 
         double tempInc() { return m_tempInc; }
