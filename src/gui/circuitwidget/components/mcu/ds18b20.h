@@ -47,6 +47,9 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
+        QString getROM() { return arrayToHex( m_ROM, 7 ); }
+        void setROM( QString ROMstr );
+
         double tempInc() { return m_tempInc; }
         void setTempInc( double inc ) { m_tempInc = trim( inc ); }
 
@@ -65,6 +68,8 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         void downbuttonclicked();
 
     private:
+ static QString arrayToHex( uint8_t* data, uint len );
+
         void dataReceived();
         void dataSent();
         void sendData( uint8_t data, int size=8);
@@ -119,6 +124,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         int m_resolution; // 9-12 bits
         uint8_t m_scratchpad[9];
         uint8_t m_ROM[8];
+        QString m_ROMstr;
 
         uint8_t m_TH_reg;  // TH register, alarm trigger register, can be stored in internal EEPROM
         uint8_t m_TL_reg;  // TL register, alarm trigger register, can be stored in internal EEPROM

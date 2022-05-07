@@ -32,6 +32,7 @@
 #include "utils.h"
 
 #include "doubleprop.h"
+#include "stringprop.h"
 
 Component* Ds18b20::construct( QObject* parent, QString type, QString id )
 { return new Ds18b20( parent, type, id ); }
@@ -44,20 +45,6 @@ LibraryItem* Ds18b20::libraryItem()
         "ic_comp.png",
         "DS18B20",
         Ds18b20::construct );
-}
-
-QString QDeb_HEX( uint8_t* data, uint len )
-{
-    QString hexValue;
-    for( uint i=0; i<len; i++) hexValue.append( val2hex( data[i] ) ).append(" ");
-    return hexValue;
-}
-
-QString QDeb_HEX( std::vector<uint8_t> data )
-{
-    QString hexValue;
-    for( uint i=0; i<data.size(); i++) hexValue.append( val2hex( data[i] ) ).append(" ");
-    return hexValue;
 }
 
 Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
@@ -120,8 +107,9 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Ds18b20>( "Temp"   , tr("Temperature")    ,"°C", this, &Ds18b20::temp   , &Ds18b20::setTemp ),
-new DoubProp<Ds18b20>( "TempInc", tr("Temp. increment"),"°C", this, &Ds18b20::tempInc, &Ds18b20::setTempInc ),
+new StringProp<Ds18b20>( "ROM"    ,"ROM"                 ,""  , this, &Ds18b20::getROM,  &Ds18b20::setROM ),
+new DoubProp  <Ds18b20>( "Temp"   , tr("Temperature")    ,"°C", this, &Ds18b20::temp   , &Ds18b20::setTemp ),
+new DoubProp  <Ds18b20>( "TempInc", tr("Temp. increment"),"°C", this, &Ds18b20::tempInc, &Ds18b20::setTempInc ),
     }} );
 }
 Ds18b20::~Ds18b20(){}
@@ -317,12 +305,12 @@ void Ds18b20::command( uint8_t cmd )
 
 void Ds18b20::readROM() // Code: 33h : send ROM to Master
 {
-    qDebug() << idLabel() <<"Ds18b20::readROM"<< QDeb_HEX( m_ROM, 8 );
+    qDebug() << idLabel() <<"Ds18b20::readROM"<< arrayToHex( m_ROM, 8 );
 
     m_txBuff.clear();
     for( int i=7; i>=0; i-- ) m_txBuff.push_back( m_ROM[i] );
 
-    qDebug() << idLabel()<< "Tx Buffer:" << QDeb_HEX( m_txBuff );
+    qDebug() << idLabel()<< "Tx Buffer:" << arrayToHex( m_txBuff.data(), m_txBuff.size() );
 
     sendData( m_txBuff.back() );
 }
@@ -352,7 +340,7 @@ void Ds18b20::readScratchpad() // Code BEh send Scratchpad LSB
     m_txBuff.clear();
     for( int i=8; i>=0; i-- ) m_txBuff.push_back( m_scratchpad[i] );
 
-    qDebug() << idLabel() <<"Ds18b20::readScratchpad :"<<QDeb_HEX( m_txBuff );
+    qDebug() << idLabel() <<"Ds18b20::readScratchpad :"<<arrayToHex( m_txBuff.data(), m_txBuff.size() );
 
     sendData( m_txBuff.back() );
 }
@@ -411,7 +399,7 @@ void Ds18b20::setTemp( double t ) // This should convert temp wrote in UI
     m_scratchpad[7] = 0x10; // Reserved. Default?
     m_scratchpad[8] = crc8( m_scratchpad, 8 );
 
-    qDebug() << idLabel() <<"Ds18b20::setTemp"<<QDeb_HEX( m_scratchpad, 9 );
+    qDebug() << idLabel() <<"Ds18b20::setTemp"<<arrayToHex( m_scratchpad, 9 );
 
     update();
 }
@@ -432,6 +420,15 @@ uint8_t Ds18b20::crc8( uint8_t* addr, uint8_t len ) // DS18B20 crc8 calc
         }
     }
     return crc;
+}
+
+void Ds18b20::setROM( QString ROMstr )
+{
+    bool ok;
+    QStringList lstROM = ROMstr.split(" ");
+    lstROM.removeAll("");
+    for( int i=0; i<7; ++i ) m_ROM[i] = lstROM.at( i ).toInt( &ok, 16 );
+    qDebug() << idLabel() <<"Ds18b20::setROM"<<arrayToHex( m_ROM, 7 );
 }
 
 void Ds18b20::generateROM( uint8_t familyCode ) // Generate unique ROM address
@@ -458,8 +455,16 @@ void Ds18b20::generateROM( uint8_t familyCode ) // Generate unique ROM address
   m_ROM[6] = 0x00; */
 
   m_ROM[7] = crc8( m_ROM, 7 );
-  qDebug() << idLabel() <<"Ds18b20::generateROM"<<QDeb_HEX( m_ROM, 8 );
+  qDebug() << idLabel() <<"Ds18b20::generateROM"<<arrayToHex( m_ROM, 7 );
 }
+
+QString Ds18b20::arrayToHex( uint8_t* data, uint len ) // Static
+{
+    QString hexValue;
+    for( uint i=0; i<len; i++) hexValue.append( val2hex( data[i] ) ).append(" ");
+    return hexValue;
+}
+
 
 void Ds18b20::upbuttonclicked()
 {
