@@ -60,6 +60,7 @@ INCLUDEPATH += ../src \
     ../src/mcusim/cores/i51 \
     ../src/mcusim/cores/pic \
     ../src/mcusim/modules \
+    ../src/mcusim/modules/extmem \
     ../src/mcusim/modules/usart \
     ../src/mcusim/modules/twi \
     ../src/mcusim/modules/spi
