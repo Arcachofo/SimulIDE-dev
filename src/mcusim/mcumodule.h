@@ -35,6 +35,8 @@ class MAINMODULE_EXPORT McuModule
         McuModule( eMcu* mcu, QString name );
         virtual ~McuModule();
 
+        virtual void reset(){;}
+
         virtual void configureA( uint8_t ){;}
         virtual void configureB( uint8_t ){;}
         virtual void configureC( uint8_t ){;}

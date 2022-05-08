@@ -230,9 +230,8 @@ void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, i
 
     if     ( type == "inverted" || type == "in" ) pin->setInverted( true );
     else if( type == "unused"   || type == "nc" ) pin->setUnused( true );
-    if     ( type == "rst" )                      pin->setPinType( Pin::pinReset );
-    else if( type.contains("nul") )               pin->setPinType( Pin::pinNull );
 
+    pin->setPackageType( type );
     pin->setLength( length );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
@@ -248,7 +247,6 @@ void Chip::deletePin( Pin* pin )
     if( !pin ) return;
     pin->removeConnector();
     if( pin->scene() ) Circuit::self()->removeItem( pin );
-    pin->reset();
     delete pin;
 }
 

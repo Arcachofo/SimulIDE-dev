@@ -448,9 +448,7 @@ void SubPackage::setPinAngle( int i )
 
 void SubPackage::setPinType( QString type )
 {
-    if     ( type == "rst" ) m_eventPin->setPinType( Pin::pinReset );
-    else if( type == "nul" ) m_eventPin->setPinType( Pin::pinNull );
-    else                     m_eventPin->setPinType( Pin::pinNormal );
+    m_eventPin->setPackageType( type );
 }
 
 void SubPackage::invertPin( bool invert )
@@ -615,12 +613,7 @@ QString SubPackage::pinEntry( Pin* pin )
     QString length = "length=\""+QString::number( pin->length() )+"\"";
     QString id     = "id=\""+pin->pinId().split( "-" ).last().replace( " ", "" )+"\"";
     QString label  = "label=\""+pin->getLabelText()+"\"";
-    QString type   = "type=\"";
-    if     ( pin->inverted() ) type += "in\"";
-    else if( pin->unused() )   type += "nc\"";
-    else if( pin->pinType() == Pin::pinReset ) type += "rst\"";
-    else if( pin->pinType() == Pin::pinNull  ) type += "nul\"";
-    else                       type += "\"";
+    QString type   = "type=\""+pin->packageType()+"\"";
 
     return "    <pin "
             +adjustSize( type, 11 )
@@ -681,8 +674,7 @@ EditDialog::EditDialog( SubPackage* pack, Pin* eventPin, QWidget* parent )
 
     m_typeLabel = new QLabel( tr("Pin Type:") );
     m_typeLineEdit = new QLineEdit;
-    if     ( eventPin->pinType() == Pin::pinReset ) m_typeLineEdit->setText("rst");
-    else if( eventPin->pinType() == Pin::pinNull  ) m_typeLineEdit->setText("nul");
+    m_typeLineEdit->setText( eventPin->packageType() );
     m_typeLabel->setBuddy( m_typeLineEdit );
     QHBoxLayout* typeLayout = new QHBoxLayout;
     typeLayout->addWidget( m_typeLabel );

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2020 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,30 +17,30 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifndef MCUCTRLPORT_H
+#define MCUCTRLPORT_H
+
 #include "mcumodule.h"
-#include "mcuinterrupts.h"
 
-McuModule::McuModule( eMcu* mcu, QString name )
-{
-    m_mcu = mcu;
-    m_name = name;
-    m_sleepMode = 0;
-    m_interrupt = NULL;
-}
-McuModule::~McuModule( ){}
+class Mcu;
+class IoPin;
 
-void McuModule::sleep( int mode )
+class MAINMODULE_EXPORT McuCtrlPort : public McuModule
 {
-    if( mode < 0 ) m_sleeping = false;
-    else           m_sleeping = (m_sleepMode & 1<<mode) > 0;
-}
+        friend class McuCreator;
 
-/*void McuModule::reset()
-{
-    Simulator::self()->cancelEvents( this );
-}*/
+    public:
+        McuCtrlPort( eMcu* mcu, QString name);
+        ~McuCtrlPort();
 
-/*void McuModule::raiseInt()
-{
-    if( m_interrupt ) m_interrupt->raise();
-}*/
+        //IoPin* getPinN( uint8_t i );
+        IoPin* getPin( QString pinId );
+
+    protected:
+         virtual void createPins( Mcu* mcuComp, QString pins );
+
+        std::vector<IoPin*> m_pins;
+        //uint8_t m_numPins;
+};
+
+#endif

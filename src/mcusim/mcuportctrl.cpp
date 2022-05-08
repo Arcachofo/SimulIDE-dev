@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2020 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,30 +17,41 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcumodule.h"
-#include "mcuinterrupts.h"
+#include <QDebug>
 
-McuModule::McuModule( eMcu* mcu, QString name )
+#include "mcuportctrl.h"
+#include "iopin.h"
+
+McuCtrlPort::McuCtrlPort( eMcu* mcu, QString name )
+           : McuModule( mcu, name )
 {
-    m_mcu = mcu;
-    m_name = name;
-    m_sleepMode = 0;
-    m_interrupt = NULL;
+    //m_numPins = numPins;
+
 }
-McuModule::~McuModule( ){}
+McuCtrlPort::~McuCtrlPort(){}
 
-void McuModule::sleep( int mode )
+void McuCtrlPort::createPins( Mcu* mcuComp, QString pins )
 {
-    if( mode < 0 ) m_sleeping = false;
-    else           m_sleeping = (m_sleepMode & 1<<mode) > 0;
+    QStringList pinList = pins.split(",");
+    for( QString pinName : pinList )
+    {
+        IoPin* pin = new IoPin( 0, QPoint(0,0), m_name+pinName, 0, (Component*)mcuComp );
+        m_pins.emplace_back( pin );
+    }
 }
 
-/*void McuModule::reset()
+/*IoPin* McuCtrlPort::getPinN( uint8_t i )
 {
-    Simulator::self()->cancelEvents( this );
+    if( i >= m_pins.size() ) return NULL;
+    return m_pins[i];
 }*/
 
-/*void McuModule::raiseInt()
+IoPin* McuCtrlPort::getPin( QString pinId )
 {
-    if( m_interrupt ) m_interrupt->raise();
-}*/
+    IoPin* pin = NULL;
+    for( IoPin* ioPin : m_pins )
+        if( ioPin->pinId().contains( pinId ) ) pin = ioPin;
+
+    if( !pin ) qDebug() << "ERROR: NULL Pin:"<< pinId;
+    return pin;
+}

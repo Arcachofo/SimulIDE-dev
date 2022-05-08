@@ -33,6 +33,7 @@ class McuCore;
 class McuTimer;
 class McuWdt;
 class McuSleep;
+class McuCtrlPort;
 
 enum{
     R_READ = 0,
@@ -46,6 +47,7 @@ enum mcuState_t{
 };
 
 class McuVref;
+class ExtMemModule;
 
 class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 {
@@ -80,7 +82,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         uint8_t  getRomValue( int address ) { return m_eeprom[address]; }
         void     setRomValue( int address, uint8_t value ) { m_eeprom[address] = value; }
 
-
         uint32_t getStack();
         int status();
         int pc();
@@ -100,7 +101,11 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         //McuPin* getPin( QString name ) { return m_ports.getPin( name ); }
         //QHash<QString, McuPort*> getPorts() { return m_ports.getPorts(); }
 
-        McuTimer* getTimer( QString name ) { return m_timers.getTimer( name ); }
+        McuTimer* getTimer( QString name );
+        McuPort* getPort( QString name );
+        McuPin*  getPin( QString pinName );
+        IoPin*   getCtrlPin( QString pinName );
+        QHash<QString, McuPort*> getPorts() { return m_portList; }
 
         McuWdt* watchDog() { return m_wdt; }
         McuVref* vrefModule();
@@ -113,6 +118,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         bool setCfgWord( uint16_t addr, uint16_t data );
         uint16_t getCfgWord( uint16_t addr=0 );
 
+        ExtMemModule* extMem;
         McuCore* cpu;
         int cyclesDone;
 
@@ -142,10 +148,13 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         QHash<uint16_t, uint16_t> m_cfgWords; // Config words
 
-        McuTimers  m_timers;
         std::vector<McuModule*> m_modules;
         std::vector<McuUsart*> m_usarts;
 
+        QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
+        QHash<QString, McuPort*>  m_portList; // Access PORTS by name
+
+        McuCtrlPort* m_ctrlPort;
         McuSleep* m_sleepModule;
         McuVref* m_vrefModule;
         McuWdt* m_wdt;

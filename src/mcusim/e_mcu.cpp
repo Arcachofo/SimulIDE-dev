@@ -19,6 +19,7 @@
 
 #include "e_mcu.h"
 #include "mcucore.h"
+#include "mcuportctrl.h"
 #include "mcupin.h"
 #include "mcuwdt.h"
 #include "usartmodule.h"
@@ -35,7 +36,6 @@ eMcu::eMcu( QString id )
     : DataSpace()
     , eElement( id )
     , m_interrupts( this )
-    , m_timers( this )
 {
     m_pSelf = this;
 
@@ -43,6 +43,7 @@ eMcu::eMcu( QString id )
     m_wdt = NULL;
     m_vrefModule = NULL;
     m_sleepModule = NULL;
+    m_ctrlPort = NULL;
 
     m_cPerInst = 1;
     setFreq( 16*1e6 );
@@ -95,10 +96,10 @@ void eMcu::runEvent()
 
 void eMcu::reset()
 {
-    //m_debugStep = false;
     m_cycle = 0;
     cyclesDone = 0;
 
+    for( McuModule* module : m_modules ) module->reset();
     cpu->reset();
     m_interrupts.resetInts();
     DataSpace::initialize();
@@ -115,32 +116,6 @@ void eMcu::stepCpu()
 
     m_cycle += cyclesDone;
 }
-
-/*void eMcu::stepDebug()
-{
-    if( !m_debugStep ) return;
-
-    int lastPC = pc();
-    stepCpu();
-    int PC = pc();
-
-    if( ( lastPC != PC )
-    && ( m_debugger->m_flashToSource.contains( PC ) ) )
-    {
-        int line = m_debugger->m_flashToSource.value( PC );
-        if( line != m_prevLine )
-        {
-            m_debugStep = false;
-            EditorWindow::self()->lineReached( line );
-        }
-    }
-}
-
-void eMcu::stepFromLine( int line )
-{
-    m_prevLine = line;
-    m_debugStep = true;
-}*/
 
 void eMcu::setDebugger( BaseDebugger* deb )
 {
@@ -194,6 +169,40 @@ void eMcu::setEeprom( QVector<int>* eep )
     if( eep->size() < size ) size = eep->size();
 
     for( int i=0; i<size; ++i ) setRomValue( i, eep->at(i) );
+}
+
+McuTimer* eMcu::getTimer( QString name )
+{
+    McuTimer* timer = m_timerList.value( name );
+    if( !timer ) qDebug() << "ERROR: NULL Timer:"<< name;
+    return timer;
+}
+
+McuPort* eMcu::getPort( QString name )
+{
+    McuPort* port = m_portList.value( name );
+    /// if( !port ) qDebug() << "ERROR: NULL Port:"<< name;
+    return port;
+}
+
+IoPin* eMcu::getCtrlPin( QString pinName )
+{
+    if( !m_ctrlPort ) return NULL;
+    return m_ctrlPort->getPin( pinName );
+}
+
+McuPin* eMcu::getPin( QString pinName )
+{
+    QString portName = pinName.left( 5 );
+    McuPort* port = getPort( portName );
+    if( !port ) return NULL;
+
+    QString pinStr = pinName;
+    pinStr.remove( portName );
+
+    McuPin* pin = port->getPinN( pinStr.toInt() );
+    if( !pin ) qDebug() << "ERROR: NULL Pin:"<< pinName;
+    return pin;
 }
 
 bool eMcu::setCfgWord( uint16_t addr, uint16_t data )

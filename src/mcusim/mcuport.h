@@ -23,14 +23,14 @@
 #include<QHash>
 
 #include "mcumodule.h"
-#include "e-element.h"
+//#include "e-element.h"
 
 class Mcu;
 class eMcu;
 class McuPin;
 class Component;
 
-class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
+class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
 {
         friend class McuCreator;
         friend class McuPorts;
@@ -39,8 +39,8 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
         McuPort( eMcu* mcu, QString name, uint8_t numPins );
         ~McuPort();
 
-        virtual void initialize() override;
-
+        //virtual void initialize() override;
+        virtual void reset() override;
         virtual void pinChanged( uint8_t pinMask, uint8_t val );
 
         void setPullups( uint8_t puMask );
@@ -48,6 +48,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
         void clearAllPullups( uint8_t val );
 
         McuPin* getPinN( uint8_t i );
+        McuPin* getPin( QString pinName );
 
         QString name() { return m_name; }
 
@@ -60,10 +61,6 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
 
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }
-
- static McuPort* getPort( QString name );
- static McuPin*  getPin( QString pinName );
- static QHash<QString, McuPort*> getPorts() { return m_portList; }
 
     protected:
         virtual void createPins( Mcu* mcuComp, uint8_t pinMask=0 );
@@ -84,8 +81,6 @@ class MAINMODULE_EXPORT McuPort : public McuModule, public eElement
         uint16_t m_outAddr;
         uint16_t m_inAddr;
         uint16_t m_dirAddr;
-
- static QHash<QString, McuPort*> m_portList; // Access PORTS by name
 };
 
 #endif

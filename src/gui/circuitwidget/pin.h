@@ -47,10 +47,8 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         enum pinType_t{
             pinNormal=0,
-            pinReset,
             pinSocket,
             pinHeader,
-            pinNull
         };
 
         enum { Type = UserType + 3 };
@@ -97,7 +95,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         void moveBy( int dx, int dy );
 
-        void reset();
+        void remove();
 
         void registerEnode( eNode* enode, int n=-1 );
         void registerPinsW( eNode* enode, int n=-1 );
@@ -107,6 +105,9 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         void setPinType( pinType_t ty ) { m_pinType = ty; }
         pinType_t pinType() { return m_pinType; }
+
+        QString packageType() { return m_packageType; }
+        void setPackageType( QString type ) { m_packageType = type; }
 
         void setPinState( pinState_t st ) { m_pinState = st; m_PinChanged = true; }
 
@@ -135,6 +136,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         bool m_unused;
 
         QString m_labelText;
+        QString m_packageType;
         
         QColor m_color[8];
         QRect      m_area;

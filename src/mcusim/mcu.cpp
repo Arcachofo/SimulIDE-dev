@@ -81,10 +81,10 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 {
     qDebug() << "        Initializing"<<id;
     m_pSelf = this;
-    //m_proc  = &m_eMcu;
+
     m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
     if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit
-    //m_id.replace("~","_");
+
     if( m_device.startsWith("p") ) // PICs TODELETE
     {
         if( m_device.endsWith("a") ) m_device.remove( m_device.size()-1, 1 );
@@ -439,42 +439,32 @@ void Mcu::slotOpenTerm( int num )
 void Mcu::addPin( QString id, QString type, QString label,
                   int pos, int xpos, int ypos, int angle, int length )
 {
-    if( (type == "nc") | (type == "unused") )
-    {
-        Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
-        return;
-    }
-    IoPin* pin = NULL;
+    if( type == "nc" ) Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
+    else{
+        IoPin* pin = NULL;
+        if( !type.isEmpty() && !type.contains("nul") )
+        {
+            if( type == "rst" )
+                 pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
+            else pin = m_eMcu.getCtrlPin( id ); // Control Port
 
-    QColor color = Qt::black;
-    if( !m_isLS ) color = QColor( 250, 250, 200 );
+        }
+        else pin = m_eMcu.getPin( id.replace( 0, 1,"PORT") ); // I/O Port
 
-    if( type == "rst" )
-    {
-        pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
-        pin->setPinType( Pin::pinReset );
-    }else{
-        QString portName = "PORT"+id.mid(1,1);
-        int pinNum = id.remove( 0, 2 ).toInt();
-        McuPort* port = McuPort::getPort( portName );
-        if( !port ) return;
-
-        pin = port->getPinN( pinNum );
         if( !pin ) return;
+
+        QColor color = Qt::black;
+        if( !m_isLS ) color = QColor( 250, 250, 200 );
 
         if( type.contains("nul") )
         {
             pin->setVisible( false );
             pin->setLabelText( "" );
-            pin->setPinType( Pin::pinNull );
         }
+        pin->setPackageType( type );
         pin->setPos( QPoint( xpos, ypos ) );
         pin->setPinAngle( angle );
         pin->setLength( length );
-    }
-
-    if( pin )
-    {
         pin->setLabelText( label );
         pin->setLabelColor( color );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
@@ -541,10 +531,8 @@ void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* w
         QPen pen( Qt::black, 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
         p->setPen( pen );
         p->setBrush( Qt::yellow );
-        if( m_width == m_height )
-            p->drawRoundedRect( 4, 4, 4, 4 , 2, 2);
-        else
-            p->drawRoundedRect( m_area.width()/2-2, -1, 4, 4 , 2, 2);
+        if( m_width == m_height ) p->drawRoundedRect( 4, 4, 4, 4 , 2, 2);
+        else                      p->drawRoundedRect( m_area.width()/2-2, -1, 4, 4 , 2, 2);
 }   }
 
 #include "moc_mcu.cpp"

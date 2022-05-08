@@ -29,7 +29,9 @@
 #include "e_mcu.h"
 #include "mcu.h"
 #include "mcuport.h"
+#include "mcuportctrl.h"
 #include "mcupin.h"
+#include "extmem.h"
 
 #include "usarttx.h"
 #include "usartrx.h"
@@ -129,6 +131,7 @@ int McuCreator::processFile( QString fileName )
         else if( part == "stack" )      m_stackEl = el;
         else if( part == "interrupts" ) createInterrupts( &el );
         else if( part == "port" )       createPort( &el );
+        else if( part == "ctrlport" )   createCtrlPort( &el );
         else if( part == "timer" )      createTimer( &el );
         else if( part == "ocm" )        createOcm( &el );
         else if( part == "ccpunit" )    createCcpUnit( &el );
@@ -141,6 +144,7 @@ int McuCreator::processFile( QString fileName )
         else if( part == "wdt" )        createWdt( &el );
         else if( part == "rom" )        createEeprom( &el );
         else if( part == "sleep" )      createSleep( &el );
+        else if( part == "extmem" )     createExtMem( &el );
         else if( part == "include" )
         {
             error = processFile( el.attribute("file") );
@@ -358,7 +362,7 @@ void McuCreator::createPort( QDomElement* p )
     else if( m_core == "Pic14e" ) port = new PicPort( mcu, name, numPins );
     else if( m_core == "8051" )   port = new I51Port( mcu, name, numPins );
     else                          port = new McuPort( mcu, name, numPins );
-    McuPort::m_portList.insert( name, port );
+    mcu->m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );
 
     uint8_t pinMask = p->attribute("pinmask").toUInt( 0, 2 );
@@ -370,10 +374,10 @@ void McuCreator::createPort( QDomElement* p )
     {
         QStringList pins = p->attribute("clockpins").split(",");
         for( int i=0; i<pins.size(); ++i )
-            m_mcuComp->m_clkPin[i] = McuPort::getPin( pins.value(i) );
+            m_mcuComp->m_clkPin[i] = port->getPin( pins.value(i) );
     }
     if( p->hasAttribute("resetpin") )
-        m_mcuComp->m_mcuRstPin = McuPort::getPin( p->attribute("resetpin") );
+        m_mcuComp->m_mcuRstPin = port->getPin( p->attribute("resetpin") );
 
     QString Oreg = "";
     if( p->hasAttribute( "outreg" ) )
@@ -470,7 +474,7 @@ void McuCreator::createPort( QDomElement* p )
             QString intName = el.attribute("name");
             Interrupt* inte = mcu->m_interrupts.m_intList.value( intName );
 
-            McuPin* pin = McuPort::getPin( el.attribute("pin") );
+            McuPin* pin = port->getPin( el.attribute("pin") );
             if( pin ) pin->m_extInt = inte;
 
             if( el.hasAttribute("configbits") )
@@ -481,6 +485,16 @@ void McuCreator::createPort( QDomElement* p )
         }   }
         node = node.nextSibling();
 }   }
+
+void McuCreator::createCtrlPort( QDomElement* p )
+{
+    McuCtrlPort* port = new McuCtrlPort( mcu, p->attribute("name") );
+
+    mcu->m_ctrlPort = port;
+    mcu->m_modules.emplace_back( port );
+
+    port->createPins( m_mcuComp, p->attribute("pins") );
+}
 
 void McuCreator::createTimer( QDomElement* t )
 {
@@ -495,7 +509,7 @@ void McuCreator::createTimer( QDomElement* t )
 
     if( !timer ) { qDebug() << "Error creating Timer"<< timerName; return; }
 
-    mcu->m_timers.m_timerList.insert( timerName, timer );
+    mcu->m_timerList.insert( timerName, timer );
     mcu->m_modules.emplace_back( timer );
 
     setConfigRegs( t, timer );
@@ -522,7 +536,7 @@ void McuCreator::createTimer( QDomElement* t )
         watchBitNames( enable, R_WRITE, timer, &McuTimer::enable, mcu );
     }
     if( t->hasAttribute("clockpin") )
-        timer->m_clockPin = McuPort::getPin( t->attribute("clockpin") );
+        timer->m_clockPin = mcu->getPin( t->attribute("clockpin") );
 
     QString topReg0 = "";
     if( t->hasAttribute("topreg0") ) /// Still done in AvrTimer16bit
@@ -554,7 +568,7 @@ void McuCreator::createTimer( QDomElement* t )
 
             timer->addOcUnit( ocUnit );
             ocUnit->m_timer = timer;
-            ocUnit->m_ocPin = McuPort::getPin( el.attribute("pin") );
+            ocUnit->m_ocPin = mcu->getPin( el.attribute("pin") );
 
             QStringList regs = el.attribute("ocreg").split(",");
             QString lowByte = regs.value(0);
@@ -594,7 +608,7 @@ void McuCreator::createTimer( QDomElement* t )
 
             timer->m_ICunit = icUnit;
             icUnit->m_timer = timer;
-            icUnit->m_icPin = McuPort::getPin( el.attribute("pin") );
+            icUnit->m_icPin = mcu->getPin( el.attribute("pin") );
 
             QStringList regs = el.attribute("icreg").split(",");
             if( !regs.isEmpty() ) icUnit-> m_icRegL = mcu->getReg( regs.value(0) );
@@ -643,7 +657,7 @@ void McuCreator::createCcpUnit( QDomElement* c )
 
     mcu->m_modules.emplace_back( ccpUnit );
 
-    ccpUnit->setPin( McuPort::getPin( c->attribute("pin") ) );
+    ccpUnit->setPin( mcu->getPin( c->attribute("pin") ) );
 
     QStringList regs = c->attribute("ccpreg").split(",");
     QString lowByte  = regs.value(0);
@@ -706,7 +720,7 @@ void McuCreator::createUsart( QDomElement* u )
 
             QStringList pinNames = el.attribute( "pin" ).split(",");
             QList<IoPin*> pinList;
-            for( QString pinName : pinNames ) pinList.append( McuPort::getPin( pinName ) );
+            for( QString pinName : pinNames ) pinList.append( mcu->getPin( pinName ) );
             trUnit->setPins( pinList );
 
             if( el.hasAttribute("enable") )
@@ -760,7 +774,7 @@ void McuCreator::createAdc( QDomElement* e )
     QStringList pins = e->attribute("adcpins").remove(" ").split(",");
     for( QString pinName : pins )
     {
-        McuPin* pin = McuPort::getPin( pinName );
+        McuPin* pin = mcu->getPin( pinName );
         if( pin ) adc->m_adcPin.emplace_back( pin );
     }
     if( e->hasAttribute("vrefpins") )
@@ -768,7 +782,7 @@ void McuCreator::createAdc( QDomElement* e )
         pins = e->attribute("vrefpins").remove(" ").split(",");
         for( QString pinName : pins )
         {
-            McuPin* pin = McuPort::getPin( pinName );
+            McuPin* pin = mcu->getPin( pinName );
             if( pin ) adc->m_refPin.emplace_back( pin );
     }   }
 }
@@ -790,7 +804,7 @@ void McuCreator::createAcomp( QDomElement* e )
     QStringList pins = e->attribute( "pins" ).split(",");
     for( QString pinName : pins )
     {
-        McuPin* pin = McuPort::getPin( pinName );
+        McuPin* pin = mcu->getPin( pinName );
         if( pin ) comp->m_pins.emplace_back( pin );
     }
     if( e->hasAttribute("interrupt") ) setInterrupt( e->attribute("interrupt"), comp );
@@ -810,7 +824,7 @@ void McuCreator::createVref( QDomElement* e )
     setConfigRegs( e, vref );
 
     if( e->hasAttribute("pinout") )
-        vref->m_pinOut = McuPort::getPin( e->attribute("pinout") );
+        vref->m_pinOut = mcu->getPin( e->attribute("pinout") );
 }
 
 void McuCreator::createTwi( QDomElement* e )
@@ -840,8 +854,8 @@ void McuCreator::createTwi( QDomElement* e )
     if( e->hasAttribute("prescalers") ) setPrescalers( e->attribute("prescalers"), twi );
 
     QStringList pins = e->attribute("pins").remove(" ").split(",");
-    twi->setSdaPin( McuPort::getPin( pins.value(0) ) );
-    twi->setSclPin( McuPort::getPin( pins.value(1) ) );
+    twi->setSdaPin( mcu->getPin( pins.value(0) ) );
+    twi->setSclPin( mcu->getPin( pins.value(1) ) );
 }
 
 void McuCreator::createSpi( QDomElement* e )
@@ -867,10 +881,10 @@ void McuCreator::createSpi( QDomElement* e )
     if( e->hasAttribute("prescalers") ) setPrescalers( e->attribute("prescalers"), spi );
 
     QStringList pins = e->attribute("pins").remove(" ").split(",");
-    spi->setMosiPin( McuPort::getPin( pins.value(0) ) );
-    spi->setMisoPin( McuPort::getPin( pins.value(1) ) );
-    spi->setSckPin(  McuPort::getPin( pins.value(2) ) );
-    spi->setSsPin(   McuPort::getPin( pins.value(3) ) );
+    spi->setMosiPin( mcu->getPin( pins.value(0) ) );
+    spi->setMisoPin( mcu->getPin( pins.value(1) ) );
+    spi->setSckPin(  mcu->getPin( pins.value(2) ) );
+    spi->setSsPin(   mcu->getPin( pins.value(3) ) );
 }
 
 void McuCreator::createWdt( QDomElement* e )
@@ -904,6 +918,32 @@ void McuCreator::createSleep( QDomElement* e )
     setConfigRegs( e, sleep );
 }
 
+void McuCreator::createExtMem( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+    ExtMemModule* extMem = new ExtMemModule( mcu, name );
+
+    mcu->extMem = extMem;
+
+    McuPort* addrPort = mcu->getPort( e->attribute("addrport") );
+    for( int i=0; i<addrPort->m_numPins; ++i )
+    {
+        McuPin* pin = addrPort->getPinN( i );
+        if( pin ) extMem->m_addrPin.emplace_back( pin );
+    }
+    McuPort* dataPort = mcu->getPort( e->attribute("dataport") );
+    for( int i=0; i<dataPort->m_numPins; ++i )
+    {
+        McuPin* pin = dataPort->getPinN( i );
+        if( pin ) extMem->m_dataPin.emplace_back( pin );
+    }
+    /// McuPin* rwPin = mcu->getCtrlPin( e->attribute("R/W") );
+    /// extMem->m_rwPin = rwPin;
+
+    mcu->m_modules.emplace_back( extMem );
+    //mcu->m_sleepModule = sleep;
+}
+
 void McuCreator::createCore( QString core )
 {
     if     ( core == "AVR" )    mcu->cpu = new AvrCore( mcu );
@@ -918,7 +958,8 @@ void McuCreator::createStack( QDomElement* s )
 {
     QStringList spRegs = s->attribute("spreg").split(",");
     mcu->cpu->m_spl = mcu->getReg( spRegs.value(0) );
-    mcu->cpu->m_sph = mcu->getReg( spRegs.value(1) );
+    if( spRegs.size() > 1 )
+        mcu->cpu->m_sph = mcu->getReg( spRegs.value(1) );
 
     QString inc = s->attribute("increment");
 

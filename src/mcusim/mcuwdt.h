@@ -36,8 +36,6 @@ class MAINMODULE_EXPORT McuWdt : public McuPrescaled, public eElement
         virtual void initialize() override;
         virtual void runEvent() override;
 
-        virtual void reset(){;}
-
         bool enabled() { return m_enabled; }
         void enable( bool en ) { m_enabled = en; }
 

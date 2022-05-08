@@ -48,8 +48,6 @@ class MAINMODULE_EXPORT ePin
 
         void stampAdmitance( double data );
         void stampCurrent( double data );
-
-        void reset();
         
         QString getId()  { return m_id; }
         void setId( QString id );

@@ -25,11 +25,9 @@
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
 
-QHash<QString, McuPort*> McuPort::m_portList;
-
 McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
        : McuModule( mcu, name )
-       , eElement( mcu->getId()+"-"+name )
+       //, eElement( mcu->getId()+"-"+name )
 {
     m_numPins = numPins;
 
@@ -46,10 +44,17 @@ McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
 }
 McuPort::~McuPort(){}
 
-void McuPort::initialize()
+/*void McuPort::initialize()
 {
     m_pinState = 0;
     if( m_rstIntMask ) m_intMask = 0;
+}*/
+
+void McuPort::reset()
+{
+    m_pinState = 0;
+    if( m_rstIntMask ) m_intMask = 0;
+    /// for( McuPin* pin : m_pins ) pin->reset();
 }
 
 void McuPort::pinChanged( uint8_t pinMask, uint8_t val ) // Pin number in pinMask
@@ -131,22 +136,12 @@ McuPin* McuPort::getPinN( uint8_t i )
     return m_pins[i];
 }
 
-McuPin* McuPort::getPin( QString pinName ) // Static
+McuPin* McuPort::getPin( QString pinName )
 {
-    int pinNumber = pinName.right(1).toInt();
-    QString portName = pinName;
-    portName = portName.remove( portName.size()-1, 1 );
-    McuPort* port = getPort( portName );
-    if( !port ) return NULL;
+    int pinNumber = pinName.remove( m_name ).toInt();
 
-    McuPin* pin = port->getPinN( pinNumber );
+    McuPin* pin = getPinN( pinNumber );
     if( !pin ) qDebug() << "ERROR: NULL Pin:"<< pinName;
     return pin;
 }
 
-McuPort* McuPort::getPort( QString name )
-{
-    McuPort* port = m_portList.value( name );
-    if( !port ) qDebug() << "ERROR: NULL Port:"<< name;
-    return port;
-}

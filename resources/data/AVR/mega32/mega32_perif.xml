@@ -46,7 +46,7 @@
     <ocunit name="OC2A" pin="PORTD7" ocreg="OCR2" bits="COM20,COM21" interrupt="T2CO" />
   </timer>
 
-  <usart name="USART0" number="1" configregsA="UCSR0A" configregsB="UCSR0B" configregsC="UCSR0C"
+  <usart name="USART" number="1" configregsA="UCSRA" configregsB="UCSRB" configregsC="UCSRC"
                        interrupt="USART_U">
                                    
     <trunit type="tx" pin="PORTD1" register="UDR0" interrupt="USART_T" />

@@ -40,6 +40,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_area = QRect(-3, -3, 11, 6);
     m_pinState = undef_state;
     m_pinType = pinNormal;
+    m_packageType = "";
 
     m_blocked = false;
     m_isBus   = false;
@@ -91,12 +92,10 @@ Pin::~Pin()
     Circuit::self()->remPin( m_id );
 }
 
-void Pin::reset()
+void Pin::remove()
 {
-    if( my_connector ) setConnector( NULL );
+    setConnector( NULL );
     m_component->inStateChanged( 1 );          // Used by node to remove
-
-    ePin::reset(); 
 }
 
 void Pin::setUnused( bool unused )
@@ -135,9 +134,7 @@ void Pin::registerEnode( eNode* enode, int n )     // Called by m_conPin
 
 void  Pin::setConnector( Connector* connector )
 {
-    my_connector = connector;
-    
-    if( my_connector ) 
+    if( connector )
     {
         setCursor( Qt::ArrowCursor );
         if( m_isBus ) my_connector->setIsBus( true );
@@ -145,10 +142,14 @@ void  Pin::setConnector( Connector* connector )
         m_conPin = NULL;
         setCursor( Qt::CrossCursor );
     }
+    my_connector = connector;
 }
 
 void Pin::removeConnector()
-{ if( my_connector ) my_connector->remove(); }
+{
+    if( my_connector ) my_connector->remove();
+    setConnector( NULL );
+}
 
 Pin* Pin::connectPin( bool connect )      // Auto-Connect
 {

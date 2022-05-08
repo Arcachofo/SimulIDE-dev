@@ -201,11 +201,3 @@ void McuTimer::enableExtClock( bool en )
     }
 }
 
-// ----------------------------------------
-
-McuTimers::McuTimers( eMcu* mcu  )
-{
-    m_mcu = mcu;
-}
-McuTimers::~McuTimers(){}
-

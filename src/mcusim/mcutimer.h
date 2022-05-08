@@ -108,21 +108,4 @@ class MAINMODULE_EXPORT McuTimer : public McuPrescaled, public eElement
         std::vector<McuOcUnit*> m_ocUnit; // Output Compare Units
 };
 
-class MAINMODULE_EXPORT McuTimers
-{
-        friend class McuCreator;
-
-    public:
-        McuTimers( eMcu* mcu );
-        ~McuTimers();
-
-       McuTimer* getTimer( QString name ) { return m_timerList.value( name ); }
-
-    protected:
-       eMcu* m_mcu;
-
-       QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
-};
-
-
 #endif

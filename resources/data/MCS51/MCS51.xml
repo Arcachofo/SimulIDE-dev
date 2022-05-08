@@ -62,6 +62,8 @@
         <extint name="EXT_1" pin="PORT33" />
     </port>
     
+    <ctrlport name="CPORT0" pins="ALE,PSEN,EA" />
+    
     <timer name="TIMER0" enable="TR0" configregsA="TMOD"
                          counter="TL0,TH0" 
                          clockpin="PORT34"
