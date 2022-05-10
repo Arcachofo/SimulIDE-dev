@@ -381,6 +381,7 @@ void Circuit::loadStrDoc( QString &doc )
                     int number = comp->objectName().split("-").last().toInt();
                     if( number > m_seqNumber ) m_seqNumber = number;               // Adjust item counter: m_seqNumber
                     addItem( comp );
+                    if( m_pasting ) comp->setIdLabel( newUid );
                     comp->updtLabelPos();
                     comp->updtValLabelPos();
                     compList.append( comp );
