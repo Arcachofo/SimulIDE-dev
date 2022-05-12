@@ -52,7 +52,6 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         int steps() { return m_steps; }
         void setSteps( int steps );
 
-        //QString waveType() { return m_waves.at( (int)m_waveType ); }
         int waveType() { return (int)m_waveType; }
         void setWaveType( int type );
 

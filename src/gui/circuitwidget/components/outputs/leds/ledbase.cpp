@@ -24,7 +24,7 @@
 #include "e-node.h"
 #include "pin.h"
 
-#include "stringprop.h"
+#include "intprop.h"
 #include "doubleprop.h"
 #include "boolprop.h"
 
@@ -36,17 +36,24 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
     m_grounded  = false;
     m_scrEnode  = NULL;
     m_intensity = 0;
-    m_colors.append({ tr("Yellow"),tr("Red"),tr("Green"),tr("Blue"),tr("Orange"),tr("Purple") });
+
+    m_colors = QStringList()
+        << QObject::tr("Yellow")
+        << QObject::tr("Red")
+        << QObject::tr("Green")
+        << QObject::tr("Blue")
+        << QObject::tr("Orange")
+        << QObject::tr("Purple");
 
     m_color = QColor( Qt::black );
-    setColorStr("Yellow");
+    setColor( 0 );
 
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
 //new StringProp<LedBase>( "Model"   , tr("Model")   ,"", this, &LedBase::model,    &LedBase::setModel, "enum" ),
-new StringProp<LedBase>( "Color"   , tr("Color")   ,"", this, &LedBase::colorStr, &LedBase::setColorStr, "enum" ),
-new BoolProp  <LedBase>( "Grounded", tr("Grounded"),"", this, &LedBase::grounded, &LedBase::setGrounded),
+new IntProp <LedBase>( "Color"   , tr("Color")   ,"", this, &LedBase::color   , &LedBase::setColor, "enum" ),
+new BoolProp<LedBase>( "Grounded", tr("Grounded"),"", this, &LedBase::grounded, &LedBase::setGrounded),
     }} );
     addPropGroup( { tr("Electric"), {
 new DoubProp<LedBase>( "Threshold" , tr("Forward Voltage"),"V", this, &LedBase::threshold,  &LedBase::setThreshold ),
@@ -116,13 +123,12 @@ void LedBase::setGrounded( bool grounded )
     m_grounded = grounded;
 }
 
-void LedBase::setColorStr( QString c )
+void LedBase::setColor( int color )
 {
-    bool ok = false;
-    int index = c.toInt( &ok );
-    if( !ok ) index = m_colors.indexOf( c );
-    if( index < 0 ) index = 0;
-    m_ledColor = (LedColor)index;
+    if( color < 0 || color > m_colors.size()-1 ) return;
+    m_ledColor = (LedColor)color;
+    if( m_showVal && (m_showProperty == "Color") )
+        setValLabelText( m_colors.at( color ) );
 }
 
 QStringList LedBase::getEnums( QString e )

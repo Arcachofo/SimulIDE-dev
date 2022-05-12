@@ -36,8 +36,8 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        QString colorStr() { return m_ledColor; }
-        void setColorStr( QString c );
+        int color() { return m_ledColor; }
+        void setColor( int color );
 
         int numDisplays() { return m_numDisplays; }
         void setNumDisplays( int dispNumber );
@@ -76,7 +76,7 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         double m_maxCurrent;
         double m_resistance;
 
-        QString m_ledColor;
+        int m_ledColor;
 
         std::vector<Pin*>   m_commonPin;
         std::vector<ePin*>  m_cathodePin;

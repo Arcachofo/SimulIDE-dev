@@ -36,8 +36,8 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        void setColorStr( QString c );
-        QString colorStr() { return m_ledColor; }
+        void setColor( int colot );
+        int color() { return m_ledColor; }
         
         int  rows() { return m_rows; }
         void setRows( int rows );
@@ -77,7 +77,7 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         
         bool m_verticalPins;
 
-        QString m_ledColor;
+        int m_ledColor;
 
         double m_resist;
         double m_maxCurr;

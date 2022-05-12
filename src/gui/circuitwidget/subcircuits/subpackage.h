@@ -46,7 +46,6 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         void setPackage( QString package );
 
         void savePackage( QString fileName );
-
         virtual void setSubcTypeStr( QString s ) override;
         virtual void setLogicSymbol( bool ls ) override;
         virtual void remove() override;

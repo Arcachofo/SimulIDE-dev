@@ -27,7 +27,6 @@ class eNode;
 
 class MAINMODULE_EXPORT LedBase : public Component, public eLed
 {
-        Q_OBJECT
     public:
         LedBase( QObject* parent, QString type, QString id );
         ~LedBase();
@@ -41,8 +40,8 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
             purple
         };
 
-        void setColorStr( QString c );
-        QString colorStr() { return m_colors.at( (int)m_ledColor ); }
+        int color() { return (int)m_ledColor; }
+        void setColor( int color );
 
         bool grounded() { return m_grounded; }
         void setGrounded( bool grounded );

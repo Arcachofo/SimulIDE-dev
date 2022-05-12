@@ -25,7 +25,6 @@
 #include "circuit.h"
 #include "pin.h"
 
-#include "stringprop.h"
 #include "doubleprop.h"
 #include "boolprop.h"
 #include "intprop.h"
@@ -56,9 +55,9 @@ LedBar::LedBar( QObject* parent, QString type, QString id )
     setValLabelPos(-16,-44-12, 0);
 
     addPropGroup( { tr("Main"), {
-new IntProp   <LedBar>( "Size"    , tr("Size")    ,tr("_Leds"), this, &LedBar::size,     &LedBar::setSize ),
-new StringProp<LedBar>( "Color"   , tr("Color")   ,""     , this, &LedBar::colorStr, &LedBar::setColorStr, "enum" ),
-new BoolProp  <LedBar>( "Grounded", tr("Grounded"),""     , this, &LedBar::grounded, &LedBar::setGrounded),
+new IntProp <LedBar>( "Size"    , tr("Size") ,tr("_Leds"), this, &LedBar::size, &LedBar::setSize ),
+new IntProp <LedBar>( "Color"   , tr("Color")   ,""      , this, &LedBar::color   , &LedBar::setColor, "enum" ),
+new BoolProp<LedBar>( "Grounded", tr("Grounded"),""      , this, &LedBar::grounded, &LedBar::setGrounded),
     }} );
     addPropGroup( { tr("Electric"), {
 new DoubProp<LedBar>( "Threshold" , tr("Forward Voltage"),"V", this, &LedBar::threshold,  &LedBar::setThreshold ),
@@ -99,7 +98,7 @@ void LedBar::createLeds( int c )
             m_led[i]->setRes( res() );
             m_led[i]->setMaxCurrent( maxCurrent() ); 
             m_led[i]->setThreshold( threshold() );
-            m_led[i]->setColorStr( colorStr() );
+            m_led[i]->setColor( color() );
 }   }   }
 
 void LedBar::deleteLeds( int d )
@@ -121,10 +120,10 @@ void LedBar::deleteLeds( int d )
     m_pin.resize( m_size*2 );
 }
 
-void LedBar::setColorStr( QString color )
-{ for( LedSmd* led : m_led ) led->setColorStr( color );  }
+void LedBar::setColor( int color )
+{ for( LedSmd* led : m_led ) led->setColor( color );  }
 
-QString LedBar::colorStr() { return m_led[0]->colorStr(); }
+int LedBar::color() { return m_led[0]->color(); }
 
 QStringList LedBar::getEnums( QString e ){ return m_led[0]->getEnums( e ); }
 

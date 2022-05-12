@@ -69,7 +69,7 @@ SubPackage::SubPackage( QObject* parent, QString type, QString id )
     m_graphical = true;
     m_boardMode = false;
     m_name = m_id.split("-").first();
-    
+
     m_lsColor = QColor( 210, 210, 255 );
     m_icColor = QColor( 40, 40, 120 );
     m_color = m_lsColor;

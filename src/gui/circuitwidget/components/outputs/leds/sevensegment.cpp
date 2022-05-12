@@ -25,7 +25,6 @@
 #include "circuit.h"
 #include "pin.h"
 
-#include "stringprop.h"
 #include "doubleprop.h"
 #include "boolprop.h"
 #include "intprop.h"
@@ -52,7 +51,7 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     setLabelPos( 20,-44, 0 );
 
     m_color = QColor(0,0,0);
-    m_ledColor = "Yellow";
+    m_ledColor = 0;
     m_commonCathode = true;
     m_verticalPins  = false;
     m_numDisplays = 0;
@@ -81,9 +80,9 @@ SevenSegment::SevenSegment( QObject* parent, QString type, QString id )
     setNumDisplays( 1 );
 
     addPropGroup( { tr("Main"), {
-new IntProp   <SevenSegment>( "NumDisplays"  , tr("Size")         ,tr("_7seg"), this, &SevenSegment::numDisplays,  &SevenSegment::setNumDisplays ),
-new StringProp<SevenSegment>( "Color"        , tr("Color")        ,""     , this, &SevenSegment::colorStr,     &SevenSegment::setColorStr, "enum" ),
-new BoolProp  <SevenSegment>( "Vertical_Pins", tr("Vertical Pins"),""     , this, &SevenSegment::verticalPins, &SevenSegment::setVerticalPins )
+new IntProp <SevenSegment>( "NumDisplays"  , tr("Size")     ,tr("_7seg"), this, &SevenSegment::numDisplays,  &SevenSegment::setNumDisplays ),
+new IntProp <SevenSegment>( "Color"        , tr("Color")        ,""     , this, &SevenSegment::color   ,     &SevenSegment::setColor, "enum" ),
+new BoolProp<SevenSegment>( "Vertical_Pins", tr("Vertical Pins"),""     , this, &SevenSegment::verticalPins, &SevenSegment::setVerticalPins )
     }} );
     addPropGroup( { tr("Electric"), {
 new BoolProp<SevenSegment>( "CommonCathode", tr("Common Cathode"),"",  this, &SevenSegment::isComCathode, &SevenSegment::setComCathode),
@@ -114,10 +113,10 @@ void SevenSegment::stamp()
                 m_cathodePin[pin]->setEnode( m_enode[j] );
 }   }   }   }
 
-void SevenSegment::setColorStr( QString color )
+void SevenSegment::setColor( int color )
 {
     m_ledColor = color;
-    for( LedSmd* segment : m_segment ) segment->setColorStr( color );
+    for( LedSmd* segment : m_segment ) segment->setColor( color );
 }
 
 QStringList SevenSegment::getEnums( QString e )
@@ -254,7 +253,7 @@ void SevenSegment::createDisplay(int n )
         lsmd->setRes( m_resistance );
         lsmd->setMaxCurrent( m_maxCurrent );
         lsmd->setThreshold( m_threshold );
-        lsmd->setColorStr( m_ledColor );
+        lsmd->setColor( m_ledColor );
 
         m_anodePin  [n*8+i] = lsmd->getEpin(0);
         m_cathodePin[n*8+i] = lsmd->getEpin(1);

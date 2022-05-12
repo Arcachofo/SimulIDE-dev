@@ -49,7 +49,12 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
     m_voltBase = 0;
     m_lastVout = 0;
     m_waveType = Sine;
-    m_waves.append({tr("Sine"),tr("Saw"),tr("Triangle"),tr("Square"),tr("Random")});
+    m_waves = QStringList()
+        <<tr("Sine")
+        <<tr("Saw")
+        <<tr("Triangle")
+        <<tr("Square")
+        <<tr("Random");
     
     setSteps( 100 );
     setDuty( 50 );

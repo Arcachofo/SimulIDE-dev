@@ -40,9 +40,7 @@ void EnumVal::setup()
 
     QString valStr = m_property->getValStr();
 
-    if( m_property->type() == "string" ) valueBox->setCurrentText( valStr );
-    else                                 valueBox->setCurrentIndex( valStr.toInt() );
-
+    valueBox->setCurrentIndex( valStr.toInt() );
 
     m_blocked = false;
     updtValues();
@@ -68,7 +66,7 @@ void EnumVal::on_valueBox_currentIndexChanged( QString val )
     if( m_blocked ) return;
     if( m_property->type() == "string" ) m_property->setValStr( val );
     else m_property->setValStr( QString::number( valueBox->currentIndex() ) );
-    if( showVal->isChecked() ) m_component->setValLabelText( valueBox->currentText() );
+    if( showVal->isChecked() ) m_component->setValLabelText( val );
 }
 
 void EnumVal::updtValues()

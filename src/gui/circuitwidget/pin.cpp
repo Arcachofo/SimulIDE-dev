@@ -137,7 +137,7 @@ void  Pin::setConnector( Connector* connector )
     if( connector )
     {
         setCursor( Qt::ArrowCursor );
-        if( m_isBus ) my_connector->setIsBus( true );
+        if( m_isBus ) connector->setIsBus( true );
     }else{
         m_conPin = NULL;
         setCursor( Qt::CrossCursor );

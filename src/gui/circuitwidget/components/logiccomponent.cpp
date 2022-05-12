@@ -24,8 +24,6 @@
 #include "circuit.h"
 #include "iopin.h"
 
-QStringList LogicComponent::m_triggers = {"None","Clock","Enable"};
-
 LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
               : IoComponent( parent, type, id )
               , eClockedDevice( id )
@@ -34,6 +32,11 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
     m_tristate = false;
     m_openCol  = false;
     m_outEnable = true;
+
+    m_triggers = QStringList()
+        << QObject::tr("None")
+        << QObject::tr("Clock")
+        << QObject::tr("Enable");
 }
 LogicComponent::~LogicComponent(){}
 
@@ -106,6 +109,9 @@ void LogicComponent::setTriggerStr( QString t )
     int index = t.toInt( &ok );
     if( !ok ) index = m_triggers.indexOf( t );
     setTrigger( (trigger_t)index );
+
+    //if( m_showVal && (m_showProperty == "Trigger") )
+    //    setValLabelText( m_triggers.at( t ) )
 }
 
 void LogicComponent::enableOutputs( bool en )

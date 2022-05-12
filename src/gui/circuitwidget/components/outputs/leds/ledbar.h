@@ -35,8 +35,8 @@ class MAINMODULE_EXPORT LedBar : public Component
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        QString colorStr();
-        void setColorStr( QString c );
+        int color();
+        void setColor( int color );
 
         int  size() { return m_size; }
         void setSize( int size );

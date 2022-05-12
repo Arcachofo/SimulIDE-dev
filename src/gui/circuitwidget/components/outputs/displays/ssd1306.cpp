@@ -24,7 +24,6 @@
 #include "simulator.h"
 #include "iopin.h"
 
-#include "stringprop.h"
 #include "doubleprop.h"
 #include "intprop.h"
 
@@ -51,7 +50,11 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     m_graphical = true;
     m_area = QRectF( -70, -48, 140, 88 );
     m_address = m_cCode = 0b00111100; // 0x3A - 60
-    m_colors.append({ tr("White"), tr("Blue"), tr("Yellow") });
+
+    m_colors = QStringList()
+        << tr("White")
+        << tr("Blue")
+        << tr("Yellow");
 
     m_pin.resize( 2 );
     m_clkPin = new IoPin( 270, QPoint(-48, 48), id+"-PinSck" , 0, this, openCo );
@@ -81,9 +84,9 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     initialize();
 
     addPropGroup( { tr("Main"), {
-new StringProp<Ssd1306>( "Color"       , tr("Color")       ,""    ,this,&Ssd1306::color,  &Ssd1306::setColor,"enum" ),
-new IntProp   <Ssd1306>( "Control_Code",tr("I2C Address")  ,""    ,this,&Ssd1306::cCode,  &Ssd1306::setCcode,"uint" ),
-new DoubProp  <Ssd1306>( "Frequency"   ,tr("I2C Frequency"),"_KHz",this,&Ssd1306::freqKHz,&Ssd1306::setFreqKHz ),
+new IntProp <Ssd1306>( "Color"       , tr("Color")       ,""    ,this,&Ssd1306::color,  &Ssd1306::setColor,"enum" ),
+new IntProp <Ssd1306>( "Control_Code",tr("I2C Address")  ,""    ,this,&Ssd1306::cCode,  &Ssd1306::setCcode,"uint" ),
+new DoubProp<Ssd1306>( "Frequency"   ,tr("I2C Frequency"),"_KHz",this,&Ssd1306::freqKHz,&Ssd1306::setFreqKHz ),
     }} );
 }
 Ssd1306::~Ssd1306(){}
@@ -413,16 +416,17 @@ void Ssd1306::updateStep()
     update();
 }
 
-void Ssd1306::setColor( QString c )
+void Ssd1306::setColor( int c )
 {
-    bool ok = false;
-    int index = c.toInt( &ok );
-    if( !ok ) index = m_colors.indexOf( c );
-    m_dColor = (dispColor)index;
+    if( c < 0 || c > m_colors.size()-1 ) return;
+    m_dColor = (dispColor)c;
 
-    if( m_dColor == White )  m_pdisplayImg->setColor( 1, qRgb(245, 245, 245) );
-    if( m_dColor == Blue  )  m_pdisplayImg->setColor( 1, qRgb(200, 200, 255) );
-    if( m_dColor == Yellow ) m_pdisplayImg->setColor( 1, qRgb(245, 245, 100) );
+    if( c == White )  m_pdisplayImg->setColor( 1, qRgb(245, 245, 245) );
+    if( c == Blue  )  m_pdisplayImg->setColor( 1, qRgb(200, 200, 255) );
+    if( c == Yellow ) m_pdisplayImg->setColor( 1, qRgb(245, 245, 100) );
+
+    if( m_showVal && (m_showProperty == "Color") )
+        setValLabelText( m_colors.at( c ) );
 }
 
 QStringList Ssd1306::getEnums( QString e )

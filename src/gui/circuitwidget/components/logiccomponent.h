@@ -60,7 +60,7 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
         bool m_tristate;
 
         IoPin*  m_oePin;
- static QStringList m_triggers;
+        QStringList m_triggers;
 };
 
 #endif

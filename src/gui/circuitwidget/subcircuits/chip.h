@@ -93,7 +93,8 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         QPixmap* m_BackPixmap;
         QGraphicsTextItem m_label;
 
- static QStringList m_subcTypes;
+        QStringList m_subcTypes;
+        //QStringList m_subcNames;
 };
 
 #endif

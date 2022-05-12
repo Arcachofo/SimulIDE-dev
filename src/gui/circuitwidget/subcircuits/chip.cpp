@@ -28,8 +28,6 @@
 #include "utils.h"
 #include "pin.h"
 
-QStringList Chip::m_subcTypes = {"None","Logic","Board","Shield","Module"};
-
 Chip::Chip( QObject* parent, QString type, QString id )
     : Component( parent, type, id )
     , eElement( id )
@@ -38,6 +36,20 @@ Chip::Chip( QObject* parent, QString type, QString id )
     m_id = id;
     QStringList list = id.split("-");
     if( list.size() > 1 ) m_name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
+
+    m_subcTypes = QStringList()
+        << "None"
+        << "Logic"
+        << "Board"
+        << "Shield"
+        << "Module";
+
+    /*m_subcNames = QStringList()
+        << QObject::tr("None")
+        << QObject::tr("Logic")
+        << QObject::tr("Board")
+        << QObject::tr("Shield")
+        << QObject::tr("Module");*/
 
     m_subcType = None;
     m_numpins = 0;
