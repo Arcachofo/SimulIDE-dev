@@ -61,6 +61,7 @@ double getMultiplier( QString mult );
 QString multToValStr( double value, QString mult );
 
 QString val2hex( int d );
+QString toDigit( int d );
 QString decToBase( int value, int base, int digits );
 
 //---------------------------------------------------

@@ -50,14 +50,19 @@ QString multToValStr( double value, QString mult )
 
 QString val2hex( int d )
 {
+    QString h = toDigit( d );
+    if( h.size()%2 ) h.prepend("0");
+    return h;
+}
+
+QString toDigit( int d )
+{
     QString Hex="0123456789ABCDEF";
     QString h = Hex.mid( d&0x0F, 1 );
-    while( d > 0x0F )
-    {
+    while( d > 0x0F ){
         d >>= 4;
         h.prepend( Hex.mid( d&0x0F, 1 ) );
     }
-    if( h.size()%2 ) h.prepend("0");
     return h;
 }
 
@@ -66,14 +71,15 @@ QString decToBase( int value, int base, int digits )
     QString converted = "";
     for( int i=0; i<digits; i++ )
     {
-        if( value >= base ) converted = val2hex( value%base ) + converted;
-        else                converted = val2hex( value ) + converted;
+        if( value >= base ) converted = toDigit( value%base ) + converted;
+        else                converted = toDigit( value ) + converted;
 
         if( i+1 == 4 ) converted = " " + converted;
         //if( (i+1)%8 == 0 ) converted = " " + converted;
 
         value = floor( value/base );
     }
+
     return converted;
 }
 
