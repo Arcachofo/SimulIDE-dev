@@ -1,0 +1,11 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+    <itemset category="MCS65" type="MCU" >
+        
+        <item name="6502" package="MCS65/MCS65" data="MCS65/MCS65"></item>
+    
+    </itemset>
+    
+</itemlib>

@@ -59,6 +59,7 @@ INCLUDEPATH += ../src \
     ../src/mcusim/cores/avr \
     ../src/mcusim/cores/i51 \
     ../src/mcusim/cores/pic \
+    ../src/mcusim/cores/mcs65 \
     ../src/mcusim/modules \
     ../src/mcusim/modules/extmem \
     ../src/mcusim/modules/usart \

@@ -55,7 +55,7 @@ class MAINMODULE_EXPORT ExtMemModule : public McuModule, public eElement
 
         virtual void reset() override;
 
-        void read( uint32_t addr, uint8_t mode );
+        void read( uint32_t addr, uint8_t mode=RW );
         void write( uint32_t addr, uint32_t data );
 
         uint32_t getData() { return m_data; }

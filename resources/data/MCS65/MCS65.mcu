@@ -1,0 +1,6 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="MCS65" core="MCS65" data="65536" prog="0" progword="1" eeprom="0" 
+            inst_cycle="1">
+            <include file="MCS65.xml" />
+</mcu>

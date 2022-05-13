@@ -220,9 +220,10 @@ void ItemLibrary::loadItems()
     addItem( AudioOut::libraryItem() );
     addItem( Lamp::libraryItem() );
     // Micro
-    addItem( new LibraryItem( QObject::tr("AVR"), QObject::tr("Micro"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("PIC"), QObject::tr("Micro"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( QObject::tr("I51"), QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( "AVR", QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( "PIC", QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( "I51", QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem("MCS65",QObject::tr("Micro"), "ic2.png","", NULL ) );
     addItem( Mcu::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Arduino"), QObject::tr("Micro"), "board.png","", NULL ) );
     addItem( new LibraryItem( QObject::tr("Shields"), QObject::tr("Micro"), "shield.png","", NULL ) );

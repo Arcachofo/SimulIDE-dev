@@ -73,6 +73,8 @@
 #include "i51usart.h"
 #include "i51port.h"
 
+#include "mcs65core.h"
+
 #include "utils.h"
 
 
@@ -950,6 +952,7 @@ void McuCreator::createCore( QString core )
     else if( core == "Pic14" )  mcu->cpu = new Pic14Core( mcu );
     else if( core == "Pic14e" ) mcu->cpu = new Pic14eCore( mcu );
     else if( core == "8051" )   mcu->cpu = new I51Core( mcu );
+    else if( core == "MCS65" )  mcu->cpu = new Mcs65Core( mcu );
 
     if( !m_stackEl.isNull() ) createStack( &m_stackEl );
 }
