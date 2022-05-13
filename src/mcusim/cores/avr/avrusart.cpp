@@ -128,7 +128,7 @@ void AvrUsart::configureC( uint8_t newUCSRnC ) // UCSRnC changed
     {
         if( !sm0 ) // Mode 2
         {
-            /// setPeriod(  m_mcu->simCycPI() );// Fixed baudrate 32 or 64
+            /// setPeriod(  m_mcu->psCycle() );// Fixed baudrate 32 or 64
         }
     }*/
 }
@@ -151,7 +151,7 @@ void AvrUsart::setBaurrate( uint8_t )
 {
     uint16_t ubrr = *m_UBRRnL | (m_UBRRHval & 0x0F)<<8 ;
 
-    uint64_t period = 16*(ubrr+1)*m_mcu->simCycPI();
+    uint64_t period = 16*(ubrr+1)*m_mcu->psCycle();
     if( m_speedx2 ) period /= 2;
 
     setPeriod( period );

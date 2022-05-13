@@ -1,38 +1,11 @@
-/* 8051 emulator core
- * Copyright 2006 Jari Komppa
- *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files( the
- * "Software" ), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject
- * to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- *
- *( i.e. the MIT License )
- *
- * m_opcodes.c
- * 8051 m_opcode simulation functions
- */
 /***************************************************************************
- *   Modified 2020 by santiago González                                    *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 3 of the License, or     *
- *  ( at your option ) any later version.                                  *
+ *   (at your option) any later version.                                   *
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
@@ -45,1602 +18,748 @@
  ***************************************************************************/
 
 #include "i51core.h"
-#include "mcuport.h"
+#include "extmem.h"
+#include "iopin.h"
 
-/// #define PSW m_sreg
-
-#define BAD_VALUE 0x77
-//#define PSW       m_sreg[0]
-#define ACC       m_acc[0]
-
-#define OPERAND1  m_progMem[PC+1]
-#define OPERAND2  m_progMem[PC+2]
-
-#define BANK_SELECT ( (STATUS(RS0)>>RS0) | (STATUS(RS1)>>RS1) ) //( (PSW & (PSWMASK_RS0|PSWMASK_RS1))>>PSW_RS0 )
-#define INDIR_RX_ADDRESS ( m_dataMem[(m_opcode & 1) + 8*BANK_SELECT] )
-#define RX_ADDRESS ( (m_opcode & 7) + 8*BANK_SELECT )
+#define ACC  m_acc[0]
+#define BANK ( (STATUS(RS0)>>RS0) | (STATUS(RS1)>>RS1) ) //( (PSW & (PSWMASK_RS0|PSWMASK_RS1))>>PSW_RS0 )
+#define I_RX_VAL ( m_dataMem[(m_opcode & 1) + 8*BANK] )
+#define RX_ADDR ( (m_opcode & 7) + 8*BANK )
 
 I51Core::I51Core( eMcu* mcu  )
        : McuCore( mcu  )
 {
+    m_eaPin = mcu->getCtrlPin("EA");
+
     m_acc = m_mcu->getReg( "ACC" );
 
     m_upperData = (m_dataMemEnd > m_regEnd);
-
-    QHash<QString, McuPort*>  ports = mcu->getPorts();
-    for( QString portName : ports.keys() )
-    {
-        McuPort* port = ports.value( portName );
-        m_outPortAddr.emplace_back( port->getOutAddr() );
-        m_inPortAddr.emplace_back( port->getInAddr() );
-    }
 }
 I51Core::~I51Core() {}
 
 void I51Core::reset()
 {
     McuCore::reset();
+    m_cpuState = cpu_FETCH;
+
+    m_psStep = m_mcu->psCycle()/12;  // We are running at 2 cycles per Machine cycle
+
+    m_mcu->extMem->setLaEnSetTime(  0*m_psStep );  // LA 1
+    m_mcu->extMem->setAddrSetTime(  3*m_psStep );  // Addr pins
+    m_mcu->extMem->setLaEnEndTime(  4*m_psStep );  // LA 0
+    m_mcu->extMem->setReadSetTime(  6*m_psStep );  // PSEN 0
+    m_mcu->extMem->setReadBusTime( 12*m_psStep-10 ); // PSEN 1, Read data Bus
 }
 
-void I51Core::pushStack8( uint8_t aValue )
+uint8_t I51Core::GetOper1() { PC++; return m_progMem[PC]; }
+uint8_t I51Core::GetOper2() { PC++; return m_progMem[PC]; }
+
+void I51Core::operRgx() { m_op0 = m_dataMem[m_RxAddr]; }
+void I51Core::operInd() { m_op0 = m_dataMem[ checkAddr( I_RX_VAL ) ]; }
+void I51Core::operI08() { m_dataEvent.append( IMME | ORIG | PGM ); }     // m_op0 = data
+void I51Core::operDir() { m_dataEvent.append( DIRE | ORIG | PGM ); }     // m_op0 = GET_RAM( data );
+void I51Core::operRel() { m_dataEvent.append( RELA | ORIG | PGM );       // m_op2 = data;
+                          m_dataEvent.append( RELA        | PGM ); }     // m_offset = data;
+
+void I51Core::addrRgx() { m_opAddr = m_RxAddr; }
+void I51Core::addrInd() { m_opAddr = checkAddr( I_RX_VAL );}             //
+void I51Core::addrI08() { m_dataEvent.append( IMME | PGM ); }            // m_opAddr = data;
+void I51Core::addrDir() { m_dataEvent.append( DIRE | PGM ); }            // m_opAddr = data;
+void I51Core::addrBit( bool invert ) { m_dataEvent.append( BIT  | PGM ); // m_opAddr = addr, m_op0 = bitMask
+                                       m_invert = invert; }
+
+void I51Core::pushStack8( uint8_t value )
 {
     REG_SPL++;
-    uint16_t address = REG_SPL;
-
-    if( REG_SPL > m_lowDataMemEnd )
-    {
-        //if( m_upperData )  m_upperData[REG_SP] = aValue;
-        if( m_upperData ) address += m_regEnd;
-        else // No Upper Data
-        {
-            ////if( aCPU->except ) aCPU->except(EXCEPTION_STACK );
-        }
-    }
-    m_dataMem[address] = aValue;
-
-    ////if(( REG_SP == 0 ) && ( aCPU->except )) aCPU->except(EXCEPTION_STACK );
+    uint16_t address = checkAddr( REG_SPL );
+    m_dataMem[address] = value;
 }
 
 uint8_t I51Core::popStack8()
 {
-    uint8_t  value = BAD_VALUE;
-    uint16_t address = REG_SPL;
-
-    if( address > m_lowDataMemEnd )
-    {
-        if( m_upperData ) address += m_regEnd;
-        ////else if( aCPU->except  ) aCPU->except(EXCEPTION_STACK );
-    }
-    value = m_dataMem[address];
-
+    uint16_t address = checkAddr( REG_SPL );
+    uint8_t value = m_dataMem[address];
     REG_SPL--;
-
-    ////if(( REG_SP == 0 ) && ( aCPU->except )) aCPU->except(EXCEPTION_STACK );
     return value;
 }
 
-void I51Core::add_solve_flags( uint8_t value1, uint8_t value2, uint8_t acc )
+void I51Core::addFlags( uint8_t value1, uint8_t value2, uint8_t acc )
 {
-    /* Carry: overflow from 7th bit to 8th bit */
-    /// PSW[Cy] = ( value1+value2+acc ) >> 8;
-    uint8_t cy = ((value1+value2+acc)>>1) & 1<<7;
-    write_S_Bit( Cy, cy );
-
-    /* Auxiliary carry: overflow from 3th bit to 4th bit */
-    ///PSW[AC] =( (value1 & 7 )+( value2 & 7 ) + acc ) >> 3;
-    write_S_Bit( AC, ((value1 & 7 )+( value2 & 7 ) + acc) & 1<<3 );
-
-    /* Overflow: overflow from 6th or 7th bit, but not both */
-    /// PSW[OV] =( ((value1 & 127 )+( value2 & 127 ) + acc ) >> 7 )^PSW[Cy];
-    write_S_Bit( OV, ((value1 & 127 )+( value2 & 127 ) + acc ) ^ cy );
+    uint8_t c = ((value1+value2+acc)>>1) & 1<<7;
+    write_S_Bit( Cy, c );                                                // Carry: overflow from 7th bit to 8th bit
+    write_S_Bit( AC, ((value1 & 7   )+( value2 & 7   ) + acc ) & 1<<3 ); // Auxiliary carry: overflow from 3th bit to 4th bit
+    write_S_Bit( OV, ((value1 & 127 )+( value2 & 127 ) + acc ) ^ c    ); // Overflow: overflow from 6th or 7th bit, but not both
 }
 
-void I51Core::sub_solve_flags( uint8_t value1, uint8_t value2 )
+void I51Core::subFlags( uint8_t value1, uint8_t value2 )
 {
-    ///PSW[Cy] =( (value1-value2) >> 8 ) & 1;
-    uint8_t cy = ((value1-value2)>>1) & 1<<7; //Carry: overflow from 7th bit to 8th bit
-    write_S_Bit( Cy, cy );
-
-    /// PSW[AC] =( ((value1 & 7 )-( value2 & 7 )) >> 3 ) & 1;
-    write_S_Bit( AC, ((value1 & 7 )-( value2 & 7 )) & 1<<3 );
-
-    /// PSW[OV] =( (((value1 & 127 )-( value2 & 127 )) >> 7 ) & 1 )^PSW[Cy];
-    write_S_Bit( OV, ((value1 & 127 )-( value2 & 127 )) ^ cy );
+    uint8_t c = ((value1-value2)>>1) & 1<<7; //Carry: overflow from 7th bit to 8th bit
+    write_S_Bit( Cy, c );                                             // Carry: overflow from 7th bit to 8th bit
+    write_S_Bit( AC, ((value1 & 7   )-( value2 & 7   )) & 1<<3 );
+    write_S_Bit( OV, ((value1 & 127 )-( value2 & 127 )) ^ c    );
 }
 
 // INSTRUCTIONS -----------------------------
 
-void I51Core::acall_offset()
-{
-    int address = (( PC+2 ) & 0xf800) | OPERAND1 |( (m_opcode & 0xe0 ) << 3 );
+void I51Core::AJMP() { PC = ((PC+2) & 0xF800) | m_opAddr | (( m_opcode & 0xE0 ) << 3 ); }
+void I51Core::LJMP() { PC = m_opAddr; }
+void I51Core::JMP()  { PC = GET_REG16_LH( REG_DPL ) + ACC; }
+void I51Core::SJMP() { PC += (int8_t)m_opAddr; }
 
-    ///push_addr( PC+2 );
-    pushStack8(( PC+2 ) & 0xff );
+void I51Core::ACALL()
+{
+    pushStack8(( PC+2 ) & 0xFF );
     pushStack8(( PC+2 ) >> 8 );
-
-    PC = address;
-    m_mcu->cyclesDone = 2;
+    AJMP();
 }
 
-void I51Core::add_a_imm()
+void I51Core::RR() { ACC = (ACC >> 1) | (ACC << 7); }
+void I51Core::RL() { ACC = (ACC << 1) | (ACC >> 7); }
+
+void I51Core::RRC()
 {
-    add_solve_flags( ACC, OPERAND1, 0 );
-    ACC += OPERAND1;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
+    uint8_t c = STATUS(Cy);
+    write_S_Bit( Cy, ACC & 1 );
+    ACC = (ACC >> 1) | c; // STATUS carry is already in bit 7
 }
 
-void I51Core::add_a_mem()
-{
-    int value = GET_RAM( OPERAND1 );
-    add_solve_flags( ACC, value, 0 );
-    ACC += value;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::add_a_indir_rx()
-{
-    int address = INDIR_RX_ADDRESS;
-
-    if( address > m_lowDataMemEnd )
-    {
-        if( m_upperData ) address += m_regEnd ;
-    }
-    add_solve_flags( ACC, m_dataMem[address], 0 );
-    ACC += m_dataMem[address];
-
-    incDefault();
-}
-
-void I51Core::rlc_a()
+void I51Core::RLC()
 {
     uint8_t newc = ACC & (1<<7);
-
-    /// ACC = (ACC << 1) | PSW[Cy];
     ACC = ACC << 1;
     if( STATUS(Cy) ) ACC += 1;
-
-    //PSW[Cy] = newc;
     write_S_Bit( Cy, newc );
-
-    incDefault();
 }
 
-void I51Core::addc_a_imm()
+void I51Core::LCALL()
 {
-    uint8_t carry = STATUS(Cy) >> Cy;///  PSW[Cy];
-
-    add_solve_flags( ACC, OPERAND1, carry );
-
-    ACC += OPERAND1 + carry;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::addc_a_mem()
-{
-    uint8_t carry = STATUS(Cy) >> Cy;///  PSW[Cy];
-    int value = GET_RAM( OPERAND1 );
-    add_solve_flags( ACC, value, carry );
-    ACC += value + carry;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::anl_mem_a()
-{
-    int address = OPERAND1;
-    SET_RAM( address, m_dataMem[address] &= ACC ); //if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] &= ACC; //else m_dataMem[address] &= ACC;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::anl_mem_imm()
-{
-    int address = OPERAND1;
-    SET_RAM( address, m_dataMem[address] &= OPERAND2 ); // if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] &= OPERAND2; //else m_dataMem[address] &= OPERAND2;
-    PC += 3;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::anl_a_imm()
-{
-    ACC &= OPERAND1;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::anl_a_mem()
-{
-    int value = GET_RAM( OPERAND1 );
-    ACC &= value;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::anl_a_indir_rx()
-{
-    ACC &= GET_RAM( INDIR_RX_ADDRESS );
-    incDefault();
-}
-
-void I51Core::anl_a_rx()
-{
-    int rx = RX_ADDRESS;
-    ACC &= m_dataMem[rx];
-    incDefault();
-}
-
-void I51Core::ajmp_offset()
-{
-    PC = ((PC+2) & 0xf800) | OPERAND1 | (( m_opcode & 0xe0 ) << 3 );
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::ljmp_address()
-{
-    PC = ( OPERAND1 << 8 ) | OPERAND2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::rr_a()
-{
-    ACC = (ACC >> 1) | (ACC << 7);
-    incDefault();
-}
-
-void I51Core::inc_a()
-{
-    ACC++;
-    incDefault();
-}
-
-void I51Core::inc_mem()
-{
-    int address = OPERAND1;
-    SET_RAM( address, m_dataMem[address]++ );
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::inc_indir_rx()
-{
-    int address = INDIR_RX_ADDRESS;
-    if( address > m_lowDataMemEnd )
-    {
-        if( m_upperData ) address += m_regEnd;
-    }
-    m_dataMem[address]++;
-    incDefault();
-}
-
-void I51Core::lcall_address()
-{
-    ///push_addr( PC+3 );
-    pushStack8(( PC+3 ) & 0xff );
+    pushStack8(( PC+3 ) & 0xFF );
     pushStack8(( PC+3 ) >> 8 );
-
-    PC = (OPERAND1 << 8) | OPERAND2;
-
-    m_mcu->cyclesDone = 2;
+    PC = m_opAddr;
 }
 
-void I51Core::rrc_a()
+void I51Core::RET() { PC  = popStack8() << 8; PC |= popStack8(); }
+
+void I51Core::JBC()
 {
-    uint8_t c = STATUS(Cy); /// PSW[Cy];
-
-    ///PSW[Cy] = ACC & 1;
-    write_S_Bit( Cy, ACC & 1 );
-
-    ACC = (ACC >> 1);
-    if( c ) ACC |= c; // STATUS carry is already in bit 7
-
-    incDefault();
-}
-
-void I51Core::dec_a()
-{
-    ACC--;
-    incDefault();
-}
-
-void I51Core::dec_mem()
-{
-    int address = OPERAND1;
-
-    SET_RAM( address, m_dataMem[address]-- );
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::dec_indir_rx()
-{
-    int address = INDIR_RX_ADDRESS;
-    if( address > m_lowDataMemEnd )
+    if( m_dataMem[m_bitAddr] & m_bitMask )
     {
-        if( m_upperData ) address += m_regEnd;
+        m_dataMem[m_bitAddr] &= ~m_bitMask;
+        PC += (int8_t)m_opAddr;
     }
-    m_dataMem[address]--;
-
-    incDefault();
 }
 
-void I51Core::ret()
+void I51Core::JB()
+{ if(   m_dataMem[m_bitAddr] & m_bitMask  ) PC += (int8_t)m_opAddr; }
+
+void I51Core::JNB()
+{ if( !(m_dataMem[m_bitAddr] & m_bitMask) ) PC += (int8_t)m_opAddr; }
+
+void I51Core::JC()  { if(  STATUS(Cy) ) PC += (int8_t)m_opAddr; }
+void I51Core::JNC() { if( !STATUS(Cy) ) PC += (int8_t)m_opAddr; }
+void I51Core::JZ()  { if( !ACC        ) PC += (int8_t)m_opAddr; }
+void I51Core::JNZ() { if(  ACC        ) PC += (int8_t)m_opAddr; }
+
+void I51Core::MOVbc()
 {
-    PC = popStack8() << 8;
-    PC |= popStack8();
-    m_mcu->cyclesDone = 2;
+    uint8_t carry = STATUS(Cy) >> Cy;
+    uint8_t     value = m_dataMem[m_bitAddr] & ~m_bitMask; // Clear bit
+    if( carry ) value = m_dataMem[m_bitAddr] | m_bitMask;  // Set bit if Carry
+
+    SET_RAM( m_bitAddr, value );
 }
-
-void I51Core::rl_a()
+void I51Core::MOVc()
 {
-    ACC =( ACC << 1 ) | ( ACC >> 7 );
-    incDefault();
-}
-
-void I51Core::jbc_bitaddr_offset()
-{
-    uint8_t address = OPERAND1;
-    uint8_t bit = address & 7;
-    uint8_t bitmask =( 1 << bit );
-
-    address &= 0xf8;
-
-    if( (m_dataMem[address] & bitmask ) )
-    {
-        m_dataMem[address] &= ~bitmask;
-        PC += (int8_t)OPERAND2;
-    }
-    PC += 3;
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::jb_bitaddr_offset()
-{
-    uint8_t address = OPERAND1;
-    uint8_t bit = address & 7;
-    uint8_t bitmask =( 1 << bit );
-
-    address &= 0xf8;
-
-    if( getValue( address ) & bitmask )
-        PC += (int8_t)OPERAND2;
-
-    PC += 3;
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::jnb_bitaddr_offset()
-{
-    uint8_t address = OPERAND1;
-    uint8_t bit = address & 7;
-    uint8_t bitmask =( 1 << bit );
-
-    address &= 0xf8;
-
-    if( !(getValue( address ) & bitmask ) )
-        PC += (int8_t)OPERAND2;
-
-    PC += 3;
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::jc_offset()
-{
-    if( STATUS(Cy) ) PC += (signed char)OPERAND1;
-    PC += 2;
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::reti()
-{
-    RETI();
-}
-
-void I51Core::addc_a_indir_rx()
-{
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-
-    int value = GET_RAM( INDIR_RX_ADDRESS );
-
-    add_solve_flags( ACC, value, carry );
-    ACC += value + carry;
-
-    incDefault();
-}
-
-void I51Core::orl_mem_a()
-{
-    int address = OPERAND1;
-
-    SET_RAM( address, m_dataMem[address] | ACC );
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::orl_mem_imm()
-{
-    int address = OPERAND1;
-
-    SET_RAM( address, m_dataMem[address] | OPERAND2 );
-
-    PC += 3;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::orl_a_imm()
-{
-    ACC |= OPERAND1;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::orl_a_mem()
-{
-    ACC |= GET_RAM( OPERAND1 );
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::orl_a_indir_rx()
-{
-    ACC |= GET_RAM( INDIR_RX_ADDRESS );
-    incDefault();
-}
-
-void I51Core::jnc_offset()
-{
-    if( STATUS(Cy) ) PC += 2;
-    else             PC +=(signed char)OPERAND1 + 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::jz_offset()
-{
-    if( !ACC ) PC +=(signed char)OPERAND1 + 2;
-    else       PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::xrl_mem_a()
-{
-    int address = OPERAND1;
-    SET_RAM( address, m_dataMem[address] ^ ACC ); //if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] ^= ACC; //else m_dataMem[address] ^= ACC;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::xrl_mem_imm()
-{
-    int address = OPERAND1;
-    SET_RAM( address, m_dataMem[address] ^ OPERAND2 ); //if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] ^= OPERAND2; //else m_dataMem[address] ^= OPERAND2;
-    PC += 3;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::xrl_a_imm()
-{
-    ACC ^= OPERAND1;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::xrl_a_mem()
-{
-    int value = GET_RAM( OPERAND1 );
-    ACC ^= value;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::xrl_a_indir_rx()
-{
-    ACC ^= GET_RAM( INDIR_RX_ADDRESS );
-    incDefault();
-}
-
-
-void I51Core::jnz_offset()
-{
-    if( ACC ) PC +=(signed char)OPERAND1 + 2;
-    else      PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::orl_c_bitaddr()
-{
-    int address = OPERAND1;
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-
-    int bit = address & 7;
-    int bitmask = 1 << bit;
-
-    address &= 0xf8;
-    int value = getValue( address );
-    value = (value & bitmask) ? 1 : carry;
-    /// PSW[Cy] = value;
+    uint8_t value = (m_dataMem[m_bitAddr] & m_bitMask) ? 1 : 0;
     write_S_Bit( Cy, value );
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
 }
 
-void I51Core::jmp_indir_a_dptr()
+void I51Core::ORLc()
 {
-    PC =( (m_dataMem[REG_DPH] << 8 ) | m_dataMem[REG_DPL] ) + ACC;
-    m_mcu->cyclesDone = 2;
-}
+    uint8_t carry = STATUS(Cy) >> Cy;
 
-void I51Core::mov_a_imm()
-{
-    ACC = OPERAND1;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
+    uint8_t value = m_dataMem[m_bitAddr] & m_bitMask;
+    if( m_invert ) value = value ? 1 : carry;
+    else           value = value ? carry : 1;
 
-void I51Core::mov_mem_imm()
-{
-    int address = OPERAND1;
-    SET_RAM( address, OPERAND2 ); //if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] = OPERAND2; //else m_dataMem[address] = OPERAND2;
-
-    PC += 3;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::mov_indir_rx_imm()
-{
-    uint16_t address = INDIR_RX_ADDRESS;
-    int value = OPERAND1;
-
-    if( address > m_lowDataMemEnd )
-    {
-        if( m_upperData )
-        {
-            address += m_regEnd;//m_upperData[address - 0x80] = value;
-            if( address <= m_dataMemEnd ) m_dataMem[address] = value;
-        }
-    }
-    else m_dataMem[address] = value;
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::sjmp_offset()
-{
-    PC +=(signed char)(OPERAND1 ) + 2;
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::anl_c_bitaddr()
-{
-    int address = OPERAND1;
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-
-    int bit = address & 7;
-    int bitmask =( 1 << bit );
-    address &= 0xf8;
-    int value =( getValue( address ) & bitmask ) ? carry : 0;
-
-    /// PSW[Cy] = value ;
     write_S_Bit( Cy, value );
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
 }
 
-void I51Core::movc_a_indir_a_pc()
+void I51Core::ANLc()
 {
-    int address = PC+1 + ACC;
-    ACC = m_progMem[address & (m_progSize - 1)];
-    incDefault();
+    uint8_t carry = STATUS(Cy) >> Cy;
+
+    uint8_t value = m_dataMem[m_bitAddr] & m_bitMask ;
+    if( m_invert ) value = value ? 0 : carry;
+    else           value = value ? carry : 0;
+
+    write_S_Bit( Cy, value );
 }
 
-void I51Core::div_ab()
+void I51Core::CLRc()  { clear_S_Bit( Cy ); }
+void I51Core::SETBc() { set_S_Bit( Cy ); }
+void I51Core::CPLc()  { *m_STATUS ^= 1 << Cy; }
+
+void I51Core::CLRb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] & ~m_bitMask ); }
+void I51Core::SETBb() { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] | m_bitMask ); }
+void I51Core::CPLb()  { SET_RAM( m_bitAddr, m_dataMem[m_bitAddr] ^ m_bitMask ); }
+
+void I51Core::CJNE()  ///
 {
-    int a = ACC;
-    int b = m_dataMem[REG_B];
-    int res;
-    //PSW &= ~(PSWMASK_C|PSWMASK_OV );
-    /// PSW[Cy] = 0;
+    write_S_Bit( Cy, m_op0 < m_op2 );
+    if( m_op0 != m_op2 ) PC += m_opAddr;
+}
+
+void I51Core::DJNZ()
+{
+    int value = m_dataMem[m_op0]-1; // m_op0 = Rx or Dir
+    SET_RAM( m_op0, value );
+    if( value ) PC += (int8_t)m_opAddr;
+}
+
+void I51Core::PUSH() { pushStack8( m_op0 ); }
+void I51Core::POP()  { SET_RAM( m_opAddr, popStack8() ); }
+
+void I51Core::CLRa()  { ACC = 0; }
+void I51Core::CPLa()  { ACC = ~ACC; }
+void I51Core::SWAPa() { ACC = (ACC << 4) | (ACC >> 4); }
+void I51Core::DAa()
+{
+    uint8_t AL = ACC & 0x0F;
+    if( AL > 0x09 || STATUS(AC) ){
+        AL  += 6;
+        ACC += 6;
+        if( AL & 1<<4 ) set_S_Bit( Cy );
+    }
+    uint8_t AH = (ACC & 0xF0) >> 4;
+    if( AH > 0x09 || STATUS(AC) ){
+        AH += 0x06;
+        if( AH & 1<<4 ) set_S_Bit( Cy );
+        ACC = AL | (AH << 4);
+    }
+}
+
+void I51Core::INCd()
+{
+    //SET_REG16_LH( GET_REG16_LH( REG_DPL ) + 1);
+    SET_RAM( REG_DPL, m_dataMem[REG_DPL]+1);
+    if( !m_dataMem[REG_DPL] ) SET_RAM( REG_DPH, m_dataMem[REG_DPH]+1 );
+}
+void I51Core::INC() { m_dataMem[m_opAddr]++; }
+void I51Core::DEC() { m_dataMem[m_opAddr]--; }
+
+void I51Core::ADD() { addFlags( m_op0, ACC, 0 ); ACC += m_op0; }
+void I51Core::ADDC()
+{
+    uint8_t carry = STATUS(Cy) >> Cy;
+    addFlags( m_op0, ACC, carry );
+    ACC += m_op0 + carry;
+}
+void I51Core::ORLm() { SET_RAM( m_opAddr, m_dataMem[m_opAddr] | m_op0 ); }
+void I51Core::ANLm() { SET_RAM( m_opAddr, m_dataMem[m_opAddr] & m_op0 ); }
+void I51Core::XRLm() { SET_RAM( m_opAddr, m_dataMem[m_opAddr] ^ m_op0 ); }
+
+void I51Core::ORLa() { ACC |= m_op0; }
+void I51Core::ANLa() { ACC &= m_op0; }
+void I51Core::XRLa() { ACC ^= m_op0; }
+
+void I51Core::SUBB()
+{
+    if( STATUS(Cy) ) m_op0--;
+    subFlags( ACC, m_op0 );
+    ACC -= m_op0;
+}
+
+void I51Core::XCH() //
+{
+    uint8_t a = ACC ;
+    ACC = m_dataMem[m_opAddr];
+    SET_RAM( m_opAddr, a );
+}
+
+void I51Core::XCHD()
+{
+    uint8_t value = m_dataMem[m_opAddr];
+    m_dataMem[m_opAddr] = (value & 0xF0) | (ACC & 0x0F);
+    ACC = (ACC & 0xF0) | (value & 0x0F);
+}
+
+void I51Core::DIVab()
+{
+    uint A = ACC;
+    uint B = m_dataMem[REG_B];
+
+    if( B ){
+        ACC = A/B;
+        m_dataMem[REG_B] = A % B;
+        clear_S_Bit( OV );
+    }
+    else set_S_Bit( OV );
+
     clear_S_Bit( Cy );
-
-    //PSW[OV] = 0;
-    clear_S_Bit( OV );
-
-    if( b )
-    {
-        res = a/b;
-        b = a % b;
-        a = res;
-    }
-    else set_S_Bit( OV ); /// PSW[OV] = 1;
-
-    ACC = a;
-    SET_RAM( REG_B, b );
-    PC++;
-    m_mcu->cyclesDone = 3;
 }
 
-void I51Core::mov_mem_mem()
+void I51Core::MULab()
 {
-    int address = OPERAND2;
-    int value = getValue( OPERAND1 );
+    uint res = ACC*m_dataMem[REG_B];
+    ACC = res & 0xFF;
+    m_dataMem[REG_B] = res >> 8;
 
-    SET_RAM( address, value );// if( address > m_lowDataMemEnd ) aCPU->mSFR[address - 0x80] = value; else m_dataMem[address] = value;
-    PC += 3;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::mov_mem_indir_rx()
-{
-    int address1 = OPERAND1;
-    int address2 = INDIR_RX_ADDRESS;
-
-    if( address1 > m_lowDataMemEnd )
-    {
-        if( address2 > m_lowDataMemEnd )
-        {
-            int value = BAD_VALUE;
-            if( m_upperData ) value = m_dataMem[address2+m_regEnd];
-            SET_RAM( address1, value ); //aCPU->mSFR[address1 - 0x80] = value;
-        }
-        else m_dataMem[address1+m_regEnd] = m_dataMem[address2];
-    }
-    else{
-        if( address2 > m_lowDataMemEnd )
-        {
-            int value = BAD_VALUE;
-            if( m_upperData ) value = m_dataMem[address2+m_regEnd];
-            m_dataMem[address1] = value;
-        }
-        else m_dataMem[address1] = m_dataMem[address2];
-    }
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::mov_dptr_imm()
-{
-    SET_RAM( REG_DPH, OPERAND1 );
-    SET_RAM( REG_DPL, OPERAND2 );
-    PC += 3;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::mov_bitaddr_c()
-{
-    int address = OPERAND1;
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-    if( address > m_lowDataMemEnd )
-    {
-        int bit = address & 7;
-        int bitmask =( 1 << bit );
-        address &= 0xf8;
-        SET_RAM( address, (m_dataMem[address] & ~bitmask ) | ( carry << bit ) );
-    }
-    else{
-        int bit = address & 7;
-        int bitmask =( 1 << bit );
-        address >>= 3;
-        address += 0x20;
-        m_dataMem[address] =( m_dataMem[address] & ~bitmask ) | ( carry << bit );
-    }
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::movc_a_indir_a_dptr()
-{
-    int address = ( m_dataMem[REG_DPH] << 8 ) | (( m_dataMem[REG_DPL] << 0 )+ACC);
-    ACC = m_progMem[address & (m_progSize - 1)];
-    PC++;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::subb_a_imm()
-{
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-    sub_solve_flags(ACC, OPERAND1 + carry );
-    ACC -= OPERAND1 + carry;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::subb_a_mem()
-{
-    int value = GET_RAM( OPERAND1 );
-    if( STATUS(Cy) ) value++;
-    sub_solve_flags( ACC, value );
-    ACC -= value;
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-void I51Core::subb_a_indir_rx()
-{
-    int value = GET_RAM( INDIR_RX_ADDRESS );
-    int address = INDIR_RX_ADDRESS;
-
-    if( address <= m_lowDataMemEnd )
-    { if( STATUS(Cy) ) value += 1;}
-
-    sub_solve_flags( ACC, value );
-    ACC -= value;
-
-    incDefault();
-}
-
-void I51Core::orl_c_compl_bitaddr()
-{
-    int address = OPERAND1;
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-
-    int bit = address & 7;
-    int bitmask =( 1 << bit );
-    address &= 0xf8;
-    int value =( getValue( address ) & bitmask ) ? carry : 1;
-    /// PSW[Cy] = value ;
-    write_S_Bit( Cy, value );
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::mov_c_bitaddr()
-{
-    int address = OPERAND1;
-
-    int bit = address & 7;
-    int bitmask =( 1 << bit );
-    address &= 0xf8;
-    int value = getValue( address );
-    value =( value & bitmask ) ? 1 : 0;
-
-    /// PSW[Cy] = value ;
-    write_S_Bit( Cy, value );
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::inc_dptr()
-{
-    SET_RAM( REG_DPL, m_dataMem[REG_DPL]+1); //aCPU->mSFR[REG_DPL]++;
-
-    if( !m_dataMem[REG_DPL] ) SET_RAM( REG_DPH, m_dataMem[REG_DPH]+1 );//aCPU->mSFR[REG_DPH]++;
-    incDefault();
-}
-
-void I51Core::mul_ab()
-{
-    int a = ACC;
-    int b = m_dataMem[REG_B];
-    int res = a*b;
-    ACC = res & 0xff;
-    SET_RAM( REG_B, res >> 8 );
-
-    //PSW &= ~(PSWMASK_C|PSWMASK_OV );
-
-    /// PSW[Cy] = 0;
+    write_S_Bit( OV, m_dataMem[REG_B] );
     clear_S_Bit( Cy );
-
-    /// PSW[OV] = 0;
-    clear_S_Bit( OV );
-
-    ////if( aCPU->mSFR[REG_B] ) PSW |= PSWMASK_OV;
-    PC++;
-    m_mcu->cyclesDone = 3;
 }
 
-void I51Core::mov_indir_rx_mem()
-{
-    int address = INDIR_RX_ADDRESS;
-    int value = GET_RAM( OPERAND1 );
-
-    if( address > m_lowDataMemEnd )
-    {
-        if( m_upperData ) m_dataMem[address+m_regEnd] = value;
-    }
-    else m_dataMem[address] = value;
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::anl_c_compl_bitaddr()
-{
-    int address = OPERAND1;
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-
-    int bit = address & 7;
-    int bitmask =( 1 << bit );
-    address &= 0xf8;
-    int value =(  getValue( address ) & bitmask ) ? 0 : carry;
-    /// PSW[Cy] = value ;
-    write_S_Bit( Cy, value );
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::cpl_bitaddr()
-{
-    int address = m_progMem[(PC+1 ) &( m_progSize - 1 )];
-
-    int bit = address & 7;
-    int bitmask =( 1 << bit );
-    address &= 0xf8;
-    SET_RAM( address, m_dataMem[address] ^ bitmask);
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::cpl_c()
-{
-    /// PSW[Cy] ^= 1;
-    *m_STATUS ^= 1 << Cy;
-    incDefault();
-}
-
-void I51Core::cjne_a_imm_offset()
-{
-    int value = OPERAND1;
-
-    /// if( ACC < value ) PSW[Cy] = 1;
-    /// else              PSW[Cy] = 0;
-    write_S_Bit( Cy, ACC < value );
-
-    if( ACC != value ) PC +=(signed char)OPERAND2 + 3;
-    else               PC += 3;
-
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::cjne_a_mem_offset()
-{
-    int address = OPERAND1;
-    int value = getValue( address );
-
-    /// if( ACC < value ) PSW[Cy] = 1;
-    /// else              PSW[Cy] = 0;
-    write_S_Bit( Cy, ACC < value );
-
-    if( ACC != value ) PC +=(signed char)OPERAND2 + 3;
-    else               PC += 3;
-
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::cjne_indir_rx_imm_offset()
-{
-    int address = INDIR_RX_ADDRESS;
-    int value1 = BAD_VALUE;
-    int value2 = OPERAND1;
-
-    if( address > m_lowDataMemEnd )
-    {
-        if( m_upperData ) value1 = m_dataMem[address+m_regEnd];
-    }
-    else value1 = m_dataMem[address];
-
-    /// if( value1 < value2 ) PSW[Cy] = 1;
-    /// else                  PSW[Cy] = 0;
-    write_S_Bit( Cy, value1 < value2 );
-
-    if( value1 != value2 ) PC +=(signed char)OPERAND2 + 3;
-    else                   PC += 3;
-
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::push_mem()
-{
-    int value = GET_RAM( OPERAND1 );
-    pushStack8(value );
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::clr_bitaddr()
-{
-    int address = m_progMem[(PC+1 ) &( m_progSize - 1 )];
-    if( address > m_lowDataMemEnd )
-    {
-        int bit = address & 7;
-        int bitmask =( 1 << bit );
-        address &= 0xf8;
-        SET_RAM( address, m_dataMem[address] & ~bitmask);
-    }
-    else{
-        int bit = address & 7;
-        int bitmask =( 1 << bit );
-        address >>= 3;
-        address += 0x20;
-        m_dataMem[address] &= ~bitmask;
-    }
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::clr_c()
-{
-    /// PSW[Cy] = 0;
-    clear_S_Bit( Cy );
-    incDefault();
-}
-
-void I51Core::swap_a()
-{
-    ACC =( ACC << 4 ) |( ACC >> 4 );
-    incDefault();
-}
-
-/*void I51Core::xch_a_mem()
-{
-    uint16_t address = OPERAND1;
-    int value = GET_RAM( address );
-
-    SET_RAM( address, ACC );
-
-    ACC = value;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::xch_a_indir_rx()
-{
-    uint16_t address = INDIR_RX_ADDRESS;
-    uint8_t val = GET_RAM( address );
-
-    SET_RAM( address, ACC );
-    ACC = val;
-
-    PC++;
-    m_mcu->cyclesDone = 1;
-}*/
-
-void I51Core::xch_a_rx()
-{
-    int rx = RX_ADDRESS;
-    int a = ACC ;
-
-    ACC = m_dataMem[rx];
-    m_dataMem[rx] = a;
-
-    incDefault();
-}
-
-void I51Core::xch( uint16_t addr )
-{
-    int value = GET_RAM( addr );
-
-    SET_RAM( addr, ACC );
-    ACC = value;
-
-    incDefault();
-}
-
-void I51Core::pop_mem()
-{
-    SET_RAM( OPERAND1, popStack8() );
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::setb_bitaddr()
-{
-    int address = OPERAND1; //m_progMem[(PC+1) /*& ( m_progSize - 1 )*/];
-
-    int bit = address & 7;
-    int bitmask =( 1 << bit );
-    address &= 0xf8;
-
-    SET_RAM( address, m_dataMem[address] | bitmask);
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::setb_c()
-{
-    /// PSW[Cy] = 1;
-    set_S_Bit( Cy );
-    incDefault();
-}
-
-void I51Core::da_a()
-{
-    // data sheets for this operation are a bit unclear..
-    // - should AC( or C ) ever be cleared?
-    // - should this be done in two steps?
-
-    int result = ACC;
-    if( (result & 0xf ) > 9 || STATUS(AC) )
-        result += 0x6;
-
-    if( (result & 0xff0 ) > 0x90 || STATUS(Cy) )
-        result += 0x60;
-
-    if( result > 0x99 ) set_S_Bit(Cy); /// PSW[Cy] = 1;
-
-    ACC = result;
-
-    incDefault();
-}
-
-void I51Core::djnz_mem_offset()
-{
-    int address = OPERAND1;
-    int value;
-
-    SET_RAM( address, m_dataMem[address]-1 );
-    value = m_dataMem[address];
-
-    if( value ) PC +=(signed char)OPERAND2 + 3;
-    else        PC += 3;
-
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::xchd_a_indir_rx()
-{
-    int address = INDIR_RX_ADDRESS;
-
-    if( address > m_lowDataMemEnd )
-    {
-        if( m_upperData ) address += m_regEnd;
-    }
-    int value = m_dataMem[address];
-
-    m_dataMem[address] =( m_dataMem[address] & 0x0f ) |( ACC & 0x0f );
-
-    ACC =( ACC & 0xf0 ) |( value & 0x0f );
-    incDefault();
-}
-
+void I51Core::MOVr()  { m_dataMem[m_opAddr] = m_op0; }
+void I51Core::MOVm()  { SET_RAM( m_opAddr, m_op0 ); }
+void I51Core::MOVa()  { ACC = m_op0; }
+void I51Core::MOVCd() { ACC = m_progMem[ GET_REG16_LH( REG_DPL ) + ACC ]; }
+void I51Core::MOVCp() { ACC = m_progMem[ PC + 1 + ACC ]; }
+void I51Core::MOVd()  { SET_REG16_LH( REG_DPL, m_opAddr ); }
 
 void I51Core::movx_a_indir_dptr()
 {
-    /////
     /*int dptr =( m_dataMem[REG_DPH] << 8 ) | m_dataMem[REG_DPL];
-    if( aCPU->xread )
-    {
-        ACC = aCPU->xread(dptr );
-    }
-    else
-    {
-        if( aCPU->mExtData )
-            ACC = aCPU->mExtData[dptr &( aCPU->mExtDataSize - 1 )];
-    }*/
-    incDefault();
+    if       ( aCPU->xread )    ACC = aCPU->xread(dptr );
+    else { if( aCPU->mExtData ) ACC = aCPU->mExtData[dptr &( aCPU->mExtDataSize - 1 )]; }*/
 }
 
 void I51Core::movx_a_indir_rx()
 {
-    /////
-    /*int address = INDIR_RX_ADDRESS;
-    if( aCPU->xread )
-    {
-        ACC = aCPU->xread(address );
-    }
-    else
-    {
-        if( aCPU->mExtData )
-            ACC = aCPU->mExtData[address &( aCPU->mExtDataSize - 1 )];
-    }*/
-
-    incDefault();
-}
-
-void I51Core::clr_a()
-{
-    ACC = 0;
-    incDefault();
-}
-
-void I51Core::mov_a_mem()
-{
-    // mov a,acc is not a valid instruction
-    int address = OPERAND1;
-    int value = GET_RAM( address );
-    ////if( ( REG_ACC == address ) && ( aCPU->except ) ) aCPU->except(EXCEPTION_ACC_TO_A );
-    ACC = value;
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::mov_a_indir_rx()
-{
-    ACC = GET_RAM( INDIR_RX_ADDRESS );
-    incDefault();
+    /*int address = I_RX_VAL;
+    if       ( aCPU->xread )    ACC = aCPU->xread(address );
+    else { if( aCPU->mExtData ) ACC = aCPU->mExtData[address &( aCPU->mExtDataSize - 1 )]; }*/
 }
 
 void I51Core::movx_indir_dptr_a()
 {
-    /////
     /*int dptr =( m_dataMem[REG_DPH] << 8 ) | m_dataMem[REG_DPL];
-
-    if( aCPU->xwrite )
-    {
-        aCPU->xwrite(dptr, ACC );
-    }
-    else
-    {
-        if( aCPU->mExtData )
-            aCPU->mExtData[dptr &( aCPU->mExtDataSize - 1 )] = ACC;
-    }*/
-
-    incDefault();
+    if       ( aCPU->xwrite ) aCPU->xwrite(dptr, ACC );
+    else { if( aCPU->mExtData ) aCPU->mExtData[dptr &( aCPU->mExtDataSize - 1 )] = ACC; }*/
 }
 
 void I51Core::movx_indir_rx_a()
 {
-    /////
-    /*int address = INDIR_RX_ADDRESS;
+    /*int address = I_RX_VAL;
 
-    if( aCPU->xwrite )
-    {
-        aCPU->xwrite(address, ACC );
-    }
-    else
-    {
-        if( aCPU->mExtData )
-            aCPU->mExtData[address &( aCPU->mExtDataSize - 1 )] = ACC;
-    }*/
-
-    incDefault();
+    if( aCPU->xwrite ) aCPU->xwrite(address, ACC );
+    else { if( aCPU->mExtData ) aCPU->mExtData[address &( aCPU->mExtDataSize - 1 )] = ACC; }*/
 }
 
-void I51Core::cpl_a()
-{
-    ACC = ~ACC;
-    incDefault();
-}
-
-void I51Core::mov_mem_a()
-{
-    SET_RAM( OPERAND1, ACC );
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::mov_indir_rx_a()
-{
-    int address = INDIR_RX_ADDRESS;
-    if( address > m_lowDataMemEnd )
-    {
-        if( m_upperData ) m_dataMem[address+m_regEnd] = ACC;
-    }
-    else m_dataMem[address] = ACC;
-
-    incDefault();
-}
-
-void I51Core::nop()
-{
-    ////if(( m_progMem[PC] != 0 ) && ( aCPU->except )) aCPU->except(EXCEPTION_ILLEGAL_m_opcode );
-    incDefault();
-}
-
-void I51Core::inc_rx()
-{
-    int rx = RX_ADDRESS;
-    m_dataMem[rx]++;
-    incDefault();
-}
-
-void I51Core::dec_rx()
-{
-    int rx = RX_ADDRESS;
-    m_dataMem[rx]--;
-    incDefault();
-}
-
-void I51Core::add_a_rx()
-{
-    int rx = RX_ADDRESS;
-    add_solve_flags( m_dataMem[rx], ACC, 0 );
-    ACC += m_dataMem[rx];
-    incDefault();
-}
-
-void I51Core::addc_a_rx()
-{
-    int rx = RX_ADDRESS;
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-    add_solve_flags(m_dataMem[rx], ACC, carry );
-    ACC += m_dataMem[rx] + carry;
-    incDefault();
-}
-
-void I51Core::orl_a_rx()
-{
-    int rx = RX_ADDRESS;
-    ACC |= m_dataMem[rx];
-    incDefault();
-}
-
-void I51Core::xrl_a_rx()
-{
-    int rx = RX_ADDRESS;
-    ACC ^= m_dataMem[rx];
-    incDefault();
-}
-
-
-void I51Core::mov_rx_imm()
-{
-    m_dataMem[RX_ADDRESS] = OPERAND1;
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::mov_mem_rx()
-{
-    SET_RAM( OPERAND1, m_dataMem[RX_ADDRESS] );
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::subb_a_rx()
-{
-    int rx = RX_ADDRESS;
-    uint8_t carry = STATUS(Cy) >> Cy; /// PSW[Cy];
-    sub_solve_flags( ACC, m_dataMem[rx] + carry );
-    ACC -= m_dataMem[rx] + carry;
-    incDefault();
-}
-
-void I51Core::mov_rx_mem()
-{
-    int value = GET_RAM( OPERAND1 );
-    m_dataMem[RX_ADDRESS] = value;
-
-    PC += 2;
-    m_mcu->cyclesDone = 1;
-}
-
-void I51Core::cjne_rx_imm_offset()
-{
-    int rx = RX_ADDRESS;
-    int value = OPERAND1;
-
-    /// if( m_dataMem[rx] < value ) PSW[Cy] = 1;
-    /// else                        PSW[Cy] = 1;
-    write_S_Bit( Cy, m_dataMem[rx] < value );
-
-    int8_t offset = OPERAND2;
-    PC += 3;
-    if( m_dataMem[rx] != value ) PC += offset; //(int8_t)OPERAND2;
-
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::djnz_rx_offset()
-{
-    int rx = RX_ADDRESS;
-    m_dataMem[rx]--;
-
-    if( m_dataMem[rx] ) PC += (int8_t)OPERAND1;
-    PC += 2;
-
-    m_mcu->cyclesDone = 2;
-}
-
-void I51Core::mov_a_rx()
-{
-    ACC = m_dataMem[RX_ADDRESS];
-    incDefault();
-}
-
-void I51Core::mov_rx_a()
-{
-    m_dataMem[RX_ADDRESS] = ACC;
-    incDefault();
-}
 
 void I51Core::runDecoder()
 {
-    m_mcu->cyclesDone = 0;
-    m_opcode = m_progMem[PC];
+    m_mcu->cyclesDone = 1;
 
-    switch( m_opcode )
+    if( m_cpuState == cpu_EXEC )  // Execute previous instruction
     {
-        case 0x00: nop(); break;
-        case 0x01: ajmp_offset(); break;
-        case 0x02: ljmp_address(); break;
-        case 0x03: rr_a(); break;
-        case 0x04: inc_a(); break;
-        case 0x05: inc_mem(); break;
-        case 0x06: inc_indir_rx(); break;
-        case 0x07: inc_indir_rx(); break;
-
-        case 0x08:
-        case 0x09:
-        case 0x0a:
-        case 0x0b:
-        case 0x0c:
-        case 0x0d:
-        case 0x0e:
-        case 0x0f: inc_rx(); break;
-
-        case 0x10: jbc_bitaddr_offset(); break;
-        case 0x11: acall_offset(); break;
-        case 0x12: lcall_address(); break;
-        case 0x13: rrc_a(); break;
-        case 0x14: dec_a(); break;
-        case 0x15: dec_mem(); break;
-        case 0x16: dec_indir_rx(); break;
-        case 0x17: dec_indir_rx(); break;
-
-        case 0x18:
-        case 0x19:
-        case 0x1a:
-        case 0x1b:
-        case 0x1c:
-        case 0x1d:
-        case 0x1e:
-        case 0x1f: dec_rx(); break;
-
-        case 0x20: jb_bitaddr_offset(); break;
-        case 0x21: ajmp_offset(); break;
-        case 0x22: ret(); break;
-        case 0x23: rl_a(); break;
-        case 0x24: add_a_imm(); break;
-        case 0x25: add_a_mem(); break;
-        case 0x26: add_a_indir_rx(); break;
-        case 0x27: add_a_indir_rx(); break;
-
-        case 0x28:
-        case 0x29:
-        case 0x2a:
-        case 0x2b:
-        case 0x2c:
-        case 0x2d:
-        case 0x2e:
-        case 0x2f: add_a_rx(); break;
-
-        case 0x30: jnb_bitaddr_offset(); break;
-        case 0x31: acall_offset(); break;
-        case 0x32: reti(); break;
-        case 0x33: rlc_a(); break;
-        case 0x34: addc_a_imm(); break;
-        case 0x35: addc_a_mem(); break;
-        case 0x36: addc_a_indir_rx(); break;
-        case 0x37: addc_a_indir_rx(); break;
-
-        case 0x38:
-        case 0x39:
-        case 0x3a:
-        case 0x3b:
-        case 0x3c:
-        case 0x3d:
-        case 0x3e:
-        case 0x3f: addc_a_rx(); break;
-
-        case 0x40: jc_offset(); break;
-        case 0x41: ajmp_offset(); break;
-        case 0x42: orl_mem_a(); break;
-        case 0x43: orl_mem_imm(); break;
-        case 0x44: orl_a_imm(); break;
-        case 0x45: orl_a_mem(); break;
-        case 0x46: orl_a_indir_rx(); break;
-        case 0x47: orl_a_indir_rx(); break;
-
-        case 0x48:
-        case 0x49:
-        case 0x4a:
-        case 0x4b:
-        case 0x4c:
-        case 0x4d:
-        case 0x4e:
-        case 0x4f: orl_a_rx(); break;
-
-        case 0x50: jnc_offset(); break;
-        case 0x51: acall_offset(); break;
-        case 0x52: anl_mem_a(); break;
-        case 0x53: anl_mem_imm(); break;
-        case 0x54: anl_a_imm(); break;
-        case 0x55: anl_a_mem(); break;
-        case 0x56: anl_a_indir_rx(); break;
-        case 0x57: anl_a_indir_rx(); break;
-
-        case 0x58:
-        case 0x59:
-        case 0x5a:
-        case 0x5b:
-        case 0x5c:
-        case 0x5d:
-        case 0x5e:
-        case 0x5f: anl_a_rx(); break;
-
-        case 0x60: jz_offset(); break;
-        case 0x61: ajmp_offset(); break;
-        case 0x62: xrl_mem_a(); break;
-        case 0x63: xrl_mem_imm(); break;
-        case 0x64: xrl_a_imm(); break;
-        case 0x65: xrl_a_mem(); break;
-        case 0x66: xrl_a_indir_rx(); break;
-        case 0x67: xrl_a_indir_rx(); break;
-
-        case 0x68:
-        case 0x69:
-        case 0x6a:
-        case 0x6b:
-        case 0x6c:
-        case 0x6d:
-        case 0x6e:
-        case 0x6f: xrl_a_rx(); break;
-
-        case 0x70: jnz_offset(); break;
-        case 0x71: acall_offset(); break;
-        case 0x72: orl_c_bitaddr(); break;
-        case 0x73: jmp_indir_a_dptr(); break;
-        case 0x74: mov_a_imm(); break;
-        case 0x75: mov_mem_imm(); break;
-        case 0x76: mov_indir_rx_imm(); break;
-        case 0x77: mov_indir_rx_imm(); break;
-
-        case 0x78:
-        case 0x79:
-        case 0x7a:
-        case 0x7b:
-        case 0x7c:
-        case 0x7d:
-        case 0x7e:
-        case 0x7f: mov_rx_imm(); break;
-
-        case 0x80: sjmp_offset(); break;
-        case 0x81: ajmp_offset(); break;
-        case 0x82: anl_c_bitaddr(); break;
-        case 0x83: movc_a_indir_a_pc(); break;
-        case 0x84: div_ab(); break;
-        case 0x85: mov_mem_mem(); break;
-        case 0x86: mov_mem_indir_rx(); break;
-        case 0x87: mov_mem_indir_rx(); break;
-
-        case 0x88:
-        case 0x89:
-        case 0x8a:
-        case 0x8b:
-        case 0x8c:
-        case 0x8d:
-        case 0x8e:
-        case 0x8f: mov_mem_rx(); break;
-
-        case 0x90: mov_dptr_imm(); break;
-        case 0x91: acall_offset(); break;
-        case 0x92: mov_bitaddr_c(); break;
-        case 0x93: movc_a_indir_a_dptr(); break;
-        case 0x94: subb_a_imm(); break;
-        case 0x95: subb_a_mem(); break;
-        case 0x96: subb_a_indir_rx(); break;
-        case 0x97: subb_a_indir_rx(); break;
-
-        case 0x98:
-        case 0x99:
-        case 0x9a:
-        case 0x9b:
-        case 0x9c:
-        case 0x9d:
-        case 0x9e:
-        case 0x9f: subb_a_rx(); break;
-
-        case 0xa0: orl_c_compl_bitaddr(); break;
-        case 0xa1: ajmp_offset(); break;
-        case 0xa2: mov_c_bitaddr(); break;
-        case 0xa3: inc_dptr(); break;
-        case 0xa4: mul_ab(); break;
-        case 0xa5: nop(); break; // unused
-        case 0xa6: mov_indir_rx_mem(); break;
-        case 0xa7: mov_indir_rx_mem(); break;
-
-        case 0xa8:
-        case 0xa9:
-        case 0xaa:
-        case 0xab:
-        case 0xac:
-        case 0xad:
-        case 0xae:
-        case 0xaf: mov_rx_mem(); break;
-
-        case 0xb0: anl_c_compl_bitaddr(); break;
-        case 0xb1: acall_offset(); break;
-        case 0xb2: cpl_bitaddr(); break;
-        case 0xb3: cpl_c(); break;
-        case 0xb4: cjne_a_imm_offset(); break;
-        case 0xb5: cjne_a_mem_offset(); break;
-        case 0xb6: cjne_indir_rx_imm_offset(); break;
-        case 0xb7: cjne_indir_rx_imm_offset(); break;
-
-        case 0xb8:
-        case 0xb9:
-        case 0xba:
-        case 0xbb:
-        case 0xbc:
-        case 0xbd:
-        case 0xbe:
-        case 0xbf: cjne_rx_imm_offset(); break;
-
-        case 0xc0: push_mem(); break;
-        case 0xc1: ajmp_offset(); break;
-        case 0xc2: clr_bitaddr(); break;
-        case 0xc3: clr_c(); break;
-        case 0xc4: swap_a(); break;
-        case 0xc5: { xch( OPERAND1 ); PC ++; } break;
-        case 0xc6:
-        case 0xc7: xch( INDIR_RX_ADDRESS ); break;
-
-        case 0xc8:
-        case 0xc9:
-        case 0xca:
-        case 0xcb:
-        case 0xcc:
-        case 0xcd:
-        case 0xce:
-        case 0xcf: xch_a_rx(); break;
-
-        case 0xd0: pop_mem(); break;
-        case 0xd1: acall_offset(); break;
-        case 0xd2: setb_bitaddr(); break;
-        case 0xd3: setb_c(); break;
-        case 0xd4: da_a(); break;
-        case 0xd5: djnz_mem_offset(); break;
-        case 0xd6: xchd_a_indir_rx(); break;
-        case 0xd7: xchd_a_indir_rx(); break;
-
-        case 0xd8:
-        case 0xd9:
-        case 0xda:
-        case 0xdb:
-        case 0xdc:
-        case 0xdd:
-        case 0xde:
-        case 0xdf: djnz_rx_offset(); break;
-
-        case 0xe0: movx_a_indir_dptr(); break;
-        case 0xe1: ajmp_offset(); break;
-        case 0xe2: movx_a_indir_rx(); break;
-        case 0xe3: movx_a_indir_rx(); break;
-        case 0xe4: clr_a(); break;
-        case 0xe5: mov_a_mem(); break;
-        case 0xe6: mov_a_indir_rx(); break;
-        case 0xe7: mov_a_indir_rx(); break;
-
-        case 0xe8:
-        case 0xe9:
-        case 0xea:
-        case 0xeb:
-        case 0xec:
-        case 0xed:
-        case 0xee:
-        case 0xef: mov_a_rx(); break;
-
-        case 0xf0: movx_indir_dptr_a(); break;
-        case 0xf1: acall_offset(); break;
-        case 0xf2: movx_indir_rx_a(); break;
-        case 0xf3: movx_indir_rx_a(); break;
-        case 0xf4: cpl_a(); break;
-        case 0xf5: mov_mem_a(); break;
-        case 0xf6: mov_indir_rx_a(); break;
-        case 0xf7: mov_indir_rx_a(); break;
-
-        case 0xf8:
-        case 0xf9:
-        case 0xfa:
-        case 0xfb:
-        case 0xfc:
-        case 0xfd:
-        case 0xfe:
-        case 0xff: mov_rx_a(); break;
-        default: incDefault();
-       }
+        Exec();
+        m_cpuState = cpu_FETCH;
+    }
+    else if( m_cpuState == cpu_DECODE ) // We got a new instruction to decode
+    {
+        Decode();
+        m_cpuState = cpu_READ;
+    }
+    Read();                        // Read data from previous
 }
 
+void I51Core::Read()
+{
+    uint8_t data;
+
+    if( !m_eaPin->getInpState() ) // m_readExtPGM
+    {
+        data = m_mcu->extMem->getData();
+        m_mcu->extMem->read( PC+1, ExtMemModule::EN | ExtMemModule::LA );
+    }
+    else data = m_progMem[PC];
+
+    if( m_cpuState == cpu_FETCH )     // Read cycle 1
+    {
+        m_cpuState = cpu_DECODE;
+        m_opcode = m_progMem[PC] = data;
+        PC++;
+    }
+    else if( m_cpuState == cpu_READ ) // Read cycle > 1
+    {
+        if( m_dataEvent.isEmpty() )
+        {
+            /// Don't pulse PSEN
+            m_cpuState = cpu_EXEC; // All operands ready
+            return;
+        }
+        PC++;
+        uint8_t addrMode = m_dataEvent.takeFirst();
+
+        if     ( addrMode & IMME ){
+            if( addrMode & ORIG ) m_op0 = data;
+            else                  m_opAddr = data; /// 16 bit addrs
+        }
+        else if( addrMode & DIRE ){
+            if( addrMode & ORIG ) m_op0 = GET_RAM( data );
+            else                  m_opAddr = data;
+        }
+        else if( addrMode & RELA ){
+            if( addrMode & ORIG ) m_op2 = data;
+            else                  m_opAddr = data;
+        }
+        else if( addrMode & BIT ){   // Get bit mask an Reg address
+            m_bitAddr = data;
+            m_bitMask = 1 << (data & 7);
+            if( m_bitAddr > m_lowDataMemEnd ) m_bitAddr &= 0xF8;
+            else{ m_bitAddr >>= 3; m_bitAddr += 0x20; }
+        }
+        if( m_dataEvent.isEmpty() ) m_cpuState = cpu_EXEC; // All operands ready
+    }
+}
+
+void I51Core::Decode()
+{
+    if( m_opcode & 8 ) // Rx
+    {
+        m_dataEvent.clear();
+
+        uint8_t nibbleH = (m_opcode & 0xF0) >> 4;
+        m_RxAddr        = (m_opcode & 0x07) + 8*BANK;
+
+        switch( nibbleH ) {                           // b-c Inst
+            case 0x00:                                // 1-1 INC  Rx <- R++
+            case 0x01: addrRgx();            break;   // 1-1 DEC  Rx <- R--
+            case 0x02:                                // 1-1 ADD  Ac += Rx
+            case 0x03:                                // 1-1 ADDC Ac += Rx+C
+            case 0x04:                                // 1-1 ORL  Ac |= Rx
+            case 0x05:                                // 1-1 ANL  Ac &= Rx
+            case 0x06:            operRgx(); break;   // 1-1 XRL  Ac ^= Rx
+            case 0x07: addrRgx(); operI08(); break;   // 2-1 MOVr Rx <- #imm8
+            case 0x08: addrDir(); operRgx(); break;   // 2-2 MOVm Di <- Rx
+            case 0x09:            operRgx(); break;   // 1-1 SUBB Ac -= Rx-C
+            case 0x0A: addrRgx(); operDir(); break;   // 2-2 MOVr Rx <- Di
+            case 0x0B: operRgx(); operRel(); break;   // 3-2 CJNE Rx == Op1 ? 0 :Jump
+            case 0x0C: addrRgx();            break;   // 1-1 XCH  Ac <> Rx
+            case 0x0D: operRgx(); addrDir(); break;   // 2-2 DJNZ Rx--      ? Jump : 0
+            case 0x0E:            operRgx(); break;   // 1-1 MOVa Ac <- Rx
+            case 0x0F: break; //m_op0=ACC; addrRgx(); break; // 1 MOVX Rx, A
+        }
+    }else{
+        switch( m_opcode ){                           // b-c Inst
+            case 0x00:                       break;   // 1-1 NOP
+            case 0x01: addrI08();            break;   // 2-2 AJMP addr11
+            case 0x02: addrI08(); addrI08(); break;   // 3-2 LJMP addr16
+            case 0x03:                       break;   // 1-1 RRa Ac >> 1
+            case 0x04:                       break;   // 1-1 INC Ac <- Ac++  Accumulator
+            case 0x05: addrDir();            break;   // 2-1 INC Di <- Di++  Direct
+            case 0x06:
+            case 0x07: addrInd();            break;   // 1-1 INC In <- In++  @Indirect Rx
+
+            case 0x10: addrBit(); addrI08(); break;   // 3-2 JBC
+            case 0x11: addrI08();            break;   // 2-2 ACALL addr11
+            case 0x12: addrI08(); addrI08(); break;   // 3-2 LCALL addr16
+            case 0x13:                       break;   // 1-1 RRCa C >> Ac>>1
+            case 0x14:                       break;   // 1-1 DEC Ac <- Ac++  Accumulator
+            case 0x15: addrDir();            break;   // 2-1 DEC Di <- Di++  Direct
+            case 0x16:
+            case 0x17: addrInd();            break;   // 1-1 DEC In <- In++  @Indirect Rx
+
+            case 0x20: addrBit(); addrI08(); break;   // 3-2 JB
+            case 0x21: addrI08();            break;   // 2-2 AJMP addr11
+            case 0x22:                       break;   // 1-2 RET
+            case 0x23:                       break;   // 1-1 RLa Ac << 1
+            case 0x24:            operI08(); break;   // 2-1 ADD Ac += #imm8  #Imminent
+            case 0x25:            operDir(); break;   // 2-1 ADD AC += Di     Direct
+            case 0x26:
+            case 0x27:            operInd(); break;   // 1-1 ADD Ac += In     @Indirect
+
+            case 0x30: addrBit(); addrI08(); break;   // 2-2 JNB
+            case 0x31: addrI08();            break;   // 2-2 ACALL addr11
+            case 0x32:                       break;   // 1-2 RETI
+            case 0x33:                       break;   // 1-1 RLCa C << Ac<<1
+            case 0x34:            operI08(); break;   // 2-1 ADDC Ac += C+#imm8  #Imminent
+            case 0x35:            operDir(); break;   // 2-1 ADDC AC += C+Di     Direct
+            case 0x36:
+            case 0x37:            operInd(); break;   // 1-1 ADDC Ac += C+In     @Indirect
+
+            case 0x40: addrI08();            break;   // 2-2 JC C ? jump : 0
+            case 0x41: addrI08();            break;   // 2-2 AJMP addr11
+            case 0x42: addrDir(); m_op0=ACC; break;   // 2-1 ORL Di |= Ac
+            case 0x43: addrDir(); operI08(); break;   // 3-2 ORL Di |= #I8
+            case 0x44:            operI08(); break;   // 2-1 ORL Ac |= #I8   #Imminent
+            case 0x45:            operDir(); break;   // 2-1 ORL AC |= Di    Direct
+            case 0x46:
+            case 0x47:            operInd(); break;   // 1-1 ORL Ac |= In    @Indirect
+
+            case 0x50: addrI08();            break;   // 2-2 JNC C ? 0 : jump
+            case 0x51: addrI08();            break;   // 2-2 ACALL addr11
+            case 0x52: addrDir(); m_op0=ACC; break;   // 2-1 ANL Di &= Ac
+            case 0x53: addrDir(); operI08(); break;   // 3-2 ANL Di &= #I8
+            case 0x54:            operI08(); break;   // 2-1 ANL Ac &= #I8 #Imminent
+            case 0x55:            operDir(); break;   // 2-1 ANL Ac &= Di Direct
+            case 0x56:
+            case 0x57:            operInd(); break;   // 1-1 ANL Ac &= In
+
+            case 0x60: addrI08();            break;   // 2-2 JZ A == 0 ? jump : 0
+            case 0x61: addrI08();            break;   // 2-2 AJMP addr11
+            case 0x62: addrDir(); m_op0=ACC; break;   // 2-1 XRL  Di ^= Ac
+            case 0x63: addrDir(); operI08(); break;   // 3-2 XRL  Di ^= #I8
+            case 0x64:            operI08(); break;   // 2-1 XRLa Ac ^= #I8 #Imminent
+            case 0x65:            operDir(); break;   // 2-1 XRLa Ac ^= Di  Direct
+            case 0x66:
+            case 0x67:            operInd(); break;   // 1-1 XRLa Ac ^= In  @Indirect
+
+            case 0x70: addrI08();            break;   // 2-2 JNZ A == 0 ? 0 : jump
+            case 0x71: addrI08();            break;   // 2-2 ACALL addr11
+            case 0x72: addrBit();            break;   // 2-2 ORLc  C  <- C|b
+            case 0x73:                       break;   // 1-2 JMP  Dptr+A
+            case 0x74:            operI08(); break;   // 2-1 MOVa Ac <- #I8  #Imminent
+            case 0x75: addrDir(); operI08(); break;   // 3-2 MOVm Di <- #I8
+            case 0x76:
+            case 0x77: addrInd(); operI08(); break;   // 2-1 MOVm In <- #I8  @Indirect
+
+            case 0x80: addrI08();            break;   // 2-2 SJMP PC += addr8
+            case 0x81: addrI08();            break;   // 2-2 AJMP addr11
+            case 0x82: addrBit();            break;   // 2-2 ANLc  C  <- C&b
+            case 0x83:                       break;   // 1-2 MOVCp Ac += (PC)
+            case 0x84:                       break;   // 1-4 DIVab Ac <- Ac/B
+            case 0x85: addrDir(); operDir(); break;   // 3-2 MOVm  Di <- Di
+            case 0x86:
+            case 0x87: addrDir(); operInd(); break;   // 2-2 MOVm Di <- In  @Indirect
+
+            case 0x90: addrI08(); addrI08(); break;   // 3-2 MOVd  Dptr <- addr16;
+            case 0x91: addrI08();            break;   // 2-2 ACALL addr11
+            case 0x92: addrBit();            break;   // 2-2 MOVbc b  <- C
+            case 0x93:                       break;   // 1-2 MOVCd Ac += (Dptr)
+            case 0x94:            operI08(); break;   // 2-1 SUBB  Ac -= #I8 #Imminent
+            case 0x95:            operDir(); break;   // 2-1 SUBB  Ac -= Di  Direct
+            case 0x96:
+            case 0x97:            operInd(); break;   // 1-1 SUBB Ac -= In  @Indirect
+
+            case 0xa0: addrBit( true );      break;   // 2-2 ORLc  C <- C|!b
+            case 0xa1: addrI08();            break;   // 2-2 AJMP addr11
+            case 0xa2: addrBit();            break;   // 2-1 MOVc C <- b
+            case 0xa3:                       break;   // 1-2 INCd Dptr++
+            case 0xa4:                       break;   // 1-4 MULab A <- A*B
+            case 0xa5:                       break;   // Nop unused
+            case 0xa6:
+            case 0xa7: addrInd(); operDir(); break;   // 2-2 MOVm In <- Di @Indirect
+
+            case 0xb0: addrBit( true );      break;   // 2-2 ANLc  C  <- C&!b
+            case 0xb1: addrI08();            break;   // 2-2 ACALL addr11
+            case 0xb2: addrBit();            break;   // 2-1 CPLb b = !b
+            case 0xb3:                       break;   // 2-1 CPLc C = !C
+            case 0xb4: m_op0=ACC; operRel(); break;   // 3-2 CJNE Ac == #in8 ? 0 :Jump
+            case 0xb5: m_op0=ACC; operRel(); break;   // 3-2 CJNE Ac == Di   ? 0 :Jump
+            case 0xb6:
+            case 0xb7: operInd(); operRel(); break;   // 3-2 CJNE In == #in8 ? 0 :Jump
+
+            case 0xc0:            operDir(); break;   // 2-2 PUSH Stack <- Di
+            case 0xc1: addrI08();            break;   // 2-2 AJMP addr11
+            case 0xc2: addrBit();            break;   // 2-2 CLRb b = 0
+            case 0xc3:                       break;   // 1-1 CLRc C = 0
+            case 0xc4:                       break;   // 1-1 SWAPa
+            case 0xc5: addrDir();            break;   // 1-1 XCH Ac <> Di  Direct
+            case 0xc6:
+            case 0xc7: addrInd();            break;  // 1-1 XCH Ac <> In @Indirect
+
+            case 0xd0: addrDir();            break;   // 2-2 POP  Di <- Stack
+            case 0xd1: addrI08();            break;   // 2-2 ACALL addr11
+            case 0xd2: addrBit();            break;   // 2-2 SETBb b = 1
+            case 0xd3:                       break;   // 1-1 SETBc C = 1
+            case 0xd4:                       break;   // 1-1 DAa
+            case 0xd5: operDir(); addrDir(); break;   // 3-2 DJNZ Dir-- ? Jump : 0
+            case 0xd6:
+            case 0xd7: addrInd();            break;   //1-1 XCHD A In @Indirect
+
+            case 0xe0: // movx_a_indir_dptr(); break;
+            case 0xe1: addrI08();            break;   // 2-2 AJMP addr11
+            case 0xe2: // movx_a_indir_rx(); break;
+            case 0xe3: // movx_a_indir_rx(); break;
+            case 0xe4:                       break;   // 1-1 CLR A
+            case 0xe5:            operDir(); break;   // 2-1 MOVa A <- Di  Direct
+            case 0xe6:
+            case 0xe7:            operInd(); break;   // 1-1 MOV In <- Ac  @Indirect Rx
+
+            case 0xf0: // movx_indir_dptr_a(); break;
+            case 0xf1: addrI08();            break;   // 2-2 ACALL addr11
+            case 0xf2: // movx_indir_rx_a(); break;
+            case 0xf3: // movx_indir_rx_a(); break;
+            case 0xf4:                       break;
+            case 0xf5: /// m_op0 = ACC; operI08(); break;
+            case 0xf6:
+            case 0xf7: break; /// m_op0 = ACC; addrInd(); MOVX(); break;  // @Indirect Rx
+       }
+    }
+}
+
+void I51Core::Exec()
+{
+    if( m_opcode & 8 ) //Rx
+    {
+        //uint8_t nibbleL = m_opcode & 0x07;
+        uint8_t nibbleH = (m_opcode & 0xF0) >> 4;
+        m_RxAddr        = (m_opcode & 0x07) + 8*BANK;
+
+        switch( nibbleH ) {
+            case 0x00: INC();   break;   // Rx
+            case 0x01: DEC();   break;   // Rx
+            case 0x02: ADD();   break;   // Rx
+            case 0x03: ADDC();  break;   // Rx
+            case 0x04: ORLa();  break;   // Rx
+            case 0x05: ANLa();  break;   // Rx
+            case 0x06: XRLa();  break;   // Rx
+            case 0x07: MOVr();  break;   // Rx, #imm
+            case 0x08: MOVm();  break;   // Rx, Direct
+            case 0x09: SUBB();  break;   // Rx
+            case 0x0A: MOVr();  break;   // Rx, Direct
+            case 0x0B: CJNE();  break;   // Rx, Rel
+            case 0x0C: XCH();   break;   // Rx
+            case 0x0D: DJNZ();  break;   // DJNZ Rx, rel
+            case 0x0E: MOVa();  break;   // MOV A, Rx
+            case 0x0F: break; //MOVX();  break; // MOVX Rx, A
+        }
+    }else{
+        switch( m_opcode ){
+            case 0x00:          break;   // nop();
+            case 0x01: AJMP();  break;
+            case 0x02: LJMP();  break;
+            case 0x03: RR();    break;
+            case 0x04: ACC++;   break;   // Accumulator
+            case 0x05:                   // Direct
+            case 0x06:
+            case 0x07: INC();   break;   // @Indirect Rx
+
+            case 0x10: JBC();   break;
+            case 0x11: ACALL(); break;
+            case 0x12: LCALL(); break;
+            case 0x13: RRC();   break;
+            case 0x14: ACC--;   break;   // Accumulator
+            case 0x15:                   // Direct
+            case 0x16:
+            case 0x17: DEC();   break;   // @Indirect Rx
+
+            case 0x20: JB();    break;
+            case 0x21: AJMP();  break;
+            case 0x22: RET();   break;
+            case 0x23: RL();    break;
+            case 0x24:                   // #Imminent
+            case 0x25:                   // Direct
+            case 0x26:
+            case 0x27: ADD();   break;   // @Indirect
+
+            case 0x30: JNB();   break;
+            case 0x31: ACALL(); break;
+            case 0x32: RETI();  break;
+            case 0x33: RLC();   break;
+            case 0x34:                   // #Imminent
+            case 0x35:                   // Direct
+            case 0x36:
+            case 0x37: ADDC();  break;   // @Indirect
+
+            case 0x40: JC();    break;
+            case 0x41: AJMP();  break;
+            case 0x42:                   // Direct ACC
+            case 0x43: ORLm();  break;   // Direct #I8
+            case 0x44:                   // ACC #Imminent
+            case 0x45:                   // ACC Direct
+            case 0x46:
+            case 0x47: ORLa();  break;   // @Indirect
+
+            case 0x50: JNC();   break;
+            case 0x51: ACALL(); break;
+            case 0x52:                   // Direct ACC
+            case 0x53: ANLm();  break;   // Direct #I8
+            case 0x54:                   // #Imminent
+            case 0x55:                   // Direct
+            case 0x56:
+            case 0x57: ANLa();  break;   // @Indirect
+
+            case 0x60: JZ();    break;
+            case 0x61: AJMP();  break;
+            case 0x62:                   // Direct ACC
+            case 0x63: XRLm();  break;   // Direct #I8
+            case 0x64:                   // #Imminent
+            case 0x65:                   // Direct
+            case 0x66:
+            case 0x67: XRLa();  break;   // @Indirect
+
+            case 0x70: JNZ();   break;
+            case 0x71: ACALL(); break;
+            case 0x72: ORLc();  break;
+            case 0x73: JMP();   break;
+            case 0x74: MOVa();  break;   // #Imminent
+            case 0x75: MOVm();  break;
+            case 0x76:
+            case 0x77: MOVm();  break;   // @Indirect
+
+            case 0x80: SJMP();  break;
+            case 0x81: AJMP();  break;
+            case 0x82: ANLc();  break;
+            case 0x83: MOVCp(); break;
+            case 0x84: DIVab(); break;
+            case 0x85: MOVm();  break;
+            case 0x86:
+            case 0x87: MOVm();  break;
+
+            case 0x90: MOVd();  break;
+            case 0x91: ACALL(); break;
+            case 0x92: MOVbc(); break;
+            case 0x93: MOVCd(); break;
+            case 0x94:                   // #Imminent
+            case 0x95:                   // Direct
+            case 0x96:
+            case 0x97: SUBB();  break;   // @Indirect
+
+            case 0xa0: ORLc();  break;
+            case 0xa1: AJMP();  break;
+            case 0xa2: MOVc();  break;
+            case 0xa3: INCd();  break;
+            case 0xa4: MULab(); break;
+            case 0xa5: PC++;    break;   // unused
+            case 0xa6:
+            case 0xa7: MOVm();  break;   // @Indirect
+
+            case 0xb0: ANLc();  break;
+            case 0xb1: ACALL(); break;
+            case 0xb2: CPLb();  break;
+            case 0xb3: CPLc();  break;
+            case 0xb4:                   // #Imminent
+            case 0xb5:                   // Direct
+            case 0xb6:
+            case 0xb7: CJNE();  break;   // @Indirect
+
+            case 0xc0: PUSH();  break;
+            case 0xc1: AJMP();  break;
+            case 0xc2: CLRb();  break;
+            case 0xc3: CLRc();  break;
+            case 0xc4: SWAPa(); break;
+            case 0xc5:                   // Direct
+            case 0xc6:
+            case 0xc7: XCH();   break;   // @Indirect
+
+            case 0xd0: POP();   break;
+            case 0xd1: ACALL(); break;
+            case 0xd2: SETBb(); break;
+            case 0xd3: SETBc(); break;
+            case 0xd4: DAa();   break;
+            case 0xd5: DJNZ();  break;
+            case 0xd6:
+            case 0xd7: XCHD();  break;
+
+            case 0xe0: movx_a_indir_dptr(); break;
+            case 0xe1: AJMP(); break;
+            case 0xe2:
+            case 0xe3: movx_a_indir_rx(); break;
+            case 0xe4: CLRa(); break;
+            case 0xe5:                  // Direct /// Avoid Acc to Acc
+            case 0xe6:
+            case 0xe7: MOVa(); break;   // @Indirect Rx
+
+            case 0xf0: movx_indir_dptr_a(); break;
+            case 0xf1: ACALL(); break;
+            case 0xf2:
+            case 0xf3: movx_indir_rx_a(); break;
+            case 0xf4: CPLa();  break;
+            case 0xf5: //MOVx(); break;
+            case 0xf6:
+            case 0xf7: break; /// m_op0 = ACC; addrInd(); MOVX(); break;  // @Indirect Rx
+        }
+    }
+}

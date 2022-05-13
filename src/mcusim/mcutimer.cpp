@@ -64,7 +64,7 @@ void McuTimer::initialize()
     //m_clkSrc  = clkMCU;
     m_clkEdge = 1;
 
-    m_scale = m_prescaler*m_mcu->simCycPI();
+    m_scale = m_prescaler*m_mcu->psCycle();
 }
 
 void McuTimer::voltChanged()  // External Clock Pin changed voltage

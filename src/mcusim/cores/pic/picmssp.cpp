@@ -62,7 +62,7 @@ void PicMssp::configureA( uint8_t SSPCON )
             case 14:                       break; // I2C Slave,  7-bit address, Start & Stop interrupts enabled
             case 15: m_sspMode = sspI2C_S; break; // I2C Slave, 10-bit address, Start & Stop interrupts enabled
         }
-        m_spiUnit->m_clockPeriod = m_mcu->simCycPI()*spiClk/2;
+        m_spiUnit->m_clockPeriod = m_mcu->psCycle()*spiClk/2;
         if( tmr2 ) {;} /// TODO: SPI TIMER2 callback
     }
 

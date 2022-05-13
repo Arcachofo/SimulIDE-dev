@@ -22,30 +22,17 @@
 
 #include "mcucore.h"
 
-// SFR register locations
-enum SFR_REGS
-{
-    REG_SBUF = 0x99,
-    REG_B    = 0xF0,
-    REG_DPL  = 0x82,
-    REG_DPH  = 0x83,
-};
-
-enum {
-    P=0,k,OV,RS0,RS1,F0,AC,Cy
-};
+class ExtMemModule;
 
 /*enum EM8051_EXCEPTION
 {
-    EXCEPTION_STACK,  // stack address > 127 with no upper memory, or roll over
-    EXCEPTION_ACC_TO_A, // acc-to-a move operation; illegal (acc-to-acc is ok, a-to-acc is ok..)
+    EXCEPTION_STACK,             // stack address > 127 with no upper memory, or roll over
+    EXCEPTION_ACC_TO_A,          // acc-to-a move operation; illegal (acc-to-acc is ok, a-to-acc is ok..)
     EXCEPTION_IRET_PSW_MISMATCH, // psw not preserved over interrupt call (doesn't care about P, F0 or UNUSED)
     EXCEPTION_IRET_SP_MISMATCH,  // sp not preserved over interrupt call
     EXCEPTION_IRET_ACC_MISMATCH, // acc not preserved over interrupt call
     EXCEPTION_ILLEGAL_OPCODE     // for the single 'reserved' opcode in the architecture
 };*/
-
-
 
 class MAINMODULE_EXPORT I51Core : public McuCore
 {
@@ -53,17 +40,95 @@ class MAINMODULE_EXPORT I51Core : public McuCore
         I51Core( eMcu* mcu );
         ~I51Core();
 
+        enum { P=0,k,OV,RS0,RS1,F0,AC,Cy }; // Status bits
+
+        enum SFR_REGS // SFR register locations
+        {
+            REG_SBUF = 0x99,
+            REG_B    = 0xF0,
+            REG_DPL  = 0x82,
+            REG_DPH  = 0x83,
+        };
+
+        enum cpuState_t{
+            cpu_FETCH=0,
+            cpu_READ,
+            cpu_DECODE,
+            cpu_EXEC,
+            cpu_WRITE
+        };
+
+        enum addrMode_t{
+            NONE=0,
+            DIRE=1,
+            INDI=1<<1,
+            IMME=1<<2,
+            ORIG=1<<3,
+            RELA=1<<4,
+            PGM =1<<5,
+            BIT =1<<6
+        };
+
+        /*struct readEvent_t
+        {
+            uint8_t m_addrMode;
+
+        };*/
+
         virtual void reset();
         virtual void runDecoder();
 
     protected:
+
+        uint64_t m_psStep;  // Half Clock cycle ps = 1/24 Machine cycle, = 1/12 Read cycle.
+
+        bool m_readExtPGM;
+
+        cpuState_t m_cpuState;
+
         uint16_t m_opcode;
         uint8_t* m_acc;
+        
+        QVector<uint8_t> m_dataEvent;
+        uint8_t m_addrMode;
+        uint16_t m_opAddr;
+        uint8_t m_op0;
+        uint8_t m_op2;
+        uint8_t m_RxAddr;
+        uint8_t m_bitAddr;
+        uint8_t m_bitMask;
+        bool    m_invert;
 
         bool m_upperData;
 
-        std::vector<uint16_t> m_outPortAddr;
-        std::vector<uint16_t> m_inPortAddr;
+        IoPin* m_eaPin;
+
+        //std::vector<uint16_t> m_outPortAddr;
+        //std::vector<uint16_t> m_inPortAddr;
+
+        inline void Read();
+        inline void Exec();
+        inline void Decode();
+
+        inline uint8_t GetOper1();
+        inline uint8_t GetOper2();
+        inline void operRgx();
+        inline void operInd();
+        inline void operI08();
+        inline void operDir();
+        inline void operRel();
+
+        inline void addrRgx();
+        inline void addrInd();
+        inline void addrI08();
+        inline void addrDir();
+        inline void addrBit( bool invert=false );
+
+        inline uint16_t checkAddr( uint16_t addr )
+        {
+            if( m_upperData && (addr > m_lowDataMemEnd) ) addr += m_regEnd ;
+            return addr;
+        }
 
         inline uint8_t getValue( uint16_t addr ) // Read Fake Input instead
         {
@@ -73,141 +138,93 @@ class MAINMODULE_EXPORT I51Core : public McuCore
 
         inline uint8_t GET_RAM( uint16_t addr ) override
         {
-            if( m_upperData )
-            {
-                if( addr > m_lowDataMemEnd ) addr += m_regEnd;
-            }
+            addr = checkAddr( addr );
             return McuCore::GET_RAM( addr );
         }
         inline void SET_RAM( uint16_t addr , uint8_t val )
         {
-            if( m_upperData )
-            {
-                if( addr > m_lowDataMemEnd ) addr += m_regEnd;
-            }
+            addr = checkAddr( addr );
             McuCore::SET_RAM( addr, val );
         }
 
-        //void push_to_stack( int aValue );
-        //int  pop_from_stack();
         inline void    pushStack8( uint8_t v );
         inline uint8_t popStack8();
 
-        inline void add_solve_flags( uint8_t value1, uint8_t value2, uint8_t acc );
-        inline void sub_solve_flags( uint8_t value1, uint8_t value2 );
+        inline void addFlags( uint8_t value1, uint8_t value2, uint8_t acc );
+        inline void subFlags( uint8_t value1, uint8_t value2 );
 
-        inline void ajmp_offset();
-        inline void ljmp_address();
-        inline void rr_a();
-        inline void inc_a();
-        inline void inc_mem();
-        inline void inc_indir_rx();
-        inline void jbc_bitaddr_offset();
-        inline void acall_offset();
-        inline void lcall_address();
-        inline void rrc_a();
-        inline void dec_a();
-        inline void dec_mem();
-        inline void dec_indir_rx();
-        inline void jb_bitaddr_offset();
-        inline void ret();
-        inline void rl_a();
-        inline void add_a_imm();
-        inline void add_a_mem();
-        inline void add_a_indir_rx();
-        inline void jnb_bitaddr_offset();
-        inline void reti();
-        inline void rlc_a();
-        inline void addc_a_imm();
-        inline void addc_a_mem();
-        inline void addc_a_indir_rx();
-        inline void jc_offset();
-        inline void orl_mem_a();
-        inline void orl_mem_imm();
-        inline void orl_a_imm();
-        inline void orl_a_mem();
-        inline void orl_a_indir_rx();
-        inline void jnc_offset();
-        inline void anl_mem_a();
-        inline void anl_mem_imm();
-        inline void anl_a_imm();
-        inline void anl_a_mem();
-        inline void anl_a_indir_rx();
-        inline void jz_offset();
-        inline void xrl_mem_a();
-        inline void xrl_mem_imm();
-        inline void xrl_a_imm();
-        inline void xrl_a_mem();
-        inline void xrl_a_indir_rx();
-        inline void jnz_offset();
-        inline void orl_c_bitaddr();
-        inline void jmp_indir_a_dptr();
-        inline void mov_a_imm();
-        inline void mov_mem_imm();
+        // Instructions --------------------------------
+        inline void JMP();
+        inline void SJMP();
+        inline void AJMP();
+        inline void LJMP();
+        inline void ACALL();
+        inline void LCALL();
+        inline void RET();
+
+        inline void JB();
+        inline void JBC();
+        inline void JNB();
+        inline void JC();
+        inline void JNC();
+        inline void JZ();
+        inline void JNZ();
+        inline void DJNZ();
+        inline void CJNE();
+
+        inline void PUSH();
+        inline void POP();
+
+        inline void CPLc();
+        inline void MOVbc() ;
+        inline void SETBc();
+        inline void MOVc() ;
+        inline void ORLc();
+        inline void ANLc();
+        inline void CLRc();
+        inline void CLRb();
+        inline void CPLb();
+        inline void SETBb();
+
+        inline void CLRa();
+        inline void CPLa();
+        inline void DAa();
+        inline void SWAPa();
+
+        inline void MULab();
+        inline void DIVab();
+        inline void INCd();
+        inline void INC();
+        inline void DEC();
+        inline void ADD();
+        inline void ADDC();
+        inline void SUBB();
+        inline void ORLm();
+        inline void ANLm();
+        inline void XRLm();
+        inline void ORLa();
+        inline void ANLa();
+        inline void XCH();
+        inline void XCHD();
+        inline void XRLa();
+        inline void RR();
+        inline void RRC();
+        inline void RL();
+        inline void RLC();
+
+        inline void MOVCp();
+        inline void MOVd();
+        inline void MOVCd();
         inline void mov_indir_rx_imm();
-        inline void sjmp_offset();
-        inline void anl_c_bitaddr();
-        inline void movc_a_indir_a_pc();
-        inline void div_ab();
-        inline void mov_mem_mem();
-        inline void mov_mem_indir_rx();
-        inline void mov_dptr_imm();
-        inline void mov_bitaddr_c() ;
-        inline void movc_a_indir_a_dptr();
-        inline void subb_a_imm();
-        inline void subb_a_mem() ;
-        inline void subb_a_indir_rx();
-        inline void orl_c_compl_bitaddr();
-        inline void mov_c_bitaddr() ;
-        inline void inc_dptr();
-        inline void mul_ab();
-        inline void mov_indir_rx_mem();
-        inline void anl_c_compl_bitaddr();
-        inline void cpl_bitaddr();
-        inline void cpl_c();
-        inline void cjne_a_imm_offset();
-        inline void cjne_a_mem_offset();
-        inline void cjne_indir_rx_imm_offset();
-        inline void push_mem();
-        inline void clr_bitaddr();
-        inline void clr_c();
-        inline void swap_a();
-        inline void xch_a_rx();
-        //inline void xch_a_mem();
-        //inline void xch_a_indir_rx();
-        inline void xch( uint16_t addr );
-        inline void pop_mem();
-        inline void setb_bitaddr();
-        inline void setb_c();
-        inline void da_a();
-        inline void djnz_mem_offset();
-        inline void xchd_a_indir_rx();
+        inline void mov_mem_a();
+        inline void MOVr();
+        inline void MOVa();
+        inline void MOVm();
+
         inline void movx_a_indir_dptr();
         inline void movx_a_indir_rx();
-        inline void clr_a();
-        inline void mov_a_mem();
-        inline void mov_a_indir_rx();
         inline void movx_indir_dptr_a();
         inline void movx_indir_rx_a();
-        inline void cpl_a();
-        inline void mov_mem_a();
-        inline void mov_indir_rx_a();
-        inline void nop();
-        inline void inc_rx();
-        inline void dec_rx();
-        inline void add_a_rx();
-        inline void addc_a_rx();
-        inline void orl_a_rx();
-        inline void anl_a_rx();
-        inline void xrl_a_rx();
-        inline void mov_rx_imm();
-        inline void mov_mem_rx();
-        inline void subb_a_rx();
-        inline void mov_rx_mem();
-        inline void cjne_rx_imm_offset();
-        inline void djnz_rx_offset();
-        inline void mov_a_rx();
-        inline void mov_rx_a();
 };
 
 #endif

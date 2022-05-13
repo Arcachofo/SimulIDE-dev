@@ -924,6 +924,7 @@ void McuCreator::createExtMem( QDomElement* e )
     ExtMemModule* extMem = new ExtMemModule( mcu, name );
 
     mcu->extMem = extMem;
+    mcu->m_modules.emplace_back( extMem );
 
     McuPort* addrPort = mcu->getPort( e->attribute("addrport") );
     for( int i=0; i<addrPort->m_numPins; ++i )
@@ -937,11 +938,10 @@ void McuCreator::createExtMem( QDomElement* e )
         McuPin* pin = dataPort->getPinN( i );
         if( pin ) extMem->m_dataPin.emplace_back( pin );
     }
-    /// McuPin* rwPin = mcu->getCtrlPin( e->attribute("R/W") );
-    /// extMem->m_rwPin = rwPin;
-
-    mcu->m_modules.emplace_back( extMem );
-    //mcu->m_sleepModule = sleep;
+    extMem->m_rwPin = mcu->getCtrlPin( e->attribute("rwpin") );
+    extMem->m_rePin = mcu->getCtrlPin( e->attribute("repin") );
+    extMem->m_enPin = mcu->getCtrlPin( e->attribute("enpin") );
+    extMem->m_laPin = mcu->getCtrlPin( e->attribute("lapin") );
 }
 
 void McuCreator::createCore( QString core )

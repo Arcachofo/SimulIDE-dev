@@ -35,7 +35,8 @@ void McuCtrlPort::createPins( Mcu* mcuComp, QString pins )
     QStringList pinList = pins.split(",");
     for( QString pinName : pinList )
     {
-        IoPin* pin = new IoPin( 0, QPoint(0,0), m_name+pinName, 0, (Component*)mcuComp );
+        IoPin* pin = new IoPin( 0, QPoint(0,0), m_name+pinName, 0, (Component*)mcuComp, input );
+        pin->setOutHighV( 5 );
         m_pins.emplace_back( pin );
     }
 }

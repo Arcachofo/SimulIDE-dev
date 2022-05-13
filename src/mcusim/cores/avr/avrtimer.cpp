@@ -109,7 +109,7 @@ void AvrTimer::updtPrescaler( uint8_t val )
 void AvrTimer::configureClock()
 {
     m_prescaler = m_prescList.at( m_prIndex );
-    m_scale = m_prescaler*m_mcu->simCycPI();
+    m_scale = m_prescaler*m_mcu->psCycle();
     enableExtClock( false );
 }
 
@@ -264,7 +264,7 @@ void AvrTimer801::configureClock() // This Timer is not derived from AvrTimer
     }
     else{               //AvrTimer::configureClock();
         m_prescaler = m_prescList.at( m_prIndex );
-        m_scale = m_prescaler*m_mcu->simCycPI();
+        m_scale = m_prescaler*m_mcu->psCycle();
         enableExtClock( false );
     }
 }

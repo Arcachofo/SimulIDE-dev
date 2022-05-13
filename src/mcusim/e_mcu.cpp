@@ -86,12 +86,12 @@ void eMcu::runEvent()
     {
         if( cyclesDone > 1 ) cyclesDone -= 1;
         else                 m_debugger->stepDebug();
-        Simulator::self()->addEvent( m_simCycPI, this );
+        Simulator::self()->addEvent( m_psCycle, this );
     }
     else if( m_state >= mcuRunning )
     {
         stepCpu();
-        Simulator::self()->addEvent( cyclesDone*m_simCycPI, this );
+        Simulator::self()->addEvent( cyclesDone*m_psCycle, this );
 }   }
 
 void eMcu::reset()
@@ -160,7 +160,7 @@ void eMcu::setFreq( double freq )
     else if( freq > 100*1e6 ) freq = 100*1e6;
 
     m_freq = freq;
-    m_simCycPI = 1e12*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
+    m_psCycle = 1e12*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }
 
 void eMcu::setEeprom( QVector<int>* eep )

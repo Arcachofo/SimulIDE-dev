@@ -58,7 +58,7 @@ void PicAdc::configureA( uint8_t newADCON0 ) // ADCON0
 
     uint8_t prs = getRegBitsVal( newADCON0, m_ADSC );
     if( prs == 3 ) m_convTime = 4*12*1e6;
-    else           m_convTime = m_mcu->simCycPI()*12*m_prescList[prs];
+    else           m_convTime = m_mcu->psCycle()*12*m_prescList[prs];
 
     m_channel = getRegBitsVal( newADCON0, m_CHS );
 
@@ -218,7 +218,7 @@ void PicAdc11::setANSEL( uint8_t newANSEL )
 {
     uint8_t prs = getRegBitsVal( newANSEL, m_ADSC );
     if( prs == 3 ) m_convTime = 4*12*1e6;
-    else           m_convTime = m_mcu->simCycPI()*12*m_prescList[prs];
+    else           m_convTime = m_mcu->psCycle()*12*m_prescList[prs];
     PicAdc1::setANSEL( newANSEL );
 }
 
@@ -250,7 +250,7 @@ void PicAdc20::configureB( uint8_t newADCON1 )
 
     uint8_t prs = getRegBitsVal( newADCON1, m_ADSC );
     if( prs == 3 ) m_convTime = 4*12*1e6;
-    else           m_convTime = m_mcu->simCycPI()*12*m_prescList[prs];
+    else           m_convTime = m_mcu->psCycle()*12*m_prescList[prs];
 }
 
 void PicAdc20::updtVref()

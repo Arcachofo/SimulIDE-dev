@@ -56,7 +56,7 @@ void I51Usart::configureA( uint8_t val ) //SCON
     switch( mode )
     {
         case 0:             // Synchronous
-            /// TODO //setPeriod(  m_mcu->simCycPI() );// Fixed baudrate 32 or 64
+            /// TODO //setPeriod(  m_mcu->psCycle() );// Fixed baudrate 32 or 64
             m_dataBits = 8;
             break;
         case 1:             // Asynchronous Timer1
@@ -64,7 +64,7 @@ void I51Usart::configureA( uint8_t val ) //SCON
             m_dataBits = 8;
             break;
         case 2:             // Asynchronous MCU Clock
-            setPeriod(  m_mcu->simCycPI() );// Fixed baudrate 32 or 64
+            setPeriod(  m_mcu->psCycle() );// Fixed baudrate 32 or 64
             m_dataBits = 9;
             break;
         case 3:             // Asynchronous Timer1

@@ -127,7 +127,7 @@ void I51Timer::updtCount( uint8_t )     // Write counter values to Ram
             return;
         }
         uint64_t timTime = m_ovfCycle-Simulator::self()->circTime(); // Next overflow time - current time
-        uint16_t countVal = timTime/m_mcu->simCycPI()/m_prescaler;
+        uint16_t countVal = timTime/m_mcu->psCycle()/m_prescaler;
 
         if( m_mode == 0 )  // 13 bits
         {

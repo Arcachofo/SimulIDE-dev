@@ -53,7 +53,7 @@ void PicOcUnit::runEvent()  // Compare match
     if( m_specEvent )
     {
          m_resetTimer = true;
-         uint64_t cycles = m_timer->scale()*m_mcu->simCycPI();
+         uint64_t cycles = m_timer->scale()*m_mcu->psCycle();
          Simulator::self()->addEvent( cycles, this ); // Reset Timer next Timer cycle
 
          m_mcu->writeReg( m_GODO.regAddr, *m_GODO.reg | m_GODO.mask );  // Set ADC GO/DONE bit

@@ -86,7 +86,7 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     m_enabled = getRegBitsBool( newADCSRA, m_ADEN );
 
     uint8_t prs = getRegBitsVal( newADCSRA, m_ADPS );
-    m_convTime = m_mcu->simCycPI()*14.5*m_prescList[prs];
+    m_convTime = m_mcu->psCycle()*14.5*m_prescList[prs];
 
     m_autoTrigger = getRegBitsBool( newADCSRA, m_ADATE );
     if( m_autoTrigger ) autotriggerConf();

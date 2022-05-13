@@ -102,7 +102,7 @@ class MAINMODULE_EXPORT McuCore
             if( (addr > m_lowDataMemEnd) && (addr <= m_regEnd) ) // Write Register
                 m_mcu->writeReg( addr, v );                      // and call Watchers
 
-            else if( addr <= m_dataMemEnd) m_dataMem[addr] = v;     // Write Ram
+            else if( addr <= m_dataMemEnd ) m_dataMem[addr] = v;     // Write Ram
         }
 
         void clear_S_Bit( uint8_t bit) { *m_STATUS &= ~(1<<bit); }
@@ -131,6 +131,10 @@ class MAINMODULE_EXPORT McuCore
         {
             m_mcu->writeReg( addr+1, val>>8 );
             m_mcu->writeReg( addr , val );
+        }
+        uint16_t GET_REG16_LH( uint16_t addr )
+        {
+            return m_dataMem[addr] + (m_dataMem[addr+1] << 8);
         }
 
         // STACK-------------------------------------------------

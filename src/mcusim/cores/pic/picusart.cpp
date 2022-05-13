@@ -125,7 +125,7 @@ void PicUsart::setBaurrate( uint8_t )
     if( m_speedx2 ) mult = 4;
     uint16_t SPBRG = *m_SPBRGL;
     if( m_SPBRGH ) SPBRG |= (uint16_t)*m_SPBRGH << 8;
-    setPeriod( mult*(SPBRG+1)*m_mcu->simCycPI() ); // period in picoseconds
+    setPeriod( mult*(SPBRG+1)*m_mcu->psCycle() ); // period in picoseconds
 }
 
 uint8_t PicUsart::getBit9Tx()

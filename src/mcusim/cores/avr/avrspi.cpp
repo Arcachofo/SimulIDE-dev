@@ -91,7 +91,7 @@ void AvrSpi::configureA( uint8_t newSPCR ) // SPCR is being written
     m_sampleEdge = ( clkPol == clkPha ) ? Clock_Rising : Clock_Falling; // This shows up in the truth table
 
     m_prescaler = m_prescList[newSPCR & 0b00000011];
-    m_clockPeriod = m_mcu->simCycPI()*m_prescaler/2;
+    m_clockPeriod = m_mcu->psCycle()*m_prescaler/2;
 }
 
 void AvrSpi::writeStatus( uint8_t newSPSR ) // SPSR is being written

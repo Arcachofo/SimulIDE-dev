@@ -91,7 +91,7 @@ void AvrWdt::configureA( uint8_t newWDTCSR ) // WDTCSR Written
     {
         m_allowChanges = true;
         Simulator::self()->cancelEvents( this );
-        Simulator::self()->addEvent( 4*m_mcu->simCycPI(), this );
+        Simulator::self()->addEvent( 4*m_mcu->psCycle(), this );
     }
     else if( m_allowChanges && !WDCE ) // WDP & WDE changes allowed
     {

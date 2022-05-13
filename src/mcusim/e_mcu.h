@@ -95,7 +95,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         double freqMHz() { return m_freq*1e-6; }
         void setFreq( double freq );
-        uint64_t simCycPI() { return m_simCycPI; }  // Simulation cycles per instruction cycle
+        uint64_t psCycle() { return m_psCycle; }  // Simulation cycles per instruction cycle
         //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle
 
         //McuPin* getPin( QString name ) { return m_ports.getPin( name ); }
@@ -163,7 +163,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle
-        uint64_t m_simCycPI;     // Simulation cycles per Instruction Cycle
+        uint64_t m_psCycle;     // Simulation cycles per Instruction Cycle
 
         // Debugger:
         BaseDebugger* m_debugger;
