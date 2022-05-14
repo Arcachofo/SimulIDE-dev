@@ -146,7 +146,7 @@ void Dht22::runEvent()
 {
     if( m_outStep == 0 )       // Send ACK
     {
-        m_bit = 1UL<<39;
+        m_bit = 1ULL<<39;
         if( m_bitStep == 0 )   // Start ACK
         {
             m_bitStep = 1;
