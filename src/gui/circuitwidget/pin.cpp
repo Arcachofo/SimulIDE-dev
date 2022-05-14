@@ -62,7 +62,13 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_color[6] = QColor( 100, 100, 250 );
     m_color[7] = QColor( 250, 120, 0 );
 
-    QFont font( "Ubuntu Mono", 5 );
+    QFont font;
+    #ifdef _WIN32
+    font.setFamily("Consolas");
+    #else
+    font.setFamily("Ubuntu Mono");
+    #endif
+
     font.setPixelSize(7);
     //font.setStretch( 110 );
     //font.setLetterSpacing( QFont::PercentageSpacing, 105 );
