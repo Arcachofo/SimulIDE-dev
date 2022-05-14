@@ -45,7 +45,9 @@ class MAINMODULE_EXPORT FreqMeter : public Component, public eElement
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
-    private:
+    protected:
+        virtual void setflip() override;
+
         bool m_rising;
         bool m_falling;
         

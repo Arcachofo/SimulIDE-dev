@@ -60,11 +60,21 @@ Meter::Meter( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    addPropGroup( { tr("Main"), {
+    /*addPropGroup( { tr("Main"), {
 new BoolProp<Meter>( "SwitchPins", tr("Switch Pins"),"", this, &Meter::swithchPins, &Meter::setSwitchPins )
-    } } );
+    } } );*/
 }
 Meter::~Meter(){}
+
+bool Meter::setPropStr( QString prop, QString val )
+{
+    if( prop =="SwitchPins" )       // Old: TODELETE
+    {
+        if( val == "true" ) { m_Hflip = -1; setflip(); }
+    }
+    else return Component::setPropStr( prop, val );
+    return true;
+}
 
 void Meter::updateStep()
 {
@@ -105,6 +115,18 @@ void Meter::setSwitchPins( bool s )
     m_pin[1]->isMoved();
 }
 
+void Meter::setflip()
+{
+    Component::setflip();
+
+    int xlabelpos = -22*m_Hflip;
+    int ylabelpos = -22*m_Vflip;
+    if( m_Vflip <0 ) ylabelpos -= 16;
+
+    m_display.setPos( xlabelpos, ylabelpos );
+    m_display.setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+}
+
 void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
@@ -119,3 +141,5 @@ void Meter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     QPointF( 26, -5 )   };
     p->drawPolygon(points, 3);*/
 }
+
+#include "moc_meter.cpp"

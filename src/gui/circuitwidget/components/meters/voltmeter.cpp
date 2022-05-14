@@ -53,3 +53,5 @@ void Voltimeter::updateStep()
         m_dispValue = volt;
         Meter::updateStep();
 }   }
+
+#include "moc_voltmeter.cpp"

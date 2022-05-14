@@ -32,6 +32,8 @@ class MAINMODULE_EXPORT Meter : public Component, public eResistor
         Meter( QObject* parent, QString type, QString id );
         ~Meter();
 
+        virtual bool setPropStr( QString prop, QString val ) override;
+
         bool swithchPins() { return m_switchPins; }
         void setSwitchPins( bool s );
 
@@ -41,6 +43,8 @@ class MAINMODULE_EXPORT Meter : public Component, public eResistor
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
+        virtual void setflip() override;
+
         QString m_unit;
         double m_dispValue;
         bool m_switchPins;

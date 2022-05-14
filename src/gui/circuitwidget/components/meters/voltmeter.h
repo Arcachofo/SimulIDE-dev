@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Voltimeter : public Meter
 {
+    Q_OBJECT
     public:
         Voltimeter( QObject* parent, QString type, QString id );
         ~Voltimeter();

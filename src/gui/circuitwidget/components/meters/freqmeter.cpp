@@ -170,9 +170,21 @@ void FreqMeter::voltChanged()
         m_lastData = data;
 }   }
 
+void FreqMeter::setflip()
+{
+    Component::setflip();
+    int xlabelpos = (m_Hflip == 1) ? -30 : 51;
+    int ylabelpos = -6*m_Vflip;
+
+    m_display.setPos( xlabelpos, ylabelpos );
+    m_display.setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+}
+
 void FreqMeter::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     p->setBrush( Qt::black);
     p->drawRect( m_area );
 }
+
+#include "moc_freqmeter.cpp"

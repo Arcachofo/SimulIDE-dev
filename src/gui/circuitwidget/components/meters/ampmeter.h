@@ -26,6 +26,7 @@ class LibraryItem;
 
 class MAINMODULE_EXPORT Amperimeter : public Meter
 {
+    Q_OBJECT
     public:
         Amperimeter( QObject* parent, QString type, QString id );
         ~Amperimeter();

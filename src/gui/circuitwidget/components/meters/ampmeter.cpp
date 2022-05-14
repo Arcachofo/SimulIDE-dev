@@ -52,3 +52,5 @@ void Amperimeter::updateStep()
         m_dispValue = curr;
         Meter::updateStep();
 }   }
+
+#include "moc_ampmeter.cpp"
