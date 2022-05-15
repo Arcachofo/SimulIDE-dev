@@ -3179,27 +3179,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="unfinished">gelb</translation>
-    </message>
-    <message>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">gelb</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished">blau</translation>
-    </message>
-    <message>
-        <source>Orange</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">blau</translation>
     </message>
 </context>
 <context>
@@ -3395,11 +3379,11 @@ Can&apos;t find file:
     <name>Meter</name>
     <message>
         <source>Main</source>
-        <translation>Hauptparameter</translation>
+        <translation type="vanished">Hauptparameter</translation>
     </message>
     <message>
         <source>Switch Pins</source>
-        <translation>Pins vertauschen</translation>
+        <translation type="vanished">Pins vertauschen</translation>
     </message>
 </context>
 <context>
@@ -3855,19 +3839,11 @@ Keine valide Package Datei:
     </message>
     <message>
         <source>AVR</source>
-        <translation>AVR</translation>
+        <translation type="vanished">AVR</translation>
     </message>
     <message>
         <source>Micro</source>
         <translation>Mikrocontroller</translation>
-    </message>
-    <message>
-        <source>PIC</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>I51</source>
-        <translation></translation>
     </message>
     <message>
         <source>Arduino</source>
@@ -3969,11 +3945,23 @@ Not valid Package file:
     </message>
     <message>
         <source>Board</source>
-        <translation type="obsolete">Platine</translation>
+        <translation type="unfinished">Platine</translation>
     </message>
     <message>
         <source>Enable</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="unfinished">weiß</translation>
     </message>
 </context>
 <context>

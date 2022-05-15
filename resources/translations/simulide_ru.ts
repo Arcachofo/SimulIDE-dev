@@ -2906,27 +2906,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="unfinished">Желтый</translation>
-    </message>
-    <message>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Желтый</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished">Синий</translation>
-    </message>
-    <message>
-        <source>Orange</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Синий</translation>
     </message>
 </context>
 <context>
@@ -3122,11 +3106,11 @@ Can&apos;t find file:
     <name>Meter</name>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Основные</translation>
+        <translation type="obsolete">Основные</translation>
     </message>
     <message>
         <source>Switch Pins</source>
-        <translation type="unfinished">Поменять контакты</translation>
+        <translation type="obsolete">Поменять контакты</translation>
     </message>
 </context>
 <context>
@@ -3574,19 +3558,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>AVR</source>
-        <translation type="unfinished">AVR</translation>
+        <translation type="obsolete">AVR</translation>
     </message>
     <message>
         <source>Micro</source>
         <translation type="unfinished">Микроконтроллеры</translation>
-    </message>
-    <message>
-        <source>PIC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I51</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Arduino</source>
@@ -3696,11 +3672,23 @@ Not valid Package file:
     </message>
     <message>
         <source>Board</source>
-        <translation type="obsolete">Плата</translation>
+        <translation type="unfinished">Плата</translation>
     </message>
     <message>
         <source>Enable</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="unfinished">Белый</translation>
     </message>
 </context>
 <context>

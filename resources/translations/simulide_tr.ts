@@ -2879,30 +2879,6 @@ Can&apos;t find file:
         <source>Color</source>
         <translation type="unfinished">Renk</translation>
     </message>
-    <message>
-        <source>Yellow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Orange</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Purple</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Mcu</name>
@@ -3096,11 +3072,7 @@ Can&apos;t find file:
     <name>Meter</name>
     <message>
         <source>Main</source>
-        <translation type="unfinished">Temel</translation>
-    </message>
-    <message>
-        <source>Switch Pins</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Temel</translation>
     </message>
 </context>
 <context>
@@ -3543,19 +3515,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>AVR</source>
-        <translation type="unfinished">AVR</translation>
+        <translation type="obsolete">AVR</translation>
     </message>
     <message>
         <source>Micro</source>
         <translation type="unfinished">Mikro</translation>
     </message>
     <message>
-        <source>PIC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>I51</source>
-        <translation type="unfinished">l51</translation>
+        <translation type="obsolete">l51</translation>
     </message>
     <message>
         <source>Arduino</source>
@@ -3645,10 +3613,22 @@ Not valid Package file:
     </message>
     <message>
         <source>Board</source>
-        <translation type="obsolete">Kart</translation>
+        <translation type="unfinished">Kart</translation>
     </message>
     <message>
         <source>Enable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

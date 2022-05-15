@@ -2922,27 +2922,27 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="unfinished">Amarillo</translation>
+        <translation type="obsolete">Amarillo</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="unfinished">Rojo</translation>
+        <translation type="obsolete">Rojo</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation type="unfinished">Verde</translation>
+        <translation type="obsolete">Verde</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished">Azul</translation>
+        <translation type="obsolete">Azul</translation>
     </message>
     <message>
         <source>Orange</source>
-        <translation type="unfinished">Naranja</translation>
+        <translation type="obsolete">Naranja</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation type="unfinished">Púrpura</translation>
+        <translation type="obsolete">Púrpura</translation>
     </message>
 </context>
 <context>
@@ -3138,11 +3138,11 @@ Can&apos;t find file:
     <name>Meter</name>
     <message>
         <source>Main</source>
-        <translation>Basico</translation>
+        <translation type="vanished">Basico</translation>
     </message>
     <message>
         <source>Switch Pins</source>
-        <translation>Cambiar Pines</translation>
+        <translation type="vanished">Cambiar Pines</translation>
     </message>
 </context>
 <context>
@@ -3586,18 +3586,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>AVR</source>
-        <translation type="unfinished">AVR</translation>
+        <translation type="obsolete">AVR</translation>
     </message>
     <message>
         <source>Micro</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PIC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I51</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3673,11 +3665,11 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Ninguno</translation>
+        <translation>Ninguno</translation>
     </message>
     <message>
         <source>Clock</source>
-        <translation type="unfinished">Reloj</translation>
+        <translation>Reloj</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3705,15 +3697,23 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>Board</source>
-        <translation type="vanished">Placa</translation>
+        <translation>Placa</translation>
     </message>
     <message>
         <source>Module</source>
-        <translation type="vanished">Modulo</translation>
+        <translation>Modulo</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation type="unfinished">Nivel</translation>
+        <translation>Nivel</translation>
+    </message>
+    <message>
+        <source>Shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation>Blanco</translation>
     </message>
 </context>
 <context>
