@@ -66,10 +66,10 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
         << QObject::tr("Purple")
         << QObject::tr("White");
 
-    m_colors[0] = QColor( 255, 255,  75 ); // Yellow
-    m_colors[1] = QColor( 255, 170,  75 ); // Red
-    m_colors[2] = QColor(  75, 255, 170 ); // Green
-    m_colors[3] = QColor(  75, 200, 255 ); // Blue
+    m_colors[0] = QColor( 255, 255,   0 ); // Yellow
+    m_colors[1] = QColor( 255, 140, 120 ); // Red
+    m_colors[2] = QColor(   0, 255, 100 ); // Green
+    m_colors[3] = QColor( 150, 150, 255 ); // Blue
     m_colors[4] = QColor( 255, 200,  25 ); // Orange
     m_colors[5] = QColor( 255,  75, 255 ); // Purple
     m_colors[5] = QColor( 255, 255, 255 ); // White
