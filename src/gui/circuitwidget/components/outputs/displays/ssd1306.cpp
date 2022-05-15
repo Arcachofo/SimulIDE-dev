@@ -25,6 +25,7 @@
 #include "iopin.h"
 
 #include "doubleprop.h"
+#include "stringprop.h"
 #include "intprop.h"
 
 Component* Ssd1306::construct( QObject* parent, QString type, QString id )
@@ -51,7 +52,12 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     m_area = QRectF( -70, -48, 140, 88 );
     m_address = m_cCode = 0b00111100; // 0x3A - 60
 
-    m_colors = QStringList()
+    m_enumUids = QStringList()
+        << "White"
+        << "Blue"
+        << "Yellow";
+
+    m_enumNames = QStringList()
         << tr("White")
         << tr("Blue")
         << tr("Yellow");
@@ -84,9 +90,9 @@ Ssd1306::Ssd1306( QObject* parent, QString type, QString id )
     initialize();
 
     addPropGroup( { tr("Main"), {
-new IntProp <Ssd1306>( "Color"       , tr("Color")       ,""    ,this,&Ssd1306::color,  &Ssd1306::setColor,"enum" ),
-new IntProp <Ssd1306>( "Control_Code",tr("I2C Address")  ,""    ,this,&Ssd1306::cCode,  &Ssd1306::setCcode,"uint" ),
-new DoubProp<Ssd1306>( "Frequency"   ,tr("I2C Frequency"),"_KHz",this,&Ssd1306::freqKHz,&Ssd1306::setFreqKHz ),
+new StringProp<Ssd1306>( "Color"       , tr("Color")       ,""    ,this,&Ssd1306::colorStr,&Ssd1306::setColorStr, "enum" ),
+new IntProp   <Ssd1306>( "Control_Code",tr("I2C Address")  ,""    ,this,&Ssd1306::cCode,   &Ssd1306::setCcode,"uint" ),
+new DoubProp  <Ssd1306>( "Frequency"   ,tr("I2C Frequency"),"_KHz",this,&Ssd1306::freqKHz, &Ssd1306::setFreqKHz ),
     }} );
 }
 Ssd1306::~Ssd1306(){}
@@ -416,9 +422,9 @@ void Ssd1306::updateStep()
     update();
 }
 
-void Ssd1306::setColor( int c )
+void Ssd1306::setColorStr( QString color )
 {
-    if( c < 0 || c > m_colors.size()-1 ) return;
+    int c = getEnumIndex(  color );
     m_dColor = (dispColor)c;
 
     if( c == White )  m_pdisplayImg->setColor( 1, qRgb(245, 245, 245) );
@@ -426,13 +432,7 @@ void Ssd1306::setColor( int c )
     if( c == Yellow ) m_pdisplayImg->setColor( 1, qRgb(245, 245, 100) );
 
     if( m_showVal && (m_showProperty == "Color") )
-        setValLabelText( m_colors.at( c ) );
-}
-
-QStringList Ssd1306::getEnums( QString e )
-{
-    if( e == "Color" ) return m_colors;
-    else return CompBase::getEnums( e );
+        setValLabelText( m_enumNames.at( c ) );
 }
 
 void Ssd1306::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

@@ -36,8 +36,8 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem *libraryItem();
 
-        int color() { return m_ledColor; }
-        void setColor( int color );
+        QString colorStr();
+        void setColorStr( QString color );
 
         int numDisplays() { return m_numDisplays; }
         void setNumDisplays( int dispNumber );
@@ -59,7 +59,8 @@ class MAINMODULE_EXPORT SevenSegment : public Component, public eElement
 
         virtual void stamp() override;
 
-        virtual QStringList getEnums( QString e ) override;
+        virtual QStringList getEnumUids( QString ) override;
+        virtual QStringList getEnumNames( QString ) override;
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 

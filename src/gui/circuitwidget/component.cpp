@@ -502,7 +502,6 @@ void Component::setShowProp( QString prop )
 {
     m_showProperty = prop;
     setShowVal( !(prop.isEmpty()) );
-    //m_valLabel->setVisible( !(prop.isEmpty()) );
 }
 
 void Component::setHflip( int hf )

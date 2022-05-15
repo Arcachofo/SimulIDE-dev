@@ -123,3 +123,11 @@ QString CompBase::toString() // Used to save circuit
     return item;
 }
 
+int CompBase::getEnumIndex( QString prop )
+{
+    bool ok = false;
+    int index = prop.toInt(&ok); // OLd TODELETE
+    if( !ok ) index = m_enumUids.indexOf( prop );
+    if( index < 0 || index > m_enumUids.size()-1) index = 0;
+    return index;
+}

@@ -40,16 +40,14 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
             purple
         };
 
-        int color() { return (int)m_ledColor; }
-        void setColor( int color );
+        QString colorStr() { return m_enumUids.at((int)m_ledColor ); }
+        void setColorStr( QString color );
 
         bool grounded() { return m_grounded; }
         void setGrounded( bool grounded );
 
         virtual void initialize() override;
         virtual void updateStep() override;
-
-        virtual QStringList getEnums( QString e ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -61,8 +59,6 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         eNode* m_scrEnode;
         
         LedColor m_ledColor;
-
-        QStringList m_colors;
 };
 
 #endif

@@ -25,6 +25,7 @@
 #include "simulator.h"
 #include "iopin.h"
 
+#include "stringprop.h"
 #include "intprop.h"
 
 Component* Max72xx_matrix::construct( QObject* parent, QString type, QString id )
@@ -46,6 +47,22 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     m_graphical = true;
     m_numDisplays = 4;
     m_area = QRectF(-36, -44, 4+64*m_numDisplays+4, 88 );
+
+    m_enumUids = QStringList()
+        << "Yellow"
+        << "Red"
+        << "Green"
+        << "Blue"
+        << "Orange"
+        << "Purple";
+
+    m_enumNames = QStringList()
+        << QObject::tr("Yellow")
+        << QObject::tr("Red")
+        << QObject::tr("Green")
+        << QObject::tr("Blue")
+        << QObject::tr("Orange")
+        << QObject::tr("Purple");
 
     m_colors[0] = QColor( 255, 255,  75 ); // Yellow
     m_colors[1] = QColor( 255, 170,  75 ); // Red
@@ -78,8 +95,8 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     initialize();
 
     addPropGroup( { tr("Main"), {
-new IntProp<Max72xx_matrix>( "Color"      , tr("Color"),"", this, &Max72xx_matrix::color, &Max72xx_matrix::setColor, "enum" ),
-new IntProp<Max72xx_matrix>( "NumDisplays", tr("Size"),"_8x8 Led", this, &Max72xx_matrix::numDisplays, &Max72xx_matrix::setNumDisplays, "uint" ),
+new StringProp<Max72xx_matrix>( "Color"   , tr("Color")   ,""       , this, &Max72xx_matrix::colorStr,    &Max72xx_matrix::setColorStr, "enum" ),
+new IntProp   <Max72xx_matrix>( "NumDisplays", tr("Size"),"_8x8 Led", this, &Max72xx_matrix::numDisplays, &Max72xx_matrix::setNumDisplays, "uint" ),
     }} );
 }
 Max72xx_matrix::~Max72xx_matrix(){}
@@ -184,10 +201,11 @@ void Max72xx_matrix::setNumDisplays( int displays )
     show();
 }
 
-QStringList Max72xx_matrix::getEnums( QString e )
+void Max72xx_matrix::setColorStr( QString color )
 {
-    if( e == "Color" ) return { tr("Yellow"),tr("Red"),tr("Green"),tr("Blue"),tr("Orange"),tr("Purple") };
-    else return CompBase::getEnums( e );
+    m_ledColor = getEnumIndex( color );
+    if( m_showVal && (m_showProperty == "Color") )
+        setValLabelText( m_enumNames.at( m_ledColor ) );
 }
 
 void Max72xx_matrix::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

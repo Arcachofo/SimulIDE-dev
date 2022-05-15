@@ -53,8 +53,6 @@ class MAINMODULE_EXPORT Dht22 : public Component , public eElement
         virtual void voltChanged() override;
         virtual void runEvent() override;
 
-        virtual QStringList getEnums( QString e ) override;
-
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:

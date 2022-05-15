@@ -45,8 +45,8 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
             Blue,
             Yellow
         };
-        void setColor( int c );
-        int color()  { return (int)m_dColor; }
+        QString colorStr() { return m_enumUids.at((int)m_dColor ); }
+        void setColorStr( QString color );
 
         virtual void initialize() override;
         virtual void stamp() override;
@@ -55,8 +55,6 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
 
         virtual void readByte() override;
         virtual void I2Cstop() override;
-
-        virtual QStringList getEnums( QString e ) override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -114,8 +112,6 @@ class MAINMODULE_EXPORT Ssd1306 : public Component, public TwiModule
         //Pin m_pinRst;
         //Pin m_pinDC;
         //Pin m_pinCS;
-
-        QStringList m_colors;
 };
 
 #endif

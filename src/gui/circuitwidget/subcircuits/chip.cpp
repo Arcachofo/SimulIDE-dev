@@ -37,19 +37,19 @@ Chip::Chip( QObject* parent, QString type, QString id )
     QStringList list = id.split("-");
     if( list.size() > 1 ) m_name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
 
-    m_subcTypes = QStringList()
+    m_enumUids = QStringList()
         << "None"
         << "Logic"
         << "Board"
         << "Shield"
         << "Module";
 
-    /*m_subcNames = QStringList()
+    m_enumNames = QStringList()
         << QObject::tr("None")
         << QObject::tr("Logic")
         << QObject::tr("Board")
         << QObject::tr("Shield")
-        << QObject::tr("Module");*/
+        << QObject::tr("Module");
 
     m_subcType = None;
     m_numpins = 0;

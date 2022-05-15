@@ -35,5 +35,7 @@ LibraryItem* Zener::libraryItem()
 
 Zener::Zener( QObject* parent, QString type, QString id )
      : Diode( parent, type, id, true )
-{}
+{
+    m_enumUids = m_enumNames = m_zeners.keys();
+}
 Zener::~Zener(){}

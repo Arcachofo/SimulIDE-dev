@@ -26,6 +26,7 @@
 #include "pin.h"
 
 #include "doubleprop.h"
+#include "stringprop.h"
 #include "boolprop.h"
 #include "intprop.h"
 
@@ -60,10 +61,10 @@ LedMatrix::LedMatrix( QObject* parent, QString type, QString id )
     createMatrix();
 
     addPropGroup( { tr("Main"), {
-new IntProp <LedMatrix>( "Rows"         , tr("Rows")     ,tr("_Leds"), this, &LedMatrix::rows,     &LedMatrix::setRows, "uint" ),
-new IntProp <LedMatrix>( "Cols"         , tr("Columns")  ,tr("_Leds"), this, &LedMatrix::cols,     &LedMatrix::setCols, "uint" ),
-new IntProp <LedMatrix>( "Color"        , tr("Color")        ,""     , this, &LedMatrix::color,    &LedMatrix::setColor, "enum" ),
-new BoolProp<LedMatrix>( "Vertical_Pins", tr("Vertical Pins"),""     , this, &LedMatrix::verticalPins, &LedMatrix::setVerticalPins ),
+new IntProp   <LedMatrix>( "Rows"         , tr("Rows")     ,tr("_Leds"), this, &LedMatrix::rows,     &LedMatrix::setRows, "uint" ),
+new IntProp   <LedMatrix>( "Cols"         , tr("Columns")  ,tr("_Leds"), this, &LedMatrix::cols,     &LedMatrix::setCols, "uint" ),
+new StringProp<LedMatrix>( "Color"        , tr("Color")        ,""     , this, &LedMatrix::colorStr, &LedMatrix::setColorStr, "enum" ),
+new BoolProp  <LedMatrix>( "Vertical_Pins", tr("Vertical Pins"),""     , this, &LedMatrix::verticalPins, &LedMatrix::setVerticalPins ),
     }} );
     addPropGroup( { tr("Electric"), {
 new DoubProp<LedMatrix>( "Threshold" , tr("Forward Voltage"),"V", this, &LedMatrix::threshold,  &LedMatrix::setThreshold ),
@@ -131,7 +132,7 @@ void LedMatrix::createMatrix()
             lsmd->setRes( m_resist );
             lsmd->setMaxCurrent( m_maxCurr );
             lsmd->setThreshold( m_threshold );
-            lsmd->setColor( m_ledColor );
+            lsmd->setColorStr( colorStr() );
             lsmd->setFlag( QGraphicsItem::ItemIsSelectable, false );
             lsmd->setAcceptedMouseButtons(0);
             m_led[row][col] = lsmd;
@@ -169,14 +170,19 @@ void LedMatrix::deleteMatrix()
     m_pin.clear();
 }
 
-void LedMatrix::setColor( int color )
+QString LedMatrix::colorStr() { return m_led[0][0]->colorStr(); }
+void LedMatrix::setColorStr( QString color )
 {
     for( int row=0; row<m_rows; ++row )
         for( int col=0; col<m_cols; ++col )
-            m_led[row][col]->setColor( color );
+            m_led[row][col]->setColorStr( color );
+
+    if( m_showVal && (m_showProperty == "Color") )
+        setValLabelText( m_enumNames.at( m_enumUids.indexOf( color ) ) );
 }
 
-QStringList LedMatrix::getEnums( QString e ){ return m_led[0][0]->getEnums( e ); }
+QStringList LedMatrix::getEnumUids( QString ){ return m_led[0][0]->getEnumUids(""); }
+QStringList LedMatrix::getEnumNames( QString ){ return m_led[0][0]->getEnumNames(""); }
 
 void LedMatrix::setRows( int rows )
 {

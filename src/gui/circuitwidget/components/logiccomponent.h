@@ -48,19 +48,16 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
         bool tristate() { return m_tristate; }
         virtual void setTristate( bool t );
 
-        QString triggerStr() { return m_triggers.at( (int)m_trigger ); }
+        QString triggerStr() { return m_enumUids.at( (int)m_trigger ); }
         void setTriggerStr( QString t );
 
         virtual void remove() override;
-
-        virtual QStringList getEnums( QString ) override { return m_triggers; }
 
     protected:
         bool m_outEnable;
         bool m_tristate;
 
         IoPin*  m_oePin;
-        QStringList m_triggers;
 };
 
 #endif

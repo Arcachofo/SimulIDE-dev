@@ -36,9 +36,9 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        void setColor( int colot );
-        int color() { return m_ledColor; }
-        
+        QString colorStr();
+        void setColorStr( QString color );
+
         int  rows() { return m_rows; }
         void setRows( int rows );
         
@@ -62,7 +62,8 @@ class MAINMODULE_EXPORT LedMatrix : public Component, public eElement
 
         virtual void setHidden( bool hid , bool hidLabel=false );
 
-        virtual QStringList getEnums( QString e ) override;
+        virtual QStringList getEnumUids( QString ) override;
+        virtual QStringList getEnumNames( QString ) override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 

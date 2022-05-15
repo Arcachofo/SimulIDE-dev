@@ -53,6 +53,8 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
     m_humiInc = 5;
     m_set = true;
 
+    m_enumUids = m_enumNames = QStringList()<<"DHT11"<<"DHT22";
+
     m_pin.resize(4);
     m_pin[0] = m_inpin = new IoPin( 180, QPoint(-36,-4), id+"-inPin", 0, this );
     m_inpin->setOutHighV( 5 );
@@ -256,8 +258,6 @@ void Dht22::setModel( QString model )
 QString Dht22::model() { return m_DHT22 ? "DHT22" : "DHT11"; }
 
 double Dht22::trim( double data ) { return (double)(((int)(data*10)))/10; }
-
-QStringList Dht22::getEnums( QString e ) { return { "DHT11", "DHT22" }; }
 
 void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

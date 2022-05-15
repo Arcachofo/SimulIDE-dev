@@ -34,13 +34,13 @@ void EnumVal::setup()
     valLabel->setText( m_property->capt() );
     m_blocked = true;
 
-    QStringList enums = m_component->getEnums( m_propName );
-    /// enums.sort();
-    for( QString val : enums ) valueBox->addItem( val );
+    QStringList enumNames = m_component->getEnumNames( m_propName );/// enums.sort();
+    for( QString val : enumNames ) valueBox->addItem( val );
+
+    m_enums = m_component->getEnumUids( m_propName );
 
     QString valStr = m_property->getValStr();
-
-    valueBox->setCurrentIndex( valStr.toInt() );
+    valueBox->setCurrentIndex( m_enums.indexOf( valStr) );
 
     m_blocked = false;
     updtValues();
@@ -64,8 +64,12 @@ void EnumVal::on_showVal_toggled( bool checked )
 void EnumVal::on_valueBox_currentIndexChanged( QString val )
 {
     if( m_blocked ) return;
-    if( m_property->type() == "string" ) m_property->setValStr( val );
-    else m_property->setValStr( QString::number( valueBox->currentIndex() ) );
+    int index = valueBox->currentIndex();
+
+    //if( m_property->type() == "string" )
+        m_property->setValStr( m_enums.at( index ) );
+    //else m_property->setValStr( QString::number( index ) );
+
     if( showVal->isChecked() ) m_component->setValLabelText( val );
 }
 

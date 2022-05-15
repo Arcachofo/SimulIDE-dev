@@ -50,13 +50,11 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         subcType_t subcType() { return m_subcType; }
 
-        QString subcTypeStr() { return m_subcTypes.at( (int)m_subcType ); }
+        QString subcTypeStr() { return m_enumUids.at( (int)m_subcType ); }
         virtual void setSubcTypeStr( QString s ){;}
 
 
         int pkgWidth() { return m_width; }
-
-        virtual QStringList getEnums( QString ) override { return m_subcTypes; }
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -92,9 +90,6 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         QPixmap* m_BackPixmap;
         QGraphicsTextItem m_label;
-
-        QStringList m_subcTypes;
-        //QStringList m_subcNames;
 };
 
 #endif

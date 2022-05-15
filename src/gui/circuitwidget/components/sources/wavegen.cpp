@@ -27,6 +27,7 @@
 #include "itemlibrary.h"
 
 #include "doubleprop.h"
+#include "stringprop.h"
 #include "boolprop.h"
 #include "intprop.h"
 
@@ -49,7 +50,15 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
     m_voltBase = 0;
     m_lastVout = 0;
     m_waveType = Sine;
-    m_waves = QStringList()
+
+    m_enumUids = QStringList()
+        << "Sine"
+        << "Saw"
+        << "Triangle"
+        << "Square"
+        << "Random";
+
+    m_enumNames = QStringList()
         <<tr("Sine")
         <<tr("Saw")
         <<tr("Triangle")
@@ -61,11 +70,11 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
 
     remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {
-new IntProp <WaveGen>( "Wave_Type", tr("Wave Type"),""      , this, &WaveGen::waveType, &WaveGen::setWaveType, "enum" ),
-new DoubProp<WaveGen>( "Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
-new IntProp <WaveGen>( "Steps"    , tr("Quality")  ,"_Steps", this, &WaveGen::steps,    &WaveGen::setSteps ),
-new DoubProp<WaveGen>( "Duty"     , tr("Duty")     ,"_\%"   , this, &WaveGen::duty,     &WaveGen::setDuty ),
-new BoolProp<WaveGen>( "Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
+new StringProp<WaveGen>( "Wave_Type", tr("Wave Type"),""     , this, &WaveGen::waveType, &WaveGen::setWaveType, "enum" ),
+new DoubProp <WaveGen>( "Freq"     , tr("Frequency"),"Hz"    , this, &WaveGen::freq,     &WaveGen::setFreq ),
+new IntProp  <WaveGen>( "Steps"    , tr("Quality")  ,"_Steps", this, &WaveGen::steps,    &WaveGen::setSteps ),
+new DoubProp <WaveGen>( "Duty"     , tr("Duty")     ,"_\%"   , this, &WaveGen::duty,     &WaveGen::setDuty ),
+new BoolProp <WaveGen>( "Always_On", tr("Always On"),""      , this, &WaveGen::alwaysOn, &WaveGen::setAlwaysOn )
     }} );
     addPropGroup( { tr("Electric"), {
 new DoubProp<WaveGen>( "Semi_Ampli", tr("Semi Amplitude"),"V", this, &WaveGen::semiAmpli, &WaveGen::setSemiAmpli ),
@@ -172,17 +181,12 @@ void WaveGen::setFreq( double freq )
     setSteps( m_steps );
 }
 
-void WaveGen::setWaveType( int type )
+void WaveGen::setWaveType( QString t )
 {
-    if( type < 0 || type > m_waves.size()-1 ) return;
+    int type = getEnumIndex( t );
     m_waveType = (wave_type)type;
-    //updateProperty(); // Update label
-}
-
-QStringList WaveGen::getEnums( QString e )
-{
-    if( e == "Wave_Type" ) return m_waves;
-    else return CompBase::getEnums( e );
+    if( m_showVal && (m_showProperty == "Wave_Type") )
+        setValLabelText( m_enumNames.at( type ) );
 }
 
 void WaveGen::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

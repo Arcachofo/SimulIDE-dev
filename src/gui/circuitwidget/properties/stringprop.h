@@ -38,8 +38,8 @@ class MAINMODULE_EXPORT StringProp : public ComProperty
 
         virtual void setValStr( QString val ) override
         {
-            (m_comp->*m_setter)( val );
             if( m_comp->showProp() == m_name ) m_comp->setValLabelText( val );
+            (m_comp->*m_setter)( val ); // Comp setter can change valLabel
         }
 
         virtual QString getValStr() override

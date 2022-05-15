@@ -35,8 +35,8 @@ class MAINMODULE_EXPORT LedBar : public Component
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        int color();
-        void setColor( int color );
+        QString colorStr();
+        void setColorStr( QString color );
 
         int  size() { return m_size; }
         void setSize( int size );
@@ -60,7 +60,8 @@ class MAINMODULE_EXPORT LedBar : public Component
 
         virtual void remove() override;
 
-        virtual QStringList getEnums( QString e ) override;
+        virtual QStringList getEnumUids( QString ) override;
+        virtual QStringList getEnumNames( QString ) override;
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem*o, QWidget* w);
 

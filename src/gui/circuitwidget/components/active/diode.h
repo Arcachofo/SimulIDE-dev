@@ -44,8 +44,6 @@ class MAINMODULE_EXPORT Diode : public Comp2Pin, public eDiode
         virtual double res() override{ return m_resistor->res(); }
         virtual void setResSafe( double resist ) override { m_resistor->setResSafe(resist);}
 
-        virtual QStringList getEnums( QString ) override { return m_diodes.keys(); }
-
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:

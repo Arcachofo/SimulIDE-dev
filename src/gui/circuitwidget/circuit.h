@@ -96,7 +96,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         bool is_constarted() { return m_conStarted ; }
 
-        bool  pasting() { return m_pasting; }
+        bool pasting() { return m_pasting; }
         bool isBusy() { return m_busy || m_pasting | m_deleting; }
         //QPointF deltaMove() { return m_deltaMove; }
         

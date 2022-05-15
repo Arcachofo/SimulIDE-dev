@@ -36,8 +36,8 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        int color() { return m_ledColor; }
-        void setColor( int c ){ m_ledColor = c; }
+        QString colorStr() { return m_enumUids.at((int)m_ledColor ); }
+        void setColorStr( QString color );
 
         int numDisplays() { return m_numDisplays; }
         void setNumDisplays( int dispNumber );
@@ -47,8 +47,6 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
         virtual void voltChanged() override;
         virtual void updateStep() override;
 
-        virtual QStringList getEnums( QString e ) override;
-        
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:

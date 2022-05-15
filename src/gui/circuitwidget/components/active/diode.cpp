@@ -47,6 +47,8 @@ Diode::Diode( QObject* parent, QString type, QString id, bool zener )
 {
     m_area = QRect(-12, -8, 24, 16 );
 
+    m_enumUids = m_enumNames = m_diodes.keys();
+
     // Pin0--eDiode--ePin1--midEnode--ePin2--eResistor--Pin1
     m_ePin[0] = m_pin[0];
     setNumEpins( 3 );

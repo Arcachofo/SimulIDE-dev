@@ -48,7 +48,8 @@ class MAINMODULE_EXPORT CompBase : public QObject
         void removeProperty( QString group, QString prop );
         QList<propGroup> propeties() { return m_propGroups; }
 
-        virtual QStringList getEnums( QString name ) { QStringList nul;return nul;}
+        virtual QStringList getEnumUids( QString ) { return m_enumUids;}
+        virtual QStringList getEnumNames( QString ) { return m_enumNames; }
 
         virtual bool    setPropStr( QString prop, QString val );
         virtual QString getPropStr( QString prop );
@@ -70,6 +71,8 @@ class MAINMODULE_EXPORT CompBase : public QObject
         static bool m_saveBoard;
 
     protected:
+        int getEnumIndex( QString prop );
+
         QString m_id;
         QString m_type;
 
@@ -80,6 +83,9 @@ class MAINMODULE_EXPORT CompBase : public QObject
         PropDialog* m_propDialog;
         QList<propGroup> m_propGroups;
         QHash<QString, ComProperty*> m_propHash;
+
+        QStringList m_enumUids;
+        QStringList m_enumNames;
 };
 
 #endif

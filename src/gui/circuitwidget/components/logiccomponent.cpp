@@ -28,12 +28,17 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
               : IoComponent( parent, type, id )
               , eClockedDevice( id )
 {
-    m_oePin   = NULL;
-    m_tristate = false;
-    m_openCol  = false;
+    m_oePin     = NULL;
+    m_tristate  = false;
+    m_openCol   = false;
     m_outEnable = true;
 
-    m_triggers = QStringList()
+    m_enumUids = QStringList()
+        << "None"
+        << "Clock"
+        << "Enable";
+
+    m_enumNames = QStringList()
         << QObject::tr("None")
         << QObject::tr("Clock")
         << QObject::tr("Enable");
@@ -105,13 +110,11 @@ void LogicComponent::setTristate( bool t )  // Activate or deactivate OE Pin
 
 void LogicComponent::setTriggerStr( QString t )
 {
-    bool ok = false;
-    int index = t.toInt( &ok );
-    if( !ok ) index = m_triggers.indexOf( t );
+    int index = getEnumIndex( t );
     setTrigger( (trigger_t)index );
 
-    //if( m_showVal && (m_showProperty == "Trigger") )
-    //    setValLabelText( m_triggers.at( t ) )
+    if( m_showVal && (m_showProperty == "Trigger") )
+        setValLabelText( m_enumNames.at( index ) );
 }
 
 void LogicComponent::enableOutputs( bool en )

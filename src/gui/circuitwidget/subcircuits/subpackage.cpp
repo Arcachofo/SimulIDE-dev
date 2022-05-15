@@ -101,11 +101,10 @@ SubPackage::~SubPackage(){}
 
 void SubPackage::setSubcTypeStr( QString s )
 {
-    bool ok = false;
-    int index = s.toInt(&ok); // OLd TODELETE
-    if( !ok ) index = m_subcTypes.indexOf( s.remove("subc") );
-    if( index < 0 ) index = 0;
+    int index = getEnumIndex( s.remove("subc") );
     m_subcType = (subcType_t)index;
+    if( m_showVal && (m_showProperty == "SubcType") )
+        setValLabelText( m_enumNames.at( index ) );
 }
 
 void SubPackage::hoverMoveEvent( QGraphicsSceneHoverEvent* event ) 
