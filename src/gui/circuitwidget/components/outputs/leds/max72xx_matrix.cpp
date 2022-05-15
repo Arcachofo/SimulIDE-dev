@@ -54,7 +54,8 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
         << "Green"
         << "Blue"
         << "Orange"
-        << "Purple";
+        << "Purple"
+        << "White";
 
     m_enumNames = QStringList()
         << QObject::tr("Yellow")
@@ -62,7 +63,8 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
         << QObject::tr("Green")
         << QObject::tr("Blue")
         << QObject::tr("Orange")
-        << QObject::tr("Purple");
+        << QObject::tr("Purple")
+        << QObject::tr("White");
 
     m_colors[0] = QColor( 255, 255,  75 ); // Yellow
     m_colors[1] = QColor( 255, 170,  75 ); // Red
@@ -70,6 +72,7 @@ Max72xx_matrix::Max72xx_matrix( QObject* parent, QString type, QString id )
     m_colors[3] = QColor(  75, 200, 255 ); // Blue
     m_colors[4] = QColor( 255, 200,  25 ); // Orange
     m_colors[5] = QColor( 255,  75, 255 ); // Purple
+    m_colors[5] = QColor( 255, 255, 255 ); // White
     m_ledColor = 0;
 
     m_pinCS  = new Pin( 270, QPoint(-12, 52), id+"PinCS", 0, this );

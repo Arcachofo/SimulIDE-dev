@@ -37,7 +37,8 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
             green,
             blue,
             orange,
-            purple
+            purple,
+            white
         };
 
         QString colorStr() { return m_enumUids.at((int)m_ledColor ); }

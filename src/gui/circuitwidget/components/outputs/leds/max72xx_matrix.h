@@ -66,7 +66,7 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
         int m_inDisplay;    // Current display
 
         int m_ledColor;
-        QColor m_colors[6];
+        QColor m_colors[7];
 
         //Inputs
         Pin* m_pinCS;

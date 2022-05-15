@@ -43,7 +43,8 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
         << "Green"
         << "Blue"
         << "Orange"
-        << "Purple";
+        << "Purple"
+        << "White";
 
     m_enumNames = QStringList()
         << QObject::tr("Yellow")
@@ -51,7 +52,8 @@ LedBase::LedBase( QObject* parent, QString type, QString id )
         << QObject::tr("Green")
         << QObject::tr("Blue")
         << QObject::tr("Orange")
-        << QObject::tr("Purple");
+        << QObject::tr("Purple")
+        << QObject::tr("White");
 
     m_color = QColor( Qt::black );
     setColorStr("Yellow");
@@ -135,6 +137,18 @@ void LedBase::setColorStr( QString color )
 {
     int ledColor = getEnumIndex( color );
     m_ledColor = (LedColor)ledColor;
+    double thr;
+    switch( m_ledColor ) {
+        case yellow: thr = 2.4; break;
+        case red:    thr = 1.8; break;
+        case green:  thr = 3.5; break;
+        case blue:   thr = 3.6; break;
+        case orange: thr = 2.0; break;
+        case purple: thr = 3.5; break;
+        case white:  thr = 4.0; break;
+        default:     thr = 2.4; break;
+    }
+    eLed::setThreshold( thr );
     if( m_showVal && (m_showProperty == "Color") )
         setValLabelText( m_enumNames.at( ledColor ) );
 }
@@ -168,12 +182,15 @@ void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
                 overBight += m_intensity-255;
                 m_intensity = 255;
         }   }
-        if     ( m_ledColor == yellow ) color = QColor( m_intensity, m_intensity,     overBight*2/3 );
-        else if( m_ledColor == red    ) color = QColor( m_intensity, m_intensity/4+overBight/2, overBight/2 );
-        else if( m_ledColor == green  ) color = QColor( overBight,   m_intensity,     m_intensity*2/3 );
-        else if( m_ledColor == blue   ) color = QColor( overBight,   m_intensity*2/3, m_intensity );
-        else if( m_ledColor == orange ) color = QColor( m_intensity, m_intensity*2/3, overBight );
-        else if( m_ledColor == purple ) color = QColor( m_intensity, m_intensity/4+overBight/2, m_intensity );
+        switch( m_ledColor ) {
+            case yellow: color = QColor( m_intensity, m_intensity,     overBight*2/3 );         break;
+            case red:    color = QColor( m_intensity, m_intensity/4+overBight/2, overBight/2 ); break;
+            case green:  color = QColor( overBight,   m_intensity,     m_intensity*2/3 );       break;
+            case blue:   color = QColor( overBight,   m_intensity*2/3, m_intensity );           break;
+            case orange: color = QColor( m_intensity, m_intensity*2/3, overBight );             break;
+            case purple: color = QColor( m_intensity, m_intensity/4+overBight/2, m_intensity ); break;
+            case white:  color = QColor( m_intensity, m_intensity, m_intensity );               break;
+        }
     }
     p->setPen( pen );
     drawBackground( p );
