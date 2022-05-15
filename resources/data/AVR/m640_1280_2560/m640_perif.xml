@@ -5,18 +5,16 @@
     <interrupt name="PCINT0" mask="PCMSK0"/>
   </port>
   <port name="PORTB" pins="8" outreg="PORTB" inreg="PINB" dirreg="DDRB">
-    <interrupt name="PCINT1" mask="PCMSK1"/>
+    <interrupt name="PCINT1" mask="PCMSK0"/>
   </port>
-  <port name="PORTC" pins="8" outreg="PORTC" inreg="PINC" dirreg="DDRC">
-    <interrupt name="PCINT2" mask="PCMSK2"/>
-  </port>
+  <port name="PORTC" pins="8" outreg="PORTC" inreg="PINC" dirreg="DDRC"/>
   <port name="PORTD" pins="8" outreg="PORTD" inreg="PIND" dirreg="DDRD">
     <extint name="INT0" pin="PORTD0" configbits="ISC00,ISC01"/>
     <extint name="INT1" pin="PORTD1" configbits="ISC10,ISC11"/>
     <extint name="INT2" pin="PORTD2" configbits="ISC20,ISC21"/>
     <extint name="INT3" pin="PORTD3" configbits="ISC30,ISC31"/>
   </port>
-  <port name="PORTE" pins="8" outreg="PORTE" inreg="PINE" dirreg="DDRE">
+  <port name="PORTE" pins="8" outreg="PORTE" inreg="PINE" dirreg="DDRE"> 0
     <extint name="INT4" pin="PORTE4" configbits="ISC40,ISC41"/>
     <extint name="INT5" pin="PORTE5" configbits="ISC50,ISC51"/>
     <extint name="INT6" pin="PORTE6" configbits="ISC60,ISC61"/>
@@ -25,8 +23,12 @@
   <port name="PORTF" pins="8" outreg="PORTF" inreg="PINF" dirreg="DDRF"/>
   <port name="PORTG" pins="6" outreg="PORTG" inreg="PING" dirreg="DDRG"/>
   <port name="PORTH" pins="8" outreg="PORTH" inreg="PINH" dirreg="DDRH"/>
-  <port name="PORTJ" pins="8" outreg="PORTJ" inreg="PINJ" dirreg="DDRJ"/>
-  <port name="PORTK" pins="8" outreg="PORTK" inreg="PINK" dirreg="DDRK"/>
+  <port name="PORTJ" pins="8" outreg="PORTJ" inreg="PINJ" dirreg="DDRJ"> 0-6
+      <interrupt name="PCINT1" mask="PCMSK0"/>
+  </port>
+  <port name="PORTK" pins="8" outreg="PORTK" inreg="PINK" dirreg="DDRK">
+      <interrupt name="PCINT2" mask="PCMSK2"/>
+  </port>
   <port name="PORTL" pins="8" outreg="PORTL" inreg="PINL" dirreg="DDRL"/>
 
 

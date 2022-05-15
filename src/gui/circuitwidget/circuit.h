@@ -98,7 +98,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         bool pasting() { return m_pasting; }
         bool isBusy() { return m_busy || m_pasting | m_deleting; }
-        //QPointF deltaMove() { return m_deltaMove; }
         
         void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; m_LdPinMap[ pinId ] = pin; }
         void remPin( QString pinId ) { m_pinMap.remove( pinId ); }

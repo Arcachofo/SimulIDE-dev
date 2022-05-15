@@ -83,10 +83,8 @@ class MAINMODULE_EXPORT Simulator : public QObject
         bool isPaused()  { return (m_state == SIM_PAUSED); }
 
         uint64_t circTime() { return m_circTime; }
-        //void setCircTime( uint64_t time );
 
         void timerEvent( QTimerEvent* e );
-        //uint64_t mS(){ return m_RefTimer.elapsed(); }
 
         double realSpeed() { return m_realSpeed; } // 0 to 10000 => 0 to 100%
 
@@ -148,8 +146,6 @@ class MAINMODULE_EXPORT Simulator : public QObject
         simState_t m_oldState;
 
         bool m_converged;
-
-        //int m_numEvents;
 
         int m_error;
         int m_warning;

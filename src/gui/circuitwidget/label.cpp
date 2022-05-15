@@ -42,14 +42,6 @@ void Label::setComponent( Component* parent )
     this->document()->setDocumentMargin(0);
 }
 
-/*void Label::focusOutEvent( QFocusEvent* event )
-{
-    setTextInteractionFlags( Qt::NoTextInteraction );
-    m_parentComp->updateLabel( this, document()->toPlainText() );
-
-    QGraphicsTextItem::focusOutEvent(event);
-}*/
-
 void Label::mousePressEvent( QGraphicsSceneMouseEvent* event )
 {
     if( event->button() == Qt::LeftButton )

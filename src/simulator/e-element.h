@@ -32,7 +32,6 @@ class MAINMODULE_EXPORT eElement
         virtual ~eElement();
 
         virtual void initialize(){;}
-        //virtual void attach(){;}
         virtual void stamp(){;}
 
         virtual void runEvent(){;}

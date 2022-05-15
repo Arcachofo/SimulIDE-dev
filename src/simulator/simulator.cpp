@@ -58,7 +58,6 @@ Simulator::Simulator( QObject* parent )
     m_warnings[1] = "NonLinear Not Converging";
     m_warnings[100] = "AVR crashed !!!";
 
-    ///m_running = false;
     resetSim();
 
     m_RefTimer.start();

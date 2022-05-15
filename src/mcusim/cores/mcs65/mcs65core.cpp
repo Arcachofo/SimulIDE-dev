@@ -24,7 +24,7 @@ Mcs65Core::Mcs65Core( eMcu* mcu )
          : McuCore( mcu )
 {
     // Control Pins
-    m_phi0Pin = mcu->getCtrlPin("P0"); m_phi0Pin->setPinMode( output );
+    m_phi0Pin = mcu->getCtrlPin("P0");
     m_phi1Pin = mcu->getCtrlPin("P1"); m_phi1Pin->setPinMode( output );
     m_phi2Pin = mcu->getCtrlPin("P2"); m_phi2Pin->setPinMode( output );
     m_syncPin = mcu->getCtrlPin("SYNC"); m_syncPin->setPinMode( output );

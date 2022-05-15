@@ -26,7 +26,6 @@ OutPanelText::OutPanelText( QWidget* parent )
             , Updatable()
 {
     m_textBuffer = "";
-    //this->setObjectName( "outPanel" );
 
     m_highlighter = new OutHighlighter( document() );
 
@@ -43,8 +42,6 @@ OutPanelText::OutPanelText( QWidget* parent )
     setFont( font );
 
     setMaximumBlockCount( 1000 );
-
-    //setReadOnly(true);
 }
 OutPanelText::~OutPanelText(){}
 

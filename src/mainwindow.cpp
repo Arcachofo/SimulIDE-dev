@@ -210,31 +210,25 @@ void MainWindow::setState( QString state )
 void MainWindow::createWidgets()
 {
     QWidget *centralWidget = new QWidget( this );
-    //centralWidget->setObjectName("centralWidget");
     setCentralWidget(centralWidget);
 
     QGridLayout *baseWidgetLayout = new QGridLayout( centralWidget );
     baseWidgetLayout->setSpacing(0);
     baseWidgetLayout->setContentsMargins(0, 0, 0, 0);
-    //baseWidgetLayout->setObjectName("gridLayout");
 
     m_Centralsplitter = new QSplitter( this );
-    //m_Centralsplitter->setObjectName("Centralsplitter");
     m_Centralsplitter->setOrientation( Qt::Horizontal );
 
     m_sidepanel = new QTabWidget( this );
-    //m_sidepanel->setObjectName("sidepanel");
     m_sidepanel->setTabPosition( QTabWidget::West );
     QString fontSize = QString::number( int(11*m_fontScale) );
     m_sidepanel->tabBar()->setStyleSheet("QTabBar { font-size:"+fontSize+"px; }");
     m_Centralsplitter->addWidget( m_sidepanel );
 
     m_componentWidget = new QWidget( this );
-    //m_componentWidget->setObjectName( "componentWidget" );
     m_componentWidgetLayout = new QVBoxLayout( m_componentWidget );
     m_componentWidgetLayout->setSpacing(0);
     m_componentWidgetLayout->setContentsMargins(0, 0, 0, 0);
-    //m_componentWidgetLayout->setObjectName( "ramTabWidgetLayout" );
 
     m_searchComponent = new QLineEdit( this );
     m_searchComponent->setPlaceholderText( tr( "Search Components" ));
@@ -243,17 +237,14 @@ void MainWindow::createWidgets()
              this,               SLOT(  searchChanged()), Qt::UniqueConnection);
 
     m_components = new ComponentSelector( m_sidepanel );
-    //m_components->setObjectName( "components" );
     m_componentWidgetLayout->addWidget( m_components );
 
     m_sidepanel->addTab( m_componentWidget, tr("Components") );
 
     m_fileSystemTree = new FileWidget( this );
-    //m_fileSystemTree->setObjectName( "fileExplorer" );
     m_sidepanel->addTab( m_fileSystemTree, tr( "File explorer" ) );
 
     m_circuit = new CircuitWidget( this );
-    //m_circuit->setObjectName( "circuit" );
     m_Centralsplitter->addWidget( m_circuit );
     
     m_editor = new EditorWindow( this );

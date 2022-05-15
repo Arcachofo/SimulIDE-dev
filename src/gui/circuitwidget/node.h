@@ -35,8 +35,6 @@ class MAINMODULE_EXPORT Node : public Component
 
         virtual void registerEnode( eNode* enode, int n=-1 ) override;
 
-        //virtual void remove() override;
-
         virtual void setHidden( bool hid , bool hidLabel=false ) override;
 
         void inStateChanged( int rem=1 );

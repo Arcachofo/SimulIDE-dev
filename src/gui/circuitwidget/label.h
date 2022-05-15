@@ -57,7 +57,6 @@ class Label : public QGraphicsTextItem
         void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
         void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
-        //void focusOutEvent( QFocusEvent* event );
 
     private:
         Component* m_parentComp;

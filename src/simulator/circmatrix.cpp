@@ -368,8 +368,6 @@ void CircMatrix::printMatrix()
         std::cout << std::endl;
         std::cout << std::endl;
     }
-
     //std::cout << "\nSantized Matrix:\n"<< std::endl;
-
 }
 

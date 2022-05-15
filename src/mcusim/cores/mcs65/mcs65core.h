@@ -23,14 +23,14 @@
 #include "mcucore.h"
 #include "mcupin.h"
 
-#define NEGATIVE  0x80
-#define OVERFLOW  0x40
+//#define NEGATIVE  0x80
+//#define OVERFLOW  0x40
 #define CONSTANT  0x20
 #define BREAK     0x10
-#define DECIMAL   0x08
-#define INTERRUPT 0x04
-#define ZERO      0x02
-#define CARRY     0x01
+//#define DECIMAL   0x08
+//#define INTERRUPT 0x04
+//#define ZERO      0x02
+//#define CARRY     0x01
 
 #define ACC       m_acc
 

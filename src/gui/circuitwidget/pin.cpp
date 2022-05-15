@@ -159,8 +159,6 @@ void Pin::removeConnector()
 
 Pin* Pin::connectPin( bool connect )      // Auto-Connect
 {
-    //if( !connect && m_pinType != pinSocket ) return NULL; // Dont connect Socket to Socket
-
     Pin* _pin = NULL;
     QList<QGraphicsItem*> list = this->collidingItems();
     while( !list.isEmpty() )
