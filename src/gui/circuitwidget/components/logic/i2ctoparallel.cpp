@@ -47,11 +47,12 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     m_height = 9;
     
     init({         // Inputs:
-            "IL02SDA",//type: Input, side: Left, pos: 01, label: "SDA"
-            "IL03SCL",
-            "IL05A0",
-            "IL06A1",
-            "IL07A2",
+            "IL01SDA",//type: Input, side: Left, pos: 01, label: "SDA"
+            "IL02SCL",
+            "IL06A0",
+            "IL07A1",
+            "IL08A2",
+            "IL04INT"
         });
 
     setNumOuts( 8, "D" );
@@ -61,6 +62,9 @@ I2CToParallel::I2CToParallel( QObject* parent, QString type, QString id )
     
     m_inPin[1]->setPinMode( openCo );
     TwiModule::setSclPin( m_inPin[1] );
+
+    m_int = m_inPin[5];
+    m_int->setPinMode( openCo );
 
     for( int i=0; i<8; ++i )
     {
@@ -83,26 +87,49 @@ I2CToParallel::~I2CToParallel(){}
     for( int i=0; i<8; ++i ) m_outPin[i]->setOutState( true );
 }*/
 
-void I2CToParallel::stamp()                     // Called at Simulation Start
+void I2CToParallel::stamp()             // Called at Simulation Start
 {
     TwiModule::initialize();
     IoComponent::initState();
-    for( int i=0; i<8; ++i ) m_outPin[i]->setOutState( true );
+
+    for( int i=0; i<8; ++i )
+    {
+        m_outPin[i]->setOutState( true );
+        m_outPin[i]->changeCallBack( this, true );
+    }
+    m_int->setOutState( true );
+    m_portState = 0xFF;
 
     TwiModule::setMode( TWI_SLAVE );
     
-    for( int i=2; i<5; ++i ) m_inPin[i]->changeCallBack( this ); // Callbacks address pins
+    for( int i=2; i<5; ++i )
+    {
+        m_inPin[i]->update();
+        m_inPin[i]->changeCallBack( this ); // Callbacks address pins
+    }
 }
 
-void I2CToParallel::voltChanged()             // Some Pin Changed State, Manage it
+void I2CToParallel::voltChanged()        // Some Pin Changed State, Manage it
 {
     m_address = m_cCode;
 
     if( m_inPin[2]->getInpState() ) m_address += 1;
     if( m_inPin[3]->getInpState() ) m_address += 2;
     if( m_inPin[4]->getInpState() ) m_address += 4;
+
+    int value = 0;
+    for( int i=0; i<8; ++i )
+    { if( m_outPin[i]->getInpState() ) value += pow( 2, i ); }
+    if( value != m_portState ) m_int->setOutState( false ); // Trigger Interrupt
+    else if( m_int->getInpState() == false )
+        m_int->setOutState( true );                         // Reset Interrupt
     
     TwiModule::voltChanged();                               // Run I2C Engine
+}
+
+void I2CToParallel::startWrite() // Master will write
+{
+    for( int i=0; i<8; ++i ) m_outPin[i]->changeCallBack( this, false ); // Disable callbacks from Port while master writes
 }
 
 void I2CToParallel::readByte()  // Reading from I2C, Writting to Parallel
@@ -114,6 +141,11 @@ void I2CToParallel::readByte()  // Reading from I2C, Writting to Parallel
         m_outPin[i]->setOutState( value & 1 );
         value >>= 1;
     }
+    m_int->setOutState( true ); // Interrupt reset
+    m_portState = m_rxReg;      // Load reference value for reset
+
+    for( int i=0; i<8; ++i ) m_outPin[i]->changeCallBack( this, true ); // Enable callbacks from Port
+
     TwiModule::readByte();
 }
 
@@ -123,6 +155,9 @@ void I2CToParallel::writeByte()   // Writting to I2C from Parallel (master is re
     for( int i=0; i<8; ++i )
     { if( m_outPin[i]->getInpState() ) value += pow( 2, i ); }
     m_txReg = value;
+
+    m_int->setOutState( true ); // Interrupt reset
+    m_portState = m_txReg;      // Load reference value for reset
 
     TwiModule::writeByte();
 }
