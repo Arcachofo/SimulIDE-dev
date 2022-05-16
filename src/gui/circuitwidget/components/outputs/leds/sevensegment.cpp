@@ -114,7 +114,11 @@ void SevenSegment::stamp()
                 m_cathodePin[pin]->setEnode( m_enode[j] );
 }   }   }   }
 
-QString SevenSegment::colorStr() { return m_segment[0]->colorStr(); }
+QString SevenSegment::colorStr()
+{
+    if( m_segment[0] ) return m_segment[0]->colorStr();
+    else               return "Yellow";
+}
 
 void SevenSegment::setColorStr( QString color )
 {

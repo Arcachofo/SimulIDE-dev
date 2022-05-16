@@ -128,7 +128,11 @@ void LedBar::setColorStr( QString color )
         setValLabelText( m_enumNames.at( m_enumUids.indexOf( color ) ) );
 }
 
-QString LedBar::colorStr() { return m_led[0]->colorStr(); }
+QString LedBar::colorStr()
+{
+    if( m_led[0] ) return m_led[0]->colorStr();
+    else           return "Yellow";
+}
 
 QStringList LedBar::getEnumUids( QString ) { return m_led[0]->getEnumUids(""); }
 QStringList LedBar::getEnumNames( QString ){ return m_led[0]->getEnumNames(""); }

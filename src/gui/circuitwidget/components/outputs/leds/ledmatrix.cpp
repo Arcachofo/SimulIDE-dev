@@ -170,7 +170,12 @@ void LedMatrix::deleteMatrix()
     m_pin.clear();
 }
 
-QString LedMatrix::colorStr() { return m_led[0][0]->colorStr(); }
+QString LedMatrix::colorStr()
+{
+    if( m_led[0][0] ) return m_led[0][0]->colorStr();
+    else              return "Yellow";
+}
+
 void LedMatrix::setColorStr( QString color )
 {
     for( int row=0; row<m_rows; ++row )
