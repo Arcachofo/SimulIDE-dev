@@ -38,10 +38,26 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
 
         enum w1State_t{
             W1_IDLE=0,
-            W1_COMMAND,
-            W1_DATA,
+            W1_ROM_CMD,
+            W1_FUN_CMD,
+            W1_SEARCH,
             W1_MATCH,
-            W1_SEARCH
+            W1_DATA,
+        };
+        enum w1Command_t {
+            W1_SEARCH_ROM = 0xF0,
+            W1_SEARCH_ALM = 0xEC,
+            W1_READ_ROM   = 0x33,
+            W1_MATCH_ROM  = 0x55,
+            W1_SKIP_ROM   = 0xCC,
+        };
+        enum dsCommand_t {
+            DS_CONVERT = 0x44,
+            DS_WR_SCRP = 0x4E,
+            DS_RD_SCRP = 0xBE,
+            DS_CP_SCRP = 0x48,
+            DS_REC_E2  = 0xB8,
+            DS_RD_POW  = 0xB4
         };
 
  static Component* construct( QObject* parent, QString type, QString id );
@@ -76,16 +92,23 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         void writeBit();
         void readBit( uint8_t bit );
         void pulse( uint64_t time, uint64_t witdth ); // Time in us
-        void command( uint8_t cmd );
+        void romCommand( uint8_t cmd );
+        void funCommand( uint8_t cmd );
 
-        // Commands
+        // ROM commands
+        void searchROM();       // F0h
         void skipROM();         // CCh
         void readROM();         // 33h
-        void convertTemp();     // 44h
-        void readPowerSupply(); // B4h
-        void readScratchpad();  // BEh
         void matchROM();        // 55h
-        void searchROM();       // F0h
+        void alarmSearch();     // ECh
+
+        // Function commands
+        void convertTemp();     // 44h
+        void writeScratchpad(); // 4Eh
+        void readScratchpad();  // BEh
+        void copyScratchpad();  // 48h
+        void recallE2();        // B8h
+        void readPowerSupply(); // B4h
 
         void sendSearchBit();
         bool bitROM( uint bitIndex );
@@ -110,7 +133,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         uint8_t  m_txReg;
         uint8_t  m_lastBit;
         uint8_t  m_bitSearch;
-        uint64_t  m_bitIndex;
+        uint64_t m_bitIndex;
 
         int m_pulse;
 
@@ -129,6 +152,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         uint8_t m_TH_reg;  // TH register, alarm trigger register, can be stored in internal EEPROM
         uint8_t m_TL_reg;  // TL register, alarm trigger register, can be stored in internal EEPROM
         uint8_t m_CFG_reg; // Config register, can be stored in internal EEPROM
+        bool m_alarm;
 
         std::vector<uint8_t> m_txBuff;
         //std::vector<uint8_t> rx_BUFF;

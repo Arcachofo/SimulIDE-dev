@@ -117,10 +117,11 @@ Ds18b20::~Ds18b20(){}
 void Ds18b20::stamp()   // Called at Simulation Start
 {
     m_lastTime = 0;
-    m_rxReg = 0;
+    m_rxReg   = 0;
     m_lastBit = 7;
-    m_write = false;
+    m_write  = false;
     m_lastIn = false;
+    m_alarm  = false;
     m_inpin->setPinMode( openCo );
     m_inpin->setOutState( true );
     m_inpin->changeCallBack( this, true );
@@ -147,7 +148,7 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
             qDebug() <<"\n"<< idLabel() << "Ds18b20::voltChanged -------------- RESET"<<time/1e3<<"ns";
             m_rxReg = 0;
             m_bitIndex = 0;
-            m_state = W1_COMMAND;
+            m_state = W1_ROM_CMD;
             m_write = false;
             pulse( 30, 80 ); // Send 80 us ( 60 to 240 us) pulse after 30 us ( 15 to 60 us)
         }
@@ -175,9 +176,9 @@ void Ds18b20::runEvent()
         m_pullDown = false;
         m_inpin->sheduleState( false, 0 );
         Simulator::self()->addEvent( m_pulse, this );
+        m_inpin->changeCallBack( this, false );        // Stop receiving voltChange() CallBacks
     }
-    else              // Release
-    {
+    else{             // Release
         m_inpin->sheduleState( true, 0 );
         m_inpin->changeCallBack( this, true ); // Receive voltChange() CallBacks again
     }
@@ -224,9 +225,11 @@ void Ds18b20::readBit( uint8_t bit )
         {
             m_state = W1_IDLE; // No ROM match, we are out
             qDebug() <<idLabel()<<"Ds18b20::readBit       NO ROM match";
+            return;
         }
     }
-    else if( bit ) m_rxReg |= 1<<m_bitIndex;
+
+    if( bit ) m_rxReg |= 1<<m_bitIndex;
 
     if( m_bitIndex == m_lastBit )   // Complete byte received
     {
@@ -245,11 +248,12 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
     switch( m_state )
     {
         case W1_IDLE: break;                      // Error, this shoild not happen
-        case W1_COMMAND: command( m_rxReg ); break; // Command received
+        case W1_ROM_CMD: romCommand( m_rxReg ); break; // ROM Command received
+        case W1_FUN_CMD: funCommand( m_rxReg ); break; // Function Command received
         case W1_DATA: break;
-        case W1_MATCH:                            // ROM Match: we are online, wait for commands
+        case W1_MATCH:                            // ROM Match: we are online, wait for Function commands
         {
-            m_state = W1_COMMAND;
+            m_state = W1_FUN_CMD;
             qDebug() <<idLabel()<<"Ds18b20::dataReceived     ROM match";
         }break;
         case W1_SEARCH:
@@ -274,28 +278,21 @@ void Ds18b20::pulse( uint64_t time, uint64_t witdth ) // Time in us
 {
     m_pullDown = true;
     m_pulse = witdth*1e6;                          // Keep line low for width us
-    m_inpin->changeCallBack( this, false );        // Stop receiving voltChange() CallBacks
     Simulator::self()->addEvent( time*1e6, this ); // Send pulse after time us
 }
 
-// COMMANDS --------------------------------------------------
+// ROM COMMANDS --------------------------------------------------
 
-void Ds18b20::command( uint8_t cmd )
+void Ds18b20::romCommand( uint8_t cmd )
 {
     m_state = W1_DATA;
     switch( cmd )
     {
         case 0x33: readROM();         break;
-        case 0x44: convertTemp();     break;
-        //case 0x48: qDebug() <<idLabel()<< "Ds18b20::command : Warning:  COPY SCRATCHPAD Not implemented"; break;
-        //case 0x4E: qDebug() <<idLabel()<< "Ds18b20::command : Warning:  WRITE SCRATCHPAD Not implemented"; break;
         case 0x55: matchROM();        break;
-        case 0xB4: readPowerSupply(); break;
-        case 0xBE: readScratchpad();  break;
         case 0xCC: skipROM();         break;
         case 0xF0: searchROM();       break;
-        default:
-        {
+        default:{
             m_state = W1_IDLE;
             qDebug()<<idLabel() << "Ds18b20::command : Warning:  command Not implemented";
         }
@@ -315,13 +312,6 @@ void Ds18b20::readROM() // Code: 33h : send ROM to Master
     sendData( m_txBuff.back() );
 }
 
-void Ds18b20::convertTemp() // Code 44h, temperature already in the Scratchpad, nothing to do
-{
-    qDebug() <<idLabel()<< "Ds18b20::convertTemp";
-    m_state = W1_IDLE;
-    if( !m_parPower ) pulse( 1, 749 ); // Send a 749 us pulse after 1 us
-}
-
 void Ds18b20::matchROM() // Code 55h : read 64 bits and compare with ROM
 {
     qDebug() <<idLabel()<< "Ds18b20::matchROM";
@@ -329,26 +319,10 @@ void Ds18b20::matchROM() // Code 55h : read 64 bits and compare with ROM
     m_state = W1_MATCH;
 }
 
-void Ds18b20::readPowerSupply() // Code B4h : using parasite power? pull down time???
-{
-    qDebug() <<idLabel()<< "Ds18b20::readPowerSupply"; // By now we don't use parasite power
-    /// TODO add property
-}
-
-void Ds18b20::readScratchpad() // Code BEh send Scratchpad LSB
-{
-    m_txBuff.clear();
-    for( int i=8; i>=0; i-- ) m_txBuff.push_back( m_scratchpad[i] );
-
-    qDebug() << idLabel() <<"Ds18b20::readScratchpad :"<<arrayToHex( m_txBuff.data(), m_txBuff.size() );
-
-    sendData( m_txBuff.back() );
-}
-
 void Ds18b20::skipROM() // Code: CCh : This device is selected, Wait command
 {
     qDebug() <<idLabel()<< "Ds18b20::skipROM";
-    m_state = W1_COMMAND;
+    m_state = W1_FUN_CMD;
 }
 
 void Ds18b20::searchROM() // Code F0h
@@ -357,6 +331,12 @@ void Ds18b20::searchROM() // Code F0h
     m_state = W1_SEARCH;
     m_bitSearch = 0;
     sendSearchBit();
+}
+
+void Ds18b20::alarmSearch()
+{
+    if( m_alarm ) searchROM();
+    else          m_state = W1_IDLE;
 }
 
 void Ds18b20::sendSearchBit()
@@ -373,6 +353,97 @@ bool Ds18b20::bitROM( uint bitIndex )
     return ( m_ROM[ byte ] & 1<<bit ) > 0;
 }
 
+// Function COMMANDS --------------------------------------------------
+
+void Ds18b20::funCommand( uint8_t cmd )
+{
+    m_state = W1_DATA;
+    switch( cmd )
+    {
+        case 0x44: convertTemp();     break;
+        case 0x48: copyScratchpad();  break;
+        case 0x4E: writeScratchpad(); break;
+        case 0xB4: readPowerSupply(); break;
+        case 0xB8: recallE2();        break;
+        case 0xBE: readScratchpad();  break;
+        default:{
+            m_state = W1_IDLE;
+            qDebug()<<idLabel() << "Ds18b20::command : Warning:  command Not implemented";
+        }
+    }
+    m_lastCommand = cmd;
+}
+
+void Ds18b20::convertTemp() // Code 44h, temperature already in the Scratchpad, nothing to do
+{
+    qDebug() <<idLabel()<< "Ds18b20::convertTemp";
+    m_state = W1_IDLE;
+    if( !m_parPower ) pulse( 1, 749 ); // Send a 749 us pulse after 1 us
+}
+
+void Ds18b20::writeScratchpad() // Code 4Eh : Master will write TH, TL, Config
+{
+    /// All three bytes must be written before a reset is issued.
+    /// TODO
+
+    qDebug() <<idLabel()<< "Ds18b20::command : Warning:  WRITE SCRATCHPAD Not implemented";
+
+    m_state = W1_DATA;
+}
+
+void Ds18b20::readScratchpad() // Code BEh : send Scratchpad LSB
+{
+    m_txBuff.clear();
+    for( int i=8; i>=0; i-- ) m_txBuff.push_back( m_scratchpad[i] );
+
+    qDebug() << idLabel() <<"Ds18b20::readScratchpad :"<<arrayToHex( m_txBuff.data(), m_txBuff.size() );
+
+    sendData( m_txBuff.back() );
+}
+
+void Ds18b20::copyScratchpad() // Code 48h :
+{
+    /// This command copies the contents of the scratchpad
+    /// TH, TL and configuration registers (bytes 2, 3 and 4) to EEPROM.
+    ///
+    /// If the device is being used in parasite power mode,
+    /// within 10µs (max) the master must enable a strong pullup on the 1-Wire bus
+    /// for at least 10ms as described in the Powering the DS18B20 section.
+
+    /// TODO
+
+    qDebug() <<idLabel()<< "Ds18b20::command : Warning:  COPY SCRATCHPAD Not implemented";
+
+    //if ( m_state == W1_WAIT_FOR_RESET_PULSE) return;
+
+    //m_state = W1_COMMAND;
+}
+
+void Ds18b20::recallE2() // Code B8h :
+{
+    /// This command recalls the alarm trigger values (T H and T L ) and configuration data from EEPROM
+    /// and places the data in bytes 2, 3, and 4, respectively, in the scratchpad memory.
+    ///
+    /// The master device can issue read time slots following the Recall E 2 command
+    /// and the DS18B20 will indicate the status of the recall by
+    /// transmitting 0 while the recall is in progress and 1 when the recall is done.
+    ///
+    /// The recall operation happens automatically at power-up,
+    /// so valid data is available in the scratchpad as soon as power is applied to the device.
+
+    /// TODO
+
+    qDebug() <<idLabel()<< "Ds18b20::recallE2";
+
+    m_state = W1_DATA;
+}
+
+void Ds18b20::readPowerSupply() // Code B4h : using parasite power? pull down time???
+{
+    qDebug() <<idLabel()<< "Ds18b20::readPowerSupply"; // By now we don't use parasite power
+    /// TODO add property
+}
+
 // End Commands --------------------------------------------------------------------
 
 void Ds18b20::setTemp( double t ) // This should convert temp wrote in UI
@@ -383,10 +454,6 @@ void Ds18b20::setTemp( double t ) // This should convert temp wrote in UI
 
     //-10.125    °C 1111 1111 0101 1110 FF5Eh
     //-25.0625   °C 1111 1110 0110 1111 FF6Fh
-
-    /// TODO alarm settings
-    //m_TH_reg =
-    //m_TL_reg =
 
     // store temperature to scratchpad
     m_scratchpad[0] = temp;
@@ -424,6 +491,8 @@ uint8_t Ds18b20::crc8( uint8_t* addr, uint8_t len ) // DS18B20 crc8 calc
 
 void Ds18b20::setROM( QString ROMstr )
 {
+    if( Circuit::self()->pasting() ) return; /// ADD THIS LINE
+
     bool ok;
     QStringList lstROM = ROMstr.split(" ");
     lstROM.removeAll("");
