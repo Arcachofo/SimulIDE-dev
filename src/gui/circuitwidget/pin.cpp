@@ -235,6 +235,7 @@ void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
 
 void Pin::setLabelText( QString label )
 {
+    label = label.simplified();
     m_labelText = label;
 
     if( label.contains("!"))

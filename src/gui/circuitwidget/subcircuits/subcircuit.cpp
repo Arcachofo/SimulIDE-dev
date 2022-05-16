@@ -376,7 +376,7 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
 
         pin->setLength( length );
         pin->setLabelColor( color );
-        pin->setLabelText( label.remove(" ") );
+        pin->setLabelText( label );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
 
         m_ePin[pos-1] = pin;
@@ -420,7 +420,7 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     }
     pin->setInverted( type == "inverted" || type == "in" );
     pin->setLength( length );
-    pin->setLabelText( label.remove(" ") );
+    pin->setLabelText( label );
     pin->setVisible( true );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
     pin->isMoved();
