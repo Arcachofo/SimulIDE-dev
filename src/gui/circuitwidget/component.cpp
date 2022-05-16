@@ -558,10 +558,12 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
 
     if( isSelected() )
     {
-        pen.setColor( Qt::darkGray);
-        color = Qt::darkGray;
+        //pen.setColor( Qt::darkGray);
+        //color = Qt::darkGray;
+        p->fillRect( boundingRect(), Qt::gray  );
+        p->setOpacity( 0.5 );
     }
-    else color = m_color;
+    color = m_color;
 
     if( m_warning || m_crashed )
     {
