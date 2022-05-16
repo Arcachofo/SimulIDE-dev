@@ -41,14 +41,18 @@ DataSpace::~DataSpace()
 
 void DataSpace::initialize()
 {
-    std::fill( m_dataMem.begin(), m_dataMem.end(), 0 );
+    for( uint i=0; i<m_dataMem.size(); i++ ) writeReg( i, 0, false );
 
     for( QString regName : m_regInfo.keys() )  // Set Registers Reset Values
     {
         regInfo_t regInfo = m_regInfo.value(regName);
-        writeReg( regInfo.address, regInfo.resetVal, false );
-        m_dataMem[regInfo.address] = regInfo.resetVal;
-}   }
+        if( regInfo.resetVal != 0 )
+        {
+            writeReg( regInfo.address, regInfo.resetVal, false );
+            m_dataMem[regInfo.address] = regInfo.resetVal;
+        }
+    }
+}
 
 uint8_t DataSpace::readReg( uint16_t addr )
 {

@@ -49,6 +49,8 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
 {
     m_area = QRect(-28,-20, 56, 40 );
 
+    m_temp = 22.5;
+    m_humi = 68.5;
     m_tempInc = 0.5;
     m_humiInc = 5;
     m_set = true;
@@ -65,8 +67,9 @@ Dht22::Dht22( QObject* parent, QString type, QString id )
     m_pin[3] = new Pin( 180, QPoint(-36, 12), id+"-ncPin", 0, this );
     m_pin[3]->setUnused( true );
 
-    m_font.setFamily("Ubuntu");
+    m_font.setFamily("Ubuntu Mono");
     m_font.setBold( true );
+    m_font.setLetterSpacing( QFont::PercentageSpacing, 100 );
     setLabelPos(-28,-32, 0);
     setModel( "DHT22" );
 
@@ -250,8 +253,6 @@ void Dht22::setModel( QString model )
     if( m_DHT22 ) m_start = 1e9;
     else          m_start = 18e9;
 
-    m_temp = 22;
-    m_humi = 68;
     calcData();
 }
 
@@ -270,6 +271,7 @@ void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     p->setBrush( QColor(200, 220, 180) );
     p->drawRoundedRect( QRect(-25,-10, 40, 26 ),2,2 );
 
+    m_font.setStretch( 100 );
     m_font.setPixelSize(6);
     p->setFont( m_font );
     if( m_DHT22 ){
@@ -279,11 +281,18 @@ void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
         p->setPen( QColor(200, 200, 255) );
         p->drawText(-10,-13, "DHT11" );
     }
-    m_font.setPixelSize(9);
+#ifdef _WIN32
+    m_font.setStretch( 99 );
+#else
+    m_font.setStretch( 93 );
+#endif
+    m_font.setPixelSize(10);
     p->setFont( m_font );
     p->setPen( QColor(0, 0, 0) );
-    p->drawText( -16, 1, "C° "+QString::number( m_temp ) );
-    p->drawText( -16,12, "%  "+QString::number( m_humi ) );
+    p->drawText( -16, 1, "C°" );
+    p->drawText( -06, 1, QString::number( m_temp ) );
+    p->drawText( -16,12, "% ");
+    p->drawText( -06,12, QString::number( m_humi ) );
 }
 
 #include "moc_dht22.cpp"

@@ -810,8 +810,7 @@ void AvrCore::runDecoder()
         }    break;
         default: ;//_avr_invalid_instruction(avr);
     }
-    if( new_pc > m_progSize )
-        qDebug() << "AVR PC ERROR" << new_pc << m_progSize;
+    if( new_pc >= m_progSize ) new_pc = 0;
 
     PC = new_pc;
     m_mcu->cyclesDone = cycle;

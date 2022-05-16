@@ -65,6 +65,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     QFont font;
     #ifdef _WIN32
     font.setFamily("Consolas");
+    font.setStretch( 99 );
     #else
     font.setFamily("Ubuntu Mono");
     #endif

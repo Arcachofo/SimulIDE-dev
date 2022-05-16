@@ -97,11 +97,18 @@ DS1621::DS1621( QObject* parent, QString type, QString id )
     connect( d_button, SIGNAL( pressed()),
              this,     SLOT  ( downbuttonclicked()) );
 
-    m_font.setFamily("Ubuntu");
+    m_font.setFamily("Ubuntu Mono");
+#ifdef _WIN32
+    m_font.setStretch( 99 );
+#else
+    m_font.setStretch( 93 );
+#endif
+    m_font.setPixelSize( 10 );
     m_font.setBold( true );
+    m_font.setLetterSpacing( QFont::PercentageSpacing, 100 );
     setLabelPos(-24,-28 );
 
-    m_temp = 22;
+    m_temp = 22.5;
     m_tempInc = 0.5;
     m_tempCount = 0;
     m_tempSlope = 0;
@@ -281,10 +288,10 @@ void DS1621::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
     p->setBrush( QColor(200, 220, 180) );
     p->drawRoundedRect( QRect(-11,-14, 33, 15 ),2,2 );
 
-    m_font.setPixelSize(9);
     p->setFont( m_font );
     p->setPen( QColor(0, 0, 0) );
-    p->drawText( -9, -3, "C° "+QString::number( m_temp ) );
+    p->drawText(-9, -3, "C°" );
+    p->drawText( 1, -3, QString::number( m_temp ) );
 }
 
 #include "moc_ds1621.cpp"

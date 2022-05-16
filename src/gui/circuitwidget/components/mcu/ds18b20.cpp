@@ -51,13 +51,13 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
        , eElement( id )
 {    
-    m_area = QRect(-28,-16, 70, 32 );
+    m_area = QRect(-28,-16, 56, 32 );
 
     m_state = W1_IDLE;
     m_parPower = false;
     m_resolution = 12; // Should check what is default 9-12, should be writable in EEPROM
     m_tempInc = 0.5;
-    setTemp( 22 );
+    setTemp( 22.0005 );
 
     // This actually should be generated and saved with sim file
     // once component is dropped. It is unique ID to keep
@@ -100,8 +100,10 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
     connect( d_button, SIGNAL( pressed()),
              this,     SLOT (  downbuttonclicked()) );
 
-    m_font.setFamily("Ubuntu");
+    m_font.setFamily("Ubuntu Mono");
+    m_font.setPixelSize( 10 );
     m_font.setBold( true );
+    m_font.setLetterSpacing( QFont::PercentageSpacing, 100 );
     setLabelPos(-24,-28 );
 
     Simulator::self()->addToUpdateList( this );
@@ -548,12 +550,12 @@ void Ds18b20::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawRoundedRect( m_area, 2, 2 );
 
     p->setBrush( QColor(200, 220, 180) );
-    p->drawRoundedRect( QRect(-24,-14, 60, 15 ),2,2 );
+    p->drawRoundedRect( QRect(-26,-14, 52, 15 ),2,2 );
 
-    m_font.setPixelSize(9);
     p->setFont( m_font );
-    p->setPen( QColor(0, 0, 0) );    
-    p->drawText( -22, -3, "C° "+QString::number( m_temp ) );
+    p->setPen( QColor(0, 0, 0) );
+    p->drawText(-23, -3, "C°" );
+    p->drawText(-12, -3, QString::number( m_temp ) );
 }
 
 //#include "moc_ds18b20.cpp"

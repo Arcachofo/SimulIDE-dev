@@ -150,7 +150,7 @@ void CircuitView::clear()
     resetMatrix();
     m_scale = 1;
     m_enterItem = NULL;
-    centerOn( 900, 600 );
+    centerOn( 0, 0 );
 }
 
 void CircuitView::wheelEvent( QWheelEvent* event )
