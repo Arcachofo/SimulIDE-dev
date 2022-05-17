@@ -145,6 +145,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
 void Simulator::runCircuit()
 {
     solveCircuit(); // Solve any pending changes
+    if( m_state < SIM_RUNNING ) return;
 
     eElement* event = m_firstEvent;
     uint64_t endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
