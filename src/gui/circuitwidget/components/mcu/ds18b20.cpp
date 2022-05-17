@@ -57,7 +57,7 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
     m_parPower = false;
     m_resolution = 12; // Should check what is default 9-12, should be writable in EEPROM
     m_tempInc = 0.5;
-    setTemp( 22.0005 );
+    setTemp( 22 );
 
     // This actually should be generated and saved with sim file
     // once component is dropped. It is unique ID to keep
@@ -182,7 +182,7 @@ void Ds18b20::runEvent()
     }
     else{             // Release
         m_inpin->sheduleState( true, 0 );
-        m_inpin->changeCallBack( this, true ); // Receive voltChange() CallBacks again
+        m_inpin->changeCallBack( this, true );         // Receive voltChange() CallBacks again
     }
 }
 
@@ -214,8 +214,13 @@ void Ds18b20::dataSent() // Last data has been sent
     if( m_state == W1_SEARCH ) m_lastBit = 0; // Read 1 bit
     else if( !m_txBuff.empty() )   // Send next byte in Tx Buffer
     {
-        m_txBuff.pop_back(); // Remove last sent byte
-        if( !m_txBuff.empty() ) sendData( m_txBuff.back() ); // Send last byte in list, if list is not empty
+        m_txBuff.pop_back();  // Remove last sent byte
+        if( m_txBuff.empty() )// All date sent
+        {
+            if     ( m_state == W1_ROM_CMD ) m_state = W1_FUN_CMD;  // Wait for Function command
+            else if( m_state == W1_FUN_CMD ) m_state = W1_IDLE;     // Wait for Reset pulse
+        }
+        else                   sendData( m_txBuff.back() ); // Send last byte in list, if list is not empty
     }
 }
 
@@ -226,6 +231,9 @@ void Ds18b20::readBit( uint8_t bit )
         if( (bit>0) != bitROM( m_bitIndex ) )
         {
             m_state = W1_IDLE; // No ROM match, we are out
+            m_rxReg = 0;
+            m_bitIndex = 0;
+            m_lastBit = 7;     // Return to normal byte reception
             qDebug() <<idLabel()<<"Ds18b20::readBit       NO ROM match";
             return;
         }
@@ -256,6 +264,9 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
         case W1_MATCH:                            // ROM Match: we are online, wait for Function commands
         {
             m_state = W1_FUN_CMD;
+            m_rxReg = 0;
+            m_bitIndex = 0;
+            m_lastBit = 7;     // Return to normal byte reception
             qDebug() <<idLabel()<<"Ds18b20::dataReceived     ROM match";
         }break;
         case W1_SEARCH:
@@ -287,7 +298,7 @@ void Ds18b20::pulse( uint64_t time, uint64_t witdth ) // Time in us
 
 void Ds18b20::romCommand( uint8_t cmd )
 {
-    m_state = W1_DATA;
+    //m_state = W1_DATA;
     switch( cmd )
     {
         case 0x33: readROM();         break;
@@ -359,7 +370,7 @@ bool Ds18b20::bitROM( uint bitIndex )
 
 void Ds18b20::funCommand( uint8_t cmd )
 {
-    m_state = W1_DATA;
+    //m_state = W1_DATA;
     switch( cmd )
     {
         case 0x44: convertTemp();     break;
@@ -380,7 +391,7 @@ void Ds18b20::convertTemp() // Code 44h, temperature already in the Scratchpad, 
 {
     qDebug() <<idLabel()<< "Ds18b20::convertTemp";
     m_state = W1_IDLE;
-    if( !m_parPower ) pulse( 1, 749 ); // Send a 749 us pulse after 1 us
+    //if( !m_parPower ) pulse( 1, 749 ); // Send a 749 us pulse after 1 us
 }
 
 void Ds18b20::writeScratchpad() // Code 4Eh : Master will write TH, TL, Config
