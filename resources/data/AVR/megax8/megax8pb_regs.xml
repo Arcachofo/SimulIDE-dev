@@ -161,17 +161,11 @@
     <register name="PCMSK3"   addr="0x0073"  reset="" mask=""
               bits="PCINT24,PCINT25,PCINT26,PCINT27,0,0,0,0"/>
 
-    <register  name="ADCL0"    addr="0x0078"  reset=""  mask="00000000" 
+    <register  name="ADCL"    addr="0x0078"  reset=""  mask="00000000" 
                bits="ADCL0,ADCL1,ADCL2,ADCL3,ADCL4,ADCL5,ADCL6,ADCL7" />
 
-    <register  name="ADCL1"    addr="0x0078"  reset=""  mask="00000000" 
-               bits="ADCL0,ADCLq,0,0,0,0,0,0" />
-
-    <register  name="ADCH0"    addr="0x0079"  reset=""  mask="00000000" 
+    <register  name="ADCH"    addr="0x0079"  reset=""  mask="00000000" 
                bits="ADCH8,ADCH9,0,0,0,0,0,0" />
-
-    <register  name="ADCH1"    addr="0x0079"  reset=""  mask="00000000" 
-               bits="ADCH2,ADCH3,ADCH4,ADCH5,ADCH6,ADCH7,ADCH8,ADCH9" />
 
     <register  name="ADCSRA"  addr="0x007A"  reset=""  mask="" 
                bits="ADPS0,ADPS1,ADPS2,ADIE,ADIF,ADATE,ADSC,ADEN" />
