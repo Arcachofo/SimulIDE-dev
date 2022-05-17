@@ -62,7 +62,7 @@ bool BaseDebugger::upload()
 
     if( ok ){
         eMcu::self()->setDebugger( this );
-        ok = postProcess();
+        if( m_fileExt != ".hex" ) ok = postProcess();
     }
     return ok;
 }
