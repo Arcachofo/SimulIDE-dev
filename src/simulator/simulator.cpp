@@ -351,7 +351,7 @@ void Simulator::pauseSim()
     m_state = SIM_PAUSED;
 
     CircuitWidget::self()->setMsg( " Paused ", 1 );
-    qDebug() << "\n    Simulation Paused ";
+    //qDebug() << "\n    Simulation Paused ";
 }
 
 void Simulator::resumeSim()
@@ -360,7 +360,7 @@ void Simulator::resumeSim()
     m_state = m_oldState; // SIM_RUNNING;
 
     CircuitWidget::self()->setMsg( " Running ", 0 );
-    qDebug() << "\n    Resuming Simulation";
+   // qDebug() << "\n    Resuming Simulation";
 }
 
 void Simulator::stopTimer()
