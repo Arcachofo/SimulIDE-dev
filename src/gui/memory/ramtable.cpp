@@ -23,6 +23,8 @@
 #include <QMessageBox>
 #include <QTextStream>
 
+#include <QDebug>
+
 #include <math.h>
 
 #include "ramtable.h"
@@ -58,6 +60,7 @@ RamTable::RamTable( QWidget* parent, eMcu* processor )
 
     m_status.setVerticalHeaderLabels( QStringList()<<" STATUS " );
     m_status.verticalHeader()->setFixedWidth( round(60*scale) );
+    m_status.horizontalHeader()->setMaximumSectionSize(row_heigh);
     m_status.horizontalHeader()->hide();
     m_status.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     m_status.setRowHeight( 0, row_heigh );
@@ -65,17 +68,18 @@ RamTable::RamTable( QWidget* parent, eMcu* processor )
     font.setPixelSize( round(12*scale) );
     for( int i=0; i<8; i++ )
     {
-        m_status.setColumnWidth( i, row_heigh );
         it = new QTableWidgetItem(0);
         it->setFlags( Qt::ItemIsEnabled );
+        it->setTextAlignment( Qt::AlignCenter );
         it->setFont( font );
         m_status.setItem( 0, i, it );
+        m_status.setColumnWidth( i, row_heigh );
     }
     int wi = row_heigh*8 + round(60*scale);
     m_status.setMinimumWidth( wi );
     m_status.setMaximumWidth( wi );
 
-    m_pc.setVerticalHeaderLabels( QStringList()<<" PC "  );
+    m_pc.setVerticalHeaderLabels( QStringList()<<" PC ");
     m_pc.verticalHeader()->setFixedWidth( round(31*scale) );
     m_pc.horizontalHeader()->hide();
     m_pc.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
