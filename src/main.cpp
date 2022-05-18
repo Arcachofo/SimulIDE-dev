@@ -95,7 +95,7 @@ int main( int argc, char *argv[] )
          || circ.endsWith(".sim1") ) CircuitWidget::self()->loadCirc( circ );
     }
     window.show();
-    QTimer::singleShot( 100, &window, &MainWindow::readSettings ); // Some DE forze window geometry, so restore geometry later
+    //QTimer::singleShot( 100, &window, &MainWindow::readSettings ); // Some DE forze window geometry, so restore geometry later
 
     return app.exec();
 }

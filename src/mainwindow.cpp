@@ -90,7 +90,7 @@ MainWindow::MainWindow()
 
     QDir compSetDir = m_filesDir.absoluteFilePath("data");
     if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
-    //readSettings();
+    readSettings();
 
     QString backPath = getConfigPath( "backup.sim1" );
     if( QFile::exists( backPath ) )
