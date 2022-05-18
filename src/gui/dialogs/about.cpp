@@ -28,5 +28,3 @@ AboutDialog::AboutDialog( QWidget* parent )
     compiled->setText( QString( BUILDDATE )+" (dd-MM-yy)" );
     icon->setPixmap( QPixmap(":/simulide.png") );
 }
-
-
