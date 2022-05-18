@@ -42,7 +42,6 @@ void Mcs65Core::reset()
 {
     McuCore::reset();
 
-    m_phi2Pin->sheduleState( true, 1 );
     m_cpuState = cpu_FETCH;
 
     m_psStep = m_mcu->psCycle()/2;
@@ -299,6 +298,38 @@ void Mcs65Core::Op_TYA() { ACC = *m_regY; setNZ( ACC ); }
 void Mcs65Core::Op_TSX() { *m_regX = m_SP; setNZ( m_SP ); }
 void Mcs65Core::Op_TXS() { m_SP = *m_regX; }
 
+void  Mcs65Core::BXX( uint8_t flag, uint8_t y )
+{
+
+}
+void Mcs65Core::BRK(){;}
+void Mcs65Core::PHP(){;}
+void Mcs65Core::BPL(){;}
+void Mcs65Core::CLC(){;}
+void Mcs65Core::JSR(){;}
+void Mcs65Core::PLP(){;}
+void Mcs65Core::SEC(){;}
+void Mcs65Core::RTI(){;}
+void Mcs65Core::PHA(){;}
+void Mcs65Core::CLI(){;}
+void Mcs65Core::RTS(){;}
+void Mcs65Core::PLA(){;}
+void Mcs65Core::SEI(){;}
+void Mcs65Core::DEY(){;}
+void Mcs65Core::TXA(){;}
+void Mcs65Core::TYA(){;}
+void Mcs65Core::TXS(){;}
+void Mcs65Core::TAY(){;}
+void Mcs65Core::TAX(){;}
+void Mcs65Core::CLV(){;}
+void Mcs65Core::TSX(){;}
+void Mcs65Core::INY(){;}
+void Mcs65Core::DEX(){;}
+void Mcs65Core::CLD(){;}
+void Mcs65Core::INX(){;}
+void Mcs65Core::NOP(){;}
+void Mcs65Core::SED(){;}
+
 void Mcs65Core::runDecoder()
 {
     m_mcu->cyclesDone = 1;
@@ -311,16 +342,15 @@ void Mcs65Core::runDecoder()
         m_cpuState = cpu_READ;
         m_syncPin->sheduleState( false, 0 ); /// prop delay???
 
-        uint8_t    instruction = m_mcu->extMem->getData();
-        m_group =  instruction & 0b00000011;
-        m_Amode = (instruction & 0b00011100) >> 2;
-        m_Ocode = (instruction & 0b11100000) >> 5;
+        m_instr = m_mcu->extMem->getData();
+        m_group =  m_instr & 0b00000011;
+        m_Amode = (m_instr & 0b00011100) >> 2;
+        m_Ocode = (m_instr & 0b11100000) >> 5;
         m_step = 0;
 
         if( m_group == 3 ) { m_cpuState = cpu_FETCH; return; }/// Not valid (by now)
 
-        switch( m_Amode )
-        {
+        switch( m_Amode ){
             case 0: {
 if( m_group == 1 ){ m_addrMode = addr_INDI; m_regI = m_regX; m_zeroPage = true; break; }   // Group 1
               else{ m_addrMode = addr_IMME;                                     break; }   // Groups 2, 4
@@ -346,275 +376,93 @@ if( m_group == 1 ){ m_addrMode = addr_ABSO; m_regI = m_regY;                    
 
     if( m_cpuState == cpu_READ ) Read( PC );
 
-    if( m_cpuState == cpu_EXEC )             // We are executing instruction
+    if( m_cpuState == cpu_EXEC )             // We are executing m_instr
     {
         //m_op0 = m_mcu->extMem->getData(); // Read first operand (even if not used)
         m_cpuState = cpu_FETCH; // Default, Ops can change this
 
-        switch( m_group )                // Regular instructions
-        {
-            case 0:{ switch( m_Ocode ){
-                    case 0: break;
-                    case 1: Op_BIT();  break;
-                    case 2: //Op_JMP();
-                    case 3: Op_JMP(); break;
-                    case 4: Op_STY(); break;
-                    case 5: Op_LDY(); break;
-                    case 6: Op_CPY(); break;
-                    case 7: Op_CPX(); break;
-            } }break;
-            case 1:{ switch( m_Ocode ){
-                    case 0: Op_ORA(); break;
-                    case 1: Op_AND(); break;
-                    case 2: Op_EOR(); break;
-                    case 3: Op_ADC(); break;
-                    case 4: Op_STA(); break;
-                    case 5: Op_LDA(); break;
-                    case 6: Op_CMP(); break;
-                    case 7: Op_SBC(); break;
-            } }break;
-            case 2:{ switch( m_Ocode ){
-                    case 0: Op_ASL(); break;
-                    case 1: Op_ROL(); break;
-                    case 2: Op_LSR(); break;
-                    case 3: Op_ROR(); break;
-                    case 4: Op_STX(); break;
-                    case 5: Op_LDX(); break;
-                    case 6: Op_DEC(); break;
-                    case 7: Op_INC(); break;
-            } }break;
-            case 3: break;
+        switch( m_instr ) {                 // Irregular m_instrs
+            case 0x00: BRK(); break; // BRK
+            case 0x08: PHP(); break; // PHP
+            case 0x10: BPL(); break; // BPL
+            case 0x18: CLC(); break; // CLC
+            case 0x20: JSR(); break; // JSR abs
+            case 0x28: PLP(); break; // PLP
+            case 0x38: SEC(); break; // SEC
+            case 0x40: RTI(); break; // RTI
+            case 0x48: PHA(); break; // PHA
+            case 0x58: CLI(); break; // CLI
+            case 0x60: RTS(); break; // RTS
+            case 0x68: PLA(); break; // PLA
+            case 0x78: SEI(); break; // SEI
+            case 0x88: DEY(); break; // DEY
+            case 0x8A: TXA(); break; // TXA
+            case 0x98: TYA(); break; // TYA
+            case 0x9A: TXS(); break; // TXS
+            case 0xA8: TAY(); break; // TAY
+            case 0xAA: TAX(); break; // TAX
+            case 0xB8: CLV(); break; // CLV
+            case 0xBA: TSX(); break; // TSX
+            case 0xC8: INY(); break; // INY
+            case 0xCA: DEX(); break; // DEX
+            case 0xD8: CLD(); break; // CLD
+            case 0xE8: INX(); break; // INX
+            case 0xEA: NOP(); break; // NOP
+            case 0xF8: SED(); break; // SED
+            default:{
+                switch( m_group ){               // Regular m_instrs
+                    case 0:{
+                    if( m_Amode == 4 ) // xxy 100 00 conditional branch
+                    {
+                        uint8_t flag = (m_instr & 0b11000000) >> 6; // 0=N, 1=O, 2=C, 3=Z
+                        uint8_t y    = (m_instr & 0b00100000) >> 5;
+                        BXX( flag, y ); // BPL BMI BVC BVS BCC BCS BNE BEQ
+                    }else{
+                        switch( m_Ocode ){
+                            case 0: break;
+                            case 1: Op_BIT(); break;
+                            case 2: //Op_JMP();
+                            case 3: Op_JMP(); break;
+                            case 4: Op_STY(); break;
+                            case 5: Op_LDY(); break;
+                            case 6: Op_CPY(); break;
+                            case 7: Op_CPX(); break;
+                    }   }
+                    }break;
+                    case 1:{ switch( m_Ocode ){
+                            case 0: Op_ORA(); break;
+                            case 1: Op_AND(); break;
+                            case 2: Op_EOR(); break;
+                            case 3: Op_ADC(); break;
+                            case 4: Op_STA(); break;
+                            case 5: Op_LDA(); break;
+                            case 6: Op_CMP(); break;
+                            case 7: Op_SBC(); break;
+                    } }break;
+                    case 2:{ switch( m_Ocode ){
+                            case 0: Op_ASL(); break;
+                            case 1: Op_ROL(); break;
+                            case 2: Op_LSR(); break;
+                            case 3: Op_ROR(); break;
+                            case 4: Op_STX(); break;
+                            case 5: Op_LDX(); break;
+                            case 6: Op_DEC(); break;
+                            case 7: Op_INC(); break;
+                    } }break;
+                    case 3: break;
+                }
+            }
         }
     }
 
-    if( m_cpuState == cpu_FETCH ) // Start instruction cycle
+    if( m_cpuState == cpu_FETCH ) // Start m_instr cycle
     {
         m_cpuState = cpu_DECODE;
         m_syncPin->sheduleState( true, 0 ); /// prop delay???
 
-        m_mcu->extMem->read( PC ); // Fetch instruction
+        m_mcu->extMem->read( PC ); // Fetch m_instr
         PC++;
     }
 
     m_step++;
-
-    /*switch( opCode )
-    {
-        case 0x00: //BRK
-        case 0x01: //ORA
-
-        case 0x05: //ORA
-        case 0x06: //ASL
-
-        case 0x08: //PHP
-        case 0x09: //ORA
-        case 0x0A: //ASL
-
-        case 0x0D: //ORA
-        case 0x0E: //ASL
-
-        case 0x10: //BPL
-        case 0x11: //ORA
-
-        case 0x15: //ORA
-        case 0x16: //ASL
-
-        case 0x18: //CLC
-        case 0x19: //ORA
-
-        case 0x1D: //ORA
-        case 0x1E: //ASL
-
-        case 0x20: //JSR
-        case 0x21: //AND
-
-        case 0x24: //BIT
-        case 0x25: //AND
-        case 0x26: //ROL
-
-        case 0x28: //PLP
-        case 0x29: //AND
-        case 0x2A: //ROL
-
-        case 0x2C: //Bit
-        case 0x2D: //AND
-        case 0x2E: //ROL
-
-        case 0x30: //BMI
-        case 0x31: //AND
-
-        case 0x35: //AND
-        case 0x36: //ROL
-
-        case 0x38: //SEC
-        case 0x39: //AND
-
-        case 0x3D: //AND
-        case 0x3E: //ROL
-
-        case 0x40: //RTI
-        case 0x41: //EOR
-
-        case 0x45: //EOR
-        case 0x46: //LSR
-
-        case 0x48: //PHA
-        case 0x49: //EOR
-        case 0x4A: //LSR
-
-        case 0x4C: //JMP
-        case 0x4D: //EOR
-        case 0x4E: //LSR
-
-        case 0x50: //BVC
-        case 0x51: //EOR
-
-        case 0x55: //EOR
-        case 0x56: //LSR
-
-        case 0x58: //CLI
-        case 0x59: //EOR
-
-        case 0x5D: //EOR
-        case 0x5E: //LSR
-
-        case 0x60: //RTS
-        case 0x61: //ADC
-
-        case 0x65: //ADC
-        case 0x66: //ROR
-
-        case 0x68: //PLA
-
-        case 0x69: //ADC
-        case 0x6A: //ROR
-
-        case 0x6C:
-        case 0x6D: //ADC
-        case 0x6E: //ROR
-
-        case 0x70: //BVS
-        case 0x71: //ADC
-
-        case 0x75: //ADC
-        case 0x76: //ROR
-
-        case 0x78: //SEI
-        case 0x79: //ADC
-
-        case 0x7D: //ADC
-        case 0x7E: //ROR
-
-        case 0x81: //STA
-
-        case 0x84: //STY
-        case 0x85: //STA
-        case 0x86: //STX
-
-        case 0x88: //DEY
-
-        case 0x8A: //TXA
-
-        case 0x8C: //STY
-        case 0x8D: //STA
-        case 0x8E: //SDX
-
-        case 0x90: //BCC
-        case 0x91: //STA
-
-        case 0x94: //STY
-        case 0x95: //STA
-        case 0x96: //STX
-
-        case 0x98: //TYA
-        case 0x99: //STA
-        case 0x9A: //TXS
-
-        case 0x9D: //STA
-
-        case 0xA0: //LDY
-        case 0xA1: //LDA
-        case 0xA2: //LDX
-
-        case 0xA4: //LDY
-        case 0xA5: //LDA
-        case 0xA6: //LDX
-
-        case 0xA8: //TAY
-        case 0xA9: //LDA
-        case 0xAA: //TAX
-
-        case 0xAC: //LDY
-        case 0xAD: //LDA
-        case 0xAE: //LDX
-
-        case 0xB0: //BCS
-        case 0xB1: //LDA
-
-        case 0xB4: //LDY
-        case 0xB5: //LDA
-        case 0xB6: //LDX
-
-        case 0xB8: //CLV
-        case 0xB9: //LDA
-        case 0xBA: //TSX
-
-        case 0xBC: //LDY
-        case 0xBD: //LDA
-        case 0xBE: //LDX
-
-        case 0xC0: //CPY
-        case 0xC1: //CMP
-
-        case 0xC4: //CPY
-        case 0xC5: //CMP
-        case 0xC6: //DEC
-
-        case 0xC8: //INY
-        case 0xC9: //CMP
-        case 0xCA: //DEX
-
-        case 0xCC: //CPY
-        case 0xCD: //CMP
-        case 0xCE: //DEC
-
-        case 0xD0: //BNE
-        case 0xD1: //CMP
-
-        case 0xD5: //CMP
-        case 0xD6: //DEC
-
-        case 0xD8: //CLD
-        case 0xD9: //CMP
-
-        case 0xDE: //DEC
-        case 0xDD: //CMP
-
-        case 0xE0: //CMP
-        case 0xE1: //SBC
-
-        case 0xE4: //CPX
-        case 0xE5: //SBC
-        case 0xE6: //INC
-
-        case 0xE8: //INX
-        case 0xE9: //SBC
-        case 0xEA: //NOP
-
-        case 0xEC: //CPX
-        case 0xED: //SBC
-        case 0xEE: //INC
-
-        case 0xF0: //BEQ
-        case 0xF1: //SBC
-
-        case 0xF5: //SBC
-        case 0xF6: //INC
-
-        case 0xF8: //SED
-        case 0xF9: //SBC
-
-        case 0xFD: //SBC
-        case 0xFE: //INC
-    }*/
 }

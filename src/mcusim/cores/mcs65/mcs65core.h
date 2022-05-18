@@ -104,6 +104,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         uint8_t* m_regI;
 
         cpuState_t m_cpuState;
+        uint8_t m_instr;
         uint8_t m_Ocode;
         uint8_t m_group;
         uint8_t m_Amode;
@@ -116,7 +117,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         addrMode_t m_addrMode;
         uint8_t m_op0;
         uint8_t m_op1;
-        uint16_t    m_readAddr;
+        uint16_t m_readAddr;
         //readState_t m_readState;
 
         bool m_zeroPage;
@@ -189,5 +190,34 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         inline void Op_TXA();
         inline void Op_TXS();
         inline void Op_TYA();
+
+        inline void BXX( uint8_t flag, uint8_t y );
+        inline void BRK();
+        inline void PHP();
+        inline void BPL();
+        inline void CLC();
+        inline void JSR();
+        inline void PLP();
+        inline void SEC();
+        inline void RTI();
+        inline void PHA();
+        inline void CLI();
+        inline void RTS();
+        inline void PLA();
+        inline void SEI();
+        inline void DEY();
+        inline void TXA();
+        inline void TYA();
+        inline void TXS();
+        inline void TAY();
+        inline void TAX();
+        inline void CLV();
+        inline void TSX();
+        inline void INY();
+        inline void DEX();
+        inline void CLD();
+        inline void INX();
+        inline void NOP();
+        inline void SED();
 };
 #endif
