@@ -402,7 +402,6 @@ void Circuit::loadStrDoc( QString &doc )
     for( ShieldSubc* shield : shieldList ) shield->connectBoard();
 
     m_idMap.clear();
-    /// m_pinMap.clear();
     m_busy = false;
     QApplication::restoreOverrideCursor();
 }

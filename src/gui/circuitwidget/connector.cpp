@@ -295,8 +295,11 @@ void Connector::remLines()
 
 void Connector::move( QPointF delta )
 {
-    if( Circuit::self()->pasting() )
-    { for( ConnectorLine* line : m_conLineList ) line->move( delta ); }
+    if( !Circuit::self()->pasting() ) return;
+
+    for( ConnectorLine* line : m_conLineList ) line->move( delta );
+    m_startPin->isMoved();
+    m_endPin->isMoved();
 }
 
 void Connector::setSelected(  bool selected )
