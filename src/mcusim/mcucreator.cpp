@@ -703,7 +703,7 @@ void McuCreator::createUsart( QDomElement* u )
 
         if( el.tagName() == "trunit" )
         {
-            UartTR* trUnit;
+            UartTR* trUnit = NULL;
             QString type = el.attribute( "type" );
             if( type == "tx" )
             {
@@ -718,19 +718,22 @@ void McuCreator::createUsart( QDomElement* u )
                 if( regName.isEmpty() ) regName = m_txRegName; // Tx and rx using the same register
                 watchRegNames( regName, R_READ, usartM, &McuUsart::readByte, mcu );
             }
-            setConfigRegs( &el, trUnit );
-
-            QStringList pinNames = el.attribute( "pin" ).split(",");
-            QList<IoPin*> pinList;
-            for( QString pinName : pinNames ) pinList.append( mcu->getPin( pinName ) );
-            trUnit->setPins( pinList );
-
-            if( el.hasAttribute("enable") )
+            if( trUnit )
             {
-                QString enable = el.attribute( "enable" );
-                watchBitNames( enable, R_WRITE, trUnit, &UartTR::enable, mcu );
+                setConfigRegs( &el, trUnit );
+
+                QStringList pinNames = el.attribute( "pin" ).split(",");
+                QList<IoPin*> pinList;
+                for( QString pinName : pinNames ) pinList.append( mcu->getPin( pinName ) );
+                trUnit->setPins( pinList );
+
+                if( el.hasAttribute("enable") )
+                {
+                    QString enable = el.attribute( "enable" );
+                    watchBitNames( enable, R_WRITE, trUnit, &UartTR::enable, mcu );
+                }
+                if( el.hasAttribute("interrupt") ) setInterrupt( el.attribute("interrupt"), trUnit );
             }
-            if( el.hasAttribute("interrupt") ) setInterrupt( el.attribute("interrupt"), trUnit );
         }
         node = node.nextSibling();
 }   }
@@ -932,13 +935,23 @@ void McuCreator::createExtMem( QDomElement* e )
     for( int i=0; i<addrPort->m_numPins; ++i )
     {
         McuPin* pin = addrPort->getPinN( i );
-        if( pin ) extMem->m_addrPin.emplace_back( pin );
+        if( pin )
+        {
+            extMem->m_addrPin.emplace_back( pin );
+            pin->setDirection( true );
+            pin->controlPin( true, true );
+        }
     }
     McuPort* dataPort = mcu->getPort( e->attribute("dataport") );
     for( int i=0; i<dataPort->m_numPins; ++i )
     {
         McuPin* pin = dataPort->getPinN( i );
-        if( pin ) extMem->m_dataPin.emplace_back( pin );
+        if( pin )
+        {
+            extMem->m_dataPin.emplace_back( pin );
+            pin->setDirection( false );
+            pin->controlPin( true, true );
+        }
     }
     extMem->m_rwPin = mcu->getCtrlPin( e->attribute("rwpin") );
     extMem->m_rePin = mcu->getCtrlPin( e->attribute("repin") );

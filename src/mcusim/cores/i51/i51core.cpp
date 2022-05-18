@@ -367,12 +367,12 @@ void I51Core::Read()
 {
     uint8_t data;
 
-    if( !m_eaPin->getInpState() ) // m_readExtPGM
+    if( m_eaPin->getInpState() ) data = m_progMem[PC];    // m_readExtPGM
+    else
     {
         data = m_mcu->extMem->getData();
         m_mcu->extMem->read( PC+1, ExtMemModule::EN | ExtMemModule::LA );
     }
-    else data = m_progMem[PC];
 
     if( m_cpuState == cpu_FETCH )     // Read cycle 1
     {

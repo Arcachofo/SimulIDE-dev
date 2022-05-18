@@ -72,7 +72,7 @@ void ePin::stampAdmitance( double data )
 
 double ePin::getVolt()
 {
-    if( m_enode )    return m_enode->getVolt();
+    if( m_enode )     return m_enode->getVolt();
     if( m_enodeComp ) return m_enodeComp->getVolt();
     return 0;
 }

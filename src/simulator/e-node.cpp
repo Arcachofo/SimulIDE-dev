@@ -85,28 +85,30 @@ void eNode::stampMatrix()
 
     if( m_admitChanged )
     {
-        m_admit.clear();
         m_totalAdmit = 0;
-
-        QHashIterator<ePin*, double> i(m_admitList); // ePin-Admit
-        while( i.hasNext() )
+        if( m_single )
         {
-            i.next();
-            double adm = i.value();
-
-            ePin* epin = i.key();
-            int enode = m_nodeList.value( epin );
-
-            m_admit[enode] += adm;
-            m_totalAdmit   += adm;
+            for( double adm : m_admitList ) m_totalAdmit += adm;
         }
-        if( !m_single )
+        else
         {
-            QHashIterator<int, double> ai(m_admit); // iterate admitance hash: eNode-Admit
+            m_admit.clear();
+            QHashIterator<ePin*, double> i(m_admitList); // ePin-Admit
+            while( i.hasNext() )
+            {
+                i.next();
+                double adm = i.value();
+                ePin* epin = i.key();
+                int enode = m_nodeList.value( epin );
+
+                m_admit[enode] += adm;
+                m_totalAdmit   += adm;
+            }
+            QHashIterator<int, double> ai(m_admit); // eNode-Admit
             while( ai.hasNext() )
             {
                 ai.next();
-                int enode = ai.key();
+                int    enode = ai.key();
                 double admit = ai.value();
                 if( enode>0 ) CircMatrix::self()->stampMatrix( m_nodeNum, enode, -admit );
             }

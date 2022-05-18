@@ -188,11 +188,13 @@ McuPort* eMcu::getPort( QString name )
 IoPin* eMcu::getCtrlPin( QString pinName )
 {
     if( !m_ctrlPort ) return NULL;
+    if( pinName.isEmpty() ) return NULL;
     return m_ctrlPort->getPin( pinName );
 }
 
 McuPin* eMcu::getPin( QString pinName )
 {
+    if( pinName.isEmpty() ) return NULL;
     QString portName = pinName.left( 5 );
     McuPort* port = getPort( portName );
     if( !port ) return NULL;
