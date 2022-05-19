@@ -68,9 +68,9 @@ bool AvrGccDebugger::getVariables()
         objdump += ".exe";
     #endif
         if( !checkCommand( objdump ) )
-            outPane()->appendLine( "\nWarning: avr-objdump executable not detected:\n"+objdump );
+            m_outPane->appendLine( "\nWarning: avr-objdump executable not detected:\n"+objdump );
     }
-    outPane()->appendText( "\nSearching for variables... " );
+    m_outPane->appendText( "\nSearching for variables... " );
     objdump = addQuotes( objdump );
 
     QProcess getBss( NULL );      // Get var addresses from .bss section
@@ -111,7 +111,7 @@ bool AvrGccDebugger::getVariables()
         //qDebug() << "AvrGccDebugger::getAvrGccData  variable "<<type<<symbol<<address;
     }
     eMcu::self()->getRamTable()->setVariables( varList );
-    outPane()->appendLine( QString::number( varList.size() )+" variables found" );
+    m_outPane->appendLine( QString::number( varList.size() )+" variables found" );
     return true;
 }
 
@@ -135,9 +135,9 @@ bool AvrGccDebugger::getFunctions()
         readelf += ".exe";
     #endif
         if( !checkCommand( readelf ) )
-            outPane()->appendLine( "\nWarning: avr-readelf executable not detected:\n"+readelf );
+            m_outPane->appendLine( "\nWarning: avr-readelf executable not detected:\n"+readelf );
     }
-    outPane()->appendText( "\nSearching for Functions... " );
+    m_outPane->appendText( "\nSearching for Functions... " );
     readelf = addQuotes( readelf );
 
     QProcess getFunctions( NULL );      //
@@ -164,7 +164,7 @@ bool AvrGccDebugger::getFunctions()
         m_functions[funcName] = address;
         //qDebug() << "AvrGccDebugger::getFunctions "<< funcName <<address;
     }
-    outPane()->appendLine( QString::number( m_functions.size() )+" functions found" );
+    m_outPane->appendLine( QString::number( m_functions.size() )+" functions found" );
     return true;
 }
 
@@ -184,7 +184,7 @@ bool AvrGccDebugger::mapFlashToSource()
         avrSize += ".exe";
     #endif
         if( !checkCommand( avrSize ) )
-            outPane()->appendLine( "\nWarning: avr-size executable not detected:\n"+avrSize );
+            m_outPane->appendLine( "\nWarning: avr-size executable not detected:\n"+avrSize );
     }
     if( !checkCommand( addr2li ) )
     {
@@ -193,9 +193,9 @@ bool AvrGccDebugger::mapFlashToSource()
         addr2li += ".exe";
     #endif
         if( !checkCommand( addr2li ) )
-            outPane()->appendLine( "\nWarning: avr-addr2line executable not detected:\n"+addr2li );
+            m_outPane->appendLine( "\nWarning: avr-addr2line executable not detected:\n"+addr2li );
     }
-    outPane()->appendText( "\nMapping Flash to Source... " );
+    m_outPane->appendText( "\nMapping Flash to Source... " );
     avrSize = addQuotes( avrSize );
     addr2li = addQuotes( addr2li );
 
@@ -250,7 +250,7 @@ bool AvrGccDebugger::mapFlashToSource()
         flashToLine.close();
     }
     ok = !m_flashToSource.isEmpty();
-    outPane()->appendLine( QString::number( m_flashToSource.size() )+" lines mapped" );
+    m_outPane->appendLine( QString::number( m_flashToSource.size() )+" lines mapped" );
     return ok;
 }
 

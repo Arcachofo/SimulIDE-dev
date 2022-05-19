@@ -23,6 +23,7 @@
 #include <QDir>
 
 #include "compiler.h"
+#include "simulator.h"
 #include "editorwindow.h"
 #include "outpaneltext.h"
 #include "compilerprop.h"
@@ -139,6 +140,7 @@ int Compiler::compile( bool debug )
 
     int error = 0;
     QApplication::setOverrideCursor( Qt::WaitCursor );
+    if( Simulator::self() ) Simulator::self()->addToUpdateList( m_outPane );
 
     preProcess();
 

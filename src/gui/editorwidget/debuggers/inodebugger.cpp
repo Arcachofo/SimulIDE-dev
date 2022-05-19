@@ -23,6 +23,7 @@
 #include "inodebugger.h"
 #include "outpaneltext.h"
 #include "mainwindow.h"
+#include "simulator.h"
 #include "circuit.h"
 #include "utils.h"
 
@@ -64,6 +65,8 @@ bool InoDebugger::upload() // Copy hex file to Circuit folder, then upload
 
 int InoDebugger::compile( bool )
 {
+    if( Simulator::self() ) Simulator::self()->addToUpdateList( m_outPane );
+
     QString builder = "arduino-builder";
 #ifndef Q_OS_UNIX
     builder += ".exe";
