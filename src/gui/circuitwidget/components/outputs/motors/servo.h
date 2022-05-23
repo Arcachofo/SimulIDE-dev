@@ -37,7 +37,12 @@ class MAINMODULE_EXPORT Servo : public LogicComponent
         double speed() { return m_speed; }
         void setSpeed( double speed ) { m_speed = speed; }
 
-        //virtual void initialize() override;
+        double minPulse() { return m_minPulse; }
+        void setMinPulse( double w );
+
+        double maxPulse() { return m_maxPulse; }
+        void setMaxPulse( double w );
+
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
@@ -46,11 +51,12 @@ class MAINMODULE_EXPORT Servo : public LogicComponent
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
-        int m_pos;            // Actual Angular position 0-180
-        int m_targetPos;      // Target Angular position 0-180
-
+        double m_pos;            // Actual Angular position 0-180
+        double m_targetPos;      // Target Angular position 0-180
         double m_speed;               // Angular speed sec/60º
-        int    m_minAngle;      // Angle to move evrey repaint
+        double m_minPulse;        // Minimum pulse width,   0º
+        double m_maxPulse;        // Maximum pulse width, 180º
+        double m_minAngle;      // Angle to move evrey repaint
 
         uint64_t m_pulseStart;              // Simulation step
         uint64_t m_lastUpdate;              // Simulation step

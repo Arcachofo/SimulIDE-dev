@@ -19,6 +19,8 @@
 
 #include <QPainter>
 
+#include <math.h>
+
 #include "servo.h"
 #include "itemlibrary.h"
 #include "simulator.h"
@@ -49,6 +51,8 @@ Servo::Servo( QObject* parent, QString type, QString id )
     m_height = 6;
     m_pos = 90;
     m_speed = 0.2;
+    m_minPulse = 1000;
+    m_maxPulse = 2000;
     
     init({         // Inputs:
             "IL01 V+",
@@ -68,21 +72,13 @@ Servo::Servo( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<Servo>( "Speed", tr("Speed "),tr("_sec/60º"), this, &Servo::speed, &Servo::setSpeed )
+new DoubProp<Servo>( "Speed"   , tr("Speed ")     ,tr("_sec/60º"), this, &Servo::speed,    &Servo::setSpeed ),
+new DoubProp<Servo>( "MinPulse", tr("Min. Pulse Width"),tr("_us"), this, &Servo::minPulse, &Servo::setMinPulse ),
+new DoubProp<Servo>( "MaxPulse", tr("Max. Pulse Width"),tr("_us"), this, &Servo::maxPulse, &Servo::setMaxPulse )
     }} );
     addPropGroup( { tr("Electric"), IoComponent::inputProps() } );
-//    addPropGroup( { tr("Edges")   , IoComponent::edgeProps() } );
 }
 Servo::~Servo(){}
-
-/*void Servo::initialize()
-{
-    m_targetPos = 90;
-    m_pulseStart = 0;
-    m_lastUpdate = Simulator::self()->circTime()/1e6;
-
-    LogicComponent::initialize();
-}*/
 
 void Servo::stamp()
 {
@@ -107,13 +103,11 @@ void Servo::updateStep()
     if( m_targetPos != m_pos )
     {
         double updateTime = (step - m_lastUpdate)/1e6;
+        double maxMove    = updateTime/m_speed*60; // Maximum to move since last update
+        double deltaPos   = m_targetPos - m_pos;
+        double absDeltaPos = fabs( deltaPos );
 
-        int maxMove  = updateTime/m_speed*60; // Maximum to move since last update
-        int deltaPos = m_targetPos - m_pos;
-        int absDeltaPos = abs(deltaPos);
-
-        if( absDeltaPos > maxMove )
-            deltaPos = absDeltaPos/deltaPos*maxMove;      // keep sign of deltaPos
+        if( absDeltaPos > maxMove ) deltaPos = absDeltaPos/deltaPos*maxMove; // keep sign of deltaPos
         m_pos += deltaPos;
         Circuit::self()->update();
     }
@@ -125,7 +119,7 @@ void Servo::voltChanged()
 {
     updateClock();
 
-    int time_us = Simulator::self()->circTime()/1e6;
+    uint64_t time_us = Simulator::self()->circTime()/1e6;
     
     if(!(m_inPin[0]->getInpState()-m_inPin[1]->getInpState()))// not power
     {
@@ -140,14 +134,26 @@ void Servo::voltChanged()
     {
         if( m_pulseStart == 0 ) return;
         
-        int steps = time_us - m_pulseStart;
-        m_targetPos = (steps-1000)*180/1000;         // Map 1mS-2mS to 0-180ª
+        double steps = time_us - m_pulseStart;
+        m_targetPos = (steps-m_minPulse)*180/(m_maxPulse-m_minPulse); // Map 1mS-2mS to 0-180ª
 
         if     ( m_targetPos>180 ) m_targetPos = 180;
         else if( m_targetPos<0 )   m_targetPos = 0;
         
         m_pulseStart = 0;
 }   }
+
+void Servo::setMinPulse( double w )
+{
+    if( w >= m_maxPulse ) return;
+    m_minPulse = w;
+}
+
+void Servo::setMaxPulse( double w )
+{
+    if( w <= m_minPulse ) return;
+    m_maxPulse = w;
+}
 
 QPainterPath Servo::shape() const
 {
