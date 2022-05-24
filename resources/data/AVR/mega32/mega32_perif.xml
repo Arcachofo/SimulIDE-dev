@@ -49,7 +49,7 @@
   <usart name="USART" number="1" configregsA="UCSRA" configregsB="UCSRB" configregsC="UCSRC"
                        interrupt="USART_U">
                                    
-    <trunit type="tx" pin="PORTD1" register="UDR0" interrupt="USART_T" />
+    <trunit type="tx" pin="PORTD1" register="UDR" interrupt="USART_T" />
     <trunit type="rx" pin="PORTD0"                 interrupt="USART_R" />
   </usart>
 
