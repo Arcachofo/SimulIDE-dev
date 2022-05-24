@@ -40,6 +40,7 @@ I51Core::~I51Core() {}
 void I51Core::reset()
 {
     McuCore::reset();
+    m_PC = 0;
     m_cpuState = cpu_FETCH;
 
     m_psStep = m_mcu->psCycle()/12;  // We are running at 2 cycles per Machine cycle
@@ -51,10 +52,7 @@ void I51Core::reset()
     m_mcu->extMem->setReadBusTime( 12*m_psStep-10 ); // PSEN 1, Read data Bus
 }
 
-uint8_t I51Core::GetOper1() { PC++; return m_progMem[PC]; }
-uint8_t I51Core::GetOper2() { PC++; return m_progMem[PC]; }
-
-void I51Core::operRgx() { m_op0 = m_dataMem[m_RxAddr]; }
+void I51Core::operRgx() { m_op0 = m_RxAddr; }//{ m_op0 = m_dataMem[m_RxAddr]; }
 void I51Core::operInd() { m_op0 = m_dataMem[ checkAddr( I_RX_VAL ) ]; }
 void I51Core::operI08() { m_dataEvent.append( IMME | ORIG | PGM ); }     // m_op0 = data
 void I51Core::operDir() { m_dataEvent.append( DIRE | ORIG | PGM ); }     // m_op0 = GET_RAM( data );
@@ -108,8 +106,8 @@ void I51Core::SJMP() { PC += (int8_t)m_opAddr; }
 
 void I51Core::ACALL()
 {
-    pushStack8(( PC+2 ) & 0xFF );
-    pushStack8(( PC+2 ) >> 8 );
+    pushStack8( PC & 0xFF );
+    pushStack8( PC >> 8 );
     AJMP();
 }
 
@@ -345,71 +343,67 @@ void I51Core::movx_indir_rx_a()
     else { if( aCPU->mExtData ) aCPU->mExtData[address &( aCPU->mExtDataSize - 1 )] = ACC; }*/
 }
 
-
 void I51Core::runDecoder()
 {
     m_mcu->cyclesDone = 1;
 
     if( m_cpuState == cpu_EXEC )  // Execute previous instruction
     {
+        PC = m_PC;
         Exec();
+        m_PC = PC;
         m_cpuState = cpu_FETCH;
     }
-    else if( m_cpuState == cpu_DECODE ) // We got a new instruction to decode
-    {
-        Decode();
-        m_cpuState = cpu_READ;
-    }
-    Read();                        // Read data from previous
-}
 
-void I51Core::Read()
-{
-    uint8_t data;
-
-    if( m_eaPin->getInpState() ) data = m_progMem[PC];    // m_readExtPGM
-    else
-    {
-        data = m_mcu->extMem->getData();
-        m_mcu->extMem->read( PC+1, ExtMemModule::EN | ExtMemModule::LA );
+    if( m_eaPin->getInpState() ) m_pgmData = m_progMem[m_PC]; // Read from Internal ROM
+    else{                                                     // Read from External
+        m_pgmData = m_mcu->extMem->getData();
+        m_mcu->extMem->read( m_PC+1, ExtMemModule::EN | ExtMemModule::LA ); //Start next Read cycle
     }
 
     if( m_cpuState == cpu_FETCH )     // Read cycle 1
     {
-        m_cpuState = cpu_DECODE;
-        m_opcode = m_progMem[PC] = data;
-        PC++;
+        m_opcode = m_progMem[m_PC] = m_pgmData;
+        m_PC++;
+        Decode();
+        m_cpuState = cpu_OPERAND;
     }
-    else if( m_cpuState == cpu_READ ) // Read cycle > 1
+    else if( m_cpuState == cpu_OPERAND ) // Read cycle > 1
     {
-        if( m_dataEvent.isEmpty() )
+        if( !m_dataEvent.isEmpty() ) // Read next operand
+        {
+            readOperand();
+            m_PC++;
+        }
+        if( m_dataEvent.isEmpty() )  // All operands ready
         {
             /// Don't pulse PSEN
-            m_cpuState = cpu_EXEC; // All operands ready
-            return;
+            m_cpuState = cpu_EXEC;
         }
-        PC++;
-        uint8_t addrMode = m_dataEvent.takeFirst();
+    }
+}
 
-        if     ( addrMode & IMME ){
-            if( addrMode & ORIG ) m_op0 = data;
-            else                  m_opAddr = data; /// 16 bit addrs
-        }
-        else if( addrMode & DIRE ){
-            if( addrMode & ORIG ) m_op0 = GET_RAM( data );
-            else                  m_opAddr = data;
-        }
-        else if( addrMode & RELA ){
-            if( addrMode & ORIG ) m_op2 = data;
-            else                  m_opAddr = data;
-        }
-        else if( addrMode & BIT ){   // Get bit mask an Reg address
-            m_bitAddr = data;
-            m_bitMask = 1 << (data & 7);
-            if( m_bitAddr > m_lowDataMemEnd ) m_bitAddr &= 0xF8;
-            else{ m_bitAddr >>= 3; m_bitAddr += 0x20; }
-        }
-        if( m_dataEvent.isEmpty() ) m_cpuState = cpu_EXEC; // All operands ready
+void I51Core::readOperand()
+{
+    uint8_t addrMode = m_dataEvent.takeFirst();
+
+    if     ( addrMode & IMME ){
+        if( addrMode & ORIG ) m_op0    = m_pgmData;
+        else                  m_opAddr = m_pgmData; /// 16 bit addrs
+    }
+    else if( addrMode & DIRE ){
+        if( addrMode & ORIG ) m_op0 = GET_RAM( m_pgmData );
+        else                  m_opAddr = m_pgmData;
+    }
+    else if( addrMode & RELA ){
+        if( addrMode & ORIG ) m_op2 = m_pgmData;
+        else                  m_opAddr = m_pgmData;
+    }
+    else if( addrMode & BIT ){   // Get bit mask an Reg address
+        m_bitAddr = m_pgmData;
+        m_bitMask = 1 << (m_pgmData & 7);
+        if( m_bitAddr > m_lowDataMemEnd ) m_bitAddr &= 0xF8;
+        else{ m_bitAddr >>= 3; m_bitAddr += 0x20; }
     }
 }
 

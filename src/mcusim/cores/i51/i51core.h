@@ -52,8 +52,7 @@ class MAINMODULE_EXPORT I51Core : public McuCore
 
         enum cpuState_t{
             cpu_FETCH=0,
-            cpu_READ,
-            cpu_DECODE,
+            cpu_OPERAND,
             cpu_EXEC,
             cpu_WRITE
         };
@@ -69,12 +68,6 @@ class MAINMODULE_EXPORT I51Core : public McuCore
             BIT =1<<6
         };
 
-        /*struct readEvent_t
-        {
-            uint8_t m_addrMode;
-
-        };*/
-
         virtual void reset();
         virtual void runDecoder();
 
@@ -86,7 +79,9 @@ class MAINMODULE_EXPORT I51Core : public McuCore
 
         cpuState_t m_cpuState;
 
-        uint16_t m_opcode;
+        uint16_t m_PC;
+        uint8_t m_pgmData;
+        uint8_t m_opcode;
         uint8_t* m_acc;
         
         QVector<uint8_t> m_dataEvent;
@@ -103,15 +98,10 @@ class MAINMODULE_EXPORT I51Core : public McuCore
 
         IoPin* m_eaPin;
 
-        //std::vector<uint16_t> m_outPortAddr;
-        //std::vector<uint16_t> m_inPortAddr;
-
-        inline void Read();
+        inline void readOperand();
         inline void Exec();
         inline void Decode();
 
-        inline uint8_t GetOper1();
-        inline uint8_t GetOper2();
         inline void operRgx();
         inline void operInd();
         inline void operI08();

@@ -107,12 +107,12 @@ void eMcu::reset()
 
 void eMcu::stepCpu()
 {
-    //if( cpu->PC < m_flashSize )
+    if( cpu->PC < m_flashSize )
     {
         if( m_state == mcuRunning ) cpu->runDecoder();
         m_interrupts.runInterrupts();
     }
-    //else m_state = mcuStopped; /// TODO: Crash
+    else m_state = mcuStopped; /// TODO: Crash
 
     m_cycle += cyclesDone;
 }
