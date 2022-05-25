@@ -63,6 +63,8 @@ class EditorWindow : public EditorWidget
         QStringList compilers() { return m_compilers.keys(); }
         QStringList assemblers() { return m_assemblers.keys(); }
 
+        OutPanelText* outPane() { return &m_outPane; }
+
     public slots:
         virtual void pause() override;
         virtual void stop() override;

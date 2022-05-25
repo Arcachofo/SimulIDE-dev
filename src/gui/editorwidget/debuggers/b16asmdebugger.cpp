@@ -39,7 +39,6 @@ B16AsmDebugger::~B16AsmDebugger() {}
 int B16AsmDebugger::compile( bool )
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    if( Simulator::self() ) Simulator::self()->addToUpdateList( m_outPane );
     
     QString file = m_fileDir+m_fileName+m_fileExt;
     QStringList lines = fileToStringList( file, "B16AsmDebugger::compile" );

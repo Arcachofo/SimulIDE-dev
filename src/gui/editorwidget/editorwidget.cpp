@@ -55,8 +55,6 @@ EditorWidget::EditorWidget( QWidget* parent )
 
     updateRecentFileActions();
     readSettings();
-    Simulator::self()->addToUpdateList( &m_outPane );
-
 }
 EditorWidget::~EditorWidget(){}
 
