@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,38 +17,24 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef STRINGPROP_H
-#define STRINGPROP_H
+#ifndef STRPROP_H
+#define STRPROP_H
 
-#include "strprop.h"
+#include "comproperty.h"
 
-template <class Comp>
-class MAINMODULE_EXPORT StringProp : public StrProp
+class CompBase;
+
+class MAINMODULE_EXPORT StrProp : public ComProperty
 {
     public:
-        StringProp( QString name, QString caption, QString unit, Comp* comp
-                  , QString (Comp::*getter)(), void (Comp::*setter)(QString), QString type="string" )
-        : StrProp( name, caption, unit, type )
-        {
-            m_comp = comp;
-            m_getter = getter;
-            m_setter = setter;
-        }
-        ~StringProp(){;}
+        StrProp( QString name, QString caption, QString unit, QString type )
+        : ComProperty( name, caption, unit, type )
+        {}
+        ~StrProp(){;}
 
-        virtual void setValStr( QString val ) override
-        {
-            if( m_comp->showProp() == m_name ) m_comp->setValLabelText( val );
-            (m_comp->*m_setter)( setStr( val ) ); // Comp setter can change valLabel
-        }
-
-        virtual QString getValStr() override
-        { return getStr( (m_comp->*m_getter)() ); }
-
-    private:
-        Comp* m_comp;
-        QString (Comp::*m_getter)();
-        void    (Comp::*m_setter)(QString);
+    protected:
+        QString getStr( QString str );
+        QString setStr( QString str );
 };
 
 #endif

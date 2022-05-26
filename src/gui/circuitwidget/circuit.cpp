@@ -356,7 +356,7 @@ void Circuit::loadStrDoc( QString &doc )
                         ShieldSubc* shield = static_cast<ShieldSubc*>(comp);
                         if( shield->subcType() >= Chip::Shield ) shieldList.append( shield );
                     }
-                    comp->setIdLabel( label );
+                    comp->setPropStr( "label", label ); //setIdLabel( label );
                     QString propName = "";
                     for( QStringRef prop : properties )
                     {

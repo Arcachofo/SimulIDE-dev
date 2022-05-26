@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,38 +17,16 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef STRINGPROP_H
-#define STRINGPROP_H
+#include"strprop.h"
 
-#include "strprop.h"
-
-template <class Comp>
-class MAINMODULE_EXPORT StringProp : public StrProp
+QString StrProp::getStr( QString str )
 {
-    public:
-        StringProp( QString name, QString caption, QString unit, Comp* comp
-                  , QString (Comp::*getter)(), void (Comp::*setter)(QString), QString type="string" )
-        : StrProp( name, caption, unit, type )
-        {
-            m_comp = comp;
-            m_getter = getter;
-            m_setter = setter;
-        }
-        ~StringProp(){;}
+    return str.replace("\n","&#xa;").replace("\"","&#x22;")
+            .replace("<","&#x3C").replace("=","&#x3D").replace(">","&#x3E");
+}
 
-        virtual void setValStr( QString val ) override
-        {
-            if( m_comp->showProp() == m_name ) m_comp->setValLabelText( val );
-            (m_comp->*m_setter)( setStr( val ) ); // Comp setter can change valLabel
-        }
-
-        virtual QString getValStr() override
-        { return getStr( (m_comp->*m_getter)() ); }
-
-    private:
-        Comp* m_comp;
-        QString (Comp::*m_getter)();
-        void    (Comp::*m_setter)(QString);
-};
-
-#endif
+QString StrProp::setStr( QString str )
+{
+    return str.replace("&#xa;","\n").replace("&#x22;","\"")
+            .replace("&#x3C","<").replace("&#x3D","=").replace("&#x3E",">");
+}

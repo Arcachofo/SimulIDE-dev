@@ -133,12 +133,12 @@ void TextComponent::setFixedW( bool fixedW )
 
 QString TextComponent::getText()
 {
-    return m_text->toPlainText().replace("\n","&#xa;").replace("\"","&#x22;");
+    return m_text->toPlainText();
 }
 
 void TextComponent::setText( QString text )
 {
-    m_text->document()->setPlainText( text.replace("&#xa;","\n").replace("&#x22;","\"") );
+    m_text->document()->setPlainText( text );
 }
 
 void TextComponent::setFont( QString font )
