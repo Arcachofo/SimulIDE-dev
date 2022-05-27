@@ -270,14 +270,14 @@ QString MainWindow::getHelp( QString name )
 {
     QString help = "No help available";
 
-    if( m_help.contains( name )) return m_help.value( name );
+    if( m_help.contains( name ) ) return m_help.value( name );
 
     QString locale = loc();
-    if( loc() != "en" ) locale.prepend("_");
+    if( loc() != "en" ) locale.prepend("_").append("/");
     else locale = "";
 
     name= name.toLower().replace( " ", "" );
-    QString dfPath = getFilePath("data/help/"+locale+"/"+name+locale+".txt");
+    QString dfPath = getFilePath("data/help/"+locale+name+locale+".txt");
 
     if( dfPath == "" ) dfPath = getFilePath( "data/help/"+name+".txt" );
     if( dfPath != "" )
