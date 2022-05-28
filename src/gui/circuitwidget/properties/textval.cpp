@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include "textval.h"
-#include "scripted.h"
+//#include "scripted.h"
 #include "comproperty.h"
 
 TextVal::TextVal( PropDialog* parent, Component* comp, ComProperty* prop )
@@ -30,13 +30,14 @@ TextVal::~TextVal() {}
 
 void TextVal::setup()
 {
-    valLabel->setText( m_property->capt() );
-    m_scriptComp = (Scripted*)m_component;
+    //valLabel->setText( m_property->capt() );
+    //m_scriptComp = (Scripted*)m_component;
+    textBox->setText( m_property->getValStr() );
     updatValue();
     this->adjustSize();
 }
 
-void TextVal::on_saveButton_clicked()
+/*void TextVal::on_saveButton_clicked()
 {
     QString script = textBox->toPlainText();
     QString excep  = m_scriptComp->evaluate( script );
@@ -49,6 +50,11 @@ void TextVal::on_saveButton_clicked()
     else excep += tr("\n\n    Script Not Saved.");
 
     evalText->setPlainText( excep );
+}*/
+
+void TextVal::on_textBox_textChanged()
+{
+    m_property->setValStr( textBox->toPlainText() );
 }
 
 void TextVal::updatValue()

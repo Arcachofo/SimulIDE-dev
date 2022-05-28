@@ -24,6 +24,7 @@
 
 #include "numval.h"
 #include "stringval.h"
+#include "textval.h"
 #include "enumval.h"
 #include "boolval.h"
 #include "mainwindow.h"
@@ -87,12 +88,13 @@ void PropDialog::setComponent( Component* comp )
                 QString type = prop->type();
                 PropVal* mp = NULL;
 
-                if     ( type == "double" ) mp = new NumVal( this, comp, prop );
-                else if( type == "uint"   ) mp = new NumVal( this, comp, prop );
-                else if( type == "int"    ) mp = new NumVal( this, comp, prop );
-                else if( type == "string" ) mp = new StringVal( this, comp, prop );
-                else if( type == "enum"   ) mp = new EnumVal( this, comp, prop );
-                else if( type == "bool"   ) mp = new BoolVal( this, comp, prop );
+                if     ( type == "double"  ) mp = new NumVal( this, comp, prop );
+                else if( type == "uint"    ) mp = new NumVal( this, comp, prop );
+                else if( type == "int"     ) mp = new NumVal( this, comp, prop );
+                else if( type == "string"  ) mp = new StringVal( this, comp, prop );
+                else if( type == "textEdit") mp = new TextVal( this, comp, prop );
+                else if( type == "enum"    ) mp = new EnumVal( this, comp, prop );
+                else if( type == "bool"    ) mp = new BoolVal( this, comp, prop );
 
                 if( !mp ) continue;
 

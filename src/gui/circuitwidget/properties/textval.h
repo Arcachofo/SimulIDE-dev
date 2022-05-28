@@ -39,12 +39,13 @@ class TextVal : public PropVal, private Ui::TextVal
         virtual void updtValues() override;
 
     public slots:
-        void on_saveButton_clicked();
+        //void on_saveButton_clicked();
+        void on_textBox_textChanged();
 
     private:
         void updatValue();
 
-        Scripted* m_scriptComp;
+        //Scripted* m_scriptComp;
 };
 
 #endif

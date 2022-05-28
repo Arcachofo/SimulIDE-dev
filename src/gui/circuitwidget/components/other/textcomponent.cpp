@@ -70,7 +70,7 @@ TextComponent::TextComponent( QObject* parent, QString type, QString id )
     m_text->document()->setTextWidth(-1);
     m_text->setDefaultTextColor( Qt::darkBlue );
     m_text->setCursor( Qt::OpenHandCursor );
-    m_text->installEventFilter( this );
+    //m_text->installEventFilter( this );
 
     m_context = false;
     m_margin = 5;
@@ -87,13 +87,11 @@ new IntProp <TextComponent>( "Margin" , tr("Margin") ,"_Pixels", this, &TextComp
 new IntProp <TextComponent>( "Border" , tr("Border") ,"_Pixels", this, &TextComponent::border, &TextComponent::setBorder, "uint" ),
 new DoubProp<TextComponent>( "Opacity", tr("Opacity"),""       , this, &TextComponent::opac,   &TextComponent::setOpac )
     }} );
-    addPropGroup( { tr("Font"), {
+    addPropGroup( { tr("Text"), {
 new StringProp<TextComponent>( "Font"       , tr("Font")       ,""       , this, &TextComponent::getFont , &TextComponent::setFont ),
 new IntProp   <TextComponent>( "Font_Size"  , tr("Font Size")  ,"_Pixels", this, &TextComponent::fontSize, &TextComponent::setFontSize ),
-new BoolProp  <TextComponent>( "Fixed_Width", tr("Fixed_Width"),""       , this, &TextComponent::fixedW  , &TextComponent::setFixedW )
-    }} );
-    addPropGroup( { "Hidden", {
-new StringProp<TextComponent>( "Text","","", this, &TextComponent::getText, &TextComponent::setText )
+new BoolProp  <TextComponent>( "Fixed_Width", tr("Fixed_Width"),""       , this, &TextComponent::fixedW  , &TextComponent::setFixedW ),
+new StringProp<TextComponent>( "Text"       ,tr("Text")        ,""       , this, &TextComponent::getText , &TextComponent::setText, "textEdit" )
     }} );
 }
 TextComponent::~TextComponent()
@@ -116,7 +114,7 @@ int TextComponent::margin() { return m_margin; }
 
 void TextComponent::setMargin( int margin )
 {
-    if( margin < 2 ) margin = 2;
+    if( margin < 0 ) margin = 0;
     m_margin = margin;
     updateGeometry( 0, 0, 0 );
 }
@@ -170,7 +168,7 @@ void TextComponent::setHidden( bool hid, bool hidLabel )
     this->setEnabled( !hid );
 }
 
-void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
+/*void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
 {
     if( event->button() == Qt::LeftButton )
     {
@@ -180,9 +178,34 @@ void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
         Circuit::self()->deselectAll();
         Circuit::self()->accepKeys( false );
         //setSelected( false );
+}   }*/
+
+/*void TextComponent::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
+{
+    if( !acceptedMouseButtons() ) event->ignore();
+    else
+    {
+        event->accept();
+        QMenu* menu = new QMenu();
+        contextMenu( event, menu );
+        Component::contextMenu( event, menu );
+        menu->deleteLater();
 }   }
 
-bool TextComponent::eventFilter( QObject* object, QEvent* event )
+void TextComponent::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    QAction* editAction = menu->addAction(QIcon(""), tr("Edit Text") );
+    connect( editAction, SIGNAL(triggered()),
+                     this, SLOT(editText()), Qt::UniqueConnection );
+    menu->addSeparator();
+}
+
+void TextComponent::editText()
+{
+
+}*/
+
+/*bool TextComponent::eventFilter( QObject* object, QEvent* event )
 {
     if( event->type() == QEvent::GraphicsSceneContextMenu ) //Added
     {
@@ -199,7 +222,7 @@ bool TextComponent::eventFilter( QObject* object, QEvent* event )
         }
     }
     return QObject::eventFilter( object, event );
-}
+}*/
 
 void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

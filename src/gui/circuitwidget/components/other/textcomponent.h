@@ -44,16 +44,19 @@ class MAINMODULE_EXPORT TextComponent : public Component
 
         virtual void setHidden( bool hid, bool hidLabel=false ) override;
 
-        bool eventFilter( QObject* object, QEvent* event );
+        //bool eventFilter( QObject* object, QEvent* event );
 
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
 
     public slots:
         void updateGeometry(int, int, int);
+        //void editText();
 
     protected:
-        void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event );
+        //void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event );
+        //virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+        //virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event);
 
     private:
         QGraphicsTextItem* m_text;
