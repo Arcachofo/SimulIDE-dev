@@ -65,6 +65,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
         regBits_t m_ADTS;
 
         //ADMUX
+        regBits_t m_MUX;
         regBits_t m_ADLAR;
         regBits_t m_REFS;
 
@@ -112,6 +113,16 @@ class MAINMODULE_EXPORT AvrAdc02 : public AvrAdc00
 
     protected:
         virtual void updtVref() override;
+};
+
+class MAINMODULE_EXPORT AvrAdc03 : public AvrAdc00
+{
+    public:
+        AvrAdc03( eMcu* mcu, QString name );
+        ~AvrAdc03();
+
+    protected:
+        virtual void specialConv() override;
 };
 
 class MAINMODULE_EXPORT AvrAdc10 : public AvrAdc

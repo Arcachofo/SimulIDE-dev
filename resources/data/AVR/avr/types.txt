@@ -3,6 +3,7 @@ ADC:
 - Type 00: megaX8, mega640, mega1281.
 - Type 01: mega8.
 - Type 02: tinyx4.
+- Type 03: mega16/32.
 - Type 10: tiny13.
 - Type 11: tinyx5.
 

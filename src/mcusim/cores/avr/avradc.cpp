@@ -105,7 +105,7 @@ void AvrAdc::configureB( uint8_t newADCSRB ) // ADCSRB
 
 void AvrAdc::setChannel( uint8_t newADMUX ) // ADMUX
 {
-    m_channel = newADMUX & 0x0F;
+    m_channel = getRegBitsVal( newADMUX, m_MUX ); //newADMUX & 0x0F;
     m_leftAdjust = getRegBitsBool( newADMUX, m_ADLAR );
     m_refSelect  = getRegBitsVal(  newADMUX, m_REFS );
 }
@@ -122,6 +122,8 @@ void AvrAdc::endConversion()
 AvrAdc00::AvrAdc00( eMcu* mcu, QString name )
         : AvrAdc( mcu, name )
 {
+    m_MUX = getRegBits( "MUX0,MUX1,MUX2,MUX3", mcu );
+
     m_timer1 = (AvrTimer16bit*)mcu->getTimer("TIMER1");
     m_txOCB  = m_timer1->getOcUnit("OCB");
 
@@ -150,7 +152,7 @@ void AvrAdc00::updtVref()
     switch( m_refSelect ){
         case 0: m_vRefP = m_aRefPin->getVolt(); break; // AREF
         case 1: m_vRefP = m_aVccPin->getVolt(); break; // AVcc
-        case 3: m_vRefP = m_fixedVref;                 // Internal 1.1 Volt
+        case 3: m_vRefP = m_fixedVref;                 // Internal ref Volt
 }   }
 
 //------------------------------------------------------
@@ -171,11 +173,78 @@ void AvrAdc01::autotriggerConf()
 }
 
 //------------------------------------------------------
+//-- AVR ADC Type 02 -----------------------------------
+
+AvrAdc02::AvrAdc02( eMcu* mcu, QString name )
+        : AvrAdc00( mcu, name )
+{
+    m_MUX = getRegBits( "MUX0,MUX1,MUX2,MUX3,MUX4,MUX5", mcu );
+}
+AvrAdc02::~AvrAdc02(){}
+
+void AvrAdc02::updtVref()
+{
+    m_vRefP = 5;
+    switch( m_refSelect ){
+        case 1: m_vRefP = m_pRefPin->getVolt();break; // External voltage reference at PA0 (AREF)
+        case 2: m_vRefP = 1.1;                 break; // Internal Vref. 1.1 Volt
+}   }
+
+//------------------------------------------------------
+//-- AVR ADC Type 03 -----------------------------------
+
+AvrAdc03::AvrAdc03( eMcu* mcu, QString name )
+        : AvrAdc00( mcu, name )
+{
+    m_MUX = getRegBits( "MUX0,MUX1,MUX2,MUX3,MUX4", mcu );
+
+    m_fixedVref = 2.56;
+}
+AvrAdc03::~AvrAdc03(){}
+
+void AvrAdc03::specialConv()
+{
+    if     ( m_channel == 30) ;
+    else if( m_channel == 31) ;
+    else{
+        updtVref();
+
+        int chP,chN;
+        int gain = 1;
+
+        if( m_channel < 16 )
+        {
+            switch( m_channel ) {
+                case  8: chP = 0; chN = 0; gain = 10;  break;
+                case  9: chP = 1; chN = 0; gain = 10;  break;
+                case 10: chP = 0; chN = 0; gain = 200; break;
+                case 11: chP = 1; chN = 0; gain = 200; break;
+                case 12: chP = 2; chN = 2; gain = 10;  break;
+                case 13: chP = 3; chN = 2; gain = 10;  break;
+                case 14: chP = 2; chN = 2; gain = 200; break;
+                case 15: chP = 3; chN = 2; gain = 200; break;
+            }
+        }else{
+            chP = m_channel & 3;
+            if( m_channel < 24 ) chN = 1;
+            else                 chN = 2;
+        }
+        double voltP = m_adcPin[chP]->getVolt();
+        double voltN = m_adcPin[chN]->getVolt();
+        if( voltP < 0 ) voltP = 0;
+        if( voltN < 0 ) voltN = 0;
+        m_adcValue = (voltP-voltN)*gain*512/m_vRefP;
+    }
+}
+
+//------------------------------------------------------
 //-- AVR ADC Type 10 -----------------------------------
 
 AvrAdc10::AvrAdc10( eMcu* mcu, QString name )
         : AvrAdc( mcu, name )
 {
+    m_MUX = getRegBits( "MUX0,MUX1", mcu );
+
     m_txOCB = m_timer0->getOcUnit("OCB");
 }
 AvrAdc10::~AvrAdc10(){}
@@ -201,28 +270,12 @@ void AvrAdc10::updtVref()
 }
 
 //------------------------------------------------------
-//-- AVR ADC Type 02 -----------------------------------
-
-AvrAdc02::AvrAdc02( eMcu* mcu, QString name )
-        : AvrAdc00( mcu, name )
-{
-}
-AvrAdc02::~AvrAdc02(){}
-
-void AvrAdc02::updtVref()
-{
-    m_vRefP = 5;
-    switch( m_refSelect ){
-        case 1: m_vRefP = m_pRefPin->getVolt();break; // External voltage reference at PA0 (AREF)
-        case 2: m_vRefP = 1.1;                 break; // Internal Vref. 1.1 Volt
-}   }
-
-//------------------------------------------------------
 //-- AVR ADC Type 11 -----------------------------------
 
 AvrAdc11::AvrAdc11( eMcu* mcu, QString name )
         : AvrAdc10( mcu, name )
 {
+    m_MUX = getRegBits( "MUX0,MUX1,MUX2,MUX3", mcu );
 }
 AvrAdc11::~AvrAdc11(){}
 

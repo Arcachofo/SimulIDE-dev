@@ -57,7 +57,7 @@ void McuAdc::runEvent()
 void McuAdc::startConversion()
 {
     if( !m_enabled ) return;
-    if( m_channel >= m_adcPin.size() ) return;
+    if( m_channel >= m_adcPin.size() ) { specialConv(); return; }
     m_converting = true;
 
     updtVref();
@@ -76,4 +76,9 @@ void McuAdc::updtVref()
 {
     m_vRefP = 5;
     m_vRefN = 0;
+}
+
+void McuAdc::specialConv()
+{
+    qDebug() << "McuAdc::specialConv Error";
 }

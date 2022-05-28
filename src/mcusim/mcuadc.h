@@ -43,6 +43,7 @@ class MAINMODULE_EXPORT McuAdc : public McuPrescaled, public eElement
 
     protected:
         virtual void updtVref();
+        virtual void specialConv();
         virtual void endConversion(){;}
 
         bool m_enabled;
