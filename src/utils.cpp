@@ -182,7 +182,7 @@ QByteArray fileToByteArray( const QString &fileName, const QString &caller )
     QByteArray ba;
 
     QFile file(fileName);
-    if (!file.open(QFile::ReadOnly | QFile::Text))
+    if( !file.open( QFile::ReadOnly ) )
     {
         MessageBoxNB( caller, "Cannot read file "+fileName+"\n"+file.errorString() );
         return ba;
