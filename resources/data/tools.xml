@@ -7,14 +7,19 @@
 
         <item name="ENCODER_BCD" folder="tools" info=" 10 State Thumbwheel Switch" />
         <item name="ENCODER_HEX" folder="tools" info=" 16 State Thumbwheel Switch" /> 
+        <item name="ENCODER_GRAY`S" folder="tools" info="GRAY`S Code Thumbwheel Switch" />
         <item name="2L_Display" folder="tools" info=" 2-bit probe. (L)" /> 
         <item name="2R_Display" folder="tools" info=" 2-bit probe. (R)" />         
         <item name="4L_Display" folder="tools" info=" 4-bit probe. (L)" /> 
         <item name="4R_Display" folder="tools" info=" 4-bit probe. (R)" /> 
         <item name="8L_Display" folder="tools" info=" 8-bit probe. (L)" /> 
         <item name="8R_Display" folder="tools" info=" 8-bit probe. (R)" /> 
+        <item name="4Bit_lvl_shift" folder="tools" info="4-bit TTL to CMOS level shifter." /> 
+        <item name="6Bit_lvl_shift" folder="tools" info="6-bit TTL to CMOS level shifter." /> 
+        <item name="8Bit_lvl_shift" folder="tools" info="8-bit TTL to CMOS level shifter." /> 
         <item name="Pattern_generator" folder="tools" info=" Pattern Generator: up to 256 byte" /> 
         <item name="Pulse_generator" folder="tools" info=" Pulse generator (1-15 pulses)" /> 
+        <item name="Pulse_generator_A" folder="tools" info="AUTO Pulse generator (1-15 pulses)" /> 
         <item name="Pulse_probe" folder="tools" info=" Short pulse detector" /> 
         <item name="Real_Button" folder="tools" info=" A button with a rattle of contacts" /> 
         <item name="Rotary_SW4" folder="tools" info=" Rotary switch for 4 positions" /> 

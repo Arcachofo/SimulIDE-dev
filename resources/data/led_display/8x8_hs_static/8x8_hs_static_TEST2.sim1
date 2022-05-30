@@ -1,0 +1,171 @@
+<circuit type="simulide_1.0" rev="1007" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Memory" CircId="Memory-2" mainComp="false" Show_id="false" Show_Val="false" Pos="812,680" rotation="0" hflip="1" vflip="1" label="Memory-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Address_Bits="4 Bits" Data_Bits="8 _Bits" Persistent="true" Inverted="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" Mem="1,3,7,15,31,63,127,255,255,127,63,31,15,7,3,1," />
+
+<item itemtype="Rail" CircId="Rail-11" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="748,720" rotation="0" hflip="1" vflip="1" label="Rail-11" idLabPos="-16,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Voltage="5 V" />
+
+<item itemtype="Subcircuit" CircId="74XX93-13" mainComp="false" Show_id="true" Show_Val="false" Pos="724,640" rotation="0" hflip="1" vflip="1" label="74XX93-13" idLabPos="-17.0064,-18.8405" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Subcircuit" CircId="8x8_hs_static-49" mainComp="false" Show_id="true" Show_Val="false" Pos="912,560" rotation="0" hflip="1" vflip="1" label="8x8_hs_static-1" idLabPos="10.8706,145.871" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Clock" CircId="Clock-57" mainComp="false" ShowProp="Freq" Show_id="false" Show_Val="true" Pos="672,672" rotation="0" hflip="1" vflip="1" label="Clock-57" idLabPos="-64,-24" labelrot="0" valLabPos="-11.0316,11.3123" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1 Hz" Always_On="true" />
+
+<item itemtype="Subcircuit" CircId="74HC154-83" mainComp="false" Show_id="true" Show_Val="false" Pos="796,412" rotation="0" hflip="1" vflip="1" label="74HC154-83" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Subcircuit" CircId="8x8_hs_static-94" mainComp="false" Show_id="true" Show_Val="false" Pos="848,560" rotation="0" hflip="1" vflip="1" label="8x8_hs_static-1" idLabPos="4.7767,145" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true" />
+
+<item itemtype="Buffer" CircId="Buffer-116" mainComp="false" Show_id="false" Show_Val="false" Pos="732,508" rotation="0" hflip="1" vflip="1" label="Buffer-116" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Node" CircId="Node-104" mainComp="false" Pos="768,648" />
+
+<item itemtype="Node" CircId="Node-107" mainComp="false" Pos="772,656" />
+
+<item itemtype="Node" CircId="Node-113" mainComp="false" Pos="780,672" />
+
+<item itemtype="Node" CircId="Node-118" mainComp="false" Pos="696,672" />
+
+<item itemtype="Node" CircId="Node-124" mainComp="false" Pos="912,648" />
+
+<item itemtype="Node" CircId="Node-127" mainComp="false" Pos="904,656" />
+
+<item itemtype="Node" CircId="Node-130" mainComp="false" Pos="896,664" />
+
+<item itemtype="Node" CircId="Node-133" mainComp="false" Pos="888,672" />
+
+<item itemtype="Node" CircId="Node-136" mainComp="false" Pos="880,680" />
+
+<item itemtype="Node" CircId="Node-139" mainComp="false" Pos="872,688" />
+
+<item itemtype="Node" CircId="Node-142" mainComp="false" Pos="864,696" />
+
+<item itemtype="Node" CircId="Node-145" mainComp="false" Pos="856,704" />
+
+<item itemtype="Node" CircId="Node-148" mainComp="false" Pos="788,508" />
+
+<item itemtype="Node" CircId="Node-155" mainComp="false" Pos="776,664" />
+
+<item itemtype="Node" CircId="Node-157" mainComp="false" Pos="784,648" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Rail-11-outnod" endpinid="Memory-2-Pin_We" pointList="764,720,776,720,776,704,788,704" />
+
+<item itemtype="Connector" uid="Connector-51" startpinid="74XX93-13-Q0" endpinid="Node-104-0" pointList="764,648,768,648" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="74XX93-13-Q1" endpinid="Node-107-0" pointList="764,656,772,656" />
+
+<item itemtype="Connector" uid="Connector-54" startpinid="Memory-2-in3" endpinid="Node-113-0" pointList="788,672,780,672" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Clock-57-outnod" endpinid="Node-118-0" pointList="688,672,696,672" />
+
+<item itemtype="Connector" uid="Connector-84" startpinid="74HC154-83-!Y0" endpinid="8x8_hs_static-49-h0" pointList="836,420,976,420,976,552" />
+
+<item itemtype="Connector" uid="Connector-85" startpinid="74HC154-83-!Y1" endpinid="8x8_hs_static-49-h1" pointList="836,428,968,428,968,552" />
+
+<item itemtype="Connector" uid="Connector-86" startpinid="74HC154-83-!Y2" endpinid="8x8_hs_static-49-h2" pointList="836,436,960,436,960,552" />
+
+<item itemtype="Connector" uid="Connector-87" startpinid="74HC154-83-!Y3" endpinid="8x8_hs_static-49-h3" pointList="836,444,952,444,952,552" />
+
+<item itemtype="Connector" uid="Connector-88" startpinid="74HC154-83-!Y4" endpinid="8x8_hs_static-49-h4" pointList="836,452,944,452,944,552" />
+
+<item itemtype="Connector" uid="Connector-89" startpinid="74HC154-83-!Y5" endpinid="8x8_hs_static-49-h5" pointList="836,460,936,460,936,552" />
+
+<item itemtype="Connector" uid="Connector-90" startpinid="74HC154-83-!Y6" endpinid="8x8_hs_static-49-h6" pointList="836,468,928,468,928,552" />
+
+<item itemtype="Connector" uid="Connector-91" startpinid="74HC154-83-!Y7" endpinid="8x8_hs_static-49-h7" pointList="836,476,920,476,920,552" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="Memory-2-out7" endpinid="Node-145-0" pointList="836,704,856,704" />
+
+<item itemtype="Connector" uid="Connector-9" startpinid="Memory-2-out6" endpinid="Node-142-0" pointList="836,696,864,696" />
+
+<item itemtype="Connector" uid="Connector-8" startpinid="Memory-2-out5" endpinid="Node-139-0" pointList="836,688,872,688" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Memory-2-out4" endpinid="Node-136-0" pointList="836,680,880,680" />
+
+<item itemtype="Connector" uid="Connector-6" startpinid="Memory-2-out3" endpinid="Node-133-0" pointList="836,672,888,672" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Memory-2-out2" endpinid="Node-130-0" pointList="836,664,896,664" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Memory-2-out0" endpinid="Node-124-0" pointList="836,648,912,648" />
+
+<item itemtype="Connector" uid="Connector-4" startpinid="Memory-2-out1" endpinid="Node-127-0" pointList="836,656,904,656" />
+
+<item itemtype="Connector" uid="Connector-95" startpinid="74HC154-83-!Y8" endpinid="8x8_hs_static-94-h0" pointList="836,484,912,484,912,552" />
+
+<item itemtype="Connector" uid="Connector-96" startpinid="74HC154-83-!Y9" endpinid="8x8_hs_static-94-h1" pointList="836,492,904,492,904,552" />
+
+<item itemtype="Connector" uid="Connector-97" startpinid="74HC154-83-!Y10" endpinid="8x8_hs_static-94-h2" pointList="836,500,896,500,896,552" />
+
+<item itemtype="Connector" uid="Connector-98" startpinid="74HC154-83-!Y11" endpinid="8x8_hs_static-94-h3" pointList="836,508,888,508,888,552" />
+
+<item itemtype="Connector" uid="Connector-99" startpinid="74HC154-83-!Y12" endpinid="8x8_hs_static-94-h4" pointList="836,516,880,516,880,552" />
+
+<item itemtype="Connector" uid="Connector-100" startpinid="74HC154-83-!Y13" endpinid="8x8_hs_static-94-h5" pointList="836,524,872,524,872,552" />
+
+<item itemtype="Connector" uid="Connector-101" startpinid="74HC154-83-!Y14" endpinid="8x8_hs_static-94-h6" pointList="836,532,864,532,864,552" />
+
+<item itemtype="Connector" uid="Connector-102" startpinid="74HC154-83-!Y15" endpinid="8x8_hs_static-94-h7" pointList="836,540,856,540,856,552" />
+
+<item itemtype="Connector" uid="Connector-103" startpinid="74HC154-83-A0" endpinid="Node-104-1" pointList="788,452,768,452,768,648" />
+
+<item itemtype="Connector" uid="Connector-105" startpinid="Node-104-2" endpinid="Node-157-0" pointList="768,648,784,648" />
+
+<item itemtype="Connector" uid="Connector-106" startpinid="74HC154-83-A1" endpinid="Node-107-1" pointList="788,460,772,460,772,656" />
+
+<item itemtype="Connector" uid="Connector-108" startpinid="Node-107-2" endpinid="Memory-2-in1" pointList="772,656,788,656" />
+
+<item itemtype="Connector" uid="Connector-115" startpinid="74HC154-83-!E0" endpinid="Node-148-0" pointList="788,500,788,508" />
+
+<item itemtype="Connector" uid="Connector-117" startpinid="Buffer-116-in0" endpinid="Node-118-1" pointList="716,508,696,508,696,672" />
+
+<item itemtype="Connector" uid="Connector-119" startpinid="Node-118-2" endpinid="74XX93-13-CP0" pointList="696,672,716,672" />
+
+<item itemtype="Connector" uid="Connector-123" startpinid="8x8_hs_static-94-v0" endpinid="Node-124-1" pointList="912,632,912,648" />
+
+<item itemtype="Connector" uid="Connector-125" startpinid="Node-124-2" endpinid="8x8_hs_static-49-v0" pointList="912,648,976,648,976,632" />
+
+<item itemtype="Connector" uid="Connector-126" startpinid="8x8_hs_static-94-v1" endpinid="Node-127-1" pointList="904,632,904,656" />
+
+<item itemtype="Connector" uid="Connector-128" startpinid="Node-127-2" endpinid="8x8_hs_static-49-v1" pointList="904,656,968,656,968,632" />
+
+<item itemtype="Connector" uid="Connector-129" startpinid="8x8_hs_static-94-v2" endpinid="Node-130-1" pointList="896,632,896,664" />
+
+<item itemtype="Connector" uid="Connector-131" startpinid="Node-130-2" endpinid="8x8_hs_static-49-v2" pointList="896,664,960,664,960,632" />
+
+<item itemtype="Connector" uid="Connector-132" startpinid="8x8_hs_static-94-v3" endpinid="Node-133-1" pointList="888,632,888,672" />
+
+<item itemtype="Connector" uid="Connector-134" startpinid="Node-133-2" endpinid="8x8_hs_static-49-v3" pointList="888,672,952,672,952,632" />
+
+<item itemtype="Connector" uid="Connector-135" startpinid="8x8_hs_static-94-v4" endpinid="Node-136-1" pointList="880,632,880,680" />
+
+<item itemtype="Connector" uid="Connector-137" startpinid="Node-136-2" endpinid="8x8_hs_static-49-v4" pointList="880,680,944,680,944,632" />
+
+<item itemtype="Connector" uid="Connector-138" startpinid="8x8_hs_static-94-v5" endpinid="Node-139-1" pointList="872,632,872,688" />
+
+<item itemtype="Connector" uid="Connector-140" startpinid="Node-139-2" endpinid="8x8_hs_static-49-v5" pointList="872,688,936,688,936,632" />
+
+<item itemtype="Connector" uid="Connector-141" startpinid="8x8_hs_static-94-v6" endpinid="Node-142-1" pointList="864,632,864,696" />
+
+<item itemtype="Connector" uid="Connector-143" startpinid="Node-142-2" endpinid="8x8_hs_static-49-v6" pointList="864,696,928,696,928,632" />
+
+<item itemtype="Connector" uid="Connector-144" startpinid="8x8_hs_static-94-v7" endpinid="Node-145-1" pointList="856,632,856,704" />
+
+<item itemtype="Connector" uid="Connector-146" startpinid="Node-145-2" endpinid="8x8_hs_static-49-v7" pointList="856,704,920,704,920,632" />
+
+<item itemtype="Connector" uid="Connector-112" startpinid="74HC154-83-A3" endpinid="Node-113-1" pointList="788,476,780,476,780,672" />
+
+<item itemtype="Connector" uid="Connector-147" startpinid="Buffer-116-out" endpinid="Node-148-1" pointList="748,508,788,508" />
+
+<item itemtype="Connector" uid="Connector-149" startpinid="Node-148-2" endpinid="74HC154-83-!E1" pointList="788,508,788,508" />
+
+<item itemtype="Connector" uid="Connector-153" startpinid="74XX93-13-Q2" endpinid="Node-155-0" pointList="764,664,776,664" />
+
+<item itemtype="Connector" uid="Connector-154" startpinid="74HC154-83-A2" endpinid="Node-155-1" pointList="788,468,776,468,776,664" />
+
+<item itemtype="Connector" uid="Connector-156" startpinid="Node-155-2" endpinid="Memory-2-in2" pointList="776,664,788,664" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="74XX93-13-Q3" endpinid="Node-113-2" pointList="764,672,780,672" />
+
+<item itemtype="Connector" uid="Connector-158" startpinid="Node-157-2" endpinid="Memory-2-in0" pointList="784,648,788,648" />
+
+<item itemtype="Connector" uid="Connector-159" startpinid="Node-157-1" endpinid="74XX93-13-CP1" pointList="784,648,784,696,716,696,716,680" />
+
+</circuit>

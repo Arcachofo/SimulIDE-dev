@@ -1,0 +1,1605 @@
+<circuit type="simulide_1.0" rev="999" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="LedRgb" CircId="LedRgb-1" mainComp="false" Show_id="false" Show_Val="false" Pos="788,512" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="12,12" circPos="788,512" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-2" mainComp="false" Show_id="false" Show_Val="false" Pos="764,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="388,-24" circPos="764,456" boardRot="90" circRot="90" Name="r0" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-4" mainComp="false" Show_id="false" Show_Val="false" Pos="756,468" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="380,-12" circPos="756,468" boardRot="90" circRot="90" Name="g0" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-6" mainComp="false" Show_id="false" Show_Val="false" Pos="748,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="372,-24" circPos="748,456" boardRot="90" circRot="90" Name="b0" Rotated="false" />
+
+<item itemtype="Package" CircId="Package-8" mainComp="false" Show_id="true" Show_Val="false" Pos="368,476" rotation="0" hflip="1" vflip="1" label="Package-8" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" SubcType="Board" Width="24 Cells" Height="24 Cells" Name="8x8_rgb_cc" Package_File="8x8_rgb_ca_LS.package" Logic_Symbol="true" />
+
+<item itemtype="LedRgb" CircId="LedRgb-9" mainComp="false" Show_id="false" Show_Val="false" Pos="788,544" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="12,36" circPos="788,544" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-19" mainComp="false" Show_id="false" Show_Val="false" Pos="788,576" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="12,60" circPos="788,576" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-29" mainComp="false" Show_id="false" Show_Val="false" Pos="788,608" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="12,84" circPos="788,608" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-39" mainComp="false" Show_id="false" Show_Val="false" Pos="788,640" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="12,108" circPos="788,640" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-49" mainComp="false" Show_id="false" Show_Val="false" Pos="788,672" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="12,132" circPos="788,672" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-59" mainComp="false" Show_id="false" Show_Val="false" Pos="788,704" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="12,156" circPos="788,704" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-69" mainComp="false" Show_id="false" Show_Val="false" Pos="788,736" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="12,180" circPos="788,736" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-82" mainComp="false" Show_id="false" Show_Val="false" Pos="864,704" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="36,156" circPos="864,704" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-83" mainComp="false" Show_id="false" Show_Val="false" Pos="864,512" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="36,12" circPos="864,512" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-84" mainComp="false" Show_id="false" Show_Val="false" Pos="864,576" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="36,60" circPos="864,576" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-87" mainComp="false" Show_id="false" Show_Val="false" Pos="864,736" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="36,180" circPos="864,736" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-88" mainComp="false" Show_id="false" Show_Val="false" Pos="840,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="464,-24" circPos="840,456" boardRot="90" circRot="90" Name="r1" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-89" mainComp="false" Show_id="false" Show_Val="false" Pos="864,608" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="36,84" circPos="864,608" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-91" mainComp="false" Show_id="false" Show_Val="false" Pos="864,640" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="36,108" circPos="864,640" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-94" mainComp="false" Show_id="false" Show_Val="false" Pos="824,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="448,-24" circPos="824,456" boardRot="90" circRot="90" Name="b1" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-97" mainComp="false" Show_id="false" Show_Val="false" Pos="864,672" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="36,132" circPos="864,672" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-102" mainComp="false" Show_id="false" Show_Val="false" Pos="864,544" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="36,36" circPos="864,544" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-107" mainComp="false" Show_id="false" Show_Val="false" Pos="832,468" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="456,-12" circPos="832,468" boardRot="90" circRot="90" Name="g1" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-159" mainComp="false" Show_id="false" Show_Val="false" Pos="944,704" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="60,156" circPos="944,704" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-160" mainComp="false" Show_id="false" Show_Val="false" Pos="944,512" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="60,12" circPos="944,512" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-161" mainComp="false" Show_id="false" Show_Val="false" Pos="944,576" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="60,60" circPos="944,576" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-164" mainComp="false" Show_id="false" Show_Val="false" Pos="944,736" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="60,180" circPos="944,736" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-165" mainComp="false" Show_id="false" Show_Val="false" Pos="920,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="544,-24" circPos="920,456" boardRot="90" circRot="90" Name="r2" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-166" mainComp="false" Show_id="false" Show_Val="false" Pos="944,608" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="60,84" circPos="944,608" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-168" mainComp="false" Show_id="false" Show_Val="false" Pos="944,640" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="60,108" circPos="944,640" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-171" mainComp="false" Show_id="false" Show_Val="false" Pos="904,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="528,-24" circPos="904,456" boardRot="90" circRot="90" Name="b2" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-174" mainComp="false" Show_id="false" Show_Val="false" Pos="944,672" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="60,132" circPos="944,672" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-179" mainComp="false" Show_id="false" Show_Val="false" Pos="944,544" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="60,36" circPos="944,544" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-184" mainComp="false" Show_id="false" Show_Val="false" Pos="912,468" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="536,-12" circPos="912,468" boardRot="90" circRot="90" Name="g2" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-191" mainComp="false" Show_id="false" Show_Val="false" Pos="1028,704" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="84,156" circPos="1028,704" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-192" mainComp="false" Show_id="false" Show_Val="false" Pos="1028,512" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="84,12" circPos="1028,512" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-193" mainComp="false" Show_id="false" Show_Val="false" Pos="1028,576" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="84,60" circPos="1028,576" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-196" mainComp="false" Show_id="false" Show_Val="false" Pos="1028,736" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="84,180" circPos="1028,736" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-197" mainComp="false" Show_id="false" Show_Val="false" Pos="1004,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="628,-24" circPos="1004,456" boardRot="90" circRot="90" Name="r3" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-198" mainComp="false" Show_id="false" Show_Val="false" Pos="1028,608" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="84,84" circPos="1028,608" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-200" mainComp="false" Show_id="false" Show_Val="false" Pos="1028,640" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="84,108" circPos="1028,640" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-203" mainComp="false" Show_id="false" Show_Val="false" Pos="988,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="612,-24" circPos="988,456" boardRot="90" circRot="90" Name="b3" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-206" mainComp="false" Show_id="false" Show_Val="false" Pos="1028,672" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="84,132" circPos="1028,672" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-211" mainComp="false" Show_id="false" Show_Val="false" Pos="1028,544" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="84,36" circPos="1028,544" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-216" mainComp="false" Show_id="false" Show_Val="false" Pos="996,468" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="620,-12" circPos="996,468" boardRot="90" circRot="90" Name="g3" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-268" mainComp="false" Show_id="false" Show_Val="false" Pos="1108,704" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="108,156" circPos="1108,704" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-269" mainComp="false" Show_id="false" Show_Val="false" Pos="1108,512" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="108,12" circPos="1108,512" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-270" mainComp="false" Show_id="false" Show_Val="false" Pos="1108,576" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="108,60" circPos="1108,576" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-273" mainComp="false" Show_id="false" Show_Val="false" Pos="1108,736" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="108,180" circPos="1108,736" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-274" mainComp="false" Show_id="false" Show_Val="false" Pos="1084,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="708,-24" circPos="1084,456" boardRot="90" circRot="90" Name="r4" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-275" mainComp="false" Show_id="false" Show_Val="false" Pos="1108,608" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="108,84" circPos="1108,608" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-277" mainComp="false" Show_id="false" Show_Val="false" Pos="1108,640" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="108,108" circPos="1108,640" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-280" mainComp="false" Show_id="false" Show_Val="false" Pos="1068,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="692,-24" circPos="1068,456" boardRot="90" circRot="90" Name="b4" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-283" mainComp="false" Show_id="false" Show_Val="false" Pos="1108,672" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="108,132" circPos="1108,672" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-288" mainComp="false" Show_id="false" Show_Val="false" Pos="1108,544" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="108,36" circPos="1108,544" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-293" mainComp="false" Show_id="false" Show_Val="false" Pos="1076,468" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="700,-12" circPos="1076,468" boardRot="90" circRot="90" Name="g4" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-345" mainComp="false" Show_id="false" Show_Val="false" Pos="1192,704" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="132,156" circPos="1192,704" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-346" mainComp="false" Show_id="false" Show_Val="false" Pos="1192,512" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="132,12" circPos="1192,512" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-347" mainComp="false" Show_id="false" Show_Val="false" Pos="1192,576" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="132,60" circPos="1192,576" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-350" mainComp="false" Show_id="false" Show_Val="false" Pos="1192,736" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="132,180" circPos="1192,736" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-351" mainComp="false" Show_id="false" Show_Val="false" Pos="1168,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="792,-24" circPos="1168,456" boardRot="90" circRot="90" Name="r5" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-352" mainComp="false" Show_id="false" Show_Val="false" Pos="1192,608" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="132,84" circPos="1192,608" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-354" mainComp="false" Show_id="false" Show_Val="false" Pos="1192,640" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="132,108" circPos="1192,640" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-357" mainComp="false" Show_id="false" Show_Val="false" Pos="1152,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="776,-24" circPos="1152,456" boardRot="90" circRot="90" Name="b5" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-360" mainComp="false" Show_id="false" Show_Val="false" Pos="1192,672" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="132,132" circPos="1192,672" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-365" mainComp="false" Show_id="false" Show_Val="false" Pos="1192,544" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="132,36" circPos="1192,544" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-370" mainComp="false" Show_id="false" Show_Val="false" Pos="1160,468" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="784,-12" circPos="1160,468" boardRot="90" circRot="90" Name="g5" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-422" mainComp="false" Show_id="false" Show_Val="false" Pos="1264,704" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="156,156" circPos="1264,704" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-423" mainComp="false" Show_id="false" Show_Val="false" Pos="1264,512" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="156,12" circPos="1264,512" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-424" mainComp="false" Show_id="false" Show_Val="false" Pos="1264,576" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="156,60" circPos="1264,576" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-427" mainComp="false" Show_id="false" Show_Val="false" Pos="1264,736" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="156,180" circPos="1264,736" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-428" mainComp="false" Show_id="false" Show_Val="false" Pos="1240,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="864,-24" circPos="1240,456" boardRot="90" circRot="90" Name="r6" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-429" mainComp="false" Show_id="false" Show_Val="false" Pos="1264,608" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="156,84" circPos="1264,608" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-431" mainComp="false" Show_id="false" Show_Val="false" Pos="1264,640" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="156,108" circPos="1264,640" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-434" mainComp="false" Show_id="false" Show_Val="false" Pos="1224,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="848,-24" circPos="1224,456" boardRot="90" circRot="90" Name="b6" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-437" mainComp="false" Show_id="false" Show_Val="false" Pos="1264,672" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="156,132" circPos="1264,672" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-442" mainComp="false" Show_id="false" Show_Val="false" Pos="1264,544" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="156,36" circPos="1264,544" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-447" mainComp="false" Show_id="false" Show_Val="false" Pos="1232,468" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="856,-12" circPos="1232,468" boardRot="90" circRot="90" Name="g6" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-499" mainComp="false" Show_id="false" Show_Val="false" Pos="1340,704" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="180,156" circPos="1340,704" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-500" mainComp="false" Show_id="false" Show_Val="false" Pos="1340,512" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="180,12" circPos="1340,512" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-501" mainComp="false" Show_id="false" Show_Val="false" Pos="1340,576" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="180,60" circPos="1340,576" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-504" mainComp="false" Show_id="false" Show_Val="false" Pos="1340,736" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="180,180" circPos="1340,736" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-505" mainComp="false" Show_id="false" Show_Val="false" Pos="1316,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="940,-24" circPos="1316,456" boardRot="90" circRot="90" Name="r7" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-506" mainComp="false" Show_id="false" Show_Val="false" Pos="1340,608" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="180,84" circPos="1340,608" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-508" mainComp="false" Show_id="false" Show_Val="false" Pos="1340,640" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="180,108" circPos="1340,640" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-511" mainComp="false" Show_id="false" Show_Val="false" Pos="1300,456" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="924,-24" circPos="1300,456" boardRot="90" circRot="90" Name="b7" Rotated="false" />
+
+<item itemtype="LedRgb" CircId="LedRgb-514" mainComp="false" Show_id="false" Show_Val="false" Pos="1340,672" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="180,132" circPos="1340,672" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="LedRgb" CircId="LedRgb-519" mainComp="false" Show_id="false" Show_Val="false" Pos="1340,544" rotation="0" hflip="1" vflip="1" label="LedRgb-1" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="180,36" circPos="1340,544" boardRot="0" circRot="0" CommonCathode="false" Threshold_R="2.4 V" MaxCurrent_R="0.03 A" Resistance_R="0.6 Ω" Threshold_G="3.5 V" MaxCurrent_G="0.03 A" Resistance_G="0.6 Ω" Threshold_B="3.5 V" MaxCurrent_B="0.03 A" Resistance_B="0.6 Ω" />
+
+<item itemtype="Tunnel" CircId="Tunnel-524" mainComp="false" Show_id="false" Show_Val="false" Pos="1308,468" rotation="90" hflip="1" vflip="1" label="Tunnel-2" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="932,-12" circPos="1308,468" boardRot="90" circRot="90" Name="g7" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-573" mainComp="false" Show_id="false" Show_Val="false" Pos="712,528" rotation="0" hflip="1" vflip="1" label="Tunnel-573" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="344,52" circPos="712,528" boardRot="0" circRot="0" Name="c0" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-596" mainComp="false" Show_id="false" Show_Val="false" Pos="712,560" rotation="0" hflip="1" vflip="1" label="Tunnel-573" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="344,84" circPos="712,560" boardRot="0" circRot="0" Name="c1" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-619" mainComp="false" Show_id="false" Show_Val="false" Pos="712,592" rotation="0" hflip="1" vflip="1" label="Tunnel-573" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="344,116" circPos="712,592" boardRot="0" circRot="0" Name="c2" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-642" mainComp="false" Show_id="false" Show_Val="false" Pos="712,624" rotation="0" hflip="1" vflip="1" label="Tunnel-573" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="344,148" circPos="712,624" boardRot="0" circRot="0" Name="c3" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-647" mainComp="false" Show_id="false" Show_Val="false" Pos="712,656" rotation="0" hflip="1" vflip="1" label="Tunnel-573" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="344,180" circPos="712,656" boardRot="0" circRot="0" Name="c4" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-648" mainComp="false" Show_id="false" Show_Val="false" Pos="712,688" rotation="0" hflip="1" vflip="1" label="Tunnel-573" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="344,212" circPos="712,688" boardRot="0" circRot="0" Name="c5" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-649" mainComp="false" Show_id="false" Show_Val="false" Pos="712,720" rotation="0" hflip="1" vflip="1" label="Tunnel-573" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="344,244" circPos="712,720" boardRot="0" circRot="0" Name="c6" Rotated="false" />
+
+<item itemtype="Tunnel" CircId="Tunnel-650" mainComp="false" Show_id="false" Show_Val="false" Pos="712,752" rotation="0" hflip="1" vflip="1" label="Tunnel-573" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" boardPos="344,276" circPos="712,752" boardRot="0" circRot="0" Name="c7" Rotated="false" />
+
+<item itemtype="Node" CircId="Node-11" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="764,504" />
+
+<item itemtype="Node" CircId="Node-14" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="756,512" />
+
+<item itemtype="Node" CircId="Node-17" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="748,520" />
+
+<item itemtype="Node" CircId="Node-21" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="764,536" />
+
+<item itemtype="Node" CircId="Node-24" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="756,544" />
+
+<item itemtype="Node" CircId="Node-27" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="748,552" />
+
+<item itemtype="Node" CircId="Node-31" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="764,568" />
+
+<item itemtype="Node" CircId="Node-34" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="756,576" />
+
+<item itemtype="Node" CircId="Node-37" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="748,584" />
+
+<item itemtype="Node" CircId="Node-41" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="764,600" />
+
+<item itemtype="Node" CircId="Node-44" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="756,608" />
+
+<item itemtype="Node" CircId="Node-47" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="748,616" />
+
+<item itemtype="Node" CircId="Node-51" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="764,632" />
+
+<item itemtype="Node" CircId="Node-54" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="756,640" />
+
+<item itemtype="Node" CircId="Node-57" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="748,648" />
+
+<item itemtype="Node" CircId="Node-61" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="764,664" />
+
+<item itemtype="Node" CircId="Node-64" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="756,672" />
+
+<item itemtype="Node" CircId="Node-67" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="748,680" />
+
+<item itemtype="Node" CircId="Node-71" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="764,696" />
+
+<item itemtype="Node" CircId="Node-74" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="756,704" />
+
+<item itemtype="Node" CircId="Node-77" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="748,712" />
+
+<item itemtype="Node" CircId="Node-79" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="840,504" />
+
+<item itemtype="Node" CircId="Node-80" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="840,696" />
+
+<item itemtype="Node" CircId="Node-81" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="840,536" />
+
+<item itemtype="Node" CircId="Node-85" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="832,640" />
+
+<item itemtype="Node" CircId="Node-86" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="832,672" />
+
+<item itemtype="Node" CircId="Node-90" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="832,704" />
+
+<item itemtype="Node" CircId="Node-92" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="824,648" />
+
+<item itemtype="Node" CircId="Node-93" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="824,584" />
+
+<item itemtype="Node" CircId="Node-95" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="824,616" />
+
+<item itemtype="Node" CircId="Node-96" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="840,568" />
+
+<item itemtype="Node" CircId="Node-98" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="840,600" />
+
+<item itemtype="Node" CircId="Node-99" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="832,544" />
+
+<item itemtype="Node" CircId="Node-100" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="824,680" />
+
+<item itemtype="Node" CircId="Node-101" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="824,520" />
+
+<item itemtype="Node" CircId="Node-103" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="832,512" />
+
+<item itemtype="Node" CircId="Node-104" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="824,712" />
+
+<item itemtype="Node" CircId="Node-105" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="840,664" />
+
+<item itemtype="Node" CircId="Node-106" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="840,632" />
+
+<item itemtype="Node" CircId="Node-108" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="832,576" />
+
+<item itemtype="Node" CircId="Node-109" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="832,608" />
+
+<item itemtype="Node" CircId="Node-110" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="824,552" />
+
+<item itemtype="Node" CircId="Node-156" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="920,504" />
+
+<item itemtype="Node" CircId="Node-157" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="920,696" />
+
+<item itemtype="Node" CircId="Node-158" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="920,536" />
+
+<item itemtype="Node" CircId="Node-162" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="912,640" />
+
+<item itemtype="Node" CircId="Node-163" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="912,672" />
+
+<item itemtype="Node" CircId="Node-167" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="912,704" />
+
+<item itemtype="Node" CircId="Node-169" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="904,648" />
+
+<item itemtype="Node" CircId="Node-170" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="904,584" />
+
+<item itemtype="Node" CircId="Node-172" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="904,616" />
+
+<item itemtype="Node" CircId="Node-173" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="920,568" />
+
+<item itemtype="Node" CircId="Node-175" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="920,600" />
+
+<item itemtype="Node" CircId="Node-176" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="912,544" />
+
+<item itemtype="Node" CircId="Node-177" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="904,680" />
+
+<item itemtype="Node" CircId="Node-178" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="904,520" />
+
+<item itemtype="Node" CircId="Node-180" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="912,512" />
+
+<item itemtype="Node" CircId="Node-181" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="904,712" />
+
+<item itemtype="Node" CircId="Node-182" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="920,664" />
+
+<item itemtype="Node" CircId="Node-183" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="920,632" />
+
+<item itemtype="Node" CircId="Node-185" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="912,576" />
+
+<item itemtype="Node" CircId="Node-186" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="912,608" />
+
+<item itemtype="Node" CircId="Node-187" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="904,552" />
+
+<item itemtype="Node" CircId="Node-188" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1004,504" />
+
+<item itemtype="Node" CircId="Node-189" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1004,696" />
+
+<item itemtype="Node" CircId="Node-190" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1004,536" />
+
+<item itemtype="Node" CircId="Node-194" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="996,640" />
+
+<item itemtype="Node" CircId="Node-195" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="996,672" />
+
+<item itemtype="Node" CircId="Node-199" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="996,704" />
+
+<item itemtype="Node" CircId="Node-201" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="988,648" />
+
+<item itemtype="Node" CircId="Node-202" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="988,584" />
+
+<item itemtype="Node" CircId="Node-204" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="988,616" />
+
+<item itemtype="Node" CircId="Node-205" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1004,568" />
+
+<item itemtype="Node" CircId="Node-207" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1004,600" />
+
+<item itemtype="Node" CircId="Node-208" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="996,544" />
+
+<item itemtype="Node" CircId="Node-209" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="988,680" />
+
+<item itemtype="Node" CircId="Node-210" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="988,520" />
+
+<item itemtype="Node" CircId="Node-212" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="996,512" />
+
+<item itemtype="Node" CircId="Node-213" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="988,712" />
+
+<item itemtype="Node" CircId="Node-214" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1004,664" />
+
+<item itemtype="Node" CircId="Node-215" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1004,632" />
+
+<item itemtype="Node" CircId="Node-217" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="996,576" />
+
+<item itemtype="Node" CircId="Node-218" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="996,608" />
+
+<item itemtype="Node" CircId="Node-219" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="988,552" />
+
+<item itemtype="Node" CircId="Node-265" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1084,504" />
+
+<item itemtype="Node" CircId="Node-266" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1084,696" />
+
+<item itemtype="Node" CircId="Node-267" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1084,536" />
+
+<item itemtype="Node" CircId="Node-271" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1076,640" />
+
+<item itemtype="Node" CircId="Node-272" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1076,672" />
+
+<item itemtype="Node" CircId="Node-276" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1076,704" />
+
+<item itemtype="Node" CircId="Node-278" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1068,648" />
+
+<item itemtype="Node" CircId="Node-279" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1068,584" />
+
+<item itemtype="Node" CircId="Node-281" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1068,616" />
+
+<item itemtype="Node" CircId="Node-282" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1084,568" />
+
+<item itemtype="Node" CircId="Node-284" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1084,600" />
+
+<item itemtype="Node" CircId="Node-285" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1076,544" />
+
+<item itemtype="Node" CircId="Node-286" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1068,680" />
+
+<item itemtype="Node" CircId="Node-287" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1068,520" />
+
+<item itemtype="Node" CircId="Node-289" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1076,512" />
+
+<item itemtype="Node" CircId="Node-290" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1068,712" />
+
+<item itemtype="Node" CircId="Node-291" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1084,664" />
+
+<item itemtype="Node" CircId="Node-292" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1084,632" />
+
+<item itemtype="Node" CircId="Node-294" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1076,576" />
+
+<item itemtype="Node" CircId="Node-295" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1076,608" />
+
+<item itemtype="Node" CircId="Node-296" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1068,552" />
+
+<item itemtype="Node" CircId="Node-342" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1168,504" />
+
+<item itemtype="Node" CircId="Node-343" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1168,696" />
+
+<item itemtype="Node" CircId="Node-344" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1168,536" />
+
+<item itemtype="Node" CircId="Node-348" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1160,640" />
+
+<item itemtype="Node" CircId="Node-349" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1160,672" />
+
+<item itemtype="Node" CircId="Node-353" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1160,704" />
+
+<item itemtype="Node" CircId="Node-355" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1152,648" />
+
+<item itemtype="Node" CircId="Node-356" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1152,584" />
+
+<item itemtype="Node" CircId="Node-358" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1152,616" />
+
+<item itemtype="Node" CircId="Node-359" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1168,568" />
+
+<item itemtype="Node" CircId="Node-361" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1168,600" />
+
+<item itemtype="Node" CircId="Node-362" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1160,544" />
+
+<item itemtype="Node" CircId="Node-363" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1152,680" />
+
+<item itemtype="Node" CircId="Node-364" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1152,520" />
+
+<item itemtype="Node" CircId="Node-366" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1160,512" />
+
+<item itemtype="Node" CircId="Node-367" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1152,712" />
+
+<item itemtype="Node" CircId="Node-368" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1168,664" />
+
+<item itemtype="Node" CircId="Node-369" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1168,632" />
+
+<item itemtype="Node" CircId="Node-371" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1160,576" />
+
+<item itemtype="Node" CircId="Node-372" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1160,608" />
+
+<item itemtype="Node" CircId="Node-373" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1152,552" />
+
+<item itemtype="Node" CircId="Node-419" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1240,504" />
+
+<item itemtype="Node" CircId="Node-420" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1240,696" />
+
+<item itemtype="Node" CircId="Node-421" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1240,536" />
+
+<item itemtype="Node" CircId="Node-425" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1232,640" />
+
+<item itemtype="Node" CircId="Node-426" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1232,672" />
+
+<item itemtype="Node" CircId="Node-430" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1232,704" />
+
+<item itemtype="Node" CircId="Node-432" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1224,648" />
+
+<item itemtype="Node" CircId="Node-433" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1224,584" />
+
+<item itemtype="Node" CircId="Node-435" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1224,616" />
+
+<item itemtype="Node" CircId="Node-436" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1240,568" />
+
+<item itemtype="Node" CircId="Node-438" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1240,600" />
+
+<item itemtype="Node" CircId="Node-439" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1232,544" />
+
+<item itemtype="Node" CircId="Node-440" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1224,680" />
+
+<item itemtype="Node" CircId="Node-441" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1224,520" />
+
+<item itemtype="Node" CircId="Node-443" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1232,512" />
+
+<item itemtype="Node" CircId="Node-444" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1224,712" />
+
+<item itemtype="Node" CircId="Node-445" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1240,664" />
+
+<item itemtype="Node" CircId="Node-446" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1240,632" />
+
+<item itemtype="Node" CircId="Node-448" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1232,576" />
+
+<item itemtype="Node" CircId="Node-449" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1232,608" />
+
+<item itemtype="Node" CircId="Node-450" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1224,552" />
+
+<item itemtype="Node" CircId="Node-496" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1316,504" />
+
+<item itemtype="Node" CircId="Node-497" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1316,696" />
+
+<item itemtype="Node" CircId="Node-498" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1316,536" />
+
+<item itemtype="Node" CircId="Node-502" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1308,640" />
+
+<item itemtype="Node" CircId="Node-503" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1308,672" />
+
+<item itemtype="Node" CircId="Node-507" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1308,704" />
+
+<item itemtype="Node" CircId="Node-509" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1300,648" />
+
+<item itemtype="Node" CircId="Node-510" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1300,584" />
+
+<item itemtype="Node" CircId="Node-512" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1300,616" />
+
+<item itemtype="Node" CircId="Node-513" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1316,568" />
+
+<item itemtype="Node" CircId="Node-515" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1316,600" />
+
+<item itemtype="Node" CircId="Node-516" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1308,544" />
+
+<item itemtype="Node" CircId="Node-517" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1300,680" />
+
+<item itemtype="Node" CircId="Node-518" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1300,520" />
+
+<item itemtype="Node" CircId="Node-520" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1308,512" />
+
+<item itemtype="Node" CircId="Node-521" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1300,712" />
+
+<item itemtype="Node" CircId="Node-522" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1316,664" />
+
+<item itemtype="Node" CircId="Node-523" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1316,632" />
+
+<item itemtype="Node" CircId="Node-525" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1308,576" />
+
+<item itemtype="Node" CircId="Node-526" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1308,608" />
+
+<item itemtype="Node" CircId="Node-527" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1300,552" />
+
+<item itemtype="Node" CircId="Node-576" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1280,528" />
+
+<item itemtype="Node" CircId="Node-579" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1208,528" />
+
+<item itemtype="Node" CircId="Node-582" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1124,528" />
+
+<item itemtype="Node" CircId="Node-585" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1044,528" />
+
+<item itemtype="Node" CircId="Node-588" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="960,528" />
+
+<item itemtype="Node" CircId="Node-591" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="880,528" />
+
+<item itemtype="Node" CircId="Node-594" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="804,528" />
+
+<item itemtype="Node" CircId="Node-599" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1280,560" />
+
+<item itemtype="Node" CircId="Node-602" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1208,560" />
+
+<item itemtype="Node" CircId="Node-605" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1124,560" />
+
+<item itemtype="Node" CircId="Node-608" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1044,560" />
+
+<item itemtype="Node" CircId="Node-611" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="960,560" />
+
+<item itemtype="Node" CircId="Node-614" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="880,560" />
+
+<item itemtype="Node" CircId="Node-617" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="804,560" />
+
+<item itemtype="Node" CircId="Node-622" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1280,592" />
+
+<item itemtype="Node" CircId="Node-625" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1208,592" />
+
+<item itemtype="Node" CircId="Node-628" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1124,592" />
+
+<item itemtype="Node" CircId="Node-631" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1044,592" />
+
+<item itemtype="Node" CircId="Node-634" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="960,592" />
+
+<item itemtype="Node" CircId="Node-637" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="880,592" />
+
+<item itemtype="Node" CircId="Node-640" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="804,592" />
+
+<item itemtype="Node" CircId="Node-645" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1280,624" />
+
+<item itemtype="Node" CircId="Node-656" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1280,656" />
+
+<item itemtype="Node" CircId="Node-659" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1280,688" />
+
+<item itemtype="Node" CircId="Node-662" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1280,720" />
+
+<item itemtype="Node" CircId="Node-665" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1284,752" />
+
+<item itemtype="Node" CircId="Node-668" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1208,752" />
+
+<item itemtype="Node" CircId="Node-671" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1208,624" />
+
+<item itemtype="Node" CircId="Node-674" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1208,656" />
+
+<item itemtype="Node" CircId="Node-677" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1208,688" />
+
+<item itemtype="Node" CircId="Node-680" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1208,720" />
+
+<item itemtype="Node" CircId="Node-683" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1124,624" />
+
+<item itemtype="Node" CircId="Node-686" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1124,656" />
+
+<item itemtype="Node" CircId="Node-689" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1124,688" />
+
+<item itemtype="Node" CircId="Node-692" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1124,720" />
+
+<item itemtype="Node" CircId="Node-695" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1124,752" />
+
+<item itemtype="Node" CircId="Node-698" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1044,624" />
+
+<item itemtype="Node" CircId="Node-701" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1044,656" />
+
+<item itemtype="Node" CircId="Node-704" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1044,688" />
+
+<item itemtype="Node" CircId="Node-707" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1044,720" />
+
+<item itemtype="Node" CircId="Node-710" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="1044,752" />
+
+<item itemtype="Node" CircId="Node-713" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="960,624" />
+
+<item itemtype="Node" CircId="Node-716" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="960,656" />
+
+<item itemtype="Node" CircId="Node-719" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="960,688" />
+
+<item itemtype="Node" CircId="Node-722" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="960,720" />
+
+<item itemtype="Node" CircId="Node-725" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="960,752" />
+
+<item itemtype="Node" CircId="Node-728" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="880,624" />
+
+<item itemtype="Node" CircId="Node-731" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="880,656" />
+
+<item itemtype="Node" CircId="Node-734" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="880,688" />
+
+<item itemtype="Node" CircId="Node-737" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="880,720" />
+
+<item itemtype="Node" CircId="Node-740" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="880,752" />
+
+<item itemtype="Node" CircId="Node-743" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="804,624" />
+
+<item itemtype="Node" CircId="Node-746" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="804,656" />
+
+<item itemtype="Node" CircId="Node-749" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="804,688" />
+
+<item itemtype="Node" CircId="Node-752" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="804,720" />
+
+<item itemtype="Node" CircId="Node-755" mainComp="false" boardPos="-1e+06,-1e+06" circPos="0,0" boardRot="-1e+06" circRot="0" Pos="804,752" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Tunnel-2-pin" endpinid="Node-11-0" pointList="764,456,764,504" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Tunnel-4-pin" endpinid="Node-14-0" pointList="756,468,756,512" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-6-pin" endpinid="Node-17-0" pointList="748,456,748,520" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedRgb-9-Pin0" endpinid="Node-21-0" pointList="772,536,764,536" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-11-2" endpinid="LedRgb-1-Pin0" pointList="764,504,772,504" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedRgb-9-Pin1" endpinid="Node-24-0" pointList="772,544,756,544" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-14-2" endpinid="LedRgb-1-Pin1" pointList="756,512,772,512" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="LedRgb-9-Pin2" endpinid="Node-27-0" pointList="772,552,748,552" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-17-2" endpinid="LedRgb-1-Pin2" pointList="748,520,772,520" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="LedRgb-19-Pin0" endpinid="Node-31-0" pointList="772,568,764,568" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-21-2" endpinid="Node-11-1" pointList="764,536,764,504" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedRgb-19-Pin1" endpinid="Node-34-0" pointList="772,576,756,576" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-24-2" endpinid="Node-14-1" pointList="756,544,756,512" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedRgb-19-Pin2" endpinid="Node-37-0" pointList="772,584,748,584" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-27-2" endpinid="Node-17-1" pointList="748,552,748,520" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedRgb-29-Pin0" endpinid="Node-41-0" pointList="772,600,764,600" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-31-2" endpinid="Node-21-1" pointList="764,568,764,536" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedRgb-29-Pin1" endpinid="Node-44-0" pointList="772,608,756,608" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-34-2" endpinid="Node-24-1" pointList="756,576,756,544" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedRgb-29-Pin2" endpinid="Node-47-0" pointList="772,616,748,616" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-37-2" endpinid="Node-27-1" pointList="748,584,748,552" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="LedRgb-39-Pin0" endpinid="Node-51-0" pointList="772,632,764,632" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-41-2" endpinid="Node-31-1" pointList="764,600,764,568" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="LedRgb-39-Pin1" endpinid="Node-54-0" pointList="772,640,756,640" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-44-2" endpinid="Node-34-1" pointList="756,608,756,576" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="LedRgb-39-Pin2" endpinid="Node-57-0" pointList="772,648,748,648" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-47-2" endpinid="Node-37-1" pointList="748,616,748,584" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedRgb-49-Pin0" endpinid="Node-61-0" pointList="772,664,764,664" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-51-2" endpinid="Node-41-1" pointList="764,632,764,600" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="LedRgb-49-Pin1" endpinid="Node-64-0" pointList="772,672,756,672" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Node-54-2" endpinid="Node-44-1" pointList="756,640,756,608" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="LedRgb-49-Pin2" endpinid="Node-67-0" pointList="772,680,748,680" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Node-57-2" endpinid="Node-47-1" pointList="748,648,748,616" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedRgb-59-Pin0" endpinid="Node-71-0" pointList="772,696,764,696" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-61-2" endpinid="Node-51-1" pointList="764,664,764,632" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedRgb-59-Pin1" endpinid="Node-74-0" pointList="772,704,756,704" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-64-2" endpinid="Node-54-1" pointList="756,672,756,640" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="LedRgb-59-Pin2" endpinid="Node-77-0" pointList="772,712,748,712" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-67-2" endpinid="Node-57-1" pointList="748,680,748,648" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="LedRgb-69-Pin0" endpinid="Node-71-1" pointList="772,728,764,728,764,696" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-71-2" endpinid="Node-61-1" pointList="764,696,764,664" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="LedRgb-69-Pin1" endpinid="Node-74-1" pointList="772,736,756,736,756,704" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-74-2" endpinid="Node-64-1" pointList="756,704,756,672" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="LedRgb-69-Pin2" endpinid="Node-77-1" pointList="772,744,748,744,748,712" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Node-77-2" endpinid="Node-67-1" pointList="748,712,748,680" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="LedRgb-102-Pin2" endpinid="Node-110-0" pointList="848,552,824,552" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-99-2" endpinid="Node-103-1" pointList="832,544,832,512" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-93-2" endpinid="Node-110-1" pointList="824,584,824,552" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Node-85-2" endpinid="Node-109-1" pointList="832,640,832,608" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-106-2" endpinid="Node-98-1" pointList="840,632,840,600" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="LedRgb-97-Pin2" endpinid="Node-100-0" pointList="848,680,824,680" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-79-2" endpinid="LedRgb-83-Pin0" pointList="840,504,848,504" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedRgb-102-Pin1" endpinid="Node-99-0" pointList="848,544,832,544" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-80-2" endpinid="Node-105-1" pointList="840,696,840,664" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="LedRgb-87-Pin1" endpinid="Node-90-1" pointList="848,736,832,736,832,704" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Tunnel-107-pin" endpinid="Node-103-0" pointList="832,468,832,512" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedRgb-89-Pin2" endpinid="Node-95-0" pointList="848,616,824,616" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedRgb-84-Pin1" endpinid="Node-108-0" pointList="848,576,832,576" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-109-2" endpinid="Node-108-1" pointList="832,608,832,576" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedRgb-97-Pin0" endpinid="Node-105-0" pointList="848,664,840,664" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="LedRgb-87-Pin0" endpinid="Node-80-1" pointList="848,728,840,728,840,696" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Node-92-2" endpinid="Node-95-1" pointList="824,648,824,616" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-100-2" endpinid="Node-92-1" pointList="824,680,824,648" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedRgb-89-Pin0" endpinid="Node-98-0" pointList="848,600,840,600" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedRgb-89-Pin1" endpinid="Node-109-0" pointList="848,608,832,608" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-110-2" endpinid="Node-101-1" pointList="824,552,824,520" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-105-2" endpinid="Node-106-1" pointList="840,664,840,632" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedRgb-84-Pin2" endpinid="Node-93-0" pointList="848,584,824,584" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="LedRgb-91-Pin1" endpinid="Node-85-0" pointList="848,640,832,640" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-94-pin" endpinid="Node-101-0" pointList="824,456,824,520" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="LedRgb-84-Pin0" endpinid="Node-96-0" pointList="848,568,840,568" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedRgb-82-Pin1" endpinid="Node-90-0" pointList="848,704,832,704" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="LedRgb-87-Pin2" endpinid="Node-104-1" pointList="848,744,824,744,824,712" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-95-2" endpinid="Node-93-1" pointList="824,616,824,584" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-96-2" endpinid="Node-81-1" pointList="840,568,840,536" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-101-2" endpinid="LedRgb-83-Pin2" pointList="824,520,848,520" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedRgb-82-Pin0" endpinid="Node-80-0" pointList="848,696,840,696" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-86-2" endpinid="Node-85-1" pointList="832,672,832,640" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Tunnel-88-pin" endpinid="Node-79-0" pointList="840,456,840,504" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Node-104-2" endpinid="Node-100-1" pointList="824,712,824,680" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-81-2" endpinid="Node-79-1" pointList="840,536,840,504" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="LedRgb-97-Pin1" endpinid="Node-86-0" pointList="848,672,832,672" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-98-2" endpinid="Node-96-1" pointList="840,600,840,568" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="LedRgb-82-Pin2" endpinid="Node-104-0" pointList="848,712,824,712" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-103-2" endpinid="LedRgb-83-Pin1" pointList="832,512,848,512" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-108-2" endpinid="Node-99-1" pointList="832,576,832,544" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="LedRgb-91-Pin2" endpinid="Node-92-0" pointList="848,648,824,648" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedRgb-102-Pin0" endpinid="Node-81-0" pointList="848,536,840,536" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-90-2" endpinid="Node-86-1" pointList="832,704,832,672" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="LedRgb-91-Pin0" endpinid="Node-106-0" pointList="848,632,840,632" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="LedRgb-179-Pin2" endpinid="Node-187-0" pointList="928,552,904,552" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-176-2" endpinid="Node-180-1" pointList="912,544,912,512" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-170-2" endpinid="Node-187-1" pointList="904,584,904,552" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Node-162-2" endpinid="Node-186-1" pointList="912,640,912,608" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-183-2" endpinid="Node-175-1" pointList="920,632,920,600" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="LedRgb-174-Pin2" endpinid="Node-177-0" pointList="928,680,904,680" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-156-2" endpinid="LedRgb-160-Pin0" pointList="920,504,928,504" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedRgb-179-Pin1" endpinid="Node-176-0" pointList="928,544,912,544" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-157-2" endpinid="Node-182-1" pointList="920,696,920,664" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="LedRgb-164-Pin1" endpinid="Node-167-1" pointList="928,736,912,736,912,704" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Tunnel-184-pin" endpinid="Node-180-0" pointList="912,468,912,512" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedRgb-166-Pin2" endpinid="Node-172-0" pointList="928,616,904,616" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedRgb-161-Pin1" endpinid="Node-185-0" pointList="928,576,912,576" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-186-2" endpinid="Node-185-1" pointList="912,608,912,576" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedRgb-174-Pin0" endpinid="Node-182-0" pointList="928,664,920,664" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="LedRgb-164-Pin0" endpinid="Node-157-1" pointList="928,728,920,728,920,696" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Node-169-2" endpinid="Node-172-1" pointList="904,648,904,616" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-177-2" endpinid="Node-169-1" pointList="904,680,904,648" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedRgb-166-Pin0" endpinid="Node-175-0" pointList="928,600,920,600" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedRgb-166-Pin1" endpinid="Node-186-0" pointList="928,608,912,608" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-187-2" endpinid="Node-178-1" pointList="904,552,904,520" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-182-2" endpinid="Node-183-1" pointList="920,664,920,632" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedRgb-161-Pin2" endpinid="Node-170-0" pointList="928,584,904,584" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="LedRgb-168-Pin1" endpinid="Node-162-0" pointList="928,640,912,640" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-171-pin" endpinid="Node-178-0" pointList="904,456,904,520" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="LedRgb-161-Pin0" endpinid="Node-173-0" pointList="928,568,920,568" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedRgb-159-Pin1" endpinid="Node-167-0" pointList="928,704,912,704" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="LedRgb-164-Pin2" endpinid="Node-181-1" pointList="928,744,904,744,904,712" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-172-2" endpinid="Node-170-1" pointList="904,616,904,584" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-173-2" endpinid="Node-158-1" pointList="920,568,920,536" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-178-2" endpinid="LedRgb-160-Pin2" pointList="904,520,928,520" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedRgb-159-Pin0" endpinid="Node-157-0" pointList="928,696,920,696" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-163-2" endpinid="Node-162-1" pointList="912,672,912,640" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Tunnel-165-pin" endpinid="Node-156-0" pointList="920,456,920,504" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Node-181-2" endpinid="Node-177-1" pointList="904,712,904,680" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-158-2" endpinid="Node-156-1" pointList="920,536,920,504" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="LedRgb-174-Pin1" endpinid="Node-163-0" pointList="928,672,912,672" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-175-2" endpinid="Node-173-1" pointList="920,600,920,568" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="LedRgb-159-Pin2" endpinid="Node-181-0" pointList="928,712,904,712" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-180-2" endpinid="LedRgb-160-Pin1" pointList="912,512,928,512" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-185-2" endpinid="Node-176-1" pointList="912,576,912,544" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="LedRgb-168-Pin2" endpinid="Node-169-0" pointList="928,648,904,648" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedRgb-179-Pin0" endpinid="Node-158-0" pointList="928,536,920,536" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-167-2" endpinid="Node-163-1" pointList="912,704,912,672" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="LedRgb-168-Pin0" endpinid="Node-183-0" pointList="928,632,920,632" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="LedRgb-211-Pin2" endpinid="Node-219-0" pointList="1012,552,988,552" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-208-2" endpinid="Node-212-1" pointList="996,544,996,512" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-202-2" endpinid="Node-219-1" pointList="988,584,988,552" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Node-194-2" endpinid="Node-218-1" pointList="996,640,996,608" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-215-2" endpinid="Node-207-1" pointList="1004,632,1004,600" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="LedRgb-206-Pin2" endpinid="Node-209-0" pointList="1012,680,988,680" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-188-2" endpinid="LedRgb-192-Pin0" pointList="1004,504,1012,504" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedRgb-211-Pin1" endpinid="Node-208-0" pointList="1012,544,996,544" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-189-2" endpinid="Node-214-1" pointList="1004,696,1004,664" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="LedRgb-196-Pin1" endpinid="Node-199-1" pointList="1012,736,996,736,996,704" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Tunnel-216-pin" endpinid="Node-212-0" pointList="996,468,996,512" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedRgb-198-Pin2" endpinid="Node-204-0" pointList="1012,616,988,616" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedRgb-193-Pin1" endpinid="Node-217-0" pointList="1012,576,996,576" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-218-2" endpinid="Node-217-1" pointList="996,608,996,576" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedRgb-206-Pin0" endpinid="Node-214-0" pointList="1012,664,1004,664" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="LedRgb-196-Pin0" endpinid="Node-189-1" pointList="1012,728,1004,728,1004,696" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Node-201-2" endpinid="Node-204-1" pointList="988,648,988,616" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-209-2" endpinid="Node-201-1" pointList="988,680,988,648" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedRgb-198-Pin0" endpinid="Node-207-0" pointList="1012,600,1004,600" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedRgb-198-Pin1" endpinid="Node-218-0" pointList="1012,608,996,608" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-219-2" endpinid="Node-210-1" pointList="988,552,988,520" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-214-2" endpinid="Node-215-1" pointList="1004,664,1004,632" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedRgb-193-Pin2" endpinid="Node-202-0" pointList="1012,584,988,584" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="LedRgb-200-Pin1" endpinid="Node-194-0" pointList="1012,640,996,640" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-203-pin" endpinid="Node-210-0" pointList="988,456,988,520" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="LedRgb-193-Pin0" endpinid="Node-205-0" pointList="1012,568,1004,568" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedRgb-191-Pin1" endpinid="Node-199-0" pointList="1012,704,996,704" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="LedRgb-196-Pin2" endpinid="Node-213-1" pointList="1012,744,988,744,988,712" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-204-2" endpinid="Node-202-1" pointList="988,616,988,584" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-205-2" endpinid="Node-190-1" pointList="1004,568,1004,536" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-210-2" endpinid="LedRgb-192-Pin2" pointList="988,520,1012,520" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedRgb-191-Pin0" endpinid="Node-189-0" pointList="1012,696,1004,696" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-195-2" endpinid="Node-194-1" pointList="996,672,996,640" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Tunnel-197-pin" endpinid="Node-188-0" pointList="1004,456,1004,504" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Node-213-2" endpinid="Node-209-1" pointList="988,712,988,680" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-190-2" endpinid="Node-188-1" pointList="1004,536,1004,504" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="LedRgb-206-Pin1" endpinid="Node-195-0" pointList="1012,672,996,672" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-207-2" endpinid="Node-205-1" pointList="1004,600,1004,568" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="LedRgb-191-Pin2" endpinid="Node-213-0" pointList="1012,712,988,712" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-212-2" endpinid="LedRgb-192-Pin1" pointList="996,512,1012,512" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-217-2" endpinid="Node-208-1" pointList="996,576,996,544" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="LedRgb-200-Pin2" endpinid="Node-201-0" pointList="1012,648,988,648" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedRgb-211-Pin0" endpinid="Node-190-0" pointList="1012,536,1004,536" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-199-2" endpinid="Node-195-1" pointList="996,704,996,672" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="LedRgb-200-Pin0" endpinid="Node-215-0" pointList="1012,632,1004,632" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="LedRgb-288-Pin2" endpinid="Node-296-0" pointList="1092,552,1068,552" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-285-2" endpinid="Node-289-1" pointList="1076,544,1076,512" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-279-2" endpinid="Node-296-1" pointList="1068,584,1068,552" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Node-271-2" endpinid="Node-295-1" pointList="1076,640,1076,608" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-292-2" endpinid="Node-284-1" pointList="1084,632,1084,600" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="LedRgb-283-Pin2" endpinid="Node-286-0" pointList="1092,680,1068,680" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-265-2" endpinid="LedRgb-269-Pin0" pointList="1084,504,1092,504" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedRgb-288-Pin1" endpinid="Node-285-0" pointList="1092,544,1076,544" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-266-2" endpinid="Node-291-1" pointList="1084,696,1084,664" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="LedRgb-273-Pin1" endpinid="Node-276-1" pointList="1092,736,1076,736,1076,704" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Tunnel-293-pin" endpinid="Node-289-0" pointList="1076,468,1076,512" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedRgb-275-Pin2" endpinid="Node-281-0" pointList="1092,616,1068,616" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedRgb-270-Pin1" endpinid="Node-294-0" pointList="1092,576,1076,576" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-295-2" endpinid="Node-294-1" pointList="1076,608,1076,576" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedRgb-283-Pin0" endpinid="Node-291-0" pointList="1092,664,1084,664" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="LedRgb-273-Pin0" endpinid="Node-266-1" pointList="1092,728,1084,728,1084,696" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Node-278-2" endpinid="Node-281-1" pointList="1068,648,1068,616" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-286-2" endpinid="Node-278-1" pointList="1068,680,1068,648" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedRgb-275-Pin0" endpinid="Node-284-0" pointList="1092,600,1084,600" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedRgb-275-Pin1" endpinid="Node-295-0" pointList="1092,608,1076,608" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-296-2" endpinid="Node-287-1" pointList="1068,552,1068,520" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-291-2" endpinid="Node-292-1" pointList="1084,664,1084,632" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedRgb-270-Pin2" endpinid="Node-279-0" pointList="1092,584,1068,584" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="LedRgb-277-Pin1" endpinid="Node-271-0" pointList="1092,640,1076,640" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-280-pin" endpinid="Node-287-0" pointList="1068,456,1068,520" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="LedRgb-270-Pin0" endpinid="Node-282-0" pointList="1092,568,1084,568" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedRgb-268-Pin1" endpinid="Node-276-0" pointList="1092,704,1076,704" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="LedRgb-273-Pin2" endpinid="Node-290-1" pointList="1092,744,1068,744,1068,712" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-281-2" endpinid="Node-279-1" pointList="1068,616,1068,584" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-282-2" endpinid="Node-267-1" pointList="1084,568,1084,536" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-287-2" endpinid="LedRgb-269-Pin2" pointList="1068,520,1092,520" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedRgb-268-Pin0" endpinid="Node-266-0" pointList="1092,696,1084,696" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-272-2" endpinid="Node-271-1" pointList="1076,672,1076,640" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Tunnel-274-pin" endpinid="Node-265-0" pointList="1084,456,1084,504" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Node-290-2" endpinid="Node-286-1" pointList="1068,712,1068,680" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-267-2" endpinid="Node-265-1" pointList="1084,536,1084,504" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="LedRgb-283-Pin1" endpinid="Node-272-0" pointList="1092,672,1076,672" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-284-2" endpinid="Node-282-1" pointList="1084,600,1084,568" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="LedRgb-268-Pin2" endpinid="Node-290-0" pointList="1092,712,1068,712" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-289-2" endpinid="LedRgb-269-Pin1" pointList="1076,512,1092,512" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-294-2" endpinid="Node-285-1" pointList="1076,576,1076,544" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="LedRgb-277-Pin2" endpinid="Node-278-0" pointList="1092,648,1068,648" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedRgb-288-Pin0" endpinid="Node-267-0" pointList="1092,536,1084,536" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-276-2" endpinid="Node-272-1" pointList="1076,704,1076,672" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="LedRgb-277-Pin0" endpinid="Node-292-0" pointList="1092,632,1084,632" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="LedRgb-365-Pin2" endpinid="Node-373-0" pointList="1176,552,1152,552" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-362-2" endpinid="Node-366-1" pointList="1160,544,1160,512" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-356-2" endpinid="Node-373-1" pointList="1152,584,1152,552" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Node-348-2" endpinid="Node-372-1" pointList="1160,640,1160,608" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-369-2" endpinid="Node-361-1" pointList="1168,632,1168,600" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="LedRgb-360-Pin2" endpinid="Node-363-0" pointList="1176,680,1152,680" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-342-2" endpinid="LedRgb-346-Pin0" pointList="1168,504,1176,504" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedRgb-365-Pin1" endpinid="Node-362-0" pointList="1176,544,1160,544" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-343-2" endpinid="Node-368-1" pointList="1168,696,1168,664" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="LedRgb-350-Pin1" endpinid="Node-353-1" pointList="1176,736,1160,736,1160,704" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Tunnel-370-pin" endpinid="Node-366-0" pointList="1160,468,1160,512" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedRgb-352-Pin2" endpinid="Node-358-0" pointList="1176,616,1152,616" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedRgb-347-Pin1" endpinid="Node-371-0" pointList="1176,576,1160,576" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-372-2" endpinid="Node-371-1" pointList="1160,608,1160,576" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedRgb-360-Pin0" endpinid="Node-368-0" pointList="1176,664,1168,664" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="LedRgb-350-Pin0" endpinid="Node-343-1" pointList="1176,728,1168,728,1168,696" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Node-355-2" endpinid="Node-358-1" pointList="1152,648,1152,616" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-363-2" endpinid="Node-355-1" pointList="1152,680,1152,648" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedRgb-352-Pin0" endpinid="Node-361-0" pointList="1176,600,1168,600" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedRgb-352-Pin1" endpinid="Node-372-0" pointList="1176,608,1160,608" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-373-2" endpinid="Node-364-1" pointList="1152,552,1152,520" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-368-2" endpinid="Node-369-1" pointList="1168,664,1168,632" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedRgb-347-Pin2" endpinid="Node-356-0" pointList="1176,584,1152,584" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="LedRgb-354-Pin1" endpinid="Node-348-0" pointList="1176,640,1160,640" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-357-pin" endpinid="Node-364-0" pointList="1152,456,1152,520" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="LedRgb-347-Pin0" endpinid="Node-359-0" pointList="1176,568,1168,568" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedRgb-345-Pin1" endpinid="Node-353-0" pointList="1176,704,1160,704" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="LedRgb-350-Pin2" endpinid="Node-367-1" pointList="1176,744,1152,744,1152,712" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-358-2" endpinid="Node-356-1" pointList="1152,616,1152,584" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-359-2" endpinid="Node-344-1" pointList="1168,568,1168,536" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-364-2" endpinid="LedRgb-346-Pin2" pointList="1152,520,1176,520" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedRgb-345-Pin0" endpinid="Node-343-0" pointList="1176,696,1168,696" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-349-2" endpinid="Node-348-1" pointList="1160,672,1160,640" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Tunnel-351-pin" endpinid="Node-342-0" pointList="1168,456,1168,504" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Node-367-2" endpinid="Node-363-1" pointList="1152,712,1152,680" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-344-2" endpinid="Node-342-1" pointList="1168,536,1168,504" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="LedRgb-360-Pin1" endpinid="Node-349-0" pointList="1176,672,1160,672" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-361-2" endpinid="Node-359-1" pointList="1168,600,1168,568" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="LedRgb-345-Pin2" endpinid="Node-367-0" pointList="1176,712,1152,712" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-366-2" endpinid="LedRgb-346-Pin1" pointList="1160,512,1176,512" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-371-2" endpinid="Node-362-1" pointList="1160,576,1160,544" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="LedRgb-354-Pin2" endpinid="Node-355-0" pointList="1176,648,1152,648" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedRgb-365-Pin0" endpinid="Node-344-0" pointList="1176,536,1168,536" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-353-2" endpinid="Node-349-1" pointList="1160,704,1160,672" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="LedRgb-354-Pin0" endpinid="Node-369-0" pointList="1176,632,1168,632" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="LedRgb-442-Pin2" endpinid="Node-450-0" pointList="1248,552,1224,552" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-439-2" endpinid="Node-443-1" pointList="1232,544,1232,512" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-433-2" endpinid="Node-450-1" pointList="1224,584,1224,552" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Node-425-2" endpinid="Node-449-1" pointList="1232,640,1232,608" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-446-2" endpinid="Node-438-1" pointList="1240,632,1240,600" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="LedRgb-437-Pin2" endpinid="Node-440-0" pointList="1248,680,1224,680" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-419-2" endpinid="LedRgb-423-Pin0" pointList="1240,504,1248,504" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedRgb-442-Pin1" endpinid="Node-439-0" pointList="1248,544,1232,544" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-420-2" endpinid="Node-445-1" pointList="1240,696,1240,664" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="LedRgb-427-Pin1" endpinid="Node-430-1" pointList="1248,736,1232,736,1232,704" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Tunnel-447-pin" endpinid="Node-443-0" pointList="1232,468,1232,512" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedRgb-429-Pin2" endpinid="Node-435-0" pointList="1248,616,1224,616" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedRgb-424-Pin1" endpinid="Node-448-0" pointList="1248,576,1232,576" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-449-2" endpinid="Node-448-1" pointList="1232,608,1232,576" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedRgb-437-Pin0" endpinid="Node-445-0" pointList="1248,664,1240,664" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="LedRgb-427-Pin0" endpinid="Node-420-1" pointList="1248,728,1240,728,1240,696" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Node-432-2" endpinid="Node-435-1" pointList="1224,648,1224,616" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-440-2" endpinid="Node-432-1" pointList="1224,680,1224,648" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedRgb-429-Pin0" endpinid="Node-438-0" pointList="1248,600,1240,600" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedRgb-429-Pin1" endpinid="Node-449-0" pointList="1248,608,1232,608" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-450-2" endpinid="Node-441-1" pointList="1224,552,1224,520" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-445-2" endpinid="Node-446-1" pointList="1240,664,1240,632" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedRgb-424-Pin2" endpinid="Node-433-0" pointList="1248,584,1224,584" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="LedRgb-431-Pin1" endpinid="Node-425-0" pointList="1248,640,1232,640" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-434-pin" endpinid="Node-441-0" pointList="1224,456,1224,520" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="LedRgb-424-Pin0" endpinid="Node-436-0" pointList="1248,568,1240,568" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedRgb-422-Pin1" endpinid="Node-430-0" pointList="1248,704,1232,704" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="LedRgb-427-Pin2" endpinid="Node-444-1" pointList="1248,744,1224,744,1224,712" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-435-2" endpinid="Node-433-1" pointList="1224,616,1224,584" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-436-2" endpinid="Node-421-1" pointList="1240,568,1240,536" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-441-2" endpinid="LedRgb-423-Pin2" pointList="1224,520,1248,520" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedRgb-422-Pin0" endpinid="Node-420-0" pointList="1248,696,1240,696" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-426-2" endpinid="Node-425-1" pointList="1232,672,1232,640" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Tunnel-428-pin" endpinid="Node-419-0" pointList="1240,456,1240,504" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Node-444-2" endpinid="Node-440-1" pointList="1224,712,1224,680" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-421-2" endpinid="Node-419-1" pointList="1240,536,1240,504" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="LedRgb-437-Pin1" endpinid="Node-426-0" pointList="1248,672,1232,672" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-438-2" endpinid="Node-436-1" pointList="1240,600,1240,568" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="LedRgb-422-Pin2" endpinid="Node-444-0" pointList="1248,712,1224,712" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-443-2" endpinid="LedRgb-423-Pin1" pointList="1232,512,1248,512" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-448-2" endpinid="Node-439-1" pointList="1232,576,1232,544" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="LedRgb-431-Pin2" endpinid="Node-432-0" pointList="1248,648,1224,648" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedRgb-442-Pin0" endpinid="Node-421-0" pointList="1248,536,1240,536" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-430-2" endpinid="Node-426-1" pointList="1232,704,1232,672" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="LedRgb-431-Pin0" endpinid="Node-446-0" pointList="1248,632,1240,632" />
+
+<item itemtype="Connector" uid="Connector-16" startpinid="LedRgb-519-Pin2" endpinid="Node-527-0" pointList="1324,552,1300,552" />
+
+<item itemtype="Connector" uid="Connector-25" startpinid="Node-516-2" endpinid="Node-520-1" pointList="1308,544,1308,512" />
+
+<item itemtype="Connector" uid="Connector-38" startpinid="Node-510-2" endpinid="Node-527-1" pointList="1300,584,1300,552" />
+
+<item itemtype="Connector" uid="Connector-55" startpinid="Node-502-2" endpinid="Node-526-1" pointList="1308,640,1308,608" />
+
+<item itemtype="Connector" uid="Connector-52" startpinid="Node-523-2" endpinid="Node-515-1" pointList="1316,632,1316,600" />
+
+<item itemtype="Connector" uid="Connector-56" startpinid="LedRgb-514-Pin2" endpinid="Node-517-0" pointList="1324,680,1300,680" />
+
+<item itemtype="Connector" uid="Connector-12" startpinid="Node-496-2" endpinid="LedRgb-500-Pin0" pointList="1316,504,1324,504" />
+
+<item itemtype="Connector" uid="Connector-13" startpinid="LedRgb-519-Pin1" endpinid="Node-516-0" pointList="1324,544,1308,544" />
+
+<item itemtype="Connector" uid="Connector-72" startpinid="Node-497-2" endpinid="Node-522-1" pointList="1316,696,1316,664" />
+
+<item itemtype="Connector" uid="Connector-73" startpinid="LedRgb-504-Pin1" endpinid="Node-507-1" pointList="1324,736,1308,736,1308,704" />
+
+<item itemtype="Connector" uid="Connector-5" startpinid="Tunnel-524-pin" endpinid="Node-520-0" pointList="1308,468,1308,512" />
+
+<item itemtype="Connector" uid="Connector-36" startpinid="LedRgb-506-Pin2" endpinid="Node-512-0" pointList="1324,616,1300,616" />
+
+<item itemtype="Connector" uid="Connector-23" startpinid="LedRgb-501-Pin1" endpinid="Node-525-0" pointList="1324,576,1308,576" />
+
+<item itemtype="Connector" uid="Connector-45" startpinid="Node-526-2" endpinid="Node-525-1" pointList="1308,608,1308,576" />
+
+<item itemtype="Connector" uid="Connector-50" startpinid="LedRgb-514-Pin0" endpinid="Node-522-0" pointList="1324,664,1316,664" />
+
+<item itemtype="Connector" uid="Connector-70" startpinid="LedRgb-504-Pin0" endpinid="Node-497-1" pointList="1324,728,1316,728,1316,696" />
+
+<item itemtype="Connector" uid="Connector-58" startpinid="Node-509-2" endpinid="Node-512-1" pointList="1300,648,1300,616" />
+
+<item itemtype="Connector" uid="Connector-68" startpinid="Node-517-2" endpinid="Node-509-1" pointList="1300,680,1300,648" />
+
+<item itemtype="Connector" uid="Connector-30" startpinid="LedRgb-506-Pin0" endpinid="Node-515-0" pointList="1324,600,1316,600" />
+
+<item itemtype="Connector" uid="Connector-33" startpinid="LedRgb-506-Pin1" endpinid="Node-526-0" pointList="1324,608,1308,608" />
+
+<item itemtype="Connector" uid="Connector-28" startpinid="Node-527-2" endpinid="Node-518-1" pointList="1300,552,1300,520" />
+
+<item itemtype="Connector" uid="Connector-62" startpinid="Node-522-2" endpinid="Node-523-1" pointList="1316,664,1316,632" />
+
+<item itemtype="Connector" uid="Connector-26" startpinid="LedRgb-501-Pin2" endpinid="Node-510-0" pointList="1324,584,1300,584" />
+
+<item itemtype="Connector" uid="Connector-43" startpinid="LedRgb-508-Pin1" endpinid="Node-502-0" pointList="1324,640,1308,640" />
+
+<item itemtype="Connector" uid="Connector-7" startpinid="Tunnel-511-pin" endpinid="Node-518-0" pointList="1300,456,1300,520" />
+
+<item itemtype="Connector" uid="Connector-20" startpinid="LedRgb-501-Pin0" endpinid="Node-513-0" pointList="1324,568,1316,568" />
+
+<item itemtype="Connector" uid="Connector-63" startpinid="LedRgb-499-Pin1" endpinid="Node-507-0" pointList="1324,704,1308,704" />
+
+<item itemtype="Connector" uid="Connector-76" startpinid="LedRgb-504-Pin2" endpinid="Node-521-1" pointList="1324,744,1300,744,1300,712" />
+
+<item itemtype="Connector" uid="Connector-48" startpinid="Node-512-2" endpinid="Node-510-1" pointList="1300,616,1300,584" />
+
+<item itemtype="Connector" uid="Connector-32" startpinid="Node-513-2" endpinid="Node-498-1" pointList="1316,568,1316,536" />
+
+<item itemtype="Connector" uid="Connector-18" startpinid="Node-518-2" endpinid="LedRgb-500-Pin2" pointList="1300,520,1324,520" />
+
+<item itemtype="Connector" uid="Connector-60" startpinid="LedRgb-499-Pin0" endpinid="Node-497-0" pointList="1324,696,1316,696" />
+
+<item itemtype="Connector" uid="Connector-65" startpinid="Node-503-2" endpinid="Node-502-1" pointList="1308,672,1308,640" />
+
+<item itemtype="Connector" uid="Connector-3" startpinid="Tunnel-505-pin" endpinid="Node-496-0" pointList="1316,456,1316,504" />
+
+<item itemtype="Connector" uid="Connector-78" startpinid="Node-521-2" endpinid="Node-517-1" pointList="1300,712,1300,680" />
+
+<item itemtype="Connector" uid="Connector-22" startpinid="Node-498-2" endpinid="Node-496-1" pointList="1316,536,1316,504" />
+
+<item itemtype="Connector" uid="Connector-53" startpinid="LedRgb-514-Pin1" endpinid="Node-503-0" pointList="1324,672,1308,672" />
+
+<item itemtype="Connector" uid="Connector-42" startpinid="Node-515-2" endpinid="Node-513-1" pointList="1316,600,1316,568" />
+
+<item itemtype="Connector" uid="Connector-66" startpinid="LedRgb-499-Pin2" endpinid="Node-521-0" pointList="1324,712,1300,712" />
+
+<item itemtype="Connector" uid="Connector-15" startpinid="Node-520-2" endpinid="LedRgb-500-Pin1" pointList="1308,512,1324,512" />
+
+<item itemtype="Connector" uid="Connector-35" startpinid="Node-525-2" endpinid="Node-516-1" pointList="1308,576,1308,544" />
+
+<item itemtype="Connector" uid="Connector-46" startpinid="LedRgb-508-Pin2" endpinid="Node-509-0" pointList="1324,648,1300,648" />
+
+<item itemtype="Connector" uid="Connector-10" startpinid="LedRgb-519-Pin0" endpinid="Node-498-0" pointList="1324,536,1316,536" />
+
+<item itemtype="Connector" uid="Connector-75" startpinid="Node-507-2" endpinid="Node-503-1" pointList="1308,704,1308,672" />
+
+<item itemtype="Connector" uid="Connector-40" startpinid="LedRgb-508-Pin0" endpinid="Node-523-0" pointList="1324,632,1316,632" />
+
+<item itemtype="Connector" uid="Connector-574" startpinid="Tunnel-573-pin" endpinid="Node-594-0" pointList="712,528,804,528" />
+
+<item itemtype="Connector" uid="Connector-575" startpinid="LedRgb-423-Pin3" endpinid="Node-576-1" pointList="1280,512,1280,528" />
+
+<item itemtype="Connector" uid="Connector-577" startpinid="Node-576-2" endpinid="LedRgb-500-Pin3" pointList="1280,528,1364,528,1364,512,1356,512" />
+
+<item itemtype="Connector" uid="Connector-578" startpinid="LedRgb-346-Pin3" endpinid="Node-579-1" pointList="1208,512,1208,528" />
+
+<item itemtype="Connector" uid="Connector-580" startpinid="Node-579-2" endpinid="Node-576-0" pointList="1208,528,1280,528" />
+
+<item itemtype="Connector" uid="Connector-581" startpinid="LedRgb-269-Pin3" endpinid="Node-582-1" pointList="1124,512,1124,528" />
+
+<item itemtype="Connector" uid="Connector-583" startpinid="Node-582-2" endpinid="Node-579-0" pointList="1124,528,1208,528" />
+
+<item itemtype="Connector" uid="Connector-584" startpinid="LedRgb-192-Pin3" endpinid="Node-585-1" pointList="1044,512,1044,528" />
+
+<item itemtype="Connector" uid="Connector-586" startpinid="Node-585-2" endpinid="Node-582-0" pointList="1044,528,1124,528" />
+
+<item itemtype="Connector" uid="Connector-587" startpinid="LedRgb-160-Pin3" endpinid="Node-588-1" pointList="960,512,960,528" />
+
+<item itemtype="Connector" uid="Connector-589" startpinid="Node-588-2" endpinid="Node-585-0" pointList="960,528,1044,528" />
+
+<item itemtype="Connector" uid="Connector-590" startpinid="LedRgb-83-Pin3" endpinid="Node-591-1" pointList="880,512,880,528" />
+
+<item itemtype="Connector" uid="Connector-592" startpinid="Node-591-2" endpinid="Node-588-0" pointList="880,528,960,528" />
+
+<item itemtype="Connector" uid="Connector-593" startpinid="LedRgb-1-Pin3" endpinid="Node-594-1" pointList="804,512,804,528" />
+
+<item itemtype="Connector" uid="Connector-595" startpinid="Node-594-2" endpinid="Node-591-0" pointList="804,528,880,528" />
+
+<item itemtype="Connector" uid="Connector-597" startpinid="Tunnel-596-pin" endpinid="Node-617-0" pointList="712,560,804,560" />
+
+<item itemtype="Connector" uid="Connector-598" startpinid="LedRgb-442-Pin3" endpinid="Node-599-1" pointList="1280,544,1280,560" />
+
+<item itemtype="Connector" uid="Connector-600" startpinid="Node-599-2" endpinid="LedRgb-519-Pin3" pointList="1280,560,1364,560,1364,544,1356,544" />
+
+<item itemtype="Connector" uid="Connector-601" startpinid="LedRgb-365-Pin3" endpinid="Node-602-1" pointList="1208,544,1208,560" />
+
+<item itemtype="Connector" uid="Connector-603" startpinid="Node-602-2" endpinid="Node-599-0" pointList="1208,560,1280,560" />
+
+<item itemtype="Connector" uid="Connector-604" startpinid="LedRgb-288-Pin3" endpinid="Node-605-1" pointList="1124,544,1124,560" />
+
+<item itemtype="Connector" uid="Connector-606" startpinid="Node-605-2" endpinid="Node-602-0" pointList="1124,560,1208,560" />
+
+<item itemtype="Connector" uid="Connector-607" startpinid="LedRgb-211-Pin3" endpinid="Node-608-1" pointList="1044,544,1044,560" />
+
+<item itemtype="Connector" uid="Connector-609" startpinid="Node-608-2" endpinid="Node-605-0" pointList="1044,560,1124,560" />
+
+<item itemtype="Connector" uid="Connector-610" startpinid="LedRgb-179-Pin3" endpinid="Node-611-1" pointList="960,544,960,560" />
+
+<item itemtype="Connector" uid="Connector-612" startpinid="Node-611-2" endpinid="Node-608-0" pointList="960,560,1044,560" />
+
+<item itemtype="Connector" uid="Connector-613" startpinid="LedRgb-102-Pin3" endpinid="Node-614-1" pointList="880,544,880,560" />
+
+<item itemtype="Connector" uid="Connector-615" startpinid="Node-614-2" endpinid="Node-611-0" pointList="880,560,960,560" />
+
+<item itemtype="Connector" uid="Connector-616" startpinid="LedRgb-9-Pin3" endpinid="Node-617-1" pointList="804,544,804,560" />
+
+<item itemtype="Connector" uid="Connector-618" startpinid="Node-617-2" endpinid="Node-614-0" pointList="804,560,880,560" />
+
+<item itemtype="Connector" uid="Connector-620" startpinid="Tunnel-619-pin" endpinid="Node-640-0" pointList="712,592,804,592" />
+
+<item itemtype="Connector" uid="Connector-621" startpinid="LedRgb-424-Pin3" endpinid="Node-622-1" pointList="1280,576,1280,592" />
+
+<item itemtype="Connector" uid="Connector-623" startpinid="Node-622-2" endpinid="LedRgb-501-Pin3" pointList="1280,592,1364,592,1364,576,1356,576" />
+
+<item itemtype="Connector" uid="Connector-624" startpinid="LedRgb-347-Pin3" endpinid="Node-625-1" pointList="1208,576,1208,592" />
+
+<item itemtype="Connector" uid="Connector-626" startpinid="Node-625-2" endpinid="Node-622-0" pointList="1208,592,1280,592" />
+
+<item itemtype="Connector" uid="Connector-627" startpinid="LedRgb-270-Pin3" endpinid="Node-628-1" pointList="1124,576,1124,592" />
+
+<item itemtype="Connector" uid="Connector-629" startpinid="Node-628-2" endpinid="Node-625-0" pointList="1124,592,1208,592" />
+
+<item itemtype="Connector" uid="Connector-630" startpinid="LedRgb-193-Pin3" endpinid="Node-631-1" pointList="1044,576,1044,592" />
+
+<item itemtype="Connector" uid="Connector-632" startpinid="Node-631-2" endpinid="Node-628-0" pointList="1044,592,1124,592" />
+
+<item itemtype="Connector" uid="Connector-633" startpinid="LedRgb-161-Pin3" endpinid="Node-634-1" pointList="960,576,960,592" />
+
+<item itemtype="Connector" uid="Connector-635" startpinid="Node-634-2" endpinid="Node-631-0" pointList="960,592,1044,592" />
+
+<item itemtype="Connector" uid="Connector-636" startpinid="LedRgb-84-Pin3" endpinid="Node-637-1" pointList="880,576,880,592" />
+
+<item itemtype="Connector" uid="Connector-638" startpinid="Node-637-2" endpinid="Node-634-0" pointList="880,592,960,592" />
+
+<item itemtype="Connector" uid="Connector-639" startpinid="LedRgb-19-Pin3" endpinid="Node-640-1" pointList="804,576,804,592" />
+
+<item itemtype="Connector" uid="Connector-641" startpinid="Node-640-2" endpinid="Node-637-0" pointList="804,592,880,592" />
+
+<item itemtype="Connector" uid="Connector-643" startpinid="Tunnel-642-pin" endpinid="Node-743-0" pointList="712,624,804,624" />
+
+<item itemtype="Connector" uid="Connector-644" startpinid="LedRgb-429-Pin3" endpinid="Node-645-1" pointList="1280,608,1280,624" />
+
+<item itemtype="Connector" uid="Connector-646" startpinid="Node-645-2" endpinid="LedRgb-506-Pin3" pointList="1280,624,1364,624,1364,608,1356,608" />
+
+<item itemtype="Connector" uid="Connector-651" startpinid="Tunnel-647-pin" endpinid="Node-746-0" pointList="712,656,804,656" />
+
+<item itemtype="Connector" uid="Connector-652" startpinid="Tunnel-648-pin" endpinid="Node-749-0" pointList="712,688,804,688" />
+
+<item itemtype="Connector" uid="Connector-653" startpinid="Tunnel-649-pin" endpinid="Node-752-0" pointList="712,720,804,720" />
+
+<item itemtype="Connector" uid="Connector-654" startpinid="Tunnel-650-pin" endpinid="Node-755-0" pointList="712,752,804,752" />
+
+<item itemtype="Connector" uid="Connector-655" startpinid="LedRgb-431-Pin3" endpinid="Node-656-1" pointList="1280,640,1280,656" />
+
+<item itemtype="Connector" uid="Connector-657" startpinid="Node-656-2" endpinid="LedRgb-508-Pin3" pointList="1280,656,1364,656,1364,640,1356,640" />
+
+<item itemtype="Connector" uid="Connector-658" startpinid="LedRgb-437-Pin3" endpinid="Node-659-1" pointList="1280,672,1280,688" />
+
+<item itemtype="Connector" uid="Connector-660" startpinid="Node-659-2" endpinid="LedRgb-514-Pin3" pointList="1280,688,1364,688,1364,672,1356,672" />
+
+<item itemtype="Connector" uid="Connector-661" startpinid="LedRgb-422-Pin3" endpinid="Node-662-1" pointList="1280,704,1280,720" />
+
+<item itemtype="Connector" uid="Connector-663" startpinid="Node-662-2" endpinid="LedRgb-499-Pin3" pointList="1280,720,1364,720,1364,704,1356,704" />
+
+<item itemtype="Connector" uid="Connector-664" startpinid="LedRgb-427-Pin3" endpinid="Node-665-1" pointList="1280,736,1280,752,1284,752" />
+
+<item itemtype="Connector" uid="Connector-666" startpinid="Node-665-2" endpinid="LedRgb-504-Pin3" pointList="1284,752,1364,752,1364,736,1356,736" />
+
+<item itemtype="Connector" uid="Connector-667" startpinid="LedRgb-350-Pin3" endpinid="Node-668-1" pointList="1208,736,1208,752" />
+
+<item itemtype="Connector" uid="Connector-669" startpinid="Node-668-2" endpinid="Node-665-0" pointList="1208,752,1284,752" />
+
+<item itemtype="Connector" uid="Connector-670" startpinid="LedRgb-352-Pin3" endpinid="Node-671-1" pointList="1208,608,1208,624" />
+
+<item itemtype="Connector" uid="Connector-672" startpinid="Node-671-2" endpinid="Node-645-0" pointList="1208,624,1280,624" />
+
+<item itemtype="Connector" uid="Connector-673" startpinid="LedRgb-354-Pin3" endpinid="Node-674-1" pointList="1208,640,1208,656" />
+
+<item itemtype="Connector" uid="Connector-675" startpinid="Node-674-2" endpinid="Node-656-0" pointList="1208,656,1280,656" />
+
+<item itemtype="Connector" uid="Connector-676" startpinid="LedRgb-360-Pin3" endpinid="Node-677-1" pointList="1208,672,1208,688" />
+
+<item itemtype="Connector" uid="Connector-678" startpinid="Node-677-2" endpinid="Node-659-0" pointList="1208,688,1280,688" />
+
+<item itemtype="Connector" uid="Connector-679" startpinid="LedRgb-345-Pin3" endpinid="Node-680-1" pointList="1208,704,1208,720" />
+
+<item itemtype="Connector" uid="Connector-681" startpinid="Node-680-2" endpinid="Node-662-0" pointList="1208,720,1280,720" />
+
+<item itemtype="Connector" uid="Connector-682" startpinid="LedRgb-275-Pin3" endpinid="Node-683-1" pointList="1124,608,1124,624" />
+
+<item itemtype="Connector" uid="Connector-684" startpinid="Node-683-2" endpinid="Node-671-0" pointList="1124,624,1208,624" />
+
+<item itemtype="Connector" uid="Connector-685" startpinid="LedRgb-277-Pin3" endpinid="Node-686-1" pointList="1124,640,1124,656" />
+
+<item itemtype="Connector" uid="Connector-687" startpinid="Node-686-2" endpinid="Node-674-0" pointList="1124,656,1208,656" />
+
+<item itemtype="Connector" uid="Connector-688" startpinid="LedRgb-283-Pin3" endpinid="Node-689-1" pointList="1124,672,1124,688" />
+
+<item itemtype="Connector" uid="Connector-690" startpinid="Node-689-2" endpinid="Node-677-0" pointList="1124,688,1208,688" />
+
+<item itemtype="Connector" uid="Connector-691" startpinid="LedRgb-268-Pin3" endpinid="Node-692-1" pointList="1124,704,1124,720" />
+
+<item itemtype="Connector" uid="Connector-693" startpinid="Node-692-2" endpinid="Node-680-0" pointList="1124,720,1208,720" />
+
+<item itemtype="Connector" uid="Connector-694" startpinid="LedRgb-273-Pin3" endpinid="Node-695-1" pointList="1124,736,1124,752" />
+
+<item itemtype="Connector" uid="Connector-696" startpinid="Node-695-2" endpinid="Node-668-0" pointList="1124,752,1208,752" />
+
+<item itemtype="Connector" uid="Connector-697" startpinid="LedRgb-198-Pin3" endpinid="Node-698-1" pointList="1044,608,1044,624" />
+
+<item itemtype="Connector" uid="Connector-699" startpinid="Node-698-2" endpinid="Node-683-0" pointList="1044,624,1124,624" />
+
+<item itemtype="Connector" uid="Connector-700" startpinid="LedRgb-200-Pin3" endpinid="Node-701-1" pointList="1044,640,1044,656" />
+
+<item itemtype="Connector" uid="Connector-702" startpinid="Node-701-2" endpinid="Node-686-0" pointList="1044,656,1124,656" />
+
+<item itemtype="Connector" uid="Connector-703" startpinid="LedRgb-206-Pin3" endpinid="Node-704-1" pointList="1044,672,1044,688" />
+
+<item itemtype="Connector" uid="Connector-705" startpinid="Node-704-2" endpinid="Node-689-0" pointList="1044,688,1124,688" />
+
+<item itemtype="Connector" uid="Connector-706" startpinid="LedRgb-191-Pin3" endpinid="Node-707-1" pointList="1044,704,1044,720" />
+
+<item itemtype="Connector" uid="Connector-708" startpinid="Node-707-2" endpinid="Node-692-0" pointList="1044,720,1124,720" />
+
+<item itemtype="Connector" uid="Connector-709" startpinid="LedRgb-196-Pin3" endpinid="Node-710-1" pointList="1044,736,1044,752" />
+
+<item itemtype="Connector" uid="Connector-711" startpinid="Node-710-2" endpinid="Node-695-0" pointList="1044,752,1124,752" />
+
+<item itemtype="Connector" uid="Connector-712" startpinid="LedRgb-166-Pin3" endpinid="Node-713-1" pointList="960,608,960,624" />
+
+<item itemtype="Connector" uid="Connector-714" startpinid="Node-713-2" endpinid="Node-698-0" pointList="960,624,1044,624" />
+
+<item itemtype="Connector" uid="Connector-715" startpinid="LedRgb-168-Pin3" endpinid="Node-716-1" pointList="960,640,960,656" />
+
+<item itemtype="Connector" uid="Connector-717" startpinid="Node-716-2" endpinid="Node-701-0" pointList="960,656,1044,656" />
+
+<item itemtype="Connector" uid="Connector-718" startpinid="LedRgb-174-Pin3" endpinid="Node-719-1" pointList="960,672,960,688" />
+
+<item itemtype="Connector" uid="Connector-720" startpinid="Node-719-2" endpinid="Node-704-0" pointList="960,688,1044,688" />
+
+<item itemtype="Connector" uid="Connector-721" startpinid="LedRgb-159-Pin3" endpinid="Node-722-1" pointList="960,704,960,720" />
+
+<item itemtype="Connector" uid="Connector-723" startpinid="Node-722-2" endpinid="Node-707-0" pointList="960,720,1044,720" />
+
+<item itemtype="Connector" uid="Connector-724" startpinid="LedRgb-164-Pin3" endpinid="Node-725-1" pointList="960,736,960,752" />
+
+<item itemtype="Connector" uid="Connector-726" startpinid="Node-725-2" endpinid="Node-710-0" pointList="960,752,1044,752" />
+
+<item itemtype="Connector" uid="Connector-727" startpinid="LedRgb-89-Pin3" endpinid="Node-728-1" pointList="880,608,880,624" />
+
+<item itemtype="Connector" uid="Connector-729" startpinid="Node-728-2" endpinid="Node-713-0" pointList="880,624,960,624" />
+
+<item itemtype="Connector" uid="Connector-730" startpinid="LedRgb-91-Pin3" endpinid="Node-731-1" pointList="880,640,880,656" />
+
+<item itemtype="Connector" uid="Connector-732" startpinid="Node-731-2" endpinid="Node-716-0" pointList="880,656,960,656" />
+
+<item itemtype="Connector" uid="Connector-733" startpinid="LedRgb-97-Pin3" endpinid="Node-734-1" pointList="880,672,880,688" />
+
+<item itemtype="Connector" uid="Connector-735" startpinid="Node-734-2" endpinid="Node-719-0" pointList="880,688,960,688" />
+
+<item itemtype="Connector" uid="Connector-736" startpinid="LedRgb-82-Pin3" endpinid="Node-737-1" pointList="880,704,880,720" />
+
+<item itemtype="Connector" uid="Connector-738" startpinid="Node-737-2" endpinid="Node-722-0" pointList="880,720,960,720" />
+
+<item itemtype="Connector" uid="Connector-739" startpinid="LedRgb-87-Pin3" endpinid="Node-740-1" pointList="880,736,880,752" />
+
+<item itemtype="Connector" uid="Connector-741" startpinid="Node-740-2" endpinid="Node-725-0" pointList="880,752,960,752" />
+
+<item itemtype="Connector" uid="Connector-742" startpinid="LedRgb-29-Pin3" endpinid="Node-743-1" pointList="804,608,804,624" />
+
+<item itemtype="Connector" uid="Connector-744" startpinid="Node-743-2" endpinid="Node-728-0" pointList="804,624,880,624" />
+
+<item itemtype="Connector" uid="Connector-745" startpinid="LedRgb-39-Pin3" endpinid="Node-746-1" pointList="804,640,804,656" />
+
+<item itemtype="Connector" uid="Connector-747" startpinid="Node-746-2" endpinid="Node-731-0" pointList="804,656,880,656" />
+
+<item itemtype="Connector" uid="Connector-748" startpinid="LedRgb-49-Pin3" endpinid="Node-749-1" pointList="804,672,804,688" />
+
+<item itemtype="Connector" uid="Connector-750" startpinid="Node-749-2" endpinid="Node-734-0" pointList="804,688,880,688" />
+
+<item itemtype="Connector" uid="Connector-751" startpinid="LedRgb-59-Pin3" endpinid="Node-752-1" pointList="804,704,804,720" />
+
+<item itemtype="Connector" uid="Connector-753" startpinid="Node-752-2" endpinid="Node-737-0" pointList="804,720,880,720" />
+
+<item itemtype="Connector" uid="Connector-754" startpinid="LedRgb-69-Pin3" endpinid="Node-755-1" pointList="804,736,804,752" />
+
+<item itemtype="Connector" uid="Connector-756" startpinid="Node-755-2" endpinid="Node-740-0" pointList="804,752,880,752" />
+
+</circuit>

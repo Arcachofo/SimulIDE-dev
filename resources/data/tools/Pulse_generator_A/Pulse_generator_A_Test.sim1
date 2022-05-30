@@ -1,0 +1,15 @@
+<circuit type="simulide_1.0" rev="1185" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="LAnalizer" CircId="LAnalizer-305" mainComp="false" Show_id="false" Show_Val="false" Pos="-200,-16" rotation="0" hflip="1" vflip="1" label="LAnalizer-305" idLabPos="-90,-100" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="4881793000" TimPos="-14156930000" VolDiv="0.6" Tunnels=",,,,,,,," Trigger="0" Treshold="2.5 V" />
+
+<item itemtype="Subcircuit" CircId="Pulse_generator_A-306" mainComp="false" Show_id="true" Show_Val="false" Pos="-436,-88" rotation="0" hflip="1" vflip="1" label="Pulse_generator_A-306" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Logic_Symbol="true">
+<mainCompProps itemtype="Clock" CircId="306_Clock-257" mainComp="true" Show_id="false" Show_Val="false" Pos="320,-324" rotation="0" hflip="1" vflip="1" label="306_Clock-257" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1000 Hz" Always_On="true" />
+</item>
+
+<item itemtype="Connector" uid="Connector-307" startpinid="Pulse_generator_A-306-S" endpinid="LAnalizer-305-Pin0" pointList="-356,-56,-356,-80,-288,-80" />
+
+<item itemtype="Connector" uid="Connector-308" startpinid="Pulse_generator_A-306-Q" endpinid="LAnalizer-305-Pin1" pointList="-356,-40,-320,-40,-320,-64,-288,-64" />
+
+<item itemtype="Connector" uid="Connector-309" startpinid="Pulse_generator_A-306-!Q" endpinid="LAnalizer-305-Pin2" pointList="-356,-24,-300,-24,-300,-48,-288,-48" />
+
+</circuit>
