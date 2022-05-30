@@ -85,8 +85,8 @@ class CodeEditor : public QPlainTextEdit
 
     private:
         int  getSintaxCoincidences();
-        void addBreakPoint( int line );
-        void remBreakPoint( int line ) { m_brkPoints.removeOne( line ); }
+        void addBreakPoint( QTextBlock* block );
+        void remBreakPoint( QTextBlock* block );
 
         void indentSelection( bool unIndent );
 
@@ -103,6 +103,7 @@ class CodeEditor : public QPlainTextEdit
 
         int m_brkAction;    // 0 = no action, 1 = add brkpoint, 2 = rem brkpoint
         int m_debugLine;
+        int m_errorLine;
 
  static bool m_showSpaces;
  static bool m_spaceTabs;

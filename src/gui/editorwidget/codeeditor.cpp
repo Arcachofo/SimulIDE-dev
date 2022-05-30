@@ -20,6 +20,7 @@
 #include <QPainter>
 #include <QTextDocumentFragment>
 #include <QSettings>
+#include <QDebug>
 
 #include "codeeditor.h"
 #include "outpaneltext.h"
@@ -56,6 +57,7 @@ CodeEditor::CodeEditor( QWidget* parent, OutPanelText* outPane )
     
     m_compiler = NULL;
     m_debugLine = 0;
+    m_errorLine = -1;
     m_brkAction = 0;
     m_help = "";
 
@@ -241,7 +243,7 @@ bool CodeEditor::compile( bool debug )
             m_outPane->appendLine( "Error: File not saved" );
             return false;
     }   }
-    m_debugLine  = -1;
+    m_errorLine  = -1;
     update();
     
     m_outPane->appendLine( "-------------------------------------------------------" );
@@ -250,18 +252,28 @@ bool CodeEditor::compile( bool debug )
     if( error == 0 ) return true;
     if( error > 0 ) // goto error line number
     {
-        m_debugLine = error; // Show arrow in error line
+        m_errorLine = error; // Show arrow in error line
         updateScreen();
     }
     return false;
 }
 
-void CodeEditor::addBreakPoint( int line )
+void CodeEditor::addBreakPoint( QTextBlock* block )
 {
+    int line = block->blockNumber() + 1;
+    block->setUserState( line );
+
     if( EditorWindow::self()->debugState() == DBG_RUNNING ) return;
     if( EditorWindow::self()->debugState() > DBG_STOPPED )
         line = m_compiler->getValidLine( line );
     if( !m_brkPoints.contains( line ) ) m_brkPoints.append( line );
+}
+
+void CodeEditor::remBreakPoint( QTextBlock* block )
+{
+    int line = block->userState();
+    m_brkPoints.removeOne( line );
+    block->setUserState( 0 );
 }
 
 void CodeEditor::startDebug()
@@ -465,7 +477,6 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
 
     QTextBlock block = firstVisibleBlock();
 
-    int blockNumber = block.blockNumber();
     int top       = (int)blockBoundingGeometry( block ).translated( contentOffset() ).top();
     int fontSize  = fontMetrics().height();
 
@@ -476,37 +487,68 @@ void CodeEditor::lineNumberAreaPaintEvent( QPaintEvent* event )
 
         if( block.isVisible() && bottom >= event->rect().top() )
         {
-            int lineNumber = blockNumber + 1;
-            // Check if there is a new breakpoint request from context menu
-            int pos = m_lNumArea->lastPos;
-            if( pos > top && pos < bottom)
+            int brkLine = block.userState();
+            if( brkLine && ( brkLine != block.blockNumber()+1 ) )
             {
-                if     ( m_brkAction == 1 ) addBreakPoint( lineNumber );
-                else if( m_brkAction == 2 ) remBreakPoint( lineNumber );
+                remBreakPoint( &block );
+                addBreakPoint( &block );
+            }
+
+            int lineNumber = block.blockNumber() + 1;
+            int pos = m_lNumArea->lastPos;
+            if( pos > top && pos < bottom ) // Check if there is a new breakpoint request from context menu
+            {
+                if     ( m_brkAction == 1 ) addBreakPoint( &block );
+                else if( m_brkAction == 2 ) remBreakPoint( &block );
                 else if( m_brkAction == 3 ){
-                    if( m_brkPoints.contains( lineNumber ) ) remBreakPoint( lineNumber );
-                    else                                     addBreakPoint( lineNumber );
+                    if( m_brkPoints.contains( lineNumber ) ) remBreakPoint( &block );
+                    else                                     addBreakPoint( &block );
                 }
                 m_brkAction = 0;
                 m_lNumArea->lastPos = 0;
             }
-            if( m_brkPoints.contains( lineNumber ) ) // Draw breakPoint icon
+
+            if( m_brkPoints.contains( lineNumber )
+            && (block.userState() == lineNumber) ) // Draw breakPoint icon
             {
                 painter.setBrush( QColor(Qt::yellow) );
                 painter.setPen( Qt::NoPen );
+                painter.drawRect( 0, top+2, fontSize, fontSize-4 );
+            }
+            else if( m_compiler->isMappedLine( lineNumber ) )
+            {
+                painter.setBrush( QColor( 180, 180, 170 ) );
+                painter.setPen( Qt::NoPen );
                 painter.drawRect( 0, top, fontSize, fontSize );
             }
+
             if( lineNumber == m_debugLine ) // Draw debug line icon
-                painter.drawImage( QRectF(0, top, fontSize, fontSize), QImage(":/finish.png") );
-            // Draw line number
-            QString number = QString::number( lineNumber );
+                painter.drawImage( QRectF( 0, top, fontSize, fontSize ), QImage(":/brkpoint.png") );
+
+            if( lineNumber == m_errorLine ) // Draw error line icon
+            {
+                painter.setBrush( QColor(Qt::red) );
+                painter.setPen( Qt::NoPen );
+                painter.drawEllipse( 2, top+2, fontSize-4, fontSize-4 );
+            }
+            QString number = QString::number( lineNumber ); // Draw line number
             painter.setPen( Qt::black );
             painter.drawText( 0, top, m_lNumArea->width(), fontSize, Qt::AlignRight, number );
         }
         block = block.next();
         top = bottom;
-        ++blockNumber;
-}   }
+    }
+    while( block.isValid() )
+    {
+        int brkLine = block.userState();
+        if( brkLine && ( brkLine != block.blockNumber()+1 ) )
+        {
+            remBreakPoint( &block );
+            addBreakPoint( &block );
+        }
+        block = block.next();
+    }
+}
 
 void CodeEditor::indentSelection( bool unIndent )
 {

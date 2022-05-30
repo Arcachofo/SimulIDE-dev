@@ -52,6 +52,7 @@
         <file alias="step.png">../src/icons/mainwindow/step.png</file>
         <file alias="stepover.png">../src/icons/mainwindow/stepover.png</file>
         <file alias="play.png">../src/icons/mainwindow/play.png</file>
+        <file alias="brkpoint.png">../src/icons/mainwindow/brkpoint.png</file>
         <file alias="runtobk.png">../src/icons/mainwindow/runtobk.png</file>
         <file alias="pause.png">../src/icons/mainwindow/pause.png</file>
         <file alias="reset.png">../src/icons/mainwindow/reset.png</file>

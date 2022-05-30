@@ -44,6 +44,7 @@ class BaseDebugger : public Compiler    // Base Class for all debuggers
         void setLineToFlash( int line, int addr );
 
         int getValidLine( int pc );
+        bool isMappedLine( int line );
 
         QString getVarType( QString var );
 

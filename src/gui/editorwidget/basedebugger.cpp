@@ -314,6 +314,11 @@ int BaseDebugger::getValidLine( int line )
     return line;
 }
 
+bool BaseDebugger::isMappedLine( int line )
+{
+    return m_sourceToFlash.contains(line);
+}
+
 QString BaseDebugger::getVarType( QString var )
 {
     return m_varTypes.value( var );
