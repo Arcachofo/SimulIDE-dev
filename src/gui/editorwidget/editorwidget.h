@@ -50,6 +50,7 @@ class EditorWidget : public QWidget
        virtual void pause(){;}
        virtual void stop(){;}
        virtual void run(){;}
+       void findReplaceDialog();
 
     protected slots:
         void confEditor();
@@ -76,7 +77,7 @@ class EditorWidget : public QWidget
         void compile() { getCodeEditor()->compile(); } /// m_compiler.compile( getCodeEditor()->getFilePath() );
 
         virtual bool upload() {return false;}
-        void findReplaceDialog();
+
 
     protected:
         void dropEvent( QDropEvent* event );

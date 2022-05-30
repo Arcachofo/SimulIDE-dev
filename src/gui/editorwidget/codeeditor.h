@@ -50,6 +50,8 @@ class CodeEditor : public QPlainTextEdit
         BaseDebugger* getCompiler() { return m_compiler; }
         void setCompiler( BaseDebugger* comp );
 
+        void setFound( QList<QTextEdit::ExtraSelection> sel );
+
         void updateScreen();
 
  static void readSettings();
@@ -95,6 +97,8 @@ class CodeEditor : public QPlainTextEdit
 
         LineNumberArea* m_lNumArea;
         Highlighter*    m_hlighter;
+
+        QList<QTextEdit::ExtraSelection> m_found;
 
         QString m_file;
         QString m_help;

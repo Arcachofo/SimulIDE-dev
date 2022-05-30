@@ -388,6 +388,10 @@ void CodeEditor::keyPressEvent( QKeyEvent* event )
     {
         setFontSize( m_fontSize-1 );
     }
+    else if( event->key() == Qt::Key_F && (event->modifiers() & Qt::ControlModifier) )
+    {
+        EditorWindow::self()->findReplaceDialog();
+    }
     else if( event->key() == Qt::Key_Tab )
     {
         if( textCursor().hasSelection() ) indentSelection( false );
@@ -452,9 +456,17 @@ void CodeEditor::resizeEvent( QResizeEvent* e )
     m_lNumArea->setGeometry( QRect( cr.left(), cr.top(), lineNumberAreaWidth(), cr.height() ) );
 }
 
+void CodeEditor::setFound( QList<QTextEdit::ExtraSelection> sel )
+{
+    m_found = sel;
+    //update();
+    highlightCurrentLine();
+}
+
 void CodeEditor::highlightCurrentLine()
 {
     QList<QTextEdit::ExtraSelection> extraSelections;
+    if( m_found.size() ) extraSelections.append( m_found );
 
     if( !isReadOnly() )
     {
@@ -464,8 +476,8 @@ void CodeEditor::highlightCurrentLine()
         selection.format.setBackground( lineColor );
         selection.format.setProperty( QTextFormat::FullWidthSelection, true );
         selection.cursor = textCursor();
-        selection.cursor.clearSelection();
-        extraSelections.append( selection );
+        //selection.cursor.clearSelection();
+        extraSelections.prepend( selection );
     }
     setExtraSelections( extraSelections );
 }

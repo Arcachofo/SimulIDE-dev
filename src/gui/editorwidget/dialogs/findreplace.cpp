@@ -38,14 +38,25 @@ void FindReplace::on_replaceEdit_textEdited( QString text )
 
 }*/
 
-void FindReplace::on_prevButton_clicked() { find( false ); }
-void FindReplace::on_nextButton_clicked() { find( true ); }
+void FindReplace::on_prevButton_clicked()
+{
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    m_editor->setFound( extraSelections );
+    find( false );
+}
+void FindReplace::on_nextButton_clicked()
+{
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    m_editor->setFound( extraSelections );
+    find( true );
+}
 
 void FindReplace::on_allButton_clicked()
 {
-    //int pos = m_editor->textCursor().position();
-    m_textCursor.setPosition( 0 );
-    m_editor->setTextCursor( m_textCursor );
+    QTextCursor tc = m_editor->textCursor();
+    int pos = tc.position();
+    tc.setPosition( 0 );
+    m_editor->setTextCursor( tc );
     QList<QTextEdit::ExtraSelection> extraSelections;
 
     int i=0;
@@ -57,18 +68,27 @@ void FindReplace::on_allButton_clicked()
         extraSelections.append( extra );
         i++;
     }
-    m_editor->setExtraSelections( extraSelections );
     showMsg( tr("Found %1 occurrence(s)").arg(i) );
+
+    tc.setPosition( pos );
+    m_editor->setTextCursor( tc );
+    m_editor->setFound( extraSelections );
 }
 
 void FindReplace::on_replaceButton_clicked()
 {
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    m_editor->setFound( extraSelections );
+
     if( m_editor->textCursor().hasSelection() )
         m_editor->textCursor().insertText( replaceEdit->text() );
 }
 
 void FindReplace::on_replFindButton_clicked()
 {
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    m_editor->setFound( extraSelections );
+
     if( m_editor->textCursor().hasSelection() )
         m_editor->textCursor().insertText( replaceEdit->text() );
     find( true );
@@ -76,6 +96,9 @@ void FindReplace::on_replFindButton_clicked()
 
 void FindReplace::on_replAllButton_clicked()
 {
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    m_editor->setFound( extraSelections );
+
     m_textCursor.setPosition( 0 );
     m_editor->setTextCursor( m_textCursor );
 
@@ -90,6 +113,8 @@ void FindReplace::on_replAllButton_clicked()
 
 void FindReplace::on_closeButton_clicked()
 {
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    m_editor->setFound( extraSelections );
     hide();
 }
 
