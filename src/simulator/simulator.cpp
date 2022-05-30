@@ -22,6 +22,7 @@
 #include <math.h>
 
 #include "simulator.h"
+#include "editorwindow.h"
 #include "circuit.h"
 #include "matrixsolver.h"
 #include "updatable.h"
@@ -117,6 +118,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         for( eNode* enode : m_eNodeList ) enode->setVoltChanged( false );
     }
     for( Updatable* el : m_updateList ) el->updateStep();
+    EditorWindow::self()->outPane()->updateStep();
 
     // Calculate Load
     uint64_t loop = 0;

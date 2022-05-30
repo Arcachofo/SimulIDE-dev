@@ -25,7 +25,6 @@
 #include <QSettings>
 
 #include "circuitwidget.h"
-#include "editorwindow.h"
 #include "mainwindow.h"
 #include "simulator.h"
 #include "circuit.h"
@@ -233,7 +232,6 @@ bool CircuitWidget::newCircuit()
 
     m_curCirc = "";
     Simulator::self()->addToUpdateList( &m_outPane );
-    Simulator::self()->addToUpdateList( EditorWindow::self()->outPane() );
 
     MainWindow::self()->setFile( tr("New Circuit"));
     MainWindow::self()->settings()->setValue( "lastCircDir", m_lastCircDir );
