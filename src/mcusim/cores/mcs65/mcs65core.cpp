@@ -25,8 +25,8 @@ Mcs65Core::Mcs65Core( eMcu* mcu )
 {
     // Control Pins
     m_phi0Pin = mcu->getCtrlPin("P0");
-    m_phi1Pin = mcu->getCtrlPin("P1"); m_phi1Pin->setPinMode( output );
-    m_phi2Pin = mcu->getCtrlPin("P2"); m_phi2Pin->setPinMode( output );
+    m_phi1Pin = mcu->getCtrlPin("P1");   m_phi1Pin->setPinMode( output );
+    m_phi2Pin = mcu->getCtrlPin("P2");   m_phi2Pin->setPinMode( output );
     m_syncPin = mcu->getCtrlPin("SYNC"); m_syncPin->setPinMode( output );
     // Interrupt Pins
     m_irqPin = mcu->getCtrlPin("IRQ");
@@ -42,7 +42,9 @@ void Mcs65Core::reset()
 {
     McuCore::reset();
 
-    m_cpuState = cpu_FETCH;
+    m_step = 0;
+    m_cpuState = cpu_RESET;
+    //m_cpuState = cpu_FETCH;
 
     m_psStep = m_mcu->psCycle()/2;
     m_mcu->extMem->setAddrSetTime(   50*m_psStep/100 );  // Addr pins
@@ -299,6 +301,27 @@ void Mcs65Core::runDecoder()
 {
     m_mcu->cyclesDone = 1;
 
+    if( m_cpuState == cpu_RESET )              //Reset proccess (8 cycles)
+    {
+        m_step++;
+        switch( m_step ){
+            case 1:                                return;
+            case 2: m_mcu->extMem->read( 1 );      return;
+            case 3: popStack8();                   return;
+            case 4: popStack8();                   return;
+            case 5: popStack8();                   return;
+            case 6: m_mcu->extMem->read( 0XFFFC ); return;
+            case 7:{
+                PC = m_mcu->extMem->getData();
+                m_mcu->extMem->read( 0XFFFD );
+                return;
+            }
+            case 8:{
+                PC &= (m_mcu->extMem->getData() << 8);
+                m_cpuState = cpu_FETCH;
+            }
+        }
+    }
     m_phi2Pin->sheduleState( false, 0 );
     m_phi2Pin->sheduleState( true, m_psStep ); // ClkPin High at half cycle
 

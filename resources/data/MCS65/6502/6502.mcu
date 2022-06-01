@@ -1,0 +1,6 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="6502" core="6502" data="65536" prog="0" progword="1" eeprom="0" 
+            inst_cycle="1">
+            <include file="6502.xml" />
+</mcu>

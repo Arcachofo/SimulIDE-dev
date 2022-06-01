@@ -45,7 +45,8 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         enum { C=0,Z,I,D,B,O,V,N };
 
         enum cpuState_t{
-            cpu_FETCH=0,
+            cpu_RESET=0,
+            cpu_FETCH,
             cpu_DECODE,
             cpu_READ,
             cpu_EXEC,

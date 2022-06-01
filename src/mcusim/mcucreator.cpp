@@ -32,6 +32,7 @@
 #include "mcuportctrl.h"
 #include "mcupin.h"
 #include "extmem.h"
+#include "intmem.h"
 
 #include "usarttx.h"
 #include "usartrx.h"
@@ -147,6 +148,7 @@ int McuCreator::processFile( QString fileName )
         else if( part == "rom" )        createEeprom( &el );
         else if( part == "sleep" )      createSleep( &el );
         else if( part == "extmem" )     createExtMem( &el );
+        else if( part == "intmem" )     createIntMem( &el );
         else if( part == "include" )
         {
             error = processFile( el.attribute("file") );
@@ -959,13 +961,50 @@ void McuCreator::createExtMem( QDomElement* e )
     extMem->m_laPin = mcu->getCtrlPin( e->attribute("lapin") );
 }
 
+void McuCreator::createIntMem( QDomElement* e )
+{
+    QString name = e->attribute( "name" );
+    IntMemModule* intMem = new IntMemModule( mcu, name );
+
+    //mcu->extMem = intMem;
+    mcu->m_modules.emplace_back( intMem );
+
+    McuPort* addrPort = mcu->getPort( e->attribute("addrport") );
+    for( int i=0; i<addrPort->m_numPins; ++i )
+    {
+        McuPin* pin = addrPort->getPinN( i );
+        if( pin )
+        {
+            intMem->m_addrPin.emplace_back( pin );
+            pin->setDirection( true );
+            pin->controlPin( true, true );
+        }
+    }
+    McuPort* dataPort = mcu->getPort( e->attribute("dataport") );
+    for( int i=0; i<dataPort->m_numPins; ++i )
+    {
+        McuPin* pin = dataPort->getPinN( i );
+        if( pin )
+        {
+            intMem->m_dataPin.emplace_back( pin );
+            pin->setDirection( false );
+            pin->controlPin( true, true );
+        }
+    }
+    intMem->m_rwPin  = mcu->getCtrlPin( e->attribute("rwpin") );
+    intMem->m_cshPin = mcu->getCtrlPin( e->attribute("cshpin") );
+    intMem->m_cslPin = mcu->getCtrlPin( e->attribute("cslpin") );
+    intMem->m_clkPin = mcu->getCtrlPin( e->attribute("clkpin") );
+}
+
 void McuCreator::createCore( QString core )
 {
     if     ( core == "AVR" )    mcu->cpu = new AvrCore( mcu );
     else if( core == "Pic14" )  mcu->cpu = new Pic14Core( mcu );
     else if( core == "Pic14e" ) mcu->cpu = new Pic14eCore( mcu );
     else if( core == "8051" )   mcu->cpu = new I51Core( mcu );
-    else if( core == "MCS65" )  mcu->cpu = new Mcs65Core( mcu );
+    else if( core == "6502" )   mcu->cpu = new Mcs65Core( mcu );
+    else                        mcu->cpu = new McuCore( mcu );
 
     if( !m_stackEl.isNull() ) createStack( &m_stackEl );
 }

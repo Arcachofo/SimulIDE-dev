@@ -1,0 +1,5 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="6522" core="6522" data="16" inst_cycle="1">
+            <include file="6522.xml" />
+</mcu>

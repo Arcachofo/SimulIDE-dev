@@ -2,6 +2,10 @@
 
 <parts>
     <datablock name="RAM" start="0x0000" end="0xFFFF"/>
+    
+    <interrupts enable="">
+        <interrupt name="RESET"                                priority="0" vector="0xFFFC"/>
+    </interrupts>
 
     
     <port name="PORTA" pins="16" >
