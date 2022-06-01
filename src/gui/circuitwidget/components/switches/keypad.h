@@ -49,8 +49,10 @@ class MAINMODULE_EXPORT KeyPad : public Component, public eElement
 
         virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
 
-    private:
+    protected:
+        virtual void setflip() override;
         void setupButtons();
+
         int m_rows;
         int m_cols;
         

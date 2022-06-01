@@ -105,7 +105,7 @@ void KeyPad::setupButtons()
     
     for( int row=0; row<m_rows; row++ )
     {
-        QPoint pinPos = QPoint(m_cols*16, 8+row*16);
+        QPoint pinPos = QPoint( m_cols*16, 8+row*16 );
         m_pin[row] = new Pin( 0, pinPos, m_id+"-Pin"+QString::number(row), 0, this);
         
         for( int col=0; col<m_cols; col++ )
@@ -126,7 +126,7 @@ void KeyPad::setupButtons()
             if( row == 0 )
             {
                 QString pinId = m_id;
-                pinId.append( QString("-Pin")+QString::number(m_rows+col)) ;
+                pinId.append( "-Pin"+QString::number(m_rows+col)) ;
                 QPoint pinPos = QPoint( col*16, m_rows*16+8);
                 m_pin[m_rows+col] = new Pin( 270, pinPos, pinId, 0, this);
             }
@@ -169,6 +169,35 @@ void KeyPad::remove()
         Circuit::self()->removeComp( button );
 
     Component::remove();
+}
+
+void KeyPad::setflip()
+{
+    int x = -16;
+    int y = -8;
+    int angH = 180;
+    int angV = 90;
+
+    if( m_Hflip > 0 )
+    {
+        x = m_cols*16;
+        angH = 0;
+    }
+    if( m_Vflip > 0 )
+    {
+        y = m_rows*16+8;
+        angV = 270;
+    }
+    for( int row=0; row<m_rows; row++ )
+    {
+        m_pin[row]->setPinAngle( angH );
+        m_pin[row]->setPos( x, m_pin[row]->pos().y() );
+    }
+    for( int col=0; col<m_cols; col++ )
+    {
+        m_pin[m_rows+col]->setPinAngle( angV );
+        m_pin[m_rows+col]->setPos( m_pin[m_rows+col]->pos().x(), y );
+    }
 }
 
 void KeyPad::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
