@@ -21,6 +21,7 @@
 
 #include "mcuportctrl.h"
 #include "iopin.h"
+#include "mcu.h"
 
 McuCtrlPort::McuCtrlPort( eMcu* mcu, QString name )
            : McuModule( mcu, name )
@@ -35,7 +36,7 @@ void McuCtrlPort::createPins( Mcu* mcuComp, QString pins )
     QStringList pinList = pins.split(",");
     for( QString pinName : pinList )
     {
-        IoPin* pin = new IoPin( 0, QPoint(0,0), m_name+pinName, 0, (Component*)mcuComp, input );
+        IoPin* pin = new IoPin( 0, QPoint(0,0), mcuComp->getUid()+"-"+m_name+pinName, 0, (Component*)mcuComp, input );
         pin->setOutHighV( 5 );
         m_pins.emplace_back( pin );
     }
