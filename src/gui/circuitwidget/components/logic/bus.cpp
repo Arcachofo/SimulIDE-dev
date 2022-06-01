@@ -71,8 +71,11 @@ void Bus::registerEnode( eNode* enode, int n )
 {
     if( m_busPin0->conPin() ) m_busPin0->registerPinsW( enode, n );
     if( m_busPin1->conPin() ) m_busPin1->registerPinsW( enode, n );
-    int i = n + 1 + m_startBit;
+
+    int i = n + 1 - m_startBit;
+    if( i < 0 ) return;
     if( i > m_numLines ) return;
+
     if( m_pin[i]->conPin() ) m_pin[i]->registerPinsW( enode, -1 );
 }
 
