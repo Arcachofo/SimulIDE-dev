@@ -65,7 +65,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     QFont font;
     #ifdef _WIN32
     font.setFamily("Consolas");
-    font.setStretch( 99 );
+    //font.setStretch( 99 );
     #else
     font.setFamily("Ubuntu Mono");
     #endif
@@ -262,7 +262,8 @@ void Pin::setLabelPos()
     int xlabelpos = pos().x();
     int ylabelpos = pos().y();
     int height = (fm.height()+1)/2;
-    int offset = m_length + height/2;
+    int space = ( height < 4 ) ? 2 : height/2;
+    int offset = m_length + space;
 
     if( m_angle == 0 )         // Right side
     {
