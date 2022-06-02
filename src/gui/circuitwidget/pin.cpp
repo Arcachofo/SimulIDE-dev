@@ -199,7 +199,7 @@ Pin* Pin::connectPin( bool connect )      // Auto-Connect
 void Pin::isMoved()
 {
     if( my_connector ) my_connector->updateConRoute( this, scenePos() );
-    else if( !isConnected() )
+    else if( this->isVisible() && !my_connector )
     {                                       // Auto-Connect
         if( !Circuit::self()->isBusy()
          && (QApplication::queryKeyboardModifiers() & Qt::ShiftModifier) )
