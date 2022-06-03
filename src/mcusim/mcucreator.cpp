@@ -419,13 +419,13 @@ void McuCreator::createPort( QDomElement* p )
     }
     if( p->hasAttribute("outmask") ) // Permanent Outputs
     {
-        uint8_t outMask = p->attribute("outmask").toUInt( 0, 2 );
+        uint outMask = p->attribute("outmask").toUInt( 0, 2 );
         for( int i=0; i<port->m_numPins; ++i )
             port->m_pins[i]->m_outMask = outMask & 1<<i;
     }
     if( p->hasAttribute("inpmask") ) // Permanent Inputs
     {
-        uint8_t inpMask = p->attribute("inpmask").toUInt( 0, 2 );
+        uint inpMask = p->attribute("inpmask").toUInt( 0, 2 );
         for( int i=0; i<port->m_numPins; ++i )
             port->m_pins[i]->m_inpMask = inpMask & 1<<i;
     }
@@ -433,7 +433,7 @@ void McuCreator::createPort( QDomElement* p )
     {
         QString pullups = p->attribute( "pullups" );
         bool ok = false;
-        uint8_t pullup = pullups.toUInt( &ok, 2 );
+        uint pullup = pullups.toUInt( &ok, 2 );
         if( ok ){
             for( int i=0; i<port->m_numPins; ++i )
                 port->m_pins[i]->m_puMask = pullup & 1<<i;
@@ -451,7 +451,7 @@ void McuCreator::createPort( QDomElement* p )
     }
     if( p->hasAttribute("opencol") ) // OPen Drain
     {
-        uint8_t opencol = p->attribute("opencol").toUInt( 0, 2 );
+        uint opencol = p->attribute("opencol").toUInt( 0, 2 );
         for( int i=0; i<port->m_numPins; ++i )
             if( opencol & 1<<i ) port->m_pins[i]->m_openColl = true;
     }
