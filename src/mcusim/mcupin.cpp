@@ -61,9 +61,11 @@ void McuPin::initialize()
 void McuPin::stamp()
 {
     IoPin::stamp();
-    setDirection( m_outMask );
+    if( !m_dirCtrl ) setDirection( m_outMask );
     setPullup( m_puMask );
-    if( m_outMask ) IoPin::setOutState( true );
+    if( !m_outCtrl && m_outMask ) IoPin::setOutState( true );
+    else                          IoPin::setOutState( false );
+
 }
 
 void McuPin::voltChanged()

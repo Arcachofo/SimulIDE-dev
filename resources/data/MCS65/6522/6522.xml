@@ -13,10 +13,10 @@
         <register name="T2CL"  addr="0x08" />
         <register name="T2CH"  addr="0x09" />
         <register name="SR"    addr="0x0A" />
-        <register name="ACR"   addr="0x0B" />
-        <register name="PCR"   addr="0x0C" />
-        <register name="IFR"   addr="0x0D" />
-        <register name="IER"   addr="0x0E" />
+        <register name="ACR"   addr="0x0B"  bits="PA,PB,SRC0,SRC1,SRC2,T2C,T1C0,T1C1"/>
+        <register name="PCR"   addr="0x0C"  bits="CA1,CA20,CA21,CA22,CB1,CB20,CB21,CB22"/>
+        <register name="IFR"   addr="0x0D"  bits="CA2IF,CA1IF,SRIF,CB2IF,CB1IF,T2IF,T1IF,IRQIF"/>
+        <register name="IER"   addr="0x0E"  bits="CA2IE,CA1IE,SRIE,CB2IE,CB1IE,T2IE,T1IE,IRQIE"/>
         <register name="ORA1"  addr="0x0F" />
     </regblock>
     

@@ -61,20 +61,22 @@ void Mcs65Core::setNZ( uint8_t val )
 
 void Mcs65Core::Read( uint16_t addr )
 {
-    m_readAddr = addr;
+    //m_opAddr = addr;
 
     m_cpuState = cpu_EXEC; // Default
 
-    if( m_step == 0 ) { m_cpuState = cpu_READ; m_mcu->extMem->read( m_readAddr ); }
+    if( m_step == 0 ) { m_cpuState = cpu_READ; readMem( addr ); }
     else{
         switch( m_addrMode )
         {
             case addr_NONE: break; /// ERROR
             case addr_ABSO:{       // Absolute: address From Mem 2 bytes, value = read( address ) 1 byte
                 switch( m_step ){
-                    case 1: m_cpuState = cpu_READ; m_mcu->extMem->read( m_readAddr ); m_op1 = m_op0; break; //
-                    case 2: m_cpuState = cpu_READ; m_mcu->extMem->read( (m_op0 << 8) | m_op1 ); break;
-                    case 3: m_cpuState = cpu_EXEC; m_op0 = m_mcu->extMem->getData();
+                    case 1: m_cpuState = cpu_READ; readMem( addr ); m_op0 = m_mcu->extMem->getData(); break; //
+                    case 2: m_cpuState = cpu_EXEC; m_opAddr = (m_mcu->extMem->getData() << 8) | m_op0 ; break;
+                    /*case 1: m_cpuState = cpu_READ; readMem( m_opAddr ); m_op1 = m_op0; break; //
+                    case 2: m_cpuState = cpu_READ; readMem( (m_op0 << 8) | m_op1 ); break;
+                    case 3: m_cpuState = cpu_EXEC; m_op0 = m_mcu->extMem->getData();*/
                 }
             }break;
             case addr_ACCU: m_op0 = ACC;                      break; // Value = Accumulator
@@ -82,6 +84,11 @@ void Mcs65Core::Read( uint16_t addr )
             case addr_INDI: break;
             case addr_RELA: break;
     }   }
+}
+
+void Mcs65Core::readMem( uint16_t addr )
+{
+    m_mcu->extMem->read( addr );
     PC++;
 }
 
@@ -91,7 +98,7 @@ void Mcs65Core::Write( uint16_t addr, uint8_t val )
     {
         case addr_NONE:                            break; /// ERROR
         case addr_ACCU: ACC = val;                 break;
-        default: m_mcu->extMem->write( addr, val );
+        default: m_mcu->extMem->write( addr, val ); m_cpuState = cpu_WRITE;
 }   }
 
 void Mcs65Core::pushStack8( uint8_t byte ) { Write( 0x0100 + m_SP, byte ); m_SP--; }
@@ -127,7 +134,7 @@ void Mcs65Core::ASL()
     SET_CARRY( m_op0 & 0x80 );
     m_op0 <<= 1;
     setNZ( m_op0 );
-    Write( m_readAddr, m_op0 );
+    Write( m_opAddr, m_op0 );
 }
 
 void Mcs65Core::BIT()
@@ -159,13 +166,13 @@ void Mcs65Core::CMP() { SET_CARRY(  ACC    >= m_op0 ); setNZ(  ACC    - m_op0 );
 void Mcs65Core::CPX() { SET_CARRY( *m_regX >= m_op0 ); setNZ( *m_regX - m_op0 ); }
 void Mcs65Core::CPY() { SET_CARRY( *m_regY >= m_op0 ); setNZ( *m_regY - m_op0 ); }
 
-void Mcs65Core::DEC() {  m_op0  -= 1; setNZ( m_op0 );  Write( m_readAddr, m_op0 ); }
+void Mcs65Core::DEC() {  m_op0  -= 1; setNZ( m_op0 );  Write( m_opAddr, m_op0 ); }
 void Mcs65Core::DEX() { *m_regX -= 1; setNZ( *m_regX ); }
 void Mcs65Core::DEY() { *m_regY -= 1; setNZ( *m_regY ); }
 
 void Mcs65Core::EOR() { ACC = ACC ^ m_op0; setNZ( m_op0 ); }
 
-void Mcs65Core::INC() {  m_op0  += 1; setNZ( m_op0 ); Write( m_readAddr, m_op0 ); }
+void Mcs65Core::INC() {  m_op0  += 1; setNZ( m_op0 ); Write( m_opAddr, m_op0 ); }
 void Mcs65Core::INX() { *m_regX += 1; setNZ( *m_regX ); }
 void Mcs65Core::INY() { *m_regY += 1; setNZ( *m_regY ); }
 
@@ -188,7 +195,7 @@ void Mcs65Core::LSR()
     SET_CARRY( m_op0 & 0x01 );
     m_op0 >>= 1;
     setNZ( m_op0 );
-    Write( m_readAddr, m_op0 );
+    Write( m_opAddr, m_op0 );
 }
 
 void Mcs65Core::NOP() { return; }
@@ -218,7 +225,7 @@ void Mcs65Core::ROL()
     if( STATUS(C) ) m_op0 |= 0x01;
     SET_CARRY( carry );
     setNZ( m_op0 );
-    Write( m_readAddr, m_op0 );
+    Write( m_opAddr, m_op0 );
 }
 
 void Mcs65Core::ROR()
@@ -228,7 +235,7 @@ void Mcs65Core::ROR()
     if( STATUS(C)  ) m_op0 |= 0x80;
     SET_CARRY( carry );
     setNZ( m_op0 );
-    Write( m_readAddr, m_op0 );
+    Write( m_opAddr, m_op0 );
 }
 
 void Mcs65Core::RTI() // Return from Interrupt
@@ -271,9 +278,9 @@ void Mcs65Core::SEC() { SET_CARRY(1); }
 void Mcs65Core::SED() { SET_DECIMAL(1); }
 void Mcs65Core::SEI() { SET_INTERRUPT(1); }
 
-void Mcs65Core::STA() { Write( m_op0,  ACC ); }
-void Mcs65Core::STX() { Write( m_op0, *m_regX ); }
-void Mcs65Core::STY() { Write( m_op0, *m_regY ); }
+void Mcs65Core::STA() { Write( m_opAddr,  ACC ); }
+void Mcs65Core::STX() { Write( m_opAddr, *m_regX ); }
+void Mcs65Core::STY() { Write( m_opAddr, *m_regY ); }
 
 void Mcs65Core::TAX() { *m_regX = ACC; setNZ( ACC ); }
 void Mcs65Core::TAY() { *m_regY = ACC; setNZ( ACC ); }
@@ -306,10 +313,10 @@ void Mcs65Core::runDecoder()
         m_step++;
         switch( m_step ){
             case 1:                                return;
-            case 2: m_mcu->extMem->read( 1 );      return;
-            case 3: popStack8();                   return;
-            case 4: popStack8();                   return;
-            case 5: popStack8();                   return;
+            case 2: return;//m_mcu->extMem->read( 1 );      return;
+            case 3: return;//popStack8();                   return;
+            case 4: return;//popStack8();                   return;
+            case 5: return;//popStack8();                   return;
             case 6: m_mcu->extMem->read( 0XFFFC ); return;
             case 7:{
                 PC = m_mcu->extMem->getData();
@@ -317,7 +324,9 @@ void Mcs65Core::runDecoder()
                 return;
             }
             case 8:{
-                PC &= (m_mcu->extMem->getData() << 8);
+                uint32_t data = m_mcu->extMem->getData();
+                PC += data << 8;
+                m_step = 0;
                 m_cpuState = cpu_FETCH;
             }
         }
@@ -444,9 +453,9 @@ if( m_group == 1 ){ m_addrMode = addr_ABSO; m_regI = m_regY;                    
         m_cpuState = cpu_DECODE;
         m_syncPin->sheduleState( true, 0 ); /// prop delay???
 
-        m_mcu->extMem->read( PC ); // Fetch m_instr
-        PC++;
+        readMem( PC ); // Fetch m_instr
     }
+    else if( m_cpuState == cpu_WRITE ) m_cpuState = cpu_FETCH;
 
     m_step++;
 }

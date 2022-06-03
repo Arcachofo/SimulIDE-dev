@@ -104,13 +104,14 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         addrMode_t m_addrMode;
         uint8_t m_op0;
         uint8_t m_op1;
-        uint16_t m_readAddr;
+        uint16_t m_opAddr;
 
         bool m_zeroPage;
 
         inline void setNZ( uint8_t val );
 
         void Read( uint16_t addr );
+        void readMem( uint16_t addr );
         void Write( uint16_t addr, uint8_t val );
 
         void pushStack8( uint8_t byte );

@@ -51,7 +51,7 @@ void IntMemModule::stamp()
     m_clkPin->changeCallBack( this );
 }
 
-void IntMemModule::reset()  // Reset happens after initialize() in Pins.
+void IntMemModule::reset()  // NO: Reset happens after initialize() in Pins.
 {
     m_memState = mem_IDLE;
     write( true );
@@ -62,14 +62,14 @@ void IntMemModule::voltChanged()
     bool CS = true;
     if( m_cshPin ) CS = CS && m_cshPin->getInpState();
     if( m_cslPin ) CS = CS && !m_cslPin->getInpState();
-    if( m_clkPin ) CS = CS && m_clkPin->getInpState();
+    if( m_clkPin ) CS = CS && !m_clkPin->getInpState();
     if( CS != m_cs ){
         m_cs = CS;
-        enableOutputs( CS );
+        //enableOutputs( CS );
     }
     if( !CS ) return;
 
-    m_we = m_rwPin->getInpState();
+    m_we = !m_rwPin->getInpState();
     m_addr = 0;
     for( uint i=0; i<m_addrPin.size(); ++i )        // Get Address
     {

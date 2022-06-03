@@ -21,7 +21,7 @@
 
 #include "extmem.h"
 #include "e_mcu.h"
-#include "iopin.h"
+#include "mcupin.h"
 #include "simulator.h"
 
 ExtMemModule::ExtMemModule( eMcu* mcu, QString name )
@@ -44,12 +44,17 @@ ExtMemModule::~ExtMemModule() {}
 
 //void ExtMemModule::initialize(){;}
 
-void ExtMemModule::reset()  // Reset happens after initialize() in Pins.
+void ExtMemModule::reset()  // NO: Reset happens after initialize() in Pins.
 {
+    Simulator::self()->cancelEvents( this );
     m_memState = mem_IDLE;
     m_read = true;
 
-    if( m_rwPin ) m_rwPin->sheduleState( true, 0 );
+    if( m_rwPin )
+    {
+        m_rwPin->setPinMode( output );
+        m_rwPin->sheduleState( true, 0 );
+    }
     if( m_rePin ) m_rePin->sheduleState( true, 0 );
     if( m_enPin )
     {
@@ -64,10 +69,11 @@ void ExtMemModule::reset()  // Reset happens after initialize() in Pins.
         m_laPin->updateStep();
     }
 
-    /*for( McuPin* pin : m_addrPin )
+    for( McuPin* pin : m_addrPin )
     {
         pin->setDirection( true );
         pin->controlPin( true, true );
+        pin->sheduleState( false, 0 );
         pin->updateStep();
     }
     for( McuPin* pin : m_dataPin )
@@ -76,7 +82,7 @@ void ExtMemModule::reset()  // Reset happens after initialize() in Pins.
         pin->controlPin( true, true );
         pin->updateStep();
     }
-    if( m_rwPin )
+    /*if( m_rwPin )
     {
         m_rwPin->setDirection( true );
         m_rwPin->controlPin( true, true );
@@ -188,8 +194,9 @@ void ExtMemModule::read( uint32_t addr, uint8_t mode )
         m_addrH = addr >> 8;
         m_memState = mem_LAEN;
         Simulator::self()->addEvent( m_laEnSetTime, this );
-    }
-    else{
+    }else{
+        if( m_memState != mem_IDLE )
+            qDebug() << "ERROR: ExtMemModule::read Operation not finished";
         m_memState = mem_ADDR;
         Simulator::self()->addEvent( m_addrSetTime, this );
     }
