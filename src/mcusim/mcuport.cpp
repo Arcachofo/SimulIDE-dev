@@ -27,7 +27,6 @@
 
 McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
        : McuModule( mcu, name )
-       //, eElement( mcu->getId()+"-"+name )
 {
     m_numPins = numPins;
 
@@ -43,12 +42,6 @@ McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
     m_rstIntMask = true;
 }
 McuPort::~McuPort(){}
-
-/*void McuPort::initialize()
-{
-    m_pinState = 0;
-    if( m_rstIntMask ) m_intMask = 0;
-}*/
 
 void McuPort::reset()
 {

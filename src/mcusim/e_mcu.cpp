@@ -70,13 +70,14 @@ eMcu::~eMcu()
     if( m_pSelf == this ) m_pSelf= NULL;
 }
 
-void eMcu::initialize()
+void eMcu::stamp()
 {
     reset();
     m_state = mcuRunning;
+    //m_state = mcuStopped;
 
     Simulator::self()->cancelEvents( this );
-    Simulator::self()->addEvent( 1, this );
+    Simulator::self()->addEvent( m_psCycle, this );
 }
 
 void eMcu::runEvent()

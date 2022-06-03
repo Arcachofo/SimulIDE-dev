@@ -91,7 +91,7 @@ new DoubProp<TextComponent>( "Opacity", tr("Opacity"),""       , this, &TextComp
 new StringProp<TextComponent>( "Font"       , tr("Font")       ,""       , this, &TextComponent::getFont , &TextComponent::setFont ),
 new IntProp   <TextComponent>( "Font_Size"  , tr("Font Size")  ,"_Pixels", this, &TextComponent::fontSize, &TextComponent::setFontSize ),
 new BoolProp  <TextComponent>( "Fixed_Width", tr("Fixed_Width"),""       , this, &TextComponent::fixedW  , &TextComponent::setFixedW ),
-new StringProp<TextComponent>( "Text"       ,tr("Text")        ,""       , this, &TextComponent::getText , &TextComponent::setText, "textEdit" )
+new StringProp<TextComponent>( "Text"       , tr("Text")        ,""       , this, &TextComponent::getText , &TextComponent::setText, "textEdit" )
     }} );
 }
 TextComponent::~TextComponent()

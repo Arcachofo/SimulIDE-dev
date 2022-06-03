@@ -39,7 +39,6 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
         McuPort( eMcu* mcu, QString name, uint8_t numPins );
         ~McuPort();
 
-        //virtual void initialize() override;
         virtual void reset() override;
         virtual void pinChanged( uint8_t pinMask, uint8_t val );
 

@@ -61,7 +61,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
  static eMcu* self() { return m_pSelf; }
 
-        virtual void initialize() override;
+        virtual void stamp() override;
         virtual void runEvent() override;
 
         void stepCpu();

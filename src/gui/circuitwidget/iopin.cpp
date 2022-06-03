@@ -67,6 +67,7 @@ void IoPin::initialize()
     m_inpState = false;
     m_outState = false;
     m_nextState = false;
+    updateStep();
 }
 
 void IoPin::stamp()
