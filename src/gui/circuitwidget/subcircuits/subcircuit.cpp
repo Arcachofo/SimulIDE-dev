@@ -48,81 +48,80 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     QString pkgeFile;
     QString subcFile;
     QString dataFile = ComponentSelector::self()->getXmlFile( name );
+    QDir circuitDir  = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
 
-    if( dataFile == "" ){
-          MessageBoxNB( "SubCircuit::construct", "                               \n"+
-                    tr( "There are no data files for " )+name+"    ");
-          //m_error = 23;
-          return NULL;
-    }
-    QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct" );
-    if( domDoc.isNull() ) return NULL; // m_error = 1;
-
-    QDomElement root  = domDoc.documentElement();
-    QDomNode    rNode = root.firstChild();
-
-    while( !rNode.isNull() )
+    if( dataFile == "" )
     {
-        QDomElement itemSet = rNode.toElement();
-        QDomNode    node    = itemSet.firstChild();
+        pkgeFile = circuitDir.absoluteFilePath( "data/"+name+"/"+name+".package" );
+        subcFile = circuitDir.absoluteFilePath( "data/"+name+"/"+name+".sim1" );
+    }else{
+        QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct" );
+        if( domDoc.isNull() ) return NULL; // m_error = 1;
 
-        QString folder = "";
-        if( itemSet.hasAttribute( "folder") )
-            folder = itemSet.attribute( "folder" );
+        QDomElement root  = domDoc.documentElement();
+        QDomNode    rNode = root.firstChild();
 
-        while( !node.isNull() )         // Find the "package", for example 628A is package: 627A, Same pins
+        while( !rNode.isNull() )
         {
-            QDomElement element = node.toElement();
+            QDomElement itemSet = rNode.toElement();
+            QDomNode    node    = itemSet.firstChild();
 
-            if( element.attribute("name") == name )
+            QString folder = "";
+            if( itemSet.hasAttribute( "folder") )
+                folder = itemSet.attribute( "folder" );
+
+            while( !node.isNull() )         // Find the "package", for example 628A is package: 627A, Same pins
             {
-                QDir dataDir( dataFile );
-                dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
+                QDomElement element = node.toElement();
 
-                QString path = "";
-
-                if( folder != "" )
+                if( element.attribute("name") == name )
                 {
-                    path = folder+"/"+name+"/"+name;
-                    pkgeFile = dataDir.filePath( path+".package" );
-                    subcFile = dataDir.filePath( path+".sim1" );
-                }
-                if( element.hasAttribute( "folder") )
-                {
-                    path = element.attribute( "folder" )+"/"+name+"/"+name;
-                    pkgeFile = dataDir.filePath( path+".package" );
-                    subcFile = dataDir.filePath( path+".sim1" );
-                }
-
-                if( element.hasAttribute( "package") )
-                    pkgeFile = dataDir.filePath( element.attribute( "package" ) );
-
-                if( !pkgeFile.endsWith( ".package" ) ) pkgeFile += ".package" ;
-
-                if( element.hasAttribute( "subcircuit") )
-                {
-                    subcFile = dataDir.filePath( element.attribute( "subcircuit" ) );
-                    if( subcFile.endsWith( ".simu" ) ) subcFile= changeExt( subcFile, ".sim1" );
-                    if( !subcFile.endsWith( ".sim1" )) subcFile += ".sim1" ;
-                }
-                if( !QFile::exists( subcFile) ) subcFile = changeExt( subcFile, ".simu" );
-
-                /*if( m_mainComponent )  // Example MCU in subcircuit needs to know where subcircuit is.
-                {
-                    dataDir.setPath( subcFile );
+                    QDir dataDir( dataFile );
                     dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
-                    m_mainComponent->setSubcDir( dataDir.absolutePath() );
-                    m_mainComponent->m_subcircuit = this;
-                }*/
-                break;
+
+                    QString path = "";
+
+                    if( folder != "" )
+                    {
+                        path = folder+"/"+name+"/"+name;
+                        pkgeFile = dataDir.filePath( path+".package" );
+                        subcFile = dataDir.filePath( path+".sim1" );
+                    }
+                    if( element.hasAttribute( "folder") )
+                    {
+                        path = element.attribute( "folder" )+"/"+name+"/"+name;
+                        pkgeFile = dataDir.filePath( path+".package" );
+                        subcFile = dataDir.filePath( path+".sim1" );
+                    }
+
+                    if( element.hasAttribute( "package") )
+                        pkgeFile = dataDir.filePath( element.attribute( "package" ) );
+
+                    if( !pkgeFile.endsWith( ".package" ) ) pkgeFile += ".package" ;
+
+                    if( element.hasAttribute( "subcircuit") )
+                    {
+                        subcFile = dataDir.filePath( element.attribute( "subcircuit" ) );
+                        if( subcFile.endsWith( ".simu" ) ) subcFile= changeExt( subcFile, ".sim1" );
+                        if( !subcFile.endsWith( ".sim1" )) subcFile += ".sim1" ;
+                    }
+                    if( !QFile::exists( subcFile) ) subcFile = changeExt( subcFile, ".simu" );
+
+                    /*if( m_mainComponent )  // Example MCU in subcircuit needs to know where subcircuit is.
+                    {
+                        dataDir.setPath( subcFile );
+                        dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
+                        m_mainComponent->setSubcDir( dataDir.absolutePath() );
+                        m_mainComponent->m_subcircuit = this;
+                    }*/
+                    break;
+                }
+                node = node.nextSibling();
             }
-            node = node.nextSibling();
+            rNode = rNode.nextSibling();
         }
-        rNode = rNode.nextSibling();
     }
 
-
-    QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString fileNameAbs = circuitDir.absoluteFilePath( pkgeFile );
 
     QFile pfile( fileNameAbs );
