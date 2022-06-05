@@ -43,7 +43,9 @@ class MAINMODULE_EXPORT StringProp : public StrProp
         }
 
         virtual QString getValStr() override
-        { return getStr( (m_comp->*m_getter)() ); }
+        { return (m_comp->*m_getter)(); }
+
+        virtual QString toString(){ return getStr( (m_comp->*m_getter)() ); }
 
     private:
         Comp* m_comp;

@@ -43,6 +43,8 @@ class MAINMODULE_EXPORT ComProperty
         virtual QString getValStr(){return "";}
         virtual double  getValue(){return 0;}
 
+        virtual QString toString(){return getValStr();}
+
         void setWidget( PropVal* w );
 
     protected:

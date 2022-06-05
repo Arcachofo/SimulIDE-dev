@@ -114,7 +114,7 @@ QString CompBase::toString() // Used to save circuit
         }
         for( ComProperty* prop : pg.propList )
         {
-            QString val = prop->getValStr();
+            QString val = prop->toString();
             if( val.isEmpty() ) continue;
             item += prop->name() + "=\""+val+"\" ";
     }   }
