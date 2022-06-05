@@ -640,7 +640,7 @@ void Circuit::copy( QPointF eventpoint )
         if( item->type() == QGraphicsItem::UserType+1 ) // Component
         {
             Component* comp =  qgraphicsitem_cast<Component*>( item );
-            if( comp ) complist.append( comp );
+            if( comp && !comp->isHidden() ) complist.append( comp );
         }
         else if( item->type() == QGraphicsItem::UserType+2 ) // ConnectorLine
         {

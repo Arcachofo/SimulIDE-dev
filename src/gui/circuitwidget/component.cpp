@@ -276,6 +276,17 @@ void Component::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     Circuit::self()->update();
 }
 
+void Component::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
+{
+    if( this->parentItem() )
+    {
+        Component* parentComp = static_cast<Component*>( this->parentItem() );
+        parentComp->mouseDoubleClickEvent( event );
+        return;
+    }
+    if( event->button() == Qt::LeftButton ) slotProperties();
+}
+
 void Component::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
     if( this->parentItem() )

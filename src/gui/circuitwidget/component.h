@@ -108,6 +108,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         int  vflip() { return m_Vflip; }
         void setVflip( int vf );
 
+        bool isHidden() { return m_hidden; }
         virtual void setHidden( bool hid, bool hidLabel=false );
 
         virtual void setBackground( QString bck ) { m_background = bck;}
@@ -154,8 +155,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void mouseMoveEvent( QGraphicsSceneMouseEvent* event );
         void mouseReleaseEvent( QGraphicsSceneMouseEvent* event );
         void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
-        void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
-            { if( event->button() == Qt::LeftButton ) slotProperties(); }
+        void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event );
 
         virtual void setflip();
 
