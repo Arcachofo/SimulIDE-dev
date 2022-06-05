@@ -131,7 +131,9 @@ void KeyPad::setupButtons()
                 m_pin[m_rows+col] = new Pin( 270, pinPos, pinId, 0, this);
             }
             Circuit::self()->update();
-}   }   }
+    }   }
+    setflip();
+}
 
 void KeyPad::setRows( int rows )
 {
