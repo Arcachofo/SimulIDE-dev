@@ -19,6 +19,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <iomanip> // setw()
 
 #include "circmatrix.h"
 #include "simulator.h"
@@ -203,9 +204,9 @@ bool CircMatrix::factorMatrix( int n, int group  )
             std::cout << std::setw(10);
             std::cout << a[i][j];
         }
-        std::cout << std::setw(10);
-        std::cout << ipvt[i] << std::endl;
-        //std::cout << std::endl;
+        //std::cout << std::setw(10);
+        //std::cout << ipvt[i] << std::endl;
+        std::cout << std::endl;
     }*/
 
     int i,j,k;
@@ -225,9 +226,11 @@ bool CircMatrix::factorMatrix( int n, int group  )
         for( i=j; i<n; ++i )
         {
             double q = a[i][j];
-            for( k=0; k<j; ++k ) q -= a[i][k]*a[k][j];
-
-            a[i][j] = q;
+            if( j > 0 )
+            {
+                for( k=0; k<j; ++k ) q -= a[i][k]*a[k][j]; //
+                a[i][j] = q;
+            }
             double x = fabs( q );
             
             //qDebug() <<"is"<<x<<">="<<largest<<( x >= largest );
@@ -261,6 +264,7 @@ bool CircMatrix::factorMatrix( int n, int group  )
         }
     }
     m_aFaList.replace( group, a );
+
     
     /*std::cout << "\nFactored Matrix:\n"<< std::endl;
     for( int i=0; i<n; i++ )
@@ -321,9 +325,7 @@ bool CircMatrix::luSolve( int n, int group )
         double tot = b[row];
 
         b[row] = b[i];
-
         for( int j=bi; j<i; ++j ) tot -= a[i][j]*b[j]; // forward substitution using the lower triangular matrix
-
         b[i] = tot;
     }
     bool isOk = true;
@@ -331,18 +333,11 @@ bool CircMatrix::luSolve( int n, int group )
     for( i=n-1; i>=0; --i )
     {
         double tot = b[i];
-
-        // back-substitution using the upper triangular matrix
-        for( int j=i+1; j<n; ++j ) tot -= a[i][j]*b[j];
-        
+        for( int j=i+1; j<n; ++j ) tot -= a[i][j]*b[j]; // back-substitution using the upper triangular matrix
         double volt = tot/a[i][i];
+
+        if( isnan( volt ) ) { isOk = false; volt = 0; }
         b[i] = volt;
-        
-        if( isnan( volt ) )
-        {
-            isOk = false;
-            volt = 0;
-        }
         m_eNodeActive->at(i)->setVolt( volt );      // Set Node Voltages
     }
     return isOk;

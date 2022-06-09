@@ -66,8 +66,7 @@ void ePin::stampCurrent( double data )
 
 void ePin::stampAdmitance( double data )
 {
-    if( !m_enode ) return;
-    m_enode->stampAdmitance( this, data );
+    if( m_enode ) m_enode->stampAdmitance( this, data );
 }
 
 double ePin::getVolt()

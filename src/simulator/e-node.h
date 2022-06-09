@@ -43,8 +43,8 @@ class MAINMODULE_EXPORT eNode
         void addToNoLinList( eElement* el );
         void remFromNoLinList( eElement* el );
 
-        void stampCurrent( ePin* epin, double data );
-        void stampAdmitance( ePin* epin, double data );
+        void stampCurrent( ePin* epin, double current );
+        void stampAdmitance( ePin* epin, double admit );
 
         int  getNodeNumber() { return m_nodeNum; }
         void setNodeNumber( int n ) { m_nodeNum = n; }

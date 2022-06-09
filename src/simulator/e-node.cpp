@@ -52,12 +52,12 @@ void eNode::initialize()
     m_volt = 0;
 }
 
-void eNode::stampCurrent( ePin* epin, double data )
+void eNode::stampCurrent( ePin* epin, double current )
 {
     if( m_nodeList.value( epin ) == m_nodeNum  )
         return; // Be sure msg doesn't come from this node
 
-    m_currList[epin] = data;
+    m_currList[epin] = current;
     m_currChanged = true;
 
     if( !m_changed ){
@@ -65,12 +65,13 @@ void eNode::stampCurrent( ePin* epin, double data )
         Simulator::self()->addToChangedNodes( this );
 }   }
 
-void eNode::stampAdmitance( ePin* epin, double data )
+void eNode::stampAdmitance( ePin* epin, double admit )
 {
     if( m_nodeList.value( epin ) == m_nodeNum  )
         return; // Be sure msg doesn't come from this node
 
-    m_admitList[epin] = data;
+    m_admitList[epin] = admit;
+    if( admit == 0 ) m_switched = true;
     m_admitChanged = true;
 
     if( !m_changed ){
@@ -86,12 +87,12 @@ void eNode::stampMatrix()
     if( m_admitChanged )
     {
         m_totalAdmit = 0;
-        if( m_single )
-        {
+        if( m_switched ) m_totalAdmit += 1e-12; // Weak connection to ground
+
+        if( m_single ){
             for( double adm : m_admitList ) m_totalAdmit += adm;
         }
-        else
-        {
+        else{
             m_admit.clear();
             QHashIterator<ePin*, double> i(m_admitList); // ePin-Admit
             while( i.hasNext() )
