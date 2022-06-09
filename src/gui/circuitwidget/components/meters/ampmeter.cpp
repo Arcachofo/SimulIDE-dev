@@ -39,7 +39,7 @@ Amperimeter::Amperimeter( QObject* parent, QString type, QString id )
     m_unit = "A";
     m_dispValue = 0;
     setRes( 1e-6 );
-    Meter::updateStep();
+    m_display.setText( "0.000\nA");
 }
 Amperimeter::~Amperimeter(){}
 
