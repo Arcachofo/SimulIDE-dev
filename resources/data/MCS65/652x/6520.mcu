@@ -1,0 +1,5 @@
+<!DOCTYPE SimulIDE>
+
+<mcu name="6520" core="scripted" script="6520_core.js" data="4" inst_cycle="1" clkpin="P2">
+            <include file="6520.xml" />
+</mcu>

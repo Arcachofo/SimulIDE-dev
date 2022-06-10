@@ -65,7 +65,6 @@ void McuPin::stamp()
     setPullup( m_puMask );
     if( !m_outCtrl && m_outMask ) IoPin::setOutState( true );
     else                          IoPin::setOutState( false );
-
 }
 
 void McuPin::voltChanged()

@@ -36,7 +36,7 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
         friend class McuPorts;
 
     public:
-        McuPort( eMcu* mcu, QString name, uint8_t numPins );
+        McuPort( eMcu* mcu, QString name );
         ~McuPort();
 
         virtual void reset() override;
@@ -51,18 +51,18 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
 
         QString name() { return m_name; }
 
-        void outChanged( uint8_t val );
-        void dirChanged( uint8_t val );
-        void setIntMask( uint8_t val) { m_intMask = val; }
-        void rstIntMask( bool rst) { m_rstIntMask = rst; }
+        virtual void outChanged( uint8_t val );
+        virtual void dirChanged( uint8_t val );
+        virtual void setIntMask( uint8_t val) { m_intMask = val; }
+        virtual void rstIntMask( bool rst) { m_rstIntMask = rst; }
 
-        void readPort( uint8_t );
+        virtual void readPort( uint8_t );
 
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }
 
     protected:
-        virtual void createPins( Mcu* mcuComp, uint8_t pinMask=0 );
+        virtual void createPins( Mcu* mcuComp, QString pins, uint8_t pinMask=0 );
 
         std::vector<McuPin*> m_pins;
         uint8_t m_numPins;

@@ -30,13 +30,13 @@ class Component;
 class MAINMODULE_EXPORT PicPort : public McuPort
 {
     public:
-        PicPort( eMcu* mcu, QString name, uint8_t numPins );
+        PicPort( eMcu* mcu, QString name );
         ~PicPort();
 
         virtual void configureA( uint8_t newANSEL ) override;
 
     protected:
-        virtual void createPins( Mcu* mcuComp, uint8_t pinMask  ) override;
+        virtual void createPins( Mcu* mcuComp, QString pins, uint8_t pinMask=0 ) override;
 };
 
 #endif

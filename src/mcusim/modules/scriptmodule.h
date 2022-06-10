@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,31 +17,45 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcumodule.h"
-#include "e_mcu.h"
-#include "mcuinterrupts.h"
+#ifndef SCRIPTMODULE_H
+#define SCRIPTMODULE_H
 
-McuModule::McuModule( eMcu* mcu, QString name )
-{
-    m_mcu = mcu;
-    m_name = name;
-    m_sleepMode = 0;
-    m_interrupt = NULL;
-}
-McuModule::~McuModule( ){}
+#include <QObject>
+#include <QScriptEngine>
+#include <QScriptProgram>
 
-void McuModule::sleep( int mode )
-{
-    if( mode < 0 ) m_sleeping = false;
-    else           m_sleeping = (m_sleepMode & 1<<mode) > 0;
-}
+//#include "mcumodule.h"
+#include "e-element.h"
 
-/*void McuModule::reset()
-{
-    Simulator::self()->cancelEvents( this );
-}*/
+class eMcu;
 
-/*void McuModule::raiseInt()
+class MAINMODULE_EXPORT ScriptModule : public eElement, public QObject
 {
-    if( m_interrupt ) m_interrupt->raise();
-}*/
+    public:
+        ScriptModule( eMcu *mcu, QString name );
+        ~ScriptModule();
+
+        void evalProg( QString prog );
+        QScriptValue evalFunc( QString func );
+
+        virtual void setScript( QString script );
+
+    public slots:
+        virtual void setValue( QString name, QString val ){;}
+
+    protected:
+        void getExceptions();
+        QScriptValue callFunction( QScriptValue* func, QScriptValueList args=QScriptValueList() );
+
+        QScriptEngine  m_engine;
+        QScriptProgram m_program;
+        QScriptValue   m_thisObject;
+
+        QScriptValue m_reset;
+        QScriptValue m_setValue;
+
+        QScriptValue m_configureA;
+        QScriptValue m_configureB;
+        QScriptValue m_configureC;
+};
+#endif

@@ -76,6 +76,9 @@
 
 #include "mcs65core.h"
 
+#include "scriptcore.h"
+#include "scriptport.h"
+
 #include "utils.h"
 
 
@@ -134,7 +137,6 @@ int McuCreator::processFile( QString fileName )
         else if( part == "stack" )      m_stackEl = el;
         else if( part == "interrupts" ) createInterrupts( &el );
         else if( part == "port" )       createPort( &el );
-        else if( part == "ctrlport" )   createCtrlPort( &el );
         else if( part == "timer" )      createTimer( &el );
         else if( part == "ocm" )        createOcm( &el );
         else if( part == "ccpunit" )    createCcpUnit( &el );
@@ -156,7 +158,20 @@ int McuCreator::processFile( QString fileName )
         }
         node = node.nextSibling();
     }
-    if( root.hasAttribute("core") ) createCore( m_core );
+    if( root.hasAttribute("core") )
+    {
+        createCore( m_core );
+        if( m_core == "scripted" )
+        {
+            ScriptCore* cpu = (ScriptCore*)mcu->cpu;
+            QString script = root.attribute("script");
+            cpu->setScript( fileToString( m_basePath+"/"+script, "McuCreator::processFile" ) );
+        }
+    }
+    if( root.hasAttribute("clkpin") )
+    {
+        mcu->m_clkPin = mcu->getCtrlPin( root.attribute("clkpin") );
+    }
     return 0;
 }
 
@@ -357,20 +372,28 @@ void McuCreator::createInterrupts( QDomElement* i )
 
 void McuCreator::createPort( QDomElement* p )
 {
-    QString name    = p->attribute("name");
-    uint8_t numPins = p->attribute("pins").toUInt(0,0);
+    QString name = p->attribute("name");
 
     McuPort* port;
-    if     ( m_core == "AVR" )    port = new AvrPort( mcu, name, numPins );
-    else if( m_core == "Pic14" )  port = new PicPort( mcu, name, numPins );
-    else if( m_core == "Pic14e" ) port = new PicPort( mcu, name, numPins );
-    else if( m_core == "8051" )   port = new I51Port( mcu, name, numPins );
-    else                          port = new McuPort( mcu, name, numPins );
+    if     ( m_core == "AVR" )    port = new AvrPort( mcu, name );
+    else if( m_core == "Pic14" )  port = new PicPort( mcu, name );
+    else if( m_core == "Pic14e" ) port = new PicPort( mcu, name );
+    else if( m_core == "8051" )   port = new I51Port( mcu, name );
+    else{
+        if( p->hasAttribute("type") && ( p->attribute("type") == "scripted" ))
+        {
+            port = new ScriptPort( mcu, name );
+            ScriptPort* sPort = (ScriptPort*)port;
+            sPort->setScript( fileToString( m_basePath+"/"+p->attribute("script"), "McuCreator::createPort" ) );
+        }
+        else port = new McuPort( mcu, name );
+    }
     mcu->m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );
+    if( name.startsWith("C") ) mcu->m_ctrlPort = port;
 
     uint8_t pinMask = p->attribute("pinmask").toUInt( 0, 2 );
-    port->createPins( m_mcuComp, pinMask );
+    port->createPins( m_mcuComp, p->attribute("pins"), pinMask );
 
     setConfigRegs( p, port );
 
@@ -489,16 +512,6 @@ void McuCreator::createPort( QDomElement* p )
         }   }
         node = node.nextSibling();
 }   }
-
-void McuCreator::createCtrlPort( QDomElement* p )
-{
-    McuCtrlPort* port = new McuCtrlPort( mcu, p->attribute("name") );
-
-    mcu->m_ctrlPort = port;
-    mcu->m_modules.emplace_back( port );
-
-    port->createPins( m_mcuComp, p->attribute("pins") );
-}
 
 void McuCreator::createTimer( QDomElement* t )
 {
@@ -966,15 +979,13 @@ void McuCreator::createIntMem( QDomElement* e )
     QString name = e->attribute( "name" );
     IntMemModule* intMem = new IntMemModule( mcu, name );
 
-    //mcu->extMem = intMem;
     mcu->m_modules.emplace_back( intMem );
 
     McuPort* addrPort = mcu->getPort( e->attribute("addrport") );
     for( int i=0; i<addrPort->m_numPins; ++i )
     {
         McuPin* pin = addrPort->getPinN( i );
-        if( pin )
-        {
+        if( pin ){
             intMem->m_addrPin.emplace_back( pin );
             pin->setDirection( true );
             pin->controlPin( true, true );
@@ -984,8 +995,7 @@ void McuCreator::createIntMem( QDomElement* e )
     for( int i=0; i<dataPort->m_numPins; ++i )
     {
         McuPin* pin = dataPort->getPinN( i );
-        if( pin )
-        {
+        if( pin ){
             intMem->m_dataPin.emplace_back( pin );
             pin->setDirection( false );
             pin->controlPin( true, true );
@@ -999,12 +1009,13 @@ void McuCreator::createIntMem( QDomElement* e )
 
 void McuCreator::createCore( QString core )
 {
-    if     ( core == "AVR" )    mcu->cpu = new AvrCore( mcu );
-    else if( core == "Pic14" )  mcu->cpu = new Pic14Core( mcu );
-    else if( core == "Pic14e" ) mcu->cpu = new Pic14eCore( mcu );
-    else if( core == "8051" )   mcu->cpu = new I51Core( mcu );
-    else if( core == "6502" )   mcu->cpu = new Mcs65Core( mcu );
-    else                        mcu->cpu = new McuCore( mcu );
+    if     ( core == "AVR" )      mcu->cpu = new AvrCore( mcu );
+    else if( core == "Pic14" )    mcu->cpu = new Pic14Core( mcu );
+    else if( core == "Pic14e" )   mcu->cpu = new Pic14eCore( mcu );
+    else if( core == "8051" )     mcu->cpu = new I51Core( mcu );
+    else if( core == "6502" )     mcu->cpu = new Mcs65Core( mcu );
+    else if( core == "scripted" ) mcu->cpu = new ScriptCore( mcu );
+    else                          mcu->cpu = new McuCore( mcu );
 
     if( !m_stackEl.isNull() ) createStack( &m_stackEl );
 }

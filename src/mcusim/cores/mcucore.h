@@ -37,6 +37,7 @@ class MAINMODULE_EXPORT McuCore
 
         virtual void reset();
         virtual void runDecoder(){;}
+        virtual void runClock( bool clkState ){;}
 
         void CALL_ADDR( uint32_t addr )
         {

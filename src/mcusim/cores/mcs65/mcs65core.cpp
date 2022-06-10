@@ -46,6 +46,14 @@ void Mcs65Core::reset()
     m_cpuState = cpu_RESET;
     //m_cpuState = cpu_FETCH;
 
+    m_phi1Pin->controlPin( true, true );
+    m_phi2Pin->controlPin( true, true );
+    m_syncPin->controlPin( true, true );
+
+    m_phi1Pin->setDirection( true );
+    m_phi2Pin->setDirection( true );
+    m_syncPin->setDirection( true );
+
     m_psStep = m_mcu->psCycle()/2;
     m_mcu->extMem->setAddrSetTime(   50*m_psStep/100 );  // Addr pins
     m_mcu->extMem->setReadSetTime(  150*m_psStep/100 );  //

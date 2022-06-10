@@ -62,6 +62,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
  static eMcu* self() { return m_pSelf; }
 
         virtual void stamp() override;
+        virtual void voltChanged() override;
         virtual void runEvent() override;
 
         void stepCpu();
@@ -104,7 +105,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuTimer* getTimer( QString name );
         McuPort* getPort( QString name );
         McuPin*  getPin( QString pinName );
-        IoPin*   getCtrlPin( QString pinName );
+        McuPin*  getCtrlPin( QString pinName );
         QHash<QString, McuPort*> getPorts() { return m_portList; }
 
         McuWdt* watchDog() { return m_wdt; }
@@ -154,7 +155,8 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
         QHash<QString, McuPort*>  m_portList; // Access PORTS by name
 
-        McuCtrlPort* m_ctrlPort;
+        McuPin*  m_clkPin;
+        McuPort* m_ctrlPort;
         McuSleep* m_sleepModule;
         McuVref* m_vrefModule;
         McuWdt* m_wdt;

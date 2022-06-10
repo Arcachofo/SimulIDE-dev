@@ -37,7 +37,7 @@
     <port name="PORTR" pins="4" >
     </port>
     
-    <ctrlport name="CPORT0" pins="CA1,CA2,CB1,CB2,CS1,CS2,RW,IRQ,P2" />
+    <port name="CPORT0" pins="CA1,CA2,CB1,CB2,CS1,CS2,RW,IRQ,P2" />
     <intmem name="MemCtrl" 
         addrport="PORTR"
         dataport="PORTD"

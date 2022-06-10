@@ -6,7 +6,6 @@
     <interrupts enable="">
         <interrupt name="RESET"                                priority="0" vector="0xFFFC"/>
     </interrupts>
-
     
     <port name="PORTA" pins="16" >
     </port>
@@ -14,7 +13,7 @@
     <port name="PORTD" pins="8" >
     </port>
     
-    <ctrlport name="CPORT0" pins="P0,P1,P2,SYNC,NMI,IRQ,RDY,SO,RW" />
+    <port name="CPORT0" pins="P0,P1,P2,SYNC,NMI,IRQ,RDY,SO,RW" />
     <extmem name="MemCtrl" 
         addrport="PORTA"
         dataport="PORTD"

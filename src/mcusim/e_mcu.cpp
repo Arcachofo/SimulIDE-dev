@@ -44,6 +44,7 @@ eMcu::eMcu( QString id )
     m_vrefModule = NULL;
     m_sleepModule = NULL;
     m_ctrlPort = NULL;
+    m_clkPin = NULL;
 
     m_cPerInst = 1;
     setFreq( 16*1e6 );
@@ -77,7 +78,13 @@ void eMcu::stamp()
     //m_state = mcuStopped;
 
     Simulator::self()->cancelEvents( this );
-    Simulator::self()->addEvent( m_psCycle, this );
+    if( m_clkPin ) m_clkPin->changeCallBack( this );  // External clock
+    else           Simulator::self()->addEvent( m_psCycle, this );
+}
+
+void eMcu::voltChanged()  // External clock
+{
+    cpu->runClock( m_clkPin->getInpState() );
 }
 
 void eMcu::runEvent()
@@ -186,7 +193,7 @@ McuPort* eMcu::getPort( QString name )
     return port;
 }
 
-IoPin* eMcu::getCtrlPin( QString pinName )
+McuPin* eMcu::getCtrlPin( QString pinName )
 {
     if( !m_ctrlPort ) return NULL;
     if( pinName.isEmpty() ) return NULL;

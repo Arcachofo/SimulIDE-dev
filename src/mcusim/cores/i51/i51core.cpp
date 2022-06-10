@@ -19,7 +19,7 @@
 
 #include "i51core.h"
 #include "extmem.h"
-#include "iopin.h"
+#include "mcupin.h"
 
 #define ACC  m_acc[0]
 #define BANK ( (STATUS(RS0)>>RS0) | (STATUS(RS1)>>RS1) ) //( (PSW & (PSWMASK_RS0|PSWMASK_RS1))>>PSW_RS0 )

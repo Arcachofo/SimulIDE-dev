@@ -21,7 +21,7 @@
 
 #include "intmem.h"
 #include "e_mcu.h"
-#include "iopin.h"
+#include "mcupin.h"
 #include "simulator.h"
 #include "circuit.h"
 
@@ -47,6 +47,9 @@ void IntMemModule::stamp()
     m_nextOutVal = 0;
     m_outValue = 0;
     m_cs = false;
+
+
+
     enableOutputs( false );
     m_clkPin->changeCallBack( this );
 }

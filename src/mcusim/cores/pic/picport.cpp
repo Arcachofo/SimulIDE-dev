@@ -23,8 +23,8 @@
 #include "e_mcu.h"
 #include "datautils.h"
 
-PicPort::PicPort( eMcu* mcu, QString name, uint8_t numPins )
-       : McuPort( mcu, name, numPins )
+PicPort::PicPort( eMcu* mcu, QString name )
+       : McuPort( mcu, name )
 {
 }
 PicPort::~PicPort(){}
@@ -35,8 +35,9 @@ void PicPort::configureA( uint8_t newANSEL ) // Analog pins
         m_pins[i]->setAnalog( newANSEL & 1<<i );
 }
 
-void PicPort::createPins( Mcu* mcuComp, uint8_t pinMask )
+void PicPort::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
 {
+    m_numPins = pins.toUInt(0,0);
     m_pins.resize( m_numPins );
 
     if( pinMask ){

@@ -33,7 +33,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
     friend class McuCreator;
 
     public:
-        McuPin( McuPort* port, int i, QString id , Component* mcu );
+        McuPin( McuPort* port, int i, QString id, Component* mcu );
         ~McuPin();
 
         enum extIntTrig_t{
@@ -55,6 +55,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         //void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
         void controlPin( bool outCtrl, bool dirCtrl );
+        void setExtIntTrig( int i ) { m_extIntTrigger = (extIntTrig_t)i; }
 
         virtual void sheduleState( bool state, uint64_t time ) override;
         virtual void setPullup( bool up ) override;
@@ -80,10 +81,10 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         bool m_openColl;
         bool m_changeCB;
 
-        bool m_outCtrl;
-        bool m_dirCtrl;
+        bool m_outCtrl; // Some device controlling out state
+        bool m_dirCtrl; // Some device controlling direction
         bool m_portState;
-        pinMode_t m_portMode;
+        pinMode_t m_portMode; // Pin mode as set by Port registers
 
         uint8_t m_pinMask;
 };

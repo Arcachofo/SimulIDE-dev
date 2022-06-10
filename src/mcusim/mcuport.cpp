@@ -25,10 +25,10 @@
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
 
-McuPort::McuPort( eMcu* mcu, QString name, uint8_t numPins )
+McuPort::McuPort( eMcu* mcu, QString name )
        : McuModule( mcu, name )
 {
-    m_numPins = numPins;
+    m_numPins = 0;
 
     m_outReg = NULL;
     m_dirReg = NULL;
@@ -115,12 +115,25 @@ void McuPort::clearAllPullups( uint8_t val )
     setPullups( puMask );
 }
 
-void McuPort::createPins( Mcu* mcuComp, uint8_t pinMask )
+void McuPort::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
 {
-    m_pins.resize( m_numPins );
+    m_numPins = pins.toUInt(0,0);
+    if( m_numPins )
+    {
+        m_pins.resize( m_numPins );
 
-    for( int i=0; i<m_numPins; ++i )
-        m_pins[i] = new McuPin( this, i, m_name+QString::number(i), mcuComp );
+        for( int i=0; i<m_numPins; ++i )
+            m_pins[i] = new McuPin( this, i, m_name+QString::number(i), mcuComp );
+    }else{
+        int i = 0;
+        QStringList pinList = pins.split(",");
+        for( QString pinName : pinList )
+        {
+            McuPin* pin = new McuPin( this, i, m_name+pinName, mcuComp );
+            m_pins.emplace_back( pin );
+            i++;
+        }
+    }
 }
 
 McuPin* McuPort::getPinN( uint8_t i )
@@ -131,9 +144,16 @@ McuPin* McuPort::getPinN( uint8_t i )
 
 McuPin* McuPort::getPin( QString pinName )
 {
-    int pinNumber = pinName.remove( m_name ).toInt();
-
-    McuPin* pin = getPinN( pinNumber );
+    McuPin* pin = NULL;
+    QString pinId = pinName.remove( m_name );
+    if( m_numPins )
+    {
+        int pinNumber = pinId.toInt();
+        pin = getPinN( pinNumber );
+    }else{
+        for( McuPin* mcuPin : m_pins )
+            if( mcuPin->pinId().contains( pinId) ) return mcuPin;
+    }
     if( !pin ) qDebug() << "ERROR: NULL Pin:"<< pinName;
     return pin;
 }

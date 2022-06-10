@@ -26,11 +26,11 @@
 class MAINMODULE_EXPORT I51Port : public McuPort
 {
     public:
-        I51Port( eMcu* mcu, QString name, uint8_t numPins );
+        I51Port( eMcu* mcu, QString name );
         ~I51Port();
 
     protected:
-        virtual void createPins( Mcu* mcuComp, uint8_t pinMask=0 ) override;
+        virtual void createPins( Mcu* mcuComp, QString pins, uint8_t pinMask=0 ) override;
 };
 
 #endif

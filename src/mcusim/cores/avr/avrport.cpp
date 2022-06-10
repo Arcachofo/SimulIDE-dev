@@ -22,14 +22,15 @@
 #include "mcu.h"
 #include "e_mcu.h"
 
-AvrPort::AvrPort( eMcu* mcu, QString name, uint8_t numPins )
-       : McuPort( mcu, name, numPins )
+AvrPort::AvrPort( eMcu* mcu, QString name )
+       : McuPort( mcu, name )
 {
 }
 AvrPort::~AvrPort(){}
 
-void AvrPort::createPins( Mcu* mcuComp, uint8_t pinMask )
+void AvrPort::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
 {
+    m_numPins = pins.toUInt(0,0);
     m_pins.resize( m_numPins );
 
     for( int i=0; i<m_numPins; ++i )

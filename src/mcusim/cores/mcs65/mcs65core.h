@@ -71,17 +71,17 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         uint64_t m_psStep;
 
         // Control Pins
-        IoPin* m_phi0Pin;
-        IoPin* m_phi1Pin;
-        IoPin* m_phi2Pin;
-        IoPin* m_syncPin;
+        McuPin* m_phi0Pin;
+        McuPin* m_phi1Pin;
+        McuPin* m_phi2Pin;
+        McuPin* m_syncPin;
         // Interrupt Pins
         IoPin* m_irqPin;
         IoPin* m_nmiPin;
         // User Pins
-        IoPin* m_rdyPin;
-        IoPin* m_soPin;
-        IoPin* m_dbePin;
+        McuPin* m_rdyPin;
+        McuPin* m_soPin;
+        McuPin* m_dbePin;
 
         uint8_t m_SP;
         uint8_t m_acc;

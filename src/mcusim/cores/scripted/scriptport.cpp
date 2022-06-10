@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,31 +17,47 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcumodule.h"
-#include "e_mcu.h"
-#include "mcuinterrupts.h"
+#include "scriptport.h"
+#include "mcupin.h"
 
-McuModule::McuModule( eMcu* mcu, QString name )
+ScriptPort::ScriptPort( eMcu* mcu, QString name )
+          : ScriptModule( mcu, name )
+          , McuPort( mcu, name )
 {
-    m_mcu = mcu;
-    m_name = name;
-    m_sleepMode = 0;
-    m_interrupt = NULL;
 }
-McuModule::~McuModule( ){}
+ScriptPort::~ScriptPort(){}
 
-void McuModule::sleep( int mode )
+void ScriptPort::configureA( uint8_t newVal )
 {
-    if( mode < 0 ) m_sleeping = false;
-    else           m_sleeping = (m_sleepMode & 1<<mode) > 0;
+    callFunction( &m_configureA, {QScriptValue( (int)newVal )} );
 }
 
-/*void McuModule::reset()
+void ScriptPort::configureB( uint8_t newVal )
 {
-    Simulator::self()->cancelEvents( this );
-}*/
+    callFunction( &m_configureB, {QScriptValue( (int)newVal )} );
+}
 
-/*void McuModule::raiseInt()
+void ScriptPort::configureC( uint8_t newVal )
 {
-    if( m_interrupt ) m_interrupt->raise();
-}*/
+    m_configureC.call( m_thisObject, newVal );
+}
+
+void ScriptPort::reset()
+{
+    callFunction( &m_reset );
+}
+
+void ScriptPort::setExtIntTrig( int pinNumber, int trig )
+{
+    m_pins[pinNumber]->setExtIntTrig( trig );
+}
+
+void ScriptPort::setScript( QString script )
+{
+    ScriptModule::setScript( script );
+
+    /*m_configureA = evalFunc("configureA");
+    m_configureB = evalFunc("configureB");
+    m_configureC = evalFunc("configureC");*/
+}
+#include "moc_scriptport.cpp"

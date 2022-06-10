@@ -96,7 +96,7 @@ class MAINMODULE_EXPORT I51Core : public McuCore
 
         bool m_upperData;
 
-        IoPin* m_eaPin;
+        McuPin* m_eaPin;
 
         inline void readOperand();
         inline void Exec();

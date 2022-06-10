@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,31 +17,32 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcumodule.h"
-#include "e_mcu.h"
-#include "mcuinterrupts.h"
+#ifndef SCRIPTPORT_H
+#define SCRIPTPORT_H
 
-McuModule::McuModule( eMcu* mcu, QString name )
-{
-    m_mcu = mcu;
-    m_name = name;
-    m_sleepMode = 0;
-    m_interrupt = NULL;
-}
-McuModule::~McuModule( ){}
+#include "scriptmodule.h"
+#include "mcuport.h"
 
-void McuModule::sleep( int mode )
+class MAINMODULE_EXPORT ScriptPort : public ScriptModule, public McuPort
 {
-    if( mode < 0 ) m_sleeping = false;
-    else           m_sleeping = (m_sleepMode & 1<<mode) > 0;
-}
+    Q_OBJECT
+    public:
+        ScriptPort( eMcu* mcu, QString name );
+        ~ScriptPort();
 
-/*void McuModule::reset()
-{
-    Simulator::self()->cancelEvents( this );
-}*/
+        virtual void configureA( uint8_t newVal ) override;
+        virtual void configureB( uint8_t newVal ) override;
+        virtual void configureC( uint8_t newVal ) override;
 
-/*void McuModule::raiseInt()
-{
-    if( m_interrupt ) m_interrupt->raise();
-}*/
+        virtual void reset() override;
+
+        virtual void setScript( QString script ) override;
+
+    public slots:
+        void setExtIntTrig( int pinNumber, int trig );
+
+    protected:
+
+
+};
+#endif

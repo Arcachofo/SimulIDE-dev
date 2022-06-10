@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,31 +17,40 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcumodule.h"
-#include "e_mcu.h"
-#include "mcuinterrupts.h"
+#include "scriptcore.h"
 
-McuModule::McuModule( eMcu* mcu, QString name )
+
+ScriptCore::ScriptCore( eMcu* mcu )
+          : ScriptModule( mcu, "" )
+          , McuCore( mcu )
 {
-    m_mcu = mcu;
-    m_name = name;
-    m_sleepMode = 0;
-    m_interrupt = NULL;
 }
-McuModule::~McuModule( ){}
+ScriptCore::~ScriptCore() {}
 
-void McuModule::sleep( int mode )
+void ScriptCore::reset()
 {
-    if( mode < 0 ) m_sleeping = false;
-    else           m_sleeping = (m_sleepMode & 1<<mode) > 0;
+    callFunction( &m_reset );
 }
 
-/*void McuModule::reset()
+void ScriptCore::runDecoder()
 {
-    Simulator::self()->cancelEvents( this );
+    ;
+}
+
+void ScriptCore::runClock( bool clkState )
+{
+    callFunction( &m_runClock, {QScriptValue( (int)clkState )} );
+}
+
+/*void setValue( QString name, QString val )
+{
+
 }*/
 
-/*void McuModule::raiseInt()
+void ScriptCore::setScript( QString script )
 {
-    if( m_interrupt ) m_interrupt->raise();
-}*/
+    ScriptModule::setScript( script );
+    m_runClock = evalFunc("runClock");
+}
+
+#include "moc_scriptcore.cpp"

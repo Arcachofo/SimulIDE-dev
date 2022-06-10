@@ -26,10 +26,10 @@
     <pin type="nc"  xpos="-8"   ypos="160"  angle="180" length="8"  id="Vdd"  label="Vdd" />
     <pin type="rst" xpos="56"   ypos="56"   angle="0"   length="8"  id="RST"  label="Rst" />
     <pin type="cp"  xpos="56"   ypos="16"   angle="0"   length="8"  id="CA2"  label="CA2" />
-    <pin type=""    xpos="56"   ypos="24"   angle="0"   length="8"  id="PR0"  label="RS0" />
-    <pin type=""    xpos="56"   ypos="32"   angle="0"   length="8"  id="PR1"  label="RS1" />
-    <pin type=""    xpos="56"   ypos="40"   angle="0"   length="8"  id="PR2"  label="RS2" />
-    <pin type=""    xpos="56"   ypos="48"   angle="0"   length="8"  id="PR3"  label="RS3" />
+    <pin type="cp"  xpos="56"   ypos="24"   angle="0"   length="8"  id="IRQA" label="IRQA"/>
+    <pin type="cp"  xpos="56"   ypos="32"   angle="0"   length="8"  id="IRQB" label="IRQB"/>
+    <pin type=""    xpos="56"   ypos="40"   angle="0"   length="8"  id="PR0"  label="RS0" />
+    <pin type=""    xpos="56"   ypos="48"   angle="0"   length="8"  id="PR1"  label="RS1" />
     <pin type="cp"  xpos="56"   ypos="8"    angle="0"   length="8"  id="CA1"  label="CA1" />
     <pin type=""    xpos="56"   ypos="64"   angle="0"   length="8"  id="PD0"  label="D0"  />
     <pin type=""    xpos="56"   ypos="72"   angle="0"   length="8"  id="PD1"  label="D1"  />
@@ -41,8 +41,8 @@
     <pin type=""    xpos="56"   ypos="120"  angle="0"   length="8"  id="PD7"  label="D7"  />
     <pin type="cp"  xpos="56"   ypos="128"  angle="0"   length="8"  id="P2"   label="Φ2"  />
     <pin type="cp"  xpos="56"   ypos="136"  angle="0"   length="8"  id="CS1"  label="CS1" />
-    <pin type="cp"  xpos="56"   ypos="144"  angle="0"   length="8"  id="CS2"  label="CS2" />
-    <pin type="cp"  xpos="56"   ypos="152"  angle="0"   length="8"  id="RW"   label="R/!W"/>
-    <pin type="cp"  xpos="56"   ypos="160"  angle="0"   length="8"  id="IRQ"  label="IRQ" />
+    <pin type="cp"  xpos="56"   ypos="144"  angle="0"   length="8"  id="CS2"  label="!CS2" />
+    <pin type="cp"  xpos="56"   ypos="160"  angle="0"   length="8"  id="RW"   label="R/!W"/>
+    <pin type="cp"  xpos="56"   ypos="152"  angle="0"   length="8"  id="CS0"  label="CS0" />
     
 </packageB>

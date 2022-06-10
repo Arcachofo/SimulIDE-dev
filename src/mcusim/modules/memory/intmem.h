@@ -23,7 +23,7 @@
 #include "mcumodule.h"
 #include "e-element.h"
 
-class IoPin;
+class McuPin;
 
 class MAINMODULE_EXPORT IntMemModule : public McuModule, public eElement
 {
@@ -76,14 +76,14 @@ class MAINMODULE_EXPORT IntMemModule : public McuModule, public eElement
 
         memState_t m_memState;
 
-        IoPin* m_rwPin;  // !Write / Read Pin
-        //IoPin* m_rePin;  // !Read Pin
-        IoPin* m_cshPin; // Enable Pin
-        IoPin* m_cslPin; // !Enable Pin
-        IoPin* m_clkPin; // Clock Pin
+        McuPin* m_rwPin;  // !Write / Read Pin
+      //McuPin* m_rePin;  // !Read Pin
+        McuPin* m_cshPin; // Enable Pin
+        McuPin* m_cslPin; // !Enable Pin
+        McuPin* m_clkPin; // Clock Pin
 
-        std::vector<IoPin*> m_addrPin;
-        std::vector<IoPin*> m_dataPin;
+        std::vector<McuPin*> m_addrPin;
+        std::vector<McuPin*> m_dataPin;
 };
 
 #endif

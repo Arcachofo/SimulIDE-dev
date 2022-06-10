@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,31 +17,29 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mcumodule.h"
-#include "e_mcu.h"
-#include "mcuinterrupts.h"
+#ifndef SCRIPTCORE_H
+#define SCRIPTCORE_H
 
-McuModule::McuModule( eMcu* mcu, QString name )
-{
-    m_mcu = mcu;
-    m_name = name;
-    m_sleepMode = 0;
-    m_interrupt = NULL;
-}
-McuModule::~McuModule( ){}
+#include "scriptmodule.h"
+#include "mcucore.h"
 
-void McuModule::sleep( int mode )
+class MAINMODULE_EXPORT ScriptCore : public ScriptModule, public McuCore
 {
-    if( mode < 0 ) m_sleeping = false;
-    else           m_sleeping = (m_sleepMode & 1<<mode) > 0;
-}
+    Q_OBJECT
+    public:
+        ScriptCore( eMcu* mcu );
+        ~ScriptCore();
 
-/*void McuModule::reset()
-{
-    Simulator::self()->cancelEvents( this );
-}*/
+        virtual void reset() override;
+        virtual void runDecoder() override;
+        virtual void runClock( bool clkState ) override;
 
-/*void McuModule::raiseInt()
-{
-    if( m_interrupt ) m_interrupt->raise();
-}*/
+        virtual void setScript( QString script ) override;
+
+    public slots:
+        //virtual void setValue( QString name, int val ) override;
+
+    protected:
+        QScriptValue m_runClock;
+};
+#endif

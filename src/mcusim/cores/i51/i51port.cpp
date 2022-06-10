@@ -22,14 +22,15 @@
 #include "mcu.h"
 #include "e_mcu.h"
 
-I51Port::I51Port( eMcu* mcu, QString name, uint8_t numPins )
-       : McuPort( mcu, name, numPins )
+I51Port::I51Port( eMcu* mcu, QString name )
+       : McuPort( mcu, name )
 {
 }
 I51Port::~I51Port(){}
 
-void I51Port::createPins( Mcu* mcuComp, uint8_t pinMask )
+void I51Port::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
 {
+    m_numPins = pins.toUInt(0,0);
     m_pins.resize( m_numPins );
 
     for( int i=0; i<m_numPins; ++i )
