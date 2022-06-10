@@ -43,6 +43,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
             W1_SEARCH,
             W1_MATCH,
             W1_DATA,
+            W1_BUSY
         };
         enum w1Command_t {
             W1_SEARCH_ROM = 0xF0,
@@ -67,7 +68,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         void setROM( QString ROMstr );
 
         double tempInc() { return m_tempInc; }
-        void setTempInc( double inc ) { m_tempInc = trim( inc ); }
+        void setTempInc( double inc ) { m_tempInc = inc; }
 
         double temp() { return m_temp; }
         void setTemp( double t );
@@ -116,19 +117,17 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         uint8_t crc8( uint8_t* addr, uint8_t len );
 
         w1State_t m_state;
-        uint8_t m_lastCommand;
-
-        // Trim to 4 decimals, not one! For 12-bit resolution step is 0.0625
-        // For 9-12-bit resolution, steps are acutually 0.5°C, 0.25°C, 0.125°C and 0.0625°C, respectively
-        double trim( double data ) { return (double)((int)(data*10000))/10000; }
+        uint8_t   m_lastCommand;
 
         bool m_lastIn;
         bool m_write;
         bool m_pullDown;
         bool m_bitROM;
         bool m_parPower;
+        bool m_alarm;
 
         uint64_t m_lastTime;
+        uint64_t m_busyTime;
         uint8_t  m_rxReg;
         uint8_t  m_txReg;
         uint8_t  m_lastBit;
@@ -136,6 +135,7 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         uint64_t m_bitIndex;
 
         int m_pulse;
+        int m_byte;
 
         double m_temp;
         double m_tempInc;
@@ -143,47 +143,15 @@ class MAINMODULE_EXPORT Ds18b20 : public Component , public eElement
         QFont m_font;
         IoPin* m_inpin;
 
-    // NEW
         int m_resolution; // 9-12 bits
         uint8_t m_scratchpad[9];
         uint8_t m_ROM[8];
-        QString m_ROMstr;
 
-        uint8_t m_TH_reg;  // TH register, alarm trigger register, can be stored in internal EEPROM
-        uint8_t m_TL_reg;  // TL register, alarm trigger register, can be stored in internal EEPROM
-        uint8_t m_CFG_reg; // Config register, can be stored in internal EEPROM
-        bool m_alarm;
+        int8_t  m_TH;  // TH register, alarm trigger register, can be stored in internal EEPROM
+        int8_t  m_TL;  // TL register, alarm trigger register, can be stored in internal EEPROM
+        uint8_t m_CFG; // Config register, can be stored in internal EEPROM
 
         std::vector<uint8_t> m_txBuff;
-        //std::vector<uint8_t> rx_BUFF;
-
-        ////////////////////////////////////
-        // Constants for 1-Wire bit-banging
-        ////////////////////////////////////
-
-        // "TIME SLOT", here TSLOT last 60us, minimum
-        // For DS1820 is minimum 60us up to 120us
-        // Arduino 1-Wire lib uses 60-65us
-        const double TSLOT  = 60*1e6;
-
-        // Time to write bit 0, pulling line down
-        // It's minimum lenght is the same as TSLOT
-        // For DS1820 is minimum 60us up to 120us
-        // Arduino 1-Wire lib uses 60-65us
-        const double TLOW_0 = TSLOT;
-
-        // TLOW1 is duration to pulling line down for bit 1
-        // For DS1820 is between 1 to 15us
-        // Arduino 1-Wire lib uses 10us
-        const double TLOW_1 = 1*1e6;
-
-        // TREC is recovery time between pulses,
-        // pulling up line minimum time
-        // For DS1820 is minimum 1us up to 15us
-        // Arduino 1-Wire lib uses 5us
-        const double TREC = 5*1e6;
-
-        //const double TRVD
 };
 
 #endif

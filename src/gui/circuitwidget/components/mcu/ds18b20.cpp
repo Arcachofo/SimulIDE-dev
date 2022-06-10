@@ -53,26 +53,30 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
 {    
     m_area = QRect(-28,-16, 56, 32 );
 
+    srand(time(0));
     m_state = W1_IDLE;
     m_parPower = false;
-    m_resolution = 12; // Should check what is default 9-12, should be writable in EEPROM
     m_tempInc = 0.5;
     setTemp( 22 );
 
-    // This actually should be generated and saved with sim file
-    // once component is dropped. It is unique ID to keep
     generateROM( 0x28 );
 
-    m_TH_reg  = 0x4B; /// TODO, check default value
-    m_TL_reg  = 0x46; /// TODO, check default value
-    m_CFG_reg = 0x7F; /// TODO, check default value
+    m_scratchpad[0] = 0xFF;
+    m_scratchpad[1] = 0x07;
+    m_scratchpad[2] = 0x4B; /// TL  reg, default value
+    m_scratchpad[3] = 0x46; /// TH  reg, default value
+    m_scratchpad[4] = 0x7F; /// CFG reg, default value
+    m_scratchpad[5] = 0xFF;
+    m_scratchpad[6] = 0x01;
+    m_scratchpad[7] = 0x10;
+    m_scratchpad[8] = 0x2F;
 
     m_pin.resize(1);
     m_pin[0] = m_inpin = new IoPin( 180, QPoint(-36, 8), id+"-inPin", 0, this, openCo );
 
-    m_inpin->setOutHighV( 5 );
+   /* m_inpin->setOutHighV( 5 );
     m_inpin->setLabelColor( QColor( 250, 250, 200 ) );
-    m_inpin->setLabelText("DQ");
+    m_inpin->setLabelText("DQ");*/
 
     QPushButton* u_button = new QPushButton();
     u_button->setMaximumSize( 9, 9 );
@@ -124,9 +128,11 @@ void Ds18b20::stamp()   // Called at Simulation Start
     m_write  = false;
     m_lastIn = false;
     m_alarm  = false;
+
     m_inpin->setPinMode( openCo );
     m_inpin->setOutState( true );
     m_inpin->changeCallBack( this, true );
+    m_state = W1_IDLE;
 }
 
 void Ds18b20::updateStep()
@@ -134,18 +140,19 @@ void Ds18b20::updateStep()
     if( !m_changed ) return;
     m_changed = false;
     setTemp( m_temp );
-    update();
 }
 
 void Ds18b20::voltChanged()                              // Called when Input Pin changes
 {
     bool inState = m_inpin->getVolt() > 2.5;
-    if( m_lastIn && !inState ) m_lastTime = Simulator::self()->circTime(); // Falling edge
+    uint64_t circTime = Simulator::self()->circTime();
+
+    if( m_lastIn && !inState ) m_lastTime = circTime; // Falling edge
     else if( !m_lastIn && inState )                                        // Rising edge
     {
-        uint64_t time = Simulator::self()->circTime()-m_lastTime; // in picoseconds
+        uint64_t time = circTime-m_lastTime; // in picoseconds
 
-        if( time > 475*1e6 )             // > 480 us : Reset
+        if( time > 205*1e6 )             // > 480 us : Reset (Tested in real device 202 us)
         {
             qDebug() <<"\n"<< idLabel() << "Ds18b20::voltChanged -------------- RESET"<<time/1e3<<"ns";
             m_rxReg = 0;
@@ -156,18 +163,21 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
         }
         else if( m_state > W1_IDLE )    // Active
         {
-            if( time > 60*1e6 )         // > 60 us : 0 received
+            if( time > 30*1e6 )         // > 30 us : 0 received
             {
-                if( m_write ) qDebug()<< idLabel() << "ERROR: Master is reading data, Read pulse should be < 15 us";
-                else          readBit( 0 );
+                if( m_state == W1_BUSY ) qDebug()<< idLabel() << "ERROR: Ds18b20 busy, Read pulse should be < 15 us";
+                else if( m_write )       qDebug()<< idLabel() << "ERROR: Master is reading data, Read pulse should be < 15 us";
+                else                     readBit( 0 );
             }
             else    ///// if( time < 15*1e6 )     // < 15 us : 1 received Or Read pulse
             {
-                if( m_write ) writeBit();
-                else          readBit( 1 );
-            }
-        }
-    }
+                if( m_state == W1_BUSY ){
+                    if( m_busyTime > circTime ) pulse( 1, 50 ); // Still busy: Send a 50 us pulse after 1 us
+                }
+                else{
+                    if( m_write ) writeBit();
+                    else          readBit( 1 );
+    }   }   }   }
     m_lastIn = inState;
 }
 
@@ -196,7 +206,7 @@ void Ds18b20::sendData( uint8_t data, int size )
 
 void Ds18b20::writeBit()
 {
-    if( (m_txReg & 1<<m_bitIndex) == 0 )  pulse( 1, 50 ); // Send a 50 us pulse after 1 us
+    if( (m_txReg & 1<<m_bitIndex) == 0 ) pulse( 1, 50 ); // Send a 50 us pulse after 1 us
 
     if( m_bitIndex == m_lastBit ) // Byte sent
     {
@@ -238,7 +248,6 @@ void Ds18b20::readBit( uint8_t bit )
             return;
         }
     }
-
     if( bit ) m_rxReg |= 1<<m_bitIndex;
 
     if( m_bitIndex == m_lastBit )   // Complete byte received
@@ -257,11 +266,19 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
 
     switch( m_state )
     {
-        case W1_IDLE: break;                      // Error, this shoild not happen
+        case W1_IDLE: break;                           // Error, this shoild not happen
         case W1_ROM_CMD: romCommand( m_rxReg ); break; // ROM Command received
         case W1_FUN_CMD: funCommand( m_rxReg ); break; // Function Command received
-        case W1_DATA: break;
-        case W1_MATCH:                            // ROM Match: we are online, wait for Function commands
+        case W1_DATA:
+        {
+            if( m_lastCommand == 0x4E )              // Write Scratchpad
+            {
+                m_scratchpad[m_byte] = m_rxReg;
+                if( m_byte == 4 ) m_state = W1_IDLE; // Transaction finished
+                else m_byte++;
+            }
+        } break;
+        case W1_MATCH:          // ROM Match: we are online, wait for Function commands
         {
             m_state = W1_FUN_CMD;
             m_rxReg = 0;
@@ -283,7 +300,8 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
                 m_state = W1_IDLE; // We are out, Wait for next Reset signal
                 qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OUT";
             }
-        }
+        }break;
+        default: qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  ERROR";
     }
 }
 
@@ -298,16 +316,15 @@ void Ds18b20::pulse( uint64_t time, uint64_t witdth ) // Time in us
 
 void Ds18b20::romCommand( uint8_t cmd )
 {
-    //m_state = W1_DATA;
     switch( cmd )
     {
-        case 0x33: readROM();         break;
-        case 0x55: matchROM();        break;
-        case 0xCC: skipROM();         break;
-        case 0xF0: searchROM();       break;
+        case 0x33: readROM();   break;
+        case 0x55: matchROM();  break;
+        case 0xCC: skipROM();   break;
+        case 0xF0: searchROM(); break;
         default:{
             m_state = W1_IDLE;
-            qDebug()<<idLabel() << "Ds18b20::command : Warning:  command Not implemented";
+            qDebug()<<idLabel() << "Ds18b20::command : Warning: ROM command Not implemented";
         }
     }
     m_lastCommand = cmd;
@@ -370,7 +387,6 @@ bool Ds18b20::bitROM( uint bitIndex )
 
 void Ds18b20::funCommand( uint8_t cmd )
 {
-    //m_state = W1_DATA;
     switch( cmd )
     {
         case 0x44: convertTemp();     break;
@@ -381,7 +397,7 @@ void Ds18b20::funCommand( uint8_t cmd )
         case 0xBE: readScratchpad();  break;
         default:{
             m_state = W1_IDLE;
-            qDebug()<<idLabel() << "Ds18b20::command : Warning:  command Not implemented";
+            qDebug()<<idLabel() << "Ds18b20::command : Warning: Function command Not implemented";
         }
     }
     m_lastCommand = cmd;
@@ -389,18 +405,31 @@ void Ds18b20::funCommand( uint8_t cmd )
 
 void Ds18b20::convertTemp() // Code 44h, temperature already in the Scratchpad, nothing to do
 {
-    qDebug() <<idLabel()<< "Ds18b20::convertTemp";
-    m_state = W1_IDLE;
-    //if( !m_parPower ) pulse( 1, 749 ); // Send a 749 us pulse after 1 us
+    uint16_t temp = round( abs( m_temp )*16 ); // Make it positive and shift to make integer value
+    if( m_temp < 0 ) temp = ~temp + 1;         // Temp under 0? Make 2nd complement
+
+    m_scratchpad[0] = temp;
+    m_scratchpad[1] = temp >> 8;
+    m_scratchpad[8] = crc8( m_scratchpad, 8 );
+
+    int res = ((m_scratchpad[4] >> 5) & 0b11)+9; // Resolution
+    switch( res ){                               // Resol.  Busy time
+        case  9: m_busyTime =  93750*1e6; break; // 9-bits  93.75 ms
+        case 10: m_busyTime = 187500*1e6; break; // 10-bit  187.5 ms
+        case 11: m_busyTime = 375000*1e6; break; // 11-bit  375   ms
+        case 12: m_busyTime = 750000*1e6; break; // 12-bit  750   ms
+    }
+    m_busyTime += Simulator::self()->circTime();
+    m_state = W1_BUSY;
+
+    qDebug() << idLabel() <<"Ds18b20::setTemp"<<arrayToHex( m_scratchpad, 9 );
 }
 
 void Ds18b20::writeScratchpad() // Code 4Eh : Master will write TH, TL, Config
 {
-    /// All three bytes must be written before a reset is issued.
-    /// TODO
+    qDebug() <<idLabel()<< "Ds18b20::writeScratchpad";
 
-    qDebug() <<idLabel()<< "Ds18b20::command : Warning:  WRITE SCRATCHPAD Not implemented";
-
+    m_byte = 2;        // start writting to byte 2 of the scratchpad
     m_state = W1_DATA;
 }
 
@@ -414,46 +443,34 @@ void Ds18b20::readScratchpad() // Code BEh : send Scratchpad LSB
     sendData( m_txBuff.back() );
 }
 
-void Ds18b20::copyScratchpad() // Code 48h :
+void Ds18b20::copyScratchpad() // Code 48h : Copy TH, TL, CFG (bytes 2, 3, 4) to EEPROM.
 {
-    /// This command copies the contents of the scratchpad
-    /// TH, TL and configuration registers (bytes 2, 3 and 4) to EEPROM.
-    ///
-    /// If the device is being used in parasite power mode,
-    /// within 10µs (max) the master must enable a strong pullup on the 1-Wire bus
-    /// for at least 10ms as described in the Powering the DS18B20 section.
+    qDebug() <<idLabel()<< "Ds18b20::copyScratchpad";
 
-    /// TODO
+    m_TH  = m_scratchpad[2];
+    m_TL  = m_scratchpad[3];
+    m_CFG = m_scratchpad[4];
 
-    qDebug() <<idLabel()<< "Ds18b20::command : Warning:  COPY SCRATCHPAD Not implemented";
-
-    //if ( m_state == W1_WAIT_FOR_RESET_PULSE) return;
-
-    //m_state = W1_COMMAND;
+    m_busyTime = Simulator::self()->circTime()+10000*1e6; // 10 ms
+    m_state = W1_BUSY;
 }
 
-void Ds18b20::recallE2() // Code B8h :
+void Ds18b20::recallE2() // Code B8h :Copy EEPROM to TH, TL, CFG (bytes 2, 3, 4)
 {
-    /// This command recalls the alarm trigger values (T H and T L ) and configuration data from EEPROM
-    /// and places the data in bytes 2, 3, and 4, respectively, in the scratchpad memory.
-    ///
-    /// The master device can issue read time slots following the Recall E 2 command
-    /// and the DS18B20 will indicate the status of the recall by
-    /// transmitting 0 while the recall is in progress and 1 when the recall is done.
-    ///
-    /// The recall operation happens automatically at power-up,
-    /// so valid data is available in the scratchpad as soon as power is applied to the device.
-
-    /// TODO
-
     qDebug() <<idLabel()<< "Ds18b20::recallE2";
 
-    m_state = W1_DATA;
+    m_scratchpad[2] = m_TH;
+    m_scratchpad[3] = m_TL;
+    m_scratchpad[4] = m_CFG;
+    m_scratchpad[8] = crc8( m_scratchpad, 8 );
+
+    m_busyTime = Simulator::self()->circTime()+10*1e3*1e6; // 10 ms ????????????
+    m_state = W1_BUSY;
 }
 
 void Ds18b20::readPowerSupply() // Code B4h : using parasite power? pull down time???
 {
-    qDebug() <<idLabel()<< "Ds18b20::readPowerSupply"; // By now we don't use parasite power
+    qDebug() <<idLabel()<< "Ds18b20::readPowerSupply No parasite power"; // By now we don't use parasite power
     /// TODO add property
 }
 
@@ -462,25 +479,6 @@ void Ds18b20::readPowerSupply() // Code B4h : using parasite power? pull down ti
 void Ds18b20::setTemp( double t ) // This should convert temp wrote in UI
 {
     m_temp = t;
-    uint16_t temp = abs( m_temp) * 16.0; // Make it positive and shift to make integer value
-    if(  m_temp < 0 ) temp = ~temp + 1;  // Temp under 0? Make 2nd complement
-
-    //-10.125    °C 1111 1111 0101 1110 FF5Eh
-    //-25.0625   °C 1111 1110 0110 1111 FF6Fh
-
-    // store temperature to scratchpad
-    m_scratchpad[0] = temp;
-    m_scratchpad[1] = temp >> 8;
-    m_scratchpad[2] = m_TH_reg;
-    m_scratchpad[3] = m_TL_reg;
-    m_scratchpad[4] = m_CFG_reg;
-    m_scratchpad[5] = 0xFF; // Reserved. Default?
-    m_scratchpad[6] = 0x0C; // Reserved. Default?
-    m_scratchpad[7] = 0x10; // Reserved. Default?
-    m_scratchpad[8] = crc8( m_scratchpad, 8 );
-
-    qDebug() << idLabel() <<"Ds18b20::setTemp"<<arrayToHex( m_scratchpad, 9 );
-
     update();
 }
 
@@ -568,5 +566,3 @@ void Ds18b20::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
     p->drawText(-23, -3, "C°" );
     p->drawText(-12, -3, QString::number( m_temp ) );
 }
-
-//#include "moc_ds18b20.cpp"
