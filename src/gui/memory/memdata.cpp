@@ -336,7 +336,7 @@ QString MemData::getMem( QVector<int>* data )
         for( int i=size-1; i>=0; --i )
         {
             int val = data->at( i );
-            if( val > 0 ) empty = false;
+            if( val != 0 ) empty = false;
             if( empty ) continue;
             m.prepend( QString::number( val )+"," );
     }   }
@@ -352,6 +352,6 @@ void MemData::setMem( QVector<int>* data, QString m )
     for( QString val : list )
     {
         if( i >= data->size() ) break;
-        data->replace( i, val.toUInt() );
+        data->replace( i, val.toInt() );
         i++;
 }   }
