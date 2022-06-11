@@ -87,6 +87,7 @@ class Compiler : public QObject
 
         bool m_useFamily;
         bool m_useDevice;
+        bool m_uploadHex;
 
         QString m_compName;
         QString m_toolPath;

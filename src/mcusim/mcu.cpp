@@ -315,6 +315,8 @@ void Mcu::slotReload()
 
 bool Mcu::load( QString fileName )
 {
+    if( fileName.isEmpty() ) return false;
+
     QDir circuitDir;
     if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
     else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();

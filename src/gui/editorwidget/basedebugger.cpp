@@ -44,7 +44,7 @@ BaseDebugger::~BaseDebugger( )
 
 bool BaseDebugger::upload()
 {
-    if( !QFileInfo::exists( m_firmware) )
+    if( !m_firmware.isEmpty() && !QFileInfo::exists( m_firmware ) )
     {
         m_outPane->appendLine( "\n"+tr("Error: Hex file doesn't exist:")+"\n"+m_firmware );
         return false;
@@ -54,12 +54,15 @@ bool BaseDebugger::upload()
         m_outPane->appendLine( "\n"+tr("Error: No Mcu in Simulator... ") );
         return false;
     }
-    bool ok = Mcu::self()->load( m_firmware );
-    if( ok ) m_outPane->appendText( "\n"+tr("FirmWare Uploaded to ") );
-    else     m_outPane->appendText( "\n"+tr("Error uploading firmware to ") );
-    m_outPane->appendLine( Mcu::self()->device() );
-    m_outPane->appendLine( m_firmware+"\n" );
-
+    bool ok = true;
+    if( !m_firmware.isEmpty() )
+    {
+        ok = Mcu::self()->load( m_firmware );
+        if( ok ) m_outPane->appendText( "\n"+tr("FirmWare Uploaded to ") );
+        else     m_outPane->appendText( "\n"+tr("Error uploading firmware to ") );
+        m_outPane->appendLine( Mcu::self()->device() );
+        m_outPane->appendLine( m_firmware+"\n" );
+    }
     if( ok ){
         eMcu::self()->setDebugger( this );
         if( m_fileExt != ".hex" ) ok = postProcess();
@@ -169,12 +172,16 @@ bool BaseDebugger::postProcess()
             }
             if( lstLineNumber >= lastListLine ) lstLineNumber = 0;
             else{
-                if( m_lstType & 1 ) lstLine = lstLine.split(":").last();
+                if( m_lstType & 1 )
+                {
+                    QStringList l = lstLine.split(":");
+                    if( l.size() > 1 ) lstLine = lstLine.split(":").at( 1 );
+                    else continue;
+                }
                 QStringList words = lstLine.split(" ");
                 words.removeAll("");
 
-                if( words.size() < 3 )
-                {
+                if( words.size() < 3 ){
                     if( srcLine.contains( ":" ) )                 // Find Subroutines
                     {
                         funcName = srcLine.left( srcLine.indexOf(":") ).toUpper();
@@ -183,8 +190,10 @@ bool BaseDebugger::postProcess()
                     continue;
                 }
                 int index = (m_lstType & 2)>>1 ;
-
                 bool ok = false;
+                words.at( index+1 ).toInt( &ok, 16 ); // Avoid things like "8: E = %10000000" (vasm)
+                if( !ok ) continue;
+
                 int address = m_codeStart+words.at( index ).toInt( &ok, 16 );
                 if( ok )
                 {

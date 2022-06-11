@@ -87,6 +87,7 @@ void Compiler::loadCompiler( QString file )
     }
     QDomElement compiler = domDoc.documentElement();
 
+    m_uploadHex = compiler.attribute( "uploadhex" ) != "false";
     QString inclPath = "";
 
     if( compiler.hasAttribute("name")   ) m_compName = compiler.attribute( "name" );
@@ -186,7 +187,8 @@ int Compiler::compile( bool debug )
     {
         m_fileList.clear();
         m_fileList.append( m_fileName+m_fileExt );
-        m_firmware = m_buildPath+m_fileName+".hex";
+        if( m_uploadHex ) m_firmware = m_buildPath+m_fileName+".hex";
+        else              m_firmware = "";
 
         if( m_compName != "None" && !m_command.isEmpty()  )
             m_outPane->appendLine( "\n"+tr("     SUCCESS!!! Compilation Ok")+"\n" );
