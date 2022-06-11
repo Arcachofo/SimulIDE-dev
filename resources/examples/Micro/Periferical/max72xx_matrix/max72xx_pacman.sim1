@@ -1,0 +1,15 @@
+<circuit type="simulide_1.0" rev="1120" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Max72xx_matrix" CircId="Max72xx_matrix-2" mainComp="false" Show_id="true" Show_Val="false" Pos="-344,-64" rotation="0" hflip="1" vflip="1" label="Max72xx_matrix-2" idLabPos="-32,-58" labelrot="0" valLabPos="0,0" valLabRot="0" Color="3" NumDisplays="4 Led" />
+
+<item itemtype="Subcircuit" CircId="Mega-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-392,-76" rotation="90" hflip="1" vflip="1" label="Arduino Mega-1" idLabPos="46,-14" labelrot="0" valLabPos="0,0" valLabRot="0" Logic_Symbol="false">
+<mainCompProps itemtype="MCU" CircId="1_mega2560-63" mainComp="true" Show_id="false" Show_Val="false" Pos="20,20" rotation="0" hflip="1" vflip="1" label="1_mega2560-63" idLabPos="0,-20" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="16 MHz" Program="MD_MAX72xx_Pacman.hex" Auto_Load="false" Rst_enabled="true" Ext_Osc="false" Wdt_enabled="false" />
+</item>
+
+<item itemtype="Connector" uid="connector-3" startpinid="Mega-1-10" endpinid="Max72xx_matrix-2PinCS" pointList="-356,16,-356,-12" />
+
+<item itemtype="Connector" uid="connector-4" startpinid="Max72xx_matrix-2PinDin" endpinid="Mega-1-11" pointList="-364,-12,-364,16" />
+
+<item itemtype="Connector" uid="connector-5" startpinid="Mega-1-13" endpinid="Max72xx_matrix-2PinSck" pointList="-380,16,-380,-4,-372,-4,-372,-12" />
+
+</circuit>
