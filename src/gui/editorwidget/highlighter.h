@@ -33,7 +33,7 @@ class Highlighter : public QSyntaxHighlighter
         Highlighter( QTextDocument* parent = 0);
         ~Highlighter();
 
-        void readSintaxFile( const QString &fileName );
+        void readsyntaxFile( const QString &fileName );
 
         void addRegisters( QStringList patterns );
 

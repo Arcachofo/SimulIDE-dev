@@ -39,7 +39,7 @@ bool    CodeEditor::m_showSpaces = false;
 bool    CodeEditor::m_spaceTabs  = false;
 int     CodeEditor::m_fontSize = 13;
 int     CodeEditor::m_tabSize = 4;
-QString CodeEditor::m_sintaxPath;
+QString CodeEditor::m_syntaxPath;
 QString CodeEditor::m_compilsPath;
 QString CodeEditor::m_tab;
 QFont   CodeEditor::m_font = QFont();
@@ -96,6 +96,11 @@ void CodeEditor::setCompiler( BaseDebugger* compiler )
     m_compiler = compiler;
 }
 
+void CodeEditor::setSyntaxFile( QString file )
+{
+    m_hlighter->readsyntaxFile( m_syntaxPath + file );
+}
+
 void CodeEditor::setFile( const QString filePath )
 {
     if( m_file == filePath ) return;
@@ -114,7 +119,7 @@ void CodeEditor::setFile( const QString filePath )
     QString code = "00";
     if( extension == ".gcb" )
     {
-        m_hlighter->readSintaxFile( m_sintaxPath + "gcbasic.sintax" );
+        m_hlighter->readsyntaxFile( m_syntaxPath + "gcbasic.syntax" );
         m_compiler = EditorWindow::self()->createDebugger( "GcBasic", this );
     }
     else if( extension == ".cpp"
@@ -122,39 +127,39 @@ void CodeEditor::setFile( const QString filePath )
           || extension == ".ino"
           || extension == ".h" )
     {
-        m_hlighter->readSintaxFile( m_sintaxPath + "cpp.sintax" );
+        m_hlighter->readsyntaxFile( m_syntaxPath + "cpp.syntax" );
         if( extension == ".ino" )
             m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );
         else if( extension == ".cpp" || extension == ".c")
             code = "10";
     }
-    else if( extension == ".s" )
+    /*else if( extension == ".s" )
     {
-        m_hlighter->readSintaxFile( m_sintaxPath + "avrasm.sintax" );
+        m_hlighter->readsyntaxFile( m_syntaxPath + "avrasm.syntax" );
         m_compiler = EditorWindow::self()->createDebugger( "Avrgcc-asm", this );
-    }
+    }*/
     else if( extension == ".asm"  // We should identify if pic, avr or i51 asm
           || extension == ".a51" )
     {
         m_outPane->appendText( tr("File recognized as: ") );
 
-        int type = getSintaxCoincidences();
+        int type = getsyntaxCoincidences();
         if( type == 1 )   // Is Pic
         {
             m_outPane->appendLine( "Pic asm\n" );
-            m_hlighter->readSintaxFile( m_sintaxPath + "pic14asm.sintax" );
+            m_hlighter->readsyntaxFile( m_syntaxPath + "pic14asm.syntax" );
             m_compiler = EditorWindow::self()->createDebugger( "GpAsm", this );
         }
         else if( type == 2 )  // Is Avr
         {
                 m_outPane->appendLine( "Avr asm\n" );
-                m_hlighter->readSintaxFile( m_sintaxPath + "avrasm.sintax" );
+                m_hlighter->readsyntaxFile( m_syntaxPath + "avrasm.syntax" );
                 m_compiler = EditorWindow::self()->createDebugger( "Avra", this );
         }
         else if( type == 3 )  // Is 8051
         {
                 m_outPane->appendLine( "I51 asm\n" );
-                m_hlighter->readSintaxFile( m_sintaxPath + "i51asm.sintax" );
+                m_hlighter->readsyntaxFile( m_syntaxPath + "i51asm.syntax" );
         }
         else m_outPane->appendLine( "Unknown asm\n" );
     }
@@ -165,18 +170,18 @@ void CodeEditor::setFile( const QString filePath )
          ||  extension == ".sim1"
          ||  extension == ".simu" )
     {
-        m_hlighter->readSintaxFile( m_sintaxPath + "xml.sintax" );
+        m_hlighter->readsyntaxFile( m_syntaxPath + "xml.syntax" );
     }
     else if( getFileName( m_file ).toLower() == "makefile"  )
     {
-        m_hlighter->readSintaxFile( m_sintaxPath + "makef.sintax" );
+        m_hlighter->readsyntaxFile( m_syntaxPath + "makef.syntax" );
     }
     else if( extension == ".hex"
          ||  extension == ".ihx" )
     {
         m_font.setLetterSpacing( QFont::PercentageSpacing, 110 );
         setFont( m_font );
-        m_hlighter->readSintaxFile( m_sintaxPath + "hex.sintax" );
+        m_hlighter->readsyntaxFile( m_syntaxPath + "hex.syntax" );
     }
     else if( extension == ".sac" )
     {
@@ -196,9 +201,9 @@ void CodeEditor::setFile( const QString filePath )
     m_outPane->appendLine( "-------------------------------------------------------" );
 }
 
-int CodeEditor::getSintaxCoincidences()
+int CodeEditor::getsyntaxCoincidences()
 {
-    QStringList lines = fileToStringList( m_file, "CodeEditor::getSintaxCoincidences" );
+    QStringList lines = fileToStringList( m_file, "CodeEditor::getsyntaxCoincidences" );
 
     double avr=1, pic=1, i51=1; // Avoid divide by 0
     int nlines = 0;
@@ -298,7 +303,7 @@ void CodeEditor::updateScreen()
 
 void CodeEditor::readSettings() // Static
 {
-    m_sintaxPath  = MainWindow::self()->getFilePath("data/codeeditor/sintax/");
+    m_syntaxPath  = MainWindow::self()->getFilePath("data/codeeditor/syntax/");
     m_compilsPath = MainWindow::self()->getFilePath("data/codeeditor/compilers/");
 
     m_font.setFamily("Ubuntu Mono");

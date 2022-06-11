@@ -38,6 +38,8 @@ class CodeEditor : public QPlainTextEdit
         void setFile(const QString filePath);
         QString getFilePath() { return m_file ; }
 
+        void setSyntaxFile( QString file );
+
         int debugLine() { return m_debugLine; }
         void setDebugLine( int line ) { m_debugLine = line; }
 
@@ -55,10 +57,10 @@ class CodeEditor : public QPlainTextEdit
         void updateScreen();
 
  static void readSettings();
- static int fontSize() { return m_fontSize; }
+ static int  fontSize() { return m_fontSize; }
  static void setFontSize( int size );
 
- static int tabSize() { return m_tabSize; }
+ static int  tabSize() { return m_tabSize; }
  static void setTabSize( int size );
 
  static bool showSpaces() { return m_showSpaces; }
@@ -86,7 +88,7 @@ class CodeEditor : public QPlainTextEdit
         void contextMenuEvent(QContextMenuEvent* event);
 
     private:
-        int  getSintaxCoincidences();
+        int  getsyntaxCoincidences();
         void addBreakPoint( QTextBlock* block );
         void remBreakPoint( QTextBlock* block );
 
@@ -119,7 +121,7 @@ class CodeEditor : public QPlainTextEdit
  static int   m_fontSize;
  static int   m_tabSize;
 
- static QString m_sintaxPath;
+ static QString m_syntaxPath;
  static QString m_compilsPath;
  static QString m_tab;
 

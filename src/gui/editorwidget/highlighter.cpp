@@ -29,7 +29,7 @@ Highlighter::Highlighter( QTextDocument* parent )
 }
 Highlighter::~Highlighter(){}
 
-void Highlighter::readSintaxFile( const QString &fileName )
+void Highlighter::readsyntaxFile( const QString &fileName )
 {
     m_rules.clear();
 

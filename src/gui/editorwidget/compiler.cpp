@@ -89,8 +89,9 @@ void Compiler::loadCompiler( QString file )
 
     QString inclPath = "";
 
-    if( compiler.hasAttribute("name") ) m_compName = compiler.attribute( "name" );
-    if( compiler.hasAttribute("type") ) m_type = compiler.attribute( "type" );
+    if( compiler.hasAttribute("name")   ) m_compName = compiler.attribute( "name" );
+    if( compiler.hasAttribute("type")   ) m_type = compiler.attribute( "type" );
+    if( compiler.hasAttribute("syntax") ) m_document->setSyntaxFile( compiler.attribute( "syntax" )+".syntax" );
     if( compiler.hasAttribute("buildPath") )
     {
         QString path = replaceData( compiler.attribute( "buildPath" ) );
