@@ -290,7 +290,14 @@ void Chip::setBackground( QString bck )
     if( bck != "" ){
         QString pixmapPath = MainWindow::self()->getFilePath("data/images");
         pixmapPath += "/"+bck;
-        if( QFile::exists( pixmapPath ) ) m_BackPixmap = new QPixmap( pixmapPath );
+        if( QFile::exists( pixmapPath ) )              // Image in simulide data folder
+            m_BackPixmap = new QPixmap( pixmapPath );
+        else                                           // Image in Circuit data folder
+        {
+            QDir    circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+            QString pixmapPath = circuitDir.absoluteFilePath( "data/"+m_name+"/"+bck );
+            if( QFile::exists( pixmapPath ) ) m_BackPixmap = new QPixmap( pixmapPath );
+        }
     }
     update();
 }
