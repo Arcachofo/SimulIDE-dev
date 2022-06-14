@@ -41,7 +41,7 @@ LibraryItem* Buffer::libraryItem()
 Buffer::Buffer( QObject* parent, QString type, QString id )
       : Gate( parent, type, id, 1 )
 {
-    m_area = QRect( -19, -17, 38, 34 ); 
+    m_area = QRect(-8, -8, 16, 16 );
     
     setOePin( new IoPin( 90, QPoint( 0,-12 ), m_id+"-Pin_outEnable", 0, this, input ) );
     setTristate( false );

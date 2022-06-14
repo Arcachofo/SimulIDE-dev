@@ -82,5 +82,5 @@ void Gate::setNumInps( int inputs )
     if( inputs < 1 ) return;
     IoComponent::setNumInps( inputs, "" );
     m_outPin[0]->setY( 0 );
-    m_area = QRect( -20, -4*m_inPin.size(), 32, 4*2*m_inPin.size() );
+    m_area = QRect( -11, -4*m_inPin.size(), 19, 4*2*m_inPin.size() );
 }

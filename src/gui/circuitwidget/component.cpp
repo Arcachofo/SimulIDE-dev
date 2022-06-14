@@ -571,8 +571,8 @@ void Component::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     {
         //pen.setColor( Qt::darkGray);
         //color = Qt::darkGray;
-        p->fillRect( boundingRect(), Qt::gray  );
         p->setOpacity( 0.5 );
+        p->fillRect( boundingRect(), Qt::darkGray  );
     }
     color = m_color;
 
