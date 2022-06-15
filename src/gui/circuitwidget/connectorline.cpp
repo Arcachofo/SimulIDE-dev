@@ -125,6 +125,8 @@ void ConnectorLine::moveSimple( QPointF delta )
     updatePos();
 }
 
+bool ConnectorLine::isDiagonal() { return ( fabs(m_p2X - m_p1X)>0 && fabs(m_p2Y - m_p1Y)>0 ); }
+
 void ConnectorLine::move( QPointF delta )
 {
     // If contiguous lines are also selected, just move line.
@@ -228,8 +230,8 @@ bool ConnectorLine::connectToWire( QPoint point1 )
     int myindex = m_pConnector->lineList()->indexOf( this );
        ConnectorLine* line;
 
-    if(( ( (dy() == 0) && ( abs( point1.x()-m_p2X ) < 8 ) ) // point near the p2 corner
-     || ( (dx() == 0) && ( abs( point1.y()-m_p2Y ) < 8 ) ) )
+    if(( ( (dy() == 0) && ( fabs( point1.x()-m_p2X ) < 8 ) ) // point near the p2 corner
+     || ( (dx() == 0) && ( fabs( point1.y()-m_p2Y ) < 8 ) ) )
      && ( myindex != m_pConnector->lineList()->size()-1 ) )
     {
     if( myindex == m_pConnector->lineList()->size()-1 ) return false;
@@ -237,8 +239,8 @@ bool ConnectorLine::connectToWire( QPoint point1 )
     index = myindex+1;
     line = m_pConnector->lineList()->at( index );
     }
-    else if(( ( (dy() == 0) && ( abs( point1.x()-m_p1X ) < 8 ) ) // point near the p1 corner
-          || ( (dx() == 0) && ( abs( point1.y()-m_p1Y ) < 8 ) ) )
+    else if(( ( (dy() == 0) && ( fabs( point1.x()-m_p1X ) < 8 ) ) // point near the p1 corner
+          || ( (dx() == 0) && ( fabs( point1.y()-m_p1Y ) < 8 ) ) )
           && ( myindex != 0 ) )
     {
         if( myindex == 0 ) return false;
@@ -345,7 +347,7 @@ QPainterPath ConnectorLine::shape() const
     QPainterPath path;
     QVector<QPointF> points;
     
-    if( abs(m_p2X - m_p1X) > abs(m_p2Y - m_p1Y) )
+    if( fabs(m_p2X - m_p1X) > fabs(m_p2Y - m_p1Y) )
     {
         points << mapFromScene( QPointF( m_p1X  , m_p1Y-2 ) )
                << mapFromScene( QPointF( m_p1X  , m_p1Y+2 ) )

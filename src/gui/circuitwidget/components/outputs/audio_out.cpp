@@ -72,6 +72,10 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     m_deviceinfo = QAudioDeviceInfo::defaultOutputDevice(); 
     if( m_deviceinfo.isNull() ) 
     {
+        const auto deviceInfos = QAudioDeviceInfo::availableDevices( QAudio::AudioOutput );
+        for( const QAudioDeviceInfo &deviceInfo : deviceInfos )
+            qDebug() << "Device name: " << deviceInfo.deviceName();
+
         qDebug() <<"   Error: No defaulf Audio Output Device Found" ;
         return;
     }

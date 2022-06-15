@@ -17,9 +17,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include <QApplication>
 #include <QPainter>
-#include <math.h>
 
 #include "pin.h"
 #include "bus.h"
@@ -170,8 +171,8 @@ Pin* Pin::connectPin( bool connect )      // Auto-Connect
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
 
             if( pin->parentItem() == this->parentItem() ) continue;
-            if( abs(scenePos().x()-pin->scenePos().x()) > 3 ) continue;
-            if( abs(scenePos().y()-pin->scenePos().y()) > 3 ) continue;
+            if( fabs(scenePos().x()-pin->scenePos().x()) > 3 ) continue;
+            if( fabs(scenePos().y()-pin->scenePos().y()) > 3 ) continue;
             if( m_isBus != pin->isBus() ) continue; // Only connect Bus to Bus
             if( pin->connector() ) continue;
             if( pin->unused() ) continue;

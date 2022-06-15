@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include <QMouseEvent>
 #include <QBrush>
 #include <QPen>
@@ -87,7 +89,7 @@ void PlotDisplay::setTimeZero( double t )
 {
     QPoint tPos = mapFromGlobal( QPoint(t, 0) );
     m_timeZero = tPos.x();
-    if( abs( m_timeZero-m_hCenter ) < 5 ) m_timeZero = m_hCenter;
+    if( fabs( m_timeZero-m_hCenter ) < 5 ) m_timeZero = m_hCenter;
     m_timeZero = m_timeZero*100/(double)width();
 }
 

@@ -19,6 +19,7 @@
 // Based on Falstad Circuit Simulator Diode model: https://falstad.com
 
 #include <math.h>
+
 #include <QDir>
 #include <QDomDocument>
 
@@ -97,7 +98,7 @@ void eDiode::voltChanged()
 
 inline double eDiode::limitStep( double vnew, double scale, double vc )
 {
-    if( vnew > vc && abs( vnew - m_voltPN ) > scale*2 ) // check new voltage; has current changed by factor of e^2?
+    if( vnew > vc && fabs( vnew - m_voltPN ) > scale*2 ) // check new voltage; has current changed by factor of e^2?
     {
         if( m_voltPN > 0 )
         {

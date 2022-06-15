@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include <QApplication>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -253,7 +255,7 @@ void SubPackage::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
         else if( angle == 90 )  yPin += length; // Top
         else if( angle == 270 ) yPin -= length; // Bottom
 
-        if(( abs(yPin-yPos)<4 ) && ( abs(xPin-xPos)<4 ) )
+        if(( fabs(yPin-yPos)<4 ) && ( fabs(xPin-xPos)<4 ) )
         { m_eventPin = pin; break; }
     }
     event->accept();

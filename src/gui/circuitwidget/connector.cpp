@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "connector.h"
 #include "connectorline.h"
 #include "circuitwidget.h"
@@ -242,7 +244,7 @@ void Connector::updateConRoute( Pin* pin, QPointF thisPoint )
         {
             point = line->p2();
 
-            if( abs(line->dx()) > abs(line->dy()) ) point.setY( line->p1().y() );
+            if( fabs(line->dx()) > fabs(line->dy()) ) point.setY( line->p1().y() );
             else                                    point.setX( line->p1().x() );
 
             ConnectorLine* newLine = addConLine( point.x(), point.y(), line->p2().x(), line->p2().y(), m_lastindex + 1 );

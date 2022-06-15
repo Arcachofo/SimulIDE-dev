@@ -53,7 +53,7 @@ class MAINMODULE_EXPORT ConnectorLine : public QGraphicsObject
         int dx() { return (m_p2X - m_p1X);}
         int dy() { return (m_p2Y - m_p1Y);}
         
-        bool isDiagonal() { return ( abs(m_p2X - m_p1X)>0 && abs(m_p2Y - m_p1Y)>0 ); }
+        bool isDiagonal();
 
         void move( QPointF delta );
         void moveLine( QPoint delta );

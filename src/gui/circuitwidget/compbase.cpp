@@ -25,7 +25,7 @@
 bool CompBase::m_saveBoard = false;
 
 CompBase::CompBase( QObject* parent, QString type, QString id )
-         : QObject( parent )
+        : QObject( parent )
 {
     m_id   = id;
     m_type = type;

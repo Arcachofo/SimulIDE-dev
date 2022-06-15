@@ -17,8 +17,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QDebug>
+#include <math.h>
 
+#include <QDebug>
 #include <QPainter>
 #include <QPushButton>
 #include <QGraphicsProxyWidget>
@@ -166,7 +167,8 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
             if( time > 30*1e6 )         // > 30 us : 0 received
             {
                 if( m_state == W1_BUSY ) qDebug()<< idLabel() << "ERROR: Ds18b20 busy, Read pulse should be < 15 us";
-                else if( m_write )       qDebug()<< idLabel() << "ERROR: Master is reading data, Read pulse should be < 15 us";
+                else if( m_write )
+                    qDebug()<< idLabel() << "ERROR: Master is reading data, Read pulse should be < 15 us";
                 else                     readBit( 0 );
             }
             else    ///// if( time < 15*1e6 )     // < 15 us : 1 received Or Read pulse
@@ -405,7 +407,7 @@ void Ds18b20::funCommand( uint8_t cmd )
 
 void Ds18b20::convertTemp() // Code 44h, temperature already in the Scratchpad, nothing to do
 {
-    uint16_t temp = round( abs( m_temp )*16 ); // Make it positive and shift to make integer value
+    uint16_t temp = round( fabs( m_temp )*16 ); // Make it positive and shift to make integer value
     if( m_temp < 0 ) temp = ~temp + 1;         // Temp under 0? Make 2nd complement
 
     m_scratchpad[0] = temp;
