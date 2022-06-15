@@ -42,7 +42,8 @@ void Mcs65Core::reset()
 {
     McuCore::reset();
 
-    m_step = 0;
+    m_cycle = 0;
+    m_incPC = false;
     m_cpuState = cpu_RESET;
     //m_cpuState = cpu_FETCH;
 
@@ -73,18 +74,14 @@ void Mcs65Core::Read( uint16_t addr )
 
     m_cpuState = cpu_EXEC; // Default
 
-    if( m_step == 0 ) { m_cpuState = cpu_READ; readMem( addr ); }
+    if( m_cycle == 1 ) { readMem( addr ); } // Read first operand
     else{
-        switch( m_addrMode )
-        {
-            case addr_NONE: break; /// ERROR
+        switch( m_addrMode ){
+            case addr_NONE: break; // Instruction with no operand
             case addr_ABSO:{       // Absolute: address From Mem 2 bytes, value = read( address ) 1 byte
-                switch( m_step ){
-                    case 1: m_cpuState = cpu_READ; readMem( addr ); m_op0 = m_mcu->extMem->getData(); break; //
-                    case 2: m_cpuState = cpu_EXEC; m_opAddr = (m_mcu->extMem->getData() << 8) | m_op0 ; break;
-                    /*case 1: m_cpuState = cpu_READ; readMem( m_opAddr ); m_op1 = m_op0; break; //
-                    case 2: m_cpuState = cpu_READ; readMem( (m_op0 << 8) | m_op1 ); break;
-                    case 3: m_cpuState = cpu_EXEC; m_op0 = m_mcu->extMem->getData();*/
+                switch( m_cycle ){
+                    case 2: readMem( addr ); m_op0 = m_mcu->extMem->getData(); break; //
+                    case 3: m_opAddr = (m_mcu->extMem->getData() << 8) | m_op0 ; break;
                 }
             }break;
             case addr_ACCU: m_op0 = ACC;                      break; // Value = Accumulator
@@ -96,8 +93,9 @@ void Mcs65Core::Read( uint16_t addr )
 
 void Mcs65Core::readMem( uint16_t addr )
 {
+    m_cpuState = cpu_READ;
     m_mcu->extMem->read( addr );
-    PC++;
+    m_incPC = m_addrMode > addr_ACCU;
 }
 
 void Mcs65Core::Write( uint16_t addr, uint8_t val )
@@ -110,7 +108,7 @@ void Mcs65Core::Write( uint16_t addr, uint8_t val )
 }   }
 
 void Mcs65Core::pushStack8( uint8_t byte ) { Write( 0x0100 + m_SP, byte ); m_SP--; }
-void Mcs65Core::popStack8()                { m_SP++; Read( 0x0100 + m_SP ); }
+void Mcs65Core::popStack8()                { m_SP++; readMem( 0x0100 + m_SP ); m_cpuState = cpu_EXEC; }
 
 void Mcs65Core::ADC()
 {
@@ -155,14 +153,13 @@ void Mcs65Core::BIT()
 
 void Mcs65Core::BRK() // Break/Interrupt : 1 byte, 7 cycles
 {SET_INTERRUPT( 1 );
-    switch( m_step )
-    {
-        case 0: pushStack8( ++PC >> 8 );       break; // PCH    -> Stack
-        case 1: pushStack8( PC & 0xFF );       break; // PCL    -> Stack
-        case 2: pushStack8( *m_STATUS );       break; // Status -> Stack
-        case 3: Read( m_IsrH );                break; // Read IsrH
-        case 4: Read( m_IsrL ); m_op1 = m_op0; break; // Read IsrL
-        case 5: PC = (m_op1 << 8) + m_op0;            // Jump to Isr
+    switch( m_cycle ){
+        case 2: pushStack8( ++PC >> 8 ); m_cpuState = cpu_EXEC; break; // PCH    -> Stack
+        case 3: pushStack8( PC & 0xFF ); m_cpuState = cpu_EXEC; break; // PCL    -> Stack
+        case 4: pushStack8( *m_STATUS ); m_cpuState = cpu_EXEC; break; // Status -> Stack
+        case 5: Read( m_IsrH );          m_cpuState = cpu_EXEC; break; // Read IsrH
+        case 6: Read( m_IsrL ); m_op1 = m_op0; m_cpuState = cpu_EXEC; break; // Read IsrL
+        case 7: PC = (m_op1 << 8) + m_op0;            // Jump to Isr
 }   }
 
 void Mcs65Core::CLC() { SET_CARRY(0);     }
@@ -170,33 +167,33 @@ void Mcs65Core::CLD() { SET_DECIMAL(0);   }
 void Mcs65Core::CLI() { SET_INTERRUPT(0); }
 void Mcs65Core::CLV() { SET_OVERFLOW(0);  }
 
-void Mcs65Core::CMP() { SET_CARRY(  ACC    >= m_op0 ); setNZ(  ACC    - m_op0 ); }
-void Mcs65Core::CPX() { SET_CARRY( *m_regX >= m_op0 ); setNZ( *m_regX - m_op0 ); }
-void Mcs65Core::CPY() { SET_CARRY( *m_regY >= m_op0 ); setNZ( *m_regY - m_op0 ); }
+void Mcs65Core::CMP() { SET_CARRY(  ACC   >= m_op0 ); setNZ(  ACC    - m_op0 ); }
+void Mcs65Core::CPX() { SET_CARRY( m_regX >= m_op0 ); setNZ( m_regX - m_op0 ); }
+void Mcs65Core::CPY() { SET_CARRY( m_regY >= m_op0 ); setNZ( m_regY - m_op0 ); }
 
-void Mcs65Core::DEC() {  m_op0  -= 1; setNZ( m_op0 );  Write( m_opAddr, m_op0 ); }
-void Mcs65Core::DEX() { *m_regX -= 1; setNZ( *m_regX ); }
-void Mcs65Core::DEY() { *m_regY -= 1; setNZ( *m_regY ); }
+void Mcs65Core::DEC() { m_op0  -= 1; setNZ( m_op0 );  Write( m_opAddr, m_op0 ); }
+void Mcs65Core::DEX() { m_regX -= 1; setNZ( m_regX ); }
+void Mcs65Core::DEY() { m_regY -= 1; setNZ( m_regY ); }
 
 void Mcs65Core::EOR() { ACC = ACC ^ m_op0; setNZ( m_op0 ); }
 
-void Mcs65Core::INC() {  m_op0  += 1; setNZ( m_op0 ); Write( m_opAddr, m_op0 ); }
-void Mcs65Core::INX() { *m_regX += 1; setNZ( *m_regX ); }
-void Mcs65Core::INY() { *m_regY += 1; setNZ( *m_regY ); }
+void Mcs65Core::INC() { m_op0  += 1; setNZ( m_op0 ); Write( m_opAddr, m_op0 ); }
+void Mcs65Core::INX() { m_regX += 1; setNZ( m_regX ); }
+void Mcs65Core::INY() { m_regY += 1; setNZ( m_regY ); }
 
 void Mcs65Core::JMP() { PC = m_op0; }
 
-void Mcs65Core::JSR()                    /////////////////
+void Mcs65Core::JSR()
 {
-    PC--;
-    pushStack8( (PC >> 8) & 0xFF);
-    pushStack8( PC & 0xFF );
-    PC = m_op0;
-}
+    switch( m_cycle ){
+        case 3: pushStack8( (PC+1) >> 8 );   m_cpuState = cpu_EXEC; break;  // PCH -> Stack
+        case 4: pushStack8( (PC+1) & 0xFF ); m_cpuState = cpu_EXEC; break;  // PCL -> Stack
+        case 5: PC = m_opAddr;                                              // Jump to Subroutine
+}   }
 
-void Mcs65Core::LDA() { ACC     = m_op0; setNZ( m_op0 ); }
-void Mcs65Core::LDX() { *m_regX = m_op0; setNZ( m_op0 ); }
-void Mcs65Core::LDY() { *m_regY = m_op0; setNZ( m_op0 ); }
+void Mcs65Core::LDA() { ACC    = m_op0; setNZ( m_op0 ); }
+void Mcs65Core::LDX() { m_regX = m_op0; setNZ( m_op0 ); }
+void Mcs65Core::LDY() { m_regY = m_op0; setNZ( m_op0 ); }
 
 void Mcs65Core::LSR()
 {
@@ -215,15 +212,14 @@ void Mcs65Core::PHP() { pushStack8( STATUS(C) | STATUS(B) ); }
 
 void Mcs65Core::PLA()
 {
-    if( m_step == 0 ) { popStack8(); m_cpuState = cpu_EXEC; return; }
-    ACC = m_op0;
-    setNZ( ACC );
+    if( m_cycle == 2 ) popStack8();
+    else             { ACC = m_op0; setNZ( ACC ); PC++; }
 }
 
 void Mcs65Core::PLP()
 {
-    if( m_step == 0 ) { popStack8(); m_cpuState = cpu_EXEC; }
-    else              *m_STATUS = m_op0 | CONSTANT | BREAK;
+    if( m_cycle == 2 ) popStack8();
+    else              { *m_STATUS = m_op0 | CONSTANT | BREAK; PC++; }
 }
 
 void Mcs65Core::ROL()
@@ -246,23 +242,21 @@ void Mcs65Core::ROR()
     Write( m_opAddr, m_op0 );
 }
 
-void Mcs65Core::RTI() // Return from Interrupt
+void Mcs65Core::RTI() // Return from Interrupt ////
 {
-    switch( m_step )
-    {
-        case 0: popStack8(); m_cpuState = cpu_EXEC; break;
-        case 1: popStack8(); m_cpuState = cpu_EXEC; *m_STATUS = m_op0 | CONSTANT | BREAK; break;
-        case 2: popStack8(); m_cpuState = cpu_EXEC; m_op1 = m_op0; break;
-        case 3: PC = (m_op0 << 8) | m_op1;
+    switch( m_cycle ){
+        case 2: popStack8();                                       break;
+        case 3: popStack8(); *m_STATUS = m_op0 | CONSTANT | BREAK; break;
+        case 4: popStack8(); m_op1 = m_op0;                        break;
+        case 5: PC = (m_op0 << 8) | m_op1;
 }   }
 
 void Mcs65Core::RTS() // Return from Subroutine
 {
-    switch( m_step )
-    {
-        case 0: popStack8(); m_cpuState = cpu_EXEC; break;
-        case 1: popStack8(); m_cpuState = cpu_EXEC; m_op1 = m_op0; break;
-        case 2: PC = ( (m_op0 << 8) | m_op1 ) + 1;
+    switch( m_cycle ){
+        case 2: popStack8();                break;
+        case 3: popStack8(); m_op0 = m_mcu->extMem->getData(); break;
+        case 4: PC = ( m_op0 << 8) | m_mcu->extMem->getData() ;//( (m_op0 << 8) | m_op1 ) + 1;
 }   }
 
 void Mcs65Core::SBC()
@@ -287,17 +281,17 @@ void Mcs65Core::SED() { SET_DECIMAL(1); }
 void Mcs65Core::SEI() { SET_INTERRUPT(1); }
 
 void Mcs65Core::STA() { Write( m_opAddr,  ACC ); }
-void Mcs65Core::STX() { Write( m_opAddr, *m_regX ); }
-void Mcs65Core::STY() { Write( m_opAddr, *m_regY ); }
+void Mcs65Core::STX() { Write( m_opAddr, m_regX ); }
+void Mcs65Core::STY() { Write( m_opAddr, m_regY ); }
 
-void Mcs65Core::TAX() { *m_regX = ACC; setNZ( ACC ); }
-void Mcs65Core::TAY() { *m_regY = ACC; setNZ( ACC ); }
+void Mcs65Core::TAX() { m_regX = ACC; setNZ( ACC ); }
+void Mcs65Core::TAY() { m_regY = ACC; setNZ( ACC ); }
 
-void Mcs65Core::TXA() { ACC = *m_regX; setNZ( ACC ); }
-void Mcs65Core::TYA() { ACC = *m_regY; setNZ( ACC ); }
+void Mcs65Core::TXA() { ACC = m_regX; setNZ( ACC ); }
+void Mcs65Core::TYA() { ACC = m_regY; setNZ( ACC ); }
 
-void Mcs65Core::TSX() { *m_regX = m_SP; setNZ( m_SP ); }
-void Mcs65Core::TXS() { m_SP = *m_regX; }
+void Mcs65Core::TSX() { m_regX = m_SP; setNZ( m_SP ); }
+void Mcs65Core::TXS() { m_SP = m_regX; }
 
 void  Mcs65Core::BXX( uint8_t flag, uint8_t y ) /// +1 cycle same page +2 different page
 {
@@ -314,17 +308,21 @@ void  Mcs65Core::BXX( uint8_t flag, uint8_t y ) /// +1 cycle same page +2 differ
 
 void Mcs65Core::runDecoder()
 {
+    if( m_incPC ) { PC++; m_incPC = false; }
     m_mcu->cyclesDone = 1;
+    m_cycle++;
+
+    m_phi2Pin->sheduleState( false, 0 );
+    m_phi2Pin->sheduleState( true, m_psStep ); // ClkPin High at half cycle
 
     if( m_cpuState == cpu_RESET )              //Reset proccess (8 cycles)
     {
-        m_step++;
-        switch( m_step ){
-            case 1:                                return;
-            case 2: return;//m_mcu->extMem->read( 1 );      return;
-            case 3: return;//popStack8();                   return;
-            case 4: return;//popStack8();                   return;
-            case 5: return;//popStack8();                   return;
+        switch( m_cycle ){
+            //case 1:                                return;
+            //case 2: return;//m_mcu->extMem->read( 1 );      return;
+            //case 3: return;//popStack8();                   return;
+            //case 4: return;//popStack8();                   return;
+            //case 5: return;//popStack8();                   return;
             case 6: m_mcu->extMem->read( 0XFFFC ); return;
             case 7:{
                 PC = m_mcu->extMem->getData();
@@ -334,57 +332,86 @@ void Mcs65Core::runDecoder()
             case 8:{
                 uint32_t data = m_mcu->extMem->getData();
                 PC += data << 8;
-                m_step = 0;
-                m_cpuState = cpu_FETCH;
+                m_cpuState = cpu_FETCH;   // Reset sequence finished, go fetch first instruction.
             }
+            default: return;
         }
     }
-    m_phi2Pin->sheduleState( false, 0 );
-    m_phi2Pin->sheduleState( true, m_psStep ); // ClkPin High at half cycle
 
-    if( m_cpuState == cpu_DECODE )                     // Decode Instruction
-    {                                                  // OOOAAAGG , O = opcode, A = Addr mode, G = group
+    if( m_cpuState == cpu_DECODE )            // Decode Instruction
+    {
+        m_ctrlPC   = false;    // Increment PC at execution
         m_cpuState = cpu_READ;
+        m_addrMode = addr_NONE;
         m_syncPin->sheduleState( false, 0 ); /// prop delay???
 
         m_instr = m_mcu->extMem->getData();
-        m_group =  m_instr & 0b00000011;
-        m_Amode = (m_instr & 0b00011100) >> 2;
-        m_Ocode = (m_instr & 0b11100000) >> 5;
-        m_step = 0;
+        switch( m_instr ) {                   // Irregular Instructions
+            case 0x00:  m_ctrlPC = true; break; // BRK
+            case 0x08:  break; // PHP
+            case 0x18:  break; // CLC
+            case 0x20:  m_addrMode = addr_ABSO; m_ctrlPC = true; break; // JSR abs Execution controls PC
+            case 0x28:  m_ctrlPC = true; break; // PLP
+            case 0x38:  break; // SEC
+            case 0x40:  m_ctrlPC = true; break; // RTI
+            case 0x48:  break; // PHA
+            case 0x58:  break; // CLI
+            case 0x60:  m_ctrlPC = true; break; // RTS
+            case 0x68:  m_ctrlPC = true; break; // PLA
+            case 0x78:  break; // SEI
+            case 0x88:  break; // DEY
+            case 0x8A:  break; // TXA
+            case 0x98:  break; // TYA
+            case 0x9A:  break; // TXS
+            case 0xA8:  break; // TAY
+            case 0xAA:  break; // TAX
+            case 0xB8:  break; // CLV
+            case 0xBA:  break; // TSX
+            case 0xC8:  break; // INY
+            case 0xCA:  break; // DEX
+            case 0xD8:  break; // CLD
+            case 0xE8:  break; // INX
+            case 0xEA:  break; // NOP
+            case 0xF8:  break; // SED
+            default:                          // Regular Instructions
+            {                                 // OOOAAAGG , O = Opcode, A = Addr mode, G = Group
+                m_group =  m_instr & 0b00000011;
+                m_Amode = (m_instr & 0b00011100) >> 2;
+                m_Ocode = (m_instr & 0b11100000) >> 5;
 
-        if( m_group == 3 ) { m_cpuState = cpu_FETCH; return; }/// Not valid (by now)
+                if( m_group == 3 ) { m_cpuState = cpu_FETCH; return; }/// Not valid (by now)
 
-        switch( m_Amode ){
-            case 0: {
-if( m_group == 1 ){ m_addrMode = addr_INDI; m_regI = m_regX; m_zeroPage = true; break; }   // Group 1
-              else{ m_addrMode = addr_IMME;                                     break; }   // Groups 2, 4
-                    }
-            case 1: m_addrMode = addr_ABSO;                  m_zeroPage = true; break;     // All
-            case 2: {
-if( m_group == 1 ){ m_addrMode = addr_IMME;                                     break; }   // Group 1
-if( m_group == 2 ){ m_addrMode = addr_ACCU;                                     break; }   // Group 2
-                    }
-            case 3: m_addrMode = addr_ABSO;                                     break;     // All
-            case 4:
-if( m_group == 1 ){ m_addrMode = addr_INDI; m_regI = m_regY;                    break; }   // Group 1
+                switch( m_Amode ){
+                    case 0: {
+        if( m_group == 1 ){ m_addrMode = addr_INDI; m_regI = &m_regX; m_zeroPage = true; break; }   // Group 1
+                      else{ m_addrMode = addr_IMME;                                     break; }   // Groups 2, 4
+                            }
+                    case 1: m_addrMode = addr_ABSO;                  m_zeroPage = true; break;     // All
+                    case 2: {
+        if( m_group == 1 ){ m_addrMode = addr_IMME;                                     break; }   // Group 1
+        if( m_group == 2 ){ m_addrMode = addr_ACCU;                                     break; }   // Group 2
+                            }
+                    case 3: m_addrMode = addr_ABSO;                                     break;     // All
+                    case 4:
+        if( m_group == 1 ){ m_addrMode = addr_INDI; m_regI = &m_regY;                    break; }   // Group 1
 
-            case 5: m_addrMode = addr_RELA; m_regI = m_regX; m_zeroPage = true; break;     // same
-            case 6:
-if( m_group == 1 ){ m_addrMode = addr_ABSO; m_regI = m_regY;                    break; }   // Group 1
+                    case 5: m_addrMode = addr_RELA; m_regI = &m_regX; m_zeroPage = true; break;     // same
+                    case 6:
+        if( m_group == 1 ){ m_addrMode = addr_ABSO; m_regI = &m_regY;                    break; }   // Group 1
 
-            case 7: m_addrMode = addr_ABSO; m_regI = m_regX;                    break;     // All
+                    case 7: m_addrMode = addr_ABSO; m_regI = &m_regX;                    break;     // All
 
-           default: m_addrMode = addr_NONE; m_regI = NULL  ; m_zeroPage = false;
+                   default: m_addrMode = addr_NONE; m_regI = NULL  ; m_zeroPage = false;
+                }
+            }
         }
     }
-
-    if( m_cpuState == cpu_READ ) Read( PC );
+    if( m_cpuState == cpu_READ ) Read( PC+1 );
 
     if( m_cpuState == cpu_EXEC )             // We are executing m_instr
     {
-        //m_op0 = m_mcu->extMem->getData(); // Read first operand (even if not used)
         m_cpuState = cpu_FETCH; // Default, Ops can change this
+        if( !m_ctrlPC ) PC++;
 
         switch( m_instr ) {                 // Irregular m_instrs
             case 0x00: BRK(); break; // BRK
@@ -458,12 +485,12 @@ if( m_group == 1 ){ m_addrMode = addr_ABSO; m_regI = m_regY;                    
 
     if( m_cpuState == cpu_FETCH ) // Start m_instr cycle
     {
+        m_cycle = 0;
         m_cpuState = cpu_DECODE;
+        m_addrMode = addr_NONE;
         m_syncPin->sheduleState( true, 0 ); /// prop delay???
 
-        readMem( PC ); // Fetch m_instr
+        m_mcu->extMem->read( PC ); // Fetch Instruction
     }
     else if( m_cpuState == cpu_WRITE ) m_cpuState = cpu_FETCH;
-
-    m_step++;
 }

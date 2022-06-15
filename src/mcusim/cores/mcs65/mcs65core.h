@@ -55,8 +55,8 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
 
         enum addrMode_t{
             addr_NONE=0,
-            addr_ABSO,
             addr_ACCU,
+            addr_ABSO,
             addr_IMME,
             //addr_IMPL,
             addr_INDI,
@@ -86,8 +86,8 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         uint8_t m_SP;
         uint8_t m_acc;
 
-        uint8_t* m_regX;
-        uint8_t* m_regY;
+        uint8_t m_regX;
+        uint8_t m_regY;
         uint8_t* m_regI;
 
         cpuState_t m_cpuState;
@@ -99,7 +99,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         uint8_t m_IsrH;
         uint8_t m_IsrL;
 
-        int m_step;
+        int m_cycle;
 
         addrMode_t m_addrMode;
         uint8_t m_op0;
@@ -107,6 +107,8 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         uint16_t m_opAddr;
 
         bool m_zeroPage;
+        bool m_ctrlPC;
+        bool m_incPC;
 
         inline void setNZ( uint8_t val );
 
