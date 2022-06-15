@@ -218,6 +218,13 @@
         <file alias="giu.png">../src/icons/components/giu.png</file>
         <file alias="down.png">../src/icons/components/down.png</file>
         
+        <file alias="sin.png">../src/icons/components/sin.png</file>
+        <file alias="saw.png">../src/icons/components/saw.png</file>
+        <file alias="tri.png">../src/icons/components/tri.png</file>
+        <file alias="sqa.png">../src/icons/components/sqa.png</file>
+        <file alias="rnd.png">../src/icons/components/rnd.png</file>
+        <file alias="wav.png">../src/icons/components/wav.png</file>
+        
         <file alias="blanc.png">../src/icons/components/blanc.png</file>
         <file alias="font2.png">../src/icons/font/font2.png</file>
         

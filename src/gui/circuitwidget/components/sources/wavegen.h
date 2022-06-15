@@ -36,7 +36,8 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
             Saw,
             Triangle,
             Square,
-            Random
+            Random,
+            Wav
         };
 
  static Component* construct( QObject* parent, QString type, QString id );
@@ -44,6 +45,7 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
 
         virtual bool setPropStr( QString prop, QString val ) override;
 
+        virtual void stamp() override;
         virtual void runEvent() override;
 
         double duty() { return m_duty; }
@@ -61,6 +63,9 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         double midVolt() { return m_voltBase+m_voltage/2; }
         void setMidVolt( double v ) { m_voltBase = v-m_voltage/2;}
 
+        QString fileName() { return m_fileName; }
+        void setFile( QString fileName );
+
         virtual void setFreq( double freq ) override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
@@ -71,6 +76,7 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         void genTriangle();
         void genSquare();
         void genRandom();
+        void genWav();
         
         wave_type m_waveType;
         double m_duty;
@@ -84,7 +90,18 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         uint64_t m_qSteps;
         uint64_t m_nextStep;
 
+        uint m_index;
+        uint16_t m_audioFormat;
+        uint16_t m_numChannels;
+        uint32_t m_sampleRate;
+        uint16_t m_blockSize;
+        uint16_t m_bitsPerSample;
+        uint32_t m_maxValue;
+        std::vector<uint16_t> m_data;
+        QString m_fileName;
+
         QStringList m_waves;
+        QPixmap* m_wavePixmap;
 };
 
 #endif
