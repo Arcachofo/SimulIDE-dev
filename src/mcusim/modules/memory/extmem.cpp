@@ -53,19 +53,19 @@ void ExtMemModule::reset()  // NO: Reset happens after initialize() in Pins.
     if( m_rwPin )
     {
         m_rwPin->setPinMode( output );
-        m_rwPin->sheduleState( true, 0 );
+        m_rwPin->setOutState( true );
     }
     if( m_rePin ) m_rePin->sheduleState( true, 0 );
     if( m_enPin )
     {
         m_enPin->setPinMode( output );
-        m_enPin->sheduleState( true, 0 );
+        m_enPin->setOutState( true );
         m_enPin->updateStep();
     }
     if( m_laPin )
     {
         m_laPin->setPinMode( output );
-        m_laPin->sheduleState( false, 0 );
+        m_laPin->setOutState( false );
         m_laPin->updateStep();
     }
 
@@ -73,7 +73,7 @@ void ExtMemModule::reset()  // NO: Reset happens after initialize() in Pins.
     {
         pin->setDirection( true );
         pin->controlPin( true, true );
-        pin->sheduleState( false, 0 );
+        pin->setOutState( false );
         pin->updateStep();
     }
     for( McuPin* pin : m_dataPin )
@@ -82,12 +82,6 @@ void ExtMemModule::reset()  // NO: Reset happens after initialize() in Pins.
         pin->controlPin( true, true );
         pin->updateStep();
     }
-    /*if( m_rwPin )
-    {
-        m_rwPin->setDirection( true );
-        m_rwPin->controlPin( true, true );
-        m_rwPin->sheduleState( true, 0 );
-    }*/
 }
 
 void ExtMemModule::runEvent()
