@@ -114,7 +114,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         eMcu m_eMcu;
 
         IoPin*  m_resetPin;
-        McuPin* m_mcuRstPin;
+        McuPin* m_portRstPin;
         McuPin* m_clkPin[2];
 
         QList<Pin*> m_pinList;

@@ -404,7 +404,7 @@ void McuCreator::createPort( QDomElement* p )
             m_mcuComp->m_clkPin[i] = port->getPin( pins.value(i) );
     }
     if( p->hasAttribute("resetpin") )
-        m_mcuComp->m_mcuRstPin = port->getPin( p->attribute("resetpin") );
+        m_mcuComp->m_portRstPin = port->getPin( p->attribute("resetpin") );
 
     QString Oreg = "";
     if( p->hasAttribute( "outreg" ) )

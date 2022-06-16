@@ -95,7 +95,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_clkPin[0]  = NULL;
     m_clkPin[1]  = NULL;
     m_resetPin   = NULL;
-    m_mcuRstPin  = NULL;
+    m_portRstPin  = NULL;
     m_mcuMonitor = NULL;
     m_autoLoad   = false;
     m_extClock   = false;
@@ -191,20 +191,19 @@ void Mcu::initialize()
 
 void Mcu::stamp()
 {
-    if( m_resetPin )
-    {
+    if( m_resetPin ){
         m_resetPin->changeCallBack( this );
 
-        if(m_resetPin == m_mcuRstPin)
+        if( m_resetPin == m_portRstPin ) // Not dedicated Reset Pin
         {
-            m_mcuRstPin->controlPin( true, true );
-            m_mcuRstPin->setPinMode( input );
+            m_portRstPin->controlPin( true, true );
+            m_portRstPin->setPinMode( input );
         }
     }
+    else m_eMcu.cpuReset( false );
+
     if( m_autoLoad )
-    {
-        if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware );
-    }
+    { if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware ); }
 }
 
 void Mcu::updateStep()
@@ -476,19 +475,19 @@ void Mcu::addPin( QString id, QString type, QString label,
 
 bool Mcu::rstPinEnabled()
 {
-    if( !m_mcuRstPin ) return true;
-    return (m_resetPin == m_mcuRstPin);
+    if( !m_portRstPin ) return true;
+    return (m_resetPin == m_portRstPin);
 }
 
 void Mcu::enableRstPin( bool en )
 {
-    if( !m_mcuRstPin ) return;
+    if( !m_portRstPin ) return;
 
-    m_mcuRstPin->controlPin( en, en );
+    m_portRstPin->controlPin( en, en );
 
     if( en ){
-        m_resetPin = m_mcuRstPin;
-        m_mcuRstPin->setPinMode( input );
+        m_resetPin = m_portRstPin;
+        m_portRstPin->setPinMode( input );
     }
     else m_resetPin = NULL;
 }
