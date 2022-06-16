@@ -64,7 +64,7 @@ void McuPin::stamp()
     if( !m_dirCtrl ) setDirection( m_outMask );
     setPullup( m_puMask );
     if( !m_outCtrl && m_outMask ) IoPin::setOutState( true );
-    else                          IoPin::setOutState( false );
+    update();
 }
 
 void McuPin::voltChanged()
@@ -104,7 +104,7 @@ void McuPin::setPortState( bool state ) // Port Is being witten
 }
 
 void McuPin::setOutState( bool state ) // Some periferical is controlling this Pin
-{ if( m_outCtrl ) IoPin::sheduleState( state, 0 ); }
+{ if( m_outCtrl ) IoPin::setOutState( state ); }
 
 void McuPin::sheduleState( bool state, uint64_t time ) // Some periferical is controlling this Pin
 { if( m_outCtrl ) IoPin::sheduleState( state, time ); }
