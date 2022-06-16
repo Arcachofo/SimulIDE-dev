@@ -1,5 +1,24 @@
 <!DOCTYPE SimulIDE>
 
 <mcu name="6520" core="scripted" script="6520_core.js" data="4" inst_cycle="1" clkpin="P2">
-            <include file="6520.xml" />
+
+    <datablock name="RAM" start="0x0000" end="0xFFFF"/>
+    
+    <interrupts enable="">
+        <interrupt name="RESET"                                priority="0" vector="0xFFFC"/>
+    </interrupts>
+    
+    <port name="PORTA" pins="16" >
+    </port>
+    
+    <port name="PORTD" pins="8" >
+    </port>
+    
+    <port name="CPORT0" pins="P0,P1,P2,SYNC,NMI,IRQ,RDY,SO,RW" />
+    <extmem name="MemCtrl" 
+        addrport="PORTA"
+        dataport="PORTD"
+        rwpin="RW">
+    </extmem>
+    
 </mcu>
