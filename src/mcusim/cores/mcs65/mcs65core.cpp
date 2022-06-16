@@ -167,7 +167,7 @@ void Mcs65Core::CLD() { SET_DECIMAL(0);   }
 void Mcs65Core::CLI() { SET_INTERRUPT(0); }
 void Mcs65Core::CLV() { SET_OVERFLOW(0);  }
 
-void Mcs65Core::CMP() { SET_CARRY(  ACC   >= m_op0 ); setNZ(  ACC    - m_op0 ); }
+void Mcs65Core::CMP() { SET_CARRY(  ACC   >= m_op0 ); setNZ( ACC    - m_op0 ); }
 void Mcs65Core::CPX() { SET_CARRY( m_regX >= m_op0 ); setNZ( m_regX - m_op0 ); }
 void Mcs65Core::CPY() { SET_CARRY( m_regY >= m_op0 ); setNZ( m_regY - m_op0 ); }
 
@@ -333,7 +333,7 @@ void Mcs65Core::runDecoder()
                 uint32_t data = m_mcu->extMem->getData();
                 PC += data << 8;
                 m_cpuState = cpu_FETCH;   // Reset sequence finished, go fetch first instruction.
-            }
+            } break;
             default: return;
         }
     }
@@ -343,7 +343,7 @@ void Mcs65Core::runDecoder()
         m_ctrlPC   = false;    // Increment PC at execution
         m_cpuState = cpu_READ;
         m_addrMode = addr_NONE;
-        m_syncPin->sheduleState( false, 0 ); /// prop delay???
+        m_syncPin->sheduleState( true, 0 ); /// prop delay???
 
         m_instr = m_mcu->extMem->getData();
         switch( m_instr ) {                   // Irregular Instructions
@@ -488,7 +488,7 @@ void Mcs65Core::runDecoder()
         m_cycle = 0;
         m_cpuState = cpu_DECODE;
         m_addrMode = addr_NONE;
-        m_syncPin->sheduleState( true, 0 ); /// prop delay???
+        m_syncPin->sheduleState( false, 0 ); /// prop delay???
 
         m_mcu->extMem->read( PC ); // Fetch Instruction
     }

@@ -65,6 +65,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
 
         virtual void reset() override;
         virtual void runDecoder() override;
+        virtual void runClock( bool clkState )override { if( !clkState ) runDecoder(); }
 
     private:
 

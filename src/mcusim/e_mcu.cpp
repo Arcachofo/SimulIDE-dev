@@ -77,14 +77,14 @@ void eMcu::stamp()
     m_state = mcuRunning;
     //m_state = mcuStopped;
 
-    Simulator::self()->cancelEvents( this );
+    /*Simulator::self()->cancelEvents( this );
     if( m_clkPin ) m_clkPin->changeCallBack( this );  // External clock
-    else           Simulator::self()->addEvent( m_psCycle, this );
+    else           Simulator::self()->addEvent( m_psCycle, this );*/
 }
 
 void eMcu::voltChanged()  // External clock
 {
-    cpu->runClock( m_clkPin->getInpState() );
+    if( m_state == mcuRunning ) cpu->runClock( m_clkPin->getInpState() );
 }
 
 void eMcu::runEvent()
@@ -133,13 +133,14 @@ void eMcu::setDebugger( BaseDebugger* deb )
 
 void eMcu::cpuReset( bool r )
 {
+    Simulator::self()->cancelEvents( this );
     if( r ){
         reset();
         m_state = mcuStopped;
     }else{
         m_state = mcuRunning;
-        Simulator::self()->cancelEvents( this );
-        Simulator::self()->addEvent( 1, this );
+        if( m_clkPin ) m_clkPin->changeCallBack( this );  // External clock
+        else           Simulator::self()->addEvent( m_psCycle, this );
     }
 }
 
