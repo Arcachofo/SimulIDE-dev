@@ -187,6 +187,7 @@ int Compiler::compile( bool debug )
     {
         m_fileList.clear();
         m_fileList.append( m_fileName+m_fileExt );
+        if( m_fileExt == ".hex" ) m_uploadHex = true;
         if( m_uploadHex ) m_firmware = m_buildPath+m_fileName+".hex";
         else              m_firmware = "";
 
