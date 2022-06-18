@@ -1,8 +1,15 @@
 <!DOCTYPE SimulIDE>
 
-<mcu name="6502" core="6502" data="65536" prog="65536" progword="1" inst_cycle="1" >
+<mcu name="6502" core="6502" data="8" prog="65536" progword="1" inst_cycle="1" >
 
-    <datablock name="RAM" start="0x0000" end="0xFFFF"/>
+    <regblock name="REGs" start="0x00" end="0x05" streg="P">
+        <register name="A"  addr="0x00" />
+        <register name="X"  addr="0x01" />
+        <register name="Y"  addr="0x02" />
+        <register name="S"  addr="0x03" />
+        <register name="IR" addr="0x04" />
+        <register name="P"  addr="0x05" bits="C,Z,I,D,B,1,V,N" reset="00110100" mask="11011111" />
+    </regblock>
     
     <interrupts enable="">
         <interrupt name="RESET"                                priority="0" vector="0xFFFC"/>

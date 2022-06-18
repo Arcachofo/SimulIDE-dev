@@ -26,7 +26,6 @@
 #define CONSTANT  0x20
 #define BREAK     0x10
 
-#define ACC       m_acc
 
 #define SET_NEGATIVE(x)  write_S_Bit( N, x & 0x80 ) //(x ? (m_STATUS |= NEGATIVE) : (m_STATUS &= (~NEGATIVE)) )
 #define SET_OVERFLOW(x)  write_S_Bit( V, x ) //(x ? (m_STATUS |= OVERFLOW) : (m_STATUS &= (~OVERFLOW)) )
@@ -68,6 +67,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         virtual void runClock( bool clkState )override { if( !clkState ) runDecoder(); }
 
     private:
+        inline uint8_t readDataBus();
 
         uint64_t m_psStep;
 
@@ -84,15 +84,14 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         McuPin* m_soPin;
         McuPin* m_dbePin;
 
-        uint8_t m_SP;
-        uint8_t m_acc;
-
-        uint8_t m_regX;
-        uint8_t m_regY;
-        uint8_t* m_regI;
+        uint8_t* m_SP;
+        uint8_t* m_Ac;
+        uint8_t* m_IR;
+        uint8_t* m_rX;
+        uint8_t* m_rY;
+        uint8_t* m_rI;
 
         cpuState_t m_cpuState;
-        uint8_t m_instr;
         uint8_t m_Ocode;
         uint8_t m_group;
         uint8_t m_Amode;
@@ -106,6 +105,12 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         uint8_t m_op0;
         uint8_t m_op1;
         uint16_t m_opAddr;
+
+        uint64_t m_tP0;
+        uint64_t m_tSync;
+        //uint64_t m_tMds;
+        //uint64_t m_tAds;
+        uint64_t m_tAcc;
 
         bool m_zeroPage;
         bool m_ctrlPC;

@@ -21,7 +21,6 @@
 
 #include "extmem.h"
 #include "e_mcu.h"
-#include "mcupin.h"
 #include "simulator.h"
 
 ExtMemModule::ExtMemModule( eMcu* mcu, QString name )
@@ -50,20 +49,22 @@ void ExtMemModule::reset()  // NO: Reset happens after initialize() in Pins.
     m_memState = mem_IDLE;
     m_read = true;
 
-    if( m_rwPin )
-    {
+    if( m_rwPin ){
+        m_rwPin->controlPin( true, true );
         m_rwPin->setPinMode( output );
         m_rwPin->setOutState( true );
     }
-    if( m_rePin ) m_rePin->sheduleState( true, 0 );
-    if( m_enPin )
-    {
+    if( m_rePin )
+        m_rePin->sheduleState( true, 0 );
+
+    if( m_enPin ){
+        m_enPin->controlPin( true, true );
         m_enPin->setPinMode( output );
         m_enPin->setOutState( true );
         m_enPin->updateStep();
     }
-    if( m_laPin )
-    {
+    if( m_laPin ){
+        m_laPin->controlPin( true, true );
         m_laPin->setPinMode( output );
         m_laPin->setOutState( false );
         m_laPin->updateStep();
@@ -88,45 +89,34 @@ void ExtMemModule::runEvent()
 {
     switch( m_memState ) {
         case mem_IDLE: break;
-        case mem_LAEN:
+        case mem_LAEN:            // Enable Latch for Low addr
         {
-            m_laPin->sheduleState( true, 0 ); // Enable Latch for Low addr
+            m_laPin->sheduleState( true, 0 );
             uint64_t time = m_addrSetTime - m_laEnSetTime;
             Simulator::self()->addEvent( time, this );
             m_memState = mem_ADDR;
         }break;
         case mem_ADDR:            // Set Address Bus
         {
-            if( m_readMode & RW ) m_rwPin->sheduleState( m_read, 0 );
+            //if( m_readMode & RW ) m_rwPin->sheduleState( m_read, 0 ); // Set RW Pin Hi/Lo
 
             uint64_t time;
-
             uint addr = m_addr;
-            if( m_readMode & LA )
+
+            if( m_readMode & LA ) // We are latching Low Address byte in Data Bus
             {
-                for( IoPin* pin : m_dataPin )  // Low byte addr to Data Pins
-                {
-                    bool state = m_addr & 1;
-                    m_addr >>= 1;
-                    pin->sheduleState( state, 0 );
-                }
+                setDataDir( output );
+                setDataBus( m_addr );         // Low byte addr to Data Pins
                 addr = m_addrH;               // Addr Pins for High byte addr
                 time = m_laEnEndTime - m_addrSetTime;
                 m_memState = mem_LADI;
-            }
-            else{
+            }else{
                 m_memState = mem_DATA;
-                time = m_read ? m_readSetTime : m_writeSetTime;
-                time -= m_addrSetTime;
-                m_dataTime = m_addrSetTime + time;
+                m_dataTime = m_read ? m_readSetTime : m_writeSetTime;
+                time = m_dataTime -m_addrSetTime;
             }
+            setAddrBus( addr );               // Set addr Pins states
 
-            for( IoPin* pin : m_addrPin )     // Set addr Pins states
-            {
-                bool state = addr & 1;
-                addr >>= 1;
-                pin->sheduleState( state, 0 );
-            }
             Simulator::self()->addEvent( time, this );
         } break;
         case mem_LADI:           // Disable Latch (if in use)
@@ -134,30 +124,23 @@ void ExtMemModule::runEvent()
             m_laPin->sheduleState( false, 0 );
             m_memState = mem_DATA;
 
-            uint64_t time = m_read ? m_readSetTime : m_writeSetTime;
-            time -= m_laEnEndTime;
-            m_dataTime = m_laEnEndTime + time;
+            m_dataTime = m_read ? m_readSetTime : m_writeSetTime;
+            uint64_t time = m_dataTime -m_laEnEndTime;
             Simulator::self()->addEvent( time, this );
         }break;
         case mem_DATA:           // Set Data Bus for Read or Write
         {
-            for( IoPin* pin : m_dataPin )
-            {
-                pin->setPinMode( m_read ? input : output ); // Set data  Pins In/Out
+            setDataDir( m_read ? input : output ); // Set data  Pins In/Out
+            if( m_readMode & RW ) m_rwPin->setOutState( m_read ); // Set RW Pin Hi/Lo
 
-                if( !m_read )    // Writting: set data Pins states
-                {
-                    bool state = m_data & 1;
-                    m_data >>= 1;
-                    pin->sheduleState( state, 1 );
-                }
-            }
             if( m_read )
             {
                 if( m_readMode & EN ) m_enPin->sheduleState( false, 1 ); // Set EN  Pin Low
                 uint64_t time = m_readBusTime - m_dataTime;
                 Simulator::self()->addEvent( time, this );
             }
+            else setDataBus( m_data ); // Set data Pins States
+
             m_memState = m_read ? mem_READ : mem_IDLE;
         } break;
         case mem_READ:           // Read Data Bus
@@ -203,4 +186,26 @@ void ExtMemModule::write( uint32_t addr, uint32_t data )
     m_data = data;
     m_memState = mem_ADDR;
     Simulator::self()->addEvent( m_addrSetTime, this );
+}
+
+void ExtMemModule::setAddrBus( uint32_t addr )
+{
+    for( IoPin* pin : m_addrPin )     // Set addr Pins states
+    {
+        pin->sheduleState( addr & 1, 0 );
+        addr >>= 1;
+    }
+}
+
+void ExtMemModule::setDataDir( pinMode_t dir ) // Set data Pins In/Out
+{
+    for( IoPin* pin : m_dataPin ) pin->setPinMode( dir );
+}
+
+void ExtMemModule::setDataBus( uint32_t data )
+{
+    for( IoPin* pin : m_dataPin ){
+            pin->sheduleState( data & 1, 0 );
+            data >>= 1;
+    }
 }

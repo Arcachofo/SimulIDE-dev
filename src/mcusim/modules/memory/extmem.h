@@ -22,9 +22,7 @@
 
 #include "mcumodule.h"
 #include "e-element.h"
-
-class IoPin;
-class McuPin;
+#include "mcupin.h"
 
 class MAINMODULE_EXPORT ExtMemModule : public McuModule, public eElement
 {
@@ -59,6 +57,11 @@ class MAINMODULE_EXPORT ExtMemModule : public McuModule, public eElement
         void read( uint32_t addr, uint8_t mode=RW );
         void write( uint32_t addr, uint32_t data );
 
+        void setAddrBus( uint32_t addr );
+        uint32_t getAddress() { return m_addr; }
+
+        void setDataDir( pinMode_t dir );
+        void setDataBus( uint32_t data );
         uint32_t getData() { return m_data; }
 
         void setLaEnSetTime(  uint64_t t ) { m_laEnSetTime = t; }
@@ -94,10 +97,10 @@ class MAINMODULE_EXPORT ExtMemModule : public McuModule, public eElement
         memState_t m_memState;
         uint8_t    m_readMode;
 
-        IoPin* m_rwPin; // !Write / Read Pin
-        IoPin* m_rePin; // !Read Pin
-        IoPin* m_enPin; // !Enable Pin
-        IoPin* m_laPin; //  Latch Enable in Low+High Address mode (8051 ALE)
+        McuPin* m_rwPin; // !Write / Read Pin
+        McuPin* m_rePin; // !Read Pin
+        McuPin* m_enPin; // !Enable Pin
+        McuPin* m_laPin; //  Latch Enable in Low+High Address mode (8051 ALE)
                         //  Acting on Data Pins. Active High
 
         std::vector<McuPin*> m_addrPin;
