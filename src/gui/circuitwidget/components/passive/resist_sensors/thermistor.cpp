@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include <QPainter>
-#include <math.h>
+#include <QtMath>
 
 #include "thermistor.h"
 #include "itemlibrary.h"
@@ -63,7 +63,7 @@ void Thermistor::updateStep()
     //double k = t*t0/(t-t0);
     //double res = m_r25/pow( e, m_bVal/k );
     double k = (t0-t)/(t*t0);
-    double res = m_r25*pow( e, m_bVal*k );
+    double res = m_r25*qPow( e, m_bVal*k );
     eResistor::setRes( res );
     if( m_propDialog ) m_propDialog->updtValues();
     else if( m_showProperty == "Temp" ) setValLabelText( getPropStr( "Temp" ) );

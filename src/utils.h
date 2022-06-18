@@ -20,7 +20,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <math.h>
+#include <QtMath>
 
 class QDomDocument;
 class QByteArray;
@@ -38,24 +38,24 @@ class Pin;
 
 #define valToUnit( val, mult, decimals ) \
     mult = " p";\
-    if( fabs( val ) > 999 ) { \
+    if( qFabs( val ) > 999 ) { \
         val /= 1e3; mult = " n"; \
-        if( fabs( val ) > 999 ) { \
+        if( qFabs( val ) > 999 ) { \
             val /= 1e3; mult = " u"; \
-            if( fabs( val ) > 999 ) { \
+            if( qFabs( val ) > 999 ) { \
                 val /= 1e3; mult = " m"; \
-                if( fabs( val ) > 999 ) { \
+                if( qFabs( val ) > 999 ) { \
                     val /= 1e3; mult = " "; \
-                    if( fabs( val ) > 999 ) { \
+                    if( qFabs( val ) > 999 ) { \
                         val /= 1e3; mult = " k"; \
-                        if( fabs( val ) > 999 ) { \
+                        if( qFabs( val ) > 999 ) { \
                             val /= 1e3; mult = " M"; \
-                            if( fabs( val ) > 999 ) { \
+                            if( qFabs( val ) > 999 ) { \
                                 val /= 1e3; mult = " G"; \
     }}}}}}} \
-    if     ( fabs( val ) < 10)   decimals = 3; \
-    else if( fabs( val ) < 100)  decimals = 2; \
-    else if( fabs( val ) < 1000) decimals = 1;
+    if     ( qFabs( val ) < 10)   decimals = 3; \
+    else if( qFabs( val ) < 100)  decimals = 2; \
+    else if( qFabs( val ) < 1000) decimals = 1;
 
 double getMultiplier( QString mult );
 QString multToValStr( double value, QString mult );

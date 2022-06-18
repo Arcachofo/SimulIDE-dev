@@ -19,8 +19,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <math.h>
-
+#include <QtMath>
 #include <QPainter>
 
 #include "lm555.h"
@@ -157,13 +156,13 @@ void Lm555::voltChanged()
     double voltPos = m_Vcc->getVolt();
     double voltNeg = m_Gnd->getVolt();
 
-    if( fabs(voltNeg-m_voltNeg) > 1e-3 )
+    if( qFabs(voltNeg-m_voltNeg) > 1e-3 )
     {
         m_output->setOutLowV( voltNeg );
         m_voltNeg = voltNeg;
         changed = true;
     }
-    if( fabs(voltPos-m_voltPos) > 1e-3 )
+    if( qFabs(voltPos-m_voltPos) > 1e-3 )
     {
         double voltHight = voltPos - 1.7;
         if( voltHight < m_voltNeg ) voltHight = m_voltNeg;

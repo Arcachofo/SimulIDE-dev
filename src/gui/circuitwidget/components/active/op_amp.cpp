@@ -21,7 +21,7 @@
 
 #include <QPainter>
 
-#include <math.h>
+#include <QtMath>
 
 #include "op_amp.h"
 #include "itemlibrary.h"
@@ -129,8 +129,8 @@ void OpAmp::voltChanged() // Called when any pin node change volt
     else if( out < m_voltNeg ) out = m_voltNeg;
 
     if( (m_step==0)
-     && (fabs(m_lastIn-vd) < m_accuracy )
-     && (fabs(out-m_lastOut) < m_accuracy) )
+     && (qFabs(m_lastIn-vd) < m_accuracy )
+     && (qFabs(out-m_lastOut) < m_accuracy) )
     { m_step = 0; return; }         // Converged
 
     Simulator::self()->notCorverged();
@@ -145,7 +145,7 @@ void OpAmp::voltChanged() // Called when any pin node change volt
     } else {
         if( m_lastIn != vd ) // We problably are in a close loop configuration
         {
-            double dIn  = fabs(m_lastIn-vd); // Input diff with last step
+            double dIn  = qFabs(m_lastIn-vd); // Input diff with last step
             out = (m_lastOut*dIn + vd*1e-6)/(dIn + m_k); // Guess next converging output:
         }
         m_step = 0;

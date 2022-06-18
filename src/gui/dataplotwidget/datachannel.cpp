@@ -17,8 +17,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
-
 #include "datachannel.h"
 #include "plotdisplay.h"
 #include "plotbase.h"

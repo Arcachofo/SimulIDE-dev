@@ -17,8 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
-
+#include <QtMath>
 #include <QMouseEvent>
 #include <QBrush>
 #include <QPen>
@@ -89,7 +88,7 @@ void PlotDisplay::setTimeZero( double t )
 {
     QPoint tPos = mapFromGlobal( QPoint(t, 0) );
     m_timeZero = tPos.x();
-    if( fabs( m_timeZero-m_hCenter ) < 5 ) m_timeZero = m_hCenter;
+    if( qFabs( m_timeZero-m_hCenter ) < 5 ) m_timeZero = m_hCenter;
     m_timeZero = m_timeZero*100/(double)width();
 }
 
@@ -162,7 +161,6 @@ void PlotDisplay::drawBackground( QPainter* p )
         divs = 8;
         ceroY += m_sizeY/16;
     }
-
     QPen pen( m_scaleColor[0], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
     p->setPen( pen );
 

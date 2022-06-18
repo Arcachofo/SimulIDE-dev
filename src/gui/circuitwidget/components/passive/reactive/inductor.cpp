@@ -18,7 +18,6 @@
  ***************************************************************************/
 
 #include <QPainter>
-#include <math.h>
 
 #include "inductor.h"
 #include "itemlibrary.h"

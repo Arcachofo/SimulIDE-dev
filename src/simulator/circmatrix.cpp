@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include <iostream>
-#include <math.h>
+#include <QtMath>
 #include <iomanip> // setw()
 
 #include "circmatrix.h"
@@ -54,14 +54,12 @@ void CircMatrix::createMatrix( QList<eNode*> &eNodeList )
 void CircMatrix::stampMatrix( int row, int col, double value )
 {
     m_admitChanged = true;
-    
     m_circMatrix[row-1][col-1] = value;      // eNode numbers start at 1
 }
 
 void CircMatrix::stampCoef( int row, double value )
 {
     m_currChanged = true;
-    
     m_coefVect[row-1] = value;
 }
 
@@ -231,15 +229,13 @@ bool CircMatrix::factorMatrix( int n, int group  )
                 for( k=0; k<j; ++k ) q -= a[i][k]*a[k][j]; //
                 a[i][j] = q;
             }
-            double x = fabs( q );
-            
-            //qDebug() <<"is"<<x<<">="<<largest<<( x >= largest );
+            double x = qFabs( q );
+
             if( x >= largest )
             {
                 largest = x;
                 largestRow = i;
             }
-            //qDebug() <<"LTE"<<i<<j<<x<<q<<largest<<largestRow<<( !(x < largest) );
         }
         if( largestRow == -1 ) return false;
         if( j != largestRow ) // pivoting
@@ -253,7 +249,6 @@ bool CircMatrix::factorMatrix( int n, int group  )
             }
         }
         ipvt[j] = largestRow;      // keep track of row interchanges
-        //qDebug() <<"IPVT"<< j<<largestRow;
 
         if( a[j][j] == 0.0 ) a[j][j]=1e-18;           // avoid zeros
 
@@ -336,7 +331,7 @@ bool CircMatrix::luSolve( int n, int group )
         for( int j=i+1; j<n; ++j ) tot -= a[i][j]*b[j]; // back-substitution using the upper triangular matrix
         double volt = tot/a[i][i];
 
-        if( isnan( volt ) ) { isOk = false; volt = 0; }
+        if( qIsNaN( volt ) || qIsInf( volt ) ) { isOk = false; volt = 0; }
         b[i] = volt;
         m_eNodeActive->at(i)->setVolt( volt );      // Set Node Voltages
     }

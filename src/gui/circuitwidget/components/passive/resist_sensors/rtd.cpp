@@ -22,7 +22,7 @@
  *                                                                         */
 
 #include <QPainter>
-#include <math.h>
+#include <QtMath>
 
 #include "rtd.h"
 #include "simulator.h"
@@ -80,7 +80,7 @@ double RTD::sensorFunction( double temp )
   // double r_sense = r0*(1.0+coef_temp*sense); // linear approximation
   // polynomial approximation (more realistic)
   double r_sense = m_r0*(1.0+coef_temp_a*temp+coef_temp_b*temp*temp);
-  if (temp < 0) r_sense += m_r0*coef_temp_c*(temp-100)*pow(temp,3.0);
+  if (temp < 0) r_sense += m_r0*coef_temp_c*(temp-100)*qPow(temp,3.0);
 
   return r_sense;
 }

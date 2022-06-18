@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
+#include <QtMath>
 #include <QPainter>
 
 #include "volt_reg.h"
@@ -111,7 +111,7 @@ void VoltReg::voltChanged()
 
     double current = (inVolt-outVolt)*m_admit;
 
-    if( fabs(current-m_lastOut)<m_accuracy ) return;
+    if( qFabs(current-m_lastOut)<m_accuracy ) return;
     m_lastOut = current;
 
     Simulator::self()->notCorverged();

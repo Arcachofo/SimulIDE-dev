@@ -18,8 +18,7 @@
  ***************************************************************************/
 // Based on Falstad Circuit Simulator Diode model: https://falstad.com
 
-#include <math.h>
-
+#include <QtMath>
 #include <QDir>
 #include <QDomDocument>
 
@@ -64,17 +63,17 @@ void eDiode::stamp()
 void eDiode::voltChanged()
 {
     double voltPN = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
-    if( fabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged  /// Mingw needs fabs
+    if( qFabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged  /// Mingw needs qFabs
     Simulator::self()->notCorverged();
 
     m_step += .01;
-    double gmin = m_bAdmit*exp( m_step );
+    double gmin = m_bAdmit*qExp( m_step );
     if( gmin > .1 ) gmin = .1;
 
     if( m_bkDown == 0 || voltPN >= 0 )  // No breakdown Diode or Forward biased Zener
     {
         voltPN = limitStep( voltPN, m_vScale, m_vCriti );
-        double eval = exp( voltPN*m_vdCoef );
+        double eval = qExp( voltPN*m_vdCoef );
         m_admit = m_satCur*m_vdCoef*eval + gmin;
         m_current = m_satCur*(eval-1);
     }
@@ -82,8 +81,8 @@ void eDiode::voltChanged()
         double volt = -voltPN-m_zOfset;
         m_voltPN = -m_voltPN-m_zOfset;
         voltPN = -( limitStep( volt, m_vt, m_vzCrit ) + m_zOfset );
-        double eval = exp( voltPN*m_vdCoef );
-        double expCoef = exp( volt*m_vzCoef );
+        double eval = qExp( voltPN*m_vdCoef );
+        double expCoef = qExp( volt*m_vzCoef );
         m_admit = m_satCur*( m_vdCoef*eval + m_vzCoef*expCoef ) + gmin;
         m_current = m_satCur*( eval - expCoef - 1 );
     }
@@ -98,14 +97,14 @@ void eDiode::voltChanged()
 
 inline double eDiode::limitStep( double vnew, double scale, double vc )
 {
-    if( vnew > vc && fabs( vnew - m_voltPN ) > scale*2 ) // check new voltage; has current changed by factor of e^2?
+    if( vnew > vc && qFabs( vnew - m_voltPN ) > scale*2 ) // check new voltage; has current changed by factor of e^2?
     {
         if( m_voltPN > 0 )
         {
             double arg = 1 + (vnew - m_voltPN)/scale;
-            if( arg > 0 ) vnew = m_voltPN + scale*log( arg );
+            if( arg > 0 ) vnew = m_voltPN + scale*qLn( arg );
             else          vnew = vc;
-        }else             vnew = scale*log( vnew/scale );
+        }else             vnew = scale*qLn( vnew/scale );
     } return vnew;
 }
 
@@ -127,7 +126,7 @@ void eDiode::SetParameters( double sc, double ec, double bv, double sr )
 
 void eDiode::setThreshold( double vCrit )
 {
-    m_satCur = m_vScale/(exp(vCrit/m_vScale)*sqrt(2));
+    m_satCur = m_vScale/(qExp(vCrit/m_vScale)*qSqrt(2));
     updateValues();
 }
 
@@ -155,9 +154,9 @@ void eDiode::updateValues()
     m_vScale = m_emCoef*m_vt;
     m_vdCoef = 1/m_vScale;
     //m_fdDrop = m_vScale*log( 1/m_satCur + 1 );
-    m_vCriti = m_vScale*log( m_vScale/(sqrt(2)*m_satCur) );
-    m_zOfset = m_bkDown - m_vt*log(-(1-0.005/m_satCur) );
-    m_vzCrit = m_vt*log( m_vt/(sqrt(2)*m_satCur) );
+    m_vCriti = m_vScale*qLn( m_vScale/(qSqrt(2)*m_satCur) );
+    m_zOfset = m_bkDown - m_vt*qLn(-(1-0.005/m_satCur) );
+    m_vzCrit = m_vt*qLn( m_vt/(qSqrt(2)*m_satCur) );
     m_bAdmit = m_satCur*1e-2;
 }
 

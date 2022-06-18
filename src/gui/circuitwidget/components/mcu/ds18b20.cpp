@@ -29,7 +29,6 @@
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"
-
 #include "utils.h"
 
 #include "doubleprop.h"
@@ -60,7 +59,7 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
     m_tempInc = 0.5;
     setTemp( 22 );
 
-    generateROM( 0x28 );
+    generateROM( 0x28 );  // FAMILY CODE = 28h for DS18B20
 
     m_scratchpad[0] = 0xFF;
     m_scratchpad[1] = 0x07;
@@ -74,10 +73,6 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
 
     m_pin.resize(1);
     m_pin[0] = m_inpin = new IoPin( 180, QPoint(-36, 8), id+"-inPin", 0, this, openCo );
-
-   /* m_inpin->setOutHighV( 5 );
-    m_inpin->setLabelColor( QColor( 250, 250, 200 ) );
-    m_inpin->setLabelText("DQ");*/
 
     QPushButton* u_button = new QPushButton();
     u_button->setMaximumSize( 9, 9 );
@@ -164,7 +159,7 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
         }
         else if( m_state > W1_IDLE )    // Active
         {
-            if( time > 30*1e6 )         // > 30 us : 0 received
+            if( time > 60*1e6 )         // > 30 us : 0 received
             {
                 if( m_state == W1_BUSY ) qDebug()<< idLabel() << "ERROR: Ds18b20 busy, Read pulse should be < 15 us";
                 else if( m_write )
@@ -297,7 +292,7 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
                 m_lastBit = 7; // Return to normal byte reception
                 qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OK ";
             }
-            else if((m_rxReg > 0) == m_bitROM ) sendSearchBit();   // Bit Match,  keep sending
+            else if( (m_rxReg > 0) == m_bitROM ) sendSearchBit();   // Bit Match,  keep sending
             else{
                 m_state = W1_IDLE; // We are out, Wait for next Reset signal
                 qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OUT";
@@ -380,28 +375,23 @@ void Ds18b20::sendSearchBit()
 
 bool Ds18b20::bitROM( uint bitIndex )
 {
-    uint byte = bitIndex/8;
-    uint bit  = bitIndex%8;
-    return ( m_ROM[ byte ] & 1<<bit ) > 0;
+    return ( m_ROM[ bitIndex/8 ] & 1<<(bitIndex%8) ) > 0;
 }
 
 // Function COMMANDS --------------------------------------------------
 
 void Ds18b20::funCommand( uint8_t cmd )
 {
-    switch( cmd )
-    {
+    switch( cmd ){
         case 0x44: convertTemp();     break;
         case 0x48: copyScratchpad();  break;
         case 0x4E: writeScratchpad(); break;
         case 0xB4: readPowerSupply(); break;
         case 0xB8: recallE2();        break;
         case 0xBE: readScratchpad();  break;
-        default:{
-            m_state = W1_IDLE;
+        default:{  m_state = W1_IDLE;
             qDebug()<<idLabel() << "Ds18b20::command : Warning: Function command Not implemented";
-        }
-    }
+    }   }
     m_lastCommand = cmd;
 }
 
@@ -473,7 +463,7 @@ void Ds18b20::recallE2() // Code B8h :Copy EEPROM to TH, TL, CFG (bytes 2, 3, 4)
 void Ds18b20::readPowerSupply() // Code B4h : using parasite power? pull down time???
 {
     qDebug() <<idLabel()<< "Ds18b20::readPowerSupply No parasite power"; // By now we don't use parasite power
-    /// TODO add property
+    /// TODO add property ?
 }
 
 // End Commands --------------------------------------------------------------------
@@ -515,10 +505,7 @@ void Ds18b20::setROM( QString ROMstr )
 
 void Ds18b20::generateROM( uint8_t familyCode ) // Generate unique ROM address
 {
-  // 8-bit CRC | 48 bit S/N | 8-BIT FAMILY CODE
-  // MSB - LSB
-  // FAMILY CODE = 28h for DS18B20
-
+  // 8-bit CRC | 48 bit S/N | 8-BIT FAMILY CODE, MSB - LSB
   m_ROM[0] = familyCode;
   m_ROM[1] = rand();
   m_ROM[2] = rand();

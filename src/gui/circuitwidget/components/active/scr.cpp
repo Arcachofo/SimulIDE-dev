@@ -19,7 +19,7 @@
 
 #include <QPainter>
 
-#include <math.h>
+#include <QtMath>
 
 #include "scr.h"
 #include "itemlibrary.h"
@@ -125,7 +125,7 @@ void SCR::voltChanged()
 {
     double voltAC = m_pin[0]->getVolt() - m_pin[1]->getVolt();
     double voltGC = m_pin[2]->getVolt() - m_pin[1]->getVolt();
-    if( fabs( voltAC ) < .01 && fabs( voltGC ) < .01 ) return;  // Converged
+    if( qFabs( voltAC ) < .01 && qFabs( voltGC ) < .01 ) return;  // Converged
     Simulator::self()->notCorverged();
 
     double anodCurr =  m_resistor->current();

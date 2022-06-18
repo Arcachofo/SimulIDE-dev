@@ -17,8 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
-
+#include <QtMath>
 #include <QPainter>
 
 #include "stepper.h"
@@ -113,7 +112,7 @@ void Stepper::voltChanged()
     else                  phaseB = 0;
 
     int delta = 0;
-    if( (fabs(phaseA)+fabs(phaseB)) > 0 ) // nosense algoritm.. just works
+    if( (qFabs(phaseA)+qFabs(phaseB)) > 0 ) // nosense algoritm.. just works
     {
         int ca = 4; 
         int cb =-1;
@@ -151,11 +150,6 @@ void Stepper::setSteps( int steps ) //" 4, 8,16,32"
     m_ang  = 0;
     m_Ppos = 4;
     update();
-}
-
-double Stepper::res()
-{
-    return m_res;//m_value;
 }
 
 void Stepper::setRes( double res )

@@ -23,7 +23,6 @@
 #include "datachannel.h"
 #include "oscope.h"
 
-
 class MAINMODULE_EXPORT OscopeChannel : public DataChannel
 {
         friend class Oscope;

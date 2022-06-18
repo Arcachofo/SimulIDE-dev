@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include <QPainter>
-#include <math.h>
+#include <QtMath>
 
 #include "relay_base.h"
 #include "simulator.h"
@@ -91,7 +91,7 @@ void RelayBase::stamp()
 
 void RelayBase::voltChanged()
 {
-    double indCurr = fabs( m_inductor->indCurrent() );
+    double indCurr = qFabs( m_inductor->indCurrent() );
     bool relayOn;
 
     if( m_relayOn ) relayOn = ( indCurr > m_relCurrent );

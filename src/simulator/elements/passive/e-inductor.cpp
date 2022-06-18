@@ -20,8 +20,6 @@
 // Inductor model using backward euler approximation
 // consists of a current source in parallel with a resistor.
 
-#include <math.h>
-
 #include "e-inductor.h"
 #include "e-pin.h"
 #include "e-node.h"

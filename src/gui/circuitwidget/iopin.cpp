@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
+#include <QtMath>
 
 #include "iopin.h"
 #include "e-node.h"
@@ -87,7 +87,7 @@ void IoPin::runEvent()
         if( m_pinMode == openCo )
         {
             double step = m_nextState ? m_step : m_steps-m_step;
-            double delta =  pow( 1e4*step/m_steps, 2 );
+            double delta =  qPow( 1e4*step/m_steps, 2 );
             m_gndAdmit = 1/(m_outputImp+delta);
             updtState();
         }else{

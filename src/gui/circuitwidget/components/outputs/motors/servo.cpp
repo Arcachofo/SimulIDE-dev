@@ -18,8 +18,7 @@
  ***************************************************************************/
 
 #include <QPainter>
-
-#include <math.h>
+#include <QtMath>
 
 #include "servo.h"
 #include "itemlibrary.h"
@@ -105,7 +104,7 @@ void Servo::updateStep()
         double updateTime = (step - m_lastUpdate)/1e6;
         double maxMove    = updateTime/m_speed*60; // Maximum to move since last update
         double deltaPos   = m_targetPos - m_pos;
-        double absDeltaPos = fabs( deltaPos );
+        double absDeltaPos = qFabs( deltaPos );
 
         if( absDeltaPos > maxMove ) deltaPos = absDeltaPos/deltaPos*maxMove; // keep sign of deltaPos
         m_pos += deltaPos;

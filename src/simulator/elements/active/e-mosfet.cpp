@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>   // fabs(x,y)
+#include <QtMath>   // qFabs(x,y)
 //#include <QDebug>
 
 #include "e-mosfet.h"
@@ -73,10 +73,7 @@ void eMosfet::voltChanged()
     double Vgs = Vg-Vs;
     double Vds = Vd-Vs;
 
-    if( m_Pchannel ){
-        Vgs = -Vgs;
-        Vds = -Vds;
-    }
+    if( m_Pchannel ){ Vgs = -Vgs; Vds = -Vds; }
     if( m_depletion ) Vgs = -Vgs;
     
     double gateV = Vgs - m_Gth;
@@ -94,7 +91,7 @@ void eMosfet::voltChanged()
         double satK = 1+Vds/100;
         if( Vds > gateV ) Vds =gateV;
 
-        DScurrent = (gateV*Vds-pow(Vds,2)/2)*satK/m_kRDSon;
+        DScurrent = (gateV*Vds-qPow(Vds,2)/2)*satK/m_kRDSon;
         if( DScurrent > maxCurrDS ) DScurrent = maxCurrDS;
         current = maxCurrDS-DScurrent;
     }
@@ -106,7 +103,7 @@ void eMosfet::voltChanged()
     }
     m_gateV = gateV;
 
-    if( fabs(current-m_lastCurrent)<m_accuracy ) return; // Converged
+    if( qFabs(current-m_lastCurrent)<m_accuracy ) return; // Converged
     Simulator::self()->notCorverged();
 
     m_lastCurrent = current;

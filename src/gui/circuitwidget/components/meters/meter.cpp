@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
+#include <QtMath>
 #include <QFont>
 #include <QPainter>
 
@@ -81,7 +81,7 @@ void Meter::updateStep()
     QString sign = " ";
     QString mult = " ";
     int decimals = 3;
-    double value = fabs(m_dispValue);
+    double value = qFabs(m_dispValue);
 
     if( value < 1e-9 ) value = 0;
     else{

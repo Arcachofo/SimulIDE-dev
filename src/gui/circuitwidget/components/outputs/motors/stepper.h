@@ -39,7 +39,7 @@ class MAINMODULE_EXPORT Stepper : public Component, public eElement
         int steps() { return m_steps; }
         void setSteps( int steps ); //" 4, 8,16,32"
         
-        double res();
+        double res()  { return m_res; }
         void setRes( double rows );
 
         bool bipolar() { return m_bipolar; }

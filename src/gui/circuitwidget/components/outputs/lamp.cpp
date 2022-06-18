@@ -18,8 +18,7 @@
  ***************************************************************************/
 
 #include <QPainter>
-
-#include <math.h>
+#include <QtMath>
 
 #include "lamp.h"
 #include "itemlibrary.h"
@@ -107,7 +106,7 @@ void Lamp::updateStep()
 
 void Lamp::voltChanged()
 {
-    m_current = fabs( m_ePin[0]->getVolt()-m_ePin[1]->getVolt() )*m_admit;
+    m_current = qFabs( m_ePin[0]->getVolt()-m_ePin[1]->getVolt() )*m_admit;
     updateVI();
 }
 

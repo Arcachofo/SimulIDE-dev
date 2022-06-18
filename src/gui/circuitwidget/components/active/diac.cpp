@@ -19,7 +19,7 @@
 
 #include <QPainter>
 
-#include <math.h>
+#include <QtMath>
 
 #include "diac.h"
 #include "itemlibrary.h"
@@ -123,8 +123,8 @@ void Diac::voltChanged()
     double current = m_resistor->current();// - m_diode2->getCurrent();
     bool state = m_state;
 
-    if( fabs(current) < m_holdCurr ) state = false; /// Mingw needs fabs
-    if( fabs(voltage) > m_brkVolt  ) state = true;
+    if( qFabs(current) < m_holdCurr ) state = false; /// Mingw needs qFabs
+    if( qFabs(voltage) > m_brkVolt  ) state = true;
 
     if( m_state != state )
     {

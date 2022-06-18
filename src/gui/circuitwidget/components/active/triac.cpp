@@ -19,7 +19,7 @@
 
 #include <QPainter>
 //#include <QDebug>
-#include <math.h>
+#include <QtMath>
 
 #include "triac.h"
 #include "itemlibrary.h"
@@ -134,8 +134,8 @@ void Triac::voltChanged()
     double currentG = m_resistGa->current();
     bool state = m_state;
 //qDebug() << "Triac::voltChanged"<<current1 <<currentG;
-    if( fabs(current1) < m_holdCurr ) state = false; /// Mingw needs fabs
-    if( fabs(currentG) > m_trigCurr ) state = true;
+    if( qFabs(current1) < m_holdCurr ) state = false; /// Mingw needs qFabs
+    if( qFabs(currentG) > m_trigCurr ) state = true;
 
     if( m_state != state )
     {

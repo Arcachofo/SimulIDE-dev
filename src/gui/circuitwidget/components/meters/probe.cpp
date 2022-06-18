@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
+#include <QtMath>
 
 #include "probe.h"
 #include "connector.h"
@@ -109,7 +109,7 @@ void Probe::setVolt( double volt )
     update();       // Repaint
 
     if( !m_showVal ) return;
-    if( fabs(volt) < 0.01 ) volt = 0;
+    if( qFabs(volt) < 0.01 ) volt = 0;
     
     setValLabelText( QString("%1 V").arg(float(int( volt*100+0.5 ))/100) );
 }

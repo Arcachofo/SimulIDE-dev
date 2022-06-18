@@ -17,8 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
-
+#include <QtMath>
 #include <QPainter>
 #include <QPushButton>
 #include <QGraphicsProxyWidget>
@@ -193,7 +192,7 @@ void Dht22::calcData()
     uint64_t tempI, tempD, humiI, humiD;
     if( m_DHT22 )
     {
-        uint64_t temp = fabs( m_temp*10 );
+        uint64_t temp = qFabs( m_temp*10 );
         if( m_temp < 0 ) temp |= 1<<15;
         tempI = temp >> 8;
         tempD = temp & 0xFF;

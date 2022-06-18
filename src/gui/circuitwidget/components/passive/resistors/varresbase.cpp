@@ -72,7 +72,7 @@ void VarResBase::initialize()
 
 void VarResBase::setMinVal( double min )
 {
-    if( min < 1e-12 ) min = 1e-12;
+    if( min < 1e-12    ) min = 1e-12;
     if( min > m_maxVal ) min = m_maxVal;
     m_minVal = min;
 
@@ -81,7 +81,7 @@ void VarResBase::setMinVal( double min )
 
 void VarResBase::setMaxVal( double max )
 {
-    if( max < 1e-12 ) max = 1e-12;
+    if( max < 1e-12    ) max = 1e-12;
     if( max < m_minVal ) max = m_minVal;
     m_maxVal = max;
 
@@ -97,7 +97,7 @@ void VarResBase::setVal( double val )
 void VarResBase::dialChanged( int val )
 {
     m_value = m_minVal+val*( m_maxVal-m_minVal)/1000;
-    if( m_step > 0 ) m_value = round(m_value/m_step)*m_step;
+    if( m_step > 0 ) m_value = round( m_value/m_step )*m_step;
 
     m_changed = true;
     if( !Simulator::self()->isRunning() ) updateStep();

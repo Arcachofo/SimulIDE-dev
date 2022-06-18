@@ -16,9 +16,9 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
  *                                                                         *
  ***************************************************************************/
-// Based on Falstad Circuit Simulator Diode model: https://falstad.com
+// Based on Falstad Circuit Simulator BJT model: https://falstad.com
 
-#include <math.h>
+#include <QtMath>
 
 #include "e-bjt.h"
 #include "e-pin.h"
@@ -34,14 +34,15 @@ eBJT::eBJT( QString id )
 {
     m_ePin.resize(3);
 
+    m_PNP = false;
+
     m_gain = 100;
     m_rgain = .5;
     m_fgain = m_gain/(m_gain+1);
-    m_PNP = false;
 
     m_vt = 0.025865;
     m_satCur = 1e-13;
-    m_vCrit = m_vt*log( m_vt/(sqrt(2)*m_satCur) );
+    m_vCrit = m_vt*qLn( m_vt/(qSqrt(2)*m_satCur) );
 
     m_BCjunction = new eElement( id+"BCjunct");
     m_BCjunction->setNumEpins( 2 );
@@ -61,7 +62,6 @@ eBJT::~eBJT()
 
 void eBJT::initialize()
 {
-    //m_accuracy = Simulator::self()->NLaccuracy()/100;
     m_step = 0;
     m_voltBE = 0;
     m_voltBC = 0;
@@ -70,7 +70,7 @@ void eBJT::initialize()
     m_EC = EMIT;
     m_CE = COLL;
 
-    m_BE->setEnode( NULL );
+    /*m_BE->setEnode( NULL );
     m_BE->setEnodeComp( NULL );
     m_EB->setEnode( NULL );
     m_EB->setEnodeComp( NULL );
@@ -78,7 +78,7 @@ void eBJT::initialize()
     m_BC->setEnode( NULL );
     m_BC->setEnodeComp( NULL );
     m_CB->setEnode( NULL );
-    m_CB->setEnodeComp( NULL );
+    m_CB->setEnodeComp( NULL );*/
 }
 
 void eBJT::stamp()
@@ -105,12 +105,12 @@ void eBJT::stamp()
     m_EC->setEnodeComp( collNod );
 
     //double r = ((double)(std::rand() %5))*1e-2; // Random start diference
-    m_BE->stampAdmitance( cero_doub );
+    /*m_BE->stampAdmitance( cero_doub );
     m_EB->stampAdmitance( cero_doub );
     m_BC->stampAdmitance( cero_doub );
     m_CB->stampAdmitance( cero_doub );
     m_CE->stampAdmitance( cero_doub );
-    m_EC->stampAdmitance( cero_doub );
+    m_EC->stampAdmitance( cero_doub );*/
 }
 
 void eBJT::voltChanged()
@@ -122,12 +122,14 @@ void eBJT::voltChanged()
     double voltBC = voltB-voltC;
     double voltBE = voltB-voltE;
 
-    if( (fabs(voltBC-m_voltBC) < .01) && (fabs(voltBE-m_voltBE) < .01) )
+    if( (m_step > 0)
+     && (qFabs( voltBC-m_voltBC ) < .001)
+     && (qFabs( voltBE-m_voltBE ) < .001) )
         { m_step = 0; return; }
     Simulator::self()->notCorverged();
 
     m_step += .1;
-    double gmin = m_satCur*1e-2*exp( m_step );
+    double gmin = m_satCur*1e-2*qExp( m_step );
     if( gmin > .1 ) gmin = .1;
 
     voltBC = pnp*limitStep( pnp*voltBC, pnp*m_voltBC );
@@ -136,8 +138,8 @@ void eBJT::voltChanged()
     m_voltBE = voltBE;
 
     double pcoef = pnp/m_vt;
-    double expBC = exp( voltBC*pcoef );
-    double expBE = exp( voltBE*pcoef );
+    double expBC = qExp( voltBC*pcoef );
+    double expBE = qExp( voltBE*pcoef );
 
     double ie = pnp*m_satCur*(-(expBE-1)/m_fgain + (expBC-1) );
     double ic = pnp*m_satCur*( (expBE-1) - (expBC-1)/m_rgain );
@@ -149,7 +151,7 @@ void eBJT::voltChanged()
     double Gec = -Gcc*m_rgain;
 
     m_BC->stampAdmitance(-Gec-Gcc );
-    m_CB->stampAdmitance(-Gce-Gcc  );
+    m_CB->stampAdmitance(-Gce-Gcc );
     m_BE->stampAdmitance(-Gee-Gce );
     m_EB->stampAdmitance(-Gee-Gec );
     m_CE->stampAdmitance( Gce );
@@ -162,13 +164,13 @@ void eBJT::voltChanged()
 
 double eBJT::limitStep( double vnew, double vold )
 {
-    if( vnew > m_vCrit && fabs(vnew-vold) > (2*m_vt) ){
+    if( vnew > m_vCrit && qFabs(vnew-vold) > (2*m_vt) ){
         if( vold > 0 ){
             double arg = 1+(vnew-vold)/m_vt;
-            if( arg > 0 )  vnew = vold + m_vt*log( arg );
+            if( arg > 0 )  vnew = vold + m_vt*qLn( arg );
             else           vnew = m_vCrit;
         }
-        else vnew = m_vt *log( vnew/m_vt );
+        else vnew = m_vt *qLn( vnew/m_vt );
     }
     return vnew;
 }
@@ -182,5 +184,5 @@ void eBJT::setGain( double gain )
 void eBJT::setThreshold( double vCrit )
 {
     m_vCrit = vCrit;
-    m_satCur = m_vt/(exp( vCrit/m_vt )*sqrt(2));
+    m_satCur = m_vt/(qExp( vCrit/m_vt )*qSqrt(2));
 }

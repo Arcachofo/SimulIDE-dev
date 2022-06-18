@@ -17,7 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <math.h>
+#include <QtMath>
 
 #include "e-led.h"
 #include "e-pin.h"
@@ -114,7 +114,7 @@ void eLed::updateBright()
     if( m_lastPeriod > sPF/2 ) // Update 2 times per frame
     {
         m_avgCurrent = m_totalCurrent/m_lastPeriod;
-        m_brightness = pow( m_avgCurrent/m_maxCurrent, 1.0/2.0 );
+        m_brightness = qPow( m_avgCurrent/m_maxCurrent, 1.0/2.0 );
 
         m_totalCurrent  = 0;
         m_lastPeriod = 0;
