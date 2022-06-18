@@ -55,7 +55,7 @@ Probe::Probe( QObject* parent, QString type, QString id )
 
     m_pin.resize(1); // Create Input Pin
     m_pin[0] = m_inputPin = new IoPin( 180, QPoint(-22,0), id+"-inpin", 0, this, input);
-    m_inputPin->setLength( 20 );
+    m_inputPin->setLength( 14 );
     m_inputPin->setBoundingRect( QRect(-2, -2, 6, 4) );
     m_inputPin->setImp( 1e9 );
 
