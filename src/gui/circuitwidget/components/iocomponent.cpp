@@ -75,17 +75,8 @@ new DoubProp<IoComponent>( "Tr_ps" , tr("Rise Time") ,"ps", this, &IoComponent::
 new DoubProp<IoComponent>( "Tf_ps" , tr("Fall Time") ,"ps", this, &IoComponent::fallTime,  &IoComponent::setFallTime ) };
 }
 
-void IoComponent::updateStep()
-{
-    if( !Circuit::self()->animate( ) ) return;
-    for( uint i=0; i<m_outPin.size(); ++i ) m_outPin[i]->updateStep();
-    for( uint i=0; i<m_inPin.size(); ++i )  m_inPin[i]->updateStep();
-}
-
 void IoComponent::initState()
 {
-    Simulator::self()->addToUpdateList( this );
-
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         m_outPin[i]->setStateZ( false );

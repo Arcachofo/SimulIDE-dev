@@ -38,8 +38,6 @@ class MAINMODULE_EXPORT IoComponent : public Component
         QList<ComProperty*> outputProps();
         QList<ComProperty*> edgeProps();
 
-        virtual void updateStep() override;
-
         void initState();
         void runOutputs();
         void sheduleOutPuts( eElement* el );

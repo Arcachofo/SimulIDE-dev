@@ -36,7 +36,6 @@ class MAINMODULE_EXPORT Memory : public LogicComponent, public MemData
         static Component* construct( QObject* parent, QString type, QString id );
         static LibraryItem* libraryItem();
 
-        //virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;

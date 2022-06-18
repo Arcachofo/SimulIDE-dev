@@ -215,8 +215,6 @@ void Mcu::updateStep()
     }
     if( m_mcuMonitor
      && m_mcuMonitor->isVisible() ) m_mcuMonitor->updateStep();
-
-    if( Circuit::self()->animate( ) ) for( Pin* pin : m_pinList ) pin->updateStep();
 }
 
 void Mcu::voltChanged() // Reset Pin callBack

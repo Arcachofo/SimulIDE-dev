@@ -152,7 +152,7 @@ void Circuit::loadStrDoc( QString &doc )
 
     Component* lastComp = NULL;
     QList<ShieldSubc*> shieldList;
-    //QHash<QString, eNode*> nodMap;
+
     m_busy    = true;
     m_LdPinMap.clear();
 
@@ -400,6 +400,8 @@ void Circuit::loadStrDoc( QString &doc )
     // Take care about unconnected Joints
     for( Node* joint : nodeList ) joint->checkRemove(); // Only removed if some missing connector
     for( ShieldSubc* shield : shieldList ) shield->connectBoard();
+
+    setAnimate( m_animate ); // Force Pin update
 
     m_idMap.clear();
     m_busy = false;
@@ -962,6 +964,13 @@ void Circuit::setShowScroll( bool show )
         m_graphicView->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
         MainWindow::self()->settings()->setValue( "Circuit/showScroll", "false" );
 }   }
+
+void Circuit::setAnimate( bool an )
+{
+    m_animate = an;
+    for( Pin* pin : m_pinMap.values() ) pin->animate( an );
+    update();
+}
 
 int Circuit::autoBck() { return MainWindow::self()->autoBck(); }
 void Circuit::setAutoBck( int secs )

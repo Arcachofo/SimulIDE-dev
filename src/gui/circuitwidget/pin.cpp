@@ -46,7 +46,8 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_blocked = false;
     m_isBus   = false;
     m_unused  = false;
-    m_PinChanged = false;
+    m_animate = false;
+    //m_PinChanged = false;
     
     my_connector = NULL;
     m_conPin     = NULL;
@@ -366,25 +367,40 @@ void Pin::setVisible( bool visible )
     QGraphicsItem::setVisible( visible );
 }
 
+void Pin::animate( bool an )
+{
+    if( m_unused || m_isBus ) return;
+
+    if( an ) Simulator::self()->addToUpdateList( this );
+    else     Simulator::self()->remFromUpdateList( this );
+    m_animate = an;
+    update();
+}
+
 void Pin::updateStep()
 {
     if( m_unused ) return;
-    if( m_PinChanged ) update();
+    //if( m_PinChanged )
+        update();
 }
 
 void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     if( !isVisible() ) return;
-    m_PinChanged = false;
+    //m_PinChanged = false;
 
     QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     //painter->setBrush( Qt::red );
     //painter->drawRect( boundingRect() );
 
-    if( isSelected() ) pen.setColor( Qt::darkGray);
-    else if( m_unused ) pen.setColor( QColor( 75, 120, 170 ));
-    else if( Circuit::self()->animate() ) pen.setColor( m_color[m_pinState] );
+    if     ( m_unused  ) pen.setColor( QColor( 75, 120, 170 ));
+    else if( m_animate )
+    {
+        if( m_pinState == undef_state )
+            pen.setColor( (getVolt() > 2.5) ? m_color[out_high] : m_color[out_low] );
+        else pen.setColor( m_color[m_pinState] );
+    }
 
     painter->setPen(pen);
     if( m_length > 1 ) painter->drawLine( 0, 0, m_length-1, 0);
@@ -395,13 +411,11 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         painter->setBrush( Qt::white );
         QPen pen = painter->pen();
         pen.setWidthF( 1.8 );
-        //if( isSelected() ) pen.setColor( Qt::darkGray);
         painter->setPen(pen);
         QRectF rect( 3.5,-2.2, 4.4, 4.4 );
         painter->drawEllipse(rect);
     }
-
-    if( !m_unused && Circuit::self()->animate() )
+    if( m_animate )
     {
         pen.setWidth( 2 );
         painter->setPen(pen);

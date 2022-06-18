@@ -112,7 +112,6 @@ void IoPin::sheduleState( bool state, uint64_t time )
         Simulator::self()->cancelEvents( this );
         m_step = m_steps-m_step;
     }
-    //m_step = 0;
 
     if( time )
         Simulator::self()->addEvent( time, this );
@@ -143,28 +142,24 @@ void IoPin::setPinMode( pinMode_t mode )
         case input:
             m_vddAdmit = 0;
             m_gndAdmit = 1/m_inputImp;
-            if( Circuit::self()->animate() ) setPinState( input_low );
+            setPinState( input_low );
             break;
         case output:
-            //m_vddAdmit = 1/m_outputImp;
-            //m_gndAdmit = cero_doub;
             m_admit = 1/m_outputImp;
             ePin::stampAdmitance( m_admit );
             break;
         case openCo:
-            //m_outVolt  = m_outLowV;
             m_vddAdmit = cero_doub;
             break;
         case source:
             m_vddAdmit = 1/cero_doub;
             m_gndAdmit = cero_doub;
             m_outState = true;
-            //setPinState( out_high );
             break;
     }
     if( m_pinMode > input ) IoPin::setOutState( m_outState );
     else                    updtState();
-    m_PinChanged = true;
+    //m_PinChanged = true;
 }
 
 void IoPin::updtState()
@@ -186,11 +181,9 @@ bool IoPin::getInpState()
     if     ( volt > m_inpHighV ) m_inpState = true;
     else if( volt < m_inpLowV )  m_inpState = false;
 
-    if( Circuit::self()->animate() )
-    {
-        if     ( m_pinMode == openCo ) setPinState( m_inpState? open_high:driven_low ); // High : Low colors
-        else if( m_pinMode == input  ) setPinState( m_inpState? input_high:input_low ); // High : Low colors
-    }
+    if     ( m_pinMode == openCo ) setPinState( m_inpState? open_high : driven_low ); // High : Low colors
+    else if( m_pinMode == input  ) setPinState( m_inpState? input_high : input_low ); // High : Low colors
+
     return m_inverted ? !m_inpState : m_inpState;
 }
 
@@ -205,11 +198,11 @@ void IoPin::setOutState( bool out ) // Set Output to Hight or Low
     {
         m_gndAdmit = out ? 1/1e8 : 1/m_outputImp;
         updtState();
-        if( Circuit::self()->animate() ) setPinState( out? open_high:open_low ); // Z-Low colors
+        setPinState( out? open_high : open_low ); // Z-Low colors
     }else{
         m_outVolt = out ? m_outHighV : m_outLowV;
         stampVolt( m_outVolt );
-        if( Circuit::self()->animate() ) setPinState( out? out_high:out_low ); // High-Low colors
+        setPinState( out? out_high : out_low ); // High-Low colors
 }   }
 
 void IoPin::setStateZ( bool z )
@@ -218,7 +211,7 @@ void IoPin::setStateZ( bool z )
     if( z ){
         m_outVolt = m_outLowV;
         setImp( m_openImp );
-        if( Circuit::self()->animate() ) setPinState( open_high );
+        setPinState( undef_state );
     }else {
         pinMode_t pm = m_pinMode; // Force pinMode
         m_pinMode = undef_mode;
@@ -269,11 +262,6 @@ void IoPin::stampAll()
     ePin::stampAdmitance( m_admit );
     stampVolt( m_outVolt );
 }
-
-/*void IoPin::stampOutput()
-{
-    stampVolt( m_outVolt );
-}*/
 
 void IoPin::stampVolt( double volt )
 {

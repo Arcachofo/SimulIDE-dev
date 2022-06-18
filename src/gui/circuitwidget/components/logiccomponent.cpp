@@ -55,14 +55,6 @@ void LogicComponent::stamp()
     if( m_oePin ) m_oePin->changeCallBack( this );
 }
 
-void LogicComponent::updateStep()
-{
-    if( !Circuit::self()->animate( ) ) return;
-    IoComponent::updateStep();
-    if( m_oePin ) m_oePin->updateStep();
-    if( m_clkPin) m_clkPin->updateStep();
-}
-
 void LogicComponent::remove()
 {
     if( m_oePin ) m_oePin->removeConnector();
@@ -81,7 +73,7 @@ bool LogicComponent::outputEnabled()
     if     ( volt > m_inHighV ) m_outEnable = false;   // Active Low
     else if( volt < m_inLowV )  m_outEnable = true;
 
-    if( Circuit::self()->animate() ) m_oePin->setPinState( m_outEnable? input_low:input_high ); // Low-High colors
+    m_oePin->setPinState( m_outEnable? input_low:input_high ); // Low-High colors
     return m_outEnable;
 }
 

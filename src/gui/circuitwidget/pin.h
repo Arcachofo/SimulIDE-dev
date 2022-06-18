@@ -21,6 +21,7 @@
 #define PIN_H
 
 #include "component.h"
+#include "updatable.h"
 #include "e-pin.h"
 
 enum pinState_t{
@@ -36,7 +37,7 @@ enum pinState_t{
 
 class Connector;
 
-class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
+class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin, public Updatable
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -109,9 +110,10 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         QString packageType() { return m_packageType; }
         void setPackageType( QString type ) { m_packageType = type; }
 
-        void setPinState( pinState_t st ) { m_pinState = st; m_PinChanged = true; }
+        void setPinState( pinState_t st ) { m_pinState = st; /*m_PinChanged = true;*/ }
 
-        void updateStep();
+        void animate( bool an );
+        virtual void updateStep() override;
 
         virtual void paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
@@ -124,7 +126,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
 
         pinType_t m_pinType;
         pinState_t m_pinState;
-        bool m_PinChanged;
+        //bool m_PinChanged;
 
         int m_angle;
         int m_length;
@@ -134,6 +136,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin
         bool m_blocked;
         bool m_isBus;
         bool m_unused;
+        bool m_animate;
 
         QString m_labelText;
         QString m_packageType;

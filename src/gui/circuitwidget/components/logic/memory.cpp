@@ -95,16 +95,6 @@ new StringProp<Memory>( "Mem","","", this, &Memory::getMem, &Memory::setMem)
 }
 Memory::~Memory(){}
 
-/*void Memory::initialize()
-{
-    m_we = true;
-    m_cs = true;
-
-    if( !m_persistent ) m_ram.fill( 0 );
-
-    LogicComponent::initialize();
-}*/
-
 void Memory::stamp()                   // Called at Simulation Start
 {
     m_we = true;
@@ -130,15 +120,8 @@ void Memory::updateStep()
         for( IoPin* pin : m_outPin ) pin->changeCallBack( this, m_asynchro && m_we );
         m_changed = false;
     }
-
     if( m_memTable ) m_memTable->updateTable( &m_ram );
-
-    if( Circuit::self()->animate( ) )
-    {
-        m_WePin->updateStep();
-        m_CsPin->updateStep();
-        LogicComponent::updateStep();
-}   }
+}
 
 void Memory::voltChanged()        // Some Pin Changed State, Manage it
 {
@@ -177,7 +160,7 @@ void Memory::runEvent()
         {
             bool state = m_outPin[i]->getInpState();
             if( state ) value += pow( 2, i );
-            if( Circuit::self()->animate() ) m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
+            m_outPin[i]->setPinState( state? input_high:input_low ); // High-Low colors
         }
         m_ram[m_address] = value;
     }

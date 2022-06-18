@@ -51,7 +51,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void setShowScroll( bool show );
         
         bool animate() { return m_animate; }
-        void setAnimate( bool an ) { m_animate = an; update(); }
+        void setAnimate( bool an );
 
         int autoBck();
         void setAutoBck( int secs );
