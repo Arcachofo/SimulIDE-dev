@@ -31,6 +31,8 @@
 
 eBJT::eBJT( QString id )
     : eElement( id )
+    , m_BEjunction( id+"BEjunct")
+    , m_BCjunction( id+"BCjunct")
 {
     m_ePin.resize(3);
 
@@ -44,21 +46,16 @@ eBJT::eBJT( QString id )
     m_satCur = 1e-13;
     m_vCrit = m_vt*qLn( m_vt/(qSqrt(2)*m_satCur) );
 
-    m_BCjunction = new eElement( id+"BCjunct");
-    m_BCjunction->setNumEpins( 2 );
-    m_BC = m_BCjunction->getEpin( 0 );
-    m_CB = m_BCjunction->getEpin( 1 );
+    m_BEjunction.setNumEpins( 2 );
+    m_BE = m_BEjunction.getEpin( 0 );
+    m_EB = m_BEjunction.getEpin( 1 );
 
-    m_BEjunction = new eElement( id+"BEjunct");
-    m_BEjunction->setNumEpins( 2 );
-    m_BE = m_BEjunction->getEpin( 0 );
-    m_EB = m_BEjunction->getEpin( 1 );
+    m_BCjunction.setNumEpins( 2 );
+    m_BC = m_BCjunction.getEpin( 0 );
+    m_CB = m_BCjunction.getEpin( 1 );
+
 }
-eBJT::~eBJT()
-{
-    delete m_BEjunction;
-    delete m_BCjunction;
-}
+eBJT::~eBJT(){}
 
 void eBJT::initialize()
 {
@@ -105,12 +102,12 @@ void eBJT::stamp()
     m_EC->setEnodeComp( collNod );
 
     //double r = ((double)(std::rand() %5))*1e-2; // Random start diference
-    /*m_BE->stampAdmitance( cero_doub );
-    m_EB->stampAdmitance( cero_doub );
-    m_BC->stampAdmitance( cero_doub );
-    m_CB->stampAdmitance( cero_doub );
-    m_CE->stampAdmitance( cero_doub );
-    m_EC->stampAdmitance( cero_doub );*/
+    /*m_BE->stampAdmitance( 1e-12 );
+    m_EB->stampAdmitance( 1e-12 );
+    m_BC->stampAdmitance( 1e-12 );
+    m_CB->stampAdmitance( 1e-12 );
+    m_CE->stampAdmitance( 1e-12 );
+    m_EC->stampAdmitance( 1e-12 );*/
 }
 
 void eBJT::voltChanged()
@@ -122,9 +119,11 @@ void eBJT::voltChanged()
     double voltBC = voltB-voltC;
     double voltBE = voltB-voltE;
 
-    if( (m_step > 0)
-     && (qFabs( voltBC-m_voltBC ) < .001)
-     && (qFabs( voltBE-m_voltBE ) < .001) )
+    if( qFabs(voltB) > 1000  )
+        voltB = 0;
+
+    if( (qFabs( voltBC-m_voltBC ) < .01)
+     && (qFabs( voltBE-m_voltBE ) < .01) )
         { m_step = 0; return; }
     Simulator::self()->notCorverged();
 
@@ -145,10 +144,13 @@ void eBJT::voltChanged()
     double ic = pnp*m_satCur*( (expBE-1) - (expBC-1)/m_rgain );
     m_baseCurr = -(ie+ic);
 
-    double Gee = -m_satCur/m_vt*expBE/m_fgain-gmin;
-    double Gcc = -m_satCur/m_vt*expBC/m_rgain-gmin;
+    double Gee = -m_satCur/m_vt*expBE/m_fgain;
+    double Gcc = -m_satCur/m_vt*expBC/m_rgain;
     double Gce = -Gee*m_fgain;
     double Gec = -Gcc*m_rgain;
+
+    Gcc -= gmin;
+    Gee -= gmin;
 
     m_BC->stampAdmitance(-Gec-Gcc );
     m_CB->stampAdmitance(-Gce-Gcc );
@@ -170,7 +172,7 @@ double eBJT::limitStep( double vnew, double vold )
             if( arg > 0 )  vnew = vold + m_vt*qLn( arg );
             else           vnew = m_vCrit;
         }
-        else vnew = m_vt *qLn( vnew/m_vt );
+        else vnew = m_vt*qLn( vnew/m_vt );
     }
     return vnew;
 }

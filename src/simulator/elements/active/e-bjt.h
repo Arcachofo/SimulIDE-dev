@@ -56,8 +56,8 @@ class MAINMODULE_EXPORT eBJT : public eElement
         double m_fgain;
         bool m_PNP;
 
-        eElement* m_BEjunction;
-        eElement* m_BCjunction;
+        eElement m_BEjunction;
+        eElement m_BCjunction;
 
         ePin* m_BC;
         ePin* m_CB;
