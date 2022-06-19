@@ -28,7 +28,7 @@ Mcs65Core::Mcs65Core( eMcu* mcu )
     m_IR = mcu->getReg("IR");
     m_rX = mcu->getReg("X");
     m_rY = mcu->getReg("Y");
-    m_rI = NULL;
+    //m_rI = NULL;
 
     // Control Pins
     m_phi0Pin = mcu->getCtrlPin("P0");
@@ -87,17 +87,26 @@ void Mcs65Core::Read( uint16_t addr )
     if( m_cycle == 1 ) { readMem( addr ); } // Read first operand
     else{
         switch( m_addrMode ){
-            case addr_NONE: break; // Instruction with no operand
-            case addr_ABSO:{       // Absolute: address From Mem 2 bytes, value = read( address ) 1 byte
+            case a_NON: break; // Instruction with no operand
+            case a_ABS:{       // Absolute: address From Mem 2 bytes: LLHH
                 switch( m_cycle ){
                     case 2: m_op0 = readDataBus(); readMem( addr );   break; //
-                    case 3: m_opAddr = (readDataBus() << 8) | m_op0 ; break;
+                    case 3:{
+                        m_opAddr = (readDataBus() << 8) | m_op0 ;
+                        if( m_addrIndx ){
+                            if( m_addrIndx & i_C ) if( STATUS(C) ) m_opAddr++;
+                            if( m_addrIndx & i_X ) m_opAddr += *m_rX;
+                            if( m_addrIndx & i_Y ) m_opAddr += *m_rY;
+                            readMem( m_opAddr );
+                        }
+                    }break;
+                    case 4: m_op0 = readDataBus(); break;
                 }
             }break;
-            case addr_ACCU: m_op0 = *m_Ac;         break; // Value = *m_Acumulator
-            case addr_IMME: m_op0 = readDataBus(); break; // Immediate: From Mem 1 byte
-            case addr_INDI: break;
-            case addr_RELA: break;
+            case a_ACC: m_op0 = *m_Ac;         break; // Value = *m_Acumulator
+            case a_IMM: m_op0 = readDataBus(); break; // Immediate: From Mem 1 byte
+            case a_IND: break;
+            case a_REL: break;
     }   }
 }
 
@@ -105,7 +114,7 @@ void Mcs65Core::readMem( uint16_t addr )
 {
     m_cpuState = cpu_READ;
     m_mcu->extMem->read( addr );
-    m_incPC = m_addrMode > addr_ACCU;
+    m_incPC = m_addrMode > a_ACC;
 }
 
 uint8_t Mcs65Core::readDataBus()
@@ -120,8 +129,8 @@ void Mcs65Core::Write( uint16_t addr, uint8_t val )
 {
     switch( m_addrMode )
     {
-        //case addr_NONE:              break; /// ERROR
-        case addr_ACCU: *m_Ac = val; break;
+        //case a_NON:              break; /// ERROR
+        case a_ACC: *m_Ac = val; break;
         default:
             m_mcu->extMem->write( addr, val );
             m_progMem[addr] = val;     // Used by Mcu Monitor
@@ -202,7 +211,7 @@ void Mcs65Core::INC() { m_op0 += 1; setNZ( m_op0 ); Write( m_opAddr, m_op0 ); }
 void Mcs65Core::INX() { *m_rX += 1; setNZ( *m_rX ); }
 void Mcs65Core::INY() { *m_rY += 1; setNZ( *m_rY ); }
 
-void Mcs65Core::JMP() { PC = m_op0; }
+void Mcs65Core::JMP() { PC = m_opAddr; }
 
 void Mcs65Core::JSR()
 {
@@ -290,7 +299,7 @@ void Mcs65Core::SBC()
 
     if( STATUS(D) )
     {
-        if( ((*m_Ac & 0x0F) - (STATUS(C)  ? 0 : 1)) < (m & 0x0F)) tmp -= 6;
+        if( ((*m_Ac & 0x0F) - (STATUS(C) ? 0 : 1)) < (m & 0x0F)) tmp -= 6;
         if( tmp > 0x99) tmp -= 0x60;
     }
     SET_CARRY( tmp < 0x100 );
@@ -363,7 +372,8 @@ void Mcs65Core::runDecoder()
     {
         m_ctrlPC   = false;    // Increment PC at execution
         m_cpuState = cpu_READ;
-        m_addrMode = addr_NONE;
+        m_addrMode = a_NON;
+        m_addrIndx = 0;
         m_syncPin->sheduleState( true, m_tSync );
 
         *m_IR = readDataBus();
@@ -371,7 +381,7 @@ void Mcs65Core::runDecoder()
             case 0x00:  m_ctrlPC = true; break; // BRK
             case 0x08:  break; // PHP
             case 0x18:  break; // CLC
-            case 0x20:  m_addrMode = addr_ABSO; m_ctrlPC = true; break; // JSR abs Execution controls PC
+            case 0x20:  m_addrMode = a_ABS; m_ctrlPC = true; break; // JSR abs Execution controls PC
             case 0x28:  m_ctrlPC = true; break; // PLP
             case 0x38:  break; // SEC
             case 0x40:  m_ctrlPC = true; break; // RTI
@@ -404,37 +414,35 @@ void Mcs65Core::runDecoder()
 
                 switch( m_Amode ){
                     case 0: {
-        if( m_group == 1 ){ m_addrMode = addr_INDI; m_rI = m_rX; m_zeroPage = true; break; }   // Group 1
-                      else{ m_addrMode = addr_IMME;                                     break; }   // Groups 2, 4
+        if( m_group == 1 ){ m_addrMode = a_IND; m_addrIndx = i_X | i_Z; break; }   // Group 1
+                      else{ m_addrMode = a_IMM;                         break; }   // Groups 2, 4
                             }
-                    case 1: m_addrMode = addr_ABSO;                  m_zeroPage = true; break;     // All
+                    case 1: m_addrMode = a_ABS; m_addrIndx = i_Z;       break;     // All
                     case 2: {
-        if( m_group == 1 ){ m_addrMode = addr_IMME;                                     break; }   // Group 1
-        if( m_group == 2 ){ m_addrMode = addr_ACCU;                                     break; }   // Group 2
+        if( m_group == 1 ){ m_addrMode = a_IMM;                         break; }   // Group 1
+        if( m_group == 2 ){ m_addrMode = a_ACC;                         break; }   // Group 2
                             }
-                    case 3: m_addrMode = addr_ABSO;                                     break;     // All
+                    case 3: m_addrMode = a_ABS;                         break;     // All
                     case 4:
-        if( m_group == 1 ){ m_addrMode = addr_INDI; m_rI = m_rY;                    break; }   // Group 1
+        if( m_group == 1 ){ m_addrMode = a_IND; m_addrIndx = i_Y;       break; }   // Group 1
 
-                    case 5: m_addrMode = addr_RELA; m_rI = m_rX; m_zeroPage = true; break;     // same
+                    case 5: m_addrMode = a_REL; m_addrIndx = i_X | i_Z; break;     // same
                     case 6:
-        if( m_group == 1 ){ m_addrMode = addr_ABSO; m_rI = m_rY;                    break; }   // Group 1
+        if( m_group == 1 ){ m_addrMode = a_ABS; m_addrIndx = i_Y | i_C; m_ctrlPC = true; break; }   // Group 1
 
-                    case 7: m_addrMode = addr_ABSO; m_rI = m_rX;                    break;     // All
-
-                   default: m_addrMode = addr_NONE; m_rI = NULL  ; m_zeroPage = false;
+                    case 7: m_addrMode = a_ABS; m_addrIndx = i_X | i_C; m_ctrlPC = true; break;     // All
                 }
             }
         }
     }
     if( m_cpuState == cpu_READ ) Read( PC+1 );
 
-    if( m_cpuState == cpu_EXEC )             // We are executing *m_IR
+    if( m_cpuState == cpu_EXEC )             // We are executing Instruction
     {
         m_cpuState = cpu_FETCH; // Default, Ops can change this
         if( !m_ctrlPC ) PC++;
 
-        switch( *m_IR ) {                 // Irregular *m_IRs
+        switch( *m_IR ) {                   // Irregular Instruction
             case 0x00: BRK(); break; // BRK
             case 0x08: PHP(); break; // PHP
             case 0x18: CLC(); break; // CLC
@@ -462,7 +470,7 @@ void Mcs65Core::runDecoder()
             case 0xEA: NOP(); break; // NOP
             case 0xF8: SED(); break; // SED
             default:{
-                switch( m_group ){               // Regular *m_IRs
+                switch( m_group ){               // Regular Instruction
                     case 0:{
                         if( m_Amode == 4 ) // xxy 100 00 conditional branch
                         {
@@ -508,7 +516,7 @@ void Mcs65Core::runDecoder()
     {
         m_cycle = 0;
         m_cpuState = cpu_DECODE;
-        m_addrMode = addr_NONE;
+        m_addrMode = a_NON;
 
         m_mcu->extMem->read( PC ); // Fetch Instruction
     }

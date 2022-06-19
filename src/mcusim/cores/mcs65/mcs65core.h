@@ -53,13 +53,21 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         };
 
         enum addrMode_t{
-            addr_NONE=0,
-            addr_ACCU,
-            addr_ABSO,
-            addr_IMME,
-            //addr_IMPL,
-            addr_INDI,
-            addr_RELA
+            a_NON=0,
+            a_ACC,
+            a_ABS,
+            a_IMM,
+            //a_IMPL,
+            a_IND,
+            a_REL
+        };
+
+        enum addrIndx_t{
+            i_X=1<<0,
+            i_Y=1<<1,
+            i_C=1<<2,
+            i_I=1<<3,
+            i_Z=1<<4,
         };
 
         virtual void reset() override;
@@ -89,7 +97,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         uint8_t* m_IR;
         uint8_t* m_rX;
         uint8_t* m_rY;
-        uint8_t* m_rI;
+        //uint8_t* m_rI;
 
         cpuState_t m_cpuState;
         uint8_t m_Ocode;
@@ -102,6 +110,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         int m_cycle;
 
         addrMode_t m_addrMode;
+        uint8_t m_addrIndx;
         uint8_t m_op0;
         uint8_t m_op1;
         uint16_t m_opAddr;
@@ -112,7 +121,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         //uint64_t m_tAds;
         uint64_t m_tAcc;
 
-        bool m_zeroPage;
+        //bool m_zeroPage;
         bool m_ctrlPC;
         bool m_incPC;
 
