@@ -21,13 +21,15 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QtMath>
-//#include <math.h>
 
 #include "wavegen.h"
 #include "iopin.h"
 #include "simulator.h"
 #include "circuit.h"
 #include "itemlibrary.h"
+#include "propdialog.h"
+#include "mainwindow.h"
+#include "circuitwidget.h"
 
 #include "doubleprop.h"
 #include "stringprop.h"
@@ -73,7 +75,6 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
     
     setSteps( 100 );
     setDuty( 50 );
-    setWaveType( "Sine" );
 
     remPropGroup( tr("Main") );
     addPropGroup( { tr("Main"), {
@@ -88,6 +89,8 @@ new BoolProp <WaveGen>( "Always_On", tr("Always On"),""      , this, &WaveGen::a
 new DoubProp<WaveGen>( "Semi_Ampli", tr("Semi Amplitude"),"V", this, &WaveGen::semiAmpli, &WaveGen::setSemiAmpli ),
 new DoubProp<WaveGen>( "Mid_Volt"  , tr("Middle Voltage"),"V", this, &WaveGen::midVolt,   &WaveGen::setMidVolt )
     }} );
+
+    setWaveType( "Sine" );
 }
 WaveGen::~WaveGen()
 {
@@ -215,18 +218,47 @@ void WaveGen::setWaveType( QString t )
     if( m_showVal && (m_showProperty == "Wave_Type") )
         setValLabelText( m_enumNames.at( type ) );
 
+    bool showFile = false;
+    bool showDuty = false;
+    bool showSteps = true;
+
     QString pixmapPath;
     switch( m_waveType ) {
     case Sine:     pixmapPath = ":/sin.png"; break;
     case Saw:      pixmapPath = ":/saw.png"; break;
-    case Triangle: pixmapPath = ":/tri.png"; break;
-    case Square:   pixmapPath = ":/sqa.png"; break;
+    case Triangle:
+        pixmapPath = ":/tri.png";
+        showDuty = true;
+        break;
+    case Square:
+        pixmapPath = ":/sqa.png";
+        showDuty = true;
+        break;
     case Random:   pixmapPath = ":/rnd.png"; break;
-    case Wav:      pixmapPath = ":/wav.png"; break;
+    case Wav:
+        pixmapPath = ":/wav.png";
+        showFile = true;
+        showSteps = false;
+        break;
     }
+    if( !m_propDialog )
+    {
+        m_help = MainWindow::self()->getHelp("WaveGen");
+        m_propDialog = new PropDialog( CircuitWidget::self(), m_help );
+        m_propDialog->setComponent( this );
+    }
+    m_propDialog->showProp("File", showFile );
+    m_propDialog->showProp("Duty", showDuty );
+    m_propDialog->showProp("Steps", showSteps );
+
     if( m_wavePixmap ) delete m_wavePixmap;
     m_wavePixmap = new QPixmap( pixmapPath );
     update();
+}
+
+void WaveGen::updtValues()
+{
+    //m_propDialog
 }
 
 void WaveGen::setFile( QString fileName )
@@ -243,7 +275,6 @@ void WaveGen::setFile( QString fileName )
         qDebug() << "Error: file doesn't exist:\n"<<fileNameAbs<<"\n";
         return;
     }
-
     QFile WAVFile( fileNameAbs );
     if( !WAVFile.open( QIODevice::ReadWrite ) )
     {

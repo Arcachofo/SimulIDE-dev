@@ -68,6 +68,8 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
 
         virtual void setFreq( double freq ) override;
 
+        virtual void updtValues() override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
     private:
