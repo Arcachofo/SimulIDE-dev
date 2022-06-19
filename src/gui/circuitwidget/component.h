@@ -72,9 +72,9 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void setShowVal( bool show );
 
         QPointF getValPos();
-        void setValPos( QPointF p );
+        void    setValPos( QPointF p );
 
-        int getValRot();
+        int  getValRot();
         void setValRot( int r );
 
         void setValLabelPos( int x, int y, int rot );
@@ -83,7 +83,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void setValLabelText( QString t ) override;
 
         virtual QString showProp() override;
-        virtual void setShowProp( QString prop )override;
+        virtual void    setShowProp( QString prop )override;
 
         bool isGraphical() { return m_graphical; }
 
@@ -91,22 +91,24 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         void setMainComp( bool m ) { m_isMainComp = m; }
 
         QPointF boardPos() { return m_boardPos; }
-        void setBoardPos( QPointF pos ) { m_boardPos = pos; }
+        void    setBoardPos( QPointF pos ) { m_boardPos = pos; }
 
         QPointF circPos() { return m_circPos; }
-        void setCircPos( QPointF pos ) { m_circPos = pos; }
+        void    setCircPos( QPointF pos ) { m_circPos = pos; }
 
         double boardRot() { return m_boardRot; }
-        void setBoardRot( double rot ) { m_boardRot = rot; }
+        void   setBoardRot( double rot ) { m_boardRot = rot; }
 
         double circRot() { return m_circRot; }
-        void setCircRot( double rot ) { m_circRot = rot; }
+        void   setCircRot( double rot ) { m_circRot = rot; }
 
         int  hflip() { return m_Hflip; }
         virtual void setHflip( int hf );
 
         int  vflip() { return m_Vflip; }
         void setVflip( int vf );
+
+        QString print();
 
         bool isHidden() { return m_hidden; }
         virtual void setHidden( bool hid, bool hidLabel=false );
@@ -116,7 +118,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         virtual void registerEnode( eNode*, int n=-1 ) {;}
 
-        QString print();
+        virtual void updtValues() {;}
 
         virtual void inStateChanged( int ){;}
 

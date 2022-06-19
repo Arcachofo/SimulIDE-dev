@@ -35,7 +35,7 @@ class PropDialog : public QDialog, private Ui::PropDialog
         PropDialog( QWidget* parent=0, QString help="" );
 
         void setComponent( Component* comp );
-
+        void showProp( QString name, bool show );
         void updtValues();
 
     public slots:

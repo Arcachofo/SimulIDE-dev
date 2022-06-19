@@ -38,6 +38,8 @@ class PropVal : public QWidget
 
         virtual QString getValWithUnit() { return ""; }
 
+        QString propName() { return m_propName; }
+
     protected:
         void addDividers( QComboBox* unitBox, QString unit );
         void addMultipliers( QComboBox* unitBox, QString unit );

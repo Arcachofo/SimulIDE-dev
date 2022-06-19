@@ -112,6 +112,18 @@ void PropDialog::setComponent( Component* comp )
     adjustWidgets();
 }
 
+void PropDialog::showProp( QString name, bool show )
+{
+    for( PropVal* prop : m_propList )
+    {
+        if( prop->propName() == name )
+        {
+            prop->setHidden( !show );
+            break;
+        }
+    }
+}
+
 void PropDialog::on_labelBox_editingFinished()
 {
     m_component->setIdLabel( labelBox->text() );
@@ -169,4 +181,5 @@ void PropDialog::adjustWidgets()
 void PropDialog::updtValues()
 {
     for( PropVal* prop : m_propList ) prop->updtValues();
+    m_component->updtValues();
 }
