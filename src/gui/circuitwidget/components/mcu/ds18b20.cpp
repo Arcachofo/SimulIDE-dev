@@ -53,10 +53,10 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
 {    
     m_area = QRect(-28,-16, 56, 32 );
 
-    srand(time(0));
-    m_state = W1_IDLE;
+    srand( time(0) );
+    m_state    = W1_IDLE;
     m_parPower = false;
-    m_tempInc = 0.5;
+    m_tempInc  = 0.5;
     setTemp( 22 );
 
     generateROM( 0x28 );  // FAMILY CODE = 28h for DS18B20
@@ -76,7 +76,7 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
 
     QPushButton* u_button = new QPushButton();
     u_button->setMaximumSize( 9, 9 );
-    u_button->setGeometry(-5,-5, 9, 9);
+    u_button->setGeometry(-5,-5, 9, 9 );
     u_button->setCheckable( false );
     u_button->setIcon(QIcon(":/su.png"));
 
@@ -86,9 +86,9 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
 
     QPushButton* d_button = new QPushButton();
     d_button->setMaximumSize( 9, 9 );
-    d_button->setGeometry(-5,-5, 9, 9);
+    d_button->setGeometry(-5,-5, 9, 9 );
     d_button->setCheckable( false );
-    d_button->setIcon(QIcon(":/giu.png"));
+    d_button->setIcon( QIcon(":/giu.png") );
 
     proxy = Circuit::self()->addWidget( d_button );
     proxy->setParentItem( this );
@@ -144,7 +144,7 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
     uint64_t circTime = Simulator::self()->circTime();
 
     if( m_lastIn && !inState ) m_lastTime = circTime; // Falling edge
-    else if( !m_lastIn && inState )                                        // Rising edge
+    else if( !m_lastIn && inState )                   // Rising edge
     {
         uint64_t time = circTime-m_lastTime; // in picoseconds
 
@@ -155,22 +155,17 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
             m_bitIndex = 0;
             m_state = W1_ROM_CMD;
             m_write = false;
-            pulse( 30, 80 ); // Send 80 us ( 60 to 240 us) pulse after 30 us ( 15 to 60 us)
+            pulse( 20, 80 ); // Send 80 us pulse (60 to 240 us)  after 20 us (15 to 60 us)
         }
         else if( m_state > W1_IDLE )    // Active
         {
-            if( time > 60*1e6 )         // > 30 us : 0 received
+            if( time > 30*1e6 )         // > 30 us : 0 received
             {
-                if( m_state == W1_BUSY ) qDebug()<< idLabel() << "ERROR: Ds18b20 busy, Read pulse should be < 15 us";
-                else if( m_write )
-                    qDebug()<< idLabel() << "ERROR: Master is reading data, Read pulse should be < 15 us";
-                else                     readBit( 0 );
+                if( !m_write ) readBit( 0 ); // If writting ignore long pulses
             }
-            else    ///// if( time < 15*1e6 )     // < 15 us : 1 received Or Read pulse
+            else if( time < 15*1e6 )          // < 15 us : 1 received Or Read pulse
             {
-                if( m_state == W1_BUSY ){
-                    if( m_busyTime > circTime ) pulse( 1, 50 ); // Still busy: Send a 50 us pulse after 1 us
-                }
+                if( m_state == W1_BUSY ){ if( m_busyTime > circTime ) pulse( 1, 50 ); } // Still busy: Send a 50 us pulse after 1 us
                 else{
                     if( m_write ) writeBit();
                     else          readBit( 1 );
@@ -185,7 +180,6 @@ void Ds18b20::runEvent()
         m_pullDown = false;
         m_inpin->sheduleState( false, 0 );
         Simulator::self()->addEvent( m_pulse, this );
-        m_inpin->changeCallBack( this, false );        // Stop receiving voltChange() CallBacks
     }
     else{             // Release
         m_inpin->sheduleState( true, 0 );
@@ -203,7 +197,7 @@ void Ds18b20::sendData( uint8_t data, int size )
 
 void Ds18b20::writeBit()
 {
-    if( (m_txReg & 1<<m_bitIndex) == 0 ) pulse( 1, 50 ); // Send a 50 us pulse after 1 us
+    if( (m_txReg & 1<<m_bitIndex) == 0 ) pulse( 1, 25 ); // Send a 25 us pulse after 1 us
 
     if( m_bitIndex == m_lastBit ) // Byte sent
     {
@@ -222,12 +216,12 @@ void Ds18b20::dataSent() // Last data has been sent
     else if( !m_txBuff.empty() )   // Send next byte in Tx Buffer
     {
         m_txBuff.pop_back();  // Remove last sent byte
-        if( m_txBuff.empty() )// All date sent
+        if( m_txBuff.empty() )// All data sent
         {
             if     ( m_state == W1_ROM_CMD ) m_state = W1_FUN_CMD;  // Wait for Function command
             else if( m_state == W1_FUN_CMD ) m_state = W1_IDLE;     // Wait for Reset pulse
         }
-        else                   sendData( m_txBuff.back() ); // Send last byte in list, if list is not empty
+        else sendData( m_txBuff.back() ); // Send last byte in list, if list is not empty
     }
 }
 
@@ -259,8 +253,6 @@ void Ds18b20::readBit( uint8_t bit )
 
 void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg)
 {
-    if( m_state != W1_MATCH && m_state != W1_SEARCH ) qDebug() << idLabel()<< "Ds18b20::dataReceived" << val2hex( m_rxReg );
-
     switch( m_state )
     {
         case W1_IDLE: break;                           // Error, this shoild not happen
@@ -282,11 +274,10 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
             m_bitIndex = 0;
             m_lastBit = 7;     // Return to normal byte reception
             qDebug() <<idLabel()<<"Ds18b20::dataReceived     ROM match";
-        }break;
+        } break;
         case W1_SEARCH:
         {
-            m_bitSearch++;
-            if( m_bitSearch == 64 )    // We passed Search ROM: wait for commands
+            if( ++m_bitSearch == 64 )    // We passed Search ROM: wait for commands
             {
                 m_state = W1_IDLE;
                 m_lastBit = 7; // Return to normal byte reception
@@ -297,7 +288,7 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
                 m_state = W1_IDLE; // We are out, Wait for next Reset signal
                 qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OUT";
             }
-        }break;
+        } break;
         default: qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  ERROR";
     }
 }
@@ -306,6 +297,7 @@ void Ds18b20::pulse( uint64_t time, uint64_t witdth ) // Time in us
 {
     m_pullDown = true;
     m_pulse = witdth*1e6;                          // Keep line low for width us
+    m_inpin->changeCallBack( this, false );          // Stop receiving voltChange() CallBacks
     Simulator::self()->addEvent( time*1e6, this ); // Send pulse after time us
 }
 
@@ -333,8 +325,6 @@ void Ds18b20::readROM() // Code: 33h : send ROM to Master
 
     m_txBuff.clear();
     for( int i=7; i>=0; i-- ) m_txBuff.push_back( m_ROM[i] );
-
-    qDebug() << idLabel()<< "Tx Buffer:" << arrayToHex( m_txBuff.data(), m_txBuff.size() );
 
     sendData( m_txBuff.back() );
 }
@@ -487,8 +477,7 @@ uint8_t Ds18b20::crc8( uint8_t* addr, uint8_t len ) // DS18B20 crc8 calc
             crc >>= 1;
             if( mix) crc ^= 0x8C;
             inbyte >>= 1;
-        }
-    }
+    }   }
     return crc;
 }
 
