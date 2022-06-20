@@ -278,7 +278,7 @@ void WaveGen::setFile( QString fileName )
     QFile WAVFile( fileNameAbs );
     if( !WAVFile.open( QIODevice::ReadWrite ) )
     {
-       qDebug() << "WaveGen::setFile Could not open:\n" << fileNameAbs;
+       qDebug() << "WaveGen::setFile Could not open:\n" << fileNameAbs<<"\n";
        return;
     }
     Simulator::self()->pauseSim();
@@ -290,12 +290,12 @@ void WaveGen::setFile( QString fileName )
     while( true )                   // Read Header
     {
         dataStream.readRawData( strm, 4 );    // 4 File Format = "RIFF"
-        if( QString( strm ) != "RIFF" ) break;
+        if( QString( QByteArray(strm,4) ) != "RIFF" ) break;
         dataStream.readRawData( strm, 4 );    // 4 File Size
         dataStream.readRawData( strm, 4 );    // 4 File Type = "WAVE"
-        if( QString( strm ) != "WAVE" ) break;
+        if( QString( QByteArray(strm,4) ) != "WAVE" ) break;
         dataStream.readRawData( strm, 4 );    // 4 Format section header= "fmt "
-        if( QString( strm ) != "fmt " ) break;
+        if( QString( QByteArray(strm,4) ) != "fmt " ) break;
         dataStream.readRawData( strm, 4 );    // 4 Size of Format section
         dataStream >> m_audioFormat;          // 2 Format type
         dataStream >> m_numChannels;          // 2 Number of channels
@@ -304,7 +304,7 @@ void WaveGen::setFile( QString fileName )
         dataStream >> m_blockSize;            // 2 Block size (bytes): (BitsPerSample * Channels) / 8.
         dataStream >> m_bitsPerSample;        // 2 Bits per sample
         dataStream.readRawData( strm, 4 );    // 4 Data section header = "data"
-        if( QString( strm ) != "data" ) break;
+        if( QString( QByteArray(strm,4) ) != "data" ) break;
         dataStream >> dataSize; // Size of Data section
         break;
     }
