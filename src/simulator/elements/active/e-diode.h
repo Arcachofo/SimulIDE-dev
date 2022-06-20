@@ -44,9 +44,6 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         virtual void initialize() override;
         virtual void voltChanged() override;
 
-        //double fdDrop()  { return m_fdDrop; }
-        //void   setFdDrop( double fdDrop );
-
         double threshold() { return m_vCriti; }
         void   setThreshold( double vCrit );
 
@@ -69,7 +66,7 @@ class MAINMODULE_EXPORT eDiode : public eResistor
  static void getModels();
 
     protected:
-        double limitStep( double vnew, double scale, double vc );
+        double limitStep( double vnew, double vold, double scale, double vc );
         void SetParameters( double sc, double ec, double bv, double sr );
         void updateValues();
 
@@ -83,7 +80,6 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         double m_vCriti;
         double m_vzCrit;
 
-        //double m_fdDrop;
         double m_bkDown;
         double m_maxCur;
 

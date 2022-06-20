@@ -63,31 +63,39 @@ void eDiode::stamp()
 void eDiode::voltChanged()
 {
     double voltPN = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
-    if( qFabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged  /// Mingw needs qFabs
+    if( qFabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged
     Simulator::self()->notCorverged();
 
     m_step += .01;
     double gmin = m_bAdmit*qExp( m_step );
     if( gmin > .1 ) gmin = .1;
 
-    if( m_bkDown == 0 || voltPN >= 0 )  // No breakdown Diode or Forward biased Zener
+    if( voltPN > m_vCriti && qFabs(voltPN - m_voltPN) > m_vScale*2 ) // check new voltage; has current changed by factor of e^2?
     {
-        voltPN = limitStep( voltPN, m_vScale, m_vCriti );
-        double eval = qExp( voltPN*m_vdCoef );
-        m_admit = m_satCur*m_vdCoef*eval + gmin;
-        m_current = m_satCur*(eval-1);
+        voltPN = limitStep( voltPN, m_voltPN, m_vScale, m_vCriti );
     }
-    else{                               // Reverse biased Zener or Diode with breakdown
-        double volt = -voltPN-m_zOfset;
-        m_voltPN = -m_voltPN-m_zOfset;
-        voltPN = -( limitStep( volt, m_vt, m_vzCrit ) + m_zOfset );
-        double eval = qExp( voltPN*m_vdCoef );
-        double expCoef = qExp( volt*m_vzCoef );
-        m_admit = m_satCur*( m_vdCoef*eval + m_vzCoef*expCoef ) + gmin;
-        m_current = m_satCur*( eval - expCoef - 1 );
+    else if( voltPN < 0 && m_zOfset != 0 )
+    {
+        voltPN = -voltPN - m_zOfset;
+        double vold = -m_voltPN - m_zOfset;
+
+        if( voltPN > m_vzCrit && qFabs(voltPN - vold) > m_vt*2 )
+            voltPN = limitStep( voltPN, vold, m_vt, m_vzCrit );
+        voltPN = -(voltPN+m_zOfset);
     }
     m_voltPN = voltPN;
 
+    double eval = qExp( voltPN*m_vdCoef );
+
+    if( m_bkDown == 0 || voltPN >= 0  )  // No breakdown Diode or Forward biased Zener
+    {
+        m_admit   = m_satCur * m_vdCoef*eval + gmin;
+        m_current = m_satCur * (eval-1);
+    }else{                               // Reverse biased Zener or Diode with breakdown
+        double expCoef = qExp( (-voltPN-m_zOfset)*m_vzCoef );
+        m_admit   = m_satCur*( m_vdCoef*eval + m_vzCoef*expCoef ) + gmin;
+        m_current = m_satCur*( eval-1 - expCoef ) ;
+    }
     eResistor::stampAdmit();
 
     double stCurr = m_current - m_admit*voltPN;
@@ -95,17 +103,16 @@ void eDiode::voltChanged()
     m_ePin[1]->stampCurrent( stCurr );
 }
 
-inline double eDiode::limitStep( double vnew, double scale, double vc )
+inline double eDiode::limitStep( double vnew, double vold, double scale, double vc )
 {
-    if( vnew > vc && qFabs( vnew - m_voltPN ) > scale*2 ) // check new voltage; has current changed by factor of e^2?
+    if( vold > 0 )
     {
-        if( m_voltPN > 0 )
-        {
-            double arg = 1 + (vnew - m_voltPN)/scale;
-            if( arg > 0 ) vnew = m_voltPN + scale*qLn( arg );
-            else          vnew = vc;
-        }else             vnew = scale*qLn( vnew/scale );
-    } return vnew;
+        double arg = 1 + (vnew-vold)/scale;
+        if( arg > 0 ) vnew = vold + scale*qLn( arg );
+        else          vnew = vc;
+    }else             vnew = scale*qLn( vnew/scale );
+
+    return vnew;
 }
 
 void eDiode::SetParameters( double sc, double ec, double bv, double sr )
@@ -117,12 +124,6 @@ void eDiode::SetParameters( double sc, double ec, double bv, double sr )
 
     updateValues();
 }
-
-/*void eDiode::setFdDrop( double fdDrop )
-{
-    m_satCur = 1/( exp( fdDrop*m_vdCoef ) - 1 );
-    updateValues();
-}*/
 
 void eDiode::setThreshold( double vCrit )
 {
@@ -153,7 +154,6 @@ void eDiode::updateValues()
 {
     m_vScale = m_emCoef*m_vt;
     m_vdCoef = 1/m_vScale;
-    //m_fdDrop = m_vScale*log( 1/m_satCur + 1 );
     m_vCriti = m_vScale*qLn( m_vScale/(qSqrt(2)*m_satCur) );
     m_zOfset = m_bkDown - m_vt*qLn(-(1-0.005/m_satCur) );
     m_vzCrit = m_vt*qLn( m_vt/(qSqrt(2)*m_satCur) );
