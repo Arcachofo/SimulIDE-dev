@@ -184,7 +184,6 @@ void WaveGen::genRandom()
 void WaveGen::genWav()
 {
     m_vOut = m_data.at( m_index );
-    m_vOut /= m_maxValue;
     m_nextStep = m_qSteps;
     m_index++;
     if( m_index >= m_data.size() ) m_index = 0;
@@ -263,6 +262,8 @@ void WaveGen::updtValues()
 
 void WaveGen::setFile( QString fileName )
 {
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+
     m_fileName = fileName;
     if( fileName.isEmpty() ) return;
 
@@ -272,7 +273,7 @@ void WaveGen::setFile( QString fileName )
 
     if( !QFileInfo::exists( fileNameAbs ) )
     {
-        qDebug() << "Error: file doesn't exist:\n"<<fileNameAbs<<"\n";
+        qDebug() << "WaveGen::setFile Error: file doesn't exist:\n"<<fileNameAbs<<"\n";
         return;
     }
     QFile WAVFile( fileNameAbs );
@@ -304,48 +305,90 @@ void WaveGen::setFile( QString fileName )
         dataStream >> m_blockSize;            // 2 Block size (bytes): (BitsPerSample * Channels) / 8.
         dataStream >> m_bitsPerSample;        // 2 Bits per sample
         dataStream.readRawData( strm, 4 );    // 4 Data section header = "data"
-        if( QString( QByteArray(strm,4) ) != "data" ) break;
+        QString section = QString( QByteArray(strm,4) );
+        while( section  != "data" )
+        {
+            qDebug() << "WaveGen::setFile Warning: Section not supported: " << section;
+            uint32_t size = 0;   // 4 Size of Format section
+            dataStream >> size;
+            uint8_t data = 0;
+            for( uint i=0; i<size; i++ ) dataStream >> data;
+            dataStream.readRawData( strm, 4 );
+            section = QString( QByteArray(strm,4) );
+        }
         dataStream >> dataSize; // Size of Data section
         break;
     }
     if( dataSize )                  // Read samples
     {
         int bytes = m_blockSize/m_numChannels;
-        char sample[bytes];
 
-        if( bytes == 1 ){
-            m_voltBase = 0;
-            m_maxValue = 255;
-        }else{
-            m_voltBase = m_voltage/2;
-            m_maxValue = 65536;
+        if( m_audioFormat == 1 )
+        {
+            qDebug() << "WaveGen::setFile Audio format: PCM" << m_bitsPerSample << "bits"<<m_numChannels<<"Channels";
+            if( bytes == 1 ){
+                m_minValue = 0;
+                m_maxValue = 255;
+            }else if( bytes == 2 ){
+                m_minValue = -32767;
+                m_maxValue = 32767;
+            }
+            else { qDebug() << "WaveGen::setFile Error: PCM format"<<bytes<<"bytes"; WAVFile.close(); return;}
         }
+        else if( m_audioFormat == 3 )
+        {
+            if( bytes == 4 ){
+                qDebug() << "WaveGen::setFile Audio format: IEEE_FLOAT" << m_bitsPerSample << "bits"<<m_numChannels<<"Channels";
+                m_minValue = -1;
+                m_maxValue = 1;
+            }
+            else { qDebug() << "WaveGen::setFile Error: IEEE_FLOAT format"<<bytes<<"bytes"; WAVFile.close(); return;}
+        }
+        else { qDebug() << "WaveGen::setFile Error: Audio format not supported:"; WAVFile.close(); return;}
 
+        char sample[bytes];
         m_data.clear();
         //m_data.resize( m_numChannels );
+
         for( int block=0; block < dataSize/m_blockSize; ++block )
         {
             for( int ch=0; ch < m_numChannels; ++ch )
             {
-                if( ch == 0 )
+                dataStream.readRawData( sample, bytes );
+                if( ch != 0 ) continue;
+
+                if( m_audioFormat == 1 )
                 {
-                    dataStream.readRawData( sample, bytes );
                     int16_t data = 0;
                     memcpy( &data, sample, bytes );
-                    uint16_t val;
-                    if( bytes == 2 ) val = data + 32767;
-                    else             val = data;
-                    m_data.emplace_back( val );
+                    m_data.emplace_back( normalize( data ) );
+                }
+                else if( m_audioFormat == 3 )
+                {
+                    float data = 0;
+                    memcpy( &data, sample, bytes );
+                    m_data.emplace_back( normalize( data ) );
                 }
             }
         }
         setFreq( m_sampleRate );
         setSteps( 1 );
-        qDebug() << "WaveGen::setFile Loaded wav file:\n" << fileNameAbs;
+        qDebug() << "WaveGen::setFile Success Loaded wav file:\n" << fileNameAbs;
     }
     else qDebug() << "WaveGen::setFile Error reading wav file:\n" << fileNameAbs;
+    qDebug() << "\n";
 
     WAVFile.close();
+}
+
+inline double WaveGen::normalize( double data )
+{
+    if     ( data > m_maxValue ) return 1;
+    else if( data < m_minValue ) return 0;
+
+    data = data-m_minValue;
+    data /= (m_maxValue-m_minValue);
+    return data;
 }
 
 void WaveGen::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

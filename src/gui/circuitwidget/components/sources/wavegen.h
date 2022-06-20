@@ -79,6 +79,8 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         void genSquare();
         void genRandom();
         void genWav();
+
+        double normalize( double data );
         
         wave_type m_waveType;
         double m_duty;
@@ -98,8 +100,11 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         uint32_t m_sampleRate;
         uint16_t m_blockSize;
         uint16_t m_bitsPerSample;
-        uint32_t m_maxValue;
-        std::vector<uint16_t> m_data;
+
+        double m_maxValue;
+        double m_minValue;
+        double m_mult;
+        std::vector<double> m_data;
         QString m_fileName;
 
         QStringList m_waves;
