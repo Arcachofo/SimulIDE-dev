@@ -184,7 +184,13 @@ void OscopeChannel::voltChanged()
             m_rising = true;
             m_lastValue = data;
         }
-        if( m_nCycles > 1 )     // Wait for a full wave
+        if( m_nCycles > 2 )     // Trigger lost? Reset Max and Min values
+        {
+            m_nCycles = 0;
+            m_maxVal  =-1e12;
+            m_minVal  = 1e12;
+        }
+        else if( m_nCycles > 1 )     // Wait for a full wave
         {
             m_ampli  = m_maxVal-m_minVal;
             m_midVal = m_minVal + m_ampli/2;
