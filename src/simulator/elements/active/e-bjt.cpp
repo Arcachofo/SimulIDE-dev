@@ -119,9 +119,6 @@ void eBJT::voltChanged()
     double voltBC = voltB-voltC;
     double voltBE = voltB-voltE;
 
-    if( qFabs(voltB) > 1000  )
-        voltB = 0;
-
     if( (qFabs( voltBC-m_voltBC ) < .01)
      && (qFabs( voltBE-m_voltBE ) < .01) )
         { m_step = 0; return; }
@@ -152,6 +149,7 @@ void eBJT::voltChanged()
     Gcc -= gmin;
     Gee -= gmin;
 
+    // Admitance Matrix OK
     m_BC->stampAdmitance(-Gec-Gcc );
     m_CB->stampAdmitance(-Gce-Gcc );
     m_BE->stampAdmitance(-Gee-Gce );

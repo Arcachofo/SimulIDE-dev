@@ -153,6 +153,8 @@ bool CircMatrix::solveMatrix()
                 if( !factorMatrix( ny, group ) ) return false;
                 if( !luSolve( ny, group ) )      return false;
 
+                //qDebug() <<"CircMatrix::solveMatrix. Circuit"<<group<<ny<<"Nodes\n";
+
                 group++;
             }
         }
@@ -329,6 +331,7 @@ bool CircMatrix::luSolve( int n, int group )
     {
         double tot = b[i];
         for( int j=i+1; j<n; ++j ) tot -= a[i][j]*b[j]; // back-substitution using the upper triangular matrix
+
         double volt = tot/a[i][i];
 
         if( qIsNaN( volt ) || qIsInf( volt ) ) { isOk = false; volt = 0; }
