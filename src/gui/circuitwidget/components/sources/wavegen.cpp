@@ -323,21 +323,21 @@ void WaveGen::setFile( QString fileName )
     {
         int bytes = m_blockSize/m_numChannels;
 
-        if( m_audioFormat == 1 )
+        if( m_audioFormat == 1 ) // PCM
         {
             qDebug() << "WaveGen::setFile Audio format: PCM" << m_bitsPerSample << "bits"<<m_numChannels<<"Channels";
             if( bytes == 1 ){
                 m_minValue = 0;
                 m_maxValue = 255;
             }else if( bytes == 2 ){
-                m_minValue = -32767;
+                m_minValue = -32768;
                 m_maxValue = 32767;
             }
             else { qDebug() << "WaveGen::setFile Error: PCM format"<<bytes<<"bytes"; WAVFile.close(); return;}
         }
-        else if( m_audioFormat == 3 )
+        else if( m_audioFormat == 3 ) // IEEE_FLOAT
         {
-            if( bytes == 4 ){
+            if( bytes == 4 || bytes == 8 ){
                 qDebug() << "WaveGen::setFile Audio format: IEEE_FLOAT" << m_bitsPerSample << "bits"<<m_numChannels<<"Channels";
                 m_minValue = -1;
                 m_maxValue = 1;
@@ -357,17 +357,24 @@ void WaveGen::setFile( QString fileName )
                 dataStream.readRawData( sample, bytes );
                 if( ch != 0 ) continue;
 
-                if( m_audioFormat == 1 )
+                if( m_audioFormat == 1 ) // PCM
                 {
                     int16_t data = 0;
                     memcpy( &data, sample, bytes );
                     m_data.emplace_back( normalize( data ) );
                 }
-                else if( m_audioFormat == 3 )
+                else if( m_audioFormat == 3 ) // IEEE_FLOAT
                 {
-                    float data = 0;
-                    memcpy( &data, sample, bytes );
-                    m_data.emplace_back( normalize( data ) );
+                    if( bytes == 4 ){         // 32 bits
+                        float data = 0;
+                        memcpy( &data, sample, bytes );
+                        m_data.emplace_back( normalize( data ) );
+                    }
+                    else if( bytes == 8 ){    // 64 bits
+                        double data = 0;
+                        memcpy( &data, sample, bytes );
+                        m_data.emplace_back( normalize( data ) );
+                    }
                 }
             }
         }
