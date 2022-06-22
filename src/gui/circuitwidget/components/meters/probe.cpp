@@ -48,7 +48,8 @@ Probe::Probe( QObject* parent, QString type, QString id )
      : Component( parent, type, id )
      , eElement( id )
 {
-    m_area = QRect(-8,-8, 16, 16 );
+    setZValue( 200 );
+    m_area = QRect(-12,-8, 20, 16 );
     m_graphical = true;
     m_voltTrig = 2.5;
     m_voltIn = 0;
@@ -56,7 +57,7 @@ Probe::Probe( QObject* parent, QString type, QString id )
     m_pin.resize(1); // Create Input Pin
     m_pin[0] = m_inputPin = new IoPin( 180, QPoint(-22,0), id+"-inpin", 0, this, input);
     m_inputPin->setLength( 14 );
-    m_inputPin->setBoundingRect( QRect(-2, -2, 6, 4) );
+    m_inputPin->setBoundingRect( QRect(-1, -1, 2, 2) );
     m_inputPin->setImp( 1e9 );
 
     setValLabelPos( 16, 0, 45 ); // x, y, rot
@@ -128,5 +129,5 @@ void Probe::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget 
     else if ( m_voltIn < -m_voltTrig) p->setBrush( QColor( 0, 100, 255 ) );
     else                              p->setBrush( QColor( 230, 230, 255 ) );
 
-    p->drawEllipse( m_area );
+    p->drawEllipse( QRect(-8,-8, 16, 16 ) );
 }
