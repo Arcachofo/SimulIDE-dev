@@ -47,6 +47,8 @@ class MAINMODULE_EXPORT ScriptModule : public eElement, public QObject
         void getExceptions();
         QScriptValue callFunction( QScriptValue* func, QScriptValueList args=QScriptValueList() );
 
+        QString m_script;
+
         QScriptEngine  m_engine;
         QScriptProgram m_program;
         QScriptValue   m_thisObject;

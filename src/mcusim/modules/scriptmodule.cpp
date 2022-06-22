@@ -36,8 +36,7 @@ ScriptModule::~ScriptModule() {}
 
 void ScriptModule::evalProg( QString prog )
 {
-    qDebug() << "ScriptModule::evalProg";
-    if( !m_engine.canEvaluate( prog ) ) qDebug() << "Error canEvaluate returned false!";
+    if( !m_engine.canEvaluate( prog ) ) qDebug() << "ScriptModule::evalProg Error: can't evaluate script";
 
     m_program = QScriptProgram( prog );
     m_engine.evaluate( m_program );
@@ -47,9 +46,11 @@ void ScriptModule::evalProg( QString prog )
 
 QScriptValue ScriptModule::evalFunc( QString func )
 {
-    qDebug() << "ScriptModule::evalFunc";
-    QScriptValue function = m_engine.evaluate( func );
-    if (!function.isFunction()) qDebug() << func+" is not a function:\n";
+    QScriptValue function;
+    if( !m_script.contains("function"+func+"(") ) return function;
+
+   function = m_engine.evaluate( func );
+    if( !function.isFunction() ) qDebug()<<"ScriptModule::evalFunc"<<func<<" is not a function:\n";
 
     //function.call( m_thisObject );
     getExceptions();
@@ -75,6 +76,7 @@ QScriptValue ScriptModule::callFunction( QScriptValue* func, QScriptValueList ar
 
 void ScriptModule::setScript( QString script )
 {
+    m_script = script;
     evalProg( script );
 
     m_reset    = evalFunc("reset");
