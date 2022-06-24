@@ -65,10 +65,7 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
     
     m_admit = 1/8;
     m_buzzer = false;
-    
-    int refreshPeriod = 10; // mS
-    int sampleRate    = 40000; // samples/S
-    
+
     m_deviceinfo = QAudioDeviceInfo::defaultOutputDevice(); 
     if( m_deviceinfo.isNull() ) 
     {
@@ -79,38 +76,59 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
         qDebug() <<"   Error: No defaulf Audio Output Device Found" ;
         return;
     }
-    m_format.setSampleRate( sampleRate );  
+    //int refreshPeriod = 10; // mS
+    //int sampleRate    = 40000; // samples/S
+    m_format = m_deviceinfo.preferredFormat();
+    m_format.setCodec( "audio/pcm" );
+    //m_format.setSampleRate( sampleRate );
     m_format.setChannelCount(1);
     m_format.setSampleSize(8);
-    m_format.setCodec( "audio/pcm" );  
+    m_format.setSampleType( QAudioFormat::UnSignedInt );
     m_format.setByteOrder( QAudioFormat::LittleEndian );  
-    m_format.setSampleType( QAudioFormat::UnSignedInt );  
-    
+
     if( !m_deviceinfo.isFormatSupported( m_format )) 
     {  
         qDebug() << "Warning: Default format not supported - trying to use nearest";
         m_format = m_deviceinfo.nearestFormat( m_format );  
         qDebug() << m_format.sampleRate() << m_format.channelCount()<<m_format.sampleSize();
     }  
-    m_audioOutput = new QAudioOutput( m_deviceinfo, m_format );   
+    m_audioOutput = new QAudioOutput( m_deviceinfo, m_format );
     
-    m_dataSize = refreshPeriod*sampleRate/1000;
-    m_dataBuffer.resize( m_dataSize );
+    //m_dataSize = refreshPeriod*sampleRate/1000;
+    //m_dataBuffer.resize( m_dataSize*10 );
+    //initialize();
 
-    initialize();
+    //connect( m_audioOutput, SIGNAL( stateChanged( QAudio::State ) ),
+    //                 this, SLOT( stateChanged( QAudio::State ) ), Qt::UniqueConnection );
 
     addPropGroup( { tr("Main"), {
 new BoolProp<AudioOut>( "Buzzer"   , tr("Buzzer")   ,"" , this, &AudioOut::buzzer, &AudioOut::setBuzzer ),
 new DoubProp<AudioOut>( "Impedance", tr("Impedance"),"Ω", this, &AudioOut::res,    &AudioOut::setResSafe )
     }} );
 }
-AudioOut::~AudioOut(){}
+AudioOut::~AudioOut()
+{
+    delete m_audioOutput;
+}
 
 void AudioOut::initialize()
 {
     if( m_deviceinfo.isNull() ) return;
-    m_dataCount = 0;
-    m_auIObuffer = m_audioOutput->start();
+
+    m_dataBuffer.clear();
+    m_audioOutput->stop();
+    m_audioOutput->reset();
+
+    Simulator::self()->cancelEvents( this );
+}
+
+void AudioOut::stamp()
+{
+    if( m_deviceinfo.isNull() ) return;
+
+    m_audioBuffer = m_audioOutput->start();
+    m_dataSize = m_audioOutput->periodSize();
+    m_dataBuffer.reserve( m_dataSize );
 
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected() )
             Simulator::self()->addEvent( 1, this );
@@ -136,24 +154,31 @@ void AudioOut::runEvent()
     if     ( outVal > 255 ) outVal = 255;
     else if( outVal < 0 )   outVal = 0;
 
-    m_dataBuffer[ m_dataCount ] = (char)outVal;
-    m_dataCount++;
+    m_dataBuffer.append( (char)outVal );
 
-    if( m_dataCount == m_dataSize )
+    if( m_dataBuffer.size() == m_dataSize )
     {
-        m_dataCount = 0;
-        m_auIObuffer->write( m_dataBuffer.data(), m_dataSize );
+        //qDebug() <<"pushing"<<m_dataBuffer.size()<< m_audioOutput->bytesFree() ;
+
+        m_audioBuffer->write( m_dataBuffer.data(), m_dataSize );
+        m_dataBuffer.clear();
     }
     double realSpeed = Simulator::self()->realSpeed();
     if( realSpeed < 1e-6 )
     {
         realSpeed = Simulator::self()->stepsPerSec();
         realSpeed *= Simulator::self()->stepSize();
-        realSpeed /= 1e8; // 1e12/10000
+        realSpeed /= 1e8;
     }
-    double nextEvent = realSpeed*25*1e2;//(realSpeed/10000)*25*1e6
+    realSpeed *= (1e12/10000);
+    uint64_t nextEvent = realSpeed/m_format.sampleRate();//realSpeed*25*1e2;//(realSpeed/10000)*25*1e6
     Simulator::self()->addEvent( nextEvent, this ); // 25 us
 }
+
+/*void AudioOut::stateChanged( QAudio::State state )
+{
+    qDebug() << state << m_audioOutput->bytesFree() ;
+}*/
 
 QPainterPath AudioOut::shape() const
 {

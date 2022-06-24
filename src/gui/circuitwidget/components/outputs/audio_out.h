@@ -38,6 +38,7 @@ class AudioOut : public Component, public eResistor
  static LibraryItem* libraryItem();
 
         virtual void initialize() override;
+        virtual void stamp() override;
         virtual void runEvent() override;
 
         bool buzzer() { return m_buzzer; }
@@ -45,18 +46,22 @@ class AudioOut : public Component, public eResistor
         
         virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
-        
+
+    //public slots:
+    //    void stateChanged( QAudio::State state );
+
     private:
         QAudioDeviceInfo m_deviceinfo;
         QAudioFormat     m_format;  
         
         QAudioOutput* m_audioOutput;
-        QIODevice*    m_auIObuffer;
+        QIODevice*    m_audioBuffer;
         QByteArray    m_dataBuffer;
 
         int m_dataSize;
         int m_dataCount;
 
+        bool m_started;
         bool m_buzzer;
 };
 
