@@ -28,14 +28,16 @@ SpiModule::SpiModule( QString name )
     m_MISO = NULL;
     m_SS   = NULL;
 
-    m_dataOut = NULL;
-    m_dataIn  = NULL;
+    m_dataOutPin = NULL;
+    m_dataInPin  = NULL;
 }
 SpiModule::~SpiModule( ){}
 
 void SpiModule::initialize()
 {
     m_mode = SPI_OFF;
+
+    m_srReg = 0;
 
     m_toggleSck = false;
     m_lsbFirst  = false;
@@ -64,7 +66,8 @@ void SpiModule::runEvent()
         m_clkPin->toggleOutState();
         m_toggleSck = false;
         m_clkState = m_clkPin->getOutState() ? Clock_Rising : Clock_Falling;
-        step();
+        if( m_bitCount == 8 ) endTransaction();
+        else                  step();
     }
 }
 
@@ -80,64 +83,70 @@ void SpiModule::voltChanged() // Called in Slave mode on SCK or SS changes
     {
         if( enabled && !m_enabled ) // Enabling
         {
+            m_clkPin->changeCallBack( this, true );
             StartTransaction(); // Start transaction
         }
         else                        // Disabling
         {
-            ;// Reset SPI Logic
+            m_clkPin->changeCallBack( this, false );
+            m_srReg = 0;// Reset SPI Logic
         }
         m_enabled = enabled;
     }
     if( !enabled ) return;
-    if( (m_clkState == Clock_High) || (m_clkState == Clock_Low) ) return; // Not an Edge
+    if( m_clkState == Clock_High || m_clkState == Clock_Low ) return; // Not an Edge
 
     step();
 }
 
 void SpiModule::endTransaction()
 {
-    m_dataOut->setOutState( true );
+    if( m_dataOutPin && m_mode == SPI_MASTER ) m_dataOutPin->setOutState( true );
 }
 
 void SpiModule::StartTransaction()
 {
-    if( m_lsbFirst )
-    {
-        m_bitPtr = 1;
-        m_endOfByte = 256;
-    }else{
-        m_bitPtr = 256;
-        m_endOfByte = 1;
-    }
+    resetSR();
     Simulator::self()->cancelEvents( this );
     if( m_sampleEdge == m_leadEdge ) // Sample in first Leading Edge => setup now
     {
-        m_clkState = m_tailEdge; // Force setup
+        //m_clkState = m_tailEdge; // Force setup
         step();
     }
-    else keepClocking();
+    else if( m_mode == SPI_MASTER ) keepClocking();
+}
+
+void SpiModule::resetSR()
+{
+    m_bitCount = 0;
+    if( m_lsbFirst )
+    {
+        m_outBit = 1;
+        m_inBit  = 1<<7;
+    }else{
+        m_outBit = 1<<7;
+        m_inBit  = 1;
+    }
 }
 
 void SpiModule::step()
 {
-    if( m_clkState == m_tailEdge ) // Rotate bit mask
-    {
-        if( m_bitPtr == m_endOfByte ) // Check end of byte
-        {
-            endTransaction();
-            return;
-        }
-        if( m_lsbFirst ) m_bitPtr <<= 1;
-        else             m_bitPtr >>= 1;
-    }
+    if( m_mode == SPI_MASTER ) keepClocking();
+
     if( m_clkState == m_sampleEdge )         //Read one bit
     {
-        if( m_dataIn->getInpState() ) m_rxReg |= m_bitPtr;
-    }
-    else if( m_dataOut )                     // Write one bit (Only if dataOut Pin exist)
-        m_dataOut->sheduleState( m_txReg & m_bitPtr, 0 );
+        if( m_dataInPin->getInpState() ) m_srReg |= m_inBit;
 
-    if( m_mode == SPI_MASTER ) keepClocking();
+        if( ++m_bitCount == 8 ) return; // Check end of byte
+
+        if( m_lsbFirst ) m_srReg >>= 1; // Rotate bit mask
+        else             m_srReg <<= 1;
+    }
+    else if( m_dataOutPin )                     // Write one bit (Only if dataOut Pin exist)
+    {
+        if( m_bitCount == 8 ) endTransaction();
+        m_dataOutPin->sheduleState( (m_srReg & m_outBit)>0, 0 );
+    }
 }
 
 void SpiModule::setMode( spiMode_t mode )
@@ -145,36 +154,30 @@ void SpiModule::setMode( spiMode_t mode )
     if( mode == m_mode ) return;
     m_mode = mode;
 
-    m_dataOut = NULL;
-    m_dataIn  = NULL;
+    m_dataOutPin = NULL;
+    m_dataInPin  = NULL;
 
-    switch( mode ) {
-    case SPI_OFF:
-        {
-            if( m_MOSI )   m_MOSI->changeCallBack( this, false );
-            if( m_MISO )   m_MISO->changeCallBack( this, false );
-            if( m_clkPin ) m_clkPin->changeCallBack( this, false );
-            if( m_SS )     m_SS->changeCallBack( this, false );
-        }
-        break;
-    case SPI_MASTER:
-        {
-            if( !m_MOSI || !m_MISO || !m_clkPin ) { m_mode = SPI_OFF; return; }
-            m_dataOut = m_MOSI;
-            m_dataIn  = m_MISO;
-        }
-        break;
-    case SPI_SLAVE:
-        {
-            if( !m_MOSI || !m_clkPin ) { m_mode = SPI_OFF; return; }
-            m_dataOut = m_MISO;
-            m_dataIn  = m_MOSI;
-
-            m_clkPin->changeCallBack( this, true );
-            if( m_SS ) m_SS->changeCallBack( this, true );
-        }
-        break;
+    if( mode == SPI_OFF )
+    {
+        if( m_MOSI )   m_MOSI->changeCallBack( this, false );
+        if( m_MISO )   m_MISO->changeCallBack( this, false );
+        if( m_clkPin ) m_clkPin->changeCallBack( this, false );
+        if( m_SS )     m_SS->changeCallBack( this, false );
     }
-    if( m_dataOut ) m_dataOut->setOutState( true );
+    else if( mode == SPI_MASTER )
+    {
+        if( !m_MOSI || !m_MISO || !m_clkPin ) { m_mode = SPI_OFF; return; }
+        m_dataOutPin = m_MOSI;
+        m_dataInPin  = m_MISO;
+    }
+    else if( mode == SPI_SLAVE )
+    {
+        if( !m_MOSI || !m_clkPin ) { m_mode = SPI_OFF; return; }
+        m_dataOutPin = m_MISO;
+        m_dataInPin  = m_MOSI;
+
+        if( m_SS ) m_SS->changeCallBack( this, true );
+    }
+    if( m_dataOutPin && m_mode == SPI_MASTER ) m_dataOutPin->setOutState( true );
 }
 

@@ -101,7 +101,7 @@ void AvrSpi::writeStatus( uint8_t newSPSR ) // SPSR is being written
 
 void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written
 {
-    m_txReg = newSPDR;
+    m_srReg = newSPDR;
 
     /// SPIF is cleared by first reading the SPI Status Register with SPIF set,
     /// then accessing the SPI Data Register (SPDR).
@@ -113,5 +113,6 @@ void AvrSpi::writeSpiReg( uint8_t newSPDR ) // SPDR is being written
 void AvrSpi::endTransaction()
 {
     SpiModule::endTransaction();
+    *m_dataReg = m_srReg;
     m_interrupt->raise();
 }
