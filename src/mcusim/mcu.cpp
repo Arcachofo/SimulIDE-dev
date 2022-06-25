@@ -445,7 +445,7 @@ void Mcu::addPin( QString id, QString type, QString label,
         {
             if( type == "rst" )
                  pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
-            else pin = m_eMcu.getCtrlPin( id ); // Control Port
+            else pin = m_eMcu.getPin( id ); // Control Port
 
         }
         else pin = m_eMcu.getPin( id.replace( 0, 1,"PORT") ); // I/O Port

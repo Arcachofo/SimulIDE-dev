@@ -19,15 +19,15 @@
 
 #include <math.h>
 
-#include "intmem.h"
+#include "intmemcore.h"
 #include "e_mcu.h"
 #include "mcupin.h"
 #include "simulator.h"
 #include "circuit.h"
 
-IntMemModule::IntMemModule( eMcu* mcu, QString name )
-            : McuModule( mcu, name )
-            , eElement( mcu->getId()+"-"+name )
+IntMemCore::IntMemCore( eMcu* mcu )
+          : McuCore( mcu )
+          , eElement( mcu->getId()+"-core" )
 {
     m_rwPin = NULL;
     //m_rePin = NULL;
@@ -38,11 +38,11 @@ IntMemModule::IntMemModule( eMcu* mcu, QString name )
     m_propDelay = 10*1000; // 10 ns
     m_asynchro = false;
 }
-IntMemModule::~IntMemModule() {}
+IntMemCore::~IntMemCore() {}
 
-//void IntMemModule::initialize(){;}
+//void IntMemCore::initialize(){;}
 
-void IntMemModule::stamp()
+/*void IntMemCore::stamp()
 {
     m_nextOutVal = 0;
     m_outValue = 0;
@@ -50,20 +50,30 @@ void IntMemModule::stamp()
 
     enableOutputs( false );
     m_clkPin->changeCallBack( this );
-}
+}*/
 
-void IntMemModule::reset()  // NO: Reset happens after initialize() in Pins.
+void IntMemCore::reset()  // NO: Reset happens after initialize() in Pins.
 {
     m_memState = mem_IDLE;
     write( true );
+
+    m_nextOutVal = 0;
+    m_outValue = 0;
+    m_cs = false;
+
+    //enableOutputs( false );
+    //m_clkPin->changeCallBack( this );
 }
 
-void IntMemModule::voltChanged()
+void IntMemCore::runClock( bool clkState )
 {
-    bool CS = true;
-    if( m_cshPin ) CS = CS && m_cshPin->getInpState();
-    if( m_cslPin ) CS = CS && !m_cslPin->getInpState();
-    if( m_clkPin ) CS = CS && !m_clkPin->getInpState();
+    bool CS = !clkState;
+    bool csh = m_cshPin->getInpState();
+    bool csl = !m_cslPin->getInpState();
+
+    if( m_cshPin ) CS = CS && csh;
+    if( m_cslPin ) CS = CS && csl;
+    //if( m_clkPin ) CS = CS && !m_clkPin->getInpState();
     if( CS != m_cs ){
         m_cs = CS;
         //enableOutputs( CS );
@@ -87,7 +97,7 @@ void IntMemModule::voltChanged()
         sheduleOutPuts();
 }   }
 
-void IntMemModule::runEvent()
+void IntMemCore::runEvent()
 {
     if( m_write )
     {
@@ -103,7 +113,7 @@ void IntMemModule::runEvent()
     else runOutputs();
 }
 
-void IntMemModule::write( bool w )
+void IntMemCore::write( bool w )
 {
     m_write = w;
     for( IoPin* pin : m_dataPin )
@@ -114,12 +124,12 @@ void IntMemModule::write( bool w )
     Simulator::self()->cancelEvents( this );
 }
 
-void IntMemModule::enableOutputs( bool en )
+void IntMemCore::enableOutputs( bool en )
 {
     for( uint i=0; i<m_dataPin.size(); ++i ) m_dataPin[i]->setStateZ( !en );
 }
 
-void IntMemModule::runOutputs()
+void IntMemCore::runOutputs()
 {
     m_outValue = m_nextOutVal;
 
@@ -132,7 +142,7 @@ void IntMemModule::runOutputs()
     }
 }
 
-void IntMemModule::sheduleOutPuts()
+void IntMemCore::sheduleOutPuts()
 {
     if( m_nextOutVal == m_outValue ) return;
     Simulator::self()->addEvent( m_propDelay, this );

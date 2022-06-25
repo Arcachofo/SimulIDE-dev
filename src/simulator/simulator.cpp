@@ -223,6 +223,7 @@ void Simulator::resetSim()
     m_error    = 0;
     m_warning  = 0;
     m_lastStep = 0;
+    m_tStep    = 0;
     m_lastRefT = 0;
     m_circTime = 0;
     m_NLstep   = 0;

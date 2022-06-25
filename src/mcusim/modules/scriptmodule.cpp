@@ -47,7 +47,7 @@ void ScriptModule::evalProg( QString prog )
 QScriptValue ScriptModule::evalFunc( QString func )
 {
     QScriptValue function;
-    if( !m_script.contains("function"+func+"(") ) return function;
+    if( !m_script.contains("function "+func+"(") ) return function;
 
    function = m_engine.evaluate( func );
     if( !function.isFunction() ) qDebug()<<"ScriptModule::evalFunc"<<func<<" is not a function:\n";
@@ -79,6 +79,7 @@ void ScriptModule::setScript( QString script )
     m_script = script;
     evalProg( script );
 
+    m_init     = evalFunc("init");
     m_reset    = evalFunc("reset");
     m_setValue = evalFunc("setValue");
 

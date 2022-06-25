@@ -105,7 +105,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuTimer* getTimer( QString name );
         McuPort* getPort( QString name );
         McuPin*  getPin( QString pinName );
-        McuPin*  getCtrlPin( QString pinName );
         QHash<QString, McuPort*> getPorts() { return m_portList; }
 
         McuWdt* watchDog() { return m_wdt; }

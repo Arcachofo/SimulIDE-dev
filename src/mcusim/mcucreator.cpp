@@ -29,7 +29,7 @@
 #include "e_mcu.h"
 #include "mcu.h"
 #include "mcuport.h"
-#include "mcuportctrl.h"
+//#include "mcuportctrl.h"
 #include "mcupin.h"
 #include "extmem.h"
 #include "intmem.h"
@@ -75,6 +75,7 @@
 #include "i51port.h"
 
 #include "mcs65core.h"
+#include "intmemcore.h"
 
 #include "scriptcore.h"
 #include "scriptport.h"
@@ -167,10 +168,38 @@ int McuCreator::processFile( QString fileName )
             QString script = root.attribute("script");
             cpu->setScript( fileToString( m_basePath+"/"+script, "McuCreator::processFile" ) );
         }
+        else if( m_core == "intmem" ){
+            IntMemCore* intMem = (IntMemCore*)mcu->cpu;
+
+            McuPort* addrPort = mcu->getPort( root.attribute("addrport") );
+            for( int i=0; i<addrPort->m_numPins; ++i )
+            {
+                McuPin* pin = addrPort->getPinN( i );
+                if( pin ){
+                    intMem->m_addrPin.emplace_back( pin );
+                    pin->setDirection( true );
+                    pin->controlPin( true, true );
+                }
+            }
+            McuPort* dataPort = mcu->getPort( root.attribute("dataport") );
+            for( int i=0; i<dataPort->m_numPins; ++i )
+            {
+                McuPin* pin = dataPort->getPinN( i );
+                if( pin ){
+                    intMem->m_dataPin.emplace_back( pin );
+                    pin->setDirection( false );
+                    pin->controlPin( true, true );
+                }
+            }
+            intMem->m_rwPin  = mcu->getPin( root.attribute("rwpin") );
+            intMem->m_cshPin = mcu->getPin( root.attribute("cshpin") );
+            intMem->m_cslPin = mcu->getPin( root.attribute("cslpin") );
+            intMem->m_clkPin = mcu->getPin( root.attribute("clkpin") );
+        }
     }
     if( root.hasAttribute("clkpin") )
     {
-        mcu->m_clkPin = mcu->getCtrlPin( root.attribute("clkpin") );
+        mcu->m_clkPin = mcu->getPin( root.attribute("clkpin") );
     }
     return 0;
 }
@@ -360,7 +389,8 @@ void McuCreator::createProgBlock( QDomElement* p )
 void McuCreator::createInterrupts( QDomElement* i )
 {
     QString enable = i->attribute("enable");
-    watchBitNames( enable, R_WRITE, mcu, &eMcu::enableInterrupts, mcu );
+    if( !enable.isEmpty() )
+        watchBitNames( enable, R_WRITE, mcu, &eMcu::enableInterrupts, mcu );
 
     QDomNode node = i->firstChild();
     while( !node.isNull() )
@@ -968,10 +998,10 @@ void McuCreator::createExtMem( QDomElement* e )
             pin->controlPin( true, true );
         }
     }
-    extMem->m_rwPin = mcu->getCtrlPin( e->attribute("rwpin") );
-    extMem->m_rePin = mcu->getCtrlPin( e->attribute("repin") );
-    extMem->m_enPin = mcu->getCtrlPin( e->attribute("enpin") );
-    extMem->m_laPin = mcu->getCtrlPin( e->attribute("lapin") );
+    extMem->m_rwPin = mcu->getPin( e->attribute("rwpin") );
+    extMem->m_rePin = mcu->getPin( e->attribute("repin") );
+    extMem->m_enPin = mcu->getPin( e->attribute("enpin") );
+    extMem->m_laPin = mcu->getPin( e->attribute("lapin") );
 }
 
 void McuCreator::createIntMem( QDomElement* e )
@@ -1001,10 +1031,10 @@ void McuCreator::createIntMem( QDomElement* e )
             pin->controlPin( true, true );
         }
     }
-    intMem->m_rwPin  = mcu->getCtrlPin( e->attribute("rwpin") );
-    intMem->m_cshPin = mcu->getCtrlPin( e->attribute("cshpin") );
-    intMem->m_cslPin = mcu->getCtrlPin( e->attribute("cslpin") );
-    intMem->m_clkPin = mcu->getCtrlPin( e->attribute("clkpin") );
+    intMem->m_rwPin  = mcu->getPin( e->attribute("rwpin") );
+    intMem->m_cshPin = mcu->getPin( e->attribute("cshpin") );
+    intMem->m_cslPin = mcu->getPin( e->attribute("cslpin") );
+    intMem->m_clkPin = mcu->getPin( e->attribute("clkpin") );
 }
 
 void McuCreator::createCore( QString core )
@@ -1014,7 +1044,8 @@ void McuCreator::createCore( QString core )
     else if( core == "Pic14e" )   mcu->cpu = new Pic14eCore( mcu );
     else if( core == "8051" )     mcu->cpu = new I51Core( mcu );
     else if( core == "6502" )     mcu->cpu = new Mcs65Core( mcu );
-    else if( core == "scripted" ) mcu->cpu = new ScriptCore( mcu );
+    //else if( core == "scripted" ) mcu->cpu = new ScriptCore( mcu );
+    else if( core == "intmem" )   mcu->cpu = new IntMemCore( mcu );
     else                          mcu->cpu = new McuCore( mcu );
 
     if( !m_stackEl.isNull() ) createStack( &m_stackEl );
@@ -1045,6 +1076,7 @@ void McuCreator::createInterrupt( QDomElement* el )
     else if( m_core == "AVR" )   iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
     else if( m_core == "Pic14" ) iv = new PicInterrupt( intName, intVector, mcu );
     else if( m_core == "Pic14e") iv = new Pic14eInterrupt( intName, intVector, mcu );
+    else                         iv = new Interrupt( intName, intVector, mcu );
     if( !iv ) return;
 
     mcu->m_interrupts.m_intList.insert( intName, iv );
@@ -1078,6 +1110,10 @@ void McuCreator::createInterrupt( QDomElement* el )
     {
         QString mode = el->attribute("mode");
         watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode, mcu );
+    }
+    if( el->hasAttribute("pin") )
+    {
+        iv->m_intPin = mcu->getPin( el->attribute("pin") );
     }
     if( el->hasAttribute("wakeup") )
     {

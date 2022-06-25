@@ -29,7 +29,7 @@
 I51Core::I51Core( eMcu* mcu  )
        : McuCore( mcu  )
 {
-    m_eaPin = mcu->getCtrlPin("EA");
+    m_eaPin = mcu->getPin("EA");
 
     m_acc = m_mcu->getReg( "ACC" );
 

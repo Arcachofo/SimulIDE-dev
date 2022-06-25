@@ -7,6 +7,7 @@
         <item name="6502" package="MCS65/6502/6502" data="MCS65/6502/6502"></item>
         <item name="6520" package="MCS65/652x/6520" data="MCS65/652x/6520"></item>
         <item name="6522" package="MCS65/652x/6522" data="MCS65/652x/6522"></item>
+        <item name="6532" package="MCS65/652x/6532" data="MCS65/652x/6532"></item>
     
     </itemset>
     

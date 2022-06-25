@@ -21,6 +21,7 @@
 
 #include "mcuinterrupts.h"
 #include "mcucore.h"
+#include "mcupin.h"
 #include "e_mcu.h"
 
 Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
@@ -32,6 +33,7 @@ Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
     m_autoClear = false;
     m_remember = false;
     m_nextInt = NULL;
+    m_intPin = NULL;
 
     m_ram = mcu->getRam();
 }
@@ -86,14 +88,17 @@ void Interrupt::raise( uint8_t v )
     m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
 
     if( m_enabled )
+    {
         m_interrupts->addToPending( this ); // Add to pending interrupts
+        if( m_intPin ) m_intPin->setOutState( false );
+    }
 
     if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
 }
 
 void Interrupt::execute()
 {
-    m_mcu->cpu->CALL_ADDR( m_vector );
+    if( m_vector ) m_mcu->cpu->CALL_ADDR( m_vector );
 }
 
 void Interrupt::exitInt() // Exit from this interrupt

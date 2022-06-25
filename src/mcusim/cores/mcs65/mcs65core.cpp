@@ -31,16 +31,16 @@ Mcs65Core::Mcs65Core( eMcu* mcu )
     //m_rI = NULL;
 
     // Control Pins
-    m_phi0Pin = mcu->getCtrlPin("P0");
-    m_phi1Pin = mcu->getCtrlPin("P1");   m_phi1Pin->setPinMode( output );
-    m_phi2Pin = mcu->getCtrlPin("P2");   m_phi2Pin->setPinMode( output );
-    m_syncPin = mcu->getCtrlPin("SYNC"); m_syncPin->setPinMode( output );
+    m_phi0Pin = mcu->getPin("P0");
+    m_phi1Pin = mcu->getPin("P1");   m_phi1Pin->setPinMode( output );
+    m_phi2Pin = mcu->getPin("P2");   m_phi2Pin->setPinMode( output );
+    m_syncPin = mcu->getPin("SYNC"); m_syncPin->setPinMode( output );
     // Interrupt Pins
-    m_irqPin = mcu->getCtrlPin("IRQ");
-    m_nmiPin = mcu->getCtrlPin("NMI");
+    m_irqPin = mcu->getPin("IRQ");
+    m_nmiPin = mcu->getPin("NMI");
     // User Pins
-    m_rdyPin = mcu->getCtrlPin("RDY");
-    m_soPin  = mcu->getCtrlPin("SO");
+    m_rdyPin = mcu->getPin("RDY");
+    m_soPin  = mcu->getPin("SO");
     /// m_dbePin = McuPort::getPin("DBE"););
 }
 Mcs65Core::~Mcs65Core() {}

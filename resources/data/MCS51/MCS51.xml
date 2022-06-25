@@ -4,7 +4,7 @@
     <datablock name="GPR" start="0x0000" end="0x007F"/>
     <regblock  name="SFR" start="0x0080" end="0x00FF" offset="0x0080" streg="PSW">
         <register name="P0"     addr="0"   bits="0-7" reset="11111111"/>
-        <register name="SP"     addr="1"   bits="" reset="00000111"/>
+        <register name="SP"     addr="1"   bits=""    reset="00000111"/>
         <register name="DPL"    addr="2"   bits=""/>
         <register name="DPH"    addr="3"   bits=""/>
         <register name="PCON"   addr="7"   bits="IDL,PD,GF0,GF1,0,0,0,SMOD"/>

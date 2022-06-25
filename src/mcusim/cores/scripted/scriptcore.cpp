@@ -18,12 +18,13 @@
  ***************************************************************************/
 
 #include "scriptcore.h"
-
+#include "intmem.h"
 
 ScriptCore::ScriptCore( eMcu* mcu )
           : ScriptModule( mcu, "" )
-          , McuCore( mcu )
+          //, McuCore( mcu )
 {
+    //m_core = core;
 }
 ScriptCore::~ScriptCore() {}
 
@@ -51,6 +52,20 @@ void ScriptCore::setScript( QString script )
 {
     ScriptModule::setScript( script );
     m_runClock = evalFunc("runClock");
+
+    callFunction( &m_init );
+}
+
+void ScriptCore::getIntMem( QString name, QString scrName )
+{
+    /*IntMemModule* intMem = NULL;//m_mcu->getModule( name );
+    if( !intMem ) return;
+
+    m_intMem = m_engine.newQObject( intMem, QScriptEngine::QtOwnership
+                                          , QScriptEngine::ExcludeSuperClassMethods
+                                          | QScriptEngine::ExcludeSuperClassProperties );
+
+    m_engine.globalObject().setProperty( "intMem", m_intMem );*/
 }
 
 #include "moc_scriptcore.cpp"

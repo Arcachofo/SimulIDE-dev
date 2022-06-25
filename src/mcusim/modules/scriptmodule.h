@@ -53,6 +53,7 @@ class MAINMODULE_EXPORT ScriptModule : public eElement, public QObject
         QScriptProgram m_program;
         QScriptValue   m_thisObject;
 
+        QScriptValue m_init;
         QScriptValue m_reset;
         QScriptValue m_setValue;
 

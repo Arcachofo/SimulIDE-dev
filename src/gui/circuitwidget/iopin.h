@@ -24,6 +24,7 @@
 
 #include "pin.h"
 #include "e-element.h"
+#include "e-node.h"
 
 enum pinMode_t{
     undef_mode=0,
@@ -117,6 +118,6 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         pinMode_t m_pinMode;
 
-        eNode* m_scrEnode;
+        static eNode m_scrEnode;
 };
 #endif

@@ -23,23 +23,30 @@
 #include "scriptmodule.h"
 #include "mcucore.h"
 
-class MAINMODULE_EXPORT ScriptCore : public ScriptModule, public McuCore
+//class IntMemModule;
+
+class MAINMODULE_EXPORT ScriptCore : public ScriptModule//, public McuCore
 {
     Q_OBJECT
     public:
         ScriptCore( eMcu* mcu );
         ~ScriptCore();
 
-        virtual void reset() override;
-        virtual void runDecoder() override;
-        virtual void runClock( bool clkState ) override;
+        virtual void reset();
+        virtual void runDecoder();
+        virtual void runClock( bool clkState );
 
         virtual void setScript( QString script ) override;
 
     public slots:
         //virtual void setValue( QString name, int val ) override;
+        void getIntMem( QString name , QString scrName );
 
     protected:
+        McuCore* m_core;
         QScriptValue m_runClock;
+
+        //IntMemModule* m_intMem;
+        QScriptValue  m_intMem;
 };
 #endif

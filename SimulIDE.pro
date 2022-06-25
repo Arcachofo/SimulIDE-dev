@@ -61,6 +61,7 @@ INCLUDEPATH += ../src \
     ../src/mcusim/cores/pic \
     ../src/mcusim/cores/mcs65 \
     ../src/mcusim/cores/scripted \
+    ../src/mcusim/cores/intmem \
     ../src/mcusim/modules \
     ../src/mcusim/modules/memory \
     ../src/mcusim/modules/usart \

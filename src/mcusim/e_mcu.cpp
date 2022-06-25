@@ -19,7 +19,7 @@
 
 #include "e_mcu.h"
 #include "mcucore.h"
-#include "mcuportctrl.h"
+//#include "mcuportctrl.h"
 #include "mcupin.h"
 #include "mcuwdt.h"
 #include "usartmodule.h"
@@ -194,24 +194,25 @@ McuPort* eMcu::getPort( QString name )
     return port;
 }
 
-McuPin* eMcu::getCtrlPin( QString pinName )
-{
-    if( !m_ctrlPort ) return NULL;
-    if( pinName.isEmpty() ) return NULL;
-    return m_ctrlPort->getPin( pinName );
-}
-
 McuPin* eMcu::getPin( QString pinName )
 {
     if( pinName.isEmpty() ) return NULL;
-    QString portName = pinName.left( 5 );
-    McuPort* port = getPort( portName );
-    if( !port ) return NULL;
 
-    QString pinStr = pinName;
-    pinStr.remove( portName );
+    McuPin* pin = NULL;
 
-    McuPin* pin = port->getPinN( pinStr.toInt() );
+    if( pinName.startsWith("PORT") )
+    {
+        QString portName = pinName.left( 5 );
+        McuPort* port = getPort( portName );
+
+        if( port ){
+            QString pinStr = pinName;
+            pinStr.remove( portName );
+            pin = port->getPinN( pinStr.toInt() );
+        }
+    }
+    else if( m_ctrlPort ) pin = m_ctrlPort->getPin( pinName );
+
     if( !pin ) qDebug() << "ERROR: NULL Pin:"<< pinName;
     return pin;
 }
