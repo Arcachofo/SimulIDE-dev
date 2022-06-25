@@ -30,7 +30,7 @@ eNode::eNode( QString id )
 
     initialize();
 
-    Simulator::self()->addToEnodeList( this );
+    if( !id.isEmpty() ) Simulator::self()->addToEnodeList( this );
 }
 eNode::~eNode(){}
 

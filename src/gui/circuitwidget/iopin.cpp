@@ -20,18 +20,15 @@
 #include <QtMath>
 
 #include "iopin.h"
-#include "e-node.h"
 #include "simulator.h"
 #include "circuit.h"
+
+eNode IoPin::m_scrEnode("");
 
 IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* parent, pinMode_t mode )
      : Pin( angle, pos, id, index, parent )
      , eElement( id )
 {
-    m_scrEnode = new eNode( id+"scr" );
-    m_scrEnode->setNodeNumber(0);
-    Simulator::self()->remFromEnodeList( m_scrEnode );
-
     m_outState = false;
     m_stateZ   = false;
 
@@ -58,7 +55,7 @@ IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* par
     m_pinMode = undef_mode;
     setPinMode( mode );
 }
-IoPin::~IoPin(){ delete m_scrEnode; }
+IoPin::~IoPin(){}
 
 void IoPin::initialize()
 {
@@ -72,7 +69,7 @@ void IoPin::initialize()
 
 void IoPin::stamp()
 {
-    ePin::setEnodeComp( m_scrEnode );
+    ePin::setEnodeComp( &m_scrEnode );
     setPinMode( m_pinMode );
     stampAll();
 }
@@ -265,6 +262,5 @@ void IoPin::stampAll()
 
 void IoPin::stampVolt( double volt )
 {
-    m_scrEnode->setVolt( volt );
     ePin::stampCurrent( volt*m_admit );
 }
