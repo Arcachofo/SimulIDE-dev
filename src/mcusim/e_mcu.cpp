@@ -96,7 +96,7 @@ void eMcu::runEvent()
         else                 m_debugger->stepDebug();
         Simulator::self()->addEvent( m_psCycle, this );
     }
-    else if( m_state >= mcuRunning )
+    else if( m_state >= mcuRunning && m_freq > 0 )
     {
         stepCpu();
         Simulator::self()->addEvent( cyclesDone*m_psCycle, this );
@@ -139,8 +139,8 @@ void eMcu::cpuReset( bool r )
         m_state = mcuStopped;
     }else{
         m_state = mcuRunning;
-        if( m_clkPin ) m_clkPin->changeCallBack( this );  // External clock
-        else           Simulator::self()->addEvent( m_psCycle, this );
+        if     ( m_clkPin   ) m_clkPin->changeCallBack( this );  // External clock
+        else if( m_freq > 0 ) Simulator::self()->addEvent( m_psCycle, this );
     }
 }
 
@@ -165,11 +165,19 @@ int eMcu::pc() { return cpu->PC; }
 
 void eMcu::setFreq( double freq )
 {
-    if     ( freq < 0  )  freq = 0;
+    if     ( freq < 0       ) freq = 0;
     else if( freq > 100*1e6 ) freq = 100*1e6;
 
+    if( freq > 0 )
+    {
+        m_psCycle = 1e12*(m_cPerInst/freq); // Set Simulation cycles per Instruction cycle
+        if( m_freq == 0 && m_state >= mcuRunning )// Previously stopped by freq = 0
+        {
+            Simulator::self()->cancelEvents( this );
+            if( !m_clkPin   ) Simulator::self()->addEvent( m_psCycle, this );
+        }
+    }
     m_freq = freq;
-    m_psCycle = 1e12*(m_cPerInst/m_freq); // Set Simulation cycles per Instruction cycle
 }
 
 void eMcu::setEeprom( QVector<int>* eep )
