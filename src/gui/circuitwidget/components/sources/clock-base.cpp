@@ -84,10 +84,13 @@ void ClockBase::setFreq( double freq )
     
     m_freq = freq;
     m_remainder = 0;
+
+    setRunning( m_isRunning && (freq>0) );
 }
 
 void ClockBase::setRunning( bool running )
 {
+    running = running && (m_freq>0);
     m_button->setChecked( running );
     m_isRunning = running;
     m_changed = true;
