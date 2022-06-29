@@ -63,7 +63,7 @@ AudioOut::AudioOut( QObject* parent, QString type, QString id )
 
     setLabelPos(-20,-36, 0);
     
-    m_admit = 1/8;
+    m_admit = 1.0/8;
     m_buzzer = false;
 
     m_deviceinfo = QAudioDeviceInfo::defaultOutputDevice(); 
