@@ -124,6 +124,8 @@ void AudioOut::initialize()
 
 void AudioOut::stamp()
 {
+    eResistor::stamp();
+
     if( m_deviceinfo.isNull() ) return;
 
     m_audioBuffer = m_audioOutput->start();
