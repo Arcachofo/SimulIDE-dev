@@ -19,6 +19,7 @@
 
 #include <QPainter>
 #include <QFileInfo>
+#include <QFileDialog>
 #include <QDir>
 #include <QtMath>
 
@@ -217,47 +218,83 @@ void WaveGen::setWaveType( QString t )
     if( m_showVal && (m_showProperty == "Wave_Type") )
         setValLabelText( m_enumNames.at( type ) );
 
-    bool showFile = false;
-    bool showDuty = false;
-    bool showSteps = true;
-
     QString pixmapPath;
     switch( m_waveType ) {
     case Sine:     pixmapPath = ":/sin.png"; break;
     case Saw:      pixmapPath = ":/saw.png"; break;
-    case Triangle:
-        pixmapPath = ":/tri.png";
-        showDuty = true;
-        break;
-    case Square:
-        pixmapPath = ":/sqa.png";
-        showDuty = true;
-        break;
+    case Triangle: pixmapPath = ":/tri.png"; break;
+    case Square:   pixmapPath = ":/sqa.png"; break;
     case Random:   pixmapPath = ":/rnd.png"; break;
-    case Wav:
-        pixmapPath = ":/wav.png";
-        showFile = true;
-        showSteps = false;
-        break;
+    case Wav:      pixmapPath = ":/wav.png"; break;
     }
+    if( m_wavePixmap ) delete m_wavePixmap;
+    m_wavePixmap = new QPixmap( pixmapPath );
+    udtProperties();
+    update();
+}
+
+void WaveGen::udtProperties()
+{
+    if( !m_propDialog ) return;
+
+    bool showFile = false;
+    bool showDuty = false;
+    bool showSteps = true;
+
+    switch( m_waveType ) {
+    case Triangle: showDuty = true; break;
+    case Square:   showDuty = true; break;
+    case Wav:      showFile = true; showSteps = false; break;
+    default: break;
+    }
+    m_propDialog->showProp("File", showFile );
+    m_propDialog->showProp("Duty", showDuty );
+    m_propDialog->showProp("Steps", showSteps );
+}
+
+void WaveGen::slotProperties()
+{
     if( !m_propDialog )
     {
         m_help = MainWindow::self()->getHelp("WaveGen");
         m_propDialog = new PropDialog( CircuitWidget::self(), m_help );
         m_propDialog->setComponent( this );
     }
-    m_propDialog->showProp("File", showFile );
-    m_propDialog->showProp("Duty", showDuty );
-    m_propDialog->showProp("Steps", showSteps );
-
-    if( m_wavePixmap ) delete m_wavePixmap;
-    m_wavePixmap = new QPixmap( pixmapPath );
-    update();
+    udtProperties();
+    m_propDialog->show();
 }
 
 void WaveGen::updtValues()
 {
     //m_propDialog
+}
+
+void WaveGen::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
+{
+    if( m_waveType == Wav )
+    {
+        QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load Wav File") );
+        connect( loadAction, SIGNAL(triggered()),
+                       this, SLOT(slotLoad()), Qt::UniqueConnection );
+
+        menu->addSeparator();
+    }
+    Component::contextMenu( event, menu );
+}
+
+void WaveGen::slotLoad()
+{
+    QString fil = m_background;
+    if( fil.isEmpty() ) fil = Circuit::self()->getFilePath();
+
+    const QString dir = fil;
+
+    QString fileName = QFileDialog::getOpenFileName( 0l, tr("Load Image"), dir,
+                       tr("Wav files (*.wav);;All files (*.*)"));
+
+    if( fileName.isEmpty() ) return; // User cancels loading
+
+    setFile( fileName );
 }
 
 void WaveGen::setFile( QString fileName )

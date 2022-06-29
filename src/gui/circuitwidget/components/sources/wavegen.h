@@ -72,6 +72,13 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
         
+    public slots:
+        void slotLoad();
+        virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
+
+    protected slots:
+        virtual void slotProperties() override;
+
     private:
         void genSine();
         void genSaw();
@@ -79,6 +86,8 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         void genSquare();
         void genRandom();
         void genWav();
+
+        void udtProperties();
 
         double normalize( double data );
         

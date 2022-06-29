@@ -141,7 +141,7 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
 
     protected slots:
-        void slotProperties();
+        virtual void slotProperties();
         void rotateCW();
         void rotateCCW();
         void rotateHalf();
