@@ -48,8 +48,8 @@ class MAINMODULE_EXPORT Shape : public Component
         double zVal() { return zValue(); }
         void setZVal( double v) { setZValue( v ); }
 
-        double opac() { return opacity(); }
-        void setOpac( double o ) { setOpacity( o ); }
+        double opac() { return m_opac; }
+        void setOpac( double op ) { m_opac = op; update(); }
 
 
         QString colorStr() { return m_color.name(); }
@@ -59,6 +59,8 @@ class MAINMODULE_EXPORT Shape : public Component
         int m_hSize;
         int m_vSize;
         int m_border;
+
+        qreal m_opac;
 };
 
 #endif

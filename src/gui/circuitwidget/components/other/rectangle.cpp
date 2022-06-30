@@ -27,11 +27,11 @@ Component* Rectangle::construct( QObject* parent, QString type, QString id )
 LibraryItem* Rectangle::libraryItem()
 {
     return new LibraryItem(
-            QObject::tr( "Rectangle" ),
-            QObject::tr( "Graphical" ),
-            "rectangle.png",
-            "Rectangle",
-            Rectangle::construct);
+        QObject::tr( "Rectangle" ),
+        QObject::tr( "Graphical" ),
+        "rectangle.png",
+        "Rectangle",
+        Rectangle::construct);
 }
 
 Rectangle::Rectangle( QObject* parent, QString type, QString id )
@@ -42,13 +42,18 @@ Rectangle::~Rectangle(){}
 
 void Rectangle::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
+    Component::paint( p, option, widget );
+
     QPen pen(Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-
-    if ( isSelected() ) pen.setColor( Qt::darkGray);
-
-    p->setBrush( m_color );
     p->setPen( pen );
     
-    if( m_border > 0 ) p->drawRect( m_area );
-    else               p->fillRect( m_area, p->brush() );
+    p->setOpacity( m_opac );
+    p->fillRect( m_area, m_color );
+    p->setOpacity( 1 );
+
+    if( m_border > 0 )
+    {
+        p->setBrush( Qt::transparent );
+        p->drawRect( m_area );
+    }
 }

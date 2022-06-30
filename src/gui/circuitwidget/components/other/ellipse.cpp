@@ -27,11 +27,11 @@ Component* Ellipse::construct( QObject* parent, QString type, QString id )
 LibraryItem* Ellipse::libraryItem()
 {
     return new LibraryItem(
-            QObject::tr( "Ellipse" ),
-            QObject::tr( "Graphical" ),
-            "ellipse.png",
-            "Ellipse",
-            Ellipse::construct);
+        QObject::tr( "Ellipse" ),
+        QObject::tr( "Graphical" ),
+        "ellipse.png",
+        "Ellipse",
+        Ellipse::construct);
 }
 
 Ellipse::Ellipse( QObject* parent, QString type, QString id )
@@ -47,14 +47,23 @@ QPainterPath Ellipse::shape() const
     return path;
 }
 
-void Ellipse::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Ellipse::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    QPen pen(Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    Component::paint( p, option, widget );
 
-    if ( isSelected() ) pen.setColor( Qt::darkGray);
-
-    p->setBrush( m_color );
+    QPen pen(Qt::black, 0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
-    
+    p->setBrush( m_color );
+
+    p->setOpacity( m_opac );
     p->drawEllipse( m_area );
+    p->setOpacity( 1 );
+
+    if( m_border > 0 )
+    {
+        QPen pen(Qt::black, m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        p->setPen( pen );
+        p->setBrush( Qt::transparent );
+        p->drawEllipse( m_area );
+    }
 }

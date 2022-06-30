@@ -25,7 +25,7 @@ class MAINMODULE_EXPORT TextComponent : public Component
         void setMargin( int margin );
         
         int  border() { return m_border; }
-        void setBorder( int border ) { m_border = border; }
+        void setBorder( int border ) { m_border = border; update(); }
         
         int  fontSize() { return m_fontSize; }
         void setFontSize( int size );

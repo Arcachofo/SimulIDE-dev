@@ -168,75 +168,22 @@ void TextComponent::setHidden( bool hid, bool hidLabel )
     this->setEnabled( !hid );
 }
 
-/*void TextComponent::mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event )
-{
-    if( event->button() == Qt::LeftButton )
-    {
-        m_text->setTextInteractionFlags( Qt::TextEditorInteraction | Qt::TextBrowserInteraction ); //( Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard | Qt::TextEditable);
-        m_text->setCursor( Qt::IBeamCursor );
-        m_text->setFocus();
-        Circuit::self()->deselectAll();
-        Circuit::self()->accepKeys( false );
-        //setSelected( false );
-}   }*/
-
-/*void TextComponent::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
-{
-    if( !acceptedMouseButtons() ) event->ignore();
-    else
-    {
-        event->accept();
-        QMenu* menu = new QMenu();
-        contextMenu( event, menu );
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
-
-void TextComponent::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
-{
-    QAction* editAction = menu->addAction(QIcon(""), tr("Edit Text") );
-    connect( editAction, SIGNAL(triggered()),
-                     this, SLOT(editText()), Qt::UniqueConnection );
-    menu->addSeparator();
-}
-
-void TextComponent::editText()
-{
-
-}*/
-
-/*bool TextComponent::eventFilter( QObject* object, QEvent* event )
-{
-    if( event->type() == QEvent::GraphicsSceneContextMenu ) //Added
-    {
-        m_context = true;
-    }
-    else if( event->type() == QEvent::FocusOut )
-    {
-        if( m_context ) m_context = false;
-        else
-        {
-            m_text->setTextInteractionFlags( Qt::NoTextInteraction );
-            m_text->setCursor( Qt::OpenHandCursor );
-            Circuit::self()->accepKeys( true );
-        }
-    }
-    return QObject::eventFilter( object, event );
-}*/
-
 void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
-    p->setOpacity( m_opac );
-
     Component::paint( p, option, widget );
 
     QPen pen( QColor( 0, 0, 0 ), m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     p->setPen( pen );
 
-    if( m_border > 0 ) p->drawRect( m_area );
-    else               p->fillRect( m_area, p->brush() );
-
+    p->setOpacity( m_opac );
+    p->fillRect( m_area, p->brush() );
     p->setOpacity( 1 );
+
+    if( m_border > 0 )
+    {
+        p->setBrush( Qt::transparent );
+        p->drawRect( m_area );
+    }
 }
 
 #include "moc_textcomponent.cpp"

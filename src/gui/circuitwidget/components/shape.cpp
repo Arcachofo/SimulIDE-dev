@@ -32,6 +32,7 @@ Shape::Shape( QObject* parent, QString type, QString id )
     m_hSize  = 50;
     m_vSize  = 30;
     m_border = 2;
+    m_opac   = 1;
     m_color  = QColor( Qt::gray );
     m_area   = QRectF( -m_hSize/2, -m_vSize/2, m_hSize, m_vSize );
     setZValue( -1 );
