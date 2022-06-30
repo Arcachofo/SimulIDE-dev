@@ -135,17 +135,17 @@ void SpiModule::step()
 
     if( m_clkState == m_sampleEdge )         //Read one bit
     {
-        if( m_dataInPin->getInpState() ) m_srReg |= m_inBit;
-
-        if( ++m_bitCount == 8 ) return; // Check end of byte
+        m_bitCount++;
 
         if( m_lsbFirst ) m_srReg >>= 1; // Rotate bit mask
         else             m_srReg <<= 1;
+
+        if( m_dataInPin->getInpState() ) m_srReg |= m_inBit;
     }
-    else if( m_dataOutPin )                     // Write one bit (Only if dataOut Pin exist)
+    else if( m_dataOutPin )                 // Write one bit (Only if dataOut Pin exist)
     {
         if( m_bitCount == 8 ) endTransaction();
-        m_dataOutPin->sheduleState( (m_srReg & m_outBit)>0, 0 );
+        else                  m_dataOutPin->sheduleState( (m_srReg & m_outBit)>0, 0 );
     }
 }
 
