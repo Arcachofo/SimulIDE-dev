@@ -187,9 +187,9 @@ bool IoPin::getInpState()
 void IoPin::setOutState( bool out ) // Set Output to Hight or Low
 {
     m_outState = m_nextState = out;
-    if( m_inverted ) out = !out;
+    if( m_pinMode < openCo || m_stateZ ) return;
 
-    if( m_stateZ ) return;
+    if( m_inverted ) out = !out;
 
     if( m_pinMode == openCo )
     {
