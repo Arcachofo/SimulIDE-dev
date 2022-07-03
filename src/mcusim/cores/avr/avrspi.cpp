@@ -72,17 +72,17 @@ void AvrSpi::setMode( spiMode_t mode )
 
 void AvrSpi::configureA( uint8_t newSPCR ) // SPCR is being written
 {
-    bool enable = getRegBitsVal( newSPCR, m_SPE );
+    bool enable = getRegBitsBool( newSPCR, m_SPE );
     if( !enable )                 /// Disable SPI
     { setMode( SPI_OFF ); return; }
 
-    bool master = getRegBitsVal( newSPCR, m_MSTR );
+    bool master = getRegBitsBool( newSPCR, m_MSTR );
     spiMode_t mode = master ? SPI_MASTER : SPI_SLAVE;
     setMode( mode );
 
-    m_lsbFirst  = getRegBitsVal( newSPCR, m_DODR ); // Data order
+    m_lsbFirst  = getRegBitsBool( newSPCR, m_DODR ); // Data order
 
-    bool clkPol = getRegBitsVal( newSPCR, m_CPOL ); // Clock polarity
+    bool clkPol = getRegBitsBool( newSPCR, m_CPOL ); // Clock polarity
     m_leadEdge = clkPol ? Clock_Falling : Clock_Rising;
     m_tailEdge = clkPol ? Clock_Rising : Clock_Falling;
     m_clkPin->setOutState( clkPol );

@@ -38,9 +38,9 @@ class MAINMODULE_EXPORT I2CToParallel : public IoComponent, public TwiModule
         //virtual void initialize() override;
         virtual void stamp() override;
         virtual void voltChanged() override;
-        virtual void writeByte();
-        virtual void readByte();
-        virtual void startWrite();
+        virtual void writeByte() override;
+        virtual void readByte() override;
+        virtual void startWrite() override;
 
     protected:
         IoPin* m_int;

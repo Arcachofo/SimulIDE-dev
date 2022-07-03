@@ -54,7 +54,7 @@ class MAINMODULE_EXPORT McuPin : public IoPin
         void setDirection( bool out );
         //void setPullupMask( bool up ) { m_puMask = up;}
         void setExtraSource( double vddAdmit, double gndAdmit );
-        void controlPin( bool outCtrl, bool dirCtrl );
+        virtual void controlPin( bool outCtrl, bool dirCtrl ) override;
         void setExtIntTrig( int i ) { m_extIntTrigger = (extIntTrig_t)i; }
 
         virtual void sheduleState( bool state, uint64_t time ) override;

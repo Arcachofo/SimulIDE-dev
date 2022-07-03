@@ -43,10 +43,7 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
  static CircuitWidget* self() { return m_pSelf; }
 
         void clear();
-        
-        void createActions();
-        void createToolBars();
-        
+
         void setRate( double rate , int load );
         void setError( QString error );
         void setMsg(QString msg , int type);
@@ -77,6 +74,8 @@ class MAINMODULE_EXPORT CircuitWidget : public QWidget
         void saving();
         
     private:
+        void createActions();
+        void createToolBars();
 
  static CircuitWidget*  m_pSelf;
 

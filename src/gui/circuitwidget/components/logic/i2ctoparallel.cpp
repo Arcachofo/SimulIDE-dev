@@ -120,7 +120,9 @@ void I2CToParallel::voltChanged()        // Some Pin Changed State, Manage it
     int value = 0;
     for( int i=0; i<8; ++i )
     { if( m_outPin[i]->getInpState() ) value += pow( 2, i ); }
-    if( value != m_portState ) m_int->setOutState( false ); // Trigger Interrupt
+
+    if( value != m_portState )
+        m_int->setOutState( false ); // Trigger Interrupt
     else if( m_int->getInpState() == false )
         m_int->setOutState( true );                         // Reset Interrupt
     
