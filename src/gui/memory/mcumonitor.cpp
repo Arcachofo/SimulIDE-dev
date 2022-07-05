@@ -61,8 +61,7 @@ void MCUMonitor::tabChanged( int )
 
 void MCUMonitor::on_byteButton_toggled( bool byte )
 {
-    int bytes = 1;
-    if( !byte ) bytes = m_processor->wordSize();
+    int bytes = byte ? 1 : m_processor->wordSize();
     m_flashMonitor->setCellBytes( bytes );
     updateStep();
 }

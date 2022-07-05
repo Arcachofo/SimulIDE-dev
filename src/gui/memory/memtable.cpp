@@ -105,7 +105,6 @@ void MemTable::resizeTable( int dataSize )
     m_blocked = true;
 
     m_dataSize = dataSize;
-
     dataSize *= m_byteRatio;
 
     int addrBytes = ceil( ceil(log2(dataSize))/8 );
@@ -115,6 +114,7 @@ void MemTable::resizeTable( int dataSize )
 
     table->clear();
 
+    //table->horizontalHeader()->setSectionResizeMode( QHeaderView::Fixed );
     table->setHorizontalHeaderLabels( QStringList()
       <<"00"<<"01"<<"02"<<"03"<<"04"<<"05"<<"06"<<"07"
       <<"08"<<"09"<<"0A"<<"0B"<<"0C"<<"0D"<<"0E"<<"0F"
@@ -122,13 +122,15 @@ void MemTable::resizeTable( int dataSize )
       <<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"
       <<"8"<<"9"<<"A"<<"B"<<"C"<<"D"<<"E"<<"F");
 
-    table->setColumnWidth( 16, 5 );
     table->setRowCount( rows );
 
     float scale = MainWindow::self()->fontScale();
     QFont font;
     font.setPixelSize( 14*scale );
     font.setFamily("Ubuntu Mono");
+
+    table->horizontalHeader()->setFont( font );
+    table->verticalHeader()->setFont( font );
 
     QTableWidgetItem* it;
 
@@ -144,8 +146,7 @@ void MemTable::resizeTable( int dataSize )
         {
             it = new QTableWidgetItem(0);
             if( col == 16 ) it->setFlags( 0 );
-            else
-            {
+            else{
                 if( col < 16 )
                 {
                     font.setWeight( QFont::DemiBold );
@@ -164,9 +165,8 @@ void MemTable::resizeTable( int dataSize )
         table->setColumnWidth( col, (18*m_cellBytes+5)*scale ); /// (2+m_cellBytes)*15*scale+2 );
         table->setColumnWidth( col+17, (8*m_cellBytes+4+4)*scale );
     }
-    font.setWeight( QFont::Normal );
-    table->horizontalHeader()->setFont( font );
-    table->verticalHeader()->setFont( font );
+    table->setColumnWidth( 16, 5 );
+
     m_blocked = false;
 }
 
@@ -194,8 +194,7 @@ void MemTable::on_table_itemChanged( QTableWidgetItem* item )
     if( col > 16 )
     {
         ok = item->text().size() == m_cellBytes;
-        if( ok )
-        {
+        if( ok ){
             for( int i=0; i<m_cellBytes; ++i )
             {
                 QChar cv = item->text().at(m_cellBytes-i-1);
