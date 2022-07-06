@@ -111,6 +111,12 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_CircuitFuture.waitForFinished();
         m_state = state;
     }
+    if( m_pauseCirc ) // Paused from sim engine thread, update UI
+    {
+        m_pauseCirc = false;
+        m_state = m_oldState;
+        CircuitWidget::self()->pauseSim();
+    }
 
     if( Circuit::self()->animate() )
     {
@@ -227,6 +233,7 @@ void Simulator::resetSim()
     m_lastRefT = 0;
     m_circTime = 0;
     m_NLstep   = 0;
+    m_pauseCirc = false;
     m_realStepsPF = 1;
 
     CircuitView::self()->setCircTime( 0 );
@@ -348,23 +355,24 @@ void Simulator::stopSim()
     m_changedNode = NULL;
 }
 
-void Simulator::pauseSim()
+
+void Simulator::pauseCirc() // Paused UI from sim engine thread
+{
+    pauseSim();
+    m_pauseCirc = true;
+}
+
+void Simulator::pauseSim() // Only pause simulation, don't update UI
 {
     if( m_state <= SIM_PAUSED ) return;
     m_oldState = m_state;
     m_state = SIM_PAUSED;
-
-    CircuitWidget::self()->setMsg( " Paused ", 1 );
-    //qDebug() << "\n    Simulation Paused ";
 }
 
 void Simulator::resumeSim()
 {
     if( m_state != SIM_PAUSED ) return;
-    m_state = m_oldState; // SIM_RUNNING;
-
-    CircuitWidget::self()->setMsg( " Running ", 0 );
-   // qDebug() << "\n    Resuming Simulation";
+    m_state = m_oldState;
 }
 
 void Simulator::stopTimer()

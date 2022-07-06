@@ -380,15 +380,16 @@ void CircuitWidget::pauseSim()
     if( Simulator::self()->simState() > SIM_PAUSED )
     {
         Simulator::self()->pauseSim();
+        setMsg( " Paused ", 1 );
         pauseSimAct->setIcon( QIcon(":/simpaused.png") );
         powerCircAct->setIcon( QIcon(":/poweroff.png") );
         powerCircAct->setIconText("Off");
-        //powerCircAct->setEnabled( false );
         MainWindow::self()->setState("❚❚");
     }
     else if( Simulator::self()->isPaused() )
     {
         Simulator::self()->resumeSim();
+        setMsg( " Running ", 0 );
         pauseSimAct->setIcon( QIcon(":/pausesim.png") );
         powerCircAct->setIcon( QIcon(":/poweron.png") );
         powerCircAct->setIconText("On");

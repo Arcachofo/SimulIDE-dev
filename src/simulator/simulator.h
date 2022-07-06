@@ -55,6 +55,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void startSim( bool paused=false );
         void resumeSim();
 
+        void pauseCirc();
         void pauseSim();
         void stopSim();
 
@@ -146,6 +147,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         simState_t m_oldState;
 
         bool m_converged;
+        bool m_pauseCirc;
 
         int m_error;
         int m_warning;
