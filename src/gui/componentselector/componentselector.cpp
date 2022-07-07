@@ -124,12 +124,7 @@ void ComponentSelector::loadXml( const QString &setFile )
                 cat = QObject::tr( cat.toLocal8Bit() );
                 category.append( "/"+cat );
             }
-            category.remove( 0, 1 );
-            /*category = QApplication::translate( "xmlfile", category.toLocal8Bit() );
-            std::string stdCat = category.toStdString();
-            const char* charCat = &(stdCat[0]);
-            category = QApplication::translate( "xmlfile", charCat );
-            //qDebug()<<"category = " <<category;*/
+            category.remove( 0, 1 ); // convert "/rootCat/category" to "rootCat/category"
 
             QString icon = "";
             if( reader.attributes().hasAttribute("icon") )
@@ -228,7 +223,6 @@ QTreeWidgetItem* ComponentSelector::getCategory( QString _category, QString icon
     QStringList catPath = _category.split( "/" );
     bool      isRootCat = (catPath.size() == 1);
     QString    category = catPath.takeLast();
-    if( category.isEmpty() ) return NULL;
 
     if( m_categories.contains( category, Qt::CaseSensitive ) )    // Find Category
     {
@@ -264,12 +258,13 @@ QTreeWidgetItem* ComponentSelector::getCategory( QString _category, QString icon
             QString topCat = catPath.takeLast();
 
             QList<QTreeWidgetItem*> list = findItems( topCat, Qt::MatchExactly | Qt::MatchRecursive );
-            if( !list.isEmpty() )
-            {
+            if( list.isEmpty() ) catPath.clear(); // Error: root category doesn't exist, force addTopLevelItem( catItem )
+            else{
                 QTreeWidgetItem* topItem = list.first();
                 topItem->addChild( catItem );
-        }   }
-        else addTopLevelItem( catItem );
+            }
+        }
+        if( catPath.isEmpty() ) addTopLevelItem( catItem ); // Is root category or root category doesn't exist
 
         if( MainWindow::self()->settings()->contains( category+"/hidden" ) )
             c_hidden =  MainWindow::self()->settings()->value( category+"/hidden" ).toBool();
