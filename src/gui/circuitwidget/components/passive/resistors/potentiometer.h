@@ -44,7 +44,6 @@ class MAINMODULE_EXPORT Potentiometer : public Component, public eElement
         double getRes() { return m_resist; }
         void setRes( double v );
 
-        virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;
 
