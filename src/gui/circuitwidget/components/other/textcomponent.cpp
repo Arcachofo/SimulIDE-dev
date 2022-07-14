@@ -166,10 +166,14 @@ void TextComponent::setHidden( bool hid, bool hidLabel )
     Component::setHidden( hid, hidLabel );
     updateGeometry( 0, 0, 0 );
     this->setEnabled( !hid );
+    if( m_hidden && m_boardRot == -1e6 ) // Text not placed in board mode, hide it
+        m_text->setVisible( false );
 }
 
 void TextComponent::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
+    if( m_hidden ) return;
+
     Component::paint( p, option, widget );
 
     QPen pen( QColor( 0, 0, 0 ), m_border, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
