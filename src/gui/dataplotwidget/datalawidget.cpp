@@ -22,7 +22,7 @@
 //#include "mainwindow.h"
 
 DataLaWidget::DataLaWidget( QWidget* parent, PlotBase* pb )
-          : QWidget( parent )
+            : QWidget( parent )
 {
     m_plotBase = pb;
 
@@ -37,7 +37,7 @@ DataLaWidget::DataLaWidget( QWidget* parent, PlotBase* pb )
     m_chNames.append( channel6 );
     m_chNames.append( channel7 );
 
-    QFont font;
+    QFont font = m_chNames.at(0)->font();
     font.setFamily("Ubuntu");
     font.setPixelSize( 9 );
     font.setBold( true );

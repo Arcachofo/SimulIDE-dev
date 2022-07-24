@@ -56,9 +56,10 @@ PlotDisplay::PlotDisplay( QWidget* parent )
     m_expand = false;
 
     double fontScale = MainWindow::self()->fontScale();
+    m_fontB.setFamily("Ubuntu");
     m_fontB.setPixelSize( 9.2*fontScale );
     m_fontB.setBold( true );
-    m_fontS.setPixelSize( 8*fontScale );
+    m_fontS.setPixelSize( 11 );
 
     m_scaleColor[0] = QColor( 70, 70, 70 );
     m_scaleColor[1] = QColor( 100, 100, 100 );
@@ -333,14 +334,14 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
     double yH = 9*fontScale;
     if( m_channels == 8 )
     {
-        p.setFont( m_fontB );
+        p.setFont( m_fontS );
         for( int i=0; i<m_channels; ++i ) // Draw Channel labels
         {
             double ceroY = m_ceroY+m_sizeY/16+i*m_sizeY/8;
             pen.setColor( m_color[i] );
             p.setPen( pen );
             p.drawText( 3, ceroY-13, 60, 12, Qt::AlignLeft, "Ch"+QString::number(i+1) );
-            p.drawText( 3, ceroY+2, 60, 12, Qt::AlignLeft, m_channel[i]->getChName() );
+            p.drawText( 3, ceroY+2 , 60, 12, Qt::AlignLeft, m_channel[i]->getChName() );
         }
     }else{
         for( int i=0; i<m_channels; ++i ) // SCALES, MAX-MIN
@@ -358,7 +359,7 @@ void PlotDisplay::paintEvent( QPaintEvent* /* event */ )
 
             QPen pen3( m_color[i], 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
             p.setPen( pen3 );
-            p.setFont( m_fontS );
+            //p.setFont( m_fontS );
 
             // Draw Background scale values
             /*int s = 0;
