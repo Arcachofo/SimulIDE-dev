@@ -1,0 +1,289 @@
+<circuit type="simulide_1.0" rev="1279" stepSize="1000000" stepsPS="1000000" NLsteps="100000" animate="1" >
+
+<item itemtype="Voltimeter" CircId="Voltimeter-10042" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,300" rotation="0" hflip="1" vflip="1" label="Voltimeter-10025" idLabPos="-24,-40" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground-10041" mainComp="false" Show_id="false" Show_Val="false" Pos="-232,340" rotation="0" hflip="1" vflip="1" label="Ground-10032" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Switch" CircId="Switch-10037" mainComp="false" Show_id="false" Show_Val="false" Pos="-796,356" rotation="0" hflip="-1" vflip="1" label="Switch-10037" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" DT="true" Poles="1 _Poles" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-10034" mainComp="false" Show_id="false" Show_Val="true" Pos="-880,392" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-10034" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Voltage="5 V" />
+
+<item itemtype="Ground" CircId="Ground-10032" mainComp="false" Show_id="false" Show_Val="false" Pos="-792,212" rotation="0" hflip="1" vflip="1" label="Ground-10032" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Voltimeter" CircId="Voltimeter-10025" mainComp="false" Show_id="false" Show_Val="false" Pos="-800,172" rotation="0" hflip="1" vflip="1" label="Voltimeter-10025" idLabPos="-24,-40" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-10023" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-804,328" rotation="0" hflip="1" vflip="1" label="Rail-10023" idLabPos="-16,-24" labelrot="0" valLabPos="-35,-6" valLabRot="0" Voltage="-15 V" />
+
+<item itemtype="Rail" CircId="Rail-10021" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-784,260" rotation="0" hflip="1" vflip="1" label="Rail-10021" idLabPos="-16,-24" labelrot="0" valLabPos="-30,-5" valLabRot="0" Voltage="15 V" />
+
+<item itemtype="DAC" CircId="DAC-3360" mainComp="false" Show_id="false" Show_Val="false" Pos="-468,296" rotation="0" hflip="1" vflip="-1" label="DAC-3360" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Num_Bits="12 _Bits" Vref="5 V" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" pd_n="1 _Gates" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Subcircuit" CircId="74XX504-2702" mainComp="false" Show_id="true" Show_Val="false" Pos="-696,284" rotation="0" hflip="1" vflip="1" label="74XX504-1" idLabPos="0,-20" labelrot="0" valLabPos="13,52" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Subcircuit" CircId="74XX504-1" mainComp="false" Show_id="true" Show_Val="false" Pos="-684,12" rotation="0" hflip="1" vflip="1" label="74XX504-1" idLabPos="0,-20" labelrot="0" valLabPos="13,52" valLabRot="-90" Logic_Symbol="true" />
+
+<item itemtype="Buffer" CircId="Buffer-673" mainComp="false" Show_id="false" Show_Val="false" Pos="-720,36" rotation="0" hflip="1" vflip="1" label="Buffer-673" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="LedBar" CircId="LedBar-676" mainComp="false" Show_id="false" Show_Val="false" Pos="-608,52" rotation="0" hflip="1" vflip="1" label="LedBar-676" idLabPos="-16,-44" labelrot="0" valLabPos="0,0" valLabRot="0" Size="13 _Leds" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="100 Ω" />
+
+<item itemtype="Clock" CircId="Clock-693" mainComp="false" Show_id="false" Show_Val="true" Pos="-760,116" rotation="0" hflip="1" vflip="1" label="Clock-693" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="1000 Hz" Always_On="true" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-695" mainComp="false" Show_id="false" Show_Val="true" Pos="-756,84" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-695" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="Fixed Voltage" CircId="Fixed Voltage-1369" mainComp="false" Show_id="false" Show_Val="true" Pos="-760,52" rotation="0" hflip="1" vflip="1" label="Fixed Voltage-695" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="false" Voltage="5 V" />
+
+<item itemtype="7-Seg BCD" CircId="7-58" mainComp="false" Show_id="false" Show_Val="false" Pos="-296,120" rotation="0" hflip="1" vflip="1" label="7-58" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="7-Seg BCD" CircId="7-59" mainComp="false" Show_id="false" Show_Val="false" Pos="-256,120" rotation="0" hflip="1" vflip="1" label="7-59" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="TextComponent" CircId="TextComponent-60" mainComp="false" Show_id="false" Show_Val="false" Pos="-312,56" rotation="0" hflip="1" vflip="1" label="TextComponent-60" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="true" Text="OUT 12 bit" />
+
+<item itemtype="TextComponent" CircId="TextComponent-61" mainComp="false" Show_id="false" Show_Val="false" Pos="-228,160" rotation="0" hflip="1" vflip="1" label="TextComponent-61" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="true" Text="D0&#xa;D1&#xa;.&#xa;.&#xa;.&#xa;.&#xa;D7" />
+
+<item itemtype="Oscope" CircId="Oscope-118" mainComp="false" Show_id="false" Show_Val="false" Pos="-80,404" rotation="0" hflip="1" vflip="1" label="Oscope-118" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Basic_X="135 _Pixels" Basic_Y="135 _Pixels" TimDiv="470947540" TimPos="0,-1737024,-1737024,-1737024," VolDiv="0.902119,4.47092,4.47092,4.47092," Tunnels=",,,," Trigger="1" Filter="0.3 V" Trigger="1" AutoSC="4" Tracks="1" HideCh="false,false,false,false," VolPos="-0.624168,-7.49485,-21.636,-1.90478," />
+
+<item itemtype="Subcircuit" CircId="74HC574-633" mainComp="false" Show_id="true" Show_Val="false" Pos="-408,160" rotation="0" hflip="1" vflip="1" label="74HC574-23" idLabPos="-24,99" labelrot="0" valLabPos="13,44" valLabRot="-90" Logic_Symbol="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="opAmp" CircId="opAmp-1241" mainComp="false" Show_id="false" Show_Val="false" Pos="-744,308" rotation="0" hflip="1" vflip="1" label="opAmp-1241" idLabPos="-16,-32" labelrot="0" valLabPos="0,0" valLabRot="0" Gain="100000" Out_Imped="1e-14 Ω" Volt_Pos="5 V" Volt_Neg="0 V" Power_Pins="true" Switch_Pins="false" />
+
+<item itemtype="Voltage Source" CircId="Voltage Source-1251" mainComp="false" ShowProp="MaxValue" Show_id="false" Show_Val="true" Pos="-884,248" rotation="0" hflip="1" vflip="1" label="Voltage Source-1251" idLabPos="-40,-80" labelrot="0" valLabPos="-26,10" valLabRot="0" Value_Volt="3.975 V" MaxValue="5 V" />
+
+<item itemtype="Clock" CircId="Clock-1278" mainComp="false" Show_id="false" Show_Val="true" Pos="-888,364" rotation="0" hflip="1" vflip="1" label="Clock-1278" idLabPos="-64,-24" labelrot="0" valLabPos="-16,8" valLabRot="0" Out="true" Running="true" Voltage="5 V" Freq="10000 Hz" Always_On="true" />
+
+<item itemtype="Buffer" CircId="Buffer-1297" mainComp="false" Show_id="false" Show_Val="false" Pos="-620,240" rotation="0" hflip="1" vflip="1" label="Buffer-1297" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Tristate="false" Inverted="true" Open_Collector="false" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+14 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" rndPD="false" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="Ground" CircId="Ground-8378" mainComp="false" Show_id="false" Show_Val="false" Pos="-712,420" rotation="0" hflip="1" vflip="1" label="Ground-8378" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Subcircuit" CircId="74HC574-8418" mainComp="false" Show_id="true" Show_Val="false" Pos="-404,412" rotation="0" hflip="1" vflip="1" label="74HC574-23" idLabPos="-24,99" labelrot="0" valLabPos="13,44" valLabRot="-90" Logic_Symbol="true" Input_High_V="2.5 V" Input_Low_V="2.5 V" Input_Imped="1e+09 Ω" Out_High_V="5 V" Out_Low_V="0 V" Out_Imped="40 Ω" Tpd_ps="10000 ps" Tr_ps="3000 ps" Tf_ps="4000 ps" />
+
+<item itemtype="7-Seg BCD" CircId="7-8476" mainComp="false" Show_id="false" Show_Val="false" Pos="-336,120" rotation="0" hflip="1" vflip="1" label="7-58" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground-8493" mainComp="false" Show_id="false" Show_Val="false" Pos="-368,272" rotation="0" hflip="1" vflip="1" label="Ground-8378" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Ground" CircId="Ground-8495" mainComp="false" Show_id="false" Show_Val="false" Pos="-364,524" rotation="0" hflip="1" vflip="1" label="Ground-8378" idLabPos="-16,8" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="TextComponent" CircId="TextComponent-8497" mainComp="false" Show_id="false" Show_Val="false" Pos="-304,416" rotation="0" hflip="1" vflip="1" label="TextComponent-61" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="5 _Pixels" Border="1 _Pixels" Opacity="1" Font="Helvetica [Cronyx]" Font_Size="10 _Pixels" Fixed_Width="true" Text="D8&#xa;.&#xa;D11" />
+
+<item itemtype="Node" CircId="Node-10047" mainComp="false" Pos="-280,356" />
+
+<item itemtype="Node" CircId="Node-10030" mainComp="false" Pos="-816,260" />
+
+<item itemtype="Node" CircId="Node-8381" mainComp="false" Pos="-644,404" />
+
+<item itemtype="Node" CircId="Node-8499" mainComp="false" Pos="-572,300" />
+
+<item itemtype="Node" CircId="Node-8502" mainComp="false" Pos="-568,308" />
+
+<item itemtype="Node" CircId="Node-8505" mainComp="false" Pos="-564,316" />
+
+<item itemtype="Node" CircId="Node-8508" mainComp="false" Pos="-560,324" />
+
+<item itemtype="Node" CircId="Node-8511" mainComp="false" Pos="-556,332" />
+
+<item itemtype="Node" CircId="Node-8514" mainComp="false" Pos="-552,340" />
+
+<item itemtype="Node" CircId="Node-8517" mainComp="false" Pos="-548,348" />
+
+<item itemtype="Node" CircId="Node-8520" mainComp="false" Pos="-544,356" />
+
+<item itemtype="Node" CircId="Node-8523" mainComp="false" Pos="-544,364" />
+
+<item itemtype="Node" CircId="Node-8526" mainComp="false" Pos="-548,372" />
+
+<item itemtype="Node" CircId="Node-8529" mainComp="false" Pos="-552,380" />
+
+<item itemtype="Node" CircId="Node-8532" mainComp="false" Pos="-556,388" />
+
+<item itemtype="Node" CircId="Node-8534" mainComp="false" Pos="-432,240" />
+
+<item itemtype="Node" CircId="Node-8541" mainComp="false" Pos="-644,440" />
+
+<item itemtype="Node" CircId="Node-10050" mainComp="false" Pos="-444,356" />
+
+<item itemtype="Connector" uid="Connector-674" startpinid="Buffer-673-out" endpinid="74XX504-1-D" pointList="-704,36,-692,36" />
+
+<item itemtype="Connector" uid="Connector-675" startpinid="Buffer-673-in0" endpinid="74XX504-1-DO" pointList="-736,36,-736,-12,-628,-12,-628,20,-644,20" />
+
+<item itemtype="Connector" uid="Connector-677" startpinid="LedBar-676-led0-pinP" endpinid="74XX504-1-Q0" pointList="-624,28,-644,28" />
+
+<item itemtype="Connector" uid="Connector-678" startpinid="LedBar-676-led1-pinP" endpinid="74XX504-1-Q1" pointList="-624,36,-644,36" />
+
+<item itemtype="Connector" uid="Connector-679" startpinid="LedBar-676-led2-pinP" endpinid="74XX504-1-Q2" pointList="-624,44,-644,44" />
+
+<item itemtype="Connector" uid="Connector-680" startpinid="LedBar-676-led3-pinP" endpinid="74XX504-1-Q3" pointList="-624,52,-644,52" />
+
+<item itemtype="Connector" uid="Connector-681" startpinid="LedBar-676-led4-pinP" endpinid="74XX504-1-Q4" pointList="-624,60,-644,60" />
+
+<item itemtype="Connector" uid="Connector-682" startpinid="LedBar-676-led5-pinP" endpinid="74XX504-1-Q5" pointList="-624,68,-644,68" />
+
+<item itemtype="Connector" uid="Connector-683" startpinid="LedBar-676-led6-pinP" endpinid="74XX504-1-Q6" pointList="-624,76,-644,76" />
+
+<item itemtype="Connector" uid="Connector-684" startpinid="LedBar-676-led7-pinP" endpinid="74XX504-1-Q7" pointList="-624,84,-644,84" />
+
+<item itemtype="Connector" uid="Connector-685" startpinid="LedBar-676-led8-pinP" endpinid="74XX504-1-Q8" pointList="-624,92,-644,92" />
+
+<item itemtype="Connector" uid="Connector-686" startpinid="LedBar-676-led9-pinP" endpinid="74XX504-1-Q9" pointList="-624,100,-644,100" />
+
+<item itemtype="Connector" uid="Connector-687" startpinid="LedBar-676-led10-pinP" endpinid="74XX504-1-Q10" pointList="-624,108,-644,108" />
+
+<item itemtype="Connector" uid="Connector-688" startpinid="LedBar-676-led11-pinP" endpinid="74XX504-1-Q11" pointList="-624,116,-644,116" />
+
+<item itemtype="Connector" uid="Connector-689" startpinid="74XX504-1-!Qcc" endpinid="74XX504-1-!S" pointList="-644,132,-616,132,-616,188,-716,188,-716,52,-692,52" />
+
+<item itemtype="Connector" uid="Connector-690" startpinid="74XX504-1-!Q11" endpinid="LedBar-676-led12-pinP" pointList="-644,124,-624,124" />
+
+<item itemtype="Connector" uid="Connector-696" startpinid="Fixed Voltage-695-outnod" endpinid="74XX504-1-CP" pointList="-740,84,-692,84" />
+
+<item itemtype="Connector" uid="Connector-1370" startpinid="Fixed Voltage-1369-outnod" endpinid="74XX504-1-!E" pointList="-744,52,-744,64,-692,64,-692,68" />
+
+<item itemtype="Connector" uid="Connector-221" startpinid="7-59-in0" endpinid="74HC574-633-Q0" pointList="-244,152,-244,168,-368,168" />
+
+<item itemtype="Connector" uid="Connector-223" startpinid="7-59-in1" endpinid="74HC574-633-Q1" pointList="-252,152,-252,176,-368,176" />
+
+<item itemtype="Connector" uid="Connector-225" startpinid="7-59-in2" endpinid="74HC574-633-Q2" pointList="-260,152,-260,184,-368,184" />
+
+<item itemtype="Connector" uid="Connector-227" startpinid="7-59-in3" endpinid="74HC574-633-Q3" pointList="-268,152,-268,192,-368,192" />
+
+<item itemtype="Connector" uid="Connector-229" startpinid="7-58-in0" endpinid="74HC574-633-Q4" pointList="-284,152,-284,200,-368,200" />
+
+<item itemtype="Connector" uid="Connector-231" startpinid="7-58-in1" endpinid="74HC574-633-Q5" pointList="-292,152,-292,208,-368,208" />
+
+<item itemtype="Connector" uid="Connector-233" startpinid="7-58-in2" endpinid="74HC574-633-Q6" pointList="-300,152,-300,216,-368,216" />
+
+<item itemtype="Connector" uid="Connector-235" startpinid="7-58-in3" endpinid="74HC574-633-Q7" pointList="-308,152,-308,224,-368,224" />
+
+<item itemtype="Connector" uid="Connector-1298" startpinid="Buffer-1297-out" endpinid="Node-8534-0" pointList="-604,240,-432,240" />
+
+<item itemtype="Connector" uid="Connector-8374" startpinid="opAmp-1241-output" endpinid="74XX504-2702-D" pointList="-720,308,-704,308" />
+
+<item itemtype="Connector" uid="Connector-8376" startpinid="74XX504-2702-!Qcc" endpinid="Node-8381-0" pointList="-656,404,-644,404" />
+
+<item itemtype="Connector" uid="Connector-8379" startpinid="Ground-8378-Gnd" endpinid="74XX504-2702-!E" pointList="-712,404,-712,340,-704,340" />
+
+<item itemtype="Connector" uid="Connector-8382" startpinid="Node-8381-2" endpinid="Node-8541-0" pointList="-644,404,-644,440" />
+
+<item itemtype="Connector" uid="Connector-8383" startpinid="Node-8381-1" endpinid="Buffer-1297-in0" pointList="-644,404,-644,240,-636,240" />
+
+<item itemtype="Connector" uid="Connector-8477" startpinid="7-8476-in0" endpinid="74HC574-8418-Q0" pointList="-324,152,-324,420,-364,420" />
+
+<item itemtype="Connector" uid="Connector-8478" startpinid="7-8476-in1" endpinid="74HC574-8418-Q1" pointList="-332,152,-332,428,-364,428" />
+
+<item itemtype="Connector" uid="Connector-8479" startpinid="7-8476-in2" endpinid="74HC574-8418-Q2" pointList="-340,152,-340,436,-364,436" />
+
+<item itemtype="Connector" uid="Connector-8480" startpinid="7-8476-in3" endpinid="74HC574-8418-Q3" pointList="-348,152,-348,444,-364,444" />
+
+<item itemtype="Connector" uid="Connector-8494" startpinid="Ground-8493-Gnd" endpinid="74HC574-633-!OE" pointList="-368,256,-368,240" />
+
+<item itemtype="Connector" uid="Connector-8496" startpinid="Ground-8495-Gnd" endpinid="74HC574-8418-!OE" pointList="-364,508,-364,492" />
+
+<item itemtype="Connector" uid="Connector-8399" startpinid="74HC574-633-D5" endpinid="Node-8514-0" pointList="-416,208,-552,208,-552,340" />
+
+<item itemtype="Connector" uid="Connector-8390" startpinid="74HC574-633-D2" endpinid="Node-8505-0" pointList="-416,184,-564,184,-564,316" />
+
+<item itemtype="Connector" uid="Connector-8481" startpinid="74HC574-8418-D0" endpinid="Node-8523-0" pointList="-412,420,-544,420,-544,364" />
+
+<item itemtype="Connector" uid="Connector-8484" startpinid="74HC574-8418-D1" endpinid="Node-8526-0" pointList="-412,428,-548,428,-548,372" />
+
+<item itemtype="Connector" uid="Connector-8393" startpinid="74HC574-633-D3" endpinid="Node-8508-0" pointList="-416,192,-560,192,-560,324" />
+
+<item itemtype="Connector" uid="Connector-8490" startpinid="74HC574-8418-D3" endpinid="Node-8532-0" pointList="-412,444,-556,444,-556,388" />
+
+<item itemtype="Connector" uid="Connector-8396" startpinid="74HC574-633-D4" endpinid="Node-8511-0" pointList="-416,200,-556,200,-556,332" />
+
+<item itemtype="Connector" uid="Connector-8384" startpinid="74HC574-633-D0" endpinid="Node-8499-0" pointList="-416,168,-572,168,-572,300" />
+
+<item itemtype="Connector" uid="Connector-8487" startpinid="74HC574-8418-D2" endpinid="Node-8529-0" pointList="-412,436,-552,436,-552,380" />
+
+<item itemtype="Connector" uid="Connector-8410" startpinid="74HC574-633-D7" endpinid="Node-8520-0" pointList="-416,224,-544,224,-544,356" />
+
+<item itemtype="Connector" uid="Connector-8407" startpinid="74HC574-633-D6" endpinid="Node-8517-0" pointList="-416,216,-548,216,-548,348" />
+
+<item itemtype="Connector" uid="Connector-8387" startpinid="74HC574-633-D1" endpinid="Node-8502-0" pointList="-416,176,-568,176,-568,308" />
+
+<item itemtype="Connector" uid="Connector-8498" startpinid="DAC-3360-in0" endpinid="Node-8499-1" pointList="-492,336,-512,336,-512,300,-572,300" />
+
+<item itemtype="Connector" uid="Connector-8500" startpinid="Node-8499-2" endpinid="74XX504-2702-Q0" pointList="-572,300,-656,300" />
+
+<item itemtype="Connector" uid="Connector-8501" startpinid="DAC-3360-in1" endpinid="Node-8502-1" pointList="-492,328,-508,328,-508,308,-568,308" />
+
+<item itemtype="Connector" uid="Connector-8503" startpinid="Node-8502-2" endpinid="74XX504-2702-Q1" pointList="-568,308,-656,308" />
+
+<item itemtype="Connector" uid="Connector-8504" startpinid="DAC-3360-in2" endpinid="Node-8505-1" pointList="-492,320,-564,320,-564,316" />
+
+<item itemtype="Connector" uid="Connector-8506" startpinid="Node-8505-2" endpinid="74XX504-2702-Q2" pointList="-564,316,-656,316" />
+
+<item itemtype="Connector" uid="Connector-8507" startpinid="DAC-3360-in3" endpinid="Node-8508-1" pointList="-492,312,-496,312,-496,324,-560,324" />
+
+<item itemtype="Connector" uid="Connector-8509" startpinid="Node-8508-2" endpinid="74XX504-2702-Q3" pointList="-560,324,-656,324" />
+
+<item itemtype="Connector" uid="Connector-8510" startpinid="DAC-3360-in4" endpinid="Node-8511-1" pointList="-492,304,-500,304,-500,332,-556,332" />
+
+<item itemtype="Connector" uid="Connector-8512" startpinid="Node-8511-2" endpinid="74XX504-2702-Q4" pointList="-556,332,-656,332" />
+
+<item itemtype="Connector" uid="Connector-8513" startpinid="DAC-3360-in5" endpinid="Node-8514-1" pointList="-492,296,-504,296,-504,340,-552,340" />
+
+<item itemtype="Connector" uid="Connector-8515" startpinid="Node-8514-2" endpinid="74XX504-2702-Q5" pointList="-552,340,-656,340" />
+
+<item itemtype="Connector" uid="Connector-8516" startpinid="DAC-3360-in6" endpinid="Node-8517-1" pointList="-492,288,-516,288,-516,348,-548,348" />
+
+<item itemtype="Connector" uid="Connector-8518" startpinid="Node-8517-2" endpinid="74XX504-2702-Q6" pointList="-548,348,-656,348" />
+
+<item itemtype="Connector" uid="Connector-8519" startpinid="DAC-3360-in7" endpinid="Node-8520-1" pointList="-492,280,-520,280,-520,356,-544,356" />
+
+<item itemtype="Connector" uid="Connector-8521" startpinid="Node-8520-2" endpinid="74XX504-2702-Q7" pointList="-544,356,-656,356" />
+
+<item itemtype="Connector" uid="Connector-8522" startpinid="DAC-3360-in8" endpinid="Node-8523-1" pointList="-492,272,-524,272,-524,364,-544,364" />
+
+<item itemtype="Connector" uid="Connector-8524" startpinid="Node-8523-2" endpinid="74XX504-2702-Q8" pointList="-544,364,-656,364" />
+
+<item itemtype="Connector" uid="Connector-8525" startpinid="DAC-3360-in9" endpinid="Node-8526-1" pointList="-492,264,-528,264,-528,372,-548,372" />
+
+<item itemtype="Connector" uid="Connector-8527" startpinid="Node-8526-2" endpinid="74XX504-2702-Q9" pointList="-548,372,-656,372" />
+
+<item itemtype="Connector" uid="Connector-8528" startpinid="DAC-3360-in10" endpinid="Node-8529-1" pointList="-492,256,-532,256,-532,380,-552,380" />
+
+<item itemtype="Connector" uid="Connector-8530" startpinid="Node-8529-2" endpinid="74XX504-2702-Q10" pointList="-552,380,-656,380" />
+
+<item itemtype="Connector" uid="Connector-8531" startpinid="DAC-3360-in11" endpinid="Node-8532-1" pointList="-492,248,-536,248,-536,388,-556,388" />
+
+<item itemtype="Connector" uid="Connector-8533" startpinid="Node-8532-2" endpinid="74XX504-2702-Q11" pointList="-556,388,-656,388" />
+
+<item itemtype="Connector" uid="Connector-8535" startpinid="Node-8534-2" endpinid="74HC574-633-CP" pointList="-432,240,-416,240" />
+
+<item itemtype="Connector" uid="Connector-8536" startpinid="Node-8534-1" endpinid="74HC574-8418-CP" pointList="-432,240,-432,492,-412,492" />
+
+<item itemtype="Connector" uid="Connector-8537" startpinid="Oscope-118-Pin0" endpinid="Node-10047-0" pointList="-168,356,-280,356" />
+
+<item itemtype="Connector" uid="Connector-8540" startpinid="Oscope-118-Pin1" endpinid="Node-8541-1" pointList="-168,388,-204,388,-204,552,-644,552,-644,440" />
+
+<item itemtype="Connector" uid="Connector-8542" startpinid="Node-8541-2" endpinid="74XX504-2702-!S" pointList="-644,440,-728,440,-728,324,-704,324" />
+
+<item itemtype="Connector" uid="Connector-10022" startpinid="Rail-10021-outnod" endpinid="opAmp-1241-powerPos" pointList="-768,260,-744,260,-744,292" />
+
+<item itemtype="Connector" uid="Connector-10024" startpinid="Rail-10023-outnod" endpinid="opAmp-1241-powerNeg" pointList="-788,328,-744,328,-744,324" />
+
+<item itemtype="Connector" uid="Connector-1289" startpinid="Voltage Source-1251-outPin" endpinid="Node-10030-0" pointList="-856,264,-856,260,-816,260" />
+
+<item itemtype="Connector" uid="Connector-10029" startpinid="Voltimeter-10025-lPin" endpinid="Node-10030-1" pointList="-808,188,-808,216,-816,216,-816,260" />
+
+<item itemtype="Connector" uid="Connector-10031" startpinid="Node-10030-2" endpinid="opAmp-1241-inputNinv" pointList="-816,260,-816,300,-768,300" />
+
+<item itemtype="Connector" uid="Connector-10033" startpinid="Ground-10032-Gnd" endpinid="Voltimeter-10025-rPin" pointList="-792,196,-792,188" />
+
+<item itemtype="Connector" uid="Connector-10038" startpinid="Switch-10037-pinP0" endpinid="74XX504-2702-CP" pointList="-780,356,-704,356" />
+
+<item itemtype="Connector" uid="Connector-10039" startpinid="Clock-1278-outnod" endpinid="Switch-10037-switch1pinN" pointList="-872,364,-872,360,-868,360,-868,348,-812,348" />
+
+<item itemtype="Connector" uid="Connector-10040" startpinid="Fixed Voltage-10034-outnod" endpinid="Switch-10037-switch0pinN" pointList="-864,392,-812,392,-812,356" />
+
+<item itemtype="Connector" uid="Connector-10043" startpinid="Ground-10041-Gnd" endpinid="Voltimeter-10042-rPin" pointList="-232,324,-232,316" />
+
+<item itemtype="Connector" uid="Connector-10046" startpinid="Voltimeter-10042-lPin" endpinid="Node-10047-1" pointList="-248,316,-248,328,-280,328,-280,356" />
+
+<item itemtype="Connector" uid="Connector-8380" startpinid="opAmp-1241-inputInv" endpinid="Node-10050-0" pointList="-768,316,-768,452,-444,452,-444,356" />
+
+<item itemtype="Connector" uid="Connector-10049" startpinid="DAC-3360-out0" endpinid="Node-10050-1" pointList="-444,336,-444,356" />
+
+<item itemtype="Connector" uid="Connector-10051" startpinid="Node-10050-2" endpinid="Node-10047-2" pointList="-444,356,-280,356" />
+
+</circuit>
