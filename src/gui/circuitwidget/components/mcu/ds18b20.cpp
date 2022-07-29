@@ -133,9 +133,8 @@ void Ds18b20::stamp()   // Called at Simulation Start
 
 void Ds18b20::updateStep()
 {
-    if( !m_changed ) return;
-    m_changed = false;
     setTemp( m_temp );
+    Simulator::self()->remFromUpdateList( this );
 }
 
 void Ds18b20::voltChanged()                              // Called when Input Pin changes
@@ -518,14 +517,16 @@ void Ds18b20::upbuttonclicked()
 {
     m_temp += m_tempInc;
     if( m_temp > 125 ) m_temp = 125;
-    m_changed = true;
+    if( Simulator::self()->isRunning() ) Simulator::self()->addToUpdateList( this );
+    else updateStep();
 }
 
 void Ds18b20::downbuttonclicked()
 {
     m_temp = m_temp - m_tempInc;
     if( m_temp < -55 ) m_temp = -55;
-    m_changed = true;
+    if( Simulator::self()->isRunning() ) Simulator::self()->addToUpdateList( this );
+    else updateStep();
 }
 
 void Ds18b20::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
