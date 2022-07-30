@@ -36,12 +36,16 @@ class MAINMODULE_EXPORT Gate : public LogicComponent
         virtual void voltChanged() override;
         virtual void runEvent() override{ IoComponent::runOutputs(); }
 
+        bool initState() { return m_initState; }
+        void setInitState( bool s) { m_initState = s; }
+
         virtual void setNumInps( int pins );
 
     protected:
         virtual bool calcOutput( int inputs );
 
         bool m_out;
+        bool m_initState;
 };
 
 #endif

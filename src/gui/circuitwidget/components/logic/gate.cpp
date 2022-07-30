@@ -28,6 +28,7 @@ Gate::Gate( QObject* parent, QString type, QString id, int inputs )
     : LogicComponent( parent, type, id )
 {
     m_width = 2;
+    m_initState = false;
 
     setNumOuts( 1, "", 0, false );
     setNumInps( inputs );  // Create Input Pins
@@ -40,8 +41,10 @@ QList<ComProperty*> Gate::edgeProps()
 {
     QList<ComProperty*> edge = IoComponent::edgeProps();
     edge.prepend(
-new BoolProp<Gate>( "rndPD", tr("Randomize PD"),"", this, &Gate::rndPD, &Gate::setRndPD )
-                );
+new BoolProp<Gate>( "initHigh", tr("Initial High State"),"", this, &Gate::initState, &Gate::setInitState ) );
+    edge.prepend(
+new BoolProp<Gate>( "rndPD", tr("Randomize PD"),"", this, &Gate::rndPD, &Gate::setRndPD ) );
+
     return edge;
 }
 
@@ -49,7 +52,10 @@ void Gate::stamp()
 {
     LogicComponent::stamp();
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
-    m_out = false;
+
+    m_outPin[0]->setOutState( m_initState );
+    m_out = m_initState;
+    m_nextOutVal = m_outValue = m_initState;
 }
 
 void Gate::voltChanged()
