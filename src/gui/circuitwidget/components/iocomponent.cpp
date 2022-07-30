@@ -115,19 +115,17 @@ void IoComponent::runOutputs()
 
 void IoComponent::sheduleOutPuts( eElement* el )
 {
+    uint64_t delay = m_propDelay*m_propSize;
+    if( m_rndPD ) delay += (std::rand()%10)*10-45;
+
     if( m_outQueue.empty() )
     {
         if( m_nextOutVal == m_outValue ) return;
-
-        if( m_rndPD ) Simulator::self()->addEvent( m_propDelay*m_propSize+(std::rand()%2), el );
-        else          Simulator::self()->addEvent( m_propDelay*m_propSize, el );
+        Simulator::self()->addEvent( delay, el );
     }
     else          // New Event while previous Event not dispatched
     {
         if( m_nextOutVal == m_outQueue.back() ) return;
-
-        uint64_t delay = m_propDelay*m_propSize;
-        if( m_rndPD ) delay += std::rand()%2;
 
         uint64_t nextTime = Simulator::self()->circTime()+delay;
         m_timeQueue.push( nextTime );

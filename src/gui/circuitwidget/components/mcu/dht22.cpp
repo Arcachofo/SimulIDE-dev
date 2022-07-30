@@ -37,7 +37,7 @@ Component* Dht22::construct( QObject* parent, QString type, QString id )
 LibraryItem* Dht22::libraryItem()
 {
     return new LibraryItem(
-        "Dht22/11",
+        "DHt22/11",
         tr( "Sensors" ),
         "dht22.png",
         "Dht22",

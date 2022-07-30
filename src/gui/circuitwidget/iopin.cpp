@@ -81,19 +81,22 @@ void IoPin::runEvent()
         m_step = 0;
         IoPin::setOutState( m_nextState );
     }else{
+        bool nextState = m_nextState;
+        if( m_inverted ) nextState = !nextState;
+
         if( m_pinMode == openCo )
         {
-            double step = m_nextState ? m_step : m_steps-m_step;
+            double step = nextState ? m_step : m_steps-m_step;
             double delta =  qPow( 1e4*step/m_steps, 2 );
             m_gndAdmit = 1/(m_outputImp+delta);
             updtState();
         }else{
             double delta = m_step;
             if( m_step == 0 ) delta = 1e-5;
-            if( m_nextState ) stampVolt( m_outLowV+delta*(m_outHighV-m_outLowV)/m_steps ); // L to H
-            else              stampVolt( m_outHighV-delta*(m_outHighV-m_outLowV)/m_steps );// H to L
+            if( nextState ) stampVolt( m_outLowV+delta*(m_outHighV-m_outLowV)/m_steps ); // L to H
+            else            stampVolt( m_outHighV-delta*(m_outHighV-m_outLowV)/m_steps );// H to L
         }
-        int time = m_nextState ? m_timeRis : m_timeFal;
+        int time = nextState ? m_timeRis : m_timeFal;
         Simulator::self()->addEvent( time/m_steps, this );
         m_step++;
     }
