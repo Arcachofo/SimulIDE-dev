@@ -273,11 +273,16 @@ QString MainWindow::getHelp( QString name )
     if( m_help.contains( name ) ) return m_help.value( name );
 
     QString locale = loc();
-    if( loc() != "en" ) locale.prepend("_").append("/");
+    QString localeFolder = "";
+
+    if( loc() != "en" ) {
+        locale.prepend("_");
+        localeFolder = locale + "/";
+    }
     else locale = "";
 
     name= name.toLower().replace( " ", "" );
-    QString dfPath = getFilePath("data/help/"+locale+name+locale+".txt");
+    QString dfPath = getFilePath("data/help/"+localeFolder+name+locale+".txt");
 
     if( dfPath == "" ) dfPath = getFilePath( "data/help/"+name+".txt" );
     if( dfPath != "" )
