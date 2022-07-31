@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "capacitorbase.h"
+#include "simulator.h"
 #include "pin.h"
 
 #include "doubleprop.h"
@@ -34,7 +35,8 @@ CapacitorBase::CapacitorBase( QObject* parent, QString type, QString id )
     m_pin[1]->setLength( 12 );
 
     addPropGroup( { tr("Main"), {
-new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance"), "F", this, &CapacitorBase::cap, &CapacitorBase::setCap )
+new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance")    , "F", this, &CapacitorBase::cap     , &CapacitorBase::setCap ),
+new DoubProp<CapacitorBase>( "InitVolt"   , tr("Initial Voltage"), "V", this, &CapacitorBase::initVolt, &CapacitorBase::setInitVolt )
     } } );
 
     setShowProp("Capacitance");
@@ -42,3 +44,17 @@ new DoubProp<CapacitorBase>( "Capacitance", tr("Capacitance"), "F", this, &Capac
 }
 CapacitorBase::~CapacitorBase(){}
 
+void CapacitorBase::updateStep()
+{
+    m_nextStep = Simulator::self()->stepSize(); // Time in ps
+    m_tStep = (double)m_nextStep/1e12;          // Time in seconds
+    eResistor::setRes( m_tStep/m_cap );
+    Simulator::self()->remFromUpdateList( this );
+}
+
+
+void  CapacitorBase::setCap( double c )
+{
+    m_cap = c;
+    Simulator::self()->addToUpdateList( this );
+}

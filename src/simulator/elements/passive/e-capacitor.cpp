@@ -29,43 +29,85 @@ eCapacitor::eCapacitor( QString id )
           : eResistor( id )
 {
     m_cap = 0.00001; // Farads
+    m_InitVolt = 0;
 }
 eCapacitor::~eCapacitor(){}
 
-void eCapacitor::initialize()
+/*void eCapacitor::initialize()
 {
-    m_nextStep = Simulator::self()->stepSize();
-    m_tStep = (double)m_nextStep/1e12;
+    m_nextStep = Simulator::self()->stepSize(); // Time in ps
+    m_tStep = (double)m_nextStep/1e12;          // Time in seconds
     m_curSource = 0;
-    m_volt = 0;
+    m_volt = m_InitVolt;
     m_admit = m_cap/m_tStep;
-}
+}*/
 
 void eCapacitor::stamp()
 {
-    eResistor::stamp();
-
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected())
-        Simulator::self()->addEvent( 1, this );
+    {
+        m_nextStep = Simulator::self()->stepSize(); // Time in ps
+        m_tStep = (double)m_nextStep/1e12;          // Time in seconds
+        m_admit = m_cap/m_tStep;
+        eResistor::stamp();
+
+        m_volt = m_InitVolt;
+        m_curSource = m_volt*m_admit;
+        if( m_curSource )
+        {
+            m_ePin[0]->stampCurrent( m_curSource );
+            m_ePin[1]->stampCurrent(-m_curSource );
+        }
+
+        m_ePin[0]->changeCallBack( this );
+        m_ePin[1]->changeCallBack( this );
+    }
+    //    Simulator::self()->addEvent( 1, this );
+
+    m_lastTime = 0;
 }
 
-void eCapacitor::runEvent()
+void eCapacitor::voltChanged()
 {
     double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
 
+    uint64_t simTime = Simulator::self()->circTime();
+    uint64_t deltaTime = simTime - m_lastTime;
+    m_lastTime = simTime;
+
+    if( deltaTime < m_nextStep )
+    {
+        Simulator::self()->cancelEvents( this );
+
+        //if( deltaTime == 0 )return;
+        //qDebug() << "Time:" << deltaTime << m_nextStep;
+    }
+//qDebug() << "Cap:"<<volt << m_ePin[0]->getVolt() << m_ePin[1]->getVolt();
     if( m_volt != volt )
     {
         m_volt = volt;
         m_curSource = volt*m_admit;
+        //qDebug() << "Cap:" << m_volt << m_curSource;
+
+        //m_ePin[0]->stampCurrent( m_curSource );
+        //m_ePin[1]->stampCurrent(-m_curSource );
+        Simulator::self()->addEvent( m_nextStep, this );
+    }
+    else qDebug() << "Final Voltage:" << volt;
+}
+
+void eCapacitor::runEvent()
+{
+    //double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
+
+    //if( m_volt != volt )
+    {
+        //m_volt = volt;
+        //m_curSource = volt*m_admit;
 
         m_ePin[0]->stampCurrent( m_curSource );
         m_ePin[1]->stampCurrent(-m_curSource );
     }
-    Simulator::self()->addEvent( m_nextStep, this );
+    //Simulator::self()->addEvent( m_nextStep, this );
 }
 
-void  eCapacitor::setCap( double c ) 
-{ 
-    m_cap = c; 
-    eResistor::setResSafe( m_tStep/m_cap );
-}

@@ -29,6 +29,14 @@ class MAINMODULE_EXPORT CapacitorBase : public Comp2Pin, public eCapacitor
     public:
         CapacitorBase( QObject* parent, QString type, QString id );
         ~CapacitorBase();
+
+        virtual void updateStep() override;
+
+        double cap() { return m_cap; }
+        void setCap( double c );
+
+        double initVolt() { return m_InitVolt; }
+        void setInitVolt( double v ) { m_InitVolt = v; }
 };
 
 #endif

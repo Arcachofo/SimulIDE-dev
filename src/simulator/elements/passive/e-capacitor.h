@@ -28,20 +28,20 @@ class MAINMODULE_EXPORT eCapacitor : public eResistor
         eCapacitor( QString id );
         ~eCapacitor();
 
-        virtual void initialize() override;
+        //virtual void initialize() override;
         virtual void stamp() override;
+        virtual void voltChanged() override;
         virtual void runEvent() override;
-
-        double cap() { return m_cap; }
-        void setCap( double c );
 
     protected:
         double m_cap;
         double m_curSource;
         double m_tStep;
         double m_volt;
+        double m_InitVolt;
 
         uint64_t m_nextStep;
+        uint64_t m_lastTime;
 };
 
 #endif
