@@ -194,7 +194,7 @@ void Oscope::setFilter( double filter )
 {
     m_filter = filter;
     m_oscWidget->setFilter( filter );
-    for( int i=0; i<2; i++ ) m_channel[i]->setFilter( filter );
+    for( int i=0; i<4; i++ ) m_channel[i]->setFilter( filter );
 }
 
 void Oscope::setTrigger( int ch )
