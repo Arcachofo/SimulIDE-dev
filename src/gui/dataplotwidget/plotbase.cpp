@@ -55,8 +55,9 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     addPropGroup( { tr("Main"), {
-new IntProp<PlotBase>( "Basic_X" ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX, &PlotBase::setBaSizeX, "uint" ),
-new IntProp<PlotBase>( "Basic_Y" ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY, &PlotBase::setBaSizeY, "uint" ),
+new IntProp<PlotBase>( "Basic_X"    ,tr("Screen Size X"),tr("_Pixels"), this, &PlotBase::baSizeX,    &PlotBase::setBaSizeX, "uint" ),
+new IntProp<PlotBase>( "Basic_Y"    ,tr("Screen Size Y"),tr("_Pixels"), this, &PlotBase::baSizeY,    &PlotBase::setBaSizeY, "uint" ),
+new IntProp<PlotBase>( "BufferSize" ,tr("Buffer Size")  ,tr("Samples"), this, &PlotBase::bufferSize, &PlotBase::setBufferSize, "uint" ),
     }} );
     addPropGroup( {"Hidden", {
 new StringProp<PlotBase>( "TimDiv"  ,"","", this, &PlotBase::timDiv,  &PlotBase::setTimDiv ),
@@ -93,6 +94,18 @@ void PlotBase::setBaSizeY( int size )
     if( size < 135 ) size = 135;
     m_baSizeY = size;
     expand( m_expand );
+}
+
+void PlotBase::setBufferSize( int bs )
+{
+    if( bs < 0 || bs > 10000000 ) bs = 10000000;
+    else if( bs < 1000 ) bs = 1000;
+    m_bufferSize = bs;
+    for( int i=0; i<m_numChannels; i++ )
+    {
+        m_channel[i]->m_buffer.resize( m_bufferSize );
+        m_channel[i]->m_time.resize( m_bufferSize );
+    }
 }
 
 QString PlotBase::timDiv()

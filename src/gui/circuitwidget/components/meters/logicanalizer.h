@@ -37,9 +37,6 @@ class MAINMODULE_EXPORT LAnalizer : public PlotBase
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
 
-        double dataSize() { return m_dataSize/1e6; }
-        void setDataSize( double ds ) { m_dataSize = ds*1e6; }
-
         virtual void updateStep() override;
 
         virtual QString timPos() override;

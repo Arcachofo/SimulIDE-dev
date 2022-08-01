@@ -45,8 +45,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         int baSizeY() { return m_baSizeY; }
         void setBaSizeY( int size );
 
-        double dataSize() { return m_dataSize/1e6; }
-        void setDataSize( double ds ) { m_dataSize = ds*1e6; }
+        int bufferSize() { return m_bufferSize; }
+        void setBufferSize( int bs );
 
         QString timDiv();
         void setTimDiv( QString td );
