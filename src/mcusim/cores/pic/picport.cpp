@@ -35,20 +35,7 @@ void PicPort::configureA( uint8_t newANSEL ) // Analog pins
         m_pins[i]->setAnalog( newANSEL & 1<<i );
 }
 
-void PicPort::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
+McuPin* PicPort::createPin( int i, QString id , Component* mcu )
 {
-    m_numPins = pins.toUInt(0,0);
-    m_pins.resize( m_numPins );
-
-    if( pinMask ){
-        for( int i=0; i<m_numPins; ++i )
-        {
-            if( pinMask & 1<<i )
-                m_pins[i] = new PicPin( this, i, m_name+QString::number(i), mcuComp );
-        }
-    }else{
-        for( int i=0; i<m_numPins; ++i )
-            m_pins[i] = new PicPin( this, i, m_name+QString::number(i), mcuComp );
-    }
+    return new PicPin( this, i, id, mcu );
 }
-

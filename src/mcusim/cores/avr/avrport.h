@@ -30,7 +30,7 @@ class MAINMODULE_EXPORT AvrPort : public McuPort
         ~AvrPort();
 
     protected:
-        virtual void createPins( Mcu* mcuComp, QString pins, uint8_t pinMask=0 ) override;
+        virtual McuPin* createPin( int i, QString id , Component* mcu ) override;
 };
 
 #endif

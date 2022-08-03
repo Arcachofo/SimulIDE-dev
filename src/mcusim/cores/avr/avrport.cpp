@@ -28,13 +28,7 @@ AvrPort::AvrPort( eMcu* mcu, QString name )
 }
 AvrPort::~AvrPort(){}
 
-void AvrPort::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
+McuPin* AvrPort::createPin( int i, QString id , Component* mcu )
 {
-    m_numPins = pins.toUInt(0,0);
-    m_pins.resize( m_numPins );
-
-    for( int i=0; i<m_numPins; ++i )
-    {
-        m_pins[i] = new AvrPin( this, i, m_name+QString::number(i), mcuComp );
-    }
+    return new AvrPin( this, i, id, mcu );
 }

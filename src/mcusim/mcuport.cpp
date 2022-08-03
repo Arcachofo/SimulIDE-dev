@@ -123,17 +123,25 @@ void McuPort::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
         m_pins.resize( m_numPins );
 
         for( int i=0; i<m_numPins; ++i )
-            m_pins[i] = new McuPin( this, i, m_name+QString::number(i), mcuComp );
+        {
+            if( pinMask & 1<<i )
+                m_pins[i] = createPin( i, m_name+QString::number(i) , mcuComp );//new McuPin( this, i, m_name+QString::number(i), mcuComp );
+        }
     }else{
         int i = 0;
         QStringList pinList = pins.split(",");
         for( QString pinName : pinList )
         {
-            McuPin* pin = new McuPin( this, i, m_name+pinName, mcuComp );
+            McuPin* pin = createPin( i, m_name+pinName , mcuComp );//new McuPin( this, i, m_name+pinName, mcuComp );
             m_pins.emplace_back( pin );
             i++;
         }
     }
+}
+
+McuPin* McuPort::createPin( int i, QString id , Component* mcu )
+{
+    return new McuPin( this, i, id, mcu );
 }
 
 McuPin* McuPort::getPinN( uint8_t i )
@@ -154,7 +162,8 @@ McuPin* McuPort::getPin( QString pinName )
         for( McuPin* mcuPin : m_pins )
             if( mcuPin->pinId().contains( pinId) ) return mcuPin;
     }
-    if( !pin ) qDebug() << "ERROR: NULL Pin:"<< pinName;
+    if( !pin )
+        qDebug() << "ERROR: NULL Pin:"<< pinName;
     return pin;
 }
 

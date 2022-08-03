@@ -62,7 +62,8 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
         uint16_t getInAddr() { return m_inAddr; }
 
     protected:
-        virtual void createPins( Mcu* mcuComp, QString pins, uint8_t pinMask=0 );
+        void createPins( Mcu* mcuComp, QString pins, uint8_t pinMask=255 );
+        virtual McuPin* createPin( int i, QString id , Component* mcu );
 
         std::vector<McuPin*> m_pins;
         uint8_t m_numPins;

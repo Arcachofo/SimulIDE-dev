@@ -28,13 +28,7 @@ I51Port::I51Port( eMcu* mcu, QString name )
 }
 I51Port::~I51Port(){}
 
-void I51Port::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
+McuPin* I51Port::createPin( int i, QString id , Component* mcu )
 {
-    m_numPins = pins.toUInt(0,0);
-    m_pins.resize( m_numPins );
-
-    for( int i=0; i<m_numPins; ++i )
-    {
-        m_pins[i] = new I51Pin( this, i, m_name+QString::number(i), mcuComp );
-    }
+    return new I51Pin( this, i, id, mcu );
 }

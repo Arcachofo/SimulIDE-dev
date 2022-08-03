@@ -221,7 +221,8 @@ McuPin* eMcu::getPin( QString pinName )
     }
     else if( m_ctrlPort ) pin = m_ctrlPort->getPin( pinName );
 
-    if( !pin ) qDebug() << "ERROR: NULL Pin:"<< pinName;
+    if( !pin )
+        qDebug() << "ERROR: NULL Pin:"<< pinName;
     return pin;
 }
 
