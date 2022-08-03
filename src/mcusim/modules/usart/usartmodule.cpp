@@ -128,7 +128,7 @@ bool UartTR::getParity( uint16_t data )
 void UartTR::raiseInt( uint8_t data )
 {
     m_data = data;
-    m_interrupt->raise( data );
+    m_interrupt->raise( /*data*/ );
 }
 
 void UartTR::setPins( QList<IoPin *> pinList )

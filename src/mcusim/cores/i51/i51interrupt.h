@@ -35,7 +35,7 @@ class MAINMODULE_EXPORT I51Interrupt : public Interrupt
 //_________________________________________________________________
 //_________________________________________________________________
 
-class MAINMODULE_EXPORT I51ExtInt : public Interrupt
+/*class MAINMODULE_EXPORT I51ExtInt : public Interrupt
 {
     public:
         I51ExtInt( QString name, uint16_t vector, eMcu* mcu );
@@ -47,7 +47,7 @@ class MAINMODULE_EXPORT I51ExtInt : public Interrupt
 
     private:
         uint8_t m_lastValue;
-};
+};*/
 //_________________________________________________________________
 //_________________________________________________________________
 

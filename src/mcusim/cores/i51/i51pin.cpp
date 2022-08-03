@@ -28,7 +28,7 @@ I51Pin::I51Pin( McuPort* port, int i, QString id, Component* mcu )
 }
 I51Pin::~I51Pin() {}
 
-void I51Pin::initialize()
+/*void I51Pin::initialize()
 {
     m_outCtrl = false;
     m_dirCtrl = false;
@@ -38,11 +38,11 @@ void I51Pin::initialize()
     m_steps = Simulator::self()->slopeSteps();
     //IoPin::initialize();
 
-    /*m_nextState = false;
-    m_outState  = false;
-    m_portState = false;
-    m_isOut     = false;*/
-}
+    //m_nextState = false;
+    //m_outState  = false;
+    //m_portState = false;
+    //m_isOut     = false;
+}*/
 
 void I51Pin::setOutState( bool state )
 {

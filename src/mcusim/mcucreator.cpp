@@ -1106,11 +1106,6 @@ void McuCreator::createInterrupt( QDomElement* el )
         if( val ) watchBitNames( intFlag, R_WRITE, iv, &Interrupt::writeFlag, mcu );
         else iv->m_autoClear = false;
     }
-    if( el->hasAttribute("mode") )
-    {
-        QString mode = el->attribute("mode");
-        watchBitNames( mode, R_WRITE, iv, &Interrupt::setMode, mcu );
-    }
     if( el->hasAttribute("pin") )
     {
         iv->m_intPin = mcu->getPin( el->attribute("pin") );

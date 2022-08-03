@@ -34,7 +34,7 @@ class MAINMODULE_EXPORT I51Pin : public McuPin
         I51Pin( McuPort* port, int i, QString id , Component* mcu );
         ~I51Pin();
 
-        virtual void initialize() override;
+        //virtual void initialize() override;
 
         virtual void setOutState( bool state ) override;
 

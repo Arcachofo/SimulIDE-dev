@@ -31,7 +31,7 @@ Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
     m_vector = vector;
     m_wakeup = 0;
     m_autoClear = false;
-    m_remember = false;
+    m_remember = true;      /// Remember by deafult: find out exceptions
     m_nextInt = NULL;
     m_intPin = NULL;
 
@@ -41,7 +41,7 @@ Interrupt::~Interrupt(){}
 
 void Interrupt::reset()
 {
-    m_mode    = 0;
+    //m_mode    = 0;
     m_enabled = 0;
     m_raised  = false;
 }
@@ -94,6 +94,18 @@ void Interrupt::raise( uint8_t v )
     }
 
     if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
+
+    if( v ){
+        m_raised = true;
+        m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
+        if( m_enabled )
+        {
+            m_interrupts->addToPending( this ); // Add to pending interrupts
+            if( m_intPin ) m_intPin->setOutState( false );
+        }
+        if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
+    }
+    else clearFlag();
 }
 
 void Interrupt::execute()

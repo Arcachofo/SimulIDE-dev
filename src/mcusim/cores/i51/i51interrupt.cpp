@@ -29,8 +29,9 @@ I51Interrupt::~I51Interrupt(){}
 // Static --------------------------
 Interrupt* I51Interrupt::getInterrupt( QString name, uint16_t vector, eMcu* mcu )
 {
-    if     ( name.startsWith( "EXT") ) return new I51ExtInt( name, vector, mcu );
-    else if( name == "T1_OVF"        ) return new I51T1Int( name, vector, mcu );
+    //if     ( name.startsWith( "EXT") ) return new I51ExtInt( name, vector, mcu );
+    //else
+        if( name == "T1_OVF"        ) return new I51T1Int( name, vector, mcu );
 
     return new Interrupt( name, vector, mcu );
 }
@@ -38,7 +39,7 @@ Interrupt* I51Interrupt::getInterrupt( QString name, uint16_t vector, eMcu* mcu 
 //_________________________________________________________________
 //_________________________________________________________________
 
-I51ExtInt::I51ExtInt( QString name, uint16_t vector, eMcu* mcu )
+/*I51ExtInt::I51ExtInt( QString name, uint16_t vector, eMcu* mcu )
          : Interrupt( name, vector, mcu )
 {}
 I51ExtInt::~I51ExtInt(){}
@@ -69,12 +70,13 @@ void I51ExtInt::exitInt() // Exit from this interrupt
 {
     Interrupt::exitInt();
 
-    if( (m_mode == 0) && m_raised ) //In mode 0 keep triggering until pin change state
-        m_interrupts->addToPending( this ); // Add to pending interrupts
-        //m_interrupts->addToPending( m_priority, this ); // Add to pending interrupts
-
+    if( m_mode == 0 ) //In mode 0 keep triggering until pin change state
+    {
+        if( m_raised ) m_interrupts->addToPending( this ); // Add to pending interrupts
+        else           m_interrupts->remFromPending( this );
+    }
     else if( m_mode == 1 ) Interrupt::clearFlag();
-}
+}*/
 
 //_________________________________________________________________
 //_________________________________________________________________

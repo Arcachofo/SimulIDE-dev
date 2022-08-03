@@ -36,9 +36,9 @@
     
     <interrupts enable="EA">
         <interrupt name="RESET"                                          vector="0x0000" />
-        <interrupt name="EXT_0"   enable="EX0" flag="IE0" priority="PX0" vector="0x0003" mode="IT0"/>
+        <interrupt name="EXT_0"   enable="EX0" flag="IE0" priority="PX0" vector="0x0003" />
         <interrupt name="T0_OVF"  enable="ET0" flag="TF0" priority="PT0" vector="0x000B" />
-        <interrupt name="EXT_1"   enable="EX1" flag="IE1" priority="PX1" vector="0x0013" mode="IT1"/>
+        <interrupt name="EXT_1"   enable="EX1" flag="IE1" priority="PX1" vector="0x0013" />
         <interrupt name="T1_OVF"  enable="ET1" flag="TF1" priority="PT1" vector="0x001B" />
         <interrupt name="USART_R" enable="ES"  flag="RI"  priority="PS"  vector="0x0023" />
         <interrupt name="USART_T" enable="ES"  flag="TI"  priority="PS"  vector="0x0023" />
@@ -58,8 +58,8 @@
     
     <port name="PORT3" pins="8" outreg="P3" outmask="11111111" 
                                 pullups="11111111" opencol="11111111">
-        <extint name="EXT_0" pin="PORT32" />
-        <extint name="EXT_1" pin="PORT33" />
+        <extint name="EXT_0" pin="PORT32" configbits="IT0"/>
+        <extint name="EXT_1" pin="PORT33" configbits="IT1"/>
     </port>
     
     <timer name="TIMER0" enable="TR0" configregsA="TMOD"

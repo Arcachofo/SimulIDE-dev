@@ -53,7 +53,7 @@ void McuPin::initialize()
     m_outCtrl = false;
     m_dirCtrl = false;
     m_isAnalog = false;
-    m_portState = false;
+    //m_portState = false;
 
     IoPin::initialize();
 }
@@ -70,20 +70,23 @@ void McuPin::stamp()
 void McuPin::voltChanged()
 {
     bool oldState = m_inpState;
-    if( oldState != IoPin::getInpState() )
+    bool newState = IoPin::getInpState();
+
+    if( m_extInt )
     {
-        if( m_extInt && m_extInt->enabled() )
-        {
-            bool raise = false;
-            switch( m_extIntTrigger ) {
-                case pinLow:     raise = !m_inpState; break;
-                case pinChange:  raise = (oldState != m_inpState); break;
-                case pinFalling: raise = (oldState && !m_inpState); break;
-                case pinRising:  raise = (!oldState && m_inpState); break;
-            }
-            if( raise ) m_extInt->raise( m_inpState );
+        bool raise = true;
+        bool trigger = false;
+        switch( m_extIntTrigger ) { // Trigger pinLow without pin change at simulation start
+            case pinLow:     raise = !newState; trigger = (Simulator::self()->circTime() == 0);
+            case pinChange:  trigger |= (oldState != newState); break;
+            case pinFalling: trigger = (oldState && !newState); break;
+            case pinRising:  trigger = (!oldState && newState); break;
         }
-        uint8_t val = m_inpState ? m_pinMask : 0;
+        if( trigger ) m_extInt->raise( raise );
+    }
+    if( oldState != newState )
+    {
+        uint8_t val = newState ? m_pinMask : 0;
         m_port->pinChanged( m_pinMask, val );
     }
 }
