@@ -39,10 +39,12 @@ DataChannel::~DataChannel(){}
 
 void DataChannel::stamp()    // Called at Simulation Start
 {
+    m_bufferCounter = 0;
+    m_trigIndex = 0;
     bool connected = false;
+
     eNode* enode =  m_ePin[0]->getEnode();
-    if( enode )
-    {
+    if( enode ){
         enode->voltChangedCallback( this );
         connected = true;
     }
@@ -50,8 +52,5 @@ void DataChannel::stamp()    // Called at Simulation Start
 
     if( !m_ePin[1] ) return;
     m_ePin[1]->changeCallBack( this );
-
-    m_bufferCounter = 0;
-    m_trigIndex = 0;
 }
 

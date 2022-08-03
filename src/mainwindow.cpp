@@ -268,7 +268,7 @@ void MainWindow::searchChanged()
 
 QString MainWindow::getHelp( QString name )
 {
-    QString help = "No help available";
+    QString help = tr("No help available");
 
     if( m_help.contains( name ) ) return m_help.value( name );
 
@@ -293,12 +293,10 @@ QString MainWindow::getHelp( QString name )
         {
             QTextStream s1( &file );
             s1.setCodec("UTF-8");
-
             help = s1.readAll();
-
             file.close();
         }
-        else qDebug() << "Warning: MainWindow::getHelp: File not found "<<dfPath;
+        else qDebug() << "Warning: MainWindow::getHelp: File not found\n"<<dfPath;
     }
     m_help[name] = help;
     return help;

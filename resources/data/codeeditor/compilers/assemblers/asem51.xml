@@ -3,6 +3,6 @@
 <compiler name="Asem-51" type="avrasm01">
     <step 
         command="asem"
-        arguments=" -v $buildPath$fileName.asm"
+        arguments=" -v $filePath"
     />
 </compiler>
