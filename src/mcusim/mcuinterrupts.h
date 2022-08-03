@@ -53,6 +53,7 @@ class MAINMODULE_EXPORT Interrupt
         void setPriority( uint8_t p ) { m_priority = p; }
 
         //void setMode( uint8_t mod )   { m_mode = mod;}
+        void setAutoClear( bool a ) { m_autoClear = a; }
 
         void callBack( McuModule* mod, bool call );
         void exitCallBack( McuModule* mod, bool call );
@@ -102,7 +103,7 @@ class MAINMODULE_EXPORT Interrupts
         uint8_t enabled() { return m_enabled; }
 
         void runInterrupts();
-        void retI();
+        void retI() { m_reti = true; }
         void remove();
         void resetInts();
 
@@ -110,7 +111,11 @@ class MAINMODULE_EXPORT Interrupts
         void remFromPending( Interrupt* remInt );
 
     protected:
+        void exitInt();
+
         eMcu* m_mcu;
+
+        bool m_reti;
 
         uint8_t    m_enabled;   // Global Interrupt Flag
         Interrupt* m_active;    // Active interrupt

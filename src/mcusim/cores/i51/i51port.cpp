@@ -28,6 +28,13 @@ I51Port::I51Port( eMcu* mcu, QString name )
 }
 I51Port::~I51Port(){}
 
+void I51Port::reset()
+{
+    m_pinState = 255;
+    //if( m_rstIntMask ) m_intMask = 0;
+    /// for( McuPin* pin : m_pins ) pin->reset();
+}
+
 McuPin* I51Port::createPin( int i, QString id , Component* mcu )
 {
     return new I51Pin( this, i, id, mcu );

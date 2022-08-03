@@ -38,6 +38,8 @@ class MAINMODULE_EXPORT I51Pin : public McuPin
 
         virtual void setOutState( bool state ) override;
 
+        virtual void ConfExtInt( uint8_t bits ) override;
+
     protected:
 
 };

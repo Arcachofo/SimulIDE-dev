@@ -20,6 +20,8 @@
 #include "i51pin.h"
 #include "iopin.h"
 #include "simulator.h"
+#include "datautils.h"
+#include "mcuinterrupts.h"
 
 I51Pin::I51Pin( McuPort* port, int i, QString id, Component* mcu )
       : McuPin( port, i, id, mcu )
@@ -48,4 +50,11 @@ void I51Pin::setOutState( bool state )
 {
     state = state && m_portState;
     IoPin::setOutState( state );
+}
+
+void I51Pin::ConfExtInt( uint8_t bits )
+{
+    bool fallEdge = getRegBitsBool( bits, m_extIntBits );
+    m_extIntTrigger = fallEdge ? McuPin::pinFalling : McuPin::pinLow;
+    m_extInt->setAutoClear( fallEdge );
 }

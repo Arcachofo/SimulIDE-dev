@@ -82,19 +82,6 @@ void Interrupt::writeFlag( uint8_t v ) // Clear Interrupt flag by writting 1 to 
 
 void Interrupt::raise( uint8_t v )
 {
-    //if( m_raised ) return; // If interrupt is raised whith m_enable = 0
-    m_raised = true;         // And enabled later, then it will not be added to pending.
-
-    m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
-
-    if( m_enabled )
-    {
-        m_interrupts->addToPending( this ); // Add to pending interrupts
-        if( m_intPin ) m_intPin->setOutState( false );
-    }
-
-    if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
-
     if( v ){
         m_raised = true;
         m_ram[m_flagReg] |= m_flagMask; // Set Interrupt flag
@@ -105,7 +92,7 @@ void Interrupt::raise( uint8_t v )
         }
         if( !m_callBacks.isEmpty() ) { for( McuModule* mod : m_callBacks ) mod->callBack(); }
     }
-    else clearFlag();
+    else if( m_autoClear ) clearFlag();
 }
 
 void Interrupt::execute()
@@ -145,6 +132,7 @@ Interrupts::~Interrupts(){}
 void Interrupts::resetInts()
 {
     m_enabled = 0;
+    m_reti    = false;
     m_active  = NULL;
     m_pending = NULL;
     m_running = NULL;
@@ -152,8 +140,10 @@ void Interrupts::resetInts()
     for( QString inte : m_intList.keys() ) m_intList.value( inte )->reset();
 }
 
-void Interrupts::retI()
+void Interrupts::exitInt()
 {
+    m_reti = false;
+
     if( !m_active ) {
         qDebug() << "Interrupts::retI Error: No active Interrupt"; return; }
     m_active->exitInt();
@@ -169,6 +159,7 @@ void Interrupts::retI()
 
 void Interrupts::runInterrupts()
 {
+    if( m_reti ) { exitInt(); return; }
     if( !m_enabled ) return; // Global Interrupts disabled
     if( m_enabled > 1 ){ m_enabled -= 1; return; }// Execute interrupts some cycles later
 
