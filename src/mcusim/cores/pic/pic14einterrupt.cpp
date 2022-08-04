@@ -38,7 +38,7 @@ void Pic14eInterrupt::execute() // Save context
     m_bsrSaved    = *m_bsr;
     m_pclathSaved = *m_pclath;
 
-    PicInterrupt::execute();
+    Interrupt::execute();
 }
 
 void Pic14eInterrupt::exitInt() // Restore context
@@ -48,6 +48,6 @@ void Pic14eInterrupt::exitInt() // Restore context
     *m_bsr    = m_bsrSaved;
     *m_pclath = m_pclathSaved;
 
-    PicInterrupt::exitInt();
+    Interrupt::exitInt();
 }
 

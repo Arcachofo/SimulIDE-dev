@@ -24,14 +24,14 @@
 PicInterrupt::PicInterrupt( QString name, uint16_t vector, eMcu* mcu )
             : Interrupt( name, vector, mcu )
 {
-    m_GIE = getRegBits( "GIE", mcu );
+    //m_GIE = getRegBits( "GIE", mcu );
 
     m_autoClear = false;
-    m_remember  = true;
+    //m_remember  = true;
 }
 PicInterrupt::~PicInterrupt(){}
 
-void PicInterrupt::execute()
+/*void PicInterrupt::execute()
 {
     clearRegBits( m_GIE );
     m_interrupts->enableGlobal( 0 ); // Disable interrupts
@@ -43,5 +43,5 @@ void PicInterrupt::exitInt()
     setRegBits( m_GIE );
     m_interrupts->enableGlobal( 1 );  // Enable interrupts
     Interrupt::exitInt();
-}
+}*/
 

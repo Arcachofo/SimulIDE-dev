@@ -386,20 +386,6 @@ void McuCreator::createProgBlock( QDomElement* p )
         node = node.nextSibling();
 }   }
 
-void McuCreator::createInterrupts( QDomElement* i )
-{
-    QString enable = i->attribute("enable");
-    if( !enable.isEmpty() )
-        watchBitNames( enable, R_WRITE, mcu, &eMcu::enableInterrupts, mcu );
-
-    QDomNode node = i->firstChild();
-    while( !node.isNull() )
-    {
-        QDomElement el = node.toElement();
-        if( el.tagName() == "interrupt" ) createInterrupt( &el );
-        node = node.nextSibling();
-}   }
-
 void McuCreator::createPort( QDomElement* p )
 {
     QString name = p->attribute("name");
@@ -1065,6 +1051,22 @@ void McuCreator::createStack( QDomElement* s )
     mcu->cpu->m_spInc = inc.contains("inc") ? 1:-1;
 }
 
+void McuCreator::createInterrupts( QDomElement* i )
+{
+    QString enable = i->attribute("enable");
+    if( !enable.isEmpty() )
+    {
+        mcu->m_interrupts.m_enGlobalFlag = getRegBits( enable, mcu );
+        watchBitNames( enable, R_WRITE, mcu, &eMcu::enableInterrupts, mcu );
+    }
+    QDomNode node = i->firstChild();
+    while( !node.isNull() )
+    {
+        QDomElement el = node.toElement();
+        if( el.tagName() == "interrupt" ) createInterrupt( &el );
+        node = node.nextSibling();
+}   }
+
 void McuCreator::createInterrupt( QDomElement* el )
 {
     QString  intName = el->attribute("name");
@@ -1074,7 +1076,7 @@ void McuCreator::createInterrupt( QDomElement* el )
 
     Interrupt* iv = NULL;
     if     ( m_core == "8051" )  iv = I51Interrupt::getInterrupt( intName, intVector, mcu );
-    else if( m_core == "AVR" )   iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
+    //else if( m_core == "AVR" )   iv = AVRInterrupt::getInterrupt( intName, intVector, mcu );
     else if( m_core == "Pic14" ) iv = new PicInterrupt( intName, intVector, mcu );
     else if( m_core == "Pic14e") iv = new Pic14eInterrupt( intName, intVector, mcu );
     else                         iv = new Interrupt( intName, intVector, mcu );

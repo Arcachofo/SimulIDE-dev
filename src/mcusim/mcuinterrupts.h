@@ -24,6 +24,8 @@
 #include <QHash>
 #include <map>
 
+#include "mcutypes.h"
+
 class eMcu;
 class Interrupts;
 class McuModule;
@@ -106,6 +108,7 @@ class MAINMODULE_EXPORT Interrupts
         void retI() { m_reti = true; }
         void remove();
         void resetInts();
+        void writeGlobalFlag( uint8_t flag );
 
         void addToPending( Interrupt* newInt );
         void remFromPending( Interrupt* remInt );
@@ -116,6 +119,8 @@ class MAINMODULE_EXPORT Interrupts
         eMcu* m_mcu;
 
         bool m_reti;
+
+        regBits_t m_enGlobalFlag;
 
         uint8_t    m_enabled;   // Global Interrupt Flag
         Interrupt* m_active;    // Active interrupt

@@ -29,14 +29,14 @@ Interrupt* AVRInterrupt::getInterrupt( QString name, uint16_t vector, eMcu* mcu 
 AVRInterrupt::AVRInterrupt( QString name, uint16_t vector, eMcu* mcu )
             : Interrupt( name, vector, mcu )
 {
-    m_I = getRegBits( "I", mcu );
+    //m_I = getRegBits( "I", mcu );
 
-    m_autoClear = true;
-    m_remember  = true;
+    //m_autoClear = true;
+    //m_remember  = true;
 }
 AVRInterrupt::~AVRInterrupt(){}
 
-void AVRInterrupt::execute()
+/*void AVRInterrupt::execute()
 {
     clearRegBits( m_I );             // Clear SREG I flag
     m_interrupts->enableGlobal( 0 ); // Disable interrupts
@@ -48,5 +48,5 @@ void AVRInterrupt::exitInt() // Exit from this interrupt
     setRegBits( m_I );                // Set SREG I flag
     m_interrupts->enableGlobal( 2 );  // Enable interrupts (execute next cycle)
     Interrupt::exitInt();
-}
+}*/
 

@@ -29,11 +29,11 @@ class MAINMODULE_EXPORT PicInterrupt : public Interrupt
         PicInterrupt( QString name, uint16_t vector, eMcu* mcu );
         ~PicInterrupt();
 
-        virtual void execute() override;
-        virtual void exitInt() override;
+        //virtual void execute() override;
+        //virtual void exitInt() override;
 
     private:
-        regBits_t m_GIE;
+        //regBits_t m_GIE;
 };
 
 #endif

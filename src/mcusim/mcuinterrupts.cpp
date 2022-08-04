@@ -23,17 +23,18 @@
 #include "mcucore.h"
 #include "mcupin.h"
 #include "e_mcu.h"
+#include "datautils.h"
 
 Interrupt::Interrupt( QString name, uint16_t vector, eMcu* mcu )
 {
-    m_mcu = mcu;
+    m_mcu  = mcu;
     m_name = name;
     m_vector = vector;
     m_wakeup = 0;
-    m_autoClear = false;
-    m_remember = true;      /// Remember by deafult: find out exceptions
+    m_autoClear = true;
+    m_remember  = true;      /// Remember by deafult: find out exceptions
     m_nextInt = NULL;
-    m_intPin = NULL;
+    m_intPin  = NULL;
 
     m_ram = mcu->getRam();
 }
@@ -97,11 +98,13 @@ void Interrupt::raise( uint8_t v )
 
 void Interrupt::execute()
 {
+    m_interrupts->writeGlobalFlag( 0 ); // Disable Global Interrupts
     if( m_vector ) m_mcu->cpu->CALL_ADDR( m_vector );
 }
 
 void Interrupt::exitInt() // Exit from this interrupt
 {
+    m_interrupts->writeGlobalFlag( 1 ); // Enable Global Interrupts
     if( m_autoClear ) clearFlag();
     if( !m_exitCallBacks.isEmpty() ) { for( McuModule* mod : m_exitCallBacks ) mod->callBack(); }
 }
@@ -175,6 +178,14 @@ void Interrupts::runInterrupts()
     }
     m_pending->execute();
     m_active = m_pending;
+}
+
+void Interrupts::writeGlobalFlag( uint8_t flag )
+{
+    if( flag ) setRegBits( m_enGlobalFlag );   // Set Enable Global Interrupts flag
+    else       clearRegBits( m_enGlobalFlag ); // Clear Enable Global Interrupts flag
+
+    enableGlobal( flag );              // Disable interrupts
 }
 
 void Interrupts::remove()
