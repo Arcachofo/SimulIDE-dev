@@ -61,6 +61,7 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
         QDomElement root  = domDoc.documentElement();
         QDomNode    rNode = root.firstChild();
 
+        bool found = false;
         while( !rNode.isNull() )
         {
             QDomElement itemSet = rNode.toElement();
@@ -114,11 +115,13 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
                         m_mainComponent->setSubcDir( dataDir.absolutePath() );
                         m_mainComponent->m_subcircuit = this;
                     }*/
-                    break;
+                    found = true;
                 }
-                node = node.nextSibling();
+                if( !found ) node = node.nextSibling();
+                else break;
             }
-            rNode = rNode.nextSibling();
+            if( !found ) rNode = rNode.nextSibling();
+            else break;
         }
     }
 
@@ -159,8 +162,8 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
         return NULL;
     }else{
         subcircuit->m_pkgeFile = pkgeFile;
-        subcircuit->loadSubCircuit( subcFile );
         subcircuit->initChip();
+        if( m_error == 0 ) subcircuit->loadSubCircuit( subcFile );
     }
 
     if( m_error > 0 )
@@ -304,19 +307,31 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     if( comp->isGraphical() )
                     {
                         QPointF pos = comp->boardPos();
-                        if( pos == QPointF( -1e6, -1e6 ) ) pos = QPointF( 0, 0 );
+                        if( pos == QPointF( -1e6, -1e6 ) ) // Don't show Components not placed
+                        {
+                            pos = QPointF( 0, 0 );
+                            comp->setVisible( false );
+                        }
                         comp->moveTo( pos );
                         comp->setRotation( comp->boardRot() );
+                        if( !this->collidesWithItem( comp ) ) // Don't show Components out of Board
+                        {
+                            pos = QPointF( 0, 0 );
+                            comp->moveTo( pos );
+                            comp->setVisible( false );
+                        }
                     }
                     else comp->moveTo( QPointF(20, 20) );
+
+                    if( m_subcType > Logic ) comp->setHidden( true, true ); // Boards: hide non graphical
+                    else                     comp->setVisible( false );     // Not Boards: Don't show any component
 
                     if( comp->isMainComp() )
                     {
                         m_mainComponent = comp; // This component will add it's Context Menu
-                        qDebug() <<comp->itemType();
+                        //qDebug() <<comp->itemType();
                         if( comp->itemType() == "MCU" ) comp->removeProperty( "Main", "Logic_Symbol" );
                     }
-                    comp->setHidden( true, true );
                     m_compList.append( comp );
 
                     if( type == "Tunnel" ) // Make Tunnel names unique for this subcircuit
