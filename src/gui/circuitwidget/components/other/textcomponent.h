@@ -42,21 +42,11 @@ class MAINMODULE_EXPORT TextComponent : public Component
         qreal opac() { return m_opac; }
         void setOpac( qreal op ) { m_opac = op; update(); }
 
-        virtual void setHidden( bool hid, bool hidLabel=false ) override;
-
-        //bool eventFilter( QObject* object, QEvent* event );
-
         void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
 
     public slots:
         void updateGeometry(int, int, int);
-        //void editText();
-
-    protected:
-        //void mouseDoubleClickEvent( QGraphicsSceneMouseEvent* event );
-        //virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
-        //virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event);
 
     private:
         QGraphicsTextItem* m_text;
