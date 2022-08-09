@@ -74,6 +74,7 @@ class MAINMODULE_EXPORT I51Core : public McuCore
     protected:
 
         uint64_t m_psStep;  // Half Clock cycle ps = 1/24 Machine cycle, = 1/12 Read cycle.
+        int m_cycle;
 
         bool m_readExtPGM;
 

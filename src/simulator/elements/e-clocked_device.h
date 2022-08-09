@@ -46,7 +46,6 @@ class MAINMODULE_EXPORT eClockedDevice : public eElement
         eClockedDevice( QString id );
         ~eClockedDevice();
 
-        //virtual void initialize() override;
         virtual void stamp() override;
 
         trigger_t trigger() { return m_trigger; }

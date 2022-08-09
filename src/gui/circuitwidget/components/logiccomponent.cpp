@@ -45,9 +45,6 @@ LogicComponent::LogicComponent( QObject* parent, QString type, QString id )
 }
 LogicComponent::~LogicComponent(){}
 
-/*void LogicComponent::initialize()
-{ IoComponent::initState(); eClockedDevice::initialize(); }*/
-
 void LogicComponent::stamp()
 {
     IoComponent::initState();

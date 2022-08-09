@@ -78,6 +78,7 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         inline uint8_t readDataBus();
 
         uint64_t m_psStep;
+        int m_cycle;
 
         // Control Pins
         McuPin* m_phi0Pin;
@@ -106,8 +107,6 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
 
         uint8_t m_IsrH;
         uint8_t m_IsrL;
-
-        int m_cycle;
 
         addrMode_t m_addrMode;
         uint8_t m_addrIndx;

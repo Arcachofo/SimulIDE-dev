@@ -41,6 +41,7 @@ void I51Core::reset()
 {
     McuCore::reset();
     m_PC = 0;
+    m_cycle = 0;
     m_cpuState = cpu_FETCH;
 
     m_psStep = m_mcu->psCycle()/12;  // We are running at 2 cycles per Machine cycle
@@ -346,6 +347,7 @@ void I51Core::movx_indir_rx_a()
 void I51Core::runDecoder()
 {
     m_mcu->cyclesDone = 1;
+    m_cycle++;
 
     if( m_cpuState == cpu_EXEC )  // Execute previous instruction
     {
@@ -364,6 +366,7 @@ void I51Core::runDecoder()
     if( m_cpuState == cpu_FETCH )     // Read cycle 1
     {
         m_opcode = m_progMem[m_PC] = m_pgmData;
+        m_cycle = 0;
         m_PC++;
         Decode();
         m_cpuState = cpu_OPERAND;
@@ -387,9 +390,12 @@ void I51Core::readOperand()
 {
     uint8_t addrMode = m_dataEvent.takeFirst();
 
-    if     ( addrMode & IMME ){
+    if( addrMode & IMME ){
         if( addrMode & ORIG ) m_op0    = m_pgmData;
-        else                  m_opAddr = m_pgmData; /// 16 bit addrs
+        else{
+            if     ( m_cycle == 1 ) m_opAddr = (uint16_t)m_pgmData << 8; /// 16 bit addrs
+            else if( m_cycle == 2 ) m_opAddr |= m_pgmData;
+        }
     }
     else if( addrMode & DIRE ){
         if( addrMode & ORIG ) m_op0 = GET_RAM( m_pgmData );
