@@ -115,7 +115,7 @@ void McuPort::clearAllPullups( uint8_t val )
     setPullups( puMask );
 }
 
-void McuPort::createPins( Mcu* mcuComp, QString pins, uint8_t pinMask )
+void McuPort::createPins( Mcu* mcuComp, QString pins, uint32_t pinMask )
 {
     m_numPins = pins.toUInt(0,0);
     if( m_numPins )

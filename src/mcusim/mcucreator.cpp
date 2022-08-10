@@ -408,7 +408,7 @@ void McuCreator::createPort( QDomElement* p )
     mcu->m_modules.emplace_back( port );
     if( name.startsWith("C") ) mcu->m_ctrlPort = port;
 
-    uint8_t pinMask = 255;
+    uint32_t pinMask=0xFFFFFFFF;
     if( p->hasAttribute("pinmask") ) pinMask = p->attribute("pinmask").toUInt( 0, 2 );
     port->createPins( m_mcuComp, p->attribute("pins"), pinMask );
 
