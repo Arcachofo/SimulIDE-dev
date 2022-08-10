@@ -105,9 +105,6 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         const QString getFilePath() const { return m_filePath; }
 
-        QString circType() { return m_circType; }
-        double circVersion() { return m_circVersion; }
-
     signals:
         void keyEvent( QString key, bool pressed );
 
@@ -141,13 +138,10 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         QString m_filePath;
         QString m_backupPath;
-        QString m_circType;
 
         QRect        m_scenerect;
         CircuitView* m_graphicView;
         Connector*   new_connector;
-
-        double m_circVersion;
 
         int m_seqNumber;
         int m_error;

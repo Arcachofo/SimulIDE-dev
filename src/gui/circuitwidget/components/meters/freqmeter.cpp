@@ -101,10 +101,9 @@ void FreqMeter::updateStep()
     if( m_period > 0 )  // We have a wave
     {
         uint64_t simTime = Simulator::self()->circTime();
-        uint64_t stepsPF  = Simulator::self()->stepsPerFrame();
-        uint64_t stepSize = Simulator::self()->stepSize();
+        uint64_t psPF  = Simulator::self()->psPerFrame();
         uint64_t lost = m_period*2;
-        if( lost < stepsPF*2 ) lost = stepsPF*stepSize*2;
+        if( lost < psPF*2 ) lost = psPF*2;
 
         if( simTime-m_lastMax > lost ) // Wave lost
         {

@@ -51,8 +51,6 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     setSceneRect( QRectF(x, y, width, height) );
 
     m_pSelf = this;
-    m_circType = "simulide_1.0";
-    m_circVersion = 1.0;
 
     m_busy       = false;
     m_changed    = false;
@@ -171,9 +169,10 @@ void Circuit::loadStrDoc( QString &doc )
                 QStringRef name = p.first(), val = p.last();
                 val = val.mid( 1, val.lastIndexOf("\"")-1 ); // Remove "
 
-                if     ( name == "stepsPS" ) m_simulator->setStepsPerSec( val.toDouble() );
+                if     ( name == "stepSize") m_simulator->setStepSize( val.toULongLong() );
+                else if( name == "stepsPS" ) m_simulator->setStepsPerSec( val.toULongLong() );
                 else if( name == "NLsteps" ) m_simulator->setMaxNlSteps( val.toUInt() );
-                else if( name == "stepSize") m_simulator->setStepSize( val.toULongLong() );
+                else if( name == "reaStep" ) m_simulator->setreactStep( val.toULongLong() );
                 else if( name == "animate" ) setAnimate( val.toInt() );
             }
         }
@@ -410,11 +409,12 @@ void Circuit::loadStrDoc( QString &doc )
 
 QString Circuit::circuitHeader()
 {
-    QString header = "<circuit type=\""+m_circType+"\" rev=\""+QString( REVNO )+"\" ";
+    QString header = "<circuit version=\""+QString( APP_VERSION )+"\" rev=\""+QString( REVNO )+"\" ";
     header += "stepSize=\""+QString::number( m_simulator->stepSize() )+"\" ";
     header += "stepsPS=\""+QString::number( m_simulator->stepsPerSec() )+"\" ";
     header += "NLsteps=\""+QString::number( m_simulator->maxNlSteps() )+"\" ";
-    header += "animate=\""+QString::number( animate() )+"\" >\n";
+    header += "reaStep=\""+QString::number( m_simulator->reactStep() )+"\" ";
+    header += "animate=\""+QString::number( m_animate )+"\" >\n";
     return header;
 }
 QString Circuit::circuitToString()

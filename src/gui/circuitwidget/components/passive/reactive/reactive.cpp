@@ -1,0 +1,109 @@
+/***************************************************************************
+ *   Copyright (C) 2022 by santiago González                               *
+ *   santigoro@gmail.com                                                   *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
+ *                                                                         *
+ ***************************************************************************/
+
+#include "reactive.h"
+#include "simulator.h"
+#include "e-node.h"
+#include "pin.h"
+
+Reactive::Reactive( QObject* parent, QString type, QString id )
+        : Comp2Pin( parent, type, id )
+        , eReactive( id )
+{
+    m_area = QRectF( -10, -10, 20, 20 );
+
+    // Pin0--eReactive--ePin1--midEnode--ePin2--eResistor--Pin1
+    m_ePin[0] = m_pin[0];
+    setNumEpins( 3 );
+
+    m_resistor = new eResistor( m_elmId+"-resistor");
+    m_resistor->setRes( 1e-6 );
+    m_resistor->setEpin( 0, m_ePin[2] );
+    m_resistor->setEpin( 1, m_pin[1] );
+}
+Reactive::~Reactive()
+{
+    delete m_resistor;
+}
+
+void Reactive::initialize()
+{
+    m_crashed = false;
+    m_warning = false;
+
+    m_midEnode = new eNode( m_elmId+"-mideNode");
+}
+
+void Reactive::stamp()
+{
+    m_ePin[1]->setEnode( m_midEnode );
+    m_ePin[2]->setEnode( m_midEnode );
+
+    if( m_pin[0]->isConnected() && m_pin[1]->isConnected() )
+        eReactive::stamp();
+}
+
+void Reactive::updateStep()
+{
+    if( m_warning != m_stepError )
+    {
+        m_warning = m_stepError;
+        if( m_stepError ){
+            setToolTip(tr("\n  Warnig: Capacitor can't update fast enough  \n\n"
+                          "  Set auto step >= 1 for this capacitor  \n") );
+                          //"  Or set Reactive Step <= ")+QString::number( m_deltaTime )+" ps globally  \n");
+        }
+        else setToolTip("");
+    }
+
+    if( m_changed )
+    {
+        m_changed = false;
+        m_warning = false;
+        m_stepError = false;
+        m_reacStep = Simulator::self()->reactStep(); // Time in ps
+        updtReactStep();
+    }
+    update();
+    Simulator::self()->remFromUpdateList( this );
+}
+
+void Reactive::stepError()
+{
+    Simulator::self()->addToUpdateList( this );
+}
+
+void Reactive::setValue( double c )
+{
+    m_value = c;
+    m_changed = true;
+    Simulator::self()->addToUpdateList( this );
+}
+
+void Reactive::setResist( double resist )
+{
+    m_resistor->setResSafe( resist );
+}
+
+void Reactive::setAutoStep( int a )
+{
+    m_autoStep = a;
+    m_changed = true;
+    Simulator::self()->addToUpdateList( this );
+}

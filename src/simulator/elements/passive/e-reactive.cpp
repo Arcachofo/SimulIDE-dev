@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,97 +17,99 @@
  *                                                                         *
  ***************************************************************************/
 
-// Capacitor model using backward euler approximation
-// consists of a current source in parallel with a resistor.
-
-#include "e-capacitor.h"
+#include "e-reactive.h"
 #include "e-pin.h"
 #include "e-node.h"
 #include "simulator.h"
 
-eCapacitor::eCapacitor( QString id ) 
-          : eResistor( id )
+eReactive::eReactive( QString id )
+         : eResistor( id )
 {
-    m_cap = 0.00001; // Farads
+    m_value    = 0;
+    m_autoStep = 0;
+    m_InitCurr = 0;
     m_InitVolt = 0;
 }
-eCapacitor::~eCapacitor(){}
+eReactive::~eReactive(){}
 
-/*void eCapacitor::initialize()
+void eReactive::stamp()
 {
-    m_nextStep = Simulator::self()->stepSize(); // Time in ps
-    m_tStep = (double)m_nextStep/1e12;          // Time in seconds
-    m_curSource = 0;
-    m_volt = m_InitVolt;
-    m_admit = m_cap/m_tStep;
-}*/
+    eResistor::stamp();
 
-void eCapacitor::stamp()
-{
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected())
     {
-        m_nextStep = Simulator::self()->stepSize(); // Time in ps
-        m_tStep = (double)m_nextStep/1e12;          // Time in seconds
-        m_admit = m_cap/m_tStep;
-        eResistor::stamp();
+        m_reacStep = Simulator::self()->reactStep(); // Time in ps
+        updtReactStep();
 
         m_volt = m_InitVolt;
-        m_curSource = m_volt*m_admit;
+        m_curSource = m_InitCurr;
+        m_curSource = updtCurr();
+
         if( m_curSource )
         {
             m_ePin[0]->stampCurrent( m_curSource );
             m_ePin[1]->stampCurrent(-m_curSource );
         }
-
         m_ePin[0]->changeCallBack( this );
         m_ePin[1]->changeCallBack( this );
     }
-    //    Simulator::self()->addEvent( 1, this );
 
     m_lastTime = 0;
+    m_stepError = false;
+    m_running = false;
 }
 
-void eCapacitor::voltChanged()
+void eReactive::voltChanged()
+{
+    uint64_t simTime = Simulator::self()->circTime();
+    m_deltaTime = simTime - m_lastTime;
+    m_lastTime = simTime;
+
+    if( m_deltaTime < m_reacStep && !m_stepError )
+    {
+        if( m_deltaTime > 10 )
+        {
+            if( m_autoStep )  // Auto-resize step
+            {
+                m_reacStep = m_deltaTime;
+                updtReactStep();
+            }else{
+                m_stepError = true;
+                stepError();
+            }
+        }
+    }
+    else if( m_stepError ) m_stepError = false;
+
+    if( !m_running )
+    {
+        m_running = true;
+        Simulator::self()->addEvent( m_reacStep, this );
+    }
+}
+
+void eReactive::runEvent()
 {
     double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
 
-    uint64_t simTime = Simulator::self()->circTime();
-    uint64_t deltaTime = simTime - m_lastTime;
-    m_lastTime = simTime;
-
-    if( deltaTime < m_nextStep )
-    {
-        Simulator::self()->cancelEvents( this );
-
-        //if( deltaTime == 0 )return;
-        //qDebug() << "Time:" << deltaTime << m_nextStep;
-    }
-//qDebug() << "Cap:"<<volt << m_ePin[0]->getVolt() << m_ePin[1]->getVolt();
     if( m_volt != volt )
     {
         m_volt = volt;
-        m_curSource = volt*m_admit;
-        //qDebug() << "Cap:" << m_volt << m_curSource;
-
-        //m_ePin[0]->stampCurrent( m_curSource );
-        //m_ePin[1]->stampCurrent(-m_curSource );
-        Simulator::self()->addEvent( m_nextStep, this );
-    }
-    else qDebug() << "Final Voltage:" << volt;
-}
-
-void eCapacitor::runEvent()
-{
-    //double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
-
-    //if( m_volt != volt )
-    {
-        //m_volt = volt;
-        //m_curSource = volt*m_admit;
+        m_curSource = updtCurr();
 
         m_ePin[0]->stampCurrent( m_curSource );
         m_ePin[1]->stampCurrent(-m_curSource );
+        Simulator::self()->addEvent( m_reacStep, this );
     }
-    //Simulator::self()->addEvent( m_nextStep, this );
+    else m_running = false;
 }
 
+void eReactive::updtReactStep()
+{
+    if( m_autoStep ) m_reacStep = m_reacStep/m_autoStep;
+    m_tStep = (double)m_reacStep/1e12;         // Time in seconds
+    eResistor::setRes( updtRes() );
+
+    m_running = false;
+    Simulator::self()->cancelEvents( this );
+}

@@ -44,31 +44,30 @@ AppDialog::AppDialog( QWidget* parent )
     // Simulation Settings
     m_blocked = true;
 
+    m_psPerSec = Simulator::self()->psPerSec();
+    m_speedP   = 100*(double)m_psPerSec/1e12;
+    m_stepsPS  = Simulator::self()->stepsPerSec();
     m_stepSize = Simulator::self()->stepSize();
-    m_sps      = Simulator::self()->stepsPerSec();
+    m_stepUnit = log10(m_stepSize)/3;
 
-    m_speedP = 100*(double)m_sps*m_stepSize/1e12;
-    simSpeedPerSlider->setValue( m_speedP );
-    simSpeedPerBox->setValue( m_speedP );
-    simSpeedSpsBox->setValue( m_sps );
-
-    m_step = m_stepSize;
-    m_stepMult = 1;
-    m_stepUnit = 0;
-
-    while( m_step > 999 )
+    uint64_t reactStep = Simulator::self()->reactStep();
+    int unit = 0; // ps
+    uint64_t mult = 1;
+    uint64_t step = reactStep / mult;
+    while( remainder( reactStep, mult*1e3 ) == 0 )
     {
-        m_step /= 1e3;
-        m_stepMult *= 1e3;
-        m_stepUnit += 1;
+        unit += 1;
+        mult *= 1e3;
+        step = reactStep / mult;
     }
-    simStepBox->setValue( m_step );
-    simStepUnitBox->setCurrentIndex( m_stepUnit );
+    reactStepBox->setValue( step );
+    reactStepUnitBox->setCurrentIndex( unit );
 
     nlStepsBox->setValue( Simulator::self()->maxNlSteps() );
     slopeStepsBox->setValue( Simulator::self()->slopeSteps() );
     m_blocked = false;
-    updateSpeedPer();
+
+    updtSpeedPer();
 
     m_showHelp = false;
     helpText->setVisible( false );
@@ -109,10 +108,7 @@ void AppDialog::updtHelp()
     adjustSize();
 }
 
-void AppDialog::updtValues()
-{
-
-}
+void AppDialog::updtValues(){}
 
 // App Settings -------------------------------
 
@@ -156,74 +152,90 @@ void AppDialog::on_backup_valueChanged( int secs )
 void AppDialog::on_simSpeedPerSlider_valueChanged( int speed )
 {
     if( m_blocked ) return;
+    if( speed == 0 ) speed = 1;
     m_speedP = speed;
-    m_sps    = m_speedP*1e12/(m_stepSize*100);
-    updateSpeed();
-}
-
-void AppDialog::on_simSpeedPerBox_editingFinished()
-{
-    m_blocked = true;
-    uint64_t speedP = simSpeedPerBox->value();
-    uint64_t sps = m_speedP*1e12/(m_stepSize*100);
-    if( sps > 0 && speedP > 0 ){
-        m_speedP = speedP;
-        m_sps    = sps;
-    }
-    updateSpeed();
-    m_blocked = false;
-}
-
-void AppDialog::on_simSpeedSpsBox_editingFinished()
-{
-    m_sps = simSpeedSpsBox->value();
-    updateSpeedPer();
+    m_psPerSec = m_speedP*1e12/100;
+    updtSpeed();
 }
 
 void AppDialog::on_simStepBox_editingFinished()
 {
-    m_step     = simStepBox->value();
-    m_stepSize = m_step * m_stepMult;
-    updateSpeedPer();
+    m_stepsPS = simStepBox->value();
+    m_psPerSec = m_stepsPS * m_stepSize;
+    updtSpeedPer();
 }
 
 void AppDialog::on_simStepUnitBox_currentIndexChanged( int index )
 {
     if( m_blocked ) return;
     m_stepUnit = index;
-    m_stepMult = pow( 1000, index );
-    m_stepSize = m_step * m_stepMult;
-    updateSpeedPer();
+    m_stepSize = pow( 1000, index );
+    m_psPerSec = m_stepsPS * m_stepSize;
+    updtSpeedPer();
 }
 
-void AppDialog::updateSpeed()
+void AppDialog::updtSpeed()
 {
     if( m_blocked ) return;
     m_blocked = true;
 
     simSpeedPerSlider->setValue( m_speedP );
-    simSpeedPerBox->setValue( m_speedP );
-    simSpeedSpsBox->setValue( m_sps );
+    speedLabel->setText( " "+QString::number( m_speedP,'f', 2 )+"%");
+
+    m_stepsPS = m_psPerSec/m_stepSize;
+    while( m_stepsPS >= 1000000000 )
+    {
+        m_stepsPS /= 1e3;
+        m_stepSize *= 1e3;
+        m_stepUnit += 1;
+    }
+    while( m_stepsPS == 0 )
+    {
+        m_stepSize /= 1e3;
+        m_stepUnit -= 1;
+        m_stepsPS = m_psPerSec/m_stepSize;
+    }
+    simStepBox->setValue( m_stepsPS );
+    simStepUnitBox->setCurrentIndex( m_stepUnit );
 
     Simulator::self()->setStepSize( m_stepSize );
-    Simulator::self()->setStepsPerSec( m_sps );
+    Simulator::self()->setStepsPerSec( m_stepsPS );
+    Simulator::self()->setPsPerSec( m_psPerSec );
     m_blocked = false;
 }
 
-void AppDialog::updateSpeedPer()
+void AppDialog::updtSpeedPer()
 {
-    m_speedP = (double)(100*m_sps*m_stepSize)/1e12;
+    m_speedP = (double)(100*m_psPerSec)/1e12;
     if( m_speedP > 100 )
     {
         m_speedP = 100;
-        m_sps = 1e12/m_stepSize;
+        m_psPerSec = 1e12;
     }
-    updateSpeed();
+    updtSpeed();
 }
 
 void AppDialog::on_nlStepsBox_editingFinished()
 {
     Simulator::self()->setMaxNlSteps( nlStepsBox->value() );
+}
+
+void AppDialog::on_reactStepUnitBox_currentIndexChanged( int index )
+{
+    updtReactStep();
+}
+
+void AppDialog::on_reactStepBox_editingFinished()
+{
+    updtReactStep();
+}
+
+void AppDialog::updtReactStep()
+{
+    if( m_blocked ) return;
+    uint64_t mult = pow( 1000, reactStepUnitBox->currentIndex() );
+    uint64_t reactStep = mult*reactStepBox->value();
+    Simulator::self()->setreactStep( reactStep );
 }
 
 void AppDialog::on_slopeStepsBox_editingFinished()

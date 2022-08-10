@@ -20,12 +20,11 @@
 #ifndef INDUCTOR_H
 #define INDUCTOR_H
 
-#include "e-inductor.h"
-#include "comp2pin.h"
+#include "reactive.h"
 
 class LibraryItem;
 
-class MAINMODULE_EXPORT Inductor : public Comp2Pin, public eInductor
+class MAINMODULE_EXPORT Inductor : public Reactive
 {
         Q_OBJECT
     public:
@@ -34,8 +33,16 @@ class MAINMODULE_EXPORT Inductor : public Comp2Pin, public eInductor
 
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem *libraryItem();
+
+        double indCurrent() { return m_curSource; }
+
+        Pin* getPin( int n ) { return m_pin[n]; }
         
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
+
+    protected:
+        virtual double updtRes()  override { return m_value/m_tStep; }
+        virtual double updtCurr() override { return m_curSource - m_volt*m_admit; }
 };
 
 #endif

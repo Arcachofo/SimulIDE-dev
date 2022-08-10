@@ -108,10 +108,10 @@ void eLed::updateBright()
     }
     updateVI();
 
-    uint64_t sPF = Simulator::self()->realSPF();//stepsPerFrame();
+    uint64_t psPF = Simulator::self()->realPsPF();//stepsPerFrame();
     //uint64_t sPS = Simulator::self()->stepSize();
 
-    if( m_lastPeriod > sPF/2 ) // Update 2 times per frame
+    if( m_lastPeriod > psPF/2 ) // Update 2 times per frame
     {
         m_avgCurrent = m_totalCurrent/m_lastPeriod;
         m_brightness = qPow( m_avgCurrent/m_maxCurrent, 1.0/2.0 );

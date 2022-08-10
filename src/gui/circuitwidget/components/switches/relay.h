@@ -17,35 +17,47 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef EINDUCTOR_H
-#define EINDUCTOR_H
+#ifndef RELAY_H
+#define RELAY_H
 
-#include "e-resistor.h"
+#include "mech_contact.h"
+#include "inductor.h"
+//#include "e-resistor.h"
 
 class LibraryItem;
+class eNode;
 
-class MAINMODULE_EXPORT eInductor : public eResistor
+class MAINMODULE_EXPORT Relay : public MechContact
 {
+        Q_OBJECT
     public:
-        eInductor( QString id );
-        ~eInductor();
+        Relay( QObject* parent, QString type, QString id );
+        ~Relay();
+
+ static Component* construct( QObject* parent, QString type, QString id );
+ static LibraryItem* libraryItem();
+
+        double iTrig() { return m_trigCurrent; }
+        void setITrig( double c ) { if( c > 0.0 ) m_trigCurrent = c; }
+
+        double iRel() { return m_relCurrent; }
+        void setIRel( double current ) { m_relCurrent = current; }
 
         virtual void initialize() override;
         virtual void stamp() override;
-        virtual void runEvent() override;
+        virtual void voltChanged() override;
 
-        double indCurrent() { return m_curSource; }
-
-        double ind() { return m_ind;  }
-        void   setInd( double h );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
-        double m_ind;
-        double m_curSource;
-        double m_tStep;
-        double m_volt;
+        Inductor* m_inductor;
 
-        uint64_t m_nextStep;
+        eNode* m_internalEnode;
+
+        double m_trigCurrent;
+        double m_relCurrent;
+
+        bool m_relayOn;
 };
 
 #endif

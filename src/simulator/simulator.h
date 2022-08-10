@@ -60,19 +60,25 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void stopSim();
 
         void setWarning( int warning ) { m_warning = warning; }
-
-        uint64_t stepSize() { return m_stepSize; }
-        void setStepSize( uint64_t stepSize ) { m_stepSize = stepSize; }
         
         uint64_t fps() { return m_fps; }
         void setFps( uint64_t fps );
-        uint64_t stepsPerFrame() { return m_stepsPF; }
-        uint64_t realSPF() { return m_realStepsPF; }
+        uint64_t psPerFrame() { return m_psPF; }
+        uint64_t realPsPF() { return m_realPsPF; }
+
+        uint64_t psPerSec() { return m_psPerSec; } // Speed picosecond/second
+        void setPsPerSec( uint64_t psPs );
+
+        uint64_t stepSize() { return m_stepSize; }
+        void setStepSize( uint64_t stepSize ) { m_stepSize = stepSize; }
 
         uint64_t stepsPerSec() { return m_stepsPS; }
         void setStepsPerSec( uint64_t sps );
 
-        double NLaccuracy();
+        uint64_t reactStep() { return m_reactStep; }
+        void setreactStep( uint64_t rs ) { m_reactStep = rs; }
+
+        double NLaccuracy(); ///////////// !!!!!!!!!!!!!!!
 
         void  setSlopeSteps( int steps ) { m_slopeSteps = steps; }
         int slopeSteps( ) { return m_slopeSteps; }
@@ -160,10 +166,12 @@ class MAINMODULE_EXPORT Simulator : public QObject
         uint32_t m_NLstep;
         uint32_t m_maxNlstp;
 
-        uint64_t m_stepSize;
-        uint64_t m_stepsPS;
-        uint64_t m_stepsPF;
-        uint64_t m_realStepsPF;
+        uint64_t m_reactStep;
+        uint64_t m_psPerSec;
+        uint64_t m_stepSize;  ///
+        uint64_t m_stepsPS;   ///
+        uint64_t m_psPF;
+        uint64_t m_realPsPF;
         double   m_realSpeed;
 
         uint64_t m_circTime;

@@ -168,8 +168,7 @@ void AudioOut::runEvent()
     double realSpeed = Simulator::self()->realSpeed();
     if( realSpeed < 1e-6 )
     {
-        realSpeed = Simulator::self()->stepsPerSec();
-        realSpeed *= Simulator::self()->stepSize();
+        realSpeed = Simulator::self()->psPerSec();
         realSpeed /= 1e8;
     }
     realSpeed *= (1e12/10000);

@@ -152,7 +152,7 @@ void KY040::updateStep()
         if( dialDelta > 0 ) m_delta = 1;// Clockwise
         else                m_delta = -1;
 
-        uint64_t spf = Simulator::self()->stepsPerFrame()*Simulator::self()->stepSize();
+        uint64_t spf = Simulator::self()->psPerFrame();
         m_stepDelta = spf/fabs(dialDelta);
 
         //qDebug()<<"\n" << dialDelta << m_stepDelta/1e6;

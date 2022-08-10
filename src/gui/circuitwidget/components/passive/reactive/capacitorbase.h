@@ -20,23 +20,18 @@
 #ifndef CAPACITORBASE_H
 #define CAPACITORBASE_H
 
-#include "e-capacitor.h"
-#include "comp2pin.h"
+#include "reactive.h"
 
-class MAINMODULE_EXPORT CapacitorBase : public Comp2Pin, public eCapacitor
+class MAINMODULE_EXPORT CapacitorBase : public Reactive
 {
         Q_OBJECT
     public:
         CapacitorBase( QObject* parent, QString type, QString id );
         ~CapacitorBase();
 
-        virtual void updateStep() override;
-
-        double cap() { return m_cap; }
-        void setCap( double c );
-
-        double initVolt() { return m_InitVolt; }
-        void setInitVolt( double v ) { m_InitVolt = v; }
+    protected:
+        virtual double updtRes()  override { return m_tStep/m_value; }
+        virtual double updtCurr() override { return m_volt*m_admit; }
 };
 
 #endif

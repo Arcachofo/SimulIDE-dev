@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,56 +17,53 @@
  *                                                                         *
  ***************************************************************************/
 
-// Inductor model using backward euler approximation
-// consists of a current source in parallel with a resistor.
+#ifndef EREACTIVE_H
+#define EREACTIVE_H
 
-#include "e-inductor.h"
-#include "e-pin.h"
-#include "e-node.h"
-#include "simulator.h"
+#include "e-resistor.h"
 
-eInductor::eInductor( QString id )
-         : eResistor( id )
+class MAINMODULE_EXPORT eReactive : public eResistor
 {
-    m_ind = 1; // H
-}
-eInductor::~eInductor(){}
+    public:
+        eReactive( QString id );
+        ~eReactive();
 
-void eInductor::initialize()
-{
-    m_nextStep = Simulator::self()->stepSize();
-    m_tStep = (double)m_nextStep/1e12;
-    m_curSource = 0;
-    m_volt = 0;
-    m_admit = m_tStep/m_ind;
-}
+        virtual void stamp() override;
+        virtual void voltChanged() override;
+        virtual void runEvent() override;
 
-void eInductor::stamp()
-{
-    eResistor::stamp();
+        double initVolt() { return m_InitVolt; }
+        void setInitVolt( double v ) { m_InitVolt = v; }
 
-    if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected())
-        Simulator::self()->addEvent( 1, this );
-}
+        double initCurr() { return -m_InitCurr; }
+        void setInitCurr( double c ) { m_InitCurr = -c; }
 
-void eInductor::runEvent()
-{
-    double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
+        virtual void stepError(){;}
 
-    if( m_volt != volt)
-    {
-        m_volt = volt;
-        m_curSource += volt*m_admit;
+    protected:
+        void updtReactStep();
 
-        m_ePin[0]->stampCurrent(-m_curSource );
-        m_ePin[1]->stampCurrent( m_curSource );
-    }
-    Simulator::self()->addEvent( m_nextStep, this );
-}
+        virtual double updtRes(){ return 0.0;}
+        virtual double updtCurr(){ return 0.0;}
 
-void  eInductor::setInd( double h ) 
-{ 
-    m_ind = h; 
-    eResistor::setResSafe( m_ind/m_tStep );
-}
+        double m_value; // Capacitance or Inductance
 
+        double m_InitCurr;
+        double m_curSource;
+
+        double m_InitVolt;
+        double m_volt;
+
+        double m_tStep;
+
+        uint64_t m_reacStep;
+        uint64_t m_lastTime;
+        uint64_t m_deltaTime;
+
+        int m_autoStep;
+
+        bool m_stepError;
+        bool m_running;
+};
+
+#endif

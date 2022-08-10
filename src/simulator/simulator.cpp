@@ -44,9 +44,11 @@ Simulator::Simulator( QObject* parent )
 
     m_fps = 20;
     m_timerId   = 0;
-    m_timerTick = 50;
-    m_stepsPS   = 1e6;
-    m_stepSize  = 1e6;
+    m_timerTick = 50;   // 50 ms default
+    m_psPerSec   = 1e12;
+    m_stepSize   = 1e6;
+    m_stepsPS    = 1e6;
+    m_reactStep  = 1e6;
     m_noLinAcc  = 5; // Non-Linear accuracy
     m_maxNlstp  = 100000;
     m_slopeSteps = 0;
@@ -132,7 +134,7 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
     m_load = (m_load+100*loop/((double)m_timerTick*1e6))/2;
 
     // Get Real Simulation Speed
-    m_realStepsPF = m_circTime-m_tStep;
+    m_realPsPF = m_circTime-m_tStep;
     m_tStep   = m_circTime;
     m_refTime = m_RefTimer.nsecsElapsed();
 
@@ -156,7 +158,7 @@ void Simulator::runCircuit()
     if( m_state < SIM_RUNNING ) return;
 
     eElement* event = m_firstEvent;
-    uint64_t endRun = m_circTime + m_stepsPF*m_stepSize; // Run upto next Timer event
+    uint64_t endRun = m_circTime + m_psPF; // Run upto next Timer event
     uint64_t nextTime;
 
     while( event )                              // Simulator event loop
@@ -234,7 +236,7 @@ void Simulator::resetSim()
     m_circTime = 0;
     m_NLstep   = 0;
     m_pauseCirc = false;
-    m_realStepsPF = 1;
+    m_realPsPF = 1;
 
     CircuitView::self()->setCircTime( 0 );
     clearEventList();
@@ -283,7 +285,7 @@ void Simulator::createNodes()
 void Simulator::startSim( bool paused )
 {
     resetSim();
-    setStepsPerSec( m_stepsPS );
+    setStepsPerSec( m_psPerSec );
     m_state = SIM_STARTING;
 
     qDebug() <<"\nStarting Circuit Simulation...\n";
@@ -327,14 +329,14 @@ void Simulator::startSim( bool paused )
     qDebug() << "\nCircuit Matrix looks good";
 
     double sps100 = 100*(double)m_stepsPS*m_stepSize/1e12; // Speed %
-    double fps = m_stepsPS/m_stepsPF;
+    //double fps = m_stepsPS/m_stepsPF;
 
-    qDebug()  << "\nFPS:   " << fps        << "\t Frames per Sec"
-              << "\nSpeed: " << sps100     << "%"
-              << "\nStep : " << m_stepSize << "\t picoseconds"
-              << "\nSpeed: " << m_stepsPS  << "\t Steps per Sec"
-              << "\nStp/F: " << m_stepsPF  << "\t Steps per Frame"
-              << "\nNonLi: " << m_maxNlstp << "\t Max Iterations";
+    qDebug()  << "\nFPS:  " << m_fps      << "\tFrames per Sec"
+              << "\nSpeed:" << sps100     << "%"
+//              << "\nStep: " << m_stepSize << "\tpicoseconds"
+              << "\nSpeed:" << m_psPerSec << "\tps per Sec"
+              << "\nps/Fr:" << m_psPF     << "\tps per Frame"
+              << "\nNonLi:" << m_maxNlstp << "\tMax Iterations";
 
     qDebug() << "\n    Simulation Running... \n";
 
@@ -401,22 +403,32 @@ void Simulator::initTimer()
 void Simulator::setFps( uint64_t fps )
 {
     m_fps = fps;
-    setStepsPerSec( m_stepsPS );
+    setPsPerSec( m_psPerSec );
 }
 
-void Simulator::setStepsPerSec( uint64_t sps )
+void Simulator::setStepsPerSec( uint64_t sps ) // Only used by Load Circuit (old circuits)
 {
     if( sps < 1 ) sps = 1;
 
-    m_timerTick = 1000/m_fps; // 50 ms default
     m_stepsPS = sps;           // Steps per second
-    m_stepsPF = sps/m_fps;     // Steps per frame
+    setPsPerSec( m_stepsPS*m_stepSize );
+}
 
-    if( sps < m_fps )
+void Simulator::setPsPerSec( uint64_t psPs )
+{
+    if( psPs < 1 ) psPs = 1;
+
+    m_psPerSec = psPs;    // picosecond/second
+    m_psPF = psPs/m_fps;  // picosecond/frame
+
+    uint64_t fps = m_fps;
+    if( m_psPF == 0 ) // We must lower fps to get at least 1 ps per frame
     {
-        m_stepsPF = 1;
-        m_timerTick = 1000/sps; // ms
-}   }
+        m_psPF = 1;
+        fps = psPs;
+    }
+    m_timerTick = 1000/fps;  // in ms
+}
 
 double Simulator::NLaccuracy() { return 1/pow(10,m_noLinAcc)/2; }
 
@@ -429,7 +441,7 @@ void Simulator::addEvent( uint64_t time, eElement* el )
     if( m_state < SIM_STARTING ) return;
 
     if( el->eventTime )
-    { qDebug() << "ERROR: Simulator::addEvent Repeated event"<<el->getId(); return; }
+    { qDebug() << "Warning: Simulator::addEvent Repeated event"<<el->getId(); return; }
 
     time += m_circTime;
     eElement* last  = NULL;

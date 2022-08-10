@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2016 by santiago González                               *
+ *   Copyright (C) 2022 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,48 +17,37 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RELAY_BASE_H
-#define RELAY_BASE_H
+#ifndef REACTIVE_H
+#define REACTIVE_H
 
-#include "e-inductor.h"
-#include "mech_contact.h"
+#include "e-reactive.h"
+#include "comp2pin.h"
 
-class eNode;
-
-class MAINMODULE_EXPORT RelayBase : public MechContact
+class MAINMODULE_EXPORT Reactive : public Comp2Pin, public eReactive
 {
+        Q_OBJECT
     public:
-        RelayBase( QObject* parent, QString type, QString id );
-        ~RelayBase();
-
-        double rCoil() { return m_resistor->res(); }
-        void setRCoil( double res ) { if( res > 0.0 ) m_resistor->setResSafe(res); }
-
-        double iTrig() { return m_trigCurrent; }
-        void setITrig( double c ) { if( c > 0.0 ) m_trigCurrent = c; }
-
-        double iRel() { return m_relCurrent; }
-        void setIRel( double current ) { m_relCurrent = current; }
-
-        double induc() { return m_inductor->ind(); }
-        void  setInduc( double i ) { m_inductor->setInd( i ); }
+        Reactive( QObject* parent, QString type, QString id );
+        ~Reactive();
 
         virtual void initialize() override;
         virtual void stamp() override;
-        virtual void voltChanged() override;
-        virtual void remove() override;
+        virtual void updateStep() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void stepError() override;
 
-    protected:
+        double value() { return m_value; }
+        void setValue( double c );
+
+        double resist() { return m_resistor->res(); }
+        void setResist( double resist );
+
+        int autoStep() { return m_autoStep; }
+        void setAutoStep( int a );
+
+    private:
+        eNode* m_midEnode;
         eResistor* m_resistor;
-        eInductor* m_inductor;
-
-        eNode* m_internalEnode;
-        double m_trigCurrent;
-        double m_relCurrent;
-
-        bool m_relayOn;
 };
 
 #endif

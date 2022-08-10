@@ -55,20 +55,22 @@ class AppDialog : public QDialog, private Ui::AppDialog
 
         // Simulation Settings
         void on_simSpeedPerSlider_valueChanged( int speed );
-        void on_simSpeedPerBox_editingFinished();
-        void on_simSpeedSpsBox_editingFinished();
 
         void on_simStepUnitBox_currentIndexChanged( int index );
         void on_simStepBox_editingFinished();
 
         void on_nlStepsBox_editingFinished();
 
+        void on_reactStepUnitBox_currentIndexChanged( int index );
+        void on_reactStepBox_editingFinished();
+
         void on_slopeStepsBox_editingFinished();
 
     private:
         void updtHelp();
-        void updateSpeed();
-        void updateSpeedPer();
+        void updtSpeed();
+        void updtSpeedPer();
+        void updtReactStep();
 
         bool m_blocked;
         bool m_showHelp;
@@ -76,10 +78,9 @@ class AppDialog : public QDialog, private Ui::AppDialog
         double m_speedP;
 
         int      m_stepUnit;
-        uint64_t m_step;
-        uint64_t m_sps;
-        uint64_t m_stepMult;
+        uint64_t m_stepsPS;
         uint64_t m_stepSize;
+        uint64_t m_psPerSec;
 };
 
 #endif

@@ -96,7 +96,7 @@
 #include "push.h"
 #include "rail.h"
 #include "rectangle.h"
-#include "relay-spst.h"
+#include "relay.h"
 #include "resistor.h"
 #include "resistordip.h"
 #include "rtd.h"
@@ -128,6 +128,8 @@
 #include "wavegen.h"
 #include "ws2812.h"
 #include "zener.h"
+
+#include "z80cpu.h"
 //END Item includes
 
 ItemLibrary* ItemLibrary::m_pSelf = NULL;
@@ -168,7 +170,7 @@ void ItemLibrary::loadItems()
     addItem( Push::libraryItem() );
     addItem( Switch::libraryItem() );
     addItem( SwitchDip::libraryItem() );
-    addItem( RelaySPST::libraryItem() );
+    addItem( Relay::libraryItem() );
     addItem( KeyPad::libraryItem() );
     // Passive
     addItem( new LibraryItem( QObject::tr("Resistors"), QObject::tr("Passive"), "resistors.png","", NULL ) );
@@ -220,6 +222,7 @@ void ItemLibrary::loadItems()
     addItem( AudioOut::libraryItem() );
     addItem( Lamp::libraryItem() );
     // Micro
+    addItem( Z80CPU::libraryItem() );
     addItem( new LibraryItem( "AVR", QObject::tr("Micro"), "ic2.png","", NULL ) );
     addItem( new LibraryItem( "PIC", QObject::tr("Micro"), "ic2.png","", NULL ) );
     addItem( new LibraryItem( "I51", QObject::tr("Micro"), "ic2.png","", NULL ) );
