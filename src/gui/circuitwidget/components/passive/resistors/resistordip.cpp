@@ -56,7 +56,7 @@ ResistorDip::ResistorDip( QObject* parent, QString type, QString id )
 
     addPropGroup( { tr("Main"), {
 new DoubProp<ResistorDip>( "Resistance", tr("Resistance"),"Ω"       , this, &ResistorDip::getRes, &ResistorDip::setRes ),
-new IntProp <ResistorDip>( "Size"      , tr("Size")      ,tr("_Resist."), this, &ResistorDip::size,   &ResistorDip::setSize, "uint" )
+new IntProp <ResistorDip>( "Size"      , tr("Size")      ,"_Resist.", this, &ResistorDip::size,   &ResistorDip::setSize, "uint" )
     } } );
 
     setShowProp("Resistance");

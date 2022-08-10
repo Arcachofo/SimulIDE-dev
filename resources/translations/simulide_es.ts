@@ -84,11 +84,11 @@
     </message>
     <message>
         <source>_Rows</source>
-        <translation>_Filas</translation>
+        <translation type="vanished">_Filas</translation>
     </message>
     <message>
         <source>_Columns</source>
-        <translation>_Columnas</translation>
+        <translation type="vanished">_Columnas</translation>
     </message>
 </context>
 <context>
@@ -269,11 +269,11 @@
     </message>
     <message>
         <source>Speed % Real</source>
-        <translation>Velocidad % Real</translation>
+        <translation type="vanished">Velocidad % Real</translation>
     </message>
     <message>
         <source>Simulation Step</source>
-        <translation>Paso de Simulacion</translation>
+        <translation type="vanished">Paso de Simulacion</translation>
     </message>
     <message>
         <source>ps</source>
@@ -297,14 +297,10 @@
     </message>
     <message>
         <source>Steps per Second</source>
-        <translation>Pasos por Segundo</translation>
+        <translation type="vanished">Pasos por Segundo</translation>
     </message>
     <message>
         <source>NonLinear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NL. Max. Steps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -321,6 +317,26 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> 0%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Steps per Second    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max. Iterations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished">Reactivos</translation>
+    </message>
+    <message>
+        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -596,6 +612,18 @@ p, li { white-space: pre-wrap; }
         <source>Capacitance</source>
         <translation>Capacidad</translation>
     </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Resistencia</translation>
+    </message>
+    <message>
+        <source>Initial Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Chip</name>
@@ -793,7 +821,7 @@ Quiere guardar los cambios?</translation>
     </message>
     <message>
         <source>All files (*.*)</source>
-        <translation>Todos los Archivos (*.*)</translation>
+        <translation type="vanished">Todos los Archivos (*.*)</translation>
     </message>
     <message>
         <source>SimulIDE Website</source>
@@ -808,6 +836,10 @@ Can&apos;t find file:
     <message>
         <source>Do you want to remove it from Recent Circuits?
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim1);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2078,6 +2110,10 @@ Can&apos;t find file:
         <source>Randomize PD</source>
         <translation>PD Aleatorio</translation>
     </message>
+    <message>
+        <source>Initial High State</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Hd44780</name>
@@ -2103,11 +2139,11 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_Rows</source>
-        <translation>_Filas</translation>
+        <translation type="vanished">_Filas</translation>
     </message>
     <message>
         <source>_Columns</source>
-        <translation>_Columnas</translation>
+        <translation type="vanished">_Columnas</translation>
     </message>
 </context>
 <context>
@@ -2236,6 +2272,18 @@ Can&apos;t find file:
         <source>Inductance</source>
         <translation>Inductancia</translation>
     </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Resistencia</translation>
+    </message>
+    <message>
+        <source>Initial Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InoDebugger</name>
@@ -2292,10 +2340,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Propagation delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Gates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2603,10 +2647,6 @@ Can&apos;t find file:
         <source>Resistance</source>
         <translation>Resistencia</translation>
     </message>
-    <message>
-        <source>_Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LedBase</name>
@@ -2708,10 +2748,6 @@ Can&apos;t find file:
     <message>
         <source>Resistance</source>
         <translation>Resistencia</translation>
-    </message>
-    <message>
-        <source>_Leds</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2896,6 +2932,10 @@ Can&apos;t find file:
     <message>
         <source>File explorer</source>
         <translation>Explorador de Archivos</translation>
+    </message>
+    <message>
+        <source>No help available</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3244,10 +3284,6 @@ Can&apos;t find file:
         <source>Impedance</source>
         <translation>Impedancia</translation>
     </message>
-    <message>
-        <source>_Bits</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>OpAmp</name>
@@ -3365,6 +3401,14 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Buffer Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Samples</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3808,42 +3852,45 @@ Archivo packae no valido:</translation>
     </message>
 </context>
 <context>
-    <name>RelaySPST</name>
+    <name>Reactive</name>
+    <message>
+        <source>
+  Warnig: Capacitor can&apos;t update fast enough  
+
+  Set auto step &gt;= 1 for this capacitor  
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Relay</name>
     <message>
         <source>Relay (all)</source>
-        <translation>Rele (todos)</translation>
+        <translation type="unfinished">Rele (todos)</translation>
     </message>
     <message>
         <source>Switches</source>
-        <translation>Interruptores</translation>
+        <translation type="unfinished">Interruptores</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation>Basico</translation>
+        <translation type="unfinished">Basico</translation>
     </message>
     <message>
         <source>Normally Closed</source>
-        <translation>Normalmente Cerrado</translation>
+        <translation type="unfinished">Normalmente Cerrado</translation>
     </message>
     <message>
         <source>Double Throw</source>
-        <translation>Doble Tiro</translation>
+        <translation type="unfinished">Doble Tiro</translation>
     </message>
     <message>
         <source>Poles</source>
-        <translation>Polos</translation>
+        <translation type="unfinished">Polos</translation>
     </message>
     <message>
         <source>Electric</source>
-        <translation>Eléctricas</translation>
-    </message>
-    <message>
-        <source>Resistance</source>
-        <translation>Resistencia</translation>
-    </message>
-    <message>
-        <source>Inductance</source>
-        <translation>Inductancia</translation>
+        <translation type="unfinished">Eléctricas</translation>
     </message>
     <message>
         <source>IOn</source>
@@ -3854,8 +3901,63 @@ Archivo packae no valido:</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Coil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inductance</source>
+        <translation type="unfinished">Inductancia</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Resistencia</translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RelaySPST</name>
+    <message>
+        <source>Relay (all)</source>
+        <translation type="vanished">Rele (todos)</translation>
+    </message>
+    <message>
+        <source>Switches</source>
+        <translation type="vanished">Interruptores</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="vanished">Basico</translation>
+    </message>
+    <message>
+        <source>Normally Closed</source>
+        <translation type="vanished">Normalmente Cerrado</translation>
+    </message>
+    <message>
+        <source>Double Throw</source>
+        <translation type="vanished">Doble Tiro</translation>
+    </message>
+    <message>
+        <source>Poles</source>
+        <translation type="vanished">Polos</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="vanished">Eléctricas</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="vanished">Resistencia</translation>
+    </message>
+    <message>
+        <source>Inductance</source>
+        <translation type="vanished">Inductancia</translation>
+    </message>
+    <message>
         <source>_Poles</source>
-        <translation>_Polos</translation>
+        <translation type="vanished">_Polos</translation>
     </message>
 </context>
 <context>
@@ -3898,10 +4000,6 @@ Archivo packae no valido:</translation>
     <message>
         <source>Size</source>
         <translation>Tamaño</translation>
-    </message>
-    <message>
-        <source>_Resist.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4066,6 +4164,18 @@ Archivo packae no valido:</translation>
         <source>_sec/60º</source>
         <translation>_seg/60º</translation>
     </message>
+    <message>
+        <source>Min. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_us</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SevenSegment</name>
@@ -4112,10 +4222,6 @@ Archivo packae no valido:</translation>
     <message>
         <source>Resistance</source>
         <translation>Resistencia</translation>
-    </message>
-    <message>
-        <source>_7seg</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4345,7 +4451,7 @@ Archivo packae no valido:</translation>
     </message>
     <message>
         <source>There are no data files for </source>
-        <translation>No hay archivo de datos para </translation>
+        <translation type="vanished">No hay archivo de datos para </translation>
     </message>
     <message>
         <source>Main</source>
@@ -4591,24 +4697,8 @@ Quiere guardar los cambios?
 <context>
     <name>TextVal</name>
     <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>save</source>
-        <translation>Guardar</translation>
-    </message>
-    <message>
-        <source> No Errors
-
-    Script Saved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-
-    Script Not Saved.</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Guardar</translation>
     </message>
 </context>
 <context>
@@ -4678,10 +4768,6 @@ Quiere guardar los cambios?
     </message>
     <message>
         <source>RyMax</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Pixels</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4830,10 +4916,6 @@ Quiere guardar los cambios?
         <source>Columns</source>
         <translation>Columnas</translation>
     </message>
-    <message>
-        <source>_Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WaveGen</name>
@@ -4901,6 +4983,22 @@ Quiere guardar los cambios?
         <source>Middle Voltage</source>
         <translation>Voltage Medio</translation>
     </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Wav File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Image</source>
+        <translation type="unfinished">Cargar Imagen</translation>
+    </message>
+    <message>
+        <source>Wav files (*.wav);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>XorGate</name>
@@ -4931,6 +5029,69 @@ Quiere guardar los cambios?
     <message>
         <source>Edges</source>
         <translation>Frentes</translation>
+    </message>
+</context>
+<context>
+    <name>Z80CPU</name>
+    <message>
+        <source>Z80CPU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Micro/Z80</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ST</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Basico</translation>
+    </message>
+    <message>
+        <source>External clock source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished">Frecuencia</translation>
+    </message>
+    <message>
+        <source>Producer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CMOS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single cycle I/O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interrupt Vector 0xFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Eléctricas</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Frentes</translation>
+    </message>
+    <message>
+        <source>Open Z80CPU Monitor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

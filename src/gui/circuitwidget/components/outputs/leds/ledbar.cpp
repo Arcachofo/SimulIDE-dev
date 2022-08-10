@@ -56,9 +56,9 @@ LedBar::LedBar( QObject* parent, QString type, QString id )
     setValLabelPos(-16,-44-12, 0);
 
     addPropGroup( { tr("Main"), {
-new IntProp   <LedBar>( "Size"    , tr("Size") ,tr("_Leds"), this, &LedBar::size, &LedBar::setSize ),
-new StringProp<LedBar>( "Color"   , tr("Color")   ,""      , this, &LedBar::colorStr, &LedBar::setColorStr, "enum" ),
-new BoolProp  <LedBar>( "Grounded", tr("Grounded"),""      , this, &LedBar::grounded, &LedBar::setGrounded),
+new IntProp   <LedBar>( "Size"    , tr("Size")    ,"_Leds", this, &LedBar::size, &LedBar::setSize ),
+new StringProp<LedBar>( "Color"   , tr("Color")   ,""     , this, &LedBar::colorStr, &LedBar::setColorStr, "enum" ),
+new BoolProp  <LedBar>( "Grounded", tr("Grounded"),""     , this, &LedBar::grounded, &LedBar::setGrounded),
     }} );
     addPropGroup( { tr("Electric"), {
 new DoubProp<LedBar>( "Threshold" , tr("Forward Voltage"),"V", this, &LedBar::threshold,  &LedBar::setThreshold ),

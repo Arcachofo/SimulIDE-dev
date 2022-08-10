@@ -69,7 +69,7 @@ new DoubProp<IoComponent>( "Out_Imped" , tr("Output Impedance")   ,"Ω", this, &
 QList<ComProperty*> IoComponent::edgeProps()
 {
     return {
-new DoubProp<IoComponent>( "pd_n"  , tr("Propagation delay"),tr("_Gates"), this, &IoComponent::propSize, &IoComponent::setPropSize ),
+new DoubProp<IoComponent>( "pd_n"  , tr("Propagation delay"),"_Gates", this, &IoComponent::propSize, &IoComponent::setPropSize ),
 new DoubProp<IoComponent>( "Tpd_ps", tr("Gate Delay"),"ps", this, &IoComponent::propDelay, &IoComponent::setPropDelay ),
 new DoubProp<IoComponent>( "Tr_ps" , tr("Rise Time") ,"ps", this, &IoComponent::riseTime,  &IoComponent::setRiseTime ),
 new DoubProp<IoComponent>( "Tf_ps" , tr("Fall Time") ,"ps", this, &IoComponent::fallTime,  &IoComponent::setFallTime ) };

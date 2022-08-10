@@ -81,14 +81,6 @@
         <source>I2C Frequency</source>
         <translation>I2C Frequenz</translation>
     </message>
-    <message>
-        <source>_Rows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Columns</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>AndGate</name>
@@ -292,11 +284,11 @@
     </message>
     <message>
         <source>Speed % Real</source>
-        <translation type="unfinished">Geschw. % real</translation>
+        <translation type="obsolete">Geschw. % real</translation>
     </message>
     <message>
         <source>Simulation Step</source>
-        <translation type="unfinished">Simulationsschritt</translation>
+        <translation type="obsolete">Simulationsschritt</translation>
     </message>
     <message>
         <source>ps</source>
@@ -320,7 +312,7 @@
     </message>
     <message>
         <source>Steps per Second</source>
-        <translation type="unfinished">Schritte pro Sekunde</translation>
+        <translation type="obsolete">Schritte pro Sekunde</translation>
     </message>
     <message>
         <source>NonLinear</source>
@@ -328,7 +320,7 @@
     </message>
     <message>
         <source>NL. Max. Steps</source>
-        <translation type="unfinished">NL. Max. Schritte</translation>
+        <translation type="obsolete">NL. Max. Schritte</translation>
     </message>
     <message>
         <source>Logic Outputs Edges</source>
@@ -344,6 +336,26 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> 0%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Steps per Second    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max. Iterations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished">Impedanzen</translation>
+    </message>
+    <message>
+        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -718,6 +730,18 @@ p, li { white-space: pre-wrap; }
         <source>Capacitance</source>
         <translation>Kondensator</translation>
     </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Widerstand</translation>
+    </message>
+    <message>
+        <source>Initial Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Chip</name>
@@ -1029,7 +1053,7 @@ Sollen die Änderungen gespeichert werden?
     </message>
     <message>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Alle Dateien (*.*)</translation>
+        <translation type="obsolete">Alle Dateien (*.*)</translation>
     </message>
     <message>
         <source>
@@ -1040,6 +1064,10 @@ Can&apos;t find file:
     <message>
         <source>Do you want to remove it from Recent Circuits?
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim1);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2339,6 +2367,10 @@ Can&apos;t find file:
         <source>Randomize PD</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Initial High State</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Hd44780</name>
@@ -2361,14 +2393,6 @@ Can&apos;t find file:
     <message>
         <source>Columns</source>
         <translation>Spalten</translation>
-    </message>
-    <message>
-        <source>_Rows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Columns</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2497,6 +2521,18 @@ Can&apos;t find file:
         <source>Inductance</source>
         <translation>Induktivität</translation>
     </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Widerstand</translation>
+    </message>
+    <message>
+        <source>Initial Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InoDebugger</name>
@@ -2553,10 +2589,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Propagation delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Gates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2864,10 +2896,6 @@ Can&apos;t find file:
         <source>Resistance</source>
         <translation>Widerstand</translation>
     </message>
-    <message>
-        <source>_Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LedBase</name>
@@ -2953,10 +2981,6 @@ Can&apos;t find file:
     <message>
         <source>Resistance</source>
         <translation>Widerstand</translation>
-    </message>
-    <message>
-        <source>_Leds</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3153,6 +3177,10 @@ Can&apos;t find file:
     <message>
         <source>Plugin Error:</source>
         <translation type="vanished">Plugin Fehler:</translation>
+    </message>
+    <message>
+        <source>No help available</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3485,10 +3513,6 @@ Can&apos;t find file:
         <source>Impedance</source>
         <translation>Impedanz</translation>
     </message>
-    <message>
-        <source>_Bits</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>OpAmp</name>
@@ -3610,6 +3634,14 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Buffer Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Samples</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4056,54 +4088,116 @@ Not valid Package file:
     </message>
 </context>
 <context>
-    <name>RelaySPST</name>
+    <name>Reactive</name>
+    <message>
+        <source>
+  Warnig: Capacitor can&apos;t update fast enough  
+
+  Set auto step &gt;= 1 for this capacitor  
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Relay</name>
     <message>
         <source>Relay (all)</source>
-        <translation>Relais</translation>
+        <translation type="unfinished">Relais</translation>
     </message>
     <message>
         <source>Switches</source>
-        <translation>Schalter</translation>
+        <translation type="unfinished">Schalter</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation>Hauptparameter</translation>
+        <translation type="unfinished">Hauptparameter</translation>
     </message>
     <message>
         <source>Normally Closed</source>
-        <translation>Öffner</translation>
+        <translation type="unfinished">Öffner</translation>
     </message>
     <message>
         <source>Double Throw</source>
-        <translation>Wechselschalter</translation>
+        <translation type="unfinished">Wechselschalter</translation>
     </message>
     <message>
         <source>Poles</source>
-        <translation>Schalter</translation>
+        <translation type="unfinished">Schalter</translation>
     </message>
     <message>
         <source>Electric</source>
-        <translation>Elektr. Parameter</translation>
-    </message>
-    <message>
-        <source>Resistance</source>
-        <translation>Widerstand</translation>
-    </message>
-    <message>
-        <source>Inductance</source>
-        <translation>Induktivität</translation>
+        <translation type="unfinished">Elektr. Parameter</translation>
     </message>
     <message>
         <source>IOn</source>
-        <translation>I_an</translation>
+        <translation type="unfinished">I_an</translation>
     </message>
     <message>
         <source>IOff</source>
-        <translation>I_aus</translation>
+        <translation type="unfinished">I_aus</translation>
     </message>
     <message>
-        <source>_Poles</source>
+        <source>Coil</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inductance</source>
+        <translation type="unfinished">Induktivität</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished">Widerstand</translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RelaySPST</name>
+    <message>
+        <source>Relay (all)</source>
+        <translation type="vanished">Relais</translation>
+    </message>
+    <message>
+        <source>Switches</source>
+        <translation type="vanished">Schalter</translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="vanished">Hauptparameter</translation>
+    </message>
+    <message>
+        <source>Normally Closed</source>
+        <translation type="vanished">Öffner</translation>
+    </message>
+    <message>
+        <source>Double Throw</source>
+        <translation type="vanished">Wechselschalter</translation>
+    </message>
+    <message>
+        <source>Poles</source>
+        <translation type="vanished">Schalter</translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="vanished">Elektr. Parameter</translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="vanished">Widerstand</translation>
+    </message>
+    <message>
+        <source>Inductance</source>
+        <translation type="vanished">Induktivität</translation>
+    </message>
+    <message>
+        <source>IOn</source>
+        <translation type="vanished">I_an</translation>
+    </message>
+    <message>
+        <source>IOff</source>
+        <translation type="vanished">I_aus</translation>
     </message>
 </context>
 <context>
@@ -4146,10 +4240,6 @@ Not valid Package file:
     <message>
         <source>Size</source>
         <translation>Größe</translation>
-    </message>
-    <message>
-        <source>_Resist.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4326,6 +4416,18 @@ Not valid Package file:
         <source>_sec/60º</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Min. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_us</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SevenSegment</name>
@@ -4372,10 +4474,6 @@ Not valid Package file:
     <message>
         <source>Resistance</source>
         <translation>Widerstand</translation>
-    </message>
-    <message>
-        <source>_7seg</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4686,7 +4784,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>There are no data files for </source>
-        <translation>Es gibt keie Datendatei für </translation>
+        <translation type="vanished">Es gibt keie Datendatei für </translation>
     </message>
     <message>
         <source>Main</source>
@@ -4896,18 +4994,14 @@ Sollen die Änderungen gespeichert werden?
 <context>
     <name>TextVal</name>
     <message>
-        <source>TextLabel</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>save</source>
-        <translation>speichern</translation>
+        <translation type="vanished">speichern</translation>
     </message>
     <message>
         <source> No Errors
 
     Script Saved.</source>
-        <translation> Keine Fehler
+        <translation type="vanished"> Keine Fehler
 
     Skript gespeichert.</translation>
     </message>
@@ -4915,7 +5009,7 @@ Sollen die Änderungen gespeichert werden?
         <source>
 
     Script Not Saved.</source>
-        <translation>
+        <translation type="vanished">
 
     Skript nicht gespeichert.</translation>
     </message>
@@ -4960,10 +5054,6 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>Width</source>
         <translation type="unfinished">Breite</translation>
-    </message>
-    <message>
-        <source>_Pixels</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Height</source>
@@ -5147,10 +5237,6 @@ Sollen die Änderungen gespeichert werden?
         <source>Columns</source>
         <translation>Spalten</translation>
     </message>
-    <message>
-        <source>_Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WaveGen</name>
@@ -5218,6 +5304,22 @@ Sollen die Änderungen gespeichert werden?
         <source>Middle Voltage</source>
         <translation>Mittenspannung</translation>
     </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Wav File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Image</source>
+        <translation type="unfinished">Bild laden</translation>
+    </message>
+    <message>
+        <source>Wav files (*.wav);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>XorGate</name>
@@ -5248,6 +5350,69 @@ Sollen die Änderungen gespeichert werden?
     <message>
         <source>Edges</source>
         <translation>Flankenparameter</translation>
+    </message>
+</context>
+<context>
+    <name>Z80CPU</name>
+    <message>
+        <source>Z80CPU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Micro/Z80</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ST</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished">Hauptparameter</translation>
+    </message>
+    <message>
+        <source>External clock source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished">Frequenz</translation>
+    </message>
+    <message>
+        <source>Producer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CMOS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single cycle I/O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interrupt Vector 0xFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished">Elektr. Parameter</translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished">Flankenparameter</translation>
+    </message>
+    <message>
+        <source>Open Z80CPU Monitor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

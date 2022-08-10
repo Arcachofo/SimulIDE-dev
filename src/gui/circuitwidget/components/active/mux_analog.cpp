@@ -66,7 +66,7 @@ MuxAnalog::MuxAnalog( QObject* parent, QString type, QString id )
     setAddrBits( 3 );
 
     addPropGroup( { tr("Main"), {
-new IntProp<MuxAnalog>( "Address_Bits", tr("Address Size"),tr("_Bits"), this, &MuxAnalog::addrBits,  &MuxAnalog::setAddrBits, "uint" ),
+new IntProp<MuxAnalog>( "Address_Bits", tr("Address Size"),"_Bits", this, &MuxAnalog::addrBits,  &MuxAnalog::setAddrBits, "uint" ),
 new DoubProp<MuxAnalog>( "Impedance"  , tr("Impedance")   ,"Ω"    , this, &MuxAnalog::impedance, &MuxAnalog::setImpedance ),
     }} );
 }

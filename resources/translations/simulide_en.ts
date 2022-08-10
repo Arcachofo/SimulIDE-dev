@@ -81,14 +81,6 @@
         <source>I2C Frequency</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>_Rows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Columns</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>AndGate</name>
@@ -267,14 +259,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Speed % Real</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulation Step</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ps</source>
         <translation type="unfinished"></translation>
     </message>
@@ -295,15 +279,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Steps per Second</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NonLinear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NL. Max. Steps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -320,6 +296,26 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> 0%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Steps per Second    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max. Iterations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reactive Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -595,6 +591,18 @@ p, li { white-space: pre-wrap; }
         <source>Capacitance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Chip</name>
@@ -772,10 +780,6 @@ Do you want to save your changes?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SimulIDE Website</source>
         <translation type="unfinished"></translation>
     </message>
@@ -788,6 +792,10 @@ Can&apos;t find file:
     <message>
         <source>Do you want to remove it from Recent Circuits?
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circuits (*.sim1);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2051,6 +2059,10 @@ Can&apos;t find file:
         <source>Randomize PD</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Initial High State</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Hd44780</name>
@@ -2072,14 +2084,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Columns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Rows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Columns</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2209,6 +2213,18 @@ Can&apos;t find file:
         <source>Inductance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InoDebugger</name>
@@ -2261,10 +2277,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Propagation delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Gates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2572,10 +2584,6 @@ Can&apos;t find file:
         <source>Resistance</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>_Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LedBase</name>
@@ -2652,10 +2660,6 @@ Can&apos;t find file:
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Leds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2816,6 +2820,10 @@ Can&apos;t find file:
     </message>
     <message>
         <source>File explorer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No help available</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3121,10 +3129,6 @@ Can&apos;t find file:
         <source>Impedance</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>_Bits</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>OpAmp</name>
@@ -3242,6 +3246,14 @@ Can&apos;t find file:
     </message>
     <message>
         <source>_Pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Buffer Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Samples</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3662,7 +3674,18 @@ Not valid Package file:
     </message>
 </context>
 <context>
-    <name>RelaySPST</name>
+    <name>Reactive</name>
+    <message>
+        <source>
+  Warnig: Capacitor can&apos;t update fast enough  
+
+  Set auto step &gt;= 1 for this capacitor  
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Relay</name>
     <message>
         <source>Relay (all)</source>
         <translation type="unfinished"></translation>
@@ -3692,14 +3715,6 @@ Not valid Package file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inductance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>IOn</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3708,7 +3723,19 @@ Not valid Package file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>_Poles</source>
+        <source>Coil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inductance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Step</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3751,10 +3778,6 @@ Not valid Package file:
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Resist.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3918,6 +3941,18 @@ Not valid Package file:
         <source>_sec/60º</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Min. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>_us</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max. Pulse Width</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SevenSegment</name>
@@ -3963,10 +3998,6 @@ Not valid Package file:
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_7seg</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4188,10 +4219,6 @@ Not valid Package file:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>There are no data files for </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4385,29 +4412,6 @@ Do you want to save your changes?
     </message>
 </context>
 <context>
-    <name>TextVal</name>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> No Errors
-
-    Script Saved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-
-    Script Not Saved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ThermistorBase</name>
     <message>
         <source>Main</source>
@@ -4474,10 +4478,6 @@ Do you want to save your changes?
     </message>
     <message>
         <source>RyMax</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>_Pixels</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4622,10 +4622,6 @@ Do you want to save your changes?
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>_Leds</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WaveGen</name>
@@ -4693,6 +4689,22 @@ Do you want to save your changes?
         <source>Middle Voltage</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Wav File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wav files (*.wav);;All files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>XorGate</name>
@@ -4722,6 +4734,69 @@ Do you want to save your changes?
     </message>
     <message>
         <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Z80CPU</name>
+    <message>
+        <source>Z80CPU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Micro/Z80</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NEC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ST</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External clock source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Producer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CMOS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single cycle I/O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interrupt Vector 0xFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Z80CPU Monitor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
