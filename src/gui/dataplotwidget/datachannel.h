@@ -66,8 +66,6 @@ class MAINMODULE_EXPORT DataChannel : public eElement, public Updatable
         uint64_t m_risEdge;
         uint64_t m_period;
 
-        double   m_subRate;
-
         int m_channel;
         int m_bufferCounter;
 

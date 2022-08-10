@@ -38,10 +38,6 @@ void OscopeChannel::initialize()
     m_rising   = false;
     m_falling  = false;
 
-    m_dataZero = 0;
-    m_subSample = 0;
-    m_subRate = 0;
-    m_subStep = 0;
     m_period = 0;
     m_risEdge = 0;
     m_nCycles = 0;
@@ -94,7 +90,7 @@ void OscopeChannel::updateStep()
             m_totalP  = 0;
             m_numMax  = 0;
         }
-        if( (m_subSample<1) && (m_freq<20) )voltChanged();
+        if( m_freq < 20 )voltChanged();
     }else{
         voltChanged();
         m_freq = 0;

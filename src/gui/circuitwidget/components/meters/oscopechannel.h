@@ -45,12 +45,12 @@ class MAINMODULE_EXPORT OscopeChannel : public DataChannel
         uint64_t m_lastMax;
         uint64_t m_numMax;       // Number of Maximum found
         uint64_t m_nCycles;
-        uint64_t m_dataZero;
+        //uint64_t m_dataZero;
 
         int m_dataTime;
 
-        uint64_t m_subSample;
-        uint64_t m_subStep;
+        //uint64_t m_subSample;
+        //uint64_t m_subStep;
 
         double m_lastValue;
         double m_freq;
