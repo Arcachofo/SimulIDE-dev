@@ -29,6 +29,7 @@ Gate::Gate( QObject* parent, QString type, QString id, int inputs )
 {
     m_width = 2;
     m_initState = false;
+    m_minInputs = inputs;
 
     setNumOuts( 1, "", 0, false );
     setNumInps( inputs );  // Create Input Pins
@@ -83,7 +84,7 @@ bool Gate::calcOutput( int inputs )
 
 void Gate::setNumInps( int inputs )
 {
-    if( inputs < 1 ) return;
+    if( inputs < m_minInputs ) return;
     IoComponent::setNumInps( inputs, "" );
     m_outPin[0]->setY( 0 );
     m_area = QRect( -11, -4*m_inPin.size(), 19, 4*2*m_inPin.size() );

@@ -46,6 +46,8 @@ class MAINMODULE_EXPORT Gate : public LogicComponent
 
         bool m_out;
         bool m_initState;
+
+        int m_minInputs;
 };
 
 #endif
