@@ -285,7 +285,7 @@ void Simulator::createNodes()
 void Simulator::startSim( bool paused )
 {
     resetSim();
-    setStepsPerSec( m_psPerSec );
+    setPsPerSec( m_psPerSec );
     m_state = SIM_STARTING;
 
     qDebug() <<"\nStarting Circuit Simulation...\n";
@@ -328,7 +328,7 @@ void Simulator::startSim( bool paused )
     }
     qDebug() << "\nCircuit Matrix looks good";
 
-    double sps100 = 100*(double)m_stepsPS*m_stepSize/1e12; // Speed %
+    double sps100 = 100*(double)m_psPerSec/1e12; // Speed %
     //double fps = m_stepsPS/m_stepsPF;
 
     qDebug()  << "\nFPS:  " << m_fps      << "\tFrames per Sec"
