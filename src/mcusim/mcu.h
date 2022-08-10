@@ -20,7 +20,7 @@
 #ifndef MCU_H
 #define MCU_H
 
-#include <QHash>
+//#include <QHash>
 
 #include "e_mcu.h"
 #include "chip.h"
