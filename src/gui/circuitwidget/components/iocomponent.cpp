@@ -37,7 +37,7 @@ IoComponent::IoComponent( QObject* parent, QString type, QString id)
     m_inImp = 1e9;
     m_ouImp = 40;
 
-    m_rndPD = false;
+    //m_rndPD = false;
     m_invInputs = false;
     m_invOutputs  = false;
 
@@ -116,7 +116,7 @@ void IoComponent::runOutputs()
 void IoComponent::sheduleOutPuts( eElement* el )
 {
     uint64_t delay = m_propDelay*m_propSize;
-    if( m_rndPD ) delay += (std::rand()%10)*10-45;
+    //if( m_rndPD ) delay += (std::rand()%10)*10-45;
 
     if( m_outQueue.empty() )
     {

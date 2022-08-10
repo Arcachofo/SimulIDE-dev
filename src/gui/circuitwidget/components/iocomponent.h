@@ -87,8 +87,8 @@ class MAINMODULE_EXPORT IoComponent : public Component
         bool openCol() { return m_openCol; }
         void setOpenCol( bool op );
 
-        bool rndPD() { return m_rndPD; }
-        void setRndPD( bool r ) { m_rndPD = r; }
+        //bool rndPD() { return m_rndPD; }
+        //void setRndPD( bool r ) { m_rndPD = r; }
 
         void init( QStringList pins );
         void initPin( IoPin* pin );
@@ -114,7 +114,7 @@ class MAINMODULE_EXPORT IoComponent : public Component
         uint64_t m_timeLH;    // Time for Output voltage to switch from 10% to 90% (1 gate)
         uint64_t m_timeHL;    // Time for Output voltage to switch from 90% to 10% (1 gate)
         double m_propSize;    // Nunmber of gates for total Propagation delay
-        bool m_rndPD;         // Randomize Propagation Delay
+        //bool m_rndPD;         // Randomize Propagation Delay
 
         double m_inHighV;  // currently in eClockedDevice
         double m_inLowV;  // currently in eClockedDevice

@@ -42,8 +42,6 @@ QList<ComProperty*> Gate::edgeProps()
     QList<ComProperty*> edge = IoComponent::edgeProps();
     edge.prepend(
 new BoolProp<Gate>( "initHigh", tr("Initial High State"),"", this, &Gate::initState, &Gate::setInitState ) );
-    edge.prepend(
-new BoolProp<Gate>( "rndPD", tr("Randomize PD"),"", this, &Gate::rndPD, &Gate::setRndPD ) );
 
     return edge;
 }
