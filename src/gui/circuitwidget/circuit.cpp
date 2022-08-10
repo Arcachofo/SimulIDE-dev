@@ -371,8 +371,9 @@ void Circuit::loadStrDoc( QString &doc )
                                 bool ok = false;
                                 if( oldArduino && mcu ) ok = mcu->setPropStr( propName, value );
                                 if( !ok ){
-                                    if( propName.toLower()  != "tristate" )   // TODELETE
-                                    qDebug() << "Circuit: Wrong Property: "<<type<<newUid<<propName<<value;}
+                                    if( propName.toLower()  != "tristate"
+                                     && propName.toLower()  != "rndpd" )   // TODELETE
+                                        qDebug() << "Circuit: Wrong Property: "<<type<<newUid<<propName<<value;}
                             }
                         }
                         propName = "";

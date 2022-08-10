@@ -296,7 +296,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                                 else                                    Component::substitution( propName );
 
                                 if( !comp->setPropStr( propName, value ) ){
-                                    if( propName.toLower()  != "tristate" )   // TODELETE
+                                    if( propName.toLower()  != "tristate"
+                                     && propName.toLower()  != "rndpd" )   // TODELETE
                                         qDebug() << "SubCircuit:"<<m_name<<m_id<<"Wrong Property: "<<type<<uid<<propName<<value; }
                             }
                         }
