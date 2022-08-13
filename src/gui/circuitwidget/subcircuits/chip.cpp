@@ -240,8 +240,8 @@ void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, i
 
     pin->setLabelText( label );
 
-    if     ( type == "inverted" || type == "in" ) pin->setInverted( true );
-    else if( type == "unused"   || type == "nc" ) pin->setUnused( true );
+    if     ( type == "inverted" || type == "inv" ) pin->setInverted( true );
+    else if( type == "unused"   || type == "nc"  ) pin->setUnused( true );
 
     pin->setPackageType( type );
     pin->setLength( length );

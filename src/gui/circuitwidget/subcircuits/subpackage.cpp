@@ -455,6 +455,7 @@ void SubPackage::setPinType( QString type )
 void SubPackage::invertPin( bool invert )
 {
     m_eventPin->setInverted( invert );
+    m_eventPin->setPackageType("inv");
     Circuit::self()->update();
     m_changed = true;
 }
@@ -462,6 +463,7 @@ void SubPackage::invertPin( bool invert )
 void SubPackage::unusePin( bool unuse )
 {
     m_eventPin->setUnused( unuse );
+    m_eventPin->setPackageType("nc");
     Circuit::self()->update();
     m_changed = true;
 }
