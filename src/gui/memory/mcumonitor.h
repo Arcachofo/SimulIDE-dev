@@ -21,13 +21,13 @@
 #define MCUMONITOR_H
 
 #include <QDialog>
+#include <QTableWidget>
 
 #include "ui_mcumonitor.h"
 
 class eMcu;
 class MemTable;
 class RamTable;
-class QTableWidget;
 
 class MCUMonitor : public QDialog, private Ui::McuMonitor
 {
@@ -50,13 +50,14 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
     private:
         eMcu* m_processor;
 
+        RamTable* m_cpuTable;
         RamTable* m_ramTable;
         MemTable* m_ramMonitor;
         MemTable* m_flashMonitor;
         MemTable* m_romMonitor;
 
-        QTableWidget* m_status;
-        QTableWidget* m_pc;
+        QTableWidget m_status;
+        QTableWidget m_pc;
 
         bool m_jumpToAddress;
 };

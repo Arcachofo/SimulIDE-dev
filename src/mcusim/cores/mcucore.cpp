@@ -50,3 +50,12 @@ void McuCore::reset()
     PC = 0;
 }
 
+int McuCore::getCpuReg( QString reg )
+{
+    if( m_cpuRegs.contains( reg ) )
+    {
+        uint8_t* regPtr = m_cpuRegs.value( reg );
+        return *regPtr;
+    }
+    return -1;
+}

@@ -55,6 +55,9 @@ class MAINMODULE_EXPORT DataSpace
         QHash<QString, regInfo_t>*     regInfo()  { return &m_regInfo; }
         QHash<uint16_t, regSignal_t*>* regSignals() { return &m_regSignals; }
 
+        void setStatusBits( QStringList bits ) { m_statusBits = bits; }
+        QStringList getStatusBits() { return m_statusBits; }
+
         int m_regOverride;                         // Register value is overriden at write time
 
     protected:
@@ -72,6 +75,7 @@ class MAINMODULE_EXPORT DataSpace
         QHash<QString, uint16_t>      m_bitRegs;   // Access Reg. address by bit name
 
         uint16_t m_sregAddr;                       // STATUS Reg Address
+        QStringList m_statusBits;
 
         RamTable* m_ramTable;
 };

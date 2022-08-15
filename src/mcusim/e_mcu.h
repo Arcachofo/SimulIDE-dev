@@ -66,8 +66,6 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         virtual void runEvent() override;
 
         void stepCpu();
-        //void stepDebug();
-        //void stepFromLine( int line );
 
         void setDebugger( BaseDebugger* deb );
         void setDebugging( bool d ) { m_debugging = d; }
@@ -88,24 +86,21 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         int pc();
         uint64_t cycle(){ return m_cycle; }
 
-
         void cpuReset( bool r );
         void sleep( bool s );
 
         QString getFileName() { return m_firmware; }
 
-        double freqMHz() { return m_freq*1e-6; }
+        double freq() { return m_freq; }
         void setFreq( double freq );
         uint64_t psCycle() { return m_psCycle; }  // Simulation cycles per instruction cycle
-        //double cpi() { return m_cPerInst; }       // Clock ticks per Instruction Cycle
-
-        //McuPin* getPin( QString name ) { return m_ports.getPin( name ); }
-        //QHash<QString, McuPort*> getPorts() { return m_ports.getPorts(); }
 
         McuTimer* getTimer( QString name );
         McuPort* getPort( QString name );
         McuPin*  getPin( QString pinName );
         QHash<QString, McuPort*> getPorts() { return m_portList; }
+
+        RamTable* getCpuTable() { return m_cpuTable; }
 
         McuWdt* watchDog() { return m_wdt; }
         McuVref* vrefModule();
@@ -141,7 +136,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         uint32_t m_flashSize;
         uint8_t  m_wordSize; // Size of Program memory word in bytes
 
-        QHash<QString, int>   m_regsTable;   // int max 32 bits
+        QHash<QString, int> m_regsTable;   // int max 32 bits
 
         uint32_t m_romSize;
         QVector<int> m_eeprom;
@@ -160,18 +155,15 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuVref* m_vrefModule;
         McuWdt* m_wdt;
 
-        //bool m_resetState;
-
         double m_freq;           // Clock Frequency in MegaHerzs
         double m_cPerInst;       // Clock ticks per Instruction Cycle
         uint64_t m_psCycle;     // Simulation cycles per Instruction Cycle
 
+        RamTable* m_cpuTable;
+
         // Debugger:
         BaseDebugger* m_debugger;
-
-        bool m_debugging;
-        //bool m_debugStep;
-        //int  m_prevLine;
+        bool          m_debugging;
 };
 
 #endif

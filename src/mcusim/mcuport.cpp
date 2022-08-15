@@ -20,7 +20,7 @@
 #include <QDebug>
 
 #include "mcuport.h"
-#include "mcupin.h"
+//#include "mcupin.h"
 #include "mcu.h"
 #include "e_mcu.h"
 #include "mcuinterrupts.h"
@@ -89,12 +89,35 @@ void McuPort::dirChanged( uint8_t val )
     if( m_dirInv ) val = ~val;   // defaul: 1 for outputs, inverted: 0 for outputs (PICs)
 
     for( int i=0; i<m_numPins; ++i ){
-        if( changed & 1<< i) m_pins[i]->setDirection( val & (1<<i) ); // Pin changed
+        if( changed & 1<<i) m_pins[i]->setDirection( val & (1<<i) ); // Pin changed
 }   }
 
 void McuPort::readPort( uint8_t )
 {
     m_mcu->m_regOverride = m_pinState;
+}
+
+void McuPort::setOutState( uint val )
+{
+    for( int i=0; i<m_numPins; ++i )
+    {
+        bool state = (val & 1<<i) > 0;
+        if( state != m_pins[i]->getOutState() )
+            m_pins[i]->setOutState( state );
+    }
+}
+
+uint McuPort::getPortState()
+{
+    uint data = 0;
+    for( int i=0; i<m_numPins; ++i )
+        if( m_pins[i]->getInpState() ) data += (1 << i);
+    return data;
+}
+
+void McuPort::setPinMode( pinMode_t mode )
+{
+    for( int i=0; i<m_numPins; ++i ) m_pins[i]->setPinMode( mode );
 }
 
 void McuPort::setPullups( uint8_t puMask )

@@ -80,7 +80,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
    , m_eMcu( id )
 {
     qDebug() << "        Initializing"<<id;
-    m_pSelf = this;
 
     m_device = m_name;//.split("_").last(); // for example: "atmega328-1" to: "atmega328"
     if( m_device.contains("_") ) m_device = m_device.split("_").last(); // MCU in Subcircuit
@@ -152,7 +151,19 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     Simulator::self()->addToUpdateList( this );
 
     qDebug() << "        "<<id<< "Initialized:"<<freq()*1e-6<<"MHz\n";
+}
 
+void Mcu::setup( QString type )
+{
+    if     ( type == "iou" ) m_deviceType = typeIOU;
+    else if( type == "mpu" ) m_deviceType = typeMPU;
+    else if( type == "mcu" ) m_deviceType = typeMCU;
+    else                     m_deviceType = typeNONE;
+
+    if( m_deviceType >= typeMPU ) m_pSelf = this;
+
+    if( m_deviceType == typeMCU )
+    {
     addPropGroup( { tr("Main"), {
 new DoubProp  <Mcu>( "Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
 new StringProp<Mcu>( "Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
@@ -166,8 +177,20 @@ new BoolProp  <Mcu>( "Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wd
     }} );
     addPropGroup( {"Hidden", {
 new StringProp<Mcu>( "varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
+new StringProp<Mcu>( "cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
 new StringProp<Mcu>( "eeprom" , "","", this, &Mcu::getEeprom, &Mcu::setEeprom )
     }} );
+    }
+    else if( m_deviceType == typeMPU )
+    {
+    addPropGroup( { tr("Main"), {
+new DoubProp  <Mcu>( "Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
+new BoolProp  <Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol )
+    }} );
+    addPropGroup( {"Hidden", {
+new StringProp<Mcu>( "cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs)
+    }} );
+    }
 }
 Mcu::~Mcu()
 {
@@ -237,14 +260,16 @@ void Mcu::setProgram( QString pro )
 }
 
 QString Mcu::varList()
-{
-    return m_eMcu.getRamTable()->getVarSet().join(",");
-}
+{ return m_eMcu.getRamTable()->getVarSet().join(","); }
 
 void Mcu::setVarList( QString vl )
-{
-    m_eMcu.getRamTable()->loadVarSet( vl.split(",") );
-}
+{ m_eMcu.getRamTable()->loadVarSet( vl.split(",") ); }
+
+QString Mcu::cpuRegs()
+{ return m_eMcu.getCpuTable()->getVarSet().join(","); }
+
+void Mcu::setCpuRegs( QString vl )
+{ m_eMcu.getCpuTable()->loadVarSet( vl.split(",") ); }
 
 void Mcu::setEeprom( QString eep )
 {
@@ -360,44 +385,54 @@ void Mcu::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
 void Mcu::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
-    QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
-    connect( mainAction, SIGNAL(triggered()),
-                   this, SLOT(slotmain()), Qt::UniqueConnection );
-
-    QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load firmware") );
-    connect( loadAction, SIGNAL(triggered()),
-                   this, SLOT(slotLoad()), Qt::UniqueConnection );
-
-    QAction* reloadAction = menu->addAction( QIcon(":/reload.png"),tr("Reload firmware") );
-    connect( reloadAction, SIGNAL(triggered()),
-                     this, SLOT(slotReload()), Qt::UniqueConnection );
-
-    menu->addSeparator();
-
-    QAction* loadDaAction = menu->addAction( QIcon(":/open.png"),tr("Load EEPROM data from file") );
-    connect( loadDaAction, SIGNAL(triggered()),
-                     this, SLOT(loadEEPROM()), Qt::UniqueConnection );
-
-    QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data to file") );
-    connect( saveDaAction, SIGNAL(triggered()),
-                     this, SLOT(saveEEPROM()), Qt::UniqueConnection );
-
-    menu->addSeparator();
-
-    QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open Mcu Monitor.") );
-    connect( openRamTab, SIGNAL(triggered()),
-                   this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
-
-    QMenu* serMonMenu = menu->addMenu( tr("Open Serial Monitor.") );
-
-    QSignalMapper* sm = new QSignalMapper(this);
-    for( uint i=0; i<m_eMcu.m_usarts.size(); ++i )
+    if( m_deviceType >= typeMPU )
     {
-        QAction* openSerMonAct = serMonMenu->addAction( "USart"+QString::number(i+1) );
-        connect( openSerMonAct, SIGNAL(triggered()), sm, SLOT(map()) );
-        sm->setMapping( openSerMonAct, i+1 );
+        QAction* mainAction = menu->addAction( QIcon(":/subc.png"),tr("Main Mcu") );
+        connect( mainAction, SIGNAL(triggered()),
+                       this, SLOT(slotmain()), Qt::UniqueConnection );
     }
-    connect( sm, SIGNAL(mapped(int)), this, SLOT(slotOpenTerm(int)) );
+
+    if( m_deviceType == typeMCU )
+    {
+        QAction* loadAction = menu->addAction( QIcon(":/load.png"),tr("Load firmware") );
+        connect( loadAction, SIGNAL(triggered()),
+                       this, SLOT(slotLoad()), Qt::UniqueConnection );
+
+        QAction* reloadAction = menu->addAction( QIcon(":/reload.png"),tr("Reload firmware") );
+        connect( reloadAction, SIGNAL(triggered()),
+                         this, SLOT(slotReload()), Qt::UniqueConnection );
+
+        menu->addSeparator();
+
+        QAction* loadDaAction = menu->addAction( QIcon(":/open.png"),tr("Load EEPROM data from file") );
+        connect( loadDaAction, SIGNAL(triggered()),
+                         this, SLOT(loadEEPROM()), Qt::UniqueConnection );
+
+        QAction* saveDaAction = menu->addAction(QIcon(":/save.png"), tr("Save EEPROM data to file") );
+        connect( saveDaAction, SIGNAL(triggered()),
+                         this, SLOT(saveEEPROM()), Qt::UniqueConnection );
+    }
+    if( m_deviceType >= typeMPU )
+    {
+        menu->addSeparator();
+
+        QAction* openRamTab = menu->addAction( QIcon(":/terminal.png"),tr("Open Mcu Monitor.") );
+        connect( openRamTab, SIGNAL(triggered()),
+                       this, SLOT(slotOpenMcuMonitor()), Qt::UniqueConnection );
+    }
+    if( m_deviceType == typeMCU )
+    {
+        QMenu* serMonMenu = menu->addMenu( tr("Open Serial Monitor.") );
+
+        QSignalMapper* sm = new QSignalMapper(this);
+        for( uint i=0; i<m_eMcu.m_usarts.size(); ++i )
+        {
+            QAction* openSerMonAct = serMonMenu->addAction( "USart"+QString::number(i+1) );
+            connect( openSerMonAct, SIGNAL(triggered()), sm, SLOT(map()) );
+            sm->setMapping( openSerMonAct, i+1 );
+        }
+        connect( sm, SIGNAL(mapped(int)), this, SLOT(slotOpenTerm(int)) );
+    }
 
     /*QAction* openSerial = menu->addAction( QIcon(":/terminal.png"),tr("Open Serial Port.") );
     connect( openSerial, SIGNAL(triggered()),
@@ -455,11 +490,13 @@ void Mcu::addPin( QString id, QString type, QString label,
         QColor color = Qt::black;
         if( !m_isLS ) color = QColor( 250, 250, 200 );
 
-        if( type.contains("nul") )
+        if( type.startsWith("nul") )
         {
             pin->setVisible( false );
             pin->setLabelText( "" );
         }
+        else if( type.startsWith("inv") ) pin->setInverted( true );
+
         pin->setPackageType( type );
         pin->setPos( QPoint( xpos, ypos ) );
         pin->setPinAngle( angle );

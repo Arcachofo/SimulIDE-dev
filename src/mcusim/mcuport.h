@@ -23,6 +23,7 @@
 #include<QHash>
 
 #include "mcumodule.h"
+#include "mcupin.h"
 //#include "e-element.h"
 
 class Mcu;
@@ -57,6 +58,10 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
         virtual void rstIntMask( bool rst) { m_rstIntMask = rst; }
 
         virtual void readPort( uint8_t );
+
+        void setOutState( uint val ); // Direct control over pins
+        uint getPortState();          // Direct control over pins
+        void setPinMode( pinMode_t mode );   // Direct control over pins
 
         uint16_t getOutAddr() { return m_outAddr; }
         uint16_t getInAddr() { return m_inAddr; }

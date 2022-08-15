@@ -222,12 +222,14 @@ void ItemLibrary::loadItems()
     addItem( AudioOut::libraryItem() );
     addItem( Lamp::libraryItem() );
     // Micro
-    addItem( Z80CPU::libraryItem() );
-    addItem( new LibraryItem( "AVR", QObject::tr("Micro"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( "PIC", QObject::tr("Micro"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem( "I51", QObject::tr("Micro"), "ic2.png","", NULL ) );
-    addItem( new LibraryItem("MCS65",QObject::tr("Micro"), "ic2.png","", NULL ) );
+
+    addItem( new LibraryItem( "AVR" , QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( "PIC" , QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem( "I51" , QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem("MCS65", QObject::tr("Micro"), "ic2.png","", NULL ) );
+    addItem( new LibraryItem("Z80"  , QObject::tr("Micro"), "ic2.png","", NULL ) );
     addItem( Mcu::libraryItem() );
+    addItem( Z80CPU::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Arduino"), QObject::tr("Micro"), "board.png","", NULL ) );
     addItem( new LibraryItem( QObject::tr("Shields"), QObject::tr("Micro"), "shield.png","", NULL ) );
     addItem( new LibraryItem( QObject::tr("Sensors"), QObject::tr("Micro"), "1to2.png","", NULL ) );

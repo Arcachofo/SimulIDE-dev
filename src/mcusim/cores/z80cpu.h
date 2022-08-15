@@ -153,22 +153,26 @@ class MAINMODULE_EXPORT Z80CPU : public IoComponent, public eClockedDevice
         unsigned char sDO;
         unsigned short sAO;
 
-        // Z80CPU pins
+        // Output pins
         IoPin* m_m1Pin;
+        IoPin* m_haltPin;
+
         IoPin* m_mreqPin;
         IoPin* m_iorqPin;
-        IoPin* m_wrPin;
         IoPin* m_rdPin;
+        IoPin* m_wrPin;
         IoPin* m_rfshPin;
-        IoPin* m_haltPin;
+        IoPin* m_busacPin;
+
+        // Input Pins
         IoPin* m_waitPin;
         IoPin* m_intPin;
         IoPin* m_nmiPin;
         IoPin* m_resetPin;
         IoPin* m_busreqPin;
-        IoPin* m_busacPin;
+
         IoPin* m_vccPin;
-        IoPin* m_gndPin;        
+        IoPin* m_gndPin;
 
         void reset();
         void singleT();

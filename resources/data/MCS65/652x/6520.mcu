@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<mcu name="6520" core="scripted" script="6520_core.js" data="8" inst_cycle="1" clkpin="P2">
+<iou name="6520" core="scripted" script="6520_core.js" data="8" inst_cycle="1" clkpin="P2">
 
     <regblock name="REGs" start="0x00" end="0x07" >
         <register name="ORA"   addr="0x00" />
@@ -44,4 +44,4 @@
         clkpin="P2">
     </intmem>
     
-</mcu>
+</iou>

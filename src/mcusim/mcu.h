@@ -25,6 +25,13 @@
 #include "e_mcu.h"
 #include "chip.h"
 
+enum deviceType_t{
+    typeNONE=0,
+    typeIOU,
+    typeMPU,
+    typeMCU
+};
+
 class LibraryItem;
 class MCUMonitor;
 
@@ -41,6 +48,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
  static Mcu* self() { return m_pSelf; }
  static Component* construct( QObject* parent, QString type, QString id );
  static LibraryItem* libraryItem();
+
+        void setup( QString type );
 
         virtual bool setPropStr( QString prop, QString val ) override;
 
@@ -64,6 +73,9 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         QString varList();
         void setVarList( QString vl );
+
+        QString cpuRegs();
+        void setCpuRegs( QString vl );
 
         void setEeprom( QString eep );
         QString getEeprom();
@@ -103,6 +115,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
         virtual void contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu );
         virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
 
+        deviceType_t m_deviceType;
+
         bool m_autoLoad;
         bool m_extClock;
 
@@ -110,6 +124,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_dataFile;
         QString m_device;       // Name of device
+
 
         eMcu m_eMcu;
 

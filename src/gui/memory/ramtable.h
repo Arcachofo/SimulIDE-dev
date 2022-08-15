@@ -34,15 +34,13 @@ class RamTable : public QWidget, private Ui::RamTable
     Q_OBJECT
 
     public:
-        RamTable( QWidget* parent=0, eMcu* processor=0 );
+        RamTable( QWidget* parent=0, eMcu* processor=NULL, bool cpuMonitor=false );
 
         void updateValues();
 
         void setItemValue( int col, QString v ) { table->item( m_currentRow, col )->setData( 0, v ); }
         void setItemValue( int col, int32_t v ) { table->item( m_currentRow, col )->setData( 0, v ); }
         void setItemValue( int col, float v ) { table->item( m_currentRow, col )->setData( 0, v ); }
-
-        void setStatusBits( QStringList statusBits );
 
         void setRegisters( QStringList regs );
         void setDebugger( BaseDebugger*  deb ) { m_debugger = deb; }
@@ -58,8 +56,6 @@ class RamTable : public QWidget, private Ui::RamTable
         void updateItems();
 
         QSplitter* getSplitter() { return splitter; }
-        QTableWidget m_status;
-        QTableWidget m_pc;
 
     public slots:
         void RegDoubleClick( const QModelIndex& index );
@@ -87,8 +83,10 @@ class RamTable : public QWidget, private Ui::RamTable
         QHash<QString, QString> m_typeTable;
         QHash<QString, uint16_t> m_varsTable;
         QStringList m_varNames;
+        QStringList m_regNames;
 
         bool m_loadingVars;
+        bool m_cpuMonitor;
 
         int m_numRegs;
         int m_currentRow;

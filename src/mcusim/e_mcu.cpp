@@ -59,8 +59,11 @@ eMcu::eMcu( QString id )
     m_debugger = NULL;
     m_debugging = false;
 
-    m_ramTable = new RamTable( NULL, this );
+    m_ramTable = new RamTable( NULL, this, false );
     m_ramTable->hide();
+
+    m_cpuTable = new RamTable( NULL, this, true );
+    m_cpuTable->hide();
 }
 
 eMcu::~eMcu()
@@ -115,7 +118,7 @@ void eMcu::reset()
 
 void eMcu::stepCpu()
 {
-    if( cpu->PC < m_flashSize )
+    if( !m_flashSize || cpu->PC < m_flashSize )
     {
         if( m_state == mcuRunning ) cpu->runDecoder();
         m_interrupts.runInterrupts();
@@ -159,7 +162,7 @@ void eMcu::sleep( bool s )
 
 uint32_t eMcu::getStack() { return cpu->GET_STACK(); }
 
-int eMcu::status() { return getRamValue( m_sregAddr ); }
+int eMcu::status() { return cpu->getStatus(); /*getRamValue( m_sregAddr );*/ }
 
 int eMcu::pc() { return cpu->PC; }
 

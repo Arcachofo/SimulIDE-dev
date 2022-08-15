@@ -1,0 +1,11 @@
+<!DOCTYPE SimulIDE>
+
+<itemlib>
+    
+    <itemset category="Z80" type="MCU" >
+        
+        <item name="Z80" package="Z80/z80" data="Z80/z80"></item>
+    
+    </itemset>
+    
+</itemlib>

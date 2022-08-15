@@ -39,6 +39,9 @@ class MAINMODULE_EXPORT McuCore
         virtual void runDecoder(){;}
         virtual void runClock( bool clkState ){;}
 
+        uint8_t getStatus() { return *m_STATUS; }
+        int getCpuReg( QString reg );
+
         void CALL_ADDR( uint32_t addr )
         {
             PUSH_STACK( PC );// Push current PC to stack
@@ -78,6 +81,8 @@ class MAINMODULE_EXPORT McuCore
         uint8_t* m_sph;     // STACK POINTER high byte
         bool     m_spPre;   // STACK pre-increment?
         int      m_spInc;   // STACK grows up or down? (+1 or -1)
+
+        QHash<QString, uint8_t*> m_cpuRegs;
 
         void RETI()
         {

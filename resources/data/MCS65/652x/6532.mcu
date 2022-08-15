@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<mcu name="6532" core="intmem" script="6532_core.js" data="144" inst_cycle="1" clkpin="P2"
+<iou name="6532" core="intmem" script="6532_core.js" data="144" inst_cycle="1" clkpin="P2"
                  addrport="PORTR"
                  dataport="PORTD"
                  rwpin="RW"
@@ -44,4 +44,4 @@
     
     <port name="CPORT0" pins="CS1,CS2,RW,IRQ,P2" />
     
-</mcu>
+</iou>

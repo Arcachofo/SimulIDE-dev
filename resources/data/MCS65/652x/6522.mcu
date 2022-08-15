@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<mcu name="6522" core="intmem" data="16" inst_cycle="1" clkpin="P2"
+<iou name="6522" core="intmem" data="16" inst_cycle="1" clkpin="P2"
                  addrport="PORTR"
                  dataport="PORTD"
                  rwpin="RW"
@@ -46,4 +46,4 @@
     
     <port name="CPORT0" pins="CA1,CA2,CB1,CB2,CS1,CS2,RW,IRQ,P2" />
     
-</mcu>
+</iou>

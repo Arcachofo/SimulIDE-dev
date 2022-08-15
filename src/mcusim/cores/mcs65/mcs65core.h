@@ -26,14 +26,12 @@
 #define CONSTANT  0x20
 #define BREAK     0x10
 
-
 #define SET_NEGATIVE(x)  write_S_Bit( N, x & 0x80 ) //(x ? (m_STATUS |= NEGATIVE) : (m_STATUS &= (~NEGATIVE)) )
 #define SET_OVERFLOW(x)  write_S_Bit( V, x ) //(x ? (m_STATUS |= OVERFLOW) : (m_STATUS &= (~OVERFLOW)) )
 #define SET_DECIMAL(x)   write_S_Bit( D, x ) //(x ? (m_STATUS |= DECIMAL) : (m_STATUS &= (~DECIMAL)) )
 #define SET_INTERRUPT(x) write_S_Bit( I, x ) //(x ? (m_STATUS |= INTERRUPT) : (m_STATUS &= (~INTERRUPT)) )
 #define SET_ZERO(x)      write_S_Bit( Z, x ) //(x ? (m_STATUS |= ZERO) : (m_STATUS &= (~ZERO)) )
 #define SET_CARRY(x)     write_S_Bit( C, x ) //(x ? (m_STATUS |= CARRY) : (m_STATUS &= (~CARRY)) )
-
 
 class MAINMODULE_EXPORT Mcs65Core : public McuCore
 {
@@ -93,11 +91,12 @@ class MAINMODULE_EXPORT Mcs65Core : public McuCore
         McuPin* m_soPin;
         McuPin* m_dbePin;
 
-        uint8_t* m_SP;
-        uint8_t* m_Ac;
-        uint8_t* m_IR;
-        uint8_t* m_rX;
-        uint8_t* m_rY;
+        uint8_t m_P;   // status
+        uint8_t m_SP;
+        uint8_t m_Ac;
+        uint8_t m_IR;
+        uint8_t m_rX;
+        uint8_t m_rY;
         //uint8_t* m_rI;
 
         cpuState_t m_cpuState;

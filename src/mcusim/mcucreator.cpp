@@ -77,6 +77,8 @@
 #include "mcs65core.h"
 #include "intmemcore.h"
 
+#include "z80core.h"
+
 #include "scriptcore.h"
 #include "scriptport.h"
 
@@ -104,13 +106,13 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
     m_basePath = QFileInfo( dataFile ).absolutePath();
     dataFile = QFileInfo( dataFile ).fileName();
 
-    int error = processFile( dataFile );
+    int error = processFile( dataFile, true );
 
     if( error == 0 ) mcu->getRamTable()->setRegisters( mcu->m_regInfo.keys() );
     return error;
 }
 
-int McuCreator::processFile( QString fileName )
+int McuCreator::processFile( QString fileName, bool main )
 {
     fileName = m_basePath+"/"+fileName;
     QDomDocument domDoc = fileToDomDoc( fileName, "McuCreator::processFile" );
@@ -124,6 +126,7 @@ int McuCreator::processFile( QString fileName )
     if( root.hasAttribute("data") )       createDataMem( root.attribute("data").toUInt(0,0) );
     if( root.hasAttribute("prog") )       createProgMem( root.attribute("prog").toUInt(0,0) );
     if( root.hasAttribute("eeprom") )     createRomMem( root.attribute("eeprom").toUInt(0,0) );
+    if( root.hasAttribute("freq") )       mcu->setFreq( root.attribute("freq").toDouble() );
 
     int error = 0;
     QDomNode node = root.firstChild();
@@ -201,6 +204,7 @@ int McuCreator::processFile( QString fileName )
     {
         mcu->m_clkPin = mcu->getPin( root.attribute("clkpin") );
     }
+    if( main ) m_mcuComp->setup( root.tagName() );
     return 0;
 }
 
@@ -354,7 +358,7 @@ void McuCreator::getRegisters( QDomElement* e, uint16_t offset )
                 if( !stReg.isEmpty() && ( regName == stReg ) )
                 {
                     mcu->m_sregAddr = regAddr;
-                    mcu->getRamTable()->setStatusBits( bitList );
+                    mcu->setStatusBits( bitList );
         }   }   }
         else if( el.tagName() == "mapped" )
         {
@@ -1031,6 +1035,7 @@ void McuCreator::createCore( QString core )
     else if( core == "Pic14e" )   mcu->cpu = new Pic14eCore( mcu );
     else if( core == "8051" )     mcu->cpu = new I51Core( mcu );
     else if( core == "6502" )     mcu->cpu = new Mcs65Core( mcu );
+    else if( core == "Z80" )      mcu->cpu = new Z80Core( mcu );
     //else if( core == "scripted" ) mcu->cpu = new ScriptCore( mcu );
     else if( core == "intmem" )   mcu->cpu = new IntMemCore( mcu );
     else                          mcu->cpu = new McuCore( mcu );

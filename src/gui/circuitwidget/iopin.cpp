@@ -113,8 +113,7 @@ void IoPin::sheduleState( bool state, uint64_t time )
         m_step = m_steps-m_step;
     }
 
-    if( time )
-        Simulator::self()->addEvent( time, this );
+    if( time ) Simulator::self()->addEvent( time, this );
     else runEvent();
 }
 
@@ -213,7 +212,7 @@ void IoPin::setStateZ( bool z )
         setImp( m_openImp );
         setPinState( undef_state );
     }else {
-        pinMode_t pm = m_pinMode; // Force pinMode
+        pinMode_t pm = m_pinMode; // Force old pinMode
         m_pinMode = undef_mode;
         setPinMode( pm );
 }   }

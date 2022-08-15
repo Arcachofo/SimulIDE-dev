@@ -179,7 +179,7 @@ LibraryItem* Z80CPU::libraryItem()
 {
     return new LibraryItem(
         tr( "Z80CPU" ),
-        tr("Micro/Z80"),
+        tr("Micro/Z80CPU"),
         "ic2.png",
         "Z80CPU",
         Z80CPU::construct );
@@ -779,8 +779,7 @@ void Z80CPU::clkFallingEdgeDelayed()
         }
     } else {
         // When bus is not requested any more by BUSRQ signal then signal BUSACK is reset
-        if (sBusReq == false)
-            m_busacPin->setOutState( false );
+        if (sBusReq == false) m_busacPin->setOutState( false );
     }
 }
 
