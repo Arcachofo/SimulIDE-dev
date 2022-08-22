@@ -232,7 +232,7 @@ bool EditorWidget::saveAs()
 
 bool EditorWidget::saveFile( const QString &fileName )
 {
-    QFile file(fileName);
+    QFile file( fileName );
     if( !file.open(QFile::WriteOnly | QFile::Text) )
     {
         QMessageBox::warning(this, "EditorWindow::saveFile",

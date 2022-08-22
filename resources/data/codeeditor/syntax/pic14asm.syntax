@@ -2,7 +2,7 @@ rules: directives keyword1 number preprocessor lineComment htmlTag quotation
 
 
 directives-style: #326432 default true false
-directives: __badram __config __idlocs __maxram bankisel banksel cblock code cblock constant da data db de dt dw endm endc endw equ error errorlevel extern exitm expand fill global idata list local macro messg noexpand nolist org page processor pagesel radix res set space subtitle title udata udata_acs udata_ovr udata_shr variable end 
+directives: __badram config idlocs maxram bankisel banksel cblock code cblock constant da data db de dt dw endm endc endw equ error errorlevel extern exitm expand fill global idata list local macro messg noexpand nolist org page processor pagesel radix res set space subtitle title udata udata_acs udata_ovr udata_shr variable end 
 
 keyword1-style: #141446 default true false
 keyword1: addlw addwf andlw andwf bcf bov bsf btfsc btg btfss call clrf clrw clrwdt comf decf decfsz goto incf incfsz iorlw iorwf movf movlw movwf nop reset retfie retlw return rlf rrf sleep sublw subwf swapf xorlw xorwf

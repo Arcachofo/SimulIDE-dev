@@ -43,11 +43,14 @@ class RamTable : public QWidget, private Ui::RamTable
         void setItemValue( int col, float v ) { table->item( m_currentRow, col )->setData( 0, v ); }
 
         void setRegisters( QStringList regs );
-        void setDebugger( BaseDebugger*  deb ) { m_debugger = deb; }
-        void remDebugger( BaseDebugger*  deb ) { if( m_debugger == deb ) m_debugger = NULL; }
+        void addRegister( QString name, QString type );
+
+        void setDebugger( BaseDebugger* deb ) { m_debugger = deb; }
+        void remDebugger( BaseDebugger* deb ) { if( m_debugger == deb ) m_debugger = NULL; }
 
         void setVariables( QStringList vars );
         void addVariable( QString name, int address, QString type );
+        void addVariable( QString name, QString type );
 
         void loadVarSet( QStringList varSet );
         QStringList getVarSet();

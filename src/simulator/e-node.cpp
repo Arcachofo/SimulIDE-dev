@@ -49,6 +49,8 @@ void eNode::initialize()
     m_currList.clear();
     m_nodeList.clear();
 
+    m_fast = false;
+    m_fastVolt = 0;
     m_volt = 0;
 }
 
@@ -79,9 +81,26 @@ void eNode::stampAdmitance( ePin* epin, double admit )
         Simulator::self()->addToChangedNodes( this );
 }   }
 
+void eNode::setFastVolt( double volt )
+{
+    m_fastVolt = volt;
+    if( !m_changed ){
+        m_fast = true;
+        m_changed = true;
+        Simulator::self()->addToChangedNodes( this );
+    }
+}
 void eNode::stampMatrix()
 {
     if( m_nodeNum == 0 ) return;
+
+
+    /*if( m_changed && m_fast )
+    {
+        m_changed = false;
+        setVolt( m_fastVolt );
+        return;
+    }*/
     m_changed = false;
 
     if( m_admitChanged )
@@ -163,20 +182,19 @@ void eNode::remEpin( ePin* epin )
 {
     if( m_ePinList.contains(epin) ) m_ePinList.removeOne( epin );
     if( m_nodeList.contains(epin) ) m_nodeList.remove( epin );
+    if( m_currList.contains(epin) ) m_currList.remove( epin );
     if( m_admitList.contains(epin) ) m_admitList.remove( epin );
 }
 
 void eNode::clear()
 {
-    for( ePin* epin : m_ePinList )
-    {
+    for( ePin* epin : m_ePinList ){
         epin->setEnode( NULL );
         epin->setEnodeComp( NULL );
-    }
-}
+}   }
 
 void eNode::addConnection( ePin* epin, int enodeComp ) // Add node at other side of pin
-{ m_nodeList[epin] = enodeComp; }
+{ if( enodeComp != m_nodeNum ) m_nodeList[epin] = enodeComp; } // Be sure msg doesn't come from this node
 
 QList<int> eNode::getConnections()
 { return m_nodeList.values(); }

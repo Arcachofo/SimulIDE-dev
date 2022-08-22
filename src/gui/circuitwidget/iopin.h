@@ -72,7 +72,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual bool getInpState();
         virtual bool getOutState() { if( m_step ) return m_nextState; return m_outState; }
         virtual void setOutState( bool out );
-        virtual void toggleOutState() { sheduleState( !m_outState, 0 ); }
+        virtual void toggleOutState( uint64_t time=0 ) { sheduleState( !m_outState, time ); }
 
         void setStateZ( bool z );
         virtual void setPullup( bool up );

@@ -116,11 +116,20 @@ void CodeEditor::setFile( const QString filePath )
 
     QString extension = getFileExt( filePath );
 
+    QString line = this->document()->findBlockByLineNumber(0).text();//  fileToStringList( filePath, "CodeEditor::setFile" );
+
     QString code = "00";
+    QString compiler = BaseDebugger::getValue( line, "compiler" );
+    if( compiler.isEmpty() ) compiler = "None";
+    else{
+        m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
+        m_compiler = EditorWindow::self()->createDebugger( compiler, this );
+    }
+
     if( extension == ".gcb" )
     {
         m_hlighter->readsyntaxFile( m_syntaxPath + "gcbasic.syntax" );
-        m_compiler = EditorWindow::self()->createDebugger( "GcBasic", this );
+        if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "GcBasic", this );
     }
     else if( extension == ".cpp"
           || extension == ".c"
@@ -129,7 +138,7 @@ void CodeEditor::setFile( const QString filePath )
     {
         m_hlighter->readsyntaxFile( m_syntaxPath + "cpp.syntax" );
         if( extension == ".ino" )
-            m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );
+        {   if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );}
         else if( extension == ".cpp" || extension == ".c")
             code = "10";
     }
@@ -138,8 +147,12 @@ void CodeEditor::setFile( const QString filePath )
         m_hlighter->readsyntaxFile( m_syntaxPath + "avrasm.syntax" );
         m_compiler = EditorWindow::self()->createDebugger( "Avrgcc-asm", this );
     }*/
-    else if( extension == ".asm"  // We should identify if pic, avr or i51 asm
-          || extension == ".a51" )
+    else if( extension == ".a51" ) // 8051
+    {
+        m_outPane->appendLine( "I51 asm\n" );
+        m_hlighter->readsyntaxFile( m_syntaxPath + "i51asm.syntax" );
+    }
+    /*else if( extension == ".asm" ) // We should identify if pic, avr or i51 asm
     {
         m_outPane->appendText( tr("File recognized as: ") );
 
@@ -148,21 +161,21 @@ void CodeEditor::setFile( const QString filePath )
         {
             m_outPane->appendLine( "Pic asm\n" );
             m_hlighter->readsyntaxFile( m_syntaxPath + "pic14asm.syntax" );
-            m_compiler = EditorWindow::self()->createDebugger( "GpAsm", this );
+            if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "GpAsm", this );
         }
         else if( type == 2 )  // Is Avr
         {
-                m_outPane->appendLine( "Avr asm\n" );
-                m_hlighter->readsyntaxFile( m_syntaxPath + "avrasm.syntax" );
-                m_compiler = EditorWindow::self()->createDebugger( "Avra", this );
+            m_outPane->appendLine( "Avr asm\n" );
+            m_hlighter->readsyntaxFile( m_syntaxPath + "avrasm.syntax" );
+            if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "Avra", this );
         }
         else if( type == 3 )  // Is 8051
         {
-                m_outPane->appendLine( "I51 asm\n" );
-                m_hlighter->readsyntaxFile( m_syntaxPath + "i51asm.syntax" );
+            m_outPane->appendLine( "I51 asm\n" );
+            m_hlighter->readsyntaxFile( m_syntaxPath + "i51asm.syntax" );
         }
         else m_outPane->appendLine( "Unknown asm\n" );
-    }
+    }*/
     else if( extension == ".xml"
          ||  extension == ".html"
          ||  extension == ".package"
@@ -183,20 +196,11 @@ void CodeEditor::setFile( const QString filePath )
         setFont( m_font );
         m_hlighter->readsyntaxFile( m_syntaxPath + "hex.syntax" );
     }
-    else if( extension == ".sac" )
+    /*else if( extension == ".sac" )
     {
         //m_compiler = new B16AsmDebugger( this, m_outPane );
-    }
-    QStringList lines = fileToStringList( filePath, "CodeEditor::setFile" );
-    QString line = lines.first();
-    if( !m_compiler )
-    {
-        QString compiler = BaseDebugger::getValue( line, "compiler" );
-        if( compiler.isEmpty() ) compiler = "None";
-        else m_outPane->appendLine( tr("Found Compiler definition in file: ") + compiler );
-
-        m_compiler = EditorWindow::self()->createDebugger( compiler, this, code );
-    }
+    }*/
+    if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( compiler, this, code );
     m_compiler->getInfoInFile( line );
     m_outPane->appendLine( "-------------------------------------------------------" );
 }

@@ -28,7 +28,7 @@
 
 #include "ramtable.h"
 #include "e_mcu.h"
-#include "mcucore.h"
+#include "cpubase.h"
 #include "circuit.h"
 #include "basedebugger.h"
 #include "mainwindow.h"
@@ -57,12 +57,19 @@ RamTable::RamTable( QWidget* parent, eMcu* processor ,bool cpuMonitor )
     font.setPixelSize( font_size );
 
     table->verticalHeader()->setSectionsMovable( true );
-    table->setColumnWidth( 0, round(50*scale) );
-    table->setColumnWidth( 1, round(55*scale) );
-    table->setColumnWidth( 2, round(40*scale) );
-    table->setColumnWidth( 3, round(40*scale) );
-    table->setColumnWidth( 4, round(75*scale) );
-
+    if( m_cpuMonitor )
+    {
+        table->setColumnWidth( 1, round(55*scale) );
+        table->setColumnWidth( 2, round(60*scale) );
+        table->setColumnWidth( 3, round(60*scale) );
+        table->setColumnWidth( 4, round(90*scale) );
+    }else{
+        table->setColumnWidth( 0, round(50*scale) );
+        table->setColumnWidth( 1, round(55*scale) );
+        table->setColumnWidth( 2, round(40*scale) );
+        table->setColumnWidth( 3, round(40*scale) );
+        table->setColumnWidth( 4, round(75*scale) );
+    }
     for( int row=0; row<m_numRegs; row++ )
     {
         it = new QTableWidgetItem(0);
@@ -104,8 +111,7 @@ RamTable::RamTable( QWidget* parent, eMcu* processor ,bool cpuMonitor )
     m_variableModel = new QStandardItemModel( this );
     variables->setModel( m_variableModel );
 
-    if( m_cpuMonitor ) splitter_2->setSizes( {100,0} );
-    else               splitter_2->setSizes( {100,30} );
+    splitter_2->setSizes( {100,30} );
 
     /*connect( registers, SIGNAL(doubleClicked(QModelIndex)),
              this,      SLOT(RegDoubleClick(QModelIndex)));*/
@@ -252,36 +258,60 @@ void RamTable::saveVarSet()
         QApplication::restoreOverrideCursor();
 }   }
 
-void RamTable::updateValues()
+
+
+void RamTable::setRegisters( QStringList regs )
 {
-    if( !m_processor ) return;
+    regs.sort();
+    m_regNames = regs;
+    for( QString reg : regs ) m_registerModel->appendRow( new QStandardItem(reg) );
+}
 
-    for( int _row: watchList.keys() )
+void RamTable::addRegister( QString name, QString type )
+{
+    m_regNames.append( name );
+    m_typeTable[ name ] = type;
+    m_registerModel->appendRow( new QStandardItem(name) );
+}
+
+void RamTable::setVariables( QStringList vars )
+{
+    vars.sort();
+    m_varNames = vars;
+    m_variableModel->clear();
+    for( QString var : vars ) m_variableModel->appendRow( new QStandardItem(var) );
+}
+
+void RamTable::addVariable( QString name, int address, QString type )
+{
+    m_typeTable[ name ] = type;
+    m_varsTable[ name ] = address;
+}
+
+void RamTable::addVariable( QString name, QString type )
+{
+    m_varNames.append( name );
+    m_typeTable[ name ] = type;
+    m_variableModel->appendRow( new QStandardItem(name) );
+}
+
+uint16_t RamTable::getCurrentAddr()
+{
+    int row = table->currentRow();
+    if( row < 0 ) return 0;
+    QString text = table->item( row, 0 )->text();
+    if( text == "---" ) return -1;
+    return  text.toUInt(NULL,16);
+}
+
+void RamTable::updateItems()
+{
+    for( int row=0; row<m_numRegs; row++ )
     {
-        m_currentRow = _row;
-        QString name = watchList[_row];
-
-        bool ok;
-        int addr = name.toInt(&ok, 10);
-        if( !ok && name.startsWith("0x") ) addr = name.toInt(&ok, 16);
-
-        if( ok ){                              // Address
-            uint8_t value = m_processor->getRamValue( addr );
-            table->item( _row, 2 )->setText("u8");
-            table->item( _row, 3 )->setData( 0, value );
-            table->item( _row, 4 )->setData( 0, decToBase(value, 2, 8) );
-        }
-        else if( m_cpuMonitor  )
-        {
-            int value = m_processor->cpu->getCpuReg( name );
-            if( value >= 0 )
-            {
-                setItemValue( 3, value );
-                setItemValue( 4, decToBase(value, 2, 8) );
-            }
-        }
-        else updateRamValue( name );  // Var or Reg name
-}   }
+        QTableWidgetItem* it = table->item( row, 1 );
+        if( it->text() != "" ) addToWatch( it );
+    }
+}
 
 void RamTable::addToWatch( QTableWidgetItem* it )
 {
@@ -303,12 +333,20 @@ void RamTable::addToWatch( QTableWidgetItem* it )
     }
     else if( m_cpuMonitor )
     {
-        if( m_regNames.contains( name ) )
+        QString type = "uint8";
+        if( m_typeTable.contains( name ) ) type = m_typeTable.value( name );
+        if( m_regNames.contains( name ) || m_varNames.contains( name ) )
         {
             watchList[_row] = name;
-            table->item( _row, 2 )->setText("u8");
-            table->item( _row, 3 )->setText("0");
-            table->item( _row, 4 )->setText("0000 0000");
+            table->item( _row, 2 )->setText( type );
+            if( type == "string" )
+            {
+                table->item( _row, 3 )->setText(" - ");
+                table->item( _row, 4 )->setText("");
+            }else{
+                table->item( _row, 3 )->setText("0");
+                table->item( _row, 4 )->setText("0000 0000");
+            }
         }
     }else{
         int addr = -1;
@@ -346,50 +384,50 @@ void RamTable::addToWatch( QTableWidgetItem* it )
                 if( varName.contains( name ) ) table->item( _row+i, 1 )->setText( varName );
 }   }   }   }
 
-void RamTable::setRegisters( QStringList regs )
+void RamTable::updateValues()
 {
-    regs.sort();
-    m_regNames = regs;
-    for( QString reg : regs ) m_registerModel->appendRow( new QStandardItem(reg) );
-}
+    if( !m_processor ) return;
 
-void RamTable::setVariables( QStringList vars )
-{
-    vars.sort();
-    m_varNames = vars;
-    m_variableModel->clear();
-    for( QString var : vars ) m_variableModel->appendRow( new QStandardItem(var) );
-}
-
-uint16_t RamTable::getCurrentAddr()
-{
-    int row = table->currentRow();
-    if( row < 0 ) return 0;
-    QString text = table->item( row, 0 )->text();
-    if( text == "---" ) return -1;
-    return  text.toUInt(NULL,16);
-}
-
-void RamTable::updateItems()
-{
-    for( int row=0; row<m_numRegs; row++ )
+    for( int _row: watchList.keys() )
     {
-        QTableWidgetItem* it = table->item( row, 1 );
-        if( it->text() != "" ) addToWatch( it );
-    }
-}
+        m_currentRow = _row;
+        QString name = watchList[_row];
 
-void RamTable::addVariable( QString name, int address, QString type )
-{
-    m_typeTable[ name ] = type;
-    m_varsTable[ name ] = address;
-}
+        if( m_cpuMonitor  )
+        {
+            QString type = "";
+            if( m_typeTable.contains( name ) ) type = m_typeTable.value( name );
+            if( type == "string" )
+            {
+                setItemValue( 4, m_processor->cpu->getStrReg( name ) );
+            }
+            else{
+                int value = m_processor->cpu->getCpuReg( name );
+                if( value < 0 ) continue;
+                setItemValue( 3, value );
+                if( type.contains("8") ) setItemValue( 4, decToBase(value, 2, 8) );
+                else setItemValue( 4, "0x"+decToBase(value, 16, 4).remove(0,1) );
+            }
+        }else{
+            bool ok;
+            int addr = name.toInt(&ok, 10);
+            if( !ok && name.startsWith("0x") ) addr = name.toInt(&ok, 16);
+
+            if( ok ){                              // Address
+                uint8_t value = m_processor->getRamValue( addr );
+                table->item( _row, 2 )->setText("u8");
+                table->item( _row, 3 )->setData( 0, value );
+                table->item( _row, 4 )->setData( 0, decToBase(value, 2, 8) );
+            }
+            else updateRamValue( name );  // Var or Reg name
+        }
+}   }
 
 void RamTable::updateRamValue( QString name )
 {
     //name = name.toUpper();
     QString type = "u8";
-    if( m_typeTable.contains( name ) ) type = m_typeTable[ name ];
+    if( m_typeTable.contains( name ) ) type = m_typeTable.value( name );
     setItemValue( 2, type );
 
     /*if( m_cpuMonitor  )
@@ -434,7 +472,7 @@ void RamTable::updateRamValue( QString name )
         if( type.contains( "f" ) )        // float, double
         {
             float value = 0;
-            memcpy(&value, ba, 4);
+            memcpy( &value, ba, 4 );
             setItemValue( 2, value );
         }
         else{                             // char, int, long

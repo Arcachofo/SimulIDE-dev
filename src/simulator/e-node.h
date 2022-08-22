@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2012 by santiago González                               *
  *   santigoro@gmail.com                                                   *
  *                                                                         *
@@ -53,6 +53,12 @@ class MAINMODULE_EXPORT eNode
         void   setVolt( double volt );
         bool voltchanged() { return m_voltChanged; }
         void setVoltChanged( bool changed ){ m_voltChanged = changed; }
+
+        /// REMOVE
+        void setFastVolt( double volt );
+        double m_fastVolt;
+        bool m_fast;
+        ///
 
         void solveSingle();
 

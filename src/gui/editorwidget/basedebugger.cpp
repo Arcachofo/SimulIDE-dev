@@ -23,6 +23,7 @@
 #include "editorwindow.h"
 #include "compilerprop.h"
 #include "simulator.h"
+#include "cpubase.h"
 #include "mcu.h"
 #include "utils.h"
 
@@ -215,16 +216,16 @@ void BaseDebugger::stepDebug()
 {
     if( !m_debugStep ) return;  // This should never happen
 
-    int lastPC = eMcu::self()->pc();
+    int lastPC = eMcu::self()->cpu->getPC();
     eMcu::self()->stepCpu();
-    int PC = eMcu::self()->pc();
+    int PC = eMcu::self()->cpu->getPC();
 
     if( lastPC != PC )
     {
         if( m_over ){       // Step Over entry
             if( m_functions.values().contains( PC ) )
             {
-                m_exitPC = eMcu::self()->getStack();
+                m_exitPC = eMcu::self()->cpu->RET_ADDR();
                 m_over = false;
                 return;
             }

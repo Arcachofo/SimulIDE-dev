@@ -74,6 +74,7 @@ QString Compiler::replaceData( QString str )
              .replace( "$buildPath", m_buildPath );
     return str;
 }
+
 void Compiler::loadCompiler( QString file )
 {
     clearCompiler();

@@ -179,7 +179,7 @@ void Simulator::runCircuit()
         }
         solveCircuit();
         if( m_state < SIM_RUNNING ) break;
-        event = m_firstEvent;
+        event = m_firstEvent;               // Can be event added at solveCircuit()
     }
     if( m_state > SIM_WAITING ) m_circTime = endRun;
     m_loopTime = m_RefTimer.nsecsElapsed();
@@ -187,7 +187,7 @@ void Simulator::runCircuit()
 
 void Simulator::solveCircuit()
 {
-    while( m_changedNode || m_nonLin )
+    while( m_changedNode || m_nonLin ) // Also Proccess changes gererated in voltChanged()
     {
         if( m_changedNode ){
             solveMatrix();

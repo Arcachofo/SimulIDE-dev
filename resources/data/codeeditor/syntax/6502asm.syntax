@@ -1,8 +1,8 @@
-rules: directives instructions number Label preprocessor lineComment htmlTag quotation
+rules: directives instructions preprocessor number Label htmlTag quotation lineComment
 
 
 directives-style: #326432 default true false
-directives: "\.[byte|cseg|db|def|device|dseg|dw|endmacro|equ|eseg|exit|include|list|listmac|macro|nolist|org|set]+[^\\b]"
+directives: equ include org
 
 instructions-style: #141446 default true false
 instructions: adc and asl bcc bcs beq bit bmi bne bpl brk bvc bvs clc cld cli clv cmp cpx cpy dec dex dey eor inc inx iny jmp jsr lda ldx ldy lsr nop ora pha php pla plp rol ror rti rts sbc sec sed sei sta stx sty tax tay tsx txa txs tya
@@ -24,6 +24,3 @@ quotation: "\"(\\.|[^\"])*\""
 
 lineComment-style: #646464 default false true
 lineComment: ";[^\n]*"
-
- 
-

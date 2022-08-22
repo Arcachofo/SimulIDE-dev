@@ -25,7 +25,7 @@ INCLUDEPATH += ../src \
     ../src/gui/circuitwidget/components \
     ../src/gui/circuitwidget/components/active \
     ../src/gui/circuitwidget/components/logic \
-    ../src/gui/circuitwidget/components/mcu \
+    ../src/gui/circuitwidget/components/micro \
     ../src/gui/circuitwidget/components/meters \
     ../src/gui/circuitwidget/components/other \
     ../src/gui/circuitwidget/components/outputs \
@@ -54,20 +54,20 @@ INCLUDEPATH += ../src \
     ../src/simulator/elements/active \
     ../src/simulator/elements/outputs \
     ../src/simulator/elements/passive \
-    ../src/mcusim \
-    ../src/mcusim/cores \
-    ../src/mcusim/cores/avr \
-    ../src/mcusim/cores/i51 \
-    ../src/mcusim/cores/pic \
-    ../src/mcusim/cores/mcs65 \
-    ../src/mcusim/cores/z80 \
-    ../src/mcusim/cores/scripted \
-    ../src/mcusim/cores/intmem \
-    ../src/mcusim/modules \
-    ../src/mcusim/modules/memory \
-    ../src/mcusim/modules/usart \
-    ../src/mcusim/modules/twi \
-    ../src/mcusim/modules/spi
+    ../src/microsim \
+    ../src/microsim/cores \
+    ../src/microsim/cores/avr \
+    ../src/microsim/cores/i51 \
+    ../src/microsim/cores/pic \
+    ../src/microsim/cores/mcs65 \
+    ../src/microsim/cores/z80 \
+    ../src/microsim/cores/scripted \
+    ../src/microsim/cores/intmem \
+    ../src/microsim/modules \
+    ../src/microsim/modules/memory \
+    ../src/microsim/modules/usart \
+    ../src/microsim/modules/twi \
+    ../src/microsim/modules/spi
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter
 QMAKE_CXXFLAGS += -Wno-implicit-fallthrough

@@ -20,6 +20,7 @@
 #include "mcumonitor.h"
 #include "simulator.h"
 #include "e_mcu.h"
+#include "cpubase.h"
 #include "memtable.h"
 #include "mainwindow.h"
 #include "utils.h"
@@ -171,7 +172,7 @@ void  MCUMonitor::on_jumpButton_toggled( bool jump )
 
 void MCUMonitor::updateStep()
 {
-    int status = m_processor->status();
+    int status = m_processor->cpu->getStatus();
     for( int i=0; i<8; i++ )
     {
         int bit = status & 1;
@@ -180,7 +181,7 @@ void MCUMonitor::updateStep()
         status >>= 1;
     }
 
-    int pc = m_processor->pc();
+    int pc = m_processor->cpu->getPC();
     if( byteButton->isChecked() ) pc *= m_processor->wordSize();
     m_pc.item( 0, 0 )->setData( 0, pc );
     m_pc.item( 0, 1 )->setText("0x"+val2hex(pc) );
