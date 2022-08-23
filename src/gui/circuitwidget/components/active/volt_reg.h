@@ -36,7 +36,6 @@ class MAINMODULE_EXPORT VoltReg : public Component, public eResistor
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
 
         double outVolt() { return m_vRef; }

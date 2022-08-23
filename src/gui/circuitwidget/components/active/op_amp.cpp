@@ -109,7 +109,11 @@ void OpAmp::stamp()
 {
     if( m_inputP->isConnected() ) m_inputP->getEnode()->addToNoLinList(this);
     if( m_inputN->isConnected() ) m_inputN->getEnode()->addToNoLinList(this);
-    if( m_output->isConnected() ) m_output->getEnode()->addToNoLinList(this);
+    if( m_output->isConnected() )
+    {
+        m_output->getEnode()->addToNoLinList(this);
+        m_output->createCurrent();
+    }
 }
 
 void OpAmp::voltChanged() // Called when any pin node change volt

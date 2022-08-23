@@ -84,6 +84,10 @@ void eBJT::stamp()
     eNode* emitNod = EMIT->getEnode();// Emitter
     eNode* baseNod = BASE->getEnode();// Base
 
+    BASE->createCurrent();
+    COLL->createCurrent();
+    EMIT->createCurrent();
+
     if( collNod ) collNod->addToNoLinList( this );
     if( emitNod ) emitNod->addToNoLinList( this );
     if( baseNod ) baseNod->addToNoLinList( this );

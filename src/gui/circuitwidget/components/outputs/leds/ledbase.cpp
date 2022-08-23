@@ -28,13 +28,14 @@
 #include "stringprop.h"
 #include "boolprop.h"
 
+eNode LedBase::m_gndEnode("");
+
 LedBase::LedBase( QObject* parent, QString type, QString id )
        : Component( parent, type, id )
        , eLed( id )
 {
     m_graphical = true;
     m_grounded  = false;
-    m_scrEnode  = NULL;
     m_intensity = 0;
 
     m_enumUids = QStringList()
@@ -78,13 +79,16 @@ new DoubProp<LedBase>( "EmCoef"    , tr("Emission Coefficient"),""  , this, &Led
 }
 LedBase::~LedBase()
 {
-    if( m_grounded ) m_pin[1]->setEnode( NULL );
+    //if( m_grounded ) m_pin[1]->setEnode( NULL );
 }
 
 void LedBase::initialize()
 {
     m_crashed = false;
     m_warning = false;
+
+    if( m_grounded ) m_ePin[1]->setEnode( &m_gndEnode );
+
     eLed::initialize();
     update();
 }
@@ -119,11 +123,6 @@ void LedBase::setGrounded( bool grounded )
         pin1->removeConnector();
         pin1->setEnabled( false );
         pin1->setVisible( false );
-
-        m_scrEnode = new eNode( m_id+"Gnod" );
-        m_scrEnode->setNodeNumber( 0 );
-        Simulator::self()->remFromEnodeList( m_scrEnode );
-        m_ePin[1]->setEnode( m_scrEnode );
     }else{
         Pin* pin1 = static_cast<Pin*>(m_ePin[1]);
         pin1->setEnabled( true );

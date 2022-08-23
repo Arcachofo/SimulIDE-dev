@@ -63,6 +63,9 @@ void Battery::stamp()
     m_pin[1]->setEnodeComp( m_pin[0]->getEnode() );
     m_pin[0]->stampAdmitance( 1/cero_doub );
     m_pin[1]->stampAdmitance( 1/cero_doub );
+
+    m_ePin[0]->createCurrent();
+    m_ePin[1]->createCurrent();
     m_pin[0]->stampCurrent( m_volt/cero_doub );
     m_pin[1]->stampCurrent(-m_volt/cero_doub );
 }

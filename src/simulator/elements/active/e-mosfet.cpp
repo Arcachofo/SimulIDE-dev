@@ -58,6 +58,9 @@ void eMosfet::stamp()
       &&(m_ePin[1]->isConnected())
       &&(m_ePin[2]->isConnected()) )
     {
+        m_ePin[0]->createCurrent();
+        m_ePin[1]->createCurrent();
+
         m_ePin[0]->getEnode()->addToNoLinList(this);
         m_ePin[1]->getEnode()->addToNoLinList(this);
         m_ePin[2]->getEnode()->addToNoLinList(this);

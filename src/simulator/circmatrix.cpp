@@ -33,7 +33,7 @@ CircMatrix::CircMatrix()
 }
 CircMatrix::~CircMatrix(){}
 
-void CircMatrix::createMatrix( QList<eNode*> &eNodeList )
+bool CircMatrix::createMatrix( QList<eNode*> &eNodeList )
 {
     m_eNodeList = &eNodeList;
     m_numEnodes = eNodeList.size();
@@ -43,24 +43,12 @@ void CircMatrix::createMatrix( QList<eNode*> &eNodeList )
 
     m_circMatrix.resize( m_numEnodes , d_vector_t( m_numEnodes , 0 ) );
     m_coefVect.resize( m_numEnodes , 0 );
-    
-    m_circChanged  = true;
+
     m_admitChanged = false;
     m_currChanged  = false;
 
     qDebug() <<"\n  Initializing Matrix: "<< m_numEnodes << " eNodes";
-}
-
-void CircMatrix::stampMatrix( int row, int col, double value )
-{
-    m_admitChanged = true;
-    m_circMatrix[row-1][col-1] = value;      // eNode numbers start at 1
-}
-
-void CircMatrix::stampCoef( int row, double value )
-{
-    m_currChanged = true;
-    m_coefVect[row-1] = value;
+    return analyze();
 }
 
 void CircMatrix::addConnections( int enodNum, QList<int>* nodeGroup, QList<int>* allNodes )
@@ -80,97 +68,99 @@ void CircMatrix::addConnections( int enodNum, QList<int>* nodeGroup, QList<int>*
     }
 }
 
+bool CircMatrix::analyze()
+{
+    //qDebug() <<"Spliting Circuit...";
+    QList<int> allNodes;
+
+    for( int i=0; i<m_numEnodes; i++ ) allNodes.append( i+1 );
+
+    m_aList.clear();
+    m_aFaList.clear();
+    m_bList.clear();
+    m_ipvtList.clear();
+    m_eNodeActList.clear();
+    int group = 0;
+    int singleNode = 0;
+
+    while( !allNodes.isEmpty() ) // Get a list of groups of nodes interconnected
+    {
+        QList<int> nodeGroup;
+        addConnections( allNodes.first(), &nodeGroup, &allNodes ); // Get a group of nodes interconnected
+        //qDebug() <<"CircMatrix::solveMatrix split"<<nodeGroup<<allNodes;
+
+        int numEnodes = nodeGroup.size();
+        if( numEnodes==1 )           // Sigle nodes do by themselves
+        {
+            eNode* enod = m_eNodeList->at( nodeGroup[0]-1 );
+            enod->setSingle( true );
+            //enod->solveSingle();
+            singleNode++;
+            //qDebug() <<"CircMatrix::solveMatrix solve single"<<enod->itemId();
+        }else{
+            dp_matrix_t a;
+            d_matrix_t ap;
+            dp_vector_t b;
+            i_vector_t ipvt;
+            QList<eNode*> eNodeActive;
+
+            a.resize( numEnodes , dp_vector_t( numEnodes , 0 ) );
+            ap.resize( numEnodes , d_vector_t( numEnodes , 0 ) );
+            b.resize( numEnodes , 0 );
+            ipvt.resize( numEnodes , 0 );
+
+            int ny=0;
+            for( int y=0; y<m_numEnodes; ++y )    // Copy data to reduced Matrix
+            {
+                if( !nodeGroup.contains( y+1 ) ) continue;
+                int nx=0;
+                for( int x=0; x<m_numEnodes; ++x )
+                {
+                    if( !nodeGroup.contains( x+1 ) ) continue;
+                    a[nx][ny] = &(m_circMatrix[x][y]);
+                    //qDebug() <<"CircMatrix::solveMatrix cell"<<nx<<ny<<*(a[nx][ny]);
+                    nx++;
+                }
+                b[ny] = &(m_coefVect[y]);
+                eNodeActive.append( m_eNodeList->at(y) );
+                //eNode* enod = m_eNodeList->at(y);
+                //qDebug() <<"CircMatrix::solveMatrix node"<<enod->itemId();
+                ny++;
+            }
+            m_aList.append( a );
+            m_aFaList.append( ap );
+            m_bList.append( b );
+            m_ipvtList.append( ipvt );
+            m_eNodeActList.append( eNodeActive );
+            m_eNodeActive = &eNodeActive;
+
+            if( !factorMatrix( ny, group ) ) return false;
+            if( !luSolve( ny, group ) )      return false;
+
+            //qDebug() <<"CircMatrix::solveMatrix. Circuit"<<group<<ny<<"Nodes\n";
+
+            group++;
+        }
+    }
+    qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
+    qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes\n";
+
+    return true;
+}
+
 bool CircMatrix::solveMatrix()
 {
     if( !m_admitChanged && !m_currChanged ) return true;
 
-    if( m_circChanged )          // Split Circuit into unconnected parts
+    for( int i=0; i<m_bList.size(); ++i )
     {
-        //qDebug() <<"Spliting Circuit...";
-        QList<int> allNodes;
-        
-        for( int i=0; i<m_numEnodes; i++ ) allNodes.append( i+1 );
-        
-        m_aList.clear();
-        m_aFaList.clear();
-        m_bList.clear();
-        m_ipvtList.clear();
-        m_eNodeActList.clear();
-        int group = 0;
-        int singleNode = 0;
-        
-        while( !allNodes.isEmpty() ) // Get a list of groups of nodes interconnected
-        {
-            QList<int> nodeGroup;
-            addConnections( allNodes.first(), &nodeGroup, &allNodes ); // Get a group of nodes interconnected
-            //qDebug() <<"CircMatrix::solveMatrix split"<<nodeGroup<<allNodes;
+        m_eNodeActive = &(m_eNodeActList[i]);
+        int n = m_eNodeActive->size();
 
-            int numEnodes = nodeGroup.size();
-            if( numEnodes==1 )           // Sigle nodes do by themselves
-            {
-                eNode* enod = m_eNodeList->at( nodeGroup[0]-1 );
-                enod->setSingle( true );
-                enod->solveSingle();
-                singleNode++;
-                //qDebug() <<"CircMatrix::solveMatrix solve single"<<enod->itemId();
-            }else{
-                dp_matrix_t a;
-                d_matrix_t ap;
-                dp_vector_t b;
-                i_vector_t ipvt;
-                QList<eNode*> eNodeActive;
-                
-                a.resize( numEnodes , dp_vector_t( numEnodes , 0 ) );
-                ap.resize( numEnodes , d_vector_t( numEnodes , 0 ) );
-                b.resize( numEnodes , 0 );
-                ipvt.resize( numEnodes , 0 );
-
-                int ny=0;
-                for( int y=0; y<m_numEnodes; ++y )    // Copy data to reduced Matrix
-                {
-                    if( !nodeGroup.contains( y+1 ) ) continue;
-                    int nx=0;
-                    for( int x=0; x<m_numEnodes; ++x )
-                    {
-                        if( !nodeGroup.contains( x+1 ) ) continue;
-                        a[nx][ny] = &(m_circMatrix[x][y]);
-                        //qDebug() <<"CircMatrix::solveMatrix cell"<<nx<<ny<<*(a[nx][ny]);
-                        nx++;
-                    }
-                    b[ny] = &(m_coefVect[y]);
-                    eNodeActive.append( m_eNodeList->at(y) );
-                    //eNode* enod = m_eNodeList->at(y);
-                    //qDebug() <<"CircMatrix::solveMatrix node"<<enod->itemId();
-                    ny++;
-                }
-                m_aList.append( a );
-                m_aFaList.append( ap );
-                m_bList.append( b );
-                m_ipvtList.append( ipvt );
-                m_eNodeActList.append( eNodeActive );
-                m_eNodeActive = &eNodeActive;
-                
-                if( !factorMatrix( ny, group ) ) return false;
-                if( !luSolve( ny, group ) )      return false;
-
-                //qDebug() <<"CircMatrix::solveMatrix. Circuit"<<group<<ny<<"Nodes\n";
-
-                group++;
-            }
-        }
-        m_circChanged  = false;
-        qDebug() <<"CircMatrix::solveMatrix"<<group<<"Circuits";
-        qDebug() <<"CircMatrix::solveMatrix"<<singleNode<<"Single Nodes\n";
-    }else{
-        for( int i=0; i<m_bList.size(); ++i )
-        {
-            m_eNodeActive = &(m_eNodeActList[i]);
-            int n = m_eNodeActive->size();
-
-            if( m_admitChanged ) { if( !factorMatrix( n, i ) ) return false; }
-            if( !luSolve( n, i ) ) return false;
-        }
+        if( m_admitChanged ) { if( !factorMatrix( n, i ) ) return false; }
+        if( !luSolve( n, i ) ) return false;
     }
+
     m_currChanged  = false;
     m_admitChanged = false;
     return true;
@@ -339,12 +329,6 @@ bool CircMatrix::luSolve( int n, int group )
         m_eNodeActive->at(i)->setVolt( volt );      // Set Node Voltages
     }
     return isOk;
-}
-
-void CircMatrix::setCircChanged()
-{ 
-    m_circChanged  = true; 
-    m_admitChanged = true;
 }
 
 void CircMatrix::printMatrix()

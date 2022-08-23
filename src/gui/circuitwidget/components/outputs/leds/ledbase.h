@@ -22,6 +22,7 @@
 
 #include "e-led.h"
 #include "component.h"
+#include "e-node.h"
 
 class eNode;
 
@@ -57,9 +58,10 @@ class MAINMODULE_EXPORT LedBase : public Component, public eLed
         virtual void drawForeground( QPainter* p )=0;
         
         bool   m_grounded;
-        eNode* m_scrEnode;
         
         LedColor m_ledColor;
+
+        static eNode m_gndEnode;
 };
 
 #endif

@@ -40,23 +40,30 @@ class MAINMODULE_EXPORT CircMatrix
  static CircMatrix* self() { return m_pSelf; }
 
         void printMatrix();
-        void createMatrix( QList<eNode*> &eNodeList );
-        void stampMatrix( int row, int col, double value );
-        void stampCoef( int row, double value );
+        bool createMatrix( QList<eNode*> &eNodeList );
         bool solveMatrix();
-        
-        void setCircChanged();
-        
+
+        inline void stampMatrix( int row, int col, double value ){
+            m_admitChanged = true;
+            m_circMatrix[row-1][col-1] = value;      // eNode numbers start at 1
+        }
+        inline void stampCoef( int row, double value ){
+            m_currChanged = true;
+            m_coefVect[row-1] = value;
+        }
+
         d_matrix_t getMatrix() { return m_circMatrix; }
         d_vector_t getCoeffVect() { return m_coefVect; }
 
     private:
  static CircMatrix* m_pSelf;
         
-        bool factorMatrix( int n, int group );
-        bool luSolve( int n, int group );
+        bool analyze();
         void addConnections( int enodNum, QList<int>* nodeGroup, QList<int>* allNodes );
-        
+
+        inline bool factorMatrix( int n, int group );
+        inline bool luSolve( int n, int group );
+
         int m_numEnodes;
         QList<eNode*>* m_eNodeList;
         
@@ -72,7 +79,6 @@ class MAINMODULE_EXPORT CircMatrix
         d_vector_t m_coefVect;
         
         bool m_admitChanged;
-        bool m_circChanged;
         bool m_currChanged;
 };
  #endif

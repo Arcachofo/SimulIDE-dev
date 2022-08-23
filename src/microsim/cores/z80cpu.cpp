@@ -394,6 +394,7 @@ Z80CPU::~Z80CPU(){
 // Initialize component after eNode initialization
 void Z80CPU::stamp()
 {
+    IoComponent::initState();
     eClockedDevice::stamp();                                        // initialize eClockDevice
     
     m_clkState = Clock_Falling;                                     // when internal clock is used the first edge is rising edge - clock is inverted
@@ -406,13 +407,6 @@ void Z80CPU::stamp()
     resetCounter = 0;                                               // reset TState counter for reset
     normalReset = false;                                            // reset flag normalReset - it is not active
     specialReset = false;                                           // reset flag specialReset - it is not active
-}
-
-// Initialize component before eNode initialization
-void Z80CPU::initialize()
-{ 
-    IoComponent::initState();
-    eClockedDevice::initialize();
 }
 
 // voltChange is used only for external clock when it is selected
@@ -672,7 +666,7 @@ void Z80CPU::writeDataBus(unsigned char dataBus)
         m_inPin[i]->setStateZ( false );
         bool state = dataBus & (1<<i);
         bool oldst = m_inPin[i]->getOutState();
-        if( state != oldst ) m_inPin[i]->setOutState( state );
+        if( state != oldst ) m_inPin[i]->setOutStatFast( state );
     }
 }
 
@@ -683,10 +677,7 @@ void Z80CPU::writeAddrBus(unsigned short addrBus)
     {
         bool state = addrBus & (1<<i);
         bool oldst = m_outPin[i]->getOutState();
-        double volt = state ? 5 : 0;
-        if( state != oldst )
-            //m_outPin[i]->getEnode()->setFastVolt( volt );
-            m_outPin[i]->setOutState( state );
+        if( state != oldst ) m_outPin[i]->setOutStatFast( state );
     }
 }
 
@@ -711,17 +702,17 @@ void Z80CPU::clkFallingEdgeDelayed()
             case 1: if (sm_waitTState == false) {
                         // When current bus operation is Op Code Fetch without interrupt (machine cycle 1) then signals MREQ and M1 are set
                         if (mc_busOperation == oM1) {
-                            m_mreqPin->setOutState( true );
-                            m_rdPin->setOutState( true );
+                            m_mreqPin->setOutStatFast( true );
+                            m_rdPin->setOutStatFast( true );
                         }
                         // When current bus operation is read from memory then signals MREQ and RD are set
                         if (mc_busOperation == oMemRead) {
-                            m_mreqPin->setOutState( true );
-                            m_rdPin->setOutState( true );
+                            m_mreqPin->setOutStatFast( true );
+                            m_rdPin->setOutStatFast( true );
                         }
                         // When current bus operation is write to memory then signal MREQ is set
                         if (mc_busOperation == oMemWrite) {
-                            m_mreqPin->setOutState( true );
+                            m_mreqPin->setOutStatFast( true );
                         }
                         // When current bus operation is write to memory or I/O then set data bus
                         if ( (mc_busOperation == oMemWrite) || (mc_busOperation == oIOWrite) )
@@ -735,54 +726,54 @@ void Z80CPU::clkFallingEdgeDelayed()
                         // When current bus operation is Op Code Fetch with interrupt (machine cycle 1) then signals IORQ signal is set
                         // (There is a difference in TStates numbering from datasheet - one automatically inserted wait states is T1 wait)
                         if (mc_busOperation == oM1Int) {
-                            m_iorqPin->setOutState(true);
+                            m_iorqPin->setOutStatFast(true);
                         }
                         // When current bus operation is write to memory then signal WR is set
                         if (mc_busOperation == oMemWrite) {
-                            m_wrPin->setOutState( true );
+                            m_wrPin->setOutStatFast( true );
                         }
                     }
                     break;
                     // Setting bus at clock rising edge of TState 3
                     // When current bus operation is Op Code Fetch (machine cycle 1) then signal MREQ is reset
             case 3: if ( (mc_busOperation == oM1) || (mc_busOperation == oM1Int) )
-                        m_mreqPin->setOutState( true );
+                        m_mreqPin->setOutStatFast( true );
                     // When current bus operation is read from memory then signals MREQ and RD are reset
                     if (mc_busOperation == oMemRead) {
-                        m_mreqPin->setOutState( false );
-                        m_rdPin->setOutState( false );
+                        m_mreqPin->setOutStatFast( false );
+                        m_rdPin->setOutStatFast( false );
                     }
                     // When current bus operation is write to memory then signals MREQ and WR are reset
                     if (mc_busOperation == oMemWrite) {
-                        m_mreqPin->setOutState( false );
-                        m_wrPin->setOutState( false );
+                        m_mreqPin->setOutStatFast( false );
+                        m_wrPin->setOutStatFast( false );
                     }
                     // When current bus operation is read from I/O then signals IORQ and RD are reset
                     if (mc_busOperation == oIORead) {
-                        m_iorqPin->setOutState( false );
-                        m_rdPin->setOutState( false );
+                        m_iorqPin->setOutStatFast( false );
+                        m_rdPin->setOutStatFast( false );
                     }
                     // When current bus operation is write to I/O then signals IORQ and WR are reset
                     if (mc_busOperation == oIOWrite) {
-                        m_iorqPin->setOutState( false );
-                        m_wrPin->setOutState( false );
+                        m_iorqPin->setOutStatFast( false );
+                        m_wrPin->setOutStatFast( false );
                     }
                     break;
                     // Setting bus at clock rising edge of TState 4
                     // When current bus operation is Op Code Fetch (machine cycle 1) then signal MREQ is reset
             case 4: if ( (mc_busOperation == oM1) || (mc_busOperation == oM1Int) )
-                        m_mreqPin->setOutState( false );
+                        m_mreqPin->setOutStatFast( false );
                     // When current instruction is HALT then signal HALT is set
                     if ( (instructionReg == 0x76) && (instructionSet == noPrefix) )
-                        m_haltPin->setOutState( true );
+                        m_haltPin->setOutStatFast( true );
                     // When interrupt is requested and enabled then signal HALT is reset
                     if ( ( (sNMI == true) || ( (sInt == true) && (IFF1 == true) ) ) && (m_haltPin->getOutState() == true) )
-                        m_haltPin->setOutState( false );
+                        m_haltPin->setOutStatFast( false );
                     break;
         }
     } else {
         // When bus is not requested any more by BUSRQ signal then signal BUSACK is reset
-        if (sBusReq == false) m_busacPin->setOutState( false );
+        if (sBusReq == false) m_busacPin->setOutStatFast( false );
     }
 }
 
@@ -852,7 +843,7 @@ void Z80CPU::clkRisingEdgeDelayed()
     // When bus is requested by other device by BUSRQ signal then signal BUSACK is set and bus is set to high impedance
     // or when normal reset is requested by RESET signal the bus is set to high impedance
     if ( ( (sBusAck == true) || (normalReset == true) ) && (highImpedanceBus == false) ) {
-        m_busacPin->setOutState( sBusAck );                         // signal BUSACK is set
+        m_busacPin->setOutStatFast( sBusAck );                         // signal BUSACK is set
         m_mreqPin->setStateZ( true );                               // set signal MREQ to high impedance
         m_iorqPin->setStateZ( true );                               // set signal IORQ to high impedance
         m_rdPin->setStateZ( true );                                 // set signal RD to high impedance
@@ -887,49 +878,49 @@ void Z80CPU::clkRisingEdgeDelayed()
                             releaseDataBus();
                         // When current bus operation is Op Code Fetch (machine cycle 1) then signal M1 is set
                         if ( (mc_busOperation == oM1) || (mc_busOperation == oM1Int) )
-                            m_m1Pin->setOutState( true );
+                            m_m1Pin->setOutStatFast( true );
                         // When previous bus opration was Op Code Fetch (machine cycle 1) then signal RFSH is reset (it might be reset also at TState 5)
                         if ( ( (lastBusOperation == oM1) || (lastBusOperation == oM1Int) ) &&  (m_rfshPin->getOutState() == true) )
-                            m_rfshPin->setOutState( false );
+                            m_rfshPin->setOutStatFast( false );
                     }
                     break;
                     // Setting bus at clock rising edge of TState 2 (it might repeat when wait states are inserted)
             case 2: if (sm_waitTState == false) {
                         // When current bus operation is read from I/O then signals IORQ and RD are set
                         if (mc_busOperation == oIORead) {
-                            m_iorqPin->setOutState( true );
-                            m_rdPin->setOutState( true );
+                            m_iorqPin->setOutStatFast( true );
+                            m_rdPin->setOutStatFast( true );
                         }
                         // When current bus operation is write to I/O then signals IORQ and WR are set
                         if (mc_busOperation == oIOWrite) {
-                            m_iorqPin->setOutState( true );
-                            m_wrPin->setOutState( true );
+                            m_iorqPin->setOutStatFast( true );
+                            m_wrPin->setOutStatFast( true );
                         }
                     }
                     break;
                     // Setting bus at clock rising edge of TState 3
                     // When current bus operation is Op Code Fetch (machine cycle 1) then signal M1 is reset, signal RFSH is set and address bus is overrided to refresh address
             case 3: if ( (mc_busOperation == oM1) || (mc_busOperation == oM1Int) ) {
-                        m_m1Pin->setOutState( false );
-                        m_rfshPin->setOutState( true );
+                        m_m1Pin->setOutStatFast( false );
+                        m_rfshPin->setOutStatFast( true );
                         writeAddrBus((regI << 8) | regR);
                         regR = ( (regR + 1) & 0x7f ) + ( regR & 0x80 );
                     }
                     // When current bus operation is Op Code Fetch without interrupt then signals MREQ and RD are reset
                     if (mc_busOperation == oM1) {
-                        m_mreqPin->setOutState( false );
-                        m_rdPin->setOutState( false );
+                        m_mreqPin->setOutStatFast( false );
+                        m_rdPin->setOutStatFast( false );
                     }
                     // When current bus operation is Op Code Fetch with interrupt then signal IORQ is reset
                     if (mc_busOperation == oM1Int) {
-                        m_iorqPin->setOutState( false );
+                        m_iorqPin->setOutStatFast( false );
                     }
                     break;
                     // Setting bus at clock rising edge of TState 5 in case of longer machine cycle than 4 TStates
                     // When bus opration is Op Code Fetch (machine cycle 1) then address bus is restored and signal RFSH is reset
         case 5:  if ( (mc_busOperation == oM1) || (mc_busOperation == oM1Int) ) {
                         writeAddrBus(sAO);
-                        m_rfshPin->setOutState( false );
+                        m_rfshPin->setOutStatFast( false );
                     }
                     break;
         }

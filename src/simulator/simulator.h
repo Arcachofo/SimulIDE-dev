@@ -20,6 +20,9 @@
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
+#include "e-node.h"
+#include "e-element.h"
+
 enum simState_t{
     SIM_STOPPED=0,
     SIM_ERROR,
@@ -42,6 +45,8 @@ class CircMatrix;
 
 class MAINMODULE_EXPORT Simulator : public QObject
 {
+        friend class eNode;
+
     Q_OBJECT
     public:
         Simulator( QObject* parent=0 );
@@ -97,13 +102,11 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         simState_t simState() { return m_state; }
 
-        void notCorverged() { m_converged = false; }
+        inline void notCorverged() { m_converged = false; }
 
         void addToEnodeList( eNode* nod );
-        void remFromEnodeList( eNode* nod );
+        //void remFromEnodeList( eNode* nod );
 
-        void addToChangedNodes( eNode* nod );
-        
         void addToElementList( eElement* el );
         void remFromElementList( eElement* el );
         
@@ -113,17 +116,19 @@ class MAINMODULE_EXPORT Simulator : public QObject
         void addToSocketList( Socket* el );
         void remFromSocketList( Socket* el );
 
-        void addToChangedList( eElement* el );
-        void addToNoLinList( eElement* el );
-        
     private:
  static Simulator* m_pSelf;
+
+        // Accelerate calls from eNode:
+        inline void addToChangedNodes( eNode* nod ) { nod->nextCH = m_changedNode; m_changedNode = nod; }
+        inline void addToChangedList( eElement* el ) { el->nextChanged = m_voltChanged; m_voltChanged = el; }
+        inline void addToNoLinList( eElement* el ) { el->nextChanged = m_nonLinear;  m_nonLinear = el; }
 
         void createNodes();
         void resetSim();
         void runCircuit();
-        void solveMatrix();
-        void solveCircuit();
+        inline void solveCircuit();
+        inline void solveMatrix();
 
         inline void clearEventList();
 
@@ -143,7 +148,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
 
         eNode*    m_changedNode;
         eElement* m_voltChanged;
-        eElement* m_nonLin;
+        eElement* m_nonLinear;
 
         QList<eElement*> m_elementList;
         QList<Updatable*> m_updateList;

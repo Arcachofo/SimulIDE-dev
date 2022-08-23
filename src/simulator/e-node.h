@@ -41,10 +41,13 @@ class MAINMODULE_EXPORT eNode
         void remFromChangedCallback( eElement* el );
 
         void addToNoLinList( eElement* el );
-        void remFromNoLinList( eElement* el );
+        //void remFromNoLinList( eElement* el );
 
-        void stampCurrent( ePin* epin, double current );
+        //void createAdmitance( ePin* epin, int node );
         void stampAdmitance( ePin* epin, double admit );
+
+        void createCurrent( ePin* epin );
+        void stampCurrent( ePin* epin, double current );
 
         int  getNodeNumber() { return m_nodeNum; }
         void setNodeNumber( int n ) { m_nodeNum = n; }
@@ -53,14 +56,6 @@ class MAINMODULE_EXPORT eNode
         void   setVolt( double volt );
         bool voltchanged() { return m_voltChanged; }
         void setVoltChanged( bool changed ){ m_voltChanged = changed; }
-
-        /// REMOVE
-        void setFastVolt( double volt );
-        double m_fastVolt;
-        bool m_fast;
-        ///
-
-        void solveSingle();
 
         void initialize();
         void stampMatrix();
@@ -76,18 +71,49 @@ class MAINMODULE_EXPORT eNode
         eNode* nextCH;
 
     private:
+        class Connection
+        {
+            public:
+                Connection( ePin* e, int n=0, double v=0 ){ epin = e; node = n; value = v; }
+                ~Connection(){;}
+
+                Connection* next;
+                ePin*  epin;
+                int    node;
+                double value;
+        };
+        class LinkedElement
+        {
+            public:
+                LinkedElement( eElement* el ) { element = el; }
+                ~LinkedElement(){;}
+
+                LinkedElement* next;
+                eElement* element;
+        };
+
+        inline void solveSingle();
+
+        void clearElmList( LinkedElement* first );
+        void clearConnList( Connection* first );
+
         QString m_id;
 
         QList<ePin*> m_ePinList;
 
-        QList<eElement*> m_changedFast;
-        QList<eElement*> m_nonLinear;
+        LinkedElement* m_voltChEl;
+        LinkedElement* m_nonLinEl;
+        //QList<eElement*> m_changedFast;
+        //QList<eElement*> m_nonLinear;
 
-        QHash<ePin*, double> m_admitList;
-        QHash<ePin*, double> m_currList;
+        Connection* m_firstAdmit;
+        Connection* m_firstCurrent;
+        Connection* m_nodeAdmit;
+
+        //QHash<ePin*, double> m_admitList;
+        //QHash<ePin*, double> m_currList;
         QHash<ePin*, int>    m_nodeList;
-
-        QHash<int, double>   m_admit;
+        //QHash<int, double>   m_admit;
 
         double m_totalCurr;
         double m_totalAdmit;
@@ -103,5 +129,4 @@ class MAINMODULE_EXPORT eNode
         bool m_switched;
 };
 #endif
-
 

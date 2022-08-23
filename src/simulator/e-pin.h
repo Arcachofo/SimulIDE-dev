@@ -22,7 +22,9 @@
 
 #include <QString>
 
-class eNode;
+#include "e-node.h"
+
+//class eNode;
 class eElement;
 
 class MAINMODULE_EXPORT ePin
@@ -44,8 +46,9 @@ class MAINMODULE_EXPORT ePin
         bool inverted() { return m_inverted; }
         virtual void setInverted( bool inverted ) { m_inverted = inverted; }
 
-        void stampAdmitance( double data );
-        void stampCurrent( double data );
+        inline void stampAdmitance( double data ) { if( m_enode ) m_enode->stampAdmitance( this, data ); }
+        inline void stampCurrent( double data ) { if( m_enode ) m_enode->stampCurrent( this, data ); }
+        void createCurrent();
         
         QString getId()  { return m_id; }
         void setId( QString id );

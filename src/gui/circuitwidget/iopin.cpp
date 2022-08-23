@@ -23,7 +23,7 @@
 #include "simulator.h"
 #include "circuit.h"
 
-eNode IoPin::m_scrEnode("");
+eNode IoPin::m_gndEnode("");
 
 IoPin::IoPin( int angle, const QPoint pos, QString id, int index, Component* parent, pinMode_t mode )
      : Pin( angle, pos, id, index, parent )
@@ -69,7 +69,8 @@ void IoPin::initialize()
 
 void IoPin::stamp()
 {
-    ePin::setEnodeComp( &m_scrEnode );
+    ePin::setEnodeComp( &m_gndEnode );
+    ePin::createCurrent();
     setPinMode( m_pinMode );
     stampAll();
 }
@@ -112,7 +113,6 @@ void IoPin::sheduleState( bool state, uint64_t time )
         Simulator::self()->cancelEvents( this );
         m_step = m_steps-m_step;
     }
-
     if( time ) Simulator::self()->addEvent( time, this );
     else runEvent();
 }
@@ -195,13 +195,23 @@ void IoPin::setOutState( bool out ) // Set Output to Hight or Low
 
     if( m_pinMode == openCo )
     {
-        m_gndAdmit = out ? 1/1e8 : 1/m_outputImp;
+        if( out ){
+            m_gndAdmit = 1/1e8;
+            setPinState( open_high ); // Z-Low colors
+         }else{
+            m_gndAdmit = 1/m_outputImp;
+            setPinState( open_low ); // Z-Low colors
+        }
         updtState();
-        setPinState( out? open_high : open_low ); // Z-Low colors
     }else{
-        m_outVolt = out ? m_outHighV : m_outLowV;
+        if( out ){
+            m_outVolt = m_outHighV;
+            setPinState( out_high ); // High colors
+        }else{
+            m_outVolt = m_outLowV;
+            setPinState( out_low ); // Low colors
+        }
         stampVolt( m_outVolt );
-        setPinState( out? out_high : out_low ); // High-Low colors
 }   }
 
 void IoPin::setStateZ( bool z )
@@ -260,9 +270,4 @@ void IoPin::stampAll()
 {
     ePin::stampAdmitance( m_admit );
     stampVolt( m_outVolt );
-}
-
-void IoPin::stampVolt( double volt )
-{
-    ePin::stampCurrent( volt*m_admit );
 }

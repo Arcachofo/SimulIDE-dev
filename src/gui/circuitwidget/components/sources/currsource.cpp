@@ -59,6 +59,10 @@ new DoubProp<CurrSource>( "MaxValue" ,tr("Max. Current") ,"A", this, &CurrSource
 }
 CurrSource::~CurrSource(){}
 
+void CurrSource::stamp()
+{
+    m_outPin->createCurrent();
+}
 void CurrSource::updateStep()
 {
     if( m_changed ) 

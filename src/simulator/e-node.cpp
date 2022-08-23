@@ -28,11 +28,22 @@ eNode::eNode( QString id )
     m_id = id;
     m_nodeNum = 0;
 
-    initialize();
+    m_voltChEl = NULL;
+    m_nonLinEl = NULL;
+    m_firstAdmit  = NULL;
+    m_firstCurrent = NULL;
+    m_nodeAdmit = NULL;
 
     if( !id.isEmpty() ) Simulator::self()->addToEnodeList( this );
 }
-eNode::~eNode(){}
+eNode::~eNode()
+{
+    clearElmList( m_voltChEl );
+    clearElmList( m_nonLinEl );
+    clearConnList( m_firstAdmit );
+    clearConnList( m_firstCurrent );
+    clearConnList( m_nodeAdmit );
+}
 
 void eNode::initialize()
 {
@@ -42,37 +53,65 @@ void eNode::initialize()
     m_currChanged  = false;
     m_admitChanged = false;
     nextCH = NULL;
-
-    m_changedFast.clear();
-    m_nonLinear.clear();
-    m_admitList.clear();
-    m_currList.clear();
-    m_nodeList.clear();
-
-    m_fast = false;
-    m_fastVolt = 0;
     m_volt = 0;
+
+    clearElmList( m_voltChEl );
+    m_voltChEl = NULL;
+
+    clearElmList( m_nonLinEl );
+    m_nonLinEl = NULL;
+
+    clearConnList( m_firstAdmit );
+    m_firstAdmit = NULL;
+
+    clearConnList( m_firstCurrent );
+    m_firstCurrent = NULL;
+
+    clearConnList( m_nodeAdmit );
+    m_nodeAdmit = NULL;
+
+    m_nodeList.clear();
 }
 
-void eNode::stampCurrent( ePin* epin, double current )
+/*void eNode::addConnection( ePin* epin, int enodeComp ) // Add node at other side of pin
 {
-    if( m_nodeList.value( epin ) == m_nodeNum  )
-        return; // Be sure msg doesn't come from this node
+    if( enodeComp != m_nodeNum ) m_nodeList[epin] = enodeComp;  // Be sure msg doesn't come from this node
+}*/
 
-    m_currList[epin] = current;
-    m_currChanged = true;
-
-    if( !m_changed ){
-        m_changed = true;
-        Simulator::self()->addToChangedNodes( this );
-}   }
-
-void eNode::stampAdmitance( ePin* epin, double admit )
+void eNode::addConnection( ePin* epin, int node )
 {
-    if( m_nodeList.value( epin ) == m_nodeNum  )
-        return; // Be sure msg doesn't come from this node
+    if( node == m_nodeNum ) // Be sure msg doesn't come from this node
+        return;
 
-    m_admitList[epin] = admit;
+    Connection* first = m_firstAdmit; // Create list of connections
+    while( first ){
+        if( first->epin == epin ) return; // Connection already in the list
+        first = first->next;
+    }
+    Connection* conn = new Connection( epin, node );
+    conn->next = m_firstAdmit;  // Prepend
+    m_firstAdmit = conn;
+
+    first = m_nodeAdmit;            // Create list of admitances to nodes (reusing Connection class)
+    while( first ){
+        if( first->node == node ) return; // Node already in the list
+        first = first->next;
+    }
+    conn = new Connection( epin, node );
+    conn->next = m_nodeAdmit;  // Prepend
+    m_nodeAdmit = conn;
+
+    m_nodeList[epin] = node; // Used by CircMatrix
+}
+
+void eNode::stampAdmitance( ePin* epin, double admit ) // Be sure msg doesn't come from this node
+{
+    Connection* conn = m_firstAdmit;
+    while( conn ){
+        if( conn->epin == epin ) { conn->value = admit; break; } // Connection found
+        conn = conn->next;
+    }
+
     if( admit == 0 ) m_switched = true;
     m_admitChanged = true;
 
@@ -81,26 +120,36 @@ void eNode::stampAdmitance( ePin* epin, double admit )
         Simulator::self()->addToChangedNodes( this );
 }   }
 
-void eNode::setFastVolt( double volt )
+void eNode::createCurrent( ePin* epin )
 {
-    m_fastVolt = volt;
+    Connection* conn = new Connection( epin );
+    Connection* first = m_firstCurrent;
+
+    while( first ){
+        if( first->epin == epin ) return; // Element already in the list
+        first = first->next;
+    }
+    conn->next = m_firstCurrent;  // Prepend
+    m_firstCurrent = conn;
+}
+
+void eNode::stampCurrent( ePin* epin, double current ) // Be sure msg doesn't come from this node
+{
+    Connection* conn = m_firstCurrent;
+    while( conn ){
+        if( conn->epin == epin ) { conn->value = current; break; } // Connection found
+        conn = conn->next;
+    }
+    m_currChanged = true;
+
     if( !m_changed ){
-        m_fast = true;
         m_changed = true;
         Simulator::self()->addToChangedNodes( this );
-    }
-}
+}   }
+
 void eNode::stampMatrix()
 {
     if( m_nodeNum == 0 ) return;
-
-
-    /*if( m_changed && m_fast )
-    {
-        m_changed = false;
-        setVolt( m_fastVolt );
-        return;
-    }*/
     m_changed = false;
 
     if( m_admitChanged )
@@ -109,37 +158,44 @@ void eNode::stampMatrix()
         if( m_switched ) m_totalAdmit += 1e-12; // Weak connection to ground
 
         if( m_single ){
-            for( double adm : m_admitList ) m_totalAdmit += adm;
-        }
-        else{
-            m_admit.clear();
-            QHashIterator<ePin*, double> i(m_admitList); // ePin-Admit
-            while( i.hasNext() )
-            {
-                i.next();
-                double adm = i.value();
-                ePin* epin = i.key();
-                int enode = m_nodeList.value( epin );
+            Connection* conn = m_firstAdmit;
+            while( conn ){ m_totalAdmit += conn->value; conn = conn->next; } // Calculate total admitance
+        }else{
+            Connection* na = m_nodeAdmit;
+            while( na ){ na->value = 0; na = na->next; } // Clear nodeAdmit
 
-                m_admit[enode] += adm;
-                m_totalAdmit   += adm;
-            }
-            QHashIterator<int, double> ai(m_admit); // eNode-Admit
-            while( ai.hasNext() )
-            {
-                ai.next();
-                int    enode = ai.key();
-                double admit = ai.value();
-                if( enode>0 ) CircMatrix::self()->stampMatrix( m_nodeNum, enode, -admit );
+            Connection* conn = m_firstAdmit;
+            while( conn ){
+                double adm = conn->value;
+                int  enode = conn->node;
+
+                if( enode > 0 ){         // Calculate admitances to nodes
+                    na = m_nodeAdmit;
+                    while( na ){
+                        if( na->node == enode ){ na->value += adm; break; }
+                        na = na->next;
+                    }
+                }
+                m_totalAdmit += adm;    // Calculate total admitance
+                conn = conn->next;
             }
             CircMatrix::self()->stampMatrix( m_nodeNum, m_nodeNum, m_totalAdmit );
+
+            na = m_nodeAdmit;
+            while( na ){
+                int    enode = na->node;
+                double admit = na->value;
+                if( enode > 0 ) CircMatrix::self()->stampMatrix( m_nodeNum, enode, -admit );
+                na = na->next;
+            }
         }
         m_admitChanged = false;
     }
-    if( m_currChanged )
-    {
+    if( m_currChanged ){
         m_totalCurr  = 0;
-        for( double current : m_currList ) m_totalCurr += current;
+
+        Connection* conn = m_firstCurrent;
+        while( conn ){ m_totalCurr += conn->value; conn = conn->next; } // Calculate total current
 
         if( !m_single ) CircMatrix::self()->stampCoef( m_nodeNum, m_totalCurr );
         m_currChanged  = false;
@@ -161,14 +217,20 @@ void  eNode::setVolt( double v )
         m_voltChanged = true; // Used for wire animation
         m_volt = v;
 
-        for( eElement* el : m_changedFast )
+        LinkedElement* linked = m_voltChEl; // VoltChaneg callback
+        while( linked )
         {
+            eElement* el = linked->element;
+            linked = linked->next;
             if( el->added ) continue;
             Simulator::self()->addToChangedList( el );
             el->added = true;
         }
-        for( eElement* el : m_nonLinear )
+        linked = m_nonLinEl ;              // Non Linear callback
+        while( linked )
         {
+            eElement* el = linked->element;
+            linked = linked->next;
             if( el->added ) continue;
             Simulator::self()->addToNoLinList( el );
             el->added = true;
@@ -181,9 +243,9 @@ void eNode::addEpin( ePin* epin )
 void eNode::remEpin( ePin* epin )
 {
     if( m_ePinList.contains(epin) ) m_ePinList.removeOne( epin );
-    if( m_nodeList.contains(epin) ) m_nodeList.remove( epin );
-    if( m_currList.contains(epin) ) m_currList.remove( epin );
-    if( m_admitList.contains(epin) ) m_admitList.remove( epin );
+    //if( m_nodeList.contains(epin) ) m_nodeList.remove( epin );
+    //if( m_currList.contains(epin) ) m_currList.remove( epin );
+    //if( m_admitList.contains(epin) ) m_admitList.remove( epin );
 }
 
 void eNode::clear()
@@ -193,20 +255,87 @@ void eNode::clear()
         epin->setEnodeComp( NULL );
 }   }
 
-void eNode::addConnection( ePin* epin, int enodeComp ) // Add node at other side of pin
-{ if( enodeComp != m_nodeNum ) m_nodeList[epin] = enodeComp; } // Be sure msg doesn't come from this node
-
 QList<int> eNode::getConnections()
 { return m_nodeList.values(); }
 
 void eNode::voltChangedCallback( eElement* el )
-{ if( !m_changedFast.contains(el) ) m_changedFast.append(el); }
+{
+    LinkedElement* changed = m_voltChEl;
+    while( changed )
+    {
+        if( el == changed->element ) return; // Element already in the list
+        changed = changed->next;
+    }
+    LinkedElement* newLinked = new LinkedElement( el );
+    newLinked->next = m_voltChEl; // Prepend
+    m_voltChEl = newLinked;
+}
 
 void eNode::remFromChangedCallback( eElement* el )
-{  m_changedFast.removeOne(el); }
+{
+    LinkedElement* changed = m_voltChEl;
+    LinkedElement* last  = NULL;
+    LinkedElement* next  = NULL;
+
+    while( changed ){
+        next = changed->next;
+        if( el == changed->element )
+        {
+            if( last ) last->next = next;
+            else       m_voltChEl = next;
+            delete changed;//changed->next = NULL;
+        }
+        else last = changed;
+        changed = next;
+    }
+}
 
 void eNode::addToNoLinList( eElement* el )
-{ if( !m_nonLinear.contains(el) ) m_nonLinear.append(el); }
+{
+    LinkedElement* changed = m_nonLinEl;
+    while( changed )
+    {
+        if( el == changed->element ) return; // Element already in the list
+        changed = changed->next;
+    }
+    LinkedElement* newLinked = new LinkedElement( el );
+    newLinked->next = m_nonLinEl; // Prepend
+    m_nonLinEl = newLinked;
+}
 
-void eNode::remFromNoLinList( eElement* el )
-{ m_nonLinear.removeOne(el); }
+/*void eNode::remFromNoLinList( eElement* el )
+{
+    LinkedElement* changed = m_nonLinEl;
+    LinkedElement* last  = NULL;
+    LinkedElement* next  = NULL;
+
+    while( changed ){
+        next = changed->next;
+        if( el == changed->element )
+        {
+            if( last ) last->next = next;
+            else       m_nonLinEl = next;
+            delete changed;//changed->next = NULL;
+        }
+        else last = changed;
+        changed = next;
+    }
+}*/
+
+void eNode::clearElmList( LinkedElement* first )
+{
+    while( first ){
+        LinkedElement* del = first;
+        first = first->next;
+        delete del;
+    }
+}
+
+void eNode::clearConnList( Connection* first )
+{
+    while( first ){
+        Connection* del = first;
+        first = first->next;
+        delete del;
+    }
+}

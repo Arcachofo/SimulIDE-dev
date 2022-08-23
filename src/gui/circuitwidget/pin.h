@@ -110,7 +110,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         QString packageType() { return m_packageType; }
         void setPackageType( QString type ) { m_packageType = type; }
 
-        void setPinState( pinState_t st ) { m_pinState = st; /*m_PinChanged = true;*/ }
+        inline void setPinState( pinState_t st ) { m_pinState = st; /*m_PinChanged = true;*/ }
 
         void animate( bool an );
         virtual void updateStep() override;

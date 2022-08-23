@@ -46,13 +46,13 @@ void eResistor::stampAdmit()
     m_ePin[1]->stampAdmitance( m_admit );
 }
 
-void eResistor::stampCurrent( double current )
+/*void eResistor::stampCurrent( double current )
 {
     if( !m_ePin[0] ) return;
 
     m_ePin[0]->stampCurrent( current );
     m_ePin[1]->stampCurrent( -current );
-}
+}*/
 
 void eResistor::setRes( double resist )
 {

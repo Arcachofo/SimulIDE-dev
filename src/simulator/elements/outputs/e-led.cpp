@@ -52,6 +52,9 @@ void eLed::initialize()
 
 void eLed::stamp()
 {
+    m_ePin[0]->createCurrent();
+    m_ePin[1]->createCurrent();
+
     eNode* node = m_ePin[0]->getEnode();
     if( node ) node->addToNoLinList( this );
 

@@ -179,7 +179,7 @@ void Simulator::runCircuit()
         }
         solveCircuit();
         if( m_state < SIM_RUNNING ) break;
-        event = m_firstEvent;               // Can be event added at solveCircuit()
+        event = m_firstEvent;               // m_firstEvent can be an event added at solveCircuit()
     }
     if( m_state > SIM_WAITING ) m_circTime = endRun;
     m_loopTime = m_RefTimer.nsecsElapsed();
@@ -187,20 +187,20 @@ void Simulator::runCircuit()
 
 void Simulator::solveCircuit()
 {
-    while( m_changedNode || m_nonLin ) // Also Proccess changes gererated in voltChanged()
+    while( m_changedNode || m_nonLinear ) // Also Proccess changes gererated in voltChanged()
     {
         if( m_changedNode ){
             solveMatrix();
             if( m_error ) return;
         }
-        m_converged = m_nonLin==NULL;
+        m_converged = m_nonLinear==NULL;
         while( !m_converged )                  // Non Linear Components
         {
             m_converged = true;
-            while( m_nonLin ){
-                m_nonLin->added = false;
-                m_nonLin->voltChanged();
-                m_nonLin = m_nonLin->nextChanged;
+            while( m_nonLinear ){
+                m_nonLinear->added = false;
+                m_nonLinear->voltChanged();
+                m_nonLinear = m_nonLinear->nextChanged;
             }
             if( m_maxNlstp && (m_NLstep++ >= m_maxNlstp) )  // Max iterations reached
             { m_warning = 1; m_converged = true; return; }
@@ -242,7 +242,7 @@ void Simulator::resetSim()
     clearEventList();
     m_changedNode = NULL;
     m_voltChanged = NULL;
-    m_nonLin = NULL;
+    m_nonLinear = NULL;
 
     CircuitWidget::self()->setMsg( " Stopped ", 1 );
 }
@@ -316,8 +316,7 @@ void Simulator::startSim( bool paused )
     }
     for( eElement* el : m_elementList ) el->stamp();
 
-    m_matrix->createMatrix( m_eNodeList );// Initialize Matrix
-    if( !m_matrix->solveMatrix() )        // Try to solve matrix, if it fails, stop simulation // m_matrix.printMatrix();
+    if( !m_matrix->createMatrix( m_eNodeList ) ) // Initialize Matrix, if it fails, stop simulation // m_matrix.printMatrix();
     {
         qDebug() << "Simulator::startSim, Failed to solve Matrix";
         m_error = 1;
@@ -483,11 +482,11 @@ void Simulator::cancelEvents( eElement* el )
 void Simulator::addToEnodeList( eNode* nod )
 { if( !m_eNodeList.contains(nod) ) m_eNodeList.append( nod ); }
 
-void Simulator::remFromEnodeList( eNode* nod )
-{ m_eNodeList.removeOne( nod );}
+//void Simulator::remFromEnodeList( eNode* nod )
+//{ m_eNodeList.removeOne( nod );}
 
-void Simulator::addToChangedNodes( eNode* nod )
-{ nod->nextCH = m_changedNode; m_changedNode = nod; }
+//void Simulator::addToChangedNodes( eNode* nod )
+//{ nod->nextCH = m_changedNode; m_changedNode = nod; }
 
 void Simulator::addToElementList( eElement* el )
 { if( !m_elementList.contains(el) ) m_elementList.append(el); }
@@ -507,10 +506,10 @@ void Simulator::addToSocketList( Socket* el )
 void Simulator::remFromSocketList( Socket* el )
 { m_socketList.removeOne(el); }
 
-void Simulator::addToChangedList( eElement* el )
-{ el->nextChanged = m_voltChanged; m_voltChanged = el; }
+//void Simulator::addToChangedList( eElement* el )
+//{ el->nextChanged = m_voltChanged; m_voltChanged = el; }
 
-void Simulator::addToNoLinList( eElement* el )
-{ el->nextChanged = m_nonLin;  m_nonLin = el; }
+//void Simulator::addToNoLinList( eElement* el )
+//{ el->nextChanged = m_nonLinear;  m_nonLinear = el; }
 
 #include "moc_simulator.cpp"

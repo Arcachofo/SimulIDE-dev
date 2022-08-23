@@ -86,11 +86,10 @@ void VoltReg::stamp()
     if( m_ePin[1]->isConnected() ) m_ePin[1]->getEnode()->addToNoLinList(this);
     if( m_ePin[2]->isConnected() ) m_ePin[2]->getEnode()->addToNoLinList(this);
 
-    eResistor::stamp();
-}
+    m_ePin[0]->createCurrent();
+    m_ePin[1]->createCurrent();
 
-void VoltReg::initialize()
-{
+    eResistor::stamp();
     eResistor::setRes( 1e-6 );
     m_accuracy = Simulator::self()->NLaccuracy();
     m_lastOut = 0;

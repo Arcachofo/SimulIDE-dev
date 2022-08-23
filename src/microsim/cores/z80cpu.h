@@ -36,7 +36,6 @@ class MAINMODULE_EXPORT Z80CPU : public IoComponent, public eClockedDevice
         static LibraryItem* libraryItem();
 
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
         virtual void runEvent() override;
         

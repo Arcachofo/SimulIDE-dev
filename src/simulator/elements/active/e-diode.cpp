@@ -57,6 +57,9 @@ void eDiode::stamp()
     node = m_ePin[1]->getEnode();
     if( node ) node->addToNoLinList( this );
 
+    m_ePin[0]->createCurrent();
+    m_ePin[1]->createCurrent();
+
     eResistor::stamp();
 }
 

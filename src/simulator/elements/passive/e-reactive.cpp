@@ -38,6 +38,9 @@ void eReactive::stamp()
 
     if( m_ePin[0]->isConnected() && m_ePin[1]->isConnected())
     {
+        m_ePin[0]->createCurrent();
+        m_ePin[1]->createCurrent();
+
         m_reacStep = Simulator::self()->reactStep(); // Time in ps
         updtReactStep();
 

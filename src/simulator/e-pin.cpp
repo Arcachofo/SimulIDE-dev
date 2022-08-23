@@ -18,7 +18,6 @@
  ***************************************************************************/
 
 #include "e-pin.h"
-#include "e-node.h"
 #include "circuit.h"
 
 ePin::ePin( QString id, int index )
@@ -52,21 +51,16 @@ void ePin::setEnodeComp( eNode* enode )
     if( m_enode ) m_enode->addConnection( this, enodeConNum );
 }
 
+void ePin::createCurrent()
+{
+    if( m_enode ) m_enode->createCurrent( this );
+}
+
 void ePin::changeCallBack( eElement* el, bool cb )
 {
     if( !m_enode ) return;
     if( cb ) m_enode->voltChangedCallback( el );
     else     m_enode->remFromChangedCallback( el );
-}
-
-void ePin::stampCurrent( double data )
-{
-    if( m_enode ) m_enode->stampCurrent( this, data );
-}
-
-void ePin::stampAdmitance( double data )
-{
-    if( m_enode ) m_enode->stampAdmitance( this, data );
 }
 
 double ePin::getVolt()
