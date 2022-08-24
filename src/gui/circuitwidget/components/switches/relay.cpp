@@ -39,7 +39,7 @@ LibraryItem* Relay::libraryItem()
         tr( "Relay (all)" ),
         tr( "Switches" ),
         "relay-spst.png",
-        "Relay",
+        "RelaySPST",
         Relay::construct);
 }
 
@@ -57,6 +57,9 @@ Relay::Relay( QObject* parent, QString type, QString id )
     m_inductor->setValue( 0.1 );  // 100 mH
     m_inductor->setResist( 100 );
     m_inductor->setShowVal( false );
+
+    m_pin[0] = m_inductor->getPin( 0 );
+    m_pin[1] = m_inductor->getPin( 1 );
 
     m_trigCurrent = 0.02;
     m_relCurrent  = 0.01;

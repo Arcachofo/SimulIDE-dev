@@ -121,8 +121,8 @@ void MechContact::SetupSwitches( int poles, int throws )
     m_numthrows = throws;
 
     m_switches.resize( poles*throws );
-    m_pin.resize( start+poles+poles*throws);
-    m_ePin.resize(m_pin0+2*poles*throws);
+    m_pin.resize( start+poles+poles*throws );
+    m_ePin.resize( m_pin0+2*poles*throws );
 
     int cont = 0;
     for( int i=0; i<poles; i++ )              // Create Resistors
