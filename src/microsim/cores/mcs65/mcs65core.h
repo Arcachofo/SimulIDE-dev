@@ -22,7 +22,7 @@
 
 #include "cpubase.h"
 #include "e-element.h"
-#include "mcupin.h"
+#include "iopin.h"
 
 #define CONSTANT  0x20
 #define BREAK     0x10
@@ -34,6 +34,8 @@
 #define SET_ZERO(x)      write_S_Bit( Z, x ) //(x ? (m_STATUS |= ZERO) : (m_STATUS &= (~ZERO)) )
 #define SET_CARRY(x)     write_S_Bit( C, x ) //(x ? (m_STATUS |= CARRY) : (m_STATUS &= (~CARRY)) )
 
+class IoPort;
+class IoPin;
 
 class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
 {
@@ -97,24 +99,25 @@ class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
         int m_cycle;
 
         // Buses
-        McuPort* m_dataBus;
-        McuPort* m_addrBus;
-        McuPin* m_rwPin;
+        IoPort* m_dataBus;
+        IoPort* m_addrBus;
+        IoPin* m_rwPin;
 
         // Control Pins
-        McuPin* m_phi0Pin;
-        McuPin* m_phi1Pin;
-        McuPin* m_phi2Pin;
-        McuPin* m_syncPin;
+        IoPort* m_ctrlPort;
+        IoPin* m_phi0Pin;
+        IoPin* m_phi1Pin;
+        IoPin* m_phi2Pin;
+        IoPin* m_syncPin;
 
         // Interrupt Pins
-        McuPin* m_irqPin;
-        McuPin* m_nmiPin;
+        IoPin* m_irqPin;
+        IoPin* m_nmiPin;
 
         // User Pins
-        McuPin* m_rdyPin;
-        McuPin* m_soPin;
-        McuPin* m_dbePin;
+        IoPin* m_rdyPin;
+        IoPin* m_soPin;
+        IoPin* m_dbePin;
 
         uint8_t m_P;   // status
         uint8_t m_SP;

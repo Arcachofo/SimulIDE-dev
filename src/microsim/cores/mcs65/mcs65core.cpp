@@ -22,6 +22,7 @@
 #include "mcs65core.h"
 #include "e_mcu.h"
 #include "simulator.h"
+#include "ioport.h"
 
 Mcs65Cpu::Mcs65Cpu( eMcu* mcu )
         : CpuBase( mcu )
@@ -42,23 +43,24 @@ Mcs65Cpu::Mcs65Cpu( eMcu* mcu )
     mcu->setStatusBits({"C","Z","I","D","B","1","V","N"});
 
     // Buses
-    m_dataBus = mcu->getPort("PORTD");
-    m_addrBus = mcu->getPort("PORTA");
-    m_rwPin   = mcu->getPin("RW");
+    m_dataBus = mcu->getIoPort("PORTD");
+    m_addrBus = mcu->getIoPort("PORTA");
+    m_rwPin   = mcu->getIoPin("RW");
 
     // Control Pins
-    m_phi0Pin = mcu->getPin("P0");
-    m_phi1Pin = mcu->getPin("P1");   m_phi1Pin->setPinMode( output );
-    m_phi2Pin = mcu->getPin("P2");   m_phi2Pin->setPinMode( output );
-    m_syncPin = mcu->getPin("SYNC"); m_syncPin->setPinMode( output );
+    m_ctrlPort = mcu->getIoPort("CPORT0");
+    m_phi0Pin = mcu->getIoPin("P0");
+    m_phi1Pin = mcu->getIoPin("P1");   m_phi1Pin->setPinMode( output );
+    m_phi2Pin = mcu->getIoPin("P2");   m_phi2Pin->setPinMode( output );
+    m_syncPin = mcu->getIoPin("SYNC"); m_syncPin->setPinMode( output );
 
     // Interrupt Pins
-    m_irqPin = mcu->getPin("IRQ");
-    m_nmiPin = mcu->getPin("NMI");
+    m_irqPin = mcu->getIoPin("IRQ");
+    m_nmiPin = mcu->getIoPin("NMI");
 
     // User Pins
-    m_rdyPin = mcu->getPin("RDY");
-    m_soPin  = mcu->getPin("SO");
+    m_rdyPin = mcu->getIoPin("RDY");
+    m_soPin  = mcu->getIoPin("SO");
     /// m_dbePin = McuPort::getPin("DBE"););
 
     /*mcu->component()->addPropGroup( {"Cpu", {
@@ -81,29 +83,39 @@ void Mcs65Cpu::reset()
 
     m_dataMode = input;
     m_nextClock = true;
+
+    stamp();
 }
 
 void Mcs65Cpu::stamp()
 {
-    m_dataBus->controlPort( true, true );;
-    m_addrBus->controlPort( true, true );
+    m_dataBus->reset();
+    m_addrBus->reset();
+    m_ctrlPort->reset();
 
     m_addrBus->setPinMode( output );
     m_dataBus->setPinMode( input );
 
-    m_rwPin->controlPin( true, true );
+    //m_rwPin->controlPin( true, true );
     m_rwPin->setPinMode( output );
     m_rwPin->setOutState( true );
 
-    m_phi1Pin->controlPin( true, true );
-    m_phi2Pin->controlPin( true, true );
-    m_syncPin->controlPin( true, true );
+    //m_phi1Pin->controlPin( true, true );
+    //m_phi2Pin->controlPin( true, true );
+    //m_syncPin->controlPin( true, true );
     m_phi1Pin->setPinMode( output );
     m_phi2Pin->setPinMode( output );
     m_syncPin->setPinMode( output );
+
+    m_irqPin->setPinMode( input );
+    m_nmiPin->setPinMode( input );
+
+    // User Pins
+    m_rdyPin->setPinMode( input );
+    m_soPin->setPinMode( input );
 }
 
-void Mcs65Cpu::runEvent() // Clock Falling delated: Set AddressBus
+void Mcs65Cpu::runEvent() // Clock Falling delayed: Set AddressBus
 {
     m_addrBus->setOutState( m_busAddr );
 

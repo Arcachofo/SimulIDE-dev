@@ -21,13 +21,10 @@
 #define EMCU_H
 
 #include "e-element.h"
-#include "itemlibrary.h"
-#include "mcuport.h"
 #include "mcutimer.h"
 #include "mcuuart.h"
 #include "mcuinterrupts.h"
 #include "mcudataspace.h"
-#include "e-element.h"
 
 class CpuBase;
 class McuTimer;
@@ -47,7 +44,10 @@ enum mcuState_t{
 };
 
 class Mcu;
+class IoPort;
+class McuPort;
 class McuVref;
+class Component;
 class ExtMemModule;
 
 class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
@@ -84,7 +84,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         uint64_t cycle(){ return m_cycle; }
 
-        void cpuReset( bool r );
+        void hardReset( bool r );
         void sleep( bool s );
 
         QString getFileName() { return m_firmware; }
@@ -96,7 +96,10 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuTimer* getTimer( QString name );
         McuPort* getPort( QString name );
         McuPin*  getPin( QString pinName );
-        QHash<QString, McuPort*> getPorts() { return m_portList; }
+        //QHash<QString, McuPort*> getPorts() { return m_portList; }
+
+        IoPort* getIoPort( QString name );
+        IoPin*  getIoPin( QString pinName );
 
         RamTable* getCpuTable() { return m_cpuTable; }
 
@@ -149,9 +152,9 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
         QHash<QString, McuPort*>  m_portList; // Access PORTS by name
+        QHash<QString, IoPort*>   m_ioPorts; // Access ioPORTS by name
 
-        McuPin*  m_clkPin;
-        McuPort* m_ctrlPort;
+        IoPin*  m_clkPin;
         McuSleep* m_sleepModule;
         McuVref* m_vrefModule;
         McuWdt* m_wdt;

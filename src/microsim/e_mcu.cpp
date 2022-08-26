@@ -20,7 +20,10 @@
 #include "e_mcu.h"
 #include "cpubase.h"
 //#include "mcuportctrl.h"
+#include "mcuport.h"
 #include "mcupin.h"
+#include "ioport.h"
+#include "iopin.h"
 #include "mcuwdt.h"
 #include "usartmodule.h"
 #include "usartrx.h"
@@ -37,24 +40,21 @@ eMcu::eMcu( Component* comp, QString id )
     , eElement( id )
     , m_interrupts( this )
 {
-    //m_pSelf = this;
-
     m_component = comp;
 
     cpu = NULL;
     m_wdt = NULL;
+    m_clkPin = NULL;
     m_vrefModule = NULL;
     m_sleepModule = NULL;
-    m_ctrlPort = NULL;
-    m_clkPin = NULL;
 
+    m_freq = 0;
     m_cPerInst = 1;
-    setFreq( 16*1e6 );
 
-    m_flashSize = 0;
     m_wordSize  = 2;
-
+    m_flashSize = 0;
     m_romSize   = 0;
+    m_ramSize   = 0;
 
     m_firmware = "";
     m_device   = "";
@@ -73,7 +73,7 @@ eMcu::~eMcu()
     if( cpu ) delete cpu;
     m_interrupts.remove();
     for( McuModule* module : m_modules ) delete module;
-    if( m_pSelf == this ) m_pSelf= NULL;
+    if( m_pSelf == this ) m_pSelf = NULL;
 }
 
 void eMcu::stamp()
@@ -97,7 +97,7 @@ void eMcu::voltChanged()  // External clock
         else                 m_debugger->stepDebug();
         //Simulator::self()->addEvent( m_psCycle, this );
     }
-    else if( m_state >= mcuRunning && m_freq > 0 )
+    else if( m_state >= mcuRunning /*&& m_freq > 0*/ )
     {
         cpu->extClock( m_clkPin->getInpState() );
         //stepCpu();
@@ -149,16 +149,17 @@ void eMcu::reset()
     DataSpace::initialize();
 }
 
-void eMcu::cpuReset( bool r )
+void eMcu::hardReset( bool r )
 {
     Simulator::self()->cancelEvents( this );
+    if( m_clkPin ) m_clkPin->changeCallBack( this, !r );  // External clock
+
     if( r ){
         reset();
         m_state = mcuStopped;
     }else{
         m_state = mcuRunning;
-        if     ( m_clkPin   ) m_clkPin->changeCallBack( this );  // External clock
-        else if( m_freq > 0 ) Simulator::self()->addEvent( m_psCycle, this );
+        if( m_freq > 0 ) Simulator::self()->addEvent( m_psCycle, this );
     }
 }
 
@@ -217,24 +218,38 @@ McuPort* eMcu::getPort( QString name )
 McuPin* eMcu::getPin( QString pinName )
 {
     if( pinName.isEmpty() ) return NULL;
-
     McuPin* pin = NULL;
 
-    if( pinName.startsWith("PORT") )
+    for( McuPort* port : m_portList )
     {
-        QString portName = pinName.left( 5 );
-        McuPort* port = getPort( portName );
-
-        if( port ){
-            QString pinStr = pinName;
-            pinStr.remove( portName );
-            pin = port->getPinN( pinStr.toInt() );
-        }
+        pin = port->getPin( pinName );
+        if( pin ) break;
     }
-    else if( m_ctrlPort ) pin = m_ctrlPort->getPin( pinName );
+    if( !pin )
+        qDebug() << "ERROR: eMcu::getPin NULL Pin:"<< pinName;
+    return pin;
+}
+
+IoPort* eMcu::getIoPort( QString name )
+{
+    return m_ioPorts.value( name );
+}
+
+IoPin*  eMcu::getIoPin( QString pinName )
+{
+    if( pinName.isEmpty() ) return NULL;
+    IoPin* pin = NULL;
+
+    for( IoPort* port : m_ioPorts )
+    {
+        pin = port->getPin( pinName );
+        if( pin ) break;
+    }
+    if( !pin )
+        pin = getPin( pinName );
 
     if( !pin )
-        qDebug() << "ERROR: NULL Pin:"<< pinName;
+        qDebug() << "ERROR: eMcu::getIoPin NULL Pin:"<< pinName;
     return pin;
 }
 

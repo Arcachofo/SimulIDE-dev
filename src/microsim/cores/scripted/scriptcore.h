@@ -21,32 +21,73 @@
 #define SCRIPTCORE_H
 
 #include "scriptmodule.h"
-#include "cpubase.h"
+#include "iopin.h"
+#include "mcucpu.h"
 
 //class IntMemModule;
 
-class MAINMODULE_EXPORT ScriptCore : public ScriptModule//, public CpuCore
+class MAINMODULE_EXPORT ScriptCore : public ScriptModule, public McuCpu
 {
     Q_OBJECT
     public:
         ScriptCore( eMcu* mcu );
         ~ScriptCore();
 
+        virtual void voltChanged() override;
+        virtual void runEvent() override;
+
         virtual void reset();
-        virtual void runDecoder();
-        virtual void runClock( bool clkState );
+        virtual void runStep();
+        virtual void extClock( bool clkState ) override;
 
         virtual void setScript( QString script ) override;
 
     public slots:
+        void addEvent( uint time );
+        void cancelEvents();
+
+        int  readPGM( uint addr );
+        void writePGM( uint addr, int value );
+        int  readRAM( uint addr );
+        void writeRAM( uint addr, int value );
+        int  readROM( uint addr );
+        void writeROM( uint addr, int value );
+
+        int  getPort( QString name );
+        void setPortMode( uint n, uint m );
+        void setPortState( uint n, uint d );
+        int  getPortState( uint n );
+        void portVoltChanged( uint n, bool ch );
+
+        int  getPin( QString name );
+        void setPinMode( uint n, uint m );
+        void setPinState( uint n, uint d );
+        int  getPinState( uint n );
+        void setPinVoltage( uint n, double volt );
+        double getPinVoltage( uint n );
+        void pinVoltChanged( uint n, bool ch );
+
+        virtual void INTERRUPT( uint32_t vector ) override;
+
         //virtual void setValue( QString name, int val ) override;
-        void getIntMem( QString name , QString scrName );
+        //void getIntMem( QString name , QString scrName );
 
     protected:
-        CpuBase* m_core;
-        QScriptValue m_runClock;
+        inline bool portExist( uint n );
+        inline void portDontExist( uint n );
+        inline bool pinExist( uint n );
+        inline void pinDontExist( uint n );
+
+        //CpuBase* m_core;
+        QScriptValue m_extClock;
+        QScriptValue m_voltChanged;
+        QScriptValue m_runEvent;
+        QScriptValue m_INTERRUPT;
+
+        std::vector<IoPort*> m_ports;
+        std::vector<IoPin*> m_pins;
 
         //IntMemModule* m_intMem;
-        QScriptValue  m_intMem;
+        //QScriptValue  m_intMem;
 };
 #endif

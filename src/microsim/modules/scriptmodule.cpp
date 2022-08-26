@@ -79,7 +79,7 @@ void ScriptModule::setScript( QString script )
     m_script = script;
     evalProg( script );
 
-    m_init     = evalFunc("init");
+    m_setup    = evalFunc("setup");
     m_reset    = evalFunc("reset");
     m_setValue = evalFunc("setValue");
 

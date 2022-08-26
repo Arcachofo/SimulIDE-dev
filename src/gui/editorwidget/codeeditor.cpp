@@ -196,6 +196,10 @@ void CodeEditor::setFile( const QString filePath )
         setFont( m_font );
         m_hlighter->readsyntaxFile( m_syntaxPath + "hex.syntax" );
     }
+    else if( extension == ".js" )
+    {
+        m_hlighter->readsyntaxFile( m_syntaxPath + "js.syntax" );
+    }
     /*else if( extension == ".sac" )
     {
         //m_compiler = new B16AsmDebugger( this, m_outPane );

@@ -1,6 +1,7 @@
 
 #include "z80io.h"
 #include "e_mcu.h"
+#include "mcuport.h"
 #include "mcupin.h"
 
 Z80io::Z80io( eMcu* mcu )
@@ -26,6 +27,9 @@ Z80io::~Z80io(){}
 
 void Z80io::stamp()
 {
+    m_dataPort->controlPort( true, true );
+    m_addrPort->controlPort( true, true );
+
     m_m1Pin->controlPin( true, true );
     m_mreqPin->controlPin( true, true );
     m_iorqPin->controlPin( true, true );

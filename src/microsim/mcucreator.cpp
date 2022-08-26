@@ -29,6 +29,7 @@
 #include "e_mcu.h"
 #include "mcu.h"
 #include "mcuport.h"
+#include "ioport.h"
 //#include "mcuportctrl.h"
 #include "mcupin.h"
 #include "extmem.h"
@@ -141,6 +142,7 @@ int McuCreator::processFile( QString fileName, bool main )
         else if( part == "stack" )      m_stackEl = el;
         else if( part == "interrupts" ) createInterrupts( &el );
         else if( part == "port" )       createPort( &el );
+        else if( part == "ioport" )     createIoPort( &el );
         else if( part == "timer" )      createTimer( &el );
         else if( part == "ocm" )        createOcm( &el );
         else if( part == "ccpunit" )    createCcpUnit( &el );
@@ -202,7 +204,7 @@ int McuCreator::processFile( QString fileName, bool main )
     }
     if( root.hasAttribute("clkpin") )
     {
-        mcu->m_clkPin = mcu->getPin( root.attribute("clkpin") );
+        mcu->m_clkPin = mcu->getIoPin( root.attribute("clkpin") );
     }
     if( main ) m_mcuComp->setup( root.tagName() );
     return 0;
@@ -390,6 +392,16 @@ void McuCreator::createProgBlock( QDomElement* p )
         node = node.nextSibling();
 }   }
 
+void McuCreator::createIoPort( QDomElement* p )
+{
+    QString name = p->attribute("name");
+
+    IoPort* port = new IoPort( name );
+    mcu->m_ioPorts.insert( name, port );
+
+    port->createPins( m_mcuComp, p->attribute("pins"), 0xFFFFFFFF );
+}
+
 void McuCreator::createPort( QDomElement* p )
 {
     QString name = p->attribute("name");
@@ -410,7 +422,7 @@ void McuCreator::createPort( QDomElement* p )
     }
     mcu->m_portList.insert( name, port );
     mcu->m_modules.emplace_back( port );
-    if( name.startsWith("C") ) mcu->m_ctrlPort = port;
+    /// if( name.startsWith("C") ) mcu->m_ctrlPort = port;
 
     uint32_t pinMask=0xFFFFFFFF;
     if( p->hasAttribute("pinmask") ) pinMask = p->attribute("pinmask").toUInt( 0, 2 );
@@ -1036,7 +1048,7 @@ void McuCreator::createCore( QString core )
     else if( core == "8051" )     mcu->cpu = new I51Core( mcu );
     else if( core == "6502" )     mcu->cpu = new Mcs65Cpu( mcu );
     else if( core == "Z80" )      mcu->cpu = new Z80Core( mcu );
-    //else if( core == "scripted" ) mcu->cpu = new ScriptCore( mcu );
+    else if( core == "scripted" ) mcu->cpu = new ScriptCore( mcu );
     else if( core == "intmem" )   mcu->cpu = new IntMemCore( mcu );
     //// else                          mcu->cpu = new CpuBase( mcu );
 

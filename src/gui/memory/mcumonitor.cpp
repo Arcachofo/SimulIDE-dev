@@ -36,84 +36,16 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
 
     m_jumpToAddress = false;
 
+    m_statusReg    = NULL;
     m_ramTable     = NULL;
     m_ramMonitor   = NULL;
     m_flashMonitor = NULL;
     m_romMonitor   = NULL;
 
-    float scale = MainWindow::self()->fontScale();
-    int row_heigh = round( 22*scale );
-    int font_size = round(14*scale);
-    int numberColor = 0x202090;
+    createStatusPC();
 
-    QTableWidgetItem* it;
-    QFont font;
-    font.setFamily("Ubuntu Mono");
-    font.setBold( true );
-    font.setPixelSize( font_size );
-    m_status.setFont( font );
-    m_pc.setFont( font );
-
-    m_status.setVerticalHeaderLabels( QStringList()<<" STATUS " );
-    m_status.verticalHeader()->setFixedWidth( round(60*scale) );
-    m_status.horizontalHeader()->setMaximumSectionSize(row_heigh);
-    m_status.horizontalHeader()->hide();
-    m_status.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-    m_status.setRowHeight( 0, row_heigh );
-    m_status.setFixedHeight( row_heigh );
-    font.setPixelSize( round(12*scale) );
-    for( int i=0; i<8; i++ )
-    {
-        it = new QTableWidgetItem(0);
-        it->setFlags( Qt::ItemIsEnabled );
-        it->setTextAlignment( Qt::AlignCenter );
-        it->setFont( font );
-        m_status.setItem( 0, i, it );
-        m_status.setColumnWidth( i, row_heigh );
-    }
-    int wi = row_heigh*8 + round(60*scale);
-    m_status.setMinimumWidth( wi );
-    m_status.setMaximumWidth( wi );
-    QStringList statusBits = mcu->getStatusBits();
-    for( int i=7; i>=0; --i ) m_status.item( 0, i )->setText( statusBits.takeFirst() );
-
-    m_pc.setVerticalHeaderLabels( QStringList()<<" PC ");
-    m_pc.verticalHeader()->setFixedWidth( round(31*scale) );
-    m_pc.horizontalHeader()->hide();
-    m_pc.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-    m_pc.setRowHeight( 0, row_heigh );
-    m_pc.setFixedHeight( row_heigh  );
-
-    font.setPixelSize( font_size );
-    it = new QTableWidgetItem(0);
-    it->setFlags( Qt::ItemIsEnabled );
-    it->setFont( font );
-    it->setTextColor( QColor( numberColor ) );
-    m_pc.setItem( 0, 0, it );
-    m_pc.setColumnWidth( 0, round(45*scale) );
-
-    it = new QTableWidgetItem(0);
-    it->setFlags( Qt::ItemIsEnabled );
-    it->setFont( font );
-    it->setTextColor( QColor( 0x3030B8 ) );
-    m_pc.setItem( 0, 1, it );
-    m_pc.setColumnWidth( 1, round(60*scale) );
-    wi = round(135*scale);
-    m_pc.setMinimumWidth( wi );
-    m_pc.setMaximumWidth( wi );
-
-    horizontalLayout->insertWidget( 0, &m_status);
-    horizontalLayout->insertWidget( 0, &m_pc);
-    horizontalLayout->setStretchFactor( &m_pc, 30 );
-    horizontalLayout->setStretchFactor( &m_status, 65 );
     horizontalLayout->setStretchFactor( byteButton, 20 );
 
-    m_cpuTable = m_processor->getCpuTable();
-    if( m_cpuTable )
-    {
-        m_cpuTable->getSplitter()->setSizes( {50,320} );
-        tabWidget->addTab( m_cpuTable, "CPU" );
-    }
     if( mcu->ramSize() )
     {
         m_ramMonitor   = new MemTable( tabWidget, m_processor->ramSize() );
@@ -135,7 +67,12 @@ MCUMonitor::MCUMonitor( QWidget* parent, eMcu* mcu )
         tabWidget->addTab( m_romMonitor, "EEPROM");
         connect( m_romMonitor,   SIGNAL(dataChanged(int, int)), this, SLOT(eepromDataChanged(int, int)) );
     }
-
+    m_cpuTable = m_processor->getCpuTable();
+    if( m_cpuTable )
+    {
+        m_cpuTable->getSplitter()->setSizes( {50,320} );
+        tabWidget->addTab( m_cpuTable, "CPU" );
+    }
     connect( tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)) );
 }
 
@@ -145,7 +82,7 @@ void MCUMonitor::ramDataChanged( int address, int val )
 void MCUMonitor::flashDataChanged( int address, int val )
 { m_processor->setFlashValue( address, val ); }
 
-void MCUMonitor::eepromDataChanged(  int address, int val )
+void MCUMonitor::eepromDataChanged( int address, int val )
 { m_processor->setRomValue( address, val ); }
 
 void MCUMonitor::tabChanged( int )
@@ -172,19 +109,23 @@ void  MCUMonitor::on_jumpButton_toggled( bool jump )
 
 void MCUMonitor::updateStep()
 {
-    int status = m_processor->cpu->getStatus();
-    for( int i=0; i<8; i++ )
-    {
-        int bit = status & 1;
-        if( bit ) m_status.item( 0, 7-i )->setBackground( QColor( 255, 150, 00 ) );
-        else      m_status.item( 0, 7-i )->setBackground( QColor( 120, 230, 255 ) );
-        status >>= 1;
-    }
-
     int pc = m_processor->cpu->getPC();
-    if( byteButton->isChecked() ) pc *= m_processor->wordSize();
-    m_pc.item( 0, 0 )->setData( 0, pc );
-    m_pc.item( 0, 1 )->setText("0x"+val2hex(pc) );
+
+    if( m_statusReg )
+    {
+        int status = *m_statusReg; //m_processor->cpu->getStatus();
+        for( int i=0; i<8; i++ )
+        {
+            int bit = status & 1;
+            if( bit ) m_status.item( 0, 7-i )->setBackground( QColor( 255, 150, 00 ) );
+            else      m_status.item( 0, 7-i )->setBackground( QColor( 120, 230, 255 ) );
+            status >>= 1;
+        }
+
+        if( byteButton->isChecked() ) pc *= m_processor->wordSize();
+        m_pc.item( 0, 0 )->setData( 0, pc );
+        m_pc.item( 0, 1 )->setText("0x"+val2hex(pc) );
+    }
 
     if( m_cpuTable && m_cpuTable->isVisible() )
     {
@@ -219,4 +160,78 @@ void MCUMonitor::updateStep()
 void MCUMonitor::updateRamTable()
 {
     if( m_ramTable ) m_ramTable->updateItems();
+}
+
+void MCUMonitor::createStatusPC()
+{
+    m_statusReg = m_processor->cpu->getStatus();
+    if( !m_statusReg ) return;
+
+    float scale = MainWindow::self()->fontScale();
+    int row_heigh = round( 22*scale );
+    int font_size = round(14*scale);
+    int numberColor = 0x202090;
+
+    QTableWidgetItem* it;
+    QFont font;
+    font.setFamily("Ubuntu Mono");
+    font.setBold( true );
+    font.setPixelSize( font_size );
+    m_status.setFont( font );
+    m_pc.setFont( font );
+
+    m_status.setVerticalHeaderLabels( QStringList()<<" STATUS " );
+    m_status.verticalHeader()->setFixedWidth( round(60*scale) );
+    m_status.horizontalHeader()->setMaximumSectionSize(row_heigh);
+    m_status.horizontalHeader()->hide();
+    m_status.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    m_status.setRowHeight( 0, row_heigh );
+    m_status.setFixedHeight( row_heigh );
+    font.setPixelSize( round(12*scale) );
+    for( int i=0; i<8; i++ )
+    {
+        it = new QTableWidgetItem(0);
+        it->setFlags( Qt::ItemIsEnabled );
+        it->setTextAlignment( Qt::AlignCenter );
+        it->setFont( font );
+        m_status.setItem( 0, i, it );
+        m_status.setColumnWidth( i, row_heigh );
+    }
+    int wi = row_heigh*8 + round(60*scale);
+    m_status.setMinimumWidth( wi );
+    m_status.setMaximumWidth( wi );
+    QStringList statusBits = m_processor->getStatusBits();
+    if( statusBits.size() )
+        for( int i=7; i>=0; --i ) m_status.item( 0, i )->setText( statusBits.takeFirst() );
+
+    horizontalLayout->insertWidget( 0, &m_status);
+    horizontalLayout->setStretchFactor( &m_status, 65 );
+
+    m_pc.setVerticalHeaderLabels( QStringList()<<" PC ");
+    m_pc.verticalHeader()->setFixedWidth( round(31*scale) );
+    m_pc.horizontalHeader()->hide();
+    m_pc.setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    m_pc.setRowHeight( 0, row_heigh );
+    m_pc.setFixedHeight( row_heigh  );
+
+    font.setPixelSize( font_size );
+    it = new QTableWidgetItem(0);
+    it->setFlags( Qt::ItemIsEnabled );
+    it->setFont( font );
+    it->setTextColor( QColor( numberColor ) );
+    m_pc.setItem( 0, 0, it );
+    m_pc.setColumnWidth( 0, round(45*scale) );
+
+    it = new QTableWidgetItem(0);
+    it->setFlags( Qt::ItemIsEnabled );
+    it->setFont( font );
+    it->setTextColor( QColor( 0x3030B8 ) );
+    m_pc.setItem( 0, 1, it );
+    m_pc.setColumnWidth( 1, round(60*scale) );
+    wi = round(135*scale);
+    m_pc.setMinimumWidth( wi );
+    m_pc.setMaximumWidth( wi );
+
+    horizontalLayout->insertWidget( 0, &m_pc);
+    horizontalLayout->setStretchFactor( &m_pc, 30 );
 }

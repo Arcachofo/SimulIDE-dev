@@ -186,16 +186,16 @@ bool IoPin::getInpState()
     return m_inverted ? !m_inpState : m_inpState;
 }
 
-void IoPin::setOutState( bool out ) // Set Output to Hight or Low
+void IoPin::setOutState(bool high ) // Set Output to Hight or Low
 {
-    m_outState = m_nextState = out;
+    m_outState = m_nextState = high;
     if( m_pinMode < openCo || m_stateZ ) return;
 
-    if( m_inverted ) out = !out;
+    if( m_inverted ) high = !high;
 
     if( m_pinMode == openCo )
     {
-        if( out ){
+        if( high ){
             m_gndAdmit = 1/1e8;
             setPinState( open_high ); // Z-Low colors
          }else{
@@ -204,7 +204,7 @@ void IoPin::setOutState( bool out ) // Set Output to Hight or Low
         }
         updtState();
     }else{
-        if( out ){
+        if( high ){
             m_outVolt = m_outHighV;
             setPinState( out_high ); // High colors
         }else{

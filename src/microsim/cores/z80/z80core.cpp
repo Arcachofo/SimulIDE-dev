@@ -3,6 +3,7 @@
 #include "z80cycles.h"
 #include "mcupin.h"
 #include "simulator.h"
+#include "mcuport.h"
 
 #include "boolprop.h"
 #include "stringprop.h"

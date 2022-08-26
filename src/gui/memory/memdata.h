@@ -32,9 +32,9 @@ class MAINMODULE_EXPORT MemData
         static bool loadData( QVector<int>* toData, bool resize=false, int bits=8 );
         static void saveData( QVector<int>* data, int bits=8 );
 
+        static bool loadFile( QVector<int>* toData, QString file, bool resize, int bits, eMcu* eMcu=NULL );
         static bool loadDat( QVector<int>* toData, QString file, bool resize );
         static bool loadHex( QVector<int>* toData, QString file, bool resize, int bits );
-        static bool loadHexMcu( QVector<int>* toData, QString file, int bits, eMcu* eMcu );
         static bool loadBin( QVector<int>* toData, QString fileName, bool resize, int bits );
 
         static QString getMem( QVector<int>* data );

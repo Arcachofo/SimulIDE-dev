@@ -88,7 +88,7 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         QString device() { return m_device; }
 
-        void reset() { m_eMcu.cpuReset( true ); }
+        void reset() { m_eMcu.hardReset( true ); }
 
         bool load( QString fileName );
 
@@ -124,7 +124,6 @@ class MAINMODULE_EXPORT Mcu : public Chip
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_dataFile;
         QString m_device;       // Name of device
-
 
         eMcu m_eMcu;
 

@@ -48,7 +48,11 @@ class MCUMonitor : public QDialog, private Ui::McuMonitor
         void on_jumpButton_toggled( bool jump );
 
     private:
+        void createStatusPC();
+
         eMcu* m_processor;
+
+        uint8_t* m_statusReg;  // STATUS register
 
         RamTable* m_cpuTable;
         RamTable* m_ramTable;

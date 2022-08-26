@@ -20,7 +20,7 @@
 #ifndef MCUPORT_H
 #define MCUPORT_H
 
-#include<QHash>
+#include <vector>
 
 #include "mcumodule.h"
 #include "mcupin.h"

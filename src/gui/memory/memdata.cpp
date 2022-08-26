@@ -65,17 +65,26 @@ bool MemData::loadData( QVector<int>* toData, bool resize, int bits )
 
     if( fileName.isEmpty() ) return false; // User cancels loading
 
-    if( resize ) toData->resize( 1 );
-
-    QString ext = getFileExt( fileName );
-
-    bool ok = false;
-    if     ( ext == ".data" ) ok = loadDat( toData, fileName, resize );
-    else if( ext == ".hex"
-          || ext == ".ihx" )  ok = loadHex( toData, fileName, resize, bits ); // Intel Hex Format
-    else                      ok = loadBin( toData, fileName, resize, bits ); // Binary Format
+    bool ok = loadFile( toData, fileName, resize, bits );
     Simulator::self()->resumeSim();
 
+    return ok;
+}
+
+bool MemData::loadFile( QVector<int>* toData, QString file, bool resize, int bits, eMcu* eMcu )
+{
+    m_eMcu = eMcu;
+    if( resize ) toData->resize( 1 );
+
+    QString ext = getFileExt( file );
+
+    bool ok = false;
+    if     ( ext == ".data" ) ok = loadDat( toData, file, resize );
+    else if( ext == ".hex"
+          || ext == ".ihx" )  ok = loadHex( toData, file, resize, bits ); // Intel Hex Format
+    else                      ok = loadBin( toData, file, resize, bits ); // Binary Format
+
+    m_eMcu = NULL;
     return ok;
 }
 
@@ -115,14 +124,6 @@ bool MemData::loadDat( QVector<int>* toData, QString file, bool resize )
             return false;
     }   }
     return true;
-}
-
-bool MemData::loadHexMcu( QVector<int>* toData, QString file, int bits, eMcu* eMcu )
-{
-    m_eMcu = eMcu;
-    bool ok = loadHex( toData, file,false, bits );
-    m_eMcu = NULL;
-    return ok;
 }
 
 bool MemData::loadHex( QVector<int>* toData, QString file, bool resize, int bits )

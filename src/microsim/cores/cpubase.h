@@ -38,14 +38,15 @@ class MAINMODULE_EXPORT CpuBase
         virtual void runStep(){;}
         virtual void extClock( bool clkState ){;}
 
-        uint8_t getStatus() { return *m_STATUS; }  // Used my Monitor: All CPUs must use m_STATUS
+        uint8_t* getStatus() { return m_STATUS; }  // Used my Monitor: All CPUs must use m_STATUS
         virtual int getCpuReg( QString reg );
         virtual QString getStrReg( QString ){ return "";}
 
+        virtual void INTERRUPT( uint32_t vector ) { CALL_ADDR( vector ); }
         virtual void CALL_ADDR( uint32_t addr ){;} // Used by MCU Interrupts:: All MCUs should use or override this
         virtual uint RET_ADDR() { return m_RET_ADDR; } // Used by Debugger: All CPUs should use or override this
 
-        virtual uint getPC() { return m_PC; }
+        virtual uint getPC() { return 10; /*m_PC;*/ }
 
     protected:
         eMcu* m_mcu;

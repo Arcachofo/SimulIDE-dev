@@ -1,13 +1,13 @@
 <!DOCTYPE SimulIDE>
 
-<mpu name="6502" core="6502" progword="1" inst_cycle="1" freq="1000000" clkpin="P0" >
+<mpu name="6502" core="6502" progword="1" inst_cycle="1" clkpin="P0" >
     
-    <port name="PORTA" pins="16" >
-    </port>
+    <ioport name="PORTA" pins="16" >
+    </ioport>
     
-    <port name="PORTD" pins="8" >
-    </port>
+    <ioport name="PORTD" pins="8" >
+    </ioport>
     
-    <port name="CPORT0" pins="P0,P1,P2,SYNC,NMI,IRQ,RDY,SO,RW" />
+    <ioport name="CPORT0" pins="P0,P1,P2,SYNC,NMI,IRQ,RDY,SO,RW" />
     
 </mpu>

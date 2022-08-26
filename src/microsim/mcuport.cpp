@@ -185,17 +185,22 @@ McuPin* McuPort::getPinN( uint8_t i )
 McuPin* McuPort::getPin( QString pinName )
 {
     McuPin* pin = NULL;
-    QString pinId = pinName.remove( m_name );
-    if( m_numPins )
+
+    if( pinName.contains( m_name ) )
     {
+        QString pinId = pinName.remove( m_name );
         int pinNumber = pinId.toInt();
         pin = getPinN( pinNumber );
     }else{
         for( McuPin* mcuPin : m_pins )
-            if( mcuPin->pinId().contains( pinId) ) return mcuPin;
+        {
+            QString pid = mcuPin->pinId().split("-").last().remove( m_name );
+            if( pid == pinName )
+                return mcuPin;
+        }
     }
-    if( !pin )
-        qDebug() << "ERROR: NULL Pin:"<< pinName;
+    //if( !pin )
+    //    qDebug() << "ERROR: McuPort::getPin NULL Pin:"<< pinName;
     return pin;
 }
 

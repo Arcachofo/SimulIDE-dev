@@ -1,6 +1,6 @@
 <!DOCTYPE SimulIDE>
 
-<mpu name="z80" core="Z80" progword="1" inst_cycle="0.5" freq="3500000" clkpin="CLK">
+<mpu name="z80" core="Z80" progword="1" inst_cycle="0.5" freq="0" clkpin="CLK">
     
     
     <port name="PORTA" pins="16" >

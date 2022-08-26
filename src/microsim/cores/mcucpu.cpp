@@ -23,15 +23,16 @@ McuCpu::McuCpu( eMcu* mcu )
       : CpuBase( mcu )
 {
     m_dataMem    = mcu->getRam();
-    m_dataMemEnd = mcu->ramSize()-1;
-    m_progMem   = mcu->m_progMem.data();
-    m_progSize  = mcu->flashSize();
+    m_dataMemEnd = mcu->ramSize();
+    if( m_dataMemEnd ) m_dataMemEnd--;
+    m_progMem    = mcu->m_progMem.data();
+    m_progSize   = mcu->flashSize();
 
     if( mcu->m_regStart > 0 ) m_lowDataMemEnd = mcu->m_regStart-1;
     else                      m_lowDataMemEnd = 0;
 
     m_regEnd = mcu->m_regEnd;
-    m_STATUS = &m_dataMem[mcu->m_sregAddr];
+    if( m_dataMemEnd > 0 ) m_STATUS = &m_dataMem[mcu->m_sregAddr];
 
     if     ( m_progSize <= 0xFF )     m_progAddrSize = 1;
     else if( m_progSize <= 0xFFFF )   m_progAddrSize = 2;

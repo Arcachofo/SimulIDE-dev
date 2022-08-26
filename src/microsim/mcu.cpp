@@ -224,7 +224,7 @@ void Mcu::stamp()
             m_portRstPin->setPinMode( input );
         }
     }
-    else m_eMcu.cpuReset( false );
+    else m_eMcu.hardReset( false );
 
     if( m_autoLoad )
     { if( !m_eMcu.m_firmware.isEmpty() ) load( m_eMcu.m_firmware ); }
@@ -243,7 +243,7 @@ void Mcu::updateStep()
 
 void Mcu::voltChanged() // Reset Pin callBack
 {
-    m_eMcu.cpuReset( !m_resetPin->getInpState() );
+    m_eMcu.hardReset( !m_resetPin->getInpState() );
 }
 
 void Mcu::setProgram( QString pro )
@@ -357,7 +357,7 @@ bool Mcu::load( QString fileName )
     QVector<int> pgm( size );
     for( int i=0; i<size; ++i ) pgm[i] = m_eMcu.getFlashValue( i );
 
-    if( !MemData::loadHexMcu( &pgm, cleanPathAbs, m_eMcu.m_wordSize*8, &m_eMcu ) )
+    if( !MemData::loadFile( &pgm, cleanPathAbs, false, m_eMcu.m_wordSize*8, &m_eMcu ) )
         return false;
 
     for( int i=0; i<size; ++i ) m_eMcu.setFlashValue( i, pgm.at(i) );
@@ -481,10 +481,10 @@ void Mcu::addPin( QString id, QString type, QString label,
         {
             if( type == "rst" )
                  pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
-            else pin = m_eMcu.getPin( id ); // Control Port
+            else pin = m_eMcu.getIoPin( id ); // Control Port
 
         }
-        else pin = m_eMcu.getPin( id.replace( 0, 1,"PORT") ); // I/O Port
+        else pin = m_eMcu.getIoPin( id ); // I/O Port
 
         if( !pin ) return;
 

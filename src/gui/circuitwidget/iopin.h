@@ -71,13 +71,19 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual bool getInpState();
         virtual bool getOutState() { if( m_step ) return m_nextState; return m_outState; }
-        virtual void setOutState( bool out );
+        virtual void setOutState( bool high );
         virtual void toggleOutState( uint64_t time=0 ) { sheduleState( !m_outState, time ); }
 
         inline void setOutStatFast( bool state )
         {
             m_outState = m_nextState = state;
-            m_outVolt = state ? m_outHighV : m_outLowV;
+            if( state ){
+                m_outVolt = m_outHighV;
+                setPinState( out_high ); // High colors
+            }else{
+                m_outVolt = m_outLowV;
+                setPinState( out_low ); // Low colors
+            }
             ePin::stampCurrent( m_outVolt*m_admit );
         }
 

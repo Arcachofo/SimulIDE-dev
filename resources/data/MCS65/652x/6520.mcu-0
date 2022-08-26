@@ -18,7 +18,9 @@
         <interrupt name="IRQB2"  enable="CB20"  flag="IRQB2"  priority="1" />
     </interrupts>
     
-    <port name="PORTA" pins="8" >
+    <port name="PORTA" pins="8" outreg="ORA" configregsA="CRA"
+                       type="scripted" 
+                       script="6520_PA.js">
     </port>
     
     <port name="PORTB" pins="8" >
@@ -30,6 +32,16 @@
     <port name="PORTR" pins="2" >
     </port>
     
-    <port name="CPORT0" pins="CA1,CA2,CB1,CB2,CS0,CS1,CS2,RW,IRQA,IRQB,P2" />
+    <port name="CPORT0" pins="CA1,CA2,CB1,CB2,CS0,CS1,CS2,RW,IRQA,IRQB,P2" 
+                        type="scripted" 
+                        script="6520_CP.js"/>
+    <intmem name="MemCtrl" 
+        addrport="PORTR"
+        dataport="PORTD"
+        rwpin="RW"
+        cshpin="CS1"
+        cslpin="CS2"
+        clkpin="P2">
+    </intmem>
     
 </iou>
