@@ -25,7 +25,7 @@
 #include "circuit.h"
 
 McuPin::McuPin( McuPort* port, int i, QString id, Component* mcu )
-      : IoPin( 0, QPoint(0,0), mcu->getUid()+"-"+id, 0, mcu )
+      : IoPin( 0, QPoint(0,0), id, 0, mcu )
 {
     m_id     = id;
     m_port   = port;

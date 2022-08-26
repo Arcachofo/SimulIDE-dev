@@ -210,7 +210,7 @@ McuTimer* eMcu::getTimer( QString name )
 
 McuPort* eMcu::getPort( QString name )
 {
-    McuPort* port = m_portList.value( name );
+    McuPort* port = m_mcuPorts.value( name );
     /// if( !port ) qDebug() << "ERROR: NULL Port:"<< name;
     return port;
 }
@@ -220,7 +220,7 @@ McuPin* eMcu::getPin( QString pinName )
     if( pinName.isEmpty() ) return NULL;
     McuPin* pin = NULL;
 
-    for( McuPort* port : m_portList )
+    for( McuPort* port : m_mcuPorts )
     {
         pin = port->getPin( pinName );
         if( pin ) break;

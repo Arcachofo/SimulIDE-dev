@@ -30,6 +30,8 @@ McuPort::McuPort( eMcu* mcu, QString name )
 {
     m_numPins = 0;
 
+    m_shortName = "P"+ name.right(1);
+
     m_outReg = NULL;
     m_dirReg = NULL;
     m_inReg  = NULL;
@@ -173,7 +175,7 @@ void McuPort::createPins( Mcu* mcuComp, QString pins, uint32_t pinMask )
 
 McuPin* McuPort::createPin( int i, QString id , Component* mcu )
 {
-    return new McuPin( this, i, id, mcu );
+    return new McuPin( this, i, mcu->getUid()+"-"+id, mcu );
 }
 
 McuPin* McuPort::getPinN( uint8_t i )
@@ -186,15 +188,16 @@ McuPin* McuPort::getPin( QString pinName )
 {
     McuPin* pin = NULL;
 
-    if( pinName.contains( m_name ) )
+    if( pinName.startsWith( m_name ) || pinName.startsWith( m_shortName ) )
     {
-        QString pinId = pinName.remove( m_name );
+        QString pinId = pinName.remove( m_name ).remove( m_shortName );
         int pinNumber = pinId.toInt();
         pin = getPinN( pinNumber );
     }else{
         for( McuPin* mcuPin : m_pins )
         {
-            QString pid = mcuPin->pinId().split("-").last().remove( m_name );
+            QString pid = mcuPin->pinId();
+            pid = pid.split("-").last().remove( m_name );
             if( pid == pinName )
                 return mcuPin;
         }

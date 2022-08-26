@@ -96,7 +96,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         McuTimer* getTimer( QString name );
         McuPort* getPort( QString name );
         McuPin*  getPin( QString pinName );
-        //QHash<QString, McuPort*> getPorts() { return m_portList; }
+        //QHash<QString, McuPort*> getPorts() { return m_mcuPorts; }
 
         IoPort* getIoPort( QString name );
         IoPin*  getIoPin( QString pinName );
@@ -151,7 +151,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
         std::vector<McuUsart*> m_usarts;
 
         QHash<QString, McuTimer*> m_timerList;// Access TIMERS by name
-        QHash<QString, McuPort*>  m_portList; // Access PORTS by name
+        QHash<QString, McuPort*>  m_mcuPorts; // Access PORTS by name
         QHash<QString, IoPort*>   m_ioPorts; // Access ioPORTS by name
 
         IoPin*  m_clkPin;

@@ -71,6 +71,8 @@ class MAINMODULE_EXPORT McuPort : public McuModule//, public eElement
         void createPins( Mcu* mcuComp, QString pins, uint32_t pinMask );
         virtual McuPin* createPin( int i, QString id , Component* mcu );
 
+        QString m_shortName;
+
         std::vector<McuPin*> m_pins;
         uint8_t m_numPins;
         uint8_t m_pinState;

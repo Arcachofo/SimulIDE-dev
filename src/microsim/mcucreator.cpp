@@ -420,7 +420,7 @@ void McuCreator::createPort( QDomElement* p )
         }
         else port = new McuPort( mcu, name );
     }
-    mcu->m_portList.insert( name, port );
+    mcu->m_mcuPorts.insert( name, port );
     mcu->m_modules.emplace_back( port );
     /// if( name.startsWith("C") ) mcu->m_ctrlPort = port;
 
