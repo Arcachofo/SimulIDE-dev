@@ -159,14 +159,14 @@ void McuPort::createPins( Mcu* mcuComp, QString pins, uint32_t pinMask )
         for( int i=0; i<m_numPins; ++i )
         {
             if( pinMask & 1<<i )
-                m_pins[i] = createPin( i, m_name+QString::number(i) , mcuComp );//new McuPin( this, i, m_name+QString::number(i), mcuComp );
+                m_pins[i] = createPin( i, mcuComp->getUid()+"-"+m_name+QString::number(i) , mcuComp );//new McuPin( this, i, m_name+QString::number(i), mcuComp );
         }
     }else{
         int i = 0;
         QStringList pinList = pins.split(",");
         for( QString pinName : pinList )
         {
-            McuPin* pin = createPin( i, m_name+pinName , mcuComp );//new McuPin( this, i, m_name+pinName, mcuComp );
+            McuPin* pin = createPin( i, mcuComp->getUid()+"-"+m_name+pinName , mcuComp );//new McuPin( this, i, m_name+pinName, mcuComp );
             m_pins.emplace_back( pin );
             i++;
         }
@@ -175,7 +175,7 @@ void McuPort::createPins( Mcu* mcuComp, QString pins, uint32_t pinMask )
 
 McuPin* McuPort::createPin( int i, QString id , Component* mcu )
 {
-    return new McuPin( this, i, mcu->getUid()+"-"+id, mcu );
+    return new McuPin( this, i, id, mcu );
 }
 
 McuPin* McuPort::getPinN( uint8_t i )
