@@ -49,9 +49,9 @@ AvrCore::~AvrCore() {}
 
 inline void AvrCore::flags_ns( uint8_t res )
 {
-    uint8_t sn = res & (1<<7);
+    bool sn = res & (1<<7);
     write_S_Bit( S_N, sn );
-    write_S_Bit( S_S, sn ^ STATUS(S_V) );
+    write_S_Bit( S_S, sn != (bool)STATUS(S_V) );
 }
 inline void AvrCore::flags_zns( uint8_t res )
 {
