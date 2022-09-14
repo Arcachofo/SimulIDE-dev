@@ -27,7 +27,7 @@ McuWdt::McuWdt( eMcu* mcu, QString name )
       : McuPrescaled( mcu, name )
       , eElement( mcu->getId()+"-"+name )
 {
-    m_enabled  = false;
+    m_wdtFuse  = false;
 }
 McuWdt::~McuWdt(){}
 
@@ -39,7 +39,7 @@ void McuWdt::initialize()
 
 void McuWdt::runEvent()            // Overflow
 {
-    if( !m_enabled ) return;
+    if( !m_wdtFuse ) return;
 
     if( m_ovfInter ) m_interrupt->raise();
     if( m_ovfReset )

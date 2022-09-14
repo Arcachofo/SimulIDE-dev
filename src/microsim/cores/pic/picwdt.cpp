@@ -47,7 +47,7 @@ void PicWdt::initialize()
 
 void PicWdt::configureA( uint8_t newOPTION ) // OPTION Written
 {
-    if( !m_enabled ) return;
+    if( !m_wdtFuse ) return;
 
     if( getRegBitsVal( newOPTION, m_PSA ) )
          m_prescaler = getRegBitsVal( newOPTION, m_PS );  // Prescaler asigned to Watchdog
@@ -58,7 +58,7 @@ void PicWdt::configureA( uint8_t newOPTION ) // OPTION Written
 void PicWdt::reset()
 {
     Simulator::self()->cancelEvents( this );
-    if( m_enabled ) Simulator::self()->addEvent( m_ovfPeriod, this );
+    if( m_wdtFuse ) Simulator::self()->addEvent( m_ovfPeriod, this );
 }
 
 
