@@ -100,7 +100,7 @@ void MechContact::SetupSwitches( int poles, int throws )
 {
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    if( m_pin0  == 0 ) m_area = QRectF( -12, 8-16*poles,   24, 16*poles-8 );     // Switches
+    if( m_pin0  == 0 ) m_area = QRectF( -12, 8-16*poles,   24, 16*poles-4 );     // Switches
     else               m_area = QRectF( -12,-8-16*poles-4, 24, 8+16*poles+8+4 ); // Relays
     int start = m_pin0/2;
 
