@@ -39,7 +39,7 @@ AvrWdt::AvrWdt( eMcu* mcu, QString name )
 
     m_WDCE = getRegBits( "WDCE", mcu );
     m_WDE  = getRegBits( "WDE", mcu );
-    m_WDP02 = getRegBits( "WDP0, WDP1, WDP2", mcu );
+    m_WDP02 = getRegBits( "WDP0,WDP1,WDP2", mcu );
 
     m_WDRF = getRegBits( "WDRF", mcu );
 }

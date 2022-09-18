@@ -23,7 +23,7 @@
 uint8_t getBitMask( QStringList bitList, DataSpace* mcu ) // Get mask for a group of bits in a Register
 {
     uint8_t bitMask = 0;
-    for( QString bitName : bitList ) bitMask |= mcu->bitMasks()->value( bitName );
+    for( QString bitName : bitList ) bitMask |= mcu->bitMasks()->value( bitName.remove(" ") );
     return bitMask;
 }
 
