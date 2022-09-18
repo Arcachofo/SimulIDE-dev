@@ -18,7 +18,6 @@
  ***************************************************************************/
 
 #include <QDebug>
-
 #include <math.h>
 
 #include "ioport.h"
@@ -35,23 +34,34 @@ void IoPort::reset()
 {
     m_pinState = 0;
     m_pinDirection = 0;
-    for( IoPin* pin : m_pins ) pin->setOutState( 0 );
-    for( IoPin* pin : m_pins ) pin->setPinMode( input );
+
+    for( IoPin* pin : m_pins ) {
+        pin->setOutState( 0 );
+        pin->setPinMode( input );
+    }
 }
 
 void IoPort::setOutState( uint32_t val )
 {
-    /*uint8_t changed = m_pinState ^ val; // See which Pins have actually changed
+    uint8_t changed = m_pinState ^ val; // See which Pins have actually changed
     if( changed == 0 ) return;
+    m_pinState = val;
 
     for( int i=0; i<m_numPins; ++i ){
-        if( changed & (1<<i) ) m_pins[i]->setOutState( (val & (1<<i)) > 0 ); // Pin changed
-    }*/
-    for( int i=0; i<m_numPins; ++i )
-    {
-        bool state = (val & 1<<i) > 0;
-        if( state != m_pins[i]->getOutState() )
-            m_pins[i]->setOutState( state );
+        uint32_t flag = 1<<i;
+        if( changed & flag ) m_pins[i]->setOutState( (val & flag) > 0 ); // Pin changed
+    }
+}
+
+void IoPort::setOutStatFast( uint32_t val )
+{
+    uint8_t changed = m_pinState ^ val; // See which Pins have actually changed
+    if( changed == 0 ) return;
+    m_pinState = val;
+
+    for( int i=0; i<m_numPins; ++i ){
+        uint32_t flag = 1<<i;
+        if( changed & flag ) m_pins[i]->setOutStatFast( (val & flag) > 0 ); // Pin changed
     }
 }
 
@@ -67,9 +77,11 @@ void IoPort::setDirection( uint32_t val )
 {
     uint8_t changed = m_pinDirection ^ val;  // See which Pins have actually changed
     if( changed == 0 ) return;
+    m_pinDirection = val;
 
     for( int i=0; i<m_numPins; ++i ){
-        if( changed & 1<< i) m_pins[i]->setPinMode( ((val & (1<<i)) > 0) ? output : input ); // Pin changed
+        uint32_t flag = 1<<i;
+        if( changed & flag ) m_pins[i]->setPinMode( ((val & flag) > 0) ? output : input ); // Pin changed
 }   }
 
 void IoPort::setPinMode( pinMode_t mode )

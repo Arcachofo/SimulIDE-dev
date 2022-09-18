@@ -30,7 +30,6 @@ class Component;
 class MAINMODULE_EXPORT IoPort
 {
         friend class McuCreator;
-        //friend class IoPorts;
 
     public:
         IoPort( QString name );
@@ -39,6 +38,7 @@ class MAINMODULE_EXPORT IoPort
         void reset();
 
         void setOutState( uint32_t val );
+        void setOutStatFast( uint32_t val );
         uint32_t getInpState();
 
         void setDirection( uint32_t val );

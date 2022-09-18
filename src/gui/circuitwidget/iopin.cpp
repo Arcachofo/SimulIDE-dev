@@ -186,7 +186,7 @@ bool IoPin::getInpState()
     return m_inverted ? !m_inpState : m_inpState;
 }
 
-void IoPin::setOutState(bool high ) // Set Output to Hight or Low
+void IoPin::setOutState( bool high ) // Set Output to Hight or Low
 {
     m_outState = m_nextState = high;
     if( m_pinMode < openCo || m_stateZ ) return;

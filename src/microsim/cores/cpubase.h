@@ -48,6 +48,9 @@ class MAINMODULE_EXPORT CpuBase
 
         virtual uint getPC() { return m_PC; }
 
+        virtual QStringList getEnumUids( QString ) { return m_enumUids;}
+        virtual QStringList getEnumNames( QString ) { return m_enumNames; }
+
     protected:
         eMcu* m_mcu;
 
@@ -73,6 +76,9 @@ class MAINMODULE_EXPORT CpuBase
             if( val ) *m_STATUS |= 1<<bit; \
             else      *m_STATUS &= ~(1<<bit);
         }
+
+        QStringList m_enumUids;
+        QStringList m_enumNames;
 };
 
 #endif

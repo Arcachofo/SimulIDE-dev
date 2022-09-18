@@ -97,6 +97,9 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         //void createCfgWord( QString name, uint16_t addr, uint16_t v );
 
+        virtual QStringList getEnumUids( QString ) override;
+        virtual QStringList getEnumNames( QString ) override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     public slots:

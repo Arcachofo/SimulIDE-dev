@@ -129,7 +129,7 @@
 #include "ws2812.h"
 #include "zener.h"
 
-#include "z80cpu.h"
+//#include "z80cpu.h"
 //END Item includes
 
 ItemLibrary* ItemLibrary::m_pSelf = NULL;
@@ -229,7 +229,7 @@ void ItemLibrary::loadItems()
     addItem( new LibraryItem("MCS65", QObject::tr("Micro"), "ic2.png","", NULL ) );
     addItem( new LibraryItem("Z80"  , QObject::tr("Micro"), "ic2.png","", NULL ) );
     addItem( Mcu::libraryItem() );
-    addItem( Z80CPU::libraryItem() );
+    //addItem( Z80CPU::libraryItem() );
     addItem( new LibraryItem( QObject::tr("Arduino"), QObject::tr("Micro"), "board.png","", NULL ) );
     addItem( new LibraryItem( QObject::tr("Shields"), QObject::tr("Micro"), "shield.png","", NULL ) );
     addItem( new LibraryItem( QObject::tr("Sensors"), QObject::tr("Micro"), "1to2.png","", NULL ) );

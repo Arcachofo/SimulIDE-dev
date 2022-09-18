@@ -26,6 +26,7 @@
 #include <QSettings>
 
 #include "mcu.h"
+#include "cpubase.h"
 #include "mcuport.h"
 #include "mcupin.h"
 #include "mcuwdt.h"
@@ -558,6 +559,9 @@ void Mcu::enableWdt( bool en ) { if( m_eMcu.m_wdt ) m_eMcu.m_wdt->enable( en ); 
 
     m_eMcu.m_cfgWords.insert( addr, v );
 }*/
+
+QStringList Mcu::getEnumUids( QString e) { return m_eMcu.cpu->getEnumUids( e ); }
+QStringList Mcu::getEnumNames( QString e) { return m_eMcu.cpu->getEnumNames( e ); }
 
 void Mcu::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
