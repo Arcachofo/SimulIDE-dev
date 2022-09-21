@@ -120,6 +120,7 @@ void Bus::setNumLines( int lines )
 
 void Bus::setStartBit( int bit )
 {
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
     if( bit < 0 ) bit = 0;
     m_startBit = bit;
 
