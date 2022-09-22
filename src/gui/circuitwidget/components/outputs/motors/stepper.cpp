@@ -99,9 +99,9 @@ Stepper::~Stepper(){}
 
 void Stepper::voltChanged()
 {
-    double voltCom = m_pinCo.getVolt();
-    double phaseA = ( m_pinA1.getVolt()-voltCom )-( m_pinA2.getVolt()-voltCom );
-    double phaseB = ( m_pinB1.getVolt()-voltCom )-( m_pinB2.getVolt()-voltCom );
+    double voltCom = m_pinCo.getVoltage();
+    double phaseA = ( m_pinA1.getVoltage()-voltCom )-( m_pinA2.getVoltage()-voltCom );
+    double phaseB = ( m_pinB1.getVoltage()-voltCom )-( m_pinB2.getVoltage()-voltCom );
     
     if     ( phaseA > 1 ) phaseA = 1;
     else if( phaseA <-1 ) phaseA =-1;

@@ -142,7 +142,7 @@ void FreqMeter::updateStep()
 void FreqMeter::voltChanged()
 {
     uint64_t simTime = Simulator::self()->circTime();
-    double data = m_ePin[0]->getVolt();
+    double data = m_ePin[0]->getVoltage();
     double delta = data-m_lastData;
     
     if( delta > m_filter )                         // Rising

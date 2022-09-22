@@ -63,7 +63,7 @@ void ePin::changeCallBack( eElement* el, bool cb )
     else     m_enode->remFromChangedCallback( el );
 }
 
-double ePin::getVolt()
+double ePin::getVoltage()
 {
     if( m_enode )     return m_enode->getVolt();
     if( m_enodeComp ) return m_enodeComp->getVolt();

@@ -24,7 +24,6 @@
 
 #include "e-node.h"
 
-//class eNode;
 class eElement;
 
 class MAINMODULE_EXPORT ePin
@@ -35,7 +34,7 @@ class MAINMODULE_EXPORT ePin
 
         bool isConnected() { return (m_enode!=NULL); }
 
-        double getVolt();
+        double getVoltage();
 
         eNode* getEnode() { return m_enode; }
         void   setEnode( eNode* enode );

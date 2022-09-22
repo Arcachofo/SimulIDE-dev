@@ -119,7 +119,7 @@ void Diac::stamp()
 
 void Diac::voltChanged()
 {
-    double voltage = m_pin[0]->getVolt()-m_pin[1]->getVolt();
+    double voltage = m_pin[0]->getVoltage()-m_pin[1]->getVoltage();
     double current = m_resistor->current();// - m_diode2->getCurrent();
     bool state = m_state;
 

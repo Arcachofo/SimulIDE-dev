@@ -384,4 +384,4 @@ void Connector::setIsBus( bool bus )
 QString Connector::startPinId() { return m_startPin->pinId(); }
 QString Connector::endPinId()   { return m_endPin->pinId(); }
 
-double Connector::getVolt() { return m_startPin->getVolt(); }
+double Connector::getVoltage() { return m_startPin->getVoltage(); }

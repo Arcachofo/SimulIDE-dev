@@ -93,7 +93,7 @@ void eReactive::voltChanged()
 
 void eReactive::runEvent()
 {
-    double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
+    double volt = m_ePin[0]->getVoltage() - m_ePin[1]->getVoltage();
 
     if( m_volt != volt )
     {

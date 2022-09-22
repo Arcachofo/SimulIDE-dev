@@ -133,7 +133,7 @@ void Max72xx_matrix::voltChanged()
 {
     updateClock();
 
-    if( m_pinCS->getVolt()>1.6 )            // CS high: not selected
+    if( m_pinCS->getVoltage()>1.6 )            // CS high: not selected
     {
         m_rxReg = 0;
         m_inBit  = 0;
@@ -143,7 +143,7 @@ void Max72xx_matrix::voltChanged()
     if( m_clkState != Clock_Rising ) return;
 
     m_rxReg &= ~1;
-    if( m_pinDin->getVolt()>1.6 ) m_rxReg |= 1;
+    if( m_pinDin->getVoltage()>1.6 ) m_rxReg |= 1;
 
     if( m_inBit == 15 )
     {

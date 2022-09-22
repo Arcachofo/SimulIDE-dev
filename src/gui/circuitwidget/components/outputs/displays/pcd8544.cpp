@@ -104,18 +104,18 @@ void Pcd8544::initialize()
 
 void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin changes
 {
-    if( m_pRst.getVolt()<0.3 )            // Reset Pin is Low
+    if( m_pRst.getVoltage()<0.3 )            // Reset Pin is Low
     {
         reset();
         return;
     }
-    if( m_pCs.getVolt()>1.6 )            // Cs Pin High: Lcd not selected
+    if( m_pCs.getVoltage()>1.6 )            // Cs Pin High: Lcd not selected
     {
         m_cinBuf = 0;                    // Initialize serial buffer
         m_inBit  = 0;
         return;
     }
-    if( m_pScl.getVolt()<1.6 )           // This is an Scl Falling Edge
+    if( m_pScl.getVoltage()<1.6 )           // This is an Scl Falling Edge
     {
         m_lastScl = false;
         return;
@@ -125,11 +125,11 @@ void Pcd8544::voltChanged()               // Called when Scl, Rst or Cs Pin chan
 
     m_cinBuf &= ~1; //Clear bit 0
     
-    if( m_pSi.getVolt()>1.6 ) m_cinBuf |= 1;
+    if( m_pSi.getVoltage()>1.6 ) m_cinBuf |= 1;
     
     if( m_inBit == 7 ) 
     {
-        if( m_pDc.getVolt()>1.6 )                        // Write Data
+        if( m_pDc.getVoltage()>1.6 )                        // Write Data
         {
             //qDebug() << "Pcd8544::setVChanged"<< m_addrY<<m_addrX<< m_cinBuf;
             m_aDispRam[m_addrY][m_addrX] = m_cinBuf;

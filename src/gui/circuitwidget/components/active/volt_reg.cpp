@@ -97,13 +97,13 @@ void VoltReg::stamp()
 
 void VoltReg::voltChanged()
 {
-    double inVolt = m_pin[0]->getVolt();
+    double inVolt = m_pin[0]->getVoltage();
 
     m_voltPos = inVolt;
     if( m_voltPos > 0.7 ) m_voltPos -= 0.7;
     else                  m_voltPos = 0;
 
-    double outVolt = m_ePin[2]->getVolt()+m_vRef;
+    double outVolt = m_ePin[2]->getVoltage()+m_vRef;
 
     if     ( outVolt > m_voltPos ) outVolt = m_voltPos;
     else if( outVolt < m_voltNeg ) outVolt = m_voltNeg;

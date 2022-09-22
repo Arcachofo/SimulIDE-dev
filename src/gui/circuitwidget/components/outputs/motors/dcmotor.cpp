@@ -122,7 +122,7 @@ void DcMotor::updatePos()
     m_lastTime = timePS;
 
     m_delta += (m_LastVolt/m_voltNom)*(duration/1e12);
-    m_LastVolt = m_ePin[1]->getVolt() - m_ePin[0]->getVolt();
+    m_LastVolt = m_ePin[1]->getVoltage() - m_ePin[0]->getVoltage();
 }
 
 void DcMotor::setRpm( int rpm )

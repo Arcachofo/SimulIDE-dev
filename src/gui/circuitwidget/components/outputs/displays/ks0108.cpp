@@ -132,10 +132,10 @@ void Ks0108::updateStep()
 
 void Ks0108::voltChanged()                 // Called when En Pin changes 
 {
-    if( m_pinRst.getVolt()<2.5 ) reset();            // Reset Pin is Low
+    if( m_pinRst.getVoltage()<2.5 ) reset();            // Reset Pin is Low
     else                         m_reset = false;
     
-    bool Write = ( m_pinRW.getVolt()<2.5 );             // Read or Write
+    bool Write = ( m_pinRW.getVoltage()<2.5 );             // Read or Write
     if( m_Write != Write )               // Set Read or Write Impedances
     {
         m_Write = Write;
@@ -144,7 +144,7 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
             if( Write ) m_dataPin[i]->setPinMode( input );
             else        m_dataPin[i]->setPinMode( output );
     }   }
-    bool Scl = (m_pinEn.getVolt()>2.5);
+    bool Scl = (m_pinEn.getVoltage()>2.5);
     
     if    ( Scl && !m_lastScl ){           // This is a clock Rising Edge
         m_lastScl = true;  
@@ -161,10 +161,10 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
     if( Write ){
         for( int pin=0; pin<8; pin++ )                     // Read input
         {
-            if( m_dataPin[pin]->getVolt()>2.5 )  m_input += pow( 2, pin );
+            if( m_dataPin[pin]->getVoltage()>2.5 )  m_input += pow( 2, pin );
     }   }
-    m_Cs1 =  (m_pinCs1.getVolt()>2.5);               // Half 1 selected?
-    m_Cs2 =  (m_pinCs2.getVolt()>2.5);               // Half 2 selected?
+    m_Cs1 =  (m_pinCs1.getVoltage()>2.5);               // Half 1 selected?
+    m_Cs2 =  (m_pinCs2.getVoltage()>2.5);               // Half 2 selected?
     if( !m_Cs1 & !m_Cs2 ) m_Cs2 = true;
     
     if( m_csActLow ) {
@@ -172,7 +172,7 @@ void Ks0108::voltChanged()                 // Called when En Pin changes
         m_Cs2 = !m_Cs2;
     }
     
-    if( (m_pinDC.getVolt()>2.5)               )                  // Data
+    if( (m_pinDC.getVoltage()>2.5)               )                  // Data
     {
         if( m_reset ) return;            // Can't write data while Reset
         if( Write ) writeData( m_input );                  // Write Data

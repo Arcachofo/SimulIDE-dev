@@ -88,7 +88,7 @@ void SR04::initialize()
 
 void SR04::voltChanged()              // Called when Trigger Pin changes
 {
-    bool trigState = m_trigpin->getVolt()>2.5;
+    bool trigState = m_trigpin->getVoltage()>2.5;
     
     if( !m_lastTrig && trigState )                 // Rising trigger Pin
     {
@@ -100,7 +100,7 @@ void SR04::voltChanged()              // Called when Trigger Pin changes
 
         if( time >= 10*1e6 )     // >=10 uS Trigger pulse
         {
-            m_echouS = (m_inpin->getVolt()*2000/0.344+0.5);
+            m_echouS = (m_inpin->getVoltage()*2000/0.344+0.5);
             if     ( m_echouS < 116 )   m_echouS = 116;   // Min range 2 cm = 116 us pulse
             else if( m_echouS > 38000 ) m_echouS = 38000; // Timeout 38 ms
             

@@ -119,8 +119,8 @@ void ScriptCpu::setScript( QString script )
                                        , asMETHODPR( IoPin, setOutState, (bool), void)
                                        , asCALL_THISCALL );
 
-    r = m_aEngine->RegisterObjectMethod("IoPin", "double getVolt()"
-                                       , asMETHODPR( IoPin, getVolt, (), double)
+    r = m_aEngine->RegisterObjectMethod("IoPin", "double getVoltage()"
+                                       , asMETHODPR( IoPin, getVoltage, (), double)
                                        , asCALL_THISCALL );
 
     r = m_aEngine->RegisterObjectMethod("IoPin", "void setVoltage(double v)"

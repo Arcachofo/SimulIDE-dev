@@ -120,13 +120,13 @@ void OpAmp::voltChanged() // Called when any pin node change volt
 {
     if( m_powerPins )
     {
-        m_voltPos = m_pin[3]->getVolt();
-        m_voltNeg = m_pin[4]->getVolt();
+        m_voltPos = m_pin[3]->getVoltage();
+        m_voltNeg = m_pin[4]->getVoltage();
     } else {
         m_voltPos = m_voltPosDef;
         m_voltNeg = m_voltNegDef;
     }
-    double vd = m_inputP->getVolt()-m_inputN->getVolt();
+    double vd = m_inputP->getVoltage()-m_inputN->getVoltage();
 
     double out = vd * m_gain;
     if     ( out > m_voltPos ) out = m_voltPos;

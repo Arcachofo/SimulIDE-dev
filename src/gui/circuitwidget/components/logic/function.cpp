@@ -122,7 +122,7 @@ bool Function::getInputState( int pin )
 double Function::getInputVoltage( int pin )
 {
     if( (uint)pin >= m_inPin.size() ) return 0;
-    return m_inPin[pin]->getVolt();
+    return m_inPin[pin]->getVoltage();
 }
 
 void Function::setOutputState( int pin, bool s )
@@ -143,7 +143,7 @@ void Function::setOutputVoltage( int pin, double v )
 double Function::getOutputVoltage( int pin )
 {
     if( (uint)pin >= m_outPin.size() ) return 0;
-    return m_outPin[pin]->getVolt();
+    return m_outPin[pin]->getVoltage();
 }
 
 void Function::setFunctions( QString f )

@@ -133,7 +133,7 @@ void Dht22::stamp()   // Called at Simulation Start
 
 void Dht22::voltChanged()                              // Called when Input Pin changes
 {
-    bool inState = m_inpin->getVolt() > 2.5;
+    bool inState = m_inpin->getVoltage() > 2.5;
     if( m_lastIn && !inState ) m_lastTime = Simulator::self()->circTime(); // Falling edge
     else if( !m_lastIn && inState )                                        // Rising edge
     {

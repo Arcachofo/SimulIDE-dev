@@ -46,7 +46,7 @@ elCapacitor::~elCapacitor(){}
 
 void elCapacitor::updateStep()
 {
-    double volt = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
+    double volt = m_ePin[0]->getVoltage() - m_ePin[1]->getVoltage();
     bool crashed = ( volt < -1e-6 );
     if( crashed || (crashed != m_crashed) )
     {

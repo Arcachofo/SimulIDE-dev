@@ -398,7 +398,7 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
     else if( m_animate )
     {
         if( m_pinState == undef_state )
-            pen.setColor( (getVolt() > 2.5) ? m_color[out_high] : m_color[out_low] );
+            pen.setColor( (getVoltage() > 2.5) ? m_color[out_high] : m_color[out_low] );
         else pen.setColor( m_color[m_pinState] );
     }
 

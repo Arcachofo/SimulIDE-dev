@@ -123,13 +123,13 @@ void PicAdc00::updtVref()
         case 1:
         case 3:
         case 5:
-        case 10: m_vRefP = m_pRefPin->getVolt(); break;
+        case 10: m_vRefP = m_pRefPin->getVoltage(); break;
         case 8:
         case 11:
         case 12:
         case 13:
-        case 15: m_vRefP = m_pRefPin->getVolt();
-                 m_vRefN = m_nRefPin->getVolt();
+        case 15: m_vRefP = m_pRefPin->getVoltage();
+                 m_vRefN = m_nRefPin->getVoltage();
 }   }
 
 //------------------------------------------------------
@@ -160,8 +160,8 @@ void PicAdc1::updtANSEL()
 
 void PicAdc1::updtVref()
 {
-    m_vRefP = (m_mode & 1) ? m_pRefPin->getVolt() : 5;
-    if( m_nRefPin ) m_vRefN = (m_mode & 0b00000010) ? m_nRefPin->getVolt() : 0;
+    m_vRefP = (m_mode & 1) ? m_pRefPin->getVoltage() : 5;
+    if( m_nRefPin ) m_vRefN = (m_mode & 0b00000010) ? m_nRefPin->getVoltage() : 0;
 }
 
 //------------------------------------------------------
@@ -257,10 +257,10 @@ void PicAdc20::updtVref()
 {
     m_vRefP = 5;  // VREF+ is connected to VDD
     switch ( m_mode ) {
-    case 2: m_vRefP = m_pRefPin->getVolt(); break; // VREF+ is connected to external VREF+ pin
+    case 2: m_vRefP = m_pRefPin->getVoltage(); break; // VREF+ is connected to external VREF+ pin
     case 3: m_vRefP = 1.024;                break; /// TODO // VREF+ is connected to internal Fixed Voltage Reference (FVR) module
     }
-    m_vRefN = (m_mode & 0b00000100) ? m_nRefPin->getVolt() : 0;
+    m_vRefN = (m_mode & 0b00000100) ? m_nRefPin->getVoltage() : 0;
 }
 
 //------------------------------------------------------

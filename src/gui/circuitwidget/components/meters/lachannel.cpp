@@ -73,7 +73,7 @@ void LaChannel::voltChanged()
     if( !m_connected ) return;
     uint64_t simTime = Simulator::self()->circTime();
 
-    double volt = m_ePin[0]->getVolt();
+    double volt = m_ePin[0]->getVoltage();
 
     if( volt > m_analizer->threshold() ) // High
     {

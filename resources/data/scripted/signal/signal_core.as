@@ -39,7 +39,7 @@ void extClock()  // Function called 1e6 times per sec.
     }
     else cycles--;
     
-    double input = inputPin.getVolt();
+    double input  = inputPin.getVoltage();
     double output = input*ampli/255;
     
     outputPin.setVoltage( output );

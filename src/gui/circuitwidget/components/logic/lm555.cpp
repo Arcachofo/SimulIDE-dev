@@ -153,8 +153,8 @@ void Lm555::voltChanged()
     if( !m_Gnd->isConnected() || !m_Vcc->isConnected() ) return;
 
     bool changed = false;
-    double voltPos = m_Vcc->getVolt();
-    double voltNeg = m_Gnd->getVolt();
+    double voltPos = m_Vcc->getVoltage();
+    double voltNeg = m_Gnd->getVoltage();
 
     if( qFabs(voltNeg-m_voltNeg) > 1e-3 )
     {
@@ -177,9 +177,9 @@ void Lm555::voltChanged()
 
     bool outState = m_outState;
 
-    if     ( m_Reset->getVolt() < (m_voltNeg+0.7) ) outState = false; // Reset
-    else if( m_threshold->getVolt() > refThre )     outState = false; // Threshold
-    else if( refTrig > m_trigger->getVolt() )       outState = true;  // Trigger
+    if     ( m_Reset->getVoltage() < (m_voltNeg+0.7) ) outState = false; // Reset
+    else if( m_threshold->getVoltage() > refThre )     outState = false; // Threshold
+    else if( refTrig > m_trigger->getVoltage() )       outState = true;  // Trigger
 
     if( outState != m_outState)
     {

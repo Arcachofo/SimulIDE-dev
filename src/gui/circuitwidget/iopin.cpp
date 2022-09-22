@@ -175,7 +175,7 @@ void IoPin::updtState()
 
 bool IoPin::getInpState()
 {
-    double volt = getVolt();
+    double volt = getVoltage();
 
     if     ( volt > m_inpHighV ) m_inpState = true;
     else if( volt < m_inpLowV )  m_inpState = false;

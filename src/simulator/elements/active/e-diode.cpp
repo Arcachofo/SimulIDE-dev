@@ -65,7 +65,7 @@ void eDiode::stamp()
 
 void eDiode::voltChanged()
 {
-    double voltPN = m_ePin[0]->getVolt() - m_ePin[1]->getVolt();
+    double voltPN = m_ePin[0]->getVoltage() - m_ePin[1]->getVoltage();
     if( qFabs( voltPN - m_voltPN ) < .01 ) { m_step = 0; return; } // Converged
     Simulator::self()->notCorverged();
 

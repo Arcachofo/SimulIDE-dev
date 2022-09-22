@@ -123,8 +123,8 @@ void SCR::stamp()
 
 void SCR::voltChanged()
 {
-    double voltAC = m_pin[0]->getVolt() - m_pin[1]->getVolt();
-    double voltGC = m_pin[2]->getVolt() - m_pin[1]->getVolt();
+    double voltAC = m_pin[0]->getVoltage() - m_pin[1]->getVoltage();
+    double voltGC = m_pin[2]->getVoltage() - m_pin[1]->getVoltage();
     if( qFabs( voltAC ) < .01 && qFabs( voltGC ) < .01 ) return;  // Converged
     Simulator::self()->notCorverged();
 

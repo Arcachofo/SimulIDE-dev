@@ -138,7 +138,7 @@ void AudioOut::stamp()
 
 void AudioOut::runEvent()
 {
-    double voltPN = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
+    double voltPN = m_ePin[0]->getVoltage()-m_ePin[1]->getVoltage();
     int outVal = 128;
 
     if( m_buzzer){

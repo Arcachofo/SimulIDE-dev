@@ -86,8 +86,8 @@ void AvrComp::compare( uint8_t ) // Performed only when ACO is readed
 {
     if( !m_enabled ) return;
 
-    double vRef = m_fixVref ? 1.1 : m_pinP->getVolt();
-    bool compOut = vRef > m_pinN->getVolt() ;
+    double vRef = m_fixVref ? 1.1 : m_pinP->getVoltage();
+    bool compOut = vRef > m_pinN->getVoltage() ;
     bool rising = !m_compOut && compOut;
 
     if( m_compOut != compOut )

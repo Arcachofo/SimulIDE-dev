@@ -69,7 +69,7 @@ void ADC::stamp()
 
 void ADC::voltChanged()
 {
-    double volt = m_inPin[0]->getVolt();
+    double volt = m_inPin[0]->getVoltage();
     m_nextOutVal = volt*m_maxValue/m_maxVolt+0.1;
     LogicComponent::sheduleOutPuts( this );
 }

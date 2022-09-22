@@ -149,8 +149,8 @@ void OscopeChannel::voltChanged()
         if( ++m_subStep > m_subSample ) m_subStep = 0;
         else return;
     }*/
-    double d0 = m_ePin[0]->getVolt();
-    double d1 = m_ePin[1]->getVolt();
+    double d0 = m_ePin[0]->getVoltage();
+    double d1 = m_ePin[1]->getVoltage();
     double data = d0-d1;
 
     if( data > m_maxVal ) m_maxVal = data;

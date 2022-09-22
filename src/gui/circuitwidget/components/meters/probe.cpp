@@ -82,7 +82,7 @@ void Probe::updateStep()
 
     if( m_inputPin->isConnected() )// Voltage from connected pin
     {
-         setVolt( m_inputPin->getVolt() );
+         setVolt( m_inputPin->getVoltage() );
          return;
     }
     QList<QGraphicsItem*> list = m_inputPin->collidingItems(); // Voltage from connector or Pin behind inputPin
@@ -93,13 +93,13 @@ void Probe::updateStep()
         if( it->type() == UserType+3 )                    // Pin found
         {
             Pin* pin =  qgraphicsitem_cast<Pin*>( it );
-            setVolt( pin->getVolt() );
+            setVolt( pin->getVoltage() );
             break;
         }else if( it->type() == UserType+2 )        // ConnectorLine
         {
             ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( it );
             Connector* con = line->connector();
-            setVolt( con->getVolt() );
+            setVolt( con->getVoltage() );
             break;
 }   }   }
 

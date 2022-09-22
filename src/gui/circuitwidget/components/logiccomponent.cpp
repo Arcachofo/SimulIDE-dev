@@ -66,7 +66,7 @@ bool LogicComponent::outputEnabled()
 {
     if( !m_oePin ) return true;
 
-    double volt = m_oePin->getVolt();
+    double volt = m_oePin->getVoltage();
     if     ( volt > m_inHighV ) m_outEnable = false;   // Active Low
     else if( volt < m_inLowV )  m_outEnable = true;
 

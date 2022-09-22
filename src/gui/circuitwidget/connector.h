@@ -48,7 +48,7 @@ class MAINMODULE_EXPORT Connector : public CompBase
         Pin* endPin() { return m_endPin; }
         void setEndPin( Pin* pin) { m_endPin = pin; }
 
-        double getVolt();
+        double getVoltage();
 
         QList<ConnectorLine*>* lineList() { return &m_conLineList; }
 

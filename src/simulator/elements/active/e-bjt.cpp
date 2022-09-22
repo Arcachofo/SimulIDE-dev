@@ -117,9 +117,9 @@ void eBJT::stamp()
 void eBJT::voltChanged()
 {
     double pnp = m_PNP ? -1 : 1;
-    double voltC = COLL->getVolt();
-    double voltE = EMIT->getVolt();
-    double voltB = BASE->getVolt();
+    double voltC = COLL->getVoltage();
+    double voltE = EMIT->getVoltage();
+    double voltB = BASE->getVoltage();
     double voltBC = voltB-voltC;
     double voltBE = voltB-voltE;
 

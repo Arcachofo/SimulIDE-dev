@@ -70,9 +70,9 @@ void eMosfet::stamp()
 
 void eMosfet::voltChanged()
 {
-    double Vd = m_ePin[0]->getVolt();
-    double Vs = m_ePin[1]->getVolt();
-    double Vg = m_ePin[2]->getVolt();
+    double Vd = m_ePin[0]->getVoltage();
+    double Vs = m_ePin[1]->getVoltage();
+    double Vg = m_ePin[2]->getVoltage();
     double Vgs = Vg-Vs;
     double Vds = Vd-Vs;
 

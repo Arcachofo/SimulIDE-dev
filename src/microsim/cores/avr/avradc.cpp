@@ -150,8 +150,8 @@ void AvrAdc00::updtVref()
 {
     m_vRefP = 5;
     switch( m_refSelect ){
-        case 0: m_vRefP = m_aRefPin->getVolt(); break; // AREF
-        case 1: m_vRefP = m_aVccPin->getVolt(); break; // AVcc
+        case 0: m_vRefP = m_aRefPin->getVoltage(); break; // AREF
+        case 1: m_vRefP = m_aVccPin->getVoltage(); break; // AVcc
         case 3: m_vRefP = m_fixedVref;                 // Internal ref Volt
 }   }
 
@@ -186,7 +186,7 @@ void AvrAdc02::updtVref()
 {
     m_vRefP = 5;
     switch( m_refSelect ){
-        case 1: m_vRefP = m_pRefPin->getVolt();break; // External voltage reference at PA0 (AREF)
+        case 1: m_vRefP = m_pRefPin->getVoltage();break; // External voltage reference at PA0 (AREF)
         case 2: m_vRefP = 1.1;                 break; // Internal Vref. 1.1 Volt
 }   }
 
@@ -229,8 +229,8 @@ void AvrAdc03::specialConv()
             if( m_channel < 24 ) chN = 1;
             else                 chN = 2;
         }
-        double voltP = m_adcPin[chP]->getVolt();
-        double voltN = m_adcPin[chN]->getVolt();
+        double voltP = m_adcPin[chP]->getVoltage();
+        double voltN = m_adcPin[chN]->getVoltage();
         if( voltP < 0 ) voltP = 0;
         if( voltN < 0 ) voltN = 0;
         m_adcValue = (voltP-voltN)*gain*512/m_vRefP;
@@ -283,7 +283,7 @@ void AvrAdc11::updtVref()
 {
     m_vRefP = 5;
     switch( m_refSelect ){
-        case 1: m_vRefP = m_pRefPin->getVolt(); break; // External voltage reference at PB0 (AREF)
+        case 1: m_vRefP = m_pRefPin->getVoltage(); break; // External voltage reference at PB0 (AREF)
         case 2: m_vRefP = 1.1;  break;  // Internal Vref. 1.1 Volt
         case 4:                         // Internal 2.56V Voltage Reference without external capacitor
         case 5: m_vRefP = 2.56; break;  // Internal 2.56V Voltage Reference with external capacitor

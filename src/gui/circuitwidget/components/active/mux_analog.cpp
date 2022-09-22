@@ -91,12 +91,12 @@ void MuxAnalog::stamp()
 
 void MuxAnalog::voltChanged()
 {
-    m_enabled = m_enPin->getVolt() < 2.5;
+    m_enabled = m_enPin->getVoltage() < 2.5;
 
     int address = 0;
     for( int i=0; i<m_addrBits; ++i )
     {
-        bool state = (m_addrPin[i]->getVolt()>2.5);
+        bool state = (m_addrPin[i]->getVoltage()>2.5);
         if( state ) address += pow( 2, i );
     }
     m_address = address;

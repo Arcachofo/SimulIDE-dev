@@ -45,7 +45,7 @@ Voltimeter::~Voltimeter(){}
 
 void Voltimeter::updateStep()
 {
-    double volt = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
+    double volt = m_ePin[0]->getVoltage()-m_ePin[1]->getVoltage();
     
     if( volt != m_dispValue )
     {

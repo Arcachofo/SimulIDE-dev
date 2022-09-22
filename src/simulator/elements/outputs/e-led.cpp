@@ -66,7 +66,7 @@ void eLed::stamp()
 
 void eLed::voltChanged()
 {
-    m_voltPN = m_ePin[0]->getVolt()-m_ePin[1]->getVolt();
+    m_voltPN = m_ePin[0]->getVoltage()-m_ePin[1]->getVoltage();
 
     double ThCurrent = m_current = 0;
     double admit = 1e-9;

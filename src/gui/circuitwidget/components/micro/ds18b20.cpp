@@ -139,7 +139,7 @@ void Ds18b20::updateStep()
 
 void Ds18b20::voltChanged()                              // Called when Input Pin changes
 {
-    bool inState = m_inpin->getVolt() > 2.5;
+    bool inState = m_inpin->getVoltage() > 2.5;
     uint64_t circTime = Simulator::self()->circTime();
 
     if( m_lastIn && !inState ) m_lastTime = circTime; // Falling edge
