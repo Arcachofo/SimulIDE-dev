@@ -20,45 +20,29 @@
 #ifndef SCRIPTMODULE_H
 #define SCRIPTMODULE_H
 
-#include <QObject>
-#include <QScriptEngine>
-#include <QScriptProgram>
+#include "angelscript.h"
+#include "as_jit.h"
 
 //#include "mcumodule.h"
 #include "e-element.h"
 
-class eMcu;
 
-class MAINMODULE_EXPORT ScriptModule : public eElement, public QObject
+class MAINMODULE_EXPORT ScriptModule : public eElement
 {
     public:
-        ScriptModule( eMcu *mcu, QString name );
+        ScriptModule( QString name );
         ~ScriptModule();
-
-        void evalProg( QString prog );
-        QScriptValue evalFunc( QString func );
 
         virtual void setScript( QString script );
 
-    public slots:
-        virtual void setValue( QString name, QString val ){;}
-
     protected:
-        void getExceptions();
-        QScriptValue callFunction( QScriptValue* func, QScriptValueList args=QScriptValueList() );
+        int compileScript();
+        void callFunction( asIScriptFunction* func, asIScriptContext* ctx=NULL );
 
         QString m_script;
 
-        QScriptEngine  m_engine;
-        QScriptProgram m_program;
-        QScriptValue   m_thisObject;
-
-        QScriptValue m_setup;
-        QScriptValue m_reset;
-        QScriptValue m_setValue;
-
-        QScriptValue m_configureA;
-        QScriptValue m_configureB;
-        QScriptValue m_configureC;
+        asCJITCompiler* m_jit;
+        asIScriptEngine* m_aEngine;
+        asIScriptContext* m_context;
 };
 #endif

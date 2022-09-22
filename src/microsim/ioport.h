@@ -43,8 +43,9 @@ class MAINMODULE_EXPORT IoPort
 
         void setDirection( uint32_t val );
         void setPinMode( pinMode_t mode );
+        void setPinMode( uint mode ) { setPinMode( (pinMode_t) mode ); }
 
-        void portVoltChanged( eElement* el, bool ch );
+        void changeCallBack( eElement* el, bool ch );
 
         IoPin* getPinN( uint8_t i );
         IoPin* getPin( QString pinName );

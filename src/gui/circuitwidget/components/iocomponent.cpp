@@ -28,9 +28,9 @@
 IoComponent::IoComponent( QObject* parent, QString type, QString id)
            : Component( parent, type, id )
 {
-    m_inHighV = 2.5;
-    m_inLowV  = 2.5;
-    m_ouHighV = 5;
+    m_inHighV = 0;
+    m_inLowV  = 0;
+    m_ouHighV = 0;
     m_ouLowV  = 0;
     m_outValue = 0;
 
@@ -107,9 +107,7 @@ void IoComponent::runOutputs()
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         bool state = m_outValue & (1<<i);
-        bool oldst = m_outPin[i]->getOutState();
-
-        if( state != oldst ) m_outPin[i]->sheduleState( state, 0 );
+        m_outPin[i]->sheduleState( state, 0 );
     }
 }
 

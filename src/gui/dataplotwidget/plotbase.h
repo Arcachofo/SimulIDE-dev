@@ -20,17 +20,17 @@
 #ifndef PLOTBASE_H
 #define PLOTBASE_H
 
-#include <QScriptEngine>
-#include <QScriptProgram>
+//#include <QScriptEngine>
+//#include <QScriptProgram>
 
 #include "component.h"
-#include "e-element.h"
+#include "scriptmodule.h"
 #include "datachannel.h"
 
 class PlotDisplay;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT PlotBase : public Component, public eElement
+class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
 {
         Q_OBJECT
     public:
@@ -104,9 +104,19 @@ class MAINMODULE_EXPORT PlotBase : public Component, public eElement
         int m_numChannels;
         DataChannel* m_channel[8];
 
+        int m_condCh1;
+        int m_condCh2;
+        int m_condCh3;
+        int m_condCh4;
+        int m_condCh5;
+        int m_condCh6;
+        int m_condCh7;
+        int m_condCh8;
+        bool m_pause;
+        asIScriptFunction* m_pauseFunc;
         QString m_conditions;
-        QScriptProgram m_condProgram;
-        QScriptEngine m_engine;
+        //QScriptProgram m_condProgram;
+        //QScriptEngine m_engine;
 
         QHash<QString, QString> m_condTo;
 

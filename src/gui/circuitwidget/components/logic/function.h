@@ -20,15 +20,14 @@
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
-#include <QScriptEngine>
-
-#include "logiccomponent.h"
+#include "iocomponent.h"
+#include "scriptmodule.h"
 
 class LibraryItem;
 class QPushButton;
 class QGraphicsProxyWidget;
 
-class MAINMODULE_EXPORT Function : public LogicComponent
+class MAINMODULE_EXPORT Function : public IoComponent, public ScriptModule
 {
     Q_OBJECT
     public:
@@ -42,13 +41,19 @@ class MAINMODULE_EXPORT Function : public LogicComponent
         virtual void voltChanged() override;
         virtual void runEvent() override { IoComponent::runOutputs(); }
 
-        QString functions() { return m_functions; }
+        QString functions() { return m_funcList.join(","); }
         void setFunctions( QString f );
 
         virtual void remove() override;
         
         void setNumInps( int inputs );
         void setNumOuts( int outs );
+
+        bool getInputState( int pin );
+        double getInputVoltage( int pin );
+        void setOutputState( int pin, bool s );
+        void setOutputVoltage( int pin, double v );
+        double getOutputVoltage( int pin );
         
     public slots:
         void onbuttonclicked();
@@ -60,12 +65,10 @@ class MAINMODULE_EXPORT Function : public LogicComponent
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event);
 
     private:
+        void updateFunctions();
         void updateArea( uint ins, uint outs );
 
-        QScriptEngine m_engine;
-        QList<QScriptProgram> m_program;
-
-        QString m_functions;
+        asIScriptFunction* m_voltChanged;
         QStringList m_funcList;
 
         QList<QPushButton*> m_buttons;

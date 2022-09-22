@@ -56,8 +56,8 @@ LibraryItem* KY040::libraryItem()
 }
 
 KY040::KY040( QObject* parent, QString type, QString id )
-    : Component( parent, type, id )
-    , eElement( id )
+     : Component( parent, type, id )
+     , eElement( id )
 {
     m_changed = false;
     m_area = QRect( -WIDTH/2, -HEIGHT/2 + GAP, WIDTH, HEIGHT );

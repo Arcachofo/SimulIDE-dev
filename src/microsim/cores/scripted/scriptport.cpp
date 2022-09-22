@@ -18,10 +18,11 @@
  ***************************************************************************/
 
 #include "scriptport.h"
+#include "e_mcu.h"
 #include "mcupin.h"
 
 ScriptPort::ScriptPort( eMcu* mcu, QString name )
-          : ScriptModule( mcu, name )
+          : ScriptModule( mcu->getId()+"-"+name )
           , McuPort( mcu, name )
 {
 }
@@ -29,22 +30,22 @@ ScriptPort::~ScriptPort(){}
 
 void ScriptPort::configureA( uint8_t newVal )
 {
-    callFunction( &m_configureA, {QScriptValue( (int)newVal )} );
+    //callFunction( &m_configureA, {QScriptValue( (int)newVal )} );
 }
 
 void ScriptPort::configureB( uint8_t newVal )
 {
-    callFunction( &m_configureB, {QScriptValue( (int)newVal )} );
+    //callFunction( &m_configureB, {QScriptValue( (int)newVal )} );
 }
 
 void ScriptPort::configureC( uint8_t newVal )
 {
-    m_configureC.call( m_thisObject, newVal );
+    //m_configureC.call( m_thisObject, newVal );
 }
 
 void ScriptPort::reset()
 {
-    callFunction( &m_reset );
+    //callFunction( &m_reset );
 }
 
 void ScriptPort::setExtIntTrig( int pinNumber, int trig )
@@ -60,4 +61,3 @@ void ScriptPort::setScript( QString script )
     m_configureB = evalFunc("configureB");
     m_configureC = evalFunc("configureC");*/
 }
-#include "moc_scriptport.cpp"

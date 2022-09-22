@@ -38,6 +38,7 @@ class eNode;
 
 class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 {
+        friend class Function;
     public:
         IoPin( int angle, const QPoint pos, QString id, int index, Component* parent, pinMode_t mode=source );
         ~IoPin();
@@ -50,6 +51,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         //pinMode_t pinMode() { return m_pinMode; }
         void setPinMode( pinMode_t mode );
+        void setPinMode( uint mode ) { setPinMode( (pinMode_t) mode ); }
 
         void  setInputHighV( double volt ) { m_inpHighV = volt; }
         void  setInputLowV( double volt ) { m_inpLowV = volt; }
@@ -74,6 +76,12 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
         virtual void setOutState( bool high );
         virtual void toggleOutState( uint64_t time=0 ) { sheduleState( !m_outState, time ); }
 
+        inline void setVoltage( double volt )
+        {
+            if( volt == m_outVolt ) return;
+            m_outVolt = volt;
+            ePin::stampCurrent( m_outVolt*m_admit );
+        }
         inline void setOutStatFast( bool state )
         {
             m_outState = m_nextState = state;

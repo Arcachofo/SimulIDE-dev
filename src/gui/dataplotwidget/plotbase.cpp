@@ -29,7 +29,7 @@
 
 PlotBase::PlotBase( QObject* parent, QString type, QString id )
         : Component( parent, type, id )
-        , eElement( id )
+        , ScriptModule( id )
 {
     m_graphical = true;
     m_bufferSize = 600000;
@@ -43,14 +43,28 @@ PlotBase::PlotBase( QObject* parent, QString type, QString id )
     m_baSizeX = 135;
     m_baSizeY = 135;
 
+    int r;
+    m_pauseFunc = NULL;
+    m_aEngine->RegisterObjectType("PlotBase",0, asOBJ_REF | asOBJ_NOCOUNT );
+    m_aEngine->RegisterGlobalProperty("PlotBase pb", this );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "bool m_pause", asOFFSET(PlotBase,m_pause)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch1", asOFFSET(PlotBase,m_condCh1)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch2", asOFFSET(PlotBase,m_condCh2)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch3", asOFFSET(PlotBase,m_condCh3)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch4", asOFFSET(PlotBase,m_condCh4)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch5", asOFFSET(PlotBase,m_condCh5)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch6", asOFFSET(PlotBase,m_condCh6)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch7", asOFFSET(PlotBase,m_condCh7)); assert( r >= 0 );
+    r = m_aEngine->RegisterObjectProperty("PlotBase", "int ch8", asOFFSET(PlotBase,m_condCh8)); assert( r >= 0 );
+
     QString n;
     for( int i=1; i<9; ++i ) // Condition simple to script: ch1l to (ch1==1)
     {
         n = QString::number(i);
-        m_condTo["ch"+n+"l"] = "(ch"+n+"==1)";
-        m_condTo["ch"+n+"r"] = "(ch"+n+"==2)";
-        m_condTo["ch"+n+"h"] = "(ch"+n+"==3)";
-        m_condTo["ch"+n+"f"] = "(ch"+n+"==4)";
+        m_condTo["ch"+n+"l"] = "(pb.ch"+n+"==1)";
+        m_condTo["ch"+n+"r"] = "(pb.ch"+n+"==2)";
+        m_condTo["ch"+n+"h"] = "(pb.ch"+n+"==3)";
+        m_condTo["ch"+n+"f"] = "(pb.ch"+n+"==4)";
     }
     Simulator::self()->addToUpdateList( this );
 
@@ -131,9 +145,13 @@ QString PlotBase::tunnels()
     return list;
 }
 
-void PlotBase::updateConds(  QString conds )
+void PlotBase::updateConds( QString conds )
 {
+    m_pauseFunc = NULL;
+    m_pause = false;
     m_conditions = conds;
+
+    if( conds.isEmpty() ) return;
     conds = conds.toLower();
 
     QString n;
@@ -145,19 +163,34 @@ void PlotBase::updateConds(  QString conds )
         conds.replace( "ch"+n+"h", m_condTo.value("ch"+n+"h") );
         conds.replace( "ch"+n+"f", m_condTo.value("ch"+n+"f") );
     }
-    m_condProgram = QScriptProgram( conds );
+    m_script = "void pause() { pb.m_pause = "+conds+";}";
+    int r = compileScript();
+    if( r < 0 ) { qDebug() << "PlotBase::updateConds Failed to compile expression:"<<conds; return; }
+
+    m_pauseFunc = m_aEngine->GetModule(0)->GetFunctionByDecl("void pause()");
 }
 
 void PlotBase::conditonMet( int ch, cond_t cond )
 {
-    m_engine.globalObject().setProperty( "ch"+QString::number(ch+1), QScriptValue( (int)cond ) );
+    if( !m_pauseFunc ) return;
 
+    ch++;
+    switch ( ch ) {
+        case 1: m_condCh1 = (int)cond; break;
+        case 2: m_condCh2 = (int)cond; break;
+        case 3: m_condCh3 = (int)cond; break;
+        case 4: m_condCh4 = (int)cond; break;
+        case 5: m_condCh5 = (int)cond; break;
+        case 6: m_condCh6 = (int)cond; break;
+        case 7: m_condCh7 = (int)cond; break;
+        case 8: m_condCh8 = (int)cond; break;
+        default: break;
+    }
     if( Simulator::self()->simState() <= SIM_PAUSED ) return;
-    if( m_condProgram.isNull() ) return;
 
-    // Check if condition met:
-    bool pause = m_engine.evaluate( m_condProgram ).toBool();
-    if( pause )
+    callFunction( m_pauseFunc ); // Check if condition met:
+
+    if( m_pause )
     {
         m_risEdge = Simulator::self()->circTime();
         CircuitWidget::self()->pauseSim();

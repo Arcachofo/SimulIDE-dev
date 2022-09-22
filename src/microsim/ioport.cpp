@@ -89,7 +89,7 @@ void IoPort::setPinMode( pinMode_t mode )
     for( IoPin* pin : m_pins ) pin->setPinMode( mode );
 }
 
-void IoPort::portVoltChanged( eElement* el, bool ch )
+void IoPort::changeCallBack( eElement* el, bool ch )
 {
     for( IoPin* pin : m_pins ) pin->changeCallBack( el, ch );
 }

@@ -17,21 +17,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SCRIPTCORE_H
-#define SCRIPTCORE_H
+#ifndef SCRIPTCPU_H
+#define SCRIPTCPU_H
 
 #include "scriptmodule.h"
 #include "iopin.h"
 #include "mcucpu.h"
 
-//class IntMemModule;
+using namespace std;
 
-class MAINMODULE_EXPORT ScriptCore : public ScriptModule, public McuCpu
+class MAINMODULE_EXPORT ScriptCpu : public ScriptModule, public McuCpu
 {
-    Q_OBJECT
     public:
-        ScriptCore( eMcu* mcu );
-        ~ScriptCore();
+        ScriptCpu( eMcu* mcu );
+        ~ScriptCpu();
 
         virtual void voltChanged() override;
         virtual void runEvent() override;
@@ -42,7 +41,6 @@ class MAINMODULE_EXPORT ScriptCore : public ScriptModule, public McuCpu
 
         virtual void setScript( QString script ) override;
 
-    public slots:
         void addEvent( uint time );
         void cancelEvents();
 
@@ -53,41 +51,17 @@ class MAINMODULE_EXPORT ScriptCore : public ScriptModule, public McuCpu
         int  readROM( uint addr );
         void writeROM( uint addr, int value );
 
-        int  getPort( QString name );
-        void setPortMode( uint n, uint m );
-        void setPortState( uint n, uint d );
-        int  getPortState( uint n );
-        void portVoltChanged( uint n, bool ch );
-
-        int  getPin( QString name );
-        void setPinMode( uint n, uint m );
-        void setPinState( uint n, uint d );
-        int  getPinState( uint n );
-        void setPinVoltage( uint n, double volt );
-        double getPinVoltage( uint n );
-        void pinVoltChanged( uint n, bool ch );
+        IoPort* getPort( const string portName );
+        IoPin*  getPin( const string pinName );
 
         virtual void INTERRUPT( uint32_t vector ) override;
 
-        //virtual void setValue( QString name, int val ) override;
-        //void getIntMem( QString name , QString scrName );
-
     protected:
-        inline bool portExist( uint n );
-        inline void portDontExist( uint n );
-        inline bool pinExist( uint n );
-        inline void pinDontExist( uint n );
+        asIScriptFunction* m_reset;
+        asIScriptFunction* m_voltChanged;
+        asIScriptFunction* m_runEvent;
 
-        //CpuBase* m_core;
-        QScriptValue m_extClock;
-        QScriptValue m_voltChanged;
-        QScriptValue m_runEvent;
-        QScriptValue m_INTERRUPT;
-
-        std::vector<IoPort*> m_ports;
-        std::vector<IoPin*> m_pins;
-
-        //IntMemModule* m_intMem;
-        //QScriptValue  m_intMem;
+        asIScriptContext* m_extClockCtx;
+        asIScriptFunction* m_extClock;
 };
 #endif

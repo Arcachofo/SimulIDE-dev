@@ -27,6 +27,7 @@
 #include "connector.h"
 #include "circuit.h"
 #include "simulator.h"
+#include "circuitwidget.h"
 #include "itemlibrary.h"
 #include "utils.h"
 #include "iopin.h"
@@ -49,16 +50,40 @@ LibraryItem* Function::libraryItem()
 }
 
 Function::Function( QObject* parent, QString type, QString id )
-        : LogicComponent( parent, type, id )
-        , m_engine()
-        , m_functions()
+        : IoComponent( parent, type, id )
+        , ScriptModule( id )
 {
     m_lastDir = Circuit::self()->getFilePath();
-    
     m_width = 4;
+
+    m_voltChanged = NULL;
+    m_aEngine->RegisterObjectType("Function",0, asOBJ_REF | asOBJ_NOCOUNT );
+    m_aEngine->RegisterGlobalProperty("Function fu", this );
+
+    int r=0;
+    r += m_aEngine->RegisterObjectMethod("Function", "bool getInputState(int pin)"
+                                       , asMETHODPR( Function, getInputState, (int), bool)
+                                       , asCALL_THISCALL );
+
+    r += m_aEngine->RegisterObjectMethod("Function", "double getInputVoltage(int pin)"
+                                       , asMETHODPR( Function, getInputVoltage, (int), double)
+                                       , asCALL_THISCALL );
+
+    r += m_aEngine->RegisterObjectMethod("Function", "void setOutputState(int pin, bool s)"
+                                       , asMETHODPR( Function, setOutputState, (int,bool), void)
+                                       , asCALL_THISCALL );
+
+    r += m_aEngine->RegisterObjectMethod("Function", "void setOutputVoltage(int pin, double v)"
+                                       , asMETHODPR( Function, setOutputVoltage, (int,double), void)
+                                       , asCALL_THISCALL );
+
+    r += m_aEngine->RegisterObjectMethod("Function", "double getOutputVoltage(int pin)"
+                                       , asMETHODPR( Function, getOutputVoltage, (int), double)
+                                       , asCALL_THISCALL );
+    if( r < 0 ) qDebug() << "Function::Function error Registering Function";
+
     setNumInps( 2 );                           // Create Input Pins
     setNumOuts( 1 );
-    
     setFunctions( "i0 | i1" );
 
     addPropGroup( { tr("Main"), {
@@ -74,80 +99,125 @@ Function::~Function(){}
 
 void Function::stamp()
 {
-    LogicComponent::stamp();
+    IoComponent::initState();
 
     for( uint i=0; i<m_inPin.size(); ++i ) m_inPin[i]->changeCallBack( this );
-
-    m_program.clear();
-    for( uint i=0; i<m_outPin.size(); ++i )
-    {
-        m_program.append( QScriptProgram( m_funcList.at(i).toLower() ));
-}   }
+}
 
 void Function::voltChanged()
 {
-    uint bit = 0;
-    //uint msb = (m_inPin.size()+m_outPin.size())*2-1;
-    for( uint i=0; i<m_inPin.size(); ++i )
-    {
-        bit = m_inPin[i]->getInpState();
-        //if( bit ) bits += 1 << (msb-(i*4));
-        //else      bits += 1 << (msb-(i*4)-1);
-        m_engine.globalObject().setProperty( "i"+QString::number(i), QScriptValue( bit ) );
-        m_engine.globalObject().setProperty( "vi"+QString::number(i), QScriptValue( m_inPin[i]->getVolt()) );
-    }
-    //m_engine.globalObject().setProperty( "inBits", QScriptValue( bits ) );
-    //m_engine.globalObject().setProperty( "inputs", QScriptValue( m_inPin.size() ) );
-
-    for( uint i=0; i<m_outPin.size(); ++i )
-    {
-        bit = m_outPin[i]->getOutState();
-        //if( bit ) bits += 1 << (msb-(i*4)-2);
-        //else      bits += 1 << (msb-(i*4)-3);
-        m_engine.globalObject().setProperty( "o"+QString::number(i), QScriptValue( bit ) );
-        m_engine.globalObject().setProperty( "vo"+QString::number(i), QScriptValue( m_outPin[i]->getVolt()) );
-    }
-    //m_engine.globalObject().setProperty( "bits", QScriptValue( bits ) );
-    //m_engine.globalObject().setProperty( "outputs", QScriptValue( m_outPin.size() ) );
-
+    if( !m_voltChanged ) return;
     m_nextOutVal = 0;
-    for( uint i=0; i<m_outPin.size(); ++i )
-    {
-        if( i >= m_outPin.size() ) break;
-        QString text = m_funcList.at(i).toLower();
 
-        if( text.startsWith( "vo" ) || text.startsWith( "{" ))
-        {
-            float out = m_engine.evaluate( m_program.at(i) ).toNumber();
-            m_outPin[i]->setOutHighV( out );
-            m_outPin[i]->setOutState( true );
-        }else {
-            bool out = m_engine.evaluate( m_program.at(i) ).toBool();
-            m_outPin[i]->setOutHighV( m_ouHighV );
-            if( out ) m_nextOutVal += 1<<i;
-        }
-    }
+    callFunction( m_voltChanged );
     sheduleOutPuts( this );
+}
+
+bool Function::getInputState( int pin )
+{
+    if( (uint)pin >= m_inPin.size() ) return false;
+    return m_inPin[pin]->getInpState();
+}
+
+double Function::getInputVoltage( int pin )
+{
+    if( (uint)pin >= m_inPin.size() ) return 0;
+    return m_inPin[pin]->getVolt();
+}
+
+void Function::setOutputState( int pin, bool s )
+{
+    if( (uint)pin >= m_outPin.size() ) return;
+    if( s ) m_nextOutVal |= 1<<pin;
+}
+
+void Function::setOutputVoltage( int pin, double v )
+{
+    if( (uint)pin >= m_outPin.size() ) return;
+    m_outPin[pin]->setOutHighV( v );
+    m_nextOutVal |= 1<<pin;
+    m_outValue   &= ~(1<<pin); // Force Pin update
+    m_outPin[pin]->m_nextState = false; // Force Pin update
+}
+
+double Function::getOutputVoltage( int pin )
+{
+    if( (uint)pin >= m_outPin.size() ) return 0;
+    return m_outPin[pin]->getVolt();
 }
 
 void Function::setFunctions( QString f )
 {
-    if( f.isEmpty() ) return;
-    m_functions = f;
     m_funcList = f.split(",");
+    updateFunctions();
+}
+
+void Function::updateFunctions()
+{
+    if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
+
+    m_script = "";
+
+    for( uint i=0; i<m_inPin.size(); ++i )
+    {
+        QString n = QString::number(i);
+        m_script += "double vi"+n+" = 0;\n";
+        m_script += "bool i"+n+" = false;\n";
+    }
+    for( uint i=0; i<m_outPin.size(); ++i )
+    {
+        QString n = QString::number(i);
+        m_script += "double vo"+n+" = 0;\n";
+        m_script += "bool o"+n+" = false;\n";
+    }
+    m_script += "\nvoid voltChanged(){\n";
+    for( uint i=0; i<m_inPin.size(); ++i )
+    {
+        QString n = QString::number(i);
+        m_script += "  vi"+n+" = fu.getInputVoltage("+n+");\n";
+        m_script += "  i"+n+"  = fu.getInputState("+n+");\n";
+    }
+    for( uint i=0; i<m_outPin.size(); ++i )
+    {
+        QString n = QString::number(i);
+        m_script += "  vo"+n+" = fu.getOutputVoltage("+n+");\n";
+    }
+
+    for( int i=0; i<m_funcList.size(); ++i )
+    {
+        QString n = QString::number(i);
+
+        QString func = m_funcList.at( i );
+        func = func.replace("&","&&").replace("|","||").replace("^","^^");
+        func = func.remove(" ").toLower();
+        if( func.startsWith("vo") )
+        {
+            func = func.replace("vo=", "");
+            m_script += "  fu.setOutputVoltage("+n+","+func+");\n";
+        }else{
+            m_script += "  o"+n+"="+func+";\n";
+            m_script += "  fu.setOutputState("+n+",o"+n+");\n";
+        }
+    }
+    m_script += "}\n";
+    qDebug() << m_script.toLocal8Bit().data();
+
+    int r = compileScript();
+    if( r < 0 ) return;
+
+    m_voltChanged = m_aEngine->GetModule(0)->GetFunctionByDecl("void voltChanged()");
 }
 
 void Function::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 {
-    if( !acceptedMouseButtons() ) event->ignore();
-    else
-    {
-        event->accept();
-        QMenu* menu = new QMenu();
-        contextMenu( event, menu );
-        Component::contextMenu( event, menu );
-        menu->deleteLater();
-}   }
+    if( !acceptedMouseButtons() ) { event->ignore(); return; }
+
+    event->accept();
+    QMenu* menu = new QMenu();
+    contextMenu( event, menu );
+    Component::contextMenu( event, menu );
+    menu->deleteLater();
+}
 
 void Function::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )
 {
@@ -176,7 +246,6 @@ void Function::loadData()
         if( line.remove(" ").isEmpty() ) continue;
         if( i >= m_funcList.size() ) break;
         m_funcList[i++] = line;
-        m_functions = m_funcList.join(",");
 }   }
 
 void Function::saveData()
@@ -206,7 +275,7 @@ void Function::remove()
        m_buttons.removeOne( button );
        delete button;
     }
-    LogicComponent::remove();
+    IoComponent::remove();
 }
 
 void Function::updateArea( uint ins, uint outs )
@@ -252,9 +321,7 @@ void Function::setNumOuts( int outs )
             {
                 m_outPin[i]->setY( -halfH+(int)i*16+8 );
                 m_proxys.at(i)->setPos( QPoint( 0, -halfH+(int)i*16+1 ) );
-            }
-            else
-            {
+            }else{
                 QPushButton* button = m_buttons.takeLast();
                 disconnect( button, SIGNAL( released() ), this, SLOT  ( onbuttonclicked() ));
                 delete button;
@@ -295,7 +362,6 @@ void Function::setNumOuts( int outs )
                 connect( button, SIGNAL( released() ),
                            this, SLOT  ( onbuttonclicked() ), Qt::UniqueConnection );
     }   }   }
-    m_functions = m_funcList.join(",");
     
     Circuit::self()->update();
 }
@@ -304,10 +370,7 @@ void Function::onbuttonclicked()
 {
     int i = 0;
     for( QPushButton* button : m_buttons ){
-       if( button->isChecked()  ){
-           button->setChecked( false );
-           break;
-       }
+       if( button->isChecked()  ){ button->setChecked( false ); break; }
        ++i;
     }
     bool ok;
@@ -315,10 +378,9 @@ void Function::onbuttonclicked()
                                              "Output "+QString::number(i)+tr(" Function:"),
                                              QLineEdit::Normal,
                                              m_funcList[i], &ok);
-    if( ok && !text.isEmpty() )
-    {
+    if( ok ){
         m_funcList[i] = text;
-        m_functions = m_funcList.join(",");
+        updateFunctions();
 }   }
 
 #include "moc_function.cpp"

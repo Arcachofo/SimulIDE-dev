@@ -22,6 +22,8 @@
 
 #include <QDoubleSpinBox>
 
+#include "scripthelper.h"
+
 class MAINMODULE_EXPORT DSpinBox : public QDoubleSpinBox
 {
     public:
@@ -35,6 +37,7 @@ class MAINMODULE_EXPORT DSpinBox : public QDoubleSpinBox
 
     private:
  static double evaluate( QString exp );
+ static asIScriptEngine* m_aEngine;
 };
 
 #endif

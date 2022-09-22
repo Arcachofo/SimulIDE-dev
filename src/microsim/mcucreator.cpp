@@ -80,7 +80,7 @@
 
 #include "z80core.h"
 
-#include "scriptcore.h"
+#include "scriptcpu.h"
 #include "scriptport.h"
 
 #include "utils.h"
@@ -166,15 +166,23 @@ int McuCreator::processFile( QString fileName, bool main )
     }
     if( root.hasAttribute("core") )
     {
-        createCore( m_core );
-        if( m_core == "scripted" )
+        if     ( m_core == "AVR" )      mcu->cpu = new AvrCore( mcu );
+        else if( m_core == "Pic14" )    mcu->cpu = new Pic14Core( mcu );
+        else if( m_core == "Pic14e" )   mcu->cpu = new Pic14eCore( mcu );
+        else if( m_core == "8051" )     mcu->cpu = new I51Core( mcu );
+        else if( m_core == "6502" )     mcu->cpu = new Mcs65Cpu( mcu );
+        else if( m_core == "Z80" )      mcu->cpu = new Z80Core( mcu );
+        else if( m_core == "scripted" )
         {
-            ScriptCore* cpu = (ScriptCore*)mcu->cpu;
+            ScriptCpu* cpu = new ScriptCpu( mcu );
+            mcu->cpu = cpu;
             QString script = root.attribute("script");
             cpu->setScript( fileToString( m_basePath+"/"+script, "McuCreator::processFile" ) );
         }
-        else if( m_core == "intmem" ){
-            IntMemCore* intMem = (IntMemCore*)mcu->cpu;
+        else if( m_core == "intmem" )
+        {
+            IntMemCore* intMem = new IntMemCore( mcu );
+            mcu->cpu = intMem;
 
             McuPort* addrPort = mcu->getPort( root.attribute("addrport") );
             for( int i=0; i<addrPort->m_numPins; ++i )
@@ -201,6 +209,7 @@ int McuCreator::processFile( QString fileName, bool main )
             intMem->m_cslPin = mcu->getPin( root.attribute("cslpin") );
             intMem->m_clkPin = mcu->getPin( root.attribute("clkpin") );
         }
+        if( !m_stackEl.isNull() ) createStack( &m_stackEl );
     }
     if( root.hasAttribute("clkpin") )
     {
@@ -1038,21 +1047,6 @@ void McuCreator::createIntMem( QDomElement* e )
     intMem->m_cshPin = mcu->getPin( e->attribute("cshpin") );
     intMem->m_cslPin = mcu->getPin( e->attribute("cslpin") );
     intMem->m_clkPin = mcu->getPin( e->attribute("clkpin") );
-}
-
-void McuCreator::createCore( QString core )
-{
-    if     ( core == "AVR" )      mcu->cpu = new AvrCore( mcu );
-    else if( core == "Pic14" )    mcu->cpu = new Pic14Core( mcu );
-    else if( core == "Pic14e" )   mcu->cpu = new Pic14eCore( mcu );
-    else if( core == "8051" )     mcu->cpu = new I51Core( mcu );
-    else if( core == "6502" )     mcu->cpu = new Mcs65Cpu( mcu );
-    else if( core == "Z80" )      mcu->cpu = new Z80Core( mcu );
-    else if( core == "scripted" ) mcu->cpu = new ScriptCore( mcu );
-    else if( core == "intmem" )   mcu->cpu = new IntMemCore( mcu );
-    //// else                          mcu->cpu = new CpuBase( mcu );
-
-    if( !m_stackEl.isNull() ) createStack( &m_stackEl );
 }
 
 void McuCreator::createStack( QDomElement* s )

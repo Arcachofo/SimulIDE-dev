@@ -25,7 +25,6 @@
 
 class MAINMODULE_EXPORT ScriptPort : public ScriptModule, public McuPort
 {
-    Q_OBJECT
     public:
         ScriptPort( eMcu* mcu, QString name );
         ~ScriptPort();
@@ -38,7 +37,6 @@ class MAINMODULE_EXPORT ScriptPort : public ScriptModule, public McuPort
 
         virtual void setScript( QString script ) override;
 
-    public slots:
         void setExtIntTrig( int pinNumber, int trig );
 
     protected:

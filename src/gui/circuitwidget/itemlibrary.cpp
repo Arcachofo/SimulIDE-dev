@@ -100,7 +100,6 @@
 #include "resistor.h"
 #include "resistordip.h"
 #include "rtd.h"
-#include "scripted.h"
 #include "serialport.h"
 #include "servo.h"
 #include "sevensegment.h"

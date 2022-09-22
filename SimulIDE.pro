@@ -1,5 +1,5 @@
 
-VERSION = "1.0.1"
+VERSION = "1.1.0"
 RELEASE = ""
 
 TEMPLATE = app
@@ -7,7 +7,6 @@ TARGET = simulide
 
 QT += svg
 QT += xml
-QT += script
 QT += widgets
 QT += concurrent
 QT += serialport
@@ -67,10 +66,18 @@ INCLUDEPATH += ../src \
     ../src/microsim/modules/memory \
     ../src/microsim/modules/usart \
     ../src/microsim/modules/twi \
-    ../src/microsim/modules/spi
+    ../src/microsim/modules/spi\
+    ../src/angel/include \
+    ../src/angel/JIT \
+    ../src/angel/src
+
 
 QMAKE_CXXFLAGS += -Wno-unused-parameter
 QMAKE_CXXFLAGS += -Wno-implicit-fallthrough
+QMAKE_CXXFLAGS += -fno-strict-aliasing      #AngelScript
+QMAKE_CXXFLAGS += -Wno-cast-function-type   #AngelScript
+QMAKE_CXXFLAGS += -Wno-deprecated-copy      #AngelScript
+QMAKE_CXXFLAGS += -Wno-invalid-offsetof     #AngelScript
 QMAKE_CXXFLAGS -= -fPIC
 QMAKE_CXXFLAGS += -fno-pic
 QMAKE_CXXFLAGS += -Ofast
