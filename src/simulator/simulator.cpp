@@ -1,21 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
- *   santigoro@gmail.com                                                   *
+ *   Copyright (C) 2012 by Santiago González                               *
  *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 3 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
- *                                                                         *
- ***************************************************************************/
+ ***( see copyright.txt file at root folder )*******************************/
 
 #include <qtconcurrentrun.h>
 #include <QHash>
@@ -59,6 +45,7 @@ Simulator::Simulator( QObject* parent )
     m_errors[3] = "LAST_SIM_EVENT reached";
 
     m_warnings[1] = "NonLinear Not Converging";
+    m_warnings[2] = "Simulation Blocked";
     m_warnings[100] = "AVR crashed !!!";
 
     resetSim();
@@ -77,6 +64,7 @@ inline void Simulator::solveMatrix()
     {
         m_changedNode->stampMatrix();
         m_changedNode = m_changedNode->nextCH;
+        if( m_state < SIM_RUNNING ) { m_warning = 2; break; }
     }
     if( !m_matrix->solveMatrix() ) // Try to solve matrix, if not stop simulation
     {
@@ -191,7 +179,7 @@ void Simulator::solveCircuit()
     {
         if( m_changedNode ){
             solveMatrix();
-            if( m_error ) return;
+            if( m_state < SIM_RUNNING ) return;
         }
         m_converged = m_nonLinear==NULL;
         while( !m_converged )                  // Non Linear Components

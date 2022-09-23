@@ -1,21 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2012 by santiago González                               *
- *   santigoro@gmail.com                                                   *
+ *   Copyright (C) 2012 by Santiago González                               *
  *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 3 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
- *                                                                         *
- ***************************************************************************/
+ ***( see copyright.txt file at root folder )*******************************/
 
 #include "e-node.h"
 #include "e-pin.h"
@@ -72,11 +58,6 @@ void eNode::initialize()
 
     m_nodeList.clear();
 }
-
-/*void eNode::addConnection( ePin* epin, int enodeComp ) // Add node at other side of pin
-{
-    if( enodeComp != m_nodeNum ) m_nodeList[epin] = enodeComp;  // Be sure msg doesn't come from this node
-}*/
 
 void eNode::addConnection( ePin* epin, int node )
 {
@@ -243,9 +224,6 @@ void eNode::addEpin( ePin* epin )
 void eNode::remEpin( ePin* epin )
 {
     if( m_ePinList.contains(epin) ) m_ePinList.removeOne( epin );
-    //if( m_nodeList.contains(epin) ) m_nodeList.remove( epin );
-    //if( m_currList.contains(epin) ) m_currList.remove( epin );
-    //if( m_admitList.contains(epin) ) m_admitList.remove( epin );
 }
 
 void eNode::clear()
@@ -301,26 +279,8 @@ void eNode::addToNoLinList( eElement* el )
     LinkedElement* newLinked = new LinkedElement( el );
     newLinked->next = m_nonLinEl; // Prepend
     m_nonLinEl = newLinked;
+    qDebug() <<m_id<< el->getId();
 }
-
-/*void eNode::remFromNoLinList( eElement* el )
-{
-    LinkedElement* changed = m_nonLinEl;
-    LinkedElement* last  = NULL;
-    LinkedElement* next  = NULL;
-
-    while( changed ){
-        next = changed->next;
-        if( el == changed->element )
-        {
-            if( last ) last->next = next;
-            else       m_nonLinEl = next;
-            delete changed;//changed->next = NULL;
-        }
-        else last = changed;
-        changed = next;
-    }
-}*/
 
 void eNode::clearElmList( LinkedElement* first )
 {

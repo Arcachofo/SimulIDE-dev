@@ -1,21 +1,7 @@
 /***************************************************************************
- *   Copyright (C) 2021 by santiago González                               *
- *   santigoro@gmail.com                                                   *
+ *   Copyright (C) 2021 by Santiago González                               *
  *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 3 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
- *                                                                         *
- ***************************************************************************/
+ ***( see copyright.txt file at root folder )*******************************/
 
 #include "iocomponent.h"
 #include "circuitwidget.h"
@@ -28,9 +14,9 @@
 IoComponent::IoComponent( QObject* parent, QString type, QString id)
            : Component( parent, type, id )
 {
-    m_inHighV = 0;
-    m_inLowV  = 0;
-    m_ouHighV = 0;
+    m_inHighV = 2.5;
+    m_inLowV  = 2.5;
+    m_ouHighV = 5;
     m_ouLowV  = 0;
     m_outValue = 0;
 

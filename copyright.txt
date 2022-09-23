@@ -1,6 +1,4 @@
 /***************************************************************************
- *   Copyright (C) 2018 by Pavel Lamonov                                   *
- *   leamonpaul@yandex.ru                                                  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -15,49 +13,4 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
  *                                                                         *
- ***( see copyright.txt file at root folder )*******************************/
-
-#ifndef FILEBROWSER_H
-#define FILEBROWSER_H
-
-#include <QTreeView>
-
-class QFileSystemModel;
-
-class MAINMODULE_EXPORT FileBrowser : public QTreeView
-{
-    Q_OBJECT
-
-    public:
-        FileBrowser( QWidget *parent );
-        ~FileBrowser();
-        
- static FileBrowser* self() { return m_pSelf; }
- 
-        void setPath( QString path );
-        void searchFiles( QString filter );
-        
-    public slots:
-        void cdUp();
-        void open();
-        void openInEditor();
-        void addBookMark();
-        void showHidden();
-        
-    protected:
-        void contextMenuEvent( QContextMenuEvent* event );
-
-    private:
- static FileBrowser* m_pSelf;
- 
-        void mouseDoubleClickEvent( QMouseEvent* ) { open(); }
-        void keyPressEvent( QKeyEvent *event );
-        
-        QFileSystemModel* m_fileSystemModel;
-        
-        QString m_currentPath;
-
-        bool m_showHidden;
-};
-
-#endif
+ ***************************************************************************
