@@ -66,6 +66,9 @@ class MAINMODULE_EXPORT Mcu : public Chip
         void setEeprom( QString eep );
         QString getEeprom();
 
+        int serialMon() { return m_serialMon; }
+        void setSerialMon( int s );
+
         virtual void initialize() override;
         virtual void stamp() override;
         virtual void updateStep() override;
@@ -108,6 +111,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         bool m_autoLoad;
         bool m_extClock;
+
+        int m_serialMon;
 
         QString m_subcDir;      // Subcircuit Path
         QString m_lastFirmDir;  // Last firmware folder used

@@ -89,3 +89,9 @@ void SerialMonitor::printOut( int value ) // Send value to OutPanelText
 
     m_uartOutPanel.appendText( text );
 }
+
+void SerialMonitor::closeEvent( QCloseEvent *event )
+{
+    event->accept();
+    m_usart->monitorClosed();
+}

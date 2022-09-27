@@ -33,18 +33,3 @@ void McuUsart::readByte( uint8_t )
 {
     m_mcu->m_regOverride = m_receiver->getData();
 }
-
-// ----------------------------------------
-
-/*McuUsarts::McuUsarts( eMcu* mcu  )
-{
-    m_mcu = mcu;
-}
-
-McuUsarts::~McuUsarts(){}
-
-void McuUsarts::remove()
-{
-    for( McuUsart* usart : m_usartList ) delete usart;
-    m_usartList.clear();
-}*/

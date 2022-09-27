@@ -24,6 +24,8 @@ UsartModule::UsartModule( eMcu* mcu, QString name )
     m_dataBits = 8;
     m_dataMask = 0xFF;
     m_parity   = parNONE;
+
+    m_serialMon = false;
 }
 UsartModule::~UsartModule( )
 {
@@ -67,6 +69,12 @@ void UsartModule::openMonitor( QString id, int num )
     if( num > 0 ) id.append(" - Uart"+QString::number(num) );
     m_monitor->setWindowTitle( id );
     m_monitor->show();
+    m_serialMon = true;
+}
+
+void UsartModule::monitorClosed()
+{
+    m_serialMon = false;
 }
 
 void UsartModule::uartIn( uint8_t value ) // Data sent from external source (Serial Monitor)

@@ -51,6 +51,8 @@ class MAINMODULE_EXPORT SerialPort : public Component, public UsartModule, publi
         QSerialPort::FlowControl flowControl() { return m_flowControl; }
         void setFlowControl( QSerialPort::FlowControl fc ) { m_flowControl = fc; }
 
+        void setSerialMon( bool s );
+
         virtual void byteReceived( uint8_t byte ) override;
         virtual void frameSent( uint8_t data ) override;
 

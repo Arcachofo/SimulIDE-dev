@@ -19,6 +19,7 @@
 #include "utils.h"
 
 #include "stringprop.h"
+#include "boolprop.h"
 #include "intprop.h"
 
 Component* SerialPort::construct( QObject* parent, QString type, QString id )
@@ -84,16 +85,19 @@ SerialPort::SerialPort( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-addPropGroup( { "Main", {
+    addPropGroup( { "Main", {
 //new BoolProp  <Chip>( "Logic_Symbol","","", this, &Chip::logicSymbol, &Chip::setLogicSymbol ),
 new StringProp<SerialPort>( "Port", tr("Port Name"),"", this, &SerialPort::port,  &SerialPort::setPort ),
     } } );
 
-addPropGroup( { "Config", {
+    addPropGroup( { "Config", {
 new IntProp<SerialPort>("Baudrate", tr("Baudrate"),"_Bauds", this, &SerialPort::baudRate, &SerialPort::setBaudRate, "uint" ),
 new IntProp<SerialPort>("DataBits", tr("Data Bits"),"_Bits", this, &SerialPort::dataBits, &SerialPort::setDataBits, "uint" ),
 new IntProp<SerialPort>("StopBits", tr("Stop Bits"),"_Bits", this, &SerialPort::stopBits, &SerialPort::setStopBits, "uint" ),
     } } );
+    addPropGroup( {"Hidden", {
+new BoolProp<SerialPort>("SerialMon","","", this, &SerialPort::serialMon, &SerialPort::setSerialMon ),
+}} );
 }
 SerialPort::~SerialPort(){}
 
@@ -201,6 +205,11 @@ void SerialPort::onbuttonclicked()
 void SerialPort::slotOpenTerm()
 {
     openMonitor( m_id, 0 );
+}
+
+void SerialPort::setSerialMon( bool s )
+{
+    if( s ) slotOpenTerm();
 }
 
 void SerialPort::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )

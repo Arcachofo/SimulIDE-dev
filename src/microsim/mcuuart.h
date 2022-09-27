@@ -28,23 +28,4 @@ class MAINMODULE_EXPORT McuUsart : public McuModule, public UsartModule
         bool m_speedx2;
 };
 
-// ----------------------------------------
-
-/*class MAINMODULE_EXPORT McuUsarts
-{
-        friend class McuCreator;
-
-    public:
-        McuUsarts( eMcu* mcu );
-        ~McuUsarts();
-
-       void remove();
-       McuUsart* getUsart( int number ) { return m_usartList.at(number); }
-
-    protected:
-       eMcu* m_mcu;
-
-       std::vector<McuUsart*> m_usartList;// Access Usarts by name
-};*/
-
 #endif

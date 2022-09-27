@@ -30,6 +30,7 @@
 
 #include "stringprop.h"
 #include "doubleprop.h"
+#include "intprop.h"
 #include "boolprop.h"
 
 #include "propdialog.h"
@@ -87,6 +88,8 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_mcuMonitor = NULL;
     m_autoLoad   = false;
     m_extClock   = false;
+
+    m_serialMon = -1;
 
     m_icColor = QColor( 20, 30, 60 );
 
@@ -154,10 +157,10 @@ void Mcu::setup( QString type )
     if( m_deviceType == typeMCU )
     {
     addPropGroup( { tr("Main"), {
-new DoubProp  <Mcu>( "Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
-new StringProp<Mcu>( "Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
-new BoolProp  <Mcu>( "Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
-new BoolProp  <Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol )
+new DoubProp  <Mcu>("Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
+new StringProp<Mcu>("Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
+new BoolProp  <Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
+new BoolProp  <Mcu>("Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol )
     }} );
     addPropGroup( { tr("Config"), {
 new BoolProp  <Mcu>( "Rst_enabled", tr("Enable Reset Pin")   ,"", this, &Mcu::rstPinEnabled, &Mcu::enableRstPin ),
@@ -165,9 +168,10 @@ new BoolProp  <Mcu>( "Ext_Osc"    , tr("External Oscillator"),"", this, &Mcu::ex
 new BoolProp  <Mcu>( "Wdt_enabled", tr("Enable WatchDog")    ,"", this, &Mcu::wdtEnabled,    &Mcu::enableWdt )
     }} );
     addPropGroup( {"Hidden", {
-new StringProp<Mcu>( "varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
-new StringProp<Mcu>( "cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
-new StringProp<Mcu>( "eeprom" , "","", this, &Mcu::getEeprom, &Mcu::setEeprom )
+new StringProp<Mcu>("varList", "","", this, &Mcu::varList,   &Mcu::setVarList),
+new StringProp<Mcu>("cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
+new StringProp<Mcu>("eeprom" , "","", this, &Mcu::getEeprom, &Mcu::setEeprom ),
+new IntProp   <Mcu>("SerialMon","","", this, &Mcu::serialMon, &Mcu::setSerialMon )
     }} );
     }
     else //if( m_deviceType == typeMPU )
@@ -176,7 +180,7 @@ new StringProp<Mcu>( "eeprom" , "","", this, &Mcu::getEeprom, &Mcu::setEeprom )
 addProperty(tr("Main"),new BoolProp<Mcu>( "Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol ) );
 
     addPropGroup( {"Hidden", {
-new StringProp<Mcu>( "cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs)
+new StringProp<Mcu>( "cpuRegs", "","", this, &Mcu::cpuRegs,   &Mcu::setCpuRegs),
     }} );
     }
 }
@@ -456,6 +460,12 @@ void Mcu::slotOpenMcuMonitor()
 void Mcu::slotOpenTerm( int num )
 {
     m_eMcu.m_usarts.at(num-1)->openMonitor( idLabel(), num );
+    m_serialMon = num;
+}
+
+void Mcu::setSerialMon( int s )
+{
+    if( s>=0 ) slotOpenTerm( s );
 }
 
 void Mcu::addPin( QString id, QString type, QString label,

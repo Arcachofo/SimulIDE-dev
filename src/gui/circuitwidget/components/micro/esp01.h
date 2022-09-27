@@ -39,6 +39,8 @@ class MAINMODULE_EXPORT Esp01 : public Component, public UsartModule, public eEl
         bool debug() { return m_debug; }
         void setDebug( bool d) { m_debug = d; }
 
+        void setSerialMon( bool s );
+
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void runEvent() override;

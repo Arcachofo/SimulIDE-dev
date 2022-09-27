@@ -41,6 +41,7 @@ Esp01::Esp01( QObject* parent, QString type, QString id )
     m_background = ":/esp01.png";
     setLabelPos(-20,-34, 0 );
 
+    m_serialMon = false;
     m_debug = true;
     m_OK = "\r\nOK\r\n";
     m_ERROR = "\r\nERROR\r\n"; // Default reply: Error //+CWJAP:<5>
@@ -77,6 +78,9 @@ new IntProp<Esp01>("Baudrate", tr("Baudrate"),"_Bauds", this, &Esp01::baudRate, 
 //new IntProp<Esp01>("StopBits", tr("Stop Bits"),"_Bits", this, &Esp01::stopBits, &Esp01::setStopBits, "uint" ),
 new BoolProp<Esp01>( "Debug", tr("Show Debug messages"),"", this, &Esp01::debug,   &Esp01::setDebug ),
         } } );
+    addPropGroup( {"Hidden", {
+new BoolProp<Esp01>("SerialMon","","", this, &Esp01::serialMon, &Esp01::setSerialMon ),
+    }} );
 }
 Esp01::~Esp01(){}
 
@@ -401,6 +405,11 @@ void Esp01::connectReply( QByteArray OP, int link )
 void Esp01::slotOpenTerm()
 {
     openMonitor( m_id, 0 );
+}
+
+void Esp01::setSerialMon( bool s )
+{
+    if( s ) slotOpenTerm();
 }
 
 void Esp01::contextMenu( QGraphicsSceneContextMenuEvent* event, QMenu* menu )

@@ -37,6 +37,8 @@ class MAINMODULE_EXPORT UsartModule
         int baudRate() { return m_baudRate; }
         void setBaudRate( int br );
 
+        bool serialMon() { return m_serialMon; }
+
         virtual uint8_t getBit9Tx(){return 0;}
         virtual void setBit9Rx( uint8_t bit ){;}
 
@@ -51,6 +53,7 @@ class MAINMODULE_EXPORT UsartModule
         virtual void frameError(){;}
 
         void openMonitor( QString id, int num=0 );
+        void monitorClosed();
         void uartIn( uint8_t value );
 
         uint8_t m_mode;
@@ -68,10 +71,9 @@ class MAINMODULE_EXPORT UsartModule
         UartRx* m_receiver;
 
         bool m_sync;
+        bool m_serialMon;
 
         int m_baudRate;
-
-        //bool m_running;   // is Uart running?
 };
 
 class Interrupt;

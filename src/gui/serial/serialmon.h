@@ -35,6 +35,9 @@ class SerialMonitor : public QDialog, private Ui::SerialMonitor, public Updatabl
         void on_clearIn_clicked() { m_uartInPanel.clear(); }
         void on_clearOut_clicked() { m_uartOutPanel.clear(); }
 
+    protected:
+        void closeEvent( QCloseEvent* event );
+
     private:
         OutPanelText m_uartInPanel;
         OutPanelText m_uartOutPanel;
