@@ -38,7 +38,6 @@
 
 #include "as_config.h"
 
-#ifndef AS_MAX_PORTABILITY
 #ifdef AS_X64_MINGW
 
 #include "as_callfunc.h"
@@ -343,6 +342,3 @@ asQWORD CallSystemFunctionNative(asCContext *context, asCScriptFunction *descr, 
 END_AS_NAMESPACE
 
 #endif // AS_X64_MINGW
-#endif // AS_MAX_PORTABILITY
-
-

@@ -28,20 +28,13 @@
    andreas@angelcode.com
 */
 
-
-//
-// as_callfunc_x86.cpp
-//
 // These functions handle the actual calling of system functions
 //
 // Added support for functor methods by Jordi Oliveras Rovira in April, 2014.
 //
 
-
-
 #include "as_config.h"
 
-#ifndef AS_MAX_PORTABILITY
 #ifdef AS_X86
 
 #include "as_callfunc.h"
@@ -1507,8 +1500,3 @@ asQWORD GetReturnedDouble()
 END_AS_NAMESPACE
 
 #endif // AS_X86
-#endif // AS_MAX_PORTABILITY
-
-
-
-

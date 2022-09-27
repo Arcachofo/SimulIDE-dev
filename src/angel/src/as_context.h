@@ -40,7 +40,7 @@
 #define AS_CONTEXT_H
 
 #include "as_config.h"
-#include "as_atomic.h"
+//#include "as_atomic.h"
 #include "as_array.h"
 #include "as_string.h"
 #include "as_objecttype.h"

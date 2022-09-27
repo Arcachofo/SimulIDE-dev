@@ -43,7 +43,7 @@
 
 BEGIN_AS_NAMESPACE
 
-#define DECLARECRITICALSECTION(x)
+/*#define DECLARECRITICALSECTION(x)
 #define ENTERCRITICALSECTION(x)
 #define LEAVECRITICALSECTION(x)
 
@@ -54,7 +54,7 @@ inline bool tryEnter() { return true; }
 #define ACQUIREEXCLUSIVE(x)
 #define RELEASEEXCLUSIVE(x)
 #define ACQUIRESHARED(x)
-#define RELEASESHARED(x)
+#define RELEASESHARED(x)*/
 
 END_AS_NAMESPACE
 

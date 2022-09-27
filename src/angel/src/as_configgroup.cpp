@@ -28,14 +28,11 @@
    andreas@angelcode.com
 */
 
-
 //
 // as_configgroup.cpp
 //
 // This class holds configuration groups for the engine
 //
-
-
 
 #include "as_config.h"
 #include "as_configgroup.h"
@@ -129,7 +126,6 @@ void asCConfigGroup::RemoveConfiguration(asCScriptEngine *engine, bool notUsed)
 		if( index >= 0 )
 		{
 			globalProps[n]->Release();
-
 			engine->registeredGlobalProps.Erase(index);
 		}
 	}
@@ -149,8 +145,7 @@ void asCConfigGroup::RemoveConfiguration(asCScriptEngine *engine, bool notUsed)
 	for( n = 0; n < types.GetLength(); n++ )
 	{
 		asCObjectType *obj = CastToObjectType(types[n]);
-		if( obj )
-			obj->ReleaseAllFunctions();
+        if( obj ) obj->ReleaseAllFunctions();
 	}
 
 	// Remove object types (skip this if it is possible other groups are still using the types)
@@ -179,14 +174,12 @@ void asCConfigGroup::RemoveConfiguration(asCScriptEngine *engine, bool notUsed)
 					engine->registeredFuncDefs.RemoveValue(CastToFuncdefType(t));
 					engine->RemoveFuncdef(CastToFuncdefType(t));
 				}
-				else
-					engine->registeredObjTypes.RemoveValue(CastToObjectType(t));
+                else engine->registeredObjTypes.RemoveValue(CastToObjectType(t));
 
 				t->DestroyInternal();
 				t->ReleaseInternal();
 			}
-			else
-			{
+            else{
 				int idx = engine->templateInstanceTypes.IndexOf(CastToObjectType(t));
 				if( idx >= 0 )
 				{
@@ -199,7 +192,6 @@ void asCConfigGroup::RemoveConfiguration(asCScriptEngine *engine, bool notUsed)
 		}
 		types.SetLength(0);
 	}
-
 	// Release other config groups
 	for( n = 0; n < referencedConfigGroups.GetLength(); n++ )
 		referencedConfigGroups[n]->refCount--;

@@ -41,7 +41,7 @@
 #define AS_SCRIPTENGINE_H
 
 #include "as_config.h"
-#include "as_atomic.h"
+//#include "as_atomic.h"
 #include "as_scriptfunction.h"
 #include "as_array.h"
 #include "as_datatype.h"
@@ -464,9 +464,6 @@ public:
 	asCArray<STypeInfoClean>  cleanTypeInfoFuncs;
 	struct SScriptObjClean { asPWORD type; asCLEANSCRIPTOBJECTFUNC_t cleanFunc; };
 	asCArray<SScriptObjClean> cleanScriptObjectFuncs;
-
-	// Synchronization for threads
-	DECLAREREADWRITELOCK(mutable engineRWLock)
 
 	// Engine properties
 	struct

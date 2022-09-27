@@ -424,8 +424,6 @@ typedef void (*asCIRCULARREFFUNC_t)(asITypeInfo *, const void *, void *);
 #define asFUNCTION(f) asFunctionPtr(f)
 #define asFUNCTIONPR(f,p,r) asFunctionPtr(reinterpret_cast<void (*)()>(static_cast<r (*)p>(f)))
 
-#ifndef AS_NO_CLASS_METHODS
-
 class asCUnknownClass;
 typedef void (asCUnknownClass::*asMETHOD_t)();
 
@@ -460,27 +458,6 @@ struct asSFuncPtr
 
 #define asMETHOD(c,m) asSMethodPtr<sizeof(void (c::*)())>::Convert((void (c::*)())(&c::m))
 #define asMETHODPR(c,m,p,r) asSMethodPtr<sizeof(void (c::*)())>::Convert(AS_METHOD_AMBIGUITY_CAST(r (c::*)p)(&c::m))
-
-#else // Class methods are disabled
-
-struct asSFuncPtr
-{
-    asSFuncPtr(asBYTE f)
-    {
-        for( int n = 0; n < sizeof(ptr.dummy); n++ )
-            ptr.dummy[n] = 0;
-        flag = f;
-    }
-
-    union
-    {
-        char dummy[25]; // largest known class method pointer
-        struct {asFUNCTION_t func; char dummy[25-sizeof(asFUNCTION_t)];} f;
-    } ptr;
-    asBYTE flag; // 1 = generic, 2 = global func
-};
-
-#endif
 
 struct asSMessageInfo
 {
@@ -533,10 +510,6 @@ extern "C"
     AS_API int               asPrepareMultithread(asIThreadManager *externalMgr = 0);
     AS_API void              asUnprepareMultithread();
     AS_API asIThreadManager *asGetThreadManager();
-    AS_API void              asAcquireExclusiveLock();
-    AS_API void              asReleaseExclusiveLock();
-    AS_API void              asAcquireSharedLock();
-    AS_API void              asReleaseSharedLock();
     AS_API int               asAtomicInc(int &value);
     AS_API int               asAtomicDec(int &value);
     AS_API int               asThreadCleanup();
@@ -1156,10 +1129,6 @@ public:
     virtual bool Get() const = 0;
     virtual void Set(bool val) = 0;
 
-    // Thread management
-    virtual void Lock() const = 0;
-    virtual void Unlock() const = 0;
-
 protected:
     virtual ~asILockableSharedBool() {}
 };
@@ -1198,8 +1167,6 @@ inline asSFuncPtr asFunctionPtr<asGENFUNC_t>(asGENFUNC_t func)
     return p;
 }
 
-#ifndef AS_NO_CLASS_METHODS
-
 // Method pointers
 
 // Declare a dummy class so that we can determine the size of a simple method pointer
@@ -1237,96 +1204,6 @@ struct asSMethodPtr<SINGLE_PTR_SIZE>
         return p;
     }
 };
-
-#if defined(_MSC_VER) && !defined(__MWERKS__)
-
-// MSVC and Intel uses different sizes for different class method pointers
-template <>
-struct asSMethodPtr<SINGLE_PTR_SIZE+1*sizeof(int)>
-{
-    template <class M>
-    static asSFuncPtr Convert(M Mthd)
-    {
-        // Mark this as a class method
-        asSFuncPtr p(3);
-        p.CopyMethodPtr(&Mthd, SINGLE_PTR_SIZE+sizeof(int));
-        return p;
-    }
-};
-
-template <>
-struct asSMethodPtr<SINGLE_PTR_SIZE+2*sizeof(int)>
-{
-    template <class M>
-    static asSFuncPtr Convert(M Mthd)
-    {
-        // On 32bit platforms with is where a class with virtual inheritance falls.
-        // On 64bit platforms we can also fall here if 8byte data alignments is used.
-
-        // Mark this as a class method
-        asSFuncPtr p(3);
-        p.CopyMethodPtr(&Mthd, SINGLE_PTR_SIZE+2*sizeof(int));
-
-        // Microsoft has a terrible optimization on class methods with virtual inheritance.
-        // They are hardcoding an important offset, which is not coming in the method pointer.
-
-#if defined(_MSC_VER) && !defined(AS_64BIT_PTR)
-            // Method pointers for virtual inheritance is not supported,
-            // as it requires the location of the vbase table, which is
-            // only available to the C++ compiler, but not in the method
-            // pointer.
-
-            // You can get around this by forward declaring the class and
-            // storing the sizeof its method pointer in a constant. Example:
-
-            // class ClassWithVirtualInheritance;
-            // const int ClassWithVirtualInheritance_workaround = sizeof(void ClassWithVirtualInheritance::*());
-
-            // This will force the compiler to use the unknown type
-            // for the class, which falls under the next case
-
-
-            // Copy the virtual table index to the 4th dword so that AngelScript
-            // can properly detect and deny the use of methods with virtual inheritance.
-            *(reinterpret_cast<asDWORD*>(&p)+3) = *(reinterpret_cast<asDWORD*>(&p)+2);
-#endif
-
-        return p;
-    }
-};
-
-template <>
-struct asSMethodPtr<SINGLE_PTR_SIZE+3*sizeof(int)>
-{
-    template <class M>
-    static asSFuncPtr Convert(M Mthd)
-    {
-        // Mark this as a class method
-        asSFuncPtr p(3);
-        p.CopyMethodPtr(&Mthd, SINGLE_PTR_SIZE+3*sizeof(int));
-        return p;
-    }
-};
-
-template <>
-struct asSMethodPtr<SINGLE_PTR_SIZE+4*sizeof(int)>
-{
-    template <class M>
-    static asSFuncPtr Convert(M Mthd)
-    {
-        // On 64bit platforms with 8byte data alignment
-        // the unknown class method pointers will come here.
-
-        // Mark this as a class method
-        asSFuncPtr p(3);
-        p.CopyMethodPtr(&Mthd, SINGLE_PTR_SIZE+4*sizeof(int));
-        return p;
-    }
-};
-
-#endif
-
-#endif // AS_NO_CLASS_METHODS
 
 //----------------------------------------------------------------
 // JIT compiler

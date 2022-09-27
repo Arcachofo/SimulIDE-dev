@@ -41,7 +41,7 @@
 
 #include "as_config.h"
 #include "as_symboltable.h"
-#include "as_atomic.h"
+//#include "as_atomic.h"
 #include "as_string.h"
 #include "as_array.h"
 #include "as_datatype.h"

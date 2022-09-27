@@ -42,7 +42,7 @@
 
 #include "as_string.h"
 #include "as_datatype.h"
-#include "as_atomic.h"
+//#include "as_atomic.h"
 #include "as_scriptfunction.h"
 #include "as_symboltable.h"
 

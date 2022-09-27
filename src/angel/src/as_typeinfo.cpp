@@ -133,10 +133,6 @@ asIScriptModule *asCTypeInfo::GetModule() const
 
 void *asCTypeInfo::SetUserData(void *data, asPWORD type)
 {
-	// As a thread might add a new new user data at the same time as another
-	// it is necessary to protect both read and write access to the userData member
-	ACQUIREEXCLUSIVE(engine->engineRWLock);
-
 	// It is not intended to store a lot of different types of userdata,
 	// so a more complex structure like a associative map would just have
 	// more overhead than a simple array.
@@ -146,36 +142,18 @@ void *asCTypeInfo::SetUserData(void *data, asPWORD type)
 		{
 			void *oldData = reinterpret_cast<void*>(userData[n + 1]);
 			userData[n + 1] = reinterpret_cast<asPWORD>(data);
-
-			RELEASEEXCLUSIVE(engine->engineRWLock);
-
 			return oldData;
 		}
 	}
 	userData.PushLast(type);
 	userData.PushLast(reinterpret_cast<asPWORD>(data));
-
-	RELEASEEXCLUSIVE(engine->engineRWLock);
-
 	return 0;
 }
 
 void *asCTypeInfo::GetUserData(asPWORD type) const
 {
-	// There may be multiple threads reading, but when
-	// setting the user data nobody must be reading.
-	ACQUIRESHARED(engine->engineRWLock);
-
 	for (asUINT n = 0; n < userData.GetLength(); n += 2)
-	{
-		if (userData[n] == type)
-		{
-			RELEASESHARED(engine->engineRWLock);
-			return reinterpret_cast<void*>(userData[n + 1]);
-		}
-	}
-	RELEASESHARED(engine->engineRWLock);
-
+        if (userData[n] == type) return reinterpret_cast<void*>(userData[n + 1]);
 	return 0;
 }
 
@@ -188,9 +166,7 @@ const char *asCTypeInfo::GetName() const
 // interface
 const char *asCTypeInfo::GetNamespace() const
 {
-	if( nameSpace )
-		return nameSpace->name.AddressOf();
-
+    if( nameSpace ) return nameSpace->name.AddressOf();
 	return 0;
 }
 
@@ -219,7 +195,6 @@ int asCTypeInfo::GetTypeId() const
 		// The engine will define the typeId for this object type
 		engine->GetTypeIdFromDataType(asCDataType::CreateType(ot, false));
 	}
-
 	return typeId;
 }
 
@@ -233,9 +208,7 @@ asIScriptEngine *asCTypeInfo::GetEngine() const
 const char *asCTypeInfo::GetConfigGroup() const
 {
 	asCConfigGroup *group = engine->FindConfigGroupForTypeInfo(this);
-	if (group == 0)
-		return 0;
-
+    if (group == 0) return 0;
 	return group->groupName.AddressOf();
 }
 
@@ -280,8 +253,7 @@ asCEnumType *CastToEnumType(asCTypeInfo *ti)
 	// Allow call on null pointer
 	if (ti == 0) return 0;
 
-	if (ti->flags & (asOBJ_ENUM))
-		return reinterpret_cast<asCEnumType*>(ti);
+    if (ti->flags & (asOBJ_ENUM)) return reinterpret_cast<asCEnumType*>(ti);
 
 	return 0;
 }
@@ -292,8 +264,7 @@ asCTypedefType *CastToTypedefType(asCTypeInfo *ti)
 	// Allow call on null pointer
 	if (ti == 0) return 0;
 
-	if (ti->flags & (asOBJ_TYPEDEF))
-		return reinterpret_cast<asCTypedefType*>(ti);
+    if (ti->flags & (asOBJ_TYPEDEF)) return reinterpret_cast<asCTypedefType*>(ti);
 
 	return 0;
 }
@@ -304,8 +275,7 @@ asCFuncdefType *CastToFuncdefType(asCTypeInfo *ti)
 	// Allow call on null pointer
 	if (ti == 0) return 0;
 
-	if (ti->flags & (asOBJ_FUNCDEF))
-		return reinterpret_cast<asCFuncdefType*>(ti);
+    if (ti->flags & (asOBJ_FUNCDEF)) return reinterpret_cast<asCFuncdefType*>(ti);
 
 	return 0;
 }
@@ -342,10 +312,8 @@ asCEnumType::~asCEnumType()
 {
 	asUINT n;
 	for (n = 0; n < enumValues.GetLength(); n++)
-	{
-		if (enumValues[n])
-			asDELETE(enumValues[n], asSEnumValue);
-	}
+        if (enumValues[n]) asDELETE(enumValues[n], asSEnumValue);
+
 	enumValues.SetLength(0);
 }
 
@@ -358,14 +326,9 @@ asUINT asCEnumType::GetEnumValueCount() const
 // interface
 const char *asCEnumType::GetEnumValueByIndex(asUINT index, int *outValue) const
 {
-	if (outValue)
-		*outValue = 0;
-
-	if (index >= enumValues.GetLength())
-		return 0;
-
-	if (outValue)
-		*outValue = enumValues[index]->value;
+    if (outValue) *outValue = 0;
+    if (index >= enumValues.GetLength()) return 0;
+    if (outValue) *outValue = enumValues[index]->value;
 
 	return enumValues[index]->name.AddressOf();
 }
@@ -390,8 +353,7 @@ void asCTypedefType::DestroyInternal()
 	CleanUserData();
 
 	// Remove the type from the engine
-	if (typeId != -1)
-		engine->RemoveFromTypeIdMap(this);
+    if (typeId != -1) engine->RemoveFromTypeIdMap(this);
 
 	// Clear the engine pointer to mark the object type as invalid
 	engine = 0;
@@ -442,7 +404,6 @@ void asCFuncdefType::DestroyInternal()
 		parentClass->childFuncDefs.RemoveValue(this);
 		parentClass = 0;
 	}
-
 	CleanUserData();
 
 	// Remove the type from the engine

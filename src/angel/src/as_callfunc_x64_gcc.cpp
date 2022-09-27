@@ -44,7 +44,6 @@
  
 #include "as_config.h"
 
-#ifndef AS_MAX_PORTABILITY
 #ifdef AS_X64_GCC
 
 #include "as_scriptengine.h"
@@ -184,11 +183,7 @@ asQWORD CallSystemFunctionNative(asCContext *context, asCScriptFunction *descr, 
 	int                         argIndex           = 0;
 	funcptr_t                   func               = (funcptr_t)sysFunc->func;
 
-	if( sysFunc->hostReturnInMemory ) 
-	{
-		// The return is made in memory
-		callConv++;
-	}
+    if( sysFunc->hostReturnInMemory ) callConv++; // The return is made in memory
 
 #ifdef AS_NO_THISCALL_FUNCTOR_METHOD
 	// Determine the real function pointer in case of virtual method
@@ -473,5 +468,3 @@ asQWORD CallSystemFunctionNative(asCContext *context, asCScriptFunction *descr, 
 END_AS_NAMESPACE
 
 #endif // AS_X64_GCC
-#endif // AS_MAX_PORTABILITY
-

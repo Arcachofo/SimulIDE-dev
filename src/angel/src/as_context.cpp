@@ -262,28 +262,16 @@ void asCContext::DetachEngine()
 	if( m_engine == 0 ) return;
 
 	// Clean up all calls, included nested ones
-	do
-	{
-		// Abort any execution
-		Abort();
-
-		// Free all resources
-		Unprepare();
+    do{
+        Abort(); // Abort any execution
+        Unprepare(); // Free all resources
 	}
 	while( IsNested() );
 
 	// Free the stack blocks
 	for( asUINT n = 0; n < m_stackBlocks.GetLength(); n++ )
-	{
-		if( m_stackBlocks[n] )
-		{
-#ifndef WIP_16BYTE_ALIGN
-			asDELETEARRAY(m_stackBlocks[n]);
-#else
-			asDELETEARRAYALIGNED(m_stackBlocks[n]);
-#endif
-		}
-	}
+        if( m_stackBlocks[n] ) asDELETEARRAY(m_stackBlocks[n]);
+
 	m_stackBlocks.SetLength(0);
 	m_stackBlockSize = 0;
 
@@ -300,8 +288,7 @@ void asCContext::DetachEngine()
 	m_userData.SetLength(0);
 
 	// Clear engine pointer
-	if( m_holdEngineRef )
-		m_engine->Release();
+    if( m_holdEngineRef ) m_engine->Release();
 	m_engine = 0;
 }
 
@@ -314,10 +301,6 @@ asIScriptEngine *asCContext::GetEngine() const
 // interface
 void *asCContext::SetUserData(void *data, asPWORD type)
 {
-	// As a thread might add a new new user data at the same time as another
-	// it is necessary to protect both read and write access to the userData member
-	ACQUIREEXCLUSIVE(m_engine->engineRWLock);
-
 	// It is not intended to store a lot of different types of userdata,
 	// so a more complex structure like a associative map would just have
 	// more overhead than a simple array.
@@ -327,39 +310,19 @@ void *asCContext::SetUserData(void *data, asPWORD type)
 		{
 			void *oldData = reinterpret_cast<void*>(m_userData[n+1]);
 			m_userData[n+1] = reinterpret_cast<asPWORD>(data);
-
-			RELEASEEXCLUSIVE(m_engine->engineRWLock);
-
 			return oldData;
 		}
 	}
-
 	m_userData.PushLast(type);
 	m_userData.PushLast(reinterpret_cast<asPWORD>(data));
-
-	RELEASEEXCLUSIVE(m_engine->engineRWLock);
-
 	return 0;
 }
 
 // interface
 void *asCContext::GetUserData(asPWORD type) const
 {
-	// There may be multiple threads reading, but when
-	// setting the user data nobody must be reading.
-	ACQUIRESHARED(m_engine->engineRWLock);
-
 	for( asUINT n = 0; n < m_userData.GetLength(); n += 2 )
-	{
-		if( m_userData[n] == type )
-		{
-			RELEASESHARED(m_engine->engineRWLock);
-			return reinterpret_cast<void*>(m_userData[n+1]);
-		}
-	}
-
-	RELEASESHARED(m_engine->engineRWLock);
-
+        if( m_userData[n] == type ) return reinterpret_cast<void*>(m_userData[n+1]);
 	return 0;
 }
 
@@ -392,15 +355,13 @@ int asCContext::Prepare(asIScriptFunction *func)
 	if( m_status != asEXECUTION_FINISHED && m_status != asEXECUTION_UNINITIALIZED )
 		CleanStack();
 
-	// Release the returned object (if any)
-    CleanReturnObject();
+    CleanReturnObject(); // Release the returned object (if any)
 
 	// Release the object if it is a script object
 	if( m_initialFunction && m_initialFunction->objectType && (m_initialFunction->objectType->flags & asOBJ_SCRIPT_OBJECT) )
 	{
 		asCScriptObject *obj = *(asCScriptObject**)&m_regs.stackFramePointer[0];
-		if( obj )
-			obj->Release();
+        if( obj ) obj->Release();
 
 		*(asPWORD*)&m_regs.stackFramePointer[0] = 0;
 	}
@@ -417,8 +378,7 @@ int asCContext::Prepare(asIScriptFunction *func)
 		// otherwise something is wrong with the way it is being updated
         asASSERT( /*IsNested() ||*/ m_stackIndex > 0 || (m_regs.stackPointer == m_stackBlocks[0] + m_stackBlockSize) );
 	}
-	else
-	{
+    else{
 		asASSERT( m_engine );
 
 		// Make sure the function is from the same engine as the context to avoid mixups

@@ -195,78 +195,6 @@ asIScriptObject *ScriptObjectCopyFactory(const asCObjectType *objType, void *ori
 	return ptr;
 }
 
-#ifdef AS_MAX_PORTABILITY
-
-static void ScriptObject_AddRef_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-	self->AddRef();
-}
-
-static void ScriptObject_Release_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-	self->Release();
-}
-
-static void ScriptObject_GetRefCount_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-	*(int*)gen->GetAddressOfReturnLocation() = self->GetRefCount();
-}
-
-static void ScriptObject_SetFlag_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-	self->SetFlag();
-}
-
-static void ScriptObject_GetFlag_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-	*(bool*)gen->GetAddressOfReturnLocation() = self->GetFlag();
-}
-
-static void ScriptObject_GetWeakRefFlag_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-	*(asILockableSharedBool**)gen->GetAddressOfReturnLocation() = self->GetWeakRefFlag();
-}
-
-static void ScriptObject_EnumReferences_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-	asIScriptEngine *engine = *(asIScriptEngine**)gen->GetAddressOfArg(0);
-	self->EnumReferences(engine);
-}
-
-static void ScriptObject_ReleaseAllHandles_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-	asIScriptEngine *engine = *(asIScriptEngine**)gen->GetAddressOfArg(0);
-	self->ReleaseAllHandles(engine);
-}
-
-static void ScriptObject_Assignment_Generic(asIScriptGeneric *gen)
-{
-	asCScriptObject *other = *(asCScriptObject**)gen->GetAddressOfArg(0);
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-
-	*self = *other;
-
-	*(asCScriptObject**)gen->GetAddressOfReturnLocation() = self;
-}
-
-static void ScriptObject_Construct_Generic(asIScriptGeneric *gen)
-{
-	asCObjectType *objType = *(asCObjectType**)gen->GetAddressOfArg(0);
-	asCScriptObject *self = (asCScriptObject*)gen->GetObject();
-
-	ScriptObject_Construct(objType, self);
-}
-
-#endif
-
 void RegisterScriptObject(asCScriptEngine *engine)
 {
 	// Register the default script class behaviours
@@ -275,7 +203,7 @@ void RegisterScriptObject(asCScriptEngine *engine)
 	engine->scriptTypeBehaviours.engine = engine;
 	engine->scriptTypeBehaviours.flags = asOBJ_SCRIPT_OBJECT | asOBJ_REF | asOBJ_GC;
 	engine->scriptTypeBehaviours.name = "$obj";
-#ifndef AS_MAX_PORTABILITY
+
 	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_CONSTRUCT, "void f(int&in)", asFUNCTION(ScriptObject_Construct), asCALL_CDECL_OBJLAST, 0); asASSERT( r >= 0 );
 	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_ADDREF, "void f()", asMETHOD(asCScriptObject,AddRef), asCALL_THISCALL, 0); asASSERT( r >= 0 );
 	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_RELEASE, "void f()", asMETHOD(asCScriptObject,Release), asCALL_THISCALL, 0); asASSERT( r >= 0 );
@@ -290,22 +218,6 @@ void RegisterScriptObject(asCScriptEngine *engine)
 	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_GETGCFLAG, "bool f()", asMETHOD(asCScriptObject,GetFlag), asCALL_THISCALL, 0); asASSERT( r >= 0 );
 	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_ENUMREFS, "void f(int&in)", asMETHOD(asCScriptObject,EnumReferences), asCALL_THISCALL, 0); asASSERT( r >= 0 );
 	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_RELEASEREFS, "void f(int&in)", asMETHOD(asCScriptObject,ReleaseAllHandles), asCALL_THISCALL, 0); asASSERT( r >= 0 );
-#else
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_CONSTRUCT, "void f(int&in)", asFUNCTION(ScriptObject_Construct_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_ADDREF, "void f()", asFUNCTION(ScriptObject_AddRef_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_RELEASE, "void f()", asFUNCTION(ScriptObject_Release_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-	r = engine->RegisterMethodToObjectType(&engine->scriptTypeBehaviours, "int &opAssign(int &in)", asFUNCTION(ScriptObject_Assignment_Generic), asCALL_GENERIC); asASSERT( r >= 0 );
-
-	// Weakref behaviours
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_GET_WEAKREF_FLAG, "int &f()", asFUNCTION(ScriptObject_GetWeakRefFlag_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-
-	// Register GC behaviours
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_GETREFCOUNT, "int f()", asFUNCTION(ScriptObject_GetRefCount_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_SETGCFLAG, "void f()", asFUNCTION(ScriptObject_SetFlag_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_GETGCFLAG, "bool f()", asFUNCTION(ScriptObject_GetFlag_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_ENUMREFS, "void f(int&in)", asFUNCTION(ScriptObject_EnumReferences_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-	r = engine->RegisterBehaviourToObjectType(&engine->scriptTypeBehaviours, asBEHAVE_RELEASEREFS, "void f(int&in)", asFUNCTION(ScriptObject_ReleaseAllHandles_Generic), asCALL_GENERIC, 0); asASSERT( r >= 0 );
-#endif
 }
 
 void ScriptObject_Construct(asCObjectType *objType, asCScriptObject *self)
@@ -482,63 +394,35 @@ asILockableSharedBool *asCScriptObject::GetWeakRefFlag() const
 	if( (extra && extra->weakRefFlag) || hasRefCountReachedZero )
 		return extra->weakRefFlag;
 
-	// Lock globally so no other thread can attempt
-	// to create a shared bool at the same time.
-	// TODO: runtime optimize: Instead of locking globally, it would be possible to have 
-	//                         a critical section per object type. This would reduce the 
-	//                         chances of two threads lock on the same critical section.
-	asAcquireExclusiveLock();
-
 	// Make sure another thread didn't create the 
 	// flag while we waited for the lock
-	if( !extra )
-		extra = asNEW(SExtra);
+    if( !extra ) extra = asNEW(SExtra);
 	if( !extra->weakRefFlag )
 		extra->weakRefFlag = asNEW(asCLockableSharedBool);
-
-	asReleaseExclusiveLock();
 
 	return extra->weakRefFlag;
 }
 
 void *asCScriptObject::GetUserData(asPWORD type) const
 {
-	if( !extra )
-		return 0;
-
-	// There may be multiple threads reading, but when
-	// setting the user data nobody must be reading.
-	// TODO: runtime optimize: Would it be worth it to have a rwlock per object type?
-	asAcquireSharedLock();
+    if( !extra ) return 0;
 
 	for( asUINT n = 0; n < extra->userData.GetLength(); n += 2 )
 	{
 		if( extra->userData[n] == type )
 		{
 			void *userData = reinterpret_cast<void*>(extra->userData[n+1]);
-			asReleaseSharedLock();
 			return userData;
 		}
-	}
-
-	asReleaseSharedLock();
-
+    }
 	return 0;
 }
 
 void *asCScriptObject::SetUserData(void *data, asPWORD type)
 {
-	// Lock globally so no other thread can attempt
-	// to manipulate the extra data at the same time.
-	// TODO: runtime optimize: Instead of locking globally, it would be possible to have 
-	//                         a critical section per object type. This would reduce the 
-	//                         chances of two threads lock on the same critical section.
-	asAcquireExclusiveLock();
-
 	// Make sure another thread didn't create the 
 	// flag while we waited for the lock
-	if( !extra )
-		extra = asNEW(SExtra);
+    if( !extra ) extra = asNEW(SExtra);
 
 	// It is not intended to store a lot of different types of userdata,
 	// so a more complex structure like a associative map would just have
@@ -549,18 +433,11 @@ void *asCScriptObject::SetUserData(void *data, asPWORD type)
 		{
 			void *oldData = reinterpret_cast<void*>(extra->userData[n+1]);
 			extra->userData[n+1] = reinterpret_cast<asPWORD>(data);
-
-			asReleaseExclusiveLock();
-
 			return oldData;
 		}
 	}
-
 	extra->userData.PushLast(type);
 	extra->userData.PushLast(reinterpret_cast<asPWORD>(data));
-
-	asReleaseExclusiveLock();
-
 	return 0;
 }
 
@@ -1143,19 +1020,7 @@ void asCLockableSharedBool::Set(bool v)
 {
 	// Make sure the value is not changed while another thread  
 	// is inspecting it and taking a decision on what to do.
-	Lock();
-	value = v;
-	Unlock();
-}
-
-void asCLockableSharedBool::Lock() const
-{
-	ENTERCRITICALSECTION(lock);
-}
-
-void asCLockableSharedBool::Unlock() const
-{
-	LEAVECRITICALSECTION(lock);
+    value = v;
 }
 
 // Interface
@@ -1167,4 +1032,3 @@ AS_API asILockableSharedBool *asCreateLockableSharedBool()
 }
 
 END_AS_NAMESPACE
-

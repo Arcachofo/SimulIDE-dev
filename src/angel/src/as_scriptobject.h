@@ -42,7 +42,7 @@
 #define AS_SCRIPTOBJECT_H
 
 #include "as_config.h"
-#include "as_atomic.h"
+//#include "as_atomic.h"
 
 BEGIN_AS_NAMESPACE
 
@@ -61,13 +61,9 @@ public:
 	bool Get() const;
 	void Set(bool);
 
-	void Lock() const;
-	void Unlock() const;
-
 protected:
 	mutable asCAtomic refCount;
-	bool      value;
-	DECLARECRITICALSECTION(mutable lock)
+    bool      value;
 };
 
 class asCScriptObject : public asIScriptObject

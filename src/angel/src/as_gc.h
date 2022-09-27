@@ -28,14 +28,7 @@
    andreas@angelcode.com
 */
 
-
-//
-// as_gc.h
-//
 // The garbage collector is used to resolve cyclic references
-//
-
-
 
 #ifndef AS_GC_H
 #define AS_GC_H
@@ -140,10 +133,6 @@ protected:
 	asSMapNode_t            *GetNode(void *obj, asSIntTypePair it);
 	void                     ReturnNode(asSMapNode_t *node);
 	asCArray<asSMapNode_t*>  freeNodes;
-
-	// Critical section for multithreaded access
-	DECLARECRITICALSECTION(gcCritical)   // Used for adding/removing objects
-	DECLARECRITICALSECTION(gcCollecting) // Used for processing
 };
 
 END_AS_NAMESPACE

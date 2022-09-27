@@ -28,14 +28,7 @@
    andreas@angelcode.com
 */
 
-
-//
-// as_callfunc.cpp
-//
 // These functions handle the actual calling of system functions
-//
-
-
 
 #include "as_config.h"
 #include "as_callfunc.h"
@@ -73,14 +66,11 @@ int DetectCallingConvention(bool isMethod, const asSFuncPtr &ptr, int callConv, 
 	asDWORD base = callConv;
 	if( !isMethod )
 	{
-		if( base == asCALL_CDECL )
-			internal->callConv = ICC_CDECL;
-		else if( base == asCALL_STDCALL )
-			internal->callConv = ICC_STDCALL;
+        if     ( base == asCALL_CDECL )   internal->callConv = ICC_CDECL;
+        else if( base == asCALL_STDCALL ) internal->callConv = ICC_STDCALL;
 		else if( base == asCALL_THISCALL_ASGLOBAL )
 		{
-			if(auxiliary == 0)
-				return asINVALID_ARG;
+            if(auxiliary == 0) return asINVALID_ARG;
 			internal->auxiliary = auxiliary;
 			internal->callConv  = ICC_THISCALL;
 
@@ -91,12 +81,9 @@ int DetectCallingConvention(bool isMethod, const asSFuncPtr &ptr, int callConv, 
 		else if (base == asCALL_GENERIC)
 		{
 			internal->callConv = ICC_GENERIC_FUNC;
-
-			// The auxiliary object is optional for generic calling convention
-			internal->auxiliary = auxiliary;
+            internal->auxiliary = auxiliary; // The auxiliary object is optional for generic calling convention
 		}
-		else
-			return asNOT_SUPPORTED;
+        else return asNOT_SUPPORTED;
 	}
 
 	if( isMethod )
@@ -117,8 +104,7 @@ int DetectCallingConvention(bool isMethod, const asSFuncPtr &ptr, int callConv, 
 #ifdef AS_NO_THISCALL_FUNCTOR_METHOD
 				return asNOT_SUPPORTED;
 #else
-				if(auxiliary == 0)
-					return asINVALID_ARG;
+                if(auxiliary == 0) return asINVALID_ARG;
 
 				internal->auxiliary = auxiliary;
 				if( base == asCALL_THISCALL_OBJFIRST )
@@ -160,8 +146,7 @@ int DetectCallingConvention(bool isMethod, const asSFuncPtr &ptr, int callConv, 
 			internal->callConv = ICC_GENERIC_METHOD;
 			internal->auxiliary = auxiliary;
 		}
-		else
-			return asNOT_SUPPORTED;
+        else return asNOT_SUPPORTED;
 	}
 
 	return 0;
@@ -216,9 +201,7 @@ int PrepareSystemFunctionGeneric(asCScriptFunction *func, asSSystemFunctionInter
 						internal->cleanArgs.PushLast(clean);
 					}
 				}
-			}
-			else
-			{
+            }else{
 				asSSystemFunctionInterface::SClean clean;
 				clean.op  = 1; // call free
 				clean.ot  = CastToObjectType(dt.GetTypeInfo());
@@ -245,15 +228,6 @@ int PrepareSystemFunctionGeneric(asCScriptFunction *func, asSSystemFunctionInter
 // This function should prepare system functions so that it will be faster to call them
 int PrepareSystemFunction(asCScriptFunction *func, asSSystemFunctionInterface *internal, asCScriptEngine *engine)
 {
-#ifdef AS_MAX_PORTABILITY
-	UNUSED_VAR(func);
-	UNUSED_VAR(internal);
-	UNUSED_VAR(engine);
-
-	// This should never happen, as when AS_MAX_PORTABILITY is on, all functions
-	// are asCALL_GENERIC, which are prepared by PrepareSystemFunctionGeneric
-	asASSERT(false);
-#else
 	// References are always returned as primitive data
 	if( func->returnType.IsReference() || func->returnType.IsObjectHandle() )
 	{
@@ -522,29 +496,9 @@ int PrepareSystemFunction(asCScriptFunction *func, asSSystemFunctionInterface *i
 			offset += AS_PTR_SIZE;
 		else
 			offset += dt.GetSizeOnStackDWords();
-	}
-#endif // !defined(AS_MAX_PORTABILITY)
+    }
 	return 0;
 }
-
-#ifdef AS_MAX_PORTABILITY
-
-int CallSystemFunction(int id, asCContext *context)
-{
-	asCScriptEngine *engine = context->m_engine;
-	asCScriptFunction *func = engine->scriptFunctions[id];
-	asSSystemFunctionInterface *sysFunc = func->sysFuncIntf;
-	int callConv = sysFunc->callConv;
-	if( callConv == ICC_GENERIC_FUNC || callConv == ICC_GENERIC_METHOD )
-		return context->CallGeneric(func);
-
-	context->SetInternalException(TXT_INVALID_CALLING_CONVENTION);
-
-	return 0;
-}
-
-#else
-
 //
 // CallSystemFunctionNative
 //
@@ -876,23 +830,17 @@ int CallSystemFunction(int id, asCContext *context)
 					engine->CallObjectMethod(*addr, clean->ot->beh.release);
 					*addr = 0;
 				}
-			}
-			else
-			{
+            }else{
 				asASSERT( clean->op == 1 || clean->op == 2 );
 				asASSERT( *addr );
 
-				if( clean->op == 2 )
-					engine->CallObjectMethod(*addr, clean->ot->beh.destruct);
+                if( clean->op == 2 ) engine->CallObjectMethod(*addr, clean->ot->beh.destruct);
 
 				engine->CallFree(*addr);
 			}
 		}
 	}
-
 	return popSize;
 }
-
-#endif // AS_MAX_PORTABILITY
 
 END_AS_NAMESPACE

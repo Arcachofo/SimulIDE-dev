@@ -28,13 +28,7 @@
    andreas@angelcode.com
 */
 
-
-
-//
-// as_thread.cpp
-//
 // Functions for multi threading support
-//
 
 #include "as_config.h"
 #include "as_thread.h"
@@ -42,69 +36,17 @@
 
 BEGIN_AS_NAMESPACE
 
-//=======================================================================
-
-// Singleton
+//=== Singleton ========================================================
 static asCThreadManager *threadManager = 0;
-
 //======================================================================
 
 // Global API functions
 extern "C"
 {
-
-AS_API int asThreadCleanup()
-{
-	return asCThreadManager::CleanupLocalData();
-}
-
-AS_API asIThreadManager *asGetThreadManager()
-{
-	return threadManager;
-}
-
-AS_API int asPrepareMultithread(asIThreadManager *externalThreadMgr)
-{
-	return asCThreadManager::Prepare(externalThreadMgr);
-}
-
-AS_API void asUnprepareMultithread()
-{
-	asCThreadManager::Unprepare();
-}
-
-AS_API void asAcquireExclusiveLock()
-{
-    if( threadManager )
-    {
-        ACQUIREEXCLUSIVE(threadManager->appRWLock);
-    }
-}
-
-AS_API void asReleaseExclusiveLock()
-{
-    if( threadManager )
-    {
-        RELEASEEXCLUSIVE(threadManager->appRWLock);
-    }
-}
-
-AS_API void asAcquireSharedLock()
-{
-    if( threadManager )
-    {
-        ACQUIRESHARED(threadManager->appRWLock);
-    }
-}
-
-AS_API void asReleaseSharedLock()
-{
-    if( threadManager )
-    {
-        RELEASESHARED(threadManager->appRWLock);
-    }
-}
-
+AS_API int asThreadCleanup(){ return asCThreadManager::CleanupLocalData(); }
+AS_API asIThreadManager *asGetThreadManager() { return threadManager; }
+AS_API int asPrepareMultithread(asIThreadManager *externalThreadMgr) { return asCThreadManager::Prepare(externalThreadMgr); }
+AS_API void asUnprepareMultithread() { asCThreadManager::Unprepare(); }
 }
 
 //======================================================================
@@ -140,12 +82,9 @@ int asCThreadManager::Prepare(asIThreadManager *externalThreadMgr)
 		// space for global variables. If multiple dlls then uses AngelScript's
 		// global thread support functions it is then best to share the thread
 		// manager to make sure all dlls use the same critical section.
-		if( externalThreadMgr )
-			threadManager = reinterpret_cast<asCThreadManager*>(externalThreadMgr);
+        if( externalThreadMgr ) threadManager = reinterpret_cast<asCThreadManager*>(externalThreadMgr);
 
-		ENTERCRITICALSECTION(threadManager->criticalSection);
-		threadManager->refCount++;
-		LEAVECRITICALSECTION(threadManager->criticalSection);
+        threadManager->refCount++;
     }
     return 0; // Success
 }
@@ -156,10 +95,6 @@ void asCThreadManager::Unprepare()
 
     if( threadManager == 0 ) return;
 
-	// It's necessary to protect this section so no
-	// other thread attempts to call AddRef or Release
-	// while clean up is in progress.
-	ENTERCRITICALSECTION(threadManager->criticalSection);
 	if( --threadManager->refCount == 0 )
 	{
 		// Make sure the local data is destroyed, at least for the current thread
@@ -169,14 +104,10 @@ void asCThreadManager::Unprepare()
 		// with the thread manager we must first clear the global
 		// variable in case a new thread manager needs to be created;
 		asCThreadManager *mgr = threadManager;
-		threadManager = 0;
-
-		// Leave the critical section before it is destroyed
-		LEAVECRITICALSECTION(mgr->criticalSection);
+        threadManager = 0;
 
 		asDELETE(mgr,asCThreadManager);
-	}
-    else { LEAVECRITICALSECTION(threadManager->criticalSection); }
+    }
 }
 
 asCThreadManager::~asCThreadManager()
@@ -204,10 +135,7 @@ int asCThreadManager::CleanupLocalData()
 asCThreadLocalData *asCThreadManager::GetLocalData()
 {
     if( threadManager == 0 ) return 0;
-
-	if( threadManager->tld == 0 )
-		threadManager->tld = asNEW(asCThreadLocalData)();
-
+    if( threadManager->tld == 0 ) threadManager->tld = asNEW(asCThreadLocalData)();
 	return threadManager->tld;
 }
 
@@ -217,4 +145,3 @@ asCThreadLocalData::asCThreadLocalData(){}
 asCThreadLocalData::~asCThreadLocalData(){}
 
 END_AS_NAMESPACE
-

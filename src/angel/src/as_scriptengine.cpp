@@ -75,23 +75,15 @@ AS_API const char * asGetLibraryOptions()
     const char *string = " "
 
     // Options
-#ifdef AS_MAX_PORTABILITY
-        "AS_MAX_PORTABILITY "
-#endif
 #ifdef AS_DEBUG
         "AS_DEBUG "
 #endif
-#ifdef AS_NO_CLASS_METHODS
-        "AS_NO_CLASS_METHODS "
-#endif
+
 #ifdef AS_USE_DOUBLE_AS_FLOAT
         "AS_USE_DOUBLE_AS_FLOAT "
 #endif
 #ifdef AS_64BIT_PTR
         "AS_64BIT_PTR "
-#endif
-#ifdef AS_NO_THREADS
-        "AS_NO_THREADS "
 #endif
 #ifdef AS_NO_ATOMIC
         "AS_NO_ATOMIC "
@@ -126,7 +118,6 @@ AS_API const char * asGetLibraryOptions()
         "AS_MAC "
 #endif
 
-
     // CPU family
 #ifdef AS_X86
         "AS_X86 "
@@ -135,7 +126,6 @@ AS_API const char * asGetLibraryOptions()
         "AS_X64_GCC "
 #endif
     ;
-
     return string;
 }
 
@@ -202,27 +192,17 @@ int asCScriptEngine::SetEngineProperty(asEEngineProp property, asPWORD value)
         break;
 
     case asEP_MAX_STACK_SIZE:
-        if( value == 0 )
-        {
-            // Restore default: no limit and initially size 4KB
+        if( value == 0 ) // Restore default: no limit and initially size 4KB
             ep.maximumContextStackSize = 0;
-        }
-        else
-        {
-            // The size is given in bytes, but we only store dwords
+        else // The size is given in bytes, but we only store dwords
             ep.maximumContextStackSize = (asUINT)value/4;
-        }
         break;
 
     case asEP_INIT_STACK_SIZE:
         if (value < 4) // At least one dword
-        {
             ep.initContextStackSize = 1;
-        }
         else // The size is given in bytes, but we only store dwords
-        {
             ep.initContextStackSize = (asUINT)value / 4;
-        }
         break;
 
     case asEP_USE_CHARACTER_LITERALS:
@@ -509,30 +489,19 @@ asCScriptEngine::asCScriptEngine()
 
 void asCScriptEngine::DeleteDiscardedModules()
 {
-    // TODO: redesign: Prevent more than one thread from entering this function at the same time.
-    //                 If a thread is already doing the work for the clean-up the other thread should
-    //                 simply return, as the first thread will continue.
-
-    ACQUIRESHARED(engineRWLock);
     asUINT maxCount = discardedModules.GetLength();
-    RELEASESHARED(engineRWLock);
 
     for( asUINT n = 0; n < maxCount; n++ )
     {
-        ACQUIRESHARED(engineRWLock);
         asCModule *mod = discardedModules[n];
-        RELEASESHARED(engineRWLock);
 
         if( !mod->HasExternalReferences(shuttingDown) )
         {
             asDELETE(mod, asCModule);
             n--;
         }
-
-        ACQUIRESHARED(engineRWLock);
         // Determine the max count again, since another module may have been discarded during the processing
         maxCount = discardedModules.GetLength();
-        RELEASESHARED(engineRWLock);
     }
 
     // Go over the list of global properties, to see if it is possible to clean
@@ -944,10 +913,6 @@ int asCScriptEngine::SetDefaultNamespace(const char *nameSpace)
 // interface
 void *asCScriptEngine::SetUserData(void *data, asPWORD type)
 {
-    // As a thread might add a new new user data at the same time as another
-    // it is necessary to protect both read and write access to the userData member
-    ACQUIREEXCLUSIVE(engineRWLock);
-
     // It is not intended to store a lot of different types of userdata,
     // so a more complex structure like a associative map would just have
     // more overhead than a simple array.
@@ -957,34 +922,20 @@ void *asCScriptEngine::SetUserData(void *data, asPWORD type)
         {
             void *oldData = reinterpret_cast<void*>(userData[n+1]);
             userData[n+1] = reinterpret_cast<asPWORD>(data);
-
-            RELEASEEXCLUSIVE(engineRWLock);
             return oldData;
         }
     }
     userData.PushLast(type);
     userData.PushLast(reinterpret_cast<asPWORD>(data));
-
-    RELEASEEXCLUSIVE(engineRWLock);
     return 0;
 }
 
 // interface
 void *asCScriptEngine::GetUserData(asPWORD type) const
 {
-    // There may be multiple threads reading, but when
-    // setting the user data nobody must be reading.
-    ACQUIRESHARED(engineRWLock);
-
     for( asUINT n = 0; n < userData.GetLength(); n += 2 )
-    {
-        if( userData[n] == type )
-        {
-            RELEASESHARED(engineRWLock);
-            return reinterpret_cast<void*>(userData[n+1]);
-        }
-    }
-    RELEASESHARED(engineRWLock);
+        if( userData[n] == type ) return reinterpret_cast<void*>(userData[n+1]);
+
     return 0;
 }
 
@@ -1117,9 +1068,7 @@ int asCScriptEngine::DiscardModule(const char *module)
 // interface
 asUINT asCScriptEngine::GetModuleCount() const
 {
-    ACQUIRESHARED(engineRWLock);
     asUINT length = asUINT(scriptModules.GetLength());
-    RELEASESHARED(engineRWLock);
     return length;
 }
 
@@ -1127,10 +1076,7 @@ asUINT asCScriptEngine::GetModuleCount() const
 asIScriptModule *asCScriptEngine::GetModuleByIndex(asUINT index) const
 {
     asIScriptModule *mod = 0;
-    ACQUIRESHARED(engineRWLock);
-    if( index < scriptModules.GetLength() )
-        mod = scriptModules[index];
-    RELEASESHARED(engineRWLock);
+    if( index < scriptModules.GetLength() ) mod = scriptModules[index];
     return mod;
 }
 
@@ -1737,11 +1683,6 @@ int asCScriptEngine::RegisterObjectBehaviour(const char *datatype, asEBehaviours
 // internal
 int asCScriptEngine::RegisterBehaviourToObjectType(asCObjectType *objectType, asEBehaviours behaviour, const char *decl, const asSFuncPtr &funcPointer, asDWORD callConv, void *auxiliary, int compositeOffset, bool isCompositeIndirect)
 {
-#ifdef AS_MAX_PORTABILITY
-    if( callConv != asCALL_GENERIC )
-        return ConfigError(asNOT_SUPPORTED, "RegisterObjectBehaviour", objectType->name.AddressOf(), decl);
-#endif
-
     asSSystemFunctionInterface internal;
     bool isMethod = !(behaviour == asBEHAVE_FACTORY ||
                       behaviour == asBEHAVE_LIST_FACTORY ||
@@ -2467,11 +2408,6 @@ int asCScriptEngine::RegisterObjectMethod(const char *obj, const char *declarati
 // internal
 int asCScriptEngine::RegisterMethodToObjectType(asCObjectType *objectType, const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv, void *auxiliary, int compositeOffset, bool isCompositeIndirect)
 {
-#ifdef AS_MAX_PORTABILITY
-    if( callConv != asCALL_GENERIC )
-        return ConfigError(asNOT_SUPPORTED, "RegisterObjectMethod", objectType->name.AddressOf(), declaration);
-#endif
-
     asSSystemFunctionInterface internal;
     int r = DetectCallingConvention(true, funcPointer, callConv, auxiliary, &internal);
     if( r < 0 ) return ConfigError(r, "RegisterObjectMethod", objectType->name.AddressOf(), declaration);
@@ -2604,11 +2540,6 @@ int asCScriptEngine::RegisterMethodToObjectType(asCObjectType *objectType, const
 // interface
 int asCScriptEngine::RegisterGlobalFunction(const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv, void *auxiliary)
 {
-#ifdef AS_MAX_PORTABILITY
-    if( callConv != asCALL_GENERIC )
-        return ConfigError(asNOT_SUPPORTED, "RegisterGlobalFunction", declaration, 0);
-#endif
-
     asSSystemFunctionInterface internal;
     int r = DetectCallingConvention(false, funcPointer, callConv, auxiliary, &internal);
     if( r < 0 ) return ConfigError(r, "RegisterGlobalFunction", declaration, 0);
@@ -2953,9 +2884,7 @@ asCModule *asCScriptEngine::GetModule(const char *name, bool create)
 
     asCModule *retModule = 0;
 
-    ACQUIRESHARED(engineRWLock);
-    if( lastModule && lastModule->m_name == name )
-        retModule = lastModule;
+    if( lastModule && lastModule->m_name == name ) retModule = lastModule;
     else
     {
         // TODO: optimize: Improve linear search
@@ -2966,14 +2895,10 @@ asCModule *asCScriptEngine::GetModule(const char *name, bool create)
                 break;
             }
     }
-    RELEASESHARED(engineRWLock);
 
     if( retModule )
     {
-        ACQUIREEXCLUSIVE(engineRWLock);
         lastModule = retModule;
-        RELEASEEXCLUSIVE(engineRWLock);
-
         return retModule;
     }
 
@@ -2985,11 +2910,8 @@ asCModule *asCScriptEngine::GetModule(const char *name, bool create)
             // Out of memory
             return 0;
         }
-
-        ACQUIREEXCLUSIVE(engineRWLock);
         scriptModules.PushLast(retModule);
         lastModule = retModule;
-        RELEASEEXCLUSIVE(engineRWLock);
     }
     return retModule;
 }
@@ -3006,15 +2928,8 @@ asCModule *asCScriptEngine::GetModuleFromFuncId(int id)
 // internal
 int asCScriptEngine::RequestBuild()
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
-    if( isBuilding )
-    {
-        RELEASEEXCLUSIVE(engineRWLock);
-        return asBUILD_IN_PROGRESS;
-    }
+    if( isBuilding ) return asBUILD_IN_PROGRESS;
     isBuilding = true;
-    RELEASEEXCLUSIVE(engineRWLock);
-
     return 0;
 }
 
@@ -3880,7 +3795,6 @@ int asCScriptEngine::CallObjectMethodRetInt(void *obj, int func) const
     asASSERT( s != 0 );
     asSSystemFunctionInterface *i = s->sysFuncIntf;
 
-#if defined(__GNUC__) || defined(AS_PSVITA)
     if( i->callConv == ICC_GENERIC_METHOD )
     {
         asCGeneric gen(const_cast<asCScriptEngine*>(this), s, obj, 0);
@@ -3914,40 +3828,6 @@ int asCScriptEngine::CallObjectMethodRetInt(void *obj, int func) const
         int (*f)(void *) = (int (*)(void *))(i->func);
         return f(obj);
     }
-#else
-#ifndef AS_NO_CLASS_METHODS
-    if( i->callConv == ICC_THISCALL )
-    {
-        union
-        {
-            asSIMPLEMETHOD_t mthd;
-            asFUNCTION_t func;
-        } p;
-        p.func = (asFUNCTION_t)(i->func);
-        int (asCSimpleDummy::*f)() = (int (asCSimpleDummy::*)())p.mthd;
-
-        obj = (void*) ((char*) obj +  i->compositeOffset);
-        if(i->isCompositeIndirect)
-            obj = *((void**)obj);
-
-        obj = (void*)(asPWORD(obj) + i->baseOffset);
-        return (((asCSimpleDummy*)obj)->*f)();
-    }
-    else
-#endif
-    if( i->callConv == ICC_GENERIC_METHOD )
-    {
-        asCGeneric gen(const_cast<asCScriptEngine*>(this), s, obj, 0);
-        void (*f)(asIScriptGeneric *) = (void (*)(asIScriptGeneric *))(i->func);
-        f(&gen);
-        return *(int*)gen.GetReturnPointer();
-    }
-    else /*if( i->callConv == ICC_CDECL_OBJLAST || i->callConv == ICC_CDECL_OBJFIRST )*/
-    {
-        int (*f)(void *) = (int (*)(void *))(i->func);
-        return f(obj);
-    }
-#endif
 }
 
 void *asCScriptEngine::CallObjectMethodRetPtr(void *obj, int func) const
@@ -3956,7 +3836,6 @@ void *asCScriptEngine::CallObjectMethodRetPtr(void *obj, int func) const
     asASSERT( s != 0 );
     asSSystemFunctionInterface *i = s->sysFuncIntf;
 
-#if defined(__GNUC__) || defined(AS_PSVITA)
     if( i->callConv == ICC_GENERIC_METHOD )
     {
         asCGeneric gen(const_cast<asCScriptEngine*>(this), s, obj, 0);
@@ -3991,40 +3870,6 @@ void *asCScriptEngine::CallObjectMethodRetPtr(void *obj, int func) const
         void *(*f)(void *) = (void *(*)(void *))(i->func);
         return f(obj);
     }
-#else
-#ifndef AS_NO_CLASS_METHODS
-    if( i->callConv == ICC_THISCALL )
-    {
-        union
-        {
-            asSIMPLEMETHOD_t mthd;
-            asFUNCTION_t func;
-        } p;
-        p.func = (asFUNCTION_t)(i->func);
-        void *(asCSimpleDummy::*f)() = (void *(asCSimpleDummy::*)())p.mthd;
-
-        obj = (void*) ((char*) obj +  i->compositeOffset);
-        if(i->isCompositeIndirect)
-            obj = *((void**)obj);
-
-        obj = (void*)(asPWORD(obj) + i->baseOffset);
-        return (((asCSimpleDummy*)obj)->*f)();
-    }
-    else
-#endif
-    if( i->callConv == ICC_GENERIC_METHOD )
-    {
-        asCGeneric gen(const_cast<asCScriptEngine*>(this), s, obj, 0);
-        void (*f)(asIScriptGeneric *) = (void (*)(asIScriptGeneric *))(i->func);
-        f(&gen);
-        return *(void **)gen.GetReturnPointer();
-    }
-    else /*if( i->callConv == ICC_CDECL_OBJLAST || i->callConv == ICC_CDECL_OBJFIRST )*/
-    {
-        void *(*f)(void *) = (void *(*)(void *))(i->func);
-        return f(obj);
-    }
-#endif
 }
 
 void *asCScriptEngine::CallObjectMethodRetPtr(void *obj, int param1, asCScriptFunction *func) const
@@ -4033,10 +3878,8 @@ void *asCScriptEngine::CallObjectMethodRetPtr(void *obj, int param1, asCScriptFu
     asASSERT( func != 0 );
     asSSystemFunctionInterface *i = func->sysFuncIntf;
 
-#ifndef AS_NO_CLASS_METHODS
     if( i->callConv == ICC_THISCALL || i->callConv == ICC_VIRTUAL_THISCALL )
     {
-#if defined(__GNUC__) || defined(AS_PSVITA)
         // For virtual thiscalls we must call the method as a true class method so that the compiler will lookup the function address in the vftable
         union
         {
@@ -4056,26 +3899,8 @@ void *asCScriptEngine::CallObjectMethodRetPtr(void *obj, int param1, asCScriptFu
 
         void *(asCSimpleDummy::*f)(int) = (void *(asCSimpleDummy::*)(int))(p.mthd);
         return (((asCSimpleDummy*)obj)->*f)(param1);
-#else
-        union
-        {
-            asSIMPLEMETHOD_t mthd;
-            asFUNCTION_t func;
-        } p;
-        p.func = (asFUNCTION_t)(i->func);
-        void *(asCSimpleDummy::*f)(int) = (void *(asCSimpleDummy::*)(int))p.mthd;
-
-        obj = (void*) ((char*) obj +  i->compositeOffset);
-        if(i->isCompositeIndirect)
-            obj = *((void**)obj);
-
-        obj = (void*)(asPWORD(obj) + i->baseOffset);
-        return (((asCSimpleDummy*)obj)->*f)(param1);
-#endif
     }
-    else
-#endif
-    if( i->callConv == ICC_GENERIC_METHOD )
+    else if( i->callConv == ICC_GENERIC_METHOD )
     {
         asCGeneric gen(const_cast<asCScriptEngine*>(this), func, obj, reinterpret_cast<asDWORD*>(&param1));
         void (*f)(asIScriptGeneric *) = (void (*)(asIScriptGeneric *))(i->func);
@@ -4161,7 +3986,6 @@ void asCScriptEngine::CallObjectMethod(void *obj, void *param, int func) const
 
 void asCScriptEngine::CallObjectMethod(void *obj, void *param, asSSystemFunctionInterface *i, asCScriptFunction *s) const
 {
-#if defined(__GNUC__) || defined(AS_PSVITA)
     if( i->callConv == ICC_CDECL_OBJLAST )
     {
         void (*f)(void *, void *) = (void (*)(void *, void *))(i->func);
@@ -4201,44 +4025,6 @@ void asCScriptEngine::CallObjectMethod(void *obj, void *param, asSSystemFunction
         void (*f)(void *, void *) = (void (*)(void *, void *))(i->func);
         f(obj, param);
     }
-#else
-#ifndef AS_NO_CLASS_METHODS
-    if( i->callConv == ICC_THISCALL )
-    {
-        union
-        {
-            asSIMPLEMETHOD_t mthd;
-            asFUNCTION_t func;
-        } p;
-        p.func = (asFUNCTION_t)(i->func);
-        void (asCSimpleDummy::*f)(void *) = (void (asCSimpleDummy::*)(void *))(p.mthd);
-
-        obj = (void*) ((char*) obj +  i->compositeOffset);
-        if(i->isCompositeIndirect)
-            obj = *((void**)obj);
-
-        obj = (void*)(asPWORD(obj) + i->baseOffset);
-        (((asCSimpleDummy*)obj)->*f)(param);
-    }
-    else
-#endif
-    if( i->callConv == ICC_CDECL_OBJLAST )
-    {
-        void (*f)(void *, void *) = (void (*)(void *, void *))(i->func);
-        f(param, obj);
-    }
-    else if( i->callConv == ICC_GENERIC_METHOD )
-    {
-        asCGeneric gen(const_cast<asCScriptEngine*>(this), s, obj, (asDWORD*)&param);
-        void (*f)(asIScriptGeneric *) = (void (*)(asIScriptGeneric *))(i->func);
-        f(&gen);
-    }
-    else /*if( i->callConv == ICC_CDECL_OBJFIRST )*/
-    {
-        void (*f)(void *, void *) = (void (*)(void *, void *))(i->func);
-        f(obj, param);
-    }
-#endif
 }
 
 void asCScriptEngine::CallGlobalFunction(void *param1, void *param2, asSSystemFunctionInterface *i, asCScriptFunction *s) const
@@ -4303,31 +4089,18 @@ void *asCScriptEngine::CallAlloc(const asCObjectType *type) const
 
     // Pad to the next even 4 bytes to avoid asBC_CPY writing outside of allocated buffer for registered POD types
     asUINT size = type->size;
-    if( size & 0x3 )
-        size += 4 - (size & 0x3);
+    if( size & 0x3 ) size += 4 - (size & 0x3);
 
-#ifndef WIP_16BYTE_ALIGN
 #if defined(AS_DEBUG)
     return ((asALLOCFUNCDEBUG_t)userAlloc)(size, __FILE__, __LINE__);
 #else
     return userAlloc(size);
 #endif
-#else
-#if defined(AS_DEBUG)
-    return ((asALLOCALIGNEDFUNCDEBUG_t)userAllocAligned)(size, type->alignment, __FILE__, __LINE__);
-#else
-    return userAllocAligned(size, type->alignment);
-#endif
-#endif
 }
 
 void asCScriptEngine::CallFree(void *obj) const
 {
-#ifndef WIP_16BYTE_ALIGN
     userFree(obj);
-#else
-    userFreeAligned(obj);
-#endif
 }
 
 // interface
@@ -4431,7 +4204,6 @@ int asCScriptEngine::GetTypeIdFromDataType(const asCDataType &dtIn) const
 
     if( typeId == -1 )
     {
-        ACQUIREEXCLUSIVE(engineRWLock);
         // Make sure another thread didn't determine the typeId while we were waiting for the lock
         if( ot->typeId == -1 )
         {
@@ -4445,7 +4217,6 @@ int asCScriptEngine::GetTypeIdFromDataType(const asCDataType &dtIn) const
 
             mapTypeIdToTypeInfo.Insert(typeId, ot);
         }
-        RELEASEEXCLUSIVE(engineRWLock);
     }
 
     // Add flags according to the requested type
@@ -4473,11 +4244,9 @@ asCDataType asCScriptEngine::GetDataTypeFromTypeId(int typeId) const
 
     // First check if the typeId is an object type
     asCTypeInfo *ot = 0;
-    ACQUIRESHARED(engineRWLock);
     asSMapNode<int,asCTypeInfo*> *cursor = 0;
     if( mapTypeIdToTypeInfo.MoveTo(&cursor, baseId) )
         ot = mapTypeIdToTypeInfo.GetValue(cursor);
-    RELEASESHARED(engineRWLock);
 
     if( ot )
     {
@@ -4500,7 +4269,6 @@ asCObjectType *asCScriptEngine::GetObjectTypeFromTypeId(int typeId) const
 
 void asCScriptEngine::RemoveFromTypeIdMap(asCTypeInfo *type)
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
     asSMapNode<int,asCTypeInfo*> *cursor = 0;
     mapTypeIdToTypeInfo.MoveFirst(&cursor);
     while( cursor )
@@ -4512,7 +4280,6 @@ void asCScriptEngine::RemoveFromTypeIdMap(asCTypeInfo *type)
         }
         mapTypeIdToTypeInfo.MoveNext(&cursor, cursor);
     }
-    RELEASEEXCLUSIVE(engineRWLock);
 }
 
 // interface
@@ -5444,7 +5211,6 @@ asCFuncdefType *asCScriptEngine::FindMatchingFuncdef(asCScriptFunction *func, as
             funcDef->module = module;
             module->AddFuncDef(funcDef); // the refCount was already accounted for in the constructor
         }
-
         // Observe, if the funcdef is created without informing a module a reference will be stored in the
         // engine's funcDefs array, but it will not be owned by any module. This means that it will live on
         // until the engine is released.
@@ -5459,10 +5225,7 @@ asCFuncdefType *asCScriptEngine::FindMatchingFuncdef(asCScriptFunction *func, as
             module->AddFuncDef(funcDef);
             funcDef->AddRefInternal();
         }
-        else
-        {
-            asASSERT(funcDef->IsShared());
-        }
+        else asASSERT(funcDef->IsShared());
     }
     return funcDef;
 }
@@ -5699,7 +5462,6 @@ asITypeInfo *asCScriptEngine::GetTypeInfoByName(const char *in_name) const
                 registeredObjTypes[n]->nameSpace == ns)
                 return registeredObjTypes[n];
         }
-
         // Perhaps it is a template type? In this case
         // the returned type will be the generic type
         for (asUINT n = 0; n < registeredTemplateTypes.GetLength(); n++)
@@ -5708,7 +5470,6 @@ asITypeInfo *asCScriptEngine::GetTypeInfoByName(const char *in_name) const
                 registeredTemplateTypes[n]->nameSpace == ns)
                 return registeredTemplateTypes[n];
         }
-
         // Check the enum types
         for (asUINT n = 0; n < registeredEnums.GetLength(); n++)
         {
@@ -5716,7 +5477,6 @@ asITypeInfo *asCScriptEngine::GetTypeInfoByName(const char *in_name) const
                 registeredEnums[n]->nameSpace == ns)
                 return registeredEnums[n];
         }
-
         // Check the typedefs
         for (asUINT n = 0; n < registeredTypeDefs.GetLength();n++)
         {
@@ -5765,7 +5525,6 @@ int asCScriptEngine::DetermineNameAndNamespace(const char *in_name, asSNameSpace
     }
     out_name = name;
     out_ns = ns;
-
     return 0;
 }
 
@@ -5801,161 +5560,108 @@ bool asCScriptEngine::IsTemplateType(const char *name) const
 // internal
 int asCScriptEngine::GetScriptSectionNameIndex(const char *name)
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
-
     // TODO: These names are only released when the engine is freed. The assumption is that
     //       the same script section names will be reused instead of there always being new
     //       names. Is this assumption valid? Do we need to add reference counting?
 
     // Store the script section names for future reference
     for( asUINT n = 0; n < scriptSectionNames.GetLength(); n++ )
-    {
-        if( scriptSectionNames[n]->Compare(name) == 0 )
-        {
-            RELEASEEXCLUSIVE(engineRWLock);
-            return n;
-        }
-    }
+        if( scriptSectionNames[n]->Compare(name) == 0 ) return n;
 
     asCString *str = asNEW(asCString)(name);
     if( str ) scriptSectionNames.PushLast(str);
     int r = int(scriptSectionNames.GetLength()-1);
-
-    RELEASEEXCLUSIVE(engineRWLock);
-
     return r;
 }
 
 // interface
 void asCScriptEngine::SetEngineUserDataCleanupCallback(asCLEANENGINEFUNC_t callback, asPWORD type)
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
-
     for( asUINT n = 0; n < cleanEngineFuncs.GetLength(); n++ )
     {
         if( cleanEngineFuncs[n].type == type )
         {
             cleanEngineFuncs[n].cleanFunc = callback;
-
-            RELEASEEXCLUSIVE(engineRWLock);
-
             return;
         }
     }
     SEngineClean otc = {type, callback};
     cleanEngineFuncs.PushLast(otc);
-
-    RELEASEEXCLUSIVE(engineRWLock);
 }
 
 // interface
 void asCScriptEngine::SetModuleUserDataCleanupCallback(asCLEANMODULEFUNC_t callback, asPWORD type)
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
-
     for( asUINT n = 0; n < cleanModuleFuncs.GetLength(); n++ )
     {
         if( cleanModuleFuncs[n].type == type )
         {
             cleanModuleFuncs[n].cleanFunc = callback;
-
-            RELEASEEXCLUSIVE(engineRWLock);
-
             return;
         }
     }
     SModuleClean otc = {type, callback};
     cleanModuleFuncs.PushLast(otc);
-
-    RELEASEEXCLUSIVE(engineRWLock);
 }
 
 // interface
 void asCScriptEngine::SetContextUserDataCleanupCallback(asCLEANCONTEXTFUNC_t callback, asPWORD type)
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
-
     for( asUINT n = 0; n < cleanContextFuncs.GetLength(); n++ )
     {
         if( cleanContextFuncs[n].type == type )
         {
             cleanContextFuncs[n].cleanFunc = callback;
-
-            RELEASEEXCLUSIVE(engineRWLock);
-
             return;
         }
     }
     SContextClean otc = {type, callback};
     cleanContextFuncs.PushLast(otc);
-
-    RELEASEEXCLUSIVE(engineRWLock);
 }
 
 // interface
 void asCScriptEngine::SetFunctionUserDataCleanupCallback(asCLEANFUNCTIONFUNC_t callback, asPWORD type)
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
-
     for( asUINT n = 0; n < cleanFunctionFuncs.GetLength(); n++ )
     {
         if( cleanFunctionFuncs[n].type == type )
         {
             cleanFunctionFuncs[n].cleanFunc = callback;
-
-            RELEASEEXCLUSIVE(engineRWLock);
-
             return;
         }
     }
     SFunctionClean otc = {type, callback};
     cleanFunctionFuncs.PushLast(otc);
-
-    RELEASEEXCLUSIVE(engineRWLock);
 }
 
 // interface
 void asCScriptEngine::SetTypeInfoUserDataCleanupCallback(asCLEANTYPEINFOFUNC_t callback, asPWORD type)
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
-
     for( asUINT n = 0; n < cleanTypeInfoFuncs.GetLength(); n++ )
     {
         if( cleanTypeInfoFuncs[n].type == type )
         {
             cleanTypeInfoFuncs[n].cleanFunc = callback;
-
-            RELEASEEXCLUSIVE(engineRWLock);
-
             return;
         }
     }
     STypeInfoClean otc = {type, callback};
     cleanTypeInfoFuncs.PushLast(otc);
-
-    RELEASEEXCLUSIVE(engineRWLock);
 }
 
 // interface
 void asCScriptEngine::SetScriptObjectUserDataCleanupCallback(asCLEANSCRIPTOBJECTFUNC_t callback, asPWORD type)
 {
-    ACQUIREEXCLUSIVE(engineRWLock);
-
     for( asUINT n = 0; n < cleanScriptObjectFuncs.GetLength(); n++ )
     {
         if( cleanScriptObjectFuncs[n].type == type )
         {
             cleanScriptObjectFuncs[n].cleanFunc = callback;
-
-            RELEASEEXCLUSIVE(engineRWLock);
-
             return;
         }
     }
     SScriptObjClean soc = {type, callback};
     cleanScriptObjectFuncs.PushLast(soc);
-
-    RELEASEEXCLUSIVE(engineRWLock);
 }
 
 // interface

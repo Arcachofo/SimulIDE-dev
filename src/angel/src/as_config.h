@@ -28,26 +28,14 @@
    andreas@angelcode.com
 */
 
-
-
-//
-// as_config.h
-//
 // this file is used for configuring the compilation of the library
-//
 
 #ifndef AS_CONFIG_H
 #define AS_CONFIG_H
 
-
-
 //
 // Features
 //-----------------------------------------
-
-// AS_NO_THREADS
-// Turns off support for multithreading. By turning off
-// this when it's not needed a bit of performance is gained.
 
 // AS_WINDOWS_THREADS
 // If the library should be compiled using windows threads.
@@ -67,14 +55,6 @@
 // If this flag is defined then some backwards compatibility is maintained.
 // There is no guarantee for how well deprecated functionality will work though
 // so it is best to exchange it for the new functionality as soon as possible.
-
-// AS_NO_CLASS_METHODS
-// Disables the possibility to add class methods. Can increase the
-// portability of the library.
-
-// AS_MAX_PORTABILITY
-// Disables all platform specific code. Only the asCALL_GENERIC calling
-// convention will be available in with this flag set.
 
 // AS_DOUBLEBYTE_CHARSET
 // When this flag is defined, the parser will treat all characters in strings
@@ -358,13 +338,9 @@
 
 
 
-
-
 //
 // Detect compiler
 //------------------------------------------------
-
-
 #define VALUE_OF_BOOLEAN_TRUE  1
 #define STDCALL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 0
 #define CDECL_RETURN_SIMPLE_IN_MEMORY_MIN_SIZE 0
@@ -455,34 +431,9 @@
 	#define AS_USE_DOUBLE_AS_FLOAT	// use 32bit floats instead of doubles
 #endif
 
-// If there are no current support for native calling
-// conventions, then compile with AS_MAX_PORTABILITY
-#if (!defined(AS_X86) && !defined(AS_SH4) && !defined(AS_MIPS) && !defined(AS_PPC) && !defined(AS_PPC_64) && !defined(AS_XENON) && !defined(AS_X64_GCC) && !defined(AS_X64_MSVC) && !defined(AS_ARM) && !defined(AS_ARM64) && !defined(AS_X64_MINGW))
-	#ifndef AS_MAX_PORTABILITY
-		#define AS_MAX_PORTABILITY
-	#endif
-#endif
-
-// If the platform doesn't support atomic instructions we can't allow
-// multithreading as the reference counters won't be threadsafe
-#if defined(AS_NO_ATOMIC) && !defined(AS_NO_THREADS)
-	#define AS_NO_THREADS
-#endif
-
-// If the form of threads to use hasn't been chosen
-// then the library will be compiled without support
-// for multithreading
-#if !defined(AS_POSIX_THREADS) && !defined(AS_WINDOWS_THREADS)
-	#define AS_NO_THREADS
-#endif
-
-
 // The assert macro
 	#include <assert.h>
 	#define asASSERT(x) assert(x)
-
-/// SimulIDE: disable multithreading
-#define AS_NO_THREADS
 
 
 //

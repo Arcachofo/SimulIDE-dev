@@ -58,9 +58,6 @@ public:
 	static int  Prepare(asIThreadManager *externalThreadMgr);
 	static void Unprepare();
 
-	// This read/write lock can be used by the application to provide simple synchronization
-	DECLAREREADWRITELOCK(appRWLock)
-
 protected:
 	asCThreadManager();
 	~asCThreadManager();
