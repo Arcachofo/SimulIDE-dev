@@ -15,7 +15,7 @@ Highlighter::Highlighter( QTextDocument* parent )
 }
 Highlighter::~Highlighter(){}
 
-void Highlighter::readsyntaxFile( const QString &fileName )
+void Highlighter::readSyntaxFile( const QString &fileName )
 {
     m_rules.clear();
 

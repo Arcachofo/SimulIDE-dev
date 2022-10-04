@@ -84,7 +84,7 @@ void CodeEditor::setCompiler( BaseDebugger* compiler )
 
 void CodeEditor::setSyntaxFile( QString file )
 {
-    m_hlighter->readsyntaxFile( m_syntaxPath + file );
+    m_hlighter->readSyntaxFile( m_syntaxPath + file );
 }
 
 void CodeEditor::setFile( const QString filePath )
@@ -114,7 +114,7 @@ void CodeEditor::setFile( const QString filePath )
 
     if( extension == ".gcb" )
     {
-        m_hlighter->readsyntaxFile( m_syntaxPath + "gcbasic.syntax" );
+        m_hlighter->readSyntaxFile( m_syntaxPath + "gcbasic.syntax" );
         if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "GcBasic", this );
     }
     else if( extension == ".cpp"
@@ -122,7 +122,7 @@ void CodeEditor::setFile( const QString filePath )
           || extension == ".ino"
           || extension == ".h" )
     {
-        m_hlighter->readsyntaxFile( m_syntaxPath + "cpp.syntax" );
+        m_hlighter->readSyntaxFile( m_syntaxPath + "cpp.syntax" );
         if( extension == ".ino" )
         {   if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "Arduino", this );}
         else if( extension == ".cpp" || extension == ".c")
@@ -130,38 +130,36 @@ void CodeEditor::setFile( const QString filePath )
     }
     /*else if( extension == ".s" )
     {
-        m_hlighter->readsyntaxFile( m_syntaxPath + "avrasm.syntax" );
+        m_hlighter->readSyntaxFile( m_syntaxPath + "avrasm.syntax" );
         m_compiler = EditorWindow::self()->createDebugger( "Avrgcc-asm", this );
     }*/
     else if( extension == ".a51" ) // 8051
     {
         m_outPane->appendLine( "I51 asm\n" );
-        m_hlighter->readsyntaxFile( m_syntaxPath + "i51asm.syntax" );
+        m_hlighter->readSyntaxFile( m_syntaxPath + "i51asm.syntax" );
     }
-    /*else if( extension == ".asm" ) // We should identify if pic, avr or i51 asm
+    else if( extension == ".asm" ) // We should identify if pic, avr or i51 asm
     {
         m_outPane->appendText( tr("File recognized as: ") );
 
-        int type = getsyntaxCoincidences();
+        int type = getSyntaxCoincidences();
         if( type == 1 )   // Is Pic
         {
             m_outPane->appendLine( "Pic asm\n" );
-            m_hlighter->readsyntaxFile( m_syntaxPath + "pic14asm.syntax" );
-            if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "GpAsm", this );
+            m_hlighter->readSyntaxFile( m_syntaxPath + "pic14asm.syntax" );
         }
         else if( type == 2 )  // Is Avr
         {
             m_outPane->appendLine( "Avr asm\n" );
-            m_hlighter->readsyntaxFile( m_syntaxPath + "avrasm.syntax" );
-            if( !m_compiler ) m_compiler = EditorWindow::self()->createDebugger( "Avra", this );
+            m_hlighter->readSyntaxFile( m_syntaxPath + "avrasm.syntax" );
         }
         else if( type == 3 )  // Is 8051
         {
             m_outPane->appendLine( "I51 asm\n" );
-            m_hlighter->readsyntaxFile( m_syntaxPath + "i51asm.syntax" );
+            m_hlighter->readSyntaxFile( m_syntaxPath + "i51asm.syntax" );
         }
         else m_outPane->appendLine( "Unknown asm\n" );
-    }*/
+    }
     else if( extension == ".xml"
          ||  extension == ".html"
          ||  extension == ".package"
@@ -169,22 +167,22 @@ void CodeEditor::setFile( const QString filePath )
          ||  extension == ".sim1"
          ||  extension == ".simu" )
     {
-        m_hlighter->readsyntaxFile( m_syntaxPath + "xml.syntax" );
+        m_hlighter->readSyntaxFile( m_syntaxPath + "xml.syntax" );
     }
     else if( getFileName( m_file ).toLower() == "makefile"  )
     {
-        m_hlighter->readsyntaxFile( m_syntaxPath + "makef.syntax" );
+        m_hlighter->readSyntaxFile( m_syntaxPath + "makef.syntax" );
     }
     else if( extension == ".hex"
          ||  extension == ".ihx" )
     {
         m_font.setLetterSpacing( QFont::PercentageSpacing, 110 );
         setFont( m_font );
-        m_hlighter->readsyntaxFile( m_syntaxPath + "hex.syntax" );
+        m_hlighter->readSyntaxFile( m_syntaxPath + "hex.syntax" );
     }
     else if( extension == ".js" )
     {
-        m_hlighter->readsyntaxFile( m_syntaxPath + "js.syntax" );
+        m_hlighter->readSyntaxFile( m_syntaxPath + "js.syntax" );
     }
     /*else if( extension == ".sac" )
     {
@@ -195,12 +193,13 @@ void CodeEditor::setFile( const QString filePath )
     m_outPane->appendLine( "-------------------------------------------------------" );
 }
 
-int CodeEditor::getsyntaxCoincidences()
+int CodeEditor::getSyntaxCoincidences()
 {
-    QStringList lines = fileToStringList( m_file, "CodeEditor::getsyntaxCoincidences" );
+    QStringList lines = fileToStringList( m_file, "CodeEditor::getSintaxCoincidences" );
 
     double avr=1, pic=1, i51=1; // Avoid divide by 0
     int nlines = 0;
+    int matches = 0;
 
     for( QString line : lines )
     {
@@ -208,24 +207,27 @@ int CodeEditor::getsyntaxCoincidences()
         words.removeAll("");
         if( words.isEmpty() ) continue;
         line = words.first();
-        if( line.isEmpty()
-         || line.startsWith(";")
-         || line.startsWith(".") ) continue;
         if( line.contains(":") )
         {
             if( words.size() > 1 ) line = words.at(1);
             else continue;
         }
+        if( line.isEmpty()
+         || line.startsWith("#")
+         || line.startsWith(";")
+         || line.startsWith(".") ) continue;
+
         for( QString instruction : m_avrInstr )
-        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) avr++; }
+        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) {avr++; matches++;} }
         for( QString instruction : m_picInstr )
-        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) pic++; }
+        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) {pic++; matches++;} }
         for( QString instruction : m_i51Instr )
-        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) i51++; }
-        if( ++nlines > 200 ) break;
+        { if( line.contains( QRegExp( "\\b"+instruction+"\\b" ) )) {i51++; matches++;} }
+        if( matches > 200 || ++nlines > 400 ) break;
     }
+    if( matches == 0 ) return 0;
     int result = 0;
-    pic = nlines/pic; avr = nlines/avr; i51 = nlines/i51;
+    pic = matches/pic; avr = matches/avr; i51 = matches/i51;
 
     if     ( pic < 3 && pic < avr && pic < i51 ) result = 1;
     else if( avr < 3 && avr < pic && avr < i51 ) result = 2;
