@@ -71,7 +71,7 @@
                bits="PORTB0,PORTB1,PORTB2,PORTB3,PORTB4,PORTB5,PORTB6,PORTB7" />
     
     <register  name="EECR"    addr="0x001C"  reset=""  mask="00001111" 
-               bits="EERE,EEWE,EEMWE,EERIE,0,0,0,0" />
+               bits="EERE,EEWE|EEPE,EEMWE|EEMPE,EERIE,0,0,0,0" />
 
     <register  name="EEDR"    addr="0x001D"  reset=""  mask="" bits="" />
 
@@ -140,7 +140,7 @@
                bits="TOIE0,0,TOIE1,OCIE1B,OCIE1A,TICIE1,TOIE2,OCIE2" />
 
     <register  name="GIFR"    addr="0x003A"  reset=""  mask="" 
-               bits="0,0,0,0,0,0INTF0,INTF1" />
+               bits="0,0,0,0,0,0,INTF0,INTF1" />
 
     <register  name="GICR"   addr="0x003B"  reset=""  mask="" 
                bits="IVCE,IVSEL,0,0,0,0,INT0,INT1" />
