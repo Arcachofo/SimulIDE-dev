@@ -49,8 +49,8 @@ Ds18b20::Ds18b20( QObject* parent, QString type, QString id )
 
     m_scratchpad[0] = 0xFF;
     m_scratchpad[1] = 0x07;
-    m_scratchpad[2] = 0x4B; /// TL  reg, default value
-    m_scratchpad[3] = 0x46; /// TH  reg, default value
+    m_scratchpad[2] = 0x4B; /// TH  reg, default value
+    m_scratchpad[3] = 0x46; /// TL  reg, default value
     m_scratchpad[4] = 0x7F; /// CFG reg, default value
     m_scratchpad[5] = 0xFF;
     m_scratchpad[6] = 0x01;
@@ -135,7 +135,7 @@ void Ds18b20::voltChanged()                              // Called when Input Pi
 
         if( time > 205*1e6 )             // > 480 us : Reset (Tested in real device 202 us)
         {
-            qDebug() <<"\n"<< idLabel() << "Ds18b20::voltChanged -------------- RESET"<<time/1e3<<"ns";
+            //qDebug() <<"\n"<< idLabel() << "Ds18b20::voltChanged -------------- RESET"<<time/1e3<<"ns";
             m_rxReg = 0;
             m_bitIndex = 0;
             m_state = W1_ROM_CMD;
@@ -195,7 +195,7 @@ void Ds18b20::writeBit()
 
 void Ds18b20::dataSent() // Last data has been sent
 {
-    if( m_state != W1_SEARCH ) qDebug() << idLabel() << "Ds18b20::dataSent"<< val2hex( m_txReg );
+    //if( m_state != W1_SEARCH ) qDebug() << idLabel() << "Ds18b20::dataSent"<< val2hex( m_txReg );
 
     if( m_state == W1_SEARCH ) m_lastBit = 0; // Read 1 bit
     else if( !m_txBuff.empty() )   // Send next byte in Tx Buffer
@@ -220,7 +220,7 @@ void Ds18b20::readBit( uint8_t bit )
             m_rxReg = 0;
             m_bitIndex = 0;
             m_lastBit = 7;     // Return to normal byte reception
-            qDebug() <<idLabel()<<"Ds18b20::readBit       NO ROM match";
+            //qDebug() <<idLabel()<<"Ds18b20::readBit       NO ROM match";
             return;
         }
     }
@@ -248,7 +248,11 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
             if( m_lastCommand == 0x4E )              // Write Scratchpad
             {
                 m_scratchpad[m_byte] = m_rxReg;
-                if( m_byte == 4 ) m_state = W1_IDLE; // Transaction finished
+                if( m_byte == 4 )
+                {
+                    m_scratchpad[8] = crc8( m_scratchpad, 8 );
+                    m_state = W1_IDLE; // Transaction finished
+                }
                 else m_byte++;
             }
         } break;
@@ -258,7 +262,7 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
             m_rxReg = 0;
             m_bitIndex = 0;
             m_lastBit = 7;     // Return to normal byte reception
-            qDebug() <<idLabel()<<"Ds18b20::dataReceived     ROM match";
+            //qDebug() <<idLabel()<<"Ds18b20::dataReceived     ROM match";
         } break;
         case W1_SEARCH:
         {
@@ -266,12 +270,12 @@ void Ds18b20::dataReceived() // Complete data has been received (it's in m_rxReg
             {
                 m_state = W1_IDLE;
                 m_lastBit = 7; // Return to normal byte reception
-                qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OK ";
+                //qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OK ";
             }
             else if( (m_rxReg > 0) == m_bitROM ) sendSearchBit();   // Bit Match,  keep sending
             else{
                 m_state = W1_IDLE; // We are out, Wait for next Reset signal
-                qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OUT";
+                //qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  Search ROM OUT";
             }
         } break;
         default: qDebug() <<idLabel()<< "Ds18b20::dataReceived  :  ERROR";
@@ -306,7 +310,7 @@ void Ds18b20::romCommand( uint8_t cmd )
 
 void Ds18b20::readROM() // Code: 33h : send ROM to Master
 {
-    qDebug() << idLabel() <<"Ds18b20::readROM"<< arrayToHex( m_ROM, 8 );
+    //qDebug() << idLabel() <<"Ds18b20::readROM"<< arrayToHex( m_ROM, 8 );
 
     m_txBuff.clear();
     for( int i=7; i>=0; i-- ) m_txBuff.push_back( m_ROM[i] );
@@ -316,20 +320,20 @@ void Ds18b20::readROM() // Code: 33h : send ROM to Master
 
 void Ds18b20::matchROM() // Code 55h : read 64 bits and compare with ROM
 {
-    qDebug() <<idLabel()<< "Ds18b20::matchROM";
+    //qDebug() <<idLabel()<< "Ds18b20::matchROM";
     m_lastBit = 63;
     m_state = W1_MATCH;
 }
 
 void Ds18b20::skipROM() // Code: CCh : This device is selected, Wait command
 {
-    qDebug() <<idLabel()<< "Ds18b20::skipROM";
+    //qDebug() <<idLabel()<< "Ds18b20::skipROM";
     m_state = W1_FUN_CMD;
 }
 
 void Ds18b20::searchROM() // Code F0h
 {
-    qDebug() <<idLabel()<< "Ds18b20::searchROM";
+    //qDebug() <<idLabel()<< "Ds18b20::searchROM";
     m_state = W1_SEARCH;
     m_bitSearch = 0;
     sendSearchBit();
@@ -389,12 +393,12 @@ void Ds18b20::convertTemp() // Code 44h, temperature already in the Scratchpad, 
     m_busyTime += Simulator::self()->circTime();
     m_state = W1_BUSY;
 
-    qDebug() << idLabel() <<"Ds18b20::setTemp"<<arrayToHex( m_scratchpad, 9 );
+    //qDebug() << idLabel() <<"Ds18b20::setTemp"<<arrayToHex( m_scratchpad, 9 );
 }
 
 void Ds18b20::writeScratchpad() // Code 4Eh : Master will write TH, TL, Config
 {
-    qDebug() <<idLabel()<< "Ds18b20::writeScratchpad";
+    //qDebug() <<idLabel()<< "Ds18b20::writeScratchpad";
 
     m_byte = 2;        // start writting to byte 2 of the scratchpad
     m_state = W1_DATA;
@@ -405,14 +409,14 @@ void Ds18b20::readScratchpad() // Code BEh : send Scratchpad LSB
     m_txBuff.clear();
     for( int i=8; i>=0; i-- ) m_txBuff.push_back( m_scratchpad[i] );
 
-    qDebug() << idLabel() <<"Ds18b20::readScratchpad :"<<arrayToHex( m_txBuff.data(), m_txBuff.size() );
+    //qDebug() << idLabel() <<"Ds18b20::readScratchpad :"<<arrayToHex( m_txBuff.data(), m_txBuff.size() );
 
     sendData( m_txBuff.back() );
 }
 
 void Ds18b20::copyScratchpad() // Code 48h : Copy TH, TL, CFG (bytes 2, 3, 4) to EEPROM.
 {
-    qDebug() <<idLabel()<< "Ds18b20::copyScratchpad";
+    //qDebug() <<idLabel()<< "Ds18b20::copyScratchpad";
 
     m_TH  = m_scratchpad[2];
     m_TL  = m_scratchpad[3];
@@ -424,7 +428,7 @@ void Ds18b20::copyScratchpad() // Code 48h : Copy TH, TL, CFG (bytes 2, 3, 4) to
 
 void Ds18b20::recallE2() // Code B8h :Copy EEPROM to TH, TL, CFG (bytes 2, 3, 4)
 {
-    qDebug() <<idLabel()<< "Ds18b20::recallE2";
+    //qDebug() <<idLabel()<< "Ds18b20::recallE2";
 
     m_scratchpad[2] = m_TH;
     m_scratchpad[3] = m_TL;
@@ -437,7 +441,7 @@ void Ds18b20::recallE2() // Code B8h :Copy EEPROM to TH, TL, CFG (bytes 2, 3, 4)
 
 void Ds18b20::readPowerSupply() // Code B4h : using parasite power? pull down time???
 {
-    qDebug() <<idLabel()<< "Ds18b20::readPowerSupply No parasite power"; // By now we don't use parasite power
+    //qDebug() <<idLabel()<< "Ds18b20::readPowerSupply No parasite power"; // By now we don't use parasite power
     /// TODO add property ?
 }
 
@@ -474,7 +478,7 @@ void Ds18b20::setROM( QString ROMstr )
     QStringList lstROM = ROMstr.split(" ");
     lstROM.removeAll("");
     for( int i=0; i<8; ++i ) m_ROM[i] = lstROM.at( i ).toInt( &ok, 16 );
-    qDebug() << idLabel() <<"Ds18b20::setROM"<<arrayToHex( m_ROM, 8 );
+    //qDebug() << idLabel() <<"Ds18b20::setROM"<<arrayToHex( m_ROM, 8 );
 }
 
 void Ds18b20::generateROM( uint8_t familyCode ) // Generate unique ROM address
@@ -489,7 +493,7 @@ void Ds18b20::generateROM( uint8_t familyCode ) // Generate unique ROM address
   m_ROM[6] = 0x00;
   m_ROM[7] = crc8( m_ROM, 7 );
 
-  qDebug() << idLabel() <<"Ds18b20::generateROM"<<arrayToHex( m_ROM, 8 );
+  //qDebug() << idLabel() <<"Ds18b20::generateROM"<<arrayToHex( m_ROM, 8 );
 }
 
 QString Ds18b20::arrayToHex( uint8_t* data, uint len ) // Static
