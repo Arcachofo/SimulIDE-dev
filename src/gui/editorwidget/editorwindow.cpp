@@ -60,7 +60,8 @@ void EditorWindow::debug()
 {
     if( initDebbuger() )
     {
-        m_editorToolBar->setVisible( false);
+        m_editorToolBar->setVisible( false );
+        m_compileToolBar->setVisible( false );
         m_debuggerToolBar->setVisible( true );
 
         runAct->setEnabled( true );
@@ -115,6 +116,7 @@ void EditorWindow::stop()
 { 
     stopDebbuger();
     m_debuggerToolBar->setVisible( false );
+    m_compileToolBar->setVisible( true );
     m_editorToolBar->setVisible( true);
 }
 

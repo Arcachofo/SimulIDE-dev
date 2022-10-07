@@ -101,6 +101,8 @@ class EditorWidget : public QWidget
         QMenu m_fileMenu;
 
         QToolBar* m_editorToolBar;
+        QToolBar* m_findToolBar;
+        QToolBar* m_compileToolBar;
         QToolBar* m_debuggerToolBar;
 
         QAction* confEditAct;

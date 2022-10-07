@@ -34,10 +34,10 @@ EditorWidget::EditorWidget( QWidget* parent )
     m_editDialog = NULL;
 
     setAcceptDrops( true );
-    
-    createWidgets();
+
     createActions();
     createToolBars();
+    createWidgets();
 
     updateRecentFileActions();
     readSettings();
@@ -404,23 +404,26 @@ void EditorWidget::setStepActs()
 
 void EditorWidget::createWidgets()
 {
-    QGridLayout* baseWidgetLayout = new QGridLayout( this );
-    baseWidgetLayout->setSpacing(0);
-    baseWidgetLayout->setContentsMargins(0, 0, 0, 0);
-    baseWidgetLayout->setObjectName("gridLayout");
+    QHBoxLayout* hLayout = new QHBoxLayout();
+    hLayout->setSpacing(0);
+    hLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_editorToolBar = new QToolBar( this );
-    baseWidgetLayout->addWidget( m_editorToolBar );
-    
-    m_debuggerToolBar = new QToolBar( this );
-    m_debuggerToolBar->setVisible( false );
-    baseWidgetLayout->addWidget( m_debuggerToolBar );
+    QVBoxLayout* vLayout = new QVBoxLayout( this );
+    vLayout->setSpacing(0);
+    vLayout->setContentsMargins(0, 0, 0, 0);
+
+    hLayout->addWidget( m_editorToolBar );
+    hLayout->addWidget( m_findToolBar );
+    hLayout->addWidget( m_compileToolBar );
+    hLayout->addWidget( m_debuggerToolBar );
+    hLayout->addStretch();
+    vLayout->addLayout( hLayout );
 
     QSplitter* splitter0 = new QSplitter( this );
     splitter0->setObjectName("splitter0");
     splitter0->setOrientation( Qt::Vertical );
-    baseWidgetLayout->addWidget( splitter0 );
-    
+    vLayout->addWidget( splitter0 );
+
     m_docWidget = new QTabWidget( this );
     m_docWidget->setObjectName("docWidget");
     m_docWidget->setTabPosition( QTabWidget::North );
@@ -435,17 +438,17 @@ void EditorWidget::createWidgets()
     splitter0->addWidget( m_docWidget );
     splitter0->addWidget( &m_outPane );
     splitter0->setSizes( {300, 100} );
-    
-    connect( m_docWidget, SIGNAL( tabCloseRequested(int)), 
+
+    connect( m_docWidget, SIGNAL( tabCloseRequested(int)),
              this,        SLOT(   closeTab(int)), Qt::UniqueConnection);
-             
+
     /*connect( m_docWidget, SIGNAL( customContextMenuRequested(const QPoint &)),
              this,        SLOT(   tabContextMenu(const QPoint &)), Qt::UniqueConnection);*/
-                        
+
     connect( m_docWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)), Qt::UniqueConnection);
-    
-    setLayout( baseWidgetLayout );
-    
+
+    //setLayout( vLayout );
+
     m_findRepDialog = new FindReplace( this );
     m_findRepDialog->setModal( false );
 }
@@ -577,9 +580,6 @@ void EditorWidget::createToolBars()
     settingsButton->setMenu( &m_settingsMenu );
     settingsButton->setIcon( QIcon(":/config.png") );
     settingsButton->setPopupMode( QToolButton::InstantPopup );
-    m_editorToolBar->addWidget( settingsButton );
-    m_editorToolBar->addSeparator();//..........................
-
 
     for( int i=0; i<MaxRecentFiles; i++ ) m_fileMenu.addAction( recentFileActs[i] );
     QToolButton* fileButton = new QToolButton( this );
@@ -587,6 +587,10 @@ void EditorWidget::createToolBars()
     fileButton->setMenu( &m_fileMenu );
     fileButton->setIcon( QIcon(":/lastfiles.png") );
     fileButton->setPopupMode( QToolButton::InstantPopup );
+
+    m_editorToolBar = new QToolBar( this );
+    m_editorToolBar->addWidget( settingsButton );
+    m_editorToolBar->addSeparator();//..........................
     m_editorToolBar->addWidget( fileButton );
 
     m_editorToolBar->addAction(newAct);
@@ -595,15 +599,17 @@ void EditorWidget::createToolBars()
     m_editorToolBar->addAction(saveAsAct);
     m_editorToolBar->addSeparator();
 
-    m_editorToolBar->addAction(findQtAct);
-    m_editorToolBar->addSeparator();
-    
-    m_editorToolBar->addAction(compileAct);
-    m_editorToolBar->addAction(loadAct);
-    m_editorToolBar->addSeparator();
-    
-    m_editorToolBar->addAction(debugAct);
-    
+    m_findToolBar = new QToolBar( this );
+    m_findToolBar->addAction(findQtAct);
+    m_findToolBar->addSeparator();
+
+    m_compileToolBar = new QToolBar( this );
+    m_compileToolBar->addAction(compileAct);
+    m_compileToolBar->addAction(loadAct);
+    m_compileToolBar->addSeparator();
+    m_compileToolBar->addAction(debugAct);
+
+    m_debuggerToolBar = new QToolBar( this );
     m_debuggerToolBar->addAction(stepAct);
     m_debuggerToolBar->addAction(stepOverAct);
     m_debuggerToolBar->addAction(runAct);
@@ -611,6 +617,7 @@ void EditorWidget::createToolBars()
     m_debuggerToolBar->addAction(resetAct);
     m_debuggerToolBar->addSeparator();
     m_debuggerToolBar->addAction(stopAct);
+    m_debuggerToolBar->setVisible( false );
 }
 
 #include  "moc_editorwidget.cpp"
