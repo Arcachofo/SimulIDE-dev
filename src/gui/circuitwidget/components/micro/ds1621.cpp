@@ -96,17 +96,7 @@ DS1621::DS1621( QObject* parent, QString type, QString id )
 
     m_temp = 22.5;
     m_tempInc = 0.5;
-    m_tempCount = 0;
-    m_tempSlope = 0;
-    m_writeByte = -1;
-    m_command = 0;
-    m_config = 0;
-    m_oneShot = false;
-    m_outPol  = false;
     m_changed = true;
-    
-    m_Th = 0;
-    m_Tl = 0;
 
     //IoComponent::initState();
     m_cCode = 0b01001000; // 0x98 >> 1  : I2C Addr
@@ -121,6 +111,19 @@ DS1621::~DS1621() {}
 
 void DS1621::stamp() // Called at Simulation Start
 {
+    m_command = 0;
+    m_changed = true;
+    m_tempCount = 0;
+    m_tempSlope = 0;
+    m_writeByte = -1;
+    m_config = 0;
+    m_convert = false;
+    m_oneShot = false;
+    m_outPol  = false;
+
+    m_Th = 0;
+    m_Tl = 0;
+
     TwiModule::setMode( TWI_SLAVE );
 
     for( int i=2; i<5; i++ ) m_inPin[i]->changeCallBack( this );
