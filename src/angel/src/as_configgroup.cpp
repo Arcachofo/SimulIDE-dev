@@ -29,8 +29,6 @@
 */
 
 //
-// as_configgroup.cpp
-//
 // This class holds configuration groups for the engine
 //
 

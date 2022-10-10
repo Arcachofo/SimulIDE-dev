@@ -3,7 +3,7 @@
 #ifdef Q_OS_WIN
 
 #include "virtual_asm.h"
-#include <Windows.h>
+#include <windows.h>
 
 namespace assembler {
 

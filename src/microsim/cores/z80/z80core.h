@@ -306,14 +306,14 @@ QString producer() { return m_enumUids.at((int)m_producer); }
         template<eMathOp op>
         inline void inst_imm();
         
-        template< eMathOp op, bool changeAllFlags = true >
-        inline void mathOp( uint8_t &regA, uint8_t reg = 0 );
+        template< eMathOp op, bool changeAllFlags=true >
+        inline void mathOp( uint8_t &regA, uint8_t reg=0 );
         
         template< eMathOp op, typename T >
         inline void mathOp16( sRegPair &rp1, T &rp2 );
         
         enum eShiftOp { iRlc, iRrc, iRl, iRr, iSla, iSra, iSll, iSrl };
-        template< eShiftOp op, bool changeSZP = true >
+        template< eShiftOp op, bool changeSZP=true >
         inline void shiftOp( uint8_t &reg );
         
         enum eRotDig { iLeft, iRight };
