@@ -24,7 +24,7 @@ class MAINMODULE_EXPORT ePin
 
         eNode* getEnode() { return m_enode; }
         void   setEnode( eNode* enode );
-        void   setEnodeComp( eNode* enode ); // The enode at other side of component
+        void   createAdmitance( eNode* enode ); // The enode at other side of component
 
         void changeCallBack( eElement* el , bool cb=true );
 

@@ -54,14 +54,14 @@ void eBJT::initialize()
     m_CE = COLL;
 
     /*m_BE->setEnode( NULL );
-    m_BE->setEnodeComp( NULL );
+    m_BE->createAdmitance( NULL );
     m_EB->setEnode( NULL );
-    m_EB->setEnodeComp( NULL );
+    m_EB->createAdmitance( NULL );
 
     m_BC->setEnode( NULL );
-    m_BC->setEnodeComp( NULL );
+    m_BC->createAdmitance( NULL );
     m_CB->setEnode( NULL );
-    m_CB->setEnodeComp( NULL );*/
+    m_CB->createAdmitance( NULL );*/
 }
 
 void eBJT::stamp()
@@ -70,26 +70,26 @@ void eBJT::stamp()
     eNode* emitNod = EMIT->getEnode();// Emitter
     eNode* baseNod = BASE->getEnode();// Base
 
-    BASE->createCurrent();
-    COLL->createCurrent();
-    EMIT->createCurrent();
-
     if( collNod ) collNod->addToNoLinList( this );
     if( emitNod ) emitNod->addToNoLinList( this );
     if( baseNod ) baseNod->addToNoLinList( this );
 
     m_BE->setEnode( baseNod );
-    m_BE->setEnodeComp( emitNod );
+    m_BE->createAdmitance( emitNod );
     m_EB->setEnode( emitNod );
-    m_EB->setEnodeComp( baseNod );
+    m_EB->createAdmitance( baseNod );
 
     m_BC->setEnode( baseNod );
-    m_BC->setEnodeComp( collNod );
+    m_BC->createAdmitance( collNod );
     m_CB->setEnode( collNod );
-    m_CB->setEnodeComp( baseNod );
+    m_CB->createAdmitance( baseNod );
 
-    m_CE->setEnodeComp( emitNod );
-    m_EC->setEnodeComp( collNod );
+    m_CE->createAdmitance( emitNod );
+    m_EC->createAdmitance( collNod );
+
+    BASE->createCurrent();
+    COLL->createCurrent();
+    EMIT->createCurrent();
 
     //double r = ((double)(std::rand() %5))*1e-2; // Random start diference
     /*m_BE->stampAdmitance( 1e-12 );

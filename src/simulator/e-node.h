@@ -29,7 +29,7 @@ class MAINMODULE_EXPORT eNode
         void addToNoLinList( eElement* el );
         //void remFromNoLinList( eElement* el );
 
-        //void createAdmitance( ePin* epin, int node );
+        void createAdmitance( ePin* epin, int node );
         void stampAdmitance( ePin* epin, double admit );
 
         void createCurrent( ePin* epin );
@@ -51,7 +51,6 @@ class MAINMODULE_EXPORT eNode
 
         QList<ePin*> getEpins() { return m_ePinList; }
 
-        void addConnection( ePin* epin, int enodeNum );
         QList<int> getConnections();
 
         eNode* nextCH;

@@ -24,7 +24,6 @@ class MAINMODULE_EXPORT eResistor : public eElement
         double admit() { return m_admit; }
         void setAdmit( double admit );
         void stampAdmit();
-        //void stampCurrent( double current );
 
         double current();
 

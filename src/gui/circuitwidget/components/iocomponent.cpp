@@ -65,8 +65,9 @@ void IoComponent::initState()
 {
     for( uint i=0; i<m_outPin.size(); ++i )
     {
-        m_outPin[i]->setStateZ( false );
-        m_outPin[i]->setOutState( false );
+        m_outPin[i]->set_m_stateZ( false );
+        m_outPin[i]->set_m_outState( false );
+        m_outPin[i]->stamp();
     }
     m_outValue = 0;
     while( !m_outQueue.empty()  ) m_outQueue.pop();

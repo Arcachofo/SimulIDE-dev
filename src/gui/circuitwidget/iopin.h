@@ -59,7 +59,8 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
 
         virtual bool getInpState();
         virtual bool getOutState() { if( m_step ) return m_nextState; return m_outState; }
-        virtual void setOutState( bool high );
+        virtual void set_m_outState( bool s ) { m_outState = s;}
+        virtual void setOutState( bool s );
         virtual void toggleOutState( uint64_t time=0 ) { sheduleState( !m_outState, time ); }
 
         inline void setVoltage( double volt )
@@ -81,6 +82,7 @@ class MAINMODULE_EXPORT IoPin : public Pin, public eElement
             ePin::stampCurrent( m_outVolt*m_admit );
         }
 
+        void set_m_stateZ( bool z ) { m_stateZ = z; }
         void setStateZ( bool z );
         virtual void setPullup( bool up );
 

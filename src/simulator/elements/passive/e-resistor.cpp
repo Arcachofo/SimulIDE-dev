@@ -18,8 +18,8 @@ eResistor::~eResistor(){}
 
 void eResistor::stamp()
 {
-    m_ePin[0]->setEnodeComp( m_ePin[1]->getEnode() );
-    m_ePin[1]->setEnodeComp( m_ePin[0]->getEnode() );
+    m_ePin[0]->createAdmitance( m_ePin[1]->getEnode() );
+    m_ePin[1]->createAdmitance( m_ePin[0]->getEnode() );
     stampAdmit();
 }
 
@@ -31,14 +31,6 @@ void eResistor::stampAdmit()
     m_ePin[0]->stampAdmitance( m_admit );
     m_ePin[1]->stampAdmitance( m_admit );
 }
-
-/*void eResistor::stampCurrent( double current )
-{
-    if( !m_ePin[0] ) return;
-
-    m_ePin[0]->stampCurrent( current );
-    m_ePin[1]->stampCurrent( -current );
-}*/
 
 void eResistor::setRes( double resist )
 {

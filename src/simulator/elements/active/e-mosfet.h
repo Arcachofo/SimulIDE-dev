@@ -15,7 +15,6 @@ class MAINMODULE_EXPORT eMosfet : public eResistor
         ~eMosfet();
 
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
 
         bool pChannel() { return m_Pchannel; }

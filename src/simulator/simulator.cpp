@@ -45,7 +45,7 @@ Simulator::Simulator( QObject* parent )
     m_errors[3] = "LAST_SIM_EVENT reached";
 
     m_warnings[1] = "NonLinear Not Converging";
-    m_warnings[2] = "Simulation Blocked";
+    //m_warnings[2] = "Simulation Blocked";    /// TO DELETE
     m_warnings[100] = "AVR crashed !!!";
 
     resetSim();
@@ -64,7 +64,7 @@ inline void Simulator::solveMatrix()
     {
         m_changedNode->stampMatrix();
         m_changedNode = m_changedNode->nextCH;
-        if( m_state < SIM_RUNNING ) { m_warning = 2; break; }
+        if( m_state < SIM_RUNNING ) { /*m_warning = 2;*/ return; }
     }
     if( !m_matrix->solveMatrix() ) // Try to solve matrix, if not stop simulation
     {

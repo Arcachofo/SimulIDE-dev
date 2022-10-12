@@ -32,7 +32,7 @@ Ground::Ground( QObject* parent, QString type, QString id )
     
     setLabelPos(-16, 8, 0);
 }
-Ground::~Ground() { /*delete m_out;*/ }
+Ground::~Ground(){}
 
 void Ground::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
 {

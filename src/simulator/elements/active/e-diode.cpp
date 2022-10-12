@@ -37,6 +37,8 @@ void eDiode::initialize()
 
 void eDiode::stamp()
 {
+    eResistor::stamp();
+
     eNode* node = m_ePin[0]->getEnode();
     if( node ) node->addToNoLinList( this );
 
@@ -45,8 +47,6 @@ void eDiode::stamp()
 
     m_ePin[0]->createCurrent();
     m_ePin[1]->createCurrent();
-
-    eResistor::stamp();
 }
 
 void eDiode::voltChanged()

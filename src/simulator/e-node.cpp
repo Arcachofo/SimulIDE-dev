@@ -59,7 +59,7 @@ void eNode::initialize()
     m_nodeList.clear();
 }
 
-void eNode::addConnection( ePin* epin, int node )
+void eNode::createAdmitance( ePin* epin, int node )
 {
     if( node == m_nodeNum ) // Be sure msg doesn't come from this node
         return;
@@ -92,6 +92,8 @@ void eNode::stampAdmitance( ePin* epin, double admit ) // Be sure msg doesn't co
         if( conn->epin == epin ) { conn->value = admit; break; } // Connection found
         conn = conn->next;
     }
+    if( conn == NULL )
+        return;
 
     if( admit == 0 ) m_switched = true;
     m_admitChanged = true;
@@ -121,6 +123,8 @@ void eNode::stampCurrent( ePin* epin, double current ) // Be sure msg doesn't co
         if( conn->epin == epin ) { conn->value = current; break; } // Connection found
         conn = conn->next;
     }
+    if( conn == NULL )
+        return;
     m_currChanged = true;
 
     if( !m_changed ){
@@ -230,7 +234,7 @@ void eNode::clear()
 {
     for( ePin* epin : m_ePinList ){
         epin->setEnode( NULL );
-        epin->setEnodeComp( NULL );
+        epin->createAdmitance( NULL );
 }   }
 
 QList<int> eNode::getConnections()
@@ -279,7 +283,7 @@ void eNode::addToNoLinList( eElement* el )
     LinkedElement* newLinked = new LinkedElement( el );
     newLinked->next = m_nonLinEl; // Prepend
     m_nonLinEl = newLinked;
-    qDebug() <<m_id<< el->getId();
+    //qDebug() <<m_id<< el->getId();
 }
 
 void eNode::clearElmList( LinkedElement* first )

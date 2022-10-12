@@ -57,7 +57,7 @@ void Mosfet::updateStep()
     if( Circuit::self()->animate() ) update();
 }
 
-void Mosfet::paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget )
+void Mosfet::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );
     

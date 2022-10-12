@@ -59,17 +59,17 @@ void SwitchDip::stamp()
 {
     for( int i=0; i<m_size; i++ )
     {
-        int pin1 = i*2;
-        int pin2 = pin1+1;
+        int pin0 = i*2;
+        int pin1 = pin0+1;
 
-        eNode* node0 = m_pin[pin1]->getEnode();
-        eNode* node1 = m_pin[pin2]->getEnode();
+        eNode* node0 = m_pin[pin0]->getEnode();
+        eNode* node1 = m_pin[pin1]->getEnode();
 
         if( node0 ) node0->setSwitched( true );
         if( node1 ) node1->setSwitched( true );
 
-        m_pin[pin1]->setEnodeComp( node1 );
-        m_pin[pin2]->setEnodeComp( node0 );
+        m_pin[pin0]->createAdmitance( node1 );
+        m_pin[pin1]->createAdmitance( node0 );
     }
     m_changed = true;
     updateStep();
