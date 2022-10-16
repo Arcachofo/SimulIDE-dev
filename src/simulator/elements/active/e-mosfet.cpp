@@ -27,19 +27,20 @@ eMosfet::~eMosfet(){}
 
 void eMosfet::stamp()
 {
+    m_admit = 1/m_RDSon;
+
     m_step = 0;
     m_gateV = 0;
     m_lastCurrent = 0;
 
     m_kRDSon = m_RDSon*(10-m_threshold);
-    m_Gth    = m_threshold*0.75;
+    m_Gth    = m_threshold-m_threshold/4;
     m_accuracy = Simulator::self()->NLaccuracy();
 
     if( (m_ePin[0]->isConnected())
       &&(m_ePin[1]->isConnected())
       &&(m_ePin[2]->isConnected()) )
     {
-        m_admit = m_RDSon;
         eResistor::stamp();
 
         m_ePin[0]->createCurrent();

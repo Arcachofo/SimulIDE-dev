@@ -61,8 +61,7 @@ void Rail::setVolt( double v )
 void Rail::stamp()
 {
     m_out->setOutHighV( m_volt );
-    m_out->set_m_outState( true );
-    m_out->stamp();
+    m_out->setOutState( true );
     update();
 }
 

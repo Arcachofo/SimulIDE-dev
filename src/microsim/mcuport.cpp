@@ -35,7 +35,6 @@ void McuPort::reset()
 {
     m_pinState = 0;
     if( m_rstIntMask ) m_intMask = 0;
-    for( McuPin* pin : m_pins ) pin->setPinMode( input ); /// Added after eNode optimization:
     /// for( McuPin* pin : m_pins ) pin->reset();
 }
 

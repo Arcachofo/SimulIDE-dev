@@ -43,7 +43,7 @@ eBJT::eBJT( QString id )
 }
 eBJT::~eBJT(){}
 
-void eBJT::initialize()
+void eBJT::stamp()
 {
     m_step = 0;
     m_voltBE = 0;
@@ -53,19 +53,6 @@ void eBJT::initialize()
     m_EC = EMIT;
     m_CE = COLL;
 
-    /*m_BE->setEnode( NULL );
-    m_BE->createAdmitance( NULL );
-    m_EB->setEnode( NULL );
-    m_EB->createAdmitance( NULL );
-
-    m_BC->setEnode( NULL );
-    m_BC->createAdmitance( NULL );
-    m_CB->setEnode( NULL );
-    m_CB->createAdmitance( NULL );*/
-}
-
-void eBJT::stamp()
-{
     eNode* collNod = COLL->getEnode();// Collector
     eNode* emitNod = EMIT->getEnode();// Emitter
     eNode* baseNod = BASE->getEnode();// Base
@@ -75,17 +62,17 @@ void eBJT::stamp()
     if( baseNod ) baseNod->addToNoLinList( this );
 
     m_BE->setEnode( baseNod );
-    m_BE->createAdmitance( emitNod );
+    m_BE->setEnodeComp( emitNod );
     m_EB->setEnode( emitNod );
-    m_EB->createAdmitance( baseNod );
+    m_EB->setEnodeComp( baseNod );
 
     m_BC->setEnode( baseNod );
-    m_BC->createAdmitance( collNod );
+    m_BC->setEnodeComp( collNod );
     m_CB->setEnode( collNod );
-    m_CB->createAdmitance( baseNod );
+    m_CB->setEnodeComp( baseNod );
 
-    m_CE->createAdmitance( emitNod );
-    m_EC->createAdmitance( collNod );
+    m_CE->setEnodeComp( emitNod );
+    m_EC->setEnodeComp( collNod );
 
     BASE->createCurrent();
     COLL->createCurrent();

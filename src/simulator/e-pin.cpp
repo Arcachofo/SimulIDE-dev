@@ -29,12 +29,12 @@ void ePin::setEnode( eNode* enode )
     m_enode = enode;
 }
 
-void ePin::createAdmitance( eNode* enode )
+void ePin::setEnodeComp( eNode* enode )
 {
     m_enodeComp = enode;
     int enodeConNum = 0;
     if( enode ) enodeConNum = enode->getNodeNumber();
-    if( m_enode ) m_enode->createAdmitance( this, enodeConNum );
+    if( m_enode ) m_enode->addConnection( this, enodeConNum );
 }
 
 void ePin::createCurrent()

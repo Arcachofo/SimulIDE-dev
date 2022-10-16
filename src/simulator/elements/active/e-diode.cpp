@@ -28,15 +28,12 @@ eDiode::eDiode( QString id )
 }
 eDiode::~eDiode(){}
 
-void eDiode::initialize()
+void eDiode::stamp()
 {
     m_admit = m_bAdmit;
     m_voltPN = 0;
     m_current = 0;
-}
 
-void eDiode::stamp()
-{
     eResistor::stamp();
 
     eNode* node = m_ePin[0]->getEnode();

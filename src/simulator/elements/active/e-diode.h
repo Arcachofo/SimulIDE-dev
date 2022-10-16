@@ -27,7 +27,6 @@ class MAINMODULE_EXPORT eDiode : public eResistor
         ~eDiode();
 
         virtual void stamp() override;
-        virtual void initialize() override;
         virtual void voltChanged() override;
 
         double threshold() { return m_vCriti; }

@@ -55,7 +55,7 @@ void IoPin::initialize()
 
 void IoPin::stamp()
 {
-    ePin::createAdmitance( &m_gndEnode );
+    ePin::setEnodeComp( &m_gndEnode );
     ePin::createCurrent();
     setPinMode( m_pinMode );
     stampAll();
@@ -117,7 +117,7 @@ void IoPin::startHL()
 
 void IoPin::setPinMode( pinMode_t mode )
 {
-    //if( m_pinMode == mode ) return;
+    if( m_pinMode == mode ) return;
     m_pinMode = mode;
 
     switch( mode )
@@ -171,16 +171,16 @@ bool IoPin::getInpState()
     return m_inverted ? !m_inpState : m_inpState;
 }
 
-void IoPin::setOutState( bool s ) // Set Output to Hight or Low
+void IoPin::setOutState( bool high ) // Set Output to Hight or Low
 {
-    m_outState = m_nextState = s;
+    m_outState = m_nextState = high;
     if( m_pinMode < openCo || m_stateZ ) return;
 
-    if( m_inverted ) s = !s;
+    if( m_inverted ) high = !high;
 
     if( m_pinMode == openCo )
     {
-        if( s ){
+        if( high ){
             m_gndAdmit = 1/1e8;
             setPinState( open_high ); // Z-Low colors
          }else{
@@ -189,7 +189,7 @@ void IoPin::setOutState( bool s ) // Set Output to Hight or Low
         }
         updtState();
     }else{
-        if( s ){
+        if( high ){
             m_outVolt = m_outHighV;
             setPinState( out_high ); // High colors
         }else{
