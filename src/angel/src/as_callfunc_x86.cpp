@@ -333,7 +333,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(args), asPWORD(paramSize), asPWORD(func)};
 
 	asm __volatile__(
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -378,7 +378,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp            \n"
 		"popl  %%ebx            \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"
@@ -455,7 +455,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(obj), asPWORD(args), asPWORD(paramSize), asPWORD(func)};
 
 	asm __volatile__ (
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -501,7 +501,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp            \n"
 		"popl  %%ebx            \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"
@@ -578,7 +578,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(obj), asPWORD(args), asPWORD(paramSize), asPWORD(func)};
 
 	asm __volatile__ (
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -624,7 +624,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp            \n"
 		"popl  %%ebx            \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"
@@ -710,7 +710,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(obj), asPWORD(args), asPWORD(paramSize), asPWORD(func), asPWORD(retPtr)};
 
 	asm __volatile__ (
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -760,7 +760,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp            \n"
 		"popl  %%ebx            \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"
@@ -842,7 +842,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(args), asPWORD(paramSize), asPWORD(func), asPWORD(retPtr)};
 
 	asm __volatile__ (
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -889,7 +889,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp            \n"
 		"popl  %%ebx            \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"
@@ -973,7 +973,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(obj), asPWORD(args), asPWORD(paramSize), asPWORD(func), asPWORD(retPtr)};
 
 	asm __volatile__ (
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -1023,7 +1023,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp            \n"
 		"popl  %%ebx            \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"
@@ -1095,7 +1095,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(args), asPWORD(paramSize), asPWORD(func)};
 
 	asm __volatile__ (
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -1138,7 +1138,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp            \n"
 		"popl  %%ebx            \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"
@@ -1226,7 +1226,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(obj), asPWORD(args), asPWORD(paramSize), asPWORD(func)};
 
 	asm __volatile__ (
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -1278,7 +1278,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp            \n"
 		"popl  %%ebx            \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"
@@ -1373,7 +1373,7 @@ endcopy:
 	volatile asPWORD a[] = {asPWORD(obj), asPWORD(args), asPWORD(paramSize), asPWORD(func), asPWORD(retPtr)};
 
 	asm __volatile__ (
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// When compiled with optimizations the stack unwind doesn't work properly,
 		// causing exceptions to crash the application. By adding this prologue
 		// and the epilogue below, the stack unwind works as it should.
@@ -1438,7 +1438,7 @@ endcopy:
 		// Pop the alignment bytes
 		"popl  %%esp           \n"
 		"popl  %%ebx           \n"
-#ifdef __OPTIMIZE__
+#ifdef __OPTIMIZE__NO
 		// Epilogue
 		"movl %%ebp, %%esp         \n"
 		".cfi_def_cfa_register esp \n"

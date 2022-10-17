@@ -4,14 +4,16 @@
     <register  name="PINB"    addr="0x0003"  reset=""  mask="" />
     <register  name="DDRB"    addr="0x0004"  reset=""  mask="" />
     <register  name="PORTB"   addr="0x0005"  reset=""  mask="" />
+    
     <register  name="PINC"    addr="0x0006"  reset=""  mask="01111111" />
     <register  name="DDRC"    addr="0x0007"  reset=""  mask="01111111" />
     <register  name="PORTC"   addr="0x0008"  reset=""  mask="01111111" />
+    
     <register  name="PIND"    addr="0x0009"  reset=""  mask="" />
     <register  name="DDRD"    addr="0x000A"  reset=""  mask="" />
-    <register  name="PORTD"   addr="0x000B"  reset=""  mask="" 
-               bits="PORTD0,PORTD1,PORTD2,PORTD3,PORTD4,PORTD5,PORTD6,PORTD7"/>
-    <register  name="PINE"    addr="0x000C"  reset=""  mask="00001111"/>
+    <register  name="PORTD"   addr="0x000B"  reset=""  mask="" />
+    
+    <register  name="PINE"    addr="0x000C"  reset=""  mask="00001111" />
     <register  name="DDRE"    addr="0x000D"  reset=""  mask="00001111" />
     <register  name="PORTE"   addr="0x000E"  reset=""  mask="00001111" />
 
