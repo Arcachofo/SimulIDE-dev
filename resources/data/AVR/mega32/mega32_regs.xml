@@ -47,41 +47,21 @@
     <register  name="SPDR"    addr="0x000F"  reset=""  mask="" 
                bits="SPDR0,SPDR1,SPDR2,SPDR3,SPDR4,SPDR5,SPDR6,SPDR7" />
 
-    <register  name="PIND"    addr="0x0010"  reset=""  mask="" 
-               bits="PIND0,PIND1,PIND2,PIND3,PIND4,PIND5,PIND6,PIND7" />
-
-    <register  name="DDRD"    addr="0x0011"  reset=""  mask="" 
-               bits="DDD0,DDD1,DDD2,DDD3,DDD4,DDD5,DDD6,DDD7" />
-
-    <register  name="PORTD"   addr="0x0012"  reset=""  mask="" 
-               bits="PD0,PD1,PD2,PD3,PD4,PD5,PD6,PD7" />
-
-    <register  name="PINC"    addr="0x0013"  reset=""  mask="" 
-               bits="PINC0,PINC1,PINC2,PINC3,PINC4,PINC5,PINC6,PINC7" />
-
-    <register  name="DDRC"    addr="0x0014"  reset=""  mask="" 
-               bits="DDC0,DDC1,DDC2,DDC3,DDC4,DDC5,DDC6,DDC7" />
-
-    <register  name="PORTC"   addr="0x0015"  reset=""  mask="" 
-               bits="PC0,PC1,PC2,PC3,PC4,PC5,PC6,PC7" />
-
-    <register  name="PINB"    addr="0x0016"  reset=""  mask="" 
-               bits="PINB0,PINB1,PINB2,PINB3,PINB4,PINB5,PINB6,PINB7" />
-
-    <register  name="DDRB"    addr="0x0017"  reset=""  mask="" 
-               bits="DDB0,DDB1,DDB2,DDB3,DDB4,DDB5,DDB6,DDB7" />
-
-    <register  name="PORTB"   addr="0x0018"  reset=""  mask="" 
-               bits="PB0,PB1,PB2,PB3,PB4,PB5,PB6,PB7" />
-
-    <register  name="PINA"    addr="0x0019"  reset=""  mask="" 
-               bits="PINA0,PINA1,PINA2,PINA3,PINA4,PINA5,PINA6,PINA7" />
-
-    <register  name="DDRA"    addr="0x001A"  reset=""  mask="" 
-               bits="DDA0,DDA1,DDA2,DDA3,DDA4,DDA5,DDA6,DDA7" />
-
-    <register  name="PORTA"   addr="0x001B"  reset=""  mask="" 
-               bits="PA0,PA1,PA2,PA3,PA4,PA5,PA6,PA7" />
+    <register  name="PIND"    addr="0x0010"  reset=""  mask="00000000" />
+    <register  name="DDRD"    addr="0x0011"  reset=""  mask="" />
+    <register  name="PORTD"   addr="0x0012"  reset=""  mask="" />
+    
+    <register  name="PINC"    addr="0x0013"  reset=""  mask="00000000" />
+    <register  name="DDRC"    addr="0x0014"  reset=""  mask="" />
+    <register  name="PORTC"   addr="0x0015"  reset=""  mask="" />
+    
+    <register  name="PINB"    addr="0x0016"  reset=""  mask="00000000" />
+    <register  name="DDRB"    addr="0x0017"  reset=""  mask="" />
+    <register  name="PORTB"   addr="0x0018"  reset=""  mask="" />
+    
+    <register  name="PINA"    addr="0x0019"  reset=""  mask="00000000" />
+    <register  name="DDRA"    addr="0x001A"  reset=""  mask="" />
+    <register  name="PORTA"   addr="0x001B"  reset=""  mask="" />
 
     <register  name="EECR"    addr="0x001C"  reset=""  mask="" 
                bits="EERE,EEWE,EEMWE,EERIE,0,0,0,0" />

@@ -14,6 +14,12 @@ AvrPort::AvrPort( eMcu* mcu, QString name )
 }
 AvrPort::~AvrPort(){}
 
+void AvrPort::pinChanged( uint8_t newPIN )
+{
+    if( newPIN == 0 ) return;
+    McuPort::outChanged( *m_outReg ^ newPIN ); // Toggle bits = 1
+}
+
 McuPin* AvrPort::createPin( int i, QString id , Component* mcu )
 {
     return new AvrPin( this, i, id, mcu );

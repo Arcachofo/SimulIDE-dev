@@ -1,7 +1,7 @@
 <parts>
   <regblock  name="I/O_REG" start="0x0020" end="0x005F" offset="32">
       
-    <register  name="PINB"    addr="0x0003"  reset=""  mask="00000000" 
+    <register  name="PINB"    addr="0x0003"  reset=""  mask="" 
                bits="PINB0,PINB1,PINB2,PINB3,PINB4,PINB5,PINB6,PINB7" />
 
     <register  name="DDRB"    addr="0x0004"  reset=""  mask="" 
@@ -10,7 +10,7 @@
     <register  name="PORTB"   addr="0x0005"  reset=""  mask="" 
                bits="PB0,PB1,PB2,PB3,PB4,PB5,PB6,PB7" />
 
-    <register  name="PINC"    addr="0x0006"  reset=""  mask="00000000" 
+    <register  name="PINC"    addr="0x0006"  reset=""  mask="" 
                bits="PINC0,PINC1,PINC2,PINC3,PINC4,PINC5,PINC6,0" />
 
     <register  name="DDRC"    addr="0x0007"  reset=""  mask="01111111" 
@@ -19,7 +19,7 @@
     <register  name="PORTC"   addr="0x0008"  reset=""  mask="01111111" 
                bits="PC0,PC1,PC2,PC3,PC4,PC5,PC6,0" />
 
-    <register  name="PIND"    addr="0x0009"  reset=""  mask="00000000" 
+    <register  name="PIND"    addr="0x0009"  reset=""  mask="" 
                bits="PIND0,PIND1,PIND2,PIND3,PIND4,PIND5,PIND6,PIND7" />
 
     <register  name="DDRD"    addr="0x000A"  reset=""  mask="" 
