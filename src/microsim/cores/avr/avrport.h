@@ -15,7 +15,7 @@ class MAINMODULE_EXPORT AvrPort : public McuPort
         AvrPort( eMcu* mcu, QString name );
         ~AvrPort();
 
-        void pinChanged( uint8_t newPIN );
+        void pinRegChanged( uint8_t newPIN );
 
     protected:
         virtual McuPin* createPin( int i, QString id , Component* mcu ) override;

@@ -452,7 +452,7 @@ void McuCreator::createPort( QDomElement* p )
         uint16_t inAddr = mcu->getRegAddress( inReg );
         port->m_inAddr = inAddr;
         port->m_inReg  = mcu->getReg( inReg );
-        if( m_core == "AVR" ) watchRegister( inAddr, R_WRITE, (AvrPort*)port, &AvrPort::pinChanged, mcu );
+        if( m_core == "AVR" ) watchRegister( inAddr, R_WRITE, (AvrPort*)port, &AvrPort::pinRegChanged, mcu );
     }
     else if( !Oreg.isEmpty() ) watchRegNames( Oreg, R_READ, port, &McuPort::readPort, mcu ); // No Input register, read pin states
 
