@@ -1,0 +1,25 @@
+<circuit type="simulide_1.0" stepSize="10000" stepsPS="100000000" NLsteps="100000" animate="0" >
+
+<item itemtype="Ground" CircId="Ground-4" mainComp="false" Show_id="false" Show_Val="false" Pos="-412,-332" rotation="0" hflip="1" vflip="1" label="Ground-4" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+
+<item itemtype="Rail" CircId="Rail-6" mainComp="false" ShowProp="Voltage" Show_id="false" Show_Val="true" Pos="-476,-428" rotation="0" hflip="1" vflip="1" label="Rail-2" idLabPos="-64,-24" labelrot="0" valLabPos="-9.8757,-19.1444" valLabRot="0" Voltage="20 V" />
+
+<item itemtype="Probe" CircId="Probe-214" mainComp="false" Show_id="false" Show_Val="true" Pos="-372,-420" rotation="-45" hflip="1" vflip="1" label="Probe-214" idLabPos="16,-16" labelrot="45" valLabPos="16,0" valLabRot="45" ShowVolt="true" Threshold="2.5 V" />
+
+<item itemtype="Resistor" CircId="Resistor-216" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-436,-428" rotation="0" hflip="1" vflip="1" label="Resistor-216" idLabPos="-16,-24" labelrot="0" valLabPos="-16,6" valLabRot="0" Resistance="1000 Ω" />
+
+<item itemtype="Thermistor" CircId="Thermistor-225" mainComp="false" ShowProp="Temp" Show_id="false" Show_Val="true" Pos="-412,-376" rotation="90" hflip="1" vflip="1" label="Thermistor-225" idLabPos="-16,-24" labelrot="0" valLabPos="-7.55394,63.2212" valLabRot="-90" Temp="16 ºC" Min_Temp="0 ºC" Max_Temp="200 ºC" Dial_Step="0 ºC" B="3455" R25="10000 Ω" />
+
+<item itemtype="Node" CircId="Node-227" mainComp="false" Pos="-412,-404" />
+
+<item itemtype="Connector" uid="Connector-217" startpinid="Resistor-216-lPin" endpinid="Rail-6-outnod" pointList="-452,-428,-460,-428" />
+
+<item itemtype="Connector" uid="Connector-220" startpinid="Probe-214-inpin" endpinid="Node-227-0" pointList="-388,-404,-412,-404" />
+
+<item itemtype="Connector" uid="Connector-226" startpinid="Thermistor-225-lPin" endpinid="Node-227-1" pointList="-412,-392,-412,-404" />
+
+<item itemtype="Connector" uid="Connector-228" startpinid="Node-227-2" endpinid="Resistor-216-rPin" pointList="-412,-404,-412,-428,-420,-428" />
+
+<item itemtype="Connector" uid="Connector-229" startpinid="Thermistor-225-rPin" endpinid="Ground-4-Gnd" pointList="-412,-360,-412,-348" />
+
+</circuit>
