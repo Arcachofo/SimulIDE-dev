@@ -8,7 +8,7 @@
 #include "oscwidget.h"
 #include "oscope.h"
 #include "utils.h"
-
+#include "mainwindow.h"
 
 OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
          : QDialog( parent )
@@ -67,10 +67,12 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     }
     mainLayout->setDirection( QBoxLayout::RightToLeft );
 
+    /*double fontScale = MainWindow::self()->fontScale();
     QFont font = timeDivLabel->font();
     font.setFamily("Ubuntu");
     font.setBold( true );
-    font.setPixelSize( 14 );
+
+    font.setPixelSize( 14*fontScale );
     timeDivLabel->setFont( font );
     timePosLabel->setFont( font );
     voltDivLabel->setFont( font );
@@ -82,7 +84,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     hideLabel->setFont( font );
     trackLabel->setFont( font );
 
-    font.setPixelSize( 10 );
+    font.setPixelSize( 10*fontScale );
     timeDivBox->setFont( font );
     timePosBox->setFont( font );
     voltDivBox->setFont( font );
@@ -96,7 +98,7 @@ OscWidget::OscWidget( QWidget* parent , Oscope* oscope )
     chButton1->setFont( font );
     chButton2->setFont( font );
     chButton3->setFont( font );
-    chButton4->setFont( font );
+    chButton4->setFont( font );*/
 }
 OscWidget::~OscWidget(){}
 

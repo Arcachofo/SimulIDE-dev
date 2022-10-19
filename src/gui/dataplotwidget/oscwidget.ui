@@ -20,6 +20,18 @@
    <string>Dialog</string>
   </property>
   <layout class="QHBoxLayout" name="mainLayout">
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
    <item>
     <widget class="PlotDisplay" name="plotDisplay" native="true">
      <property name="sizePolicy">
@@ -305,7 +317,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>78</width>
+             <width>83</width>
              <height>16777215</height>
             </size>
            </property>
@@ -330,13 +342,13 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>78</width>
+             <width>83</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>7</pointsize>
+             <pointsize>8</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
@@ -404,7 +416,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>78</width>
+             <width>83</width>
              <height>16777215</height>
             </size>
            </property>
@@ -429,13 +441,13 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>78</width>
+             <width>83</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>7</pointsize>
+             <pointsize>8</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
@@ -525,7 +537,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>78</width>
+             <width>83</width>
              <height>16777215</height>
             </size>
            </property>
@@ -550,13 +562,13 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>78</width>
+             <width>83</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>7</pointsize>
+             <pointsize>8</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
@@ -624,7 +636,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>78</width>
+             <width>83</width>
              <height>16777215</height>
             </size>
            </property>
@@ -649,13 +661,13 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>78</width>
+             <width>83</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <pointsize>7</pointsize>
+             <pointsize>8</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
@@ -752,13 +764,13 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>78</width>
+           <width>73</width>
            <height>16777215</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>7</pointsize>
+           <pointsize>8</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1407,7 +1419,18 @@
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="trackGroup"/>
+  <buttongroup name="hideGroup">
+   <property name="exclusive">
+    <bool>false</bool>
+   </property>
+  </buttongroup>
   <buttongroup name="triggerGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+  <buttongroup name="channelGroup">
    <property name="exclusive">
     <bool>true</bool>
    </property>
@@ -1415,17 +1438,6 @@
   <buttongroup name="autoGroup">
    <property name="exclusive">
     <bool>true</bool>
-   </property>
-  </buttongroup>
-  <buttongroup name="trackGroup"/>
-  <buttongroup name="channelGroup">
-   <property name="exclusive">
-    <bool>true</bool>
-   </property>
-  </buttongroup>
-  <buttongroup name="hideGroup">
-   <property name="exclusive">
-    <bool>false</bool>
    </property>
   </buttongroup>
  </buttongroups>

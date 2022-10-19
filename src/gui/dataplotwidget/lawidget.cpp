@@ -8,6 +8,7 @@
 #include "lawidget.h"
 #include "logicanalizer.h"
 #include "utils.h"
+#include "mainwindow.h"
 
 LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
         : QDialog( parent )
@@ -18,21 +19,23 @@ LaWidget::LaWidget( QWidget* parent , LAnalizer* la )
     m_blocked = false;
     m_action = actNone;
 
+    /*double fontScale = MainWindow::self()->fontScale();
     QFont font = timeDivLabel->font();
     font.setFamily("Ubuntu");
     font.setBold( true );
-    font.setPixelSize( 14 );
+
+    font.setPixelSize( 14*fontScale );
     timeDivLabel->setFont( font );
     timePosLabel->setFont( font );
     voltDivLabel->setFont( font );
     trigLabel->setFont( font );
 
-    font.setPixelSize( 10 );
+    font.setPixelSize( 10*fontScale );
     timeDivBox->setFont( font );
     timePosBox->setFont( font );
     voltDivBox->setFont( font );
     triggerBox->setFont( font );
-    condEdit->setFont( font );
+    condEdit->setFont( font );*/
 }
 LaWidget::~LaWidget(){}
 
