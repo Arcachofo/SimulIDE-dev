@@ -49,7 +49,6 @@ class InoDebugger : public AvrGccDebugger
 
         int m_lastInoLine;
         int m_loopInoLine;
-        int m_processorType;
         
         QString m_arduinoPath;
         QString m_sketchBook;
@@ -57,6 +56,5 @@ class InoDebugger : public AvrGccDebugger
         board_t m_Ardboard;
         QStringList m_ArdboardList;
 };
-
 
 #endif

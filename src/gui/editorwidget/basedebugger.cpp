@@ -17,10 +17,8 @@ BaseDebugger::BaseDebugger( CodeEditor* parent, OutPanelText* outPane )
             : Compiler( parent, outPane )
 {
     m_compName = "None";
-    m_processorType = 0;
     m_langLevel = 0;
     m_lstType = 0;
-    m_stepOver = false;
 
     m_appPath = QCoreApplication::applicationDirPath();
 }
@@ -51,6 +49,9 @@ bool BaseDebugger::upload()
         m_outPane->appendLine( m_firmware+"\n" );
     }
     if( ok ){
+        m_debugStep = false;
+        m_stepOver = false;
+        m_running = false;
         eMcu::self()->setDebugger( this );
         if( m_fileExt != ".hex" ) ok = postProcess();
     }
@@ -198,9 +199,29 @@ bool BaseDebugger::postProcess()
     return true;
 }
 
+void BaseDebugger::run()
+{
+    m_running = true;
+    stepFromLine();
+}
+void BaseDebugger::pause()
+{
+    m_running = false;
+    m_debugStep = false;
+}
+
+void BaseDebugger::stepFromLine( bool over )
+{
+    m_over = over;
+    m_exitPC = 0;
+    m_prevLine = m_document->debugLine();
+    m_debugStep = true;
+    m_brkPoints = m_document->getBreakPoints();
+}
+
 void BaseDebugger::stepDebug()
 {
-    if( !m_debugStep ) return;  // This should never happen
+    if( !m_debugStep ) return;
 
     int lastPC = eMcu::self()->cpu->getPC();
     eMcu::self()->stepCpu();
@@ -226,17 +247,16 @@ void BaseDebugger::stepDebug()
             int line = m_flashToSource.value( PC );
             if( line != m_prevLine )
             {
-                m_debugStep = false;
-                EditorWindow::self()->lineReached( line );
-}   }   }   }
+                m_document->setDebugLine( line );
 
-void BaseDebugger::stepFromLine( int line, bool over )
-{
-    m_over = over;
-    m_exitPC = 0;
-    m_prevLine = line;
-    m_debugStep = true;
-}
+                if( m_running                       // We are running to Breakpoint
+                 && !m_brkPoints.contains( line ) ) // Breakpoint not reached, Keep stepping
+                { return; }
+
+                m_running = false;
+                m_debugStep = false;
+                EditorWindow::self()->lineReached();
+}   }   }   }
 
 void BaseDebugger::getInfoInFile( QString line )
 {

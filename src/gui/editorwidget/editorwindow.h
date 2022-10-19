@@ -7,6 +7,7 @@
 #define EDITORWINDOW_H
 
 #include "editorwidget.h"
+#include "updatable.h"
 
 enum bebugState_t{
     DBG_STOPPED = 0,
@@ -18,7 +19,7 @@ enum bebugState_t{
 class BaseDebugger;
 class Compiler;
 
-class EditorWindow : public EditorWidget
+class EditorWindow : public EditorWidget, public Updatable
 {
     Q_OBJECT
 
@@ -39,8 +40,10 @@ class EditorWindow : public EditorWidget
 
         BaseDebugger* debugger() { return m_debugger; }
 
+        virtual void updateStep();
+
         bool debugStarted() { return (m_state > DBG_STOPPED); }
-        void lineReached( int line );
+        void lineReached();
 
         bebugState_t debugState() { return m_state; }
 
@@ -78,6 +81,7 @@ class EditorWindow : public EditorWidget
         BaseDebugger* m_debugger;
         bool m_stepOver;
         bool m_driveCirc;
+        bool m_updateScreen;
         int m_lastCycle;
 
         bebugState_t m_state;
