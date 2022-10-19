@@ -30,6 +30,7 @@ class CodeEditor : public QPlainTextEdit
         void setDebugLine( int line ) { m_debugLine = line; }
 
         QList<int> getBreakPoints() { return m_brkPoints; }
+        void addBreakPointAt( int line );
         void startDebug();
 
         void lineNumberAreaPaintEvent( QPaintEvent* event );

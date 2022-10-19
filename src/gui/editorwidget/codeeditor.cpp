@@ -259,6 +259,12 @@ bool CodeEditor::compile( bool debug )
     return false;
 }
 
+void CodeEditor::addBreakPointAt( int line )
+{
+    QTextBlock block = document()->findBlockByLineNumber( line-1 );
+    addBreakPoint( &block );
+}
+
 void CodeEditor::addBreakPoint( QTextBlock* block )
 {
     int line = block->blockNumber() + 1;

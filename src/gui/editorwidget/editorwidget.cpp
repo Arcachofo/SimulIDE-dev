@@ -164,6 +164,9 @@ void EditorWidget::loadFile( const QString &fileName )
     ce->setPlainText( fileToString( fileName, "EditorWidget::loadFile" ) );
     ce->setFile( fileName );
 
+    QFile file( fileName +".brk" );
+    if( file.exists() ) loadBreakpoints( fileName +".brk" );
+
     m_lastDir = fileName;
     int index = m_docWidget->currentIndex();
     m_fileList.replace( index, fileName );
@@ -219,7 +222,7 @@ bool EditorWidget::saveAs()
 bool EditorWidget::saveFile( const QString &fileName )
 {
     QFile file( fileName );
-    if( !file.open(QFile::WriteOnly | QFile::Text) )
+    if( !file.open( QFile::WriteOnly | QFile::Text) )
     {
         QMessageBox::warning(this, "EditorWindow::saveFile",
                              tr("Cannot write file %1:\n%2.")
@@ -229,11 +232,15 @@ bool EditorWidget::saveFile( const QString &fileName )
     }
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    QTextStream out(&file);
+    QTextStream out( &file );
     out.setCodec("UTF-8");
 
     CodeEditor* ce = getCodeEditor();
     out << ce->toPlainText();
+    file.close();
+
+    saveBreakpoints( fileName );
+
     ce->document()->setModified( false );
     documentWasModified();
 
@@ -242,6 +249,41 @@ bool EditorWidget::saveFile( const QString &fileName )
 
     QApplication::restoreOverrideCursor();
     return true;
+}
+
+void EditorWidget::saveBreakpoints( const QString &fileName )
+{
+    QList<int> brkList = getCodeEditor()->getBreakPoints();
+    if( brkList.isEmpty() ) return;
+
+    QFile file( fileName +".brk" );
+    if( !file.open( QFile::WriteOnly | QFile::Text) )
+    {
+        QMessageBox::warning(this, "EditorWindow::saveBreakpoints",
+                             tr("Cannot write file %1:\n%2.")
+                             .arg(fileName +".brk")
+                             .arg(file.errorString()));
+        return;
+    }
+    QTextStream out( &file );
+    out.setCodec("UTF-8");
+
+    QString brkListStr;
+    for( int brk : brkList )
+        brkListStr.append( QString::number( brk )+"," );
+
+    out << brkListStr;
+    file.close();
+}
+
+void EditorWidget::loadBreakpoints( const QString &fileName )
+{
+    QString brkListStr = fileToString( fileName, "EditorWidget::loadBreakpoints" );
+    QStringList list = brkListStr.split(",");
+    list.removeOne("");
+
+    CodeEditor* ce = getCodeEditor();
+    for( QString brk : list ) ce->addBreakPointAt( brk.toInt() );
 }
 
 bool EditorWidget::maybeSave()
