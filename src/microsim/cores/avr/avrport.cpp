@@ -18,6 +18,7 @@ void AvrPort::pinRegChanged( uint8_t newPIN )
 {
     if( newPIN == 0 ) return;
     McuPort::outChanged( *m_outReg ^ newPIN ); // Toggle bits = 1
+    m_mcu->m_regOverride = *m_inReg;
 }
 
 McuPin* AvrPort::createPin( int i, QString id , Component* mcu )
