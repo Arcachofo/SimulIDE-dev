@@ -247,6 +247,7 @@ void BaseDebugger::stepDebug()
             int line = m_flashToSource.value( PC );
             if( line != m_prevLine )
             {
+                m_prevLine = line;
                 m_document->setDebugLine( line );
 
                 if( m_running                       // We are running to Breakpoint

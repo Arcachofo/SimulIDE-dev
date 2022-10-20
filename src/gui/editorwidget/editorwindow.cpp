@@ -165,8 +165,8 @@ bool EditorWindow::initDebbuger()
         m_debugDoc->setDebugLine( 1 );
         setDriveCirc( m_driveCirc );
 
-        CircuitWidget::self()->powerCircDebug( m_driveCirc );
         Simulator::self()->addToUpdateList( this );
+        CircuitWidget::self()->powerCircDebug( m_driveCirc );
 
         m_outPane.appendLine("\n"+tr("Debugger Started")+"\n");
     }else{
