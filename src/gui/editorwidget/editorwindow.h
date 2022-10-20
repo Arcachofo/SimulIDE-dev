@@ -83,6 +83,7 @@ class EditorWindow : public EditorWidget, public Updatable
         bool m_driveCirc;
         bool m_updateScreen;
         int m_lastCycle;
+        double m_lastTime;
 
         bebugState_t m_state;
         bebugState_t m_resume;

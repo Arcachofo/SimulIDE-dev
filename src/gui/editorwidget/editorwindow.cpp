@@ -161,6 +161,7 @@ bool EditorWindow::initDebbuger()
         eMcu::self()->setDebugging( true );
         ///reset();
         m_lastCycle = 0;
+        m_lastTime = 0;
         m_state = DBG_PAUSED;
         m_debugDoc->setDebugLine( 1 );
         setDriveCirc( m_driveCirc );
@@ -190,8 +191,11 @@ void EditorWindow::lineReached() // Processor reached PC related to source line
 {
     pause();
     int cycle = eMcu::self()->cycle();
-    m_outPane.appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle ));
+    double time = Simulator::self()->circTime()/1e6;
+    m_outPane.appendLine( tr("Clock Cycles: ")+QString::number( cycle-m_lastCycle )
+                          +"\t\t"+tr("Time us: ")+QString::number( time-m_lastTime ));
     m_lastCycle = cycle;
+    m_lastTime = time;
     m_updateScreen = true;
 }
 
