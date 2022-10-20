@@ -45,7 +45,7 @@ Simulator::Simulator( QObject* parent )
     m_errors[3] = "LAST_SIM_EVENT reached";
 
     m_warnings[1] = "NonLinear Not Converging";
-    m_warnings[2] = "Simulation Blocked";
+    //m_warnings[2] = "Simulation Blocked";
     m_warnings[100] = "AVR crashed !!!";
 
     resetSim();
@@ -63,8 +63,10 @@ inline void Simulator::solveMatrix()
     while( m_changedNode )
     {
         m_changedNode->stampMatrix();
+        //eNode* node = m_changedNode;
         m_changedNode = m_changedNode->nextCH;
-        if( m_state < SIM_RUNNING ) { m_warning = 2; break; }
+        //node->nextCH = NULL;
+        //if( m_state < SIM_RUNNING ) { m_warning = 2; return; }
     }
     if( !m_matrix->solveMatrix() ) // Try to solve matrix, if not stop simulation
     {
@@ -101,12 +103,12 @@ void Simulator::timerEvent( QTimerEvent* e )  //update at m_timerTick rate (50 m
         m_CircuitFuture.waitForFinished();
         m_state = state;
     }
-    if( m_pauseCirc ) // Paused from sim engine thread, update UI
+    /*if( m_pauseCirc ) // Paused from sim engine thread, update UI
     {
         m_pauseCirc = false;
         m_state = m_oldState;
         CircuitWidget::self()->pauseSim();
-    }
+    }*/
 
     if( Circuit::self()->animate() )
     {
@@ -179,7 +181,7 @@ void Simulator::solveCircuit()
     {
         if( m_changedNode ){
             solveMatrix();
-            if( m_state < SIM_RUNNING ) return;
+            if( m_error ) return;
         }
         m_converged = m_nonLinear==NULL;
         while( !m_converged )                  // Non Linear Components
@@ -223,7 +225,7 @@ void Simulator::resetSim()
     m_lastRefT = 0;
     m_circTime = 0;
     m_NLstep   = 0;
-    m_pauseCirc = false;
+    ///m_pauseCirc = false;
     m_realPsPF = 1;
 
     CircuitView::self()->setCircTime( 0 );
@@ -345,17 +347,18 @@ void Simulator::stopSim()
 }
 
 
-void Simulator::pauseCirc() // Paused UI from sim engine thread
+/*void Simulator::pauseCirc() // Paused UI from sim engine thread
 {
     pauseSim();
     m_pauseCirc = true;
-}
+}*/
 
 void Simulator::pauseSim() // Only pause simulation, don't update UI
 {
     if( m_state <= SIM_PAUSED ) return;
     m_oldState = m_state;
     m_state = SIM_PAUSED;
+    //m_CircuitFuture.waitForFinished(); /// blocks simulation
 }
 
 void Simulator::resumeSim()
