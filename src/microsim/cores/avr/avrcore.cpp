@@ -405,6 +405,7 @@ void AvrCore::runStep()
                     }
                     if( call ){
                         PUSH_STACK( new_pc );
+                        m_RET_ADDR = new_pc;
                         cycle += m_progAddrSize-1;
                     }
                     new_pc = z;
@@ -638,6 +639,7 @@ void AvrCore::runStep()
                             a =( a << 16) | x;
                             new_pc += 1;
                             PUSH_STACK( new_pc );
+                            m_RET_ADDR = new_pc;
                             cycle += 1+m_progAddrSize;
                             new_pc = a;
                         }    break;
@@ -745,6 +747,7 @@ void AvrCore::runStep()
             const int16_t k = ((int16_t)((instruction << 4) & 0xFFFF)) >> 4;
             cycle += m_progAddrSize;
             PUSH_STACK( new_pc );
+            m_RET_ADDR = new_pc;
             new_pc = (new_pc + k) % m_progSize;
         }    break;
 
