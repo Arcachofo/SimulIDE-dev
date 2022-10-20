@@ -36,6 +36,7 @@ class MAINMODULE_EXPORT AvrAdc : public McuAdc
 
         bool m_autoTrigger;
         bool m_freeRunning;
+        uint m_initCycles;
 
         uint8_t m_refSelect;
         uint8_t m_trigger;

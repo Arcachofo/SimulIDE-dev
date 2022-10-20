@@ -58,6 +58,7 @@ void AvrAdc::initialize()
 
     m_trigger = 0;
     m_refSelect = 0;
+    m_initCycles = 12;
 
     if( m_refPin.size() > 0 ) m_pRefPin = m_refPin.at(0);
 
@@ -78,7 +79,16 @@ void AvrAdc::configureA( uint8_t newADCSRA ) // ADCSRA
     if( m_autoTrigger ) autotriggerConf();
 
     bool convert = getRegBitsBool( newADCSRA, m_ADSC );
-    if( !m_converting && convert ) startConversion();
+    if( !m_converting && convert )
+    {
+        startConversion();
+
+        if( m_initCycles ) // Recalculate m_convTime in case of Free Running
+        {
+            m_initCycles = 0;
+            m_convTime = m_mcu->psCycle()*13*m_prescList[prs];
+        }
+    }
 }
 
 void AvrAdc::configureB( uint8_t newADCSRB ) // ADCSRB
