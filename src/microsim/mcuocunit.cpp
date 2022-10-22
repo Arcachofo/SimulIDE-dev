@@ -46,7 +46,7 @@ void McuOcUnit::drivePin( ocAct_t act )
     if( !act ) return;
     bool pinState = false;
 
-    if     ( act == ocTOG ) pinState = !m_ocPin->getInpState();
+    if     ( act == ocTOG ) pinState = !m_ocPin->getOutState();
     else if( act == ocCLR ) pinState = !m_pinSet;
     else if( act == ocSET ) pinState =  m_pinSet;
 
