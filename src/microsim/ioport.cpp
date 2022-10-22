@@ -29,7 +29,7 @@ void IoPort::reset()
 
 void IoPort::setOutState( uint32_t val )
 {
-    uint8_t changed = m_pinState ^ val; // See which Pins have actually changed
+    uint32_t changed = m_pinState ^ val; // See which Pins have actually changed
     if( changed == 0 ) return;
     m_pinState = val;
 
@@ -41,7 +41,7 @@ void IoPort::setOutState( uint32_t val )
 
 void IoPort::setOutStatFast( uint32_t val )
 {
-    uint8_t changed = m_pinState ^ val; // See which Pins have actually changed
+    uint32_t changed = m_pinState ^ val; // See which Pins have actually changed
     if( changed == 0 ) return;
     m_pinState = val;
 
@@ -61,7 +61,7 @@ uint32_t IoPort::getInpState()
 
 void IoPort::setDirection( uint32_t val )
 {
-    uint8_t changed = m_pinDirection ^ val;  // See which Pins have actually changed
+    uint32_t changed = m_pinDirection ^ val;  // See which Pins have actually changed
     if( changed == 0 ) return;
     m_pinDirection = val;
 
