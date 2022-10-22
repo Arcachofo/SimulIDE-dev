@@ -12,23 +12,50 @@ Z80Core::Z80Core( eMcu* mcu )
        : CpuBase( mcu )
        , eElement( mcu->getId()+"-Z80Core" )
 {
-    // CPU registers to show in Monitor (uint8)
-    /*m_cpuRegs.insert("T_STATE", &sm_TState );
-    m_cpuRegs.insert("OpCode", &m_iReg );
-    mcu->getCpuTable()->setRegisters( m_cpuRegs.keys() );*/
-
-    // Values to show in Monitor High Area(any type)
+    // Values to show in Monitor High Area (any type)
+    mcu->getCpuTable()->addRegister( "A", "uint8" );
+    mcu->getCpuTable()->addRegister( "B", "uint8" );
+    mcu->getCpuTable()->addRegister( "C", "uint8" );
+    mcu->getCpuTable()->addRegister( "D", "uint8" );
+    mcu->getCpuTable()->addRegister( "E", "uint8" );
+    mcu->getCpuTable()->addRegister( "H", "uint8" );
+    mcu->getCpuTable()->addRegister( "L", "uint8" );
+    mcu->getCpuTable()->addRegister( "XH", "uint8" );
+    mcu->getCpuTable()->addRegister( "XL", "uint8" );
+    mcu->getCpuTable()->addRegister( "YH", "uint8" );
+    mcu->getCpuTable()->addRegister( "YL", "uint8" );
+    mcu->getCpuTable()->addRegister( "I", "uint8" );
+    mcu->getCpuTable()->addRegister( "R", "uint8" );
     mcu->getCpuTable()->addRegister( "AF", "uint16" );
-    mcu->getCpuTable()->addRegister( "BC", "uint8" );
+    mcu->getCpuTable()->addRegister( "BC", "uint16" );
     mcu->getCpuTable()->addRegister( "DE", "uint16" );
     mcu->getCpuTable()->addRegister( "HL", "uint16" );
-    mcu->getCpuTable()->addRegister( "IX", "uint8" );
-    mcu->getCpuTable()->addRegister( "IR", "uint8" );
+    mcu->getCpuTable()->addRegister( "IX", "uint16" );
+    mcu->getCpuTable()->addRegister( "IY", "uint16" );
+    mcu->getCpuTable()->addRegister( "AF'", "uint16" );
+    mcu->getCpuTable()->addRegister( "BC'", "uint16" );
+    mcu->getCpuTable()->addRegister( "DE'", "uint16" );
+    mcu->getCpuTable()->addRegister( "HL'", "uint16" );
+    mcu->getCpuTable()->addRegister( "IR", "uint16" );
+    mcu->getCpuTable()->addRegister( "SP", "uint16" );
+    mcu->getCpuTable()->addRegister( "WZ", "uint16" );
+    mcu->getCpuTable()->addRegister( "IFF1", "string" );
+    mcu->getCpuTable()->addRegister( "IFF2", "string" );
 
     // Values to show in Monitor Low Area (any type)
-    mcu->getCpuTable()->addVariable( "MC_type", "string" );
+    mcu->getCpuTable()->addVariable( "TState", "string" );
+    mcu->getCpuTable()->addVariable( "TState_Int", "uint32" );
+    mcu->getCpuTable()->addVariable( "MCycle", "string" );
+    mcu->getCpuTable()->addVariable( "M1_Type", "string" );
+    mcu->getCpuTable()->addVariable( "Op_Code", "uint8" );
+    mcu->getCpuTable()->addVariable( "Instruction", "string" );
+    mcu->getCpuTable()->addVariable( "Address_Bus", "uint16" );
+    mcu->getCpuTable()->addVariable( "Data_Bus_In", "uint8" );
+    mcu->getCpuTable()->addVariable( "Data_Bus_Out", "uint8" );
+    mcu->getCpuTable()->addVariable( "Bus_Op", "string" );
+    mcu->getCpuTable()->addVariable( "Bus_HighZ", "string" );
 
-    m_STATUS = &regF.flags;
+    m_STATUS = &regF;
     mcu->setStatusBits({"C","N","PV","y","H","x","Z","S"});
 
     // initialization Z80Core settings
@@ -71,12 +98,44 @@ new BoolProp  <Z80Core>( "Single cycle I/O", QObject::tr("Single cycle I/O")    
 new BoolProp  <Z80Core>( "Int_Vector"      , QObject::tr("Interrupt Vector 0xFF"), "", this, &Z80Core::intVector, &Z80Core::setIntVector ),
     }} );
 }
+
 Z80Core::~Z80Core() {}
 
 int Z80Core::getCpuReg( QString reg ) // Called by Mcu Monitor to get Integer values
 {
     int value = -1;
-    if( reg == "AF") value = regA<<8 | regF;
+    if( reg == "A") value = regA;
+    if( reg == "B") value = regs[rB];
+    if( reg == "C") value = regs[rC];
+    if( reg == "D") value = regs[rD];
+    if( reg == "E") value = regs[rE];
+    if( reg == "H") value = regs[rH];
+    if( reg == "L") value = regs[rL];
+    if( reg == "XH") value = regs[rXH];
+    if( reg == "XL") value = regs[rXL];
+    if( reg == "YH") value = regs[rYH];
+    if( reg == "YL") value = regs[rYL];
+    if( reg == "I") value = regI;
+    if( reg == "R") value = regR;
+    if( reg == "AF") value = regPairs[rAF];
+    if( reg == "BC") value = regPairs[rBC];
+    if( reg == "DE") value = regPairs[rDE];
+    if( reg == "HL") value = regPairs[rHL];
+    if( reg == "IX") value = regPairs[rIX];
+    if( reg == "IY") value = regPairs[rIY];
+    if( reg == "AF'") value = regAAlt << 8 | regFAlt;
+    if( reg == "BC'") value = regsAlt[rB] << 8 | regsAlt[rC];
+    if( reg == "DE'") value = regsAlt[rD] << 8 | regsAlt[rE];
+    if( reg == "HL'") value = regsAlt[rH] << 8 | regsAlt[rL];
+    if( reg == "IR") value = regI << 8 | regR;
+    if( reg == "SP") value = regSP;
+    if( reg == "WZ") value = regWZ;
+
+    if( reg == "TState_Int") value = sm_TStatesAfterInt;
+    if( reg == "Op_Code") value = m_iReg;
+    if( reg == "Address_Bus") value = sAO;
+    if( reg == "Data_Bus_In") value = sDI;
+    if( reg == "Data_Bus_Out") value = sDO;
 
     return value;
 }
@@ -84,8 +143,291 @@ int Z80Core::getCpuReg( QString reg ) // Called by Mcu Monitor to get Integer va
 QString Z80Core::getStrReg( QString reg ) // Called by Mcu Monitor to get String values
 {
     QString value = "";
-    if( reg == "MC_type") value = "Don't know"; /// TODO
+    if( reg == "IFF1" ) value = IFF1 ? "enabled" : "disabled";
+    if( reg == "IFF2" ) value = IFF2 ? "enabled" : "disabled";
+    if( reg == "TState" ) value = QString::number(sm_TState) + " / " + QString::number(mc_TStates);
+    if( reg == "MCycle" ) value = QString::number(sm_MCycle) + " / " + QString::number(mc_MCycles);
+    if( reg == "M1_Type") switch(sm_M1CycleType) {
+                          case tOpCodeFetch:  value = "OpCode fetch"; break;
+                          case tInt:          value = "Int"; break;
+                          case tNMI:          value = "NMI"; break;
+                          case tHalt:         value = "HALT"; break;
+                          case tSpecialReset: value = "Special reset"; break;
+                          default:            value = "Don't know";
+                          }
+    if( reg == "Instruction") value = getStrInst();
+    if( reg == "Bus_Op")  switch(mc_busOp) {
+                          case oNone:     value = "None"; break;
+                          case oM1:       value = "M1"; break;
+                          case oIntAck:   value = "Interrupt acknowledge"; break;
+                          case oMemRead:  value = "Memory read"; break;
+                          case oMemWrite: value = "Memory write"; break;
+                          case oIORead:   value = "IO read"; break;
+                          case oIOWrite:  value = "IO write"; break;
+                          default:        value = "Don't know";
+                        }
+    if( reg == "Bus_HighZ" ) value = highImpedanceBus ? "high Z" : "low Z";
+
     return value;
+}
+
+QString Z80Core::getStrInst()
+{
+    QString strInst;
+    uint8_t mathOp;
+    
+    if( m_iSet == noPrefix ) {
+        switch( m_iReg & 0xc0 ) {
+            case 0x00: if( m_iReg == 0x00 ) strInst = "NOP";
+                       if( m_iReg == 0x08 ) strInst = "EX AF,AF'";
+                       if( m_iReg == 0x10 ) strInst = "DJNZ " + getStrReg8();
+                       if( m_iReg == 0x18 ) strInst = "JR " + getStrReg8();
+                       if( (m_iReg & 0x27) == 0x20 ) strInst = "JR " + getStrFlag( (m_iReg >> 3) & 0x03 ) + "," + getStrReg8();
+                       if( (m_iReg & 0x0f) == 0x01 ) strInst = "LD " + getStrRegPair( (m_iReg >> 4) & 0x03 ) + "," + getStrReg16( (m_iReg >> 4) & 0x03 );
+                       if( (m_iReg & 0x0f) == 0x09 ) strInst = "ADD " + getStrRegPair( (m_iReg >> 4) & 0x03 ) + "," + getStrRegPair( (m_iReg >> 4) & 0x03 );
+                       if( (m_iReg & 0x2f) == 0x02 ) strInst = "LD (" + getStrRegPair( (m_iReg >> 4) & 0x01 ) + "),A";
+                       if( (m_iReg & 0x2f) == 0x0a ) strInst = "LD A,(" + getStrRegPair( (m_iReg >> 4) & 0x01 ) + ")";
+                       if( m_iReg == 0x22 ) strInst = "LD (" + getStrReg16() + ")," + getStrRegPair( (m_iReg >> 4) & 0x01 );
+                       if( m_iReg == 0x2a ) strInst = "LD " + getStrRegPair( (m_iReg >> 4) & 0x01 ) + ",(" + getStrReg16() + ")";
+                       if( m_iReg == 0x32 ) strInst = "LD (" + getStrReg16() + "),A";
+                       if( m_iReg == 0x3a ) strInst = "LD A,(" + getStrReg16() + ")";
+                       if( (m_iReg & 0x0f) == 0x03 ) strInst = "INC " + getStrRegPair( (m_iReg >> 4) & 0x03 );
+                       if( (m_iReg & 0x0f) == 0x0b ) strInst = "DEC " + getStrRegPair( (m_iReg >> 4) & 0x03 );
+                       if( (m_iReg & 0x07) == 0x04 ) strInst = "INC " + getStrReg( (m_iReg >> 3) & 0x07 );
+                       if( (m_iReg & 0x07) == 0x05 ) strInst = "DEC " + getStrReg( (m_iReg >> 3) & 0x07 );
+                       if( (m_iReg & 0x07) == 0x06 ) strInst = "LD " + getStrReg( (m_iReg >> 3) & 0x07 ) + "," + getStrReg8();
+                       if( m_iReg == 0x07 ) strInst = "RLCA";
+                       if( m_iReg == 0x0f ) strInst = "RRCA";
+                       if( m_iReg == 0x17 ) strInst = "RLA";
+                       if( m_iReg == 0x1f ) strInst = "RRA";
+                       if( m_iReg == 0x27 ) strInst = "DAA";
+                       if( m_iReg == 0x2f ) strInst = "CPL";
+                       if( m_iReg == 0x37 ) strInst = "SCF";
+                       if( m_iReg == 0x3f ) strInst = "CCF";
+                       break;
+            case 0x40: if( m_iReg != 0x76 ) strInst = "LD " + getStrReg( (m_iReg >> 3) & 0x07 ) + "," + getStrReg( m_iReg & 0x07 );
+                       else                 strInst = "HALT";
+                       break;
+            case 0x80: mathOp = (m_iReg >> 3) & 0x07;
+                       strInst = getStrMathOp( mathOp ) + " ";
+                       if( mathOp == 0 || mathOp == 1 || mathOp == 3) strInst += "A,";
+                       strInst += getStrReg( m_iReg & 0x07 );
+                       break;
+            case 0xc0: if( (m_iReg & 0x07) == 0x00 ) strInst = "RET " + getStrFlag( (m_iReg >> 3) & 0x07 );
+                       if( (m_iReg & 0x0f) == 0x01 ) strInst = "POP " + getStrRegPair( (m_iReg >> 4) & 0x03, true );
+                       if( m_iReg == 0xc9 ) strInst = "RET";
+                       if( m_iReg == 0xd9 ) strInst = "EXX";
+                       if( m_iReg == 0xe9 ) strInst = "JP (" + getStrRegPair( 2 ) + ")";
+                       if( m_iReg == 0xf9 ) strInst = "LD SP," + getStrRegPair( 2 );
+                       if( (m_iReg & 0x07) == 0x02 ) strInst = "JP " + getStrFlag( (m_iReg >> 3) & 0x07 ) + "," + getStrReg16();
+                       if( m_iReg == 0xc3 ) strInst = "JP " + getStrReg16();
+                       if( m_iReg == 0xcb ) strInst = "PREFIX CB";
+                       if( m_iReg == 0xd3 ) strInst = "OUT (" + getStrReg8() + "),A";
+                       if( m_iReg == 0xdb ) strInst = "IN A,(" + getStrReg8() + ")";
+                       if( m_iReg == 0xe3 ) strInst = "EX (SP)," + getStrRegPair( 2 );
+                       if( m_iReg == 0xeb ) strInst = "EX DE,HL";
+                       if( m_iReg == 0xf3 ) strInst = "DI";
+                       if( m_iReg == 0xfb ) strInst = "EI";
+                       if( (m_iReg & 0x07) == 0x04 ) strInst = "CALL " + getStrFlag( (m_iReg >> 3) & 0x07 ) + "," + getStrReg16();
+                       if( (m_iReg & 0x0f) == 0x05 ) strInst = "PUSH " + getStrRegPair( (m_iReg >> 4) & 0x03, true );
+                       if( m_iReg == 0xcd ) strInst = "CALL " + getStrReg16();
+                       if( m_iReg == 0xdd ) strInst = "PREFIX IX";
+                       if( m_iReg == 0xed ) strInst = "PREFIX ED";
+                       if( m_iReg == 0xfd ) strInst = "PREFIX IY";
+                       if( (m_iReg & 0x07) == 0x06 ) strInst = getStrMathOp( (m_iReg >> 3) & 0x07 ) + " " + getStrReg8();
+                       if( (m_iReg & 0x07) == 0x07 ) strInst = "RST " + QString::number( m_iReg & 0x38 );
+                       break;
+        }
+    }
+
+    if( m_iSet == prefixCB ) {
+        switch( m_iReg & 0xc0 ) {
+            case 0x00: switch( m_iReg & 0xf8 ) {
+                           case 0x00: strInst = "RLC "; break;
+                           case 0x08: strInst = "RRC "; break;
+                           case 0x10: strInst = "RL "; break;
+                           case 0x18: strInst = "RR "; break;
+                           case 0x20: strInst = "SLA "; break;
+                           case 0x28: strInst = "SRA "; break;
+                           case 0x30: strInst = "SLL "; break;
+                           case 0x38: strInst = "SRL "; break;
+                       }
+                       if( XYState == rHL ) strInst += getStrReg( m_iReg & 0x07 );
+                       else                 strInst = "LD " + getStrReg( m_iReg & 0x07 ) + "," + strInst + getStrReg( 6 );
+                       break;
+            case 0x40: strInst = "BIT " + QString::number( (m_iReg >> 3) & 0x07 ) + "," + getStrReg( m_iReg & 0x07 ); break;
+            case 0x80: if( XYState == rHL ) strInst = "RES " + QString::number( (m_iReg >> 3) & 0x07 ) + "," + getStrReg( m_iReg & 0x07 );
+                       else                 strInst = "LD " + getStrReg( m_iReg & 0x07 ) + ",RES " + QString::number( (m_iReg >> 3) & 0x07 ) + getStrReg( 6 );
+                       break;
+            case 0xc0: if( XYState == rHL ) strInst = "SET " + QString::number( (m_iReg >> 3) & 0x07 ) + "," + getStrReg( m_iReg & 0x07 );
+                       else                 strInst = "LD " + getStrReg( m_iReg & 0x07 ) + ",SET " + QString::number( (m_iReg >> 3) & 0x07 ) + getStrReg( 6 );
+                       break;
+        }
+    }
+
+    if( m_iSet == prefixED ) {
+        switch( m_iReg & 0xc0 ) {
+            case 0x40: if( m_iReg == 0x70 ) { strInst = "IN (C)"; break; }
+                       if( (m_iReg & 0x07) == 0x00 ) strInst = "IN " + getStrReg( (m_iReg >> 3) & 0x07 ) + "(C)";
+                       if( m_iReg == 0x71 ) { strInst = (m_cmos == false) ? "OUT (C),0" : "OUT (C),FF"; break; }
+                       if( (m_iReg & 0x07) == 0x01 ) strInst = "OUT (C)," + getStrReg( (m_iReg >> 3) & 0x07 );
+                       if( (m_iReg & 0x0f) == 0x02 ) strInst = "SBC HL," + getStrRegPair( (m_iReg >> 4) & 0x03 );
+                       if( (m_iReg & 0x0f) == 0x0a ) strInst = "ADC HL," + getStrRegPair( (m_iReg >> 4) & 0x03 );
+                       if( (m_iReg & 0x0f) == 0x03 ) strInst = "LD (" + getStrReg16( 5 ) + ")," + getStrRegPair( (m_iReg >> 4) & 0x03 );
+                       if( (m_iReg & 0x0f) == 0x0b ) strInst = "LD " + getStrRegPair( (m_iReg >> 4) & 0x03 ) + ",(" + getStrReg16( 5 ) + ")";
+                       if( (m_iReg & 0x07) == 0x04 ) strInst = "NEG";
+                       if( m_iReg == 0x4d ) { strInst = "RETI"; break; }
+                       if( (m_iReg & 0x07) == 0x05 ) strInst = "RETN";
+                       if( (m_iReg & 0x1f) == 0x06 ) strInst = "IM 0";
+                       if( (m_iReg & 0x1f) == 0x0e ) strInst = "IM 0/1";
+                       if( (m_iReg & 0x1f) == 0x16 ) strInst = "IM 1";
+                       if( (m_iReg & 0x1f) == 0x1e ) strInst = "IM 2";
+                       if( m_iReg == 0x47 ) strInst = "LD I,A";
+                       if( m_iReg == 0x4f ) strInst = "LD R,A";
+                       if( m_iReg == 0x57 ) strInst = "LD A,I";
+                       if( m_iReg == 0x5f ) strInst = "LD A,R";
+                       if( m_iReg == 0x67 ) strInst = "RRD";
+                       if( m_iReg == 0x6f ) strInst = "RLD";
+                       break;
+            case 0x80: if( m_iReg == 0xa0 ) { strInst = "LDI"; break; }
+                       if( m_iReg == 0xa1 ) { strInst = "CPI"; break; }
+                       if( m_iReg == 0xa2 ) { strInst = "INI"; break; }
+                       if( m_iReg == 0xa3 ) { strInst = "OUTI"; break; }
+                       if( m_iReg == 0xa8 ) { strInst = "LDD"; break; }
+                       if( m_iReg == 0xa9 ) { strInst = "CPD"; break; }
+                       if( m_iReg == 0xaa ) { strInst = "IND"; break; }
+                       if( m_iReg == 0xab ) { strInst = "OUTD"; break; }
+                       if( m_iReg == 0xb0 ) { strInst = "LDIR"; break; }
+                       if( m_iReg == 0xb1 ) { strInst = "CPIR"; break; }
+                       if( m_iReg == 0xb2 ) { strInst = "INIR"; break; }
+                       if( m_iReg == 0xb3 ) { strInst = "OTIR"; break; }
+                       if( m_iReg == 0xb8 ) { strInst = "LDDR"; break; }
+                       if( m_iReg == 0xb9 ) { strInst = "CPDR"; break; }
+                       if( m_iReg == 0xba ) { strInst = "INDR"; break; }
+                       if( m_iReg == 0xbb ) { strInst = "OTDR"; break; }
+            case 0x00:
+            case 0xc0: strInst = "Illegal prefix ED instruction"; break;
+        }
+    }
+        
+    return strInst;
+}
+
+QString Z80Core::getStrMathOp( uint8_t reg )
+{
+    QString strMathOp;
+    
+    switch( reg ) {
+        case 0 : strMathOp = "ADD"; break;
+        case 1 : strMathOp = "ADC"; break;
+        case 2 : strMathOp = "SUB"; break;
+        case 3 : strMathOp = "SBC"; break;
+        case 4 : strMathOp = "AND"; break;
+        case 5 : strMathOp = "XOR"; break;
+        case 6 : strMathOp = "OR"; break;
+        case 7 : strMathOp = "CP"; break;
+    }
+    return strMathOp;
+}
+
+QString Z80Core::getStrFlag( uint8_t reg )
+{
+    QString strFlag;
+    
+    switch( reg ) {
+        case 0: strFlag = "NZ"; break;
+        case 1: strFlag = "Z"; break;
+        case 2: strFlag = "NC"; break;
+        case 3: strFlag = "C"; break;
+        case 4: strFlag = "PO"; break;
+        case 5: strFlag = "PE"; break;
+        case 6: strFlag = "P"; break;
+        case 7: strFlag = "M"; break;
+        default: strFlag = "?";
+    }
+    return strFlag;
+}
+
+QString Z80Core::getStrReg( uint8_t reg )
+{
+    QString strReg;
+    static int8_t offset;
+    
+    switch( reg ) {
+        case 0: strReg = "B"; break;
+        case 1: strReg = "C"; break;
+        case 2: strReg = "D"; break;
+        case 3: strReg = "E"; break;
+        case 4: strReg = XYState == rIX ? "XH" : ( XYState == rIY ? "YH" : "H" ); break;
+        case 5: strReg = XYState == rIX ? "XL" : ( XYState == rIY ? "YL" : "L" ); break;
+        case 6: if( XYState == rHL ) strReg = "(HL)"; break; //?? tady se musí doplnit ještě IX+d a IY+d
+                if( XYState == rIX ) strReg = "(IX";
+                if (XYState == rIY ) strReg = "(IY";
+                switch( sm_MCycle ) {
+                    case 1:  if ( sm_TState >= 3) { strReg += "+??"; break; }
+                    default: offset = static_cast<int>( regWZ ) - static_cast<int>( regPairs[XYState] );
+                             strReg += (offset >= 0) ? "+" + QString::number( offset, 16 ).toUpper() : "-" + QString::number( -offset, 16 ).toUpper(); break;
+                    case 6:  strReg += "+??";
+                }
+                strReg += ")";
+                break;
+        case 7: strReg = "A"; break;
+        default: strReg = "?";
+    }
+    return strReg;
+}
+
+QString Z80Core::getStrRegPair( uint8_t reg, bool set )
+{
+    QString strRegPair;
+    
+    switch( reg ) {
+        case 0: strRegPair = "BC"; break;
+        case 1: strRegPair = "DE"; break;
+        case 2: strRegPair = XYState == rIX ? "IX" : ( XYState == rIY ? "IY" : "HL" ); break;
+        case 3: if( set ) strRegPair = "AF";
+                else      strRegPair = "SP";
+                break;
+        default: strRegPair = "??";
+    }
+    return strRegPair;
+}
+
+QString Z80Core::getStrReg8()
+{
+    QString strReg8;
+    
+    switch( sm_MCycle ) {
+        case 1:  if ( sm_TState >= 3) { strReg8 = "??"; break; }
+        default: strReg8 = QString::number( sDI, 16 ).toUpper(); break;
+        case 2:  strReg8 = "??";
+    }
+    return strReg8;
+}
+
+QString Z80Core::getStrReg16( uint8_t reg )
+{
+    QString strReg16;
+    static uint16_t value = 0;
+    
+    switch( reg ) {
+        case 0: value = regPairs[rBC]; break;
+        case 1: value = regPairs[rDE]; break;
+        case 2: value = XYState == rIX ? regPairs[rIX] : ( XYState == rIY ? regPairs[rIY] : regPairs[rHL] ); break;
+        case 3: value = regSP; break;
+        case 4: value = regWZ; break;
+        case 5: if( sm_MCycle == 3 ) value = regWZ;
+                if( sm_MCycle > 3 ) value = regWZ - 1;
+    }
+
+    switch( sm_MCycle ) {
+        case 1:  if ( sm_TState >= 3) { strReg16 = "????"; break; }
+        default: strReg16 = QString::number( value, 16 ).toUpper(); break;
+        case 2:  strReg16 = "????"; break;
+        case 3:  strReg16 = "??" + QString::number( value & 0xff, 16 ).toUpper(); break;
+    }
+
+    return strReg16;
 }
 
 void Z80Core::stamp()
@@ -97,9 +439,9 @@ void Z80Core::stamp()
     m_rfshPin->setOutStatFast( true );
 
     m_m1Pin->setPinMode( output );
-    m_m1Pin->setOutStatFast( false );
+    m_m1Pin->setOutStatFast( true );
     m_haltPin->setPinMode( output );
-    m_haltPin->setOutStatFast( false );
+    m_haltPin->setOutStatFast( true );
     m_waitPin->setPinMode( input );
     m_intPin->setPinMode( input );
     m_nmiPin->setPinMode( input );
@@ -159,7 +501,7 @@ void Z80Core::reset()
     // Reset Z80Core main state machine variables
     sm_TState = 0;
     sm_lastTState = true;
-    sm_TStatesAfterInt = Z80Core_MAX_T_INT;
+    sm_TStatesAfterInt = Z80CORE_MAX_T_INT;
     sm_MCycle = 1;
     sm_PreXYMCycle = 1;
     sm_M1CycleType = tOpCodeFetch;
@@ -168,6 +510,8 @@ void Z80Core::reset()
     sm_waitTState = false;
 
     // Reset Z80Core sampled bus signals
+    NMIFF = false;
+    sLastNMI = false;
     sNMI = false;
     sInt = false;
     sWait = false;
@@ -205,8 +549,8 @@ void Z80Core::clkRisingEdge() // Execution of instruction and sampling bus signa
         }
         else rstCount = 0;                          // restart TStates counter for reset when the reset pulse is shorter than 3 TStates
     }
-    // Increase counter TStates after interrupt (it is limited to Z80Core_MAX_T_INT)
-    if( sm_TStatesAfterInt < Z80Core_MAX_T_INT ) sm_TStatesAfterInt++;
+    // Increase counter TStates after interrupt (it is limited to Z80CORE_MAX_T_INT)
+    if( sm_TStatesAfterInt < Z80CORE_MAX_T_INT ) sm_TStatesAfterInt++;
 
     // Increase TStaste and execute instructions only when the bus is used by cpu, otherwise cpu is halted
     if( !normalReset && ( !sBusReq || !sBusAck ) )
@@ -233,7 +577,10 @@ void Z80Core::clkRisingEdge() // Execution of instruction and sampling bus signa
             mc_MCycles = sTableMCycles[prefixCB][m_iReg];   // set number of machine cycles for instruction
         }
     }
+    sLastNMI = sNMI;
     sNMI    = !m_nmiPin->getInpState(); // Sampling of bus signals NMI, INT and BUSREQ
+    if ( !sLastNMI && sNMI )
+        NMIFF = true;
     sInt    = !m_intPin->getInpState();
     sBusReq = !m_busreqPin->getInpState(); /// At Rising edge latst T State ??? - I guess it doesn't matter
 
@@ -293,14 +640,15 @@ void Z80Core::nextTState()
                         sm_M1CycleType = tSpecialReset;
                         specialReset = false;               // reset special reset flag
                     }
-                    if( sNMI && mc_prefix == noPrefix ) // Non maskable interrupt only when instruction is completed with all prefixes
+                    if( NMIFF && mc_prefix == noPrefix ) // Non maskable interrupt only when instruction is completed with all prefixes
                     {
+                        NMIFF = false;
                         sm_M1CycleType = tNMI;              // machine cycle nonmaskable interrupt, bus op. Op Code Fetch
                         IFF1 = false;                       // disable interrupt
                     }
                     else if( sInt && IFF1 && mc_prefix == noPrefix )// Interrupt only when instruction is completed with all prefixes and interrupt is enabled
                     {
-                        mc_busOp = oM1Int;              // bus op. interrupt
+                        mc_busOp = oIntAck;             // bus op. interrupt
                         sm_M1CycleType = tInt;          // machine cycle interrupt
                         sm_autoWait = 1;                // one wait state during INT M1 cycle TState 1
                         IFF1 = false;                   // disable interrupt
@@ -316,7 +664,7 @@ void Z80Core::nextTState()
             {
                 sm_TState++;                                        // increase TState
                 // I/O operations and interrupt require one T2 wait state extra (it is possible to disable it by variable m_ioWait)
-                if( m_ioWait && sm_TState == 2 && (mc_busOp == oIORead || mc_busOp == oIOWrite || mc_busOp == oM1Int) )
+                if( m_ioWait && sm_TState == 2 && (mc_busOp == oIORead || mc_busOp == oIOWrite || mc_busOp == oIntAck) )
                     sm_autoWait = 1;                                // set number of inserted wait states to 1
                 if( sm_TState == 2 && !m_resetPin->getInpState() )  //  when the RESET signal is set at rising edge of TState 2 the special reset will be executed
                     specialReset = true;                            // set special reset flag
@@ -349,11 +697,11 @@ void Z80Core::risingEdgeDelayed()
                 {
                     m_addrPort->setOutStatFast( sAO );
                     if( m_lastBusOp == oMemWrite || m_lastBusOp == oIOWrite ) m_dataPort->setPinMode( input );// If previous bus op. was write data then release data bus
-                    if( mc_busOp    == oM1 || mc_busOp    == oM1Int )  m_m1Pin->setOutStatFast( false );// If current bus op. is Fetch (machine cycle 1) then set M1
-                    if( m_lastBusOp == oM1 || m_lastBusOp == oM1Int  ) m_rfshPin->setOutStatFast( true );// If previous bus op. was Fetch (machine cycle 1) then signal RFSH is reset
+                    if( mc_busOp    == oM1 || mc_busOp    == oIntAck )  m_m1Pin->setOutStatFast( false );// If current bus op. is Fetch (machine cycle 1) then set M1
+                    if( m_lastBusOp == oM1 || m_lastBusOp == oIntAck  ) m_rfshPin->setOutStatFast( true );// If previous bus op. was Fetch (machine cycle 1) then signal RFSH is reset
                 }
                 break;
-        case 2: if( sm_waitTState )// Setting bus at clock rising edge of TState 2 (it might repeat when wait states are inserted)
+        case 2: if( sm_waitTState == false )// Setting bus at clock rising edge of TState 2 (it might repeat when wait states are inserted)
                 {
                     if( mc_busOp == oIORead ) {              // If current bus op. is read I/O then set IORQ and RD
                         m_iorqPin->setOutStatFast( false );
@@ -365,7 +713,7 @@ void Z80Core::risingEdgeDelayed()
                     }
                 }
                 break;
-        case 3: if( mc_busOp == oM1 || mc_busOp == oM1Int ) // If current bus op. is Fetch (machine cycle 1) then reset M1, set RFSH and update address bus
+        case 3: if( mc_busOp == oM1 || mc_busOp == oIntAck ) // If current bus op. is Fetch (machine cycle 1) then reset M1, set RFSH and update address bus
                 {
                     m_m1Pin->setOutStatFast( true );
                     m_rfshPin->setOutStatFast( false );
@@ -378,10 +726,10 @@ void Z80Core::risingEdgeDelayed()
                     m_mreqPin->setOutStatFast( true );
                     m_rdPin->setOutStatFast( true );
                 }
-                if( mc_busOp == oM1Int ) m_iorqPin->setOutStatFast( true );// If current bus op. is Fetch with interrupt then reset IORQ
+                if( mc_busOp == oIntAck ) m_iorqPin->setOutStatFast( true );// If current bus op. is Fetch with interrupt then reset IORQ
                 break;
                 // Setting bus at clock rising edge of TState 5 in case of longer machine cycle than 4 TStates
-        case 5: if( mc_busOp == oM1 || mc_busOp == oM1Int ) // If bus op. is Fetch (machine cycle 1) then address bus is restored and reset RFSH
+        case 5: if( mc_busOp == oM1 || mc_busOp == oIntAck ) // If bus op. is Fetch (machine cycle 1) then address bus is restored and reset RFSH
                 {
                     m_addrPort->setOutStatFast( sAO );
                     m_rfshPin->setOutStatFast( true );
@@ -406,14 +754,16 @@ void Z80Core::fallingEdgeDelayed()
                         m_rdPin->setOutStatFast( false );
                     }
                     if( mc_busOp == oMemWrite) m_mreqPin->setOutStatFast( false ); // If  current bus op. is write memory then set MREQ
-                    if( mc_busOp == oMemWrite || mc_busOp == oIOWrite )// If current bus op. is write memory or I/O then set data bus
+                    if( mc_busOp == oMemWrite || mc_busOp == oIOWrite ) {// If current bus op. is write memory or I/O then set data bus
+                        m_dataPort->setPinMode( output );
                         m_dataPort->setOutStatFast( sDO );
+                    }
                 }
                 break;
         case 2: if( sm_waitTState == false ) {// Setting bus at clock rising edge of TState 2 (it might repeat when wait states are inserted)
                     // If  current bus op. is Fetch with interrupt (machine cycle 1) then set IORQ
                     // (There is a difference in TStates numbering from datasheet - one automatically inserted wait states is T1 wait)
-                    if (mc_busOp == oM1Int) m_iorqPin->setOutStatFast( false );
+                    if (mc_busOp == oIntAck) m_iorqPin->setOutStatFast( false );
                     if (mc_busOp == oMemWrite) m_wrPin->setOutStatFast( false ); // If  current bus op. is write memory then set WR
                 }
                 break;
@@ -422,7 +772,7 @@ void Z80Core::fallingEdgeDelayed()
 
             /// If  current bus op. is Fetch (machine cycle 1) then reset MREQ
             /// reset or set???
-                if( mc_busOp == oM1 || mc_busOp == oM1Int )
+                if( mc_busOp == oM1 || mc_busOp == oIntAck )
                     m_mreqPin->setOutStatFast( false );
 
                 if( mc_busOp == oMemRead ) {                 // If  current bus op. is read memory then reset MREQ and RD
@@ -442,7 +792,7 @@ void Z80Core::fallingEdgeDelayed()
                     m_wrPin->setOutStatFast( true );
                 }
                 break;
-        case 4: if( mc_busOp == oM1 || mc_busOp == oM1Int ) m_mreqPin->setOutStatFast( true ); // If current bus op. is Fetch (machine cycle 1) then reset MREQ
+        case 4: if( mc_busOp == oM1 || mc_busOp == oIntAck ) m_mreqPin->setOutStatFast( true ); // If current bus op. is Fetch (machine cycle 1) then reset MREQ
             /// create Halt variable, state or whatever
                 if( m_iReg == 0x76 && m_iSet == noPrefix )  m_haltPin->setOutStatFast( false ); // If  current instruction is HALT then set HALT
                 if( sNMI || ( sInt && IFF1 ) )              m_haltPin->setOutStatFast( true ); // If interrupt is requested and enabled then reset HALT
@@ -497,6 +847,7 @@ void Z80Core::opCodeFetch()
                 case 0:  m_iReg = m_dataPort->getInpState(); break; // from data bus
                 case 1:  m_iReg = 0xFF; break;          // RST 38H
                 case 2:  m_iReg = 0x00;                 // NOP for IM2 has 5 machine cycles and 5 TStates
+                         sDI = m_dataPort->getInpState();  // Read interrupt vector
                          mc_MCycles = 5;
                          mc_TStates = 5;
                          break;
@@ -953,7 +1304,7 @@ void Z80Core::ld_r_imm( uint8_t &reg ) //s LD r,N - load register r from byte af
     }
 }
 
-void Z80Core::ld_r_indir(uint8_t &reg, const sRegPair &rp ) //s LD A,(BC) and LD A,(DE) - load register from memory address stored in register pair
+void Z80Core::ld_r_indir(uint8_t &reg, const Z80RegPair &rp ) //s LD A,(BC) and LD A,(DE) - load register from memory address stored in register pair
 {
     switch(sm_MCycle) {
         case 1: regWZ = rp;                                     // set memory pointer
@@ -1004,7 +1355,7 @@ void Z80Core::ld_r_mem( uint8_t &reg )// LD A,(NN) - load register from memory a
     }
 }
 
-void Z80Core::ld_indir_r( const sRegPair &rp, const uint8_t &reg )//s LD (BC),A and LD (DE),A - store register to memory address stored in register pair
+void Z80Core::ld_indir_r( const Z80RegPair &rp, const uint8_t &reg )//s LD (BC),A and LD (DE),A - store register to memory address stored in register pair
 {
     switch(sm_MCycle) {
         case 1: regWZ = rp;                     // set memory pointer
@@ -1068,7 +1419,9 @@ void Z80Core::ld_indirXY_imm() //s LD (HL),N, LD (IX+d),N and LD (IY+d),N - stor
                 // Address offset fetch
         case 6: regWZ = regPairs[XYState] + static_cast<signed char>(sDI);   // calculation of memory pointer
                 mc_StateMachine = sXYFetchFinish;               // set address offset fetch finish flag - next machine cycle is machine cycle 2
-                readMem( m_PC++ ); break;                         // next bus op. is read byte from address PC, increase program counter PC
+                readMem( m_PC++ );
+                mc_TStates = 5;                                 // set number of TStates for machine cycle 5
+                break;                         // next bus op. is read byte from address PC, increase program counter PC
     }
 }
 
@@ -1125,7 +1478,7 @@ void Z80Core::ld_mem_rr( T &rp ) // LD (NN),rr - store register pair rr to memor
     }
 }
 
-void Z80Core::push_rr( sRegPair &rp ) // PUSH rr - store register pair rr to stack
+void Z80Core::push_rr( Z80RegPair &rp ) // PUSH rr - store register pair rr to stack
 {
     switch(sm_MCycle) {
         case 1: pushStack8( rp.getHighByte() ); break;                     // decrease SP // Inicialization
@@ -1134,7 +1487,7 @@ void Z80Core::push_rr( sRegPair &rp ) // PUSH rr - store register pair rr to sta
     }
 }
 
-void Z80Core::pop_rr( sRegPair &rp ) // POP rr - load register pair rr from stack
+void Z80Core::pop_rr( Z80RegPair &rp ) // POP rr - load register pair rr from stack
 {
     switch(sm_MCycle) {
         case 1: popStack8();
@@ -1149,7 +1502,7 @@ void Z80Core::pop_rr( sRegPair &rp ) // POP rr - load register pair rr from stac
     }
 }
 
-void Z80Core::ex_rr_rr( sRegPair &rp, uint8_t &regH, uint8_t &regL )//s EX AF,AF', EX DE,HL and EXX - exchange registers
+void Z80Core::ex_rr_rr( Z80RegPair &rp, uint8_t &regH, uint8_t &regL )//s EX AF,AF', EX DE,HL and EXX - exchange registers
 {
     uint8_t tmp;
     tmp = rp.getHighByte();                                                // exchange high byte of register pair
@@ -1160,30 +1513,30 @@ void Z80Core::ex_rr_rr( sRegPair &rp, uint8_t &regH, uint8_t &regL )//s EX AF,AF
     regL = tmp;
 }
 
-void Z80Core::ex_SP_rr( sRegPair &rp ) // EX (SP),HL, EX (SP),IX and EX (SP),IY - exchange register pair and last value in stack
+void Z80Core::ex_SP_rr( Z80RegPair &rp ) // EX (SP),HL, EX (SP),IX and EX (SP),IY - exchange register pair and last value in stack
 {
     switch(sm_MCycle) {
         case 1: readMem( regSP );                               // next bus op. is read low byte from stack
+                regSP++;                                        // increase stack pointer
                 break;
                 // Read low byte from stack and exchange it with low byte of register pair
         case 2: regWZ.setLowByte( sDI );                 // low byte from stack is stored to low byte of WZ
-                writeMem( regSP, rp.getLowByte() );                        // next bus op. is write low byte to stack
-                rp.setLowByte( sDI );                                     // value read from data bus
+                readMem( regSP );                               // next bus op. is read high byte from stack
                 mc_TStates = 4;                                 // set number of TStates for machine cycle 3
                 break;
                 // Write low byte to stack
-        case 3: regSP++;                                        // increase stack pointer
-                readMem( regSP );                               // next bus op. is read high byte from stack
+        case 3: regWZ.setHighByte( sDI );          // high byte from stack is stored to high byte of WZ
+                writeMem( regSP, rp.getHighByte() );                        // next bus op. is write low byte to stack
+                regSP--;                                        // decrease stack pointer back
+                rp.setHighByte( regWZ.getHighByte() );                                     // value read from data bus
                 break;
                 //  Read high byte from stack and exchange it with high byte of register pair
-        case 4: regWZ.setHighByte( sDI );          // high byte from stack is stored to high byte of WZ
-                writeMem( regSP, rp.getHighByte() );                         // next bus op. is write high byte to stack
-                rp.setHighByte( sDI );                                     // high byte is stored to high byte of register pair
+        case 4: writeMem( regSP, rp.getLowByte() );                         // next bus op. is write high byte to stack
+                rp.setLowByte( regWZ.getLowByte() );                                     // high byte is stored to high byte of register pair
                 mc_TStates = 5;                                 // set number of TStates for machine cycle 5
                 break;
                 // Write high byte to stack
-        case 5: regSP--;                                        // decrease stack pointer back
-                break;
+        case 5: break;
     }
 }
 
@@ -1206,9 +1559,10 @@ inline void Z80Core::inst_indirXY()
         case 1: if (XYState != rHL) {                           // test if it is used register IX or IY
                     mc_StateMachine = sXYOffsetFetch;           // set address offset fetch flag - following machine cycle is machine cycle 6
                     readMem( m_PC );                              // next bus op. is read byte from memory at address PC
-                } else
+                } else {
                     readMem( regPairs[rHL] );      // next bus op. is read byte from memory
-                if ( op == iInc || op == iDec ) mc_TStates = 4;
+                    if ( op == iInc || op == iDec ) mc_TStates = 4;
+                }
                 break;
                 // Read byte from memory and do selected matematical operation with accumulator
         case 2: if (op == iInc || op == iDec ) {
@@ -1226,6 +1580,7 @@ inline void Z80Core::inst_indirXY()
                 // Increase program counter and inicialization reading from memory; following machine cycle is machine cycle 2
         case 7: readMem( regWZ );                               // next bus op. is read byte from memory
                 m_PC++;                                        // increase program counter PC
+                if ( op == iInc || op == iDec ) mc_TStates = 4;
     }
 }
 
@@ -1250,7 +1605,7 @@ inline void Z80Core::inst_imm()
     }
 }
 
-template< Z80Core::eMathOp op, bool changeAllFlags>
+template< Z80Core::eMathOp op, bool changeAllFlags = true >
 inline void Z80Core::mathOp( uint8_t &regA, uint8_t reg )
 {
     uint8_t carry = regA;
@@ -1326,10 +1681,10 @@ inline void Z80Core::mathOp( uint8_t &regA, uint8_t reg )
 // SBC rr,rr - subtraction of register pair rr and flag C from other regiser pair rr
 // The subtraction is calculated in two steps. At first the low bytes are subtracted and then the high bytes are subtracted.
 template< Z80Core::eMathOp op, typename T >
-inline void Z80Core::mathOp16( sRegPair &rp1, T &rp2 )
+inline void Z80Core::mathOp16( Z80RegPair &rp1, T &rp2 )
 {
     switch(sm_MCycle) {
-    case 1: noBusOp( m_PC, 3 ); break;                           // next bus op. is no operation
+    case 1: noBusOp( m_PC, 4 ); break;                           // next bus op. is no operation
             // Addition of low bytes
     case 2: regWZ = rp1;               // set memory pointer
             mathOp< op, false >( rp1.getLowByte(), rp2.getLowByte() );
@@ -1343,7 +1698,7 @@ inline void Z80Core::mathOp16( sRegPair &rp1, T &rp2 )
     }
 }
 
-template< Z80Core::eShiftOp op, bool changeSZP>
+template< Z80Core::eShiftOp op, bool changeSZP = true >
 inline void Z80Core::shiftOp( uint8_t &reg ) {
     bool carry;
     
@@ -1448,6 +1803,7 @@ void Z80Core::instCB( const uint8_t &ireg, uint8_t &reg )
                 if ( ( ireg & 0xc0 ) == 0x40 ) regF.copyYX( reg ); // instruction BIT
             } else {                                        // if instruction has more than one machine cycle matematical operation is with byte at memory address stored in register pair
                 readMem( regPairs[rHL] );                 // next bus op. is read byte from memory
+                mc_TStates = 4;                                 // set number of TStates for machine cycle 2
             }
             break;
             // Read byte from memory and do selected operation with byte at memory address stored in register pair
@@ -1505,7 +1861,7 @@ void Z80Core::in_r_imm( uint8_t &reg )// IN r,(N) - load register r from I/O add
     }
 }
 
-void Z80Core::in_r_rr( uint8_t &reg, const sRegPair &rp )// IN r,(rr) - load register r from I/O address stored in register pair
+void Z80Core::in_r_rr( uint8_t &reg, const Z80RegPair &rp )// IN r,(rr) - load register r from I/O address stored in register pair
 {
     switch(sm_MCycle) {
     case 1: regWZ = rp;                     // set memory pointer
@@ -1525,11 +1881,11 @@ void Z80Core::out_imm_r( const uint8_t &reg ) // OUT (N),r - store register r to
     case 2: regWZ = (reg << 8) | sDI;                       // set memory pointer
             writeIO( regWZ, reg );                          // next bus op. is write byte to I/O
             break;
-    case 3: regWZ++;                                        // increase memory pointer
+    case 3: regWZ.setLowByte( regWZ.getLowByte() + 1 );                                        // increase memory pointer
     }
 }
 
-void Z80Core::out_rr_r( const sRegPair &rp, const uint8_t &reg ) // OUT (rr),r - store register r to I/O address stored in register pair
+void Z80Core::out_rr_r( const Z80RegPair &rp, const uint8_t &reg ) // OUT (rr),r - store register r to I/O address stored in register pair
 {
     switch(sm_MCycle) {
     case 1: regWZ = rp;                     // set memory pointer
@@ -1573,7 +1929,7 @@ void Z80Core::call( const bool &cond )// CALL NN and CALL cond,NN - if condition
             // Read byte after instruction and store it to low byte of memory pointer
     case 2: regWZ.setLowByte( sDI );                 // low byte is stored to low byte of memory pointer
             readMem( m_PC++ );                                // next bus op. is read byte from address PC, increase program counter PC
-            mc_TStates = 4;                                 // set number of TStates for machine cycle 3
+            if (cond) mc_TStates = 4;                                 // set number of TStates for machine cycle 3
             break;
             // Read byte after instruction and store it to high byte of memory pointer and if the condition is false then finish instruction
     case 3: regWZ.setHighByte( sDI );          // high byte is stored to high byte of memory pointer
@@ -1633,12 +1989,14 @@ void Z80Core::int_im2()
     case 2: pushStack8( m_PC & 0xff );                // next bus op. is write byte to stack
             break;
             // Write low byte of program counter PC to stack and calculate addrese in interrupt vector table
-    case 3: m_PC = (regI << 8) | ((m_intVector == true) ? 0xff : (regWZ & 0xff));
-            readMem( m_PC++ );                             // next bus op. is read byte from address PC, increase program counter PC
+    case 3: regWZ.setHighByte( regI );
+            if (m_intVector == true) regWZ.setHighByte( 0xff );
+            readMem( regWZ );                             // next bus op. is read byte from address PC, increase program counter PC
+            regWZ++;
             break;
             // Read low byte from interrupt vector table
-    case 4: regWZ.setLowByte( sDI );                 // low byte is stored to low byte of memory pointer
-            readMem( m_PC );                                  // next bus op. is read byte from address PC
+    case 4: readMem( regWZ );                                  // next bus op. is read byte from address PC
+            regWZ.setLowByte( sDI );                 // low byte is stored to low byte of memory pointer
             break;
             // Read high byte from interrupt vector table and change program counter PC
     case 5: regWZ.setHighByte( sDI );          // high byte is stored to high byte of memory pointer
@@ -1744,7 +2102,6 @@ inline void Z80Core::inxx()
             break;
             // Read byte from I/O address
     case 2: writeMem( regPairs[rHL], sDI );    // next bus op. is write byte to memory
-            mc_TStates = 5;                                 // set number of TStates for machine cycle 3
             break;
             // Write byte to memory, increase/decrease register with memory address and check of termination of instruction
     case 3: if( type == bInc || type == bIncRep ) {         // if the instruction is INI or INIR
@@ -1769,6 +2126,7 @@ inline void Z80Core::inxx()
             // Decrease program counter PC to first byte of this instrucion
     case 4: m_PC -= 2;                                     // set PC back to this instruction
             regF.copyYX( m_PC >> 8 ).inotxxPH( sDI, regs[rB] );
+            regWZ = m_PC + 1;                              // set memory pointer
             sAO = m_PC;                                    // set address for address bus
     }
 }
@@ -1787,7 +2145,6 @@ inline void Z80Core::otxx()
             break;
             // Read byte from memory
     case 2: writeIO( regPairs[rBC], sDI );    // next bus op. is write byte to I/O
-            mc_TStates = 5;                                 // set number of TStates for machine cycle 3
             break;
             // Write byte to I/O address, increase/decrease register with memory address and check of termination of instruction
     case 3: if ( type == bInc || type == bIncRep ) {    // if the instruction is OUTI or OTIR
@@ -1811,6 +2168,7 @@ inline void Z80Core::otxx()
             // Decrease program counter PC to first byte of this instrucion
     case 4: m_PC -= 2;                                     // set program counter PC back to this instruction
             regF.copyYX( m_PC >> 8 ).inotxxPH( sDI, regs[rB] );
+            regWZ = m_PC + 1;                              // set memory pointer
             sAO = m_PC;                                    // set address for address bus
     }
 }
@@ -1823,23 +2181,3 @@ void Z80Core::setProducer( QString producer )
 void Z80Core::setCmos( bool cmos ) { m_cmos = cmos; }// Setter for CMOS or NMOS version
 void Z80Core::setIoWait( bool ioWait ) { m_ioWait = !ioWait; } // Setter for single wait I/O operation
 void Z80Core::setIntVector( bool intVector ) { m_intVector = intVector; } // Setter for force interrupt vector 0xff
-
-Z80Core::sFlags& Z80Core::sFlags::inotxxPH(const uint8_t &r1, const uint8_t &r2)
-{
-    if ((flags & fC) == 0) {
-        flags ^= ( (parity(r2 & 0x07) == true) << 2 ) & fP;
-    } else {
-        flags &= ~fH;
-        if ((r1 & 0x80) != 0) {
-            if ((r2 & 0x0f) == 0x00)
-                flags |= fH;
-            flags ^= ( (parity((r2 - 1) & 0x07) == true) << 2) & fP;
-        } else {
-            if ((r2 & 0x0f) == 0x0f)
-                flags |= fH;
-            flags ^= ( (parity((r2 + 1) & 0x07) == true) << 2 ) & fP;
-        }
-    }
-    changed = true;
-    return *this;
-}
