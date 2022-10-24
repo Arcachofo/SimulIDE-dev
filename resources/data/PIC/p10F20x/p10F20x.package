@@ -6,11 +6,11 @@
 
     <pin type="nc"  xpos="-8"   ypos="8"    angle="180" length="8"  id="NC1"  label="n/c" />
     <pin type="nc"  xpos="-8"   ypos="16"   angle="180" length="8"  id="VDD"  label="Vdd" />
-    <pin type=""    xpos="-8"   ypos="24"   angle="180" length="8"  id="GP2"  label="GP2" />
-    <pin type=""    xpos="-8"   ypos="32"   angle="180" length="8"  id="GP1"  label="GP1" />
-    <pin type=""    xpos="40"   ypos="32"   angle="0"   length="8"  id="GP0"  label="GP0" />
+    <pin type=""    xpos="-8"   ypos="24"   angle="180" length="8"  id="PP2"  label="GP2" />
+    <pin type=""    xpos="-8"   ypos="32"   angle="180" length="8"  id="PP1"  label="GP1" />
+    <pin type=""    xpos="40"   ypos="32"   angle="0"   length="8"  id="PP0"  label="GP0" />
     <pin type="nc"  xpos="40"   ypos="24"   angle="0"   length="8"  id="NC2"  label="n/c" />
     <pin type="nc"  xpos="40"   ypos="16"   angle="0"   length="8"  id="VSS"  label="Vss" />
-    <pin type=""    xpos="40"   ypos="8"    angle="0"   length="8"  id="GP3"  label="GP3" />
+    <pin type=""    xpos="40"   ypos="8"    angle="0"   length="8"  id="PP3"  label="GP3" />
     
 </packageB>
