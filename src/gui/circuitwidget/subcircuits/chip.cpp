@@ -129,7 +129,7 @@ void Chip::initChip()
         setName( m_name );
     }
     else{
-        qDebug() <<"Chip::initChip"<<QObject::tr("Error:\nNot valid Package file:\n")<< m_pkgeFile;
+        qDebug() <<"Chip::initChip"<<"Error: \nNot valid Package file:\n"<< m_pkgeFile;
         m_error = 3;
         return;
     }

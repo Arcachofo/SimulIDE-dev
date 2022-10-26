@@ -31,6 +31,15 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     QStringList list = id.split("-");
     if( list.size() > 1 ) name = list.at( list.size()-2 ); // for example: "atmega328-1" to: "atmega328"
 
+    list = name.split("_");
+    if( list.size() > 1 )  // Subcircuit inside Subcircuit: 1_74HC00 to 74HC00
+    {
+        QString n = list.first();
+        bool ok = false;
+        n.toInt(&ok);
+        if( ok ) name = list.at( 1 );
+    }
+
     QString pkgeFile;
     QString subcFile;
     QString dataFile = ComponentSelector::self()->getXmlFile( name );
@@ -359,8 +368,8 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         pin->setId( pId );
         connect( this, SIGNAL( moved() ), pin, SLOT( isMoved() ), Qt::UniqueConnection );
 
-        if     ( type == "inverted" || type == "in" ) pin->setInverted( true );
-        else if( type == "unused"   || type == "nc" )
+        if     ( type == "inverted" || type == "inv" ) pin->setInverted( true );
+        else if( type == "unused"   || type == "nc"  )
         {
             pin->setUnused( true );
             if( m_isLS )
@@ -409,7 +418,7 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     }
     else pin->setLabelColor( QColor( 250, 250, 200 ) );
 
-    if( type == "unused"   || type == "nc" )
+    if( type == "unused" || type == "nc" )
     {
         pin->setUnused( true );
         if( m_isLS )
@@ -419,7 +428,7 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
             pin->setLabelText( "" );
         }
     }
-    pin->setInverted( type == "inverted" || type == "in" );
+    pin->setInverted( type == "inverted" || type == "inv" );
     pin->setLength( length );
     pin->setLabelText( label );
     pin->setVisible( true );
