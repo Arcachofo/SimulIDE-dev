@@ -3,13 +3,15 @@
 <itemlib>
     <itemset category="AVR/attiny" type="MCU">
         
-        <item name="tiny13"   package="AVR/tiny13/tiny13"    data="AVR/tiny13" />
-        <item name="tiny24"   package="AVR/tinyx4/tinyx4"    data="AVR/tiny24" />
-        <item name="tiny25"   package="AVR/tinyx5/tinyx5"    data="AVR/tiny25" />
-        <item name="tiny44"   package="AVR/tinyx4/tinyx4"    data="AVR/tiny44" />
-        <item name="tiny45"   package="AVR/tinyx5/tinyx5"    data="AVR/tiny45" />
-        <item name="tiny84"   package="AVR/tinyx4/tinyx4"    data="AVR/tiny84" />
-        <item name="tiny85"   package="AVR/tinyx5/tinyx5"    data="AVR/tiny85" />
+        <item name="tiny13"   package="AVR/tiny13/tiny13"     data="AVR/tiny13" />
+        <item name="tiny24"   package="AVR/tinyx4/tinyx4"     data="AVR/tiny24" />
+        <item name="tiny25"   package="AVR/tinyx5/tinyx5"     data="AVR/tiny25" />
+        <item name="tiny44"   package="AVR/tinyx4/tinyx4"     data="AVR/tiny44" />
+        <item name="tiny45"   package="AVR/tinyx5/tinyx5"     data="AVR/tiny45" />
+        <item name="tiny84"   package="AVR/tinyx4/tinyx4"     data="AVR/tiny84" />
+        <item name="tiny85"   package="AVR/tinyx5/tinyx5"     data="AVR/tiny85" />
+        <item name="tiny2313" package="AVR/tinyx313/tinyx313" data="AVR/tiny2313" />
+        <item name="tiny4313" package="AVR/tinyx313/tinyx313" data="AVR/tiny4313" />
     </itemset>
     <itemset category="AVR/atmega" type="MCU">
         
