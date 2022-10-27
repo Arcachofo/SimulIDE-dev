@@ -332,31 +332,41 @@ void McuCreator::getRegisters( QDomElement* e, uint16_t offset )
             uint8_t resetVal = el.attribute("reset").toUInt(0,2);
             QString    wMask = el.attribute("mask");
 
-            if( !wMask.isEmpty() ) mcu->m_regMask[regAddr] = wMask.toUInt(0,2);
-            mcu->m_addrMap[regAddr] = regAddr;
-
-            regInfo_t regInfo = { regAddr, resetVal/*, writeMask*/ };
-            mcu->m_regInfo.insert( regName, regInfo );
-
-            QString bits = el.attribute( "bits" );
-            if( !bits.isEmpty() )                    // Create bitMasks
+            if( regAddr >= mcu->m_ramSize )
             {
-                QString bitName;
-                QStringList bitList = bits.split(",");
-                for( int i=0; i<bitList.size(); ++i )
+                qDebug() << "McuCreator::getRegisters  ERROR creating Register"<< regName ;
+                qDebug() << "dataMemSize  = " << mcu->m_ramSize;
+                qDebug() << "Register Address = " << regAddr<<"\n";
+            }
+            else{
+                if( !wMask.isEmpty() ) mcu->m_regMask[regAddr] = wMask.toUInt(0,2);
+                mcu->m_addrMap[regAddr] = regAddr;
+
+                regInfo_t regInfo = { regAddr, resetVal/*, writeMask*/ };
+                mcu->m_regInfo.insert( regName, regInfo );
+
+                QString bits = el.attribute( "bits" );
+                if( !bits.isEmpty() )                    // Create bitMasks
                 {
-                    bitName = bitList.value( i );
-                    if( bitName == "0" ) continue;
-                    for( QString alias : bitName.split("|") ) // Bit name variations: alias first used bit name
-                    {                                         // Example tiny WDTCR.WDTIE is 328 WDTCSR.WDIE
-                        mcu->m_bitMasks.insert( alias, 1<<i );
-                        mcu->m_bitRegs.insert( alias, regAddr );
-                }   }
-                if( !stReg.isEmpty() && ( regName == stReg ) )
-                {
-                    mcu->m_sregAddr = regAddr;
-                    mcu->setStatusBits( bitList );
-        }   }   }
+                    QString bitName;
+                    QStringList bitList = bits.split(",");
+                    for( int i=0; i<bitList.size(); ++i )
+                    {
+                        bitName = bitList.value( i );
+                        if( bitName == "0" ) continue;
+                        for( QString alias : bitName.split("|") ) // Bit name variations: alias first used bit name
+                        {                                         // Example tiny WDTCR.WDTIE is 328 WDTCSR.WDIE
+                            mcu->m_bitMasks.insert( alias, 1<<i );
+                            mcu->m_bitRegs.insert( alias, regAddr );
+                    }   }
+                    if( !stReg.isEmpty() && ( regName == stReg ) )
+                    {
+                        mcu->m_sregAddr = regAddr;
+                        mcu->setStatusBits( bitList );
+                    }
+                }
+            }
+        }
         else if( el.tagName() == "mapped" )
         {
             uint16_t regAddr = el.attribute("addr").toUInt(0,0)+offset;
