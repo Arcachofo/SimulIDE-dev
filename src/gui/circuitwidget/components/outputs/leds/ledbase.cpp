@@ -158,23 +158,24 @@ void LedBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
         pen.setColor( color );
     }else{
         int overBight = 100;
-        
-        if( m_intensity > 25 )
+        uint32_t intensity = m_intensity;
+
+        if( intensity > 25 )
         {
-            m_intensity += 15;       // Set a Minimun Bright
-            if( m_intensity > 255 )
+            intensity += 15;       // Set a Minimun Bright
+            if( intensity > 255 )
             {
-                overBight += m_intensity-255;
-                m_intensity = 255;
+                overBight += intensity-255;
+                intensity = 255;
         }   }
         switch( m_ledColor ) {
-            case yellow: color = QColor( m_intensity, m_intensity,     overBight*2/3 );         break;
-            case red:    color = QColor( m_intensity, m_intensity/4+overBight/2, overBight/2 ); break;
-            case green:  color = QColor( overBight,   m_intensity,     m_intensity*2/3 );       break;
-            case blue:   color = QColor( overBight,   m_intensity*2/3, m_intensity );           break;
-            case orange: color = QColor( m_intensity, m_intensity*2/3, overBight );             break;
-            case purple: color = QColor( m_intensity, m_intensity/4+overBight/2, m_intensity ); break;
-            case white:  color = QColor( m_intensity, m_intensity, m_intensity );               break;
+            case yellow: color = QColor( intensity, intensity,               overBight*2/3 ); break;
+            case red:    color = QColor( intensity, intensity/4+overBight/2, overBight/2 );   break;
+            case green:  color = QColor( overBight, intensity,               intensity*2/3 ); break;
+            case blue:   color = QColor( overBight, intensity*2/3,           intensity );     break;
+            case orange: color = QColor( intensity, intensity*2/3,           overBight );     break;
+            case purple: color = QColor( intensity, intensity/4+overBight/2, intensity );     break;
+            case white:  color = QColor( intensity, intensity,               intensity );     break;
         }
     }
     p->setPen( pen );
