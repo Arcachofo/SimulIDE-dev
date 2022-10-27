@@ -25,6 +25,6 @@
     <interrupt name="EEPR"    enable="EERIE"  flag=""      priority="4"  vector="0x002C"/>
     <interrupt name="ACOMP"   enable="ACIE"   flag="ACI"   priority="3"  vector="0x002E"/>
     <interrupt name="TWI"     enable="TWIE"   flag="TWINT" priority="2"  vector="0x0030" clear="0"/>
-    <interrupt name="SPM"     enable=" "  flag=" " priority="1" vector="0x0032"/>
+    <interrupt name="SPM"     enable=""       flag=""      priority="1"  vector="0x0032"/>
   </interrupts>
 </parts>

@@ -1,5 +1,5 @@
 
-VERSION = "trunk"
+VERSION = ""
 RELEASE = ""
 
 TEMPLATE = app
