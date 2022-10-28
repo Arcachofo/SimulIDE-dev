@@ -79,6 +79,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         
         bool isRunning() { return (m_state >= SIM_STARTING); }
         bool isPaused()  { return (m_state == SIM_PAUSED); }
+        bool isPauseDebug() { return (m_state == SIM_PAUSED && m_debug == true); }
 
         uint64_t circTime() { return m_circTime; }
 
@@ -143,6 +144,7 @@ class MAINMODULE_EXPORT Simulator : public QObject
         simState_t m_state;
         simState_t m_oldState;
 
+        bool m_debug;
         bool m_converged;
         bool m_pauseCirc;
 

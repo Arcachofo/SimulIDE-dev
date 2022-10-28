@@ -276,6 +276,7 @@ void Simulator::startSim( bool paused )
 {
     resetSim();
     setPsPerSec( m_psPerSec );
+    m_debug = paused;
     m_state = SIM_STARTING;
 
     qDebug() <<"\nStarting Circuit Simulation...\n";

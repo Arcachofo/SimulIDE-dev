@@ -97,18 +97,26 @@ void eLed::updateBright()
     }
     updateVI();
 
-    uint64_t psPF = Simulator::self()->realPsPF();//stepsPerFrame();
-    //uint64_t sPS = Simulator::self()->stepSize();
-
-    if( m_lastPeriod > psPF/2 ) // Update 2 times per frame
+    if( Simulator::self()->isPauseDebug() )
     {
-        m_avgCurrent = m_totalCurrent/m_lastPeriod;
-        m_brightness = qPow( m_avgCurrent/m_maxCurrent, 1.0/2.0 );
+        double bright = qPow( m_current/m_maxCurrent, 1.0/2.0 );
+        m_intensity  = uint32_t(bright*255)+25;
+    }
+    else{
+        uint64_t psPF = Simulator::self()->realPsPF();//stepsPerFrame();
+        //uint64_t sPS = Simulator::self()->stepSize();
 
-        m_totalCurrent  = 0;
-        m_lastPeriod = 0;
-        m_intensity  = uint32_t(m_brightness*255)+25;
-}   }
+        if( m_lastPeriod > psPF/2 ) // Update 2 times per frame
+        {
+            m_avgCurrent = m_totalCurrent/m_lastPeriod;
+            m_brightness = qPow( m_avgCurrent/m_maxCurrent, 1.0/2.0 );
+
+            m_totalCurrent  = 0;
+            m_lastPeriod = 0;
+            m_intensity  = uint32_t(m_brightness*255)+25;
+        }
+    }
+}
 
 void eLed::setRes( double resist )
 {
