@@ -95,9 +95,6 @@ TouchPad::TouchPad( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    connect( &m_touchpadW, SIGNAL( valueChanged(int, int) ),
-             this,         SLOT  ( onvaluechanged(int, int) ));
-
     addPropGroup( { tr("Main"), {
 new IntProp<TouchPad>(  "Width", tr("Width"),"_Pixels" , this, &TouchPad::width, &TouchPad::setWidth ,"uint" ),
 new IntProp<TouchPad>(  "Height",tr("Height"),"_Pixels", this, &TouchPad::height, &TouchPad::setHeight ,"uint" ),

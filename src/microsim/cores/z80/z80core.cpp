@@ -1605,12 +1605,12 @@ inline void Z80Core::inst_imm()
     }
 }
 
-template< Z80Core::eMathOp op, bool changeAllFlags = true >
+template< Z80Core::eMathOp op, bool changeAllFlags>
 inline void Z80Core::mathOp( uint8_t &regA, uint8_t reg )
 {
     uint8_t carry = regA;
     uint16_t tmp;
-    
+
     switch(op) {
     case iInc: regA++; carry = carry & ~regA; regF.copySYXzeroZ( regA ).overflowHP( carry ).resetN(); break;
     case iDec: regA--; carry = ~carry & regA; regF.copySYXzeroZ( regA ).overflowHP( carry ).setN(); break;
@@ -1698,10 +1698,10 @@ inline void Z80Core::mathOp16( Z80RegPair &rp1, T &rp2 )
     }
 }
 
-template< Z80Core::eShiftOp op, bool changeSZP = true >
+template< Z80Core::eShiftOp op, bool changeSZP>
 inline void Z80Core::shiftOp( uint8_t &reg ) {
     bool carry;
-    
+
     switch(op) {
     case iRlc: carry = reg & 0x80;  reg = (reg << 1) | (reg >> 7); break;                              // rotation 1 bit left
     case iRrc: carry = reg & 0x01;  reg = (reg >> 1) | (reg << 7); break;                              // rotation 1 bit right
