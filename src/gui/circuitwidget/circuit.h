@@ -84,6 +84,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         bool pasting() { return m_pasting; }
         bool isBusy() { return m_busy || m_pasting | m_deleting; }
+        bool isSubc() { return m_createSubc; }
         
         void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; m_LdPinMap[ pinId ] = pin; }
         void remPin( QString pinId ) { m_pinMap.remove( pinId ); }
@@ -142,6 +143,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool m_changed;
         bool m_busy;
         bool m_acceptKeys;
+        bool m_createSubc;
 
         QPointF m_eventpoint;
         QPointF m_deltaMove;

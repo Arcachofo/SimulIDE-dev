@@ -43,6 +43,7 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
                                 int xpos, int ypos, int angle, int length=8  );
 
         Component* m_mainComponent;
+        static QString m_subcDir;      // Subcircuit Path
 
         QList<Component*>       m_compList;
         QList<Tunnel*>          m_subcTunnels;

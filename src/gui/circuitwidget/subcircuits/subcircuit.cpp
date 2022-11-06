@@ -15,6 +15,7 @@
 #include "node.h"
 #include "e-node.h"
 #include "utils.h"
+#include "mcu.h"
 
 #include "logicsubc.h"
 #include "board.h"
@@ -22,6 +23,8 @@
 #include "module.h"
 
 #include "boolprop.h"
+
+QString SubCircuit::m_subcDir = "";
 
 Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 {
@@ -47,10 +50,11 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
 
     if( dataFile == "" )
     {
-        pkgeFile = circuitDir.absoluteFilePath( "data/"+name+"/"+name+".package" );
-        subcFile = circuitDir.absoluteFilePath( "data/"+name+"/"+name+".sim1" );
+        m_subcDir = circuitDir.absoluteFilePath( "data/"+name );
+        pkgeFile = m_subcDir+"/"+name+".package";
+        subcFile = m_subcDir+"/"+name+".sim1";
     }else{
-        QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct" );
+        QDomDocument domDoc = fileToDomDoc( dataFile, "SubCircuit::construct");
         if( domDoc.isNull() ) return NULL; // m_error = 1;
 
         QDomElement root  = domDoc.documentElement();
@@ -103,13 +107,10 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
                     }
                     if( !QFile::exists( subcFile) ) subcFile = changeExt( subcFile, ".simu" );
 
-                    /*if( m_mainComponent )  // Example MCU in subcircuit needs to know where subcircuit is.
-                    {
-                        dataDir.setPath( subcFile );
-                        dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
-                        m_mainComponent->setSubcDir( dataDir.absolutePath() );
-                        m_mainComponent->m_subcircuit = this;
-                    }*/
+                    dataDir.setPath( subcFile );
+                    dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
+                    m_subcDir = dataDir.absolutePath();
+
                     found = true;
                 }
                 if( !found ) node = node.nextSibling();
@@ -119,7 +120,6 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
             else break;
         }
     }
-
     QString fileNameAbs = circuitDir.absoluteFilePath( pkgeFile );
 
     QFile pfile( fileNameAbs );
@@ -141,8 +141,6 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
     QString subcTyp = "None";
     if( root1.hasAttribute("type") ) subcTyp = root1.attribute("type").remove("subc");
 
-
-
     SubCircuit* subcircuit = NULL;
     if     ( subcTyp == "None"  )  subcircuit = new SubCircuit( parent, type, id );
     else if( subcTyp == "Logic" )  subcircuit = new LogicSubc( parent, type, id );
@@ -156,9 +154,11 @@ Component* SubCircuit::construct( QObject* parent, QString type, QString id )
         subcircuit->remove();
         return NULL;
     }else{
+        Circuit::self()->m_createSubc = true;
         subcircuit->m_pkgeFile = pkgeFile;
         subcircuit->initChip();
         if( m_error == 0 ) subcircuit->loadSubCircuit( subcFile );
+        Circuit::self()->m_createSubc = false;
     }
 
     if( m_error > 0 )
@@ -257,8 +257,8 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 startPinId = startPinId.replace("Pin-", "Pin_"); // Old TODELETE
                 endPinId   =   endPinId.replace("Pin-", "Pin_"); // Old TODELETE
 
-                Pin* startPin = Circuit::self()->m_LdPinMap.value( startPinId ); //getConPin( startPinId );
-                Pin* endPin   = Circuit::self()->m_LdPinMap.value( endPinId ); //getConPin( endPinId );
+                Pin* startPin = circ->m_LdPinMap.value( startPinId ); //getConPin( startPinId );
+                Pin* endPin   = circ->m_LdPinMap.value( endPinId ); //getConPin( endPinId );
 
                 if( startPin && endPin )    // Create Connector
                 {
@@ -322,11 +322,17 @@ void SubCircuit::loadSubCircuit( QString fileName )
                     if( m_subcType > Logic ) comp->setHidden( true, true ); // Boards: hide non graphical
                     else                     comp->setVisible( false );     // Not Boards: Don't show any component
 
+                    if( comp->itemType() == "MCU" )
+                    {
+                        comp->removeProperty( "Main", "Logic_Symbol" );
+                        Mcu* mcu = (Mcu*)comp;
+                        QString program = mcu->program();
+                        if( !program.isEmpty() ) mcu->load( m_subcDir+"/"+program );
+                    }
                     if( comp->isMainComp() )
                     {
                         m_mainComponent = comp; // This component will add it's Context Menu
                         //qDebug() <<comp->itemType();
-                        if( comp->itemType() == "MCU" ) comp->removeProperty( "Main", "Logic_Symbol" );
                     }
                     m_compList.append( comp );
 

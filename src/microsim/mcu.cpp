@@ -138,8 +138,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     QDir dir( m_lastFirmDir );
     if( !dir.exists() ) m_lastFirmDir = Circuit::self()->getFilePath();
 
-    m_subcDir = "";
-
     Simulator::self()->addToUpdateList( this );
 
     qDebug() << "        "<<id<< "Initialized:"<<freq()*1e-6<<"MHz\n";
@@ -240,15 +238,8 @@ void Mcu::voltChanged() // Reset Pin callBack
 void Mcu::setProgram( QString pro )
 {
     if( pro == "" ) return;
-    m_eMcu.m_firmware = pro;
-
-    QDir circuitDir;
-    if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
-    else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
-    QString fileNameAbs = circuitDir.absoluteFilePath( m_eMcu.m_firmware );
-
-    if( QFileInfo::exists( fileNameAbs ) )
-    { load( m_eMcu.m_firmware ); }
+    if( Circuit::self()->isSubc() ) m_eMcu.m_firmware = pro; // Let Subcircuit load firmware with path to subc dir
+    else load( pro );
 }
 
 QString Mcu::varList()
@@ -331,9 +322,7 @@ bool Mcu::load( QString fileName )
 {
     if( fileName.isEmpty() ) return false;
 
-    QDir circuitDir;
-    if( m_subcDir != "" ) circuitDir.setPath( m_subcDir );
-    else circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+    QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
     QString fileNameAbs  = circuitDir.absoluteFilePath( fileName );
     QString cleanPathAbs = circuitDir.cleanPath( fileNameAbs );
 

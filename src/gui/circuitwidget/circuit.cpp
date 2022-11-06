@@ -44,6 +44,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_pasting    = false;
     m_deleting   = false;
     m_conStarted = false;
+    m_createSubc = false;
     m_acceptKeys = true;
 
     new_connector = NULL;

@@ -114,7 +114,6 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         int m_serialMon;
 
-        QString m_subcDir;      // Subcircuit Path
         QString m_lastFirmDir;  // Last firmware folder used
         QString m_dataFile;
         QString m_device;       // Name of device
