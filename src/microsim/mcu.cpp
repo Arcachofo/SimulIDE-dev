@@ -88,6 +88,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_mcuMonitor = NULL;
     m_autoLoad   = false;
     m_extClock   = false;
+    m_saveEepr = true;
 
     m_serialMon = -1;
 
@@ -158,6 +159,7 @@ void Mcu::setup( QString type )
 new DoubProp  <Mcu>("Frequency", tr("Frequency"),"MHz" , this, &Mcu::freq,    &Mcu::setFreq ),
 new StringProp<Mcu>("Program"  , tr("Firmware")  ,""   , this, &Mcu::program, &Mcu::setProgram ),
 new BoolProp  <Mcu>("Auto_Load", tr("Reload hex at Simulation Start"),"", this, &Mcu::autoLoad, &Mcu::setAutoLoad ),
+new BoolProp  <Mcu>("saveEepr", tr("EEPROM persitent"),"", this, &Mcu::saveEepr, &Mcu::setSaveEepr ),
 new BoolProp  <Mcu>("Logic_Symbol", tr("Logic Symbol"),"", this, &Mcu::logicSymbol, &Mcu::setLogicSymbol )
     }} );
     addPropGroup( { tr("Config"), {
@@ -267,17 +269,19 @@ void Mcu::setEeprom( QString eep )
 QString Mcu::getEeprom()  // Used by property, stripped to last written value.
 {
     QString eeprom;
-    int size = m_eMcu.romSize();
-    if( size > 0 )
+    if( m_saveEepr )
     {
-        bool empty = true;
-        for( int i=size-1; i>=0; --i )
+        int size = m_eMcu.romSize();
+        if( size > 0 )
         {
-            uint8_t val = m_eMcu.getRomValue( i );
-            if( val < 0xFF ) empty = false;
-            if( empty ) continue;
-            eeprom.prepend( QString::number( val )+"," );
-    }   }
+            bool empty = true;
+            for( int i=size-1; i>=0; --i )
+            {
+                uint8_t val = m_eMcu.getRomValue( i );
+                if( val < 0xFF ) empty = false;
+                if( empty ) continue;
+                eeprom.prepend( QString::number( val )+"," );
+    }   }   }
     return eeprom;
 }
 
