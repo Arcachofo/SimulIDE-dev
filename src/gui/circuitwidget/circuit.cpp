@@ -53,7 +53,7 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_backupPath = MainWindow::self()->getConfigPath("backup.sim1");
     m_hideGrid   = MainWindow::self()->settings()->value( "Circuit/hideGrid" ).toBool();
     m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
-    m_filePath   = qApp->applicationDirPath()+"/new.simu";
+    m_filePath   = "";//qApp->applicationDirPath()+"/new.simu"; // AppImage tries to write in read olny filesystem
 
     connect( &m_bckpTimer, SIGNAL(timeout() ),
                      this, SLOT( saveChanges()), Qt::UniqueConnection );
