@@ -254,6 +254,7 @@ void Mcs65Cpu::decode()
     }
     case 3:               m_aMode = aABSO;                     break;     // All
     case 4:
+        if( group == 0 ){ m_aMode = aIMME;                     break; }   // Conditional Branch
         if( group == 1 ){ m_aMode = aINDI; m_aIndx = iY;       break; }   // Group 1
 
     case 5:               m_aMode = aRELA; m_aIndx = iX|iZ;    break;     // same
@@ -264,7 +265,7 @@ void Mcs65Cpu::decode()
     }
     switch( group ){               // Set Executable
         case 0:{
-        if( Atype == 4 ) // xxy 100 00 conditional branch
+        if( Atype == 4 ) // xxy 100 00 Conditional Branch
         {
             m_tmp0 = (m_IR & 0b11000000) >> 6; // flag: 0=N, 1=O, 2=C, 3=Z
             m_tmp1 = (m_IR & 0b00100000) >> 5; // y
