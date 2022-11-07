@@ -52,9 +52,9 @@ class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
             aNONE=0,
             aACCU,
             aIMME,
-            aRELA,
-            aABSO,
-            aINDI
+            aINDX,
+            aINDI,
+            aABSO
         };
         enum addrIndx_t{
             iX=1<<0,
@@ -72,6 +72,7 @@ class MAINMODULE_EXPORT Mcs65Cpu : public CpuBase, public eElement
 
         inline void readPGM();
         inline void Read();
+        inline void readIndx();
         inline void readMem( uint16_t addr );
         inline uint8_t readDataBus();
 

@@ -257,7 +257,7 @@ void Mcs65Cpu::decode()
         if( group == 0 ){ m_aMode = aIMME;                     break; }   // Conditional Branch
         if( group == 1 ){ m_aMode = aINDI; m_aIndx = iY;       break; }   // Group 1
 
-    case 5:               m_aMode = aRELA; m_aIndx = iX|iZ;    break;     // same
+    case 5:               m_aMode = aINDX; m_aIndx = iX|iZ;    break;     // same
     case 6:
         if( group == 1 ){ m_aMode = aABSO; m_aIndx = iY|iC;    break; }   // Group 1
 
@@ -311,9 +311,20 @@ void Mcs65Cpu::Read()
     m_state = cEXEC; // Default
 
     switch( m_aMode ){
-        case aNONE: break; // Dummy Read //qDebug() << "Warning: Mcs65Cpu::Read aNONE";//readPGM(); break; // Dummy read ???
-
-        case aABSO:{       // Absolute: address From Mem 2 bytes: LLHH (Little Endian)
+        case aNONE:                        break; // Dummy Read //qDebug() << "Warning: Mcs65Cpu::Read aNONE";//readPGM(); break; // Dummy read ???
+        case aACCU: m_op0 = m_Ac;          break; // Value = m_Acumulator
+        case aIMME: m_op0 = readDataBus(); break; // Immediate: From Mem 1 byte
+        case aINDX: readIndx();            break; // Zero Page indexed
+        case aINDI:{                              // Indirect: 1 byte from Mem + RX(ZP wrap) or RY
+            switch( m_cycle ){
+                case 2:{
+                    readIndx();
+                    readMem( m_opAddr );
+                }break;
+                case 3: m_op0 = readDataBus(); break;
+            }
+        }break;
+        case aABSO:{                              // Absolute: address From Mem 2 bytes: LLHH (Little Endian)
             switch( m_cycle ){
                 case 2: m_op0 = readDataBus(); readPGM(); break; // Read 2º Operand
                 case 3:{
@@ -328,11 +339,17 @@ void Mcs65Cpu::Read()
                 case 4: m_op0 = readDataBus(); break;
             }
         }break;
-        case aACCU: m_op0 = m_Ac;          break; // Value = m_Acumulator
-        case aIMME: m_op0 = readDataBus(); break; // Immediate: From Mem 1 byte
-        case aINDI: break;
-        case aRELA: break;
     }
+}
+
+void Mcs65Cpu::readIndx()
+{
+    m_opAddr = readDataBus();
+    if( m_aIndx & iX ){
+        m_opAddr += m_rX;
+        if( m_opAddr > 255 ) m_opAddr -= 256; // Zero Page wrap around
+    }
+    else if( m_aIndx & iY ) m_opAddr += m_rY;
 }
 
 void Mcs65Cpu::readPGM(){ readMem( m_PC++ ); }
