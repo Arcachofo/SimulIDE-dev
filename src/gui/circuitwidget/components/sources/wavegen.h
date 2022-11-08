@@ -44,10 +44,10 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         void setWaveType( QString t );
 
         double semiAmpli() { return m_voltage/2; }
-        void setSemiAmpli( double v ) { m_voltage = v*2; }
+        void setSemiAmpli( double v );
 
-        double midVolt() { return m_voltBase+m_voltage/2; }
-        void setMidVolt( double v ) { m_voltBase = v-m_voltage/2;}
+        double midVolt() { return m_voltMid; }
+        void setMidVolt( double v );
 
         QString fileName() { return m_fileName; }
         void setFile( QString fileName );
@@ -80,6 +80,7 @@ class MAINMODULE_EXPORT WaveGen : public ClockBase
         wave_type m_waveType;
         double m_duty;
         double m_vOut;
+        double m_voltMid;
         double m_voltBase;
         double m_lastVout;
         double m_halfW;

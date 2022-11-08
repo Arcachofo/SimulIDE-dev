@@ -40,6 +40,7 @@ WaveGen::WaveGen( QObject* parent, QString type, QString id )
        : ClockBase( parent, type, id )
 {
     m_voltBase = 0;
+    m_voltMid  = 0;
     m_lastVout = 0;
     m_waveType = Sine;
     m_wavePixmap = NULL;
@@ -195,6 +196,18 @@ void WaveGen::setFreq( double freq )
     ClockBase::setFreq( freq );
     setDuty( m_duty );
     setSteps( m_steps );
+}
+
+void WaveGen::setSemiAmpli( double v )
+{
+    m_voltBase = m_voltMid-v;
+    m_voltage = v*2;
+}
+
+void WaveGen::setMidVolt( double v )
+{
+    m_voltBase = v-m_voltage/2;
+    m_voltMid = v;
 }
 
 void WaveGen::setWaveType( QString t )
