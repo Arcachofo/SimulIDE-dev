@@ -130,6 +130,7 @@ class MAINMODULE_EXPORT eMcu : public DataSpace, public eElement
 
         uint32_t m_romSize;
         QVector<int> m_eeprom;
+        bool m_saveEepr;
 
         QHash<uint16_t, uint16_t> m_cfgWords; // Config words
 

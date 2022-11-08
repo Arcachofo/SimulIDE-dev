@@ -46,6 +46,7 @@ eMcu::eMcu( Component* comp, QString id )
     m_device   = "";
     m_debugger = NULL;
     m_debugging = false;
+    m_saveEepr = true;
 
     m_ramTable = new RamTable( NULL, this, false );
     m_ramTable->hide();
@@ -133,6 +134,9 @@ void eMcu::reset()
     cpu->reset();
     m_interrupts.resetInts();
     DataSpace::initialize();
+
+    if( !m_saveEepr )
+        for( uint i=0; i<m_romSize; ++i ) setRomValue( i, 0xFF );
 }
 
 void eMcu::hardReset( bool r )

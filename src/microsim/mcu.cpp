@@ -88,7 +88,6 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     m_mcuMonitor = NULL;
     m_autoLoad   = false;
     m_extClock   = false;
-    m_saveEepr = true;
 
     m_serialMon = -1;
 
@@ -269,7 +268,7 @@ void Mcu::setEeprom( QString eep )
 QString Mcu::getEeprom()  // Used by property, stripped to last written value.
 {
     QString eeprom;
-    if( m_saveEepr )
+    if( m_eMcu.m_saveEepr )
     {
         int size = m_eMcu.romSize();
         if( size > 0 )

@@ -66,8 +66,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
         void setEeprom( QString eep );
         QString getEeprom();
 
-        bool saveEepr() { return m_saveEepr; }
-        void setSaveEepr( bool s ) { m_saveEepr = s; }
+        bool saveEepr() { return m_eMcu.m_saveEepr; }
+        void setSaveEepr( bool s ) { m_eMcu.m_saveEepr = s; }
 
         int serialMon() { return m_serialMon; }
         void setSerialMon( int s );
@@ -114,7 +114,6 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         bool m_autoLoad;
         bool m_extClock;
-        bool m_saveEepr;
 
         int m_serialMon;
 
