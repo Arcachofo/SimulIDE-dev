@@ -296,6 +296,13 @@ void CodeEditor::startDebug()
     update();
 }
 
+void CodeEditor::stopDebug()
+{
+    setReadOnly( false );
+    setDebugLine( 0 );
+    update();
+}
+
 void CodeEditor::updateScreen()
 {
     setTextCursor( QTextCursor(document()->findBlockByLineNumber( m_debugLine-1 )));

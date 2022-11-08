@@ -207,9 +207,7 @@ void EditorWindow::stopDebbuger()
         eMcu::self()->setDebugging( false );
 
         m_state = DBG_STOPPED;
-        m_debugDoc->setDebugLine( 0 );
-        m_debugDoc->setReadOnly( false );
-        m_debugDoc->updateScreen();
+        m_debugDoc->stopDebug();
 
         Simulator::self()->remFromUpdateList( this );
     }
