@@ -1,0 +1,12 @@
+<parts>
+    <interrupts enable="GIE">
+        <interrupt name="RESET"                                  priority="1" vector="0x0000"/>
+        <interrupt name="INT"      enable="INTE"   flag="INTF"   priority="1" vector="0x0004"/>
+        <interrupt name="T0_OVF"   enable="T0IE"   flag="T0IF"   priority="1" vector="0x0004"/>
+        <interrupt name="PA_INT"   enable="RAIE"   flag="RAIF"   priority="1" vector="0x0004"/>
+        <interrupt name="ACOMP"    enable="CMIE"   flag="CMIF"   priority="1" vector="0x0004"/>
+        <interrupt name="ADC"      enable="ADIE"   flag="ADIF"   priority="1" vector="0x0004"/>
+        <interrupt name="T1_OVF"   enable="TMR1IE" flag="TMR1IF" priority="1" vector="0x0004"/>
+        <interrupt name="EEPR"     enable="EEIE"   flag="EEIF"   priority="1" vector="0x0004"/>
+    </interrupts>
+</parts>

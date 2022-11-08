@@ -18,7 +18,11 @@
         
         <item name="p16F627" package="PIC/p16F627/p16F627" data="PIC/p16F627"></item>
         <item name="p16F628" package="PIC/p16F627/p16F627" data="PIC/p16F628"></item>
+        <item name="p16F630" package="PIC/p16F630/p16F630" data="PIC/p16F630"></item>
         <item name="p16F648" package="PIC/p16F627/p16F627" data="PIC/p16F648"></item>
+        
+        <item name="p16F676" package="PIC/p16F630/p16F630" data="PIC/p16F676"></item>
+        <item name="p16F684" package="PIC/p16F630/p16F630" data="PIC/p16F684"></item>
         
         <item name="p16F873" package="PIC/p16F87x/p16F873" data="PIC/p16F873"></item>
         <item name="p16F874" package="PIC/p16F87x/p16F874" data="PIC/p16F874"></item>
