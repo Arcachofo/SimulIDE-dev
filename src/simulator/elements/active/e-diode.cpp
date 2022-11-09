@@ -60,7 +60,7 @@ void eDiode::voltChanged()
     {
         voltPN = limitStep( voltPN, m_voltPN, m_vScale, m_vCriti );
     }
-    else if( voltPN < 0 && m_zOfset != 0 )
+    else if( m_bkDown != 0 && voltPN < 0 )
     {
         voltPN = -voltPN - m_zOfset;
         double vold = -m_voltPN - m_zOfset;
@@ -79,8 +79,8 @@ void eDiode::voltChanged()
         m_current = m_satCur * (eval-1);
     }else{                               // Reverse biased Zener or Diode with breakdown
         double expCoef = qExp( (-voltPN-m_zOfset)*m_vzCoef );
-        m_admit   = m_satCur*( m_vdCoef*eval + m_vzCoef*expCoef ) + gmin;
-        m_current = m_satCur*( eval-1 - expCoef ) ;
+        m_admit   = m_satCur * ( m_vdCoef*eval + m_vzCoef*expCoef ) + gmin;
+        m_current = m_satCur * ( eval-1 - expCoef ) ;
     }
     eResistor::stampAdmit();
 
