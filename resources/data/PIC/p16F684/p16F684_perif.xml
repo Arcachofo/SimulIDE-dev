@@ -32,11 +32,11 @@
                        pin="PORTC2"
                        interrupt="CCP1" />
 
-  <acomp name="COMP1" type="01" configregsA="CMCON"
+  <acomp name="COMP1" type="01" configregsA="CMCON0"
                       interrupt="ACOMP1"
                       pins="PORTA0,PORTA1,PORTA2"/>
 
-  <acomp name="COMP2" type="02" configregsA="CMCON"
+  <acomp name="COMP2" type="02" configregsA="CMCON0"
                       interrupt="ACOMP2"
                       pins="PORTC0,PORTC1,PORTC4"/>
                       

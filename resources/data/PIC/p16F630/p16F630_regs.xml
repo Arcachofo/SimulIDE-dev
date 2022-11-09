@@ -15,10 +15,10 @@
         <register name="TMR1L"   addr="0x0E" bits=""/>
         <register name="TMR1H"   addr="0x0F" bits=""/>
         <register name="T1CON"   addr="0x10" 
-                  bits="TMR1ON,TMR1CS,T1SYNC,T1OSCEN,T1CKPS0,T1CKPS1"/>
+                  bits="TMR1ON,TMR1CS,T1SYNC,T1OSCEN,T1CKPS0,T1CKPS1,TMR1GE"/>
                   
         <register name="CMCON"   addr="0x19" mask="00111111"
-                  bits="CM0,CM1,CM2,CIS,C1INV,C2INV,C1OUT,C2OUT" />
+                  bits="CM0,CM1,CM2,CIS,CINV,0,COUT,0" />
                   
     </regblock>
     <datablock name="GPR0" start="0x0020" end="0x005F"/>
@@ -27,7 +27,7 @@
     <regblock name="SFR1" start="0x0080" end="0x009F">
         <mapped                 addr="0x80" mapto="0x00"/><!-- INDF -->
         <register name="OPTION" addr="0x81" reset="11111111"
-                  bits="PS0,PS1,PS2,PSA,T0SE,T0CS,INTEDG,RBPU"/>
+                  bits="PS0,PS1,PS2,PSA,T0SE,T0CS,INTEDG,RAPU"/>
                   
         <mapped                 addr="0x82" mapto="0x02"/><!-- PCL -->
         <mapped                 addr="0x83" mapto="0x03"/><!-- STATUS -->
@@ -51,7 +51,7 @@
                   bits=""/>
                   
         <register name="VRCON"  addr="0x99" bits=""
-                  bits="VR0,VR1,VR2,VR3,0,VRR,VROE,VREN"/>
+                  bits="VR0,VR1,VR2,VR3,0,VRR,0,VREN"/>
                   
         <register name="EEDAT"  addr="0x9A" bits=""/>
         <register name="EEADR"  addr="0x9B" bits=""/>

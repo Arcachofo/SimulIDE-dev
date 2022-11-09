@@ -42,13 +42,13 @@
 
   <vref name="Vref" configregsA="VRCON" pinout="PORTA2"/>
 
-  <acomp name="COMP" type="01" configregsA="CMCON"
-                     interrupt="ACOMP"
-                     pins="PORTA0,PORTA3,PORTA2"/>
+  <acomp name="COMP1" type="01" configregsA="CMCON"
+                      interrupt="ACOMP"
+                      pins="PORTA0,PORTA3,PORTA2"/>
 
-  <acomp name="COMP" type="02" configregsA="CMCON"
-                     interrupt="ACOMP"
-                     pins="PORTA1,PORTA2,PORTA4"/>
+  <acomp name="COMP2" type="02" configregsA="CMCON"
+                      interrupt="ACOMP"
+                      pins="PORTA1,PORTA2,PORTA4"/>
 
   <wdt name="WDT" configregsA="OPTION"
                   prescalers="1,2,4,8,16,32,64,128"/>

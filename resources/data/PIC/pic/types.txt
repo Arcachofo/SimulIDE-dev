@@ -1,58 +1,49 @@
 
 ADC:
-    - Type 00: p16F87x.
-    - Type 10: p16F88x.
-    - Type 11: p12F675.
-    - Type 20: p16F1826
+    - Type 00: 16F87x.
+    - Type 10: 16F88x.
+    - Type 11: 12F675; 16f676,684.
+    - Type 20: 16F1826
 
 
 Timer:
     - Type 800:
-        T0 p10f20x
-        T0 p12F629,675
-        T0 p16f84
-        T0 p16f627
-        T0 p16f87x
-        T0 p16f88x
-        T0 p16f1826
+        T0 10f20x
+        T0 12F629,675
+        T0 16f84,627,630,676,684,87x,88x,1826
         
     - Type 820:
-        T2 p16f627
-        T2 p16f87x
-        T2 p16f88x
-        T2 p16f1826
+        T2 16f627,684,87x,88x,1826
         
     - Type 160:
-        T1 p12F629,675
-        T1 p16f627 
-        T1 p16f87x
-        T1 p16f88x
+        T1 12F629,675
+        T1 16f627,630,684,676,87x,88x
 
     - Type 161: 
-        T1 p16f1826
+        T1 16f1826
     
 CCP:
     - Type : 
-        p16F88x.
+        16F88x.
 
 
 Comparators:
     - Type 01: 
-        C1 p16f627 
-        p16f87,88
+        C1 16f627,684
+        16f87,88
         
     - Type 02: 
-        C2 p16f627
-        p16f87,88
+        C2 16f627,684
+        16f87,88
         
     - Type 03:
-        p12F629,675
+        12F629,630,675,676
         
     - Type 11: 
-        C1 p16f88x
+        C1 16f88x
         
     - Type 12: 
-        C2 p16f88x 
+        C2 16f88x 
 
 
 
