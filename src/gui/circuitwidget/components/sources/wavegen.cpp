@@ -95,6 +95,7 @@ bool WaveGen::setPropStr( QString prop, QString val )
 void WaveGen::stamp()
 {
     ClockBase::stamp();
+    m_lastVout = m_vOut = 0;
     m_index = 0;
 }
 
