@@ -76,7 +76,7 @@
         <mapped                  addr="0x102" mapto="0x02"/><!-- PCL -->
         <mapped                  addr="0x103" mapto="0x03"/><!-- STATUS -->
         <mapped                  addr="0x104" mapto="0x04"/><!-- FSR -->
-        <mapped                  addr="0x106" mapto="0x04"/><!-- PORTB -->
+        <mapped                  addr="0x106" mapto="0x06"/><!-- PORTB -->
         <mapped                  addr="0x10A" mapto="0x0A"/><!-- PCLATH -->
         <mapped                  addr="0x10B" mapto="0x0B"/><!-- INTCON -->
     </regblock>

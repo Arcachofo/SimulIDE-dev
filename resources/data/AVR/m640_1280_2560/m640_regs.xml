@@ -91,8 +91,8 @@
     <register  name="SPMCSR"  addr="0x0037" bits="SPMEN,PGERS,PGWRT,BLBSET,RWWSRE,SIGRD,RWWSB,SPMIE" />
     <register  name="RAMPZ"   addr="0x003B" bits="RAMPZ0,RAMPZ1,0,0,0,0,0,0" />
     <register  name="EIND"    addr="0x003C" bits="EIND0,0,0,0,0,0,0,0" />
-    <register  name="SPL"     addr="0x003D" bits="" />
-    <register  name="SPH"     addr="0x003E" bits="" />
+    <register  name="SPL"     addr="0x003D"  />
+    <register  name="SPH"     addr="0x003E"  />
   </regblock>
   <regblock  name="EXT_I/O_REG" start="0x0060" end="0x01FF" offset="0">
     <register  name="WDTCSR"  addr="0x0060" bits="WDP0,WDP1,WDP2,WDE,WDCE,WDP3,WDIE,WDIF" />
@@ -149,16 +149,16 @@
     <register  name="TCCR1C"  addr="0x0082"  reset=""  mask="11100000"
                bits="0,0,0,0,0,FOC1C,FOC1B,FOC1A" />
                
-    <register  name="TCNT1L"  addr="0x0084" bits="" />
-    <register  name="TCNT1H"  addr="0x0085" bits="" />
-    <register  name="ICR1L"   addr="0x0086" bits="" />
-    <register  name="ICR1H"   addr="0x0087" bits="" />
-    <register  name="OCR1AL"  addr="0x0088" bits="" />
-    <register  name="OCR1AH"  addr="0x0089" bits="" />
-    <register  name="OCR1BL"  addr="0x008A" bits="" />
-    <register  name="OCR1BH"  addr="0x008B" bits="" />
-    <register  name="OCR1CL"  addr="0x008C" bits="" />
-    <register  name="OCR1CH"  addr="0x008D" bits="" />
+    <register  name="TCNT1L"  addr="0x0084"  />
+    <register  name="TCNT1H"  addr="0x0085"  />
+    <register  name="ICR1L"   addr="0x0086"  />
+    <register  name="ICR1H"   addr="0x0087"  />
+    <register  name="OCR1AL"  addr="0x0088"  />
+    <register  name="OCR1AH"  addr="0x0089"  />
+    <register  name="OCR1BL"  addr="0x008A"  />
+    <register  name="OCR1BH"  addr="0x008B"  />
+    <register  name="OCR1CL"  addr="0x008C"  />
+    <register  name="OCR1CH"  addr="0x008D"  />
     <register  name="TCCR3A"  addr="0x0090" bits="WGM30,WGM31,COM3C0,COM3C1,COM3B0,COM3B1,COM3A0,COM3A1" />
     <register  name="TCCR3B"  addr="0x0091"  reset=""  mask="11011111"
                bits="CS30,CS31,CS32,WGM32,WGM33,0,ICES3,ICNC3" />
@@ -166,16 +166,16 @@
     <register  name="TCCR3C"  addr="0x0092"  reset=""  mask="11100000"
                bits="0,0,0,0,0,FOC3C,FOC3B,FOC3A" />
                
-    <register  name="TCNT3L"  addr="0x0094" bits="" />
-    <register  name="TCNT3H"  addr="0x0095" bits="" />
-    <register  name="ICR3L"   addr="0x0096" bits="" />
-    <register  name="ICR3H"   addr="0x0097" bits="" />
-    <register  name="OCR3AL"  addr="0x0098" bits="" />
-    <register  name="OCR3AH"  addr="0x0099" bits="" />
-    <register  name="OCR3BL"  addr="0x009A" bits="" />
-    <register  name="OCR3BH"  addr="0x009B" bits="" />
-    <register  name="OCR3CL"  addr="0x009C" bits="" />
-    <register  name="OCR3CH"  addr="0x009D" bits="" />
+    <register  name="TCNT3L"  addr="0x0094"  />
+    <register  name="TCNT3H"  addr="0x0095"  />
+    <register  name="ICR3L"   addr="0x0096"  />
+    <register  name="ICR3H"   addr="0x0097"  />
+    <register  name="OCR3AL"  addr="0x0098"  />
+    <register  name="OCR3AH"  addr="0x0099"  />
+    <register  name="OCR3BL"  addr="0x009A"  />
+    <register  name="OCR3BH"  addr="0x009B"  />
+    <register  name="OCR3CL"  addr="0x009C"  />
+    <register  name="OCR3CH"  addr="0x009D"  />
     <register  name="TCCR4A"  addr="0x00A0" bits="WGM40,WGM41,COM4C0,COM4C1,COM4B0,COM4B1,COM4A0,COM4A1" />
     <register  name="TCCR4B"  addr="0x00A1"  reset=""  mask="11011111"
                bits="CS40,CS41,CS42,WGM42,WGM43,0,ICES4,ICNC4" />
@@ -183,16 +183,16 @@
     <register  name="TCCR4C"  addr="0x00A2"  reset=""  mask="11100000"
                bits="0,0,0,0,0,FOC4C,FOC4B,FOC4A" />
                
-    <register  name="TCNT4L"  addr="0x00A4" bits="" />
-    <register  name="TCNT4H"  addr="0x00A5" bits="" />
-    <register  name="ICR4L"   addr="0x00A6" bits="" />
-    <register  name="ICR4H"   addr="0x00A7" bits="" />
-    <register  name="OCR4AL"  addr="0x00A8" bits="" />
-    <register  name="OCR4AH"  addr="0x00A9" bits="" />
-    <register  name="OCR4BL"  addr="0x00AA" bits="" />
-    <register  name="OCR4BH"  addr="0x00AB" bits="" />
-    <register  name="OCR4CL"  addr="0x00AC" bits="" />
-    <register  name="OCR4CH"  addr="0x00AD" bits="" />
+    <register  name="TCNT4L"  addr="0x00A4"  />
+    <register  name="TCNT4H"  addr="0x00A5"  />
+    <register  name="ICR4L"   addr="0x00A6"  />
+    <register  name="ICR4H"   addr="0x00A7"  />
+    <register  name="OCR4AL"  addr="0x00A8"  />
+    <register  name="OCR4AH"  addr="0x00A9"  />
+    <register  name="OCR4BL"  addr="0x00AA"  />
+    <register  name="OCR4BH"  addr="0x00AB"  />
+    <register  name="OCR4CL"  addr="0x00AC"  />
+    <register  name="OCR4CH"  addr="0x00AD"  />
     <register  name="TCCR2A"  addr="0x00B0"  reset=""  mask="11110011"
                bits="WGM20,WGM21,0,0,COM2B0,COM2B1,COM2A0,COM2A1" />
                
@@ -228,8 +228,8 @@
     <register  name="UCSR0C"  addr="0x00C2"  reset="00000110"  mask="" 
                bits="UCPOL0,UCSZ00,UCSZ01,USBS0,UPM00,UPM01,UMSEL00,UMSEL01" />
                
-    <register  name="UBRR0L"  addr="0x00C4" bits="" />
-    <register  name="UBRR0H"  addr="0x00C5"  reset=""  mask="00001111" bits="" />
+    <register  name="UBRR0L"  addr="0x00C4"  />
+    <register  name="UBRR0H"  addr="0x00C5"  reset=""  mask="00001111"  />
                
     <register  name="UDR0"    addr="0x00C6" bits="UDR0_0,UDR0_1,UDR0_2,UDR0_3,UDR0_4,UDR0_5,UDR0_6,UDR0_7" />
     <register  name="UCSR1A"  addr="0x00C8"  reset="00100000"  mask="01000011" 
@@ -241,8 +241,8 @@
     <register  name="UCSR1C"  addr="0x00CA"  reset="00000110"  mask="" 
                bits="UCPOL1,UCPHA1,UDORD1,USBS1,UPM10,UPM11,UMSEL10,UMSEL11" />
     
-    <register  name="UBRR1L"  addr="0x00CC" bits="" />
-    <register  name="UBRR1H"  addr="0x00CD"  reset=""  mask="00001111" bits="" />
+    <register  name="UBRR1L"  addr="0x00CC"  />
+    <register  name="UBRR1H"  addr="0x00CD"  reset=""  mask="00001111"  />
                
     <register  name="UDR1"    addr="0x00CE" bits="UDR1_0,UDR1_1,UDR1_2,UDR1_3,UDR1_4,UDR1_5,UDR1_6,UDR1_7" />
     <register  name="UCSR2A"  addr="0x00D0"  reset="00100000"  mask="01000011" 
@@ -255,7 +255,7 @@
                bits="UCPOL2,UCSZ20,UCSZ21,USBS2,UPM20,UPM21,UMSEL20,UMSEL21" />
                
     <register  name="UBRR2L"  addr="0x00D4" bits=" " />
-    <register  name="UBRR2H"  addr="0x00D5"  reset=""  mask="00001111" bits="" />
+    <register  name="UBRR2H"  addr="0x00D5"  reset=""  mask="00001111"  />
     
     <register  name="UDR2"    addr="0x00D6" bits="UDR2_0,UDR2_1,UDR2_2,UDR2_3,UDR2_4,UDR2_5,UDR2_6,UDR2_7" />
     <register  name="PINH"    addr="0x0100" bits="PINH0,PINH1,PINH2,PINH3,PINH4,PINH5,PINH6,PINH7" />
@@ -277,16 +277,16 @@
     <register  name="TCCR5C"  addr="0x0122"  reset=""  mask="11100000"
                bits="0,0,0,0,0,FOC5C,FOC5B,FOC5A" />
                
-    <register  name="TCNT5L"  addr="0x0124" bits="" />
-    <register  name="TCNT5H"  addr="0x0125" bits="" />
+    <register  name="TCNT5L"  addr="0x0124"  />
+    <register  name="TCNT5H"  addr="0x0125"  />
     <register  name="ICR5L"   addr="0x0126" bits="ICR5L0,ICR5L1,ICR5L2,ICR5L3,ICR5L4,ICR5L5,ICR5L6,ICR5L7" />
     <register  name="ICR5H"   addr="0x0127" bits="ICR5H0,ICR5H1,ICR5H2,ICR5H3,ICR5H4,ICR5H5,ICR5H6,ICR5H7" />
-    <register  name="OCR5AL"  addr="0x0128" bits="" />
-    <register  name="OCR5AH"  addr="0x0129" bits="" />
-    <register  name="OCR5BL"  addr="0x012A" bits="" />
-    <register  name="OCR5BH"  addr="0x012B" bits="" />
-    <register  name="OCR5CL"  addr="0x012C" bits="" />
-    <register  name="OCR5CH"  addr="0x012D" bits="" />
+    <register  name="OCR5AL"  addr="0x0128"  />
+    <register  name="OCR5AH"  addr="0x0129"  />
+    <register  name="OCR5BL"  addr="0x012A"  />
+    <register  name="OCR5BH"  addr="0x012B"  />
+    <register  name="OCR5CL"  addr="0x012C"  />
+    <register  name="OCR5CH"  addr="0x012D"  />
     <register  name="UCSR3A"  addr="0x0130"  reset="00100000"  mask="01000011" 
                bits="MPCM3,U2X3,UPE3,DOR3,FE3,UDRE3,TXC3,RXC3" />
                
@@ -296,8 +296,8 @@
     <register  name="UCSR3C"  addr="0x0132"  reset="00000110"  mask="" 
                bits="UCPOL3,UCSZ30,UCSZ31,USBS3,UPM30,UPM31,UMSEL30,UMSEL31" />
                
-    <register  name="UBRR3L"  addr="0x0134" bits="" />
-    <register  name="UBRR3H"  addr="0x0135"  reset=""  mask="00001111" bits="" />
+    <register  name="UBRR3L"  addr="0x0134"  />
+    <register  name="UBRR3H"  addr="0x0135"  reset=""  mask="00001111"  />
     <register  name="UDR3"    addr="0x0136" bits="UDR3_0,UDR3_1,UDR3_2,UDR3_3,UDR3_4,UDR3_5,UDR3_6,UDR3_7" />
   </regblock>
   <stack  spreg="SPL,SPH" increment="postdec" />

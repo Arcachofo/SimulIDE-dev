@@ -89,7 +89,7 @@
         <register name="WPUB"    addr="0x95" reset="11111111" bits=""/>
         <register name="IOCB"    addr="0x96" bits=""/>
         <register name="VRCON"   addr="0x97" 
-                  bits="Vr0,VR1,VR2,VR3,VRSS,VRR,VROE,VREN"/>
+                  bits="VR0,VR1,VR2,VR3,VRSS,VRR,VROE,VREN"/>
                   
         <register name="TXSTA"   addr="0x98" reset="00000010" mask="11111101"
                   bits="TX9D,TRMT,BRGH,0,SYNC,TXEN,TX9,CSRC"/>
@@ -115,10 +115,10 @@
         <mapped                  addr="0x106" mapto="0x04"/><!-- PORTB -->
         
         <register name="CM1CON0" addr="0x107" mask="11110111"
-                  bits="C1Ch0,C1CH1,C1R,0,C1POL,C1OE,C1OUT,C1ON"/>
+                  bits="C1CH0,C1CH1,C1R,0,C1POL,C1OE,C1OUT,C1ON"/>
                   
         <register name="CM2CON0" addr="0x108" mask="11110111"
-                  bits="C2Ch0,C2CH1,C2R,0,C2POL,C2OE,C2OUT,C2ON"/>
+                  bits="C2CH0,C2CH1,C2R,0,C2POL,C2OE,C2OUT,C2ON"/>
                   
         <register name="CM2CON1" addr="0x109" mask="11110011"
                   bits="C2SYNC,T1GSS,C2RSEL,C1RSEL,MC2OUT,MC1OUT"/>
