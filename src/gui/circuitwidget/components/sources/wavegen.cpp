@@ -112,15 +112,14 @@ void WaveGen::runEvent()
     if( m_vOut != m_lastVout )
     {
         m_lastVout = m_vOut;
-        //m_outpin->setOutHighV( m_voltage*m_vOut+m_voltBase );
-        //m_outpin->setOutState( true  );
+
         if( m_waveType == Square )
         {
-            m_outpin->setOutHighV( m_voltage );
+            m_outpin->setOutHighV( m_voltBase+m_voltage );
             m_outpin->setOutLowV( m_voltBase );
             m_outpin->sheduleState( m_vOut, 0 );
         }else{
-            m_outpin->setOutHighV( m_voltage*m_vOut+m_voltBase );
+            m_outpin->setOutHighV( m_voltBase+m_voltage*m_vOut );
             m_outpin->setOutState( true );
         }
     }
