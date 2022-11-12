@@ -196,6 +196,12 @@ void PlotBase::conditonMet( int ch, cond_t cond )
     }*/
 }
 
+void PlotBase::remove()
+{
+    if( m_expand ) expand( false );
+    Component::remove();
+}
+
 void PlotBase::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {
     Component::paint( p, option, widget );

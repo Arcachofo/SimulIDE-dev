@@ -69,6 +69,8 @@ class MAINMODULE_EXPORT PlotBase : public Component, public ScriptModule
 
         void conditonMet( int ch, cond_t cond );
 
+        virtual void remove() override;
+
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
