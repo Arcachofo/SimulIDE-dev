@@ -118,10 +118,10 @@ bool CircMatrix::analyze()
             m_bList.append( b );
             m_ipvtList.append( ipvt );
             m_eNodeActList.append( eNodeActive );
-            m_eNodeActive = &eNodeActive;
+            //m_eNodeActive = &eNodeActive;
 
-            if( !factorMatrix( ny, group ) ) return false;
-            if( !luSolve( ny, group ) )      return false;
+            //if( !factorMatrix( ny, group ) ) return false;
+            //if( !luSolve( ny, group ) )      return false;
 
             //qDebug() <<"CircMatrix::solveMatrix. Circuit"<<group<<ny<<"Nodes\n";
 
@@ -157,10 +157,10 @@ bool CircMatrix::factorMatrix( int n, int group  )
     // factors a matrix into upper and lower triangular matrices by
     // gaussian elimination.  On entry, a[0..n-1][0..n-1] is the
     // matrix to be factored.  ipvt[] returns an integer vector of pivot
-    // indices, used in the solve routine.
+    // indices, used in the lusolve routine.
     
     dp_matrix_t&  ap  = m_aList[group];
-    i_vector_t&  ipvt = m_ipvtList[group];
+    //i_vector_t&  ipvt = m_ipvtList[group];
     
     d_matrix_t& a = m_aFaList[group];
     for( int i=0; i<n; ++i )
@@ -175,12 +175,12 @@ bool CircMatrix::factorMatrix( int n, int group  )
     /*std::cout << "\nAdmitance Matrix:\n"<< std::endl;
     for( int i=0; i<n; i++ )
     {
-        for( int j=0; j<n; j++ )
+        for( int j=0; j<n; ++j )
         {
-            std::cout << std::setw(10);
+            std::cout << std::setw(15);
             std::cout << a[i][j];
         }
-        //std::cout << std::setw(10);
+        //std::cout << std::setw(15);
         //std::cout << ipvt[i] << std::endl;
         std::cout << std::endl;
     }*/
@@ -197,8 +197,8 @@ bool CircMatrix::factorMatrix( int n, int group  )
             a[i][j] = q;
         }
                            // calculate lower triangular elements for this column
-        double largest = 0;
-        int largestRow = -1;
+        //double largest = 0;
+        //int largestRow = -1;
         for( i=j; i<n; ++i )
         {
             double q = a[i][j];
@@ -207,16 +207,16 @@ bool CircMatrix::factorMatrix( int n, int group  )
                 for( k=0; k<j; ++k ) q -= a[i][k]*a[k][j]; //
                 a[i][j] = q;
             }
-            double x = qFabs( q );
+            /*double x = qFabs( q );
 
             if( x >= largest )
             {
                 largest = x;
                 largestRow = i;
-            }
+            }*/
         }
-        if( largestRow == -1 ) return false;
-        if( j != largestRow ) // pivoting
+        //if( largestRow == -1 ) return false;
+        /*if( j != largestRow ) // pivoting
         {
             double x;
             for( k=0; k<n; ++k )
@@ -225,10 +225,11 @@ bool CircMatrix::factorMatrix( int n, int group  )
                 a[largestRow][k] = a[j][k];
                 a[j][k] = x;
             }
-        }
-        ipvt[j] = largestRow;      // keep track of row interchanges
+        }*/
+        //ipvt[j] = largestRow;      // keep track of row interchanges
 
-        if( a[j][j] == 0.0 ) a[j][j]=1e-18;           // avoid zeros
+        if( a[j][j] == 0.0 )
+            a[j][j] = 1e-18;           // avoid zeros
 
         if( j != n-1 )
         {
@@ -244,10 +245,10 @@ bool CircMatrix::factorMatrix( int n, int group  )
     {
         for( int j=0; j<n; j++ )
         {
-            std::cout << std::setw(10);
+            std::cout << std::setw(15);
             std::cout << a[i][j];
         }
-        std::cout << std::setw(10);
+        std::cout << std::setw(15);
         std::cout << ipvt[i] << std::endl;
         //std::cout << std::endl;
     }*/
@@ -262,42 +263,44 @@ bool CircMatrix::luSolve( int n, int group )
 
     const d_matrix_t&  a    = m_aFaList[group];
     const dp_vector_t& bp   = m_bList[group];
-    const i_vector_t&  ipvt = m_ipvtList[group];
+    //const i_vector_t&  ipvt = m_ipvtList[group];
 
     d_vector_t b;
     b.resize( n , 0 );
     for( int i=0; i<n; ++i ) b[i] = *(bp[i]);
     
-    /*std::cout << "\nAdmitance Matrix luSolve:\n"<< std::endl;
+    /*std::cout << "\nFactored Matrix: luSolve:\n"<< std::endl;
     for( int i=0; i<n; i++ )
     {
         for( int j=0; j<n; j++ )
         {
-            std::cout << std::setw(10);
+            std::cout << std::setw(15);
             std::cout << a[i][j]; // <<"\t";
         }
-        std::cout << std::setw(10);
+        std::cout << std::setw(15);
         std::cout << b[i]<<"\t"<< ipvt[i] << std::endl;
     }*/
 
     int i;
     for( i=0; i<n; ++i )                 // find first nonzero b element
     {
-        int row = ipvt[i];
+        /*int row = ipvt[i];
 
         double swap = b[row];
         b[row] = b[i];
-        b[i] = swap;
-        if( swap != 0 ) break;
+        b[i]   = swap;
+        if( swap != 0 ) break;*/
+        if( b[i] != 0 ) break;
     }
 
     int bi = i++;
     for( /*i = bi*/; i<n; ++i )
     {
-        int    row = ipvt[i];
-        double tot = b[row];
+        //int    row = ipvt[i];
+        //double tot = b[row];
+        double tot = b[i];
 
-        b[row] = b[i];
+        //b[row] = b[i];
         for( int j=bi; j<i; ++j ) tot -= a[i][j]*b[j]; // forward substitution using the lower triangular matrix
         b[i] = tot;
     }
@@ -313,7 +316,9 @@ bool CircMatrix::luSolve( int n, int group )
         if( qIsNaN( volt ) || qIsInf( volt ) ) { isOk = false; volt = 0; }
         b[i] = volt;
         m_eNodeActive->at(i)->setVolt( volt );      // Set Node Voltages
+        //qDebug() << m_eNodeActive->at(i)->itemId() << volt;
     }
+    //qDebug() << "                                  -----";
     return isOk;
 }
 

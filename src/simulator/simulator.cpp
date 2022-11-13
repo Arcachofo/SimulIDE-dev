@@ -249,8 +249,9 @@ void Simulator::createNodes()
 
     int i = 0;
     QStringList pinList;
-    QStringList pins = Circuit::self()->m_pinMap.keys();
-    for( QString pinName : pins )
+    QStringList pinNames = Circuit::self()->m_pinMap.keys();
+    pinNames.sort();
+    for( QString pinName : pinNames )
     {
         Pin* pin = Circuit::self()->m_pinMap.value( pinName );
         if( !pin ) continue;
