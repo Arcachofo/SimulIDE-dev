@@ -6,7 +6,7 @@
 #ifndef USARTMODULE_H
 #define USARTMODULE_H
 
-#include<QHash>
+#include<QList>
 
 #include "mcumodule.h"
 #include "e-element.h"

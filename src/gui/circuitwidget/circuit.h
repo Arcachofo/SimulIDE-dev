@@ -75,7 +75,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         QList<Component*>* compList() { return &m_compList; }
         QList<Connector*>* conList()  { return &m_conList; }
-        QList<Node*>*      nodeList()  { return &m_nodeList; }
+        QList<Node*>*      nodeList() { return &m_nodeList; }
 
         Component* getCompById( QString id );
         QString origId( QString name ) { return m_idMap.value( name ); }
@@ -83,8 +83,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool is_constarted() { return m_conStarted ; }
 
         bool pasting() { return m_pasting; }
-        bool isBusy() { return m_busy || m_pasting | m_deleting; }
-        bool isSubc() { return m_createSubc; }
+        bool isBusy()  { return m_busy || m_pasting | m_deleting; }
+        bool isSubc()  { return m_createSubc; }
         
         void addPin( Pin* pin, QString pinId ) { m_pinMap[ pinId ] = pin; m_LdPinMap[ pinId ] = pin; }
         void remPin( QString pinId ) { m_pinMap.remove( pinId ); }
@@ -102,7 +102,7 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void redo();
         void importCirc( QPointF eventpoint );
         void bom();
-        void saveChanges();
+        void saveBackup();
 
     protected:
         void mousePressEvent( QGraphicsSceneMouseEvent* event );

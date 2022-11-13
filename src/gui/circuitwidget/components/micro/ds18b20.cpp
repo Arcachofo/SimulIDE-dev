@@ -472,7 +472,7 @@ uint8_t Ds18b20::crc8( uint8_t* addr, uint8_t len ) // DS18B20 crc8 calc
 
 void Ds18b20::setROM( QString ROMstr )
 {
-    if( Circuit::self()->pasting() ) return; /// ADD THIS LINE
+    if( Circuit::self()->pasting() ) return;
 
     bool ok;
     QStringList lstROM = ROMstr.split(" ");

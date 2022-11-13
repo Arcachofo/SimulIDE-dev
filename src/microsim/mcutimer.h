@@ -6,8 +6,6 @@
 #ifndef MCUTIMER_H
 #define MCUTIMER_H
 
-#include<QHash>
-
 #include "mcuprescaled.h"
 #include "e-element.h"
 

@@ -77,14 +77,6 @@ void eBJT::stamp()
     BASE->createCurrent();
     COLL->createCurrent();
     EMIT->createCurrent();
-
-    //double r = ((double)(std::rand() %5))*1e-2; // Random start diference
-    /*m_BE->stampAdmitance( 1e-12 );
-    m_EB->stampAdmitance( 1e-12 );
-    m_BC->stampAdmitance( 1e-12 );
-    m_CB->stampAdmitance( 1e-12 );
-    m_CE->stampAdmitance( 1e-12 );
-    m_EC->stampAdmitance( 1e-12 );*/
 }
 
 void eBJT::voltChanged()

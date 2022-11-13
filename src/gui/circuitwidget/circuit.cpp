@@ -55,8 +55,8 @@ Circuit::Circuit( qreal x, qreal y, qreal width, qreal height, CircuitView*  par
     m_showScroll = MainWindow::self()->settings()->value( "Circuit/showScroll" ).toBool();
     m_filePath   = "";//qApp->applicationDirPath()+"/new.simu"; // AppImage tries to write in read olny filesystem
 
-    connect( &m_bckpTimer, SIGNAL(timeout() ),
-                     this, SLOT( saveChanges()), Qt::UniqueConnection );
+    connect( &m_bckpTimer, SIGNAL( timeout() ),
+                     this, SLOT( saveBackup() ), Qt::UniqueConnection );
 }
 
 Circuit::~Circuit()
@@ -572,7 +572,7 @@ void Circuit::saveState()
     m_busy = false;
 }
 
-void Circuit::saveChanges()
+void Circuit::saveBackup()
 {
     if( m_simulator->isRunning() ) return;
     if( !m_changed || m_conStarted || m_busy || m_deleting ) return;
