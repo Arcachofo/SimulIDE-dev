@@ -228,9 +228,11 @@ void Pin::setLabelText( QString label, bool over )
     m_overScore = -1;
     if( over && label.startsWith("!")) // Draw overscore
     {
-        if( !m_inverted) m_overScore = label.indexOf("!");
+        if( !m_inverted ) m_overScore = label.indexOf("!");
         label.replace("!","");
     }
+    /// Hack: if ItemStacksBehindParent then overscore does not paint
+    setFlag( QGraphicsItem::ItemStacksBehindParent, m_overScore == -1 );
     m_label.setText( label );
     setLabelPos();
 }
