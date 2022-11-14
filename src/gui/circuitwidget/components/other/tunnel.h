@@ -52,6 +52,7 @@ class MAINMODULE_EXPORT Tunnel : public Component
         void mousePressEvent( QGraphicsSceneMouseEvent* event ) override;
 
         int m_size;
+
         QString m_name;
         QString m_tunUid;
 

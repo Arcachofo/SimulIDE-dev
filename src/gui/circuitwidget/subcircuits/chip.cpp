@@ -50,8 +50,15 @@ Chip::Chip( QObject* parent, QString type, QString id )
     QFont f;
     f.setFamily("Ubuntu Mono");
     f.setWeight( 65 );
-    f.setPixelSize(5);
+#ifdef Q_OS_UNIX
     f.setLetterSpacing( QFont::PercentageSpacing, 120 );
+#else
+    //f.setLetterSpacing( QFont::AbsoluteSpacing, -1 );
+    f.setWeight( 100 );
+    //f.setStretch( 99 );
+#endif
+    f.setPixelSize(5);
+
     m_label.setFont( f );
     m_label.setDefaultTextColor( QColor( 125, 125, 110 ) );
     m_label.setAcceptedMouseButtons( 0 );
@@ -164,7 +171,7 @@ void Chip::initPackage_old( QDomElement root )
             int ypos = 0;
             int angle = 0;
 
-            if( side=="left" ){
+            if( side=="left"){
                 xpos = -8;
                 ypos = 8*pos;
                 angle = 180;
@@ -174,12 +181,12 @@ void Chip::initPackage_old( QDomElement root )
                 ypos = -8;
                 angle = 90;
             }
-            else if( side=="right" ){
+            else if( side=="right"){
                 xpos =  m_width*8+8;
                 ypos = 8*pos;
                 angle = 0;
             }
-            else if( side=="bottom" ){
+            else if( side=="bottom"){
                 xpos = 8*pos;
                 ypos =  m_height*8+8;
                 angle = 270;
@@ -191,7 +198,9 @@ void Chip::initPackage_old( QDomElement root )
             addPin( id, type, label, chipPos, xpos, ypos, angle, 8 );
         }
         node = node.nextSibling();
-}   }
+    }
+    update();
+}
 
 void Chip::initPackage( QDomElement root )
 {
@@ -218,7 +227,9 @@ void Chip::initPackage( QDomElement root )
             addPin( id, type, label, chipPos, xpos, ypos, angle, length );
         }
         node = node.nextSibling();
-}   }
+    }
+    update();
+}
 
 void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
 {

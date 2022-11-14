@@ -414,22 +414,17 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     else if( angle == 90 ) tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
     else                   tunnel->setRotation( angle );
 
-    pin = tunnel->getPin();
+    pin  = tunnel->getPin();
     type = type.toLower();
 
-    if( m_isLS )
-    {
-        label.remove("!");
-        pin->setLabelColor( QColor( 0, 0, 0 ) );
-    }
-    else pin->setLabelColor( QColor( 250, 250, 200 ) );
+    if( m_isLS ) pin->setLabelColor( QColor( 0, 0, 0 ) );
+    else         pin->setLabelColor( QColor( 250, 250, 200 ) );
 
     if( type == "unused" || type == "nc" )
     {
         pin->setUnused( true );
         if( m_isLS )
         {
-            label.remove("!");
             pin->setVisible( false );
             pin->setLabelText( "" );
         }

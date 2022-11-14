@@ -40,6 +40,7 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_angle      = angle;
     m_Hflip = 1;
     m_Vflip = 1;
+    m_overScore = -1;
     
     m_color[0] = Qt::black;
     m_color[1] = QColor( 100, 100, 250 );
@@ -51,16 +52,14 @@ Pin::Pin( int angle, const QPoint pos, QString id, int index, Component* parent 
     m_color[7] = QColor( 250, 120, 0 );
 
     QFont font;
-    #ifdef _WIN32
-    font.setFamily("Consolas");
-    //font.setStretch( 99 );
-    #else
     font.setFamily("Ubuntu Mono");
-    #endif
-
     font.setPixelSize(7);
-    //font.setStretch( 110 );
-    //font.setLetterSpacing( QFont::PercentageSpacing, 105 );
+    font.setStretch( 100 );
+    font.setLetterSpacing( QFont::PercentageSpacing, 100 );
+#ifndef Q_OS_UNIX
+    font.setLetterSpacing( QFont::PercentageSpacing, 87 );
+    //font.setStretch( 99 );
+#endif
     m_label.setFont( font );
     m_label.setText("");
     m_label.setBrush( QColor( 250, 250, 200 ) );
@@ -222,25 +221,15 @@ void Pin::mousePressEvent( QGraphicsSceneMouseEvent* event )
             else                                   Circuit::self()->newconnector( this );
 }   }   }
 
-void Pin::setLabelText( QString label )
+void Pin::setLabelText( QString label, bool over )
 {
     label = label.simplified();
     m_labelText = label;
-
-    if( label.contains("!"))
+    m_overScore = -1;
+    if( over && label.startsWith("!")) // Draw overscore
     {
-        QString text;
-        bool inv = false;
-        for( int i=0; i<label.size(); i++ )
-        {
-            QString e = "!";
-            QChar ch = label[i];
-            if( ch == e[0] )  { inv = true; continue; }
-            e = " ";
-            if( inv && (ch != e[0]) ) text.append("\u0305");
-            text.append( ch );
-        }
-        label = text;
+        if( !m_inverted) m_overScore = label.indexOf("!");
+        label.replace("!","");
     }
     m_label.setText( label );
     setLabelPos();
@@ -252,52 +241,53 @@ void Pin::setLabelPos()
 
     int xlabelpos = pos().x();
     int ylabelpos = pos().y();
-    int height = (fm.height()+1)/2;
-    int space = ( height < 4 ) ? 2 : height/2;
+    m_labelheight = (fm.height()+1)/2;
+    m_labelWidth  = fm.width(m_label.text());
+    int space = ( m_labelheight < 4 ) ? 2 : m_labelheight/2;
     int offset = m_length + space;
 
     if( m_angle == 0 )         // Right side
     {
         m_label.setRotation( 0 );
         if( m_Hflip == -1 ) xlabelpos -= offset;
-        else                xlabelpos -= fm.width(m_label.text())+offset;
-        if( m_Vflip == -1 ) ylabelpos += height;
-        else                ylabelpos -= height;
+        else                xlabelpos -= m_labelWidth+offset;
+        if( m_Vflip == -1 ) ylabelpos += m_labelheight;
+        else                ylabelpos -= m_labelheight;
     }
     else if( m_angle == 90 )   // Top
     {
         m_label.setRotation(m_angle);
-        if( m_Hflip == -1 ) xlabelpos -= height;
-        else                xlabelpos += height;
-        if( m_Vflip == -1 ) ylabelpos += fm.width(m_label.text())+offset;
+        if( m_Hflip == -1 ) xlabelpos -= m_labelheight;
+        else                xlabelpos += m_labelheight;
+        if( m_Vflip == -1 ) ylabelpos += m_labelWidth+offset;
         else                ylabelpos += offset;
     }
     else if( m_angle == 180 )  // Left
     {
         m_label.setRotation( 0 );
-        if( m_Hflip == -1 ) xlabelpos += fm.width(m_label.text())+offset;
+        if( m_Hflip == -1 ) xlabelpos += m_labelWidth+offset;
         else                xlabelpos += offset;
-        if( m_Vflip == -1 ) ylabelpos += height;
-        else                ylabelpos -= height;
+        if( m_Vflip == -1 ) ylabelpos += m_labelheight;
+        else                ylabelpos -= m_labelheight;
     }
     else if( m_angle == 270 )  // Bottom
     {
         m_label.setRotation( m_angle );
-        if( m_Hflip == -1 ) xlabelpos += height;
-        else                xlabelpos -= height;
-        if( m_Vflip == -1 ) ylabelpos -= fm.width(m_label.text())+offset;
+        if( m_Hflip == -1 ) xlabelpos += m_labelheight;
+        else                xlabelpos -= m_labelheight;
+        if( m_Vflip == -1 ) ylabelpos -= m_labelWidth+offset;
         else                ylabelpos -= offset;
     }
     m_label.setPos( xlabelpos, ylabelpos );
     m_label.setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
+    update();
 }
 
 void Pin::setLabelColor( QColor color ) { m_label.setBrush( QBrush(color) ); }
 
 int Pin::labelSizeX()
 {
-    QFontMetrics fm( m_label.font() );
-    return fm.width( m_label.text() );
+    return m_labelWidth;
 }
 
 void Pin::setFontSize( int size )
@@ -374,11 +364,21 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 {
     if( !isVisible() ) return;
     //m_PinChanged = false;
-
-    QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-
     //painter->setBrush( Qt::red );
     //painter->drawRect( boundingRect() );
+
+    if( m_overScore > -1 )
+    {
+        qreal x = m_length+2.5;
+        qreal y = -m_labelheight+1;
+        qreal width = m_labelWidth-1;
+        if( m_angle == 0 ) y = -y; // Right
+
+        QPen pen( m_label.brush().color(), 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        painter->setPen( pen );
+        painter->drawLine( QPointF( x, y ), QPointF( x+width, y ) );
+    }
+    QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     if     ( m_unused  ) pen.setColor( QColor( 75, 120, 170 ));
     else if( m_animate )

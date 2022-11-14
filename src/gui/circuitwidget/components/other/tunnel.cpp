@@ -101,7 +101,7 @@ void Tunnel::setName( QString name )
     removeTunnel(); // Remove old name before setting new one
 
     m_name = name;
-    if( !m_packed ) m_pin[0]->setLabelText( name );
+    if( !m_packed ) m_pin[0]->setLabelText( name, false );
     if( name == "" ) m_size = 20;
     else  m_size = snapToGrid( m_pin[0]->labelSizeX()+4 );
     setRotated( m_rotated );
@@ -199,4 +199,5 @@ void Tunnel::paint( QPainter* p, const QStyleOptionGraphicsItem *option, QWidget
             QPointF(-m_size-8, 4 ) };
 
         p->drawPolygon( points, 5 );
-}   }
+    }
+}

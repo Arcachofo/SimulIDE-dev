@@ -71,7 +71,7 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         Pin* connectPin( bool connect );
 
         QString getLabelText() { return m_labelText; }
-        void setLabelText( QString label );
+        void setLabelText( QString label, bool over=true );
         void setLabelPos();
         void setLabelColor( QColor color );
         void setFontSize( int size );
@@ -118,6 +118,9 @@ class MAINMODULE_EXPORT Pin : public QObject, public QGraphicsItem, public ePin,
         int m_length;
         int m_Hflip;
         int m_Vflip;
+        int m_overScore;
+        int m_labelheight;
+        int m_labelWidth;
 
         bool m_blocked;
         bool m_isBus;

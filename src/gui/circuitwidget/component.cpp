@@ -53,6 +53,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_circRot  = 0;
 
     QFont f;
+    f.setFamily("Ubuntu Mono");
     f.setPixelSize( 10 );
     
     m_idLabel = new Label();
