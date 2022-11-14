@@ -380,7 +380,6 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
             pin->setUnused( true );
             if( m_isLS )
             {
-                label.remove("!");
                 pin->setVisible( false );
                 pin->setLabelText( "" );
             }

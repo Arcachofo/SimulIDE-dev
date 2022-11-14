@@ -285,11 +285,6 @@ void Pin::setLabelPos()
 
 void Pin::setLabelColor( QColor color ) { m_label.setBrush( QBrush(color) ); }
 
-int Pin::labelSizeX()
-{
-    return m_labelWidth;
-}
-
 void Pin::setFontSize( int size )
 {
     QFont font = m_label.font();
@@ -374,11 +369,11 @@ void Pin::paint( QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
         qreal width = m_labelWidth-1;
         if( m_angle == 0 ) y = -y; // Right
 
-        QPen pen( m_label.brush().color(), 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+        QPen pen( m_label.brush().color(), 0.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
         painter->setPen( pen );
         painter->drawLine( QPointF( x, y ), QPointF( x+width, y ) );
     }
-    QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen pen( m_color[0], 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin );
 
     if     ( m_unused  ) pen.setColor( QColor( 75, 120, 170 ));
     else if( m_animate )
