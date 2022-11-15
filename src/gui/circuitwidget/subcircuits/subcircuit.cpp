@@ -374,8 +374,8 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         pin->setId( pId );
         connect( this, SIGNAL( moved() ), pin, SLOT( isMoved() ), Qt::UniqueConnection );
 
-        if     ( type == "inverted" || type == "inv" ) pin->setInverted( true );
-        else if( type == "unused"   || type == "nc"  )
+        pin->setInverted( type == "inverted" || type == "inv" );
+        if( type == "unused" || type == "nc"  )
         {
             pin->setUnused( true );
             if( m_isLS )
