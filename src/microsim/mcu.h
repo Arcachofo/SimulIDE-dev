@@ -76,7 +76,6 @@ class MAINMODULE_EXPORT Mcu : public Chip
         virtual void stamp() override;
         virtual void updateStep() override;
         virtual void voltChanged() override;
-        virtual void remove() override;
 
         QString device() { return m_device; }
 
@@ -84,8 +83,8 @@ class MAINMODULE_EXPORT Mcu : public Chip
 
         bool load( QString fileName );
 
-        virtual void addPin( QString id, QString type, QString label,
-                             int pos, int xpos, int ypos, int angle , int length=8);
+        virtual Pin* addPin( QString id, QString type, QString label,
+                             int pos, int xpos, int ypos, int angle , int length=8) override;
 
         //void createCfgWord( QString name, uint16_t addr, uint16_t v );
 

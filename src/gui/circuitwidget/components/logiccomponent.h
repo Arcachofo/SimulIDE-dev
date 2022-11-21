@@ -35,6 +35,8 @@ class MAINMODULE_EXPORT LogicComponent : public IoComponent, public eClockedDevi
         QString triggerStr() { return m_enumUids.at( (int)m_trigger ); }
         void setTriggerStr( QString t );
 
+        virtual std::vector<Pin*> getPins() override;
+
         virtual void remove() override;
 
     protected:

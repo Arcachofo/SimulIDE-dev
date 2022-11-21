@@ -80,9 +80,11 @@ void Node::checkRemove() // Only remove if there are less than 3 connectors
         if( !Circuit::self()->deleting() )
         {
             Circuit::self()->nodeList()->removeOne( this );
+            Circuit::self()->compMap()->remove( m_id );
             if( this->scene() ) Circuit::self()->removeItem( this );
             this->deleteLater();
         }
+        Circuit::self()->addCompState( this, "new", stateAdd );
 }   }
 
 void Node::joinConns( int c0, int c1 )
@@ -96,8 +98,9 @@ void Node::joinConns( int c0, int c1 )
 
     if( pin1->conPin() != pin0 )
     {
-        Connector* con = new Connector( Circuit::self(), "Connector", con0->getUid(), pin0->conPin() );
+        Connector* con = new Connector( Circuit::self(), "Connector", "Connector-"+Circuit::self()->newSceneId(), pin0->conPin() );
         Circuit::self()->conList()->append( con );
+        Circuit::self()->compMap()->insert( con->getUid(), con );
 
         QStringList list0 = con0->pointList();
         QStringList list1 = con1->pointList();
@@ -123,12 +126,15 @@ void Node::joinConns( int c0, int c1 )
 
         con->setPointList( plist );
         con->closeCon( pin1->conPin() );
+        Circuit::self()->addCompState( con, "remove", stateAdd );
         if( this->isSelected() ) con->setSelected( true );
     }
+    Circuit::self()->addCompState( con0, "new", stateAdd );
     con0->setStartPin( NULL );
     con0->setEndPin( NULL );
     con0->remove();
 
+    Circuit::self()->addCompState( con1, "new", stateAdd );
     con1->setStartPin( NULL );
     con1->setEndPin( NULL );
     con1->remove();

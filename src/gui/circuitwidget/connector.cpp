@@ -35,7 +35,7 @@ new StringProp<Connector>( "itemtype"  ,"","", this, &Connector::itemType,   &Co
 new StringProp<Connector>( "uid"       ,"","", this, &Connector::getUid,     &Connector::dummySetter ),
 new StringProp<Connector>( "startpinid","","", this, &Connector::startPinId, &Connector::dummySetter ),
 new StringProp<Connector>( "endpinid"  ,"","", this, &Connector::endPinId,   &Connector::dummySetter ),
-new StringProp<Connector>( "pointList" ,"","", this, &Connector::pListStr,   &Connector::dummySetter ),
+new StringProp<Connector>( "pointList" ,"","", this, &Connector::pListStr,   &Connector::setPointListStr ),
     }} );
 }
 Connector::~Connector(){}
@@ -78,23 +78,42 @@ void Connector::remConLine( ConnectorLine* line  )
     if( m_actLine > 0 ) m_actLine -= 1;
 }
 
+void Connector::setPointListStr( QString pl )
+{
+    setPointList( pl.split(",") );
+    //remNullLines();
+}
+
 void Connector::setPointList( QStringList plist )
 {
     remLines();
     m_pointList = plist;
 
-    int p1x = plist.first().toInt();
+    int index = 0;
+    int p1x = plist.at(0).toInt();
     int p1y = plist.at(1).toInt();
     int p2x = plist.at(plist.size()-2).toInt();
     int p2y = plist.last().toInt();
 
-    addConLine( m_startPin->scenePos().x(), m_startPin->scenePos().y(), p1x, p1y, 0 );
+    ConnectorLine* line1 = NULL;
 
     for( int i=2; i<plist.size(); i+=2 )
     {
         p2x = plist.at(i).toInt();
         p2y = plist.at(i+1).toInt();
-        addConLine( p1x, p1y, p2x, p2y, i/2 );
+
+        ConnectorLine* line2 = new ConnectorLine( p1x, p1y, p2x, p2y, this );
+        line2->setIsBus( m_isBus );
+        m_conLineList.insert( index, line2 );
+        Circuit::self()->addItem( line2 );
+
+        if( line1 )
+        {
+            line1->setNextLine( line2 );
+            line2->setPrevLine( line1 );
+        }
+        index++;
+        line1 = line2;
         p1x = p2x;
         p1y = p2y;
 }   }
@@ -304,6 +323,7 @@ void Connector::remove()
     if( m_endPin )   m_endPin->remove();
 
     Circuit::self()->conList()->removeOne( this );
+    Circuit::self()->compMap()->remove( m_id );
     remLines();
 }
 
@@ -324,7 +344,7 @@ void Connector::closeCon( Pin* endpin )
     for( ConnectorLine* line : m_conLineList ) line->setCursor( Qt::CrossCursor );
 }
 
-void Connector::splitCon( int index, Pin* pin1, Pin* pin2 )
+void Connector::splitCon(int index, Pin* pin0, Pin* pin2 )
 {
     if( !m_endPin ) return;
     disconnectLines( index-1, index );
@@ -333,10 +353,11 @@ void Connector::splitCon( int index, Pin* pin1, Pin* pin2 )
 
     Connector* new_connector = new Connector( Circuit::self(), "Connector", id, pin2 );
     Circuit::self()->conList()->append( new_connector );
+    Circuit::self()->compMap()->insert( id, new_connector  );
 
     int newindex = 0;
     int size = m_conLineList.size();
-    for( int i=index; i<size; ++i)
+    for( int i=index; i<size; ++i )
     {
         ConnectorLine* lline = m_conLineList.takeAt( index );
         new_connector->lineList()->insert( newindex, lline );
@@ -351,7 +372,9 @@ void Connector::splitCon( int index, Pin* pin1, Pin* pin2 )
     else             m_actLine = 0;
     
     new_connector->closeCon( m_endPin );    // Close new_connector first please
-    closeCon( pin1 );                       // Close this
+    closeCon( pin0 );                       // Close this
+    Circuit::self()->addCompState( this, "remove", stateAdd );
+    Circuit::self()->addCompState( new_connector, "remove", stateAdd );
 }
 
 void Connector::updateLines()

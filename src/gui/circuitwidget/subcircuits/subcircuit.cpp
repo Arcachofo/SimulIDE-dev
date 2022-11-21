@@ -346,11 +346,11 @@ void SubCircuit::loadSubCircuit( QString fileName )
                 else qDebug() << "SubCircuit:"<<m_name<<m_id<< "ERROR Creating Component: "<<type<<uid<<label;
 }   }   }   }
 
-void SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
+Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
 {
     if( m_initialized && m_pinTunnels.contains( m_id+"-"+id ) )
     {
-        updatePin( id, type, label, xpos, ypos, angle, length );
+        return updatePin( id, type, label, xpos, ypos, angle, length );
     }else{
         QColor color = Qt::black;
         if( !m_isLS ) color = QColor( 250, 250, 200 );
@@ -372,18 +372,9 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         Pin* pin = tunnel->getPin();
         pin->setObjectName( pId );
         pin->setId( pId );
+        pin->setInverted( type == "inverted" || type == "inv" );
         connect( this, SIGNAL( moved() ), pin, SLOT( isMoved() ), Qt::UniqueConnection );
 
-        pin->setInverted( type == "inverted" || type == "inv" );
-        if( type == "unused" || type == "nc"  )
-        {
-            pin->setUnused( true );
-            if( m_isLS )
-            {
-                pin->setVisible( false );
-                pin->setLabelText( "" );
-            }
-        }
         tunnel->setRotated( angle >= 180 );      // Our Pins at left side
         if     ( angle == 180) tunnel->setRotation( 0 );
         else if( angle == 90 ) tunnel->setRotation( -90 ); // QGraphicsItem 0º i at right side
@@ -393,18 +384,18 @@ void SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         pin->setLabelColor( color );
         pin->setLabelText( label );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
+        return pin;
+    }
+}
 
-        m_ePin[pos-1] = pin;
-}   }
-
-void SubCircuit::updatePin( QString id, QString type, QString label, int xpos, int ypos, int angle, int length )
+Pin* SubCircuit::updatePin( QString id, QString type, QString label, int xpos, int ypos, int angle, int length )
 {
     Pin* pin = NULL;
     Tunnel* tunnel = m_pinTunnels.value( m_id+"-"+id );
     if( !tunnel )
     {
         qDebug() <<"SubCircuit::updatePin Pin Not Found:"<<id<<type<<label;
-        return;
+        return NULL;
     }
     tunnel->setPos( xpos, ypos );
     tunnel->setRotated( angle >= 180 );      // Our Pins at left side
@@ -434,6 +425,8 @@ void SubCircuit::updatePin( QString id, QString type, QString label, int xpos, i
     pin->setVisible( true );
     pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
     pin->isMoved();
+
+    return pin;
 }
 
 void SubCircuit::setLogicSymbol( bool ls )
@@ -467,6 +460,7 @@ void SubCircuit::remove()
         comp->setParentItem( NULL );
         Circuit::self()->removeComp( comp );
     }
+    m_pin.clear();
     Component::remove();
 }
 

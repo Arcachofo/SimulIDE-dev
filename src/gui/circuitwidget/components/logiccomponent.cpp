@@ -38,6 +38,14 @@ void LogicComponent::stamp()
     if( m_oePin ) m_oePin->changeCallBack( this );
 }
 
+std::vector<Pin*> LogicComponent::getPins()
+{
+    std::vector<Pin*> pins = IoComponent::getPins();
+    if( m_oePin  ) pins.emplace_back( m_oePin );
+    if( m_clkPin ) pins.emplace_back( m_clkPin );
+    return pins;
+}
+
 void LogicComponent::remove()
 {
     if( m_oePin ) m_oePin->removeConnector();

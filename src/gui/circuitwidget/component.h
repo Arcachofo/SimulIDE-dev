@@ -15,6 +15,8 @@
 class Pin;
 class eNode;
 class Label;
+class Connector;
+class ConnectorLine;
 
 class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, public Updatable
 {
@@ -93,6 +95,8 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         int  vflip() { return m_Vflip; }
         void setVflip( int vf );
+
+        virtual std::vector<Pin*> getPins() { return m_pin; }
 
         QString print();
 
@@ -178,6 +182,10 @@ class MAINMODULE_EXPORT Component : public CompBase, public QGraphicsItem, publi
 
         Label* m_idLabel;
         Label* m_valLabel;
+
+        QList<ConnectorLine*> m_linMoveList;
+        QList<Connector*> m_conMoveList;
+        QList<Component*> m_compMoveList;
 
         std::vector<Pin*> m_pin;
 };

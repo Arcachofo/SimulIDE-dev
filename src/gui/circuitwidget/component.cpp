@@ -212,40 +212,56 @@ void Component::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
     event->accept();
     
     QPointF delta = togrid(event->scenePos()) - togrid(event->lastScenePos());
-    bool deltaH  = fabs( delta.x() )> 0;
-    bool deltaV  = fabs( delta.y() )> 0;
-    if( !deltaH && !deltaV ) return;
+    if( !(fabs( delta.x() )> 0) && !(fabs( delta.y() )> 0) ) return;
 
-    QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
-
-    if( !m_moving ){
-        Circuit::self()->saveState();
+    if( !m_moving ) // Get lists of elements to move and save Undo state
+    {
+        Circuit::self()->addCompState( NULL, "", stateNew );
+        m_linMoveList.clear();
+        m_conMoveList.clear();
+        m_compMoveList.clear();
+        QList<QGraphicsItem*> itemlist = Circuit::self()->selectedItems();
+        for( QGraphicsItem* item : itemlist )
+        {
+            if( item->type() == UserType+2 ) // ConnectorLine selected
+            {
+                ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( item );
+                m_linMoveList.append( line );
+                Connector* con = line->connector();
+                if( !m_conMoveList.contains( con ) ) // Connectors selected
+                {
+                    m_conMoveList.append( con );
+                    Circuit::self()->addCompState( con, "pointList", stateAdd );
+                }
+            }
+            else if( item->type() == UserType+1 ) // Component selected
+            {
+                Component* comp =  qgraphicsitem_cast<Component*>( item );
+                Circuit::self()->addCompState( comp, "Pos", stateAdd );
+                m_compMoveList.append( comp );
+                std::vector<Pin*> pins = comp->getPins();
+                for( Pin* pin : pins )
+                {
+                    if( !pin ) continue;
+                    Connector* con = pin->connector();
+                    if( !con ) continue;
+                    if( !m_conMoveList.contains( con ) ) // Connector attached to selected Component
+                    {
+                        m_conMoveList.append( con );
+                        Circuit::self()->addCompState( con, "pointList", stateAdd );
+                    }
+                }
+            }
+        }
         m_moving = true;
     }
-    if( itemlist.size() > 1 )
+    for( ConnectorLine* line : m_linMoveList  ) line->moveSimple( delta ); // Move lines selected
+    for( Component*     comp : m_compMoveList ) comp->move( delta );       // Move Components selected
+    for( Connector*     con  : m_conMoveList )                             // Update Connectors
     {
-        QList<Connector*> conlist;
-
-        for( QGraphicsItem* item : itemlist )
-        {
-            if( item->type() != UserType+2 ) continue; // ConnectorLine
-            ConnectorLine* line =  qgraphicsitem_cast<ConnectorLine*>( item );
-            line->moveSimple( delta );
-            Connector* con = line->connector();
-            if( !conlist.contains( con ) ) conlist.append( con );
-        }
-        for( QGraphicsItem* item : itemlist )
-        {
-            if( item->type() != UserType+1 ) continue; // Component
-            Component* comp =  qgraphicsitem_cast<Component*>( item );
-            comp->move( delta );
-        }
-        for( Connector* con : conlist )
-        {
-            con->startPin()->isMoved();
-            con->endPin()->isMoved();
-    }   }
-    else this->move( delta );
+        con->startPin()->isMoved();
+        con->endPin()->isMoved();
+    }
 }
 
 void Component::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
@@ -259,7 +275,11 @@ void Component::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     event->accept();
     setCursor( Qt::OpenHandCursor );
 
-    m_moving = false;
+    if( m_moving )
+    {
+        m_moving = false;
+        Circuit::self()->saveState();
+    }
     Circuit::self()->update();
 }
 
@@ -415,14 +435,14 @@ void Component::slotProperties()
 
 void Component::H_flip()
 {
-    Circuit::self()->saveState();
+    Circuit::self()->addCompState( this, "hflip" );
     m_Hflip = -m_Hflip;
     setflip();
 }
 
 void Component::V_flip()
 {
-    Circuit::self()->saveState();
+    Circuit::self()->addCompState( this, "vflip" );
     m_Vflip = -m_Vflip;
     setflip();
 }
@@ -430,7 +450,7 @@ void Component::V_flip()
 void Component::rotateCW()
 {
     if( m_hidden ) return;
-    Circuit::self()->saveState();
+    Circuit::self()->addCompState( this, "rotation" );
     setRotation( rotation() + 90 );
     emit moved();
 }
@@ -438,7 +458,7 @@ void Component::rotateCW()
 void Component::rotateCCW()
 {
     if( m_hidden ) return;
-    Circuit::self()->saveState();
+    Circuit::self()->addCompState( this, "rotation" );
     setRotation( rotation() - 90 );
     emit moved();
 }
@@ -446,7 +466,7 @@ void Component::rotateCCW()
 void Component::rotateHalf()
 {
     if( m_hidden ) return;
-    Circuit::self()->saveState();
+    Circuit::self()->addCompState( this, "rotation" );
     setRotation( rotation() - 180);
     emit moved();
 }

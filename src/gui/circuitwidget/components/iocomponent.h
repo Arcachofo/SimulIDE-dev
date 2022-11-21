@@ -79,6 +79,8 @@ class MAINMODULE_EXPORT IoComponent : public Component
         void init( QStringList pins );
         void initPin( IoPin* pin );
 
+        virtual std::vector<Pin*> getPins() override;
+
         virtual void remove() override;
 
         virtual void setHidden( bool hid , bool hidLabel=false ) override;

@@ -392,6 +392,16 @@ void IoComponent::deletePins( std::vector<IoPin*>* pinList, uint pins )
     pinList->resize( newSize );
 }
 
+std::vector<Pin*> IoComponent::getPins()
+{
+    std::vector<Pin*> pins;
+    pins.reserve( m_inPin.size()+m_outPin.size()+m_otherPin.size() );
+    for( Pin* pin : m_inPin    ) pins.emplace_back( pin );
+    for( Pin* pin : m_outPin   ) pins.emplace_back( pin );
+    for( Pin* pin : m_otherPin ) pins.emplace_back( pin );
+    return pins;
+}
+
 void IoComponent::remove()
 {
     for( IoPin* pin : m_inPin )    pin->removeConnector();

@@ -47,8 +47,8 @@ QRectF ConnectorLine::boundingRect() const
     int p =-1;
     int d = 2;
 
-    if( dx != 0
-     && dy != 0 )     return QRect( 0   , 0   , dx  , dy );
+    if    ( dx != 0
+         && dy != 0 ) return QRect( 0   , 0   , dx  , dy );
     else if( dx > 0 ) return QRect(-1   ,-2   , dx+d, 4 );
     else if( dx < 0 ) return QRect( dx+p,-2   ,-dx+d, 4 );
     else if( dy > 0 ) return QRect(-2   ,-1   , 4   , dy+d );
@@ -198,7 +198,7 @@ void ConnectorLine::mousePressEvent( QGraphicsSceneMouseEvent* event )
             else if( evPoint==p2() ) m_moveP2 = true;
         }
         else{                                         // Connecting a wire here
-           if( Circuit::self()->is_constarted() )
+           if( Circuit::self()->is_constarted() )     // Wire started at Pin is connecting here
            {
                Connector* con = Circuit::self()->getNewConnector();
                if( con == this->connector() ) return;
@@ -214,10 +214,10 @@ bool ConnectorLine::connectToWire( QPoint point1 )
 {
     int index;
     int myindex = m_pConnector->lineList()->indexOf( this );
-       ConnectorLine* line;
+    ConnectorLine* line;
 
-    if(( ( (dy() == 0) && ( fabs( point1.x()-m_p2X ) < 8 ) ) // point near the p2 corner
-     || ( (dx() == 0) && ( fabs( point1.y()-m_p2Y ) < 8 ) ) )
+    if((( dy() == 0 && fabs( point1.x()-m_p2X ) < 8 ) // point near the p2 corner
+     || ( dx() == 0 && fabs( point1.y()-m_p2Y ) < 8 ) )
      && ( myindex != m_pConnector->lineList()->size()-1 ) )
     {
     if( myindex == m_pConnector->lineList()->size()-1 ) return false;
@@ -225,8 +225,8 @@ bool ConnectorLine::connectToWire( QPoint point1 )
     index = myindex+1;
     line = m_pConnector->lineList()->at( index );
     }
-    else if(( ( (dy() == 0) && ( fabs( point1.x()-m_p1X ) < 8 ) ) // point near the p1 corner
-          || ( (dx() == 0) && ( fabs( point1.y()-m_p1Y ) < 8 ) ) )
+    else if((( dy() == 0 && fabs( point1.x()-m_p1X ) < 8 ) // point near the p1 corner
+          || ( dx() == 0 && fabs( point1.y()-m_p1Y ) < 8 ) )
           && ( myindex != 0 ) )
     {
         if( myindex == 0 ) return false;
@@ -250,12 +250,20 @@ bool ConnectorLine::connectToWire( QPoint point1 )
 
     if( Simulator::self()->isRunning() )  CircuitWidget::self()->powerCircOff();
 
-    m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
-
     if( Circuit::self()->is_constarted() )   // A Connector wants to connect here (ends in a node)
-       Circuit::self()->closeconnector( node->getPin(1) );
+    {
+        Circuit::self()->addCompState( m_pConnector, "new", stateAdd );
+        m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
+        Circuit::self()->addCompState( node, "remove", stateAdd );
+        Circuit::self()->closeconnector( node->getPin(1) );
+    }
     else                                     // A new Connector created here (starts in a node)
-       Circuit::self()->newconnector( node->getPin(1) );      // start a new connector
+    {
+        Circuit::self()->newconnector( node->getPin(1) );
+        Circuit::self()->addCompState( m_pConnector, "new", stateAdd );
+        m_pConnector->splitCon( index, node->getPin(0), node->getPin(2) );
+        Circuit::self()->addCompState( node, "remove", stateAdd );
+    }
     return true;
 }
 
@@ -265,9 +273,9 @@ void ConnectorLine::mouseMoveEvent( QGraphicsSceneMouseEvent* event )
 
     QPoint delta = togrid( event->scenePos() ).toPoint() - togrid(event->lastScenePos()).toPoint();
 
-    if( !m_moving )
+    if( !m_moving && !Circuit::self()->is_constarted() )
     {
-        Circuit::self()->saveState();
+        Circuit::self()->addCompState( m_pConnector, "pointList" );
         m_moving = true;
     }
 
@@ -295,8 +303,9 @@ void ConnectorLine::mouseReleaseEvent( QGraphicsSceneMouseEvent* event )
     event->accept();
     m_moveP1 = false;
     m_moveP2 = false;
-    m_moving = false;
     m_pConnector->remNullLines();
+    if( m_moving ) Circuit::self()->saveState();
+    m_moving = false;
 }
 
 void ConnectorLine::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )

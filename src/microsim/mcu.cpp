@@ -294,14 +294,6 @@ void Mcu::loadEEPROM()
 
 void Mcu::saveEEPROM() { MemData::saveData( m_eMcu.eeprom() ); }
 
-void Mcu::remove()
-{
-    for( Pin* pin : m_pinList ) pin->removeConnector();
-    m_pinList.clear();
-
-    Component::remove();
-}
-
 void Mcu::slotLoad()
 {
     QDir dir( m_lastFirmDir );
@@ -460,42 +452,38 @@ void Mcu::setSerialMon( int s )
     if( s>=0 ) slotOpenTerm( s );
 }
 
-void Mcu::addPin( QString id, QString type, QString label,
+Pin* Mcu::addPin( QString id, QString type, QString label,
                   int pos, int xpos, int ypos, int angle, int length )
 {
-    if( type == "nc" ) Chip::addPin( id, type, label, pos, xpos, ypos, angle, length );
-    else{
-        IoPin* pin = NULL;
-        if( !type.isEmpty() && !type.contains("nul") )
-        {
-            if( type == "rst" )
-                 pin = m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
-            else pin = m_eMcu.getIoPin( id ); // Control Port
-
-        }
-        else pin = m_eMcu.getIoPin( id ); // I/O Port
-
-        if( !pin ) return;
-
-        QColor color = Qt::black;
-        if( !m_isLS ) color = QColor( 250, 250, 200 );
-
-        if( type.startsWith("nul") )
-        {
-            pin->setVisible( false );
-            pin->setLabelText( "" );
-        }
-        else if( type.startsWith("inv") ) pin->setInverted( true );
-
-        pin->setPackageType( type );
-        pin->setPos( QPoint( xpos, ypos ) );
-        pin->setPinAngle( angle );
-        pin->setLength( length );
-        pin->setLabelText( label );
-        pin->setLabelColor( color );
-        pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
-        m_pinList.append( pin );
+    IoPin* pin = NULL;
+    if( type == "rst" )
+    {
+        if( !m_resetPin )
+            m_resetPin = new IoPin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this, input );
+        pin = m_resetPin;
     }
+    else pin = m_eMcu.getIoPin( id ); // I/O Port
+
+    if( !pin ) return NULL;
+
+    QColor color = Qt::black;
+    if( !m_isLS ) color = QColor( 250, 250, 200 );
+
+    if( type.startsWith("nul") )
+    {
+        pin->setVisible( false );
+        pin->setLabelText( "" );
+    }
+    else if( type.startsWith("inv") ) pin->setInverted( true );
+
+    pin->setPackageType( type );
+    pin->setPos( QPoint( xpos, ypos ) );
+    pin->setPinAngle( angle );
+    pin->setLength( length );
+    pin->setLabelText( label );
+    pin->setLabelColor( color );
+    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+    return pin;
 }
 
 bool Mcu::rstPinEnabled()

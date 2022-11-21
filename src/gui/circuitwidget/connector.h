@@ -23,6 +23,7 @@ class MAINMODULE_EXPORT Connector : public CompBase
 
         QString pListStr() { return m_pointList.join(","); }
         QStringList pointList() { refreshPointList(); return m_pointList; }
+        void setPointListStr( QString pl );
         void setPointList( QStringList pl );
 
         void dummySetter( QString ) {;}
@@ -46,7 +47,7 @@ class MAINMODULE_EXPORT Connector : public CompBase
         void refreshPointList();
         void updateConRoute( Pin* nod, QPointF this_point );
         void closeCon( Pin* endpin );
-        void splitCon( int index, Pin* pin1, Pin* pin2 );
+        void splitCon( int index, Pin* pin0, Pin* pin2 );
 
         void updateLines();
 
@@ -59,12 +60,12 @@ class MAINMODULE_EXPORT Connector : public CompBase
         void move( QPointF delta );
 
         void remove();
+        void remLines();
 
         bool m_freeLine;
 
     private:
         void remConLine( ConnectorLine* line  );
-        void remLines();
         void updateCon();
         void connectLines( int index1, int index2 );
         void disconnectLines( int index1, int index2 );

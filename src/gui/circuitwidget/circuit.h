@@ -13,6 +13,13 @@
 #include "connector.h"
 #include "pin.h"
 
+enum stateMode{
+    stateNew=1,
+    stateAdd=2,
+    stateSave=4,
+    stateAll=1+2+4
+};
+
 class CircuitView;
 class Simulator;
 class Node;
@@ -48,13 +55,12 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool deleting() { return m_deleting; }
         void compRemoved( bool removed ) { m_compRemoved = removed; }
         void saveState();
+        void addCompState( CompBase* c, QString p, stateMode=stateAll );
         void unSaveState() { m_undoStack.takeLast(); }
         void setChanged() { m_changed = true; }
 
         void deselectAll();
         void accepKeys( bool a ) { m_acceptKeys = a; }
-
-        void drawBackground( QPainter* painter, const QRectF &rect );
 
         Pin* findPin( int x, int y, QString id );
 
@@ -69,13 +75,14 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void closeconnector( Pin* endpin );
         void deleteNewConnector();
         void updateConnectors();
-        Connector* getNewConnector() { return new_connector; }
+        Connector* getNewConnector() { return m_newConnector; }
 
         void addNode( Node* node );
 
         QList<Component*>* compList() { return &m_compList; }
         QList<Connector*>* conList()  { return &m_conList; }
         QList<Node*>*      nodeList() { return &m_nodeList; }
+        QHash<QString, CompBase*>* compMap() { return &m_compMap;}
 
         Component* getCompById( QString id );
         QString origId( QString name ) { return m_idMap.value( name ); }
@@ -91,6 +98,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void updatePin( ePin* epin, QString oldId, QString newId );
 
         const QString getFilePath() const { return m_filePath; }
+
+        void drawBackground( QPainter* painter, const QRectF &rect );
 
     signals:
         void keyEvent( QString key, bool pressed );
@@ -113,11 +122,26 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         void dropEvent( QGraphicsSceneDragDropEvent* event );
 
     private:
-        QString getCompId( QString &pinName );
+        struct compState{
+            QString component;
+            QString property;
+            QString valStr;
+        };
+        struct circState{
+                QList<compState> remove;
+                QList<compState> create;
+                int size() { return remove.size()+create.size(); }
+                void clear() { remove.clear(); create.clear(); }
+        };
+
+        //typedef QList<compState> circState;
+
+        void restoreState( circState step );
         void loadStrDoc( QString &doc );
+        bool saveString( QString &fileName, QString doc );
         QString circuitHeader();
         QString circuitToString();
-        bool saveString(QString &fileName, QString doc );
+        QString getCompId( QString &pinName );
 
         void updatePinName( QString* name );
 
@@ -128,10 +152,13 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
 
         QRect        m_scenerect;
         CircuitView* m_graphicView;
-        Connector*   new_connector;
+        Connector*   m_newConnector;
+        CompBase*    m_newComp;
 
         int m_seqNumber;
         int m_error;
+        int m_undoIndex;
+        int m_redoIndex;
 
         bool m_pasting;
         bool m_deleting;
@@ -142,6 +169,8 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         bool m_animate;
         bool m_changed;
         bool m_busy;
+        bool m_undo;
+        bool m_redo;
         bool m_acceptKeys;
         bool m_createSubc;
 
@@ -155,9 +184,11 @@ class MAINMODULE_EXPORT Circuit : public QGraphicsScene
         QHash<QString, Pin*> m_pinMap;    // Pin list
         QHash<QString, Pin*> m_LdPinMap;  // Pin list while loading/pasting/importing
         QHash<QString, QString> m_idMap;
+        QHash<QString, CompBase*> m_compMap; // Map Component name -> Component pointer
 
-        QStringList m_undoStack;
-        QStringList m_redoStack;
+        circState m_circState;
+        QList<circState> m_undoStack;
+        QList<circState> m_redoStack;
 
         QTimer m_bckpTimer;
 

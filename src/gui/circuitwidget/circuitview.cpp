@@ -155,7 +155,6 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
     QString name = event->mimeData()->text();
 
     if( type.isEmpty() || name.isEmpty() ) return;
-    Circuit::self()->saveState();
 
     m_enterItem = m_circuit->createItem( type, name+"-"+m_circuit->newSceneId() );
     if( m_enterItem )
@@ -168,9 +167,9 @@ void CircuitView::dragEnterEvent( QDragEnterEvent* event )
         m_enterItem->setPos( mapToScene( event->pos() ) );
         m_circuit->addItem( m_enterItem );
         m_circuit->compList()->append( m_enterItem );
+        m_circuit->addCompState( m_enterItem, "remove" );
         this->setFocus();
     }
-    else Circuit::self()->unSaveState();
 }
 
 void CircuitView::dragMoveEvent( QDragMoveEvent* event )
@@ -185,8 +184,8 @@ void CircuitView::dragLeaveEvent( QDragLeaveEvent* event )
     if ( m_enterItem )
     {
         m_circuit->removeComp( m_enterItem );
-        m_enterItem = NULL;
         Circuit::self()->unSaveState();
+        m_enterItem = NULL;
 }   }
 
 void CircuitView::mousePressEvent( QMouseEvent* event )

@@ -171,7 +171,7 @@ void SubPackage::mousePressEvent( QGraphicsSceneMouseEvent* event )
         m_eventPin->setLabelPos();
         if( m_p2X == m_p1X+1) m_eventPin->setLength( 1 );
         else                  m_eventPin->setLabelText( "Name" );
-        m_pins.append( m_eventPin );
+        m_unusedPins.append( m_eventPin );
 
         editPin();
         Circuit::self()->update();
@@ -229,7 +229,7 @@ void SubPackage::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
     m_eventPin = NULL;
 
-    for( Pin* pin : m_pins )
+    for( Pin* pin : m_pin )
     {
         int xPin = pin->x();
         int yPin = pin->y();
@@ -344,7 +344,7 @@ void SubPackage::remove()
         if     ( ret == QMessageBox::Save ) slotSave();
         else if( ret == QMessageBox::Cancel ) return;
     }
-    for( Pin* pin : m_pins ) pin->removeConnector();
+    for( Pin* pin : m_pin ) pin->removeConnector();
     Component::remove();
     //Circuit::self()->compRemoved( true );
 }
@@ -403,8 +403,7 @@ void SubPackage::deleteEventPin()
     if( !m_eventPin ) return;
     m_changed = true;
 
-    m_pins.removeOne( m_eventPin );
-    deletePin( m_eventPin );
+    m_unusedPins.removeOne( m_eventPin );
     m_eventPin = NULL;
     
     Circuit::self()->update();
@@ -507,7 +506,7 @@ void SubPackage::setLogicSymbol( bool ls )
         m_color = m_icColor;
         labelColor = QColor( 250, 250, 200 );
     }
-    for( Pin* pin : m_pins ) pin->setLabelColor( labelColor );
+    for( Pin* pin : m_pin ) pin->setLabelColor( labelColor );
 
     Circuit::self()->update();
 }
@@ -526,7 +525,7 @@ void SubPackage::slotSave()
 
 void SubPackage::loadPackage()
 {
-    Circuit::self()->saveState();
+    Circuit::self()->addCompState( this, "Package_File" );
 
     QDir pkgDir;
     QString dir;
@@ -579,7 +578,7 @@ void SubPackage::savePackage( QString fileName )
            +"\" >\n\n";
     
     int pP = 1;
-    for( Pin* pin : m_pins ) { out << pinEntry( pin ); pP++; }
+    for( Pin* pin : m_pin ) { out << pinEntry( pin ); pP++; }
 
     out << "    \n";
     out << "</packageB>\n";

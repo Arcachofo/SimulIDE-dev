@@ -38,7 +38,6 @@ Chip::Chip( QObject* parent, QString type, QString id )
         << QObject::tr("Module");
 
     m_subcType = None;
-    m_numpins = 0;
     m_isLS = false;
     m_initialized = false;
     m_pkgeFile = "";
@@ -92,14 +91,10 @@ void Chip::initChip()
         }
         fileNameAbs = circuitDir.absoluteFilePath( m_pkgeFile );
     }
-
     QDomDocument domDoc = fileToDomDoc( fileNameAbs, "Chip::initChip" );
     QDomElement   root  = domDoc.documentElement();
 
-    //if( !root.hasChildNodes() ) { m_error = 1; return; }
-
-    if(( root.tagName() == "package" )
-    || ( root.tagName() == "packageB" ))
+    if( root.tagName() == "packageB" )
     {
         if( m_pkgeFile.endsWith( "_LS.package" )) m_isLS = true;
         else                                      m_isLS = false;
@@ -111,15 +106,7 @@ void Chip::initChip()
         m_height  = root.attribute( "height" ).toInt();
         m_area = QRect( 0, 0, 8*m_width, 8*m_height );
 
-        m_numpins = 0;//root.attribute( "pins" ).toInt();
-
-        for( Pin* pin : m_pin )
-        {
-            deletePin( pin );
-            if( m_pins.contains( pin ) ) m_pins.removeAll( pin );
-        }
-        for( Pin* pin : m_pins ) deletePin( pin );
-        m_pins.clear();
+        for( Pin* pin : m_unusedPins ) deletePin( pin );
         m_ePin.clear();
         m_pin.clear();
 
@@ -131,11 +118,9 @@ void Chip::initChip()
             QString name = root.attribute("name");
             if( name.toLower() != "package" ) m_name = name;
         }
-        if     ( root.tagName() == "package" )  initPackage_old( root );
-        else if( root.tagName() == "packageB" ) initPackage( root );
+        initPackage( root );
         setName( m_name );
-    }
-    else{
+    }else{
         qDebug() <<"Chip::initChip"<<"Error: Not valid Package file:\n"<< m_pkgeFile;
         m_error = 3;
         return;
@@ -150,56 +135,6 @@ void Chip::setName( QString name )
     m_label.adjustSize();
     m_label.setY( m_area.height()/2+m_label.textWidth()/2 );
     m_label.setX( ( m_area.width()/2-m_label.boundingRect().height()/2 ) );
-}
-
-void Chip::initPackage_old( QDomElement root )
-{
-    int chipPos = 0;
-    QDomNode node = root.firstChild();
-    while( !node.isNull() )
-    {
-        QDomElement element = node.toElement();
-        if( element.tagName() == "pin" )
-        {
-            QString type  = element.attribute( "type" );
-            QString label = element.attribute( "label" );
-            QString id    = element.attribute( "id" ).remove(" ");
-            QString side  = element.attribute( "side" );
-            int     pos   = element.attribute( "pos" ).toInt();
-
-            int xpos = 0;
-            int ypos = 0;
-            int angle = 0;
-
-            if( side=="left"){
-                xpos = -8;
-                ypos = 8*pos;
-                angle = 180;
-            }
-            else if( side=="top"){
-                xpos = 8*pos;
-                ypos = -8;
-                angle = 90;
-            }
-            else if( side=="right"){
-                xpos =  m_width*8+8;
-                ypos = 8*pos;
-                angle = 0;
-            }
-            else if( side=="bottom"){
-                xpos = 8*pos;
-                ypos =  m_height*8+8;
-                angle = 270;
-            }
-            chipPos++;
-            m_numpins++;
-            m_ePin.resize( m_numpins );
-            m_pin.resize( m_numpins );
-            addPin( id, type, label, chipPos, xpos, ypos, angle, 8 );
-        }
-        node = node.nextSibling();
-    }
-    update();
 }
 
 void Chip::initPackage( QDomElement root )
@@ -221,39 +156,45 @@ void Chip::initPackage( QDomElement root )
             int length = element.attribute( "length" ).toInt();
 
             chipPos++;
-            m_numpins++;
-            m_ePin.resize( m_numpins );
-            m_pin.resize( m_numpins );
-            addPin( id, type, label, chipPos, xpos, ypos, angle, length );
+            addNewPin( id, type, label, chipPos, xpos, ypos, angle, length );
         }
         node = node.nextSibling();
     }
     update();
 }
 
-void Chip::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
+void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length )
 {
-    Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
+    if( type == "unused" || type == "nc" )
+    {
+        Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
 
-    pin->setLabelText( label );
+        pin->setLabelText( label );
 
-    if     ( type == "inverted" || type == "inv" ) pin->setInverted( true );
-    else if( type == "unused"   || type == "nc"  ) pin->setUnused( true );
+        pin->setUnused( true ); // Chip::addPin is only for unused Pins
+        if( m_isLS )
+        {
+            pin->setVisible( false );
+            pin->setLabelText( "" );
+        }
 
-    pin->setPackageType( type );
-    pin->setLength( length );
-    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+        pin->setPackageType( type );
+        pin->setLength( length );
+        pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
 
-    if( m_isLS ) pin->setLabelColor( Qt::black );
-
-    m_ePin[pos-1] = pin;
-    m_pin[pos-1]  = pin;
-    m_pins.append( pin );
+        m_unusedPins.append( pin );
+    }
+    else{
+        Pin* pin = addPin( id, type, label, pos, xpos, ypos, angle, length );
+        m_ePin.emplace_back( pin );
+        m_pin.emplace_back( pin );
+    }
 }
 
 void Chip::deletePin( Pin* pin )
 {
     if( !pin ) return;
+    m_unusedPins.removeOne( pin );
     pin->removeConnector();
     if( pin->scene() ) Circuit::self()->removeItem( pin );
     delete pin;
@@ -264,7 +205,7 @@ void Chip::setLogicSymbol( bool ls )
     if( m_initialized && (m_isLS == ls) ) return;
 
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
-    Circuit::self()->saveState();
+    Circuit::self()->addCompState( this, "Logic_Symbol" );
     
     if(  ls && m_pkgeFile.endsWith(".package"))    m_pkgeFile.replace( ".package", "_LS.package" );
     if( !ls && m_pkgeFile.endsWith("_LS.package")) m_pkgeFile.replace( "_LS.package", ".package" );

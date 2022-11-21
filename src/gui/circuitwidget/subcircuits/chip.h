@@ -45,19 +45,19 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     protected:
-        virtual void addPin( QString id, QString type, QString label,
-                             int pos, int xpos, int ypos, int angle, int length=8);
+        virtual Pin* addPin( QString id, QString type, QString label,
+                             int pos, int xpos, int ypos, int angle, int length=8){return NULL;}
 
-        virtual void updatePin( QString id, QString type, QString label,
-                                int pos, int xpos, int ypos, int angle ){;}
+        virtual Pin* updatePin( QString id, QString type, QString label,
+                                int pos, int xpos, int ypos, int angle ){return NULL;}
 
+        void addNewPin( QString id, QString type, QString label,
+                        int pos, int xpos, int ypos, int angle, int length=8);
         void deletePin( Pin* pin );
 
         virtual void initChip();
-        virtual void initPackage_old( QDomElement root );
         virtual void initPackage( QDomElement root );
 
-        int m_numpins;
         int m_width;
         int m_height;
         
@@ -71,8 +71,8 @@ class MAINMODULE_EXPORT Chip : public Component, public eElement
 
         QString m_name;
         QString m_pkgeFile;     // file containig package defs
-        
-        QList<Pin*> m_pins;
+
+        QList<Pin*> m_unusedPins;
 
         QPixmap* m_BackPixmap;
         QGraphicsTextItem m_label;
