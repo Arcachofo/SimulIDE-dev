@@ -9,6 +9,7 @@
 
 #include "op_amp.h"
 #include "itemlibrary.h"
+#include "propdialog.h"
 #include "connector.h"
 #include "simulator.h"
 #include "e-node.h"
@@ -70,10 +71,10 @@ new DoubProp<OpAmp>( "Gain"     , tr("Gain")            ,"" , this, &OpAmp::gain
 new DoubProp<OpAmp>( "Out_Imped", tr("Output Impedance"),"Ω", this, &OpAmp::outImp, &OpAmp::setOutImp ),
     }} );
     addPropGroup( { tr("Supply"), {
+new BoolProp<OpAmp>( "Power_Pins" , tr("Use Supply Pins")   ,"" , this, &OpAmp::powerPins,  &OpAmp::setPowerPins ),
+new BoolProp<OpAmp>( "Switch_Pins", tr("Switch Supply Pins"),"" , this, &OpAmp::switchPins, &OpAmp::setSwitchPins ),
 new DoubProp<OpAmp>( "Volt_Pos"   , tr("V+")                ,"V", this, &OpAmp::voltPos,    &OpAmp::setVoltPos ),
 new DoubProp<OpAmp>( "Volt_Neg"   , tr("V-")                ,"V", this, &OpAmp::voltNeg,    &OpAmp::setVoltNeg ),
-new BoolProp<OpAmp>( "Power_Pins" , tr("Show Supply Pins")  ,"" , this, &OpAmp::powerPins,  &OpAmp::setPowerPins ),
-new BoolProp<OpAmp>( "Switch_Pins", tr("Switch Supply Pins"),"" , this, &OpAmp::switchPins, &OpAmp::setSwitchPins ),
     }} );
 }
 OpAmp::~OpAmp(){}
@@ -161,7 +162,13 @@ void OpAmp::setPowerPins( bool set )
     m_pin[4]->setEnabled( set );
     m_pin[4]->setVisible( set );
     
+    if( !set )
+    {
+        m_pin[3]->removeConnector();
+        m_pin[4]->removeConnector();
+    }
     m_powerPins = set;
+    udtProperties();
 }
 
 void OpAmp::setSwitchPins( bool s )
@@ -175,6 +182,20 @@ void OpAmp::setSwitchPins( bool s )
     m_pin[3]->setY( yP );
     m_pin[4]->setPinAngle( angleN );
     m_pin[4]->setY( yN );
+}
+
+void OpAmp::udtProperties()
+{
+    if( !m_propDialog ) return;
+    m_propDialog->showProp("Volt_Pos", !m_powerPins );
+    m_propDialog->showProp("Volt_Neg", !m_powerPins );
+    m_propDialog->showProp("Switch_Pins", m_powerPins );
+}
+
+void OpAmp::slotProperties()
+{
+    Component::slotProperties();
+    udtProperties();
 }
 
 QPainterPath OpAmp::shape() const

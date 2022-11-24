@@ -67,7 +67,12 @@ class MAINMODULE_EXPORT OpAmp : public Component, public eElement
         virtual QPainterPath shape() const;
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
+    protected slots:
+        virtual void slotProperties() override;
+
     protected:
+        void udtProperties();
+
         bool m_powerPins;
         bool m_switchPins;
 
