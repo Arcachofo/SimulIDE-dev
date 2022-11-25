@@ -19,14 +19,14 @@ class MAINMODULE_EXPORT Battery : public Comp2Pin, public eElement
         ~Battery();
 
  static Component* construct( QObject* parent, QString type, QString id );
- static LibraryItem *libraryItem();
+ static LibraryItem* libraryItem();
 
         double volt() { return m_volt; }
         void setVolt( double volt );
 
         virtual void stamp() override;
 
-        virtual void paint( QPainter *p, const QStyleOptionGraphicsItem *option, QWidget *widget );
+        virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
 
     private:
         double m_volt;

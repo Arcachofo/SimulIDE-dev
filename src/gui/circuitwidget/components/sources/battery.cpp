@@ -25,14 +25,12 @@ LibraryItem* Battery::libraryItem()
 }
 
 Battery::Battery( QObject* parent, QString type, QString id )
-      : Comp2Pin( parent, type, id )
-      , eElement( id )
+       : Comp2Pin( parent, type, id )
+       , eElement( id )
 {
     m_area = QRect( -10, -10, 20, 20 );
 
-    //m_unit = "V";
     m_volt = 5;
-    //setShowVal( true );
 
     setLabelPos(-18,-22, 0 );
     setValLabelPos(-10, 10, 0 ); // x, y, rot
@@ -49,7 +47,7 @@ void Battery::stamp()
     m_pin[1]->setEnodeComp( m_pin[0]->getEnode() );
     m_pin[0]->stampAdmitance( 1/cero_doub );
     m_pin[1]->stampAdmitance( 1/cero_doub );
-
+qDebug() <<"\nBattery::stamp"<<m_volt/cero_doub;
     m_pin[0]->createCurrent();
     m_pin[1]->createCurrent();
     m_pin[0]->stampCurrent( m_volt/cero_doub );

@@ -206,7 +206,7 @@ bool CircMatrix::luSolve( int n, int group ) // Solves the set of n linear equat
         double div = a[i][i];
         double volt = 0;
         if( div != 0 ) volt = tot/div;
-        else isOk = false;
+        //else isOk = false;
 
         b[i] = volt;
         m_eNodeActive->at(i)->setVolt( volt );      // Set Node Voltages
