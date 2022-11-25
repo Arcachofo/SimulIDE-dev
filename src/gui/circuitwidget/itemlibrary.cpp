@@ -21,6 +21,7 @@
 #include "bus.h"
 #include "capacitor.h"
 #include "clock.h"
+#include "csource.h"
 #include "currsource.h"
 #include "dac.h"
 #include "dcmotor.h"
@@ -148,6 +149,7 @@ void ItemLibrary::loadItems()
     addItem( WaveGen::libraryItem() );
     addItem( VoltSource::libraryItem() );
     addItem( CurrSource::libraryItem() );
+    addItem( Csource::libraryItem() );
     addItem( Battery::libraryItem() );
     addItem( Rail::libraryItem() );
     addItem( Ground::libraryItem() );
