@@ -383,7 +383,7 @@ Pin* SubCircuit::addPin( QString id, QString type, QString label, int pos, int x
         pin->setLength( length );
         pin->setLabelColor( color );
         pin->setLabelText( label );
-        pin->setFlag( QGraphicsItem::ItemStacksBehindParent, (length<8) );
+        pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
         return pin;
     }
 }

@@ -67,6 +67,9 @@ class MAINMODULE_EXPORT SubPackage : public Chip
         
         virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent* event );
 
+        virtual Pin* addPin( QString id, QString type, QString label,
+                            int pos, int xpos, int ypos, int angle, int length=8 ) override;
+
     private:
         QString pinEntry( Pin* pin );
         QString adjustSize( QString str, int size );

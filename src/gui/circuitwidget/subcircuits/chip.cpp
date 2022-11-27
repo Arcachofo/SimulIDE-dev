@@ -169,15 +169,13 @@ void Chip::addNewPin( QString id, QString type, QString label, int pos, int xpos
     {
         Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
 
-        pin->setLabelText( label );
-
         pin->setUnused( true ); // Chip::addPin is only for unused Pins
         if( m_isLS )
         {
             pin->setVisible( false );
-            pin->setLabelText( "" );
+            label = "";
         }
-
+        pin->setLabelText( label );
         pin->setPackageType( type );
         pin->setLength( length );
         pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );

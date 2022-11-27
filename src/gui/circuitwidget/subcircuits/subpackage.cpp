@@ -344,9 +344,7 @@ void SubPackage::remove()
         if     ( ret == QMessageBox::Save ) slotSave();
         else if( ret == QMessageBox::Cancel ) return;
     }
-    for( Pin* pin : m_pin ) pin->removeConnector();
     Component::remove();
-    //Circuit::self()->compRemoved( true );
 }
 
 void SubPackage::setWidth( int width )
@@ -369,6 +367,24 @@ void SubPackage::setHeight( int height )
     m_area = QRect( 0, 0, m_width*8, m_height*8 );
     
     Circuit::self()->update();
+}
+
+Pin* SubPackage::addPin( QString id, QString type, QString label, int pos, int xpos, int ypos, int angle, int length  )
+{
+    Pin* pin = new Pin( angle, QPoint(xpos, ypos), m_id+"-"+id, pos-1, this ); // pos in package starts at 1
+
+    QColor color = Qt::black;
+    if( !m_isLS ) color = QColor( 250, 250, 200 );
+
+    pin->setLabelColor( color );
+    pin->setPackageType( type );
+    pin->setPos( QPoint( xpos, ypos ) );
+    pin->setPinAngle( angle );
+    pin->setLength( length );
+    pin->setLabelText( label );
+    pin->setInverted( type == "inverted" || type == "inv" );
+    pin->setFlag( QGraphicsItem::ItemStacksBehindParent, false );
+    return pin;
 }
 
 void SubPackage::movePin()

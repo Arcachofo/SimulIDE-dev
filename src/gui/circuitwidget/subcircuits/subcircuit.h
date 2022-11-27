@@ -37,10 +37,10 @@ class MAINMODULE_EXPORT SubCircuit : public Chip
         void loadSubCircuit( QString file );
 
         virtual Pin* addPin( QString id, QString type, QString label,
-                            int pos, int xpos, int ypos, int angle, int length=8 );
+                            int pos, int xpos, int ypos, int angle, int length=8 ) override;
 
         virtual Pin* updatePin( QString id, QString type, QString label,
-                                int xpos, int ypos, int angle, int length=8  );
+                                int xpos, int ypos, int angle, int length=8  ) override;
 
         Component* m_mainComponent;
         static QString m_subcDir;      // Subcircuit Path
