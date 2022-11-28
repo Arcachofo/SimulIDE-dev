@@ -98,7 +98,7 @@ void Max72xx_matrix::stamp()
 
 void Max72xx_matrix::initialize()
 {
-    for( int i=0; i<11; i++)
+    for( int i=0; i<16; i++)
     {
         for( int j=0; j<8; j++ ) m_ram[i][j] = 0;
         m_intensity[i] = 0;
@@ -145,7 +145,7 @@ void Max72xx_matrix::updateStep() { update(); }
 
 void Max72xx_matrix::proccessCommand()
 {
-    if ( m_inDisplay >= 11 ) return;
+    if ( m_inDisplay >= 16 ) return;
 
     int addr = (m_rxReg>>8) & 0x0F;
     switch( addr )
@@ -182,11 +182,11 @@ void Max72xx_matrix::setNumDisplays( int displays )
 {
     if( displays == m_numDisplays ) return;
     if( displays < 1 ) displays = 1;
-    if( displays > 11 ) displays = 11;
+    if( displays > 16 ) displays = 16;
     m_numDisplays = displays;
 
     hide();
-    m_area = QRectF(-36, -44, 4+64*m_numDisplays+4, 88 );
+    m_area = QRectF(-36,-44, 4+64*m_numDisplays+4, 88 );
     show();
 }
 

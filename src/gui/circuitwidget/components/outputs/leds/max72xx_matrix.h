@@ -40,8 +40,8 @@ class MAINMODULE_EXPORT Max72xx_matrix : public LogicComponent
 
         int m_numDisplays;
 
-        int  m_ram[11][8];
-        int  m_intensity[11];
+        int  m_ram[16][8];
+        int  m_intensity[16];
         int  m_decodemode;
         int  m_scanlimit;
         bool m_shutdown;
