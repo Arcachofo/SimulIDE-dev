@@ -276,10 +276,8 @@ void Dht22::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget*
     m_font.setPixelSize(10);
     p->setFont( m_font );
     p->setPen( QColor(0, 0, 0) );
-    p->drawText( -16, 1, "C°" );
-    p->drawText( -06, 1, QString::number( m_temp ) );
-    p->drawText( -16,12, "% ");
-    p->drawText( -06,12, QString::number( m_humi ) );
+    p->drawText( -16, 1, QString::number( m_temp )+"°C" );
+    p->drawText( -16,12, QString::number( m_humi )+" %" );
 }
 
 #include "moc_dht22.cpp"

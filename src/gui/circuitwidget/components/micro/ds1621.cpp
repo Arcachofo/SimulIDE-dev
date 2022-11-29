@@ -279,8 +279,8 @@ void DS1621::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget
 
     p->setFont( m_font );
     p->setPen( QColor(0, 0, 0) );
-    p->drawText(-9, -3, "C°" );
-    p->drawText( 1, -3, QString::number( m_temp ) );
+    //p->drawText(-9, -3, "°C" );
+    p->drawText(-9, -3, QString::number( m_temp )+"°C" );
 }
 
 #include "moc_ds1621.cpp"

@@ -532,6 +532,5 @@ void Ds18b20::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidge
 
     p->setFont( m_font );
     p->setPen( QColor(0, 0, 0) );
-    p->drawText(-23, -3, "C°" );
-    p->drawText(-12, -3, QString::number( m_temp ) );
+    p->drawText(-23, -3, QString::number( m_temp )+"°C" );
 }
