@@ -96,41 +96,53 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
     QString xmlFile = ComponentSelector::self()->getXmlFile( m_device );
     QFile file( xmlFile );
 
-    if(( xmlFile == "" ) || ( !file.exists() ))
+    if( file.exists() )
     {
-        MessageBoxNB( "Mcu::Mcu", "                               \n"+
-                  tr("xml file not found for: %1").arg( m_device ) );
-        m_error = 1;
-        return;
-    }
-    QDomDocument domDoc = fileToDomDoc( xmlFile, "Mcu::Mcu" );
-    if( domDoc.isNull() ) { m_error = 1; return; }
+        QDomDocument domDoc = fileToDomDoc( xmlFile, "Mcu::Mcu" );
+        if( domDoc.isNull() ) { m_error = 1; return; }
 
-    QDomElement root  = domDoc.documentElement();
-    QDomNode    rNode = root.firstChild();
+        QDomElement root  = domDoc.documentElement();
+        QDomNode    rNode = root.firstChild();
 
-    while( !rNode.isNull() )
-    {
-        QDomElement element = rNode.toElement();
-        QDomNode    node    = element.firstChild();
-
-        while( !node.isNull() )
+        while( !rNode.isNull() )
         {
-            QDomElement element = node.toElement();
-            if( element.attribute("name") == m_device )
-            {
-                // Get package file
-                QDir dataDir( xmlFile );
-                dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
-                m_pkgeFile = dataDir.filePath( element.attribute( "package" ) )+".package";
+            QDomElement element = rNode.toElement();
+            QDomNode    node    = element.firstChild();
 
-                // Get data file
-                m_dataFile = dataDir.filePath( element.attribute( "data" ) )+".mcu";
-                break;
+            while( !node.isNull() )
+            {
+                QDomElement element = node.toElement();
+                if( element.attribute("name") == m_device )
+                {
+                    // Get package file
+                    QDir dataDir( xmlFile );
+                    dataDir.cdUp();             // Indeed it doesn't cd, just take out file name
+                    m_pkgeFile = dataDir.filePath( element.attribute( "package" ) )+".package";
+
+                    // Get data file
+                    m_dataFile = dataDir.filePath( element.attribute( "data" ) )+".mcu";
+                    break;
+                }
+                node = node.nextSibling();
             }
-            node = node.nextSibling();
+            rNode = rNode.nextSibling();
         }
-        rNode = rNode.nextSibling();
+    }else // Try to find a "data" folder in Circuit folder
+    {
+        QDir circuitDir = QFileInfo( Circuit::self()->getFilePath() ).absoluteDir();
+        QString folder = "data/"+m_device+"/";
+        m_dataFile = circuitDir.absoluteFilePath( folder+m_device+".mcu" );
+        m_pkgeFile = circuitDir.absoluteFilePath( folder+m_device+".package" );
+
+        QFile dataFile( m_dataFile );
+        QFile pkgeFile( m_pkgeFile );
+        if( !dataFile.exists() || !pkgeFile.exists() )
+        {
+            MessageBoxNB( "Mcu::Mcu", "                               \n"+
+                      tr("xml file not found for: %1").arg( m_device ) );
+            m_error = 1;
+            return;
+        }
     }
     QSettings* settings = MainWindow::self()->settings();
     m_lastFirmDir = settings->value("lastFirmDir").toString();
