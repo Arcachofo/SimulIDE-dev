@@ -49,10 +49,6 @@ MainWindow::MainWindow()
 
     m_settings = new QSettings( getConfigPath("simulide.ini"), QSettings::IniFormat, this );
 
-    QString userAddonPath = getConfigPath("addons");
-    QDir pluginsDir( userAddonPath );
-    if( !pluginsDir.exists() ) pluginsDir.mkpath( userAddonPath );
-
     // Fonts --------------------------------------
     QFontDatabase::addApplicationFont( ":/Ubuntu-B.ttf" );
     QFontDatabase::addApplicationFont( ":/UbuntuMono-B.ttf" );
@@ -76,6 +72,12 @@ MainWindow::MainWindow()
 
     QDir compSetDir = m_filesDir.absoluteFilePath("data");
     if( compSetDir.exists() ) ComponentSelector::self()->LoadCompSetAt( compSetDir );
+
+    QString userAddonPath = getConfigPath("addons");
+    QDir pluginsDir( userAddonPath );
+    if( !pluginsDir.exists() ) pluginsDir.mkpath( userAddonPath );
+    else ComponentSelector::self()->LoadCompSetAt( userAddonPath );
+
     readSettings();
 
     QString backPath = getConfigPath( "backup.sim1" );
