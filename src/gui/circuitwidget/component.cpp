@@ -53,7 +53,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_circRot  = 0;
 
     QFont f;
-    f.setFamily("Ubuntu Mono");
+    f.setFamily("Ubuntu");
     f.setPixelSize( 10 );
     
     m_idLabel = new Label();
@@ -67,7 +67,7 @@ Component::Component( QObject* parent, QString type, QString id )
     m_valLabel->setComponent( this );
     m_valLabel->setDefaultTextColor( Qt::darkRed );
     setValLabelPos(-16, 20, 0 );
-    f.setPixelSize( 9 );
+    f.setPixelSize( 8 );
     m_valLabel->setFont( f );
     m_valLabel->setVisible( false );
     
