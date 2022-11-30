@@ -120,7 +120,8 @@ void CodeEditor::setFile( const QString filePath )
     else if( extension == ".cpp"
           || extension == ".c"
           || extension == ".ino"
-          || extension == ".h" )
+          || extension == ".h"
+          || extension == ".as" )
     {
         m_hlighter->readSyntaxFile( m_syntaxPath + "cpp.syntax" );
         if( extension == ".ino" )
