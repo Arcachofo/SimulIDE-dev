@@ -229,7 +229,7 @@ void SubPackage::contextMenuEvent( QGraphicsSceneContextMenuEvent* event )
 
     m_eventPin = NULL;
 
-    for( Pin* pin : m_pin )
+    for( Pin* pin : m_unusedPins )
     {
         int xPin = pin->x();
         int yPin = pin->y();
@@ -522,7 +522,7 @@ void SubPackage::setLogicSymbol( bool ls )
         m_color = m_icColor;
         labelColor = QColor( 250, 250, 200 );
     }
-    for( Pin* pin : m_pin ) pin->setLabelColor( labelColor );
+    for( Pin* pin : m_unusedPins ) pin->setLabelColor( labelColor );
 
     Circuit::self()->update();
 }
@@ -594,7 +594,7 @@ void SubPackage::savePackage( QString fileName )
            +"\" >\n\n";
     
     int pP = 1;
-    for( Pin* pin : m_pin ) { out << pinEntry( pin ); pP++; }
+    for( Pin* pin : m_unusedPins ) { out << pinEntry( pin ); pP++; }
 
     out << "    \n";
     out << "</packageB>\n";
