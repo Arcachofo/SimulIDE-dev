@@ -29,7 +29,6 @@ Build dependencies:
  - Qt5svg dev
  - Qt5 Multimedia dev
  - Qt5 Serialport dev
- - Qt5 Script
  - Qt5 qmake
 
  
@@ -57,7 +56,6 @@ Run time dependencies:
  - Qt5 Multimedia
  - Qt5 Multimedia Plugins
  - Qt5 Serialport
- - Qt5 Script
 
 
 No need for installation, place SimulIDE folder wherever you want and run the executable.
