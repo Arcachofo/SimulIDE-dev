@@ -41,7 +41,6 @@ using namespace assembler;
 #ifdef JIT_PRINT_UNHANDLED_CALLS
 #include <string>
 #include <set>
-
 static std::set<asCScriptFunction*> unhandledCalls;
 #endif
 
@@ -136,51 +135,42 @@ void stdcall returnScriptFunction(asCContext* ctx);
 //Wrapper functions to cast between types, or perform math on large types, where doing so is overly complicated in the ASM
 #ifdef _MSC_VER
 template<class F, class T>
-void stdcall directConvert(F* from, T* to) {
-	*to = (T)*from;
-}
+void stdcall directConvert(F* from, T* to) { *to = (T)*from; }
 #else
 //stdcall doesn't work with templates on GCC
 template<class F, class T>
-void directConvert(F* from, T* to) {
-	*to = (T)*from;
-}
+void directConvert(F* from, T* to) { *to = (T)*from; }
 #endif
 
 void fpow_wrapper(float* base, float* exponent, bool* overflow, float* ret) {
 	float r = pow(*base, *exponent);
 	bool over = (r == float(HUGE_VAL));
 	*overflow = over;
-	if(!over)
-		*ret = r;
+    if(!over) *ret = r;
 }
 
 void dpow_wrapper(double* base, double* exponent, bool* overflow, double* ret) {
 	double r = pow(*base, *exponent);
 	bool over = (r == HUGE_VAL);
 	*overflow = over;
-	if(!over)
-		*ret = r;
+    if(!over) *ret = r;
 }
 
 void dipow_wrapper(double* base, int exponent, bool* overflow, double* ret) {
 	double r = pow(*base, exponent);
 	bool over = (r == HUGE_VAL);
 	*overflow = over;
-	if(!over)
-		*ret = r;
+    if(!over) *ret = r;
 }
 
 void i64pow_wrapper(asINT64* base, asINT64* exponent, bool* overflow, asINT64* ret) {
 	auto r = as_powi64(*base, *exponent, *overflow);
-	if(!*overflow)
-		*ret = r;
+    if(!*overflow) *ret = r;
 }
 
 void u64pow_wrapper(asQWORD* base, asQWORD* exponent, bool* overflow, asQWORD* ret) {
 	auto r = as_powu64(*base, *exponent, *overflow);
-	if(!*overflow)
-		*ret = r;
+    if(!*overflow) *ret = r;
 }
 
 float stdcall fmod_wrapper_f(float* div, float* mod) {
@@ -224,33 +214,25 @@ void stdcall i64_sra(long long* a, asDWORD* b, long long* r) {
 }
 
 int stdcall cmp_int64(long long* a, long long* b) {
-	if(*a == *b )
-		return 0;
-	else if(*a < *b)
-		return -1;
-	else
-		return 1;
+    if     (*a == *b ) return 0;
+    else if(*a < *b  ) return -1;
+    else               return 1;
 }
 
 int stdcall cmp_uint64(unsigned long long* a, unsigned long long* b) {
-	if(*a == *b )
-		return 0;
-	else if(*a < *b)
-		return -1;
-	else
-		return 1;
+    if     (*a == *b ) return 0;
+    else if(*a < *b  ) return -1;
+    else               return 1;
 }
 
 size_t stdcall div_ull(unsigned long long* div, unsigned long long* by, unsigned long long* result) {
-	if(*by == 0)
-		return 1;
+    if(*by == 0) return 1;
 	*result = *div / *by;
 	return 0;
 }
 
 size_t stdcall mod_ull(unsigned long long* div, unsigned long long* by, unsigned long long* result) {
-	if(*by == 0)
-		return 1;
+    if(*by == 0) return 1;
 	*result = *div % *by;
 	return 0;
 }
@@ -600,7 +582,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 		}
 		waitingForEntry = true;
 	};
-
 	auto PrepareJitScriptCall = [&](asCScriptFunction* func) -> bool {
 		asDWORD* bc = func->scriptData->byteCode.AddressOf();
 
@@ -613,8 +594,7 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 
 		//Prepare the vm state
 		cpu.call_stdcall((void*)callScriptFunction,"rp", &arg0, func);
-		if(flags & JIT_NO_SCRIPT_CALLS)
-			return false;
+        if(flags & JIT_NO_SCRIPT_CALLS) return false;
 		return *(asBYTE*)bc == asBC_JitEntry;
 	};
 
@@ -644,7 +624,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 
 			deferredPointers.insert(std::pair<asIScriptFunction*,DeferredCodePointer>(func,def));
 		}
-
 		unsigned sb = cpu.call_cdecl_args("rr", &arg0, &arg1);
 		cpu.call(ptr);
 		cpu.call_cdecl_end(sb);
@@ -751,12 +730,10 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 			jumpData->next = jmp ? (FutureJump*)jmp : 0;
 			jmp = (byte*)jumpData;
 		}
-		else if(jmp != 0 && jmp != JUMP_DESTINATION) {
-			//Jump to code that already exists
-			cpu.jump(type, jmp);
+        else if(jmp != 0 && jmp != JUMP_DESTINATION) { //Jump to code that already exists
+            cpu.jump(type, jmp);
 		}
-		else {
-			//We can't handle this address, so generate a special return that does the jump ahead of time
+        else { //We can't handle this address, so generate a special return that does the jump ahead of time
 			rarg = bc;
 			cpu.jump(type, ret_pos);
 		}
@@ -765,19 +742,16 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 	auto do_jump_from = [&](JumpType type, asDWORD* op) {
 		asDWORD* bc = op + asBC_INTARG(op) + 2;
 		auto& jmp = jumpTable[bc - start];
-		if(bc > op) {
-			//Prep the jump for a future instruction
+        if(bc > op) { //Prep the jump for a future instruction
 			auto* jumpData = new FutureJump;
 			jumpData->jump = cpu.prep_long_jump(type);
 			jumpData->next = jmp ? (FutureJump*)jmp : 0;
 			jmp = (byte*)jumpData;
 		}
-		else if(jmp != 0 && jmp != JUMP_DESTINATION) {
-			//Jump to code that already exists
+        else if(jmp != 0 && jmp != JUMP_DESTINATION) { //Jump to code that already exists
 			cpu.jump(type, jmp);
 		}
-		else {
-			//We can't handle this address, so generate a special return that does the jump ahead of time
+        else { //We can't handle this address, so generate a special return that does the jump ahead of time
 			rarg = bc;
 			cpu.jump(type, ret_pos);
 		}
@@ -825,7 +799,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 					cpu.end_long_jump(futureJump->jump);
 					futureJump = futureJump->advance();
 				}
-
 				Return(true);
 
 				pOp += toSize(op);
@@ -899,12 +872,10 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 						if(asBC_SWORDARG0(pOp) == asBC_SWORDARG1(pThirdOp)) {
 							fpu.store_double(*edi-offset(pOp,0),false);
 							fpu.store_double(*edi-offset(pThirdOp,0));
-						
 							pOp = pThirdOp + toSize(thirdOp);
 						}
 						else {
 							fpu.store_double(*edi-offset(pOp,0));
-						
 							pOp = pThirdOp;
                         }
 						continue;
@@ -1108,7 +1079,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
                 case asBC_JNP:    jump = isUnsigned ? NotAbove : LessOrEqual; break;
                 default: break;
 				}
-
 				//Conditional tests never use plain Jump
 				if(jump != Jump) {
 					eax = *edi-offset0;
@@ -1258,8 +1228,7 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 
 		////Now the normally-ordered ops
 		case asBC_SwapPtr:
-			if(currentEAX != EAX_Stack)
-				pax = as<void*>(*esi);
+            if(currentEAX != EAX_Stack) pax = as<void*>(*esi);
 			pax.swap(as<void*>(*esi+sizeof(void*)));
 			as<void*>(*esi) = pax;
 			nextEAX = EAX_Stack;
@@ -1292,9 +1261,8 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 					JitScriptCall(func);
 					ReturnFromJittedScriptCall(0);
 				}
-				else {
-					ReturnFromScriptCall();
-				}
+                else ReturnFromScriptCall();
+
 			} break;
 		case asBC_RET: {
 				//Not implemented if script call jitting is off,
@@ -1500,14 +1468,11 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 							for(unsigned i = 1; i < iterations; ++i)
 								cpu.string_copy(copySize);
 						}
-						else {
-							cpu.loop(loop);
-						}
+                        else cpu.loop(loop);
 
 						from = pdx;
 						to = pax;
 					}
-
 					skip_err_return = cpu.prep_short_jump(Jump);
 				}
 				else {
@@ -1543,8 +1508,7 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 		//case asBC_PshVPtr:
 		case asBC_RDSPtr:
 			{
-				if(currentEAX != EAX_Stack)
-					pax = as<void*>(*esi);
+                if(currentEAX != EAX_Stack) pax = as<void*>(*esi);
 
 				pax &= pax;
 				auto notNull = cpu.prep_short_jump(NotZero);
@@ -1681,14 +1645,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 			esi += sizeof(void*);
 			break;
 		//case asBC_PshRPtr: //All pushes are handled above, near asBC_PshC4
-		/* deprecated with Angelscript 2.32 
-        case asBC_STR:
-			{
-				const asCString &str = ((asCScriptEngine*)function->GetEngine())->GetConstantString(asBC_WORDARG0(pOp));
-				esi -= sizeof(void*) + sizeof(asDWORD);
-				as<void*>(*esi + sizeof(asDWORD)) = (void*)str.AddressOf();
-				as<asDWORD>(*esi) = (asDWORD)str.GetLength();
-			} break;*/
 		case asBC_CALLSYS:
 		case asBC_Thiscall1:
 			{
@@ -1725,9 +1681,7 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 				}
 			} break;
 		case asBC_SUSPEND:
-			if(flags & JIT_NO_SUSPEND) {
-				//Do nothing
-			}
+            if(flags & JIT_NO_SUSPEND) {} //Do nothing
 			else {
 				//Check if we should suspend
 				cl = as<byte>(*ebp+offsetof(asSVMRegisters,doProcessSuspend));
@@ -1749,7 +1703,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 				rarg = (void*)pOp;
 				al &= al;
 				cpu.jump(NotZero, ret_pos);
-				
 				cpu.end_short_jump(skip);
 			}
 			break;
@@ -1773,9 +1726,7 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 						JitScriptCall(f);
 						ReturnFromJittedScriptCall((void*)(pOp+(2+AS_PTR_SIZE)));
 					}
-					else {
-						ReturnFromScriptCall();
-					}
+                    else ReturnFromScriptCall();
 				}
 				else {
 					cpu.call_stdcall((void*)engineAlloc,"pp",
@@ -1859,7 +1810,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 						(asCScriptEngine*)function->GetEngine(),
 						&arg1);
 				}
-
 				//Null out pointer on the stack
 				pax ^= pax;
 				as<void*>(*edi-offset0) = pax;
@@ -1931,7 +1881,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 #else
 				Register arg1 = pcx;
 #endif
-
 				asSTypeBehaviour *beh = &objType->beh;
 
 				if(op == asBC_REFCPY) {
@@ -1962,7 +1911,6 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
                     }
                     cpu.end_long_jump(prev);
                 }
-
 				//Release reference from object 2, if not null
 				arg1 = as<void*>(*esp+local::object2);
 				arg1 = as<void*>(*arg1);
@@ -2194,17 +2142,14 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 			Return(false);
 			cpu.end_short_jump(zero_test);
 			}
-
 			eax = *edi-offset1;
 			edx ^= edx;
-
 			{
 			eax == 0;
 			auto notSigned = cpu.prep_short_jump(NotSign);
 			~edx;
 			cpu.end_short_jump(notSigned);
 			}
-
 			as<int>(ecx).divide_signed();
 
 			*edi-offset0 = eax;
@@ -2218,17 +2163,14 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 			Return(false);
 			cpu.end_short_jump(zero_test);
 			}
-
 			eax = *edi-offset1;
 			edx ^= edx;
-
 			{
 			eax == 0;
 			auto notSigned = cpu.prep_short_jump(NotSign);
 			~edx;
 			cpu.end_short_jump(notSigned);
 			}
-
 			ecx.divide_signed();
 
 			*edi-offset0 = edx;
@@ -4433,6 +4375,5 @@ void stdcall returnScriptFunction(asCContext* ctx) {
 		ctx->m_status = asEXECUTION_FINISHED;
 		return;
 	}
-
 	ctx->PopCallState();
 }

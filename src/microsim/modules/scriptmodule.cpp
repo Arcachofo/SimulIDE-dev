@@ -43,9 +43,12 @@ ScriptModule::ScriptModule( QString name )
 
     m_aEngine->RegisterGlobalFunction("void print(const string &in)", asFUNCTION(print), asCALL_CDECL);
 
+    m_jit = NULL;
+#ifndef SIMULIDE_W32 // Defined in .pro file for win32
     m_jit = new asCJITCompiler(0);
     m_aEngine->SetEngineProperty( asEP_INCLUDE_JIT_INSTRUCTIONS, 1 );
     m_aEngine->SetJITCompiler( m_jit );
+#endif
 }
 ScriptModule::~ScriptModule()
 {

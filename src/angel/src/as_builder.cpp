@@ -3883,10 +3883,7 @@ void asCBuilder::IncludeMethodsFromMixins(sClassDeclaration *decl)
         asSNameSpace *ns;
         asCString name;
         if( GetNamespaceAndNameFromNode(node, decl->script, decl->typeInfo->nameSpace, ns, name) < 0 )
-        {
-            node = node->next;
-            continue;
-        }
+        { node = node->next; continue; }
 
         sMixinClass *mixin = 0;
         while( ns )
@@ -3954,10 +3951,7 @@ void asCBuilder::IncludePropertiesFromMixins(sClassDeclaration *decl)
         asSNameSpace *ns;
         asCString name;
         if( GetNamespaceAndNameFromNode(node, decl->script, decl->typeInfo->nameSpace, ns, name) < 0 )
-        {
-            node = node->next;
-            continue;
-        }
+        { node = node->next; continue; }
 
         sMixinClass *mixin = 0;
         while( ns )
@@ -4024,10 +4018,7 @@ void asCBuilder::IncludePropertiesFromMixins(sClassDeclaration *decl)
                         asCObjectType *ot = CastToObjectType(decl->typeInfo);
                         for( asUINT p = 0; p < ot->properties.GetLength(); p++ )
                             if( ot->properties[p]->name == name )
-                            {
-                                exists = true;
-                                break;
-                            }
+                            { exists = true; break; }
 
                         if( !exists )
                         {
@@ -4050,10 +4041,7 @@ void asCBuilder::IncludePropertiesFromMixins(sClassDeclaration *decl)
                                         prop->isProtected == isProtected &&
                                         prop->name == name &&
                                         prop->type == dt )
-                                    {
-                                        found = true;
-                                        break;
-                                    }
+                                    { found = true; break; }
                                 }
                                 if( !found )
                                 {
@@ -4260,10 +4248,7 @@ int asCBuilder::RegisterEnum(asCScriptNode *node, asCScriptCode *file, asSNameSp
                 (o->flags & asOBJ_ENUM) &&
                 o->name == name &&
                 o->nameSpace == ns )
-            {
-                existingSharedType = CastToEnumType(o);
-                break;
-            }
+            { existingSharedType = CastToEnumType(o); break; }
         }
     }
 
@@ -4289,15 +4274,13 @@ int asCBuilder::RegisterEnum(asCScriptNode *node, asCScriptCode *file, asSNameSp
         {
             st = existingSharedType;
             st->AddRefInternal();
-        }
-        else{
+        }else{
             st = asNEW(asCEnumType)(engine);
             if( st == 0 )
                 return asOUT_OF_MEMORY;
 
             st->flags     = asOBJ_ENUM;
-            if( isShared )
-                st->flags |= asOBJ_SHARED;
+            if( isShared ) st->flags |= asOBJ_SHARED;
             st->size      = 4;
             st->name      = name;
             st->nameSpace = ns;
@@ -4349,10 +4332,7 @@ int asCBuilder::RegisterEnum(asCScriptNode *node, asCScriptCode *file, asSNameSp
                 bool found = false;
                 for( asUINT n = 0; n < st->enumValues.GetLength(); n++ )
                     if( st->enumValues[n]->name == name )
-                    {
-                        found = true;
-                        break;
-                    }
+                    { found = true; break; }
 
                 if( !found )
                 {
@@ -4366,8 +4346,7 @@ int asCBuilder::RegisterEnum(asCScriptNode *node, asCScriptCode *file, asSNameSp
                 if( tmp && tmp->nodeType == snAssignment )
                     tmp = tmp->next;
                 continue;
-            }
-            else{
+            }else{
                 // Check for name conflict errors with other values in the enum
                 if( globVariables.GetFirst(ns, name, asCCompGlobVarType(type)) )
                 {
