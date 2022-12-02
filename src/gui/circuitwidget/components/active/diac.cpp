@@ -4,11 +4,12 @@
  ***( see copyright.txt file at root folder )*******************************/
 
 #include <QPainter>
-
 #include <QtMath>
+#include <QDebug>
 
 #include "diac.h"
 #include "itemlibrary.h"
+#include "simulator.h"
 #include "circuit.h"
 #include "e-diode.h"
 #include "e-node.h"
@@ -112,12 +113,13 @@ void Diac::voltChanged()
     if( qFabs(current) < m_holdCurr ) state = false; /// Mingw needs qFabs
     if( qFabs(voltage) > m_brkVolt  ) state = true;
 
-    if( m_state != state )
-    {
-        m_state = state;
-        double res = state ? m_resOn : m_resOff;
-        m_resistor->setRes( res );
-    }
+    if( m_state == state ) return;
+    Simulator::self()->notCorverged();
+
+    //qDebug() << "Diac::voltChanged" << state;
+    m_state = state;
+    double res = state ? m_resOn : m_resOff;
+    m_resistor->setRes( res );
 }
 
 void Diac::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )

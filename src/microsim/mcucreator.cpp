@@ -115,6 +115,7 @@ int McuCreator::processFile( QString fileName, bool main )
     if( root.hasAttribute("eeprom") )     createRomMem( root.attribute("eeprom").toUInt(0,0) );
     if( root.hasAttribute("freq") )       mcu->setFreq( root.attribute("freq").toDouble() );
 
+    bool newStack = false;
     int error = 0;
     QDomNode node = root.firstChild();
     while( !node.isNull() )
@@ -125,7 +126,7 @@ int McuCreator::processFile( QString fileName, bool main )
         if     ( part == "regblock" )   createRegisters( &el );
         else if( part == "datablock" )  createDataBlock( &el );
         else if( part == "progblock" )  createProgBlock( &el );
-        else if( part == "stack" )      m_stackEl = el;
+        else if( part == "stack" )      { m_stackEl = el; newStack = true; }
         else if( part == "interrupts" ) createInterrupts( &el );
         else if( part == "port" )       createPort( &el );
         else if( part == "ioport" )     createIoPort( &el );
@@ -195,7 +196,7 @@ int McuCreator::processFile( QString fileName, bool main )
             intMem->m_cslPin = mcu->getPin( root.attribute("cslpin") );
             intMem->m_clkPin = mcu->getPin( root.attribute("clkpin") );
         }
-        if( !m_stackEl.isNull() ) createStack( &m_stackEl );
+        if( newStack ) createStack( &m_stackEl );
     }
     if( root.hasAttribute("clkpin") )
     {

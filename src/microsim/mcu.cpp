@@ -152,7 +152,7 @@ Mcu::Mcu( QObject* parent, QString type, QString id )
 
     Simulator::self()->addToUpdateList( this );
 
-    qDebug() << "        "<<id<< "Initialized:"<<freq()*1e-6<<"MHz\n";
+    qDebug() << "       "<<id<< "Initialized"<<endl;
 }
 
 void Mcu::setup( QString type )

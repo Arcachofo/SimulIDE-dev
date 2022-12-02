@@ -171,11 +171,11 @@ void Simulator::runCircuit()
 
 void Simulator::solveCircuit()
 {
-    while( m_changedNode || m_nonLinear ) // Also Proccess changes gererated in voltChanged()
+    while( m_changedNode || m_nonLinear || !m_converged ) // Also Proccess changes gererated in voltChanged()
     {
         if( m_changedNode ) solveMatrix();
 
-        m_converged = m_nonLinear==NULL;
+        if( m_converged ) m_converged = m_nonLinear==NULL;
         while( !m_converged )              // Non Linear Components
         {
             m_converged = true;
