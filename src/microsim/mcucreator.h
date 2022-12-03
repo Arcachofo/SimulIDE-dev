@@ -63,6 +63,7 @@ class MAINMODULE_EXPORT McuCreator
         static QString m_core;
         static QString m_txRegName;
 
+        static bool m_newStack;
         static QDomElement m_stackEl;
         static Mcu* m_mcuComp;
         static eMcu* mcu;

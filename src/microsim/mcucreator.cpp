@@ -78,6 +78,7 @@ QString McuCreator::m_basePath = "";
 QString McuCreator::m_txRegName = "";
 Mcu*    McuCreator::m_mcuComp = NULL;
 eMcu*   McuCreator::mcu = NULL;
+bool    McuCreator::m_newStack;
 QDomElement McuCreator::m_stackEl;
 
 McuCreator::McuCreator(){}
@@ -87,6 +88,7 @@ int McuCreator::createMcu( Mcu* mcuComp, QString name )
 {
     m_CompName = name;
     m_mcuComp  = mcuComp;
+    m_newStack = false;
 
     mcu = &(mcuComp->m_eMcu);
     QString dataFile = mcuComp->m_dataFile;
@@ -115,7 +117,6 @@ int McuCreator::processFile( QString fileName, bool main )
     if( root.hasAttribute("eeprom") )     createRomMem( root.attribute("eeprom").toUInt(0,0) );
     if( root.hasAttribute("freq") )       mcu->setFreq( root.attribute("freq").toDouble() );
 
-    bool newStack = false;
     int error = 0;
     QDomNode node = root.firstChild();
     while( !node.isNull() )
@@ -126,7 +127,7 @@ int McuCreator::processFile( QString fileName, bool main )
         if     ( part == "regblock" )   createRegisters( &el );
         else if( part == "datablock" )  createDataBlock( &el );
         else if( part == "progblock" )  createProgBlock( &el );
-        else if( part == "stack" )      { m_stackEl = el; newStack = true; }
+        else if( part == "stack" )      { m_stackEl = el; m_newStack = true; }
         else if( part == "interrupts" ) createInterrupts( &el );
         else if( part == "port" )       createPort( &el );
         else if( part == "ioport" )     createIoPort( &el );
@@ -196,7 +197,7 @@ int McuCreator::processFile( QString fileName, bool main )
             intMem->m_cslPin = mcu->getPin( root.attribute("cslpin") );
             intMem->m_clkPin = mcu->getPin( root.attribute("clkpin") );
         }
-        if( newStack ) createStack( &m_stackEl );
+        if( m_newStack ) createStack( &m_stackEl );
     }
     if( root.hasAttribute("clkpin") )
     {
