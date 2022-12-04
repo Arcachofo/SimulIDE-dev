@@ -12,6 +12,8 @@
 #include "simulator.h"
 #include "circuit.h"
 
+#include "boolprop.h"
+
 #define WIDTH 40
 #define HEIGHT 56
 #define DIAL_SIZE 36
@@ -49,6 +51,10 @@ VarSource::VarSource( QObject* parent, QString type, QString id )
 
     connect( m_dial,   SIGNAL( valueChanged(int) ),
              this,     SLOT  ( valueChanged(int)), Qt::UniqueConnection );
+
+    addPropGroup( { "Hidden1", {
+new BoolProp<VarSource>( "Running", "","", this, &VarSource::running, &VarSource::setRunning ),
+    }} );
 }
 VarSource::~VarSource() { }
 
@@ -96,6 +102,9 @@ void VarSource::setflip()
     m_proxy->setPos( QPoint( (-WIDTH/2+2)*m_Hflip, (-HEIGHT/2+2)*m_Vflip ) );
     m_proxy->setTransform( QTransform::fromScale( m_Hflip, m_Vflip ) );
 }
+
+bool VarSource::running() { return m_button->isChecked(); }
+void VarSource::setRunning( bool r ) { m_button->setChecked( r ); }
 
 void VarSource::paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget )
 {

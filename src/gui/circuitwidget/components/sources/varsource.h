@@ -23,6 +23,9 @@ class MAINMODULE_EXPORT VarSource : public Component, public eElement
         double maxValue() { return m_maxValue; }
         void setMaxValue( double v ) { m_maxValue = v;}
 
+        bool running();
+        void setRunning( bool r );
+
         virtual void initialize() override;
 
         virtual void paint( QPainter* p, const QStyleOptionGraphicsItem* option, QWidget* widget );
