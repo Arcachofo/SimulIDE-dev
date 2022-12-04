@@ -158,10 +158,7 @@ void *asCTypeInfo::GetUserData(asPWORD type) const
 }
 
 // interface
-const char *asCTypeInfo::GetName() const
-{
-	return name.AddressOf();
-}
+const char *asCTypeInfo::GetName() const { return name.AddressOf(); }
 
 // interface
 const char *asCTypeInfo::GetNamespace() const
@@ -171,16 +168,10 @@ const char *asCTypeInfo::GetNamespace() const
 }
 
 // interface
-asDWORD asCTypeInfo::GetFlags() const
-{
-	return flags;
-}
+asDWORD asCTypeInfo::GetFlags() const { return flags; }
 
 // interface
-asUINT asCTypeInfo::GetSize() const
-{
-	return size;
-}
+asUINT asCTypeInfo::GetSize() const { return size; }
 
 // interface
 int asCTypeInfo::GetTypeId() const
@@ -199,10 +190,7 @@ int asCTypeInfo::GetTypeId() const
 }
 
 // interface
-asIScriptEngine *asCTypeInfo::GetEngine() const
-{
-	return engine;
-}
+asIScriptEngine *asCTypeInfo::GetEngine() const { return engine; }
 
 // interface
 const char *asCTypeInfo::GetConfigGroup() const
@@ -213,10 +201,7 @@ const char *asCTypeInfo::GetConfigGroup() const
 }
 
 // interface
-asDWORD asCTypeInfo::GetAccessMask() const
-{
-	return accessMask;
-}
+asDWORD asCTypeInfo::GetAccessMask() const { return accessMask; }
 
 // interface
 int asCTypeInfo::GetProperty(asUINT index, const char **out_name, int *out_typeId, bool *out_isPrivate, bool *out_isProtected, int *out_offset, bool *out_isReference, asDWORD *out_accessMask, int *out_compositeOffset, bool *out_isCompositeIndirect) const
@@ -250,8 +235,7 @@ asCObjectType *CastToObjectType(asCTypeInfo *ti)
 // internal
 asCEnumType *CastToEnumType(asCTypeInfo *ti)
 {
-	// Allow call on null pointer
-	if (ti == 0) return 0;
+    if (ti == 0) return 0; // Allow call on null pointer
 
     if (ti->flags & (asOBJ_ENUM)) return reinterpret_cast<asCEnumType*>(ti);
 
@@ -261,8 +245,7 @@ asCEnumType *CastToEnumType(asCTypeInfo *ti)
 // internal
 asCTypedefType *CastToTypedefType(asCTypeInfo *ti)
 {
-	// Allow call on null pointer
-	if (ti == 0) return 0;
+    if (ti == 0) return 0; // Allow call on null pointer
 
     if (ti->flags & (asOBJ_TYPEDEF)) return reinterpret_cast<asCTypedefType*>(ti);
 
@@ -272,8 +255,7 @@ asCTypedefType *CastToTypedefType(asCTypeInfo *ti)
 // internal
 asCFuncdefType *CastToFuncdefType(asCTypeInfo *ti)
 {
-	// Allow call on null pointer
-	if (ti == 0) return 0;
+    if (ti == 0) return 0; // Allow call on null pointer
 
     if (ti->flags & (asOBJ_FUNCDEF)) return reinterpret_cast<asCFuncdefType*>(ti);
 
@@ -302,8 +284,7 @@ bool asCTypeInfo::IsShared() const
 	// Types that can be declared by scripts need to have the explicit flag asOBJ_SHARED
 	if (flags & (asOBJ_SCRIPT_OBJECT | asOBJ_ENUM)) return flags & asOBJ_SHARED ? true : false;
 
-	// Otherwise we assume the type to be shared
-	return true;
+    return true; // Otherwise we assume the type to be shared
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

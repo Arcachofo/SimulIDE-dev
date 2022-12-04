@@ -573,20 +573,17 @@ bool asCDataType::IsDoubleType() const
 
 bool asCDataType::IsBooleanType() const
 {
-	if( tokenType == ttBool )
-		return true;
+    if( tokenType == ttBool ) return true;
 
 	return false;
 }
 
 bool asCDataType::IsObject() const
 {
-	if( IsPrimitive() )
-		return false;
+    if( IsPrimitive() ) return false;
 
 	// Null handle doesn't have an object type but should still be considered an object
-	if( typeInfo == 0 )
-		return IsNullHandle();
+    if( typeInfo == 0 ) return IsNullHandle();
 
 	// Template subtypes shouldn't be considered objects
 	return CastToObjectType(typeInfo) ? true : false;
@@ -602,11 +599,9 @@ bool asCDataType::IsFuncdef() const
 
 int asCDataType::GetSizeInMemoryBytes() const
 {
-	if( typeInfo != 0 )
-		return typeInfo->size;
+    if( typeInfo != 0 ) return typeInfo->size;
 
-	if( tokenType == ttVoid )
-		return 0;
+    if( tokenType == ttVoid ) return 0;
 
 	if( tokenType == ttInt8 ||
 		tokenType == ttUInt8 )

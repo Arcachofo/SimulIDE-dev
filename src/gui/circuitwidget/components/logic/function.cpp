@@ -146,33 +146,36 @@ void Function::updateFunctions()
 {
     if( Simulator::self()->isRunning() ) CircuitWidget::self()->powerCircOff();
 
-    m_script = "";
+    m_script = "\n// "+m_id+" Script --------;\n";
 
+    m_script += "\n// Declaring Variables:\n";
     for( uint i=0; i<m_inPin.size(); ++i )
     {
         QString n = QString::number(i);
         m_script += "double vi"+n+" = 0;\n";
-        m_script += "bool i"+n+" = false;\n";
+        m_script += "bool   i"+n+"  = false;\n";
     }
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         QString n = QString::number(i);
         m_script += "double vo"+n+" = 0;\n";
-        m_script += "bool o"+n+" = false;\n";
+        m_script += "bool   o"+n+"  = false;\n";
     }
-    m_script += "\nvoid voltChanged(){\n";
+    m_script += "\nvoid voltChanged()\n{\n";
+    m_script += "  // Getting data:\n";
     for( uint i=0; i<m_inPin.size(); ++i )
     {
         QString n = QString::number(i);
         m_script += "  vi"+n+" = fu.getInputVoltage("+n+");\n";
         m_script += "  i"+n+"  = fu.getInputState("+n+");\n";
+        m_script += "\n";
     }
     for( uint i=0; i<m_outPin.size(); ++i )
     {
         QString n = QString::number(i);
         m_script += "  vo"+n+" = fu.getOutputVoltage("+n+");\n";
     }
-
+    m_script += "\n  // Setting Outputs:\n";
     for( int i=0; i<m_funcList.size(); ++i )
     {
         QString n = QString::number(i);
@@ -183,14 +186,17 @@ void Function::updateFunctions()
         if( func.startsWith("vo") )
         {
             func = func.replace("vo=", "");
-            m_script += "  fu.setOutputVoltage("+n+","+func+");\n";
+            m_script += "  vo"+n+" = "+func+";\n";
+            m_script += "  fu.setOutputVoltage( "+n+", vo"+n+" );\n";
         }else{
-            m_script += "  o"+n+"="+func+";\n";
-            m_script += "  fu.setOutputState("+n+",o"+n+");\n";
+            m_script += "  o"+n+" = "+func+";\n";
+            m_script += "  fu.setOutputState( "+n+", o"+n+" );\n";
         }
+        m_script += "\n";
     }
     m_script += "}\n";
-    qDebug() << m_script.toLocal8Bit().data();
+    m_script += "//----------------------;\n";
+    /// qDebug() << m_script.toLocal8Bit().data();
 
     int r = compileScript();
     if( r < 0 ) return;
