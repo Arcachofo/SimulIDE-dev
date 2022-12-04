@@ -87,13 +87,19 @@ void VarSource::valueChanged( int val )
 
 void VarSource::setVal( double val )
 {
-    if( val > m_maxValue ) val = m_maxValue;
+    if( val > m_maxValue ) m_maxValue = val;
     else if( val < 0 ) val = 0;
     m_dial->setValue( val*1000/m_maxValue );
     m_outValue = val;
     m_changed = true;
     updateButton();
     if( !Simulator::self()->isRunning() ) updateStep();
+}
+
+void VarSource::setMaxValue( double v )
+{
+    m_maxValue = v;
+    m_dial->setValue( m_outValue*1000/m_maxValue );
 }
 
 void VarSource::setflip()
