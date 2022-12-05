@@ -349,6 +349,7 @@ void SubPackage::remove()
 
 void SubPackage::setWidth( int width )
 {
+    if( width < 1 ) width = 1;
     if( m_width == width ) return;
     m_changed = true;
 
@@ -360,6 +361,7 @@ void SubPackage::setWidth( int width )
 
 void SubPackage::setHeight( int height )
 {
+    if( height < 1 ) height = 1;
     if( m_height == height ) return;
     m_changed = true;
     
